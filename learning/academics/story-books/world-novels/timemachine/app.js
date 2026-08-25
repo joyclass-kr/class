@@ -476,6 +476,74 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '⏳',
+    art: [],
+    paras: [
+        `이 책의 제목은 『타임머신』입니다. 시간을 오가는 기계라는 뜻인데, 그 말을 처음 만들어 쓴 것이 바로 이 책입니다.`,
+        `쓴 사람은 영국의 허버트 조지 웰스입니다. 가난한 집에서 태어나 포목점 점원 노릇을 하다가, 장학금을 받고 과학을 배웠습니다. 생물학을 배운 사람입니다.`,
+        `그래서 이 책에는 학교에서 배운 것이 그대로 들어 있습니다. 사람이 오랜 세월에 걸쳐 조금씩 달라진다는 생각이 그것입니다.`,
+        `웰스를 가르친 사람 가운데 토머스 헉슬리라는 학자가 있었습니다. 다윈의 생각을 세상에 알린 사람으로 이름난 사람입니다. 웰스는 그 밑에서 한 해를 배웠고, 그것이 평생 그의 글에 남았습니다.`,
+        `책은 천팔백구십오 년에 나왔습니다. 웰스가 스물아홉 살 때이고, 그의 첫 소설입니다. 이 책 한 권으로 그는 이름을 얻었습니다.`,
+        `그 뒤로 그는 화성인이 쳐들어오는 이야기, 사람을 보이지 않게 하는 이야기, 달에 가는 이야기를 잇달아 냈습니다. 지금 우리가 아는 공상 과학 이야기의 밑그림이 대개 그 몇 해에 나왔습니다.`,
+        `그래서 웰스를 공상 과학 소설의 아버지라고 부르는 사람도 있습니다. 프랑스의 쥘 베른과 함께 그렇게 불립니다. 다만 두 사람은 서로를 좋아하지 않았습니다. 베른은 웰스가 되지도 않을 것을 쓴다고 했고, 웰스는 베른이 이미 되는 것만 쓴다고 했습니다.`,
+        `원작은 여기 실린 것보다 조금 더 깁니다. 시간을 오가는 원리를 설명하는 대목이 더 길게 들어 있습니다. 여기서는 그 사람이 팔십만 년 뒤에서 본 것을 따라가는 줄기를 골라 실었습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 첫 장의 이야기를 다시 읽어 보십시오. 시간 여행자는 손님들 앞에서 시간이 네 번째 방향이라고 말합니다. 앞뒤, 좌우, 위아래에 이어 하나가 더 있다는 것입니다.`,
+        `그 설명이 이 책의 첫 장 전체를 차지합니다. 웰스는 이야기를 시작하기 전에 그것부터 납득시키려 했습니다. 그래야 뒤에 나오는 것을 믿을 수 있기 때문입니다.`,
+        `실제로 시간을 네 번째 방향으로 보는 생각은 그 무렵 학자들 사이에 돌던 것이었습니다. 웰스가 혼자 지어낸 것이 아닙니다. 다만 그것으로 이야기를 만든 것은 처음이었습니다.`,
+        `둘째, 그 사람이 처음 본 것을 세어 보십시오. 팔십만 년 뒤에 도착해서 처음 만난 것은 작고 곱고 웃기만 하는 사람들이었습니다.`,
+        `그것을 보고 그는 사람이 마침내 다툼도 굶주림도 없는 세상을 만들었다고 여깁니다. 그리고 그 판단이 틀립니다. 이 책의 절반은 그 잘못된 판단 위에서 흘러갑니다.`,
+        `그 사람이 그렇게 여긴 데는 까닭이 있습니다. 밭도 공장도 보이지 않았고, 다투는 것도 못 보았습니다. 눈에 보이는 것만으로는 그 판단이 맞았습니다.`,
+        `그러니 이 책은 판단을 서두르면 어떻게 되는지를 보여 주는 이야기이기도 합니다. 그 사람은 학자입니다. 그런 사람이 사흘 보고 결론을 냈습니다.`,
+        `셋째, 우물을 다시 보십시오. 벌판 여기저기에 우물처럼 생긴 구멍이 있고, 그 안에서 기계 소리가 납니다. 그것이 이 이야기의 진짜 문이었습니다.`,
+        `위에서 놀고 있는 사람들과 아래에서 기계를 돌리는 사람들. 웰스는 그 두 무리를 팔십만 년 뒤의 이야기로 적었지만, 그가 겨눈 것은 자기 시대의 영국이었습니다.`,
+        `그 시절 영국에는 지하의 공장과 갱도에서 일하는 사람이 아주 많았습니다. 그리고 그 사람들이 만든 것으로 사는 사람들이 위에 있었습니다. 웰스는 그것이 몇십만 년 이어지면 어떻게 될지를 그려 본 것입니다.`,
+        `그 시절 런던 아래에는 이미 땅속 철길이 놓여 있었습니다. 공장도 지하실을 썼습니다. 웰스가 우물과 기계 소리를 그렇게 적은 것은 자기 눈으로 본 것을 옮긴 셈입니다.`,
+        `넷째, 박물관 대목을 다시 읽어 보십시오. 그 사람은 폐허가 된 옛 박물관에 들어갑니다. 진열장이 줄지어 있고 그 안에 무엇인가가 들어 있는데, 이름표가 다 삭아 없어졌습니다.`,
+        `이름을 붙여 두는 것이 사람이 하는 일입니다. 그런데 그 이름이 제일 먼저 사라졌습니다. 이 대목이 이 책에서 제일 조용하게 무섭습니다.`,
+        `그 박물관에서 그가 챙긴 것은 쇠막대 하나와 성냥 한 통이었습니다. 그 땅에서 제일 값나가는 것이 그 둘이었습니다. 그런데 아무도 가져가지 않고 있었습니다.`,
+        `인물도 짚어 둘 만합니다.`,
+        `이 책에는 이름이 있는 사람이 거의 없습니다. 시간 여행자도 이름이 없고, 그 이야기를 듣는 사람들도 직업으로만 불립니다. 의사, 심리학자, 시장 같은 식입니다.`,
+        `이름이 나오는 것은 위나 하나뿐입니다. 그런데 그 이름도 그 사람이 붙여 준 것입니다. 팔십만 년 뒤 사람들에게는 이름이 없었기 때문입니다.`,
+        `위나를 그냥 곁에 있던 사람으로 읽으면 놓치는 것이 있습니다. 그 사람은 물에 빠진 것을 시간 여행자가 건져 줍니다. 둘레에서 아무도 도우려 하지 않던 참이었습니다.`,
+        `서로를 돕지 않는 사람들이었습니다. 다칠 일이 없는 세상에서 오래 살면 그렇게 된다고 이 책은 적어 둡니다.`,
+        `그리고 위나는 그 뒤로 그 사람을 따라다닙니다. 꽃을 꺾어 주머니에 넣어 주기도 합니다. 그 꽃이 이 이야기의 마지막에 다시 나옵니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 책이 나온 때는 사람들이 앞날을 아주 밝게 보던 무렵입니다. 기계가 나날이 좋아지고 있었고, 세상이 점점 나아질 것이라고 다들 믿었습니다.`,
+        `웰스는 거기에 물음표를 붙였습니다. 좋아지기만 하면 그다음은 무엇이냐는 것입니다. 이 책이 팔십만 년 뒤에 보여 주는 것은 완성된 세상이 아니라 갈라진 세상입니다.`,
+        `그리고 다윈의 생각이 퍼진 지 얼마 되지 않은 때이기도 합니다. 살아남는 것이 달라진다는 생각 말입니다. 웰스는 그것을 사람에게 적용해 본 것입니다.`,
+        `어둠 속에서 오래 살면 눈이 달라지고, 힘쓸 일이 없으면 몸이 약해집니다. 동굴에 사는 물고기가 눈을 잃는 것과 같은 셈입니다. 이 책은 그 셈을 사람으로 해 봅니다.`,
+        `다만 웰스의 셈에는 빠진 것도 있습니다. 팔십만 년이면 사람이 그렇게 되기에 넉넉한 세월이지만, 그 사이에 무슨 일이 있었는지는 아무도 모릅니다. 이 책도 그것을 적지 않습니다.`,
+        `이 책이 붙들고 있는 물음은 두 가지입니다.`,
+        `하나는 편해지는 것이 좋기만 하냐는 것입니다. 이 책은 아니라고 말합니다. 어려울 일이 하나도 없어지자 사람들이 아무것도 할 줄 모르게 되었습니다.`,
+        `다만 그 말도 반쯤만 맞습니다. 어려움이 사람을 강하게 한다는 말은 굶주림과 병을 겪는 사람 앞에서 함부로 할 말이 아닙니다. 이 책도 그것을 다 정리하지는 못합니다.`,
+        `다른 하나는 사람이 갈라지면 어떻게 되느냐는 것입니다. 이 책이 진짜로 겨눈 것은 그것입니다. 위와 아래가 오래 갈라져 있으면 나중에는 같은 종류의 사람이 아니게 된다는 것입니다.`,
+        `마지막 장도 그냥 넘기지 마십시오. 그 사람은 더 먼 곳으로 갑니다. 삼천만 년 뒤입니다. 거기에는 사람이 없습니다. 해가 붉게 커져 있고 바닷가에 게 같은 것들만 있습니다.`,
+        `그 대목은 이야기에 꼭 필요한 것이 아닙니다. 그런데 웰스는 그것을 넣었습니다. 사람이 있는 세상이 영원하지 않다는 것을 한 번 보여 주고 싶었기 때문입니다.`,
+        `그리고 이 책은 그 사람이 다시 떠나 돌아오지 않는 것으로 끝납니다. 어디로 갔는지 적어 두지 않았습니다.`,
+        `책이 나오자 크게 읽혔습니다. 그리고 이 책이 만든 말과 생각이 그 뒤 백삼십 년 동안 수없이 되풀이되었습니다. 시간을 오가는 이야기는 다 이 책의 후손이라고 해도 지나치지 않습니다.`,
+        `웰스는 그 뒤에 소설만 쓴 것이 아닙니다. 세계사 책도 쓰고, 나라들이 어떻게 지내야 하는지에 대한 글도 많이 썼습니다. 그는 이야기를 통해 세상에 말을 거는 사람이었습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 시간 여행자가 틀리는 자리를 세어 보십시오. 그 사람은 여러 번 틀립니다. 그리고 틀릴 때마다 그것을 솔직하게 적어 둡니다.`,
+        `학자가 하는 일이 그것입니다. 알아낸 것만 적는 것이 아니라 틀렸던 것도 적는 것입니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `시간 여행자가 팔십만 년 뒤에서 본 것은 정말 그가 말한 대로였을까요? 그 사람은 며칠 동안 본 것으로 온 세상을 셈했습니다. 그 셈을 우리는 어디까지 믿어야 할까요?`,
+        `위와 아래로 갈라진 세상이 정말 팔십만 년이 걸릴까요? 웰스는 자기 시대에 이미 그 갈라짐이 시작되었다고 보았습니다.`,
+        `그리고 그 사람은 왜 다시 떠났을까요. 무엇을 가지러 갔을지, 아니면 누구를 찾으러 갔을지 생각해 보십시오. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -757,16 +825,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌅')}
-            <h2>타임 머신를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -778,7 +930,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -799,7 +951,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
