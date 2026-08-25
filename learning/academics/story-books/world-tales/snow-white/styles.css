@@ -484,8 +484,9 @@ body {
 .after-art {
     flex: 0 0 auto;
     aspect-ratio: 3 / 2;
-    width: calc(100% + var(--after-pad-x));
-    margin: calc(-1 * var(--after-pad-y)) calc(-1 * var(--after-pad-x)) clamp(8px, 1.8cqh, 18px) 0;
+    /* 쪽 왼쪽 끝(가운데 접히는 선)부터 오른쪽 끝까지 꽉 나간다. 진짜 책이 그렇게 한다. */
+    width: calc(100% + var(--after-pad-x) * 2);
+    margin: calc(-1 * var(--after-pad-y)) calc(-1 * var(--after-pad-x)) clamp(8px, 1.8cqh, 18px);
     min-height: 0;
     overflow: hidden;
 }
