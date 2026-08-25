@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
             : `${a.f.label} · 기온 ${a.change > 0 ? '+' : ''}${a.change} ℃`;
         dataNote.innerHTML = a.kind === 'wind'
             ? `<div class="data-row"><span class="data-name">기압 차이</span><span class="data-val">${a.spacing} km 마다 ${DP_HPA} hPa</span></div>` +
-              `<div class="data-row"><span class="data-name">기압 경도</span><span class="data-val">${(DP_HPA * 100)} Pa ÷ ${(a.spacing * 1000).toLocaleString()} m = ${a.gradient.toExponential(2)} Pa/m</span></div>` +
+              `<div class="data-row"><span class="data-name">기압 경도</span><span class="data-val">${(DP_HPA * 100)} Pa ÷ ${(a.spacing * 1000).toLocaleString()} m = ${a.gradient.toFixed(4)} Pa/m</span></div>` +
               `<div class="data-row"><span class="data-name">바람</span><span class="data-val">${a.v.toFixed(1)} m/s · 시속 ${a.kmh.toFixed(0)} km</span></div>` +
               `<div class="data-row"><span class="data-name">부는 방향</span><span class="data-val">${a.low ? '시계 반대 방향으로 불어 들어옴' : '시계 방향으로 불어 나감'}</span></div>` +
               `<div class="data-row match"><span class="data-name">세기</span><span class="data-val">${STRENGTH[a.strength]}</span></div>`
@@ -334,6 +334,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const STRENGTH = { strong: '세다', medium: '보통이다', weak: '약하다' };
+    // '이다'만 인용형이 '-라고'입니다. '보통이다고'는 틀린 말입니다.
+    const STRENGTH_QUOTE = { strong: '세다고', medium: '보통이라고', weak: '약하다고' };
 
     function check() {
         const a = render();
@@ -347,8 +349,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 : state.prediction === a.strength ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
             const other = analyseWind(state.spacing === 100 ? 400 : 100);
             explanation.textContent =
-                `${a.spacing} km 마다 ${DP_HPA} hPa 씩 차이가 나므로 1 m 당 기압 차이는 ${a.gradient.toExponential(2)} Pa 입니다. ` +
-                `이 힘이 공기를 밀어 ${a.v.toFixed(1)} m/s, 시속 ${a.kmh.toFixed(0)} km 의 바람이 붑니다. ${STRENGTH[a.strength]}고 할 수 있습니다. ` +
+                `${a.spacing} km 마다 ${DP_HPA} hPa 씩 차이가 나므로 1 m 당 기압 차이는 ${a.gradient.toFixed(4)} Pa 입니다. ` +
+                `이 힘이 공기를 밀어 ${a.v.toFixed(1)} m/s, 시속 ${a.kmh.toFixed(0)} km 의 바람이 붑니다. ${STRENGTH_QUOTE[a.strength]} 할 수 있습니다. ` +
                 `같은 기압 차이라도 간격이 ${other.spacing} km 라면 ${other.v.toFixed(1)} m/s로 ${other.v > a.v ? '더 세집니다' : '약해집니다'}. ` +
                 `등압선이 촘촘할수록 바람이 세다는 뜻입니다. ` +
                 (a.low
