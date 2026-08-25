@@ -140,6 +140,11 @@ body {
     overflow: hidden;
     color: var(--ink);
     min-height: 0;
+    /* 한글은 기본값이면 낱말 가운데서도 줄이 넘어간다.
+       '먹지 못했습 / 니다'처럼 끊기지 않도록 띄어쓰기에서만 넘긴다.
+       다만 한 낱말이 칸보다 길면 그때는 끊어야 칸 밖으로 삐져나가지 않는다. */
+    word-break: keep-all;
+    overflow-wrap: break-word;
 }
 
 .page h1,
@@ -232,11 +237,13 @@ body {
 
 .page-story p {
     margin: 0 0 10px;
-    font-size: clamp(15px, 2.605cqh, 27px);
+    font-size: clamp(14px, 2.315cqh, 24px);
     font-weight: 500;
     line-height: 1.75;
     color: var(--ink);
     text-indent: 1em;
+    /* keep-all 이라 줄 끝이 들쭉날쭉해진다. 양쪽으로 맞춘다. */
+    text-align: justify;
 }
 
 .story-media {
@@ -326,6 +333,7 @@ body {
     line-height: 1.7;
     color: var(--ink);
     text-indent: 1em;
+    text-align: justify;
 }
 
 /* toc */
