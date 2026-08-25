@@ -36,6 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const DIGIT_JONG = { '0': 21, '1': 8, '2': 0, '3': 16, '4': 0, '5': 0, '6': 1, '7': 8, '8': 8, '9': 0 };
     const numJong = n => DIGIT_JONG[String(n).replace(/[^0-9]/g, '').slice(-1)] ?? 0;
     const wa = n => `${n}${numJong(n) > 0 ? '과' : '와'}`;
+    /* 구별 기준은 조흔색·자성·염산 반응·굳기로 바뀝니다. 앞의 셋은 받침이 있어
+       '으로', 굳기는 받침이 없어 '로'입니다. '(으)로'는 서식 표기지 문장에 쓸 말이
+       아니라서 받침을 보고 골라 붙입니다. */
+    const roWord = w => {
+        const c = String(w).trim().slice(-1).charCodeAt(0);
+        const j = (c < 0xac00 || c > 0xd7a3) ? -1 : (c - 0xac00) % 28;
+        return `${w}${j <= 0 || j === 8 ? '로' : '으로'}`;
+    };
     const eulNum = n => `${n}${numJong(n) > 0 ? '을' : '를'}`;
 
     const MINERALS = {
@@ -195,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="note-text" x="300" y="176">A ${a.A.acid ? '거품이 난다' : '반응 없음'} · B ${a.B.acid ? '거품이 난다' : '반응 없음'}</text>`;
 
         out += `<text class="part-label" x="20" y="24">굳기 ${wa(a.A.h)} ${eulNum(a.B.h)} 견줍니다</text>`;
-        out += `<text class="note-text" x="20" y="200">${a.tellApart ? `이 둘은 ${a.tellApart}(으)로 구별할 수 있습니다` : '이 둘은 주어진 방법으로는 구별되지 않습니다'}</text>`;
+        out += `<text class="note-text" x="20" y="200">${a.tellApart ? `이 둘은 ${roWord(a.tellApart)} 구별할 수 있습니다` : '이 둘은 주어진 방법으로는 구별되지 않습니다'}</text>`;
         mainGroup.innerHTML = out;
     }
 
