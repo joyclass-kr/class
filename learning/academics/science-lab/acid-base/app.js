@@ -154,6 +154,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderData() {
+        if (!selectedSolution) {
+            dataNote.innerHTML =
+                `<div class="data-row"><span class="data-name">고른 용액</span><span class="data-val">아직 고르지 않았습니다</span></div>` +
+                `<div class="data-row"><span class="data-name">알아볼 것</span><span class="data-val">리트머스 종이 두 장이 어떻게 바뀌는지</span></div>` +
+                `<div class="data-row"><span class="data-name">나누는 무리</span><span class="data-val">산성 · 중성 · 염기성</span></div>`;
+            return;
+        }
         const d = SOLUTIONS[selectedSolution];
         const acid = d.type === 'acid', base = d.type === 'base';
         dataNote.innerHTML =
@@ -246,6 +253,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     solutionButtons.forEach(button => button.addEventListener('click', () => selectSolution(button.dataset.solution)));
+    // 용액을 고르기 전에도 무리 나눔은 보여 줍니다. 고르고 나서야 그리면
+    // 처음 연 사람은 빈 칸을 보게 됩니다.
+    renderBand();
+    renderData();
     predictionButtons.forEach(button => button.addEventListener('click', () => {
         prediction = button.dataset.prediction;
         predictionButtons.forEach(item => item.classList.toggle('selected', item === button));
