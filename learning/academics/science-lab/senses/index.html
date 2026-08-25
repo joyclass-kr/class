@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="떨어지는 자를 잡아 반응 시간을 재고, 눈·귀·피부·코·혀 가운데 어느 감각이 빠른지 견주어 보는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=4">
+    <link rel="stylesheet" href="sense-visual.css?v=4">
+    <link rel="stylesheet" href="quiz.css?v=4">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>감각 기관의 반응</h1>
+            </div>
+            <div class="grade-tags"><span>초등 5~6</span><span>생명과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>어느 감각으로 신호를 받을지 고릅니다.</li>
+            <li>지금 몸 상태를 고릅니다.</li>
+            <li>자를 떨어뜨려 잡습니다.</li>
+            <li>잡힌 눈금으로 반응 시간을 구합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">30 cm 자를 떨어뜨려 잡는 방법으로 잽니다</p>
+
+                <fieldset class="pick-field">
+                    <legend>어느 감각으로 알아챌까요</legend>
+                    <div class="pick-buttons cols5">
+                        <button type="button" data-sense="skin">피부<small>손을 톡</small></button>
+                        <button type="button" data-sense="ear">귀<small>소리로</small></button>
+                        <button type="button" data-sense="eye">눈<small>보고서</small></button>
+                        <button type="button" data-sense="nose">코<small>냄새로</small></button>
+                        <button type="button" data-sense="tongue">혀<small>맛으로</small></button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="pick-field">
+                    <legend>지금 몸 상태는</legend>
+                    <div class="pick-buttons cols3">
+                        <button type="button" data-cond="fresh">잘 잤을 때<small>정신이 맑음</small></button>
+                        <button type="button" data-cond="sleepy">졸릴 때<small>눈이 감김</small></button>
+                        <button type="button" data-cond="busy">딴생각할 때<small>다른 데 봄</small></button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="prediction-field">
+                    <legend>이 감각을 30 cm 자로 잴 수 있을까요?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="p1">잴 수 있다</button>
+                        <button type="button" data-prediction="p2">아슬아슬하다</button>
+                        <button type="button" data-prediction="p3">너무 느려 못 잰다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="runBtn" type="button">자 떨어뜨리기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">감각을 고르고 자를 떨어뜨려 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>반응 시간</span><strong id="valueA">-</strong></article>
+                            <article><span>자가 떨어진 거리</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel sense-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <defs><clipPath id="stageClip"><rect x="0" y="0" width="460" height="214"/></clipPath></defs>
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">자는 놓는 순간부터 점점 빨라지며 떨어집니다. 그래서 반응이 조금만 늦어도 떨어진 거리는 훨씬 길어집니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>신호가 지나가는 길</strong> 자극을 감각 기관이 받으면 신경이 그 소식을 뇌로 보내고, 뇌가 판단해 다시 신경으로 근육에 명령을 내립니다. 이 모든 일이 0.2초 안에 일어나지만, 아무리 빨라도 0은 될 수 없습니다.</p>
+                <p><strong>감각마다 빠르기가 다릅니다</strong> 살갗에 닿는 느낌과 소리가 가장 빠르고 눈이 그다음입니다. 냄새와 맛은 훨씬 느립니다. 냄새 알갱이가 코 속까지 퍼지고 맛 물질이 침에 녹는 데 시간이 걸리기 때문입니다.</p>
+                <p><strong>떨어진 거리로 시간을 잽니다</strong> 떨어지는 물체는 시간이 두 배가 되면 거리가 네 배가 됩니다. 그래서 자가 떨어진 거리만 읽으면 몇 초가 걸렸는지 거꾸로 알아낼 수 있습니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>자극이 몸에서 지나가는 차례로 맞는 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 자극 → 뇌 → 감각 기관 → 근육</label>
+                        <label><input type="radio" name="q1" value="b"> 자극 → 감각 기관 → 신경 → 뇌 → 신경 → 근육</label>
+                        <label><input type="radio" name="q1" value="c"> 자극 → 근육 → 뇌 → 감각 기관</label>
+                        <label><input type="radio" name="q1" value="d"> 자극 → 신경 → 근육</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>감각 기관이 먼저 받아들이고, 신경이 뇌로 전하고, 뇌가 정한 명령이 다시 신경을 타고 근육으로 갑니다. 뇌를 거치므로 아무리 빨라도 시간이 조금은 걸립니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>떨어지는 자를 잡았더니 눈금이 두 배로 길어졌습니다. 반응 시간은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 두 배가 되었다</label>
+                        <label><input type="radio" name="q2" value="b"> 네 배가 되었다</label>
+                        <label><input type="radio" name="q2" value="c"> 그대로이다</label>
+                        <label><input type="radio" name="q2" value="d"> 두 배보다 조금 짧게 늘었다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>거리가 네 배여야 시간이 두 배입니다. 거리가 두 배뿐이라면 시간은 두 배까지는 안 늘고 1.4배쯤 늘어난 것입니다. 떨어지는 물체는 점점 빨라지기 때문입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>냄새와 맛으로 신호를 알아채면 왜 훨씬 느릴까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 냄새 알갱이가 퍼지고 맛 물질이 녹는 데 시간이 걸려서</label>
+                        <label><input type="radio" name="q3" value="b"> 코와 혀에는 신경이 없어서</label>
+                        <label><input type="radio" name="q3" value="c"> 뇌가 냄새를 싫어해서</label>
+                        <label><input type="radio" name="q3" value="d"> 코와 혀가 뇌에서 멀어서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>빛과 소리는 곧바로 닿지만 냄새와 맛은 물질이 실제로 코와 혀에 도착해 퍼지고 녹아야 느낄 수 있습니다. 그 준비 시간 때문에 훨씬 느립니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>졸리거나 딴생각할 때 반응이 느려지는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 감각 기관이 망가져서</label>
+                        <label><input type="radio" name="q4" value="b"> 신경이 짧아져서</label>
+                        <label><input type="radio" name="q4" value="c"> 뇌가 판단하는 데 시간이 더 걸려서</label>
+                        <label><input type="radio" name="q4" value="d"> 근육에 힘이 빠져서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>감각 기관과 신경은 그대로입니다. 느려지는 곳은 뇌입니다. 신호를 알아채고 결정하는 데 시간이 더 걸리므로 반응 시간이 길어집니다. 자동차 운전에서 졸음이 위험한 까닭도 이것입니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=4"></script>
+</body>
+</html>
