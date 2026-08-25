@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Learn all 3,000 words from Korea's official 2022 English curriculum">
     <title>영단어 3,000</title>
-    <link rel="stylesheet" href="styles.css?v=20260822a">
+    <link rel="stylesheet" href="styles.css?v=20260826a">
     <script src="vocabulary-core.js?v=20260803a" defer></script>
-    <script src="app.js?v=20260822a" defer></script>
+    <script src="app.js?v=20260826a" defer></script>
 </head>
 <body>
     <main>
@@ -106,6 +106,7 @@
                     <h1 id="studyTitle">Level 1</h1>
                 </div>
                 <div class="toolbar-actions">
+                    <button id="lessonQuizStartButton" class="start-lesson-quiz-button" type="button">20문제 풀기</button>
                     <button id="shuffleButton" class="shuffle-toggle" type="button" role="switch" aria-checked="false">
                         <span>Shuffle</span><span class="toggle-track" aria-hidden="true"><i></i></span>
                     </button>
@@ -161,6 +162,53 @@
             <p id="studyMessage" class="study-message" role="status"></p>
         </section>
 
+        <section id="lessonQuizScreen" class="game-screen lesson-quiz-screen" hidden aria-labelledby="lessonQuizTitle">
+            <div class="game-toolbar lesson-quiz-toolbar">
+                <button id="backFromLessonQuiz" class="text-button" type="button">← 차시 선택</button>
+                <div>
+                    <p id="lessonQuizStage" class="study-stage">20단어 확인 퀴즈</p>
+                    <h1 id="lessonQuizTitle">Level 1 · 1차시</h1>
+                </div>
+                <button id="lessonQuizRestartButton" class="text-button" type="button">처음부터</button>
+            </div>
+
+            <div id="lessonQuizStats" class="game-stats lesson-quiz-stats" aria-live="polite">
+                <div><span>문제</span><strong><b id="lessonQuizQuestionNumber">1</b>/<b id="lessonQuizQuestionTotal">20</b></strong></div>
+                <div><span>정답</span><strong id="lessonQuizScore">0</strong></div>
+                <div><span>연속 정답</span><strong id="lessonQuizStreak">0</strong></div>
+            </div>
+
+            <div class="game-panel lesson-quiz-panel">
+                <div id="lessonQuizQuestionPanel">
+                    <p class="game-instruction">단어에 맞는 뜻을 고르세요.</p>
+                    <div class="game-word-row">
+                        <h2 id="lessonQuizWord">word</h2>
+                        <button id="lessonQuizSpeakButton" class="game-speak-button" type="button" aria-label="Listen to the word">Listen</button>
+                    </div>
+                    <div id="lessonQuizChoices" class="lesson-quiz-choices" aria-label="뜻 선택지"></div>
+                    <p id="lessonQuizFeedback" class="game-feedback" role="status" aria-live="polite">뜻을 하나 고르세요.</p>
+                    <button id="lessonQuizNextButton" class="game-next-button" type="button" disabled>다음</button>
+                </div>
+
+                <div id="lessonQuizResultPanel" class="game-result-panel" hidden>
+                    <p class="game-result-eyebrow">차시 완료!</p>
+                    <h2 id="lessonQuizResultTitle">20문제를 모두 풀었어요</h2>
+                    <div class="game-result-stats lesson-quiz-result-stats">
+                        <div><span>정답</span><strong id="lessonQuizResultScore">0 / 20</strong></div>
+                        <div><span>정확도</span><strong id="lessonQuizResultAccuracy">0%</strong></div>
+                        <div><span>최고 연속 정답</span><strong id="lessonQuizResultBestStreak">0</strong></div>
+                    </div>
+                    <div class="game-wrong-section">
+                        <h3>다시 볼 단어</h3>
+                        <div id="lessonQuizWrongList" class="game-wrong-list"></div>
+                    </div>
+                    <div class="game-result-actions lesson-quiz-result-actions">
+                        <button id="lessonQuizRetryWrongButton" type="button">틀린 문제 다시 풀기</button>
+                        <button id="lessonQuizContinueButton" type="button">다음 차시</button>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section id="gameScreen" class="game-screen" hidden aria-labelledby="gameTitle">
             <div class="game-toolbar">
                 <button id="backFromGame" class="text-button" type="button">← Levels</button>
@@ -191,7 +239,7 @@
                     <p class="game-instruction">Pick the right picture.</p>
                     <div class="game-word-row">
                         <h2 id="gameWord">word</h2>
-                        <button id="gameSpeakButton" class="game-speak-button" type="button" aria-label="Hear the word">Hear it</button>
+                        <button id="gameSpeakButton" class="game-speak-button" type="button" aria-label="Listen to the word">Listen</button>
                     </div>
                     <div class="game-timer-track" aria-hidden="true"><span id="gameTimerBar"></span></div>
                     <div id="gameChoices" class="game-choices" aria-label="Picture choices"></div>
@@ -259,7 +307,7 @@
                         <input id="spellingInput" class="spelling-input tile-input" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="30" aria-label="Your English word" readonly tabindex="-1">
                         <div class="spelling-actions">
                             <button id="spellingHintButton" type="button">Hint</button>
-                            <button id="spellingSpeakButton" type="button">Hear it</button>
+                            <button id="spellingSpeakButton" type="button" aria-label="Listen to the word">Listen</button>
                             <button id="spellingCheckButton" type="button">Check</button>
                         </div>
                         <p id="spellingFeedback" class="game-feedback" role="status" aria-live="polite">Type the word.</p>

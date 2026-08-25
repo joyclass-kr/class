@@ -41,11 +41,16 @@
     const elements = Object.fromEntries([
         "levelScreen", "lessonScreen", "studyScreen", "bandListScreen", "stageGroups", "loadingState", "toast",
         "totalKnown", "overallPercent", "overallBar", "totalUnknown", "backToLevels",
-        "shuffleButton", "studyStage", "studyTitle", "cardPosition", "levelStatus", "sessionBar",
+        "shuffleButton", "lessonQuizStartButton", "studyStage", "studyTitle", "cardPosition", "levelStatus", "sessionBar",
         "flashcard", "cardBadge", "wordText", "posText", "meaningText", "exampleBlock", "exampleLabel", "exampleText",
         "exampleKo", "relatedBlock", "relatedWords", "answerLayout", "wordImageBlock", "wordImage",
         "previousButton", "speakButton", "exampleSpeakButton",
         "nextButton", "unknownButton", "knownButton", "reviewUnknownButton", "studyMessage",
+        "lessonQuizScreen", "backFromLessonQuiz", "lessonQuizStage", "lessonQuizTitle", "lessonQuizRestartButton",
+        "lessonQuizStats", "lessonQuizQuestionNumber", "lessonQuizQuestionTotal", "lessonQuizScore", "lessonQuizStreak",
+        "lessonQuizQuestionPanel", "lessonQuizWord", "lessonQuizSpeakButton", "lessonQuizChoices", "lessonQuizFeedback", "lessonQuizNextButton",
+        "lessonQuizResultPanel", "lessonQuizResultTitle", "lessonQuizResultScore", "lessonQuizResultAccuracy",
+        "lessonQuizResultBestStreak", "lessonQuizWrongList", "lessonQuizRetryWrongButton", "lessonQuizContinueButton",
         "gameStartButton", "gameWordCount", "gameScreen", "backFromGame", "gameLevelButtons",
         "gameQuestionNumber", "gameScore", "gameStreak", "gameTimer", "gameTimerBar",
         "gameWord", "gameSpeakButton", "gameChoices", "gameFeedback", "gameNextButton", "gameResetButton",
@@ -76,6 +81,15 @@
         revealed: false,
         unknownOnly: false,
         shuffleEnabled: localStorage.getItem(SHUFFLE_PREFERENCE_KEY) === "true",
+        lessonQuizPool: [],
+        lessonQuizTarget: null,
+        lessonQuizChoices: [],
+        lessonQuizQuestionNumber: 0,
+        lessonQuizScore: 0,
+        lessonQuizStreak: 0,
+        lessonQuizBestStreak: 0,
+        lessonQuizAnswered: false,
+        lessonQuizWrongWords: [],
         gameLevel: 0,
         gamePool: [],
         gameTargetPool: [],
@@ -311,18 +325,27 @@
             const touched = summary.known + summary.unknown;
             const percent = Math.round((touched / lessonWords.length) * 100);
             const isRecommended = recommended.lessonIndex === lessonIndex;
-            const button = document.createElement("button");
-            button.type = "button";
-            button.className = `lesson-button ${summary.unseen === 0 ? "complete" : ""} ${isRecommended ? "recommended" : ""}`.trim();
-            button.setAttribute("aria-label", `${lessonIndex + 1}차시, ${lessonWords.length}단어, ${touched}개 확인`);
-            button.innerHTML = `
+            const card = document.createElement("article");
+            card.className = "lesson-card";
+            const studyButton = document.createElement("button");
+            studyButton.type = "button";
+            studyButton.className = `lesson-button ${summary.unseen === 0 ? "complete" : ""} ${isRecommended ? "recommended" : ""}`.trim();
+            studyButton.setAttribute("aria-label", `${lessonIndex + 1}차시 단어 학습, ${lessonWords.length}단어, ${touched}개 확인`);
+            studyButton.innerHTML = `
                 <span class="lesson-number">${lessonIndex + 1}차시 ${isRecommended ? '<b>추천</b>' : ''}</span>
                 <strong>${lessonIndex * LESSON_SIZE + 1}–${lessonIndex * LESSON_SIZE + lessonWords.length}번 단어</strong>
                 <span class="lesson-progress" aria-hidden="true"><span style="width:${percent}%"></span></span>
                 <small>${summary.unseen === 0 ? "완료" : `${touched}/${lessonWords.length} 확인`} · 복습 ${summary.unknown}</small>
             `;
-            button.addEventListener("click", () => openLesson(level, lessonIndex));
-            return button;
+            studyButton.addEventListener("click", () => openLesson(level, lessonIndex));
+            const quizButton = document.createElement("button");
+            quizButton.type = "button";
+            quizButton.className = "lesson-quiz-launch-button";
+            quizButton.textContent = `${lessonWords.length}문제 바로 풀기`;
+            quizButton.setAttribute("aria-label", `${lessonIndex + 1}차시 ${lessonWords.length}문제 바로 풀기`);
+            quizButton.addEventListener("click", () => openLessonQuiz(level, lessonIndex));
+            card.append(studyButton, quizButton);
+            return card;
         }));
     }
 
@@ -480,8 +503,198 @@
             moveCard(1);
         } else {
             renderStudyCard();
-            showToast(status === "known" ? "You learned the last word!" : "You checked the last word.");
+            showToast("마지막 단어예요. 위의 ‘20문제 풀기’로 바로 확인할 수 있어요.");
         }
+    }
+
+    function primaryMeaning(word) {
+        return (word?.meanings || []).find((meaning) => String(meaning || "").trim()) || "뜻 정보 없음";
+    }
+
+    function createLessonQuizChoices(target) {
+        const targetMeaning = primaryMeaning(target);
+        const seenMeanings = new Set([targetMeaning]);
+        const distractors = [];
+        const candidates = core.shuffleWords([
+            ...currentLessonWords(),
+            ...state.data.words,
+        ]);
+        for (const candidate of candidates) {
+            const meaning = primaryMeaning(candidate);
+            if (String(candidate.id) === String(target.id) || seenMeanings.has(meaning) || meaning === "뜻 정보 없음") continue;
+            seenMeanings.add(meaning);
+            distractors.push({ wordId: String(candidate.id), meaning, correct: false });
+            if (distractors.length === 3) break;
+        }
+        return core.shuffleWords([
+            { wordId: String(target.id), meaning: targetMeaning, correct: true },
+            ...distractors,
+        ]);
+    }
+
+    function updateLessonQuizStats() {
+        elements.lessonQuizQuestionNumber.textContent = String(Math.max(1, state.lessonQuizQuestionNumber));
+        elements.lessonQuizQuestionTotal.textContent = String(state.lessonQuizPool.length);
+        elements.lessonQuizScore.textContent = String(state.lessonQuizScore);
+        elements.lessonQuizStreak.textContent = String(state.lessonQuizStreak);
+    }
+
+    function renderLessonQuizQuestion() {
+        const target = state.lessonQuizTarget;
+        elements.lessonQuizWord.textContent = target.word;
+        elements.lessonQuizFeedback.textContent = "뜻을 하나 고르세요.";
+        elements.lessonQuizFeedback.className = "game-feedback";
+        elements.lessonQuizNextButton.disabled = true;
+        elements.lessonQuizNextButton.textContent = "다음";
+        elements.lessonQuizChoices.replaceChildren(...state.lessonQuizChoices.map((choice, index) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "lesson-quiz-choice";
+            button.dataset.wordId = choice.wordId;
+            button.dataset.correct = String(choice.correct);
+            const number = document.createElement("span");
+            number.className = "lesson-quiz-choice-number";
+            number.textContent = String(index + 1);
+            const meaning = document.createElement("span");
+            meaning.textContent = choice.meaning;
+            button.append(number, meaning);
+            button.addEventListener("click", () => answerLessonQuiz(button));
+            return button;
+        }));
+        updateLessonQuizStats();
+        speakText(target.word);
+    }
+
+    function nextLessonQuizQuestion() {
+        if (state.lessonQuizQuestionNumber >= state.lessonQuizPool.length) {
+            showLessonQuizResult();
+            return;
+        }
+        state.lessonQuizTarget = state.lessonQuizPool[state.lessonQuizQuestionNumber];
+        state.lessonQuizChoices = createLessonQuizChoices(state.lessonQuizTarget);
+        state.lessonQuizQuestionNumber += 1;
+        state.lessonQuizAnswered = false;
+        renderLessonQuizQuestion();
+    }
+
+    function answerLessonQuiz(selectedButton) {
+        if (state.lessonQuizAnswered || !state.lessonQuizTarget) return;
+        state.lessonQuizAnswered = true;
+        const isCorrect = selectedButton.dataset.correct === "true";
+        const targetMeaning = primaryMeaning(state.lessonQuizTarget);
+        elements.lessonQuizChoices.querySelectorAll(".lesson-quiz-choice").forEach((button) => {
+            button.disabled = true;
+            if (button.dataset.correct === "true") button.classList.add("correct");
+        });
+        if (isCorrect) {
+            state.progress[String(state.lessonQuizTarget.id)] = { status: "known", updatedAt: new Date().toISOString() };
+            state.lessonQuizScore += 1;
+            state.lessonQuizStreak += 1;
+            state.lessonQuizBestStreak = Math.max(state.lessonQuizBestStreak, state.lessonQuizStreak);
+            elements.lessonQuizFeedback.textContent = `정답! ${state.lessonQuizTarget.word} — ${targetMeaning}`;
+            elements.lessonQuizFeedback.className = "game-feedback correct";
+        } else {
+            selectedButton.classList.add("incorrect");
+            state.lessonQuizStreak = 0;
+            if (!state.lessonQuizWrongWords.some((word) => String(word.id) === String(state.lessonQuizTarget.id))) {
+                state.lessonQuizWrongWords.push(state.lessonQuizTarget);
+            }
+            state.progress[String(state.lessonQuizTarget.id)] = { status: "unknown", updatedAt: new Date().toISOString() };
+            elements.lessonQuizFeedback.textContent = `아쉬워요. ${state.lessonQuizTarget.word} — ${targetMeaning}`;
+            elements.lessonQuizFeedback.className = "game-feedback incorrect";
+        }
+        saveProgress();
+        renderOverallProgress();
+        elements.lessonQuizNextButton.disabled = false;
+        elements.lessonQuizNextButton.textContent = state.lessonQuizQuestionNumber >= state.lessonQuizPool.length ? "결과 보기" : "다음";
+        updateLessonQuizStats();
+    }
+
+    function continueLessonQuiz() {
+        if (!state.lessonQuizAnswered) return;
+        nextLessonQuizQuestion();
+    }
+
+    function showLessonQuizResult() {
+        elements.lessonQuizQuestionPanel.hidden = true;
+        elements.lessonQuizResultPanel.hidden = false;
+        elements.lessonQuizStats.hidden = true;
+        const total = state.lessonQuizPool.length;
+        const accuracy = total ? Math.round((state.lessonQuizScore / total) * 100) : 0;
+        elements.lessonQuizResultTitle.textContent = `${total}문제를 모두 풀었어요`;
+        elements.lessonQuizResultScore.textContent = `${state.lessonQuizScore} / ${total}`;
+        elements.lessonQuizResultAccuracy.textContent = `${accuracy}%`;
+        elements.lessonQuizResultBestStreak.textContent = String(state.lessonQuizBestStreak);
+        if (state.lessonQuizWrongWords.length) {
+            elements.lessonQuizWrongList.replaceChildren(...state.lessonQuizWrongWords.map((word) => {
+                const chip = document.createElement("span");
+                chip.className = "game-wrong-word";
+                chip.textContent = `${word.word} · ${primaryMeaning(word)}`;
+                return chip;
+            }));
+        } else {
+            const message = document.createElement("span");
+            message.textContent = "모두 맞혔어요!";
+            elements.lessonQuizWrongList.replaceChildren(message);
+        }
+        elements.lessonQuizRetryWrongButton.hidden = state.lessonQuizWrongWords.length === 0;
+        const hasNextLesson = state.currentLesson + 1 < lessonsForLevel(state.currentLevel).length;
+        elements.lessonQuizContinueButton.textContent = hasNextLesson ? "다음 차시" : "차시 선택으로";
+        renderLevelGroups();
+        renderRecommendedLesson();
+    }
+
+    function openLessonQuiz(level, lessonIndex) {
+        state.currentLevel = Number(level);
+        state.currentLesson = Number(lessonIndex);
+        state.unknownOnly = false;
+        const words = lessonsForLevel(state.currentLevel)[state.currentLesson] || [];
+        startLessonQuiz(words);
+    }
+
+    function startLessonQuiz(words = currentLessonWords()) {
+        const quizWords = words.filter((word) => primaryMeaning(word) !== "뜻 정보 없음");
+        if (!quizWords.length) {
+            showToast("퀴즈로 낼 수 있는 단어가 없습니다.");
+            return;
+        }
+        state.lessonQuizPool = core.shuffleWords([...quizWords]);
+        state.lessonQuizTarget = null;
+        state.lessonQuizChoices = [];
+        state.lessonQuizQuestionNumber = 0;
+        state.lessonQuizScore = 0;
+        state.lessonQuizStreak = 0;
+        state.lessonQuizBestStreak = 0;
+        state.lessonQuizAnswered = false;
+        state.lessonQuizWrongWords = [];
+        elements.studyScreen.hidden = true;
+        elements.lessonScreen.hidden = true;
+        elements.lessonQuizScreen.hidden = false;
+        elements.lessonQuizStats.hidden = false;
+        elements.lessonQuizQuestionPanel.hidden = false;
+        elements.lessonQuizResultPanel.hidden = true;
+        elements.lessonQuizStage.textContent = `${state.lessonQuizPool.length}단어 확인 퀴즈`;
+        elements.lessonQuizTitle.textContent = `${levelName(state.currentLevel)} · ${state.currentLesson + 1}차시`;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        nextLessonQuizQuestion();
+    }
+
+    function backFromLessonQuiz() {
+        elements.lessonQuizScreen.hidden = true;
+        elements.lessonScreen.hidden = false;
+        renderLessonPicker(state.currentLevel);
+        renderOverallProgress();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function continueAfterLessonQuiz() {
+        const nextLessonIndex = state.currentLesson + 1;
+        if (nextLessonIndex < lessonsForLevel(state.currentLevel).length) {
+            elements.lessonQuizScreen.hidden = true;
+            openLesson(state.currentLevel, nextLessonIndex);
+            return;
+        }
+        backFromLessonQuiz();
     }
 
     function speakText(text, rate = 0.85) {
@@ -621,6 +834,7 @@
         }));
         updateGameStats();
         startGameTimer();
+        speakText(state.gameTarget.word);
     }
 
     function nextGameQuestion() {
@@ -783,6 +997,7 @@
         elements.spellingNextButton.textContent = "Next";
         updateSpellingStats();
         renderSpellingTiles();
+        speakText(state.spellingTarget.word);
     }
 
     function renderSpellingTiles() {
@@ -1031,6 +1246,7 @@
         elements.knownButton.addEventListener("click", () => markWord("known"));
         elements.speakButton.addEventListener("click", speakCurrentWord);
         elements.exampleSpeakButton.addEventListener("click", speakCurrentExample);
+        elements.lessonQuizStartButton.addEventListener("click", () => startLessonQuiz(currentLessonWords()));
         elements.shuffleButton.addEventListener("click", toggleShuffle);
         elements.wordImage.addEventListener("error", () => {
             elements.wordImageBlock.hidden = true;
@@ -1039,6 +1255,15 @@
         elements.backFromLessons.addEventListener("click", backFromLessons);
         elements.backToLevels.addEventListener("click", backToLevels);
         elements.reviewUnknownButton.addEventListener("click", () => openLesson(state.currentLevel, state.currentLesson, { unknownOnly: true }));
+        elements.backFromLessonQuiz.addEventListener("click", backFromLessonQuiz);
+        elements.lessonQuizRestartButton.addEventListener("click", () => startLessonQuiz(currentLessonWords()));
+        elements.lessonQuizSpeakButton.addEventListener("click", () => speakText(state.lessonQuizTarget?.word));
+        elements.lessonQuizNextButton.addEventListener("click", continueLessonQuiz);
+        elements.lessonQuizRetryWrongButton.addEventListener("click", () => {
+            const retryWords = [...state.lessonQuizWrongWords];
+            startLessonQuiz(retryWords);
+        });
+        elements.lessonQuizContinueButton.addEventListener("click", continueAfterLessonQuiz);
         elements.gameStartButton.addEventListener("click", openGame);
         elements.backFromGame.addEventListener("click", backFromGame);
         elements.gameNextButton.addEventListener("click", continueGame);
@@ -1086,6 +1311,18 @@
                     event.preventDefault();
                     if (state.spellingAnswered) continueSpelling();
                     else checkSpellingAnswer();
+                }
+                return;
+            }
+            if (!elements.lessonQuizScreen.hidden) {
+                if (elements.lessonQuizQuestionPanel.hidden) return;
+                const choiceIndex = Number(event.key) - 1;
+                if (choiceIndex >= 0 && choiceIndex < 4 && !state.lessonQuizAnswered) {
+                    event.preventDefault();
+                    elements.lessonQuizChoices.querySelectorAll(".lesson-quiz-choice")[choiceIndex]?.click();
+                } else if (event.key === "Enter" && state.lessonQuizAnswered) {
+                    event.preventDefault();
+                    continueLessonQuiz();
                 }
                 return;
             }
