@@ -397,8 +397,10 @@ function paginateChapter(ch, chIndex) {
     for (let guard = 0; guard < 8; guard++) {
         // 한 쪽이라도 넘치면 펼침면을 늘려 다시 나눈다.
         // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
+        // 여유를 1px이나 두면 안 된다. 0.8px만 넘쳐도 그 칸에 스크롤 막대가 생기고,
+        // 막대가 칸을 15px 좁히면 글이 다시 길어져 넘침이 32px로 불어난다.
         const over = ranges.some(([a, b], n) =>
-            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 0.25);
         if (!over || spreadCount >= maxSpreads) break;
         spreadCount++;
         slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
