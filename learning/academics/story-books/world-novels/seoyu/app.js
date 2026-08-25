@@ -520,6 +520,82 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🐒',
+    art: [],
+    paras: [
+        `이 책의 원래 제목은 『서유기』입니다. 서쪽으로 간 이야기라는 뜻입니다. 서쪽은 인도를 가리킵니다.`,
+        `이 이야기에는 실제로 있었던 일이 밑바탕에 있습니다. 천사백 년쯤 전 당나라의 현장이라는 승려가 인도까지 걸어가서 경전을 가지고 돌아왔습니다.`,
+        `그 사람은 열일곱 해 동안 오만 리를 다녔습니다. 사막을 건너고 산맥을 넘었습니다. 그리고 돌아와서 자기가 본 것을 책으로 적었습니다.`,
+        `그 책은 지금도 남아 있습니다. 그 시절 중앙아시아와 인도의 여러 나라가 어떤 곳이었는지를 알려 주는 아주 중요한 기록입니다.`,
+        `그런데 그 사람이 나라의 허락 없이 몰래 떠났다는 것도 알아 둘 만합니다. 그 시절 국경을 넘는 것이 금지되어 있었기 때문입니다.`,
+        `그러니 삼장법사의 실제 모델은 겁 많은 사람이 아니었습니다. 나라 법을 어기고 혼자 사막으로 나간 사람이었습니다.`,
+        `그리고 돌아올 때는 나라에서 크게 맞아 주었습니다. 가져온 경전이 육백 권이 넘었기 때문입니다. 그 뒤로 그는 죽을 때까지 그것을 한문으로 옮기는 일을 했습니다.`,
+        `그 이야기가 팔백 년쯤 흐르면서 사람들 입에서 커졌습니다. 원숭이 제자가 붙고, 돼지 제자가 붙고, 요괴가 붙었습니다.`,
+        `그것을 사백오십 년쯤 전에 오승은이라는 사람이 백 회짜리 소설로 묶었다고 전합니다. 다만 그 사람이 지었다는 증거는 확실하지 않습니다.`,
+        `여기 실린 것은 그 가운데 줄기를 골라 옮긴 것입니다. 원작은 아주 깁니다. 요괴만 해도 여든한 번을 만납니다.`,
+        `여든한 번이라는 수도 그냥 나온 것이 아닙니다. 아홉에 아홉을 곱한 수입니다. 그 시절 중국에서 아홉은 가장 큰 수를 뜻했습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 손오공이 하늘을 뒤집는 대목을 다시 읽어 보십시오. 이 이야기의 앞부분 일곱 회가 통째로 손오공 이야기입니다. 삼장법사는 아직 나오지도 않습니다.`,
+        `돌에서 태어나 원숭이 왕이 되고, 도술을 배우고, 용궁에서 여의봉을 얻고, 저승의 명부에서 자기 이름을 지웁니다. 그리고 하늘로 올라가 잔치를 뒤엎습니다.`,
+        `그러니 손오공이 하늘과 싸운 까닭을 세어 보십시오. 처음에는 벼슬을 주었는데 아주 하찮은 자리였습니다. 말을 돌보는 자리였습니다.`,
+        `그것을 알고 손오공이 화를 냅니다. 속인 것이 화가 난 것입니다. 이 대목은 웃기게 적혀 있는데, 무시당한 사람이 어떻게 되는지를 보여 주는 자리이기도 합니다.`,
+        `그러고 나서 하늘이 다시 벼슬을 주는데, 이번에는 복숭아밭을 지키는 자리였습니다. 그런데 그 복숭아가 먹으면 오래 사는 복숭아였습니다. 지키라고 맡긴 것을 손오공이 다 먹어 치웁니다.`,
+        `둘째, 부처의 손바닥을 다시 보십시오. 손오공은 근두운을 타고 한 번에 십만 팔천 리를 갑니다. 그래서 세상 끝까지 갔다고 여기고 기둥에 표시를 하고 돌아옵니다.`,
+        `그런데 그것이 부처의 손가락이었습니다. 이 대목은 아주 유명해서, 아무리 날뛰어도 벗어나지 못한다는 뜻의 말로 지금도 쓰입니다.`,
+        `그러고 나서 손오공은 오백 년 동안 산 아래에 눌려 있습니다. 삼장법사가 지나가다 꺼내 줍니다. 그러니 이 둘의 인연은 그 오백 년 뒤에 시작됩니다.`,
+        `셋째, 머리테를 다시 읽어 보십시오. 손오공의 머리에 씌운 쇠테입니다. 삼장법사가 주문을 외우면 조여듭니다.`,
+        `그것을 씌운 방법을 보십시오. 예쁜 모자라고 속여서 씌웁니다. 그러니 손오공은 속아서 그것을 쓴 것입니다.`,
+        `이 머리테를 두고 여러 가지로 읽습니다. 사나운 것을 다스리는 법이라고 읽기도 하고, 자유로운 것을 묶어 놓은 것이라고 읽기도 합니다.`,
+        `그리고 마지막 장을 보십시오. 여행이 끝나자 그 머리테가 저절로 없어져 있습니다. 손오공이 그것을 손으로 만져 보고 없다는 것을 압니다.`,
+        `그것이 무슨 뜻인지 생각해 보십시오. 묶어 둘 필요가 없어졌다는 뜻입니다. 그러니 이 책은 손오공이 길들여지는 이야기가 아니라 스스로 그렇게 되는 이야기입니다.`,
+        `그 대목에서 손오공은 부처가 되어 있습니다. 돌에서 난 원숭이가 그렇게 됩니다. 이 이야기가 백 회를 들여 하려던 말이 그것입니다.`,
+        `넷째, 백골 요괴 대목을 다시 보십시오. 요괴가 사람으로 세 번 모습을 바꾸어 나타납니다. 손오공은 그것을 알아보고 물리칩니다.`,
+        `그런데 삼장법사는 손오공이 사람을 해쳤다고 여기고 쫓아냅니다. 눈으로 본 것을 믿고 손오공의 말을 믿지 않은 것입니다.`,
+        `이 대목이 이 책에서 제일 아픕니다. 옳은 것을 했는데 쫓겨나는 자리입니다. 그리고 손오공은 그러고도 다시 돌아옵니다.`,
+        `쫓겨날 때 손오공이 절을 네 번 하고 갑니다. 그리고 물속에 몸을 담그고 갑니다. 스승 앞에서 요괴 냄새를 지우고 가려던 것이었습니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `삼장법사를 답답한 사람으로만 읽으면 절반만 읽은 것이 됩니다. 그 사람은 도술도 못 쓰고 겁도 많습니다. 요괴에게 자주 잡힙니다.`,
+        `그런데 그 사람에게는 다른 것이 있습니다. 끝까지 가겠다는 마음입니다. 여든한 번 어려움을 겪으면서 한 번도 돌아가자고 하지 않습니다.`,
+        `그리고 그 사람은 살생을 하지 않습니다. 그것 때문에 여러 번 위험해집니다. 그런데 끝까지 그것을 지킵니다. 지키기 쉬운 규칙은 규칙이 아닙니다.`,
+        `그리고 삼장법사가 겁이 많은 것도 그냥 흠이 아닙니다. 힘도 도술도 없는 사람이 그 길을 걸었다는 뜻이기 때문입니다. 손오공에게는 그 길이 어렵지 않았습니다.`,
+        `저팔계도 다시 볼 만합니다. 먹는 것을 좋아하고 게으르고 자주 돌아가자고 합니다. 그런데 이 넷 가운데 제일 사람 같습니다.`,
+        `이 책이 재미있는 까닭 가운데 하나가 저팔계입니다. 다들 훌륭하기만 하면 이야기가 되지 않습니다.`,
+        `사오정은 말이 적습니다. 짐을 지고 묵묵히 따라갑니다. 하는 일이 별로 없어 보이는데, 이 넷이 흩어지지 않게 붙들고 있는 사람이 그 사람입니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기가 지어진 명나라 때는 이야기책이 크게 유행하던 시기입니다. 인쇄가 좋아져서 책이 널리 퍼졌습니다.`,
+        `그리고 이 책에는 그 시절 중국 사회를 빗댄 대목이 많습니다. 하늘의 관청이 서로 미루고 문서를 주고받는 대목이 그렇습니다. 사람 사는 관청과 똑같이 그려 놓았습니다.`,
+        `마지막에 경전을 받으러 갔더니 아무것도 적히지 않은 것을 주는 대목도 그렇습니다. 그러고 나서 뇌물을 주고서야 제대로 된 것을 받습니다.`,
+        `그 대목을 웃자고 넣은 것이 아닙니다. 이 책은 그런 식으로 여러 군데를 찌릅니다.`,
+        `요괴들 가운데 상당수가 하늘의 신선이 부리던 짐승이라는 것도 눈여겨볼 만합니다. 사고를 치고 내려온 것들입니다. 그리고 잡히려는 순간 위에서 주인이 내려와 데려갑니다.`,
+        `그리고 이 이야기는 세 가지 가르침이 섞여 있습니다. 불교의 이야기인데 도교의 신선들이 나오고, 유교의 말도 섞입니다. 그 시절 중국 사람들의 머릿속이 그랬습니다.`,
+        `이 책이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 길이 무엇이냐는 것입니다. 이 넷은 경전을 가지러 갑니다. 그런데 이 책의 백 회 가운데 아흔 회 넘게가 가는 길 이야기입니다.`,
+        `경전을 받는 것은 마지막 몇 회입니다. 그리고 받고 나서 이렇다 할 일도 없습니다. 그러니 이 책이 말하는 것은 얻는 것이 아니라 가는 것입니다.`,
+        `다른 하나는 사람이 어떻게 달라지느냐는 것입니다. 손오공은 처음에 아무도 못 말리는 원숭이였습니다. 마지막에는 스스로를 다스리는 사람이 됩니다.`,
+        `그런데 그것을 만든 것은 머리테가 아니었습니다. 함께 걸은 열네 해였습니다.`,
+        `열네 해면 아주 긴 세월입니다. 그동안 넷이 싸우고 흩어지고 다시 모입니다. 그 되풀이가 이 책의 절반입니다.`,
+        `이 이야기는 우리나라에도 아주 일찍 들어왔습니다. 조선 시대에 이미 읽혔습니다. 그리고 지금은 만화와 영화와 게임으로 끝없이 다시 만들어지고 있습니다.`,
+        `손오공이라는 인물이 그렇게 오래 사랑받는 까닭도 생각해 볼 만합니다. 힘이 세고 하늘을 무서워하지 않는데, 그러면서도 스승을 두고 가지 않기 때문일 것입니다.`,
+        `언젠가 이 이야기를 다시 읽게 되거든, 이번에는 손오공이 쫓겨나는 대목만 모아 읽어 보십시오. 세 번쯤 쫓겨납니다. 그리고 그때마다 다시 돌아옵니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `삼장법사가 손오공을 쫓아낸 것은 잘못이었을까요? 그 사람은 눈으로 본 것을 믿었습니다. 눈으로 본 것을 믿는 것이 잘못일까요?`,
+        `머리테를 씌운 것은 옳은 일이었을까요? 그것이 없었다면 손오공은 어떻게 되었을까요?`,
+        `그리고 아무것도 적히지 않은 경전을 준 까닭은 무엇이었을까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -801,16 +877,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '📖')}
-            <h2>서유기를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -822,7 +982,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -843,7 +1003,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
