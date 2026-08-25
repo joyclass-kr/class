@@ -52,7 +52,7 @@ const LESSONS = {
     title: "옥타브와 음역 번호", english: "Octave Registers",
     terms: [["옥타브", "Octave"], ["음역", "Register"], ["과학적 음높이 표기", "Scientific Pitch Notation"]],
     sections: [
-      { title: "옥타브는 ‘여덟 번째’라는 뜻에서 왔어요", body: "옥타브(Octave)는 라틴어 옥타부스(octavus, ‘여덟 번째’)에서 온 말입니다. C를 1로 시작해 C–D–E–F–G–A–B–다음 C를 양끝 모두 포함해 세면 다음 C가 여덟 번째 자리에 옵니다. 그래서 이 음정을 8도, 즉 옥타브라고 부릅니다. 음이름 자리는 8개이지만 건반의 실제 이동 거리는 12반음입니다.", visual: "octave", caption: "C(1)–D(2)–E(3)–F(4)–G(5)–A(6)–B(7)–C(8) = 옥타브 · 실제 거리 12반음", audio: [[48], [60]] },
+      { title: "옥타브는 ‘여덟 번째’라는 뜻에서 왔어요", body: "옥타브(Octave)는 라틴어 octo(여덟)에서 파생된 octavus(여덟 번째)에서 온 말입니다. C를 1로 시작해 C–D–E–F–G–A–B–다음 C를 양끝 모두 포함해 세면 다음 C가 여덟 번째 자리에 옵니다. 그래서 이 음정을 8도, 즉 옥타브라고 부릅니다. 음이름 자리는 8개이지만 건반의 실제 이동 거리는 12반음입니다.", visual: "octave", caption: "C(1)–D(2)–E(3)–F(4)–G(5)–A(6)–B(7)–C(8) = 옥타브 · 실제 거리 12반음", audio: [[48], [60]] },
       { title: "C가 나올 때마다 옥타브 번호가 바뀌어요", body: "과학적 음높이 표기(Scientific Pitch Notation)는 음이름 뒤에 숫자를 붙입니다. B3 다음 반음은 C4이고, C4부터 B4까지 같은 번호를 씁니다. 그래서 가운데 C는 C4입니다.", visual: "registers", caption: "… B3 | C4 D4 … B4 | C5 …" }
     ], quiz: "octave"
   },
@@ -201,7 +201,7 @@ function relation(nodes) {
 }
 function octaveOriginMarkup() {
   const notes = ["C","D","E","F","G","A","B","C"];
-  return `<div class="octave-origin"><div class="origin-note"><strong>octavus</strong><span>라틴어 · 여덟 번째</span></div><div class="octave-count-row">${notes.map((note,index) => `<div class="octave-count-note${index === 0 || index === 7 ? " edge" : ""}"><b>${index + 1}</b><span>${note}</span></div>`).join("")}</div><div class="octave-measures"><p><b>음이름으로 세기</b><span>양끝을 포함한 여덟 자리 → 8도(Octave)</span></p><p><b>건반으로 재기</b><span>이웃 건반 사이 열두 칸 → 12반음</span></p></div></div>`;
+  return `<div class="octave-origin"><div class="origin-note"><strong>octo → octavus</strong><span>라틴어 · 여덟 → 여덟 번째</span></div><div class="octave-count-row">${notes.map((note,index) => `<div class="octave-count-note${index === 0 || index === 7 ? " edge" : ""}"><b>${index + 1}</b><span>${note}</span></div>`).join("")}</div><div class="octave-measures"><p><b>음이름으로 세기</b><span>양끝을 포함한 여덟 자리 → 8도(Octave)</span></p><p><b>건반으로 재기</b><span>이웃 건반 사이 열두 칸 → 12반음</span></p></div></div>`;
 }
 
 function registerBoundaryMarkup() {

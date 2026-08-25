@@ -52,7 +52,7 @@ assert.match(guides, /C\(1\)–D\(2\)–E\(3\)/);
 assert.match(js, /octavus/);
 assert.match(js, /octaveOriginMarkup/);
 assert.match(js, /registerBoundaryMarkup/);
-assert.match(guides, /라틴어 octavus/);
+assert.match(guides, /라틴어 octo.*octavus/);
 assert.match(guides, /HARMONY_DEEP_DIVES/);
 assert.match(js, /왜 이렇게 배우나요\?/);
 assert.match(js, /악보와 건반에 적용해 보기/);
