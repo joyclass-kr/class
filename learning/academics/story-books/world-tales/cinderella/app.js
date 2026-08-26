@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 재투성이 소녀",
         "beats": [
             {
-                "art": "story-01-chores.png",
+                "art": "story-01-chores.webp",
                 "emoji": "🧹",
                 "left": [
                     "한 소녀가 살았습니다. 어머니를 일찍 여의었지요. 아버지는 얼마 뒤 새 부인을 맞았습니다.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "story-01-chores-2.png",
+                "art": "story-01-chores-2.webp",
                 "emoji": "🧹",
                 "left": [
                     "그날부터 소녀의 하루가 아주 달라졌습니다. 새벽에 일어나 우물에서 물을 길었지요. 아침에는 아궁이에 불을 지폈습니다.",
@@ -41,7 +41,7 @@ const CHAPTERS = [
         "title": "2장 · 무도회 초대장",
         "beats": [
             {
-                "art": "story-02-invite.png",
+                "art": "story-02-invite.webp",
                 "emoji": "💌",
                 "left": [
                     "어느 날 심부름꾼이 대문을 두드렸습니다. 손에 금빛 초대장을 들고 있었지요.",
@@ -58,7 +58,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "story-02-invite-2.png",
+                "art": "story-02-invite-2.webp",
                 "emoji": "💌",
                 "left": [
                     "신데렐라도 무도회에 가고 싶었습니다. 저녁상을 물리고 나서 용기를 내어 물었지요.",
@@ -81,7 +81,7 @@ const CHAPTERS = [
         "title": "3장 · 요정 대모의 마법",
         "beats": [
             {
-                "art": "story-03-magic.png",
+                "art": "story-03-magic.webp",
                 "emoji": "🪄",
                 "left": [
                     "콩은 아무리 골라도 좀처럼 줄지 않았습니다. 손끝이 얼얼하고 허리도 아팠지요. 그러는 사이 해가 뉘엿뉘엿 넘어갔습니다.",
@@ -95,7 +95,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "story-03-magic-2.png",
+                "art": "story-03-magic-2.webp",
                 "emoji": "🪄",
                 "left": [
                     "\"자, 마당의 호박을 하나 가져오렴.\"",
@@ -118,7 +118,7 @@ const CHAPTERS = [
         "title": "4장 · 무도회의 밤",
         "beats": [
             {
-                "art": "story-04-ball.png",
+                "art": "story-04-ball.webp",
                 "emoji": "💃",
                 "left": [
                     "무도회장 문이 열렸습니다. 그 순간 음악이 뚝 그쳤지요. 사람들이 하나같이 고개를 돌렸습니다.",
@@ -135,7 +135,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "story-04-ball-2.png",
+                "art": "story-04-ball-2.webp",
                 "emoji": "💃",
                 "left": [
                     "시간이 어찌나 빨리 가는지 몰랐습니다.",
@@ -159,7 +159,7 @@ const CHAPTERS = [
         "title": "5장 · 유리구두를 찾아서",
         "beats": [
             {
-                "art": "story-05-search.png",
+                "art": "story-05-search.webp",
                 "emoji": "🔍",
                 "left": [
                     "이튿날 아침이었습니다. 왕자가 계단에서 구두 한 짝을 주웠지요.",
@@ -177,7 +177,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "story-05-search-2.png",
+                "art": "story-05-search-2.webp",
                 "emoji": "🔍",
                 "left": [
                     "발이 큰 사람도 신어 봤습니다. 발이 작은 사람도 신어 봤지요.",
@@ -198,7 +198,7 @@ const CHAPTERS = [
         "title": "6장 · 신데렐라의 발",
         "beats": [
             {
-                "art": "story-06-fit.png",
+                "art": "story-06-fit.webp",
                 "emoji": "👠",
                 "left": [
                     "언니들이 소식을 듣고 먼저 달려 나왔습니다. 큰언니가 얼른 의자에 앉았지요.",
@@ -215,7 +215,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "story-06-fit-2.png",
+                "art": "story-06-fit-2.webp",
                 "emoji": "👠",
                 "left": [
                     "새어머니가 얼른 손사래를 쳤습니다.",
@@ -236,7 +236,7 @@ const CHAPTERS = [
         "title": "7장 · 행복한 시작",
         "beats": [
             {
-                "art": "story-07-wedding.png",
+                "art": "story-07-wedding.webp",
                 "emoji": "💍",
                 "left": [
                     "마차가 궁궐로 향했습니다. 왕자가 문 앞에 나와 서 있었지요.",
@@ -254,7 +254,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "story-07-wedding-2.png",
+                "art": "story-07-wedding-2.webp",
                 "emoji": "💍",
                 "left": [
                     "궁궐에서 큰 잔치가 열렸습니다. 온 마을 사람이 초대를 받았지요.",
@@ -286,7 +286,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '👠')}
+                ${artFrame('cover.webp', '👠')}
             </div>
             <div class="story-page-right">
                 <h1>신데렐라</h1>
@@ -358,7 +358,7 @@ const AFTERWORD = {
     emoji: '👠',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "신데렐라 이야기는 한 나라 것이 아닙니다. 세계 곳곳에 비슷한 이야기가 수백 가지나 있습니다. 우리나라 콩쥐 팥쥐도 그 가운데 하나입니다.",
                 "가장 오래된 것은 천 년도 더 전에 중국에서 적힌 이야기입니다. 거기서도 아이는 잃어버린 신 한 짝 때문에 찾아집니다.",

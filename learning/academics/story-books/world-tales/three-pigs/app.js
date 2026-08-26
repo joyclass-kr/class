@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 집을 지어라",
         "beats": [
             {
-                "art": "01-leaving.png",
+                "art": "01-leaving.webp",
                 "emoji": "🐷",
                 "left": [
                     "아기돼지 삼형제가 한집에서 오순도순 자랐습니다.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-leaving-2.png",
+                "art": "01-leaving-2.webp",
                 "emoji": "🐷",
                 "left": [
                     "언덕에 이르자 길이 세 갈래로 갈라졌습니다. 셋은 거기서 걸음을 멈췄지요.",
@@ -44,7 +44,7 @@ const CHAPTERS = [
         "title": "2장 · 짚으로 뚝딱",
         "beats": [
             {
-                "art": "02-straw.png",
+                "art": "02-straw.webp",
                 "emoji": "🌾",
                 "left": [
                     "첫째는 넓은 들판으로 갔습니다. 마침 짚단을 파는 사람을 만났지요.",
@@ -62,7 +62,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-straw-2.png",
+                "art": "02-straw-2.webp",
                 "emoji": "🌾",
                 "left": [
                     "지나가던 둘째가 그 집을 보고 놀랐습니다.",
@@ -86,7 +86,7 @@ const CHAPTERS = [
         "title": "3장 · 나뭇가지로 대충",
         "beats": [
             {
-                "art": "03-sticks.png",
+                "art": "03-sticks.webp",
                 "emoji": "🪵",
                 "left": [
                     "둘째는 숲가로 갔습니다. 바닥에 떨어진 나뭇가지를 잔뜩 모았지요. 짚보다는 훨씬 단단해 보였습니다.",
@@ -103,7 +103,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-sticks-2.png",
+                "art": "03-sticks-2.webp",
                 "emoji": "🪵",
                 "left": [
                     "그때까지도 막내는 집을 짓고 있었습니다. 벽돌을 한 장씩 쌓고 사이사이 반죽을 발랐지요. 줄이 곧은지 실을 대어 재 보기도 했습니다.",
@@ -124,7 +124,7 @@ const CHAPTERS = [
         "title": "4장 · 벽돌을 한 장씩",
         "beats": [
             {
-                "art": "04-bricks.png",
+                "art": "04-bricks.webp",
                 "emoji": "🧱",
                 "left": [
                     "막내는 그 뒤로도 여러 날을 일했습니다. 벽을 두껍게 올리고 지붕에는 기와를 얹었지요. 굴뚝도 반듯하게 세웠습니다.",
@@ -139,7 +139,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-bricks-2.png",
+                "art": "04-bricks-2.webp",
                 "emoji": "🧱",
                 "left": [
                     "두 형이 또 구경을 왔습니다.",
@@ -162,7 +162,7 @@ const CHAPTERS = [
         "title": "5장 · 훅! 후!",
         "beats": [
             {
-                "art": "05-blown-down.png",
+                "art": "05-blown-down.webp",
                 "emoji": "💨",
                 "left": [
                     "이튿날 밤 드디어 늑대가 나타났습니다. 늑대는 짚 집 앞에 서서 코를 킁킁거렸지요.",
@@ -181,7 +181,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-blown-down-2.png",
+                "art": "05-blown-down-2.webp",
                 "emoji": "💨",
                 "left": [
                     "첫째는 맨발로 둘째네까지 달아났습니다.",
@@ -206,7 +206,7 @@ const CHAPTERS = [
         "title": "6장 · 꿈쩍도 않는 집",
         "beats": [
             {
-                "art": "06-brick-house.png",
+                "art": "06-brick-house.webp",
                 "emoji": "🏠",
                 "left": [
                     "막내가 문을 활짝 열어 주었습니다. 두 형이 데굴데굴 굴러들어 왔지요.",
@@ -223,7 +223,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-brick-house-2.png",
+                "art": "06-brick-house-2.webp",
                 "emoji": "🏠",
                 "left": [
                     "\"후우우!\"",
@@ -246,7 +246,7 @@ const CHAPTERS = [
         "title": "7장 · 굴뚝으로 내려온 늑대",
         "beats": [
             {
-                "art": "07-chimney.png",
+                "art": "07-chimney.webp",
                 "emoji": "🔥",
                 "left": [
                     "늑대는 담을 타고 기어올라 지붕 위에 섰습니다.",
@@ -263,7 +263,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-chimney-2.png",
+                "art": "07-chimney-2.webp",
                 "emoji": "🔥",
                 "left": [
                     "늑대가 굴뚝을 타고 스르르 내려왔습니다.",
@@ -295,7 +295,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐷')}
+                ${artFrame('cover.webp', '🐷')}
             </div>
             <div class="story-page-right">
                 <h1>아기돼지 삼형제</h1>
@@ -367,7 +367,7 @@ const AFTERWORD = {
     emoji: '🐷',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 영국에서 전해 오던 것입니다. 백오십 년쯤 전에 처음 책으로 묶였습니다. 그전에는 어른들이 아이에게 들려주던 이야기였지요.",
                 "삼형제는 다 집을 지었습니다. 게으름을 부린 형제도 일은 한 것입니다. 다만 빨리 끝나는 쪽을 골랐지요.",

@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 엄마 염소의 당부",
         "beats": [
             {
-                "art": "01-warning.png",
+                "art": "01-warning.webp",
                 "emoji": "🐐",
                 "left": [
                     "숲가 오두막에 엄마 염소가 살았습니다. 아기 염소가 일곱이나 되었지요. 첫째는 키가 제일 크고 막내는 목에 방울을 달고 다녔습니다.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-warning-2.png",
+                "art": "01-warning-2.webp",
                 "emoji": "🐐",
                 "left": [
                     "\"목소리가 걸걸하단다. 우리처럼 곱지 않아.\"",
@@ -43,7 +43,7 @@ const CHAPTERS = [
         "title": "2장 · 첫 번째 속임수",
         "beats": [
             {
-                "art": "02-first-try.png",
+                "art": "02-first-try.webp",
                 "emoji": "🐺",
                 "left": [
                     "얼마 지나지 않아 문에서 소리가 났습니다.",
@@ -62,7 +62,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-first-try-2.png",
+                "art": "02-first-try-2.webp",
                 "emoji": "🐺",
                 "left": [
                     "문밖에서 늑대가 발을 쿵쿵 굴렀습니다.",
@@ -85,7 +85,7 @@ const CHAPTERS = [
         "title": "3장 · 하얀 발과 고운 목소리",
         "beats": [
             {
-                "art": "03-disguise.png",
+                "art": "03-disguise.webp",
                 "emoji": "🥛",
                 "left": [
                     "\"얘들아, 엄마 왔단다.\"",
@@ -103,7 +103,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-disguise-2.png",
+                "art": "03-disguise-2.webp",
                 "emoji": "🥛",
                 "left": [
                     "늑대는 이번에 방앗간으로 갔습니다.",
@@ -126,7 +126,7 @@ const CHAPTERS = [
         "title": "4장 · 시계 속에 숨은 막내",
         "beats": [
             {
-                "art": "04-hiding.png",
+                "art": "04-hiding.webp",
                 "emoji": "🕰️",
                 "left": [
                     "늑대가 성큼 안으로 들어섰습니다. 온 방이 발칵 뒤집혔지요.",
@@ -142,7 +142,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-hiding-2.png",
+                "art": "04-hiding-2.webp",
                 "emoji": "🕰️",
                 "left": [
                     "막내는 시계 문을 살며시 열고 안으로 쏙 들어갔습니다. 그러고는 숨도 크게 쉬지 않았지요. 시계추가 코앞에서 째깍째깍 흔들렸습니다.",
@@ -163,7 +163,7 @@ const CHAPTERS = [
         "title": "5장 · 엄마 염소가 돌아왔어요",
         "beats": [
             {
-                "art": "05-mother-returns.png",
+                "art": "05-mother-returns.webp",
                 "emoji": "😢",
                 "left": [
                     "해질 무렵 엄마 염소가 돌아왔습니다.",
@@ -178,7 +178,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-mother-returns-2.png",
+                "art": "05-mother-returns-2.webp",
                 "emoji": "😢",
                 "left": [
                     "바로 그때 시계가 덜컹거렸습니다.",
@@ -201,7 +201,7 @@ const CHAPTERS = [
         "title": "6장 · 늑대의 배 속에서",
         "beats": [
             {
-                "art": "06-rescue.png",
+                "art": "06-rescue.webp",
                 "emoji": "✂️",
                 "left": [
                     "두 모자는 살금살금 밖으로 나갔습니다. 늑대는 나무 밑에 그대로 있었지요.",
@@ -218,7 +218,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-rescue-2.png",
+                "art": "06-rescue-2.webp",
                 "emoji": "✂️",
                 "left": [
                     "\"엄마!\"",
@@ -239,7 +239,7 @@ const CHAPTERS = [
         "title": "7장 · 우물가의 늑대",
         "beats": [
             {
-                "art": "07-well.png",
+                "art": "07-well.webp",
                 "emoji": "🪨",
                 "left": [
                     "여덟은 늑대의 배 속에 돌을 가득 채웠습니다. 엄마가 실을 꿰어 배를 촘촘히 꿰맸지요. 일곱은 그동안 숨소리도 내지 않았습니다.",
@@ -255,7 +255,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-well-2.png",
+                "art": "07-well-2.webp",
                 "emoji": "🪨",
                 "left": [
                     "걸을 때마다 뱃속에서 소리가 났습니다.",
@@ -287,7 +287,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐐')}
+                ${artFrame('cover.webp', '🐐')}
             </div>
             <div class="story-page-right">
                 <h1>늑대와 일곱 마리 아기 염소</h1>
@@ -359,7 +359,7 @@ const AFTERWORD = {
     emoji: '🐐',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기를 책에 적은 사람은 독일의 그림 형제입니다. 지어낸 것이 아니라 마을을 돌며 할머니들이 들려주는 이야기를 받아 적었지요.",
                 "늑대는 세 번 찾아왔습니다. 그때마다 들킨 데를 고쳐 왔지요. 목소리가 걸걸해서 들키자 분필을 삼켰고, 발이 까매서 들키자 밀가루를 묻혔습니다.",
