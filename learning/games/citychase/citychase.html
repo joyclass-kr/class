@@ -7,7 +7,7 @@
   <meta name="description" content="경찰팀과 도둑팀이 각자의 기기로 접속해 보석을 둘러싼 추격전을 벌이는 2~6인 실시간 보드게임">
   <title>경찰과 도둑 (Cops and Robbers) · 실시간 추격 보드게임</title>
   <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
-  <link rel="stylesheet" href="citychase.css?v=20260826a">
+  <link rel="stylesheet" href="citychase.css?v=20260824m">
   <script src="../../../assets/sound/music-control.js?v=20260825-compact-vertical-1" defer></script>
   <script src="../../../assets/network/game-network.js?v=20260821"></script>
   <script src="../../../assets/network/multiplayer-lobby.js?v=20260821"></script>
@@ -24,18 +24,18 @@
       </div>
     </section>
 
-    <section id="lobbyScreen" class="lobbyShell hidden" data-multiplayer-lobby>
+    <section id="lobbyScreen" class="lobbyShell hidden">
       <header class="lobbyPanel lobbyTop">
         <div class="lobbyBrand">
           <div class="brandMark" aria-hidden="true">♟</div>
           <div>
             <h1 class="lobbyTitle">경찰과 도둑</h1>
-            <p class="lobbyLead">(Cops and Robbers) · 2–6명</p>
+            <p class="lobbyLead">(Cops and Robbers) · 2–6명 · 각자의 기기로 참가</p>
           </div>
         </div>
         <p class="lobbyIdentity"><strong id="savedName">-</strong>님</p>
-        <div class="mp-lobby-tabs" role="tablist" aria-label="방 참여 방법">
-          <button id="hostTab" class="primary" type="button" role="tab">방 만들기</button>
+        <div class="mp-lobby-tabs">
+          <button id="hostTab" class="primary" type="button">방 만들기</button>
           <button id="joinTab" class="secondary" type="button" aria-label="방 번호 입력 방식 선택" role="tab">방번호 입력</button>
         </div>
       </header>
@@ -173,7 +173,7 @@
     <div class="modal">
       <div class="row spread"><div><div class="eyebrow">HOW TO PLAY</div><h2 id="rulesTitle">경찰과 도둑 게임 방법</h2></div><button id="closeRulesBtn" class="iconButton" type="button" aria-label="닫기">×</button></div>
       <div class="rulesGrid">
-        <article class="ruleBox"><h3>🌸 도둑팀</h3><ul><li>도시의 일곱 장소를 조사해 숨겨진 보석을 찾으세요.</li><li>찾은 보석을 하나씩 비밀기지까지 운반하면 확보됩니다.</li><li>경보 장치를 발견한 말은 현장에서 붙잡힙니다.</li><li>가짜 단서 카드를 놓아 경찰을 엉뚱한 방향으로 유도할 수 있습니다.</li></ul></article>
+        <article class="ruleBox"><h3>🌸 도둑팀</h3><ul><li>도시의 일곱 장소를 조사해 숨겨진 보석을 찾으세요.</li><li>찾은 보석을 하나씩 비밀기지까지 운반하면 확보됩니다.</li><li>경보 장치를 발견한 말은 현장에서 붙잡힙니다.</li><li>방향 표지를 놓아 경찰의 다음 이동을 유도할 수 있습니다.</li></ul></article>
         <article class="ruleBox"><h3>🟣 경찰팀</h3><ul><li>추격 전에 보석 두 개와 경보 장치를 서로 다른 장소에 배치하세요.</li><li>이동 경로에서 도둑말과 마주치면 그 말을 구금합니다.</li><li>차단 표지를 활용해 도둑팀의 진로를 막을 수 있습니다.</li><li>도둑말 세 개를 모두 구금하면 경찰팀이 승리합니다.</li></ul></article>
         <article class="ruleBox"><h3>🎲 이동</h3><ul><li>도둑팀 세 말과 경찰팀 세 말이 번호 순서대로 번갈아 행동합니다.</li><li>주사위 결과만큼 이동하며 마지막 칸에서 행동을 마칩니다.</li><li>갈림길에 도착할 때마다 진행할 길을 직접 선택합니다.</li><li>현재 말을 담당하는 학생만 이동을 결정할 수 있습니다.</li></ul></article>
         <article class="ruleBox"><h3>🔓 구금과 안전구역</h3><ul><li>구금된 도둑말은 자기 차례에 탈출 주사위를 시도합니다.</li><li>경찰말이 없을 때 동료가 구금 구역에 도착하면 함께 빠져나옵니다.</li><li>경찰말은 비밀기지와 수색 장소 안으로 들어갈 수 없습니다.</li><li>도둑말은 안전구역에서 최대 세 차례까지 모습을 감출 수 있습니다.</li></ul></article>
@@ -201,6 +201,6 @@
   </section>
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
-  <script src="citychase.js?v=20260826a"></script>
+  <script src="citychase.js?v=20260824m"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Typing Handwriting";
-  src: url("../../../../assets/fonts/klee-one/KleeOne-SemiBold.ttf") format("truetype");
+  src: url("../../../assets/fonts/klee-one/KleeOne-SemiBold.ttf") format("truetype");
   font-display: swap;
   font-weight: 600;
 }

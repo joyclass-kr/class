@@ -538,7 +538,7 @@ function moveStep(game, playerId, targetNodeId) {
     if (trickIndex >= 0) {
       const [trick] = game.tricks.splice(trickIndex, 1);
       pawn.forcedNext = trick.nextNodeId;
-      game.lastAction = "가짜 단서에 속았습니다. 카드의 화살표 방향으로만 이동합니다.";
+      game.lastAction = "방향 표지에 걸렸습니다. 화살표 방향으로만 이동합니다.";
     }
     const caught = game.pawns.find(candidate => candidate.team === "thief" && candidate.status === "active" && candidate.position === target && !Board.NODES[target]?.safe);
     if (caught) {
@@ -575,15 +575,15 @@ function occupied(game, nodeId) {
 function placeTrick(game, playerId, nodeId, nextNodeId) {
   const { pawn, error } = validateActor(game, playerId, ["awaiting_roll"]);
   if (error) return { ok: false, error };
-  if (pawn.team !== "thief") return { ok: false, error: "가짜 단서 카드는 도둑팀만 사용할 수 있습니다." };
-  if (game.resources.thief.trickCards <= 0) return { ok: false, error: "남은 가짜 단서 카드가 없습니다." };
+  if (pawn.team !== "thief") return { ok: false, error: "방향 표지는 도둑팀만 사용할 수 있습니다." };
+  if (game.resources.thief.trickCards <= 0) return { ok: false, error: "남은 방향 표지가 없습니다." };
   const node = Board.NODES[String(nodeId)];
   if (!node?.trickSlot || occupied(game, node.id) || game.tricks.some(card => card.nodeId === node.id) || game.checks.some(card => card.nodeId === node.id)) return { ok: false, error: "분홍 방향 표시가 있고 비어 있는 칸을 선택하세요." };
   const next = String(nextNodeId || "");
   if (!Board.neighbors(node.id, "police").some(item => item.id === next)) return { ok: false, error: "경찰이 실제로 갈 수 있는 화살표 방향을 선택하세요." };
   game.tricks.push({ nodeId: node.id, nextNodeId: next });
   game.resources.thief.trickCards -= 1;
-  advanceTurn(game, `도둑팀이 가짜 단서 카드를 놓았습니다. 남은 카드 ${game.resources.thief.trickCards}장.`);
+  advanceTurn(game, `도둑팀이 방향 표지를 설치했습니다. 남은 표지 ${game.resources.thief.trickCards}개.`);
   game.revision += 1;
   return { ok: true };
 }

@@ -285,7 +285,7 @@
       marker.className = "boardCard trick";
       marker.style.cssText = positionStyle(node.x, node.y);
       marker.textContent = "➜";
-      marker.title = `가짜 단서 카드 · ${nodeMeta(card.nextNodeId)?.label || "화살표"} 방향`;
+      marker.title = `방향 표지 · ${nodeMeta(card.nextNodeId)?.label || "화살표"} 방향`;
       fragment.appendChild(marker);
     }
     for (const card of state.checks) {
@@ -475,14 +475,14 @@
     let hint = "현재 플레이어의 행동을 기다리는 중입니다.";
     if (state.canAct) {
       if (placementMode) {
-        const text = placementMode === "trick-node" ? "가짜 단서 카드를 놓을 분홍 칸을 선택하세요." : placementMode === "trick-direction" ? "경찰을 유도할 다음 칸을 선택하세요." : "차단 표지를 놓을 파란 칸을 선택하세요.";
+        const text = placementMode === "trick-node" ? "방향 표지를 놓을 분홍 칸을 선택하세요." : placementMode === "trick-direction" ? "경찰을 보낼 다음 칸을 선택하세요." : "차단 표지를 놓을 파란 칸을 선택하세요.";
         fragment.appendChild(makeAction("카드 배치 취소", "", cancelPlacement));
         hint = text;
       } else if (state.actions.roll) {
         const pawn = currentPawn();
         fragment.appendChild(makeAction(pawn.status === "jailed" ? "🎲 탈출 주사위" : "🎲 주사위 던지기", "roll", () => sendAction("ROLL")));
         if (state.actions.hide) fragment.appendChild(makeAction(`안전지대에서 숨기 (${pawn.hidingTurns}/3)`, "thief", () => sendAction("HIDE")));
-        if (state.actions.trick) fragment.appendChild(makeAction(`가짜 단서 카드 · ${state.resources.thief.trickCards}장`, "thief", () => { placementMode = "trick-node"; renderActions(); renderBoardState(); }));
+        if (state.actions.trick) fragment.appendChild(makeAction(`방향 표지 · ${state.resources.thief.trickCards}개`, "thief", () => { placementMode = "trick-node"; renderActions(); renderBoardState(); }));
         if (state.actions.check) fragment.appendChild(makeAction(`차단 표지 · ${state.resources.police.checkCards}개`, "police", () => { placementMode = "check"; renderActions(); renderBoardState(); }));
         hint = pawn.status === "jailed" ? "1이 나오면 즉시 탈출해 다시 이동합니다." : "주사위를 쓰는 대신 카드나 숨기를 선택할 수 있습니다.";
       } else if (state.turnMode === "moving") {
@@ -505,7 +505,7 @@
     const team = state.myTeam;
     $("intelCard").classList.toggle("hidden", !team || state.phase === "lobby");
     if (!team) return;
-    $("cardCount").textContent = team === "thief" ? `가짜 단서 카드 ${state.resources.thief.trickCards}장` : `차단 표지 ${state.resources.police.checkCards}개`;
+    $("cardCount").textContent = team === "thief" ? `방향 표지 ${state.resources.thief.trickCards}개` : `차단 표지 ${state.resources.police.checkCards}개`;
     const list = $("intelList");
     const fragment = document.createDocumentFragment();
     const knownBuildings = state.buildings.filter(building => building.known);

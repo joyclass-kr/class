@@ -11,10 +11,9 @@
     <link rel="preload" href="../music-studio/assets/piano/C4.ogg" as="fetch" type="audio/ogg" crossorigin>
     <link rel="preload" href="../music-studio/assets/piano/C5.ogg" as="fetch" type="audio/ogg" crossorigin>
     <link rel="preload" href="instrument-worklet-v2.js?v=20260824-fast-adsr" as="script">
-    <link rel="stylesheet" href="styles.css?v=20260826-instrument-details">
+    <link rel="stylesheet" href="styles.css?v=20260825-drum-rooms">
     <script src="instrument-core.js?v=20260824-physical-room" defer></script>
-    <script src="instrument-details.js?v=20260826-complete-guide" defer></script>
-    <script src="app.js?v=20260826-instrument-details" defer></script>
+    <script src="app.js?v=20260825-drum-webp" defer></script>
 </head>
 <body>
     <div class="room-glow" aria-hidden="true"></div>
@@ -22,29 +21,29 @@
         <header class="topbar">
             <a class="back-link" href="../../../" aria-label="메인 화면으로 돌아가기">← <span>메인</span></a>
             <div class="room-title">
-                <b>디지털 악기실</b>
+                <span class="level-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                <span><b>디지털 악기실</b><small>LOCAL PHYSICAL INSTRUMENTS</small></span>
             </div>
-            <button id="audioButton" class="audio-button" type="button">소리 켜기</button>
+            <button id="audioButton" class="audio-button" type="button"><span aria-hidden="true">●</span> 소리 켜기</button>
         </header>
 
         <main>
             <nav class="instrument-tabs" aria-label="악기 대분류 선택">
-                <button class="active" type="button" data-family="korean" aria-selected="true"><span aria-hidden="true">한</span><b>국악기</b><small>KOREAN</small></button>
-                <button type="button" data-family="strings" aria-selected="false"><span aria-hidden="true">◒</span><b>현악기</b><small>STRINGS</small></button>
-                <button type="button" data-family="woodwind" aria-selected="false"><span aria-hidden="true">◌</span><b>목관악기</b><small>WOODWIND</small></button>
-                <button type="button" data-family="brass" aria-selected="false"><span aria-hidden="true">◖</span><b>금관악기</b><small>BRASS</small></button>
-                <button type="button" data-family="percussion" aria-selected="false"><span aria-hidden="true">✦</span><b>타악기</b><small>PERCUSSION</small></button>
-                <button type="button" data-family="drums" aria-selected="false"><span aria-hidden="true">◉</span><b>드럼</b><small>DRUMS</small></button>
-                <button type="button" data-family="bass" aria-selected="false"><span aria-hidden="true">≋</span><b>베이스</b><small>BASS</small></button>
+                <button class="active" type="button" data-family="keyboard" aria-selected="true"><span aria-hidden="true">♬</span><b>건반</b><small>KEYS</small></button>
                 <button type="button" data-family="guitar" aria-selected="false"><span aria-hidden="true">⌁</span><b>기타</b><small>GUITAR</small></button>
-                <button type="button" data-family="keyboard" aria-selected="false"><span aria-hidden="true">♬</span><b>건반</b><small>KEYS</small></button>
+                <button type="button" data-family="bass" aria-selected="false"><span aria-hidden="true">≋</span><b>베이스</b><small>BASS</small></button>
+                <button type="button" data-family="drums" aria-selected="false"><span aria-hidden="true">◉</span><b>드럼</b><small>DRUMS</small></button>
+                <button type="button" data-family="strings" aria-selected="false"><span aria-hidden="true">◒</span><b>현악</b><small>STRINGS</small></button>
+                <button type="button" data-family="woodwind" aria-selected="false"><span aria-hidden="true">◌</span><b>목관</b><small>WOODWIND</small></button>
+                <button type="button" data-family="brass" aria-selected="false"><span aria-hidden="true">◖</span><b>금관</b><small>BRASS</small></button>
+                <button type="button" data-family="percussion" aria-selected="false"><span aria-hidden="true">✦</span><b>타악</b><small>PERCUSSION</small></button>
+                <button type="button" data-family="korean" aria-selected="false"><span aria-hidden="true">한</span><b>국악</b><small>KOREAN</small></button>
             </nav>
             <section class="model-browser" aria-label="악기 모델 선택">
                 <div class="browser-title"><span id="familyEyebrow">KEYBOARD</span><b id="familyName">건반악기</b></div>
                 <div id="koreanRoomSwitch" class="korean-room-switch hidden" role="tablist" aria-label="국악방 선택">
-                    <button class="active" type="button" data-korean-room="melody" role="tab" aria-selected="true">선율악기</button>
-                    <button type="button" data-korean-room="folk" role="tab" aria-selected="false">풍물·민속</button>
-                    <button type="button" data-korean-room="court" role="tab" aria-selected="false">궁중·의식</button>
+                    <button class="active" type="button" data-korean-room="melody" role="tab" aria-selected="true">선율악기방</button>
+                    <button type="button" data-korean-room="percussion" role="tab" aria-selected="false">타악기방</button>
                 </div>
                 <div id="modelChooser" class="model-chooser" role="list"></div>
             </section>
@@ -56,9 +55,6 @@
                         <h1 id="instrumentName">그랜드 피아노</h1>
                         <p id="instrumentDescription">화성학 연습실과 같은 피아노예요. 건반을 누르고 스페이스바로 서스테인을 사용해 보세요.</p>
                     </div>
-                    <button id="instrumentInfoButton" class="instrument-info-button" type="button" aria-haspopup="dialog">
-                        <span>악기 자세히</span><b aria-hidden="true">i</b>
-                    </button>
                     <div id="guitarModeSwitch" class="mode-switch hidden" role="group" aria-label="기타 입력 방식">
                         <button class="active" type="button" data-guitar-mode="keyboard">건반</button>
                         <button type="button" data-guitar-mode="chords">코드패드</button>
@@ -74,7 +70,6 @@
                                 <small id="scaleNote">모든 방에서 같은 기준 눈금으로 비교해요</small>
                             </div>
                             <img id="instrumentArtwork" class="instrument-artwork hidden" src="" alt="">
-                            <div id="instrumentLayers" class="instrument-layers hidden" aria-label="편성 악기 구성"></div>
                             <div id="classicalRender" class="classical-render hidden" aria-hidden="true"><i class="render-top"></i><i class="render-neck"></i><i class="render-body upper"></i><i class="render-body lower"></i><i class="render-detail"></i></div>
                             <div id="machineDeck" class="machine-deck hidden" aria-label="전자 드럼 머신"></div>
                             <div id="malletRender" class="mallet-render hidden" aria-hidden="true"></div>
@@ -135,52 +130,5 @@
         </main>
     </div>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
-
-    <div id="instrumentDetailModal" class="instrument-detail-modal hidden" aria-hidden="true">
-        <button class="instrument-detail-backdrop" type="button" data-detail-close aria-label="악기 설명 닫기"></button>
-        <section id="instrumentDetailDialog" class="instrument-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="detailTitle" aria-describedby="detailSubtitle" tabindex="-1">
-            <header class="detail-header">
-                <div class="detail-heading">
-                    <span id="detailFamily">KEYBOARD · AP</span>
-                    <h2 id="detailTitle">콘서트 그랜드</h2>
-                    <p id="detailSubtitle"></p>
-                </div>
-                <div class="detail-navigation" aria-label="악기 설명 이동">
-                    <button id="detailPrevious" type="button" aria-label="이전 악기">←</button>
-                    <button id="detailNext" type="button" aria-label="다음 악기">→</button>
-                    <button id="detailClose" class="detail-close" type="button" data-detail-close aria-label="설명 닫기">×</button>
-                </div>
-            </header>
-            <div class="detail-layout">
-                <aside class="detail-visual-column">
-                    <div id="detailArtworkFrame" class="detail-artwork-frame">
-                        <img id="detailArtwork" class="hidden" src="" alt="">
-                        <div id="detailArtworkLayers" class="detail-artwork-layers hidden" aria-hidden="true"></div>
-                        <div id="detailArtworkFallback" class="detail-artwork-fallback hidden" aria-hidden="true"><span>INSTRUMENT</span><b></b></div>
-                    </div>
-                    <div id="detailPartPicker" class="detail-part-picker hidden" role="list" aria-label="구성 악기 선택"></div>
-                    <dl id="detailFacts" class="detail-facts"></dl>
-                </aside>
-                <article class="detail-reading-column">
-                    <div id="detailTabs" class="detail-tabs" role="tablist" aria-label="악기 설명 항목">
-                        <button class="active" type="button" role="tab" aria-selected="true" data-detail-tab="overview">한눈에</button>
-                        <button type="button" role="tab" aria-selected="false" data-detail-tab="mechanism">구조·원리</button>
-                        <button type="button" role="tab" aria-selected="false" data-detail-tab="technique">연주법</button>
-                        <button type="button" role="tab" aria-selected="false" data-detail-tab="role">음악 속 역할</button>
-                        <button type="button" role="tab" aria-selected="false" data-detail-tab="history">역사·비교</button>
-                    </div>
-                    <div id="detailArticle" class="detail-article" role="tabpanel" tabindex="0">
-                        <span id="detailSectionEyebrow"></span>
-                        <h3 id="detailSectionTitle"></h3>
-                        <div id="detailSectionBody"></div>
-                        <section class="detail-sources" aria-labelledby="detailSourcesTitle">
-                            <h4 id="detailSourcesTitle">더 확인하기</h4>
-                            <ul id="detailSourceList"></ul>
-                        </section>
-                    </div>
-                </article>
-            </div>
-        </section>
-    </div>
 </body>
 </html>
