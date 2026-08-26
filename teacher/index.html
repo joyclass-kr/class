@@ -173,6 +173,7 @@
             <button class="tab-btn active" onclick="switchSection('send', this)">📢 가정통신문 작성/발송</button>
             <button class="tab-btn" onclick="switchSection('quick', this)">🤒 실시간 출결 예고 접수함</button>
             <button class="tab-btn" onclick="switchSection('approval', this)">📝 결석계 & 체험학습 전자 결재함</button>
+            <button class="tab-btn" onclick="switchSection('replies', this)">📊 가정통신문 회신 수합 현황</button>
         </div>
 
         <!-- 1. 가정통신문 작성/발송 -->
@@ -180,14 +181,14 @@
             <div class="panel-card">
                 <!-- e-알리미 작성 탭 -->
                 <div style="display: flex; gap: 8px; border-bottom: 2px solid var(--line); margin-bottom: 20px; padding-bottom: 10px;">
-                    <button type="button" class="tab-type active" onclick="switchNoticeCategory('general', this)" style="padding: 10px 20px; border-radius: 8px; border: 1px solid var(--line); background: #1f4730; color: #fff; font-weight: 800; font-size: 15px; cursor: pointer;">
-                        📣 일반·공지
+                    <button type="button" class="tab-type active" onclick="switchNoticeCategory('none', this)" style="padding: 10px 20px; border-radius: 8px; border: 1px solid var(--line); background: #1f4730; color: #fff; font-weight: 800; font-size: 15px; cursor: pointer;">
+                        📣 일반·공지 <span style="font-weight:600; font-size:12px; opacity:0.8;">(회신 없음)</span>
                     </button>
-                    <button type="button" class="tab-type" onclick="switchNoticeCategory('survey', this)" style="padding: 10px 20px; border-radius: 8px; border: 1px solid var(--line); background: #141b16; color: var(--muted); font-weight: 800; font-size: 15px; cursor: pointer;">
-                        📝 설문·신청·투표
+                    <button type="button" class="tab-type" onclick="switchNoticeCategory('confirm', this)" style="padding: 10px 20px; border-radius: 8px; border: 1px solid var(--line); background: #141b16; color: var(--muted); font-weight: 800; font-size: 15px; cursor: pointer;">
+                        👀 확인 회신 받기
                     </button>
-                    <button type="button" class="tab-type" onclick="switchNoticeCategory('signature', this)" style="padding: 10px 20px; border-radius: 8px; border: 1px solid var(--line); background: #141b16; color: var(--muted); font-weight: 800; font-size: 15px; cursor: pointer;">
-                        ✍️ 서명 서류
+                    <button type="button" class="tab-type" onclick="switchNoticeCategory('agree', this)" style="padding: 10px 20px; border-radius: 8px; border: 1px solid var(--line); background: #141b16; color: var(--muted); font-weight: 800; font-size: 15px; cursor: pointer;">
+                        ✍️ 동의서 (동의/미동의)
                     </button>
                 </div>
 
@@ -319,6 +320,18 @@
                 </div>
             </div>
         </section>
+
+        <!-- 4. 가정통신문 회신 수합 현황 -->
+        <section id="sec-replies" class="hidden">
+            <div class="panel-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <h2 style="font-size:18px; margin:0; color:var(--green);">📊 가정통신문 회신 수합 현황</h2>
+                    <button class="btn-secondary" onclick="loadNoticeReplies()">🔄 새로고침</button>
+                </div>
+                <div id="noticeReplyList">불러오는 중…</div>
+                <div id="noticeReplyDetail" style="margin-top:18px;"></div>
+            </div>
+        </section>
     </main>
 
     <script>
@@ -329,6 +342,98 @@
             btn.classList.add('active');
             if (secId === 'quick') loadQuickAbsences();
             if (secId === 'approval') loadApprovals();
+            if (secId === 'replies') loadNoticeReplies();
+        }
+
+        function escapeHtml(value) {
+            return String(value == null ? '' : value)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        const REPLY_TYPE_LABELS = { none: '회신 없음', confirm: '확인 회신', agree: '동의서' };
+        const REPLY_CHOICE_LABELS = { confirmed: '확인함', agree: '동의', disagree: '미동의' };
+
+        async function loadNoticeReplies() {
+            const listEl = document.getElementById('noticeReplyList');
+            const detailEl = document.getElementById('noticeReplyDetail');
+            if (!listEl) return;
+            detailEl.innerHTML = '';
+            try {
+                const res = await fetch('/api/teacher/notices');
+                if (!res.ok) throw new Error('목록을 불러오지 못했습니다.');
+                const data = await res.json();
+                const notices = data.notices || [];
+
+                if (notices.length === 0) {
+                    listEl.innerHTML = '<div class="item-row" style="justify-content:center; color:var(--muted);">발송한 가정통신문이 없습니다.</div>';
+                    return;
+                }
+
+                listEl.innerHTML = notices.map(n => {
+                    const tally = n.replyType === 'agree'
+                        ? `동의 <strong style="color:var(--green);">${n.agreeCount}</strong> · 미동의 <strong style="color:#ff7b72;">${n.disagreeCount}</strong>`
+                        : n.replyType === 'confirm'
+                            ? `확인 <strong style="color:var(--green);">${n.confirmedCount}</strong>명`
+                            : '<span style="color:var(--muted);">회신을 받지 않는 통신문</span>';
+                    return `
+                        <div class="item-row">
+                            <div>
+                                <span class="badge ${n.replyType === 'none' ? 'pending' : 'approved'}">${escapeHtml(REPLY_TYPE_LABELS[n.replyType] || n.replyType)}</span>
+                                <strong style="margin-left:8px; font-size:16px;">${escapeHtml(n.title)}</strong>
+                                <p style="margin:6px 0 0; color:var(--muted); font-size:13px;">
+                                    ${escapeHtml(new Date(n.createdAt).toLocaleDateString())} · ${escapeHtml(n.senderName)} · ${tally}
+                                </p>
+                            </div>
+                            ${n.replyType === 'none' ? '' : `<button class="btn-secondary" onclick="openReplyDetail('${escapeHtml(n.id)}')">👥 명단별 현황 보기</button>`}
+                        </div>`;
+                }).join('');
+            } catch (err) {
+                listEl.innerHTML = `<div class="item-row" style="justify-content:center; color:#ff7b72;">${escapeHtml(err.message)}</div>`;
+            }
+        }
+
+        async function openReplyDetail(noticeId) {
+            const detailEl = document.getElementById('noticeReplyDetail');
+            detailEl.innerHTML = '<div class="item-row" style="justify-content:center; color:var(--muted);">불러오는 중…</div>';
+            try {
+                const res = await fetch(`/api/teacher/notices/${encodeURIComponent(noticeId)}/replies`);
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || '현황을 불러오지 못했습니다.');
+
+                const pending = data.roster.filter(r => !r.choice);
+                const rows = data.roster.map(r => `
+                    <tr>
+                        <td style="padding:6px 8px;">${r.grade}-${r.classNumber} ${escapeHtml(r.studentNumber)}번</td>
+                        <td style="padding:6px 8px; font-weight:700;">${escapeHtml(r.studentName)}</td>
+                        <td style="padding:6px 8px; color:${r.choice ? 'var(--green)' : '#ff7b72'}; font-weight:700;">
+                            ${r.choice ? escapeHtml(REPLY_CHOICE_LABELS[r.choice] || r.choice) : '미회신'}
+                        </td>
+                        <td style="padding:6px 8px; color:var(--muted); font-size:12px;">
+                            ${r.repliedAt ? escapeHtml(new Date(r.repliedAt).toLocaleString()) : ''}
+                        </td>
+                    </tr>`).join('');
+
+                detailEl.innerHTML = `
+                    <div style="border:1px solid var(--line); border-radius:12px; padding:16px; background:#111713;">
+                        <h3 style="margin:0 0 6px; color:var(--green); font-size:16px;">${escapeHtml(data.notice.title)}</h3>
+                        <p style="margin:0 0 12px; color:var(--muted); font-size:13px;">
+                            회신 <strong style="color:#fff;">${data.repliedCount}</strong> / 대상 <strong style="color:#fff;">${data.total}</strong>명
+                            ${pending.length > 0 ? ` · 미회신 <strong style="color:#ff7b72;">${pending.length}</strong>명` : ' · <span style="color:var(--green);">전원 회신 완료</span>'}
+                        </p>
+                        <div style="max-height:360px; overflow-y:auto;">
+                            <table style="width:100%; border-collapse:collapse; font-size:14px;">
+                                <thead><tr style="text-align:left; color:var(--green); border-bottom:1px solid var(--line);">
+                                    <th style="padding:6px 8px;">학반/번호</th><th style="padding:6px 8px;">이름</th>
+                                    <th style="padding:6px 8px;">회신</th><th style="padding:6px 8px;">시각</th>
+                                </tr></thead>
+                                <tbody>${rows}</tbody>
+                            </table>
+                        </div>
+                    </div>`;
+            } catch (err) {
+                detailEl.innerHTML = `<div class="item-row" style="justify-content:center; color:#ff7b72;">${escapeHtml(err.message)}</div>`;
+            }
         }
 
         function toggleStudentTargetInput() {
@@ -340,12 +445,13 @@
             window.open(`/notice/print-templates.html?type=${type}&id=${docId}`, '_blank', 'width=900,height=1000');
         }
 
-        let noticeCategory = 'general';
+        // What this notice asks of guardians: 'none' | 'confirm' | 'agree'.
+        let noticeReplyType = 'none';
         let rawAddressBook = { classes: [], groups: [], students: [] };
         let selectedTargets = [];
 
         function switchNoticeCategory(cat, btn) {
-            noticeCategory = cat;
+            noticeReplyType = cat;
             document.querySelectorAll('.tab-type').forEach(b => {
                 b.style.background = '#141b16';
                 b.style.color = 'var(--muted)';
@@ -573,7 +679,7 @@
                         targetType: selectedTargets.length > 0 ? 'students' : 'all',
                         targetStudentNumbers,
                         deduplicateGuardians,
-                        noticeCategory
+                        replyType: noticeReplyType
                     })
                 });
                 const data = await res.json();
