@@ -3,7 +3,7 @@
 
     const piano = window.HarmonyPiano;
     const STORE_KEY = "musicTheoryHarmonyProgressV1";
-    const NATURAL_NAMES = ["도(C)", "레(D)", "미(E)", "파(F)", "솔(G)", "라(A)", "시(B)"];
+    const NATURAL_NAMES = ["C", "D", "E", "F", "G", "A", "B"];
     const PITCH_NAMES = ["C", "C♯", "D", "E♭", "E", "F", "F♯", "G", "A♭", "A", "B♭", "B"];
     const INTERVALS = [
         { semitones: 1, label: "단2도" }, { semitones: 2, label: "장2도" },
@@ -31,7 +31,7 @@
     const FUNCTION_BY_DEGREE = ["토닉", "서브도미넌트", "토닉", "서브도미넌트", "도미넌트", "토닉", "도미넌트"];
 
     const stages = [
-        { id: 1, title: "음과 건반", short: "음이름 · 옥타브", summary: "일곱 음이름과 피아노 건반의 위치를 익혀요.", concept: "음이름은 건반에서 반복돼요", body: "도·레·미·파·솔·라·시는 C·D·E·F·G·A·B와 연결됩니다. 같은 이름의 음은 옥타브마다 다시 나타납니다.", points: ["검은건반 두 개 왼쪽의 흰건반이 도(C)", "일곱 음이름 뒤에는 다시 도가 시작", "옥타브가 달라도 음이름의 역할은 같음"], make: makeNoteQuestion },
+        { id: 1, title: "음과 건반", short: "음이름 · 옥타브", summary: "일곱 음이름과 피아노 건반의 위치를 익혀요.", concept: "C·D·E는 건반의 고정된 음이름이에요", body: "C·D·E·F·G·A·B는 고정된 음이름입니다. 도·레·미는 조에 따라 시작 위치가 달라지는 계이름입니다.", points: ["C·D·E·F·G·A·B는 고정된 음이름", "검은건반까지 포함하면 한 옥타브는 12음", "도·레·미는 조에 따라 위치가 바뀌는 계이름"], make: makeNoteQuestion },
         { id: 2, title: "반음과 온음", short: "샵 · 플랫", summary: "건반 사이의 가장 작은 거리를 배워요.", concept: "가장 가까운 건반 사이는 반음이에요", body: "흰건반과 검은건반을 가리지 않고 바로 옆 건반까지가 반음입니다. 반음 두 칸을 합치면 온음입니다.", points: ["바로 옆 건반: 반음", "반음 두 개: 온음", "샵은 반음 올리고 플랫은 반음 내림"], make: makeToneDistanceQuestion },
         { id: 3, title: "음정", short: "2도 · 3도 · 5도", summary: "두 음 사이의 거리를 이름 붙여요.", concept: "음정은 음이름의 수와 반음 수로 정해져요", body: "먼저 음이름을 세어 도수를 구하고, 반음 수를 확인해 장·단·완전 음정을 구별합니다.", points: ["음이름은 처음과 끝을 모두 셈", "1·4·5·8도는 완전 계열", "2·3·6·7도는 장·단 계열"], make: makeIntervalQuestion },
         { id: 4, title: "장음계와 조표", short: "장음계 · 오도권", summary: "장음계의 배열과 주요 조표를 익혀요.", concept: "장음계는 온·온·반·온·온·온·반", body: "어떤 음에서 시작해도 같은 간격을 지키면 장음계가 됩니다. 조표는 이 간격을 유지하도록 샵이나 플랫을 미리 표시합니다.", points: ["3–4음과 7–8음 사이는 반음", "샵 조표는 파부터 5도씩 늘어남", "플랫 조표는 시부터 4도씩 늘어남"], make: makeMajorScaleQuestion },
@@ -50,9 +50,9 @@
                 "C·D·E·F·G·A·B는 높이가 달라져도 바뀌지 않는 음이름입니다. 도·레·미·파·솔·라·시는 조 안에서 맡은 순서를 나타내는 계이름이므로 둘을 구별해야 합니다.",
                 "높은음자리표에서 가운데 도(C4)는 오선 아래의 덧줄에 놓입니다. 그다음 레는 덧줄과 첫째 줄 사이, 미는 첫째 줄에 놓이며 음이 한 칸씩 올라갈 때마다 선과 칸을 번갈아 사용합니다."
             ],
-            notationTitle: "가운데 도에서 높은 도까지",
+            notationTitle: "가운데 C에서 한 옥타브 위 C까지",
             notationBody: "악보의 음이 한 자리씩 올라갈 때 건반도 오른쪽으로 이동합니다. 먼저 음이름을 눈으로 따라간 뒤 예시를 들어 보세요.",
-            notes: [60,62,64,65,67,69,71,72], labels: ["도 C","레 D","미 E","파 F","솔 G","라 A","시 B","도 C"]
+            notes: [60,62,64,65,67,69,71,72], labels: ["C","D","E","F","G","A","B","C"]
         },
         2: {
             paragraphs: [
@@ -162,9 +162,10 @@
     function saveProgress() { try { localStorage.setItem(STORE_KEY, JSON.stringify(state.progress)); } catch (error) { /* optional */ } }
 
     function makeNoteQuestion() {
-        const midi = 48 + Math.floor(Math.random() * 12);
-        const answer = pitchName(midi);
-        return { prompt: "한 음을 듣고 12개 음 중 음이름을 고르세요.", answer: answer, choices: choicesAround(answer, PITCH_NAMES, 4), groups: [[midi]], explain: "이 음은 " + answer + "입니다." };
+        const scaleIndex = Math.floor(Math.random() * NATURAL_NAMES.length);
+        const midi = 60 + SCALE_OFFSETS[scaleIndex];
+        const answer = NATURAL_NAMES[scaleIndex];
+        return { prompt: "흰건반의 음을 듣고 음이름을 고르세요.", answer: answer, choices: choicesAround(answer, NATURAL_NAMES, 4), groups: [[midi]], explain: "이 음의 고정 음이름은 " + answer + "입니다." };
     }
     function makeToneDistanceQuestion() {
         const distance = Math.random() < .5 ? 1 : 2;
