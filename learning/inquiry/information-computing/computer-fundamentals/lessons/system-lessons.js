@@ -161,9 +161,9 @@
                     </div>
                 </div>`,
             details: [
-                ["기기", "Device", "iPad·Chromebook·스마트폰·PC처럼 실제 부품으로 이루어진 제품입니다. 제조사와 제품명은 운영체제 이름과 같지 않을 수 있습니다."],
-                ["운영체제", "Operating System / OS", "Windows·Android·iOS·iPadOS·macOS·ChromeOS·Linux처럼 앱 실행, 파일, 화면, 입력 장치와 권한을 관리하는 기본 소프트웨어입니다."],
-                ["앱", "Application / App", "브라우저·카메라·문서 편집기처럼 특정 작업을 수행하는 소프트웨어입니다. 같은 앱도 여러 운영체제용 버전이 따로 있을 수 있습니다."],
+                ["기기", "Device", "iPad · Chromebook · 스마트폰 · PC처럼 실제 부품으로 이루어진 제품입니다. 제조사와 제품명은 운영체제 이름과 같지 않을 수 있습니다."],
+                ["운영체제", "Operating System / OS", "Windows · Android · iOS · iPadOS · macOS · ChromeOS · Linux처럼 앱 실행, 파일, 화면, 입력 장치와 권한을 관리하는 기본 소프트웨어입니다."],
+                ["앱", "Application / App", "브라우저 · 카메라 · 문서 편집기처럼 특정 작업을 수행하는 소프트웨어입니다. 같은 앱도 여러 운영체제용 버전이 따로 있을 수 있습니다."],
                 ["층 사이의 요청", "Requests Between Layers", "앱은 운영체제에 파일 저장이나 카메라 사용을 요청하고, 운영체제는 드라이버를 통해 하드웨어를 제어합니다."]
             ],
             workedExample: {
@@ -474,7 +474,7 @@
             domain: "컴퓨터 안의 하드웨어",
             title: "본체 안에는 어떤 부품이 있을까?",
             english: "Inside a Desktop Computer",
-            conceptTitle: "서로 다른 일을 맡은 부품이 한 시스템으로 연결된다",
+            conceptTitle: "CPU·RAM·저장 장치가 연결되어 한 컴퓨터로 작동한다",
             visual: `
                 <div class="system-visual hardware-cutaway-grid">
                     <figure class="hardware-photo">
@@ -744,22 +744,34 @@
         document.getElementById("lessonMeta").textContent = `${lesson.number}차시`;
         document.getElementById("lessonTitle").innerHTML = `${lesson.title} <small>${lesson.english}</small>`;
         document.getElementById("conceptTitle").textContent = lesson.conceptTitle;
-        document.getElementById("conceptVisual").innerHTML = lesson.visual;
+        const conceptVisual = document.getElementById("conceptVisual");
+        const conceptDiagram = document.getElementById("conceptDiagram");
+        const conceptOverview = document.getElementById("conceptOverview");
+        conceptVisual.innerHTML = lesson.visual;
+        conceptDiagram.innerHTML = "";
+        const diagram = conceptVisual.querySelector(".system-visual");
+        if (diagram) {
+            conceptDiagram.innerHTML = `<div class="section-divider"><span>${lesson.parts?.length ? "본체 안에서 위치 찾기" : "구조로 다시 확인하기"}</span><small>${lesson.parts?.length ? "Locate the Parts" : "Check the Structure"}</small></div>`;
+            conceptDiagram.appendChild(diagram);
+        }
         const partsMount = document.getElementById("conceptParts");
         if (lesson.parts?.length) {
             partsMount.innerHTML = `
                 <section class="component-inspector" aria-labelledby="componentInspectorTitle">
                     <div class="explanation-heading">
                         <span>부품 하나씩 자세히 보기 <small>Component Close-ups</small></span>
-                        <h2 id="componentInspectorTitle">부품을 선택해 확대 사진과 역할을 확인하세요.</h2>
-                        <p>전체 사진에서 위치를 확인한 뒤, 각 부품의 생김새·이름의 유래·역할·연결 방식을 차례로 살펴봅니다.</p>
+                        <h2 id="componentInspectorTitle">8개 부품을 사진으로 비교하고 하나씩 살펴보세요.</h2>
+                        <p>위 사진 단추에서 부품을 고르면 생김새·이름의 유래·역할·연결 방식이 바뀝니다. 아래에서는 본체 안의 실제 위치도 확인합니다.</p>
                     </div>
                     <div class="component-tabs" role="tablist" aria-label="자세히 볼 컴퓨터 부품">
                         ${lesson.parts.map((part, index) => `
-                            <button type="button" role="tab" data-part-index="${index}" aria-selected="${index === 0}" tabindex="${index === 0 ? 0 : -1}">${part.short}<small>${part.korean}</small></button>
+                            <button id="componentTab${index}" type="button" role="tab" data-part-index="${index}" aria-controls="componentPartPanel" aria-selected="${index === 0}" tabindex="${index === 0 ? 0 : -1}">
+                                <img src="${part.image}" width="768" height="768" alt="">
+                                <span><strong>${part.short}</strong><small>${part.korean}</small></span>
+                            </button>
                         `).join("")}
                     </div>
-                    <article id="componentPartPanel" class="component-detail-card" aria-live="polite"></article>
+                    <article id="componentPartPanel" class="component-detail-card" role="tabpanel" aria-live="polite"></article>
                 </section>
             `;
             const partButtons = [...partsMount.querySelectorAll("[data-part-index]")];
@@ -770,6 +782,7 @@
                     button.setAttribute("aria-selected", String(buttonIndex === index));
                     button.tabIndex = buttonIndex === index ? 0 : -1;
                 });
+                partPanel.setAttribute("aria-labelledby", `componentTab${index}`);
                 partPanel.innerHTML = `
                     <figure>
                         <img src="${part.image}" width="768" height="768" alt="${part.alt}">
@@ -787,7 +800,17 @@
                     </div>
                 `;
             };
-            partButtons.forEach((button) => button.addEventListener("click", () => showPart(Number(button.dataset.partIndex))));
+            partButtons.forEach((button, index) => {
+                button.addEventListener("click", () => showPart(index));
+                button.addEventListener("keydown", (event) => {
+                    const directions = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+                    if (!(event.key in directions)) return;
+                    event.preventDefault();
+                    const next = (index + directions[event.key] + partButtons.length) % partButtons.length;
+                    showPart(next);
+                    partButtons[next].focus();
+                });
+            });
             showPart(0);
         } else {
             partsMount.innerHTML = "";
@@ -796,6 +819,7 @@
         details.innerHTML = lesson.details.map((detail, index) => `
             <article><span class="concept-number">${index + 1}</span><h3>${detail[0]} <small>${detail[1]}</small></h3><p>${detail[2]}</p></article>
         `).join("");
+        conceptOverview.hidden = Boolean(lesson.parts?.length);
         const story = lesson.workedExample;
         document.getElementById("conceptStory").innerHTML = `
             <section class="worked-example" aria-labelledby="workedExampleTitle">

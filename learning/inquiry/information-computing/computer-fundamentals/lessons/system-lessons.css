@@ -921,3 +921,100 @@
     .part-marker { min-width: 28px; min-height: 28px; width: 28px; height: 28px; }
     .part-marker b { font-size: 12px; }
 }
+/* Textbook layout and visible component gallery */
+.concept-overview {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(340px, .92fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.concept-overview[hidden] { display: none; }
+.concept-overview .visual-gallery { display: block; }
+.concept-overview .concept-illustration { margin-top: 16px; }
+.concept-overview .concept-illustration img { max-height: 440px; }
+.concept-overview .concept-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.concept-overview .concept-grid article {
+    min-height: 0;
+    padding: 13px 14px 13px 52px;
+}
+
+.concept-diagram > .system-visual { margin-top: 10px; }
+
+.section-divider {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin: 22px 2px 0;
+    padding-top: 16px;
+    border-top: 2px solid #c89b57;
+    color: #3d2513;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.section-divider small {
+    color: #075963;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.component-inspector { margin-top: 14px; }
+
+.component-tabs button {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+    min-height: 86px;
+    padding: 6px;
+    text-align: left;
+}
+
+.component-tabs button img {
+    display: block;
+    width: 72px;
+    height: 72px;
+    border: 1px solid #c5a778;
+    border-radius: 7px;
+    background: #f7ead2;
+    object-fit: cover;
+}
+
+.component-tabs button span { min-width: 0; }
+.component-tabs button strong {
+    display: block;
+    color: inherit;
+    font-size: 17px;
+    line-height: 1.2;
+}
+
+.component-tabs button small {
+    overflow-wrap: anywhere;
+    line-height: 1.35;
+}
+
+.component-tabs button[aria-selected="true"] img {
+    border-color: #075963;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #075963;
+}
+
+@media (max-width: 900px) {
+    .concept-overview { grid-template-columns: 1fr; }
+    .concept-overview .concept-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 820px) {
+    .concept-overview .concept-grid { grid-template-columns: 1fr; }
+    .component-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 520px) {
+    .component-tabs { grid-template-columns: 1fr; }
+    .section-divider { display: grid; gap: 2px; }
+}
