@@ -8,14 +8,30 @@
     const elements = {};
     [
         "midiButton", "midiButtonLabel", "midiStatus", "scaleControls", "voicingControls", "referenceControls",
-        "scaleKeySelect", "scaleTypeSelect", "handSelect", "skillSelect", "referenceSelect", "previousSkillButton",
-        "nextSkillButton", "exerciseEyebrow", "exerciseTitle", "exerciseSummary", "sourceBadge", "scoreHeading",
+        "whiteKeyChoices", "exceptionKeyChoices", "blackKeyChoices", "scaleTypeChoices", "handChoices",
+        "skillChoices", "referenceSelect", "previousChapterButton", "nextChapterButton", "chapterRange", "chapterTitle",
+        "chapterSummary", "exerciseEyebrow", "exerciseTitle", "exerciseSummary", "scoreHeading", "pageControls",
         "scoreViewport", "scoreSurface", "scoreCaption", "previousPageButton", "nextPageButton", "pageIndicator",
-        "lessonNotes", "conceptList", "practiceList", "practiceDock", "tempo", "tempoOutput", "listenButton",
+        "lessonNotes", "lessonNotesTitle", "conceptList", "practiceList", "practiceDock", "tempo", "tempoOutput", "listenButton",
         "practiceButton", "metronomeButton", "resetButton", "feedback", "midiMonitor", "noteReadout", "miniKeyboard"
     ].forEach(function (id) { elements[id] = document.getElementById(id); });
 
     const SCALE_KEY_ORDER = ["C", "D", "E", "G", "A", "F", "B", "Db", "Eb", "Gb", "Ab", "Bb"];
+    const SCALE_KEY_GROUPS = [
+        { container:"whiteKeyChoices", ids:["C", "D", "E", "G", "A"] },
+        { container:"exceptionKeyChoices", ids:["F", "B"] },
+        { container:"blackKeyChoices", ids:["Db", "Eb", "Gb", "Ab", "Bb"] }
+    ];
+    const SCALE_KEY_BUTTON_LABELS = {
+        C:"C", D:"D", E:"E", G:"G", A:"A", F:"F", B:"B",
+        Db:"D♭ / C♯", Eb:"E♭", Gb:"G♭ / F♯", Ab:"A♭ / G♯", Bb:"B♭"
+    };
+    const SCALE_ROOT_NAMES = {
+        Db:{ major:"D♭", minor:"C♯" },
+        Gb:{ major:"G♭", minor:"F♯" },
+        Ab:{ major:"A♭", minor:"G♯" }
+    };
+    const HAND_LABELS = { both:"Both Hands", right:"Right Hand", left:"Left Hand" };
     const FLAT_NAMES = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"];
     const SHARP_NAMES = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"];
     const BLACK_PCS = new Set([1, 3, 6, 8, 10]);
@@ -62,6 +78,18 @@
         return SOURCE.referenceSections.find(function (section) { return section.id === id; }) || SOURCE.referenceSections[0];
     }
 
+    function currentModule() {
+        return DATA.voicingModules.find(function (module) {
+            return module.skills.some(function (skill) { return Number(skill) === state.skillId; });
+        }) || DATA.voicingModules[0];
+    }
+
+    function scaleRootLabel() {
+        const names = SCALE_ROOT_NAMES[state.scaleKeyId];
+        if (!names) return keyById(state.scaleKeyId).label;
+        return state.scaleType === "major" ? names.major : names.minor;
+    }
+
     function option(value, label) {
         const item = document.createElement("option");
         item.value = value;
@@ -69,24 +97,68 @@
         return item;
     }
 
+    function choiceButton(value, label, dataName) {
+        const item = document.createElement("button");
+        item.type = "button";
+        item.className = "choice-button";
+        item.dataset[dataName] = value;
+        item.setAttribute("aria-pressed", "false");
+        item.textContent = label;
+        return item;
+    }
+
     function populateSelectors() {
-        SCALE_KEY_ORDER.forEach(function (id) {
-            const key = keyById(id);
-            elements.scaleKeySelect.appendChild(option(id, key.label));
+        SCALE_KEY_GROUPS.forEach(function (group) {
+            group.ids.forEach(function (id) {
+                elements[group.container].appendChild(choiceButton(id, SCALE_KEY_BUTTON_LABELS[id], "scaleKey"));
+            });
         });
         Object.keys(DATA.scaleTypes).forEach(function (id) {
-            elements.scaleTypeSelect.appendChild(option(id, DATA.scaleTypes[id].label));
+            elements.scaleTypeChoices.appendChild(choiceButton(id, DATA.scaleTypes[id].label, "scaleType"));
         });
-        DATA.voicingModules.forEach(function (module) {
-            const group = document.createElement("optgroup");
-            group.label = "Skill " + module.skills[0] + "–" + module.skills[module.skills.length - 1] + " · " + module.title;
-            SOURCE.skills.filter(function (skill) { return skill.moduleId === module.id; }).forEach(function (skill) {
-                group.appendChild(option(String(skill.id), "Skill " + skill.id + " · " + skill.title));
-            });
-            elements.skillSelect.appendChild(group);
+        Object.keys(HAND_LABELS).forEach(function (id) {
+            elements.handChoices.appendChild(choiceButton(id, HAND_LABELS[id], "hand"));
         });
         SOURCE.referenceSections.forEach(function (section) {
             elements.referenceSelect.appendChild(option(section.id, section.label));
+        });
+    }
+
+    function renderScaleChoices() {
+        document.querySelectorAll("[data-scale-key]").forEach(function (button) {
+            const active = button.dataset.scaleKey === state.scaleKeyId;
+            button.classList.toggle("is-active", active);
+            button.setAttribute("aria-pressed", String(active));
+        });
+        document.querySelectorAll("[data-scale-type]").forEach(function (button) {
+            const active = button.dataset.scaleType === state.scaleType;
+            button.classList.toggle("is-active", active);
+            button.setAttribute("aria-pressed", String(active));
+        });
+        document.querySelectorAll("[data-hand]").forEach(function (button) {
+            const active = button.dataset.hand === state.hand;
+            button.classList.toggle("is-active", active);
+            button.setAttribute("aria-pressed", String(active));
+        });
+    }
+
+    function renderVoicingChoices() {
+        const module = currentModule();
+        const first = Number(module.skills[0]);
+        const last = Number(module.skills[module.skills.length - 1]);
+        const moduleIndex = DATA.voicingModules.indexOf(module);
+        elements.chapterRange.textContent = "Skill " + first + (first === last ? "" : "-" + last);
+        elements.chapterTitle.textContent = module.title;
+        elements.chapterSummary.textContent = module.summary;
+        elements.previousChapterButton.disabled = moduleIndex === 0;
+        elements.nextChapterButton.disabled = moduleIndex === DATA.voicingModules.length - 1;
+        elements.skillChoices.replaceChildren();
+        SOURCE.skills.filter(function (skill) { return skill.moduleId === module.id; }).forEach(function (skill) {
+            const button = choiceButton(String(skill.id), "Skill " + skill.id + " · " + skill.title, "skillId");
+            const active = skill.id === state.skillId;
+            button.classList.toggle("is-active", active);
+            button.setAttribute("aria-pressed", String(active));
+            elements.skillChoices.appendChild(button);
         });
     }
 
@@ -110,16 +182,14 @@
         elements.pageIndicator.textContent = (state.sourcePageIndex + 1) + " / " + pages.length;
         elements.previousPageButton.disabled = state.sourcePageIndex === 0;
         elements.nextPageButton.disabled = state.sourcePageIndex >= pages.length - 1;
-        elements.sourceBadge.textContent = "새 악보 " + (state.sourcePageIndex + 1) + "/" + pages.length;
+        elements.pageControls.hidden = pages.length <= 1;
         window.PianoEngraving.render(elements.scoreSurface, state.scoreModel, state.sourcePageIndex, { tempo:state.tempo });
-        elements.scoreViewport.scrollTop = 0;
-        elements.scoreViewport.scrollLeft = 0;
         if (state.mode === "scale") {
-            elements.scoreCaption.textContent = "제공된 운지표의 음과 손가락 번호를 바탕으로 새로 조판한 양손 두 옥타브 악보입니다.";
+            elements.scoreCaption.textContent = "Ascending과 Descending을 같은 박으로 연결하고, 손바꿈에서 멈추지 않습니다.";
         } else if (state.mode === "voicing") {
-            elements.scoreCaption.textContent = "Jazz Piano Voicing Skills · Skill " + state.skillId + "의 성부와 진행을 새 SVG 악보로 조판했습니다.";
+            elements.scoreCaption.textContent = "Left Hand와 Right Hand의 Voice Leading(성부 진행)을 확인한 뒤 Chord Symbol만 보고 연주합니다.";
         } else {
-            elements.scoreCaption.textContent = "교재의 기본 개념·연습 원칙·과정 순서를 읽기 쉬운 학습 카드로 다시 구성했습니다.";
+            elements.scoreCaption.textContent = "설명을 읽은 뒤 해당 단계의 연습에 적용합니다.";
         }
     }
 
@@ -135,46 +205,48 @@
     function renderNotes() {
         if (state.mode === "scale") {
             const lesson = scaleLesson();
-            fillList(elements.conceptList, [
-                "제공된 자료의 음과 운지를 대조해 오른손·왼손 두 보표의 두 옥타브 악보로 다시 조판했습니다."
-            ].concat(lesson.concepts));
-            fillList(elements.practiceList, [
-                "먼저 한 손씩 손바꿈을 확인하고, 그다음 양손을 한 옥타브 간격으로 맞춥니다."
-            ].concat(lesson.practice));
+            fillList(elements.conceptList, lesson.concepts);
+            fillList(elements.practiceList, lesson.practice);
+            elements.lessonNotesTitle.textContent = lesson.title + " · 기본 개념과 연습 방법";
             return;
         }
         if (state.mode === "voicing") {
             const skill = skillById(state.skillId);
             fillList(elements.conceptList, skill.concepts);
             fillList(elements.practiceList, skill.practice);
+            elements.lessonNotesTitle.textContent = skill.moduleTitle + " · 챕터 설명과 연습 방법";
             return;
         }
         fillList(elements.conceptList, DATA.practicePrinciples.slice(0, 5));
         fillList(elements.practiceList, DATA.practicePrinciples.slice(5));
+        elements.lessonNotesTitle.textContent = "교재의 기본 연습 원칙";
     }
 
     function renderHeading() {
         if (state.mode === "scale") {
-            const key = keyById(state.scaleKeyId);
             const type = DATA.scaleTypes[state.scaleType];
-            elements.exerciseEyebrow.textContent = "SCALE · TWO OCTAVES";
-            elements.exerciseTitle.textContent = key.label + " " + type.label;
-            elements.exerciseSummary.textContent = "제공된 운지표를 대조해 새로 조판한 악보로 양손 두 옥타브를 연습합니다.";
-            elements.scoreHeading.textContent = "새로 조판한 스케일 악보";
+            const lesson = scaleLesson();
+            const stage = lesson.id === "scale-white" ? "1. 흰건반 시작 · Common Fingering"
+                : lesson.id === "scale-exceptions" ? "1-1. 흰건반 시작 · Exception Fingering"
+                : "2. 검은건반 시작";
+            elements.exerciseEyebrow.textContent = stage;
+            elements.exerciseTitle.textContent = scaleRootLabel() + " " + type.label;
+            elements.exerciseSummary.textContent = lesson.summary;
+            elements.scoreHeading.textContent = scaleRootLabel() + " " + type.label + " · " + HAND_LABELS[state.hand] + " · Two Octaves";
             return;
         }
         if (state.mode === "voicing") {
             const skill = skillById(state.skillId);
-            elements.exerciseEyebrow.textContent = skill.moduleTitle.toUpperCase() + " · BOOK SKILL";
+            elements.exerciseEyebrow.textContent = skill.moduleTitle + " · 교재 단계";
             elements.exerciseTitle.textContent = "Skill " + skill.id + " · " + skill.title;
             elements.exerciseSummary.textContent = skill.summary;
-            elements.scoreHeading.textContent = "Skill " + skill.id + " 재조판 악보";
+            elements.scoreHeading.textContent = "Skill " + skill.id + " · " + skill.title;
             return;
         }
         const section = referenceById(state.referenceId);
-        elements.exerciseEyebrow.textContent = "BOOK NOTES · REBUILT";
+        elements.exerciseEyebrow.textContent = "교재 설명";
         elements.exerciseTitle.textContent = section.label;
-        elements.exerciseSummary.textContent = "교재의 기본 개념, 연습 방법, 적용 설명과 과정표를 학습용으로 다시 구성했습니다.";
+        elements.exerciseSummary.textContent = "기본 개념과 연습 방법을 읽고 해당 단계에 적용합니다.";
         elements.scoreHeading.textContent = "교재 개념 정리";
     }
 
@@ -190,7 +262,7 @@
         elements.referenceControls.hidden = state.mode !== "reference";
         elements.practiceDock.hidden = state.mode === "reference";
         elements.midiMonitor.hidden = state.mode === "reference";
-        elements.lessonNotes.open = false;
+        elements.lessonNotes.open = state.mode !== "reference";
     }
 
     function renderTransport() {
@@ -204,6 +276,8 @@
 
     function renderAll() {
         renderMode();
+        renderScaleChoices();
+        renderVoicingChoices();
         renderHeading();
         renderScore();
         renderNotes();
@@ -452,33 +526,25 @@
     populateSelectors();
     buildMiniKeyboard();
     if (state.mode === "voicing") state.tempo = skillById(state.skillId).tempo;
-    elements.scaleKeySelect.value = state.scaleKeyId;
-    elements.scaleTypeSelect.value = state.scaleType;
-    elements.handSelect.value = state.hand;
-    elements.skillSelect.value = String(state.skillId);
     elements.referenceSelect.value = state.referenceId;
 
     document.querySelectorAll(".mode-tab").forEach(function (button) {
         button.addEventListener("click", function () { changeMode(button.dataset.mode); });
     });
-    elements.scaleKeySelect.addEventListener("change", function () {
-        state.scaleKeyId = elements.scaleKeySelect.value;
+    elements.scaleControls.addEventListener("click", function (event) {
+        const button = event.target.closest("button[data-scale-key], button[data-scale-type], button[data-hand]");
+        if (!button) return;
+        if (button.dataset.scaleKey) state.scaleKeyId = button.dataset.scaleKey;
+        if (button.dataset.scaleType) state.scaleType = button.dataset.scaleType;
+        if (button.dataset.hand) state.hand = button.dataset.hand;
         state.sourcePageIndex = 0;
         resetPractice();
         renderAll();
     });
-    elements.scaleTypeSelect.addEventListener("change", function () {
-        state.scaleType = elements.scaleTypeSelect.value;
-        resetPractice();
-        renderAll();
-    });
-    elements.handSelect.addEventListener("change", function () {
-        state.hand = elements.handSelect.value;
-        resetPractice();
-        renderAll();
-    });
-    elements.skillSelect.addEventListener("change", function () {
-        state.skillId = Number(elements.skillSelect.value);
+    elements.skillChoices.addEventListener("click", function (event) {
+        const button = event.target.closest("button[data-skill-id]");
+        if (!button) return;
+        state.skillId = Number(button.dataset.skillId);
         state.tempo = skillById(state.skillId).tempo;
         state.sourcePageIndex = 0;
         resetPractice();
@@ -489,19 +555,19 @@
         state.sourcePageIndex = 0;
         renderAll();
     });
-    elements.previousSkillButton.addEventListener("click", function () {
-        if (state.skillId <= 1) return;
-        state.skillId -= 1;
-        elements.skillSelect.value = String(state.skillId);
+    elements.previousChapterButton.addEventListener("click", function () {
+        const index = DATA.voicingModules.indexOf(currentModule());
+        if (index <= 0) return;
+        state.skillId = Number(DATA.voicingModules[index - 1].skills[0]);
         state.tempo = skillById(state.skillId).tempo;
         state.sourcePageIndex = 0;
         resetPractice();
         renderAll();
     });
-    elements.nextSkillButton.addEventListener("click", function () {
-        if (state.skillId >= 123) return;
-        state.skillId += 1;
-        elements.skillSelect.value = String(state.skillId);
+    elements.nextChapterButton.addEventListener("click", function () {
+        const index = DATA.voicingModules.indexOf(currentModule());
+        if (index >= DATA.voicingModules.length - 1) return;
+        state.skillId = Number(DATA.voicingModules[index + 1].skills[0]);
         state.tempo = skillById(state.skillId).tempo;
         state.sourcePageIndex = 0;
         resetPractice();

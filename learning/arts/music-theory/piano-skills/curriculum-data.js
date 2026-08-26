@@ -17,11 +17,11 @@
     ];
 
     const SCALE_TYPES = {
-        major: { label: "장음계", intervals: [0, 2, 4, 5, 7, 9, 11, 12] },
-        naturalMinor: { label: "자연단음계", intervals: [0, 2, 3, 5, 7, 8, 10, 12] },
-        harmonicMinor: { label: "화성단음계", intervals: [0, 2, 3, 5, 7, 8, 11, 12] },
+        major: { label: "Major Scale", intervals: [0, 2, 4, 5, 7, 9, 11, 12] },
+        naturalMinor: { label: "Natural Minor Scale", intervals: [0, 2, 3, 5, 7, 8, 10, 12] },
+        harmonicMinor: { label: "Harmonic Minor Scale", intervals: [0, 2, 3, 5, 7, 8, 11, 12] },
         melodicMinor: {
-            label: "가락단음계",
+            label: "Melodic Minor Scale",
             intervals: [0, 2, 3, 5, 7, 9, 11, 12],
             descending: [12, 10, 8, 7, 5, 3, 2, 0]
         }
@@ -45,86 +45,86 @@
     const SCALE_LESSONS = [
         {
             id: "scale-foundation",
-            title: "운지 기본",
-            eyebrow: "손가락 번호와 손바꿈",
-            summary: "엄지는 1번, 새끼손가락은 5번입니다. 음 이름보다 손의 이동 지점을 먼저 익힙니다.",
+            title: "Fingering Basics",
+            eyebrow: "Fingering Number와 손바꿈",
+            summary: "Thumb는 1번, Little Finger는 5번입니다. Note Name보다 손의 이동 지점을 먼저 익힙니다.",
             keys: ["C", "D", "E", "G", "A"],
             concepts: [
-                "양손 모두 엄지부터 새끼손가락까지 1·2·3·4·5로 셉니다.",
-                "오른손 상행은 엄지를 아래로 통과시키고, 왼손 상행은 긴 손가락을 엄지 위로 넘깁니다.",
-                "손가락 번호는 음 이름이 아니라 건반 위에서 손이 이동하는 순서를 나타냅니다."
+                "Both Hands 모두 Thumb부터 Little Finger까지 1·2·3·4·5로 셉니다.",
+                "Right Hand Ascending은 Thumb-under, Left Hand Ascending은 Finger-over 동작을 사용합니다.",
+                "Fingering Number는 Note Name이 아니라 건반 위에서 손이 이동하는 순서를 나타냅니다."
             ],
             practice: [
                 "건반을 누르지 않고 1-2-3, 엄지 통과, 1-2-3-4-5 동작을 천천히 해 봅니다.",
-                "한 옥타브를 박자 없이 정확히 연결한 뒤 메트로놈 60 BPM에서 한 박에 한 음씩 연주합니다.",
+                "One Octave를 Out of Tempo로 정확히 연결한 뒤 Metronome 60 BPM에서 한 박에 한 음씩 연주합니다.",
                 "시선을 건반에서 떼고 손바꿈 지점의 촉감이 같은지 확인합니다."
             ]
         },
         {
             id: "scale-white",
-            title: "흰건반 시작 조",
+            title: "White-key Starts",
             eyebrow: "C·D·E·G·A",
-            summary: "다섯 조는 공통 운지 골격으로 먼저 묶어서 익힙니다.",
+            summary: "다섯 Keys는 Common Fingering Pattern으로 먼저 묶어서 익힙니다.",
             keys: ["C", "D", "E", "G", "A"],
             concepts: [
-                "오른손 상행의 기본 골격은 1-2-3 | 1-2-3-4-5입니다.",
-                "왼손 상행의 기본 골격은 5-4-3-2-1 | 3-2-1입니다.",
-                "장·자연단·화성단·가락단음계의 반음 위치가 달라도 손바꿈 골격을 먼저 유지합니다."
+                "Right Hand Ascending의 기본 Pattern은 1-2-3 | 1-2-3-4-5입니다.",
+                "Left Hand Ascending의 기본 Pattern은 5-4-3-2-1 | 3-2-1입니다.",
+                "Major·Natural Minor·Harmonic Minor·Melodic Minor Scale의 Half Step 위치가 달라도 손바꿈 Pattern을 먼저 유지합니다."
             ],
             practice: [
-                "선택한 음계를 상행만 연주하며 3번 뒤 엄지 이동을 따로 점검합니다.",
-                "상행과 하행을 이어서 같은 속도로 연주합니다.",
-                "다섯 조를 5도권 또는 반음·온음·단3도 순서로 바꾸어 연습합니다."
+                "선택한 Scale을 Ascending만 연주하며 3번 뒤 Thumb 이동을 따로 점검합니다.",
+                "Ascending과 Descending을 이어서 같은 Tempo로 연주합니다.",
+                "다섯 Keys를 Circle of Fifths 또는 Half Step·Whole Step·Minor 3rd 순서로 바꾸어 연습합니다."
             ]
         },
         {
             id: "scale-exceptions",
-            title: "F·B 예외",
-            eyebrow: "흰건반 시작 예외",
-            summary: "F장조 오른손과 B장조 왼손은 공통 골격과 다른 손바꿈을 씁니다.",
+            title: "F·B Fingering Exceptions",
+            eyebrow: "White-key Start Exceptions",
+            summary: "F Major의 Right Hand와 B Major의 Left Hand는 Common Pattern과 다른 손바꿈을 씁니다.",
             keys: ["F", "B"],
             concepts: [
-                "F장조 오른손은 1-2-3-4 | 1-2-3-4로, B♭에 엄지를 놓지 않습니다.",
-                "B장조 왼손은 4-3-2-1 | 4-3-2-1로 두 묶음의 모양을 반복합니다.",
-                "예외 운지는 검은건반에 엄지를 억지로 올리지 않고 손의 방향을 자연스럽게 유지하려는 선택입니다."
+                "F Major Right Hand는 1-2-3-4 | 1-2-3-4로, B♭에 Thumb를 놓지 않습니다.",
+                "B Major Left Hand는 4-3-2-1 | 4-3-2-1로 두 Fingering Group의 모양을 반복합니다.",
+                "Exception Fingering은 Black Key에 Thumb를 억지로 올리지 않고 손의 방향을 자연스럽게 유지합니다."
             ],
             practice: [
-                "F장조 오른손의 4번-1번, B장조 왼손의 1번-4번 연결만 네 번 반복합니다.",
+                "F Major Right Hand의 4-1, B Major Left Hand의 1-4 연결만 네 번 반복합니다.",
                 "예외 지점 앞에서 멈추지 않고 느린 일정 박으로 통과합니다.",
-                "장음계를 통과한 뒤 같은 으뜸음의 세 단음계와 손 모양을 비교합니다."
+                "Major Scale을 통과한 뒤 같은 Tonic의 세 Minor Scales와 Hand Shape를 비교합니다."
             ]
         },
         {
             id: "scale-black",
-            title: "검은건반 시작 조",
+            title: "Black-key Starts",
             eyebrow: "D♭·E♭·G♭·A♭·B♭",
-            summary: "검은건반에서 시작할 때는 2번이나 3번으로 출발하고 엄지는 흰건반에 놓습니다.",
+            summary: "Black Key에서 시작할 때는 2번이나 3번으로 출발하고 Thumb는 White Key에 놓습니다.",
             keys: ["Db", "Eb", "Gb", "Ab", "Bb"],
             concepts: [
-                "검은건반 으뜸음은 보통 오른손 2번 또는 3번으로 시작합니다.",
-                "검은건반에서 흰건반으로 내려오는 자리에 엄지 1번을 사용합니다.",
-                "엄지 위로 손을 넘길 때는 3번과 4번을 조의 모양에 맞추어 번갈아 사용합니다."
+                "Black-key Tonic은 보통 Right Hand 2번 또는 3번으로 시작합니다.",
+                "Black Key에서 White Key로 내려오는 자리에 Thumb 1번을 사용합니다.",
+                "Finger-over에서는 3번과 4번을 Key의 모양에 맞추어 번갈아 사용합니다."
             ],
             practice: [
-                "첫 세 음만 반복해 검은건반 시작 손 모양을 기억합니다.",
-                "엄지가 닿는 흰건반을 먼저 표시하고 나머지 손가락을 채웁니다.",
-                "눈을 감고 같은 조의 시작 모양을 다시 찾아 정확히 착지합니다."
+                "첫 세 Notes만 반복해 Black-key Start Hand Shape를 기억합니다.",
+                "Thumb가 닿는 White Key를 먼저 표시하고 나머지 Fingers를 채웁니다.",
+                "눈을 감고 같은 Key의 Starting Shape를 다시 찾아 정확히 착지합니다."
             ]
         },
         {
             id: "scale-all-keys",
-            title: "전 조 통과",
-            eyebrow: "12개 조 · 네 음계",
-            summary: "48개 조합을 틀린 음과 머뭇거림 없이 연주해 완전히 익혔는지 확인합니다.",
+            title: "All Keys Pass",
+            eyebrow: "12 Keys · Four Scale Types",
+            summary: "48개 조합을 Wrong Note와 Hesitation 없이 연주해 완전히 익혔는지 확인합니다.",
             keys: KEYS.map((key) => key.id),
             concepts: [
-                "장음계와 세 단음계는 3·6·7음의 차이를 귀와 손으로 함께 구별합니다.",
-                "가락단음계는 상행에서 6·7음을 올리고 하행에서는 자연단음계로 돌아옵니다.",
+                "Major Scale과 세 Minor Scales는 3rd·6th·7th의 차이를 귀와 손으로 함께 구별합니다.",
+                "Melodic Minor는 Ascending에서 6th·7th를 올리고 Descending에서는 Natural Minor로 돌아옵니다.",
                 "한 번의 우연한 성공보다 여러 조에서 같은 원리를 재현하는 것이 통과 기준입니다."
             ],
             practice: [
-                "박자 없이 음과 운지를 확인한 뒤 목표 BPM으로 통과 시험을 합니다.",
-                "5도권, 반음, 온음, 장·단3도 순서를 번갈아 사용해 조를 바꿉니다.",
+                "Out of Tempo로 Notes와 Fingering을 확인한 뒤 Target BPM으로 통과 시험을 합니다.",
+                "Circle of Fifths, Half Step, Whole Step, Major·Minor 3rd 순서를 번갈아 사용해 Key를 바꿉니다.",
                 "틀리거나 머뭇거리면 속도를 낮추고 해당 손바꿈만 고친 뒤 처음부터 다시 연주합니다."
             ]
         }
@@ -136,124 +136,144 @@
 
     const VOICING_MODULES = [
         {
-            id: "block", title: "블록 코드", skills: range(1, 6), tempo: 120,
-            summary: "보이싱 전에 7화음의 철자와 전위를 모든 조에서 확실히 만듭니다.",
-            concepts: ["근음·3음·5음·7음으로 코드 구조를 먼저 철자합니다.", "근음 왼손+오른손 블록 또는 양손 블록으로 모양을 확인합니다.", "근음·3음·5음·7음 위의 네 전위를 같은 코드로 인식합니다."],
-            practice: ["코드를 네 박씩 누릅니다.", "4분음표 상·하행 아르페지오와 8분음표 왕복으로 바꿉니다.", "네 전위를 8분음표로 연결하고 120 BPM에서 무정지 통과합니다."]
+            id: "block", title: "Block Chords", skills: range(1, 6), tempo: 120,
+            sourcePage:4,
+            summary: "Voicing을 배우기 전에 Chord Structure(코드 구조)와 Chord Spelling(구성음 철자)을 확실히 익히는 챕터입니다.",
+            concepts: ["Root·3rd·5th·7th를 정확히 말하고 눌러 Chord Spelling을 고정합니다.", "Root는 Left Hand에 두고 Right Hand로 Block Chord를 연주하거나, Both Hands로 같은 Block Chord를 연주합니다.", "Root·3rd·5th·7th 위에서 시작하는 네 Inversion(전위)을 같은 Chord로 인식합니다."],
+            practice: ["각 Chord를 four beats의 Harmonic Rhythm으로 유지합니다.", "Quarter Notes로 Ascending 또는 Descending Arpeggio를, Eighth Notes로 왕복 Arpeggio를 연주합니다.", "네 Inversion을 Eighth Notes로 연결하며 틀린 음이나 멈춤 없이 통과합니다."]
         },
         {
-            id: "shell", title: "셸 보이싱", skills: range(7, 20), tempo: 120,
-            summary: "3·7음과 텐션을 포함한 공통 손 모양을 눈보다 촉감으로 익힙니다.",
-            concepts: ["보이싱의 음 이름과 함께 손가락 사이 간격과 모양을 기억합니다.", "근음은 왼손에 두거나, 근음 없이 양손 각각에서 셸을 익힙니다.", "검은건반이 섞여도 전체 손 모양의 감각은 크게 달라지지 않습니다."],
-            practice: ["눈을 감고 반음씩 위아래로 옮깁니다.", "온음과 단3도로 이동 간격을 넓힙니다.", "손을 건반에서 들어 올렸다가 같은 보이싱에 다시 정확히 착지합니다."]
+            id: "shell", title: "Shell Voicings", skills: range(7, 20), tempo: 120,
+            sourcePage:8,
+            summary: "Common Voicing Shell의 음뿐 아니라 손가락 간격과 Hand Shape의 촉감을 Rote Learning으로 익히는 챕터입니다.",
+            concepts: ["Voicing의 Note Names와 함께 손이 만드는 Spacing과 Shape를 기억합니다.", "흰건반 일부가 검은건반으로 바뀌어도 Hand Shape의 전체 촉감은 크게 달라지지 않습니다.", "Root를 Left Hand에 두는 형태와 Rootless Voicing을 Both Hands에서 모두 준비합니다."],
+            practice: ["눈을 감고 Chromatic으로 Ascending·Descending하며 Hand Shape에 집중합니다.", "확실해지면 Whole Step과 Minor 3rd로 이동 간격을 넓힙니다.", "Voicing을 누른 뒤 손을 건반 위로 들어 올리고, 보지 않은 채 같은 Voicing에 다시 착지합니다.", "손의 높이를 점차 높여도 틀리지 않는지 확인합니다."]
         },
         {
-            id: "diatonic", title: "다이어토닉 7화음", skills: range(21, 32), tempo: 120,
-            summary: "12개 장조의 I부터 VII까지를 조표·기능·코드 성질로 연결합니다.",
-            concepts: ["건반에서 조 밖의 음이 사라졌다고 상상해 일곱 음만 봅니다.", "Imaj7·IIm7·IIIm7·IVmaj7·V7·VIm7·VIIm7♭5의 기능을 함께 말합니다.", "조표 지식으로 화음을 확인하고, 화음의 소리로 조표 실수를 다시 검증합니다."],
-            practice: ["각 조의 음계를 한 번 친 뒤 다이어토닉 7화음을 차례로 연주합니다.", "코드를 누를 때 로마 숫자와 성질을 소리 내어 말합니다.", "C-F-B♭ 순의 5도권으로 12개 조를 연결합니다."]
+            id: "diatonic", title: "Diatonic 7th Chords", skills: range(21, 32), tempo: 120,
+            sourcePage:16,
+            summary: "모든 Major Key의 Diatonic 7th Chords를 Key Signature, Chord Quality, Harmonic Function과 함께 익히는 챕터입니다.",
+            concepts: ["Non-scale Tone 건반이 사라지고 한 Octave에 Scale Tone 일곱 개만 남았다고 시각화합니다.", "II·V·I뿐 아니라 III·IV·VI와 V의 Substitute로 쓰이는 VII의 Function을 함께 봅니다.", "Chord Quality의 Sound로 맞는 Voicing인지 확인하고, Key Signature 지식과 서로 교차 검증합니다."],
+            practice: ["각 Key의 Major Scale을 먼저 연주한 뒤 I부터 VII까지 Diatonic 7th Chords를 연결합니다.", "각 Chord를 누르며 Roman Numeral과 Chord Quality를 소리 내어 말합니다.", "Circle of Fifths 순서로 12 Keys를 틀림없이 통과합니다."]
         },
         {
-            id: "cycle", title: "5도권 진행", skills: range(33, 39), tempo: 120,
-            summary: "3음 또는 7음 위의 전위를 사용해 공통음과 순차 진행으로 코드를 연결합니다.",
-            concepts: ["보이싱의 아래 음은 주로 3음 또는 7음입니다.", "공통음은 유지하고 나머지 성부는 가장 가까운 음으로 움직입니다.", "단조 II-V에서는 m7의 5음을 낮춰 다음 V7의 ♭9으로 이어지는 관계를 관찰합니다."],
-            practice: ["두 코드만 박자 없이 왕복해 성부 이동을 봅니다.", "5도권 전체를 느린 메트로놈으로 연결합니다.", "같은 진행을 두 전위와 장·단조형으로 각각 통과합니다."]
+            id: "cycle", title: "Cycle Progressions", skills: range(33, 39), tempo: 120,
+            sourcePage:24,
+            summary: "전형적인 Progression에서 서로 다른 Inversion을 idiomatic하게 연결하며 smooth Voice Leading을 만드는 챕터입니다.",
+            concepts: ["I-IV, Dominant 7th Cycle, Major II-V, Major·Minor V-I를 Cycle로 연결합니다.", "두 Inversion은 각 Chord의 3rd 또는 7th를 Bass에 둡니다.", "Common Tone은 유지하고 나머지 Voice는 Stepwise Motion으로 가장 가까운 음에 연결합니다.", "Skill 37에서는 Minor 7th의 5th를 낮춰 다음 Dominant 7th의 ♭9으로 유지하는 Minor II-V를 관찰합니다."],
+            practice: ["두 Chord씩 Out of Tempo로 왕복하며 각 Voice의 이동을 확인합니다.", "Skill 37의 Minor II에서 Major 9th와 Minor 9th를 모두 시험합니다.", "두 Inversion과 Major·Minor 형태를 Circle of Fifths 전체에서 연결합니다."]
         },
         {
-            id: "ii-v-i", title: "장·단조 II-V-I", skills: range(40, 45), tempo: 120,
-            summary: "대표적인 재즈 종지를 두 포맷과 상대 장·단조 연결로 익힙니다.",
-            concepts: ["II의 7음에서 시작하는 7-3-5형은 조의 으뜸음과 연결됩니다.", "II→V는 공통음을 남기고 한 성부가 반음 이동하며, V→I는 나머지 성부가 순차 하행합니다.", "단조 II의 ♭9은 길게 머물기보다 짧게 처리하면 비밥 어법의 긴장을 살릴 수 있습니다."],
-            practice: ["각 성부의 수평 이동을 한 줄씩 소리 내어 확인합니다.", "장조와 단조를 따로 통과한 뒤 상대 장·단조 진행으로 연결합니다.", "인쇄된 음을 보지 않고 코드 기호만 보고 연주합니다."]
+            id: "ii-v-i", title: "II-V-I in Major & Minor", skills: range(40, 45), tempo: 120,
+            sourcePage:36,
+            summary: "Cycle Progressions를 완전한 Major·Minor II-V-I Cadence로 확장하고, Common Tone과 Stepwise Voice Leading으로 부드럽게 연결합니다.",
+            concepts: ["Format 1의 첫 II는 7th 위의 7-3-5 Voicing이며 Key Center와 연결됩니다.", "II→V에서는 위 두 Voice를 Common Tone으로 두고 아래 Voice가 Half Step Descending합니다.", "V→I에서는 아래 Voice를 유지하고 위 두 Voice가 Scale 안에서 Stepwise Descending합니다.", "Skill 43의 Half-diminished II에 있는 ♭9은 Bebop 어법의 Tension이므로 짧게 연주할 수 있습니다.", "Skills 44-45는 Major Key와 Relative Minor를 한 Progression으로 연결합니다."],
+            practice: ["각 Voice의 Horizontal Motion을 따로 말하고 노래한 뒤 연주합니다.", "Skill 43의 ♭9 Chord는 Short Duration과 Sustained Duration을 비교합니다.", "Major와 Minor Format을 따로 통과한 뒤 Relative Major-Minor Progression으로 연결합니다.", "틀린 음과 Hesitation 없이 Chord Symbol만 보고 연주합니다."]
         },
         {
-            id: "i-iv", title: "I-IV 순환", skills: ["46"], tempo: 120,
-            summary: "I가 IV로 이동하고 그 IV가 새 I가 되는 연속 전조를 모든 장조에서 연결합니다.",
-            concepts: ["첫 I는 7-3-5형이며 조의 이끈음에서 시작합니다.", "각 성부의 온음계 이동과 반음계 변화를 따로 관찰합니다.", "중간의 반감7화음부터 아래 성부가 다음 조의 이끈음까지 반음 하행합니다."],
-            practice: ["첫 네 화음으로 상대단조 전조 느낌을 익힙니다.", "도미넌트 변형을 하나 정해 전 조에서 일관되게 사용합니다.", "I-IV 연결을 12개 조에서 멈춤 없이 순환합니다."]
+            id: "i-iv", title: "I-IV Cycle Progression", skills: ["46"], tempo: 120,
+            sourcePage:50,
+            summary: "I에서 IV로 이동한 뒤 그 IV를 새로운 Key Center의 I로 바꾸는 common Cycle Progression을 모든 Major Key에서 익힙니다.",
+            concepts: ["첫 I는 7th 위의 7-3-5 Voicing이며 Leading Tone에서 시작합니다.", "첫 Voicing은 Key의 III Chord를 2nd Inversion으로 본 형태와 같습니다.", "Diatonic Motion과 Chromatic Alteration을 Voice별로 구분하고, 두 번째 Measure의 Half-diminished Chord부터 Right Hand Bottom Voice가 다음 Key의 Leading Tone까지 Chromatic Descending하는 것을 봅니다."],
+            practice: ["각 Key의 첫 네 Chords가 Relative Minor Modulation으로 들리는지 확인합니다.", "Dominant 7th Alteration을 하나 선택하고 모든 Keys에서 같은 Alteration을 유지합니다.", "각 Voice의 움직임을 따로 연습한 뒤 12 Keys를 멈춤 없이 Cycle로 연결합니다."]
         },
         {
-            id: "modal-fourths", title: "도리안 4도 보이싱", skills: ["47"], tempo: 120,
-            summary: "모든 도리안 모드의 각 음 위에 쌓이는 4도 구조를 익힙니다.",
-            concepts: ["1·2·4·5·6도는 완전4도 적층입니다.", "3도 위치는 아래에 트라이톤, 7도 위치는 위에 트라이톤이 생깁니다.", "모드의 일곱 음과 보이싱 구조를 서로 확인 수단으로 사용합니다."],
-            practice: ["조 밖의 건반이 사라졌다고 상상합니다.", "각 보이싱의 완전4도와 트라이톤 위치를 말합니다.", "12개 도리안을 5도권으로 이동합니다."]
+            id: "modal-fourths", title: "Modal Fourthy Voicings", skills: ["47"], tempo: 120,
+            sourcePage:54,
+            summary: "Dorian Mode 안에서 Diatonic Fourthy Voicing을 이동하며 Scale Degree에 따라 달라지는 Interval Structure를 익힙니다.",
+            concepts: ["1st·2nd·4th·5th·6th Degree의 Voicing은 Perfect 4ths로 쌓입니다.", "3rd Degree는 아래에 Tri-tone, 7th Degree는 위에 Tri-tone이 생깁니다.", "Modal Key Signature와 Fourthy Structure를 서로 확인 수단으로 사용합니다."],
+            practice: ["Non-scale Tone 건반이 사라지고 Dorian의 일곱 음만 남았다고 시각화합니다.", "각 위치의 Perfect 4th와 Tri-tone을 말하며 맞는 Sound를 기억합니다.", "모든 Dorian Modes를 Circle of Fifths로 이동합니다."]
         },
         {
-            id: "so-what", title: "So What 보이싱", skills: ["48", "49"], tempo: 120,
-            summary: "완전4도 세 개 위에 장3도를 얹은 다섯 음 구조를 단조와 장조에 적용합니다.",
-            concepts: ["도리안의 1·2·5도에서는 단7화음에, 리디안의 3·6·7도에서는 장7화음에 연결됩니다.", "아래 세 음은 왼손의 두 완전4도, 위 세 음은 오른손의 2전위 장3화음으로 느낄 수 있습니다.", "도리안 보이싱은 완전5도 아래의 무변형 도미넌트7에도 겹칠 수 있습니다."],
-            practice: ["다섯 음을 두 손 2+3 또는 3+2로 나눠 봅니다.", "반음 이동과 위·아래 사이드슬립을 연습합니다.", "단조 12개와 장조 12개에서 같은 구조를 재현합니다."]
+            id: "so-what", title: "“So What” Voicings", skills: ["48", "49"], tempo: 120,
+            sourcePage:58,
+            summary: "Miles Davis의 ‘So What’으로 알려진 Three Perfect 4ths + Major 3rd 구조를 Minor·Major Chord Family에 적용합니다.",
+            concepts: ["Skill 48은 Dorian의 1st·2nd·5th Degree에서 같은 Modal Center의 Minor 7th Chord와 연결됩니다.", "Skill 49는 Lydian의 3rd·6th·7th Degree에서 같은 Modal Center의 Major 7th Chord와 연결됩니다.", "아래부터 Three Perfect 4ths와 Major 3rd가 쌓인 Five-note Voicing입니다.", "Right Hand의 위 세 음은 2nd Inversion Major Triad, Left Hand의 아래 세 음은 Two Perfect 4ths로 느낄 수 있습니다.", "Skill 48 Voicing은 Root가 Perfect 5th 아래에 있는 Unaltered Dominant 7th에도 사용할 수 있습니다."],
+            practice: ["Five-note Voicing의 Middle Note를 어느 Hand가 맡을지 두 가지 Fingering을 비교합니다.", "Chromatic으로 이동한 뒤 Diatonic Voicing의 Half Step 위·아래에서 Side-slipping합니다.", "12 Minor Keys와 12 Major Keys에서 같은 Structure를 재현합니다."]
         },
         {
-            id: "modal-so-what", title: "모달 So What", skills: ["50"], tempo: 120,
-            summary: "So What 구조를 도리안 음계 안에서 이동시키며 단계마다 달라지는 3도·4도를 듣습니다.",
-            concepts: ["1·2·5도는 순수한 세 완전4도+장3도 구조를 유지합니다.", "나머지 도수는 모드 안에 머물기 위해 간격 구조가 조금씩 달라집니다.", "맞는 구조의 울림과 틀린 음을 귀로 구별합니다."],
-            practice: ["도리안 일곱 음 위의 구조를 느리게 쌓습니다.", "각 위치의 3도·4도 종류를 말합니다.", "조표와 손 모양을 동시에 보지 않고 촉감으로 이동합니다."]
+            id: "modal-so-what", title: "Modal “So What” Voicings", skills: ["50"], tempo: 120,
+            sourcePage:62,
+            summary: "‘So What’ Voicing을 Dorian Mode의 각 Degree로 옮기며 Mode 안에 머물도록 달라지는 3rd와 4th의 종류를 익힙니다.",
+            concepts: ["1st·2nd·5th Degree는 Three Perfect 4ths + Major 3rd의 pure ‘So What’ Structure를 유지합니다.", "나머지 Degree에서는 Dorian Mode에 맞추기 위해 Interval Structure가 달라집니다.", "Modal Key Signature와 Voicing Structure를 서로 확인해 맞는 Sound와 오류를 구별합니다."],
+            practice: ["Dorian의 일곱 Degree 위에 Voicing을 천천히 쌓습니다.", "각 위치의 Major·Minor 3rd와 Perfect·Augmented 4th를 말합니다.", "Notation을 보지 않고 Key Signature와 Hand Shape의 촉감으로 이동합니다."]
         },
         {
-            id: "fourthy-ii-v-i", title: "4도 II-V-I", skills: ["51", "52"], tempo: 120,
-            summary: "So What 구조를 II와 I에 놓고 V에서는 반음 사이드슬립으로 해결합니다.",
-            concepts: ["II는 근음, I는 3음 위에 구조를 둡니다.", "중간 V는 전통적인 도미넌트 철자보다 I로 향하는 경과 소리입니다.", "포맷 1은 평행 반음 상행, 포맷 2는 선율 같은 곡선을 만듭니다."],
-            practice: ["V를 짧게 연주해 해결 방향을 드러냅니다.", "세 화음의 평행 이동을 한 덩어리로 느낍니다.", "두 포맷을 모든 조에서 번갈아 연주합니다."]
+            id: "fourthy-ii-v-i", title: "Fourthy II-V-I", skills: ["51", "52"], tempo: 120,
+            sourcePage:66,
+            summary: "Skill 48의 ‘So What’ Voicing을 II의 Root와 I의 3rd 위에 두고, 중간 V 자리는 Chromatic Side-slipping으로 I에 Resolution합니다.",
+            concepts: ["중간의 V 표기는 실제 Dominant Voicing이라기보다 I로 가는 Passing Sound입니다.", "이 V Sound는 강조하지 않고 Short Rhythmic Duration으로 처리합니다.", "Skill 51은 Parallel Chromatic Ascending, Skill 52는 tune-like한 Smooth Melodic Curve를 만듭니다."],
+            practice: ["II와 I의 ‘So What’ Structure를 먼저 고정합니다.", "V Sound를 짧게 두고 I Resolution 방향이 들리는지 확인합니다.", "Format 1과 Format 2의 서로 다른 Melodic Motion을 모든 Keys에서 비교합니다."]
         },
         {
-            id: "tritone-ii-v-i", title: "트라이톤 대리 II-V-I", skills: ["53", "54"], tempo: 120,
-            summary: "원래 II-V와 트라이톤 떨어진 II-V를 연결해 반음 해결의 색채를 만듭니다.",
-            concepts: ["도미넌트는 완전5도 하행뿐 아니라 반음 하행으로도 강하게 해결됩니다.", "II→V는 두 공통음+한 반음, V→♭VI는 같은 전위, ♭VI→♭II는 바깥 공통음+가운데 반음으로 연결합니다.", "최종 ♭II→I도 가장 가까운 전위를 유지합니다."],
-            practice: ["각 연결에서 유지되는 공통음을 손가락으로 남깁니다.", "포맷별 성부 진행을 따로 노래한 뒤 연주합니다.", "빠르기보다 매끈한 연결과 무정지를 우선합니다."]
+            id: "tritone-ii-v-i", title: "Tri-Tone Sub II-V-I", skills: ["53", "54"], tempo: 120,
+            sourcePage:70,
+            summary: "Normal II-V와 Tri-tone 떨어진 II-V를 결합해 먼 Key로 갑자기 Modulation하는 듯한 Deceptive Cadence를 만듭니다.",
+            concepts: ["Dominant Chord는 Perfect 5th Descending뿐 아니라 Half Step Descending으로도 강하게 Resolution합니다.", "첫 II는 7th 위의 7-3-5 Voicing이며 Key Center와 연결됩니다.", "II→V는 위 두 Voice가 Common Tone이고 아래 Voice가 Half Step Descending합니다.", "V→♭VI와 ♭II→I는 같은 Inversion을 유지하며, ♭VI→♭II는 Outside Voices를 유지하고 Middle Voice만 Half Step Descending합니다."],
+            practice: ["각 연결에서 Common Tone을 실제 손가락으로 남긴 채 나머지 Voice만 이동합니다.", "Format별 Horizontal Voice Leading을 한 Voice씩 노래한 뒤 연주합니다.", "Stepwise Motion과 같은 Inversion을 유지해 빠르기보다 Smooth Connection을 우선합니다."]
         },
         {
-            id: "polychord-ii-v-i", title: "폴리코드 II-V-I", skills: range(55, 58), tempo: 120,
-            summary: "왼손의 관용 셸 위에 오른손 장·단3화음을 겹쳐 텐션과 변형음을 만듭니다.",
-            concepts: ["왼손은 3-7-9 또는 7-3-6형, 오른손은 별도의 3화음 구조를 맡습니다.", "오른손은 평행 반음 이동하고 왼손 윗성부는 반대 방향으로 움직일 수 있습니다.", "각 포맷에서도 공통음과 순차 진행이 가장 매끄러운 전위를 선택합니다."],
-            practice: ["왼손과 오른손을 따로 외운 뒤 합칩니다.", "양손의 반대 방향 성부를 천천히 관찰합니다.", "네 포맷을 코드 기호만 보고 모든 조에서 연주합니다."]
+            id: "polychord-ii-v-i", title: "Polychordal II-V-I", skills: range(55, 58), tempo: 120,
+            sourcePage:74,
+            summary: "Left Hand의 conventional inversion 위에 Right Hand Triadic Structure를 겹쳐 Extension과 Alteration을 만드는 Polychordal II-V-I입니다.",
+            concepts: ["Skill 55의 첫 Left Hand는 II의 3rd 위에 놓인 3-7-9 Voicing입니다.", "Right Hand는 Key의 Triad를 2nd Inversion으로 두고 Parallel Chromatic Ascending합니다.", "Left Hand Top Voice는 반대 방향으로 Chromatic Descending합니다.", "전체 목표는 Common Tone과 Stepwise Motion 중심의 Smooth Voice Leading입니다."],
+            practice: ["Left Hand conventional inversion과 Right Hand Triad를 따로 외운 뒤 합칩니다.", "Right Hand Ascending과 Left Hand Top Voice Descending을 느리게 분리 연습합니다.", "네 Formats에서 각 Voice의 Horizontal Motion을 확인한 뒤 Chord Symbol만 보고 연주합니다."]
         },
         {
-            id: "altered-dominants", title: "변형 도미넌트 순환", skills: ["59", "60"], tempo: 120,
-            summary: "5도권 근음 위에서 왼손 셸과 오른손 3화음을 반음 진행시켜 도미넌트 색채를 바꿉니다.",
-            concepts: ["왼손은 1-7과 1-3 셸을 번갈아 사용합니다.", "오른손은 첫 근음의 장6도 위 장3화음에서 시작해 평행 반음 하행합니다.", "아래 성부는 5도권, 위 성부는 반음계로 움직이는 두 층을 동시에 듣습니다."],
-            practice: ["왼손 근음과 셸만 5도권으로 연습합니다.", "오른손 평행 3화음만 따로 연결합니다.", "13♭9→7♯9과 7♯5♯9→13 두 형식을 합칩니다."]
+            id: "altered-dominants", title: "Cycling Altered Dominants", skills: ["59", "60"], tempo: 120,
+            sourcePage:82,
+            summary: "Left Hand Dominant Structure와 Right Hand Triad를 결합해 Extension·Alteration을 만들고 Circle of Fifths로 순환합니다.",
+            concepts: ["Skill 59에서 Left Hand는 1-7 Shell과 1-3 Shell을 번갈아 사용합니다.", "첫 Right Hand는 Dominant Root의 Major 6th 위 Major Triad를 2nd Inversion으로 둡니다.", "Right Hand는 Parallel Chromatic Descending하고, Left Hand Top Voice도 Chromatic Descending합니다.", "Left Hand Bottom Voice의 Root만 Circle of Fifths로 이동합니다."],
+            practice: ["Left Hand Shell 교대와 Circle of Fifths Root만 먼저 연습합니다.", "Right Hand Major Triad의 Parallel Chromatic Descending을 따로 연결합니다.", "13♭9→7♯9과 7♯5♯9→13 두 Formats를 Smooth Voice Leading으로 합칩니다."]
         },
         {
-            id: "polychord-blues", title: "폴리코드 블루스", skills: range(61, 72), tempo: 132,
-            summary: "12개 조 블루스에서 왼손 관용 전위와 오른손 3화음을 두 포맷으로 연결합니다.",
-            concepts: ["첫 I는 왼손 7-3-6형, 오른손은 조의 1전위 3화음으로 시작합니다.", "기본 3화음을 주로 쓰되 VI와 II에서 텐션·변형을 만드는 상부구조를 사용합니다.", "성부는 공통음 또는 한두 음의 순차 이동으로 최대한 가깝게 연결합니다."],
-            practice: ["한 조의 12마디를 포맷 1과 2로 나누어 익힙니다.", "마디 사이 공통음을 색으로 확인한 뒤 화면을 보지 않고 연주합니다.", "C-F-B♭ 순으로 12개 조를 통과합니다."]
+            id: "polychord-blues", title: "Polychordal Blues Voicings", skills: range(61, 72), tempo: 132,
+            sourcePage:86,
+            summary: "Left Hand conventional inversion과 Right Hand Triadic Structure를 결합해 12-bar Blues의 Two-hand Polychordal Voicing을 만듭니다.",
+            concepts: ["Skill 61의 첫 Left Hand는 I의 7th 위에 놓인 7-3-6 Voicing이고, Right Hand는 Key Triad의 1st Inversion입니다.", "Bar 1→2에서 Right Hand Top Voice는 Common Tone, 나머지 두 Voice는 Stepwise Ascending합니다.", "같은 연결에서 Left Hand 아래 두 Voice는 Half Step Descending, Top Voice는 Whole Step Descending합니다.", "Upper Triad는 대체로 Basic Triad이며 VI와 II에서만 Extension·Alteration을 만듭니다."],
+            practice: ["한 Key의 12 bars를 Format 1과 Format 2로 나누어 익힙니다.", "Bar 사이 Common Tone을 손가락으로 남기고 Stepwise Voice만 이동합니다.", "C-F-B♭ 순의 Circle of Fifths로 12 Keys를 132 BPM까지 연결합니다."]
         },
         {
-            id: "fourthy-blues", title: "4도 블루스", skills: range(73, 84), tempo: 132,
-            summary: "왼손 셸 위에 오른손 2-5-8 완전4도 구조를 얹은 블루스를 모든 조에서 연주합니다.",
-            concepts: ["첫 I는 왼손 7-3-6, 오른손 2-5-8의 두 완전4도입니다.", "대부분의 상부 4도는 무변형 코드톤이며 VI에서 텐션·변형을 만듭니다.", "7→8마디에서는 모든 성부가 단3도 평행 상행하는 움직임을 관찰합니다."],
-            practice: ["오른손 두 완전4도의 촉감을 먼저 고정합니다.", "왼손 성부의 반음·온음 이동을 따로 연습합니다.", "두 포맷과 12개 조를 132 BPM까지 올립니다."]
+            id: "fourthy-blues", title: "Fourthy Blues Voicings", skills: range(73, 84), tempo: 132,
+            sourcePage:100,
+            summary: "Left Hand conventional inversion 위에 Right Hand의 Two Perfect 4ths를 얹어 12-bar Blues의 Two-hand Fourthy Voicing을 만듭니다.",
+            concepts: ["Skill 73의 첫 Left Hand는 I의 7th 위 7-3-6 Voicing이고, Right Hand는 2-5-8 Voicing입니다.", "Bar 1→2에서 Right Hand 세 Voice는 모두 Common Tone이며, Left Hand 아래 두 Voice는 Half Step, Top Voice는 Whole Step Descending합니다.", "Bar 7→8에서는 모든 Voice가 Minor 3rd Parallel Ascending합니다.", "Upper Fourths는 대체로 Unaltered Chord Tones이고 Bar 8의 VI에서 Extension·Alteration이 생깁니다."],
+            practice: ["Right Hand의 Two Perfect 4ths Hand Shape를 먼저 고정합니다.", "Left Hand의 Half Step·Whole Step Voice Leading을 따로 연습합니다.", "Bar 7→8의 Minor 3rd Parallel Motion을 반복한 뒤 두 Formats와 12 Keys를 연결합니다."]
         },
         {
-            id: "major7-blues", title: "메이저7 블루스", skills: range(85, 96), tempo: 120,
-            summary: "앞서 익힌 장조 II-V-I·I-IV·트라이톤 II-V-I를 한 블루스 진행에 통합합니다.",
-            concepts: ["1-4마디는 I-IV 순환과 같습니다.", "6-8마디는 아래로 반음 전조하는 장조 II-V 연속입니다.", "9-10마디는 트라이톤 대리 II-V이며 전체 목표는 매끄러운 성부 연결입니다."],
-            practice: ["세 부분을 각각 통과한 뒤 12마디로 합칩니다.", "어떤 이전 기술이 다시 등장하는지 말하며 연주합니다.", "12개 조에서 120 BPM 무정지 통과를 목표로 합니다."]
+            id: "major7-blues", title: "Major 7th Blues Voicings", skills: range(85, 96), tempo: 120,
+            sourcePage:114,
+            summary: "앞에서 익힌 Major II-V-I, I-IV Cycle, Tri-Tone II-V-I를 하나의 12-bar Blues Progression에 통합합니다.",
+            concepts: ["Bars 1-4는 I-IV Cycle과 같습니다.", "Bars 6-8은 Chromatic Descending으로 Modulation하는 Major II-V의 연속입니다.", "Bars 9-10은 Tri-Tone II-V Progression입니다.", "전체 목표는 Common Tone과 Stepwise Motion을 이용한 Smooth Voice Leading입니다."],
+            practice: ["세 구간을 각각 이전 Skill과 대조해 따로 통과합니다.", "각 Bar에서 사용된 이전 Progression 이름을 말하며 연주합니다.", "세 구간을 12 bars로 합쳐 12 Keys에서 120 BPM 무정지 통과를 목표로 합니다."]
         },
         {
-            id: "minor-blues", title: "마이너 블루스", skills: range(97, 108), tempo: 132,
-            summary: "단조 블루스에서 왼손 관용 전위와 오른손 두 완전4도를 두 포맷으로 연결합니다.",
-            concepts: ["첫 I는 왼손 7-3-5, 오른손 2-5-8형입니다.", "대부분의 오른손 4도는 무변형이며 4·10·12마디 도미넌트에서 텐션·변형이 생깁니다.", "I→IV에서 오른손은 공통음을 유지하고 왼손 아래 성부만 온음 하행합니다."],
-            practice: ["I와 IV의 최소 성부 이동부터 익힙니다.", "세 도미넌트 마디의 변형음을 따로 확인합니다.", "C-F-B♭ 순의 12개 단조와 두 포맷을 통과합니다."]
+            id: "minor-blues", title: "Minor Blues Voicings", skills: range(97, 108), tempo: 132,
+            sourcePage:124,
+            summary: "Minor Blues에서 Left Hand conventional inversion과 Right Hand의 Two Perfect 4ths를 결합한 Two-hand Voicing을 익힙니다.",
+            concepts: ["Skill 97의 첫 Left Hand는 I의 7th 위 7-3-5 Voicing이고, Right Hand는 Key Center에서 아래로 쌓은 2-5-8 Voicing입니다.", "Bar 1→2에서 Right Hand 세 Voice와 Left Hand 위 두 Voice는 Common Tone이며, Left Hand Bottom Voice만 Whole Step Descending합니다.", "Upper Fourths는 대체로 Unaltered Chord Tones입니다.", "Bars 4·10·12의 Dominant Chords에서만 Extension·Alteration이 생깁니다."],
+            practice: ["I→IV의 Common Tone을 유지하고 Left Hand Bottom Voice만 이동하는 연결부터 익힙니다.", "Bars 4·10·12의 Altered Dominant Sound를 따로 확인합니다.", "두 Formats를 C-F-B♭ 순의 12 Minor Keys에서 132 BPM까지 연결합니다."]
         },
         {
-            id: "dominant-polychords", title: "도미넌트 폴리코드", skills: range(109, 116), tempo: 120,
-            summary: "도미넌트7 셸 위의 상부 장·단3화음 위치를 공식처럼 익혀 여덟 가지 색채를 만듭니다.",
-            concepts: ["장3화음은 근음의 온음·단3도·트라이톤·단6도·장6도 위에 놓을 수 있습니다.", "단3화음은 반음·단3도·트라이톤 위에 놓습니다.", "기본 도미넌트의 5음은 생략하고 상부구조의 변형5음과 텐션을 선명하게 둡니다."],
-            practice: ["상부 3화음/도미넌트 근음 관계를 말하고 누릅니다.", "왼손을 3-7-9 또는 7-3-6형으로 바꾸고 오른손 전위도 바꿉니다.", "오른손 한 음을 옥타브로 겹치는 변형까지 시험합니다."]
+            id: "dominant-polychords", title: "Dominant 7th Polychords", skills: range(109, 116), tempo: 120,
+            sourcePage:138,
+            summary: "Dominant 7th 위에 Upper-structure Triad를 겹치는 Polychord Formula로 다양한 Extension과 Alteration의 색채를 만듭니다.",
+            concepts: ["Upper Major Triad는 Dominant Root의 Whole Step·Minor 3rd·Tri-tone·Minor 6th·Major 6th 위에 놓을 수 있습니다.", "Upper Minor Triad는 Dominant Root의 Half Step·Minor 3rd·Tri-tone 위에 놓습니다.", "Basic Dominant 7th의 5th는 생략합니다. Upper Triad의 Altered 5th가 그 기능을 대신하거나 5th 자체가 Dispensable Tone이기 때문입니다.", "각 관계를 ‘Upper Triad over Dominant Root = Dominant Sound’라는 Formula로 기억합니다."],
+            practice: ["Upper Triad와 Dominant Root의 Interval 관계를 말한 뒤 누릅니다.", "Left Hand를 Root Position에서 3-7-9 또는 7-3-6 Voicing으로 바꿉니다.", "Right Hand Triad의 Inversion을 바꾸고 한 Note를 Octave Doubling해 Variations를 만듭니다."]
         },
         {
-            id: "polychord-groups", title: "폴리코드 그룹", skills: ["117"], tempo: 96,
-            summary: "하나의 도미넌트 위에서 상부 장3화음만 이동시켜 긴 화음의 색과 선율을 바꿉니다.",
-            concepts: ["Skills 109-113의 다섯 장3화음 공식을 한 흐름으로 사용합니다.", "상부 3화음은 반음 상행→단3도 상행→온음 상행→반음 상행합니다.", "화성은 그대로지만 윗성부의 선율과 색채가 바뀝니다."],
-            practice: ["왼손 도미넌트를 유지한 채 오른손만 평행 이동합니다.", "상부 3화음의 전위를 바꾸어 선율선을 비교합니다.", "발라드의 긴 도미넌트 구간처럼 느리게 색채를 이어 봅니다."]
+            id: "polychord-groups", title: "Dominant Polychord Groups", skills: ["117"], tempo: 96,
+            sourcePage:144,
+            summary: "Skills 109-113의 Polychord Formulas를 Melodic Motion으로 연결해 Harmony는 유지하면서 Dominant 7th의 Color를 변화시킵니다.",
+            concepts: ["모든 Upper Structures는 Major Triads가 Parallel Motion으로 이동합니다.", "원문 Sequence는 Half Step Up → Minor 3rd Up → Whole Step Up → Half Step Up입니다.", "표기는 Root Position Triads이지만 Both Hands 모두 다른 Inversion을 사용할 수 있습니다.", "긴 Dominant 7th Duration이 있는 Ballad에서 Color와 Melody를 움직이는 방법으로 쓸 수 있습니다."],
+            practice: ["Left Hand Dominant를 유지한 채 Right Hand Major Triads만 원문 Sequence로 이동합니다.", "Upper Triad의 Inversion을 바꾸어 다른 Melodic Line을 비교합니다.", "Polychord의 조합과 이동 방향을 바꾸어 자신의 Variation을 만듭니다."]
         },
         {
-            id: "diminished-sub", title: "감7 대리", skills: range(118, 123), tempo: 96,
-            summary: "반-온 감음계에서 나온 13♭9형을 단3도 평행 이동하고 원하는 지점에서 I로 해결합니다.",
-            concepts: ["같은 반-온 감음계는 단3도 간격의 네 도미넌트7과 연결됩니다.", "모든 보이싱은 같은 감음계 음만 사용하며 단3도 계단처럼 위아래로 이동합니다.", "빠른 곡은 두 계단, 발라드는 다섯·여섯 계단 뒤에도 해결할 수 있습니다."],
-            practice: ["두세 옥타브에 걸쳐 4분음표로 단3도 계단을 왕복합니다.", "포맷 1·2와 세 전조 위치를 각각 통과합니다.", "13♭9 이외의 세 위치에서도 자신만의 I 해결을 만들어 봅니다."]
+            id: "diminished-sub", title: "Diminished Substitutions", skills: range(118, 123), tempo: 96,
+            sourcePage:148,
+            summary: "Dominant 7th와 연결되는 Half-Whole Diminished Scale의 13♭9 Voicing을 Minor 3rd Parallel Motion으로 이동해 여러 지점에서 I로 Resolution합니다.",
+            concepts: ["하나의 Half-Whole Diminished Scale은 Minor 3rd 간격의 네 Dominant 7th Chords와 연결됩니다.", "Resolution 직전의 13♭9 Voicing 외 세 Voicings는 다른 Dominant로 Transposition된 형태지만 Main Dominant 위에서도 사용할 수 있습니다.", "모든 Voicing은 같은 Diminished Scale의 Notes만 사용하며 Minor 3rd로 Parallel Ascending·Descending합니다.", "Sequence는 원하는 Landing에서 내려 I로 Resolution할 수 있는 계단처럼 생각합니다."],
+            practice: ["Quarter-note Voicings를 Two or Three Octaves에 걸쳐 Ascending·Descending합니다.", "빠른 Tempo에서는 두 Voicings, Ballad에서는 다섯·여섯 Voicings 뒤에 Resolution해 봅니다.", "13♭9 외의 세 Transposition에서도 자신만의 I Resolution을 만듭니다."]
         }
     ];
 
@@ -284,20 +304,20 @@
     ];
 
     const PRACTICE_PRINCIPLES = [
-        "악보보다 한 옥타브 아래가 더 풍성하게 들리면 음역을 내려 연주합니다.",
-        "보이싱 사이의 간격·공통음·성부 진행 관계를 찾아 말합니다.",
-        "처음에는 박자 없이 문제를 익힌 뒤 느린 메트로놈으로 옮깁니다.",
-        "목표 빠르기에서 미리 한 번 시험해 현재 상태를 확인합니다.",
-        "틀린 음이나 머뭇거림이 한 번이라도 있으면 아직 통과하지 않은 것으로 봅니다.",
-        "5도권뿐 아니라 반음·온음·장3도·단3도 순서로도 모든 조를 연습합니다.",
-        "스윙·보사노바 같은 반복 리듬을 입혀 실제 음악처럼 연주합니다.",
-        "매끄러운 진행은 손을 가능한 한 보지 않고 모양과 촉감에 집중합니다.",
-        "인쇄된 음표에서 빨리 벗어나 코드 기호와 기억만으로 연주합니다.",
-        "배운 보이싱으로 간단한 코드 진행을 초견 연주하며 실제 적용을 확인합니다."
+        "Notation보다 One Octave 아래가 더 풍성하게 들리면 Register를 내려 연주합니다.",
+        "Voicing 사이의 Interval·Common Tone·Voice Leading 관계를 찾아 말합니다.",
+        "처음에는 Out of Tempo로 문제를 익힌 뒤 느린 Metronome으로 옮깁니다.",
+        "Target Tempo에서 Practice Run을 해 현재 상태를 확인합니다.",
+        "Wrong Note나 Hesitation이 한 번이라도 있으면 아직 통과하지 않은 것으로 봅니다.",
+        "Circle of Fifths뿐 아니라 Half Step·Whole Step·Major 3rd·Minor 3rd 순서로도 All Keys를 연습합니다.",
+        "Swing·Bossa Nova 같은 반복 Rhythm을 입혀 실제 음악처럼 연주합니다.",
+        "Smooth Progression은 손을 가능한 한 보지 않고 Voicing Shape와 촉감에 집중합니다.",
+        "Printed Notation에서 빨리 벗어나 Chord Symbol과 기억만으로 연주합니다.",
+        "배운 Voicing으로 간단한 Chord Progression을 Sight-reading하며 실제 적용을 확인합니다."
     ];
 
     const SEMESTER_TRACKS = {
-        foundation: ["1-3", "4-6", "9-11", "12-14", "15·19·20", "21·22·32", "33·34", "35·36", "37", "38", "40", "42", "43", "코드 진행 초견 시험"],
+        foundation: ["1-3", "4-6", "9-11", "12-14", "15·19·20", "21·22·32", "33·34", "35·36", "37", "38", "40", "42", "43", "Chord Progression Sight-reading 시험"],
         advanced: ["44·45", "46", "47", "48·49", "53·54", "55·58", "59·60", "61-64·70-72 중 임의의 한 조", "73-76·82-84 중 임의의 한 조", "85-88·94-96 중 임의의 한 조", "97-100·106-108 중 임의의 한 조", "117", "118-120"]
     };
 

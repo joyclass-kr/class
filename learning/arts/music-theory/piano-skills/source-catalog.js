@@ -77,13 +77,14 @@
 
     const referenceSections = [
         { id:"cover", label:"표지", pages:[1] },
-        { id:"intro", label:"기본 개념·연습법", pages:[2,3,4] },
-        { id:"block-notes", label:"블록 코드 설명", pages:[8] },
-        { id:"diatonic-notes", label:"다이어토닉 설명", pages:[16,23] },
-        { id:"cycle-notes", label:"5도권·II–V–I 설명", pages:[24,35,36] },
-        { id:"modal-notes", label:"모달·4도 보이싱 설명", pages:[49,50,54,58,62,66,70,74,81,82] },
-        { id:"blues-notes", label:"블루스 적용 설명", pages:[85,86,99,100,113,114,124,137,138] },
-        { id:"advanced-notes", label:"폴리코드·감7 대리 설명", pages:[143,144,148] },
+        { id:"intro", label:"기본 개념·Practice Tips", pages:[2,3] },
+        { id:"block-notes", label:"Block Chords 설명", pages:[4] },
+        { id:"shell-notes", label:"Shell Voicings 설명", pages:[8] },
+        { id:"diatonic-notes", label:"Diatonic 7th Chords 설명", pages:[16] },
+        { id:"cycle-notes", label:"Cycle·II-V-I 설명", pages:[24,36,50] },
+        { id:"modal-notes", label:"Modal·Fourthy Voicings 설명", pages:[54,58,62,66,70,74,82] },
+        { id:"blues-notes", label:"Blues Voicings 설명", pages:[86,100,114,124] },
+        { id:"advanced-notes", label:"Polychords·Diminished Substitutions 설명", pages:[138,144,148] },
         { id:"course", label:"학기 과정표", pages:[155,156,157,158] }
     ];
 

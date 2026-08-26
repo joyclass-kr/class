@@ -11,7 +11,16 @@
     const FLAT_NAMES = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
     const SHARP_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     const SCALE_KEY_ORDER = ["C", "D", "E", "G", "A", "F", "B", "Db", "Eb", "Gb", "Ab", "Bb"];
-    const SCALE_PAGE_LABELS = { major:"장음계", naturalMinor:"자연단음계", harmonicMinor:"화성단음계", melodicMinor:"가락단음계" };
+    const SCALE_PAGE_LABELS = { major:"Major Scale", naturalMinor:"Natural Minor Scale", harmonicMinor:"Harmonic Minor Scale", melodicMinor:"Melodic Minor Scale" };
+    const SCALE_ROOT_NAMES = {
+        Db:{ major:"Db", minor:"C#" },
+        Gb:{ major:"Gb", minor:"F#" },
+        Ab:{ major:"Ab", minor:"G#" }
+    };
+    const MINOR_KEY_SIGNATURES = {
+        C:"Eb", D:"F", E:"G", G:"Bb", A:"C", F:"Ab", B:"D",
+        "C#":"E", Eb:"Gb", "F#":"A", "G#":"B", Bb:"Db"
+    };
 
     const DEGREE_MAP = {
         1:[1,3,5,7], 2:[1,3,5,7], 3:[1,3,5,7], 4:[1,3,5,7], 5:[1,3,5,7], 6:[1,4,5,7],
@@ -120,7 +129,10 @@
     function buildScale(settings) {
         const key = DATA.keys.find(function (item) { return item.id === settings.keyId; });
         const type = DATA.scaleTypes[settings.scaleType];
-        const rootName = key.id;
+        const rootNames = SCALE_ROOT_NAMES[key.id];
+        const rootName = rootNames
+            ? (settings.scaleType === "major" ? rootNames.major : rootNames.minor)
+            : key.id;
         const rootMidi = 60 + key.pc;
         const ascendingIntervals = type.intervals.slice(0, -1).concat(type.intervals.map(function (interval) { return interval + 12; }));
         const descendingIntervals = settings.scaleType === "melodicMinor"
@@ -159,7 +171,14 @@
         });
         return {
             kind:"scale",
-            pages:[{ kind:"scale", up:up, down:down, keyLabel:key.label, typeLabel:SCALE_PAGE_LABELS[settings.scaleType] }],
+            pages:[{
+                kind:"scale",
+                up:up,
+                down:down,
+                keyLabel:displayRoot(rootName),
+                typeLabel:SCALE_PAGE_LABELS[settings.scaleType],
+                keySignature:settings.scaleType === "major" ? rootName : MINOR_KEY_SIGNATURES[rootName]
+            }],
             audioGroups:audioGroups
         };
     }
@@ -564,8 +583,9 @@
     }
 
     function scaleStaveNotes(VF, specs, clef, stemDirection, fingerPosition) {
-        return specs.map(function (spec) {
-            const note = staveNote(VF, clef, [spec], "8", stemDirection);
+        return specs.map(function (spec, index) {
+            const duration = index === specs.length - 1 ? "q" : "8";
+            const note = staveNote(VF, clef, [spec], duration, stemDirection);
             const finger = new VF.Annotation(String(spec.finger))
                 .setFont("Inter, Arial, sans-serif", 11, "500")
                 .setVerticalJustification(fingerPosition);
@@ -574,48 +594,68 @@
         });
     }
 
-    function drawScaleSystem(VF, context, line, y, label) {
-        const width = 1085;
-        const treble = new VF.Stave(70, y, width).addClef("treble");
-        const bass = new VF.Stave(70, y + 104, width).addClef("bass");
-        treble.setContext(context).draw();
-        bass.setContext(context).draw();
-        new VF.StaveConnector(treble, bass).setType(VF.StaveConnector.type.BRACE).setContext(context).draw();
-        new VF.StaveConnector(treble, bass).setType(VF.StaveConnector.type.SINGLE_LEFT).setContext(context).draw();
-        context.setFont("Inter, Arial, sans-serif", 14, "600");
-        context.fillText(label, 18, y + 56);
+    function buildFingeringBeams(VF, notes, specs, breakBeforeThumb) {
+        const groups = [];
+        let current = [];
+        notes.forEach(function (note, index) {
+            const previousFinger = index > 0 ? specs[index - 1].finger : null;
+            const finger = specs[index].finger;
+            const crosses = index > 0 && (breakBeforeThumb
+                ? finger === 1 && previousFinger > 1
+                : previousFinger === 1 && finger >= 3);
+            if (crosses && current.length) {
+                groups.push(current);
+                current = [];
+            }
+            current.push(note);
+        });
+        if (current.length) groups.push(current);
+        return groups.map(function (group) {
+            const beamable = group.filter(function (note) { return note.getDuration() === "8"; });
+            return beamable.length >= 2 ? new VF.Beam(beamable) : null;
+        }).filter(Boolean);
+    }
+
+    function drawScaleSystem(VF, context, line, y, label, ascending) {
+        const width = 1080;
+        const stave = new VF.Stave(76, y, width).addClef("treble");
+        stave.setContext(context).draw();
+        context.setFont("Inter, Arial, sans-serif", 14, "700");
+        context.fillText(label, 18, y + 48);
         const rightNotes = scaleStaveNotes(VF, line.right, "treble", 1, VF.Annotation.VerticalJustify.TOP);
-        const leftNotes = scaleStaveNotes(VF, line.left, "bass", -1, VF.Annotation.VerticalJustify.BOTTOM);
-        const rightVoice = new VF.Voice({ num_beats:15, beat_value:8 }).setStrict(false).addTickables(rightNotes);
-        const leftVoice = new VF.Voice({ num_beats:15, beat_value:8 }).setStrict(false).addTickables(leftNotes);
-        new VF.Formatter().joinVoices([rightVoice]).format([rightVoice], width - 90);
-        new VF.Formatter().joinVoices([leftVoice]).format([leftVoice], width - 90);
-        rightVoice.draw(context, treble);
-        leftVoice.draw(context, bass);
-        VF.Beam.generateBeams(rightNotes).forEach(function (beam) { beam.setContext(context).draw(); });
-        VF.Beam.generateBeams(leftNotes).forEach(function (beam) { beam.setContext(context).draw(); });
+        const leftNotes = scaleStaveNotes(VF, line.left, "treble", -1, VF.Annotation.VerticalJustify.BOTTOM);
+        const rightBeams = buildFingeringBeams(VF, rightNotes, line.right, ascending);
+        const leftBeams = buildFingeringBeams(VF, leftNotes, line.left, !ascending);
+        const rightVoice = new VF.Voice({ num_beats:8, beat_value:4 }).addTickables(rightNotes);
+        const leftVoice = new VF.Voice({ num_beats:8, beat_value:4 }).addTickables(leftNotes);
+        new VF.Formatter().joinVoices([rightVoice, leftVoice]).format([rightVoice, leftVoice], width - 100);
+        rightVoice.draw(context, stave);
+        leftVoice.draw(context, stave);
+        rightBeams.concat(leftBeams).forEach(function (beam) {
+            beam.setContext(context).draw();
+        });
     }
 
     function renderScalePage(container, page) {
         const VF = window.Vex.Flow;
         const width = 1200;
-        const height = 760;
+        const height = 590;
         const renderer = new VF.Renderer(container, VF.Renderer.Backends.SVG);
         renderer.resize(width, height);
         const context = renderer.getContext();
         context.setFillStyle("#17201d");
         context.setStrokeStyle("#17201d");
         context.setFont("Inter, Arial, sans-serif", 20, "700");
-        context.fillText(page.keyLabel + " " + page.typeLabel + " · 양손 두 옥타브", 34, 30);
+        context.fillText(page.keyLabel + " " + page.typeLabel + " · Both Hands · Two Octaves", 34, 30);
         context.setFont("Inter, Arial, sans-serif", 12, "500");
-        context.fillText("오른손은 위 보표, 왼손은 아래 보표 · 숫자는 손가락 번호", 34, 52);
-        drawScaleSystem(VF, context, page.up, 75, "상행");
-        drawScaleSystem(VF, context, page.down, 405, "하행");
+        context.fillText("Right Hand: upper voice · Left Hand: lower voice · Fingering numbers", 34, 52);
+        drawScaleSystem(VF, context, page.up, 88, "Ascending", true);
+        drawScaleSystem(VF, context, page.down, 340, "Descending", false);
         const svg = container.querySelector("svg");
         if (svg) {
             svg.setAttribute("viewBox", "0 0 " + width + " " + height);
             svg.setAttribute("preserveAspectRatio", "xMidYMin meet");
-            svg.setAttribute("aria-label", page.keyLabel + " " + page.typeLabel + " 양손 두 옥타브");
+            svg.setAttribute("aria-label", page.keyLabel + " " + page.typeLabel + " Both Hands Two Octaves");
         }
     }
 
