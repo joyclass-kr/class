@@ -190,6 +190,9 @@
                     <button type="button" class="tab-type" onclick="switchNoticeCategory('agree', this)" style="padding: 10px 20px; border-radius: 8px; border: 1px solid var(--line); background: #141b16; color: var(--muted); font-weight: 800; font-size: 15px; cursor: pointer;">
                         ✍️ 동의서 (동의/미동의)
                     </button>
+                    <button type="button" class="tab-type" onclick="switchNoticeCategory('survey', this)" style="padding: 10px 20px; border-radius: 8px; border: 1px solid var(--line); background: #141b16; color: var(--muted); font-weight: 800; font-size: 15px; cursor: pointer;">
+                        📝 설문·신청·투표
+                    </button>
                 </div>
 
                 <h2 style="font-size:18px; margin:0 0 16px; color:var(--green);">📢 알리미 신규 작성 및 학부모 발송</h2>
@@ -220,6 +223,15 @@
                     <div id="textBox" class="form-group">
                         <label>가정통신문 본문 내용</label>
                         <textarea id="nTextBody" placeholder="학부모님께 전달할 알림 내용을 상세히 입력하세요."></textarea>
+                    </div>
+
+                    <!-- 설문 문항 편집기 (설문·신청·투표 탭에서만) -->
+                    <div id="surveyBuilder" class="form-group hidden">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                            <label style="margin:0;">설문 문항</label>
+                            <button type="button" class="btn-secondary" onclick="addSurveyQuestion()">➕ 문항 추가</button>
+                        </div>
+                        <div id="surveyQuestionList"></div>
                     </div>
 
                     <button type="submit" class="btn-action">🚀 학부모 모바일 알림장으로 가정통신문 전송</button>
@@ -351,8 +363,55 @@
                 .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
         }
 
-        const REPLY_TYPE_LABELS = { none: '회신 없음', confirm: '확인 회신', agree: '동의서' };
-        const REPLY_CHOICE_LABELS = { confirmed: '확인함', agree: '동의', disagree: '미동의' };
+        const REPLY_TYPE_LABELS = { none: '회신 없음', confirm: '확인 회신', agree: '동의서', survey: '설문' };
+        const REPLY_CHOICE_LABELS = { confirmed: '확인함', agree: '동의', disagree: '미동의', submitted: '제출함' };
+
+        // 설문 문항별 집계. 막대는 응답자 대비 비율.
+        function renderSurveyStats(survey) {
+            if (!Array.isArray(survey) || survey.length === 0) return '';
+            const blocks = survey.map((q, qi) => {
+                if (q.type === 'text') {
+                    const answers = (q.textAnswers || []).map(a => `
+                        <li style="margin-bottom:6px;">
+                            <strong style="color:#fff;">${escapeHtml(a.studentName)}</strong>
+                            <span style="color:var(--muted);"> — ${escapeHtml(a.text)}</span>
+                        </li>`).join('');
+                    return `
+                        <div style="margin-bottom:18px;">
+                            <p style="margin:0 0 8px; font-weight:700;">${qi + 1}. ${escapeHtml(q.text)}
+                                <span style="color:var(--muted); font-weight:600; font-size:13px;">(서술형 · ${q.answeredCount}명 응답)</span></p>
+                            <ul style="margin:0; padding-left:18px; font-size:14px;">${answers || '<li style="color:var(--muted);">응답 없음</li>'}</ul>
+                        </div>`;
+                }
+
+                const total = q.answeredCount || 0;
+                const bars = (q.options || []).map(o => {
+                    const pct = total > 0 ? Math.round((o.count / total) * 100) : 0;
+                    return `
+                        <div style="margin-bottom:6px;">
+                            <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:2px;">
+                                <span>${escapeHtml(o.label)}</span>
+                                <span style="color:var(--muted);">${o.count}명 (${pct}%)</span>
+                            </div>
+                            <div style="height:8px; background:#1c2620; border-radius:4px; overflow:hidden;">
+                                <div style="height:100%; width:${pct}%; background:var(--green);"></div>
+                            </div>
+                        </div>`;
+                }).join('');
+
+                return `
+                    <div style="margin-bottom:18px;">
+                        <p style="margin:0 0 8px; font-weight:700;">${qi + 1}. ${escapeHtml(q.text)}
+                            <span style="color:var(--muted); font-weight:600; font-size:13px;">(${q.type === 'multiple' ? '복수 선택' : '단일 선택'} · ${total}명 응답)</span></p>
+                        ${bars}
+                    </div>`;
+            }).join('');
+
+            return `<div style="margin-top:16px; padding-top:16px; border-top:1px solid var(--line);">
+                <h4 style="margin:0 0 12px; color:var(--green); font-size:15px;">📈 문항별 집계</h4>
+                ${blocks}
+            </div>`;
+        }
 
         async function loadNoticeReplies() {
             const listEl = document.getElementById('noticeReplyList');
@@ -430,6 +489,7 @@
                                 <tbody>${rows}</tbody>
                             </table>
                         </div>
+                        ${renderSurveyStats(data.survey)}
                     </div>`;
             } catch (err) {
                 detailEl.innerHTML = `<div class="item-row" style="justify-content:center; color:#ff7b72;">${escapeHtml(err.message)}</div>`;
@@ -458,6 +518,63 @@
             });
             btn.style.background = '#1f4730';
             btn.style.color = '#fff';
+
+            const builder = document.getElementById('surveyBuilder');
+            builder.classList.toggle('hidden', cat !== 'survey');
+            if (cat === 'survey' && document.querySelectorAll('#surveyQuestionList .survey-item').length === 0) {
+                addSurveyQuestion();
+            }
+        }
+
+        // --- 설문 문항 편집기 ---
+        let surveyQuestionSeq = 0;
+
+        function addSurveyQuestion() {
+            const list = document.getElementById('surveyQuestionList');
+            const id = ++surveyQuestionSeq;
+            const box = document.createElement('div');
+            box.className = 'survey-item';
+            box.dataset.qid = String(id);
+            box.style.cssText = 'border:1px solid var(--line); border-radius:10px; padding:12px; margin-bottom:10px; background:#111713;';
+            box.innerHTML = `
+                <div style="display:flex; gap:8px; align-items:center; margin-bottom:8px;">
+                    <span style="color:var(--green); font-weight:800;">문항</span>
+                    <input type="text" class="sq-text" placeholder="예: 급식 만족도는 어떠신가요?" style="flex:1;">
+                    <select class="sq-type" onchange="onSurveyTypeChange(this)" style="width:130px;">
+                        <option value="single">객관식(하나)</option>
+                        <option value="multiple">객관식(복수)</option>
+                        <option value="text">서술형</option>
+                    </select>
+                    <label style="display:inline-flex; align-items:center; gap:4px; margin:0; font-size:13px; color:#fff; white-space:nowrap;">
+                        <input type="checkbox" class="sq-required" checked style="width:16px; height:16px;"> 필수
+                    </label>
+                    <button type="button" class="btn-secondary" onclick="this.closest('.survey-item').remove()">🗑️</button>
+                </div>
+                <div class="sq-options">
+                    <textarea class="sq-option-text" rows="3" placeholder="보기를 줄바꿈으로 구분해 입력하세요&#10;매우 만족&#10;보통&#10;불만족"></textarea>
+                </div>`;
+            list.appendChild(box);
+        }
+
+        function onSurveyTypeChange(select) {
+            const box = select.closest('.survey-item');
+            box.querySelector('.sq-options').classList.toggle('hidden', select.value === 'text');
+        }
+
+        function collectSurveyQuestions() {
+            return Array.from(document.querySelectorAll('#surveyQuestionList .survey-item')).map(box => {
+                const type = box.querySelector('.sq-type').value;
+                const question = {
+                    text: box.querySelector('.sq-text').value.trim(),
+                    type,
+                    required: box.querySelector('.sq-required').checked
+                };
+                if (type !== 'text') {
+                    question.options = box.querySelector('.sq-option-text').value
+                        .split('\n').map(s => s.trim()).filter(Boolean);
+                }
+                return question;
+            }).filter(q => q.text);
         }
 
         async function openAddressBookModal() {
@@ -670,6 +787,19 @@
 
             const targetStudentNumbers = selectedTargets.map(t => t.id).join(',');
 
+            const questions = noticeReplyType === 'survey' ? collectSurveyQuestions() : [];
+            if (noticeReplyType === 'survey') {
+                if (questions.length === 0) {
+                    alert('설문 문항을 하나 이상 입력해 주세요.');
+                    return;
+                }
+                const thin = questions.find(q => q.type !== 'text' && (q.options || []).length < 2);
+                if (thin) {
+                    alert(`"${thin.text}" 문항에는 보기를 두 개 이상 넣어 주세요.`);
+                    return;
+                }
+            }
+
             try {
                 const res = await fetch('/api/teacher/notices', {
                     method: 'POST',
@@ -679,13 +809,15 @@
                         targetType: selectedTargets.length > 0 ? 'students' : 'all',
                         targetStudentNumbers,
                         deduplicateGuardians,
-                        replyType: noticeReplyType
+                        replyType: noticeReplyType,
+                        questions
                     })
                 });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.message || '가정통신문 발송 실패');
                 alert('학부모 모바일 앱으로 알리미가 정상 발송되었습니다.');
                 e.target.reset();
+                document.getElementById('surveyQuestionList').innerHTML = '';
                 selectedTargets = [];
                 confirmAddressBookSelection();
             } catch (err) {

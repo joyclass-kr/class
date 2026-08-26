@@ -34,16 +34,33 @@ let membershipRows = [];
 let guardianRows = [];
 let schoolLookupRows = [];
 let noticeTargetRows = [];
-let teacherRows = [];
+const registeredTeachers = new Set();
 let teacherContextRows = [];
+let surveyQuestionRows = [];
 let upsertCalls = [];
+let answerInserts = [];
+let questionInserts = [];
 
 function answer(sql, params) {
   const text = String(sql);
   if (text.includes("FROM classroom_sessions s")) return { rows: sessionRows };
   if (text.includes("INSERT INTO classroom_notice_replies")) {
     upsertCalls.push(params);
+    return { rows: [{ id: 555 }] };
+  }
+  if (text.includes("INSERT INTO classroom_notice_answers")) {
+    answerInserts.push(params);
     return { rows: [] };
+  }
+  if (text.includes("INSERT INTO classroom_notice_questions")) {
+    questionInserts.push(params);
+    return { rows: [] };
+  }
+  if (text.includes("INSERT INTO classroom_notices")) {
+    return { rows: [{ id: 321, created_at: new Date() }] };
+  }
+  if (text.includes("FROM classroom_notice_questions")) {
+    return { rows: surveyQuestionRows };
   }
   if (text.includes("FROM classroom_notices n") && text.includes("n.reply_type")) {
     return { rows: noticeTargetRows };
@@ -52,11 +69,14 @@ function answer(sql, params) {
     return { rows: schoolLookupRows };
   }
   if (text.includes("guardian1_email")) return { rows: guardianRows };
+  // requireTeacher() keys off the classroom_teachers registration, not user.role,
+  // so these must answer per user id -- a blanket "yes" would let the test pass
+  // while a guardian could really reach teacher-only routes.
   if (text.includes("FROM classroom_teachers t") && text.includes("teacher_type")) {
-    return { rows: teacherContextRows };
+    return { rows: registeredTeachers.has(Number(params?.[0])) ? teacherContextRows : [] };
   }
   if (text.includes("classroom_teachers t") && text.includes("sc.enabled = TRUE")) {
-    return { rows: teacherRows };
+    return { rows: registeredTeachers.has(Number(params?.[0])) ? [{ ok: 1 }] : [] };
   }
   return { rows: [] };
 }
@@ -189,14 +209,111 @@ app.use((error, _req, res, _next) => {
     assert.equal(listBody.notices[0].myReply.choice, "agree", "An existing answer must come back with the notice.");
     assert.equal(listBody.child.studentNumber, "12", "The list must say which child it is for.");
 
-    // 9. The teacher collection view is teacher-only.
+    // --- surveys ---------------------------------------------------------
+    const surveyQuestions = [
+      { id: 11, position: 0, question_text: "급식 만족도", question_type: "single",
+        options: ["만족", "보통", "불만족"], is_required: true },
+      { id: 12, position: 1, question_text: "바라는 점", question_type: "text",
+        options: [], is_required: false }
+    ];
+
+    // 9. A survey notice must be answered with 'submitted', not a consent choice.
+    noticeTargetRows = [{ id: 2, reply_type: "survey" }];
+    surveyQuestionRows = surveyQuestions;
+    const wrongForSurvey = await post("/api/notice/replies", { noticeId: 2, choice: "agree" }, cookie);
+    assert.equal(wrongForSurvey.status, 400, "A survey must not accept a bare consent choice.");
+
+    // 10. A required question left blank is refused.
+    answerInserts = [];
+    const missing = await post(
+      "/api/notice/replies",
+      { noticeId: 2, choice: "submitted", answers: [{ questionId: "12", text: "없습니다" }] },
+      cookie
+    );
+    assert.equal(missing.status, 400, "A required question must be answered.");
+    assert.equal(answerInserts.length, 0, "Nothing may be written when validation fails.");
+
+    // 11. An out-of-range option index is refused rather than stored.
+    const outOfRange = await post(
+      "/api/notice/replies",
+      { noticeId: 2, choice: "submitted", answers: [{ questionId: "11", choiceIndexes: [9] }] },
+      cookie
+    );
+    assert.equal(outOfRange.status, 400, "Choices outside the option list must be refused.");
+
+    // 12. Picking two options on a single-choice question is refused.
+    const tooMany = await post(
+      "/api/notice/replies",
+      { noticeId: 2, choice: "submitted", answers: [{ questionId: "11", choiceIndexes: [0, 1] }] },
+      cookie
+    );
+    assert.equal(tooMany.status, 400, "A single-choice question must take one answer.");
+
+    // 13. A valid submission stores one answer row per answered question, and
+    //     an answer aimed at a question from another notice is dropped.
+    upsertCalls = [];
+    answerInserts = [];
+    const goodSurvey = await post(
+      "/api/notice/replies",
+      {
+        noticeId: 2,
+        choice: "submitted",
+        answers: [
+          { questionId: "11", choiceIndexes: [0] },
+          { questionId: "12", text: "고맙습니다" },
+          { questionId: "999", choiceIndexes: [0] }
+        ]
+      },
+      cookie
+    );
+    assert.equal(goodSurvey.status, 201, `Expected 201, got ${goodSurvey.status}: ${await goodSurvey.clone().text()}`);
+    assert.equal(upsertCalls.length, 1, "The survey reply row must be written once.");
+    assert.equal(upsertCalls[0][7], "submitted");
+    assert.equal(answerInserts.length, 2, "Only answers to this notice's questions may be stored.");
+    assert.deepEqual(answerInserts[0][2], [0], "The chosen option index must be stored.");
+    assert.equal(answerInserts[1][3], "고맙습니다", "The written answer must be stored.");
+
+    // 14. Sending a survey with a choice question that has one option is refused.
+    sessionRows = [{ id: 9, email: "teacher@example.com", role: "teacher", display_name: "담임" }];
+    registeredTeachers.add(9);
+    teacherContextRows = [{ school_id: 5, teacher_name: "담임", teacher_type: "교사", school_name: "서울계상초등학교" }];
+    questionInserts = [];
+    const thinSurvey = await post("/api/teacher/notices", {
+      title: "설문", contentBody: "본문", replyType: "survey",
+      questions: [{ text: "하나뿐", type: "single", options: ["예"] }]
+    }, cookie);
+    assert.equal(thinSurvey.status, 400, "A choice question needs at least two options.");
+    assert.equal(questionInserts.length, 0);
+
+    // 15. A survey with no questions at all is refused.
+    const emptySurvey = await post("/api/teacher/notices", {
+      title: "설문", contentBody: "본문", replyType: "survey", questions: []
+    }, cookie);
+    assert.equal(emptySurvey.status, 400, "A survey needs at least one question.");
+
+    // 16. A well-formed survey stores its questions alongside the notice.
+    questionInserts = [];
+    const sentSurvey = await post("/api/teacher/notices", {
+      title: "급식 설문", contentBody: "본문", replyType: "survey",
+      questions: [
+        { text: "만족도", type: "single", options: ["만족", "불만족"] },
+        { text: "의견", type: "text" }
+      ]
+    }, cookie);
+    assert.equal(sentSurvey.status, 201, `Expected 201, got ${sentSurvey.status}: ${await sentSurvey.clone().text()}`);
+    assert.equal(questionInserts.length, 2, "Both questions must be stored.");
+    assert.equal(questionInserts[0][1], 0, "Question order must be recorded.");
+    assert.equal(questionInserts[1][3], "text");
+
+    // 17. The teacher collection view is teacher-only.
+    sessionRows = [{ id: 42, email: "parent@example.com", role: "user", display_name: "학부모" }];
     const parentPeek = await fetch(`${base}/api/teacher/notices`, { headers: { Cookie: cookie } });
     assert.equal(parentPeek.status, 403, "Guardians must not read the collection view.");
 
     // 10. A registered teacher reaches the collection view, exercising the
     //     scope predicate's placeholders.
     sessionRows = [{ id: 9, email: "teacher@example.com", role: "teacher", display_name: "담임" }];
-    teacherRows = [{ ok: 1 }];
+    registeredTeachers.add(9);
     teacherContextRows = [{ school_id: 5, teacher_name: "담임", teacher_type: "교사", school_name: "서울계상초등학교" }];
     const teacherView = await fetch(`${base}/api/teacher/notices`, { headers: { Cookie: cookie } });
     assert.equal(teacherView.status, 200, `Expected 200, got ${teacherView.status}: ${await teacherView.clone().text()}`);
