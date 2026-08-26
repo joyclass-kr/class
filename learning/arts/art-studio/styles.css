@@ -51,12 +51,6 @@ html, body {
 }
 .back-link:hover { color: var(--accent-dark); }
 
-.brand {
-  margin: 0;
-  font-size: 20px;
-  white-space: nowrap;
-}
-
 .title-field {
   flex: 1;
   display: flex;
@@ -272,45 +266,44 @@ input[type="range"] {
 .canvas-stage {
   display: flex;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
   min-width: 0;
+  overflow: hidden;
 }
 
-/* Fixed reference box at the paper's maximum size (1000x700) - this box
-   itself never changes size. Shrinking the canvas only shrinks .canvas-frame
-   inside it, so growing back is always possible up to this same maximum. */
+/* The paper card hugs the current paper size, so shrinking the canvas
+   really does shrink what you see - no dead frame left behind. It is
+   anchored top-left so a resize handle tracks the pointer 1:1. */
 .canvas-max {
   position: relative;
-  width: min(100%, 1000px);
-  aspect-ratio: 1000 / 700;
   padding: 10px;
-  box-sizing: border-box;
   background: var(--panel);
   border: 1px solid var(--panel-line);
   border-radius: 18px;
   box-shadow: var(--shadow);
 }
 
-/* The visible/drawable crop, sized as a percentage of the max box's
-   content area so it stays responsive. --view-w/--view-h are buffer-pixel
-   dimensions (1-1000 / 1-700) set from JS. */
+/* The visible paper. --view-w/--view-h are buffer pixels (set from JS,
+   1-1000 / 1-700) and --scale is the buffer-pixel-to-screen-pixel ratio
+   that fits the full 1000x700 sheet into the stage. */
 .canvas-frame {
   position: relative;
   overflow: hidden;
-  width: calc(var(--view-w, 1000) / 1000 * 100%);
-  height: calc(var(--view-h, 700) / 700 * 100%);
+  width: calc(var(--view-w, 1000) * var(--scale, 1) * 1px);
+  height: calc(var(--view-h, 700) * var(--scale, 1) * 1px);
   border-radius: 10px;
   box-shadow: inset 0 0 0 1px #eee0c8;
 }
 
 #mainCanvas {
-  /* Always rendered at full 1000x700 buffer scale - .canvas-frame's
-     overflow:hidden crops away whatever is past the current view size. */
+  /* Always laid out at the full 1000x700 buffer - .canvas-frame's
+     overflow:hidden crops away whatever is past the current paper size,
+     so strokes keep their on-screen size while the sheet resizes. */
   position: absolute;
   top: 0;
   left: 0;
-  width: calc(100% * (1000 / var(--view-w, 1000)));
-  height: calc(100% * (700 / var(--view-h, 700)));
+  width: calc(1000 * var(--scale, 1) * 1px);
+  height: calc(700 * var(--scale, 1) * 1px);
   display: block;
   background: #fffdf6;
   touch-action: none;

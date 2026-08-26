@@ -209,8 +209,11 @@
       this.playerName = String(localStorage.getItem("classPlayerName") || "").trim();
 
       this.canvasFrameEl = $("canvasFrame");
+      this.canvasStageEl = document.querySelector(".canvas-stage");
       this.viewW = CANVAS_W;
       this.viewH = CANVAS_H;
+      this.updateStageScale();
+      window.addEventListener("resize", () => this.updateStageScale());
 
       this.bindUI();
       this.bindCanvas();
@@ -514,6 +517,21 @@
           window.addEventListener("pointerup", onUp, { once: true });
         });
       });
+    }
+
+    // Screen pixels per buffer pixel: whatever makes the full 1000x700 sheet
+    // fit the stage. Measured against the viewport (not the card) so the card
+    // hugging its paper can never feed back into the scale it is sized from.
+    updateStageScale() {
+      const stage = this.canvasStageEl;
+      if (!stage) return;
+      const CARD_CHROME = 22; // 10px padding + 1px border on each side
+      const top = stage.getBoundingClientRect().top;
+      const availW = stage.clientWidth - CARD_CHROME;
+      const availH = window.innerHeight - top - 24 - CARD_CHROME; // 24 = app-shell bottom padding
+      if (availW <= 0 || availH <= 0) return;
+      const scale = Math.min(availW / CANVAS_W, availH / CANVAS_H, 1);
+      this.canvasFrameEl.style.setProperty("--scale", Math.max(0.1, scale).toFixed(4));
     }
 
     setViewSize(w, h) {
