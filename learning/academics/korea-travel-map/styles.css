@@ -35,10 +35,11 @@ button{font:inherit}
 .modal-card{position:relative;width:min(1120px,100%);max-height:calc(100dvh - 36px);overflow:hidden;border:1px solid rgba(255,255,255,.55);border-radius:24px;background:var(--cream);box-shadow:var(--shadow)}
 .modal-close{position:absolute;right:14px;top:14px;z-index:20;width:48px;height:48px;border:3px solid #ffd36e;border-radius:50%;color:#fff;background:rgba(10,35,43,.9);font-size:1.55rem;line-height:1}
 .modal-grid{display:grid;grid-template-columns:minmax(360px,.9fr) minmax(470px,1.15fr);max-height:calc(100dvh - 36px)}
-.place-visual{min-height:650px;display:grid;grid-template-rows:minmax(270px,1.2fr) auto minmax(220px,.8fr);gap:10px;padding:20px;color:#fff;background:linear-gradient(145deg,#2b6c68,#173b4b);overflow:auto}
+.place-visual{min-height:650px;display:grid;grid-template-rows:clamp(280px,42dvh,400px) auto minmax(220px,1fr);gap:10px;padding:20px;color:#fff;background:linear-gradient(145deg,#2b6c68,#173b4b);overflow:auto}
 .place-photo-frame{position:relative;width:100%;height:100%;min-height:270px;margin:0;overflow:hidden;border:2px solid rgba(255,255,255,.7);border-radius:18px;background:#19434d;box-shadow:0 12px 30px rgba(3,25,32,.25)}
-.place-photo-frame img{width:100%;height:100%;display:block;object-fit:cover}.place-photo-frame img[hidden],.photo-fallback[hidden]{display:none!important}
-.photo-fallback{width:100%;height:100%;display:grid;place-items:center;font-size:5.5rem;background:radial-gradient(circle at 50% 35%,#347b76,#173b4b)}
+.place-photo-frame img{width:100%;height:100%;display:block;object-fit:cover}.place-photo-frame img.is-portrait{object-fit:contain;background:#102f38}.place-photo-frame img[hidden],.photo-fallback[hidden]{display:none!important}
+.photo-fallback{width:100%;height:100%;display:grid;place-content:center;place-items:center;gap:12px;padding:20px;font-size:5.5rem;background:radial-gradient(circle at 50% 35%,#347b76,#173b4b)}
+.photo-fallback::after{content:attr(data-status);font:800 .78rem/1.4 "Malgun Gothic",sans-serif;color:rgba(255,255,255,.9);text-align:center}
 .place-photo-frame figcaption{position:absolute;left:0;right:0;bottom:0;min-height:28px;padding:6px 9px;color:#fff;background:rgba(5,25,31,.78);font-size:.65rem;line-height:1.35}
 .place-photo-frame figcaption:empty{display:none}.place-photo-frame figcaption a{color:#fff}
 .modal-route-map-wrap{position:relative;min-height:220px;width:100%;overflow:hidden;border:2px solid rgba(255,255,255,.7);border-radius:18px;background:#e8efeb;box-shadow:0 12px 30px rgba(3,25,32,.28)}
