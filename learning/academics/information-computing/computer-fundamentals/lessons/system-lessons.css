@@ -29,7 +29,7 @@
 .hardware-photo img { display: block; width: 100%; height: 100%; min-height: 280px; object-fit: cover; }
 .component-legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; align-content: center; }
 .component-legend span { min-height: 54px; display: grid; align-content: center; padding: 8px; border: 1px solid #b99a6c; border-left-width: 7px; border-radius: 7px; background: #fffdf8; font-weight: 900; }
-.component-legend small { display: block; color: var(--muted); font-size: 10px; }
+.component-legend small { display: block; color: var(--muted); font-size: 12px; }
 .component-legend .cpu { border-left-color: #d39734; }
 .component-legend .gpu { border-left-color: #16727b; }
 .component-legend .ram { border-left-color: #315b9b; }
@@ -62,7 +62,7 @@
 .visual-panel h3 small {
     display: block;
     color: var(--teal);
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .part-grid {
@@ -85,7 +85,7 @@
 }
 
 .part-chip small,
-.software-card small { display: block; color: var(--muted); font-size: 10px; }
+.software-card small { display: block; color: var(--muted); font-size: 12px; }
 .software-card { border-color: #75a8ab; background: #e8f6f5; }
 
 .execution-arrow {
@@ -96,7 +96,7 @@
     font-weight: 900;
     text-align: center;
 }
-.execution-arrow small { display: block; color: var(--muted); font-size: 10px; line-height: 1.25; }
+.execution-arrow small { display: block; color: var(--muted); font-size: 12px; line-height: 1.25; }
 
 .layer-visual {
     display: grid;
@@ -155,7 +155,7 @@
     background: #fff9e9;
 }
 .signal-card.digital { border-color: var(--teal); background: #eefaf8; }
-.signal-card h3 small { display: block; color: var(--teal); font-size: 11px; }
+.signal-card h3 small { display: block; color: var(--teal); font-size: 12px; }
 .continuous-line {
     height: 76px;
     margin: 15px 0 10px;
@@ -220,7 +220,7 @@
     background: #f8edd9;
 }
 .drop-zone h3 { color: var(--brown); font-size: 16px; }
-.drop-zone h3 small { display: block; color: var(--teal); font-size: 11px; }
+.drop-zone h3 small { display: block; color: var(--teal); font-size: 12px; }
 .drop-zone.is-drop-target { border-style: solid; border-color: var(--gold); outline: 4px solid rgba(223, 167, 47, .28); background: #fff7d9; }
 .zone-items { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
 
@@ -249,7 +249,7 @@
     user-select: none;
     -webkit-user-select: none;
 }
-.sort-card small { display: block; color: #4e6668; font-size: 10px; }
+.sort-card small { display: block; color: #4e6668; font-size: 12px; }
 .sort-card.is-selected { outline: 4px solid var(--gold); outline-offset: 2px; background: #fff7d9; }
 .sort-card.is-dragging { opacity: .3; }
 
@@ -272,7 +272,7 @@
     pointer-events: none;
     transform: translate(-50%, -50%) rotate(-1deg);
 }
-.lesson-drag-ghost small { display: block; color: #4e6668; font-size: 10px; }
+.lesson-drag-ghost small { display: block; color: #4e6668; font-size: 12px; }
 
 .measurement-lab { display: grid; grid-template-columns: minmax(260px, .8fr) minmax(340px, 1.2fr); gap: 18px; align-items: center; }
 .thermometer-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -411,7 +411,7 @@
 .analogy-label small {
     display: inline;
     color: var(--muted);
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .explanation-heading h2,
@@ -498,7 +498,7 @@
 .story-steps strong small {
     display: block;
     color: var(--teal);
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .story-steps p {
@@ -533,7 +533,7 @@
 .comparison-grid h3 small {
     display: block;
     color: var(--teal);
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .comparison-grid p {
@@ -578,7 +578,7 @@
 .teachback strong small {
     display: block;
     color: var(--teal);
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .teachback {
@@ -615,8 +615,6 @@
 .marker-cpu { left: 39%; top: 32%; background: #b87519; }
 .marker-ram { left: 54%; top: 24%; background: #315b9b; }
 .marker-gpu { left: 39%; top: 59%; background: #16727b; }
-.marker-storage { left: 71%; top: 62%; background: #508044; }
-.marker-power { left: 16%; top: 78%; background: #4c3828; }
 .marker-board { left: 48%; top: 46%; background: #7b673a; }
 .marker-cooling { left: 63%; top: 82%; background: #6f5840; }
 
@@ -649,4 +647,277 @@
     .part-marker { min-width: 36px; min-height: 36px; border-width: 2px; }
     .part-marker b { font-size: 12px; }
     .part-marker small { display: none; }
+}
+
+/* Component close-ups and readability audit */
+.hardware-cutaway-grid {
+    grid-template-columns: 1fr;
+}
+
+.hardware-photo-map {
+    max-width: 920px;
+    margin-inline: auto;
+}
+
+.component-legend {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.component-legend span {
+    min-height: 92px;
+    padding: 11px 12px;
+    font-size: 16px;
+    line-height: 1.35;
+}
+
+.component-legend small {
+    margin-top: 4px;
+    color: #4b4036;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.component-legend .ssd { border-left-color: #508044; }
+.component-legend .hdd { border-left-color: #7d6a44; }
+
+.part-marker {
+    min-width: 30px;
+    min-height: 30px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border-width: 2px;
+}
+
+.part-marker b { font-size: 13px; }
+.part-marker small { display: none; }
+.marker-cpu { left: 40%; top: 33%; }
+.marker-ram { left: 56%; top: 25%; }
+.marker-gpu { left: 40%; top: 60%; }
+.marker-ssd { left: 68%; top: 53%; background: #508044; }
+.marker-hdd { left: 72%; top: 67%; background: #7d6a44; }
+.marker-psu { left: 16%; top: 79%; background: #4c3828; }
+.marker-board { left: 49%; top: 47%; background: #7b673a; }
+.marker-cooling { left: 63%; top: 83%; background: #6f5840; }
+
+.component-inspector {
+    margin-top: 20px;
+    padding: 18px;
+    border: 2px solid #9e7e4e;
+    border-radius: 12px;
+    background: #fffaf0;
+}
+
+.component-inspector .explanation-heading > span {
+    font-size: 14px;
+}
+
+.component-inspector .explanation-heading > span small {
+    font-size: 12px;
+}
+
+.component-inspector .explanation-heading p {
+    font-size: 15px;
+}
+
+.component-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.component-tabs button {
+    min-height: 58px;
+    padding: 8px 10px;
+    border: 2px solid #967345;
+    border-radius: 9px;
+    background: #fffdf8;
+    color: #2f2116;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.component-tabs button small {
+    display: block;
+    margin-top: 2px;
+    color: #4f443a;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.component-tabs button[aria-selected="true"] {
+    border-color: #075963;
+    background: #d8f1ee;
+    color: #073f46;
+    box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.component-detail-card {
+    display: grid;
+    grid-template-columns: minmax(280px, .8fr) minmax(0, 1.2fr);
+    gap: 18px;
+    margin-top: 12px;
+    padding: 16px;
+    border: 1px solid #b99a6c;
+    border-radius: 11px;
+    background: #fffdf8;
+}
+
+.component-detail-card figure {
+    margin: 0;
+    align-self: start;
+    overflow: hidden;
+    border: 1px solid #b99a6c;
+    border-radius: 10px;
+    background: #f7ead2;
+}
+
+.component-detail-card figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+.component-detail-card figcaption {
+    padding: 9px 11px;
+    border-top: 1px solid #d6bc91;
+    color: #4f443a;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.component-copy header {
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.component-copy header > span {
+    min-height: 50px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: #4a260f;
+    color: #fff6df;
+    font-size: 17px;
+    font-weight: 900;
+    text-align: center;
+}
+
+.component-copy h3 {
+    color: #3c210e;
+    font-size: clamp(20px, 2.2vw, 25px);
+    line-height: 1.2;
+}
+
+.component-copy h3 small {
+    display: block;
+    margin-top: 3px;
+    color: #075963;
+    font-size: 14px;
+}
+
+.term-origin {
+    padding: 12px 13px;
+    border-left: 6px solid #d39734;
+    border-radius: 8px;
+    background: #fff3d8;
+}
+
+.term-origin strong,
+.component-copy dt {
+    color: #3d2513;
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.term-origin strong small,
+.component-copy dt small {
+    display: block;
+    color: #075963;
+    font-size: 12px;
+}
+
+.term-origin p,
+.component-copy dd {
+    margin: 5px 0 0;
+    color: #3f3831;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.component-copy dl {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+    margin: 10px 0 0;
+}
+
+.component-copy dl > div {
+    padding: 11px 12px;
+    border: 1px solid #cbb18a;
+    border-radius: 8px;
+    background: #fffaf0;
+}
+
+.component-copy dl > .misconception {
+    grid-column: 1 / -1;
+    border-color: #bd8f78;
+    background: #fff1eb;
+}
+
+.explanation-heading > span,
+.analogy-label { font-size: 14px; }
+.explanation-heading > span small,
+.analogy-label small { font-size: 12px; }
+.explanation-heading h2 small,
+.analogy-panel h2 small { font-size: 13px; }
+.explanation-heading p,
+.analogy-main p,
+.analogy-limit p,
+.teachback p { color: #4f443a; font-size: 15px; }
+.story-steps strong small { font-size: 12px; }
+.story-steps p { color: #4f443a; font-size: 15px; line-height: 1.65; }
+.comparison-grid h3 small { font-size: 13px; }
+.comparison-grid p { color: #4f443a; font-size: 15px; line-height: 1.6; }
+.comparison-grid dl { font-size: 14px; }
+.analogy-limit strong small,
+.teachback strong small { font-size: 12px; }
+.concept-illustration figcaption,
+.hardware-photo figcaption { color: #4f443a; font-size: 14px; }
+.visual-panel h3 small,
+.signal-card h3 small,
+.drop-zone h3 small { font-size: 12px; }
+.part-chip small,
+.software-card small,
+.execution-arrow small,
+.sort-card small,
+.lesson-drag-ghost small { color: #334f51; font-size: 12px; }
+.example-path span,
+.drag-explanation,
+.sample-records output { font-size: 14px; }
+
+@media (max-width: 900px) {
+    .component-legend { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .component-detail-card { grid-template-columns: 1fr; }
+    .component-detail-card figure { width: min(520px, 100%); margin-inline: auto; }
+}
+
+@media (max-width: 760px) {
+    .component-inspector { padding: 13px; }
+    .component-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .component-detail-card { padding: 12px; }
+    .component-copy dl { grid-template-columns: 1fr; }
+    .component-copy dl > .misconception { grid-column: auto; }
+    .part-marker { min-width: 28px; min-height: 28px; width: 28px; height: 28px; }
+    .part-marker b { font-size: 12px; }
 }

@@ -483,24 +483,26 @@
                                 <source srcset="../assets/images/desktop-hardware-cutaway-768.webp 768w, ../assets/images/desktop-hardware-cutaway-1448.webp 1448w" sizes="(max-width: 900px) calc(100vw - 60px), 65vw" type="image/webp">
                                 <img src="../assets/images/desktop-hardware-cutaway-768.webp" width="768" height="576" alt="열린 데스크톱 본체 안의 CPU, RAM, GPU, SSD, 하드 디스크, 메인보드, 전원 공급 장치와 냉각 팬">
                             </picture>
-                            <span class="part-marker marker-cpu"><b>1</b><small>CPU</small></span>
-                            <span class="part-marker marker-ram"><b>2</b><small>RAM</small></span>
-                            <span class="part-marker marker-gpu"><b>3</b><small>GPU</small></span>
-                            <span class="part-marker marker-storage"><b>4</b><small>저장</small></span>
-                            <span class="part-marker marker-power"><b>5</b><small>전원</small></span>
-                            <span class="part-marker marker-board"><b>6</b><small>기판</small></span>
-                            <span class="part-marker marker-cooling"><b>7</b><small>냉각</small></span>
+                            <span class="part-marker marker-cpu" aria-label="1번 CPU"><b>1</b></span>
+                            <span class="part-marker marker-ram" aria-label="2번 RAM"><b>2</b></span>
+                            <span class="part-marker marker-gpu" aria-label="3번 GPU"><b>3</b></span>
+                            <span class="part-marker marker-ssd" aria-label="4번 SSD"><b>4</b></span>
+                            <span class="part-marker marker-hdd" aria-label="5번 HDD"><b>5</b></span>
+                            <span class="part-marker marker-psu" aria-label="6번 전원 공급 장치"><b>6</b></span>
+                            <span class="part-marker marker-board" aria-label="7번 메인보드"><b>7</b></span>
+                            <span class="part-marker marker-cooling" aria-label="8번 냉각 장치"><b>8</b></span>
                         </div>
-                        <figcaption>번호를 오른쪽 역할 카드와 연결해 실제 위치와 기능을 함께 확인하세요.</figcaption>
+                        <figcaption>작은 번호는 부품의 위치만 가리킵니다. 아래 카드에서 정식 이름과 핵심 역할을 확인하세요.</figcaption>
                     </figure>
                     <div class="component-legend" aria-label="그림 속 부품 번호와 역할">
-                        <span class="cpu"><b>1</b> CPU<small>명령을 해석하고 순서에 따라 계산</small></span>
-                        <span class="ram"><b>2</b> RAM<small>실행 중인 명령과 데이터를 빠르게 펼쳐 둠</small></span>
-                        <span class="gpu"><b>3</b> GPU<small>비슷한 계산을 여러 개 동시에 처리</small></span>
-                        <span class="storage"><b>4</b> SSD·HDD<small>앱과 파일을 전원이 꺼져도 보관</small></span>
-                        <span class="power"><b>5</b> 전원 공급 장치<small>콘센트 전기를 부품에 맞게 바꾸어 나눔</small></span>
-                        <span class="board"><b>6</b> 메인보드<small>부품이 꽂히고 데이터가 오가는 연결 기반</small></span>
-                        <span class="cooling"><b>7</b> 냉각 장치<small>방열판과 팬이 부품의 열을 밖으로 옮김</small></span>
+                        <span class="cpu"><b>1</b> CPU<small>Central Processing Unit<br>명령 해석·계산·작업 순서 제어</small></span>
+                        <span class="ram"><b>2</b> RAM<small>Random Access Memory<br>실행 중인 명령과 데이터의 작업 공간</small></span>
+                        <span class="gpu"><b>3</b> GPU<small>Graphics Processing Unit<br>비슷한 계산을 여러 개 병렬 처리</small></span>
+                        <span class="ssd"><b>4</b> SSD<small>Solid-State Drive<br>반도체에 앱과 파일을 보관</small></span>
+                        <span class="hdd"><b>5</b> HDD<small>Hard Disk Drive<br>자기 원판에 앱과 파일을 보관</small></span>
+                        <span class="power"><b>6</b> PSU<small>Power Supply Unit<br>전기를 변환해 각 부품에 공급</small></span>
+                        <span class="board"><b>7</b> 메인보드<small>Motherboard / Mainboard<br>부품을 연결하는 중심 기판</small></span>
+                        <span class="cooling"><b>8</b> 냉각 장치<small>Heat Sink and Cooling Fan<br>부품의 열을 공기 쪽으로 이동</small></span>
                     </div>
                 </div>`,
             details: [
@@ -508,6 +510,112 @@
                 ["GPU", "Graphics Processing Unit", "그림의 많은 픽셀처럼 비슷한 계산을 동시에 나누어 처리하는 데 강합니다. 미술부원 여러 명이 많은 그림 조각을 함께 계산하는 모습에 비유할 수 있습니다."],
                 ["RAM과 저장 장치", "Memory and Storage", "RAM은 지금 펼쳐 둔 자료를 빠르게 쓰는 책상이고 전원이 꺼지면 내용이 사라집니다. SSD·HDD는 파일을 오래 보관하는 사물함에 가깝습니다."],
                 ["메인보드·전원·냉각", "Motherboard, Power, and Cooling", "메인보드는 부품이 꽂히고 데이터를 주고받는 길을 제공합니다. 전원 공급 장치는 필요한 전력을 나누고, 팬과 방열판은 생긴 열을 밖으로 보냅니다."]
+            ],
+            parts: [
+                {
+                    key: "cpu",
+                    short: "CPU",
+                    full: "Central Processing Unit",
+                    korean: "중앙 처리 장치",
+                    image: "../assets/images/component-cpu-768.webp",
+                    alt: "금속 덮개가 있는 데스크톱 CPU의 윗면과 접점이 배열된 아랫면 확대 사진",
+                    origin: "Central은 컴퓨터의 여러 작업을 중심에서 맡는다는 뜻, Processing은 명령과 데이터를 처리한다는 뜻, Unit은 하나의 기능 장치를 뜻합니다.",
+                    look: "손바닥보다 작은 네모난 부품입니다. 윗면의 금속 덮개는 내부 칩의 열을 방열판으로 전달하고, 아랫면의 접점은 메인보드와 전기 신호를 주고받습니다.",
+                    job: "프로그램의 기계 명령을 가져오고 해석한 뒤 계산·비교·이동 명령을 실행합니다. 입력 처리, 파일 열기, 앱의 진행 순서처럼 종류가 다른 작업을 빠르게 바꿔 가며 처리합니다.",
+                    connection: "메인보드의 CPU 소켓에 장착되고 RAM에서 명령과 데이터를 읽습니다. 필요한 화면 계산은 GPU에 요청하고 결과를 다시 받습니다.",
+                    misconception: "CPU가 사람의 뇌처럼 뜻을 이해하거나 스스로 목표를 정하는 것은 아닙니다. 작성된 명령과 현재 데이터에 따라 회로가 동작합니다."
+                },
+                {
+                    key: "ram",
+                    short: "RAM",
+                    full: "Random Access Memory",
+                    korean: "임의 접근 기억 장치",
+                    image: "../assets/images/component-ram-768.webp",
+                    alt: "검은 메모리 칩과 금색 접점, 끼우는 홈이 보이는 데스크톱 RAM 모듈 확대 사진",
+                    origin: "Random Access는 데이터를 무작위로 고른다는 뜻이 아닙니다. 앞에서부터 차례로 찾지 않고 필요한 주소로 바로 접근할 수 있다는 뜻입니다. Memory는 실행 중 정보를 잠시 기억하는 장치라는 뜻입니다.",
+                    look: "길고 좁은 회로 기판 위에 여러 메모리 칩이 붙어 있습니다. 아래쪽 금색 접점과 홈의 위치를 RAM 슬롯에 맞추어 꽂습니다.",
+                    job: "현재 실행 중인 운영체제·앱의 명령과 작업 중인 데이터를 CPU가 빠르게 꺼내 쓰도록 펼쳐 둡니다. 용량이 넉넉하면 여러 앱과 큰 자료를 동시에 다루기 쉽습니다.",
+                    connection: "메인보드의 DIMM 슬롯에 꽂히며 CPU의 메모리 제어 장치와 매우 빠르게 데이터를 주고받습니다.",
+                    misconception: "RAM 용량은 SSD 저장 용량과 다릅니다. 일반적인 RAM은 전원이 끊기면 내용이 사라지므로 완성 파일을 오래 보관하는 창고가 아닙니다."
+                },
+                {
+                    key: "gpu",
+                    short: "GPU",
+                    full: "Graphics Processing Unit",
+                    korean: "그래픽 처리 장치",
+                    image: "../assets/images/component-gpu-768.webp",
+                    alt: "냉각 팬, 회로 기판, 금속 브래킷과 금색 연결부가 보이는 데스크톱 그래픽 카드 확대 사진",
+                    origin: "Graphics는 화면의 그림과 영상을 뜻하고 Processing Unit은 계산을 맡는 장치라는 뜻입니다. 처음에는 그래픽 계산이 중심이어서 이런 이름이 붙었습니다.",
+                    look: "그래픽 처리 칩이 있는 회로 기판에 큰 방열판과 팬이 붙습니다. 화면 단자와 메인보드에 꽂는 PCI Express 접점이 보입니다.",
+                    job: "픽셀·도형처럼 비슷한 계산을 아주 많이 동시에 처리합니다. 2D·3D 화면, 영상, 일부 과학·인공지능 계산에도 사용됩니다.",
+                    connection: "그래픽 카드는 메인보드의 PCI Express 슬롯과 전원 케이블에 연결됩니다. CPU가 작업을 보내면 GPU가 계산하고 화면용 결과를 돌려줍니다.",
+                    misconception: "GPU가 CPU보다 모든 계산에서 빠른 것은 아닙니다. 순서와 조건이 복잡한 일반 작업은 CPU가, 같은 계산을 많이 반복하는 작업은 GPU가 유리한 경우가 많습니다."
+                },
+                {
+                    key: "ssd",
+                    short: "SSD",
+                    full: "Solid-State Drive",
+                    korean: "반도체 저장 장치",
+                    image: "../assets/images/component-ssd-768.webp",
+                    alt: "겉 케이스와 내부 플래시 메모리 칩, 제어 칩, 연결 단자가 보이는 SSD 확대 사진",
+                    origin: "Solid-State는 움직이는 기계 부품 대신 반도체 회로로 동작한다는 전자공학 표현입니다. 단단한 상태라는 일상적 뜻만 가리키지 않습니다. Drive는 저장 장치를 부르던 이름이 이어진 것입니다.",
+                    look: "2.5인치 SSD는 납작한 케이스 안에 NAND 플래시 메모리 칩과 제어 칩이 들어 있습니다. M.2 SSD는 막대 모양의 작은 회로 기판 형태도 있습니다.",
+                    job: "운영체제·앱·사진·문서 파일을 전원이 꺼져도 보관합니다. 움직이는 헤드가 없어 HDD보다 빠르고 충격에 강한 경우가 많습니다.",
+                    connection: "SATA 케이블로 메인보드에 연결하거나 M.2 슬롯에 직접 꽂습니다. 파일을 실행할 때 SSD의 데이터가 RAM으로 읽혀 올라갑니다.",
+                    misconception: "SSD 용량이 크다고 실행 중 작업 공간인 RAM도 커지는 것은 아닙니다. 저장 장치와 작업 메모리는 역할과 속도가 다릅니다."
+                },
+                {
+                    key: "hdd",
+                    short: "HDD",
+                    full: "Hard Disk Drive",
+                    korean: "하드 디스크 드라이브",
+                    image: "../assets/images/component-hdd-768.webp",
+                    alt: "덮개가 열린 하드 디스크 안의 원형 자기 디스크와 회전축, 읽기 쓰기 헤드 확대 사진",
+                    origin: "Hard Disk의 Hard는 휘어지는 플로피 디스크와 달리 단단한 원판을 쓴다는 뜻입니다. Disk는 원형 기록판, Drive는 원판을 돌리고 읽고 쓰는 장치를 뜻합니다.",
+                    look: "금속 케이스 안에 반짝이는 자기 원판, 원판을 돌리는 모터, 표면 가까이 움직이는 읽기·쓰기 헤드가 있습니다.",
+                    job: "자기 원판 표면에 데이터를 기록해 오래 보관합니다. 같은 가격에서 큰 용량을 제공하기 쉬워 대용량 자료 보관에 사용됩니다.",
+                    connection: "SATA 데이터 케이블로 메인보드와, 전원 케이블로 전원 공급 장치와 연결됩니다.",
+                    misconception: "헤드가 원판을 정상적으로 긁으며 읽는 것이 아닙니다. 매우 가까이 떠서 자기 상태를 읽으며, 강한 충격은 기계 부품을 손상시킬 수 있습니다."
+                },
+                {
+                    key: "motherboard",
+                    short: "메인보드",
+                    full: "Motherboard / Mainboard",
+                    korean: "주기판",
+                    image: "../assets/images/component-motherboard-768.webp",
+                    alt: "CPU 소켓, RAM 슬롯, PCI Express 슬롯과 여러 연결 단자가 보이는 메인보드 전체 확대 사진",
+                    origin: "여러 부품과 작은 확장 보드가 연결되는 중심 기판이라 Motherboard 또는 Mainboard라고 부릅니다. 다른 부품의 어머니라는 생물학적 뜻은 아닙니다.",
+                    look: "넓은 회로 기판 위에 CPU 소켓, RAM 슬롯, 그래픽 카드 슬롯, 저장 장치 단자와 전원 단자가 구역별로 배치됩니다.",
+                    job: "부품을 고정하고 전기 신호·데이터·일부 전력을 주고받는 통로를 제공합니다. 칩셋과 펌웨어가 시작 과정과 장치 연결을 돕습니다.",
+                    connection: "CPU·RAM·GPU·저장 장치·전원·팬과 직접 또는 케이블로 연결되는 컴퓨터의 중심 기판입니다.",
+                    misconception: "메인보드가 모든 계산을 대신하는 것은 아닙니다. 계산과 저장은 연결된 전용 부품이 맡고, 메인보드는 이들이 통신할 기반을 제공합니다."
+                },
+                {
+                    key: "psu",
+                    short: "PSU",
+                    full: "Power Supply Unit",
+                    korean: "전원 공급 장치",
+                    image: "../assets/images/component-psu-768.webp",
+                    alt: "금속 상자, 냉각 팬, 전원 스위치와 여러 출력 케이블이 보이는 데스크톱 전원 공급 장치 확대 사진",
+                    origin: "Power는 전력, Supply는 필요한 곳에 공급한다는 뜻, Unit은 하나의 기능 장치를 뜻합니다. 줄여서 PSU라고 합니다.",
+                    look: "통풍구와 팬이 있는 금속 상자에서 메인보드·CPU·GPU·저장 장치용 케이블이 여러 갈래로 나옵니다.",
+                    job: "콘센트의 교류 전기를 컴퓨터 부품이 사용할 수 있는 여러 직류 전압으로 바꾸고 안정적으로 나누어 공급합니다.",
+                    connection: "메인보드의 큰 전원 단자, CPU 보조 전원, 그래픽 카드, SSD·HDD 등에 각기 맞는 케이블을 연결합니다.",
+                    misconception: "PSU는 배터리가 아닙니다. 전기를 오래 저장하기보다 들어온 전기를 부품에 알맞게 변환·공급합니다."
+                },
+                {
+                    key: "cooling",
+                    short: "냉각 장치",
+                    full: "Heat Sink and Cooling Fan",
+                    korean: "방열판과 냉각 팬",
+                    image: "../assets/images/component-cooling-768.webp",
+                    alt: "금속 방열핀, 구리 히트파이프, 냉각 팬과 CPU에 닿는 바닥면이 보이는 CPU 냉각 장치 확대 사진",
+                    origin: "Heat Sink는 열이 흘러 들어가 퍼지는 곳이라는 뜻으로 방열판을 가리킵니다. Cooling Fan은 공기를 움직여 열을 밖으로 보내는 팬입니다.",
+                    look: "CPU에 닿는 금속 바닥, 열을 옮기는 구리 히트파이프, 넓은 금속 핀, 공기를 통과시키는 팬으로 이루어집니다.",
+                    job: "CPU·GPU에서 생긴 열을 넓은 금속 표면으로 퍼뜨리고, 팬의 공기로 케이스 밖으로 이동시킵니다.",
+                    connection: "방열판은 CPU나 GPU 표면에 밀착되고 팬 케이블은 메인보드에 연결되어 온도에 따라 속도를 조절합니다.",
+                    misconception: "팬이 차가움을 만들어 내는 것은 아닙니다. 부품에서 생긴 열을 주변 공기와 케이스 밖으로 더 빠르게 옮깁니다."
+                }
             ],
             workedExample: {
                 title: "그림 앱과 사진 파일을 여는 1초",
@@ -637,6 +745,53 @@
         document.getElementById("lessonTitle").innerHTML = `${lesson.title} <small>${lesson.english}</small>`;
         document.getElementById("conceptTitle").textContent = lesson.conceptTitle;
         document.getElementById("conceptVisual").innerHTML = lesson.visual;
+        const partsMount = document.getElementById("conceptParts");
+        if (lesson.parts?.length) {
+            partsMount.innerHTML = `
+                <section class="component-inspector" aria-labelledby="componentInspectorTitle">
+                    <div class="explanation-heading">
+                        <span>부품 하나씩 자세히 보기 <small>Component Close-ups</small></span>
+                        <h2 id="componentInspectorTitle">부품을 선택해 확대 사진과 역할을 확인하세요.</h2>
+                        <p>전체 사진에서 위치를 확인한 뒤, 각 부품의 생김새·이름의 유래·역할·연결 방식을 차례로 살펴봅니다.</p>
+                    </div>
+                    <div class="component-tabs" role="tablist" aria-label="자세히 볼 컴퓨터 부품">
+                        ${lesson.parts.map((part, index) => `
+                            <button type="button" role="tab" data-part-index="${index}" aria-selected="${index === 0}" tabindex="${index === 0 ? 0 : -1}">${part.short}<small>${part.korean}</small></button>
+                        `).join("")}
+                    </div>
+                    <article id="componentPartPanel" class="component-detail-card" aria-live="polite"></article>
+                </section>
+            `;
+            const partButtons = [...partsMount.querySelectorAll("[data-part-index]")];
+            const partPanel = document.getElementById("componentPartPanel");
+            const showPart = (index) => {
+                const part = lesson.parts[index];
+                partButtons.forEach((button, buttonIndex) => {
+                    button.setAttribute("aria-selected", String(buttonIndex === index));
+                    button.tabIndex = buttonIndex === index ? 0 : -1;
+                });
+                partPanel.innerHTML = `
+                    <figure>
+                        <img src="${part.image}" width="768" height="768" alt="${part.alt}">
+                        <figcaption>실물의 대표적인 형태입니다. 제품에 따라 크기·색·덮개 모양은 달라질 수 있습니다.</figcaption>
+                    </figure>
+                    <div class="component-copy">
+                        <header><span>${part.short}</span><h3>${part.full}<small>${part.korean}</small></h3></header>
+                        <section class="term-origin"><strong>이름을 풀어 보면 <small>Name and Origin</small></strong><p>${part.origin}</p></section>
+                        <dl>
+                            <div><dt>생김새 <small>What It Looks Like</small></dt><dd>${part.look}</dd></div>
+                            <div><dt>맡은 일 <small>What It Does</small></dt><dd>${part.job}</dd></div>
+                            <div><dt>연결 방식 <small>How It Connects</small></dt><dd>${part.connection}</dd></div>
+                            <div class="misconception"><dt>헷갈리기 쉬운 점 <small>Common Misconception</small></dt><dd>${part.misconception}</dd></div>
+                        </dl>
+                    </div>
+                `;
+            };
+            partButtons.forEach((button) => button.addEventListener("click", () => showPart(Number(button.dataset.partIndex))));
+            showPart(0);
+        } else {
+            partsMount.innerHTML = "";
+        }
         const details = document.getElementById("conceptDetails");
         details.innerHTML = lesson.details.map((detail, index) => `
             <article><span class="concept-number">${index + 1}</span><h3>${detail[0]} <small>${detail[1]}</small></h3><p>${detail[2]}</p></article>

@@ -1,7 +1,7 @@
 :root {
     color-scheme: light;
     --ink: #251b14;
-    --muted: #665b50;
+    --muted: #4f443a;
     --paper: #fff9ec;
     --paper-deep: #f3e4c9;
     --line: #c89b57;
@@ -43,11 +43,11 @@ button:focus-visible, a:focus-visible {
 
 .app-bar {
     display: grid;
-    grid-template-columns: 48px minmax(0, 1fr) auto;
+    grid-template-columns: 44px minmax(0, 1fr);
     align-items: center;
-    gap: 12px;
-    min-height: 68px;
-    padding: 8px clamp(14px, 3vw, 32px);
+    gap: 8px;
+    min-height: 54px;
+    padding: 5px clamp(10px, 2vw, 20px);
     border-bottom: 2px solid var(--line);
     background: rgba(42, 19, 7, 0.96);
     color: #fff7e5;
@@ -69,12 +69,7 @@ button:focus-visible, a:focus-visible {
     cursor: pointer;
 }
 
-.course-button { padding: 8px 14px; }
-
-.app-title { min-width: 0; line-height: 1.2; }
-.app-title > span { display: block; color: var(--gold-light); font-size: 12px; font-weight: 800; }
-.app-title strong { display: block; font-size: 19px; }
-.app-title small { color: #dbc9aa; font-size: 12px; font-weight: 700; }
+.course-button { justify-self: end; padding: 6px 12px; }
 
 .lesson-shell {
     width: min(1080px, calc(100% - 28px));
@@ -85,8 +80,8 @@ button:focus-visible, a:focus-visible {
     display: flex;
     justify-content: space-between;
     gap: 14px;
-    color: #5e4835;
-    font-size: 13px;
+    color: #4a3728;
+    font-size: 14px;
     font-weight: 800;
 }
 
@@ -123,7 +118,7 @@ h1 small {
     display: block;
     margin-bottom: 3px;
     color: var(--teal);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 900;
 }
 
@@ -174,7 +169,7 @@ h3 { margin: 0; }
     top: 6px;
     left: 8px;
     color: #8b7254;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 900;
 }
 
@@ -218,7 +213,7 @@ h3 { margin: 0; }
     display: block;
     margin-top: 4px;
     color: #4e6668;
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .flow-card:disabled { visibility: hidden; }
@@ -305,8 +300,8 @@ h3 { margin: 0; }
     font-weight: 900;
 }
 
-.concept-grid h3 small { display: block; color: var(--teal); font-size: 12px; }
-.concept-grid p { margin: 8px 0 0; color: var(--muted); line-height: 1.55; }
+.concept-grid h3 small { display: block; color: var(--teal); font-size: 13px; }
+.concept-grid p { margin: 8px 0 0; color: var(--muted); font-size: 15px; line-height: 1.65; overflow-wrap: anywhere; }
 
 .quiz-card { margin-top: 18px; }
 .question-text { margin: 0 0 16px; font-size: 18px; font-weight: 800; line-height: 1.65; }
@@ -389,9 +384,8 @@ h3 { margin: 0; }
 .course-list .is-current { border: 2px solid var(--teal); background: var(--teal-light); }
 
 @media (max-width: 760px) {
-    .app-bar { grid-template-columns: 48px minmax(0, 1fr) auto; gap: 8px; }
+    .app-bar { grid-template-columns: 44px minmax(0, 1fr); gap: 8px; }
     .course-button { min-width: 48px; padding-inline: 10px; font-size: 13px; }
-    .app-title small { display: none; }
     .lesson-shell { width: calc(100% - 18px); margin-top: 10px; }
     h1 small { display: block; margin-top: 2px; }
     .stage { min-height: 0; padding: 15px; }
@@ -471,7 +465,7 @@ h3 { margin: 0; }
 }
 
 .process-details h3 { font-size: 16px; }
-.process-details h3 small { color: var(--teal); font-size: 11px; }
+.process-details h3 small { color: var(--teal); font-size: 12px; }
 .process-details p {
     margin: 4px 0 0;
     color: #5d5144;
@@ -517,7 +511,7 @@ h3 { margin: 0; }
 }
 
 .role-slot > span { display: block; color: var(--brown); font-size: 16px; font-weight: 900; }
-.role-slot small { display: block; color: var(--teal); font-size: 11px; }
+.role-slot small { display: block; color: var(--teal); font-size: 12px; }
 .role-slot em { display: block; margin-top: 8px; color: #756653; font-size: 13px; font-style: normal; line-height: 1.4; }
 .role-slot.has-card { border-style: solid; border-color: var(--teal); background: #e8f7f5; }
 .role-slot.has-card em { color: #173f42; font-weight: 800; }
@@ -550,7 +544,7 @@ h3 { margin: 0; }
 }
 .drag-guide strong { color: var(--brown); }
 .drag-guide b { margin-right: 6px; color: var(--teal); }
-.drag-guide small { font-size: 10px; }
+.drag-guide small { font-size: 12px; }
 .drag-guide .tap-alternative { flex: 1; color: var(--muted); }
 
 .drag-ghost {
@@ -571,7 +565,7 @@ h3 { margin: 0; }
     pointer-events: none;
     transform: translate(-50%, -50%) rotate(-1deg);
 }
-.drag-ghost small { display: block; margin-top: 4px; color: #4e6668; font-size: 11px; }
+.drag-ghost small { display: block; margin-top: 4px; color: #4e6668; font-size: 12px; }
 
 .flow-bank .flow-card.is-selected {
     outline: 4px solid var(--gold);
