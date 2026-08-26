@@ -4,7 +4,7 @@ const assert = require("node:assert/strict");
 const core = require("../learning/arts/instrument-room/instrument-core.js");
 
 assert.ok(Math.abs(core.midiToFrequency(69) - 440) < .0001);
-assert.equal(core.noteLabel(60), "도4");
+assert.equal(core.noteLabel(60), "C4");
 assert.equal(core.isBlackKey(61), true);
 assert.equal(core.isBlackKey(60), false);
 
