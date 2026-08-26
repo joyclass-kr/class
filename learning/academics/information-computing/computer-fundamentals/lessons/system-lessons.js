@@ -9,26 +9,35 @@
             english: "Hardware and Software",
             conceptTitle: "물리적인 장치와 실행되는 명령",
             visual: `
-                <div class="system-visual hardware-software-visual" aria-label="소프트웨어의 명령을 하드웨어가 실행하는 관계 그림">
-                    <section class="visual-panel">
-                        <h3>하드웨어 <small>Hardware</small></h3>
-                        <div class="part-grid">
-                            <span class="part-chip">CPU<small>계산 장치</small></span>
-                            <span class="part-chip">RAM<small>작업 공간</small></span>
-                            <span class="part-chip">디스플레이<small>Display</small></span>
-                            <span class="part-chip">키보드<small>Keyboard</small></span>
-                        </div>
-                    </section>
-                    <div class="execution-arrow" aria-hidden="true">←<small>명령을<br>실행</small></div>
-                    <section class="visual-panel">
-                        <h3>소프트웨어 <small>Software</small></h3>
-                        <div class="part-grid">
-                            <span class="software-card">운영체제<small>Operating System</small></span>
-                            <span class="software-card">그림 앱<small>Drawing App</small></span>
-                            <span class="software-card">웹 브라우저<small>Web Browser</small></span>
-                            <span class="software-card">장치 드라이버<small>Device Driver</small></span>
-                        </div>
-                    </section>
+                <div class="visual-gallery">
+                    <figure class="concept-illustration">
+                        <picture>
+                            <source srcset="../assets/images/hardware-software-flow-768.webp 768w, ../assets/images/hardware-software-flow-1536.webp 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
+                            <img src="../assets/images/hardware-software-flow-768.webp" width="1536" height="1024" alt="키보드 입력이 노트북 안으로 들어가 소프트웨어 명령, RAM, CPU를 거친 뒤 화면의 결과로 나타나는 네 단계 흐름">
+                        </picture>
+                        <figcaption>키를 누르는 물리적 동작은 소프트웨어의 명령과 데이터를 거쳐 다시 화면의 물리적 빛으로 나타납니다.</figcaption>
+                    </figure>
+                    <div class="system-visual hardware-software-visual" aria-label="하드웨어와 소프트웨어가 협력하는 관계">
+                        <section class="visual-panel">
+                            <h3>하드웨어 <small>Hardware</small></h3>
+                            <div class="part-grid">
+                                <span class="part-chip">CPU<small>명령 실행</small></span>
+                                <span class="part-chip">RAM<small>실행 중 작업</small></span>
+                                <span class="part-chip">디스플레이<small>결과 표시</small></span>
+                                <span class="part-chip">키보드<small>동작 입력</small></span>
+                            </div>
+                        </section>
+                        <div class="execution-arrow" aria-hidden="true">↔<small>요청과<br>결과</small></div>
+                        <section class="visual-panel">
+                            <h3>소프트웨어 <small>Software</small></h3>
+                            <div class="part-grid">
+                                <span class="software-card">운영체제<small>자원 관리</small></span>
+                                <span class="software-card">그림 앱<small>그리기 명령</small></span>
+                                <span class="software-card">웹 브라우저<small>웹 문서 표시</small></span>
+                                <span class="software-card">장치 드라이버<small>장치 제어</small></span>
+                            </div>
+                        </section>
+                    </div>
                 </div>`,
             details: [
                 ["하드웨어", "Hardware", "손으로 만질 수 있는 물리적인 장치입니다. CPU·RAM처럼 본체 안에 있는 부품과 키보드·화면처럼 밖에서 보이는 장치가 모두 포함됩니다."],
@@ -36,6 +45,36 @@
                 ["둘의 관계", "How They Work Together", "그림 앱만 있어도 화면과 CPU가 없으면 실행할 수 없고, 하드웨어만 있어도 실행할 소프트웨어가 없으면 원하는 작업을 지시할 수 없습니다."],
                 ["경계가 헷갈리는 사례", "A Useful Boundary", "프린터 본체는 하드웨어이고 프린터 드라이버는 소프트웨어입니다. 같은 기능에 함께 쓰여도 물리 장치와 명령은 구별됩니다."]
             ],
+            workedExample: {
+                title: "메모장에 ‘가’를 입력하면",
+                english: "From Key Press to Screen",
+                intro: "키 하나를 눌러도 하드웨어와 소프트웨어가 차례로 요청과 결과를 주고받습니다.",
+                steps: [
+                    ["키보드", "Keyboard", "키 아래 스위치가 눌린 위치를 전기 신호로 보냅니다. 아직 화면의 글자는 아닙니다."],
+                    ["드라이버와 운영체제", "Driver & OS", "어느 키가 눌렸는지 읽고, 한글 입력 상태와 조합 규칙을 확인합니다."],
+                    ["메모 앱", "Text App", "운영체제에서 받은 글자를 현재 문서의 커서 위치에 넣으라고 요청합니다."],
+                    ["RAM과 CPU", "RAM & CPU", "실행 중인 앱·문서 데이터는 RAM에 펼쳐지고 CPU가 명령을 순서대로 처리합니다."],
+                    ["화면", "Display", "글자 모양이 픽셀의 밝기와 색 데이터로 바뀌어 디스플레이에 나타납니다."],
+                    ["저장 장치", "Storage", "저장 버튼을 눌러야 문서 데이터가 파일로 SSD에 기록되어 전원을 꺼도 남습니다."]
+                ]
+            },
+            comparisons: {
+                title: "물건·명령·내용을 구별하기",
+                english: "Hardware, Software, and Data",
+                cards: [
+                    ["키보드", "Hardware", "손으로 누르는 물리 장치", "스위치가 눌린 위치를 신호로 보냄"],
+                    ["메모 앱", "Software", "CPU가 실행할 명령의 묶음", "입력·편집·저장 방법을 정함"],
+                    ["운영체제", "System Software", "여러 앱과 장치를 관리하는 기본 소프트웨어", "키보드 입력과 파일 저장 요청을 연결함"],
+                    ["문서 파일", "Data", "앱으로 만든 내용", "소프트웨어 자체가 아니라 소프트웨어가 다루는 자료"]
+                ]
+            },
+            analogy: {
+                title: "비유: 주방과 요리법",
+                english: "Kitchen Analogy",
+                text: "주방 기구는 하드웨어, 요리 순서를 적은 조리법은 소프트웨어, 실제로 다루는 재료와 완성 음식은 데이터에 비유할 수 있습니다.",
+                limit: "하지만 컴퓨터는 맛을 판단하거나 조리법의 뜻을 이해하지 않습니다. CPU는 주어진 기계 명령을 매우 빠르고 정확하게 실행할 뿐입니다.",
+                teachback: "‘프린터 본체·프린터 드라이버·인쇄할 사진’이 각각 무엇인지 자신의 말로 설명해 보세요."
+            },
             activity: {
                 type: "sort",
                 title: "장치와 프로그램 분류하기",
@@ -99,17 +138,26 @@
             english: "Device, Operating System, and App",
             conceptTitle: "한 화면 안에 겹쳐 있는 세 층",
             visual: `
-                <div class="system-visual layer-visual" aria-label="기기 위에서 운영체제가 동작하고 그 위에서 앱이 실행되는 층 구조">
-                    <div class="layer-stack">
-                        <div class="layer-card app-layer"><strong>앱</strong><span><small>Application / App</small>그림·웹·영상처럼 사용자가 고른 작업</span></div>
-                        <div class="layer-card os-layer"><strong>운영체제</strong><span><small>Operating System / OS</small>하드웨어와 앱을 관리하는 기본 소프트웨어</span></div>
-                        <div class="layer-card device-layer"><strong>기기</strong><span><small>Device</small>CPU·메모리·화면이 들어 있는 물리적인 제품</span></div>
-                    </div>
-                    <div class="example-paths">
-                        <div class="example-path"><span>iPad</span><span>iPadOS</span><span>Safari</span></div>
-                        <div class="example-path"><span>Chromebook</span><span>ChromeOS</span><span>Chrome</span></div>
-                        <div class="example-path"><span>PC</span><span>Windows</span><span>그림 앱</span></div>
-                        <div class="example-path"><span>스마트폰</span><span>Android</span><span>카메라 앱</span></div>
+                <div class="visual-gallery">
+                    <figure class="concept-illustration">
+                        <picture>
+                            <source srcset="../assets/images/device-os-app-layers-768.webp 768w, ../assets/images/device-os-app-layers-1536.webp 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
+                            <img src="../assets/images/device-os-app-layers-768.webp" width="1536" height="1024" alt="태블릿, 노트북, 데스크톱, 스마트폰 위에 운영체제 관리층과 앱 작업층이 겹쳐 있는 구조">
+                        </picture>
+                        <figcaption>기기는 아래에서 실제 일을 하고, 운영체제는 가운데에서 자원을 관리하며, 앱은 위에서 사용자가 고른 작업을 요청합니다.</figcaption>
+                    </figure>
+                    <div class="system-visual layer-visual" aria-label="기기 위에서 운영체제가 동작하고 그 위에서 앱이 실행되는 층 구조">
+                        <div class="layer-stack">
+                            <div class="layer-card app-layer"><strong>앱</strong><span><small>Application / App</small>그림·웹·영상처럼 사용자가 고른 작업</span></div>
+                            <div class="layer-card os-layer"><strong>운영체제</strong><span><small>Operating System / OS</small>파일·화면·권한·장치를 관리</span></div>
+                            <div class="layer-card device-layer"><strong>기기</strong><span><small>Device</small>CPU·메모리·화면이 든 물리적 제품</span></div>
+                        </div>
+                        <div class="example-paths">
+                            <div class="example-path"><span>iPad</span><span>iPadOS</span><span>Safari</span></div>
+                            <div class="example-path"><span>Chromebook</span><span>ChromeOS</span><span>Chrome</span></div>
+                            <div class="example-path"><span>PC</span><span>Windows</span><span>그림 앱</span></div>
+                            <div class="example-path"><span>스마트폰</span><span>Android</span><span>카메라 앱</span></div>
+                        </div>
                     </div>
                 </div>`,
             details: [
@@ -118,6 +166,35 @@
                 ["앱", "Application / App", "브라우저·카메라·문서 편집기처럼 특정 작업을 수행하는 소프트웨어입니다. 같은 앱도 여러 운영체제용 버전이 따로 있을 수 있습니다."],
                 ["층 사이의 요청", "Requests Between Layers", "앱은 운영체제에 파일 저장이나 카메라 사용을 요청하고, 운영체제는 드라이버를 통해 하드웨어를 제어합니다."]
             ],
+            workedExample: {
+                title: "카메라 앱으로 사진을 찍을 때",
+                english: "A Photo Request Through Three Layers",
+                intro: "앱이 카메라를 직접 마음대로 움직이는 것이 아니라 운영체제에 요청하고 결과를 돌려받습니다.",
+                steps: [
+                    ["앱의 요청", "App Request", "카메라 앱이 운영체제에 카메라 사용과 촬영을 요청합니다."],
+                    ["권한 확인", "Permission Check", "운영체제가 이 앱에 카메라 권한이 있는지 확인합니다."],
+                    ["장치 제어", "Device Control", "운영체제와 드라이버가 이미지 센서 하드웨어를 켜고 빛을 측정하게 합니다."],
+                    ["데이터 전달", "Data Return", "센서 데이터가 RAM으로 들어오고 앱이 미리보기와 보정을 처리합니다."],
+                    ["파일 저장", "File Save", "앱이 저장을 요청하면 운영체제가 파일 이름·위치·접근 권한을 관리해 저장 장치에 기록합니다."]
+                ]
+            },
+            comparisons: {
+                title: "같이 불려도 층은 다르다",
+                english: "Name the Correct Layer",
+                cards: [
+                    ["iPad·Chromebook·PC", "Device", "CPU·메모리·화면이 들어 있는 실제 제품", "손에 들거나 책상에 놓을 수 있음"],
+                    ["iPadOS·ChromeOS·Windows", "Operating System", "앱·파일·장치·권한을 관리", "기기를 켜면 기본 환경을 제공"],
+                    ["Safari·Chrome·그림 앱", "Application", "사용자가 고른 특정 작업을 수행", "웹 보기·그리기·촬영 같은 목적"],
+                    ["Google 검색·학교 홈페이지", "Service / Website", "앱을 통해 접속하는 인터넷상의 대상", "브라우저 자체와 웹사이트는 서로 다름"]
+                ]
+            },
+            analogy: {
+                title: "비유: 학교 건물·운영 규칙·동아리",
+                english: "School Analogy",
+                text: "학교 건물과 교실은 기기, 교실 배정과 출입을 관리하는 운영 규칙은 운영체제, 미술부·방송부처럼 특정 활동을 하는 모임은 앱에 비유할 수 있습니다.",
+                limit: "운영체제는 교장 선생님처럼 생각하는 사람이 아닙니다. 미리 작성된 규칙과 프로그램으로 메모리·파일·장치 사용을 배분합니다.",
+                teachback: "‘Chromebook에서 Chrome으로 웹사이트를 연다’는 문장에서 기기·운영체제·앱·웹사이트를 나누어 말해 보세요."
+            },
             activity: {
                 type: "sort",
                 title: "세 층에 알맞게 놓기",
@@ -184,17 +261,26 @@
             english: "Analog and Digital",
             conceptTitle: "이어지는 변화와 정해진 단계의 기록",
             visual: `
-                <div class="system-visual analog-visual" aria-label="연속적인 아날로그 변화와 단계별 디지털 기록 비교">
-                    <section class="signal-card">
-                        <h3>아날로그 <small>Analog</small></h3>
-                        <div class="continuous-line" aria-hidden="true"></div>
-                        <p>온도·빛·소리처럼 현실에서 매끄럽게 이어지는 변화를 그 변화에 대응하는 연속적인 값으로 나타냅니다.</p>
-                    </section>
-                    <section class="signal-card digital">
-                        <h3>디지털 <small>Digital</small></h3>
-                        <div class="step-line" aria-hidden="true"></div>
-                        <p>측정한 값을 정해진 단계와 숫자·기호로 기록합니다. 작은 차이는 같은 단계로 기록될 수도 있습니다.</p>
-                    </section>
+                <div class="visual-gallery">
+                    <figure class="concept-illustration">
+                        <picture>
+                            <source srcset="../assets/images/analog-digital-measurement-768.webp 768w, ../assets/images/analog-digital-measurement-1536.webp 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
+                            <img src="../assets/images/analog-digital-measurement-768.webp" width="1536" height="1024" alt="현실의 매끄러운 온도와 소리 변화가 센서 측정을 거쳐 정해진 단계의 디지털 기록으로 바뀌는 비교 그림">
+                        </picture>
+                        <figcaption>현실의 변화는 이어지지만, 디지털 장치는 일정한 순간과 정해진 값의 칸을 골라 기록합니다.</figcaption>
+                    </figure>
+                    <div class="system-visual analog-visual" aria-label="연속적인 아날로그 변화와 단계별 디지털 기록 비교">
+                        <section class="signal-card">
+                            <h3>이어지는 변화 <small>Continuous / Analog</small></h3>
+                            <div class="continuous-line" aria-hidden="true"></div>
+                            <p>눈금 사이의 중간값도 존재합니다. 현실의 온도·빛·소리는 계속 변할 수 있습니다.</p>
+                        </section>
+                        <section class="signal-card digital">
+                            <h3>정해진 칸에 기록 <small>Discrete / Digital</small></h3>
+                            <div class="step-line" aria-hidden="true"></div>
+                            <p>측정 순간과 기록 단계를 정합니다. 다른 실제 값이 같은 칸에 들어갈 수도 있습니다.</p>
+                        </section>
+                    </div>
                 </div>`,
             details: [
                 ["아날로그", "Analog", "값이 중간에서 끊기지 않고 이어집니다. 바늘의 위치, 홈에 새겨진 소리의 흔적처럼 물리량에 대응해 연속적으로 변할 수 있습니다."],
@@ -202,6 +288,36 @@
                 ["오래됨과 새로움의 구분이 아님", "Not Old versus New", "현대의 마이크 안에도 아날로그 전기 신호가 생기고, 최신 장비에도 아날로그 회로가 사용됩니다. 두 말은 표현 방식의 차이입니다."],
                 ["변환", "Conversion", "센서가 현실의 변화를 측정하고 ADC가 숫자 데이터로 바꿉니다. 스피커는 디지털 데이터를 다시 전기 신호와 공기의 떨림으로 바꿉니다."]
             ],
+            workedExample: {
+                title: "디지털 온도계가 숫자를 만드는 과정",
+                english: "How a Digital Thermometer Records Temperature",
+                intro: "표시창에 숫자가 나타나기 전에는 현실의 온도를 측정하고 정해진 기록 칸에 넣는 과정이 필요합니다.",
+                steps: [
+                    ["현실의 온도", "Real Temperature", "공기의 온도는 20.14°C에서 20.18°C처럼 중간값을 지나며 계속 변합니다."],
+                    ["센서 반응", "Sensor Response", "온도 센서의 전기적 성질이 온도에 따라 연속적으로 달라집니다."],
+                    ["측정 순간 선택", "Sampling", "장치가 일정한 시간마다 센서 신호를 읽습니다."],
+                    ["기록 단계 선택", "Quantization", "읽은 값을 0.1°C 같은 정해진 간격의 가장 가까운 칸에 맞춥니다."],
+                    ["숫자 부호화", "Encoding", "선택한 값을 컴퓨터가 저장·계산할 수 있는 비트의 조합으로 기록합니다."],
+                    ["표시", "Display", "기록된 값을 사람이 읽을 수 있는 20.2°C 같은 문자와 숫자로 보여 줍니다."]
+                ]
+            },
+            comparisons: {
+                title: "아날로그와 디지털을 판단하는 근거",
+                english: "What Actually Makes the Difference",
+                cards: [
+                    ["바늘식 온도계", "Analog Display", "바늘 위치가 눈금 사이에서도 이어져 변함", "오래되었기 때문이 아니라 표현 방식이 연속적이기 때문"],
+                    ["디지털 녹음 파일", "Digital Data", "측정값을 정해진 숫자 단계와 순서로 기록", "화면에 숫자가 없어도 디지털"],
+                    ["최신 마이크의 전기 신호", "Analog Signal", "마이크 내부에서 처음 생기는 신호는 연속적으로 변할 수 있음", "최신 제품 안에도 아날로그 단계가 존재"],
+                    ["센서 기록값", "Digital Record", "측정 순간과 기록 단계가 정해짐", "실제 값과 기록값이 완전히 같다는 뜻은 아님"]
+                ]
+            },
+            analogy: {
+                title: "비유: 경사로와 계단",
+                english: "Ramp and Stairs",
+                text: "경사로에서는 어느 높이에도 설 수 있어 연속적인 아날로그 값과 비슷합니다. 계단에서는 정해진 단에 서므로 디지털 기록 단계와 비슷합니다.",
+                limit: "디지털 계단의 단을 아주 촘촘하게 만들면 차이가 눈에 거의 보이지 않을 수 있습니다. 디지털이 거칠다거나 아날로그가 더 정확하다는 뜻은 아닙니다.",
+                teachback: "20.14°C와 20.18°C가 모두 20.2°C로 표시될 수 있는 까닭을 ‘측정’과 ‘기록 단계’라는 말로 설명해 보세요."
+            },
             activity: {
                 type: "analog",
                 title: "서로 다른 온도가 같은 숫자로 기록될까?",
@@ -253,13 +369,22 @@
             english: "From Sound to Digital Data",
             conceptTitle: "이어진 파형에서 측정점을 고르기",
             visual: `
-                <div class="system-visual sample-visual" aria-label="소리 파형을 일정한 간격으로 측정해 숫자로 기록하는 과정">
-                    <div class="sample-canvas-wrap"><canvas class="sample-canvas" data-samples="8" aria-label="연속 파형 위에 여덟 개의 측정점이 표시된 그래프"></canvas></div>
-                    <div class="conversion-chain">
-                        <span><b>1</b>&nbsp; 공기의 떨림</span>
-                        <span><b>2</b>&nbsp; 마이크 전기 신호</span>
-                        <span><b>3</b>&nbsp; 일정 간격 측정</span>
-                        <span><b>4</b>&nbsp; 숫자 데이터</span>
+                <div class="visual-gallery">
+                    <figure class="concept-illustration">
+                        <picture>
+                            <source srcset="../assets/images/sound-to-digital-flow-768.webp 768w, ../assets/images/sound-to-digital-flow-1536.webp 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
+                            <img src="../assets/images/sound-to-digital-flow-768.webp" width="1536" height="1024" alt="기타 줄의 떨림과 공기 파동이 마이크, 전기 신호, 측정점, 숫자 데이터, 스피커를 거쳐 다시 소리가 되는 흐름">
+                        </picture>
+                        <figcaption>녹음은 공기의 떨림을 숫자로 바꾸는 길이고, 재생은 숫자를 다시 공기의 떨림으로 바꾸는 반대 길입니다.</figcaption>
+                    </figure>
+                    <div class="system-visual sample-visual" aria-label="소리 파형을 일정한 간격으로 측정해 숫자로 기록하는 과정">
+                        <div class="sample-canvas-wrap"><canvas class="sample-canvas" data-samples="8" aria-label="연속 파형 위에 여덟 개의 측정점이 표시된 그래프"></canvas></div>
+                        <div class="conversion-chain">
+                            <span><b>1</b>&nbsp; 공기의 떨림</span>
+                            <span><b>2</b>&nbsp; 마이크 전기 신호</span>
+                            <span><b>3</b>&nbsp; 일정 간격 측정</span>
+                            <span><b>4</b>&nbsp; 숫자 단계 기록</span>
+                        </div>
                     </div>
                 </div>`,
             details: [
@@ -268,6 +393,36 @@
                 ["양자화", "Quantization", "측정한 높이를 컴퓨터가 기록할 수 있는 정해진 숫자 단계에 맞춥니다. 실제 값과 기록값 사이에 작은 차이가 생길 수 있습니다."],
                 ["재생", "Playback", "저장된 숫자를 시간 순서대로 읽고 전기 신호로 바꿔 스피커를 움직이면 다시 공기의 떨림인 소리로 들립니다."]
             ],
+            workedExample: {
+                title: "한 음을 녹음하고 다시 듣기까지",
+                english: "Record and Play Back One Note",
+                intro: "소리는 파일 속에 공기 떨림 그대로 들어가는 것이 아니라, 시간 순서가 있는 숫자 목록으로 기록됩니다.",
+                steps: [
+                    ["공기의 떨림", "Air Vibration", "기타 줄이 주변 공기를 밀고 당겨 압력 변화를 만듭니다."],
+                    ["마이크 신호", "Microphone Signal", "마이크 진동판이 움직이며 공기 떨림에 대응하는 연속 전기 신호를 만듭니다."],
+                    ["샘플링", "Sampling", "장치가 같은 시간 간격으로 전기 신호의 높이를 여러 번 측정합니다."],
+                    ["양자화", "Quantization", "각 측정 높이를 컴퓨터가 기록할 수 있는 가까운 숫자 단계에 맞춥니다."],
+                    ["파일 만들기", "Audio File", "측정값의 순서와 재생 속도 같은 정보를 WAV·AAC 등의 파일 형식으로 묶습니다."],
+                    ["재생", "Playback", "숫자를 시간 순서대로 전기 신호로 바꾸고 스피커가 공기를 떨게 합니다."]
+                ]
+            },
+            comparisons: {
+                title: "서로 다른 네 가지 설정",
+                english: "Do Not Mix These Up",
+                cards: [
+                    ["샘플링 레이트", "Sampling Rate", "1초에 몇 번 측정하는가", "시간 방향의 촘촘함"],
+                    ["비트 깊이", "Bit Depth", "한 측정값을 몇 단계로 나누어 기록하는가", "높이 방향의 촘촘함"],
+                    ["파일 형식", "File Format", "측정값과 부가 정보를 어떤 규칙으로 묶는가", "WAV·AAC·MP3 등의 저장 규칙"],
+                    ["파일 크기", "File Size", "측정 횟수·단계·길이·압축 방식의 영향을 받음", "더 자세한 기록은 보통 더 많은 데이터가 필요"]
+                ]
+            },
+            analogy: {
+                title: "비유: 움직임을 여러 장의 사진으로 기록하기",
+                english: "Snapshot Analogy",
+                text: "점프 동작을 일정한 간격으로 여러 장 찍으면 사진 수가 많을수록 움직임 변화를 더 자세히 짐작할 수 있습니다. 소리 샘플링도 시간마다 신호 높이를 측정한다는 점이 비슷합니다.",
+                limit: "샘플 하나는 짧은 소리 조각이 아니라 한 순간의 신호 높이 값입니다. 여러 값의 순서가 모여 파형을 나타냅니다.",
+                teachback: "샘플링 레이트를 높이면 무엇이 더 촘촘해지고, 왜 데이터 양이 늘어나는지 설명해 보세요."
+            },
             activity: {
                 type: "sampling",
                 title: "측정점 수에 따라 무엇이 달라질까?",
@@ -323,18 +478,29 @@
             visual: `
                 <div class="system-visual hardware-cutaway-grid">
                     <figure class="hardware-photo">
-                        <picture>
-                            <source srcset="../assets/images/desktop-hardware-cutaway-768.webp 768w, ../assets/images/desktop-hardware-cutaway-1448.webp 1448w" sizes="(max-width: 900px) calc(100vw - 60px), 65vw" type="image/webp">
-                            <img src="../assets/images/desktop-hardware-cutaway-768.webp" width="768" height="576" alt="열린 데스크톱 본체 안에 메인보드, 금색 CPU, 파란 RAM, 청록색 GPU, 초록색 SSD, 은색 하드 디스크, 전원 공급 장치와 냉각 팬이 연결된 모습">
-                        </picture>
+                        <div class="hardware-photo-map">
+                            <picture>
+                                <source srcset="../assets/images/desktop-hardware-cutaway-768.webp 768w, ../assets/images/desktop-hardware-cutaway-1448.webp 1448w" sizes="(max-width: 900px) calc(100vw - 60px), 65vw" type="image/webp">
+                                <img src="../assets/images/desktop-hardware-cutaway-768.webp" width="768" height="576" alt="열린 데스크톱 본체 안의 CPU, RAM, GPU, SSD, 하드 디스크, 메인보드, 전원 공급 장치와 냉각 팬">
+                            </picture>
+                            <span class="part-marker marker-cpu"><b>1</b><small>CPU</small></span>
+                            <span class="part-marker marker-ram"><b>2</b><small>RAM</small></span>
+                            <span class="part-marker marker-gpu"><b>3</b><small>GPU</small></span>
+                            <span class="part-marker marker-storage"><b>4</b><small>저장</small></span>
+                            <span class="part-marker marker-power"><b>5</b><small>전원</small></span>
+                            <span class="part-marker marker-board"><b>6</b><small>기판</small></span>
+                            <span class="part-marker marker-cooling"><b>7</b><small>냉각</small></span>
+                        </div>
+                        <figcaption>번호를 오른쪽 역할 카드와 연결해 실제 위치와 기능을 함께 확인하세요.</figcaption>
                     </figure>
-                    <div class="component-legend" aria-label="그림 속 부품 색상 범례">
-                        <span class="cpu">CPU<small>명령 해석·계산</small></span>
-                        <span class="gpu">GPU<small>많은 계산을 병렬 처리</small></span>
-                        <span class="ram">RAM<small>실행 중인 작업 공간</small></span>
-                        <span class="storage">SSD·HDD<small>전원이 꺼져도 보관</small></span>
-                        <span class="board">메인보드<small>부품 연결·통신</small></span>
-                        <span class="power">전원·냉각<small>전력 공급·열 배출</small></span>
+                    <div class="component-legend" aria-label="그림 속 부품 번호와 역할">
+                        <span class="cpu"><b>1</b> CPU<small>명령을 해석하고 순서에 따라 계산</small></span>
+                        <span class="ram"><b>2</b> RAM<small>실행 중인 명령과 데이터를 빠르게 펼쳐 둠</small></span>
+                        <span class="gpu"><b>3</b> GPU<small>비슷한 계산을 여러 개 동시에 처리</small></span>
+                        <span class="storage"><b>4</b> SSD·HDD<small>앱과 파일을 전원이 꺼져도 보관</small></span>
+                        <span class="power"><b>5</b> 전원 공급 장치<small>콘센트 전기를 부품에 맞게 바꾸어 나눔</small></span>
+                        <span class="board"><b>6</b> 메인보드<small>부품이 꽂히고 데이터가 오가는 연결 기반</small></span>
+                        <span class="cooling"><b>7</b> 냉각 장치<small>방열판과 팬이 부품의 열을 밖으로 옮김</small></span>
                     </div>
                 </div>`,
             details: [
@@ -343,6 +509,36 @@
                 ["RAM과 저장 장치", "Memory and Storage", "RAM은 지금 펼쳐 둔 자료를 빠르게 쓰는 책상이고 전원이 꺼지면 내용이 사라집니다. SSD·HDD는 파일을 오래 보관하는 사물함에 가깝습니다."],
                 ["메인보드·전원·냉각", "Motherboard, Power, and Cooling", "메인보드는 부품이 꽂히고 데이터를 주고받는 길을 제공합니다. 전원 공급 장치는 필요한 전력을 나누고, 팬과 방열판은 생긴 열을 밖으로 보냅니다."]
             ],
+            workedExample: {
+                title: "그림 앱과 사진 파일을 여는 1초",
+                english: "What the Parts Do Together",
+                intro: "한 부품이 혼자 앱을 여는 것이 아닙니다. 저장·작업 공간·계산·표시·전력·냉각이 이어집니다.",
+                steps: [
+                    ["SSD에서 읽기", "Load from Storage", "전원이 꺼져도 보관되던 그림 앱의 명령과 사진 파일을 읽습니다."],
+                    ["RAM에 펼치기", "Place in RAM", "곧 사용할 명령과 사진 데이터를 빠르게 꺼내 쓸 수 있도록 RAM에 올립니다."],
+                    ["CPU가 진행", "CPU Coordinates", "CPU가 앱 명령을 읽고 파일 해석·입력 처리·작업 순서를 진행합니다."],
+                    ["GPU가 화면 계산", "GPU Draws", "GPU가 사진과 앱 창의 많은 픽셀 값을 동시에 계산해 화면용 이미지를 만듭니다."],
+                    ["디스플레이에 출력", "Display Output", "계산된 픽셀 데이터가 화면으로 전달되어 빛과 색으로 보입니다."],
+                    ["전원과 냉각", "Power & Cooling", "전원 공급 장치가 각 부품에 전력을 보내고 방열판과 팬이 생긴 열을 밖으로 옮깁니다."]
+                ]
+            },
+            comparisons: {
+                title: "CPU·GPU·RAM·저장 장치를 한눈에 비교",
+                english: "Four Parts, Four Roles",
+                cards: [
+                    ["CPU", "General Processor", "서로 다른 명령을 순서와 조건에 따라 처리", "앱 실행, 입력 판단, 파일 처리"],
+                    ["GPU", "Parallel Processor", "비슷한 계산을 아주 많이 동시에 처리", "픽셀·영상·3D·일부 인공지능 계산"],
+                    ["RAM", "Working Memory", "지금 실행 중인 명령과 데이터를 빠르게 펼쳐 둠", "전원이 꺼지면 내용이 유지되지 않음"],
+                    ["SSD·HDD", "Storage", "앱과 파일을 오래 보관", "전원이 꺼져도 기록이 남음"]
+                ]
+            },
+            analogy: {
+                title: "비유: 작업실",
+                english: "Workshop Analogy",
+                text: "CPU는 작업 순서를 진행하는 작업자, GPU는 같은 종류의 조각을 동시에 만드는 많은 작업대, RAM은 지금 재료를 펼친 큰 책상, SSD는 재료와 완성품을 보관하는 창고에 비유할 수 있습니다. 메인보드는 이들을 잇는 길, 전원과 냉각은 작업실의 전기와 환기입니다.",
+                limit: "CPU가 항상 혼자 지휘하고 GPU가 그림만 처리하는 것은 아닙니다. 실제 프로그램은 작업의 종류에 따라 CPU와 GPU에 일을 나누며, 두 부품 모두 전자 회로로 명령과 데이터를 처리합니다.",
+                teachback: "저장 공간이 256GB로 같아도 RAM 4GB와 16GB의 사용감이 달라질 수 있는 이유를 ‘창고’와 ‘책상’ 비유로 설명해 보세요."
+            },
             activity: {
                 type: "sort",
                 title: "부품의 실제 역할로 분류하기",
@@ -445,6 +641,59 @@
         details.innerHTML = lesson.details.map((detail, index) => `
             <article><span class="concept-number">${index + 1}</span><h3>${detail[0]} <small>${detail[1]}</small></h3><p>${detail[2]}</p></article>
         `).join("");
+        const story = lesson.workedExample;
+        document.getElementById("conceptStory").innerHTML = `
+            <section class="worked-example" aria-labelledby="workedExampleTitle">
+                <div class="explanation-heading">
+                    <span>실제로 일어나는 순서 <small>Step by Step</small></span>
+                    <h2 id="workedExampleTitle">${story.title} <small>${story.english}</small></h2>
+                    <p>${story.intro}</p>
+                </div>
+                <ol class="story-steps">
+                    ${story.steps.map((step, index) => `
+                        <li>
+                            <span class="story-number">${index + 1}</span>
+                            <div><strong>${step[0]} <small>${step[1]}</small></strong><p>${step[2]}</p></div>
+                        </li>
+                    `).join("")}
+                </ol>
+            </section>
+        `;
+
+        const comparison = lesson.comparisons;
+        document.getElementById("conceptCompare").innerHTML = `
+            <section class="concept-comparison" aria-labelledby="comparisonTitle">
+                <div class="explanation-heading compact">
+                    <span>헷갈리지 않기 <small>Compare</small></span>
+                    <h2 id="comparisonTitle">${comparison.title} <small>${comparison.english}</small></h2>
+                </div>
+                <div class="comparison-grid">
+                    ${comparison.cards.map((card) => `
+                        <article>
+                            <h3>${card[0]} <small>${card[1]}</small></h3>
+                            <p>${card[2]}</p>
+                            <dl><dt>구체적인 예</dt><dd>${card[3]}</dd></dl>
+                        </article>
+                    `).join("")}
+                </div>
+            </section>
+        `;
+
+        const analogy = lesson.analogy;
+        document.getElementById("conceptAnalogy").innerHTML = `
+            <section class="analogy-panel" aria-labelledby="analogyTitle">
+                <div class="analogy-main">
+                    <span class="analogy-label">쉽게 비유하면 <small>Analogy</small></span>
+                    <h2 id="analogyTitle">${analogy.title} <small>${analogy.english}</small></h2>
+                    <p>${analogy.text}</p>
+                </div>
+                <aside class="analogy-limit">
+                    <strong>비유가 실제와 다른 점 <small>Where the Analogy Stops</small></strong>
+                    <p>${analogy.limit}</p>
+                </aside>
+                <div class="teachback"><strong>내 말로 설명하기 <small>Teach It Back</small></strong><p>${analogy.teachback}</p></div>
+            </section>
+        `;
         document.getElementById("activityTitle").textContent = lesson.activity.title;
         document.getElementById("activityInstruction").textContent = lesson.activity.instruction;
         renderStaticCanvases();
