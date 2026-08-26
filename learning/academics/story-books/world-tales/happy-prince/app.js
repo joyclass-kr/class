@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 도시를 내려다보는 동상",
         "beats": [
             {
-                "art": "01-statue.png",
+                "art": "01-statue.webp",
                 "emoji": "🏙️",
                 "left": [
                     "도시 한복판에 아주 높은 기둥이 서 있었습니다. 그 꼭대기에 동상이 올라앉아 있었지요.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-statue-2.png",
+                "art": "01-statue-2.webp",
                 "emoji": "🏙️",
                 "left": [
                     "왕자는 살아 있을 때를 가끔 떠올렸습니다.",
@@ -41,7 +41,7 @@ const CHAPTERS = [
         "title": "2장 · 하룻밤만 묵어가는 제비",
         "beats": [
             {
-                "art": "02-swallow.png",
+                "art": "02-swallow.webp",
                 "emoji": "🐦",
                 "left": [
                     "그 무렵 제비 한 마리가 도시로 날아왔습니다. 동무들은 벌써 따뜻한 나라로 떠난 뒤였지요. 갈대와 놀다가 그만 한참 늦고 만 것입니다.",
@@ -59,7 +59,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-swallow-2.png",
+                "art": "02-swallow-2.webp",
                 "emoji": "🐦",
                 "left": [
                     "\"왜 우세요?\"",
@@ -82,7 +82,7 @@ const CHAPTERS = [
         "title": "3장 · 첫 번째 심부름",
         "beats": [
             {
-                "art": "03-ruby.png",
+                "art": "03-ruby.webp",
                 "emoji": "❤️",
                 "left": [
                     "\"저는 내일 아침에 떠나야 해요. 동무들이 기다리거든요.\"",
@@ -95,7 +95,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-ruby-2.png",
+                "art": "03-ruby-2.webp",
                 "emoji": "❤️",
                 "left": [
                     "제비는 아이 곁을 맴돌며 날개로 부채질을 해 주었습니다.",
@@ -119,7 +119,7 @@ const CHAPTERS = [
         "title": "4장 · 파란 눈을 주다",
         "beats": [
             {
-                "art": "04-sapphire.png",
+                "art": "04-sapphire.webp",
                 "emoji": "💙",
                 "left": [
                     "아침이 되자 제비가 날개를 활짝 폈습니다.",
@@ -136,7 +136,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-sapphire-2.png",
+                "art": "04-sapphire-2.webp",
                 "emoji": "💙",
                 "left": [
                     "제비는 사파이어를 조심조심 물고 다락 창으로 날아갔습니다. 젊은이가 잠깐 고개를 숙인 사이에 책상 위에 살며시 내려놓았지요.",
@@ -156,7 +156,7 @@ const CHAPTERS = [
         "title": "5장 · 제비의 눈이 되어",
         "beats": [
             {
-                "art": "05-eyes.png",
+                "art": "05-eyes.webp",
                 "emoji": "👀",
                 "left": [
                     "며칠 뒤 광장에 아이 하나가 서 있었습니다. 성냥을 팔러 나온 아이였지요.",
@@ -173,7 +173,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-eyes-2.png",
+                "art": "05-eyes-2.webp",
                 "emoji": "👀",
                 "left": [
                     "아이는 그것을 쥐고 웃으며 달려갔습니다. 제비는 동상으로 돌아왔지요.",
@@ -197,7 +197,7 @@ const CHAPTERS = [
         "title": "6장 · 첫눈이 내리던 밤",
         "beats": [
             {
-                "art": "06-snow.png",
+                "art": "06-snow.webp",
                 "emoji": "🌨️",
                 "left": [
                     "제비는 금박을 한 장씩 떼어 날랐습니다. 굶는 집마다 찾아가 창턱에 놓아 주었지요. 아이들 얼굴이 하루가 다르게 밝아졌습니다.",
@@ -212,7 +212,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-snow-2.png",
+                "art": "06-snow-2.webp",
                 "emoji": "🌨️",
                 "left": [
                     "겨울이 깊어졌습니다.",
@@ -234,7 +234,7 @@ const CHAPTERS = [
         "title": "7장 · 가장 귀한 것 둘",
         "beats": [
             {
-                "art": "07-ending.png",
+                "art": "07-ending.webp",
                 "emoji": "✨",
                 "left": [
                     "납으로 된 심장이 두 쪽으로 갈라진 것이었습니다. 그만큼 추운 밤이었지요.",
@@ -251,7 +251,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-ending-2.png",
+                "art": "07-ending-2.webp",
                 "emoji": "✨",
                 "left": [
                     "동상은 용광로에 넣어졌습니다. 쇳물이 부글부글 끓고 쇠망치 소리가 쨍쨍 울렸지요.",
@@ -283,7 +283,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🗿')}
+                ${artFrame('cover.webp', '🗿')}
             </div>
             <div class="story-page-right">
                 <h1>행복한 왕자</h1>
@@ -355,7 +355,7 @@ const AFTERWORD = {
     emoji: '🗽',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기를 지은 사람은 아일랜드의 오스카 와일드입니다. 백삼십 년쯤 전에 제 아이들에게 들려주려고 지었다고 합니다.",
                 "왕자는 살아 있을 때 슬픔을 몰랐습니다. 담장 안에서만 살았으니까요. 동상이 되어 높이 선 뒤에야 도시가 다 보였습니다.",

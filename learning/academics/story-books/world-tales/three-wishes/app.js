@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 숲에서 만난 손님",
         "beats": [
             {
-                "art": "01-spirit.png",
+                "art": "01-spirit.webp",
                 "emoji": "✨",
                 "left": [
                     "나무꾼 부부의 집은 방 하나짜리 오두막이었습니다. 숲가에 겨우 지붕만 얹은 집이었지요. 가진 것은 거의 없었습니다.",
@@ -18,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-spirit-2.png",
+                "art": "01-spirit-2.webp",
                 "emoji": "✨",
                 "left": [
                     "빛 속에 아주 작은 사람이 있었습니다. 머리카락이 나뭇잎 같았지요. 숲의 정령이었습니다.",
@@ -42,7 +42,7 @@ const CHAPTERS = [
         "title": "2장 · 소원 세 가지",
         "beats": [
             {
-                "art": "02-wishes.png",
+                "art": "02-wishes.webp",
                 "emoji": "🎁",
                 "left": [
                     "정령이 환하게 웃었습니다.",
@@ -61,7 +61,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-wishes-2.png",
+                "art": "02-wishes-2.webp",
                 "emoji": "🎁",
                 "left": [
                     "나무꾼은 한참을 멍하니 서 있었습니다.",
@@ -85,7 +85,7 @@ const CHAPTERS = [
         "title": "3장 · 저녁 밥상 앞에서",
         "beats": [
             {
-                "art": "03-table.png",
+                "art": "03-table.webp",
                 "emoji": "🍲",
                 "left": [
                     "나무꾼은 숨을 헐떡이며 이야기했습니다. 아내는 듣더니 손뼉을 쳤지요.",
@@ -103,7 +103,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-table-2.png",
+                "art": "03-table-2.webp",
                 "emoji": "🍲",
                 "left": [
                     "밥상에는 묽은 죽 두 그릇이 놓였습니다. 늘 먹던 대로였지요.",
@@ -124,7 +124,7 @@ const CHAPTERS = [
         "title": "4장 · 아내의 불호령",
         "beats": [
             {
-                "art": "04-scold.png",
+                "art": "04-scold.webp",
                 "emoji": "😤",
                 "left": [
                     "먼저 정신을 차린 것은 아내였습니다. 얼굴이 순식간에 벌게졌지요.",
@@ -142,7 +142,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-scold-2.png",
+                "art": "04-scold-2.webp",
                 "emoji": "😤",
                 "left": [
                     "나무꾼도 지지 않았습니다.",
@@ -165,7 +165,7 @@ const CHAPTERS = [
         "title": "5장 · 코에 붙은 소시지",
         "beats": [
             {
-                "art": "05-nose.png",
+                "art": "05-nose.webp",
                 "emoji": "😳",
                 "left": [
                     "아내는 그래도 그치지 않았습니다.",
@@ -181,7 +181,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-nose-2.png",
+                "art": "05-nose-2.webp",
                 "emoji": "😳",
                 "left": [
                     "아내가 두 눈을 아래로 내리떴습니다. 코끝에 소시지가 대롱대롱 달려 있었지요.",
@@ -203,7 +203,7 @@ const CHAPTERS = [
         "title": "6장 · 아무리 해도",
         "beats": [
             {
-                "art": "06-try.png",
+                "art": "06-try.webp",
                 "emoji": "🧈",
                 "left": [
                     "두 사람은 온갖 수를 다 써 보았습니다. 먼저 버터를 발라 보았지요.",
@@ -218,7 +218,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-try-2.png",
+                "art": "06-try-2.webp",
                 "emoji": "🧈",
                 "left": [
                     "기진맥진해서 마루에 주저앉았습니다. 숨이 차서 말도 나오지 않았지요. 아내는 코를 감싸 쥐고 훌쩍였습니다.",
@@ -240,7 +240,7 @@ const CHAPTERS = [
         "title": "7장 · 마지막 한 가지",
         "beats": [
             {
-                "art": "07-last.png",
+                "art": "07-last.webp",
                 "emoji": "🤔",
                 "left": [
                     "아내가 코를 감싼 채 고개를 들었습니다.",
@@ -257,7 +257,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-last-2.png",
+                "art": "07-last-2.webp",
                 "emoji": "🤔",
                 "left": [
                     "\"금덩이가 있으면 뭐 하겠소.\"",
@@ -280,7 +280,7 @@ const CHAPTERS = [
         "title": "8장 · 다시 죽 한 그릇",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🥣",
                 "left": [
                     "\"아내의 코를 원래대로 돌려주시오.\"",
@@ -297,7 +297,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🥣",
                 "left": [
                     "집도 그대로였고 살림도 그대로였습니다. 밥상에는 묽은 죽 두 그릇뿐이었지요. 두 사람은 상 앞에 앉았습니다.",
@@ -328,7 +328,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🌭')}
+                ${artFrame('cover.webp', '🌭')}
             </div>
             <div class="story-page-right">
                 <h1>요술 소시지</h1>
@@ -400,7 +400,7 @@ const AFTERWORD = {
     emoji: '🌭',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 유럽 여러 나라에 전해 옵니다. 프랑스와 영국에 특히 비슷한 것이 많지요.",
                 "나무꾼 부부가 얻은 것은 소원 세 번이었습니다. 무엇이든 될 수 있었지요.",

@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -42,64 +42,64 @@ clothes.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a slender stone tower rising above a dark forest, a long golden braid tumbling from its single high window, wildflowers and a garden wall in the foreground, dusk light, beautiful and inviting. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a slender stone tower rising above a dark forest, a long golden braid tumbling from its single high window, wildflowers and a garden wall in the foreground, dusk light, beautiful and inviting. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 담 너머의 밭
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-garden.png` | A modest cottage room where a pale young wife gazes from the window toward a high garden wall, and beyond it rows of lush green herbs growing in a walled garden, wistful evening light. |
-| `images/01-garden-2.png` | A moonless walled garden where a man crouches picking herbs and freezes as a tall figure in a plum cloak appears behind him in the shadow of the wall, tense and dramatic. |
+| `images/01-garden.webp` | A modest cottage room where a pale young wife gazes from the window toward a high garden wall, and beyond it rows of lush green herbs growing in a walled garden, wistful evening light. |
+| `images/01-garden-2.webp` | A moonless walled garden where a man crouches picking herbs and freezes as a tall figure in a plum cloak appears behind him in the shadow of the wall, tense and dramatic. |
 
 ## 2장 · 탑에 갇힌 아이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-tower.png` | A walled garden where a kneeling man pleads with a tall cloaked woman who names her price, and later the same woman at a cottage door reaching for a newborn, sombre and moving. |
-| `images/02-tower-2.png` | A lone stone tower with a single high window standing in a forest clearing, a small girl looking up at it in dismay as a cloaked woman gestures, tall dark pines all around. |
+| `images/02-tower.webp` | A walled garden where a kneeling man pleads with a tall cloaked woman who names her price, and later the same woman at a cottage door reaching for a newborn, sombre and moving. |
+| `images/02-tower-2.webp` | A lone stone tower with a single high window standing in a forest clearing, a small girl looking up at it in dismay as a cloaked woman gestures, tall dark pines all around. |
 
 ## 3장 · 머리카락을 내려라
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-hair.png` | The base of a tower where a cloaked woman grips a long golden braid hanging from the high window and begins to climb, the girl bracing at the sill above, dramatic vertical composition. |
-| `images/03-hair-2.png` | A girl sitting at a high tower window singing as her voice drifts out over an endless forest, birds passing, clouds moving, lonely and beautiful. |
+| `images/03-hair.webp` | The base of a tower where a cloaked woman grips a long golden braid hanging from the high window and begins to climb, the girl bracing at the sill above, dramatic vertical composition. |
+| `images/03-hair-2.webp` | A girl sitting at a high tower window singing as her voice drifts out over an endless forest, birds passing, clouds moving, lonely and beautiful. |
 
 ## 4장 · 노래를 들은 사람
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-prince.png` | A young man in a russet coat reining in his horse in a deep forest, then circling a doorless stone tower and craning up at the single high window, wondering. |
-| `images/04-prince-2.png` | A young man crouching behind ferns watching a cloaked woman call up at a tower and climb a golden braid, and the next evening standing alone at the tower base calling out himself, tense. |
+| `images/04-prince.webp` | A young man in a russet coat reining in his horse in a deep forest, then circling a doorless stone tower and craning up at the single high window, wondering. |
+| `images/04-prince-2.webp` | A young man crouching behind ferns watching a cloaked woman call up at a tower and climb a golden braid, and the next evening standing alone at the tower base calling out himself, tense. |
 
 ## 5장 · 처음 만난 사람
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-meeting.png` | A small round tower room where a startled girl backs away as a young man climbs in over the sill, evening light through the window, wary and charged. |
-| `images/05-meeting-2.png` | A tower room at dusk where a young man tells stories to a rapt girl, and later the same girl secretly knotting silk thread into a ladder under her bed, hopeful and conspiratorial. |
+| `images/05-meeting.webp` | A small round tower room where a startled girl backs away as a young man climbs in over the sill, evening light through the window, wary and charged. |
+| `images/05-meeting-2.webp` | A tower room at dusk where a young man tells stories to a rapt girl, and later the same girl secretly knotting silk thread into a ladder under her bed, hopeful and conspiratorial. |
 
 ## 6장 · 들켜 버린 저녁
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-caught.png` | A tower room where a girl claps a hand over her mouth too late as a cloaked woman's face hardens into fury, silk thread spilling from a basket, tense and sad. |
-| `images/06-caught-2.png` | A tower room with shears and a cut golden braid heaped on the floor, and a bleak treeless moorland where a girl stands alone, and the braid tied to the window hook, stark and sorrowful. |
+| `images/06-caught.webp` | A tower room where a girl claps a hand over her mouth too late as a cloaked woman's face hardens into fury, silk thread spilling from a basket, tense and sad. |
+| `images/06-caught-2.webp` | A tower room with shears and a cut golden braid heaped on the floor, and a bleak treeless moorland where a girl stands alone, and the braid tied to the window hook, stark and sorrowful. |
 
 ## 7장 · 빈 탑
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-empty.png` | A tower window where a young man hauls himself up expecting joy and finds a cloaked woman waiting with folded arms, his face draining, dramatic and cold. |
-| `images/07-empty-2.png` | A young man falling into brambles at a tower base, and then walking blindly through forests and villages over the seasons with a stick, asking strangers, moving but not gory. |
+| `images/07-empty.webp` | A tower window where a young man hauls himself up expecting joy and finds a cloaked woman waiting with folded arms, his face draining, dramatic and cold. |
+| `images/07-empty-2.webp` | A young man falling into brambles at a tower base, and then walking blindly through forests and villages over the seasons with a stick, asking strangers, moving but not gory. |
 
 ## 8장 · 들판에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A wide moorland where a young woman digs herbs beside a small turf hut and sings, and far off a stumbling figure walking straight toward the sound, hopeful and vast. |
-| `images/08-ending-2.png` | A sunlit moorland where a young woman runs to embrace a ragged blind man, her tears falling on his eyes as light returns, the two then walking away hand in hand, radiant and moving. |
+| `images/08-ending.webp` | A wide moorland where a young woman digs herbs beside a small turf hut and sings, and far off a stumbling figure walking straight toward the sound, hopeful and vast. |
+| `images/08-ending-2.webp` | A sunlit moorland where a young woman runs to embrace a ragged blind man, her tears falling on his eyes as light returns, the two then walking away hand in hand, radiant and moving. |
 
 ## 사용 팁
 

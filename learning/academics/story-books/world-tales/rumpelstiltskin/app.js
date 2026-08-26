@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 방앗간 주인의 허풍",
         "beats": [
             {
-                "art": "01-boast.png",
+                "art": "01-boast.webp",
                 "emoji": "💬",
                 "left": [
                     "방앗간 주인은 가난하기는 해도 허풍 하나는 대단했습니다. 어디를 가나 제 자랑을 늘어놓았지요. 듣는 사람이 고개를 절레절레 흔들 정도였습니다.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-boast-2.png",
+                "art": "01-boast-2.webp",
                 "emoji": "💬",
                 "left": [
                     "\"그것 참 놀라운 재주로구나.\"",
@@ -41,7 +41,7 @@ const CHAPTERS = [
         "title": "2장 · 짚이 가득한 방",
         "beats": [
             {
-                "art": "02-straw.png",
+                "art": "02-straw.webp",
                 "emoji": "🌾",
                 "left": [
                     "딸은 어느 방으로 안내되었습니다. 문을 열자 짚이 산더미처럼 쌓여 있었지요. 천장까지 닿을 지경이었습니다.",
@@ -56,7 +56,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-straw-2.png",
+                "art": "02-straw-2.webp",
                 "emoji": "🌾",
                 "left": [
                     "얼마나 울었을까요. 문틈에서 무언가가 스르륵 들어왔지요.",
@@ -79,7 +79,7 @@ const CHAPTERS = [
         "title": "3장 · 작은 남자",
         "beats": [
             {
-                "art": "03-little-man.png",
+                "art": "03-little-man.webp",
                 "emoji": "🧙",
                 "left": [
                     "\"제가 해 드리지요.\"",
@@ -96,7 +96,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-little-man-2.png",
+                "art": "03-little-man-2.webp",
                 "emoji": "🧙",
                 "left": [
                     "남자는 밤새 물레를 돌렸습니다. 실패가 하나하나 금빛으로 가득 찼지요.",
@@ -116,7 +116,7 @@ const CHAPTERS = [
         "title": "4장 · 더 큰 방",
         "beats": [
             {
-                "art": "04-bigger.png",
+                "art": "04-bigger.webp",
                 "emoji": "🚪",
                 "left": [
                     "그날 저녁 임금님이 딸을 다른 방으로 데려갔습니다. 어제보다 두 배는 넓은 방이었지요. 역시 짚이 가득 쌓여 있었습니다.",
@@ -132,7 +132,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-bigger-2.png",
+                "art": "04-bigger-2.webp",
                 "emoji": "🚪",
                 "left": [
                     "이번에도 밤새 드르륵 소리가 났습니다.",
@@ -153,7 +153,7 @@ const CHAPTERS = [
         "title": "5장 · 줄 것이 없어서",
         "beats": [
             {
-                "art": "05-promise.png",
+                "art": "05-promise.webp",
                 "emoji": "😰",
                 "left": [
                     "작은 남자가 또 나타났습니다. 이번에는 여느 때보다 느긋해 보였지요.",
@@ -170,7 +170,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-promise-2.png",
+                "art": "05-promise-2.webp",
                 "emoji": "😰",
                 "left": [
                     "작은 남자는 밤새 물레를 돌렸습니다.",
@@ -189,7 +189,7 @@ const CHAPTERS = [
         "title": "6장 · 찾아온 약속",
         "beats": [
             {
-                "art": "06-baby.png",
+                "art": "06-baby.webp",
                 "emoji": "👶",
                 "left": [
                     "왕비는 아이를 끔찍이 아꼈습니다. 하루 종일 곁을 떠나지 않았지요. 작은 남자와의 약속은 까맣게 잊었습니다.",
@@ -205,7 +205,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-baby-2.png",
+                "art": "06-baby-2.webp",
                 "emoji": "👶",
                 "left": [
                     "\"나라의 보물을 다 드릴게요.\"",
@@ -229,7 +229,7 @@ const CHAPTERS = [
         "title": "7장 · 온 나라의 이름",
         "beats": [
             {
-                "art": "07-names.png",
+                "art": "07-names.webp",
                 "emoji": "📜",
                 "left": [
                     "이튿날 왕비는 심부름꾼들을 사방으로 보냈습니다. 나라 안의 이름을 모조리 모아 오게 했지요. 두루마리가 방바닥까지 늘어졌습니다.",
@@ -246,7 +246,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-names-2.png",
+                "art": "07-names-2.webp",
                 "emoji": "📜",
                 "left": [
                     "이튿날에는 별난 이름을 모았습니다.",
@@ -270,7 +270,7 @@ const CHAPTERS = [
         "title": "8장 · 숲속의 노래",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🔥",
                 "left": [
                     "\"깊은 숲속을 지나는 길이었습니다.\"",
@@ -288,7 +288,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🔥",
                 "left": [
                     "밤이 되자 작은 남자가 나타났습니다.",
@@ -323,7 +323,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🧵')}
+                ${artFrame('cover.webp', '🧵')}
             </div>
             <div class="story-page-right">
                 <h1>이름을 맞혀 보시오</h1>
@@ -395,7 +395,7 @@ const AFTERWORD = {
     emoji: '🧵',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 그림 형제가 모은 것입니다. 이름을 알아맞히는 이야기는 유럽 곳곳에 있습니다.",
                 "모든 일은 방앗간 주인의 자랑에서 비롯됩니다. 딸이 짚으로 금실을 잣는다고 했지요. 있지도 않은 재주를 있다고 한 것입니다.",

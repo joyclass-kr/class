@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -41,64 +41,64 @@ with a short beard and a green cloak.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: eleven white swans wheeling across an evening sky above a young girl standing on a seashore with a bundle of nettles in her arms, the low sun turning the water gold, beautiful and wistful. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: eleven white swans wheeling across an evening sky above a young girl standing on a seashore with a bundle of nettles in her arms, the low sun turning the water gold, beautiful and wistful. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 열한 명의 오빠
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-family.png` | A sunny castle courtyard where eleven boy princes in golden circlets play with a small laughing girl on their shoulders, warm and joyful. |
-| `images/01-family-2.png` | A tall woman in black and purple robes whispering to a king while eleven princes stand apart, and a small girl being sent away in a cart, cold and ominous. |
+| `images/01-family.webp` | A sunny castle courtyard where eleven boy princes in golden circlets play with a small laughing girl on their shoulders, warm and joyful. |
+| `images/01-family-2.webp` | A tall woman in black and purple robes whispering to a king while eleven princes stand apart, and a small girl being sent away in a cart, cold and ominous. |
 
 ## 2장 · 백조가 된 오빠들
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-swans.png` | Eleven great white swans rising from a castle and circling three times before flying toward the sea, empty princes' beds below, dramatic and moving. |
-| `images/02-swans-2.png` | A grown girl turned away at a castle gate by a cold queen, then setting out alone along a road toward the distant sea, wistful and determined. |
+| `images/02-swans.webp` | Eleven great white swans rising from a castle and circling three times before flying toward the sea, empty princes' beds below, dramatic and moving. |
+| `images/02-swans-2.webp` | A grown girl turned away at a castle gate by a cold queen, then setting out alone along a road toward the distant sea, wistful and determined. |
 
 ## 3장 · 바닷가에서의 재회
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-reunion.png` | A rocky sea islet at sunset where a travel-worn girl watches eleven white swans descending from a golden sky, waves breaking below, beautiful. |
-| `images/03-reunion-2.png` | Eleven swans transforming into young princes as the sun sets on a rocky islet, embracing a weeping girl, deeply emotional golden light. |
+| `images/03-reunion.webp` | A rocky sea islet at sunset where a travel-worn girl watches eleven white swans descending from a golden sky, waves breaking below, beautiful. |
+| `images/03-reunion-2.webp` | Eleven swans transforming into young princes as the sun sets on a rocky islet, embracing a weeping girl, deeply emotional golden light. |
 
 ## 4장 · 쐐기풀 옷
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-nettles.png` | Eleven swans carrying a girl across the sea in a great woven net, and a dream of a white-robed elder speaking to her in a forest cave, magical. |
-| `images/04-nettles-2.png` | A girl in a cave weaving shirts from green nettles by firelight, her hands red and blistered, princes gathered around her in concern, quiet determination. |
+| `images/04-nettles.webp` | Eleven swans carrying a girl across the sea in a great woven net, and a dream of a white-robed elder speaking to her in a forest cave, magical. |
+| `images/04-nettles-2.webp` | A girl in a cave weaving shirts from green nettles by firelight, her hands red and blistered, princes gathered around her in concern, quiet determination. |
 
 ## 5장 · 낯선 임금님
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-king.png` | A young king on horseback pausing at a cave mouth where a silent girl looks up from her weaving, hounds and hunters behind, mossy forest light. |
-| `images/05-king-2.png` | A king lifting a silent girl clutching a bundle of nettles onto his horse and riding to a castle where servants offer her fine clothes, gentle and warm. |
+| `images/05-king.webp` | A young king on horseback pausing at a cave mouth where a silent girl looks up from her weaving, hounds and hunters behind, mossy forest light. |
+| `images/05-king-2.webp` | A king lifting a silent girl clutching a bundle of nettles onto his horse and riding to a castle where servants offer her fine clothes, gentle and warm. |
 
 ## 6장 · 오해
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-accused.png` | A stone castle room at night where a girl weaves nettles by moonlight, and outside courtiers whispering as she slips out the gate, tense and sad. |
-| `images/06-accused-2.png` | A girl shaking her head silently before a troubled king and accusing courtiers, then locked in a stone tower with her bundle of nettles thrown in after her, sad. |
+| `images/06-accused.webp` | A stone castle room at night where a girl weaves nettles by moonlight, and outside courtiers whispering as she slips out the gate, tense and sad. |
+| `images/06-accused-2.webp` | A girl shaking her head silently before a troubled king and accusing courtiers, then locked in a stone tower with her bundle of nettles thrown in after her, sad. |
 
 ## 7장 · 마지막 한 벌
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-finish.png` | A tower room at dawn where a girl finishes the tenth nettle shirt and starts the eleventh, guards opening the door, tense and urgent. |
-| `images/07-finish-2.png` | A town square where a girl flings woven nettle shirts over eleven descending swans that transform into princes mid-air, the crowd falling back astonished, bright. |
+| `images/07-finish.webp` | A tower room at dawn where a girl finishes the tenth nettle shirt and starts the eleventh, guards opening the door, tense and urgent. |
+| `images/07-finish-2.webp` | A town square where a girl flings woven nettle shirts over eleven descending swans that transform into princes mid-air, the crowd falling back astonished, bright. |
 
 ## 8장 · 되찾은 말
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | Eleven princes reunited in a sunlit square, the youngest with one white swan wing instead of an arm smiling and shrugging, their sister beside him, joyful. |
-| `images/08-ending-2.png` | A king bowing over a girl's hands in a hushed square, and then a great feast in a castle hall with twelve siblings side by side, joyful celebration. |
+| `images/08-ending.webp` | Eleven princes reunited in a sunlit square, the youngest with one white swan wing instead of an arm smiling and shrugging, their sister beside him, joyful. |
+| `images/08-ending-2.webp` | A king bowing over a girl's hands in a hushed square, and then a great feast in a castle hall with twelve siblings side by side, joyful celebration. |
 
 ## 사용 팁
 

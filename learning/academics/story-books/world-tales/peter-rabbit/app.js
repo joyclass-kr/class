@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 그 밭에는 가지 마라",
         "beats": [
             {
-                "art": "01-warning.png",
+                "art": "01-warning.webp",
                 "emoji": "🏠",
                 "left": [
                     "아주 커다란 전나무가 한 그루 있었습니다. 그 뿌리 밑 모랫굴에 토끼 식구가 살았지요. 아기 토끼는 모두 넷이었습니다.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-warning-2.png",
+                "art": "01-warning-2.webp",
                 "emoji": "🏠",
                 "left": [
                     "\"왜요, 엄마?\"",
@@ -42,7 +42,7 @@ const CHAPTERS = [
         "title": "2장 · 대문 밑으로",
         "beats": [
             {
-                "art": "02-gate.png",
+                "art": "02-gate.webp",
                 "emoji": "🚪",
                 "left": [
                     "세 남매는 들판으로 나갔습니다. 길가에서 검은딸기를 따 먹었지요.",
@@ -56,7 +56,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-gate-2.png",
+                "art": "02-gate-2.webp",
                 "emoji": "🚪",
                 "left": [
                     "\"우와, 이게 다 먹을 거잖아!\"",
@@ -78,7 +78,7 @@ const CHAPTERS = [
         "title": "3장 · 배가 아파서",
         "beats": [
             {
-                "art": "03-parsley.png",
+                "art": "03-parsley.webp",
                 "emoji": "🥬",
                 "left": [
                     "배가 슬슬 아파 왔습니다. 피터는 배를 문질렀지요.",
@@ -93,7 +93,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-parsley-2.png",
+                "art": "03-parsley-2.webp",
                 "emoji": "🥬",
                 "left": [
                     "둘은 그대로 얼어붙었습니다. 피터도 놀라고 아저씨도 놀랐지요.",
@@ -116,7 +116,7 @@ const CHAPTERS = [
         "title": "4장 · 갈퀴를 든 아저씨",
         "beats": [
             {
-                "art": "04-chase.png",
+                "art": "04-chase.webp",
                 "emoji": "🏃",
                 "left": [
                     "피터는 양배추밭으로 뛰어들었습니다. 커다란 잎 사이를 헤치고 달렸지요.",
@@ -131,7 +131,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-chase-2.png",
+                "art": "04-chase-2.webp",
                 "emoji": "🏃",
                 "left": [
                     "피터는 몸을 숨길 곳을 찾았습니다. 마침 까치밥나무가 눈에 띄었지요.",
@@ -152,7 +152,7 @@ const CHAPTERS = [
         "title": "5장 · 그물에 걸린 단추",
         "beats": [
             {
-                "art": "05-net.png",
+                "art": "05-net.webp",
                 "emoji": "🥅",
                 "left": [
                     "그때 참새 세 마리가 날아왔습니다. 피터 둘레를 빙빙 돌며 짹짹거렸지요.",
@@ -167,7 +167,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-net-2.png",
+                "art": "05-net-2.webp",
                 "emoji": "🥅",
                 "left": [
                     "눈앞에 낡은 창고가 보였습니다. 문이 조금 열려 있었지요.",
@@ -188,7 +188,7 @@ const CHAPTERS = [
         "title": "6장 · 물뿌리개 속에서",
         "beats": [
             {
-                "art": "06-can.png",
+                "art": "06-can.webp",
                 "emoji": "🪣",
                 "left": [
                     "맥그리거 아저씨가 창고로 들어왔습니다. 화분 밑을 하나하나 들춰 보았지요. 피터는 숨도 쉬지 못했습니다.",
@@ -205,7 +205,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-can-2.png",
+                "art": "06-can-2.webp",
                 "emoji": "🪣",
                 "left": [
                     "피터는 창문 쪽으로 내달렸습니다. 화분이 우당탕 쏟아졌지요.",
@@ -226,7 +226,7 @@ const CHAPTERS = [
         "title": "7장 · 대문을 찾아서",
         "beats": [
             {
-                "art": "07-escape.png",
+                "art": "07-escape.webp",
                 "emoji": "🚪",
                 "left": [
                     "피터는 연못가로 갔습니다. 금붕어 몇 마리가 헤엄치고 있었지요.",
@@ -241,7 +241,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-escape-2.png",
+                "art": "07-escape-2.webp",
                 "emoji": "🚪",
                 "left": [
                     "뒤에서 아저씨가 또 쫓아왔습니다. 갈퀴를 흔들며 소리를 질렀지요.",
@@ -261,7 +261,7 @@ const CHAPTERS = [
         "title": "8장 · 저녁에 마신 차",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🍵",
                 "left": [
                     "어머니가 굴 안에서 나왔습니다. 피터를 보고는 한숨을 쉬었지요. 털은 젖고 발은 맨발이었으니까요.",
@@ -277,7 +277,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🍵",
                 "left": [
                     "그동안 세 남매는 저녁을 먹었습니다. 빵과 우유와 검은딸기가 나왔지요. 셋은 배불리 먹었습니다.",
@@ -307,7 +307,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐰')}
+                ${artFrame('cover.webp', '🐰')}
             </div>
             <div class="story-page-right">
                 <h1>피터 래빗 이야기</h1>
@@ -379,7 +379,7 @@ const AFTERWORD = {
     emoji: '🐰',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기를 지은 사람은 영국의 비어트릭스 포터입니다. 백이십 년쯤 전에 아픈 아이에게 보낸 편지에서 시작되었지요.",
                 "포터는 글만 쓴 것이 아니라 그림도 손수 그렸습니다. 토끼를 오래 기르며 살펴본 사람이라 몸짓이 정확합니다.",

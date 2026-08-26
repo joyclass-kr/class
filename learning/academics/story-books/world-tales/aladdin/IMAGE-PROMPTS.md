@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -44,64 +44,64 @@ a round jolly man with an enormous turban.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a battered brass oil lamp resting on a stone ledge in a treasure cave, threads of golden smoke curling from its spout, jewels and coins glittering in the dark beyond, and a domed city skyline glimpsed through the cave mouth above, magical and inviting. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a battered brass oil lamp resting on a stone ledge in a treasure cave, threads of golden smoke curling from its spout, jewels and coins glittering in the dark beyond, and a domed city skyline glimpsed through the cave mouth above, magical and inviting. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 낯선 아저씨
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-stranger.png` | A bustling desert-city street of awnings and spice stalls where a scruffy boy loafs on a wall, and a tall stranger in dark travelling robes approaching his humble doorway, warm gold light. |
-| `images/01-stranger-2.png` | A market where a stranger buys a boy fine clothes and food, and the two walking far out past the city into a barren rocky valley under a wide sky, ominous but bright. |
+| `images/01-stranger.webp` | A bustling desert-city street of awnings and spice stalls where a scruffy boy loafs on a wall, and a tall stranger in dark travelling robes approaching his humble doorway, warm gold light. |
+| `images/01-stranger-2.webp` | A market where a stranger buys a boy fine clothes and food, and the two walking far out past the city into a barren rocky valley under a wide sky, ominous but bright. |
 
 ## 2장 · 동굴 속 램프
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-cave.png` | A rocky valley where the ground splits open at a sorcerer's word revealing a stair, and below a vast cavern heaped with jewels and gold, a boy descending wide-eyed, magical and dazzling. |
-| `images/02-cave-2.png` | A cave stair where a boy holds up his arm for help as a sorcerer above demands the lamp first, then flings powder and the ground grinds shut, the boy sealed in darkness, dramatic. |
+| `images/02-cave.webp` | A rocky valley where the ground splits open at a sorcerer's word revealing a stair, and below a vast cavern heaped with jewels and gold, a boy descending wide-eyed, magical and dazzling. |
+| `images/02-cave-2.webp` | A cave stair where a boy holds up his arm for help as a sorcerer above demands the lamp first, then flings powder and the ground grinds shut, the boy sealed in darkness, dramatic. |
 
 ## 3장 · 램프의 지니
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-genie.png` | A pitch-dark cave where a boy rubs his hands in despair and a ring glows, smoke swirling into a genie, and then the boy suddenly standing in his own doorway as his mother rushes out, joyful. |
-| `images/03-genie-2.png` | A humble room where a woman polishes an old lamp and an enormous smiling blue genie billows out filling the space, the mother tumbling backwards, a boy stepping forward, comic and magical. |
+| `images/03-genie.webp` | A pitch-dark cave where a boy rubs his hands in despair and a ring glows, smoke swirling into a genie, and then the boy suddenly standing in his own doorway as his mother rushes out, joyful. |
+| `images/03-genie-2.webp` | A humble room where a woman polishes an old lamp and an enormous smiling blue genie billows out filling the space, the mother tumbling backwards, a boy stepping forward, comic and magical. |
 
 ## 4장 · 공주를 만나다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-princess.png` | A city street cleared for a royal procession where a boy peeks from behind a wall as a curtained litter passes and the veil lifts for an instant, sunlight and colour, charming. |
-| `images/04-princess-2.png` | A palace hall where a woman in a worn headscarf presents a tray of blazing jewels to an astonished sultan, and a great procession of camels and gift-bearers filling the street outside, spectacular. |
+| `images/04-princess.webp` | A city street cleared for a royal procession where a boy peeks from behind a wall as a curtained litter passes and the veil lifts for an instant, sunlight and colour, charming. |
+| `images/04-princess-2.webp` | A palace hall where a woman in a worn headscarf presents a tray of blazing jewels to an astonished sultan, and a great procession of camels and gift-bearers filling the street outside, spectacular. |
 
 ## 5장 · 하룻밤 사이의 궁전
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-palace.png` | A sultan naming his condition in a palace hall, and next morning a vast jewelled palace standing where an empty lot had been, the whole court crowding the windows in astonishment, dazzling. |
-| `images/05-palace-2.png` | A grand wedding filling a city with music and lanterns, and far away a dark-robed sorcerer hearing the news at a caravan stop and packing to travel, threatening and comic. |
+| `images/05-palace.webp` | A sultan naming his condition in a palace hall, and next morning a vast jewelled palace standing where an empty lot had been, the whole court crowding the windows in astonishment, dazzling. |
+| `images/05-palace-2.webp` | A grand wedding filling a city with music and lanterns, and far away a dark-robed sorcerer hearing the news at a caravan stop and packing to travel, threatening and comic. |
 
 ## 6장 · 낡은 램프를 새 램프로
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-swap.png` | A palace forecourt where a disguised pedlar cries his trade with a cart of shiny new lamps, passersby laughing, and a princess at a high window sending a maid to fetch an old one, ironic and tense. |
-| `images/06-swap-2.png` | An alley where a disguised sorcerer rubs an old lamp and a genie rises, and a returning hunting party finding only bare ground where a jewelled palace stood, the sultan furious, dramatic. |
+| `images/06-swap.webp` | A palace forecourt where a disguised pedlar cries his trade with a cart of shiny new lamps, passersby laughing, and a princess at a high window sending a maid to fetch an old one, ironic and tense. |
+| `images/06-swap-2.webp` | An alley where a disguised sorcerer rubs an old lamp and a genie rises, and a returning hunting party finding only bare ground where a jewelled palace stood, the sultan furious, dramatic. |
 
 ## 7장 · 사막 끝의 궁전
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-desert.png` | A desperate young man rubbing a ring as a genie appears, then standing in a vast desert with a jewelled palace shimmering on the far horizon, and creeping over its wall at night, adventurous. |
-| `images/07-desert-2.png` | A palace bedroom where a princess weeps with relief seeing the young man, and a dining hall where she offers a cup to the sorcerer who drains it and slumps forward asleep, tense and satisfying. |
+| `images/07-desert.webp` | A desperate young man rubbing a ring as a genie appears, then standing in a vast desert with a jewelled palace shimmering on the far horizon, and creeping over its wall at night, adventurous. |
+| `images/07-desert-2.webp` | A palace bedroom where a princess weeps with relief seeing the young man, and a dining hall where she offers a cup to the sorcerer who drains it and slumps forward asleep, tense and satisfying. |
 
 ## 8장 · 다시 돌아온 자리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-return.png` | A palace room where a young man retrieves the lamp and a genie rises again, and next morning a sultan flinging open his window to see the jewelled palace restored and his daughter waving, joyous. |
-| `images/08-return-2.png` | A lamp being locked away in a chest, and a palace with its gates standing open as townspeople come and go receiving grain and help, the young couple among them, warm and generous. |
+| `images/08-return.webp` | A palace room where a young man retrieves the lamp and a genie rises again, and next morning a sultan flinging open his window to see the jewelled palace restored and his daughter waving, joyous. |
+| `images/08-return-2.webp` | A lamp being locked away in a chest, and a palace with its gates standing open as townspeople come and go receiving grain and help, the young couple among them, warm and generous. |
 
 ## 사용 팁
 

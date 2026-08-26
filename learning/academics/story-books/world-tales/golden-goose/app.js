@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 숲에 간 큰형",
         "beats": [
             {
-                "art": "01-eldest.png",
+                "art": "01-eldest.webp",
                 "emoji": "🪓",
                 "left": [
                     "큰아들은 키가 크고 힘이 셌습니다. 둘째는 몸집이 좋고 말솜씨가 좋았지요.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-eldest-2.png",
+                "art": "01-eldest-2.webp",
                 "emoji": "🪓",
                 "left": [
                     "큰아들이 도끼를 내려놓고 앉았습니다.",
@@ -42,7 +42,7 @@ const CHAPTERS = [
         "title": "2장 · 둘째도 마찬가지",
         "beats": [
             {
-                "art": "02-second.png",
+                "art": "02-second.webp",
                 "emoji": "🍞",
                 "left": [
                     "이튿날은 둘째 아들이 숲으로 갔습니다. 역시 좋은 빵과 포도주를 챙겨 갔지요.",
@@ -59,7 +59,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-second-2.png",
+                "art": "02-second-2.webp",
                 "emoji": "🍞",
                 "left": [
                     "노인은 조용히 자리를 떴습니다. 둘째는 다시 도끼질을 시작했지요.",
@@ -80,7 +80,7 @@ const CHAPTERS = [
         "title": "3장 · 막내가 나서다",
         "beats": [
             {
-                "art": "03-share.png",
+                "art": "03-share.webp",
                 "emoji": "🤝",
                 "left": [
                     "\"제가 나무를 하러 가겠어요.\"",
@@ -96,7 +96,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-share-2.png",
+                "art": "03-share-2.webp",
                 "emoji": "🤝",
                 "left": [
                     "점심때가 되자 노인이 또 나타났습니다.",
@@ -119,7 +119,7 @@ const CHAPTERS = [
         "title": "4장 · 나무 밑동의 거위",
         "beats": [
             {
-                "art": "04-goose.png",
+                "art": "04-goose.webp",
                 "emoji": "✨",
                 "left": [
                     "식사를 마친 노인이 자리에서 일어났습니다.",
@@ -136,7 +136,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-goose-2.png",
+                "art": "04-goose-2.webp",
                 "emoji": "✨",
                 "left": [
                     "밑동 안에 거위 한 마리가 앉아 있었습니다. 깃털이 온통 금빛으로 빛났지요.",
@@ -157,7 +157,7 @@ const CHAPTERS = [
         "title": "5장 · 손이 붙어 버렸다",
         "beats": [
             {
-                "art": "05-stuck.png",
+                "art": "05-stuck.webp",
                 "emoji": "🙌",
                 "left": [
                     "주막집에는 딸이 셋 있었습니다. 세 딸은 금빛 깃털을 보고 눈이 휘둥그레졌지요. 막내가 방으로 들어가 잠든 뒤였습니다.",
@@ -174,7 +174,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-stuck-2.png",
+                "art": "05-stuck-2.webp",
                 "emoji": "🙌",
                 "left": [
                     "셋째 딸까지 달려와 언니들을 잡았습니다. 결과는 뻔했지요.",
@@ -195,7 +195,7 @@ const CHAPTERS = [
         "title": "6장 · 줄줄이 따라온 사람들",
         "beats": [
             {
-                "art": "06-parade.png",
+                "art": "06-parade.webp",
                 "emoji": "🚶‍♂️",
                 "left": [
                     "막내는 거위를 안고 마을 길을 걸었습니다. 뒤에는 세 자매가 줄줄이 딸려 왔지요. 길가 사람들이 배를 잡고 웃었습니다.",
@@ -212,7 +212,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-parade-2.png",
+                "art": "06-parade-2.webp",
                 "emoji": "🚶‍♂️",
                 "left": [
                     "밭에서 일하던 농부 둘도 달려왔습니다.",
@@ -233,7 +233,7 @@ const CHAPTERS = [
         "title": "7장 · 웃지 않는 공주",
         "beats": [
             {
-                "art": "07-princess.png",
+                "art": "07-princess.webp",
                 "emoji": "👸",
                 "left": [
                     "그 무렵 어느 나라 임금님에게 큰 걱정이 있었습니다. 공주가 태어나서 한 번도 웃지 않았기 때문이지요. 임금님은 온갖 재주꾼을 불러들였습니다.",
@@ -248,7 +248,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-princess-2.png",
+                "art": "07-princess-2.webp",
                 "emoji": "👸",
                 "left": [
                     "그날 성 앞 큰길로 그 이상한 행렬이 지나갔습니다. 앞에서는 젊은이가 금빛 거위를 안고 걸었지요. 뒤에는 사람들이 줄줄이 매달려 있었습니다.",
@@ -269,7 +269,7 @@ const CHAPTERS = [
         "title": "8장 · 손이 떨어지던 날",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🎉",
                 "left": [
                     "공주가 웃자 놀라운 일이 벌어졌습니다. 붙어 있던 손들이 툭툭 떨어진 것이었지요. 세 자매도 신부님도 자유가 되었습니다.",
@@ -284,7 +284,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🎉",
                 "left": [
                     "임금님이 막내를 불렀습니다.",
@@ -316,7 +316,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🪿')}
+                ${artFrame('cover.webp', '🪿')}
             </div>
             <div class="story-page-right">
                 <h1>황금 거위</h1>
@@ -388,7 +388,7 @@ const AFTERWORD = {
     emoji: '🪿',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 그림 형제가 모은 것입니다.",
                 "형 둘은 숲에서 노인을 만나 빵과 술을 나누지 않습니다. 제 것이 줄어드니까요. 막내는 나눕니다. 가진 것이 더 적었는데도요.",

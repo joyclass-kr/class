@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 거울아, 거울아",
         "beats": [
             {
-                "art": "01-mirror.png",
+                "art": "01-mirror.webp",
                 "emoji": "🪞",
                 "left": [
                     "눈 내리는 겨울이었습니다. 왕비가 창가에서 바느질을 했지요. 손끝을 바늘에 찔렸습니다.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-mirror-2.png",
+                "art": "01-mirror-2.webp",
                 "emoji": "🪞",
                 "left": [
                     "새 왕비에게는 거울이 있었습니다. 무엇이든 답해 주는 거울이었지요. 왕비는 날마다 물었습니다.",
@@ -42,7 +42,7 @@ const CHAPTERS = [
         "title": "2장 · 숲으로 간 공주",
         "beats": [
             {
-                "art": "02-forest.png",
+                "art": "02-forest.webp",
                 "emoji": "🌲",
                 "left": [
                     "왕비가 사냥꾼을 불렀습니다. 문을 걸어 잠그고 말했지요.",
@@ -61,7 +61,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-forest-2.png",
+                "art": "02-forest-2.webp",
                 "emoji": "🌲",
                 "left": [
                     "\"공주님, 어서 달아나십시오.\"",
@@ -83,7 +83,7 @@ const CHAPTERS = [
         "title": "3장 · 일곱 난쟁이의 집",
         "beats": [
             {
-                "art": "03-dwarfs.png",
+                "art": "03-dwarfs.webp",
                 "emoji": "🏠",
                 "left": [
                     "숲 한가운데 작은 집이 있었습니다. 문이 살짝 열려 있었지요.",
@@ -97,7 +97,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-dwarfs-2.png",
+                "art": "03-dwarfs-2.webp",
                 "emoji": "🏠",
                 "left": [
                     "밤이 되자 문이 열렸습니다. 난쟁이 일곱이 돌아왔지요. 광에서 일하고 오는 길이었습니다.",
@@ -120,7 +120,7 @@ const CHAPTERS = [
         "title": "4장 · 빗과 허리끈",
         "beats": [
             {
-                "art": "04-disguise.png",
+                "art": "04-disguise.webp",
                 "emoji": "🧣",
                 "left": [
                     "왕비가 다시 거울에 물었습니다.",
@@ -138,7 +138,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-disguise-2.png",
+                "art": "04-disguise-2.webp",
                 "emoji": "🧣",
                 "left": [
                     "공주는 숨이 막혀 쓰러졌습니다. 왕비는 웃으며 사라졌지요.",
@@ -160,7 +160,7 @@ const CHAPTERS = [
         "title": "5장 · 새빨간 사과",
         "beats": [
             {
-                "art": "05-apple.png",
+                "art": "05-apple.webp",
                 "emoji": "🍎",
                 "left": [
                     "왕비는 지하실로 내려갔습니다. 사과 하나를 골랐지요. 한쪽은 새빨갛고 한쪽은 하얬습니다.",
@@ -177,7 +177,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-apple-2.png",
+                "art": "05-apple-2.webp",
                 "emoji": "🍎",
                 "left": [
                     "\"무섭거든 반씩 나눠 먹읍시다.\"",
@@ -200,7 +200,7 @@ const CHAPTERS = [
         "title": "6장 · 유리관 속의 공주",
         "beats": [
             {
-                "art": "06-glass-coffin.png",
+                "art": "06-glass-coffin.webp",
                 "emoji": "💎",
                 "left": [
                     "난쟁이들이 돌아왔습니다. 이번에는 아무 끈도 없었지요. 빗도 보이지 않았습니다.",
@@ -217,7 +217,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-glass-coffin-2.png",
+                "art": "06-glass-coffin-2.webp",
                 "emoji": "💎",
                 "left": [
                     "계절이 여러 번 지났습니다. 눈이 왔다가 다시 꽃이 폈지요.",
@@ -240,7 +240,7 @@ const CHAPTERS = [
         "title": "7장 · 사과 조각이 튀어나오다",
         "beats": [
             {
-                "art": "07-awake.png",
+                "art": "07-awake.webp",
                 "emoji": "👑",
                 "left": [
                     "신하들이 관을 메고 내려갔습니다. 언덕길이 몹시 가팔랐지요. 난쟁이들이 뒤를 따랐습니다.",
@@ -257,7 +257,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-awake-2.png",
+                "art": "07-awake-2.webp",
                 "emoji": "👑",
                 "left": [
                     "공주는 난쟁이들을 안았습니다.",
@@ -291,7 +291,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🍎')}
+                ${artFrame('cover.webp', '🍎')}
             </div>
             <div class="story-page-right">
                 <h1>백설공주</h1>
@@ -364,7 +364,7 @@ const AFTERWORD = {
     emoji: '🍎',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기를 책에 적은 사람은 독일의 그림 형제입니다. 두 사람은 이야기를 지어내지 않았습니다. 마을을 돌며 사람들이 들려주는 이야기를 받아 적었지요.",
                 "왕비는 세 번 찾아왔습니다. 처음에는 끈이었고, 다음에는 빗이었고, 마지막이 사과였습니다. 그때마다 조금씩 더 그럴듯한 물건을 골랐지요.",

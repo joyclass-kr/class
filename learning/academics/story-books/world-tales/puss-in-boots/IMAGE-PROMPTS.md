@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -43,57 +43,57 @@ frightening. Field workers in straw hats.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a lean tabby cat in tall red leather boots and a plumed hat standing confidently on a country road with a sack over one shoulder, a castle on a distant hill behind, witty and inviting. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a lean tabby cat in tall red leather boots and a plumed hat standing confidently on a country road with a sack over one shoulder, a castle on a distant hill behind, witty and inviting. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 남은 것은 고양이 한 마리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-inherit.png` | A mill yard where two brothers claim a mill and a donkey while the youngest sits dejected on a step with only a tabby cat beside him, warm afternoon light, quietly sad. |
-| `images/01-inherit-2.png` | A cottage room where a talking cat asks for a sack and boots, then pulls on tall red leather boots and admires itself in a mirror with a plumed hat, comic swagger. |
+| `images/01-inherit.webp` | A mill yard where two brothers claim a mill and a donkey while the youngest sits dejected on a step with only a tabby cat beside him, warm afternoon light, quietly sad. |
+| `images/01-inherit-2.webp` | A cottage room where a talking cat asks for a sack and boots, then pulls on tall red leather boots and admires itself in a mirror with a plumed hat, comic swagger. |
 
 ## 2장 · 임금님께 바친 선물
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-gift.png` | A meadow where a booted cat lies in wait beside an open sack baited with carrots, and a palace hall where the same cat bows deeply before a puzzled king, comic and confident. |
-| `images/02-gift-2.png` | A palace corridor where a booted cat presents game birds to a delighted king again and again over months, and the cat listening at a doorway to servants gossiping, sly and comic. |
+| `images/02-gift.webp` | A meadow where a booted cat lies in wait beside an open sack baited with carrots, and a palace hall where the same cat bows deeply before a puzzled king, comic and confident. |
+| `images/02-gift-2.webp` | A palace corridor where a booted cat presents game birds to a delighted king again and again over months, and the cat listening at a doorway to servants gossiping, sly and comic. |
 
 ## 3장 · 강물에 빠진 후작님
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-river.png` | A river bank where a young man bathes while his clothes lie on a rock, and a booted cat stuffing those clothes deep into the reeds as a royal carriage approaches on the road, comic scheming. |
-| `images/03-river-2.png` | A river bank where courtiers haul a young man from the water as a booted cat gestures dramatically, and the same man moments later dressed in fine borrowed clothes beside a royal carriage, funny. |
+| `images/03-river.webp` | A river bank where a young man bathes while his clothes lie on a rock, and a booted cat stuffing those clothes deep into the reeds as a royal carriage approaches on the road, comic scheming. |
+| `images/03-river-2.webp` | A river bank where courtiers haul a young man from the water as a booted cat gestures dramatically, and the same man moments later dressed in fine borrowed clothes beside a royal carriage, funny. |
 
 ## 4장 · 이 밭은 누구 것이냐
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-fields.png` | A royal carriage rolling along a country road with a blushing young man beside a princess, while ahead a booted cat instructs field workers in straw hats, wheat fields stretching away, comic. |
-| `images/04-fields-2.png` | A carriage passing field after field where workers straighten and answer in unison, the king leaning further out of the window each time in growing amazement, the young man shrinking in his seat, hilarious. |
+| `images/04-fields.webp` | A royal carriage rolling along a country road with a blushing young man beside a princess, while ahead a booted cat instructs field workers in straw hats, wheat fields stretching away, comic. |
+| `images/04-fields-2.webp` | A carriage passing field after field where workers straighten and answer in unison, the king leaning further out of the window each time in growing amazement, the young man shrinking in his seat, hilarious. |
 
 ## 5장 · 마법사의 성
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-castle.png` | A grand castle doorway where an enormous man in a purple coat looms over a small booted cat that bows politely, vast halls glimpsed behind, comic scale contrast. |
-| `images/05-castle-2.png` | A castle hall where a huge man transforms into a roaring lion as a booted cat leaps onto a cupboard with bristling fur, and then back to human as the cat calmly needles him, comic tension. |
+| `images/05-castle.webp` | A grand castle doorway where an enormous man in a purple coat looms over a small booted cat that bows politely, vast halls glimpsed behind, comic scale contrast. |
+| `images/05-castle-2.webp` | A castle hall where a huge man transforms into a roaring lion as a booted cat leaps onto a cupboard with bristling fur, and then back to human as the cat calmly needles him, comic tension. |
 
 ## 6장 · 아주 작은 쥐
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-mouse.png` | A castle hall where a giant shrinks down into a small mouse scurrying across the floorboards as a booted cat crouches with one paw raised, comic and decisive, no gore. |
-| `images/06-mouse-2.png` | A castle gate flung open by a booted cat welcoming a royal carriage, and a grand hall beyond with a feast already laid on a long table, the king marvelling, the young man quietly overwhelmed. |
+| `images/06-mouse.webp` | A castle hall where a giant shrinks down into a small mouse scurrying across the floorboards as a booted cat crouches with one paw raised, comic and decisive, no gore. |
+| `images/06-mouse-2.webp` | A castle gate flung open by a booted cat welcoming a royal carriage, and a grand hall beyond with a feast already laid on a long table, the king marvelling, the young man quietly overwhelmed. |
 
 ## 7장 · 진짜 후작이 되다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-wedding.png` | A candlelit banquet corner where a princess and a plain young man talk quietly, she glancing at his work-worn hands with a knowing smile, the feast bustling behind them, warm and tender. |
-| `images/07-wedding-2.png` | A banquet hall where a young man stands to confess his true origins, the hall hushed then the king laughing warmly, and in a sunny window seat the cat pulling off its boots to nap, funny and warm. |
+| `images/07-wedding.webp` | A candlelit banquet corner where a princess and a plain young man talk quietly, she glancing at his work-worn hands with a knowing smile, the feast bustling behind them, warm and tender. |
+| `images/07-wedding-2.webp` | A banquet hall where a young man stands to confess his true origins, the hall hushed then the king laughing warmly, and in a sunny window seat the cat pulling off its boots to nap, funny and warm. |
 
 ## 사용 팁
 

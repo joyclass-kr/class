@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 너무 뜨거운 죽",
         "beats": [
             {
-                "art": "01-porridge.png",
+                "art": "01-porridge.webp",
                 "emoji": "🥣",
                 "left": [
                     "자작나무가 우거진 숲속에 통나무집이 한 채 있었습니다. 그 집에는 곰 세 마리가 살았지요. 아빠 곰과 엄마 곰과 아기 곰이었습니다.",
@@ -17,7 +17,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-porridge-2.png",
+                "art": "01-porridge-2.webp",
                 "emoji": "🥣",
                 "left": [
                     "아기 곰이 제일 먼저 숟가락을 들었습니다. 한 숟가락 뜨더니 폴짝 뛰었지요.",
@@ -40,7 +40,7 @@ const CHAPTERS = [
         "title": "2장 · 문이 열려 있어",
         "beats": [
             {
-                "art": "02-door.png",
+                "art": "02-door.webp",
                 "emoji": "🚪",
                 "left": [
                     "그 무렵 숲을 돌아다니던 아이가 하나 있었습니다. 머리가 금빛으로 반짝이는 아이였지요. 아침에 꽃을 꺾으러 나왔다가 그만 길을 잃었습니다.",
@@ -56,7 +56,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-door-2.png",
+                "art": "02-door-2.webp",
                 "emoji": "🚪",
                 "left": [
                     "아무리 불러도 대답이 없었습니다. 아이는 창문에 붙어 안을 들여다보았지요. 식탁 위에서 하얀 김이 오르고 있었습니다.",
@@ -77,7 +77,7 @@ const CHAPTERS = [
         "title": "3장 · 세 그릇의 죽",
         "beats": [
             {
-                "art": "03-bowls.png",
+                "art": "03-bowls.webp",
                 "emoji": "🍯",
                 "left": [
                     "식탁 위에 죽이 세 그릇 놓여 있었습니다. 큰 그릇, 가운데 그릇, 아주 작은 그릇이었지요. 아이는 배가 고파 참을 수가 없었습니다.",
@@ -92,7 +92,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-bowls-2.png",
+                "art": "03-bowls-2.webp",
                 "emoji": "🍯",
                 "left": [
                     "마지막으로 제일 작은 그릇을 떠먹었습니다. 아이의 눈이 동그래졌지요.",
@@ -114,7 +114,7 @@ const CHAPTERS = [
         "title": "4장 · 세 개의 의자",
         "beats": [
             {
-                "art": "04-chairs.png",
+                "art": "04-chairs.webp",
                 "emoji": "🪑",
                 "left": [
                     "배가 부른 아이는 앉을 자리를 찾았습니다. 난롯가에 의자가 셋 놓여 있었지요. 이것도 큰 것, 가운데 것, 작은 것이었습니다.",
@@ -129,7 +129,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-chairs-2.png",
+                "art": "04-chairs-2.webp",
                 "emoji": "🪑",
                 "left": [
                     "아이는 제일 작은 의자에 앉아 보았습니다. 엉덩이가 쏙 들어가고 등이 딱 맞았지요.",
@@ -151,7 +151,7 @@ const CHAPTERS = [
         "title": "5장 · 세 개의 침대",
         "beats": [
             {
-                "art": "05-beds.png",
+                "art": "05-beds.webp",
                 "emoji": "🛏️",
                 "left": [
                     "아이는 부서진 의자를 보고 멈칫했습니다. 그래도 미안하다는 말은 하지 않았지요. 아무도 보지 않았으니까요.",
@@ -165,7 +165,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-beds-2.png",
+                "art": "05-beds-2.webp",
                 "emoji": "🛏️",
                 "left": [
                     "가운데 침대로 옮겨 누워 보았습니다. 이번에는 발치가 너무 푹신했지요. 몸이 자꾸 아래로 미끄러졌습니다.",
@@ -188,7 +188,7 @@ const CHAPTERS = [
         "title": "6장 · 돌아온 곰들",
         "beats": [
             {
-                "art": "06-return.png",
+                "art": "06-return.webp",
                 "emoji": "🐻",
                 "left": [
                     "그 무렵 곰 세 마리가 산책을 마쳤습니다.",
@@ -205,7 +205,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-return-2.png",
+                "art": "06-return-2.webp",
                 "emoji": "🐻",
                 "left": [
                     "\"누가 내 죽도 먹었어요.\"",
@@ -226,7 +226,7 @@ const CHAPTERS = [
         "title": "7장 · 부서진 의자",
         "beats": [
             {
-                "art": "07-broken.png",
+                "art": "07-broken.webp",
                 "emoji": "💥",
                 "left": [
                     "세 마리는 난롯가로 갔습니다. 아빠 곰의 의자에는 방석이 삐뚜름했지요.",
@@ -243,7 +243,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-broken-2.png",
+                "art": "07-broken-2.webp",
                 "emoji": "💥",
                 "left": [
                     "아빠 곰이 코를 킁킁거렸습니다.",
@@ -265,7 +265,7 @@ const CHAPTERS = [
         "title": "8장 · 눈이 딱 마주쳐서",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "😲",
                 "left": [
                     "다락방 문이 스르르 열렸습니다. 아빠 곰이 제 침대를 보았지요. 이불이 잔뜩 헝클어져 있었습니다.",
@@ -281,7 +281,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "😲",
                 "left": [
                     "그 소리에 아이가 눈을 번쩍 떴습니다. 눈앞에 곰 세 마리가 있었지요. 아이는 소리를 지르며 벌떡 일어났습니다.",
@@ -313,7 +313,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐻')}
+                ${artFrame('cover.webp', '🐻')}
             </div>
             <div class="story-page-right">
                 <h1>곰 세 마리와 금발 아이</h1>
@@ -385,7 +385,7 @@ const AFTERWORD = {
     emoji: '🐻',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 영국에서 나왔습니다. 백팔십 년쯤 전에 처음 적혔지요. 그때는 금발 아이가 아니라 할머니가 들어가는 이야기였습니다.",
                 "아이는 세 번 다 같은 순서로 골랐습니다. 큰 것, 가운데 것, 작은 것이지요. 그리고 세 번 다 작은 것이 맞았습니다.",

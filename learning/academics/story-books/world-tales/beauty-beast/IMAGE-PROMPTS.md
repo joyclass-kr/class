@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -43,64 +43,64 @@ drawn like a big awkward animal rather than a monster.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a single red rose under a glass dome on a stone table in a grand candlelit hall, a large shaggy silhouette in the shadows behind and a girl in a blue cloak at the doorway, warm and mysterious, never scary. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a single red rose under a glass dome on a stone table in a grand candlelit hall, a large shaggy silhouette in the shadows behind and a girl in a blue cloak at the doorway, warm and mysterious, never scary. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 장사꾼의 세 딸
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-family.png` | A fine merchant house where two showily dressed sisters admire themselves before a mirror while a plain-dressed girl reads by the window, warm domestic light, comic contrast. |
-| `images/01-family-2.png` | A modest country cottage where two sisters wail over lost finery while a plain-dressed girl calmly kneads bread at the hearth and their father watches, warm firelight, tender. |
+| `images/01-family.webp` | A fine merchant house where two showily dressed sisters admire themselves before a mirror while a plain-dressed girl reads by the window, warm domestic light, comic contrast. |
+| `images/01-family-2.webp` | A modest country cottage where two sisters wail over lost finery while a plain-dressed girl calmly kneads bread at the hearth and their father watches, warm firelight, tender. |
 
 ## 2장 · 아버지의 선물
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-rose.png` | A cottage doorway where a father in a travelling coat is besieged by two sisters demanding silks and pearls while the youngest asks only for a single rose, morning light. |
-| `images/02-rose-2.png` | A snowbound forest road at night where a lost traveller leads his horse toward the gates of a vast castle, and inside a warm hall with a laid table and no one present, eerie but inviting. |
+| `images/02-rose.webp` | A cottage doorway where a father in a travelling coat is besieged by two sisters demanding silks and pearls while the youngest asks only for a single rose, morning light. |
+| `images/02-rose-2.webp` | A snowbound forest road at night where a lost traveller leads his horse toward the gates of a vast castle, and inside a warm hall with a laid table and no one present, eerie but inviting. |
 
 ## 3장 · 꺾어서는 안 될 꽃
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-plucked.png` | A snowy castle garden where roses bloom impossibly in the cold, a traveller freezing mid-reach as a huge shaggy horned figure looms in the archway behind, dramatic but not gory. |
-| `images/03-plucked-2.png` | A shaggy horned figure in a velvet coat speaking sternly to a kneeling traveller in a snowy rose garden, and then the man riding home with a single rose held to his chest, sombre. |
+| `images/03-plucked.webp` | A snowy castle garden where roses bloom impossibly in the cold, a traveller freezing mid-reach as a huge shaggy horned figure looms in the archway behind, dramatic but not gory. |
+| `images/03-plucked-2.webp` | A shaggy horned figure in a velvet coat speaking sternly to a kneeling traveller in a snowy rose garden, and then the man riding home with a single rose held to his chest, sombre. |
 
 ## 4장 · 벨이 나서다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-belle.png` | A cottage room where a father confesses, two sisters point accusingly, and a girl in a blue cloak quietly takes down her coat, a single rose lying on the table, tense and moving. |
-| `images/04-belle-2.png` | A snowy road at dawn where a father and a girl in a blue cloak walk to a vast castle gate that opens by itself, the girl smiling and going in alone, resolute and sad. |
+| `images/04-belle.webp` | A cottage room where a father confesses, two sisters point accusingly, and a girl in a blue cloak quietly takes down her coat, a single rose lying on the table, tense and moving. |
+| `images/04-belle-2.webp` | A snowy road at dawn where a father and a girl in a blue cloak walk to a vast castle gate that opens by itself, the girl smiling and going in alone, resolute and sad. |
 
 ## 5장 · 성에서의 나날
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-castle.png` | A vast castle library with shelves to the ceiling, a fire lit by itself and a window seat, a girl in a blue cloak standing amazed in the doorway, golden light, wondrous. |
-| `images/05-castle-2.png` | A candlelit dining hall where a large shaggy figure sits awkwardly on a too-small chair listening to a girl talk about her book, both relaxed and smiling, warm and gentle. |
+| `images/05-castle.webp` | A vast castle library with shelves to the ceiling, a fire lit by itself and a window seat, a girl in a blue cloak standing amazed in the doorway, golden light, wondrous. |
+| `images/05-castle-2.webp` | A candlelit dining hall where a large shaggy figure sits awkwardly on a too-small chair listening to a girl talk about her book, both relaxed and smiling, warm and gentle. |
 
 ## 6장 · 거울 속의 집
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-mirror.png` | A candlelit room where a girl gazes into a hand mirror showing a sick old man in a distant cottage, her face falling, rich tapestries around, tender and sad. |
-| `images/06-mirror-2.png` | A large shaggy figure with bowed head giving a mirror and a ring to a girl, and then the same girl appearing in a snowy cottage yard as her father rises from his sickbed, moving. |
+| `images/06-mirror.webp` | A candlelit room where a girl gazes into a hand mirror showing a sick old man in a distant cottage, her face falling, rich tapestries around, tender and sad. |
+| `images/06-mirror-2.webp` | A large shaggy figure with bowed head giving a mirror and a ring to a girl, and then the same girl appearing in a snowy cottage yard as her father rises from his sickbed, moving. |
 
 ## 7장 · 늦어 버린 날
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-late.png` | A cottage where a recovering father sits by the fire with his daughter tending him, while two sisters eye her fine dress and ring with envy and cling to her sleeves. |
-| `images/07-late-2.png` | A girl waking in terror from a dream, checking a mirror that shows a fallen shaggy figure in a snowy rose garden, then turning a ring and appearing in that garden, urgent. |
+| `images/07-late.webp` | A cottage where a recovering father sits by the fire with his daughter tending him, while two sisters eye her fine dress and ring with envy and cling to her sleeves. |
+| `images/07-late-2.webp` | A girl waking in terror from a dream, checking a mirror that shows a fallen shaggy figure in a snowy rose garden, then turning a ring and appearing in that garden, urgent. |
 
 ## 8장 · 뜰에 쓰러진 야수
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A snowy castle rose garden at dawn where a girl cradles a fallen shaggy figure and weeps, roses bright against the snow, deeply moving but never grim. |
-| `images/08-ending-2.png` | A rose garden bursting with light as a shaggy figure becomes a young man, castle windows lighting up and servants appearing, the girl beside him radiant, joyous. |
+| `images/08-ending.webp` | A snowy castle rose garden at dawn where a girl cradles a fallen shaggy figure and weeps, roses bright against the snow, deeply moving but never grim. |
+| `images/08-ending-2.webp` | A rose garden bursting with light as a shaggy figure becomes a young man, castle windows lighting up and servants appearing, the girl beside him radiant, joyous. |
 
 ## 사용 팁
 

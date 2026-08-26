@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 쥐가 들끓는 마을",
         "beats": [
             {
-                "art": "01-rats.png",
+                "art": "01-rats.webp",
                 "emoji": "🐀",
                 "left": [
                     "하멜른이라는 마을이 있었습니다. 강가에 자리 잡은 고운 마을이었지요.",
@@ -18,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-rats-2.png",
+                "art": "01-rats-2.webp",
                 "emoji": "🐀",
                 "left": [
                     "참다못한 사람들이 시청으로 몰려갔습니다.",
@@ -42,7 +42,7 @@ const CHAPTERS = [
         "title": "2장 · 낯선 사나이",
         "beats": [
             {
-                "art": "02-piper.png",
+                "art": "02-piper.webp",
                 "emoji": "🪈",
                 "left": [
                     "키가 껑충한 사람이 들어왔습니다. 옷이 아주 이상했지요.",
@@ -60,7 +60,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-piper-2.png",
+                "art": "02-piper-2.webp",
                 "emoji": "🪈",
                 "left": [
                     "그러다 얼른 고개를 끄덕였지요.",
@@ -84,7 +84,7 @@ const CHAPTERS = [
         "title": "3장 · 피리 소리를 따라",
         "beats": [
             {
-                "art": "03-rats-follow.png",
+                "art": "03-rats-follow.webp",
                 "emoji": "🎵",
                 "left": [
                     "가늘고 맑은 소리였습니다. 처음에는 아무 일도 일어나지 않았지요.",
@@ -100,7 +100,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-rats-follow-2.png",
+                "art": "03-rats-follow-2.webp",
                 "emoji": "🎵",
                 "left": [
                     "사나이가 천천히 걸음을 옮겼습니다. 쥐들이 그 뒤를 졸졸 따랐지요.",
@@ -120,7 +120,7 @@ const CHAPTERS = [
         "title": "4장 · 약속을 어긴 마을",
         "beats": [
             {
-                "art": "04-refuse.png",
+                "art": "04-refuse.webp",
                 "emoji": "💰",
                 "left": [
                     "사나이가 시청으로 돌아왔습니다.",
@@ -139,7 +139,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-refuse-2.png",
+                "art": "04-refuse-2.webp",
                 "emoji": "💰",
                 "left": [
                     "\"약속은 약속입니다.\"",
@@ -163,7 +163,7 @@ const CHAPTERS = [
         "title": "5장 · 두 번째 피리 소리",
         "beats": [
             {
-                "art": "05-children.png",
+                "art": "05-children.webp",
                 "emoji": "🚸",
                 "left": [
                     "이튿날 아침이었습니다. 어른들은 모두 교회에 갔지요. 골목에는 아이들만 남았습니다.",
@@ -180,7 +180,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-children-2.png",
+                "art": "05-children-2.webp",
                 "emoji": "🚸",
                 "left": [
                     "아이들이 사나이의 뒤를 따랐습니다. 웃고 뛰며 신이 나서 걸었지요. 줄이 점점 길어졌습니다.",
@@ -201,7 +201,7 @@ const CHAPTERS = [
         "title": "6장 · 산 앞에서",
         "beats": [
             {
-                "art": "06-mountain.png",
+                "art": "06-mountain.webp",
                 "emoji": "⛰️",
                 "left": [
                     "어른들은 그 자리에 얼어붙었습니다. 거리가 텅 비어 있었지요.",
@@ -217,7 +217,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-mountain-2.png",
+                "art": "06-mountain-2.webp",
                 "emoji": "⛰️",
                 "left": [
                     "그때 뒤에서 소리가 났습니다.",
@@ -240,7 +240,7 @@ const CHAPTERS = [
         "title": "7장 · 돌아온 아이들",
         "beats": [
             {
-                "art": "07-return.png",
+                "art": "07-return.webp",
                 "emoji": "🏘️",
                 "left": [
                     "\"나는 값을 받으러 왔단다.\"",
@@ -259,7 +259,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-return-2.png",
+                "art": "07-return-2.webp",
                 "emoji": "🏘️",
                 "left": [
                     "사나이가 말없이 자루를 내밀었습니다. 시장이 그 자리에서 금화 천 닢을 세어 담았지요. 손이 덜덜 떨렸습니다.",
@@ -288,7 +288,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🎶')}
+                ${artFrame('cover.webp', '🎶')}
             </div>
             <div class="story-page-right">
                 <h1>피리 부는 사나이</h1>
@@ -360,7 +360,7 @@ const AFTERWORD = {
     emoji: '🎺',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 독일 하멜른이라는 마을에 실제로 전해 오는 것입니다. 마을 교회 창에 그림으로 남아 있었다고 하지요.",
                 "칠백 년도 더 전에 하멜른에서 아이들이 사라졌다는 기록이 있습니다. 무슨 일이 있었는지는 아무도 모릅니다. 그 빈자리를 이야기가 채운 셈입니다.",

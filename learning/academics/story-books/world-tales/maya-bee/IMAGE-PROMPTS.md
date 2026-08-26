@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -42,64 +42,64 @@ larger striped wasps, drawn stern rather than monstrous.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a small bright-eyed honeybee hovering over a wide summer meadow full of poppies and cornflowers, dragonflies and grasshoppers among the stems below, dew catching the light, joyful and inviting. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a small bright-eyed honeybee hovering over a wide summer meadow full of poppies and cornflowers, dragonflies and grasshoppers among the stems below, dew catching the light, joyful and inviting. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 벌집을 나서다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-hive.png` | The golden interior of a beehive with rows of hexagonal cells where a stern spectacled teacher bee instructs a small newly hatched bee, warm honey light. |
-| `images/01-hive-2.png` | A small bee raising her arm eagerly among rows of young bees while a spectacled teacher shakes her head, then lying awake alone at night by a hive doorway. |
+| `images/01-hive.webp` | The golden interior of a beehive with rows of hexagonal cells where a stern spectacled teacher bee instructs a small newly hatched bee, warm honey light. |
+| `images/01-hive-2.webp` | A small bee raising her arm eagerly among rows of young bees while a spectacled teacher shakes her head, then lying awake alone at night by a hive doorway. |
 
 ## 2장 · 첫 아침
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-meadow.png` | A tiny bee slipping out of a hive entrance into an enormous sunlit meadow of towering poppies and cornflowers, dew sparkling, exhilarating sense of scale. |
-| `images/02-meadow-2.png` | A small bee flitting joyfully among giant flowers meeting butterflies and ladybirds, then hovering puzzled under a high noon sun with no hive tree in sight. |
+| `images/02-meadow.webp` | A tiny bee slipping out of a hive entrance into an enormous sunlit meadow of towering poppies and cornflowers, dew sparkling, exhilarating sense of scale. |
+| `images/02-meadow-2.webp` | A small bee flitting joyfully among giant flowers meeting butterflies and ladybirds, then hovering puzzled under a high noon sun with no hive tree in sight. |
 
 ## 3장 · 메뚜기 페피
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-grasshopper.png` | A lanky green grasshopper bouncing mid-air among towering grass stems while a small bee recoils in surprise, blades of grass like green pillars, comic. |
-| `images/03-grasshopper-2.png` | A grasshopper laughing and pointing at the pollen dusting a small bee, the two chatting among grass stems, then the grasshopper leaping away, sunny and comic. |
+| `images/03-grasshopper.webp` | A lanky green grasshopper bouncing mid-air among towering grass stems while a small bee recoils in surprise, blades of grass like green pillars, comic. |
+| `images/03-grasshopper-2.webp` | A grasshopper laughing and pointing at the pollen dusting a small bee, the two chatting among grass stems, then the grasshopper leaping away, sunny and comic. |
 
 ## 4장 · 쇠똥구리 쿠르트
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-beetle.png` | A stout brown dung beetle in a stiff collar straining to push a large ball up a slope of soil while a small bee hovers offering help, comic dignity. |
-| `images/04-beetle-2.png` | A dung beetle finally rolling his ball to the top of a soil slope, sweating and grinning, while a small bee watches thoughtfully, warm afternoon light. |
+| `images/04-beetle.webp` | A stout brown dung beetle in a stiff collar straining to push a large ball up a slope of soil while a small bee hovers offering help, comic dignity. |
+| `images/04-beetle-2.webp` | A dung beetle finally rolling his ball to the top of a soil slope, sweating and grinning, while a small bee watches thoughtfully, warm afternoon light. |
 
 ## 5장 · 거미줄
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-web.png` | A dew-jewelled spiderweb strung between grass stems at sunset with a small bee drifting closer, entranced, then her wing catching fast, tense. |
-| `images/05-web-2.png` | A small bee thoroughly tangled in a spiderweb calling for help in a quiet dusk meadow, then a green grasshopper appearing at the edge of the frame, hopeful. |
+| `images/05-web.webp` | A dew-jewelled spiderweb strung between grass stems at sunset with a small bee drifting closer, entranced, then her wing catching fast, tense. |
+| `images/05-web-2.webp` | A small bee thoroughly tangled in a spiderweb calling for help in a quiet dusk meadow, then a green grasshopper appearing at the edge of the frame, hopeful. |
 
 ## 6장 · 구해 준 이웃
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-rescue.png` | A grasshopper carefully snapping web threads with his hind legs to free a small bee, both tumbling into soft grass below, dusk light, warm friendship. |
-| `images/06-rescue-2.png` | A grasshopper bounding away shyly into the grass, and a small bee resting under a leaf beneath a starry sky, thoughtful and tender. |
+| `images/06-rescue.webp` | A grasshopper carefully snapping web threads with his hind legs to free a small bee, both tumbling into soft grass below, dusk light, warm friendship. |
+| `images/06-rescue-2.webp` | A grasshopper bounding away shyly into the grass, and a small bee resting under a leaf beneath a starry sky, thoughtful and tender. |
 
 ## 7장 · 말벌들의 계획
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-hornets.png` | A dark hollow tree where large striped hornets confer in a huddle while a tiny bee flattens herself against the bark listening in terror, atmospheric. |
-| `images/07-hornets-2.png` | A tiny bee streaking away from a hollow tree across a sunset meadow, rising high to spot a familiar tree in the distance, wings blurring, urgent. |
+| `images/07-hornets.webp` | A dark hollow tree where large striped hornets confer in a huddle while a tiny bee flattens herself against the bark listening in terror, atmospheric. |
+| `images/07-hornets-2.webp` | A tiny bee streaking away from a hollow tree across a sunset meadow, rising high to spot a familiar tree in the distance, wings blurring, urgent. |
 
 ## 8장 · 돌아온 마야
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A bee arriving breathless at a hive entrance at night past guard bees, raising the alarm as the whole hive erupts into motion, urgent and dramatic. |
-| `images/08-ending-2.png` | A beehive entrance at night with ranks of bees standing shoulder to shoulder as hornets hover and turn away, a small bee praised by an older bee, triumphant glow. |
+| `images/08-ending.webp` | A bee arriving breathless at a hive entrance at night past guard bees, raising the alarm as the whole hive erupts into motion, urgent and dramatic. |
+| `images/08-ending-2.webp` | A beehive entrance at night with ranks of bees standing shoulder to shoulder as hornets hover and turn away, a small bee praised by an older bee, triumphant glow. |
 
 ## 사용 팁
 

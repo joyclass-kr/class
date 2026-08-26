@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -44,64 +44,64 @@ reindeer: a shaggy grey reindeer with kind eyes.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a girl in a red cloak and bare feet walking across a vast frozen plain toward a distant palace of ice, the northern lights arching green and violet above her, tiny and determined, beautiful and cold. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a girl in a red cloak and bare feet walking across a vast frozen plain toward a distant palace of ice, the northern lights arching green and violet above her, tiny and determined, beautiful and cold. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 창가의 장미
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-roses.png` | Two attic windows facing each other across a narrow gap joined by a window box of climbing roses, two children playing beneath, warm rooftop light over a huddled town, charming. |
-| `images/01-roses-2.png` | A cosy attic where a spectacled grandmother tells a story by the stove, and a snowflake at the frosted window growing into the shape of a tall pale woman in white furs, eerie but beautiful. |
+| `images/01-roses.webp` | Two attic windows facing each other across a narrow gap joined by a window box of climbing roses, two children playing beneath, warm rooftop light over a huddled town, charming. |
+| `images/01-roses-2.webp` | A cosy attic where a spectacled grandmother tells a story by the stove, and a snowflake at the frosted window growing into the shape of a tall pale woman in white furs, eerie but beautiful. |
 
 ## 2장 · 눈에 박힌 조각
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-shard.png` | A shattering mirror scattering glittering dust across a wide sky, and a rooftop garden where a boy claps a hand to his eye as a girl peers at him anxiously, summer roses around, striking. |
-| `images/02-shard-2.png` | A rooftop garden where a boy kicks over a rose box sneering while a girl stands hurt beside it, and the same boy running off with older children into falling snow, sad and cold. |
+| `images/02-shard.webp` | A shattering mirror scattering glittering dust across a wide sky, and a rooftop garden where a boy claps a hand to his eye as a girl peers at him anxiously, summer roses around, striking. |
+| `images/02-shard-2.webp` | A rooftop garden where a boy kicks over a rose box sneering while a girl stands hurt beside it, and the same boy running off with older children into falling snow, sad and cold. |
 
 ## 3장 · 하얀 썰매
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-sleigh.png` | A snowy town square where children hitch their sleds to passing carts, and a pure white sleigh sweeping in and out through the gate with one boy towed helplessly behind, thrilling. |
-| `images/03-sleigh-2.png` | A snowy plain where a tall pale woman in white furs steps from a sleigh and kisses a boy's forehead, frost spreading over him, the sleigh then racing north under a wide grey sky, beautiful and chilling. |
+| `images/03-sleigh.webp` | A snowy town square where children hitch their sleds to passing carts, and a pure white sleigh sweeping in and out through the gate with one boy towed helplessly behind, thrilling. |
+| `images/03-sleigh-2.webp` | A snowy plain where a tall pale woman in white furs steps from a sleigh and kisses a boy's forehead, frost spreading over him, the sleigh then racing north under a wide grey sky, beautiful and chilling. |
 
 ## 4장 · 게르다가 길을 나서다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-journey.png` | A spring riverbank where a small girl in a red cloak throws her new red shoes into the water asking after her friend, and the shoes drifting back to her feet, hopeful and tender. |
-| `images/04-journey-2.png` | A boat drifting downriver to a garden full of flowers where an old woman welcomes a girl, and later a single rose blooming through the soil as the girl remembers with a start, dreamlike. |
+| `images/04-journey.webp` | A spring riverbank where a small girl in a red cloak throws her new red shoes into the water asking after her friend, and the shoes drifting back to her feet, hopeful and tender. |
+| `images/04-journey-2.webp` | A boat drifting downriver to a garden full of flowers where an old woman welcomes a girl, and later a single rose blooming through the soil as the girl remembers with a start, dreamlike. |
 
 ## 5장 · 도둑 소녀
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-robber.png` | A dark forest road where robbers surround a carriage and a fierce dark-haired girl with a knife claims the small traveller for herself, torchlight and shadows, tense but not cruel. |
-| `images/05-robber-2.png` | A robbers' hall where a girl sleeps among caged doves and a tethered reindeer as another girl listens to her story, and at dawn cutting the reindeer's rope, warm and surprising. |
+| `images/05-robber.webp` | A dark forest road where robbers surround a carriage and a fierce dark-haired girl with a knife claims the small traveller for herself, torchlight and shadows, tense but not cruel. |
+| `images/05-robber-2.webp` | A robbers' hall where a girl sleeps among caged doves and a tethered reindeer as another girl listens to her story, and at dawn cutting the reindeer's rope, warm and surprising. |
 
 ## 6장 · 북쪽 끝으로
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-reindeer.png` | A reindeer bounding away from a robbers' camp with a small girl on its back, a fierce girl waving a scarf behind, and then a vast treeless snowfield under dancing green and violet auroras, breathtaking. |
-| `images/06-reindeer-2.png` | A tiny turf hut on the tundra where a wise woman speaks to a reindeer and a small girl, and then the reindeer racing on toward a distant glimmering palace of ice, hopeful and vast. |
+| `images/06-reindeer.webp` | A reindeer bounding away from a robbers' camp with a small girl on its back, a fierce girl waving a scarf behind, and then a vast treeless snowfield under dancing green and violet auroras, breathtaking. |
+| `images/06-reindeer-2.webp` | A tiny turf hut on the tundra where a wise woman speaks to a reindeer and a small girl, and then the reindeer racing on toward a distant glimmering palace of ice, hopeful and vast. |
 
 ## 7장 · 얼음 궁전
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-ice-palace.png` | A vast empty palace of ice with soundless halls where a small girl walks alone, and in the great hall a frozen lake with a pale boy sitting on it arranging shards of ice, stark and beautiful. |
-| `images/07-ice-palace-2.png` | A frozen hall where a girl throws her arms around a pale boy and her tears fall on his chest, ice melting and colour returning to his face as he blinks awake, deeply moving. |
+| `images/07-ice-palace.webp` | A vast empty palace of ice with soundless halls where a small girl walks alone, and in the great hall a frozen lake with a pale boy sitting on it arranging shards of ice, stark and beautiful. |
+| `images/07-ice-palace-2.webp` | A frozen hall where a girl throws her arms around a pale boy and her tears fall on his chest, ice melting and colour returning to his face as he blinks awake, deeply moving. |
 
 ## 8장 · 다시 여름
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-home.png` | Two children riding a reindeer south as snow thins into green grass, meeting a taller robber girl on the road, all laughing together, spring light and relief. |
-| `images/08-home-2.png` | A familiar attic where a grandmother reads by the window as two grown-taller children sit down in their old chairs, the rose box blooming outside in full summer sun, warm and complete. |
+| `images/08-home.webp` | Two children riding a reindeer south as snow thins into green grass, meeting a taller robber girl on the road, all laughing together, spring light and relief. |
+| `images/08-home-2.webp` | A familiar attic where a grandmother reads by the window as two grown-taller children sit down in their old chairs, the rose box blooming outside in full summer sun, warm and complete. |
 
 ## 사용 팁
 

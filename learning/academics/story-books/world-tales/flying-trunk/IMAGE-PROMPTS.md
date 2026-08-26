@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -42,64 +42,64 @@ The townspeople: a lively crowd of market folk.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: an old leather travelling trunk flying high above a moonlit city of domes and minarets, a young man sitting inside it with his hair blown back, stars all around, whimsical and inviting. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: an old leather travelling trunk flying high above a moonlit city of domes and minarets, a young man sitting inside it with his hair blown back, stars all around, whimsical and inviting. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 다 써 버린 재산
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-spend.png` | A grand merchant house where a cheerful young man in fine clothes treats a crowd of friends to a lavish feast, coins scattered on the table, warm and comic. |
-| `images/01-spend-2.png` | An emptied house where a young man sits alone on the bare floor while a stooped friend in spectacles carries in a battered leather trunk, rueful and comic. |
+| `images/01-spend.webp` | A grand merchant house where a cheerful young man in fine clothes treats a crowd of friends to a lavish feast, coins scattered on the table, warm and comic. |
+| `images/01-spend-2.webp` | An emptied house where a young man sits alone on the bare floor while a stooped friend in spectacles carries in a battered leather trunk, rueful and comic. |
 
 ## 2장 · 가방이 날아올랐다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-fly.png` | An old leather trunk lifting off a bare floor with a startled young man inside, then shooting up out of a chimney into the night, exhilarating and funny. |
-| `images/02-fly-2.png` | A leather trunk soaring high above moonlit clouds with a delighted young man steering by leaning, tiny towns and rivers far below, stars all around, magical. |
+| `images/02-fly.webp` | An old leather trunk lifting off a bare floor with a startled young man inside, then shooting up out of a chimney into the night, exhilarating and funny. |
+| `images/02-fly-2.webp` | A leather trunk soaring high above moonlit clouds with a delighted young man steering by leaning, tiny towns and rivers far below, stars all around, magical. |
 
 ## 3장 · 낯선 나라의 탑
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-tower.png` | A trunk landing in a wood beside a colourful eastern city of domes and awnings, a young man hiding it under leaves then walking into a busy spice market, lively. |
-| `images/03-tower-2.png` | A market seller pointing up at a tall lone tower rising above the rooftops while a young man listens with a gleam in his eye, colourful stalls around, intriguing. |
+| `images/03-tower.webp` | A trunk landing in a wood beside a colourful eastern city of domes and awnings, a young man hiding it under leaves then walking into a busy spice market, lively. |
+| `images/03-tower-2.webp` | A market seller pointing up at a tall lone tower rising above the rooftops while a young man listens with a gleam in his eye, colourful stalls around, intriguing. |
 
 ## 4장 · 창문으로 들어가다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-window.png` | A leather trunk rising to the top of a tall tower at night, a young man climbing in through a half-open window where a princess sleeps on a couch, moonlit and charming. |
-| `images/04-window-2.png` | A tower bedroom where a young man bows to a wide-eyed princess sitting up on her couch, a trunk resting by the window, warm lamplight, charming. |
+| `images/04-window.webp` | A leather trunk rising to the top of a tall tower at night, a young man climbing in through a half-open window where a princess sleeps on a couch, moonlit and charming. |
+| `images/04-window-2.webp` | A tower bedroom where a young man bows to a wide-eyed princess sitting up on her couch, a trunk resting by the window, warm lamplight, charming. |
 
 ## 5장 · 이야기를 들려주다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-story.png` | A tower room where a young man acts out a story with sweeping gestures, kitchen objects sketched magically in the air around him, a princess laughing on the couch, warm lamplight. |
-| `images/05-story-2.png` | A trunk arriving at a tower window night after night under different moons, a princess waiting eagerly at the sill each time, warm and romantic. |
+| `images/05-story.webp` | A tower room where a young man acts out a story with sweeping gestures, kitchen objects sketched magically in the air around him, a princess laughing on the couch, warm lamplight. |
+| `images/05-story-2.webp` | A trunk arriving at a tower window night after night under different moons, a princess waiting eagerly at the sill each time, warm and romantic. |
 
 ## 6장 · 임금님 앞에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-parents.png` | A tower room where a princess happily tells her stout royal parents about a visitor while the king frowns and the queen looks curious, ornate robes, comic. |
-| `images/06-parents-2.png` | A domed throne room where a young man tells a story with animated gestures, the queen dabbing her eyes and the king slapping his knee, courtiers delighted, festive. |
+| `images/06-parents.webp` | A tower room where a princess happily tells her stout royal parents about a visitor while the king frowns and the queen looks curious, ornate robes, comic. |
+| `images/06-parents-2.webp` | A domed throne room where a young man tells a story with animated gestures, the queen dabbing her eyes and the king slapping his knee, courtiers delighted, festive. |
 
 ## 7장 · 하늘에서 터진 불꽃
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-fireworks.png` | A young man buying armfuls of fireworks at a lantern-lit market, then loading them into a trunk and rising into the night sky above a glowing city, festive. |
-| `images/07-fireworks-2.png` | A night sky above a domed city bursting with fireworks launched from a flying trunk, crowds below cheering with upturned faces, spectacular and joyful. |
+| `images/07-fireworks.webp` | A young man buying armfuls of fireworks at a lantern-lit market, then loading them into a trunk and rising into the night sky above a glowing city, festive. |
+| `images/07-fireworks-2.webp` | A night sky above a domed city bursting with fireworks launched from a flying trunk, crowds below cheering with upturned faces, spectacular and joyful. |
 
 ## 8장 · 타 버린 가방
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A forest clearing at dawn where only a heap of grey ash remains where a trunk stood, a young man kneeling and sifting it with his hands, quiet and sad. |
-| `images/08-ending-2.png` | A wandering storyteller telling tales in a village square while glancing at the sky, and far away a princess at a tower window watching empty clouds, wistful. |
+| `images/08-ending.webp` | A forest clearing at dawn where only a heap of grey ash remains where a trunk stood, a young man kneeling and sifting it with his hands, quiet and sad. |
+| `images/08-ending-2.webp` | A wandering storyteller telling tales in a village square while glancing at the sky, and far away a princess at a tower window watching empty clouds, wistful. |
 
 ## 사용 팁
 

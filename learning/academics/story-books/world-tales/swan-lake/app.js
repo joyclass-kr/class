@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 스무 살 생일",
         "beats": [
             {
-                "art": "01-birthday.png",
+                "art": "01-birthday.webp",
                 "emoji": "🎂",
                 "left": [
                     "궁궐 마당에 깃발이 걸리고 악사들이 모였습니다. 지크프리트 왕자가 스무 살이 되던 날이었지요. 큰 잔치가 열렸습니다.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-birthday-2.png",
+                "art": "01-birthday-2.webp",
                 "emoji": "🎂",
                 "left": [
                     "\"정해 놓고 고르는 게 무슨 뜻이 있을까요.\"",
@@ -41,7 +41,7 @@ const CHAPTERS = [
         "title": "2장 · 호수의 백조들",
         "beats": [
             {
-                "art": "02-lake.png",
+                "art": "02-lake.webp",
                 "emoji": "🦢",
                 "left": [
                     "달빛이 호수 위에 가득 내려앉아 있었습니다. 물이 은처럼 반짝였지요.",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-lake-2.png",
+                "art": "02-lake-2.webp",
                 "emoji": "🦢",
                 "left": [
                     "백조가 있던 자리에 아가씨가 서 있었습니다. 하얀 깃털 옷을 입고 있었지요. 머리에는 작은 관을 쓰고 있었습니다.",
@@ -77,7 +77,7 @@ const CHAPTERS = [
         "title": "3장 · 오데트의 사연",
         "beats": [
             {
-                "art": "03-odette.png",
+                "art": "03-odette.webp",
                 "emoji": "🌙",
                 "left": [
                     "\"제 이름은 오데트입니다.\"",
@@ -96,7 +96,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-odette-2.png",
+                "art": "03-odette-2.webp",
                 "emoji": "🌙",
                 "left": [
                     "왕자는 오데트의 손을 잡았습니다.",
@@ -120,7 +120,7 @@ const CHAPTERS = [
         "title": "4장 · 검은 옷의 아가씨",
         "beats": [
             {
-                "art": "04-ball.png",
+                "art": "04-ball.webp",
                 "emoji": "🕯️",
                 "left": [
                     "이튿날 저녁이 되었습니다. 궁궐 무도회장이 촛불로 환했지요.",
@@ -136,7 +136,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-ball-2.png",
+                "art": "04-ball-2.webp",
                 "emoji": "🕯️",
                 "left": [
                     "검은 옷을 입은 아가씨가 들어섰습니다. 뒤에는 검은 망토를 두른 사람이 서 있었지요. 아가씨의 얼굴을 보고 왕자는 벌떡 일어났습니다.",
@@ -157,7 +157,7 @@ const CHAPTERS = [
         "title": "5장 · 창밖의 백조",
         "beats": [
             {
-                "art": "05-window.png",
+                "art": "05-window.webp",
                 "emoji": "😰",
                 "left": [
                     "왕자는 밤이 깊도록 춤을 추었습니다. 다른 아가씨는 눈에 들어오지도 않았지요.",
@@ -173,7 +173,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-window-2.png",
+                "art": "05-window-2.webp",
                 "emoji": "😰",
                 "left": [
                     "그 순간 창밖에서 흰 그림자가 스쳤습니다. 사람들이 일제히 창을 보았지요. 유리창에 오데트가 매달려 있었습니다.",
@@ -195,7 +195,7 @@ const CHAPTERS = [
         "title": "6장 · 다시 호수로",
         "beats": [
             {
-                "art": "06-return.png",
+                "art": "06-return.webp",
                 "emoji": "🏃",
                 "left": [
                     "왕자는 무도회장을 뛰쳐나갔습니다. 어머니가 부르는 소리도 듣지 못했지요. 궁궐 문을 지나 숲길로 들어섰습니다.",
@@ -209,7 +209,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-return-2.png",
+                "art": "06-return-2.webp",
                 "emoji": "🏃",
                 "left": [
                     "오데트가 천천히 고개를 들었습니다.",
@@ -233,7 +233,7 @@ const CHAPTERS = [
         "title": "7장 · 마주 선 밤",
         "beats": [
             {
-                "art": "07-confront.png",
+                "art": "07-confront.webp",
                 "emoji": "⚡",
                 "left": [
                     "로트바르트가 두 사람 사이를 가로막았습니다. 검은 깃털이 사방으로 흩날렸지요. 바람이 세게 몰아쳤습니다.",
@@ -249,7 +249,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-confront-2.png",
+                "art": "07-confront-2.webp",
                 "emoji": "⚡",
                 "left": [
                     "오데트가 왕자의 곁으로 다가왔습니다. 그러고는 나란히 섰지요. 두 사람은 손을 맞잡았습니다.",
@@ -270,7 +270,7 @@ const CHAPTERS = [
         "title": "8장 · 아침 호수",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🌅",
                 "left": [
                     "동쪽 하늘이 붉어졌습니다.",
@@ -285,7 +285,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🌅",
                 "left": [
                     "오데트가 제 손을 내려다보았습니다. 햇빛이 손등에 따뜻하게 닿았지요.",
@@ -316,7 +316,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🩰')}
+                ${artFrame('cover.webp', '🩰')}
             </div>
             <div class="story-page-right">
                 <h1>백조의 호수</h1>
@@ -388,7 +388,7 @@ const AFTERWORD = {
     emoji: '🦢',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이것은 이야기책이기 전에 발레 작품입니다. 백오십 년쯤 전 러시아에서 차이콥스키가 음악을 지었지요.",
                 "처음 무대에 올렸을 때는 좋은 소리를 듣지 못했습니다. 차이콥스키가 세상을 떠난 뒤에야 널리 알려졌지요.",

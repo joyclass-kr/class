@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 덤불 속에서",
         "beats": [
             {
-                "art": "01-birth.png",
+                "art": "01-birth.webp",
                 "emoji": "🌿",
                 "left": [
                     "깊은 숲 한가운데 덤불이 우거진 곳이 있었습니다. 고사리가 무성해서 아무도 들여다볼 수 없었지요.",
@@ -18,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-birth-2.png",
+                "art": "01-birth-2.webp",
                 "emoji": "🌿",
                 "left": [
                     "소문은 금세 숲에 퍼졌습니다. 이웃들이 하나둘 구경을 왔지요.",
@@ -39,7 +39,7 @@ const CHAPTERS = [
         "title": "2장 · 넓은 풀밭",
         "beats": [
             {
-                "art": "02-meadow.png",
+                "art": "02-meadow.webp",
                 "emoji": "🌼",
                 "left": [
                     "며칠이 지나자 밤비는 제법 잘 걸었습니다.",
@@ -57,7 +57,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-meadow-2.png",
+                "art": "02-meadow-2.webp",
                 "emoji": "🌼",
                 "left": [
                     "\"풀밭에서는 늘 조심해야 한단다.\"",
@@ -81,7 +81,7 @@ const CHAPTERS = [
         "title": "3장 · 숲의 친구들",
         "beats": [
             {
-                "art": "03-friends.png",
+                "art": "03-friends.webp",
                 "emoji": "🐇",
                 "left": [
                     "풀밭에는 다른 사슴들도 나와 있었습니다. 밤비 또래도 있었지요.",
@@ -97,7 +97,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-friends-2.png",
+                "art": "03-friends-2.webp",
                 "emoji": "🐇",
                 "left": [
                     "풀밭에는 이웃이 많았습니다. 토끼는 늘 귀를 쫑긋 세우고 있었지요.",
@@ -119,7 +119,7 @@ const CHAPTERS = [
         "title": "4장 · 늙은 사슴",
         "beats": [
             {
-                "art": "04-old-stag.png",
+                "art": "04-old-stag.webp",
                 "emoji": "🦌",
                 "left": [
                     "어느 날이었습니다. 풀밭이 갑자기 조용해졌지요. 새들도 울음을 그쳤습니다.",
@@ -134,7 +134,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-old-stag-2.png",
+                "art": "04-old-stag-2.webp",
                 "emoji": "🦌",
                 "left": [
                     "늙은 사슴이 밤비 앞에 멈춰 섰습니다.",
@@ -156,7 +156,7 @@ const CHAPTERS = [
         "title": "5장 · 첫눈",
         "beats": [
             {
-                "art": "05-winter.png",
+                "art": "05-winter.webp",
                 "emoji": "❄️",
                 "left": [
                     "여름이 가고 가을이 왔습니다. 나뭇잎이 붉게 물들었지요.",
@@ -172,7 +172,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-winter-2.png",
+                "art": "05-winter-2.webp",
                 "emoji": "❄️",
                 "left": [
                     "그런데 겨울은 생각보다 길었습니다. 눈이 자꾸 쌓여 갔지요.",
@@ -194,7 +194,7 @@ const CHAPTERS = [
         "title": "6장 · 혼자 남은 날",
         "beats": [
             {
-                "art": "06-alone.png",
+                "art": "06-alone.webp",
                 "emoji": "🌫️",
                 "left": [
                     "어느 겨울 아침이었습니다. 밤비와 어미는 풀밭 가장자리에 있었지요.",
@@ -210,7 +210,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-alone-2.png",
+                "art": "06-alone-2.webp",
                 "emoji": "🌫️",
                 "left": [
                     "나무들이 옆으로 휙휙 지나갔습니다. 눈이 사방으로 튀었지요.",
@@ -230,7 +230,7 @@ const CHAPTERS = [
         "title": "7장 · 다시 봄",
         "beats": [
             {
-                "art": "07-spring.png",
+                "art": "07-spring.webp",
                 "emoji": "🌸",
                 "left": [
                     "겨울이 끝나고 눈이 녹았습니다. 땅에서 새싹이 돋아났지요. 숲이 다시 초록으로 물들었습니다.",
@@ -246,7 +246,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-spring-2.png",
+                "art": "07-spring-2.webp",
                 "emoji": "🌸",
                 "left": [
                     "팔리네가 풀밭으로 나가려 했습니다.",
@@ -270,7 +270,7 @@ const CHAPTERS = [
         "title": "8장 · 숲을 걷는 법",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🌳",
                 "left": [
                     "어느 저녁이었습니다. 숲이 아주 고요했지요.",
@@ -287,7 +287,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🌳",
                 "left": [
                     "늙은 사슴은 말없이 숲 읽는 법을 보여 주었습니다. 바람이 어디서 오는지 알려 주었지요. 어디로 몸을 숨길지도 일러 주었습니다.",
@@ -316,7 +316,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🦌')}
+                ${artFrame('cover.webp', '🦌')}
             </div>
             <div class="story-page-right">
                 <h1>아기 사슴 이야기</h1>
@@ -388,7 +388,7 @@ const AFTERWORD = {
     emoji: '🦌',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기를 지은 사람은 오스트리아의 펠릭스 잘텐입니다. 백 년쯤 전에 나왔습니다. 원래는 어른이 읽는 책이었지요.",
                 "어미가 밤비에게 가르친 것은 달리는 법이 아니었습니다. 먼저 멈춰 서서 귀를 기울이는 것이었지요.",

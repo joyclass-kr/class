@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 꽃 속에서 태어난 아이",
         "beats": [
             {
-                "art": "01-flower.png",
+                "art": "01-flower.webp",
                 "emoji": "🌸",
                 "left": [
                     "아이가 없는 부인이 있었습니다. 넓은 집에서 늘 외롭게 지냈지요. 빈 요람이 방 한구석에 그대로 놓여 있었습니다.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-flower-2.png",
+                "art": "01-flower-2.webp",
                 "emoji": "🌸",
                 "left": [
                     "꽃 속에 아이가 앉아 있었습니다. 키가 엄지손가락만 했지요.",
@@ -41,7 +41,7 @@ const CHAPTERS = [
         "title": "2장 · 두꺼비가 데려간 밤",
         "beats": [
             {
-                "art": "02-toad.png",
+                "art": "02-toad.webp",
                 "emoji": "🐸",
                 "left": [
                     "어느 밤 창문이 조금 열려 있었습니다. 그 틈으로 두꺼비 한 마리가 폴짝 들어왔지요. 커다랗고 축축한 두꺼비였습니다.",
@@ -59,7 +59,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-toad-2.png",
+                "art": "02-toad-2.webp",
                 "emoji": "🐸",
                 "left": [
                     "두꺼비는 넓은 잎을 하나 골랐습니다. 개울 한가운데 떠 있는 잎이었지요. 거기에 엄지 공주를 살짝 올려놓았습니다.",
@@ -81,7 +81,7 @@ const CHAPTERS = [
         "title": "3장 · 물고기들이 도와주었어요",
         "beats": [
             {
-                "art": "03-fish.png",
+                "art": "03-fish.webp",
                 "emoji": "🐟",
                 "left": [
                     "작은 물고기들이 하나둘 모여들었습니다. 모두 엄지 공주를 올려다봤지요. 울음소리를 물속에서 다 듣고 있었던 것입니다.",
@@ -97,7 +97,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-fish-2.png",
+                "art": "03-fish-2.webp",
                 "emoji": "🐟",
                 "left": [
                     "그때 하얀 나비 한 마리가 날아왔습니다. 잎 위에 사뿐 내려앉았지요. 엄지 공주는 허리띠를 풀어 한쪽을 나비에게 매었습니다.",
@@ -118,7 +118,7 @@ const CHAPTERS = [
         "title": "4장 · 여름 들판의 하루",
         "beats": [
             {
-                "art": "04-summer.png",
+                "art": "04-summer.webp",
                 "emoji": "🦋",
                 "left": [
                     "그때 갑자기 커다란 그림자가 졌습니다. 풍뎅이 한 마리가 쏜살같이 내려온 것이었지요. 풍뎅이는 엄지 공주를 낚아채 나무 위로 데려갔습니다.",
@@ -134,7 +134,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-summer-2.png",
+                "art": "04-summer-2.webp",
                 "emoji": "🦋",
                 "left": [
                     "엄지 공주는 넓은 들판에 홀로 남았습니다. 그해 여름 내내 혼자 지냈지요. 풀잎을 엮어 침대를 만들고 꽃에서 꿀을 얻어먹었습니다.",
@@ -153,7 +153,7 @@ const CHAPTERS = [
         "title": "5장 · 들쥐 아주머니의 집",
         "beats": [
             {
-                "art": "05-mouse.png",
+                "art": "05-mouse.webp",
                 "emoji": "🐭",
                 "left": [
                     "엄지 공주는 들판을 헤매다 작은 굴 하나를 찾았습니다. 떨리는 손으로 문을 두드렸지요.",
@@ -170,7 +170,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-mouse-2.png",
+                "art": "05-mouse-2.webp",
                 "emoji": "🐭",
                 "left": [
                     "어느 날 아주머니가 들뜬 얼굴로 말했습니다.",
@@ -193,7 +193,7 @@ const CHAPTERS = [
         "title": "6장 · 다친 제비",
         "beats": [
             {
-                "art": "06-swallow.png",
+                "art": "06-swallow.webp",
                 "emoji": "🐦",
                 "left": [
                     "며칠 뒤 두더지가 제 굴을 보여 주었습니다. 길고 컴컴한 통로가 끝없이 이어졌지요. 흙냄새가 코를 찔렀습니다.",
@@ -207,7 +207,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-swallow-2.png",
+                "art": "06-swallow-2.webp",
                 "emoji": "🐦",
                 "left": [
                     "쿵, 쿵.",
@@ -231,7 +231,7 @@ const CHAPTERS = [
         "title": "7장 · 제비의 등을 타고",
         "beats": [
             {
-                "art": "07-flight.png",
+                "art": "07-flight.webp",
                 "emoji": "☀️",
                 "left": [
                     "어느새 겨울이 끝나 갔습니다. 그사이 혼인 날짜가 정해졌지요. 엄지 공주는 마음이 자꾸 무거워졌습니다.",
@@ -247,7 +247,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-flight-2.png",
+                "art": "07-flight-2.webp",
                 "emoji": "☀️",
                 "left": [
                     "\"이제 따뜻한 나라로 가요.\"",
@@ -269,7 +269,7 @@ const CHAPTERS = [
         "title": "8장 · 꽃의 나라에서",
         "beats": [
             {
-                "art": "08-prince.png",
+                "art": "08-prince.webp",
                 "emoji": "👑",
                 "left": [
                     "제비가 하얀 기둥 위에 내려앉았습니다. 아래에는 큰 꽃밭이 있었지요.",
@@ -284,7 +284,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-prince-2.png",
+                "art": "08-prince-2.webp",
                 "emoji": "👑",
                 "left": [
                     "\"저는 이 나라 왕자예요.\"",
@@ -317,7 +317,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🌷')}
+                ${artFrame('cover.webp', '🌷')}
             </div>
             <div class="story-page-right">
                 <h1>엄지 공주</h1>
@@ -389,7 +389,7 @@ const AFTERWORD = {
     emoji: '🌷',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 안데르센이 지었습니다. 백팔십 년쯤 전 덴마크에서 나왔습니다.",
                 "엄지 공주는 제 발로 집을 나선 적이 한 번도 없습니다. 두꺼비가 업어 갔고, 풍뎅이가 채 갔고, 들쥐가 데려갔지요. 늘 남이 정한 곳으로 옮겨졌습니다.",

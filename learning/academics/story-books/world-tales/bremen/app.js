@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 늙은 당나귀",
         "beats": [
             {
-                "art": "01-donkey.png",
+                "art": "01-donkey.webp",
                 "emoji": "🫏",
                 "left": [
                     "당나귀는 새벽에 나가 저녁이 되어야 돌아왔습니다. 아주 오랫동안 방앗간 짐을 나른 것이지요. 하루도 거른 날이 없었습니다.",
@@ -17,7 +17,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-donkey-2.png",
+                "art": "01-donkey-2.webp",
                 "emoji": "🫏",
                 "left": [
                     "\"이제 저놈은 쓸모가 없구나. 먹이만 축내는걸.\"",
@@ -40,7 +40,7 @@ const CHAPTERS = [
         "title": "2장 · 길에서 만난 개",
         "beats": [
             {
-                "art": "02-dog.png",
+                "art": "02-dog.webp",
                 "emoji": "🐕",
                 "left": [
                     "한참을 걸었을 때였습니다. 길가에 무언가 늘어져 있었지요.",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-dog-2.png",
+                "art": "02-dog-2.webp",
                 "emoji": "🐕",
                 "left": [
                     "당나귀가 앞발로 땅을 툭툭 쳤습니다.",
@@ -79,7 +79,7 @@ const CHAPTERS = [
         "title": "3장 · 고양이와 수탉",
         "beats": [
             {
-                "art": "03-four.png",
+                "art": "03-four.webp",
                 "emoji": "🐈",
                 "left": [
                     "둘이 나란히 걷다 보니 어느새 낮이 되었습니다. 길가 돌담 위에 고양이가 앉아 있었지요. 얼굴이 잔뜩 찌푸려져 있었습니다.",
@@ -94,7 +94,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-four-2.png",
+                "art": "03-four-2.webp",
                 "emoji": "🐈",
                 "left": [
                     "셋이 마을을 지나갈 때였습니다. 어느 집 담장 위에서 수탉이 목이 터져라 울고 있었지요. 해도 이미 중천인데 무슨 일인가 싶었습니다.",
@@ -115,7 +115,7 @@ const CHAPTERS = [
         "title": "4장 · 숲속의 불빛",
         "beats": [
             {
-                "art": "04-light.png",
+                "art": "04-light.webp",
                 "emoji": "🌲",
                 "left": [
                     "해가 지고 넷은 숲에서 밤을 맞았습니다. 브레멘은 아직 한참 멀었지요.",
@@ -131,7 +131,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-light-2.png",
+                "art": "04-light-2.webp",
                 "emoji": "🌲",
                 "left": [
                     "넷은 불빛을 따라 걸었습니다. 나뭇가지가 자꾸 얼굴을 스쳤지요. 발밑에서 마른 잎이 바스락거렸습니다.",
@@ -152,7 +152,7 @@ const CHAPTERS = [
         "title": "5장 · 도둑들의 밥상",
         "beats": [
             {
-                "art": "05-robbers.png",
+                "art": "05-robbers.webp",
                 "emoji": "🍗",
                 "left": [
                     "방 안에는 사내 셋이 있었습니다. 상다리가 휘도록 차려 놓고 먹는 중이었지요. 고기며 빵이며 술이며 상 위에 가득했습니다.",
@@ -168,7 +168,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-robbers-2.png",
+                "art": "05-robbers-2.webp",
                 "emoji": "🍗",
                 "left": [
                     "넷은 창 밑에 모여 머리를 맞댔습니다. 어떻게 하면 저들을 쫓아낼지 궁리했지요. 문을 두드려 볼까, 뒤로 돌아가 볼까 말이 오갔습니다.",
@@ -190,7 +190,7 @@ const CHAPTERS = [
         "title": "6장 · 한꺼번에",
         "beats": [
             {
-                "art": "06-noise.png",
+                "art": "06-noise.webp",
                 "emoji": "💥",
                 "left": [
                     "넷이 한꺼번에 목청을 높였습니다.",
@@ -206,7 +206,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-noise-2.png",
+                "art": "06-noise-2.webp",
                 "emoji": "💥",
                 "left": [
                     "도둑들이 숲 저편으로 달아났습니다. 발소리가 한참 들리다 이내 조용해졌지요. 넷은 서로를 마주 보았습니다.",
@@ -225,7 +225,7 @@ const CHAPTERS = [
         "title": "7장 · 다시 온 도둑",
         "beats": [
             {
-                "art": "07-return.png",
+                "art": "07-return.webp",
                 "emoji": "😱",
                 "left": [
                     "한밤중이었습니다. 숲에 숨어 있던 도둑들이 수군거렸지요. 오두막 쪽이 캄캄해진 지 한참이었습니다.",
@@ -241,7 +241,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-return-2.png",
+                "art": "07-return-2.webp",
                 "emoji": "😱",
                 "left": [
                     "\"야옹!\"",
@@ -263,7 +263,7 @@ const CHAPTERS = [
         "title": "8장 · 브레멘은 못 갔지만",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🏠",
                 "left": [
                     "도둑은 두목에게 달려가 벌벌 떨며 말했습니다.",
@@ -279,7 +279,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🏠",
                 "left": [
                     "아침이 되었습니다. 넷은 오두막을 천천히 둘러보았지요. 지붕도 튼튼하고 부엌도 넓었습니다.",
@@ -309,7 +309,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🎺')}
+                ${artFrame('cover.webp', '🎺')}
             </div>
             <div class="story-page-right">
                 <h1>브레멘 음악대</h1>
@@ -381,7 +381,7 @@ const AFTERWORD = {
     emoji: '🐓',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 그림 형제가 모은 것입니다. 독일 브레멘에는 네 마리가 올라선 동상이 서 있습니다.",
                 "넷은 모두 늙어서 쫓겨난 짐승들입니다. 당나귀도 개도 고양이도 닭도요. 젊었을 때는 쓸모가 있었지요.",

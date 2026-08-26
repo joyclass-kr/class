@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 담 너머의 밭",
         "beats": [
             {
-                "art": "01-garden.png",
+                "art": "01-garden.webp",
                 "emoji": "🌿",
                 "left": [
                     "요람 하나가 다 만들어졌습니다. 오래도록 아이가 없던 젊은 부부에게 드디어 아이가 생긴 것이었지요. 두 사람은 뛸 듯이 기뻤습니다.",
@@ -18,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-garden-2.png",
+                "art": "01-garden-2.webp",
                 "emoji": "🌿",
                 "left": [
                     "아내는 밥도 제대로 넘기지 못했습니다. 얼굴이 하루가 다르게 여위어 갔지요.",
@@ -39,7 +39,7 @@ const CHAPTERS = [
         "title": "2장 · 탑에 갇힌 아이",
         "beats": [
             {
-                "art": "02-tower.png",
+                "art": "02-tower.webp",
                 "emoji": "🗼",
                 "left": [
                     "남편은 그 자리에 주저앉았습니다. 있는 대로 사정을 털어놓았지요.",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-tower-2.png",
+                "art": "02-tower-2.webp",
                 "emoji": "🗼",
                 "left": [
                     "마녀는 아이에게 라푼젤이라는 이름을 지어 주었습니다. 어머니가 먹고 싶어 했던 그 나물 이름이었지요. 라푼젤은 마녀의 집에서 자랐습니다.",
@@ -76,7 +76,7 @@ const CHAPTERS = [
         "title": "3장 · 머리카락을 내려라",
         "beats": [
             {
-                "art": "03-hair.png",
+                "art": "03-hair.webp",
                 "emoji": "💇‍♀️",
                 "left": [
                     "라푼젤의 머리카락은 한 번도 자르지 않았습니다. 어느새 탑 높이만큼 길어졌지요.",
@@ -91,7 +91,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-hair-2.png",
+                "art": "03-hair-2.webp",
                 "emoji": "💇‍♀️",
                 "left": [
                     "라푼젤의 하루는 늘 같았습니다.",
@@ -112,7 +112,7 @@ const CHAPTERS = [
         "title": "4장 · 노래를 들은 사람",
         "beats": [
             {
-                "art": "04-prince.png",
+                "art": "04-prince.webp",
                 "emoji": "🎵",
                 "left": [
                     "어느 날 젊은 왕자가 숲으로 사냥을 나왔습니다. 말을 몰고 깊은 곳까지 들어갔지요.",
@@ -126,7 +126,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-prince-2.png",
+                "art": "04-prince-2.webp",
                 "emoji": "🎵",
                 "left": [
                     "왕자는 며칠을 숨어서 지켜보았습니다. 덤불 뒤에 몸을 낮추고 기다렸지요. 모기가 물어도 꼼짝하지 않았습니다.",
@@ -146,7 +146,7 @@ const CHAPTERS = [
         "title": "5장 · 처음 만난 사람",
         "beats": [
             {
-                "art": "05-meeting.png",
+                "art": "05-meeting.webp",
                 "emoji": "👋",
                 "left": [
                     "머리카락이 스르르 내려왔습니다. 왕자는 그것을 붙잡고 올라갔지요. 창턱을 넘어 방으로 들어섰습니다.",
@@ -162,7 +162,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-meeting-2.png",
+                "art": "05-meeting-2.webp",
                 "emoji": "👋",
                 "left": [
                     "두 사람은 해가 질 때까지 이야기를 나누었습니다. 왕자는 바깥세상 이야기를 들려주었지요.",
@@ -184,7 +184,7 @@ const CHAPTERS = [
         "title": "6장 · 들켜 버린 저녁",
         "beats": [
             {
-                "art": "06-caught.png",
+                "art": "06-caught.webp",
                 "emoji": "😨",
                 "left": [
                     "사다리는 좀처럼 길어지지 않았습니다. 탑이 워낙 높았으니까요. 라푼젤은 밤마다 실을 이어 매듭을 지었습니다.",
@@ -200,7 +200,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-caught-2.png",
+                "art": "06-caught-2.webp",
                 "emoji": "😨",
                 "left": [
                     "마녀는 그 자리에서 가위를 꺼냈습니다. 라푼젤의 머리카락을 싹둑 잘랐지요. 금빛 머리카락이 바닥에 쌓였습니다.",
@@ -220,7 +220,7 @@ const CHAPTERS = [
         "title": "7장 · 빈 탑",
         "beats": [
             {
-                "art": "07-empty.png",
+                "art": "07-empty.webp",
                 "emoji": "🌫️",
                 "left": [
                     "그날 저녁 왕자가 여느 때처럼 탑 아래에 왔습니다. 아무것도 모른 채였지요.",
@@ -236,7 +236,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-empty-2.png",
+                "art": "07-empty-2.webp",
                 "emoji": "🌫️",
                 "left": [
                     "왕자는 발을 헛디뎌 아래로 떨어졌습니다. 탑 밑은 온통 가시덤불이었지요.",
@@ -256,7 +256,7 @@ const CHAPTERS = [
         "title": "8장 · 들판에서",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "💗",
                 "left": [
                     "한편 라푼젤은 들판에서 혼자 살아가고 있었습니다. 흙집을 짓고 나물을 캐며 지냈지요. 여름에는 풀을 엮어 지붕을 덮었습니다.",
@@ -269,7 +269,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "💗",
                 "left": [
                     "라푼젤은 노래를 멈추고 그쪽을 보았습니다.",
@@ -299,7 +299,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🗼')}
+                ${artFrame('cover.webp', '🗼')}
             </div>
             <div class="story-page-right">
                 <h1>라푼젤</h1>
@@ -371,7 +371,7 @@ const AFTERWORD = {
     emoji: '💇',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 그림 형제가 모은 것입니다. 그전에 이탈리아와 프랑스에도 비슷한 이야기가 있었습니다.",
                 "모든 일은 담 너머 밭에서 비롯됩니다. 아내가 그 나물을 몹시 먹고 싶어 했고, 남편이 담을 넘었지요.",

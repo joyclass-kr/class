@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 집을 나선 삼형제",
         "beats": [
             {
-                "art": "01-leaving.png",
+                "art": "01-leaving.webp",
                 "emoji": "🎒",
                 "left": [
                     "늙은 재봉사가 안경을 밀어 올렸습니다. 실이 자꾸 바늘귀를 비껴갔거든요.",
@@ -22,7 +22,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-leaving-2.png",
+                "art": "01-leaving-2.webp",
                 "emoji": "🎒",
                 "left": [
                     "마을 어귀에 세 갈래 길이 있었습니다. 큰아들은 목수에게 가기로 했지요. 둘째는 방앗간으로 가기로 했습니다.",
@@ -42,7 +42,7 @@ const CHAPTERS = [
         "title": "2장 · 큰아들의 식탁보",
         "beats": [
             {
-                "art": "02-cloth.png",
+                "art": "02-cloth.webp",
                 "emoji": "🍲",
                 "left": [
                     "큰아들은 목수 일을 잘 배웠습니다. 어깨가 넓어지고 손이 두꺼워졌지요. 머리에는 늘 톱밥이 앉아 있었습니다.",
@@ -59,7 +59,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-cloth-2.png",
+                "art": "02-cloth-2.webp",
                 "emoji": "🍲",
                 "left": [
                     "숲길을 걷다 배가 고파졌습니다. 큰아들은 문득 그 말이 떠올랐지요.",
@@ -81,7 +81,7 @@ const CHAPTERS = [
         "title": "3장 · 주막에서 생긴 일",
         "beats": [
             {
-                "art": "03-inn.png",
+                "art": "03-inn.webp",
                 "emoji": "🏨",
                 "left": [
                     "해가 지자 큰아들은 주막에 들었습니다. 주인은 배가 나오고 웃음이 헤픈 사람이었지요. 손님들이 저녁을 시켰습니다.",
@@ -97,7 +97,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-inn-2.png",
+                "art": "03-inn-2.webp",
                 "emoji": "🏨",
                 "left": [
                     "주인은 그날 밤 잠을 자지 않았습니다. 창고를 뒤져 비슷한 천을 찾아냈지요. 색도 크기도 꼭 같았습니다.",
@@ -118,7 +118,7 @@ const CHAPTERS = [
         "title": "4장 · 둘째의 당나귀",
         "beats": [
             {
-                "art": "04-donkey.png",
+                "art": "04-donkey.webp",
                 "emoji": "🫏",
                 "left": [
                     "이듬해에는 둘째가 집으로 향했습니다. 온몸에 밀가루가 뽀얗게 묻어 있었지요. 방앗간 주인이 헤어질 때 말했습니다.",
@@ -134,7 +134,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-donkey-2.png",
+                "art": "04-donkey-2.webp",
                 "emoji": "🫏",
                 "left": [
                     "둘째는 신이 나서 당나귀를 몰았습니다.",
@@ -157,7 +157,7 @@ const CHAPTERS = [
         "title": "5장 · 막내의 자루",
         "beats": [
             {
-                "art": "05-sack.png",
+                "art": "05-sack.webp",
                 "emoji": "🎒",
                 "left": [
                     "한편 막내는 나무 깎는 일을 배웠습니다. 형들 소식은 편지로 들었지요. 막내는 곰곰이 생각했습니다.",
@@ -173,7 +173,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-sack-2.png",
+                "art": "05-sack-2.webp",
                 "emoji": "🎒",
                 "left": [
                     "막내는 자루를 어깨에 멨습니다. 그러고는 빙그레 웃었지요.",
@@ -195,7 +195,7 @@ const CHAPTERS = [
         "title": "6장 · 자루 속의 몽둥이",
         "beats": [
             {
-                "art": "06-cudgel.png",
+                "art": "06-cudgel.webp",
                 "emoji": "🪵",
                 "left": [
                     "막내는 저녁을 먹으며 일부러 큰소리를 쳤습니다.",
@@ -214,7 +214,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-cudgel-2.png",
+                "art": "06-cudgel-2.webp",
                 "emoji": "🪵",
                 "left": [
                     "주인이 자루로 손을 뻗었습니다. 바로 그 순간이었지요. 막내가 벌떡 일어나 외쳤습니다.",
@@ -236,7 +236,7 @@ const CHAPTERS = [
         "title": "7장 · 돌려받은 물건들",
         "beats": [
             {
-                "art": "07-return.png",
+                "art": "07-return.webp",
                 "emoji": "🔁",
                 "left": [
                     "주인은 마당까지 쫓겨 나갔습니다. 손님들이 창문으로 내다보았지요.",
@@ -252,7 +252,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-return-2.png",
+                "art": "07-return-2.webp",
                 "emoji": "🔁",
                 "left": [
                     "막내는 두 가지를 모두 챙겼습니다. 식탁보는 품에 넣었지요. 당나귀는 고삐를 잡았습니다.",
@@ -274,7 +274,7 @@ const CHAPTERS = [
         "title": "8장 · 한 상 가득",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🎉",
                 "left": [
                     "막내가 마을에 들어섰습니다. 당나귀를 끌고 오는 모습이 멀리서도 보였지요. 온 식구가 마당으로 뛰어나왔습니다.",
@@ -291,7 +291,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🎉",
                 "left": [
                     "당나귀도 옆에서 금화를 쏟아 놓았습니다. 마당이 온통 반짝였지요.",
@@ -322,7 +322,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🍽️')}
+                ${artFrame('cover.webp', '🍽️')}
             </div>
             <div class="story-page-right">
                 <h1>요정이 준 식탁보</h1>
@@ -394,7 +394,7 @@ const AFTERWORD = {
     emoji: '🍽️',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 그림 형제가 모은 것입니다. 요술 물건을 주막 주인에게 빼앗기는 이야기는 유럽 여러 곳에 있습니다.",
                 "세 형제가 얻은 물건은 다 훌륭했습니다. 식탁보와 당나귀와 자루지요.",

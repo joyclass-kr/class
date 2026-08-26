@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -45,64 +45,64 @@ with seven small crowns, comic and blustering.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a wooden nutcracker soldier in a red coat standing guard beneath a candlelit Christmas tree at midnight, tiny mice eyes glinting in the shadows around him, snow at the window beyond, magical and inviting. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a wooden nutcracker soldier in a red coat standing guard beneath a candlelit Christmas tree at midnight, tiny mice eyes glinting in the shadows around him, snow at the window beyond, magical and inviting. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 크리스마스이브의 선물
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-gift.png` | A grand parlour on Christmas Eve where a huge candlelit tree glows over heaped presents as two children rush in, and a lean old clockmaker with an eyepatch arriving at the door, warm and festive. |
-| `images/01-gift-2.png` | A clockwork castle with moving figures being wound up as everyone applauds, while a girl kneels apart under the tree holding a wooden nutcracker soldier in a red coat, tender. |
+| `images/01-gift.webp` | A grand parlour on Christmas Eve where a huge candlelit tree glows over heaped presents as two children rush in, and a lean old clockmaker with an eyepatch arriving at the door, warm and festive. |
+| `images/01-gift-2.webp` | A clockwork castle with moving figures being wound up as everyone applauds, while a girl kneels apart under the tree holding a wooden nutcracker soldier in a red coat, tender. |
 
 ## 2장 · 부러진 턱
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-broken.png` | A parlour rug where a boy forces an oversized nut into a nutcracker's mouth and its jaw cracks, his sister crying out with hands raised, broken pieces on the floor, comic and sad. |
-| `images/02-broken-2.png` | A girl bandaging a nutcracker's jaw with a handkerchief as an old clockmaker leans down to tell her something, and later the doll laid carefully under the tree with a tiny blanket, tender. |
+| `images/02-broken.webp` | A parlour rug where a boy forces an oversized nut into a nutcracker's mouth and its jaw cracks, his sister crying out with hands raised, broken pieces on the floor, comic and sad. |
+| `images/02-broken-2.webp` | A girl bandaging a nutcracker's jaw with a handkerchief as an old clockmaker leans down to tell her something, and later the doll laid carefully under the tree with a tiny blanket, tender. |
 
 ## 3장 · 한밤중의 시계 소리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-midnight.png` | A dim parlour at midnight where a girl in a nightgown stands as a clock strikes twelve and floorboards gape open, mice pouring out in a wave, comic and thrilling, not horrid. |
-| `images/03-midnight-2.png` | A parlour floor where a plump mouse king with seven tiny crowns leads a mouse horde, and a nutcracker soldier drawing his sword as tin soldiers form ranks and toy cannons roll out, exciting. |
+| `images/03-midnight.webp` | A dim parlour at midnight where a girl in a nightgown stands as a clock strikes twelve and floorboards gape open, mice pouring out in a wave, comic and thrilling, not horrid. |
+| `images/03-midnight-2.webp` | A parlour floor where a plump mouse king with seven tiny crowns leads a mouse horde, and a nutcracker soldier drawing his sword as tin soldiers form ranks and toy cannons roll out, exciting. |
 
 ## 4장 · 생쥐 왕과의 싸움
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-battle.png` | A toy battlefield on a parlour rug where tin soldiers fire sugar-plum cannonballs at a mouse horde and a nutcracker faces a crowned mouse king, chaotic and comic. |
-| `images/04-battle-2.png` | A parlour where a girl hurls her slipper across the room striking a mouse king, the mouse horde scattering into the floorboards, and the girl sinking down dizzy, dramatic and comic. |
+| `images/04-battle.webp` | A toy battlefield on a parlour rug where tin soldiers fire sugar-plum cannonballs at a mouse horde and a nutcracker faces a crowned mouse king, chaotic and comic. |
+| `images/04-battle-2.webp` | A parlour where a girl hurls her slipper across the room striking a mouse king, the mouse horde scattering into the floorboards, and the girl sinking down dizzy, dramatic and comic. |
 
 ## 5장 · 왕자가 된 인형
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-prince.png` | A glowing parlour where a slim young prince in a red coat stands before a wondering girl and offers his hand, a small door opening at the base of the Christmas tree, magical. |
-| `images/05-prince-2.png` | A doorway at the foot of a Christmas tree opening into another world of sugar-dusted paths, tin soldiers saluting a returning prince as a girl in a nightgown walks beside him, wondrous. |
+| `images/05-prince.webp` | A glowing parlour where a slim young prince in a red coat stands before a wondering girl and offers his hand, a small door opening at the base of the Christmas tree, magical. |
+| `images/05-prince-2.webp` | A doorway at the foot of a Christmas tree opening into another world of sugar-dusted paths, tin soldiers saluting a returning prince as a girl in a nightgown walks beside him, wondrous. |
 
 ## 6장 · 눈송이가 춤추는 숲
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-snow.png` | A forest of ice-glazed trees ringing like bells in the wind where snowflakes take the form of dancing figures whirling around a girl and a prince, luminous and magical. |
-| `images/06-snow-2.png` | Dancing snowflakes parting to reveal a river of orange juice where a shell boat pulled by dolphins waits, sugar flowers blooming along the banks, delightful and strange. |
+| `images/06-snow.webp` | A forest of ice-glazed trees ringing like bells in the wind where snowflakes take the form of dancing figures whirling around a girl and a prince, luminous and magical. |
+| `images/06-snow-2.webp` | Dancing snowflakes parting to reveal a river of orange juice where a shell boat pulled by dolphins waits, sugar flowers blooming along the banks, delightful and strange. |
 
 ## 7장 · 과자 나라
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-candy.png` | A city of gingerbread walls, chocolate roofs and almond-paved streets where crowds pour out cheering as a prince returns with a girl beside him, petals in the air, joyous. |
-| `images/07-candy-2.png` | A great square where dancers from chocolate, tea and sugar lands perform in turn and flowers waltz at the end, a prince and a girl watching side by side, festive and warm. |
+| `images/07-candy.webp` | A city of gingerbread walls, chocolate roofs and almond-paved streets where crowds pour out cheering as a prince returns with a girl beside him, petals in the air, joyous. |
+| `images/07-candy-2.webp` | A great square where dancers from chocolate, tea and sugar lands perform in turn and flowers waltz at the end, a prince and a girl watching side by side, festive and warm. |
 
 ## 8장 · 아침의 트리 아래
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-morning.png` | A candy city receding behind a shell boat drifting downstream as a prince waves from the quay and a girl's eyes grow heavy, soft dreamlike light, gentle farewell. |
-| `images/08-morning-2.png` | A sunlit morning parlour where a girl wakes on the rug beneath the Christmas tree as her mother comes in, and the nutcracker lying there with its jaw whole again, quietly magical. |
+| `images/08-morning.webp` | A candy city receding behind a shell boat drifting downstream as a prince waves from the quay and a girl's eyes grow heavy, soft dreamlike light, gentle farewell. |
+| `images/08-morning-2.webp` | A sunlit morning parlour where a girl wakes on the rug beneath the Christmas tree as her mother comes in, and the nutcracker lying there with its jaw whole again, quietly magical. |
 
 ## 사용 팁
 

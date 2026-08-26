@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -42,64 +42,64 @@ kindly bearded man with sharp eyes.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a fair-haired girl in a plain grey dress sitting on a grassy hillside with a flock of white geese around her, a distant castle on the horizon and a horse's head carved above a stone gateway below, wistful and beautiful. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a fair-haired girl in a plain grey dress sitting on a grassy hillside with a flock of white geese around her, a distant castle on the horizon and a horse's head carved above a stone gateway below, wistful and beautiful. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 먼 길을 떠나며
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-departure.png` | A castle courtyard before dawn where a queen packs a daughter's travelling chests and a white horse is led out, morning mist, lanterns, tender and solemn. |
-| `images/01-departure-2.png` | A castle gate where a queen presses an embroidered handkerchief into her daughter's hands, and the two riders crossing a hill as the castle disappears behind, long shadows, wistful. |
+| `images/01-departure.webp` | A castle courtyard before dawn where a queen packs a daughter's travelling chests and a white horse is led out, morning mist, lanterns, tender and solemn. |
+| `images/01-departure-2.webp` | A castle gate where a queen presses an embroidered handkerchief into her daughter's hands, and the two riders crossing a hill as the castle disappears behind, long shadows, wistful. |
 
 ## 2장 · 냇가에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-stream.png` | A hot noon road beside a shady stream where a richly dressed girl asks for water and a maid stands with folded arms refusing, the girl then climbing down alone, quietly tense. |
-| `images/02-stream-2.png` | A stream where a white handkerchief slips from a kneeling girl's bodice and is carried away by the current, her hand reaching too late, a maid watching from the bank with a changing expression. |
+| `images/02-stream.webp` | A hot noon road beside a shady stream where a richly dressed girl asks for water and a maid stands with folded arms refusing, the girl then climbing down alone, quietly tense. |
+| `images/02-stream-2.webp` | A stream where a white handkerchief slips from a kneeling girl's bodice and is carried away by the current, her hand reaching too late, a maid watching from the bank with a changing expression. |
 
 ## 3장 · 뒤바뀐 자리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-swap.png` | A lonely roadside where a maid demands a princess exchange clothes, the road empty in both directions, the princess lowering her head, stark and quietly cruel. |
-| `images/03-swap-2.png` | A dusty road where a maid in a fine blue gown rides a white horse while the true princess walks behind in grey, and a flag-decked castle appearing on the horizon at sunset, poignant. |
+| `images/03-swap.webp` | A lonely roadside where a maid demands a princess exchange clothes, the road empty in both directions, the princess lowering her head, stark and quietly cruel. |
+| `images/03-swap-2.webp` | A dusty road where a maid in a fine blue gown rides a white horse while the true princess walks behind in grey, and a flag-decked castle appearing on the horizon at sunset, poignant. |
 
 ## 4장 · 거위를 치는 아이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-geese.png` | A castle courtyard where a prince hands down a maid in fine clothes while the true princess stands ignored behind, and an old king gesturing toward the goose yard, telling and sad. |
-| `images/04-geese-2.png` | A wide green meadow where a freckled boy in a straw hat and a girl in grey drive a flock of white geese, the castle small in the distance, open sky, gentle melancholy. |
+| `images/04-geese.webp` | A castle courtyard where a prince hands down a maid in fine clothes while the true princess stands ignored behind, and an old king gesturing toward the goose yard, telling and sad. |
+| `images/04-geese-2.webp` | A wide green meadow where a freckled boy in a straw hat and a girl in grey drive a flock of white geese, the castle small in the distance, open sky, gentle melancholy. |
 
 ## 5장 · 성문 위의 팔라다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-falada.png` | A castle stable where a maid in fine clothes speaks urgently to a prince about a white horse, and a girl in grey pressing coins into a gatekeeper's hand at a stone archway, moving. |
-| `images/05-falada-2.png` | A stone town gateway with a carved white horse's head mounted above where a girl in grey pauses each morning as geese stream past her feet, tears on her face, poignant and beautiful. |
+| `images/05-falada.webp` | A castle stable where a maid in fine clothes speaks urgently to a prince about a white horse, and a girl in grey pressing coins into a gatekeeper's hand at a stone archway, moving. |
+| `images/05-falada-2.webp` | A stone town gateway with a carved white horse's head mounted above where a girl in grey pauses each morning as geese stream past her feet, tears on her face, poignant and beautiful. |
 
 ## 6장 · 바람아 불어라
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-wind.png` | A breezy hilltop meadow where a girl combs out long golden hair as a freckled boy reaches toward it, geese scattering, sunlit and lively. |
-| `images/06-wind-2.png` | A boy chasing his straw hat tumbling far over a hillside while the girl calmly finishes braiding her hair, and later the same boy complaining earnestly to an old king, funny and pivotal. |
+| `images/06-wind.webp` | A breezy hilltop meadow where a girl combs out long golden hair as a freckled boy reaches toward it, geese scattering, sunlit and lively. |
+| `images/06-wind-2.webp` | A boy chasing his straw hat tumbling far over a hillside while the girl calmly finishes braiding her hair, and later the same boy complaining earnestly to an old king, funny and pivotal. |
 
 ## 7장 · 난로에게 한 이야기
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-stove.png` | A quiet castle room where an old king with sharp kind eyes questions a girl in grey who shakes her head, then gestures toward a great iron stove in the kitchen beyond, warm and clever. |
-| `images/07-stove-2.png` | A dim castle kitchen where a girl kneels before the open door of a great iron stove speaking into it, firelight on her wet face, an old king listening just outside the doorway, deeply moving. |
+| `images/07-stove.webp` | A quiet castle room where an old king with sharp kind eyes questions a girl in grey who shakes her head, then gestures toward a great iron stove in the kitchen beyond, warm and clever. |
+| `images/07-stove-2.webp` | A dim castle kitchen where a girl kneels before the open door of a great iron stove speaking into it, firelight on her wet face, an old king listening just outside the doorway, deeply moving. |
 
 ## 8장 · 제자리로
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A grand banquet hall where a girl now in fine clothes is seated at the high table and a maid in silks answers a king's question loudly, courtiers falling silent around her, dramatic. |
-| `images/08-ending-2.png` | A banquet hall where a maid realises her own judgment and pales as the king nods, and a prince crossing to speak with the true princess who smiles for the first time, warm resolution. |
+| `images/08-ending.webp` | A grand banquet hall where a girl now in fine clothes is seated at the high table and a maid in silks answers a king's question loudly, courtiers falling silent around her, dramatic. |
+| `images/08-ending-2.webp` | A banquet hall where a maid realises her own judgment and pales as the king nods, and a prince crossing to speak with the true princess who smiles for the first time, warm resolution. |
 
 ## 사용 팁
 

@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 소를 팔러 가는 길",
         "beats": [
             {
-                "art": "01-cow.png",
+                "art": "01-cow.webp",
                 "emoji": "🐄",
                 "left": [
                     "잭은 어머니와 둘이 살았습니다. 가진 것이라고는 소 한 마리뿐이었지요.",
@@ -22,7 +22,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-cow-2.png",
+                "art": "01-cow-2.webp",
                 "emoji": "🐄",
                 "left": [
                     "잭은 장터를 향해 걸어갔습니다. 흰둥이가 뒤를 뚜벅뚜벅 따랐지요.",
@@ -45,7 +45,7 @@ const CHAPTERS = [
         "title": "2장 · 콩 다섯 알",
         "beats": [
             {
-                "art": "02-beans.png",
+                "art": "02-beans.webp",
                 "emoji": "🫘",
                 "left": [
                     "잭은 눈이 휘둥그레졌습니다.",
@@ -61,7 +61,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-beans-2.png",
+                "art": "02-beans-2.webp",
                 "emoji": "🫘",
                 "left": [
                     "\"소를 콩과 바꿔 왔단 말이냐!\"",
@@ -84,7 +84,7 @@ const CHAPTERS = [
         "title": "3장 · 하늘까지 자란 나무",
         "beats": [
             {
-                "art": "03-beanstalk.png",
+                "art": "03-beanstalk.webp",
                 "emoji": "🌱",
                 "left": [
                     "이튿날 아침이었습니다. 방 안이 어쩐지 캄캄했지요. 잭이 창을 열자 눈앞이 온통 초록이었습니다.",
@@ -98,7 +98,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-beanstalk-2.png",
+                "art": "03-beanstalk-2.webp",
                 "emoji": "🌱",
                 "left": [
                     "잭은 줄기를 두 손으로 붙잡았습니다. 한 발, 두 발 위로 올랐지요. 집이 점점 작아지더니 마을도 손톱만 해졌습니다.",
@@ -118,7 +118,7 @@ const CHAPTERS = [
         "title": "4장 · 구름 위의 성",
         "beats": [
             {
-                "art": "04-castle.png",
+                "art": "04-castle.webp",
                 "emoji": "🏰",
                 "left": [
                     "길 끝에 커다란 성이 있었습니다. 문이 산더미만 했지요. 잭은 그 앞에 서 보았습니다.",
@@ -135,7 +135,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-castle-2.png",
+                "art": "04-castle-2.webp",
                 "emoji": "🏰",
                 "left": [
                     "부엌은 어마어마하게 컸습니다. 식탁이 운동장 같았지요.",
@@ -157,7 +157,7 @@ const CHAPTERS = [
         "title": "5장 · 쿵, 쿵, 쿵",
         "beats": [
             {
-                "art": "05-giant.png",
+                "art": "05-giant.webp",
                 "emoji": "👹",
                 "left": [
                     "거인이 성큼 들어왔습니다. 천장에 머리가 닿을 뻔했지요.",
@@ -173,7 +173,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-giant-2.png",
+                "art": "05-giant-2.webp",
                 "emoji": "👹",
                 "left": [
                     "\"금화 자루를 가져와라.\"",
@@ -194,7 +194,7 @@ const CHAPTERS = [
         "title": "6장 · 황금알을 낳는 거위",
         "beats": [
             {
-                "art": "06-goose.png",
+                "art": "06-goose.webp",
                 "emoji": "🥚",
                 "left": [
                     "잭은 콩나무를 타고 내려왔습니다. 어머니가 금화를 보고는 입을 딱 벌렸지요.",
@@ -210,7 +210,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-goose-2.png",
+                "art": "06-goose-2.webp",
                 "emoji": "🥚",
                 "left": [
                     "\"거위를 가져와라.\"",
@@ -232,7 +232,7 @@ const CHAPTERS = [
         "title": "7장 · 노래하는 하프",
         "beats": [
             {
-                "art": "07-harp.png",
+                "art": "07-harp.webp",
                 "emoji": "🎵",
                 "left": [
                     "거위 덕분에 살림이 활짝 폈습니다.",
@@ -250,7 +250,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-harp-2.png",
+                "art": "07-harp-2.webp",
                 "emoji": "🎵",
                 "left": [
                     "\"노래하라.\"",
@@ -272,7 +272,7 @@ const CHAPTERS = [
         "title": "8장 · 도끼 한 자루",
         "beats": [
             {
-                "art": "08-axe.png",
+                "art": "08-axe.webp",
                 "emoji": "🪓",
                 "left": [
                     "잭은 구름 길을 있는 힘껏 달렸습니다. 뒤에서 발소리가 바짝 쫓아왔지요.",
@@ -289,7 +289,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-axe-2.png",
+                "art": "08-axe-2.webp",
                 "emoji": "🪓",
                 "left": [
                     "잭이 땅에 내려서자마자 도끼를 받아 들었습니다. 그러고는 있는 힘껏 줄기를 내리쳤지요.",
@@ -321,7 +321,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🌱')}
+                ${artFrame('cover.webp', '🌱')}
             </div>
             <div class="story-page-right">
                 <h1>잭과 콩나무</h1>
@@ -393,7 +393,7 @@ const AFTERWORD = {
     emoji: '🌱',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 영국에서 전해 오던 것입니다. 이백 년쯤 전에 책으로 묶였습니다.",
                 "잭은 소를 콩 몇 알과 바꿔 왔습니다. 누가 봐도 밑진 장사였지요. 어머니가 콩을 창밖으로 던진 것도 그래서입니다.",

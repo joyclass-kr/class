@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 우물가의 물레",
         "beats": [
             {
-                "art": "01-well.png",
+                "art": "01-well.webp",
                 "emoji": "🧵",
                 "left": [
                     "해도 뜨기 전에 우물가에서 물레 소리가 났습니다. 실을 잣는 아이가 있었지요. 한집에 딸이 둘인데 일은 늘 그 아이 차지였습니다.",
@@ -17,7 +17,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-well-2.png",
+                "art": "01-well-2.webp",
                 "emoji": "🧵",
                 "left": [
                     "그날도 아이는 우물가에서 실을 잣고 있었습니다.",
@@ -39,7 +39,7 @@ const CHAPTERS = [
         "title": "2장 · 우물 속으로",
         "beats": [
             {
-                "art": "02-fall.png",
+                "art": "02-fall.webp",
                 "emoji": "🕳️",
                 "left": [
                     "새어머니는 눈을 부라렸습니다.",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-fall-2.png",
+                "art": "02-fall-2.webp",
                 "emoji": "🕳️",
                 "left": [
                     "몸이 아래로 아래로 떨어졌습니다.",
@@ -77,7 +77,7 @@ const CHAPTERS = [
         "title": "3장 · 빵을 꺼내 주세요",
         "beats": [
             {
-                "art": "03-bread.png",
+                "art": "03-bread.webp",
                 "emoji": "🍞",
                 "left": [
                     "한참을 걷는데 어디선가 목소리가 났습니다.",
@@ -91,7 +91,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-bread-2.png",
+                "art": "03-bread-2.webp",
                 "emoji": "🍞",
                 "left": [
                     "빵을 다 꺼내고 나자 목소리가 다시 났습니다.",
@@ -112,7 +112,7 @@ const CHAPTERS = [
         "title": "4장 · 사과를 흔들어 주세요",
         "beats": [
             {
-                "art": "04-apples.png",
+                "art": "04-apples.webp",
                 "emoji": "🍎",
                 "left": [
                     "조금 더 가니 사과나무가 서 있었습니다. 가지가 땅에 닿을 만큼 늘어져 있었지요.",
@@ -127,7 +127,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-apples-2.png",
+                "art": "04-apples-2.webp",
                 "emoji": "🍎",
                 "left": [
                     "아이는 떨어진 사과를 하나하나 주웠습니다. 풀밭에 가지런히 쌓아 놓았지요. 벌레 먹은 것은 따로 골라 두었습니다.",
@@ -147,7 +147,7 @@ const CHAPTERS = [
         "title": "5장 · 이불을 터는 할머니",
         "beats": [
             {
-                "art": "05-holle.png",
+                "art": "05-holle.webp",
                 "emoji": "🛏️",
                 "left": [
                     "이윽고 아이는 작은 집 앞에 이르렀습니다. 문가에 커다란 할머니가 서 있었지요. 아이가 인사를 하려고 고개를 들었습니다.",
@@ -163,7 +163,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-holle-2.png",
+                "art": "05-holle-2.webp",
                 "emoji": "🛏️",
                 "left": [
                     "아이는 고개를 끄덕였습니다. 집 안은 깨끗하고 아늑했지요. 홀레 할머니는 밥을 넉넉히 차려 주었습니다.",
@@ -182,7 +182,7 @@ const CHAPTERS = [
         "title": "6장 · 금빛 소나기",
         "beats": [
             {
-                "art": "06-gold.png",
+                "art": "06-gold.webp",
                 "emoji": "✨",
                 "left": [
                     "아이는 날마다 부지런히 일했습니다. 이불을 털고 집을 쓸고 그릇을 닦았지요. 홀레 할머니는 아이를 아주 마음에 들어 했습니다.",
@@ -197,7 +197,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-gold-2.png",
+                "art": "06-gold-2.webp",
                 "emoji": "✨",
                 "left": [
                     "홀레 할머니는 고개를 끄덕였습니다.",
@@ -219,7 +219,7 @@ const CHAPTERS = [
         "title": "7장 · 나도 갈래",
         "beats": [
             {
-                "art": "07-lazy.png",
+                "art": "07-lazy.webp",
                 "emoji": "😏",
                 "left": [
                     "금빛 아이를 보고 온 집이 뒤집혔습니다. 새어머니의 눈이 번쩍했지요.",
@@ -233,7 +233,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-lazy-2.png",
+                "art": "07-lazy-2.webp",
                 "emoji": "😏",
                 "left": [
                     "들판에 내려선 딸도 빵 가마를 지났습니다.",
@@ -256,7 +256,7 @@ const CHAPTERS = [
         "title": "8장 · 문을 지나며",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🖤",
                 "left": [
                     "홀레 할머니 집에서도 마찬가지였습니다. 첫날은 그래도 열심인 척했지요. 금을 받고 싶었으니까요.",
@@ -271,7 +271,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🖤",
                 "left": [
                     "딸은 신이 나서 문 앞에 섰습니다. 이제 금이 쏟아질 차례라고 생각했지요.",
@@ -302,7 +302,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '❄️')}
+                ${artFrame('cover.webp', '❄️')}
             </div>
             <div class="story-page-right">
                 <h1>홀레 할머니</h1>
@@ -374,7 +374,7 @@ const AFTERWORD = {
     emoji: '🧹',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 그림 형제가 모은 것입니다. 홀레 할머니가 이불을 털면 아래 세상에 눈이 내린다고 하지요.",
                 "언니는 우물에 빠진 실패를 주우러 뛰어듭니다. 무서웠을 텐데도요. 잃어버린 것을 제 손으로 찾으려 한 것입니다.",

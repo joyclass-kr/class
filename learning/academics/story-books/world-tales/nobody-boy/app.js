@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 바르브랭 아주머니",
         "beats": [
             {
-                "art": "01-home.png",
+                "art": "01-home.webp",
                 "emoji": "🏡",
                 "left": [
                     "프랑스의 작은 시골 마을에 레미가 살았습니다. 머리가 곱슬곱슬하고 눈이 큰 아이였지요.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-home-2.png",
+                "art": "01-home-2.webp",
                 "emoji": "🏡",
                 "left": [
                     "그러던 어느 날이었습니다. 아주머니가 레미를 꼭 끌어안았지요.",
@@ -43,7 +43,7 @@ const CHAPTERS = [
         "title": "2장 · 비탈리스 할아버지",
         "beats": [
             {
-                "art": "02-vitalis.png",
+                "art": "02-vitalis.webp",
                 "emoji": "🎩",
                 "left": [
                     "얼마 뒤 마을에 낯선 사람이 들어왔습니다. 떠돌이 악사였지요.",
@@ -57,7 +57,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-vitalis-2.png",
+                "art": "02-vitalis-2.webp",
                 "emoji": "🎩",
                 "left": [
                     "공연이 끝나자 노인이 레미를 보았습니다.",
@@ -79,7 +79,7 @@ const CHAPTERS = [
         "title": "3장 · 길 위의 식구들",
         "beats": [
             {
-                "art": "03-troupe.png",
+                "art": "03-troupe.webp",
                 "emoji": "🐩",
                 "left": [
                     "길 위의 하루하루는 고단했습니다.",
@@ -94,7 +94,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-troupe-2.png",
+                "art": "03-troupe-2.webp",
                 "emoji": "🐩",
                 "left": [
                     "비탈리스 할아버지는 하프도 가르쳐 주었습니다. 처음에는 손끝이 아팠지요. 줄이 뜻대로 울리지 않았습니다.",
@@ -115,7 +115,7 @@ const CHAPTERS = [
         "title": "4장 · 눈보라 치던 밤",
         "beats": [
             {
-                "art": "04-snow.png",
+                "art": "04-snow.webp",
                 "emoji": "❄️",
                 "left": [
                     "겨울이 오자 길이 훨씬 험해졌습니다. 사람들은 문을 닫고 나오지 않았지요. 공연을 해도 동전이 잘 모이지 않았습니다.",
@@ -129,7 +129,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-snow-2.png",
+                "art": "04-snow-2.webp",
                 "emoji": "❄️",
                 "left": [
                     "할아버지는 나무 밑 우묵한 곳을 찾았습니다. 거기 레미를 앉혔지요.",
@@ -151,7 +151,7 @@ const CHAPTERS = [
         "title": "5장 · 헤어짐",
         "beats": [
             {
-                "art": "05-parting.png",
+                "art": "05-parting.webp",
                 "emoji": "💔",
                 "left": [
                     "그 겨울 뒤로 할아버지가 자주 기침을 했습니다. 걸음도 눈에 띄게 느려졌지요. 그래도 공연은 그치지 않았습니다.",
@@ -167,7 +167,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-parting-2.png",
+                "art": "05-parting-2.webp",
                 "emoji": "💔",
                 "left": [
                     "\"카피를 잘 돌보아라.\"",
@@ -191,7 +191,7 @@ const CHAPTERS = [
         "title": "6장 · 물 위의 집",
         "beats": [
             {
-                "art": "06-barge.png",
+                "art": "06-barge.webp",
                 "emoji": "⛵",
                 "left": [
                     "레미는 카피와 함께 길을 걸었습니다. 하프를 켜서 겨우 끼니를 이었지요.",
@@ -205,7 +205,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-barge-2.png",
+                "art": "06-barge-2.webp",
                 "emoji": "⛵",
                 "left": [
                     "레미는 배에 올랐습니다. 오랜만에 지붕 아래에서 잤지요.",
@@ -227,7 +227,7 @@ const CHAPTERS = [
         "title": "7장 · 어두운 갱도",
         "beats": [
             {
-                "art": "07-mine.png",
+                "art": "07-mine.webp",
                 "emoji": "⛏️",
                 "left": [
                     "가을이 되자 레미는 다시 길을 떠났습니다. 제 힘으로 살아 보고 싶었거든요.",
@@ -242,7 +242,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-mine-2.png",
+                "art": "07-mine-2.webp",
                 "emoji": "⛏️",
                 "left": [
                     "\"물이다! 어서 위로!\"",
@@ -264,7 +264,7 @@ const CHAPTERS = [
         "title": "8장 · 찾아낸 가족",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "💗",
                 "left": [
                     "구조대가 벽을 뚫고 들어왔습니다. 레미와 광부들은 겨우 밖으로 나왔지요. 햇빛이 눈부셔 앞이 보이지 않았습니다.",
@@ -278,7 +278,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "💗",
                 "left": [
                     "레미는 새 식구들과 함께 지내게 되었습니다.",
@@ -310,7 +310,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🎻')}
+                ${artFrame('cover.webp', '🎻')}
             </div>
             <div class="story-page-right">
                 <h1>집 없는 아이</h1>
@@ -382,7 +382,7 @@ const AFTERWORD = {
     emoji: '🎻',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 프랑스의 엑토르 말로가 쓴 『집 없는 아이』입니다. 백사십 년쯤 전에 나왔습니다.",
                 "비탈리스 할아버지가 레미에게 가르친 것은 하프만이 아닙니다. 흙바닥에 나뭇가지로 글자를 썼지요.",

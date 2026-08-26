@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 먼 길을 떠나며",
         "beats": [
             {
-                "art": "01-departure.png",
+                "art": "01-departure.webp",
                 "emoji": "👑",
                 "left": [
                     "공주는 아버지를 일찍 여의고 어머니와 단둘이 지냈습니다. 성이 크고 조용해서 두 사람은 늘 붙어 다녔지요. 어디를 가든 함께였습니다.",
@@ -17,7 +17,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-departure-2.png",
+                "art": "01-departure-2.webp",
                 "emoji": "👑",
                 "left": [
                     "길 떠나는 아침이었습니다.",
@@ -37,7 +37,7 @@ const CHAPTERS = [
         "title": "2장 · 냇가에서",
         "beats": [
             {
-                "art": "02-stream.png",
+                "art": "02-stream.webp",
                 "emoji": "💧",
                 "left": [
                     "한낮이 되자 해가 몹시 뜨거웠습니다. 그늘 한 점 없는 벌판 길이었지요. 공주는 목이 말라 견딜 수가 없었습니다.",
@@ -51,7 +51,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-stream-2.png",
+                "art": "02-stream-2.webp",
                 "emoji": "💧",
                 "left": [
                     "공주는 두 손을 모아 물을 떴습니다. 몸을 굽히는 순간이었지요.",
@@ -72,7 +72,7 @@ const CHAPTERS = [
         "title": "3장 · 뒤바뀐 자리",
         "beats": [
             {
-                "art": "03-swap.png",
+                "art": "03-swap.webp",
                 "emoji": "👗",
                 "left": [
                     "하녀가 말에서 내려 성큼성큼 다가왔습니다. 여느 때와 걸음걸이부터 달랐지요.",
@@ -89,7 +89,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-swap-2.png",
+                "art": "03-swap-2.webp",
                 "emoji": "👗",
                 "left": [
                     "하녀는 고운 옷으로 갈아입고 팔라다에 올랐습니다. 공주는 낡은 옷 차림으로 그 뒤를 걸어야 했지요.",
@@ -109,7 +109,7 @@ const CHAPTERS = [
         "title": "4장 · 거위를 치는 아이",
         "beats": [
             {
-                "art": "04-geese.png",
+                "art": "04-geese.webp",
                 "emoji": "🪿",
                 "left": [
                     "젊은 왕자가 마중을 나와 하녀에게 손을 내밀었습니다. 공주는 그 뒤에 우두커니 서 있었지요. 아무도 눈길을 주지 않았습니다.",
@@ -124,7 +124,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-geese-2.png",
+                "art": "04-geese-2.webp",
                 "emoji": "🪿",
                 "left": [
                     "콘라트라는 아이가 있었습니다.",
@@ -146,7 +146,7 @@ const CHAPTERS = [
         "title": "5장 · 성문 위의 팔라다",
         "beats": [
             {
-                "art": "05-falada.png",
+                "art": "05-falada.webp",
                 "emoji": "🐴",
                 "left": [
                     "새 왕자비가 된 하녀는 마음이 놓이지 않았습니다. 저 하얀 말이 언제 입을 열지 몰랐거든요. 밤마다 그 생각에 잠을 설쳤지요.",
@@ -160,7 +160,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-falada-2.png",
+                "art": "05-falada-2.webp",
                 "emoji": "🐴",
                 "left": [
                     "그 뒤로 아침마다 공주는 성문 밑에서 걸음을 멈추었습니다. 거위들이 꽥꽥거리며 발밑으로 지나갔지요. 공주는 고개를 들어 조용히 불렀습니다.",
@@ -180,7 +180,7 @@ const CHAPTERS = [
         "title": "6장 · 바람아 불어라",
         "beats": [
             {
-                "art": "06-wind.png",
+                "art": "06-wind.webp",
                 "emoji": "🌬️",
                 "left": [
                     "들판에 이르면 공주는 풀밭에 앉아 머리를 풀어 빗었습니다. 금빛 머리카락이 햇빛을 받아 눈부시게 쏟아졌지요. 콘라트는 그것을 볼 때마다 자꾸 손이 갔습니다.",
@@ -194,7 +194,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-wind-2.png",
+                "art": "06-wind-2.webp",
                 "emoji": "🌬️",
                 "left": [
                     "밀짚모자가 데굴데굴 굴러 언덕을 넘어갔습니다. 콘라트가 헐레벌떡 뒤를 쫓았지요. 겨우 주워 돌아왔을 때는 공주가 이미 머리를 다 땋은 뒤였습니다.",
@@ -216,7 +216,7 @@ const CHAPTERS = [
         "title": "7장 · 난로에게 한 이야기",
         "beats": [
             {
-                "art": "07-stove.png",
+                "art": "07-stove.webp",
                 "emoji": "🔥",
                 "left": [
                     "이튿날 임금님이 공주를 조용한 방으로 불렀습니다. 문을 닫고 마주 앉았지요.",
@@ -232,7 +232,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-stove-2.png",
+                "art": "07-stove-2.webp",
                 "emoji": "🔥",
                 "left": [
                     "공주는 부엌으로 가 난로 문을 열었습니다. 무릎을 꿇고 앉아 한참을 말없이 불빛만 바라보았지요.",
@@ -252,7 +252,7 @@ const CHAPTERS = [
         "title": "8장 · 제자리로",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "💗",
                 "left": [
                     "이튿날 성에서 큰 잔치가 열렸습니다. 공주는 고운 옷을 받아 입고 높은 자리에 앉으라는 명을 받았지요. 하녀는 영문을 몰라 자꾸 곁눈질을 했습니다.",
@@ -267,7 +267,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "💗",
                 "left": [
                     "넓은 홀이 조용해졌습니다.",
@@ -301,7 +301,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🪿')}
+                ${artFrame('cover.webp', '🪿')}
             </div>
             <div class="story-page-right">
                 <h1>거위지기 아가씨</h1>
@@ -373,7 +373,7 @@ const AFTERWORD = {
     emoji: '🪿',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 그림 형제가 모은 것입니다.",
                 "공주는 냇가에서 손수건을 잃습니다. 어머니가 준 것이었지요. 그 뒤로 하녀에게 눌리기 시작합니다.",

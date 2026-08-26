@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 마지막에 깨어난 알",
         "beats": [
             {
-                "art": "01-hatching.png",
+                "art": "01-hatching.webp",
                 "emoji": "🥚",
                 "left": [
                     "여름 농장의 연못가였습니다. 엄마 오리가 둥지에 앉아 알을 품고 있었지요. 햇볕이 등을 따끈하게 데우고 갈대가 사각사각 흔들렸습니다.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-hatching-2.png",
+                "art": "01-hatching-2.webp",
                 "emoji": "🥚",
                 "left": [
                     "엄마 오리는 그 알을 하루 더 품었습니다.",
@@ -44,7 +44,7 @@ const CHAPTERS = [
         "title": "2장 · 미운 오리라고 불렀어요",
         "beats": [
             {
-                "art": "02-teased.png",
+                "art": "02-teased.webp",
                 "emoji": "😢",
                 "left": [
                     "다음 날 엄마 오리는 아기들을 데리고 농장 마당으로 나섰습니다.",
@@ -63,7 +63,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-teased-2.png",
+                "art": "02-teased-2.webp",
                 "emoji": "😢",
                 "left": [
                     "아기 오리는 마당 구석으로 갔습니다. 갈대 사이에 몸을 웅크렸지요.",
@@ -86,7 +86,7 @@ const CHAPTERS = [
         "title": "3장 · 혼자 떠난 길",
         "beats": [
             {
-                "art": "03-leaving.png",
+                "art": "03-leaving.webp",
                 "emoji": "🌾",
                 "left": [
                     "들판은 생각보다 아주 넓었습니다. 아기 오리는 밤새도록 걸었지요. 풀숲에 몸을 묻고 자다가 아침이면 또 걸었습니다.",
@@ -103,7 +103,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-leaving-2.png",
+                "art": "03-leaving-2.webp",
                 "emoji": "🌾",
                 "left": [
                     "아기 오리는 해가 질 때까지 숨을 죽이고 있었지요. 어두워지고 나서야 다시 길을 나섰습니다.",
@@ -125,7 +125,7 @@ const CHAPTERS = [
         "title": "4장 · 처음 본 하얀 새",
         "beats": [
             {
-                "art": "04-swans.png",
+                "art": "04-swans.webp",
                 "emoji": "🕊️",
                 "left": [
                     "가을이 되어 잎이 노랗게 물들었습니다. 아기 오리는 어느 호수에 머물렀지요. 물이 차가워지고 바람도 서늘해졌습니다.",
@@ -139,7 +139,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-swans-2.png",
+                "art": "04-swans-2.webp",
                 "emoji": "🕊️",
                 "left": [
                     "'저 새들은 뭘까.'",
@@ -160,7 +160,7 @@ const CHAPTERS = [
         "title": "5장 · 길고 추운 겨울",
         "beats": [
             {
-                "art": "05-winter.png",
+                "art": "05-winter.webp",
                 "emoji": "❄️",
                 "left": [
                     "겨울이 찾아왔습니다. 바람이 살을 에듯 불었지요. 호수가 가장자리부터 조금씩 얼어붙었습니다.",
@@ -176,7 +176,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-winter-2.png",
+                "art": "05-winter-2.webp",
                 "emoji": "❄️",
                 "left": [
                     "농부는 얼음을 깨고 아기 오리를 품에 안았습니다. 그러고는 서둘러 집으로 데려갔지요. 난롯가에 눕히자 언 몸이 조금씩 녹았습니다.",
@@ -197,7 +197,7 @@ const CHAPTERS = [
         "title": "6장 · 물에 비친 모습",
         "beats": [
             {
-                "art": "06-reflection.png",
+                "art": "06-reflection.webp",
                 "emoji": "💧",
                 "left": [
                     "겨울은 길고 길었습니다. 아기 오리는 갈대밭에서 그 겨울을 버텼지요. 먹을 것이 없어 마른 풀뿌리를 씹기도 했습니다.",
@@ -211,7 +211,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-reflection-2.png",
+                "art": "06-reflection-2.webp",
                 "emoji": "💧",
                 "left": [
                     "아래로 넓은 정원이 내려다보였습니다. 연못에 하얀 새들이 떠 있었지요. 지난가을에 본 바로 그 새들이었습니다.",
@@ -231,7 +231,7 @@ const CHAPTERS = [
         "title": "7장 · 백조가 되어",
         "beats": [
             {
-                "art": "07-swan.png",
+                "art": "07-swan.webp",
                 "emoji": "🦢",
                 "left": [
                     "큰 백조들이 천천히 다가왔습니다. 아기 오리는 몸을 잔뜩 움츠렸지요.",
@@ -247,7 +247,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-swan-2.png",
+                "art": "07-swan-2.webp",
                 "emoji": "🦢",
                 "left": [
                     "아이들이 연못가로 몰려나왔습니다. 빵을 뜯어 물 위에 던져 주었지요.",
@@ -280,7 +280,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🦢')}
+                ${artFrame('cover.webp', '🦢')}
             </div>
             <div class="story-page-right">
                 <h1>미운 아기 오리</h1>
@@ -352,7 +352,7 @@ const AFTERWORD = {
     emoji: '🦢',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 안데르센이 지었습니다. 안데르센은 가난한 구둣방 집 아들이었고, 어릴 적에 놀림을 많이 받았다고 합니다.",
                 "아기 오리는 못생긴 것이 아니었습니다. 오리가 아니었을 뿐이지요. 오리 무리에서 재는 자로 쟀으니 늘 모자랄 수밖에요.",

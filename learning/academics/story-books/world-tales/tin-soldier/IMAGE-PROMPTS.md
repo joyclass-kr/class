@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -42,64 +42,64 @@ a curious kitchen maid appear along the way.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a one-legged tin soldier standing at attention on a wooden windowsill at night, a paper ballerina on a toy castle behind him, city rooftops and a big moon beyond the glass, warm nostalgic light. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a one-legged tin soldier standing at attention on a wooden windowsill at night, a paper ballerina on a toy castle behind him, city rooftops and a big moon beyond the glass, warm nostalgic light. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 다리가 하나뿐인 병정
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-soldier.png` | A nursery table where a child unpacks a long box of twenty-five tin soldiers in blue and red uniforms and lines them up, low toy-level viewpoint, warm lamplight. |
-| `images/01-soldier-2.png` | A one-legged tin soldier standing firmly at the end of a row of soldiers on a table full of toys, a child leaving the room, warm lamplight, tender. |
+| `images/01-soldier.webp` | A nursery table where a child unpacks a long box of twenty-five tin soldiers in blue and red uniforms and lines them up, low toy-level viewpoint, warm lamplight. |
+| `images/01-soldier-2.webp` | A one-legged tin soldier standing firmly at the end of a row of soldiers on a table full of toys, a child leaving the room, warm lamplight, tender. |
 
 ## 2장 · 종이 무희
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-ballerina.png` | A paper castle on a table with a mirror lake and a cut-paper ballerina poised on one toe in a white gauze skirt with a spangle, candlelight and long shadows. |
-| `images/02-ballerina-2.png` | A one-legged tin soldier peeking from behind a snuffbox at a paper ballerina on her castle across a tabletop, soft candlelight, tender and wistful. |
+| `images/02-ballerina.webp` | A paper castle on a table with a mirror lake and a cut-paper ballerina poised on one toe in a white gauze skirt with a spangle, candlelight and long shadows. |
+| `images/02-ballerina-2.webp` | A one-legged tin soldier peeking from behind a snuffbox at a paper ballerina on her castle across a tabletop, soft candlelight, tender and wistful. |
 
 ## 3장 · 창밖으로
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-fall.png` | A grinning black-hatted goblin springing up from a snuffbox at midnight and shaking a fist at a calm one-legged tin soldier, comic and eerie but not scary. |
-| `images/03-fall-2.png` | A tin soldier tumbling from a third-floor windowsill toward cobblestones and landing head-down with his musket stuck between the stones, dramatic and comic. |
+| `images/03-fall.webp` | A grinning black-hatted goblin springing up from a snuffbox at midnight and shaking a fist at a calm one-legged tin soldier, comic and eerie but not scary. |
+| `images/03-fall-2.webp` | A tin soldier tumbling from a third-floor windowsill toward cobblestones and landing head-down with his musket stuck between the stones, dramatic and comic. |
 
 ## 4장 · 종이배를 타고
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-boat.png` | Two children folding a newspaper boat and setting a tin soldier inside, launching it down a rain-swollen street gutter, cobblestones towering, lively. |
-| `images/04-boat-2.png` | A folded newspaper boat spinning and taking on water in a rushing gutter with a tiny tin soldier standing upright inside, a dark drain mouth ahead, thrilling. |
+| `images/04-boat.webp` | Two children folding a newspaper boat and setting a tin soldier inside, launching it down a rain-swollen street gutter, cobblestones towering, lively. |
+| `images/04-boat-2.webp` | A folded newspaper boat spinning and taking on water in a rushing gutter with a tiny tin soldier standing upright inside, a dark drain mouth ahead, thrilling. |
 
 ## 5장 · 어두운 물길
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-tunnel.png` | A dark stone drain tunnel where a paper boat rushes past a scolding water rat while a tin soldier grips his musket, dramatic and eerie. |
-| `images/05-tunnel-2.png` | A bright tunnel mouth where water pours out like a waterfall into a canal, a paper boat plunging over the edge with a tin soldier standing firm, dramatic. |
+| `images/05-tunnel.webp` | A dark stone drain tunnel where a paper boat rushes past a scolding water rat while a tin soldier grips his musket, dramatic and eerie. |
+| `images/05-tunnel-2.webp` | A bright tunnel mouth where water pours out like a waterfall into a canal, a paper boat plunging over the edge with a tin soldier standing firm, dramatic. |
 
 ## 6장 · 물고기 뱃속
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-fish.png` | A large fish swallowing a tiny tin soldier in murky green canal water as a soggy paper boat sinks behind, dramatic underwater light. |
-| `images/06-fish-2.png` | A fish caught in a net and carried to a market, then a kitchen where a maid slices it open and gasps at a tin soldier inside, bright and surprising. |
+| `images/06-fish.webp` | A large fish swallowing a tiny tin soldier in murky green canal water as a soggy paper boat sinks behind, dramatic underwater light. |
+| `images/06-fish-2.webp` | A fish caught in a net and carried to a market, then a kitchen where a maid slices it open and gasps at a tin soldier inside, bright and surprising. |
 
 ## 7장 · 돌아온 자리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-return.png` | A maid carrying a rescued tin soldier into a familiar nursery where a delighted child recognises it, the same window in the background, joyful homecoming. |
-| `images/07-return-2.png` | A one-legged tin soldier set back on a nursery table facing a paper ballerina on her castle across the tabletop, warm lamplight, tender and quiet. |
+| `images/07-return.webp` | A maid carrying a rescued tin soldier into a familiar nursery where a delighted child recognises it, the same window in the background, joyful homecoming. |
+| `images/07-return-2.webp` | A one-legged tin soldier set back on a nursery table facing a paper ballerina on her castle across the tabletop, warm lamplight, tender and quiet. |
 
 ## 8장 · 작은 주석 심장
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A hearth fire where a small tin soldier glows red-hot but stands straight with his musket, still facing the paper ballerina across the room, moving. |
-| `images/08-ending-2.png` | A paper ballerina drifting into a hearth to land beside a tin soldier in the glow, and a hand next morning lifting a tiny tin heart and a blackened spangle from the ashes. |
+| `images/08-ending.webp` | A hearth fire where a small tin soldier glows red-hot but stands straight with his musket, still facing the paper ballerina across the room, moving. |
+| `images/08-ending-2.webp` | A paper ballerina drifting into a hearth to land beside a tin soldier in the glow, and a hand next morning lifting a tiny tin heart and a blackened spangle from the ashes. |
 
 ## 사용 팁
 

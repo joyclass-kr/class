@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 하얀 조약돌",
         "beats": [
             {
-                "art": "01-pebbles.png",
+                "art": "01-pebbles.webp",
                 "emoji": "🤍",
                 "left": [
                     "숲가 오두막에 나무꾼이 살았습니다. 헨젤과 그레텔 남매가 있었지요. 그해 흉년이 몹시 심했습니다.",
@@ -22,7 +22,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-pebbles-2.png",
+                "art": "01-pebbles-2.webp",
                 "emoji": "🤍",
                 "left": [
                     "아버지는 고개를 저었습니다.",
@@ -44,7 +44,7 @@ const CHAPTERS = [
         "title": "2장 · 다시 찾아온 길",
         "beats": [
             {
-                "art": "02-back-home.png",
+                "art": "02-back-home.webp",
                 "emoji": "🌙",
                 "left": [
                     "이튿날 아침 넷은 숲으로 갔습니다.",
@@ -62,7 +62,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-back-home-2.png",
+                "art": "02-back-home-2.webp",
                 "emoji": "🌙",
                 "left": [
                     "눈을 뜨니 사방이 캄캄했습니다. 불은 이미 꺼져 재만 남았지요.",
@@ -84,7 +84,7 @@ const CHAPTERS = [
         "title": "3장 · 새들이 먹어 버린 빵",
         "beats": [
             {
-                "art": "03-breadcrumbs.png",
+                "art": "03-breadcrumbs.webp",
                 "emoji": "🐦",
                 "left": [
                     "아버지는 뛸 듯이 기뻐했습니다. 남매를 몇 번이나 끌어안았지요.",
@@ -99,7 +99,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-breadcrumbs-2.png",
+                "art": "03-breadcrumbs-2.webp",
                 "emoji": "🐦",
                 "left": [
                     "넷은 지난번보다 훨씬 깊이 들어갔습니다. 헨젤은 주머니 속 빵을 잘게 뜯어 몇 걸음마다 뿌렸지요. 숲은 갈수록 어두워졌습니다.",
@@ -120,7 +120,7 @@ const CHAPTERS = [
         "title": "4장 · 과자로 만든 집",
         "beats": [
             {
-                "art": "04-candy-house.png",
+                "art": "04-candy-house.webp",
                 "emoji": "🍬",
                 "left": [
                     "남매는 사흘을 헤맸습니다. 나무 열매를 따 먹으며 겨우 버텼지요.",
@@ -134,7 +134,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-candy-house-2.png",
+                "art": "04-candy-house-2.webp",
                 "emoji": "🍬",
                 "left": [
                     "벽은 온통 과자로 되어 있었습니다. 지붕은 새하얀 설탕이고 창문은 반짝이는 엿이었지요.",
@@ -157,7 +157,7 @@ const CHAPTERS = [
         "title": "5장 · 우리에 갇힌 헨젤",
         "beats": [
             {
-                "art": "05-cage.png",
+                "art": "05-cage.webp",
                 "emoji": "🦴",
                 "left": [
                     "할머니는 상을 잔뜩 차려 주었습니다. 우유와 과자와 사과가 놓였지요. 남매는 배가 부르도록 실컷 먹었습니다.",
@@ -173,7 +173,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-cage-2.png",
+                "art": "05-cage-2.webp",
                 "emoji": "🦴",
                 "left": [
                     "그날부터 날마다 같은 일이 되풀이됐습니다.",
@@ -197,7 +197,7 @@ const CHAPTERS = [
         "title": "6장 · 그레텔의 꾀",
         "beats": [
             {
-                "art": "06-oven.png",
+                "art": "06-oven.webp",
                 "emoji": "🔥",
                 "left": [
                     "그렇게 몇 주가 지났습니다. 할머니는 더 기다리지 못했지요.",
@@ -213,7 +213,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-oven-2.png",
+                "art": "06-oven-2.webp",
                 "emoji": "🔥",
                 "left": [
                     "\"이런 답답한 아이 같으니!\"",
@@ -235,7 +235,7 @@ const CHAPTERS = [
         "title": "7장 · 집으로",
         "beats": [
             {
-                "art": "07-home.png",
+                "art": "07-home.webp",
                 "emoji": "💎",
                 "left": [
                     "남매는 집 안을 찬찬히 둘러봤습니다. 구석에 궤짝이 여럿 놓여 있었지요.",
@@ -250,7 +250,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-home-2.png",
+                "art": "07-home-2.webp",
                 "emoji": "💎",
                 "left": [
                     "그때 하얀 오리 한 마리가 헤엄쳐 왔습니다. 그레텔이 물가에 앉아 살며시 물었지요.",
@@ -281,7 +281,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🍬')}
+                ${artFrame('cover.webp', '🍬')}
             </div>
             <div class="story-page-right">
                 <h1>헨젤과 그레텔</h1>
@@ -354,7 +354,7 @@ const AFTERWORD = {
     emoji: '🍬',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 그림 형제가 모은 것입니다. 옛날 유럽에는 흉년이 들면 먹을 것이 정말로 없었습니다. 이야기 속 배고픔은 지어낸 것이 아닙니다.",
                 "헨젤은 두 번 다 준비를 했습니다. 처음에는 하얀 조약돌이었고, 다음에는 빵 부스러기였지요. 첫 번째는 통했고 두 번째는 통하지 않았습니다.",

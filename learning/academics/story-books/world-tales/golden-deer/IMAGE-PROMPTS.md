@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -42,64 +42,64 @@ face.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a magnificent deer with a golden coat and silver antlers standing in a sunlit Indian forest glade, other deer resting among ferns behind it, shafts of light through great trees, serene and inviting. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a magnificent deer with a golden coat and silver antlers standing in a sunlit Indian forest glade, other deer resting among ferns behind it, shafts of light through great trees, serene and inviting. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 숲의 우두머리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-forest.png` | A lush Indian forest glade where a golden stag with silver antlers leads a large herd of deer to a stream, waiting for a small fawn at the back, dappled sunlight. |
-| `images/01-forest-2.png` | A peaceful Indian forest through the seasons with deer grazing, fawns playing and a golden stag watching from a high rock, warm golden light, serene. |
+| `images/01-forest.webp` | A lush Indian forest glade where a golden stag with silver antlers leads a large herd of deer to a stream, waiting for a small fawn at the back, dappled sunlight. |
+| `images/01-forest-2.webp` | A peaceful Indian forest through the seasons with deer grazing, fawns playing and a golden stag watching from a high rock, warm golden light, serene. |
 
 ## 2장 · 사냥이 시작되다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-hunt.png` | A forest edge in uproar as horns sound and hunters on horseback advance, deer scattering through ferns, a golden stag rearing on a rock, tense but not gory. |
-| `images/02-hunt-2.png` | A quiet forest at dusk where a golden stag tends injured deer through the night, and then walks out alone at dawn toward a distant palace, solemn. |
+| `images/02-hunt.webp` | A forest edge in uproar as horns sound and hunters on horseback advance, deer scattering through ferns, a golden stag rearing on a rock, tense but not gory. |
+| `images/02-hunt-2.webp` | A quiet forest at dusk where a golden stag tends injured deer through the night, and then walks out alone at dawn toward a distant palace, solemn. |
 
 ## 3장 · 임금님 앞에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-king.png` | A golden stag walking through villages and into a carved stone palace courtyard between rows of astonished guards, sunlight on pillars, awe-struck. |
-| `images/03-king-2.png` | A golden stag speaking calmly before a king who has risen from his throne in astonishment, courtiers holding their breath, morning light on stone. |
+| `images/03-king.webp` | A golden stag walking through villages and into a carved stone palace courtyard between rows of astonished guards, sunlight on pillars, awe-struck. |
+| `images/03-king-2.webp` | A golden stag speaking calmly before a king who has risen from his throne in astonishment, courtiers holding their breath, morning light on stone. |
 
 ## 4장 · 이상한 약속
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-promise.png` | A palace hall where a king listens intently to a golden stag and slowly nods in agreement, courtiers watching in silence, solemn and warm. |
-| `images/04-promise-2.png` | A forest clearing where deer quietly agree and draw lots, and a hushed dawn where the whole herd stands silently to see one of them off, solemn and moving. |
+| `images/04-promise.webp` | A palace hall where a king listens intently to a golden stag and slowly nods in agreement, courtiers watching in silence, solemn and warm. |
+| `images/04-promise-2.webp` | A forest clearing where deer quietly agree and draw lots, and a hushed dawn where the whole herd stands silently to see one of them off, solemn and moving. |
 
 ## 5장 · 어린 어미 사슴
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-doe.png` | A quiet forest hollow at dawn where a slender doe heavy with fawn approaches a golden stag with lowered head, ferns all around, gentle and moving. |
-| `images/05-doe-2.png` | A golden stag asking the herd for a volunteer while every deer looks away, then blocking the doe's path as she starts to leave, tense and moving. |
+| `images/05-doe.webp` | A quiet forest hollow at dawn where a slender doe heavy with fawn approaches a golden stag with lowered head, ferns all around, gentle and moving. |
+| `images/05-doe-2.webp` | A golden stag asking the herd for a volunteer while every deer looks away, then blocking the doe's path as she starts to leave, tense and moving. |
 
 ## 6장 · 스스로 걸어간 길
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-walk.png` | A golden stag lifting his head in morning light to announce he will go, the herd surging in protest, an old deer stepping forward, deeply moving. |
-| `images/06-walk-2.png` | A long forest path at sunrise where a golden stag walks away alone toward a distant palace while the whole herd stands motionless watching, long shadows. |
+| `images/06-walk.webp` | A golden stag lifting his head in morning light to announce he will go, the herd surging in protest, an old deer stepping forward, deeply moving. |
+| `images/06-walk-2.webp` | A long forest path at sunrise where a golden stag walks away alone toward a distant palace while the whole herd stands motionless watching, long shadows. |
 
 ## 7장 · 임금님의 물음
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-question.png` | A palace courtyard where a barefoot king hurries out to face a golden stag standing calmly, guards astonished, morning light on stone. |
-| `images/07-question-2.png` | A king standing shaken before a golden stag in a hushed courtyard, courtiers bowing their heads, the king's eyes reddening, deeply moving. |
+| `images/07-question.webp` | A palace courtyard where a barefoot king hurries out to face a golden stag standing calmly, guards astonished, morning light on stone. |
+| `images/07-question-2.webp` | A king standing shaken before a golden stag in a hushed courtyard, courtiers bowing their heads, the king's eyes reddening, deeply moving. |
 
 ## 8장 · 숲이 열린 날
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A palace courtyard where a king lays down his bow before a golden stag, the bow clattering on stone, courtiers murmuring, generous and moving. |
-| `images/08-ending-2.png` | A king promising to protect all creatures as a golden stag bows deeply, then the stag returning to a forest where the whole herd rushes joyfully to meet him. |
+| `images/08-ending.webp` | A palace courtyard where a king lays down his bow before a golden stag, the bow clattering on stone, courtiers murmuring, generous and moving. |
+| `images/08-ending-2.webp` | A king promising to protect all creatures as a golden stag bows deeply, then the stag returning to a forest where the whole herd rushes joyfully to meet him. |
 
 ## 사용 팁
 

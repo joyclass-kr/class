@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 이상한 가루",
         "beats": [
             {
-                "art": "01-powder.png",
+                "art": "01-powder.webp",
                 "emoji": "📦",
                 "left": [
                     "바그다드에 하시드라는 임금님이 살았습니다. 마음씨가 좋고 웃기를 잘했지요. 무엇보다 신기한 물건을 좋아했습니다.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-powder-2.png",
+                "art": "01-powder-2.webp",
                 "emoji": "📦",
                 "left": [
                     "장수가 가고 나서 상자를 열었습니다. 안에는 검은 가루가 담겨 있었지요.",
@@ -42,7 +42,7 @@ const CHAPTERS = [
         "title": "2장 · 절대 웃지 말 것",
         "beats": [
             {
-                "art": "02-warning.png",
+                "art": "02-warning.webp",
                 "emoji": "⚠️",
                 "left": [
                     "\"짐승의 말도 알아듣게 된다는군!\"",
@@ -59,7 +59,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-warning-2.png",
+                "art": "02-warning-2.webp",
                 "emoji": "⚠️",
                 "left": [
                     "임금님은 그 말을 흘려들었습니다.",
@@ -82,7 +82,7 @@ const CHAPTERS = [
         "title": "3장 · 황새가 되어",
         "beats": [
             {
-                "art": "03-storks.png",
+                "art": "03-storks.webp",
                 "emoji": "🕊️",
                 "left": [
                     "두 사람은 가루를 코에 댔습니다. 그러고는 함께 주문을 외웠지요.",
@@ -98,7 +98,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-storks-2.png",
+                "art": "03-storks-2.webp",
                 "emoji": "🕊️",
                 "left": [
                     "그때 진짜 황새들이 다가왔습니다. 놀랍게도 그 말이 그대로 들렸지요.",
@@ -122,7 +122,7 @@ const CHAPTERS = [
         "title": "4장 · 잊어버린 주문",
         "beats": [
             {
-                "art": "04-forgot.png",
+                "art": "04-forgot.webp",
                 "emoji": "😰",
                 "left": [
                     "웃음이 그치자 두 황새는 얼어붙었습니다. 만소르의 얼굴이 하얗게 질렸지요.",
@@ -139,7 +139,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-forgot-2.png",
+                "art": "04-forgot-2.webp",
                 "emoji": "😰",
                 "left": [
                     "두 황새는 궁궐로 날아갔습니다. 창가에 앉아 신하들을 불렀지요.",
@@ -163,7 +163,7 @@ const CHAPTERS = [
         "title": "5장 · 폐허의 올빼미",
         "beats": [
             {
-                "art": "05-owl.png",
+                "art": "05-owl.webp",
                 "emoji": "🦉",
                 "left": [
                     "갈 곳이 없어진 두 황새는 사막으로 날았습니다.",
@@ -178,7 +178,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-owl-2.png",
+                "art": "05-owl-2.webp",
                 "emoji": "🦉",
                 "left": [
                     "\"저는 원래 인도 임금님의 딸이랍니다.\"",
@@ -203,7 +203,7 @@ const CHAPTERS = [
         "title": "6장 · 엿들은 밤",
         "beats": [
             {
-                "art": "06-eavesdrop.png",
+                "art": "06-eavesdrop.webp",
                 "emoji": "🌙",
                 "left": [
                     "셋은 무너진 벽 뒤에 몸을 숨겼습니다. 숨소리도 내지 않았지요.",
@@ -218,7 +218,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-eavesdrop-2.png",
+                "art": "06-eavesdrop-2.webp",
                 "emoji": "🌙",
                 "left": [
                     "\"바그다드 임금이 황새가 되어 헤맨다지.\"",
@@ -240,7 +240,7 @@ const CHAPTERS = [
         "title": "7장 · 무타보르",
         "beats": [
             {
-                "art": "07-mutabor.png",
+                "art": "07-mutabor.webp",
                 "emoji": "✨",
                 "left": [
                     "두 황새는 밖으로 나왔습니다. 동쪽 하늘이 조금씩 밝아 오고 있었지요.",
@@ -255,7 +255,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-mutabor-2.png",
+                "art": "07-mutabor-2.webp",
                 "emoji": "✨",
                 "left": [
                     "그런데 올빼미가 그대로였습니다. 주문으로는 그 마법이 풀리지 않았지요. 올빼미가 조용히 말했습니다.",
@@ -276,7 +276,7 @@ const CHAPTERS = [
         "title": "8장 · 궁궐로 돌아가다",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🏛️",
                 "left": [
                     "세 사람은 바그다드로 돌아왔습니다. 성문에서 사람들이 걸음을 멈췄지요.",
@@ -290,7 +290,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🏛️",
                 "left": [
                     "궁궐에 들어선 임금님이 상자를 꺼냈습니다. 그 검은 가루가 든 상자였지요. 임금님은 그것을 높이 들어 보였습니다.",
@@ -322,7 +322,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🕊️')}
+                ${artFrame('cover.webp', '🕊️')}
             </div>
             <div class="story-page-right">
                 <h1>황새가 된 임금님</h1>
@@ -394,7 +394,7 @@ const AFTERWORD = {
     emoji: '🕊️',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기를 지은 사람은 독일의 하우프입니다. 이백 년쯤 전에 나왔고, 아라비아를 무대로 삼았습니다.",
                 "임금님은 신기한 물건을 좋아했습니다. 검은 가루를 사 들인 것도 그래서지요.",

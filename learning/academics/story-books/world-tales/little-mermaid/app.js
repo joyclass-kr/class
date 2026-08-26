@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 바닷속 궁전",
         "beats": [
             {
-                "art": "01-palace.png",
+                "art": "01-palace.webp",
                 "emoji": "🏰",
                 "left": [
                     "바다 깊은 곳에 궁전이 하나 있었습니다. 산호로 지은 궁전이었지요.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-palace-2.png",
+                "art": "01-palace-2.webp",
                 "emoji": "🏰",
                 "left": [
                     "\"열다섯 살이 되면 올라가도 된단다.\"",
@@ -42,7 +42,7 @@ const CHAPTERS = [
         "title": "2장 · 폭풍우 치던 밤",
         "beats": [
             {
-                "art": "02-storm.png",
+                "art": "02-storm.webp",
                 "emoji": "⛈️",
                 "left": [
                     "눈앞에 큰 배 한 척이 있었습니다. 뱃전에 등불이 환하게 켜져 있었지요.",
@@ -57,7 +57,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-storm-2.png",
+                "art": "02-storm-2.webp",
                 "emoji": "⛈️",
                 "left": [
                     "배가 크게 기울었습니다. 사람들이 하나둘 물에 빠졌지요.",
@@ -77,7 +77,7 @@ const CHAPTERS = [
         "title": "3장 · 모래밭에 눕히고",
         "beats": [
             {
-                "art": "03-rescue.png",
+                "art": "03-rescue.webp",
                 "emoji": "🌅",
                 "left": [
                     "멀리 흰 모래밭이 보였습니다. 인어공주는 그리로 천천히 헤엄쳤지요. 젊은이를 모래 위에 조심스레 눕혔습니다.",
@@ -92,7 +92,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-rescue-2.png",
+                "art": "03-rescue-2.webp",
                 "emoji": "🌅",
                 "left": [
                     "인어공주는 아무 말도 하지 못했습니다. 그저 물속으로 돌아왔지요.",
@@ -116,7 +116,7 @@ const CHAPTERS = [
         "title": "4장 · 바다 마녀를 찾아가다",
         "beats": [
             {
-                "art": "04-witch.png",
+                "art": "04-witch.webp",
                 "emoji": "🐙",
                 "left": [
                     "바다 끝에 마녀가 살았습니다. 아무도 가지 않는 곳이었지요.",
@@ -132,7 +132,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-witch-2.png",
+                "art": "04-witch-2.webp",
                 "emoji": "🐙",
                 "left": [
                     "\"무엇을 드리면 되나요?\"",
@@ -157,7 +157,7 @@ const CHAPTERS = [
         "title": "5장 · 목소리를 잃고",
         "beats": [
             {
-                "art": "05-legs.png",
+                "art": "05-legs.webp",
                 "emoji": "👣",
                 "left": [
                     "인어공주는 물 위로 올라가 약을 마셨습니다. 그 순간 온몸이 불에 닿은 듯했지요. 인어공주는 그대로 정신을 잃었습니다.",
@@ -171,7 +171,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-legs-2.png",
+                "art": "05-legs-2.webp",
                 "emoji": "👣",
                 "left": [
                     "인어공주는 대답할 수 없었습니다. 입을 열어도 소리가 나지 않았지요. 젊은이는 인어공주를 궁으로 데려갔습니다.",
@@ -193,7 +193,7 @@ const CHAPTERS = [
         "title": "6장 · 다른 나라의 공주",
         "beats": [
             {
-                "art": "06-wedding.png",
+                "art": "06-wedding.webp",
                 "emoji": "💔",
                 "left": [
                     "어느 날 왕자가 말했습니다.",
@@ -211,7 +211,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-wedding-2.png",
+                "art": "06-wedding-2.webp",
                 "emoji": "💔",
                 "left": [
                     "이웃 나라 공주가 앞으로 나왔습니다. 그 얼굴을 본 왕자가 걸음을 뚝 멈췄지요.",
@@ -232,7 +232,7 @@ const CHAPTERS = [
         "title": "7장 · 단검을 바다에 던지고",
         "beats": [
             {
-                "art": "07-dagger.png",
+                "art": "07-dagger.webp",
                 "emoji": "🌊",
                 "left": [
                     "한밤중이었습니다. 물결 사이로 언니들이 얼굴을 내밀었지요.",
@@ -249,7 +249,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-dagger-2.png",
+                "art": "07-dagger-2.webp",
                 "emoji": "🌊",
                 "left": [
                     "인어공주는 오래도록 서 있었습니다. 왕자의 얼굴을 가만히 내려다봤지요.",
@@ -271,7 +271,7 @@ const CHAPTERS = [
         "title": "8장 · 바람이 된 인어공주",
         "beats": [
             {
-                "art": "08-air.png",
+                "art": "08-air.webp",
                 "emoji": "☁️",
                 "left": [
                     "인어공주는 바다로 몸을 던졌습니다.",
@@ -288,7 +288,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-air-2.png",
+                "art": "08-air-2.webp",
                 "emoji": "☁️",
                 "left": [
                     "인어공주는 아래를 내려다봤습니다. 저 밑으로 배가 보였지요. 왕자가 갑판에 나와 주위를 두리번거리고 있었습니다.",
@@ -318,7 +318,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🧜‍♀️')}
+                ${artFrame('cover.webp', '🧜‍♀️')}
             </div>
             <div class="story-page-right">
                 <h1>인어공주</h1>
@@ -390,7 +390,7 @@ const AFTERWORD = {
     emoji: '🧜',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 안데르센이 지었습니다. 오늘날 널리 알려진 것과는 끝이 다릅니다. 여기 실린 것이 안데르센이 적은 쪽에 가깝습니다.",
                 "인어공주가 바다 마녀에게 내준 것은 목소리였습니다. 하필 목소리였지요. 그래서 왕자를 구한 사람이 저라는 말을 끝내 못 합니다.",

@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -43,57 +43,57 @@ frightening. The thirty-nine robbers: figures glimpsed in cloaks and turbans.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a great stone door standing half open in a desert cliff face with golden light and heaped treasure spilling from within, a single lamp on the sand before it and forty hoofprints leading away, mysterious and inviting. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a great stone door standing half open in a desert cliff face with golden light and heaped treasure spilling from within, a single lamp on the sand before it and forty hoofprints leading away, mysterious and inviting. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 열려라 참깨
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-cave.png` | A rocky desert hillside where a woodcutter with three donkeys scrambles up a tree as a great dust cloud and riders approach, tense and cinematic. |
-| `images/01-cave-2.png` | Forty masked riders dismounting before a sheer cliff as their captain raises a hand and the rock splits open revealing golden light, sacks carried inside, dramatic and magical. |
+| `images/01-cave.webp` | A rocky desert hillside where a woodcutter with three donkeys scrambles up a tree as a great dust cloud and riders approach, tense and cinematic. |
+| `images/01-cave-2.webp` | Forty masked riders dismounting before a sheer cliff as their captain raises a hand and the rock splits open revealing golden light, sacks carried inside, dramatic and magical. |
 
 ## 2장 · 보물이 가득한 동굴
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-treasure.png` | A cave interior blazing with heaped gold coins, rolls of silk and jewels where a modest woodcutter stands frozen in awe, sunlight spilling in from the open rock door behind, dazzling. |
-| `images/02-treasure-2.png` | A cave mouth where a woodcutter loads three sacks onto donkeys and covers them with firewood, and a modest home where his wife stares at spilled gold coins, warm lamplight. |
+| `images/02-treasure.webp` | A cave interior blazing with heaped gold coins, rolls of silk and jewels where a modest woodcutter stands frozen in awe, sunlight spilling in from the open rock door behind, dazzling. |
+| `images/02-treasure-2.webp` | A cave mouth where a woodcutter loads three sacks onto donkeys and covers them with firewood, and a modest home where his wife stares at spilled gold coins, warm lamplight. |
 
 ## 3장 · 형의 욕심
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-brother.png` | A wealthy courtyard where a woman examines a measuring bowl and finds a gold coin stuck to the wax on its base, and her plump husband storming off to confront his brother, comic greed. |
-| `images/03-brother-2.png` | A treasure cave where a plump man in silks frantically stuffs sacks with gold, then hammers on the sealed rock door shouting wrong words, panic on his face, comic and tense. |
+| `images/03-brother.webp` | A wealthy courtyard where a woman examines a measuring bowl and finds a gold coin stuck to the wax on its base, and her plump husband storming off to confront his brother, comic greed. |
+| `images/03-brother-2.webp` | A treasure cave where a plump man in silks frantically stuffs sacks with gold, then hammers on the sealed rock door shouting wrong words, panic on his face, comic and tense. |
 
 ## 4장 · 표시된 대문
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-chalk.png` | A desert road at night where a woodcutter leads laden donkeys home, and a courtyard where a quick-eyed young servant takes charge with her sleeves rolled up, calm and capable. |
-| `images/04-chalk-2.png` | A town alley at dawn where a young servant notices a chalk mark on her gate, then swiftly chalking the same mark on every door down the street, clever and lively. |
+| `images/04-chalk.webp` | A desert road at night where a woodcutter leads laden donkeys home, and a courtyard where a quick-eyed young servant takes charge with her sleeves rolled up, calm and capable. |
+| `images/04-chalk-2.webp` | A town alley at dawn where a young servant notices a chalk mark on her gate, then swiftly chalking the same mark on every door down the street, clever and lively. |
 
 ## 5장 · 기름 항아리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-jars.png` | A courtyard at dusk where a disguised oil merchant unloads thirty-nine enormous jars from mules while a kind householder welcomes him in, warm lamplight, quietly ominous. |
-| `images/05-jars-2.png` | A moonlit courtyard of huge jars where a young servant leans toward one and a whispered voice comes from inside, her eyes widening as she answers in a low tone, gripping. |
+| `images/05-jars.webp` | A courtyard at dusk where a disguised oil merchant unloads thirty-nine enormous jars from mules while a kind householder welcomes him in, warm lamplight, quietly ominous. |
+| `images/05-jars-2.webp` | A moonlit courtyard of huge jars where a young servant leans toward one and a whispered voice comes from inside, her eyes widening as she answers in a low tone, gripping. |
 
 ## 6장 · 모르지아나의 춤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-dance.png` | A courtyard where a young servant pours steaming oil into row after row of jars and robbers come tumbling out hopping and yelping, scrambling over the wall, comic mayhem, no blood. |
-| `images/06-dance-2.png` | A lamplit dining room where a young servant dances with a dagger at her sash before a smiling guest, drums beating, family clapping, tension hidden under celebration. |
+| `images/06-dance.webp` | A courtyard where a young servant pours steaming oil into row after row of jars and robbers come tumbling out hopping and yelping, scrambling over the wall, comic mayhem, no blood. |
+| `images/06-dance-2.webp` | A lamplit dining room where a young servant dances with a dagger at her sash before a smiling guest, drums beating, family clapping, tension hidden under celebration. |
 
 ## 7장 · 정체가 드러나다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-revealed.png` | A dining room where a young servant flings back a guest's robe revealing a hidden sword, the man leaping up to find neighbours blocking the doorway, dramatic and satisfying. |
-| `images/07-revealed-2.png` | A courtyard where a grateful householder takes a young servant's hands before the family, and later villagers receiving gold to dig a well and mend a road, warm and generous. |
+| `images/07-revealed.webp` | A dining room where a young servant flings back a guest's robe revealing a hidden sword, the man leaping up to find neighbours blocking the doorway, dramatic and satisfying. |
+| `images/07-revealed-2.webp` | A courtyard where a grateful householder takes a young servant's hands before the family, and later villagers receiving gold to dig a well and mend a road, warm and generous. |
 
 ## 사용 팁
 

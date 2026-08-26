@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 바다로 나가다",
         "beats": [
             {
-                "art": "01-port.png",
+                "art": "01-port.webp",
                 "emoji": "🕌",
                 "left": [
                     "옛날 바그다드에 신드바드라는 젊은이가 살았습니다. 아버지가 큰 장사꾼이어서 물려받은 재산이 많았지요. 신드바드는 그 돈으로 날마다 잔치를 벌였습니다.",
@@ -18,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-port-2.png",
+                "art": "01-port-2.webp",
                 "emoji": "🕌",
                 "left": [
                     "신드바드는 물건을 지고 항구로 나갔습니다. 항구에는 돛대가 숲처럼 빽빽했지요.",
@@ -39,7 +39,7 @@ const CHAPTERS = [
         "title": "2장 · 섬이 아니었다",
         "beats": [
             {
-                "art": "02-whale.png",
+                "art": "02-whale.webp",
                 "emoji": "🐋",
                 "left": [
                     "배는 여러 날을 나아갔습니다.",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-whale-2.png",
+                "art": "02-whale-2.webp",
                 "emoji": "🐋",
                 "left": [
                     "그런데 땅이 갑자기 출렁 흔들렸습니다. 사람들이 넘어지고 냄비가 굴러갔지요. 빨래도 물에 휩쓸려 갔습니다.",
@@ -75,7 +75,7 @@ const CHAPTERS = [
         "title": "3장 · 거대한 새",
         "beats": [
             {
-                "art": "03-roc.png",
+                "art": "03-roc.webp",
                 "emoji": "🥚",
                 "left": [
                     "신드바드는 나무통을 붙잡고 밤새 떠다녔습니다.",
@@ -89,7 +89,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-roc-2.png",
+                "art": "03-roc-2.webp",
                 "emoji": "🥚",
                 "left": [
                     "그때 하늘이 갑자기 어두워졌습니다.",
@@ -110,7 +110,7 @@ const CHAPTERS = [
         "title": "4장 · 보석 골짜기",
         "beats": [
             {
-                "art": "04-valley.png",
+                "art": "04-valley.webp",
                 "emoji": "💎",
                 "left": [
                     "아침이 되자 새가 날개를 폈습니다. 신드바드의 몸이 붕 떠올랐지요. 바다도 섬도 발밑에서 자꾸 작아졌습니다.",
@@ -124,7 +124,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-valley-2.png",
+                "art": "04-valley-2.webp",
                 "emoji": "💎",
                 "left": [
                     "신드바드는 바닥을 내려다보았습니다. 땅바닥이 온통 반짝이고 있었지요. 허리를 굽혀 하나를 주워 보았습니다.",
@@ -144,7 +144,7 @@ const CHAPTERS = [
         "title": "5장 · 고깃덩이를 타고",
         "beats": [
             {
-                "art": "05-meat.png",
+                "art": "05-meat.webp",
                 "emoji": "🦅",
                 "left": [
                     "그때 위에서 무언가가 툭 떨어졌습니다. 커다란 고깃덩이였지요.",
@@ -160,7 +160,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-meat-2.png",
+                "art": "05-meat-2.webp",
                 "emoji": "🦅",
                 "left": [
                     "신드바드는 자루에 보석을 가득 담았습니다. 허리에 단단히 묶었지요. 그러고는 제일 큰 고깃덩이 밑으로 들어갔습니다.",
@@ -180,7 +180,7 @@ const CHAPTERS = [
         "title": "6장 · 다시 바다로",
         "beats": [
             {
-                "art": "06-sea.png",
+                "art": "06-sea.webp",
                 "emoji": "🌊",
                 "left": [
                     "독수리는 절벽 위 둥지에 고기를 내려놓았습니다. 상인들이 소리를 지르며 달려왔지요.",
@@ -194,7 +194,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-sea-2.png",
+                "art": "06-sea-2.webp",
                 "emoji": "🌊",
                 "left": [
                     "바그다드로 돌아온 신드바드는 큰 부자가 되었습니다. 넓은 집을 사고 좋은 옷을 지어 입었지요.",
@@ -215,7 +215,7 @@ const CHAPTERS = [
         "title": "7장 · 어깨에 올라탄 노인",
         "beats": [
             {
-                "art": "07-old-man.png",
+                "art": "07-old-man.webp",
                 "emoji": "🧓",
                 "left": [
                     "이번 항해에서도 신드바드는 배를 잃었습니다. 겨우 헤엄쳐 어느 섬에 닿았지요. 섬에는 나무가 우거지고 개울이 흘렀습니다.",
@@ -230,7 +230,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-old-man-2.png",
+                "art": "07-old-man-2.webp",
                 "emoji": "🧓",
                 "left": [
                     "신드바드는 노인을 업고 개울을 건넜습니다.",
@@ -251,7 +251,7 @@ const CHAPTERS = [
         "title": "8장 · 마지막 항해",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🏠",
                 "left": [
                     "어느 날 신드바드는 포도밭을 지나게 되었습니다.",
@@ -265,7 +265,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🏠",
                 "left": [
                     "신드바드는 얼른 어깨에서 노인을 내려놓았습니다. 그러고는 뒤도 돌아보지 않고 달아났지요. 바닷가까지 단숨에 뛰었습니다.",
@@ -295,7 +295,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '⛵')}
+                ${artFrame('cover.webp', '⛵')}
             </div>
             <div class="story-page-right">
                 <h1>신드바드의 모험</h1>
@@ -367,7 +367,7 @@ const AFTERWORD = {
     emoji: '⛵',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 아라비안나이트에 실려 있습니다. 신드바드는 일곱 번 바다에 나갑니다. 여기에는 그 가운데 몇 번만 실었습니다.",
                 "신드바드가 처음 바다에 나간 까닭은 돈을 다 써 버렸기 때문입니다. 모험이 좋아서가 아니었지요.",

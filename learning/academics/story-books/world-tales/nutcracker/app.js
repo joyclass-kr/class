@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 크리스마스이브의 선물",
         "beats": [
             {
-                "art": "01-gift.png",
+                "art": "01-gift.webp",
                 "emoji": "🎁",
                 "left": [
                     "크리스마스이브였습니다. 거실 한가운데 커다란 나무가 서 있었지요.",
@@ -18,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-gift-2.png",
+                "art": "01-gift-2.webp",
                 "emoji": "🎁",
                 "left": [
                     "대부님이 커다란 상자를 열었습니다. 안에는 작은 성이 들어 있었지요. 태엽을 감자 성안의 인형들이 움직이기 시작했습니다.",
@@ -39,7 +39,7 @@ const CHAPTERS = [
         "title": "2장 · 부러진 턱",
         "beats": [
             {
-                "art": "02-broken.png",
+                "art": "02-broken.webp",
                 "emoji": "🔧",
                 "left": [
                     "마리는 그 인형을 안고 이리저리 다녔습니다. 프리츠가 그것을 보고 다가왔지요.",
@@ -56,7 +56,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-broken-2.png",
+                "art": "02-broken-2.webp",
                 "emoji": "🔧",
                 "left": [
                     "마리는 인형을 조심스레 안아 들었습니다. 손수건을 풀어 턱을 감아 주었지요.",
@@ -79,7 +79,7 @@ const CHAPTERS = [
         "title": "3장 · 한밤중의 시계 소리",
         "beats": [
             {
-                "art": "03-midnight.png",
+                "art": "03-midnight.webp",
                 "emoji": "🕛",
                 "left": [
                     "그날 밤 마리는 도무지 잠이 오지 않았습니다. 마리는 살금살금 거실로 나왔지요. 마룻바닥이 차가워 발끝이 시렸습니다.",
@@ -94,7 +94,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-midnight-2.png",
+                "art": "03-midnight-2.webp",
                 "emoji": "🕛",
                 "left": [
                     "한가운데에 유난히 큰 생쥐가 있었습니다. 머리에 작은 왕관을 여럿 쓰고 있었지요.",
@@ -115,7 +115,7 @@ const CHAPTERS = [
         "title": "4장 · 생쥐 왕과의 싸움",
         "beats": [
             {
-                "art": "04-battle.png",
+                "art": "04-battle.webp",
                 "emoji": "⚔️",
                 "left": [
                     "병정들이 한 걸음씩 앞으로 나아갔습니다. 대포에서 사탕이 펑펑 튀어나왔지요. 사탕에 맞은 생쥐들이 우수수 넘어졌습니다.",
@@ -130,7 +130,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-battle-2.png",
+                "art": "04-battle-2.webp",
                 "emoji": "⚔️",
                 "left": [
                     "끝내 인형이 쿵 넘어졌습니다. 생쥐 왕이 성큼성큼 다가갔지요.",
@@ -150,7 +150,7 @@ const CHAPTERS = [
         "title": "5장 · 왕자가 된 인형",
         "beats": [
             {
-                "art": "05-prince.png",
+                "art": "05-prince.webp",
                 "emoji": "✨",
                 "left": [
                     "눈을 뜨니 사방이 환했습니다. 코끝에 달콤한 냄새가 스쳤지요.",
@@ -166,7 +166,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-prince-2.png",
+                "art": "05-prince-2.webp",
                 "emoji": "✨",
                 "left": [
                     "문 너머는 전혀 다른 세상이었습니다. 뒤를 돌아보니 거실이 아득히 멀었지요. 발밑이 사각사각하며 반짝였습니다.",
@@ -188,7 +188,7 @@ const CHAPTERS = [
         "title": "6장 · 눈송이가 춤추는 숲",
         "beats": [
             {
-                "art": "06-snow.png",
+                "art": "06-snow.webp",
                 "emoji": "❄️",
                 "left": [
                     "길은 이내 숲으로 이어졌습니다. 나무마다 얼음이 맺혀 있었지요.",
@@ -203,7 +203,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-snow-2.png",
+                "art": "06-snow-2.webp",
                 "emoji": "❄️",
                 "left": [
                     "눈송이들이 스르르 길을 열어 주었습니다. 두 사람은 그 사이를 지나갔지요. 숲이 끝나자 넓은 강이 나왔습니다.",
@@ -224,7 +224,7 @@ const CHAPTERS = [
         "title": "7장 · 과자 나라",
         "beats": [
             {
-                "art": "07-candy.png",
+                "art": "07-candy.webp",
                 "emoji": "🍬",
                 "left": [
                     "강이 끝나는 곳에 도시가 있었습니다. 집이 모두 과자로 지어져 있었지요. 지붕은 초콜릿이고 담은 생강빵이었습니다.",
@@ -240,7 +240,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-candy-2.png",
+                "art": "07-candy-2.webp",
                 "emoji": "🍬",
                 "left": [
                     "광장에서 큰 잔치가 열렸습니다. 나라마다 나와서 춤을 보여 주었지요. 먼저 초콜릿 나라 사람들이 나왔습니다.",
@@ -262,7 +262,7 @@ const CHAPTERS = [
         "title": "8장 · 아침의 트리 아래",
         "beats": [
             {
-                "art": "08-morning.png",
+                "art": "08-morning.webp",
                 "emoji": "🌅",
                 "left": [
                     "왕자가 조용히 고개를 끄덕였습니다.",
@@ -279,7 +279,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-morning-2.png",
+                "art": "08-morning-2.webp",
                 "emoji": "🌅",
                 "left": [
                     "아침 햇살에 눈을 떴습니다. 마리가 누워 있는 곳은 거실 바닥이었지요. 나무 아래에 이불도 없이 잠들어 있었던 것입니다.",
@@ -311,7 +311,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🎄')}
+                ${artFrame('cover.webp', '🎄')}
             </div>
             <div class="story-page-right">
                 <h1>호두까기 인형</h1>
@@ -383,7 +383,7 @@ const AFTERWORD = {
     emoji: '🎄',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기를 지은 사람은 독일의 호프만입니다. 이백 년쯤 전에 나왔습니다. 뒤에 차이콥스키가 발레 음악으로 만들어 더 널리 알려졌지요.",
                 "호두까기 인형은 선물 가운데 가장 볼품없었습니다. 이가 빠지고 턱이 굳은 인형이었지요. 다들 거들떠보지 않았습니다.",

@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 세상에서 가장 아름다운 궁궐",
         "beats": [
             {
-                "art": "01-palace.png",
+                "art": "01-palace.webp",
                 "emoji": "🏯",
                 "left": [
                     "옛날 중국에 도자기로 지은 궁궐이 있었습니다. 기둥도 지붕도 모두 도자기였지요. 얼마나 고운지 먼 나라에서도 구경을 왔습니다.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-palace-2.png",
+                "art": "01-palace-2.webp",
                 "emoji": "🏯",
                 "left": [
                     "먼 나라 사람들이 이 궁궐을 보고 책을 썼습니다. 그 책은 여러 나라로 퍼져 나갔지요. 그 책이 마침내 임금님 손에까지 들어왔습니다.",
@@ -41,7 +41,7 @@ const CHAPTERS = [
         "title": "2장 · 아무도 몰랐던 새",
         "beats": [
             {
-                "art": "02-search.png",
+                "art": "02-search.webp",
                 "emoji": "❓",
                 "left": [
                     "임금님은 곧바로 신하를 불렀습니다.",
@@ -59,7 +59,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-search-2.png",
+                "art": "02-search-2.webp",
                 "emoji": "❓",
                 "left": [
                     "해가 기울도록 새를 찾지 못했습니다. 신하는 발을 동동 굴렀지요.",
@@ -82,7 +82,7 @@ const CHAPTERS = [
         "title": "3장 · 숲에서 온 손님",
         "beats": [
             {
-                "art": "03-nightingale.png",
+                "art": "03-nightingale.webp",
                 "emoji": "🌲",
                 "left": [
                     "아이는 신하들을 데리고 숲으로 갔습니다. 비단옷을 입은 사람들이 줄줄이 따라나섰지요. 가다가 소가 음매 하고 울었습니다.",
@@ -98,7 +98,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-nightingale-2.png",
+                "art": "03-nightingale-2.webp",
                 "emoji": "🌲",
                 "left": [
                     "이윽고 아이가 걸음을 멈추었습니다.",
@@ -120,7 +120,7 @@ const CHAPTERS = [
         "title": "4장 · 궁궐의 밤",
         "beats": [
             {
-                "art": "04-court.png",
+                "art": "04-court.webp",
                 "emoji": "🕯️",
                 "left": [
                     "밤꾀꼬리는 궁궐로 초대를 받았습니다. 작은 새는 낯선 곳이 조금 무서웠지요.",
@@ -134,7 +134,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-court-2.png",
+                "art": "04-court-2.webp",
                 "emoji": "🕯️",
                 "left": [
                     "이윽고 임금님이 고개를 들었습니다. 뺨에 눈물이 흐르고 있었지요.",
@@ -155,7 +155,7 @@ const CHAPTERS = [
         "title": "5장 · 보석으로 만든 새",
         "beats": [
             {
-                "art": "05-machine.png",
+                "art": "05-machine.webp",
                 "emoji": "⚙️",
                 "left": [
                     "어느 날 이웃 나라에서 선물이 왔습니다. 비단 보자기에 싸인 상자였지요. 뚜껑을 열자 사람들이 탄성을 질렀습니다.",
@@ -170,7 +170,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-machine-2.png",
+                "art": "05-machine-2.webp",
                 "emoji": "⚙️",
                 "left": [
                     "사람들은 두 새를 함께 부르게 해 보았습니다.",
@@ -192,7 +192,7 @@ const CHAPTERS = [
         "title": "6장 · 뚝 멈춘 노래",
         "beats": [
             {
-                "art": "06-broken.png",
+                "art": "06-broken.webp",
                 "emoji": "🔧",
                 "left": [
                     "기계 새는 밤낮없이 노래를 불렀습니다. 사람들은 그 노래를 모두 외워 버렸지요. 길에서도 흥얼거릴 정도였습니다.",
@@ -204,7 +204,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-broken-2.png",
+                "art": "06-broken-2.webp",
                 "emoji": "🔧",
                 "left": [
                     "솜씨 좋은 시계장이가 한참을 들여다보았습니다. 작은 톱니를 갈아 끼우고 기름을 쳤지요. 겨우 소리가 다시 나기는 했습니다.",
@@ -224,7 +224,7 @@ const CHAPTERS = [
         "title": "7장 · 임금님이 앓아눕다",
         "beats": [
             {
-                "art": "07-illness.png",
+                "art": "07-illness.webp",
                 "emoji": "🌙",
                 "left": [
                     "그로부터 몇 해가 지났습니다. 임금님이 병으로 자리에 눕고 말았지요. 얼굴이 하얗게 여위었습니다.",
@@ -238,7 +238,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-illness-2.png",
+                "art": "07-illness-2.webp",
                 "emoji": "🌙",
                 "left": [
                     "임금님은 머리맡의 기계 새를 바라보았습니다. 보석이 달빛에 차갑게 반짝였지요.",
@@ -258,7 +258,7 @@ const CHAPTERS = [
         "title": "8장 · 창가로 돌아온 노래",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🐦",
                 "left": [
                     "그때 창밖에서 노랫소리가 들려왔습니다. 맑고 고운 소리였지요.",
@@ -273,7 +273,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🐦",
                 "left": [
                     "임금님은 새에게 손을 내밀었습니다.",
@@ -307,7 +307,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐦')}
+                ${artFrame('cover.webp', '🐦')}
             </div>
             <div class="story-page-right">
                 <h1>밤꾀꼬리</h1>
@@ -379,7 +379,7 @@ const AFTERWORD = {
     emoji: '🐦',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 안데르센이 지었습니다. 중국 황제의 궁궐을 무대로 삼았지요.",
                 "황제는 제 나라 안에 있는 밤꾀꼬리를 책을 읽고서야 알았습니다. 먼 나라 사람이 적어 놓은 것을 보고요.",

@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 남은 것은 고양이 한 마리",
         "beats": [
             {
-                "art": "01-inherit.png",
+                "art": "01-inherit.webp",
                 "emoji": "🐱",
                 "left": [
                     "방앗간 주인이 세상을 떠났습니다. 아들이 셋 있었지요. 남긴 것은 세 가지였습니다.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-inherit-2.png",
+                "art": "01-inherit-2.webp",
                 "emoji": "🐱",
                 "left": [
                     "그때 고양이가 입을 열었습니다.",
@@ -44,7 +44,7 @@ const CHAPTERS = [
         "title": "2장 · 임금님께 바친 선물",
         "beats": [
             {
-                "art": "02-gift.png",
+                "art": "02-gift.webp",
                 "emoji": "👑",
                 "left": [
                     "고양이는 들판으로 갔습니다. 자루를 벌려 놓았지요. 안에 당근을 몇 개 넣었습니다.",
@@ -61,7 +61,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-gift-2.png",
+                "art": "02-gift-2.webp",
                 "emoji": "👑",
                 "left": [
                     "그날부터 선물이 이어졌습니다. 토끼도 보내고 꿩도 보냈지요.",
@@ -85,7 +85,7 @@ const CHAPTERS = [
         "title": "3장 · 강물에 빠진 후작님",
         "beats": [
             {
-                "art": "03-river.png",
+                "art": "03-river.webp",
                 "emoji": "🌊",
                 "left": [
                     "고양이가 막내를 깨웠습니다.",
@@ -102,7 +102,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-river-2.png",
+                "art": "03-river-2.webp",
                 "emoji": "🌊",
                 "left": [
                     "\"사람 살려! 사람 살려요!\"",
@@ -125,7 +125,7 @@ const CHAPTERS = [
         "title": "4장 · 이 밭은 누구 것이냐",
         "beats": [
             {
-                "art": "04-fields.png",
+                "art": "04-fields.webp",
                 "emoji": "🌾",
                 "left": [
                     "임금님이 마차에 태워 주었습니다. 공주 옆자리였지요. 막내는 얼굴이 빨개졌습니다.",
@@ -143,7 +143,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-fields-2.png",
+                "art": "04-fields-2.webp",
                 "emoji": "🌾",
                 "left": [
                     "마차가 밭 앞을 지났습니다.",
@@ -167,7 +167,7 @@ const CHAPTERS = [
         "title": "5장 · 마법사의 성",
         "beats": [
             {
-                "art": "05-castle.png",
+                "art": "05-castle.webp",
                 "emoji": "🏰",
                 "left": [
                     "길 끝에 커다란 성이 있었습니다. 그 땅의 진짜 주인은 따로 있었지요.",
@@ -185,7 +185,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-castle-2.png",
+                "art": "05-castle-2.webp",
                 "emoji": "🏰",
                 "left": [
                     "\"그것쯤이야 쉽지.\"",
@@ -208,7 +208,7 @@ const CHAPTERS = [
         "title": "6장 · 아주 작은 쥐",
         "beats": [
             {
-                "art": "06-mouse.png",
+                "art": "06-mouse.webp",
                 "emoji": "🐭",
                 "left": [
                     "\"쥐 따위가 어렵겠느냐!\"",
@@ -225,7 +225,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-mouse-2.png",
+                "art": "06-mouse-2.webp",
                 "emoji": "🐭",
                 "left": [
                     "고양이는 성문으로 달려갔습니다. 마차가 막 도착한 참이었지요. 문을 활짝 열었습니다.",
@@ -247,7 +247,7 @@ const CHAPTERS = [
         "title": "7장 · 진짜 후작이 되다",
         "beats": [
             {
-                "art": "07-wedding.png",
+                "art": "07-wedding.webp",
                 "emoji": "💍",
                 "left": [
                     "잔치가 무르익었습니다. 공주와 막내는 이야기를 나눴지요.",
@@ -265,7 +265,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-wedding-2.png",
+                "art": "07-wedding-2.webp",
                 "emoji": "💍",
                 "left": [
                     "임금님이 잔을 들었습니다.",
@@ -300,7 +300,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🥾')}
+                ${artFrame('cover.webp', '🥾')}
             </div>
             <div class="story-page-right">
                 <h1>장화 신은 고양이</h1>
@@ -372,7 +372,7 @@ const AFTERWORD = {
     emoji: '🥾',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 프랑스 사람 페로가 삼백 년쯤 전에 적었습니다. 그전에 이탈리아에도 비슷한 이야기가 있었습니다.",
                 "막내가 물려받은 것은 고양이 한 마리뿐이었습니다. 형들은 방앗간과 당나귀를 받았지요. 누가 봐도 가장 쓸모없는 몫이었습니다.",

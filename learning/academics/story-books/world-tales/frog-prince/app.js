@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 황금 공",
         "beats": [
             {
-                "art": "01-ball.png",
+                "art": "01-ball.webp",
                 "emoji": "🟡",
                 "left": [
                     "황금 공 하나가 햇빛을 받아 눈이 부시게 빛났습니다. 막내 공주가 가장 아끼는 물건이었지요. 해님도 그 얼굴을 볼 때면 잠시 걸음을 멈춘다고 할 정도였습니다.",
@@ -16,7 +16,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-ball-2.png",
+                "art": "01-ball-2.webp",
                 "emoji": "🟡",
                 "left": [
                     "그날도 공주는 공을 높이 던졌다가 받았습니다.",
@@ -37,7 +37,7 @@ const CHAPTERS = [
         "title": "2장 · 연못에서 나온 목소리",
         "beats": [
             {
-                "art": "02-frog.png",
+                "art": "02-frog.webp",
                 "emoji": "🐸",
                 "left": [
                     "공주는 한참을 울었습니다. 울어도 공이 떠오르지는 않았지요.",
@@ -53,7 +53,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-frog-2.png",
+                "art": "02-frog-2.webp",
                 "emoji": "🐸",
                 "left": [
                     "공주는 눈물을 닦고 대답했습니다.",
@@ -76,7 +76,7 @@ const CHAPTERS = [
         "title": "3장 · 가벼운 약속",
         "beats": [
             {
-                "art": "03-promise.png",
+                "art": "03-promise.webp",
                 "emoji": "🤝",
                 "left": [
                     "개구리는 물 위에 가만히 떠서 천천히 말했습니다.",
@@ -93,7 +93,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-promise-2.png",
+                "art": "03-promise-2.webp",
                 "emoji": "🤝",
                 "left": [
                     "개구리는 물속으로 쏙 들어갔습니다.",
@@ -113,7 +113,7 @@ const CHAPTERS = [
         "title": "4장 · 문을 두드리는 소리",
         "beats": [
             {
-                "art": "04-knock.png",
+                "art": "04-knock.webp",
                 "emoji": "🚪",
                 "left": [
                     "이튿날 저녁이었습니다. 온 식구가 커다란 밥상에 둘러앉았지요.",
@@ -130,7 +130,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-knock-2.png",
+                "art": "04-knock-2.webp",
                 "emoji": "🚪",
                 "left": [
                     "문을 연 공주는 그대로 얼어붙었습니다. 문턱에 개구리가 앉아 있었으니까요. 밤새 뛰어온 모양이었습니다.",
@@ -151,7 +151,7 @@ const CHAPTERS = [
         "title": "5장 · 임금님의 말",
         "beats": [
             {
-                "art": "05-king.png",
+                "art": "05-king.webp",
                 "emoji": "👑",
                 "left": [
                     "임금님이 딸의 얼굴을 보고 물었습니다.",
@@ -166,7 +166,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-king-2.png",
+                "art": "05-king-2.webp",
                 "emoji": "👑",
                 "left": [
                     "임금님은 잠시 말이 없었습니다.",
@@ -188,7 +188,7 @@ const CHAPTERS = [
         "title": "6장 · 한 밥상에서",
         "beats": [
             {
-                "art": "06-dinner.png",
+                "art": "06-dinner.webp",
                 "emoji": "🍽️",
                 "left": [
                     "개구리는 폴짝폴짝 뛰어 들어왔습니다. 의자를 타고 밥상 위까지 올라왔지요. 접시들 사이를 조심조심 지나갔습니다.",
@@ -202,7 +202,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-dinner-2.png",
+                "art": "06-dinner-2.webp",
                 "emoji": "🍽️",
                 "left": [
                     "개구리가 배를 두드렸습니다.",
@@ -224,7 +224,7 @@ const CHAPTERS = [
         "title": "7장 · 방문 앞에서",
         "beats": [
             {
-                "art": "07-room.png",
+                "art": "07-room.webp",
                 "emoji": "🛏️",
                 "left": [
                     "공주는 방에 들어서자마자 개구리를 내려놓았습니다. 푹신한 잠자리에서 한참 떨어진 구석이었지요.",
@@ -241,7 +241,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-room-2.png",
+                "art": "07-room-2.webp",
                 "emoji": "🛏️",
                 "left": [
                     "한참 뒤 공주가 몸을 일으켰습니다. 촛불을 들고 구석으로 가 보았지요. 개구리는 차가운 돌바닥에 웅크리고 있었습니다.",
@@ -262,7 +262,7 @@ const CHAPTERS = [
         "title": "8장 · 풀린 마법",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "✨",
                 "left": [
                     "그 순간이었습니다.",
@@ -277,7 +277,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "✨",
                 "left": [
                     "이튿날 아침이었습니다.",
@@ -308,7 +308,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐸')}
+                ${artFrame('cover.webp', '🐸')}
             </div>
             <div class="story-page-right">
                 <h1>개구리 왕자</h1>
@@ -380,7 +380,7 @@ const AFTERWORD = {
     emoji: '🐸',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 그림 형제가 모은 것 가운데 맨 앞에 실려 있습니다. 두 사람이 첫머리에 놓을 만큼 아꼈던 이야기지요.",
                 "공주가 개구리에게 한 약속은 아주 가벼웠습니다. 공을 건져 주면 무엇이든 하겠다고요. 지킬 생각이 없었으니 쉽게 한 말입니다.",

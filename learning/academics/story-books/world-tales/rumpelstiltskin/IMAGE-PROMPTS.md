@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -42,64 +42,64 @@ drawn as comical and sly, never scary. A messenger: a lanky man with muddy boots
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a dim tower room piled with golden thread on spindles, a small spinning wheel turning by itself and a tiny cloaked figure dancing in the corner shadows, moonlight through a barred window, mysterious and inviting. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a dim tower room piled with golden thread on spindles, a small spinning wheel turning by itself and a tiny cloaked figure dancing in the corner shadows, moonlight through a barred window, mysterious and inviting. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 방앗간 주인의 허풍
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-boast.png` | A castle audience hall where a floury-aproned miller gestures grandly while a young king leans forward with gleaming eyes, the miller's face already turning sheepish, comic. |
-| `images/01-boast-2.png` | A miller telling his pale daughter the news in a poor cottage, and the girl being led through a great castle gate that closes behind her, sombre and tense. |
+| `images/01-boast.webp` | A castle audience hall where a floury-aproned miller gestures grandly while a young king leans forward with gleaming eyes, the miller's face already turning sheepish, comic. |
+| `images/01-boast-2.webp` | A miller telling his pale daughter the news in a poor cottage, and the girl being led through a great castle gate that closes behind her, sombre and tense. |
 
 ## 2장 · 짚이 가득한 방
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-straw.png` | A stone store room piled to the ceiling with straw, a single spinning wheel in the middle and a weeping girl beside it, a locked door behind, tense and lonely. |
-| `images/02-straw-2.png` | A tiny man in a pointed cap and green coat slipping in through a door crack into a straw-filled room, tilting his head at a weeping girl, comic and curious. |
+| `images/02-straw.webp` | A stone store room piled to the ceiling with straw, a single spinning wheel in the middle and a weeping girl beside it, a locked door behind, tense and lonely. |
+| `images/02-straw-2.webp` | A tiny man in a pointed cap and green coat slipping in through a door crack into a straw-filled room, tilting his head at a weeping girl, comic and curious. |
 
 ## 3장 · 작은 남자
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-little-man.png` | A tiny man in a pointed cap sitting at a spinning wheel, straw feeding in one side and glittering golden thread winding out the other, the girl watching wide-eyed, magical. |
-| `images/03-little-man-2.png` | Dawn light on a room stacked with glittering golden thread and no straw left, a girl asleep by the wheel and a king staring open-mouthed in the doorway, dazzling. |
+| `images/03-little-man.webp` | A tiny man in a pointed cap sitting at a spinning wheel, straw feeding in one side and glittering golden thread winding out the other, the girl watching wide-eyed, magical. |
+| `images/03-little-man-2.webp` | Dawn light on a room stacked with glittering golden thread and no straw left, a girl asleep by the wheel and a king staring open-mouthed in the doorway, dazzling. |
 
 ## 4장 · 더 큰 방
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-bigger.png` | A much larger store room heaped with straw at dusk, a girl handing a small ring to a tiny man who is already rolling up his sleeves at the wheel, resigned and comic. |
-| `images/04-bigger-2.png` | A king running his hands through heaps of golden thread and grinning greedily, then a vast warehouse-sized hall filled with straw and a small figure alone in it, dramatic. |
+| `images/04-bigger.webp` | A much larger store room heaped with straw at dusk, a girl handing a small ring to a tiny man who is already rolling up his sleeves at the wheel, resigned and comic. |
+| `images/04-bigger-2.webp` | A king running his hands through heaps of golden thread and grinning greedily, then a vast warehouse-sized hall filled with straw and a small figure alone in it, dramatic. |
 
 ## 5장 · 줄 것이 없어서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-promise.png` | A vast straw-filled hall at night where a tiny man holds out his hand slyly and a girl hesitates with her own hand half raised, torchlight and long shadows, heavy and quiet. |
-| `images/05-promise-2.png` | A wedding celebration in a castle courtyard with banners and crowds, and later a queen holding a newborn baby in a sunlit nursery, joyful but with a shadow of worry. |
+| `images/05-promise.webp` | A vast straw-filled hall at night where a tiny man holds out his hand slyly and a girl hesitates with her own hand half raised, torchlight and long shadows, heavy and quiet. |
+| `images/05-promise-2.webp` | A wedding celebration in a castle courtyard with banners and crowds, and later a queen holding a newborn baby in a sunlit nursery, joyful but with a shadow of worry. |
 
 ## 6장 · 찾아온 약속
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-baby.png` | A nursery at night where a queen clutches her baby as a tiny man stands on the windowsill, moonlight and gauzy curtains, tense but gentle. |
-| `images/06-baby-2.png` | A tiny man holding up three fingers on a windowsill while a kneeling queen weeps with her baby, moonlit nursery, tense and moving. |
+| `images/06-baby.webp` | A nursery at night where a queen clutches her baby as a tiny man stands on the windowsill, moonlight and gauzy curtains, tense but gentle. |
+| `images/06-baby-2.webp` | A tiny man holding up three fingers on a windowsill while a kneeling queen weeps with her baby, moonlit nursery, tense and moving. |
 
 ## 7장 · 온 나라의 이름
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-names.png` | A throne room where a queen reads from a long unrolled scroll of names while a tiny man shakes his head smugly, courtiers crowding the doorway, comic tension. |
-| `images/07-names-2.png` | A queen despairing over lists of odd names, and then a mud-booted messenger bursting into the throne room breathless as she leaps up, comic urgency. |
+| `images/07-names.webp` | A throne room where a queen reads from a long unrolled scroll of names while a tiny man shakes his head smugly, courtiers crowding the doorway, comic tension. |
+| `images/07-names-2.webp` | A queen despairing over lists of odd names, and then a mud-booted messenger bursting into the throne room breathless as she leaps up, comic urgency. |
 
 ## 8장 · 숲속의 노래
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A forest clearing at night where a tiny man capers on one leg around a bonfire singing, seen from behind a bush by a mud-booted messenger, comic and secretive. |
-| `images/08-ending-2.png` | A lit palace nursery where a calm queen names the tiny man who leaps in shock with his cap flying off, then dashes out the door, comic and triumphant. |
+| `images/08-ending.webp` | A forest clearing at night where a tiny man capers on one leg around a bonfire singing, seen from behind a bush by a mud-booted messenger, comic and secretive. |
+| `images/08-ending-2.webp` | A lit palace nursery where a calm queen names the tiny man who leaps in shock with his cap flying off, then dashes out the door, comic and triumphant. |
 
 ## 사용 팁
 

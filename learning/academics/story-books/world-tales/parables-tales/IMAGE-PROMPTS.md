@@ -5,9 +5,9 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-이 책은 이야기 분량이 모두 짧아서 중간 페이지(`-3.png`)가 필요한 이야기는 없어요.
+이 책은 이야기 분량이 모두 짧아서 중간 페이지(`-3.webp`)가 필요한 이야기는 없어요.
 
-권장 크기: 가로 4 : 세로 3 비율, PNG. **단, 표지(`cover.png`)만 예외 — 세로 2 : 3 비율로 만들어주세요.** 표지 그림칸은 책을 펼쳤을 때 왼쪽 반쪽 전체를 꽉 채우는데, 그 칸 자체가 가로로 넓은 4:3이 아니라 세로로 긴 2:3 모양이에요. 4:3 가로 그림을 넣으면 화면에 꽉 채우려다 양옆이 절반 가까이 잘려나가니 꼭 세로 비율로 따로 생성해주세요.
+권장 크기: 가로 4 : 세로 3 비율, WebP. **단, 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율로 만들어주세요.** 표지 그림칸은 책을 펼쳤을 때 왼쪽 반쪽 전체를 꽉 채우는데, 그 칸 자체가 가로로 넓은 4:3이 아니라 세로로 긴 2:3 모양이에요. 4:3 가로 그림을 넣으면 화면에 꽉 채우려다 양옆이 절반 가까이 잘려나가니 꼭 세로 비율로 따로 생성해주세요.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -27,120 +27,120 @@ expressive character faces, dynamic staging.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: an old storybook standing upright on a wooden table under warm golden light, a tall wheat sprig and an oil lamp rising beside it, night sky with stars filling the space above, magical and inviting. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: an old storybook standing upright on a wooden table under warm golden light, a tall wheat sprig and an oil lamp rising beside it, night sky with stars filling the space above, magical and inviting. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 이야기 1 · 값비싼 진주
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-pearl.png` | A traveling merchant leaning over a humble market stall at dusk, eyes wide with astonishment at a single glowing moonlit pearl resting on a cloth, warm lantern light. |
-| `images/story-01-pearl-2.png` | The same merchant walking away from an empty house and sold belongings, holding the pearl up to the light with a deeply content smile, warm sunset glow. |
+| `images/story-01-pearl.webp` | A traveling merchant leaning over a humble market stall at dusk, eyes wide with astonishment at a single glowing moonlit pearl resting on a cloth, warm lantern light. |
+| `images/story-01-pearl-2.webp` | The same merchant walking away from an empty house and sold belongings, holding the pearl up to the light with a deeply content smile, warm sunset glow. |
 
 ## 이야기 2 · 착한 사마리아인
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-samaritan.png` | A wounded traveler lying on a rocky mountain road, two passersby in the distance turning away and walking past without stopping, dusty warm daylight, somber mood. |
-| `images/story-02-samaritan-2.png` | A kind traveler kneeling to bandage the wounded man's arm, a donkey waiting nearby, warm compassionate lighting, gentle rescue scene. |
+| `images/story-02-samaritan.webp` | A wounded traveler lying on a rocky mountain road, two passersby in the distance turning away and walking past without stopping, dusty warm daylight, somber mood. |
+| `images/story-02-samaritan-2.webp` | A kind traveler kneeling to bandage the wounded man's arm, a donkey waiting nearby, warm compassionate lighting, gentle rescue scene. |
 
 ## 이야기 3 · 한밤중에 빵을 빌리러 온 친구
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-friend.png` | A man knocking urgently on a neighbor's wooden door at midnight under a starry sky, holding an empty basket, warm lantern glow from a small window. |
-| `images/story-03-friend-2.png` | The sleepy neighbor handing over three loaves of bread through the doorway with a tired but warm smile, moonlit street, cozy resolution. |
+| `images/story-03-friend.webp` | A man knocking urgently on a neighbor's wooden door at midnight under a starry sky, holding an empty basket, warm lantern glow from a small window. |
+| `images/story-03-friend-2.webp` | The sleepy neighbor handing over three loaves of bread through the doorway with a tired but warm smile, moonlit street, cozy resolution. |
 
 ## 이야기 4 · 되찾은 은전 한 닢
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-coin.png` | A woman kneeling on a floor by candlelight, sweeping under furniture searching intently for something small, warm indoor glow, focused expression. |
-| `images/story-04-coin-2.png` | The same woman joyfully holding up a single silver coin, neighbors gathered smiling around her in a small warm-lit room, celebratory mood. |
+| `images/story-04-coin.webp` | A woman kneeling on a floor by candlelight, sweeping under furniture searching intently for something small, warm indoor glow, focused expression. |
+| `images/story-04-coin-2.webp` | The same woman joyfully holding up a single silver coin, neighbors gathered smiling around her in a small warm-lit room, celebratory mood. |
 
 ## 이야기 5 · 반석 위에 지은 집
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-house.png` | Two small houses being built side by side, one on loose sand and one on solid rock, builders at work, warm daytime countryside. |
-| `images/story-05-house-2.png` | A dramatic storm with rain and flooding water sweeping away the sand house while the house on the rock stands firm and unshaken, dramatic warm-toned lighting. |
+| `images/story-05-house.webp` | Two small houses being built side by side, one on loose sand and one on solid rock, builders at work, warm daytime countryside. |
+| `images/story-05-house-2.webp` | A dramatic storm with rain and flooding water sweeping away the sand house while the house on the rock stands firm and unshaken, dramatic warm-toned lighting. |
 
 ## 이야기 6 · 포도원 일꾼들의 품삯
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-vineyard.png` | A vineyard owner greeting idle workers in a village square at different times of day, golden late-afternoon light, warm harvest atmosphere. |
-| `images/story-06-vineyard-2.png` | Workers lined up receiving equal coins from the vineyard owner at sunset, some looking surprised and murmuring, others calm and satisfied, warm evening light. |
+| `images/story-06-vineyard.webp` | A vineyard owner greeting idle workers in a village square at different times of day, golden late-afternoon light, warm harvest atmosphere. |
+| `images/story-06-vineyard-2.webp` | Workers lined up receiving equal coins from the vineyard owner at sunset, some looking surprised and murmuring, others calm and satisfied, warm evening light. |
 
 ## 이야기 7 · 돌아온 둘째 아들
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-son.png` | A ragged young man sitting alone among pigs in a muddy pen, hungry and thoughtful, distant golden sunset over dry fields. |
-| `images/story-07-son-2.png` | A father running down a dusty road with open arms to embrace his returning son, warm golden light, joyful emotional reunion. |
+| `images/story-07-son.webp` | A ragged young man sitting alone among pigs in a muddy pen, hungry and thoughtful, distant golden sunset over dry fields. |
+| `images/story-07-son-2.webp` | A father running down a dusty road with open arms to embrace his returning son, warm golden light, joyful emotional reunion. |
 
 ## 이야기 8 · 가라지 씨앗
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-weeds.png` | A worried farmer and field hand looking down at young wheat sprouts mixed with unfamiliar weeds in a sunlit field, warm morning light. |
-| `images/story-08-weeds-2.png` | The same farmer calmly overseeing a golden harvest, wheat bundled separately from a smoldering pile of burned weeds nearby, warm harvest-time glow. |
+| `images/story-08-weeds.webp` | A worried farmer and field hand looking down at young wheat sprouts mixed with unfamiliar weeds in a sunlit field, warm morning light. |
+| `images/story-08-weeds-2.webp` | The same farmer calmly overseeing a golden harvest, wheat bundled separately from a smoldering pile of burned weeds nearby, warm harvest-time glow. |
 
 ## 이야기 9 · 땅에 묻은 한 달란트
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-talent.png` | A nervous servant digging a hole in the ground at night to bury a small pouch of coins, moonlit courtyard, anxious expression. |
-| `images/story-09-talent-2.png` | Two joyful servants presenting doubled coin pouches to a pleased master, while a third servant stands ashamed holding his single unopened pouch, warm indoor lighting. |
+| `images/story-09-talent.webp` | A nervous servant digging a hole in the ground at night to bury a small pouch of coins, moonlit courtyard, anxious expression. |
+| `images/story-09-talent-2.webp` | Two joyful servants presenting doubled coin pouches to a pleased master, while a third servant stands ashamed holding his single unopened pouch, warm indoor lighting. |
 
 ## 이야기 10 · 끈질긴 과부
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-widow.png` | A determined elderly widow standing before an unimpressed judge at his bench, pleading with clasped hands, warm dim courtroom light. |
-| `images/story-10-widow-2.png` | The same judge throwing up his hands in exasperated surrender while the widow smiles with quiet triumph, warm afternoon light. |
+| `images/story-10-widow.webp` | A determined elderly widow standing before an unimpressed judge at his bench, pleading with clasped hands, warm dim courtroom light. |
+| `images/story-10-widow-2.webp` | The same judge throwing up his hands in exasperated surrender while the widow smiles with quiet triumph, warm afternoon light. |
 
 ## 이야기 11 · 영리한 청지기
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-steward.png` | A worried manager sitting at a desk with ledgers and scrolls, deep in thought about his uncertain future, dim warm study light. |
-| `images/story-11-steward-2.png` | The same manager smiling and reducing a debt on a scroll for a grateful visitor, warm candlelight, clever confident expression. |
+| `images/story-11-steward.webp` | A worried manager sitting at a desk with ledgers and scrolls, deep in thought about his uncertain future, dim warm study light. |
+| `images/story-11-steward-2.webp` | The same manager smiling and reducing a debt on a scroll for a grateful visitor, warm candlelight, clever confident expression. |
 
 ## 이야기 12 · 용서할 줄 모르는 종
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-servant.png` | A relieved servant kneeling before a king who gestures forgiveness with an open hand, a torn debt scroll on the floor, warm golden throne room. |
-| `images/story-12-servant-2.png` | The same servant harshly grabbing a coworker by the collar demanding payment on a dusty street, cold contrasting light, tense dramatic mood. |
+| `images/story-12-servant.webp` | A relieved servant kneeling before a king who gestures forgiveness with an open hand, a torn debt scroll on the floor, warm golden throne room. |
+| `images/story-12-servant-2.webp` | The same servant harshly grabbing a coworker by the collar demanding payment on a dusty street, cold contrasting light, tense dramatic mood. |
 
 ## 이야기 13 · 포도원을 노린 소작농들
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-13-tenants.png` | Angry tenant farmers driving off a landowner's messenger at the gate of a lush vineyard, tense confrontation, warm late-afternoon light. |
-| `images/story-13-tenants-2.png` | The landowner arriving with guards to confront the tenants amid the vineyard, stern expression, dramatic golden evening light. |
+| `images/story-13-tenants.webp` | Angry tenant farmers driving off a landowner's messenger at the gate of a lush vineyard, tense confrontation, warm late-afternoon light. |
+| `images/story-13-tenants-2.webp` | The landowner arriving with guards to confront the tenants amid the vineyard, stern expression, dramatic golden evening light. |
 
 ## 이야기 14 · 기름을 준비한 다섯 처녀
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-14-lamps.png` | Ten young women sitting with oil lamps in the dark waiting outside a decorated gate, some lamps glowing brightly, others dim, moonlit night. |
-| `images/story-14-lamps-2.png` | Five women with bright lamps joyfully entering a lit doorway to a feast while five others stand outside a closed door in the dark, poignant warm-cool contrast. |
+| `images/story-14-lamps.webp` | Ten young women sitting with oil lamps in the dark waiting outside a decorated gate, some lamps glowing brightly, others dim, moonlit night. |
+| `images/story-14-lamps-2.webp` | Five women with bright lamps joyfully entering a lit doorway to a feast while five others stand outside a closed door in the dark, poignant warm-cool contrast. |
 
 ## 이야기 15 · 혼인 잔치에 초대받은 사람들
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-15-wedding.png` | Royal servants inviting ordinary people from a busy street into a grand decorated banquet hall, warm festive lighting, joyful chaos. |
-| `images/story-15-wedding-2.png` | A king pointing questioningly at one improperly dressed guest at a long feast table full of joyful guests, warm banquet hall glow, dramatic focus. |
+| `images/story-15-wedding.webp` | Royal servants inviting ordinary people from a busy street into a grand decorated banquet hall, warm festive lighting, joyful chaos. |
+| `images/story-15-wedding-2.webp` | A king pointing questioningly at one improperly dressed guest at a long feast table full of joyful guests, warm banquet hall glow, dramatic focus. |
 
 ## 이야기 16 · 곳간을 더 크게 지은 부자
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-16-barn.png` | A wealthy farmer standing proudly before overflowing grain sacks and a half-built larger barn, golden harvest fields behind him, warm satisfied expression. |
-| `images/story-16-barn-2.png` | The same barn standing finished and full under a quiet night sky, no one present, an empty chair beside it, still and reflective moonlit mood. |
+| `images/story-16-barn.webp` | A wealthy farmer standing proudly before overflowing grain sacks and a half-built larger barn, golden harvest fields behind him, warm satisfied expression. |
+| `images/story-16-barn-2.webp` | The same barn standing finished and full under a quiet night sky, no one present, an empty chair beside it, still and reflective moonlit mood. |
 
 ## 사용 팁
 

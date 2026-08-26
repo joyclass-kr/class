@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 닳아 버린 신발",
         "beats": [
             {
-                "art": "01-shoes.png",
+                "art": "01-shoes.webp",
                 "emoji": "👠",
                 "left": [
                     "한방에 침대가 나란히 열둘 놓여 있었습니다. 임금님의 열두 공주가 함께 잠드는 방이었지요. 모두 곱고 사이가 좋았습니다.",
@@ -18,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-shoes-2.png",
+                "art": "01-shoes-2.webp",
                 "emoji": "👠",
                 "left": [
                     "임금님은 그것이 도무지 이해되지 않았습니다. 새 신을 지어 주어도 마찬가지였지요. 하룻밤이면 또 구멍이 났습니다.",
@@ -40,7 +40,7 @@ const CHAPTERS = [
         "title": "2장 · 임금님의 방",
         "beats": [
             {
-                "art": "02-decree.png",
+                "art": "02-decree.webp",
                 "emoji": "📜",
                 "left": [
                     "임금님은 마침내 온 나라에 알렸습니다. 전령이 광장에서 큰 소리로 읽었지요.",
@@ -57,7 +57,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-decree-2.png",
+                "art": "02-decree-2.webp",
                 "emoji": "📜",
                 "left": [
                     "첫 번째 왕자가 공주들의 방 앞에 앉았습니다. 문을 열어 두고 밤을 지키기로 했지요. 큰공주가 술 한 잔을 내왔습니다.",
@@ -77,7 +77,7 @@ const CHAPTERS = [
         "title": "3장 · 길에서 만난 노파",
         "beats": [
             {
-                "art": "03-cloak.png",
+                "art": "03-cloak.webp",
                 "emoji": "🧓",
                 "left": [
                     "그 무렵 늙은 병사 하나가 그 나라를 지났습니다. 전쟁에서 다쳐 이제는 싸울 수 없는 몸이었지요.",
@@ -92,7 +92,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-cloak-2.png",
+                "art": "03-cloak-2.webp",
                 "emoji": "🧓",
                 "left": [
                     "\"성에 가서 공주들의 비밀을 알아내 보게.\"",
@@ -116,7 +116,7 @@ const CHAPTERS = [
         "title": "4장 · 마시지 않은 술",
         "beats": [
             {
-                "art": "04-wine.png",
+                "art": "04-wine.webp",
                 "emoji": "🍷",
                 "left": [
                     "병사는 성으로 갔습니다.",
@@ -134,7 +134,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-wine-2.png",
+                "art": "04-wine-2.webp",
                 "emoji": "🍷",
                 "left": [
                     "병사는 노파의 말을 떠올렸습니다. 잔을 입에 대고 마시는 시늉만 했지요. 술은 몰래 옷깃 뒤로 흘려보냈습니다.",
@@ -155,7 +155,7 @@ const CHAPTERS = [
         "title": "5장 · 침대 밑의 계단",
         "beats": [
             {
-                "art": "05-trapdoor.png",
+                "art": "05-trapdoor.webp",
                 "emoji": "🕳️",
                 "left": [
                     "공주들이 침대에서 일어났습니다. 장롱에서 고운 옷을 꺼내 입었지요.",
@@ -172,7 +172,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-trapdoor-2.png",
+                "art": "05-trapdoor-2.webp",
                 "emoji": "🕳️",
                 "left": [
                     "병사는 얼른 일어났습니다. 노파가 준 망토를 걸쳤지요.",
@@ -194,7 +194,7 @@ const CHAPTERS = [
         "title": "6장 · 은과 금과 다이아몬드 숲",
         "beats": [
             {
-                "art": "06-forests.png",
+                "art": "06-forests.webp",
                 "emoji": "🌳",
                 "left": [
                     "계단이 끝나자 놀라운 곳이 펼쳐졌습니다. 땅 밑인데도 사방이 환했지요. 첫 번째 숲이 나타났습니다.",
@@ -209,7 +209,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-forests-2.png",
+                "art": "06-forests-2.webp",
                 "emoji": "🌳",
                 "left": [
                     "두 번째 숲은 나뭇잎이 금이었습니다. 빛을 받아 눈이 부실 지경이었지요.",
@@ -230,7 +230,7 @@ const CHAPTERS = [
         "title": "7장 · 호수 건너 무도회장",
         "beats": [
             {
-                "art": "07-ball.png",
+                "art": "07-ball.webp",
                 "emoji": "💃",
                 "left": [
                     "숲을 지나자 커다란 호수가 나왔습니다. 물이 거울처럼 잔잔했지요. 물가에 작은 배 열두 척이 기다리고 있었습니다.",
@@ -246,7 +246,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-ball-2.png",
+                "art": "07-ball-2.webp",
                 "emoji": "💃",
                 "left": [
                     "호수 건너에는 무도회장이 있었습니다. 창마다 불빛이 환했지요. 안에서 음악 소리가 흘러나왔습니다.",
@@ -265,7 +265,7 @@ const CHAPTERS = [
         "title": "8장 · 세 개의 가지",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🌿",
                 "left": [
                     "병사는 공주들보다 먼저 올라왔습니다. 망토를 벗고 다시 누웠지요.",
@@ -282,7 +282,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🌿",
                 "left": [
                     "\"거짓말할 생각 마라. 증거가 있느냐?\"",
@@ -313,7 +313,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '👠')}
+                ${artFrame('cover.webp', '👠')}
             </div>
             <div class="story-page-right">
                 <h1>춤추는 열두 공주</h1>
@@ -385,7 +385,7 @@ const AFTERWORD = {
     emoji: '👞',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 그림 형제가 모은 것입니다.",
                 "임금님을 답답하게 한 것은 신발값이 아니었습니다. 문이 잠겨 있는데 신발만 닳아 있다는 것이었지요. 눈앞의 일이 말이 되지 않았던 것입니다.",

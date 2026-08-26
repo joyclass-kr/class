@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 할머니 댁 심부름",
         "beats": [
             {
-                "art": "01-errand.png",
+                "art": "01-errand.webp",
                 "emoji": "🧺",
                 "left": [
                     "한 소녀가 살았습니다. 할머니가 만들어 준 모자가 하나 있었지요.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-errand-2.png",
+                "art": "01-errand-2.webp",
                 "emoji": "🧺",
                 "left": [
                     "어머니가 대문 앞에서 한 번 더 당부했습니다.",
@@ -44,7 +44,7 @@ const CHAPTERS = [
         "title": "2장 · 숲에서 만난 늑대",
         "beats": [
             {
-                "art": "02-wolf-meets.png",
+                "art": "02-wolf-meets.webp",
                 "emoji": "🐺",
                 "left": [
                     "한참 길을 걷는데 누가 말을 걸었습니다.",
@@ -63,7 +63,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-wolf-meets-2.png",
+                "art": "02-wolf-meets-2.webp",
                 "emoji": "🐺",
                 "left": [
                     "늑대가 슬쩍 길옆을 가리켰습니다.",
@@ -85,7 +85,7 @@ const CHAPTERS = [
         "title": "3장 · 먼저 도착한 늑대",
         "beats": [
             {
-                "art": "03-wolf-arrives.png",
+                "art": "03-wolf-arrives.webp",
                 "emoji": "🏠",
                 "left": [
                     "늑대는 숲을 가로질러 냅다 달렸습니다. 금세 저 앞에 물레방아가 보였지요. 참나무 세 그루도 나란히 서 있었습니다.",
@@ -101,7 +101,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-wolf-arrives-2.png",
+                "art": "03-wolf-arrives-2.webp",
                 "emoji": "🏠",
                 "left": [
                     "늑대는 방을 이리저리 둘러봤습니다. 옷걸이에 할머니 잠옷이 걸려 있었지요. 늑대는 그 잠옷을 걸치고 머리에는 두건을 썼습니다.",
@@ -123,7 +123,7 @@ const CHAPTERS = [
         "title": "4장 · 할머니, 왜 그렇게 커요?",
         "beats": [
             {
-                "art": "04-questions.png",
+                "art": "04-questions.webp",
                 "emoji": "👀",
                 "left": [
                     "빨간 모자가 도착했습니다. 꽃을 한 아름 안고 있었지요. 문이 살짝 열려 있었습니다.",
@@ -138,7 +138,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-questions-2.png",
+                "art": "04-questions-2.webp",
                 "emoji": "👀",
                 "left": [
                     "\"할머니, 귀가 왜 그렇게 커요?\"",
@@ -163,7 +163,7 @@ const CHAPTERS = [
         "title": "5장 · 코를 고는 늑대",
         "beats": [
             {
-                "art": "05-snoring.png",
+                "art": "05-snoring.webp",
                 "emoji": "😴",
                 "left": [
                     "배가 잔뜩 부른 늑대였습니다. 이제 몹시 졸렸지요. 늑대는 침대에 다시 벌렁 누웠습니다.",
@@ -179,7 +179,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-snoring-2.png",
+                "art": "05-snoring-2.webp",
                 "emoji": "😴",
                 "left": [
                     "사냥꾼이 창으로 방 안을 들여다봤습니다. 침대에 늑대가 떡하니 누워 있었지요.",
@@ -201,7 +201,7 @@ const CHAPTERS = [
         "title": "6장 · 벽장 문이 덜컹덜컹",
         "beats": [
             {
-                "art": "06-rescue.png",
+                "art": "06-rescue.webp",
                 "emoji": "✂️",
                 "left": [
                     "사냥꾼은 살금살금 방으로 들어갔습니다. 늑대는 여전히 코를 골고 있었지요. 사냥꾼은 조심조심 배를 갈랐습니다.",
@@ -217,7 +217,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-rescue-2.png",
+                "art": "06-rescue-2.webp",
                 "emoji": "✂️",
                 "left": [
                     "세 사람은 머리를 맞대고 꾀를 냈습니다. 마당에서 돌을 주워 왔지요.",
@@ -237,7 +237,7 @@ const CHAPTERS = [
         "title": "7장 · 큰길로만",
         "beats": [
             {
-                "art": "07-lesson.png",
+                "art": "07-lesson.webp",
                 "emoji": "🌷",
                 "left": [
                     "\"어이쿠, 배가 왜 이리 무겁지?\"",
@@ -254,7 +254,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-lesson-2.png",
+                "art": "07-lesson-2.webp",
                 "emoji": "🌷",
                 "left": [
                     "빨간 모자는 가져온 꽃을 꽂았습니다. 침대 옆 병에 하나씩 담았지요.",
@@ -286,7 +286,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🔴')}
+                ${artFrame('cover.webp', '🔴')}
             </div>
             <div class="story-page-right">
                 <h1>빨간 모자</h1>
@@ -359,7 +359,7 @@ const AFTERWORD = {
     emoji: '🔴',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 그림 형제가 모은 것입니다. 그전에 프랑스 사람 페로가 먼저 적었는데, 그 판에는 사냥꾼이 나오지 않습니다.",
                 "늑대는 힘으로 덤비지 않았습니다. 먼저 말을 걸었지요. 어디 가는지, 누구를 찾아가는지 물었습니다. 빨간 모자는 순순히 다 알려 주었고요.",

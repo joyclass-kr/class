@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 오지 않는 편지",
         "beats": [
             {
-                "art": "01-letter.png",
+                "art": "01-letter.webp",
                 "emoji": "📮",
                 "left": [
                     "이탈리아 제노바에 마르코라는 아이가 살았습니다. 열세 살 난 아이였지요.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-letter-2.png",
+                "art": "01-letter-2.webp",
                 "emoji": "📮",
                 "left": [
                     "한 달이 가고 두 달이 갔습니다. 그래도 소식이 없었지요. 아버지는 여러 곳에 편지를 보냈습니다.",
@@ -40,7 +40,7 @@ const CHAPTERS = [
         "title": "2장 · 제노바 항구",
         "beats": [
             {
-                "art": "02-harbor.png",
+                "art": "02-harbor.webp",
                 "emoji": "⚓",
                 "left": [
                     "아버지는 아는 사람에게 부탁을 했습니다. 겨우 뱃삯을 마련했지요. 마르코는 작은 보따리 하나만 챙겼습니다.",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-harbor-2.png",
+                "art": "02-harbor-2.webp",
                 "emoji": "⚓",
                 "left": [
                     "아버지가 부두에서 손을 흔들었습니다. 얼굴이 잘 보이지 않았지요. 마르코는 목청껏 소리쳤습니다.",
@@ -75,7 +75,7 @@ const CHAPTERS = [
         "title": "3장 · 바다를 건너",
         "beats": [
             {
-                "art": "03-voyage.png",
+                "art": "03-voyage.webp",
                 "emoji": "🌊",
                 "left": [
                     "배 안은 발 디딜 틈이 없었습니다. 아래층 짐칸까지 사람이 가득했지요. 마르코는 갑판 구석에 자리를 잡았습니다.",
@@ -88,7 +88,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-voyage-2.png",
+                "art": "03-voyage-2.webp",
                 "emoji": "🌊",
                 "left": [
                     "배에는 이런저런 사람이 많았습니다. 농부도 있고 목수도 있었지요. 다들 일자리를 찾아 떠나는 사람들이었습니다.",
@@ -108,7 +108,7 @@ const CHAPTERS = [
         "title": "4장 · 이미 떠난 뒤",
         "beats": [
             {
-                "art": "04-moved.png",
+                "art": "04-moved.webp",
                 "emoji": "🏚️",
                 "left": [
                     "마르코는 배에서 내렸습니다. 낯선 말소리가 사방에서 들렸지요.",
@@ -124,7 +124,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-moved-2.png",
+                "art": "04-moved-2.webp",
                 "emoji": "🏚️",
                 "left": [
                     "마르코는 어머니의 이름을 댔습니다. 그 사람은 고개를 저었지요.",
@@ -147,7 +147,7 @@ const CHAPTERS = [
         "title": "5장 · 도와준 사람들",
         "beats": [
             {
-                "art": "05-help.png",
+                "art": "05-help.webp",
                 "emoji": "🤝",
                 "left": [
                     "마르코는 로사리오로 향했습니다. 걷다가 얻어 타고 또 걸었지요.",
@@ -163,7 +163,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-help-2.png",
+                "art": "05-help-2.webp",
                 "emoji": "🤝",
                 "left": [
                     "어떤 이는 빵을 쥐여 주었습니다. 어떤 이는 짐수레 한구석에 태워 주었지요. 어떤 이는 하룻밤 잠자리를 내주었습니다.",
@@ -185,7 +185,7 @@ const CHAPTERS = [
         "title": "6장 · 다시 어긋난 길",
         "beats": [
             {
-                "art": "06-again.png",
+                "art": "06-again.webp",
                 "emoji": "😔",
                 "left": [
                     "마침내 로사리오에 닿았습니다. 마르코는 곧장 그 집을 찾아갔지요. 이번에는 틀림없으리라 여겼습니다.",
@@ -202,7 +202,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-again-2.png",
+                "art": "06-again-2.webp",
                 "emoji": "😔",
                 "left": [
                     "그때 주머니에 손이 닿았습니다. 어머니의 사진이 만져졌지요.",
@@ -223,7 +223,7 @@ const CHAPTERS = [
         "title": "7장 · 마지막 길",
         "beats": [
             {
-                "art": "07-final.png",
+                "art": "07-final.webp",
                 "emoji": "🚶",
                 "left": [
                     "마르코는 들판을 지났습니다. 강을 건너고 언덕을 넘었지요.",
@@ -238,7 +238,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-final-2.png",
+                "art": "07-final-2.webp",
                 "emoji": "🚶",
                 "left": [
                     "이윽고 흙집 몇 채가 보였습니다. 작은 마을이었지요. 마르코는 마지막 힘을 다해 걸었습니다.",
@@ -260,7 +260,7 @@ const CHAPTERS = [
         "title": "8장 · 어머니의 방",
         "beats": [
             {
-                "art": "08-reunion.png",
+                "art": "08-reunion.webp",
                 "emoji": "💗",
                 "left": [
                     "아주머니가 마르코를 안으로 데려갔습니다. 작은 방에 침대가 하나 있었지요. 어머니가 거기 누워 있었습니다.",
@@ -275,7 +275,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-reunion-2.png",
+                "art": "08-reunion-2.webp",
                 "emoji": "💗",
                 "left": [
                     "어머니가 천천히 눈을 떴습니다.",
@@ -307,7 +307,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🚢')}
+                ${artFrame('cover.webp', '🚢')}
             </div>
             <div class="story-page-right">
                 <h1>어머니를 찾아서</h1>
@@ -379,7 +379,7 @@ const AFTERWORD = {
     emoji: '🚢',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 이탈리아의 아미치스가 쓴 『사랑의 학교』에 실린 한 대목입니다. 백사십 년쯤 전에 나왔습니다.",
                 "마르코가 배를 탄 그 무렵, 이탈리아에서는 많은 사람이 일을 찾아 남아메리카로 떠났습니다. 지어낸 이야기가 아니지요.",

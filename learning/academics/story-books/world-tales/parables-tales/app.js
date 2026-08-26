@@ -7,7 +7,7 @@ const CHAPTERS = [
         num: 1,
         title: "값비싼 진주",
         emoji: "💎",
-        art: ["story-01-pearl.png", "story-01-pearl-2.png"],
+        art: ["story-01-pearl.webp", "story-01-pearl-2.webp"],
         paras: [
             `어느 마을에 진주를 보는 눈이 남달리 좋은 상인이 있었어요.`,
             `그는 세상에서 제일 아름다운 진주를 찾아 이 나라 저 나라를 떠돌아다녔지요.`,
@@ -56,7 +56,7 @@ const CHAPTERS = [
         num: 2,
         title: "착한 사마리아인",
         emoji: "🩹",
-        art: ["story-02-samaritan.png", "story-02-samaritan-2.png"],
+        art: ["story-02-samaritan.webp", "story-02-samaritan-2.webp"],
         paras: [
             `어느 날 한 나그네가 예루살렘에서 여리고로 가는 산길을 홀로 걷고 있었어요.`,
             `그 길은 바위투성이에 굽이가 많았지요.`,
@@ -104,7 +104,7 @@ const CHAPTERS = [
         num: 3,
         title: "한밤중에 빵을 빌리러 온 친구",
         emoji: "🍞",
-        art: ["story-03-friend.png", "story-03-friend-2.png"],
+        art: ["story-03-friend.webp", "story-03-friend-2.webp"],
         paras: [
             `깊은 밤이었어요. 온 마을이 잠들어 있었지요.`,
             `개 짖는 소리 하나 나지 않는 고요한 밤이었답니다.`,
@@ -152,7 +152,7 @@ const CHAPTERS = [
         num: 4,
         title: "되찾은 은전 한 닢",
         emoji: "🪙",
-        art: ["story-04-coin.png", "story-04-coin-2.png"],
+        art: ["story-04-coin.webp", "story-04-coin-2.webp"],
         paras: [
             `한 여인에게는 소중히 간직해 온 은전 열 닢이 있었어요.`,
             `혼인할 때 받은 것이라 무엇과도 바꿀 수 없는 것이었지요.`,
@@ -198,7 +198,7 @@ const CHAPTERS = [
         num: 5,
         title: "반석 위에 지은 집",
         emoji: "🏠",
-        art: ["story-05-house.png", "story-05-house-2.png"],
+        art: ["story-05-house.webp", "story-05-house-2.webp"],
         paras: [
             `두 사람이 각자 살 집을 짓기로 했어요.`,
             `같은 날 시작했고, 가진 나무도 비슷했지요.`,
@@ -245,7 +245,7 @@ const CHAPTERS = [
         num: 6,
         title: "포도원 일꾼들의 품삯",
         emoji: "🍇",
-        art: ["story-06-vineyard.png", "story-06-vineyard-2.png"],
+        art: ["story-06-vineyard.webp", "story-06-vineyard-2.webp"],
         paras: [
             `어느 포도원 주인이 이른 아침 시장에 나갔어요.`,
             `일할 사람을 구하러 간 거예요.`,
@@ -293,7 +293,7 @@ const CHAPTERS = [
         num: 7,
         title: "돌아온 둘째 아들",
         emoji: "🤲",
-        art: ["story-07-son.png", "story-07-son-2.png"],
+        art: ["story-07-son.webp", "story-07-son-2.webp"],
         paras: [
             `어느 부잣집에 아들이 둘 있었어요.`,
             `어느 날 둘째 아들이 아버지 앞에 섰지요.`,
@@ -340,7 +340,7 @@ const CHAPTERS = [
         num: 8,
         title: "가라지 씨앗",
         emoji: "🌾",
-        art: ["story-08-weeds.png", "story-08-weeds-2.png"],
+        art: ["story-08-weeds.webp", "story-08-weeds-2.webp"],
         paras: [
             `어느 농부가 정성껏 밭을 갈아 좋은 밀 씨앗을 뿌렸어요.`,
             `흙을 곱게 부수고, 한 알 한 알 고른 씨앗이었지요.`,
@@ -386,7 +386,7 @@ const CHAPTERS = [
         num: 9,
         title: "땅에 묻은 한 달란트",
         emoji: "💰",
-        art: ["story-09-talent.png", "story-09-talent-2.png"],
+        art: ["story-09-talent.webp", "story-09-talent-2.webp"],
         paras: [
             `먼 길을 떠나야 했던 주인이 종 세 명을 불러 모았어요.`,
             `주인은 그들 앞에 묵직한 돈주머니를 내놓았지요.`,
@@ -436,7 +436,7 @@ const CHAPTERS = [
         num: 10,
         title: "끈질긴 과부",
         emoji: "⚖️",
-        art: ["story-10-widow.png", "story-10-widow-2.png"],
+        art: ["story-10-widow.webp", "story-10-widow-2.webp"],
         paras: [
             `어느 마을에 아무도 두려워하지 않는 고약한 재판관이 살았어요.`,
             `임금님도, 이웃도, 그 무엇도 무서워하지 않는 사람이었지요.`,
@@ -482,7 +482,7 @@ const CHAPTERS = [
         num: 11,
         title: "영리한 청지기",
         emoji: "📜",
-        art: ["story-11-steward.png", "story-11-steward-2.png"],
+        art: ["story-11-steward.webp", "story-11-steward-2.webp"],
         paras: [
             `어느 부자에게 재산을 관리하는 청지기가 있었어요.`,
             `곳간 열쇠도, 장부도 모두 그의 손에 있었지요.`,
@@ -527,7 +527,7 @@ const CHAPTERS = [
         num: 12,
         title: "용서할 줄 모르는 종",
         emoji: "⛓️",
-        art: ["story-12-servant.png", "story-12-servant-2.png"],
+        art: ["story-12-servant.webp", "story-12-servant-2.webp"],
         paras: [
             `어느 임금이 신하들의 빚을 정산하기로 했어요.`,
             `장부가 산더미처럼 쌓였지요.`,
@@ -580,7 +580,7 @@ const CHAPTERS = [
         num: 13,
         title: "포도원을 노린 소작농들",
         emoji: "🍷",
-        art: ["story-13-tenants.png", "story-13-tenants-2.png"],
+        art: ["story-13-tenants.webp", "story-13-tenants-2.webp"],
         paras: [
             `어느 지주가 포도원을 정성껏 일구었어요.`,
             `둘레에 울타리를 두르고, 즙 짜는 틀을 놓고, 지키는 망대까지 세웠지요.`,
@@ -630,7 +630,7 @@ const CHAPTERS = [
         num: 14,
         title: "기름을 준비한 다섯 처녀",
         emoji: "🪔",
-        art: ["story-14-lamps.png", "story-14-lamps-2.png"],
+        art: ["story-14-lamps.webp", "story-14-lamps-2.webp"],
         paras: [
             `열 명의 처녀가 신랑을 맞이하러 등불을 들고 기다리고 있었어요.`,
             `혼인 잔치에 함께 들어갈 사람들이었지요.`,
@@ -683,7 +683,7 @@ const CHAPTERS = [
         num: 15,
         title: "혼인 잔치에 초대받은 사람들",
         emoji: "🎊",
-        art: ["story-15-wedding.png", "story-15-wedding-2.png"],
+        art: ["story-15-wedding.webp", "story-15-wedding-2.webp"],
         paras: [
             `어느 임금이 아들의 혼인 잔치를 성대하게 준비했어요.`,
             `소를 잡고, 상을 차리고, 온 궁궐에 등을 달았지요.`,
@@ -727,7 +727,7 @@ const CHAPTERS = [
         num: 16,
         title: "곳간을 더 크게 지은 부자",
         emoji: "🏺",
-        art: ["story-16-barn.png", "story-16-barn-2.png"],
+        art: ["story-16-barn.webp", "story-16-barn-2.webp"],
         paras: [
             `어느 부자의 밭에서 그해 유난히 곡식이 풍성하게 자랐어요.`,
             `이삭마다 알이 꽉 들어차 고개를 푹 숙였지요.`,
@@ -1097,7 +1097,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🌾')}
+                ${artFrame('cover.webp', '🌾')}
             </div>
             <div class="story-page-right">
                 <h1>예수님의 비유</h1>
@@ -1242,7 +1242,7 @@ function quizPage(part) {
 const AFTERWORD = {
     title: '읽고 나서',
     emoji: '🌾',
-    art: ['end.png'],
+    art: ['end.webp'],
     paras: [
         `비유란 어려운 것을 쉬운 것에 빗대어 말하는 방법입니다. 예수님은 사람들 앞에서 이야기로 말했습니다. 듣는 사람 대부분이 농사를 짓고 고기를 잡던 사람들이었기 때문이지요.`,
         `그래서 비유에 나오는 것들은 다 그 시절 사람들이 날마다 보던 것입니다. 씨앗, 밭, 양, 그물, 빵, 은전 같은 것들이지요. 어려운 말은 하나도 나오지 않습니다.`,

@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 임금님의 부름",
         "beats": [
             {
-                "art": "01-court.png",
+                "art": "01-court.webp",
                 "emoji": "🦁",
                 "left": [
                     "숲속 나라의 임금님은 사자 노블이었습니다. 갈기가 금빛으로 빛나는 사자였지요. 해마다 봄이 되면 큰 재판이 열렸습니다.",
@@ -18,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-court-2.png",
+                "art": "01-court-2.webp",
                 "emoji": "🦁",
                 "left": [
                     "늑대 이젠그림이 벌떡 일어났습니다. 찌그러진 투구를 쓴 늑대였지요.",
@@ -42,7 +42,7 @@ const CHAPTERS = [
         "title": "2장 · 쏟아지는 고발",
         "beats": [
             {
-                "art": "02-accusations.png",
+                "art": "02-accusations.webp",
                 "emoji": "📢",
                 "left": [
                     "늑대가 말을 마치자 여기저기서 앞발이 올라왔습니다. 먼저 곰 브라운이 일어섰지요. 코가 퉁퉁 부어 있었습니다.",
@@ -58,7 +58,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-accusations-2.png",
+                "art": "02-accusations-2.webp",
                 "emoji": "📢",
                 "left": [
                     "닭들도 몰려나와 꼬꼬댁거렸습니다. 토끼도 두더지도 할 말이 있었지요. 온 숲이 여우 이야기로 들끓었습니다.",
@@ -81,7 +81,7 @@ const CHAPTERS = [
         "title": "3장 · 곰이 다녀오다",
         "beats": [
             {
-                "art": "03-bear.png",
+                "art": "03-bear.webp",
                 "emoji": "🐻",
                 "left": [
                     "한참 만에 곰 브라운이 일어섰습니다.",
@@ -98,7 +98,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-bear-2.png",
+                "art": "03-bear-2.webp",
                 "emoji": "🐻",
                 "left": [
                     "\"저 나무에 꿀이 가득한데요.\"",
@@ -119,7 +119,7 @@ const CHAPTERS = [
         "title": "4장 · 고양이도 다녀오다",
         "beats": [
             {
-                "art": "04-cat.png",
+                "art": "04-cat.webp",
                 "emoji": "🐱",
                 "left": [
                     "곰은 겨우 빠져나와 돌아왔습니다. 코가 더 부어 있었지요.",
@@ -136,7 +136,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-cat-2.png",
+                "art": "04-cat-2.webp",
                 "emoji": "🐱",
                 "left": [
                     "\"딱 한 마리만 잡고 가지요.\"",
@@ -157,7 +157,7 @@ const CHAPTERS = [
         "title": "5장 · 오소리의 설득",
         "beats": [
             {
-                "art": "05-badger.png",
+                "art": "05-badger.webp",
                 "emoji": "🦡",
                 "left": [
                     "이제 아무도 가려 하지 않았습니다.",
@@ -175,7 +175,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-badger-2.png",
+                "art": "05-badger-2.webp",
                 "emoji": "🦡",
                 "left": [
                     "\"안 가면 온 숲이 너를 잡으러 올 거야.\"",
@@ -199,7 +199,7 @@ const CHAPTERS = [
         "title": "6장 · 여우의 이야기",
         "beats": [
             {
-                "art": "06-trial.png",
+                "art": "06-trial.webp",
                 "emoji": "⚖️",
                 "left": [
                     "이튿날 여우가 재판정에 나타났습니다. 짐승들이 술렁였지요.",
@@ -216,7 +216,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-trial-2.png",
+                "art": "06-trial-2.webp",
                 "emoji": "⚖️",
                 "left": [
                     "\"저는 임금님을 위해 일하고 있었습니다.\"",
@@ -241,7 +241,7 @@ const CHAPTERS = [
         "title": "7장 · 있지도 않은 보물",
         "beats": [
             {
-                "art": "07-treasure.png",
+                "art": "07-treasure.webp",
                 "emoji": "💰",
                 "left": [
                     "여우는 없는 보물의 자리를 술술 지어냈습니다.",
@@ -259,7 +259,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-treasure-2.png",
+                "art": "07-treasure-2.webp",
                 "emoji": "💰",
                 "left": [
                     "그사이 여우는 슬그머니 자리를 떴습니다. 지팡이를 하나 짚고 나섰지요.",
@@ -282,7 +282,7 @@ const CHAPTERS = [
         "title": "8장 · 숲은 여전히",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🍂",
                 "left": [
                     "짐승들은 해가 질 때까지 늪을 뒤졌습니다.",
@@ -299,7 +299,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🍂",
                 "left": [
                     "곰은 제 코를 만졌습니다. 고양이는 꼬리를 감췄지요. 오소리는 딴 데를 보았습니다.",
@@ -331,7 +331,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🦊')}
+                ${artFrame('cover.webp', '🦊')}
             </div>
             <div class="story-page-right">
                 <h1>여우의 재판</h1>
@@ -403,7 +403,7 @@ const AFTERWORD = {
     emoji: '🦊',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 유럽에서 팔백 년 넘게 전해 온 것입니다. 여우 라이너드가 나오는 이야기만 따로 묶은 책도 있지요.",
                 "짐승들이 재판정에 모여 저마다 여우를 일러바칩니다. 그런데 여우는 늘 나오지 않지요.",

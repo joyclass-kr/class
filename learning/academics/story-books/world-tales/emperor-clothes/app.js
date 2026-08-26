@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 옷을 좋아하는 임금님",
         "beats": [
             {
-                "art": "01-emperor.png",
+                "art": "01-emperor.webp",
                 "emoji": "👑",
                 "left": [
                     "임금님은 한 시간마다 옷을 갈아입었습니다. 나랏일보다 옷이 먼저였지요. 새 옷 이야기가 나오면 밥도 잊었습니다.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-emperor-2.png",
+                "art": "01-emperor-2.webp",
                 "emoji": "👑",
                 "left": [
                     "어느 날 낯선 두 사람이 왔습니다. 하나는 키가 크고 하나는 작았지요.",
@@ -45,7 +45,7 @@ const CHAPTERS = [
         "title": "2장 · 이상한 옷감",
         "beats": [
             {
-                "art": "02-swindlers.png",
+                "art": "02-swindlers.webp",
                 "emoji": "🧵",
                 "left": [
                     "임금님은 무릎을 쳤습니다.",
@@ -62,7 +62,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-swindlers-2.png",
+                "art": "02-swindlers-2.webp",
                 "emoji": "🧵",
                 "left": [
                     "두 사람은 밤늦도록 일했습니다. 베틀이 달그락달그락 울렸지요.",
@@ -83,7 +83,7 @@ const CHAPTERS = [
         "title": "3장 · 빈 베틀",
         "beats": [
             {
-                "art": "03-loom.png",
+                "art": "03-loom.webp",
                 "emoji": "🪡",
                 "left": [
                     "임금님은 궁금해 견딜 수 없었습니다.",
@@ -100,7 +100,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-loom-2.png",
+                "art": "03-loom-2.webp",
                 "emoji": "🪡",
                 "left": [
                     "'내 눈에는 안 보이는구나.'",
@@ -124,7 +124,7 @@ const CHAPTERS = [
         "title": "4장 · 아무도 말하지 못했다",
         "beats": [
             {
-                "art": "04-nobody.png",
+                "art": "04-nobody.webp",
                 "emoji": "🤐",
                 "left": [
                     "이번에는 젊은 관리가 갔습니다. 역시 아무것도 보이지 않았지요. 땀이 등을 타고 흘렀습니다.",
@@ -140,7 +140,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-nobody-2.png",
+                "art": "04-nobody-2.webp",
                 "emoji": "🤐",
                 "left": [
                     "'내가 어리석다는 말인가?' '임금 자리에 안 맞는다는 말인가?'",
@@ -163,7 +163,7 @@ const CHAPTERS = [
         "title": "5장 · 옷을 입는 임금님",
         "beats": [
             {
-                "art": "05-dressing.png",
+                "art": "05-dressing.webp",
                 "emoji": "🪞",
                 "left": [
                     "행진하는 날이 정해졌습니다. 두 사람은 밤을 새웠지요. 촛불을 열여섯 개나 켰습니다.",
@@ -181,7 +181,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-dressing-2.png",
+                "art": "05-dressing-2.webp",
                 "emoji": "🪞",
                 "left": [
                     "임금님은 거울을 돌아봤습니다. 이쪽저쪽 몸을 틀어 봤지요.",
@@ -204,7 +204,7 @@ const CHAPTERS = [
         "title": "6장 · 임금님이 벌거벗었다",
         "beats": [
             {
-                "art": "06-parade.png",
+                "art": "06-parade.webp",
                 "emoji": "🎺",
                 "left": [
                     "거리에 사람이 가득했습니다. 나팔이 울렸지요. 임금님이 걸어 나왔습니다.",
@@ -220,7 +220,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-parade-2.png",
+                "art": "06-parade-2.webp",
                 "emoji": "🎺",
                 "left": [
                     "그때 작은 목소리가 났습니다. 아버지 어깨에 탄 아이였지요.",
@@ -245,7 +245,7 @@ const CHAPTERS = [
         "title": "7장 · 끝까지 걸어간 임금님",
         "beats": [
             {
-                "art": "07-ending.png",
+                "art": "07-ending.webp",
                 "emoji": "🚶",
                 "left": [
                     "임금님도 그 소리를 들었습니다. 얼굴이 화끈 달아올랐지요.",
@@ -261,7 +261,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-ending-2.png",
+                "art": "07-ending-2.webp",
                 "emoji": "🚶",
                 "left": [
                     "그날 밤 궁궐은 조용했습니다. 두 사람은 이미 떠난 뒤였지요. 금실 자루도 함께 사라졌습니다.",
@@ -294,7 +294,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '👑')}
+                ${artFrame('cover.webp', '👑')}
             </div>
             <div class="story-page-right">
                 <h1>벌거숭이 임금님</h1>
@@ -366,7 +366,7 @@ const AFTERWORD = {
     emoji: '👑',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기를 지은 사람은 덴마크의 안데르센입니다. 앞의 여러 이야기와 달리 이것은 모은 것이 아니라 지어낸 것입니다.",
                 "사기꾼들은 아주 영리한 말을 붙였습니다. 어리석은 사람에게는 옷이 보이지 않는다고요. 그 한마디로 아무도 안 보인다는 말을 못 하게 됐지요.",

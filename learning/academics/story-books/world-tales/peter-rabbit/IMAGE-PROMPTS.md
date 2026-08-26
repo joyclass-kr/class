@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -42,64 +42,64 @@ menacing. A friendly sparrow trio.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a small brown rabbit in a blue jacket squeezing under a wooden garden gate into a lush vegetable garden, cabbages and carrot tops all around, a watering can in the corner, charming and inviting. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a small brown rabbit in a blue jacket squeezing under a wooden garden gate into a lush vegetable garden, cabbages and carrot tops all around, a watering can in the corner, charming and inviting. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 그 밭에는 가지 마라
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-warning.png` | A sandy burrow under a great fir tree where a rabbit mother in apron and cap takes up a basket while four young rabbits listen, warm morning light, charming. |
-| `images/01-warning-2.png` | A rabbit mother warning four young rabbits gravely at a burrow mouth, three nodding and one in a blue jacket gazing off toward a distant garden wall, comic and telling. |
+| `images/01-warning.webp` | A sandy burrow under a great fir tree where a rabbit mother in apron and cap takes up a basket while four young rabbits listen, warm morning light, charming. |
+| `images/01-warning-2.webp` | A rabbit mother warning four young rabbits gravely at a burrow mouth, three nodding and one in a blue jacket gazing off toward a distant garden wall, comic and telling. |
 
 ## 2장 · 대문 밑으로
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-gate.png` | Three tidy rabbits picking blackberries in a lane while a rabbit in a blue jacket squeezes under a wooden garden gate into rows of lettuces, lush and exciting. |
-| `images/02-gate-2.png` | A rabbit in a blue jacket happily devouring lettuces, French beans and radishes in a sunlit vegetable garden, his tummy round, funny and lush. |
+| `images/02-gate.webp` | Three tidy rabbits picking blackberries in a lane while a rabbit in a blue jacket squeezes under a wooden garden gate into rows of lettuces, lush and exciting. |
+| `images/02-gate-2.webp` | A rabbit in a blue jacket happily devouring lettuces, French beans and radishes in a sunlit vegetable garden, his tummy round, funny and lush. |
 
 ## 3장 · 배가 아파서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-parsley.png` | A rabbit in a blue jacket clutching his round tummy and wandering toward a cucumber frame, then rounding a corner to face a huge boot, comic tension. |
-| `images/03-parsley-2.png` | A vegetable garden where a stout gardener leaps up shaking a rake as a rabbit in a blue jacket bolts away between cabbage rows, hilarious motion. |
+| `images/03-parsley.webp` | A rabbit in a blue jacket clutching his round tummy and wandering toward a cucumber frame, then rounding a corner to face a huge boot, comic tension. |
+| `images/03-parsley-2.webp` | A vegetable garden where a stout gardener leaps up shaking a rake as a rabbit in a blue jacket bolts away between cabbage rows, hilarious motion. |
 
 ## 4장 · 갈퀴를 든 아저씨
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-chase.png` | A garden chase where a rabbit in a blue jacket sprints between cabbages and potato rows, tiny shoes flying off behind him, a gardener pounding after with a rake, comic motion. |
-| `images/04-chase-2.png` | A gooseberry bush under a net where a rabbit is caught fast by his jacket buttons, struggling with tears in his eyes as a shadow approaches, funny and touching. |
+| `images/04-chase.webp` | A garden chase where a rabbit in a blue jacket sprints between cabbages and potato rows, tiny shoes flying off behind him, a gardener pounding after with a rake, comic motion. |
+| `images/04-chase-2.webp` | A gooseberry bush under a net where a rabbit is caught fast by his jacket buttons, struggling with tears in his eyes as a shadow approaches, funny and touching. |
 
 ## 5장 · 그물에 걸린 단추
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-net.png` | Three sparrows fluttering encouragement around a tangled rabbit who twists free, leaving his empty blue jacket hanging in the gooseberry net, funny and heartening. |
-| `images/05-net-2.png` | A dim tool shed where a rabbit dives into a metal watering can and sinks into cold water inside, only his ears showing, comic and miserable. |
+| `images/05-net.webp` | Three sparrows fluttering encouragement around a tangled rabbit who twists free, leaving his empty blue jacket hanging in the gooseberry net, funny and heartening. |
+| `images/05-net-2.webp` | A dim tool shed where a rabbit dives into a metal watering can and sinks into cold water inside, only his ears showing, comic and miserable. |
 
 ## 6장 · 물뿌리개 속에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-can.png` | A dim tool shed where a gardener turns sharply at a sneeze and reaches for a watering can as a soaked rabbit leaps out, hilarious suspense. |
-| `images/06-can-2.png` | Flowerpots crashing down as a gardener trips and a soaked rabbit leaps out a shed window into a wide garden, water dripping from his fur, comic chaos. |
+| `images/06-can.webp` | A dim tool shed where a gardener turns sharply at a sneeze and reaches for a watering can as a soaked rabbit leaps out, hilarious suspense. |
+| `images/06-can-2.webp` | Flowerpots crashing down as a gardener trips and a soaked rabbit leaps out a shed window into a wide garden, water dripping from his fur, comic chaos. |
 
 ## 7장 · 대문을 찾아서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-escape.png` | A garden pond with goldfish where a white cat sits motionless on a rock and a rabbit tiptoes past, then spotting a distant wooden gate, tense and hopeful. |
-| `images/07-escape-2.png` | A rabbit squeezing under a wooden gate and tumbling into open meadow grass, then racing across fields toward a great fir tree, relief and speed. |
+| `images/07-escape.webp` | A garden pond with goldfish where a white cat sits motionless on a rock and a rabbit tiptoes past, then spotting a distant wooden gate, tense and hopeful. |
+| `images/07-escape-2.webp` | A rabbit squeezing under a wooden gate and tumbling into open meadow grass, then racing across fields toward a great fir tree, relief and speed. |
 
 ## 8장 · 저녁에 마신 차
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A cosy burrow where a rabbit mother sighs at a soaked barefoot rabbit and puts him to bed with a spoonful of chamomile tea, warm and tender. |
-| `images/08-ending-2.png` | Three tidy young rabbits feasting on bread, milk and blackberries in a burrow, and outside a garden scarecrow wearing a small blue jacket with tiny shoes on top, funny. |
+| `images/08-ending.webp` | A cosy burrow where a rabbit mother sighs at a soaked barefoot rabbit and puts him to bed with a spoonful of chamomile tea, warm and tender. |
+| `images/08-ending-2.webp` | Three tidy young rabbits feasting on bread, milk and blackberries in a burrow, and outside a garden scarecrow wearing a small blue jacket with tiny shoes on top, funny. |
 
 ## 사용 팁
 

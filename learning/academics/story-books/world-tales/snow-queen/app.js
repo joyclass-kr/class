@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 창가의 장미",
         "beats": [
             {
-                "art": "01-roses.png",
+                "art": "01-roses.webp",
                 "emoji": "🌹",
                 "left": [
                     "한 도시의 지붕 밑에 아이 둘이 살았습니다. 게르다와 카이였지요. 두 집이 나란히 붙어 있어 다락 창문이 서로 마주 보았습니다.",
@@ -18,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-roses-2.png",
+                "art": "01-roses-2.webp",
                 "emoji": "🌹",
                 "left": [
                     "\"눈의 여왕 이야기를 아니?\"",
@@ -41,7 +41,7 @@ const CHAPTERS = [
         "title": "2장 · 눈에 박힌 조각",
         "beats": [
             {
-                "art": "02-shard.png",
+                "art": "02-shard.webp",
                 "emoji": "🪞",
                 "left": [
                     "아주 오래전 일이었습니다. 못된 요술쟁이가 거울을 하나 만들었지요. 무엇이든 밉게 비추는 거울이었습니다.",
@@ -58,7 +58,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-shard-2.png",
+                "art": "02-shard-2.webp",
                 "emoji": "🪞",
                 "left": [
                     "그날부터 카이가 달라졌습니다. 늘 좋아하던 장미를 보고 인상을 썼지요.",
@@ -80,7 +80,7 @@ const CHAPTERS = [
         "title": "3장 · 하얀 썰매",
         "beats": [
             {
-                "art": "03-sleigh.png",
+                "art": "03-sleigh.webp",
                 "emoji": "🛷",
                 "left": [
                     "겨울 광장이었습니다. 아이들이 썰매를 타고 놀았지요. 지나가는 마차에 몰래 줄을 걸고 끌려다니는 놀이였습니다.",
@@ -94,7 +94,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-sleigh-2.png",
+                "art": "03-sleigh-2.webp",
                 "emoji": "🛷",
                 "left": [
                     "넓은 들판을 한참 지나서야 썰매가 멈췄습니다. 흰옷을 입은 여인이 천천히 내렸지요. 눈이 부시게 아름다웠지만 어쩐지 서늘했습니다.",
@@ -116,7 +116,7 @@ const CHAPTERS = [
         "title": "4장 · 게르다가 길을 나서다",
         "beats": [
             {
-                "art": "04-journey.png",
+                "art": "04-journey.webp",
                 "emoji": "👣",
                 "left": [
                     "카이는 돌아오지 않았습니다.",
@@ -135,7 +135,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-journey-2.png",
+                "art": "04-journey-2.webp",
                 "emoji": "👣",
                 "left": [
                     "게르다는 강가에 매인 배에 올랐습니다. 밧줄이 스르르 풀리더니 강물이 배를 실어 갔지요. 배는 한참을 흘러 꽃이 가득한 뜰에 닿았습니다.",
@@ -156,7 +156,7 @@ const CHAPTERS = [
         "title": "5장 · 도둑 소녀",
         "beats": [
             {
-                "art": "05-robber.png",
+                "art": "05-robber.webp",
                 "emoji": "🗡️",
                 "left": [
                     "게르다는 그 길로 다시 떠났습니다. 이내 어두운 숲길로 접어들었지요.",
@@ -174,7 +174,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-robber-2.png",
+                "art": "05-robber-2.webp",
                 "emoji": "🗡️",
                 "left": [
                     "방에는 짐승이 잔뜩 있었습니다. 비둘기도 있고 순록도 한 마리 있었지요.",
@@ -198,7 +198,7 @@ const CHAPTERS = [
         "title": "6장 · 북쪽 끝으로",
         "beats": [
             {
-                "art": "06-reindeer.png",
+                "art": "06-reindeer.webp",
                 "emoji": "🦌",
                 "left": [
                     "\"이 아이를 라플란드까지 데려다줘.\"",
@@ -213,7 +213,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-reindeer-2.png",
+                "art": "06-reindeer-2.webp",
                 "emoji": "🦌",
                 "left": [
                     "가는 길에 오두막 두 곳에 들렀습니다. 라플란드 아주머니와 핀란드 아주머니였지요. 순록이 숨을 몰아쉬며 부탁했습니다.",
@@ -237,7 +237,7 @@ const CHAPTERS = [
         "title": "7장 · 얼음 궁전",
         "beats": [
             {
-                "art": "07-ice-palace.png",
+                "art": "07-ice-palace.webp",
                 "emoji": "🧊",
                 "left": [
                     "순록이 궁전 앞에 게르다를 내려 주었습니다.",
@@ -251,7 +251,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-ice-palace-2.png",
+                "art": "07-ice-palace-2.webp",
                 "emoji": "🧊",
                 "left": [
                     "\"카이야!\"",
@@ -273,7 +273,7 @@ const CHAPTERS = [
         "title": "8장 · 다시 여름",
         "beats": [
             {
-                "art": "08-home.png",
+                "art": "08-home.webp",
                 "emoji": "🌸",
                 "left": [
                     "두 아이는 손을 꼭 잡고 궁전을 나왔습니다. 문밖에 순록이 그대로 기다리고 있었지요. 셋은 남쪽을 향해 달렸습니다.",
@@ -288,7 +288,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-home-2.png",
+                "art": "08-home-2.webp",
                 "emoji": "🌸",
                 "left": [
                     "드디어 두 아이가 살던 도시에 닿았습니다. 마침 종소리가 뎅뎅 울리고 있었지요. 두 아이는 익숙한 다락 계단을 한 칸씩 올라갔습니다.",
@@ -319,7 +319,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '❄️')}
+                ${artFrame('cover.webp', '❄️')}
             </div>
             <div class="story-page-right">
                 <h1>눈의 여왕</h1>
@@ -391,7 +391,7 @@ const AFTERWORD = {
     emoji: '❄️',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 안데르센이 지었습니다. 안데르센이 쓴 것 가운데 가장 긴 이야기입니다.",
                 "모든 일은 깨진 거울 조각에서 비롯됩니다. 그 조각이 눈에 들어가면 좋은 것이 흉하게 보이지요. 카이가 달라진 까닭이 그것입니다.",

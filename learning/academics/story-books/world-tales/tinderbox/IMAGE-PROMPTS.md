@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -43,64 +43,64 @@ a copper-coloured gown who is bored of her tower.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a small battered tin tinderbox resting on a stone floor with three pairs of enormous glowing dog eyes in the darkness behind it, a hollow tree opening above, mysterious and inviting, never scary. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a small battered tin tinderbox resting on a stone floor with three pairs of enormous glowing dog eyes in the darkness behind it, a hollow tree opening above, mysterious and inviting, never scary. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 길에서 만난 노파
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-witch.png` | A dusty country road beside a huge hollow tree where a bent old woman in a striped shawl with a very long chin beckons to a young soldier in a worn red coat, autumn light. |
-| `images/01-witch-2.png` | An old woman pointing into the dark opening of a hollow tree while a soldier peers in with gleaming eyes, a coil of rope at their feet, curious and comic. |
+| `images/01-witch.webp` | A dusty country road beside a huge hollow tree where a bent old woman in a striped shawl with a very long chin beckons to a young soldier in a worn red coat, autumn light. |
+| `images/01-witch-2.webp` | An old woman pointing into the dark opening of a hollow tree while a soldier peers in with gleaming eyes, a coil of rope at their feet, curious and comic. |
 
 ## 2장 · 첫 번째 방
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-first-dog.png` | A soldier descending on a rope into a wide underground cavern with three doors, opening the first to face a huge dog with teacup-sized eyes staring at him, comic tension. |
-| `images/02-first-dog-2.png` | An underground chamber where a huge dog sits obediently on a spread apron wagging its tail beside an open chest of copper coins, a grinning soldier stuffing his pockets, warm and funny. |
+| `images/02-first-dog.webp` | A soldier descending on a rope into a wide underground cavern with three doors, opening the first to face a huge dog with teacup-sized eyes staring at him, comic tension. |
+| `images/02-first-dog-2.webp` | An underground chamber where a huge dog sits obediently on a spread apron wagging its tail beside an open chest of copper coins, a grinning soldier stuffing his pockets, warm and funny. |
 
 ## 3장 · 두 번째, 세 번째 방
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-more-dogs.png` | An underground chamber with a dog with mill-wheel eyes on an apron beside a chest of silver, a soldier gleefully dumping copper coins on the floor, absurd and comic. |
-| `images/03-more-dogs-2.png` | An underground chamber with a dog whose eyes are as big as towers sitting on an apron, a soldier filling every pocket with gold and pocketing a small battered tinderbox, dazzling. |
+| `images/03-more-dogs.webp` | An underground chamber with a dog with mill-wheel eyes on an apron beside a chest of silver, a soldier gleefully dumping copper coins on the floor, absurd and comic. |
+| `images/03-more-dogs-2.webp` | An underground chamber with a dog whose eyes are as big as towers sitting on an apron, a soldier filling every pocket with gold and pocketing a small battered tinderbox, dazzling. |
 
 ## 4장 · 노파와의 다툼
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-quarrel.png` | A roadside beside a hollow tree where a soldier holds a battered tinderbox behind his back while a bent old woman reaches for it furiously, comic standoff. |
-| `images/04-quarrel-2.png` | A soldier walking away down a country road with heavy pockets while an old woman stamps her feet behind him, and ahead a busy town at sunset, comic and lively. |
+| `images/04-quarrel.webp` | A roadside beside a hollow tree where a soldier holds a battered tinderbox behind his back while a bent old woman reaches for it furiously, comic standoff. |
+| `images/04-quarrel-2.webp` | A soldier walking away down a country road with heavy pockets while an old woman stamps her feet behind him, and ahead a busy town at sunset, comic and lively. |
 
 ## 5장 · 돈을 다 써 버리고
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-town.png` | A lively town street where a well-dressed soldier treats a laughing crowd outside an inn and hands coins to the poor, golden light, generous and warm. |
-| `images/05-town-2.png` | A bare attic room where a soldier in shabby clothes sits alone with an empty purse and a stub of candle, digging a battered tinderbox out of his pack, quiet and telling. |
+| `images/05-town.webp` | A lively town street where a well-dressed soldier treats a laughing crowd outside an inn and hands coins to the poor, golden light, generous and warm. |
+| `images/05-town-2.webp` | A bare attic room where a soldier in shabby clothes sits alone with an empty purse and a stub of candle, digging a battered tinderbox out of his pack, quiet and telling. |
 
 ## 6장 · 통을 세 번 치면
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-summon.png` | A bare attic room where a soldier strikes a tinderbox and a huge dog with teacup eyes bursts through the door wagging its tail, candle flame flaring, comic and delightful. |
-| `images/06-summon-2.png` | A soldier in fine clothes at a laden table with three dogs of increasing size behind him, friends crowding back in, warm lamplight, funny and pointed. |
+| `images/06-summon.webp` | A bare attic room where a soldier strikes a tinderbox and a huge dog with teacup eyes bursts through the door wagging its tail, candle flame flaring, comic and delightful. |
+| `images/06-summon-2.webp` | A soldier in fine clothes at a laden table with three dogs of increasing size behind him, friends crowding back in, warm lamplight, funny and pointed. |
 
 ## 7장 · 밀가루 자국
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-flour.png` | A moonlit town where a huge dog carries a sleeping princess on its back across the rooftops toward a lit attic window, magical and gentle. |
-| `images/07-flour-2.png` | A thin white trail of flour running along moonlit cobbles and up to an inn door, soldiers following it by daylight, clever and funny. |
+| `images/07-flour.webp` | A moonlit town where a huge dog carries a sleeping princess on its back across the rooftops toward a lit attic window, magical and gentle. |
+| `images/07-flour-2.webp` | A thin white trail of flour running along moonlit cobbles and up to an inn door, soldiers following it by daylight, clever and funny. |
 
 ## 8장 · 광장에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A soldier at a barred prison window asking a small boy in the street for a favour, and the boy handing a battered tinderbox through the bars, hopeful and clever. |
-| `images/08-ending-2.png` | A packed town square where a soldier strikes his tinderbox and three colossal goofy dogs appear at once, the crowd tumbling backwards laughing, banners and sunshine, joyous chaos. |
+| `images/08-ending.webp` | A soldier at a barred prison window asking a small boy in the street for a favour, and the boy handing a battered tinderbox through the bars, hopeful and clever. |
+| `images/08-ending-2.webp` | A packed town square where a soldier strikes his tinderbox and three colossal goofy dogs appear at once, the crowd tumbling backwards laughing, banners and sunshine, joyous chaos. |
 
 ## 사용 팁
 

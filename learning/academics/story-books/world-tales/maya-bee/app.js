@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 벌집을 나서다",
         "beats": [
             {
-                "art": "01-hive.png",
+                "art": "01-hive.webp",
                 "emoji": "🍯",
                 "left": [
                     "커다란 나무 속에 벌집이 하나 있었습니다. 수천 마리 꿀벌이 사는 집이었지요. 방마다 육각형 칸이 촘촘히 붙어 있었습니다.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-hive-2.png",
+                "art": "01-hive-2.webp",
                 "emoji": "🍯",
                 "left": [
                     "마야는 앞발을 번쩍 들었습니다.",
@@ -42,7 +42,7 @@ const CHAPTERS = [
         "title": "2장 · 첫 아침",
         "beats": [
             {
-                "art": "02-meadow.png",
+                "art": "02-meadow.webp",
                 "emoji": "🌼",
                 "left": [
                     "이튿날 아주 이른 아침이었습니다. 아직 아무도 일어나지 않았지요.",
@@ -56,7 +56,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-meadow-2.png",
+                "art": "02-meadow-2.webp",
                 "emoji": "🌼",
                 "left": [
                     "마야는 정신없이 날아다녔습니다. 이 꽃에 앉았다 저 꽃으로 옮겼지요.",
@@ -76,7 +76,7 @@ const CHAPTERS = [
         "title": "3장 · 메뚜기 페피",
         "beats": [
             {
-                "art": "03-grasshopper.png",
+                "art": "03-grasshopper.webp",
                 "emoji": "🦗",
                 "left": [
                     "마야는 풀숲으로 내려앉았습니다. 풀잎이 초록 기둥처럼 서 있었지요.",
@@ -92,7 +92,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-grasshopper-2.png",
+                "art": "03-grasshopper-2.webp",
                 "emoji": "🦗",
                 "left": [
                     "\"너 벌집에서 나온 벌이구나?\"",
@@ -116,7 +116,7 @@ const CHAPTERS = [
         "title": "4장 · 쇠똥구리 쿠르트",
         "beats": [
             {
-                "art": "04-beetle.png",
+                "art": "04-beetle.webp",
                 "emoji": "🪲",
                 "left": [
                     "마야는 다시 길을 나섰습니다. 흙길을 따라 낮게 날았지요. 저 앞에서 무언가가 꿈틀거렸습니다.",
@@ -132,7 +132,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-beetle-2.png",
+                "art": "04-beetle-2.webp",
                 "emoji": "🪲",
                 "left": [
                     "\"제 이름은 쿠르트라고 하네.\"",
@@ -156,7 +156,7 @@ const CHAPTERS = [
         "title": "5장 · 거미줄",
         "beats": [
             {
-                "art": "05-web.png",
+                "art": "05-web.webp",
                 "emoji": "🕸️",
                 "left": [
                     "어느 저녁이었습니다.",
@@ -172,7 +172,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-web-2.png",
+                "art": "05-web-2.webp",
                 "emoji": "🕸️",
                 "left": [
                     "마야는 몸을 비틀었습니다.",
@@ -194,7 +194,7 @@ const CHAPTERS = [
         "title": "6장 · 구해 준 이웃",
         "beats": [
             {
-                "art": "06-rescue.png",
+                "art": "06-rescue.webp",
                 "emoji": "🤝",
                 "left": [
                     "\"어라, 너 거기서 뭐 해?\"",
@@ -212,7 +212,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-rescue-2.png",
+                "art": "06-rescue-2.webp",
                 "emoji": "🤝",
                 "left": [
                     "페피는 쑥스러운 듯 훌쩍 뛰어올랐습니다.",
@@ -234,7 +234,7 @@ const CHAPTERS = [
         "title": "7장 · 말벌들의 계획",
         "beats": [
             {
-                "art": "07-hornets.png",
+                "art": "07-hornets.webp",
                 "emoji": "⚠️",
                 "left": [
                     "며칠이 지났습니다. 마야는 낡은 나무 곁을 지나고 있었지요. 나무에 커다란 구멍이 뚫려 있었습니다.",
@@ -250,7 +250,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-hornets-2.png",
+                "art": "07-hornets-2.webp",
                 "emoji": "⚠️",
                 "left": [
                     "\"알려야 해. 지금 당장.\"",
@@ -270,7 +270,7 @@ const CHAPTERS = [
         "title": "8장 · 돌아온 마야",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🏠",
                 "left": [
                     "마야는 밤이 되어서야 벌집에 닿았습니다. 문지기 벌들이 앞을 막았지요.",
@@ -288,7 +288,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🏠",
                 "left": [
                     "꿀벌들이 문 앞에 빽빽이 늘어섰습니다. 어깨를 맞대고 꼼짝하지 않았지요.",
@@ -319,7 +319,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐝')}
+                ${artFrame('cover.webp', '🐝')}
             </div>
             <div class="story-page-right">
                 <h1>꿀벌 마야</h1>
@@ -391,7 +391,7 @@ const AFTERWORD = {
     emoji: '🐝',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기를 지은 사람은 독일의 발데마르 본젤스입니다. 백십 년쯤 전에 나왔습니다.",
                 "마야는 벌집을 나옵니다. 규칙을 어긴 것이지요. 벌은 무리를 벗어나지 않는 것이 법이니까요.",

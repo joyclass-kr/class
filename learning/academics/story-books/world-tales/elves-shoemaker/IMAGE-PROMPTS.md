@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -43,57 +43,57 @@ Customers: a fine lady, a merchant and a farmer, all delighted.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a cobbler's workbench at night lit by one candle where two tiny figures in ragged clothes stitch a pair of fine shoes far too big for them, tools and leather scraps around, warm and enchanting. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a cobbler's workbench at night lit by one candle where two tiny figures in ragged clothes stitch a pair of fine shoes far too big for them, tools and leather scraps around, warm and enchanting. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 마지막 가죽 한 장
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-leather.png` | A cosy but shabby cobbler's shop in winter where a thin old man in spectacles holds up a single last piece of leather, empty shelves behind him, his wife watching quietly, warm lamplight. |
-| `images/01-leather-2.png` | A cobbler carefully cutting leather pieces by candlelight late at night and laying them out on his bench, then blowing out the candle as his wife touches his shoulder, tender. |
+| `images/01-leather.webp` | A cosy but shabby cobbler's shop in winter where a thin old man in spectacles holds up a single last piece of leather, empty shelves behind him, his wife watching quietly, warm lamplight. |
+| `images/01-leather-2.webp` | A cobbler carefully cutting leather pieces by candlelight late at night and laying them out on his bench, then blowing out the candle as his wife touches his shoulder, tender. |
 
 ## 2장 · 저절로 만들어진 신발
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-shoes.png` | A morning workshop where an old cobbler picks up a perfectly finished pair of shoes from his bench in astonishment, his wife hurrying in, sunlight through the window, wondrous. |
-| `images/02-shoes-2.png` | A shop where a well-dressed customer pays double for a fine pair of shoes, and that evening the cobbler laying out leather for two pairs on his bench, snow falling outside, hopeful. |
+| `images/02-shoes.webp` | A morning workshop where an old cobbler picks up a perfectly finished pair of shoes from his bench in astonishment, his wife hurrying in, sunlight through the window, wondrous. |
+| `images/02-shoes-2.webp` | A shop where a well-dressed customer pays double for a fine pair of shoes, and that evening the cobbler laying out leather for two pairs on his bench, snow falling outside, hopeful. |
 
 ## 3장 · 밤마다 늘어나는 신발
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-more.png` | A shop bench holding two, then four, then eight pairs of fine shoes on successive mornings, and a queue of customers forming outside the door, lively and prosperous. |
-| `images/03-more-2.png` | A now-prosperous workshop with full shelves and a warm back room where an old couple sit talking over supper, glancing toward the darkened shop, cosy and curious. |
+| `images/03-more.webp` | A shop bench holding two, then four, then eight pairs of fine shoes on successive mornings, and a queue of customers forming outside the door, lively and prosperous. |
+| `images/03-more-2.webp` | A now-prosperous workshop with full shelves and a warm back room where an old couple sit talking over supper, glancing toward the darkened shop, cosy and curious. |
 
 ## 4장 · 몰래 지켜본 밤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-watching.png` | A dark workshop where an old couple peek from behind a wardrobe as two tiny nearly naked figures slip in under the door at midnight, moonlight on the bench, magical and tender. |
-| `images/04-watching-2.png` | Two tiny figures working at lightning speed on a cobbler's bench, hammering and stitching and humming, and at dawn setting the finished shoes in a neat row before vanishing, delightful. |
+| `images/04-watching.webp` | A dark workshop where an old couple peek from behind a wardrobe as two tiny nearly naked figures slip in under the door at midnight, moonlight on the bench, magical and tender. |
+| `images/04-watching-2.webp` | Two tiny figures working at lightning speed on a cobbler's bench, hammering and stitching and humming, and at dawn setting the finished shoes in a neat row before vanishing, delightful. |
 
 ## 5장 · 작은 옷을 만들다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-clothes.png` | A workshop where an old woman cuts red and green cloth into doll-sized coats and caps while her husband stitches minuscule shoes, tiny buttons like grains, warm and loving. |
-| `images/05-clothes-2.png` | A cobbler stitching thumbnail-sized shoes with his best leather, and the couple laying out two complete tiny outfits on the empty bench on Christmas Eve before hiding, expectant and warm. |
+| `images/05-clothes.webp` | A workshop where an old woman cuts red and green cloth into doll-sized coats and caps while her husband stitches minuscule shoes, tiny buttons like grains, warm and loving. |
+| `images/05-clothes-2.webp` | A cobbler stitching thumbnail-sized shoes with his best leather, and the couple laying out two complete tiny outfits on the empty bench on Christmas Eve before hiding, expectant and warm. |
 
 ## 6장 · 옷을 입고 춤을 추며
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-dance.png` | A midnight workbench where two tiny figures find bright little clothes instead of leather, hold them up in wonder and quickly dress, grinning at each other, joyful and enchanting. |
-| `images/06-dance-2.png` | Two tiny figures in bright coats and caps dancing and singing on a workbench, then leaping over the threshold into a snowy yard leaving small footprints that the snow soon covers, bittersweet. |
+| `images/06-dance.webp` | A midnight workbench where two tiny figures find bright little clothes instead of leather, hold them up in wonder and quickly dress, grinning at each other, joyful and enchanting. |
+| `images/06-dance-2.webp` | Two tiny figures in bright coats and caps dancing and singing on a workbench, then leaping over the threshold into a snowy yard leaving small footprints that the snow soon covers, bittersweet. |
 
 ## 7장 · 남은 것
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-after.png` | An empty workbench in morning light where an old couple sit down together to cut leather themselves again, hands slower but steady, quiet and warm. |
-| `images/07-after-2.png` | A busy cobbler's shop with customers and shelves of fine shoes, and each winter a tiny coat left on the windowsill in the snow, untouched but placed again year after year, tender. |
+| `images/07-after.webp` | An empty workbench in morning light where an old couple sit down together to cut leather themselves again, hands slower but steady, quiet and warm. |
+| `images/07-after-2.webp` | A busy cobbler's shop with customers and shelves of fine shoes, and each winter a tiny coat left on the windowsill in the snow, untouched but placed again year after year, tender. |
 
 ## 사용 팁
 

@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 오래 기다린 공주",
         "beats": [
             {
-                "art": "01-birth.png",
+                "art": "01-birth.webp",
                 "emoji": "👑",
                 "left": [
                     "임금님 부부는 해마다 같은 소원을 빌었습니다. 아이가 없어 궁궐이 늘 조용했거든요.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-birth-2.png",
+                "art": "01-birth-2.webp",
                 "emoji": "👑",
                 "left": [
                     "\"그럼 열둘만 부르시오.\"",
@@ -44,7 +44,7 @@ const CHAPTERS = [
         "title": "2장 · 초대받지 못한 손님",
         "beats": [
             {
-                "art": "02-curse.png",
+                "art": "02-curse.webp",
                 "emoji": "🕯️",
                 "left": [
                     "열한 번째 요정이 물러섰습니다. 이제 한 사람만 남았지요.",
@@ -59,7 +59,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-curse-2.png",
+                "art": "02-curse-2.webp",
                 "emoji": "🕯️",
                 "left": [
                     "\"저도 선물을 드리지요.\"",
@@ -83,7 +83,7 @@ const CHAPTERS = [
         "title": "3장 · 마지막 요정의 선물",
         "beats": [
             {
-                "art": "03-softened.png",
+                "art": "03-softened.webp",
                 "emoji": "✨",
                 "left": [
                     "그때 열두 번째 요정이 앞으로 나왔습니다.",
@@ -101,7 +101,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-softened-2.png",
+                "art": "03-softened-2.webp",
                 "emoji": "✨",
                 "left": [
                     "임금님은 그날로 명을 내렸습니다.",
@@ -122,7 +122,7 @@ const CHAPTERS = [
         "title": "4장 · 탑 위의 방",
         "beats": [
             {
-                "art": "04-spindle.png",
+                "art": "04-spindle.webp",
                 "emoji": "🧵",
                 "left": [
                     "드디어 공주의 열다섯 번째 생일이었습니다.",
@@ -136,7 +136,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-spindle-2.png",
+                "art": "04-spindle-2.webp",
                 "emoji": "🧵",
                 "left": [
                     "방 안에 할머니가 앉아 있었습니다. 무언가를 빙글빙글 돌리고 있었지요.",
@@ -159,7 +159,7 @@ const CHAPTERS = [
         "title": "5장 · 성 전체가 잠들다",
         "beats": [
             {
-                "art": "05-sleep.png",
+                "art": "05-sleep.webp",
                 "emoji": "😴",
                 "left": [
                     "그 순간 성 전체가 우뚝 멈췄습니다. 부엌에서 요리사가 멈췄지요. 들어 올렸던 국자가 그대로 멈춰 섰습니다.",
@@ -174,7 +174,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-sleep-2.png",
+                "art": "05-sleep-2.webp",
                 "emoji": "😴",
                 "left": [
                     "이윽고 성 둘레에서 가시덤불이 자라기 시작했습니다. 하루가 다르게 쑥쑥 뻗었지요.",
@@ -196,7 +196,7 @@ const CHAPTERS = [
         "title": "6장 · 가시덤불을 헤치고",
         "beats": [
             {
-                "art": "06-prince.png",
+                "art": "06-prince.webp",
                 "emoji": "🌿",
                 "left": [
                     "백 년이 되던 해였습니다. 한 왕자가 그 나라를 지나가게 되었지요. 왕자는 마을에서 가시덤불 이야기를 들었습니다.",
@@ -211,7 +211,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-prince-2.png",
+                "art": "06-prince-2.webp",
                 "emoji": "🌿",
                 "left": [
                     "왕자는 그 길로 걸어 들어갔습니다. 마당의 개가 엎드린 채 잠들어 있었지요. 부엌에는 요리사가 서 있었습니다.",
@@ -231,7 +231,7 @@ const CHAPTERS = [
         "title": "7장 · 백 년 만의 아침",
         "beats": [
             {
-                "art": "07-wake.png",
+                "art": "07-wake.webp",
                 "emoji": "🌅",
                 "left": [
                     "탑 꼭대기 방이었습니다. 문이 반쯤 열려 있었지요. 창으로 아침 햇살이 비껴들었습니다.",
@@ -247,7 +247,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-wake-2.png",
+                "art": "07-wake-2.webp",
                 "emoji": "🌅",
                 "left": [
                     "성이 깨어나기 시작했습니다. 마당의 개가 벌떡 일어나 짖었지요. 요리사가 국자를 내려놓았습니다.",
@@ -277,7 +277,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🌹')}
+                ${artFrame('cover.webp', '🌹')}
             </div>
             <div class="story-page-right">
                 <h1>잠자는 숲속의 공주</h1>
@@ -349,7 +349,7 @@ const AFTERWORD = {
     emoji: '🌹',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 프랑스 사람 페로가 적은 것이 널리 알려졌고, 그림 형제도 뒤에 다시 적었습니다. 여기 실린 것은 그림 형제 쪽에 가깝습니다.",
                 "모든 일은 금접시가 열두 개뿐이었던 데서 비롯됩니다. 열세 번째 요정을 부르지 않은 까닭이 그것이지요. 아주 작은 일이 큰일을 불렀습니다.",

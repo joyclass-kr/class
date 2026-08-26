@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 빨리 크고 싶어",
         "beats": [
             {
-                "art": "01-small.png",
+                "art": "01-small.webp",
                 "emoji": "🌱",
                 "left": [
                     "숲 한구석에 아주 작은 전나무가 있었습니다. 둘레에는 키 큰 나무들이 서 있었지요.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-small-2.png",
+                "art": "01-small-2.webp",
                 "emoji": "🌱",
                 "left": [
                     "\"지금이 제일 좋은 때란다.\"",
@@ -42,7 +42,7 @@ const CHAPTERS = [
         "title": "2장 · 잘려 나간 나무들",
         "beats": [
             {
-                "art": "02-felled.png",
+                "art": "02-felled.webp",
                 "emoji": "🪓",
                 "left": [
                     "가을이 되자 숲에 사람들이 왔습니다. 도끼와 톱을 든 나무꾼들이었지요.",
@@ -57,7 +57,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-felled-2.png",
+                "art": "02-felled-2.webp",
                 "emoji": "🪓",
                 "left": [
                     "\"거기서 큰 배를 보았지.\"",
@@ -81,7 +81,7 @@ const CHAPTERS = [
         "title": "3장 · 반짝이는 나무들",
         "beats": [
             {
-                "art": "03-christmas.png",
+                "art": "03-christmas.webp",
                 "emoji": "⭐",
                 "left": [
                     "겨울이 되자 나무꾼들이 또 왔습니다. 이번에는 큰 나무를 베지 않았지요.",
@@ -97,7 +97,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-christmas-2.png",
+                "art": "03-christmas-2.webp",
                 "emoji": "⭐",
                 "left": [
                     "\"따뜻한 방 한가운데 서 있더라.\"",
@@ -121,7 +121,7 @@ const CHAPTERS = [
         "title": "4장 · 드디어 온 날",
         "beats": [
             {
-                "art": "04-cut.png",
+                "art": "04-cut.webp",
                 "emoji": "🚚",
                 "left": [
                     "이듬해 겨울이 왔습니다. 눈이 소복이 쌓인 아침이었지요. 도끼 소리가 바로 곁에서 났습니다.",
@@ -137,7 +137,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-cut-2.png",
+                "art": "04-cut-2.webp",
                 "emoji": "🚚",
                 "left": [
                     "전나무는 수레에 실렸습니다. 수레가 덜컹거리며 움직였지요.",
@@ -158,7 +158,7 @@ const CHAPTERS = [
         "title": "5장 · 가장 빛나던 저녁",
         "beats": [
             {
-                "art": "05-decorated.png",
+                "art": "05-decorated.webp",
                 "emoji": "🕯️",
                 "left": [
                     "전나무는 방 한가운데에 세워졌습니다. 통에 모래를 채워 단단히 받쳐 주었지요.",
@@ -172,7 +172,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-decorated-2.png",
+                "art": "05-decorated-2.webp",
                 "emoji": "🕯️",
                 "left": [
                     "이윽고 촛불이 하나씩 켜졌습니다. 가지마다 불빛이 반짝였지요.",
@@ -194,7 +194,7 @@ const CHAPTERS = [
         "title": "6장 · 다락방의 겨울",
         "beats": [
             {
-                "art": "06-attic.png",
+                "art": "06-attic.webp",
                 "emoji": "📦",
                 "left": [
                     "그런데 잔치는 하룻밤으로 끝났습니다.",
@@ -210,7 +210,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-attic-2.png",
+                "art": "06-attic-2.webp",
                 "emoji": "📦",
                 "left": [
                     "하지만 아무도 오지 않았습니다. 하루가 가고 이레가 갔지요.",
@@ -233,7 +233,7 @@ const CHAPTERS = [
         "title": "7장 · 뒤늦게 떠오른 것",
         "beats": [
             {
-                "art": "07-memory.png",
+                "art": "07-memory.webp",
                 "emoji": "💭",
                 "left": [
                     "전나무는 이야기를 시작했습니다.",
@@ -252,7 +252,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-memory-2.png",
+                "art": "07-memory-2.webp",
                 "emoji": "💭",
                 "left": [
                     "\"그때가…… 참 좋았구나.\"",
@@ -273,7 +273,7 @@ const CHAPTERS = [
         "title": "8장 · 마당에 나온 날",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🌿",
                 "left": [
                     "봄이 되자 다락문이 열렸습니다. 환한 빛이 쏟아져 들어왔지요.",
@@ -286,7 +286,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🌿",
                 "left": [
                     "마당에서는 아이들이 놀고 있었습니다. 한 아이가 무언가를 주웠지요. 전나무 꼭대기에 달렸던 별이었습니다.",
@@ -317,7 +317,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🌲')}
+                ${artFrame('cover.webp', '🌲')}
             </div>
             <div class="story-page-right">
                 <h1>전나무</h1>
@@ -389,7 +389,7 @@ const AFTERWORD = {
     emoji: '🌲',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 안데르센이 지었습니다. 크리스마스 이야기처럼 보이지만 즐거운 이야기는 아닙니다.",
                 "전나무는 늘 다음을 기다립니다. 얼른 커지기를, 배의 돛대가 되기를, 방에 놓이기를요. 지금 서 있는 숲은 눈에 들어오지 않았지요.",

@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 길에서 만난 노파",
         "beats": [
             {
-                "art": "01-witch.png",
+                "art": "01-witch.webp",
                 "emoji": "👵",
                 "left": [
                     "전쟁이 끝났습니다. 병사 하나가 집으로 가는 길이었지요. 어깨에는 배낭을, 허리에는 칼을 차고 있었습니다.",
@@ -18,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-witch-2.png",
+                "art": "01-witch-2.webp",
                 "emoji": "👵",
                 "left": [
                     "노파는 나무를 가리켰습니다.",
@@ -43,7 +43,7 @@ const CHAPTERS = [
         "title": "2장 · 첫 번째 방",
         "beats": [
             {
-                "art": "02-first-dog.png",
+                "art": "02-first-dog.webp",
                 "emoji": "🐕",
                 "left": [
                     "노파는 병사의 허리에 밧줄을 매어 주었습니다. 앞치마도 한 장 건네주었지요.",
@@ -59,7 +59,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-first-dog-2.png",
+                "art": "02-first-dog-2.webp",
                 "emoji": "🐕",
                 "left": [
                     "병사는 노파가 일러 준 대로 했습니다. 앞치마를 바닥에 척 펼쳤지요. 그러고는 개를 번쩍 들어 그 위에 올려놓았습니다.",
@@ -79,7 +79,7 @@ const CHAPTERS = [
         "title": "3장 · 두 번째, 세 번째 방",
         "beats": [
             {
-                "art": "03-more-dogs.png",
+                "art": "03-more-dogs.webp",
                 "emoji": "💰",
                 "left": [
                     "두 번째 방에도 개가 앉아 있었습니다. 이번에는 눈이 물레방아만 했지요. 병사는 이번에도 앞치마를 폈습니다.",
@@ -93,7 +93,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-more-dogs-2.png",
+                "art": "03-more-dogs-2.webp",
                 "emoji": "💰",
                 "left": [
                     "세 번째 방의 개는 어마어마했지요. 눈이 탑만큼이나 컸습니다.",
@@ -114,7 +114,7 @@ const CHAPTERS = [
         "title": "4장 · 노파와의 다툼",
         "beats": [
             {
-                "art": "04-quarrel.png",
+                "art": "04-quarrel.webp",
                 "emoji": "❓",
                 "left": [
                     "병사가 나무 밖으로 올라왔습니다. 햇빛이 눈부셨지요. 노파가 얼른 손을 내밀었습니다.",
@@ -133,7 +133,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-quarrel-2.png",
+                "art": "04-quarrel-2.webp",
                 "emoji": "❓",
                 "left": [
                     "노파는 끝내 입을 열지 않았습니다. 병사도 물러서지 않았지요.",
@@ -154,7 +154,7 @@ const CHAPTERS = [
         "title": "5장 · 돈을 다 써 버리고",
         "beats": [
             {
-                "art": "05-town.png",
+                "art": "05-town.webp",
                 "emoji": "🏙️",
                 "left": [
                     "병사는 여관에서 제일 좋은 방을 얻었습니다. 좋은 옷을 지어 입고 새 신도 샀지요. 거리에서 만나는 사람마다 한턱을 냈습니다.",
@@ -168,7 +168,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-town-2.png",
+                "art": "05-town-2.webp",
                 "emoji": "🏙️",
                 "left": [
                     "병사는 좋은 방을 내주어야 했습니다. 지붕 밑 좁은 다락방으로 옮겼지요. 옷도 하나둘 팔았습니다.",
@@ -192,7 +192,7 @@ const CHAPTERS = [
         "title": "6장 · 통을 세 번 치면",
         "beats": [
             {
-                "art": "06-summon.png",
+                "art": "06-summon.webp",
                 "emoji": "✨",
                 "left": [
                     "병사는 부싯돌을 탁 쳤습니다. 불꽃이 튀는 순간이었지요.",
@@ -209,7 +209,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-summon-2.png",
+                "art": "06-summon-2.webp",
                 "emoji": "✨",
                 "left": [
                     "병사는 이것저것 시험해 보았습니다. 한 번 치면 첫째 개가 왔지요. 두 번 치면 눈이 물레방아만 한 개가 왔습니다.",
@@ -231,7 +231,7 @@ const CHAPTERS = [
         "title": "7장 · 밀가루 자국",
         "beats": [
             {
-                "art": "07-flour.png",
+                "art": "07-flour.webp",
                 "emoji": "👣",
                 "left": [
                     "병사는 공주가 몹시 궁금해졌습니다.",
@@ -246,7 +246,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-flour-2.png",
+                "art": "07-flour-2.webp",
                 "emoji": "👣",
                 "left": [
                     "이튿날 공주가 간밤의 꿈 이야기를 했습니다. 왕비는 고개를 갸웃했지요. 아무래도 그냥 꿈 같지 않았습니다.",
@@ -266,7 +266,7 @@ const CHAPTERS = [
         "title": "8장 · 광장에서",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🎉",
                 "left": [
                     "병사는 그길로 붙잡히고 말았습니다. 감옥에 갇혀 하룻밤을 보냈지요.",
@@ -282,7 +282,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🎉",
                 "left": [
                     "광장에는 사람들이 가득했습니다. 임금님도 왕비도 나와 앉았지요. 병사가 조용히 부탁했습니다.",
@@ -313,7 +313,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🕯️')}
+                ${artFrame('cover.webp', '🕯️')}
             </div>
             <div class="story-page-right">
                 <h1>부싯깃 통</h1>
@@ -385,7 +385,7 @@ const AFTERWORD = {
     emoji: '🔥',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 안데르센이 지었습니다. 안데르센이 맨 처음 펴낸 이야기 묶음에 실렸지요.",
                 "병사가 나무 아래에서 챙긴 것은 두 가지입니다. 돈과 낡은 통이지요. 돈은 눈에 보였고 통은 볼품없었습니다.",

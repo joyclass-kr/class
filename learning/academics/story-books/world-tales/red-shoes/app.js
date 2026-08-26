@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 맨발의 아이",
         "beats": [
             {
-                "art": "01-barefoot.png",
+                "art": "01-barefoot.webp",
                 "emoji": "🦶",
                 "left": [
                     "카렌은 여름 내내 맨발로 다녔습니다. 신발을 살 돈이 없는 집이었지요. 그래도 카렌은 잘 웃는 아이였습니다.",
@@ -18,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-barefoot-2.png",
+                "art": "01-barefoot-2.webp",
                 "emoji": "🦶",
                 "left": [
                     "카렌은 그 신을 아주 아꼈습니다. 흙이 묻을까 봐 조심조심 걸었지요.",
@@ -39,7 +39,7 @@ const CHAPTERS = [
         "title": "2장 · 할머니 댁으로",
         "beats": [
             {
-                "art": "02-adopted.png",
+                "art": "02-adopted.webp",
                 "emoji": "🏠",
                 "left": [
                     "그 마을을 지나던 부인이 있었습니다. 머리가 하얗고 안경을 쓴 부인이었지요. 부인은 카렌을 오래 바라보았습니다.",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-adopted-2.png",
+                "art": "02-adopted-2.webp",
                 "emoji": "🏠",
                 "left": [
                     "다만 한 가지가 마음에 걸렸습니다. 부인이 그 빨간 헝겊 신을 보았거든요.",
@@ -76,7 +76,7 @@ const CHAPTERS = [
         "title": "3장 · 구둣방 창가에서",
         "beats": [
             {
-                "art": "03-shop.png",
+                "art": "03-shop.webp",
                 "emoji": "👠",
                 "left": [
                     "어느 날 부인이 카렌을 데리고 나섰습니다. 큰 행사가 있어 새 구두를 사려는 것이었지요. 두 사람은 마을 구둣방으로 갔습니다.",
@@ -91,7 +91,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-shop-2.png",
+                "art": "03-shop-2.webp",
                 "emoji": "👠",
                 "left": [
                     "반짝반짝 윤이 나는 구두였습니다. 카렌은 눈을 뗄 수가 없었지요.",
@@ -113,7 +113,7 @@ const CHAPTERS = [
         "title": "4장 · 온통 구두 생각",
         "beats": [
             {
-                "art": "04-church.png",
+                "art": "04-church.webp",
                 "emoji": "⛪",
                 "left": [
                     "일요일 아침이 되었습니다. 카렌은 그 구두를 신고 예배당에 갔지요.",
@@ -128,7 +128,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-church-2.png",
+                "art": "04-church-2.webp",
                 "emoji": "⛪",
                 "left": [
                     "집에 돌아와서도 마찬가지였습니다. 카렌은 구두만 닦고 또 닦았지요. 헝겊으로 문지르며 들여다보았습니다.",
@@ -150,7 +150,7 @@ const CHAPTERS = [
         "title": "5장 · 멈추지 않는 춤",
         "beats": [
             {
-                "art": "05-dance.png",
+                "art": "05-dance.webp",
                 "emoji": "💃",
                 "left": [
                     "그날 저녁 마을에 잔치가 열렸습니다. 광장에 등불이 걸리고 악사들이 모였지요. 카렌은 창밖을 내다보았습니다.",
@@ -164,7 +164,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-dance-2.png",
+                "art": "05-dance-2.webp",
                 "emoji": "💃",
                 "left": [
                     "그런데 한 곡이 끝나도 발이 멈추지 않았습니다. 두 곡이 끝나도 마찬가지였지요.",
@@ -186,7 +186,7 @@ const CHAPTERS = [
         "title": "6장 · 벗겨지지 않는 구두",
         "beats": [
             {
-                "art": "06-stuck.png",
+                "art": "06-stuck.webp",
                 "emoji": "😢",
                 "left": [
                     "새벽이 되어도 춤은 그치지 않았습니다. 옷은 이슬에 젖고 머리는 헝클어졌지요. 카렌은 나무를 붙잡았습니다.",
@@ -200,7 +200,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-stuck-2.png",
+                "art": "06-stuck-2.webp",
                 "emoji": "😢",
                 "left": [
                     "카렌은 그제야 부인을 떠올렸습니다. 자리에 누워 있던 얼굴이 눈에 밟혔지요.",
@@ -222,7 +222,7 @@ const CHAPTERS = [
         "title": "7장 · 나무꾼의 오두막",
         "beats": [
             {
-                "art": "07-cottage.png",
+                "art": "07-cottage.webp",
                 "emoji": "🪵",
                 "left": [
                     "춤에 끌려간 곳은 숲속 빈터였습니다. 작은 오두막이 하나 서 있었지요.",
@@ -238,7 +238,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-cottage-2.png",
+                "art": "07-cottage-2.webp",
                 "emoji": "🪵",
                 "left": [
                     "아주머니가 구두를 내려다보았습니다.",
@@ -261,7 +261,7 @@ const CHAPTERS = [
         "title": "8장 · 다시 집으로",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🌤️",
                 "left": [
                     "카렌은 맨발로 집을 향해 걸었습니다. 자갈에 발이 아팠지요. 그래도 마음은 오히려 가벼웠습니다.",
@@ -277,7 +277,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🌤️",
                 "left": [
                     "카렌은 침대 옆에 무릎을 꿇었습니다.",
@@ -309,7 +309,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '👠')}
+                ${artFrame('cover.webp', '👠')}
             </div>
             <div class="story-page-right">
                 <h1>빨강 구두</h1>
@@ -381,7 +381,7 @@ const AFTERWORD = {
     emoji: '👠',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 안데르센이 지었습니다.",
                 "카렌은 여름 내내 맨발이었습니다. 처음 신은 것은 아주머니가 헝겊을 이어 만들어 준 빨간 신이었지요.",

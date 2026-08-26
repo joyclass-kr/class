@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -44,57 +44,57 @@ wheel in a tower room. The prince: a young man in a blue riding coat.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a castle almost swallowed by a wall of blooming briar roses and thorns, one high tower window still visible above the tangle, evening light gilding the petals, beautiful and inviting. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a castle almost swallowed by a wall of blooming briar roses and thorns, one high tower window still visible above the tangle, evening light gilding the petals, beautiful and inviting. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 오래 기다린 공주
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-birth.png` | A castle nursery where a king and queen lean over a cradle in wonder as courtiers celebrate, bells ringing beyond the window, spring blossom outside, warm and joyful. |
-| `images/01-birth-2.png` | A grand candlelit hall where twelve small bright fairies step forward one by one to a cradle, each offering a different gift, courtiers smiling, twelve gold plates on the table, festive. |
+| `images/01-birth.webp` | A castle nursery where a king and queen lean over a cradle in wonder as courtiers celebrate, bells ringing beyond the window, spring blossom outside, warm and joyful. |
+| `images/01-birth-2.webp` | A grand candlelit hall where twelve small bright fairies step forward one by one to a cradle, each offering a different gift, courtiers smiling, twelve gold plates on the table, festive. |
 
 ## 2장 · 초대받지 못한 손님
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-curse.png` | A festive hall falling silent as the doors blow open and a tall figure in grey and violet walks in, candle flames guttering, guests drawing back, dramatic but not monstrous. |
-| `images/02-curse-2.png` | A hushed hall where a tall grey-violet figure pronounces over a cradle as a queen cries out, then sweeps out through the doors leaving the court frozen, powerful and sad. |
+| `images/02-curse.webp` | A festive hall falling silent as the doors blow open and a tall figure in grey and violet walks in, candle flames guttering, guests drawing back, dramatic but not monstrous. |
+| `images/02-curse-2.webp` | A hushed hall where a tall grey-violet figure pronounces over a cradle as a queen cries out, then sweeps out through the doors leaving the court frozen, powerful and sad. |
 
 ## 3장 · 마지막 요정의 선물
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-softened.png` | A hall where a small bright fairy steps forward to a cradle with her hands raised in blessing, soft light spreading, the queen clutching her hand in tears, hopeful and moving. |
-| `images/03-softened-2.png` | A town square where soldiers pile spinning wheels onto a bonfire as smoke rises, and beside it a growing girl singing in a castle garden over the years, bittersweet. |
+| `images/03-softened.webp` | A hall where a small bright fairy steps forward to a cradle with her hands raised in blessing, soft light spreading, the queen clutching her hand in tears, hopeful and moving. |
+| `images/03-softened-2.webp` | A town square where soldiers pile spinning wheels onto a bonfire as smoke rises, and beside it a growing girl singing in a castle garden over the years, bittersweet. |
 
 ## 4장 · 탑 위의 방
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-spindle.png` | A narrow dusty spiral stair inside an old tower where a girl in a rose gown climbs toward a small door at the top with a rusted key in its lock, shafts of light through arrow slits, curious. |
-| `images/04-spindle-2.png` | A small sunlit tower room where a bent old woman works a spinning wheel and a curious girl reaches out to the spindle, and in the same wide scene the girl sinking gently to the floor, quiet and gentle. |
+| `images/04-spindle.webp` | A narrow dusty spiral stair inside an old tower where a girl in a rose gown climbs toward a small door at the top with a rusted key in its lock, shafts of light through arrow slits, curious. |
+| `images/04-spindle-2.webp` | A small sunlit tower room where a bent old woman works a spinning wheel and a curious girl reaches out to the spindle, and in the same wide scene the girl sinking gently to the floor, quiet and gentle. |
 
 ## 5장 · 성 전체가 잠들다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-sleep.png` | A castle frozen mid-motion — a cook asleep with ladle raised, a dog curled in the yard, pigeons still on the roof, the king and queen dozing on the threshold, flames paused, magical stillness. |
-| `images/05-sleep-2.png` | A castle being swallowed year by year in a rising wall of briar and thorn, roses blooming in spring and snow settling in winter over the same wall, villagers pointing from afar, beautiful and timeless. |
+| `images/05-sleep.webp` | A castle frozen mid-motion — a cook asleep with ladle raised, a dog curled in the yard, pigeons still on the roof, the king and queen dozing on the threshold, flames paused, magical stillness. |
+| `images/05-sleep-2.webp` | A castle being swallowed year by year in a rising wall of briar and thorn, roses blooming in spring and snow settling in winter over the same wall, villagers pointing from afar, beautiful and timeless. |
 
 ## 6장 · 가시덤불을 헤치고
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-prince.png` | A young man in a blue riding coat before a towering wall of thorns as villagers warn him, and the thorns parting of their own accord into an arch of blooming roses, wondrous and radiant. |
-| `images/06-prince-2.png` | A dusty sleeping castle interior where a young man walks past a slumbering dog and a motionless cook, cobwebs and shafts of light everywhere, then climbing a narrow tower stair, hushed. |
+| `images/06-prince.webp` | A young man in a blue riding coat before a towering wall of thorns as villagers warn him, and the thorns parting of their own accord into an arch of blooming roses, wondrous and radiant. |
+| `images/06-prince-2.webp` | A dusty sleeping castle interior where a young man walks past a slumbering dog and a motionless cook, cobwebs and shafts of light everywhere, then climbing a narrow tower stair, hushed. |
 
 ## 7장 · 백 년 만의 아침
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-wake.png` | A tower room filled with morning light where a girl lies asleep as she was a century ago, a young man standing quietly by, and a stopped clock beginning to tick as her fingers stir, radiant. |
-| `images/07-wake-2.png` | A castle waking all at once — a dog barking, a cook blinking at his ladle, fire leaping up, pigeons bursting from the roof, the king and queen rising on the threshold, roses where thorns had been, joyous. |
+| `images/07-wake.webp` | A tower room filled with morning light where a girl lies asleep as she was a century ago, a young man standing quietly by, and a stopped clock beginning to tick as her fingers stir, radiant. |
+| `images/07-wake-2.webp` | A castle waking all at once — a dog barking, a cook blinking at his ladle, fire leaping up, pigeons bursting from the roof, the king and queen rising on the threshold, roses where thorns had been, joyous. |
 
 ## 사용 팁
 

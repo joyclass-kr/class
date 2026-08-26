@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -42,64 +42,64 @@ antlers who appears and disappears without a sound.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a spotted fawn standing on thin legs in a sunlit forest thicket, its mother's head lowered protectively beside it, ferns and wildflowers all around, shafts of green light, tender and inviting. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a spotted fawn standing on thin legs in a sunlit forest thicket, its mother's head lowered protectively beside it, ferns and wildflowers all around, shafts of green light, tender and inviting. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 덤불 속에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-birth.png` | A hidden forest thicket of tall ferns where a newborn spotted fawn wobbles on thin legs while its mother licks it clean, soft green light, tender. |
-| `images/01-birth-2.png` | A plump hare, magpies and squirrels peeking through ferns at a newborn fawn nestled beside its mother, dappled sunlight, warm and charming. |
+| `images/01-birth.webp` | A hidden forest thicket of tall ferns where a newborn spotted fawn wobbles on thin legs while its mother licks it clean, soft green light, tender. |
+| `images/01-birth-2.webp` | A plump hare, magpies and squirrels peeking through ferns at a newborn fawn nestled beside its mother, dappled sunlight, warm and charming. |
 
 ## 2장 · 넓은 풀밭
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-meadow.png` | A narrow forest path opening onto a vast sunlit meadow, a fawn gazing up at the huge sky while its mother blocks his way with her body, exhilarating. |
-| `images/02-meadow-2.png` | A doe standing tall at a treeline with ears turned and nose lifted while a fawn bounds heedlessly out into the grass, butterflies rising, joyful and anxious. |
+| `images/02-meadow.webp` | A narrow forest path opening onto a vast sunlit meadow, a fawn gazing up at the huge sky while its mother blocks his way with her body, exhilarating. |
+| `images/02-meadow-2.webp` | A doe standing tall at a treeline with ears turned and nose lifted while a fawn bounds heedlessly out into the grass, butterflies rising, joyful and anxious. |
 
 ## 3장 · 숲의 친구들
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-friends.png` | Two young fawns chasing each other through tall meadow grass that parts like waves, butterflies scattering, summer flowers everywhere, joyful. |
-| `images/03-friends-2.png` | A meadow edge where a hare sits bolt upright, squirrels chatter overhead and three fawns rest side by side in the grass, warm sunlight, tender. |
+| `images/03-friends.webp` | Two young fawns chasing each other through tall meadow grass that parts like waves, butterflies scattering, summer flowers everywhere, joyful. |
+| `images/03-friends-2.webp` | A meadow edge where a hare sits bolt upright, squirrels chatter overhead and three fawns rest side by side in the grass, warm sunlight, tender. |
 
 ## 4장 · 늙은 사슴
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-old-stag.png` | A hushed meadow where a great grey-muzzled stag with wide antlers steps soundlessly out of the treeline, every animal turning to look, awe-struck stillness. |
-| `images/04-old-stag-2.png` | An old stag looking down at a small fawn who cannot meet his gaze, then vanishing silently between misty trunks, quietly majestic. |
+| `images/04-old-stag.webp` | A hushed meadow where a great grey-muzzled stag with wide antlers steps soundlessly out of the treeline, every animal turning to look, awe-struck stillness. |
+| `images/04-old-stag-2.webp` | An old stag looking down at a small fawn who cannot meet his gaze, then vanishing silently between misty trunks, quietly majestic. |
 
 ## 5장 · 첫눈
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-winter.png` | A snow-covered forest where a fawn touches its nose to fresh snow in wonder then bounds about leaving tracks, its mother watching, bright winter light. |
-| `images/05-winter-2.png` | Deer stripping bark from trees in deep snow at blue winter dusk, a doe nudging her share toward her fawn, beautiful and sober. |
+| `images/05-winter.webp` | A snow-covered forest where a fawn touches its nose to fresh snow in wonder then bounds about leaving tracks, its mother watching, bright winter light. |
+| `images/05-winter-2.webp` | Deer stripping bark from trees in deep snow at blue winter dusk, a doe nudging her share toward her fawn, beautiful and sober. |
 
 ## 6장 · 혼자 남은 날
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-alone.png` | A doe suddenly alert at a snowy meadow edge, pushing her fawn toward the thicket as distant noise rises, the fawn bolting away, tense. |
-| `images/06-alone-2.png` | A young deer standing alone in a wide empty snowy clearing looking back, falling snow, quiet and poignant with no violence shown. |
+| `images/06-alone.webp` | A doe suddenly alert at a snowy meadow edge, pushing her fawn toward the thicket as distant noise rises, the fawn bolting away, tense. |
+| `images/06-alone-2.webp` | A young deer standing alone in a wide empty snowy clearing looking back, falling snow, quiet and poignant with no violence shown. |
 
 ## 7장 · 다시 봄
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-spring.png` | A spring meadow bright with new grass where a young stag with small antlers meets a grown doe, both taller than before, hopeful and warm. |
-| `images/07-spring-2.png` | A young stag pausing at a treeline with ears turned and nose lifted to the wind while a doe watches in surprise, spring meadow beyond, quietly moving. |
+| `images/07-spring.webp` | A spring meadow bright with new grass where a young stag with small antlers meets a grown doe, both taller than before, hopeful and warm. |
+| `images/07-spring-2.webp` | A young stag pausing at a treeline with ears turned and nose lifted to the wind while a doe watches in surprise, spring meadow beyond, quietly moving. |
 
 ## 8장 · 숲을 걷는 법
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A deep evening forest where an old stag leads a young one along a hidden path between trunks, long slanting light, quietly majestic. |
-| `images/08-ending-2.png` | An old stag showing a young stag how to read the wind and the hidden ways, then walking away alone between the trunks as the young stag stands steady, moving. |
+| `images/08-ending.webp` | A deep evening forest where an old stag leads a young one along a hidden path between trunks, long slanting light, quietly majestic. |
+| `images/08-ending-2.webp` | An old stag showing a young stag how to read the wind and the hidden ways, then walking away alone between the trunks as the young stag stands steady, moving. |
 
 ## 사용 팁
 

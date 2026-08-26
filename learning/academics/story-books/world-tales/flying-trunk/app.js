@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 다 써 버린 재산",
         "beats": [
             {
-                "art": "01-spend.png",
+                "art": "01-spend.webp",
                 "emoji": "💸",
                 "left": [
                     "옛날 어느 마을에 큰 장사꾼이 살았습니다. 어찌나 돈이 많은지 은화로 온 거리를 덮을 정도였지요.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-spend-2.png",
+                "art": "01-spend-2.webp",
                 "emoji": "💸",
                 "left": [
                     "그런데 재산은 끝이 있었습니다.",
@@ -42,7 +42,7 @@ const CHAPTERS = [
         "title": "2장 · 가방이 날아올랐다",
         "beats": [
             {
-                "art": "02-fly.png",
+                "art": "02-fly.webp",
                 "emoji": "🪄",
                 "left": [
                     "그런데 쌀 짐이 없었습니다. 가진 것이 하나도 없었으니까요.",
@@ -58,7 +58,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-fly-2.png",
+                "art": "02-fly-2.webp",
                 "emoji": "🪄",
                 "left": [
                     "가방은 구름 위까지 솟구쳤습니다. 아래로 마을이 손톱만큼 작아졌지요. 강도 실오라기처럼 보였습니다.",
@@ -79,7 +79,7 @@ const CHAPTERS = [
         "title": "3장 · 낯선 나라의 탑",
         "beats": [
             {
-                "art": "03-tower.png",
+                "art": "03-tower.webp",
                 "emoji": "🕌",
                 "left": [
                     "한참을 날아가자 낯선 도시가 나타났습니다. 지붕이 둥글고 탑이 뾰족한 도시였지요.",
@@ -94,7 +94,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-tower-2.png",
+                "art": "03-tower-2.webp",
                 "emoji": "🕌",
                 "left": [
                     "\"저기는 공주님이 계신 곳이오.\"",
@@ -119,7 +119,7 @@ const CHAPTERS = [
         "title": "4장 · 창문으로 들어가다",
         "beats": [
             {
-                "art": "04-window.png",
+                "art": "04-window.webp",
                 "emoji": "🪟",
                 "left": [
                     "밤이 되자 아들은 숲으로 돌아갔습니다. 덤불에서 가방을 꺼냈지요.",
@@ -134,7 +134,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-window-2.png",
+                "art": "04-window-2.webp",
                 "emoji": "🪟",
                 "left": [
                     "아들은 얼른 고개를 숙였습니다.",
@@ -158,7 +158,7 @@ const CHAPTERS = [
         "title": "5장 · 이야기를 들려주다",
         "beats": [
             {
-                "art": "05-story.png",
+                "art": "05-story.webp",
                 "emoji": "📖",
                 "left": [
                     "아들은 그 자리에 앉아 이야기를 시작했습니다. 부엌 살림들이 다투는 이야기였지요.",
@@ -175,7 +175,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-story-2.png",
+                "art": "05-story-2.webp",
                 "emoji": "📖",
                 "left": [
                     "이야기가 끝나자 창밖이 뿌옇게 밝아 왔습니다.",
@@ -197,7 +197,7 @@ const CHAPTERS = [
         "title": "6장 · 임금님 앞에서",
         "beats": [
             {
-                "art": "06-parents.png",
+                "art": "06-parents.webp",
                 "emoji": "👑",
                 "left": [
                     "어느 날 임금님과 왕비가 탑에 올라왔습니다. 공주가 부쩍 밝아진 것이 궁금했거든요. 공주는 숨기지 못하고 털어놓았지요.",
@@ -213,7 +213,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-parents-2.png",
+                "art": "06-parents-2.webp",
                 "emoji": "👑",
                 "left": [
                     "그날 저녁 아들이 궁궐로 갔습니다. 임금님과 왕비가 나란히 앉아 있었지요. 신하들도 빙 둘러섰습니다.",
@@ -235,7 +235,7 @@ const CHAPTERS = [
         "title": "7장 · 하늘에서 터진 불꽃",
         "beats": [
             {
-                "art": "07-fireworks.png",
+                "art": "07-fireworks.webp",
                 "emoji": "🎆",
                 "left": [
                     "혼례 전날 밤이었습니다. 온 도시에 잔치가 벌어졌지요. 거리마다 등불이 걸리고 북소리가 울렸습니다.",
@@ -250,7 +250,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-fireworks-2.png",
+                "art": "07-fireworks-2.webp",
                 "emoji": "🎆",
                 "left": [
                     "하늘에서 불꽃이 펑펑 터졌습니다. 빨강 파랑 노랑 빛이 쏟아졌지요. 사람들이 고개를 젖히고 환호했습니다.",
@@ -271,7 +271,7 @@ const CHAPTERS = [
         "title": "8장 · 타 버린 가방",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🔥",
                 "left": [
                     "아들은 밤늦도록 잔치 구경을 했습니다. 사람들이 저마다 하늘 이야기를 하고 있었지요. 아들은 웃음을 참기가 힘들었습니다.",
@@ -285,7 +285,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🔥",
                 "left": [
                     "이제 탑으로 올라갈 방법이 없었습니다. 하늘에서 왔다고 한 사람이었으니까요. 걸어서 궁궐로 갈 수는 없는 노릇이었지요.",
@@ -314,7 +314,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🧳')}
+                ${artFrame('cover.webp', '🧳')}
             </div>
             <div class="story-page-right">
                 <h1>하늘을 나는 가방</h1>
@@ -386,7 +386,7 @@ const AFTERWORD = {
     emoji: '🧳',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 안데르센이 지었습니다.",
                 "장사꾼의 아들은 물려받은 돈을 다 써 버립니다. 남은 것이 낡은 가방 하나였지요. 그런데 그 가방이 날았습니다.",

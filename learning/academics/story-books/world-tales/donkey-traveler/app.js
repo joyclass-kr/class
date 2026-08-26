@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 두 그루의 나무",
         "beats": [
             {
-                "art": "01-trees.png",
+                "art": "01-trees.webp",
                 "emoji": "🌳",
                 "left": [
                     "어느 젊은 나그네가 길을 떠돌고 있었습니다. 지팡이 하나에 등짐 하나가 전부였지요. 이 마을 저 마을을 다니며 일을 도왔습니다.",
@@ -18,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-trees-2.png",
+                "art": "01-trees-2.webp",
                 "emoji": "🌳",
                 "left": [
                     "나그네는 붉은 열매를 하나 땄습니다. 한 입 베어 무니 달콤한 물이 흘렀지요.",
@@ -41,7 +41,7 @@ const CHAPTERS = [
         "title": "2장 · 당나귀가 되어",
         "beats": [
             {
-                "art": "02-donkey.png",
+                "art": "02-donkey.webp",
                 "emoji": "🫏",
                 "left": [
                     "귀만 길어진 것이 아니었습니다. 손발이 굽어지기 시작했지요.",
@@ -56,7 +56,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-donkey-2.png",
+                "art": "02-donkey-2.webp",
                 "emoji": "🫏",
                 "left": [
                     "그때 짐수레가 언덕을 올라왔습니다. 장사꾼이 몰고 오는 수레였지요.",
@@ -79,7 +79,7 @@ const CHAPTERS = [
         "title": "3장 · 무거운 짐",
         "beats": [
             {
-                "art": "03-labor.png",
+                "art": "03-labor.webp",
                 "emoji": "📦",
                 "left": [
                     "그날부터 나그네는 짐을 날랐습니다. 아침 해가 뜨기 전부터 길을 나섰지요. 수레에는 곡식 자루가 잔뜩 실렸습니다.",
@@ -94,7 +94,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-labor-2.png",
+                "art": "03-labor-2.webp",
                 "emoji": "📦",
                 "left": [
                     "밤이 되면 마구간에 매였습니다. 마른 짚 위에 몸을 눕혔지요.",
@@ -115,7 +115,7 @@ const CHAPTERS = [
         "title": "4장 · 다시 그 언덕으로",
         "beats": [
             {
-                "art": "04-escape.png",
+                "art": "04-escape.webp",
                 "emoji": "🏃",
                 "left": [
                     "그렇게 몇 달이 지났습니다.",
@@ -131,7 +131,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-escape-2.png",
+                "art": "04-escape-2.webp",
                 "emoji": "🏃",
                 "left": [
                     "\"이놈, 어디 가느냐!\"",
@@ -152,7 +152,7 @@ const CHAPTERS = [
         "title": "5장 · 욕심 많은 주막 주인",
         "beats": [
             {
-                "art": "05-innkeeper.png",
+                "art": "05-innkeeper.webp",
                 "emoji": "🍺",
                 "left": [
                     "나그네는 그길로 마을로 내려왔습니다. 오랜만에 사람 말로 인사를 나누었지요. 주막에 들러 밥을 시켰습니다.",
@@ -169,7 +169,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-innkeeper-2.png",
+                "art": "05-innkeeper-2.webp",
                 "emoji": "🍺",
                 "left": [
                     "주인은 그날 밤 잠을 이루지 못했습니다. 자꾸 셈을 해 보았지요.",
@@ -192,7 +192,7 @@ const CHAPTERS = [
         "title": "6장 · 히히힝",
         "beats": [
             {
-                "art": "06-transform.png",
+                "art": "06-transform.webp",
                 "emoji": "😲",
                 "left": [
                     "이튿날 아침이었습니다. 주막 안이 발칵 뒤집혔지요. 주인이 자던 방에 주인이 없었습니다.",
@@ -209,7 +209,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-transform-2.png",
+                "art": "06-transform-2.webp",
                 "emoji": "😲",
                 "left": [
                     "당나귀는 아내에게 다가갔습니다.",
@@ -232,7 +232,7 @@ const CHAPTERS = [
         "title": "7장 · 나그네가 돌아오다",
         "beats": [
             {
-                "art": "07-return.png",
+                "art": "07-return.webp",
                 "emoji": "🍋",
                 "left": [
                     "소문은 금세 마을에 퍼졌습니다.",
@@ -249,7 +249,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-return-2.png",
+                "art": "07-return-2.webp",
                 "emoji": "🍋",
                 "left": [
                     "나그네는 품에서 무언가를 꺼냈습니다. 노란 열매 한 알이었지요. 혹시 몰라 챙겨 두었던 것이었습니다.",
@@ -269,7 +269,7 @@ const CHAPTERS = [
         "title": "8장 · 두 나무 아래에서",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🌤️",
                 "left": [
                     "주인은 한참을 고개를 들지 못했습니다.",
@@ -288,7 +288,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🌤️",
                 "left": [
                     "그날 주막에는 잔치가 벌어졌습니다. 주인이 손수 상을 차렸지요. 나그네도 마음껏 먹었습니다.",
@@ -318,7 +318,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🫏')}
+                ${artFrame('cover.webp', '🫏')}
             </div>
             <div class="story-page-right">
                 <h1>당나귀가 된 나그네</h1>
@@ -390,7 +390,7 @@ const AFTERWORD = {
     emoji: '🫏',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 이솝 이야기에서 나왔습니다. 이천 년도 더 전 그리스에서 전해 오던 것이지요.",
                 "아버지와 아들은 처음에 당나귀를 끌고 걸어갑니다. 그러자 타지 않는다고 웃음을 삽니다.",

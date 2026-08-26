@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 작은 나라의 왕자",
         "beats": [
             {
-                "art": "01-prince.png",
+                "art": "01-prince.webp",
                 "emoji": "🤴",
                 "left": [
                     "아주 작은 나라에 젊은 왕자가 살았습니다. 나라가 어찌나 작은지 지도에 겨우 점만 했지요. 그래도 왕자는 마음이 넉넉했습니다.",
@@ -17,7 +17,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-prince-2.png",
+                "art": "01-prince-2.webp",
                 "emoji": "🤴",
                 "left": [
                     "왕자는 장미를 은 상자에 담았습니다. 밤꾀꼬리도 은 상자에 담았지요.",
@@ -39,7 +39,7 @@ const CHAPTERS = [
         "title": "2장 · 시큰둥한 공주",
         "beats": [
             {
-                "art": "02-gifts.png",
+                "art": "02-gifts.webp",
                 "emoji": "🌹",
                 "left": [
                     "선물이 궁궐에 도착했습니다. 공주가 반가워서 달려 나왔지요.",
@@ -56,7 +56,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-gifts-2.png",
+                "art": "02-gifts-2.webp",
                 "emoji": "🌹",
                 "left": [
                     "공주는 상자를 밀어냈습니다.",
@@ -79,7 +79,7 @@ const CHAPTERS = [
         "title": "3장 · 돼지치기가 되어",
         "beats": [
             {
-                "art": "03-disguise.png",
+                "art": "03-disguise.webp",
                 "emoji": "🐷",
                 "left": [
                     "소식은 곧 왕자에게 전해졌습니다. 왕자는 화가 나기보다 궁금해졌지요.",
@@ -96,7 +96,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-disguise-2.png",
+                "art": "03-disguise-2.webp",
                 "emoji": "🐷",
                 "left": [
                     "왕자는 궁궐 뒷마당에서 지내게 되었습니다. 방은 좁고 천장이 낮았지요. 낮에는 돼지를 돌보았습니다.",
@@ -118,7 +118,7 @@ const CHAPTERS = [
         "title": "4장 · 노래하는 냄비",
         "beats": [
             {
-                "art": "04-pot.png",
+                "art": "04-pot.webp",
                 "emoji": "🍲",
                 "left": [
                     "왕자가 만든 것은 작은 냄비였습니다. 가장자리에 방울이 잔뜩 달려 있었지요.",
@@ -132,7 +132,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-pot-2.png",
+                "art": "04-pot-2.webp",
                 "emoji": "🍲",
                 "left": [
                     "냄비 소리는 담을 넘어 퍼졌습니다. 지나가던 시녀가 그 소리를 들었지요.",
@@ -154,7 +154,7 @@ const CHAPTERS = [
         "title": "5장 · 열 번의 입맞춤",
         "beats": [
             {
-                "art": "05-bargain.png",
+                "art": "05-bargain.webp",
                 "emoji": "💋",
                 "left": [
                     "시녀가 돼지우리로 갔습니다.",
@@ -172,7 +172,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-bargain-2.png",
+                "art": "05-bargain-2.webp",
                 "emoji": "💋",
                 "left": [
                     "\"무례하기 짝이 없구나!\"",
@@ -196,7 +196,7 @@ const CHAPTERS = [
         "title": "6장 · 시녀들의 담장",
         "beats": [
             {
-                "art": "06-kisses.png",
+                "art": "06-kisses.webp",
                 "emoji": "🙈",
                 "left": [
                     "공주는 시녀들을 데리고 뒷마당으로 내려갔습니다. 돼지들이 꿀꿀거리며 몰려왔지요. 공주는 코를 막았습니다.",
@@ -211,7 +211,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-kisses-2.png",
+                "art": "06-kisses-2.webp",
                 "emoji": "🙈",
                 "left": [
                     "그렇게 냄비는 공주의 것이 되었습니다. 공주는 냄비를 안고 방으로 뛰어갔지요. 온종일 물을 끓이며 놀았습니다.",
@@ -232,7 +232,7 @@ const CHAPTERS = [
         "title": "7장 · 이번엔 딸랑이",
         "beats": [
             {
-                "art": "07-rattle.png",
+                "art": "07-rattle.webp",
                 "emoji": "🔔",
                 "left": [
                     "며칠이 지나자 공주는 또 심심해졌습니다.",
@@ -249,7 +249,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-rattle-2.png",
+                "art": "07-rattle-2.webp",
                 "emoji": "🔔",
                 "left": [
                     "\"이번에는 백 번입니다.\"",
@@ -273,7 +273,7 @@ const CHAPTERS = [
         "title": "8장 · 성문 밖에서",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🚪",
                 "left": [
                     "하필 임금님이 창밖을 내다보았습니다. 뒷마당에 웬 사람들이 잔뜩 모여 있었지요. 임금님은 안경을 고쳐 썼습니다.",
@@ -286,7 +286,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🚪",
                 "left": [
                     "성문이 등 뒤에서 쿵 닫혔습니다. 마침 비가 내리기 시작했지요.",
@@ -319,7 +319,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐷')}
+                ${artFrame('cover.webp', '🐷')}
             </div>
             <div class="story-page-right">
                 <h1>돼지치기 왕자</h1>
@@ -391,7 +391,7 @@ const AFTERWORD = {
     emoji: '🐖',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 안데르센이 지었습니다.",
                 "왕자가 처음 보낸 것은 장미 한 송이와 밤꾀꼬리였습니다. 아버지 무덤에서 자란 장미이고, 세상에 하나뿐인 새였지요.",

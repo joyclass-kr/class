@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -42,64 +42,64 @@ tired.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: an absurdly tall stack of twenty mattresses and twenty featherbeds towering in a candlelit bedchamber with a tiny ladder leaning against it and a single green pea on the floor beneath, whimsical and inviting. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: an absurdly tall stack of twenty mattresses and twenty featherbeds towering in a candlelit bedchamber with a tiny ladder leaning against it and a single green pea on the floor beneath, whimsical and inviting. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 진짜 공주를 찾아서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-prince.png` | A wide panorama of travel — ships, mountains, foreign palaces — with a young man in a blue coat journeying from one to the next, hopeful and adventurous. |
-| `images/01-prince-2.png` | A weary young man in a worn blue coat sitting by a castle window sighing, his travelling boots worn through, dark clouds gathering outside, melancholy. |
+| `images/01-prince.webp` | A wide panorama of travel — ships, mountains, foreign palaces — with a young man in a blue coat journeying from one to the next, hopeful and adventurous. |
+| `images/01-prince-2.webp` | A weary young man in a worn blue coat sitting by a castle window sighing, his travelling boots worn through, dark clouds gathering outside, melancholy. |
 
 ## 2장 · 폭풍우 치는 밤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-storm.png` | A small castle in a lashing thunderstorm, lightning splitting the sky, an old king in a nightgown carrying a candle to the great gate, dramatic and funny. |
-| `images/02-storm-2.png` | A castle gate where an old king holds up a candle to a soaked girl standing in pouring rain, water streaming from her cloak and shoes, comic and pitiable. |
+| `images/02-storm.webp` | A small castle in a lashing thunderstorm, lightning splitting the sky, an old king in a nightgown carrying a candle to the great gate, dramatic and funny. |
+| `images/02-storm-2.webp` | A castle gate where an old king holds up a candle to a soaked girl standing in pouring rain, water streaming from her cloak and shoes, comic and pitiable. |
 
 ## 3장 · 정말 공주일까
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-doubt.png` | A castle entrance hall where a dripping girl stands in a spreading puddle while servants run for towels and a young prince stares at her, warm candlelight. |
-| `images/03-doubt-2.png` | A sharp-eyed old queen in a lace cap looking a dripping girl up and down with folded arms while smiling politely, then heading upstairs alone, comic. |
+| `images/03-doubt.webp` | A castle entrance hall where a dripping girl stands in a spreading puddle while servants run for towels and a young prince stares at her, warm candlelight. |
+| `images/03-doubt-2.webp` | A sharp-eyed old queen in a lace cap looking a dripping girl up and down with folded arms while smiling politely, then heading upstairs alone, comic. |
 
 ## 4장 · 침대 밑의 완두콩
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-pea.png` | A bedchamber where a small brisk queen strips a bed to the bare boards and places a single green pea in the middle, candlelight, secretive and funny. |
-| `images/04-pea-2.png` | A bedchamber with twenty mattresses and twenty featherbeds stacked to the ceiling above a single pea, a ladder leaning against it, servants gaping, absurd and delightful. |
+| `images/04-pea.webp` | A bedchamber where a small brisk queen strips a bed to the bare boards and places a single green pea in the middle, candlelight, secretive and funny. |
+| `images/04-pea-2.webp` | A bedchamber with twenty mattresses and twenty featherbeds stacked to the ceiling above a single pea, a ladder leaning against it, servants gaping, absurd and delightful. |
 
 ## 5장 · 잠 못 이루는 밤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-sleepless.png` | A girl climbing a tall ladder to the top of a towering stack of bedding, then tossing and turning up there under moonlight, comic and cosy. |
-| `images/05-sleepless-2.png` | A sleepless girl sitting up on top of a mountain of bedding lifting the quilts to look, rain on the dark window, and dawn light later, comic and weary. |
+| `images/05-sleepless.webp` | A girl climbing a tall ladder to the top of a towering stack of bedding, then tossing and turning up there under moonlight, comic and cosy. |
+| `images/05-sleepless-2.webp` | A sleepless girl sitting up on top of a mountain of bedding lifting the quilts to look, rain on the dark window, and dawn light later, comic and weary. |
 
 ## 6장 · 아침 인사
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-morning.png` | A sunny breakfast hall where a very tired girl politely explains her sleepless night while the old king and queen exchange a knowing glance, warm and funny. |
-| `images/06-morning-2.png` | A breakfast table where a prince apologises earnestly and a girl waves it off, while the old queen quietly leaves and returns with her hand closed, warm and expectant. |
+| `images/06-morning.webp` | A sunny breakfast hall where a very tired girl politely explains her sleepless night while the old king and queen exchange a knowing glance, warm and funny. |
+| `images/06-morning-2.webp` | A breakfast table where a prince apologises earnestly and a girl waves it off, while the old queen quietly leaves and returns with her hand closed, warm and expectant. |
 
 ## 7장 · 스무 장 아래
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-reveal.png` | A breakfast hall where an old queen holds out one small green pea on her open palm and everyone leans in astonished, bright and joyful. |
-| `images/07-reveal-2.png` | A prince beaming and proposing across a breakfast table to a blushing girl while the old king claps and the queen smiles knowingly, radiant and warm. |
+| `images/07-reveal.webp` | A breakfast hall where an old queen holds out one small green pea on her open palm and everyone leans in astonished, bright and joyful. |
+| `images/07-reveal-2.webp` | A prince beaming and proposing across a breakfast table to a blushing girl while the old king claps and the queen smiles knowingly, radiant and warm. |
 
 ## 8장 · 박물관에 놓인 콩
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A wedding feast filling a castle hall with banners, dancing and music, the prince and princess at the centre, joyous and bright. |
-| `images/08-ending-2.png` | A quiet museum room where a single pea rests under a glass dome on a small pedestal while visitors and children press close to look, charming and witty. |
+| `images/08-ending.webp` | A wedding feast filling a castle hall with banners, dancing and music, the prince and princess at the centre, joyous and bright. |
+| `images/08-ending-2.webp` | A quiet museum room where a single pea rests under a glass dome on a small pedestal while visitors and children press close to look, charming and witty. |
 
 ## 사용 팁
 

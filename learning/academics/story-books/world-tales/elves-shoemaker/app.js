@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 마지막 가죽 한 장",
         "beats": [
             {
-                "art": "01-leather.png",
+                "art": "01-leather.webp",
                 "emoji": "🪡",
                 "left": [
                     "골목 끝 구둣방에서는 밤늦도록 망치 소리가 났습니다. 늙은 구두장이가 가죽을 두드리는 소리였지요. 그 집 신발은 발이 편하기로 온 마을이 알아주었습니다.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-leather-2.png",
+                "art": "01-leather-2.webp",
                 "emoji": "🪡",
                 "left": [
                     "구두장이는 남은 가죽을 작업대에 폈습니다. 자로 재고 금을 그었지요. 가위로 조심조심 오려 나갔습니다.",
@@ -40,7 +40,7 @@ const CHAPTERS = [
         "title": "2장 · 저절로 만들어진 신발",
         "beats": [
             {
-                "art": "02-shoes.png",
+                "art": "02-shoes.webp",
                 "emoji": "✨",
                 "left": [
                     "이튿날 아침이었습니다. 구두장이가 눈을 비비며 작업대로 갔지요.",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-shoes-2.png",
+                "art": "02-shoes-2.webp",
                 "emoji": "✨",
                 "left": [
                     "그날 아침 손님이 하나 찾아왔습니다. 신발을 보더니 눈이 커졌지요.",
@@ -76,7 +76,7 @@ const CHAPTERS = [
         "title": "3장 · 밤마다 늘어나는 신발",
         "beats": [
             {
-                "art": "03-more.png",
+                "art": "03-more.webp",
                 "emoji": "👢",
                 "left": [
                     "아침이 되자 두 사람은 서둘러 작업대로 갔습니다. 이번에도 신발이 놓여 있었지요. 두 켤레가 나란히, 전보다 더 곱게요.",
@@ -92,7 +92,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-more-2.png",
+                "art": "03-more-2.webp",
                 "emoji": "👢",
                 "left": [
                     "살림은 금세 폈습니다. 따뜻한 이불도 사고 아내는 새 앞치마도 얻었지요.",
@@ -116,7 +116,7 @@ const CHAPTERS = [
         "title": "4장 · 몰래 지켜본 밤",
         "beats": [
             {
-                "art": "04-watching.png",
+                "art": "04-watching.webp",
                 "emoji": "👀",
                 "left": [
                     "그날 밤 두 사람은 촛불을 끄고 옷장 뒤에 숨었습니다. 커튼 사이로 작업대가 빤히 보였지요. 아내는 숨소리가 날까 봐 손으로 입을 가렸습니다.",
@@ -129,7 +129,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-watching-2.png",
+                "art": "04-watching-2.webp",
                 "emoji": "👀",
                 "left": [
                     "둘은 작업대로 폴짝 올라가 연장을 손에 잡았습니다. 어찌나 빠른지 눈으로 따라가기가 어려웠지요.",
@@ -148,7 +148,7 @@ const CHAPTERS = [
         "title": "5장 · 작은 옷을 만들다",
         "beats": [
             {
-                "art": "05-clothes.png",
+                "art": "05-clothes.webp",
                 "emoji": "🧥",
                 "left": [
                     "\"여보, 봤소? 그 옷차림을.\"",
@@ -164,7 +164,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-clothes-2.png",
+                "art": "05-clothes-2.webp",
                 "emoji": "🧥",
                 "left": [
                     "구두장이도 가만있지 않았지요. 창고에서 가장 좋은 가죽을 꺼내 왔습니다.",
@@ -185,7 +185,7 @@ const CHAPTERS = [
         "title": "6장 · 옷을 입고 춤을 추며",
         "beats": [
             {
-                "art": "06-dance.png",
+                "art": "06-dance.webp",
                 "emoji": "💃",
                 "left": [
                     "자정이 되자 작은 것 둘이 들어왔습니다. 늘 하던 대로 작업대에 폴짝 올랐지요.",
@@ -200,7 +200,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-dance-2.png",
+                "art": "06-dance-2.webp",
                 "emoji": "💃",
                 "left": [
                     "둘은 작업대 위에서 팔짝팔짝 뛰었습니다. 손을 잡고 빙글빙글 춤을 췄지요.",
@@ -222,7 +222,7 @@ const CHAPTERS = [
         "title": "7장 · 남은 것",
         "beats": [
             {
-                "art": "07-after.png",
+                "art": "07-after.webp",
                 "emoji": "🕯️",
                 "left": [
                     "아침이 되었습니다. 작업대는 텅 비어 있었지요. 아내가 조금 서운한 얼굴을 했습니다.",
@@ -238,7 +238,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-after-2.png",
+                "art": "07-after-2.webp",
                 "emoji": "🕯️",
                 "left": [
                     "그날부터 구둣방이 다시 돌아갔습니다. 이번에는 두 사람이 만든 신발이었지요. 손님들은 여전히 문을 밀고 들어왔습니다.",
@@ -270,7 +270,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '👞')}
+                ${artFrame('cover.webp', '👞')}
             </div>
             <div class="story-page-right">
                 <h1>난쟁이와 구둣방</h1>
@@ -342,7 +342,7 @@ const AFTERWORD = {
     emoji: '👞',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 그림 형제가 모은 것입니다. 독일에서 전해 오던 이야기입니다.",
                 "구두장이는 가난했지만 게으르지 않았습니다. 가죽이 한 장 남았을 때도 그것을 재어 마름질해 두고 잤지요.",

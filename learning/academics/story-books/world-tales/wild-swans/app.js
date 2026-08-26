@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 열한 명의 오빠",
         "beats": [
             {
-                "art": "01-family.png",
+                "art": "01-family.webp",
                 "emoji": "👑",
                 "left": [
                     "궁궐 뜰에 금관 열한 개가 나란히 반짝였습니다. 왕자 열한 명이 저마다 쓰고 다니는 것이었지요. 막내는 엘리사라는 공주였습니다.",
@@ -17,7 +17,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-family-2.png",
+                "art": "01-family-2.webp",
                 "emoji": "👑",
                 "left": [
                     "그런데 임금님이 새 왕비를 맞았습니다. 왕비는 키가 크고 눈이 차가웠지요. 겉으로는 아이들에게 웃어 주었습니다.",
@@ -39,7 +39,7 @@ const CHAPTERS = [
         "title": "2장 · 백조가 된 오빠들",
         "beats": [
             {
-                "art": "02-swans.png",
+                "art": "02-swans.webp",
                 "emoji": "🦢",
                 "left": [
                     "어느 날 아침이었습니다. 궁궐이 이상하게 조용했지요.",
@@ -54,7 +54,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-swans-2.png",
+                "art": "02-swans-2.webp",
                 "emoji": "🦢",
                 "left": [
                     "엘리사는 시골집에서 그 소식을 들었습니다.",
@@ -76,7 +76,7 @@ const CHAPTERS = [
         "title": "3장 · 바닷가에서의 재회",
         "beats": [
             {
-                "art": "03-reunion.png",
+                "art": "03-reunion.webp",
                 "emoji": "🌊",
                 "left": [
                     "엘리사는 몇 날 며칠을 걸었습니다. 숲을 지나고 들을 지났지요. 나무 열매를 따 먹으며 버텼습니다.",
@@ -92,7 +92,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-reunion-2.png",
+                "art": "03-reunion-2.webp",
                 "emoji": "🌊",
                 "left": [
                     "해가 물속으로 넘어갔습니다. 그 순간 백조들의 깃털이 벗겨졌지요.",
@@ -116,7 +116,7 @@ const CHAPTERS = [
         "title": "4장 · 쐐기풀 옷",
         "beats": [
             {
-                "art": "04-nettles.png",
+                "art": "04-nettles.webp",
                 "emoji": "🌿",
                 "left": [
                     "오빠들은 엘리사를 큰 그물에 태웠습니다. 백조가 되어 바다 건너로 데려갔지요. 숲속 동굴에 자리를 잡았습니다.",
@@ -132,7 +132,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-nettles-2.png",
+                "art": "04-nettles-2.webp",
                 "emoji": "🌿",
                 "left": [
                     "동굴 앞에 정말 쐐기풀이 자라 있었습니다. 엘리사는 곧바로 그것을 뜯었지요. 손이 불에 덴 듯 따가웠습니다.",
@@ -156,7 +156,7 @@ const CHAPTERS = [
         "title": "5장 · 낯선 임금님",
         "beats": [
             {
-                "art": "05-king.png",
+                "art": "05-king.webp",
                 "emoji": "🐎",
                 "left": [
                     "어느 날 이웃 나라 임금님이 사냥을 나왔습니다. 사냥개들이 동굴 쪽으로 달려갔지요. 임금님도 그 뒤를 따랐습니다.",
@@ -171,7 +171,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-king-2.png",
+                "art": "05-king-2.webp",
                 "emoji": "🐎",
                 "left": [
                     "임금님은 그 눈을 오래 들여다보았습니다. 나쁜 사람의 눈이 아니었지요.",
@@ -192,7 +192,7 @@ const CHAPTERS = [
         "title": "6장 · 오해",
         "beats": [
             {
-                "art": "06-accused.png",
+                "art": "06-accused.webp",
                 "emoji": "😖",
                 "left": [
                     "성에서도 엘리사는 밤마다 쐐기풀을 엮었습니다. 방문을 닫고 혼자 앉아 있었지요.",
@@ -208,7 +208,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-accused-2.png",
+                "art": "06-accused-2.webp",
                 "emoji": "😖",
                 "left": [
                     "마침내 그 말이 임금님 귀에까지 들어갔습니다. 신하들이 엘리사를 끌고 왔지요.",
@@ -229,7 +229,7 @@ const CHAPTERS = [
         "title": "7장 · 마지막 한 벌",
         "beats": [
             {
-                "art": "07-finish.png",
+                "art": "07-finish.webp",
                 "emoji": "🕊️",
                 "left": [
                     "엘리사는 오히려 잘되었다고 생각했지요. 쐐기풀이 곁에 있었으니까요. 갇힌 방에서도 손을 놀리지 않았지요.",
@@ -243,7 +243,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-finish-2.png",
+                "art": "07-finish-2.webp",
                 "emoji": "🕊️",
                 "left": [
                     "광장에는 사람들이 가득했습니다. 엘리사는 옷을 놓지 않았지요.",
@@ -265,7 +265,7 @@ const CHAPTERS = [
         "title": "8장 · 되찾은 말",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "💗",
                 "left": [
                     "그런데 막내 오빠만은 좀 달랐습니다. 한쪽 팔이 백조 날개로 남아 있었지요. 소매를 다 엮지 못했기 때문입니다.",
@@ -280,7 +280,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "💗",
                 "left": [
                     "광장이 조용해졌습니다. 오빠들이 그동안의 일을 이야기했지요.",
@@ -311,7 +311,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🦢')}
+                ${artFrame('cover.webp', '🦢')}
             </div>
             <div class="story-page-right">
                 <h1>백조 왕자</h1>
@@ -383,7 +383,7 @@ const AFTERWORD = {
     emoji: '🦢',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 안데르센이 지었습니다. 형제가 새가 되는 이야기는 유럽 여러 곳에 있습니다.",
                 "엘리사가 해야 할 일은 두 가지였습니다. 쐐기풀로 옷 열한 벌을 짓는 것, 그리고 다 지을 때까지 한마디도 하지 않는 것이지요.",

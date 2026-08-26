@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 밀밭을 지키는 밤",
         "beats": [
             {
-                "art": "01-field.png",
+                "art": "01-field.webp",
                 "emoji": "🌾",
                 "left": [
                     "러시아의 어느 마을에 농부가 살았습니다. 아들이 셋 있었지요.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-field-2.png",
+                "art": "01-field-2.webp",
                 "emoji": "🌾",
                 "left": [
                     "큰아들은 헛간에서 코를 골다 돌아왔습니다.",
@@ -41,7 +41,7 @@ const CHAPTERS = [
         "title": "2장 · 조랑말을 얻다",
         "beats": [
             {
-                "art": "02-pony.png",
+                "art": "02-pony.webp",
                 "emoji": "🐴",
                 "left": [
                     "이반은 살금살금 다가갔습니다. 그러고는 갈기를 덥석 붙잡았지요.",
@@ -57,7 +57,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-pony-2.png",
+                "art": "02-pony-2.webp",
                 "emoji": "🐴",
                 "left": [
                     "이튿날 새벽 암말이 다시 왔습니다. 뒤에 훌륭한 말 두 마리를 데려왔지요. 갈기가 금빛으로 빛나는 말이었습니다.",
@@ -78,7 +78,7 @@ const CHAPTERS = [
         "title": "3장 · 궁궐로 가다",
         "beats": [
             {
-                "art": "03-palace.png",
+                "art": "03-palace.webp",
                 "emoji": "🏰",
                 "left": [
                     "두 형은 그 말들을 보고 눈이 뒤집혔습니다.",
@@ -95,7 +95,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-palace-2.png",
+                "art": "03-palace-2.webp",
                 "emoji": "🏰",
                 "left": [
                     "세 형제는 함께 도시로 갔습니다. 양파 모양 지붕이 즐비한 도시였지요. 시장에 말을 세우자 사람들이 몰려들었습니다.",
@@ -116,7 +116,7 @@ const CHAPTERS = [
         "title": "4장 · 불새의 깃털",
         "beats": [
             {
-                "art": "04-feather.png",
+                "art": "04-feather.webp",
                 "emoji": "🪶",
                 "left": [
                     "이반은 조랑말과 함께 궁궐에서 지냈습니다. 말들을 돌보는 일은 어렵지 않았지요.",
@@ -131,7 +131,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-feather-2.png",
+                "art": "04-feather-2.webp",
                 "emoji": "🪶",
                 "left": [
                     "\"이렇게 예쁜 걸 어떻게 두고 가.\"",
@@ -152,7 +152,7 @@ const CHAPTERS = [
         "title": "5장 · 불새를 잡아라",
         "beats": [
             {
-                "art": "05-firebird.png",
+                "art": "05-firebird.webp",
                 "emoji": "🔥",
                 "left": [
                     "\"숲에서 주웠습니다.\"",
@@ -171,7 +171,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-firebird-2.png",
+                "art": "05-firebird-2.webp",
                 "emoji": "🔥",
                 "left": [
                     "두 사람은 밤에 높은 산으로 갔습니다. 꼭대기에 넓은 빈터가 있었지요.",
@@ -192,7 +192,7 @@ const CHAPTERS = [
         "title": "6장 · 이번엔 공주님",
         "beats": [
             {
-                "art": "06-princess.png",
+                "art": "06-princess.webp",
                 "emoji": "🌙",
                 "left": [
                     "임금님은 불새를 보고 손뼉을 쳤습니다. 하지만 욕심은 끝이 없었지요.",
@@ -209,7 +209,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-princess-2.png",
+                "art": "06-princess-2.webp",
                 "emoji": "🌙",
                 "left": [
                     "이반은 모래밭에 천막을 쳤습니다. 안에 좋은 음식을 차려 놓았지요.",
@@ -231,7 +231,7 @@ const CHAPTERS = [
         "title": "7장 · 세 개의 가마솥",
         "beats": [
             {
-                "art": "07-cauldrons.png",
+                "art": "07-cauldrons.webp",
                 "emoji": "🫧",
                 "left": [
                     "공주가 궁궐에 도착했습니다. 임금님이 버선발로 뛰어나왔지요.",
@@ -249,7 +249,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-cauldrons-2.png",
+                "art": "07-cauldrons-2.webp",
                 "emoji": "🫧",
                 "left": [
                     "마당에 커다란 가마솥 셋이 걸렸습니다. 하나는 펄펄 끓고 하나는 얼음처럼 찼지요. 임금님은 슬쩍 이반을 돌아보았습니다.",
@@ -272,7 +272,7 @@ const CHAPTERS = [
         "title": "8장 · 다시 나온 이반",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🎉",
                 "left": [
                     "사람들이 숨을 죽였습니다. 잠시 뒤 물속에서 무언가가 올라왔지요. 이반이었습니다.",
@@ -289,7 +289,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🎉",
                 "left": [
                     "그런데 이번에는 달랐습니다. 조랑말이 물을 식혀 주지 않았거든요. 임금님은 발을 담그자마자 소리를 질렀지요.",
@@ -320,7 +320,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐴')}
+                ${artFrame('cover.webp', '🐴')}
             </div>
             <div class="story-page-right">
                 <h1>곱사등이 조랑말</h1>
@@ -392,7 +392,7 @@ const AFTERWORD = {
     emoji: '🐴',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 러시아에서 왔습니다. 백구십 년쯤 전 예르쇼프라는 젊은이가 시로 썼습니다. 열아홉 살 때 지은 것이라고 하지요.",
                 "이반은 형들처럼 꾀를 부리지 않았습니다. 밀밭을 지키라 하니 정말로 밤을 새웠지요. 그래서 암말을 본 것입니다.",

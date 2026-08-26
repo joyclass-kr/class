@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 열려라 참깨",
         "beats": [
             {
-                "art": "01-cave.png",
+                "art": "01-cave.webp",
                 "emoji": "🚪",
                 "left": [
                     "도끼 한 자루와 당나귀 세 마리.",
@@ -18,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-cave-2.png",
+                "art": "01-cave-2.webp",
                 "emoji": "🚪",
                 "left": [
                     "알리바바는 손가락을 꼽아 수를 세었습니다. 모두 마흔 명이었지요. 하나같이 천으로 얼굴을 가리고 있었습니다.",
@@ -40,7 +40,7 @@ const CHAPTERS = [
         "title": "2장 · 보물이 가득한 동굴",
         "beats": [
             {
-                "art": "02-treasure.png",
+                "art": "02-treasure.webp",
                 "emoji": "💰",
                 "left": [
                     "도적들이 멀리 사라진 뒤였습니다. 알리바바는 조심조심 나무에서 내려왔지요.",
@@ -57,7 +57,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-treasure-2.png",
+                "art": "02-treasure-2.webp",
                 "emoji": "💰",
                 "left": [
                     "알리바바는 금화만 조금 담기로 했습니다. 자루 세 개에 나눠 담아 당나귀 등에 실었지요. 그 위에는 나뭇짐을 수북이 덮었습니다.",
@@ -78,7 +78,7 @@ const CHAPTERS = [
         "title": "3장 · 형의 욕심",
         "beats": [
             {
-                "art": "03-brother.png",
+                "art": "03-brother.webp",
                 "emoji": "🪙",
                 "left": [
                     "카심의 아내는 어쩐지 이상했습니다.",
@@ -95,7 +95,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-brother-2.png",
+                "art": "03-brother-2.webp",
                 "emoji": "🪙",
                 "left": [
                     "이튿날 카심이 산으로 갔습니다. 노새를 열 마리나 끌고 갔지요.",
@@ -117,7 +117,7 @@ const CHAPTERS = [
         "title": "4장 · 표시된 대문",
         "beats": [
             {
-                "art": "04-chalk.png",
+                "art": "04-chalk.webp",
                 "emoji": "✖️",
                 "left": [
                     "카심은 끝내 돌아오지 못했습니다.",
@@ -134,7 +134,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-chalk-2.png",
+                "art": "04-chalk-2.webp",
                 "emoji": "✖️",
                 "left": [
                     "한편 도적들은 시신이 사라진 것을 알았습니다.",
@@ -155,7 +155,7 @@ const CHAPTERS = [
         "title": "5장 · 기름 항아리",
         "beats": [
             {
-                "art": "05-jars.png",
+                "art": "05-jars.webp",
                 "emoji": "🏺",
                 "left": [
                     "그날 밤 도적들은 헛걸음을 했습니다. 똑같은 표시가 온 동네에 있었으니까요.",
@@ -171,7 +171,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-jars-2.png",
+                "art": "05-jars-2.webp",
                 "emoji": "🏺",
                 "left": [
                     "밤이 깊었습니다. 모르지아나가 등잔에 불을 켜려는데 기름이 떨어져 있었지요.",
@@ -194,7 +194,7 @@ const CHAPTERS = [
         "title": "6장 · 모르지아나의 춤",
         "beats": [
             {
-                "art": "06-dance.png",
+                "art": "06-dance.webp",
                 "emoji": "💃",
                 "left": [
                     "모르지아나는 서두르지 않았습니다. 기름이 든 항아리로 가서 기름을 크게 한 솥 펐지요. 그러고는 부엌에서 팔팔 끓였습니다.",
@@ -208,7 +208,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-dance-2.png",
+                "art": "06-dance-2.webp",
                 "emoji": "💃",
                 "left": [
                     "이튿날 두목이 또 찾아왔습니다. 이번에는 장사꾼 차림이었지요. 두목은 알리바바의 아들과 슬슬 친해졌습니다.",
@@ -229,7 +229,7 @@ const CHAPTERS = [
         "title": "7장 · 정체가 드러나다",
         "beats": [
             {
-                "art": "07-revealed.png",
+                "art": "07-revealed.webp",
                 "emoji": "🔦",
                 "left": [
                     "그 순간 손님의 옷 안이 드러났습니다. 허리에 커다란 칼이 숨겨져 있었지요.",
@@ -246,7 +246,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-revealed-2.png",
+                "art": "07-revealed-2.webp",
                 "emoji": "🔦",
                 "left": [
                     "알리바바는 한참 동안 말이 없었습니다. 그러고는 모르지아나를 바라봤지요.",
@@ -277,7 +277,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🗝️')}
+                ${artFrame('cover.webp', '🗝️')}
             </div>
             <div class="story-page-right">
                 <h1>알리바바와 40인의 도적</h1>
@@ -349,7 +349,7 @@ const AFTERWORD = {
     emoji: '🏺',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 아라비안나이트에 실려 있습니다. 알라딘과 마찬가지로 원래 묶음에는 없다가 나중에 들어온 것입니다.",
                 "알리바바는 부자가 아니었습니다. 나무를 해서 파는 사람이었지요. 도둑들이 여는 문을 본 것도 나무를 하러 갔기 때문입니다.",

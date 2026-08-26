@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 산속의 음악 대결",
         "beats": [
             {
-                "art": "01-contest.png",
+                "art": "01-contest.webp",
                 "emoji": "🎵",
                 "left": [
                     "아주 먼 옛날 그리스에서 있었던 일입니다. 어느 산에서 음악 대결이 열렸지요.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-contest-2.png",
+                "art": "01-contest-2.webp",
                 "emoji": "🎵",
                 "left": [
                     "먼저 판이 피리를 불었습니다. 소리가 어찌나 흥겨운지 발이 절로 움직였지요. 사람들이 어깨를 들썩였습니다.",
@@ -40,7 +40,7 @@ const CHAPTERS = [
         "title": "2장 · 혼자 다른 대답",
         "beats": [
             {
-                "art": "02-judgment.png",
+                "art": "02-judgment.webp",
                 "emoji": "🙋",
                 "left": [
                     "이제 심판이 결정을 내릴 차례였습니다. 심판은 그 산의 산신이었지요. 산신은 잠시 생각하더니 손을 들었습니다.",
@@ -56,7 +56,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-judgment-2.png",
+                "art": "02-judgment-2.webp",
                 "emoji": "🙋",
                 "left": [
                     "순간 산속이 조용해졌습니다. 사람들이 임금님을 쳐다보았지요.",
@@ -81,7 +81,7 @@ const CHAPTERS = [
         "title": "3장 · 아침에 생긴 일",
         "beats": [
             {
-                "art": "03-ears.png",
+                "art": "03-ears.webp",
                 "emoji": "😱",
                 "left": [
                     "이튿날 아침이었습니다. 임금님은 늘 하던 대로 거울 앞에 앉았지요.",
@@ -96,7 +96,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-ears-2.png",
+                "art": "03-ears-2.webp",
                 "emoji": "😱",
                 "left": [
                     "임금님은 옷장을 뒤졌습니다. 커다랗고 뾰족한 모자를 찾아냈지요.",
@@ -118,7 +118,7 @@ const CHAPTERS = [
         "title": "4장 · 이발사만은 알았다",
         "beats": [
             {
-                "art": "04-barber.png",
+                "art": "04-barber.webp",
                 "emoji": "✂️",
                 "left": [
                     "그렇게 몇 달이 지났습니다. 아무리 그래도 머리는 깎아야 했지요.",
@@ -135,7 +135,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-barber-2.png",
+                "art": "04-barber-2.webp",
                 "emoji": "✂️",
                 "left": [
                     "\"이 일을 누구에게든 말하면 안 된다.\"",
@@ -156,7 +156,7 @@ const CHAPTERS = [
         "title": "5장 · 참을 수 없는 말",
         "beats": [
             {
-                "art": "05-itch.png",
+                "art": "05-itch.webp",
                 "emoji": "🤐",
                 "left": [
                     "이발사는 밥을 먹다가도 그 생각이 났습니다. 숟가락을 들면 귀가 떠올랐지요. 잠을 자려고 누우면 더 또렷해졌습니다.",
@@ -172,7 +172,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-itch-2.png",
+                "art": "05-itch-2.webp",
                 "emoji": "🤐",
                 "left": [
                     "친구가 술을 권해도 마찬가지였습니다. 이발사는 입을 꾹 다물었지요. 한 잔만 마셔도 말이 나올 것 같았거든요.",
@@ -195,7 +195,7 @@ const CHAPTERS = [
         "title": "6장 · 갈대밭 구덩이",
         "beats": [
             {
-                "art": "06-hole.png",
+                "art": "06-hole.webp",
                 "emoji": "🕳️",
                 "left": [
                     "어느 날 이발사가 벌떡 일어났습니다. 좋은 생각이 떠올랐거든요.",
@@ -210,7 +210,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-hole-2.png",
+                "art": "06-hole-2.webp",
                 "emoji": "🕳️",
                 "left": [
                     "이발사는 목청껏 소리쳤습니다.",
@@ -233,7 +233,7 @@ const CHAPTERS = [
         "title": "7장 · 바람이 지나가자",
         "beats": [
             {
-                "art": "07-reeds.png",
+                "art": "07-reeds.webp",
                 "emoji": "🌾",
                 "left": [
                     "얼마 뒤 그 자리에 갈대가 자랐습니다. 쑥쑥 자라 사람 키만큼 커졌지요.",
@@ -250,7 +250,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-reeds-2.png",
+                "art": "07-reeds-2.webp",
                 "emoji": "🌾",
                 "left": [
                     "사람들이 갈대밭으로 몰려들었습니다. 바람이 불 때마다 같은 소리가 났지요. 이제는 누구나 알아들을 수 있었습니다.",
@@ -271,7 +271,7 @@ const CHAPTERS = [
         "title": "8장 · 모자를 벗은 날",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "😄",
                 "left": [
                     "임금님도 결국 그 소문을 들었습니다. 신하가 조심조심 알려 주었지요.",
@@ -286,7 +286,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "😄",
                 "left": [
                     "임금님은 모자를 쓰지 않고 마당으로 나갔습니다. 당나귀 귀가 훤히 드러났지요. 사람들이 깜짝 놀라 뒷걸음질을 쳤습니다.",
@@ -317,7 +317,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '👑')}
+                ${artFrame('cover.webp', '👑')}
             </div>
             <div class="story-page-right">
                 <h1>미다스 임금님의 귀</h1>
@@ -389,7 +389,7 @@ const AFTERWORD = {
     emoji: '👂',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 그리스에서 왔습니다. 이천 년도 더 전에 적힌 것입니다. 우리나라에도 거의 같은 이야기가 전해 오지요.",
                 "임금님의 귀가 당나귀 귀가 된 까닭은 겨루기에서 엉뚱한 쪽 손을 들어 주었기 때문입니다. 잘 듣지 못한 값인 셈이지요.",

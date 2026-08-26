@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 다리가 하나뿐인 병정",
         "beats": [
             {
-                "art": "01-soldier.png",
+                "art": "01-soldier.webp",
                 "emoji": "🎁",
                 "left": [
                     "어느 아이가 생일 선물을 받았습니다. 기다란 상자 하나였지요.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-soldier-2.png",
+                "art": "01-soldier-2.webp",
                 "emoji": "🎁",
                 "left": [
                     "주석이 모자라 미처 다 만들지 못한 것이었습니다. 마지막에 부은 병정이었거든요. 그래도 그 병정은 잘 서 있었습니다.",
@@ -39,7 +39,7 @@ const CHAPTERS = [
         "title": "2장 · 종이 무희",
         "beats": [
             {
-                "art": "02-ballerina.png",
+                "art": "02-ballerina.webp",
                 "emoji": "💃",
                 "left": [
                     "탁자 저편에 종이로 만든 성이 있었습니다. 창문마다 얇은 종이가 발려 있었지요. 성 앞에는 작은 호수도 만들어 두었습니다.",
@@ -54,7 +54,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-ballerina-2.png",
+                "art": "02-ballerina-2.webp",
                 "emoji": "💃",
                 "left": [
                     "병정은 속으로 생각했습니다.",
@@ -76,7 +76,7 @@ const CHAPTERS = [
         "title": "3장 · 창밖으로",
         "beats": [
             {
-                "art": "03-fall.png",
+                "art": "03-fall.webp",
                 "emoji": "🪟",
                 "left": [
                     "밤이 깊어 열두 시가 되었습니다.",
@@ -92,7 +92,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-fall-2.png",
+                "art": "03-fall-2.webp",
                 "emoji": "🪟",
                 "left": [
                     "이튿날 아침이었습니다. 누가 병정을 창턱에 올려놓았지요. 창문이 활짝 열려 있었습니다.",
@@ -112,7 +112,7 @@ const CHAPTERS = [
         "title": "4장 · 종이배를 타고",
         "beats": [
             {
-                "art": "04-boat.png",
+                "art": "04-boat.webp",
                 "emoji": "⛵",
                 "left": [
                     "곧 비가 쏟아지기 시작했습니다. 길에 빗물이 콸콸 흘렀지요.",
@@ -129,7 +129,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-boat-2.png",
+                "art": "04-boat-2.webp",
                 "emoji": "⛵",
                 "left": [
                     "물살이 점점 빨라졌습니다. 배가 빙글빙글 돌았지요. 물이 뱃전을 넘어 들어왔습니다.",
@@ -150,7 +150,7 @@ const CHAPTERS = [
         "title": "5장 · 어두운 물길",
         "beats": [
             {
-                "art": "05-tunnel.png",
+                "art": "05-tunnel.webp",
                 "emoji": "🌑",
                 "left": [
                     "도랑은 컴컴한 굴속으로 이어졌습니다. 배가 그 안으로 빨려 들어갔지요. 사방이 새까맸습니다.",
@@ -166,7 +166,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-tunnel-2.png",
+                "art": "05-tunnel-2.webp",
                 "emoji": "🌑",
                 "left": [
                     "쥐가 뒤에서 소리를 질렀습니다.",
@@ -187,7 +187,7 @@ const CHAPTERS = [
         "title": "6장 · 물고기 뱃속",
         "beats": [
             {
-                "art": "06-fish.png",
+                "art": "06-fish.webp",
                 "emoji": "🐟",
                 "left": [
                     "종이배는 물을 먹고 스르르 가라앉았습니다. 병정도 함께 물속으로 잠겼지요.",
@@ -201,7 +201,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-fish-2.png",
+                "art": "06-fish-2.webp",
                 "emoji": "🐟",
                 "left": [
                     "물고기는 이리저리 헤엄쳤습니다. 몸이 흔들릴 때마다 병정도 흔들렸지요.",
@@ -221,7 +221,7 @@ const CHAPTERS = [
         "title": "7장 · 돌아온 자리",
         "beats": [
             {
-                "art": "07-return.png",
+                "art": "07-return.webp",
                 "emoji": "🍳",
                 "left": [
                     "하녀는 병정을 두 손으로 집어 들었습니다. 물기를 닦고 이리저리 살펴보았지요.",
@@ -237,7 +237,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-return-2.png",
+                "art": "07-return-2.webp",
                 "emoji": "🍳",
                 "left": [
                     "병정은 둘레를 살펴보았습니다. 장난감들이 그대로 있었지요.",
@@ -258,7 +258,7 @@ const CHAPTERS = [
         "title": "8장 · 작은 주석 심장",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "❤️",
                 "left": [
                     "그런데 그때 한 아이가 다가왔습니다. 무슨 생각이었는지 알 수 없었지요.",
@@ -272,7 +272,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "❤️",
                 "left": [
                     "그때 문이 열리며 바람이 불어왔습니다. 종이 무희가 사뿐 떠올랐지요.",
@@ -302,7 +302,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🪖')}
+                ${artFrame('cover.webp', '🪖')}
             </div>
             <div class="story-page-right">
                 <h1>장난감 병정</h1>
@@ -374,7 +374,7 @@ const AFTERWORD = {
     emoji: '🎖️',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 안데르센이 지었습니다.",
                 "주석 병정 스물다섯 가운데 하나만 다리가 하나였습니다. 주석이 모자라 마지막에 부은 것이지요. 못 만든 것이 아니라 남은 것으로 만든 것입니다.",

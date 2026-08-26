@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 낯선 아저씨",
         "beats": [
             {
-                "art": "01-stranger.png",
+                "art": "01-stranger.webp",
                 "emoji": "🧿",
                 "left": [
                     "옛날 어느 도시에 알라딘이 살았습니다. 아버지는 일찍 세상을 떠났지요. 알라딘은 어머니와 둘이 살았습니다.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-stranger-2.png",
+                "art": "01-stranger-2.webp",
                 "emoji": "🧿",
                 "left": [
                     "그런데 아저씨는 돈을 척척 냈습니다. 고기며 과일을 잔뜩 사 왔지요.",
@@ -42,7 +42,7 @@ const CHAPTERS = [
         "title": "2장 · 동굴 속 램프",
         "beats": [
             {
-                "art": "02-cave.png",
+                "art": "02-cave.webp",
                 "emoji": "🕳️",
                 "left": [
                     "아저씨가 품에서 이상한 가루를 꺼내 뿌렸습니다. 그러고는 주문 같은 말을 중얼거렸지요.",
@@ -60,7 +60,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-cave-2.png",
+                "art": "02-cave-2.webp",
                 "emoji": "🕳️",
                 "left": [
                     "알라딘은 램프를 찾아 두리번거렸습니다. 구석에 낡은 램프 하나가 놓여 있었지요. 알라딘은 그것을 품에 넣고 돌아섰습니다.",
@@ -83,7 +83,7 @@ const CHAPTERS = [
         "title": "3장 · 램프의 지니",
         "beats": [
             {
-                "art": "03-genie.png",
+                "art": "03-genie.webp",
                 "emoji": "💨",
                 "left": [
                     "동굴 안은 캄캄했습니다. 알라딘은 그렇게 이틀을 갇혀 있었지요.",
@@ -99,7 +99,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-genie-2.png",
+                "art": "03-genie-2.webp",
                 "emoji": "💨",
                 "left": [
                     "그런데 집에는 먹을 것이 하나도 없었습니다. 어머니가 알라딘이 가져온 램프를 꺼냈지요.",
@@ -123,7 +123,7 @@ const CHAPTERS = [
         "title": "4장 · 공주를 만나다",
         "beats": [
             {
-                "art": "04-princess.png",
+                "art": "04-princess.webp",
                 "emoji": "👸",
                 "left": [
                     "그날부터 알라딘의 집은 넉넉해졌습니다.",
@@ -141,7 +141,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-princess-2.png",
+                "art": "04-princess-2.webp",
                 "emoji": "👸",
                 "left": [
                     "이튿날 어머니는 궁궐로 갔습니다. 보석을 담은 쟁반을 들고서요.",
@@ -164,7 +164,7 @@ const CHAPTERS = [
         "title": "5장 · 하룻밤 사이의 궁전",
         "beats": [
             {
-                "art": "05-palace.png",
+                "art": "05-palace.webp",
                 "emoji": "🏯",
                 "left": [
                     "임금님이 혼인을 허락했습니다. 다만 한 가지를 요구했지요.",
@@ -180,7 +180,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-palace-2.png",
+                "art": "05-palace-2.webp",
                 "emoji": "🏯",
                 "left": [
                     "혼례가 크게 열렸습니다. 온 도시가 함께 잔치를 벌였지요.",
@@ -201,7 +201,7 @@ const CHAPTERS = [
         "title": "6장 · 낡은 램프를 새 램프로",
         "beats": [
             {
-                "art": "06-swap.png",
+                "art": "06-swap.webp",
                 "emoji": "🔃",
                 "left": [
                     "마법사는 장사꾼 차림을 했습니다. 수레에 새 램프를 잔뜩 실었지요. 하나같이 반짝반짝 윤이 나는 것들이었습니다.",
@@ -218,7 +218,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-swap-2.png",
+                "art": "06-swap-2.webp",
                 "emoji": "🔃",
                 "left": [
                     "시녀가 낡은 램프를 내밀었습니다. 마법사가 얼른 그것을 받아 챙겼지요. 그러고는 새 램프를 건네고 돌아섰습니다.",
@@ -239,7 +239,7 @@ const CHAPTERS = [
         "title": "7장 · 사막 끝의 궁전",
         "beats": [
             {
-                "art": "07-desert.png",
+                "art": "07-desert.webp",
                 "emoji": "🐫",
                 "left": [
                     "알라딘은 앞이 캄캄했습니다. 밤새 성 밖을 헤맸지요.",
@@ -255,7 +255,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-desert-2.png",
+                "art": "07-desert-2.webp",
                 "emoji": "🐫",
                 "left": [
                     "공주가 알라딘을 보고 울음을 터뜨렸습니다.",
@@ -278,7 +278,7 @@ const CHAPTERS = [
         "title": "8장 · 다시 돌아온 자리",
         "beats": [
             {
-                "art": "08-return.png",
+                "art": "08-return.webp",
                 "emoji": "✨",
                 "left": [
                     "알라딘이 마법사의 품에서 램프를 꺼냈습니다. 그러고는 천으로 벅벅 문질렀지요. 지니가 다시 나타났습니다.",
@@ -294,7 +294,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-return-2.png",
+                "art": "08-return-2.webp",
                 "emoji": "✨",
                 "left": [
                     "마법사는 먼 사막에 남겨졌습니다.",
@@ -326,7 +326,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🪔')}
+                ${artFrame('cover.webp', '🪔')}
             </div>
             <div class="story-page-right">
                 <h1>알라딘과 요술 램프</h1>
@@ -398,7 +398,7 @@ const AFTERWORD = {
     emoji: '🪔',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 아라비안나이트에 실려 있습니다. 왕비 세헤라자데가 천 하루 동안 들려주었다는 이야기 묶음이지요.",
                 "그런데 알라딘은 원래 그 묶음에 없었습니다. 삼백 년쯤 전 프랑스 사람이 옮기면서 새로 넣은 것입니다. 시리아에서 온 사람에게 들었다고 적어 두었지요.",

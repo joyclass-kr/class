@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 숲의 우두머리",
         "beats": [
             {
-                "art": "01-forest.png",
+                "art": "01-forest.webp",
                 "emoji": "🌳",
                 "left": [
                     "아주 오랜 옛날 인도의 큰 숲에서 있었던 일입니다. 그 숲에 사슴 무리가 살았지요. 수백 마리나 되는 큰 무리였습니다.",
@@ -18,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-forest-2.png",
+                "art": "01-forest-2.webp",
                 "emoji": "🌳",
                 "left": [
                     "숲은 오래도록 평화로웠습니다.",
@@ -40,7 +40,7 @@ const CHAPTERS = [
         "title": "2장 · 사냥이 시작되다",
         "beats": [
             {
-                "art": "02-hunt.png",
+                "art": "02-hunt.webp",
                 "emoji": "🏹",
                 "left": [
                     "그러던 어느 날이었습니다. 숲 밖에서 나팔 소리가 울렸지요.",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-hunt-2.png",
+                "art": "02-hunt-2.webp",
                 "emoji": "🏹",
                 "left": [
                     "해가 질 무렵 사냥이 끝났습니다. 숲은 다시 조용해졌지요.",
@@ -77,7 +77,7 @@ const CHAPTERS = [
         "title": "3장 · 임금님 앞에서",
         "beats": [
             {
-                "art": "03-king.png",
+                "art": "03-king.webp",
                 "emoji": "👑",
                 "left": [
                     "황금 사슴은 궁궐로 향했습니다. 들을 지나고 마을을 지났지요.",
@@ -93,7 +93,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-king-2.png",
+                "art": "03-king-2.webp",
                 "emoji": "👑",
                 "left": [
                     "\"짐승이 어찌 사람처럼 걸어 들어오느냐?\"",
@@ -117,7 +117,7 @@ const CHAPTERS = [
         "title": "4장 · 이상한 약속",
         "beats": [
             {
-                "art": "04-promise.png",
+                "art": "04-promise.webp",
                 "emoji": "🤝",
                 "left": [
                     "\"쫓기다 흩어져 죽는 것보다 낫지요.\"",
@@ -135,7 +135,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-promise-2.png",
+                "art": "04-promise-2.webp",
                 "emoji": "🤝",
                 "left": [
                     "황금 사슴은 무리에게 그 이야기를 했습니다. 사슴들은 한참 동안 아무 말도 못 했지요.",
@@ -157,7 +157,7 @@ const CHAPTERS = [
         "title": "5장 · 어린 어미 사슴",
         "beats": [
             {
-                "art": "05-doe.png",
+                "art": "05-doe.webp",
                 "emoji": "🦌",
                 "left": [
                     "그렇게 여러 날이 지났습니다.",
@@ -173,7 +173,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-doe-2.png",
+                "art": "05-doe-2.webp",
                 "emoji": "🦌",
                 "left": [
                     "황금 사슴은 무리를 둘러보았습니다.",
@@ -197,7 +197,7 @@ const CHAPTERS = [
         "title": "6장 · 스스로 걸어간 길",
         "beats": [
             {
-                "art": "06-walk.png",
+                "art": "06-walk.webp",
                 "emoji": "🚶",
                 "left": [
                     "황금 사슴은 조용히 고개를 들었습니다. 아침 햇살이 금빛 털에 내려앉았지요.",
@@ -214,7 +214,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-walk-2.png",
+                "art": "06-walk-2.webp",
                 "emoji": "🚶",
                 "left": [
                     "아무도 더 말하지 못했습니다. 암사슴은 그 자리에 주저앉았지요.",
@@ -236,7 +236,7 @@ const CHAPTERS = [
         "title": "7장 · 임금님의 물음",
         "beats": [
             {
-                "art": "07-question.png",
+                "art": "07-question.webp",
                 "emoji": "❓",
                 "left": [
                     "그날 아침 궁궐 뜰이 술렁였습니다. 금빛 사슴이 서 있었으니까요.",
@@ -253,7 +253,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-question-2.png",
+                "art": "07-question-2.webp",
                 "emoji": "❓",
                 "left": [
                     "임금님은 한참을 말하지 못했습니다. 손이 부들부들 떨렸지요.",
@@ -276,7 +276,7 @@ const CHAPTERS = [
         "title": "8장 · 숲이 열린 날",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🌿",
                 "left": [
                     "이윽고 임금님이 입을 열었습니다.",
@@ -295,7 +295,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🌿",
                 "left": [
                     "\"사슴은 이제 안전합니다.\"",
@@ -329,7 +329,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🦌')}
+                ${artFrame('cover.webp', '🦌')}
             </div>
             <div class="story-page-right">
                 <h1>황금 사슴</h1>
@@ -401,7 +401,7 @@ const AFTERWORD = {
     emoji: '🦌',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 인도에서 왔습니다. 부처의 옛이야기를 모은 책에 실려 있고, 이천 년도 더 된 것입니다.",
                 "황금 사슴이 임금님에게 한 제안을 다시 보십시오. 사냥을 하면 쫓기다 여러 마리가 다칩니다. 하루에 한 마리씩 가면 그만이라고 했지요.",

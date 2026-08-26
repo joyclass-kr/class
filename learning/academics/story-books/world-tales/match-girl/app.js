@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 한 해의 마지막 밤",
         "beats": [
             {
-                "art": "01-street.png",
+                "art": "01-street.webp",
                 "emoji": "❄️",
                 "left": [
                     "한 해의 마지막 날이었습니다. 아침부터 눈이 펑펑 내려 거리가 온통 하얗게 덮였지요. 사람들은 목도리에 얼굴을 파묻고 걸음을 재촉했습니다.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-street-2.png",
+                "art": "01-street-2.webp",
                 "emoji": "❄️",
                 "left": [
                     "아이는 신발이 없었습니다. 아침에 나올 때는 큰 슬리퍼를 신고 있었지요. 어머니가 신던 것이라 발보다 한참 컸습니다.",
@@ -40,7 +40,7 @@ const CHAPTERS = [
         "title": "2장 · 창문 너머의 저녁상",
         "beats": [
             {
-                "art": "02-window.png",
+                "art": "02-window.webp",
                 "emoji": "🪟",
                 "left": [
                     "거리에는 좋은 냄새가 가득했습니다. 집집마다 저녁을 짓고 있었거든요. 아이는 밝은 창문 앞에 서서 안을 들여다봤지요.",
@@ -54,7 +54,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-window-2.png",
+                "art": "02-window-2.webp",
                 "emoji": "🪟",
                 "left": [
                     "집이라고 해 봐야 지붕 밑 다락방이었습니다. 지붕에 틈이 벌어져 바람이 그대로 들어왔지요. 짚을 뭉쳐 막아 두었지만 소용이 없었습니다.",
@@ -74,7 +74,7 @@ const CHAPTERS = [
         "title": "3장 · 첫 번째 성냥",
         "beats": [
             {
-                "art": "03-stove.png",
+                "art": "03-stove.webp",
                 "emoji": "🔥",
                 "left": [
                     "곱은 손이 떨려 성냥개비를 놓칠 뻔했지요. 아이는 성냥 하나를 꺼내 벽에 대고 그었습니다.",
@@ -89,7 +89,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-stove-2.png",
+                "art": "03-stove-2.webp",
                 "emoji": "🔥",
                 "left": [
                     "그때 성냥이 다 타 버렸습니다. 불이 툭 꺼지자 난로도 함께 사라졌지요. 손에는 새까맣게 탄 성냥개비만 남아 있었습니다.",
@@ -110,7 +110,7 @@ const CHAPTERS = [
         "title": "4장 · 두 번째 성냥",
         "beats": [
             {
-                "art": "04-feast.png",
+                "art": "04-feast.webp",
                 "emoji": "🍽️",
                 "left": [
                     "방 안에는 큰 상이 차려져 있었습니다. 새하얀 식탁보 위에 고운 그릇들이 놓여 있었지요. 한가운데에는 노릇하게 구운 거위 요리가 있었습니다.",
@@ -125,7 +125,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-feast-2.png",
+                "art": "04-feast-2.webp",
                 "emoji": "🍽️",
                 "left": [
                     "그 순간 성냥이 꺼졌습니다. 거위도 상도 온데간데없이 사라졌지요.",
@@ -145,7 +145,7 @@ const CHAPTERS = [
         "title": "5장 · 세 번째 성냥",
         "beats": [
             {
-                "art": "05-tree.png",
+                "art": "05-tree.webp",
                 "emoji": "🎄",
                 "left": [
                     "이번에는 커다란 나무가 보였습니다. 천장에 닿을 만큼 큰 나무였지요.",
@@ -161,7 +161,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-tree-2.png",
+                "art": "05-tree-2.webp",
                 "emoji": "🎄",
                 "left": [
                     "그때 별 하나가 긴 빛줄기를 그리며 흘렀습니다. 아이는 할머니가 해 준 말을 떠올렸지요.",
@@ -183,7 +183,7 @@ const CHAPTERS = [
         "title": "6장 · 할머니",
         "beats": [
             {
-                "art": "06-grandmother.png",
+                "art": "06-grandmother.webp",
                 "emoji": "👵",
                 "left": [
                     "성냥 여러 개가 한꺼번에 타올랐습니다. 좁은 골목이 대낮처럼 환해졌지요. 그 빛 속에 누군가 서 있었습니다.",
@@ -201,7 +201,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-grandmother-2.png",
+                "art": "06-grandmother-2.webp",
                 "emoji": "👵",
                 "left": [
                     "아이는 앞치마 속 성냥을 모두 켰습니다. 골목이 눈부시게 밝아졌지요. 성냥 다발이 한꺼번에 타오르며 탁탁 소리를 냈습니다.",
@@ -222,7 +222,7 @@ const CHAPTERS = [
         "title": "7장 · 아침이 오고",
         "beats": [
             {
-                "art": "07-morning.png",
+                "art": "07-morning.webp",
                 "emoji": "🌅",
                 "left": [
                     "새해 아침이 밝았습니다. 눈은 어느새 그쳐 있었지요. 햇살이 골목 안까지 들어왔습니다.",
@@ -236,7 +236,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-morning-2.png",
+                "art": "07-morning-2.webp",
                 "emoji": "🌅",
                 "left": [
                     "아이가 무엇을 보았는지는 아무도 알지 못했습니다. 난로도, 거위도, 반짝이던 나무도요. 무엇보다 할머니를 만난 것을요.",
@@ -266,7 +266,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🕯️')}
+                ${artFrame('cover.webp', '🕯️')}
             </div>
             <div class="story-page-right">
                 <h1>성냥팔이 소녀</h1>
@@ -338,7 +338,7 @@ const AFTERWORD = {
     emoji: '🕯️',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 안데르센이 지었습니다. 안데르센의 어머니는 어릴 적에 거리에서 구걸을 했다고 합니다. 그 이야기를 듣고 지은 것이라고 하지요.",
                 "소녀는 성냥을 네 번 켭니다. 그때마다 보이는 것이 달라지지요. 난로, 밥상, 크리스마스 나무, 그리고 할머니입니다.",

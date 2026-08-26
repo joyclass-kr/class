@@ -8,7 +8,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
+권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
 > **마무리 그림(`end`)은 이제 「읽고 나서」 쪽 오른쪽 위 한 자리에만 쓰입니다.** 따로 있던 마지막 쪽은 없앴어요.
 > 칸은 **가로 3 : 세로 2** 그대로입니다. 적어 둔 비율대로 그리면 잘리지 않고 그대로 들어갑니다.
@@ -43,64 +43,64 @@ tall man in dark robes with a pointed beard, comically villainous.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: two white storks standing on a domed palace rooftop at sunset looking out over a Middle Eastern city of minarets and palm trees, a small carved box lying open beside them, warm amber light, magical and inviting. |
-| `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: two white storks standing on a domed palace rooftop at sunset looking out over a Middle Eastern city of minarets and palm trees, a small carved box lying open beside them, warm amber light, magical and inviting. |
+| `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 이상한 가루
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-powder.png` | A tiled palace courtyard where a turbaned king and his lean vizier sit with coffee as a hunched pedlar offers a small carved box, warm amber light and rich carpets. |
-| `images/01-powder-2.png` | A palace chamber where a king and vizier lean over an open box of dark powder and a scroll while a scholar reads the strange writing aloud, lamplight. |
+| `images/01-powder.webp` | A tiled palace courtyard where a turbaned king and his lean vizier sit with coffee as a hunched pedlar offers a small carved box, warm amber light and rich carpets. |
+| `images/01-powder-2.webp` | A palace chamber where a king and vizier lean over an open box of dark powder and a scroll while a scholar reads the strange writing aloud, lamplight. |
 
 ## 2장 · 절대 웃지 말 것
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-warning.png` | A palace chamber where a scholar reads a warning from a scroll and the vizier looks alarmed while the king waves it off cheerfully, comic tension. |
-| `images/02-warning-2.png` | A palace garden pond at dawn where a king and vizier crouch behind reeds watching two white storks wade, an open box in the king's hand, comic secrecy. |
+| `images/02-warning.webp` | A palace chamber where a scholar reads a warning from a scroll and the vizier looks alarmed while the king waves it off cheerfully, comic tension. |
+| `images/02-warning-2.webp` | A palace garden pond at dawn where a king and vizier crouch behind reeds watching two white storks wade, an open box in the king's hand, comic secrecy. |
 
 ## 3장 · 황새가 되어
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-storks.png` | A king and vizier sniffing dark powder and transforming into two white storks by a pond, legs and necks stretching, feathers sprouting, magical and funny. |
-| `images/03-storks-2.png` | Two newly transformed storks doubled over laughing as a real stork performs a ridiculous high-stepping dance on a pond bank, feathers flying, hilarious. |
+| `images/03-storks.webp` | A king and vizier sniffing dark powder and transforming into two white storks by a pond, legs and necks stretching, feathers sprouting, magical and funny. |
+| `images/03-storks-2.webp` | Two newly transformed storks doubled over laughing as a real stork performs a ridiculous high-stepping dance on a pond bank, feathers flying, hilarious. |
 
 ## 4장 · 잊어버린 주문
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-forgot.png` | Two storks staring at each other and then at their reflections in a pond in dawning horror, feathers ruffled, comic despair. |
-| `images/04-forgot-2.png` | Two storks at a palace window being chased off by servants with brooms, then perched on a domed rooftop looking down at a bustling city, comic and sad. |
+| `images/04-forgot.webp` | Two storks staring at each other and then at their reflections in a pond in dawning horror, feathers ruffled, comic despair. |
+| `images/04-forgot-2.webp` | Two storks at a palace window being chased off by servants with brooms, then perched on a domed rooftop looking down at a bustling city, comic and sad. |
 
 ## 5장 · 폐허의 올빼미
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-owl.png` | A ruined desert hall with broken pillars and moonlight through a collapsed roof, two storks meeting a small brown owl with huge sorrowful eyes, atmospheric and tender. |
-| `images/05-owl-2.png` | A small owl telling her story to two storks among ruined pillars in moonlight, then lowering her voice with a hopeful glint, tender and conspiratorial. |
+| `images/05-owl.webp` | A ruined desert hall with broken pillars and moonlight through a collapsed roof, two storks meeting a small brown owl with huge sorrowful eyes, atmospheric and tender. |
+| `images/05-owl-2.webp` | A small owl telling her story to two storks among ruined pillars in moonlight, then lowering her voice with a hopeful glint, tender and conspiratorial. |
 
 ## 6장 · 엿들은 밤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-eavesdrop.png` | A candlelit ruin where dark-robed figures gather around a low table while two storks and an owl press flat behind a broken wall, tense and thrilling. |
-| `images/06-eavesdrop-2.png` | Dark-robed figures laughing around a table as two storks behind a wall stare at each other in sudden realisation, an owl covering their beaks with a wing, thrilling. |
+| `images/06-eavesdrop.webp` | A candlelit ruin where dark-robed figures gather around a low table while two storks and an owl press flat behind a broken wall, tense and thrilling. |
+| `images/06-eavesdrop-2.webp` | Dark-robed figures laughing around a table as two storks behind a wall stare at each other in sudden realisation, an owl covering their beaks with a wing, thrilling. |
 
 ## 7장 · 무타보르
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-mutabor.png` | Two storks facing the dawn and transforming back into a king and vizier in a moonlit desert courtyard, feathers scattering into light, triumphant. |
-| `images/07-mutabor-2.png` | An owl transforming into a beautiful princess as a king nods, then three figures seizing a sleeping wizard in a ruined chamber, radiant and triumphant. |
+| `images/07-mutabor.webp` | Two storks facing the dawn and transforming back into a king and vizier in a moonlit desert courtyard, feathers scattering into light, triumphant. |
+| `images/07-mutabor-2.webp` | An owl transforming into a beautiful princess as a king nods, then three figures seizing a sleeping wizard in a ruined chamber, radiant and triumphant. |
 
 ## 8장 · 궁궐로 돌아가다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A joyful Baghdad street where crowds cheer and throw flowers as a returning king, vizier and princess walk to the palace, banners and drums, warm celebration. |
-| `images/08-ending-2.png` | A palace hall where a king holds up the little box with a rueful grin as servants carry it to a storeroom, the vizier smiling knowingly, warm daylight. |
+| `images/08-ending.webp` | A joyful Baghdad street where crowds cheer and throw flowers as a returning king, vizier and princess walk to the palace, banners and drums, warm celebration. |
+| `images/08-ending-2.webp` | A palace hall where a king holds up the little box with a rueful grin as servants carry it to a storeroom, the vizier smiling knowingly, warm daylight. |
 
 ## 사용 팁
 

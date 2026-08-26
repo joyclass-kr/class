@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 진짜 공주를 찾아서",
         "beats": [
             {
-                "art": "01-prince.png",
+                "art": "01-prince.webp",
                 "emoji": "🤴",
                 "left": [
                     "옛날 어느 작은 나라에 왕자가 있었습니다. 어느새 결혼할 나이가 되었지요. 임금님과 왕비님은 신붓감을 알아보았습니다.",
@@ -18,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-prince-2.png",
+                "art": "01-prince-2.webp",
                 "emoji": "🤴",
                 "left": [
                     "그런데 만나 보면 늘 어딘가 미심쩍었습니다. 어떤 공주는 걸음걸이가 이상했지요. 어떤 공주는 말투가 공주 같지 않았습니다.",
@@ -38,7 +38,7 @@ const CHAPTERS = [
         "title": "2장 · 폭풍우 치는 밤",
         "beats": [
             {
-                "art": "02-storm.png",
+                "art": "02-storm.webp",
                 "emoji": "⛈️",
                 "left": [
                     "그날 밤 무서운 폭풍우가 몰아쳤습니다. 번개가 하늘을 쩍쩍 갈랐지요.",
@@ -52,7 +52,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-storm-2.png",
+                "art": "02-storm-2.webp",
                 "emoji": "⛈️",
                 "left": [
                     "문밖에는 웬 아가씨가 서 있었습니다. 머리에서 발끝까지 물이 뚝뚝 떨어졌지요. 머리카락이 얼굴에 착 달라붙어 있었습니다.",
@@ -74,7 +74,7 @@ const CHAPTERS = [
         "title": "3장 · 정말 공주일까",
         "beats": [
             {
-                "art": "03-doubt.png",
+                "art": "03-doubt.webp",
                 "emoji": "🤔",
                 "left": [
                     "아가씨가 현관에 들어섰습니다. 발밑에 금세 물웅덩이가 생겼지요.",
@@ -89,7 +89,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-doubt-2.png",
+                "art": "03-doubt-2.webp",
                 "emoji": "🤔",
                 "left": [
                     "왕비는 팔짱을 낀 채 바라보기만 했습니다. 눈이 아주 매서웠지요.",
@@ -111,7 +111,7 @@ const CHAPTERS = [
         "title": "4장 · 침대 밑의 완두콩",
         "beats": [
             {
-                "art": "04-pea.png",
+                "art": "04-pea.webp",
                 "emoji": "🫛",
                 "left": [
                     "왕비는 손님방으로 들어갔습니다. 문을 꼭 닫고 소매를 걷었지요.",
@@ -127,7 +127,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-pea-2.png",
+                "art": "04-pea-2.webp",
                 "emoji": "🫛",
                 "left": [
                     "하인들이 요를 스무 장 날라 왔습니다. 완두콩 위에 한 장씩 차곡차곡 깔았지요. 그다음에는 오리털 이불을 가져오게 했습니다.",
@@ -148,7 +148,7 @@ const CHAPTERS = [
         "title": "5장 · 잠 못 이루는 밤",
         "beats": [
             {
-                "art": "05-sleepless.png",
+                "art": "05-sleepless.webp",
                 "emoji": "🌙",
                 "left": [
                     "아가씨가 방으로 안내되었습니다. 침대를 보고 눈이 둥그레졌지요.",
@@ -163,7 +163,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-sleepless-2.png",
+                "art": "05-sleepless-2.webp",
                 "emoji": "🌙",
                 "left": [
                     "아가씨는 자리에서 일어나 앉았습니다. 이불을 들춰 보기도 했지요.",
@@ -183,7 +183,7 @@ const CHAPTERS = [
         "title": "6장 · 아침 인사",
         "beats": [
             {
-                "art": "06-morning.png",
+                "art": "06-morning.webp",
                 "emoji": "🍽️",
                 "left": [
                     "아침 밥상이 차려졌습니다. 왕자도 임금님도 자리에 앉았지요.",
@@ -200,7 +200,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-morning-2.png",
+                "art": "06-morning-2.webp",
                 "emoji": "🍽️",
                 "left": [
                     "왕자는 숟가락을 놓았습니다.",
@@ -222,7 +222,7 @@ const CHAPTERS = [
         "title": "7장 · 스무 장 아래",
         "beats": [
             {
-                "art": "07-reveal.png",
+                "art": "07-reveal.webp",
                 "emoji": "😲",
                 "left": [
                     "왕비가 밥상 앞에 섰습니다.",
@@ -240,7 +240,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-reveal-2.png",
+                "art": "07-reveal-2.webp",
                 "emoji": "😲",
                 "left": [
                     "왕비가 아들을 돌아보았습니다.",
@@ -264,7 +264,7 @@ const CHAPTERS = [
         "title": "8장 · 박물관에 놓인 콩",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "🏛️",
                 "left": [
                     "그날로 두 사람의 혼인이 정해졌습니다. 온 나라에 소식이 퍼졌지요. 성에서는 사흘 동안 잔치가 이어졌습니다.",
@@ -278,7 +278,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "🏛️",
                 "left": [
                     "완두콩은 유리 상자에 담겼습니다. 그러고는 박물관에 놓였지요.",
@@ -309,7 +309,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🫛')}
+                ${artFrame('cover.webp', '🫛')}
             </div>
             <div class="story-page-right">
                 <h1>완두콩 위의 공주</h1>
@@ -381,7 +381,7 @@ const AFTERWORD = {
     emoji: '🛏️',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기도 안데르센이 지었습니다. 아주 짧은 이야기인데도 오래 남았지요.",
                 "왕자는 여러 나라를 돌아다녔습니다. 공주는 많았지만 진짜인지 알 길이 없었지요. 물어보면 다들 그렇다고 하니까요.",

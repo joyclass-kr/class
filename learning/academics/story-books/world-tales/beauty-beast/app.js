@@ -4,7 +4,7 @@ const CHAPTERS = [
         "title": "1장 · 장사꾼의 세 딸",
         "beats": [
             {
-                "art": "01-family.png",
+                "art": "01-family.webp",
                 "emoji": "🏡",
                 "left": [
                     "옛날 어느 항구 도시에 큰 장사꾼이 살았습니다. 배를 여러 척 가진 부자였지요.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "01-family-2.png",
+                "art": "01-family-2.webp",
                 "emoji": "🏡",
                 "left": [
                     "그러던 어느 해였습니다.",
@@ -40,7 +40,7 @@ const CHAPTERS = [
         "title": "2장 · 아버지의 선물",
         "beats": [
             {
-                "art": "02-rose.png",
+                "art": "02-rose.webp",
                 "emoji": "🌹",
                 "left": [
                     "몇 해가 지난 어느 날이었습니다.",
@@ -56,7 +56,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "02-rose-2.png",
+                "art": "02-rose-2.webp",
                 "emoji": "🌹",
                 "left": [
                     "그런데 항구에 가 보니 배는 이미 남의 손에 넘어간 뒤였습니다. 아버지는 빈손으로 돌아서야 했지요. 돌아오는 길에 그만 눈보라가 몰아쳤습니다.",
@@ -75,7 +75,7 @@ const CHAPTERS = [
         "title": "3장 · 꺾어서는 안 될 꽃",
         "beats": [
             {
-                "art": "03-plucked.png",
+                "art": "03-plucked.webp",
                 "emoji": "❄️",
                 "left": [
                     "이튿날 아침이었습니다.",
@@ -91,7 +91,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "03-plucked-2.png",
+                "art": "03-plucked-2.webp",
                 "emoji": "❄️",
                 "left": [
                     "돌아보니 털이 북슬북슬한 커다란 짐승이 서 있었습니다.",
@@ -113,7 +113,7 @@ const CHAPTERS = [
         "title": "4장 · 벨이 나서다",
         "beats": [
             {
-                "art": "04-belle.png",
+                "art": "04-belle.webp",
                 "emoji": "🚶‍♀️",
                 "left": [
                     "아버지는 있었던 일을 하나도 빼놓지 않고 털어놓았습니다.",
@@ -129,7 +129,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "04-belle-2.png",
+                "art": "04-belle-2.webp",
                 "emoji": "🚶‍♀️",
                 "left": [
                     "\"안 된다! 약속은 내가 했으니 내가 가야지.\"",
@@ -152,7 +152,7 @@ const CHAPTERS = [
         "title": "5장 · 성에서의 나날",
         "beats": [
             {
-                "art": "05-castle.png",
+                "art": "05-castle.webp",
                 "emoji": "📚",
                 "left": [
                     "벨은 성에서 뜻밖의 대접을 받았습니다. 방문에 이런 글씨가 붙어 있었지요.",
@@ -166,7 +166,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "05-castle-2.png",
+                "art": "05-castle-2.webp",
                 "emoji": "📚",
                 "left": [
                     "야수는 저녁마다 밥상에 나타났습니다. 처음에는 벨도 말을 제대로 붙이지 못했지요. 커다란 몸이 작은 의자에 겨우 앉아 있었습니다.",
@@ -186,7 +186,7 @@ const CHAPTERS = [
         "title": "6장 · 거울 속의 집",
         "beats": [
             {
-                "art": "06-mirror.png",
+                "art": "06-mirror.webp",
                 "emoji": "🪞",
                 "left": [
                     "어느 날 벨은 방에서 손거울을 하나 찾았습니다. 보고 싶은 곳을 떠올리면 그곳이 비치는 거울이었지요. 벨은 집을 떠올려 보았습니다.",
@@ -200,7 +200,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "06-mirror-2.png",
+                "art": "06-mirror-2.webp",
                 "emoji": "🪞",
                 "left": [
                     "야수는 한참 고개를 숙이고 있었습니다. 커다란 손이 조금 떨렸지요.",
@@ -223,7 +223,7 @@ const CHAPTERS = [
         "title": "7장 · 늦어 버린 날",
         "beats": [
             {
-                "art": "07-late.png",
+                "art": "07-late.webp",
                 "emoji": "⏳",
                 "left": [
                     "아버지는 벨을 보자 눈에 띄게 기운을 차렸습니다.",
@@ -237,7 +237,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "07-late-2.png",
+                "art": "07-late-2.webp",
                 "emoji": "⏳",
                 "left": [
                     "그러다 여드레째 되던 밤이었습니다.",
@@ -259,7 +259,7 @@ const CHAPTERS = [
         "title": "8장 · 뜰에 쓰러진 야수",
         "beats": [
             {
-                "art": "08-ending.png",
+                "art": "08-ending.webp",
                 "emoji": "💗",
                 "left": [
                     "야수는 장미 덤불 아래에 쓰러져 있었습니다. 숨소리가 아주 작았지요. 벨은 달려가 야수를 끌어안았습니다.",
@@ -275,7 +275,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                "art": "08-ending-2.png",
+                "art": "08-ending-2.webp",
                 "emoji": "💗",
                 "left": [
                     "그 말이 끝나자 뜰에 빛이 쏟아졌습니다. 눈이 부셔 앞이 보이지 않았지요. 빛이 걷히고 벨은 눈을 떴습니다.",
@@ -306,7 +306,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🌹')}
+                ${artFrame('cover.webp', '🌹')}
             </div>
             <div class="story-page-right">
                 <h1>미녀와 야수</h1>
@@ -378,7 +378,7 @@ const AFTERWORD = {
     emoji: '🌹',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 프랑스에서 나왔습니다. 이백칠십 년쯤 전에 보몽 부인이 아이들이 읽기 좋게 다듬은 것이 널리 퍼졌지요.",
                 "아버지가 꺾은 것은 장미 한 송이였습니다. 보물을 훔친 것이 아니지요. 세 딸 가운데 막내만 그것을 부탁했고요.",
