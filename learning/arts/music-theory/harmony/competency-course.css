@@ -1,0 +1,375 @@
+.course-shell {
+    width: min(1120px, calc(100% - 28px));
+}
+
+button, select, summary {
+    touch-action: manipulation;
+}
+
+.dashboard-progress {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.skill-strand > summary {
+    grid-template-columns: 46px minmax(0, 1fr) auto auto;
+}
+
+.strand-mark,
+.skill-id {
+    display: grid;
+    place-items: center;
+    color: #202a36;
+    background: linear-gradient(145deg, #f2ce72, #b98527);
+    font-family: Georgia, "Noto Serif KR", serif;
+    font-weight: 950;
+}
+
+.strand-mark {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    font-size: 14px;
+}
+
+.skill-button {
+    min-height: 106px;
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+    gap: 12px;
+    border-color: #344764;
+}
+
+.skill-button.ready {
+    border-color: #806326;
+    background: linear-gradient(135deg, #22334e, #19283f);
+}
+
+.skill-button.completed {
+    border-color: #347867;
+    background: #19352f;
+}
+
+.skill-button.needs-prereq {
+    color: #d2d9e4;
+    background: #172237;
+}
+
+.skill-id {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.lesson-copy {
+    min-width: 0;
+}
+
+.prereq-note {
+    display: block;
+    margin-top: 7px;
+    color: #e6bd61;
+    font-size: 11px;
+    font-weight: 850;
+}
+
+.skill-status {
+    align-self: center;
+    min-width: 60px;
+    padding: 6px 8px;
+    border: 1px solid #60718b;
+    border-radius: 999px;
+    color: #dce5f2;
+    font-size: 11px;
+    font-weight: 900;
+    text-align: center;
+}
+
+.skill-button.completed .skill-status {
+    border-color: #53a792;
+    color: #93e0cb;
+}
+
+.prereq-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 10px 0 0 !important;
+    color: inherit;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+}
+
+.prereq-line > strong {
+    margin-right: 2px;
+}
+
+.prereq-chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 3px 9px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    color: #a65c45;
+    background: rgba(255,255,255,.1);
+    font-weight: 800;
+}
+
+.continue-card .prereq-chip {
+    color: #f3c975;
+    background: rgba(4,10,18,.22);
+}
+
+.prereq-chip.done {
+    color: #287260;
+}
+
+.continue-card .prereq-chip.done {
+    color: #8fdac5;
+}
+
+.lesson-outcome .prereq-line {
+    border-top: 1px solid #cdc4b6;
+    padding-top: 9px;
+}
+
+.section-label {
+    display: inline-flex;
+    min-height: 28px;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    color: #67480e;
+    background: #eadcbf;
+    font-size: 11px;
+    font-weight: 950;
+}
+
+.section-audio {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.section-audio button {
+    min-height: 44px;
+    padding: 8px 13px;
+    border: 1px solid #765117;
+    border-radius: 8px;
+    color: #fff;
+    background: #765117;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.score-frame + .score-frame {
+    margin-top: 12px;
+}
+
+.score-svg .staff-lines line,
+.score-svg .ledger {
+    stroke: #3d4046;
+    stroke-width: 1.25;
+}
+
+.score-svg .note-head {
+    fill: #1d232c;
+}
+
+.score-svg .chord-label {
+    fill: #684912;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.score-svg .accidental {
+    fill: #1d232c;
+    font-size: 18px;
+}
+
+.score-svg .clef {
+    fill: #20252d;
+    font-size: 48px;
+}
+
+.construction-lab {
+    scroll-margin-top: 12px;
+}
+
+.aural-console {
+    display: grid;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.aural-play {
+    width: 100%;
+}
+
+.aural-choices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.aural-choices button {
+    min-height: 48px;
+    padding: 9px 12px;
+    border: 1px solid #9f9585;
+    border-radius: 8px;
+    color: #2c3540;
+    background: #fffdfa;
+    font-weight: 850;
+    cursor: pointer;
+}
+
+.aural-choices button:disabled {
+    opacity: .62;
+}
+
+.progression-builder {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.progression-builder label {
+    display: grid;
+    gap: 5px;
+}
+
+.progression-builder label > span {
+    color: #6d5222;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.progression-slot {
+    width: 100%;
+    min-height: 48px;
+    padding: 8px 10px;
+    border: 1px solid #9e9484;
+    border-radius: 8px;
+    color: #26313e;
+    background: #fffdfa;
+    font-size: 15px;
+    font-weight: 850;
+}
+
+.feedback.success {
+    color: var(--success);
+    font-weight: 800;
+}
+
+.feedback.error {
+    color: var(--danger);
+}
+
+.feedback.pending {
+    color: #f0ca73;
+    font-weight: 800;
+}
+
+.practice-panel > summary span {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.primary-button[hidden] {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .course-shell {
+        width: min(100% - 24px, 1120px);
+    }
+
+    .lesson-section,
+    .lesson-section:nth-child(even) {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+    }
+
+    .lesson-section:nth-child(even) .section-copy,
+    .lesson-section:nth-child(even) .visual-board {
+        order: initial;
+    }
+
+    .visual-board {
+        padding: 14px;
+    }
+
+    .progression-builder {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .skill-strand > summary {
+        grid-template-columns: 42px minmax(0, 1fr) auto;
+    }
+
+    .skill-strand > summary .unit-count {
+        display: none;
+    }
+
+    .skill-button {
+        grid-template-columns: 40px minmax(0, 1fr);
+    }
+
+    .skill-status {
+        grid-column: 2;
+        justify-self: start;
+    }
+
+    .lesson-sections {
+        padding-inline: 18px;
+    }
+
+    .section-copy p {
+        font-size: 15px;
+        line-height: 1.72;
+    }
+
+    .section-copy h2 {
+        font-size: 21px;
+    }
+
+    .aural-choices,
+    .progression-builder,
+    .term-list {
+        grid-template-columns: 1fr;
+    }
+
+    .score-svg {
+        min-width: 480px;
+    }
+
+    .score-frame {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 420px) {
+    .course-shell {
+        width: min(100% - 18px, 1120px);
+    }
+
+    .skill-strand > summary {
+        padding-inline: 10px;
+    }
+
+    .skill-button {
+        min-height: 118px;
+    }
+
+    .lab-actions {
+        grid-template-columns: 1fr;
+    }
+}
