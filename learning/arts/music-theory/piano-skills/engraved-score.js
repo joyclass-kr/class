@@ -1,0 +1,675 @@
+(function () {
+    "use strict";
+
+    const DATA = window.PianoSkillsData;
+    const SOURCE = window.PianoSourceCatalog;
+    const ROOT_NAMES = ["C", "F", "Bb", "Eb", "Ab", "Db", "F#", "B", "E", "A", "D", "G"];
+    const ROOT_LABELS = ["C", "F", "B♭", "E♭", "A♭", "D♭", "F♯", "B", "E", "A", "D", "G"];
+    const ROOT_MIDIS = [60, 65, 58, 63, 68, 61, 66, 59, 64, 69, 62, 67];
+    const NATURAL_PC = { C:0, D:2, E:4, F:5, G:7, A:9, B:11 };
+    const LETTERS = ["C", "D", "E", "F", "G", "A", "B"];
+    const FLAT_NAMES = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
+    const SHARP_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+    const SCALE_KEY_ORDER = ["C", "D", "E", "G", "A", "F", "B", "Db", "Eb", "Gb", "Ab", "Bb"];
+    const SCALE_PAGE_LABELS = { major:"장음계", naturalMinor:"자연단음계", harmonicMinor:"화성단음계", melodicMinor:"가락단음계" };
+
+    const DEGREE_MAP = {
+        1:[1,3,5,7], 2:[1,3,5,7], 3:[1,3,5,7], 4:[1,3,5,7], 5:[1,3,5,7], 6:[1,4,5,7],
+        7:[3,6,9], 8:[3,6,9], 9:[3,7,9], 10:[3,7,9], 11:[3,7,9],
+        12:[7,10,12], 13:[7,10,12], 14:[7,10,12], 15:[7,10,12],
+        16:[7,10,13], 17:[7,10,13], 18:[7,10,13], 19:[4,7,9], 20:[7,9,11,13]
+    };
+
+    function mod(value, base) {
+        return ((value % base) + base) % base;
+    }
+
+    function parseRoot(name) {
+        const letter = name[0].toUpperCase();
+        let accidental = 0;
+        if (name.includes("b") || name.includes("♭")) accidental = -1;
+        if (name.includes("#") || name.includes("♯")) accidental = 1;
+        return { letter:letter, accidental:accidental, pc:mod(NATURAL_PC[letter] + accidental, 12) };
+    }
+
+    function rootNameAtPc(pc, preferSharp) {
+        return (preferSharp ? SHARP_NAMES : FLAT_NAMES)[mod(pc, 12)];
+    }
+
+    function rootMidiAtPc(pc) {
+        const found = ROOT_MIDIS.find(function (midi) { return midi % 12 === mod(pc, 12); });
+        return found === undefined ? 60 + mod(pc, 12) : found;
+    }
+
+    function displayRoot(name) {
+        return name.replace("b", "♭").replace("#", "♯");
+    }
+
+    function accidentalForDiff(diff) {
+        if (diff === -2) return "bb";
+        if (diff === -1) return "b";
+        if (diff === 1) return "#";
+        if (diff === 2) return "##";
+        return "";
+    }
+
+    function pitchSpec(rootName, midi, degree) {
+        const root = parseRoot(rootName);
+        const rootLetterIndex = LETTERS.indexOf(root.letter);
+        const letter = LETTERS[mod(rootLetterIndex + degree - 1, 7)];
+        let diff = mod(mod(midi, 12) - NATURAL_PC[letter], 12);
+        if (diff > 6) diff -= 12;
+        const accidental = accidentalForDiff(diff);
+        return {
+            midi:midi,
+            degree:degree,
+            key:letter.toLowerCase() + accidental + "/" + (Math.floor(midi / 12) - 1),
+            accidental:accidental
+        };
+    }
+
+    function diatonicRootName(tonicName, targetPc, degree) {
+        const tonic = parseRoot(tonicName);
+        const letter = LETTERS[mod(LETTERS.indexOf(tonic.letter) + degree - 1, 7)];
+        let diff = mod(targetPc - NATURAL_PC[letter], 12);
+        if (diff > 6) diff -= 12;
+        return letter + accidentalForDiff(diff);
+    }
+
+    function makeFormulaGroup(rootName, voiceRootMidi, bassMidi, intervals, degrees, label) {
+        return {
+            label:label,
+            left:[pitchSpec(rootName, bassMidi, 1)],
+            right:intervals.map(function (interval, index) {
+                return pitchSpec(rootName, voiceRootMidi + interval, degrees[index]);
+            })
+        };
+    }
+
+    function makeSplitGroup(rootName, voiceRootMidi, leftIntervals, leftDegrees, rightIntervals, rightDegrees, label) {
+        return {
+            label:label,
+            left:leftIntervals.map(function (interval, index) {
+                return pitchSpec(rootName, voiceRootMidi + interval, leftDegrees[index]);
+            }),
+            right:rightIntervals.map(function (interval, index) {
+                return pitchSpec(rootName, voiceRootMidi + interval, rightDegrees[index]);
+            })
+        };
+    }
+
+    function audioNotes(group) {
+        return group.left.concat(group.right).map(function (note) { return note.midi; });
+    }
+
+    function paginateSections(sections, pageSize) {
+        const pages = [];
+        sections.forEach(function (section) {
+            for (let index = 0; index < section.groups.length; index += pageSize) {
+                pages.push({
+                    kind:"chords",
+                    sectionLabel:section.label,
+                    continuation:index > 0,
+                    groups:section.groups.slice(index, index + pageSize)
+                });
+            }
+        });
+        return pages;
+    }
+
+    function buildScale(settings) {
+        const key = DATA.keys.find(function (item) { return item.id === settings.keyId; });
+        const type = DATA.scaleTypes[settings.scaleType];
+        const rootName = key.id;
+        const rootMidi = 60 + key.pc;
+        const ascendingIntervals = type.intervals.slice(0, -1).concat(type.intervals.map(function (interval) { return interval + 12; }));
+        const descendingIntervals = settings.scaleType === "melodicMinor"
+            ? [24,22,20,19,17,15,14,12,10,8,7,5,3,2,0]
+            : ascendingIntervals.slice().reverse();
+        const degreesUp = Array.from({ length:15 }, function (_, index) { return index + 1; });
+        const degreesDown = degreesUp.slice().reverse();
+        const rightBase = DATA.fingering[key.id].right;
+        const leftBase = DATA.fingering[key.id].left;
+        const rightUpFingers = rightBase.slice(0, -1).concat(rightBase);
+        const leftUpFingers = leftBase.concat(leftBase.slice(1));
+        const makeLine = function (intervals, degrees, direction) {
+            const rightFingers = direction === "up" ? rightUpFingers : rightUpFingers.slice().reverse();
+            const leftFingers = direction === "up" ? leftUpFingers : leftUpFingers.slice().reverse();
+            return {
+                right:intervals.map(function (interval, index) {
+                    const note = pitchSpec(rootName, rootMidi + interval, degrees[index]);
+                    note.finger = rightFingers[index];
+                    return note;
+                }),
+                left:intervals.map(function (interval, index) {
+                    const note = pitchSpec(rootName, rootMidi + interval - 12, degrees[index]);
+                    note.finger = leftFingers[index];
+                    return note;
+                })
+            };
+        };
+        const up = makeLine(ascendingIntervals, degreesUp, "up");
+        const down = makeLine(descendingIntervals, degreesDown, "down");
+        const combinedRight = up.right.concat(down.right.slice(1));
+        const combinedLeft = up.left.concat(down.left.slice(1));
+        const audioGroups = combinedRight.map(function (note, index) {
+            if (settings.hand === "right") return [note.midi];
+            if (settings.hand === "left") return [combinedLeft[index].midi];
+            return [combinedLeft[index].midi, note.midi];
+        });
+        return {
+            kind:"scale",
+            pages:[{ kind:"scale", up:up, down:down, keyLabel:key.label, typeLabel:SCALE_PAGE_LABELS[settings.scaleType] }],
+            audioGroups:audioGroups
+        };
+    }
+
+    function buildFoundationSkill(skillId) {
+        const definition = DATA.blockSkills.concat(DATA.shellSkills).find(function (item) { return Number(item.id) === skillId; });
+        const groups = ROOT_NAMES.map(function (rootName, index) {
+            return makeFormulaGroup(
+                rootName,
+                ROOT_MIDIS[index],
+                ROOT_MIDIS[index] - 12,
+                definition.intervals,
+                DEGREE_MAP[skillId],
+                ROOT_LABELS[index] + definition.suffix
+            );
+        });
+        return { pages:paginateSections([{ label:"Skill " + skillId + " · " + definition.label, groups:groups }], 12), audioGroups:groups.map(audioNotes) };
+    }
+
+    function seventhFormula(quality) {
+        const formulas = {
+            maj7:{ intervals:[11,16,19], degrees:[7,10,12], suffix:"Δ" },
+            min7:{ intervals:[10,15,19], degrees:[7,10,12], suffix:"m7" },
+            dom7:{ intervals:[10,16,19], degrees:[7,10,12], suffix:"7" },
+            halfDim:{ intervals:[10,15,18], degrees:[7,10,12], suffix:"ø" }
+        };
+        return formulas[quality];
+    }
+
+    function buildDiatonicSkill(skillId) {
+        const keyIndex = skillId - 21;
+        const tonicName = ROOT_NAMES[keyIndex];
+        const tonicPc = parseRoot(tonicName).pc;
+        const tonicMidi = 48 + tonicPc;
+        const scale = [0,2,4,5,7,9,11,12,11,9,7,5,4,2,0];
+        const degrees = [1,2,3,4,5,6,7,8,7,6,5,4,3,2,1];
+        const qualities = ["maj7","min7","min7","maj7","dom7","min7","halfDim","maj7","halfDim","min7","dom7","maj7","min7","min7","maj7"];
+        const groups = scale.map(function (offset, index) {
+            const degree = degrees[index];
+            const pc = mod(tonicPc + offset, 12);
+            const name = diatonicRootName(tonicName, pc, degree);
+            const formula = seventhFormula(qualities[index]);
+            const chordRootMidi = tonicMidi + offset;
+            return makeFormulaGroup(name, chordRootMidi, chordRootMidi, formula.intervals, formula.degrees, displayRoot(name) + formula.suffix);
+        });
+        return { pages:paginateSections([{ label:"Skill " + skillId + " · " + displayRoot(tonicName) + " Major", groups:groups }], 8), audioGroups:groups.map(audioNotes) };
+    }
+
+    function cycleFormula(kind, upper) {
+        const map = {
+            majA:{ intervals:[11,16,19], degrees:[7,10,12], suffix:"Δ" },
+            majB:{ intervals:[4,11,14], degrees:[3,7,9], suffix:"Δ9" },
+            minA:{ intervals:[10,15,19], degrees:[7,10,12], suffix:"m7" },
+            minB:{ intervals:[3,10,14], degrees:[3,7,9], suffix:"m9" },
+            domA:{ intervals:[10,16,19], degrees:[7,10,12], suffix:"7" },
+            domB:{ intervals:[4,10,14], degrees:[3,7,9], suffix:"9" },
+            susA:{ intervals:[5,10,14], degrees:[4,7,9], suffix:"9sus4" },
+            susB:{ intervals:[10,14,17,21], degrees:[7,9,11,13], suffix:"13sus4" }
+        };
+        return map[kind + (upper ? "B" : "A")];
+    }
+
+    function cycleGroups(startIndex, firstFormula, secondFormula) {
+        const groups = [];
+        for (let step = 0; step <= 12; step += 1) {
+            const index = mod(startIndex + step, 12);
+            const formula = step % 2 === 0 ? firstFormula : secondFormula;
+            groups.push(makeFormulaGroup(ROOT_NAMES[index], ROOT_MIDIS[index], ROOT_MIDIS[index] - 12, formula.intervals, formula.degrees, ROOT_LABELS[index] + formula.suffix));
+        }
+        return groups;
+    }
+
+    function buildSimpleCycleSkill(skillId) {
+        const kind = {33:"maj",34:"min",35:"dom",36:"sus"}[skillId];
+        const formulaA = cycleFormula(kind, false);
+        const formulaB = cycleFormula(kind, true);
+        const sections = [
+            { label:"Skill " + skillId + "a · " + SOURCE.skills[skillId - 1].title, groups:cycleGroups(0, formulaA, formulaB) },
+            { label:"Skill " + skillId + "b · " + SOURCE.skills[skillId - 1].title, groups:cycleGroups(0, formulaB, formulaA) }
+        ];
+        return { pages:paginateSections(sections, 8), audioGroups:sections.flatMap(function (section) { return section.groups.map(audioNotes); }) };
+    }
+
+    function buildLinkedCycleSkill(skillId) {
+        const definitions = skillId === 37 ? [
+            [cycleFormula("min", false), cycleFormula("dom", true), "m7 → 9"],
+            [cycleFormula("min", false), cycleFormula("dom", true), "m7 → 9"],
+            [cycleFormula("min", true), { intervals:[10,16,21], degrees:[7,10,13], suffix:"13" }, "m9 → 13"],
+            [cycleFormula("min", true), { intervals:[10,16,21], degrees:[7,10,13], suffix:"13" }, "m9 → 13"]
+        ] : skillId === 38 ? [
+            [cycleFormula("dom", true), cycleFormula("maj", false), "9 → Δ"],
+            [cycleFormula("dom", false), cycleFormula("maj", true), "7 → Δ9"],
+            [{ intervals:[10,16,21], degrees:[7,10,13], suffix:"13" }, cycleFormula("maj", true), "13 → Δ9"],
+            [{ intervals:[4,10,14], degrees:[3,7,9], suffix:"9" }, cycleFormula("maj", false), "9 → Δ"]
+        ] : [
+            [{ intervals:[4,10,13], degrees:[3,7,9], suffix:"7♭9" }, cycleFormula("min", false), "7♭9 → m7"],
+            [{ intervals:[10,16,21], degrees:[7,10,13], suffix:"13" }, cycleFormula("min", true), "13 → m9"],
+            [{ intervals:[4,10,13], degrees:[3,7,9], suffix:"7♭9" }, cycleFormula("min", true), "7♭9 → m9"],
+            [{ intervals:[10,16,21], degrees:[7,10,13], suffix:"13" }, cycleFormula("min", false), "13 → m7"]
+        ];
+        const letters = ["a","b","c","d"];
+        const sections = definitions.map(function (definition, index) {
+            return {
+                label:"Skill " + skillId + letters[index] + " · " + definition[2],
+                groups:cycleGroups(index % 2, definition[0], definition[1])
+            };
+        });
+        return { pages:paginateSections(sections, 8), audioGroups:sections.flatMap(function (section) { return section.groups.map(audioNotes); }) };
+    }
+
+    function formulaGroupForPc(pc, formula, label, preferSharp) {
+        const name = rootNameAtPc(pc, preferSharp);
+        const midi = rootMidiAtPc(pc);
+        return makeFormulaGroup(name, midi, midi - 12, formula.intervals, formula.degrees, displayRoot(name) + label);
+    }
+
+    function iiVIForKey(tonicIndex, minor, format) {
+        const tonicName = ROOT_NAMES[tonicIndex];
+        const tonicPc = parseRoot(tonicName).pc;
+        const sharp = tonicName.includes("#") || ["B","E","A","D","G"].includes(tonicName);
+        const iiPc = mod(tonicPc + 2, 12);
+        const vPc = mod(tonicPc + 7, 12);
+        if (!minor && format === 1) return [
+            formulaGroupForPc(iiPc, cycleFormula("min", false), "m7", sharp),
+            formulaGroupForPc(vPc, cycleFormula("dom", true), "9", sharp),
+            formulaGroupForPc(tonicPc, cycleFormula("maj", false), "Δ", sharp)
+        ];
+        if (!minor && format === 2) return [
+            formulaGroupForPc(iiPc, cycleFormula("min", true), "m9", sharp),
+            formulaGroupForPc(vPc, { intervals:[10,16,21], degrees:[7,10,13] }, "13", sharp),
+            formulaGroupForPc(tonicPc, cycleFormula("maj", true), "Δ9", sharp)
+        ];
+        if (minor && format === 1) return [
+            formulaGroupForPc(iiPc, { intervals:[10,15,18], degrees:[7,10,12] }, "m7♭5", sharp),
+            formulaGroupForPc(vPc, { intervals:[4,10,13], degrees:[3,7,9] }, "7♭9", sharp),
+            formulaGroupForPc(tonicPc, cycleFormula("min", false), "m7", sharp)
+        ];
+        return [
+            formulaGroupForPc(iiPc, { intervals:[3,10,13], degrees:[3,7,9] }, "m7♭5", sharp),
+            formulaGroupForPc(vPc, { intervals:[10,16,21], degrees:[7,10,13] }, "7♭9", sharp),
+            formulaGroupForPc(tonicPc, cycleFormula("min", true), "m9", sharp)
+        ];
+    }
+
+    function buildCadenceSkill(skillId) {
+        const format = [41,43,45].includes(skillId) ? 2 : 1;
+        const minor = [42,43].includes(skillId);
+        const relative = [44,45].includes(skillId);
+        const groups = [];
+        ROOT_NAMES.forEach(function (_, tonicIndex) {
+            groups.push.apply(groups, iiVIForKey(tonicIndex, minor, format));
+            if (relative) {
+                const relativePc = mod(parseRoot(ROOT_NAMES[tonicIndex]).pc + 9, 12);
+                const relativeIndex = ROOT_NAMES.findIndex(function (name) {
+                    return parseRoot(name).pc === relativePc;
+                });
+                groups.push.apply(groups, iiVIForKey(relativeIndex, true, format));
+            }
+        });
+        return { pages:paginateSections([{ label:"Skill " + skillId + " · " + SOURCE.skills[skillId - 1].title, groups:groups }], 12), audioGroups:groups.map(audioNotes) };
+    }
+
+    function buildModalAndProgressionSkill(skillId) {
+        const groups = [];
+        if (skillId === 46) {
+            ROOT_NAMES.forEach(function (name, index) {
+                const first = cycleFormula("maj", false);
+                const nextIndex = mod(index + 1, 12);
+                groups.push(makeFormulaGroup(name, ROOT_MIDIS[index], ROOT_MIDIS[index] - 12, first.intervals, first.degrees, ROOT_LABELS[index] + "Δ"));
+                groups.push(makeFormulaGroup(ROOT_NAMES[nextIndex], ROOT_MIDIS[nextIndex], ROOT_MIDIS[nextIndex] - 12, cycleFormula("maj", true).intervals, cycleFormula("maj", true).degrees, ROOT_LABELS[nextIndex] + "Δ9"));
+            });
+        } else if (skillId === 47) {
+            const dorian = [0,2,3,5,7,9,10,12,14,15,17,19,21,22];
+            ROOT_NAMES.forEach(function (name, rootIndex) {
+                for (let degree = 0; degree < 7; degree += 1) {
+                    const midi = ROOT_MIDIS[rootIndex];
+                    groups.push(makeFormulaGroup(name, midi, midi - 12, [dorian[degree],dorian[degree+3],dorian[degree+6]], [degree+1,degree+4,degree+7], ROOT_LABELS[rootIndex] + " Dorian · " + (degree + 1)));
+                }
+            });
+        } else if (skillId === 48 || skillId === 49) {
+            ROOT_NAMES.forEach(function (name, index) {
+                const baseMidi = ROOT_MIDIS[index];
+                groups.push(makeSplitGroup(name, baseMidi, [0,5], [1,4], [10,15,19], [7,11,13], ROOT_LABELS[index] + (skillId === 48 ? "m · So What" : "Δ · So What")));
+            });
+        } else if (skillId === 50) {
+            const dorian = [0,2,3,5,7,9,10,12,14,15,17,19,21,22,24,26,27,29];
+            ROOT_NAMES.forEach(function (name, rootIndex) {
+                for (let degree = 0; degree < 7; degree += 1) {
+                    const midi = ROOT_MIDIS[rootIndex];
+                    groups.push(makeSplitGroup(name, midi, [dorian[degree],dorian[degree+3]], [degree+1,degree+4], [dorian[degree+6],dorian[degree+9],dorian[degree+11]], [degree+7,degree+10,degree+12], ROOT_LABELS[rootIndex] + " Dorian · " + (degree + 1)));
+                }
+            });
+        } else if (skillId >= 51 && skillId <= 58) {
+            const format = skillId % 2 === 0 ? 2 : 1;
+            ROOT_NAMES.forEach(function (name, index) {
+                const rootPc = parseRoot(name).pc;
+                if (skillId <= 52) {
+                    const iiPc = mod(rootPc + 2, 12);
+                    const iiName = rootNameAtPc(iiPc, !name.includes("b"));
+                    const iiMidi = rootMidiAtPc(iiPc);
+                    const target = makeSplitGroup(name, ROOT_MIDIS[index], [4,9], [3,6], [14,19,23], [9,12,14], ROOT_LABELS[index] + "Δ");
+                    const sideShift = format === 1 ? -1 : 1;
+                    groups.push(makeSplitGroup(iiName, iiMidi, [0,5], [1,4], [10,15,19], [7,11,13], displayRoot(iiName) + "m7"));
+                    groups.push({
+                        label:"side-slip",
+                        left:target.left.map(function (note) { return Object.assign({}, note, { midi:note.midi + sideShift, key:pitchSpec(name, note.midi + sideShift, note.degree).key }); }),
+                        right:target.right.map(function (note) { return Object.assign({}, note, { midi:note.midi + sideShift, key:pitchSpec(name, note.midi + sideShift, note.degree).key }); })
+                    });
+                    groups.push(target);
+                } else {
+                    const progression = iiVIForKey(index, false, format);
+                    if (skillId <= 54) {
+                        const flatSixPc = mod(rootPc + 8, 12);
+                        const flatTwoPc = mod(rootPc + 1, 12);
+                        groups.push(progression[0], progression[1]);
+                        groups.push(formulaGroupForPc(flatSixPc, cycleFormula("min", false), "m7", false));
+                        groups.push(formulaGroupForPc(flatTwoPc, cycleFormula("dom", false), "7", false));
+                        groups.push(progression[2]);
+                    } else {
+                        groups.push.apply(groups, progression);
+                    }
+                }
+            });
+        } else if (skillId === 59 || skillId === 60) {
+            ROOT_NAMES.forEach(function (name, index) {
+                const first = skillId === 59
+                    ? makeSplitGroup(name, ROOT_MIDIS[index], [0,10], [1,7], [13,16,21], [9,11,13], ROOT_LABELS[index] + "13♭9")
+                    : makeSplitGroup(name, ROOT_MIDIS[index], [0,4,10], [1,3,7], [15,20], [10,12], ROOT_LABELS[index] + "7♯5♯9");
+                groups.push(first);
+            });
+        }
+        return { pages:paginateSections([{ label:"Skill " + skillId + " · " + SOURCE.skills[skillId - 1].title, groups:groups }], 12), audioGroups:groups.map(audioNotes) };
+    }
+
+    function bluesRootPcs(tonicPc) {
+        return [0,5,0,0,5,10,0,9,2,7,0,7].map(function (offset) { return mod(tonicPc + offset, 12); });
+    }
+
+    function buildBluesFormat(tonicName, kind, format) {
+        const tonicPc = parseRoot(tonicName).pc;
+        return bluesRootPcs(tonicPc).map(function (pc, index) {
+            const name = rootNameAtPc(pc, tonicName.includes("#"));
+            const midi = rootMidiAtPc(pc);
+            if (kind === "minor") {
+                const left = format === "b" ? [3,10,14] : [10,15,19];
+                const leftDegrees = format === "b" ? [3,7,9] : [7,10,12];
+                return makeSplitGroup(name, midi, left, leftDegrees, [26,31,36], [16,19,22], displayRoot(name) + "m9");
+            }
+            if (kind === "fourthy") {
+                const left = format === "b" ? [4,10,14] : [10,16,21];
+                const leftDegrees = format === "b" ? [3,7,9] : [7,10,13];
+                return makeSplitGroup(name, midi, left, leftDegrees, [26,31,36], [16,19,22], displayRoot(name) + "13");
+            }
+            if (kind === "major7") {
+                const quality = index < 4 ? "maj" : index % 3 === 0 ? "min" : "dom";
+                const formula = quality === "maj" ? cycleFormula("maj", index % 2 === 1) : quality === "min" ? cycleFormula("min", index % 2 === 1) : cycleFormula("dom", index % 2 === 1);
+                return makeFormulaGroup(name, midi, midi - 12, formula.intervals, formula.degrees, displayRoot(name) + formula.suffix);
+            }
+            const left = format === "b" ? [4,10,14] : [10,16,21];
+            const leftDegrees = format === "b" ? [3,7,9] : [7,10,13];
+            const upperRoot = index === 7 || index === 8 ? 3 : 0;
+            const right = format === "b" ? [upperRoot+31,upperRoot+36,upperRoot+40] : [upperRoot+28,upperRoot+31,upperRoot+36];
+            const rightDegrees = format === "b" ? [19,22,24] : [17,19,22];
+            const suffix = format === "b"
+                ? ["9","13","9","9","13","9","9","7♯5♯9","m9","13","9","13"][index]
+                : ["13","9","13","13","9","13","13","7♯9","m9","9","13","9"][index];
+            return makeSplitGroup(name, midi, left, leftDegrees, right, rightDegrees, displayRoot(name) + suffix);
+        });
+    }
+
+    function buildBluesSkill(skillId) {
+        let tonicName;
+        let kind;
+        if (skillId <= 72) { tonicName = ROOT_NAMES[skillId - 61]; kind = "polychord"; }
+        else if (skillId <= 84) { tonicName = ROOT_NAMES[skillId - 73]; kind = "fourthy"; }
+        else if (skillId <= 96) { tonicName = ROOT_NAMES[skillId - 85]; kind = "major7"; }
+        else { tonicName = ["C","F","Bb","Eb","G#","C#","F#","B","E","A","D","G"][skillId - 97]; kind = "minor"; }
+        const sections = kind === "major7" ? [
+            { label:"Skill " + skillId + " · " + SOURCE.skills[skillId - 1].title, groups:buildBluesFormat(tonicName, kind, "a") }
+        ] : [
+            { label:"Skill " + skillId + "a · Format a", groups:buildBluesFormat(tonicName, kind, "a") },
+            { label:"Skill " + skillId + "b · Format b", groups:buildBluesFormat(tonicName, kind, "b") }
+        ];
+        return { pages:paginateSections(sections, 12), audioGroups:sections.flatMap(function (section) { return section.groups.map(audioNotes); }) };
+    }
+
+    function buildAdvancedDominantSkill(skillId) {
+        const groups = [];
+        if (skillId <= 116) {
+            const index = skillId - 109;
+            const upperOffsets = [2,3,6,8,9,1,3,6];
+            const minor = index >= 5;
+            ROOT_NAMES.forEach(function (name, rootIndex) {
+                const upper = upperOffsets[index];
+                const right = minor ? [upper+12,upper+15,upper+19] : [upper+12,upper+16,upper+19];
+                groups.push(makeSplitGroup(name, ROOT_MIDIS[rootIndex], [0,4,10], [1,3,7], right, [9,11,13], ROOT_LABELS[rootIndex] + " · " + SOURCE.skills[skillId - 1].title.replace("Dominant ","")));
+            });
+        } else if (skillId === 117) {
+            ROOT_NAMES.forEach(function (name, rootIndex) {
+                [2,3,6,8,9].forEach(function (upper) {
+                    groups.push(makeSplitGroup(name, ROOT_MIDIS[rootIndex], [0,4,10], [1,3,7], [upper+12,upper+16,upper+19], [9,11,13], ROOT_LABELS[rootIndex] + "7 / " + displayRoot(rootNameAtPc(parseRoot(name).pc + upper, true))));
+                });
+            });
+        } else {
+            const transposition = mod(skillId - 118, 3);
+            const direction = skillId >= 121 ? -1 : 1;
+            ROOT_NAMES.forEach(function (name, rootIndex) {
+                for (let step = 0; step < 4; step += 1) {
+                    const shift = (transposition + direction * step) * 3;
+                    const pc = mod(parseRoot(name).pc + shift, 12);
+                    const shiftedName = rootNameAtPc(pc, name.includes("#"));
+                    const midi = rootMidiAtPc(pc);
+                    groups.push(makeSplitGroup(shiftedName, midi, [0,4,10], [1,3,7], [13,21], [9,13], displayRoot(shiftedName) + "13♭9"));
+                }
+                groups.push(makeFormulaGroup(name, ROOT_MIDIS[rootIndex], ROOT_MIDIS[rootIndex] - 12, cycleFormula("maj", false).intervals, cycleFormula("maj", false).degrees, ROOT_LABELS[rootIndex] + "Δ"));
+            });
+        }
+        return { pages:paginateSections([{ label:"Skill " + skillId + " · " + SOURCE.skills[skillId - 1].title, groups:groups }], 12), audioGroups:groups.map(audioNotes) };
+    }
+
+    function buildSkill(skillId) {
+        if (skillId <= 20) return buildFoundationSkill(skillId);
+        if (skillId <= 32) return buildDiatonicSkill(skillId);
+        if (skillId <= 36) return buildSimpleCycleSkill(skillId);
+        if (skillId <= 39) return buildLinkedCycleSkill(skillId);
+        if (skillId <= 45) return buildCadenceSkill(skillId);
+        if (skillId <= 60) return buildModalAndProgressionSkill(skillId);
+        if (skillId <= 108) return buildBluesSkill(skillId);
+        return buildAdvancedDominantSkill(skillId);
+    }
+
+    function staveNote(VF, clef, specs, duration, stemDirection) {
+        const note = new VF.StaveNote({
+            clef:clef,
+            keys:specs.map(function (spec) { return spec.key; }),
+            duration:duration,
+            stem_direction:stemDirection
+        });
+        specs.forEach(function (spec, index) {
+            if (spec.accidental) note.addModifier(new VF.Accidental(spec.accidental), index);
+        });
+        return note;
+    }
+
+    function renderChordPage(container, page, options) {
+        const VF = window.Vex.Flow;
+        const width = 1200;
+        const height = 650;
+        const renderer = new VF.Renderer(container, VF.Renderer.Backends.SVG);
+        renderer.resize(width, height);
+        const context = renderer.getContext();
+        context.setFillStyle("#17201d");
+        context.setStrokeStyle("#17201d");
+        context.setFont("Inter, Arial, sans-serif", 18, "600");
+        context.fillText(page.sectionLabel + (page.continuation ? " · 계속" : ""), 38, 32);
+        context.setFont("Inter, Arial, sans-serif", 14, "500");
+        context.fillText("♩ = " + options.tempo, 1080, 32);
+        const columns = 6;
+        const cellWidth = 188;
+        const left = 34;
+        const systems = [
+            { treble:78, bass:180 },
+            { treble:358, bass:460 }
+        ];
+        page.groups.forEach(function (group, index) {
+            const row = Math.floor(index / columns);
+            const column = index % columns;
+            const system = systems[row];
+            const x = left + column * cellWidth;
+            const staveWidth = cellWidth + (column === columns - 1 ? 0 : 1);
+            const treble = new VF.Stave(x, system.treble, staveWidth);
+            const bass = new VF.Stave(x, system.bass, staveWidth);
+            if (column === 0) {
+                treble.addClef("treble");
+                bass.addClef("bass");
+            }
+            treble.setContext(context).draw();
+            bass.setContext(context).draw();
+            if (column === 0) {
+                new VF.StaveConnector(treble, bass).setType(VF.StaveConnector.type.BRACE).setContext(context).draw();
+                new VF.StaveConnector(treble, bass).setType(VF.StaveConnector.type.SINGLE_LEFT).setContext(context).draw();
+            }
+            context.setFont("Inter, Arial, sans-serif", 13, "600");
+            const labelWidth = Array.from(group.label).length * 7.2;
+            const labelCenter = x + staveWidth / 2 + (column === 0 ? 14 : 0);
+            context.fillText(group.label, labelCenter - labelWidth / 2, system.treble - 10);
+            if (group.right.length) {
+                const rightNote = staveNote(VF, "treble", group.right, "w", 1);
+                VF.Formatter.FormatAndDraw(context, treble, [rightNote]);
+            }
+            if (group.left.length) {
+                const leftNote = staveNote(VF, "bass", group.left, "w", -1);
+                VF.Formatter.FormatAndDraw(context, bass, [leftNote]);
+            }
+        });
+        const svg = container.querySelector("svg");
+        if (svg) {
+            svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+            svg.setAttribute("preserveAspectRatio", "xMidYMin meet");
+            svg.setAttribute("aria-label", page.sectionLabel);
+        }
+    }
+
+    function scaleStaveNotes(VF, specs, clef, stemDirection, fingerPosition) {
+        return specs.map(function (spec) {
+            const note = staveNote(VF, clef, [spec], "8", stemDirection);
+            const finger = new VF.Annotation(String(spec.finger))
+                .setFont("Inter, Arial, sans-serif", 11, "500")
+                .setVerticalJustification(fingerPosition);
+            note.addModifier(finger, 0);
+            return note;
+        });
+    }
+
+    function drawScaleSystem(VF, context, line, y, label) {
+        const width = 1085;
+        const treble = new VF.Stave(70, y, width).addClef("treble");
+        const bass = new VF.Stave(70, y + 104, width).addClef("bass");
+        treble.setContext(context).draw();
+        bass.setContext(context).draw();
+        new VF.StaveConnector(treble, bass).setType(VF.StaveConnector.type.BRACE).setContext(context).draw();
+        new VF.StaveConnector(treble, bass).setType(VF.StaveConnector.type.SINGLE_LEFT).setContext(context).draw();
+        context.setFont("Inter, Arial, sans-serif", 14, "600");
+        context.fillText(label, 18, y + 56);
+        const rightNotes = scaleStaveNotes(VF, line.right, "treble", 1, VF.Annotation.VerticalJustify.TOP);
+        const leftNotes = scaleStaveNotes(VF, line.left, "bass", -1, VF.Annotation.VerticalJustify.BOTTOM);
+        const rightVoice = new VF.Voice({ num_beats:15, beat_value:8 }).setStrict(false).addTickables(rightNotes);
+        const leftVoice = new VF.Voice({ num_beats:15, beat_value:8 }).setStrict(false).addTickables(leftNotes);
+        new VF.Formatter().joinVoices([rightVoice]).format([rightVoice], width - 90);
+        new VF.Formatter().joinVoices([leftVoice]).format([leftVoice], width - 90);
+        rightVoice.draw(context, treble);
+        leftVoice.draw(context, bass);
+        VF.Beam.generateBeams(rightNotes).forEach(function (beam) { beam.setContext(context).draw(); });
+        VF.Beam.generateBeams(leftNotes).forEach(function (beam) { beam.setContext(context).draw(); });
+    }
+
+    function renderScalePage(container, page) {
+        const VF = window.Vex.Flow;
+        const width = 1200;
+        const height = 760;
+        const renderer = new VF.Renderer(container, VF.Renderer.Backends.SVG);
+        renderer.resize(width, height);
+        const context = renderer.getContext();
+        context.setFillStyle("#17201d");
+        context.setStrokeStyle("#17201d");
+        context.setFont("Inter, Arial, sans-serif", 20, "700");
+        context.fillText(page.keyLabel + " " + page.typeLabel + " · 양손 두 옥타브", 34, 30);
+        context.setFont("Inter, Arial, sans-serif", 12, "500");
+        context.fillText("오른손은 위 보표, 왼손은 아래 보표 · 숫자는 손가락 번호", 34, 52);
+        drawScaleSystem(VF, context, page.up, 75, "상행");
+        drawScaleSystem(VF, context, page.down, 405, "하행");
+        const svg = container.querySelector("svg");
+        if (svg) {
+            svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+            svg.setAttribute("preserveAspectRatio", "xMidYMin meet");
+            svg.setAttribute("aria-label", page.keyLabel + " " + page.typeLabel + " 양손 두 옥타브");
+        }
+    }
+
+    function buildReference(sectionId) {
+        const modules = DATA.voicingModules.map(function (module) {
+            return "Skill " + module.skills[0] + "-" + module.skills[module.skills.length - 1] + " · " + module.title;
+        });
+        const pages = [
+            { kind:"reference", title:"연습의 기본 원칙 1", items:DATA.practicePrinciples.slice(0, 5) },
+            { kind:"reference", title:"연습의 기본 원칙 2", items:DATA.practicePrinciples.slice(5) },
+            { kind:"reference", title:"Skills 1-123 과정 지도", items:modules },
+            { kind:"reference", title:"기초 학기 통과 순서", items:DATA.semesterTracks.foundation },
+            { kind:"reference", title:"고급 학기 통과 순서", items:DATA.semesterTracks.advanced }
+        ];
+        return { pages:pages, audioGroups:[] };
+    }
+
+    function renderReferencePage(container, page) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "engraved-reference";
+        const title = document.createElement("h3");
+        title.textContent = page.title;
+        const list = document.createElement("ol");
+        page.items.forEach(function (text) {
+            const item = document.createElement("li");
+            item.textContent = text;
+            list.appendChild(item);
+        });
+        wrapper.append(title, list);
+        container.appendChild(wrapper);
+    }
+
+    function render(container, model, pageIndex, options) {
+        container.replaceChildren();
+        const page = model.pages[Math.max(0, Math.min(pageIndex, model.pages.length - 1))];
+        try {
+            if (page.kind === "scale") renderScalePage(container, page);
+            else if (page.kind === "reference") renderReferencePage(container, page);
+            else renderChordPage(container, page, options);
+        } catch (error) {
+            container.replaceChildren();
+            const message = document.createElement("p");
+            message.className = "engraving-error";
+            message.textContent = "악보 조판 중 오류가 발생했습니다: " + error.message;
+            container.appendChild(message);
+            throw error;
+        }
+    }
+
+    function build(settings) {
+        if (settings.mode === "scale") return buildScale(settings);
+        if (settings.mode === "voicing") return buildSkill(settings.skillId);
+        return buildReference(settings.referenceId);
+    }
+
+    window.PianoEngraving = { build:build, render:render };
+})();

@@ -7,81 +7,88 @@ const root = path.join(__dirname, "..", "learning", "arts", "music-theory", "pia
 const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const css = fs.readFileSync(path.join(root, "styles.css"), "utf8");
 const app = fs.readFileSync(path.join(root, "app.js"), "utf8");
-const score = fs.readFileSync(path.join(root, "score-renderer.js"), "utf8");
-const audio = fs.readFileSync(path.join(root, "..", "harmony", "piano-engine.js"), "utf8");
+const sampler = fs.readFileSync(path.join(root, "piano-sampler.js"), "utf8");
+const engraving = fs.readFileSync(path.join(root, "engraved-score.js"), "utf8");
 const dataSource = fs.readFileSync(path.join(root, "curriculum-data.js"), "utf8");
+const catalogSource = fs.readFileSync(path.join(root, "source-catalog.js"), "utf8");
 const sandbox = { window: {} };
 vm.runInNewContext(dataSource, sandbox);
+vm.runInNewContext(catalogSource, sandbox);
+vm.runInNewContext(engraving, sandbox);
 const data = sandbox.window.PianoSkillsData;
+const catalog = sandbox.window.PianoSourceCatalog;
+const score = sandbox.window.PianoEngraving;
 
 assert.match(html, /<title>피아노 스케일·보이싱<\/title>/);
 assert.match(html, /id="midiButton"/);
-assert.match(html, /id="keyboardViewport"/);
-assert.match(html, /id="calibrationDialog"/);
-assert.match(html, /id="scoreSvg"/);
-assert.match(html, /score-renderer\.js/);
+assert.match(html, /id="scoreSurface"/);
+assert.match(html, /vendor\/vexflow-4\.2\.2\.js/);
+assert.match(html, /engraved-score\.js/);
+assert.match(html, /piano-sampler\.js/);
+assert.doesNotMatch(html, /scoreImage|score-renderer\.js|assets\/scores/);
+assert.equal(fs.existsSync(path.join(root, "score-renderer.js")), false);
+assert.match(html, /입력 확인용이며 실물 크기가 아닙니다/);
+
 assert.match(app, /navigator\.requestMIDIAccess/);
 assert.match(app, /0x90/);
-assert.match(app, /data1 === 64/);
-assert.match(app, /23\.5 \* state\.pxPerMm/);
-assert.match(app, /틀린 음/);
-assert.match(app, /머뭇거림/);
-assert.match(app, /\[0, 5, 0, 0, 5, 10, 0, 9, 2, 7, 0, 7\]/, "교재의 블루스 6마디는 B♭13이어야 합니다.");
-assert.match(app, /upperRoot \+ 28/, "폴리코드 오른손은 왼손보다 높은 실제 음역에 배치해야 합니다.");
-assert.match(app, /Math\.min\(72, module\.tempo\)/, "목표 템포를 첫 연습 속도로 강제하면 안 됩니다.");
-assert.match(score, /renderScale/);
-assert.match(score, /renderVoicing/);
-assert.match(score, /pageForIndex/);
-assert.doesNotMatch(audio, /\* 5\.6/, "샘플 볼륨을 과증폭하면 안 됩니다.");
-assert.match(audio, /Math\.sqrt\(group\.length\)/, "화음의 음 수에 따라 볼륨을 정규화해야 합니다.");
+assert.match(app, /PianoEngraving\.build/);
+assert.match(app, /PianoEngraving\.render/);
+assert.doesNotMatch(app, /assets\/scores|scoreImage|원본 악보/);
+
+assert.match(engraving, /Renderer\.Backends\.SVG/);
+assert.match(engraving, /new VF\.Stave/);
+assert.match(engraving, /new VF\.StaveNote/);
+assert.match(engraving, /VF\.Beam\.generateBeams/);
+assert.match(engraving, /return buildAdvancedDominantSkill\(skillId\)/);
+assert.doesNotMatch(sampler, /createOscillator/, "피아노 샘플 실패를 합성음으로 대체하면 안 됩니다.");
+assert.match(sampler, /Math\.sqrt\(size\)/, "화음의 음 수에 따라 샘플 볼륨을 정규화해야 합니다.");
+
 assert.match(css, /min-height:\s*44px/);
-assert.match(css, /overflow-x:\s*clip/);
+assert.match(css, /\.score-surface svg[\s\S]*width:\s*100%\s*!important/);
+assert.match(css, /@media \(min-width: 1024px\) and \(max-height: 850px\)/);
 assert.match(css, /@media \(max-width: 820px\)/);
 assert.match(css, /@media \(max-width: 620px\)/);
 
-assert.equal(Object.keys(data.scaleTypes).length, 4, "네 종류의 장·단음계를 제공해야 합니다.");
-assert.equal(Object.keys(data.fingering).length, 12, "12개 조의 운지를 제공해야 합니다.");
-assert.equal(data.voicingModules.length, 20, "교재의 20개 보이싱 영역을 제공해야 합니다.");
-const skills = data.voicingModules.flatMap((module) => module.skills.map(Number));
-assert.equal(skills.length, 123, "Skills 1-123을 모두 포함해야 합니다.");
-assert.deepEqual([...skills].sort((a, b) => a - b), Array.from({ length: 123 }, (_, index) => index + 1));
+assert.equal(Object.keys(data.scaleTypes).length, 4, "장·자연단·화성단·가락단음계를 모두 제공해야 합니다.");
+assert.equal(Object.keys(data.fingering).length, 12, "12개 조 운지를 제공해야 합니다.");
 assert.equal(data.practicePrinciples.length, 10, "교재의 10가지 연습 원칙을 반영해야 합니다.");
-assert.ok(data.semesterTracks.foundation.length >= 14);
-assert.ok(data.semesterTracks.advanced.length >= 13);
 
-class FakeSvgNode {
-    constructor(name) {
-        this.name = name;
-        this.attributes = {};
-        this.children = [];
-        this.textContent = "";
-    }
-    setAttribute(name, value) { this.attributes[name] = String(value); }
-    appendChild(child) { this.children.push(child); return child; }
-    replaceChildren(...children) { this.children = children; }
-}
-const scoreSandbox = {
-    window: {},
-    document: { createElementNS: (_namespace, name) => new FakeSvgNode(name) }
-};
-vm.runInNewContext(score, scoreSandbox);
-const fakeSvg = new FakeSvgNode("svg");
-const scoreResult = scoreSandbox.window.PianoScoreRenderer.render(fakeSvg, {
-    mode: "voicing",
-    exercise: {
-        groups: [
-            { label: "C13", notes: [58, 64, 69, 76, 79, 84], left: [58, 64, 69], right: [76, 79, 84] }
-        ]
-    },
-    key: data.keys[0],
-    page: 0,
-    currentIndex: 0
-});
-assert.equal(scoreResult.pageCount, 1);
-assert.equal(fakeSvg.attributes.viewBox, "0 0 920 330");
-assert.ok(fakeSvg.children.length > 0, "큰보표 SVG 요소가 생성되어야 합니다.");
+assert.equal(catalog.skills.length, 123, "교재 Skill 1–123을 각각 선택할 수 있어야 합니다.");
+assert.deepEqual(
+    Array.from(catalog.skills, (skill) => skill.id),
+    Array.from({ length: 123 }, (_, index) => index + 1)
+);
+assert.equal(catalog.skills[0].title, "Major 7ths");
+assert.deepEqual(Array.from(catalog.skills[0].pages), [5]);
+assert.deepEqual(Array.from(catalog.skills[36].pages), [29, 30]);
+assert.equal(catalog.skills[60].title, "Blues in C · Formats a/b");
+assert.deepEqual(Array.from(catalog.skills[116].pages), [145, 146, 147]);
+assert.equal(catalog.skills[122].title, "Diminished Substitution · Format 2 · Transposition 3");
+assert.deepEqual(Array.from(catalog.skills[122].pages), [154]);
+assert.deepEqual(Array.from(catalog.referenceSections.at(-1).pages), [155, 156, 157, 158]);
 
+const scaleModel = score.build({ mode:"scale", keyId:"C", scaleType:"major", hand:"both", tempo:60 });
+assert.equal(scaleModel.pages.length, 1);
+assert.equal(scaleModel.pages[0].up.right.length, 15, "두 옥타브 상행은 15개 음이어야 합니다.");
+assert.equal(scaleModel.pages[0].down.left.length, 15, "두 옥타브 하행은 15개 음이어야 합니다.");
+assert.equal(scaleModel.pages[0].up.right[0].finger, 1);
+
+const skill2 = score.build({ mode:"voicing", skillId:2, tempo:120 });
+assert.equal(skill2.pages.length, 1);
+assert.equal(skill2.pages[0].groups.length, 12, "Skill 2는 12개 조를 모두 한 악보에 조판해야 합니다.");
+assert.deepEqual(Array.from(skill2.pages[0].groups[0].right, (note) => note.midi), [60, 64, 67, 70]);
+assert.equal(skill2.pages[0].groups[0].left[0].midi, 48);
+
+const skill21 = score.build({ mode:"voicing", skillId:21, tempo:120 });
+assert.equal(skill21.pages.length, 2, "다이어토닉 7화음의 상행·하행을 빠짐없이 조판해야 합니다.");
+assert.equal(skill21.pages.flatMap((page) => page.groups).length, 15);
+
+const skill117 = score.build({ mode:"voicing", skillId:117, tempo:96 });
+assert.ok(skill117.pages.length >= 1, "고급 폴리코드 단계도 새 악보를 생성해야 합니다.");
+assert.ok(skill117.audioGroups.length > 12);
+
+assert.equal(fs.existsSync(path.join(root, "assets", "scores")), false, "원본 PDF 스캔 이미지를 사이트 자산으로 남기지 않습니다.");
 const samples = fs.readdirSync(path.join(root, "assets", "piano")).filter((name) => name.endsWith(".ogg"));
-assert.equal(samples.length, 9, "기존 화성학 피아노 샘플 9개를 재사용해야 합니다.");
+assert.equal(samples.length, 9, "샘플 피아노 음원 9개를 사용해야 합니다.");
 
-console.log("piano scale and voicing contracts passed");
+console.log("piano engraved-score contracts passed");

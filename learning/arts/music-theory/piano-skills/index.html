@@ -3,185 +3,138 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#071918">
+    <meta name="theme-color" content="#071816">
     <title>피아노 스케일·보이싱</title>
-    <meta name="description" content="스케일 운지와 재즈 피아노 보이싱을 화면 건반 또는 USB MIDI 건반으로 연습하는 과정">
-    <link rel="stylesheet" href="styles.css?v=20260826-2">
-    <script src="../harmony/piano-engine.js?v=20260826-9" defer></script>
+    <meta name="description" content="제공된 자료를 바탕으로 새로 조판한 스케일 운지와 Jazz Piano Voicing Skills 1–123 MIDI 학습 도구">
+    <link rel="stylesheet" href="styles.css?v=20260826-5">
+    <script src="vendor/vexflow-4.2.2.js" defer></script>
+    <script src="piano-sampler.js?v=20260826-1" defer></script>
     <script src="curriculum-data.js?v=20260826-2" defer></script>
-    <script src="score-renderer.js?v=20260826-1" defer></script>
-    <script src="app.js?v=20260826-2" defer></script>
+    <script src="source-catalog.js?v=20260826-1" defer></script>
+    <script src="engraved-score.js?v=20260826-2" defer></script>
+    <script src="app.js?v=20260826-5" defer></script>
 </head>
 <body>
     <header class="app-header">
         <a class="back-link" href="../../../../" aria-label="학습 메뉴로 돌아가기">‹ <span>학습 메뉴</span></a>
-        <div class="title-block">
+        <div class="app-title">
             <strong>피아노 스케일·보이싱</strong>
-            <span id="courseProgress">통과 0</span>
+            <span>깨끗한 벡터 악보 연습</span>
         </div>
-        <button id="midiButton" class="midi-button" type="button" aria-describedby="midiStatus">
+        <button id="midiButton" class="midi-button" type="button">
             <span class="status-dot" aria-hidden="true"></span>
-            MIDI 연결
+            <span id="midiButtonLabel">MIDI 연결</span>
         </button>
     </header>
 
     <main class="app-shell">
         <nav class="mode-tabs" aria-label="연습 영역">
             <button class="mode-tab is-active" type="button" data-mode="scale" aria-pressed="true">스케일·손가락</button>
-            <button class="mode-tab" type="button" data-mode="voicing" aria-pressed="false">재즈 보이싱</button>
-            <button class="mode-tab" type="button" data-mode="curriculum" aria-pressed="false">전체 과정</button>
+            <button class="mode-tab" type="button" data-mode="voicing" aria-pressed="false">재즈 보이싱 1–123</button>
+            <button class="mode-tab" type="button" data-mode="reference" aria-pressed="false">개념·연습법</button>
         </nav>
 
-        <div class="study-layout">
-            <aside class="lesson-rail" aria-label="단계 선택">
-                <div class="rail-heading">
-                    <span>연습 단계</span>
-                    <strong id="railCount"></strong>
+        <section class="practice-card" aria-labelledby="exerciseTitle">
+            <div class="exercise-heading">
+                <div>
+                    <span id="exerciseEyebrow" class="eyebrow">SCALE SCORE</span>
+                    <h1 id="exerciseTitle">C 장음계</h1>
+                    <p id="exerciseSummary">교재의 양손 운지를 깨끗하게 다시 조판한 악보로 연습합니다.</p>
                 </div>
-                <div id="lessonList" class="lesson-list"></div>
-            </aside>
-
-            <section class="practice-workspace" aria-labelledby="lessonTitle">
-                <header class="lesson-header">
-                    <div>
-                        <span id="lessonEyebrow" class="eyebrow"></span>
-                        <h1 id="lessonTitle">스케일 운지 원리</h1>
-                        <p id="lessonSummary"></p>
-                    </div>
-                    <span id="skillBadge" class="skill-badge"></span>
-                </header>
-
-                <section class="exercise-card" aria-labelledby="exerciseTitle">
-                    <div class="exercise-heading">
-                        <div>
-                            <span class="eyebrow">지금 연습</span>
-                            <h2 id="exerciseTitle"></h2>
-                        </div>
-                        <div class="pass-state"><span id="passMark">미통과</span><strong id="attemptSummary">정확히 연주해 보세요</strong></div>
-                    </div>
-
-                    <div class="control-row" aria-label="연습 설정">
-                        <label>조
-                            <select id="keySelect"></select>
-                        </label>
-                        <label id="variantField">종류
-                            <select id="variantSelect"></select>
-                        </label>
-                        <label id="handField">손
-                            <select id="handSelect">
-                                <option value="right">오른손</option>
-                                <option value="left">왼손</option>
-                            </select>
-                        </label>
-                        <label class="tempo-field">연습 빠르기 <small id="targetTempo">목표 120 BPM</small>
-                            <span class="tempo-control"><input id="tempo" type="range" min="40" max="160" step="2" value="72"><output id="tempoOutput" for="tempo">72 BPM</output></span>
-                        </label>
-                    </div>
-
-                    <section class="score-card" aria-labelledby="scoreTitle">
-                        <header class="score-toolbar">
-                            <div>
-                                <span class="eyebrow">SCORE</span>
-                                <h3 id="scoreTitle">연주할 악보</h3>
-                            </div>
-                            <div class="score-pagination">
-                                <button id="scorePrevButton" class="score-page-button" type="button" aria-label="이전 악보">‹</button>
-                                <span id="scorePage">1 / 1</span>
-                                <button id="scoreNextButton" class="score-page-button" type="button" aria-label="다음 악보">›</button>
-                            </div>
-                        </header>
-                        <div id="scoreViewport" class="score-viewport">
-                            <svg id="scoreSvg" role="img" aria-labelledby="scoreTitle scoreCaption"></svg>
-                        </div>
-                        <p id="scoreCaption" class="score-caption">음표와 손가락 번호를 보고 연주하세요.</p>
-                        <div id="targetStrip" class="visually-hidden" aria-live="polite"></div>
-                    </section>
-
-                    <div class="action-row">
-                        <button id="listenButton" class="secondary-button" type="button">▶ 먼저 듣기</button>
-                        <button id="practiceButton" class="primary-button" type="button">연습 시작</button>
-                        <button id="metronomeButton" class="icon-button" type="button" aria-pressed="false">♩ 메트로놈</button>
-                        <button id="resetAttemptButton" class="icon-button" type="button">다시</button>
-                    </div>
-
-                    <p id="feedback" class="feedback" role="status" aria-live="polite">연습 시작을 누른 뒤 화면 또는 MIDI 건반을 연주하세요.</p>
-
-                    <div class="midi-status-row" aria-label="MIDI 연결 상태">
-                        <span class="status-dot" aria-hidden="true"></span>
-                        <div>
-                            <strong id="midiStatus">화면 건반으로 연습할 수 있어요.</strong>
-                            <span id="midiDetail">USB MIDI 건반을 연결하면 누른 음을 자동으로 검사합니다.</span>
-                        </div>
-                        <label class="midi-picker" for="midiInput">
-                            <span>입력</span>
-                            <select id="midiInput" disabled><option>연결된 장치 없음</option></select>
-                        </label>
-                    </div>
-                </section>
-
-                <details class="keyboard-card" open>
-                    <summary class="keyboard-summary">
-                        <span><span class="eyebrow">KEYBOARD</span><strong id="keyboardTitle">화면 건반</strong></span>
-                        <small>터치·마우스 입력</small>
-                    </summary>
-                    <div class="keyboard-toolbar">
-                        <div class="keyboard-actions">
-                            <button id="fitModeButton" class="small-button is-selected" type="button" aria-pressed="true">화면 맞춤</button>
-                            <button id="realModeButton" class="small-button" type="button" aria-pressed="false">실물 폭</button>
-                            <button id="calibrateButton" class="small-button" type="button">폭 보정</button>
-                        </div>
-                    </div>
-                    <p id="keyboardHint" class="keyboard-hint">연습에 필요한 음역을 자동으로 가운데 보여 줍니다.</p>
-                    <div id="keyboardViewport" class="keyboard-viewport" tabindex="0" aria-label="피아노 건반. 좌우로 스크롤할 수 있습니다.">
-                        <div id="keyboard" class="keyboard"></div>
-                    </div>
-                    <div class="keyboard-legend" aria-label="건반 색상 설명">
-                        <span><i class="legend-target"></i>연습 음</span>
-                        <span><i class="legend-next"></i>다음 음</span>
-                        <span><i class="legend-played"></i>누른 음</span>
-                    </div>
-                </details>
-
-                <details class="lesson-notes">
-                    <summary>이 단계의 기본 개념과 연습 방법</summary>
-                    <div class="lesson-grid">
-                        <section class="concept-card" aria-labelledby="conceptTitle">
-                            <h2 id="conceptTitle">기본 개념</h2>
-                            <ul id="conceptList"></ul>
-                        </section>
-                        <section class="method-card" aria-labelledby="methodTitle">
-                            <h2 id="methodTitle">연습 방법</h2>
-                            <ol id="methodList"></ol>
-                        </section>
-                    </div>
-                </details>
-
-                <details class="reference-panel">
-                    <summary>책의 전체 연습 원칙과 과정 보기</summary>
-                    <div id="referenceContent" class="reference-content"></div>
-                </details>
-            </section>
-        </div>
-    </main>
-
-    <dialog id="calibrationDialog" class="calibration-dialog">
-        <form method="dialog">
-            <header>
-                <div><span class="eyebrow">실물 폭 보정</span><h2>카드와 안내 상자의 폭을 맞추세요</h2></div>
-                <button value="cancel" class="close-button" aria-label="닫기">×</button>
-            </header>
-            <p>교통카드나 신용카드를 화면 위에 가로로 대고, 아래 상자가 카드와 같은 폭이 되도록 조절하세요.</p>
-            <div id="cardGauge" class="card-gauge"><span>85.6 mm</span></div>
-            <label class="calibration-range">상자 폭
-                <input id="calibrationRange" type="range" min="220" max="520" step="1" value="324">
-            </label>
-            <div class="dialog-actions">
-                <button value="cancel" class="secondary-button">취소</button>
-                <button id="saveCalibration" value="default" class="primary-button">이 폭 저장</button>
+                    <span id="sourceBadge" class="source-badge">새 악보</span>
             </div>
-        </form>
-    </dialog>
 
-    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+            <div id="scaleControls" class="selector-row" aria-label="스케일 선택">
+                <label>조
+                    <select id="scaleKeySelect"></select>
+                </label>
+                <label>음계
+                    <select id="scaleTypeSelect"></select>
+                </label>
+                <label>연습 손
+                    <select id="handSelect">
+                        <option value="both">양손</option>
+                        <option value="right">오른손</option>
+                        <option value="left">왼손</option>
+                    </select>
+                </label>
+            </div>
+
+            <div id="voicingControls" class="selector-row skill-selector" aria-label="교재 Skill 선택" hidden>
+                <button id="previousSkillButton" class="square-button" type="button" aria-label="이전 Skill">‹</button>
+                <label>교재 단계
+                    <select id="skillSelect"></select>
+                </label>
+                <button id="nextSkillButton" class="square-button" type="button" aria-label="다음 Skill">›</button>
+            </div>
+
+            <div id="referenceControls" class="selector-row" aria-label="교재 설명 선택" hidden>
+                <label>개념 범위
+                    <select id="referenceSelect"></select>
+                </label>
+            </div>
+
+            <section class="score-panel" aria-labelledby="scoreHeading">
+                <header class="score-toolbar">
+                    <div>
+                        <span class="eyebrow">ENGRAVED SCORE</span>
+                        <h2 id="scoreHeading">새로 조판한 악보</h2>
+                    </div>
+                    <div class="page-controls">
+                        <button id="previousPageButton" type="button" aria-label="이전 악보 페이지">‹</button>
+                        <span id="pageIndicator">1 / 1</span>
+                        <button id="nextPageButton" type="button" aria-label="다음 악보 페이지">›</button>
+                    </div>
+                </header>
+                <div id="scoreViewport" class="score-viewport" tabindex="0" aria-label="새로 조판한 벡터 악보입니다. 필요하면 좌우로 스크롤할 수 있습니다.">
+                    <div id="scoreSurface" class="score-surface" role="img" aria-label="연주할 악보"></div>
+                </div>
+                <p id="scoreCaption" class="score-caption"></p>
+            </section>
+
+            <details id="lessonNotes" class="lesson-notes">
+                <summary>이 단계의 기본 개념과 연습 방법</summary>
+                <div class="notes-grid">
+                    <section>
+                        <h2>기본 개념</h2>
+                        <ul id="conceptList"></ul>
+                    </section>
+                    <section>
+                        <h2>연습 방법</h2>
+                        <ol id="practiceList"></ol>
+                    </section>
+                </div>
+            </details>
+
+            <div id="practiceDock" class="practice-dock">
+                <div class="tempo-control">
+                    <label for="tempo">빠르기 <strong><output id="tempoOutput">60</output> BPM</strong></label>
+                    <input id="tempo" type="range" min="40" max="160" step="2" value="60">
+                </div>
+                <div class="transport" aria-label="연습 재생">
+                    <button id="listenButton" type="button">▶ 먼저 듣기</button>
+                    <button id="practiceButton" class="primary-button" type="button">연습 시작</button>
+                    <button id="metronomeButton" type="button" aria-pressed="false">♩ 메트로놈</button>
+                    <button id="resetButton" type="button">다시</button>
+                </div>
+                <p id="feedback" class="feedback" aria-live="polite">새로 조판한 악보를 확인한 뒤 연습을 시작하세요.</p>
+            </div>
+
+            <section id="midiMonitor" class="midi-monitor" aria-labelledby="midiMonitorTitle">
+                <header>
+                    <div>
+                        <span class="eyebrow">MIDI INPUT</span>
+                        <h2 id="midiMonitorTitle">건반 입력 확인</h2>
+                    </div>
+                    <span id="midiStatus">연결된 MIDI 건반 없음</span>
+                </header>
+                <div class="monitor-body">
+                    <div id="noteReadout" class="note-readout">건반을 누르면 음이 표시됩니다.</div>
+                    <div id="miniKeyboard" class="mini-keyboard" aria-label="입력 확인용 축소 건반"></div>
+                </div>
+                <p>이 건반 그림은 입력 확인용이며 실물 크기가 아닙니다. 크롬북·아이패드·PC에서는 M-Audio, Keystation 같은 USB MIDI 건반의 실제 건반으로 연주하세요.</p>
+            </section>
+        </section>
+    </main>
 </body>
 </html>
