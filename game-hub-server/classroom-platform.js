@@ -598,6 +598,39 @@ function createClassroomPlatform(options = {}) {
         requires_signature BOOLEAN NOT NULL DEFAULT FALSE,
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       )`,
+      // What the notice asks of the guardian: nothing, a read receipt, or a
+      // yes/no answer. Older rows carry only requires_signature, so seed from it.
+      `ALTER TABLE classroom_notices
+        ADD COLUMN IF NOT EXISTS reply_type TEXT NOT NULL DEFAULT 'none'`,
+      // Only the name was stored before, which isn't enough to tell who may read
+      // the replies to a notice.
+      `ALTER TABLE classroom_notices
+        ADD COLUMN IF NOT EXISTS sender_user_id BIGINT REFERENCES classroom_users(id) ON DELETE SET NULL`,
+      `ALTER TABLE classroom_notices
+        DROP CONSTRAINT IF EXISTS classroom_notices_reply_type_check`,
+      `ALTER TABLE classroom_notices
+        ADD CONSTRAINT classroom_notices_reply_type_check
+        CHECK (reply_type IN ('none', 'confirm', 'agree'))`,
+      `UPDATE classroom_notices
+        SET reply_type = 'agree'
+        WHERE reply_type = 'none' AND requires_signature = TRUE`,
+      `CREATE TABLE IF NOT EXISTS classroom_notice_replies (
+        id BIGSERIAL PRIMARY KEY,
+        notice_id BIGINT NOT NULL REFERENCES classroom_notices(id) ON DELETE CASCADE,
+        school_id BIGINT,
+        grade INTEGER NOT NULL,
+        class_number INTEGER NOT NULL,
+        student_number TEXT NOT NULL,
+        student_name TEXT NOT NULL,
+        responder_user_id BIGINT REFERENCES classroom_users(id) ON DELETE SET NULL,
+        reply_choice TEXT NOT NULL CHECK (reply_choice IN ('confirmed', 'agree', 'disagree')),
+        reply_note TEXT,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE (notice_id, grade, class_number, student_number)
+      )`,
+      `CREATE INDEX IF NOT EXISTS classroom_notice_replies_notice_idx
+        ON classroom_notice_replies (notice_id)`,
       `CREATE TABLE IF NOT EXISTS classroom_absence_notices (
         id BIGSERIAL PRIMARY KEY,
         school_id BIGINT,
@@ -3347,10 +3380,15 @@ function createClassroomPlatform(options = {}) {
     const targetGrade = req.body?.targetGrade ? Number(req.body.targetGrade) : null;
     const targetClassNumber = req.body?.targetClassNumber ? Number(req.body.targetClassNumber) : null;
     const targetStudentNumbers = req.body?.targetStudentNumbers ? String(req.body.targetStudentNumbers).trim() : null;
-    const requiresSignature = Boolean(req.body?.requiresSignature);
+    const replyType = String(req.body?.replyType || "none").trim();
+    // requires_signature predates reply_type; keep it consistent for old readers.
+    const requiresSignature = replyType === "agree" || Boolean(req.body?.requiresSignature);
 
     if (!title || !contentBody) {
       throw new HttpError(400, "TITLE_AND_CONTENT_REQUIRED", "제목과 내용을 입력하세요.");
+    }
+    if (!["none", "confirm", "agree"].includes(replyType)) {
+      throw new HttpError(400, "INVALID_REPLY_TYPE", "회신 방식이 올바르지 않습니다.");
     }
 
     const teacherProfileRes = await pool.query(
@@ -3365,10 +3403,10 @@ function createClassroomPlatform(options = {}) {
 
     const insertRes = await pool.query(
       `INSERT INTO classroom_notices
-         (school_id, sender_teacher_name, title, content_type, content_body, target_type, target_grade, target_class_number, target_student_numbers, requires_signature)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+         (school_id, sender_teacher_name, sender_user_id, title, content_type, content_body, target_type, target_grade, target_class_number, target_student_numbers, requires_signature, reply_type)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
        RETURNING id, created_at`,
-      [schoolId, senderName, title, contentType, contentBody, targetType, targetGrade, targetClassNumber, targetStudentNumbers, requiresSignature]
+      [schoolId, senderName, teacher.id, title, contentType, contentBody, targetType, targetGrade, targetClassNumber, targetStudentNumbers, requiresSignature, replyType]
     );
 
     res.status(201).json({ ok: true, noticeId: String(insertRes.rows[0].id) });
@@ -3519,51 +3557,99 @@ function createClassroomPlatform(options = {}) {
     res.json({ settings: result.rows[0] || null });
   }));
 
+  // Which children a signed-in viewer may read notices for: the student's own
+  // record, or every roster entry that names this account as a guardian.
+  async function noticeViewerTargets(user) {
+    if (!user) return [];
+    const membership = await studentMembership(user.id);
+    if (membership) {
+      // studentMembership() doesn't carry school_id -- look it up once.
+      const schoolRes = await pool.query(
+        `SELECT s.school_id AS school_id FROM school_students s WHERE s.user_id = $1
+         UNION ALL
+         SELECT c.school_id AS school_id FROM classroom_students s
+          JOIN classroom_classes c ON c.id = s.class_id
+          WHERE s.user_id = $1
+         LIMIT 1`,
+        [user.id]
+      );
+      return [{
+        schoolId: schoolRes.rows[0]?.school_id || null,
+        grade: membership.grade,
+        classNumber: membership.classNumber,
+        studentNumber: String(membership.studentNumber || ""),
+        studentName: membership.studentName
+      }].filter(t => t.schoolId && t.grade && t.classNumber && t.studentNumber);
+    }
+    const children = await getGuardianChildren(user);
+    return children.map(c => ({
+      schoolId: c.schoolId,
+      grade: c.grade,
+      classNumber: c.classNumber,
+      studentNumber: c.studentNumber,
+      studentName: c.studentName
+    })).filter(t => t.schoolId && t.grade && t.classNumber && t.studentNumber);
+  }
+
+  // Pick which child a notice request applies to. Guardians of several children
+  // pass the child explicitly; otherwise the first roster entry is used.
+  function pickNoticeTarget(targets, query) {
+    if (targets.length === 0) return null;
+    const wantedNumber = String(query?.studentNumber || "").trim();
+    const wantedGrade = query?.grade ? Number(query.grade) : null;
+    const wantedClass = query?.classNumber ? Number(query.classNumber) : null;
+    if (!wantedNumber && !wantedGrade && !wantedClass) return targets[0];
+    return targets.find(t =>
+      (!wantedNumber || String(t.studentNumber) === wantedNumber) &&
+      (!wantedGrade || Number(t.grade) === wantedGrade) &&
+      (!wantedClass || Number(t.classNumber) === wantedClass)
+    ) || null;
+  }
+
+  // Notice targeting as a SQL predicate so the database does the filtering
+  // instead of fetching every school's notices and sieving them in JS.
+  // Parameters: $1 school_id, $2 grade, $3 class_number, $4 student_number.
+  const NOTICE_TARGET_SQL = `
+    (n.school_id IS NULL OR n.school_id = $1)
+    AND (
+      n.target_type = 'all'
+      OR (n.target_type = 'grade' AND n.target_grade = $2)
+      OR (n.target_type = 'class' AND n.target_grade = $2 AND n.target_class_number = $3)
+      OR (n.target_type = 'students' AND n.target_grade = $2 AND n.target_class_number = $3
+          AND (n.target_student_numbers IS NULL
+               OR BTRIM(n.target_student_numbers) = ''
+               OR $4 = ANY(string_to_array(REPLACE(n.target_student_numbers, ' ', ''), ','))))
+    )`;
+
   // 2. Fetch Notice List (Parent / Student / Teacher)
   router.get("/notice/list", asyncRoute(async (req, res) => {
-    let user = await sessionUser(req);
-    let schoolId = null;
-    let grade = null;
-    let classNumber = null;
-    let studentNumber = null;
-
-    if (user && user.membership) {
-      schoolId = user.membership.schoolId;
-      grade = user.membership.grade;
-      classNumber = user.membership.classNumber;
-      studentNumber = String(user.membership.studentNumber || "");
-    }
+    const user = await sessionUser(req);
+    const targets = await noticeViewerTargets(user);
+    const target = pickNoticeTarget(targets, req.query);
+    // Notices are only for people on the roster; signed-out visitors get nothing.
+    if (!target) return res.json({ notices: [], children: [] });
 
     const noticesRes = await pool.query(
-      `SELECT id, school_id, sender_teacher_name, title, content_type, content_body,
-              target_type, target_grade, target_class_number, target_student_numbers, requires_signature, created_at
-       FROM classroom_notices
-       ORDER BY created_at DESC
-       LIMIT 50`
+      `SELECT n.id, n.sender_teacher_name, n.title, n.content_type, n.content_body,
+              n.target_type, n.requires_signature, n.reply_type, n.created_at,
+              r.reply_choice, r.reply_note, r.updated_at AS replied_at
+       FROM classroom_notices n
+       LEFT JOIN classroom_notice_replies r
+         ON r.notice_id = n.id AND r.grade = $2 AND r.class_number = $3 AND r.student_number = $4
+       WHERE ${NOTICE_TARGET_SQL}
+       ORDER BY n.created_at DESC
+       LIMIT 50`,
+      [target.schoolId, target.grade, target.classNumber, target.studentNumber]
     );
 
-    const filtered = noticesRes.rows.filter(n => {
-      // Deny by default: a notice is only visible once its targeting actually
-      // matches this viewer. (This used to fall through to `return true` for
-      // any unmatched case, which leaked every notice -- including ones aimed
-      // at a different school -- to every viewer.)
-      if (n.school_id && schoolId && String(n.school_id) !== String(schoolId)) return false;
-      if (n.target_type === 'all') return true;
-      if (n.target_type === 'grade') return Number(n.target_grade) === Number(grade);
-      if (n.target_type === 'class') {
-        return Number(n.target_grade) === Number(grade) && Number(n.target_class_number) === Number(classNumber);
-      }
-      if (n.target_type === 'students') {
-        if (Number(n.target_grade) !== Number(grade) || Number(n.target_class_number) !== Number(classNumber)) return false;
-        if (!n.target_student_numbers || !studentNumber) return true;
-        const nums = String(n.target_student_numbers).split(',').map(s => s.trim());
-        return nums.includes(String(studentNumber));
-      }
-      return false;
-    });
-
     res.json({
-      notices: filtered.map(n => ({
+      child: {
+        grade: target.grade,
+        classNumber: target.classNumber,
+        studentNumber: target.studentNumber,
+        studentName: target.studentName
+      },
+      notices: noticesRes.rows.map(n => ({
         id: String(n.id),
         senderName: n.sender_teacher_name,
         title: n.title,
@@ -3571,8 +3657,207 @@ function createClassroomPlatform(options = {}) {
         contentBody: n.content_body,
         targetType: n.target_type,
         requiresSignature: n.requires_signature,
+        replyType: n.reply_type || "none",
+        myReply: n.reply_choice ? { choice: n.reply_choice, note: n.reply_note, repliedAt: n.replied_at } : null,
         createdAt: n.created_at
       }))
+    });
+  }));
+
+  // 2b. Guardian answers a notice (read receipt or consent). Re-answering
+  // overwrites the previous answer rather than piling up rows.
+  router.post("/notice/replies", asyncRoute(async (req, res) => {
+    const user = await sessionUser(req);
+    if (!user) throw new HttpError(401, "LOGIN_REQUIRED", "로그인이 필요합니다.");
+
+    const noticeId = Number(req.body?.noticeId);
+    const choice = String(req.body?.choice || "").trim();
+    const note = String(req.body?.note || "").trim().slice(0, 500);
+
+    if (!Number.isInteger(noticeId)) {
+      throw new HttpError(400, "INVALID_NOTICE", "가정통신문을 찾을 수 없습니다.");
+    }
+    if (!["confirmed", "agree", "disagree"].includes(choice)) {
+      throw new HttpError(400, "INVALID_CHOICE", "회신 값이 올바르지 않습니다.");
+    }
+
+    const targets = await noticeViewerTargets(user);
+    const target = pickNoticeTarget(targets, req.body);
+    if (!target) throw new HttpError(403, "NOT_ON_ROSTER", "명단에서 자녀 정보를 찾을 수 없습니다.");
+
+    // The notice must actually have been addressed to this child, and must be
+    // one that asks for a reply at all.
+    const noticeRes = await pool.query(
+      `SELECT n.id, n.reply_type
+       FROM classroom_notices n
+       WHERE n.id = $5 AND ${NOTICE_TARGET_SQL}`,
+      [target.schoolId, target.grade, target.classNumber, target.studentNumber, noticeId]
+    );
+    const notice = noticeRes.rows[0];
+    if (!notice) throw new HttpError(404, "NOTICE_NOT_FOUND", "가정통신문을 찾을 수 없습니다.");
+    if (notice.reply_type === "none") {
+      throw new HttpError(400, "REPLY_NOT_REQUESTED", "회신을 받지 않는 가정통신문입니다.");
+    }
+    if (notice.reply_type === "confirm" && choice !== "confirmed") {
+      throw new HttpError(400, "INVALID_CHOICE", "확인 회신만 받는 가정통신문입니다.");
+    }
+    if (notice.reply_type === "agree" && choice === "confirmed") {
+      throw new HttpError(400, "INVALID_CHOICE", "동의 여부를 선택해 주세요.");
+    }
+
+    await pool.query(
+      `INSERT INTO classroom_notice_replies
+         (notice_id, school_id, grade, class_number, student_number, student_name, responder_user_id, reply_choice, reply_note)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+       ON CONFLICT (notice_id, grade, class_number, student_number) DO UPDATE
+       SET reply_choice = EXCLUDED.reply_choice,
+           reply_note = EXCLUDED.reply_note,
+           responder_user_id = EXCLUDED.responder_user_id,
+           updated_at = NOW()`,
+      [noticeId, target.schoolId, target.grade, target.classNumber, target.studentNumber,
+       target.studentName, user.id, choice, note || null]
+    );
+
+    res.status(201).json({ ok: true, choice });
+  }));
+
+  // 2c. Teacher-side collection view: notices this teacher may read replies for,
+  // with running tallies. A teacher sees what they sent plus anything aimed at
+  // their own class; school admins see the whole school.
+  async function noticeReadScope(req) {
+    const teacher = await requireTeacher(req);
+    const ctx = await getTeacherContext(teacher.id);
+    if (!ctx) throw new HttpError(403, "TEACHER_REGISTRATION_REQUIRED", "학급 등록 정보를 찾을 수 없습니다.");
+    const isAdmin = ["관리자", "교장", "교감"].includes(ctx.teacher_type);
+    return { teacher, ctx, isAdmin };
+  }
+
+  const NOTICE_TEACHER_SCOPE_SQL = `
+    n.school_id = $1
+    AND (
+      $2::BOOLEAN
+      OR n.sender_user_id = $3
+      OR EXISTS (
+        SELECT 1 FROM classroom_classes c
+        WHERE c.teacher_user_id = $3
+          AND (n.target_type = 'all'
+               OR (n.target_type IN ('grade', 'class', 'students') AND c.grade = n.target_grade
+                   AND (n.target_type = 'grade' OR c.class_number = n.target_class_number)))
+      )
+    )`;
+
+  router.get("/teacher/notices", asyncRoute(async (req, res) => {
+    const { teacher, ctx, isAdmin } = await noticeReadScope(req);
+    const result = await pool.query(
+      `SELECT n.id, n.title, n.sender_teacher_name, n.reply_type, n.target_type,
+              n.target_grade, n.target_class_number, n.created_at,
+              COUNT(r.id) AS reply_count,
+              COUNT(r.id) FILTER (WHERE r.reply_choice = 'confirmed') AS confirmed_count,
+              COUNT(r.id) FILTER (WHERE r.reply_choice = 'agree') AS agree_count,
+              COUNT(r.id) FILTER (WHERE r.reply_choice = 'disagree') AS disagree_count
+       FROM classroom_notices n
+       LEFT JOIN classroom_notice_replies r ON r.notice_id = n.id
+       WHERE ${NOTICE_TEACHER_SCOPE_SQL}
+       GROUP BY n.id
+       ORDER BY n.created_at DESC
+       LIMIT 50`,
+      [ctx.school_id, isAdmin, teacher.id]
+    );
+
+    res.json({
+      notices: result.rows.map(n => ({
+        id: String(n.id),
+        title: n.title,
+        senderName: n.sender_teacher_name,
+        replyType: n.reply_type || "none",
+        targetType: n.target_type,
+        targetGrade: n.target_grade,
+        targetClassNumber: n.target_class_number,
+        replyCount: Number(n.reply_count),
+        confirmedCount: Number(n.confirmed_count),
+        agreeCount: Number(n.agree_count),
+        disagreeCount: Number(n.disagree_count),
+        createdAt: n.created_at
+      }))
+    });
+  }));
+
+  // 2d. Who answered and who still hasn't, for one notice.
+  router.get("/teacher/notices/:id/replies", asyncRoute(async (req, res) => {
+    const { teacher, ctx, isAdmin } = await noticeReadScope(req);
+    const noticeId = Number(req.params.id);
+    if (!Number.isInteger(noticeId)) throw new HttpError(400, "INVALID_NOTICE", "잘못된 요청입니다.");
+
+    const noticeRes = await pool.query(
+      `SELECT n.id, n.title, n.reply_type, n.target_type, n.target_grade,
+              n.target_class_number, n.target_student_numbers
+       FROM classroom_notices n
+       WHERE n.id = $4 AND ${NOTICE_TEACHER_SCOPE_SQL}`,
+      [ctx.school_id, isAdmin, teacher.id, noticeId]
+    );
+    const notice = noticeRes.rows[0];
+    if (!notice) throw new HttpError(404, "NOTICE_NOT_FOUND", "가정통신문을 찾을 수 없습니다.");
+
+    // Everyone the notice was addressed to, so unanswered students can be listed.
+    const rosterFilters = ["s.school_id = $1"];
+    const rosterParams = [ctx.school_id];
+    if (notice.target_type === "grade" || notice.target_type === "class" || notice.target_type === "students") {
+      rosterParams.push(notice.target_grade);
+      rosterFilters.push(`s.grade = $${rosterParams.length}`);
+    }
+    if (notice.target_type === "class" || notice.target_type === "students") {
+      rosterParams.push(notice.target_class_number);
+      rosterFilters.push(`s.class_number = $${rosterParams.length}`);
+    }
+    const pickedNumbers = String(notice.target_student_numbers || "")
+      .split(",").map(s => s.trim()).filter(Boolean);
+    if (notice.target_type === "students" && pickedNumbers.length > 0) {
+      rosterParams.push(pickedNumbers);
+      rosterFilters.push(`s.student_number::TEXT = ANY($${rosterParams.length}::TEXT[])`);
+    }
+    // A homeroom teacher only ever sees their own class, even on a school-wide notice.
+    if (!isAdmin) {
+      rosterParams.push(teacher.id);
+      rosterFilters.push(`EXISTS (SELECT 1 FROM classroom_classes c
+         WHERE c.teacher_user_id = $${rosterParams.length}
+           AND c.grade = s.grade AND c.class_number = s.class_number)`);
+    }
+
+    const rosterRes = await pool.query(
+      `SELECT s.grade, s.class_number, s.student_number::TEXT AS student_number, s.roster_name
+       FROM school_students s
+       WHERE ${rosterFilters.join(" AND ")}
+       ORDER BY s.grade, s.class_number, s.student_number`,
+      rosterParams
+    );
+
+    const repliesRes = await pool.query(
+      `SELECT grade, class_number, student_number, student_name, reply_choice, reply_note, updated_at
+       FROM classroom_notice_replies
+       WHERE notice_id = $1`,
+      [noticeId]
+    );
+    const replyKey = r => `${r.grade}-${r.class_number}-${r.student_number}`;
+    const replyMap = new Map(repliesRes.rows.map(r => [replyKey(r), r]));
+
+    const roster = rosterRes.rows.map(s => {
+      const reply = replyMap.get(`${s.grade}-${s.class_number}-${s.student_number}`);
+      return {
+        grade: s.grade,
+        classNumber: s.class_number,
+        studentNumber: s.student_number,
+        studentName: s.roster_name,
+        choice: reply ? reply.reply_choice : null,
+        note: reply ? reply.reply_note : null,
+        repliedAt: reply ? reply.updated_at : null
+      };
+    });
+
+    res.json({
+      notice: { id: String(notice.id), title: notice.title, replyType: notice.reply_type || "none" },
+      total: roster.length,
+      repliedCount: roster.filter(r => r.choice).length,
+      roster
     });
   }));
 
@@ -3827,32 +4112,7 @@ function createClassroomPlatform(options = {}) {
     const user = await sessionUser(req);
     if (!user) return res.json({ submissions: [] });
 
-    let targets = [];
-    const membership = await studentMembership(user.id);
-    if (membership) {
-      targets = [{
-        schoolId: null, grade: membership.grade, classNumber: membership.classNumber,
-        studentNumber: membership.studentNumber, studentName: membership.studentName
-      }];
-      // studentMembership() doesn't return school_id -- look it up once.
-      const schoolRes = await pool.query(
-        `SELECT s.id FROM school_students s WHERE s.user_id = $1
-         UNION ALL
-         SELECT sc.id FROM classroom_students s
-          JOIN classroom_classes c ON c.id = s.class_id JOIN classroom_schools sc ON sc.id = c.school_id
-          WHERE s.user_id = $1
-         LIMIT 1`,
-        [user.id]
-      );
-      if (schoolRes.rows[0]) targets[0].schoolId = schoolRes.rows[0].id;
-    } else {
-      const children = await getGuardianChildren(user);
-      targets = children.map(c => ({
-        schoolId: c.schoolId, grade: c.grade, classNumber: c.classNumber,
-        studentNumber: c.studentNumber, studentName: c.studentName
-      }));
-    }
-    targets = targets.filter(t => t.schoolId && t.grade && t.classNumber && t.studentNumber);
+    const targets = await noticeViewerTargets(user);
     if (targets.length === 0) return res.json({ submissions: [] });
 
     const submissions = [];

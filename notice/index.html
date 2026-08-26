@@ -800,28 +800,105 @@
             }
         }
 
+        function escapeHtml(value) {
+            return String(value == null ? '' : value)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        const REPLY_LABELS = { confirmed: '확인함', agree: '동의', disagree: '미동의' };
+
+        function renderReplyBox(n) {
+            if (n.replyType === 'none') return '';
+
+            if (n.myReply) {
+                const when = new Date(n.myReply.repliedAt).toLocaleString();
+                return `
+                    <div style="margin-top:12px; padding:10px 12px; border-radius:8px; background:rgba(117,214,159,0.12); border:1px solid rgba(117,214,159,0.35);">
+                        <strong style="color:var(--green);">✅ ${escapeHtml(REPLY_LABELS[n.myReply.choice] || n.myReply.choice)}</strong>
+                        <span style="color:var(--muted); font-size:12px; margin-left:6px;">${escapeHtml(when)} 회신함</span>
+                        <button class="btn-secondary" style="margin-left:8px; padding:4px 10px; font-size:12px;"
+                                onclick="resetNoticeReply('${n.id}')">회신 바꾸기</button>
+                    </div>`;
+            }
+
+            const buttons = n.replyType === 'confirm'
+                ? `<button class="btn-primary" style="margin-top:0;" onclick="submitNoticeReply('${n.id}', 'confirmed')">👀 확인했습니다</button>`
+                : `<div style="display:flex; gap:8px;">
+                       <button class="btn-primary" style="margin-top:0; flex:1;" onclick="submitNoticeReply('${n.id}', 'agree')">⭕ 동의합니다</button>
+                       <button class="btn-secondary" style="flex:1; min-height:48px;" onclick="submitNoticeReply('${n.id}', 'disagree')">❌ 동의하지 않습니다</button>
+                   </div>`;
+
+            return `
+                <div style="margin-top:12px; padding-top:12px; border-top:1px dashed var(--panel-border);">
+                    <p style="color:var(--gold); font-size:13px; margin:0 0 8px; font-weight:700;">
+                        ${n.replyType === 'confirm' ? '※ 확인 회신이 필요한 통신문입니다.' : '※ 보호자 동의 여부 회신이 필요합니다.'}
+                    </p>
+                    ${buttons}
+                </div>`;
+        }
+
+        async function submitNoticeReply(noticeId, choice) {
+            if (!activeChild) { alert('자녀 정보를 먼저 확인해 주세요.'); return; }
+            try {
+                const res = await fetch('/api/notice/replies', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        noticeId,
+                        choice,
+                        grade: activeChild.grade,
+                        classNumber: activeChild.classNumber,
+                        studentNumber: activeChild.studentNumber
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || '회신 전송 실패');
+                await loadNotices();
+            } catch (err) {
+                alert(err.message || '회신을 보내지 못했습니다.');
+            }
+        }
+
+        // Re-answering is just another POST; the server overwrites the old answer.
+        function resetNoticeReply(noticeId) {
+            const card = document.querySelector(`[data-notice-id="${noticeId}"] .reply-slot`);
+            const notice = loadedNotices.find(n => String(n.id) === String(noticeId));
+            if (!card || !notice) return;
+            card.innerHTML = renderReplyBox({ ...notice, myReply: null });
+        }
+
+        let loadedNotices = [];
+
         async function loadNotices() {
             const listEl = document.getElementById('noticesList');
             if (!listEl) return;
             try {
-                const res = await fetch('/api/notice/list');
+                const params = new URLSearchParams();
+                if (activeChild) {
+                    params.set('grade', activeChild.grade);
+                    params.set('classNumber', activeChild.classNumber);
+                    params.set('studentNumber', activeChild.studentNumber);
+                }
+                const res = await fetch('/api/notice/list?' + params.toString());
                 if (!res.ok) return;
                 const data = await res.json();
-                const notices = data.notices || [];
+                loadedNotices = data.notices || [];
 
-                if (notices.length === 0) {
+                if (loadedNotices.length === 0) {
                     listEl.innerHTML = '<div class="card" style="text-align:center; color:var(--muted);">등록된 가정통신문이 없습니다.</div>';
                     return;
                 }
 
-                listEl.innerHTML = notices.map(n => `
-                    <div class="card">
+                listEl.innerHTML = loadedNotices.map(n => `
+                    <div class="card" data-notice-id="${escapeHtml(n.id)}">
                         <div class="card-title">
-                            <span>${n.title}</span>
-                            <span class="tag">${n.contentType.toUpperCase()}</span>
+                            <span>${escapeHtml(n.title)}</span>
+                            <span class="tag">${escapeHtml(String(n.contentType || '').toUpperCase())}</span>
                         </div>
-                        <p style="color:var(--muted); font-size:13px;">발송: ${new Date(n.createdAt).toLocaleDateString()} | ${n.senderName}</p>
-                        <div style="margin-top:10px; font-size:14px; line-height:1.5; white-space:pre-wrap; background:rgba(0,0,0,0.2); padding:10px; border-radius:6px;">${n.contentBody}</div>
+                        <p style="color:var(--muted); font-size:13px;">발송: ${escapeHtml(new Date(n.createdAt).toLocaleDateString())} | ${escapeHtml(n.senderName)}</p>
+                        <div style="margin-top:10px; font-size:14px; line-height:1.5; white-space:pre-wrap; background:rgba(0,0,0,0.2); padding:10px; border-radius:6px;">${escapeHtml(n.contentBody)}</div>
+                        <div class="reply-slot">${renderReplyBox(n)}</div>
                     </div>
                 `).join('');
             } catch (err) {
