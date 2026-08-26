@@ -14,7 +14,8 @@
         "courseProgress", "midiButton", "midiStatus", "midiDetail", "midiInput", "railCount", "lessonList",
         "lessonEyebrow", "lessonTitle", "lessonSummary", "skillBadge", "conceptList", "methodList",
         "exerciseTitle", "passMark", "attemptSummary", "keySelect", "variantField", "variantSelect", "handField",
-        "handSelect", "tempo", "tempoOutput", "targetStrip", "listenButton", "practiceButton", "metronomeButton",
+        "handSelect", "tempo", "tempoOutput", "targetTempo", "targetStrip", "scoreSvg", "scorePrevButton",
+        "scoreNextButton", "scorePage", "scoreCaption", "listenButton", "practiceButton", "metronomeButton",
         "resetAttemptButton", "feedback", "fitModeButton", "realModeButton", "calibrateButton", "keyboardHint",
         "keyboardViewport", "keyboard", "referenceContent", "calibrationDialog", "calibrationRange", "cardGauge",
         "saveCalibration", "toast"
@@ -37,6 +38,7 @@
         midiInputId: "",
         metronomeTimer: null,
         metronomeContext: null,
+        scorePage: 0,
         progress: loadProgress()
     };
 
@@ -71,17 +73,32 @@
         return `${noteName(midi, key)}${Math.floor(midi / 12) - 1}`;
     }
 
+    function notationKey(spelling) {
+        return { ...currentKey(), spelling: spelling || currentKey().spelling };
+    }
+
+    function bluesNoteName(midiOrPc) {
+        const key = currentKey();
+        return noteName(midiOrPc, notationKey(key.id === "C" || key.spelling === "flat" ? "flat" : key.spelling));
+    }
+
     function baseForPc(pc, low) {
         let note = (low || 48) + pc;
         while (note < (low || 48)) note += 12;
         return note;
     }
 
-    function makeVoicing(rootPc, intervals, label, low) {
+    function makeVoicing(rootPc, intervals, label, low, split) {
         const root = baseForPc(rootPc, low || 48);
         let notes = intervals.map((interval) => root + interval);
-        while (Math.max(...notes) > 84) notes = notes.map((note) => note - 12);
-        return { label, notes };
+        while (Math.max(...notes) > 88) notes = notes.map((note) => note - 12);
+        const result = { label, notes };
+        if (Number.isInteger(split)) {
+            result.split = split;
+            result.left = notes.slice(0, split);
+            result.right = notes.slice(split);
+        }
+        return result;
     }
 
     function chord(rootPc, type, label, low) {
@@ -96,6 +113,9 @@
     function getScaleExercise() {
         const key = currentKey();
         const type = DATA.scaleTypes[state.variant] || DATA.scaleTypes.major;
+        const minorSharpKeys = new Set(["E", "A", "B", "Gb"]);
+        const notationSpelling = state.variant === "major" ? key.spelling : minorSharpKeys.has(key.id) ? "sharp" : "flat";
+        const scoreKey = notationKey(notationSpelling);
         const start = (state.hand === "left" ? 48 : 60) + key.pc;
         const ascending = type.intervals.map((interval) => start + interval);
         const descendingIntervals = type.descending || [...type.intervals].reverse();
@@ -107,8 +127,10 @@
             id: `scale:${state.scaleLessonId}:${key.id}:${state.variant}:${state.hand}`,
             title: `${key.label} ${type.label} · ${state.hand === "right" ? "오른손" : "왼손"}`,
             badge: "1옥타브 상행·하행",
-            groups: notes.map((note) => ({ label: midiName(note, key), notes: [note] })),
+            groups: notes.map((note) => ({ label: midiName(note, scoreKey), notes: [note] })),
             fingers: fingerSequence,
+            hand: state.hand,
+            notationSpelling,
             match: "pitchClass"
         };
     }
@@ -168,24 +190,30 @@
     }
 
     function bluesRoots(rootPc) {
-        return [0, 5, 0, 0, 5, 5, 0, 9, 2, 7, 0, 7].map((offset) => (rootPc + offset) % 12);
+        return [0, 5, 0, 0, 5, 10, 0, 9, 2, 7, 0, 7].map((offset) => (rootPc + offset) % 12);
     }
 
     function bluesSequence(rootPc, minor, fourthy, format) {
         const roots = bluesRoots(rootPc);
         return roots.map((pc, index) => {
             if (minor) {
-                const upper = [14, 17, 20];
+                const upper = [14, 19, 24];
                 const left = format === "b" ? [3, 10, 14] : [10, 15, 19];
-                return makeVoicing(pc, left.concat(upper.map((value) => value + (index === 7 ? 3 : 0))), `${noteName(pc)}m9`);
+                return makeVoicing(pc, left.concat(upper.map((value) => value + (index === 7 ? 15 : 12))), `${bluesNoteName(pc)}m9`, 48, 3);
             }
             if (fourthy) {
                 const left = format === "b" ? [4, 10, 14] : [10, 16, 21];
-                return makeVoicing(pc, left.concat([14, 19, 24]), `${noteName(pc)}13`);
+                return makeVoicing(pc, left.concat([26, 31, 36]), `${bluesNoteName(pc)}13`, 48, 3);
             }
             const left = format === "b" ? [4, 10, 14] : [10, 16, 21];
-            const upperRoot = index === 7 ? 3 : 0;
-            return makeVoicing(pc, left.concat([upperRoot + 12, upperRoot + 16, upperRoot + 19]), `${noteName(pc)}13`);
+            const upperRoot = index === 7 || index === 8 ? 3 : 0;
+            const upper = format === "b"
+                ? [upperRoot + 31, upperRoot + 36, upperRoot + 40]
+                : [upperRoot + 28, upperRoot + 31, upperRoot + 36];
+            const suffixes = format === "b"
+                ? ["9", "13", "9", "9", "13", "9", "9", "7♯5♯9", "m9", "13", "9", "13"]
+                : ["13", "9", "13", "13", "9", "13", "13", "7♯9", "m9", "9", "13", "9"];
+            return makeVoicing(pc, left.concat(upper), `${bluesNoteName(pc)}${suffixes[index]}`, 48, 3);
         });
     }
 
@@ -295,6 +323,7 @@
             badge,
             groups,
             fingers: [],
+            notationSpelling: module.id.includes("blues") && key.id === "C" ? "flat" : key.spelling,
             match: "shape"
         };
     }
@@ -346,6 +375,7 @@
             elements.variantSelect.replaceChildren(...options);
             elements.handField.hidden = false;
             elements.variantField.hidden = false;
+            elements.targetTempo.textContent = "목표 80 BPM";
         } else if (state.mode === "voicing") {
             const module = DATA.voicingModules.find((item) => item.id === state.voicingModuleId) || DATA.voicingModules[0];
             const options = skillOptionsFor(module);
@@ -354,7 +384,8 @@
             elements.variantSelect.replaceChildren(...options.map((option) => new Option(option.label, option.value, false, option.value === state.variant)));
             elements.handField.hidden = true;
             elements.variantField.hidden = options.length === 1 && module.skills.length === 1;
-            elements.tempo.value = module.tempo;
+            elements.tempo.value = Math.min(72, module.tempo);
+            elements.targetTempo.textContent = `목표 ${module.tempo} BPM`;
         }
         elements.tempoOutput.value = `${elements.tempo.value} BPM`;
     }
@@ -417,21 +448,37 @@
         elements.passMark.textContent = passed ? "통과" : "미통과";
         elements.passMark.classList.toggle("is-passed", passed);
         elements.attemptSummary.textContent = passed ? "정확·무정지 연주 완료" : "정확히 연주해 보세요";
-        renderTargetStrip();
+        renderScore();
         renderKeyboardState();
         centerKeyboardOnExercise();
     }
 
-    function renderTargetStrip() {
-        const index = state.practice ? state.practice.index : -1;
-        elements.targetStrip.replaceChildren(...state.exercise.groups.map((group, groupIndex) => {
-            const card = document.createElement("div");
-            card.className = `target-item${groupIndex === index ? " is-next" : ""}${groupIndex < index ? " is-done" : ""}`;
-            const names = group.notes.map((note) => midiName(note)).join(" · ");
-            const finger = state.exercise.fingers[groupIndex];
-            card.innerHTML = `<strong>${group.label}</strong><span>${names}</span>${finger ? `<b>${state.hand === "right" ? "RH" : "LH"} ${finger}</b>` : ""}`;
-            return card;
-        }));
+    function renderScore() {
+        if (!state.exercise || !window.PianoScoreRenderer) return;
+        const currentIndex = state.practice?.active ? state.practice.index : 0;
+        if (state.practice?.active) {
+            state.scorePage = window.PianoScoreRenderer.pageForIndex(state.mode, currentIndex);
+        }
+        const scoreKey = notationKey(state.exercise.notationSpelling);
+        const result = window.PianoScoreRenderer.render(elements.scoreSvg, {
+            mode: state.mode,
+            exercise: state.exercise,
+            key: scoreKey,
+            page: state.scorePage,
+            currentIndex
+        });
+        state.scorePage = result.page;
+        elements.scorePage.textContent = `${result.page + 1} / ${result.pageCount}`;
+        elements.scorePrevButton.disabled = result.page === 0;
+        elements.scoreNextButton.disabled = result.page >= result.pageCount - 1;
+        const current = state.exercise.groups[Math.min(currentIndex, state.exercise.groups.length - 1)];
+        const noteNames = current ? current.notes.map((note) => midiName(note, scoreKey)).join(" · ") : "";
+        elements.scoreCaption.textContent = state.mode === "scale"
+            ? `${state.hand === "right" ? "오른손" : "왼손"} 손가락 번호 · 현재 음 ${noteNames}`
+            : `현재 ${current?.label || ""} · ${noteNames} · 위 보표는 오른손, 아래 보표는 왼손`;
+        elements.targetStrip.textContent = state.exercise.groups
+            .map((group) => `${group.label}: ${group.notes.map((note) => midiName(note, scoreKey)).join(", ")}`)
+            .join(" / ");
     }
 
     function createKeyboard() {
@@ -475,7 +522,7 @@
             elements.keyboardHint.textContent = "연습 음역을 보기 편한 폭으로 맞춥니다. 실제 연주는 연결한 MIDI 건반에서 하세요.";
         }
         elements.keyboard.style.setProperty("--white-width", `${whiteWidth}px`);
-        elements.keyboard.style.setProperty("--black-width", `${Math.max(44, whiteWidth * 0.62)}px`);
+        elements.keyboard.style.setProperty("--black-width", `${Math.max(30, whiteWidth * 0.58)}px`);
         elements.keyboard.style.width = `${Number(elements.keyboard.dataset.whiteCount) * whiteWidth}px`;
     }
 
@@ -523,10 +570,11 @@
 
     function startPractice() {
         state.practice = { active: true, index: 0, wrong: 0, hesitations: 0, lastStepAt: performance.now(), waitingRelease: false, wrongRegistered: false };
+        state.scorePage = 0;
         elements.practiceButton.textContent = "연습 중지";
         elements.practiceButton.classList.add("is-running");
         setFeedback(state.mode === "scale" ? "첫 음부터 차례로 연주하세요." : "표시된 첫 보이싱을 한 번에 누르세요.", "ready");
-        renderTargetStrip();
+        renderScore();
         renderKeyboardState();
     }
 
@@ -535,15 +583,16 @@
         elements.practiceButton.textContent = "연습 시작";
         elements.practiceButton.classList.remove("is-running");
         if (message) setFeedback(message);
-        renderTargetStrip();
+        renderScore();
         renderKeyboardState();
     }
 
     function resetAttempt() {
         stopPractice("처음부터 다시 준비했습니다.");
         state.practice = null;
+        state.scorePage = 0;
         state.heldNotes.clear();
-        renderTargetStrip();
+        renderScore();
         renderKeyboardState();
     }
 
@@ -576,7 +625,8 @@
         const target = state.exercise.groups[state.practice.index].notes[0];
         if (midi % 12 !== target % 12) {
             state.practice.wrong += 1;
-            setFeedback(`${midiName(midi)}이 아니라 ${midiName(target)} 차례예요.`, "error");
+            const scoreKey = notationKey(state.exercise.notationSpelling);
+            setFeedback(`${midiName(midi, scoreKey)}이 아니라 ${midiName(target, scoreKey)} 차례예요.`, "error");
             return;
         }
         registerTiming();
@@ -615,7 +665,7 @@
             return;
         }
         setFeedback(`좋아요. ${state.practice.index} / ${state.exercise.groups.length} 완료`, "success");
-        renderTargetStrip();
+        renderScore();
         renderKeyboardState();
     }
 
@@ -646,12 +696,15 @@
         elements.listenButton.disabled = true;
         elements.listenButton.textContent = "재생 중…";
         const seconds = 60 / Number(elements.tempo.value);
-        window.HarmonyPiano.playSequence(state.exercise.groups.map((group) => group.notes), seconds)
+        const pageSize = window.PianoScoreRenderer?.pageSize[state.mode] || state.exercise.groups.length;
+        const start = state.scorePage * pageSize;
+        const visibleGroups = state.exercise.groups.slice(start, start + pageSize);
+        window.HarmonyPiano.playSequence(visibleGroups.map((group) => group.notes), seconds)
             .catch(() => showToast("피아노 소리를 불러오지 못했습니다."))
             .finally(() => window.setTimeout(() => {
                 elements.listenButton.disabled = false;
                 elements.listenButton.textContent = "▶ 먼저 듣기";
-            }, Math.max(700, state.exercise.groups.length * seconds * 1000)));
+            }, Math.max(700, visibleGroups.length * seconds * 1000)));
     }
 
     async function connectMidi() {
@@ -683,6 +736,7 @@
             elements.midiStatus.textContent = "MIDI 건반을 찾지 못했습니다.";
             elements.midiDetail.textContent = "USB 케이블을 연결한 뒤 장치가 켜져 있는지 확인하세요.";
             elements.midiButton.classList.remove("is-connected");
+            document.querySelector(".midi-status-row").classList.remove("is-connected");
         }
     }
 
@@ -697,6 +751,7 @@
         elements.midiStatus.textContent = `${input.name || "USB MIDI 건반"} 연결됨`;
         elements.midiDetail.textContent = "건반을 누르면 화면에 표시되고 현재 과제를 자동으로 검사합니다.";
         elements.midiButton.classList.add("is-connected");
+        document.querySelector(".midi-status-row").classList.add("is-connected");
         elements.midiButton.lastChild.textContent = " 연결됨";
     }
 
@@ -788,6 +843,7 @@
         if (!button || button.dataset.mode === state.mode) return;
         stopPractice();
         state.practice = null;
+        state.scorePage = 0;
         state.mode = button.dataset.mode;
         state.variant = state.mode === "scale" ? "major" : state.mode === "voicing" ? DATA.voicingModules.find((item) => item.id === state.voicingModuleId).skills[0] : "";
         renderAll();
@@ -798,6 +854,7 @@
         if (!button) return;
         stopPractice();
         state.practice = null;
+        state.scorePage = 0;
         if (state.mode === "scale") state.scaleLessonId = button.dataset.lessonId;
         else if (state.mode === "voicing") {
             state.voicingModuleId = button.dataset.lessonId;
@@ -807,13 +864,15 @@
         document.querySelector(".practice-workspace").scrollIntoView({ behavior: "smooth", block: "start" });
     });
 
-    elements.keySelect.addEventListener("change", () => { state.keyId = elements.keySelect.value; resetAttempt(); renderExercise(); });
-    elements.variantSelect.addEventListener("change", () => { state.variant = elements.variantSelect.value; resetAttempt(); renderExercise(); });
-    elements.handSelect.addEventListener("change", () => { state.hand = elements.handSelect.value; resetAttempt(); renderExercise(); });
+    elements.keySelect.addEventListener("change", () => { state.keyId = elements.keySelect.value; state.scorePage = 0; resetAttempt(); renderExercise(); });
+    elements.variantSelect.addEventListener("change", () => { state.variant = elements.variantSelect.value; state.scorePage = 0; resetAttempt(); renderExercise(); });
+    elements.handSelect.addEventListener("change", () => { state.hand = elements.handSelect.value; state.scorePage = 0; resetAttempt(); renderExercise(); });
     elements.tempo.addEventListener("input", () => { elements.tempoOutput.value = `${elements.tempo.value} BPM`; if (state.metronomeTimer) { toggleMetronome(); toggleMetronome(); } });
     elements.practiceButton.addEventListener("click", () => state.practice?.active ? stopPractice("연습을 멈췄습니다.") : startPractice());
     elements.resetAttemptButton.addEventListener("click", resetAttempt);
     elements.listenButton.addEventListener("click", playExercise);
+    elements.scorePrevButton.addEventListener("click", () => { state.scorePage = Math.max(0, state.scorePage - 1); renderScore(); });
+    elements.scoreNextButton.addEventListener("click", () => { state.scorePage += 1; renderScore(); });
     elements.midiButton.addEventListener("click", connectMidi);
     elements.midiInput.addEventListener("change", () => selectMidiInput(elements.midiInput.value));
     elements.metronomeButton.addEventListener("click", toggleMetronome);

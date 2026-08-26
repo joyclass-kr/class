@@ -6,10 +6,11 @@
     <meta name="theme-color" content="#071918">
     <title>피아노 스케일·보이싱</title>
     <meta name="description" content="스케일 운지와 재즈 피아노 보이싱을 화면 건반 또는 USB MIDI 건반으로 연습하는 과정">
-    <link rel="stylesheet" href="styles.css?v=20260826-1">
-    <script src="../harmony/piano-engine.js?v=20260826-8" defer></script>
-    <script src="curriculum-data.js?v=20260826-1" defer></script>
-    <script src="app.js?v=20260826-1" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260826-2">
+    <script src="../harmony/piano-engine.js?v=20260826-9" defer></script>
+    <script src="curriculum-data.js?v=20260826-2" defer></script>
+    <script src="score-renderer.js?v=20260826-1" defer></script>
+    <script src="app.js?v=20260826-2" defer></script>
 </head>
 <body>
     <header class="app-header">
@@ -25,17 +26,6 @@
     </header>
 
     <main class="app-shell">
-        <section class="connection-strip" aria-label="MIDI 연결 상태">
-            <div>
-                <strong id="midiStatus">화면 건반으로 연습할 수 있어요.</strong>
-                <span id="midiDetail">USB MIDI 건반을 연결하면 누른 음을 자동으로 검사합니다.</span>
-            </div>
-            <label class="midi-picker" for="midiInput">
-                <span>입력 장치</span>
-                <select id="midiInput" disabled><option>연결된 장치 없음</option></select>
-            </label>
-        </section>
-
         <nav class="mode-tabs" aria-label="연습 영역">
             <button class="mode-tab is-active" type="button" data-mode="scale" aria-pressed="true">스케일·손가락</button>
             <button class="mode-tab" type="button" data-mode="voicing" aria-pressed="false">재즈 보이싱</button>
@@ -61,17 +51,6 @@
                     <span id="skillBadge" class="skill-badge"></span>
                 </header>
 
-                <div class="lesson-grid">
-                    <section class="concept-card" aria-labelledby="conceptTitle">
-                        <h2 id="conceptTitle">기본 개념</h2>
-                        <ul id="conceptList"></ul>
-                    </section>
-                    <section class="method-card" aria-labelledby="methodTitle">
-                        <h2 id="methodTitle">연습 방법</h2>
-                        <ol id="methodList"></ol>
-                    </section>
-                </div>
-
                 <section class="exercise-card" aria-labelledby="exerciseTitle">
                     <div class="exercise-heading">
                         <div>
@@ -94,12 +73,29 @@
                                 <option value="left">왼손</option>
                             </select>
                         </label>
-                        <label>빠르기
+                        <label class="tempo-field">연습 빠르기 <small id="targetTempo">목표 120 BPM</small>
                             <span class="tempo-control"><input id="tempo" type="range" min="40" max="160" step="2" value="72"><output id="tempoOutput" for="tempo">72 BPM</output></span>
                         </label>
                     </div>
 
-                    <div id="targetStrip" class="target-strip" aria-live="polite"></div>
+                    <section class="score-card" aria-labelledby="scoreTitle">
+                        <header class="score-toolbar">
+                            <div>
+                                <span class="eyebrow">SCORE</span>
+                                <h3 id="scoreTitle">연주할 악보</h3>
+                            </div>
+                            <div class="score-pagination">
+                                <button id="scorePrevButton" class="score-page-button" type="button" aria-label="이전 악보">‹</button>
+                                <span id="scorePage">1 / 1</span>
+                                <button id="scoreNextButton" class="score-page-button" type="button" aria-label="다음 악보">›</button>
+                            </div>
+                        </header>
+                        <div id="scoreViewport" class="score-viewport">
+                            <svg id="scoreSvg" role="img" aria-labelledby="scoreTitle scoreCaption"></svg>
+                        </div>
+                        <p id="scoreCaption" class="score-caption">음표와 손가락 번호를 보고 연주하세요.</p>
+                        <div id="targetStrip" class="visually-hidden" aria-live="polite"></div>
+                    </section>
 
                     <div class="action-row">
                         <button id="listenButton" class="secondary-button" type="button">▶ 먼저 듣기</button>
@@ -109,14 +105,26 @@
                     </div>
 
                     <p id="feedback" class="feedback" role="status" aria-live="polite">연습 시작을 누른 뒤 화면 또는 MIDI 건반을 연주하세요.</p>
+
+                    <div class="midi-status-row" aria-label="MIDI 연결 상태">
+                        <span class="status-dot" aria-hidden="true"></span>
+                        <div>
+                            <strong id="midiStatus">화면 건반으로 연습할 수 있어요.</strong>
+                            <span id="midiDetail">USB MIDI 건반을 연결하면 누른 음을 자동으로 검사합니다.</span>
+                        </div>
+                        <label class="midi-picker" for="midiInput">
+                            <span>입력</span>
+                            <select id="midiInput" disabled><option>연결된 장치 없음</option></select>
+                        </label>
+                    </div>
                 </section>
 
-                <section class="keyboard-card" aria-labelledby="keyboardTitle">
+                <details class="keyboard-card" open>
+                    <summary class="keyboard-summary">
+                        <span><span class="eyebrow">KEYBOARD</span><strong id="keyboardTitle">화면 건반</strong></span>
+                        <small>터치·마우스 입력</small>
+                    </summary>
                     <div class="keyboard-toolbar">
-                        <div>
-                            <span class="eyebrow">KEYBOARD</span>
-                            <h2 id="keyboardTitle">반응형 연습 건반</h2>
-                        </div>
                         <div class="keyboard-actions">
                             <button id="fitModeButton" class="small-button is-selected" type="button" aria-pressed="true">화면 맞춤</button>
                             <button id="realModeButton" class="small-button" type="button" aria-pressed="false">실물 폭</button>
@@ -132,7 +140,21 @@
                         <span><i class="legend-next"></i>다음 음</span>
                         <span><i class="legend-played"></i>누른 음</span>
                     </div>
-                </section>
+                </details>
+
+                <details class="lesson-notes">
+                    <summary>이 단계의 기본 개념과 연습 방법</summary>
+                    <div class="lesson-grid">
+                        <section class="concept-card" aria-labelledby="conceptTitle">
+                            <h2 id="conceptTitle">기본 개념</h2>
+                            <ul id="conceptList"></ul>
+                        </section>
+                        <section class="method-card" aria-labelledby="methodTitle">
+                            <h2 id="methodTitle">연습 방법</h2>
+                            <ol id="methodList"></ol>
+                        </section>
+                    </div>
+                </details>
 
                 <details class="reference-panel">
                     <summary>책의 전체 연습 원칙과 과정 보기</summary>

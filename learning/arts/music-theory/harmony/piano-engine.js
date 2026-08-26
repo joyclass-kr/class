@@ -32,25 +32,25 @@
             state.reverb = context.createConvolver();
             state.reverbGain = context.createGain();
 
-            state.masterGain.gain.value = 1.08;
-            state.compressor.threshold.value = -18;
+            state.masterGain.gain.value = .82;
+            state.compressor.threshold.value = -14;
             state.compressor.knee.value = 14;
             state.compressor.ratio.value = 3.5;
             state.compressor.attack.value = .012;
             state.compressor.release.value = .22;
             lowShelf.type = "lowshelf";
             lowShelf.frequency.value = 190;
-            lowShelf.gain.value = 3.5;
+            lowShelf.gain.value = 1.2;
             presence.type = "peaking";
             presence.frequency.value = 2700;
             presence.Q.value = .75;
-            presence.gain.value = 1.8;
+            presence.gain.value = .7;
             limiter.threshold.value = -3;
             limiter.knee.value = 1;
             limiter.ratio.value = 20;
             limiter.attack.value = .002;
             limiter.release.value = .1;
-            state.reverbGain.gain.value = .1;
+            state.reverbGain.gain.value = .045;
 
             const impulseLength = Math.floor(context.sampleRate * 1.7);
             const impulse = context.createBuffer(2, impulseLength, context.sampleRate);
@@ -113,26 +113,26 @@
         const buffer = state.samples.get(sample.midi);
         if (!context || !buffer) return false;
         const start = Math.max(context.currentTime, when || context.currentTime);
-        const hold = Math.max(1.35, (duration || .8) + .7);
-        const release = .85;
+        const hold = Math.max(.16, duration || .72);
+        const release = .38;
         const output = context.createGain();
         const panner = typeof context.createStereoPanner === "function" ? context.createStereoPanner() : null;
         const source = context.createBufferSource();
-        const peak = Math.min(.62, Math.max(.16, (volume || .09) * 5.6));
+        const peak = Math.min(.17, Math.max(.018, volume || .09));
         source.buffer = buffer;
         source.playbackRate.value = Math.pow(2, (midi - sample.midi) / 12);
         output.gain.setValueAtTime(.0001, start);
         output.gain.exponentialRampToValueAtTime(peak, start + .004);
-        output.gain.exponentialRampToValueAtTime(peak * .82, start + .18);
-        output.gain.setValueAtTime(peak * .82, start + hold);
+        output.gain.exponentialRampToValueAtTime(peak * .72, start + Math.min(.16, hold * .45));
+        output.gain.setValueAtTime(peak * .72, start + hold);
         output.gain.exponentialRampToValueAtTime(.0001, start + hold + release);
         source.connect(output);
         if (panner) {
             panner.pan.value = Math.max(-.35, Math.min(.35, panAmount || 0));
             output.connect(panner);
-            connectToMix(panner, .12);
+            connectToMix(panner, .055);
         } else {
-            connectToMix(output, .12);
+            connectToMix(output, .055);
         }
         source.start(start, Math.min(.012, Math.max(0, buffer.duration - .01)));
         source.stop(start + Math.min(buffer.duration / source.playbackRate.value, hold + release + .1));
@@ -144,25 +144,25 @@
         if (!context) return;
         const start = Math.max(context.currentTime, when || context.currentTime);
         const frequency = 440 * Math.pow(2, (midi - 69) / 12);
-        const length = duration || .8;
+        const length = duration || .65;
         const envelope = context.createGain();
         const filter = context.createBiquadFilter();
         filter.type = "lowpass";
-        filter.frequency.value = Math.min(6200, frequency * 16);
+        filter.frequency.value = Math.min(4800, frequency * 11);
         envelope.gain.setValueAtTime(.0001, start);
-        envelope.gain.exponentialRampToValueAtTime(volume || .09, start + .006);
-        envelope.gain.exponentialRampToValueAtTime(.0001, start + length + .5);
+        envelope.gain.exponentialRampToValueAtTime(Math.min(.09, volume || .055), start + .004);
+        envelope.gain.exponentialRampToValueAtTime(.0001, start + length + .28);
         filter.connect(envelope);
-        connectToMix(envelope, .12);
-        [1, 2, 3, 4].forEach(function (ratio, index) {
+        connectToMix(envelope, .035);
+        [1, 2, 3].forEach(function (ratio, index) {
             const oscillator = context.createOscillator();
             const gain = context.createGain();
             oscillator.type = "sine";
             oscillator.frequency.value = frequency * ratio;
-            gain.gain.value = [1, .38, .2, .1][index];
+            gain.gain.value = [1, .16, .045][index];
             oscillator.connect(gain).connect(filter);
             oscillator.start(start);
-            oscillator.stop(start + length + .55);
+            oscillator.stop(start + length + .3);
         });
     }
 
@@ -186,7 +186,8 @@
             const gap = settings.arpeggio || 0;
             midis.forEach(function (midi, index) {
                 const pan = midis.length > 1 ? -0.18 + index * (.36 / Math.max(1, midis.length - 1)) : 0;
-                playLoadedMidi(midi, start + index * gap, settings.duration || .9, settings.volume || .075, pan);
+                const voiceVolume = settings.volume || Math.min(.13, .2 / Math.sqrt(Math.max(1, midis.length)));
+                playLoadedMidi(midi, start + index * gap, settings.duration || .72, voiceVolume, pan);
             });
         }).catch(function () {
             midis.forEach(function (midi, index) { playSynthetic(midi, context.currentTime + index * (settings.arpeggio || 0), settings.duration, settings.volume); });
@@ -199,13 +200,18 @@
         return loadSamples().then(function () {
             const start = context.currentTime + .05;
             groups.forEach(function (group, index) {
+                const chord = group.length > 1;
+                const volume = chord ? Math.min(.072, .16 / Math.sqrt(group.length)) : .13;
+                const length = chord ? Math.max(.28, beatSeconds * .68) : Math.max(.18, beatSeconds * .72);
                 group.forEach(function (midi, noteIndex) {
-                    playLoadedMidi(midi, start + index * beatSeconds, Math.max(.45, beatSeconds * .82), .064, -0.16 + noteIndex * .16);
+                    const pan = group.length > 1 ? -.2 + noteIndex * (.4 / Math.max(1, group.length - 1)) : 0;
+                    playLoadedMidi(midi, start + index * beatSeconds, length, volume, pan);
                 });
             });
         }).catch(function () {
             groups.forEach(function (group, index) {
-                group.forEach(function (midi) { playSynthetic(midi, context.currentTime + index * beatSeconds, beatSeconds * .8, .065); });
+                const volume = group.length > 1 ? .045 / Math.sqrt(group.length) : .06;
+                group.forEach(function (midi) { playSynthetic(midi, context.currentTime + index * beatSeconds, beatSeconds * .65, volume); });
             });
         });
     }
