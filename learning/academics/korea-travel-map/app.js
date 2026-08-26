@@ -225,18 +225,23 @@
     photo.removeAttribute('src');
     photo.alt = '';
     photo.hidden = true;
+    photo.classList.remove('is-portrait');
     fallback.hidden = false;
     fallback.textContent = place.emoji;
+    fallback.dataset.status = image ? '사진 불러오는 중…' : '등록된 사진이 없어요.';
     credit.replaceChildren();
     if (!image) return;
 
     photo.onload = () => {
+      photo.classList.toggle('is-portrait', photo.naturalHeight > photo.naturalWidth);
       photo.hidden = false;
       fallback.hidden = true;
+      delete fallback.dataset.status;
     };
     photo.onerror = () => {
       photo.hidden = true;
       fallback.hidden = false;
+      fallback.dataset.status = '사진을 불러오지 못했어요.';
     };
     photo.alt = `${place.name} 대표 사진`;
     photo.loading = 'eager';
