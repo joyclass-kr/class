@@ -130,13 +130,15 @@ test('renders a full keyboard and disables notes outside each model range', () =
   assert.match(css, /\.key\.unavailable/);
 });
 
-test('offers a centered accessible encyclopedia dialog without triggering performance', () => {
+test('offers a single-scroll accessible encyclopedia dialog without external links', () => {
   assert.match(html, /instrument-details\.js[^>]*defer/);
   assert.ok(html.indexOf('instrument-details.js') < html.indexOf('app.js'));
   assert.match(html, /id="instrumentInfoButton"[^>]*aria-haspopup="dialog"/);
   assert.match(html, /id="instrumentDetailDialog"[^>]*role="dialog"[^>]*aria-modal="true"/);
-  assert.match(html, /data-detail-tab="overview"/);
-  assert.match(html, /data-detail-tab="history"/);
+  assert.doesNotMatch(html, /data-detail-tab|detailSourceList|더 확인하기/);
+  assert.match(app, /const DETAIL_SECTIONS/);
+  assert.match(app, /section\.className = "detail-section"/);
+  assert.doesNotMatch(app, /target = "_blank"|source\.url|DETAIL_TABS/);
   assert.match(app, /function openInstrumentDetail/);
   assert.match(app, /function closeInstrumentDetail/);
   assert.match(app, /function handleDetailKeydown/);

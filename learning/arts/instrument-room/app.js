@@ -233,7 +233,6 @@
         detailOpen: false,
         detailId: null,
         detailParentId: null,
-        detailTab: "overview",
         detailReturnFocus: null
     };
     const elements = {};
@@ -245,7 +244,7 @@
             "articulationButtons", "toneSlider", "toneOutput", "muteSlider", "muteOutput", "pickSlider", "pickOutput",
             "driveSlider", "driveOutput", "drumResonanceSlider", "drumResonanceOutput", "drumToneSlider", "drumToneOutput",
             "noteReadout", "rangeLegend", "rangeReadout", "octaveControls", "octaveReadout", "octaveDown", "octaveUp", "keyboardViewport",
-            "keyboard", "chordSurface", "chordPads", "drumPads", "toast", "instrumentInfoButton", "instrumentDetailModal", "instrumentDetailDialog", "detailFamily", "detailTitle", "detailSubtitle", "detailPrevious", "detailNext", "detailClose", "detailArtworkFrame", "detailArtwork", "detailArtworkLayers", "detailArtworkFallback", "detailPartPicker", "detailFacts", "detailTabs", "detailArticle", "detailSectionEyebrow", "detailSectionTitle", "detailSectionBody", "detailSourceList"
+            "keyboard", "chordSurface", "chordPads", "drumPads", "toast", "instrumentInfoButton", "instrumentDetailModal", "instrumentDetailDialog", "detailFamily", "detailTitle", "detailSubtitle", "detailPrevious", "detailNext", "detailClose", "detailArtworkFrame", "detailArtwork", "detailArtworkLayers", "detailArtworkFallback", "detailPartPicker", "detailFacts", "detailArticle"
         ].forEach(function (id) { elements[id] = document.getElementById(id); });
     }
 
@@ -732,13 +731,13 @@
         }
     }
 
-    const DETAIL_TABS = {
-        overview: ["AT A GLANCE", "한눈에 보는 악기"],
-        mechanism: ["HOW IT WORKS", "구조와 소리의 원리"],
-        technique: ["HOW TO PLAY", "연주법과 표현"],
-        role: ["IN THE MUSIC", "음악 속 역할"],
-        history: ["CONTEXT", "역사와 다른 악기 비교"]
-    };
+    const DETAIL_SECTIONS = [
+        ["overview", "AT A GLANCE", "한눈에 보는 악기"],
+        ["mechanism", "HOW IT WORKS", "구조와 소리의 원리"],
+        ["technique", "HOW TO PLAY", "연주법과 표현"],
+        ["role", "IN THE MUSIC", "음악 속 역할"],
+        ["history", "CONTEXT", "역사와 다른 악기 비교"]
+    ];
 
     function instrumentDetails() {
         return window.INSTRUMENT_DETAILS || {};
@@ -809,7 +808,6 @@
             button.classList.toggle("active", part.id === state.detailId);
             button.addEventListener("click", function () {
                 state.detailId = part.id;
-                state.detailTab = "overview";
                 renderInstrumentDetail();
             });
             elements.detailPartPicker.appendChild(button);
@@ -843,31 +841,21 @@
             elements.detailFacts.appendChild(box);
         });
 
-        document.querySelectorAll("[data-detail-tab]").forEach(function (button) {
-            const active = button.dataset.detailTab === state.detailTab;
-            button.classList.toggle("active", active);
-            button.setAttribute("aria-selected", String(active));
-            button.tabIndex = active ? 0 : -1;
-        });
-        const tabCopy = DETAIL_TABS[state.detailTab] || DETAIL_TABS.overview;
-        elements.detailSectionEyebrow.textContent = tabCopy[0];
-        elements.detailSectionTitle.textContent = tabCopy[1];
-        elements.detailSectionBody.innerHTML = "";
-        String(entry.sections[state.detailTab] || entry.sections.overview).split(/\n\s*\n/).forEach(function (paragraph) {
-            const item = document.createElement("p");
-            item.textContent = paragraph;
-            elements.detailSectionBody.appendChild(item);
-        });
-        elements.detailSourceList.innerHTML = "";
-        entry.sources.forEach(function (source) {
-            const item = document.createElement("li");
-            const link = document.createElement("a");
-            link.href = source.url;
-            link.target = "_blank";
-            link.rel = "noopener noreferrer";
-            link.textContent = source.label;
-            item.appendChild(link);
-            elements.detailSourceList.appendChild(item);
+        elements.detailArticle.innerHTML = "";
+        DETAIL_SECTIONS.forEach(function (sectionCopy) {
+            const section = document.createElement("section");
+            section.className = "detail-section";
+            const eyebrow = document.createElement("span");
+            const title = document.createElement("h3");
+            eyebrow.textContent = sectionCopy[1];
+            title.textContent = sectionCopy[2];
+            section.append(eyebrow, title);
+            String(entry.sections[sectionCopy[0]] || "").split(/\n\s*\n/).filter(Boolean).forEach(function (paragraph) {
+                const item = document.createElement("p");
+                item.textContent = paragraph;
+                section.appendChild(item);
+            });
+            elements.detailArticle.appendChild(section);
         });
         elements.detailArticle.scrollTop = 0;
     }
@@ -882,7 +870,6 @@
         state.detailReturnFocus = document.activeElement;
         state.detailParentId = state.currentModel.id;
         state.detailId = id;
-        state.detailTab = "overview";
         state.detailOpen = true;
         renderInstrumentDetail();
         elements.instrumentDetailModal.classList.remove("hidden");
@@ -910,7 +897,6 @@
         selectModel(model.id);
         state.detailParentId = model.id;
         state.detailId = model.id;
-        state.detailTab = "overview";
         renderInstrumentDetail();
     }
 
@@ -1496,12 +1482,6 @@
         document.querySelectorAll("[data-detail-close]").forEach(function (button) { button.addEventListener("click", closeInstrumentDetail); });
         elements.detailPrevious.addEventListener("click", function () { moveInstrumentDetail(-1); });
         elements.detailNext.addEventListener("click", function () { moveInstrumentDetail(1); });
-        document.querySelectorAll("[data-detail-tab]").forEach(function (button) {
-            button.addEventListener("click", function () {
-                state.detailTab = button.dataset.detailTab;
-                renderInstrumentDetail();
-            });
-        });
         document.addEventListener("keydown", handleDetailKeydown, true);
         elements.audioButton.addEventListener("click", function () {
             ensureAudio();
