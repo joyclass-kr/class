@@ -288,12 +288,16 @@
                 this._handleServerMessage(message);
             });
             socket.addEventListener("error", () => {
-                if (this.socket === socket) this._setStatus("통신 서버 연결 중 오류가 발생했습니다.");
+                if (this.socket !== socket) return;
+                if (this.started) this._abort("연결 종료", "통신 서버와의 연결이 끊어졌습니다.");
+                this._resetDisconnectedLobby(socket, "통신 서버 연결에 실패했습니다. 교사용 방 만들기를 다시 눌러 주세요.");
             });
             socket.addEventListener("close", () => {
                 if (this.socket !== socket || this.intentionalClose) return;
-                if (this.started) this._abort("연결 종료", "통신 서버와의 연결이 끊어졌습니다.");
-                else this._setStatus("게임 서버 연결이 끊어졌습니다. 다시 시도하세요.");
+                if (this.started) {
+                    this._abort("연결 종료", "통신 서버와의 연결이 끊어졌습니다.");
+                }
+                this._resetDisconnectedLobby(socket, "게임 서버 연결이 끊어졌습니다. 교사용 방 만들기를 다시 눌러 주세요.");
             });
         }
 
@@ -305,6 +309,21 @@
             }
             this.socket = null;
             setTimeout(() => { this.intentionalClose = false; }, 0);
+        }
+
+        _resetDisconnectedLobby(socket, message) {
+            if (socket && this.socket !== socket) return;
+            this.socket = null;
+            this.pendingAction = null;
+            this.connected = false;
+            this.started = false;
+            this.roomCode = "";
+            this.myId = null;
+            this.players = {};
+            if (this.elements.roomCode) this.elements.roomCode.textContent = "----";
+            this._setStatus(message);
+            this.render();
+            this._emitState();
         }
 
         _sendRaw(message) {
@@ -474,6 +493,7 @@
         }
 
         _canStart(count = Object.keys(this.players).length) {
+            if (!this.connected || !this.socket) return false;
             if (typeof this.options.canStart === "function") {
                 return this.options.canStart({ ...this.snapshot(), count }) === true;
             }

@@ -2722,16 +2722,21 @@
 
             if (active) {
                 var roomCode = ufoLobby ? ufoLobby.snapshot().roomCode : '';
-                var isTeacher = ufoRoomRole === 'host';
+                var isSolo = ufoRoomRole === 'solo';
+                var isTeacher = ufoRoomRole === 'host' || isSolo;
                 if (ufoModeBtn) {
-                    ufoModeBtn.textContent = '🛸 UFO Flight · ROOM ' + (roomCode || '----');
+                    ufoModeBtn.textContent = isSolo
+                        ? '🛸 UFO Flight · SOLO'
+                        : '🛸 UFO Flight · ROOM ' + (roomCode || '----');
                     ufoModeBtn.style.background = 'rgba(56, 189, 248, 0.3)';
                     ufoModeBtn.style.color = '#fff';
                 }
                 if (ufoRoomStatus) {
-                    ufoRoomStatus.textContent = isTeacher
-                        ? '교사 · 시간 및 공전 속도 조작 가능'
-                        : '학생 · 시간은 교사 화면과 동기화';
+                    ufoRoomStatus.textContent = isSolo
+                        ? '단독 비행 · 통신 없이 탐험 계속'
+                        : (isTeacher
+                            ? '교사 · 시간 및 공전 속도 조작 가능'
+                            : '학생 · 시간은 교사 화면과 동기화');
                 }
                 if (ufoControlsPanel) ufoControlsPanel.style.display = 'block';
                 if (ufoMesh) ufoMesh.visible = true;
@@ -3038,7 +3043,22 @@
                         ufoLobby.broadcast({ type: 'UFO_PLAYER_LEFT', playerId: info.playerId });
                     }
                 },
-                onAbort: function () {
+                onAbort: function (info) {
+                    if (ufoState.active && info && info.title === '연결 종료') {
+                        if (ufoTimeSyncTimer) {
+                            clearInterval(ufoTimeSyncTimer);
+                            ufoTimeSyncTimer = null;
+                        }
+                        if (ufoPositionSyncTimer) {
+                            clearInterval(ufoPositionSyncTimer);
+                            ufoPositionSyncTimer = null;
+                        }
+                        clearRemoteUfos();
+                        ufoRoomRole = 'solo';
+                        overlay.classList.add('hidden');
+                        setTimeout(function () { setUfoFlightActive(true); }, 0);
+                        return;
+                    }
                     ufoRoomRole = null;
                     setUfoFlightActive(false);
                     overlay.classList.remove('hidden');
