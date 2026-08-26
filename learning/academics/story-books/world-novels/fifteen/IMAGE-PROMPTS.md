@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
@@ -46,110 +46,110 @@ Evans: a weather-beaten sailor of thirty.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a small schooner heeled over on a sandbar at dawn seen from the beach, and in the foreground the backs of a dozen boys of very different sizes standing in a ragged line looking at it, the smallest holding the hand of one of the biggest. |
-| `images/end.png` | A wooden marker post on a headland with a hand-drawn map nailed to it, an empty green island behind, an empty sea in front. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a small schooner heeled over on a sandbar at dawn seen from the beach, and in the foreground the backs of a dozen boys of very different sizes standing in a ragged line looking at it, the smallest holding the hand of one of the biggest. |
+| `images/end.webp` | A wooden marker post on a headland with a hand-drawn map nailed to it, an empty green island behind, an empty sea in front. |
 
 ## 1장 · 밧줄이 풀린 밤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A harbour at night: a small schooner drifting silently away from a quay, its mooring rope trailing in the water, the town lights behind. |
-| `images/story-01-b.png` | Dawn on the deck: a dozen boys in nightshirts crowded at the rail staring at an empty horizon in every direction, one older boy holding the smallest one up. |
+| `images/story-01-a.webp` | A harbour at night: a small schooner drifting silently away from a quay, its mooring rope trailing in the water, the town lights behind. |
+| `images/story-01-b.webp` | Dawn on the deck: a dozen boys in nightshirts crowded at the rail staring at an empty horizon in every direction, one older boy holding the smallest one up. |
 
 ## 2장 · 열다섯 명
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | The cramped hold by lantern light: boys passing up crates, barrels and a chest of tools, one boy sitting on a step writing a list. |
-| `images/story-02-b.png` | The galley: a Black cabin boy of twelve cooking competently at a small stove while three younger boys watch him, plainly relying on him. |
+| `images/story-02-a.webp` | The cramped hold by lantern light: boys passing up crates, barrels and a chest of tools, one boy sitting on a step writing a list. |
+| `images/story-02-b.webp` | The galley: a Black cabin boy of twelve cooking competently at a small stove while three younger boys watch him, plainly relying on him. |
 
 ## 3장 · 폭풍
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | Night, a schooner under a broken mast in a heavy sea, boys clinging to the rigging, a line of white breakers ahead lit by lightning. |
-| `images/story-03-b.png` | Morning: the schooner lying over on a sandbar, spars broken, and beyond it a green shoreline. |
+| `images/story-03-a.webp` | Night, a schooner under a broken mast in a heavy sea, boys clinging to the rigging, a line of white breakers ahead lit by lightning. |
+| `images/story-03-b.webp` | Morning: the schooner lying over on a sandbar, spars broken, and beyond it a green shoreline. |
 
 ## 4장 · 섬인가 대륙인가
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | A boy alone on a bare clifftop with a spyglass, sea visible on every side of him to the horizon; his shoulders dropping. |
-| `images/story-04-b.png` | A tent on a beach at night, an open atlas weighted down with stones, boys crowded around it by lamplight, nobody speaking. |
+| `images/story-04-a.webp` | A boy alone on a bare clifftop with a spyglass, sea visible on every side of him to the horizon; his shoulders dropping. |
+| `images/story-04-b.webp` | A tent on a beach at night, an open atlas weighted down with stones, boys crowded around it by lamplight, nobody speaking. |
 
 ## 5장 · 프렌치 굴
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A plank pulled away from a cliff face to reveal a dark hand-cut cave mouth behind it. |
-| `images/story-05-b.png` | Inside the cave by candlelight: a rough bed, a table, a chest, and an old notebook open in a boy's hands; the boys standing very still. |
+| `images/story-05-a.webp` | A plank pulled away from a cliff face to reveal a dark hand-cut cave mouth behind it. |
+| `images/story-05-b.webp` | Inside the cave by candlelight: a rough bed, a table, a chest, and an old notebook open in a boy's hands; the boys standing very still. |
 
 ## 6장 · 이름을 붙이다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | Boys drawing a map of their island on a large sheet, writing names along the coast, the lake in the middle. |
-| `images/story-06-b.png` | The cave turned into a home in winter: bunks along the wall, a ship's stove with a pipe through the rock, a shelf of a hundred books, boys reading by lamplight. |
+| `images/story-06-a.webp` | Boys drawing a map of their island on a large sheet, writing names along the coast, the lake in the middle. |
+| `images/story-06-b.webp` | The cave turned into a home in winter: bunks along the wall, a ship's stove with a pipe through the rock, a shelf of a hundred books, boys reading by lamplight. |
 
 ## 7장 · 대장을 뽑다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | A vote inside the cave: slips of paper in a cap, boys watching one boy count them, one older boy standing apart with his arms folded. |
-| `images/story-07-b.png` | Spring outside: a field being broken up with spades, and two guanacos in a rough pen. |
+| `images/story-07-a.webp` | A vote inside the cave: slips of paper in a cap, boys watching one boy count them, one older boy standing apart with his arms folded. |
+| `images/story-07-b.webp` | Spring outside: a field being broken up with spades, and two guanacos in a rough pen. |
 
 ## 8장 · 두 해째
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A big kite high in the evening sky with a lantern hanging from it, and boys far below on a headland watching it, hoping. |
-| `images/story-08-b.png` | A boy of eleven fetching water alone at dawn, before anyone else is up, his face closed. |
+| `images/story-08-a.webp` | A big kite high in the evening sky with a lantern hanging from it, and boys far below on a headland watching it, hoping. |
+| `images/story-08-b.webp` | A boy of eleven fetching water alone at dawn, before anyone else is up, his face closed. |
 
 ## 9장 · 자크의 고백
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | Night in the cave: a small boy standing in front of his older brother, hands at his sides, having just said something; the brother frozen. |
-| `images/story-09-b.png` | The whole group in a half circle in daylight, the small boy in the middle of it, and one boy stepping forward to speak for him. |
+| `images/story-09-a.webp` | Night in the cave: a small boy standing in front of his older brother, hands at his sides, having just said something; the brother frozen. |
+| `images/story-09-b.webp` | The whole group in a half circle in daylight, the small boy in the middle of it, and one boy stepping forward to speak for him. |
 
 ## 10장 · 갈라서다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | Four boys walking away along a lakeshore with packs and a gun, and eleven watching them go from a distance. |
-| `images/story-10-b.png` | A leaking makeshift hut in autumn rain, one boy lying sick inside, the others crowded and miserable. |
+| `images/story-10-a.webp` | Four boys walking away along a lakeshore with packs and a gun, and eleven watching them go from a distance. |
+| `images/story-10-b.webp` | A leaking makeshift hut in autumn rain, one boy lying sick inside, the others crowded and miserable. |
 
 ## 11장 · 표범
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | A jaguar crouched over a fallen boy at the edge of a lake, another boy running in from the side with a hunting knife raised. |
-| `images/story-11-b.png` | Four boys carrying a fifth on a stretcher of branches along a forest track, a long way still to go. |
+| `images/story-11-a.webp` | A jaguar crouched over a fallen boy at the edge of a lake, another boy running in from the side with a hunting knife raised. |
+| `images/story-11-b.webp` | Four boys carrying a fifth on a stretcher of branches along a forest track, a long way still to go. |
 
 ## 12장 · 떠내려온 여자
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.png` | A small boat grounded on a beach with a woman lying unconscious in it, boys wading out to it. |
-| `images/story-12-b.png` | Evening inside the cave: a woman sitting with three small boys leaning against her, older boys watching from across the room. |
+| `images/story-12-a.webp` | A small boat grounded on a beach with a woman lying unconscious in it, boys wading out to it. |
+| `images/story-12-b.webp` | Evening inside the cave: a woman sitting with three small boys leaning against her, older boys watching from across the room. |
 
 ## 13장 · 일곱 명
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-13-a.png` | Seven rough men landing from a boat on a southern beach, seen from a hiding place among rocks. |
-| `images/story-13-b.png` | Night at the cave door: a bound sailor half crawling toward it, boys pulling him inside. |
+| `images/story-13-a.webp` | Seven rough men landing from a boat on a southern beach, seen from a hiding place among rocks. |
+| `images/story-13-b.webp` | Night at the cave door: a bound sailor half crawling toward it, boys pulling him inside. |
 
 ## 14장 · 섬을 아는 쪽
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-14-a.png` | A narrow rock gully in fog with a great sailcloth net rigged above it, boys crouched invisibly along the top edge. |
-| `images/story-14-b.png` | The moment after: one boy holding a gun down at his side, and another boy's hand pressing the barrel toward the ground; captured men sitting on the gully floor behind them. |
+| `images/story-14-a.webp` | A narrow rock gully in fog with a great sailcloth net rigged above it, boys crouched invisibly along the top edge. |
+| `images/story-14-b.webp` | The moment after: one boy holding a gun down at his side, and another boy's hand pressing the barrel toward the ground; captured men sitting on the gully floor behind them. |
 
 ## 15장 · 돌아가는 길
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-15-a.png` | Boys repairing a boat on a beach — planing planks, sewing a sail, caulking seams — a sailor directing them. |
-| `images/story-15-b.png` | A crowded quay in Auckland: parents surging forward as boys come down a gangway, all of them noticeably taller than the clothes they left in. |
+| `images/story-15-a.webp` | Boys repairing a boat on a beach — planing planks, sewing a sail, caulking seams — a sailor directing them. |
+| `images/story-15-b.webp` | A crowded quay in Auckland: parents surging forward as boys come down a gangway, all of them noticeably taller than the clothes they left in. |

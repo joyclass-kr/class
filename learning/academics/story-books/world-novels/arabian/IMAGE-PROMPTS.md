@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
@@ -55,75 +55,75 @@ state robes by day.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a young woman seated upright on cushions in a lamplit palace chamber, speaking, one hand raised; a king listening from the shadows; and behind and above them, painted faint like a tapestry, the shapes of the stories — a jinni of smoke, a great bird, a wooden horse, a cave mouth. |
-| `images/end.png` | A window of a palace at dawn with the last lamp still burning inside and the sky going pale outside, a stack of story-worn cushions on the floor. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a young woman seated upright on cushions in a lamplit palace chamber, speaking, one hand raised; a king listening from the shadows; and behind and above them, painted faint like a tapestry, the shapes of the stories — a jinni of smoke, a great bird, a wooden horse, a cave mouth. |
+| `images/end.webp` | A window of a palace at dawn with the last lamp still burning inside and the sky going pale outside, a stack of story-worn cushions on the floor. |
 
 ## 1편 · 천 하룻밤을 벌다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A grand vizier standing in his own doorway with his hands over his face, his elder daughter facing him steadily, a younger girl in the background. |
-| `images/story-01-b.png` | A palace chamber at night: a young woman seated and talking, a young girl beside her listening, and a king propped on one elbow, plainly caught up in it. |
+| `images/story-01-a.webp` | A grand vizier standing in his own doorway with his hands over his face, his elder daughter facing him steadily, a younger girl in the background. |
+| `images/story-01-b.webp` | A palace chamber at night: a young woman seated and talking, a young girl beside her listening, and a king propped on one elbow, plainly caught up in it. |
 
 ## 2편 · 항아리 속의 마신
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A poor fisherman on a beach at dawn hauling up a sealed brass jar in his net, three failed casts' worth of rubbish beside him. |
-| `images/story-02-b.png` | An enormous human figure of smoke towering over a tiny man on the shore, its head in the clouds; the man holding the little jar up and pointing at it. |
+| `images/story-02-a.webp` | A poor fisherman on a beach at dawn hauling up a sealed brass jar in his net, three failed casts' worth of rubbish beside him. |
+| `images/story-02-b.webp` | An enormous human figure of smoke towering over a tiny man on the shore, its head in the clouds; the man holding the little jar up and pointing at it. |
 
 ## 3편 · 알라딘과 요술 램프
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | An underground garden by lamplight: trees hung with fruit that are cut jewels, a boy filling his sleeves, a plain old lamp on a ledge. |
-| `images/story-03-b.png` | A city street: a man calling out with a rack of shining new lamps, and at a palace window above, a young woman holding out a battered old one. |
+| `images/story-03-a.webp` | An underground garden by lamplight: trees hung with fruit that are cut jewels, a boy filling his sleeves, a plain old lamp on a ledge. |
+| `images/story-03-b.webp` | A city street: a man calling out with a rack of shining new lamps, and at a palace window above, a young woman holding out a battered old one. |
 
 ## 4편 · 알리바바와 사십 인의 도적
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | A rock face in a wooded gorge splitting open, forty mounted men with loaded saddlebags before it, and high in a tree one small figure watching. |
-| `images/story-04-b.png` | A courtyard by night lined with thirty-seven big oil jars, and a young woman standing very still beside one of them, listening, a lamp shaded in her hand. |
+| `images/story-04-a.webp` | A rock face in a wooded gorge splitting open, forty mounted men with loaded saddlebags before it, and high in a tree one small figure watching. |
+| `images/story-04-b.webp` | A courtyard by night lined with thirty-seven big oil jars, and a young woman standing very still beside one of them, listening, a lamp shaded in her hand. |
 
 ## 5편 · 신드바드와 로크 새
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A vast white egg the size of a house on an empty island, a man standing beside it for scale, and the sky darkening as something enormous descends. |
-| `images/story-05-b.png` | A deep valley floor glittering with cut stones, huge snakes among the rocks, chunks of meat lying where they have fallen from above, and eagles stooping. |
+| `images/story-05-a.webp` | A vast white egg the size of a house on an empty island, a man standing beside it for scale, and the sky darkening as something enormous descends. |
+| `images/story-05-b.webp` | A deep valley floor glittering with cut stones, huge snakes among the rocks, chunks of meat lying where they have fallen from above, and eagles stooping. |
 
 ## 6편 · 바다의 노인
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A young man walking bent under an old man riding on his shoulders, the old man's legs locked round his neck, both of them on a jungle path. |
-| `images/story-06-b.png` | The same beach later: a hollowed gourd lying on its side in the sand and a single set of footprints running away toward the sea. |
+| `images/story-06-a.webp` | A young man walking bent under an old man riding on his shoulders, the old man's legs locked round his neck, both of them on a jungle path. |
+| `images/story-06-b.webp` | The same beach later: a hollowed gourd lying on its side in the sand and a single set of footprints running away toward the sea. |
 
 ## 7편 · 하늘을 나는 나무 말
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | A new year's court: a carved ebony horse standing on the marble floor before a throne, courtiers laughing, one man beside it with his hand on a small peg in its neck. |
-| `images/story-07-b.png` | A boy on the wooden horse far above the clouds at night, groping along the horse's shoulder for a second peg, the earth invisible below. |
+| `images/story-07-a.webp` | A new year's court: a carved ebony horse standing on the marble floor before a throne, courtiers laughing, one man beside it with his hand on a small peg in its neck. |
+| `images/story-07-b.webp` | A boy on the wooden horse far above the clouds at night, groping along the horse's shoulder for a second peg, the earth invisible below. |
 
 ## 8편 · 하룻밤의 왕
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A modest house at night: a young man and a plainly dressed stranger eating together on the floor and talking, a single lamp between them. |
-| `images/story-08-b.png` | A throne room: the same young man on the throne in state robes, leaning forward and pointing at four men kneeling before him; and among the courtiers at the side, one man watching him with great interest. |
+| `images/story-08-a.webp` | A modest house at night: a young man and a plainly dressed stranger eating together on the floor and talking, a single lamp between them. |
+| `images/story-08-b.webp` | A throne room: the same young man on the throne in state robes, leaning forward and pointing at four men kneeling before him; and among the courtiers at the side, one man watching him with great interest. |
 
 ## 9편 · 검은 섬의 왕자
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | A still lake in a valley with fish of four colours — white, red, blue, yellow — clearly visible in it, and a palace on the far shore. |
-| `images/story-09-b.png` | A throne room with every lamp lit and no one in it but one young man on the throne, his lower half plainly stone, a king standing frozen in the doorway. |
+| `images/story-09-a.webp` | A still lake in a valley with fish of four colours — white, red, blue, yellow — clearly visible in it, and a palace on the far shore. |
+| `images/story-09-b.webp` | A throne room with every lamp lit and no one in it but one young man on the throne, his lower half plainly stone, a king standing frozen in the doorway. |
 
 ## 10편 · 이야기의 값
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | A map-like spread showing routes converging on one city — from India, from Persia, from Egypt — drawn as caravans and ships, all heading toward a domed library. |
-| `images/story-10-b.png` | Dawn in the palace chamber: a young woman standing with three children beside her, a king rising from his seat, the lamp guttering out. |
+| `images/story-10-a.webp` | A map-like spread showing routes converging on one city — from India, from Persia, from Egypt — drawn as caravans and ships, all heading toward a domed library. |
+| `images/story-10-b.webp` | Dawn in the palace chamber: a young woman standing with three children beside her, a king rising from his seat, the lamp guttering out. |

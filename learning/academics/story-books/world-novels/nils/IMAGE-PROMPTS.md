@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
@@ -50,82 +50,82 @@ Ermenrich: a white stork with a red bill, nesting on a castle roof.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover seen from high above: a wedge of wild grey geese flying north over patchwork Swedish farmland, and on the neck of one white domestic goose among them a tiny boy holding on with both arms, his cap blown back. |
-| `images/end.png` | A farmhouse yard at dusk from ground level, a boy standing alone with his head tilted back watching a wedge of geese pass low overhead, one hand half raised. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover seen from high above: a wedge of wild grey geese flying north over patchwork Swedish farmland, and on the neck of one white domestic goose among them a tiny boy holding on with both arms, his cap blown back. |
+| `images/end.webp` | A farmhouse yard at dusk from ground level, a boy standing alone with his head tilted back watching a wedge of geese pass low overhead, one hand half raised. |
 
 ## 1장 · 작아진 아이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A Swedish farm kitchen on a Sunday morning: an open Bible on the table, a boy asleep over it, and behind him an open chest with a hand-high bearded figure in a wide hat rummaging inside. |
-| `images/story-01-b.png` | The same room from floor level: the table legs like tree trunks, a chair towering, and a tiny boy standing in the middle of the floorboards looking up. |
+| `images/story-01-a.webp` | A Swedish farm kitchen on a Sunday morning: an open Bible on the table, a boy asleep over it, and behind him an open chest with a hand-high bearded figure in a wide hat rummaging inside. |
+| `images/story-01-b.webp` | The same room from floor level: the table legs like tree trunks, a chair towering, and a tiny boy standing in the middle of the floorboards looking up. |
 
 ## 2장 · 거위 등에 오르다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A farmyard: a cat's paw pinning a hand-high boy to the ground, the cat's face enormous and calm. |
-| `images/story-02-b.png` | A white farm goose beating heavily into the air over a fence, a tiny boy clinging to its neck with both arms, the farm shrinking below. |
+| `images/story-02-a.webp` | A farmyard: a cat's paw pinning a hand-high boy to the ground, the cat's face enormous and calm. |
+| `images/story-02-b.webp` | A white farm goose beating heavily into the air over a fence, a tiny boy clinging to its neck with both arms, the farm shrinking below. |
 
 ## 3장 · 아카
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | Wild geese asleep on a sheet of ice in the middle of a lake at night, and a fox creeping out onto the ice toward them. |
-| `images/story-03-b.png` | A tiny boy hanging onto a fox's tail with both hands while the fox twists round, a goose escaping in the background. |
+| `images/story-03-a.webp` | Wild geese asleep on a sheet of ice in the middle of a lake at night, and a fox creeping out onto the ice toward them. |
+| `images/story-03-b.webp` | A tiny boy hanging onto a fox's tail with both hands while the fox twists round, a goose escaping in the background. |
 
 ## 4장 · 글리밍겐 성의 황새
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | A thick-walled Swedish castle with a stork's nest on the roof, and grey rats streaming toward it across the fields at dusk. |
-| `images/story-04-b.png` | A tiny boy walking away across open country playing a small wooden pipe, and behind him a long dark river of rats following. |
+| `images/story-04-a.webp` | A thick-walled Swedish castle with a stork's nest on the roof, and grey rats streaming toward it across the fields at dusk. |
+| `images/story-04-b.webp` | A tiny boy walking away across open country playing a small wooden pipe, and behind him a long dark river of rats following. |
 
 ## 5장 · 학들의 춤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A hillside meadow crowded with wild animals — deer, hares, foxes, crows, geese — all keeping the truce, none hunting. |
-| `images/story-05-b.png` | Cranes dancing in the middle of the meadow, wings half spread, necks up, the whole crowd of animals watching in silence. |
+| `images/story-05-a.webp` | A hillside meadow crowded with wild animals — deer, hares, foxes, crows, geese — all keeping the truce, none hunting. |
+| `images/story-05-b.webp` | Cranes dancing in the middle of the meadow, wings half spread, necks up, the whole crowd of animals watching in silence. |
 
 ## 6장 · 빙어 마을
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A ruined shore fortress on a Baltic island by moonlight, empty and overgrown. |
-| `images/story-06-b.png` | The same place transformed: a crowded medieval trading town with lit shops and ships in the harbour, everyone crowding round one tiny boy holding out an empty hand. |
+| `images/story-06-a.webp` | A ruined shore fortress on a Baltic island by moonlight, empty and overgrown. |
+| `images/story-06-b.webp` | The same place transformed: a crowded medieval trading town with lit shops and ships in the harbour, everyone crowding round one tiny boy holding out an empty hand. |
 
 ## 7장 · 곰의 굴
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | Inside a warm bear den: two cubs rolling a hand-high boy between their paws like a toy, the mother's eye just opening. |
-| `images/story-07-b.png` | Outside the den at night: a lit fuse on the ground and a tiny boy gripping it with both hands, miners standing well back in the trees, unaware. |
+| `images/story-07-a.webp` | Inside a warm bear den: two cubs rolling a hand-high boy between their paws like a toy, the mother's eye just opening. |
+| `images/story-07-b.webp` | Outside the den at night: a lit fuse on the ground and a tiny boy gripping it with both hands, miners standing well back in the trees, unaware. |
 
 ## 8장 · 청동상과 나무상
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A great bronze equestrian statue stepping down off its plinth in a Stockholm square at night, the pavement cracking under the hoof. |
-| `images/story-08-b.png` | A weathered wooden figurehead of a sailor standing in the middle of a quay blocking the bronze king's path, a tiny boy behind its foot. |
+| `images/story-08-a.webp` | A great bronze equestrian statue stepping down off its plinth in a Stockholm square at night, the pavement cracking under the hoof. |
+| `images/story-08-b.webp` | A weathered wooden figurehead of a sailor standing in the middle of a quay blocking the bronze king's path, a tiny boy behind its foot. |
 
 ## 9장 · 돌아가고 싶은 마음
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | Lapland in summer under a low midnight sun: bare fells, a shallow lake, geese with goslings, a tiny boy sitting among them. |
-| `images/story-09-b.png` | A farmhouse window at night seen from outside at sill height: a man and a woman sitting at a table not speaking, and on the sill a tiny figure looking in. |
+| `images/story-09-a.webp` | Lapland in summer under a low midnight sun: bare fells, a shallow lake, geese with goslings, a tiny boy sitting among them. |
+| `images/story-09-b.webp` | A farmhouse window at night seen from outside at sill height: a man and a woman sitting at a table not speaking, and on the sill a tiny figure looking in. |
 
 ## 10장 · 다시 사람이 되는 값
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | A farm kitchen: a man carrying a struggling white goose in by the wings, a woman turning from the stove. |
-| `images/story-10-b.png` | The same kitchen an instant later with a full-sized fourteen-year-old boy standing in the middle of the floor, both parents frozen. |
+| `images/story-10-a.webp` | A farm kitchen: a man carrying a struggling white goose in by the wings, a woman turning from the stove. |
+| `images/story-10-b.webp` | The same kitchen an instant later with a full-sized fourteen-year-old boy standing in the middle of the floor, both parents frozen. |
 
 ## 11장 · 그날 저녁
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | A farmyard gate flung open and a white goose with a grey mate and six goslings running out and lifting into the air. |
-| `images/story-11-b.png` | A boy alone in a yard at dusk with his hand raised, a wedge of geese passing low overhead, the lead bird an old grey goose. |
+| `images/story-11-a.webp` | A farmyard gate flung open and a white goose with a grey mate and six goslings running out and lifting into the air. |
+| `images/story-11-b.webp` | A boy alone in a yard at dusk with his hand raised, a wedge of geese passing low overhead, the lead bird an old grey goose. |

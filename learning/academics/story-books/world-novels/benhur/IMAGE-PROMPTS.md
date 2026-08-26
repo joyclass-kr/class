@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
@@ -59,89 +59,89 @@ The four horses: matched Arabian bays with a white one on the left.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: four horses abreast in full gallop coming almost straight at the viewer, dust and sand flying, a chariot behind them and a driver leaning far forward with the reins wrapped round his body; the packed tiers of a hippodrome rising out of focus behind. |
-| `images/end.png` | A Jerusalem rooftop at dawn with a low parapet and one loose tile lying beside a gap in it, the city quiet below. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: four horses abreast in full gallop coming almost straight at the viewer, dust and sand flying, a chariot behind them and a driver leaning far forward with the reins wrapped round his body; the packed tiers of a hippodrome rising out of focus behind. |
+| `images/end.webp` | A Jerusalem rooftop at dawn with a low parapet and one loose tile lying beside a gap in it, the city quiet below. |
 
 ## 1장 · 로마가 다스리던 땅
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A Jerusalem street: a Roman patrol marching through, and the local people standing back against the walls in silence, no one meeting the soldiers' eyes. |
-| `images/story-01-b.png` | A courtyard garden: two young men of the same age facing each other, one in a Judean robe and one in Roman dress, the friendly moment already gone out of both faces. |
+| `images/story-01-a.webp` | A Jerusalem street: a Roman patrol marching through, and the local people standing back against the walls in silence, no one meeting the soldiers' eyes. |
+| `images/story-01-b.webp` | A courtyard garden: two young men of the same age facing each other, one in a Judean robe and one in Roman dress, the friendly moment already gone out of both faces. |
 
 ## 2장 · 떨어진 기와
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A flat rooftop with a low parapet: a young man leaning out to watch a procession below, his sister beside him, one tile shifting under his hand. |
-| `images/story-02-b.png` | A doorway of a great house being sealed with wax and cord by soldiers, furniture still inside, the courtyard empty. |
+| `images/story-02-a.webp` | A flat rooftop with a low parapet: a young man leaning out to watch a procession below, his sister beside him, one tile shifting under his hand. |
+| `images/story-02-b.webp` | A doorway of a great house being sealed with wax and cord by soldiers, furniture still inside, the courtyard empty. |
 
 ## 3장 · 나사렛의 우물
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | A line of chained prisoners on a dusty road, guards resting at a village well and drinking, the prisoners left in the sun. |
-| `images/story-03-b.png` | A young man on his knees in the dust drinking from a bowl held to his lips — draw only the giver's hands and forearms and the edge of a robe; the whole picture is the drinker's face. |
+| `images/story-03-a.webp` | A line of chained prisoners on a dusty road, guards resting at a village well and drinking, the prisoners left in the sun. |
+| `images/story-03-b.webp` | A young man on his knees in the dust drinking from a bowl held to his lips — draw only the giver's hands and forearms and the edge of a robe; the whole picture is the drinker's face. |
 
 ## 4장 · 노 젓는 자리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | Below the deck of a Roman galley: three banks of oars, rows of men chained to benches in half-darkness, a drum keeping time. |
-| `images/story-04-b.png` | A Roman admiral standing on the gangway looking down at one rower, the rower looking straight back at him. |
+| `images/story-04-a.webp` | Below the deck of a Roman galley: three banks of oars, rows of men chained to benches in half-darkness, a drum keeping time. |
+| `images/story-04-b.webp` | A Roman admiral standing on the gangway looking down at one rower, the rower looking straight back at him. |
 
 ## 5장 · 바다에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A galley ramming another at speed, oars shattering, seen from a distance across the water. |
-| `images/story-05-b.png` | Night, open sea: two men clinging to a floating plank, one holding a sword out of the other's reach. |
+| `images/story-05-a.webp` | A galley ramming another at speed, oars shattering, seen from a distance across the water. |
+| `images/story-05-b.webp` | Night, open sea: two men clinging to a floating plank, one holding a sword out of the other's reach. |
 
 ## 6장 · 로마에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A Roman training ground: a young man practising with a four-horse chariot on a bare oval track, an instructor watching. |
-| `images/story-06-b.png` | An office in Antioch: a heavy man seated motionless in a wheeled chair with a great ledger open before him, a young man standing across the table reading it. |
+| `images/story-06-a.webp` | A Roman training ground: a young man practising with a four-horse chariot on a bare oval track, an instructor watching. |
+| `images/story-06-b.webp` | An office in Antioch: a heavy man seated motionless in a wheeled chair with a great ledger open before him, a young man standing across the table reading it. |
 
 ## 7장 · 시모니데스
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | The same room later: a written document being handed across the table, a young woman standing beside the seated man with her hand on his shoulder. |
-| `images/story-07-b.png` | A warehouse yard on the Orontes river: bales, amphorae, ships at a quay, clerks with tablets — the scale of a business built up over years. |
+| `images/story-07-a.webp` | The same room later: a written document being handed across the table, a young woman standing beside the seated man with her hand on his shoulder. |
+| `images/story-07-b.webp` | A warehouse yard on the Orontes river: bales, amphorae, ships at a quay, clerks with tablets — the scale of a business built up over years. |
 
 ## 8장 · 발타사르
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A desert camp of black tents at evening: four matched horses in a rope corral, a big Arab chieftain gesturing at them, a young man moving among them quietly. |
-| `images/story-08-b.png` | A very old Egyptian seated at a fire telling something, three cups set out but only one man drinking. |
+| `images/story-08-a.webp` | A desert camp of black tents at evening: four matched horses in a rope corral, a big Arab chieftain gesturing at them, a young man moving among them quietly. |
+| `images/story-08-b.webp` | A very old Egyptian seated at a fire telling something, three cups set out but only one man drinking. |
 
 ## 9장 · 전차 경주
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | Nine four-horse chariots at the starting gates of a great oval hippodrome, the stands packed, the spina down the middle with turning posts at each end. |
-| `images/story-09-b.png` | The inside turning post: two chariots locked side by side, one with iron spikes on its wheel hub, the other pulling a hand's breadth wider — the exact instant before the spiked wheel loses its bite. |
+| `images/story-09-a.webp` | Nine four-horse chariots at the starting gates of a great oval hippodrome, the stands packed, the spina down the middle with turning posts at each end. |
+| `images/story-09-b.webp` | The inside turning post: two chariots locked side by side, one with iron spikes on its wheel hub, the other pulling a hand's breadth wider — the exact instant before the spiked wheel loses its bite. |
 
 ## 10장 · 문둥이 골짜기
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | A dry ravine outside the city walls at dusk with a few small shelters among the rocks, seen from far off; figures indistinct at that distance. |
-| `images/story-10-b.png` | A young man standing still on the path above the ravine with his arms at his sides, and a woman's raised hand far below telling him to stop — the whole picture is the distance between them. |
+| `images/story-10-a.webp` | A dry ravine outside the city walls at dusk with a few small shelters among the rocks, seen from far off; figures indistinct at that distance. |
+| `images/story-10-b.webp` | A young man standing still on the path above the ravine with his arms at his sides, and a woman's raised hand far below telling him to stop — the whole picture is the distance between them. |
 
 ## 11장 · 그 사람을 다시 보다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | A Galilean hillside crowd seated on the grass listening; at the front, seen from behind, a standing figure with a hand raised, face not visible. |
-| `images/story-11-b.png` | A road outside the city walls: three people standing at the roadside as a crowd passes, the mother and daughter with cloths over their faces, the son's face turned toward something out of frame. |
+| `images/story-11-a.webp` | A Galilean hillside crowd seated on the grass listening; at the front, seen from behind, a standing figure with a hand raised, face not visible. |
+| `images/story-11-b.webp` | A road outside the city walls: three people standing at the roadside as a crowd passes, the mother and daughter with cloths over their faces, the son's face turned toward something out of frame. |
 
 ## 12장 · 그 뒤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.png` | A courtyard of armed men being dismissed: weapons being stacked, men walking away, a young man watching them go. |
-| `images/story-12-b.png` | An underground vaulted room in Rome fitted out as a refuge: bedding, lamps, food stores, ordinary families settling in; a man and a woman in the doorway. |
+| `images/story-12-a.webp` | A courtyard of armed men being dismissed: weapons being stacked, men walking away, a young man watching them go. |
+| `images/story-12-b.webp` | An underground vaulted room in Rome fitted out as a refuge: bedding, lamps, food stores, ordinary families settling in; a man and a woman in the doorway. |

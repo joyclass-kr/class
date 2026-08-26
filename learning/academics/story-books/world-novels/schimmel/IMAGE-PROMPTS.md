@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
@@ -51,75 +51,75 @@ later a magnificent white horse — always a real horse, never a phantom.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a grass dike running away to the horizon under a huge black storm sky, the sea pushed right up to the dike's shoulder on one side and farmland far below on the other; a single rider on a white horse small on the crest, seen from behind through rain. |
-| `images/end.png` | The same dike a century later on a calm bright day, its seaward face long and gently sloped, sheep grazing on it, the sea flat beyond. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a grass dike running away to the horizon under a huge black storm sky, the sea pushed right up to the dike's shoulder on one side and farmland far below on the other; a single rider on a white horse small on the crest, seen from behind through rain. |
+| `images/end.webp` | The same dike a century later on a calm bright day, its seaward face long and gently sloped, sheep grazing on it, the sea flat beyond. |
 
 ## 1장 · 제방 위의 그림자
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | Night on a dike in driving rain: a traveller on horseback halted, and ahead of him another rider on a pale horse going away along the crest, indistinct in the weather. |
-| `images/story-01-b.png` | A low-beamed inn parlour with a peat fire, farmers with mugs, and an old schoolmaster in the corner beginning to speak; every face turned to him. |
+| `images/story-01-a.webp` | Night on a dike in driving rain: a traveller on horseback halted, and ahead of him another rider on a pale horse going away along the crest, indistinct in the weather. |
+| `images/story-01-b.webp` | A low-beamed inn parlour with a peat fire, farmers with mugs, and an old schoolmaster in the corner beginning to speak; every face turned to him. |
 
 ## 2장 · 제방 감독관의 아들이 아닌 아이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A boy of twelve lying flat on the crest of a dike watching waves strike its steep seaward face, spray going straight up the wall of earth. |
-| `images/story-02-b.png` | A cross-section drawing scratched into the sand with a stick: on one side a steep dike face with an arrow hitting it square, on the other a long gentle slope with the arrow sliding up it; a boy crouched over it, his father standing behind. |
+| `images/story-02-a.webp` | A boy of twelve lying flat on the crest of a dike watching waves strike its steep seaward face, spray going straight up the wall of earth. |
+| `images/story-02-b.webp` | A cross-section drawing scratched into the sand with a stick: on one side a steep dike face with an arrow hitting it square, on the other a long gentle slope with the arrow sliding up it; a boy crouched over it, his father standing behind. |
 
 ## 3장 · 고양이와 겨울
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | A farmhouse office in winter: ledgers open on a table by lamplight, a young man and a young woman on either side of it, both working. |
-| `images/story-03-b.png` | A frozen dike at dusk with a young man standing alone, a dead sea bird in his hand and an old cat backing away in the snow. |
+| `images/story-03-a.webp` | A farmhouse office in winter: ledgers open on a table by lamplight, a young man and a young woman on either side of it, both working. |
+| `images/story-03-b.webp` | A frozen dike at dusk with a young man standing alone, a dead sea bird in his hand and an old cat backing away in the snow. |
 
 ## 4장 · 감독관이 되다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | A crowded farm hall after a funeral: a young woman standing and speaking to the assembled farmers, a young man at the edge of the room. |
-| `images/story-04-b.png` | A man walking the length of a dike with a measuring rod and a notebook, alone, farmers watching him from a distance and talking to each other. |
+| `images/story-04-a.webp` | A crowded farm hall after a funeral: a young woman standing and speaking to the assembled farmers, a young man at the edge of the room. |
+| `images/story-04-b.webp` | A man walking the length of a dike with a measuring rod and a notebook, alone, farmers watching him from a distance and talking to each other. |
 
 ## 5장 · 새 제방
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A huge earthworks in progress on the mudflats: dozens of men with spades and barrows, ox carts of clay, a long new dike taking shape with a very gentle seaward slope. |
-| `images/story-05-b.png` | A pit dug in the new dike with a dog on a rope beside it, workmen standing round; a man striding in and taking the rope, the dog under his arm. |
+| `images/story-05-a.webp` | A huge earthworks in progress on the mudflats: dozens of men with spades and barrows, ox carts of clay, a long new dike taking shape with a very gentle seaward slope. |
+| `images/story-05-b.webp` | A pit dug in the new dike with a dog on a rope beside it, workmen standing round; a man striding in and taking the rope, the dog under his arm. |
 
 ## 6장 · 백마
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A muddy road: a shabby drover holding the halter of a starved white horse, ribs showing, and a man counting coins into his hand while onlookers laugh. |
-| `images/story-06-b.png` | Months later: the same horse transformed, glossy and powerful, galloping along a dike crest at dusk with a man on its back; two farmers below watching and talking behind their hands. |
+| `images/story-06-a.webp` | A muddy road: a shabby drover holding the halter of a starved white horse, ribs showing, and a man counting coins into his hand while onlookers laugh. |
+| `images/story-06-b.webp` | Months later: the same horse transformed, glossy and powerful, galloping along a dike crest at dusk with a man on its back; two farmers below watching and talking behind their hands. |
 
 ## 7장 · 이음매
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | Close to the ground where a new dike meets an old one: the joint visibly softer and lower, a small channel of water working its way in, a man kneeling with his hand in it. |
-| `images/story-07-b.png` | A meeting of farmers in a hall, one broad man speaking and pointing, and at the front a greying man standing with nothing to say. |
+| `images/story-07-a.webp` | Close to the ground where a new dike meets an old one: the joint visibly softer and lower, a small channel of water working its way in, a man kneeling with his hand in it. |
+| `images/story-07-b.webp` | A meeting of farmers in a hall, one broad man speaking and pointing, and at the front a greying man standing with nothing to say. |
 
 ## 8장 · 그 밤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | Night on the dike in a north-west gale: a line of men with lanterns, straw and clay being piled at one spot, the sea already halfway up the slope. |
-| `images/story-08-b.png` | Men digging into the crest of the new dike by lantern light, and a rider bearing down on them out of the dark with his arm out. |
+| `images/story-08-a.webp` | Night on the dike in a north-west gale: a line of men with lanterns, straw and clay being piled at one spot, the sea already halfway up the slope. |
+| `images/story-08-b.webp` | Men digging into the crest of the new dike by lantern light, and a rider bearing down on them out of the dark with his arm out. |
 
 ## 9장 · 물속으로
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | A flooded road at night: a tilting carriage with water round its wheels, a woman and a child in it, and a rider stopped a little way off. |
-| `images/story-09-b.png` | Dawn after the flood, seen from high on the new dike: the old dike broken open in one place with water still pouring through, half the farmland a sheet of grey water, and the new dike whole from end to end. |
+| `images/story-09-a.webp` | A flooded road at night: a tilting carriage with water round its wheels, a woman and a child in it, and a rider stopped a little way off. |
+| `images/story-09-b.webp` | Dawn after the flood, seen from high on the new dike: the old dike broken open in one place with water still pouring through, half the farmland a sheet of grey water, and the new dike whole from end to end. |
 
 ## 10장 · 그 뒤에 남은 것
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | The inn parlour again, the fire burnt low, the old schoolmaster finishing, the traveller with his cup untouched. |
-| `images/story-10-b.png` | A modern-looking dike in daylight with a gently sloping seaward face, a small boy walking along the crest with his hands in his pockets. |
+| `images/story-10-a.webp` | The inn parlour again, the fire burnt low, the old schoolmaster finishing, the traveller with his cup untouched. |
+| `images/story-10-b.webp` | A modern-looking dike in daylight with a gently sloping seaward face, a small boy walking along the crest with his hands in his pockets. |

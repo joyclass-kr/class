@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
@@ -50,89 +50,89 @@ Colonel Adye: a police officer in a dark uniform coat.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a figure in a wide hat, blue goggles and white bandages standing in a doorway with snow blowing in behind him — and one bandage on the cheek just beginning to come loose, showing that there is nothing underneath. |
-| `images/end.png` | A small inn parlour at night, the lamps out, three thick notebooks open on a table and a fat man in a silk hat bent over them, unable to read a word. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a figure in a wide hat, blue goggles and white bandages standing in a doorway with snow blowing in behind him — and one bandage on the cheek just beginning to come loose, showing that there is nothing underneath. |
+| `images/end.webp` | A small inn parlour at night, the lamps out, three thick notebooks open on a table and a fat man in a silk hat bent over them, unable to read a word. |
 
 ## 1장 · 눈 오는 날의 손님
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A snowbound village street at dusk, an inn sign swinging, and a heavily wrapped figure with a small case walking toward it out of the blizzard. |
-| `images/story-01-b.png` | An inn parlour with a big fire: the wrapped figure sitting with hat and coat still on, water dripping off him onto the floor, an innkeeper's wife in the doorway with a tray. |
+| `images/story-01-a.webp` | A snowbound village street at dusk, an inn sign swinging, and a heavily wrapped figure with a small case walking toward it out of the blizzard. |
+| `images/story-01-b.webp` | An inn parlour with a big fire: the wrapped figure sitting with hat and coat still on, water dripping off him onto the floor, an innkeeper's wife in the doorway with a tray. |
 
 ## 2장 · 유리병 상자
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A parlour turned into a laboratory: dozens of bottles of every size crowding the table, curtains drawn in the middle of the day, papers everywhere. |
-| `images/story-02-b.png` | A doctor recoiling from an empty coat sleeve that is unmistakably reaching toward him, the wrapped figure seated calmly. |
+| `images/story-02-a.webp` | A parlour turned into a laboratory: dozens of bottles of every size crowding the table, curtains drawn in the middle of the day, papers everywhere. |
+| `images/story-02-b.webp` | A doctor recoiling from an empty coat sleeve that is unmistakably reaching toward him, the wrapped figure seated calmly. |
 
 ## 3장 · 도둑
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | A vicarage kitchen before dawn: an open cash box, an open window too small for a person, and untouched snow in the yard beyond it. |
-| `images/story-03-b.png` | An inn bedroom: a chair standing up by itself and moving toward the doorway, bedclothes flung about, two people backing out in terror. |
+| `images/story-03-a.webp` | A vicarage kitchen before dawn: an open cash box, an open window too small for a person, and untouched snow in the yard beyond it. |
+| `images/story-03-b.webp` | An inn bedroom: a chair standing up by itself and moving toward the doorway, bedclothes flung about, two people backing out in terror. |
 
 ## 4장 · 밥값을 셈합시다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | A crowded parlour: the wrapped figure holding up a wax nose he has just removed, everyone staring. |
-| `images/story-04-b.png` | The unwrapping: a coat, a collar and a shirt in the shape of a seated man, and above the collar nothing at all — the wallpaper behind showing straight through. |
+| `images/story-04-a.webp` | A crowded parlour: the wrapped figure holding up a wax nose he has just removed, everyone staring. |
+| `images/story-04-b.webp` | The unwrapping: a coat, a collar and a shirt in the shape of a seated man, and above the collar nothing at all — the wallpaper behind showing straight through. |
 
 ## 5장 · 마을을 빠져나가다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A room in uproar: a policeman grappling with a shirt and a pair of trousers that are visibly empty, other clothes already on the floor. |
-| `images/story-05-b.png` | A muddy village lane: fresh bare footprints pressing themselves into the mud one after another, and villagers frozen at their doors watching them come. |
+| `images/story-05-a.webp` | A room in uproar: a policeman grappling with a shirt and a pair of trousers that are visibly empty, other clothes already on the floor. |
+| `images/story-05-b.webp` | A muddy village lane: fresh bare footprints pressing themselves into the mud one after another, and villagers frozen at their doors watching them come. |
 
 ## 6장 · 마블 씨
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A fat tramp in a battered silk hat sitting on a bank at the roadside with two odd boots in front of him, talking to nobody. |
-| `images/story-06-b.png` | The same tramp trudging along a road loaded with bundles and three thick notebooks, hunched, looking back over his shoulder at nothing. |
+| `images/story-06-a.webp` | A fat tramp in a battered silk hat sitting on a bank at the roadside with two odd boots in front of him, talking to nobody. |
+| `images/story-06-b.webp` | The same tramp trudging along a road loaded with bundles and three thick notebooks, hunched, looking back over his shoulder at nothing. |
 
 ## 7장 · 마블의 도망
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | A country inn door being barricaded from the inside by half a dozen men while the latch rattles by itself. |
-| `images/story-07-b.png` | The road outside afterwards at dusk: a broken window, a dropped bundle, and a line of footprints leading off across a field, one of them smeared. |
+| `images/story-07-a.webp` | A country inn door being barricaded from the inside by half a dozen men while the latch rattles by itself. |
+| `images/story-07-b.webp` | The road outside afterwards at dusk: a broken window, a dropped bundle, and a line of footprints leading off across a field, one of them smeared. |
 
 ## 8장 · 켐프 박사
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A staircase at night with a smear on the banister and the bedroom door ajar, a young man in shirtsleeves holding a lamp at the bottom. |
-| `images/story-08-b.png` | A bedroom: a dressing gown seated in an armchair holding its shape as though a man were in it, a bandage floating where an arm would be, and a young doctor sitting opposite listening. |
+| `images/story-08-a.webp` | A staircase at night with a smear on the banister and the bedroom door ajar, a young man in shirtsleeves holding a lamp at the bottom. |
+| `images/story-08-b.webp` | A bedroom: a dressing gown seated in an armchair holding its shape as though a man were in it, a bandage floating where an arm would be, and a young doctor sitting opposite listening. |
 
 ## 9장 · 그리핀의 이야기
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | A shabby lodging-house room at night crammed with apparatus, a pale young man with white hair working alone by lamplight, dark windows. |
-| `images/story-09-b.png` | A mirror in that room with nothing reflected in it, and an empty chair in front of it. |
+| `images/story-09-a.webp` | A shabby lodging-house room at night crammed with apparatus, a pale young man with white hair working alone by lamplight, dark windows. |
+| `images/story-09-b.webp` | A mirror in that room with nothing reflected in it, and an empty chair in front of it. |
 
 ## 10장 · 보이지 않는다는 것
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | A busy London street in January seen at knee height: a gap in the crowd where people are colliding with something, a hansom swerving, and red bare footprints on the wet pavement. |
-| `images/story-10-b.png` | Snow falling in a dark alley and settling on nothing — building up the shape of a man's shoulders and head out of nowhere. |
+| `images/story-10-a.webp` | A busy London street in January seen at knee height: a gap in the crowd where people are colliding with something, a hansom swerving, and red bare footprints on the wet pavement. |
+| `images/story-10-b.webp` | Snow falling in a dark alley and settling on nothing — building up the shape of a man's shoulders and head out of nowhere. |
 
 ## 11장 · 공포의 통치
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | A study at night: a young doctor writing a short note very fast, glancing at the door. |
-| `images/story-11-b.png` | A village wall in the morning with a handwritten notice pinned to it and villagers gathered in front of it, reading in silence. |
+| `images/story-11-a.webp` | A study at night: a young doctor writing a short note very fast, glancing at the door. |
+| `images/story-11-b.webp` | A village wall in the morning with a handwritten notice pinned to it and villagers gathered in front of it, reading in silence. |
 
 ## 12장 · 언덕 위
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.png` | A man running downhill toward a village on a bright morning, arms out, shouting; behind him nothing at all, but the grass laid flat in a line following him. |
-| `images/story-12-b.png` | A village street: workmen with spades standing back in a wide circle, and in the middle of the road a young man with white hair and very pale skin lying still, an ordinary young face, someone laying a coat over him. |
+| `images/story-12-a.webp` | A man running downhill toward a village on a bright morning, arms out, shouting; behind him nothing at all, but the grass laid flat in a line following him. |
+| `images/story-12-b.webp` | A village street: workmen with spades standing back in a wide circle, and in the middle of the road a young man with white hair and very pale skin lying still, an ordinary young face, someone laying a coat over him. |

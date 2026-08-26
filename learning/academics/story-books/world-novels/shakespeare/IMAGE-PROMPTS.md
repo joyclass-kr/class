@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
@@ -39,61 +39,61 @@ Rich costume, dramatic light. No blood or wounds shown. No text or letters.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover seen from the yard of an open-roofed Elizabethan playhouse: the bare thrust stage lit by afternoon sun, two actors mid-scene, three galleries of spectators rising around, and the groundlings packed on the bare ground in the foreground with their backs to us. |
-| `images/end.png` | An empty stage at the end of a performance: a broken staff lying on the boards and a book beside it, the yard empty, low light. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover seen from the yard of an open-roofed Elizabethan playhouse: the bare thrust stage lit by afternoon sun, two actors mid-scene, three galleries of spectators rising around, and the groundlings packed on the bare ground in the foreground with their backs to us. |
+| `images/end.webp` | An empty stage at the end of a performance: a broken staff lying on the boards and a book beside it, the yard empty, low light. |
 
 ## 1편 · 극장을 짓던 사람
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | The inside of a round wooden playhouse from the stage's point of view: three tiers of galleries and a crowd of standing groundlings looking up, some heckling, hats and food in hand. |
-| `images/story-01-b.png` | Backstage: a boy of about fourteen being laced into a woman's gown by two men in doublets, a rack of costumes and a box of props behind them. |
+| `images/story-01-a.webp` | The inside of a round wooden playhouse from the stage's point of view: three tiers of galleries and a crowd of standing groundlings looking up, some heckling, hats and food in hand. |
+| `images/story-01-b.webp` | Backstage: a boy of about fourteen being laced into a woman's gown by two men in doublets, a rack of costumes and a box of props behind them. |
 
 ## 2편 · 한여름 밤의 꿈
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A moonlit Athenian wood: a small sprite squeezing juice from a flower over the eyes of a sleeping young man, while another sleeper lies a few feet away. |
-| `images/story-02-b.png` | A fairy queen in a bower of flowers with her arms around a workman whose head is that of a donkey, small fairies attending them solemnly. |
+| `images/story-02-a.webp` | A moonlit Athenian wood: a small sprite squeezing juice from a flower over the eyes of a sleeping young man, while another sleeper lies a few feet away. |
+| `images/story-02-b.webp` | A fairy queen in a bower of flowers with her arms around a workman whose head is that of a donkey, small fairies attending them solemnly. |
 
 ## 3편 · 베니스의 상인
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | A Venetian street by a canal: an older merchant in a dark gown standing with a document, and another man laughing as he signs it, a bench and stone bridge nearby. |
-| `images/story-03-b.png` | A Venetian courtroom: a young lawyer in robes holding up a paper and pointing at one line; the older merchant standing with a knife lowered, his face tired and set — an ordinary human face, no caricature. |
+| `images/story-03-a.webp` | A Venetian street by a canal: an older merchant in a dark gown standing with a document, and another man laughing as he signs it, a bench and stone bridge nearby. |
+| `images/story-03-b.webp` | A Venetian courtroom: a young lawyer in robes holding up a paper and pointing at one line; the older merchant standing with a knife lowered, his face tired and set — an ordinary human face, no caricature. |
 
 ## 4편 · 로미오와 줄리엣
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | A masked ball in a torchlit hall: two young people who have just seen each other across the room and stopped, everyone else still dancing. |
-| `images/story-04-b.png` | A moonlit walled garden: a girl on a balcony speaking to herself, and below in the shadow of the wall a boy standing very still, listening. |
+| `images/story-04-a.webp` | A masked ball in a torchlit hall: two young people who have just seen each other across the room and stopped, everyone else still dancing. |
+| `images/story-04-b.webp` | A moonlit walled garden: a girl on a balcony speaking to herself, and below in the shadow of the wall a boy standing very still, listening. |
 
 ## 5편 · 햄릿
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A cold castle battlement at night in fog: an armoured figure at the far end and a young man in black halfway toward it, guards frozen behind him. |
-| `images/story-05-b.png` | A court watching a play within the hall: the actors mid-scene, and one man on the dais half risen from his chair, everyone else looking at the stage — except one young man watching him. |
+| `images/story-05-a.webp` | A cold castle battlement at night in fog: an armoured figure at the far end and a young man in black halfway toward it, guards frozen behind him. |
+| `images/story-05-b.webp` | A court watching a play within the hall: the actors mid-scene, and one man on the dais half risen from his chair, everyone else looking at the stage — except one young man watching him. |
 
 ## 6편 · 리어 왕
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A throne room: a map spread on the floor, an old king pointing at it, three daughters standing before him — two leaning forward, one standing still. |
-| `images/story-06-b.png` | A heath in a storm at night: an old man bareheaded in the rain with his arms out, a fool crouched beside him, no shelter anywhere. |
+| `images/story-06-a.webp` | A throne room: a map spread on the floor, an old king pointing at it, three daughters standing before him — two leaning forward, one standing still. |
+| `images/story-06-b.webp` | A heath in a storm at night: an old man bareheaded in the rain with his arms out, a fool crouched beside him, no shelter anywhere. |
 
 ## 7편 · 맥베스
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | A cold Scottish moor at dusk: two mounted soldiers halted before three figures on the heath, the figures half turned away. |
-| `images/story-07-b.png` | A stone corridor at night by candlelight: a woman in a nightgown walking with her eyes open and unseeing, rubbing her hands together, a servant and a doctor watching from a doorway. |
+| `images/story-07-a.webp` | A cold Scottish moor at dusk: two mounted soldiers halted before three figures on the heath, the figures half turned away. |
+| `images/story-07-b.webp` | A stone corridor at night by candlelight: a woman in a nightgown walking with her eyes open and unseeing, rubbing her hands together, a servant and a doctor watching from a doorway. |
 
 ## 8편 · 폭풍우
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A green island shore: a young woman seeing a group of shipwrecked courtiers for the first time, her hands half raised in wonder; a sunburnt young man of the island standing apart, watching, drawn with a fully human face and bearing. |
-| `images/story-08-b.png` | A beach at evening: an old man snapping a staff across his knee and a heavy book already floating out on the water. |
+| `images/story-08-a.webp` | A green island shore: a young woman seeing a group of shipwrecked courtiers for the first time, her hands half raised in wonder; a sunburnt young man of the island standing apart, watching, drawn with a fully human face and bearing. |
+| `images/story-08-b.webp` | A beach at evening: an old man snapping a staff across his knee and a heavy book already floating out on the water. |

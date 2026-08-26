@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 이 책은 그림 지시를 특히 조심해서 쓰세요
 
@@ -62,110 +62,110 @@ Simon Legree: a big coarse white man, unshaven, a heavy fist, filthy clothes.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a log cabin at evening in Kentucky with warm light in the one window and people gathered inside; and in the foreground, seen from behind, a broad-shouldered man standing at the gate looking down the road, a bundle at his feet. |
-| `images/end.png` | A plain wooden grave marker on a low rise above a cotton field at sunrise, no name carved on it, a hat resting on top. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a log cabin at evening in Kentucky with warm light in the one window and people gathered inside; and in the foreground, seen from behind, a broad-shouldered man standing at the gate looking down the road, a bundle at his feet. |
+| `images/end.webp` | A plain wooden grave marker on a low rise above a cotton field at sunrise, no name carved on it, a hat resting on top. |
 
 ## 1장 · 사람을 사고팔던 시절
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A one-room log cabin lit by firelight: a family and neighbours crowded in, a woman taking corn bread off the hearth, a man sitting with a worn book open on his knee reading slowly aloud. |
-| `images/story-01-b.png` | A white boy of thirteen and a grown Black man sitting side by side on a step with a slate, the boy pointing at a letter, the man following it with his finger. |
+| `images/story-01-a.webp` | A one-room log cabin lit by firelight: a family and neighbours crowded in, a woman taking corn bread off the hearth, a man sitting with a worn book open on his knee reading slowly aloud. |
+| `images/story-01-b.webp` | A white boy of thirteen and a grown Black man sitting side by side on a step with a slate, the boy pointing at a letter, the man following it with his finger. |
 
 ## 2장 · 팔리다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A farmhouse study: a trader in a loud waistcoat leaning back with papers on the desk, a landowner standing at the window with his back turned. |
-| `images/story-02-b.png` | A hallway at night: a young woman standing frozen just outside a lit doorway, one hand against the wall, having heard something. |
+| `images/story-02-a.webp` | A farmhouse study: a trader in a loud waistcoat leaning back with papers on the desk, a landowner standing at the window with his back turned. |
+| `images/story-02-b.webp` | A hallway at night: a young woman standing frozen just outside a lit doorway, one hand against the wall, having heard something. |
 
 ## 3장 · 톰의 밤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | The cabin at night: a young woman with a sleeping child on her shoulder speaking urgently, a man seated with his hands together, his wife standing behind him. |
-| `images/story-03-b.png` | Morning in a farmyard: a man with irons on his wrists standing straight beside a wagon, a boy of thirteen reaching up to hang a coin on a cord around his neck. |
+| `images/story-03-a.webp` | The cabin at night: a young woman with a sleeping child on her shoulder speaking urgently, a man seated with his hands together, his wife standing behind him. |
+| `images/story-03-b.webp` | Morning in a farmyard: a man with irons on his wrists standing straight beside a wagon, a boy of thirteen reaching up to hang a coin on a cord around his neck. |
 
 ## 4장 · 얼음을 건너다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | The Ohio river in late winter, choked with broken slabs of ice grinding together, no boat anywhere, a steep bank. |
-| `images/story-04-b.png` | A woman with a child on her back mid-leap between two tilting ice floes, the far bank still distant, men on the near bank stopped at the water's edge. |
+| `images/story-04-a.webp` | The Ohio river in late winter, choked with broken slabs of ice grinding together, no boat anywhere, a steep bank. |
+| `images/story-04-b.webp` | A woman with a child on her back mid-leap between two tilting ice floes, the far bank still distant, men on the near bank stopped at the water's edge. |
 
 ## 5장 · 강을 내려가는 배
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | The lower deck of a Mississippi steamboat: people seated on the boards among freight, a trader with a ledger going along the row. |
-| `images/story-05-b.png` | The same deck at dawn, one place at the rail empty, a folded shawl left on the boards; a man sitting nearby looking at it. |
+| `images/story-05-a.webp` | The lower deck of a Mississippi steamboat: people seated on the boards among freight, a trader with a ledger going along the row. |
+| `images/story-05-b.webp` | The same deck at dawn, one place at the rail empty, a folded shawl left on the boards; a man sitting nearby looking at it. |
 
 ## 6장 · 에바
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A steamboat deck: a very fair little girl in white sitting on a crate watching a big man carve a small wooden toy, both absorbed. |
-| `images/story-06-b.png` | A New Orleans courtyard with a fountain and iron balconies, an elegant man lying in a hammock talking, a man standing nearby listening. |
+| `images/story-06-a.webp` | A steamboat deck: a very fair little girl in white sitting on a crate watching a big man carve a small wooden toy, both absorbed. |
+| `images/story-06-b.webp` | A New Orleans courtyard with a fountain and iron balconies, an elegant man lying in a hammock talking, a man standing nearby listening. |
 
 ## 7장 · 북쪽에서 온 사촌
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | A tidy New England-looking woman in a Southern parlour holding a duster, visibly uncomfortable, while household staff go about their work around her. |
-| `images/story-07-b.png` | A girl of nine standing in front of a seated woman being questioned, her chin up, entirely unreadable — drawn as a real child, no comedy. |
+| `images/story-07-a.webp` | A tidy New England-looking woman in a Southern parlour holding a duster, visibly uncomfortable, while household staff go about their work around her. |
+| `images/story-07-b.webp` | A girl of nine standing in front of a seated woman being questioned, her chin up, entirely unreadable — drawn as a real child, no comedy. |
 
 ## 8장 · 에바의 부탁
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | Two girls on a garden step, one fair and one Black, hands joined; the Black girl crying and the fair one simply holding on. |
-| `images/story-08-b.png` | A darkened bedroom with the shutters half closed, a father kneeling at a small bed, a promise being made. |
+| `images/story-08-a.webp` | Two girls on a garden step, one fair and one Black, hands joined; the Black girl crying and the fair one simply holding on. |
+| `images/story-08-b.webp` | A darkened bedroom with the shutters half closed, a father kneeling at a small bed, a promise being made. |
 
 ## 9장 · 지키지 못한 약속
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | A study with a half-written legal document on the desk, the pen laid across it, the chair pushed back and empty. |
-| `images/story-09-b.png` | A New Orleans auction room: people standing on a low platform, buyers with catalogues below; draw the people on the platform standing straight and looking out, not cowering. |
+| `images/story-09-a.webp` | A study with a half-written legal document on the desk, the pen laid across it, the chair pushed back and empty. |
+| `images/story-09-b.webp` | A New Orleans auction room: people standing on a low platform, buyers with catalogues below; draw the people on the platform standing straight and looking out, not cowering. |
 
 ## 10장 · 붉은 강의 농장
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | A run-down plantation at the end of a rutted track: a sagging house, bare quarters, cotton fields to the horizon, no neighbours anywhere. |
-| `images/story-10-b.png` | A coarse white man on a porch holding up his fist to a newly arrived group, two Black overseers standing behind him with their eyes down. |
+| `images/story-10-a.webp` | A run-down plantation at the end of a rutted track: a sagging house, bare quarters, cotton fields to the horizon, no neighbours anywhere. |
+| `images/story-10-b.webp` | A coarse white man on a porch holding up his fist to a newly arrived group, two Black overseers standing behind him with their eyes down. |
 
 ## 11장 · 채찍을 들라는 명령
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | Evening weighing: baskets of cotton on a scale, and a man quietly transferring handfuls from his own basket to an older woman's. |
-| `images/story-11-b.png` | A lamplit shed: a whip being held out and a man standing straight with his hands at his sides, not taking it, looking directly at the man offering it. This is the key image of the book. |
+| `images/story-11-a.webp` | Evening weighing: baskets of cotton on a scale, and a man quietly transferring handfuls from his own basket to an older woman's. |
+| `images/story-11-b.webp` | A lamplit shed: a whip being held out and a man standing straight with his hands at his sides, not taking it, looking directly at the man offering it. This is the key image of the book. |
 
 ## 12장 · 카시
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.png` | A woman with an educated bearing sitting on a doorstep at night talking low to a man, a lamp between them turned down. |
-| `images/story-12-b.png` | A dusty plantation attic seen from inside: two women sitting quietly among old furniture, and below them through the floorboards, lantern light moving as men search the swamp outside. |
+| `images/story-12-a.webp` | A woman with an educated bearing sitting on a doorstep at night talking low to a man, a lamp between them turned down. |
+| `images/story-12-b.webp` | A dusty plantation attic seen from inside: two women sitting quietly among old furniture, and below them through the floorboards, lantern light moving as men search the swamp outside. |
 
 ## 13장 · 말하지 않다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-13-a.png` | A big man in a doorway shouting a question, and a man standing in front of him saying nothing, his shoulders square. |
-| `images/story-13-b.png` | A barn at night: two men who have brought a gourd of water kneeling beside another lying on straw; one of them has his face in his hands. |
+| `images/story-13-a.webp` | A big man in a doorway shouting a question, and a man standing in front of him saying nothing, his shoulders square. |
+| `images/story-13-b.webp` | A barn at night: two men who have brought a gourd of water kneeling beside another lying on straw; one of them has his face in his hands. |
 
 ## 14장 · 너무 늦게 온 사람
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-14-a.png` | A young white man on horseback riding into a plantation yard, dust behind him, the house door opening. |
-| `images/story-14-b.png` | Inside the barn: a young man kneeling and taking an older man's hand; a coin on a worn cord visible at the older man's neck. |
+| `images/story-14-a.webp` | A young white man on horseback riding into a plantation yard, dust behind him, the house door opening. |
+| `images/story-14-b.webp` | Inside the barn: a young man kneeling and taking an older man's hand; a coin on a worn cord visible at the older man's neck. |
 
 ## 15장 · 그 뒤에 일어난 일
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-15-a.png` | A Kentucky farmyard: a young man handing out folded papers one by one to a crowd of people, some reading them, some holding them without moving. |
-| `images/story-15-b.png` | A printing shop with stacks of a new book being bound, and a small woman in a plain bonnet standing among them looking at one copy. |
+| `images/story-15-a.webp` | A Kentucky farmyard: a young man handing out folded papers one by one to a crowd of people, some reading them, some holding them without moving. |
+| `images/story-15-b.webp` | A printing shop with stacks of a new book being bound, and a small woman in a plain bonnet standing among them looking at one copy. |

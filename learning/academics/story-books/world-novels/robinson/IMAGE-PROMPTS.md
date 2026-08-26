@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
@@ -49,110 +49,110 @@ The parrot: a green parrot that appears from chapter 8 on.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a bearded man in goatskins with a tall flapped cap standing on a headland with a musket and a goatskin parasol, looking out over an empty ocean; behind and below him the palisade, the goat pen and the forest of his island. |
-| `images/end.png` | A ship's rail at sea at evening, and a low green island shrinking on the horizon behind it. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a bearded man in goatskins with a tall flapped cap standing on a headland with a musket and a goatskin parasol, looking out over an empty ocean; behind and below him the palisade, the goat pen and the forest of his island. |
+| `images/end.webp` | A ship's rail at sea at evening, and a low green island shrinking on the horizon behind it. |
 
 ## 1장 · 집을 나가다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A panelled English room in 1651: an old father seated, gripping the arms of his chair and weeping, a restless young man standing before him unable to meet his eyes. |
-| `images/story-01-b.png` | A ship going down off a grey coast, its masts already leaning, seen from the shore where a soaked young man stands among the rescued crew. |
+| `images/story-01-a.webp` | A panelled English room in 1651: an old father seated, gripping the arms of his chair and weeping, a restless young man standing before him unable to meet his eyes. |
+| `images/story-01-b.webp` | A ship going down off a grey coast, its masts already leaning, seen from the shore where a soaked young man stands among the rescued crew. |
 
 ## 2장 · 노예가 되다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A sea fight: a low fast corsair coming alongside a merchant ship, grappling hooks in the air, smoke. |
-| `images/story-02-b.png` | A small fishing boat far out at dawn, two figures aboard, the African coast a thin line behind them. |
+| `images/story-02-a.webp` | A sea fight: a low fast corsair coming alongside a merchant ship, grappling hooks in the air, smoke. |
+| `images/story-02-b.webp` | A small fishing boat far out at dawn, two figures aboard, the African coast a thin line behind them. |
 
 ## 3장 · 난파
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | A ship driven hard onto a sandbar in a storm, her deck awash, a boat capsizing in the surf beside her. |
-| `images/story-03-b.png` | A man lying face down on wet sand at dawn, the beach otherwise completely empty in both directions. |
+| `images/story-03-a.webp` | A ship driven hard onto a sandbar in a storm, her deck awash, a boat capsizing in the surf beside her. |
+| `images/story-03-b.webp` | A man lying face down on wet sand at dawn, the beach otherwise completely empty in both directions. |
 
 ## 4장 · 배에서 실어 온 것들
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | A crude raft of ship's planks piled with chests, barrels, tools and rolled canvas, poled toward a beach by one man. |
-| `images/story-04-b.png` | An open drawer of gold and silver coins in a flooded cabin, and a man's hand hesitating over it. |
+| `images/story-04-a.webp` | A crude raft of ship's planks piled with chests, barrels, tools and rolled canvas, poled toward a beach by one man. |
+| `images/story-04-b.webp` | An open drawer of gold and silver coins in a flooded cabin, and a man's hand hesitating over it. |
 
 ## 5장 · 집을 짓다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A double palisade of driven stakes in front of a rock face, a tent inside it, a ladder leaning against the wall from the inside. |
-| `images/story-05-b.png` | A post with hundreds of knife-cut notches on it, some longer than others, a man's hand cutting a fresh one. |
+| `images/story-05-a.webp` | A double palisade of driven stakes in front of a rock face, a tent inside it, a ladder leaning against the wall from the inside. |
+| `images/story-05-b.webp` | A post with hundreds of knife-cut notches on it, some longer than others, a man's hand cutting a fresh one. |
 
 ## 6장 · 장부를 적다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A man at a rough handmade table by candlelight, ruling a line down a sheet of paper and writing in two columns. |
-| `images/story-06-b.png` | The same man very ill on a bed of ropes, alone, a gourd of water just out of reach on the floor. |
+| `images/story-06-a.webp` | A man at a rough handmade table by candlelight, ruling a line down a sheet of paper and writing in two columns. |
+| `images/story-06-b.webp` | The same man very ill on a bed of ropes, alone, a gourd of water just out of reach on the floor. |
 
 ## 7장 · 보리와 빵
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | Green barley shoots growing improbably out of bare ground outside a palisade, a man on his knees in front of them. |
-| `images/story-07-b.png` | A hollowed tree-stump mortar, clay pots standing in the embers of a fire, and a single small dark loaf on a board. |
+| `images/story-07-a.webp` | Green barley shoots growing improbably out of bare ground outside a palisade, a man on his knees in front of them. |
+| `images/story-07-b.webp` | A hollowed tree-stump mortar, clay pots standing in the embers of a fire, and a single small dark loaf on a board. |
 
 ## 8장 · 염소와 앵무새
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A fenced enclosure of goats on a hillside, a man milking one, tame kids crowding his legs. |
-| `images/story-08-b.png` | The full goatskin outfit: jerkin with the fur outward, tall cap with a long flap, a goatskin parasol open overhead, a green parrot on his shoulder. |
+| `images/story-08-a.webp` | A fenced enclosure of goats on a hillside, a man milking one, tame kids crowding his legs. |
+| `images/story-08-b.webp` | The full goatskin outfit: jerkin with the fur outward, tall cap with a long flap, a goatskin parasol open overhead, a green parrot on his shoulder. |
 
 ## 9장 · 모래밭의 발자국
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | A single bare human footprint pressed into smooth wet sand, and a man's own foot placed beside it for comparison; no other marks anywhere. |
-| `images/story-09-b.png` | A man crouched behind his palisade with the ladder pulled up, both hands on a musket, staring at nothing. |
+| `images/story-09-a.webp` | A single bare human footprint pressed into smooth wet sand, and a man's own foot placed beside it for comparison; no other marks anywhere. |
+| `images/story-09-b.webp` | A man crouched behind his palisade with the ladder pulled up, both hands on a musket, staring at nothing. |
 
 ## 10장 · 쫓기는 사람
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | Seen from a wooded ridge: canoes drawn up on a distant beach and a fire, small figures around it. |
-| `images/story-10-b.png` | A man running full speed along the shore toward the viewer, three pursuers well behind him, a creek ahead. |
+| `images/story-10-a.webp` | Seen from a wooded ridge: canoes drawn up on a distant beach and a fire, small figures around it. |
+| `images/story-10-b.webp` | A man running full speed along the shore toward the viewer, three pursuers well behind him, a creek ahead. |
 
 ## 11장 · 프라이데이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | A bearded man in goatskins lowering his musket and reaching out an open hand to raise a kneeling man to his feet; the kneeling man already half standing. Draw both men the same height and give both faces equal weight. |
-| `images/story-11-b.png` | The two men sitting on opposite sides of a small fire in the evening, neither above the other, eating from the same dish. |
+| `images/story-11-a.webp` | A bearded man in goatskins lowering his musket and reaching out an open hand to raise a kneeling man to his feet; the kneeling man already half standing. Draw both men the same height and give both faces equal weight. |
+| `images/story-11-b.webp` | The two men sitting on opposite sides of a small fire in the evening, neither above the other, eating from the same dish. |
 
 ## 12장 · 말을 나누다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.png` | A large canoe being hollowed by controlled fire on a beach: the Carib man directing the work with a shell scraper, the bearded man watching and clearly learning. |
-| `images/story-12-b.png` | The two men working a field side by side with equal effort, talking; neither one giving orders. |
+| `images/story-12-a.webp` | A large canoe being hollowed by controlled fire on a beach: the Carib man directing the work with a shell scraper, the bearded man watching and clearly learning. |
+| `images/story-12-b.webp` | The two men working a field side by side with equal effort, talking; neither one giving orders. |
 
 ## 13장 · 프라이데이의 아버지
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-13-a.png` | A young man cutting the bonds from an exhausted elderly prisoner and then stopping dead, recognising him; the older man reaching up. |
-| `images/story-13-b.png` | Four men of three different origins sitting around a fire in the evening, all talking at once, entirely at ease with one another. |
+| `images/story-13-a.webp` | A young man cutting the bonds from an exhausted elderly prisoner and then stopping dead, recognising him; the older man reaching up. |
+| `images/story-13-b.webp` | Four men of three different origins sitting around a fire in the evening, all talking at once, entirely at ease with one another. |
 
 ## 14장 · 영국 배
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-14-a.png` | A ship's boat drawn up on a beach with a group of sailors, three of them bound; a wild-looking bearded figure in goatskins watching from the treeline. |
-| `images/story-14-b.png` | Night in the forest: sailors laying down their weapons in a clearing, voices coming from several directions at once out of the dark. |
+| `images/story-14-a.webp` | A ship's boat drawn up on a beach with a group of sailors, three of them bound; a wild-looking bearded figure in goatskins watching from the treeline. |
+| `images/story-14-b.webp` | Night in the forest: sailors laying down their weapons in a clearing, voices coming from several directions at once out of the dark. |
 
 ## 15장 · 이십팔 년 만에
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-15-a.png` | A man taking a last walk round his own works — the mortar, the pots, the goat pen, the notched post — with the notched post reading a very great many years. |
-| `images/story-15-b.png` | The deck of a departing ship: the bearded man at the rail in his goatskin cap with his island behind him, and beside him at the same rail, standing level with him, the Carib man and his father. |
+| `images/story-15-a.webp` | A man taking a last walk round his own works — the mortar, the pots, the goat pen, the notched post — with the notched post reading a very great many years. |
+| `images/story-15-b.webp` | The deck of a departing ship: the bearded man at the rail in his goatskin cap with his island behind him, and beside him at the same rail, standing level with him, the Carib man and his father. |

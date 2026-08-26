@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 이 책은 그림 지시를 특히 조심해서 쓰세요
 
@@ -66,89 +66,89 @@ Tamenund: an extremely old Delaware leader, over a hundred, seated.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: an old-growth forest gorge with a river below, three figures on a rock ledge looking down a trail — a frontiersman with a long rifle and two Mohican men — drawn as three individual people with distinct faces, not as a heroic tableau. |
-| `images/end.png` | A modern-looking wooden signboard at the edge of a wooded road in Wisconsin marking a tribal community, with a school building visible beyond it — quiet, ordinary, present-day. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: an old-growth forest gorge with a river below, three figures on a rock ledge looking down a trail — a frontiersman with a long rifle and two Mohican men — drawn as three individual people with distinct faces, not as a heroic tableau. |
+| `images/end.webp` | A modern-looking wooden signboard at the edge of a wooded road in Wisconsin marking a tribal community, with a school building visible beyond it — quiet, ordinary, present-day. |
 
 ## 1장 · 이 이야기를 읽기 전에
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A map-like spread of the eastern woodlands in 1757 with rivers, lakes and forest, and the territories of several nations marked, British and French forts as small squares. |
-| `images/story-01-b.png` | An eastern woodlands village before contact: bark lodges, cornfields, people working, children playing — an ordinary busy settlement, drawn with the same care as a European town would be. |
+| `images/story-01-a.webp` | A map-like spread of the eastern woodlands in 1757 with rivers, lakes and forest, and the territories of several nations marked, British and French forts as small squares. |
+| `images/story-01-b.webp` | An eastern woodlands village before contact: bark lodges, cornfields, people working, children playing — an ordinary busy settlement, drawn with the same care as a European town would be. |
 
 ## 2장 · 숲으로 들어간 일행
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A narrow trail under dense forest canopy at midday, so dark it looks like dusk; a small party on horseback strung out along it, a guide walking ahead. |
-| `images/story-02-b.png` | A forest clearing at evening: three men rising from a small fire — a frontiersman and two Mohican men — meeting the party; every face distinct. |
+| `images/story-02-a.webp` | A narrow trail under dense forest canopy at midday, so dark it looks like dusk; a small party on horseback strung out along it, a guide walking ahead. |
+| `images/story-02-b.webp` | A forest clearing at evening: three men rising from a small fire — a frontiersman and two Mohican men — meeting the party; every face distinct. |
 
 ## 3장 · 마과
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | A cave behind a waterfall on a rocky island in a river, firelight inside, the water sheeting past the mouth. |
-| `images/story-03-b.png` | Three men slipping into fast water below the falls at dawn, seen from the cave mouth. |
+| `images/story-03-a.webp` | A cave behind a waterfall on a rocky island in a river, firelight inside, the water sheeting past the mouth. |
+| `images/story-03-b.webp` | Three men slipping into fast water below the falls at dawn, seen from the cave mouth. |
 
 ## 4장 · 구출
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | A hilltop clearing: a Huron man speaking to a young woman who is standing straight and answering him; both faces serious, neither one caricatured. |
-| `images/story-04-b.png` | A young Mohican man and a young woman walking a forest trail talking quietly, others ahead of them on the path. |
+| `images/story-04-a.webp` | A hilltop clearing: a Huron man speaking to a young woman who is standing straight and answering him; both faces serious, neither one caricatured. |
+| `images/story-04-b.webp` | A young Mohican man and a young woman walking a forest trail talking quietly, others ahead of them on the path. |
 
 ## 5장 · 칭가치국의 이야기
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A small fire at night with four people around it, an older Mohican man speaking and the others listening. |
-| `images/story-05-b.png` | A visual memory: a coastal river valley with a large village, then the same valley with fields and a European settlement and no village at all. |
+| `images/story-05-a.webp` | A small fire at night with four people around it, an older Mohican man speaking and the others listening. |
+| `images/story-05-b.webp` | A visual memory: a coastal river valley with a large village, then the same valley with fields and a European settlement and no village at all. |
 
 ## 6장 · 요새에 닿다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A log-and-earth fort on a lake shore under bombardment, French siege lines dug in beyond it, smoke over the water. |
-| `images/story-06-b.png` | A parley tent between the lines: two officers seated at a folding table with papers, aides standing; outside the tent flap, warriors of several nations waiting with nobody speaking to them. |
+| `images/story-06-a.webp` | A log-and-earth fort on a lake shore under bombardment, French siege lines dug in beyond it, smoke over the water. |
+| `images/story-06-b.webp` | A parley tent between the lines: two officers seated at a folding table with papers, aides standing; outside the tent flap, warriors of several nations waiting with nobody speaking to them. |
 
 ## 7장 · 그날 아침
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | A road out of a fort in morning mist, abandoned baggage and dropped belongings along it, nobody in sight. |
-| `images/story-07-b.png` | A young Mohican man crouched on one knee reading marks on the ground while a British officer stands behind him seeing nothing. |
+| `images/story-07-a.webp` | A road out of a fort in morning mist, abandoned baggage and dropped belongings along it, nobody in sight. |
+| `images/story-07-b.webp` | A young Mohican man crouched on one knee reading marks on the ground while a British officer stands behind him seeing nothing. |
 
 ## 8장 · 델라웨어 마을
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A Delaware village of bark lodges: people going about ordinary work, a crowd gathering in the open space at the centre. |
-| `images/story-08-b.png` | A young man standing before a very old seated leader, his shirt open showing a small blue turtle tattoo; the old man half risen from his seat. |
+| `images/story-08-a.webp` | A Delaware village of bark lodges: people going about ordinary work, a crowd gathering in the open space at the centre. |
+| `images/story-08-b.webp` | A young man standing before a very old seated leader, his shirt open showing a small blue turtle tattoo; the old man half risen from his seat. |
 
 ## 9장 · 타메눈드의 판단
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | The village council: an ancient leader speaking, a Huron man standing to one side, a British officer with his mouth open in protest, the crowd silent. |
-| `images/story-09-b.png` | Sunset over the treetops seen from the village, everyone standing and watching the light go. |
+| `images/story-09-a.webp` | The village council: an ancient leader speaking, a Huron man standing to one side, a British officer with his mouth open in protest, the crowd silent. |
+| `images/story-09-b.webp` | Sunset over the treetops seen from the village, everyone standing and watching the light go. |
 
 ## 10장 · 벼랑 위
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | A narrow ledge high on a cliff face: a man and a young woman standing at the edge, the man's hand at his side and visibly unsteady. |
-| `images/story-10-b.png` | The cliff seen from far below afterwards: the ledge empty, a rifle's smoke drifting from a rock further down, sky above. |
+| `images/story-10-a.webp` | A narrow ledge high on a cliff face: a man and a young woman standing at the edge, the man's hand at his side and visibly unsteady. |
+| `images/story-10-b.webp` | The cliff seen from far below afterwards: the ledge empty, a rifle's smoke drifting from a rock further down, sky above. |
 
 ## 11장 · 장례
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | A Delaware funeral: two graves side by side, women singing, the whole village standing in a circle, an old British officer at the edge with his hat off. |
-| `images/story-11-b.png` | An older Mohican man standing alone at the edge of the clearing after everyone else has gone, and a very old leader seated behind him. |
+| `images/story-11-a.webp` | A Delaware funeral: two graves side by side, women singing, the whole village standing in a circle, an old British officer at the edge with his hat off. |
+| `images/story-11-b.webp` | An older Mohican man standing alone at the edge of the clearing after everyone else has gone, and a very old leader seated behind him. |
 
 ## 12장 · 그 뒤에 있었던 일
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.png` | A long line of families walking west along a winter road with carts and bundles, soldiers riding alongside — drawn soberly, no melodrama. |
-| `images/story-12-b.png` | A present-day classroom: children at desks and an adult at the front pointing at a word list in a Native language on the board. |
+| `images/story-12-a.webp` | A long line of families walking west along a winter road with carts and bundles, soldiers riding alongside — drawn soberly, no melodrama. |
+| `images/story-12-b.webp` | A present-day classroom: children at desks and an adult at the front pointing at a word list in a Native language on the board. |

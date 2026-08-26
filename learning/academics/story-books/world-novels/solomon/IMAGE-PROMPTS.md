@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 이 책은 그림 지시를 특히 조심해서 쓰세요
 
@@ -63,89 +63,89 @@ grotesque.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: an ancient stone-paved road running down out of snow-capped mountains toward a green highland, cut into the cliff face and bridged across a gorge; five small travellers on it, the tallest of them ahead of the others looking down at the country below. |
-| `images/end.png` | An old hand-drawn map on a scrap of cloth lying on a table with a lamp beside it, one corner of the route deliberately smudged out. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: an ancient stone-paved road running down out of snow-capped mountains toward a green highland, cut into the cliff face and bridged across a gorge; five small travellers on it, the tallest of them ahead of the others looking down at the country below. |
+| `images/end.webp` | An old hand-drawn map on a scrap of cloth lying on a table with a lamp beside it, one corner of the route deliberately smudged out. |
 
 ## 1장 · 이 책을 읽기 전에
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A conference room in 1880s Berlin: European men in frock coats around a huge map of Africa on a table, drawing straight lines across it; nobody from Africa present. |
-| `images/story-01-b.png` | The great stone ruins of Great Zimbabwe under a wide sky, the mortarless walls curving away, drawn with the same awe a European cathedral would get. |
+| `images/story-01-a.webp` | A conference room in 1880s Berlin: European men in frock coats around a huge map of Africa on a table, drawing straight lines across it; nobody from Africa present. |
+| `images/story-01-b.webp` | The great stone ruins of Great Zimbabwe under a wide sky, the mortarless walls curving away, drawn with the same awe a European cathedral would get. |
 
 ## 2장 · 앨런 쿼터메인
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | The deck of a coastal steamer: a small weather-beaten hunter with a pipe talking to a very large bearded man and a short neat man with a monocle. |
-| `images/story-02-b.png` | A veld camp at night: a fire, a rifle propped against a wagon wheel, an old hunter writing in a notebook. |
+| `images/story-02-a.webp` | The deck of a coastal steamer: a small weather-beaten hunter with a pipe talking to a very large bearded man and a short neat man with a monocle. |
+| `images/story-02-b.webp` | A veld camp at night: a fire, a rifle propped against a wagon wheel, an old hunter writing in a notebook. |
 
 ## 3장 · 삼백 년 된 지도
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | A tattered piece of cloth on a table with a crude map drawn on it in faded ink — mountains, a road, a cross — a lamp and three heads bent over it. |
-| `images/story-03-b.png` | A hunter's storeroom of ivory tusks stacked against a wall, the man standing among them not looking pleased about it. |
+| `images/story-03-a.webp` | A tattered piece of cloth on a table with a crude map drawn on it in faded ink — mountains, a road, a cross — a lamp and three heads bent over it. |
+| `images/story-03-b.webp` | A hunter's storeroom of ivory tusks stacked against a wall, the man standing among them not looking pleased about it. |
 
 ## 4장 · 움보파
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | A hiring line of porters outside a trading post, and one tall man standing apart from the line, not carrying anything, looking north. |
-| `images/story-04-b.png` | The same man at a campfire speaking, the three white men listening; he is the one standing and they are the ones seated. |
+| `images/story-04-a.webp` | A hiring line of porters outside a trading post, and one tall man standing apart from the line, not carrying anything, looking north. |
+| `images/story-04-b.webp` | The same man at a campfire speaking, the three white men listening; he is the one standing and they are the ones seated. |
 
 ## 5장 · 사막
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A red sand desert at dusk with five tiny figures crossing it, shadows enormously long, no landmark anywhere. |
-| `images/story-05-b.png` | A San tracker pointing at birds flying low across the evening sky while the others look at him rather than at the birds. |
+| `images/story-05-a.webp` | A red sand desert at dusk with five tiny figures crossing it, shadows enormously long, no landmark anywhere. |
+| `images/story-05-b.webp` | A San tracker pointing at birds flying low across the evening sky while the others look at him rather than at the birds. |
 
 ## 6장 · 솔로몬의 큰길
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A broad, beautifully engineered stone road descending from a mountain pass, cut through solid rock in one place and carried on a stone bridge in another, green country far below. |
-| `images/story-06-b.png` | A ring of Kukuana warriors with cowhide shields and short spears around four travellers on the road — the warriors drawn as a disciplined army, faces individual and unafraid. |
+| `images/story-06-a.webp` | A broad, beautifully engineered stone road descending from a mountain pass, cut through solid rock in one place and carried on a stone bridge in another, green country far below. |
+| `images/story-06-b.webp` | A ring of Kukuana warriors with cowhide shields and short spears around four travellers on the road — the warriors drawn as a disciplined army, faces individual and unafraid. |
 
 ## 7장 · 트왈라
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | A large well-built city seen from above: thousands of houses in neat rings, open squares, watercourses running between them, cultivated fields beyond. |
-| `images/story-07-b.png` | A great open square filled with silent people, a one-eyed king seated above them, a tiny hooded old woman moving slowly along the ranks; three foreigners seated at the side, one of them gripping his own knees. |
+| `images/story-07-a.webp` | A large well-built city seen from above: thousands of houses in neat rings, open squares, watercourses running between them, cultivated fields beyond. |
+| `images/story-07-b.webp` | A great open square filled with silent people, a one-eyed king seated above them, a tiny hooded old woman moving slowly along the ranks; three foreigners seated at the side, one of them gripping his own knees. |
 
 ## 8장 · 속임수
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A naval almanac open on a knee in lamplight, a finger on a date, three faces close over it. |
-| `images/story-08-b.png` | A total eclipse at midday over the city: the sun a black disc with a ring of light, the whole square in shadow, thousands of people on the ground, four figures standing. |
+| `images/story-08-a.webp` | A naval almanac open on a knee in lamplight, a finger on a date, three faces close over it. |
+| `images/story-08-b.webp` | A total eclipse at midday over the city: the sun a black disc with a ring of light, the whole square in shadow, thousands of people on the ground, four figures standing. |
 
 ## 9장 · 이그노시
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | A cave by firelight: a tall man with his cloak off showing a great snake tattoo round his waist, an old commander on one knee before him, the three foreigners standing well back at the edge of the light. |
-| `images/story-09-b.png` | A night meeting of village headmen: the tall man standing at the centre speaking and counting three points on his fingers, dozens of men listening; the foreigners not in the picture at all. |
+| `images/story-09-a.webp` | A cave by firelight: a tall man with his cloak off showing a great snake tattoo round his waist, an old commander on one knee before him, the three foreigners standing well back at the edge of the light. |
+| `images/story-09-b.webp` | A night meeting of village headmen: the tall man standing at the centre speaking and counting three points on his fingers, dozens of men listening; the foreigners not in the picture at all. |
 
 ## 10장 · 싸움
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | A narrow neck of ground between two hills at dawn, one regiment of grey-haired veterans formed up across it with shields locked, and a vast army coming on beyond. |
-| `images/story-10-b.png` | The morning after: a king standing before a great crowd making a proclamation, an old commander beside him with a doubtful face. |
+| `images/story-10-a.webp` | A narrow neck of ground between two hills at dawn, one regiment of grey-haired veterans formed up across it with shields locked, and a vast army coming on beyond. |
+| `images/story-10-b.webp` | The morning after: a king standing before a great crowd making a proclamation, an old commander beside him with a doubtful face. |
 
 ## 11장 · 동굴
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | A vast rock-cut chamber with carved stone figures along the walls and an enormous slab door standing raised on stone pillars. |
-| `images/story-11-b.png` | Complete darkness with one guttering candle: three men among chests of gold and boxes of uncut stones, one of them with his hand flat against a sealed stone wall. |
+| `images/story-11-a.webp` | A vast rock-cut chamber with carved stone figures along the walls and an enormous slab door standing raised on stone pillars. |
+| `images/story-11-b.webp` | Complete darkness with one guttering candle: three men among chests of gold and boxes of uncut stones, one of them with his hand flat against a sealed stone wall. |
 
 ## 12장 · 돌아가는 길
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.png` | A farewell at the head of a pass: a king and his commanders on one side, three travellers with packs on the other, the green highland behind the king. |
-| `images/story-12-b.png` | A small oasis with a hut: a very large bearded man standing frozen, and a thin lame man coming out of the doorway shading his eyes. |
+| `images/story-12-a.webp` | A farewell at the head of a pass: a king and his commanders on one side, three travellers with packs on the other, the green highland behind the king. |
+| `images/story-12-b.webp` | A small oasis with a hut: a very large bearded man standing frozen, and a thin lame man coming out of the doorway shading his eyes. |

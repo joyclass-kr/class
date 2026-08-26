@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
@@ -47,110 +47,110 @@ The Abbot of St Mary's: a smooth, comfortable churchman in rich vestments.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a hooded archer in green standing in a shaft of golden light between two enormous oak trunks, longbow drawn to the ear, aiming upward out of the frame; behind him in the green shadows a dozen more figures with bows, barely visible. |
-| `images/end.png` | A single arrow standing upright in the grass at the edge of a great forest at evening, an open window of a stone building small in the distance behind it. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a hooded archer in green standing in a shaft of golden light between two enormous oak trunks, longbow drawn to the ear, aiming upward out of the frame; behind him in the green shadows a dozen more figures with bows, barely visible. |
+| `images/end.webp` | A single arrow standing upright in the grass at the edge of a great forest at evening, an open window of a stone building small in the distance behind it. |
 
 ## 1장 · 숲으로 들어가다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | Foresters drinking under an oak on a spring morning, jeering at a slight young man with a longbow who is passing on the road. |
-| `images/story-01-b.png` | The same young man running into deep forest, an arrow just through the crown of his hat, more arrows in the trunks around him. |
+| `images/story-01-a.webp` | Foresters drinking under an oak on a spring morning, jeering at a slight young man with a longbow who is passing on the road. |
+| `images/story-01-b.webp` | The same young man running into deep forest, an arrow just through the crown of his hat, more arrows in the trunks around him. |
 
 ## 2장 · 리틀 존
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A single log bridge over a brown forest stream with a man at each end, one very tall, both holding staffs, neither giving way. |
-| `images/story-02-b.png` | A young man sitting in the shallow water laughing, soaked through, while an enormous man reaches down a hand to pull him up. |
+| `images/story-02-a.webp` | A single log bridge over a brown forest stream with a man at each end, one very tall, both holding staffs, neither giving way. |
+| `images/story-02-b.webp` | A young man sitting in the shallow water laughing, soaked through, while an enormous man reaches down a hand to pull him up. |
 
 ## 3장 · 터크 수사
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | A fat monk sitting on a river bank with a roast joint and a flask beside him, a young man in green standing over him asking a favour. |
-| `images/story-03-b.png` | A country church door: green-hooded men filling the porch, a singer with a harp, a stout monk joining two young people's hands, a rich old knight stalking out. |
+| `images/story-03-a.webp` | A fat monk sitting on a river bank with a roast joint and a flask beside him, a young man in green standing over him asking a favour. |
+| `images/story-03-b.webp` | A country church door: green-hooded men filling the porch, a singer with a harp, a stout monk joining two young people's hands, a rich old knight stalking out. |
 
 ## 4장 · 부자의 짐, 가난한 이의 짐
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | A long table of planks in a forest clearing, venison and bread on it, a nervous traveller seated in the place of honour and green-clad men all around. |
-| `images/story-04-b.png` | A worn-out knight on a thin horse being handed a heavy bag by a huge man, the knight's hands shaking, oaks overhead. |
+| `images/story-04-a.webp` | A long table of planks in a forest clearing, venison and bread on it, a nervous traveller seated in the place of honour and green-clad men all around. |
+| `images/story-04-b.webp` | A worn-out knight on a thin horse being handed a heavy bag by a huge man, the knight's hands shaking, oaks overhead. |
 
 ## 5장 · 수도원장의 셈
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A rich abbey hall with gold hangings and silver plate, an abbot at the head of the table, and a shabby knight kneeling before him. |
-| `images/story-05-b.png` | Four hundred gold coins spilling across the table from an upended bag, the abbot half risen, the knight standing straight. |
+| `images/story-05-a.webp` | A rich abbey hall with gold hangings and silver plate, an abbot at the head of the table, and a shabby knight kneeling before him. |
+| `images/story-05-b.webp` | Four hundred gold coins spilling across the table from an upended bag, the abbot half risen, the knight standing straight. |
 
 ## 6장 · 노팅엄 성주
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A castle chamber: a sour-faced sheriff dictating a proclamation, a clerk writing, soldiers waiting at the door. |
-| `images/story-06-b.png` | A crowded tournament field with butts set up, spectators' stands, soldiers standing in pairs along the edges, and among the crowd several men in beggar's and farmer's clothes not looking at each other. |
+| `images/story-06-a.webp` | A castle chamber: a sour-faced sheriff dictating a proclamation, a clerk writing, soldiers waiting at the door. |
+| `images/story-06-b.webp` | A crowded tournament field with butts set up, spectators' stands, soldiers standing in pairs along the edges, and among the crowd several men in beggar's and farmer's clothes not looking at each other. |
 
 ## 7장 · 황금 화살
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | The last shot: an archer in red with a patch over one eye at full draw, the crowd on its feet behind him. |
-| `images/story-07-b.png` | A bedchamber window at night with an arrow driven into the frame and a strip of paper tied to its shaft. |
+| `images/story-07-a.webp` | The last shot: an archer in red with a patch over one eye at full draw, the crowd on its feet behind him. |
+| `images/story-07-b.webp` | A bedchamber window at night with an arrow driven into the frame and a strip of paper tied to its shaft. |
 
 ## 8장 · 윌 스터틀리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A castle forecourt packed with townspeople, a bound man on the scaffold steps, the sheriff above; the crowd's faces grim rather than eager. |
-| `images/story-08-b.png` | Arrows standing in the ground at the soldiers' feet in a neat line, the soldiers frozen, green-hooded figures rising on the walls and rooftops all around. |
+| `images/story-08-a.webp` | A castle forecourt packed with townspeople, a bound man on the scaffold steps, the sheriff above; the crowd's faces grim rather than eager. |
+| `images/story-08-b.webp` | Arrows standing in the ground at the soldiers' feet in a neat line, the soldiers frozen, green-hooded figures rising on the walls and rooftops all around. |
 
 ## 9장 · 푸줏간 장수
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | A market stall heaped with meat, a cheerful stranger serving, a crowd of poor townspeople pressing in and rival butchers glaring from the next stall. |
-| `images/story-09-b.png` | A forest clearing: a well-dressed sheriff on horseback staring at a herd of deer while his guide gestures at them, green figures stepping out of the trees behind. |
+| `images/story-09-a.webp` | A market stall heaped with meat, a cheerful stranger serving, a crowd of poor townspeople pressing in and rival butchers glaring from the next stall. |
+| `images/story-09-b.webp` | A forest clearing: a well-dressed sheriff on horseback staring at a herd of deer while his guide gestures at them, green figures stepping out of the trees behind. |
 
 ## 10장 · 성주가 저녁을 먹다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | The forest table again: the sheriff seated in the place of honour with untouched food in front of him, being served with elaborate courtesy. |
-| `images/story-10-b.png` | Three hundred pounds of gold rolling across the plank table, the sheriff's empty bag held up by a huge man. |
+| `images/story-10-a.webp` | The forest table again: the sheriff seated in the place of honour with untouched food in front of him, being served with elaborate courtesy. |
+| `images/story-10-b.webp` | Three hundred pounds of gold rolling across the plank table, the sheriff's empty bag held up by a huge man. |
 
 ## 11장 · 가이 오브 기스본
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | A man walking through the forest wearing an entire horsehide as a cloak, the head and tail still attached, a sword at his hip. |
-| `images/story-11-b.png` | A figure in that same horsehide raising a hunting horn to his lips at the edge of a clearing, seen from behind so the face is hidden. |
+| `images/story-11-a.webp` | A man walking through the forest wearing an entire horsehide as a cloak, the head and tail still attached, a sword at his hip. |
+| `images/story-11-b.webp` | A figure in that same horsehide raising a hunting horn to his lips at the edge of a clearing, seen from behind so the face is hidden. |
 
 ## 12장 · 매리언
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.png` | Two figures crossing swords on a forest path, one in green, one a slight young knight in mail with the visor down, evenly matched. |
-| `images/story-12-b.png` | The knight lifting the helm off: a young woman with long dark hair, and the man in green with his sword dropped in the leaves at his feet. |
+| `images/story-12-a.webp` | Two figures crossing swords on a forest path, one in green, one a slight young knight in mail with the visor down, evenly matched. |
+| `images/story-12-b.webp` | The knight lifting the helm off: a young woman with long dark hair, and the man in green with his sword dropped in the leaves at his feet. |
 
 ## 13장 · 붙잡히다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-13-a.png` | A stone cell with a high barred slit: a man in torn green sitting against the wall in a bar of light. |
-| `images/story-13-b.png` | A baker's cart of flour sacks going through a castle side gate before dawn, a bored guard waving it past. |
+| `images/story-13-a.webp` | A stone cell with a high barred slit: a man in torn green sitting against the wall in a bar of light. |
+| `images/story-13-b.webp` | A baker's cart of flour sacks going through a castle side gate before dawn, a bored guard waving it past. |
 
 ## 14장 · 숲에 온 손님
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-14-a.png` | The forest table once more: a broad-shouldered monk eating venison and asking a question, the green-clad outlaws around him relaxed. |
-| `images/story-14-b.png` | The same man with the monk's hood thrown back, plainly a king; every man in the clearing on his knees, one of them looking up. |
+| `images/story-14-a.webp` | The forest table once more: a broad-shouldered monk eating venison and asking a question, the green-clad outlaws around him relaxed. |
+| `images/story-14-b.webp` | The same man with the monk's hood thrown back, plainly a king; every man in the clearing on his knees, one of them looking up. |
 
 ## 15장 · 마지막 화살
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-15-a.png` | A greying man stepping in under the eaves of the great forest at dawn with his eyes shut and his face lifted, a horn in his hand. |
-| `images/story-15-b.png` | A narrow priory window pushed open on the forest, a very old man propped up drawing a bow with almost no strength left, an enormous man supporting his shoulders. |
+| `images/story-15-a.webp` | A greying man stepping in under the eaves of the great forest at dawn with his eyes shut and his face lifted, a horn in his hand. |
+| `images/story-15-b.webp` | A narrow priory window pushed open on the forest, a very old man propped up drawing a bow with almost no strength left, an enormous man supporting his shoulders. |

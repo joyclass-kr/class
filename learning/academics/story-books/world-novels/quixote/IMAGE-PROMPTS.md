@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
@@ -49,110 +49,110 @@ The Duke and Duchess: a handsome bored pair in expensive black and silver.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a gaunt armoured figure on a bony horse with lance couched, charging up a bare ridge toward a row of white windmills against an enormous evening sky; far behind him a short round man on a donkey, one arm raised, shouting after him. |
-| `images/end.png` | An empty bedroom at evening: a made bed, a rusty helmet on a chair, and a single lance leaning in the corner by a window that looks out on the plain. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a gaunt armoured figure on a bony horse with lance couched, charging up a bare ridge toward a row of white windmills against an enormous evening sky; far behind him a short round man on a donkey, one arm raised, shouting after him. |
+| `images/end.webp` | An empty bedroom at evening: a made bed, a rusty helmet on a chair, and a single lance leaning in the corner by a window that looks out on the plain. |
 
 ## 1장 · 책을 너무 많이 읽은 사람
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A study by candlelight crammed with a hundred books, an open book on the table, and a thin middle-aged man reading with his face very close to the page, dawn already at the window behind him. |
-| `images/story-01-b.png` | The same man in an attic scouring an ancient suit of armour with a cloth, pieces of it laid out around him, a half-made cardboard visor on the floor. |
+| `images/story-01-a.webp` | A study by candlelight crammed with a hundred books, an open book on the table, and a thin middle-aged man reading with his face very close to the page, dawn already at the window behind him. |
+| `images/story-01-b.webp` | The same man in an attic scouring an ancient suit of armour with a cloth, pieces of it laid out around him, a half-made cardboard visor on the floor. |
 
 ## 2장 · 둘시네아
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A whitewashed roadside inn at dusk drawn realistically, and beside it — smaller, ghosted, as the man imagines it — the same building as a castle with towers and a drawbridge. |
-| `images/story-02-b.png` | An inn courtyard at night: a thin armoured man standing sentry over a pile of armour beside a stone water trough, moonlight, a mule driver approaching with a bucket. |
+| `images/story-02-a.webp` | A whitewashed roadside inn at dusk drawn realistically, and beside it — smaller, ghosted, as the man imagines it — the same building as a castle with towers and a drawbridge. |
+| `images/story-02-b.webp` | An inn courtyard at night: a thin armoured man standing sentry over a pile of armour beside a stone water trough, moonlight, a mule driver approaching with a bucket. |
 
 ## 3장 · 첫 번째 출정
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | A boy tied to an oak in a wood, a farmer with a belt, and an armoured horseman levelling a lance at him from the path. |
-| `images/story-03-b.png` | The same clearing after the horseman has gone: the boy tied to the tree again, the farmer standing over him. |
+| `images/story-03-a.webp` | A boy tied to an oak in a wood, a farmer with a belt, and an armoured horseman levelling a lance at him from the path. |
+| `images/story-03-b.webp` | The same clearing after the horseman has gone: the boy tied to the tree again, the farmer standing over him. |
 
 ## 4장 · 책을 태우다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | A courtyard bonfire of books, a housekeeper throwing armfuls in, and a priest standing to one side quietly slipping two volumes under his arm. |
-| `images/story-04-b.png` | A farmyard: a tall thin gentleman in armour talking earnestly to a short round peasant who is scratching his head, a donkey behind them. |
+| `images/story-04-a.webp` | A courtyard bonfire of books, a housekeeper throwing armfuls in, and a priest standing to one side quietly slipping two volumes under his arm. |
+| `images/story-04-b.webp` | A farmyard: a tall thin gentleman in armour talking earnestly to a short round peasant who is scratching his head, a donkey behind them. |
 
 ## 5장 · 풍차
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | Thirty white windmills along a ridge under a huge sky, sails turning, two small figures on the road below. |
-| `images/story-05-b.png` | The instant of impact: a lance jammed into a turning sail, horse and rider lifted off the ground, the lance splintering. |
+| `images/story-05-a.webp` | Thirty white windmills along a ridge under a huge sky, sails turning, two small figures on the road below. |
+| `images/story-05-b.webp` | The instant of impact: a lance jammed into a turning sail, horse and rider lifted off the ground, the lance splintering. |
 
 ## 6장 · 양 떼
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A great cloud of dust on the plain, and inside it — nothing but sheep and two shepherds. |
-| `images/story-06-b.png` | An armoured man on the ground among scattering sheep, shepherds with slings on a low rise, a peasant running toward him. |
+| `images/story-06-a.webp` | A great cloud of dust on the plain, and inside it — nothing but sheep and two shepherds. |
+| `images/story-06-b.webp` | An armoured man on the ground among scattering sheep, shepherds with slings on a low rise, a peasant running toward him. |
 
 ## 7장 · 황금 투구
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | A rainy road: a barber on a donkey with a brass basin upside down on his head, and an armoured horseman bearing down on him. |
-| `images/story-07-b.png` | The gentleman riding on wearing the brass basin as a helmet with total dignity, village children running behind him laughing, and the peasant walking a little ahead of him, not looking back. |
+| `images/story-07-a.webp` | A rainy road: a barber on a donkey with a brass basin upside down on his head, and an armoured horseman bearing down on him. |
+| `images/story-07-b.webp` | The gentleman riding on wearing the brass basin as a helmet with total dignity, village children running behind him laughing, and the peasant walking a little ahead of him, not looking back. |
 
 ## 8장 · 죄수들
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A chain gang of twelve men linked at the neck on a country road, two guards with muskets, an armoured horseman blocking the way. |
-| `images/story-08-b.png` | The road afterwards: two men sitting in the dust stripped of their outer clothes, stones scattered around them, the freed prisoners already far off. |
+| `images/story-08-a.webp` | A chain gang of twelve men linked at the neck on a country road, two guards with muskets, an armoured horseman blocking the way. |
+| `images/story-08-b.webp` | The road afterwards: two men sitting in the dust stripped of their outer clothes, stones scattered around them, the freed prisoners already far off. |
 
 ## 9장 · 산속의 편지
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | A rocky sierra: a half-dressed thin man turning cartwheels among the boulders, entirely serious about it, while a peasant watches from a rock with a letter in his hand. |
-| `images/story-09-b.png` | An inn parlour: a priest and a barber leaning over a table talking to a worried peasant, a bundle of borrowed women's clothes on the bench beside them. |
+| `images/story-09-a.webp` | A rocky sierra: a half-dressed thin man turning cartwheels among the boulders, entirely serious about it, while a peasant watches from a rock with a letter in his hand. |
+| `images/story-09-b.webp` | An inn parlour: a priest and a barber leaning over a table talking to a worried peasant, a bundle of borrowed women's clothes on the bench beside them. |
 
 ## 10장 · 우리에 실려 돌아오다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | An inn room at night: slashed wineskins on the floor, red wine everywhere, a man in a nightshirt standing with a sword, still asleep on his feet, guests crowding the doorway. |
-| `images/story-10-b.png` | An ox cart on a village road carrying a wooden cage with a calm armoured man sitting inside it, villagers lining the road to look. |
+| `images/story-10-a.webp` | An inn room at night: slashed wineskins on the floor, red wine everywhere, a man in a nightshirt standing with a sword, still asleep on his feet, guests crowding the doorway. |
+| `images/story-10-b.webp` | An ox cart on a village road carrying a wooden cage with a calm armoured man sitting inside it, villagers lining the road to look. |
 
 ## 11장 · 두 번째 출정
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | A dusty road outside a village: three sunburnt farm girls on donkeys riding past, and an armoured man on his knees in the road with his helmet off, bowing to them. |
-| `images/story-11-b.png` | The same man rising and looking after them with a puzzled expression while the peasant beside him keeps insisting, gesturing after the girls. |
+| `images/story-11-a.webp` | A dusty road outside a village: three sunburnt farm girls on donkeys riding past, and an armoured man on his knees in the road with his helmet off, bowing to them. |
+| `images/story-11-b.webp` | The same man rising and looking after them with a puzzled expression while the peasant beside him keeps insisting, gesturing after the girls. |
 
 ## 12장 · 공작의 성
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.png` | A great hall: liveried servants bowing deeply to a thin armoured man who is receiving it with grave dignity, while at the far end a Duke and Duchess exchange a look. |
-| `images/story-12-b.png` | A blindfolded man and a blindfolded peasant sitting astride a wooden horse in a courtyard, servants working bellows at them from both sides, the whole court doubled over laughing behind them. |
+| `images/story-12-a.webp` | A great hall: liveried servants bowing deeply to a thin armoured man who is receiving it with grave dignity, while at the far end a Duke and Duchess exchange a look. |
+| `images/story-12-b.webp` | A blindfolded man and a blindfolded peasant sitting astride a wooden horse in a courtyard, servants working bellows at them from both sides, the whole court doubled over laughing behind them. |
 
 ## 13장 · 산초의 섬
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-13-a.png` | A village hall set up as a court: a short round peasant seated in the governor's chair, leaning forward to listen to a woman, the onlookers who came to laugh now leaning in. |
-| `images/story-13-b.png` | The same man riding out of the village gate on his own grey donkey in his own old clothes, everything he came with and nothing more. |
+| `images/story-13-a.webp` | A village hall set up as a court: a short round peasant seated in the governor's chair, leaning forward to listen to a woman, the onlookers who came to laugh now leaning in. |
+| `images/story-13-b.webp` | The same man riding out of the village gate on his own grey donkey in his own old clothes, everything he came with and nothing more. |
 
 ## 14장 · 흰 달의 기사
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-14-a.png` | A beach at Barcelona at dawn: a young knight in bright armour with a white moon on his shield facing a thin man in rusty armour, the sea behind them. |
-| `images/story-14-b.png` | An old thin man on his back in the sand with a lance point at his throat, his helmet knocked askew, still speaking. |
+| `images/story-14-a.webp` | A beach at Barcelona at dawn: a young knight in bright armour with a white moon on his shield facing a thin man in rusty armour, the sea behind them. |
+| `images/story-14-b.webp` | An old thin man on his back in the sand with a lance point at his throat, his helmet knocked askew, still speaking. |
 
 ## 15장 · 알론소 키하노
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-15-a.png` | A bedroom with the shutters half open: a thin old man propped up in bed dictating to a notary, a priest and a young woman standing by. |
-| `images/story-15-b.png` | A short round peasant on a stool at the bedside holding the old man's hand in both of his, crying, saying something. |
+| `images/story-15-a.webp` | A bedroom with the shutters half open: a thin old man propped up in bed dictating to a notary, a priest and a young woman standing by. |
+| `images/story-15-b.webp` | A short round peasant on a stool at the bedside holding the old man's hand in both of his, crying, saying something. |

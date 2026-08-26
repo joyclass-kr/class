@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
@@ -47,110 +47,110 @@ The two goats: one white, one brown — treat them as characters.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a small dark-haired girl standing on a high alpine pasture with her arms out, two goats beside her, three huge fir trees behind, and the rock peaks above turning red in the evening sun; the valley far below in shadow. |
-| `images/end.png` | The timber hut at night seen from outside, one small window lit, the three fir trees black against a sky full of stars. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a small dark-haired girl standing on a high alpine pasture with her arms out, two goats beside her, three huge fir trees behind, and the rock peaks above turning red in the evening sun; the valley far below in shadow. |
+| `images/end.webp` | The timber hut at night seen from outside, one small window lit, the three fir trees black against a sky full of stars. |
 
 ## 1장 · 산으로 올라가는 길
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A steep mountain path in June: a young woman in town clothes striding ahead, and behind her a small child so bundled in layers of clothing that she can barely walk, red-faced with heat. |
-| `images/story-01-b.png` | The same child, now stripped to her petticoat, running uphill after a herd of goats, her discarded clothes left in a neat pile on the grass behind her. |
+| `images/story-01-a.webp` | A steep mountain path in June: a young woman in town clothes striding ahead, and behind her a small child so bundled in layers of clothing that she can barely walk, red-faced with heat. |
+| `images/story-01-b.webp` | The same child, now stripped to her petticoat, running uphill after a herd of goats, her discarded clothes left in a neat pile on the grass behind her. |
 
 ## 2장 · 알름 할아버지
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A big white-bearded old man sitting on a bench outside a timber hut with a pipe, not looking up, while a woman gestures at him and a small girl stands to one side. |
-| `images/story-02-b.png` | A hayloft under the roof: a child asleep in fresh hay under a sheet, a round window beside her open onto the whole valley; the old man's head and shoulders just visible at the top of the ladder, watching. |
+| `images/story-02-a.webp` | A big white-bearded old man sitting on a bench outside a timber hut with a pipe, not looking up, while a woman gestures at him and a small girl stands to one side. |
+| `images/story-02-b.webp` | A hayloft under the roof: a child asleep in fresh hay under a sheet, a round window beside her open onto the whole valley; the old man's head and shoulders just visible at the top of the ladder, watching. |
 
 ## 3장 · 산 위의 여름
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | High summer pasture: a goatherd boy lying back in the grass, a small girl kneeling over a patch of yellow flowers, goats scattered across the slope, an eagle circling high above. |
-| `images/story-03-b.png` | Evening: a child standing with both hands over her mouth in alarm as the snow peaks above her burn bright red and gold, the old man beside her pointing. |
+| `images/story-03-a.webp` | High summer pasture: a goatherd boy lying back in the grass, a small girl kneeling over a patch of yellow flowers, goats scattered across the slope, an eagle circling high above. |
+| `images/story-03-b.webp` | Evening: a child standing with both hands over her mouth in alarm as the snow peaks above her burn bright red and gold, the old man beside her pointing. |
 
 ## 4장 · 페터의 할머니
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | Inside a dim crooked hut: a very old blind woman at a spinning wheel, a small girl standing close and holding the woman's hand up to her own face. |
-| `images/story-04-b.png` | Outside the same hut in winter, the old man on a ladder nailing a new shutter into place, nobody watching him, snow on the roof. |
+| `images/story-04-a.webp` | Inside a dim crooked hut: a very old blind woman at a spinning wheel, a small girl standing close and holding the woman's hand up to her own face. |
+| `images/story-04-b.webp` | Outside the same hut in winter, the old man on a ladder nailing a new shutter into place, nobody watching him, snow on the roof. |
 
 ## 5장 · 데테 이모가 돌아오다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A confrontation outside the hut: the old man standing up from his bench, the woman in the hat facing him squarely, the child between them looking from one to the other. |
-| `images/story-05-b.png` | A train window: a child kneeling on the seat with both hands on the glass, the mountains outside already low and far away, flat country beginning. |
+| `images/story-05-a.webp` | A confrontation outside the hut: the old man standing up from his bench, the woman in the hat facing him squarely, the child between them looking from one to the other. |
+| `images/story-05-b.webp` | A train window: a child kneeling on the seat with both hands on the glass, the mountains outside already low and far away, flat country beginning. |
 
 ## 6장 · 클라라
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A grand dim Frankfurt dining room with heavy curtains and a long table: a pale girl in a wheeled chair, a small country child sitting too straight in a chair opposite, a severe tall woman standing behind. |
-| `images/story-06-b.png` | The two girls alone in a corner by a window, the country child talking with her hands wide apart describing mountains, the pale girl laughing; outside the window only the wall of the opposite house. |
+| `images/story-06-a.webp` | A grand dim Frankfurt dining room with heavy curtains and a long table: a pale girl in a wheeled chair, a small country child sitting too straight in a chair opposite, a severe tall woman standing behind. |
+| `images/story-06-b.webp` | The two girls alone in a corner by a window, the country child talking with her hands wide apart describing mountains, the pale girl laughing; outside the window only the wall of the opposite house. |
 
 ## 7장 · 도시의 규칙
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | The top of a church tower: a child looking out expecting mountains and seeing only rooftops and chimneys to the horizon, her face falling. |
-| `images/story-07-b.png` | A lesson room in uproar: two kittens loose on the table, a tall severe woman standing on a chair with her skirts gathered, a girl in a wheeled chair helpless with laughter. |
+| `images/story-07-a.webp` | The top of a church tower: a child looking out expecting mountains and seeing only rooftops and chimneys to the horizon, her face falling. |
+| `images/story-07-b.webp` | A lesson room in uproar: two kittens loose on the table, a tall severe woman standing on a chair with her skirts gathered, a girl in a wheeled chair helpless with laughter. |
 
 ## 8장 · 밤마다 열리는 문
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A dark grand staircase at night: a small figure in a white nightgown coming down barefoot, eyes open but seeing nothing, two men watching from a doorway with a shaded lamp. |
-| `images/story-08-b.png` | A doctor kneeling in front of a child sitting on the edge of a bed, listening while she cries; the room otherwise empty and very large. |
+| `images/story-08-a.webp` | A dark grand staircase at night: a small figure in a white nightgown coming down barefoot, eyes open but seeing nothing, two men watching from a doorway with a shaded lamp. |
+| `images/story-08-b.webp` | A doctor kneeling in front of a child sitting on the edge of a bed, listening while she cries; the room otherwise empty and very large. |
 
 ## 9장 · 산으로 돌아가다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | Inside the blind grandmother's hut: white rolls tumbling out of a basket onto her lap, her hands on them, her face crumpling; a child kneeling in front of her. |
-| `images/story-09-b.png` | The hut on the alp in the evening light: an old man half risen from his bench as a child runs the last stretch of the path with her arms already out. |
+| `images/story-09-a.webp` | Inside the blind grandmother's hut: white rolls tumbling out of a basket onto her lap, her hands on them, her face crumpling; a child kneeling in front of her. |
+| `images/story-09-b.webp` | The hut on the alp in the evening light: an old man half risen from his bench as a child runs the last stretch of the path with her arms already out. |
 
 ## 10장 · 겨울 마을
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | A village street deep in snow: the big old man shovelling a path clear past somebody else's door, villagers watching him from their windows. |
-| `images/story-10-b.png` | Inside a small warm room by a stove: a girl pointing at letters in a book while a goatherd boy scowls at them furiously, an old blind woman listening from her chair. |
+| `images/story-10-a.webp` | A village street deep in snow: the big old man shovelling a path clear past somebody else's door, villagers watching him from their windows. |
+| `images/story-10-b.webp` | Inside a small warm room by a stove: a girl pointing at letters in a book while a goatherd boy scowls at them furiously, an old blind woman listening from her chair. |
 
 ## 11장 · 클라라가 오다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | A procession coming up the mountain path: porters, a lady, and a girl carried in a chair, with a dark-haired child running down to meet them. |
-| `images/story-11-b.png` | Two girls asleep side by side in the hay under the round window, stars visible through it. |
+| `images/story-11-a.webp` | A procession coming up the mountain path: porters, a lady, and a girl carried in a chair, with a dark-haired child running down to meet them. |
+| `images/story-11-b.webp` | Two girls asleep side by side in the hay under the round window, stars visible through it. |
 
 ## 12장 · 페터의 마음
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.png` | A goatherd boy alone in front of the hut with both hands on the back of an empty wheeled chair, looking down the steep slope; nobody else in sight. |
-| `images/story-12-b.png` | On the pasture: the big old man holding a girl upright by both arms as she puts one foot to the ground, her face screwed up with pain and effort. |
+| `images/story-12-a.webp` | A goatherd boy alone in front of the hut with both hands on the back of an empty wheeled chair, looking down the steep slope; nobody else in sight. |
+| `images/story-12-b.webp` | On the pasture: the big old man holding a girl upright by both arms as she puts one foot to the ground, her face screwed up with pain and effort. |
 
 ## 13장 · 두 걸음
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-13-a.png` | Two children supporting a third between them on a flowering alpine meadow, all three concentrating hard, one small foot lifting forward. |
-| `images/story-13-b.png` | A goatherd boy standing in front of the old man with his head down, confessing; the old man listening without anger. |
+| `images/story-13-a.webp` | Two children supporting a third between them on a flowering alpine meadow, all three concentrating hard, one small foot lifting forward. |
+| `images/story-13-b.webp` | A goatherd boy standing in front of the old man with his head down, confessing; the old man listening without anger. |
 
 ## 14장 · 아버지가 오다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-14-a.png` | A well-dressed man frozen in place with one hand half raised, staring across the grass at a girl walking slowly toward him between two helpers. |
-| `images/story-14-b.png` | The same man on his knees on the grass holding his daughter, the old man standing a little apart with his hat in his hands. |
+| `images/story-14-a.webp` | A well-dressed man frozen in place with one hand half raised, staring across the grass at a girl walking slowly toward him between two helpers. |
+| `images/story-14-b.webp` | The same man on his knees on the grass holding his daughter, the old man standing a little apart with his hat in his hands. |
 
 ## 15장 · 전나무 소리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-15-a.png` | Two girls sitting together on the high pasture at evening looking down the valley, goats behind them, saying goodbye. |
-| `images/story-15-b.png` | The round hayloft window from inside at night: a sleeping child, and beyond the glass the three great firs bending in the wind under the stars. |
+| `images/story-15-a.webp` | Two girls sitting together on the high pasture at evening looking down the valley, goats behind them, saying goodbye. |
+| `images/story-15-b.webp` | The round hayloft window from inside at night: a sleeping child, and beyond the glass the three great firs bending in the wind under the stars. |

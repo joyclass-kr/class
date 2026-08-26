@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
@@ -49,110 +49,110 @@ Madelon: a pretty village girl in her best clothes at the fête.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a small girl in torn clothes standing alone on a low stone wall at dusk with a stream and a watermill behind her, looking straight out at the reader; far off across the field two identical boys walking away together. |
-| `images/end.png` | A cottage doorway in a village at evening with several small children sitting on the step, and a woman's hand setting a bowl down beside them. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a small girl in torn clothes standing alone on a low stone wall at dusk with a stream and a watermill behind her, looking straight out at the reader; far off across the field two identical boys walking away together. |
+| `images/end.webp` | A cottage doorway in a village at evening with several small children sitting on the step, and a woman's hand setting a bowl down beside them. |
 
 ## 1장 · 쌍둥이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A farmhouse kitchen: a mother dressing two identical small boys in identical smocks, an older man watching from the doorway without smiling. |
-| `images/story-01-b.png` | Two identical boys of about ten asleep in one bed under a single blanket, a candle on the chest beside them. |
+| `images/story-01-a.webp` | A farmhouse kitchen: a mother dressing two identical small boys in identical smocks, an older man watching from the doorway without smiling. |
+| `images/story-01-b.webp` | Two identical boys of about ten asleep in one bed under a single blanket, a candle on the chest beside them. |
 
 ## 2장 · 떨어뜨려 놓다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A farm kitchen at night: a father seated at the table talking to two boys standing side by side, neither of them looking up. |
-| `images/story-02-b.png` | A boy of fourteen alone on a field path at midday with a small bundle, stopping to rub his face with his sleeve, a farm visible on the next rise. |
+| `images/story-02-a.webp` | A farm kitchen at night: a father seated at the table talking to two boys standing side by side, neither of them looking up. |
+| `images/story-02-b.webp` | A boy of fourteen alone on a field path at midday with a small bundle, stopping to rub his face with his sleeve, a farm visible on the next rise. |
 
 ## 3장 · 프리슈 농장
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | A boy driving a pair of oxen at the plough in a wide field, sleeves rolled, entirely absorbed in the work. |
-| `images/story-03-b.png` | A field path at dusk: one boy walking away and the other standing still watching him go, the light almost gone. |
+| `images/story-03-a.webp` | A boy driving a pair of oxen at the plough in a wide field, sleeves rolled, entirely absorbed in the work. |
+| `images/story-03-b.webp` | A field path at dusk: one boy walking away and the other standing still watching him go, the light almost gone. |
 
 ## 4장 · 사라진 형
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | Villagers with lanterns searching the banks of a stream at night, one man standing apart looking at the deep water below a mill. |
-| `images/story-04-b.png` | A tumbledown cottage on a slope by the mill, herbs hanging under the eaves, a lame boy sitting on the step and a small ragged girl on the wall above him. |
+| `images/story-04-a.webp` | Villagers with lanterns searching the banks of a stream at night, one man standing apart looking at the deep water below a mill. |
+| `images/story-04-b.webp` | A tumbledown cottage on a slope by the mill, herbs hanging under the eaves, a lame boy sitting on the step and a small ragged girl on the wall above him. |
 
 ## 5장 · 조건
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A ragged girl sitting on a low wall looking down at a boy in the lane, one hand held out to shake on something. |
-| `images/story-05-b.png` | Under a huge ash tree by the water: a boy pulling his brother up out of the long grass and holding him, the girl already turning away at the edge of the picture. |
+| `images/story-05-a.webp` | A ragged girl sitting on a low wall looking down at a boy in the lane, one hand held out to shake on something. |
+| `images/story-05-b.webp` | Under a huge ash tree by the water: a boy pulling his brother up out of the long grass and holding him, the girl already turning away at the edge of the picture. |
 
 ## 6장 · 팡셰는 어떻게 알았나
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A small girl standing in the middle of a wide pasture with cows all around her, a herb basket at her hip, watching a distant figure on a far path. |
-| `images/story-06-b.png` | The same girl walking away down a lane, seen from behind, and a boy standing still in the road looking after her. |
+| `images/story-06-a.webp` | A small girl standing in the middle of a wide pasture with cows all around her, a herb basket at her hip, watching a distant figure on a far path. |
+| `images/story-06-b.webp` | The same girl walking away down a lane, seen from behind, and a boy standing still in the road looking after her. |
 
 ## 7장 · 성 앙도슈 축제
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | A village square full of people dancing, musicians on a cart, everyone in their best clothes; at the edge a ragged girl gripping a boy's sleeve, and the whole square turning to look. |
-| `images/story-07-b.png` | The two of them dancing in the middle of the square, the girl's chin up, the ring of onlookers silent. |
+| `images/story-07-a.webp` | A village square full of people dancing, musicians on a cart, everyone in their best clothes; at the edge a ragged girl gripping a boy's sleeve, and the whole square turning to look. |
+| `images/story-07-b.webp` | The two of them dancing in the middle of the square, the girl's chin up, the ring of onlookers silent. |
 
 ## 8장 · 채석장에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A small stone quarry above the village at night, music and lantern light far below, a girl sitting on a block of stone with her face in her hands. |
-| `images/story-08-b.png` | The same two sitting side by side on the stone, not looking at each other, talking. |
+| `images/story-08-a.webp` | A small stone quarry above the village at night, music and lantern light far below, a girl sitting on a block of stone with her face in her hands. |
+| `images/story-08-b.webp` | The same two sitting side by side on the stone, not looking at each other, talking. |
 
 ## 9장 · 달라진 사람
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | The same girl at a washing place at the stream, scrubbing her own clothes, her hair tied back — same face exactly, nothing prettified. |
-| `images/story-09-b.png` | A cottage interior at night: the girl sitting up beside a sick child's bed with a bowl and a cloth, everyone else asleep. |
+| `images/story-09-a.webp` | The same girl at a washing place at the stream, scrubbing her own clothes, her hair tied back — same face exactly, nothing prettified. |
+| `images/story-09-b.webp` | A cottage interior at night: the girl sitting up beside a sick child's bed with a bowl and a cloth, everyone else asleep. |
 
 ## 10장 · 소문
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | A farm kitchen: a father standing with one hand half raised and a grown son facing him squarely, neither backing down. |
-| `images/story-10-b.png` | A dark bedroom in summer: a young man lying with his eyes open and his back to the door, a mother in the doorway with a candle. |
+| `images/story-10-a.webp` | A farm kitchen: a father standing with one hand half raised and a grown son facing him squarely, neither backing down. |
+| `images/story-10-b.webp` | A dark bedroom in summer: a young man lying with his eyes open and his back to the door, a mother in the doorway with a candle. |
 
 ## 11장 · 마을을 떠나다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | A newly filled grave in a small country churchyard, a girl and a lame boy standing alone at it, nobody else there. |
-| `images/story-11-b.png` | A frosty morning on the high road: a girl with a bundle climbing into a coach, looking back once; a young man standing in the road. |
+| `images/story-11-a.webp` | A newly filled grave in a small country churchyard, a girl and a lame boy standing alone at it, nobody else there. |
+| `images/story-11-b.webp` | A frosty morning on the high road: a girl with a bundle climbing into a coach, looking back once; a young man standing in the road. |
 
 ## 12장 · 돌아오다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.png` | A village street: a neatly dressed young woman walking through it with a small case, and villagers stopping to stare — the same face they used to jeer at. |
-| `images/story-12-b.png` | A farmhouse doorway: the young woman standing on the step speaking, an older farmer seated inside, half turned toward her. |
+| `images/story-12-a.webp` | A village street: a neatly dressed young woman walking through it with a small case, and villagers stopping to stare — the same face they used to jeer at. |
+| `images/story-12-b.webp` | A farmhouse doorway: the young woman standing on the step speaking, an older farmer seated inside, half turned toward her. |
 
 ## 13장 · 실비네의 병
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-13-a.png` | A shuttered bedroom with one shutter just pushed half open, a bar of daylight across the floor, a young woman sitting quietly by the bed. |
-| `images/story-13-b.png` | The same room at night: the young man sitting up talking with his hands, the young woman listening without interrupting. |
+| `images/story-13-a.webp` | A shuttered bedroom with one shutter just pushed half open, a bar of daylight across the floor, a young woman sitting quietly by the bed. |
+| `images/story-13-b.webp` | The same room at night: the young man sitting up talking with his hands, the young woman listening without interrupting. |
 
 ## 14장 · 바르보 영감
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-14-a.png` | A farm kitchen table with two people seated across it, the older man's big hands flat on the wood, the young woman speaking steadily. |
-| `images/story-14-b.png` | The older man on his feet with his hand out across the table, and the young woman taking it. |
+| `images/story-14-a.webp` | A farm kitchen table with two people seated across it, the older man's big hands flat on the wood, the young woman speaking steadily. |
+| `images/story-14-b.webp` | The older man on his feet with his hand out across the table, and the young woman taking it. |
 
 ## 15장 · 그 뒤의 일
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-15-a.png` | A country wedding in front of a small church, the whole village there, the couple in the middle of the crowd. |
-| `images/story-15-b.png` | A young man in a soldier's coat at a crossroads with a pack, turning to bow his head to a young woman while his identical brother stands beside her. |
+| `images/story-15-a.webp` | A country wedding in front of a small church, the whole village there, the couple in the middle of the crowd. |
+| `images/story-15-b.webp` | A young man in a soldier's coat at a crossroads with a pack, turning to bow his head to a young woman while his identical brother stands beside her. |

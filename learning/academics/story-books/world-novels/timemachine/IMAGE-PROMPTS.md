@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
@@ -52,89 +52,89 @@ lidless eyes, human hands; they shield their faces from any light.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a man on a strange brass and crystal machine mid-journey, the world around him blurred into streaks — a dark blue sky with the sun drawn as a band of fire across it, buildings rising and falling as smears on either side; his face lit and rigid. |
-| `images/end.png` | An empty Victorian workshop with the doors standing open, a bare patch of floor where something heavy used to stand, dust in the light. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a man on a strange brass and crystal machine mid-journey, the world around him blurred into streaks — a dark blue sky with the sun drawn as a band of fire across it, buildings rising and falling as smears on either side; his face lit and rigid. |
+| `images/end.webp` | An empty Victorian workshop with the doors standing open, a bare patch of floor where something heavy used to stand, dust in the light. |
 
 ## 1장 · 네 번째 방향
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A Victorian dining room after dinner: gentlemen in evening dress in armchairs around a coal fire, the host leaning forward mid-argument, hands describing something in the air. |
-| `images/story-01-b.png` | A close view of a small brass-and-ivory model on a table, one man's finger just leaving a tiny lever, the model already going indistinct at the edges. |
+| `images/story-01-a.webp` | A Victorian dining room after dinner: gentlemen in evening dress in armchairs around a coal fire, the host leaning forward mid-argument, hands describing something in the air. |
+| `images/story-01-b.webp` | A close view of a small brass-and-ivory model on a table, one man's finger just leaving a tiny lever, the model already going indistinct at the edges. |
 
 ## 2장 · 이레 뒤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A dining room doorway: a filthy, limping man in a torn coat, grey at the temples, no shoes; every guest at the table turned toward him and frozen. |
-| `images/story-02-b.png` | The same man cleaned up and in fresh clothes, sitting by the fire beginning to speak, the others leaning in. |
+| `images/story-02-a.webp` | A dining room doorway: a filthy, limping man in a torn coat, grey at the temples, no shoes; every guest at the table turned toward him and frozen. |
+| `images/story-02-b.webp` | The same man cleaned up and in fresh clothes, sitting by the fire beginning to speak, the others leaning in. |
 
 ## 3장 · 출발
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | A workshop interior seen from the saddle of the machine: the wall clock's hands spinning into a blur, everything else starting to smear. |
-| `images/story-03-b.png` | A man sprawled on wet grass in a hailstorm beside an overturned machine, one arm over his head. |
+| `images/story-03-a.webp` | A workshop interior seen from the saddle of the machine: the wall clock's hands spinning into a blur, everything else starting to smear. |
+| `images/story-03-b.webp` | A man sprawled on wet grass in a hailstorm beside an overturned machine, one arm over his head. |
 
 ## 4장 · 하얀 스핑크스
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | A huge weathered white sphinx on a bronze pedestal standing over a meadow of strange flowers, its face pitted with age, looking down at a small man. |
-| `images/story-04-b.png` | Slender four-foot people in coloured tunics crowding around a tall Victorian man, laughing, one of them hanging a chain of flowers around his neck. |
+| `images/story-04-a.webp` | A huge weathered white sphinx on a bronze pedestal standing over a meadow of strange flowers, its face pitted with age, looking down at a small man. |
+| `images/story-04-b.webp` | Slender four-foot people in coloured tunics crowding around a tall Victorian man, laughing, one of them hanging a chain of flowers around his neck. |
 
 ## 5장 · 엘로이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | The inside of a vast ruined hall, half its roof gone and green growing through: low tables heaped with unfamiliar fruit, small people eating and laughing, no work of any kind anywhere. |
-| `images/story-05-b.png` | A man sitting alone on a hillside at evening writing in a notebook, the beautiful ruined landscape below him. |
+| `images/story-05-a.webp` | The inside of a vast ruined hall, half its roof gone and green growing through: low tables heaped with unfamiliar fruit, small people eating and laughing, no work of any kind anywhere. |
+| `images/story-05-b.webp` | A man sitting alone on a hillside at evening writing in a notebook, the beautiful ruined landscape below him. |
 
 ## 6장 · 기계가 사라지다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | An empty patch of trampled grass at night with a man on his knees running his hands over it. |
-| `images/story-06-b.png` | The base of the sphinx by daylight: two bronze panels set into the pedestal, and drag marks in the turf running straight up to them. |
+| `images/story-06-a.webp` | An empty patch of trampled grass at night with a man on his knees running his hands over it. |
+| `images/story-06-b.webp` | The base of the sphinx by daylight: two bronze panels set into the pedestal, and drag marks in the turf running straight up to them. |
 
 ## 7장 · 위나
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | A river: a man wading out to lift a small limp figure from the current, and on the bank a dozen others watching without moving. |
-| `images/story-07-b.png` | A small Eloi woman pushing two flowers into the pocket of a man's ragged coat, the man looking down at her. |
+| `images/story-07-a.webp` | A river: a man wading out to lift a small limp figure from the current, and on the bank a dozen others watching without moving. |
+| `images/story-07-b.webp` | A small Eloi woman pushing two flowers into the pocket of a man's ragged coat, the man looking down at her. |
 
 ## 8장 · 우물
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A round bronze-rimmed well set flush in a grassy slope, a man kneeling with his ear to the rim, wind visibly moving his hair upward out of it. |
-| `images/story-08-b.png` | Half-dark before dawn among ruins: a pale stooping figure caught mid-turn, one hand up against the light, its face just visible — clearly human. |
+| `images/story-08-a.webp` | A round bronze-rimmed well set flush in a grassy slope, a man kneeling with his ear to the rim, wind visibly moving his hair upward out of it. |
+| `images/story-08-b.webp` | Half-dark before dawn among ruins: a pale stooping figure caught mid-turn, one hand up against the light, its face just visible — clearly human. |
 
 ## 9장 · 땅 아래
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | Looking straight down a deep shaft with iron rungs set in the wall, a man far down it, the circle of daylight small above. |
-| `images/story-09-b.png` | A vast underground machine hall by the light of a single match held up: great machines turning, and pale figures all around with their arms across their eyes. |
+| `images/story-09-a.webp` | Looking straight down a deep shaft with iron rungs set in the wall, a man far down it, the circle of daylight small above. |
+| `images/story-09-b.webp` | A vast underground machine hall by the light of a single match held up: great machines turning, and pale figures all around with their arms across their eyes. |
 
 ## 10장 · 두 종족
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | A man sitting alone on a ruined step at night, thinking, the sleeping halls behind him and a bronze well cover in the foreground. |
-| `images/story-10-b.png` | A split composition: above, a Victorian street with well-dressed people; below, the same city's underground — furnaces, tunnels, and workers who never see the sun. |
+| `images/story-10-a.webp` | A man sitting alone on a ruined step at night, thinking, the sleeping halls behind him and a bronze well cover in the foreground. |
+| `images/story-10-b.webp` | A split composition: above, a Victorian street with well-dressed people; below, the same city's underground — furnaces, tunnels, and workers who never see the sun. |
 
 ## 11장 · 숲의 불
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | Inside a huge ruined hall of green porcelain: rows of broken display cases, a fossil skeleton, books collapsing into dust, a man lifting an iron bar out of a case. |
-| `images/story-11-b.png` | A forest fire at night: a man running with an iron bar, pale figures blundering blindly between the trees away from the light, smoke everywhere. |
+| `images/story-11-a.webp` | Inside a huge ruined hall of green porcelain: rows of broken display cases, a fossil skeleton, books collapsing into dust, a man lifting an iron bar out of a case. |
+| `images/story-11-b.webp` | A forest fire at night: a man running with an iron bar, pale figures blundering blindly between the trees away from the light, smoke everywhere. |
 
 ## 12장 · 더 먼 곳
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.png` | A cold beach under a huge dull red sun fixed low in the sky, a still oily sea, black lichen on the rocks, and one enormous crab-like shape at the water's edge; a small machine and a man on it. |
-| `images/story-12-b.png` | A dining room table with two withered flowers lying on the cloth, and a doctor holding one up to the lamp, his face changed. |
+| `images/story-12-a.webp` | A cold beach under a huge dull red sun fixed low in the sky, a still oily sea, black lichen on the rocks, and one enormous crab-like shape at the water's edge; a small machine and a man on it. |
+| `images/story-12-b.webp` | A dining room table with two withered flowers lying on the cloth, and a doctor holding one up to the lamp, his face changed. |

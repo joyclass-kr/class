@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
@@ -49,110 +49,110 @@ Buldeo: a village hunter with an old matchlock gun and a big moustache.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: an Indian boy of about twelve crouched on a moonlit rock at the edge of a jungle clearing, wolves gathered in the darkness behind and below him, a black panther beside him; the boy looking straight out of the picture. |
-| `images/end.png` | A boy walking away down a path between green fields toward a village at dawn, and at the treeline behind him a single wolf sitting and watching. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: an Indian boy of about twelve crouched on a moonlit rock at the edge of a jungle clearing, wolves gathered in the darkness behind and below him, a black panther beside him; the boy looking straight out of the picture. |
+| `images/end.webp` | A boy walking away down a path between green fields toward a village at dawn, and at the treeline behind him a single wolf sitting and watching. |
 
 ## 1장 · 밤에 온 아기
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | Evening at a cave mouth in the Seeonee hills: a big male wolf stretching, a jackal cringing at a distance with a bone. |
-| `images/story-01-b.png` | A naked toddler standing in the moonlight at the mouth of the cave, one hand out, looking up at a wolf twice his height; the wolf twisted mid-spring, checking himself. |
+| `images/story-01-a.webp` | Evening at a cave mouth in the Seeonee hills: a big male wolf stretching, a jackal cringing at a distance with a bone. |
+| `images/story-01-b.webp` | A naked toddler standing in the moonlight at the mouth of the cave, one hand out, looking up at a wolf twice his height; the wolf twisted mid-spring, checking himself. |
 
 ## 2장 · 굴 앞에 선 호랑이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A tiger's head and shoulders filling a narrow cave mouth, unable to get further in; inside, only two eyes shining in the dark. |
-| `images/story-02-b.png` | Inside the cave: a she-wolf standing over a human baby among four wolf cubs, her head lowered and her teeth bared toward the entrance. |
+| `images/story-02-a.webp` | A tiger's head and shoulders filling a narrow cave mouth, unable to get further in; inside, only two eyes shining in the dark. |
+| `images/story-02-b.webp` | Inside the cave: a she-wolf standing over a human baby among four wolf cubs, her head lowered and her teeth bared toward the entrance. |
 
 ## 3장 · 회의 바위
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | A wide flat rock under a full moon crowded with forty wolves, a naked child standing alone in the middle of them, an old grey wolf on the highest point. |
-| `images/story-03-b.png` | A black panther stepping up onto the edge of the rock with a freshly killed bull lying on the ground below, the wolves turning toward it. |
+| `images/story-03-a.webp` | A wide flat rock under a full moon crowded with forty wolves, a naked child standing alone in the middle of them, an old grey wolf on the highest point. |
+| `images/story-03-b.webp` | A black panther stepping up onto the edge of the rock with a freshly killed bull lying on the ground below, the wolves turning toward it. |
 
 ## 4장 · 정글의 법
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | A big brown bear teaching: a boy of ten sitting in front of him reciting, the bear's paw raised; forest floor, dappled light. |
-| `images/story-04-b.png` | A boy and a black panther face to face very close, the boy looking straight into the panther's eyes and the panther looking slightly away. |
+| `images/story-04-a.webp` | A big brown bear teaching: a boy of ten sitting in front of him reciting, the bear's paw raised; forest floor, dappled light. |
+| `images/story-04-b.webp` | A boy and a black panther face to face very close, the boy looking straight into the panther's eyes and the panther looking slightly away. |
 
 ## 5장 · 반다르로그
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | Monkeys crowding the branches around a boy sitting alone high in a tree, all of them talking at once. |
-| `images/story-05-b.png` | Seen from above the canopy: a boy being carried at speed through the treetops by two monkeys, and a kite wheeling in the sky above him. |
+| `images/story-05-a.webp` | Monkeys crowding the branches around a boy sitting alone high in a tree, all of them talking at once. |
+| `images/story-05-b.webp` | Seen from above the canopy: a boy being carried at speed through the treetops by two monkeys, and a kite wheeling in the sky above him. |
 
 ## 6장 · 차가운 굴
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A ruined red sandstone city swallowed by jungle — collapsed domes, fig roots splitting the walls, a dry tank — swarming with monkeys. |
-| `images/story-06-b.png` | An enormous rock python raising its head above a broken wall in moonlight, and every monkey in the courtyard gone absolutely still. |
+| `images/story-06-a.webp` | A ruined red sandstone city swallowed by jungle — collapsed domes, fig roots splitting the walls, a dry tank — swarming with monkeys. |
+| `images/story-06-b.webp` | An enormous rock python raising its head above a broken wall in moonlight, and every monkey in the courtyard gone absolutely still. |
 
 ## 7장 · 붉은 꽃
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | A boy crouched outside a village wall at night looking through a doorway at a clay fire pot glowing inside a hut. |
-| `images/story-07-b.png` | The same boy in the jungle feeding dry twigs into a pot of embers, his face lit orange, watching it with total concentration. |
+| `images/story-07-a.webp` | A boy crouched outside a village wall at night looking through a doorway at a clay fire pot glowing inside a hut. |
+| `images/story-07-b.webp` | The same boy in the jungle feeding dry twigs into a pot of embers, his face lit orange, watching it with total concentration. |
 
 ## 8장 · 무리가 갈라지다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | The council rock at night in uproar, wolves on their feet snarling at each other, a tiger's head visible at the lower edge of the rock. |
-| `images/story-08-b.png` | A boy standing upright holding a burning branch, wolves backing away in a ring around him, a tiger crouched flat at his feet. |
+| `images/story-08-a.webp` | The council rock at night in uproar, wolves on their feet snarling at each other, a tiger's head visible at the lower edge of the rock. |
+| `images/story-08-b.webp` | A boy standing upright holding a burning branch, wolves backing away in a ring around him, a tiger crouched flat at his feet. |
 
 ## 9장 · 마을
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | A village gate at morning: a wild-looking boy sitting in the dust, villagers gathered at a careful distance, and one woman pushing forward through them. |
-| `images/story-09-b.png` | Evening under a great banyan tree: villagers seated in a circle listening to a hunter with an old matchlock telling a story, and one boy at the edge plainly not believing a word. |
+| `images/story-09-a.webp` | A village gate at morning: a wild-looking boy sitting in the dust, villagers gathered at a careful distance, and one woman pushing forward through them. |
+| `images/story-09-b.webp` | Evening under a great banyan tree: villagers seated in a circle listening to a hunter with an old matchlock telling a story, and one boy at the edge plainly not believing a word. |
 
 ## 10장 · 물소 떼
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | A boy lying full length on the back of a buffalo in a wide pasture, the herd grazing around him, the jungle a dark wall on the horizon. |
-| `images/story-10-b.png` | The edge of the pasture at dusk: a grey wolf standing just clear of the trees and a boy walking toward it with both arms out. |
+| `images/story-10-a.webp` | A boy lying full length on the back of a buffalo in a wide pasture, the herd grazing around him, the jungle a dark wall on the horizon. |
+| `images/story-10-b.webp` | The edge of the pasture at dusk: a grey wolf standing just clear of the trees and a boy walking toward it with both arms out. |
 
 ## 11장 · 협곡
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | A narrow ravine between sheer rock walls seen from above, a tiger asleep on the floor of it, and a boy looking down from the rim. |
-| `images/story-11-b.png` | Two hundred buffalo pouring into the head of the ravine in a wall of horns and dust, seen from the rim. |
+| `images/story-11-a.webp` | A narrow ravine between sheer rock walls seen from above, a tiger asleep on the floor of it, and a boy looking down from the rim. |
+| `images/story-11-b.webp` | Two hundred buffalo pouring into the head of the ravine in a wall of horns and dust, seen from the rim. |
 
 ## 12장 · 쫓겨나다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.png` | A hunter flat on his back on the ravine floor with a grey wolf standing over him, and a boy kneeling nearby with a knife and a tiger skin. |
-| `images/story-12-b.png` | A closed village gate at sunset, figures on the wall above throwing stones, and a boy standing in the road below with a rolled skin over his shoulder, blood on his forehead, not moving. |
+| `images/story-12-a.webp` | A hunter flat on his back on the ravine floor with a grey wolf standing over him, and a boy kneeling nearby with a knife and a tiger skin. |
+| `images/story-12-b.webp` | A closed village gate at sunset, figures on the wall above throwing stones, and a boy standing in the road below with a rolled skin over his shoulder, blood on his forehead, not moving. |
 
 ## 13장 · 붉은 개
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-13-a.png` | Deer, boar and peafowl all streaming north through the forest at night, away from something. |
-| `images/story-13-b.png` | A boy sitting in front of the coiled head of an enormous python in a cave, the two of them talking, everything very still. |
+| `images/story-13-a.webp` | Deer, boar and peafowl all streaming north through the forest at night, away from something. |
+| `images/story-13-b.webp` | A boy sitting in front of the coiled head of an enormous python in a cave, the two of them talking, everything very still. |
 
 ## 14장 · 강 위의 싸움
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-14-a.png` | A cliff face hung with hundreds of wild bee combs above a river, a boy leaping out from the top of it toward the water far below. |
-| `images/story-14-b.png` | Dawn on a river bank after the fight: an old grey wolf lying still with a young man kneeling beside him, mist on the water. |
+| `images/story-14-a.webp` | A cliff face hung with hundreds of wild bee combs above a river, a boy leaping out from the top of it toward the water far below. |
+| `images/story-14-b.webp` | Dawn on a river bank after the fight: an old grey wolf lying still with a young man kneeling beside him, mist on the water. |
 
 ## 15장 · 봄의 달음질
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-15-a.png` | A young man standing alone on a hilltop at dawn looking down at cultivated fields and a village, jungle behind him. |
-| `images/story-15-b.png` | The council rock at evening: a young man kneeling with both hands on the face of an old half-blind bear, a black panther and a python beside them. |
+| `images/story-15-a.webp` | A young man standing alone on a hilltop at dawn looking down at cultivated fields and a village, jungle behind him. |
+| `images/story-15-b.webp` | The council rock at evening: a young man kneeling with both hands on the face of an old half-blind bear, a black panther and a python beside them. |

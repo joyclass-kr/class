@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
@@ -52,89 +52,89 @@ Poole: an elderly butler in dark livery.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a gaslit London street in fog at night; a tall well-dressed man walking toward the viewer, and cast on the wet wall beside him a shadow that is small, hunched and wrong — not his shape at all. |
-| `images/end.png` | A lawyer standing at a window at night looking down on a gaslit street where ordinary people are still walking, the room behind him dark. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a gaslit London street in fog at night; a tall well-dressed man walking toward the viewer, and cast on the wet wall beside him a shadow that is small, hunched and wrong — not his shape at all. |
+| `images/end.webp` | A lawyer standing at a window at night looking down on a gaslit street where ordinary people are still walking, the room behind him dark. |
 
 ## 1장 · 그 문 이야기
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A tidy prosperous side street with one dead building in the middle of it: no windows, one blistered door with the bottom panel scarred and kicked in. |
-| `images/story-01-b.png` | A bare street at three in the morning under one lamp: a small girl on the pavement and a small man walking on past her without breaking stride, seen from behind. |
+| `images/story-01-a.webp` | A tidy prosperous side street with one dead building in the middle of it: no windows, one blistered door with the bottom panel scarred and kicked in. |
+| `images/story-01-b.webp` | A bare street at three in the morning under one lamp: a small girl on the pavement and a small man walking on past her without breaking stride, seen from behind. |
 
 ## 2장 · 수표
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A knot of angry people around a small man at that door — a doctor, a family, a young gentleman gripping his collar; the small man's face turned down and away, entirely calm. |
-| `images/story-02-b.png` | A lawyer at home late at night with a safe open beside him, holding a sealed envelope up to a lamp. |
+| `images/story-02-a.webp` | A knot of angry people around a small man at that door — a doctor, a family, a young gentleman gripping his collar; the small man's face turned down and away, entirely calm. |
+| `images/story-02-b.webp` | A lawyer at home late at night with a safe open beside him, holding a sealed envelope up to a lamp. |
 
 ## 3장 · 유언장
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | A close view of a handwritten will on a desk, a magnifying glass and a candle, one line of it clearly the object of attention. |
-| `images/story-03-b.png` | A lawyer standing in a dark doorway across from the blistered door in the rain, waiting, night after night — put a folded umbrella and puddles in it. |
+| `images/story-03-a.webp` | A close view of a handwritten will on a desk, a magnifying glass and a candle, one line of it clearly the object of attention. |
+| `images/story-03-b.webp` | A lawyer standing in a dark doorway across from the blistered door in the rain, waiting, night after night — put a folded umbrella and puddles in it. |
 
 ## 4장 · 하이드
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | Under a gas lamp: a small man with his face lifted into the light for the first and only time in the book — an ordinary, unremarkable face; and a tall lawyer looking at him with an expression of physical revulsion. |
-| `images/story-04-b.png` | A street map view: a fine house facing a good square on one side, and the windowless door on a back lane behind it — the same building. |
+| `images/story-04-a.webp` | Under a gas lamp: a small man with his face lifted into the light for the first and only time in the book — an ordinary, unremarkable face; and a tall lawyer looking at him with an expression of physical revulsion. |
+| `images/story-04-b.webp` | A street map view: a fine house facing a good square on one side, and the windowless door on a back lane behind it — the same building. |
 
 ## 5장 · 지킬 박사
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A handsome dining room after guests have gone: two old friends by the fire, one leaning forward earnestly, the other with his hand raised to stop him. |
-| `images/story-05-b.png` | A large healthy man of fifty smiling and shaking a lawyer's hand at his own front door — everything about the picture comfortable and reassuring. |
+| `images/story-05-a.webp` | A handsome dining room after guests have gone: two old friends by the fire, one leaning forward earnestly, the other with his hand raised to stop him. |
+| `images/story-05-b.webp` | A large healthy man of fifty smiling and shaking a lawyer's hand at his own front door — everything about the picture comfortable and reassuring. |
 
 ## 6장 · 커루 경 사건
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | Seen from an upstairs window in bright moonlight: a white-haired gentleman raising his hat to a small man in the street below, the small man's stick just beginning to lift. Stop the picture there. |
-| `images/story-06-b.png` | A ransacked Soho lodging: fine pictures on the walls, drawers pulled out, and grey ash in the grate with the corner of a burnt chequebook in it. |
+| `images/story-06-a.webp` | Seen from an upstairs window in bright moonlight: a white-haired gentleman raising his hat to a small man in the street below, the small man's stick just beginning to lift. Stop the picture there. |
+| `images/story-06-b.webp` | A ransacked Soho lodging: fine pictures on the walls, drawers pulled out, and grey ash in the grate with the corner of a burnt chequebook in it. |
 
 ## 7장 · 그 뒤 두 달
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | Two samples of handwriting laid side by side under a lamp, a clerk bent over them with a lens, a lawyer standing very still behind him. |
-| `images/story-07-b.png` | A bright afternoon drawing room full of guests, a large man laughing among them — the only cheerful picture in the book. |
+| `images/story-07-a.webp` | Two samples of handwriting laid side by side under a lamp, a clerk bent over them with a lens, a lawyer standing very still behind him. |
+| `images/story-07-b.webp` | A bright afternoon drawing room full of guests, a large man laughing among them — the only cheerful picture in the book. |
 
 ## 8장 · 래니언 박사
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A consulting room: a white-haired doctor sunk in a chair, shrunken, his hand shaking on the arm rest, a lawyer half risen in shock. |
-| `images/story-08-b.png` | A sealed envelope in a safe with a line of handwriting across it and a lawyer's hand hesitating over the door. |
+| `images/story-08-a.webp` | A consulting room: a white-haired doctor sunk in a chair, shrunken, his hand shaking on the arm rest, a lawyer half risen in shock. |
+| `images/story-08-b.webp` | A sealed envelope in a safe with a line of handwriting across it and a lawyer's hand hesitating over the door. |
 
 ## 9장 · 창가에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | A damp mossy courtyard behind a house, three windows above, a large man sitting at the middle one like a prisoner talking down to two men below. |
-| `images/story-09-b.png` | The same window an instant later, slammed shut, the sash still trembling; the two men in the yard frozen with their faces turned up. |
+| `images/story-09-a.webp` | A damp mossy courtyard behind a house, three windows above, a large man sitting at the middle one like a prisoner talking down to two men below. |
+| `images/story-09-b.webp` | The same window an instant later, slammed shut, the sash still trembling; the two men in the yard frozen with their faces turned up. |
 
 ## 10장 · 문을 부수다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | A kitchen full of frightened servants huddled together with candles, an old butler in the doorway putting his coat on. |
-| `images/story-10-b.png` | A lawyer with an axe raised before a locked laboratory door, the butler holding a lamp, both listening to something on the other side. |
+| `images/story-10-a.webp` | A kitchen full of frightened servants huddled together with candles, an old butler in the doorway putting his coat on. |
+| `images/story-10-b.webp` | A lawyer with an axe raised before a locked laboratory door, the butler holding a lamp, both listening to something on the other side. |
 
 ## 11장 · 래니언의 편지
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | A study at midnight: a small cloaked figure with his back to us holding up a glass of liquid that has turned pale green, and facing us the doctor's face — the whole picture is that face. |
-| `images/story-11-b.png` | A quiet laboratory room afterwards: a fire burning down, a cup on the table, three sealed envelopes laid out on the desk. |
+| `images/story-11-a.webp` | A study at midnight: a small cloaked figure with his back to us holding up a glass of liquid that has turned pale green, and facing us the doctor's face — the whole picture is that face. |
+| `images/story-11-b.webp` | A quiet laboratory room afterwards: a fire burning down, a cup on the table, three sealed envelopes laid out on the desk. |
 
 ## 12장 · 헨리 지킬의 진술
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.png` | A cluttered laboratory: shelves of salts and bottles, a burner, and a large man staring at a mirror he has just had brought in. |
-| `images/story-12-b.png` | The same man alone at a desk writing very fast by candlelight, sleeves already too long for his arms. |
+| `images/story-12-a.webp` | A cluttered laboratory: shelves of salts and bottles, a burner, and a large man staring at a mirror he has just had brought in. |
+| `images/story-12-b.webp` | The same man alone at a desk writing very fast by candlelight, sleeves already too long for his arms. |

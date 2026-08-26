@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.**
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
@@ -53,117 +53,117 @@ The Jade Emperor: an elderly ruler on a jade throne who never looks confident.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: four travellers and a white horse crossing a vast desert dune at sunset, tiny against the sky — a monk on horseback, a monkey striding ahead with a staff on his shoulder, a pig-headed man trudging, and a broad man behind carrying all the luggage; far above them in the clouds, faint, a giant open hand. |
-| `images/end.png` | A monkey's hand raised to his own forehead, and nothing there — no band, just fur; behind him a sunrise over mountains. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: four travellers and a white horse crossing a vast desert dune at sunset, tiny against the sky — a monk on horseback, a monkey striding ahead with a staff on his shoulder, a pig-headed man trudging, and a broad man behind carrying all the luggage; far above them in the clouds, faint, a giant open hand. |
+| `images/end.webp` | A monkey's hand raised to his own forehead, and nothing there — no band, just fur; behind him a sunrise over mountains. |
 
 ## 1장 · 돌에서 난 원숭이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A lone monk with a pack and a staff walking into an enormous empty desert, footprints behind him, no companions anywhere — the real journey. |
-| `images/story-01-b.png` | A great split boulder on a mountain summit with light pouring out of the crack, and a small monkey standing upright in it, eyes blazing. |
+| `images/story-01-a.webp` | A lone monk with a pack and a staff walking into an enormous empty desert, footprints behind him, no companions anywhere — the real journey. |
+| `images/story-01-b.webp` | A great split boulder on a mountain summit with light pouring out of the crack, and a small monkey standing upright in it, eyes blazing. |
 
 ## 2장 · 원숭이 왕
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A monkey leaping headfirst through a waterfall, hundreds of other monkeys watching from the rocks. |
-| `images/story-02-b.png` | A feast in a cave hall gone silent, all the monkeys staring at their king, who is sitting on a stone throne crying. |
+| `images/story-02-a.webp` | A monkey leaping headfirst through a waterfall, hundreds of other monkeys watching from the rocks. |
+| `images/story-02-b.webp` | A feast in a cave hall gone silent, all the monkeys staring at their king, who is sitting on a stone throne crying. |
 
 ## 3장 · 재주를 배우다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | A mountain hermitage courtyard at night: a monkey slipping through a back door while everyone else sleeps. |
-| `images/story-03-b.png` | A monkey standing on a small cloud high above a valley, arms out, plainly delighted with himself. |
+| `images/story-03-a.webp` | A mountain hermitage courtyard at night: a monkey slipping through a back door while everyone else sleeps. |
+| `images/story-03-b.webp` | A monkey standing on a small cloud high above a valley, arms out, plainly delighted with himself. |
 
 ## 4장 · 여의봉
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | An undersea palace of coral and pearl: a monkey with both hands on an enormous iron pillar that is glowing, a dragon king watching in dismay. |
-| `images/story-04-b.png` | The underworld's records office: a monkey holding a huge ledger open and crossing out a line with a brush, officials in dark robes helpless around him. |
+| `images/story-04-a.webp` | An undersea palace of coral and pearl: a monkey with both hands on an enormous iron pillar that is glowing, a dragon king watching in dismay. |
+| `images/story-04-b.webp` | The underworld's records office: a monkey holding a huge ledger open and crossing out a line with a brush, officials in dark robes helpless around him. |
 
 ## 5장 · 하늘을 뒤집다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A heavenly peach orchard: a monkey lying along a branch eating, cores dropping through the clouds below. |
-| `images/story-05-b.png` | A wrecked banquet in heaven — overturned tables, spilled wine, immortals scattering — and one small figure going out through a gate with a jar under each arm. |
+| `images/story-05-a.webp` | A heavenly peach orchard: a monkey lying along a branch eating, cores dropping through the clouds below. |
+| `images/story-05-b.webp` | A wrecked banquet in heaven — overturned tables, spilled wine, immortals scattering — and one small figure going out through a gate with a jar under each arm. |
 
 ## 6장 · 손바닥 다섯 손가락
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A vast open palm seen from above with a tiny monkey standing on it, and five enormous pillars rising at the edge of the world in the distance. |
-| `images/story-06-b.png` | A bare mountain with a paper charm on the summit and one monkey's head and one arm protruding from the rock at its foot, moss and grass grown over him. |
+| `images/story-06-a.webp` | A vast open palm seen from above with a tiny monkey standing on it, and five enormous pillars rising at the edge of the world in the distance. |
+| `images/story-06-b.webp` | A bare mountain with a paper charm on the summit and one monkey's head and one arm protruding from the rock at its foot, moss and grass grown over him. |
 
 ## 7장 · 삼장법사
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | A court in Chang'an: an emperor asking a question of a hall full of officials, everyone looking at the floor, one young monk stepping forward. |
-| `images/story-07-b.png` | A monk kneeling at the foot of a mountain, peeling a charm from the rock; the rock beginning to crack open. |
+| `images/story-07-a.webp` | A court in Chang'an: an emperor asking a question of a hall full of officials, everyone looking at the floor, one young monk stepping forward. |
+| `images/story-07-b.webp` | A monk kneeling at the foot of a mountain, peeling a charm from the rock; the rock beginning to crack open. |
 
 ## 8장 · 머리테
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A roadside: a monkey shooting away on a cloud in one direction, and a monk sitting alone on a rock with the horse, doing nothing. |
-| `images/story-08-b.png` | A monkey on the ground clutching his head with both hands, a thin gold band biting into his brow; a monk standing a few steps away reciting, uncomfortable about it. |
+| `images/story-08-a.webp` | A roadside: a monkey shooting away on a cloud in one direction, and a monk sitting alone on a rock with the horse, doing nothing. |
+| `images/story-08-b.webp` | A monkey on the ground clutching his head with both hands, a thin gold band biting into his brow; a monk standing a few steps away reciting, uncomfortable about it. |
 
 ## 9장 · 저팔계와 사오정
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | A village at night: a pig-headed man with a rake being confronted by a monkey on a rooftop, villagers peering from doorways. |
-| `images/story-09-b.png` | A wide river crossing: all four travellers on the bank, the broad grim one shouldering the entire load while the others carry nothing. |
+| `images/story-09-a.webp` | A village at night: a pig-headed man with a rake being confronted by a monkey on a rooftop, villagers peering from doorways. |
+| `images/story-09-b.webp` | A wide river crossing: all four travellers on the bank, the broad grim one shouldering the entire load while the others carry nothing. |
 
 ## 10장 · 백골 요괴
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | A mountain path: a young woman with a food basket approaching a monk, and behind her a monkey with his staff already raised and his eyes narrowed. |
-| `images/story-10-b.png` | The same path afterwards: a pile of white bones on the ground, a monk pointing angrily down the road, a monkey bowing three times before leaving. |
+| `images/story-10-a.webp` | A mountain path: a young woman with a food basket approaching a monk, and behind her a monkey with his staff already raised and his eyes narrowed. |
+| `images/story-10-b.webp` | The same path afterwards: a pile of white bones on the ground, a monk pointing angrily down the road, a monkey bowing three times before leaving. |
 
 ## 11장 · 화염산
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | A mountain range on fire for as far as the eye can see, red rock and flame, four travellers halted at a distance with their sleeves over their faces. |
-| `images/story-11-b.png` | A palm-leaf fan being swung once and a wall of flame going out along an entire ridge, rain already starting behind it. |
+| `images/story-11-a.webp` | A mountain range on fire for as far as the eye can see, red rock and flame, four travellers halted at a distance with their sleeves over their faces. |
+| `images/story-11-b.webp` | A palm-leaf fan being swung once and a wall of flame going out along an entire ridge, rain already starting behind it. |
 
 ## 12장 · 진짜와 가짜
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.png` | Two identical monkeys with identical staffs mid-fight in the air, impossible to tell apart, onlookers below at a complete loss. |
-| `images/story-12-b.png` | A great hall where a seated buddha reaches out one hand toward the two identical monkeys, and everyone else — kings, judges, immortals — stands back. |
+| `images/story-12-a.webp` | Two identical monkeys with identical staffs mid-fight in the air, impossible to tell apart, onlookers below at a complete loss. |
+| `images/story-12-b.webp` | A great hall where a seated buddha reaches out one hand toward the two identical monkeys, and everyone else — kings, judges, immortals — stands back. |
 
 ## 13장 · 여든한 가지 어려움
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-13-a.png` | A palace hall where a monkey stands before a throne holding open his own robe with several red shapes in his hands, the king recoiling; children being led out safely at the back. |
-| `images/story-13-b.png` | A defeated monster on the ground turning back into an ordinary animal, and a heavenly official descending on a cloud to collect it, entirely unembarrassed. |
+| `images/story-13-a.webp` | A palace hall where a monkey stands before a throne holding open his own robe with several red shapes in his hands, the king recoiling; children being led out safely at the back. |
+| `images/story-13-b.webp` | A defeated monster on the ground turning back into an ordinary animal, and a heavenly official descending on a cloud to collect it, entirely unembarrassed. |
 
 ## 14장 · 글자 없는 경전
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-14-a.png` | A bottomless boat on a wide river with four travellers aboard, and a body floating past in the current that has the monk's own face. |
-| `images/story-14-b.png` | A monastery courtyard: scroll cases open on a table and the pages inside completely blank, four travellers staring at them. |
+| `images/story-14-a.webp` | A bottomless boat on a wide river with four travellers aboard, and a body floating past in the current that has the monk's own face. |
+| `images/story-14-b.webp` | A monastery courtyard: scroll cases open on a table and the pages inside completely blank, four travellers staring at them. |
 
 ## 15장 · 머리테가 사라지다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-15-a.png` | Scriptures spread out to dry on flat rocks by a river, one scroll's corner torn away and stuck to the stone. |
-| `images/story-15-b.png` | A monkey with one hand on his own forehead and an astonished face, the gold band simply gone; a monk beside him smiling. |
+| `images/story-15-a.webp` | Scriptures spread out to dry on flat rocks by a river, one scroll's corner torn away and stuck to the stone. |
+| `images/story-15-b.webp` | A monkey with one hand on his own forehead and an astonished face, the gold band simply gone; a monk beside him smiling. |
 
 ## 16장 · 이 이야기를 어떻게 읽을까
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-16-a.png` | The four travellers walking away from the viewer along a mountain road, each one a completely different shape and gait, the luggage still on the last one's back. |
-| `images/story-16-b.png` | A single monk walking alone across a desert at dawn, the way the real journey happened — the same composition as the first picture in the book, but at sunrise instead of noon. |
+| `images/story-16-a.webp` | The four travellers walking away from the viewer along a mountain road, each one a completely different shape and gait, the luggage still on the last one's back. |
+| `images/story-16-b.webp` | A single monk walking alone across a desert at dawn, the way the real journey happened — the same composition as the first picture in the book, but at sunrise instead of noon. |

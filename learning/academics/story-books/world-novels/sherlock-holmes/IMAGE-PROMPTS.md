@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.** 표지 그림칸은 책을 펼쳤을 때 왼쪽 반쪽 전체를 채우는데,
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.** 표지 그림칸은 책을 펼쳤을 때 왼쪽 반쪽 전체를 채우는데,
 그 칸 자체가 세로로 긴 2:3 모양입니다. 4:3 가로 그림을 넣으면 양옆이 절반 가까이 잘려 나갑니다.
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
@@ -38,62 +38,62 @@ side table, two armchairs by a coal fire, a bay window onto a foggy street.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a very tall thin man in a long caped coat and deerstalker standing under a gas lamp in a foggy Victorian London street at night, holding up a magnifying glass, his long shadow thrown across wet cobbles, a sturdy moustached companion a step behind him. |
-| `images/end.png` | A quiet Baker Street sitting room at night seen from the doorway: an empty armchair by the dying fire, a violin and bow laid across it, a pipe on the mantel, one lamp still burning. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a very tall thin man in a long caped coat and deerstalker standing under a gas lamp in a foggy Victorian London street at night, holding up a magnifying glass, his long shadow thrown across wet cobbles, a sturdy moustached companion a step behind him. |
+| `images/end.webp` | A quiet Baker Street sitting room at night seen from the doorway: an empty armchair by the dying fire, a violin and bow laid across it, a pipe on the mantel, one lamp still burning. |
 
 ## 1편 · 베이커가 221B
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A Victorian hospital laboratory: a tall thin young man springing up from a bench of glass tubes and burners holding a test tube aloft in triumph, grasping the hand of a startled moustached ex-army doctor, a third man watching amused. |
-| `images/story-01-b.png` | The Baker Street sitting room by firelight: the thin man sprawled in an armchair scraping a violin, papers and chemical bottles everywhere, the doctor reading a newspaper opposite him with a long-suffering expression. |
+| `images/story-01-a.webp` | A Victorian hospital laboratory: a tall thin young man springing up from a bench of glass tubes and burners holding a test tube aloft in triumph, grasping the hand of a startled moustached ex-army doctor, a third man watching amused. |
+| `images/story-01-b.webp` | The Baker Street sitting room by firelight: the thin man sprawled in an armchair scraping a violin, papers and chemical bottles everywhere, the doctor reading a newspaper opposite him with a long-suffering expression. |
 
 ## 2편 · 보헤미아 왕국의 사진
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A very tall broad man in a rich fur-trimmed travelling coat standing in a lamplit sitting room, a black mask just pulled away from his face in his hand, two seated men watching him calmly. |
-| `images/story-02-b.png` | Night outside an elegant villa: smoke pouring from a window, people rushing about shouting, a shabby country clergyman being helped inside while glancing sharply back over his shoulder toward a drawing-room wall. |
+| `images/story-02-a.webp` | A very tall broad man in a rich fur-trimmed travelling coat standing in a lamplit sitting room, a black mask just pulled away from his face in his hand, two seated men watching him calmly. |
+| `images/story-02-b.webp` | Night outside an elegant villa: smoke pouring from a window, people rushing about shouting, a shabby country clergyman being helped inside while glancing sharply back over his shoulder toward a drawing-room wall. |
 
 ## 3편 · 빨간 머리 연맹
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | A narrow London street packed shoulder to shoulder with men who all have flaming red hair, queuing at a small office door, a stout red-haired shopkeeper among them looking bewildered. |
-| `images/story-03-b.png` | A dark bank vault: crates stacked around, a paving stone pushed aside from below and a man's head and shoulders emerging with a lantern, while a tall figure lunges from behind the crates and a constable steps forward with handcuffs. |
+| `images/story-03-a.webp` | A narrow London street packed shoulder to shoulder with men who all have flaming red hair, queuing at a small office door, a stout red-haired shopkeeper among them looking bewildered. |
+| `images/story-03-b.webp` | A dark bank vault: crates stacked around, a paving stone pushed aside from below and a man's head and shoulders emerging with a lantern, while a tall figure lunges from behind the crates and a constable steps forward with handcuffs. |
 
 ## 4편 · 얼룩 끈
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | A gloomy half-ruined country manor at dusk with a wing still lived in; a caged cheetah's eyes in the shrubbery, ivy over broken windows, a young woman in black hurrying up the drive. |
-| `images/story-04-b.png` | A dark bedroom lit only by a struck match: a tall man striking upward at a dangling bell-rope with a cane, a small ventilator high on the wall above the bed, the seated doctor half risen with a pistol. |
+| `images/story-04-a.webp` | A gloomy half-ruined country manor at dusk with a wing still lived in; a caged cheetah's eyes in the shrubbery, ivy over broken windows, a young woman in black hurrying up the drive. |
+| `images/story-04-b.webp` | A dark bedroom lit only by a struck match: a tall man striking upward at a dangling bell-rope with a cane, a small ventilator high on the wall above the bed, the seated doctor half risen with a pistol. |
 
 ## 5편 · 푸른 보석
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A Baker Street table on a winter morning: a battered old felt hat under a magnifying glass, and a uniformed commissionaire holding out his open palm with a brilliant blue gem blazing in it, the two men staring. |
-| `images/story-05-b.png` | A crowded Covent Garden poultry market by gaslight at night: rows of hanging geese, a burly angry salesman with a ledger, a small frightened man hovering at the edge of the stall. |
+| `images/story-05-a.webp` | A Baker Street table on a winter morning: a battered old felt hat under a magnifying glass, and a uniformed commissionaire holding out his open palm with a brilliant blue gem blazing in it, the two men staring. |
+| `images/story-05-b.webp` | A crowded Covent Garden poultry market by gaslight at night: rows of hanging geese, a burly angry salesman with a ledger, a small frightened man hovering at the edge of the stall. |
 
 ## 6편 · 짖지 않은 개
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | Bleak windswept Dartmoor moorland after rain: a tall thin man crouched low examining hoofprints in the soft ground, three other men waiting behind him, distant tors under a grey sky. |
-| `images/story-06-b.png` | A racecourse: a dark bay racehorse with a white blaze thundering past the post two lengths clear, crowds cheering along the rail, a delighted colonel in the foreground. |
+| `images/story-06-a.webp` | Bleak windswept Dartmoor moorland after rain: a tall thin man crouched low examining hoofprints in the soft ground, three other men waiting behind him, distant tors under a grey sky. |
+| `images/story-06-b.webp` | A racecourse: a dark bay racehorse with a white blaze thundering past the post two lengths clear, crowds cheering along the rail, a delighted colonel in the foreground. |
 
 ## 7편 · 춤추는 인형
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | Close on a garden sundial in morning light: a row of chalked stick figures with arms and legs flung out drawn across its face, a country gentleman and his pale wife staring down at them. |
-| `images/story-07-b.png` | A country study: a tall thin detective seated calmly with a paper of stick-figure symbols on the desk, and a big sunburnt American stopping dead in the doorway as he sees who is waiting. |
+| `images/story-07-a.webp` | Close on a garden sundial in morning light: a row of chalked stick figures with arms and legs flung out drawn across its face, a country gentleman and his pale wife staring down at them. |
+| `images/story-07-b.webp` | A country study: a tall thin detective seated calmly with a paper of stick-figure symbols on the desk, and a big sunburnt American stopping dead in the doorway as he sees who is waiting. |
 
 ## 8편 · 폭포에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | A dim study: a very tall stooping older man with a domed forehead and hooded eyes standing across the desk from a seated detective, both perfectly still, lamplight between them. |
-| `images/story-08-b.png` | The Reichenbach Falls: a huge torrent plunging into a black chasm, spray rising, a narrow path ending at the cliff edge where a walking stick leans against a rock, a lone figure arriving in the distance. |
-| `images/story-08-c.png` | A doctor's consulting room: an old stooped bookseller straightening up and throwing off his disguise to reveal the tall thin detective smiling, while the doctor staggers back against a bookcase in shock. |
+| `images/story-08-a.webp` | A dim study: a very tall stooping older man with a domed forehead and hooded eyes standing across the desk from a seated detective, both perfectly still, lamplight between them. |
+| `images/story-08-b.webp` | The Reichenbach Falls: a huge torrent plunging into a black chasm, spray rising, a narrow path ending at the cliff edge where a walking stick leans against a rock, a lone figure arriving in the distance. |
+| `images/story-08-c.webp` | A doctor's consulting room: an old stooped bookseller straightening up and throwing off his disguise to reveal the tall thin detective smiling, while the doctor staggers back against a bookcase in shock. |

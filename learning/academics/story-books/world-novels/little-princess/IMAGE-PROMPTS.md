@@ -6,7 +6,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
-**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.** 표지 그림칸은 책을 펼쳤을 때 왼쪽 반쪽 전체를 채우는데,
+**단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.** 표지 그림칸은 책을 펼쳤을 때 왼쪽 반쪽 전체를 채우는데,
 그 칸 자체가 세로로 긴 2:3 모양입니다. 4:3 가로 그림을 넣으면 양옆이 절반 가까이 잘려 나갑니다.
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
@@ -46,110 +46,110 @@ Mr Carrisford: a gaunt, ill gentleman wrapped in shawls in a deep armchair.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a thin girl in a shabby black dress standing very straight at the top of a snowy London street at dusk, chin lifted, a large doll under one arm; behind and above her the attic window of a tall dark house with one small light in it, snow falling. |
-| `images/end.png` | An empty attic room seen from the doorway, swept clean, a small window with light coming through, one chair by a cold grate. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a thin girl in a shabby black dress standing very straight at the top of a snowy London street at dusk, chin lifted, a large doll under one arm; behind and above her the attic window of a tall dark house with one small light in it, snow falling. |
+| `images/end.webp` | An empty attic room seen from the doorway, swept clean, a small window with light coming through, one chair by a cold grate. |
 
 ## 1장 · 마차에서 내린 아이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.png` | A hansom cab stopped in a foggy London street before a tall gloomy brick school with a brass plate; a small girl in a fur-trimmed coat stepping down, her father behind her. |
-| `images/story-01-b.png` | A stiff formal parlour: a tall bony headmistress smiling too widely at a small grave girl, the father talking cheerfully, the girl's eyes steady and unconvinced. |
+| `images/story-01-a.webp` | A hansom cab stopped in a foggy London street before a tall gloomy brick school with a brass plate; a small girl in a fur-trimmed coat stepping down, her father behind her. |
+| `images/story-01-b.webp` | A stiff formal parlour: a tall bony headmistress smiling too widely at a small grave girl, the father talking cheerfully, the girl's eyes steady and unconvinced. |
 
 ## 2장 · 인형 에밀리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.png` | A toyshop window: a huge doll almost as tall as the child looking out, and a small girl on the pavement pointing at it while her father laughs, gaslight and snow. |
-| `images/story-02-b.png` | A girl alone in a beautiful bedroom with her face buried in the shoulder of the big doll seated in a chair, an open trunk behind, evening light. |
+| `images/story-02-a.webp` | A toyshop window: a huge doll almost as tall as the child looking out, and a small girl on the pavement pointing at it while her father laughs, gaslight and snow. |
+| `images/story-02-b.webp` | A girl alone in a beautiful bedroom with her face buried in the shoulder of the big doll seated in a chair, an open trunk behind, evening light. |
 
 ## 3장 · 이야기를 들려주는 아이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-a.png` | A schoolroom at playtime: girls sitting on the floor in a tight ring around one girl who is telling a story with her hands, every face rapt; one older girl sulking at the edge. |
-| `images/story-03-b.png` | A corridor floor: a tiny four-year-old lying mid-tantrum, and a bigger girl sitting calmly down beside her on the boards and speaking very quietly, the little one's crying already stopping. |
+| `images/story-03-a.webp` | A schoolroom at playtime: girls sitting on the floor in a tight ring around one girl who is telling a story with her hands, every face rapt; one older girl sulking at the edge. |
+| `images/story-03-b.webp` | A corridor floor: a tiny four-year-old lying mid-tantrum, and a bigger girl sitting calmly down beside her on the boards and speaking very quietly, the little one's crying already stopping. |
 
 ## 4장 · 부엌의 베키
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.png` | A grand bedroom at evening: a small coal-smudged scullery maid asleep upright in an armchair with a coal box still in her hands, the room's owner standing quietly in the doorway not waking her. |
-| `images/story-04-b.png` | Two girls sitting on the hearthrug together sharing a plate of cake by firelight, one in a fine dress and one in a maid's apron, both laughing. |
+| `images/story-04-a.webp` | A grand bedroom at evening: a small coal-smudged scullery maid asleep upright in an armchair with a coal box still in her hands, the room's owner standing quietly in the doorway not waking her. |
+| `images/story-04-b.webp` | Two girls sitting on the hearthrug together sharing a plate of cake by firelight, one in a fine dress and one in a maid's apron, both laughing. |
 
 ## 5장 · 열한 번째 생일
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-a.png` | A schoolroom decorated for a party: flowers, a long table, opened crates from India, a girl in a rose-coloured dress opening presents while the others crowd around. |
-| `images/story-05-b.png` | A dim parlour: a lawyer in black speaking gravely, the headmistress gripping the back of a chair, the sound of children laughing faintly through the closed door behind them. |
+| `images/story-05-a.webp` | A schoolroom decorated for a party: flowers, a long table, opened crates from India, a girl in a rose-coloured dress opening presents while the others crowd around. |
+| `images/story-05-b.webp` | A dim parlour: a lawyer in black speaking gravely, the headmistress gripping the back of a chair, the sound of children laughing faintly through the closed door behind them. |
 
 ## 6장 · 그날 오후
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-a.png` | A girl standing alone in the middle of a silenced schoolroom still in her party dress, the headmistress speaking over her, every other child staring. |
-| `images/story-06-b.png` | A bare attic: sloping ceiling, torn wallpaper, a thin mattress, a small window showing chimneys; a girl kneeling on the floor picking up a fallen doll and brushing it off. |
+| `images/story-06-a.webp` | A girl standing alone in the middle of a silenced schoolroom still in her party dress, the headmistress speaking over her, every other child staring. |
+| `images/story-06-b.webp` | A bare attic: sloping ceiling, torn wallpaper, a thin mattress, a small window showing chimneys; a girl kneeling on the floor picking up a fallen doll and brushing it off. |
 
 ## 7장 · 다락방의 하녀
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-a.png` | A girl in a too-small black dress and broken boots carrying a heavy basket through driving rain in a London street, head down, water in the gutters. |
-| `images/story-07-b.png` | Two attic rooms side by side shown as one picture through the wall: a girl knocking on the wall from one side and a maid answering from the other, both smiling in the dark. |
+| `images/story-07-a.webp` | A girl in a too-small black dress and broken boots carrying a heavy basket through driving rain in a London street, head down, water in the gutters. |
+| `images/story-07-b.webp` | Two attic rooms side by side shown as one picture through the wall: a girl knocking on the wall from one side and a maid answering from the other, both smiling in the dark. |
 
 ## 8장 · 다락방의 잔치
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-08-a.png` | Three girls at a makeshift feast on an attic floor: a handkerchief for a cloth, paper flowers, candle stubs burning, faces bright in the small light. |
-| `images/story-08-b.png` | The same attic a moment later: the door thrown open, the headmistress's tall black shape in the doorway, the little feast overturned, one candle going out. |
+| `images/story-08-a.webp` | Three girls at a makeshift feast on an attic floor: a handkerchief for a cloth, paper flowers, candle stubs burning, faces bright in the small light. |
+| `images/story-08-b.webp` | The same attic a moment later: the door thrown open, the headmistress's tall black shape in the doorway, the little feast overturned, one candle going out. |
 
 ## 9장 · 빵 네 개
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-09-a.png` | A rainy street outside a warm-lit bakery window: a thin girl in black crouched beside a smaller barefoot beggar girl on the step, handing her a bun, several more buns in her lap. |
-| `images/story-09-b.png` | The baker woman watching from inside the shop window, flour on her hands, her face softening as she sees what is happening outside. |
+| `images/story-09-a.webp` | A rainy street outside a warm-lit bakery window: a thin girl in black crouched beside a smaller barefoot beggar girl on the step, handing her a bun, several more buns in her lap. |
+| `images/story-09-b.webp` | The baker woman watching from inside the shop window, flour on her hands, her face softening as she sees what is happening outside. |
 
 ## 10장 · 옆집에 온 신사
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-10-a.png` | A London rooftop between two attic windows at dusk: a dignified Indian man in a white turban stepping surefooted across the slates, a small monkey on his shoulder, a girl leaning from her window. |
-| `images/story-10-b.png` | A warm room full of Indian rugs, brass and carved chests: a gaunt gentleman in shawls listening intently as the turbaned man speaks and gestures toward the wall next door. |
+| `images/story-10-a.webp` | A London rooftop between two attic windows at dusk: a dignified Indian man in a white turban stepping surefooted across the slates, a small monkey on his shoulder, a girl leaning from her window. |
+| `images/story-10-b.webp` | A warm room full of Indian rugs, brass and carved chests: a gaunt gentleman in shawls listening intently as the turbaned man speaks and gestures toward the wall next door. |
 
 ## 11장 · 하룻밤 사이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-11-a.png` | The attic transformed overnight: a blazing fire in the grate, a rug, curtains, a covered table with steaming food and a stack of books; a girl standing in the middle of it with her hands over her mouth. |
-| `images/story-11-b.png` | Two girls eating together at the little table by firelight, one crying while she eats, the sloping attic ceiling now warm and golden. |
+| `images/story-11-a.webp` | The attic transformed overnight: a blazing fire in the grate, a rug, curtains, a covered table with steaming food and a stack of books; a girl standing in the middle of it with her hands over her mouth. |
+| `images/story-11-b.webp` | Two girls eating together at the little table by firelight, one crying while she eats, the sloping attic ceiling now warm and golden. |
 
 ## 12장 · 원숭이가 넘어온 날
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.png` | A girl in a shabby black dress standing at a grand front door holding a shivering monkey in her arms, the turbaned man opening the door in surprise. |
-| `images/story-12-b.png` | The gentleman half risen out of his armchair, shawls slipping, staring at the girl in the middle of the warm room; the lawyer already stepping toward her. |
+| `images/story-12-a.webp` | A girl in a shabby black dress standing at a grand front door holding a shivering monkey in her arms, the turbaned man opening the door in surprise. |
+| `images/story-12-b.webp` | The gentleman half risen out of his armchair, shawls slipping, staring at the girl in the middle of the warm room; the lawyer already stepping toward her. |
 
 ## 13장 · 다이아몬드 광산
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-13-a.png` | A drawing room confrontation: the tall headmistress in black facing a lawyer and a gentleman, the girl standing quietly between them, the headmistress's expression caught between anger and calculation. |
-| `images/story-13-b.png` | Evening: the small scullery maid arriving at the fine house with everything she owns tied in one cloth bundle, the girl coming down the stairs to meet her. |
+| `images/story-13-a.webp` | A drawing room confrontation: the tall headmistress in black facing a lawyer and a gentleman, the girl standing quietly between them, the headmistress's expression caught between anger and calculation. |
+| `images/story-13-b.webp` | Evening: the small scullery maid arriving at the fine house with everything she owns tied in one cloth bundle, the girl coming down the stairs to meet her. |
 
 ## 14장 · 빵집으로
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-14-a.png` | Inside a warm bakery: a well-dressed girl talking with the baker woman across the counter, and a clean tidy girl in an apron behind it recognising her. |
-| `images/story-14-b.png` | A carriage window at dusk: a girl looking out at a wet London street where a ragged child stands, her face thoughtful. |
+| `images/story-14-a.webp` | Inside a warm bakery: a well-dressed girl talking with the baker woman across the counter, and a clean tidy girl in an apron behind it recognising her. |
+| `images/story-14-b.webp` | A carriage window at dusk: a girl looking out at a wet London street where a ragged child stands, her face thoughtful. |
 
 ## 15장 · 그래도 공주
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-15-a.png` | A bright room lined with books: a girl reading aloud to two friends and a little one curled against her, firelight, snow outside the window. |
-| `images/story-15-b.png` | Seen from a lit window across a London square at night: the small dark attic window of the house opposite, empty now, one girl looking up at it from the warm side of the glass. |
+| `images/story-15-a.webp` | A bright room lined with books: a girl reading aloud to two friends and a little one curled against her, firelight, snow outside the window. |
+| `images/story-15-b.webp` | Seen from a lit window across a London square at night: the small dark attic window of the house opposite, empty now, one girl looking up at it from the warm side of the glass. |
