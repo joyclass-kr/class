@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 16장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -65,7 +65,7 @@ eyes.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A wall of green broad-leaved bushes fills the
@@ -78,7 +78,7 @@ green. Funny on sight.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-morning.png` — 아침에 만져진 길쭉한 것
+### `01-morning.webp` — 아침에 만져진 길쭉한 것
 
 ```
 Wide interior of a Silla palace bedchamber at dawn. In the centre, the king sits
@@ -87,7 +87,7 @@ frozen mid-scratch, eyes going wide. Beside him a low lacquered table and a
 folded robe. Soft pink morning light through a paper screen. Comic dread.
 ```
 
-### `02-mirror.png` — 거울 앞에서 기겁하다
+### `02-mirror.webp` — 거울 앞에서 기겁하다
 
 ```
 Wide interior scene. On the right, a bronze mirror on a stand, and in it the
@@ -97,7 +97,7 @@ mouth wide open in a silent scream, legs kicking. Morning light, enormous comic
 panic.
 ```
 
-### `03-hat.png` — 금빛 왕관을 지어 쓰다
+### `03-hat.webp` — 금빛 왕관을 지어 쓰다
 
 ```
 Wide interior of a palace hall. In the centre, the small stooped crownmaker kneels
@@ -106,7 +106,7 @@ left, the king leans down toward him with one finger to his lips, eyes stern and
 enormous. Red pillars and painted beams behind. Funny conspiratorial hush.
 ```
 
-### `04-suspicion.png` — 수군거리는 신하들
+### `04-suspicion.webp` — 수군거리는 신하들
 
 ```
 Wide scene in the palace courtyard on a hot day. On the right, the king sits on a
@@ -116,7 +116,7 @@ and concerned faces, one reaching helpfully toward the crown. Blazing sunlight.
 Excruciating and funny.
 ```
 
-### `05-aim.png` — 여우를 겨눈 임금님
+### `05-aim.webp` — 여우를 겨눈 임금님
 
 ```
 Wide summer forest scene. On the right, the king stands with his bow fully drawn,
@@ -126,7 +126,7 @@ slim brown fox watches him calmly. Dappled green light. The one picture where th
 king looks impressive.
 ```
 
-### `06-fox.png` — 배를 잡고 웃는 여우
+### `06-fox.webp` — 배를 잡고 웃는 여우
 
 ```
 Wide forest scene. On the left, the fox has collapsed against the tree trunk
@@ -136,7 +136,7 @@ scarlet, moustache bristling, one eyebrow twitching. Bright green forest.
 Hilarious and infuriating.
 ```
 
-### `07-chase.png` — 나뭇가지에 걸린 왕관
+### `07-chase.webp` — 나뭇가지에 걸린 왕관
 
 ```
 Wide forest scene full of motion. The fox streaks away to the left with a smug
@@ -146,7 +146,7 @@ branch swinging. The king runs on for one more step, hair loose. Motion lines,
 scattered leaves.
 ```
 
-### `08-hide.png` — 덤불 위로 솟은 귀 두 개
+### `08-hide.webp` — 덤불 위로 솟은 귀 두 개
 
 ```
 Wide forest scene. Across the centre of the frame, a dense wall of big
@@ -156,7 +156,7 @@ hangs on a branch off to the right. Everything is still. The whole joke is the t
 ears in the leaves.
 ```
 
-### `09-spot.png` — 저게 무슨 짐승이지
+### `09-spot.webp` — 저게 무슨 짐승이지
 
 ```
 Wide forest scene. On the right, the retainer sits on his black horse with one
@@ -166,7 +166,7 @@ across the clearing, the two long ears stand up out of the bushes. The reader
 knows; he does not. Dappled sun.
 ```
 
-### `10-order.png` — 저 덤불을 쏘아라
+### `10-order.webp` — 저 덤불을 쏘아라
 
 ```
 Wide forest scene. On the right, the retainer stands in his stirrups and thrusts
@@ -176,7 +176,7 @@ arrows streak into the leaves - and out of the bushes bursts the king's face,
 eyes bulging, mouth open in a howl. Peak farce, nobody hit.
 ```
 
-### `11-dive.png` — 첨벙, 연못으로
+### `11-dive.webp` — 첨벙, 연못으로
 
 ```
 Wide scene at a lotus pond. In the centre, the king launches off the bank into
@@ -186,7 +186,7 @@ the ground and the retainer skids to a halt on his horse, baffled. Water, spray,
 comic disaster.
 ```
 
-### `12-turtle.png` — 물속에서 마주친 거북이
+### `12-turtle.webp` — 물속에서 마주친 거북이
 
 ```
 Wide underwater scene in blue-green pond water. On the right, the king crouches
@@ -197,7 +197,7 @@ face, eyes round as saucers, mouth open. Bubbles, weeds, shafts of light. The
 funniest picture in the book.
 ```
 
-### `13-report.png` — 이만큼 큰 귀였습니다
+### `13-report.webp` — 이만큼 큰 귀였습니다
 
 ```
 Wide interior of the palace hall in the evening. On the right, the retainer
@@ -208,7 +208,7 @@ the crown visibly trembling. Courtiers look on politely. Unbearable and
 hilarious.
 ```
 
-### `14-crownmaker.png` — 평생 입을 다문 사람
+### `14-crownmaker.webp` — 평생 입을 다문 사람
 
 ```
 Wide interior of a small dim workshop across many years. In the centre, the
@@ -218,7 +218,7 @@ single lamp. The whole picture is about a man not saying something. Quiet and a
 little sad.
 ```
 
-### `15-shout.png` — 대나무숲에서 목이 터져라
+### `15-shout.webp` — 대나무숲에서 목이 터져라
 
 ```
 Wide scene in a dense green bamboo grove. In the centre, the very old crownmaker
@@ -228,7 +228,7 @@ stalks tower on all sides; startled birds burst upward out of the canopy. Green
 light, release.
 ```
 
-### `16-laugh.png` — 허허, 사실이니 어쩌겠느냐
+### `16-laugh.webp` — 허허, 사실이니 어쩌겠느냐
 
 ```
 Wide scene at the edge of a grove where bamboo stumps have been cleared and young
@@ -238,7 +238,7 @@ for the first time, head thrown back laughing. On the left, courtiers stand
 open-mouthed, then start to smile. Warm spring light, wind in the branches.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet grove of cornelian cherry trees in spring, no people. Yellow blossom on

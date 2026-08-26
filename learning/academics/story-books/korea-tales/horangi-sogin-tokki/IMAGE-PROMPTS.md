@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -50,7 +50,7 @@ joke.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. Looking up from low on the forest floor: a huge
@@ -62,7 +62,7 @@ perfectly innocent expression. Autumn pines and golden light behind them.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-caught.png` — 붙잡힌 토끼
+### `01-caught.webp` — 붙잡힌 토끼
 
 ```
 Wide autumn forest scene. On the right, the huge tiger looms with one paw pinning
@@ -72,7 +72,7 @@ utterly composed despite the size difference. Dry golden grass and red-barked
 pines, dappled light. Funny rather than frightening.
 ```
 
-### `02-sparrow.png` — 참새가 더 맛있다며
+### `02-sparrow.webp` — 참새가 더 맛있다며
 
 ```
 Wide forest scene. On the left, the hare stands on his hind legs gesturing
@@ -82,7 +82,7 @@ tilted, a huge drop of drool hanging from his mouth, completely taken in. Small
 sparrows flit in the branches above, unnoticed by both.
 ```
 
-### `03-fire.png` — 눈 감고 입 벌린 호랑이
+### `03-fire.webp` — 눈 감고 입 벌린 호랑이
 
 ```
 Wide forest scene, strong left-right split. On the right, the tiger sits with
@@ -92,7 +92,7 @@ grass, one paw shielding the tiny spark, glancing sideways with a sly grin. Firs
 wisps of smoke curling up.
 ```
 
-### `04-burn.png` — 개울로 뛰어드는 호랑이
+### `04-burn.webp` — 개울로 뛰어드는 호랑이
 
 ```
 Wide forest scene full of action. On the left, a wall of orange flame roars up
@@ -102,7 +102,7 @@ whiskers now frizzled into comic corkscrews. Far in the background, a tiny hare
 silhouette bounding away over a ridge. Pure slapstick.
 ```
 
-### `05-again.png` — 며칠 뒤 다시 마주치다
+### `05-again.webp` — 며칠 뒤 다시 마주치다
 
 ```
 Wide rocky forest clearing. On the left, the tiger plants both front paws down
@@ -112,7 +112,7 @@ his chin, head tilted, wearing an expression of polite concern - the picture of
 innocence. Autumn colors, comic standoff.
 ```
 
-### `06-stones.png` — 돌을 떡이라며 굽다
+### `06-stones.webp` — 돌을 떡이라며 굽다
 
 ```
 Wide clearing scene with a small campfire in the centre. Round smooth grey stones
@@ -122,7 +122,7 @@ fire, eyes shining, licking his lips, one paw already reaching. Warm firelight o
 both faces, evening forest behind.
 ```
 
-### `07-hot.png` — 뜨거운 돌을 물고 펄쩍
+### `07-hot.webp` — 뜨거운 돌을 물고 펄쩍
 
 ```
 Wide clearing scene. In the centre, the tiger springs straight up into the air
@@ -132,7 +132,7 @@ sweat drops everywhere. On the far right edge, a single long rabbit ear
 disappearing behind a rock. Peak slapstick, no injury shown.
 ```
 
-### `08-winter.png` — 얼어붙은 강가
+### `08-winter.webp` — 얼어붙은 강가
 
 ```
 Wide winter river scene. A broad frozen river stretches across the frame, snow on
@@ -142,7 +142,7 @@ his back. On the left, the small hare sits on a snowy rock, ears up, watching hi
 with bright interest. Crisp blue and white.
 ```
 
-### `09-tail.png` — 얼음 구멍에 꼬리를 담그다
+### `09-tail.webp` — 얼음 구멍에 꼬리를 담그다
 
 ```
 Wide winter river scene at dusk. In the centre, the tiger sits hunched on the ice
@@ -152,7 +152,7 @@ the hole with one paw while already half turned away, taking a first sneaky step
 in the other direction. Purple-blue evening light, first stars.
 ```
 
-### `10-escape.png` — 얼음이 쩍 갈라지고
+### `10-escape.webp` — 얼음이 쩍 갈라지고
 
 ```
 Wide winter river scene at sunrise. In the centre, the tiger heaves backward with
@@ -162,7 +162,7 @@ figures approach over the snow. On the right, far away on a hill, the tiny hare
 watches with folded paws. Pale gold dawn, explosive motion.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet snowy Korean riverbank at sunrise, no animals in sight. A round hole in

@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 개암 네 알",
         beats: [
             {
-                art: "01-brothers.png",
+                art: "01-brothers.webp",
                 emoji: "🌰",
                 left: [
                     "옛날 어느 마을에 형제가 살았습니다.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-pick.png",
+                art: "02-pick.webp",
                 emoji: "🤲",
                 left: [
                     "\"오, 이건 아버지 드려야지.\"",
@@ -40,7 +40,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-house.png",
+                art: "03-house.webp",
                 emoji: "🏚️",
                 left: [
                     "나무를 하다 보니 어느새 해가 넘어갔어요. 산속이 캄캄해졌습니다. 다행히 골짜기에 낡은 빈 집이 하나 있었지요.",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-dokkaebi.png",
+                art: "04-dokkaebi.webp",
                 emoji: "👹",
                 left: [
                     "한밤중이었어요.",
@@ -79,7 +79,7 @@ const CHAPTERS = [
         title: "2장 · 금 나와라 뚝딱",
         beats: [
             {
-                art: "05-feast.png",
+                art: "05-feast.webp",
                 emoji: "✨",
                 left: [
                     "\"금 나와라, 뚝딱!\"",
@@ -96,7 +96,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-hungry.png",
+                art: "06-hungry.webp",
                 emoji: "😖",
                 left: [
                     "다락 위에서 아우는 배가 고파 견딜 수가 없었어요. 떡 냄새가 코끝을 간질였거든요.",
@@ -112,7 +112,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-crack.png",
+                art: "07-crack.webp",
                 emoji: "💥",
                 left: [
                     "딱!",
@@ -129,7 +129,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-left.png",
+                art: "08-left.webp",
                 emoji: "🔨",
                 left: [
                     "날이 밝았어요.",
@@ -151,7 +151,7 @@ const CHAPTERS = [
         title: "3장 · 따라 한 형",
         beats: [
             {
-                art: "09-brother.png",
+                art: "09-brother.webp",
                 emoji: "😏",
                 left: [
                     "아우네 집이 하루아침에 기와집이 되자 형이 달려왔어요.",
@@ -167,7 +167,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-copy.png",
+                art: "10-copy.webp",
                 emoji: "🌰",
                 left: [
                     "이튿날 형은 산으로 달려가 개암을 한 자루나 주웠어요.",
@@ -184,7 +184,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-caught.png",
+                art: "11-caught.webp",
                 emoji: "😱",
                 left: [
                     "형은 개암을 한 움큼 입에 넣고 힘껏 깨물었어요.",
@@ -203,7 +203,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-nose.png",
+                art: "12-nose.webp",
                 emoji: "👃",
                 left: [
                     "\"코 늘어나라, 뚝딱!\"",
@@ -254,7 +254,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🔨')}
+                ${artFrame('cover.webp', '🔨')}
             </div>
             <div class="story-page-right">
                 <h1>도깨비 방망이</h1>
@@ -317,7 +317,7 @@ const AFTERWORD = {
     emoji: '🌰',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "착한 아우와 욕심 많은 형이 같은 곳에 가서 다른 것을 얻어 오는 이야기는 우리 옛이야기의 큰 틀 가운데 하나입니다. 흥부와 놀부도 같은 틀입니다.",
                 "여기서 열쇠는 개암입니다. 산에서 절로 나는 작은 열매인데 껍질이 단단해서 깨물면 딱 소리가 크게 납니다. 도깨비들이 그 소리를 집 무너지는 소리로 들은 것이지요.",

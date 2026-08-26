@@ -33,7 +33,7 @@ def upgrade(slug):
     cover = slice_between(old, u'function coverPage() {', u'function tocPage(')
     quiz = slice_between(old, u'const QUIZ = [', u'\n];\n') + u'\n];\n'
     end_blk = slice_between(old, u'function endPage()', u'\n}\n')
-    end_emoji = re.search(u"artFrame\\('end\\.png', '(.*?)'\\)", end_blk).group(1)
+    end_emoji = re.search(u"artFrame\\('end\\.(?:png|webp)', '(.*?)'\\)", end_blk).group(1)
     end_line = re.search(u'<h2>(.*?)</h2>', end_blk).group(1)
 
     # 새 엔진에 갈아 끼운다.
@@ -49,7 +49,7 @@ def upgrade(slug):
     # 끝쪽은 endPage 안에서만 바꾼다.
     i = new.index(u'function endPage()')
     head, tail = new[:i], new[i:]
-    mark = u"artFrame('end.png', '"
+    mark = u"artFrame('end.%s', '" % ('webp' if "end.webp" in s else 'png')
     a = tail.index(mark) + len(mark)
     tail = tail[:a] + end_emoji + tail[tail.index(u"'", a):]
     tail = re.sub(u'<h2>.*?</h2>', u'<h2>%s</h2>' % end_line, tail, count=1)

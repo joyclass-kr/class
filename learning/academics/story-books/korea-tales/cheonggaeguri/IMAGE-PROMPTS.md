@@ -20,8 +20,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -49,7 +49,7 @@ clearly the same characters in every image.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A quiet Korean countryside stream seen from low at
@@ -61,7 +61,7 @@ little lonely.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-opposite.png` — 산에 가라니 개울로 뛰는 아들
+### `01-opposite.webp` — 산에 가라니 개울로 뛰는 아들
 
 ```
 Wide scene by a countryside stream. On the left, the mother frog stands on a flat
@@ -71,7 +71,7 @@ the opposite direction, toward the water, grinning over his shoulder, tongue out
 Motion arcs behind him. Comic, sunny, full of energy.
 ```
 
-### `02-backwards.png` — 무엇이든 반대로
+### `02-backwards.webp` — 무엇이든 반대로
 
 ```
 Wide scene divided into three small moments across the frame, like a comic strip
@@ -81,7 +81,7 @@ mother slumps with a hand on her forehead, exhausted. Keep the frogs clearly the
 same characters in each moment. Playful and funny.
 ```
 
-### `03-gulgae.png` — 우는 소리도 거꾸로
+### `03-gulgae.webp` — 우는 소리도 거꾸로
 
 ```
 Wide scene on a lily-pad-covered pond. On the left, the mother frog demonstrates
@@ -91,7 +91,7 @@ backwards. Behind them a row of village frogs on the bank laugh with their heads
 thrown back. Bright and comic.
 ```
 
-### `04-sigh.png` — 밤마다 한숨 쉬는 엄마
+### `04-sigh.webp` — 밤마다 한숨 쉬는 엄마
 
 ```
 Wide night scene at the edge of the stream. On the right, the mother frog sits
@@ -101,7 +101,7 @@ happily by himself, splashing, completely unaware. Cool blue night, quiet and a
 little sad.
 ```
 
-### `05-sick.png` — 자리에 누운 엄마
+### `05-sick.webp` — 자리에 누운 엄마
 
 ```
 Wide scene inside a small cozy burrow among the reeds, seen in cutaway. On the
@@ -111,7 +111,7 @@ crouches at the entrance peering in, his usual grin gone, one hand on the ground
 Warm dim green light.
 ```
 
-### `06-plan.png` — 반대로 말하기로 마음먹는 엄마
+### `06-plan.webp` — 반대로 말하기로 마음먹는 엄마
 
 ```
 Wide scene in the same burrow. The mother frog lies propped on one elbow, eyes
@@ -121,7 +121,7 @@ the other side a stone mound beside a stream. Soft warm light, tender rather tha
 sad.
 ```
 
-### `07-last-words.png` — 마지막 부탁
+### `07-last-words.webp` — 마지막 부탁
 
 ```
 Wide scene in the burrow. The mother frog has drawn the small son frog close with
@@ -131,7 +131,7 @@ mouth slightly open, confused. Soft golden light through the reed entrance.
 Gentle and quiet.
 ```
 
-### `08-regret.png` — 목놓아 우는 아들
+### `08-regret.webp` — 목놓아 우는 아들
 
 ```
 Wide scene by the stream at dawn. The small son frog sits alone on a wet flat
@@ -140,7 +140,7 @@ tears flying. Reeds bend around him, pale grey and pink dawn light on the water.
 The frame is mostly empty space around the tiny figure. Sad but soft, not grim.
 ```
 
-### `09-grave.png` — 개울가에 무덤을 쌓는 아들
+### `09-grave.webp` — 개울가에 무덤을 쌓는 아들
 
 ```
 Wide scene on the stream bank. The son frog carries a smooth round stone in both
@@ -149,7 +149,7 @@ in place in a careful circle. His face is calm and serious for the first time.
 Reeds and wildflowers around the mound, warm afternoon light on the water.
 ```
 
-### `10-rain.png` — 비 오는 날 우는 청개구리
+### `10-rain.webp` — 비 오는 날 우는 청개구리
 
 ```
 Wide scene in heavy rain. The stream has swollen and the water pushes close to a
@@ -159,7 +159,7 @@ sky with all his strength, rain streaming off him. Dark blue-grey rain, silver
 streaks, dramatic and moving.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A calm countryside stream the morning after rain, no frogs. A small round mound

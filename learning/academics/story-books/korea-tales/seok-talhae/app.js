@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 바다를 건너온 궤",
         beats: [
             {
-                art: "01-sea.png",
+                art: "01-sea.webp",
                 emoji: "🌊",
                 left: [
                     "아주 먼 옛날, 바다 건너 어느 나라에서 있었던 일이에요.",
@@ -22,7 +22,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-chest.png",
+                art: "02-chest.webp",
                 emoji: "📦",
                 left: [
                     "왕은 알을 비단에 싸서 나무 궤에 넣었어요. 궤 안에는 보물과 종들도 함께 넣었지요.",
@@ -37,7 +37,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-magpie.png",
+                art: "03-magpie.webp",
                 emoji: "🐦",
                 left: [
                     "며칠 뒤, 아진포라는 바닷가에서였어요. 까치 떼가 한자리에 모여 요란하게 울었습니다.",
@@ -52,7 +52,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-open.png",
+                art: "04-open.webp",
                 emoji: "👦",
                 left: [
                     "할머니가 밧줄을 걸어 궤를 끌어올렸어요. 끙— 하고 뚜껑을 열었지요.",
@@ -68,7 +68,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-name.png",
+                art: "05-name.webp",
                 emoji: "🏠",
                 left: [
                     "할머니는 아이를 집으로 데려갔습니다.",
@@ -89,7 +89,7 @@ const CHAPTERS = [
         title: "2장 · 토함산에서 내려다본 자리",
         beats: [
             {
-                art: "06-grow.png",
+                art: "06-grow.webp",
                 emoji: "🎣",
                 left: [
                     "탈해는 고기를 잡고 그물을 깁고 나무를 했어요. 그러면서 틈만 나면 책을 읽었지요.",
@@ -104,7 +104,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-mountain.png",
+                art: "07-mountain.webp",
                 emoji: "⛰️",
                 left: [
                     "어른이 된 탈해가 토함산에 올랐습니다. 이레 동안 산꼭대기에서 아래를 내려다보았지요.",
@@ -119,7 +119,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-house.png",
+                art: "08-house.webp",
                 emoji: "🏡",
                 left: [
                     "그런데 그 자리에는 이미 큰 집이 있었어요. 호공이라는 사람의 집이었지요. 탈해는 한참을 담 밖에 서 있었습니다.",
@@ -134,7 +134,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-trick.png",
+                art: "09-trick.webp",
                 emoji: "⚒️",
                 left: [
                     "탈해는 밤중에 담 밑에 숯과 숫돌을 묻었어요.",
@@ -151,7 +151,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-court.png",
+                art: "10-court.webp",
                 emoji: "⚖️",
                 left: [
                     "\"무엇으로 증명하겠느냐?\"",
@@ -173,7 +173,7 @@ const CHAPTERS = [
         title: "3장 · 돌려준 집",
         beats: [
             {
-                art: "11-return.png",
+                art: "11-return.webp",
                 emoji: "🔑",
                 left: [
                     "그날 저녁, 탈해가 호공을 찾아갔어요. 그러고는 대문 열쇠를 도로 내밀었습니다.",
@@ -189,7 +189,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-friend.png",
+                art: "12-friend.webp",
                 emoji: "🤝",
                 left: [
                     "\"그럼 무엇이었소?\"",
@@ -206,7 +206,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-king.png",
+                art: "13-king.webp",
                 emoji: "📜",
                 left: [
                     "그 이야기가 임금의 귀에 들어갔어요. 임금이 탈해를 불러 앉혔습니다.",
@@ -221,7 +221,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "14-shore.png",
+                art: "14-shore.webp",
                 emoji: "🌅",
                 left: [
                     "임금이 된 탈해가 아진포를 다시 찾았어요. 할머니의 낡은 집은 그대로였습니다. 탈해는 신을 벗고 물가로 내려갔지요.",
@@ -270,7 +270,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🌊')}
+                ${artFrame('cover.webp', '🌊')}
             </div>
             <div class="story-page-right">
                 <h1>석탈해</h1>
@@ -349,7 +349,7 @@ const AFTERWORD = {
     emoji: '⛵',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "석탈해도 『삼국유사』에 실린 사람입니다. 신라의 네 번째 임금이 되었는데, 신라 임금 가운데 박씨도 김씨도 아닌 석씨의 첫 사람입니다.",
                 "이 사람은 알에서 나와 궤에 담겨 바다를 떠왔다고 합니다. 밖에서 온 사람이 임금이 되는 이야기가 우리 옛 기록에 남아 있는 것이지요.",

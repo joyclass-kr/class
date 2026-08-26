@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 형님!",
         beats: [
             {
-                art: "01-woodcutter.png",
+                art: "01-woodcutter.webp",
                 emoji: "🪓",
                 left: [
                     "옛날 어느 산 밑에 나무꾼이 늙은 어머니와 살았습니다.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-tiger.png",
+                art: "02-tiger.webp",
                 emoji: "🐯",
                 left: [
                     "부스럭.",
@@ -37,7 +37,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-brother.png",
+                art: "03-brother.webp",
                 emoji: "😲",
                 left: [
                     "그 순간 나무꾼의 입에서 저도 모르게 말이 튀어나왔어요.",
@@ -54,7 +54,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-story.png",
+                art: "04-story.webp",
                 emoji: "🥲",
                 left: [
                     "나무꾼은 눈물까지 짜내며 이야기를 지어냈어요.",
@@ -77,7 +77,7 @@ const CHAPTERS = [
         title: "2장 · 밤마다 놓인 것",
         beats: [
             {
-                art: "05-tears.png",
+                art: "05-tears.webp",
                 emoji: "💧",
                 left: [
                     "호랑이가 들었던 앞발을 슬그머니 내려놓았어요. 그러고는 커다란 눈에서 눈물을 뚝뚝 흘렸습니다.",
@@ -93,7 +93,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-farewell.png",
+                art: "06-farewell.webp",
                 emoji: "🌄",
                 left: [
                     "\"어머니께 내 이야기는 하지 마라.\"",
@@ -109,7 +109,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-gift.png",
+                art: "07-gift.webp",
                 emoji: "🐗",
                 left: [
                     "그런데 이튿날 아침이었어요. 마당에 커다란 멧돼지 한 마리가 놓여 있었습니다.",
@@ -123,7 +123,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-mother.png",
+                art: "08-mother.webp",
                 emoji: "👵",
                 left: [
                     "어머니가 고개를 갸웃했어요.",
@@ -146,7 +146,7 @@ const CHAPTERS = [
         title: "3장 · 진작 알고 있었다",
         beats: [
             {
-                art: "09-years.png",
+                art: "09-years.webp",
                 emoji: "🍂",
                 left: [
                     "그렇게 여러 해가 흘렀어요. 나무꾼네는 더 이상 굶지 않았습니다. 어머니는 밤마다 마당에 밥 한 그릇을 내놓았어요.",
@@ -161,7 +161,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-guilt.png",
+                art: "10-guilt.webp",
                 emoji: "😔",
                 left: [
                     "그런데 나무꾼은 마음이 점점 무거워졌어요.",
@@ -178,7 +178,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-confess.png",
+                art: "11-confess.webp",
                 emoji: "🙇",
                 left: [
                     "골짜기에서 호랑이가 나왔어요. 이제는 털이 허옇게 세어 있었지요. 나무꾼이 그 앞에 무릎을 꿇었습니다.",
@@ -194,7 +194,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-know.png",
+                art: "12-know.webp",
                 emoji: "🌙",
                 left: [
                     "한참 만에 호랑이가 입을 열었어요.",
@@ -246,7 +246,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐯')}
+                ${artFrame('cover.webp', '🐯')}
             </div>
             <div class="story-page-right">
                 <h1>나무꾼과 호랑이 형님</h1>
@@ -312,7 +312,7 @@ const AFTERWORD = {
     emoji: '🐯',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "호랑이가 사람과 말을 주고받는 이야기는 우리 옛이야기에 유난히 많습니다. 산이 많은 땅에서 호랑이가 가장 가깝고도 무서운 이웃이었기 때문입니다.",
                 "그래서 호랑이는 우리 이야기에서 늘 나쁜 쪽이 아닙니다. 속기도 하고 은혜를 갚기도 하고 이렇게 형님 소리를 듣고 마음이 풀리기도 합니다.",

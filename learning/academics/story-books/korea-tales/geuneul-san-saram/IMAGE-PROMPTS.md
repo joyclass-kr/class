@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -54,7 +54,7 @@ same tree, same shape, in every picture.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. Looking down from above onto a Korean village at
@@ -66,7 +66,7 @@ comfortably on a mat. Blazing white sunlight everywhere the shadow is not.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-tree.png` — 마을 어귀의 아름드리 느티나무
+### `01-tree.webp` — 마을 어귀의 아름드리 느티나무
 
 ```
 Wide village scene at midday. In the centre, an enormous ancient zelkova tree
@@ -76,7 +76,7 @@ prosperous tiled-roof house behind an earthen wall. Blazing sun, sharp shadow
 edges, cicada heat.
 ```
 
-### `02-rest.png` — 그늘에 짐을 내려놓은 나그네
+### `02-rest.webp` — 그늘에 짐을 내려놓은 나그네
 
 ```
 Wide scene at the foot of the tree. In the centre of the tree's shadow on the
@@ -85,7 +85,7 @@ eyes closed in bliss. Everything outside the shadow is bleached white with sun.
 Cicadas suggested on the trunk. Deliciously cool inside a very hot picture.
 ```
 
-### `03-scold.png` — 대문을 박차고 나온 부자
+### `03-scold.webp` — 대문을 박차고 나온 부자
 
 ```
 Wide scene at the tree and the house gate. On the right, the rich man storms out
@@ -95,7 +95,7 @@ eyebrows raised but calm. The shadow's edge lies clearly between them on the
 ground. Comic confrontation.
 ```
 
-### `04-buy.png` — 엽전 꾸러미를 꺼내며
+### `04-buy.webp` — 엽전 꾸러미를 꺼내며
 
 ```
 Wide scene at the tree. In the centre, the traveller stands and holds out a
@@ -105,7 +105,7 @@ coins, one hand already half raised. Behind them, the shadow lies on the road.
 Beautifully absurd.
 ```
 
-### `05-deal.png` — 흐뭇하게 돌아서는 부자
+### `05-deal.webp` — 흐뭇하게 돌아서는 부자
 
 ```
 Wide scene. On the right, the rich man walks back toward his gate counting coins
@@ -115,7 +115,7 @@ watching him go with a mild unreadable smile. The shadow has already shifted a
 little toward the wall. Warm and ominous.
 ```
 
-### `06-move.png` — 담을 넘어간 그늘
+### `06-move.webp` — 담을 넘어간 그늘
 
 ```
 Wide scene later in the afternoon, sun visibly lower on the right. The tree's
@@ -125,7 +125,7 @@ frame except a cat blinking at the edge of the shade. The whole picture is about
 the shadow moving.
 ```
 
-### `07-enter.png` — 마당에 멍석을 펴는 나그네
+### `07-enter.webp` — 마당에 멍석을 펴는 나그네
 
 ```
 Wide scene in the rich man's courtyard. In the centre, the traveller calmly
@@ -135,7 +135,7 @@ verandah with both arms out, mouth open, face purple. Strong shadow edge cutting
 across the swept earth. Perfect comic timing.
 ```
 
-### `08-friends.png` — 사람들을 데려온 이튿날
+### `08-friends.webp` — 사람들을 데려온 이튿날
 
 ```
 Wide scene in the courtyard. A dozen villagers of all ages sit around on mats in
@@ -145,7 +145,7 @@ not to step out of it. On the far right, the rich man peers out from a
 paper-screened window, seething. Warm, sociable, hilarious.
 ```
 
-### `09-porch.png` — 대청마루까지 닿은 그늘
+### `09-porch.webp` — 대청마루까지 닿은 그늘
 
 ```
 Wide scene of the house verandah in late afternoon. The tree's shadow now reaches
@@ -155,7 +155,7 @@ verandah, squeezed into the last sunlit corner of his own house, the rich man
 sits stiffly with his knees together. Deliciously awkward.
 ```
 
-### `10-beg.png` — 나그네를 찾아온 부자
+### `10-beg.webp` — 나그네를 찾아온 부자
 
 ```
 Wide scene in the courtyard at evening. On the left, the rich man stands with his
@@ -165,7 +165,7 @@ the mat looking up at him, silent and thoughtful. The shadow is long and soft
 now. Quiet turning point.
 ```
 
-### `11-return.png` — 그늘은 마을 사람 모두의 것
+### `11-return.webp` — 그늘은 마을 사람 모두의 것
 
 ```
 Wide scene in the courtyard. In the centre, the traveller stands and gestures
@@ -175,7 +175,7 @@ the coins forgotten in his hand, face turning red for a completely different
 reason. Warm gold evening light. Generous and unexpected.
 ```
 
-### `12-village.png` — 이듬해 여름의 느티나무 아래
+### `12-village.webp` — 이듬해 여름의 느티나무 아래
 
 ```
 Wide scene under the great tree the following summer. Straw mats are spread
@@ -185,7 +185,7 @@ fanning himself, chatting with a neighbour, entirely at ease. The tree's shadow
 covers everyone equally. Warm, green, generous.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet village entrance at sunset, no people. The great zelkova stands alone

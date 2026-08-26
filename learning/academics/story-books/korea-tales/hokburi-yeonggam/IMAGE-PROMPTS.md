@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -68,7 +68,7 @@ monsters.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. Inside a dark wooden hut lit by one small fire. At
@@ -81,7 +81,7 @@ frightening.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-oldman.png` — 노래 잘하는 혹부리 영감
+### `01-oldman.webp` — 노래 잘하는 혹부리 영감
 
 ```
 Wide sunny village scene. In the centre, the kind old man stands in a field with
@@ -91,7 +91,7 @@ with a water jar on her head, a boy with a sickle, an old woman on a veranda -
 all turned toward him, smiling. Musical notes suggested by drifting blossom.
 ```
 
-### `02-mountain.png` — 해가 넘어간 깊은 산
+### `02-mountain.webp` — 해가 넘어간 깊은 산
 
 ```
 Wide mountain forest scene at dusk. On the left, the old man stoops to tie
@@ -101,7 +101,7 @@ to black silhouettes. Long purple shadows sweep across the slope. A sense of tim
 running out.
 ```
 
-### `03-hut.png` — 골짜기의 낡은 빈 오두막
+### `03-hut.webp` — 골짜기의 낡은 빈 오두막
 
 ```
 Wide night scene in a valley. In the centre, a small tumbledown wooden hut with a
@@ -111,7 +111,7 @@ with a lantern-less hand raised. Deep blue night, pines pressing in on both
 sides.
 ```
 
-### `04-dokkaebi.png` — 문을 벌컥 열고 몰려든 도깨비들
+### `04-dokkaebi.webp` — 문을 벌컥 열고 몰려든 도깨비들
 
 ```
 Wide interior of the hut. On the left, the old man has flattened himself against
@@ -121,7 +121,7 @@ grinning ear to ear, jostling each other to get inside. Firelight, dust, chaos -
 but they are clearly excited, not angry.
 ```
 
-### `05-question.png` — 그 소리가 어디서 나느냐
+### `05-question.webp` — 그 소리가 어디서 나느냐
 
 ```
 Wide interior scene. On the right, the biggest goblin leans down until his face
@@ -131,7 +131,7 @@ the wall with both hands up, sweating, eyes darting. Other goblins crowd behind,
 all leaning in to listen. Comic tension.
 ```
 
-### `06-lie.png` — 이 혹에서 나옵니다
+### `06-lie.webp` — 이 혹에서 나옵니다
 
 ```
 Wide interior scene. In the centre, the old man has raised one trembling hand to
@@ -141,7 +141,7 @@ eyes going wide and round, several pointing at the lump. Firelight on every
 face. Perfect comic beat.
 ```
 
-### `07-trade.png` — 보물을 쏟아 내고 혹을 떼어 가다
+### `07-trade.webp` — 보물을 쏟아 내고 혹을 떼어 가다
 
 ```
 Wide interior scene, riotous. Goblins hammer their knobbly clubs on the floor and
@@ -151,7 +151,7 @@ jaw between two fingers and holds it up like a prize. The old man sits in a heap
 of treasure, utterly bewildered. Sparkling and funny.
 ```
 
-### `08-home.png` — 매끈한 턱으로 돌아온 아침
+### `08-home.webp` — 매끈한 턱으로 돌아온 아침
 
 ```
 Wide village street scene in bright morning. In the centre, the old man walks
@@ -161,7 +161,7 @@ mouths open, hands on their own faces in astonishment. Warm gold light, joyful
 uproar.
 ```
 
-### `09-greedy.png` — 소문을 듣고 달려온 욕심쟁이 영감
+### `09-greedy.webp` — 소문을 듣고 달려온 욕심쟁이 영감
 
 ```
 Wide scene in the kind old man's yard. On the right, the greedy old man leans in
@@ -171,7 +171,7 @@ palms up, brows raised in mild warning, clearly trying to say something the othe
 will not hear. Bright day, comic mismatch.
 ```
 
-### `10-sing.png` — 목청껏 불러 보지만
+### `10-sing.webp` — 목청껏 불러 보지만
 
 ```
 Wide interior of the same hut at night. In the centre, the greedy old man sits
@@ -181,7 +181,7 @@ a spider drops from the rafters, a mouse covers its ears. Behind the door on the
 right, the first goblin shadows are arriving anyway. Very funny.
 ```
 
-### `11-angry.png` — 험악해진 도깨비 대장
+### `11-angry.webp` — 험악해진 도깨비 대장
 
 ```
 Wide interior scene. On the left, the greedy old man thrusts his chin forward
@@ -191,7 +191,7 @@ roar, one fist raised - furious but comic, more offended than dangerous. Other
 goblins behind him fold their arms and scowl in unison. Firelight, red-tinged.
 ```
 
-### `12-two.png` — 혹을 둘이나 달고 내려오는 길
+### `12-two.webp` — 혹을 둘이나 달고 내려오는 길
 
 ```
 Wide mountain path scene at dawn. In the centre, the greedy old man trudges
@@ -202,7 +202,7 @@ villagers stare with their hands over their mouths. Pale morning light, richly
 deserved.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet mountain valley at sunrise, no people. The tumbledown wooden hut stands

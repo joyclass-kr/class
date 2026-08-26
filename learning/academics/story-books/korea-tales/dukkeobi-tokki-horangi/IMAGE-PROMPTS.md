@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -50,7 +50,7 @@ siru (Korean steaming pot) full of pale rice cakes.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A steep grassy autumn hillside seen from the side.
@@ -62,7 +62,7 @@ tiger and rabbit figures sprint after the steamer. Warm gold and green.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-cake.png` — 떡시루를 둘러싼 셋
+### `01-cake.webp` — 떡시루를 둘러싼 셋
 
 ```
 Wide autumn hillside scene. In the centre, a round grey steamer heaped with pale
@@ -72,7 +72,7 @@ back legs with both paws up in delight, on the right the plump toad sits low and
 still, blinking. Golden afternoon light.
 ```
 
-### `02-argue.png` — 누가 다 먹을지 다투다
+### `02-argue.webp` — 누가 다 먹을지 다투다
 
 ```
 Wide hillside scene. On the left, the tiger slams one huge paw down on the grass,
@@ -82,7 +82,7 @@ puffs and comic impact lines between them. Far right at the edge, the toad sits
 watching, unmoved.
 ```
 
-### `03-quiet.png` — 아무 말 없는 두꺼비
+### `03-quiet.webp` — 아무 말 없는 두꺼비
 
 ```
 Wide hillside scene. On the left, the tiger and the hare have both turned to look
@@ -92,7 +92,7 @@ completely blank expression, one webbed foot tucked under him. Lots of open gras
 between them. Comic timing through empty space.
 ```
 
-### `04-idea.png` — 내기를 제안하는 두꺼비
+### `04-idea.webp` — 내기를 제안하는 두꺼비
 
 ```
 Wide hillside scene. On the right, the toad has risen slightly and lifted one
@@ -102,7 +102,7 @@ whiskers forward, wide-eyed and interested. The steamer sits between them at the
 crest of the slope.
 ```
 
-### `05-agree.png` — 출발선에 선 둘
+### `05-agree.webp` — 출발선에 선 둘
 
 ```
 Wide hillside scene at the top of the slope. On the left, the tiger crouches in
@@ -112,7 +112,7 @@ lifted confidently. On the right, the toad sits flat on the grass beside the
 steamer, completely relaxed. The long slope falls away below them.
 ```
 
-### `06-roll.png` — 굴러가는 시루를 쫓아
+### `06-roll.webp` — 굴러가는 시루를 쫓아
 
 ```
 Wide hillside scene full of motion. The round steamer bounces down the slope from
@@ -122,7 +122,7 @@ reaching forward with one paw, mouths open shouting. Grass and leaves fly up
 behind them.
 ```
 
-### `07-scatter.png` — 언덕에 떨어지는 떡
+### `07-scatter.webp` — 언덕에 떨어지는 떡
 
 ```
 Wide hillside scene. The steamer bounces away toward the bottom left, and along
@@ -132,7 +132,7 @@ plods slowly downhill, one webbed foot lifted mid-step, eyeing the nearest rice
 cake. Warm gold light.
 ```
 
-### `08-eat.png` — 떡을 주워 먹는 두꺼비
+### `08-eat.webp` — 떡을 주워 먹는 두꺼비
 
 ```
 Wide hillside scene. The toad sits square in the middle of the trail of scattered
@@ -142,7 +142,7 @@ like a little collection. Far below at the very bottom edge, two tiny running
 figures. Sunny and satisfying.
 ```
 
-### `09-empty.png` — 텅 빈 시루
+### `09-empty.webp` — 텅 빈 시루
 
 ```
 Wide scene at the foot of the hill. In the centre, the tiger and the hare both
@@ -152,7 +152,7 @@ and slack, mouths hanging open, ears and whiskers drooping. A single dry crumb
 sits in the bottom. Dead silence, comic.
 ```
 
-### `10-belly.png` — 배를 두드리는 두꺼비
+### `10-belly.webp` — 배를 두드리는 두꺼비
 
 ```
 Wide hillside scene. On the right, the toad reclines back on the grass with an
@@ -162,7 +162,7 @@ slope and stand frozen mid-stride, pointing at him with mouths wide open in
 outrage. Empty steamer abandoned behind them. Very funny.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet grassy Korean hillside at sunset, no animals. An empty round grey

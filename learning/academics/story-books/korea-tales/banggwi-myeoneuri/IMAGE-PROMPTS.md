@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -61,7 +61,7 @@ carrying poles and empty baskets.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A traditional Korean house seen from the yard,
@@ -74,7 +74,7 @@ its handle. Bright blue sky, dust, chaos. Funny on sight.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-bride.png` — 얼굴빛이 누레진 며느리
+### `01-bride.webp` — 얼굴빛이 누레진 며느리
 
 ```
 Wide interior of a country house room. In the centre, the young wife kneels
@@ -84,7 +84,7 @@ father-in-law and mother-in-law lean toward her with worried faces, one hand
 half-raised. Warm afternoon light through a paper door. Concerned and comic.
 ```
 
-### `02-ask.png` — 실은 방귀를 못 뀌어서
+### `02-ask.webp` — 실은 방귀를 못 뀌어서
 
 ```
 Wide interior scene. On the right, the young wife has both hands over her face,
@@ -94,7 +94,7 @@ hairline, and the husband blinks with his spoon halfway to his mouth. A low meal
 table between them. Warm light. Perfect comic timing.
 ```
 
-### `03-permit.png` — 어서 시원하게 뀌어라
+### `03-permit.webp` — 어서 시원하게 뀌어라
 
 ```
 Wide interior scene. On the left, the father-in-law leans back roaring with
@@ -104,7 +104,7 @@ other hand pointing at the pillars. The husband looks between them, uncertain.
 Warm light. He has no idea what is coming.
 ```
 
-### `04-brace.png` — 다들 꼭 붙잡으세요
+### `04-brace.webp` — 다들 꼭 붙잡으세요
 
 ```
 Wide interior scene, everyone in position. On the left, the father-in-law
@@ -115,7 +115,7 @@ handle. In the middle, the young wife stands with her back to them, chest
 swelling with a huge breath. Tense and hilarious.
 ```
 
-### `05-boom.png` — 뿌우우우웅—!
+### `05-boom.webp` — 뿌우우우웅—!
 
 ```
 Wide scene of the whole house from outside, lifting and tilting. Swirling white
@@ -125,7 +125,7 @@ crack. Bright blue sky, dust clouds. Enormous impact lines. No smoke, no colour 
 just wind.
 ```
 
-### `06-fly.png` — 제각각 날아간 식구들
+### `06-fly.webp` — 제각각 날아간 식구들
 
 ```
 Wide scene of the yard mid-flight. On the left, the father-in-law spins around
@@ -136,7 +136,7 @@ the roof ridge holding the cauldron lid like a shield. Feathers everywhere.
 Peak slapstick.
 ```
 
-### `07-send.png` — 친정에 다녀오는 게 좋겠구나
+### `07-send.webp` — 친정에 다녀오는 게 좋겠구나
 
 ```
 Wide scene in the wrecked yard at dusk. On the left, the father-in-law sits on
@@ -146,7 +146,7 @@ hands folded, a small bundle at her feet. Broken door leaning against the wall
 behind. Soft orange evening light. Quiet and a little sad.
 ```
 
-### `08-road.png` — 배나무 아래 모인 장수들
+### `08-road.webp` — 배나무 아래 모인 장수들
 
 ```
 Wide scene on a country road. Filling the right of the frame, an enormous old
@@ -156,7 +156,7 @@ frustrated, empty baskets on the ground. On the left, the young wife and her
 husband come walking up with their bundles. Bright noon light.
 ```
 
-### `09-offer.png` — 제가 따 드릴까요
+### `09-offer.webp` — 제가 따 드릴까요
 
 ```
 Wide scene under the pear tree. On the left, the young wife steps forward with
@@ -166,7 +166,7 @@ his hand, one already reaching to shake on the deal. The husband stands behind
 her trying not to grin. Dappled shade.
 ```
 
-### `10-aim.png` — 다들 아주 멀리 물러서세요
+### `10-aim.webp` — 다들 아주 멀리 물러서세요
 
 ```
 Wide scene under the pear tree. In the centre, the young wife stands with her
@@ -176,7 +176,7 @@ out. On the right, the husband is already crouched behind a boulder with only hi
 eyes and a huge grin showing. Comic anticipation.
 ```
 
-### `11-pears.png` — 우수수 쏟아진 배
+### `11-pears.webp` — 우수수 쏟아진 배
 
 ```
 Wide scene of the pear tree bending. Swirling white wind streams blast from the
@@ -187,7 +187,7 @@ with their mouths open and their arms up. Sunlight through flying leaves.
 Spectacular and funny.
 ```
 
-### `12-home.png` — 대문 밖까지 나와 맞은 식구들
+### `12-home.webp` — 대문 밖까지 나와 맞은 식구들
 
 ```
 Wide scene at the house gate in the golden late afternoon. On the right, the
@@ -197,7 +197,7 @@ out through the mended gate with both arms wide, the mother-in-law behind him
 waving a cloth. The repaired roof and door behind them. Warm and happy.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet country house yard at evening, no people. A basket of golden pears sits

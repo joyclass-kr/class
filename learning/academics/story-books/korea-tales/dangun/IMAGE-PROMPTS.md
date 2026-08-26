@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 14장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -65,7 +65,7 @@ base - drawn identically every time.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A great mountain summit rising through a sea of
@@ -78,7 +78,7 @@ lets a shaft of light down onto the summit. Vast, still, and mythic.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-heaven.png` — 구름 사이로 내려다보다
+### `01-heaven.webp` — 구름 사이로 내려다보다
 
 ```
 Wide scene high above the clouds. On the right, Hwanung stands at the edge of a
@@ -88,7 +88,7 @@ mountains and rivers are visible. Deep blue sky, gold light from behind him.
 Longing.
 ```
 
-### `02-descend.png` — 무리 삼천을 이끌고
+### `02-descend.webp` — 무리 삼천을 이끌고
 
 ```
 Wide scene of a great forested mountain seen from the air. Down through a
@@ -98,7 +98,7 @@ wind, rain and cloud in ribbons. Below, the bare summit waits. Sweeping motion,
 blue and gold. Enormous scale.
 ```
 
-### `03-sinsi.png` — 신단수 아래에 터를 열다
+### `03-sinsi.webp` — 신단수 아래에 터를 열다
 
 ```
 Wide scene on a bare windswept mountain summit. In the centre stands one
@@ -108,7 +108,7 @@ mark out ground around him. Wind in the grass, clouds streaming past below the
 summit. Beginning.
 ```
 
-### `04-rule.png` — 널리 사람을 이롭게 하라
+### `04-rule.webp` — 널리 사람을 이롭게 하라
 
 ```
 Wide scene of the settlement below the summit. Across the frame, people plant
@@ -118,7 +118,7 @@ hands behind his back. Green terraced slopes, warm sunlight, smoke from cooking
 fires. Busy and peaceful.
 ```
 
-### `05-two.png` — 사람이 되고 싶습니다
+### `05-two.webp` — 사람이 되고 싶습니다
 
 ```
 Wide scene at the sacred tree at dusk. On the left, a black bear with a white
@@ -128,7 +128,7 @@ at them, one hand at his chin. Long shadows, gold and violet sky. Solemn, and
 strangely moving.
 ```
 
-### `06-give.png` — 쑥 한 다발과 마늘 스무 개
+### `06-give.webp` — 쑥 한 다발과 마늘 스무 개
 
 ```
 Wide scene beneath the sacred tree. In the centre, Hwanung sets down a bundle of
@@ -138,7 +138,7 @@ and its whiskers back in an unmistakable smirk, one paw already reaching. Mornin
 light. The tiger is far too confident.
 ```
 
-### `07-cave.png` — 빛이라고는 입구에 한 줄기뿐
+### `07-cave.webp` — 빛이라고는 입구에 한 줄기뿐
 
 ```
 Wide scene inside a deep stone cave, almost entirely black. Far off at the left
@@ -148,7 +148,7 @@ pairs of eyes catching the light, the pale bundle of mugwort between them. Very
 dark, very quiet.
 ```
 
-### `08-tiger.png` — 못 하겠다!
+### `08-tiger.webp` — 못 하겠다!
 
 ```
 Wide scene inside the cave. On the right, the tiger bolts for the entrance, body
@@ -158,7 +158,7 @@ bear sits perfectly still and watches it go. Black and white light, violent
 motion against complete stillness.
 ```
 
-### `09-bear.png` — 조금만 더, 조금만 더
+### `09-bear.webp` — 조금만 더, 조금만 더
 
 ```
 Wide scene inside the cave, mostly black. In the centre, the bear sits hunched
@@ -168,7 +168,7 @@ across the floor and changed colour, showing that seasons have passed. Almost no
 colour at all. Endurance.
 ```
 
-### `10-woman.png` — 삼칠일이 되던 날 아침
+### `10-woman.webp` — 삼칠일이 되던 날 아침
 
 ```
 Wide scene inside the cave with exactly the same composition as the previous
@@ -178,7 +178,7 @@ open hands. A faint white crescent shows at her collar. Bear fur lies on the flo
 around her. Overwhelming light. The turn of the book.
 ```
 
-### `11-pray.png` — 날마다 신단수 아래에서
+### `11-pray.webp` — 날마다 신단수 아래에서
 
 ```
 Wide scene at the sacred tree in late autumn. In the centre, Ungnyeo kneels alone
@@ -188,7 +188,7 @@ against her knees, showing she has been there a long time. Bare branches, low gr
 light. Lonely and persistent.
 ```
 
-### `12-birth.png` — 신단수 아래의 울음소리
+### `12-birth.webp` — 신단수 아래의 울음소리
 
 ```
 Wide scene at the sacred tree in spring. In the centre, Ungnyeo sits at the foot
@@ -197,7 +197,7 @@ laughing and crying at once. Beside her stands Hwanung with one hand resting on
 the trunk. New leaves overhead, birds, warm green light breaking through. Joy.
 ```
 
-### `13-asadal.png` — 이곳을 아사달이라 하겠다
+### `13-asadal.webp` — 이곳을 아사달이라 하겠다
 
 ```
 Wide landscape scene from a high ridge at sunrise. In the foreground on the
@@ -207,7 +207,7 @@ lying gold in the low ground, the sun just clearing the far hills. Enormous open
 space. Promise.
 ```
 
-### `14-joseon.png` — 나라 이름은 조선이다
+### `14-joseon.webp` — 나라 이름은 조선이다
 
 ```
 Wide scene of a walled settlement on the river plain in the morning. Earthen
@@ -217,7 +217,7 @@ Dangun stands looking out over it all. Gold morning light flooding the whole
 plain. Warm, wide and hopeful.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A bare mountain summit at dawn with no people. One enormous ancient tree with

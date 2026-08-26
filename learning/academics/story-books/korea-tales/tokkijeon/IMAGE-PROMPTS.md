@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 18장 | 1.33 : 1 | **가로 4 : 세로 3** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.33 : 1 | **가로 4 : 세로 3** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.33 : 1 | **가로 4 : 세로 3** |
 
 > **`end` 그림은 「읽고 나서」 쪽에 들어갑니다.** 쪽 위쪽에 가로로 얹히므로 비율은 아래 표대로면 됩니다.
 > 다만 글 분량에 따라 높이가 조금씩 달라지니, **중요한 것은 한가운데에 두고 위아래 가장자리는 여유를 두세요.**
@@ -62,7 +62,7 @@ it.
 
 ---
 
-## 표지 — `cover.png` (세로 2:3)
+## 표지 — `cover.webp` (세로 2:3)
 
 세로로 긴 표지. 자라 등에 탄 토끼가 바다 아래로 내려간다.
 
@@ -79,7 +79,7 @@ absurd.
 
 ## 본문 18장 (모두 가로 4:3)
 
-### `story-01-a.png` — 1장 — 수정궁과 병든 용왕
+### `story-01-a.webp` — 1장 — 수정궁과 병든 용왕
 
 ```
 Wide 4:3 undersea scene. A vast palace of coral pillars and mother-of-pearl roofs
@@ -90,7 +90,7 @@ in Joseon court robes stand in ranks below. Drifting light, slow bubbles,
 magnificence and sickness together.
 ```
 
-### `story-01-b.png` — 1장 — 늙은 의원이 토끼의 간을 말한다
+### `story-01-b.webp` — 1장 — 늙은 의원이 토끼의 간을 말한다
 
 ```
 Wide 4:3 undersea scene. Before the throne, an ancient bent fish-doctor in a grey
@@ -99,7 +99,7 @@ king leans forward off his throne, gaunt face suddenly sharp with hope. Around
 them the court exchanges glances. Green light, coral columns, a hush.
 ```
 
-### `story-01-c.png` — 1장 — 신하들이 서로 미룬다
+### `story-01-c.webp` — 1장 — 신하들이 서로 미룬다
 
 ```
 Wide 4:3 undersea scene. The full court in ranks. Every courtier - octopus, shark,
@@ -109,7 +109,7 @@ king's eye. On the throne the king glares down at them. Comic cowardice played
 completely straight.
 ```
 
-### `story-02-a.png` — 2장 — 문어 승상이 핑계를 댄다
+### `story-02-a.webp` — 2장 — 문어 승상이 핑계를 댄다
 
 ```
 Wide 4:3 undersea scene. An octopus in an oversized scholar's robe spreads all
@@ -119,7 +119,7 @@ general's face is pure alarm. Behind them the court watches. Rich robes, absurd
 dignity.
 ```
 
-### `story-02-b.png` — 2장 — 용왕이 자리에서 일어선다
+### `story-02-b.webp` — 2장 — 용왕이 자리에서 일어선다
 
 ```
 Wide 4:3 undersea scene. The king has forced himself up off the throne, one thin
@@ -129,7 +129,7 @@ floor in a wave of prostration. Furs sliding off his shoulders. Shafts of cold
 green light.
 ```
 
-### `story-02-c.png` — 2장 — 자라가 어머니께 절을 올린다
+### `story-02-c.webp` — 2장 — 자라가 어머니께 절을 올린다
 
 ```
 Wide 4:3 undersea scene, small and domestic. A modest little house of stacked
@@ -139,7 +139,7 @@ closed. A packed bundle at the door. Soft dim water-light, seaweed swaying. Very
 tender.
 ```
 
-### `story-03-a.png` — 3장 — 화공이 토끼 화상을 그린다
+### `story-03-a.webp` — 3장 — 화공이 토끼 화상을 그린다
 
 ```
 Wide 4:3 undersea scene. A court painter with brush and ink stone works on a
@@ -149,7 +149,7 @@ scroll is comically wrong: too long, too round-eyed, absurd. Everyone very
 serious. Green palace light.
 ```
 
-### `story-03-b.png` — 3장 — 자라가 뭍에 올라 산을 오른다
+### `story-03-b.webp` — 3장 — 자라가 뭍에 올라 산을 오른다
 
 ```
 Wide 4:3 scene, land. A sandy shore at the bottom left, a green pine mountain
@@ -159,7 +159,7 @@ drag-trail behind him. The path ahead is enormous. Bright hard sunlight, dry
 grass, a very long way to go.
 ```
 
-### `story-03-c.png` — 3장 — 풀밭의 짐승들이 윗자리를 다툰다
+### `story-03-c.webp` — 3장 — 풀밭의 짐승들이 윗자리를 다툰다
 
 ```
 Wide 4:3 scene, land. A broad grass meadow crowded with animals - deer, boar,
@@ -169,7 +169,7 @@ rabbit calmly picks up a fallen chestnut and eats it. Bright green, comic energy
 one still figure in the middle of the noise.
 ```
 
-### `story-04-a.png` — 4장 — 자라가 토끼에게 다가간다
+### `story-04-a.webp` — 4장 — 자라가 토끼에게 다가간다
 
 ```
 Wide 4:3 scene, land. A grassy slope. On the right a terrapin edges forward,
@@ -179,7 +179,7 @@ forward, one eye narrowed, ready to bolt. Tension and comedy. Afternoon light,
 long grass.
 ```
 
-### `story-04-b.png` — 4장 — 수궁 자랑을 늘어놓는다
+### `story-04-b.webp` — 4장 — 수궁 자랑을 늘어놓는다
 
 ```
 Wide 4:3 scene, land, with the sea visible far below. The terrapin gestures
@@ -189,7 +189,7 @@ straight up, whiskers forward, eyes gone round and greedy. Behind them, drawn as
 a faint dreamlike wash in the sky, a shimmering rainbow palace. Golden light.
 ```
 
-### `story-04-c.png` — 4장 — 물가에서 두 눈을 꼭 감는다
+### `story-04-c.webp` — 4장 — 물가에서 두 눈을 꼭 감는다
 
 ```
 Wide 4:3 scene. A sandy shore at evening. The terrapin is already half into the
@@ -199,7 +199,7 @@ the pine mountain is going dark and a single crow flies over it. Long red light 
 the water. A point of no return.
 ```
 
-### `story-05-a.png` — 5장 — 수궁에 닿아 눈을 뜬다
+### `story-05-a.webp` — 5장 — 수궁에 닿아 눈을 뜬다
 
 ```
 Wide 4:3 undersea scene. The rabbit, still on the terrapin's back, has opened his
@@ -209,7 +209,7 @@ everything. The terrapin swims steadily on, not looking at him. Vast, glittering
 overwhelming.
 ```
 
-### `story-05-b.png` — 5장 — 용왕 앞에 끌려 나온다
+### `story-05-b.webp` — 5장 — 용왕 앞에 끌려 나온다
 
 ```
 Wide 4:3 undersea scene. The throne hall. The rabbit stands very small and alone
@@ -219,7 +219,7 @@ him, mouth open, ordering something. The terrapin stands to one side with his he
 turned away. Cold green light, spears, absolute isolation.
 ```
 
-### `story-05-c.png` — 5장 — "제 간은 산속 바위틈에 있습니다" 하고 배를 내민다
+### `story-05-c.webp` — 5장 — "제 간은 산속 바위틈에 있습니다" 하고 배를 내민다
 
 ```
 Wide 4:3 undersea scene. The rabbit has recovered completely: he stands with his
@@ -229,7 +229,7 @@ king has frozen with one hand still raised, brow furrowed. Around them the whole
 court is exchanging baffled looks. The comic peak of the book.
 ```
 
-### `story-06-a.png` — 6장 — 용왕이 토끼를 노려본다
+### `story-06-a.webp` — 6장 — 용왕이 토끼를 노려본다
 
 ```
 Wide 4:3 undersea scene, close and tense. The gaunt king leans far forward off
@@ -238,7 +238,7 @@ looks back up at him without blinking, ears calmly at rest. Everyone else in the
 hall is a blurred green shape behind them. A pure contest of nerve.
 ```
 
-### `story-06-b.png` — 6장 — 모래밭에 닿자마자 뛰어내린다
+### `story-06-b.webp` — 6장 — 모래밭에 닿자마자 뛰어내린다
 
 ```
 Wide 4:3 scene. The shore in daylight. The rabbit has leapt off the terrapin's
@@ -248,7 +248,7 @@ him the terrapin sits in the shallows watching, small and still. Bright sun,
 sparkling water, green mountain ahead.
 ```
 
-### `story-06-c.png` — 6장 — 자라가 홀로 물가에 남는다
+### `story-06-c.webp` — 6장 — 자라가 홀로 물가에 남는다
 
 ```
 Wide 4:3 scene. The empty shore at dusk. The terrapin sits alone at the water's
@@ -260,7 +260,7 @@ Quiet and sad.
 
 ---
 
-## 마지막 장 — `end.png` (가로 4:3)
+## 마지막 장 — `end.webp` (가로 4:3)
 
 토끼가 산속에서 귀를 눕힌다.
 

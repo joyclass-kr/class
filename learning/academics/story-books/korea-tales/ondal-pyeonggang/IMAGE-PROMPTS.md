@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 16장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -62,7 +62,7 @@ its forehead - the same markings every time, gaunt at first, magnificent later.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A wide green ridge under a big spring sky. In the
@@ -75,7 +75,7 @@ gold light. Triumphant and funny.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-ondal.png` — 바보 온달이다!
+### `01-ondal.webp` — 바보 온달이다!
 
 ```
 Wide scene in a busy Goguryeo market street. In the centre, Ondal walks along in
@@ -85,7 +85,7 @@ pulling a face. Stall-keepers glance up. Ochre timber buildings, hanging goods,
 dust and sunlight. Comic and a bit sad.
 ```
 
-### `02-kind.png` — 어머니 몫부터 덜어 두고
+### `02-kind.webp` — 어머니 몫부터 덜어 두고
 
 ```
 Wide interior of a bare one-room hut. On the right, Ondal crouches at a small
@@ -95,7 +95,7 @@ toward the sound. Between them, one bowl already set aside on a low tray. Fireli
 smoke, almost nothing else in the room. Tender.
 ```
 
-### `03-cry.png` — 하루에도 몇 번씩 앙—
+### `03-cry.webp` — 하루에도 몇 번씩 앙—
 
 ```
 Wide interior of a palace hall. In the centre, a small girl of about five lies
@@ -105,7 +105,7 @@ the king backs out through the door with both hands over his ears. Painted beams
 bright daylight. Very funny.
 ```
 
-### `04-threat.png` — 바보 온달에게 시집보내겠다!
+### `04-threat.webp` — 바보 온달에게 시집보내겠다!
 
 ```
 Wide interior scene. On the left, the king leans down at the small crying
@@ -115,7 +115,7 @@ her eyes have gone narrow and thoughtful, one tear still on her cheek. Court
 ladies frozen behind. Comic - and the whole story turns here.
 ```
 
-### `05-sixteen.png` — 저는 온달에게 가겠습니다
+### `05-sixteen.webp` — 저는 온달에게 가겠습니다
 
 ```
 Wide interior of the palace hall. On the right, the sixteen-year-old princess
@@ -125,7 +125,7 @@ open. Around them, courtiers with the wedding gifts of a fine noble family
 frozen in place. Bright formal light. Enormous tension.
 ```
 
-### `06-argue.png` — 임금의 말은 농담이어도 말입니다
+### `06-argue.webp` — 임금의 말은 농담이어도 말입니다
 
 ```
 Wide interior scene. On the left, the king is on his feet, face scarlet, one arm
@@ -135,7 +135,7 @@ press back against the pillars. Strong diagonal composition. Neither of them is
 backing down.
 ```
 
-### `07-leave.png` — 다 쓰러져 가는 집
+### `07-leave.webp` — 다 쓰러져 가는 집
 
 ```
 Wide scene at the foot of a wooded hill in the evening. On the right, a tiny
@@ -145,7 +145,7 @@ having stopped some distance away, just looking at it. Long shadows, dry grass,
 gold evening light. A very long pause.
 ```
 
-### `08-refuse.png` — 어서 돌아가십시오
+### `08-refuse.webp` — 어서 돌아가십시오
 
 ```
 Wide scene at the hut door at dusk. In the doorway, the blind old mother waves
@@ -154,7 +154,7 @@ for the door frame. On the path, the princess stands quite still, not moving to
 leave. Behind her, night coming on. One small lamp inside. Painful and quiet.
 ```
 
-### `09-horse.png` — 나라에서 내다 판 여윈 말을 사 오세요
+### `09-horse.webp` — 나라에서 내다 판 여윈 말을 사 오세요
 
 ```
 Wide scene in the yard in the morning. In the centre, the princess presses two
@@ -164,7 +164,7 @@ baffled, mouth slightly open. Chickens, a broken fence, bright light. Funny and
 warm.
 ```
 
-### `10-train.png` — 굶었을 뿐이지요
+### `10-train.webp` — 굶었을 뿐이지요
 
 ```
 Wide scene split across the frame. On the left, Ondal leads home a gaunt dappled
@@ -174,7 +174,7 @@ stands glossy and strong while the princess brushes its neck and it tosses its
 head. Green yard, summer light. The change is the point.
 ```
 
-### `11-study.png` — 손바닥이 터지고 아물기를 몇 번이나
+### `11-study.webp` — 손바닥이 터지고 아물기를 몇 번이나
 
 ```
 Wide scene in the yard. On the left, the princess kneels with a wooden board and
@@ -184,7 +184,7 @@ a straw target, and a row of arrows stands in the ground where he has been
 practising since dawn, his palms wrapped in cloth. Warm light, sweat, effort.
 ```
 
-### `12-hunt.png` — 낙랑 언덕의 사냥 대회
+### `12-hunt.webp` — 낙랑 언덕의 사냥 대회
 
 ```
 Wide scene on a broad grassy ridge in spring. Across the frame, a long line of
@@ -194,7 +194,7 @@ behind the rest, one shabby figure on a dappled grey nobody is looking at. Big
 sky, green grass, dust. Energy and scale.
 ```
 
-### `13-win.png` — 저자가 누구냐?
+### `13-win.webp` — 저자가 누구냐?
 
 ```
 Wide scene on the ridge at the end of the hunt. On the right, a huge heap of
@@ -205,7 +205,7 @@ middle, the king rides forward with his eyebrows up. Gold afternoon light. The
 best moment in the book.
 ```
 
-### `14-king.png` — 과연 내 사위로다!
+### `14-king.webp` — 과연 내 사위로다!
 
 ```
 Wide scene on the ridge. In the centre, the king throws his head back laughing
@@ -215,7 +215,7 @@ frame, the princess stands alone among the grass watching, one hand at her mouth
 Warm light, banners. Joyful.
 ```
 
-### `15-general.png` — 온달 장군
+### `15-general.webp` — 온달 장군
 
 ```
 Wide scene of a mountain pass at dawn. In the centre, Ondal rides at the head of
@@ -225,7 +225,7 @@ soldiers with short bows and long spears. Mist in the valley, cold blue and gold
 light. Strong and cheerful.
 ```
 
-### `16-together.png` — 말은 당신이 키운 겁니다
+### `16-together.webp` — 말은 당신이 키운 겁니다
 
 ```
 Wide scene on the wooden porch of a modest house at night. Ondal and the
@@ -235,7 +235,7 @@ the yard, the dappled grey stands at the rail with its head over the fence,
 listening. Lantern light, moths, warm dark. Quiet and happy.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A modest house yard at dawn with no people. A dappled grey horse with a white

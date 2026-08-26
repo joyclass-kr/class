@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -51,7 +51,7 @@ and the serpent, not by a monstrous transformation.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A moonlit Korean mountain at night. High on the
@@ -63,7 +63,7 @@ behind the peak. Quiet, dramatic, hopeful.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-road.png` — 한양 가는 산길
+### `01-road.webp` — 한양 가는 산길
 
 ```
 Wide panoramic mountain landscape in late afternoon. A young scholar in pale blue
@@ -72,7 +72,7 @@ on his back, bow over one shoulder, looking up at a high ridge ahead. Tall pines
 line the trail, distant blue mountain ranges layered behind, long golden light.
 ```
 
-### `02-nest.png` — 둥지로 다가가는 구렁이
+### `02-nest.webp` — 둥지로 다가가는 구렁이
 
 ```
 Wide forest scene. On the right, a huge old pine with a magpie nest high in the
@@ -82,7 +82,7 @@ nest, beaks open. On the left, far below, the small figure of the scholar looks
 up, one hand shading his eyes. Tension without menace.
 ```
 
-### `03-arrow.png` — 활을 쏘는 선비
+### `03-arrow.webp` — 활을 쏘는 선비
 
 ```
 Wide forest scene. On the left, the scholar stands with his bow fully drawn, one
@@ -92,7 +92,7 @@ a loose curve, no wound or blood shown, just motion. The two magpies swoop
 overhead. Dynamic and clean.
 ```
 
-### `04-house.png` — 산속 외딴집
+### `04-house.webp` — 산속 외딴집
 
 ```
 Wide night landscape. Dark forested slopes fill most of the frame. On the right,
@@ -102,7 +102,7 @@ weary, one hand raised toward the door. Deep indigo night, stars above the
 ridgeline. Lonely and a little eerie.
 ```
 
-### `05-coil.png` — 몸을 감은 구렁이
+### `05-coil.webp` — 몸을 감은 구렁이
 
 ```
 Wide interior of a dim Korean room at night, seen from the side. The scholar lies
@@ -112,7 +112,7 @@ door glows faint blue with moonlight. Keep the snake decorative and rounded, not
 realistic. Tense but not frightening.
 ```
 
-### `06-revenge.png` — 낮의 그 여인
+### `06-revenge.webp` — 낮의 그 여인
 
 ```
 Wide interior of the same room. On the right, the snake's large head rises beside
@@ -122,7 +122,7 @@ long black hair down, speaking quietly. The scholar looks between them, face
 drained. Cool blue moonlight, still and quiet.
 ```
 
-### `07-bell.png` — 종을 치라는 조건
+### `07-bell.webp` — 종을 치라는 조건
 
 ```
 Wide interior with a view through the open paper door. Inside on the left, the
@@ -132,7 +132,7 @@ sliver of moon. The scholar stares out at it, hopeless. Strong depth between the
 near room and the distant temple.
 ```
 
-### `08-ring.png` — 종이 울리던 순간
+### `08-ring.webp` — 종이 울리던 순간
 
 > **이 그림은 다시 그려야 합니다.** 본문이 바뀌었습니다.
 > 구렁이는 종이 울릴 리 없다고 여기고, 날이 밝으면 선비를 잡아먹고 하늘로 오를
@@ -153,7 +153,7 @@ no blood, nobody being squeezed.
 The sky at the right edge is turning pale grey-pink.
 ```
 
-### `09-temple.png` — 혼자 오르는 용과 종 아래의 까치들
+### `09-temple.webp` — 혼자 오르는 용과 종 아래의 까치들
 
 > **이 그림은 다시 그려야 합니다.** 본문에 용이 들어갔습니다.
 > 용은 **혼자** 올라갑니다. 곁에 다른 용이 있으면 안 됩니다.
@@ -173,7 +173,7 @@ Soft pink dawn light, mist in the valley. Sad and tender and a little funny,
 never grim. No injury shown.
 ```
 
-### `10-nest-home.png` — 되살아난 까치
+### `10-nest-home.webp` — 되살아난 까치
 
 ```
 Wide sunny scene in the courtyard of a modest Korean house. On the left, the
@@ -183,7 +183,7 @@ built a nest, wings wide, clearly healthy again. Blue sky, green leaves, warm an
 joyful.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet Korean mountain temple at sunrise, no people. The bronze bell hangs

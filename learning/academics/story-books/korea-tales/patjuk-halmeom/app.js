@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 가을에 오시오",
         beats: [
             {
-                art: "01-field.png",
+                art: "01-field.webp",
                 emoji: "🌱",
                 left: [
                     "옛날 어느 산 밑에 할머니가 혼자 살았습니다. 밭이라고는 팥밭 한 뙈기가 전부였지요.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-tiger.png",
+                art: "02-tiger.webp",
                 emoji: "🐯",
                 left: [
                     "그때 등 뒤에서 서늘한 바람이 불었어요.",
@@ -37,7 +37,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-deal.png",
+                art: "03-deal.webp",
                 emoji: "🥣",
                 left: [
                     "\"자, 잠깐만!\"",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-agree.png",
+                art: "04-agree.webp",
                 emoji: "🍂",
                 left: [
                     "\"허, 그거 그럴듯하구나.\"",
@@ -78,7 +78,7 @@ const CHAPTERS = [
         title: "2장 · 팥죽 한 그릇씩",
         beats: [
             {
-                art: "05-cry.png",
+                art: "05-cry.webp",
                 emoji: "😭",
                 left: [
                     "가을이 왔어요.",
@@ -95,7 +95,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-chestnut.png",
+                art: "06-chestnut.webp",
                 emoji: "🌰",
                 left: [
                     "그때 밤 한 톨이 데구루루 굴러왔어요.",
@@ -111,7 +111,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-turtle.png",
+                art: "07-turtle.webp",
                 emoji: "🐢",
                 left: [
                     "이번에는 자라가 엉금엉금 기어왔어요.",
@@ -128,7 +128,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-dung.png",
+                art: "08-dung.webp",
                 emoji: "💩",
                 left: [
                     "다음은 개똥이 데굴데굴 굴러왔어요.",
@@ -146,7 +146,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-mortar.png",
+                art: "09-mortar.webp",
                 emoji: "🪨",
                 left: [
                     "쿵, 쿵, 쿵.",
@@ -163,7 +163,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-mat.png",
+                art: "10-mat.webp",
                 emoji: "🧺",
                 left: [
                     "마지막으로 멍석과 지게가 나란히 찾아왔어요.",
@@ -185,7 +185,7 @@ const CHAPTERS = [
         title: "3장 · 그날 밤",
         beats: [
             {
-                art: "11-arrive.png",
+                art: "11-arrive.webp",
                 emoji: "🌙",
                 left: [
                     "해가 지자 호랑이가 어슬렁어슬렁 내려왔어요.",
@@ -202,7 +202,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-pop.png",
+                art: "12-pop.webp",
                 emoji: "💥",
                 left: [
                     "호랑이가 잿속을 후후 불었어요. 그 순간이었습니다.",
@@ -219,7 +219,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-bite.png",
+                art: "13-bite.webp",
                 emoji: "😱",
                 left: [
                     "호랑이는 눈을 식히려고 물동이로 달려갔어요.",
@@ -237,7 +237,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "14-slip.png",
+                art: "14-slip.webp",
                 emoji: "🌀",
                 left: [
                     "펄쩍 뛰어 착지한 곳은 하필 개똥 위였어요.",
@@ -254,7 +254,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "15-roll.png",
+                art: "15-roll.webp",
                 emoji: "🧺",
                 left: [
                     "문틀 위에 있던 절구가 호랑이 머리 위로 떨어졌어요.",
@@ -270,7 +270,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "16-river.png",
+                art: "16-river.webp",
                 emoji: "🌊",
                 left: [
                     "담 옆에 서 있던 지게가 성큼 다가왔어요.",
@@ -321,7 +321,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🥣')}
+                ${artFrame('cover.webp', '🥣')}
             </div>
             <div class="story-page-right">
                 <h1>팥죽 할멈과 호랑이</h1>
@@ -384,7 +384,7 @@ const AFTERWORD = {
     emoji: '🌰',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기의 도우미들을 한번 세어 보십시오. 밤, 자라, 개똥, 절구, 멍석, 지게. 하나같이 부엌과 마당에 있던 것들입니다.",
                 "칼을 든 장수도 없고 도술을 부리는 신선도 없습니다. 할머니가 날마다 쓰던 살림살이가 그대로 도우미가 된 것이지요.",

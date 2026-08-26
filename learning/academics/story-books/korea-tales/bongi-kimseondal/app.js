@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 돈으로 못 살 게 없다니",
         beats: [
             {
-                art: "01-seondal.png",
+                art: "01-seondal.webp",
                 emoji: "🧑",
                 left: [
                     "옛날 평양에 김선달이라는 사람이 살았습니다. 가진 것은 없었지만 머리가 비상하고 말재간이 좋았지요.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-merchants.png",
+                art: "02-merchants.webp",
                 emoji: "💰",
                 left: [
                     "어느 날 한양에서 큰 상인 셋이 평양에 왔어요.",
@@ -36,7 +36,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-water.png",
+                art: "03-water.webp",
                 emoji: "🪣",
                 left: [
                     "마침 대동강가에서는 물장수들이 물을 긷고 있었어요.",
@@ -53,7 +53,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-plan.png",
+                art: "04-plan.webp",
                 emoji: "🪙",
                 left: [
                     "그날 저녁, 김선달이 물장수들을 불러 모았어요. 그러고는 한 사람씩 엽전을 나누어 주었습니다.",
@@ -75,7 +75,7 @@ const CHAPTERS = [
         title: "2장 · 대동강을 팔다",
         beats: [
             {
-                art: "05-collect.png",
+                art: "05-collect.webp",
                 emoji: "🌅",
                 left: [
                     "이튿날 아침, 김선달은 강가 바위에 떡 앉았어요. 마침 상인 셋이 그 앞을 지나갔습니다.",
@@ -91,7 +91,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-line.png",
+                art: "06-line.webp",
                 emoji: "😲",
                 left: [
                     "한 사람이 지나가자 또 한 사람.",
@@ -107,7 +107,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-claim.png",
+                art: "07-claim.webp",
                 emoji: "🌊",
                 left: [
                     "\"설마 저 강이 당신 것이오?\"",
@@ -124,7 +124,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-sell.png",
+                art: "08-sell.webp",
                 emoji: "📜",
                 left: [
                     "상인들이 달라붙어 조르기 시작했어요.",
@@ -146,7 +146,7 @@ const CHAPTERS = [
         title: "3장 · 아무도 못 사는 것",
         beats: [
             {
-                art: "09-morning.png",
+                art: "09-morning.webp",
                 emoji: "🪣",
                 left: [
                     "이튿날 아침, 상인 셋이 강가 바위에 나란히 앉았어요.",
@@ -162,7 +162,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-refuse.png",
+                art: "10-refuse.webp",
                 emoji: "😠",
                 left: [
                     "\"이 강은 이제 우리 것이오!\"",
@@ -178,7 +178,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-return.png",
+                art: "11-return.webp",
                 emoji: "🪙",
                 left: [
                     "상인들이 씩씩거리며 김선달을 찾아갔어요.",
@@ -195,7 +195,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-lesson.png",
+                art: "12-lesson.webp",
                 emoji: "🌊",
                 left: [
                     "\"그럼 대체 왜 이런 짓을 한 거요?\"",
@@ -246,7 +246,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '💧')}
+                ${artFrame('cover.webp', '💧')}
             </div>
             <div class="story-page-right">
                 <h1>봉이 김선달</h1>
@@ -309,7 +309,7 @@ const AFTERWORD = {
     emoji: '🌊',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "김선달이 실제로 있었던 사람인지는 아무도 모릅니다. 다만 조선 후기에 이런 재담꾼 이야기가 아주 많이 돌았습니다. 힘없는 사람이 말재주 하나로 힘 있는 사람을 골탕 먹이는 이야기입니다.",
                 "봉이라는 별명은 닭을 봉황이라 우겨 판 이야기에서 왔습니다. 사람들이 그 뒤로 그를 봉이라 불렀지요. 이름 자체가 속임수의 기록인 셈입니다.",

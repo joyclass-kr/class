@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 하루아침에 길어진 귀",
         beats: [
             {
-                art: "01-morning.png",
+                art: "01-morning.webp",
                 emoji: "👂",
                 left: [
                     "신라에 경문왕이라는 임금님이 살았습니다. 어질고 부지런해 백성들이 잘 따랐지요.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-mirror.png",
+                art: "02-mirror.webp",
                 emoji: "😱",
                 left: [
                     "임금님은 벌떡 일어나 거울 앞으로 달려갔어요.",
@@ -35,7 +35,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-hat.png",
+                art: "03-hat.webp",
                 emoji: "👑",
                 left: [
                     "임금님은 왕관 만드는 이를 몰래 불렀어요.",
@@ -53,7 +53,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-suspicion.png",
+                art: "04-suspicion.webp",
                 emoji: "🤔",
                 left: [
                     "그런데 신하들이 수군거리기 시작했어요.",
@@ -77,7 +77,7 @@ const CHAPTERS = [
         title: "2장 · 여우를 쫓다가",
         beats: [
             {
-                art: "05-aim.png",
+                art: "05-aim.webp",
                 emoji: "🏹",
                 left: [
                     "어느 날 임금님이 사냥을 나갔어요.",
@@ -93,7 +93,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-fox.png",
+                art: "06-fox.webp",
                 emoji: "🦊",
                 left: [
                     "그런데 여우가 갑자기 배를 잡고 웃기 시작했어요.",
@@ -110,7 +110,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-chase.png",
+                art: "07-chase.webp",
                 emoji: "💨",
                 left: [
                     "여우가 쏜살같이 달아나자 임금님도 뒤를 쫓았어요.",
@@ -126,7 +126,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-hide.png",
+                art: "08-hide.webp",
                 emoji: "🌿",
                 left: [
                     "임금님은 그 자리에 얼어붙었어요. 긴 귀 두 개가 훤히 드러났거든요.",
@@ -142,7 +142,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-spot.png",
+                art: "09-spot.webp",
                 emoji: "👀",
                 left: [
                     "마침 말을 타고 지나던 신하가 그것을 보았어요. 임금님을 늘 곁에서 모시는 바로 그 신하였습니다.",
@@ -158,7 +158,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-order.png",
+                art: "10-order.webp",
                 emoji: "🎯",
                 left: [
                     "신하가 사냥꾼들을 향해 팔을 쭉 뻗었어요.",
@@ -182,7 +182,7 @@ const CHAPTERS = [
         title: "3장 · 연못과 대나무숲",
         beats: [
             {
-                art: "11-dive.png",
+                art: "11-dive.webp",
                 emoji: "🌊",
                 left: [
                     "임금님은 덤불에서 뛰쳐나와 죽어라 달렸어요.",
@@ -199,7 +199,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-turtle.png",
+                art: "12-turtle.webp",
                 emoji: "🐢",
                 left: [
                     "물속은 조용했어요.",
@@ -215,7 +215,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-report.png",
+                art: "13-report.webp",
                 emoji: "😤",
                 left: [
                     "그날 저녁, 신하가 임금님 앞에 나와 아뢰었어요.",
@@ -232,7 +232,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "14-crownmaker.png",
+                art: "14-crownmaker.webp",
                 emoji: "🤐",
                 left: [
                     "세상에서 비밀을 아는 사람은 왕관 만드는 이 하나뿐이었어요.",
@@ -249,7 +249,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "15-shout.png",
+                art: "15-shout.webp",
                 emoji: "🎋",
                 left: [
                     "늙고 병이 든 어느 날, 그는 지팡이를 짚고 도림사 뒤 대나무숲으로 들어갔어요. 사방을 둘러보아도 사람이라고는 없었습니다.",
@@ -264,7 +264,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "16-laugh.png",
+                art: "16-laugh.webp",
                 emoji: "😄",
                 left: [
                     "그날부터 바람만 불면 대숲에서 소리가 났어요.",
@@ -316,7 +316,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '👂')}
+                ${artFrame('cover.webp', '👂')}
             </div>
             <div class="story-page-right">
                 <h1>임금님 귀는 당나귀 귀</h1>
@@ -379,7 +379,7 @@ const AFTERWORD = {
     emoji: '🎋',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "그리스에서는 갈대가 말을 옮기는데 우리 이야기에서는 대나무입니다. 이야기가 나라를 건너면 그 땅에 흔한 것으로 바뀝니다. 우리 땅에는 갈대보다 대나무가 가까웠던 것이지요.",
                 "그 이야기가 여러 나라를 건너 우리 땅에 오면서 갈대가 대나무로 바뀌었습니다. 우리 쪽 기록은 『삼국유사』에 있습니다. 신라 경문왕 이야기로 실려 있지요.",

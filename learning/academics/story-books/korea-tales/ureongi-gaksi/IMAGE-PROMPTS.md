@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -53,7 +53,7 @@ fist, glossy dark green with pale spiral bands. Keep it identical every time.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. The dim corner of an earthen kitchen at night. A
@@ -65,7 +65,7 @@ snail shell rests on the jar's rim. Quiet and enchanted.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-field.png` — 혼자 김을 매는 총각
+### `01-field.webp` — 혼자 김을 매는 총각
 
 ```
 Wide rice paddy scene at midday. A wide flooded field reflecting a blue sky
@@ -75,7 +75,7 @@ Distant thatched roofs, green hills. Beautiful but very empty. Loneliness in a
 wide space.
 ```
 
-### `02-voice.png` — 어디선가 들려온 대답
+### `02-voice.webp` — 어디선가 들려온 대답
 
 ```
 Wide rice paddy scene. The young man has straightened up sharply, one hand still
@@ -84,7 +84,7 @@ ripples spread from where his hand was. The paddy, the dyke, the hills - all
 empty. Nothing to explain the voice. Sunlit and strange.
 ```
 
-### `03-again.png` — 벼 포기를 헤치며
+### `03-again.webp` — 벼 포기를 헤치며
 
 ```
 Wide paddy scene, closer in. The young man wades through the rice with both
@@ -93,7 +93,7 @@ half disbelieving. Rice leaves lean away on both sides. Sunlight glinting off th
 water surface. Anticipation.
 ```
 
-### `04-shell.png` — 손바닥 위의 커다란 우렁이
+### `04-shell.webp` — 손바닥 위의 커다란 우렁이
 
 ```
 Wide scene at the edge of the paddy. In the centre, the young man crouches on
@@ -102,7 +102,7 @@ turning it toward the light, eyebrows raised in wonder. Water drips from his
 sleeve. Green rice on one side, dry dyke path on the other. Small and marvellous.
 ```
 
-### `05-table.png` — 차려져 있던 밥상
+### `05-table.webp` — 차려져 있던 밥상
 
 ```
 Wide interior of a small thatched cottage room at evening. On the right, the door
@@ -112,7 +112,7 @@ steaming bowl of rice, three side dishes and a soup bowl. Nobody else. Warm lamp
 glow. Wonderful and unsettling.
 ```
 
-### `06-days.png` — 이웃에게 물어보아도
+### `06-days.webp` — 이웃에게 물어보아도
 
 ```
 Wide scene in a village lane in daylight. On the right, the young man gestures
@@ -121,7 +121,7 @@ woman with a basin and a man with a hoe - both shake their heads with puzzled
 faces, one shrugging. Bright day, thatched roofs, ordinary and baffled.
 ```
 
-### `07-hide.png` — 짚더미 뒤에 숨어서
+### `07-hide.webp` — 짚더미 뒤에 숨어서
 
 ```
 Wide scene in the cottage yard at dusk. On the right, the young man crouches
@@ -131,7 +131,7 @@ earthen kitchen with the big water jar just visible inside. Long blue shadows.
 Held breath.
 ```
 
-### `08-appear.png` — 우렁이에서 나온 색시
+### `08-appear.webp` — 우렁이에서 나온 색시
 
 ```
 Wide interior of the earthen kitchen, the most beautiful image in the book. In
@@ -141,7 +141,7 @@ touching the floor yet. The light picks out the stove, the woodpile, the hanging
 gourd. On the far right edge, one eye of the watching man. Luminous and hushed.
 ```
 
-### `09-caught.png` — 뛰어나온 총각
+### `09-caught.webp` — 뛰어나온 총각
 
 ```
 Wide interior of the kitchen. On the left, the young man has burst in with one
@@ -151,7 +151,7 @@ startled, her glow flickering. Firelight and green light mixing. A moment that
 cannot be taken back.
 ```
 
-### `10-wait.png` — 사흘만 기다려 주세요
+### `10-wait.webp` — 사흘만 기다려 주세요
 
 ```
 Wide interior of the kitchen, calmer. The two stand facing each other across the
@@ -161,7 +161,7 @@ nodding. Between them on the floor, the empty snail shell catches the lamplight.
 Gentle and serious.
 ```
 
-### `11-impatient.png` — 하루를 못 넘긴 마음
+### `11-impatient.webp` — 하루를 못 넘긴 마음
 
 ```
 Wide interior of the cottage room at night. On the left, the young man lies awake
@@ -171,7 +171,7 @@ of the kitchen. A small thought bubble above him shows the water jar standing
 empty. Restless and human.
 ```
 
-### `12-together.png` — 조촐한 혼례, 그리고 저물녀
+### `12-together.webp` — 조촐한 혼례, 그리고 저물녀
 
 ```
 Wide scene in the cottage yard at dusk. On the left, the young man and the bride
@@ -184,7 +184,7 @@ snail shell waits in the last light. Warm and happy on the surface, quietly
 wrong underneath.
 ```
 
-### `13-jar.png` — 물독 앞의 밤
+### `13-jar.webp` — 물독 앞의 밤
 
 ```
 Night interior of the cottage kitchen, lit only by a single oil lamp. The young
@@ -195,7 +195,7 @@ low meal tables stand ready by the wall — one set for him, one set beside the
 jar. Very still. Grief without drama, and a man who has decided to wait.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet Korean farmyard at sunset, no people. A large brown water jar stands

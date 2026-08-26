@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 잉어가 준 구슬",
         beats: [
             {
-                art: "01-carp.png",
+                art: "01-carp.webp",
                 emoji: "🐟",
                 left: [
                     "옛날 강가에 가난한 할아버지 내외가 살았습니다.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-release.png",
+                art: "02-release.webp",
                 emoji: "💧",
                 left: [
                     "그런데 잉어가 할아버지를 물끄러미 올려다보았어요.",
@@ -37,7 +37,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-prince.png",
+                art: "03-prince.webp",
                 emoji: "🔵",
                 left: [
                     "그날 밤이었어요.",
@@ -54,7 +54,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-rich.png",
+                art: "04-rich.webp",
                 emoji: "🏡",
                 left: [
                     "\"쌀 한 가마니만 나오너라.\"",
@@ -77,7 +77,7 @@ const CHAPTERS = [
         title: "2장 · 쥐들의 왕",
         beats: [
             {
-                art: "05-steal.png",
+                art: "05-steal.webp",
                 emoji: "😈",
                 left: [
                     "소문은 강 건너 마을까지 퍼졌어요.",
@@ -93,7 +93,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-decide.png",
+                art: "06-decide.webp",
                 emoji: "🐕",
                 left: [
                     "마당에서 개와 고양이가 마주 앉았어요.",
@@ -109,7 +109,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-swim.png",
+                art: "07-swim.webp",
                 emoji: "🌊",
                 left: [
                     "강물은 넓고 깊었어요.",
@@ -126,7 +126,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-chest.png",
+                art: "08-chest.webp",
                 emoji: "🔒",
                 left: [
                     "할멈의 집에 몰래 숨어들었어요. 구슬은 방 안 궤짝 속에 있었습니다.",
@@ -142,7 +142,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-ratking.png",
+                art: "09-ratking.webp",
                 emoji: "👑",
                 left: [
                     "그때 고양이의 눈이 반짝였어요. 고양이는 벽 밑 쥐구멍 앞에 가만히 엎드렸습니다.",
@@ -165,7 +165,7 @@ const CHAPTERS = [
         title: "3장 · 강에 빠진 구슬",
         beats: [
             {
-                art: "10-threat.png",
+                art: "10-threat.webp",
                 emoji: "😼",
                 left: [
                     "\"저 궤짝 속에 푸른 구슬이 있다.\"",
@@ -183,7 +183,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-gnaw.png",
+                art: "11-gnaw.webp",
                 emoji: "🐀",
                 left: [
                     "쥐들이 우르르 몰려나왔어요.",
@@ -199,7 +199,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-drop.png",
+                art: "12-drop.webp",
                 emoji: "😱",
                 left: [
                     "돌아오는 길, 다시 강을 건널 때였어요. 개가 자꾸 고개를 돌려 물었습니다.",
@@ -217,7 +217,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-fish.png",
+                art: "13-fish.webp",
                 emoji: "🐠",
                 left: [
                     "개는 화가 나서 뒤도 안 보고 집으로 가 버렸어요. 혼자 남은 고양이는 강가를 몇 번이나 오갔습니다.",
@@ -232,7 +232,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "14-home.png",
+                art: "14-home.webp",
                 emoji: "🏠",
                 left: [
                     "푸른 구슬이었어요! 고양이는 구슬을 물고 집으로 달렸습니다.",
@@ -281,7 +281,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🔵')}
+                ${artFrame('cover.webp', '🔵')}
             </div>
             <div class="story-page-right">
                 <h1>푸른 구슬</h1>
@@ -344,7 +344,7 @@ const AFTERWORD = {
     emoji: '💎',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 두 가지를 한꺼번에 합니다. 잃은 것을 되찾는 이야기이면서, 개와 고양이가 왜 사이가 나쁜지를 풀어 주는 이야기이기도 합니다.",
                 "물을 건널 때 고양이가 개 등에 업히는 대목이 어느 판본에나 나옵니다. 고양이는 물을 싫어하고 개는 헤엄을 칠 줄 알기 때문입니다.",

@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 나정의 흰말",
         beats: [
             {
-                art: "01-six.png",
+                art: "01-six.webp",
                 emoji: "🗣️",
                 left: [
                     "옛날 서라벌 땅에는 여섯 마을이 있었습니다. 마을마다 촌장이 하나씩 있었지요.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-light.png",
+                art: "02-light.webp",
                 emoji: "🌈",
                 left: [
                     "그때 한 촌장이 남쪽을 가리켰습니다.",
@@ -37,7 +37,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-horse.png",
+                art: "03-horse.webp",
                 emoji: "🐴",
                 left: [
                     "우물가에 흰말 한 마리가 있었어요. 나정이라 부르던 우물이었지요. 말은 앞무릎을 꿇고 길게 울고 있었습니다.",
@@ -52,7 +52,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-egg.png",
+                art: "04-egg.webp",
                 emoji: "🥚",
                 left: [
                     "말은 훌쩍 하늘로 솟아올라 사라졌습니다. 그 자리에 무언가 놓여 있었어요. 커다랗고 붉은 알 하나였지요.",
@@ -68,7 +68,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-boy.png",
+                art: "05-boy.webp",
                 emoji: "👶",
                 left: [
                     "그때 알에 금이 쩍 갔어요.",
@@ -89,7 +89,7 @@ const CHAPTERS = [
         title: "2장 · 알영 우물의 아이",
         beats: [
             {
-                art: "06-bath.png",
+                art: "06-bath.webp",
                 emoji: "💧",
                 left: [
                     "촌장들이 아이를 동쪽 냇물에 데려가 씻겼습니다.",
@@ -105,7 +105,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-name.png",
+                art: "07-name.webp",
                 emoji: "📜",
                 left: [
                     "\"이름을 무어라 지을까요?\"",
@@ -121,7 +121,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-dragon.png",
+                art: "08-dragon.webp",
                 emoji: "🐉",
                 left: [
                     "바로 그날, 알영이라는 우물에서도 일이 있었어요.",
@@ -138,7 +138,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-beak.png",
+                art: "09-beak.webp",
                 emoji: "🕊️",
                 left: [
                     "할머니 한 분이 아이를 냇물로 데려갔습니다. 조심조심 얼굴을 씻겼지요.",
@@ -158,7 +158,7 @@ const CHAPTERS = [
         title: "3장 · 서라벌",
         beats: [
             {
-                art: "10-grow.png",
+                art: "10-grow.webp",
                 emoji: "🌱",
                 left: [
                     "두 아이는 여섯 마을이 함께 길렀어요. 이 집에서 밥을 먹고 저 집에서 잠을 잤지요.",
@@ -172,7 +172,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-thirteen.png",
+                art: "11-thirteen.webp",
                 emoji: "👑",
                 left: [
                     "혁거세가 열세 살이 되던 해였어요. 여섯 촌장이 다시 언덕에 모였습니다.",
@@ -190,7 +190,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-queen.png",
+                art: "12-queen.webp",
                 emoji: "🤝",
                 left: [
                     "혁거세는 알영을 왕비로 맞았어요.",
@@ -207,7 +207,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-seorabeol.png",
+                art: "13-seorabeol.webp",
                 emoji: "🏯",
                 left: [
                     "나라 이름은 서라벌이라 했어요. 여섯 마을이 하나가 된 것이지요. 담을 헐어 길을 내고, 저잣거리를 열었습니다.",
@@ -222,7 +222,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "14-people.png",
+                art: "14-people.webp",
                 emoji: "🌾",
                 left: [
                     "가을이면 온 서라벌이 누렇게 물들었어요. 곳간마다 곡식이 그득했지요.",
@@ -272,7 +272,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🥚')}
+                ${artFrame('cover.webp', '🥚')}
             </div>
             <div class="story-page-right">
                 <h1>박혁거세</h1>
@@ -350,7 +350,7 @@ const AFTERWORD = {
     emoji: '🥚',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "두 책이 전하는 이야기가 조금 다릅니다. 『삼국사기』는 촌장들이 알을 발견한 데서 담담하게 시작하는데, 『삼국유사』에는 흰말이 무릎을 꿇고 울다 하늘로 올라갔다는 대목이 더 붙어 있습니다.",
                 "알에서 나왔다는 것은 아버지가 없다는 뜻이기도 합니다. 앞선 임금의 자식이 아니라 하늘에서 곧바로 온 사람이라야, 여섯 마을 어느 쪽에도 치우치지 않는 임금이 될 수 있었습니다.",

@@ -78,7 +78,7 @@ def load_cfg(path):
 def build_js(groups, art_count):
     out = [u'const CHAPTERS = [']
     for n, (title, emoji, paras) in enumerate(groups, 1):
-        arts = u', '.join(u'"story-%02d-%s.png"' % (n, chr(ord('a') + k))
+        arts = u', '.join(u'"story-%02d-%s.webp"' % (n, chr(ord('a') + k))
                           for k in range(art_count))
         out.append(u'    {')
         out.append(u'        num: %d,' % n)

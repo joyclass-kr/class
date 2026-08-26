@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 울보 공주",
         beats: [
             {
-                art: "01-ondal.png",
+                art: "01-ondal.webp",
                 emoji: "🍚",
                 left: [
                     "옛날 고구려에 온달이라는 젊은이가 살았습니다. 눈먼 어머니와 단둘이 살았지요. 옷은 다 해지고 신은 짝짝이였어요.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-kind.png",
+                art: "02-kind.webp",
                 emoji: "🌰",
                 left: [
                     "그런데 온달은 화를 내는 법이 없었어요. 놀리는 아이에게도 씩 웃어 주었지요.",
@@ -34,7 +34,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-cry.png",
+                art: "03-cry.webp",
                 emoji: "😭",
                 left: [
                     "그 무렵 궁궐에는 울보 공주가 하나 있었어요. 평강 공주였지요.",
@@ -48,7 +48,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-threat.png",
+                art: "04-threat.webp",
                 emoji: "😤",
                 left: [
                     "\"자꾸 울면 바보 온달에게 시집보내겠다!\"",
@@ -63,7 +63,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-sixteen.png",
+                art: "05-sixteen.webp",
                 emoji: "💍",
                 left: [
                     "공주가 열여섯이 되던 해였어요. 임금이 좋은 집안 사윗감을 골라 놓았습니다.",
@@ -85,7 +85,7 @@ const CHAPTERS = [
         title: "2장 · 궁을 나온 공주",
         beats: [
             {
-                art: "06-argue.png",
+                art: "06-argue.webp",
                 emoji: "⚡",
                 left: [
                     "\"그건 그냥 해 본 말이 아니냐!\"",
@@ -102,7 +102,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-leave.png",
+                art: "07-leave.webp",
                 emoji: "🚪",
                 left: [
                     "공주는 금팔찌 몇 개만 챙겨 궁을 나왔어요. 비단옷도 가마도 두고서요.",
@@ -116,7 +116,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-refuse.png",
+                art: "08-refuse.webp",
                 emoji: "🙅",
                 left: [
                     "\"저는 공주입니다. 온달과 혼인하러 왔습니다.\"",
@@ -133,7 +133,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-horse.png",
+                art: "09-horse.webp",
                 emoji: "🐴",
                 left: [
                     "이튿날 공주가 팔찌를 내주며 말했어요.",
@@ -150,7 +150,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-train.png",
+                art: "10-train.webp",
                 emoji: "🌾",
                 left: [
                     "온달이 끌고 온 말은 갈비뼈가 다 드러나 있었어요. 공주는 그 말을 정성껏 먹이고 씻겼습니다.",
@@ -171,7 +171,7 @@ const CHAPTERS = [
         title: "3장 · 낙랑 언덕의 사냥",
         beats: [
             {
-                art: "11-study.png",
+                art: "11-study.webp",
                 emoji: "🏹",
                 left: [
                     "공주는 온달에게 글을 가르쳤어요. 활 잡는 법과 말 타는 법도요. 온달은 하나를 가르치면 열 번을 되풀이했습니다.",
@@ -186,7 +186,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-hunt.png",
+                art: "12-hunt.webp",
                 emoji: "🌄",
                 left: [
                     "삼월 삼짇날, 낙랑 언덕에서 사냥 대회가 열렸어요.",
@@ -202,7 +202,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-win.png",
+                art: "13-win.webp",
                 emoji: "🥇",
                 left: [
                     "그런데 사냥이 끝나고 보니 이상한 일이 벌어졌어요.",
@@ -219,7 +219,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "14-king.png",
+                art: "14-king.webp",
                 emoji: "👑",
                 left: [
                     "임금은 한참 동안 말이 없었어요.",
@@ -235,7 +235,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "15-general.png",
+                art: "15-general.webp",
                 emoji: "⚔️",
                 left: [
                     "그 뒤로 온달은 싸움터마다 앞장섰어요. 북쪽에서 쳐들어온 군사를 여러 번 물리쳤지요.",
@@ -250,7 +250,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "16-together.png",
+                art: "16-together.webp",
                 emoji: "🌅",
                 left: [
                     "싸움에서 돌아온 밤이면 둘은 마루에 앉았어요.",
@@ -301,7 +301,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐴')}
+                ${artFrame('cover.webp', '🐴')}
             </div>
             <div class="story-page-right">
                 <h1>바보 온달과 평강 공주</h1>
@@ -365,7 +365,7 @@ const AFTERWORD = {
     emoji: '🐎',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "온달은 지어낸 사람이 아닙니다. 『삼국사기』 열전에 이름이 올라 있는 고구려 장수입니다. 평강 공주도 그 기록에 함께 나옵니다.",
                 "다만 그 자리가 어디인지는 갈립니다. 단양의 온달산성이라는 말도 있고 서울 아차산성이라는 말도 있습니다. 싸움이 한강을 두고 벌어진 것이라 아차산성 쪽으로 보는 학자가 요즘은 더 많습니다.",

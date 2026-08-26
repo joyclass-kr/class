@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 14장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -56,7 +56,7 @@ identical in every picture.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A dim room at night. Filling the upper half of
@@ -68,7 +68,7 @@ Below them, a heavy wooden chest with a big iron lock. Funny and iconic.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-carp.png` — 그물에 걸린 커다란 잉어
+### `01-carp.webp` — 그물에 걸린 커다란 잉어
 
 ```
 Wide riverside scene at sunset. On the left, the old fisherman kneels on the
@@ -77,7 +77,7 @@ the right, the wide slow river and low hills catching the last orange light. His
 empty basket sits beside him. Warm and quiet, a hard day ending.
 ```
 
-### `02-release.png` — 눈물을 흘린 잉어를 놓아 주다
+### `02-release.webp` — 눈물을 흘린 잉어를 놓아 주다
 
 ```
 Wide riverside scene. In the centre, the old man holds the big carp in both arms
@@ -86,7 +86,7 @@ single tear catching the light. The man's face is torn. The net lies open and
 empty behind him. Soft violet dusk. Tender.
 ```
 
-### `03-prince.png` — 푸른 구슬을 건넨 젊은이
+### `03-prince.webp` — 푸른 구슬을 건넨 젊은이
 
 ```
 Wide scene at the cottage door at night. On the right, a young man in fine
@@ -96,7 +96,7 @@ the doorway in their nightclothes, mouths open, lamplight behind them. Deep
 indigo night, magical glow.
 ```
 
-### `04-rich.png` — 낡은 집이 기와집으로
+### `04-rich.webp` — 낡은 집이 기와집으로
 
 ```
 Wide scene of the house by day, split as before and after. On the left, the old
@@ -106,7 +106,7 @@ together while the dog rolls on his back and the cat sits fat and blinking on a
 full rice sack. Bright and joyful.
 ```
 
-### `05-steal.png` — 구슬을 들고 강을 건너는 할멈
+### `05-steal.webp` — 구슬을 들고 강을 건너는 할멈
 
 ```
 Wide river scene at dusk. On the right, a gaunt woman in dark clothes sits in a
@@ -116,7 +116,7 @@ stand very small, one with a hand raised. Cold blue water between them. A theft
 already done.
 ```
 
-### `06-decide.png` — 마주 앉은 개와 고양이
+### `06-decide.webp` — 마주 앉은 개와 고양이
 
 ```
 Wide scene in a bare moonlit yard, the house behind them poor again. In the
@@ -125,7 +125,7 @@ serious. Around them, the yard is empty and the storehouse door hangs open. Cool
 blue night, one small resolve in a big empty frame.
 ```
 
-### `07-swim.png` — 개 등에 탄 고양이
+### `07-swim.webp` — 개 등에 탄 고양이
 
 ```
 Wide river scene at night. In the middle of the frame, the dog swims steadily
@@ -134,7 +134,7 @@ back rides the cat, paws gripping fur, tail straight up, expression of pure
 dignity under great strain. Moonlight on the ripples. Funny and heroic.
 ```
 
-### `08-chest.png` — 자물쇠가 채워진 궤짝
+### `08-chest.webp` — 자물쇠가 채워진 궤짝
 
 ```
 Wide interior of a dim cluttered room. In the centre, a heavy wooden chest with
@@ -144,7 +144,7 @@ background, the greedy old woman sleeps under a quilt. Amber lamp stub, tense an
 comic.
 ```
 
-### `09-ratking.png` — 쥐구멍 앞에 엎드린 고양이
+### `09-ratking.webp` — 쥐구멍 앞에 엎드린 고양이
 
 ```
 Wide interior scene, low viewpoint at floor level. On the right, a small hole at
@@ -154,7 +154,7 @@ flat along the floor in shadow, the cat waits with only its green eyes and one
 raised paw catching the light. Perfect held breath.
 ```
 
-### `10-threat.png` — 목덜미를 잡고 으르는 고양이
+### `10-threat.webp` — 목덜미를 잡고 으르는 고양이
 
 ```
 Wide interior scene, the big one. Two faces fill the frame in close-up. On the
@@ -164,7 +164,7 @@ kicks all four legs in the air, crown sliding sideways, face a mask of terror,
 tiny hands clasped in pleading. Claws visible but nothing harmed. Hilarious.
 ```
 
-### `11-gnaw.png` — 궤짝을 갉아 내는 쥐들
+### `11-gnaw.webp` — 궤짝을 갉아 내는 쥐들
 
 ```
 Wide interior scene. Dozens of rats swarm over and around the wooden chest,
@@ -174,7 +174,7 @@ recovering his dignity now that he is not being held. On the right, the cat sits
 watching with the dog, tail curled neatly. Busy and funny.
 ```
 
-### `12-drop.png` — 퐁당
+### `12-drop.webp` — 퐁당
 
 ```
 Wide river scene at dawn. In the centre, the dog swims with the cat on his back,
@@ -184,7 +184,7 @@ teeth toward the water, a small splash already starting below. Both animals'
 eyes are enormous. Frozen disaster, very funny.
 ```
 
-### `13-fish.png` — 모래밭의 죽은 물고기
+### `13-fish.webp` — 모래밭의 죽은 물고기
 
 ```
 Wide riverside scene in late afternoon. On the sandy bank in the centre, a
@@ -193,7 +193,7 @@ body suddenly gone rigid, eyes wide, ears up - having just bitten something hard
 Long orange light, empty shore, gulls. The moment luck turns.
 ```
 
-### `14-home.png` — 방 안으로 들어간 고양이
+### `14-home.webp` — 방 안으로 들어간 고양이
 
 ```
 Wide scene at the cottage in warm evening light. On the right, inside the open
@@ -203,7 +203,7 @@ the yard, the dog lies with his chin on his paws looking in through the door,
 ears down. Warm gold inside, cooler blue outside. Funny and a little sad.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet riverside cottage at dusk, no people. Warm lamplight from an open

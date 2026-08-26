@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -50,7 +50,7 @@ identical in every picture.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. An underwater view looking down into deep blue
@@ -62,7 +62,7 @@ fish drifting. Quiet, strange, beautiful.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-mountain.png` — 안개 속의 노인
+### `01-mountain.webp` — 안개 속의 노인
 
 ```
 Wide misty mountain forest scene. On the left, the woodcutter stands on a narrow
@@ -72,7 +72,7 @@ half hidden in drifting mist between the pines, feet not quite visible. Cool gre
 green light, hushed and mysterious.
 ```
 
-### `02-mortar.png` — 절구를 건네받다
+### `02-mortar.webp` — 절구를 건네받다
 
 ```
 Wide forest scene. In the centre, the elder holds out a small round grey stone
@@ -81,7 +81,7 @@ and a puzzled, careful expression. Mist swirls thickly behind the elder, already
 beginning to close over him. Soft light through pine branches.
 ```
 
-### `03-rice.png` — 쏟아지는 쌀
+### `03-rice.webp` — 쏟아지는 쌀
 
 ```
 Wide scene inside a modest Korean house yard. In the centre, the stone mortar
@@ -91,7 +91,7 @@ in delight. On the right, neighbours crowd in with bowls and sacks, laughing.
 Sunny, joyful, generous.
 ```
 
-### `04-rumor.png` — 소문을 들은 도둑
+### `04-rumor.webp` — 소문을 들은 도둑
 
 ```
 Wide village street scene. On the left, two villagers stand talking with animated
@@ -101,7 +101,7 @@ eavesdrop, one eye narrowed and a sly grin showing above the cloth. Bright day,
 long shadows.
 ```
 
-### `05-steal.png` — 한밤중의 도둑질
+### `05-steal.webp` — 한밤중의 도둑질
 
 ```
 Wide moonlit night scene. On the left, the thief straddles the top of a low
@@ -111,7 +111,7 @@ paper windows, and beyond it a path leading toward a strip of moonlit sea on the
 horizon. Deep blue night, tiptoeing tension.
 ```
 
-### `06-salt.png` — 바다 위에서 소금을 부르다
+### `06-salt.webp` — 바다 위에서 소금을 부르다
 
 ```
 Wide open sea scene. A small wooden boat sits alone in the middle of calm dark
@@ -121,7 +121,7 @@ white fountain of salt into the air. Land is a thin line far away on the left.
 Bright and comic.
 ```
 
-### `07-more.png` — 멈추지 않는 소금
+### `07-more.webp` — 멈추지 않는 소금
 
 ```
 Wide sea scene, closer in. The boat is now half full of white salt piling up
@@ -131,7 +131,7 @@ sprays higher than his head. Waves start to slap the hull. Dramatic and funny at
 once.
 ```
 
-### `08-sinking.png` — 기울어지는 배
+### `08-sinking.webp` — 기울어지는 배
 
 ```
 Wide sea scene. The boat tilts steeply, gunwale almost at the waterline, buried
@@ -141,7 +141,7 @@ waves all around, empty sea to every edge. Keep it dramatic but not grim - no
 sense of drowning.
 ```
 
-### `09-plank.png` — 널빤지를 붙잡고
+### `09-plank.webp` — 널빤지를 붙잡고
 
 ```
 Wide dawn sea scene. In the centre, the thief floats holding onto a broad wooden
@@ -150,7 +150,7 @@ from his face. A calm pale pink and grey dawn, low gentle swells, a distant
 shoreline on the right. Empty-handed and worn out, but plainly safe.
 ```
 
-### `10-sea.png` — 바닷속의 절구
+### `10-sea.webp` — 바닷속의 절구
 
 ```
 Wide underwater scene. On the seabed toward the left sits the small grey stone
@@ -159,7 +159,7 @@ across the entire width of the frame. Fish swim through the cloud. Above, the
 underside of the water surface glitters with light. Calm, strange, wondrous.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet Korean seashore at sunrise, no people. Gentle waves washing over dark

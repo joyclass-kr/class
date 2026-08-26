@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 알에서 나온 아이",
         beats: [
             {
-                art: "01-yuhwa.png",
+                art: "01-yuhwa.webp",
                 emoji: "🌊",
                 left: [
                     "옛날 북쪽 땅 부여에 금와라는 임금이 있었습니다.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-sunlight.png",
+                art: "02-sunlight.webp",
                 emoji: "☀️",
                 left: [
                     "햇빛 한 줄기가 유화를 따라다녔어요. 방을 옮겨도, 발을 내려도 소용없었지요.",
@@ -36,7 +36,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-throw.png",
+                art: "03-throw.webp",
                 emoji: "🐖",
                 left: [
                     "금와왕은 알을 돼지우리에 던졌어요.",
@@ -53,7 +53,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-hatch.png",
+                art: "04-hatch.webp",
                 emoji: "👶",
                 left: [
                     "유화가 알을 품에 안고 따뜻한 곳에 두었어요. 얼마 지나지 않아 쩍— 소리가 났습니다. 알을 깨고 사내아이가 나왔지요.",
@@ -68,7 +68,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-bow.png",
+                art: "05-bow.webp",
                 emoji: "🏹",
                 left: [
                     "아이는 일곱 살에 제 손으로 활을 만들었어요.",
@@ -90,7 +90,7 @@ const CHAPTERS = [
         title: "2장 · 마구간의 준마",
         beats: [
             {
-                art: "06-princes.png",
+                art: "06-princes.webp",
                 emoji: "😠",
                 left: [
                     "금와왕에게는 아들이 일곱 있었어요.",
@@ -107,7 +107,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-stable.png",
+                art: "07-stable.webp",
                 emoji: "🐎",
                 left: [
                     "왕자들이 조르자 주몽은 마구간으로 보내졌어요. 말똥을 치우고 여물을 나르는 일이었지요.",
@@ -122,7 +122,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-needle.png",
+                art: "08-needle.webp",
                 emoji: "📌",
                 left: [
                     "주몽의 눈에 유난히 잘 달리는 말 한 마리가 띄었어요.",
@@ -138,7 +138,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-gift.png",
+                art: "09-gift.webp",
                 emoji: "🎁",
                 left: [
                     "얼마 뒤 금와왕이 마구간을 둘러보았어요. 살진 말들을 왕자들에게 나누어 주었지요. 그러고는 비쩍 마른 말을 가리켰습니다.",
@@ -154,7 +154,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-secret.png",
+                art: "10-secret.webp",
                 emoji: "🌙",
                 left: [
                     "그날 밤 주몽은 말의 혀에서 바늘을 뽑았어요. 말은 며칠 만에 살이 오르기 시작했지요.",
@@ -174,7 +174,7 @@ const CHAPTERS = [
         title: "3장 · 강을 건너다",
         beats: [
             {
-                art: "11-flee.png",
+                art: "11-flee.webp",
                 emoji: "🌫️",
                 left: [
                     "\"오늘 밤 저들이 너를 해치려 한다.\"",
@@ -191,7 +191,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-river.png",
+                art: "12-river.webp",
                 emoji: "🐟",
                 left: [
                     "주몽은 벗 셋을 데리고 성을 빠져나갔어요. 새벽녘, 앞을 커다란 강이 가로막았습니다. 뒤에서는 말발굽 소리가 점점 가까워졌지요.",
@@ -207,7 +207,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-bridge.png",
+                art: "13-bridge.webp",
                 emoji: "🐢",
                 left: [
                     "그러자 물이 부글부글 끓어올랐어요. 물고기와 자라가 떼로 떠올라 등을 맞대었지요.",
@@ -221,7 +221,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "14-jolbon.png",
+                art: "14-jolbon.webp",
                 emoji: "🏕️",
                 left: [
                     "주몽은 졸본이라는 땅에 닿았어요. 산이 험하고 물이 맑은 곳이었지요.",
@@ -236,7 +236,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "15-yuri.png",
+                art: "15-yuri.webp",
                 emoji: "🗡️",
                 left: [
                     "여러 해가 지난 어느 날이었어요. 웬 소년이 성문 앞에 나타났습니다. 품에서 부러진 칼 반쪽을 꺼냈지요.",
@@ -251,7 +251,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "16-sword.png",
+                art: "16-sword.webp",
                 emoji: "⚔️",
                 left: [
                     "주몽이 제 칼 반쪽을 꺼내 맞대었습니다. 쩌억— 하고 두 조각이 하나로 붙었어요.",
@@ -300,7 +300,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🏹')}
+                ${artFrame('cover.webp', '🏹')}
             </div>
             <div class="story-page-right">
                 <h1>주몽</h1>
@@ -379,7 +379,7 @@ const AFTERWORD = {
     emoji: '🏹',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "글로만 전하는 것이 아닙니다. 광개토대왕비에도 주몽 이야기가 새겨져 있습니다. 천육백 년 된 돌에 나라를 연 사람의 이야기를 새겨 둔 것입니다.",
                 "주몽은 태어날 때부터 이름이 그것은 아니었습니다. 활 솜씨를 보고 사람들이 붙여 준 말이 그대로 이름이 된 것입니다.",

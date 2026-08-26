@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 하늘나라의 두 사람",
         beats: [
             {
-                art: "01-gyeonu.png",
+                art: "01-gyeonu.webp",
                 emoji: "🐂",
                 left: [
                     "아주 먼 옛날, 하늘나라에 견우라는 젊은이가 살았습니다. 은하수 건너편 들판에서 소를 치는 일을 했지요.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-jiknyeo.png",
+                art: "02-jiknyeo.webp",
                 emoji: "🧵",
                 left: [
                     "은하수 이쪽에는 직녀가 살았어요.",
@@ -36,7 +36,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-meet.png",
+                art: "03-meet.webp",
                 emoji: "💫",
                 left: [
                     "옥황상제는 두 사람을 눈여겨보았어요.",
@@ -52,7 +52,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-idle.png",
+                art: "04-idle.webp",
                 emoji: "🕸️",
                 left: [
                     "그런데 그때부터 일이 이상해졌어요.",
@@ -75,7 +75,7 @@ const CHAPTERS = [
         title: "2장 · 은하수 양쪽으로",
         beats: [
             {
-                art: "05-anger.png",
+                art: "05-anger.webp",
                 emoji: "⚡",
                 left: [
                     "마침내 옥황상제가 노했습니다.",
@@ -92,7 +92,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-parted.png",
+                art: "06-parted.webp",
                 emoji: "🌌",
                 left: [
                     "\"오늘부터 은하수 양쪽에서 따로 살아라.\"",
@@ -106,7 +106,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-year.png",
+                art: "07-year.webp",
                 emoji: "🌙",
                 left: [
                     "그날부터 견우는 다시 소를 몰았어요. 직녀도 다시 베를 짰지요.",
@@ -122,7 +122,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-river.png",
+                art: "08-river.webp",
                 emoji: "😢",
                 left: [
                     "두 사람은 한달음에 은하수 강가로 달려갔어요.",
@@ -144,7 +144,7 @@ const CHAPTERS = [
         title: "3장 · 오작교",
         beats: [
             {
-                art: "09-birds.png",
+                art: "09-birds.webp",
                 emoji: "🐦",
                 left: [
                     "그 울음소리가 땅에까지 들렸어요.",
@@ -162,7 +162,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-bridge.png",
+                art: "10-bridge.webp",
                 emoji: "🌉",
                 left: [
                     "온 나라의 까치와 까마귀가 하늘로 날아올랐어요. 그러고는 은하수 위에 머리를 맞대고 줄지어 섰습니다.",
@@ -177,7 +177,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-reunion.png",
+                art: "11-reunion.webp",
                 emoji: "🤝",
                 left: [
                     "견우와 직녀는 새들의 등을 밟고 강 한가운데서 만났어요.",
@@ -193,7 +193,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-rain.png",
+                art: "12-rain.webp",
                 emoji: "🌧️",
                 left: [
                     "헤어지며 흘린 눈물이 땅으로 떨어졌어요.",
@@ -243,7 +243,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🌌')}
+                ${artFrame('cover.webp', '🌌')}
             </div>
             <div class="story-page-right">
                 <h1>견우와 직녀</h1>
@@ -306,7 +306,7 @@ const AFTERWORD = {
     emoji: '🌌',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "두 별 사이는 실제로 아주 멉니다. 빛으로 달려도 열여섯 해가 걸리는 거리입니다. 옛사람들은 그 거리를 몰랐지만 은하수를 사이에 두고 떨어져 있다는 것만은 눈으로 보았습니다.",
                 "그 별들이 일 년에 한 번 가장 가까워 보이는 때가 음력 칠월 초이레 무렵입니다. 그래서 그날을 칠석이라 하고 이 이야기를 붙여 두었습니다.",

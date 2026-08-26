@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -62,7 +62,7 @@ rather than horrifying.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A night sky filling the tall frame. Down the
@@ -75,7 +75,7 @@ night, one warm break of gold in the clouds. Frightening and thrilling at once.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-family.png` — 문 꼭 잠그고 있어라
+### `01-family.webp` — 문 꼭 잠그고 있어라
 
 ```
 Wide scene at the door of a small thatched cottage in the morning. On the right,
@@ -86,7 +86,7 @@ sleeve. Bare mountain slopes behind, thin smoke from the roof. Warm and a little
 anxious.
 ```
 
-### `02-tiger.png` — 떡 하나 주면 안 잡아먹지
+### `02-tiger.webp` — 떡 하나 주면 안 잡아먹지
 
 ```
 Wide scene on a misty mountain pass. On the right, an enormous striped tiger
@@ -96,7 +96,7 @@ her head, one hand steadying it, knees bent to run. Evening mist, pine trees, a
 narrow path. Huge size difference, comic-scary.
 ```
 
-### `03-pass.png` — 고개마다 앉아 있는 그놈
+### `03-pass.webp` — 고개마다 앉아 있는 그놈
 
 ```
 Wide scene showing a chain of mountain passes receding into the distance. On each
@@ -106,7 +106,7 @@ hurries along with the basket, noticeably emptier than before. Blue-violet dusk.
 Funny and dreadful at once.
 ```
 
-### `04-empty.png` — 텅 빈 광주리
+### `04-empty.webp` — 텅 빈 광주리
 
 ```
 Wide scene of an empty misty mountain path at nightfall - no people in it at all.
@@ -116,7 +116,7 @@ the sky. Show nothing else. The emptiness is the whole picture. Quiet and
 frightening without a single frightening thing in it.
 ```
 
-### `05-knock.png` — 얘들아, 엄마다
+### `05-knock.webp` — 얘들아, 엄마다
 
 ```
 Wide interior of the small cottage at night, one oil lamp burning. On the right,
@@ -126,7 +126,7 @@ door glows faintly from something on the other side, and a huge shadow spreads
 across the paper. Warm lamplight, deep shadow. Held breath.
 ```
 
-### `06-hand.png` — 문틈으로 들어온 손
+### `06-hand.webp` — 문틈으로 들어온 손
 
 ```
 Wide interior scene, close on the door. Through a gap at the bottom of the paper
@@ -137,7 +137,7 @@ eyes enormous. Lamplight, one terrible detail. The scariest picture in the
 book.
 ```
 
-### `07-escape.png` — 뒷문으로 살금살금
+### `07-escape.webp` — 뒷문으로 살금살금
 
 ```
 Wide scene of the cottage yard at night. On the left, the two children slip out
@@ -147,7 +147,7 @@ a big old tree with low branches. Blue moonlight, long shadows, silence. Tense
 and quick.
 ```
 
-### `08-well.png` — 우물에 비친 얼굴
+### `08-well.webp` — 우물에 비친 얼굴
 
 ```
 Wide scene at the well. In the centre, the tiger leans far over the stone rim
@@ -157,7 +157,7 @@ cling to a branch, holding perfectly still. Moonlight on water. The reader sees
 what he does not.
 ```
 
-### `09-laugh.png` — 바가지로 우물물을 푸다
+### `09-laugh.webp` — 바가지로 우물물을 푸다
 
 ```
 Wide scene at the well, comic. The huge tiger is frantically bailing water out of
@@ -168,7 +168,7 @@ her brother's face is pure alarm. Moonlight, flying droplets. The turn of the
 book.
 ```
 
-### `10-climb.png` — 참기름을 바르고 주르륵
+### `10-climb.webp` — 참기름을 바르고 주르륵
 
 ```
 Wide scene at the foot of the tree. The tiger has smeared sesame oil on his paws
@@ -179,7 +179,7 @@ mouth in horror at what she has just blurted out. Moonlight, motion lines. Very
 funny.
 ```
 
-### `11-rope.png` — 하늘에 빌다
+### `11-rope.webp` — 하늘에 빌다
 
 ```
 Wide scene looking up the tree. Near the top, the two children cling to the last
@@ -190,7 +190,7 @@ toward the children. Deep blue night, one shaft of light. Desperate and
 hopeful.
 ```
 
-### `12-sky.png` — 뚝, 그리고 해와 달
+### `12-sky.webp` — 뚝, 그리고 해와 달
 
 ```
 Tall dramatic scene. Two ropes hang from the clouds: on the left a strong new one
@@ -201,7 +201,7 @@ Above the clouds, a warm sun and a pale moon side by side. No injury shown.
 Sweeping and triumphant.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A field of tall sorghum at dusk with no one in it, the stalks a deep red-brown,

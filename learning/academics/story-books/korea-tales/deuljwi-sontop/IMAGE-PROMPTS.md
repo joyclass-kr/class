@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -54,7 +54,7 @@ bright green eyes.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A moonlit Korean yard at night seen from low
@@ -67,7 +67,7 @@ pale mist. Uncanny and quiet.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-clip.png` — 마루에 걸터앉아 손톱을 깎다
+### `01-clip.webp` — 마루에 걸터앉아 손톱을 깎다
 
 ```
 Wide scene on a cottage verandah in the afternoon. On the right, Deokgu sits on
@@ -77,7 +77,7 @@ doorway with one hand raised, mid-scolding. Warm light, ordinary domestic
 moment.
 ```
 
-### `02-toss.png` — 마당으로 훅 뿌려 버린 손톱
+### `02-toss.webp` — 마당으로 훅 뿌려 버린 손톱
 
 ```
 Wide scene in the yard. In the centre, Deokgu flicks his hand outward and a
@@ -86,7 +86,7 @@ drawn with fine motion lines. He is already turning away, not watching where the
 land. Late afternoon light, long shadows. Careless and small.
 ```
 
-### `03-rat.png` — 담 밑에서 나온 들쥐
+### `03-rat.webp` — 담 밑에서 나온 들쥐
 
 ```
 Wide night scene in the empty yard. On the left, a small brown rat has emerged
@@ -95,7 +95,7 @@ ground toward the pale clippings scattered in the centre. Everything else is
 still and dark. Cool blue moonlight, sharp little shadow behind the rat.
 ```
 
-### `04-change.png` — 김이 피어오르고 두 발로 일어서다
+### `04-change.webp` — 김이 피어오르고 두 발로 일어서다
 
 ```
 Wide night scene in the yard, the transformation. In the centre, pale mist rises
@@ -105,7 +105,7 @@ is unmistakably Deokgu, and he is smiling faintly. Moonlight, drifting mist. Eer
 but not monstrous.
 ```
 
-### `05-return.png` — 방 안에서 밥을 먹고 있는 나
+### `05-return.webp` — 방 안에서 밥을 먹고 있는 나
 
 ```
 Wide scene at the cottage door in the evening. On the left, Deokgu stands in the
@@ -115,7 +115,7 @@ halfway to his mouth, looking calmly back at him. The family eats on around him.
 Warm light, cold shock.
 ```
 
-### `06-family.png` — 나란히 세워 놓고 보아도
+### `06-family.webp` — 나란히 세워 놓고 보아도
 
 ```
 Wide scene in the yard at night. In the centre, two identical Deokgus stand side
@@ -125,7 +125,7 @@ peering desperately from face to face. Draw them so the reader genuinely cannot
 tell which is which. Lantern light, dread.
 ```
 
-### `07-test.png` — 가짜가 더 술술 대답하고
+### `07-test.webp` — 가짜가 더 술술 대답하고
 
 ```
 Wide interior scene by lamplight. The family sits in a half circle firing
@@ -135,7 +135,7 @@ half open, one hand raised, faltering. Nothing in the drawing says which is real
 Amber light, sinking feeling.
 ```
 
-### `08-out.png` — 닫히는 대문
+### `08-out.webp` — 닫히는 대문
 
 ```
 Wide scene at the cottage gate at night. On the right, inside the yard, one
@@ -145,7 +145,7 @@ hands as the heavy wooden gate swings shut between them. Moonlight, one narrowin
 band of warm light from inside. Heartbreaking.
 ```
 
-### `09-wander.png` — 처마 밑에 웅크린 밤
+### `09-wander.webp` — 처마 밑에 웅크린 밤
 
 ```
 Wide rainy night scene in a village lane. In the centre, Deokgu sits hunched
@@ -154,7 +154,7 @@ nothing. Rain streaks down in long grey lines and pools in the lane. Distant
 lamplit windows he cannot go into. Cold greys and blues. Lonely.
 ```
 
-### `10-cat.png` — 고양이를 데려가 보렴
+### `10-cat.webp` — 고양이를 데려가 보렴
 
 ```
 Wide scene in a village lane the next day. On the right, a small elderly woman
@@ -163,7 +163,7 @@ kindly. On the left, Deokgu takes it, looking down at the cat with dawning hope,
 still bedraggled. Grey morning light beginning to clear. Small kindness.
 ```
 
-### `11-reveal.png` — 등을 세우고 달려든 고양이
+### `11-reveal.webp` — 등을 세우고 달려든 고양이
 
 ```
 Wide scene in the yard. On the left, the cat lands with its back arched and every
@@ -173,7 +173,7 @@ cracking into panic. The family recoils behind. Dust, motion lines. The moment
 everything flips.
 ```
 
-### `12-rat-again.png` — 담 밑 구멍으로 사라진 들쥐
+### `12-rat-again.webp` — 담 밑 구멍으로 사라진 들쥐
 
 ```
 Wide scene in the yard. On the right, a small brown rat scurries into the hole at
@@ -183,7 +183,7 @@ the mother's face buried in his shoulder. The cat sits washing one paw, entirely
 unimpressed. Warm daylight, relief.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet Korean cottage verandah in the morning, no people. A folded square of

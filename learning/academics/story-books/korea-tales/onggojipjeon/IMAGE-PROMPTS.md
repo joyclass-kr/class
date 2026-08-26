@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 18장 | 1.33 : 1 | **가로 4 : 세로 3** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.33 : 1 | **가로 4 : 세로 3** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.33 : 1 | **가로 4 : 세로 3** |
 
 > **`end` 그림은 「읽고 나서」 쪽에 들어갑니다.** 쪽 위쪽에 가로로 얹히므로 비율은 아래 표대로면 됩니다.
 > 다만 글 분량에 따라 높이가 조금씩 달라지니, **중요한 것은 한가운데에 두고 위아래 가장자리는 여유를 두세요.**
@@ -63,7 +63,7 @@ doll about the size of a forearm.
 
 ---
 
-## 표지 — `cover.png` (세로 2:3)
+## 표지 — `cover.webp` (세로 2:3)
 
 세로로 긴 표지. 똑같은 두 사람이 마당에서 마주 서 있다.
 
@@ -80,7 +80,7 @@ long shadows. Unsettling and quiet.
 
 ## 본문 18장 (모두 가로 4:3)
 
-### `story-01-a.png` — 1장 — 곳간 여섯 채를 거느린 부자
+### `story-01-a.webp` — 1장 — 곳간 여섯 채를 거느린 부자
 
 ```
 Wide 4:3 scene. A wealthy walled compound seen from the yard: six granaries in a
@@ -91,7 +91,7 @@ as he passes. Hard bright light, deep shadows under the eaves. Prosperous and
 joyless.
 ```
 
-### `story-01-b.png` — 1장 — 쌀 몇 되에도 저울부터 가져온다
+### `story-01-b.webp` — 1장 — 쌀 몇 되에도 저울부터 가져온다
 
 ```
 Wide 4:3 scene. An inner room. A woman kneels beside a small sack of rice with a
@@ -100,7 +100,7 @@ between them with great care, one eyebrow raised, already reaching for the scoop
 The room is fine but bare. Cold north light through the paper door.
 ```
 
-### `story-01-c.png` — 1장 — 늙은 어머니의 방에는 불을 넣지 않는다
+### `story-01-c.webp` — 1장 — 늙은 어머니의 방에는 불을 넣지 않는다
 
 ```
 Wide 4:3 scene. A cold dim room at night. A very old blind woman sits wrapped in
@@ -110,7 +110,7 @@ sits at his ledger with his back to her. The cold room is blue, the warm room is
 gold, and the doorway divides them. Terrible in its quietness.
 ```
 
-### `story-02-a.png` — 2장 — 시주 온 스님을 매질해 내쫓는다
+### `story-02-a.webp` — 2장 — 시주 온 스님을 매질해 내쫓는다
 
 ```
 Wide 4:3 scene, restrained. The compound gateway. A young monk in grey has been
@@ -121,7 +121,7 @@ back with their hands half raised, unwilling. Autumn leaves, hard afternoon ligh
 No blood.
 ```
 
-### `story-02-b.png` — 2장 — 취암사의 밤, 노승이 짚으로 사람을 만든다
+### `story-02-b.webp` — 2장 — 취암사의 밤, 노승이 짚으로 사람을 만든다
 
 ```
 Wide 4:3 scene. A mountain temple hall at night, candles on the altar. An ancient
@@ -132,7 +132,7 @@ writing lies on the mat before him. Warm candlelight, huge shadows on the
 pillars, wind in the pines outside.
 ```
 
-### `story-02-c.png` — 2장 — 짚 사람이 산을 내려간다
+### `story-02-c.webp` — 2장 — 짚 사람이 산을 내려간다
 
 ```
 Wide 4:3 scene. A mountain path at dawn. A man in dark hanbok walks down toward
@@ -142,7 +142,7 @@ pines, first pale light on the valley, the village roofs far below. Calm and
 strange.
 ```
 
-### `story-03-a.png` — 3장 — 마당에 또 하나의 옹고집이 나타난다
+### `story-03-a.webp` — 3장 — 마당에 또 하나의 옹고집이 나타난다
 
 ```
 Wide 4:3 scene. The courtyard in daylight, full of shouting servants. In the
@@ -152,7 +152,7 @@ other standing calmly with his hands at his sides. Servants scatter between them
 pointing at both. Bright noon, no shadows to hide in.
 ```
 
-### `story-03-b.png` — 3장 — 아내가 두 사람 사이에서 어쩔 줄 모른다
+### `story-03-b.webp` — 3장 — 아내가 두 사람 사이에서 어쩔 줄 모른다
 
 ```
 Wide 4:3 scene. The same yard. The wife has run out and stopped dead between the
@@ -161,7 +161,7 @@ other, her face collapsing in confusion and fear. Both men have their arms out t
 her. The two identical faces on either side of her. Very close in, very cruel.
 ```
 
-### `story-03-c.png` — 3장 — 관가에서 어머니의 밥상을 묻는다
+### `story-03-c.webp` — 3장 — 관가에서 어머니의 밥상을 묻는다
 
 ```
 Wide 4:3 scene. A magistrate's hall. The two identical men kneel side by side on
@@ -171,7 +171,7 @@ head slightly bowed. The magistrate leans forward, looking only at the one who i
 speaking. Officials and villagers crowd the edges. Hard clear daylight.
 ```
 
-### `story-04-a.png` — 4장 — 곤장을 맞고 고을 밖으로 쫓겨난다
+### `story-04-a.webp` — 4장 — 곤장을 맞고 고을 밖으로 쫓겨난다
 
 ```
 Wide 4:3 scene, restrained. A village boundary marker on a road at evening.
@@ -181,7 +181,7 @@ gate. No blows shown, no blood. Grey dusk, bare fields, a very long empty road
 ahead. Bleak.
 ```
 
-### `story-04-b.png` — 4장 — 남의 집 헛간 처마 밑에서 잔다
+### `story-04-b.webp` — 4장 — 남의 집 헛간 처마 밑에서 잔다
 
 ```
 Wide 4:3 scene. Night. Under the eaves of a stranger's barn, a man curls on the
@@ -190,7 +190,7 @@ visibly, breath steaming. A dog watches him from a few paces off. Snow beginning
 to fall. Cold blue-black, one distant warm window far away across the yard.
 ```
 
-### `story-04-c.png` — 4장 — 제 집 담 밖에서 안을 들여다본다
+### `story-04-c.webp` — 4장 — 제 집 담 밖에서 안을 들여다본다
 
 ```
 Wide 4:3 scene. Night at his own compound wall. A ragged man stands outside
@@ -200,7 +200,7 @@ was always dark - and a figure is carrying a tray toward it. His face is
 breaking. Cold blue outside, warm gold inside, the wall between.
 ```
 
-### `story-05-a.png` — 5장 — 눈 덮인 산길에 쓰러진다
+### `story-05-a.webp` — 5장 — 눈 덮인 산길에 쓰러진다
 
 ```
 Wide 4:3 scene. A snowbound mountain pass, everything white and pale blue. A
@@ -209,7 +209,7 @@ one hand outstretched, already half drifted over. Bare black trees, an enormous
 empty white slope, no tracks but his own. Utterly still.
 ```
 
-### `story-05-b.png` — 5장 — 노승이 그를 일으킨다
+### `story-05-b.webp` — 5장 — 노승이 그를 일으킨다
 
 ```
 Wide 4:3 scene. The same pass. The old grey-robed abbot crouches in the snow with
@@ -218,7 +218,7 @@ snow from the man's face. The abbot's expression is neither pitying nor
 triumphant, only attentive. Pale winter light, falling flakes. Quiet mercy.
 ```
 
-### `story-05-c.png` — 5장 — 제 집 대문 앞에 선다
+### `story-05-c.webp` — 5장 — 제 집 대문 앞에 선다
 
 ```
 Wide 4:3 scene. Daylight at the compound gate. A thin, much-aged man in borrowed
@@ -227,7 +227,7 @@ his sides, looking up at it. He is very small against the wall. The gate is
 standing open. Cold clear winter light. He does not move.
 ```
 
-### `story-06-a.png` — 6장 — 열려 있는 대문
+### `story-06-a.webp` — 6장 — 열려 있는 대문
 
 ```
 Wide 4:3 scene. Looking through the open gateway into the courtyard from outside.
@@ -237,7 +237,7 @@ that used to lock the gate leans unused against the wall. Bright light inside,
 the viewer still standing in the shadow of the gateway.
 ```
 
-### `story-06-b.png` — 6장 — 짚 사람이 부적을 건넨다
+### `story-06-b.webp` — 6장 — 짚 사람이 부적을 건넨다
 
 ```
 Wide 4:3 scene. An inner room. The two identical men sit facing each other on the
@@ -247,7 +247,7 @@ a plain straw doll. Warm lamplight; the giver is already very slightly less soli
 than the receiver, his edges softening. Strange and gentle.
 ```
 
-### `story-06-c.png` — 6장 — 어머니 앞에 무릎을 꿇는다
+### `story-06-c.webp` — 6장 — 어머니 앞에 무릎을 꿇는다
 
 ```
 Wide 4:3 scene. A warm lamplit room, a brazier glowing. A thin worn man kneels
@@ -259,7 +259,7 @@ Quilts, warm floor, soft gold light. Deeply quiet.
 
 ---
 
-## 마지막 장 — `end.png` (가로 4:3)
+## 마지막 장 — `end.webp` (가로 4:3)
 
 취암사 지붕에 새 기와가 얹힌다.
 

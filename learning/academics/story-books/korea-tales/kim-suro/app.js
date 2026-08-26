@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 구지봉의 소리",
         beats: [
             {
-                art: "01-gugan.png",
+                art: "01-gugan.webp",
                 emoji: "🏘️",
                 left: [
                     "옛날 낙동강 아래쪽 땅에는 임금이 없었습니다. 대신 아홉 우두머리가 저마다 마을을 이끌었지요. 사람들은 그들을 아홉 간이라 불렀어요.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-voice.png",
+                art: "02-voice.webp",
                 emoji: "👂",
                 left: [
                     "삼월 어느 날이었어요.",
@@ -36,7 +36,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-song.png",
+                art: "03-song.webp",
                 emoji: "🎶",
                 left: [
                     "\"하늘이 나에게 이곳에 나라를 세우라 하셨다.\"",
@@ -53,7 +53,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-dance.png",
+                art: "04-dance.webp",
                 emoji: "💃",
                 left: [
                     "아홉 간과 이백 명 남짓한 사람들이 노래를 불렀어요.",
@@ -70,7 +70,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-rope.png",
+                art: "05-rope.webp",
                 emoji: "🎁",
                 left: [
                     "그러자 하늘에서 자줏빛 줄이 스르르 내려왔어요. 줄 끝에는 붉은 보자기가 묶여 있었지요. 보자기를 풀자 금빛 상자가 나왔습니다.",
@@ -91,7 +91,7 @@ const CHAPTERS = [
         title: "2장 · 황금 알 여섯",
         beats: [
             {
-                art: "06-eggs.png",
+                art: "06-eggs.webp",
                 emoji: "🥚",
                 left: [
                     "상자 안에는 황금빛 알이 여섯 개 들어 있었어요. 저마다 해처럼 둥글었지요.",
@@ -107,7 +107,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-hatch.png",
+                art: "07-hatch.webp",
                 emoji: "👶",
                 left: [
                     "열이틀이 지난 아침이었어요. 뚜껑을 열자 사람들이 모두 얼어붙었습니다.",
@@ -123,7 +123,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-suro.png",
+                art: "08-suro.webp",
                 emoji: "👑",
                 left: [
                     "가장 먼저 알을 깨고 나온 아이가 있었어요. 사람들은 그 아이를 수로라 불렀습니다. 수로는 열흘 만에 어른만큼 자랐지요.",
@@ -138,7 +138,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-six.png",
+                art: "09-six.webp",
                 emoji: "🗺️",
                 left: [
                     "나머지 다섯도 저마다 훌쩍 자랐습니다. 수로가 다섯 형제를 불러 모았어요.",
@@ -159,7 +159,7 @@ const CHAPTERS = [
         title: "3장 · 바다에서 온 배",
         beats: [
             {
-                art: "10-iron.png",
+                art: "10-iron.webp",
                 emoji: "⚒️",
                 left: [
                     "수로가 다스리는 땅에서는 좋은 쇠가 났어요. 골짜기마다 대장간 망치 소리가 울렸지요.",
@@ -174,7 +174,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-alone.png",
+                art: "11-alone.webp",
                 emoji: "🌙",
                 left: [
                     "아홉 간이 수로에게 말했어요.",
@@ -191,7 +191,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-ship.png",
+                art: "12-ship.webp",
                 emoji: "⛵",
                 left: [
                     "어느 날 붉은 돛을 단 배가 바다 저편에서 나타났어요.",
@@ -208,7 +208,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-wedding.png",
+                art: "13-wedding.webp",
                 emoji: "🎊",
                 left: [
                     "수로가 언덕까지 마중을 나갔어요. 둘은 그 자리에서 한참을 마주 보고 서 있었지요.",
@@ -224,7 +224,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "14-gaya.png",
+                art: "14-gaya.webp",
                 emoji: "🌊",
                 left: [
                     "가야는 바다로 열린 나라가 되었어요. 쇠를 실은 배가 나가고 낯선 물건이 들어왔지요.",
@@ -274,7 +274,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐢')}
+                ${artFrame('cover.webp', '🐢')}
             </div>
             <div class="story-page-right">
                 <h1>김수로</h1>
@@ -353,7 +353,7 @@ const AFTERWORD = {
     emoji: '🥚',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "신라의 박혁거세, 고구려의 주몽과 나란히 놓이는 자리입니다. 세 나라가 저마다 첫 임금 이야기를 하나씩 갖고 있는 셈이지요.",
                 "여기에도 알이 나옵니다. 다만 하나가 아니라 여섯입니다. 여섯 알에서 나온 여섯이 각각 여섯 가야의 임금이 되었다고 합니다.",

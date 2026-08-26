@@ -23,8 +23,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -55,7 +55,7 @@ muted hanbok of straw, indigo and brown.
 
 ---
 
-## 표지 — `cover.png` (세로 2:3)
+## 표지 — `cover.webp` (세로 2:3)
 
 ```
 Vertical portrait composition. A grassy mountain pass at golden hour, a winding
@@ -67,7 +67,7 @@ frame both sides. Warm and inviting.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-pass.png` — 삼년 고개를 살금살금 넘는 사람들
+### `01-pass.webp` — 삼년 고개를 살금살금 넘는 사람들
 
 ```
 Wide panoramic view of a low grassy mountain pass with a narrow dirt path. Four
@@ -77,7 +77,7 @@ A mother holds a child's hand to stop him running. A gnarled pine and a cracked
 boulder stand beside the path. Comic, hushed, everyone tiptoeing.
 ```
 
-### `02-sandals.png` — 밤에 짚신을 삼는 박 노인
+### `02-sandals.webp` — 밤에 짚신을 삼는 박 노인
 
 ```
 Wide interior of a simple Korean thatched-roof house at night, seen from the
@@ -87,7 +87,7 @@ sandals lined up beside him. On the right, through the open paper-screen door,
 a dark blue night sky with stars. Warm lamplight, cozy.
 ```
 
-### `03-homeward.png` — 빈 지게 지고 콧노래 부르며 돌아오는 길
+### `03-homeward.webp` — 빈 지게 지고 콧노래 부르며 돌아오는 길
 
 ```
 Wide sunset landscape. An old Korean man walks a country road from left to
@@ -97,7 +97,7 @@ the sun sinking behind a mountain ridge on the left, long golden light stretchin
 across the road.
 ```
 
-### `04-stumble.png` — 돌부리에 걸려 넘어지는 순간
+### `04-stumble.webp` — 돌부리에 걸려 넘어지는 순간
 
 ```
 Wide shot at the top of the mountain pass. The exact instant of the fall: an old
@@ -107,7 +107,7 @@ carrier flying sideways off his back, dust puffing up. Motion lines. The gnarled
 pine on the right, open sky.
 ```
 
-### `05-realize.png` — 여기가 삼년 고개라는 걸 깨닫는 장면
+### `05-realize.webp` — 여기가 삼년 고개라는 걸 깨닫는 장면
 
 ```
 Wide shot of the mountain pass. An old Korean man sits slumped on the dirt path
@@ -116,7 +116,7 @@ staring at the cracked boulder and gnarled pine on the left that tell him where
 he is. His A-frame carrier lies tipped over beside him. Dramatic, comic despair.
 ```
 
-### `06-bedridden.png` — 자리에 누워 벽만 보는 박 노인
+### `06-bedridden.webp` — 자리에 누워 벽만 보는 박 노인
 
 ```
 Wide interior of a Korean thatched-roof house. On the right, an old man lies on
@@ -126,7 +126,7 @@ small meal tray, looking worried, the food untouched. Soft dim light through the
 paper-screen door.
 ```
 
-### `07-doctor.png` — 아픈 데가 없다는 의원
+### `07-doctor.webp` — 아픈 데가 없다는 의원
 
 ```
 Wide interior of the same house. In the centre, a village doctor in a scholar's
@@ -136,7 +136,7 @@ nothing wrong" gesture. The old man lies flat with his eyes shut, refusing to
 listen. On the right, neighbours peer in through the doorway looking worried.
 ```
 
-### `08-deoki.png` — 찾아온 덕이
+### `08-deoki.webp` — 찾아온 덕이
 
 ```
 Wide interior of the same house. On the right, a bright ten-year-old boy in pale
@@ -146,7 +146,7 @@ propped on one elbow, gaunt and gloomy, answering weakly. Warm light through the
 paper-screen door.
 ```
 
-### `09-counting.png` — 손가락을 꼽으며 셈하는 덕이
+### `09-counting.webp` — 손가락을 꼽으며 셈하는 덕이
 
 ```
 Wide interior. On the left, the boy in pale blue hanbok is up on his knees,
@@ -156,7 +156,7 @@ enormous, mouth open, one finger raised as the realisation hits him. Big comic
 contrast between the two.
 ```
 
-### `10-rolling.png` — 데굴데굴 구르는 박 노인
+### `10-rolling.webp` — 데굴데굴 구르는 박 노인
 
 ```
 Wide panoramic view of the grassy top of the mountain pass. In the centre an old
@@ -167,7 +167,7 @@ over laughing, the boy in blue jumping with both arms up. Bright open sky.
 Joyful, full of movement.
 ```
 
-## 마지막 — `end.png` (가로 2:1)
+## 마지막 — `end.webp` (가로 2:1)
 
 ```
 A peaceful mountain pass at dawn seen from a distance, the dirt path empty and

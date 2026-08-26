@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 21장 | 1.33 : 1 | **가로 4 : 세로 3** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.33 : 1 | **가로 4 : 세로 3** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.33 : 1 | **가로 4 : 세로 3** |
 
 > **`end` 그림은 「읽고 나서」 쪽에 들어갑니다.** 쪽 위쪽에 가로로 얹히므로 비율은 아래 표대로면 됩니다.
 > 다만 글 분량에 따라 높이가 조금씩 달라지니, **중요한 것은 한가운데에 두고 위아래 가장자리는 여유를 두세요.**
@@ -63,7 +63,7 @@ angry.
 
 ---
 
-## 표지 — `cover.png` (세로 2:3)
+## 표지 — `cover.webp` (세로 2:3)
 
 세로로 긴 표지. 안개 속으로 걸어 들어가는 길동.
 
@@ -79,7 +79,7 @@ gold light somewhere ahead inside the mist. Solitary, resolute, open-ended.
 
 ## 본문 21장 (모두 가로 4:3)
 
-### `story-01-a.png` — 1장 — "대감"이라 불러야 하는 아들
+### `story-01-a.webp` — 1장 — "대감"이라 불러야 하는 아들
 
 ```
 Wide 4:3 scene. A fine study in a great house. A boy of twelve kneels formally on
@@ -90,7 +90,7 @@ between them is the subject of the picture. Cold north light, expensive empty
 space.
 ```
 
-### `story-01-b.png` — 1장 — 밤마다 뒤뜰에서 혼자 익힌다
+### `story-01-b.webp` — 1장 — 밤마다 뒤뜰에서 혼자 익힌다
 
 ```
 Wide 4:3 scene. A back garden at night under a half moon. The boy stands alone
@@ -100,7 +100,7 @@ off the ground in a slow spiral without wind. Blue moonlight, deep shadow, no
 sparkle or glow. Quietly uncanny.
 ```
 
-### `story-01-c.png` — 1장 — 종이 사람이 일어나 걸어 다닌다
+### `story-01-c.webp` — 1장 — 종이 사람이 일어나 걸어 다닌다
 
 ```
 Wide 4:3 scene. A lamplit inner room. Three flat pale paper cut-out figures the
@@ -110,7 +110,7 @@ still in his hand, watching them without expression. Their shadows on the wall a
 solid and human. Warm lamplight and something very wrong. Unsettling, not comic.
 ```
 
-### `story-02-a.png` — 2장 — 초란이 어둠 속에서 사람을 부른다
+### `story-02-a.webp` — 2장 — 초란이 어둠 속에서 사람을 부른다
 
 ```
 Wide 4:3 scene. A corner of a courtyard at night. A beautiful woman in pink silk
@@ -120,7 +120,7 @@ lantern behind her throws her shadow long across the flagstones. Deep blue night
 one warm point of light.
 ```
 
-### `story-02-b.png` — 2장 — 안개 속에서 자객이 길을 잃는다
+### `story-02-b.webp` — 2장 — 안개 속에서 자객이 길을 잃는다
 
 ```
 Wide 4:3 scene. An inner courtyard filled floor to roof with impossible white
@@ -130,7 +130,7 @@ vertical shape that might be a standing figure. The buildings are barely visible
 Almost monochrome white and grey. Terrifying and beautiful.
 ```
 
-### `story-02-c.png` — 2장 — 새벽 안개 속으로 집을 떠난다
+### `story-02-c.webp` — 2장 — 새벽 안개 속으로 집을 떠난다
 
 ```
 Wide 4:3 scene. The great gate of the mansion at dawn, seen from inside the yard.
@@ -140,7 +140,7 @@ in the yard his father stands at the top of the steps in a night robe with one
 hand half raised. Grey-blue dawn, wet flagstones. Nobody speaks.
 ```
 
-### `story-03-a.png` — 3장 — 바위 문 너머의 도적 마을
+### `story-03-a.webp` — 3장 — 바위 문 너머의 도적 마을
 
 ```
 Wide 4:3 scene. A hidden valley behind an enormous split boulder that forms a
@@ -150,7 +150,7 @@ looking in, seen from behind, small against the rock. Deep green shadow, warm
 firelight beyond. A whole world hidden.
 ```
 
-### `story-03-b.png` — 3장 — 큰 돌을 들고 마당을 한 바퀴 돈다
+### `story-03-b.webp` — 3장 — 큰 돌을 들고 마당을 한 바퀴 돈다
 
 ```
 Wide 4:3 scene. The bandit village clearing. A young man carries an enormous
@@ -160,7 +160,7 @@ feet, mouths open, some dropping what they were holding. Bright hard daylight,
 dust, disbelief.
 ```
 
-### `story-03-c.png` — 3장 — 활빈당 깃발을 세운다
+### `story-03-c.webp` — 3장 — 활빈당 깃발을 세운다
 
 ```
 Wide 4:3 scene. The clearing at sunrise. A plain white cotton banner with three
@@ -170,7 +170,7 @@ the pole. Long red-gold light across the valley, wind snapping the cloth. Rough,
 plain, stirring.
 ```
 
-### `story-04-a.png` — 4장 — 함경 감사의 곳간이 열린다
+### `story-04-a.webp` — 4장 — 함경 감사의 곳간이 열린다
 
 ```
 Wide 4:3 scene. Night at a provincial granary, a fire burning at the far end of
@@ -180,7 +180,7 @@ faces amazed. Men in dark clothes hold the doors and gesture them on. Orange
 firelight far off, blue night near.
 ```
 
-### `story-04-b.png` — 4장 — 벽에 남은 글씨
+### `story-04-b.webp` — 4장 — 벽에 남은 글씨
 
 ```
 Wide 4:3 scene. Morning at the emptied granary. A provincial governor in official
@@ -190,7 +190,7 @@ stand behind him not daring to speak. Cold morning light, the writing dominating
 the frame.
 ```
 
-### `story-04-c.png` — 4장 — 여덟 명의 길동이 한꺼번에 대답한다
+### `story-04-c.webp` — 4장 — 여덟 명의 길동이 한꺼번에 대답한다
 
 ```
 Wide 4:3 scene. A palace hall. Eight identical young men in identical dark blue
@@ -200,7 +200,7 @@ seat; his officials are backing toward the pillars. Absolutely symmetrical
 composition. Red pillars, gold light, deep unease.
 ```
 
-### `story-05-a.png` — 5장 — 임금이 홍 판서를 불러들인다
+### `story-05-a.webp` — 5장 — 임금이 홍 판서를 불러들인다
 
 ```
 Wide 4:3 scene. The palace hall. The old minister in crimson kneels before the
@@ -209,7 +209,7 @@ leans forward looking down at him, not unkindly, one hand extended. The hall is
 enormous and nearly empty around them. Cold high light from clerestory windows.
 ```
 
-### `story-05-b.png` — 5장 — "네가 진짜 홍길동이냐"
+### `story-05-b.webp` — 5장 — "네가 진짜 홍길동이냐"
 
 ```
 Wide 4:3 scene. The throne hall. A single young man stands alone in the middle of
@@ -219,7 +219,7 @@ rigid, appalled that he is standing. The whole picture is built on that one
 upright figure. Shafts of light, red and gold.
 ```
 
-### `story-05-c.png` — 5장 — 대궐 뜰에서 구름 속으로 솟구친다
+### `story-05-c.webp` — 5장 — 대궐 뜰에서 구름 속으로 솟구친다
 
 ```
 Wide 4:3 scene. A palace courtyard from below. A young man has launched upward
@@ -229,7 +229,7 @@ scores of officials in coloured robes - stands in the yard with their heads
 thrown back, hats falling off. Bright sky, tumbling cloud, no sparkles.
 ```
 
-### `story-06-a.png` — 6장 — 무리를 배에 태운다
+### `story-06-a.webp` — 6장 — 무리를 배에 태운다
 
 ```
 Wide 4:3 scene. A shore at dawn. Several broad wooden ships lie at anchor; a long
@@ -239,7 +239,7 @@ them the mountains of Joseon; ahead, open sea and morning light. Migration, not
 war.
 ```
 
-### `story-06-b.png` — 6장 — 성문마다 사람들이 스스로 문을 연다
+### `story-06-b.webp` — 6장 — 성문마다 사람들이 스스로 문을 연다
 
 ```
 Wide 4:3 scene. An island town gate. The heavy gates are being pushed open from
@@ -249,7 +249,7 @@ the ground. Nobody is fighting. Bright green island light, palms of banana leaf
 and stone walls. Astonishing quiet.
 ```
 
-### `story-06-c.png` — 6장 — "사람은 다만 사람일 뿐이다"
+### `story-06-c.webp` — 6장 — "사람은 다만 사람일 뿐이다"
 
 ```
 Wide 4:3 scene. A wide public square packed with people of every kind - farmers,
@@ -259,7 +259,7 @@ dark robes speaks with one hand open. No canopy, no guards. Warm even daylight
 falling on everyone equally.
 ```
 
-### `story-07-a.png` — 7장 — 율도국의 법은 몇 가지뿐이다
+### `story-07-a.webp` — 7장 — 율도국의 법은 몇 가지뿐이다
 
 ```
 Wide 4:3 scene. A plain stone stele standing in a village square, a few short
@@ -269,7 +269,7 @@ officials, no soldiers. Bright ordinary morning, green fields beyond. Law as
 furniture, not as fear.
 ```
 
-### `story-07-b.png` — 7장 — 조선으로 건너가 아버지의 장례를 치른다
+### `story-07-b.webp` — 7장 — 조선으로 건너가 아버지의 장례를 치른다
 
 ```
 Wide 4:3 scene. A hillside burial in the rain, Joseon. A man in white mourning
@@ -278,7 +278,7 @@ ground. His elder brother stands a little behind under an umbrella, watching him
 Grey rain, dark pines, mud. Nothing is said.
 ```
 
-### `story-07-c.png` — 7장 — 늘그막에 성 밖 작은 집으로 옮겨 간다
+### `story-07-c.webp` — 7장 — 늘그막에 성 밖 작은 집으로 옮겨 간다
 
 ```
 Wide 4:3 scene. A small thatched house outside a town wall, late afternoon. An old
@@ -290,7 +290,7 @@ tree, hens. Utterly unremarkable and completely earned.
 
 ---
 
-## 마지막 장 — `end.png` (가로 4:3)
+## 마지막 장 — `end.webp` (가로 4:3)
 
 아이가 이름을 부른다.
 

@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 천장에 매달린 굴비",
         beats: [
             {
-                art: "01-house.png",
+                art: "01-house.webp",
                 emoji: "🏠",
                 left: [
                     "옛날 충주 땅에 소문난 부자가 살았습니다.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-gulbi.png",
+                art: "02-gulbi.webp",
                 emoji: "🐟",
                 left: [
                     "밥상이 차려졌어요.",
@@ -38,7 +38,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-twice.png",
+                art: "03-twice.webp",
                 emoji: "😲",
                 left: [
                     "그런데 막내가 그만 두 번을 쳐다보았습니다.",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-fan.png",
+                art: "04-fan.webp",
                 emoji: "🌬️",
                 left: [
                     "여름날이었어요.",
@@ -78,7 +78,7 @@ const CHAPTERS = [
         title: "2장 · 파리를 쫓아 한양까지",
         beats: [
             {
-                art: "05-fly.png",
+                art: "05-fly.webp",
                 emoji: "🪰",
                 left: [
                     "하루는 파리 한 마리가 장독대에 앉았어요. 된장을 앞발로 쓱 훔치더니 붕 날아올랐지요.",
@@ -94,7 +94,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-chase.png",
+                art: "06-chase.webp",
                 emoji: "🏃",
                 left: [
                     "파리는 고개를 넘고 들판을 지나 날아갔어요. 자린고비는 그 뒤를 헐레벌떡 쫓았지요.",
@@ -110,7 +110,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-hanyang.png",
+                art: "07-hanyang.webp",
                 emoji: "🏙️",
                 left: [
                     "사흘 만에 한양 저잣거리에 닿았어요. 파리는 어느 기와집 담을 넘어 사라졌습니다. 자린고비는 담벼락에 털썩 주저앉았지요.",
@@ -125,7 +125,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-rival.png",
+                art: "08-rival.webp",
                 emoji: "🤝",
                 left: [
                     "그 소문이 경상도까지 퍼졌습니다. 그곳에도 지지 않는 구두쇠가 하나 있었거든요.",
@@ -141,7 +141,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-contest.png",
+                art: "09-contest.webp",
                 emoji: "🍚",
                 left: [
                     "구두쇠가 대문을 두드렸어요.",
@@ -163,7 +163,7 @@ const CHAPTERS = [
         title: "3장 · 흉년이 든 해",
         beats: [
             {
-                art: "10-drought.png",
+                art: "10-drought.webp",
                 emoji: "🌾",
                 left: [
                     "그해 여름, 비가 한 방울도 오지 않았어요. 논바닥이 거북이 등처럼 쩍쩍 갈라졌습니다.",
@@ -177,7 +177,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-mutter.png",
+                art: "11-mutter.webp",
                 emoji: "😠",
                 left: [
                     "\"자린고비 어른 곳간은 터져 나갈 텐데.\"",
@@ -194,7 +194,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-open.png",
+                art: "12-open.webp",
                 emoji: "🌅",
                 left: [
                     "이튿날 새벽이었어요. 쿵— 곳간 문이 활짝 열렸습니다.",
@@ -210,7 +210,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-share.png",
+                art: "13-share.webp",
                 emoji: "🍚",
                 left: [
                     "\"어, 어르신… 이걸 다 내주시면…\"",
@@ -227,7 +227,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "14-fish.png",
+                art: "14-fish.webp",
                 emoji: "🐟",
                 left: [
                     "그날 저녁, 자린고비네 밥상에도 밥과 물뿐이었어요.",
@@ -277,7 +277,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐟')}
+                ${artFrame('cover.webp', '🐟')}
             </div>
             <div class="story-page-right">
                 <h1>자린고비</h1>
@@ -340,7 +340,7 @@ const AFTERWORD = {
     emoji: '🐟',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "자린고비는 한 사람의 이름이 아니라 지독한 구두쇠를 가리키던 말입니다. 충청도 쪽에서 나온 말로 전해 오는데, 어디서 왔는지는 말이 여러 가지입니다.",
                 "굴비를 천장에 매달아 두고 쳐다보며 밥을 먹었다는 대목은 이 이야기에서 가장 이름난 자리입니다. 너무 여러 번 봤다고 나무라는 대목까지가 한 짝입니다.",

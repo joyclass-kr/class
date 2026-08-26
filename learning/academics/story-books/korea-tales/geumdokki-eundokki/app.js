@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 풍덩, 빠진 도끼",
         beats: [
             {
-                art: "01-woodcutter.png",
+                art: "01-woodcutter.webp",
                 emoji: "🪓",
                 left: [
                     "옛날 어느 산골에 가난한 나무꾼이 살았습니다. 가진 것이라고는 지게 하나와 낡은 쇠도끼 한 자루뿐이었지요.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-splash.png",
+                art: "02-splash.webp",
                 emoji: "💦",
                 left: [
                     "그날은 연못가 나무를 찍고 있었어요.",
@@ -39,7 +39,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-cry.png",
+                art: "03-cry.webp",
                 emoji: "😭",
                 left: [
                     "나무꾼은 물가에 주저앉았어요. 연못은 바닥이 안 보일 만큼 깊었습니다.",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-spirit.png",
+                art: "04-spirit.webp",
                 emoji: "✨",
                 left: [
                     "그때였습니다. 연못 한가운데가 환해지더니 물이 스르르 갈라졌어요.",
@@ -78,7 +78,7 @@ const CHAPTERS = [
         title: "2장 · 이것이 네 도끼냐",
         beats: [
             {
-                art: "05-gold.png",
+                art: "05-gold.webp",
                 emoji: "🥇",
                 left: [
                     "산신령이 물속으로 손을 넣더니 도끼 하나를 꺼냈어요.",
@@ -95,7 +95,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-silver.png",
+                art: "06-silver.webp",
                 emoji: "🥈",
                 left: [
                     "산신령이 다시 손을 넣어 은도끼를 꺼냈어요. 달빛처럼 하얗게 빛났습니다.",
@@ -111,7 +111,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-iron.png",
+                art: "07-iron.webp",
                 emoji: "🪓",
                 left: [
                     "산신령이 세 번째로 꺼낸 것은",
@@ -128,7 +128,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-reward.png",
+                art: "08-reward.webp",
                 emoji: "🎁",
                 left: [
                     "산신령이 껄껄 웃었어요.",
@@ -151,7 +151,7 @@ const CHAPTERS = [
         title: "3장 · 따라 한 사람",
         beats: [
             {
-                art: "09-copy.png",
+                art: "09-copy.webp",
                 emoji: "😏",
                 left: [
                     "이웃에 사는 욕심쟁이가 그 소문을 들었어요.",
@@ -169,7 +169,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-greedy.png",
+                art: "10-greedy.webp",
                 emoji: "💨",
                 left: [
                     "정말로 물이 갈라지고 산신령이 나타났어요. 금도끼를 꺼내 들고 물었지요.",
@@ -220,7 +220,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🪓')}
+                ${artFrame('cover.webp', '🪓')}
             </div>
             <div class="story-page-right">
                 <h1>금도끼 은도끼</h1>
@@ -286,7 +286,7 @@ const AFTERWORD = {
     emoji: '🪓',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기의 뿌리는 우리 것이 아닙니다. 이천 년도 더 전에 그리스에서 이솝이 모은 이야기 가운데 똑같은 것이 있습니다. 그쪽에서는 산신령 자리에 헤르메스라는 신이 나옵니다.",
                 "그 이야기가 아주 오랜 세월에 걸쳐 여러 나라를 건너오면서 신이 산신령으로 바뀌고, 강이 연못으로 바뀌었습니다. 이야기는 이렇게 옮겨 다니며 그 땅의 옷으로 갈아입습니다.",

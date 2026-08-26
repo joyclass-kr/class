@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 18장 | 1.33 : 1 | **가로 4 : 세로 3** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.33 : 1 | **가로 4 : 세로 3** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.33 : 1 | **가로 4 : 세로 3** |
 
 > **`end` 그림은 「읽고 나서」 쪽에 들어갑니다.** 쪽 위쪽에 가로로 얹히므로 비율은 아래 표대로면 됩니다.
 > 다만 글 분량에 따라 높이가 조금씩 달라지니, **중요한 것은 한가운데에 두고 위아래 가장자리는 여유를 두세요.**
@@ -65,7 +65,7 @@ flower on the pond.
 
 ---
 
-## 표지 — `cover.png` (세로 2:3)
+## 표지 — `cover.webp` (세로 2:3)
 
 세로로 긴 표지. 달빛 연못에 뜬 붉은 연꽃과 두꺼비.
 
@@ -81,7 +81,7 @@ the middle. Beautiful and a little eerie.
 
 ## 본문 18장 (모두 가로 4:3)
 
-### `story-01-a.png` — 1장 — 밥상이 둘로 나뉜다
+### `story-01-a.webp` — 1장 — 밥상이 둘로 나뉜다
 
 ```
 Wide 4:3 scene. Evening in a modest house, shown through two openings at once. In
@@ -91,7 +91,7 @@ kitchen, Kongjwi kneels alone on the earth floor with a single bowl of cold barl
 in front of her. The doorway divides gold from grey. Nobody is shouting.
 ```
 
-### `story-01-b.png` — 1장 — 자갈밭에 나무 호미 하나
+### `story-01-b.webp` — 1장 — 자갈밭에 나무 호미 하나
 
 ```
 Wide 4:3 scene. A steep stony hillside field under a hard sun, nothing but grey
@@ -101,7 +101,7 @@ sweat. The field stretches away enormous in every direction. Far below, tiny, th
 roofs of the village. Heat shimmer.
 ```
 
-### `story-01-c.png` — 1장 — 검은 소가 밭을 갈아 준다
+### `story-01-c.webp` — 1장 — 검은 소가 밭을 갈아 준다
 
 ```
 Wide 4:3 scene. The same field, late afternoon. An enormous black ox with no rope
@@ -112,7 +112,7 @@ lie on the ground in front of her. Long gold light, the finished field dark and
 soft.
 ```
 
-### `story-02-a.png` — 2장 — 밑 빠진 독 앞에서
+### `story-02-a.webp` — 2장 — 밑 빠진 독 앞에서
 
 ```
 Wide 4:3 scene. The stone-walled yard at midday. A tall earthenware jar stands
@@ -123,7 +123,7 @@ stepmother and Patjwi are leaving for the feast in their good clothes without
 looking back. Hard bright light.
 ```
 
-### `story-02-b.png` — 2장 — 두꺼비가 독 밑을 막아 준다
+### `story-02-b.webp` — 2장 — 두꺼비가 독 밑을 막아 준다
 
 ```
 Wide 4:3 scene. Close on the base of the jar. A big brown toad has wedged himself
@@ -133,7 +133,7 @@ face lit with disbelief and gratitude. Cool shade under the eaves, splashing
 water, sunlight beyond.
 ```
 
-### `story-02-c.png` — 2장 — 참새 떼가 벼를 쓿어 준다
+### `story-02-c.webp` — 2장 — 참새 떼가 벼를 쓿어 준다
 
 ```
 Wide 4:3 scene of joyous motion. Inside an open granary, three great heaps of
@@ -143,7 +143,7 @@ stands in the doorway with both hands raised and her face turned up, laughing.
 Shafts of dusty sunlight through the door.
 ```
 
-### `story-03-a.png` — 3장 — 징검다리에서 꽃신 한 짝을 잃는다
+### `story-03-a.webp` — 3장 — 징검다리에서 꽃신 한 짝을 잃는다
 
 ```
 Wide 4:3 scene. A stream with stepping stones, late afternoon. Kongjwi has
@@ -153,7 +153,7 @@ turning away downstream on the current in the lower right. Splashing water,
 sunlight on ripples, willows on the bank.
 ```
 
-### `story-03-b.png` — 3장 — 팥쥐의 발에 참기름을 발라 억지로 밀어 넣는다
+### `story-03-b.webp` — 3장 — 팥쥐의 발에 참기름을 발라 억지로 밀어 넣는다
 
 ```
 Wide 4:3 scene, comic and awful. A room at the feast house. The stepmother kneels
@@ -163,7 +163,7 @@ with her face screwed up in pain, one leg rigid. Onlookers in the doorway watch
 with raised eyebrows. Bright lantern light.
 ```
 
-### `story-03-c.png` — 3장 — 부엌 문이 열리고, 꽃신이 꼭 맞는다
+### `story-03-c.webp` — 3장 — 부엌 문이 열리고, 꽃신이 꼭 맞는다
 
 ```
 Wide 4:3 scene. A kitchen doorway opened from outside. Kongjwi stands in the dim
@@ -173,7 +173,7 @@ dead. Behind him the light of the yard floods in. Grey kitchen, blazing doorway,
 the moment of being seen.
 ```
 
-### `story-04-a.png` — 4장 — 아버지가 딸의 손을 놓지 못한다
+### `story-04-a.webp` — 4장 — 아버지가 딸의 손을 놓지 못한다
 
 ```
 Wide 4:3 scene. A gate at morning, a palanquin waiting. A mild worried older man
@@ -183,7 +183,7 @@ Neighbours wait at a distance. Soft clear light, blossom on the wall. Gentle and
 sad.
 ```
 
-### `story-04-b.png` — 4장 — "그 소를 이제는 제가 먹여 주고 싶습니다"
+### `story-04-b.webp` — 4장 — "그 소를 이제는 제가 먹여 주고 싶습니다"
 
 ```
 Wide 4:3 scene. A fine room in the governor's residence. Kongjwi sits speaking
@@ -193,7 +193,7 @@ wholly attentive. Through the open door behind her, a green pasture. Warm
 afternoon light on polished floors.
 ```
 
-### `story-04-c.png` — 4장 — 연못가에서 두꺼비가 밤새 물가를 맴돈다
+### `story-04-c.webp` — 4장 — 연못가에서 두꺼비가 밤새 물가를 맴돈다
 
 ```
 Wide 4:3 scene. The back garden pond at night, empty and silvered with moonlight.
@@ -203,7 +203,7 @@ all facing the water. Nothing else in the picture. Deep blue, absolute silence,
 dread.
 ```
 
-### `story-05-a.png` — 5장 — 연꽃 줄기가 부인의 머리채를 후려친다
+### `story-05-a.webp` — 5장 — 연꽃 줄기가 부인의 머리채를 후려친다
 
 ```
 Wide 4:3 scene. Daylight at the pond. A woman in bright pink hanbok walking the
@@ -213,7 +213,7 @@ sideways with both arms up, face outraged and frightened. The flower itself is
 upright and calm. Servants at a distance stare. Green water, hot sun.
 ```
 
-### `story-05-b.png` — 5장 — 붉은 구슬이 감사의 발 앞에 멈춘다
+### `story-05-b.webp` — 5장 — 붉은 구슬이 감사의 발 앞에 멈춘다
 
 ```
 Wide 4:3 scene. A lamplit room at night. A small glowing red bead has rolled
@@ -223,7 +223,7 @@ The room is otherwise empty. The bead casts a faint red light up onto his face.
 Deep shadows, one impossible small light.
 ```
 
-### `story-05-c.png` — 5장 — "나리, 저를 좀 보십시오"
+### `story-05-c.webp` — 5장 — "나리, 저를 좀 보십시오"
 
 ```
 Wide 4:3 scene. The same room, close. The governor has risen and is standing over
@@ -233,7 +233,7 @@ lotus is thrown across it. Red light below, blue light behind. The voice is in t
 composition, not in the picture.
 ```
 
-### `story-06-a.png` — 6장 — 새벽에 연못 물을 퍼낸다
+### `story-06-a.webp` — 6장 — 새벽에 연못 물을 퍼낸다
 
 ```
 Wide 4:3 scene. First light in the back garden. A line of servants passes buckets
@@ -243,7 +243,7 @@ face like stone. Mist over the water, lanterns still lit, tense purposeful
 activity.
 ```
 
-### `story-06-b.png` — 6장 — 팥쥐와 배 씨가 마당에 끌려 나온다
+### `story-06-b.webp` — 6장 — 팥쥐와 배 씨가 마당에 끌려 나온다
 
 ```
 Wide 4:3 scene. The main courtyard in the morning. The stepmother and Patjwi
@@ -253,7 +253,7 @@ delivering judgment with one hand raised. Household and neighbours line the
 walls. Cold clear light, no pleasure anywhere.
 ```
 
-### `story-06-c.png` — 6장 — 아버지가 딸 가까이로 옮겨 온다
+### `story-06-c.webp` — 6장 — 아버지가 딸 가까이로 옮겨 온다
 
 ```
 Wide 4:3 scene. A small house near a larger one, autumn. The old father sits on
@@ -265,7 +265,7 @@ that took a whole book to reach.
 
 ---
 
-## 마지막 장 — `end.png` (가로 4:3)
+## 마지막 장 — `end.webp` (가로 4:3)
 
 검은 소와 두꺼비와 참새.
 

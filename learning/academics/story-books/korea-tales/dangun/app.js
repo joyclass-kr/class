@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 하늘에서 내려온 환웅",
         beats: [
             {
-                art: "01-heaven.png",
+                art: "01-heaven.webp",
                 emoji: "☁️",
                 left: [
                     "아주 먼 옛날, 하늘나라에 환인이라는 임금이 있었습니다.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-descend.png",
+                art: "02-descend.webp",
                 emoji: "⛰️",
                 left: [
                     "환인은 아래 세상을 오래 살펴보았습니다. 그러고는 태백산을 짚었어요.",
@@ -37,7 +37,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-sinsi.png",
+                art: "03-sinsi.webp",
                 emoji: "🌳",
                 left: [
                     "산꼭대기에는 커다란 나무 한 그루가 서 있었습니다.",
@@ -53,7 +53,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-rule.png",
+                art: "04-rule.webp",
                 emoji: "🌾",
                 left: [
                     "환웅은 사람들에게 곡식 기르는 법을 가르쳤어요. 병을 고치는 법도, 옳고 그름을 가리는 법도요.",
@@ -67,7 +67,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-two.png",
+                art: "05-two.webp",
                 emoji: "🐻",
                 left: [
                     "어느 날 곰 한 마리와 호랑이 한 마리가 찾아왔어요. 둘은 신단수 아래에 나란히 엎드렸습니다.",
@@ -89,7 +89,7 @@ const CHAPTERS = [
         title: "2장 · 동굴 속의 백일",
         beats: [
             {
-                art: "06-give.png",
+                art: "06-give.webp",
                 emoji: "🌿",
                 left: [
                     "환웅이 쑥 한 다발과 마늘 스무 개를 내주었어요.",
@@ -107,7 +107,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-cave.png",
+                art: "07-cave.webp",
                 emoji: "🕳️",
                 left: [
                     "둘은 깊은 동굴로 들어갔습니다. 빛이라고는 입구에 한 줄기뿐이었어요.",
@@ -123,7 +123,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-tiger.png",
+                art: "08-tiger.webp",
                 emoji: "🐯",
                 left: [
                     "사흘이 지나자 호랑이가 안절부절못했어요. 이레가 지나자 벌떡 일어섰습니다.",
@@ -138,7 +138,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-bear.png",
+                art: "09-bear.webp",
                 emoji: "🌑",
                 left: [
                     "곰은 혼자 남았어요. 쑥을 씹고, 마늘을 씹고, 또 씹었습니다. 발톱이 무디어지고 털이 푸석해졌지요.",
@@ -153,7 +153,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-woman.png",
+                art: "10-woman.webp",
                 emoji: "✨",
                 left: [
                     "스무하루가 되던 날 아침이었어요. 백 일을 채우려면 아직 멀었는데 말이지요.",
@@ -175,7 +175,7 @@ const CHAPTERS = [
         title: "3장 · 아사달의 아침",
         beats: [
             {
-                art: "11-pray.png",
+                art: "11-pray.webp",
                 emoji: "🙏",
                 left: [
                     "웅녀는 사람이 되었지만 곁에 아무도 없었어요. 날마다 신단수 아래에 앉아 빌었습니다.",
@@ -190,7 +190,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-birth.png",
+                art: "12-birth.webp",
                 emoji: "👶",
                 left: [
                     "환웅이 그 앞에 내려섰어요. 둘은 부부가 되었습니다.",
@@ -206,7 +206,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-asadal.png",
+                art: "13-asadal.webp",
                 emoji: "🌄",
                 left: [
                     "자라난 단군은 새 터를 찾아 길을 나섰습니다. 강이 넓고 들이 기름진 곳이었지요.",
@@ -221,7 +221,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "14-joseon.png",
+                art: "14-joseon.webp",
                 emoji: "🏞️",
                 left: [
                     "단군은 성을 쌓고 나라를 열었어요.",
@@ -270,7 +270,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐻')}
+                ${artFrame('cover.webp', '🐻')}
             </div>
             <div class="story-page-right">
                 <h1>단군</h1>
@@ -348,7 +348,7 @@ const AFTERWORD = {
     emoji: '🐻',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "단군 이야기가 글로 처음 적힌 것은 팔백 년쯤 전입니다. 일연 스님이 『삼국유사』에 적었고 비슷한 무렵 이승휴도 적었습니다. 그전까지는 입에서 입으로만 전해 온 것이지요.",
                 "곰과 호랑이가 먹은 것을 이 책에서는 쑥과 마늘이라 했습니다. 그런데 그 시절 이 땅에 마늘이 있었는지를 두고는 말이 갈립니다. 원래 글자를 달래나 다른 매운 풀로 읽어야 한다는 학자들도 있습니다.",

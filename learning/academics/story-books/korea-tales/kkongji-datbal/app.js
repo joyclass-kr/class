@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 하늘이 어두워지다",
         beats: [
             {
-                art: "01-mother.png",
+                art: "01-mother.webp",
                 emoji: "🌿",
                 left: [
                     "옛날 어느 산골에 어머니와 아들이 둘이 살았습니다.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-shadow.png",
+                art: "02-shadow.webp",
                 emoji: "🌑",
                 left: [
                     "어머니가 나물을 캐는데 갑자기 사방이 어두워졌어요.",
@@ -38,7 +38,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-empty.png",
+                art: "03-empty.webp",
                 emoji: "🧺",
                 left: [
                     "저녁이 되어 아들이 나무를 지고 내려왔어요.",
@@ -54,7 +54,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-name.png",
+                art: "04-name.webp",
                 emoji: "😨",
                 left: [
                     "아들이 깃털을 들고 마을로 내려갔어요.",
@@ -71,7 +71,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-set-out.png",
+                art: "05-set-out.webp",
                 emoji: "🥾",
                 left: [
                     "\"어디로 가느냐! 너까지 잃을 참이냐!\"",
@@ -94,7 +94,7 @@ const CHAPTERS = [
         title: "2장 · 가는 길에 만난 이들",
         beats: [
             {
-                art: "06-washing.png",
+                art: "06-washing.webp",
                 emoji: "🧺",
                 left: [
                     "며칠을 걷다가 냇가에서 빨래하는 할머니를 만났어요.",
@@ -111,7 +111,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-direction.png",
+                art: "07-direction.webp",
                 emoji: "🧭",
                 left: [
                     "빨래가 다 끝나자 할머니가 물었어요.",
@@ -128,7 +128,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-field.png",
+                art: "08-field.webp",
                 emoji: "🌾",
                 left: [
                     "이튿날은 밭 매는 노인을 만났어요. 허리가 굽어 호미질이 더뎠습니다. 아들은 말없이 옆 고랑을 매기 시작했어요.",
@@ -144,7 +144,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-club.png",
+                art: "09-club.webp",
                 emoji: "🔨",
                 left: [
                     "이야기를 들은 노인이 헛간으로 들어갔어요.",
@@ -161,7 +161,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-cliff.png",
+                art: "10-cliff.webp",
                 emoji: "🪨",
                 left: [
                     "다시 며칠을 걸어 서쪽 끝에 닿았어요. 하늘을 찌를 듯한 바위 벼랑이 서 있었습니다.",
@@ -182,7 +182,7 @@ const CHAPTERS = [
         title: "3장 · 목구멍은 하나뿐",
         beats: [
             {
-                art: "11-nest.png",
+                art: "11-nest.webp",
                 emoji: "🪹",
                 left: [
                     "아들은 손발로 바위를 짚고 기어올랐어요.",
@@ -198,7 +198,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-fire.png",
+                art: "12-fire.webp",
                 emoji: "🔥",
                 left: [
                     "\"쉿. 이제 곧 돌아옵니다.\"",
@@ -213,7 +213,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-fight.png",
+                art: "13-fight.webp",
                 emoji: "⚔️",
                 left: [
                     "해가 지자 하늘이 다시 시커멓게 덮였습니다. 꽁지 닷발 주둥이 닷발이 둥지로 내려앉았어요.",
@@ -228,7 +228,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "14-home.png",
+                art: "14-home.webp",
                 emoji: "🏠",
                 left: [
                     "새가 아들을 삼키려고 부리를 쩍 벌린 순간이었어요.",
@@ -279,7 +279,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🦅')}
+                ${artFrame('cover.webp', '🦅')}
             </div>
             <div class="story-page-right">
                 <h1>꽁지 닷발 주둥이 닷발</h1>
@@ -345,7 +345,7 @@ const AFTERWORD = {
     emoji: '🪶',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이름이 곧 크기를 말해 줍니다. 한 발은 두 팔을 벌린 길이니, 꼬리만 해도 어른 다섯이 나란히 서야 하는 셈입니다. 이름을 부를 때마다 그 크기가 따라옵니다.",
                 "어머니를 찾아 먼 길을 떠나는 아이 이야기는 우리 옛이야기에 여럿 있습니다. 그 길에서 만난 사람들을 도와주고 그 대가로 필요한 것을 얻는 것이 짜임입니다.",

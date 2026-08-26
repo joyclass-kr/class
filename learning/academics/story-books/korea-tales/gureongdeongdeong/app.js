@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 구렁덩덩 신선비네",
         beats: [
             {
-                art: "01-birth.png",
+                art: "01-birth.webp",
                 emoji: "🐍",
                 left: [
                     "옛날 어느 마을에 아이 없는 할머니가 살았습니다. 늘그막에 아이를 하나 낳았는데 사람들이 다 놀랐어요.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-neighbors.png",
+                art: "02-neighbors.webp",
                 emoji: "👀",
                 left: [
                     "소문을 듣고 이웃집 세 딸이 구경을 왔어요. 문틈으로 방 안을 들여다보았지요.",
@@ -36,7 +36,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-third.png",
+                art: "03-third.webp",
                 emoji: "🌸",
                 left: [
                     "그런데 셋째 딸만은 그 자리에 남았어요.",
@@ -52,7 +52,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-marry.png",
+                art: "04-marry.webp",
                 emoji: "🎊",
                 left: [
                     "그날 밤 구렁이가 할머니에게 말했어요.",
@@ -75,7 +75,7 @@ const CHAPTERS = [
         title: "2장 · 밤에 벗어 둔 허물",
         beats: [
             {
-                art: "05-shed.png",
+                art: "05-shed.webp",
                 emoji: "✨",
                 left: [
                     "혼례를 올린 그날 밤이었어요.",
@@ -91,7 +91,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-promise.png",
+                art: "06-promise.webp",
                 emoji: "🤝",
                 left: [
                     "신선비는 낮에는 구렁이로, 밤에는 사람으로 지냈어요.",
@@ -108,7 +108,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-burn.png",
+                art: "07-burn.webp",
                 emoji: "🔥",
                 left: [
                     "그런데 언니 둘이 그 이야기를 엿듣고 말았어요.",
@@ -125,7 +125,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-gone.png",
+                art: "08-gone.webp",
                 emoji: "🌫️",
                 left: [
                     "그날 밤 신선비는 돌아오지 않았어요.",
@@ -147,7 +147,7 @@ const CHAPTERS = [
         title: "3장 · 신을 몇 켤레나 닳려",
         beats: [
             {
-                art: "09-magpie.png",
+                art: "09-magpie.webp",
                 emoji: "🐦",
                 left: [
                     "며칠을 걷다가 까치 떼를 만났어요.",
@@ -163,7 +163,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-boar.png",
+                art: "10-boar.webp",
                 emoji: "🐗",
                 left: [
                     "다음에는 밭을 뒤지는 멧돼지를 만났어요.",
@@ -179,7 +179,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-washer.png",
+                art: "11-washer.webp",
                 emoji: "🧺",
                 left: [
                     "마지막으로 냇가에서 빨래하는 할머니를 만났어요.",
@@ -196,7 +196,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-reunion.png",
+                art: "12-reunion.webp",
                 emoji: "💛",
                 left: [
                     "아내는 그 집 담 밖에 서서 노래를 불렀어요.",
@@ -247,7 +247,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐍')}
+                ${artFrame('cover.webp', '🐍')}
             </div>
             <div class="story-page-right">
                 <h1>구렁덩덩 신선비</h1>
@@ -313,7 +313,7 @@ const AFTERWORD = {
     emoji: '🐍',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "흉하게 생긴 신랑이 알고 보니 아주 귀한 사람이었다는 이야기는 세계 곳곳에 있습니다. 서양의 미녀와 야수도 같은 갈래이고, 더 거슬러 가면 그리스의 옛이야기까지 닿습니다.",
                 "그런 이야기들의 뒷부분도 서로 닮았습니다. 금기가 깨져 신랑을 잃고, 신부가 먼 길을 떠나 되찾아 옵니다. 되찾으러 가는 쪽은 늘 신부입니다.",

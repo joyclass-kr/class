@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -51,7 +51,7 @@ onggi jar, wide-mouthed, waist-high.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A single large round dark-brown Korean onggi jar
@@ -63,7 +63,7 @@ thatched roofs and hills at the bottom. Warm and magical.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-dig.png` — 밭에서 항아리를 파내다
+### `01-dig.webp` — 밭에서 항아리를 파내다
 
 ```
 Wide scene in a small ploughed field in spring. On the right, a farmer in patched
@@ -73,7 +73,7 @@ surprise. On the left, low green hills and a few thatched roofs. Warm morning
 light, dark rich earth.
 ```
 
-### `02-hoe.png` — 호미가 두 개
+### `02-hoe.webp` — 호미가 두 개
 
 ```
 Wide scene in a modest Korean house yard. In the centre, the jar sits on the
@@ -83,7 +83,7 @@ in total bewilderment, free hand scratching his head. Simple wooden veranda and
 earthen wall behind. Comic.
 ```
 
-### `03-coin.png` — 끝없이 나오는 엽전
+### `03-coin.webp` — 끝없이 나오는 엽전
 
 ```
 Wide night scene inside a small Korean room lit by an oil lamp. The jar sits in
@@ -93,7 +93,7 @@ heels laughing with his head thrown back, coins in his lap. Warm lamplight,
 joyful chaos.
 ```
 
-### `04-rich.png` — 몰라보게 달라진 농부의 집
+### `04-rich.webp` — 몰라보게 달라진 농부의 집
 
 ```
 Wide village scene by day. On the right, the farmer's house now has a handsome
@@ -103,7 +103,7 @@ lean their heads together whispering behind their hands, glancing over. Bright
 sunny day, gossip in the air.
 ```
 
-### `05-seize.png` — 항아리를 빼앗아 가는 부자
+### `05-seize.webp` — 항아리를 빼앗아 가는 부자
 
 ```
 Wide scene in the farmer's yard. On the right, the plump rich man in dark blue
@@ -113,7 +113,7 @@ mouths open in protest, hands out. Two of the rich man's servants block their
 way. Dust kicked up, comic outrage.
 ```
 
-### `06-gold.png` — 금붙이를 퍼내는 부자
+### `06-gold.webp` — 금붙이를 퍼내는 부자
 
 ```
 Wide scene inside a fine Korean room with the paper door shut tight. The rich man
@@ -123,7 +123,7 @@ around him and spilling toward both edges of the frame. Lamplight, warm gold
 glow.
 ```
 
-### `07-father.png` — 항아리에 빠지는 아버지
+### `07-father.webp` — 항아리에 빠지는 아버지
 
 ```
 Wide scene in the same room. On the right, the rich man spins around with one arm
@@ -133,7 +133,7 @@ windmilling. Exaggerated comic motion lines. Gold scattered on the floor between
 them.
 ```
 
-### `08-two.png` — 아버지가 둘
+### `08-two.webp` — 아버지가 둘
 
 ```
 Wide scene in the same room. On the left, the rich man has just hauled one old
@@ -143,7 +143,7 @@ the rim, waving cheerfully. The rich man looks back and forth between the two,
 face frozen in horror. Perfect comic timing.
 ```
 
-### `09-many.png` — 마당 가득한 아버지들
+### `09-many.webp` — 마당 가득한 아버지들
 
 ```
 Wide scene in the courtyard of the rich man's house. Dozens of identical small
@@ -153,7 +153,7 @@ centre, the rich man clutches his own head with both hands, mouth open in a
 howl. Bright daylight, overwhelming and very funny.
 ```
 
-### `10-ruined.png` — 텅 빈 곳간
+### `10-ruined.webp` — 텅 빈 곳간
 
 ```
 Wide scene. On the left, an empty storehouse with its doors thrown open, bare
@@ -163,7 +163,7 @@ identical old fathers holding bowls. On the right, villagers peer over the wall,
 doubled over laughing. Sunny and comic.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet Korean village yard at sunset, no people. A row of ordinary brown onggi

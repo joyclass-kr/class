@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -72,7 +72,7 @@ The hazelnuts: small round glossy brown nuts the size of a thumbnail.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. The dim interior of an abandoned cottage at
@@ -86,7 +86,7 @@ Amber firelight from below, deep blue shadow above.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-brothers.png` — 욕심 많은 형과 마음 고운 아우
+### `01-brothers.webp` — 욕심 많은 형과 마음 고운 아우
 
 ```
 Wide autumn scene in a small mountain village. On the left, the younger brother
@@ -96,7 +96,7 @@ chin up, looking away. Thatched roofs, persimmon trees, gold afternoon light.
 The difference between them is all in the posture.
 ```
 
-### `02-pick.png` — 개암 네 알을 줍다
+### `02-pick.webp` — 개암 네 알을 줍다
 
 ```
 Wide scene in an autumn oak and hazel forest floor thick with fallen leaves. In
@@ -106,7 +106,7 @@ three small thought bubbles showing his father, his mother and his brother, and
 a fourth showing himself. Dappled gold light, drifting leaves.
 ```
 
-### `03-house.png` — 해가 진 골짜기의 빈 집
+### `03-house.webp` — 해가 진 골짜기의 빈 집
 
 ```
 Wide scene in a dark mountain valley at dusk. In the centre, a tumbledown
@@ -116,7 +116,7 @@ firewood carrier, one hand shading his eyes. Deep blue-violet twilight, one
 early star. Lonely and a little eerie, not frightening.
 ```
 
-### `04-dokkaebi.png` — 한밤중에 몰려온 도깨비들
+### `04-dokkaebi.webp` — 한밤중에 몰려온 도깨비들
 
 ```
 Wide interior of the cottage at night. Through the broken door on the left, a
@@ -126,7 +126,7 @@ brother scrambles up a ladder into the dark loft, looking back over his shoulder
 with huge frightened eyes. Blue moonlight, dust shaken from the beams.
 ```
 
-### `05-feast.png` — 금 나와라, 뚝딱!
+### `05-feast.webp` — 금 나와라, 뚝딱!
 
 ```
 Wide interior scene, the whole floor filled with the party. In the centre, a
@@ -136,7 +136,7 @@ dokkaebi dance in a ring with their arms up, singing. Amber firelight, sparkles,
 motion lines everywhere. Pure noisy joy.
 ```
 
-### `06-hungry.png` — 다락 위에서 꼬르륵
+### `06-hungry.webp` — 다락 위에서 꼬르륵
 
 ```
 Wide scene of the dark loft above. In the centre, the younger brother lies flat
@@ -146,7 +146,7 @@ steam from the rice cakes below drift up through the gap and coil around his
 nose. Blue shadow above, warm glow from below. Comic longing.
 ```
 
-### `07-crack.png` — 딱! 집이 무너진다!
+### `07-crack.webp` — 딱! 집이 무너진다!
 
 ```
 Wide interior scene, total pandemonium. From the loft at the top, a single
@@ -156,7 +156,7 @@ doorway, clubs and gold flying, mouths open in screams, eyes enormous. Dust and
 falling straw. The funniest picture in the book.
 ```
 
-### `08-left.png` — 덩그러니 남은 방망이 하나
+### `08-left.webp` — 덩그러니 남은 방망이 하나
 
 ```
 Wide interior scene in the pale morning. The cottage floor is empty and still,
@@ -166,7 +166,7 @@ the younger brother stands at the foot of the ladder looking at it with his
 mouth open. Cool morning light through the gaps. Quiet after the storm.
 ```
 
-### `09-brother.png` — 하나도 빠짐없이 말해 보아라
+### `09-brother.webp` — 하나도 빠짐없이 말해 보아라
 
 ```
 Wide scene in the yard of a brand-new tiled-roof house. On the left, the
@@ -176,7 +176,7 @@ eyes wide and glittering, teeth bared in a grin. Behind them the fine new roof
 and a full grain jar. Bright day. Comic greed.
 ```
 
-### `10-copy.png` — 개암을 한 자루나
+### `10-copy.webp` — 개암을 한 자루나
 
 ```
 Wide scene split between forest and cottage. On the left, the elder brother
@@ -186,7 +186,7 @@ cottage floor at dusk with the sack in his lap, grinning at the door and
 waiting. Deep blue evening light. Too eager by half.
 ```
 
-### `11-caught.png` — 저놈이다!
+### `11-caught.webp` — 저놈이다!
 
 ```
 Wide interior scene at night. On the left in the loft, the elder brother has a
@@ -196,7 +196,7 @@ clubs, faces furious, and come swarming up the ladder in a knot of arms and
 horns. Amber firelight. His eyes fly open. Comic doom.
 ```
 
-### `12-nose.png` — 코 늘어나라, 뚝딱!
+### `12-nose.webp` — 코 늘어나라, 뚝딱!
 
 ```
 Wide interior scene. In the centre, the elder brother sits on the floor with an
@@ -206,7 +206,7 @@ laughing, clubs waving, one wiping a tear. Keep the nose silly and rubbery, neve
 gruesome. Firelight, chaos, laughter.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet mountain village yard in the morning, no people. A gnarled wooden club

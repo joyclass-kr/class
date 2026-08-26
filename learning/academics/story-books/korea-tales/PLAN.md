@@ -1771,3 +1771,56 @@ webp가 아예 없는 png는 건드리지 않는다. 그럴 때는 먼저 ffmpeg
 걸린 것뿐이었다. 다시 밀었더니 `cannot lock ref ... is at fd5adf9d`
 라고 나왔는데, 그 fd5adf9d가 바로 내 커밋이었다. **끊겼다고 실패한
 것으로 보고 다시 밀기 전에 `git fetch` 하고 원격 끝을 먼저 본다.**
+
+## 그림을 webp 하나로 통일 (2026-08-27)
+
+png를 전부 없앴다. 세 트랙을 한꺼번에 봤다.
+
+    png   409장  ->  0장
+    webp  501장  ->  560장   (webp가 없던 59장을 만들어 넣음)
+
+`world-novels` 는 png 59장에 webp가 **하나도** 없었다. 거기부터
+품질 82로 만들었다. 61MB가 14MB가 됐다.
+
+그다음 부르는 이름을 바꿨다.
+
+    app.js            2682곳
+    IMAGE-PROMPTS.md  2299곳 (104권)
+
+### 지우기 전에 무엇을 봤나
+
+지우는 것은 되돌리기 어려우니 네 가지를 먼저 봤다.
+
+1. 이름만 webp인 가짜가 있나 — 머리 네 바이트가 RIFF인지
+2. app.js 가 부르는데 없는 그림이 있나
+3. webp 없이 png 만 있는 것이 있나 — **지우면 그림이 사라진다**
+4. app.js 가 `.png` 를 직접 부르는 곳이 있나 — 같은 이유
+
+그리고 진짜 회귀 검사를 하나 했다. **바꾸기 전과 뒤에 「실제로
+보이는 그림 수」를 책마다 세어 견줬다.** 예전 값은 `git show HEAD:`
+로 꺼내 온다. 36권 모두 그대로였다. 한 장도 잃지 않았다.
+
+### 뿌리를 막았다
+
+이 일을 몇 번이나 되풀이한 까닭은 **도구가 새 책을 png 로 찍어
+내기 때문**이었다. 찍어 내는 쪽 다섯을 고쳤다.
+
+    tools-emit-prompts.py       cover.png / end.png  -> webp
+    tools-add-after-pic.py      art: 'end.png'       -> webp
+    tools-add-afterword.py      art: ['end.png']     -> webp
+    tools-merge-chapters.py     "story-NN-x.png"     -> webp
+    tools-image-status.py       기본 목록             -> webp
+
+`tools-upgrade-novel-engine.py` 는 `artFrame('end.png', …)` 를
+콕 집어 찾고 있어서 이제 못 찾는다. 두 확장자를 다 받게 넓혔다.
+
+**이미 있는 png 를 찾기만 하는 곳은 건드리지 않았다.** 찍어 내는
+쪽과 찾는 쪽은 다르다.
+
+### 옆방과 겹쳤다
+
+작업하는 사이에 옆방이 `fadc11cb` 로 같은 일을 했다. 커밋 글에는
+「png 84장」이라 적었지만 실제로는 350장을 지웠다 — 세계명작 84장에
+전래동화 266장까지 함께였다. 남의 트랙까지 건드린 것이다.
+같은 나무를 셋이 쓰면 이런 일이 난다. **지운 장수는 커밋 글이 아니라
+`git ls-tree` 로 센다.**

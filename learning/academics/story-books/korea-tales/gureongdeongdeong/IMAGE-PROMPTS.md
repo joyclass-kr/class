@@ -23,8 +23,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데
 눈에 띄지 않는 정도예요. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요.
@@ -65,7 +65,7 @@ paired, sneering or peeking, small mean eyes.
 
 ---
 
-## 표지 — `cover.png` (세로 2:3)
+## 표지 — `cover.webp` (세로 2:3)
 
 세로로 긴 표지. 아내가 먼 길을 걷고, 위쪽에 구렁이가 감돈다.
 
@@ -82,7 +82,7 @@ tender, never frightening.
 
 ## 본문 12장 (모두 가로 2:1)
 
-### `01-birth.png` — 할머니가 구렁이 아이를 이불에 싸서 아랫목에 뉜다
+### `01-birth.webp` — 할머니가 구렁이 아이를 이불에 싸서 아랫목에 뉜다
 
 ```
 Wide panoramic scene. Inside a small warm lamplit room at night. On the right the
@@ -92,7 +92,7 @@ outside the paper door, the dark blue silhouettes of two neighbours leaning in t
 listen. Warm orange lamplight against cold blue night.
 ```
 
-### `02-neighbors.png` — 이웃 두 딸이 들여다보고 달아난다
+### `02-neighbors.webp` — 이웃 두 딸이 들여다보고 달아난다
 
 ```
 Wide panoramic scene. Daytime at the paper sliding door of the cottage. On the
@@ -102,7 +102,7 @@ mid-flight with her skirts flying and one sandal coming off. On the left, dimly
 seen through the gap, the quiet coiled snake. Bright daylight, comic.
 ```
 
-### `03-third.png` — 셋째 딸이 "구렁덩덩 신선비를 낳으셨네요"
+### `03-third.webp` — 셋째 딸이 "구렁덩덩 신선비를 낳으셨네요"
 
 ```
 Wide panoramic scene. The same doorway, quiet now. On the right the third
@@ -113,7 +113,7 @@ old mother stands behind with a hand pressed to her mouth, tears in her eyes.
 Soft afternoon light falling across the threshold.
 ```
 
-### `04-marry.png` — 셋째가 "제가 가겠습니다"
+### `04-marry.webp` — 셋째가 "제가 가겠습니다"
 
 ```
 Wide panoramic scene. Evening in the neighbours' room. On the left the two elder
@@ -123,7 +123,7 @@ her hands in her lap, chin level, speaking quietly. Between them their startled
 parents. Warm lamplight, strong contrast between the chaos and her stillness.
 ```
 
-### `05-shed.png` — 첫날밤, 허물을 벗은 신선비
+### `05-shed.webp` — 첫날밤, 허물을 벗은 신선비
 
 ```
 Wide panoramic scene. A lamplit bridal room at night. On the right a tall
@@ -134,7 +134,7 @@ the young bride sits up from her bedding, one hand to her heart, eyes wide with
 wonder rather than fear. Warm gold light, sparkles in the air.
 ```
 
-### `06-promise.png` — 허물을 곱게 접어 건네며 당부한다
+### `06-promise.webp` — 허물을 곱게 접어 건네며 당부한다
 
 ```
 Wide panoramic scene. Night, the same room, a travelling bundle packed by the
@@ -145,7 +145,7 @@ the dark road he will take. Deep blue night outside, warm circle of lamplight
 inside.
 ```
 
-### `07-burn.png` — 언니들이 허물을 아궁이에 던진다
+### `07-burn.webp` — 언니들이 허물을 아궁이에 던진다
 
 ```
 Wide panoramic scene. A kitchen with a clay stove on the right. The two elder
@@ -156,7 +156,7 @@ left, through the doorway and far away, the third daughter walks back from the
 well with a water jar, unaware. Lurid firelight.
 ```
 
-### `08-gone.png` — 빈 방에 편지 한 장
+### `08-gone.webp` — 빈 방에 편지 한 장
 
 ```
 Wide panoramic scene. An empty room at dawn. On the right the bedding is folded
@@ -166,7 +166,7 @@ in the open doorway holding the door frame with one hand, seen from behind,
 absolutely still. Cold blue-grey morning light. Very quiet and empty.
 ```
 
-### `09-magpie.png` — 까치들에게 겉옷을 벗어 덮어 준다
+### `09-magpie.webp` — 까치들에게 겉옷을 벗어 덮어 준다
 
 ```
 Wide panoramic scene. A bare windy field under a grey sky. On the right a flock
@@ -177,7 +177,7 @@ lifts a wing to point west. Chilly blue-grey palette with the warm colour of her
 jacket at the centre.
 ```
 
-### `10-boar.png` — 멧돼지와 함께 밤새 밭을 뒤집는다
+### `10-boar.webp` — 멧돼지와 함께 밤새 밭을 뒤집는다
 
 ```
 Wide panoramic scene. A huge field at night under a low moon. On the right a big
@@ -187,7 +187,7 @@ hair falling loose, jaw set. Half the enormous field is already turned. Cool
 moonlight, dark rich soil, exhausting and determined.
 ```
 
-### `11-washer.png` — 빨래하는 할머니에게 길을 듣는다
+### `11-washer.webp` — 빨래하는 할머니에게 길을 듣는다
 
 ```
 Wide panoramic scene. A clear stream with flat washing stones. On the left an old
@@ -198,7 +198,7 @@ intently. Beside her on the bank, four worn-out pairs of straw sandals lie in a
 row. Bright water, dragonflies, midday sun.
 ```
 
-### `12-reunion.png` — 담 밖에서 노래를 부르자 신선비가 일어선다
+### `12-reunion.webp` — 담 밖에서 노래를 부르자 신선비가 일어선다
 
 ```
 Wide panoramic scene. A rich tile-roofed house at a wedding feast. On the right,
@@ -212,7 +212,7 @@ evening light. The moment of recognition.
 
 ---
 
-## 마지막 장 — `end.png` (가로 2:1)
+## 마지막 장 — `end.webp` (가로 2:1)
 
 두 사람이 함께 집으로 돌아간다.
 

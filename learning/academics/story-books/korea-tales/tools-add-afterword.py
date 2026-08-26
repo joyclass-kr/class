@@ -11,7 +11,7 @@
 
 하던 일:
   1. endPage() / kind:'end' 를 걷어 내고 그 자리에 읽고 나서를 넣는다.
-     (end.png 는 없어지지 않는다. 읽고 나서의 그림으로 옮겨 간다.)
+     (end.webp 는 없어지지 않는다. 읽고 나서의 그림으로 옮겨 간다.)
   2. AFTERWORD, AFTER_SEGS, AFTER_FOOT, paginateAfterword, afterSpreadPage 를 넣는다.
   3. TWO_PAGE_KINDS 에 'after' 를 더한다.
   4. styles.css 에 .after-home 을 더한다.
@@ -28,7 +28,7 @@ BLOCK = u'''
 const AFTERWORD = {
     title: '읽고 나서',
     emoji: '%(emoji)s',
-    art: ['end.png'],
+    art: ['end.webp'],
     paras: [
 %(paras)s
     ]

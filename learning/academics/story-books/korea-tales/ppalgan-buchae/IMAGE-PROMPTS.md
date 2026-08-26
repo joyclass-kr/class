@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 14장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -61,7 +61,7 @@ The fans: one flat bright red folding fan and one flat bright blue folding fan.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A golden heavenly palace floats among pink and
@@ -74,7 +74,7 @@ grand at once.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-nap.png` — 산에서 낮잠을 자다 깨어 보니
+### `01-nap.webp` — 산에서 낮잠을 자다 깨어 보니
 
 ```
 Wide sunny pine hillside scene. On the left, Kim Cheomji sprawls on his back in
@@ -84,7 +84,7 @@ blue fan lie neatly side by side, as if placed there. Bright green and gold,
 comic.
 ```
 
-### `02-red.png` — 빨간 부채를 부치자 코가 쑥
+### `02-red.webp` — 빨간 부채를 부치자 코가 쑥
 
 ```
 Wide hillside scene. In the centre, Kim Cheomji sits cross-legged fanning
@@ -93,7 +93,7 @@ a hand's length, drawn as a smooth tube with motion lines showing it extending.
 He has not noticed yet. A butterfly perches on the tip. Very funny, sunny.
 ```
 
-### `03-blue.png` — 파란 부채로 도로 줄이다
+### `03-blue.webp` — 파란 부채로 도로 줄이다
 
 ```
 Wide hillside scene split in two. On the left, Kim leaps up with both eyes
@@ -102,7 +102,7 @@ later, he fans furiously with the blue fan while the nose shrinks back with comi
 retraction lines. Alarm is already turning into a sly grin. Fast comic timing.
 ```
 
-### `04-feast.png` — 부잣집 잔치에 숨어들다
+### `04-feast.webp` — 부잣집 잔치에 숨어들다
 
 ```
 Wide scene in a rich family's courtyard during a feast. Low tables laden with
@@ -112,7 +112,7 @@ left, Kim Cheomji peeks from behind a wooden pillar, red fan half hidden against
 his chest, eyes narrowed. Sunny and busy.
 ```
 
-### `05-nose.png` — 쑥쑥 자라는 영감의 코
+### `05-nose.webp` — 쑥쑥 자라는 영감의 코
 
 ```
 Wide courtyard scene, chaos. In the centre, the old master's nose has grown
@@ -122,7 +122,7 @@ hats falling, mouths open in shock. On the far left, Kim hides behind the pillar
 biting his knuckle. Peak comedy.
 ```
 
-### `06-cure.png` — 파란 부채로 고쳐 주자
+### `06-cure.webp` — 파란 부채로 고쳐 주자
 
 ```
 Wide courtyard scene, calmer. In the centre, Kim Cheomji fans the old master with
@@ -132,7 +132,7 @@ already slid sideways and locked onto the blue fan, pupils gone greedy. Warm gol
 light, the exact moment the trouble starts.
 ```
 
-### `07-trade.png` — 이 집을 통째로 주겠소
+### `07-trade.webp` — 이 집을 통째로 주겠소
 
 ```
 Wide scene on the verandah of the tiled-roof house. On the right, the old master
@@ -142,7 +142,7 @@ back with one eyebrow raised, half tempted, half alarmed. Behind them the fine
 house, the storehouse, the full yard. Absurd bargain.
 ```
 
-### `08-moveout.png` — 세간을 이고 지고 집을 나서는 식구들
+### `08-moveout.webp` — 세간을 이고 지고 집을 나서는 식구들
 
 ```
 Wide scene on a village road, a single long line of figures walking from right to
@@ -154,7 +154,7 @@ grinning and waving the red fan, delighted, and a servant follows with the last
 box. Everyone miserable except him. Sunny road, distant hills.
 ```
 
-### `09-play.png` — 빈 마당에서 신이 난 영감
+### `09-play.webp` — 빈 마당에서 신이 난 영감
 
 ```
 Wide scene in the now empty courtyard. In the centre, the old master reclines on
@@ -164,7 +164,7 @@ him is stripped - open doors, empty storehouse, nothing in the yard. Bright
 midday, gleeful and stupid.
 ```
 
-### `10-sky.png` — 구름을 뚫고 올라가는 코
+### `10-sky.webp` — 구름을 뚫고 올라가는 코
 
 ```
 Wide scene, mostly sky. From the bottom left of the frame, an enormously long
@@ -174,7 +174,7 @@ from it in fright, wings blurred, beak open. Bright blue sky, absurd and
 beautiful.
 ```
 
-### `11-emperor.png` — 밥을 드시다 상이 흔들리고
+### `11-emperor.webp` — 밥을 드시다 상이 흔들리고
 
 ```
 Wide interior of a golden heavenly palace hall. On the left, the Jade Emperor
@@ -186,7 +186,7 @@ grapes, a lidded soup tureen with the soup visibly sloshing. Motion lines shakin
 the table. Very funny.
 ```
 
-### `12-pillar.png` — 구름 위에 솟은 벌건 기둥
+### `12-pillar.webp` — 구름 위에 솟은 벌건 기둥
 
 ```
 Wide scene on a cloud terrace outside the palace. On the right, the Jade Emperor
@@ -196,7 +196,7 @@ through the cloud floor, the pale round tip of an enormous nose, sitting there
 like a badly placed post. Golden light, pink clouds. Deadpan absurdity.
 ```
 
-### `13-tied.png` — 꽁꽁 묶인 코
+### `13-tied.webp` — 꽁꽁 묶인 코
 
 ```
 Wide scene split between sky and ground. Above, two heavenly attendants wind
@@ -206,7 +206,7 @@ face, mouth open in a howl, the blue fan flapping wildly in one hand. Motion
 lines top and bottom. Slapstick.
 ```
 
-### `14-fall.png` — 짚더미에 쿵, 그리고 돌려준 집
+### `14-fall.webp` — 짚더미에 쿵, 그리고 돌려준 집
 
 ```
 Wide courtyard scene. On the left, the old master has landed head first in a
@@ -217,7 +217,7 @@ returning family, who are coming back through the gate with their bundles, faces
 lighting up. Warm and satisfying.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet Korean courtyard at sunset, no people. A haystack with a person-shaped

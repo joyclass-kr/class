@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 한겨울의 심부름",
         beats: [
             {
-                art: "01-yeoni.png",
+                art: "01-yeoni.webp",
                 emoji: "❄️",
                 left: [
                     "옛날 어느 마을에 연이라는 아이가 살았습니다. 어머니를 일찍 여의고 새어머니와 함께 살았지요. 새어머니는 연이에게만 일을 시켰어요.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-order.png",
+                art: "02-order.webp",
                 emoji: "🥬",
                 left: [
                     "눈이 무릎까지 쌓인 섣달이었어요. 새어머니가 소쿠리를 툭 던졌습니다.",
@@ -35,7 +35,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-snow.png",
+                art: "03-snow.webp",
                 emoji: "🏔️",
                 left: [
                     "연이는 소쿠리를 안고 눈 덮인 산을 올랐어요. 아무리 헤쳐도 나오는 건 마른 풀뿌리뿐이었지요.",
@@ -51,7 +51,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-door.png",
+                art: "04-door.webp",
                 emoji: "🚪",
                 left: [
                     "그때였어요.",
@@ -69,7 +69,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-garden.png",
+                art: "05-garden.webp",
                 emoji: "🌸",
                 left: [
                     "연이는 눈을 몇 번이나 비볐어요. 바위 안은 온통 봄이었습니다. 냇물이 졸졸 흐르고 나비가 날아다녔지요.",
@@ -90,7 +90,7 @@ const CHAPTERS = [
         title: "2장 · 봄이 있는 문",
         beats: [
             {
-                art: "06-doryeong.png",
+                art: "06-doryeong.webp",
                 emoji: "🧺",
                 left: [
                     "버들 도령은 연이의 소쿠리를 나물로 가득 채워 주었어요.",
@@ -107,7 +107,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-again.png",
+                art: "07-again.webp",
                 emoji: "🌿",
                 left: [
                     "그날부터 연이는 몰래몰래 그 문을 찾아갔어요. 둘은 냇물에 발을 담그고 이야기를 나누었습니다. 연이가 웃는 법을 다시 배운 것도 그 안에서였지요.",
@@ -122,7 +122,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-suspect.png",
+                art: "08-suspect.webp",
                 emoji: "🤨",
                 left: [
                     "한겨울에 파란 나물이 매일같이 들어오니 새어머니가 이상했어요.",
@@ -139,7 +139,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-follow.png",
+                art: "09-follow.webp",
                 emoji: "👣",
                 left: [
                     "이튿날 새어머니는 연이의 뒤를 살금살금 밟았어요.",
@@ -162,7 +162,7 @@ const CHAPTERS = [
         title: "3장 · 세 송이 꽃",
         beats: [
             {
-                art: "10-strike.png",
+                art: "10-strike.webp",
                 emoji: "😨",
                 left: [
                     "다음 날, 새어머니가 먼저 그 문 앞에 섰어요.",
@@ -179,7 +179,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-flee.png",
+                art: "11-flee.webp",
                 emoji: "💨",
                 left: [
                     "쿠르릉—",
@@ -195,7 +195,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-flowers.png",
+                art: "12-flowers.webp",
                 emoji: "🌺",
                 left: [
                     "뒤늦게 달려온 연이가 버들 도령을 흔들었어요.",
@@ -212,7 +212,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-revive.png",
+                art: "13-revive.webp",
                 emoji: "✨",
                 left: [
                     "하얀 꽃을 얹자 몸이 반듯해졌어요. 발그레한 꽃을 얹자 볼에 살이 돌았지요.",
@@ -227,7 +227,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "14-spring.png",
+                art: "14-spring.webp",
                 emoji: "🌷",
                 left: [
                     "\"나 얼마나 잤어?\"",
@@ -278,7 +278,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🌱')}
+                ${artFrame('cover.webp', '🌱')}
             </div>
             <div class="story-page-right">
                 <h1>연이와 버들 도령</h1>
@@ -341,7 +341,7 @@ const AFTERWORD = {
     emoji: '🌿',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "한겨울에 없는 것을 구해 오라는 심부름을 받는 이야기는 우리 옛이야기에 여럿 있습니다. 대개 새어머니가 시키고, 그 심부름 길에서 도와주는 이를 만납니다.",
                 "이 이야기는 거기에 봄을 얹었습니다. 버들 도령이 사는 곳은 한겨울에도 봄인 자리입니다. 겨울과 봄을 나란히 놓아 두 사람의 마음을 보여 준 것이지요.",

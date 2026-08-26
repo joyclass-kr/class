@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 18장 | 1.33 : 1 | **가로 4 : 세로 3** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.33 : 1 | **가로 4 : 세로 3** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.33 : 1 | **가로 4 : 세로 3** |
 
 > **`end` 그림은 「읽고 나서」 쪽에 들어갑니다.** 쪽 위쪽에 가로로 얹히므로 비율은 아래 표대로면 됩니다.
 > 다만 글 분량에 따라 높이가 조금씩 달라지니, **중요한 것은 한가운데에 두고 위아래 가장자리는 여유를 두세요.**
@@ -61,7 +61,7 @@ thatch.
 
 ---
 
-## 표지 — `cover.png` (세로 2:3)
+## 표지 — `cover.webp` (세로 2:3)
 
 세로로 긴 표지. 초가지붕을 뒤덮은 커다란 박과 제비.
 
@@ -78,7 +78,7 @@ green, comic and hopeful.
 
 ## 본문 18장 (모두 가로 4:3)
 
-### `story-01-a.png` — 1장 — 형이 아우를 내쫓는다
+### `story-01-a.webp` — 1장 — 형이 아우를 내쫓는다
 
 ```
 Wide 4:3 scene. Winter, in the gateway of a fine tile-roofed compound. On the
@@ -89,7 +89,7 @@ wife and a crowd of small ragged children huddled behind him. Bare branches,
 grey-white light, no one shouting - just finality.
 ```
 
-### `story-01-b.png` — 1장 — 형수가 밥주걱으로 뺨을 때린다
+### `story-01-b.webp` — 1장 — 형수가 밥주걱으로 뺨을 때린다
 
 ```
 Wide 4:3 scene. A kitchen doorway. On the right a big red-faced woman has just
@@ -100,7 +100,7 @@ is not anger but wonder. Steam from the cauldron, comic energy with a sad
 undertow.
 ```
 
-### `story-01-c.png` — 1장 — 반대쪽 뺨을 내민다
+### `story-01-c.webp` — 1장 — 반대쪽 뺨을 내민다
 
 ```
 Wide 4:3 scene. The same doorway a moment later. The thin man has carefully
@@ -110,7 +110,7 @@ embarrassed smile. The sister-in-law has frozen mid-swing, the paddle stopped in
 the air, her face gone completely blank. Kitchen smoke, bright morning.
 ```
 
-### `story-02-a.png` — 2장 — 처마 밑에 제비 한 쌍이 날아든다
+### `story-02-a.webp` — 2장 — 처마 밑에 제비 한 쌍이 날아든다
 
 ```
 Wide 4:3 scene. Spring. The eaves of the crooked hut. A pair of sleek swallows
@@ -120,7 +120,7 @@ face delighted, while his wife shades her eyes beside him. Fresh green willow,
 soft blue sky, warm light.
 ```
 
-### `story-02-b.png` — 2장 — 다리 부러진 새끼 제비를 실로 싸매 준다
+### `story-02-b.webp` — 2장 — 다리 부러진 새끼 제비를 실로 싸매 준다
 
 ```
 Wide 4:3 scene. Inside the little room. The thin man sits cross-legged holding a
@@ -131,7 +131,7 @@ his hands. A snake's tail disappearing out the door in the background. Warm lamp
 light, everything very small and careful.
 ```
 
-### `story-02-c.png` — 2장 — 이듬해 봄, 제비가 박씨를 물어다 준다
+### `story-02-c.webp` — 2장 — 이듬해 봄, 제비가 박씨를 물어다 준다
 
 ```
 Wide 4:3 scene. The yard in spring. A swallow banks away upward on the right,
@@ -141,7 +141,7 @@ against the light, squinting at strange markings on its shell. His wife leans
 over his shoulder. Blossom petals in the air, bright clear morning.
 ```
 
-### `story-03-a.png` — 3장 — 부부가 마주 잡고 박을 탄다
+### `story-03-a.webp` — 3장 — 부부가 마주 잡고 박을 탄다
 
 ```
 Wide 4:3 scene. The yard. A gourd as big as a barrel sits on a straw mat, and the
@@ -151,7 +151,7 @@ children crowd around in a ring, some plugging their ears, all wide-eyed. Bright
 midday, dust and sawdust in the sun.
 ```
 
-### `story-03-b.png` — 3장 — 박에서 쌀이 쏟아진다
+### `story-03-b.webp` — 3장 — 박에서 쌀이 쏟아진다
 
 ```
 Wide 4:3 scene of joy. The gourd has split open and white rice is pouring out of
@@ -161,7 +161,7 @@ The husband and wife stand holding each other's arms, crying openly. Golden ligh
 white rice, motion everywhere.
 ```
 
-### `story-03-c.png` — 3장 — 목수들이 사흘 만에 새 집을 짓는다
+### `story-03-c.webp` — 3장 — 목수들이 사흘 만에 새 집을 짓는다
 
 ```
 Wide 4:3 scene. A building site full of activity. Carpenters raise a ridge beam
@@ -171,7 +171,7 @@ of it all with his arms hanging, completely overwhelmed, while a child tugs his
 sleeve. Warm timber colours, blue sky, cheerful chaos.
 ```
 
-### `story-04-a.png` — 4장 — 놀부가 흥부 집에 쳐들어와 캐묻는다
+### `story-04-a.webp` — 4장 — 놀부가 흥부 집에 쳐들어와 캐묻는다
 
 ```
 Wide 4:3 scene. Inside the fine new house. On the right the stout brother sits
@@ -182,7 +182,7 @@ guileless and eager to please. A tray of food untouched between them. Rich warm
 interior.
 ```
 
-### `story-04-b.png` — 4장 — 놀부가 제 손으로 제비 다리를 부러뜨린다
+### `story-04-b.webp` — 4장 — 놀부가 제 손으로 제비 다리를 부러뜨린다
 
 ```
 Wide 4:3 scene, comic and unpleasant but not graphic. Up a ladder at his own
@@ -193,7 +193,7 @@ bird is whole and squawking, wings out. Below, his wife steadies the ladder and
 looks up eagerly. Harsh bright noon light, ugly comedy.
 ```
 
-### `story-04-c.png` — 4장 — 떠나는 제비들에게 소리친다
+### `story-04-c.webp` — 4장 — 떠나는 제비들에게 소리친다
 
 ```
 Wide 4:3 scene. Autumn. The stout brother stands alone in the middle of his big
@@ -203,7 +203,7 @@ leaves blowing around his feet. Servants watch from a doorway, embarrassed. Wide
 cold blue sky, one small shouting man.
 ```
 
-### `story-05-a.png` — 5장 — 지붕 가득 열두 통의 박
+### `story-05-a.webp` — 5장 — 지붕 가득 열두 통의 박
 
 ```
 Wide 4:3 scene. The rich compound's roof loaded with twelve enormous gourds, far
@@ -213,7 +213,7 @@ with her hands clasped. Servants on ladders. Late summer, heavy green vines,
 bright light, a faint sense of something about to break.
 ```
 
-### `story-05-b.png` — 5장 — 박에서 사당패가 나와 밤새 놀고 값을 받아 간다
+### `story-05-b.webp` — 5장 — 박에서 사당패가 나와 밤새 놀고 값을 받아 간다
 
 ```
 Wide 4:3 scene of noisy comedy. A troupe of travelling entertainers has poured
@@ -224,7 +224,7 @@ presented with a bill by a grinning troupe leader, and his face is falling. Nigh
 warm lantern colour, wonderful chaos.
 ```
 
-### `story-05-c.png` — 5장 — 해질 무렵, 집터에 흙더미만 남는다
+### `story-05-c.webp` — 5장 — 해질 무렵, 집터에 흙더미만 남는다
 
 ```
 Wide 4:3 scene. Sunset. Where the fine compound stood there is now a broad mound
@@ -234,7 +234,7 @@ their backs to the viewer. Long red light, dust hanging in the air, crows on the
 gatepost. Desolate but not cruel.
 ```
 
-### `story-06-a.png` — 6장 — 비 내리는 무너진 집터
+### `story-06-a.webp` — 6장 — 비 내리는 무너진 집터
 
 ```
 Wide 4:3 scene. Rain. The family stands in the ruins under a grey downpour, the
@@ -243,7 +243,7 @@ clinging, rain running down his face, staring at nothing. His wife holds a mat
 over the children. Everything grey-green and streaming. Very quiet.
 ```
 
-### `story-06-b.png` — 6장 — 아우의 집 앞에서 걸음을 멈춘다
+### `story-06-b.webp` — 6장 — 아우의 집 앞에서 걸음을 멈춘다
 
 ```
 Wide 4:3 scene. A road at dusk before a warm lit house. The stout brother has
@@ -253,7 +253,7 @@ back on the road. Blue evening, gold light in the paper windows, a long distance
 between him and the door.
 ```
 
-### `story-06-c.png` — 6장 — 아우가 형에게 밥상을 차려 준다
+### `story-06-c.webp` — 6장 — 아우가 형에게 밥상을 차려 준다
 
 ```
 Wide 4:3 scene. Inside the warm house. The thin brother sets down a full tray of
@@ -265,7 +265,7 @@ Lamplight, steam rising from the bowls. Quiet and enormous.
 
 ---
 
-## 마지막 장 — `end.png` (가로 4:3)
+## 마지막 장 — `end.webp` (가로 4:3)
 
 우물가에 걸어 둔 바가지.
 

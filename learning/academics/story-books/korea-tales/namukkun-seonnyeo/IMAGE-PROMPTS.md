@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 16장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -62,7 +62,7 @@ a thick straw rope, drawn identically every time.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A small clear pond on a mountain summit under a
@@ -76,7 +76,7 @@ and magical.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-woodcutter.png` — 지게 하나와 도끼 한 자루
+### `01-woodcutter.webp` — 지게 하나와 도끼 한 자루
 
 ```
 Wide scene at a poor thatched cottage at the foot of a steep wooded mountain in
@@ -86,7 +86,7 @@ doorway with one hand raised, saying something. Mist on the mountain, cold blue
 dawn light, a thin curl of smoke. Poor and warm.
 ```
 
-### `02-deer.png` — 나뭇더미에 숨긴 사슴
+### `02-deer.webp` — 나뭇더미에 숨긴 사슴
 
 ```
 Wide scene in a pine forest. On the right, the woodcutter throws an armful of
@@ -96,7 +96,7 @@ a hunter runs past with a bow, not looking their way. Dappled green light, motio
 lines. Tense and quick.
 ```
 
-### `03-tell.png` — 보름달 뜨는 밤에요
+### `03-tell.webp` — 보름달 뜨는 밤에요
 
 ```
 Wide scene in a forest clearing. In the centre, the roe deer stands with one
@@ -106,7 +106,7 @@ mouth slightly open. Above them, a daytime moon faint in the blue. Sunlight
 through pines. Quiet and strange.
 ```
 
-### `04-pond.png` — 연못에 내려앉은 일곱
+### `04-pond.webp` — 연못에 내려앉은 일곱
 
 ```
 Wide night scene at a small pond on a mountain summit. In the upper part of the
@@ -116,7 +116,7 @@ them. On the near bank, the woodcutter crouches behind a boulder, only his head
 showing, eyes wide. Silver light, mist off the water. Breathtaking.
 ```
 
-### `05-robe.png` — 가시덤불에 걸린 날개옷
+### `05-robe.webp` — 가시덤불에 걸린 날개옷
 
 ```
 Wide scene at the pond. A gust of wind sweeps across the frame, bending the
@@ -126,7 +126,7 @@ woodcutter is already scrambling toward it with his arms up, brambles snagging h
 sleeves. Moonlight, flying leaves. Urgent and kind.
 ```
 
-### `06-left.png` — 못가에 남은 한 사람
+### `06-left.webp` — 못가에 남은 한 사람
 
 ```
 Wide scene at the pond at first light. In the upper part of the frame, six
@@ -136,7 +136,7 @@ drawn up and her face buried in them, hair loose over her shoulders. Empty pale
 sky, cold mist. Lonely.
 ```
 
-### `07-give.png` — 두 손으로 내민 옷
+### `07-give.webp` — 두 손으로 내민 옷
 
 ```
 Wide scene at the pond. In the centre, the woodcutter stands holding out the
@@ -147,7 +147,7 @@ for it. Pale gold dawn light on the water. The most important picture in the
 book.
 ```
 
-### `08-closed.png` — 하늘 문이 닫혔어요
+### `08-closed.webp` — 하늘 문이 닫혔어요
 
 ```
 Wide scene at the pond in the morning. In the centre, the young woman stands in
@@ -158,7 +158,7 @@ his hands at his sides. Ordinary morning light. Comically anticlimactic and
 sad.
 ```
 
-### `09-home.png` — 산나물 이름은 하나도 빠짐없이
+### `09-home.webp` — 산나물 이름은 하나도 빠짐없이
 
 ```
 Wide interior of the small cottage at night. Around a low table, the old mother
@@ -168,7 +168,7 @@ leans in listening. A pot of scorched rice sits to one side. Warm lamplight,
 smoke-darkened beams. Homely and happy.
 ```
 
-### `10-stay.png` — 조금만 더 있다 갈게요
+### `10-stay.webp` — 조금만 더 있다 갈게요
 
 ```
 Wide interior of the cottage under a full moon shining through the open door. In
@@ -178,7 +178,7 @@ on the lid. She is not looking at him. Blue moonlight and warm lamplight
 together. A decision.
 ```
 
-### `11-children.png` — 마당에 아이가 둘
+### `11-children.webp` — 마당에 아이가 둘
 
 ```
 Wide scene of the cottage yard in summer. Two children chase a chicken across
@@ -188,7 +188,7 @@ mat to dry; in the doorway, the grandmother laughs with her hands on her knees.
 Bright green mountain behind. Full of noise and life.
 ```
 
-### `12-homesick.png` — 자꾸 올려다본 하늘
+### `12-homesick.webp` — 자꾸 올려다본 하늘
 
 ```
 Wide scene of the yard on a bright day. In the centre, the heavenly woman stands
@@ -198,7 +198,7 @@ On the right, from the doorway, the woodcutter watches her without saying
 anything. Sunlight, drifting cloud. Quiet ache.
 ```
 
-### `13-up.png` — 구름 속으로
+### `13-up.webp` — 구름 속으로
 
 ```
 Wide scene of the yard. In the centre, the heavenly woman rises off the ground in
@@ -208,7 +208,7 @@ half-raised, and the grandmother has both hands pressed to her mouth. Wind, dust
 a shaft of light in the cloud. Beautiful and painful.
 ```
 
-### `14-bucket.png` — 마당 한가운데로 내려온 두레박
+### `14-bucket.webp` — 마당 한가운데로 내려온 두레박
 
 ```
 Wide scene of the yard at midday. Straight down through a break in the clouds
@@ -218,7 +218,7 @@ rope, looking up. The grandmother holds his sleeve with one hand and waves him o
 with the other. Bright light pouring down. Wonderful and funny.
 ```
 
-### `15-mother.png` — 땅에 발을 딛으면 안 돼요
+### `15-mother.webp` — 땅에 발을 딛으면 안 돼요
 
 ```
 Wide scene on a terrace of white cloud in the heavens. On the right, a white
@@ -228,7 +228,7 @@ On the left, the woodcutter is already up in the saddle, nodding, half turned
 toward the gap in the clouds below. Jade pavilions, silk banners, no shadows.
 ```
 
-### `16-rooster.png` — 그날 아침 수탉들이 하늘을 보고 울었대요
+### `16-rooster.webp` — 그날 아침 수탉들이 하늘을 보고 울었대요
 
 ```
 Wide scene of the cottage yard. In the centre, the woodcutter sits flat on the
@@ -240,7 +240,7 @@ necks stretched straight up, crowing at the sky. Gold morning light. Joyful and
 funny.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A poor thatched cottage yard at dawn with no people. A big wooden bucket on a

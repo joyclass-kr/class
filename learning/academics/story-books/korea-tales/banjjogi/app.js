@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 잉어 두 마리 반",
         beats: [
             {
-                art: "01-carp.png",
+                art: "01-carp.webp",
                 emoji: "🐟",
                 left: [
                     "옛날 어느 마을에 아이 없는 부부가 살았습니다.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-half.png",
+                art: "02-half.webp",
                 emoji: "👶",
                 left: [
                     "그런데 세 마리째를 반쯤 먹었을 때였어요.",
@@ -36,7 +36,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-grow.png",
+                art: "03-grow.webp",
                 emoji: "💪",
                 left: [
                     "사람들은 막내를 반쪽이라고 불렀어요.",
@@ -52,7 +52,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-jealous.png",
+                art: "04-jealous.webp",
                 emoji: "😒",
                 left: [
                     "형들은 그것이 영 못마땅했어요.",
@@ -75,7 +75,7 @@ const CHAPTERS = [
         title: "2장 · 나무째 지고 온 아이",
         beats: [
             {
-                art: "05-tie.png",
+                art: "05-tie.webp",
                 emoji: "🪢",
                 left: [
                     "어느 날 형들이 반쪽이를 산으로 데려갔어요.",
@@ -92,7 +92,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-uproot.png",
+                art: "06-uproot.webp",
                 emoji: "🌲",
                 left: [
                     "형들이 저녁상을 물릴 무렵이었어요.",
@@ -110,7 +110,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-tiger.png",
+                art: "07-tiger.webp",
                 emoji: "🐯",
                 left: [
                     "그 무렵 마을에는 큰 걱정이 하나 있었어요. 밤마다 산에서 커다란 호랑이가 내려왔거든요.",
@@ -125,7 +125,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-catch.png",
+                art: "08-catch.webp",
                 emoji: "🪢",
                 left: [
                     "그날 밤 반쪽이가 혼자 마을 어귀로 나갔어요. 커다란 밧줄 한 타래를 들고서요.",
@@ -147,7 +147,7 @@ const CHAPTERS = [
         title: "3장 · 세 가지 내기",
         beats: [
             {
-                art: "09-promise.png",
+                art: "09-promise.webp",
                 emoji: "📜",
                 left: [
                     "마을에서 제일 부자인 김 부자가 이렇게 말한 적이 있었어요.",
@@ -163,7 +163,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-excuse.png",
+                art: "10-excuse.webp",
                 emoji: "😤",
                 left: [
                     "\"약속은 약속이지만 아무나 사위로 들일 수는 없지.\"",
@@ -181,7 +181,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-contest.png",
+                art: "11-contest.webp",
                 emoji: "🥇",
                 left: [
                     "첫째는 힘겨루기였어요. 반쪽이가 곳간 기둥을 한 팔로 들어 올렸지요.",
@@ -198,7 +198,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-wedding.png",
+                art: "12-wedding.webp",
                 emoji: "🎊",
                 left: [
                     "김 부자는 더 할 말이 없었어요. 그해 가을 혼례가 열렸습니다.",
@@ -248,7 +248,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '💪')}
+                ${artFrame('cover.webp', '💪')}
             </div>
             <div class="story-page-right">
                 <h1>반쪽이</h1>
@@ -314,7 +314,7 @@ const AFTERWORD = {
     emoji: '💪',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "반쪽이는 우리 옛이야기 가운데서도 유난히 눈에 띄는 주인공입니다. 몸이 남과 다른 사람이 힘도 세고 꾀도 밝은 주인공으로 나오는 이야기는 흔치 않기 때문입니다.",
                 "이야기는 반쪽이를 한 번도 불쌍하게 그리지 않습니다. 형들이 놀려도, 사람들이 손가락질해도 반쪽이는 주눅 들지 않습니다. 호랑이를 잡아 오는 것도 반쪽이입니다.",

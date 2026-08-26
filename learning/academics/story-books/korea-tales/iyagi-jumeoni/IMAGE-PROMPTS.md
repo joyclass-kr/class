@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -56,7 +56,7 @@ visibly bulging more in each picture.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A fat cloth pouch hangs from a nail on a paper-
@@ -69,7 +69,7 @@ unsettling.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-boy.png` — 이야기라면 사족을 못 쓰는 도련님
+### `01-boy.webp` — 이야기라면 사족을 못 쓰는 도련님
 
 ```
 Wide interior of a warm Korean room. On the right, an old woman sits telling a
@@ -79,7 +79,7 @@ Other family members eat on unbothered in the background. Amber lamplight, funny
 and warm.
 ```
 
-### `02-pouch.png` — 주머니에 후 불어 넣기
+### `02-pouch.webp` — 주머니에 후 불어 넣기
 
 ```
 Wide interior scene at night. In the centre, the boy stands on his toes at the
@@ -89,7 +89,7 @@ pouch, its tiny arms reaching back. His face is delighted and possessive. Warm
 lamplight, magical and just slightly wrong.
 ```
 
-### `03-years.png` — 열 해가 지나 터질 듯 불룩해진 주머니
+### `03-years.webp` — 열 해가 지나 터질 듯 불룩해진 주머니
 
 ```
 Wide interior scene. On the right, the pouch hangs from its nail, now enormously
@@ -99,7 +99,7 @@ his back to it reading, entirely used to it. Dust on the nail. Time visibly
 passed.
 ```
 
-### `04-angry.png` — 주머니 속의 웅성거림
+### `04-angry.webp` — 주머니 속의 웅성거림
 
 ```
 Cutaway view into the inside of the pouch, filling the whole wide frame. Dozens
@@ -109,7 +109,7 @@ Some sit slumped, some shout with their fists raised, one bangs on the cloth
 wall. Cramped and stuffy. Pitiable and cross, not scary.
 ```
 
-### `05-plot.png` — 혼례 전날 밤의 모의
+### `05-plot.webp` — 혼례 전날 밤의 모의
 
 ```
 Cutaway into the pouch again, at night. The sprites have gathered in a tight ring
@@ -119,7 +119,7 @@ a coiled shape. Their dull light throws long shadows in the cramped space.
 Conspiratorial and comic-sinister.
 ```
 
-### `06-listen.png` — 문밖에서 엿들은 하인
+### `06-listen.webp` — 문밖에서 엿들은 하인
 
 ```
 Wide interior scene at night, seen from the corridor. On the right, inside the
@@ -129,7 +129,7 @@ low, eyes wide, mouth open. His shadow stretches long down the corridor. Tense
 and quiet.
 ```
 
-### `07-well.png` — 우물가를 그대로 지나쳐
+### `07-well.webp` — 우물가를 그대로 지나쳐
 
 ```
 Wide scene on a country road in the morning. A wedding procession moves from
@@ -139,7 +139,7 @@ pointing back at it, mouth open, annoyed. At the horse's head, the old servant
 faces stubbornly forward and walks faster. Bright and comic-tense.
 ```
 
-### `08-berry.png` — 탐스러운 딸기밭도 그냥 지나쳐
+### `08-berry.webp` — 탐스러운 딸기밭도 그냥 지나쳐
 
 ```
 Wide scene further along the road. On the left, a lush patch of ripe red
@@ -149,7 +149,7 @@ red with irritation, while the old servant tugs the reins and keeps going.
 Sunlight, dust, comic stubbornness.
 ```
 
-### `09-scold.png` — 신부 집 앞의 꾸중
+### `09-scold.webp` — 신부 집 앞의 꾸중
 
 ```
 Wide scene in a courtyard before a fine tiled-roof house. On the right, the young
@@ -159,7 +159,7 @@ his hands on the ground, saying nothing. Onlookers watch awkwardly from the
 edges. Warm afternoon light, painful silence.
 ```
 
-### `10-room.png` — 몽둥이를 들고 신방 문을 열다
+### `10-room.webp` — 몽둥이를 들고 신방 문을 열다
 
 ```
 Wide scene at night outside the bridal room. In the centre, the old servant
@@ -169,7 +169,7 @@ faces of the bride and groom. On the left, family members come running with
 lanterns, mouths open in outrage. Chaos and candle glow.
 ```
 
-### `11-snake.png` — 이불 밑에서 미끄러져 나온 것
+### `11-snake.webp` — 이불 밑에서 미끄러져 나온 것
 
 ```
 Wide interior of the bridal room. In the centre, the old servant has lifted the
@@ -179,7 +179,7 @@ left, the bride and groom recoil, and behind them the family stands frozen in th
 doorway. Candlelight, no blood, nobody struck.
 ```
 
-### `12-tell.png` — 주머니를 활짝 열고
+### `12-tell.webp` — 주머니를 활짝 열고
 
 ```
 Wide interior of the young master's room in daylight. In the centre, he stands
@@ -189,7 +189,7 @@ as they rise. On the right, village children sit in a row, faces upturned and
 delighted. The old servant smiles from the doorway. Joyful and released.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet Korean room in the afternoon, no people. An empty cloth pouch hangs

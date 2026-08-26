@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 이상한 꿈",
         beats: [
             {
-                art: "01-dream.png",
+                art: "01-dream.webp",
                 emoji: "💭",
                 left: [
                     "동해 바닷속에 멸치 한 마리가 살았습니다.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-wake.png",
+                art: "02-wake.webp",
                 emoji: "😵",
                 left: [
                     "멸치는 벌떡 일어났어요.",
@@ -37,7 +37,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-send.png",
+                art: "03-send.webp",
                 emoji: "🏃",
                 left: [
                     "멸치는 옆에 있던 망둥이를 불렀어요.",
@@ -54,7 +54,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-journey.png",
+                art: "04-journey.webp",
                 emoji: "🌊",
                 left: [
                     "망둥이는 밤낮으로 헤엄쳤어요. 지느러미가 다 닳도록 물살을 갈랐습니다. 몇 날 며칠 만에 겨우 넙치를 찾아 데려왔지요.",
@@ -75,7 +75,7 @@ const CHAPTERS = [
         title: "2장 · 해몽",
         beats: [
             {
-                art: "05-feast.png",
+                art: "05-feast.webp",
                 emoji: "🍽️",
                 left: [
                     "멸치는 상다리가 휘어지게 상을 차렸어요.",
@@ -91,7 +91,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-tell.png",
+                art: "06-tell.webp",
                 emoji: "🗣️",
                 left: [
                     "멸치가 꿈 이야기를 늘어놓았어요.",
@@ -108,7 +108,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-bad.png",
+                art: "07-bad.webp",
                 emoji: "😬",
                 left: [
                     "넙치가 천천히 입을 열었어요.",
@@ -124,7 +124,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-slap.png",
+                art: "08-slap.webp",
                 emoji: "💥",
                 left: [
                     "멸치는 눈이 뒤집혔어요.",
@@ -146,7 +146,7 @@ const CHAPTERS = [
         title: "3장 · 바다가 시끄러워진 날",
         beats: [
             {
-                art: "09-catfish.png",
+                art: "09-catfish.webp",
                 emoji: "😂",
                 left: [
                     "그 꼴을 본 메기가 참지 못하고 웃음을 터뜨렸어요.",
@@ -163,7 +163,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-pomfret.png",
+                art: "10-pomfret.webp",
                 emoji: "🤐",
                 left: [
                     "옆에 있던 병어는 웃음을 참으려고 입을 꼭 오므렸어요.",
@@ -179,7 +179,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-squid.png",
+                art: "11-squid.webp",
                 emoji: "😱",
                 left: [
                     "꼴뚜기는 큰일 났다 싶어 달아나려 했어요.",
@@ -194,7 +194,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-goby.png",
+                art: "12-goby.webp",
                 emoji: "🐠",
                 left: [
                     "구석에서 이 난리를 다 지켜본 망둥이는 눈이 튀어나올 지경이었어요.",
@@ -244,7 +244,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐟')}
+                ${artFrame('cover.webp', '🐟')}
             </div>
             <div class="story-page-right">
                 <h1>멸치의 꿈</h1>
@@ -307,7 +307,7 @@ const AFTERWORD = {
     emoji: '🐟',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 왜 그런지를 풀어 주는 이야기입니다. 넙치 눈이 왜 한쪽으로 몰렸는지, 메기 입이 왜 넓적한지를 한꺼번에 설명합니다.",
                 "바닷물고기의 생김새를 하나하나 이야기로 붙여 둔 셈입니다. 우리 옛이야기에는 이런 것이 아주 많습니다.",

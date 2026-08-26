@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 벽에 걸린 주머니",
         beats: [
             {
-                art: "01-boy.png",
+                art: "01-boy.webp",
                 emoji: "👂",
                 left: [
                     "옛날 어느 집에 이야기를 무척 좋아하는 도련님이 살았습니다.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-pouch.png",
+                art: "02-pouch.webp",
                 emoji: "📿",
                 left: [
                     "그런데 도련님에게는 이상한 버릇이 하나 있었어요.",
@@ -36,7 +36,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-years.png",
+                art: "03-years.webp",
                 emoji: "⏳",
                 left: [
                     "그렇게 열 해가 지났어요. 주머니는 터질 듯이 불룩해졌습니다.",
@@ -50,7 +50,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-angry.png",
+                art: "04-angry.webp",
                 emoji: "😤",
                 left: [
                     "주머니 속은 어두컴컴하고 답답했어요.",
@@ -72,7 +72,7 @@ const CHAPTERS = [
         title: "2장 · 엿들은 하인",
         beats: [
             {
-                art: "05-plot.png",
+                art: "05-plot.webp",
                 emoji: "🗣️",
                 left: [
                     "도련님이 장가가는 날을 앞둔 밤이었어요. 주머니 안이 웅성웅성 시끄러웠습니다.",
@@ -88,7 +88,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-listen.png",
+                art: "06-listen.webp",
                 emoji: "😳",
                 left: [
                     "마침 문밖을 지나던 늙은 하인이 그 소리를 들었어요.",
@@ -105,7 +105,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-well.png",
+                art: "07-well.webp",
                 emoji: "🪣",
                 left: [
                     "이튿날 아침, 하인은 기어이 말고삐를 잡겠다고 나섰어요.",
@@ -122,7 +122,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-berry.png",
+                art: "08-berry.webp",
                 emoji: "🍓",
                 left: [
                     "얼마 뒤 길가에 탐스러운 딸기밭이 나타났어요.",
@@ -144,7 +144,7 @@ const CHAPTERS = [
         title: "3장 · 신방 구석의 것",
         beats: [
             {
-                art: "09-scold.png",
+                art: "09-scold.webp",
                 emoji: "😠",
                 left: [
                     "신부 집에 닿자 도련님이 하인을 불러 세웠어요.",
@@ -160,7 +160,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-room.png",
+                art: "10-room.webp",
                 emoji: "🕯️",
                 left: [
                     "밤이 깊어 신방에 불이 켜졌어요.",
@@ -176,7 +176,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-snake.png",
+                art: "11-snake.webp",
                 emoji: "🐍",
                 left: [
                     "하인이 이불 밑 구석을 몽둥이로 툭 건드렸어요.",
@@ -192,7 +192,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-tell.png",
+                art: "12-tell.webp",
                 emoji: "🔥",
                 left: [
                     "하인이 그제야 지난밤에 들은 이야기를 다 털어놓았어요. 도련님은 한참을 말이 없었습니다.",
@@ -242,7 +242,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '📿')}
+                ${artFrame('cover.webp', '📿')}
             </div>
             <div class="story-page-right">
                 <h1>이야기 주머니</h1>
@@ -305,7 +305,7 @@ const AFTERWORD = {
     emoji: '🗣️',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이 이야기는 이야기에 대한 이야기입니다. 옛이야기 가운데 이런 것은 흔치 않습니다. 이야기를 하는 사람들이 스스로를 두고 지은 셈이지요.",
                 "옛날에는 이야기가 책에 있지 않고 사람에게 있었습니다. 겨울밤에 한 사람이 풀어놓으면 듣던 사람이 다음 마을에서 다시 풀어놓았습니다. 그렇게 살아 움직이던 것입니다.",

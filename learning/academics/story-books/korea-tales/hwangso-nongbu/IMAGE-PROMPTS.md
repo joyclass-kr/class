@@ -24,8 +24,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -57,7 +57,7 @@ wooden ox-head mask, brown, painted like a Korean folk dance mask.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A carved wooden ox-head mask hangs from a low
@@ -69,7 +69,7 @@ little ominous.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-lazy.png` — 해가 중천인데 누워 있는 농부
+### `01-lazy.webp` — 해가 중천인데 누워 있는 농부
 
 ```
 Wide cutaway view of a modest Korean room with the front wall removed. On the
@@ -79,7 +79,7 @@ doorway with hands on hips, one eyebrow up, pointing outside toward the fields.
 Bright noon sunlight streaming in. Comic domestic scene.
 ```
 
-### `02-leave.png` — 슬그머니 집을 나서는 농부
+### `02-leave.webp` — 슬그머니 집을 나서는 농부
 
 ```
 Wide village scene. On the left, the farmer sneaks away down a dirt path with
@@ -88,7 +88,7 @@ guilty face. On the right, his house sits with the door still open. The path
 leads off toward pine-covered hills. Bright day, long grass along the path.
 ```
 
-### `03-mask.png` — 나무 아래의 노인
+### `03-mask.webp` — 나무 아래의 노인
 
 ```
 Wide scene under an enormous old tree on a mountain path. On the right, a lean
@@ -98,7 +98,7 @@ farmer leans in with both hands on his knees, eyes wide and greedy with interest
 Dappled green light.
 ```
 
-### `04-become.png` — 탈을 쓰자 황소가 되다
+### `04-become.webp` — 탈을 쓰자 황소가 되다
 
 ```
 ABSOLUTELY NO TEXT ANYWHERE IN THIS IMAGE. No speech bubbles, no letters, no
@@ -113,7 +113,7 @@ puffs of smoke. On the right, the elder watches calmly with his arms folded,
 wearing a Korean gat or a plain topknot, not a conical straw hat.
 ```
 
-### `05-sold.png` — 장터에서 팔리는 황소
+### `05-sold.webp` — 장터에서 팔리는 황소
 
 ```
 Wide bustling village market scene with straw-mat stalls. In the centre, the
@@ -123,7 +123,7 @@ right, a buyer in work clothes counts coins into the elder's palm. Villagers and
 other animals fill the background. Sunny and busy.
 ```
 
-### `06-work.png` — 새벽부터 밭을 가는 황소
+### `06-work.webp` — 새벽부터 밭을 가는 황소
 
 ```
 Wide field scene at dawn. The ox pulls a wooden plough from right to left across
@@ -133,7 +133,7 @@ stretch to the edges of the frame, pale pink and grey sunrise sky. Hard work, bu
 nothing cruel shown.
 ```
 
-### `07-regret.png` — 외양간에서 후회하는 황소
+### `07-regret.webp` — 외양간에서 후회하는 황소
 
 ```
 Wide cutaway view of a straw-roofed cattle shed at night. The ox lies on straw
@@ -143,7 +143,7 @@ beside him. Through the shed opening on the right, the moon and the distant
 silhouette of a village. Quiet and touching.
 ```
 
-### `08-radish.png` — 무를 뽑아 먹는 황소
+### `08-radish.webp` — 무를 뽑아 먹는 황소
 
 ```
 Wide scene beside a radish field. On the left, rows of white Korean radishes with
@@ -153,7 +153,7 @@ completely absorbed. On the right, a rope trails loose behind him. Bright sunny
 afternoon.
 ```
 
-### `09-human.png` — 사람으로 돌아오다
+### `09-human.webp` — 사람으로 돌아오다
 
 ```
 Wide scene in the radish field, the moment of transformation. In the centre, the
@@ -163,7 +163,7 @@ mask lying split on the ground. On the right, the owner has fallen backward onto
 his seat, hat rolling away, eyes like saucers. Explosive comic energy.
 ```
 
-### `10-work-hard.png` — 부지런해진 농부
+### `10-work-hard.webp` — 부지런해진 농부
 
 ```
 Wide sunny field scene. On the left, the farmer works a hoe with real energy,
@@ -173,7 +173,7 @@ Behind them, a neat well-tended field and their thatched house. Bright green and
 gold, warm and cheerful.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet Korean field at sunset, no people. A wooden plough rests at the edge of a

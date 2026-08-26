@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -55,7 +55,7 @@ painting - long body, whiskers, patterned scales, imposing rather than horrifyin
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. An enormous sheer cliff face fills the tall frame
@@ -67,7 +67,7 @@ wide, looking up. Vertigo and hope in one image.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-brothers.png` — 물려줄 것이 없는 아버지
+### `01-brothers.webp` — 물려줄 것이 없는 아버지
 
 ```
 Wide interior of a bare thatched cottage room. On the right, an elderly father
@@ -77,7 +77,7 @@ and a smaller one in green. The room is almost empty: one chest, one lamp. Warm
 dim light. Poor and dignified.
 ```
 
-### `02-depart.png` — 갈림길에 선 세 사람
+### `02-depart.webp` — 갈림길에 선 세 사람
 
 ```
 Wide scene at a three-way fork in a country road at dawn. In the centre, the
@@ -87,7 +87,7 @@ three roads run off toward three different horizons. Long morning shadows.
 Hopeful and lonely.
 ```
 
-### `03-return.png` — 삼 년 만에 다시 만난 형제
+### `03-return.webp` — 삼 년 만에 다시 만난 형제
 
 ```
 Wide scene in the cottage yard. In the centre, the eldest in brown kneels with
@@ -96,7 +96,7 @@ father and the other two brothers lean in watching. Chickens scatter. Bright
 daylight, dust motes. Curiosity and reunion.
 ```
 
-### `04-skills.png` — 받는 재주라니
+### `04-skills.webp` — 받는 재주라니
 
 ```
 Wide scene in the yard, split. On the left, the second brother in navy has just
@@ -107,7 +107,7 @@ slapping his knee. The younger one's face is patient. Comic but a little
 stinging.
 ```
 
-### `05-hear.png` — 백 리 밖 소리를 듣다
+### `05-hear.webp` — 백 리 밖 소리를 듣다
 
 ```
 Wide scene in the yard. In the centre, the eldest stands with one hand raised
@@ -117,7 +117,7 @@ suggested faintly in the air, coming from far beyond the hills on the right.
 Charged stillness.
 ```
 
-### `06-village.png` — 이무기가 아이를 채어 갔다
+### `06-village.webp` — 이무기가 아이를 채어 갔다
 
 ```
 Wide scene in a village lane. On the left, a crowd of anxious villagers surrounds
@@ -127,7 +127,7 @@ listening, already turning toward the ridge. Overcast light, real fear in the
 faces.
 ```
 
-### `07-run.png` — 산을 넘고 골짜기를 건너
+### `07-run.webp` — 산을 넘고 골짜기를 건너
 
 ```
 Wide mountain landscape, full of motion. The three brothers run in single file
@@ -136,7 +136,7 @@ pointing, the navy one behind, the small green one bringing up the rear with his
 arms pumping. Pines blur past; a valley drops away below. Speed lines, urgency.
 ```
 
-### `08-cliff.png` — 하늘을 찌를 듯한 절벽
+### `08-cliff.webp` — 하늘을 찌를 듯한 절벽
 
 ```
 Wide scene looking up at an enormous cliff face that fills the frame, its top
@@ -145,7 +145,7 @@ speck of red beside it. At the bottom of the frame, the three brothers are small
 dark figures with their heads tipped all the way back. Overwhelming scale.
 ```
 
-### `09-aim.png` — 쏘면 아이가 떨어진다
+### `09-aim.webp` — 쏘면 아이가 떨어진다
 
 ```
 Wide scene at the cliff base. On the right, the second brother has an arrow
@@ -155,7 +155,7 @@ brother in green looks up at the cliff, already thinking. Tension in three
 directions.
 ```
 
-### `10-ready.png` — 두 팔을 벌린 셋째
+### `10-ready.webp` — 두 팔을 벌린 셋째
 
 ```
 Wide scene at the cliff base. In the centre, the small brother in green has
@@ -165,7 +165,7 @@ reading the wind with his eyes closed. On the right, the second draws his bow.
 Three men, three jobs, one moment. Quiet before action.
 ```
 
-### `11-catch.png` — 품에 사뿐히 안긴 아이
+### `11-catch.webp` — 품에 사뿐히 안긴 아이
 
 ```
 Wide vertical-feeling scene at the cliff base. A long arrow trail streaks up the
@@ -176,7 +176,7 @@ the fall, dust puffing at his feet. The child is safe, eyes shut. Triumphant and
 tender.
 ```
 
-### `12-reward.png` — 셋에게 똑같이 내린 상
+### `12-reward.webp` — 셋에게 똑같이 내린 상
 
 ```
 Wide scene in a magistrate's courtyard. On the right, the magistrate holds the
@@ -186,7 +186,7 @@ raised in refusal, the small one in the middle. Servants bring forward three
 identical trays of reward. Warm gold light, villagers applauding at the edges.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet mountain valley at sunset, no people. Three sets of footprints lead away

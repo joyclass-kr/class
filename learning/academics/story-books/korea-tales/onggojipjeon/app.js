@@ -6,7 +6,7 @@ const CHAPTERS = [
     {
         num: 1,
         title: "옹당촌 옹고집",
-        art: ["story-01-a.png", "story-01-b.png", "story-01-c.png"],
+        art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
         paras: [
             "옛날 옹진골 옹당촌이라는 마을에 옹고집이라는 사람이 살았습니다. 이 고을에서 그만한 부자가 없었습니다. 대문에서 곳간까지 걸어가는 데만 한참이 걸렸습니다. 논이 백 마지기요 밭이 그 곱절이요, 곳간이 여섯 채나 되었습니다.",
             "그런데 사람됨이 재물만 못했습니다. 아니, 재물이 늘어날수록 사람됨은 줄어들었습니다. 돈을 세는 손은 빨라졌는데 사람을 보는 눈은 흐려졌습니다.",
@@ -37,7 +37,7 @@ const CHAPTERS = [
     {
         num: 2,
         title: "문전박대와 취암사의 밤",
-        art: ["story-02-a.png", "story-02-b.png", "story-02-c.png"],
+        art: ["story-02-a.webp", "story-02-b.webp", "story-02-c.webp"],
         paras: [
             "그해 가을이었습니다. 월출봉 취암사에서 스님 하나가 시주<span class=\"gloss\">(절에 쌀이나 돈을 보태는 일)</span>를 받으러 옹당촌에 내려왔습니다. 산에는 벌써 서리가 내려 있었습니다.",
             "스님은 마을을 돌며 목탁을 두드렸습니다. 사람들은 형편대로 쌀을 한 줌씩 내주었습니다. 가난한 집에서는 보리를 한 움큼 내주며 미안해했습니다. 스님은 받은 것이 많든 적든 똑같이 허리를 굽혔습니다.",
@@ -68,7 +68,7 @@ const CHAPTERS = [
     {
         num: 3,
         title: "또 하나의 옹고집",
-        art: ["story-03-a.png", "story-03-b.png", "story-03-c.png"],
+        art: ["story-03-a.webp", "story-03-b.webp", "story-03-c.webp"],
         paras: [
             "이튿날 낮이었습니다. 옹고집은 사랑방에서 장부를 들여다보고 있었습니다. 그때 마당이 소란스러워졌습니다. 종들이 마당을 가로질러 뛰어다니는 소리가 났습니다.",
             "\"주인어른께서 들어오십니다!\"<br>옹고집이 고개를 들었습니다. 무슨 소리인가 싶었습니다. 자기는 아침부터 이 방에 앉아 있었기 때문입니다. 장부에 적던 붓끝이 멈추었습니다.",
@@ -99,7 +99,7 @@ const CHAPTERS = [
     {
         num: 4,
         title: "쫓겨나 빌어먹다",
-        art: ["story-04-a.png", "story-04-b.png", "story-04-c.png"],
+        art: ["story-04-a.webp", "story-04-b.webp", "story-04-c.webp"],
         paras: [
             "원님이 판결을 내렸습니다.<br>\"이쪽이 진짜 옹고집이다. 저쪽은 남의 집을 빼앗으려 든 자이니 곤장을 쳐서 고을 밖으로 내쫓아라.\" 원님의 목소리에 조금도 망설임이 없었습니다.",
             "\"안 됩니다! 제가 옹고집입니다! 제가!\"<br>진짜 옹고집이 발버둥을 쳤습니다. 그러나 사령들이 양팔을 붙들었습니다. 소리를 지를수록 사람들은 더 딱하게 여겼습니다.",
@@ -130,7 +130,7 @@ const CHAPTERS = [
     {
         num: 5,
         title: "눈 위의 노승",
-        art: ["story-05-a.png", "story-05-b.png", "story-05-c.png"],
+        art: ["story-05-a.webp", "story-05-b.webp", "story-05-c.webp"],
         paras: [
             "그해 겨울은 유난히 길었습니다. 옹고집은 눈 덮인 산길을 넘다가 그만 쓰러지고 말았습니다. 눈이 무릎까지 쌓여 한 걸음 떼기가 힘들었습니다.",
             "며칠을 굶은 데다 발이 얼어 더는 걸을 수가 없었습니다. 눈발이 얼굴 위로 내려앉았습니다. 몸이 점점 따뜻해지는 것 같았습니다. 그것이 더 위험한 것인 줄은 몰랐습니다.",
@@ -161,7 +161,7 @@ const CHAPTERS = [
     {
         num: 6,
         title: "짚으로 돌아가다",
-        art: ["story-06-a.png", "story-06-b.png", "story-06-c.png"],
+        art: ["story-06-a.webp", "story-06-b.webp", "story-06-c.webp"],
         paras: [
             "대문이 열려 있었습니다. 예전에는 늘 빗장이 걸려 있던 문이었습니다. 빗장은 아예 빼서 담 옆에 세워 두었습니다.",
             "마당에서 종들이 일하고 있었습니다. 그런데 새참 그릇이 놓여 있었고, 웃음소리가 났습니다. 예전 같으면 있을 수 없는 일이었습니다.",
@@ -429,7 +429,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🌾')}
+                ${artFrame('cover.webp', '🌾')}
             </div>
             <div class="story-page-right">
                 <h1>옹고집전</h1>
@@ -564,7 +564,7 @@ function quizPage(part) {
 const AFTERWORD = {
     title: '읽고 나서',
     emoji: '🌾',
-    art: ['end.png'],
+    art: ['end.webp'],
     paras: [
         `이 이야기는 조금 특별한 자리에 있습니다. 판소리로 부르던 이야기였는데 지금은 소리가 전하지 않습니다.`,
         `판소리는 원래 열두 마당이었다고 합니다. 그 가운데 지금까지 소리로 남은 것은 다섯입니다. 춘향가, 심청가, 흥보가, 수궁가, 적벽가. 나머지 일곱은 부르는 사람이 끊겨 가락이 사라졌습니다. 「옹고집타령」이 그 일곱 가운데 하나입니다.`,

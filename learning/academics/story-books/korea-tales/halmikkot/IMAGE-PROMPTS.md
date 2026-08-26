@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -55,7 +55,7 @@ deep purple bell-shaped bloom, the whole plant covered in fine white hairs.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A single pasqueflower fills the lower half of the
@@ -67,7 +67,7 @@ spring hillside. Soft pale sky. Quiet and tender.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-daughters.png` — 딸 셋을 키운 할머니
+### `01-daughters.webp` — 딸 셋을 키운 할머니
 
 ```
 Wide scene in a small mountain village yard in daytime. On the left, a
@@ -77,7 +77,7 @@ different heights play in the yard. Simple thatched cottage, pine hills behind.
 Warm, modest, hardworking.
 ```
 
-### `02-married.png` — 하나둘 시집을 간 딸들
+### `02-married.webp` — 하나둘 시집을 간 딸들
 
 ```
 Wide scene showing three departures across one frame, like a single long road.
@@ -88,7 +88,7 @@ In the centre foreground, the mother stands watching, one hand raised. Soft
 afternoon light.
 ```
 
-### `03-alone.png` — 지팡이를 짚고 나선 길
+### `03-alone.webp` — 지팡이를 짚고 나선 길
 
 ```
 Wide scene at a small cottage gate in early spring. On the right, the grandmother
@@ -98,7 +98,7 @@ and very quiet. On the left, a long empty path curves away between budding
 trees. Pale morning light.
 ```
 
-### `04-first.png` — 열리지 않은 첫째 딸네 대문
+### `04-first.webp` — 열리지 않은 첫째 딸네 대문
 
 ```
 Wide scene at the gate of a fine tiled-roof house. On the left, the grandmother
@@ -108,7 +108,7 @@ a woman who has gone very still. The gate stays shut. Cool light, wide empty
 space around the tiny figure.
 ```
 
-### `05-second.png` — 스르르 닫힌 둘째 딸네 문
+### `05-second.webp` — 스르르 닫힌 둘째 딸네 문
 
 ```
 Wide courtyard scene at a prosperous house across the river. On the right, the
@@ -118,7 +118,7 @@ has stopped mid-step with her stick raised, her face gentle rather than angry.
 Muted midday light, a long distance between them.
 ```
 
-### `06-hill.png` — 해가 기우는 언덕길
+### `06-hill.webp` — 해가 기우는 언덕길
 
 ```
 Wide scene of a long grassy hillside path in late afternoon. In the lower left,
@@ -128,7 +128,7 @@ youngest daughter's cottage is just visible. The hill looks impossibly long. Low
 golden light, long shadow behind her.
 ```
 
-### `07-rest.png` — 언덕 중턱에 앉은 할머니
+### `07-rest.webp` — 언덕 중턱에 앉은 할머니
 
 ```
 Wide hillside scene at dusk. In the centre, the grandmother has sat down in the
@@ -138,7 +138,7 @@ the breeze. Wide open hillside, first stars in a lilac sky. Still and quiet,
 plainly resting, not lifeless.
 ```
 
-### `08-search.png` — 앞치마를 벗어 던지고 뛰다
+### `08-search.webp` — 앞치마를 벗어 던지고 뛰다
 
 ```
 Wide scene at the youngest daughter's cottage at dusk. On the right, she has
@@ -148,7 +148,7 @@ into the deepening evening. Her small cottage door stands open behind her. Motio
 and worry.
 ```
 
-### `09-found.png` — 언덕에서 어머니를 찾아내다
+### `09-found.webp` — 언덕에서 어머니를 찾아내다
 
 ```
 Wide hillside scene in the last light. In the centre, the youngest daughter has
@@ -158,7 +158,7 @@ touch her daughter's cheek. Wide empty hillside around them, warm last sunlight
 on the two figures. Deeply tender.
 ```
 
-### `10-flower.png` — 이듬해 봄, 그 자리에 핀 꽃
+### `10-flower.webp` — 이듬해 봄, 그 자리에 핀 꽃
 
 ```
 Wide hillside scene the following spring, bright and green. On the left, a small
@@ -168,7 +168,7 @@ grandmother sits on the sunny veranda of the small cottage with a blanket over h
 knees while her youngest daughter hangs washing nearby. Warm and hopeful.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A sunny spring hillside at morning, no people. A few pasqueflowers with bent

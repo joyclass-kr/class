@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 14장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -61,7 +61,7 @@ the same every time.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A rocky shore under a wide pale sky. In the lower
@@ -73,7 +73,7 @@ spread. Grey-green sea, pale gold morning light. Lonely and full of promise.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-sea.png` — 상서롭지 못합니다
+### `01-sea.webp` — 상서롭지 못합니다
 
 ```
 Wide interior of a foreign palace hall of unfamiliar design. In the centre, a
@@ -83,7 +83,7 @@ the right, a king sits with his chin on his fist, silent, looking at it. Cool
 light through high openings. Uneasy and quiet.
 ```
 
-### `02-chest.png` — 살 만한 땅에 닿거라
+### `02-chest.webp` — 살 만한 땅에 닿거라
 
 ```
 Wide scene at a foreign harbour at dusk. In the centre, a big iron-bound wooden
@@ -93,7 +93,7 @@ with one hand half raised in farewell. Grey sea, low red sun, a long empty
 horizon. Sad and open.
 ```
 
-### `03-magpie.png` — 깍깍! 깍깍!
+### `03-magpie.webp` — 깍깍! 깍깍!
 
 ```
 Wide scene on a rocky Korean shore in the morning. On the right, a flock of
@@ -103,7 +103,7 @@ rocks in the surf. On the left, the old fisherwoman straightens up from her nets
 one hand on her back, staring. Salt spray, pale gold light.
 ```
 
-### `04-open.png` — 여기가 어디예요?
+### `04-open.webp` — 여기가 어디예요?
 
 ```
 Wide scene on the shore. The chest has been hauled up onto the shingle, ropes
@@ -113,7 +113,7 @@ old woman has sat straight down on the stones with her mouth open. Nets, gulls,
 morning light. Astonishing and funny.
 ```
 
-### `05-name.png` — 성은 석, 이름은 탈해
+### `05-name.webp` — 성은 석, 이름은 탈해
 
 ```
 Wide interior of a tiny thatched fisherman's hut. On the left, the old woman
@@ -123,7 +123,7 @@ the open door behind them, a magpie sits on the fence post. Warm firelight,
 smoke, nets hanging from the beams. Home.
 ```
 
-### `06-grow.png` — 손도 야무진데 머리도 비상하구나
+### `06-grow.webp` — 손도 야무진데 머리도 비상하구나
 
 ```
 Wide scene on the shore. In the centre, the young man Talhae sits on an upturned
@@ -133,7 +133,7 @@ fishermen watch him and nudge each other. Bright sea light, drying nets, gulls.
 Warm and slightly comic.
 ```
 
-### `07-mountain.png` — 이레 동안 내려다보다
+### `07-mountain.webp` — 이레 동안 내려다보다
 
 ```
 Wide landscape scene from a mountain summit at dawn. In the foreground on the
@@ -143,7 +143,7 @@ a river, fields and a scattering of tiled roofs, and one long crescent-shaped
 ridge catching the first light. Enormous space. Deciding.
 ```
 
-### `08-house.png` — 담 밖에 서 있던 사람
+### `08-house.webp` — 담 밖에 서 있던 사람
 
 ```
 Wide scene in a town lane. On the right, a fine walled house with a tiled roof
@@ -152,7 +152,7 @@ lane with his hands at his sides, looking up at it, his face torn between longin
 and doubt. Long shadows, a dog asleep in the dust. Quiet and uncomfortable.
 ```
 
-### `09-trick.png` — 담 밑에 묻은 숯과 숫돌
+### `09-trick.webp` — 담 밑에 묻은 숯과 숫돌
 
 ```
 Wide scene split between night and morning. On the left, at night, Talhae
@@ -162,7 +162,7 @@ morning light, he stands at the gate knocking while Hogong bursts out red-faced
 and shouting. Moonlight and daylight in one frame.
 ```
 
-### `10-court.png` — 정말로 숯과 숫돌이 나왔어요
+### `10-court.webp` — 정말로 숯과 숫돌이 나왔어요
 
 ```
 Wide scene in a government courtyard. In the centre, two servants have dug a
@@ -172,7 +172,7 @@ seat. On the right, Hogong's arms drop to his sides, and behind him Talhae is no
 smiling at all. Dust, bright noon light.
 ```
 
-### `11-return.png` — 도로 내민 열쇠
+### `11-return.webp` — 도로 내민 열쇠
 
 ```
 Wide scene at the gate of the fine house at evening. In the centre, Talhae holds
@@ -182,7 +182,7 @@ completely thrown. Warm orange light along the wall. The most important picture 
 the book.
 ```
 
-### `12-friend.png` — 그날부터 둘도 없는 벗
+### `12-friend.webp` — 그날부터 둘도 없는 벗
 
 ```
 Wide scene on the porch of the house. On the left, Hogong is doubled over
@@ -192,7 +192,7 @@ them, a small table with two cups. Lantern light, moths, a warm evening. Easy an
 happy.
 ```
 
-### `13-king.png` — 물러설 줄도 아는구나
+### `13-king.webp` — 물러설 줄도 아는구나
 
 ```
 Wide interior of a modest Silla hall. On the right, an elderly king leans forward
@@ -202,7 +202,7 @@ and Hogong stand along the wall, Hogong openly proud. Warm plain wood, daylight
 from the door. Respect.
 ```
 
-### `14-shore.png` — 내가 여기서 시작했지
+### `14-shore.webp` — 내가 여기서 시작했지
 
 ```
 Wide scene on the rocky shore at sunrise. In the centre, Talhae, now older and
@@ -212,7 +212,7 @@ fisherwoman's tiny hut and a few magpies on the roof ridge. Gold light on the
 water, gulls, wide horizon. Full circle.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A rocky shore at evening with no people. A tiny thatched hut with nets drying on

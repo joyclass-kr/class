@@ -23,8 +23,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데
 눈에 띄지 않는 정도예요. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요.
@@ -68,7 +68,7 @@ face, fierce at first and then comically indignant once tied up.
 
 ---
 
-## 표지 — `cover.png` (세로 2:3)
+## 표지 — `cover.webp` (세로 2:3)
 
 세로로 긴 표지. 소나무를 뿌리째 지고 선 반쪽이.
 
@@ -85,7 +85,7 @@ behind, deep blue sky above.
 
 ## 본문 12장 (모두 가로 2:1)
 
-### `01-carp.png` — 노인이 잉어 세 마리를 준다
+### `01-carp.webp` — 노인이 잉어 세 마리를 준다
 
 ```
 Wide panoramic scene. A humble thatched cottage yard. On the right an old
@@ -95,7 +95,7 @@ instructions. On the left a middle-aged couple in plain hanbok receive them with
 both hands, bowing slightly, hopeful faces. Late afternoon, warm gold light.
 ```
 
-### `02-half.png` — 세 마리째를 반만 먹고, 셋째 아이가 반쪽으로 태어난다
+### `02-half.webp` — 세 마리째를 반만 먹고, 셋째 아이가 반쪽으로 태어난다
 
 ```
 Wide panoramic scene split in feeling. On the left, inside a warm lamplit room,
@@ -108,7 +108,7 @@ with wide surprised eyes and a soft smile. Never gruesome - the half baby is
 round and cute.
 ```
 
-### `03-grow.png` — 한 팔로 쌀가마를 번쩍 든다
+### `03-grow.webp` — 한 팔로 쌀가마를 번쩍 든다
 
 ```
 Wide panoramic scene. A village threshing yard in bright daylight. On the right
@@ -118,7 +118,7 @@ of villagers - farmers, an old man, children - throw up their hands and cheer,
 mouths wide open in amazement. Dust motes and straw in the golden air.
 ```
 
-### `04-jealous.png` — 형 둘이 시샘하며 수군거린다
+### `04-jealous.webp` — 형 둘이 시샘하며 수군거린다
 
 ```
 Wide panoramic scene. Evening behind a low stone wall. On the left the two elder
@@ -128,7 +128,7 @@ the right, far away and out of earshot, Banjjogi hops cheerfully along a path
 carrying a huge bundle of firewood, oblivious. Long blue evening shadows.
 ```
 
-### `05-tie.png` — 깊은 산에서 반쪽이를 소나무에 묶는다
+### `05-tie.webp` — 깊은 산에서 반쪽이를 소나무에 묶는다
 
 ```
 Wide panoramic scene. Deep pine forest at dusk. In the centre-left Banjjogi is
@@ -138,7 +138,7 @@ two brothers hurry away downhill without looking back, glancing sideways at each
 other. Cool dim blue-green light, tall dark trunks.
 ```
 
-### `06-uproot.png` — 소나무를 통째로 지고 마당에 나타난다
+### `06-uproot.webp` — 소나무를 통째로 지고 마당에 나타난다
 
 ```
 Wide panoramic scene. Night in the cottage yard, warm lamplight spilling from an
@@ -149,7 +149,7 @@ across his back with earth and roots dangling, scratching his head with his one
 hand and smiling apologetically. Dust puffing up around his foot.
 ```
 
-### `07-tiger.png` — 밤마다 호랑이가 마을로 내려온다
+### `07-tiger.webp` — 밤마다 호랑이가 마을로 내려온다
 
 ```
 Wide panoramic scene. A sleeping village under a cold blue moon, thatched roofs
@@ -159,7 +159,7 @@ yellow, one paw raised. An overturned water jar and a broken fence rail. Every
 window dark. Tense but stylised, not gory.
 ```
 
-### `08-catch.png` — 한 팔로 호랑이 목덜미를 붙들어 꽁꽁 묶는다
+### `08-catch.webp` — 한 팔로 호랑이 목덜미를 붙들어 꽁꽁 묶는다
 
 ```
 Wide panoramic scene. Night at the village entrance under a moon. In the centre
@@ -170,7 +170,7 @@ rope is slung over Banjjogi's shoulder and one loop is already around the tiger'
 middle. Moonlight, motion lines, funny not frightening.
 ```
 
-### `09-promise.png` — 김 부자 대문 앞에 호랑이를 끌고 선다
+### `09-promise.webp` — 김 부자 대문 앞에 호랑이를 끌고 선다
 
 ```
 Wide panoramic scene. Morning outside a rich man's tile-roofed house with a big
@@ -181,7 +181,7 @@ half raised, sweat drops flying off his forehead. Villagers peek over the wall,
 delighted.
 ```
 
-### `10-excuse.png` — "세 가지 내기를 해서 이기면"
+### `10-excuse.webp` — "세 가지 내기를 해서 이기면"
 
 ```
 Wide panoramic scene. The same gateway, now with a crowd. On the right Kim the
@@ -192,7 +192,7 @@ villagers mutter to one another with raised eyebrows and folded arms. Bright
 midday.
 ```
 
-### `11-contest.png` — 힘겨루기, 달리기, 슬기 겨루기
+### `11-contest.webp` — 힘겨루기, 달리기, 슬기 겨루기
 
 ```
 Wide panoramic scene showing three moments in one strip, left to right. Left:
@@ -203,7 +203,7 @@ stream carrying a huge earthenware jar in his arm and dunks it straight into the
 water. Bright daylight, cheering crowd, playful energy.
 ```
 
-### `12-wedding.png` — 혼례, 형 둘을 윗자리에 앉힌다
+### `12-wedding.webp` — 혼례, 형 둘을 윗자리에 앉힌다
 
 ```
 Wide panoramic scene. An autumn wedding in a courtyard hung with red and blue
@@ -217,7 +217,7 @@ festive.
 
 ---
 
-## 마지막 장 — `end.png` (가로 2:1)
+## 마지막 장 — `end.webp` (가로 2:1)
 
 반쪽이와 형들이 함께 밭에서 일한다.
 

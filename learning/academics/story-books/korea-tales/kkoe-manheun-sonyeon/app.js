@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 재로 꼰 새끼줄",
         beats: [
             {
-                art: "01-boy.png",
+                art: "01-boy.webp",
                 emoji: "🧒",
                 left: [
                     "옛날 어느 고을에 꾀 많기로 이름난 소년이 살았습니다.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-envoy.png",
+                art: "02-envoy.webp",
                 emoji: "📜",
                 left: [
                     "어느 날 이웃 나라에서 사신이 찾아왔어요. 사신은 두루마리를 펼치며 말했습니다.",
@@ -37,7 +37,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-first.png",
+                art: "03-first.webp",
                 emoji: "🪢",
                 left: [
                     "첫 번째 문제가 읽혔습니다.",
@@ -54,7 +54,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-solve1.png",
+                art: "04-solve1.webp",
                 emoji: "🔥",
                 left: [
                     "이틀이 지나도록 아무도 답을 내지 못했어요.",
@@ -77,7 +77,7 @@ const CHAPTERS = [
         title: "2장 · 아홉 번 굽은 구슬",
         beats: [
             {
-                art: "05-second.png",
+                art: "05-second.webp",
                 emoji: "🔵",
                 left: [
                     "사신의 눈이 커졌어요.",
@@ -94,7 +94,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-stuck.png",
+                art: "06-stuck.webp",
                 emoji: "😖",
                 left: [
                     "어른들이 번갈아 달려들었어요.",
@@ -111,7 +111,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-ant.png",
+                art: "07-ant.webp",
                 emoji: "🐜",
                 left: [
                     "소년은 마당 구석에 쪼그리고 앉았어요.",
@@ -128,7 +128,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-honey.png",
+                art: "08-honey.webp",
                 emoji: "🍯",
                 left: [
                     "소년은 구슬 한쪽 구멍에 꿀을 살짝 발랐어요. 그리고 반대쪽 구멍에 개미를 살그머니 놓아 주었습니다. 개미가 쏙 들어갔지요.",
@@ -151,7 +151,7 @@ const CHAPTERS = [
         title: "3장 · 통나무의 위아래",
         beats: [
             {
-                art: "09-third.png",
+                art: "09-third.webp",
                 emoji: "🪵",
                 left: [
                     "사신의 얼굴이 붉어졌어요.",
@@ -168,7 +168,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-water.png",
+                art: "10-water.webp",
                 emoji: "💧",
                 left: [
                     "소년은 물을 가득 채운 통을 가져다 달라고 했어요. 그러고는 통나무를 그 안에 가만히 눕혔습니다. 모두가 통나무만 들여다보았지요.",
@@ -184,7 +184,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-bow.png",
+                art: "11-bow.webp",
                 emoji: "🙇",
                 left: [
                     "사신은 한참 동안 아무 말이 없었어요.",
@@ -201,7 +201,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-school.png",
+                art: "12-school.webp",
                 emoji: "📖",
                 left: [
                     "원님이 소년을 불렀어요.",
@@ -252,7 +252,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🧠')}
+                ${artFrame('cover.webp', '🧠')}
             </div>
             <div class="story-page-right">
                 <h1>꾀 많은 소년</h1>
@@ -315,7 +315,7 @@ const AFTERWORD = {
     emoji: '🧠',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "어려운 문제를 아이가 푸는 이야기는 세계 곳곳에 있습니다. 어른들이 다 막힌 자리에서 아이 하나가 답을 내는 틀입니다.",
                 "그런 이야기에서 아이가 쓰는 것은 힘도 아니고 학식도 아닙니다. 문제를 낸 사람이 정해 놓은 틀 밖에서 보는 것입니다.",

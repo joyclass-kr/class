@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 16장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -64,7 +64,7 @@ on its two legs.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A dim Korean kitchen at night seen from the
@@ -78,7 +78,7 @@ top. Funny and full of secrets.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-field.png` — 팥밭을 매는 할머니
+### `01-field.webp` — 팥밭을 매는 할머니
 
 ```
 Wide autumn scene at the foot of a mountain. In the centre, a small plot of red
@@ -87,7 +87,7 @@ tiny thatched cottage sits on the right, pine hills behind. Warm gold afternoon
 light, red bean pods just starting to swell. Peaceful and modest.
 ```
 
-### `02-tiger.png` — 등 뒤에 나타난 호랑이
+### `02-tiger.webp` — 등 뒤에 나타난 호랑이
 
 ```
 Wide scene in the bean field. On the right, an enormous striped tiger rears up
@@ -97,7 +97,7 @@ hand, mouth open, knees knocking together with comic wobble lines. Huge size
 difference.
 ```
 
-### `03-deal.png` — 가을에 팥죽을 쑤어 드리리다
+### `03-deal.webp` — 가을에 팥죽을 쑤어 드리리다
 
 ```
 Wide scene in the bean field. On the left, the old woman holds up one finger with
@@ -107,7 +107,7 @@ chin, licking his lips as he imagines something. Above his head a small daydream
 bubble of a steaming bowl of red porridge. Warm and comic.
 ```
 
-### `04-agree.png` — 가을에 다시 오마
+### `04-agree.webp` — 가을에 다시 오마
 
 ```
 Wide scene. On the right, the tiger strolls away up the mountain path with his
@@ -116,7 +116,7 @@ down hard in the dirt among the bean plants, shoulders slumped, one hand to her
 forehead. Long evening shadows, falling leaves. Funny and a little sad.
 ```
 
-### `05-cry.png` — 팥죽을 쑤며 엉엉 울다
+### `05-cry.webp` — 팥죽을 쑤며 엉엉 울다
 
 ```
 Wide interior of a Korean kitchen. In the centre, a big black pot of red bean
@@ -126,7 +126,7 @@ cheeks and dripping into the pot. Warm firelight, rich red porridge. Sad and
 funny at once.
 ```
 
-### `06-chestnut.png` — 아궁이 잿속으로 쏙
+### `06-chestnut.webp` — 아궁이 잿속으로 쏙
 
 ```
 Wide kitchen scene. On the left, a glossy brown chestnut with a cheeky little
@@ -136,7 +136,7 @@ watches with the ladle in her hand and her eyebrows raised. Warm amber light,
 comic.
 ```
 
-### `07-turtle.png` — 물동이 속으로 첨벙
+### `07-turtle.webp` — 물동이 속으로 첨벙
 
 ```
 Wide kitchen scene. On the right, a big brown water jar, and a flat green turtle
@@ -145,7 +145,7 @@ splash, one back foot still in the air. An empty porridge bowl sits beside the
 jar. On the left, the old woman peers over, ladle forgotten. Warm light.
 ```
 
-### `08-dung.png` — 부엌 바닥에 철퍼덕
+### `08-dung.webp` — 부엌 바닥에 철퍼덕
 
 ```
 Wide kitchen scene. In the middle of the packed earth floor, a small round shiny
@@ -155,7 +155,7 @@ the left, the old woman looks down at it with a face caught between gratitude an
 doubt. Warm firelight, very funny.
 ```
 
-### `09-mortar.png` — 문틀 위로 낑낑
+### `09-mortar.webp` — 문틀 위로 낑낑
 
 ```
 Wide kitchen scene looking toward the door. In the centre, a stout grey stone
@@ -165,7 +165,7 @@ hands up as if ready to catch it. Dust falling from the frame. Precarious and
 comic.
 ```
 
-### `10-mat.png` — 마당의 멍석과 담 옆의 지게
+### `10-mat.webp` — 마당의 멍석과 담 옆의 지게
 
 ```
 Wide scene of the cottage yard at dusk. On the left, a rolled straw mat with two
@@ -175,7 +175,7 @@ earthen wall, one leg crossed casually over the other. The old woman watches fro
 the kitchen door. Blue evening light, everything in place.
 ```
 
-### `11-arrive.png` — 캄캄한 부엌에 들어선 호랑이
+### `11-arrive.webp` — 캄캄한 부엌에 들어선 호랑이
 
 ```
 Wide scene at the kitchen door at night. Filling the right of the frame, the
@@ -185,7 +185,7 @@ outline of the pot. Nothing else visible - the reader knows what is waiting.
 Deep blue night, one warm gleam. Tense and funny.
 ```
 
-### `12-pop.png` — 팍! 눈을 때린 밤
+### `12-pop.webp` — 팍! 눈을 때린 밤
 
 ```
 Wide kitchen scene, explosion of motion. The tiger crouches at the ash pit
@@ -195,7 +195,7 @@ The tiger's head snaps back, both front paws flying to his face, mouth open in a
 howl. Firelight, ash everywhere.
 ```
 
-### `13-bite.png` — 물동이 속에서 콱
+### `13-bite.webp` — 물동이 속에서 콱
 
 ```
 Wide kitchen scene. On the right, the tiger has plunged one front paw into the
@@ -205,7 +205,7 @@ off the floor, water sloshing out, his one good eye enormous. Splashes and
 motion lines. Hilarious.
 ```
 
-### `14-slip.png` — 개똥에 미끄러져 벌러덩
+### `14-slip.webp` — 개똥에 미끄러져 벌러덩
 
 ```
 Wide kitchen scene. In the centre, the tiger lands from a leap onto the small
@@ -215,7 +215,7 @@ Long skid lines across the packed earth. The lump grins up at him. Peak
 slapstick.
 ```
 
-### `15-roll.png` — 절구가 쿵, 멍석이 둘둘
+### `15-roll.webp` — 절구가 쿵, 멍석이 둘둘
 
 ```
 Wide scene split between doorway and yard. On the left, the tiger bolts through
@@ -225,7 +225,7 @@ upright and is rolling the dazed tiger up inside itself like a spring roll, only
 his head and tail sticking out. Moonlight, dust, chaos.
 ```
 
-### `16-river.png` — 지게가 지고 나가 강물에 텀벙
+### `16-river.webp` — 지게가 지고 나가 강물에 텀벙
 
 ```
 Wide moonlit scene at a riverbank. In the centre, the wooden A-frame carrier
@@ -236,7 +236,7 @@ cottage, the old woman and the five helpers watch from the yard, all cheering.
 Moonlight on water. Triumphant and funny.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet Korean kitchen in the morning, no one there. An empty black pot on the

@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -53,7 +53,7 @@ narrow mouth, always half hidden by fog or shadow until the end.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A creamy white dog with black patches stands
@@ -65,7 +65,7 @@ faint shape of a man sitting slumped on the road. Tense and atmospheric.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-dog.png` — 눈 오는 날 주워 온 개
+### `01-dog.webp` — 눈 오는 날 주워 온 개
 
 ```
 Wide winter scene of a country road under falling snow, drawn as a warm memory.
@@ -75,7 +75,7 @@ reaching out, snow on his shoulders, a soft smile. Muted white and grey with war
 skin tones. Gentle and tender.
 ```
 
-### `02-market.png` — 물건이 다 팔린 장날
+### `02-market.webp` — 물건이 다 팔린 장날
 
 ```
 Wide busy market scene at late afternoon. Rows of straw-mat stalls, crowds in
@@ -85,7 +85,7 @@ his waistband. At his feet, Badugi sits with his tail sweeping the ground. Warm
 gold light, cheerful bustle.
 ```
 
-### `03-inn.png` — 주막의 흘끔거리는 눈
+### `03-inn.webp` — 주막의 흘끔거리는 눈
 
 ```
 Wide interior of a roadside tavern at night, lit by paper lanterns. On the left,
@@ -95,7 +95,7 @@ watches sideways over his cup, eyes fixed on the pedlar's waistband. Badugi's
 head has turned toward him, lip curled. Warm light, cold undertone.
 ```
 
-### `04-dawn.png` — 안개 낀 고갯길
+### `04-dawn.webp` — 안개 낀 고갯길
 
 ```
 Wide mountain pass scene at dawn, thick grey-blue fog reducing the pines to
@@ -105,7 +105,7 @@ down the trail, ears up, whole body tense. The road behind vanishes into white.
 Quiet dread.
 ```
 
-### `05-robbed.png` — 안개 속에서 튀어나온 사내
+### `05-robbed.webp` — 안개 속에서 튀어나온 사내
 
 ```
 Wide scene at the top of the fogged pass. In the centre, the robber lunges out of
@@ -115,7 +115,7 @@ the right, Badugi launches forward barking, too far to reach them. Motion lines,
 sharp diagonal composition. A shove only, nothing worse.
 ```
 
-### `06-lost.png` — 방향을 잃은 숲
+### `06-lost.webp` — 방향을 잃은 숲
 
 ```
 Wide forest scene drowned in fog. In the centre, the pedlar sits slumped on the
@@ -125,7 +125,7 @@ purposeful thing in the picture. Grey-blue light, trees fading to nothing on bot
 sides.
 ```
 
-### `07-scent.png` — 냄새를 잡은 바둑이
+### `07-scent.webp` — 냄새를 잡은 바둑이
 
 ```
 Wide forest scene. On the right, Badugi has snapped upright, ears rigid, head
@@ -135,7 +135,7 @@ mouth open calling. Fog swirling in the gap between them. All the energy suddenl
 in the dog.
 ```
 
-### `08-chase.png` — 나무 사이를 가로질러
+### `08-chase.webp` — 나무 사이를 가로질러
 
 ```
 Wide forest scene, full sprint. Badugi tears from right to left across the frame
@@ -145,7 +145,7 @@ distance, a rocky gully with a small crouched shape barely visible behind a
 boulder. Pure momentum.
 ```
 
-### `09-bark.png` — 물고 늘어진 바둑이
+### `09-bark.webp` — 물고 늘어진 바둑이
 
 ```
 Wide scene in a rocky gully. On the right, the robber stands with his back to a
@@ -155,7 +155,7 @@ trouser leg gripped in his teeth, all four legs braced, barking around the cloth
 On the far left edge, woodcutters come running with axes over their shoulders.
 ```
 
-### `10-return.png` — 다시 돌아온 돈주머니
+### `10-return.webp` — 다시 돌아온 돈주머니
 
 ```
 Wide forest clearing scene in morning light, fog lifting. In the centre, the
@@ -165,7 +165,7 @@ beside them. On the right, the woodcutters lead the robber away between the
 trees. Warm gold light breaking through. Relief and warmth.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet Korean farmyard at sunset, no people. A wooden dog bowl sits by the

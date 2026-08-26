@@ -28,8 +28,8 @@ HEAD_NOVEL = u"""# 제미나이 그림 프롬프트 — {title}
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 {body}장 | 1.33 : 1 | **가로 4 : 세로 3** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.33 : 1 | **가로 4 : 세로 3** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.33 : 1 | **가로 4 : 세로 3** |
 
 표지 칸은 책을 펼쳤을 때 왼쪽 반쪽을 통째로 채우는 세로 칸이에요. 가로 그림을 넣으면 양옆이 절반 가까이 잘려 나갑니다.
 """
@@ -49,8 +49,8 @@ HEAD_PICTURE = u"""# 제미나이 그림 프롬프트 — {title}
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 {body}장 | 1.92 : 1 | **가로 16 : 세로 9** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.76 : 1 | **가로 16 : 세로 9** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.76 : 1 | **가로 16 : 세로 9** |
 
 제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데
 눈에 띄지 않는 정도예요. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요.
@@ -78,14 +78,14 @@ def build(cfg):
     out.append(u'\n---\n')
 
     ko, en = cfg.COVER
-    out.append(u'\n## 표지 — `cover.png` (세로 2:3)\n\n%s\n\n```\n%s\n```\n' % (ko, en.strip()))
+    out.append(u'\n## 표지 — `cover.webp` (세로 2:3)\n\n%s\n\n```\n%s\n```\n' % (ko, en.strip()))
 
     out.append(u'\n## 본문 %d장 (모두 %s)\n' % (body, ratio_body))
     for name, ko, en in cfg.IMAGES:
         out.append(u'\n### `%s` — %s\n\n```\n%s\n```\n' % (name, ko, en.strip()))
 
     ko, en = cfg.END
-    out.append(u'\n---\n\n## 마지막 장 — `end.png` (%s)\n\n%s\n\n```\n%s\n```\n'
+    out.append(u'\n---\n\n## 마지막 장 — `end.webp` (%s)\n\n%s\n\n```\n%s\n```\n'
                % (ratio_end, ko, en.strip()))
 
     p = os.path.join(BOOKS, cfg.SLUG, 'IMAGE-PROMPTS.md')

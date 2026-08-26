@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 16장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -62,7 +62,7 @@ time. Yuri: a boy of about twelve, unmistakably Jumong's son.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A broad grey river fills the lower two thirds of
@@ -75,7 +75,7 @@ racing cloud and low gold light. Wide, strange and thrilling.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-yuhwa.png` — 하백의 딸 유화
+### `01-yuhwa.webp` — 하백의 딸 유화
 
 ```
 Wide scene on a reedy riverbank in the north. On the left, Yuhwa stands ankle
@@ -85,7 +85,7 @@ retinue behind him, one hand raised. Wide grey river, huge sky, wind in the
 reeds. Still and strange.
 ```
 
-### `02-sunlight.png` — 따라다니는 햇빛 한 줄기
+### `02-sunlight.webp` — 따라다니는 햇빛 한 줄기
 
 ```
 Wide interior of a timber hall with the blinds pulled down and the room in
@@ -95,7 +95,7 @@ followed. On the left, two servants press themselves against the wall, wide-eyed
 Dark room, one blade of gold. Eerie and beautiful.
 ```
 
-### `03-throw.png` — 짐승들이 알을 아끼다
+### `03-throw.webp` — 짐승들이 알을 아끼다
 
 ```
 Wide scene divided into three parts. On the left, a pig pen where the pigs have
@@ -105,7 +105,7 @@ the egg, one with an exaggerated high step. On the right, a wood where birds hav
 settled over it in a feathered dome. Very funny.
 ```
 
-### `04-hatch.png` — 쩍, 알이 갈라지다
+### `04-hatch.webp` — 쩍, 알이 갈라지다
 
 ```
 Wide interior of a warm room. In the centre, the pale egg lies on a folded cloth
@@ -114,7 +114,7 @@ leans over it with both hands to her mouth, hair falling forward. In the crack, 
 small hand and a wide-open eye. Firelight, soft shadows. Wonder.
 ```
 
-### `05-bow.png` — 쏘았다 하면 백발백중
+### `05-bow.webp` — 쏘았다 하면 백발백중
 
 ```
 Wide scene on a practice ground. On the right, a boy of about seven stands with a
@@ -124,7 +124,7 @@ turning to look with their eyebrows up, one dropping the arrow he was holding.
 Bright day, dust. Comic astonishment.
 ```
 
-### `06-princes.png` — 저놈 때문에 우리가 우스워진다
+### `06-princes.webp` — 저놈 때문에 우리가 우스워진다
 
 ```
 Wide scene at an archery field. On the left, the seven princes stand in a knot
@@ -133,7 +133,7 @@ right, some distance away, Jumong pulls his arrows out of the target's bullseye
 without looking up. Between them, a wide space of trodden grass. Big sky. Envy.
 ```
 
-### `07-stable.png` — 말똥을 치우는 일
+### `07-stable.webp` — 말똥을 치우는 일
 
 ```
 Wide interior of a long timber stable. In the centre, Jumong forks straw with a
@@ -142,7 +142,7 @@ studying the horses down the line, one at a time. On the left, two princes lean 
 the doorway laughing at him. Dust in shafts of light, rows of horses. Patient.
 ```
 
-### `08-needle.png` — 혀 밑에 꽂아 둔 바늘
+### `08-needle.webp` — 혀 밑에 꽂아 둔 바늘
 
 ```
 Wide interior of the stable at night. In the centre, Jumong stands close to a
@@ -152,7 +152,7 @@ fingers. His face is apologetic. One lantern, deep shadows. Secretive and a
 little sad.
 ```
 
-### `09-gift.png` — 저건 네가 가져라
+### `09-gift.webp` — 저건 네가 가져라
 
 ```
 Wide scene in the stable yard. On the left, King Geumwa points from horseback
@@ -162,7 +162,7 @@ low beside it - with a barely hidden grin. Bright morning, straw and dust. Comic
 triumph.
 ```
 
-### `10-secret.png` — 바람보다 빨랐어요
+### `10-secret.webp` — 바람보다 빨랐어요
 
 ```
 Wide scene on a moonlit plain. Across the middle of the frame, Jumong rides the
@@ -171,7 +171,7 @@ hooves barely touching the grass, long motion lines behind them. Blue night, hug
 sky, silver grass. Exhilarating.
 ```
 
-### `11-flee.png` — 네 나라를 세우거라
+### `11-flee.webp` — 네 나라를 세우거라
 
 ```
 Wide interior of a dim room before dawn. In the centre, Yuhwa presses a small
@@ -180,7 +180,7 @@ his uncertain. On the right, three friends wait at the door with bows and packs,
 one glancing out into the dark. One small lamp. Urgent and tender.
 ```
 
-### `12-river.png` — 나는 하늘의 손자다!
+### `12-river.webp` — 나는 하늘의 손자다!
 
 ```
 Wide scene at a broad grey river at first light. On the near bank, Jumong has
@@ -190,7 +190,7 @@ the far left, a dust cloud and the shapes of pursuing riders. Mist on the water,
 no bridge, no boat. Desperate.
 ```
 
-### `13-bridge.png` — 물고기와 자라가 등을 맞대다
+### `13-bridge.webp` — 물고기와 자라가 등을 맞대다
 
 ```
 Wide scene across the whole river. The water boils and hundreds of fish backs
@@ -201,7 +201,7 @@ astonishment. Silver water, dark shells, enormous sky. The most spectacular
 picture in the book.
 ```
 
-### `14-jolbon.png` — 여기다
+### `14-jolbon.webp` — 여기다
 
 ```
 Wide landscape scene of a steep green valley with a clear river and rocky
@@ -210,7 +210,7 @@ bundle through his fingers into turned earth, his three friends already cutting
 timber behind him. Mist on the ridges, morning light. Beginning again.
 ```
 
-### `15-yuri.png` — 성문 앞에 나타난 소년
+### `15-yuri.webp` — 성문 앞에 나타난 소년
 
 ```
 Wide scene at the timber gate of a new walled town. In the centre, a boy of about
@@ -219,7 +219,7 @@ sword on both palms. Guards on either side have stepped back. Beyond the gate,
 people are stopping to look. Dusty road, clear light. A held moment.
 ```
 
-### `16-sword.png` — 쩌억, 하나로 붙은 칼
+### `16-sword.webp` — 쩌억, 하나로 붙은 칼
 
 ```
 Wide interior of a plain timber hall. In the centre, Jumong and Yuri hold the two
@@ -229,7 +229,7 @@ bowed. Around them, the three old friends stand with their hands over their mout
 Warm firelight. Overwhelming.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A steep green valley at dawn with no people. A new timber palisade on a ridge,

@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -54,7 +54,7 @@ their necks.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A single blue glass bead fills the middle of the
@@ -66,7 +66,7 @@ leaning in to look. Warm light through the bead. Curious and clever.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-boy.png` — 꾀 많기로 이름난 소년
+### `01-boy.webp` — 꾀 많기로 이름난 소년
 
 ```
 Wide village street scene. On the left, three adults stand in a knot pointing
@@ -76,7 +76,7 @@ looking straight ahead. Thatched roofs, warm daylight. Ordinary and quietly
 interesting.
 ```
 
-### `02-envoy.png` — 세 가지 문제를 들고 온 사신
+### `02-envoy.webp` — 세 가지 문제를 들고 온 사신
 
 ```
 Wide scene in a county office courtyard. On the right, a tall foreign envoy in an
@@ -86,7 +86,7 @@ stricken. Officials and villagers crowd the courtyard, murmuring. Warm daylight,
 formal tension.
 ```
 
-### `03-first.png` — 재로 새끼줄을 꼬아 오라
+### `03-first.webp` — 재로 새끼줄을 꼬아 오라
 
 ```
 Wide courtyard scene. In the centre, an official holds up a scroll reading the
@@ -95,7 +95,7 @@ hands, shaking their heads, one holding a handful of grey ash that trickles
 uselessly through his fingers. Dust and gestures everywhere. Comic despair.
 ```
 
-### `04-solve1.png` — 꼰 새끼를 태워서
+### `04-solve1.webp` — 꼰 새끼를 태워서
 
 ```
 Wide courtyard scene, split in two moments. On the left, the boy kneels twisting
@@ -105,7 +105,7 @@ twisted shape in pale grey ash while a last thread of smoke rises. The crowd
 leans in from all sides, mouths open. Sunlight, awe.
 ```
 
-### `05-second.png` — 아홉 번 굽은 구슬
+### `05-second.webp` — 아홉 번 굽은 구슬
 
 ```
 Wide courtyard scene. On the right, the envoy stands holding out one hand with a
@@ -115,7 +115,7 @@ inset detail shows the bead in cross-section with its winding nine-curve tunnel.
 Bright and taunting.
 ```
 
-### `06-stuck.png` — 실은 첫 굽이도 넘지 못하고
+### `06-stuck.webp` — 실은 첫 굽이도 넘지 못하고
 
 ```
 Wide courtyard scene. Around a low table, four grown men take turns at the bead -
@@ -125,7 +125,7 @@ despair. Threads and slivers scattered on the table. Sweat drops and comic
 frustration.
 ```
 
-### `07-ant.png` — 개미 허리에 실을 매고
+### `07-ant.webp` — 개미 허리에 실을 매고
 
 ```
 Wide courtyard scene, low viewpoint. In the foreground, the boy crouches in the
@@ -135,7 +135,7 @@ concentration. Behind and above him, a ring of adult faces leans in, utterly
 baffled. Warm light, tiny and enormous at once.
 ```
 
-### `08-honey.png` — 꿀 냄새를 따라 기어 나온 개미
+### `08-honey.webp` — 꿀 냄새를 따라 기어 나온 개미
 
 ```
 Wide scene, close on a low table. In the centre, the blue bead is shown large,
@@ -145,7 +145,7 @@ the right edge, the boy watches quietly; on the left, the envoy's face is
 beginning to change. Beautiful and clear.
 ```
 
-### `09-third.png` — 껍질을 벗긴 통나무
+### `09-third.webp` — 껍질을 벗긴 통나무
 
 ```
 Wide courtyard scene. In the centre, a smooth peeled log lies across two
@@ -155,7 +155,7 @@ the log studying it from every angle, hands behind backs. Bright daylight,
 puzzled silence.
 ```
 
-### `10-water.png` — 물에 띄워 가려낸 위아래
+### `10-water.webp` — 물에 띄워 가려낸 위아래
 
 ```
 Wide courtyard scene. In the centre, a big wooden tub of water with the peeled
@@ -165,7 +165,7 @@ sinking end. All around, the crowd erupts - hands to heads, mouths open, one man
 grabbing another's shoulder. Splashes and sunlight.
 ```
 
-### `11-bow.png` — 고개를 숙인 사신
+### `11-bow.webp` — 고개를 숙인 사신
 
 ```
 Wide courtyard scene. On the right, the tall envoy has stepped down from the
@@ -175,7 +175,7 @@ them, the whole courtyard has erupted in cheering, hats thrown into the air.
 Warm gold light, triumphant.
 ```
 
-### `12-school.png` — 서당을 지어 주십시오
+### `12-school.webp` — 서당을 지어 주십시오
 
 ```
 Wide courtyard scene, quieter. On the right, the magistrate sits forward with one
@@ -185,7 +185,7 @@ cluster of village children have crept up to the courtyard edge, watching him
 with wide eyes. Warm afternoon light. Modest and moving.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A small village schoolroom at morning, no one yet arrived. Low writing desks in

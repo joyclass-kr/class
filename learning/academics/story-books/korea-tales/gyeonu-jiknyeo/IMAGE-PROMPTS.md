@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -55,7 +55,7 @@ their hundreds as a single moving mass.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A vast silver river of stars runs from the bottom
@@ -67,7 +67,7 @@ faint bridge of birds is just beginning to form. Silent, enormous, aching.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-gyeonu.png` — 은하수 건너편에서 소를 치는 견우
+### `01-gyeonu.webp` — 은하수 건너편에서 소를 치는 견우
 
 ```
 Wide heavenly landscape. Rolling meadows of cloud stretch across the frame under
@@ -77,7 +77,7 @@ the vastness. On the far left edge, the silver band of a star river marks the
 horizon. Warm gold light, peaceful and industrious.
 ```
 
-### `02-jiknyeo.png` — 베틀 앞의 직녀
+### `02-jiknyeo.webp` — 베틀 앞의 직녀
 
 ```
 Wide interior of an open pavilion on a cloud terrace. On the left, a young woman
@@ -87,7 +87,7 @@ out of the pavilion and becomes actual sunset clouds and starlight in the sky
 beyond. Silver and rose light. Magical and calm.
 ```
 
-### `03-meet.png` — 옥황상제가 짝지어 준 날
+### `03-meet.webp` — 옥황상제가 짝지어 준 날
 
 ```
 Wide scene on a bridge of light across the star river. In the centre, the
@@ -97,7 +97,7 @@ crowds of heavenly figures look on. The whole sky is unusually bright. Joyful an
 ceremonial.
 ```
 
-### `04-idle.png` — 멈춘 베틀과 흩어진 소
+### `04-idle.webp` — 멈춘 베틀과 흩어진 소
 
 ```
 Wide split scene. On the left, the wooden loom sits abandoned with a spider web
@@ -107,7 +107,7 @@ bolt of cloth. In the far distance in the middle, two small figures sit close
 together, oblivious. Gently reproachful.
 ```
 
-### `05-anger.png` — 노한 옥황상제
+### `05-anger.webp` — 노한 옥황상제
 
 ```
 Wide scene from a very low viewpoint. Filling the upper two thirds, the Jade
@@ -117,7 +117,7 @@ kneel side by side with their heads bowed. Dark clouds and shafts of cold light.
 Awe rather than terror.
 ```
 
-### `06-parted.png` — 은하수 양쪽으로 갈라지다
+### `06-parted.webp` — 은하수 양쪽으로 갈라지다
 
 ```
 Wide scene dominated by the star river running down the centre of the frame,
@@ -127,7 +127,7 @@ each other, both very small, separated by an enormous glittering emptiness. Deep
 indigo and silver. Lonely and beautiful.
 ```
 
-### `07-year.png` — 일하면서도 자꾸 강 쪽을 보고
+### `07-year.webp` — 일하면서도 자꾸 강 쪽을 보고
 
 ```
 Wide split scene through the seasons. On the left, the weaver works her loom but
@@ -137,7 +137,7 @@ Between them, cloud meadows change colour from spring green to summer gold.
 Quietly aching.
 ```
 
-### `08-river.png` — 다리가 없는 강가에서
+### `08-river.webp` — 다리가 없는 강가에서
 
 ```
 Wide scene at the star river on the seventh night. On both banks the two figures
@@ -146,7 +146,7 @@ across, faces lifted. The river between them is impossibly wide and bright. No
 bridge anywhere. Above, a thin crescent moon. Heart-breaking and still.
 ```
 
-### `09-birds.png` — 울음소리를 들은 땅 위의 새들
+### `09-birds.webp` — 울음소리를 들은 땅 위의 새들
 
 ```
 Wide scene on earth at night. Below, a Korean village of thatched roofs under a
@@ -156,7 +156,7 @@ faint silver band of the star river. Moonlight on black and white feathers.
 Hushed and expectant.
 ```
 
-### `10-bridge.png` — 몸으로 놓은 다리, 오작교
+### `10-bridge.webp` — 몸으로 놓은 다리, 오작교
 
 ```
 Wide scene, the biggest image in the book. Across the entire width of the frame,
@@ -166,7 +166,7 @@ catch starlight. On the far left and far right, two tiny figures step onto the
 bridge from opposite banks. Vast, breathtaking, reverent.
 ```
 
-### `11-reunion.png` — 강 한가운데의 하룻밤
+### `11-reunion.webp` — 강 한가운데의 하룻밤
 
 ```
 Wide scene at the centre of the bird bridge. The herdsman and the weaver have met
@@ -176,7 +176,7 @@ river blazes. Their two figures are small in an enormous glittering frame.
 Tender and fleeting.
 ```
 
-### `12-rain.png` — 헤어지며 흘린 눈물이 비가 되어
+### `12-rain.webp` — 헤어지며 흘린 눈물이 비가 되어
 
 ```
 Wide scene split between sky and earth. Above, the bird bridge is coming apart as
@@ -186,7 +186,7 @@ rice paddies and thatched roofs, and a magpie with a bare patch on its head shak
 water from its wings. Melancholy and warm at once.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A summer night sky over a quiet Korean village, no people. The Milky Way arcs

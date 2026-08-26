@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -53,7 +53,7 @@ alive and breathing. Keep his colour and shape identical in every picture.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A wall of orange flame sweeps across a dark field
@@ -65,7 +65,7 @@ Dramatic and heroic, nobody harmed.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-pair.png` — 그림자처럼 붙어 다니는 김 서방과 누렁이
+### `01-pair.webp` — 그림자처럼 붙어 다니는 김 서방과 누렁이
 
 ```
 Wide autumn country scene. A dirt path between harvested fields, low pine hills
@@ -75,7 +75,7 @@ with his tail curled up, looking up at his master. Warm afternoon light, long
 paired shadows on the road.
 ```
 
-### `02-tavern.png` — 주막에서 한잔 걸치는 김 서방
+### `02-tavern.webp` — 주막에서 한잔 걸치는 김 서방
 
 ```
 Wide interior of a roadside tavern at night lit by paper lanterns. On the right,
@@ -85,7 +85,7 @@ lies with his chin on his paws, eyes open and patient. Warm amber light, blue
 night outside.
 ```
 
-### `03-asleep.png` — 마른 풀밭에 쓰러져 잠든 주인
+### `03-asleep.webp` — 마른 풀밭에 쓰러져 잠든 주인
 
 ```
 Wide night field scene. In the centre-left, Kim lies flat on his back in dry
@@ -94,7 +94,7 @@ upright beside him, ears pricked, looking out into the dark. A wide empty field
 stretches to both edges, stars overhead. Peaceful, with a faint unease.
 ```
 
-### `04-fire.png` — 들판 끝에서 번지기 시작한 불
+### `04-fire.webp` — 들판 끝에서 번지기 시작한 불
 
 ```
 Wide night field scene. Along the far right edge, a low line of orange fire
@@ -104,7 +104,7 @@ sprung to his feet, body turned toward the fire, ears flat. Deep indigo and
 burning orange.
 ```
 
-### `05-wake.png` — 아무리 짖어도 깨지 않는 주인
+### `05-wake.webp` — 아무리 짖어도 깨지 않는 주인
 
 ```
 Wide night scene, close in. On the right, the dog stands over Kim with the man's
@@ -114,7 +114,7 @@ vaguely at the air. Orange firelight already lighting one side of their faces.
 Desperate and frustrating.
 ```
 
-### `06-stream.png` — 개울로 뛰어들어 몸을 적시다
+### `06-stream.webp` — 개울로 뛰어들어 몸을 적시다
 
 ```
 Wide night scene at a shallow stream. In the centre, the dog leaps into the
@@ -123,7 +123,7 @@ his reflection broken across the surface. Behind him on the right, the orange
 glow of the fire lights the far bank. Motion lines and spray. Urgent.
 ```
 
-### `07-roll.png` — 젖은 몸으로 풀밭을 구르는 누렁이
+### `07-roll.webp` — 젖은 몸으로 풀밭을 구르는 누렁이
 
 ```
 Wide night field scene. In the centre, the soaked dog rolls on his back and side
@@ -132,7 +132,7 @@ curved trails and flying water droplets, flattening a dark wet ring into the
 field. Kim sleeps on in the middle of the ring. Fire glowing large on the right.
 ```
 
-### `08-stop.png` — 젖은 풀 앞에서 멈춘 불길
+### `08-stop.webp` — 젖은 풀 앞에서 멈춘 불길
 
 ```
 Wide night scene from above. A huge sweep of orange flame fills most of the
@@ -142,7 +142,7 @@ collapsed onto his side, sides visibly rising with breath. Smoke and sparks
 above. Dramatic and moving.
 ```
 
-### `09-dawn.png` — 까맣게 탄 들판 한가운데
+### `09-dawn.webp` — 까맣게 탄 들판 한가운데
 
 ```
 Wide dawn scene. A vast blackened field of ash stretches to every edge under a
@@ -152,7 +152,7 @@ him. Beside him the wet dog lies with eyes closed, one ear twitching. Stark and
 striking.
 ```
 
-### `10-tree.png` — 그 자리에 심은 나무
+### `10-tree.webp` — 그 자리에 심은 나무
 
 ```
 Wide scene of the same field weeks later, green shoots pushing through the burnt
@@ -162,7 +162,7 @@ the sapling. Warm gold light, a few villagers approaching in the distance.
 Hopeful and warm.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet Korean field at sunset years later, no people. A grown tree stands alone

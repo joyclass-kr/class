@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 14장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -63,7 +63,7 @@ red comb and beak, gentle eyes - strange but never scary.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A grove at dawn. In the lower half of the tall
@@ -76,7 +76,7 @@ ground at the edge of the light. Radiant and still.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-six.png` — 우리를 묶을 임금이 있어야 합니다
+### `01-six.webp` — 우리를 묶을 임금이 있어야 합니다
 
 ```
 Wide scene on a grassy hilltop above a broad green plain. In the centre, the six
@@ -86,7 +86,7 @@ around them, six small thatched villages are scattered across the plain. Bright
 morning light, wide sky.
 ```
 
-### `02-light.png` — 저것 좀 보시오!
+### `02-light.webp` — 저것 좀 보시오!
 
 ```
 Wide scene on the same hilltop. On the left, all six chiefs are on their feet,
@@ -96,7 +96,7 @@ warm light rises from the ground into the sky and spreads out at the top. Awe an
 motion.
 ```
 
-### `03-horse.png` — 무릎 꿇고 우는 흰말
+### `03-horse.webp` — 무릎 꿇고 우는 흰말
 
 ```
 Wide scene in a quiet grove. In the centre, beside a low round stone well and an
@@ -106,7 +106,7 @@ right, the six chiefs come running in through the trees and stop dead. Green
 shade, one blazing white shape.
 ```
 
-### `04-egg.png` — 그 자리에 남은 붉은 알
+### `04-egg.webp` — 그 자리에 남은 붉은 알
 
 ```
 Wide scene in the grove. In the upper left, the white horse is streaking up into
@@ -116,7 +116,7 @@ six chiefs kneel in a ring, faces lit red from below, hands half raised. Hushed
 and enormous.
 ```
 
-### `05-boy.png` — 쩌억, 갈라진 알
+### `05-boy.webp` — 쩌억, 갈라진 알
 
 ```
 Wide scene in the grove. In the centre, the red egg has split open in a starburst
@@ -126,7 +126,7 @@ flat on the ground around him, foreheads to the earth. Light pouring upward.
 Joyful shock.
 ```
 
-### `06-bath.png` — 씻길수록 빛이 나는 아이
+### `06-bath.webp` — 씻길수록 빛이 나는 아이
 
 ```
 Wide scene at a clear stream. In the centre, an old chief holds the baby in the
@@ -136,7 +136,7 @@ and deer and rabbits come out of the trees to look. Sunlight through leaves.
 Wondrous and warm.
 ```
 
-### `07-name.png` — 꼭 박처럼 생기지 않았소
+### `07-name.webp` — 꼭 박처럼 생기지 않았소
 
 ```
 Wide scene in the grove. On the left, a chief holds up the two halves of the
@@ -146,7 +146,7 @@ the rest lean in nodding. Broken shell fragments on the grass. Bright shade.
 Ordinary talk about an extraordinary thing.
 ```
 
-### `08-dragon.png` — 알영 우물의 계룡
+### `08-dragon.webp` — 알영 우물의 계룡
 
 ```
 Wide scene at a second stone well among reeds. In the centre, a long
@@ -157,7 +157,7 @@ beak. On the left, a village woman has both hands to her cheeks. Strange and
 gentle.
 ```
 
-### `09-beak.png` — 툭 떨어져 떠내려간 부리
+### `09-beak.webp` — 툭 떨어져 떠내려간 부리
 
 ```
 Wide scene at the stream. In the centre, an old woman kneels in the shallows
@@ -167,7 +167,7 @@ and beneath it the baby is laughing with an ordinary little mouth. Sunlit ripple
 Keep it soft and painless.
 ```
 
-### `10-grow.png` — 여섯 마을이 함께 기르다
+### `10-grow.webp` — 여섯 마을이 함께 기르다
 
 ```
 Wide scene of village life across the plain. On the left, the boy Hyeokgeose
@@ -177,7 +177,7 @@ trays, showing something to two women. Between them, people going about work,
 smoke from roofs. Green summer, busy and warm.
 ```
 
-### `11-thirteen.png` — 열세 살에 임금이 되다
+### `11-thirteen.webp` — 열세 살에 임금이 되다
 
 ```
 Wide scene on the grassy hilltop. In the centre, the thirteen-year-old
@@ -187,7 +187,7 @@ bow deeply, and below on the plain, crowds of villagers have gathered up the
 slope. Wide sky, gold afternoon light.
 ```
 
-### `12-queen.png` — 논밭을 보고, 뽕나무를 보고
+### `12-queen.webp` — 논밭을 보고, 뽕나무를 보고
 
 ```
 Wide scene of the countryside. On the left, Hyeokgeose crouches at the edge of a
@@ -197,7 +197,7 @@ silkworm cocoon. A path connects the two halves of the picture. Green and gold,
 ordinary work. Partnership.
 ```
 
-### `13-seorabeol.png` — 담을 헐고 길을 내다
+### `13-seorabeol.webp` — 담을 헐고 길을 내다
 
 ```
 Wide scene of the six villages growing together into one town. In the middle
@@ -207,7 +207,7 @@ going up along it. Dust, shouting, cheerful chaos. Bright day. A town being
 born.
 ```
 
-### `14-people.png` — 여섯 마을이 모였기 때문이지요
+### `14-people.webp` — 여섯 마을이 모였기 때문이지요
 
 ```
 Wide autumn scene of the whole plain, gold with ripe grain from edge to edge.
@@ -217,7 +217,7 @@ shaking his head with a smile and gesturing out at the six villages. Warm gold
 light everywhere. Abundant and happy.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet grove at evening with no people. A low round stone well with an old tree

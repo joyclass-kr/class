@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 논에서 들려온 대답",
         beats: [
             {
-                art: "01-field.png",
+                art: "01-field.webp",
                 emoji: "🌾",
                 left: [
                     "옛날 어느 마을에 가난한 총각이 혼자 살았습니다. 부모도 형제도 없이 손바닥만 한 논을 부치며 지냈지요.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-voice.png",
+                art: "02-voice.webp",
                 emoji: "❓",
                 left: [
                     "그때였어요.",
@@ -37,7 +37,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-again.png",
+                art: "03-again.webp",
                 emoji: "👂",
                 left: [
                     "\"이 농사 지어서 누구랑 먹고 사나.\"",
@@ -53,7 +53,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-shell.png",
+                art: "04-shell.webp",
                 emoji: "🐚",
                 left: [
                     "주먹만 한 우렁이 하나였습니다. 여느 우렁이보다 훨씬 크고 빛깔이 고왔지요.",
@@ -74,7 +74,7 @@ const CHAPTERS = [
         title: "2장 · 차려진 밥상",
         beats: [
             {
-                art: "05-table.png",
+                art: "05-table.webp",
                 emoji: "🍚",
                 left: [
                     "이튿날 일을 마치고 돌아온 총각은 방문을 열다 말고 멈췄어요. 김이 모락모락 나는 밥상이 놓여 있었거든요.",
@@ -89,7 +89,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-days.png",
+                art: "06-days.webp",
                 emoji: "🤔",
                 left: [
                     "그런 일이 하루, 이틀, 사흘 이어졌어요.",
@@ -106,7 +106,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-hide.png",
+                art: "07-hide.webp",
                 emoji: "👀",
                 left: [
                     "어느 날 총각은 논에 가는 척하고는 몰래 돌아왔어요.",
@@ -122,7 +122,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-appear.png",
+                art: "08-appear.webp",
                 emoji: "✨",
                 left: [
                     "우렁이 껍데기에서 고운 색시가 스르르 나왔습니다.",
@@ -144,7 +144,7 @@ const CHAPTERS = [
         title: "3장 · 사흘을 못 기다리고",
         beats: [
             {
-                art: "09-caught.png",
+                art: "09-caught.webp",
                 emoji: "🫢",
                 left: [
                     "총각은 그만 참지 못하고 뛰어나갔어요.",
@@ -161,7 +161,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-wait.png",
+                art: "10-wait.webp",
                 emoji: "⏳",
                 left: [
                     "\"나와 함께 삽시다.\"",
@@ -178,7 +178,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-impatient.png",
+                art: "11-impatient.webp",
                 emoji: "😖",
                 left: [
                     "총각은 그러겠다고 했어요. 하지만 하루가 지나자 마음이 조급해졌습니다.",
@@ -194,7 +194,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-together.png",
+                art: "12-together.webp",
                 emoji: "🏡",
                 left: [
                     "그날 조촐한 혼례가 열렸어요. 이웃 사람 몇이 와서 축하해 주었지요.",
@@ -210,7 +210,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-jar.png",
+                art: "13-jar.webp",
                 emoji: "🫙",
                 left: [
                     "총각이 물독을 붙들고 색시를 불렀어요.",
@@ -262,7 +262,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐚')}
+                ${artFrame('cover.webp', '🐚')}
             </div>
             <div class="story-page-right">
                 <h1>우렁이 색시</h1>
@@ -325,7 +325,7 @@ const AFTERWORD = {
     emoji: '🐚',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "우렁이나 조개에서 사람이 나와 살림을 해 주는 이야기는 우리나라 곳곳에 전해 옵니다. 일본에도 학이나 조개가 사람이 되는 비슷한 이야기가 있습니다.",
                 "그런 이야기에는 늘 지켜야 할 약속이 하나 붙습니다. 들여다보지 말라거나 며칠만 기다리라는 것입니다. 그리고 그 약속은 늘 깨집니다.",

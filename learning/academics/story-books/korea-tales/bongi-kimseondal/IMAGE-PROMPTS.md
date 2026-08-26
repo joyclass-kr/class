@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -60,7 +60,7 @@ wooden bucket hanging from each side.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. The wide blue-green Daedong River fills the lower
@@ -73,7 +73,7 @@ stone gate of Pyongyang. Bright, wide, and calm.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-seondal.png` — 평양 사람이면 다 아는 김선달
+### `01-seondal.webp` — 평양 사람이면 다 아는 김선달
 
 ```
 Wide scene in a busy Pyongyang market street. In the centre, Kim Seondal walks
@@ -83,7 +83,7 @@ child tugs his coat hem. Tiled roofs, hanging signs, warm morning light. Everyon
 here knows him.
 ```
 
-### `02-merchants.png` — 한양에서 온 상인 셋
+### `02-merchants.webp` — 한양에서 온 상인 셋
 
 ```
 Wide scene at the stone city gate. In the centre, the three silk-coated
@@ -93,7 +93,7 @@ On the left, two Pyongyang townsfolk step aside and exchange a look. Bright day.
 Comic arrogance.
 ```
 
-### `03-water.png` — 대동강가의 물장수들
+### `03-water.webp` — 대동강가의 물장수들
 
 ```
 Wide scene at the riverbank. Across the middle of the frame, the wide sparkling
@@ -103,7 +103,7 @@ out of frame, Kim Seondal watches from under a willow with one eyebrow raised an
 his eyes bright with an idea. Morning light on water.
 ```
 
-### `04-plan.png` — 물장수들을 불러 모으다
+### `04-plan.webp` — 물장수들을 불러 모으다
 
 ```
 Wide interior of a modest room at night, one oil lamp. In the centre, Kim
@@ -113,7 +113,7 @@ him, half a dozen water sellers sit in a rough circle, heads tilted, brows
 furrowed in total confusion. Warm amber lamplight. Conspiratorial and funny.
 ```
 
-### `05-collect.png` — 어르신, 오늘 물값입니다
+### `05-collect.webp` — 어르신, 오늘 물값입니다
 
 ```
 Wide scene at the riverbank in the early morning. On the left, Kim Seondal sits
@@ -123,7 +123,7 @@ merchants are passing by and the stout one has stopped mid-step, head turning.
 Golden morning light on the water.
 ```
 
-### `06-line.png` — 줄줄이 돈을 내놓다
+### `06-line.webp` — 줄줄이 돈을 내놓다
 
 ```
 Wide scene at the riverbank. On the left, Kim Seondal sits on his rock counting
@@ -133,7 +133,7 @@ have gathered shoulder to shoulder, all three with their eyes enormous and their
 mouths open, the fan frozen halfway. Sparkling water behind.
 ```
 
-### `07-claim.png` — 조상 대대로 물려받은 것이지요
+### `07-claim.webp` — 조상 대대로 물려받은 것이지요
 
 ```
 Wide scene at the riverbank. On the right, Kim Seondal finally looks up, one
@@ -143,7 +143,7 @@ a shaking finger, the short one clutching his own coin strings. The wide river
 sparkles between them. Comic disbelief turning to greed.
 ```
 
-### `08-sell.png` — 우리에게 파시오!
+### `08-sell.webp` — 우리에게 파시오!
 
 ```
 Wide scene at the riverbank. On the left, the three merchants crowd around Kim
@@ -153,7 +153,7 @@ one waving his fan wildly. On the right, Kim Seondal turns his face half away wi
 a reluctant expression that is not quite hiding a smile. Bright noon.
 ```
 
-### `09-morning.png` — 이튿날 아침, 바위 위의 세 사람
+### `09-morning.webp` — 이튿날 아침, 바위 위의 세 사람
 
 ```
 Wide scene at the riverbank in the morning. On the right, the three merchants
@@ -163,7 +163,7 @@ begin filling their buckets, paying them no attention at all. Willows, sparkling
 water, blue sky. The calm before.
 ```
 
-### `10-refuse.png` — 강물이 어떻게 누구 것이 됩니까
+### `10-refuse.webp` — 강물이 어떻게 누구 것이 됩니까
 
 ```
 Wide scene at the riverbank. On the left, a water seller stands with one hand on
@@ -174,7 +174,7 @@ tall one gripping his own hair, the fan lying dropped on the rock. Bright
 merciless daylight.
 ```
 
-### `11-return.png` — 한 푼도 안 썼소
+### `11-return.webp` — 한 푼도 안 썼소
 
 ```
 Wide interior of a plain room. On the right, Kim Seondal sits calmly behind the
@@ -184,7 +184,7 @@ burst in red-faced and furious - and are now stopped dead, fists still raised,
 faces sliding into bewilderment. Warm light. The turn of the story.
 ```
 
-### `12-lesson.png` — 저 강물은 아무도 못 삽니다
+### `12-lesson.webp` — 저 강물은 아무도 못 삽니다
 
 ```
 Wide scene on the riverbank at sunset. On the right, Kim Seondal stands with one
@@ -194,7 +194,7 @@ the water, hats in their hands, saying nothing. The Daedong River glows gold and
 rose from bank to bank. Quiet and large.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 The wide Daedong River at dusk, no people. A big flat rock at the near bank with

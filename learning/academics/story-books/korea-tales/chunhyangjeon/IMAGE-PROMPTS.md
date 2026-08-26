@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 21장 | 1.33 : 1 | **가로 4 : 세로 3** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.33 : 1 | **가로 4 : 세로 3** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.33 : 1 | **가로 4 : 세로 3** |
 
 > **`end` 그림은 「읽고 나서」 쪽에 들어갑니다.** 쪽 위쪽에 가로로 얹히므로 비율은 아래 표대로면 됩니다.
 > 다만 글 분량에 따라 높이가 조금씩 달라지니, **중요한 것은 한가운데에 두고 위아래 가장자리는 여유를 두세요.**
@@ -66,7 +66,7 @@ The mapae: a round bronze plaque cast with horses, hung on a cord.
 
 ---
 
-## 표지 — `cover.png` (세로 2:3)
+## 표지 — `cover.webp` (세로 2:3)
 
 세로로 긴 표지. 광한루 그네와 옥에 갇힌 춘향이 위아래로.
 
@@ -84,7 +84,7 @@ pitiful.
 
 ## 본문 21장 (모두 가로 4:3)
 
-### `story-01-a.png` — 1장 — 광한루에서 그네 타는 춘향을 본다
+### `story-01-a.webp` — 1장 — 광한루에서 그네 타는 춘향을 본다
 
 ```
 Wide 4:3 scene. Late spring, the Dano festival. On the right, the tiled Gwanghallu
@@ -95,7 +95,7 @@ crimson skirt rides a swing high into the air, skirts and ribbons flying. Bright
 clear daylight, fresh green, festival colour.
 ```
 
-### `story-01-b.png` — 1장 — 방자가 빈손으로 돌아온다
+### `story-01-b.webp` — 1장 — 방자가 빈손으로 돌아온다
 
 ```
 Wide 4:3 scene. On the pavilion. A wiry servant boy stands scratching the back of
@@ -104,7 +104,7 @@ young scholar who has turned around fast with his eyebrows up and his mouth open
 in disbelief. Willow shade, dappled light on the wooden floor.
 ```
 
-### `story-01-c.png` — 1장 — 버드나무 아래에서 처음 마주 본다
+### `story-01-c.webp` — 1장 — 버드나무 아래에서 처음 마주 본다
 
 ```
 Wide 4:3 scene. In the willow grove by the stream. The young woman stands beside
@@ -114,7 +114,7 @@ away on the left with his hands together in a small bow, cheeks faintly red.
 Green filtered light, drifting willow leaves, a charged quiet moment.
 ```
 
-### `story-02-a.png` — 2장 — 밤중에 월매의 집 문 앞에서
+### `story-02-a.webp` — 2장 — 밤중에 월매의 집 문 앞에서
 
 ```
 Wide 4:3 scene. Night at a small walled house in a quiet lane. A handsome
@@ -124,7 +124,7 @@ the young scholar bows deeply, the servant boy holding a lantern behind him.
 Warm lamp glow against deep blue night, bamboo against the wall.
 ```
 
-### `story-02-b.png` — 2장 — 종이에 글을 쓰고 손도장을 찍는다
+### `story-02-b.webp` — 2장 — 종이에 글을 쓰고 손도장을 찍는다
 
 ```
 Wide 4:3 scene. Inside a lamplit room. The young man kneels at a low writing table
@@ -134,7 +134,7 @@ and an unreadable expression. In the doorway behind, a young woman's silhouette.
 Warm gold lamplight, deep shadows in the corners.
 ```
 
-### `story-02-c.png` — 2장 — 마루에 나란히 앉아 글씨를 배운다
+### `story-02-c.webp` — 2장 — 마루에 나란히 앉아 글씨를 배운다
 
 ```
 Wide 4:3 scene. Autumn afternoon on a wooden verandah, persimmon tree in the
@@ -143,7 +143,7 @@ brush over a sheet of paper, both of them absorbed and smiling faintly. Ink ston
 scattered papers, warm slanting light and long shadows.
 ```
 
-### `story-03-a.png` — 3장 — 이별을 말하는 밤
+### `story-03-a.webp` — 3장 — 이별을 말하는 밤
 
 ```
 Wide 4:3 scene. A small lamplit room at night, two people seated on the floor
@@ -153,7 +153,7 @@ listening without moving. The lamp flame is the only light. Long silence in the
 composition, lots of dark space.
 ```
 
-### `story-03-b.png` — 3장 — 거울과 옥가락지를 주고받는다
+### `story-03-b.webp` — 3장 — 거울과 옥가락지를 주고받는다
 
 ```
 Wide 4:3 scene. Close in on the same room. The young woman holds out a small round
@@ -163,7 +163,7 @@ picture, lit warm by the lamp; their faces above are half in shadow. Intimate an
 still.
 ```
 
-### `story-03-c.png` — 3장 — 오리정에서 배웅한다
+### `story-03-c.webp` — 3장 — 오리정에서 배웅한다
 
 ```
 Wide 4:3 scene. Dawn on a road outside the town wall, a small roadside pavilion on
@@ -173,7 +173,7 @@ the young woman stands alone in the road, small, not moving, her mother a few
 steps behind her. Cold blue-grey morning, mist in the fields, very long road.
 ```
 
-### `story-04-a.png` — 4장 — 변학도의 요란한 부임 행차
+### `story-04-a.webp` — 4장 — 변학도의 요란한 부임 행차
 
 ```
 Wide 4:3 scene. A palanquin procession entering a town gate. In front, bearers
@@ -183,7 +183,7 @@ with flat unimpressed faces, one old man frowning. Bright hard daylight, dust,
 too much colour and noise.
 ```
 
-### `story-04-b.png` — 4장 — 사령들이 춘향의 집에 들이닥친다
+### `story-04-b.webp` — 4장 — 사령들이 춘향의 집에 들이닥친다
 
 ```
 Wide 4:3 scene. A narrow lane before a small gate. On the left two government
@@ -193,7 +193,7 @@ her hair freshly combed and her jacket straightened, the young woman puts a hand
 on her mother's shoulder. Neighbours watching from doorways. Tense, midday light.
 ```
 
-### `story-04-c.png` — 4장 — 관가 마당, "저는 이미 지아비가 있습니다"
+### `story-04-c.webp` — 4장 — 관가 마당, "저는 이미 지아비가 있습니다"
 
 ```
 Wide 4:3 scene. A wide flagstone courtyard packed with onlookers. On the raised
@@ -204,7 +204,7 @@ speaking. Every face in the crowd is turned toward her. Strong overhead sun, her
 shadow small and sharp beneath her.
 ```
 
-### `story-05-a.png` — 5장 — 매를 맞으면서도 소리를 지르지 않는다
+### `story-05-a.webp` — 5장 — 매를 맞으면서도 소리를 지르지 않는다
 
 ```
 Wide 4:3 scene, restrained and not graphic. The same courtyard. The young woman
@@ -215,7 +215,7 @@ grip the top of the stones and weep. The magistrate is a small angry red shape f
 up on the hall. No blood, no wounds - the weight is in the faces of the watchers.
 ```
 
-### `story-05-b.png` — 5장 — 옥 안, 어머니가 창살 사이로 밥을 넣어 준다
+### `story-05-b.webp` — 5장 — 옥 안, 어머니가 창살 사이로 밥을 넣어 준다
 
 ```
 Wide 4:3 scene. A dark stone prison. Through heavy wooden bars on the right, the
@@ -225,7 +225,7 @@ bowl of rice between the bars, her face crumpled with weeping. A single high
 barred window lets in one shaft of cold light. Damp stone, straw, deep shadow.
 ```
 
-### `story-05-c.png` — 5장 — 임금이 마패를 내린다
+### `story-05-c.webp` — 5장 — 임금이 마패를 내린다
 
 ```
 Wide 4:3 scene. A formal palace hall. On the right the king sits on a raised seat
@@ -235,7 +235,7 @@ both hands raised to receive it, head bowed. Vast polished floor, red pillars,
 gold light from high windows. Ceremonial and grave.
 ```
 
-### `story-06-a.png` — 6장 — 거지 차림으로 남원 땅에 들어선다
+### `story-06-a.webp` — 6장 — 거지 차림으로 남원 땅에 들어선다
 
 ```
 Wide 4:3 scene. A country road in poor country. A young man in a torn brown coat,
@@ -245,7 +245,7 @@ fallen fence, weeds growing across the road, an empty farmhouse. Overcast light,
 dull colours, silence.
 ```
 
-### `story-06-b.png` — 6장 — 주막에서 옆자리 이야기를 듣는다
+### `story-06-b.webp` — 6장 — 주막에서 옆자리 이야기를 듣는다
 
 ```
 Wide 4:3 scene. Inside a crowded roadside tavern. On the right, at the next table,
@@ -255,7 +255,7 @@ mouth, his whole body gone still, eyes fixed on nothing. A half-eaten bowl of
 soup. Smoky warm interior, tallow light.
 ```
 
-### `story-06-c.png` — 6장 — 옥 창살 앞에서 다시 만난다
+### `story-06-c.webp` — 6장 — 옥 창살 앞에서 다시 만난다
 
 ```
 Wide 4:3 scene. Night outside the prison wall. The young man presses his face and
@@ -265,7 +265,7 @@ his hand. Moonlight falls in a narrow band across both their faces. Everything
 else is deep blue-black. The two hands at the bars are the centre of the picture.
 ```
 
-### `story-07-a.png` — 7장 — 생일잔치, 거지가 시를 짓겠다고 나선다
+### `story-07-a.webp` — 7장 — 생일잔치, 거지가 시를 짓겠다고 나선다
 
 ```
 Wide 4:3 scene. A magistrate's birthday banquet in a courtyard: officials seated
@@ -275,7 +275,7 @@ beggar has risen to his feet with a brush in his hand. Faces at the tables turn
 toward him, laughing, pointing. Rich colour above, poor grey corner below.
 ```
 
-### `story-07-b.png` — 7장 — 시를 읽자 좌중이 얼어붙는다
+### `story-07-b.webp` — 7장 — 시를 읽자 좌중이 얼어붙는다
 
 ```
 Wide 4:3 scene. The same banquet a moment later. The ragged man stands holding up
@@ -285,7 +285,7 @@ seat edging backwards, a third has gone grey. The magistrate's face is purple wi
 rage, one fist raised. Lanterns still swinging. Total silence in a noisy room.
 ```
 
-### `story-07-c.png` — 7장 — "암행어사 출두야!"
+### `story-07-c.webp` — 7장 — "암행어사 출두야!"
 
 ```
 Wide 4:3 scene of explosive motion. The courtyard gate bursts inward on the right
@@ -298,7 +298,7 @@ cloth, chaos around a single fixed point.
 
 ---
 
-## 마지막 장 — `end.png` (가로 4:3)
+## 마지막 장 — `end.webp` (가로 4:3)
 
 광한루에서 거울을 돌려준다.
 

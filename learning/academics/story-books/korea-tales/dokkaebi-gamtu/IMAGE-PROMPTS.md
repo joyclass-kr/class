@@ -23,8 +23,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 16장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데
 눈에 띄지 않는 정도예요. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요.
@@ -82,7 +82,7 @@ family style. Each wears a small black horsehair cap (gamtu) when hidden.
 
 ---
 
-## 표지 — `cover.png` (세로 2:3)
+## 표지 — `cover.webp` (세로 2:3)
 
 세로로 긴 표지. 달밤 개울가, 허공에 뜬 게와 도깨비 감투.
 
@@ -99,7 +99,7 @@ rising. Funny and eerie at once.
 
 ## 본문 16장 (모두 가로 2:1)
 
-### `01-poor.png` — 돌쇠가 빈 밥그릇한테 말을 건다
+### `01-poor.webp` — 돌쇠가 빈 밥그릇한테 말을 건다
 
 ```
 Wide panoramic scene. Evening inside a bare little thatched cottage. On the right
@@ -110,7 +110,7 @@ with his A-frame rack and hoe leaning by the wall, everything neat and swept. Wa
 low lamplight. Poor but not miserable - comic and companionable.
 ```
 
-### `02-fire.png` — 모닥불은 타는데 둘레에 아무도 없다
+### `02-fire.webp` — 모닥불은 타는데 둘레에 아무도 없다
 
 ```
 Wide panoramic scene. A pebbly stream bank at night. On the right a campfire
@@ -121,7 +121,7 @@ a small round O. Deep blue night, orange light pooling on the empty stones. Very
 strange, very quiet.
 ```
 
-### `03-crab.png` — 게가 저 혼자 걸어가 불 위에 올라앉는다
+### `03-crab.webp` — 게가 저 혼자 걸어가 불 위에 올라앉는다
 
 ```
 Wide panoramic scene. Close along the ground at the fire's edge. On the left a
@@ -132,7 +132,7 @@ already-grilled crab hovers in mid-air with one leg snapped off and floating awa
 Firelight on wet stones, no people anywhere. Absurd and wonderful.
 ```
 
-### `04-appear.png` — 허공에서 뿔이 쑥, 도깨비가 통째로 나타난다
+### `04-appear.webp` — 허공에서 뿔이 쑥, 도깨비가 통째로 나타난다
 
 ```
 Wide panoramic scene. The fire on the left. In the middle of the frame a
@@ -144,7 +144,7 @@ fingertips show over the top, eyebrows shot up into his headband. Warm firelight
 comic astonishment.
 ```
 
-### `05-party.png` — 도깨비 여섯이 나타나 노래하고 딸꾹질하고 게를 떨어뜨린다
+### `05-party.webp` — 도깨비 여섯이 나타나 노래하고 딸꾹질하고 게를 떨어뜨린다
 
 ```
 Wide panoramic scene of joyful chaos. Six stocky green and reddish dokkaebi
@@ -156,7 +156,7 @@ while a neighbour throws both hands up in exasperation. Six little black caps
 tossed on a flat boulder in the foreground. Sparks, motion lines, huge grins.
 ```
 
-### `06-wrestle.png` — 감투를 벗어 던지고 씨름을 시작한다
+### `06-wrestle.webp` — 감투를 벗어 던지고 씨름을 시작한다
 
 ```
 Wide panoramic scene. On the right two dokkaebi are locked together in a Korean
@@ -167,7 +167,7 @@ very edge of that boulder, half hidden in shadow, a human hand is beginning to
 creep into frame. Firelight, dust, energy on one side and stillness on the other.
 ```
 
-### `07-steal.png` — 감투를 품에 넣고 냅다 뛴다
+### `07-steal.webp` — 감투를 품에 넣고 냅다 뛴다
 
 ```
 Wide panoramic scene. On the left the man sprints away along the dark stream bank
@@ -178,7 +178,7 @@ caps now lie, while another points an accusing finger at him. Moonlit water, mot
 lines, a comic chase that hasn't started yet.
 ```
 
-### `08-mirror.png` — 거울 앞에 섰는데 아무것도 비치지 않는다
+### `08-mirror.webp` — 거울 앞에 섰는데 아무것도 비치지 않는다
 
 ```
 Wide panoramic scene. Inside the cottage at night. On the right stands a small
@@ -189,7 +189,7 @@ mid-step, and his hat is floating at head height. A single raised bump in the
 air where his hand must be. Warm lamplight, hilarious and slightly spooky.
 ```
 
-### `09-prank.png` — 빨랫줄을 건드리고 훈장님 갓을 눌러 본다
+### `09-prank.webp` — 빨랫줄을 건드리고 훈장님 갓을 눌러 본다
 
 ```
 Wide panoramic scene split into two gags. On the left, a laundry line in a yard
@@ -201,7 +201,7 @@ small boys sit bolt upright with their hands on their knees and identical
 expressions of total innocence. Bright daylight, comic outrage.
 ```
 
-### `10-cow.png` — 소가 저절로 온 동네를 뛰어다닌다
+### `10-cow.webp` — 소가 저절로 온 동네를 뛰어다닌다
 
 ```
 Wide panoramic scene of full comic motion. A big cream-brown ox gallops down the
@@ -213,7 +213,7 @@ one woman with a water jar tipping over. Chickens exploding out of the way. Dust
 motion lines, bright noon. The funniest picture in the book.
 ```
 
-### `11-market.png` — 떡 하나가 공중으로 슥 떠오른다
+### `11-market.webp` — 떡 하나가 공중으로 슥 떠오른다
 
 ```
 Wide panoramic scene. A busy market under straw awnings. On the right a plump
@@ -224,7 +224,7 @@ mid-bite and is staring at it with her eyes crossed. Bright colours, crowded
 stalls, one impossible detail.
 ```
 
-### `12-rumor.png` — 곳간은 차오르는데 마음은 무거워진다
+### `12-rumor.webp` — 곳간은 차오르는데 마음은 무거워진다
 
 ```
 Wide panoramic scene. On the left, inside a storehouse, bolts of cloth, fruit
@@ -235,7 +235,7 @@ goods with their arms wrapped around them, lanterns lit, watching the dark
 suspiciously. Warm hoard on one side, worried faces on the other.
 ```
 
-### `13-hole.png` — 불티가 튀어 구멍이 나고, 빨간 헝겊으로 기운다
+### `13-hole.webp` — 불티가 튀어 구멍이 나고, 빨간 헝겊으로 기운다
 
 ```
 Wide panoramic scene. A lamplit room at night. On the left a small charcoal
@@ -246,7 +246,7 @@ brilliant scarlet scrap of cloth over the hole with big crooked stitches. An ope
 chest of rags beside him. Warm light, one shocking spot of red.
 ```
 
-### `14-spot.png` — 허공에 빨간 점 하나가 둥둥 떠다닌다
+### `14-spot.webp` — 허공에 빨간 점 하나가 둥둥 떠다닌다
 
 ```
 Wide panoramic scene. The market in broad daylight. In the middle of the frame,
@@ -257,7 +257,7 @@ faces, pointing arms, one man standing on a barrel. Bright hard sunlight makes
 the red blaze. Tense and very funny.
 ```
 
-### `15-caught.png` — 감투가 벗겨지고 돌쇠가 불쑥 나타난다
+### `15-caught.webp` — 감투가 벗겨지고 돌쇠가 불쑥 나타난다
 
 ```
 Wide panoramic scene. The market, the moment after. On the right a crowd has
@@ -268,7 +268,7 @@ face around him has gone silent and still, mouths open. Bright noon, dust
 settling. No anger yet - just shock.
 ```
 
-### `16-burn.png` — 감투를 태우고, 개울가의 도깨비를 다시 만난다
+### `16-burn.webp` — 감투를 태우고, 개울가의 도깨비를 다시 만난다
 
 ```
 Wide panoramic scene split between two moments. On the left, a kitchen fire hole
@@ -283,7 +283,7 @@ both.
 
 ---
 
-## 마지막 장 — `end.png` (가로 2:1)
+## 마지막 장 — `end.webp` (가로 2:1)
 
 돌쇠가 지게를 지고 장터를 간다.
 

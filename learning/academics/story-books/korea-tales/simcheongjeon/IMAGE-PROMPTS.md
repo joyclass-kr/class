@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 21장 | 1.33 : 1 | **가로 4 : 세로 3** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.33 : 1 | **가로 4 : 세로 3** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.33 : 1 | **가로 4 : 세로 3** |
 
 > **`end` 그림은 「읽고 나서」 쪽에 들어갑니다.** 쪽 위쪽에 가로로 얹히므로 비율은 아래 표대로면 됩니다.
 > 다만 글 분량에 따라 높이가 조금씩 달라지니, **중요한 것은 한가운데에 두고 위아래 가장자리는 여유를 두세요.**
@@ -62,7 +62,7 @@ The king: a grave youngish man in a dragon-embroidered robe.
 
 ---
 
-## 표지 — `cover.png` (세로 2:3)
+## 표지 — `cover.webp` (세로 2:3)
 
 세로로 긴 표지. 인당수 물속에서 피어오르는 연꽃.
 
@@ -79,7 +79,7 @@ of drowning.
 
 ## 본문 21장 (모두 가로 4:3)
 
-### `story-01-a.png` — 1장 — 앞 못 보는 아버지가 갓난아기를 안고 젖동냥을 나선다
+### `story-01-a.webp` — 1장 — 앞 못 보는 아버지가 갓난아기를 안고 젖동냥을 나선다
 
 ```
 Wide 4:3 scene. A poor village lane in early morning. A thin blind man in a shabby
@@ -90,7 +90,7 @@ reaching out to take the baby. Frost on the thatch, pale winter light, neighbour
 looking on from further down the lane.
 ```
 
-### `story-01-b.png` — 1장 — 어린 심청이 바가지를 들고 밥을 얻으러 다닌다
+### `story-01-b.webp` — 1장 — 어린 심청이 바가지를 들고 밥을 얻으러 다닌다
 
 ```
 Wide 4:3 scene. A village path in autumn. A very small barefoot girl in a patched
@@ -100,7 +100,7 @@ to scrape an extra spoonful into the bowl, her mouth turned down with pity. Fall
 leaves, low golden light, a long lane behind her.
 ```
 
-### `story-01-c.png` — 1장 — 장 승상 부인이 심청의 손을 잡는다
+### `story-01-c.webp` — 1장 — 장 승상 부인이 심청의 손을 잡는다
 
 ```
 Wide 4:3 scene. A fine room with polished floors and a folding screen. A dignified
@@ -110,7 +110,7 @@ work is folded neatly on the floor beside them. Warm afternoon light through pap
 windows, quiet and tender.
 ```
 
-### `story-02-a.png` — 2장 — 심 봉사가 개천에 빠지고 스님이 건져 낸다
+### `story-02-a.webp` — 2장 — 심 봉사가 개천에 빠지고 스님이 건져 낸다
 
 ```
 Wide 4:3 scene. Winter dusk beside a frozen stream below a footpath. A grey-robed
@@ -119,7 +119,7 @@ arms, bracing his feet on the icy bank. The blind man's stick floats away
 downstream. Bare willows, blue cold light, breath steaming.
 ```
 
-### `story-02-b.png` — 2장 — "공양미 삼백 석"이라는 말
+### `story-02-b.webp` — 2장 — "공양미 삼백 석"이라는 말
 
 ```
 Wide 4:3 scene. Inside a small dark room. The blind man sits by a low fire wrapped
@@ -129,7 +129,7 @@ together, head tilted, listening carefully. A single guttering lamp; huge shadow
 on the paper walls. Foreboding.
 ```
 
-### `story-02-c.png` — 2장 — 심청이 뒤뜰에서 정화수를 떠 놓고 빈다
+### `story-02-c.webp` — 2장 — 심청이 뒤뜰에서 정화수를 떠 놓고 빈다
 
 ```
 Wide 4:3 scene. A back yard at night under a bright moon. A girl of fifteen kneels
@@ -138,7 +138,7 @@ water, her hands pressed together and raised, head bowed, eyes closed. Bare
 persimmon branches above, frost on the ground, deep blue and silver. Very still.
 ```
 
-### `story-03-a.png` — 3장 — 마을 어귀에 붙은 방을 보는 뱃사람들
+### `story-03-a.webp` — 3장 — 마을 어귀에 붙은 방을 보는 뱃사람들
 
 ```
 Wide 4:3 scene. A village entrance with an old zelkova tree. Three or four
@@ -148,7 +148,7 @@ stopped on the path with a bundle on her head and is watching them, her face
 carefully blank. Bright hard daylight, the sea a thin blue line beyond the roofs.
 ```
 
-### `story-03-b.png` — 3장 — "낭자, 이건 장난이 아니오"
+### `story-03-b.webp` — 3장 — "낭자, 이건 장난이 아니오"
 
 ```
 Wide 4:3 scene. On the shore beside a beached boat. A big bearded sailor has
@@ -158,7 +158,7 @@ hands folded in front of her, meeting his eyes without flinching. The other
 sailors have gone silent behind him, caps in hand. Grey sea, wind, gulls.
 ```
 
-### `story-03-c.png` — 3장 — 잠든 아버지 곁에서 밤을 새운다
+### `story-03-c.webp` — 3장 — 잠든 아버지 곁에서 밤을 새운다
 
 ```
 Wide 4:3 scene. A tiny room at night. The blind father lies asleep on the floor
@@ -168,7 +168,7 @@ low. Everything is warm brown and gold, and utterly quiet. Her face shows no tea
 - only attention.
 ```
 
-### `story-04-a.png` — 4장 — 아침상을 차려 놓고 옷을 갈아입는다
+### `story-04-a.webp` — 4장 — 아침상을 차려 놓고 옷을 갈아입는다
 
 ```
 Wide 4:3 scene. Dawn in the small room. A neatly set breakfast tray sits on the
@@ -178,7 +178,7 @@ figure of her father, her face composed. Cold blue-grey first light through the
 paper door. Everything tidied and folded.
 ```
 
-### `story-04-b.png` — 4장 — 배가 인당수에 이른다
+### `story-04-b.webp` — 4장 — 배가 인당수에 이른다
 
 ```
 Wide 4:3 scene. A wooden merchant ship on a heaving grey-green sea, sails
@@ -188,7 +188,7 @@ white figure stands alone at the bow. Enormous sky, low cloud, spray. Awe rather
 than horror.
 ```
 
-### `story-04-c.png` — 4장 — 뱃전에 엎드려 통곡하는 뱃사람들
+### `story-04-c.webp` — 4장 — 뱃전에 엎드려 통곡하는 뱃사람들
 
 ```
 Wide 4:3 scene. The ship's deck immediately after. The rail is empty; a discarded
@@ -198,7 +198,7 @@ with his forehead against his hands. The sea beyond is already smooth. No figure
 in the water. Grey light, terrible quiet.
 ```
 
-### `story-05-a.png` — 5장 — 물속으로 한없이 가라앉는데 숨이 막히지 않는다
+### `story-05-a.webp` — 5장 — 물속으로 한없이 가라앉는데 숨이 막히지 않는다
 
 ```
 Wide 4:3 underwater scene. A girl in white drifts slowly downward through
@@ -208,7 +208,7 @@ surface; shoals of small silver fish curve past her. Utterly calm and beautiful,
 no struggle, no fear.
 ```
 
-### `story-05-b.png` — 5장 — 물 아래에서 어머니를 만난다
+### `story-05-b.webp` — 5장 — 물 아래에서 어머니를 만난다
 
 ```
 Wide 4:3 underwater scene. A vast calm hall of pale jade pillars in green-blue
@@ -218,7 +218,7 @@ astonished, one hand gripping her mother's sleeve. Soft drifting light, slow
 bubbles, a few gentle robed figures further back. Warm within cool.
 ```
 
-### `story-05-c.png` — 5장 — 인당수에 떠오른 연꽃을 뱃사람들이 건져 올린다
+### `story-05-c.webp` — 5장 — 인당수에 떠오른 연꽃을 뱃사람들이 건져 올린다
 
 ```
 Wide 4:3 scene. Calm sea at dawn. Alongside the merchant ship, an enormous pink
@@ -227,7 +227,7 @@ with ropes and boat hooks, faces lit with astonishment, the bearded leader
 pointing and shouting. Pink and gold sunrise on the water. Wonder.
 ```
 
-### `story-06-a.png` — 6장 — 대궐 뜰에 놓인 연꽃
+### `story-06-a.webp` — 6장 — 대궐 뜰에 놓인 연꽃
 
 ```
 Wide 4:3 scene. A palace courtyard at evening. The huge closed lotus stands on a
@@ -237,7 +237,7 @@ looking at it. Red pillars, tiled roofs, lantern light beginning. Hushed and
 strange.
 ```
 
-### `story-06-b.png` — 6장 — 왕후가 되었으나 아버지 생각뿐이다
+### `story-06-b.webp` — 6장 — 왕후가 되었으나 아버지 생각뿐이다
 
 ```
 Wide 4:3 scene. A palace room. A young queen in red and gold court robes sits at
@@ -247,7 +247,7 @@ one hand out. Rich brocade, gold screens - and a completely absent expression on
 her face. Wealth and homesickness together.
 ```
 
-### `story-06-c.png` — 6장 — 심 봉사가 지팡이로 문지방을 더듬어 대궐로 들어선다
+### `story-06-c.webp` — 6장 — 심 봉사가 지팡이로 문지방을 더듬어 대궐로 들어선다
 
 ```
 Wide 4:3 scene. A great palace gate. A thin shabby blind man in a patched white
@@ -257,7 +257,7 @@ guests are being helped through by attendants. The gate is enormous and he is ve
 small. Bright daylight, red pillars, banners.
 ```
 
-### `story-07-a.png` — 7장 — 맹인 잔치 마당
+### `story-07-a.webp` — 7장 — 맹인 잔치 마당
 
 ```
 Wide 4:3 scene. A vast palace courtyard filled with low tables, at each a blind
@@ -266,7 +266,7 @@ banners, spring blossom. The mood is generous and noisy. In the far background, 
 the raised hall, a small red-robed figure stands watching the crowd.
 ```
 
-### `story-07-b.png` — 7장 — 왕후가 노인 앞에 무릎을 꿇는다
+### `story-07-b.webp` — 7장 — 왕후가 노인 앞에 무릎을 꿇는다
 
 ```
 Wide 4:3 scene. Among the tables. A young queen in full red and gold court robes
@@ -276,7 +276,7 @@ tears running. He has half risen, head tilted, his whole face a question. All
 around them people are standing up and turning to look. Blazing daylight.
 ```
 
-### `story-07-c.png` — 7장 — 심 봉사가 눈을 뜬다
+### `story-07-c.webp` — 7장 — 심 봉사가 눈을 뜬다
 
 ```
 Wide 4:3 scene of pure release. The same spot a heartbeat later. The old man's
@@ -288,7 +288,7 @@ them the whole crowd of guests is on its feet, arms raised, caps flying. Radiant
 
 ---
 
-## 마지막 장 — `end.png` (가로 4:3)
+## 마지막 장 — `end.webp` (가로 4:3)
 
 노인이 마당에서 손녀에게 이야기를 들려준다.
 

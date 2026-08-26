@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -68,7 +68,7 @@ smooth blue, not furry, and he is built like the others.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. Looking up a moonlit village road. In the upper
@@ -80,7 +80,7 @@ An enormous full moon behind them. Funny rather than frightening.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-nightroad.png` — 달 밝은 밤, 집으로 가는 길
+### `01-nightroad.webp` — 달 밝은 밤, 집으로 가는 길
 
 ```
 Wide moonlit country road scene. On the left, Kim weaves happily along a dirt
@@ -89,7 +89,7 @@ right, the road drops toward a shallow stream with flat stepping stones and a bi
 old willow. An enormous full moon low in a deep indigo sky. Cheerful and calm.
 ```
 
-### `02-challenge.png` — 징검다리를 막아선 도깨비
+### `02-challenge.webp` — 징검다리를 막아선 도깨비
 
 ```
 Wide night scene at the stream. On the right, the huge blue-grey goblin stands on
@@ -99,7 +99,7 @@ in all directions. On the left, Kim has stopped dead on the near bank, arms up,
 eyes like saucers. Silver moonlight on the water.
 ```
 
-### `03-grip.png` — 허리를 맞잡은 두 사람
+### `03-grip.webp` — 허리를 맞잡은 두 사람
 
 ```
 Wide night scene on the sandy bank. In the centre, Kim and the goblin have taken
@@ -109,7 +109,7 @@ reaches the goblin's chest. Moonlight rimming both figures, dust at their feet.
 Comic tension.
 ```
 
-### `04-wrestle.png` — 바위를 미는 것 같은 힘
+### `04-wrestle.webp` — 바위를 미는 것 같은 힘
 
 ```
 Wide night scene. The goblin leans in casually with one arm, almost bored, while
@@ -118,7 +118,7 @@ squeezed with effort, sweat flying off him in droplets. Deep footprint grooves
 dragged across the sand behind him. Moonlit and very funny.
 ```
 
-### `05-remember.png` — 왼다리가 약하다던 말
+### `05-remember.webp` — 왼다리가 약하다던 말
 
 ```
 Wide night scene. Kim, still gripped, has gone suddenly still and thoughtful, one
@@ -128,7 +128,7 @@ the goblin grins on, oblivious. The stream and willow behind. Beat of
 anticipation.
 ```
 
-### `06-throw.png` — 쿵! 나자빠진 도깨비
+### `06-throw.webp` — 쿵! 나자빠진 도깨비
 
 ```
 Wide night scene, explosive. The goblin crashes flat onto his back on the sand
@@ -137,7 +137,7 @@ lines around him, eyes spinning. On the left, Kim stands panting in a low finish
 stance, one fist clenched. Sand and moonlight everywhere. Peak slapstick.
 ```
 
-### `07-tied.png` — 버드나무에 꽁꽁 묶다
+### `07-tied.webp` — 버드나무에 꽁꽁 묶다
 
 ```
 Wide night scene at the willow. In the centre, the goblin is lashed to the thick
@@ -147,7 +147,7 @@ Kim walks away backwards pointing a warning finger, grinning. Moonlight through
 willow leaves.
 ```
 
-### `08-boast.png` — 마을 사람들을 데리고 나서다
+### `08-boast.webp` — 마을 사람들을 데리고 나서다
 
 ```
 Wide village street scene in bright morning. On the left, Kim strides ahead with
@@ -157,7 +157,7 @@ folded arms, children running ahead excitedly. Warm gold morning light, long
 shadows.
 ```
 
-### `09-broom.png` — 묶여 있던 것은 낡은 빗자루
+### `09-broom.webp` — 묶여 있던 것은 낡은 빗자루
 
 ```
 Wide morning scene at the willow. In the centre, the cloth belt is still wound
@@ -167,7 +167,7 @@ leans in staring, mouths open. On the left, Kim points with one finger, his own
 face slowly falling. Bright, ridiculous, perfect.
 ```
 
-### `10-laugh.png` — 웃음바다가 된 마을
+### `10-laugh.webp` — 웃음바다가 된 마을
 
 ```
 Wide morning scene by the stream. The whole crowd has dissolved into laughter -
@@ -177,7 +177,7 @@ Kim stands crimson to the ears, hat pulled down over his eyes. Bright and
 joyful.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet village lane at dusk, no people. A worn-out straw broom leans against a

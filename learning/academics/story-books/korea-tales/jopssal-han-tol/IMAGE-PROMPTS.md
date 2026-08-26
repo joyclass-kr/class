@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -54,7 +54,7 @@ Korean dog, a brown horse, and finally a huge yellow-brown ox.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. In the foreground at the bottom, a boy's open palm
@@ -66,7 +66,7 @@ light. The idea of one small thing becoming enormous.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-depart.png` — 좁쌀 한 톨을 품에 넣고
+### `01-depart.webp` — 좁쌀 한 톨을 품에 넣고
 
 ```
 Wide country road scene at morning. On the left, the boy stands on a dirt path
@@ -76,7 +76,7 @@ cloth bundle on his back is almost empty and flat. The road stretches away to th
 right toward distant pine hills.
 ```
 
-### `02-first.png` — 첫 번째 집
+### `02-first.webp` — 첫 번째 집
 
 ```
 Wide scene at the gate of a thatched farmhouse at dusk. On the left, the boy
@@ -86,7 +86,7 @@ how small it is, one eyebrow raised in amusement. Warm lamplight from the door,
 purple evening sky.
 ```
 
-### `03-mouse.png` — 좁쌀을 먹어 버린 쥐
+### `03-mouse.webp` — 좁쌀을 먹어 버린 쥐
 
 ```
 Wide interior scene of a simple Korean room in the morning. On the right, an
@@ -96,7 +96,7 @@ On the left, the boy holds a small grey mouse by the tail, looking at it with
 polite surprise. Comic and warm.
 ```
 
-### `04-cat.png` — 쥐를 물어 간 고양이
+### `04-cat.webp` — 쥐를 물어 간 고양이
 
 ```
 Wide scene in a farmyard in the morning. On the right, a plump woman in a blue
@@ -105,7 +105,7 @@ wall, licking one paw. On the left, the boy stands holding an empty little cage 
 woven straw, blinking. The cat is clearly bigger than the mouse was. Sunny.
 ```
 
-### `05-dog.png` — 고양이를 쫓아낸 개
+### `05-dog.webp` — 고양이를 쫓아낸 개
 
 ```
 Wide scene at a farmhouse gate. On the right, a shaggy white Korean dog stands
@@ -115,7 +115,7 @@ disappearing. On the left, the boy looks up at the dog, which comes up to his
 waist. Bright morning light.
 ```
 
-### `06-horse.png` — 말의 뒷발질
+### `06-horse.webp` — 말의 뒷발질
 
 ```
 Wide scene beside a straw-roofed stable at dawn. On the right, a brown horse
@@ -125,7 +125,7 @@ at a broken tether. On the left, the boy stands with his mouth open, the horse
 towering over him. Cool early light.
 ```
 
-### `07-ox.png` — 뿔을 휘두른 황소
+### `07-ox.webp` — 뿔을 휘두른 황소
 
 ```
 Wide scene at a cattle shed in the morning. On the right, an enormous
@@ -135,7 +135,7 @@ slightly with both hands together, apologising. On the left, the boy looks up an
 up at the ox, tiny in comparison. Strong size contrast.
 ```
 
-### `08-road.png` — 황소를 끌고 가는 소년
+### `08-road.webp` — 황소를 끌고 가는 소년
 
 ```
 Wide country road scene at midday. In the centre-left, the boy walks along the
@@ -144,7 +144,7 @@ of the frame. On the right, two villagers by the roadside stop and stare, one
 pointing, both open-mouthed. Rice paddies and pine hills behind, bright blue sky.
 ```
 
-### `09-home.png` — 눈이 휘둥그레진 어머니
+### `09-home.webp` — 눈이 휘둥그레진 어머니
 
 ```
 Wide scene in a small farmyard. On the right, the boy's mother has just come out
@@ -154,7 +154,7 @@ holding the ox's rope, the huge animal standing patiently beside him. Warm
 afternoon light.
 ```
 
-### `10-millet.png` — 좁쌀을 쌌던 종이
+### `10-millet.webp` — 좁쌀을 쌌던 종이
 
 ```
 Wide scene in the farmyard. In the centre, the boy holds open a small square of
@@ -163,7 +163,7 @@ paper is empty except for a faint crease. On the right, the ox lifts his head an
 bellows, mouth open. Soft golden late-afternoon light, warm and satisfying.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet Korean farmyard at sunset, no people. A huge ox rests in the shade beside

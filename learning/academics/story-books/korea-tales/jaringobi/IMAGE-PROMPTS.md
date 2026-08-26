@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 14장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -61,7 +61,7 @@ the same every time.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A plain Korean room seen from floor level. In
@@ -74,7 +74,7 @@ lamplight, deep shadow at the edges. Funny and a little touching.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-house.png` — 저 집이 부잣집이라고?
+### `01-house.webp` — 저 집이 부잣집이라고?
 
 ```
 Wide scene in a Joseon town street. On the right, a shabby house with a sagging
@@ -84,7 +84,7 @@ hand, the other with his eyebrows raised. Fine houses further down the street fo
 contrast. Warm afternoon light.
 ```
 
-### `02-gulbi.png` — 한 술 뜨고 한 번 보아라
+### `02-gulbi.webp` — 한 술 뜨고 한 번 보아라
 
 ```
 Wide interior of a plain room. In the centre, a low table with one bowl of rice
@@ -94,7 +94,7 @@ serious. His wife and the small boy have their spoons in their mouths and their
 faces tipped straight up at the fish. Amber lamplight. Absurd and funny.
 ```
 
-### `03-twice.png` — 짜다! 어서 물을 켜라!
+### `03-twice.webp` — 짜다! 어서 물을 켜라!
 
 ```
 Wide interior scene. On the right, Jaringobi is on his feet with one arm flung
@@ -104,7 +104,7 @@ puffed, lower lip pushed out in enormous injustice. The dried fish swings gently
 overhead. Lamplight, dust motes. Hilarious.
 ```
 
-### `04-fan.png` — 부채는 가만, 고개만 절레절레
+### `04-fan.webp` — 부채는 가만, 고개만 절레절레
 
 ```
 Wide interior scene on a hot summer day. In the centre, Jaringobi sits
@@ -115,7 +115,7 @@ hand over her eyes. Bright hot light, sweat drops. The funniest picture in the
 book.
 ```
 
-### `05-fly.png` — 내 된장 내놓고 가거라!
+### `05-fly.webp` — 내 된장 내놓고 가거라!
 
 ```
 Wide scene at the jar platform in the yard. On the left, a fat housefly lifts
@@ -125,7 +125,7 @@ in his socks, one arm outstretched, hat flying off, face thunderous. Sunlight,
 jars, scattering chickens. Comic fury.
 ```
 
-### `06-chase.png` — 한양! 저놈이 한양으로 간다!
+### `06-chase.webp` — 한양! 저놈이 한양으로 간다!
 
 ```
 Wide scene of open countryside with a road winding over a hill. In the upper
@@ -135,7 +135,7 @@ the right, three farmers by the roadside double over laughing, one pointing.
 Bright wide daylight, dust cloud.
 ```
 
-### `07-hanyang.png` — 짚신이 다 떨어졌구나
+### `07-hanyang.webp` — 짚신이 다 떨어졌구나
 
 ```
 Wide scene in a busy Hanyang market street. In the centre, Jaringobi sits down
@@ -145,7 +145,7 @@ over a roof in the upper right. Crowds and shop signs all around him ignoring
 him. Warm evening light. Funny and oddly happy.
 ```
 
-### `08-rival.png` — 어디 한번 겨루어 보자
+### `08-rival.webp` — 어디 한번 겨루어 보자
 
 ```
 Wide scene on a country road at dawn. In the centre, the rival miser strides
@@ -154,7 +154,7 @@ determination, mountains ahead of him. Beside the road, a milestone. Cool mornin
 light, mist in the valley. Absurdly serious.
 ```
 
-### `09-contest.png` — 보면 밥을 더 먹게 되지 않소
+### `09-contest.webp` — 보면 밥을 더 먹게 되지 않소
 
 ```
 Wide interior of the plain room. On the right, the rival miser eats his rice
@@ -164,7 +164,7 @@ frozen with his spoon halfway up, staring at his guest with dawning respect.
 Lamplight. Two ridiculous men in perfect earnest.
 ```
 
-### `10-drought.png` — 쩍쩍 갈라진 논바닥
+### `10-drought.webp` — 쩍쩍 갈라진 논바닥
 
 ```
 Wide scene of a valley of rice paddies in a drought. The whole foreground is
@@ -174,7 +174,7 @@ their arms hanging down. Harsh white sky, no clouds, bleached colours. Bleak and
 quiet - the mood of the book changes here.
 ```
 
-### `11-mutter.png` — 그 양반이 쌀 한 톨을 내놓겠나
+### `11-mutter.webp` — 그 양반이 쌀 한 톨을 내놓겠나
 
 ```
 Wide scene outside the granary wall at night. On the left, three thin villagers
@@ -184,7 +184,7 @@ window across the wall. Cold blue night against one warm square of light. Tense
 and sad.
 ```
 
-### `12-open.png` — 활짝 열린 곳간
+### `12-open.webp` — 활짝 열린 곳간
 
 ```
 Wide scene of the house yard at sunrise. The granary doors stand wide open in
@@ -194,7 +194,7 @@ them. At the gate on the left, villagers stand frozen mid-step with their hands
 over their mouths. Enormous, warm, overwhelming.
 ```
 
-### `13-share.png` — 오늘 같은 날 쓰려고 아낀 것이지요
+### `13-share.webp` — 오늘 같은 날 쓰려고 아낀 것이지요
 
 ```
 Wide scene at the gate. On the right, Jaringobi leans against the gatepost with
@@ -204,7 +204,7 @@ with both hands, weeping. Children run between the sacks. Gold morning light.
 Warm and moving.
 ```
 
-### `14-fish.png` — 이번엔 못 본 척했답니다
+### `14-fish.webp` — 이번엔 못 본 척했답니다
 
 ```
 Wide interior of the plain room that evening. The same low table, one bowl of
@@ -214,7 +214,7 @@ right, Jaringobi looks pointedly the other way, the corner of his mouth turned
 up. Warm lamplight. Gentle and funny.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A plain empty Korean room at night, no people. A ceiling beam with a straw cord

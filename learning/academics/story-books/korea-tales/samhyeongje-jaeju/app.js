@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 각자 배우러 떠나다",
         beats: [
             {
-                art: "01-brothers.png",
+                art: "01-brothers.webp",
                 emoji: "👨‍👨‍👦",
                 left: [
                     "옛날 어느 산골에 삼형제가 살았습니다.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-depart.png",
+                art: "02-depart.webp",
                 emoji: "🛤️",
                 left: [
                     "이튿날 아침, 삼형제는 갈림길에 섰어요.",
@@ -37,7 +37,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-return.png",
+                art: "03-return.webp",
                 emoji: "🏡",
                 left: [
                     "삼 년이 흘러 삼형제가 집에 모였어요.",
@@ -53,7 +53,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-skills.png",
+                art: "04-skills.webp",
                 emoji: "🏹",
                 left: [
                     "\"저는 활을 배웠습니다.\"",
@@ -76,7 +76,7 @@ const CHAPTERS = [
         title: "2장 · 백 리 밖의 울음소리",
         beats: [
             {
-                art: "05-hear.png",
+                art: "05-hear.webp",
                 emoji: "👂",
                 left: [
                     "그때 첫째가 갑자기 손을 들어 올렸어요.",
@@ -93,7 +93,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-village.png",
+                art: "06-village.webp",
                 emoji: "😰",
                 left: [
                     "마침 마을에는 큰일이 나 있었어요.",
@@ -109,7 +109,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-run.png",
+                art: "07-run.webp",
                 emoji: "🏃",
                 left: [
                     "삼형제는 그길로 달렸어요. 첫째가 앞장서서 방향을 짚었습니다.",
@@ -125,7 +125,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-cliff.png",
+                art: "08-cliff.webp",
                 emoji: "🐉",
                 left: [
                     "고개를 젖혀 올려다보니 아득한 절벽 꼭대기였습니다.",
@@ -147,7 +147,7 @@ const CHAPTERS = [
         title: "3장 · 셋이라야 되는 일",
         beats: [
             {
-                art: "09-aim.png",
+                art: "09-aim.webp",
                 emoji: "🎯",
                 left: [
                     "둘째가 활을 들었어요.",
@@ -165,7 +165,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-ready.png",
+                art: "10-ready.webp",
                 emoji: "🤲",
                 left: [
                     "셋째가 조용히 앞으로 나섰어요.",
@@ -183,7 +183,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-catch.png",
+                art: "11-catch.webp",
                 emoji: "💫",
                 left: [
                     "피융—",
@@ -200,7 +200,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-reward.png",
+                art: "12-reward.webp",
                 emoji: "🏅",
                 left: [
                     "원님은 아이를 끌어안고 한참을 울었어요.",
@@ -251,7 +251,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🏹')}
+                ${artFrame('cover.webp', '🏹')}
             </div>
             <div class="story-page-right">
                 <h1>삼형제의 재주</h1>
@@ -314,7 +314,7 @@ const AFTERWORD = {
     emoji: '🎯',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이런 이야기에서 재주는 늘 셋이고, 마지막 하나는 늘 시시해 보입니다. 그래야 마지막에 뒤집을 수 있기 때문입니다. 이야기를 짓는 오래된 솜씨입니다.",
                 "그런 이야기에서 일이 되는 방식은 늘 같습니다. 셋 가운데 하나만 빠져도 되지 않습니다. 순서도 바꿀 수 없습니다.",

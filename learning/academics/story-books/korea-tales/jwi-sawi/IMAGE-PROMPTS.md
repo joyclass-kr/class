@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -55,7 +55,7 @@ weathered grey granite statue with a calm half-smiling face, moss at its base.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. Looking straight up a towering stone Buddha statue
@@ -67,7 +67,7 @@ sunlight. The size gap is the whole picture.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-family.png` — 곳간 밑의 쥐 가족
+### `01-family.webp` — 곳간 밑의 쥐 가족
 
 ```
 Wide cutaway view of a cosy mouse home under a wooden granary floor. In the
@@ -77,7 +77,7 @@ rice stacked neatly in a corner, a wooden floorboard ceiling above. Warm amber
 light through a knothole. Sweet and domestic.
 ```
 
-### `02-decide.png` — 세상에서 제일 센 사위를 찾자
+### `02-decide.webp` — 세상에서 제일 센 사위를 찾자
 
 ```
 Wide scene at the mouse hole entrance at dawn. On the left, father mouse strides
@@ -87,7 +87,7 @@ enormous world opens up - the granary post like a tower, the yard beyond, a huge
 sky. Comic ambition.
 ```
 
-### `03-sun.png` — 해를 찾아가다
+### `03-sun.webp` — 해를 찾아가다
 
 ```
 Wide sky scene. The whole upper two thirds of the frame is filled by the great
@@ -97,7 +97,7 @@ looking up with their hats tipped back, one paw raised in a question. Blazing
 gold light. Absurd size difference.
 ```
 
-### `04-sunanswer.png` — 구름이 나를 가리면
+### `04-sunanswer.webp` — 구름이 나를 가리면
 
 ```
 Wide sky scene. The sun's face is now half covered by a large soft white cloud
@@ -106,7 +106,7 @@ the bottom, the two mice have both turned to follow the pointing ray, mouths
 open. Light dimming across the hilltop below them. Funny and clear.
 ```
 
-### `05-cloud.png` — 높은 산에서 만난 구름
+### `05-cloud.webp` — 높은 산에서 만난 구름
 
 ```
 Wide mountain scene above the treeline. Filling the frame, a great billowing
@@ -115,7 +115,7 @@ the lower right, the two tiny mice stand, mother mouse's skirt whipping, father
 mouse gripping his hat. Thin blue air, distant peaks below. Grand and airy.
 ```
 
-### `06-wind.png` — 들판에서 부른 바람
+### `06-wind.webp` — 들판에서 부른 바람
 
 ```
 Wide grass field scene. Across the whole frame, the wind sweeps through as a
@@ -125,7 +125,7 @@ over, father mouse hanging on to a grass stem with both paws, hat flying away.
 Dynamic and funny.
 ```
 
-### `07-windanswer.png` — 돌부처만은 못 이긴다
+### `07-windanswer.webp` — 돌부처만은 못 이긴다
 
 ```
 Wide field scene, calmer. The wind figure has curled around to point off toward a
@@ -134,7 +134,7 @@ mice, still windblown, follow the gesture with their eyes, father mouse retrievi
 his hat from a bush. Long grass, low afternoon light. A new direction.
 ```
 
-### `08-buddha.png` — 고갯마루의 돌부처
+### `08-buddha.webp` — 고갯마루의 돌부처
 
 ```
 Wide scene at a mountain pass. On the right, a weathered grey stone Buddha stands
@@ -143,7 +143,7 @@ the left, the two mice bow low with their paws together, tiny beside the stone
 pedestal. Pine ridges behind, warm late light. Reverent and comic at once.
 ```
 
-### `09-answer.png` — 쥐라네
+### `09-answer.webp` — 쥐라네
 
 ```
 Wide scene at the pass. The stone Buddha's calm face is tilted slightly downward,
@@ -153,7 +153,7 @@ round, paws still raised mid-question. A beat of pure comic silence. Warm gold
 light.
 ```
 
-### `10-explain.png` — 발밑을 파면 넘어진다
+### `10-explain.webp` — 발밑을 파면 넘어진다
 
 ```
 Wide scene at the base of the statue, low viewpoint. The stone pedestal fills the
@@ -163,7 +163,7 @@ The two mice look at the soil, then at each other. A single pebble trickles down
 Quietly enormous idea.
 ```
 
-### `11-realize.png` — 집으로 돌아오는 길
+### `11-realize.webp` — 집으로 돌아오는 길
 
 ```
 Wide scene of a country road at sunset. In the centre, the two mice walk home
@@ -173,7 +173,7 @@ huge behind them across the road - far bigger than they are. Warm orange light.
 Wry and warm.
 ```
 
-### `12-wedding.png` — 곳간 밑의 조촐한 혼례
+### `12-wedding.webp` — 곳간 밑의 조촐한 혼례
 
 ```
 Wide cutaway of the mouse home under the granary, decorated for a wedding. In the
@@ -183,7 +183,7 @@ grains and berries. On the left, father mouse scratches the back of his head wit
 a sheepish grin. Warm lamplight, festive and tiny.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet mountain pass at dawn, no one there. The old stone Buddha stands calm in

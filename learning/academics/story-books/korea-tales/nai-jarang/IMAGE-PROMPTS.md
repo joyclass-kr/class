@@ -32,8 +32,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -64,7 +64,7 @@ animals but seated and gesturing like people at a table.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A low traditional Korean feast table seen from the
@@ -76,7 +76,7 @@ with their mouths open. Warm autumn light through pines.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-feast.png` — 잔칫상 앞의 셋
+### `01-feast.webp` — 잔칫상 앞의 셋
 
 ```
 Wide forest clearing scene. In the centre, a low wooden Korean feast table on a
@@ -86,7 +86,7 @@ sitting, glancing sideways at each other. The toad sits low near the bottom edge
 already settled. Golden autumn light, red maple leaves.
 ```
 
-### `02-rule.png` — 나이대로 앉자
+### `02-rule.webp` — 나이대로 앉자
 
 ```
 Wide clearing scene. On the left, the fox sits up very straight with one paw
@@ -95,7 +95,7 @@ rule. On the right, the sika deer nods gravely with his chin tucked. Between and
 below them, the toad simply blinks. The feast table sits untouched in the middle.
 ```
 
-### `03-fox.png` — 별을 세던 시절
+### `03-fox.webp` — 별을 세던 시절
 
 ```
 Wide clearing scene. The low wooden feast table stands in the middle of the frame
@@ -108,7 +108,7 @@ containing exactly ten large stars, with a tiny fox silhouette below counting th
 on his paws. The daydream is drawn in pale dreamy colors to read as imaginary.
 ```
 
-### `04-deer.png` — 뿔로 긁은 골짜기
+### `04-deer.webp` — 뿔로 긁은 골짜기
 
 ```
 Wide clearing scene. The low wooden feast table stands in the middle of the frame
@@ -121,7 +121,7 @@ antlers along the ground, carving deep grooves that become valleys. Pale dreamy
 colors for the daydream, solid colors for the real scene.
 ```
 
-### `05-quarrel.png` — 얼굴이 벌게지도록
+### `05-quarrel.webp` — 얼굴이 벌게지도록
 
 ```
 Wide clearing scene. The fox and the sika deer are nose to nose across the feast
@@ -130,7 +130,7 @@ hoof jabbing at each other. Comic impact lines and flying spit between them. At
 the very bottom edge, the toad sits under the table, perfectly still, unnoticed.
 ```
 
-### `06-tears.png` — 두꺼비의 울음소리
+### `06-tears.webp` — 두꺼비의 울음소리
 
 ```
 Wide clearing scene. On the right, the toad sits on the straw mat with two
@@ -139,7 +139,7 @@ shaking. On the left, the fox and the sika deer have stopped mid-argument and bo
 turned to stare, mouths still open, one paw still raised. Comic freeze-frame.
 ```
 
-### `07-why.png` — 옛날 생각이 나서요
+### `07-why.webp` — 옛날 생각이 나서요
 
 ```
 Wide clearing scene. In the centre, the toad wipes one eye with a webbed foot,
@@ -148,7 +148,7 @@ the right have both leaned in close, ears forward, brows furrowed with genuine
 curiosity. The feast table between them. Soft warm light, a hush after the shouting.
 ```
 
-### `08-trees.png` — 세 그루의 나무
+### `08-trees.webp` — 세 그루의 나무
 
 ```
 Wide scene dominated by a huge glowing daydream image filling most of the frame:
@@ -163,7 +163,7 @@ it is the same golden autumn clearing as every other picture in this book. Dream
 and magnificent.
 ```
 
-### `09-shock.png` — 입을 딱 벌린 둘
+### `09-shock.webp` — 입을 딱 벌린 둘
 
 ```
 Wide clearing scene. On the left, the fox and the sika deer both sit frozen with
@@ -172,7 +172,7 @@ the right, the toad blinks placidly, one tear still on his cheek. Both boasters
 are already shuffling backward off the mat. Comic dead silence.
 ```
 
-### `10-seat.png` — 윗자리에 앉은 두꺼비
+### `10-seat.webp` — 윗자리에 앉은 두꺼비
 
 ```
 Wide clearing scene. At the head of the low feast table sits the toad, upright
@@ -181,7 +181,7 @@ the fox and the sika deer sit in the lower seats, shoulders slumped, faces sour,
 picking at their food. Warm golden light, red leaves drifting down. Wry and funny.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet forest clearing at dusk, no animals. The low wooden feast table stands

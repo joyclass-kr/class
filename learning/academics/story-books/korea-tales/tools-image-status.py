@@ -22,7 +22,7 @@ for slug in sorted(os.listdir(BOOKS)):
     if not os.path.isfile(app):
         continue
     js = io.open(app, encoding='utf-8').read()
-    need = set(re.findall(r'"([a-z0-9\-]+\.(?:png|webp))"', js)) | {'cover.png', 'end.png'}
+    need = set(re.findall(r'"([a-z0-9\-]+\.(?:png|webp))"', js)) | {'cover.webp', 'end.webp'}
     d = os.path.join(BOOKS, slug, 'images')
     stems = {os.path.splitext(f)[0] for f in os.listdir(d)} if os.path.isdir(d) else set()
     miss = sorted(n for n in need if os.path.splitext(n)[0] not in stems)

@@ -23,8 +23,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데, 눈에 띄지 않는 정도라 그대로 쓰면 됩니다. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요. 인물을 가운데에 몰지 말고 좌우로 나눠 배치하면 훨씬 자연스러워요.
 
@@ -55,7 +55,7 @@ hanbok.
 
 ---
 
-## 표지 — `cover.png` (세로 2:3)
+## 표지 — `cover.webp` (세로 2:3)
 
 ```
 Vertical portrait composition. A moonlit Korean village at night seen from a low
@@ -68,7 +68,7 @@ and mysterious.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-hungry.png` — 굶주린 호랑이가 산을 내려온다
+### `01-hungry.webp` — 굶주린 호랑이가 산을 내려온다
 
 ```
 Wide panoramic night scene. A deep pine forest on a mountainside on the left, a
@@ -78,7 +78,7 @@ slightly, tongue out, one paw on his empty belly, an exaggerated grumpy-hungry
 expression. Cool blue moonlight, long shadows.
 ```
 
-### `02-crying.png` — 아기 울음소리를 엿듣는 호랑이
+### `02-crying.webp` — 아기 울음소리를 엿듣는 호랑이
 
 ```
 Wide night scene outside a thatched-roof cottage. On the right, a paper-screen
@@ -88,7 +88,7 @@ door, eyes squeezed shut in concentration, a huge drop of drool hanging from his
 mouth, front paws braced on the wall. Comic sneaking pose.
 ```
 
-### `03-tiger-came.png` — 엄마가 호랑이 온다고 해도 아기는 더 크게 운다
+### `03-tiger-came.webp` — 엄마가 호랑이 온다고 해도 아기는 더 크게 운다
 
 ```
 Wide cutaway view of a Korean room, seen as if the front wall were removed. On
@@ -99,7 +99,7 @@ face twisted in offended disbelief, one paw pointing at himself. Warm lamplight
 inside, blue night outside.
 ```
 
-### `04-persimmon.png` — 곶감이라는 말에 아기가 뚝 그친다
+### `04-persimmon.webp` — 곶감이라는 말에 아기가 뚝 그친다
 
 ```
 Wide cutaway view of the same Korean room. On the left, the mother holds up a
@@ -109,7 +109,7 @@ On the right outside the door, the tiger is frozen stiff, eyes bulging, jaw
 dropped, entirely rigid with shock. Strong comic contrast between the two halves.
 ```
 
-### `05-scared.png` — 곶감이 자기보다 무섭다고 믿는 호랑이
+### `05-scared.webp` — 곶감이 자기보다 무섭다고 믿는 호랑이
 
 ```
 Wide night scene outside the cottage. The tiger dominates the left, backing away
@@ -119,7 +119,7 @@ his head, a small thought bubble shows a single dried persimmon drawn as a huge
 glowing monster with fangs. The lit cottage sits small on the right. Very comic.
 ```
 
-### `06-thief.png` — 담을 넘는 소도둑
+### `06-thief.webp` — 담을 넘는 소도둑
 
 ```
 Wide night scene of the same farmyard. On the left, a wiry man in dark brown
@@ -130,7 +130,7 @@ faintly visible deep inside. Blue moonlight, long shadows, the two characters
 unaware of each other.
 ```
 
-### `07-mount.png` — 소도둑이 호랑이 등에 올라탄다
+### `07-mount.webp` — 소도둑이 호랑이 등에 올라탄다
 
 ```
 Wide dark interior of a straw-roofed Korean barn, lit only by a thin shaft of
@@ -141,7 +141,7 @@ eyes gigantic and white with terror, mouth open in a silent scream, ears pinned
 back. Comic horror.
 ```
 
-### `08-running.png` — 미친 듯이 달리는 호랑이
+### `08-running.webp` — 미친 듯이 달리는 호랑이
 
 ```
 Wide panoramic night landscape, extreme motion. The tiger tears across rice
@@ -152,7 +152,7 @@ face bewildered and yelling, one hand reaching forward. Moonlit fields, a stream
 splashing beneath them.
 ```
 
-### `09-branch.png` — 호랑이 무늬를 알아본 소도둑
+### `09-branch.webp` — 호랑이 무늬를 알아본 소도둑
 
 ```
 Wide landscape at dawn, the eastern sky turning pale pink on the right. Mid-run,
@@ -162,7 +162,7 @@ both hands toward a thick tree branch passing overhead on the left. Strong motio
 lines, the tiger still charging forward oblivious.
 ```
 
-### `10-flee.png` — 서로 반대쪽으로 달아나는 둘
+### `10-flee.webp` — 서로 반대쪽으로 달아나는 둘
 
 ```
 Wide dawn landscape split in two. On the left, the tiger bolts away toward the
@@ -173,7 +173,7 @@ ground. A wide empty gap between them in the middle. Pink and gold morning sky,
 funny and energetic.
 ```
 
-## 마지막 — `end.png` (가로 2:1)
+## 마지막 — `end.webp` (가로 2:1)
 
 ```
 A quiet Korean farmyard in the early morning, no people. A wooden tray of dried

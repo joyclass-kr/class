@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 14장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -61,7 +61,7 @@ the same simple five-petal shape.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A wall of deep snow and bare grey branches fills
@@ -74,7 +74,7 @@ from behind. Cold white outside, blazing spring inside.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-yeoni.png` — 쉬는 날이 없는 아이
+### `01-yeoni.webp` — 쉬는 날이 없는 아이
 
 ```
 Wide scene in the yard of a poor thatched house in deep winter. In the centre,
@@ -84,7 +84,7 @@ watching. Snow banked against the walls, icicles on the eaves, bare grey
 branches. Cold blue-white light. Bleak but not cruel-looking.
 ```
 
-### `02-order.png` — 봄나물을 뜯어 오너라
+### `02-order.webp` — 봄나물을 뜯어 오너라
 
 ```
 Wide interior of a cold room. On the right, the stepmother tosses a woven
@@ -94,7 +94,7 @@ disbelief. Through the open door behind her, nothing but falling snow. Pale grey
 light. Unfair and hard.
 ```
 
-### `03-snow.png` — 눈 덮인 산을 헤매다
+### `03-snow.webp` — 눈 덮인 산을 헤매다
 
 ```
 Wide scene on a snowbound mountainside. In the centre, small in a vast white
@@ -104,7 +104,7 @@ still falling. Almost no colour but white, grey and one small patch of pale blue
 jacket. Lonely and cold.
 ```
 
-### `04-door.png` — 드르륵, 바위가 열리다
+### `04-door.webp` — 드르륵, 바위가 열리다
 
 ```
 Wide scene beneath an enormous old willow on the snowy slope. On the right, a
@@ -114,7 +114,7 @@ hand and half his face lean out, grinning. On the left, Yeoni looks up from the
 snow, eyes enormous. Cold and warm meeting on one page.
 ```
 
-### `05-garden.png` — 바위 안은 온통 봄이었어요
+### `05-garden.webp` — 바위 안은 온통 봄이었어요
 
 ```
 Wide scene inside the hidden valley, looking in from the doorway. A clear brook
@@ -124,7 +124,7 @@ still on her shoulders and both hands pressed to her mouth. Beside her, Beodeul
 Doryeong spreads his arms wide in welcome. Overwhelming spring.
 ```
 
-### `06-doryeong.png` — 소쿠리 가득 담아 주다
+### `06-doryeong.webp` — 소쿠리 가득 담아 주다
 
 ```
 Wide scene in the spring valley. In the centre, Beodeul Doryeong kneels in the
@@ -134,7 +134,7 @@ her face slowly breaking into a smile. Butterflies, blossom, warm gold light.
 Generous and easy.
 ```
 
-### `07-again.png` — 냇가에 발을 담그고
+### `07-again.webp` — 냇가에 발을 담그고
 
 ```
 Wide scene beside the brook. In the centre, the two children sit side by side
@@ -144,7 +144,7 @@ water, blossom drifting down, a butterfly on her knee. Dappled warm light.
 Peaceful and happy.
 ```
 
-### `08-suspect.png` — 이걸 어디서 뜯어 오느냐
+### `08-suspect.webp` — 이걸 어디서 뜯어 오느냐
 
 ```
 Wide interior of the cold house. On the right, the stepmother holds up a bunch
@@ -154,7 +154,7 @@ hands behind her back and her eyes on the floor. Snow visible outside. Cold ligh
 Suspicion.
 ```
 
-### `09-follow.png` — 눈 위의 발자국을 따라
+### `09-follow.webp` — 눈 위의 발자국을 따라
 
 ```
 Wide scene on the snowy slope. On the left, Yeoni walks ahead toward the willow,
@@ -164,7 +164,7 @@ greed as the golden crack in the boulder appears ahead. Cold blue snow, one warm
 sliver of light. Tense.
 ```
 
-### `10-strike.png` — 풀밭에 쓰러진 도령
+### `10-strike.webp` — 풀밭에 쓰러진 도령
 
 ```
 Wide scene inside the spring valley. On the left, the stepmother has stopped
@@ -174,7 +174,7 @@ in the green grass with his eyes closed, one arm out, looking asleep. Do not dra
 any violence. Warm light gone slightly pale. Quiet and awful.
 ```
 
-### `11-flee.png` — 쿠르릉, 닫히는 문
+### `11-flee.webp` — 쿠르릉, 닫히는 문
 
 ```
 Wide scene at the rock doorway from inside. In the centre, the great boulder is
@@ -184,7 +184,7 @@ bundle abandoned behind her, face white with terror. Motion lines, falling grit.
 Frightening but bloodless.
 ```
 
-### `12-flowers.png` — 냇가에 핀 세 송이
+### `12-flowers.webp` — 냇가에 핀 세 송이
 
 ```
 Wide scene by the brook. On the left, Yeoni kneels beside the fallen boy with
@@ -194,7 +194,7 @@ pure white, one soft pink, one deep red - each glowing faintly. Yeoni's head has
 turned toward them. Soft light, held breath.
 ```
 
-### `13-revive.png` — 에취!
+### `13-revive.webp` — 에취!
 
 ```
 Wide scene in the grass. In the centre, Beodeul Doryeong sits bolt upright
@@ -204,7 +204,7 @@ white and pink flowers lie beside him. Petals and light bursting outward. Joyful
 and funny.
 ```
 
-### `14-spring.png` — 봄이 문으로 걸어 나오다
+### `14-spring.webp` — 봄이 문으로 걸어 나오다
 
 ```
 Wide scene of the whole snowy mountainside from a distance. In the centre, the
@@ -214,7 +214,7 @@ Small in the middle of it, the two children stand together in the opening. Brigh
 huge, triumphant.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A hidden spring valley with no one in it. A clear brook, soft green grass, peach

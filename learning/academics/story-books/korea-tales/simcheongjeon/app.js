@@ -7,7 +7,7 @@ const CHAPTERS = [
         num: 1,
         title: "젖동냥으로 기른 딸",
         emoji: "👶",
-        art: ["story-01-a.png", "story-01-b.png", "story-01-c.png"],
+        art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
         paras: [
             `옛날 황해도 황주 도화동에 심학규라는 사람이 살았습니다. 본디 글을 읽던 집안이었으나 살림이 기울어 가난하게 지냈습니다.`,
             `심학규는 스무 살 무렵 큰 병을 앓고 나서 앞을 보지 못하게 되었습니다. 그때부터 사람들은 그를 심 봉사<span class="gloss">(앞 못 보는 남자를 가리키던 옛말)</span>라 불렀습니다.`,
@@ -39,7 +39,7 @@ const CHAPTERS = [
         num: 2,
         title: "공양미 삼백 석",
         emoji: "🌾",
-        art: ["story-02-a.png", "story-02-b.png", "story-02-c.png"],
+        art: ["story-02-a.webp", "story-02-b.webp", "story-02-c.webp"],
         paras: [
             `심청이 열다섯 되던 해 겨울이었습니다. 그날 심청은 장 승상 댁에 바느질감을 가져다주러 갔습니다.`,
             `날이 저물었는데도 딸이 돌아오지 않자 심 봉사는 걱정이 되었습니다.<br>"이것이 왜 이리 늦누."`,
@@ -71,7 +71,7 @@ const CHAPTERS = [
         num: 3,
         title: "뱃사람들과 거짓말",
         emoji: "⛵",
-        art: ["story-03-a.png", "story-03-b.png", "story-03-c.png"],
+        art: ["story-03-a.webp", "story-03-b.webp", "story-03-c.webp"],
         paras: [
             `며칠 뒤 심청은 마을 어귀에서 낯선 사람들을 보았습니다. 뱃사람 차림의 사내 여럿이 무언가를 붙이고 있었습니다.`,
             `심청이 다가가 물었습니다.<br>"무슨 일이신지요."`,
@@ -117,7 +117,7 @@ const CHAPTERS = [
         num: 4,
         title: "인당수",
         emoji: "🌊",
-        art: ["story-04-a.png", "story-04-b.png", "story-04-c.png"],
+        art: ["story-04-a.webp", "story-04-b.webp", "story-04-c.webp"],
         paras: [
             `새벽닭이 울었습니다. 심청은 아버지의 아침상을 차려 놓고 옷을 갈아입었습니다.`,
             `그때 대문 밖에서 뱃사람들의 목소리가 들렸습니다.<br>"낭자, 때가 되었소."`,
@@ -149,7 +149,7 @@ const CHAPTERS = [
         num: 5,
         title: "물 아래, 그리고 연꽃",
         emoji: "🪷",
-        art: ["story-05-a.png", "story-05-b.png", "story-05-c.png"],
+        art: ["story-05-a.webp", "story-05-b.webp", "story-05-c.webp"],
         paras: [
             `심청은 물속으로 한없이 가라앉았습니다. 이상하게도 숨이 막히지 않았습니다.`,
             `얼마쯤 내려갔을까요. 발밑이 환해지더니 누군가 심청의 몸을 받쳐 들었습니다.`,
@@ -181,7 +181,7 @@ const CHAPTERS = [
         num: 6,
         title: "맹인 잔치",
         emoji: "👑",
-        art: ["story-06-a.png", "story-06-b.png", "story-06-c.png"],
+        art: ["story-06-a.webp", "story-06-b.webp", "story-06-c.webp"],
         paras: [
             `연꽃은 대궐 뜰에 놓였습니다. 임금은 날마다 그 앞에 나와 꽃을 보았습니다.`,
             `며칠이 지난 밤이었습니다. 달빛이 유난히 밝았습니다. 그 빛을 받은 꽃잎이 하나씩 열리기 시작했습니다.`,
@@ -213,7 +213,7 @@ const CHAPTERS = [
         num: 7,
         title: "눈을 뜨다",
         emoji: "👁️",
-        art: ["story-07-a.png", "story-07-b.png", "story-07-c.png"],
+        art: ["story-07-a.webp", "story-07-b.webp", "story-07-c.webp"],
         paras: [
             `잔치 마당에는 앞 못 보는 사람들이 가득 앉아 있었습니다. 상마다 밥과 국이 올라 있었습니다.`,
             `심청은 발 뒤에 앉아 하루 종일 그 마당을 내려다보았습니다. 벌써 여러 날째였습니다.`,
@@ -480,7 +480,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🪷')}
+                ${artFrame('cover.webp', '🪷')}
             </div>
             <div class="story-page-right">
                 <h1>효녀 심청</h1>
@@ -617,7 +617,7 @@ function quizPage(part) {
 const AFTERWORD = {
     title: '읽고 나서',
     emoji: '👁️',
-    art: ['end.png'],
+    art: ['end.webp'],
     paras: [
         `이 이야기는 책이기 전에 노래였습니다. 소리꾼 한 사람이 북 치는 사람 하나만 데리고 서너 시간을 내리 부르는 「심청가」가 먼저 있었고, 그것을 글로 옮겨 적은 것이 지금 읽은 『심청전』입니다.`,
         `판소리로 지금까지 남아 전하는 것은 다섯 마당입니다. 춘향가, 심청가, 흥보가, 수궁가, 적벽가. 이 가운데 세 마당이 이 서가에 소설로 들어와 있습니다. 춘향전, 심청전, 그리고 흥부전입니다. 수궁가는 토끼전이 되었으니 넷인 셈입니다.`,

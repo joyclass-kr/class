@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -51,7 +51,7 @@ rounded top - draw it exactly the same in every picture, completely inert.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A weathered grey stone post stands upright in the
@@ -63,7 +63,7 @@ heads peeks in from the edges. Warm sunlight, absurd and intriguing.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-merchant.png` — 망두석 그늘에서 잠들다
+### `01-merchant.webp` — 망두석 그늘에서 잠들다
 
 ```
 Wide summer country road scene at midday. On the right, a tall weathered grey
@@ -73,7 +73,7 @@ head on his arm, mouth open, his A-frame carrier stacked with bright silk bolts
 propped beside him. Blazing sun, cicada-loud stillness.
 ```
 
-### `02-gone.png` — 사라진 비단
+### `02-gone.webp` — 사라진 비단
 
 ```
 Wide road scene. In the centre, the merchant is on his feet spinning around with
@@ -83,7 +83,7 @@ stands beside him, utterly indifferent. Empty road stretching to both edges, not
 a soul in sight.
 ```
 
-### `03-court.png` — 관아에 아뢰다
+### `03-court.webp` — 관아에 아뢰다
 
 ```
 Wide scene in a government office courtyard. On the right, the magistrate sits on
@@ -93,7 +93,7 @@ kneels on the packed earth with both hands on the ground, head bowed, one hand
 lifted to point weakly back toward the road. Two constables stand at the sides.
 ```
 
-### `04-arrest.png` — 돌을 잡아 오너라
+### `04-arrest.webp` — 돌을 잡아 오너라
 
 ```
 Wide courtyard scene. On the right, the magistrate stands and points offstage
@@ -103,7 +103,7 @@ in disbelief, the other's hat sliding sideways. Huge comic contrast between the
 magistrate's calm and their panic.
 ```
 
-### `05-drag.png` — 밧줄로 끌려오는 돌기둥
+### `05-drag.webp` — 밧줄로 끌려오는 돌기둥
 
 ```
 Wide scene on the road into town. In the centre, the two constables heave on
@@ -113,7 +113,7 @@ pointing and laughing behind their hands, more running in from the edges of the
 frame. Dust and effort lines.
 ```
 
-### `06-question.png` — 돌을 심문하는 원님
+### `06-question.webp` — 돌을 심문하는 원님
 
 ```
 Wide courtyard scene. On the right, the magistrate leans over his desk and
@@ -123,7 +123,7 @@ the left and behind, a packed crowd of villagers presses in, all wide-eyed, some
 biting their lips. Peak absurdity, played completely straight.
 ```
 
-### `07-laugh.png` — 터져 버린 웃음
+### `07-laugh.webp` — 터져 버린 웃음
 
 ```
 Wide courtyard scene. The crowd fills most of the frame, every single person
@@ -132,7 +132,7 @@ tears flying. In the centre the stone post stands silent. On the right edge, the
 magistrate sits frozen mid-shout, staring at them. Explosive noise and motion.
 ```
 
-### `08-fine.png` — 비단 한 필씩 바쳐라
+### `08-fine.webp` — 비단 한 필씩 바쳐라
 
 ```
 Wide courtyard scene. On the right, the magistrate slams one palm down on his low
@@ -142,7 +142,7 @@ with stiff frightened steps. The stone post stands unbothered in the middle.
 Comic reversal.
 ```
 
-### `09-silk.png` — 산더미처럼 쌓인 비단
+### `09-silk.webp` — 산더미처럼 쌓인 비단
 
 ```
 Wide courtyard scene in evening light. In the centre, a big heap of colourful
@@ -152,7 +152,7 @@ the right, the magistrate watches from his platform, expression unreadable. Warm
 orange light across the courtyard.
 ```
 
-### `10-caught.png` — 무릎을 탁 친 사람들
+### `10-caught.webp` — 무릎을 탁 친 사람들
 
 ```
 Wide courtyard scene. On the left, the two constables take hold of a shifty-looking
@@ -162,7 +162,7 @@ their own knees and foreheads in dawning realisation, several pointing at the
 stone post. Warm evening light, satisfying and funny.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet country road at sunset, no people. The weathered grey stone post stands

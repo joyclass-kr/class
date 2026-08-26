@@ -20,8 +20,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -50,7 +50,7 @@ A-frame carrier (jige) loaded with sheaves of harvested rice.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A moonlit rice field at night seen from a low
@@ -60,7 +60,7 @@ above. Two sets of footprints cross in the middle of the path, going opposite
 ways. No people visible. Quiet, warm, gently mysterious.
 ```
 
-### `01-brothers.png` — 나란히 붙은 두 형제의 논
+### `01-brothers.webp` — 나란히 붙은 두 형제의 논
 
 ```
 Wide panoramic view of two rice paddies side by side, divided by a low earthen
@@ -69,7 +69,7 @@ wave at each other across the divide, both smiling. Thatched-roof houses behind
 them, pine hills in the distance, bright green summer rice. Warm and peaceful.
 ```
 
-### `02-harvest.png` — 볏단을 똑같이 나누는 두 형제
+### `02-harvest.webp` — 볏단을 똑같이 나누는 두 형제
 
 ```
 Wide autumn scene in a harvested golden rice field. In the centre, the two
@@ -79,7 +79,7 @@ counting aloud, the younger nods. Cut stubble underfoot, sheaves scattered
 around, warm low afternoon sun.
 ```
 
-### `03-elder-thinks.png` — 잠 못 드는 형
+### `03-elder-thinks.webp` — 잠 못 드는 형
 
 ```
 Wide cutaway view of a Korean room at night, as if the front wall were removed.
@@ -89,7 +89,7 @@ left, blue moonlight pours through the paper-screen door. A small thought bubble
 above him shows a cooking pot and a folded quilt. Quiet night mood.
 ```
 
-### `04-elder-carries.png` — 볏단을 지고 동생 논으로 가는 형
+### `04-elder-carries.webp` — 볏단을 지고 동생 논으로 가는 형
 
 ```
 Wide moonlit night scene across rice fields. The elder brother walks left to
@@ -99,7 +99,7 @@ shoulder to check no one sees him. Full moon, long blue shadows, two stacks of
 sheaves visible in the distance.
 ```
 
-### `05-younger-thinks.png` — 잠 못 드는 동생
+### `05-younger-thinks.webp` — 잠 못 드는 동생
 
 ```
 Wide cutaway view of a different Korean room the same night. On the left, the
@@ -109,7 +109,7 @@ the paper-screen door. A small thought bubble above him shows five small childre
 sleeping in a row. Same blue night palette as the previous scene.
 ```
 
-### `06-younger-carries.png` — 볏단을 지고 형 논으로 가는 동생
+### `06-younger-carries.webp` — 볏단을 지고 형 논으로 가는 동생
 
 ```
 Wide moonlit night scene across the same rice fields, but the direction is
@@ -119,7 +119,7 @@ back over his shoulder. Same full moon and blue shadows, mirroring the earlier
 scene.
 ```
 
-### `07-morning.png` — 그대로인 볏단 앞에서 어리둥절한 두 형제
+### `07-morning.webp` — 그대로인 볏단 앞에서 어리둥절한 두 형제
 
 ```
 Wide morning scene split into two halves by an earthen bank down the middle. On
@@ -129,7 +129,7 @@ before his own identical stack in exactly the same pose, head tilted, palms up.
 Neither can see the other. Soft golden morning light, comic symmetry.
 ```
 
-### `08-again.png` — 또 그대로인 볏단
+### `08-again.webp` — 또 그대로인 볏단
 
 ```
 Wide morning scene, same two fields. Both brothers stand with hands on hips
@@ -138,7 +138,7 @@ question marks float above both heads. A magpie sits on top of one stack watchin
 them. Bright clear autumn sky.
 ```
 
-### `09-meet.png` — 달빛 아래 논둑길에서 마주친 두 형제
+### `09-meet.webp` — 달빛 아래 논둑길에서 마주친 두 형제
 
 ```
 Wide night scene, low viewpoint along a narrow earthen path between moonlit rice
@@ -148,7 +148,7 @@ startled eyes and open mouths. A huge full moon hangs directly behind them,
 silhouetting both loads. Still, striking, the moment of recognition.
 ```
 
-### `10-laugh.png` — 논둑에 나란히 앉아 웃는 두 형제
+### `10-laugh.webp` — 논둑에 나란히 앉아 웃는 두 형제
 
 ```
 Wide night scene. The two brothers sit side by side on the earthen bank between
@@ -158,7 +158,7 @@ scattered around their feet, full moon above, warm and joyful despite the night
 palette.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 Two identical stacks of harvested rice sheaves standing side by side in a quiet

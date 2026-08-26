@@ -23,8 +23,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데
 눈에 띄지 않는 정도예요. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요.
@@ -59,7 +59,7 @@ that glows cool white; a gold axe that glows warm yellow.
 
 ---
 
-## 표지 — `cover.png` (세로 2:3)
+## 표지 — `cover.webp` (세로 2:3)
 
 세로로 긴 표지. 연못 위로 갈라진 물과 도끼 셋.
 
@@ -75,7 +75,7 @@ against cool blue-green water. Awe-struck and magical.
 
 ## 본문 10장 (모두 가로 2:1)
 
-### `01-woodcutter.png` — 가난한 나무꾼과 낡은 쇠도끼
+### `01-woodcutter.webp` — 가난한 나무꾼과 낡은 쇠도끼
 
 ```
 Wide panoramic scene. Evening inside a small thatched cottage yard on the left,
@@ -85,7 +85,7 @@ face lit warm orange by a small oil lamp. His A-frame carrying rack leans on the
 wall beside him. A pile of firewood on the right. Cosy and poor.
 ```
 
-### `02-splash.png` — 손이 미끄러져 도끼가 날아간다
+### `02-splash.webp` — 손이 미끄러져 도끼가 날아간다
 
 ```
 Wide panoramic scene. A pond fills the right two-thirds of the frame, dark green
@@ -95,7 +95,7 @@ axe is flying through the air over the water toward the right, with motion lines
 Bright midday, sunlight on the water.
 ```
 
-### `03-cry.png` — 물가에 주저앉아 엉엉 운다
+### `03-cry.webp` — 물가에 주저앉아 엉엉 운다
 
 ```
 Wide panoramic scene. Sunset. The woodcutter sits collapsed on the pond bank on
@@ -105,7 +105,7 @@ the right side, reflecting an orange sky. Long shadows. Lonely and sad but not
 grim.
 ```
 
-### `04-spirit.png` — 물이 갈라지고 산신령이 나타난다
+### `04-spirit.webp` — 물이 갈라지고 산신령이 나타난다
 
 ```
 Wide panoramic scene. The pond water in the centre-right splits open in a burst
@@ -115,7 +115,7 @@ scrambled backward onto his hands, rubbing one eye with a fist, mouth open in
 astonishment. Cool blue water, brilliant warm gold light, sparkles on the ripples.
 ```
 
-### `05-gold.png` — 번쩍이는 금도끼를 내민다
+### `05-gold.webp` — 번쩍이는 금도끼를 내민다
 
 ```
 Wide panoramic scene. The mountain spirit stands on the water on the right,
@@ -125,7 +125,7 @@ raised forearm, squinting away from the glare, the other hand waving 'no'.
 Strong yellow light rays radiating from the axe across the water.
 ```
 
-### `06-silver.png` — 은도끼를 내민다
+### `06-silver.webp` — 은도끼를 내민다
 
 ```
 Wide panoramic scene. Same pond, now with a cool silvery-white glow. The mountain
@@ -134,7 +134,7 @@ bank kneels and shakes his head firmly, both hands raised palm-out in refusal,
 eyes closed, a small polite smile. Moon-pale light on the rippling water.
 ```
 
-### `07-iron.png` — 낡은 쇠도끼를 알아보고 펄쩍 뛴다
+### `07-iron.webp` — 낡은 쇠도끼를 알아보고 펄쩍 뛴다
 
 ```
 Wide panoramic scene. The mountain spirit on the right holds out a plain worn
@@ -143,7 +143,7 @@ has leapt up off both feet, arms thrown wide, face split by an enormous delighte
 grin, tears of joy flying. Motion lines around him. Bright and comic and warm.
 ```
 
-### `08-reward.png` — 산신령이 셋을 다 준다
+### `08-reward.webp` — 산신령이 셋을 다 준다
 
 ```
 Wide panoramic scene. The mountain spirit stands on the water on the right,
@@ -153,7 +153,7 @@ the left bank waves both hands in flustered refusal, half bowing, cheeks red.
 Warm golden light flooding the whole pond.
 ```
 
-### `09-copy.png` — 욕심쟁이가 일부러 도끼를 던지고 우는 시늉을 한다
+### `09-copy.webp` — 욕심쟁이가 일부러 도끼를 던지고 우는 시늉을 한다
 
 ```
 Wide panoramic scene. The plump greedy neighbour in a showy blue hanbok stands on
@@ -163,7 +163,7 @@ over his eyes with the fingers spread wide so he can peek through them, the othe
 hand on his hip. Overacted and funny. Bright daylight.
 ```
 
-### `10-greedy.png` — 금도끼가 제 것이라 하자 산신령이 사라진다
+### `10-greedy.webp` — 금도끼가 제 것이라 하자 산신령이 사라진다
 
 ```
 Wide panoramic scene. The mountain spirit stands on the water on the right,
@@ -176,7 +176,7 @@ glow is shrinking. Cold blue-grey light returning.
 
 ---
 
-## 마지막 장 — `end.png` (가로 2:1)
+## 마지막 장 — `end.webp` (가로 2:1)
 
 나무꾼이 산으로 돌아간다.
 

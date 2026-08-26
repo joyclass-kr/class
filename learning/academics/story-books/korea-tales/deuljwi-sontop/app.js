@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 마당에 버린 손톱",
         beats: [
             {
-                art: "01-clip.png",
+                art: "01-clip.webp",
                 emoji: "✂️",
                 left: [
                     "옛날 어느 마을에 덕구라는 젊은이가 살았습니다. 무엇이든 대충대충 하는 것이 흠이었지요.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-toss.png",
+                art: "02-toss.webp",
                 emoji: "🌬️",
                 left: [
                     "덕구는 깎은 손톱을 마당으로 훅 뿌려 버렸어요. 하얀 조각들이 흙 위에 흩어졌습니다.",
@@ -36,7 +36,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-rat.png",
+                art: "03-rat.webp",
                 emoji: "🐀",
                 left: [
                     "담 밑 구멍에서 들쥐 한 마리가 나왔습니다. 코를 킁킁거리며 마당을 돌아다녔지요.",
@@ -51,7 +51,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-change.png",
+                art: "04-change.webp",
                 emoji: "💫",
                 left: [
                     "그 순간 들쥐의 몸에서 뿌연 김이 피어올랐어요.",
@@ -72,7 +72,7 @@ const CHAPTERS = [
         title: "2장 · 똑같이 생긴 사람",
         beats: [
             {
-                art: "05-return.png",
+                art: "05-return.webp",
                 emoji: "😨",
                 left: [
                     "이튿날 저녁, 진짜 덕구가 집에 돌아왔어요.",
@@ -88,7 +88,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-family.png",
+                art: "06-family.webp",
                 emoji: "😵",
                 left: [
                     "온 식구가 마당으로 뛰어나왔어요. 둘을 나란히 세워 놓고 아무리 들여다보아도 구별이 되지 않았습니다.",
@@ -104,7 +104,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-test.png",
+                art: "07-test.webp",
                 emoji: "❓",
                 left: [
                     "식구들이 이것저것 물어보았어요.",
@@ -119,7 +119,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-out.png",
+                art: "08-out.webp",
                 emoji: "🚪",
                 left: [
                     "\"저놈이 가짜다! 내쫓아라!\"",
@@ -142,7 +142,7 @@ const CHAPTERS = [
         title: "3장 · 고양이가 알아본 것",
         beats: [
             {
-                art: "09-wander.png",
+                art: "09-wander.webp",
                 emoji: "🌧️",
                 left: [
                     "덕구는 갈 데가 없었어요.",
@@ -159,7 +159,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-cat.png",
+                art: "10-cat.webp",
                 emoji: "🐈",
                 left: [
                     "그때 이웃집 할머니가 지나가다 사정을 들었어요. 할머니는 한참 생각하더니 말했습니다.",
@@ -175,7 +175,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-reveal.png",
+                art: "11-reveal.webp",
                 emoji: "😼",
                 left: [
                     "덕구가 대문을 열고 고양이를 내려놓았어요. 고양이는 코를 킁킁거리더니 갑자기 등을 잔뜩 세웠습니다.",
@@ -191,7 +191,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-rat-again.png",
+                art: "12-rat-again.webp",
                 emoji: "🕳️",
                 left: [
                     "가짜가 펄쩍 뛰며 마당을 뒹구는 사이, 몸이 쪼그라들고 털이 돋아났어요. 들쥐 한 마리가 담 밑 구멍으로 쏙 사라졌지요.",
@@ -241,7 +241,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐀')}
+                ${artFrame('cover.webp', '🐀')}
             </div>
             <div class="story-page-right">
                 <h1>들쥐와 손톱</h1>
@@ -304,7 +304,7 @@ const AFTERWORD = {
     emoji: '🐭',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "진짜와 가짜가 나타나 서로 자기가 진짜라고 다투는 이야기를 진가쟁주 이야기라고 합니다. 우리나라에 여러 갈래가 전해 오는데, 이 손톱 이야기가 가장 널리 알려진 것입니다.",
                 "손톱을 아무 데나 버리지 말라는 말은 옛날에 실제로 지키던 금기였습니다. 손톱과 머리카락은 몸에서 떨어져 나와도 그 사람의 일부라고 여겼기 때문입니다.",

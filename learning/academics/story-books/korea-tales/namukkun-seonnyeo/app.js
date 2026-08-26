@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 사슴이 알려 준 것",
         beats: [
             {
-                art: "01-woodcutter.png",
+                art: "01-woodcutter.webp",
                 emoji: "🪓",
                 left: [
                     "옛날 깊은 산 밑에 나무꾼이 홀어머니와 살았습니다.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-deer.png",
+                art: "02-deer.webp",
                 emoji: "🦌",
                 left: [
                     "그날도 나무를 하는데 무언가 다리에 부딪혔어요. 사슴 한 마리가 부들부들 떨고 있었지요.",
@@ -36,7 +36,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-tell.png",
+                art: "03-tell.webp",
                 emoji: "🌕",
                 left: [
                     "사슴이 나뭇더미에서 기어 나왔어요.",
@@ -53,7 +53,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-pond.png",
+                art: "04-pond.webp",
                 emoji: "💧",
                 left: [
                     "\"무엇이든 절대 감추지 마세요.\"",
@@ -68,7 +68,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-robe.png",
+                art: "05-robe.webp",
                 emoji: "🪶",
                 left: [
                     "그때 바람이 세게 불었어요. 바위에 널어 둔 날개옷 하나가 훌렁 날아갔지요. 옷은 가시덤불에 걸려 파닥거렸습니다.",
@@ -89,7 +89,7 @@ const CHAPTERS = [
         title: "2장 · 남기로 한 사람",
         beats: [
             {
-                art: "06-left.png",
+                art: "06-left.webp",
                 emoji: "😢",
                 left: [
                     "동이 트자 선녀들이 하나둘 하늘로 올라갔어요.",
@@ -105,7 +105,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-give.png",
+                art: "07-give.webp",
                 emoji: "🤲",
                 left: [
                     "\"저, 이거 찾으시는 것 아닙니까?\"",
@@ -121,7 +121,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-closed.png",
+                art: "08-closed.webp",
                 emoji: "🚪",
                 left: [
                     "선녀가 날개옷을 입고 하늘을 올려다보았어요.",
@@ -138,7 +138,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-home.png",
+                art: "09-home.webp",
                 emoji: "🏠",
                 left: [
                     "나무꾼은 선녀를 제 집으로 데려갔어요. 어머니가 아랫목을 내주었습니다.",
@@ -152,7 +152,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-stay.png",
+                art: "10-stay.webp",
                 emoji: "🌙",
                 left: [
                     "한 달이 지나 다시 보름달이 떴어요. 나무꾼이 날개옷을 개어 내밀었습니다.",
@@ -174,7 +174,7 @@ const CHAPTERS = [
         title: "3장 · 두레박",
         beats: [
             {
-                art: "11-children.png",
+                art: "11-children.webp",
                 emoji: "👦",
                 left: [
                     "그렇게 몇 해가 흘렀어요. 마당에는 아이가 둘 뛰어다녔지요.",
@@ -188,7 +188,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-homesick.png",
+                art: "12-homesick.webp",
                 emoji: "☁️",
                 left: [
                     "그런데 언제부터인가 아내가 하늘을 자주 올려다보았어요.",
@@ -205,7 +205,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-up.png",
+                art: "13-up.webp",
                 emoji: "✨",
                 left: [
                     "아내는 날개옷을 입고 아이 둘을 양팔에 안았어요. 몸이 스르르 떠올랐지요.",
@@ -220,7 +220,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "14-bucket.png",
+                art: "14-bucket.webp",
                 emoji: "🪣",
                 left: [
                     "며칠 뒤 마당 한가운데로 두레박이 스르르 내려왔어요.",
@@ -236,7 +236,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "15-mother.png",
+                art: "15-mother.webp",
                 emoji: "🐴",
                 left: [
                     "그런데 나무꾼은 자꾸 땅이 그리웠어요.",
@@ -253,7 +253,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "16-rooster.png",
+                art: "16-rooster.webp",
                 emoji: "🐓",
                 left: [
                     "어머니는 아들을 보자 팥죽부터 쑤어 왔어요. 말 위에서 받아 든 순간 그릇이 기울었지요.",
@@ -304,7 +304,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🪶')}
+                ${artFrame('cover.webp', '🪶')}
             </div>
             <div class="story-page-right">
                 <h1>나무꾼과 선녀</h1>
@@ -368,7 +368,7 @@ const AFTERWORD = {
     emoji: '🪶',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "이런 이야기에는 늘 옷이 나옵니다. 옷을 잃으면 돌아가지 못하고 옷을 되찾으면 돌아갑니다. 하늘 사람과 땅 사람을 가르는 것이 몸이 아니라 걸친 것 하나인 셈입니다.",
                 "우리 이야기의 판본은 끝이 여러 가지입니다. 선녀가 돌아가고 나무꾼이 두레박을 타고 하늘로 오르는 것도 있고, 끝내 만나지 못하는 것도 있습니다.",

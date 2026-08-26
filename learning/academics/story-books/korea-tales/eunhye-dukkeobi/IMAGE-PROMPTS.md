@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -55,7 +55,7 @@ would be. Suggestive, not disgusting.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. The dark interior of an old wooden shrine at
@@ -68,7 +68,7 @@ toad. Beautiful and tense.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-girl.png` — 남의 집 부엌에서 일하는 소녀
+### `01-girl.webp` — 남의 집 부엌에서 일하는 소녀
 
 ```
 Wide interior of a dim Korean kitchen at evening. On the right, the girl kneels
@@ -78,7 +78,7 @@ small bowl left behind on the ledge. Steam, soot, worn wooden beams. Humble and
 quiet.
 ```
 
-### `02-toad.png` — 부뚜막 구석에서 눈을 껌뻑이는 두꺼비
+### `02-toad.webp` — 부뚜막 구석에서 눈을 껌뻑이는 두꺼비
 
 ```
 Wide interior kitchen scene. On the left, the girl has half risen with a broom in
@@ -87,7 +87,7 @@ shadowed corner of the stove ledge, a small palm-sized brown-green toad sits
 blinking up at her, entirely unbothered. Warm firelight, a moment of stillness.
 ```
 
-### `03-share.png` — 자기 밥을 덜어 주는 소녀
+### `03-share.webp` — 자기 밥을 덜어 주는 소녀
 
 ```
 Wide interior kitchen scene, close and warm. In the centre, the girl crouches and
@@ -96,7 +96,7 @@ fingers, smiling faintly. The little toad stretches its neck toward them. Her
 bowl is visibly emptier now. Amber light, tender.
 ```
 
-### `04-grow.png` — 몰라보게 자란 두꺼비
+### `04-grow.webp` — 몰라보게 자란 두꺼비
 
 ```
 Wide interior kitchen scene, some seasons later. On the right, the toad now sits
@@ -105,7 +105,7 @@ left, the girl kneels beside him laughing with both hands raised in mock
 astonishment, measuring his width in the air. Warm and funny.
 ```
 
-### `05-shrine.png` — 뒷산 사당에 산다는 지네
+### `05-shrine.webp` — 뒷산 사당에 산다는 지네
 
 ```
 Wide mountain scene at dusk seen from the village. In the lower left, thatched
@@ -115,7 +115,7 @@ doorway. Cold blue evening light on the mountain, warm lamplight in the village
 below. Dread at a distance.
 ```
 
-### `06-chosen.png` — 혼자 산길을 오르는 소녀
+### `06-chosen.webp` — 혼자 산길을 오르는 소녀
 
 ```
 Wide mountain path scene at sunset. In the centre, the girl climbs a winding
@@ -124,7 +124,7 @@ Far below on the left, a cluster of villagers stand watching her go, several wit
 their heads bowed. Long orange light, very long shadows. Lonely but dignified.
 ```
 
-### `07-hidden.png` — 치마 속에서 나온 두꺼비
+### `07-hidden.webp` — 치마 속에서 나온 두꺼비
 
 ```
 Wide interior of the dim shrine. In the centre, the girl sits on the wooden floor
@@ -134,7 +134,7 @@ astonishment. A single shaft of moonlight through the doorway. Warm relief in a
 cold room.
 ```
 
-### `08-centipede.png` — 들보에 매달린 시퍼런 그림자
+### `08-centipede.webp` — 들보에 매달린 시퍼런 그림자
 
 ```
 Wide interior of the shrine at midnight. Across the whole upper half of the
@@ -144,7 +144,7 @@ comparison, the girl presses back against the wall with both hands over her
 mouth. Never detailed, only shape and glow. Terrifying without being gross.
 ```
 
-### `09-glow.png` — 맞부딪힌 두 빛
+### `09-glow.webp` — 맞부딪힌 두 빛
 
 ```
 Wide interior of the shrine, the most beautiful image in the book. In the
@@ -155,7 +155,7 @@ middle of the frame, sparks and ripples spreading from the seam. The girl is
 silhouetted behind the toad. Awe.
 ```
 
-### `10-retreat.png` — 물러가는 시퍼런 빛
+### `10-retreat.webp` — 물러가는 시퍼런 빛
 
 ```
 Wide interior of the shrine. The blue-green light has faded to a thin trace
@@ -165,7 +165,7 @@ have begun to fold. The girl reaches out one hand toward him. Quiet after the
 storm.
 ```
 
-### `11-morning.png` — 문을 열자 무사히 앉아 있던 소녀
+### `11-morning.webp` — 문을 열자 무사히 앉아 있던 소녀
 
 ```
 Wide scene at the shrine door at dawn. On the right, villagers push the wooden
@@ -175,7 +175,7 @@ holding the limp toad in both arms against her chest, her cheek against his back
 Soft and moving.
 ```
 
-### `12-recover.png` — 눈을 껌뻑 뜬 두꺼비
+### `12-recover.webp` — 눈을 껌뻑 뜬 두꺼비
 
 ```
 Wide interior of the girl's small room, days later. In the centre, the toad lies
@@ -185,7 +185,7 @@ smile, a small bowl of water beside her. Warm daylight through the paper door.
 Green shoots visible outside. Joyful and gentle.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet Korean kitchen at morning, no people. A few grains of rice sit on the

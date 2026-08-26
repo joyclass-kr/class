@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 지게에 진 아버지",
         beats: [
             {
-                art: "01-old.png",
+                art: "01-old.webp",
                 emoji: "👴",
                 left: [
                     "옛날 어느 마을에 아들 내외와 늙은 아버지가 함께 살았습니다.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-decide.png",
+                art: "02-decide.webp",
                 emoji: "😔",
                 left: [
                     "그 무렵 그 고장에는 이런 말이 떠돌았어요.",
@@ -39,7 +39,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-carry.png",
+                art: "03-carry.webp",
                 emoji: "🪵",
                 left: [
                     "이튿날 새벽, 아들은 지게를 지고 마루에 등을 댔어요.",
@@ -56,7 +56,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-follow.png",
+                art: "04-follow.webp",
                 emoji: "🧒",
                 left: [
                     "\"들어가 있거라.\"",
@@ -77,7 +77,7 @@ const CHAPTERS = [
         title: "2장 · 두고 온 자리",
         beats: [
             {
-                art: "05-mountain.png",
+                art: "05-mountain.webp",
                 emoji: "🌲",
                 left: [
                     "해가 중천에 오를 무렵 깊은 산속에 닿았어요. 아들은 바람이 덜 드는 바위 아래에 지게를 내려놓았습니다.",
@@ -93,7 +93,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-leave.png",
+                art: "06-leave.webp",
                 emoji: "🥀",
                 left: [
                     "아들은 몇 번이나 돌아보다가 걸음을 옮겼어요. 눈앞이 뿌옇게 흐려졌습니다.",
@@ -108,7 +108,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-pickup.png",
+                art: "07-pickup.webp",
                 emoji: "🎒",
                 left: [
                     "아이는 바위 아래로 가서 빈 지게를 들어 올렸습니다.",
@@ -125,7 +125,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-words.png",
+                art: "08-words.webp",
                 emoji: "❄️",
                 left: [
                     "아이가 지게를 꼭 붙든 채 아버지를 올려다보았어요.",
@@ -148,7 +148,7 @@ const CHAPTERS = [
         title: "3장 · 다시 지고 내려온 길",
         beats: [
             {
-                art: "09-frozen.png",
+                art: "09-frozen.webp",
                 emoji: "😳",
                 left: [
                     "아들은 그 자리에 얼어붙었어요. 숨이 턱 막혔습니다.",
@@ -164,7 +164,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-back.png",
+                art: "10-back.webp",
                 emoji: "🏃",
                 left: [
                     "아들은 지게를 빼앗듯 받아 들고 산으로 되돌아 뛰었어요.",
@@ -180,7 +180,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-down.png",
+                art: "11-down.webp",
                 emoji: "🌄",
                 left: [
                     "아들은 아버지를 다시 지게에 모시고 산을 내려왔어요.",
@@ -196,7 +196,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-village.png",
+                art: "12-village.webp",
                 emoji: "🏡",
                 left: [
                     "그날부터 아들은 아버지를 정성껏 모셨어요. 이 일은 곧 온 마을에 퍼졌습니다.",
@@ -246,7 +246,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🪵')}
+                ${artFrame('cover.webp', '🪵')}
             </div>
             <div class="story-page-right">
                 <h1>아버지를 내다버린 지게</h1>
@@ -309,7 +309,7 @@ const AFTERWORD = {
     emoji: '🎒',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "늙은 부모를 산에 버리는 이야기는 우리나라에도 있고 일본과 중국에도 있습니다. 아주 널리 퍼진 이야기 틀입니다.",
                 "그런 이야기들의 끝은 대개 같습니다. 버리러 간 사람이 무언가를 보고 되돌아옵니다. 버리는 이야기가 아니라 되돌아오는 이야기인 것이지요.",

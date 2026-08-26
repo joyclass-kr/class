@@ -6,7 +6,7 @@ const CHAPTERS = [
     {
         num: 1,
         title: "광한루에서",
-        art: ["story-01-a.png", "story-01-b.png", "story-01-c.png"],
+        art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
         paras: [
             "전라도 남원 땅에 광한루라는 누각이 있었습니다. 앞으로는 맑은 물이 흐르고 둘레에는 버드나무가 늘어져, 남원에서 경치 좋기로 으뜸가는 자리였습니다. 봄이면 꽃구경 온 사람으로 난간이 비좁았습니다. 난간에 기대면 남원 성안이 한눈에 들어왔습니다. 봄이면 강가에 사람이 그득했습니다.",
             "그해 단오였습니다. 단오는 음력 오월 초닷샛날로, 여자들은 창포물에 머리를 감고 그네를 뛰고 남자들은 씨름을 하는 큰 명절이었습니다. 아침부터 강가에 사람이 그득했습니다.",
@@ -35,7 +35,7 @@ const CHAPTERS = [
     {
         num: 2,
         title: "백년가약",
-        art: ["story-02-a.png", "story-02-b.png", "story-02-c.png"],
+        art: ["story-02-a.webp", "story-02-b.webp", "story-02-c.webp"],
         paras: [
             "춘향의 집은 남원 성 밖 조용한 골목에 있었습니다. 담 안에 대나무가 서 있고 마당에는 국화 화분이 줄지어 놓여 있었습니다. 대나무 잎이 바람에 서걱거렸습니다.",
             "문을 열어 준 것은 춘향의 어머니 월매였습니다. 월매는 젊은 시절 기생이었다가 이제는 딸 하나를 키우며 조용히 사는 사람이었습니다. 손끝에 굳은살이 박여 있었습니다.",
@@ -64,7 +64,7 @@ const CHAPTERS = [
     {
         num: 3,
         title: "이별",
-        art: ["story-03-a.png", "story-03-b.png", "story-03-c.png"],
+        art: ["story-03-a.webp", "story-03-b.webp", "story-03-c.webp"],
         paras: [
             "그날 저녁 이몽룡은 춘향의 집으로 갔습니다. 대문 앞에서 몇 번이나 걸음을 돌렸다가 다시 섰습니다. 손에 아무것도 들지 않은 채였습니다.",
             "방으로 들어서자 춘향이 먼저 알아보았습니다.<br>\"…무슨 일이 있으셨군요.\" 얼굴빛만 보고 알아챈 것이었습니다.",
@@ -93,7 +93,7 @@ const CHAPTERS = [
     {
         num: 4,
         title: "새로 온 사또",
-        art: ["story-04-a.png", "story-04-b.png", "story-04-c.png"],
+        art: ["story-04-a.webp", "story-04-b.webp", "story-04-c.webp"],
         paras: [
             "두 해가 지나고 이듬해 봄, 남원에 새 사또가 왔습니다. 이름은 변학도라 했습니다. 남원 사람들이 길가에 나와 구경했습니다.",
             "부임 행차부터 요란했습니다. 가마 뒤로 짐수레가 열 대나 따라왔고, 그 안에는 비단이며 그릇이며 세간이 그득했습니다. 구경하던 사람들이 서로 얼굴을 쳐다보았습니다.",
@@ -122,7 +122,7 @@ const CHAPTERS = [
     {
         num: 5,
         title: "옥에 갇히다",
-        art: ["story-05-a.png", "story-05-b.png", "story-05-c.png"],
+        art: ["story-05-a.webp", "story-05-b.webp", "story-05-c.webp"],
         paras: [
             "변학도의 얼굴에서 웃음이 사라졌습니다.<br>\"지아비라니. 혼서<span class=\"gloss\">(혼인을 약속하며 주고받던 문서)</span>가 있느냐. 나라에 올린 문서가 있느냐.\" 부채를 쥔 손에 힘이 들어갔습니다.",
             "\"종이는 있습니다.\"<br>\"기생의 딸이 도령과 주고받은 종이 쪼가리가 무슨 문서란 말이냐!\"",
@@ -151,7 +151,7 @@ const CHAPTERS = [
     {
         num: 6,
         title: "거지가 되어 온 사람",
-        art: ["story-06-a.png", "story-06-b.png", "story-06-c.png"],
+        art: ["story-06-a.webp", "story-06-b.webp", "story-06-c.webp"],
         paras: [
             "남원에 가까워지자 이몽룡은 옷을 갈아입었습니다. 다 해진 옷에 짚신을 신고, 갓은 챙이 부러진 것을 썼습니다. 얼굴에 일부러 흙을 묻혔습니다.",
             "암행어사는 그렇게 다녔습니다. 아무도 알아보지 못해야 그 고을의 진짜 모습을 볼 수 있기 때문입니다.",
@@ -180,7 +180,7 @@ const CHAPTERS = [
     {
         num: 7,
         title: "암행어사 출두야",
-        art: ["story-07-a.png", "story-07-b.png", "story-07-c.png"],
+        art: ["story-07-a.webp", "story-07-b.webp", "story-07-c.webp"],
         paras: [
             "이튿날은 변학도의 생일이었습니다. 관가에서는 아침부터 큰 잔치가 벌어졌습니다. 새벽부터 풍악 소리가 났습니다.",
             "이웃 고을 수령들까지 불려 와 대청에 늘어앉았습니다. 상마다 고기와 술이 그득했습니다. 광에서 곡식이 자루째 실려 나갔습니다. 기생과 악공이 스무 명도 넘게 불려 왔습니다. 상마다 고기가 산처럼 쌓였습니다.",
@@ -447,7 +447,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🌸')}
+                ${artFrame('cover.webp', '🌸')}
             </div>
             <div class="story-page-right">
                 <h1>춘향전</h1>
@@ -584,7 +584,7 @@ function quizPage(part) {
 const AFTERWORD = {
     title: '읽고 나서',
     emoji: '🌸',
-    art: ['end.png'],
+    art: ['end.webp'],
     paras: [
         `먼저 이 이야기가 어디서 왔는지부터입니다. 『춘향전』은 판소리 「춘향가」를 글로 옮긴 것입니다. 소리꾼 한 사람이 북 치는 사람만 데리고 여덟 시간을 부르기도 하는 긴 노래였습니다.`,
         `지은이는 없습니다. 한 사람이 앉아서 지은 것이 아니라 여럿이 부르고 고치며 만들어 온 이야기이기 때문입니다. 그래서 남아 있는 책이 백 가지가 넘고, 그 백 가지가 저마다 조금씩 다릅니다. 어떤 책에서는 춘향이 양반의 딸이고, 어떤 책에서는 끝까지 기생의 딸입니다.`,

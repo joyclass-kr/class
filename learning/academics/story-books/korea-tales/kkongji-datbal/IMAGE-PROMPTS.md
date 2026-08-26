@@ -23,8 +23,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 14장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데
 눈에 띄지 않는 정도예요. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요.
@@ -66,7 +66,7 @@ hoeing slowly.
 
 ---
 
-## 표지 — `cover.png` (세로 2:3)
+## 표지 — `cover.webp` (세로 2:3)
 
 세로로 긴 표지. 벼랑 위 둥지와 하늘을 덮은 거대한 새.
 
@@ -83,7 +83,7 @@ Dramatic, never gory.
 
 ## 본문 14장 (모두 가로 2:1)
 
-### `01-mother.png` — 어머니가 나물 바구니를 끼고 뒷산으로 오른다
+### `01-mother.webp` — 어머니가 나물 바구니를 끼고 뒷산으로 오른다
 
 ```
 Wide panoramic scene. Morning. On the left a small thatched cottage with a swept
@@ -93,7 +93,7 @@ house with a namul basket on her hip, half turned to wave back. Fresh spring
 green, clear light, birdsong feeling. Warm and ordinary.
 ```
 
-### `02-shadow.png` — 대낮인데 하늘이 시커먼 날개로 덮인다
+### `02-shadow.webp` — 대낮인데 하늘이 시커먼 날개로 덮인다
 
 ```
 Wide panoramic scene. A green hillside meadow. The mother stands small in the
@@ -104,7 +104,7 @@ black wings sweeping across the sky, edges rimmed with blinding gold sunlight. N
 body visible yet - only the wings and the enormous shadow. Terrifying scale.
 ```
 
-### `03-empty.png` — 풀밭에 나물 바구니와 시커먼 깃털 하나
+### `03-empty.webp` — 풀밭에 나물 바구니와 시커먼 깃털 하나
 
 ```
 Wide panoramic scene. The same hillside, evening. On the right the overturned
@@ -115,7 +115,7 @@ running toward it, arms out, mouth open in a shout. Long low orange light, wind
 in the grass. Empty and awful.
 ```
 
-### `04-name.png` — 마을에서 제일 나이 많은 노인이 그 이름을 말한다
+### `04-name.webp` — 마을에서 제일 나이 많은 노인이 그 이름을 말한다
 
 ```
 Wide panoramic scene. Evening in the village lane, a small crowd. On the right a
@@ -125,7 +125,7 @@ his fists clenched and his jaw set, already stepping back toward the road. Aroun
 them villagers cover their mouths and turn away. Lantern light, deep blue dusk.
 ```
 
-### `05-set-out.png` — 짚신 한 켤레를 매달고 해 지는 쪽으로 나선다
+### `05-set-out.webp` — 짚신 한 켤레를 매달고 해 지는 쪽으로 나선다
 
 ```
 Wide panoramic scene. A road running west toward a low red sun. On the right the
@@ -135,7 +135,7 @@ villagers stand in a line watching him go, one old woman with a hand raised.
 Huge red-and-gold sunset sky, very long shadows. Lonely and brave.
 ```
 
-### `06-washing.png` — 냇가에서 할머니의 빨래를 밟아 준다
+### `06-washing.webp` — 냇가에서 할머니의 빨래를 밟아 준다
 
 ```
 Wide panoramic scene. A bright stream with flat washing stones. On the right a
@@ -146,7 +146,7 @@ around him, grinning through the effort. Sparkling water, dragonflies, hot
 afternoon sun.
 ```
 
-### `07-direction.png` — "저 서쪽 끝 벼랑에 산다"
+### `07-direction.webp` — "저 서쪽 끝 벼랑에 산다"
 
 ```
 Wide panoramic scene. The stream bank at day's end, laundry hung on a line. On
@@ -156,7 +156,7 @@ far horizon shows a thin dark spike of rock against a burning orange sky. The bo
 looks toward it, wet to the knees, listening. Warm light, sober mood.
 ```
 
-### `08-field.png` — 허리 굽은 노인과 나란히 밭을 맨다
+### `08-field.webp` — 허리 굽은 노인과 나란히 밭을 맨다
 
 ```
 Wide panoramic scene. A terraced field on a hillside. On the right a very stooped
@@ -166,7 +166,7 @@ Behind them the finished rows stretch away. Late gold light, dust in the air,
 companionable silence.
 ```
 
-### `09-club.png` — 노인이 헛간에서 무쇠 몽둥이를 꺼내 온다
+### `09-club.webp` — 노인이 헛간에서 무쇠 몽둥이를 꺼내 온다
 
 ```
 Wide panoramic scene. Outside a dark barn at dusk. On the right the old farmer
@@ -176,7 +176,7 @@ for it with both arms, eyes wide, his torn and bleeding palms visible. Warm
 lantern glow against blue dusk. The iron club is the darkest thing in the frame.
 ```
 
-### `10-cliff.png` — 벼랑 꼭대기 둥지와 하얗게 널린 뼈다귀
+### `10-cliff.webp` — 벼랑 꼭대기 둥지와 하얗게 널린 뼈다귀
 
 ```
 Wide panoramic scene. A towering bare rock cliff rises on the right against a
@@ -186,7 +186,7 @@ stands at the bottom looking up with the iron club over his shoulder,
 swallowing hard. Enormous sense of scale. Stylised bones only - no gore.
 ```
 
-### `11-nest.png` — 둥지 안에서 어머니를 찾아낸다
+### `11-nest.webp` — 둥지 안에서 어머니를 찾아낸다
 
 ```
 Wide panoramic scene. The top of the cliff, inside the huge stick nest, sky all
@@ -197,7 +197,7 @@ her, face breaking open with relief. Wind, high cold blue light, enormous empty
 sky beyond.
 ```
 
-### `12-fire.png` — 무쇠 몽둥이를 불 속에 넣어 벌겋게 달군다
+### `12-fire.webp` — 무쇠 몽둥이를 불 속에 넣어 벌겋게 달군다
 
 ```
 Wide panoramic scene. The nest at nightfall. On the left the boy crouches over a
@@ -207,7 +207,7 @@ in a cleft of rock, only her worried face showing. Warm red firelight on the boy
 face against a darkening violet sky. Tense and focused.
 ```
 
-### `13-fight.png` — 괴물 새가 둥지로 내려앉고 부리가 쩍 벌어진다
+### `13-fight.webp` — 괴물 새가 둥지로 내려앉고 부리가 쩍 벌어진다
 
 ```
 Wide panoramic scene. Night on the cliff top. Filling the right two-thirds of the
@@ -218,7 +218,7 @@ stands his ground with both hands on the glowing red-hot iron club, braced,
 absolutely unafraid. Sparks, wind, cold moonlight and hot red glow.
 ```
 
-### `14-home.png` — 어머니를 업고 벼랑을 내려온다
+### `14-home.webp` — 어머니를 업고 벼랑을 내려온다
 
 ```
 Wide panoramic scene. Dawn at the foot of the cliff. On the left the boy walks
@@ -230,7 +230,7 @@ flying free. Relief and morning.
 
 ---
 
-## 마지막 장 — `end.png` (가로 2:1)
+## 마지막 장 — `end.webp` (가로 2:1)
 
 집으로 돌아와 나물을 다듬는다.
 

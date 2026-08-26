@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 서라벌로 간 석수",
         beats: [
             {
-                art: "01-asadal.png",
+                art: "01-asadal.webp",
                 emoji: "🔨",
                 left: [
                     "옛날 백제 땅에 아사달이라는 석수가 살았습니다. 돌 다루는 솜씨가 나라에서 으뜸이었지요.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-farewell.png",
+                art: "02-farewell.webp",
                 emoji: "🌾",
                 left: [
                     "어느 날 신라에서 사람이 찾아왔습니다.",
@@ -37,7 +37,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-bulguksa.png",
+                art: "03-bulguksa.webp",
                 emoji: "⛰️",
                 left: [
                     "불국사 공사판은 아침부터 밤까지 시끌시끌했어요.",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-years.png",
+                art: "04-years.webp",
                 emoji: "🍂",
                 left: [
                     "한 해가 가고 두 해가 갔어요. 탑은 좀처럼 올라가지 않았습니다. 돌 하나를 다듬는 데만 몇 달이 걸렸거든요.",
@@ -70,7 +70,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-asanyeo.png",
+                art: "05-asanyeo.webp",
                 emoji: "👣",
                 left: [
                     "기다리다 못한 아사녀가 길을 나섰습니다. 짚신이 몇 켤레나 닳도록 걷고 또 걸었지요.",
@@ -91,7 +91,7 @@ const CHAPTERS = [
         title: "2장 · 그림자 연못",
         beats: [
             {
-                art: "06-refused.png",
+                art: "06-refused.webp",
                 emoji: "🚧",
                 left: [
                     "그런데 절 문 앞에서 막히고 말았어요.",
@@ -108,7 +108,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-monk.png",
+                art: "07-monk.webp",
                 emoji: "🧎",
                 left: [
                     "그때 노스님이 다가와 아래쪽을 가리켰어요. 산 밑에 못이 하나 있었습니다.",
@@ -124,7 +124,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-wait.png",
+                art: "08-wait.webp",
                 emoji: "💧",
                 left: [
                     "그날부터 아사녀는 못가에 앉았어요. 물만 들여다보면서요.",
@@ -141,7 +141,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-seasons.png",
+                art: "09-seasons.webp",
                 emoji: "🌸",
                 left: [
                     "못가에 진달래가 피었다 졌어요. 물잠자리가 날았다 사라졌지요.",
@@ -157,7 +157,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-nothing.png",
+                art: "10-nothing.webp",
                 emoji: "🌫️",
                 left: [
                     "탑은 차츰차츰 모습을 갖추어 갔어요.",
@@ -180,7 +180,7 @@ const CHAPTERS = [
         title: "3장 · 그림자 없는 탑",
         beats: [
             {
-                art: "11-done.png",
+                art: "11-done.webp",
                 emoji: "🗿",
                 left: [
                     "그리고 어느 밤, 아사달이 마지막 돌을 얹었습니다.",
@@ -196,7 +196,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-run.png",
+                art: "12-run.webp",
                 emoji: "🏃",
                 left: [
                     "아사달은 연장도 팽개치고 산을 뛰어 내려갔어요. 누가 못가에 앉아 있다는 말을 그제야 들었거든요.",
@@ -211,7 +211,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-meet.png",
+                art: "13-meet.webp",
                 emoji: "🌅",
                 left: [
                     "못가 바위에 아사녀가 웅크리고 잠들어 있었어요.",
@@ -226,7 +226,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "14-tower.png",
+                art: "14-tower.webp",
                 emoji: "🪞",
                 left: [
                     "\"그림자가 끝내 안 왔어요.\"",
@@ -278,7 +278,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🗿')}
+                ${artFrame('cover.webp', '🗿')}
             </div>
             <div class="story-page-right">
                 <h1>무영탑</h1>
@@ -342,7 +342,7 @@ const AFTERWORD = {
     emoji: '🗼',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "탑에 그림자가 없다는 것은 사실이 아닙니다. 어떤 탑에도 그림자는 집니다. 그런데도 그림자 없는 탑이라 부르는 것은, 못에 비치기를 기다린 사람이 끝내 보지 못했기 때문입니다.",
                 "탑을 세운 이가 백제 땅에서 온 아사달이라는 사람이었고 그 아내가 아사녀였다는 이야기가 전해 옵니다. 다만 이 이야기가 옛 기록에 그대로 실려 있는 것은 아닙니다.",

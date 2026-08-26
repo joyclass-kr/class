@@ -30,7 +30,7 @@ const AFTERWORD = {
     emoji: '%(emoji)s',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
 %(left)s
             ],

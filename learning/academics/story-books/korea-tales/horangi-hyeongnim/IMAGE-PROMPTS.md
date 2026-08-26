@@ -23,8 +23,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데
 눈에 띄지 않는 정도예요. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요.
@@ -61,7 +61,7 @@ hair in a low bun, a deeply gentle face.
 
 ---
 
-## 표지 — `cover.png` (세로 2:3)
+## 표지 — `cover.webp` (세로 2:3)
 
 세로로 긴 표지. 호랑이와 나무꾼이 산길에 마주 서 있다.
 
@@ -77,7 +77,7 @@ trees from behind the tiger. Tender and slightly comic, not frightening.
 
 ## 본문 12장 (모두 가로 2:1)
 
-### `01-woodcutter.png` — 나무꾼이 깊은 골짜기까지 들어간다
+### `01-woodcutter.webp` — 나무꾼이 깊은 골짜기까지 들어간다
 
 ```
 Wide panoramic scene. Deep mountain forest in the late afternoon. On the left a
@@ -87,7 +87,7 @@ ravine opens dark and quiet, mist pooling between the trees. Slanting gold light
 through the branches. Very still.
 ```
 
-### `02-tiger.png` — 덤불이 갈라지고 커다란 호랑이가 나온다
+### `02-tiger.webp` — 덤불이 갈라지고 커다란 호랑이가 나온다
 
 ```
 Wide panoramic scene. On the right an enormous striped tiger bursts out through a
@@ -97,7 +97,7 @@ eyes gone to white circles, hair standing straight up, knees knocking together.
 Comic terror rather than horror. Green forest gloom.
 ```
 
-### `03-brother.png` — "혀, 형님!"
+### `03-brother.webp` — "혀, 형님!"
 
 ```
 Wide panoramic scene. Same forest. On the left the woodcutter has flung himself
@@ -107,7 +107,7 @@ lifted in the air, his whole body frozen, head tilted, one enormous eyebrow
 raised in bewilderment. Motion lines stopping dead. Very funny.
 ```
 
-### `04-story.png` — 나무꾼이 눈물을 짜내며 이야기를 지어낸다
+### `04-story.webp` — 나무꾼이 눈물을 짜내며 이야기를 지어낸다
 
 ```
 Wide panoramic scene. On the left the woodcutter kneels, one hand over his heart
@@ -117,7 +117,7 @@ his haunches, both front paws on the ground, leaning in, listening with his whol
 face. Dappled forest light.
 ```
 
-### `05-tears.png` — 호랑이가 큰 눈에서 눈물을 뚝뚝 흘린다
+### `05-tears.webp` — 호랑이가 큰 눈에서 눈물을 뚝뚝 흘린다
 
 ```
 Wide panoramic scene. The tiger fills the right two-thirds of the frame, sitting
@@ -127,7 +127,7 @@ small woodcutter stands with his mouth slightly open, taken aback, one hand half
 raised as if to pat the tiger and not quite daring. Warm late light through mist.
 ```
 
-### `06-farewell.png` — 호랑이가 지게를 지고 산 밑까지 데려다준다
+### `06-farewell.webp` — 호랑이가 지게를 지고 산 밑까지 데려다준다
 
 ```
 Wide panoramic scene. Dusk on a mountain path going downhill to the right. The
@@ -138,7 +138,7 @@ empty, glancing back up the mountain, legs still wobbly. Long violet shadows,
 first stars.
 ```
 
-### `07-gift.png` — 아침마다 마당에 짐승과 산나물이 놓여 있다
+### `07-gift.webp` — 아침마다 마당에 짐승과 산나물이 놓여 있다
 
 ```
 Wide panoramic scene. Early morning in the cottage yard, frost in the air. On the
@@ -149,7 +149,7 @@ on his head. A single line of huge pawprints leads away toward the mountain.
 Pale pink dawn light.
 ```
 
-### `08-mother.png` — 어머니가 어두운 산 쪽을 오래 바라본다
+### `08-mother.webp` — 어머니가 어두운 산 쪽을 오래 바라본다
 
 ```
 Wide panoramic scene. Night. On the left the small old mother stands alone in the
@@ -159,7 +159,7 @@ single paper window glows warm yellow behind her. The woodcutter watches from th
 doorway, hesitant. Deep blue night, very quiet, moving.
 ```
 
-### `09-years.png` — 어머니가 밤마다 마당에 밥 한 그릇을 내놓는다
+### `09-years.webp` — 어머니가 밤마다 마당에 밥 한 그릇을 내놓는다
 
 ```
 Wide panoramic scene. Moonlit yard. On the left the old mother, now more stooped,
@@ -169,7 +169,7 @@ round golden eyes and the faint striped shape of the tiger wait in the dark,
 watching her. Silver moonlight, warm little glow from the bowl. Tender.
 ```
 
-### `10-guilt.png` — 나무꾼은 밥이 목에 넘어가지 않는다
+### `10-guilt.webp` — 나무꾼은 밥이 목에 넘어가지 않는다
 
 ```
 Wide panoramic scene. Inside the lamplit room at night. On the right the
@@ -180,7 +180,7 @@ mountain and a sliver of moon. Warm orange lamp against cold blue night. Heavy
 and quiet.
 ```
 
-### `11-confess.png` — 나무꾼이 무릎을 꿇고 사실을 털어놓는다
+### `11-confess.webp` — 나무꾼이 무릎을 꿇고 사실을 털어놓는다
 
 ```
 Wide panoramic scene. The mountain ravine again, autumn, leaves on the ground. On
@@ -191,7 +191,7 @@ bonier - listening in total stillness, eyes half closed. Cold clear air, low
 amber light, absolute silence.
 ```
 
-### `12-know.png` — "진작 알고 있었다." 호랑이가 산속으로 걸어 들어간다
+### `12-know.webp` — "진작 알고 있었다." 호랑이가 산속으로 걸어 들어간다
 
 ```
 Wide panoramic scene. The same ravine a moment later. On the right the old white-
@@ -204,7 +204,7 @@ tiger. Quiet, warm, a little heartbreaking.
 
 ---
 
-## 마지막 장 — `end.png` (가로 2:1)
+## 마지막 장 — `end.webp` (가로 2:1)
 
 나무꾼이 산을 올려다본다.
 

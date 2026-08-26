@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -49,7 +49,7 @@ is the joke.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. Looking down into a deep pit dug in a Korean
@@ -61,7 +61,7 @@ resting on a thick wooden pole. Tall pines and dappled light around the pit.
 
 ## 본문 열 장 (모두 가로 2:1)
 
-### `01-pit.png` — 함정 속의 호랑이를 발견하는 나그네
+### `01-pit.webp` — 함정 속의 호랑이를 발견하는 나그네
 
 ```
 Wide forest scene. On the right, a traveller in hanbok and black hat stops on a
@@ -71,7 +71,7 @@ and front paws showing above the rim, mouth wide open shouting for help.
 Scattered branches that once covered the trap lie broken around the edge.
 ```
 
-### `02-beg.png` — 눈물까지 흘리며 애원하는 호랑이
+### `02-beg.webp` — 눈물까지 흘리며 애원하는 호랑이
 
 ```
 Wide scene at the pit. On the left, the tiger inside the pit clasps both front
@@ -81,7 +81,7 @@ the traveller crouches at the rim, hand on his chin, clearly wavering, brow
 furrowed with doubt. Sunlight through pines.
 ```
 
-### `03-rescue.png` — 나무를 타고 올라오는 호랑이
+### `03-rescue.webp` — 나무를 타고 올라오는 호랑이
 
 ```
 Wide scene at the pit. A thick log now slants from the bottom of the pit up to
@@ -91,7 +91,7 @@ stands back with both hands raised, smiling nervously. A small hint of a sly
 sideways glance from the tiger. Warm afternoon light.
 ```
 
-### `04-betray.png` — 태도가 돌변한 호랑이
+### `04-betray.webp` — 태도가 돌변한 호랑이
 
 ```
 Wide forest scene. On the left, the tiger now stands at full height, front paw
@@ -101,7 +101,7 @@ tipping off his head, arms flung up, mouth open in shock, walking stick dropped
 on the ground. Dramatic and comic.
 ```
 
-### `05-pine.png` — 소나무에게 묻다
+### `05-pine.webp` — 소나무에게 묻다
 
 ```
 Wide forest scene. On the right stands a huge ancient red-barked pine with a
@@ -111,7 +111,7 @@ while the tiger stands behind him with front paws crossed, wearing a smug
 confident grin. Shafts of light through the branches.
 ```
 
-### `06-cow.png` — 소에게 묻다
+### `06-cow.webp` — 소에게 묻다
 
 ```
 Wide scene at the edge of the forest where it opens onto a small field. On the
@@ -121,7 +121,7 @@ to his knees on the path with his head in his hands, utterly defeated, while the
 tiger throws his head back laughing. Open sky above the field.
 ```
 
-### `07-rabbit.png` — 지나가던 토끼
+### `07-rabbit.webp` — 지나가던 토끼
 
 ```
 Wide forest trail scene. In the centre, a small white rabbit has stopped
@@ -132,7 +132,7 @@ haunches, arms folded, waiting impatiently. Size contrast between the tiny rabbi
 and the huge tiger.
 ```
 
-### `08-confused.png` — 못 알아듣는 척하는 토끼
+### `08-confused.webp` — 못 알아듣는 척하는 토끼
 
 ```
 Wide forest scene near the pit. On the left, the tiger has both front paws
@@ -143,7 +143,7 @@ tilted the other way. The traveller peeks from behind a tree in the middle,
 starting to catch on.
 ```
 
-### `09-back-in.png` — 다시 구덩이로 내려가는 호랑이
+### `09-back-in.webp` — 다시 구덩이로 내려가는 호랑이
 
 ```
 Wide scene at the pit. The tiger stomps down the slanted log back into the pit,
@@ -153,7 +153,7 @@ rabbit watches with hands folded neatly, expression still perfectly blank. The
 traveller stands behind the rabbit, eyes wide, hand over his mouth.
 ```
 
-### `10-verdict.png` — 나무를 치워 버리는 토끼
+### `10-verdict.webp` — 나무를 치워 버리는 토끼
 
 ```
 Wide scene at the pit. The rabbit has hauled the thick log clear of the pit and
@@ -164,7 +164,7 @@ down the trail together, both laughing, the traveller's hat back on his head.
 Bright and triumphant.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet Korean mountain trail in late afternoon, no characters. A thick wooden

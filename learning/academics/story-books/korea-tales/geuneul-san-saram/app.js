@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 그늘을 사겠소",
         beats: [
             {
-                art: "01-tree.png",
+                art: "01-tree.webp",
                 emoji: "🌳",
                 left: [
                     "어느 마을 어귀에 아름드리 느티나무 한 그루가 서 있었습니다.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-rest.png",
+                art: "02-rest.webp",
                 emoji: "😌",
                 left: [
                     "몹시 무더운 날이었어요.",
@@ -35,7 +35,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-scold.png",
+                art: "03-scold.webp",
                 emoji: "😠",
                 left: [
                     "그때 대문이 벌컥 열렸어요. 부자가 성큼성큼 걸어 나왔습니다.",
@@ -51,7 +51,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-buy.png",
+                art: "04-buy.webp",
                 emoji: "💰",
                 left: [
                     "나그네는 천천히 몸을 일으켰어요. 그러고는 허리춤에서 엽전 꾸러미를 꺼냈습니다.",
@@ -73,7 +73,7 @@ const CHAPTERS = [
         title: "2장 · 그늘이 옮겨 가다",
         beats: [
             {
-                art: "05-deal.png",
+                art: "05-deal.webp",
                 emoji: "🤝",
                 left: [
                     "부자는 속으로 쾌재를 불렀어요.",
@@ -90,7 +90,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-move.png",
+                art: "06-move.webp",
                 emoji: "🌇",
                 left: [
                     "해가 서쪽으로 기울기 시작했어요.",
@@ -106,7 +106,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-enter.png",
+                art: "07-enter.webp",
                 emoji: "🚶",
                 left: [
                     "나그네는 짐을 챙겨 들고 그늘을 따라 걸었어요. 대문을 지나 마당 한가운데에 멍석을 폈습니다.",
@@ -122,7 +122,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-friends.png",
+                art: "08-friends.webp",
                 emoji: "👥",
                 left: [
                     "이튿날, 나그네는 길에서 만난 사람들을 데려왔어요.",
@@ -144,7 +144,7 @@ const CHAPTERS = [
         title: "3장 · 누구의 것도 아닌 것",
         beats: [
             {
-                art: "09-porch.png",
+                art: "09-porch.webp",
                 emoji: "🏠",
                 left: [
                     "날이 갈수록 그늘은 더 깊이 들어왔어요.",
@@ -159,7 +159,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-beg.png",
+                art: "10-beg.webp",
                 emoji: "🙏",
                 left: [
                     "마침내 부자가 나그네를 찾아왔어요.",
@@ -175,7 +175,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-return.png",
+                art: "11-return.webp",
                 emoji: "🍃",
                 left: [
                     "\"돈은 도로 가져가십시오.\"",
@@ -193,7 +193,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-village.png",
+                art: "12-village.webp",
                 emoji: "🎋",
                 left: [
                     "나그네는 그날로 길을 떠났어요.",
@@ -243,7 +243,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🌳')}
+                ${artFrame('cover.webp', '🌳')}
             </div>
             <div class="story-page-right">
                 <h1>그늘을 산 사람</h1>
@@ -306,7 +306,7 @@ const AFTERWORD = {
     emoji: '🌳',
     spreads: [
         {
-            art: 'end.png',
+            art: 'end.webp',
             left: [
                 "다만 방향이 반대입니다. 김선달은 팔 수 없는 것을 팔아 넘겼고, 여기서는 부자가 팔 수 없는 것을 스스로 팔았습니다.",
                 "다시 보면 부자가 판 것은 그늘이 아니었습니다. 그늘은 해를 따라 하루 종일 움직입니다. 아침에는 마당에 있다가 저녁에는 안방까지 들어옵니다.",

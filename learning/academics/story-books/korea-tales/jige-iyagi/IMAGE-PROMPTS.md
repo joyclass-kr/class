@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 12장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -54,7 +54,7 @@ picture, sometimes carried, sometimes leaning, sometimes dragged.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A worn wooden A-frame carrier stands upright and
@@ -66,7 +66,7 @@ through the pines. Quiet and heavy with meaning.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-old.png` — 자리에서 일어나지 못하는 아버지
+### `01-old.webp` — 자리에서 일어나지 못하는 아버지
 
 ```
 Wide interior of a small poor thatched cottage. On the right, the very old
@@ -77,7 +77,7 @@ bowl, mouth set. The A-frame carrier leans against the wall behind them. Cold
 grey morning light, silence.
 ```
 
-### `02-decide.png` — 며칠 밤을 뒤척인 끝에
+### `02-decide.webp` — 며칠 밤을 뒤척인 끝에
 
 ```
 Wide interior at night. The son lies on his mat with his eyes wide open, staring
@@ -87,7 +87,7 @@ carrier, making it the brightest thing in the picture. Deep blue night. Dread
 without a villain.
 ```
 
-### `03-carry.png` — 지게에 오른 아버지
+### `03-carry.webp` — 지게에 오른 아버지
 
 ```
 Wide scene in the cottage yard at dawn. In the centre, the son crouches with the
@@ -97,7 +97,7 @@ door of the house; ahead, the mountain trail. Pale cold light, breath visible.
 Wordless and awful.
 ```
 
-### `04-follow.png` — 따라나선 아이
+### `04-follow.webp` — 따라나선 아이
 
 ```
 Wide scene at the cottage gate. On the right, the son stands half turned with the
@@ -107,7 +107,7 @@ sides, refusing. Between them, the empty morning road climbs toward the
 mountain. Small and immovable.
 ```
 
-### `05-mountain.png` — 바위 아래에 내려놓고
+### `05-mountain.webp` — 바위 아래에 내려놓고
 
 ```
 Wide scene in a deep pine forest. On the right, a sheltering rock outcrop where
@@ -117,7 +117,7 @@ son stands with his back to us, unable to turn around. The boy waits further
 down the trail. Cool green shade, terrible stillness.
 ```
 
-### `06-leave.png` — 몇 번이나 돌아보며
+### `06-leave.webp` — 몇 번이나 돌아보며
 
 ```
 Wide scene on the descending trail. In the centre, the son walks downhill with
@@ -127,7 +127,7 @@ right, the small seated figure of the grandfather beside the rock, growing
 smaller. Long distance across the frame.
 ```
 
-### `07-pickup.png` — 빈 지게를 끌고 온 아이
+### `07-pickup.webp` — 빈 지게를 끌고 온 아이
 
 ```
 Wide scene on the trail. In the centre, the boy struggles back down the slope
@@ -137,7 +137,7 @@ stopped and turned, one hand out. Pine needles and dust. Ordinary determination
 in a child.
 ```
 
-### `08-words.png` — 나중에 아버지 모실 때 쓰려고요
+### `08-words.webp` — 나중에 아버지 모실 때 쓰려고요
 
 ```
 Wide scene on the trail, the pivot of the book. In the centre, the boy stands
@@ -148,7 +148,7 @@ gone from his face. The forest around them is silent. Devastating in its
 calmness.
 ```
 
-### `09-frozen.png` — 그 자리에 얼어붙은 아들
+### `09-frozen.webp` — 그 자리에 얼어붙은 아들
 
 ```
 Wide scene on the trail, close in. The son has sunk to a crouch on the path with
@@ -158,7 +158,7 @@ still holding one strap. Filtered green light through pines. A man seeing himsel
 for the first time.
 ```
 
-### `10-back.png` — 다시 산으로 되달려 올라가
+### `10-back.webp` — 다시 산으로 되달려 올라가
 
 ```
 Wide scene of the mountain trail, full of motion. The son runs uphill from left
@@ -168,7 +168,7 @@ the boy runs after, small and hurrying. Shafts of light through the trees.
 Urgency and hope.
 ```
 
-### `11-down.png` — 아버지를 지고 내려오는 길
+### `11-down.webp` — 아버지를 지고 내려오는 길
 
 ```
 Wide scene on the descending trail in late afternoon. In the centre, the son
@@ -178,7 +178,7 @@ The boy trots alongside holding the frame's edge. Their three shadows stretch
 long and joined across the path. Warm gold light. Relief.
 ```
 
-### `12-village.png` — 다시 부모를 모시고 내려온 사람들
+### `12-village.webp` — 다시 부모를 모시고 내려온 사람들
 
 ```
 Wide scene of the village at evening from a low hillside. Down the mountain
@@ -188,7 +188,7 @@ the son's cottage with lamplight in the window and the boy waving from the gate.
 Warm amber lights coming on across the village. Quiet and healing.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A quiet mountain trail at sunrise, no people. A worn wooden A-frame carrier

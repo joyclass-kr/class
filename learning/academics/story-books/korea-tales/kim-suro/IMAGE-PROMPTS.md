@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 14장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -61,7 +61,7 @@ and warriors in riveted iron plate armour with iron horse masks.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A low round grassy hilltop under a bright sky.
@@ -74,7 +74,7 @@ stamping feet. Gold, purple and green. Loud and joyful.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-gugan.png` — 우리 마을이 제일이지
+### `01-gugan.webp` — 우리 마을이 제일이지
 
 ```
 Wide scene of a river delta with nine small villages scattered across it among
@@ -84,7 +84,7 @@ roofs, boats on the water, low hills beyond. Bright morning, green and ochre.
 Lively but scattered.
 ```
 
-### `02-voice.png` — 여기에 사람이 있느냐?
+### `02-voice.webp` — 여기에 사람이 있느냐?
 
 ```
 Wide scene on a low round grassy peak. The hilltop is bare and empty except for
@@ -93,7 +93,7 @@ scramble onto the summit, out of breath, looking wildly around for whoever is
 speaking - and there is no one there at all. Big empty sky. Eerie and exciting.
 ```
 
-### `03-song.png` — 거북아 거북아, 머리를 내어라
+### `03-song.webp` — 거북아 거북아, 머리를 내어라
 
 ```
 Wide scene on the hilltop. The nine chiefs kneel in a ring on the grass with
@@ -103,7 +103,7 @@ centre, a small tortoise has poked its head out and is watching. Wind, sunlight.
 Comic and solemn at once.
 ```
 
-### `04-dance.png` — 봉우리가 들썩들썩
+### `04-dance.webp` — 봉우리가 들썩들썩
 
 ```
 Wide scene on the hilltop packed with people - two hundred villagers and the
@@ -113,7 +113,7 @@ Everyone is looking upward. Gold afternoon light through the dust. The most
 crowded, loudest picture in the book.
 ```
 
-### `05-rope.png` — 하늘에서 내려온 자줏빛 줄
+### `05-rope.webp` — 하늘에서 내려온 자줏빛 줄
 
 ```
 Wide scene on the hilltop. Down through a break in the clouds comes a long
@@ -123,7 +123,7 @@ every face turned up, the song stopped mid-word. Shafts of light through cloud.
 Held breath.
 ```
 
-### `06-eggs.png` — 황금빛 알 여섯 개
+### `06-eggs.webp` — 황금빛 알 여섯 개
 
 ```
 Wide interior of a simple house that night. In the centre, a golden box sits open
@@ -133,7 +133,7 @@ wide-awake in a ring, chins on hands, not one of them able to sleep. Warm gold
 light, deep shadows. Wonder and comedy.
 ```
 
-### `07-hatch.png` — 여섯이 한꺼번에 방긋
+### `07-hatch.webp` — 여섯이 한꺼번에 방긋
 
 ```
 Wide interior scene at dawn. In the centre, the golden box lies open with six
@@ -143,7 +143,7 @@ shock, hats flying, arms in the air. Morning light through the door. Hilarious
 and miraculous.
 ```
 
-### `08-suro.png` — 이 아이가 우리 임금이오
+### `08-suro.webp` — 이 아이가 우리 임금이오
 
 ```
 Wide scene in a village square. In the centre, the young man Suro stands in a
@@ -153,7 +153,7 @@ look over each other's shoulders. Sunlight, thatched roofs, banners of plain
 cloth. Simple and strong.
 ```
 
-### `09-six.png` — 각자 제 골짜기로
+### `09-six.webp` — 각자 제 골짜기로
 
 ```
 Wide landscape scene of a river valley splitting into several smaller valleys. In
@@ -163,7 +163,7 @@ five valleys under a wide sky. Green hills, morning light. Parting without
 sadness.
 ```
 
-### `10-iron.png` — 골짜기마다 망치 소리
+### `10-iron.webp` — 골짜기마다 망치 소리
 
 ```
 Wide scene of an ironworking village. On the left, a charcoal furnace with
@@ -173,7 +173,7 @@ down to boats at a jetty, and a finished suit of riveted iron armour hangs on a
 frame. Smoke, sparks, iron grey and orange. Busy and strong.
 ```
 
-### `11-alone.png` — 내 짝은 하늘이 보내 줄 것이오
+### `11-alone.webp` — 내 짝은 하늘이 보내 줄 것이오
 
 ```
 Wide scene on a terrace above the harbour at night. On the right, Suro stands
@@ -182,7 +182,7 @@ two of the chiefs stand back with their heads together, one gesturing helplessly
 Moonlight on the water, lamps at the jetty below. Quiet and patient.
 ```
 
-### `12-ship.png` — 붉은 돛을 단 배
+### `12-ship.webp` — 붉은 돛을 단 배
 
 ```
 Wide scene at the harbour. On the right, a large seagoing ship with a deep red
@@ -192,7 +192,7 @@ gold bangles and a shawl over her hair, her attendants behind her with chests an
 jars. On the left, a crowd of Gaya villagers stares. Bright sea light. Wonder.
 ```
 
-### `13-wedding.png` — 새벽까지 이어진 북소리
+### `13-wedding.webp` — 새벽까지 이어진 북소리
 
 ```
 Wide night scene of the whole harbour town lit with lanterns and bonfires.
@@ -202,7 +202,7 @@ side looking out at it all. Warm orange firelight against deep blue night.
 Festival.
 ```
 
-### `14-gaya.png` — 이제는 바다까지가 우리 마당이오
+### `14-gaya.webp` — 이제는 바다까지가 우리 마당이오
 
 ```
 Wide scene of the harbour at midday from a height. Boats loaded with stacked
@@ -212,7 +212,7 @@ foreground on a terrace, Suro stands with one arm out over the view. Blue sea,
 white sails, iron grey and warm ochre. Wide and prosperous.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 A low round grassy hilltop at sunset with no one on it. The grass is trampled

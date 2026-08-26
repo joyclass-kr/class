@@ -18,8 +18,8 @@
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
 | 본문 그림 14장 | 2.14 : 1 | **가로 2 : 세로 1** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.5 : 1 | **가로 3 : 세로 2** |
+| 표지 `cover.webp` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.webp` | 1.5 : 1 | **가로 3 : 세로 2** |
 
 그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
@@ -61,7 +61,7 @@ corners, no ornament at all.
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+### `cover.webp` — 표지 (세로 2:3)
 
 ```
 Vertical portrait composition. A still round pond fills the lower half of the
@@ -75,7 +75,7 @@ her back to us. Quiet, still, and strange.
 
 ## 본문  장 (모두 가로 2:1)
 
-### `01-asadal.png` — 돌도 숨을 쉬게 하는 손
+### `01-asadal.webp` — 돌도 숨을 쉬게 하는 손
 
 ```
 Wide scene in a Baekje village stoneyard. In the centre, Asadal kneels over a
@@ -85,7 +85,7 @@ doorway of a modest house holding a water gourd, watching him with quiet pride.
 Warm afternoon light, chips of stone on the ground.
 ```
 
-### `02-farewell.png` — 탑이 다 서면 돌아오리다
+### `02-farewell.webp` — 탑이 다 서면 돌아오리다
 
 ```
 Wide scene at the edge of a village, a dirt road running away over the fields.
@@ -95,7 +95,7 @@ lifted, small against the wide barley fields. Long low evening light, a long
 road. Gentle and sad.
 ```
 
-### `03-bulguksa.png` — 땅땅, 새벽까지 이어진 소리
+### `03-bulguksa.webp` — 땅땅, 새벽까지 이어진 소리
 
 ```
 Wide scene of a temple building site on a wooded mountain. Scaffolding, stone
@@ -105,7 +105,7 @@ apart from everyone, absorbed. Dust in the shafts of sunlight, pine trees behind
 Busy but lonely.
 ```
 
-### `04-years.png` — 머리에 흰 것이 섞이다
+### `04-years.webp` — 머리에 흰 것이 섞이다
 
 ```
 Wide scene at the building site in autumn. In the centre, Asadal works on the
@@ -115,7 +115,7 @@ the pagoda behind him. Fewer workers than before. Ochre and rust colours, low
 slanting light. Time passing.
 ```
 
-### `05-asanyeo.png` — 저 안에 그이가 있구나
+### `05-asanyeo.webp` — 저 안에 그이가 있구나
 
 ```
 Wide landscape scene of a road coming over a hill toward Gyeongju. In the
@@ -125,7 +125,7 @@ the tiled roofs of a great temple on the mountainside. Wide sky, clear light.
 Hope.
 ```
 
-### `06-refused.png` — 아무도 못 들어갑니다
+### `06-refused.webp` — 아무도 못 들어갑니다
 
 ```
 Wide scene at a temple gate. On the right, a gatekeeper stands square in the
@@ -134,7 +134,7 @@ Asanyeo has both hands raised, pleading, her bundle at her feet, road dust to he
 knees. Beyond the gate, scaffolding and stone. Grey stone, hard midday light.
 ```
 
-### `07-monk.png` — 저 못을 영지라 하오
+### `07-monk.webp` — 저 못을 영지라 하오
 
 ```
 Wide scene on the mountain path below the temple. On the right, the old monk
@@ -143,7 +143,7 @@ left and below, a still round pond lies among the trees, silver in the sun. Asan
 follows his hand with her eyes. Pine shadows, soft green light. Kind and quiet.
 ```
 
-### `08-wait.png` — 저건가? 구름이었어요
+### `08-wait.webp` — 저건가? 구름이었어요
 
 ```
 Wide scene at the pond in spring. On the left, Asanyeo sits on the big flat rock
@@ -152,7 +152,7 @@ a single white cloud drifts across the reflected sky. Reeds, azaleas in bloom on
 the bank behind. Everything perfectly still. Patient and lonely.
 ```
 
-### `09-seasons.png` — 피었다 지고, 얼었다 풀리고
+### `09-seasons.webp` — 피었다 지고, 얼었다 풀리고
 
 ```
 Wide scene of the same pond from the same viewpoint, but divided across the
@@ -162,7 +162,7 @@ same small figure sits on the same rock. The rock and the reeds stay in the same
 place throughout. Beautiful and aching.
 ```
 
-### `10-nothing.png` — 탑만은 비치지 않았어요
+### `10-nothing.webp` — 탑만은 비치지 않았어요
 
 ```
 Wide scene at the pond. In the upper half, the mountain with the nearly finished
@@ -173,7 +173,7 @@ at all, only empty silver water. On the rock, Asanyeo leans out over the surface
 The most important picture in the book.
 ```
 
-### `11-done.png` — 달빛 아래 우뚝 선 탑
+### `11-done.webp` — 달빛 아래 우뚝 선 탑
 
 ```
 Wide night scene on the mountain. In the centre, the finished granite pagoda
@@ -183,7 +183,7 @@ one hand, head tipped back, looking up. Blue moonlight, deep shadow, silence.
 Awe.
 ```
 
-### `12-run.png` — 연장도 팽개치고
+### `12-run.webp` — 연장도 팽개치고
 
 ```
 Wide scene of a mountain path at dawn in heavy mist. In the centre, Asadal runs
@@ -192,7 +192,7 @@ dropped and left behind on the path above. Thick white mist between the trunks,
 first grey light. Motion and urgency in a still world.
 ```
 
-### `13-meet.png` — 무릎에는 진달래 한 줌
+### `13-meet.webp` — 무릎에는 진달래 한 줌
 
 ```
 Wide scene at the pond at sunrise. In the centre, Asanyeo is curled asleep
@@ -202,7 +202,7 @@ breaking. Mist lying low on the water, first gold light on the reeds. Tender and
 overwhelming.
 ```
 
-### `14-tower.png` — 못에 나란히 비친 두 얼굴
+### `14-tower.webp` — 못에 나란히 비친 두 얼굴
 
 ```
 Wide scene at the pond, seen looking down into the water. The still surface
@@ -212,7 +212,7 @@ pagoda should be reflected, the water is still empty. Reeds and azaleas at the
 edges, warm morning gold. Quiet, complete, and lovely.
 ```
 
-### `end.png` — 마지막 (가로 2:1)
+### `end.webp` — 마지막 (가로 2:1)
 
 ```
 The still round pond at evening with no one there. A big flat rock at the water's
