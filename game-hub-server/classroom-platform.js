@@ -522,6 +522,11 @@ function createClassroomPlatform(options = {}) {
       `INSERT INTO classroom_settings (setting_key, setting_value)
         VALUES ('site_access_mode', 'open')
         ON CONFLICT (setting_key) DO NOTHING`,
+      `CREATE TABLE IF NOT EXISTS site_content_disabled (
+        content_path TEXT PRIMARY KEY,
+        updated_by BIGINT REFERENCES classroom_users(id) ON DELETE SET NULL,
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )`,
       // classroom_content_locks used to store the OPT-OUT set (menu items a
       // teacher hid). The menu default flipped to opt-in, so on first boot
       // after the flip we rename the table and drop its rows -- old "hidden"
@@ -1244,9 +1249,14 @@ function createClassroomPlatform(options = {}) {
   // is also called right after the admin toggles it, for immediate effect.
   const SITE_ACCESS_MODE_TTL_MS = 5000;
   let siteAccessModeCache = null;
+  let globallyDisabledContentPathsCache = null;
 
   function invalidateSiteAccessModeCache() {
     siteAccessModeCache = null;
+  }
+
+  function invalidateGloballyDisabledContentPathsCache() {
+    globallyDisabledContentPathsCache = null;
   }
 
   async function getSiteAccessMode() {
@@ -1261,6 +1271,23 @@ function createClassroomPlatform(options = {}) {
     const mode = result.rows[0]?.setting_value === "restricted" ? "restricted" : "open";
     siteAccessModeCache = { mode, expiresAt: Date.now() + SITE_ACCESS_MODE_TTL_MS };
     return mode;
+  }
+
+  async function getGloballyDisabledContentPaths() {
+    if (!pool && !isProduction) return [];
+    if (globallyDisabledContentPathsCache?.expiresAt > Date.now()) {
+      return globallyDisabledContentPathsCache.paths;
+    }
+    requireDatabase();
+    const result = await pool.query(
+      "SELECT content_path FROM site_content_disabled ORDER BY content_path"
+    );
+    const paths = result.rows.map((row) => row.content_path);
+    globallyDisabledContentPathsCache = {
+      paths,
+      expiresAt: Date.now() + SITE_ACCESS_MODE_TTL_MS
+    };
+    return paths;
   }
 
   async function studentMembership(userId) {
@@ -1458,12 +1485,31 @@ function createClassroomPlatform(options = {}) {
     return finalSlashIndex > 0 ? clean.slice(0, finalSlashIndex) : "";
   }
 
+  function matchesDisabledContentPath(requestPath, disabledPath) {
+    return requestPath === disabledPath || requestPath.startsWith(`${disabledPath}/`);
+  }
+
+  function isGloballyDisabledContent(requestPath, assetRootPath, disabledPaths) {
+    return disabledPaths.some((disabledPath) => (
+      matchesDisabledContentPath(requestPath, disabledPath)
+      || (assetRootPath && matchesDisabledContentPath(assetRootPath, disabledPath))
+    ));
+  }
+
   const requireSiteAccess = asyncRoute(async (req, res, next) => {
     // mode and user are each resolved once per request and reused below --
     // this used to call getSiteAccessMode() and sessionUser() twice per
     // request (once to check access, again to render the student
     // content-lock check), doubling the DB round trips on every static
     // asset request under the gated paths.
+    const requestPath = normalizeContentPath(req.originalUrl);
+    const assetRootPath = contentRootForStaticAsset(requestPath);
+    const globallyDisabledPaths = await getGloballyDisabledContentPaths();
+    if (requestPath && isGloballyDisabledContent(requestPath, assetRootPath, globallyDisabledPaths)) {
+      if (req.method === "GET") return res.redirect(302, "/?content=globally-disabled");
+      throw new HttpError(403, "CONTENT_GLOBALLY_DISABLED", "This content is currently unavailable.");
+    }
+
     const mode = await getSiteAccessMode();
     // Open mode is intended for development and demonstrations. A display
     // name is still useful for game hand-off, but it must not gate routes
@@ -1483,7 +1529,6 @@ function createClassroomPlatform(options = {}) {
         // list matched (e.g. "/arithmetic" itself resolves to req.path === "/"), so it can
         // never equal the full paths stored by the "공개 설정" UI. req.originalUrl keeps the
         // real, unstripped path regardless of which mount prefix matched.
-        const requestPath = normalizeContentPath(req.originalUrl);
         // Personal account settings (birthday/avatar), not a curated learning
         // menu item -- must stay reachable regardless of what the homeroom
         // teacher has enabled for the class. The clean-URL middleware further
@@ -1493,7 +1538,6 @@ function createClassroomPlatform(options = {}) {
         // Both forms must be recognized or that redirect defeats this bypass.
         const isAlwaysAllowed = requestPath === "/classtools/profile.html" || requestPath === "/classtools/profile";
         if (classId && requestPath && !isAlwaysAllowed) {
-          const assetRootPath = contentRootForStaticAsset(requestPath);
           const enabled = await pool.query(
             `SELECT 1 FROM classroom_content_enabled
              WHERE class_id = $1
@@ -2247,13 +2291,28 @@ function createClassroomPlatform(options = {}) {
 
   router.get("/home-content-access", asyncRoute(async (req, res) => {
     const mode = await getSiteAccessMode();
+    const globallyDisabledPaths = await getGloballyDisabledContentPaths();
     const user = await sessionUser(req);
     if (!user) {
-      return res.json({ mode, enabledPaths: [], canManage: false });
+      return res.json({
+        mode,
+        enabledPaths: [],
+        globallyDisabledPaths,
+        hasClassAccess: false,
+        canManage: false,
+        canManageGlobally: false
+      });
     }
     const classId = await userClassId(user);
     if (!classId) {
-      return res.json({ mode, enabledPaths: [], canManage: false });
+      return res.json({
+        mode,
+        enabledPaths: [],
+        globallyDisabledPaths,
+        hasClassAccess: false,
+        canManage: false,
+        canManageGlobally: user.role === "admin"
+      });
     }
     const enabled = await pool.query(
       "SELECT content_path FROM classroom_content_enabled WHERE class_id = $1 ORDER BY content_path",
@@ -2262,7 +2321,10 @@ function createClassroomPlatform(options = {}) {
     res.json({
       mode,
       enabledPaths: enabled.rows.map((row) => row.content_path),
-      canManage: user.role === "teacher"
+      globallyDisabledPaths,
+      hasClassAccess: true,
+      canManage: user.role === "teacher",
+      canManageGlobally: user.role === "admin"
     });
   }));
 
@@ -2291,6 +2353,30 @@ function createClassroomPlatform(options = {}) {
       );
     }
     res.json({ ok: true, path: contentPath, enabled });
+  }));
+
+  router.put("/admin/home-content-access", asyncRoute(async (req, res) => {
+    const admin = await requireAdmin(req);
+    const contentPath = normalizeContentPath(req.body?.path);
+    const disabled = req.body?.disabled === true;
+    if (!contentPath || contentPath === "/") {
+      throw new HttpError(400, "INVALID_CONTENT_PATH", "올바른 홈 버튼을 선택해 주세요.");
+    }
+    if (disabled) {
+      await pool.query(
+        `INSERT INTO site_content_disabled (content_path, updated_by, updated_at)
+         VALUES ($1, $2, NOW())
+         ON CONFLICT (content_path) DO UPDATE SET updated_by = EXCLUDED.updated_by, updated_at = NOW()`,
+        [contentPath, admin.id]
+      );
+    } else {
+      await pool.query(
+        "DELETE FROM site_content_disabled WHERE content_path = $1",
+        [contentPath]
+      );
+    }
+    invalidateGloballyDisabledContentPathsCache();
+    res.json({ ok: true, path: contentPath, disabled });
   }));
 
   router.get("/schools", asyncRoute(async (req, res) => {

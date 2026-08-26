@@ -58,7 +58,8 @@
             transition: filter 0.3s ease, -webkit-filter 0.3s ease;
         }
 
-        body.content-access-editing::before {
+        body.content-access-editing::before,
+        body.global-content-access-editing::before {
             filter: brightness(0.2) blur(8px);
             -webkit-filter: brightness(0.2) blur(8px);
         }
@@ -298,7 +299,10 @@
 
         .worksheet-container a.is-class-locked,
         .worksheet-group > summary.is-class-locked,
-        .game-card-grid a.is-class-locked {
+        .game-card-grid a.is-class-locked,
+        .worksheet-container a.is-global-locked,
+        .worksheet-group > summary.is-global-locked,
+        .game-card-grid a.is-global-locked {
             border-color: #555555 !important;
             background: linear-gradient(135deg, #444444, #222222) !important;
             color: #888888 !important;
@@ -308,7 +312,10 @@
 
         .worksheet-container a.is-class-locked *,
         .worksheet-group > summary.is-class-locked *,
-        .game-card-grid a.is-class-locked * {
+        .game-card-grid a.is-class-locked *,
+        .worksheet-container a.is-global-locked *,
+        .worksheet-group > summary.is-global-locked *,
+        .game-card-grid a.is-global-locked * {
             color: #888888 !important;
         }
 
@@ -579,16 +586,30 @@
             font-weight: 800;
         }
 
+        body.global-content-access-editing #globalContentAccessButton {
+            background: linear-gradient(#b91c1c, #7f1d1d);
+            color: #ffffff;
+            border-color: #fecaca;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.55);
+            font-weight: 800;
+        }
+
         body.content-access-editing .worksheet-container a,
         body.content-access-editing .worksheet-group > summary,
-        body.content-access-editing .game-card-grid a {
+        body.content-access-editing .game-card-grid a,
+        body.global-content-access-editing .worksheet-container a,
+        body.global-content-access-editing .worksheet-group > summary,
+        body.global-content-access-editing .game-card-grid a {
             box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.4);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         body.content-access-editing .worksheet-container a:hover,
         body.content-access-editing .worksheet-group > summary:hover,
-        body.content-access-editing .game-card-grid a:hover {
+        body.content-access-editing .game-card-grid a:hover,
+        body.global-content-access-editing .worksheet-container a:hover,
+        body.global-content-access-editing .worksheet-group > summary:hover,
+        body.global-content-access-editing .game-card-grid a:hover {
             box-shadow: 0 0 0 3px #ffd700, 0 4px 16px rgba(255, 215, 0, 0.5);
             transform: scale(1.02);
         }
@@ -597,8 +618,16 @@
             display: none;
         }
 
+        body.global-content-access-editing .worksheet-group-options {
+            display: none;
+        }
+
         /* 공개 설정 모드에서도 이 목록은 보여야 항목별로 잠글 수 있다. */
         body.content-access-editing .worksheet-group[open] > .is-lockable-list {
+            display: grid;
+        }
+
+        body.global-content-access-editing .worksheet-group[open] > .is-lockable-list {
             display: grid;
         }
 
@@ -726,6 +755,7 @@
             <div id="profileList" class="profile-list"></div>
             <div class="signed-in-actions" style="margin-top: 15px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 8px;">
                 <button id="contentAccessButton" class="auth-button secondary content-access-button" type="button" aria-pressed="false" style="background: linear-gradient(135deg, #0284c7, #2563eb); color: #ffffff; font-weight: 700; border: none; border-radius: 20px; padding: 10px 18px; cursor: pointer; box-shadow: 0 4px 12px rgba(2,132,199,0.35);" hidden>🔒 우리 반 학급 메뉴/게임 잠금 설정</button>
+                <button id="globalContentAccessButton" class="auth-button secondary content-access-button" type="button" aria-pressed="false" style="background: linear-gradient(135deg, #b91c1c, #7f1d1d); color: #ffffff; font-weight: 700; border: none; border-radius: 20px; padding: 10px 18px; cursor: pointer; box-shadow: 0 4px 12px rgba(185,28,28,0.35);" hidden>⛔ 전체 메뉴/게임 사용 중지 설정</button>
                 <button id="signOutButton" class="auth-button secondary" type="button">SIGN OUT</button>
             </div>
         </div>
@@ -1009,6 +1039,7 @@
             const studentProfileLink = document.getElementById('studentProfileLink');
             const adminPanelLink = document.getElementById('adminPanelLink');
             const contentAccessButton = document.getElementById('contentAccessButton');
+            const globalContentAccessButton = document.getElementById('globalContentAccessButton');
             const classToolsLink = document.getElementById('classToolsLink');
             const parentNoticeLink = document.getElementById('parentNoticeLink');
             const classboardLink = document.getElementById('classboardLink');
@@ -1050,7 +1081,10 @@
             let currentPlayerName = '';
             let isTeacherSignedIn = false;
             let contentAccessEditing = false;
+            let globalContentAccessEditing = false;
+            let classContentAccessApplies = false;
             let classEnabledPaths = new Set();
+            let globallyDisabledPaths = new Set();
 
             function normalizedContentPath(href) {
                 if (!href) return '';
@@ -1081,16 +1115,36 @@
                 return paths.length > 0 && paths.every((path) => classEnabledPaths.has(path));
             }
 
+            function isGloballyDisabledPath(path) {
+                return Boolean(path) && Array.from(globallyDisabledPaths).some((disabledPath) => (
+                    path === disabledPath || path.startsWith(`${disabledPath}/`)
+                ));
+            }
+
+            function isAccessControlGloballyDisabled(control) {
+                const paths = contentPathsForControl(control);
+                return paths.length > 0 && paths.every(isGloballyDisabledPath);
+            }
+
             function renderClassLocks() {
-                // Group children inherit the state of their single parent control.
+                // A site-wide lock always wins. Class locks remain the homeroom
+                // teacher's lower-priority setting for that one class.
                 hubLinks.forEach((link) => {
                     const groupControl = accessControlForLink(link);
-                    const locked = groupControl
+                    const path = contentPathForLink(link);
+                    const globallyLocked = isGloballyDisabledPath(path)
+                        || Boolean(groupControl && isAccessControlGloballyDisabled(groupControl));
+                    const classLocked = classContentAccessApplies && (groupControl
                         ? !isAccessControlEnabled(groupControl)
-                        : !classEnabledPaths.has(contentPathForLink(link));
-                    link.classList.toggle('is-class-locked', locked);
-                    link.dataset.classLocked = String(locked);
-                    if (locked) {
+                        : !classEnabledPaths.has(path));
+                    link.classList.toggle('is-global-locked', globallyLocked);
+                    link.classList.toggle('is-class-locked', classLocked && !globallyLocked);
+                    link.dataset.globalLocked = String(globallyLocked);
+                    link.dataset.classLocked = String(classLocked);
+                    if (globallyLocked) {
+                        link.setAttribute('aria-disabled', globalContentAccessEditing ? 'false' : 'true');
+                        link.setAttribute('aria-label', `${link.textContent.trim()} · 전체관리자가 사용 중지`);
+                    } else if (classLocked) {
                         link.setAttribute('aria-disabled', contentAccessEditing ? 'false' : 'true');
                         link.setAttribute('aria-label', `${link.textContent.trim()} · 담임교사가 잠금`);
                     } else {
@@ -1103,26 +1157,69 @@
                     if (!control.dataset.baseAriaLabel) {
                         control.dataset.baseAriaLabel = control.getAttribute('aria-label') || control.textContent.trim();
                     }
-                    const locked = !isAccessControlEnabled(control);
-                    control.classList.toggle('is-class-locked', locked);
-                    control.dataset.classLocked = String(locked);
-                    control.setAttribute('aria-label', locked
-                        ? `${control.dataset.baseAriaLabel} · 담임교사가 잠금`
-                        : control.dataset.baseAriaLabel);
-                    control.setAttribute('aria-disabled', locked && !contentAccessEditing ? 'true' : 'false');
+                    const globallyLocked = isAccessControlGloballyDisabled(control);
+                    const classLocked = classContentAccessApplies && !isAccessControlEnabled(control);
+                    control.classList.toggle('is-global-locked', globallyLocked);
+                    control.classList.toggle('is-class-locked', classLocked && !globallyLocked);
+                    control.dataset.globalLocked = String(globallyLocked);
+                    control.dataset.classLocked = String(classLocked);
+                    control.setAttribute('aria-label', globallyLocked
+                        ? `${control.dataset.baseAriaLabel} · 전체관리자가 사용 중지`
+                        : classLocked
+                            ? `${control.dataset.baseAriaLabel} · 담임교사가 잠금`
+                            : control.dataset.baseAriaLabel);
+                    control.setAttribute('aria-disabled', globallyLocked
+                        ? (globalContentAccessEditing ? 'false' : 'true')
+                        : (classLocked && !contentAccessEditing ? 'true' : 'false'));
                 });
             }
 
             async function loadClassContentAccess() {
                 const result = await api('/api/home-content-access');
                 classEnabledPaths = new Set(result.enabledPaths || []);
+                globallyDisabledPaths = new Set(result.globallyDisabledPaths || []);
+                classContentAccessApplies = result.hasClassAccess === true;
                 contentAccessButton.hidden = !result.canManage;
+                globalContentAccessButton.hidden = !result.canManageGlobally;
                 renderClassLocks();
             }
 
             async function handleGroupedContentAccess(event) {
                 const control = event.target.closest('[data-content-paths]');
                 if (!control || !hubContent.contains(control)) return;
+
+                if (globalContentAccessEditing) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    const paths = contentPathsForControl(control);
+                    if (paths.length === 0) return;
+                    const nextDisabled = !paths.every((path) => globallyDisabledPaths.has(path));
+                    try {
+                        await Promise.all(paths.map((path) => api('/api/admin/home-content-access', {
+                            method: 'PUT',
+                            body: JSON.stringify({ path, disabled: nextDisabled }),
+                        })));
+                        paths.forEach((path) => {
+                            if (nextDisabled) globallyDisabledPaths.add(path);
+                            else globallyDisabledPaths.delete(path);
+                        });
+                        renderClassLocks();
+                        setStatus(nextDisabled
+                            ? '이 메뉴와 모든 하위 메뉴를 전체 사용 중지했습니다.'
+                            : '이 메뉴와 모든 하위 메뉴를 다시 사용할 수 있게 했습니다.');
+                    } catch (error) {
+                        await loadClassContentAccess().catch(() => renderClassLocks());
+                        setStatus(error.message, true);
+                    }
+                    return;
+                }
+
+                if (control.dataset.globalLocked === 'true') {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    setStatus('전체관리자가 준비 중인 메뉴로 사용 중지했습니다.');
+                    return;
+                }
 
                 if (contentAccessEditing) {
                     event.preventDefault();
@@ -1491,7 +1588,7 @@
 
                 const state = await api('/api/auth/me').catch(() => ({ signedIn: false }));
                 if (state.signedIn) {
-                    routeSignedIn(state);
+                    await routeSignedIn(state);
                     return;
                 }
 
@@ -1505,7 +1602,10 @@
 
                 signedInArea.hidden = true;
                 hubContent.hidden = false;
-                await loadSchools().catch((e) => setStatus(e.message, true));
+                await Promise.all([
+                    loadSchools().catch((e) => setStatus(e.message, true)),
+                    loadClassContentAccess().catch((e) => console.error('loadClassContentAccess failed', e)),
+                ]);
             }
 
             async function loadSchools() {
@@ -1609,7 +1709,6 @@
                     // Also set up logic that showTeacherHome used to do
                     isTeacherSignedIn = true;
                     restrictedPreview = false;
-                    await loadClassContentAccess().catch((error) => console.error('loadClassContentAccess failed', error));
                     setPlayerIdentity(teacherProfileData.name);
                 }
 
@@ -1628,7 +1727,6 @@
 
                     setPlayerIdentity(studentName, m);
                     setHubLocked(false);
-                    await loadClassContentAccess().catch((error) => console.error('loadClassContentAccess failed', error));
                 }
 
                 // 4. Guardian (Parents)
@@ -1669,6 +1767,7 @@
                     setHubLocked(false);
                 }
 
+                await loadClassContentAccess().catch((error) => console.error('loadClassContentAccess failed', error));
                 setStatus('');
             }
 
@@ -1714,7 +1813,38 @@
             }
 
             hubContent.addEventListener('click', async (event) => {
-                                const selectedLink = event.target.closest('a');
+                const selectedLink = event.target.closest('a');
+
+                if (globalContentAccessEditing && selectedLink && hubContent.contains(selectedLink)) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    const path = contentPathForLink(selectedLink);
+                    if (!path) return;
+                    const nextDisabled = !globallyDisabledPaths.has(path);
+                    try {
+                        await api('/api/admin/home-content-access', {
+                            method: 'PUT',
+                            body: JSON.stringify({ path, disabled: nextDisabled }),
+                        });
+                        if (nextDisabled) globallyDisabledPaths.add(path);
+                        else globallyDisabledPaths.delete(path);
+                        renderClassLocks();
+                        setStatus(nextDisabled
+                            ? '이 버튼을 모든 사용자에게 사용 중지했습니다.'
+                            : '이 버튼을 모든 사용자가 다시 이용할 수 있게 했습니다.');
+                    } catch (error) {
+                        await loadClassContentAccess().catch(() => renderClassLocks());
+                        setStatus(error.message, true);
+                    }
+                    return;
+                }
+
+                if (selectedLink?.dataset.globalLocked === 'true') {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    setStatus('전체관리자가 준비 중인 메뉴로 사용 중지했습니다.');
+                    return;
+                }
 
                 if (contentAccessEditing && selectedLink && hubContent.contains(selectedLink)) {
                     event.preventDefault();
@@ -1762,6 +1892,12 @@
             }, true);
 
             contentAccessButton.addEventListener('click', () => {
+                if (globalContentAccessEditing) {
+                    globalContentAccessEditing = false;
+                    globalContentAccessButton.setAttribute('aria-pressed', 'false');
+                    globalContentAccessButton.textContent = '⛔ 전체 메뉴/게임 사용 중지 설정';
+                    document.body.classList.remove('global-content-access-editing');
+                }
                 contentAccessEditing = !contentAccessEditing;
                 contentAccessButton.setAttribute('aria-pressed', String(contentAccessEditing));
                 contentAccessButton.textContent = contentAccessEditing ? '✅ 공개 설정 완료' : '🔓 공개 설정 모드';
@@ -1774,6 +1910,29 @@
                 setStatus(contentAccessEditing
                     ? '각 상위 버튼을 눌러 공개하세요. 하위 메뉴는 상위 설정을 함께 따릅니다.'
                     : '우리 반 공개 설정을 저장했습니다.');
+            });
+
+            globalContentAccessButton.addEventListener('click', () => {
+                if (contentAccessEditing) {
+                    contentAccessEditing = false;
+                    contentAccessButton.setAttribute('aria-pressed', 'false');
+                    contentAccessButton.textContent = '🔓 공개 설정 모드';
+                    contentAccessButton.style.background = 'linear-gradient(135deg, #0284c7, #2563eb)';
+                    document.body.classList.remove('content-access-editing');
+                }
+                globalContentAccessEditing = !globalContentAccessEditing;
+                globalContentAccessButton.setAttribute('aria-pressed', String(globalContentAccessEditing));
+                globalContentAccessButton.textContent = globalContentAccessEditing
+                    ? '✅ 전체 사용 중지 설정 완료'
+                    : '⛔ 전체 메뉴/게임 사용 중지 설정';
+                document.body.classList.toggle('global-content-access-editing', globalContentAccessEditing);
+                if (globalContentAccessEditing) {
+                    document.querySelectorAll('.worksheet-group[open]').forEach((group) => group.removeAttribute('open'));
+                }
+                renderClassLocks();
+                setStatus(globalContentAccessEditing
+                    ? '사용을 막을 버튼을 누르세요. 회색 버튼은 어느 사용자도 열 수 없습니다.'
+                    : '전체 메뉴 사용 중지 설정을 저장했습니다.');
             });
             guestPasscodeInput.addEventListener('input', () => {
                 guestPasscodeInput.value = guestPasscodeInput.value.replace(/\D/g, '').slice(0, 4);
@@ -1921,7 +2080,7 @@
                 try {
                     const siteAccess = await api('/api/site/access');
                     if (siteAccess.mode === 'open') {
-                        showOpenAccess();
+                        await showOpenAccess();
                         return;
                     }
                     showRestrictedPreview();
