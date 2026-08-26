@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="입력, 처리, 출력, 저장의 흐름을 직접 구성하는 컴퓨터 원리와 활용 학습">
+    <title>컴퓨터는 무슨 일을 할까? | 컴퓨터 원리와 활용</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="lessons/system-lessons.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <header class="app-bar">
+        <a class="back-button" href="../../../../" aria-label="포털 메인으로 돌아가기">←</a>
+
+        <button id="openCourse" class="course-button" type="button">전체 과정</button>
+    </header>
+
+    <main class="lesson-shell">
+        <div class="lesson-meta">
+            <span>1차시</span>
+            <span id="stepStatus" aria-live="polite">활동 1 / 3</span>
+        </div>
+        <h1>컴퓨터는 무슨 일을 할까? <small>What Does a Computer Do?</small></h1>
+
+        <section id="stageActivity" class="stage is-active" aria-labelledby="activityTitle">
+            <div class="stage-heading">
+                <div>
+                    <span class="stage-label">원리 보기</span>
+                    <h2 id="activityTitle">태블릿은 사진을 어떻게 다룰까?</h2>
+                </div>
+            </div>
+
+            <div class="visual-layout">
+                <figure class="lesson-figure">
+                    <picture>
+                        <source srcset="assets/images/tablet-photo-data-flow-768.webp 768w, assets/images/tablet-photo-data-flow-1536.webp 1536w" sizes="(max-width: 760px) calc(100vw - 50px), 58vw" type="image/webp">
+                        <img src="assets/images/tablet-photo-data-flow-768.webp" width="768" height="512" alt="나무 블록에서 반사된 빛이 태블릿 카메라 센서로 들어가 처리 칩으로 이동한 뒤, 화면 표시와 내부 저장 칩의 두 갈래로 나뉘는 모습">
+                    </picture>
+                    <figcaption>처리된 사진 데이터는 화면에 보이는 길과 파일로 기록되는 길로 나뉩니다.</figcaption>
+                </figure>
+
+                <div class="process-details">
+                    <article>
+                        <span class="process-badge">1</span>
+                        <div><h3>입력 <small>Input</small></h3><p>렌즈로 들어온 빛이 이미지 센서에 닿습니다. 센서는 작은 점마다 빛의 밝기와 색을 측정해 숫자 데이터로 바꿉니다.</p></div>
+                    </article>
+                    <article>
+                        <span class="process-badge">2</span>
+                        <div><h3>처리 <small>Processing</small></h3><p>카메라 앱과 처리 장치는 센서의 숫자를 픽셀로 배열하고 밝기·색을 조정해 한 장의 사진 데이터를 만듭니다.</p></div>
+                    </article>
+                    <article>
+                        <span class="process-badge">3</span>
+                        <div><h3>출력 <small>Output</small></h3><p>디스플레이가 사진의 픽셀값을 받아 화면의 작은 빛점들을 켭니다. 화면은 결과를 보여 주지만 파일을 보관하지는 않습니다.</p></div>
+                    </article>
+                    <article>
+                        <span class="process-badge">4</span>
+                        <div><h3>저장 <small>Storage</small></h3><p>카메라 앱이 사진 데이터를 JPG·HEIC 같은 파일 형식으로 묶고 저장 장치에 기록합니다. 그래서 전원을 꺼도 사진이 남습니다.</p></div>
+                    </article>
+                </div>
+            </div>
+
+            <div class="branch-note"><strong>핵심 관계</strong><span>입력 → 처리 → 출력</span><span>입력 → 처리 → 저장</span></div>
+            <section class="worked-example" aria-labelledby="photoJourneyTitle">
+                <div class="explanation-heading">
+                    <span>사진 한 장의 실제 여행 <small>Step by Step</small></span>
+                    <h2 id="photoJourneyTitle">촬영 버튼을 누른 뒤 1초 동안 <small>What Happens After the Shutter Tap?</small></h2>
+                    <p>입력·처리·출력·저장은 외울 네 단어가 아니라 한 작업 안에서 이어지는 역할입니다.</p>
+                </div>
+                <ol class="story-steps">
+                    <li><span class="story-number">1</span><div><strong>손가락 입력 <small>Touch Input</small></strong><p>터치 센서가 누른 위치를 감지해 운영체제와 카메라 앱에 좌표 신호를 보냅니다.</p></div></li>
+                    <li><span class="story-number">2</span><div><strong>빛 측정 <small>Light Measurement</small></strong><p>렌즈를 지난 빛이 이미지 센서의 수많은 점에 닿고, 각 점의 밝기와 색이 숫자로 측정됩니다.</p></div></li>
+                    <li><span class="story-number">3</span><div><strong>사진 처리 <small>Image Processing</small></strong><p>처리 장치와 앱이 센서 값을 배열하고 밝기·색·흔들림을 보정해 픽셀 데이터를 만듭니다.</p></div></li>
+                    <li><span class="story-number">4</span><div><strong>화면 출력 <small>Display Output</small></strong><p>디스플레이의 작은 픽셀이 계산된 밝기와 색으로 빛나서 촬영 결과를 보여 줍니다.</p></div></li>
+                    <li><span class="story-number">5</span><div><strong>파일 만들기 <small>File Encoding</small></strong><p>사진 데이터와 촬영 시간·크기 같은 정보를 JPG·HEIC 등의 파일 규칙에 맞게 묶습니다.</p></div></li>
+                    <li><span class="story-number">6</span><div><strong>저장 장치 기록 <small>Storage Write</small></strong><p>완성된 파일을 내부 저장 장치에 기록합니다. 그래서 화면을 끄거나 전원을 꺼도 다시 열 수 있습니다.</p></div></li>
+                </ol>
+            </section>
+
+            <section class="concept-comparison" aria-labelledby="roleDifferenceTitle">
+                <div class="explanation-heading compact">
+                    <span>헷갈리지 않기 <small>Compare</small></span>
+                    <h2 id="roleDifferenceTitle">보이는 것과 저장된 것은 다르다 <small>Display Is Not Storage</small></h2>
+                </div>
+                <div class="comparison-grid">
+                    <article><h3>입력 <small>Input</small></h3><p>사람이나 센서의 동작을 컴퓨터가 다룰 신호와 데이터로 받습니다.</p><dl><dt>사진 예시</dt><dd>터치 좌표와 센서가 측정한 빛</dd></dl></article>
+                    <article><h3>처리 <small>Processing</small></h3><p>명령에 따라 데이터를 계산·비교·변환합니다.</p><dl><dt>사진 예시</dt><dd>밝기 조절, 색 보정, 픽셀 배열</dd></dl></article>
+                    <article><h3>출력 <small>Output</small></h3><p>처리 결과를 사람이 보거나 들을 수 있게 나타냅니다.</p><dl><dt>사진 예시</dt><dd>화면 픽셀이 사진을 빛으로 표시</dd></dl></article>
+                    <article><h3>저장 <small>Storage</small></h3><p>나중에 다시 쓰도록 데이터를 기록합니다.</p><dl><dt>사진 예시</dt><dd>사진 파일을 내부 저장 장치에 기록</dd></dl></article>
+                </div>
+            </section>
+
+            <section class="analogy-panel" aria-labelledby="systemAnalogyTitle">
+                <div class="analogy-main">
+                    <span class="analogy-label">쉽게 비유하면 <small>Analogy</small></span>
+                    <h2 id="systemAnalogyTitle">택배 처리소 <small>Parcel Center</small></h2>
+                    <p>접수 창구는 입력, 물건을 분류하고 주소를 확인하는 작업은 처리, 배송 현황판은 출력, 창고 선반은 저장에 비유할 수 있습니다.</p>
+                </div>
+                <aside class="analogy-limit">
+                    <strong>비유가 실제와 다른 점 <small>Where the Analogy Stops</small></strong>
+                    <p>컴퓨터의 데이터는 물건처럼 한곳에서 없어져 다른 곳으로만 이동하지 않습니다. 같은 데이터를 복사해 화면에 보여 주면서 저장 장치에도 기록할 수 있습니다.</p>
+                </aside>
+                <div class="teachback"><strong>내 말로 설명하기 <small>Teach It Back</small></strong><p>화면에 사진이 보이지만 아직 저장하지 않은 상태와, 파일로 저장한 상태가 왜 다른지 설명해 보세요.</p></div>
+            </section>
+            <div class="stage-actions end-aligned">
+                <button id="continueToActivity" class="primary-button" type="button">직접 연결하기</button>
+            </div>
+        </section>
+
+        <section id="stageConcept" class="stage" aria-labelledby="conceptTitle" hidden>
+            <div class="stage-heading">
+                <div>
+                    <span class="stage-label">활동 2</span>
+                    <h2 id="conceptTitle">동작과 역할 연결하기</h2>
+                </div>
+                <button id="resetFlow" class="text-button" type="button">다시 놓기</button>
+            </div>
+            <p class="task-instruction">동작 카드를 누른 채 알맞은 역할 칸으로 끌어다 놓으세요. 터치와 트랙패드에서도 같은 방법으로 조작할 수 있습니다.</p>
+            <div class="drag-guide" aria-label="드래그 앤 드롭 용어 안내">
+                <strong>드래그 앤 드롭 <small>Drag and Drop</small></strong>
+                <span><b>드래그 <small>Drag</small></b> 카드를 누른 채 움직이기</span>
+                <span><b>드롭 <small>Drop</small></b> 역할 칸에서 놓기</span>
+                <span class="tap-alternative">드래그가 어려우면 카드와 역할 칸을 차례로 눌러도 됩니다.</span>
+            </div>
+
+            <div id="roleMap" class="role-map" aria-label="입력 처리 출력 저장 역할 칸">
+                <button class="role-slot" type="button" data-role="input"><span>입력 <small>Input</small></span><em>동작 카드를 놓으세요</em></button>
+                <button class="role-slot" type="button" data-role="processing"><span>처리 <small>Processing</small></span><em>동작 카드를 놓으세요</em></button>
+                <button class="role-slot" type="button" data-role="output"><span>출력 <small>Output</small></span><em>동작 카드를 놓으세요</em></button>
+                <button class="role-slot" type="button" data-role="storage"><span>저장 <small>Storage</small></span><em>동작 카드를 놓으세요</em></button>
+            </div>
+            <div id="flowBank" class="flow-bank" aria-label="동작 카드"></div>
+
+            <div class="stage-actions">
+                <p id="flowFeedback" class="feedback" aria-live="polite"></p>
+                <div class="action-buttons">
+                    <button id="checkFlow" class="primary-button" type="button" disabled>연결 확인</button>
+                    <button id="startQuiz" class="primary-button" type="button" hidden>문제 풀기</button>
+                </div>
+            </div>
+        </section>
+        <section id="stageQuiz" class="stage" aria-labelledby="quizTitle" hidden>
+            <div class="stage-heading">
+                <div>
+                    <span id="quizCount" class="stage-label">문제 1 / 5</span>
+                    <h2 id="quizTitle">상황을 보고 판단하세요.</h2>
+                </div>
+            </div>
+            <div class="quiz-card">
+                <p id="questionText" class="question-text"></p>
+                <div id="questionOptions" class="question-options"></div>
+                <p id="quizFeedback" class="feedback quiz-feedback" aria-live="polite"></p>
+            </div>
+            <div class="stage-actions end-aligned">
+                <button id="submitAnswer" class="primary-button" type="button" disabled>답 확인</button>
+                <button id="nextQuestion" class="primary-button" type="button" hidden>다음 문제</button>
+            </div>
+        </section>
+
+        <section id="stageResult" class="stage" aria-labelledby="resultTitle" hidden>
+            <div class="result-grid">
+                <div class="result-score" aria-hidden="true"><strong id="scoreNumber">0</strong><span>/ 5</span></div>
+                <div>
+                    <span class="stage-label">차시 결과</span>
+                    <h2 id="resultTitle">학습 결과</h2>
+                    <p id="resultMessage"></p>
+                </div>
+            </div>
+            <div id="reviewList" class="review-list"></div>
+            <div class="stage-actions end-aligned">
+                <button id="retryQuiz" class="secondary-button" type="button">문제 다시 풀기</button>
+                <button id="showCourse" class="primary-button" type="button">전체 과정 보기</button>
+                <a class="primary-button" href="lessons/?lesson=a02">다음 차시</a>
+            </div>
+        </section>
+    </main>
+
+    <dialog id="courseDialog" class="course-dialog" aria-labelledby="courseTitle">
+        <div class="dialog-heading">
+            <h2 id="courseTitle">컴퓨터 원리와 활용 전체 과정</h2>
+            <button id="closeCourse" class="icon-button" type="button" aria-label="전체 과정 닫기">×</button>
+        </div>
+        <ol class="course-list">
+            <li class="is-current"><span>01</span><strong>컴퓨터의 기본 원리</strong><small>Computer Fundamentals</small></li>
+            <li><span>02</span><strong>컴퓨터 안의 하드웨어</strong><small>Computer Hardware</small></li>
+            <li><span>03</span><strong>운영체제와 앱</strong><small>Operating Systems &amp; Apps</small></li>
+            <li><span>04</span><strong>마우스·터치·키보드</strong><small>Mouse, Touch &amp; Keyboard</small></li>
+            <li><span>05</span><strong>파일과 저장 공간</strong><small>Files &amp; Storage</small></li>
+            <li><span>06</span><strong>화면과 디지털 미디어</strong><small>Displays &amp; Digital Media</small></li>
+            <li><span>07</span><strong>데이터의 크기와 표현</strong><small>Data Size &amp; Representation</small></li>
+            <li><span>08</span><strong>네트워크와 인터넷</strong><small>Networks &amp; the Internet</small></li>
+            <li><span>09</span><strong>안전하고 책임 있는 사용</strong><small>Safe &amp; Responsible Use</small></li>
+            <li><span>10</span><strong>문제 해결과 코딩 원리</strong><small>Problem Solving &amp; Coding</small></li>
+        </ol>
+    </dialog>
+</body>
+</html>
