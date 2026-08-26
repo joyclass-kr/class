@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const repoRoot = path.resolve(import.meta.dirname, '..');
-const lessonRoot = path.join(repoRoot, 'learning', 'basics', 'hanja-meaning');
+const lessonRoot = path.join(repoRoot, 'learning', 'literacy-numeracy', 'hanja-meaning');
 const curriculumPath = path.join(repoRoot, 'scripts', 'hanja-curriculum-v2.json');
 
 const indexHtml = fs.readFileSync(path.join(lessonRoot, 'index.html'), 'utf8');

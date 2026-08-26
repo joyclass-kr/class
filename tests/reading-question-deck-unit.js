@@ -1,7 +1,7 @@
 "use strict";
 
 const assert = require("node:assert/strict");
-const deck = require("../learning/basics/reading/deck");
+const deck = require("../learning/literacy-numeracy/reading/deck");
 
 function fixedRandom() {
   return 0.37;

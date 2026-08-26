@@ -2,11 +2,11 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 
 const root = fs.readFileSync('index.html', 'utf8');
-const page = fs.readFileSync('learning/academics/chemistry-lab/index.html', 'utf8');
-const app = fs.readFileSync('learning/academics/chemistry-lab/app.js', 'utf8');
-const styles = fs.readFileSync('learning/academics/chemistry-lab/styles.css', 'utf8');
+const page = fs.readFileSync('learning/inquiry/chemistry-lab/index.html', 'utf8');
+const app = fs.readFileSync('learning/inquiry/chemistry-lab/app.js', 'utf8');
+const styles = fs.readFileSync('learning/inquiry/chemistry-lab/styles.css', 'utf8');
 
-assert.match(root, /href="learning\/academics\/chemistry-lab\/"/);
+assert.match(root, /href="learning\/inquiry\/chemistry-lab\/"/);
 assert.match(root, /<strong>화학 실험실<\/strong>/);
 assert.match(page, /<h1 id="page-title">화학 실험실<\/h1>/);
 assert.doesNotMatch(page, /초등 관찰에서/);

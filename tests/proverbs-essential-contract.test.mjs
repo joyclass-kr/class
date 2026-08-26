@@ -5,8 +5,8 @@ import vm from "node:vm";
 
 function loadBanks() {
   const context = { window: {} };
-  vm.runInNewContext(fs.readFileSync("learning/basics/proverbs/proverbs-data.js", "utf8"), context);
-  vm.runInNewContext(fs.readFileSync("learning/basics/proverbs/proverbs-essential-additions.js", "utf8"), context);
+  vm.runInNewContext(fs.readFileSync("learning/literacy-numeracy/proverbs/proverbs-data.js", "utf8"), context);
+  vm.runInNewContext(fs.readFileSync("learning/literacy-numeracy/proverbs/proverbs-essential-additions.js", "utf8"), context);
   return context.window.PROVERB_BANKS;
 }
 

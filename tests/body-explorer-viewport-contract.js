@@ -5,7 +5,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const root = path.resolve(__dirname, "..");
-const dir = path.join(root, "learning", "academics", "body-explorer");
+const dir = path.join(root, "learning", "inquiry", "body-explorer");
 const app = fs.readFileSync(path.join(dir, "app.js"), "utf8");
 const styles = fs.readFileSync(path.join(dir, "styles.css"), "utf8");
 const nervousStyles = fs.readFileSync(path.join(dir, "nervous.css"), "utf8");

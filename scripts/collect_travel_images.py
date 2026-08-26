@@ -31,7 +31,7 @@ from PIL import Image, ImageOps, UnidentifiedImageError
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MAP_DIR = ROOT / "learning" / "academics" / "korea-travel-map"
+MAP_DIR = ROOT / "learning" / "inquiry" / "korea-travel-map"
 IMAGE_DIR = MAP_DIR / "images"
 MANIFEST_PATH = MAP_DIR / "image-manifest.js"
 ERROR_LOG_PATH = ROOT / "scratch" / "travel-image-collection-errors.json"

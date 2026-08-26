@@ -1,10 +1,10 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 
-const scienceLab = fs.readFileSync('learning/academics/science-lab/index.html', 'utf8');
-const page = fs.readFileSync('learning/academics/science-lab/earthquake/index.html', 'utf8');
-const app = fs.readFileSync('learning/academics/science-lab/earthquake/app.js', 'utf8');
-const styles = fs.readFileSync('learning/academics/science-lab/earthquake/styles.css', 'utf8');
+const scienceLab = fs.readFileSync('learning/inquiry/science-lab/index.html', 'utf8');
+const page = fs.readFileSync('learning/inquiry/science-lab/earthquake/index.html', 'utf8');
+const app = fs.readFileSync('learning/inquiry/science-lab/earthquake/app.js', 'utf8');
+const styles = fs.readFileSync('learning/inquiry/science-lab/earthquake/styles.css', 'utf8');
 
 assert.doesNotMatch(page, /항상/);
 

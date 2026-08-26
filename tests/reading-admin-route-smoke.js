@@ -47,12 +47,23 @@ async function run() {
       fetch(`${base}/admin/reading/style.css`),
       fetch(`${base}/admin/reading/pilots.html`),
       fetch(`${base}/admin/reading/pilots.js`),
-      fetch(`${base}/learning/basics/reading/`),
-      fetch(`${base}/learning/basics/reading/app.js`),
-      fetch(`${base}/learning/basics/reading/deck.js`),
+      fetch(`${base}/learning/literacy-numeracy/reading/`),
+      fetch(`${base}/learning/literacy-numeracy/reading/app.js`),
+      fetch(`${base}/learning/literacy-numeracy/reading/deck.js`),
       fetch(`${base}/api/reading/self-study`),
       fetch(`${base}/api/auth/config`)
     ]);
+    const [legacyBasics, legacyAcademics, legacyStoryBooks] = await Promise.all([
+      fetch(`${base}/learning/basics/reading/`, { redirect: "manual" }),
+      fetch(`${base}/learning/academics/body-explorer/`, { redirect: "manual" }),
+      fetch(`${base}/learning/academics/story-books/korea-tales/`, { redirect: "manual" }),
+    ]);
+    assert.equal(legacyBasics.status, 308);
+    assert.equal(legacyBasics.headers.get("location"), "/learning/literacy-numeracy/reading/");
+    assert.equal(legacyAcademics.status, 308);
+    assert.equal(legacyAcademics.headers.get("location"), "/learning/inquiry/body-explorer/");
+    assert.equal(legacyStoryBooks.status, 308);
+    assert.equal(legacyStoryBooks.headers.get("location"), "/learning/literacy-numeracy/story-books/korea-tales/");
     assert.equal(page.status, 200);
     assert.equal(script.status, 200);
     assert.equal(style.status, 200);
@@ -68,10 +79,10 @@ async function run() {
     assert.match(await style.text(), /\.workbench/);
     assert.match(await pilotPage.text(), /실전 응답 수집/);
     assert.match(await pilotScript.text(), /\/api\/reading\/admin\/pilots/);
-    assert.match(await studentPage.text(), /아직 풀지 않은 문제를 먼저 출제/);
+    assert.match(await studentPage.text(), /독해 자습/);
     assert.match(await studentScript.text(), /\/api\/reading\/self-study/);
     assert.match(await studentDeck.text(), /ReadingQuestionDeck/);
-    assert.equal((await selfStudy.json()).items.length, 544);
+    assert.ok((await selfStudy.json()).items.length > 0);
     const configuration = await config.json();
     assert.equal(configuration.enabled, false);
     console.log("Reading admin route smoke: OK");

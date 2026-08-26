@@ -4,7 +4,7 @@ const assert = require("node:assert");
 const fs = require("node:fs");
 const path = require("node:path");
 
-const vocabularyAssets = path.join(__dirname, "..", "learning", "basics", "vocabulary", "assets");
+const vocabularyAssets = path.join(__dirname, "..", "learning", "literacy-numeracy", "vocabulary", "assets");
 const dataPath = path.join(vocabularyAssets, "data", "english-vocabulary-3000-v2.json");
 const payload = JSON.parse(fs.readFileSync(dataPath, "utf8"));
 

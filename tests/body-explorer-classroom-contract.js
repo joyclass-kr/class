@@ -6,7 +6,7 @@ const path = require("node:path");
 const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
-const explorerRoot = path.join(root, "learning", "academics", "body-explorer");
+const explorerRoot = path.join(root, "learning", "inquiry", "body-explorer");
 const serverSource = fs.readFileSync(path.join(root, "game-hub-server", "server.js"), "utf8");
 const teacherSource = fs.readFileSync(path.join(explorerRoot, "teacher.js"), "utf8");
 

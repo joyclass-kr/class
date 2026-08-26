@@ -3,14 +3,14 @@ import fs from "node:fs";
 import test from "node:test";
 import vm from "node:vm";
 
-const html = fs.readFileSync("learning/basics/proverbs/index.html", "utf8");
-const app = fs.readFileSync("learning/basics/proverbs/app.js", "utf8");
-const styles = fs.readFileSync("learning/basics/proverbs/styles.css", "utf8");
+const html = fs.readFileSync("learning/literacy-numeracy/proverbs/index.html", "utf8");
+const app = fs.readFileSync("learning/literacy-numeracy/proverbs/app.js", "utf8");
+const styles = fs.readFileSync("learning/literacy-numeracy/proverbs/styles.css", "utf8");
 
 function curriculumCounts() {
   const dataContext = { window: {} };
-  vm.runInNewContext(fs.readFileSync("learning/basics/proverbs/proverbs-data.js", "utf8"), dataContext);
-  vm.runInNewContext(fs.readFileSync("learning/basics/proverbs/proverbs-essential-additions.js", "utf8"), dataContext);
+  vm.runInNewContext(fs.readFileSync("learning/literacy-numeracy/proverbs/proverbs-data.js", "utf8"), dataContext);
+  vm.runInNewContext(fs.readFileSync("learning/literacy-numeracy/proverbs/proverbs-essential-additions.js", "utf8"), dataContext);
   const lessonContext = {};
   vm.runInNewContext(app.slice(app.indexOf("const LESSONS ="), app.indexOf("let language")) + ";globalThis.lessons=LESSONS", lessonContext);
   return Object.fromEntries(["ko", "en"].map((language) => {

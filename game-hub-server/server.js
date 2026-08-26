@@ -163,17 +163,17 @@ function proxyToLearningApp(port, options = {}) {
 }
 
 const arithmeticApp = startLearningApp(
-  "learning/basics/arithmetics",
+  "learning/literacy-numeracy/arithmetics",
   ARITHMETIC_PORT,
   "Arithmetic app",
 );
 const hanguksaApp = startLearningApp(
-  "learning/academics/korean-history",
+  "learning/inquiry/korean-history",
   HANGUKSA_PORT,
   "Hanguksa app",
 );
 const worldVoyageApp = startNodeLearningApp(
-  "learning/academics/age-of-exploration",
+  "learning/inquiry/age-of-exploration",
   WORLD_VOYAGE_PORT,
   "World Voyage app",
 );
@@ -283,11 +283,11 @@ app.get("/favicon.png", (_req, res) => {
 });
 app.use(
   "/assets",
-  express.static(path.join(SITE_ROOT, "learning", "basics", "arithmetics", "dist", "client", "assets"), staticAssetOptions),
+  express.static(path.join(SITE_ROOT, "learning", "literacy-numeracy", "arithmetics", "dist", "client", "assets"), staticAssetOptions),
 );
 app.use(
   "/fonts",
-  express.static(path.join(SITE_ROOT, "learning", "basics", "arithmetics", "dist", "client", "fonts"), staticAssetOptions),
+  express.static(path.join(SITE_ROOT, "learning", "literacy-numeracy", "arithmetics", "dist", "client", "fonts"), staticAssetOptions),
 );
 app.get("/math-learning-banner.webp", (_req, res) => {
   res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
@@ -295,7 +295,7 @@ app.get("/math-learning-banner.webp", (_req, res) => {
     path.join(
       SITE_ROOT,
       "learning",
-      "basics",
+      "literacy-numeracy",
       "arithmetics",
       "dist",
       "client",
@@ -305,18 +305,18 @@ app.get("/math-learning-banner.webp", (_req, res) => {
 });
 app.use(
   "/hanguksa/assets",
-  express.static(path.join(SITE_ROOT, "learning", "academics", "korean-history", "dist", "client", "assets"), staticAssetOptions),
+  express.static(path.join(SITE_ROOT, "learning", "inquiry", "korean-history", "dist", "client", "assets"), staticAssetOptions),
 );
 app.use(
   "/questions",
-  express.static(path.join(SITE_ROOT, "learning", "academics", "korean-history", "dist", "client", "questions"), staticAssetOptions),
+  express.static(path.join(SITE_ROOT, "learning", "inquiry", "korean-history", "dist", "client", "questions"), staticAssetOptions),
 );
 // Travel-map photos are requested by an <img> after the gated page opens.
 // Serve this immutable asset directory before requireSiteAccess so a session
 // check cannot turn an image response into login HTML.
 app.use(
-  "/learning/academics/korea-travel-map/images",
-  express.static(path.join(SITE_ROOT, "learning", "academics", "korea-travel-map", "images"), staticAssetOptions),
+  "/learning/inquiry/korea-travel-map/images",
+  express.static(path.join(SITE_ROOT, "learning", "inquiry", "korea-travel-map", "images"), staticAssetOptions),
 );
 const MAX_ROOM_PLAYERS = {
   setgame: 4,
@@ -376,17 +376,20 @@ app.use(
 );
 
 const LEGACY_LEARNING_PATHS = new Map([
-  ["/learning/reading", "/learning/basics/reading"],
-  ["/learning/basics/idioms", "/learning/basics/classical-chinese-idioms"],
-  ["/learning/academics/classical-chinese-idioms", "/learning/basics/classical-chinese-idioms"],
-  ["/learning/academics/proverbs", "/learning/basics/proverbs"],
-  ["/learning/simulations/body-explorer", "/learning/academics/body-explorer"],
+  ["/learning/reading", "/learning/literacy-numeracy/reading"],
+  ["/learning/basics/idioms", "/learning/literacy-numeracy/classical-chinese-idioms"],
+  ["/learning/academics/classical-chinese-idioms", "/learning/literacy-numeracy/classical-chinese-idioms"],
+  ["/learning/academics/proverbs", "/learning/literacy-numeracy/proverbs"],
+  ["/learning/academics/story-books", "/learning/literacy-numeracy/story-books"],
+  ["/learning/simulations/body-explorer", "/learning/inquiry/body-explorer"],
   ["/learning/training/music-studio", "/learning/arts/music-studio"],
   ["/learning/art", "/learning/arts/art-appreciation/museum/"],
   ["/learning/music/classics", "/learning/arts/music-listening/genres/classical"],
   ["/learning/music/korean", "/learning/arts/music-listening/genres/korean"],
   ["/learning/arts/classical-music", "/learning/arts/music-listening/genres/classical"],
   ["/learning/arts/korean-music", "/learning/arts/music-listening/genres/korean"],
+  ["/learning/basics", "/learning/literacy-numeracy"],
+  ["/learning/academics", "/learning/inquiry"],
 ]);
 for (const [legacyPath, currentPath] of LEGACY_LEARNING_PATHS) {
   app.use(legacyPath, (req, res) => {

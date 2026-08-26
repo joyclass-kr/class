@@ -1,7 +1,7 @@
 ﻿import fs from 'node:fs/promises';
 import vm from 'node:vm';
 
-const mapDir = 'learning/academics/korea-travel-map';
+const mapDir = 'learning/inquiry/korea-travel-map';
 const files = [
   'places.js', 'more-places.js', 'manual-places.js', 'supplement-places.js',
   'value-places.js', 'value-places-extra.js', 'regional-value-places.js',

@@ -5,7 +5,7 @@ const html = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
 
 assert.match(
   html,
-  /href="learning\/academics\/periodic-table\/"[\s\S]*?<strong>주기율표<\/strong><small>\(Periodic Table\)<\/small>/,
+  /href="learning\/inquiry\/periodic-table\/"[\s\S]*?<strong>주기율표<\/strong><small>\(Periodic Table\)<\/small>/,
   "The periodic-table menu must use the concise Korean title and English translation.",
 );
 assert.doesNotMatch(
@@ -15,8 +15,8 @@ assert.doesNotMatch(
 );
 assert.match(
   html,
-  /href="learning\/academics\/body-explorer\/"[\s\S]*?<strong>인체의 구조와 기능<\/strong><small>\(Human Body Systems\)<\/small>/,
-  "The body-learning menu must describe both anatomy and how body systems work.",
+  /href="learning\/inquiry\/body-explorer\/"[\s\S]*?<strong>인체의 구조<\/strong><small>\(Human Body Structure\)<\/small>/,
+  "The body-learning menu must describe the anatomy focus.",
 );
 assert.doesNotMatch(
   html,
@@ -26,8 +26,8 @@ assert.doesNotMatch(
 
 assert.match(
   html,
-  /href="learning\/academics\/korean-museum\/"[\s\S]*?<strong>\uD55C\uAD6D\uC0AC \uC720\uBB3C\u00B7\uC720\uC801<\/strong><small>\(Korean Artifacts &amp; Sites\)<\/small>/,
-  "The Korean-history museum menu must name the artifacts and sites it teaches.",
+  /href="learning\/inquiry\/korean-museum\/"[\s\S]*?<strong>유물·유적<\/strong><small>\(Artifacts &amp; Sites\)<\/small>/,
+  "The museum menu must use the concise artifacts-and-sites label.",
 );
 assert.doesNotMatch(
   html,

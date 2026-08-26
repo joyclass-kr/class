@@ -1,7 +1,7 @@
 const assert = require("node:assert/strict");
 const path = require("node:path");
 const { spawn } = require("node:child_process");
-const { io } = require("../learning/academics/age-of-exploration/node_modules/socket.io-client");
+const { io } = require("../learning/inquiry/age-of-exploration/node_modules/socket.io-client");
 const WebSocket = require("../game-hub-server/node_modules/ws");
 
 const ROOT = path.resolve(__dirname, "..");

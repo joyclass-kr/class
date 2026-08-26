@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const repoRoot = path.resolve(import.meta.dirname, '..');
 const batchFiles = ['hanja-v2-lessons-01.json', 'hanja-v2-lessons-02.json', 'hanja-v2-lessons-03.json', 'hanja-v2-lessons-04.json', 'hanja-v2-lessons-05.json', 'hanja-v2-lessons-06.json'];
-const outputDir = path.join(repoRoot, 'learning', 'basics', 'hanja-meaning', 'v2');
+const outputDir = path.join(repoRoot, 'learning', 'literacy-numeracy', 'hanja-meaning', 'v2');
 const rawLessons = batchFiles.flatMap((name) => JSON.parse(fs.readFileSync(path.join(repoRoot, 'scripts', name), 'utf8')));
 
 function escapeHtml(value) {

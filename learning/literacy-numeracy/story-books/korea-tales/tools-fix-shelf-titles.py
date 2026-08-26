@@ -6,7 +6,7 @@
 """
 import io, os, re
 
-BOOKS = r'E:\webprojects\class\learning\academics\story-books\korea-tales'
+BOOKS = r'E:\webprojects\class\learning\inquiry\story-books\korea-tales'
 p = os.path.join(BOOKS, 'index.html')
 s = io.open(p, encoding='utf-8').read()
 

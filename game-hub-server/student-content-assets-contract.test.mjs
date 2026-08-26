@@ -19,8 +19,8 @@ test("game backgrounds and music resolve to their enabled content folder", () =>
     "/learning/games/diamondgame",
   );
   assert.equal(
-    contentRootForStaticAsset("/learning/basics/spelling/app.js?v=1"),
-    "/learning/basics/spelling",
+    contentRootForStaticAsset("/learning/literacy-numeracy/spelling/app.js?v=1"),
+    "/learning/literacy-numeracy/spelling",
   );
 });
 

@@ -1,8 +1,8 @@
 "use strict";
 
 const assert = require("node:assert");
-const core = require("../learning/basics/classical-chinese-idioms/idioms-core.js");
-const data = require("../learning/basics/classical-chinese-idioms/idioms-data.js");
+const core = require("../learning/literacy-numeracy/classical-chinese-idioms/idioms-core.js");
+const data = require("../learning/literacy-numeracy/classical-chinese-idioms/idioms-data.js");
 
 assert.ok(data.length >= 40, "검증된 핵심 한자성어가 40개 이상이어야 합니다.");
 assert.strictEqual(new Set(data.map((item) => item.id)).size, data.length, "id는 중복될 수 없습니다.");

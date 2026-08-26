@@ -10,7 +10,7 @@ const musicControlPath = path.join(root, "assets", "sound", "music-control.js");
 const musicControlCssPath = path.join(root, "assets", "sound", "music-control.css");
 const hubPath = path.join(root, "index.html");
 const fruitBellPath = path.join(root, "learning", "games", "fruitbell", "fruitbell.html");
-const voyagePath = path.join(root, "learning", "academics", "age-of-exploration", "public", "index.html");
+const voyagePath = path.join(root, "learning", "inquiry", "age-of-exploration", "public", "index.html");
 
 for (const filePath of [sfxPath, musicControlPath, musicControlCssPath, hubPath, fruitBellPath, voyagePath]) {
     assert.ok(fs.existsSync(filePath), `Missing sound effect file: ${filePath}`);

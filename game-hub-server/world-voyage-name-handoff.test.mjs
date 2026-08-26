@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 const home = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
 const voyage = fs.readFileSync(
-  new URL("../learning/academics/age-of-exploration/public/index.html", import.meta.url),
+  new URL("../learning/inquiry/age-of-exploration/public/index.html", import.meta.url),
   "utf8",
 );
 

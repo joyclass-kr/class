@@ -3,7 +3,7 @@ import path from 'node:path';
 import https from 'node:https';
 
 const repoRoot = path.resolve(import.meta.dirname, '..');
-const lessonRoot = path.join(repoRoot, 'learning', 'basics', 'hanja-meaning');
+const lessonRoot = path.join(repoRoot, 'learning', 'literacy-numeracy', 'hanja-meaning');
 const dataDir = path.join(repoRoot, 'scripts', 'hanja-lessons');
 const cachePath = path.join(repoRoot, 'scripts', 'hanja-strokes.json');
 const templatePath = path.join(lessonRoot, 'il-wol-nyeon', 'index.html');

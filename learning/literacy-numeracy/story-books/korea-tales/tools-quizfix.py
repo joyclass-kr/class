@@ -7,7 +7,7 @@
 import io, os, re, json, sys
 
 SPREAD = [1, 2, 0, 2, 0, 1]
-BOOKS = r'E:\webprojects\class\learning\academics\story-books\korea-tales'
+BOOKS = r'E:\webprojects\class\learning\inquiry\story-books\korea-tales'
 LINE = re.compile(r'^(\s*)\{ q: (.*?), choices: (\[.*?\]), answer: (\d+) \}(,?)\s*$')
 
 

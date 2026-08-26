@@ -10,7 +10,7 @@
 """
 import io, os, re
 
-BOOKS = r'E:\webprojects\class\learning\academics\story-books\korea-tales'
+BOOKS = r'E:\webprojects\class\learning\inquiry\story-books\korea-tales'
 CARD = re.compile(
     r'[ \t]*<a class="book-card" href="(.*?)/">\n'
     r'[ \t]*<span class="book-cover" data-title="(.*?)"><img src=".*?" alt="" loading="lazy"></span>\n'

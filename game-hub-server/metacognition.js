@@ -12,7 +12,7 @@ const fs = require("fs");
 const path = require("path");
 
 const MIGRATION_NAMES = ["004-metacognition"];
-const PAGE_DIR = path.join(__dirname, "..", "learning", "basics", "metacognition");
+const PAGE_DIR = path.join(__dirname, "..", "learning", "literacy-numeracy", "metacognition");
 
 /*
  * 문항 세트와 산출식은 학생 화면 폴더에 있는 것을 그대로 가져다 쓴다.

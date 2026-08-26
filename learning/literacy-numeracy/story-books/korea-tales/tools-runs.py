@@ -9,7 +9,7 @@
 """
 import io, os, re, sys, json
 
-BOOKS = r'E:\webprojects\class\learning\academics\story-books\korea-tales'
+BOOKS = r'E:\webprojects\class\learning\inquiry\story-books\korea-tales'
 def _is_novel(slug):
     # 소설 틀은 paras, 그림책 틀은 beats를 쓴다. 목록을 손으로 적지 않는다.
     try:

@@ -6,7 +6,7 @@ const path = require("node:path");
 const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
-const explorerRoot = path.join(root, "learning", "academics", "body-explorer");
+const explorerRoot = path.join(root, "learning", "inquiry", "body-explorer");
 const read = (file) => fs.readFileSync(path.join(explorerRoot, file), "utf8");
 const loadStages = (file) => {
     const sandbox = { window: {} };

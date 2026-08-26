@@ -2,18 +2,18 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 
 const root = fs.readFileSync('index.html', 'utf8');
-const page = fs.readFileSync('learning/academics/science-lab/index.html', 'utf8');
-const app = fs.readFileSync('learning/academics/science-lab/app.js', 'utf8');
-const styles = fs.readFileSync('learning/academics/science-lab/styles.css', 'utf8');
-const solubilityPage = fs.readFileSync('learning/academics/science-lab/solubility/index.html', 'utf8');
-const solubilityApp = fs.readFileSync('learning/academics/science-lab/solubility/app.js', 'utf8');
-const solubilityStyles = fs.readFileSync('learning/academics/science-lab/solubility/styles.css', 'utf8');
-const saltVisualStyles = fs.readFileSync('learning/academics/science-lab/solubility/salt-visual.css', 'utf8');
-const solubilityQuizStyles = fs.readFileSync('learning/academics/science-lab/solubility/quiz.css', 'utf8');
+const page = fs.readFileSync('learning/inquiry/science-lab/index.html', 'utf8');
+const app = fs.readFileSync('learning/inquiry/science-lab/app.js', 'utf8');
+const styles = fs.readFileSync('learning/inquiry/science-lab/styles.css', 'utf8');
+const solubilityPage = fs.readFileSync('learning/inquiry/science-lab/solubility/index.html', 'utf8');
+const solubilityApp = fs.readFileSync('learning/inquiry/science-lab/solubility/app.js', 'utf8');
+const solubilityStyles = fs.readFileSync('learning/inquiry/science-lab/solubility/styles.css', 'utf8');
+const saltVisualStyles = fs.readFileSync('learning/inquiry/science-lab/solubility/salt-visual.css', 'utf8');
+const solubilityQuizStyles = fs.readFileSync('learning/inquiry/science-lab/solubility/quiz.css', 'utf8');
 
-assert.match(root, /href="learning\/academics\/science-lab\/"/);
+assert.match(root, /href="learning\/inquiry\/science-lab\/"/);
 assert.match(root, /<strong>과학 실험실<\/strong>/);
-assert.doesNotMatch(root, /href="learning\/academics\/chemistry-lab\/"/);
+assert.doesNotMatch(root, /href="learning\/inquiry\/chemistry-lab\/"/);
 assert.match(page, /<h1>과학 실험실<\/h1>/);
 assert.doesNotMatch(page, /<header class="site-header">/);
 assert.match(page, /← 학습 메뉴/);

@@ -16,26 +16,27 @@ test("learning menus use the four top-level domains", () => {
       .filter((entry) => entry.isDirectory())
       .map((entry) => entry.name)
       .sort(),
-    ["academics", "arts", "basics", "games"],
+    ["arts", "games", "inquiry", "literacy-numeracy"],
   );
 
   const menu = read("index.html");
   for (const href of [
-    "learning/basics/reading/",
-    "learning/basics/classical-chinese-idioms/",
-    "learning/academics/body-explorer/",
-    "learning/arts/music-studio/",
+    "learning/literacy-numeracy/reading/",
+    "learning/literacy-numeracy/classical-chinese-idioms/",
+    "learning/literacy-numeracy/story-books/korea-tales/",
+    "learning/inquiry/body-explorer/",
+    "learning/arts/music-listening/",
     "learning/arts/art-appreciation/museum/",
-    "learning/arts/classical-music/",
-    "learning/arts/korean-music/",
+    "learning/arts/instrument-room/",
+    "learning/arts/art-studio/",
   ]) {
     assert.match(menu, new RegExp(`href="${href.replaceAll(".", "\\.")}"`));
     assert.equal(fs.existsSync(path.join(root, href)), true, href);
   }
-  assert.doesNotMatch(menu, /href="learning\/basics\/graph-studio\/"/);
+  assert.doesNotMatch(menu, /href="learning\/literacy-numeracy\/graph-studio\/"/);
 
   const teacherMenu = read("classtools/index.html");
-  assert.match(teacherMenu, /href="\/learning\/basics\/graph-studio\/"/);
+  assert.match(teacherMenu, /href="\/learning\/literacy-numeracy\/graph-studio\/"/);
   assert.match(teacherMenu, /<h3 class="tool-name">그래프 그리기<\/h3>/);
   assert.match(teacherMenu, /<h3 class="tool-name">학급 대시보드<\/h3>/);
   assert.doesNotMatch(teacherMenu, /스마트 학급 대시보드|href="seating"|교실 자리 배치/);
@@ -44,9 +45,9 @@ test("learning menus use the four top-level domains", () => {
 
 test("menu-specific asset groups live with their menu", () => {
   const expected = [
-    "learning/basics/vocabulary/assets/data/english-vocabulary-3000-v2.json",
-    "learning/basics/vocabulary/assets/images/apple-v2.webp",
-    "learning/academics/body-explorer/assets/images/circulation-hero-v2.webp",
+    "learning/literacy-numeracy/vocabulary/assets/data/english-vocabulary-3000-v2.json",
+    "learning/literacy-numeracy/vocabulary/assets/images/apple-v2.webp",
+    "learning/inquiry/body-explorer/assets/images/circulation-hero-v2.webp",
     "learning/arts/art-appreciation/assets/sound/museum/gallery-01-portrait.ogg",
     "learning/arts/art-appreciation/assets/sound/museum/gallery-02-nature.ogg",
     "learning/arts/art-appreciation/assets/sound/museum/gallery-03-story.ogg",
@@ -97,14 +98,14 @@ test("museum galleries switch to their matching background music", () => {
 
 test("moved menu assets have no references to their former root locations", () => {
   const sources = [
-    read("learning/basics/vocabulary/app.js"),
+    read("learning/literacy-numeracy/vocabulary/app.js"),
     read("learning/arts/art-appreciation/museum/index.html"),
     read("learning/games/omok/omok.html"),
     read("learning/games/connect6/connect6.html"),
     ...fs
-      .readdirSync(path.join(root, "learning/academics/body-explorer"))
+      .readdirSync(path.join(root, "learning/inquiry/body-explorer"))
       .filter((name) => /\.(?:css|html|js)$/.test(name))
-      .map((name) => read(`learning/academics/body-explorer/${name}`)),
+      .map((name) => read(`learning/inquiry/body-explorer/${name}`)),
   ].join("\n");
 
   assert.doesNotMatch(sources, /(?:\.\.\/){3}assets\/data\//);
@@ -119,7 +120,7 @@ test("relocated static asset URLs resolve to files in the repository", () => {
   const sourceRoots = [
     path.join(root, "index.html"),
     path.join(root, "learning/games"),
-    path.join(root, "learning/basics/spelling"),
+    path.join(root, "learning/literacy-numeracy/spelling"),
   ];
   const sourceFiles = [];
 
@@ -135,7 +136,7 @@ test("relocated static asset URLs resolve to files in the repository", () => {
   for (const sourcePath of sourceRoots) collect(sourcePath);
 
   const staticUrlPattern =
-    /\/learning\/(?:games|basics|academics|arts)\/[^"'()\s]+?\.(?:mp3|webp)/g;
+    /\/learning\/(?:games|literacy-numeracy|inquiry|arts)\/[^"'()\s]+?\.(?:mp3|webp)/g;
   for (const sourceFile of sourceFiles) {
     const source = fs.readFileSync(sourceFile, "utf8");
     for (const url of source.match(staticUrlPattern) || []) {

@@ -1,11 +1,11 @@
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 
-const css = fs.readFileSync("learning/basics/graph-studio/styles.css", "utf8");
-const html = fs.readFileSync("learning/basics/graph-studio/index.html", "utf8");
-const script = fs.readFileSync("learning/basics/graph-studio/app.js", "utf8");
-const { expressionToLatex, createGraphViewport } = require("../learning/basics/graph-studio/math-format.js");
-const katex = require("../learning/basics/graph-studio/vendor/katex.min.js");
+const css = fs.readFileSync("learning/literacy-numeracy/graph-studio/styles.css", "utf8");
+const html = fs.readFileSync("learning/literacy-numeracy/graph-studio/index.html", "utf8");
+const script = fs.readFileSync("learning/literacy-numeracy/graph-studio/app.js", "utf8");
+const { expressionToLatex, createGraphViewport } = require("../learning/literacy-numeracy/graph-studio/math-format.js");
+const katex = require("../learning/literacy-numeracy/graph-studio/vendor/katex.min.js");
 
 assert.match(css, /\.sectionHeading small[^}]*font-size:\s*12px/);
 assert.match(css, /\.functionComposer header small,[\s\S]*?font-size:\s*12px/);

@@ -259,7 +259,7 @@ font-size: clamp(15px, 1.8vw, 18px);
 
 ## 폴더 규칙
 
-`learning/academics/story-books/korea-tales/<책이름>/` — 예: `korea-tales/samnyeon-gogae/`
+`learning/literacy-numeracy/story-books/korea-tales/<책이름>/` — 예: `korea-tales/samnyeon-gogae/`
 책 안의 `back-link`와 `home-btn` 경로는 `../../../../../` (5단계 위).
 
 ## 진행 상황

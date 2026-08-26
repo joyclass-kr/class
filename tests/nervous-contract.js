@@ -6,7 +6,7 @@ const path = require("node:path");
 const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
-const dir = path.join(root, "learning", "academics", "body-explorer");
+const dir = path.join(root, "learning", "inquiry", "body-explorer");
 const files = {
     html: path.join(dir, "nervous.html"),
     data: path.join(dir, "nervous-data.js"),

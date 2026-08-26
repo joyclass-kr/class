@@ -45,7 +45,7 @@ test("sound controls collapse into a top-right speaker with vertical sliders", (
 
 test("space activities no longer link to the retired space hub", () => {
   for (const activity of ["solar-system", "constellations", "earth-moon"]) {
-    const html = read(`learning/academics/space/${activity}/index.html`);
+    const html = read(`learning/inquiry/space/${activity}/index.html`);
     assert.doesNotMatch(html, /우주 관찰 메인/);
     assert.doesNotMatch(html, /space-home-btn/);
   }

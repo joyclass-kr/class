@@ -12,7 +12,7 @@
 import io, json, os, re, sys
 from collections import defaultdict
 
-BOOKS = r'E:\webprojects\class\learning\academics\story-books\korea-tales'
+BOOKS = r'E:\webprojects\class\learning\inquiry\story-books\korea-tales'
 SIDE = re.compile(r'((?:left|right): \[\n)(.*?)(\n                \])', re.S)
 ITEM = re.compile(r'^(\s*)"((?:[^"\\]|\\.)*)"(,?)\s*$', re.M)
 

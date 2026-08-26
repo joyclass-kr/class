@@ -12,15 +12,10 @@ class/
 ├─ classtools/                 교사용 학급 도구
 ├─ assets/                     공통 이미지·음원·네트워크 코드
 ├─ learning/
-│  ├─ basics/
-│  │  ├─ arithmetics/          산수·수학 앱
-│  │  └─ hanguksa-basic/       한국사 앱
-│  ├─ reading/                 읽기 학습
-│  ├─ games/                   교실 게임
-│  ├─ art/                     미술 학습
-│  ├─ music/                   음악 학습
-│  ├─ simulations/             체험형 학습
-│  └─ training/                훈련 활동
+│  ├─ literacy-numeracy/       문해·수리 학습(읽기·맞춤법·연산·이야기책)
+│  ├─ inquiry/                 교과·탐구 학습(역사·과학·지도·정보)
+│  ├─ games/                   보드게임과 사고력 활동
+│  └─ arts/                    음악·미술 학습
 ├─ game-hub-server/            인증·학급·게임·학습 앱 통합 서버
 ├─ scripts/                    운영 데이터 생성 스크립트
 ├─ tests/                      포털 계약 테스트

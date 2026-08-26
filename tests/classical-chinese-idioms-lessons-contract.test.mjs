@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
-const idioms = require("../learning/basics/classical-chinese-idioms/idioms-data.js");
-require("../learning/basics/classical-chinese-idioms/idioms-lessons-data.js");
+const idioms = require("../learning/literacy-numeracy/classical-chinese-idioms/idioms-data.js");
+require("../learning/literacy-numeracy/classical-chinese-idioms/idioms-lessons-data.js");
 const lessons = globalThis.IDIOM_LESSONS;
 
 test("한자성어 112개가 의미 차시에 빠짐없이 한 번씩 배정된다", () => {

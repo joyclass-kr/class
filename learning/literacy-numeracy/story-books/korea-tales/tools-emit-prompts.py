@@ -11,7 +11,7 @@
 """
 import io, os, sys, importlib.util
 
-BOOKS = r'E:\webprojects\class\learning\academics\story-books\korea-tales'
+BOOKS = r'E:\webprojects\class\learning\inquiry\story-books\korea-tales'
 
 HEAD_NOVEL = u"""# 제미나이 그림 프롬프트 — {title}
 

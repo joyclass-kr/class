@@ -4,7 +4,7 @@ const path = require("node:path");
 const test = require("node:test");
 const vm = require("node:vm");
 
-const APP_PATH = path.join(__dirname, "..", "learning", "basics", "math-ox", "app.js");
+const APP_PATH = path.join(__dirname, "..", "learning", "literacy-numeracy", "math-ox", "app.js");
 
 function loadQuestions() {
   const source = fs.readFileSync(APP_PATH, "utf8");

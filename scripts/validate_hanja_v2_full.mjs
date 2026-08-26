@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root = path.resolve(import.meta.dirname, '..');
-const lessonRoot = path.join(root, 'learning', 'basics', 'hanja-meaning', 'v2');
+const lessonRoot = path.join(root, 'learning', 'literacy-numeracy', 'hanja-meaning', 'v2');
 const files = ['hanja-v2-lessons-01.json', 'hanja-v2-lessons-02.json', 'hanja-v2-lessons-03.json', 'hanja-v2-lessons-04.json', 'hanja-v2-lessons-05.json', 'hanja-v2-lessons-06.json'];
 const lessons = files.flatMap((name) => JSON.parse(fs.readFileSync(path.join(import.meta.dirname, name), 'utf8')));
 const curriculum = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-curriculum-v2.json'), 'utf8'));

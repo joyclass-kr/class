@@ -4,7 +4,7 @@ const path = require("node:path");
 const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
-const phonicsDir = path.join(root, "learning", "basics", "phonics");
+const phonicsDir = path.join(root, "learning", "literacy-numeracy", "phonics");
 const curriculumSource = fs.readFileSync(path.join(phonicsDir, "curriculum.js"), "utf8");
 const appSource = fs.readFileSync(path.join(phonicsDir, "app.js"), "utf8");
 const html = fs.readFileSync(path.join(phonicsDir, "index.html"), "utf8");

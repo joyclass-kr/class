@@ -6,11 +6,11 @@ const vm = require("node:vm");
 
 const context = { window: {} };
 vm.runInNewContext(
-    fs.readFileSync("learning/academics/periodic-table/elements-data.js", "utf8"),
+    fs.readFileSync("learning/inquiry/periodic-table/elements-data.js", "utf8"),
     context
 );
 vm.runInNewContext(
-    fs.readFileSync("learning/academics/periodic-table/molecule-models.js", "utf8"),
+    fs.readFileSync("learning/inquiry/periodic-table/molecule-models.js", "utf8"),
     context
 );
 
@@ -82,8 +82,8 @@ assert.ok(
     "every exploration item needs a 3D model"
 );
 
-const appSource = fs.readFileSync("learning/academics/periodic-table/app.js", "utf8");
-const pageSource = fs.readFileSync("learning/academics/periodic-table/index.html", "utf8");
+const appSource = fs.readFileSync("learning/inquiry/periodic-table/app.js", "utf8");
+const pageSource = fs.readFileSync("learning/inquiry/periodic-table/index.html", "utf8");
 
 assert.match(appSource, /function initLab3D\(\)/);
 assert.match(appSource, /function drawMolecule3D\(\)/);
