@@ -610,7 +610,7 @@ function createClassroomPlatform(options = {}) {
         DROP CONSTRAINT IF EXISTS classroom_notices_reply_type_check`,
       `ALTER TABLE classroom_notices
         ADD CONSTRAINT classroom_notices_reply_type_check
-        CHECK (reply_type IN ('none', 'confirm', 'agree'))`,
+        CHECK (reply_type IN ('none', 'confirm', 'agree', 'survey'))`,
       `UPDATE classroom_notices
         SET reply_type = 'agree'
         WHERE reply_type = 'none' AND requires_signature = TRUE`,
@@ -629,8 +629,41 @@ function createClassroomPlatform(options = {}) {
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         UNIQUE (notice_id, grade, class_number, student_number)
       )`,
+      // 'submitted' marks a filled-in survey, whose real content lives in
+      // classroom_notice_answers.
+      `ALTER TABLE classroom_notice_replies
+        DROP CONSTRAINT IF EXISTS classroom_notice_replies_reply_choice_check`,
+      `ALTER TABLE classroom_notice_replies
+        ADD CONSTRAINT classroom_notice_replies_reply_choice_check
+        CHECK (reply_choice IN ('confirmed', 'agree', 'disagree', 'submitted'))`,
       `CREATE INDEX IF NOT EXISTS classroom_notice_replies_notice_idx
         ON classroom_notice_replies (notice_id)`,
+      // Survey questions belong to a notice; 'single'/'multiple' carry options,
+      // 'text' collects a free written answer.
+      `CREATE TABLE IF NOT EXISTS classroom_notice_questions (
+        id BIGSERIAL PRIMARY KEY,
+        notice_id BIGINT NOT NULL REFERENCES classroom_notices(id) ON DELETE CASCADE,
+        position INTEGER NOT NULL,
+        question_text TEXT NOT NULL,
+        question_type TEXT NOT NULL CHECK (question_type IN ('single', 'multiple', 'text')),
+        options JSONB NOT NULL DEFAULT '[]'::JSONB,
+        is_required BOOLEAN NOT NULL DEFAULT TRUE,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE (notice_id, position)
+      )`,
+      `CREATE INDEX IF NOT EXISTS classroom_notice_questions_notice_idx
+        ON classroom_notice_questions (notice_id, position)`,
+      `CREATE TABLE IF NOT EXISTS classroom_notice_answers (
+        id BIGSERIAL PRIMARY KEY,
+        reply_id BIGINT NOT NULL REFERENCES classroom_notice_replies(id) ON DELETE CASCADE,
+        question_id BIGINT NOT NULL REFERENCES classroom_notice_questions(id) ON DELETE CASCADE,
+        choice_indexes INTEGER[] NOT NULL DEFAULT '{}',
+        text_answer TEXT,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE (reply_id, question_id)
+      )`,
+      `CREATE INDEX IF NOT EXISTS classroom_notice_answers_question_idx
+        ON classroom_notice_answers (question_id)`,
       `CREATE TABLE IF NOT EXISTS classroom_absence_notices (
         id BIGSERIAL PRIMARY KEY,
         school_id BIGINT,
@@ -3371,6 +3404,45 @@ function createClassroomPlatform(options = {}) {
   }));
 
   // 1. Send Notice (Teacher)
+  // Survey questions arrive as free-form JSON from the compose screen. Keep only
+  // what the schema allows, and reject shapes that could never be answered
+  // (a choice question with no options, an option list that is all blanks).
+  const SURVEY_QUESTION_LIMIT = 20;
+  const SURVEY_OPTION_LIMIT = 10;
+
+  function normalizeSurveyQuestions(raw) {
+    if (!Array.isArray(raw)) return [];
+    const questions = [];
+    for (const item of raw.slice(0, SURVEY_QUESTION_LIMIT)) {
+      const text = String(item?.text || "").trim().slice(0, 300);
+      const type = String(item?.type || "single").trim();
+      if (!text) continue;
+      if (!["single", "multiple", "text"].includes(type)) {
+        throw new HttpError(400, "INVALID_QUESTION_TYPE", `문항 유형이 올바르지 않습니다: ${type}`);
+      }
+
+      let options = [];
+      if (type !== "text") {
+        options = (Array.isArray(item?.options) ? item.options : [])
+          .map(o => String(o == null ? "" : o).trim().slice(0, 120))
+          .filter(Boolean)
+          .slice(0, SURVEY_OPTION_LIMIT);
+        if (options.length < 2) {
+          throw new HttpError(400, "OPTIONS_REQUIRED", `"${text}" 문항에는 보기를 두 개 이상 넣어 주세요.`);
+        }
+      }
+
+      questions.push({
+        position: questions.length,
+        text,
+        type,
+        options,
+        required: item?.required === false ? false : true
+      });
+    }
+    return questions;
+  }
+
   router.post("/teacher/notices", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const title = String(req.body?.title || "").trim();
@@ -3387,8 +3459,13 @@ function createClassroomPlatform(options = {}) {
     if (!title || !contentBody) {
       throw new HttpError(400, "TITLE_AND_CONTENT_REQUIRED", "제목과 내용을 입력하세요.");
     }
-    if (!["none", "confirm", "agree"].includes(replyType)) {
+    if (!["none", "confirm", "agree", "survey"].includes(replyType)) {
       throw new HttpError(400, "INVALID_REPLY_TYPE", "회신 방식이 올바르지 않습니다.");
+    }
+
+    const questions = replyType === "survey" ? normalizeSurveyQuestions(req.body?.questions) : [];
+    if (replyType === "survey" && questions.length === 0) {
+      throw new HttpError(400, "QUESTIONS_REQUIRED", "설문 문항을 하나 이상 만들어 주세요.");
     }
 
     const teacherProfileRes = await pool.query(
@@ -3401,15 +3478,38 @@ function createClassroomPlatform(options = {}) {
     const schoolId = teacherInfo?.school_id || null;
     const senderName = teacherInfo?.teacher_name || teacher.displayName || "담임선생님";
 
-    const insertRes = await pool.query(
-      `INSERT INTO classroom_notices
-         (school_id, sender_teacher_name, sender_user_id, title, content_type, content_body, target_type, target_grade, target_class_number, target_student_numbers, requires_signature, reply_type)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-       RETURNING id, created_at`,
-      [schoolId, senderName, teacher.id, title, contentType, contentBody, targetType, targetGrade, targetClassNumber, targetStudentNumbers, requiresSignature, replyType]
-    );
+    // The notice and its questions must land together, or a survey could go out
+    // with no way to answer it.
+    const client = await pool.connect();
+    let noticeId;
+    try {
+      await client.query("BEGIN");
+      const insertRes = await client.query(
+        `INSERT INTO classroom_notices
+           (school_id, sender_teacher_name, sender_user_id, title, content_type, content_body, target_type, target_grade, target_class_number, target_student_numbers, requires_signature, reply_type)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+         RETURNING id, created_at`,
+        [schoolId, senderName, teacher.id, title, contentType, contentBody, targetType, targetGrade, targetClassNumber, targetStudentNumbers, requiresSignature, replyType]
+      );
+      noticeId = insertRes.rows[0].id;
 
-    res.status(201).json({ ok: true, noticeId: String(insertRes.rows[0].id) });
+      for (const q of questions) {
+        await client.query(
+          `INSERT INTO classroom_notice_questions
+             (notice_id, position, question_text, question_type, options, is_required)
+           VALUES ($1, $2, $3, $4, $5::JSONB, $6)`,
+          [noticeId, q.position, q.text, q.type, JSON.stringify(q.options), q.required]
+        );
+      }
+      await client.query("COMMIT");
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    } finally {
+      client.release();
+    }
+
+    res.status(201).json({ ok: true, noticeId: String(noticeId), questionCount: questions.length });
   }));
 
   // ── General School Events (일반 행사) ──
@@ -3642,6 +3742,34 @@ function createClassroomPlatform(options = {}) {
       [target.schoolId, target.grade, target.classNumber, target.studentNumber]
     );
 
+    // Surveys need their questions, plus whatever this child already answered.
+    const surveyIds = noticesRes.rows.filter(n => n.reply_type === "survey").map(n => n.id);
+    const questionsByNotice = new Map();
+    const answersByQuestion = new Map();
+    if (surveyIds.length > 0) {
+      const questionsRes = await pool.query(
+        `SELECT id, notice_id, position, question_text, question_type, options, is_required
+         FROM classroom_notice_questions
+         WHERE notice_id = ANY($1::BIGINT[])
+         ORDER BY notice_id, position`,
+        [surveyIds]
+      );
+      for (const q of questionsRes.rows) {
+        if (!questionsByNotice.has(String(q.notice_id))) questionsByNotice.set(String(q.notice_id), []);
+        questionsByNotice.get(String(q.notice_id)).push(q);
+      }
+
+      const answersRes = await pool.query(
+        `SELECT a.question_id, a.choice_indexes, a.text_answer
+         FROM classroom_notice_answers a
+         JOIN classroom_notice_replies r ON r.id = a.reply_id
+         WHERE r.notice_id = ANY($1::BIGINT[])
+           AND r.grade = $2 AND r.class_number = $3 AND r.student_number = $4`,
+        [surveyIds, target.grade, target.classNumber, target.studentNumber]
+      );
+      for (const a of answersRes.rows) answersByQuestion.set(String(a.question_id), a);
+    }
+
     res.json({
       child: {
         grade: target.grade,
@@ -3659,13 +3787,72 @@ function createClassroomPlatform(options = {}) {
         requiresSignature: n.requires_signature,
         replyType: n.reply_type || "none",
         myReply: n.reply_choice ? { choice: n.reply_choice, note: n.reply_note, repliedAt: n.replied_at } : null,
+        questions: (questionsByNotice.get(String(n.id)) || []).map(q => {
+          const mine = answersByQuestion.get(String(q.id));
+          return {
+            id: String(q.id),
+            text: q.question_text,
+            type: q.question_type,
+            options: Array.isArray(q.options) ? q.options : [],
+            required: q.is_required,
+            myAnswer: mine
+              ? { choiceIndexes: mine.choice_indexes || [], text: mine.text_answer || "" }
+              : null
+          };
+        }),
         createdAt: n.created_at
       }))
     });
   }));
 
-  // 2b. Guardian answers a notice (read receipt or consent). Re-answering
-  // overwrites the previous answer rather than piling up rows.
+  // Match a submitted answer set against the notice's real questions. Anything
+  // the guardian sends that doesn't correspond to a stored question is dropped,
+  // and out-of-range choices are refused rather than silently recorded.
+  function validateSurveyAnswers(questions, rawAnswers) {
+    const byId = new Map(questions.map(q => [String(q.id), q]));
+    const submitted = new Map();
+    for (const item of Array.isArray(rawAnswers) ? rawAnswers : []) {
+      const key = String(item?.questionId ?? "");
+      if (byId.has(key)) submitted.set(key, item);
+    }
+
+    const prepared = [];
+    for (const q of questions) {
+      const given = submitted.get(String(q.id));
+      const optionCount = Array.isArray(q.options) ? q.options.length : 0;
+
+      if (q.question_type === "text") {
+        const text = String(given?.text || "").trim().slice(0, 1000);
+        if (!text) {
+          if (q.is_required) {
+            throw new HttpError(400, "ANSWER_REQUIRED", `"${q.question_text}" 문항에 답해 주세요.`);
+          }
+          continue;
+        }
+        prepared.push({ questionId: q.id, choiceIndexes: [], textAnswer: text });
+        continue;
+      }
+
+      const rawIndexes = Array.isArray(given?.choiceIndexes) ? given.choiceIndexes : [];
+      const indexes = [...new Set(rawIndexes.map(Number))]
+        .filter(i => Number.isInteger(i) && i >= 0 && i < optionCount);
+
+      if (indexes.length === 0) {
+        if (q.is_required) {
+          throw new HttpError(400, "ANSWER_REQUIRED", `"${q.question_text}" 문항에 답해 주세요.`);
+        }
+        continue;
+      }
+      if (q.question_type === "single" && indexes.length > 1) {
+        throw new HttpError(400, "SINGLE_CHOICE_ONLY", `"${q.question_text}" 문항은 하나만 고를 수 있습니다.`);
+      }
+      prepared.push({ questionId: q.id, choiceIndexes: indexes, textAnswer: null });
+    }
+    return prepared;
+  }
+
+  // 2b. Guardian answers a notice (read receipt, consent, or a filled-in survey).
+  // Re-answering overwrites the previous answer rather than piling up rows.
   router.post("/notice/replies", asyncRoute(async (req, res) => {
     const user = await sessionUser(req);
     if (!user) throw new HttpError(401, "LOGIN_REQUIRED", "로그인이 필요합니다.");
@@ -3677,7 +3864,7 @@ function createClassroomPlatform(options = {}) {
     if (!Number.isInteger(noticeId)) {
       throw new HttpError(400, "INVALID_NOTICE", "가정통신문을 찾을 수 없습니다.");
     }
-    if (!["confirmed", "agree", "disagree"].includes(choice)) {
+    if (!["confirmed", "agree", "disagree", "submitted"].includes(choice)) {
       throw new HttpError(400, "INVALID_CHOICE", "회신 값이 올바르지 않습니다.");
     }
 
@@ -3704,19 +3891,64 @@ function createClassroomPlatform(options = {}) {
     if (notice.reply_type === "agree" && choice === "confirmed") {
       throw new HttpError(400, "INVALID_CHOICE", "동의 여부를 선택해 주세요.");
     }
+    if (notice.reply_type === "survey" && choice !== "submitted") {
+      throw new HttpError(400, "INVALID_CHOICE", "설문은 문항에 답해 제출해 주세요.");
+    }
+    if (notice.reply_type !== "survey" && choice === "submitted") {
+      throw new HttpError(400, "INVALID_CHOICE", "설문이 아닌 가정통신문입니다.");
+    }
 
-    await pool.query(
-      `INSERT INTO classroom_notice_replies
-         (notice_id, school_id, grade, class_number, student_number, student_name, responder_user_id, reply_choice, reply_note)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-       ON CONFLICT (notice_id, grade, class_number, student_number) DO UPDATE
-       SET reply_choice = EXCLUDED.reply_choice,
-           reply_note = EXCLUDED.reply_note,
-           responder_user_id = EXCLUDED.responder_user_id,
-           updated_at = NOW()`,
-      [noticeId, target.schoolId, target.grade, target.classNumber, target.studentNumber,
-       target.studentName, user.id, choice, note || null]
-    );
+    // For a survey, check the submitted answers against the real questions
+    // before writing anything.
+    let preparedAnswers = [];
+    if (notice.reply_type === "survey") {
+      const questionsRes = await pool.query(
+        `SELECT id, position, question_text, question_type, options, is_required
+         FROM classroom_notice_questions
+         WHERE notice_id = $1
+         ORDER BY position`,
+        [noticeId]
+      );
+      preparedAnswers = validateSurveyAnswers(questionsRes.rows, req.body?.answers);
+    }
+
+    // Reply row and its answers move together, so a survey is never half-saved.
+    const client = await pool.connect();
+    try {
+      await client.query("BEGIN");
+      const replyRes = await client.query(
+        `INSERT INTO classroom_notice_replies
+           (notice_id, school_id, grade, class_number, student_number, student_name, responder_user_id, reply_choice, reply_note)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+         ON CONFLICT (notice_id, grade, class_number, student_number) DO UPDATE
+         SET reply_choice = EXCLUDED.reply_choice,
+             reply_note = EXCLUDED.reply_note,
+             responder_user_id = EXCLUDED.responder_user_id,
+             updated_at = NOW()
+         RETURNING id`,
+        [noticeId, target.schoolId, target.grade, target.classNumber, target.studentNumber,
+         target.studentName, user.id, choice, note || null]
+      );
+      const replyId = replyRes.rows[0].id;
+
+      if (notice.reply_type === "survey") {
+        // Re-answering replaces the previous set outright.
+        await client.query("DELETE FROM classroom_notice_answers WHERE reply_id = $1", [replyId]);
+        for (const a of preparedAnswers) {
+          await client.query(
+            `INSERT INTO classroom_notice_answers (reply_id, question_id, choice_indexes, text_answer)
+             VALUES ($1, $2, $3::INTEGER[], $4)`,
+            [replyId, a.questionId, a.choiceIndexes, a.textAnswer]
+          );
+        }
+      }
+      await client.query("COMMIT");
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    } finally {
+      client.release();
+    }
 
     res.status(201).json({ ok: true, choice });
   }));
@@ -3853,11 +4085,68 @@ function createClassroomPlatform(options = {}) {
       };
     });
 
+    // For a survey, tally each question. Choice counts are computed in SQL;
+    // written answers come back as a list for the teacher to read.
+    let survey = null;
+    if (notice.reply_type === "survey") {
+      const questionsRes = await pool.query(
+        `SELECT id, position, question_text, question_type, options, is_required
+         FROM classroom_notice_questions
+         WHERE notice_id = $1
+         ORDER BY position`,
+        [noticeId]
+      );
+
+      // Only count answers from students this teacher is allowed to see.
+      const visibleKeys = new Set(roster.map(r => `${r.grade}-${r.classNumber}-${r.studentNumber}`));
+      const answersRes = await pool.query(
+        `SELECT a.question_id, a.choice_indexes, a.text_answer,
+                r.grade, r.class_number, r.student_number, r.student_name
+         FROM classroom_notice_answers a
+         JOIN classroom_notice_replies r ON r.id = a.reply_id
+         WHERE r.notice_id = $1`,
+        [noticeId]
+      );
+      const visibleAnswers = answersRes.rows.filter(a =>
+        visibleKeys.has(`${a.grade}-${a.class_number}-${a.student_number}`)
+      );
+
+      survey = questionsRes.rows.map(q => {
+        const options = Array.isArray(q.options) ? q.options : [];
+        const mine = visibleAnswers.filter(a => String(a.question_id) === String(q.id));
+        if (q.question_type === "text") {
+          return {
+            id: String(q.id),
+            text: q.question_text,
+            type: q.question_type,
+            answeredCount: mine.length,
+            textAnswers: mine
+              .filter(a => a.text_answer)
+              .map(a => ({ studentName: a.student_name, text: a.text_answer }))
+          };
+        }
+        const counts = options.map(() => 0);
+        for (const a of mine) {
+          for (const idx of a.choice_indexes || []) {
+            if (idx >= 0 && idx < counts.length) counts[idx] += 1;
+          }
+        }
+        return {
+          id: String(q.id),
+          text: q.question_text,
+          type: q.question_type,
+          answeredCount: mine.length,
+          options: options.map((label, i) => ({ label, count: counts[i] }))
+        };
+      });
+    }
+
     res.json({
       notice: { id: String(notice.id), title: notice.title, replyType: notice.reply_type || "none" },
       total: roster.length,
       repliedCount: roster.filter(r => r.choice).length,
-      roster
+      roster,
+      survey
     });
   }));
 

@@ -806,10 +806,106 @@
                 .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
         }
 
-        const REPLY_LABELS = { confirmed: '확인함', agree: '동의', disagree: '미동의' };
+        const REPLY_LABELS = { confirmed: '확인함', agree: '동의', disagree: '미동의', submitted: '설문 제출함' };
+
+        // A survey renders its own questions; each input carries the question id so
+        // the answers can be gathered straight off the DOM at submit time.
+        function renderSurveyForm(n) {
+            const questions = n.questions || [];
+            if (questions.length === 0) {
+                return '<p style="color:var(--muted); font-size:13px;">문항이 없습니다.</p>';
+            }
+
+            const body = questions.map((q, qi) => {
+                const mine = q.myAnswer;
+                const head = `
+                    <p style="margin:0 0 8px; font-weight:700; font-size:14px;">
+                        ${qi + 1}. ${escapeHtml(q.text)}
+                        ${q.required ? '<span style="color:var(--danger); font-size:12px;"> *필수</span>' : ''}
+                        ${q.type === 'multiple' ? '<span style="color:var(--muted); font-size:12px; font-weight:600;"> (복수 선택)</span>' : ''}
+                    </p>`;
+
+                if (q.type === 'text') {
+                    return `<div class="survey-q" data-question-id="${escapeHtml(q.id)}" data-type="text" style="margin-bottom:16px;">
+                        ${head}
+                        <textarea class="survey-text" placeholder="답변을 적어 주세요">${escapeHtml(mine ? mine.text : '')}</textarea>
+                    </div>`;
+                }
+
+                const inputType = q.type === 'multiple' ? 'checkbox' : 'radio';
+                const chosen = mine ? (mine.choiceIndexes || []) : [];
+                const opts = (q.options || []).map((label, i) => `
+                    <label style="display:flex; align-items:center; gap:8px; margin:0 0 6px; font-weight:600; color:var(--text); cursor:pointer;">
+                        <input type="${inputType}" name="q_${escapeHtml(q.id)}" value="${i}"
+                               ${chosen.includes(i) ? 'checked' : ''}
+                               style="width:18px; height:18px; margin:0;">
+                        <span>${escapeHtml(label)}</span>
+                    </label>`).join('');
+
+                return `<div class="survey-q" data-question-id="${escapeHtml(q.id)}" data-type="${escapeHtml(q.type)}" style="margin-bottom:16px;">
+                    ${head}
+                    ${opts}
+                </div>`;
+            }).join('');
+
+            return `${body}
+                <button class="btn-primary" onclick="submitSurvey('${escapeHtml(n.id)}')">
+                    ${n.myReply ? '📤 설문 다시 제출하기' : '📤 설문 제출하기'}
+                </button>`;
+        }
+
+        async function submitSurvey(noticeId) {
+            if (!activeChild) { alert('자녀 정보를 먼저 확인해 주세요.'); return; }
+            const card = document.querySelector(`[data-notice-id="${noticeId}"]`);
+            if (!card) return;
+
+            const answers = Array.from(card.querySelectorAll('.survey-q')).map(box => {
+                const questionId = box.dataset.questionId;
+                if (box.dataset.type === 'text') {
+                    return { questionId, text: box.querySelector('.survey-text').value.trim() };
+                }
+                const choiceIndexes = Array.from(box.querySelectorAll('input:checked'))
+                    .map(input => Number(input.value));
+                return { questionId, choiceIndexes };
+            });
+
+            try {
+                const res = await fetch('/api/notice/replies', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        noticeId,
+                        choice: 'submitted',
+                        answers,
+                        grade: activeChild.grade,
+                        classNumber: activeChild.classNumber,
+                        studentNumber: activeChild.studentNumber
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || '설문 제출 실패');
+                alert('설문이 제출되었습니다.');
+                await loadNotices();
+            } catch (err) {
+                alert(err.message || '설문을 제출하지 못했습니다.');
+            }
+        }
 
         function renderReplyBox(n) {
             if (n.replyType === 'none') return '';
+
+            if (n.replyType === 'survey') {
+                const done = n.myReply
+                    ? `<span style="color:var(--green); font-size:12px; font-weight:700;">✅ ${escapeHtml(new Date(n.myReply.repliedAt).toLocaleString())} 제출함</span>`
+                    : '';
+                return `
+                    <div style="margin-top:12px; padding-top:12px; border-top:1px dashed var(--panel-border);">
+                        <p style="color:var(--gold); font-size:13px; margin:0 0 10px; font-weight:700;">
+                            ※ 설문 응답이 필요한 통신문입니다. ${done}
+                        </p>
+                        ${renderSurveyForm(n)}
+                    </div>`;
+            }
 
             if (n.myReply) {
                 const when = new Date(n.myReply.repliedAt).toLocaleString();
