@@ -13,7 +13,7 @@ const LESSONS = {
     terms: [["오선", "Staff"], ["선", "Line"], ["칸", "Space"]],
     sections: [
       { title: "다섯 줄은 음의 높이를 기록하는 좌표예요", body: "오선(Staff)은 아래에서부터 제1선·제2선·제3선·제4선·제5선으로 셉니다. 선과 선 사이의 네 칸도 아래에서부터 제1칸·제2칸·제3칸·제4칸으로 셉니다. 음표 머리가 놓인 자리가 그 음의 높이를 나타냅니다.", visual: "staffGuide", caption: "선과 칸은 언제나 아래에서 위로 셉니다." },
-      { title: "한 칸씩 움직이면 음이름도 한 단계씩 움직여요", body: "음표가 선에서 바로 위 칸으로, 다시 다음 선으로 이동할 때마다 음이름은 알파벳 순서로 한 단계씩 올라갑니다. 아직 특정 음이름을 외우기보다 ‘선–칸–선–칸’의 규칙적인 이동을 먼저 눈으로 확인하세요.", visual: "staffSteps", caption: "선과 칸을 건너뛰지 않으면 인접한 음입니다." }
+      { title: "한 자리씩 움직이면 음이름도 한 단계씩 움직여요", body: "음표가 선에서 바로 위 칸으로, 다시 다음 선으로 이동할 때마다 음이름은 알파벳 순서로 한 단계씩 올라갑니다. 아직 특정 음이름을 외우기보다 ‘선–칸–선–칸’의 규칙적인 이동을 먼저 눈으로 확인하세요.", visual: "staffSteps", caption: "선과 칸을 건너뛰지 않으면 인접한 음입니다." }
     ], quiz: "staff"
   },
   2: {
@@ -207,6 +207,13 @@ function octaveOriginMarkup() {
 function registerBoundaryMarkup() {
   return `<div class="register-boundary"><div class="register-run"><span>B3</span><strong>C4</strong><span>D4</span><span>…</span><span>B4</span><strong>C5</strong></div><div class="register-rule"><b>C에서 번호 변경</b><span>B3 다음은 C4 · B4 다음은 C5</span></div></div>`;
 }
+function staffGuideMarkup() {
+  return `<div class="staff-position-guide"><section><strong>선 5개</strong>${staffMarkup("none", [64,67,71,74,77], ["제1선","제2선","제3선","제4선","제5선"])}</section><section><strong>칸 4개</strong>${staffMarkup("none", [65,69,72,76], ["제1칸","제2칸","제3칸","제4칸"])}</section></div>`;
+}
+
+function staffStepMarkup() {
+  return `<div class="staff-step-visual">${staffMarkup("none", [64,65,67,69,71,72,74,76], ["제1선","제1칸","제2선","제2칸","제3선","제3칸","제4선","제4칸"])}<p>선 → 칸 → 선 → 칸: 한 번에 한 자리씩</p></div>`;
+}
 function intervalCountStaffMarkup() {
   return `<div class="interval-count-visual">${staffMarkup("treble", [60,62,64], ["① C","② D","③ E"])}<div class="count-result"><span>C</span><b>세 자리를 모두 세어 3도</b><span>E</span></div></div>`;
 }
@@ -238,8 +245,8 @@ function visualMarkup(type) {
   if (type === "registers") return registerBoundaryMarkup();
   if (type === "notationKeyboard") return notationMapMarkup();
   if (keyboardVisuals[type]) return keyboardMarkup(...keyboardVisuals[type]);
-  if (type === "staffGuide") return staffMarkup("none", [64,65,67,69,71], ["제1선","제1칸","제2선","제2칸","제3선"]);
-  if (type === "staffSteps") return staffMarkup("none", [60,62,64,65,67,69,71,72], ["1","2","3","4","5","6","7","8"]);
+  if (type === "staffGuide") return staffGuideMarkup();
+  if (type === "staffSteps") return staffStepMarkup();
   if (type === "treble") return staffMarkup("treble", [67], ["제2선 G"]);
   if (type === "middleC") return staffMarkup("treble", [60,62,64,65,67], ["C","D","E","F","G"]);
   if (type === "bass") return staffMarkup("bass", [53], ["제4선 F"]);
@@ -523,9 +530,9 @@ function finishRound() {
   els.questionPrompt.textContent = `5문제 중 ${state.score}문제를 맞혔습니다.`;
   els.listenButton.hidden = true;
   els.answerChoices.innerHTML = "";
-  els.feedback.textContent = passed ? "이 차시를 완료했습니다. 전체 과정에서 다음 차시를 선택하세요." : "설명을 다시 확인한 뒤 한 번 더 풀어 보세요.";
+  els.feedback.textContent = passed ? "이 차시를 완료했습니다. 차시 목록에서 다음 차시를 선택하세요." : "설명을 다시 확인한 뒤 한 번 더 풀어 보세요.";
   els.feedback.className = `feedback ${passed ? "correct" : "wrong"}`;
-  els.nextButton.textContent = passed ? "전체 과정으로" : "다시 풀기";
+  els.nextButton.textContent = passed ? "차시 목록" : "다시 풀기";
   els.nextButton.hidden = false;
   els.nextButton.onclick = passed ? leaveLesson : retryRound;
 }

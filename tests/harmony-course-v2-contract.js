@@ -16,6 +16,9 @@ assert.match(html, /id="study"[^>]*hidden/);
 assert.match(html, /course-v2\.css/);
 assert.match(html, /course-guides\.js/);
 assert.match(html, /course-v2\.js/);
+assert.match(html, /course-list-button/);
+assert.match(html, /차시 목록/);
+assert.doesNotMatch(html, /← 전체 과정/);
 assert.ok(html.indexOf("course-guides.js") < html.indexOf("course-v2.js"), "guides must load before course rendering");
 
 for (let id = 1; id <= 16; id += 1) {
@@ -36,6 +39,11 @@ assert.match(js, /FIXED_QUIZZES\.quality/);
 assert.match(js, /state\.seen = new Set\(\)/);
 assert.match(js, /roots = shuffled\(\[48,49,50,51,52,53,54,55,56,57,58,59\]\)/);
 assert.match(js, /intervalCountStaffMarkup/);
+assert.match(js, /staffGuideMarkup/);
+assert.match(js, /staffStepMarkup/);
+assert.match(js, /제1선","제2선","제3선","제4선","제5선/);
+assert.match(js, /제1칸","제2칸","제3칸","제4칸/);
+assert.doesNotMatch(js, /한 칸씩 움직이면 음이름도/);
 assert.match(js, /notationMapMarkup/);
 assert.match(js, /perfectExamplesMarkup/);
 assert.match(js, /audioLabels: \["완전1도",\s*"완전4도",\s*"완전5도",\s*"완전8도"\]/);
@@ -68,6 +76,10 @@ assert.match(css, /\.notation-map/);
 assert.match(css, /\.perfect-score-grid/);
 assert.match(css, /\.lesson-guide/);
 assert.match(css, /\.example-controls/);
+assert.match(css, /\.course-list-button/);
+assert.match(css, /\.staff-position-guide/);
+assert.match(css, /\.staff-note-label[^}]*font-size: 13px/s);
+assert.match(css, /\.section-copy p[^}]*font-size: 17px/s);
 assert.match(css, /@media \(max-width: 900px\)/);
 assert.match(css, /min-height: 44px/);
 

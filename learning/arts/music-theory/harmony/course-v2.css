@@ -49,25 +49,27 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .lesson-check { color: var(--success); font-weight: 900; }
 
 .study-nav { min-height: 54px; display: grid; grid-template-columns: 150px 1fr 150px; align-items: center; margin-bottom: 12px; border-bottom: 1px solid var(--line); }
-.study-nav strong { justify-self: center; font-size: 14px; }
+.study-nav strong { justify-self: center; font-size: 15px; }
+.course-list-button { min-height: 44px; display: inline-flex; align-items: center; justify-self: start; gap: 8px; padding: 0 13px; border: 1px solid #415472; border-radius: 10px; color: #e3eaf5; background: #18263c; font-weight: 900; cursor: pointer; }
+.course-list-button span { color: var(--gold); font-size: 18px; }
 .lesson-paper { overflow: hidden; border-radius: 8px; color: var(--paper-ink); background: var(--paper); box-shadow: 0 20px 42px rgba(0,0,0,.3); }
 .lesson-title { padding: 22px clamp(22px,4vw,40px) 18px; border-bottom: 1px solid var(--paper-line); }
-.lesson-title span { color: #886119; font-size: 11px; font-weight: 900; letter-spacing: .08em; }
+.lesson-title span { color: #714d0d; font-size: 13px; font-weight: 950; letter-spacing: .05em; }
 .lesson-title h1 { margin: 5px 0 2px; font-family: Georgia,"Noto Serif KR",serif; font-size: clamp(22px,2.6vw,27px); line-height: 1.3; }
-.lesson-title p { margin: 0; color: var(--paper-muted); font-size: 13px; }
+.lesson-title p { margin: 3px 0 0; color: #4d5661; font-size: 15px; }
 .lesson-sections { padding: 0 clamp(22px,4vw,40px); }
 .lesson-section { display: grid; grid-template-columns: minmax(260px,.82fr) minmax(380px,1.18fr); align-items: center; gap: clamp(22px,4vw,44px); padding: 28px 0; border-bottom: 1px solid var(--paper-line); }
 .lesson-section:nth-child(even) .section-copy { order: 2; }
 .lesson-section:nth-child(even) .visual-board { order: 1; }
 .section-copy { min-width: 0; }
-.section-step { display: inline-flex; align-items: center; min-height: 24px; margin-bottom: 8px; color: #866019; font-size: 11px; font-weight: 950; letter-spacing: .06em; }
-.section-copy h2 { margin: 0 0 9px; font-family: Georgia,"Noto Serif KR",serif; font-size: 21px; line-height: 1.4; }
-.section-copy p { margin: 0; color: #454b53; font-family: Georgia,"Noto Serif KR",serif; font-size: 16px; line-height: 1.75; word-break: keep-all; }
+.section-step { display: inline-flex; align-items: center; min-height: 24px; margin-bottom: 8px; color: #76500d; font-size: 13px; font-weight: 950; letter-spacing: .04em; }
+.section-copy h2 { margin: 0 0 11px; font-family: Georgia,"Noto Serif KR",serif; font-size: 23px; line-height: 1.4; }
+.section-copy p { margin: 0; color: #303842; font-family: Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif; font-size: 17px; font-weight: 500; line-height: 1.8; word-break: keep-all; }
 .example-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
 .example-controls .example-button { flex: 1 1 120px; margin-top: 0; }
 .example-button { min-height: 44px; margin-top: 15px; padding: 8px 16px; border: 1px solid #263c5d; border-radius: 7px; color: #fff; background: #263c5d; font-weight: 900; cursor: pointer; }
 .visual-board { min-width: 0; padding: 18px; border: 1px solid #beb7aa; border-radius: 5px; background: #fffefa; box-shadow: 0 6px 14px rgba(54,45,34,.1); }
-.visual-caption { margin: 10px 0 0; color: #656b72; font-size: 11px; text-align: center; }
+.visual-caption { margin: 12px 0 0; color: #454d57; font-size: 13px; font-weight: 700; line-height: 1.55; text-align: center; }
 .term-summary { padding: 24px clamp(22px,4vw,40px) 30px; }
 .term-summary h2 { margin: 0 0 12px; font-size: 17px; }
 .term-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
@@ -86,8 +88,12 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .note-mark.highlight { background: #b97819; box-shadow: 0 0 0 4px rgba(216,170,74,.22); }
 .note-mark.highlight::after { background: #b97819; }
 .note-mark.ledger::before { content: ""; position: absolute; left: -5px; top: 4px; width: 24px; height: 1px; background: #161616; transform: rotate(13deg); }
-.staff-note-label { position: absolute; top: 82px; z-index: 4; transform: translateX(-50%); color: #454b53; font-size: 10px; font-weight: 800; }
-.line-space-guide { display: grid; grid-template-columns: repeat(9,1fr); gap: 4px; margin-top: 8px; }
+.staff-note-label { position: absolute; top: 82px; z-index: 4; transform: translateX(-50%); color: #252c34; font-size: 13px; font-weight: 900; white-space: nowrap; }
+.staff-position-guide { display: grid; gap: 18px; }
+.staff-position-guide > section { padding-bottom: 6px; border-bottom: 1px solid #d5cec1; }
+.staff-position-guide > section:last-child { border-bottom: 0; }
+.staff-position-guide > section > strong { display: block; margin-bottom: 3px; color: #63430e; font-size: 15px; }
+.staff-step-visual > p { margin: -2px 0 0; color: #454d57; font-size: 13px; font-weight: 800; text-align: center; }.line-space-guide { display: grid; grid-template-columns: repeat(9,1fr); gap: 4px; margin-top: 8px; }
 .line-space-guide span { display: grid; place-items: center; min-height: 38px; border: 1px solid #d0c9bc; color: #555; font-size: 10px; }
 .line-space-guide span:nth-child(odd) { background: #eee8dc; }
 
@@ -155,18 +161,18 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .perfect-score .staff-row { height: 96px; }
 .lesson-guide { padding: 30px 0 34px; border-bottom: 1px solid var(--paper-line); }
 .lesson-guide > header h2 { margin: 0 0 10px; font-family: Georgia,"Noto Serif KR",serif; font-size: 21px; }
-.lesson-guide > header p, .guide-columns p, .guide-caution p, .self-check p { margin: 0; color: #454b53; font-family: Georgia,"Noto Serif KR",serif; font-size: 15px; line-height: 1.75; word-break: keep-all; }
+.lesson-guide > header p, .guide-columns p, .guide-caution p, .self-check p { margin: 0; color: #303842; font-family: Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif; font-size: 17px; font-weight: 500; line-height: 1.8; word-break: keep-all; }
 .guide-principle { margin-top: 22px; padding: 18px 20px; border-left: 4px solid #b98424; background: #eee8dc; }
 .guide-principle h3, .worked-examples h3 { margin: 0 0 8px; font-size: 15px; }
-.guide-principle p, .worked-card p, .guide-bridge p { margin: 0; color: #454b53; font-family: Georgia,"Noto Serif KR",serif; font-size: 14px; line-height: 1.75; word-break: keep-all; }
+.guide-principle p, .worked-card p, .guide-bridge p { margin: 0; color: #303842; font-family: Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif; font-size: 16px; font-weight: 500; line-height: 1.75; word-break: keep-all; }
 .worked-examples { margin-top: 24px; }
 .worked-card-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
 .worked-card { min-width: 0; padding: 14px 15px; border: 1px solid #cbc3b5; background: #fffdfa; }
-.worked-card strong { display: block; margin-bottom: 6px; color: #744f12; font-size: 13px; }
+.worked-card strong { display: block; margin-bottom: 7px; color: #67450c; font-size: 15px; }
 .guide-bridge { display: grid; grid-template-columns: 130px 1fr; gap: 14px; align-items: start; margin-top: 18px; padding-top: 16px; border-top: 1px solid #cbc3b5; }
 .guide-bridge strong { color: #795515; font-size: 13px; }.guide-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 22px; }
 .guide-columns h3, .guide-caution h3 { margin: 0 0 9px; font-size: 15px; }
-.guide-columns ol { margin: 0; padding-left: 22px; color: #3f454c; font-family: Georgia,"Noto Serif KR",serif; font-size: 15px; line-height: 1.8; }
+.guide-columns ol { margin: 0; padding-left: 24px; color: #303842; font-family: Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif; font-size: 16px; font-weight: 500; line-height: 1.85; }
 .guide-caution { margin-top: 22px; padding-top: 18px; border-top: 1px solid #d5cec1; }
 .self-check { display: grid; grid-template-columns: 100px 1fr; align-items: start; gap: 16px; margin-top: 20px; padding: 14px 16px; border-left: 4px solid var(--gold); background: #e9e4d9; }
 .self-check strong { color: #6f5018; font-size: 13px; }
@@ -222,8 +228,8 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
     .study-nav::after { display: none; }
     .lesson-title { padding: 18px; }
     .lesson-sections { padding: 0 18px; }
-    .section-copy h2 { font-size: 19px; }
-    .section-copy p { font-size: 15px; }
+    .section-copy h2 { font-size: 21px; }
+    .section-copy p { font-size: 17px; }
     .term-summary { padding: 22px 18px; }
     .term-list { grid-template-columns: 1fr; }
     .answer-choices { grid-template-columns: 1fr; }
