@@ -171,14 +171,28 @@ of the kitchen. A small thought bubble above him shows the water jar standing
 empty. Restless and human.
 ```
 
-### `12-together.png` — 조촐한 혼례
+### `12-together.png` — 조촐한 혼례, 그리고 저물녀
 
 ```
-Wide scene in the cottage yard in warm morning light. In the centre, the young
-man and the bride stand together in simple wedding clothes, bowing to a few
-neighbours gathered at the gate. The bride is smiling, but her eyes are bright
-with tears and she no longer glows. On a stone by the wall, the empty snail shell
-sits in the sun. Warm, happy, and just a little wistful.
+Wide scene in the cottage yard at dusk. On the left, the young man and the bride
+stand together in simple wedding clothes; a few neighbours are leaving through
+the gate behind them. The bride is smiling, but her eyes are bright with tears
+and she is looking down at her own hand — her fingertips have gone faintly
+translucent, the colour of pond water, and a soft glow is beginning to run up
+her wrist. The young man has just noticed. On a stone by the wall, the green
+snail shell waits in the last light. Warm and happy on the surface, quietly
+wrong underneath.
+```
+
+### `13-jar.png` — 물독 앞의 밤
+
+```
+Night interior of the cottage kitchen, lit only by a single oil lamp. The young
+man sits on the earthen floor with his arms wrapped around the big brown water
+jar, his cheek resting against it, eyes open and unfocused. Inside the jar, just
+under the surface of the water, the green snail shell rests on the bottom. Two
+low meal tables stand ready by the wall — one set for him, one set beside the
+jar. Very still. Grief without drama, and a man who has decided to wait.
 ```
 
 ### `end.png` — 마지막 (가로 2:1)
