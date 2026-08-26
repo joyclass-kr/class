@@ -291,7 +291,6 @@ export function StudyApp() {
       <main className={`site-shell quiz-shell quiz-shell-solving ${selectedAnswer !== null ? "quiz-shell-answered" : ""}`}>
         <header className="quiz-header">
           <nav className="quiz-nav" aria-label="바로가기">
-            <a className="text-button" href="/">← 포털 메인</a>
             <button className="text-button" onClick={goHome} aria-label="단원 선택으로 돌아가기">← 단원 선택</button>
           </nav>
           <div className="quiz-heading">
