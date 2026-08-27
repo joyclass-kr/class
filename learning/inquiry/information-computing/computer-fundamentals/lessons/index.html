@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="system-lessons.css">
     <script src="system-lessons.js" defer></script>
 </head>
-<body>
+<body data-course-root="false">
     <header class="app-bar">
         <a class="back-button" href="../" aria-label="이전 차시로 돌아가기">←</a>
 
@@ -29,6 +29,7 @@
                     <span class="stage-label">원리 보기</span>
                     <h2 id="conceptTitle"></h2>
                 </div>
+                <button id="startActivityTop" class="secondary-button" type="button">직접 확인하기</button>
             </div>
             <div id="conceptParts"></div>
             <div id="conceptOverview" class="concept-overview">
@@ -36,6 +37,7 @@
                 <div id="conceptDetails" class="concept-grid"></div>
             </div>
             <div id="conceptDiagram" class="concept-diagram"></div>
+            <div id="conceptDevices"></div>
             <div id="conceptStory"></div>
             <div id="conceptCompare"></div>
             <div id="conceptAnalogy"></div>
@@ -80,7 +82,7 @@
 
         <section id="stageResult" class="stage" aria-labelledby="resultTitle" hidden>
             <div class="result-grid">
-                <div class="result-score" aria-hidden="true"><strong id="scoreNumber">0</strong><span>/ 5</span></div>
+                <div class="result-score" aria-hidden="true"><strong id="scoreNumber">0</strong><span id="scoreTotal">/ 5</span></div>
                 <div>
                     <span class="stage-label">차시 결과</span>
                     <h2 id="resultTitle">학습 결과</h2>

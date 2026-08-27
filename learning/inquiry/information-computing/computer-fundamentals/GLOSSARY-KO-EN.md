@@ -75,6 +75,8 @@
 | 입출력 장치 | Input/Output Device, I/O Device | 입력과 출력을 모두 수행하는 장치 |
 | 중앙 처리 장치 | Central Processing Unit, CPU | 명령을 해석하고 계산하며 작업을 처리하는 장치 |
 | 프로세서 | Processor | CPU를 가리키거나 데이터를 처리하는 장치를 넓게 이르는 말 |
+| 시스템 온 칩 | System on a Chip, SoC | CPU·GPU·메모리 제어·통신 기능 등을 하나의 칩에 통합한 장치. 스마트폰과 태블릿에서 흔히 사용 |
+| 모바일 프로세서 | Mobile Processor | 배터리 사용 시간과 발열을 고려해 모바일 기기용으로 구성한 프로세서 또는 SoC |
 | CPU 코어 | CPU Core | CPU 안에서 명령을 처리하는 독립적인 작업 단위 |
 | 스레드 | Thread | CPU가 처리하는 명령 작업의 흐름 |
 | 클록 속도 | Clock Speed | CPU가 일정 시간 동안 동작하는 기본 속도, 보통 GHz로 표시 |
@@ -87,13 +89,16 @@
 | 솔리드 스테이트 드라이브 | Solid-State Drive, SSD | 반도체 메모리에 데이터를 저장하는 빠른 저장 장치 |
 | 하드 디스크 드라이브 | Hard Disk Drive, HDD | 회전하는 자기 디스크에 데이터를 저장하는 장치 |
 | 플래시 메모리 | Flash Memory | 전원을 꺼도 데이터가 남는 반도체 저장 메모리 |
+| 모바일 플래시 저장 장치 | Mobile Flash Storage | 스마트폰·태블릿에서 앱과 파일을 보관하는 반도체 저장 장치. PC의 SSD와 역할은 비슷하지만 형태와 연결 방식이 다름 |
 | 메인보드 | Motherboard / Mainboard | CPU, RAM, 저장 장치 등 부품을 연결하는 주 회로 기판 |
+| 로직 보드·주기판 | Logic Board / Main Board | 스마트폰·태블릿에서 SoC, RAM, 저장 장치, 통신 칩 등이 붙는 중심 회로 기판 |
 | 회로 기판 | Circuit Board | 전자 부품과 연결 회로가 놓인 판 |
 | 슬롯 | Slot | RAM이나 확장 카드를 끼우는 연결 자리 |
 | 소켓 | Socket | CPU 등 특정 부품을 장착하는 연결 자리 |
 | 데이터 버스 | Data Bus | 부품 사이에서 데이터를 전달하는 통로 |
 | 전원 공급 장치 | Power Supply Unit, PSU | 필요한 전력을 각 부품에 공급하는 장치 |
 | 배터리 | Battery | 전기를 저장해 이동 중에도 기기를 작동시키는 장치 |
+| 전원 관리 칩 | Power Management Integrated Circuit, PMIC | 배터리 전력을 부품별로 알맞게 나누고 충전을 관리하는 칩 |
 | 방열판 | Heat Sink | 부품의 열을 넓게 퍼뜨리는 금속 부품 |
 | 냉각팬 | Cooling Fan | 공기를 움직여 부품의 열을 식히는 장치 |
 | 포트 | Port | 케이블이나 장치를 연결하는 접속구 |
@@ -104,6 +109,10 @@
 | HDMI | High-Definition Multimedia Interface, HDMI | 디지털 영상과 소리를 전달하는 연결 규격 |
 | 오디오 단자 | Audio Jack | 이어폰, 헤드폰, 마이크 등을 연결하는 단자 |
 | 네트워크 어댑터 | Network Adapter | 유선 또는 무선 네트워크 연결을 담당하는 장치 |
+| 셀룰러 모뎀 | Cellular Modem | 이동통신망과 데이터를 주고받도록 신호를 처리하는 장치 |
+| 안테나 | Antenna | Wi-Fi·Bluetooth·이동통신·GPS 등의 전파를 보내고 받는 부품 |
+| 카메라 모듈 | Camera Module | 렌즈와 이미지 센서 등을 묶어 사진과 영상을 입력하는 부품 |
+| 진동 모터·햅틱 장치 | Vibration Motor / Haptic Actuator | 진동이나 촉각 반응으로 상태와 입력 결과를 알려 주는 출력 장치 |
 | 모니터 | Monitor | 컴퓨터의 시각 정보를 보여 주는 외부 출력 장치 |
 | 디스플레이 | Display | 화면을 보여 주는 장치나 표시 영역의 일반 명칭 |
 | 터치스크린 | Touchscreen | 화면 표시와 터치 입력을 함께 수행하는 장치 |
@@ -395,6 +404,13 @@
 | 서버 | Server | 요청을 받아 데이터나 서비스를 제공하는 컴퓨터 또는 프로그램 |
 | 요청 | Request | 클라이언트가 서버에 보내는 요구 |
 | 응답 | Response | 서버가 요청을 처리해 돌려주는 결과 |
+| 사용자 인터페이스 | User Interface, UI | 사람이 화면을 보고 입력하며 프로그램과 상호작용하는 부분 |
+| 프론트엔드 | Front End / Frontend | 브라우저나 앱에서 사용자가 보고 조작하는 화면과 그 동작을 구현한 부분 |
+| 백엔드 | Back End / Backend | 서버에서 요청을 검사하고 계산하며 데이터 저장·조회 등을 처리하는 프로그램 부분 |
+| 웹 앱 | Web Application / Web App | 브라우저를 통해 사용하며 입력과 처리 기능을 제공하는 응용 프로그램 |
+| 응용 프로그램 프로그래밍 인터페이스 | Application Programming Interface, API | 프로그램끼리 정해진 방법으로 기능이나 데이터를 요청하고 응답받는 연결 규칙 |
+| 데이터베이스 | Database, DB | 여러 데이터를 정해진 구조로 저장하고 조건에 따라 찾고 수정하도록 관리하는 체계 |
+| 데이터베이스 관리 시스템 | Database Management System, DBMS | 데이터베이스를 만들고 조회·추가·수정·삭제하도록 관리하는 소프트웨어 |
 | 패킷 | Packet | 네트워크에서 전달하기 좋게 나눈 데이터 묶음 |
 | IP 주소 | IP Address | 네트워크에서 기기나 연결 지점을 찾기 위한 숫자 주소 |
 | 도메인 이름 | Domain Name | 사람이 읽기 쉽게 만든 인터넷 이름 |
@@ -408,6 +424,15 @@
 | 검색 엔진 | Search Engine | 웹 자료를 찾아 검색 결과로 제공하는 서비스 |
 | 웹사이트 | Website | 하나의 목적이나 주제로 묶인 웹페이지들의 집합 |
 | 웹페이지 | Webpage / Web Page | 브라우저에서 보는 하나의 웹 문서 |
+| HTML | HyperText Markup Language, HTML | 웹페이지 내용과 구조를 나타내는 언어 |
+| CSS | Cascading Style Sheets, CSS | 웹페이지의 배치·크기·색·모양을 정하는 스타일 언어 |
+| JavaScript | JavaScript, JS | 웹페이지의 동작과 데이터 처리를 구현하는 프로그래밍 언어 |
+| 소스 코드 | Source Code | 사람이 작성하고 수정하는 프로그램의 원본 명령 |
+| 빌드 | Build | 소스 코드와 자원을 실행·배포할 형태로 검사하고 변환하는 과정 |
+| 호스팅 | Hosting | 웹사이트나 서버 프로그램을 인터넷에서 접속할 수 있는 컴퓨터 환경에 두고 운영하는 것 |
+| 배포 | Deployment | 새 프로그램이나 변경 사항을 실제 사용 환경에 전달해 작동하게 하는 과정 |
+| 로컬 환경 | Local Environment | 현재 사용 중인 기기 안에서 개발하거나 실행하는 환경 |
+| 원격 환경 | Remote Environment | 네트워크를 통해 접속하는 다른 컴퓨터나 서버의 실행 환경 |
 | 주소 표시줄 | Address Bar | 브라우저에서 웹 주소나 검색어를 입력하는 영역 |
 | 검색창 | Search Box / Search Field | 검색어를 입력하는 영역 |
 | 링크·하이퍼링크 | Link / Hyperlink | 다른 페이지나 자원으로 이동하게 하는 연결 |

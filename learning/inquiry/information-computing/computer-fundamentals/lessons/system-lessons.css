@@ -1018,3 +1018,107 @@
     .component-tabs { grid-template-columns: 1fr; }
     .section-divider { display: grid; gap: 2px; }
 }
+/* Shared A01 flow and cross-device textbook comparison */
+.data-flow-visual {
+    display: grid;
+    grid-template-columns: minmax(150px, 1fr) 32px minmax(170px, 1fr) 42px minmax(210px, 1.15fr);
+    gap: 10px;
+    align-items: center;
+}
+
+.flow-role {
+    min-height: 108px;
+    display: grid;
+    align-content: center;
+    gap: 7px;
+    padding: 14px;
+    border: 2px solid #997346;
+    border-radius: 10px;
+    background: #fff8e8;
+}
+
+.flow-role strong { color: #3d2513; font-size: 19px; }
+.flow-role strong small { display: block; color: #075963; font-size: 12px; }
+.flow-role span { color: #4f443a; font-size: 14px; line-height: 1.5; }
+.flow-role.input { border-color: #2b7890; background: #edf7fa; }
+.flow-role.processing { border-color: #b47519; background: #fff3d6; }
+.flow-role.output { border-color: #16727b; background: #eaf7f6; }
+.flow-role.storage { border-color: #4f8448; background: #eef7e9; }
+.flow-arrow,
+.flow-branch { color: #075963; font-size: 30px; font-weight: 900; text-align: center; line-height: 1.1; }
+.flow-outcomes { display: grid; gap: 8px; }
+.flow-outcomes .flow-role { min-height: 82px; }
+
+.device-comparison {
+    margin-top: 22px;
+    padding: 18px;
+    border: 1px solid #b99a6c;
+    border-radius: 12px;
+    background: #fffdf8;
+}
+
+.device-comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.device-comparison-grid article {
+    overflow: hidden;
+    border: 1px solid #bfa57b;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.device-comparison-grid figure {
+    margin: 0;
+    aspect-ratio: 3 / 2;
+    border-bottom: 1px solid #d7bf98;
+    background: #f5ead7;
+}
+
+.device-comparison-grid img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.device-card-copy { padding: 12px; }
+.device-card-copy h3 { margin: 0 0 8px; color: #3d2513; font-size: 18px; line-height: 1.25; }
+.device-card-copy h3 small { display: block; margin-top: 2px; color: #075963; font-size: 12px; }
+.device-card-copy p { margin: 7px 0 0; color: #4f443a; font-size: 14px; line-height: 1.55; }
+.device-card-copy .device-relation {
+    padding: 8px;
+    border-left: 4px solid #0e6670;
+    background: #eef8f7;
+    color: #233f42;
+    font-weight: 800;
+}
+
+.representative-note {
+    margin: 14px 0 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #f4ead7;
+    color: #4d402f;
+    font-size: 14px;
+    line-height: 1.55;
+}
+.representative-note strong { color: #6d3a12; }
+
+@media (max-width: 900px) {
+    .device-comparison-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+    .data-flow-visual { grid-template-columns: 1fr; }
+    .flow-arrow { transform: rotate(90deg); }
+    .flow-branch { transform: rotate(90deg); min-height: 38px; }
+    .device-comparison { padding: 14px; }
+}
+
+@media (max-width: 520px) {
+    .device-comparison-grid { grid-template-columns: 1fr; }
+}

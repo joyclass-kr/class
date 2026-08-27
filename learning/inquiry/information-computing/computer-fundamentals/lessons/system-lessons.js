@@ -1,7 +1,122 @@
 (() => {
     "use strict";
 
+    const isCourseRootPage = document.body.dataset.courseRoot === "true";
+    const asset = (name) => `${isCourseRootPage ? "assets" : "../assets"}/images/${name}`;
+    const portalHref = isCourseRootPage ? "../../../../" : "../../../../../";
+    const lessonHref = (id) => {
+        if (id === "a01") return isCourseRootPage ? "./" : "../";
+        return isCourseRootPage ? `lessons/?lesson=${id}` : `?lesson=${id}`;
+    };
+
     const lessons = [
+        {
+            id: "a01",
+            code: "A01",
+            number: 1,
+            domain: "컴퓨터의 기본 원리",
+            title: "컴퓨터는 무슨 일을 할까?",
+            english: "What Does a Computer Do?",
+            conceptTitle: "입력된 데이터는 처리된 뒤 출력되거나 저장된다",
+            visual: `
+                <div class="visual-gallery">
+                    <figure class="concept-illustration">
+                        <picture>
+                            <source srcset="${asset("tablet-photo-data-flow-768.webp")} 768w, ${asset("tablet-photo-data-flow-1536.webp")} 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
+                            <img src="${asset("tablet-photo-data-flow-768.webp")}" width="1536" height="1024" alt="나무 블록에서 반사된 빛이 태블릿 카메라 센서로 들어가 처리 칩을 거친 뒤 화면 표시와 내부 저장 장치의 두 갈래로 나뉘는 모습">
+                        </picture>
+                        <figcaption>카메라가 받은 빛은 숫자 데이터로 바뀌고, 처리된 결과는 화면에 보이는 길과 파일로 남는 길로 나뉩니다.</figcaption>
+                    </figure>
+                    <div class="system-visual data-flow-visual" aria-label="입력 처리 출력 저장의 관계">
+                        <div class="flow-role input"><strong>입력 <small>Input</small></strong><span>빛·소리·터치·키 입력을 데이터로 받음</span></div>
+                        <span class="flow-arrow" aria-hidden="true">→</span>
+                        <div class="flow-role processing"><strong>처리 <small>Processing</small></strong><span>명령에 따라 계산·비교·변환</span></div>
+                        <span class="flow-branch" aria-hidden="true">↗<br>↘</span>
+                        <div class="flow-outcomes">
+                            <div class="flow-role output"><strong>출력 <small>Output</small></strong><span>화면·소리·인쇄로 나타냄</span></div>
+                            <div class="flow-role storage"><strong>저장 <small>Storage</small></strong><span>파일로 기록해 다시 사용함</span></div>
+                        </div>
+                    </div>
+                </div>`,
+            details: [
+                ["입력", "Input", "사람의 조작이나 센서의 측정값을 컴퓨터 안으로 받는 역할입니다. 스마트폰의 터치 좌표, 카메라 센서가 측정한 빛, 키보드가 보낸 키 신호가 입력 데이터가 됩니다."],
+                ["처리", "Processing", "CPU·GPU와 실행 중인 앱이 명령에 따라 데이터를 계산·비교·변환합니다. 카메라 앱은 센서 값을 픽셀로 배열하고 밝기와 색을 보정합니다."],
+                ["출력", "Output", "처리 결과를 사람이 확인할 수 있게 나타냅니다. 디스플레이의 픽셀, 스피커의 소리, 프린터의 종이 출력이 서로 다른 출력 방식입니다."],
+                ["저장", "Storage", "나중에 다시 사용할 데이터를 파일로 기록합니다. 화면에 잠깐 보이는 것과 SSD나 모바일 플래시 저장 장치에 기록되어 전원을 꺼도 남는 것은 다릅니다."]
+            ],
+            deviceComparison: {
+                title: "같은 네 역할이 기기마다 어디에서 일어날까?",
+                english: "One Principle Across Four Devices",
+                intro: "모양은 달라도 입력–처리–출력–저장 관계는 같습니다. 아래 그림은 각 기기의 대표적인 내부 구조입니다.",
+                cards: [
+                    { title: "데스크톱 PC", english: "Desktop PC", image: asset("desktop-hardware-cutaway-768.webp"), alt: "열린 데스크톱 본체의 대표적인 내부 구조", relation: "마우스·키보드 → CPU·GPU → 모니터 / SSD·HDD", note: "처리와 저장 부품을 따로 교체할 수 있는 경우가 많습니다." },
+                    { title: "Chromebook", english: "Chromebook", image: asset("chromebook-internals-exploded-768.webp"), alt: "화면과 키보드 아래 메인 기판, 배터리, 스피커가 분리된 Chromebook형 노트북의 대표 내부 구조", relation: "키보드·트랙패드 → 프로세서 → 화면 / 플래시 저장 장치", note: "노트북 본체 안에 화면·입력·배터리가 함께 들어 있습니다." },
+                    { title: "태블릿·iPad", english: "Tablet / iPad", image: asset("tablet-internals-exploded-768.webp"), alt: "터치 디스플레이, 배터리 두 장, 로직 보드와 스피커가 분리된 태블릿의 대표 내부 구조", relation: "터치·카메라 → SoC → 화면·스피커 / 플래시 저장 장치", note: "터치스크린이 입력 장치와 출력 장치 역할을 함께 합니다." },
+                    { title: "스마트폰", english: "Smartphone", image: asset("smartphone-internals-exploded-768.webp"), alt: "화면, 배터리, 로직 보드, 카메라와 작은 부품이 층별로 분리된 스마트폰의 대표 내부 구조", relation: "터치·센서 → SoC → 화면·진동 / 플래시 저장 장치", note: "작은 공간에 처리·통신·저장 부품이 촘촘하게 결합됩니다." }
+                ]
+            },
+            workedExample: {
+                title: "태블릿으로 사진을 찍은 뒤 1초",
+                english: "One Second After a Photo",
+                intro: "입력·처리·출력·저장은 외울 네 단어가 아니라 한 작업 안에서 이어지는 역할입니다.",
+                steps: [
+                    ["촬영 입력", "Capture Input", "손가락의 터치 좌표와 이미지 센서가 측정한 빛이 입력 데이터로 들어옵니다."],
+                    ["RAM에 작업 준비", "Working in RAM", "카메라 앱과 센서 데이터가 CPU가 빠르게 사용할 수 있도록 RAM에 놓입니다."],
+                    ["사진 처리", "Image Processing", "CPU와 영상 처리 장치가 픽셀 배열, 밝기, 색, 흔들림 보정을 계산합니다."],
+                    ["화면 출력", "Display Output", "처리된 픽셀값에 따라 디스플레이의 작은 빛점들이 색과 밝기를 나타냅니다."],
+                    ["파일 만들기", "File Encoding", "사진 데이터와 촬영 정보를 JPG·HEIC 같은 파일 규칙으로 묶습니다."],
+                    ["저장 장치 기록", "Storage Write", "완성된 파일을 플래시 저장 장치에 기록해 화면을 끄거나 전원을 꺼도 다시 열 수 있게 합니다."]
+                ]
+            },
+            comparisons: {
+                title: "화면에 보이는 것과 저장된 것을 구별하기",
+                english: "Display Is Not Storage",
+                cards: [
+                    ["카메라 미리보기", "Live Preview", "센서 입력을 계속 처리해 화면에 출력하는 중", "아직 촬영 파일이 만들어지지 않을 수 있음"],
+                    ["저장된 사진", "Saved Photo", "정해진 파일 형식으로 저장 장치에 기록된 데이터", "전원을 껐다 켜도 사진 앱에서 다시 열 수 있음"],
+                    ["앱 실행 중 작업", "Working Data", "현재 필요한 명령과 데이터가 RAM에 펼쳐진 상태", "일반적인 RAM 내용은 전원이 끊기면 유지되지 않음"],
+                    ["사진 파일", "Photo File", "이름·형식·위치를 가진 데이터 묶음", "앱이 파일을 읽어 다시 화면에 출력할 수 있음"]
+                ]
+            },
+            analogy: {
+                title: "비유: 방송 제작실",
+                english: "Broadcast Studio Analogy",
+                text: "카메라와 마이크는 입력, 편집실은 처리, 방송 화면과 스피커는 출력, 녹화 보관실은 저장에 비유할 수 있습니다.",
+                limit: "컴퓨터 데이터는 실제 방송 장비 사이를 한 번만 이동하는 물건이 아닙니다. 같은 데이터를 복사해 화면에 보여 주면서 파일로도 기록할 수 있습니다.",
+                teachback: "사진이 화면에는 보이지만 파일로 저장되지 않은 상황을 입력·처리·출력·저장 중 어떤 역할이 끝나지 않은 것인지 설명해 보세요."
+            },
+            activity: {
+                type: "sort",
+                title: "네 기기의 동작을 역할별로 연결하기",
+                instruction: "기기 이름에 기대지 말고, 각 동작이 데이터를 받는지·계산하는지·나타내는지·남기는지를 근거로 끌어다 놓으세요.",
+                categories: [
+                    { id: "input", label: "입력", english: "Input" },
+                    { id: "processing", label: "처리", english: "Processing" },
+                    { id: "output", label: "출력", english: "Output" },
+                    { id: "storage", label: "저장", english: "Storage" }
+                ],
+                items: [
+                    { id: "camera-light", label: "스마트폰 카메라 센서가 빛을 측정한다", english: "Camera Sensor Measures Light", category: "input" },
+                    { id: "keyboard-key", label: "Chromebook 키보드가 눌린 키 신호를 보낸다", english: "Keyboard Sends a Key Signal", category: "input" },
+                    { id: "image-calc", label: "SoC가 사진의 밝기와 색을 계산한다", english: "SoC Calculates Image Data", category: "processing" },
+                    { id: "page-layout", label: "브라우저가 글과 그림의 위치를 계산한다", english: "Browser Calculates Page Layout", category: "processing" },
+                    { id: "screen-pixels", label: "디스플레이 픽셀이 사진을 보여 준다", english: "Display Shows Pixels", category: "output" },
+                    { id: "speaker-sound", label: "스피커가 음악을 소리로 낸다", english: "Speaker Produces Sound", category: "output" },
+                    { id: "photo-file", label: "사진 파일을 모바일 저장 장치에 기록한다", english: "Write Photo to Mobile Storage", category: "storage" },
+                    { id: "document-file", label: "문서 파일을 SSD에 기록한다", english: "Write Document to SSD", category: "storage" }
+                ],
+                success: "기기의 모양이 달라도 입력–처리–출력–저장이라는 같은 관계로 설명할 수 있음을 확인했습니다."
+            },
+            questions: [
+                { text: "태블릿 카메라 화면에는 장면이 계속 보이지만 촬영 버튼을 누르지 않았습니다. 현재 일어난 역할의 조합으로 가장 알맞은 것은 무엇입니까?", options: ["센서 입력–영상 처리–화면 출력", "파일 저장–키보드 입력–인쇄 출력", "화면 저장–배터리 처리–센서 출력", "파일 입력–폴더 처리–카메라 저장"], answer: 0, concept: "입력·처리·출력", explanation: "미리보기는 센서가 빛을 입력하고 앱과 처리 장치가 계산한 결과를 화면에 출력한 상태입니다. 촬영 파일 저장은 아직 일어나지 않을 수 있습니다." },
+                { text: "사진을 찍은 뒤 기기를 완전히 종료했다가 다시 켰는데도 사진 앱에서 열 수 있었습니다. 이 사실을 가장 직접적으로 뒷받침하는 것은 무엇입니까?", options: ["사진 데이터가 저장 장치에 파일로 기록되었다", "사진 앱이 카메라 센서에서 이전 장면을 다시 측정했다", "디스플레이 회로가 꺼지기 전 픽셀 빛을 보존했다", "프로세서가 원본 데이터 없이 같은 사진을 다시 계산했다"], answer: 0, concept: "저장", explanation: "전원을 끈 뒤에도 다시 열 수 있으려면 사진 데이터가 비휘발성 저장 장치에 파일로 기록되어 있어야 합니다." },
+                { text: "Chromebook에서 키를 눌렀더니 문서 앱이 글자가 들어갈 위치를 계산했습니다. 키 신호와 위치 계산의 역할을 순서대로 고르면 무엇입니까?", options: ["입력–처리", "처리–저장", "저장–출력", "출력–입력"], answer: 0, concept: "입력과 처리", explanation: "키보드는 눌린 키를 입력으로 보내고, 앱과 CPU는 현재 커서 위치와 입력 규칙을 처리합니다." },
+                { text: "스마트폰에서 음악 파일을 열자 CPU가 파일 형식을 해석하고 스피커가 소리를 냈습니다. CPU와 스피커의 역할을 순서대로 고르면 무엇입니까?", options: ["처리–출력", "입력–저장", "저장–처리", "출력–입력"], answer: 0, concept: "처리와 출력", explanation: "파일 데이터를 해석하는 것은 처리이고, 전기 신호를 실제 소리로 나타내는 스피커는 출력 장치입니다." },
+                { text: "그림 앱에서 선을 그린 직후 저장하지 않고 앱을 강제로 종료했습니다. 다시 열었을 때 선이 사라질 수 있는 이유는 무엇입니까?", options: ["임시 작업 데이터가 RAM에 있었고 저장 장치 기록이 끝나지 않았기 때문이다", "저장된 파일의 화면 해상도가 터치 좌표와 달랐기 때문이다", "터치 센서가 입력 좌표를 디스플레이 픽셀로 출력했기 때문이다", "GPU의 그림 계산 결과가 원본 파일을 대신해 기록되었기 때문이다"], answer: 0, concept: "작업 데이터와 파일", explanation: "실행 중 작업이 RAM에 있고 저장 장치의 파일에 기록되지 않았다면 앱 종료 뒤 변경 내용이 남지 않을 수 있습니다." },
+                { text: "같은 사진 데이터를 화면에 보여 주면서 저장 장치에도 기록했습니다. 이 상황이 가능한 까닭은 무엇입니까?", options: ["처리된 데이터를 출력 경로와 저장 경로에서 각각 사용할 수 있기 때문이다", "화면으로 보낸 데이터가 이동하면서 저장 장치의 원본이 사라지기 때문이다", "저장 장치가 영상 계산을 맡고 디스플레이가 파일 형식을 정하기 때문이다", "카메라 센서가 화면 픽셀을 거쳐 저장 장치에 직접 기록하기 때문이다"], answer: 0, concept: "데이터의 분기", explanation: "처리된 데이터는 복사되거나 서로 다른 경로로 전달되어 화면 출력과 파일 저장에 함께 사용될 수 있습니다." },
+                { text: "PC, Chromebook, 태블릿, 스마트폰에서 공통으로 찾아야 할 관계는 무엇입니까?", options: ["입력을 받고 명령에 따라 처리한 뒤 결과를 출력하거나 저장한다", "처리 장치의 모양과 운영체제 이름이 일치해야 앱을 실행한다", "키보드나 터치 신호가 처리 장치를 거치지 않고 화면에 표시된다", "저장 장치가 앱 명령을 해석하고 CPU가 파일을 장기 보관한다"], answer: 0, concept: "공통 원리", explanation: "부품의 모양과 운영체제는 달라도 데이터를 입력받아 처리하고 출력하거나 저장하는 기본 관계는 공통입니다." }
+            ]
+        },
         {
             id: "a02",
             number: 2,
@@ -12,8 +127,8 @@
                 <div class="visual-gallery">
                     <figure class="concept-illustration">
                         <picture>
-                            <source srcset="../assets/images/hardware-software-flow-768.webp 768w, ../assets/images/hardware-software-flow-1536.webp 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
-                            <img src="../assets/images/hardware-software-flow-768.webp" width="1536" height="1024" alt="키보드 입력이 노트북 안으로 들어가 소프트웨어 명령, RAM, CPU를 거친 뒤 화면의 결과로 나타나는 네 단계 흐름">
+                            <source srcset="${asset("hardware-software-flow-768.webp")} 768w, ${asset("hardware-software-flow-1536.webp")} 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
+                            <img src="${asset("hardware-software-flow-768.webp")}" width="1536" height="1024" alt="키보드 입력이 노트북 안으로 들어가 소프트웨어 명령, RAM, CPU를 거친 뒤 화면의 결과로 나타나는 네 단계 흐름">
                         </picture>
                         <figcaption>키를 누르는 물리적 동작은 소프트웨어의 명령과 데이터를 거쳐 다시 화면의 물리적 빛으로 나타납니다.</figcaption>
                     </figure>
@@ -45,6 +160,17 @@
                 ["둘의 관계", "How They Work Together", "그림 앱만 있어도 화면과 CPU가 없으면 실행할 수 없고, 하드웨어만 있어도 실행할 소프트웨어가 없으면 원하는 작업을 지시할 수 없습니다."],
                 ["경계가 헷갈리는 사례", "A Useful Boundary", "프린터 본체는 하드웨어이고 프린터 드라이버는 소프트웨어입니다. 같은 기능에 함께 쓰여도 물리 장치와 명령은 구별됩니다."]
             ],
+            deviceComparison: {
+                title: "PC와 모바일 기기에서 하드웨어·소프트웨어 찾기",
+                english: "Hardware and Software Across Devices",
+                intro: "모양과 결합 방식은 달라도 물리적인 부품은 하드웨어이고, 그 부품에서 실행되는 운영체제와 앱은 소프트웨어입니다.",
+                cards: [
+                    { title: "데스크톱 PC", english: "Desktop PC", image: asset("desktop-hardware-cutaway-768.webp"), alt: "CPU, RAM, 그래픽 카드와 저장 장치가 따로 연결된 데스크톱 내부", relation: "CPU·RAM·SSD = 하드웨어 / Windows·앱 = 소프트웨어", note: "부품이 슬롯과 케이블로 나뉘어 보여 역할을 관찰하기 쉽습니다." },
+                    { title: "Chromebook", english: "Chromebook", image: asset("chromebook-internals-exploded-768.webp"), alt: "화면, 키보드, 배터리와 메인 기판이 분리된 Chromebook형 노트북 내부", relation: "프로세서·배터리 = 하드웨어 / ChromeOS·Chrome = 소프트웨어", note: "노트북 한 몸 안에 입력·출력·처리·저장 장치가 함께 들어 있습니다." },
+                    { title: "태블릿·iPad", english: "Tablet / iPad", image: asset("tablet-internals-exploded-768.webp"), alt: "터치 화면, 배터리와 로직 보드가 분리된 태블릿 내부", relation: "터치 화면·SoC = 하드웨어 / iPadOS·그림 앱 = 소프트웨어", note: "터치 화면은 물리 장치이고 화면에 나타난 아이콘과 앱은 소프트웨어 쪽입니다." },
+                    { title: "Android·iPhone", english: "Smartphone", image: asset("smartphone-internals-exploded-768.webp"), alt: "화면, 배터리, 로직 보드, 카메라가 분리된 스마트폰 내부", relation: "카메라·SoC·저장 칩 = 하드웨어 / Android·iOS·앱 = 소프트웨어", note: "작은 칩 안에 여러 기능이 합쳐져 있어도 물리 회로와 실행 명령은 구별됩니다." }
+                ]
+            },
             workedExample: {
                 title: "메모장에 ‘가’를 입력하면",
                 english: "From Key Press to Screen",
@@ -128,6 +254,13 @@
                     answer: 0,
                     concept: "실행",
                     explanation: "저장된 소프트웨어를 실행하려면 명령을 작업 공간으로 불러오고 처리할 RAM과 CPU가 필요합니다."
+                },
+{
+                    text: "스마트폰 설명서에 ‘SoC, 8GB RAM, Android, 카메라 앱’이 적혀 있습니다. 하드웨어와 소프트웨어를 올바르게 나눈 것은 무엇입니까?",
+                    options: ["SoC·RAM은 하드웨어이고 Android·카메라 앱은 소프트웨어다", "Android·RAM은 하드웨어이고 SoC·카메라 앱은 소프트웨어다", "SoC·Android는 하드웨어이고 RAM·카메라 앱은 소프트웨어다", "네 항목은 모두 스마트폰 안에 있으므로 같은 종류다"],
+                    answer: 0,
+                    concept: "모바일 하드웨어와 소프트웨어",
+                    explanation: "SoC와 RAM은 물리적인 전자 부품이고, Android는 운영체제 소프트웨어이며 카메라 앱은 응용 소프트웨어입니다."
                 }
             ]
         },
@@ -141,8 +274,8 @@
                 <div class="visual-gallery">
                     <figure class="concept-illustration">
                         <picture>
-                            <source srcset="../assets/images/device-os-app-layers-768.webp 768w, ../assets/images/device-os-app-layers-1536.webp 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
-                            <img src="../assets/images/device-os-app-layers-768.webp" width="1536" height="1024" alt="태블릿, 노트북, 데스크톱, 스마트폰 위에 운영체제 관리층과 앱 작업층이 겹쳐 있는 구조">
+                            <source srcset="${asset("device-os-app-layers-768.webp")} 768w, ${asset("device-os-app-layers-1536.webp")} 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
+                            <img src="${asset("device-os-app-layers-768.webp")}" width="1536" height="1024" alt="태블릿, 노트북, 데스크톱, 스마트폰 위에 운영체제 관리층과 앱 작업층이 겹쳐 있는 구조">
                         </picture>
                         <figcaption>기기는 아래에서 실제 일을 하고, 운영체제는 가운데에서 자원을 관리하며, 앱은 위에서 사용자가 고른 작업을 요청합니다.</figcaption>
                     </figure>
@@ -166,6 +299,17 @@
                 ["앱", "Application / App", "브라우저 · 카메라 · 문서 편집기처럼 특정 작업을 수행하는 소프트웨어입니다. 같은 앱도 여러 운영체제용 버전이 따로 있을 수 있습니다."],
                 ["층 사이의 요청", "Requests Between Layers", "앱은 운영체제에 파일 저장이나 카메라 사용을 요청하고, 운영체제는 드라이버를 통해 하드웨어를 제어합니다."]
             ],
+            deviceComparison: {
+                title: "제품 이름·운영체제·앱을 층으로 나누기",
+                english: "Device, OS, and App Layers",
+                intro: "내부 사진은 기기 하드웨어를 보여 줍니다. 그 위에서 운영체제가 부품을 관리하고, 앱은 운영체제에 작업을 요청합니다.",
+                cards: [
+                    { title: "PC", english: "Device", image: asset("desktop-hardware-cutaway-768.webp"), alt: "데스크톱 PC의 대표 내부 하드웨어", relation: "PC → Windows·Linux → Edge·그림 앱", note: "PC는 제품 종류이고 Windows는 운영체제입니다." },
+                    { title: "Chromebook", english: "Device Family", image: asset("chromebook-internals-exploded-768.webp"), alt: "Chromebook형 노트북의 대표 내부 하드웨어", relation: "Chromebook → ChromeOS → Chrome·파일 앱", note: "Chromebook과 ChromeOS와 Chrome은 비슷하게 들리지만 서로 다른 층입니다." },
+                    { title: "iPad", english: "Tablet Device", image: asset("tablet-internals-exploded-768.webp"), alt: "iPad와 비슷한 태블릿의 대표 내부 하드웨어", relation: "iPad → iPadOS → Safari·그림 앱", note: "iPad는 기기, iPadOS는 운영체제, Safari는 앱입니다." },
+                    { title: "스마트폰", english: "Smartphone Device", image: asset("smartphone-internals-exploded-768.webp"), alt: "스마트폰의 대표 내부 하드웨어", relation: "Galaxy 등 → Android → 카메라·브라우저 앱 / iPhone → iOS → Safari", note: "회사·제품 계열·운영체제·앱을 한 이름처럼 섞지 않습니다." }
+                ]
+            },
             workedExample: {
                 title: "카메라 앱으로 사진을 찍을 때",
                 english: "A Photo Request Through Three Layers",
@@ -251,6 +395,13 @@
                     answer: 0,
                     concept: "층 사이 요청",
                     explanation: "운영체제는 앱의 요청을 받아 장치 드라이버를 통해 카메라 센서 같은 하드웨어를 제어합니다."
+                },
+{
+                    text: "iPhone에서 Safari로 학교 웹사이트를 열었습니다. 회사·기기·운영체제·앱을 순서대로 올바르게 연결한 것은 무엇입니까?",
+                    options: ["Apple–iPhone–iOS–Safari", "iPhone–Apple–Safari–iOS", "Apple–iOS–iPhone–Safari", "Safari–iPhone–Apple–iOS"],
+                    answer: 0,
+                    concept: "회사·기기·운영체제·앱",
+                    explanation: "Apple은 회사, iPhone은 기기 제품 계열, iOS는 운영체제, Safari는 웹 브라우저 앱입니다."
                 }
             ]
         },
@@ -264,8 +415,8 @@
                 <div class="visual-gallery">
                     <figure class="concept-illustration">
                         <picture>
-                            <source srcset="../assets/images/analog-digital-measurement-768.webp 768w, ../assets/images/analog-digital-measurement-1536.webp 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
-                            <img src="../assets/images/analog-digital-measurement-768.webp" width="1536" height="1024" alt="현실의 매끄러운 온도와 소리 변화가 센서 측정을 거쳐 정해진 단계의 디지털 기록으로 바뀌는 비교 그림">
+                            <source srcset="${asset("analog-digital-measurement-768.webp")} 768w, ${asset("analog-digital-measurement-1536.webp")} 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
+                            <img src="${asset("analog-digital-measurement-768.webp")}" width="1536" height="1024" alt="현실의 매끄러운 온도와 소리 변화가 센서 측정을 거쳐 정해진 단계의 디지털 기록으로 바뀌는 비교 그림">
                         </picture>
                         <figcaption>현실의 변화는 이어지지만, 디지털 장치는 일정한 순간과 정해진 값의 칸을 골라 기록합니다.</figcaption>
                     </figure>
@@ -341,7 +492,7 @@
                 },
                 {
                     text: "바늘식 전압계의 바늘이 2.0V와 2.1V 사이 중간 위치를 가리킵니다. 이 표시가 보여 주는 특징은 무엇입니까?",
-                    options: ["정해진 두 숫자 중 하나만 선택한다", "중간 위치를 이용해 이어지는 값을 나타낼 수 있다", "측정값을 파일 확장자로 저장한다", "전압을 0과 1 두 값으로만 표시한다"],
+                    options: ["측정 순간마다 두 숫자 중 하나를 골라 기록한다", "중간 위치를 이용해 이어지는 값을 나타낼 수 있다", "측정값을 파일 확장자로 저장한다", "전압 변화 전체를 0과 1 두 단계로 압축해 표시한다"],
                     answer: 1,
                     concept: "연속값",
                     explanation: "바늘 위치는 눈금 사이에서도 연속적으로 달라질 수 있어 중간값을 나타냅니다."
@@ -372,8 +523,8 @@
                 <div class="visual-gallery">
                     <figure class="concept-illustration">
                         <picture>
-                            <source srcset="../assets/images/sound-to-digital-flow-768.webp 768w, ../assets/images/sound-to-digital-flow-1536.webp 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
-                            <img src="../assets/images/sound-to-digital-flow-768.webp" width="1536" height="1024" alt="기타 줄의 떨림과 공기 파동이 마이크, 전기 신호, 측정점, 숫자 데이터, 스피커를 거쳐 다시 소리가 되는 흐름">
+                            <source srcset="${asset("sound-to-digital-flow-768.webp")} 768w, ${asset("sound-to-digital-flow-1536.webp")} 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
+                            <img src="${asset("sound-to-digital-flow-768.webp")}" width="1536" height="1024" alt="기타 줄의 떨림과 공기 파동이 마이크, 전기 신호, 측정점, 숫자 데이터, 스피커를 거쳐 다시 소리가 되는 흐름">
                         </picture>
                         <figcaption>녹음은 공기의 떨림을 숫자로 바꾸는 길이고, 재생은 숫자를 다시 공기의 떨림으로 바꾸는 반대 길입니다.</figcaption>
                     </figure>
@@ -446,7 +597,7 @@
                 },
                 {
                     text: "마이크가 만든 전기 신호가 아직 시간에 따라 매끄럽게 변하고 있습니다. 숫자 배열로 저장하기 전에 필요한 과정은 무엇입니까?",
-                    options: ["신호를 일정한 간격으로 측정하고 숫자 단계로 기록한다", "연속 신호의 크기만 키운 뒤 그 상태를 숫자 변환 없이 저장한다", "신호를 스피커로 먼저 재생하고 나온 소리를 다시 마이크로 기록한다", "신호에 WAV라는 파일 이름을 붙이면 내용도 숫자로 바뀐다고 본다"],
+                    options: ["신호를 일정한 간격으로 측정하고 숫자 단계로 기록한다", "연속 신호의 크기를 키운 상태로 숫자 변환 없이 저장한다", "신호를 스피커로 먼저 재생하고 나온 소리를 다시 마이크로 기록한다", "신호에 WAV라는 파일 이름을 붙이면 내용도 숫자로 바뀐다고 본다"],
                     answer: 0,
                     concept: "아날로그-디지털 변환",
                     explanation: "연속 신호를 샘플링하고 양자화해야 컴퓨터가 저장하고 처리할 숫자 데이터가 됩니다."
@@ -480,8 +631,8 @@
                     <figure class="hardware-photo">
                         <div class="hardware-photo-map">
                             <picture>
-                                <source srcset="../assets/images/desktop-hardware-cutaway-768.webp 768w, ../assets/images/desktop-hardware-cutaway-1448.webp 1448w" sizes="(max-width: 900px) calc(100vw - 60px), 65vw" type="image/webp">
-                                <img src="../assets/images/desktop-hardware-cutaway-768.webp" width="768" height="576" alt="열린 데스크톱 본체 안의 CPU, RAM, GPU, SSD, 하드 디스크, 메인보드, 전원 공급 장치와 냉각 팬">
+                                <source srcset="${asset("desktop-hardware-cutaway-768.webp")} 768w, ${asset("desktop-hardware-cutaway-1448.webp")} 1448w" sizes="(max-width: 900px) calc(100vw - 60px), 65vw" type="image/webp">
+                                <img src="${asset("desktop-hardware-cutaway-768.webp")}" width="768" height="576" alt="열린 데스크톱 본체 안의 CPU, RAM, GPU, SSD, 하드 디스크, 메인보드, 전원 공급 장치와 냉각 팬">
                             </picture>
                             <span class="part-marker marker-cpu" aria-label="1번 CPU"><b>1</b></span>
                             <span class="part-marker marker-ram" aria-label="2번 RAM"><b>2</b></span>
@@ -511,13 +662,24 @@
                 ["RAM과 저장 장치", "Memory and Storage", "RAM은 지금 펼쳐 둔 자료를 빠르게 쓰는 책상이고 전원이 꺼지면 내용이 사라집니다. SSD·HDD는 파일을 오래 보관하는 사물함에 가깝습니다."],
                 ["메인보드·전원·냉각", "Motherboard, Power, and Cooling", "메인보드는 부품이 꽂히고 데이터를 주고받는 길을 제공합니다. 전원 공급 장치는 필요한 전력을 나누고, 팬과 방열판은 생긴 열을 밖으로 보냅니다."]
             ],
+            deviceComparison: {
+                title: "같은 역할, 다른 모양과 연결 방식",
+                english: "Same Roles, Different Packaging",
+                intro: "데스크톱은 부품이 크게 나뉘고 모바일 기기는 칩과 기판에 촘촘히 결합됩니다. 사진은 특정 제품의 수리도가 아닌 대표적인 구조입니다.",
+                cards: [
+                    { title: "데스크톱 PC", english: "Separate Modules", image: asset("desktop-hardware-cutaway-768.webp"), alt: "교체 가능한 부품이 나뉘어 연결된 데스크톱 내부", relation: "CPU 소켓 · RAM 슬롯 · 그래픽 카드 · SSD/HDD · PSU", note: "부품이 따로 보이고 교체 가능한 경우가 많습니다." },
+                    { title: "Chromebook", english: "Compact Laptop", image: asset("chromebook-internals-exploded-768.webp"), alt: "메인 기판, 배터리, 스피커와 화면이 분리된 Chromebook 내부", relation: "프로세서/SoC · RAM · 플래시 저장 · 배터리 · Wi-Fi", note: "얇은 본체에 맞춰 RAM과 저장 장치가 기판에 붙는 제품이 많습니다." },
+                    { title: "태블릿", english: "Tablet", image: asset("tablet-internals-exploded-768.webp"), alt: "큰 배터리와 좁은 로직 보드가 들어 있는 태블릿 내부", relation: "SoC · RAM · 플래시 저장 · 큰 배터리 · 터치 디스플레이", note: "화면과 배터리가 내부 공간의 대부분을 차지하고 주요 칩은 한쪽 기판에 모입니다." },
+                    { title: "스마트폰", english: "Smartphone", image: asset("smartphone-internals-exploded-768.webp"), alt: "작은 로직 보드와 배터리, 카메라가 층별로 배치된 스마트폰 내부", relation: "SoC · RAM · 플래시 저장 · PMIC · 모뎀 · 안테나", note: "SoC에는 CPU와 GPU 같은 기능이 통합되고 통신 부품이 함께 필요합니다." }
+                ]
+            },
             parts: [
                 {
                     key: "cpu",
                     short: "CPU",
                     full: "Central Processing Unit",
                     korean: "중앙 처리 장치",
-                    image: "../assets/images/component-cpu-768.webp",
+                    image: asset("component-cpu-768.webp"),
                     alt: "금속 덮개가 있는 데스크톱 CPU의 윗면과 접점이 배열된 아랫면 확대 사진",
                     origin: "Central은 컴퓨터의 여러 작업을 중심에서 맡는다는 뜻, Processing은 명령과 데이터를 처리한다는 뜻, Unit은 하나의 기능 장치를 뜻합니다.",
                     look: "손바닥보다 작은 네모난 부품입니다. 윗면의 금속 덮개는 내부 칩의 열을 방열판으로 전달하고, 아랫면의 접점은 메인보드와 전기 신호를 주고받습니다.",
@@ -530,7 +692,7 @@
                     short: "RAM",
                     full: "Random Access Memory",
                     korean: "임의 접근 기억 장치",
-                    image: "../assets/images/component-ram-768.webp",
+                    image: asset("component-ram-768.webp"),
                     alt: "검은 메모리 칩과 금색 접점, 끼우는 홈이 보이는 데스크톱 RAM 모듈 확대 사진",
                     origin: "Random Access는 데이터를 무작위로 고른다는 뜻이 아닙니다. 앞에서부터 차례로 찾지 않고 필요한 주소로 바로 접근할 수 있다는 뜻입니다. Memory는 실행 중 정보를 잠시 기억하는 장치라는 뜻입니다.",
                     look: "길고 좁은 회로 기판 위에 여러 메모리 칩이 붙어 있습니다. 아래쪽 금색 접점과 홈의 위치를 RAM 슬롯에 맞추어 꽂습니다.",
@@ -543,7 +705,7 @@
                     short: "GPU",
                     full: "Graphics Processing Unit",
                     korean: "그래픽 처리 장치",
-                    image: "../assets/images/component-gpu-768.webp",
+                    image: asset("component-gpu-768.webp"),
                     alt: "냉각 팬, 회로 기판, 금속 브래킷과 금색 연결부가 보이는 데스크톱 그래픽 카드 확대 사진",
                     origin: "Graphics는 화면의 그림과 영상을 뜻하고 Processing Unit은 계산을 맡는 장치라는 뜻입니다. 처음에는 그래픽 계산이 중심이어서 이런 이름이 붙었습니다.",
                     look: "그래픽 처리 칩이 있는 회로 기판에 큰 방열판과 팬이 붙습니다. 화면 단자와 메인보드에 꽂는 PCI Express 접점이 보입니다.",
@@ -556,7 +718,7 @@
                     short: "SSD",
                     full: "Solid-State Drive",
                     korean: "반도체 저장 장치",
-                    image: "../assets/images/component-ssd-768.webp",
+                    image: asset("component-ssd-768.webp"),
                     alt: "겉 케이스와 내부 플래시 메모리 칩, 제어 칩, 연결 단자가 보이는 SSD 확대 사진",
                     origin: "Solid-State는 움직이는 기계 부품 대신 반도체 회로로 동작한다는 전자공학 표현입니다. 단단한 상태라는 일상적 뜻만 가리키지 않습니다. Drive는 저장 장치를 부르던 이름이 이어진 것입니다.",
                     look: "2.5인치 SSD는 납작한 케이스 안에 NAND 플래시 메모리 칩과 제어 칩이 들어 있습니다. M.2 SSD는 막대 모양의 작은 회로 기판 형태도 있습니다.",
@@ -569,7 +731,7 @@
                     short: "HDD",
                     full: "Hard Disk Drive",
                     korean: "하드 디스크 드라이브",
-                    image: "../assets/images/component-hdd-768.webp",
+                    image: asset("component-hdd-768.webp"),
                     alt: "덮개가 열린 하드 디스크 안의 원형 자기 디스크와 회전축, 읽기 쓰기 헤드 확대 사진",
                     origin: "Hard Disk의 Hard는 휘어지는 플로피 디스크와 달리 단단한 원판을 쓴다는 뜻입니다. Disk는 원형 기록판, Drive는 원판을 돌리고 읽고 쓰는 장치를 뜻합니다.",
                     look: "금속 케이스 안에 반짝이는 자기 원판, 원판을 돌리는 모터, 표면 가까이 움직이는 읽기·쓰기 헤드가 있습니다.",
@@ -582,7 +744,7 @@
                     short: "메인보드",
                     full: "Motherboard / Mainboard",
                     korean: "주기판",
-                    image: "../assets/images/component-motherboard-768.webp",
+                    image: asset("component-motherboard-768.webp"),
                     alt: "CPU 소켓, RAM 슬롯, PCI Express 슬롯과 여러 연결 단자가 보이는 메인보드 전체 확대 사진",
                     origin: "여러 부품과 작은 확장 보드가 연결되는 중심 기판이라 Motherboard 또는 Mainboard라고 부릅니다. 다른 부품의 어머니라는 생물학적 뜻은 아닙니다.",
                     look: "넓은 회로 기판 위에 CPU 소켓, RAM 슬롯, 그래픽 카드 슬롯, 저장 장치 단자와 전원 단자가 구역별로 배치됩니다.",
@@ -595,7 +757,7 @@
                     short: "PSU",
                     full: "Power Supply Unit",
                     korean: "전원 공급 장치",
-                    image: "../assets/images/component-psu-768.webp",
+                    image: asset("component-psu-768.webp"),
                     alt: "금속 상자, 냉각 팬, 전원 스위치와 여러 출력 케이블이 보이는 데스크톱 전원 공급 장치 확대 사진",
                     origin: "Power는 전력, Supply는 필요한 곳에 공급한다는 뜻, Unit은 하나의 기능 장치를 뜻합니다. 줄여서 PSU라고 합니다.",
                     look: "통풍구와 팬이 있는 금속 상자에서 메인보드·CPU·GPU·저장 장치용 케이블이 여러 갈래로 나옵니다.",
@@ -608,7 +770,7 @@
                     short: "냉각 장치",
                     full: "Heat Sink and Cooling Fan",
                     korean: "방열판과 냉각 팬",
-                    image: "../assets/images/component-cooling-768.webp",
+                    image: asset("component-cooling-768.webp"),
                     alt: "금속 방열핀, 구리 히트파이프, 냉각 팬과 CPU에 닿는 바닥면이 보이는 CPU 냉각 장치 확대 사진",
                     origin: "Heat Sink는 열이 흘러 들어가 퍼지는 곳이라는 뜻으로 방열판을 가리킵니다. Cooling Fan은 공기를 움직여 열을 밖으로 보내는 팬입니다.",
                     look: "CPU에 닿는 금속 바닥, 열을 옮기는 구리 히트파이프, 넓은 금속 핀, 공기를 통과시키는 팬으로 이루어집니다.",
@@ -686,7 +848,7 @@
                 },
                 {
                     text: "문서의 기존 파일은 SSD에 저장되어 있었지만 방금 입력한 문장은 저장하지 않은 채 전원이 꺼졌습니다. 다시 켰을 때 예상할 수 있는 결과는 무엇입니까?",
-                    options: ["SSD의 기존 파일은 남고 RAM에 있던 저장 전 변경 내용은 사라질 수 있다", "RAM의 변경 내용은 남고 SSD의 기존 파일은 사라진다", "CPU가 입력 문장을 기억해 두었다가 파일을 다시 만든다", "메인보드가 저장하지 않은 문장을 자동으로 장기 보관한다"],
+                    options: ["SSD의 기존 파일은 남고 RAM에 있던 저장 전 변경 내용은 사라질 수 있다", "RAM의 변경 내용은 남고 SSD의 기존 파일은 사라진다", "CPU가 입력 문장을 기억해 두었다가 파일을 다시 만든다", "메인보드의 대기 회로가 저장하지 않은 문장을 장기 보관한다"],
                     answer: 0,
                     concept: "휘발성과 비휘발성",
                     explanation: "SSD는 전원이 꺼져도 저장된 파일을 보관하지만 RAM에만 있던 변경 내용은 사라질 수 있습니다."
@@ -704,14 +866,22 @@
                     answer: 0,
                     concept: "냉각",
                     explanation: "방열판과 팬이 열을 충분히 내보내지 못하면 부품은 손상을 막기 위해 처리 속도를 낮출 수 있습니다."
+                },
+{
+                    text: "스마트폰은 CPU와 GPU가 SoC에 함께 들어 있고 RAM과 저장 칩이 기판에 붙어 있습니다. 데스크톱과 비교한 설명으로 가장 정확한 것은 무엇입니까?",
+                    options: ["같은 처리·작업·저장 역할이 더 작은 부품과 통합된 방식으로 구현된다", "SoC 안에 GPU가 있으므로 CPU는 필요하지 않다", "기판에 붙은 RAM은 파일을 전원이 꺼져도 보관한다", "스마트폰은 저장 칩이 있으므로 운영체제가 필요하지 않다"],
+                    answer: 0,
+                    concept: "기기별 부품 대응",
+                    explanation: "스마트폰도 처리에는 CPU·GPU, 작업 공간에는 RAM, 장기 보관에는 플래시 저장 장치를 사용합니다. 다만 이들이 SoC와 로직 보드에 더 촘촘히 통합됩니다."
                 }
             ]
         }
     ];
 
     const params = new URLSearchParams(window.location.search);
-    const requestedId = params.get("lesson");
-    const lessonIndex = Math.max(0, lessons.findIndex((item) => item.id === requestedId));
+    const requestedId = params.get("lesson") || (isCourseRootPage ? "a01" : "a02");
+    const requestedIndex = lessons.findIndex((item) => item.id === requestedId);
+    const lessonIndex = requestedIndex >= 0 ? requestedIndex : 0;
     const lesson = lessons[lessonIndex];
     const stages = {
         concept: document.getElementById("stageConcept"),
@@ -820,6 +990,35 @@
             <article><span class="concept-number">${index + 1}</span><h3>${detail[0]} <small>${detail[1]}</small></h3><p>${detail[2]}</p></article>
         `).join("");
         conceptOverview.hidden = Boolean(lesson.parts?.length);
+        const devicesMount = document.getElementById("conceptDevices");
+        const deviceComparison = lesson.deviceComparison;
+        if (deviceComparison?.cards?.length) {
+            devicesMount.innerHTML = `
+                <section class="device-comparison" aria-labelledby="deviceComparisonTitle">
+                    <div class="explanation-heading compact">
+                        <span>기기별로 비교하기 <small>Compare Devices</small></span>
+                        <h2 id="deviceComparisonTitle">${deviceComparison.title} <small>${deviceComparison.english}</small></h2>
+                        <p>${deviceComparison.intro}</p>
+                    </div>
+                    <div class="device-comparison-grid">
+                        ${deviceComparison.cards.map((card) => `
+                            <article>
+                                <figure><img src="${card.image}" width="768" height="512" alt="${card.alt}"></figure>
+                                <div class="device-card-copy">
+                                    <h3>${card.title} <small>${card.english}</small></h3>
+                                    <p class="device-relation">${card.relation}</p>
+                                    <p>${card.note}</p>
+                                </div>
+                            </article>
+                        `).join("")}
+                    </div>
+                    <p class="representative-note"><strong>대표적인 구조</strong> 제품과 세대에 따라 부품의 위치·크기·결합 방식은 달라질 수 있습니다. 배터리가 있는 기기는 직접 분해하지 않고 시각 자료로 관찰합니다.</p>
+                </section>
+            `;
+        } else {
+            devicesMount.innerHTML = "";
+        }
+        if (lesson.parts?.length) partsMount.before(devicesMount);
         const story = lesson.workedExample;
         document.getElementById("conceptStory").innerHTML = `
             <section class="worked-example" aria-labelledby="workedExampleTitle">
@@ -878,16 +1077,18 @@
         renderStaticCanvases();
         renderLessonList();
         const back = document.querySelector(".back-button");
-        back.href = lessonIndex === 0 ? "../" : `?lesson=${lessons[lessonIndex - 1].id}`;
-        back.setAttribute("aria-label", lessonIndex === 0 ? "1차시로 돌아가기" : "이전 차시로 돌아가기");
+        back.href = lessonIndex === 0 ? portalHref : lessonHref(lessons[lessonIndex - 1].id);
+        back.setAttribute("aria-label", lessonIndex === 0 ? "포털 메인으로 돌아가기" : "이전 차시로 돌아가기");
+        document.getElementById("scoreTotal").textContent = `/ ${lesson.questions.length}`;
     }
 
     function renderLessonList() {
         const list = document.getElementById("lessonList");
-        const entries = [
-            { id: "a01", code: "A01", number: 1, title: "컴퓨터는 무슨 일을 할까?", english: "What Does a Computer Do?", href: "../" },
-            ...lessons.map((item) => ({ ...item, code: item.code || item.id.toUpperCase(), href: `?lesson=${item.id}` }))
-        ];
+        const entries = lessons.map((item) => ({
+            ...item,
+            code: item.code || item.id.toUpperCase(),
+            href: lessonHref(item.id)
+        }));
         list.innerHTML = entries.map((item) => {
             let complete = false;
             try { complete = Boolean(JSON.parse(localStorage.getItem(`computer-literacy:${item.id}`) || "null")?.completed); } catch (_) { complete = false; }
@@ -1185,10 +1386,12 @@
         checkActivity.textContent = "문제 풀기";
     }
 
-    document.getElementById("startActivity").addEventListener("click", () => {
+    const beginActivity = () => {
         resetActivity();
         showStage("activity", "직접 조작 2 / 3");
-    });
+    };
+    document.getElementById("startActivity").addEventListener("click", beginActivity);
+    document.getElementById("startActivityTop").addEventListener("click", beginActivity);
     document.getElementById("resetActivity").addEventListener("click", resetActivity);
     checkActivity.addEventListener("click", () => {
         if (!activityPassed) {
@@ -1224,16 +1427,22 @@
         quizCount.textContent = `문제 ${questionIndex + 1} / ${lesson.questions.length}`;
         questionText.textContent = question.text;
         questionOptions.replaceChildren();
-        question.options.forEach((option, index) => {
+        const presentedOptions = question.options.map((text, originalIndex) => ({ text, originalIndex }));
+        for (let index = presentedOptions.length - 1; index > 0; index -= 1) {
+            const swapIndex = Math.floor(Math.random() * (index + 1));
+            [presentedOptions[index], presentedOptions[swapIndex]] = [presentedOptions[swapIndex], presentedOptions[index]];
+        }
+        presentedOptions.forEach((option, displayIndex) => {
             const button = document.createElement("button");
             button.type = "button";
             button.className = "option-button";
-            button.textContent = `${index + 1}. ${option}`;
+            button.dataset.optionIndex = String(option.originalIndex);
+            button.textContent = `${displayIndex + 1}. ${option.text}`;
             button.setAttribute("aria-pressed", "false");
             button.addEventListener("click", () => {
                 if (submitAnswer.hidden) return;
-                selectedOption = index;
-                [...questionOptions.children].forEach((entry, entryIndex) => entry.setAttribute("aria-pressed", String(entryIndex === index)));
+                selectedOption = option.originalIndex;
+                [...questionOptions.children].forEach((entry, entryIndex) => entry.setAttribute("aria-pressed", String(entryIndex === displayIndex)));
                 submitAnswer.disabled = false;
             });
             questionOptions.append(button);
@@ -1250,10 +1459,11 @@
         const correct = selectedOption === question.answer;
         if (correct) score += 1;
         results.push({ correct, concept: question.concept, explanation: question.explanation });
-        [...questionOptions.children].forEach((button, index) => {
+        [...questionOptions.children].forEach((button) => {
+            const originalIndex = Number(button.dataset.optionIndex);
             button.disabled = true;
-            if (index === question.answer) button.classList.add("is-answer");
-            if (index === selectedOption && !correct) button.classList.add("is-selected-wrong");
+            if (originalIndex === question.answer) button.classList.add("is-answer");
+            if (originalIndex === selectedOption && !correct) button.classList.add("is-selected-wrong");
         });
         quizFeedback.textContent = question.explanation;
         quizFeedback.className = `feedback quiz-feedback ${correct ? "is-correct" : "is-wrong"}`;
@@ -1271,7 +1481,7 @@
 
     function showResult() {
         document.getElementById("scoreNumber").textContent = String(score);
-        const passed = score >= 4;
+        const passed = score >= Math.ceil(lesson.questions.length * 0.8);
         document.getElementById("resultMessage").textContent = passed ? "그림과 상황을 근거로 이번 차시의 개념을 적용했습니다." : "틀린 문제의 설명을 확인하고 개념 사이의 관계를 다시 적용해 보세요.";
         const reviewList = document.getElementById("reviewList");
         reviewList.replaceChildren();
@@ -1286,10 +1496,10 @@
         }
         const nextLink = document.getElementById("nextLesson");
         if (lessonIndex < lessons.length - 1) {
-            nextLink.href = `?lesson=${lessons[lessonIndex + 1].id}`;
+            nextLink.href = lessonHref(lessons[lessonIndex + 1].id);
             nextLink.textContent = "다음 차시";
         } else {
-            nextLink.href = "../";
+            nextLink.href = lessonHref("a01");
             nextLink.textContent = "첫 차시로 돌아가기";
         }
         showStage("result", "차시 완료");
