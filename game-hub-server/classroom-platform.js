@@ -2658,10 +2658,35 @@ function createClassroomPlatform(options = {}) {
     const name = String(req.body?.name || "").trim();
     const officeCode = String(req.body?.officeCode || "").trim();
     const schoolCode = String(req.body?.schoolCode || "").trim();
-    const locationName = String(req.body?.locationName || "").trim();
 
-    if (!name || name.length > 80) {
-      throw new HttpError(400, "INVALID_SCHOOL", "Enter a school name.");
+    if (!name || name.length > 80 || !officeCode || !schoolCode) {
+      throw new HttpError(400, "INVALID_SCHOOL_SELECTION", "검색 결과에서 학교를 선택하세요.");
+    }
+
+    const keyParam = process.env.NEIS_API_KEY ? `&KEY=${process.env.NEIS_API_KEY}` : "";
+    const neisUrl = `https://open.neis.go.kr/hub/schoolInfo?Type=json&pIndex=1&pSize=1${keyParam}&ATPT_OFCDC_SC_CODE=${encodeURIComponent(officeCode)}&SD_SCHUL_CODE=${encodeURIComponent(schoolCode)}`;
+    let verifiedSchool;
+    try {
+      const response = await fetch(neisUrl, { signal: AbortSignal.timeout(8000) });
+      if (!response.ok) throw new Error(`NEIS responded with ${response.status}`);
+      const data = await response.json();
+      verifiedSchool = data?.schoolInfo?.[1]?.row?.[0] || null;
+    } catch (error) {
+      console.warn("NEIS school verification failed:", error.message);
+      throw new HttpError(502, "SCHOOL_VERIFICATION_FAILED", "학교 정보를 확인하지 못했습니다. 잠시 후 다시 시도하세요.");
+    }
+
+    const verifiedName = String(verifiedSchool?.SCHUL_NM || "").trim();
+    const verifiedOfficeCode = String(verifiedSchool?.ATPT_OFCDC_SC_CODE || "").trim();
+    const verifiedSchoolCode = String(verifiedSchool?.SD_SCHUL_CODE || "").trim();
+    const verifiedLocationName = String(verifiedSchool?.LCTN_SC_NM || verifiedSchool?.ATPT_OFCDC_SC_NM || "").trim();
+    if (
+      !verifiedName
+      || verifiedName !== name
+      || verifiedOfficeCode !== officeCode
+      || verifiedSchoolCode !== schoolCode
+    ) {
+      throw new HttpError(400, "INVALID_SCHOOL_SELECTION", "NEIS 검색 결과와 일치하는 학교만 등록할 수 있습니다.");
     }
     const existing = await pool.query(
       `UPDATE classroom_schools
@@ -2670,15 +2695,22 @@ function createClassroomPlatform(options = {}) {
            school_code = COALESCE(NULLIF($3, ''), school_code),
            location_name = COALESCE(NULLIF($4, ''), location_name),
            updated_at = NOW()
-       WHERE id = (SELECT id FROM classroom_schools WHERE name = $1 ORDER BY id LIMIT 1)
+       WHERE id = (
+         SELECT id
+         FROM classroom_schools
+         WHERE school_code = $3
+            OR ((school_code IS NULL OR school_code = '') AND name = $1)
+         ORDER BY CASE WHEN school_code = $3 THEN 0 ELSE 1 END, id
+         LIMIT 1
+       )
        RETURNING id, name, office_code, school_code, location_name, enabled`,
-      [name, officeCode, schoolCode, locationName]
+      [verifiedName, verifiedOfficeCode, verifiedSchoolCode, verifiedLocationName]
     );
     const result = existing.rows[0] ? existing : await pool.query(
       `INSERT INTO classroom_schools (name, google_domain, office_code, school_code, location_name, enabled)
        VALUES ($1, '', $2, $3, $4, TRUE)
        RETURNING id, name, office_code, school_code, location_name, enabled`,
-      [name, officeCode, schoolCode, locationName]
+      [verifiedName, verifiedOfficeCode, verifiedSchoolCode, verifiedLocationName]
     );
     const row = result.rows[0];
     res.json({

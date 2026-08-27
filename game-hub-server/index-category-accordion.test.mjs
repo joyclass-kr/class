@@ -10,7 +10,7 @@ assert.match(
 );
 
 const expectedCategories = [
-  ["01", "문해·수리", "category-literacy-panel"],
+  ["01", "문해력·수리력", "category-literacy-panel"],
   ["02", "교과·탐구", "category-exploration-panel"],
   ["03", "보드게임", "category-boardgame-panel"],
   ["04", "개인 퍼즐", "category-puzzle-panel"],
