@@ -176,6 +176,10 @@ test("every B01 component close-up is visible through an image tab and detailed 
   assert.match(lessonSource, /<img src="\${part\.image}"/);
   assert.match(lessonSource, /Name and Origin/);
   assert.match(lessonStyles, /\.component-tabs button img/);
+  assert.match(lessonStyles, /grid-auto-flow: column/);
+  assert.match(lessonStyles, /overflow-x: auto/);
+  assert.match(lessonSource, /showPart\(index, true\)/);
+  assert.match(lessonSource, /partPanel\.scrollIntoView/);
 });
 
 test("activities support touch, pointer, and keyboard while feedback waits for submit", () => {
