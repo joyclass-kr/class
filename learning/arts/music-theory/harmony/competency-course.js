@@ -5,6 +5,7 @@
   if (!curriculum) return;
 
   const STORAGE_KEY = "musicTheoryPracticalHarmonyCompetenciesV1";
+  const CURRENT_KEY = "musicTheoryPracticalHarmonyCurrentV1";
   const NOTE_NAMES = ["C", "C♯", "D", "E♭", "E", "F", "F♯", "G", "A♭", "A", "B♭", "B"];
   const LETTER_STEPS = { C:0, D:1, E:2, F:3, G:4, A:5, B:6 };
   const els = {};
@@ -96,34 +97,128 @@
     showToast.timer = window.setTimeout(function () { els.toast.classList.remove("show"); }, 2200);
   }
 
+  const SEQUENCE_KEYS = new Set([
+    "key-scale", "leading-tone", "roman-transfer", "practice-layers",
+    "transpose-map", "transpose-melody", "harmonic-rhythm", "rhythm-density",
+    "harmonize-options", "melody-register", "secondary-chain",
+    "lead-sheet", "arrangement-layers", "revision-loop"
+  ]);
+  const LETTER_PITCHES = { C:0, D:2, E:4, F:5, G:7, A:9, B:11 };
+
   function noteParts(note) {
     const match = /^([A-G])([#b]?)(-?\d)$/.exec(note);
-    if (!match) return { y:90, accidental:"", label:note };
+    if (!match) return { step:28, midi:60, accidental:"", label:note };
     const octave = Number(match[3]);
-    const step = octave * 7 + LETTER_STEPS[match[1]];
-    const c4 = 4 * 7;
-    const staffY = Math.max(44, Math.min(124, 124 - (step - c4) * 5));
-    return { y:staffY, accidental:match[2] === "#" ? "♯" : match[2] === "b" ? "♭" : "", label:note };
+    const accidentalValue = match[2] === "#" ? 1 : match[2] === "b" ? -1 : 0;
+    return {
+      step:octave * 7 + LETTER_STEPS[match[1]],
+      midi:(octave + 1) * 12 + LETTER_PITCHES[match[1]] + accidentalValue,
+      accidental:match[2] === "#" ? "♯" : match[2] === "b" ? "♭" : "",
+      label:note
+    };
   }
-  function staffSvg(items, title) {
-    const width = 520;
-    const margin = 46;
-    const gap = Math.max(50, (width - margin * 2) / Math.max(1, items.length));
-    const staff = [64,74,84,94,104].map(function (y) { return '<line x1="22" y1="'+y+'" x2="502" y2="'+y+'"/>'; }).join("");
-    const events = items.map(function (item, index) {
-      const x = margin + gap * index + gap / 2;
-      const notes = item[1];
-      const noteShapes = notes.map(function (note) {
-        const part = noteParts(note);
-        const ledger = (part.y >= 114 ? '<line class="ledger" x1="'+(x-13)+'" y1="'+part.y+'" x2="'+(x+13)+'" y2="'+part.y+'"/>' : "") +
-          (part.y <= 54 ? '<line class="ledger" x1="'+(x-13)+'" y1="'+part.y+'" x2="'+(x+13)+'" y2="'+part.y+'"/>' : "");
-        return ledger + (part.accidental ? '<text class="accidental" x="'+(x-17)+'" y="'+(part.y+5)+'">'+part.accidental+'</text>' : "") +
-          '<ellipse class="note-head" cx="'+x+'" cy="'+part.y+'" rx="7" ry="5" transform="rotate(-18 '+x+' '+part.y+')"/>';
-      }).join("");
-      return noteShapes + '<text class="chord-label" x="'+x+'" y="28" text-anchor="middle">'+escapeHtml(item[0])+'</text>';
+  function noteY(part, clef, grand) {
+    if (grand) return 124 - (part.step - 28) * 5;
+    if (clef === "bass") return 99 - (part.step - 21) * 5;
+    return 124 - (part.step - 28) * 5;
+  }
+  function staffLines(ys, width) {
+    return ys.map(function (y) { return '<line x1="28" y1="'+y+'" x2="'+(width-18)+'" y2="'+y+'"/>'; }).join("");
+  }
+  function ledgerLines(y, x, clef, grand) {
+    const lines = [];
+    let cursor;
+    if (grand && clef === "bass") {
+      for (cursor = 124; cursor >= y; cursor -= 10) lines.push(cursor);
+      for (cursor = 184; cursor <= y; cursor += 10) lines.push(cursor);
+    } else {
+      for (cursor = 64; cursor >= y; cursor -= 10) lines.push(cursor);
+      for (cursor = 124; cursor <= y; cursor += 10) lines.push(cursor);
+    }
+    return lines.map(function (lineY) {
+      return '<line class="ledger" x1="'+(x-13)+'" y1="'+lineY+'" x2="'+(x+13)+'" y2="'+lineY+'"/>';
     }).join("");
-    return '<div class="score-frame"><p class="score-title">'+escapeHtml(title || "악보로 확인")+'</p><svg class="score-svg" viewBox="0 0 '+width+' 150" role="img" aria-label="'+escapeHtml(title || "화음 악보")+'"><rect width="520" height="150" rx="8" fill="#fffdf7"/><g class="staff-lines">'+staff+'</g><text class="music-glyph clef" x="26" y="105">𝄞</text>'+events+'</svg></div>';
   }
+  function placeChordParts(noteStrings, x, grand, singleClef) {
+    const parts = noteStrings.map(noteParts).map(function (part) {
+      const clef = grand ? (part.step >= 28 ? "treble" : "bass") : singleClef;
+      return Object.assign(part, { clef:clef, y:noteY(part, clef, grand), shift:0 });
+    });
+    ["treble","bass"].forEach(function (clef) {
+      const group = parts.filter(function (part) { return part.clef === clef; }).sort(function (a,b) { return b.y-a.y; });
+      group.forEach(function (part, index) {
+        if (index && Math.abs(part.y-group[index-1].y) === 5) part.shift = group[index-1].shift ? 0 : 9;
+      });
+    });
+    return parts.map(function (part, index) {
+      const noteX = x + part.shift;
+      const accidentalX = noteX - 18 - (index % 2) * 3;
+      return ledgerLines(part.y, noteX, part.clef, grand) +
+        (part.accidental ? '<text class="accidental" x="'+accidentalX+'" y="'+(part.y+5)+'">'+part.accidental+'</text>' : "") +
+        '<ellipse class="note-head" cx="'+noteX+'" cy="'+part.y+'" rx="7" ry="5" transform="rotate(-18 '+noteX+' '+part.y+')"/>';
+    }).join("") + ["treble","bass"].map(function (clef) {
+      const group = parts.filter(function (part) { return part.clef === clef; });
+      if (!group.length) return "";
+      const minY = Math.min.apply(null, group.map(function (part) { return part.y; }));
+      const maxY = Math.max.apply(null, group.map(function (part) { return part.y; }));
+      const stemsUp = (minY + maxY) / 2 >= 94;
+      const stemX = stemsUp ? x + 8 : x - 7;
+      return stemsUp
+        ? '<line class="note-stem" x1="'+stemX+'" y1="'+(maxY+1)+'" x2="'+stemX+'" y2="'+(minY-27)+'"/>'
+        : '<line class="note-stem" x1="'+stemX+'" y1="'+(minY-1)+'" x2="'+stemX+'" y2="'+(maxY+27)+'"/>';
+    }).join("");
+  }
+  function chordStaffSvg(items, title) {
+    const width = 520;
+    const allParts = items.flatMap(function (item) { return item[1].map(noteParts); });
+    const grand = allParts.some(function (part) { return part.step <= 25; }) && allParts.some(function (part) { return part.step >= 28; });
+    const bassOnly = !grand && allParts.every(function (part) { return part.step <= 25; });
+    const clef = bassOnly ? "bass" : "treble";
+    const height = grand ? 208 : 150;
+    const gap = (width - 92) / Math.max(1, items.length);
+    const staff = grand
+      ? staffLines([74,84,94,104,114], width) + staffLines([134,144,154,164,174], width)
+      : staffLines([74,84,94,104,114], width);
+    const clefs = grand
+      ? '<text class="music-glyph clef" x="28" y="116">𝄞</text><text class="music-glyph clef bass-clef" x="29" y="174">𝄢</text>'
+      : '<text class="music-glyph clef '+(clef === "bass" ? "bass-clef" : "")+'" x="28" y="'+(clef === "bass" ? 113 : 116)+'">'+(clef === "bass" ? "𝄢" : "𝄞")+'</text>';
+    const events = items.map(function (item, index) {
+      const x = 66 + gap * index + gap / 2;
+      return placeChordParts(item[1], x, grand, clef) +
+        '<text class="chord-label" x="'+x+'" y="26" text-anchor="middle">'+escapeHtml(item[0])+'</text>';
+    }).join("");
+    return '<div class="score-frame"><p class="score-title">'+escapeHtml(title || "악보로 확인")+'</p><svg class="score-svg" viewBox="0 0 '+width+' '+height+'" role="img" aria-label="'+escapeHtml(title || "화음 악보")+'"><rect width="'+width+'" height="'+height+'" rx="8" fill="#fffdf7"/><g class="staff-lines">'+staff+'</g>'+clefs+events+'</svg></div>';
+  }
+  function sequenceNote(part, x, clef) {
+    const y = noteY(part, clef, false);
+    const stemsUp = y >= 94;
+    const stemX = stemsUp ? x+7 : x-7;
+    const stem = stemsUp
+      ? '<line class="note-stem" x1="'+stemX+'" y1="'+(y+1)+'" x2="'+stemX+'" y2="'+(y-27)+'"/>'
+      : '<line class="note-stem" x1="'+stemX+'" y1="'+(y-1)+'" x2="'+stemX+'" y2="'+(y+27)+'"/>';
+    return ledgerLines(y, x, clef, false) +
+      (part.accidental ? '<text class="accidental" x="'+(x-18)+'" y="'+(y+5)+'">'+part.accidental+'</text>' : "") +
+      '<ellipse class="note-head" cx="'+x+'" cy="'+y+'" rx="7" ry="5" transform="rotate(-18 '+x+' '+y+')"/>'+stem;
+  }
+  function sequenceStaffSvg(items, title) {
+    const width = 520;
+    const rows = items.map(function (item) {
+      const parts = item[1].map(noteParts);
+      const averageStep = parts.reduce(function (total, part) { return total+part.step; }, 0) / Math.max(1, parts.length);
+      const clef = averageStep < 26 ? "bass" : "treble";
+      const gap = (width - 126) / Math.max(1, parts.length);
+      const notes = parts.map(function (part, index) { return sequenceNote(part, 92 + gap * index + gap / 2, clef); }).join("");
+      return '<div class="score-line-card"><strong>'+escapeHtml(item[0])+'</strong><svg class="score-svg sequence-score" viewBox="0 0 '+width+' 150" role="img" aria-label="'+escapeHtml(item[0])+'"><rect width="'+width+'" height="150" rx="8" fill="#fffdf7"/><g class="staff-lines">'+staffLines([74,84,94,104,114],width)+'</g><text class="music-glyph clef '+(clef === "bass" ? "bass-clef" : "")+'" x="28" y="'+(clef === "bass" ? 113 : 116)+'">'+(clef === "bass" ? "𝄢" : "𝄞")+'</text>'+notes+'</svg></div>';
+    }).join("");
+    return '<div class="score-frame"><p class="score-title">'+escapeHtml(title || "악보로 확인")+'</p><div class="score-compare">'+rows+'</div></div>';
+  }
+  function staffSvg(items, title, key) {
+    return SEQUENCE_KEYS.has(key) ? sequenceStaffSvg(items, title) : chordStaffSvg(items, title);
+  }
+  window.PracticalHarmonyNotation = {
+    render:function (key) { return staffSvg(SCORE_SETS[key], "악보 검수", key); },
+    noteParts:noteParts
+  };
   function formulaVisual(key) {
     const formulas = {
       "quality-pairs":[["장3화음","4 + 3"],["단3화음","3 + 4"],["감3화음","3 + 3"],["증3화음","4 + 4"]],
@@ -139,40 +234,40 @@
     const formula = formulaVisual(key);
     if (!score) return '<div class="concept-map"><div class="concept-row"><strong>보기</strong><span>악보와 소리를 함께 비교하세요.</span></div></div>';
     const title = key === "lead-sheet" ? "리드시트의 코드와 멜로디" : "오선에서 음의 배치 비교";
-    return (formula ? formula : "") + staffSvg(score, title);
+    return (formula ? formula : "") + staffSvg(score, title, key);
   }
 
   function renderDashboard() {
     const nextId = recommendedId();
     const next = curriculum.skills[nextId];
-    const strand = getStrand(nextId);
-    const missing = next.prereqs.filter(function (id) { return !state.completed.has(id); });
-    els.progressText.textContent = state.completed.size ? "숙달한 역량 " + state.completed.size + "개" : "아직 기록된 숙달 역량이 없습니다";
-    els.continueCard.innerHTML = '<div class="continue-copy"><span class="continue-label">'+(missing.length ? "선수 역량부터 확인" : "지금 추천하는 다음 행동")+'</span><h2>'+escapeHtml(next.title)+'</h2><p>'+escapeHtml(next.summary)+'</p><div class="continue-meta"><span class="learning-chip">'+escapeHtml(strand.title)+'</span>'+next.tags.map(function (tag) { return '<span class="learning-chip">'+escapeHtml(tag)+'</span>'; }).join("")+'</div>'+prereqMarkup(next)+'</div><button class="continue-button" type="button" data-open-skill="'+nextId+'">학습 시작</button>';
+    els.progressText.textContent = state.completed.size
+      ? state.completed.size + "개 완료 · 다음: " + next.title
+      : "첫 학습부터 시작하면 됩니다.";
     els.unitList.innerHTML = curriculum.strands.map(function (group) {
-      const active = group.skills.includes(nextId);
-      const readyCount = group.skills.filter(prereqsMet).length;
-      return '<details class="unit-block skill-strand" '+(active ? "open" : "")+'><summary><span class="strand-mark" aria-hidden="true">'+strandIcon(group.id)+'</span><span class="unit-summary-copy"><strong>'+escapeHtml(group.title)+'</strong><small>'+escapeHtml(group.description)+'</small></span><span class="unit-count">준비된 역량 '+readyCount+'개</span></summary><div class="lesson-list">'+group.skills.map(skillButtonMarkup).join("")+'</div></details>';
+      const active = group.skills.includes(state.currentId || nextId);
+      return '<details class="unit-block skill-strand" '+(active ? "open" : "")+'><summary><span class="strand-mark" aria-hidden="true">'+strandIcon(group.id)+'</span><span class="unit-summary-copy"><strong>'+escapeHtml(group.title)+'</strong><small>'+escapeHtml(group.description)+'</small></span></summary><div class="lesson-list">'+group.skills.map(skillButtonMarkup).join("")+'</div></details>';
     }).join("");
   }
   function strandIcon(id) {
     return { "chord-language":"C△", voicing:"↘", "tonal-map":"Ⅰ", progression:"→", application:"♪" }[id] || "♪";
   }
   function prereqMarkup(skill) {
-    if (!skill.prereqs.length) return '<p class="prereq-line"><strong>시작 조건</strong> 바로 시작할 수 있습니다.</p>';
-    return '<p class="prereq-line"><strong>먼저 익힐 역량</strong> '+skill.prereqs.map(function (id) { return '<span class="prereq-chip '+(state.completed.has(id) ? "done" : "")+'">'+escapeHtml(curriculum.skills[id].title)+'</span>'; }).join(" ")+'</p>';
+    if (!skill.prereqs.length) return "";
+    return '<p class="prereq-line"><strong>먼저 확인</strong> '+skill.prereqs.map(function (id) { return '<span class="prereq-chip '+(state.completed.has(id) ? "done" : "")+'">'+escapeHtml(curriculum.skills[id].title)+'</span>'; }).join(" ")+'</p>';
   }
   function skillButtonMarkup(id) {
     const skill = curriculum.skills[id];
     const complete = state.completed.has(id);
     const ready = prereqsMet(id);
-    return '<button class="lesson-button skill-button '+(complete ? "completed" : ready ? "ready" : "needs-prereq")+'" type="button" data-open-skill="'+id+'"><span class="skill-id" aria-hidden="true">'+strandIcon(getStrand(id).id)+'</span><span class="lesson-copy"><strong>'+escapeHtml(skill.title)+'</strong><small>'+escapeHtml(skill.summary)+'</small>'+(!ready && !complete ? '<span class="prereq-note">선수 역량을 먼저 추천합니다</span>' : "")+'</span><span class="skill-status">'+(complete ? "✓ 숙달" : ready ? "시작" : "미리보기")+'</span></button>';
+    const order = allSkillIds().indexOf(id) + 1;
+    return '<button class="lesson-button skill-button '+(complete ? "completed" : ready ? "ready" : "needs-prereq")+'" type="button" data-open-skill="'+id+'"><span class="skill-id" aria-hidden="true">'+order+'</span><span class="lesson-copy"><strong>'+escapeHtml(skill.title)+'</strong><small>'+escapeHtml(skill.summary)+'</small>'+(!ready && !complete ? '<span class="prereq-note">앞 진도를 먼저 익히면 이해하기 쉽습니다.</span>' : "")+'</span><span class="skill-status">'+(complete ? "✓ 완료" : id === state.currentId ? "학습 중" : "열기")+'</span></button>';
   }
 
   function openSkill(id) {
     const skill = curriculum.skills[id];
     if (!skill) return;
     state.currentId = id;
+    localStorage.setItem(CURRENT_KEY, id);
     state.questionIndex = 0;
     state.firstTryCorrect = 0;
     state.attempts = 0;
@@ -180,11 +275,17 @@
     state.evidencePassed = state.completed.has(id);
     state.selectedMidis = new Set();
     const strand = getStrand(id);
-    els.currentLesson.textContent = strand.title + " · " + (state.completed.has(id) ? "숙달 기록 있음" : prereqsMet(id) ? "수행 중" : "선수 역량 미완료");
+    const ids = allSkillIds();
+    const order = ids.indexOf(id);
+    const followingId = ids[order+1] || "";
+    els.currentLesson.textContent = "진도 " + (order+1) + " / " + ids.length;
+    els.nextSkillNav.disabled = !followingId;
+    els.nextSkillNav.dataset.nextSkill = followingId;
+    els.nextSkillNav.innerHTML = followingId ? '다음 학습 <span aria-hidden="true">→</span>' : '마지막 학습';
     els.lessonUnit.textContent = strand.title;
     els.lessonTitle.textContent = skill.title;
     els.lessonEnglish.textContent = skill.english;
-    els.lessonOutcome.innerHTML = '<strong>수행 목표</strong> '+escapeHtml(skill.outcome)+prereqMarkup(skill);
+    els.lessonOutcome.innerHTML = '<strong>이번에 할 일</strong> '+escapeHtml(skill.outcome);
     els.lessonSections.innerHTML = skill.sections.map(function (section) {
       const audio = section.audioOptions && section.audioOptions.length ? '<div class="section-audio" aria-label="비교 청음">'+section.audioOptions.map(function (option, index) { return '<button type="button" data-section-audio="'+index+'">♪ '+escapeHtml(option.label)+'</button>'; }).join("")+'</div>' : "";
       return '<section class="lesson-section"><div class="section-copy"><span class="section-label">'+escapeHtml(section.label)+'</span><h2>'+escapeHtml(section.title)+'</h2>'+section.body.map(function (paragraph) { return '<p>'+escapeHtml(paragraph)+'</p>'; }).join("")+'<p class="section-takeaway"><strong>연주 판단</strong> '+escapeHtml(section.takeaway)+'</p>'+audio+'</div><div class="visual-board">'+renderVisual(section.visual)+'</div></section>';
@@ -337,9 +438,11 @@
       els.feedback.textContent = "직접 구성과 판단 근거를 모두 확인했습니다. 이 역량을 숙달로 기록했습니다.";
       els.feedback.className = "feedback success";
     }
+    const ids = allSkillIds();
+    const followingId = ids[ids.indexOf(state.currentId)+1];
     els.nextButton.hidden = false;
-    els.nextButton.textContent = "추천 다음 역량 보기";
-    els.nextButton.onclick = function () { showDashboard(); };
+    els.nextButton.textContent = followingId ? "다음 학습으로" : "진도표 보기";
+    els.nextButton.onclick = function () { if (followingId) openSkill(followingId); else showDashboard(); };
   }
 
   function midiName(midi) { return NOTE_NAMES[midi % 12] + (Math.floor(midi / 12) - 1); }
@@ -398,14 +501,19 @@
       if (button) openSkill(button.dataset.openSkill);
     });
     els.backToCourse.addEventListener("click", showDashboard);
+    els.nextSkillNav.addEventListener("click", function () {
+      if (els.nextSkillNav.dataset.nextSkill) openSkill(els.nextSkillNav.dataset.nextSkill);
+    });
     els.resetProgress.addEventListener("click", resetProgress);
     els.nextButton.addEventListener("click", nextQuestion);
   }
   function init() {
-    ["dashboard","study","progressText","resetProgress","continueCard","unitList","backToCourse","currentLesson","lessonUnit","lessonTitle","lessonEnglish","lessonOutcome","lessonSections","constructionLab","termList","practicePanel","roundCounter","scoreText","questionKind","questionPrompt","listenButton","questionVisual","answerChoices","feedback","nextButton","piano","toast"].forEach(function (id) { els[id] = byId(id); });
+    ["dashboard","study","progressText","resetProgress","unitList","backToCourse","nextSkillNav","currentLesson","lessonUnit","lessonTitle","lessonEnglish","lessonOutcome","lessonSections","constructionLab","termList","practicePanel","roundCounter","scoreText","questionKind","questionPrompt","listenButton","questionVisual","answerChoices","feedback","nextButton","piano","toast"].forEach(function (id) { els[id] = byId(id); });
     renderDashboard();
     renderFreePiano();
     bindEvents();
+    const savedId = localStorage.getItem(CURRENT_KEY);
+    openSkill(curriculum.skills[savedId] ? savedId : recommendedId());
     if (window.HarmonyPiano) window.setTimeout(function () { window.HarmonyPiano.preload(); }, 1200);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

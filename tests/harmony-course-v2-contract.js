@@ -22,8 +22,9 @@ const ids = Object.keys(curriculum.skills);
 
 assert.match(html, /id="dashboard"/);
 assert.match(html, /id="study"[^>]*hidden/);
-assert.match(html, /역량 지도/);
+assert.match(html, /진도표/);
 assert.match(html, /competency-data\.js/);
+assert.doesNotMatch(html, /PRACTICAL HARMONY|continueCard/);
 assert.match(html, /competency-course\.js/);
 assert.ok(html.indexOf("competency-data.js") < html.indexOf("competency-course.js"), "data must load before rendering");
 assert.doesNotMatch(html, /course-guides\.js|course-v2\.js|practical-course\.js/);
@@ -48,6 +49,14 @@ for (const id of ids) {
 assert.match(renderer, /recommendedId/);
 assert.match(renderer, /prereqsMet/);
 assert.match(renderer, /staffSvg/);
+assert.match(renderer, /SEQUENCE_KEYS/);
+assert.match(renderer, /chordStaffSvg/);
+assert.match(renderer, /sequenceStaffSvg/);
+assert.match(renderer, /note-stem/);
+assert.match(renderer, /\[74,84,94,104,114\]/);
+assert.match(renderer, /Math\.abs\(part\.y-group\[index-1\]\.y\) === 5/);
+assert.doesNotMatch(renderer, /Math\.max\(44, Math\.min\(124/);
+assert.match(renderer, /openSkill\(curriculum\.skills\[savedId\]/);
 assert.match(renderer, /HarmonyPiano/);
 assert.match(renderer, /renderKeyboardLab/);
 assert.match(renderer, /renderAuralLab/);
@@ -61,6 +70,7 @@ assert.match(baseCss + competencyCss, /min-height:\s*44px/);
 assert.match(competencyCss, /@media \(max-width:\s*900px\)/);
 assert.match(competencyCss, /@media \(max-width:\s*700px\)/);
 assert.match(competencyCss, /\.score-svg/);
+assert.match(competencyCss, /\.score-svg \.note-stem/);
 assert.match(competencyCss, /\.progression-builder/);
 
 console.log("harmony competency course contract: ok");

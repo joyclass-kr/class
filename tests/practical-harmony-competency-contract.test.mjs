@@ -54,8 +54,9 @@ assert.deepEqual(new Set(expectedIds.map((id) => curriculum.skills[id].lab.type)
 assert.ok(new Set(expectedIds.map((id) => curriculum.skills[id].sections.length)).size > 1, "explanation length must follow the concept, not a fixed lesson template");
 assert.ok(new Set(expectedIds.map((id) => curriculum.skills[id].evidence.length)).size > 1, "evidence count must follow the outcome, not an imposed question count");
 
-assert.match(index, /역량 지도/);
+assert.match(index, /진도표/);
 assert.match(index, /competency-data\.js/);
+assert.doesNotMatch(index, /PRACTICAL HARMONY|continueCard/);
 assert.match(index, /competency-course\.js/);
 assert.match(index, /competency-course\.css/);
 assert.doesNotMatch(index, /practical-course\.js/);
@@ -64,6 +65,14 @@ assert.doesNotMatch(index, /완료\s*0\s*\/\s*10|적용 문제와 청음 6개|\d
 assert.match(courseSource, /recommendedId/);
 assert.match(courseSource, /prereqsMet/);
 assert.match(courseSource, /staffSvg/);
+assert.match(courseSource, /SEQUENCE_KEYS/);
+assert.match(courseSource, /chordStaffSvg/);
+assert.match(courseSource, /sequenceStaffSvg/);
+assert.match(courseSource, /note-stem/);
+assert.match(courseSource, /\[74,84,94,104,114\]/);
+assert.match(courseSource, /Math\.abs\(part\.y-group\[index-1\]\.y\) === 5/);
+assert.doesNotMatch(courseSource, /Math\.max\(44, Math\.min\(124/);
+assert.match(courseSource, /openSkill\(curriculum\.skills\[savedId\]/);
 assert.match(courseSource, /HarmonyPiano/);
 assert.match(courseSource, /renderKeyboardLab/);
 assert.match(courseSource, /renderAuralLab/);
@@ -79,5 +88,6 @@ assert.match(css + baseCss, /min-height:\s*44px/);
 assert.match(css + baseCss, /@media \(max-width:\s*900px\)/);
 assert.match(css + baseCss, /@media \(max-width:\s*700px\)/);
 assert.match(css, /grid-template-columns:\s*repeat\(2/);
+assert.match(css, /\.score-svg \.note-stem/);
 
 console.log("Practical harmony competency contract passed.");
