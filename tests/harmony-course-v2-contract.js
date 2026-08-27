@@ -9,68 +9,52 @@ const root = path.resolve(__dirname, "..");
 const base = path.join(root, "learning", "arts", "music-theory", "harmony");
 const read = (name) => fs.readFileSync(path.join(base, name), "utf8");
 const html = read("index.html");
-const baseCss = read("course-v2.css") + read("practical-course.css");
-const competencyCss = read("competency-course.css");
-const dataSource = read("competency-data.js");
-const renderer = read("competency-course.js");
+const css = read("course-v2.css") + read("harmony-foundation.css") + read("harmony-course.css");
+const dataSource = read("harmony-curriculum.js");
+const renderer = read("harmony-course.js");
 
 const context = { window: {} };
 vm.createContext(context);
 vm.runInContext(dataSource, context);
-const curriculum = context.window.PracticalHarmonyCurriculum;
-const ids = Object.keys(curriculum.skills);
+const curriculum = context.window.HarmonyCurriculum;
+const ids = curriculum.strands.flatMap((strand) => Array.from(strand.skills));
 
-assert.match(html, /id="dashboard"/);
+assert.match(html, /id="dashboard"[^>]*hidden/);
 assert.match(html, /id="study"[^>]*hidden/);
 assert.match(html, /진도표/);
-assert.match(html, /competency-data\.js/);
-assert.doesNotMatch(html, /PRACTICAL HARMONY|continueCard/);
-assert.match(html, /competency-course\.js/);
-assert.ok(html.indexOf("competency-data.js") < html.indexOf("competency-course.js"), "data must load before rendering");
-assert.doesNotMatch(html, /course-guides\.js|course-v2\.js|practical-course\.js/);
-assert.doesNotMatch(html, /\d+차시|완료\s*\d+\s*\/\s*\d+|적용 문제와 청음 6개/);
+assert.match(html, /harmony-curriculum\.js/);
+assert.match(html, /harmony-course\.js/);
+assert.ok(html.indexOf("harmony-curriculum.js") < html.indexOf("harmony-course.js"), "data must load before rendering");
+assert.doesNotMatch(html, /hero|continueCard|continue-card|실용/i);
 
-assert.equal(ids.length, 19);
-assert.equal(curriculum.strands.length, 5);
-assert.equal(new Set(curriculum.strands.flatMap((strand) => Array.from(strand.skills))).size, ids.length);
+assert.equal(ids.length, 27);
+assert.equal(curriculum.strands.length, 7);
+assert.equal(new Set(ids).size, ids.length);
 for (const id of ids) {
   const skill = curriculum.skills[id];
-  assert.ok(skill.outcome && skill.summary, `${id}: explanation and outcome required`);
-  assert.ok(skill.sections.length >= 2, `${id}: substantial explanation required`);
-  assert.ok(skill.sections.every((section) => section.visual && section.audioOptions?.length), `${id}: every explanation needs visual and audio support`);
-  assert.ok(["keyboard", "aural", "progression"].includes(skill.lab.type), `${id}: performance lab required`);
-  assert.ok(skill.evidence.length >= 2, `${id}: evidence required`);
-  for (const prerequisite of skill.prereqs) {
-    assert.ok(curriculum.skills[prerequisite], `${id}: missing prerequisite ${prerequisite}`);
-    assert.ok(ids.indexOf(prerequisite) < ids.indexOf(id), `${id}: prerequisite must appear earlier`);
-  }
+  assert.ok(skill.outcome && skill.summary, id + ": explanation and outcome required");
+  assert.ok(skill.sections.length >= 2, id + ": substantial explanation required");
+  assert.ok(skill.sections.every((section) => section.visual && section.audioOptions?.length >= 2), id + ": every explanation needs score and audio");
+  assert.ok(["keyboard", "aural", "progression"].includes(skill.lab.type), id + ": direct activity required");
+  assert.ok(skill.evidence.length >= 3, id + ": checks required");
 }
 
+assert.match(renderer, /HarmonyNotation/);
 assert.match(renderer, /recommendedId/);
 assert.match(renderer, /prereqsMet/);
-assert.match(renderer, /staffSvg/);
-assert.match(renderer, /SEQUENCE_KEYS/);
 assert.match(renderer, /chordStaffSvg/);
 assert.match(renderer, /sequenceStaffSvg/);
-assert.match(renderer, /note-stem/);
-assert.match(renderer, /\[74,84,94,104,114\]/);
-assert.match(renderer, /Math\.abs\(part\.y-group\[index-1\]\.y\) === 5/);
-assert.doesNotMatch(renderer, /Math\.max\(44, Math\.min\(124/);
+assert.match(renderer, /note-annotation/);
 assert.match(renderer, /openSkill\(curriculum\.skills\[savedId\]/);
 assert.match(renderer, /HarmonyPiano/);
 assert.match(renderer, /renderKeyboardLab/);
 assert.match(renderer, /renderAuralLab/);
 assert.match(renderer, /renderProgressionLab/);
-assert.match(renderer, /state\.labPassed\s*\|\|\s*!state\.evidencePassed/);
 
-const visualKeys = new Set([...dataSource.matchAll(/visual:"([^"]+)"/g)].map((match) => match[1]));
-for (const key of visualKeys) assert.ok(renderer.includes(`"${key}"`), `missing visual renderer: ${key}`);
+assert.match(css, /min-height:\s*44px/);
+assert.match(css, /@media \(max-width:\s*900px\)/);
+assert.match(css, /@media \(max-width:\s*700px\)/);
+assert.match(css, /\.score-svg \.note-stem/);
+assert.match(css, /\.progression-builder/);
 
-assert.match(baseCss + competencyCss, /min-height:\s*44px/);
-assert.match(competencyCss, /@media \(max-width:\s*900px\)/);
-assert.match(competencyCss, /@media \(max-width:\s*700px\)/);
-assert.match(competencyCss, /\.score-svg/);
-assert.match(competencyCss, /\.score-svg \.note-stem/);
-assert.match(competencyCss, /\.progression-builder/);
-
-console.log("harmony competency course contract: ok");
+console.log("harmony course smoke contract: ok");

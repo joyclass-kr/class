@@ -1,11 +1,11 @@
 "use strict";
 
 (function () {
-  const curriculum = window.PracticalHarmonyCurriculum;
+  const curriculum = window.HarmonyCurriculum;
   if (!curriculum) return;
 
-  const STORAGE_KEY = "musicTheoryPracticalHarmonyCompetenciesV1";
-  const CURRENT_KEY = "musicTheoryPracticalHarmonyCurrentV1";
+  const STORAGE_KEY = "musicTheoryHarmonyProgressV2";
+  const CURRENT_KEY = "musicTheoryHarmonyCurrentV2";
   const NOTE_NAMES = ["C", "C♯", "D", "E♭", "E", "F", "F♯", "G", "A♭", "A", "B♭", "B"];
   const LETTER_STEPS = { C:0, D:1, E:2, F:3, G:4, A:5, B:6 };
   const els = {};
@@ -21,6 +21,22 @@
   };
 
   const SCORE_SETS = {
+    "staff-clefs": [["낮은음자리표 C3–G3",["C3","D3","E3","F3","G3"]],["높은음자리표 C4–G4",["C4","D4","E4","F4","G4"]]],
+    "enharmonic-spelling": [["C♯로 읽기",["C4","C#4","D4"],["C","C♯","D"]],["D♭로 읽기",["C4","Db4","D4"],["C","D♭","D"]]],
+    "interval-spelling": [["장3도",["C4","E4"]],["단3도",["C4","Eb4"]],["증4도",["C4","F#4"]],["감5도",["C4","Gb4"]]],
+    "interval-inversion": [["단3도",["C4","Eb4"]],["장6도",["Eb4","C5"]],["완전4도",["C4","F4"]],["완전5도",["F4","C5"]]],
+    "part-spacing": [["균형 배치",["C3","G3","C4","E4"]],["과도한 벌어짐",["C3","E3","G3","E5"]]],
+    "part-motion": [["베이스",["G3","C3"],["V","I"]],["소프라노",["B4","C5"],["7","1"]],["화음7음",["F4","E4"],["7음","해결"]]],
+    "nonchord-motion": [["경과음",["C4","D4","E4"],["화음음","경과","화음음"]],["보조음",["E4","F4","E4"],["화음음","보조","화음음"]]],
+    "suspension-resolution": [["소프라노 4–3",["C5","C5","B4"],["준비","계류","해결"]],["베이스",["C3","G2","G2"],["C","G7","G7"]]],
+    "minor-scales": [["자연단음계",["A3","B3","C4","D4","E4","F4","G4","A4"]],["화성단음계",["A3","B3","C4","D4","E4","F4","G#4","A4"]],["가락단음계 상행",["A3","B3","C4","D4","E4","F#4","G#4","A4"]]],
+    "minor-dominant": [["v (Em)",["E4","G4","B4"]],["V7 (E7)",["E4","G#4","B4","D5"]],["i (Am)",["A4","C5","E5"]]],
+    "sequence-cycle": [["vi (Am)",["A3","C4","E4"]],["ii (Dm)",["A3","D4","F4"]],["V (G)",["G3","B3","D4"]],["I (C)",["G3","C4","E4"]]],
+    "sequence-voices": [["베이스",["A2","D3","G2","C3"],["vi","ii","V","I"]],["공통·순차 성부",["C4","D4","B3","C4"]],["윗성부",["E4","F4","G4","E4"]]],
+    "neapolitan-sixth": [["iv",["F3","Ab3","C4"]],["N6",["F3","Ab3","Db4"]],["V",["G3","B3","D4"]],["i",["C3","G3","Eb4"]]],
+    "augmented-sixth": [["It+6",["Ab3","C4","F#4"]],["V",["G3","B3","D4"]],["Ger+6",["Ab3","C4","Eb4","F#4"]],["I6/4",["G3","C4","E4"]]],
+    "tonicization-modulation": [["C: I",["C3","G3","E4"]],["V/V",["D3","C4","F#4"]],["V",["G2","G3","B3"]],["G: V",["D3","C4","F#4"]],["G: I",["G2","G3","B3"]]],
+    "pivot-modulation": [["C: I",["C3","G3","E4"]],["C: vi = G: ii",["A2","A3","C4","E4"]],["G: V7",["D3","C4","F#4"]],["G: I",["G2","G3","B3"]]],
     "symbol-anatomy": [["C",["C4","E4","G4"]],["Cm",["C4","Eb4","G4"]],["C7",["C4","E4","G4","Bb4"]],["Cmaj7",["C4","E4","G4","B4"]]],
     "symbol-contrast": [["Csus4",["C4","F4","G4"]],["Cadd9",["C4","D4","E4","G4"]]],
     "triad-stack": [["D",["D4","F#4","A4"]],["Dm",["D4","F4","A4"]]],
@@ -35,32 +51,36 @@
     "leading-tone": [["C조 7→1",["B4","C5"]],["G조 7→1",["F#4","G4"]]],
     "diatonic-map": [["I",["C4","E4","G4"]],["ii",["D4","F4","A4"]],["iii",["E4","G4","B4"]],["IV",["F4","A4","C5"]],["V",["G4","B4","D5"]],["vi",["A4","C5","E5"]],["vii°",["B4","D5","F5"]]],
     "roman-transfer": [["C: I–IV–V–I",["C4","F4","G4","C5"]],["G: I–IV–V–I",["G3","C4","D4","G4"]]],
+    "diatonic-sevenths": [["Imaj7",["C4","E4","G4","B4"]],["ii7",["D4","F4","A4","C5"]],["V7",["G3","B3","D4","F4"]],["viiø7",["B3","D4","F4","A4"]]],
     "function-flow": [["T",["C4","E4","G4"]],["PD",["C4","F4","A4"]],["D",["B3","D4","G4"]],["T",["C4","E4","G4"]]],
     "function-options": [["I",["C4","E4","G4"]],["vi",["C4","E4","A4"]],["ii",["D4","F4","A4"]],["IV",["C4","F4","A4"]],["V",["B3","D4","G4"]]],
     "cadence-compare": [["정격 V–I",["B3","D4","G4"]],["I",["C4","E4","G4"]],["변격 IV–I",["C4","F4","A4"]],["I",["C4","E4","G4"]]],
     "cadence-voices": [["G7",["G3","B3","F4"]],["강한 I",["C3","C4","E4"]],["약한 I6",["E3","C4","G4"]]],
     "deceptive-cadence": [["V",["B3","D4","G4"]],["vi",["C4","E4","A4"]]],
+    "cadential-six-four": [["I6/4",["G3","C4","E4"]],["V",["G3","B3","D4"]],["I",["C3","G3","E4"]]],
     "loop-leadsheet": [["C",["C4","E4","G4"]],["G/B",["B3","D4","G4"]],["Am",["C4","E4","A4"]],["F",["C4","F4","A4"]]],
     "practice-layers": [["베이스",["C3","G2","A2","F2"]],["가까운 윗성부",["C4","B3","C4","C4"]],["코드 완성",["E4","D4","E4","F4"]]],
     "seventh-family": [["Cmaj7",["C4","E4","G4","B4"]],["Dm7",["D4","F4","A4","C5"]],["G7",["G3","B3","D4","F4"]],["Bm7♭5",["B3","D4","F4","A4"]]],
     "diminished-sevenths": [["Bm7♭5",["B3","D4","F4","A4"]],["Bdim7",["B3","D4","F4","Ab4"]]],
-    "guide-tone": [["G7: 3·7",["B3","F4"]],["Cmaj7: 3·7",["E4","B4"]]],
-    "two-five-one-guides": [["Dm7",["F4","C5"]],["G7",["F4","B4"]],["Cmaj7",["E4","B4"]]],
+    "seventh-inversions": [["G7",["G3","B3","D4","F4"]],["G7/B",["B3","D4","F4","G4"]],["G7/D",["D4","F4","G4","B4"]],["G7/F",["F3","G3","B3","D4"]]],
+    "guide-tone": [["G7: 3·7",["B3","F4"]],["해결: 1·3",["C4","E4"]]],
+    "two-five-one-guides": [["Dm7",["F4","C5"]],["G7",["F4","B4"]],["Cmaj7 해결",["E4","C5"]]],
     "sus-add": [["C",["C4","E4","G4"]],["Csus4",["C4","F4","G4"]],["Cadd9",["C4","D4","E4","G4"]]],
     "tension-map": [["Cmaj7",["C4","E4","G4","B4"]],["Cmaj9",["C4","E4","G4","B4","D5"]],["G13",["G3","B3","F4","E5"]]],
     "transpose-map": [["C: I–V–vi–IV",["C4","G4","A4","F4"]],["G: I–V–vi–IV",["G3","D4","E4","C4"]]],
     "transpose-melody": [["C조 E–D–C",["E4","D4","C4"]],["G조 B–A–G",["B4","A4","G4"]]],
-    "harmonic-rhythm": [["C 유지",["C4","D4","E4"]],["G→C",["B3","D4","C4"]]],
-    "rhythm-density": [["느린 변화",["C4","C4","F4","G4"]],["종지 전 가속",["C4","F4","D4","G4","C5"]]],
+    "harmonic-rhythm": [["C 유지",["C4","D4","E4"],["C","유지","유지"]],["G→C",["B3","D4","C4"],["G","유지","C"]]],
+    "rhythm-density": [["느린 변화",["C4","C4","F4","G4"],["C","유지","F","G"]],["종지 전 가속",["C4","F4","D4","G4","C5"],["C","F","Dm","G","C"]]],
     "melody-candidates": [["E는 C의 3음",["C4","E4","G4"]],["E는 Am의 5음",["A3","C4","E4"]],["E는 Em의 근음",["E4","G4","B4"]]],
     "harmonize-options": [["단순 C–G–C",["E4","D4","C4"]],["확장 Am–Dm–G–C",["E4","D4","B3","C4"]]],
-    "melody-register": [["반주",["C3","E3","G3"]],["멜로디",["E4","D4","C4"]]],
+    "melody-register": [["반주 화음",["C3","E3","G3"],null,"chord"],["멜로디",["E4","D4","C4"]]],
     "secondary-dominant": [["D7 (V/V)",["D4","F#4","A4","C5"]],["G",["D4","G4","B4"]]],
-    "secondary-chain": [["A7→Dm",["C#4","G4","D5"]],["E7→Am",["G#3","D4","A4"]]],
+    "secondary-chain": [["A7→Dm",["C#4","D4"],["C♯","D"]],["E7→Am",["G#3","A3"],["G♯","A"]]],
+    "secondary-leading-tone": [["vii°7/V",["F#3","A3","C4","Eb4"]],["V",["G3","B3","D4"]]],
     "borrowed-compare": [["IV",["F4","A4","C5"]],["iv",["F4","Ab4","C5"]]],
     "borrowed-resolution": [["Fm",["F4","Ab4","C5"]],["C",["E4","G4","C5"]]],
-    "lead-sheet": [["C",["E4"]],["G/B",["D4"]],["Am",["C4"]],["F",["B3"]],["C",["C4"]]],
-    "arrangement-layers": [["베이스",["C3","B2","A2","F2","C3"]],["보이싱",["E4","D4","E4","F4","E4"]],["멜로디",["E5","D5","C5","B4","C5"]]],
+    "lead-sheet": [["멜로디와 코드",["E4","D4","C4","A3","C4"],["C","G/B","Am","F","C"]]],
+    "arrangement-layers": [["베이스",["C3","B2","A2","F2","C3"]],["보이싱",["E4","D4","E4","F4","E4"]],["멜로디",["E5","D5","C5","A4","C5"]]],
     "revision-loop": [["초안",["C4","G4","A4","F4"]],["가까운 연결",["C4","B3","C4","C4"]]]
   };
 
@@ -70,13 +90,22 @@
       return { "&":"&amp;", "<":"&lt;", ">":"&gt;", "\"":"&quot;", "'":"&#39;" }[char];
     });
   }
+  function readStorage(key) {
+    try { return localStorage.getItem(key); }
+    catch (error) { return null; }
+  }
+  function writeStorage(key, value) {
+    try { localStorage.setItem(key, value); }
+    catch (error) { /* Learning must continue when storage is unavailable. */ }
+  }
   function loadCompleted() {
     try {
-      const value = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      const stored = readStorage(STORAGE_KEY) || "[]";
+      const value = JSON.parse(stored);
       return new Set(Array.isArray(value) ? value.filter(function (id) { return curriculum.skills[id]; }) : []);
     } catch (error) { return new Set(); }
   }
-  function saveCompleted() { localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(state.completed))); }
+  function saveCompleted() { writeStorage(STORAGE_KEY, JSON.stringify(Array.from(state.completed))); }
   function allSkillIds() { return curriculum.strands.flatMap(function (strand) { return strand.skills; }); }
   function getStrand(id) { return curriculum.strands.find(function (strand) { return strand.skills.includes(id); }); }
   function prereqsMet(id) { return curriculum.skills[id].prereqs.every(function (prereq) { return state.completed.has(prereq); }); }
@@ -98,6 +127,7 @@
   }
 
   const SEQUENCE_KEYS = new Set([
+    "staff-clefs", "enharmonic-spelling", "part-motion", "nonchord-motion", "suspension-resolution", "minor-scales", "sequence-voices",
     "key-scale", "leading-tone", "roman-transfer", "practice-layers",
     "transpose-map", "transpose-melody", "harmonic-rhythm", "rhythm-density",
     "harmonize-options", "melody-register", "secondary-chain",
@@ -200,22 +230,34 @@
       (part.accidental ? '<text class="accidental" x="'+(x-18)+'" y="'+(y+5)+'">'+part.accidental+'</text>' : "") +
       '<ellipse class="note-head" cx="'+x+'" cy="'+y+'" rx="7" ry="5" transform="rotate(-18 '+x+' '+y+')"/>'+stem;
   }
-  function sequenceStaffSvg(items, title) {
+  function sequenceStaffSvg(items, title, key) {
     const width = 520;
     const rows = items.map(function (item) {
       const parts = item[1].map(noteParts);
       const averageStep = parts.reduce(function (total, part) { return total+part.step; }, 0) / Math.max(1, parts.length);
       const clef = averageStep < 26 ? "bass" : "treble";
       const gap = (width - 126) / Math.max(1, parts.length);
-      const notes = parts.map(function (part, index) { return sequenceNote(part, 92 + gap * index + gap / 2, clef); }).join("");
-      return '<div class="score-line-card"><strong>'+escapeHtml(item[0])+'</strong><svg class="score-svg sequence-score" viewBox="0 0 '+width+' 150" role="img" aria-label="'+escapeHtml(item[0])+'"><rect width="'+width+'" height="150" rx="8" fill="#fffdf7"/><g class="staff-lines">'+staffLines([74,84,94,104,114],width)+'</g><text class="music-glyph clef '+(clef === "bass" ? "bass-clef" : "")+'" x="28" y="'+(clef === "bass" ? 113 : 116)+'">'+(clef === "bass" ? "𝄢" : "𝄞")+'</text>'+notes+'</svg></div>';
+      const notes = item[3] === "chord"
+        ? placeChordParts(item[1], width / 2, false, clef)
+        : parts.map(function (part, index) {
+            const x = 92 + gap * index + gap / 2;
+            const annotation = item[2] && item[2][index] ? '<text class="note-annotation" x="'+x+'" y="49" text-anchor="middle">'+escapeHtml(item[2][index])+'</text>' : "";
+            return annotation + sequenceNote(part, x, clef);
+          }).join("");
+      const barlines = key === "lead-sheet"
+        ? parts.slice(1).map(function (_, index) {
+            const x = 92 + gap * (index + 1);
+            return '<line class="bar-line" x1="'+x+'" y1="74" x2="'+x+'" y2="114"/>';
+          }).join("") + '<line class="bar-line final" x1="'+(width-18)+'" y1="74" x2="'+(width-18)+'" y2="114"/>'
+        : "";
+      return '<div class="score-line-card"><strong>'+escapeHtml(item[0])+'</strong><svg class="score-svg sequence-score" viewBox="0 0 '+width+' 150" role="img" aria-label="'+escapeHtml(item[0])+'"><rect width="'+width+'" height="150" rx="8" fill="#fffdf7"/><g class="staff-lines">'+staffLines([74,84,94,104,114],width)+'</g><text class="music-glyph clef '+(clef === "bass" ? "bass-clef" : "")+'" x="28" y="'+(clef === "bass" ? 113 : 116)+'">'+(clef === "bass" ? "𝄢" : "𝄞")+'</text>'+barlines+notes+'</svg></div>';
     }).join("");
     return '<div class="score-frame"><p class="score-title">'+escapeHtml(title || "악보로 확인")+'</p><div class="score-compare">'+rows+'</div></div>';
   }
   function staffSvg(items, title, key) {
-    return SEQUENCE_KEYS.has(key) ? sequenceStaffSvg(items, title) : chordStaffSvg(items, title);
+    return SEQUENCE_KEYS.has(key) ? sequenceStaffSvg(items, title, key) : chordStaffSvg(items, title);
   }
-  window.PracticalHarmonyNotation = {
+  window.HarmonyNotation = {
     render:function (key) { return staffSvg(SCORE_SETS[key], "악보 검수", key); },
     noteParts:noteParts
   };
@@ -241,15 +283,15 @@
     const nextId = recommendedId();
     const next = curriculum.skills[nextId];
     els.progressText.textContent = state.completed.size
-      ? state.completed.size + "개 완료 · 다음: " + next.title
-      : "첫 학습부터 시작하면 됩니다.";
+      ? "배운 항목 " + state.completed.size + "개 · 다음: " + next.title
+      : "첫 항목부터 차례로 시작하세요.";
     els.unitList.innerHTML = curriculum.strands.map(function (group) {
       const active = group.skills.includes(state.currentId || nextId);
       return '<details class="unit-block skill-strand" '+(active ? "open" : "")+'><summary><span class="strand-mark" aria-hidden="true">'+strandIcon(group.id)+'</span><span class="unit-summary-copy"><strong>'+escapeHtml(group.title)+'</strong><small>'+escapeHtml(group.description)+'</small></span></summary><div class="lesson-list">'+group.skills.map(skillButtonMarkup).join("")+'</div></details>';
     }).join("");
   }
   function strandIcon(id) {
-    return { "chord-language":"C△", voicing:"↘", "tonal-map":"Ⅰ", progression:"→", application:"♪" }[id] || "♪";
+    return { notation:"𝄞", "chord-language":"C△", "tonal-map":"Ⅰ", "part-writing":"4", progression:"→", chromatic:"♭♯", application:"♪" }[id] || "♪";
   }
   function prereqMarkup(skill) {
     if (!skill.prereqs.length) return "";
@@ -267,7 +309,7 @@
     const skill = curriculum.skills[id];
     if (!skill) return;
     state.currentId = id;
-    localStorage.setItem(CURRENT_KEY, id);
+    writeStorage(CURRENT_KEY, id);
     state.questionIndex = 0;
     state.firstTryCorrect = 0;
     state.attempts = 0;
@@ -278,7 +320,7 @@
     const ids = allSkillIds();
     const order = ids.indexOf(id);
     const followingId = ids[order+1] || "";
-    els.currentLesson.textContent = "진도 " + (order+1) + " / " + ids.length;
+    els.currentLesson.textContent = "학습 " + (order+1) + " / " + ids.length;
     els.nextSkillNav.disabled = !followingId;
     els.nextSkillNav.dataset.nextSkill = followingId;
     els.nextSkillNav.innerHTML = followingId ? '다음 학습 <span aria-hidden="true">→</span>' : '마지막 학습';
@@ -288,7 +330,7 @@
     els.lessonOutcome.innerHTML = '<strong>이번에 할 일</strong> '+escapeHtml(skill.outcome);
     els.lessonSections.innerHTML = skill.sections.map(function (section) {
       const audio = section.audioOptions && section.audioOptions.length ? '<div class="section-audio" aria-label="비교 청음">'+section.audioOptions.map(function (option, index) { return '<button type="button" data-section-audio="'+index+'">♪ '+escapeHtml(option.label)+'</button>'; }).join("")+'</div>' : "";
-      return '<section class="lesson-section"><div class="section-copy"><span class="section-label">'+escapeHtml(section.label)+'</span><h2>'+escapeHtml(section.title)+'</h2>'+section.body.map(function (paragraph) { return '<p>'+escapeHtml(paragraph)+'</p>'; }).join("")+'<p class="section-takeaway"><strong>연주 판단</strong> '+escapeHtml(section.takeaway)+'</p>'+audio+'</div><div class="visual-board">'+renderVisual(section.visual)+'</div></section>';
+      return '<section class="lesson-section"><div class="section-copy"><span class="section-label">'+escapeHtml(section.label)+'</span><h2>'+escapeHtml(section.title)+'</h2>'+section.body.map(function (paragraph) { return '<p>'+escapeHtml(paragraph)+'</p>'; }).join("")+'<p class="section-takeaway"><strong>핵심 정리</strong> '+escapeHtml(section.takeaway)+'</p>'+audio+'</div><div class="visual-board">'+renderVisual(section.visual)+'</div></section>';
     }).join("");
     Array.from(els.lessonSections.querySelectorAll(".lesson-section")).forEach(function (sectionEl, sectionIndex) {
       sectionEl.querySelectorAll("[data-section-audio]").forEach(function (button) {
@@ -305,7 +347,7 @@
   }
 
   function labHeader(lab) {
-    return '<div class="lab-heading"><div><span class="lab-kicker">직접 만드는 수행 과제</span><h2 id="constructionTitle">'+escapeHtml(lab.title)+'</h2><p>'+escapeHtml(lab.instruction)+'</p></div>'+(lab.reference ? '<button class="lab-reference" type="button" data-lab-reference>♪ 기준 소리</button>' : "")+'</div>';
+    return '<div class="lab-heading"><div><span class="lab-kicker">직접 해보기</span><h2 id="constructionTitle">'+escapeHtml(lab.title)+'</h2><p>'+escapeHtml(lab.instruction)+'</p></div>'+(lab.reference ? '<button class="lab-reference" type="button" data-lab-reference>♪ 기준 소리</button>' : "")+'</div>';
   }
   function renderLab(skill) {
     const lab = skill.lab;
@@ -376,7 +418,7 @@
   function renderQuestion() {
     const skill = curriculum.skills[state.currentId];
     const question = skill.evidence[state.questionIndex];
-    els.roundCounter.textContent = "근거 " + (state.questionIndex + 1) + " / " + skill.evidence.length;
+    els.roundCounter.textContent = "문제 " + (state.questionIndex + 1) + " / " + skill.evidence.length;
     els.scoreText.textContent = "첫 시도 정답 " + state.firstTryCorrect + "개";
     els.questionKind.textContent = question.kind;
     els.questionPrompt.textContent = question.prompt;
@@ -408,7 +450,7 @@
     els.feedback.textContent = "맞았습니다. " + question.explain;
     els.feedback.className = "feedback success";
     els.scoreText.textContent = "첫 시도 정답 " + state.firstTryCorrect + "개";
-    els.nextButton.textContent = state.questionIndex === curriculum.skills[state.currentId].evidence.length - 1 ? "수행 결과 확인" : "다음 근거";
+    els.nextButton.textContent = state.questionIndex === curriculum.skills[state.currentId].evidence.length - 1 ? "수행 결과 확인" : "다음 문제";
     els.nextButton.hidden = false;
   }
   function nextQuestion() {
@@ -420,7 +462,7 @@
     }
     state.evidencePassed = true;
     if (!state.labPassed) {
-      els.feedback.textContent = "근거 문제는 확인했습니다. 위의 직접 구성 수행까지 성공하면 이 역량이 숙달됩니다.";
+      els.feedback.textContent = "확인 문제를 마쳤습니다. 위의 직접 활동까지 성공하면 학습이 완료됩니다.";
       els.feedback.className = "feedback pending";
       els.nextButton.textContent = "직접 구성 수행으로 이동";
       els.nextButton.onclick = function () { els.constructionLab.scrollIntoView({ behavior:"smooth", block:"start" }); };
@@ -433,9 +475,9 @@
     const wasNew = !state.completed.has(state.currentId);
     state.completed.add(state.currentId);
     saveCompleted();
-    if (wasNew) showToast("역량 숙달 기록을 저장했습니다.");
+    if (wasNew) showToast("학습 완료 기록을 저장했습니다.");
     if (els.feedback) {
-      els.feedback.textContent = "직접 구성과 판단 근거를 모두 확인했습니다. 이 역량을 숙달로 기록했습니다.";
+      els.feedback.textContent = "직접 활동과 확인 문제를 모두 마쳐 학습 완료로 기록했습니다.";
       els.feedback.className = "feedback success";
     }
     const ids = allSkillIds();
@@ -489,11 +531,11 @@
     window.scrollTo({ top:0, behavior:"smooth" });
   }
   function resetProgress() {
-    if (!window.confirm("이 브라우저에 저장된 실용화성학 숙달 기록을 지울까요?")) return;
+    if (!window.confirm("이 브라우저에 저장된 화성학 학습 기록을 지울까요?")) return;
     state.completed.clear();
     saveCompleted();
     renderDashboard();
-    showToast("숙달 기록을 초기화했습니다.");
+    showToast("학습 기록을 초기화했습니다.");
   }
   function bindEvents() {
     document.addEventListener("click", function (event) {
@@ -512,9 +554,9 @@
     renderDashboard();
     renderFreePiano();
     bindEvents();
-    const savedId = localStorage.getItem(CURRENT_KEY);
+    const savedId = readStorage(CURRENT_KEY);
     openSkill(curriculum.skills[savedId] ? savedId : recommendedId());
-    if (window.HarmonyPiano) window.setTimeout(function () { window.HarmonyPiano.preload(); }, 1200);
+    if (window.HarmonyPiano) window.setTimeout(function () { window.HarmonyPiano.preload().catch(function () { /* First user action will use the synthesized fallback. */ }); }, 1200);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();

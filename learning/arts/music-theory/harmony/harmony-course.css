@@ -117,17 +117,8 @@ button, select, summary {
     font-weight: 800;
 }
 
-.continue-card .prereq-chip {
-    color: #f3c975;
-    background: rgba(4,10,18,.22);
-}
-
 .prereq-chip.done {
     color: #287260;
-}
-
-.continue-card .prereq-chip.done {
-    color: #8fdac5;
 }
 
 .lesson-outcome .prereq-line {
@@ -178,6 +169,21 @@ button, select, summary {
 
 .score-svg .note-head {
     fill: #1d232c;
+}
+
+.score-svg .bar-line {
+    stroke: #3d4046;
+    stroke-width: 1.25;
+}
+
+.score-svg .bar-line.final {
+    stroke-width: 2.4;
+}
+
+.score-svg .note-annotation {
+    fill: #684912;
+    font-size: 11px;
+    font-weight: 900;
 }
 
 .score-svg .chord-label {
@@ -374,7 +380,7 @@ button, select, summary {
     }
 }
 
-/* Direct lesson flow: the course list is secondary, not a landing-page hero. */
+/* The course list is secondary; the current lesson opens first. */
 .dashboard-heading {
     min-height: 64px;
     align-items: center;

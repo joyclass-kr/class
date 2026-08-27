@@ -1,12 +1,18 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const assert = require("node:assert/strict");
+const vm = require("node:vm");
 
 const root = path.join(__dirname, "..", "learning", "arts", "music-theory");
 const harmonyHtml = fs.readFileSync(path.join(root, "harmony", "index.html"), "utf8");
-const harmonyApp = fs.readFileSync(path.join(root, "harmony", "course-v2.js"), "utf8");
+const harmonyApp = fs.readFileSync(path.join(root, "harmony", "harmony-course.js"), "utf8");
+const harmonyData = fs.readFileSync(path.join(root, "harmony", "harmony-curriculum.js"), "utf8");
 const harmonyAudio = fs.readFileSync(path.join(root, "harmony", "piano-engine.js"), "utf8");
-const harmonyCss = fs.readFileSync(path.join(root, "harmony", "course-v2.css"), "utf8");
+const harmonyCss = ["course-v2.css", "harmony-foundation.css", "harmony-course.css"].map((name) => fs.readFileSync(path.join(root, "harmony", name), "utf8")).join("\n");
+const harmonyContext = { window: {} };
+vm.createContext(harmonyContext);
+vm.runInContext(harmonyData, harmonyContext);
+const harmonyIds = harmonyContext.window.HarmonyCurriculum.strands.flatMap((strand) => Array.from(strand.skills));
 const rhythmHtml = fs.readFileSync(path.join(root, "rhythm", "index.html"), "utf8");
 const rhythmApp = fs.readFileSync(path.join(root, "rhythm", "app.js"), "utf8");
 const rhythmCss = fs.readFileSync(path.join(root, "rhythm", "styles.css"), "utf8");
@@ -16,8 +22,9 @@ assert.match(harmonyHtml, /id="dashboard"/);
 assert.match(harmonyHtml, /id="study"[^>]*hidden/);
 assert.match(harmonyHtml, /id="piano"/);
 assert.match(harmonyHtml, /piano-engine\.js/);
-assert.equal((harmonyApp.match(/\n  \d+: \{/g) || []).length, 16, "화성학은 16차시여야 합니다.");
-assert.match(harmonyApp, /musicTheoryHarmonyCourseV3/);
+assert.equal(harmonyIds.length, 27, "화성학 학습 항목이 누락되면 안 됩니다.");
+for (const id of ["INTERVAL_SPELLING", "MINOR_HARMONY", "PART_WRITING", "NON_CHORD_TONES", "MODULATION"]) assert.ok(harmonyIds.includes(id));
+assert.match(harmonyApp, /musicTheoryHarmonyProgressV2/);
 assert.match(harmonyAudio, /assets\/piano\//);
 assert.equal(fs.readdirSync(path.join(root, "harmony", "assets", "piano")).filter((name) => name.endsWith(".ogg")).length, 9);
 
