@@ -192,6 +192,41 @@ test("activities support touch, pointer, and keyboard while feedback waits for s
   assert.match(lessonPage, /id="submitAnswer"[^>]*disabled>답 확인/);
 });
 
+test("lesson 13 teaches pointer states through direct manipulation before classification", () => {
+  const lesson = allLessons.find((item) => item.id === "d01");
+  assert.equal(lesson.title, "포인터·텍스트 커서·클릭·드래그는 어떻게 다를까?");
+  assert.equal(lesson.english, "How Are the Pointer, Text Cursor, Click, and Drag Different?");
+  assert.equal(lesson.workedExample.steps.length, 4);
+  assert.equal(lesson.activity.categories.length, 4);
+  assert.deepEqual(
+    Array.from(lesson.activity.categories, (category) => category.id),
+    ["pointer", "caret", "click", "drag"]
+  );
+  assert.equal(lesson.activity.items.length, 8);
+  assert.match(lessonSource, /function pointerConceptLabMarkup\(\)/);
+  assert.match(lessonSource, /data-pointer-workspace/);
+  assert.match(lessonSource, /data-demo-text/);
+  assert.match(lessonSource, /data-demo-button/);
+  assert.match(lessonSource, /data-demo-file/);
+  assert.match(lessonSource, /data-demo-folder/);
+  assert.match(lessonSource, /setPointerCapture/);
+  assert.match(lessonSource, /folder\.addEventListener\("click"/);
+  assert.doesNotMatch(coursePage, /id="startActivityTop"/);
+  assert.doesNotMatch(lessonPage, /id="startActivityTop"/);
+  assert.match(lessonStyles, /\.pointer-concept-lab/);
+  assert.match(lessonStyles, /\.demo-file\.is-in-folder/);
+  assert.match(lessonStyles, /grid-template-columns: repeat\(var\(--story-columns, 3\)/);
+});
+
+test("the primary Chromebook and iPad breakpoints preserve touch-sized controls", () => {
+  assert.match(lessonStyles, /@media \(max-width: 800px\)/);
+  assert.doesNotMatch(lessonStyles, /@media \(max-width: 760px\)/);
+  assert.match(lessonStyles, /min-height: 44px/);
+  assert.match(lessonStyles, /touch-action: none/);
+  assert.match(lessonStyles, /\.sort-zone-grid \{ grid-template-columns: 1fr; \}/);
+  assert.match(lessonStyles, /\.story-steps,[\s\S]*\.comparison-grid \{ grid-template-columns: 1fr; \}/);
+});
+
 test("mobile and Chromebook interiors are project assets used in device comparisons", () => {
   for (const name of ["smartphone", "chromebook", "tablet"]) {
     for (const width of [768, 1536]) {

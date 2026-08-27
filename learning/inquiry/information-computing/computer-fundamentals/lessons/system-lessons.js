@@ -926,6 +926,188 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
+    function pointerConceptLabMarkup() {
+        return `
+            <section class="pointer-concept-lab" aria-labelledby="pointerLabTitle">
+                <div class="pointer-lab-heading">
+                    <div>
+                        <span>입력 상태 관찰 <small>Input State Lab</small></span>
+                        <h3 id="pointerLabTitle">움직이고·누르고·끌어서 화면의 변화를 확인하세요</h3>
+                    </div>
+                    <p><b>1</b> 빈 곳에서 포인터 이동 <b>2</b> 문장 누르기 <b>3</b> 단추 클릭 <b>4</b> 파일을 폴더로 드래그</p>
+                </div>
+                <ol class="pointer-lab-states" aria-label="포인터와 입력 동작의 네 상태">
+                    <li class="is-active" data-lab-state="pointer"><strong>포인터 <small>Pointer</small></strong><span>화면에서 가리키는 위치</span></li>
+                    <li data-lab-state="caret"><strong>텍스트 커서 <small>Text Cursor</small></strong><span>다음 글자가 들어갈 위치</span></li>
+                    <li data-lab-state="click"><strong>클릭 <small>Click</small></strong><span>같은 자리에서 짧게 눌렀다 놓기</span></li>
+                    <li data-lab-state="drag"><strong>드래그 앤 드롭 <small>Drag and Drop</small></strong><span>누른 채 이동한 뒤 목표에서 놓기</span></li>
+                </ol>
+                <div class="pointer-lab-workspace" data-pointer-workspace>
+                    <div class="demo-pointer" data-demo-pointer aria-hidden="true"><span></span></div>
+                    <div class="pointer-lab-toolbar">
+                        <button type="button" data-demo-button><strong>단추 눌러 보기</strong><small>Click the Button · <span data-click-count>0회</span></small></button>
+                        <button type="button" class="pointer-lab-reset" data-demo-reset>실험 초기화 <small>Reset</small></button>
+                    </div>
+                    <label class="demo-text-field">
+                        <span>문장 안을 눌러 입력 위치 바꾸기 <small>Place the Text Cursor</small></span>
+                        <input data-demo-text type="text" value="파일을 폴더로 옮깁니다." aria-label="텍스트 커서 위치를 확인할 문장">
+                    </label>
+                    <button type="button" class="demo-file" data-demo-file aria-label="관찰 기록 파일">
+                        <span class="demo-file-icon">TXT</span>
+                        <strong>관찰 기록.txt</strong>
+                        <small>누른 채 폴더까지 이동</small>
+                    </button>
+                    <button type="button" class="demo-folder" data-demo-folder aria-label="수업 자료 폴더">
+                        <span class="demo-folder-icon" aria-hidden="true"></span>
+                        <strong>수업 자료</strong>
+                        <small data-folder-state>비어 있음</small>
+                    </button>
+                    <p class="pointer-lab-live" data-pointer-live aria-live="polite">포인터: 작업 화면 안에서 가리키는 위치가 바뀝니다.</p>
+                </div>
+            </section>
+        `;
+    }
+
+    function setupPointerConceptLab() {
+        const lab = document.querySelector(".pointer-concept-lab");
+        if (!lab) return;
+        const workspace = lab.querySelector("[data-pointer-workspace]");
+        const marker = lab.querySelector("[data-demo-pointer]");
+        const textInput = lab.querySelector("[data-demo-text]");
+        const clickButton = lab.querySelector("[data-demo-button]");
+        const clickCount = lab.querySelector("[data-click-count]");
+        const file = lab.querySelector("[data-demo-file]");
+        const folder = lab.querySelector("[data-demo-folder]");
+        const folderState = lab.querySelector("[data-folder-state]");
+        const live = lab.querySelector("[data-pointer-live]");
+        const resetButton = lab.querySelector("[data-demo-reset]");
+        let clicks = 0;
+        let fileSelected = false;
+        let drag = null;
+
+        const setState = (name, message) => {
+            lab.querySelectorAll("[data-lab-state]").forEach((item) => {
+                item.classList.toggle("is-active", item.dataset.labState === name);
+            });
+            live.textContent = message;
+        };
+
+        const moveMarker = (event) => {
+            const bounds = workspace.getBoundingClientRect();
+            const x = Math.max(10, Math.min(bounds.width - 18, event.clientX - bounds.left));
+            const y = Math.max(10, Math.min(bounds.height - 18, event.clientY - bounds.top));
+            marker.style.transform = `translate(${x}px, ${y}px)`;
+            marker.classList.add("is-visible");
+            if (!drag) setState("pointer", `포인터: 작업 화면의 (${Math.round(x)}, ${Math.round(y)}) 위치를 가리킵니다.`);
+        };
+
+        const resetFile = () => {
+            file.classList.remove("is-held", "is-selected", "is-in-folder");
+            file.style.removeProperty("transform");
+            folder.classList.remove("is-target", "has-file");
+            folderState.textContent = "비어 있음";
+            fileSelected = false;
+        };
+
+        const placeFile = () => {
+            file.classList.remove("is-held", "is-selected");
+            file.classList.add("is-in-folder");
+            file.style.removeProperty("transform");
+            folder.classList.remove("is-target");
+            folder.classList.add("has-file");
+            folderState.textContent = "관찰 기록.txt 들어 있음";
+            fileSelected = false;
+            setState("drag", "드롭 완료: 목표 폴더에서 놓아 파일의 위치가 바뀌었습니다.");
+        };
+
+        workspace.addEventListener("pointermove", moveMarker);
+        workspace.addEventListener("pointerleave", () => {
+            if (!drag) marker.classList.remove("is-visible");
+        });
+
+        textInput.addEventListener("focus", () => {
+            setState("caret", "텍스트 커서: 깜박이는 세로선 앞에 다음 글자가 입력됩니다.");
+        });
+        textInput.addEventListener("click", () => {
+            setState("caret", `텍스트 커서: 문장의 ${textInput.selectionStart + 1}번째 입력 위치를 나타냅니다.`);
+        });
+        textInput.addEventListener("keyup", () => {
+            setState("caret", `텍스트 커서: 문장의 ${textInput.selectionStart + 1}번째 입력 위치를 나타냅니다.`);
+        });
+
+        clickButton.addEventListener("click", () => {
+            clicks += 1;
+            clickCount.textContent = `${clicks}회`;
+            clickButton.classList.add("was-clicked");
+            setTimeout(() => clickButton.classList.remove("was-clicked"), 180);
+            setState("click", "클릭: 같은 자리에서 짧게 눌렀다 놓아 단추가 한 번 실행되었습니다.");
+        });
+
+        file.addEventListener("pointerdown", (event) => {
+            if (!event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) return;
+            event.preventDefault();
+            if (file.classList.contains("is-in-folder")) resetFile();
+            drag = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, moved: false };
+            file.setPointerCapture?.(event.pointerId);
+            file.classList.add("is-held");
+            setState("drag", "누르고 유지: 아직 위치는 바뀌지 않았습니다. 누른 채 폴더까지 이동하세요.");
+        });
+
+        file.addEventListener("pointermove", (event) => {
+            if (!drag || drag.pointerId !== event.pointerId) return;
+            event.preventDefault();
+            const dx = event.clientX - drag.startX;
+            const dy = event.clientY - drag.startY;
+            if (Math.hypot(dx, dy) > 6) drag.moved = true;
+            file.style.transform = `translate(${dx}px, ${dy}px)`;
+            const target = folder.getBoundingClientRect();
+            const overFolder = event.clientX >= target.left && event.clientX <= target.right && event.clientY >= target.top && event.clientY <= target.bottom;
+            folder.classList.toggle("is-target", overFolder);
+            if (drag.moved) setState("drag", overFolder ? "드래그: 폴더가 강조되었습니다. 여기에서 놓으세요." : "드래그: 누른 상태를 유지하며 파일과 포인터를 함께 이동합니다.");
+        });
+
+        const finishFilePointer = (event) => {
+            if (!drag || drag.pointerId !== event.pointerId) return;
+            const finished = drag;
+            drag = null;
+            try { file.releasePointerCapture?.(event.pointerId); } catch (_) { /* capture may already be released */ }
+            const target = folder.getBoundingClientRect();
+            const overFolder = event.type !== "pointercancel" && event.clientX >= target.left && event.clientX <= target.right && event.clientY >= target.top && event.clientY <= target.bottom;
+            if (finished.moved && overFolder) {
+                placeFile();
+                return;
+            }
+            file.style.removeProperty("transform");
+            file.classList.remove("is-held");
+            folder.classList.remove("is-target");
+            if (!finished.moved) {
+                fileSelected = true;
+                file.classList.add("is-selected");
+                setState("click", "클릭: 파일이 선택되었지만 위치는 바뀌지 않았습니다.");
+            } else {
+                setState("drag", "드래그 취소: 폴더 밖에서 놓아 파일이 원래 위치로 돌아왔습니다.");
+            }
+        };
+        file.addEventListener("pointerup", finishFilePointer);
+        file.addEventListener("pointercancel", finishFilePointer);
+        file.addEventListener("click", (event) => {
+            if (event.detail !== 0) return;
+            fileSelected = true;
+            file.classList.add("is-selected");
+            setState("click", "키보드 실행: 파일을 선택했습니다. Tab으로 폴더에 이동해 Enter를 누를 수 있습니다.");
+        });
+        folder.addEventListener("click", () => {
+            if (fileSelected) placeFile();
+        });
+
+        resetButton.addEventListener("click", () => {
+            clicks = 0;
+            clickCount.textContent = "0회";
+            resetFile();
+            setState("pointer", "포인터: 작업 화면 안에서 가리키는 위치가 바뀝니다.");
+        });
+    }
+
     function renderLesson() {
         document.title = `${lesson.title} | 컴퓨터 원리와 활용`;
         document.getElementById("lessonMeta").textContent = `${lesson.number}차시`;
@@ -934,7 +1116,8 @@
         const conceptVisual = document.getElementById("conceptVisual");
         const conceptDiagram = document.getElementById("conceptDiagram");
         const conceptOverview = document.getElementById("conceptOverview");
-        conceptVisual.innerHTML = lesson.visual;
+        const hasPointerLab = lesson.id === "d01";
+        conceptVisual.innerHTML = hasPointerLab ? pointerConceptLabMarkup() : lesson.visual;
         conceptDiagram.innerHTML = "";
         const diagram = conceptVisual.querySelector(".system-visual");
         if (diagram) {
@@ -1009,10 +1192,12 @@
             partsMount.innerHTML = "";
         }
         const details = document.getElementById("conceptDetails");
-        details.innerHTML = lesson.details.map((detail, index) => `
+        details.innerHTML = hasPointerLab ? "" : lesson.details.map((detail, index) => `
             <article><span class="concept-number">${index + 1}</span><h3>${detail[0]} <small>${detail[1]}</small></h3><p>${detail[2]}</p></article>
         `).join("");
+        conceptOverview.classList.toggle("has-pointer-lab", hasPointerLab);
         conceptOverview.hidden = Boolean(lesson.parts?.length);
+        if (hasPointerLab) setupPointerConceptLab();
         const devicesMount = document.getElementById("conceptDevices");
         const deviceComparison = lesson.deviceComparison;
         if (deviceComparison?.cards?.length) {
@@ -1050,7 +1235,7 @@
                     <h2 id="workedExampleTitle">${story.title} <small>${story.english}</small></h2>
                     <p>${story.intro}</p>
                 </div>
-                <ol class="story-steps">
+                <ol class="story-steps ${story.steps.length <= 4 ? "is-linear-row" : ""}" style="--story-columns:${story.steps.length === 4 ? 4 : 3}" data-step-count="${story.steps.length}">
                     ${story.steps.map((step, index) => `
                         <li>
                             <span class="story-number">${index + 1}</span>
@@ -1421,7 +1606,6 @@
         showStage("activity", "직접 조작 2 / 3");
     };
     document.getElementById("startActivity").addEventListener("click", beginActivity);
-    document.getElementById("startActivityTop").addEventListener("click", beginActivity);
     document.getElementById("resetActivity").addEventListener("click", resetActivity);
     checkActivity.addEventListener("click", () => {
         if (!activityPassed) {
