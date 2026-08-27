@@ -436,10 +436,10 @@ function paginateChapter(ch, chIndex) {
     let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
     let caps = capsOf(slots);
     let ranges = fillPages(segs, caps, headHtml);
-    for (let guard = 0; guard < 16; guard++) {
+    for (let guard = 0; guard < 24; guard++) {
         // 그림을 제 장면이 있는 쪽으로 옮긴다. 옮기면 글 나눔이 달라지므로
         // 자리가 더 안 움직일 때까지 되풀이한다.
-        if (anchors && tries < 4) {
+        if (anchors && tries < 10) {
             const want = anchorSlots(segs, ranges, arts.length, anchors, spreadCount);
             if (want.join() !== slots.join()) {
                 tries++;
