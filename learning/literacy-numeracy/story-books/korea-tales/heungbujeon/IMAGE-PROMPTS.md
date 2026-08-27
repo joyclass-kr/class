@@ -37,6 +37,11 @@ Jeolla province: a rich brother's tile-roofed compound with granaries and a big
 gate, a poor brother's crooked one-room thatched hut on the edge of the fields,
 gourd vines over the roof, rice paddies, low hills. Everyone wears period hanbok.
 Warm daylight, lantern light at night. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
@@ -52,7 +57,9 @@ in a swarm, big eyes, patched clothes, comic and lively.
 Nolbu: a stout well-fed man in a good brown silk hanbok and a black horsehair
 hat, a permanent scowl, one hand usually on his belly or pointing. Not a monster -
 a small-minded, greedy, frightened man.
-Nolbu's wife: a big loud woman with a red face, usually holding a rice paddle.
+Nolbu's wife: a well-fed woman in good silk, hair neatly dressed, a pleasant
+ordinary face - she is not ugly and not a shrew to look at. A rice paddle is
+usually in her hand. What is unkind about her is only what she does with it.
 The swallows: sleek blue-black-and-white birds with forked tails; one nestling
 with a splinted leg wrapped in white thread.
 The gourds: enormous pale green gourds, some as big as a person, growing on the
@@ -190,7 +197,7 @@ eaves, the stout brother reaches into a swallow's nest with a nestling in his fa
 hand, holding it up to look at it, his tongue out of the corner of his mouth in
 concentration, already reaching with the other hand. Show only the intent - the
 bird is whole and squawking, wings out. Below, his wife steadies the ladder and
-looks up eagerly. Harsh bright noon light, ugly comedy.
+looks up eagerly. Harsh bright noon light. Comic, but nobody is drawn ugly.
 ```
 
 ### `story-04-c.webp` — 4장 — 떠나는 제비들에게 소리친다

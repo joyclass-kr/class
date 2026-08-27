@@ -33,6 +33,11 @@ autumn pine forest with dry golden grass, a rocky clearing, and a frozen winter
 river. Big expressive faces, exaggerated slapstick gestures, heavy motion lines.
 Comedy first - the tiger is never actually hurt, only comically startled. No
 blood, no injuries, no burns on skin. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

@@ -44,6 +44,11 @@ for the heavens, rich greens and browns for the mountain, near-total black for
 the cave, warm sunrise gold for the ending. Wide sweeping compositions, small
 figures against big landscapes. Solemn and beautiful, never frightening. No text
 or letters.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

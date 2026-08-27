@@ -38,6 +38,11 @@ cottages, low stone walls, straw-roofed barns, pine trees, rolling hills, dirt
 paths, rice paddies. Characters wear hanbok. Night scenes lit by warm lantern
 glow and cool blue moonlight. Big expressive faces, exaggerated comic gestures,
 lively motion. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)

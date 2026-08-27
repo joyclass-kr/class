@@ -42,6 +42,11 @@ Gujibong above a river delta, reed marshes, a busy river-mouth harbour with
 wooden boats, ironworking villages with charcoal smoke, and the open sea beyond.
 Warm greens and ochres, iron greys, and deep blue sea. Big lively crowds. Joyful
 and energetic, never dark. No text or letters.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

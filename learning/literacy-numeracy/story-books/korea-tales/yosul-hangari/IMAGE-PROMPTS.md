@@ -33,6 +33,11 @@ tiled-roof houses, earthen walls, rows of large brown onggi jars on a raised
 platform, ploughed fields, persimmon trees. Warm earth-tone palette with clay
 brown, straw yellow and grass green. Big expressive faces, exaggerated comic
 gestures. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

@@ -37,6 +37,11 @@ through pines, and an old wooden shrine with a tiled roof and faded paint. Warm
 amber for the kitchen scenes, cold blue and gold for the shrine at night.
 Never grotesque or gory - the centipede is a glowing silhouette, never a detailed
 insect. Nobody is harmed on the page. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

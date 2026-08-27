@@ -41,6 +41,11 @@ trees, then wide open country - fields, streams, mountain passes - as the journe
 goes on. Characters wear hanbok. Night scenes lit by warm lantern glow and cool
 blue moonlight. Big expressive faces, gentle warm mood. No text or letters in the
 image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
@@ -59,8 +64,9 @@ The third daughter (the wife): a young woman in a soft coral and cream hanbok
 with a long single braid, then later travel-worn - hair tied up in a cloth, hem
 muddy, straw sandals in tatters. Her face stays steady and determined throughout;
 she almost never cries.
-The two elder sisters: two young women in showier pink and yellow hanbok, always
-paired, sneering or peeking, small mean eyes.
+The two elder sisters: two pretty young women in showier pink and yellow hanbok,
+always paired. Draw them as good-looking as the third sister - what is unkind
+about them shows only in what they do, never in their faces.
 ```
 
 ---

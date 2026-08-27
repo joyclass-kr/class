@@ -44,6 +44,11 @@ and painted beams, a green summer forest with big broad-leaved bushes, a lotus
 pond, and a dense bamboo grove behind a temple. Sunny warm palette, blue-green
 underwater scenes. Big exaggerated cartoon expressions, heavy motion lines.
 Funny, never frightening. Nobody is hit by the arrows. No text or letters.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

@@ -38,6 +38,11 @@ greedy old woman's dim cluttered room with a heavy wooden chest. Warm amber
 indoors, blue-green river light, deep indigo for the night raid. Big expressive
 animal faces, comic staging. Nothing gory - the rats are never harmed. No text or
 letters in the image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

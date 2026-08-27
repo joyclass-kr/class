@@ -40,6 +40,11 @@ steep green ridges, a deep still pond, thatched-roof cottages, dirt paths,
 stacked firewood. Characters wear hanbok. Magical moments lit with warm golden
 light rising out of the water. Big expressive faces, exaggerated comic gestures,
 lively motion. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
@@ -51,8 +56,9 @@ on his back. His face is open and honest, easily moved to tears.
 The mountain spirit (Sanshin): a tall serene old man with a long flowing white
 beard and white robes, wide sleeves, standing on the surface of the water inside
 a soft golden halo. Kind but unreadable. Never frightening.
-The greedy neighbour: a plump man in a showy blue hanbok with a fat belt and a
-smug face, small darting eyes, always over-acting.
+The greedy neighbour: a well-fed man in a showy blue hanbok with a wide belt, a
+handsome open face, always over-acting. He is pleasant to look at - the greed is
+in his gestures, not in his features.
 The three axes: a plain worn iron axe with a smooth wooden handle; a silver axe
 that glows cool white; a gold axe that glows warm yellow.
 ```

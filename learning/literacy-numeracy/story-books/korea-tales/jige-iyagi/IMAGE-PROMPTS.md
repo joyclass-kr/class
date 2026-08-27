@@ -37,6 +37,11 @@ a small thatched cottage, a narrow winding mountain trail, tall pines, a
 sheltering rock outcrop. Muted greens, browns and greys; cool morning light going
 to warm evening light at the end. Quiet, dignified, never melodramatic. Nothing
 frightening, nobody dies on the page. No text or letters.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

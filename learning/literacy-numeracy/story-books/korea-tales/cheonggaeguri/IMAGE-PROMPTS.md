@@ -34,6 +34,11 @@ storybook. Setting is a Korean countryside stream and the green hills around it:
 reeds and cattails along the water, flat wet stones, lily pads, willow branches
 overhead, rice paddies and pine hills in the distance. Fresh green and water-blue
 palette. Big expressive faces, warm gentle mood. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

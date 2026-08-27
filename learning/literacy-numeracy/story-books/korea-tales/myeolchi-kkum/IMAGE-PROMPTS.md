@@ -37,6 +37,11 @@ swaying seaweed, coral and shells arranged like furniture, a low Korean feast
 table set with dishes. Bright blue-green water with shafts of light from above.
 Big exaggerated cartoon faces on all the fish, heavy slapstick motion lines.
 Funny, never scary, no blood. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

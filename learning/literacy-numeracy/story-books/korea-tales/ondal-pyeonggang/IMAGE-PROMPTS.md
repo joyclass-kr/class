@@ -42,6 +42,11 @@ capital with timber and tile buildings and a market street, a tumbledown
 one-room hut at the foot of a wooded hill, a horse market, and a wide grassy
 ridge called Nangnang Hill where the spring hunt is held. Warm ochres, deep
 greens, iron greys, big spring skies. Lively and expressive. No text or letters.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

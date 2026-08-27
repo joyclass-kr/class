@@ -37,6 +37,11 @@ earthen yard with a low wall and a mouse hole at its base, a kitchen, and a
 rainy village lane. Warm amber indoors, cool blue moonlight outdoors, grey for
 the rainy scenes. Uncanny rather than frightening - no horror, no gore. No text
 or letters in the image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

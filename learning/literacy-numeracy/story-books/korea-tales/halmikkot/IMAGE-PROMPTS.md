@@ -37,6 +37,11 @@ tiled-roof rich house, a river with a ferry, and a long grassy hillside path.
 Pale spring greens, soft browns, dusty pinks. Restrained and tender - no
 exaggerated comedy, no grotesque faces. Never show anyone dying or dead. No text
 or letters in the image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

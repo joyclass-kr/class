@@ -37,6 +37,11 @@ roadside tavern with paper lanterns, a fog-filled mountain pass at dawn, and a
 dense pine forest with rocky gullies. Warm amber for the market and tavern, cold
 grey-blue for the fog scenes. Expressive faces, real tension in the chase scenes.
 No violence beyond a shove, no blood, nobody injured. No text or letters.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

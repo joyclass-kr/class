@@ -38,6 +38,11 @@ robes and hats; and the land - a Korean pine mountain, grass meadows, chestnut
 trees, a sandy shore. Animals are drawn as animals wearing human clothes only in
 the sea court; the land animals wear nothing. Expressive faces, satirical
 comedy played straight. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)

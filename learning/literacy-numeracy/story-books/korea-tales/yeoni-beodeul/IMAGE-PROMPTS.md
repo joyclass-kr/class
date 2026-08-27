@@ -43,6 +43,11 @@ white, pale grey and cold blue. Inside the rock door: a hidden spring valley
 with a clear brook, soft green grass, peach blossom, butterflies and warm golden
 light - painted in bright fresh greens and pinks. The contrast between the two
 is the whole point. No text or letters.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

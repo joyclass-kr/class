@@ -37,6 +37,11 @@ Hwanghae province, mountain temples, a merchant sailing ship, the open sea, and
 finally a royal palace. Everyone wears period hanbok. Strong light and shadow,
 lantern and candlelight at night; underwater scenes lit with cool green-blue
 radiance. Restrained and serious mood. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)

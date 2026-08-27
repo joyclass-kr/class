@@ -38,6 +38,11 @@ cliff face rising into cloud. Warm earth tones on the ground, cool blue-grey for
 the cliff. Dynamic staging, strong sense of height and distance in the last
 chapter. The imugi is a grand folk-painting serpent, never gory. No text or
 letters in the image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

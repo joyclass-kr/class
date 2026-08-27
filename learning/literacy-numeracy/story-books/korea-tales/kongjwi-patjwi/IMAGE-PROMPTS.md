@@ -37,6 +37,11 @@ with a kitchen and a stone-walled yard, stony hillside fields, a village feast
 house, a stream with stepping stones, and later a provincial governor's fine
 residence with a lotus pond in the back garden. Everyone wears period hanbok.
 Warm daylight, firelit kitchens, moonlit ponds. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
@@ -48,7 +53,8 @@ and her sleeves tied back. Her face is patient and unresentful, quick to smile a
 animals. Later, as the governor's wife, she wears fine soft colours but is drawn
 with exactly the same face.
 Patjwi: her stepsister, the same age, in bright showy pink and yellow hanbok,
-plump and idle, a sulky mouth, always eating something or lying down.
+well-fed and idle, a pretty face - draw her every bit as pretty as Kongjwi.
+She is usually eating something or lying down.
 Lady Bae, the stepmother: a handsome hard-faced woman in good dark hanbok, thin
 lips, a hand-scale or a switch usually nearby.
 Choe Manchun, the father: a mild worried older man in a plain scholar's coat who

@@ -41,6 +41,11 @@ stones, dirt roads winding west, and finally a towering bare rock cliff at the
 end of the world. Characters wear hanbok. Danger is shown with sky, shadow and
 scale rather than blood - never any gore. Big expressive faces, exaggerated
 gestures, strong sense of motion. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)

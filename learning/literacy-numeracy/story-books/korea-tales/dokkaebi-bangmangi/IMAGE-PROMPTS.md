@@ -42,6 +42,11 @@ hazel forest with fallen leaves, a tumbledown abandoned cottage in a valley with
 a dusty loft, and small thatched houses in the village below. Warm gold autumn
 daylight, deep amber firelight and blue moonlight at night. Big exaggerated
 comic expressions, heavy motion lines. Nobody is hurt. No text or letters.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

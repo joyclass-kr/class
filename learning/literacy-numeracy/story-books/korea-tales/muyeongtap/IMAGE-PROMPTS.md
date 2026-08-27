@@ -43,6 +43,11 @@ pond called Yeongji with reeds, a big flat rock at its edge and azaleas on the
 bank. Muted greens, grey granite, warm ochre earth, silver water. Wide open
 compositions with small figures. Quiet and beautiful, never frightening or
 comic. No text or letters.
+Villains and unkind characters are drawn as ordinary, nice-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth. What is wrong with them shows only in what they are doing and in their
+posture, never in a deformed or repulsive face. A cruel character may be
+handsome; a kind one may be plain.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)
