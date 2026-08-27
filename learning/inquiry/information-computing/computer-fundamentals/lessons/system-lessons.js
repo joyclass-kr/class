@@ -9,7 +9,7 @@
         return isCourseRootPage ? `lessons/?lesson=${id}` : `?lesson=${id}`;
     };
 
-    const lessons = [
+    const detailedLessons = [
         {
             id: "a01",
             code: "A01",
@@ -878,6 +878,9 @@
         }
     ];
 
+    const lessons = [...detailedLessons, ...(window.COMPUTER_FOUNDATION_LESSONS || [])]
+        .sort((left, right) => left.number - right.number);
+
     const params = new URLSearchParams(window.location.search);
     const requestedId = params.get("lesson") || (isCourseRootPage ? "a01" : "a02");
     const requestedIndex = lessons.findIndex((item) => item.id === requestedId);
@@ -1084,16 +1087,23 @@
 
     function renderLessonList() {
         const list = document.getElementById("lessonList");
-        const entries = lessons.map((item) => ({
-            ...item,
-            code: item.code || item.id.toUpperCase(),
-            href: lessonHref(item.id)
-        }));
-        list.innerHTML = entries.map((item) => {
-            let complete = false;
-            try { complete = Boolean(JSON.parse(localStorage.getItem(`computer-literacy:${item.id}`) || "null")?.completed); } catch (_) { complete = false; }
-            const current = item.id === lesson.id;
-            return `<li class="${current ? "is-current" : ""} ${complete ? "is-complete" : ""}"><a href="${item.href}"><span>${item.code}</span><strong>${item.title}</strong><small>${item.english}</small></a></li>`;
+        const modules = window.COMPUTER_CORE_MODULES || [];
+        const completed = new Set();
+        lessons.forEach((item) => {
+            try {
+                if (JSON.parse(localStorage.getItem(`computer-literacy:${item.id}`) || "null")?.completed) completed.add(item.id);
+            } catch (_) { /* Ignore damaged local progress. */ }
+        });
+        list.innerHTML = modules.map((module) => {
+            const items = lessons.filter((item) => item.id[0].toUpperCase() === module.code);
+            const done = items.filter((item) => completed.has(item.id)).length;
+            const currentModule = lesson.id[0].toUpperCase() === module.code;
+            const links = items.map((item) => {
+                const current = item.id === lesson.id;
+                const complete = completed.has(item.id);
+                return `<li class="${current ? "is-current" : ""} ${complete ? "is-complete" : ""}"><a href="${lessonHref(item.id)}" ${current ? 'aria-current="page"' : ""}><span>${item.code || item.id.toUpperCase()}</span><strong>${item.title}</strong><small>${item.english}</small></a></li>`;
+            }).join("");
+            return `<details class="course-module" ${currentModule ? "open" : ""}><summary><span><b>${module.code}</b><strong>${module.title}</strong><small>${module.english}</small></span><em>${done} / ${items.length}</em></summary><ol class="course-list lesson-link-list">${links}</ol></details>`;
         }).join("");
     }
 

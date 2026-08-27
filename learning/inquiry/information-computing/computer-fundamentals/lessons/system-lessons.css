@@ -1122,3 +1122,146 @@
 @media (max-width: 520px) {
     .device-comparison-grid { grid-template-columns: 1fr; }
 }
+
+/* Core-course relationship diagrams and progressive curriculum navigation. */
+.concept-relationship-figure {
+    margin: 0;
+    border: 1px solid #c99b55;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fffaf0;
+}
+.concept-relationship-board {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    padding: 18px;
+}
+.concept-relationship-board article {
+    position: relative;
+    min-height: 148px;
+    padding: 18px 15px 14px;
+    border: 2px solid var(--teal);
+    border-radius: 12px;
+    background: #f7ffff;
+}
+.concept-relationship-board article:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    right: -19px;
+    width: 24px;
+    color: #80501f;
+    font-size: 23px;
+    font-weight: 900;
+    text-align: center;
+    transform: translateY(-50%);
+}
+.relationship-index {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 8px;
+    place-items: center;
+    border-radius: 6px;
+    background: var(--teal);
+    color: #fff;
+    font-weight: 900;
+}
+.concept-relationship-board strong {
+    display: block;
+    color: #17110c;
+    font-size: 19px;
+    line-height: 1.25;
+}
+.concept-relationship-board strong small {
+    display: block;
+    margin-top: 3px;
+    color: #006a78;
+    font-size: 13px;
+}
+.concept-relationship-board p {
+    margin: 10px 0 0;
+    color: #382f27;
+    font-size: 16px;
+    line-height: 1.6;
+}
+.concept-relationship-figure figcaption {
+    padding: 12px 16px;
+    border-top: 1px solid #d9b77c;
+    background: #f4e5c9;
+    color: #33281f;
+    font-size: 15px;
+    font-weight: 750;
+    line-height: 1.55;
+}
+.course-modules {
+    display: grid;
+    gap: 10px;
+}
+.course-module {
+    border: 1px solid #c7a06a;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fffaf1;
+}
+.course-module summary {
+    display: flex;
+    min-height: 58px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 12px;
+    cursor: pointer;
+    list-style: none;
+    touch-action: manipulation;
+}
+.course-module summary::-webkit-details-marker { display: none; }
+.course-module summary > span {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: 34px minmax(0, 1fr);
+    align-items: center;
+}
+.course-module summary b {
+    grid-row: 1 / 3;
+    color: var(--teal);
+    font-size: 18px;
+}
+.course-module summary strong { font-size: 16px; }
+.course-module summary small { color: #5d5147; font-size: 12px; }
+.course-module summary em {
+    flex: 0 0 auto;
+    color: #6c4a26;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 900;
+}
+.course-module[open] > summary {
+    border-bottom: 1px solid #c7a06a;
+    background: #f3e0bd;
+}
+.course-module > .course-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.course-module .lesson-link-list li { border-bottom: 1px solid #ead6b5; }
+.course-module .lesson-link-list li:last-child { border-bottom: 0; }
+.course-module .lesson-link-list li.is-current { border: 0; border-left: 5px solid var(--teal); }
+.course-module .lesson-link-list a { min-height: 60px; }
+
+@media (max-width: 900px) {
+    .concept-relationship-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .concept-relationship-board article:nth-child(2)::after { content: "↓"; top: auto; right: 50%; bottom: -25px; transform: translateX(50%); }
+}
+@media (max-width: 620px) {
+    .concept-relationship-board { grid-template-columns: 1fr; padding: 12px; }
+    .concept-relationship-board article { min-height: 0; }
+    .concept-relationship-board article:not(:last-child)::after,
+    .concept-relationship-board article:nth-child(2)::after { content: "↓"; top: auto; right: 50%; bottom: -25px; transform: translateX(50%); }
+}
