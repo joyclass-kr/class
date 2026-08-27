@@ -19,6 +19,16 @@ Galilean hills, the Syrian city of Antioch with colonnaded avenues, a Roman
 war galley, desert camps of black goat-hair tents, and a great oval hippodrome.
 Roman military kit, Judean robes and head cloths, Arab desert dress.
 No blood or wounds shown. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 **세 세계를 색으로 갈라 주세요.** 예루살렘은 흰 석회석과 마른 볕,

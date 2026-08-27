@@ -20,6 +20,16 @@ staircases, peach orchards and cinnabar furnaces.
 Tang dress: round-collared robes, monks' kasaya, court officials in silk with
 long sleeves. Rich colour, gold, cloud scrollwork.
 No blood or wounds shown. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 **손오공을 사람 얼굴의 원숭이로 그려 주세요.** 진짜 원숭이도 아니고 사람도 아닌

@@ -19,6 +19,16 @@ broad new avenues of Buenos Aires; the endless flat pampas; the dry scrubland
 and ox-cart trails of northern Argentina; and the Andes foothills at Salta.
 Working clothes of the period. No blood or wounds shown.
 No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 **거리감이 이 책의 전부입니다.** 장이 넘어갈 때마다 배경이 더 멀고 더 낯설어져야 합니다.

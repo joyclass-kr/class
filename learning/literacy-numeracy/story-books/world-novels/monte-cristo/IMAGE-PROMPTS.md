@@ -18,6 +18,16 @@ but slightly muted colors, realistic human proportions with expressive faces,
 France 1815-1839, Marseille harbour, stone prison cells, and the drawing rooms
 of Paris, dramatic light and deep shadow, serious mood, no blood or wounds
 shown, no text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
@@ -34,8 +44,8 @@ Abbe Faria: a frail white-haired old priest with a high forehead and brilliant
 eyes, in prison rags.
 Mercedes: a Catalan girl with black hair and dark eyes, in a simple bright
 dress as a girl; later a grave, still-beautiful woman in dark silk.
-Danglars: a heavy sallow man with calculating eyes, later a fat banker in a
-gold-buttoned coat.
+Danglars: a solid careful man who is always working something out, later a
+prosperous banker in a gold-buttoned coat; a respectable-looking man throughout.
 Fernand: a lean intense fisherman in a red cap, later a decorated general in a
 blue uniform heavy with medals.
 Villefort: a rigid pale prosecutor with severe features, always in black.

@@ -17,6 +17,16 @@ colors, realistic proportions with expressive faces, London in 1547: narrow
 timbered lanes and crowded alleys on one side, palace halls with tapestries
 and torchlight on the other; ruffs, doublets and hose; dramatic light and deep
 shadow; no blood or wounds shown, no text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 **두 아이는 반드시 똑같은 얼굴로 그려 주세요.** 머리 색, 눈, 키, 이목구비가 완전히 같아야 하고,
@@ -31,8 +41,10 @@ Prince Edward: exactly the same face — same hair, same eyes, same height — b
 upright and used to being obeyed; velvet, a gold chain, a short sword at his hip.
 Miles Hendon: a tall sunburnt swordsman of about thirty in a worn but once-fine
 doublet, easy-going, always with a hand near his hilt.
-John Canty: a heavy brutal man with a stubbled jaw and a cudgel.
-Henry VIII: a huge swollen old king propped among cushions.
+John Canty: a big man in a labourer's coat, an unremarkable face, a cudgel
+in his hand; frightening because of what he is about to do, not how he looks.
+Henry VIII: a large, heavy old king propped among cushions, richly dressed,
+an ill man rather than a repulsive one.
 The Yorkshire man: a gaunt farmer with a branded ear and haunted eyes.
 ```
 

@@ -16,6 +16,18 @@ illustrated classics: gouache and watercolor, bold clean outlines, realistic
 child proportions with expressive faces; Yorkshire around 1910: a long low
 grey stone manor with a hundred windows, high ivy-covered walls, and open
 moorland; no text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
+No blood, no wounds and no cruelty shown: when something violent happens,
+draw the moment just before or just after it instead.
 ```
 
 **색을 이야기의 흐름에 맞춰 주세요.** 1장부터 6장까지는 잿빛과 갈색으로,
@@ -25,9 +37,9 @@ moorland; no text or letters in the image.
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-Mary Lennox: a thin sallow girl of nine with thin fair hair and a permanently
-pinched cross expression at first, gradually filling out and colouring as the
-book goes on; plain black mourning clothes, later a warm coat.
+Mary Lennox: a thin pale girl of nine with fine fair hair, closed and cross
+in the face at first — sulky, not unattractive — gradually filling out and
+colouring as the book goes on; plain black mourning clothes, later a warm coat.
 Colin Craven: a boy of ten with an ivory-white face, large grey eyes and a mass
 of dark hair, propped in a huge carved bed at first; later sunburnt and
 standing straight.
@@ -51,7 +63,7 @@ put it in several pictures.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-a.webp` | A hot Indian bungalow garden: a small sallow girl alone, sticking cut flowers into a mound of earth, the house behind her strangely still. |
+| `images/story-01-a.webp` | A hot Indian bungalow garden: a small pale girl alone, sticking cut flowers into a mound of earth, the house behind her strangely still. |
 | `images/story-01-b.webp` | An empty bungalow room with an overturned chair: two officers in the doorway staring at a small girl sitting alone in the corner. |
 
 ## 2장 · 미슬스웨이트 저택

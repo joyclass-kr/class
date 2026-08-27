@@ -18,6 +18,16 @@ enormous ancient oaks and green shade, a stone castle town, thatched cottages,
 a market square; longbows taller than a man, quivers of arrows with grey goose
 feathers, hooded green wool, mail and surcoats on the soldiers.
 No blood or wounds shown. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 **초록을 이 책의 색으로 삼아 주세요.** 숲 장면은 초록과 금빛으로 밝게,
@@ -39,7 +49,7 @@ red face, brown habit tucked up, a stout staff.
 Maid Marian: a young woman of about twenty, dark hair; first seen in a young
 knight's mail with a closed helm, later in green with a bow.
 The Sheriff of Nottingham: a well-fed man of fifty in fine dark clothes and a
-chain of office, a permanently sour mouth.
+chain of office; a well-fed, well-dressed man who looks entirely respectable.
 The Abbot of St Mary's: a smooth, comfortable churchman in rich vestments.
 ```
 

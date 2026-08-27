@@ -18,6 +18,18 @@ South Pacific in the 1860s — beech forest, a freshwater lake, sandstone
 cliffs, a wrecked hundred-ton schooner on a sandbar; the boys' clothes start
 as school uniforms and become patched and homemade over three years;
 no text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
+No blood, no wounds and no cruelty shown: when something violent happens,
+draw the moment just before or just after it instead.
 ```
 
 **아이들을 어른처럼 그리지 마세요.** 여덟 살은 여덟 살로, 열네 살은 열네 살로 그려 주세요.

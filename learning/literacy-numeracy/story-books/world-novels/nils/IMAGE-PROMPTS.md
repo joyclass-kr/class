@@ -19,6 +19,16 @@ pine forest, thousands of lakes, iron-mining country, the old town of Stockholm
 on its islands, and the bare fells of Lapland under a midnight sun.
 Clean northern light, long shadows. No blood or wounds shown.
 No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 **크기 차이가 이 책의 전부입니다.** 닐스는 손바닥만 합니다.

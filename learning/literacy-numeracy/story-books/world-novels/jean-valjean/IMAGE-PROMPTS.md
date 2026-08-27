@@ -17,6 +17,18 @@ illustrated classics: gouache and watercolor, bold clean outlines, saturated
 but slightly muted colors, realistic human proportions with expressive faces,
 19th-century French setting (1815-1833), strong light-and-shadow with lantern
 and candlelight, restrained and serious mood, no text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
+No blood, no wounds and no cruelty shown: when something violent happens,
+draw the moment just before or just after it instead.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
@@ -35,8 +47,9 @@ dress, later gaunt with cropped hair and a thin shawl.
 Cosette (child): a thin barefoot-in-clogs girl of eight, tangled hair, torn
 sackcloth dress, always carrying something too heavy for her.
 Cosette (grown): a graceful young woman of seventeen in a simple pale dress.
-The Thenardiers: a sly weaselly innkeeper with a sharp nose, and his large
-loud coarse-faced wife.
+The Thenardiers: a neat, plausible innkeeper with a ready smile, and his
+brisk capable wife; both perfectly presentable people. What is wrong with
+them is in what they do — the padded bill, the child sent out in the snow.
 Marius: a slim serious young man of twenty in a shabby black coat.
 ```
 
@@ -87,7 +100,7 @@ Marius: a slim serious young man of twenty in a shabby black coat.
 | 파일명 | 장면 |
 |---|---|
 | `images/story-06-a.webp` | A heavily loaded cart sunk in deep mud in a town street, an old carter pinned beneath it, townspeople crowding helplessly around, a white-haired gentleman removing his coat in the foreground. |
-| `images/story-06-b.webp` | Seen low and close: a white-haired man on his back under the cart, straining upward with his shoulders, the cart lifted a hand's width, his face streaming with blood; a police inspector watching him with fixed intensity. |
+| `images/story-06-b.webp` | Seen low and close: a white-haired man on his back under the cart, straining upward with his shoulders, the cart lifted a hand's width, every tendon in his neck standing out; a police inspector watching him with fixed intensity. |
 
 ## 7장 · 대신 붙잡힌 사람
 
@@ -150,7 +163,7 @@ Marius: a slim serious young man of twenty in a shabby black coat.
 | 파일명 | 장면 |
 |---|---|
 | `images/story-15-a.webp` | Deep in the Paris sewers: a man wading chest-deep in mud through a stone tunnel, holding an unconscious young man up above his head with both arms, near total darkness. |
-| `images/story-15-b.webp` | A locked iron grating at a sewer mouth opening onto the river at dawn; a shabby weaselly man holding out a key from the shadows, the exhausted man with the body on his back facing him. |
+| `images/story-15-b.webp` | A locked iron grating at a sewer mouth opening onto the river at dawn; a shabby innkeeper holding out a key from the shadows, the exhausted man with the body on his back facing him. |
 
 ## 16장 · 은촛대 곁에서
 

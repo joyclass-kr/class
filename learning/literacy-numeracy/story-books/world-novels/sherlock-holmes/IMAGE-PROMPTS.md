@@ -17,6 +17,18 @@ illustrated classics: gouache and watercolor, bold clean outlines, saturated
 but slightly muted colors, realistic human proportions with expressive faces,
 late Victorian London 1881-1894, gaslight and fog, hansom cabs and brick
 terraces, mysterious but not gruesome, no text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
+No blood, no wounds and no cruelty shown: when something violent happens,
+draw the moment just before or just after it instead.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
@@ -28,8 +40,8 @@ long travelling cape and deerstalker cap outdoors, pipe often in hand.
 Dr John Watson: a solid, moustached man of middle height in a neat brown suit,
 kind steady face, slight stiffness in one shoulder.
 Mrs Hudson: a plump elderly landlady in a dark dress and white apron.
-Inspector Lestrade / police: sallow rat-faced detective in a bowler hat, and
-uniformed constables in tall helmets.
+Inspector Lestrade / police: a small brisk detective in a bowler hat, an
+ordinary capable face, and uniformed constables in tall helmets.
 The Baker Street sitting room: cluttered with papers, chemical apparatus on a
 side table, two armchairs by a coal fire, a bay window onto a foggy street.
 ```

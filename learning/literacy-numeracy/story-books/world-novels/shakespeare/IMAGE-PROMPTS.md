@@ -19,6 +19,16 @@ playhouse in London; an Athenian wood at night; Venice with canals and stone
 courts; Verona's sunlit squares and torchlit tombs; a cold Danish castle;
 a storm-lashed heath; a Scottish keep; a green island.
 Rich costume, dramatic light. No blood or wounds shown. No text or letters.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 **작품마다 색을 다르게 잡아 주세요.**

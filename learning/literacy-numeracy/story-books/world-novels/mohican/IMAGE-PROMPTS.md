@@ -41,6 +41,16 @@ log-and-earth British fort on a lake, longhouses and bark lodges.
 Eastern woodlands dress: deerskin leggings and shirts, roach headdresses,
 wampum, shell and silver ornaments — never plains war bonnets.
 No blood or wounds shown. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)

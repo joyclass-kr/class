@@ -17,6 +17,18 @@ child proportions with expressive faces; rural Flanders around 1870 — flat
 open country to the horizon, windmills, canals, poplars in rows, a tumbledown
 mud-and-thatch cottage; and the city of Antwerp with its enormous cathedral
 spire visible from everywhere in the landscape; no text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
+No blood, no wounds and no cruelty shown: when something violent happens,
+draw the moment just before or just after it instead.
 ```
 
 **개를 사람처럼 그리지 마세요.** 파트라슈는 크고 무거운 플랑드르 짐수레 개입니다.
@@ -36,8 +48,8 @@ Patrasche: a large heavy draught dog, tawny with a broad head and blunt muzzle,
 scarred bare patches on his neck from a harness; powerful, never cute.
 Alois (Aloa): a round-cheeked fair-haired girl the same age as Nello, in a
 clean red dress and apron.
-Baas Cogez: a solid prosperous miller in his forties, thick arms, a hard face
-that softens only at the very end.
+Baas Cogez: a solid prosperous miller in his forties, thick arms, a kind
+enough face held carefully closed; it opens only at the very end.
 ```
 
 ## 표지 · 마무리

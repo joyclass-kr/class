@@ -18,6 +18,18 @@ sunbaked plain of La Mancha, rows of white windmills on low ridges, dusty
 cart roads, whitewashed inns with a courtyard and a well, olive trees, sheep;
 and by contrast a rich ducal palace with tapestries and liveried servants.
 Warm ochre, dust, hard shadows. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
+No blood, no wounds and no cruelty shown: when something violent happens,
+draw the moment just before or just after it instead.
 ```
 
 **돈키호테를 우스꽝스러운 캐리커처로 그리지 마세요.**

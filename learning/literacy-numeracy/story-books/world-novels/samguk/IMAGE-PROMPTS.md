@@ -21,6 +21,16 @@ Han-dynasty dress: cross-collared robes, lamellar armour of iron plates laced
 with cord, square-topped official caps, chariots and cavalry with ring-pommel swords
 and long ji halberds. No stirrups on saddles before this era's later part.
 No blood or wounds shown. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 **후한 시대의 옷과 무기로 그려 주세요.** 이 이야기는 흔히 훨씬 나중 시대(명나라)의

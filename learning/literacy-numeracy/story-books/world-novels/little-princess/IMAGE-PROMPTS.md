@@ -17,6 +17,18 @@ illustrated classics: gouache and watercolor, bold clean outlines, warm
 saturated colors, realistic child proportions with expressive faces, Victorian
 London around 1900, gaslight, fog and soot outside, firelight and lamplight
 inside, tender rather than grim, no text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
+No blood, no wounds and no cruelty shown: when something violent happens,
+draw the moment just before or just after it instead.
 ```
 
 **램 다스를 그릴 때 지켜 주세요.** 인도 사람인 램 다스는 솜씨 있고 사려 깊은 어른으로 그려 주세요.
@@ -30,8 +42,9 @@ greenish-grey eyes; early in the story in rich velvet dresses, later in a black
 dress far too small for her with broken shoes.
 Captain Crewe: a young handsome officer in a light travelling suit, warm and
 laughing.
-Miss Minchin: a tall bony woman with cold eyes and a false smile, in stiff
-black silk.
+Miss Minchin: a tall handsome woman in stiff black silk, perfectly composed
+and well kept; her cruelty shows only in what she says and in how she turns
+away, never in her face.
 Becky: a very small thin scullery maid of fourteen, smudged with coal, cap
 askew, always carrying something.
 Ermengarde: a plump anxious girl with untidy fair hair, always clutching books.

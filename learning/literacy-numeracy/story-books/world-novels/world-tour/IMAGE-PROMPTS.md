@@ -17,6 +17,18 @@ illustrated classics: gouache and watercolor, bold clean outlines, saturated
 colors, realistic human proportions with expressive faces, 1872 setting,
 Victorian steamships, steam locomotives and sailing craft, a sense of speed
 and travel, bright adventurous mood, no text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
+No blood, no wounds and no cruelty shown: when something violent happens,
+draw the moment just before or just after it instead.
 ```
 
 **사람을 그릴 때 지켜 주세요.** 이 이야기는 인도, 중국, 일본, 미국을 지나갑니다.

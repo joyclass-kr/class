@@ -19,6 +19,18 @@ illustrated classics: gouache and watercolor, bold clean outlines, saturated
 but slightly muted colors, realistic human proportions with expressive faces,
 18th-century English coastal and seafaring setting, dramatic staging and
 strong light-and-shadow, no text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
+No blood, no wounds and no cruelty shown: when something violent happens,
+draw the moment just before or just after it instead.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
@@ -27,12 +39,13 @@ strong light-and-shadow, no text or letters in the image.
 Jim Hawkins: a lean boy of about thirteen, tousled brown hair, plain brown
 waistcoat over a loose linen shirt, breeches and worn buckled shoes.
 Billy Bones (the captain): a huge weather-beaten old sailor in his sixties,
-tarry pigtail, long livid sabre scar across one cheek, faded blue sea coat,
+tarry pigtail, an old faded sabre scar across one cheek, blue sea coat,
 brass telescope under his arm.
 Doctor Livesey: a neat slim gentleman, powdered white wig, black coat with a
 crisp white collar, calm steady eyes.
-Black Dog: a pale sallow man missing two fingers on his left hand, shabby
-blue coat, cutlass at his hip, a smile that never reaches his eyes.
+Black Dog: a pale quiet man missing two fingers on his left hand, shabby blue
+coat, cutlass at his hip; a pleasant enough face — he is dangerous because he
+is calm, not because he looks it.
 Blind Pew: a bent old blind man in an enormous ragged hooded sea-cloak far too
 big for him, green shade over his eyes, tapping a stick.
 Jim's mother: a thin tired woman in a plain apron and white cap.
@@ -42,7 +55,7 @@ almost always smiling, a green parrot on his shoulder.
 Squire Trelawney: a large loud red-faced gentleman in a fine coat.
 Captain Smollett: a compact stern officer in a plain blue naval coat, sharp
 eyes, never smiling.
-Israel Hands: a lean sallow sailor with a sly sideways look.
+Israel Hands: a lean capable sailor, quiet and watchful, an ordinary face.
 Ben Gunn: a gaunt sun-blackened castaway dressed in scraps of goatskin and old
 sailcloth pinned together with brass buttons and twigs, wild hair and beard.
 ```
@@ -65,7 +78,7 @@ sailcloth pinned together with brass buttons and twigs, wild hair and beard.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.webp` | A cutlass fight bursting out inside a small inn: a pale sallow man with two fingers missing on his left hand fleeing toward the door with a wounded shoulder, the huge old sailor swinging after him, a chair toppling, a boy pressed against the wall. |
+| `images/story-02-a.webp` | A cutlass fight bursting out inside a small inn: a pale quiet man with two fingers missing on his left hand bolting for the door clutching his shoulder, the huge old sailor swinging after him, a chair toppling, a boy pressed against the wall. |
 | `images/story-02-b.webp` | The old sailor collapsed on the inn floor, the boy kneeling beside him, the doctor in the powdered wig crouching to examine him, the boy's mother standing behind with her hands to her mouth, cold winter light through the window. |
 
 ## 3장 · 검은 딱지
@@ -94,7 +107,7 @@ sailcloth pinned together with brass buttons and twigs, wild hair and beard.
 | 파일명 | 장면 |
 |---|---|
 | `images/story-06-a.webp` | A busy 18th-century Bristol dockside crowded with tall ships, barrels and sailors, a boy with a bundle walking wide-eyed through the crowd. |
-| `images/story-06-b.webp` | Inside a bright harbour tavern: a huge one-legged man on a crutch turning with a warm broad smile to greet a boy, a green parrot on his shoulder; in the background a sallow man slips out through the door unnoticed. |
+| `images/story-06-b.webp` | Inside a bright harbour tavern: a huge one-legged man on a crutch turning with a warm broad smile to greet a boy, a green parrot on his shoulder; in the background a quiet pale man slips out through the door unnoticed. |
 
 ## 7장 · 히스파니올라 호
 
@@ -149,7 +162,7 @@ sailcloth pinned together with brass buttons and twigs, wild hair and beard.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-14-a.webp` | A boy at the tilted deck rail hauling down a black pirate flag and flinging it into the sea, a wounded sallow sailor watching him from against the bulwark. |
+| `images/story-14-a.webp` | A boy at the tilted deck rail hauling down a black pirate flag and flinging it into the sea, a lean sailor slumped against the bulwark watching him. |
 | `images/story-14-b.webp` | High on the mast: a boy braced on the crosstrees aiming two pistols downward, a wounded sailor climbing toward him hand over hand with a long dirk gripped in his teeth, empty blue sea far below. |
 
 ## 15장 · 적의 손에

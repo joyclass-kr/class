@@ -18,6 +18,16 @@ Mississippi valley in the 1840s: the huge brown river, timber rafts, canoes,
 steamboats, cottonwood islands, river bluffs and small landings; much of the
 book happens at night and at dawn, so lean on moonlight, fog and firelight;
 no blood or wounds shown, no text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 **짐을 그릴 때 반드시 지켜 주세요.** 짐은 이 이야기에서 가장 어른스럽고 지혜로운 인물입니다.
@@ -34,8 +44,9 @@ Jim: a Black man of about thirty-eight, strongly built, calm steady eyes, a
 quiet dignified bearing; worn but decent clothes, a straw hat; depicted with
 full realism and respect at all times — he is the steadiest and wisest person
 in the story and the composition should always show that.
-Pap: a gaunt frightening man of fifty with long greasy hair and an unnaturally
-pale face, ragged clothes.
+Pap: a thin man of fifty with long uncombed hair and worn clothes, an ordinary
+face; what frightens Huck is how he stands and what he is holding, not how he
+looks.
 Tom Sawyer: a boy Huck's age in decent clothes, always full of schemes.
 The King: a bald man of seventy in a shabby frock coat, theatrical.
 The Duke: a younger sharp-faced man in worn city clothes.

@@ -35,6 +35,16 @@ race; the American South around 1850 — a Kentucky farm with a log cabin, the
 frozen Ohio river, Mississippi steamboats, a grand New Orleans house with a
 courtyard fountain, and a remote cotton plantation on the Red River.
 Absolutely no caricature. No blood or wounds shown. No text or letters.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
@@ -55,7 +65,9 @@ Ophelia: an angular white New England woman of fifty, plain dark dress.
 Topsy: a Black girl of about nine, quick, watchful, ragged clothes at first —
 draw her as a real child, never as a comic figure.
 Cassy: a Black woman of about forty, striking, educated bearing.
-Simon Legree: a big coarse white man, unshaven, a heavy fist, filthy clothes.
+Simon Legree: a big white man in plain working clothes, an ordinary weathered
+face; what is monstrous about him is in his orders and his fist, never in his
+appearance. Do not make him look like a monster.
 ```
 
 ## 표지 · 마무리

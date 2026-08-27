@@ -17,6 +17,18 @@ proportions with expressive faces; a Caribbean island in the 1660s — white
 sand, dense green forest, a rock cliff with a palisade of stakes in front of
 it, goats, a wide empty sea on every horizon; strong tropical light and deep
 shade; no text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
+No blood, no wounds and no cruelty shown: when something violent happens,
+draw the moment just before or just after it instead.
 ```
 
 **프라이데이를 반드시 존엄하게 그려 주세요.** 이 지시문을 그 인물이 나오는 모든 프롬프트에 넣으세요.

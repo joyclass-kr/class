@@ -18,6 +18,18 @@ summer pasture, bare rock peaks, a small weathered timber hut under three
 enormous fir trees, goats everywhere; and by contrast Frankfurt: heavy
 curtains, carpets, tall panelled doors, a city street with no horizon;
 no text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
+No blood, no wounds and no cruelty shown: when something violent happens,
+draw the moment just before or just after it instead.
 ```
 
 **산과 도시를 확실히 다르게 그려 주세요.** 산 장면은 넓고 빛이 많고 하늘이 크게,

@@ -19,6 +19,18 @@ saturated colors, realistic human proportions with expressive faces, France
 narrow Paris streets and candlelit rooms, energetic and dashing mood,
 sword fights shown as movement and stance, never with blood or injury,
 no text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
+No blood, no wounds and no cruelty shown: when something violent happens,
+draw the moment just before or just after it instead.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
@@ -36,7 +48,8 @@ Monsieur de Treville: a lean weathered captain of about fifty with grey hair.
 Cardinal Richelieu: a thin composed man in scarlet robes with a pointed beard,
 never raising his voice.
 Milady: a beautiful fair-haired woman with pale blue eyes, elegant dark gowns.
-Rochefort: a tall dark-faced man with a scar at his temple, dressed in black.
+Rochefort: a tall handsome man dressed in black, a faded old scar at his
+temple, calm and courteous.
 Constance: a young woman of twenty-five in a modest respectable dress.
 ```
 

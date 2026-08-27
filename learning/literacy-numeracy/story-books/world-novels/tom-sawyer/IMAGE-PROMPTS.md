@@ -19,6 +19,16 @@ faces, a small Mississippi river town in the 1840s: whitewashed fences, frame
 houses, a steamboat on the wide brown river, woods and bluffs, strong
 sunlight, humorous and energetic mood, no blood or wounds shown, no text or
 letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
@@ -34,8 +44,9 @@ Becky Thatcher: a girl of about twelve with golden hair in two braids and a
 white summer dress.
 Joe Harper: a plain sensible boy, Tom's age.
 Muff Potter: a shabby harmless old man with a grey stubble beard.
-Scarred Joe (the villain): a lean hard-faced man with a long scar down one
-cheek, dark clothes, always half in shadow — menacing but never grotesque.
+Scarred Joe (the villain): a lean man with an ordinary, even good-looking
+face and an old scar down one cheek, dark clothes, often half in shadow.
+Draw him as a man, not a monster — the fear comes from the situation.
 ```
 
 ## 표지 · 마무리

@@ -19,6 +19,16 @@ plane trees, canal barges and towpaths, greenhouses outside Paris, and a
 coalfield town; and London's crowded back lanes.
 Working clothes, wooden clogs, patched coats. No blood or wounds shown.
 No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 **가난을 예쁘게 그리지 마세요.** 이 책에는 여덟 살에 팔려 가고 열세 살에 탄광에

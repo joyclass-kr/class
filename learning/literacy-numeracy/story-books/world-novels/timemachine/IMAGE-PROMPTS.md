@@ -19,6 +19,16 @@ workshop of brass, ivory and quartz; and the year 802,701 — a warm overgrown
 parkland of unfamiliar flowers, huge ruined stone halls half swallowed by
 green, and a weathered white sphinx on a bronze pedestal.
 No blood or wounds shown. No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 **엘로이를 귀엽게만 그리지 마세요.** 예쁘고 작고 부드럽게 그리되,
@@ -34,7 +44,7 @@ No blood or wounds shown. No text or letters in the image.
 
 ```
 The Time Traveller: a wiry Englishman of about forty, pale, high forehead,
-in a tweed suit; from chapter 3 onward increasingly torn, filthy and bruised,
+in a tweed suit; from chapter 3 onward increasingly torn, dust-covered and bruised,
 his hair going grey by the end.
 The dinner guests: half a dozen Victorian gentlemen in evening dress.
 The Time Machine: a saddle mounted on a frame of nickel, ivory and brass with
@@ -66,7 +76,7 @@ lidless eyes, human hands; they shield their faces from any light.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.webp` | A dining room doorway: a filthy, limping man in a torn coat, grey at the temples, no shoes; every guest at the table turned toward him and frozen. |
+| `images/story-02-a.webp` | A dining room doorway: a dust-covered limping man in a torn coat, grey at the temples, no shoes; every guest at the table turned toward him and frozen. |
 | `images/story-02-b.webp` | The same man cleaned up and in fresh clothes, sitting by the fire beginning to speak, the others leaning in. |
 
 ## 3장 · 출발

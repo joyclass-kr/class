@@ -18,6 +18,16 @@ workhouse hall, muddy country roads, and the crowded soot-black lanes of east
 London with leaning timber houses and boarded windows; also, by contrast, warm
 panelled rooms with firelight and books. No blood or wounds shown.
 No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 **페이긴을 인종으로 그리지 마세요.** 이 판본에서 페이긴은 그저 아이들을 부려 먹는
@@ -38,11 +48,13 @@ Mr Bumble: a stout self-important parish officer in a cocked hat and a coat
 with a wide collar, a cane.
 The Artful Dodger (Jack Dawkins): a boy Oliver's age in a man's coat with the
 sleeves turned back and a tall hat pushed onto the back of his head.
-Fagin: an old man with matted hair and a greasy dressing gown, stooped, a
-toasting fork in his hand. No ethnic markers of any kind.
+Fagin: a mild-looking old man with untidy grey hair and a worn dressing gown,
+a toasting fork in his hand; a pleasant host's face — that is exactly how he
+keeps the boys. No ethnic markers of any kind.
 Nancy: a young woman of about twenty-two, a shawl, hair pinned untidily, a
 worn but not squalid dress; draw her face with sympathy at all times.
-Bill Sikes: a heavy brutal man in a black coat, a white dog at his heel.
+Bill Sikes: a big strong man in a black coat, an ordinary face, a white dog
+at his heel; the danger is in his stillness and his hands, never in his looks.
 Mr Brownlow: a kindly stout old gentleman in a bottle-green coat and
 spectacles.
 Rose Maylie: a girl of seventeen, fair and gentle-faced.
@@ -89,7 +101,7 @@ Monks: a tall pale man with dark eyes, always in a heavy cloak.
 | 파일명 | 장면 |
 |---|---|
 | `images/story-05-a.webp` | A dark London lane where the houses lean toward each other overhead, one narrow doorway open, three flights of broken stairs visible inside. |
-| `images/story-05-b.webp` | A garret by firelight: an old man in a greasy dressing gown crouched over an open box of watches and rings, holding one up to the light; in the shadows a boy's open eye. |
+| `images/story-05-b.webp` | A garret by firelight: a mild old man in a worn dressing gown crouched over an open box of watches and rings, holding one up to the light; in the shadows a boy's open eye. |
 
 ## 6장 · 손수건 놀이
 

@@ -19,6 +19,16 @@ respectable house a bare damp courtyard and an old dissecting theatre turned
 laboratory, with a windowless street door.
 Muted greys, browns and gaslight yellow. No blood or wounds shown.
 No text or letters in the image.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
 ```
 
 **하이드를 괴물로 그리지 마세요.** 이 책에서 하이드가 무서운 것은 생김새가 아니라,
