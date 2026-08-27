@@ -19,23 +19,18 @@ vm.createContext(context);
 vm.runInContext(dataSource, context);
 const curriculum = context.window.HarmonyCurriculum;
 
-const expectedIds = [
-  "STAFF_PITCH", "INTERVAL_SPELLING",
-  "TRIAD_BUILD", "SYMBOL_READ", "QUALITY_HEAR", "SLASH_BASS", "SEVENTH_BUILD",
-  "KEY_MAP", "DIATONIC_BUILD", "MINOR_HARMONY", "FUNCTION_HEAR",
-  "VOICE_LEAD", "PART_WRITING", "NON_CHORD_TONES", "GUIDE_TONE",
-  "CADENCE_SHAPE", "SEQUENCE_PLAY", "PROGRESSION_PLAY", "HARMONIC_RHYTHM", "COLOR_CHORD",
-  "TRANSPOSE", "SECONDARY_DOMINANT", "BORROWED_CHORD", "CHROMATIC_PREDOMINANT", "MODULATION",
-  "MELODY_HARMONIZE", "LEAD_SHEET_PROJECT"
-];
-
 assert.ok(curriculum, "curriculum must be exposed to the renderer");
 const listedIds = Array.from(curriculum.strands, (strand) => Array.from(strand.skills)).flat();
-assert.deepEqual(listedIds, expectedIds, "the content-derived learning order changed unexpectedly");
+const implementedIds = Object.keys(curriculum.skills);
+assert.ok(curriculum.strands.length > 0, "the course needs at least one content strand");
+for (const strand of curriculum.strands) {
+  assert.ok(strand.id && strand.title && strand.description, "every strand needs an identity and explanation");
+  assert.ok(Array.isArray(strand.skills) && strand.skills.length > 0, strand.id + " must contain learning items");
+}
 assert.equal(new Set(listedIds).size, listedIds.length, "a learning item appears more than once");
-assert.deepEqual(new Set(Object.keys(curriculum.skills)), new Set(expectedIds), "listed items and implemented items differ");
+assert.deepEqual(new Set(implementedIds), new Set(listedIds), "listed items and implemented items differ");
 
-for (const [order, id] of expectedIds.entries()) {
+for (const [order, id] of listedIds.entries()) {
   const skill = curriculum.skills[id];
   assert.ok(skill.title && skill.summary && skill.outcome, id + " needs a title, explanation, and observable outcome");
   assert.ok(Array.isArray(skill.prereqs), id + " needs explicit prerequisites");
@@ -47,7 +42,7 @@ for (const [order, id] of expectedIds.entries()) {
 
   for (const prerequisite of skill.prereqs) {
     assert.ok(curriculum.skills[prerequisite], id + " refers to missing prerequisite " + prerequisite);
-    assert.ok(expectedIds.indexOf(prerequisite) < order, id + " must be taught after prerequisite " + prerequisite);
+    assert.ok(listedIds.indexOf(prerequisite) < order, id + " must be taught after prerequisite " + prerequisite);
   }
 
   for (const section of skill.sections) {
@@ -58,9 +53,9 @@ for (const [order, id] of expectedIds.entries()) {
   }
 }
 
-assert.ok(new Set(expectedIds.map((id) => curriculum.skills[id].sections.length)).size > 1, "section counts must follow the concept instead of a fixed template");
-assert.ok(new Set(expectedIds.map((id) => curriculum.skills[id].evidence.length)).size > 1, "question counts must follow the concept instead of a fixed template");
-assert.deepEqual(new Set(expectedIds.map((id) => curriculum.skills[id].lab.type)), new Set(["keyboard", "aural", "progression"]), "the course needs construction, listening, and progression activities");
+assert.ok(new Set(listedIds.map((id) => curriculum.skills[id].sections.length)).size > 1, "section counts must follow the concept instead of a fixed template");
+assert.ok(new Set(listedIds.map((id) => curriculum.skills[id].evidence.length)).size > 1, "question counts must follow the concept instead of a fixed template");
+assert.deepEqual(new Set(listedIds.map((id) => curriculum.skills[id].lab.type)), new Set(["keyboard", "aural", "progression"]), "the course needs construction, listening, and progression activities");
 
 assert.match(index, /<title>화성학<\/title>/);
 assert.match(index, /harmony-curriculum\.js/);

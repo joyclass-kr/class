@@ -503,7 +503,8 @@ button, select, summary {
         font-size: 18px;
     }
 }
-/* Textbook reading flow: explanation first, then full-width notation. */
+
+/* Lesson reading flow: explanation first, then full-width notation. */
 .lesson-section,
 .lesson-section:nth-child(even) {
     grid-template-columns: minmax(0, 1fr);
