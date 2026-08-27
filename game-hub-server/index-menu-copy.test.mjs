@@ -5,6 +5,17 @@ const html = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
 
 assert.match(
   html,
+  /<strong>정보·컴퓨터<\/strong><small>\(Computing\)<\/small>/,
+  "The information-computing menu must keep the Korean title while using a compact English subtitle.",
+);
+assert.doesNotMatch(
+  html,
+  /<small>\(Information &amp; Computing\)<\/small>/,
+  "The information-computing subtitle must not wrap because of the older long wording.",
+);
+
+assert.match(
+  html,
   /href="learning\/inquiry\/periodic-table\/"[\s\S]*?<strong>주기율표<\/strong><small>\(Periodic Table\)<\/small>/,
   "The periodic-table menu must use the concise Korean title and English translation.",
 );
