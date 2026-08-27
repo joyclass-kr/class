@@ -6,14 +6,6 @@
 .dashboard-intro { margin-top: 6px !important; max-width: 620px; font-size: 15px !important; line-height: 1.5; }
 .dashboard-progress { flex: 0 0 auto; }
 
-.continue-card { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 20px; min-height: 132px; padding: 20px 22px; border: 1px solid #b88831; border-radius: 14px; background: linear-gradient(125deg,#24334c,#17253b 70%); box-shadow: 0 14px 30px rgba(0,0,0,.2); }
-.continue-copy { min-width: 0; }
-.continue-label { display: block; margin-bottom: 5px; color: var(--gold); font-size: 12px; font-weight: 950; }
-.continue-copy h2 { margin: 0; font-size: 21px; }
-.continue-copy p { margin: 6px 0 0; color: #c3cedf; font-size: 14px; line-height: 1.55; }
-.continue-meta { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
-.learning-chip { display: inline-flex; align-items: center; min-height: 28px; padding: 3px 9px; border: 1px solid #546783; border-radius: 999px; color: #dce5f2; background: rgba(8,14,24,.24); font-size: 11px; font-weight: 850; }
-.continue-button { min-width: 168px; min-height: 50px; padding: 8px 18px; border: 0; border-radius: 10px; color: #161c26; background: var(--gold); font-weight: 950; cursor: pointer; }
 
 .course-map-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; margin: 20px 2px 10px; }
 .course-map-heading h2 { margin: 0; font-size: 18px; }
@@ -118,7 +110,6 @@
 .piano-panel-heading span { color: var(--muted); font-size: 12px; }
 
 @media (max-width: 900px) {
-    .continue-card { grid-template-columns: 1fr auto; }
     .unit-block .lesson-list { grid-template-columns: 1fr; }
     .roman-map { grid-template-columns: repeat(4,1fr); }
     .function-flow { grid-template-columns: 1fr; }
@@ -128,8 +119,6 @@
 @media (max-width: 700px) {
     .dashboard-heading { display: grid; gap: 10px; }
     .dashboard-progress { width: 100%; justify-content: space-between; }
-    .continue-card { grid-template-columns: 1fr; }
-    .continue-button { width: 100%; }
     .course-map-heading { display: block; }
     .course-map-heading p { margin-top: 5px; line-height: 1.5; }
     .unit-block > summary { grid-template-columns: 42px 1fr auto; padding-inline: 12px; }
@@ -151,7 +140,6 @@
 }
 
 @media (max-width: 420px) {
-    .continue-card { padding: 16px; }
     .unit-summary-copy small { display: none; }
     .unit-block > summary { grid-template-columns: 40px 1fr auto; gap: 9px; }
     .construction-lab { margin-inline: 18px; }
