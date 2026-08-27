@@ -37,11 +37,14 @@ Jeolla province: a rich brother's tile-roofed compound with granaries and a big
 gate, a poor brother's crooked one-room thatched hut on the edge of the fields,
 gourd vines over the roof, rice paddies, low hills. Everyone wears period hanbok.
 Warm daylight, lantern light at night. No text or letters in the image.
-Villains and unkind characters are drawn as ordinary, nice-looking people -
-never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
-teeth. What is wrong with them shows only in what they are doing and in their
-posture, never in a deformed or repulsive face. A cruel character may be
-handsome; a kind one may be plain.
+Villains and unkind characters must be FUN to look at - comic, lively and cute,
+with big round expressive eyes and big exaggerated expressions. Exaggerate
+freely: puffed-up cheeks, enormous grins, comic sweat drops, tiny pupils when
+startled, whole body leaning into the gag. But never repulsive - no wrinkled
+scowling faces, no warts, no bared yellow teeth, no mean squinting slits, no
+ugly caricature. The reader should enjoy watching them and laugh at them, never
+be disgusted by them. A greedy character can be adorable; what is wrong with
+them shows in what they DO, not in an ugly face.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
@@ -57,9 +60,10 @@ in a swarm, big eyes, patched clothes, comic and lively.
 Nolbu: a stout well-fed man in a good brown silk hanbok and a black horsehair
 hat, a permanent scowl, one hand usually on his belly or pointing. Not a monster -
 a small-minded, greedy, frightened man.
-Nolbu's wife: a well-fed woman in good silk, hair neatly dressed, a pleasant
-ordinary face - she is not ugly and not a shrew to look at. A rice paddle is
-usually in her hand. What is unkind about her is only what she does with it.
+Nolbu's wife: a round well-fed woman in good silk with a neat bun, big round
+eyes and cheeks that puff right up when she is cross. Comic and cute even at her
+worst - the reader should laugh at her, never be disgusted. A rice paddle is
+usually in her hand.
 The swallows: sleek blue-black-and-white birds with forked tails; one nestling
 with a splinted leg wrapped in white thread.
 The gourds: enormous pale green gourds, some as big as a person, growing on the

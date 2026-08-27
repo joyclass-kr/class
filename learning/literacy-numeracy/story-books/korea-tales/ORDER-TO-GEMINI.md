@@ -7,38 +7,46 @@
 
 ---
 
-## ① 먼저 읽어 주세요 — 악당을 흉하게 그리지 마세요
+## ① 먼저 읽어 주세요 — 악당은 재미있고 귀엽게
 
 지금 들어온 그림에서 악당이 **혐오스럽게** 그려진 것이 여럿입니다.
-주름진 얼굴, 튀어나온 눈, 벌린 입에 드러난 이, 심술궂게 찡그린 눈매입니다.
+주름진 얼굴, 튀어나온 눈, 벌린 입에 드러난 이입니다.
+
+**과장이 문제가 아닙니다. 과장은 실컷 해 주세요.**
+악당은 **보는 재미가 있어야** 합니다. 볼이 부풀고, 눈이 동그래지고,
+때로는 빙빙 돌아가고, 땀방울이 튀는 그런 과장 말입니다.
+**웃기면 되고 징그러우면 안 됩니다.**
 
 **이것은 제미나이 잘못이 아니라 프롬프트 잘못이었습니다.** 예를 들어
-흥부전 인물 설명에 이렇게 적혀 있었습니다.
+흥부전 인물 설명이 이랬습니다.
 
     Nolbu's wife: a big loud woman with a red face, usually holding a rice paddle.
 
-놀부에게는 "괴물이 아니라 속 좁고 겁 많은 사람"이라는 단서를 달아 두고
-**아내에게는 안 달았습니다.** 그래서 흉하게 그릴 수밖에 없었습니다.
+놀부에게는 "괴물이 아니다"라는 단서를 달아 두고 **아내에게는 안 달았습니다.**
+그래서 흉하게 그릴 수밖에 없었습니다.
 
 62권 프롬프트를 모두 고쳤습니다. 공통 스타일 지시문에 이 규칙이 들어갔습니다.
 
-    Villains and unkind characters are drawn as ordinary, nice-looking people -
-    never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
-    teeth. What is wrong with them shows only in what they are doing and in their
-    posture, never in a deformed or repulsive face. A cruel character may be
-    handsome; a kind one may be plain.
+    Villains and unkind characters must be FUN to look at - comic, lively and cute,
+    with big round expressive eyes and big exaggerated expressions. Exaggerate
+    freely: puffed-up cheeks, enormous grins, comic sweat drops, tiny pupils when
+    startled, whole body leaning into the gag. But never repulsive - no wrinkled
+    scowling faces, no warts, no bared yellow teeth, no mean squinting slits, no
+    ugly caricature. The reader should enjoy watching them and laugh at them, never
+    be disgusted by them. A greedy character can be adorable; what is wrong with
+    them shows in what they DO, not in an ugly face.
 
-**다시 그리실 때 이 규칙이 들어간 새 프롬프트를 쓰셔야 합니다.**
+**다시 그리실 때 이 규칙이 든 새 프롬프트를 쓰셔야 합니다.**
 각 책의 `IMAGE-PROMPTS.md`를 새로 받아 주세요.
 
 ### 특히 고친 인물 넷
 
 | 책 | 인물 | 예전 | 지금 |
 |---|---|---|---|
-| 흥부전 | 놀부 아내 | big loud woman with a red face | 좋은 비단옷, 단정한 머리, **평범하고 보기 좋은 얼굴** |
-| 구렁덩덩 신선비 | 언니 둘 | sneering or peeking, small mean eyes | **셋째 딸만큼 예쁘게**, 심술은 행동으로만 |
-| 금도끼 은도끼 | 욕심쟁이 이웃 | smug face, small darting eyes | **잘생긴 열린 얼굴**, 욕심은 몸짓으로만 |
-| 콩쥐 팥쥐 | 팥쥐 | plump and idle, a sulky mouth | **콩쥐만큼 예쁘게** |
+| 흥부전 | 놀부 아내 | 크고 시끄럽고 얼굴 붉은 여자 | 동그란 얼굴에 **큰 둥근 눈**, 화나면 볼이 부풀 대로 부푸는 |
+| 구렁덩덩 신선비 | 언니 둘 | 비웃거나 엿보는, 작고 심술궂은 눈 | **셋째 딸만큼 귀엽게**, 둘이 똑같이 움직이는 게 대목 |
+| 금도끼 은도끼 | 욕심쟁이 이웃 | 능글맞은 얼굴, 작고 굴리는 눈 | 금을 보면 **눈이 빙빙 돌아가는** 둥글둥글한 사람 |
+| 콩쥐 팥쥐 | 팥쥐 | 통통하고 게으르고 뾰로통한 입 | **콩쥐만큼 귀엽게**, 샐쭉거리는 건 크고 웃기게 |
 
 ---
 
@@ -48,14 +56,14 @@
 
 | 파일 | 무엇이 문제인가 |
 |---|---|
-| `heungbujeon/story-01-c` | 놀부 아내가 주름진 얼굴에 눈이 튀어나오고 입을 벌린 채 그려짐 |
-| `gureongdeongdeong/07-burn` | 언니 둘이 주름지고 심술궂은 중년으로, 밖의 셋째 딸과 딴판 |
-| `geumdokki-eundokki/10-greedy` | 욕심쟁이 이웃이 얼굴을 일그러뜨린 채 그려짐 |
+| `heungbujeon/story-01-c` | 놀부 아내가 주름진 얼굴에 눈이 튀어나오고 입을 벌린 채 |
+| `gureongdeongdeong/07-burn` | 언니 둘이 주름진 중년으로, 밖의 셋째 딸과 딴판 |
+| `geumdokki-eundokki/10-greedy` | 욕심쟁이 이웃이 얼굴을 일그러뜨린 채 |
 
 ### 같은 규칙으로 다시 봐 주실 것 — 악당이 나오는 그림 전부
 
 프롬프트에서 악당이 등장한다고 적힌 그림만 뽑았습니다. **얼굴이 흉하게
-나온 것만** 다시 그려 주시면 됩니다. 멀쩡한 것은 그대로 두셔도 됩니다.
+나온 것만** 다시 그려 주시면 됩니다. 웃기고 귀엽게 나온 것은 그대로 두세요.
 
     흥부전       story-02-a/b/c  story-04-a/b/c  story-05-a/b/c  story-06-a/b/c
     그늘을 산 사람  03-scold 04-buy 05-deal 07-enter 08-friends
@@ -109,7 +117,7 @@
 
 - **같은 그림을 두 자리에 저장하지 말아 주세요.** 이번에 세 건 있었습니다.
 
-- 규격 (`webp`, 품질은 저희가 맞춥니다)
+- 규격 (`webp` 변환은 저희가 합니다)
 
   | 자리 | 비율 | 크기 예 |
   |---|---|---|

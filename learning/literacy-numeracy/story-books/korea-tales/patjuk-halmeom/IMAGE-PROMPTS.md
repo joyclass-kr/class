@@ -43,11 +43,14 @@ a clay stove and ash pit, a big brown water jar, a wooden door frame, straw mats
 and an A-frame carrier. Warm autumn colours by day, deep amber firelight and blue
 moonlight at night. Big exaggerated comic expressions, heavy motion lines.
 The tiger is never actually injured, only comically battered. No text or letters.
-Villains and unkind characters are drawn as ordinary, nice-looking people -
-never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
-teeth. What is wrong with them shows only in what they are doing and in their
-posture, never in a deformed or repulsive face. A cruel character may be
-handsome; a kind one may be plain.
+Villains and unkind characters must be FUN to look at - comic, lively and cute,
+with big round expressive eyes and big exaggerated expressions. Exaggerate
+freely: puffed-up cheeks, enormous grins, comic sweat drops, tiny pupils when
+startled, whole body leaning into the gag. But never repulsive - no wrinkled
+scowling faces, no warts, no bared yellow teeth, no mean squinting slits, no
+ugly caricature. The reader should enjoy watching them and laugh at them, never
+be disgusted by them. A greedy character can be adorable; what is wrong with
+them shows in what they DO, not in an ugly face.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)

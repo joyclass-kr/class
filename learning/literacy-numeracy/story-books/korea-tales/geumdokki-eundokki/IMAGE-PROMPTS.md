@@ -40,11 +40,14 @@ steep green ridges, a deep still pond, thatched-roof cottages, dirt paths,
 stacked firewood. Characters wear hanbok. Magical moments lit with warm golden
 light rising out of the water. Big expressive faces, exaggerated comic gestures,
 lively motion. No text or letters in the image.
-Villains and unkind characters are drawn as ordinary, nice-looking people -
-never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
-teeth. What is wrong with them shows only in what they are doing and in their
-posture, never in a deformed or repulsive face. A cruel character may be
-handsome; a kind one may be plain.
+Villains and unkind characters must be FUN to look at - comic, lively and cute,
+with big round expressive eyes and big exaggerated expressions. Exaggerate
+freely: puffed-up cheeks, enormous grins, comic sweat drops, tiny pupils when
+startled, whole body leaning into the gag. But never repulsive - no wrinkled
+scowling faces, no warts, no bared yellow teeth, no mean squinting slits, no
+ugly caricature. The reader should enjoy watching them and laugh at them, never
+be disgusted by them. A greedy character can be adorable; what is wrong with
+them shows in what they DO, not in an ugly face.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
@@ -56,9 +59,10 @@ on his back. His face is open and honest, easily moved to tears.
 The mountain spirit (Sanshin): a tall serene old man with a long flowing white
 beard and white robes, wide sleeves, standing on the surface of the water inside
 a soft golden halo. Kind but unreadable. Never frightening.
-The greedy neighbour: a well-fed man in a showy blue hanbok with a wide belt, a
-handsome open face, always over-acting. He is pleasant to look at - the greed is
-in his gestures, not in his features.
+The greedy neighbour: a round well-fed man in a showy blue hanbok with a wide
+belt. Big round eager eyes that go into spirals when he sees gold, an enormous
+grin, comic sweat, always over-acting with his whole body. Funny and likeable to
+look at - the greed is in the over-acting, never in an ugly face.
 The three axes: a plain worn iron axe with a smooth wooden handle; a silver axe
 that glows cool white; a gold axe that glows warm yellow.
 ```

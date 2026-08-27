@@ -38,11 +38,14 @@ cottages, low stone walls, straw-roofed barns, pine trees, rolling hills, dirt
 paths, rice paddies. Characters wear hanbok. Night scenes lit by warm lantern
 glow and cool blue moonlight. Big expressive faces, exaggerated comic gestures,
 lively motion. No text or letters in the image.
-Villains and unkind characters are drawn as ordinary, nice-looking people -
-never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
-teeth. What is wrong with them shows only in what they are doing and in their
-posture, never in a deformed or repulsive face. A cruel character may be
-handsome; a kind one may be plain.
+Villains and unkind characters must be FUN to look at - comic, lively and cute,
+with big round expressive eyes and big exaggerated expressions. Exaggerate
+freely: puffed-up cheeks, enormous grins, comic sweat drops, tiny pupils when
+startled, whole body leaning into the gag. But never repulsive - no wrinkled
+scowling faces, no warts, no bared yellow teeth, no mean squinting slits, no
+ugly caricature. The reader should enjoy watching them and laugh at them, never
+be disgusted by them. A greedy character can be adorable; what is wrong with
+them shows in what they DO, not in an ugly face.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
