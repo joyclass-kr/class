@@ -80,3 +80,13 @@ test("quiz totals follow each lesson and answer positions are shuffled", () => {
   assert.match(lessonSource, /presentedOptions/);
   assert.match(lessonSource, /Math\.random/);
 });
+
+test("student-facing section labels name the content without promotional filler", () => {
+  const studentFacingCopy = [coursePage, lessonPage, lessonSource].join("\n");
+  for (const phrase of ["헷갈리지 않기", "쉽게 비유하면", "한눈에 비교", "원리 보기", "직접 확인하기"]) {
+    assert.doesNotMatch(studentFacingCopy, new RegExp(phrase));
+  }
+  for (const label of ["개념 설명", "활동 시작", "개념 비교", "동작 순서", "명칭과 어원"]) {
+    assert.match(studentFacingCopy, new RegExp(label));
+  }
+});

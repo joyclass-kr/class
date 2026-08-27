@@ -158,7 +158,7 @@
                 ["하드웨어", "Hardware", "손으로 만질 수 있는 물리적인 장치입니다. CPU·RAM처럼 본체 안에 있는 부품과 키보드·화면처럼 밖에서 보이는 장치가 모두 포함됩니다."],
                 ["소프트웨어", "Software", "하드웨어가 어떤 일을 할지 정한 명령과 데이터입니다. 저장 장치에 기록되어 있다가 실행할 때 RAM으로 불려 오고 CPU가 명령을 처리합니다."],
                 ["둘의 관계", "How They Work Together", "그림 앱만 있어도 화면과 CPU가 없으면 실행할 수 없고, 하드웨어만 있어도 실행할 소프트웨어가 없으면 원하는 작업을 지시할 수 없습니다."],
-                ["경계가 헷갈리는 사례", "A Useful Boundary", "프린터 본체는 하드웨어이고 프린터 드라이버는 소프트웨어입니다. 같은 기능에 함께 쓰여도 물리 장치와 명령은 구별됩니다."]
+                ["물리 장치와 명령의 경계", "Boundary Between Device and Instructions", "프린터 본체는 하드웨어이고 프린터 드라이버는 소프트웨어입니다. 같은 기능에 함께 쓰여도 물리 장치와 명령은 구별됩니다."]
             ],
             deviceComparison: {
                 title: "PC와 모바일 기기에서 하드웨어·소프트웨어 찾기",
@@ -793,7 +793,7 @@
                 ]
             },
             comparisons: {
-                title: "CPU·GPU·RAM·저장 장치를 한눈에 비교",
+                title: "CPU·GPU·RAM·저장 장치 비교",
                 english: "Four Parts, Four Roles",
                 cards: [
                     ["CPU", "General Processor", "서로 다른 명령을 순서와 조건에 따라 처리", "앱 실행, 입력 판단, 파일 처리"],
@@ -921,7 +921,7 @@
         conceptDiagram.innerHTML = "";
         const diagram = conceptVisual.querySelector(".system-visual");
         if (diagram) {
-            conceptDiagram.innerHTML = `<div class="section-divider"><span>${lesson.parts?.length ? "본체 안에서 위치 찾기" : "구조로 다시 확인하기"}</span><small>${lesson.parts?.length ? "Locate the Parts" : "Check the Structure"}</small></div>`;
+            conceptDiagram.innerHTML = `<div class="section-divider"><span>${lesson.parts?.length ? "본체 내부의 부품 위치" : "구조도"}</span><small>${lesson.parts?.length ? "Component Locations" : "Structure Diagram"}</small></div>`;
             conceptDiagram.appendChild(diagram);
         }
         const partsMount = document.getElementById("conceptParts");
@@ -929,9 +929,9 @@
             partsMount.innerHTML = `
                 <section class="component-inspector" aria-labelledby="componentInspectorTitle">
                     <div class="explanation-heading">
-                        <span>부품 하나씩 자세히 보기 <small>Component Close-ups</small></span>
-                        <h2 id="componentInspectorTitle">8개 부품을 사진으로 비교하고 하나씩 살펴보세요.</h2>
-                        <p>위 사진 단추에서 부품을 고르면 생김새·이름의 유래·역할·연결 방식이 바뀝니다. 아래에서는 본체 안의 실제 위치도 확인합니다.</p>
+                        <span>부품 확대 사진 <small>Component Close-ups</small></span>
+                        <h2 id="componentInspectorTitle">CPU·GPU·RAM·SSD·HDD·메인보드·전원 공급 장치·냉각 장치</h2>
+                        <p>부품 단추를 누르면 확대 사진과 명칭·어원·역할·연결 방식이 표시됩니다.</p>
                     </div>
                     <div class="component-tabs" role="tablist" aria-label="자세히 볼 컴퓨터 부품">
                         ${lesson.parts.map((part, index) => `
@@ -960,12 +960,12 @@
                     </figure>
                     <div class="component-copy">
                         <header><span>${part.short}</span><h3>${part.full}<small>${part.korean}</small></h3></header>
-                        <section class="term-origin"><strong>이름을 풀어 보면 <small>Name and Origin</small></strong><p>${part.origin}</p></section>
+                        <section class="term-origin"><strong>명칭과 어원 <small>Name and Origin</small></strong><p>${part.origin}</p></section>
                         <dl>
                             <div><dt>생김새 <small>What It Looks Like</small></dt><dd>${part.look}</dd></div>
                             <div><dt>맡은 일 <small>What It Does</small></dt><dd>${part.job}</dd></div>
                             <div><dt>연결 방식 <small>How It Connects</small></dt><dd>${part.connection}</dd></div>
-                            <div class="misconception"><dt>헷갈리기 쉬운 점 <small>Common Misconception</small></dt><dd>${part.misconception}</dd></div>
+                            <div class="misconception"><dt>구별할 점 <small>Distinction</small></dt><dd>${part.misconception}</dd></div>
                         </dl>
                     </div>
                 `;
@@ -996,7 +996,7 @@
             devicesMount.innerHTML = `
                 <section class="device-comparison" aria-labelledby="deviceComparisonTitle">
                     <div class="explanation-heading compact">
-                        <span>기기별로 비교하기 <small>Compare Devices</small></span>
+                        <span>기기별 구조 비교 <small>Device Structure Comparison</small></span>
                         <h2 id="deviceComparisonTitle">${deviceComparison.title} <small>${deviceComparison.english}</small></h2>
                         <p>${deviceComparison.intro}</p>
                     </div>
@@ -1023,7 +1023,7 @@
         document.getElementById("conceptStory").innerHTML = `
             <section class="worked-example" aria-labelledby="workedExampleTitle">
                 <div class="explanation-heading">
-                    <span>실제로 일어나는 순서 <small>Step by Step</small></span>
+                    <span>동작 순서 <small>Operation Sequence</small></span>
                     <h2 id="workedExampleTitle">${story.title} <small>${story.english}</small></h2>
                     <p>${story.intro}</p>
                 </div>
@@ -1042,7 +1042,7 @@
         document.getElementById("conceptCompare").innerHTML = `
             <section class="concept-comparison" aria-labelledby="comparisonTitle">
                 <div class="explanation-heading compact">
-                    <span>헷갈리지 않기 <small>Compare</small></span>
+                    <span>개념 비교 <small>Concept Comparison</small></span>
                     <h2 id="comparisonTitle">${comparison.title} <small>${comparison.english}</small></h2>
                 </div>
                 <div class="comparison-grid">
@@ -1061,7 +1061,7 @@
         document.getElementById("conceptAnalogy").innerHTML = `
             <section class="analogy-panel" aria-labelledby="analogyTitle">
                 <div class="analogy-main">
-                    <span class="analogy-label">쉽게 비유하면 <small>Analogy</small></span>
+                    <span class="analogy-label">비유 <small>Analogy</small></span>
                     <h2 id="analogyTitle">${analogy.title} <small>${analogy.english}</small></h2>
                     <p>${analogy.text}</p>
                 </div>
@@ -1069,7 +1069,7 @@
                     <strong>비유가 실제와 다른 점 <small>Where the Analogy Stops</small></strong>
                     <p>${analogy.limit}</p>
                 </aside>
-                <div class="teachback"><strong>내 말로 설명하기 <small>Teach It Back</small></strong><p>${analogy.teachback}</p></div>
+                <div class="teachback"><strong>설명 문제 <small>Explanation Question</small></strong><p>${analogy.teachback}</p></div>
             </section>
         `;
         document.getElementById("activityTitle").textContent = lesson.activity.title;
