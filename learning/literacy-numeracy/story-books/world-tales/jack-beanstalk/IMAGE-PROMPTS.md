@@ -8,6 +8,14 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
+> **⚠️ 구름 위 성 그림 여섯 장을 다시 그려 주세요 (2026-08-28).**
+> 장면은 다 맞는데 **크기**가 안 맞습니다. 글에는 식탁이 운동장 같고 접시가 수레바퀴만
+> 하다고 되어 있는데, 그림 속 부엌은 보통 부엌이고 거인도 그냥 덩치 큰 아저씨예요.
+> 거인 나라가 거인 나라로 보여야 이 책이 재미있습니다.
+>
+> 다시 그릴 것: `04-castle-2` · `05-giant` · `05-giant-2` · `06-goose-2` · `07-harp` · `07-harp-2`
+> 나머지(소·콩·콩나무·성문 앞·마지막 장면)는 그대로 두시면 됩니다.
+
 > **한 파일 = 한 장면입니다. 앞질러 가지 마세요.**
 > 파일마다 뒤에 〔이 쪽에 실린 글〕을 붙여 두었습니다. 그 쪽에 실제로 실리는 글이에요.
 > 그림은 **그 글에 나오는 장면만** 그려 주세요. 다음 쪽 이야기를 미리 그리면
@@ -40,9 +48,15 @@ rather than terrifying.
 ```
 Jack: a scruffy cheerful boy about 11 with a patched jacket and bare feet. His
 mother: a tired woman in a worn apron and headscarf. The bean seller: a small
-odd man in a wide hat with twinkling eyes. The giant: an enormous slow man with
-a bushy beard and a huge belt, drawn as comically dim. The giant's wife: a large
-kindly woman in an apron. The goose and the harp: a plump golden goose and a
+odd man in a wide hat with twinkling eyes. The giant: a mountain of a man, AT LEAST FIVE TIMES Jack's height — his head
+brushes the ceiling beams and Jack barely reaches the top of his boot. Bushy
+beard, huge belt, comically dim, never frightening. The giant's wife: also a
+giant, about four times Jack's height, a kindly woman in an apron.
+SCALE IS THE WHOLE POINT OF THIS BOOK. Everything in the cloud castle is
+giant-sized: the table top is far over Jack's head, one plate is as wide as a
+cartwheel, a single slice of bread is as big as Jack's whole body, one gold coin
+is the size of his head. Always keep Jack in frame so the reader can see how
+enormous everything is. The goose and the harp: a plump golden goose and a
 small harp with a sleeping face carved into it.
 ```
 

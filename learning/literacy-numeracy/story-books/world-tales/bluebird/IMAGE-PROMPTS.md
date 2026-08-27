@@ -14,7 +14,7 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 
 > **한 파일 = 한 장면입니다. 앞질러 가지 마세요.**
-> 파일마다 뒤에 〔이 쪽에 실린 글〕을 붙여 두었습니다. 그 쪽에 실제로 실리는 글이에요.
+> 파일마다 뒤에을 붙여 두었습니다. 그 쪽에 실제로 실리는 글이에요.
 > 그림은 **그 글에 나오는 장면만** 그려 주세요. 다음 쪽 이야기를 미리 그리면
 > 그림이 글보다 한 칸씩 밀려서 책 전체가 어긋납니다. 실제로 그런 일이 있었어요.
 > 장면이 둘 적혀 있으면 둘을 **한 그림 안에** 담아 주세요. 하나만 골라 그리면 안 됩니다.
@@ -118,8 +118,8 @@ orange tabby cat, both walking upright like small people once transformed.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/09-home.webp` | A warm sunlit bedroom on Christmas morning, a mother gently waking two children, an elderly neighbor smiling nearby, an ordinary birdcage on the windowsill quietly glowing pale blue. 〔이 쪽에 실린 글 (17/18) — 그림에 글자는 넣지 마세요. 왼쪽: 치르치르, 미치르, 일어나렴. 다정한 목소리에 오누이는 눈을 떴습니다. 어머니가 크리스마스 아침 인사를 건네고 있었습니다. 창밖에는 눈이 하얗게 쌓여 있었지요. 그 긴 여행이 다 꿈이었을까요. / 오른쪽: 손에는 작은 보따리를 들고 있었지요. 할머니, 죄송해요. 파랑새를 못 찾았어요. 치르치르가 풀 죽은 목소리로 사과했습니다. 미치르도 고개를 숙였지요. 밤새 그 먼 길을 다녀왔는데 말입니다.〕 |
-| `images/09-home-2.webp` | An ordinary birdcage on a sunlit windowsill, the bird inside catching the morning light and shining a clear bright blue, the two children staring in wonder as the elderly neighbour points at it with a knowing smile. 〔이 쪽에 실린 글 (18/18) — 그림에 글자는 넣지 마세요. 왼쪽: 파랑새라면, 저기 있잖니? 할머니가 손가락으로 새장을 가리켰습니다. 오누이는 그쪽을 돌아보았지요. 어, 우리 집에 있던 새잖아! 새장 속 새가 창으로 든 햇빛을 받고 있었습니다. / 오른쪽: 깃털이 파랗게 반짝였지요. 오누이는 그제야 깨달았습니다. 그토록 찾아 헤매던 행복이 늘 곁에 있었다는 것을요. 오누이는 그 새를 할머니께 드렸습니다. 아픈 딸이 그 새를 보고 자리에서 일어났답니다. 오누이는 그날 아침이 가장 기뻤지요.〕 |
+| `images/09-home.webp` | A warm sunlit bedroom on Christmas morning, a mother gently waking two children, an elderly neighbor smiling nearby, an ordinary birdcage on the windowsill quietly glowing pale blue. 〔이 쪽에 실린 글 (17/18) — 그림에 글자는 넣지 마세요. 왼쪽: 치르치르, 미치르, 일어나렴. 어머니 목소리에 오누이는 눈을 떴습니다. 창밖에는 눈이 하얗게 쌓여 있었지요. 그 긴 여행이 다 꿈이었을까요. / 오른쪽: 할머니, 죄송해요. 파랑새를 못 찾았어요. 치르치르가 풀 죽은 목소리로 말했습니다. 미치르도 고개를 숙였지요. 그러자 할머니가 빙그레 웃었습니다.〕 |
+| `images/09-home-2.webp` | An ordinary birdcage on a sunlit windowsill, the bird inside catching the morning light and shining a clear bright blue, the two children staring in wonder as the elderly neighbour points at it with a knowing smile. 〔이 쪽에 실린 글 (18/18) — 그림에 글자는 넣지 마세요. 왼쪽: 오누이는 그쪽을 돌아보았습니다. 어, 우리 집에 있던 새잖아! 새장 속 새가 창으로 든 햇빛을 받고 있었지요. 어제까지는 잿빛으로만 보였는데 말입니다. / 오른쪽: 오누이는 그 새를 할머니께 드렸습니다. 아픈 딸이 새를 보고 자리에서 일어났지요. 그때 새가 포르르 날아올랐습니다. 아, 파랑새가 날아갔어요!〕 |
 
 ## 사용 팁
 

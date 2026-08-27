@@ -9,7 +9,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
 > **한 파일 = 한 장면입니다. 앞질러 가지 마세요.**
-> 파일마다 뒤에 〔이 쪽에 실린 글〕을 붙여 두었습니다. 그 쪽에 실제로 실리는 글이에요.
+> 파일마다 뒤에을 붙여 두었습니다. 그 쪽에 실제로 실리는 글이에요.
 > 그림은 **그 글에 나오는 장면만** 그려 주세요. 다음 쪽 이야기를 미리 그리면
 > 그림이 글보다 한 칸씩 밀려서 책 전체가 어긋납니다. 실제로 그런 일이 있었어요.
 > 장면이 둘 적혀 있으면 둘을 **한 그림 안에** 담아 주세요. 하나만 골라 그리면 안 됩니다.
@@ -35,7 +35,7 @@
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm French countryside light,
 no text or letters in the image, a mill and cottage, wheat fields and meadows, a
-river bank, a royal carriage road and an ogre's grand castle, very expressive
+river bank, a royal carriage road and a sorcerer's grand castle, very expressive
 comic faces, wide panoramic composition, funny and never frightening.
 ```
 
@@ -45,9 +45,7 @@ comic faces, wide panoramic composition, funny and never frightening.
 The cat: a lean tabby in tall red boots, a plumed hat and a small cloak, always
 one step ahead. The youngest son: a plain honest young man in a patched shirt,
 easily flustered. The king: a round jovial man in a gold-trimmed coat. The
-princess: a curious young woman with a lace collar. The ogre: an enormous man in
-a purple coat with a booming laugh, drawn as vain and gullible rather than
-frightening. Field workers in straw hats.
+princess: a curious young woman with a lace collar. The sorcerer: a plump theatrical man in a tall pointed hat and long crimson-and-purple robes that sweep the floor, big moustache, comic rather than frightening. He can turn into a roaring lion or a tiny mouse. Field workers in straw hats.
 ```
 
 ## 표지 · 마무리
@@ -89,16 +87,16 @@ frightening. Field workers in straw hats.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-castle.webp` | **이미 있음** — 성문 앞 다리 위에서 장화 신은 고양이가 사자 머리 문고리를 잡고 두드리는 장면, 뒤로 뾰족한 탑이 늘어선 커다란 성. 〔이 쪽에 실린 글 (9/15) — 그림에 글자는 넣지 마세요. 왼쪽: 마차는 넓은 길을 달렸습니다. 길 끝에 커다란 성이 서 있었지요. 임금님이 또 물었습니다. 저 성은 누구 것인가? / 오른쪽: 성의 주인은 마법을 부리는 거인이었습니다. 고양이는 마차보다 먼저 달렸지요. 숨이 턱에 찼지만 멈추지 않았습니다. 성문 앞에 서서 옷매무새를 가다듬었지요.〕 |
-| `images/05-castle-2.webp` | **이미 있음** — 횃불 켜진 성 안 넓은 홀, 화려한 옷을 입은 마법사가 고개를 젖히고 껄껄 웃고, 장화 신은 고양이가 한 손을 내밀며 이야기하는 장면. 〔이 쪽에 실린 글 (10/15) — 그림에 글자는 넣지 마세요. 왼쪽: 커다란 문이 스르르 열렸습니다. 안에서 그림자가 쑥 나왔지요. 거인이 내려다보았지요. 천장에 닿을 만큼 컸습니다. 고양이가 무슨 일이냐. / 오른쪽: 소문을 듣고 여기까지 왔습니다. 무엇으로든 변하신다지요? 거인이 껄껄 웃었습니다. 웃음소리에 벽이 다 울렸지요.〕 |
-| `images/05-castle-3.webp` | **이미 있음** — 같은 홀에서 마법사가 커다란 사자로 변해 포효하고, 고양이는 벽장 위로 뛰어올라 털을 곤두세운 채 놀라는 장면. 〔이 쪽에 실린 글 (11/15) — 그림에 글자는 넣지 마세요. 왼쪽: 이를테면 사자 같은 것도요? 그것쯤이야 쉽지. 거인의 몸이 부풀어 올랐습니다. 털이 돋고 갈기가 솟았지요. / 오른쪽: 고양이는 얼른 벽장 위로 뛰었습니다. 털이 곤두섰지요. 심장이 쿵쿵 뛰었습니다. 그래도 고양이는 태연한 척했지요. 수염을 쓱 쓸어 보이기까지 했습니다.〕 |
+| `images/05-castle.webp` | **이미 있음** — 성문 앞 다리 위에서 장화 신은 고양이가 사자 머리 문고리를 잡고 두드리는 장면, 뒤로 뾰족한 탑이 늘어선 커다란 성. 〔이 쪽에 실린 글 (9/15) — 그림에 글자는 넣지 마세요. 왼쪽: 마차는 넓은 길을 달렸습니다. 길 끝에 커다란 성이 서 있었지요. 임금님이 또 물었습니다. 저 성은 누구 것인가? / 오른쪽: 성의 주인은 마법을 부리는 마법사였습니다. 고양이는 마차보다 먼저 달렸지요. 숨이 턱에 찼지만 멈추지 않았습니다. 성문 앞에 서서 옷매무새를 가다듬었지요.〕 |
+| `images/05-castle-2.webp` | **이미 있음** — 횃불 켜진 성 안 넓은 홀, 화려한 옷을 입은 마법사가 고개를 젖히고 껄껄 웃고, 장화 신은 고양이가 한 손을 내밀며 이야기하는 장면. 〔이 쪽에 실린 글 (10/15) — 그림에 글자는 넣지 마세요. 왼쪽: 커다란 문이 스르르 열렸습니다. 안에서 그림자가 쑥 나왔지요. 마법사가 고개를 내밀었지요. 옷자락이 바닥까지 끌렸습니다. 고양이가 무슨 일이냐. / 오른쪽: 소문을 듣고 여기까지 왔습니다. 무엇으로든 변하신다지요? 마법사가 껄껄 웃었습니다. 웃음소리에 벽이 다 울렸지요.〕 |
+| `images/05-castle-3.webp` | **이미 있음** — 같은 홀에서 마법사가 커다란 사자로 변해 포효하고, 고양이는 벽장 위로 뛰어올라 털을 곤두세운 채 놀라는 장면. 〔이 쪽에 실린 글 (11/15) — 그림에 글자는 넣지 마세요. 왼쪽: 이를테면 사자 같은 것도요? 그것쯤이야 쉽지. 마법사의 몸이 부풀어 올랐습니다. 털이 돋고 갈기가 솟았지요. / 오른쪽: 고양이는 얼른 벽장 위로 뛰었습니다. 털이 곤두섰지요. 심장이 쿵쿵 뛰었습니다. 그래도 고양이는 태연한 척했지요. 수염을 쓱 쓸어 보이기까지 했습니다.〕 |
 
 ## 6장 · 아주 작은 쥐
 
 | 파일명 | 장면 |
 |---|---|
 | `images/06-mouse.webp` | **이미 있음** — 같은 홀에서 마법이 반짝이며 흩어지고, 작은 쥐가 마룻바닥을 달리자 고양이가 앞발을 내려놓는 장면. 피 흘리는 묘사 없이 익살스럽게. 〔이 쪽에 실린 글 (12/15) — 그림에 글자는 넣지 마세요. 왼쪽: 사자가 다시 사람으로 돌아왔습니다. 고양이가 벽장에서 내려왔지요. 사자는 어차피 크니까요. 작은 것도 되십니까? / 오른쪽: 쥐 따위가 어렵겠느냐! 어디 잘 보아라! 몸이 쭉쭉 줄어들었습니다. 이내 작은 쥐가 되었지요. 쥐는 마룻바닥을 쪼르르 달렸습니다.〕 |
-| `images/06-mouse-2.webp` | **← 이 한 장만 새로 그리면 됩니다.** A booted cat flinging open a huge castle gate with both paws to welcome a royal carriage that has just pulled up, and beyond the gate a bright hall with a long banquet table already laid, the king gaping in amazement, the young man quietly overwhelmed, comic and warm. 〔이 쪽에 실린 글 (13/15) — 그림에 글자는 넣지 마세요. 왼쪽: 고양이는 성문으로 달려갔습니다. 마차가 막 도착한 참이었지요. 고양이가 두 손으로 문을 활짝 열었습니다. 어서 오십시오, 임금님! / 오른쪽: 성 안은 눈부셨습니다. 긴 식탁에 상이 그득 차려져 있었지요. 거인이 손님을 부른 참이었거든요. 자, 드시지요.〕 |
+| `images/06-mouse-2.webp` | **← 이 한 장만 새로 그리면 됩니다.** A booted cat flinging open a huge castle gate with both paws to welcome a royal carriage that has just pulled up, and beyond the gate a bright hall with a long banquet table already laid, the king gaping in amazement, the young man quietly overwhelmed, comic and warm. 〔이 쪽에 실린 글 (13/15) — 그림에 글자는 넣지 마세요. 왼쪽: 고양이는 성문으로 달려갔습니다. 마차가 막 도착한 참이었지요. 고양이가 두 손으로 문을 활짝 열었습니다. 어서 오십시오, 임금님! / 오른쪽: 성 안은 눈부셨습니다. 긴 식탁에 상이 그득 차려져 있었지요. 마법사가 손님을 부른 참이었거든요. 자, 드시지요.〕 |
 
 ## 7장 · 진짜 후작이 되다
 
