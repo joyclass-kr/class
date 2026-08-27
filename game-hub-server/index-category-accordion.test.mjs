@@ -50,4 +50,22 @@ assert.ok(
   "Collapsed category panels must stay visually hidden despite their grid or flex layout.",
 );
 
+const categorySectionCss = html.slice(
+  html.indexOf(".category-section {"),
+  html.indexOf(".category-heading {"),
+);
+assert.ok(
+  categorySectionCss.includes("overflow: visible;") && categorySectionCss.includes("z-index: 30;"),
+  "Expanded category sections must allow nested worksheet menus to render outside the panel without being clipped or covered.",
+);
+
+const studentButtonCss = html.slice(
+  html.indexOf(".worksheet-container a,"),
+  html.indexOf(".worksheet-group {"),
+);
+assert.ok(
+  studentButtonCss.includes("min-height: 72px;") && studentButtonCss.includes("padding: 11px 15px;"),
+  "Student activity buttons must use the compact 72px height while remaining comfortably above the touch-target minimum.",
+);
+
 console.log("Index category accordion contract passed.");

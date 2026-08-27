@@ -195,17 +195,19 @@
         }
 
         .category-section {
+            position: relative;
             width: min(1180px, 100%);
             margin: 0 auto 10px;
             border: 1px solid rgba(255, 226, 155, 0.24);
             border-radius: 13px;
             background: rgba(var(--panel-darker-rgb), 0.7);
             box-shadow: 0 7px 22px rgba(0, 0, 0, 0.28);
-            overflow: clip;
+            overflow: visible;
             transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
         }
 
         .category-section.is-expanded {
+            z-index: 30;
             border-color: rgba(255, 226, 155, 0.62);
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.42);
         }
@@ -222,6 +224,7 @@
             min-height: 62px;
             padding: 8px 14px;
             border: 0;
+            border-radius: 12px;
             background: linear-gradient(135deg, rgba(var(--panel-dark-rgb), 0.96), rgba(var(--panel-darker-rgb), 0.94));
             color: #fff8e8;
             font: inherit;
@@ -241,6 +244,7 @@
         }
 
         .category-section.is-expanded .category-toggle {
+            border-radius: 12px 12px 0 0;
             background: linear-gradient(135deg, var(--gold-dark), var(--panel));
         }
 
@@ -309,6 +313,7 @@
         .category-panel {
             padding: 18px 16px 20px;
             border-top: 1px solid rgba(255, 226, 155, 0.22);
+            border-radius: 0 0 12px 12px;
             background: linear-gradient(180deg, rgba(var(--panel-dark-rgb), 0.72), rgba(var(--panel-darker-rgb), 0.82));
         }
 
@@ -348,8 +353,8 @@
             grid-template-columns: 1fr auto;
             align-items: center;
             flex: 0 1 220px;
-            min-height: 82px;
-            padding: 14px 16px;
+            min-height: 72px;
+            padding: 11px 15px;
             border: 2px solid var(--gold);
             background: linear-gradient(135deg, var(--gold-dark), var(--panel));
             color: #ffffff;
