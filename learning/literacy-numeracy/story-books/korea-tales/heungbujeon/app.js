@@ -7,6 +7,7 @@ const CHAPTERS = [
         num: 1,
         title: "쫓겨난 아우",
         art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
+        artAt: ["오늘부터 나가 살아라", "주걱이 흥부의 뺨을 후려쳤습니다", "이쪽도 한 번만 때려 주십시오"],
         paras: [
             "옛날 전라도 어느 고을에 형제가 살았습니다. 형은 놀부요 아우는 흥부였습니다. 집안은 논밭이 제법 되어 먹고살 걱정은 없었습니다.",
             "한배에서 났는데도 두 사람은 물과 불처럼 달랐습니다. 흥부는 마음이 여려서 남의 일에 먼저 소매를 걷었고, 놀부는 제 것 아니면 눈길도 주지 않았습니다. 한 어머니 배에서 났다는 것이 믿기지 않을 정도였습니다. 한 사람은 주려고 태어났고 한 사람은 받으려고 태어난 듯했습니다.",
@@ -38,6 +39,7 @@ const CHAPTERS = [
         num: 2,
         title: "처마 밑의 제비",
         art: ["story-02-a.webp", "story-02-b.webp", "story-02-c.webp"],
+        artAt: ["제비 한 쌍이 날아들었습니다", "실로 조심조심 감았습니다", "흥부의 발 앞에 무언가를 떨어뜨렸습니다"],
         paras: [
             "이듬해 봄이 왔습니다. 흥부네 오두막 처마 밑에 제비 한 쌍이 날아들었습니다. 지지배배 우는 소리가 마당에 가득했습니다.",
             "아이들이 손뼉을 쳤습니다.<br>\"아버지, 제비가 우리 집에 집을 지어요!\"<br>\"그렇구나. 우리 집이 마음에 들었나 보다.\" 막내는 하루에도 몇 번씩 처마를 올려다보았습니다.",
@@ -69,6 +71,7 @@ const CHAPTERS = [
         num: 3,
         title: "박을 타다",
         art: ["story-03-a.webp", "story-03-b.webp", "story-03-c.webp"],
+        artAt: ["긴 톱을 마주 잡았습니다", "배가 터지도록 밥을 먹었습니다", "기둥을 세우고 대들보를 올리고"],
         paras: [
             "흥부 부부는 지붕에서 박 하나를 내려 마당에 놓았습니다. 그러고는 긴 톱을 마주 잡았습니다. 박이 얼마나 무거운지 둘이서 겨우 굴려 내렸습니다.",
             "\"슬근슬근 톱질하세.\"<br>흥부가 장단을 넣자 아내가 받았습니다.<br>\"이 박을 타서 속을랑 끓여 먹고 바가지는 팔아 봅세.\" 톱날이 박 껍질에 스윽 걸렸습니다. 톱질 소리가 마당에 울렸습니다.",
@@ -101,6 +104,7 @@ const CHAPTERS = [
         num: 4,
         title: "놀부의 제비",
         art: ["story-04-a.webp", "story-04-b.webp", "story-04-c.webp"],
+        artAt: ["제비라니", "뚝, 하고 소리가 났습니다", "잊지 마라! 나다! 놀부다!"],
         paras: [
             "놀부는 소문을 듣고도 처음에는 믿지 않았습니다.<br>\"그 거지 같은 것이 부자가 됐다고? 헛소리다.\" 듣고도 코웃음을 쳤습니다.",
             "그러나 사흘이 지나도 소문이 잦아들지 않았습니다. 놀부는 결국 아우의 집으로 향했습니다. 장에 다녀온 종까지 같은 말을 했기 때문입니다.",
@@ -132,6 +136,7 @@ const CHAPTERS = [
         num: 5,
         title: "열두 통의 박",
         art: ["story-05-a.webp", "story-05-b.webp", "story-05-c.webp"],
+        artAt: ["세다 보니 열두 통이었습니다", "두 번째 박에서는 사당패가 나왔습니다", "흙더미만 남아 있었습니다"],
         paras: [
             "그해 겨울, 놀부는 밤마다 박 꿈을 꾸었습니다. 금덩이가 쏟아지는 꿈이었습니다. 아침에 깨면 그 꿈 이야기부터 했습니다.",
             "이듬해 삼월 삼짇날, 놀부는 아침부터 마당에 나와 하늘을 살폈습니다. 아침을 거르고 하늘만 보았습니다.",
@@ -164,6 +169,7 @@ const CHAPTERS = [
         num: 6,
         title: "다시 심은 박씨",
         art: ["story-06-a.webp", "story-06-b.webp", "story-06-c.webp"],
+        artAt: ["무너진 집터에 서 있었습니다", "담 밖에 그냥 서 있었습니다", "흰쌀밥에 고깃국이었습니다"],
         paras: [
             "놀부와 그 식구는 무너진 집터에 서 있었습니다. 비가 내리기 시작했습니다. 아무도 우산을 씌워 주지 않았습니다.",
             "구경하던 마을 사람들이 하나둘 돌아갔습니다. 아무도 놀부에게 자기 집으로 가자는 말을 하지 않았습니다. 놀부는 그동안 마을에서 그런 말을 들을 만한 일을 한 적이 없었습니다. 비가 옷 속까지 스몄습니다.",
@@ -303,6 +309,45 @@ function runHtml(segs, a, b) {
     return out;
 }
 
+// 그림은 제가 그린 장면보다 **앞에 나오면 안 된다.** 앞에 나오면 아직 읽지도
+// 않은 일을 먼저 보여 주는 셈이라 김이 새고 헷갈린다. 실제로 흥부전 5장에서
+// 사당패 그림이 사당패가 나오기 열일곱 쪽 전에 붙어 있었다.
+// 그래서 장마다 그림 옆에 「이 장면이다」 하는 문구(artAt)를 달아 두고,
+// 그 문구가 든 펼침면에 그림을 얹는다. 두 그림이 같은 쪽으로 몰리면 뒤로 민다.
+function anchorSlots(segs, ranges, count, anchors, total) {
+    // 1) 문구가 든 펼침면을 찾는다. 못 찾으면 예전처럼 고르게 나눈 자리.
+    const want = [];
+    for (let k = 0; k < count; k++) {
+        let at = -1;
+        const a = anchors[k];
+        if (a) {
+            const segIdx = segs.findIndex(g => g.html.indexOf(a) >= 0);
+            if (segIdx >= 0) {
+                for (let p = 0; p < ranges.length; p++) {
+                    if (segIdx >= ranges[p][0] && segIdx < ranges[p][1]) { at = p >> 1; break; }
+                }
+            }
+        }
+        want.push(at < 0 ? Math.min(Math.round((k * total) / count), total - 1) : at);
+    }
+    // 2) 앞으로 훑으며 겹치면 뒤로 민다.
+    for (let k = 1; k < count; k++) {
+        if (want[k] <= want[k - 1]) want[k] = want[k - 1] + 1;
+    }
+    // 3) 뒤로 훑으며 끝을 넘은 것을 앞으로 당긴다.
+    //    이 두 번으로 자리가 반드시 서로 다르고 순서도 범위도 지켜진다.
+    for (let k = count - 1; k >= 0; k--) {
+        const cap = total - 1 - (count - 1 - k);
+        if (want[k] > cap) want[k] = cap;
+        if (k > 0 && want[k - 1] >= want[k]) want[k - 1] = want[k] - 1;
+    }
+    const slots = new Array(total).fill('text');
+    for (let k = 0; k < count; k++) {
+        if (want[k] >= 0 && want[k] < total) slots[want[k]] = 'img';
+    }
+    return slots;
+}
+
 function slotPlan(imgCount, textCount) {
     const total = imgCount + textCount;
     const slots = new Array(total).fill('text');
@@ -386,10 +431,24 @@ function paginateChapter(ch, chIndex) {
         spreadCount++;
     }
 
+    const anchors = (ch.artAt && ch.artAt.length === arts.length) ? ch.artAt : null;
+    let tries = 0;
     let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
     let caps = capsOf(slots);
     let ranges = fillPages(segs, caps, headHtml);
-    for (let guard = 0; guard < 8; guard++) {
+    for (let guard = 0; guard < 16; guard++) {
+        // 그림을 제 장면이 있는 쪽으로 옮긴다. 옮기면 글 나눔이 달라지므로
+        // 자리가 더 안 움직일 때까지 되풀이한다.
+        if (anchors && tries < 4) {
+            const want = anchorSlots(segs, ranges, arts.length, anchors, spreadCount);
+            if (want.join() !== slots.join()) {
+                tries++;
+                slots = want;
+                caps = capsOf(slots);
+                ranges = fillPages(segs, caps, headHtml);
+                continue;
+            }
+        }
         // 한 쪽이라도 넘치면 펼침면을 늘려 다시 나눈다.
         // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
         // 여유를 1px이나 두면 안 된다. 0.8px만 넘쳐도 그 칸에 스크롤 막대가 생기고,
@@ -398,6 +457,7 @@ function paginateChapter(ch, chIndex) {
             PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 0.25);
         if (!over || spreadCount >= maxSpreads) break;
         spreadCount++;
+        tries = 0;
         slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
         caps = capsOf(slots);
         ranges = fillPages(segs, caps, headHtml);
