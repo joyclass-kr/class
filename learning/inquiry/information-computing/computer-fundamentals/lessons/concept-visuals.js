@@ -16,15 +16,21 @@
     `;
 
     const flow = (steps, className = "") => `
-        <ol class="visual-process ${className}">
-            ${steps.map((step, index) => `
-                <li>
-                    <span class="visual-step-number">${index + 1}</span>
-                    <strong>${step[0]}<small>${step[1]}</small></strong>
-                    ${step[2] ? `<p>${step[2]}</p>` : ""}
-                </li>
-            `).join("")}
-        </ol>
+        <div class="concept-sequence" data-concept-sequence>
+            <ol class="visual-process ${className}">
+                ${steps.map((step, index) => `
+                    <li data-sequence-step tabindex="0" role="button" aria-pressed="false">
+                        <span class="visual-step-number">${index + 1}</span>
+                        <strong>${step[0]}<small>${step[1]}</small></strong>
+                        ${step[2] ? `<p>${step[2]}</p>` : ""}
+                    </li>
+                `).join("")}
+            </ol>
+            <div class="sequence-controller">
+                <p data-sequence-status aria-live="polite"></p>
+                <button type="button" data-sequence-next>다음 단계 <small>Next Step</small></button>
+            </div>
+        </div>
     `;
 
     const renderers = {
@@ -263,14 +269,41 @@
         `),
 
         h04: (spec) => figure(spec, "visual-full-stack", `
-            <div class="full-stack-map">
-                ${object("프론트엔드", "Frontend", "학생이 보는 화면", "frontend-box")}
-                <span class="api-bridge"><b>API</b><small>요청·응답 규칙</small></span>
-                ${object("백엔드", "Backend", "권한 확인·계산", "backend-box")}
-                <span class="database-link">↕</span>
-                ${object("데이터베이스", "Database", "계정·점수·콘텐츠 기록", "database-box")}
-            </div>
-            <div class="request-packet"><b>문제 제출</b><span>POST /answers</span><b>→ 채점 결과 JSON →</b><span>{ score: 5 }</span></div>
+            <section class="stack-transaction-lab" data-stack-lab data-stage="0" aria-label="답 제출 요청과 응답의 이동 과정">
+                <div class="stack-boundary device-boundary">
+                    <h3>학생의 기기 <small>Student Device</small></h3>
+                    <div class="stack-node frontend-node" data-stack-node="1">
+                        <span class="screen-icon"><i></i></span>
+                        <strong>프론트엔드 <small>Frontend</small></strong>
+                        <p>답을 입력하고 제출 단추를 누르는 화면</p>
+                        <span class="result-chip" data-stack-node="6">점수 5점 <small>Score: 5</small></span>
+                    </div>
+                </div>
+                <div class="stack-api-lane">
+                    <div class="stack-packet request-direction" data-stack-node="2"><b>POST /answers</b><span>답 데이터 →</span></div>
+                    <div class="api-contract" data-stack-node="2"><b>API</b><span>주소·방법·데이터 형식의 약속</span></div>
+                    <div class="stack-packet response-direction" data-stack-node="5"><span>← 채점 결과</span><b>{ score: 5 }</b></div>
+                </div>
+                <div class="stack-boundary server-boundary">
+                    <h3>서버 <small>Server</small></h3>
+                    <div class="stack-node backend-node" data-stack-node="3">
+                        <span class="gear-icon">⚙</span>
+                        <strong>백엔드 <small>Backend</small></strong>
+                        <p>로그인·권한·정답을 확인하고 점수를 계산</p>
+                    </div>
+                    <div class="database-exchange" data-stack-node="4"><span>문제 읽기 ↓</span><span>점수 저장 ↑</span></div>
+                    <div class="stack-node database-node" data-stack-node="4">
+                        <span class="database-icon"></span>
+                        <strong>데이터베이스 <small>Database</small></strong>
+                        <p>문제·계정·점수를 구조에 맞춰 기록</p>
+                    </div>
+                </div>
+                <div class="stack-lab-controller">
+                    <button type="button" data-stack-start>답 제출 <small>Submit Answer</small></button>
+                    <p data-stack-status aria-live="polite">답 제출을 누르면 데이터가 이동하는 순서를 확인할 수 있습니다.</p>
+                    <button type="button" data-stack-next disabled>다음 단계 <small>Next Step</small></button>
+                </div>
+            </section>
         `),
 
         h05: (spec) => figure(spec, "visual-web-storage", `

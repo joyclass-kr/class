@@ -1108,6 +1108,94 @@
         });
     }
 
+    function setupConceptSequences() {
+        document.querySelectorAll("[data-concept-sequence]").forEach((sequence) => {
+            const steps = Array.from(sequence.querySelectorAll("[data-sequence-step]"));
+            const status = sequence.querySelector("[data-sequence-status]");
+            const nextButton = sequence.querySelector("[data-sequence-next]");
+            if (!steps.length || !status || !nextButton) return;
+            let activeIndex = 0;
+
+            const activate = (index) => {
+                activeIndex = index;
+                steps.forEach((step, stepIndex) => {
+                    const selected = stepIndex === activeIndex;
+                    step.classList.toggle("is-active", selected);
+                    step.setAttribute("aria-pressed", String(selected));
+                });
+                const title = steps[activeIndex].querySelector("strong")?.childNodes[0]?.textContent?.trim() || "";
+                const detail = steps[activeIndex].querySelector("p")?.textContent?.trim() || "";
+                status.textContent = `${activeIndex + 1} / ${steps.length}　${title}${detail ? ` — ${detail}` : ""}`;
+                nextButton.innerHTML = activeIndex === steps.length - 1
+                    ? "처음부터 <small>Restart</small>"
+                    : "다음 단계 <small>Next Step</small>";
+            };
+
+            steps.forEach((step, index) => {
+                step.addEventListener("click", () => activate(index));
+                step.addEventListener("keydown", (event) => {
+                    if (event.key !== "Enter" && event.key !== " ") return;
+                    event.preventDefault();
+                    activate(index);
+                });
+            });
+            nextButton.addEventListener("click", () => activate((activeIndex + 1) % steps.length));
+            activate(0);
+        });
+    }
+
+    function setupFullStackLab() {
+        const lab = document.querySelector("[data-stack-lab]");
+        if (!lab) return;
+        const startButton = lab.querySelector("[data-stack-start]");
+        const nextButton = lab.querySelector("[data-stack-next]");
+        const status = lab.querySelector("[data-stack-status]");
+        const nodes = Array.from(lab.querySelectorAll("[data-stack-node]"));
+        if (!startButton || !nextButton || !status || !nodes.length) return;
+        const messages = [
+            "",
+            "1 / 6　프론트엔드가 학생이 입력한 답을 읽어 요청 데이터를 만듭니다.",
+            "2 / 6　API 약속에 맞춰 POST 주소와 데이터 형식을 정해 서버로 보냅니다.",
+            "3 / 6　백엔드가 로그인과 권한을 확인하고 답을 채점합니다.",
+            "4 / 6　백엔드가 데이터베이스에서 문제를 읽고 계산한 점수를 저장합니다.",
+            "5 / 6　백엔드가 JSON 형식의 응답을 프론트엔드로 돌려보냅니다.",
+            "6 / 6　프론트엔드가 응답을 읽고 학생 화면에 점수와 결과를 표시합니다."
+        ];
+        let stage = 0;
+
+        const activate = (nextStage) => {
+            stage = nextStage;
+            lab.dataset.stage = String(stage);
+            nodes.forEach((node) => {
+                const stages = node.dataset.stackNode.split(",").map(Number);
+                const selected = stages.includes(stage);
+                node.classList.toggle("is-active", selected);
+                node.setAttribute("aria-pressed", String(selected));
+            });
+            status.textContent = messages[stage];
+            nextButton.disabled = false;
+            nextButton.innerHTML = stage === 6
+                ? "처음부터 <small>Restart</small>"
+                : "다음 단계 <small>Next Step</small>";
+        };
+
+        nodes.forEach((node) => {
+            node.tabIndex = 0;
+            node.setAttribute("role", "button");
+            node.addEventListener("click", (event) => {
+                event.stopPropagation();
+                activate(Number(node.dataset.stackNode.split(",")[0]));
+            });
+            node.addEventListener("keydown", (event) => {
+                if (event.key !== "Enter" && event.key !== " ") return;
+                event.preventDefault();
+                activate(Number(node.dataset.stackNode.split(",")[0]));
+            });
+        });
+        startButton.addEventListener("click", () => activate(1));
+        nextButton.addEventListener("click", () => activate(stage >= 6 ? 1 : stage + 1));
+    }
+
     function renderLesson() {
         document.title = `${lesson.title} | 컴퓨터 원리와 활용`;
         document.getElementById("lessonMeta").textContent = `${lesson.number}차시`;
@@ -1196,8 +1284,11 @@
             <article><span class="concept-number">${index + 1}</span><h3>${detail[0]} <small>${detail[1]}</small></h3><p>${detail[2]}</p></article>
         `).join("");
         conceptOverview.classList.toggle("has-pointer-lab", hasPointerLab);
+        conceptOverview.classList.toggle("has-stack-lab", lesson.id === "h04");
         conceptOverview.hidden = Boolean(lesson.parts?.length);
         if (hasPointerLab) setupPointerConceptLab();
+        setupConceptSequences();
+        setupFullStackLab();
         const devicesMount = document.getElementById("conceptDevices");
         const deviceComparison = lesson.deviceComparison;
         if (deviceComparison?.cards?.length) {

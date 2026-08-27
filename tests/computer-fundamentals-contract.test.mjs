@@ -90,6 +90,33 @@ test("all generated lessons except the direct manipulation lesson use a specific
   }
 });
 
+test("all 36 lessons are covered by a visual teaching mode instead of one repeated card pattern", () => {
+  const directManipulation = ["a05", "b01", "d01", "h04"];
+  const stepSequence = ["a01", "a03", "c01", "c03", "e02", "g03", "h02", "i01", "j01", "j03"];
+  const concreteModel = [
+    "a02", "a04", "b02", "b03", "c02", "c04", "d02", "d03", "e01", "e03", "e04", "e05",
+    "f01", "f02", "f03", "g01", "g02", "h01", "h03", "h05", "i02", "j02"
+  ];
+  const covered = [...directManipulation, ...stepSequence, ...concreteModel].sort();
+  assert.deepEqual(covered, Array.from(allLessons, (lesson) => lesson.id).sort());
+  for (const id of ["c01", "c03", "e02", "g03", "h02", "i01", "j01", "j03"]) {
+    const lesson = generatedLessons.find((item) => item.id === id);
+    assert.match(lesson.visual, /data-concept-sequence/);
+    assert.match(lesson.visual, /data-sequence-next/);
+  }
+  const fullStackLesson = generatedLessons.find((item) => item.id === "h04");
+  assert.match(fullStackLesson.visual, /data-stack-lab/);
+  assert.match(fullStackLesson.visual, /POST \/answers/);
+  assert.match(fullStackLesson.visual, /data-stack-node="6"/);
+  assert.doesNotMatch(fullStackLesson.visual, /class="full-stack-map"/);
+  assert.match(lessonSource, /function setupConceptSequences\(\)/);
+  assert.match(lessonSource, /function setupFullStackLab\(\)/);
+  assert.match(lessonSource, /프론트엔드가 학생이 입력한 답을 읽어 요청 데이터를 만듭니다/);
+  assert.match(lessonStyles, /\.concept-overview\.has-stack-lab \{ grid-template-columns: 1fr; \}/);
+  assert.match(lessonStyles, /\.stack-transaction-lab/);
+  assert.doesNotMatch(lessonStyles, /\.lesson-specific-board \{[\s\S]{0,120}min-height: 330px/);
+});
+
 test("every generated lesson has substantive bilingual content, manipulation, and six questions", () => {
   for (const lesson of generatedLessons) {
     assert.ok(lesson.title && lesson.english, `${lesson.id} needs a bilingual title`);
