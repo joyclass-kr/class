@@ -680,8 +680,8 @@ body {
     .page-toc h2 { margin-bottom: 10px; }
     /* 이솝은 이야기가 서른아홉 편이라 차례가 길다. 세로 화면에서는
        사이와 안쪽 여백을 한 번 더 줄여야 한 칸에 들어간다. */
-    .toc-list { gap: 4px; }
-    .toc-list button { padding: 6px 12px; gap: 9px; }
+    .toc-list { gap: 3px; }
+    .toc-list button { padding: 5px 11px; gap: 8px; }
     /* 세로 화면은 한 쪽만 보이므로 두 칸을 나란히 두면 글줄이 너무 짧아진다.
        위아래로 쌓고, 그림을 조금 줄여 글자리를 넓힌다. */
     .spread-art { flex: 0 0 35%; aspect-ratio: auto; }

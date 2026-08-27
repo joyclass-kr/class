@@ -139,6 +139,22 @@ dynamic staging.
 | `images/story-12-bat-2.webp` | The same bat now baring its teeth and showing its fur to a group of beasts, the birds visible retreating in the background, shifting tides of battle. |
 | `images/story-12-bat-3.webp` | Birds and beasts celebrating together at a joyful feast while the bat slinks away alone toward a dark cave mouth, both groups turning their backs, dusk. |
 
+## 13장 · 말과 당나귀
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-13-horse.webp` | A hot dusty road under a blazing summer sun where a sleek horse walks lightly beside a small donkey buckling under a towering load of sacks, the donkey turning its head to plead. |
+| `images/story-13-horse-2.webp` | The horse tossing its mane and striding ahead with its face turned away while the donkey stumbles behind, knees folding, sacks sliding sideways on the dirt track. |
+| `images/story-13-horse-3.webp` | A roadside where a farmer piles every sack from the collapsed donkey onto the horse's back, the horse's eyes wide with dismay under the doubled load. |
+
+## 14장 · 깃털을 주운 까마귀
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-14-crow.webp` | A woodland clearing where peacocks, parrots and bright birds preen for a beauty contest while a plain black crow stares glumly at its reflection in a pool. |
+| `images/story-14-crow-2.webp` | The crow gathering fallen red, yellow, blue and green feathers from the ground and sticking them all over itself, transformed into a gaudy rainbow bird, comically proud. |
+| `images/story-14-crow-3.webp` | The feast where birds crowd around plucking their own feathers back off the crow one by one, colours falling away, a small plain black bird left standing alone. |
+
 ## 사용 팁
 
 - 이미지가 준비되기 전에도 페이지는 이모지로 예쁘게 보여요. 준비되는 대로 하나씩 교체하면 됩니다.
