@@ -1265,3 +1265,31 @@
     .concept-relationship-board article:not(:last-child)::after,
     .concept-relationship-board article:nth-child(2)::after { content: "↓"; top: auto; right: 50%; bottom: -25px; transform: translateX(50%); }
 }
+/* Final readability pass: two-column concept boards and concrete bilingual examples. */
+.concept-relationship-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.concept-relationship-board article:not(:last-child)::after { display: none; }
+.concept-example-list {
+    display: grid;
+    gap: 7px;
+    margin: 13px 0 0;
+    padding: 11px 12px;
+    border-top: 1px solid #b8d6d9;
+    list-style: none;
+    background: #eefafa;
+}
+.concept-example-list li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    color: #2f2923;
+    font-size: 15px;
+    line-height: 1.4;
+}
+.concept-example-list b { font-weight: 850; }
+.concept-example-list small { color: #006a78; font-size: 12px; font-weight: 750; }
+.comparison-grid dt small { color: #006a78; font-size: 11px; }
+@media (min-width: 1400px) {
+    .concept-relationship-board { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+    .concept-relationship-board { grid-template-columns: 1fr; }
+}

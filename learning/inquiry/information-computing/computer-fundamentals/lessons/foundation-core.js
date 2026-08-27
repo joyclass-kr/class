@@ -14,6 +14,11 @@
         ["J", "알고리즘과 코딩 논리", "Algorithms and Coding Logic"]
     ].map(([code, title, english]) => ({ code, title, english }));
 
+    const imageAsset = (name) => {
+        const courseRoot = typeof document !== "undefined" && document.body?.dataset.courseRoot === "true";
+        return `${courseRoot ? "assets" : "../assets"}/images/${name}`;
+    };
+
     const relationshipVisual = (nodes, caption) => `
         <figure class="concept-relationship-figure">
             <div class="concept-relationship-board" style="--node-count:${nodes.length}">
@@ -22,11 +27,21 @@
                         <span class="relationship-index">${index + 1}</span>
                         <strong>${node[0]} <small>${node[1]}</small></strong>
                         <p>${node[2]}</p>
+                        ${node[3]?.length ? `<ul class="concept-example-list">${node[3].map((example) => `<li><b>${example[0]}</b><small>${example[1]}</small></li>`).join("")}</ul>` : ""}
                     </article>
                 `).join("")}
             </div>
             <figcaption>${caption}</figcaption>
         </figure>`;
+
+    const normalizeStep = (step, index) => {
+        if (Array.isArray(step) && step.length >= 3) return step;
+        if (Array.isArray(step) && step.length === 2) {
+            const numbered = /^\d+$/.test(String(step[0]));
+            return [numbered ? `${index + 1}단계` : step[0], `Step ${index + 1}`, step[1]];
+        }
+        return [`${index + 1}단계`, `Step ${index + 1}`, String(step)];
+    };
 
     const makeLesson = (spec) => ({
         id: spec.id,
@@ -38,11 +53,12 @@
         conceptTitle: spec.concept,
         visual: relationshipVisual(spec.nodes, spec.caption),
         details: spec.details || spec.nodes.map((node) => [node[0], node[1], node[2]]),
+        deviceComparison: spec.deviceComparison,
         workedExample: {
             title: spec.example[0],
             english: spec.example[1],
             intro: spec.example[2],
-            steps: spec.steps
+            steps: spec.steps.map(normalizeStep)
         },
         comparisons: {
             title: spec.compare[0],
@@ -74,6 +90,7 @@
     });
 
     window.COMPUTER_CORE_MODULES = modules;
+    window.COMPUTER_IMAGE_ASSET = imageAsset;
     window.COMPUTER_LESSON_FACTORY = makeLesson;
     window.COMPUTER_FOUNDATION_LESSONS = [];
 })();
