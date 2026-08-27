@@ -112,6 +112,26 @@ assert.equal(fSharpMinor.pages[0].keyLabel, "F♯");
 const gSharpMinor = score.build({ mode:"scale", keyId:"Ab", scaleType:"melodicMinor", hand:"both", tempo:60 });
 assert.equal(gSharpMinor.pages[0].keyLabel, "G♯");
 
+const bFlatMelodic = score.build({ mode:"scale", keyId:"Bb", scaleType:"melodicMinor", hand:"both", tempo:60 });
+const bFlatMinorRight = [2,1,2,3,1,2,3,4,1,2,3,1,2,3,4];
+const bFlatMinorLeft = [2,1,3,2,1,4,3,2,1,3,2,1,4,3,2];
+assert.deepEqual(Array.from(bFlatMelodic.pages[0].up.right, (note) => note.finger), bFlatMinorRight, "B♭ Minor Right Hand 운지는 원본의 두 옥타브 배열과 같아야 합니다.");
+assert.deepEqual(Array.from(bFlatMelodic.pages[0].up.left, (note) => note.finger), bFlatMinorLeft, "B♭ Minor Left Hand 운지는 원본의 두 옥타브 배열과 같아야 합니다.");
+assert.deepEqual(Array.from(bFlatMelodic.pages[0].down.right, (note) => note.finger), bFlatMinorRight.slice().reverse());
+
+const bFlatMajor = score.build({ mode:"scale", keyId:"Bb", scaleType:"major", hand:"both", tempo:60 });
+assert.deepEqual(Array.from(bFlatMajor.pages[0].up.right, (note) => note.finger), [2,1,2,3,4,1,2,3,1,2,3,4,1,2,3], "B♭ Major와 Minor의 Right Hand 운지를 구분해야 합니다.");
+
+Object.keys(data.fingering).forEach((keyId) => {
+    Object.keys(data.scaleTypes).forEach((scaleType) => {
+        const model = score.build({ mode:"scale", keyId, scaleType, hand:"both", tempo:60 });
+        [model.pages[0].up.right, model.pages[0].up.left, model.pages[0].down.right, model.pages[0].down.left].forEach((line) => {
+            assert.equal(line.length, 15, `${keyId} ${scaleType} 운지는 손마다 15개여야 합니다.`);
+            assert.ok(line.every((note) => note.finger >= 1 && note.finger <= 5), `${keyId} ${scaleType} 운지 번호는 1-5여야 합니다.`);
+        });
+    });
+});
+
 const skill2 = score.build({ mode:"voicing", skillId:2, tempo:120 });
 assert.equal(skill2.pages.length, 1);
 assert.equal(skill2.pages[0].groups.length, 12, "Skill 2는 12개 조를 모두 한 악보에 조판해야 합니다.");

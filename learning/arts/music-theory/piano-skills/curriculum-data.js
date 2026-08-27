@@ -27,19 +27,64 @@
         }
     };
 
+    const COMMON_WHITE_FINGERING = {
+        right: [1,2,3,1,2,3,4,1,2,3,1,2,3,4,5],
+        left:  [5,4,3,2,1,3,2,1,4,3,2,1,3,2,1]
+    };
+    const F_FINGERING = {
+        right: [1,2,3,4,1,2,3,4,1,2,3,4,1,2,3],
+        left: COMMON_WHITE_FINGERING.left
+    };
+    const B_FINGERING = {
+        right: COMMON_WHITE_FINGERING.right,
+        left: [4,3,2,1,4,3,2,1,4,3,2,1,4,3,2]
+    };
+    const DB_MAJOR_CSHARP_MINOR_FINGERING = {
+        right: [2,3,1,2,3,4,1,2,3,1,2,3,4,1,2],
+        left:  [3,2,1,4,3,2,1,3,2,1,4,3,2,1,3]
+    };
+    const EB_MAJOR_FINGERING = {
+        right: [3,1,2,3,4,1,2,3,1,2,3,4,1,2,3],
+        left:  [3,2,1,4,3,2,1,3,2,1,4,3,2,1,3]
+    };
+    const EB_MINOR_FINGERING = {
+        right: [2,1,2,3,4,1,2,3,1,2,3,4,1,2,3],
+        left:  [2,1,4,3,2,1,3,2,1,4,3,2,1,3,2]
+    };
+    const GB_MAJOR_FSHARP_MINOR_FINGERING = {
+        right: [2,3,4,1,2,3,1,2,3,4,1,2,3,1,2],
+        left:  [4,3,2,1,3,2,1,4,3,2,1,3,2,1,4]
+    };
+    const AB_MAJOR_FINGERING = {
+        right: [3,4,1,2,3,1,2,3,4,1,2,3,1,2,3],
+        left:  [3,2,1,4,3,2,1,3,2,1,4,3,2,1,3]
+    };
+    const GSHARP_MINOR_FINGERING = {
+        right: [2,3,1,2,3,1,2,3,4,1,2,3,1,2,3],
+        left:  [3,2,1,3,2,1,4,3,2,1,3,2,1,4,3]
+    };
+    const BB_MAJOR_FINGERING = {
+        right: [2,1,2,3,4,1,2,3,1,2,3,4,1,2,3],
+        left:  [3,2,1,4,3,2,1,3,2,1,4,3,2,1,3]
+    };
+    const BB_MINOR_FINGERING = {
+        right: [2,1,2,3,1,2,3,4,1,2,3,1,2,3,4],
+        left:  [2,1,3,2,1,4,3,2,1,3,2,1,4,3,2]
+    };
+
     const FINGERING = {
-        C:  { right: [1, 2, 3, 1, 2, 3, 4, 5], left: [5, 4, 3, 2, 1, 3, 2, 1] },
-        D:  { right: [1, 2, 3, 1, 2, 3, 4, 5], left: [5, 4, 3, 2, 1, 3, 2, 1] },
-        E:  { right: [1, 2, 3, 1, 2, 3, 4, 5], left: [5, 4, 3, 2, 1, 3, 2, 1] },
-        G:  { right: [1, 2, 3, 1, 2, 3, 4, 5], left: [5, 4, 3, 2, 1, 3, 2, 1] },
-        A:  { right: [1, 2, 3, 1, 2, 3, 4, 5], left: [5, 4, 3, 2, 1, 3, 2, 1] },
-        F:  { right: [1, 2, 3, 4, 1, 2, 3, 4], left: [5, 4, 3, 2, 1, 3, 2, 1] },
-        B:  { right: [1, 2, 3, 1, 2, 3, 4, 5], left: [4, 3, 2, 1, 4, 3, 2, 1] },
-        Db: { right: [2, 3, 1, 2, 3, 4, 1, 2], left: [3, 2, 1, 4, 3, 2, 1, 3] },
-        Eb: { right: [3, 1, 2, 3, 4, 1, 2, 3], left: [3, 2, 1, 4, 3, 2, 1, 3] },
-        Gb: { right: [2, 3, 4, 1, 2, 3, 1, 2], left: [4, 3, 2, 1, 3, 2, 1, 4] },
-        Ab: { right: [3, 4, 1, 2, 3, 1, 2, 3], left: [3, 2, 1, 4, 3, 2, 1, 3] },
-        Bb: { right: [2, 1, 2, 3, 4, 1, 2, 3], left: [3, 2, 1, 4, 3, 2, 1, 3] }
+        C:  { major: COMMON_WHITE_FINGERING, minor: COMMON_WHITE_FINGERING },
+        D:  { major: COMMON_WHITE_FINGERING, minor: COMMON_WHITE_FINGERING },
+        E:  { major: COMMON_WHITE_FINGERING, minor: COMMON_WHITE_FINGERING },
+        G:  { major: COMMON_WHITE_FINGERING, minor: COMMON_WHITE_FINGERING },
+        A:  { major: COMMON_WHITE_FINGERING, minor: COMMON_WHITE_FINGERING },
+        F:  { major: F_FINGERING, minor: F_FINGERING },
+        B:  { major: B_FINGERING, minor: B_FINGERING },
+        Db: { major: DB_MAJOR_CSHARP_MINOR_FINGERING, minor: DB_MAJOR_CSHARP_MINOR_FINGERING },
+        Eb: { major: EB_MAJOR_FINGERING, minor: EB_MINOR_FINGERING },
+        Gb: { major: GB_MAJOR_FSHARP_MINOR_FINGERING, minor: GB_MAJOR_FSHARP_MINOR_FINGERING },
+        Ab: { major: AB_MAJOR_FINGERING, minor: GSHARP_MINOR_FINGERING },
+        Bb: { major: BB_MAJOR_FINGERING, minor: BB_MINOR_FINGERING }
     };
 
     const SCALE_LESSONS = [

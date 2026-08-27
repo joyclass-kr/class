@@ -140,10 +140,10 @@
             : ascendingIntervals.slice().reverse();
         const degreesUp = Array.from({ length:15 }, function (_, index) { return index + 1; });
         const degreesDown = degreesUp.slice().reverse();
-        const rightBase = DATA.fingering[key.id].right;
-        const leftBase = DATA.fingering[key.id].left;
-        const rightUpFingers = rightBase.slice(0, -1).concat(rightBase);
-        const leftUpFingers = leftBase.concat(leftBase.slice(1));
+        const fingeringType = settings.scaleType === "major" ? "major" : "minor";
+        const selectedFingering = DATA.fingering[key.id][fingeringType];
+        const rightUpFingers = selectedFingering.right;
+        const leftUpFingers = selectedFingering.left;
         const makeLine = function (intervals, degrees, direction) {
             const rightFingers = direction === "up" ? rightUpFingers : rightUpFingers.slice().reverse();
             const leftFingers = direction === "up" ? leftUpFingers : leftUpFingers.slice().reverse();
