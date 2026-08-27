@@ -49,6 +49,8 @@
         expectedGroups: [],
         collected: new Set(),
         activeNotes: new Set(),
+        midiNotes: new Set(),
+        virtualPointers: new Map(),
         midiAccess: null,
         metronomeTimer: null,
         freeNoteCount: 0,
@@ -187,7 +189,9 @@
         if (state.mode === "scale") {
             elements.scoreCaption.textContent = "Ascending과 Descending을 같은 박으로 연결하고, 손바꿈에서 멈추지 않습니다.";
         } else if (state.mode === "voicing") {
-            elements.scoreCaption.textContent = "Left Hand와 Right Hand의 Voice Leading(성부 진행)을 확인한 뒤 Chord Symbol만 보고 연주합니다.";
+            const page = pages[state.sourcePageIndex];
+            const source = page && page.sourcePage ? "Source p." + page.sourcePage + " · " : "";
+            elements.scoreCaption.textContent = source + "Left Hand와 Right Hand의 Voice Leading(성부 진행)을 먼저 확인하고, 각 Bar를 끊지 않고 연결합니다.";
         } else {
             elements.scoreCaption.textContent = "설명을 읽은 뒤 해당 단계의 연습에 적용합니다.";
         }
@@ -226,9 +230,9 @@
         if (state.mode === "scale") {
             const type = DATA.scaleTypes[state.scaleType];
             const lesson = scaleLesson();
-            const stage = lesson.id === "scale-white" ? "1. 흰건반 시작 · Common Fingering"
-                : lesson.id === "scale-exceptions" ? "1-1. 흰건반 시작 · Exception Fingering"
-                : "2. 검은건반 시작";
+            const stage = lesson.id === "scale-white" ? "1. Common Fingering Keys"
+                : lesson.id === "scale-exceptions" ? "1-1. Exception Fingering Keys"
+                : "2. Black-key-start Keys";
             elements.exerciseEyebrow.textContent = stage;
             elements.exerciseTitle.textContent = scaleRootLabel() + " " + type.label;
             elements.exerciseSummary.textContent = lesson.summary;
@@ -296,6 +300,11 @@
             });
         }
         const page = state.scoreModel.pages[state.sourcePageIndex];
+        if (page && page.audioEvents) {
+            return page.audioEvents.map(function (event) {
+                return { label:event.label, notes:event.notes };
+            });
+        }
         if (!page || !page.groups) return [];
         return page.groups.map(function (group) {
             return {
@@ -388,12 +397,20 @@
     function listen() {
         const groups = currentScoreGroups();
         if (!groups.length) return;
+        const page = state.scoreModel && state.scoreModel.pages[state.sourcePageIndex];
+        const sourceEvents = state.mode === "voicing" && page && page.audioEvents ? page.audioEvents : null;
         const gap = state.mode === "scale" ? 30 / state.tempo : 60 / state.tempo;
         elements.listenButton.disabled = true;
-        setFeedback("현재 조판 악보의 음을 샘플 피아노로 재생합니다.");
-        window.PianoSampler.playSequence(groups.map(function (group) { return group.notes; }), gap)
+        setFeedback(sourceEvents ? "원본의 Note Value와 Voice Leading으로 현재 악보를 재생합니다." : "현재 조판 악보의 음을 샘플 피아노로 재생합니다.");
+        const playback = sourceEvents
+            ? window.PianoSampler.playTimeline(sourceEvents, 60 / state.tempo)
+            : window.PianoSampler.playSequence(groups.map(function (group) { return group.notes; }), gap);
+        const playbackSeconds = sourceEvents
+            ? Math.max.apply(Math, sourceEvents.map(function (event) { return event.at + event.beats; })) * 60 / state.tempo
+            : groups.length * gap;
+        playback
             .then(function () {
-                window.setTimeout(function () { renderTransport(); }, Math.ceil(groups.length * gap * 1000));
+                window.setTimeout(function () { renderTransport(); }, Math.ceil(playbackSeconds * 1000));
             })
             .catch(function () {
                 renderTransport();
@@ -431,8 +448,8 @@
     }
 
     function buildMiniKeyboard() {
-        const start = 36;
-        const end = 84;
+        const start = 48;
+        const end = 72;
         let whiteCount = 0;
         for (let midi = start; midi <= end; midi += 1) {
             if (!BLACK_PCS.has(midi % 12)) whiteCount += 1;
@@ -441,10 +458,13 @@
         const blackWidth = whiteWidth * .64;
         let whiteIndex = 0;
         for (let midi = start; midi <= end; midi += 1) {
-            const key = document.createElement("span");
+            const key = document.createElement("button");
             const black = BLACK_PCS.has(midi % 12);
+            key.type = "button";
             key.className = "piano-key " + (black ? "black" : "white");
             key.dataset.midi = String(midi);
+            key.setAttribute("aria-label", midiName(midi, "flat") + " 연주");
+            key.title = midiName(midi, "flat");
             if (black) {
                 key.style.left = (whiteIndex * whiteWidth - blackWidth / 2) + "%";
                 key.style.width = blackWidth + "%";
@@ -453,8 +473,54 @@
                 key.style.width = whiteWidth + "%";
                 whiteIndex += 1;
             }
+            key.addEventListener("pointerdown", handleVirtualKeyDown);
+            key.addEventListener("pointerup", releaseVirtualKey);
+            key.addEventListener("pointercancel", releaseVirtualKey);
+            key.addEventListener("lostpointercapture", releaseVirtualKey);
+            key.addEventListener("click", function (event) {
+                if (event.detail !== 0) return;
+                const sourceId = "keyboard-" + midi;
+                activateVirtualNote(midi, sourceId);
+                window.setTimeout(function () { releaseVirtualNote(sourceId); }, 180);
+            });
             elements.miniKeyboard.appendChild(key);
         }
+    }
+
+    function virtualNoteIsHeld(midi) {
+        return Array.from(state.virtualPointers.values()).includes(midi);
+    }
+
+    function activateVirtualNote(midi, sourceId) {
+        if (state.virtualPointers.has(sourceId)) return;
+        state.virtualPointers.set(sourceId, midi);
+        state.activeNotes.add(midi);
+        updateKeyboard();
+        assessNote(midi);
+        window.PianoSampler.playMidi(midi, { volume:.11 }).catch(function () {
+            setFeedback("피아노 소리를 불러오지 못했습니다. 입력 판정은 계속 사용할 수 있습니다.", "error");
+        });
+    }
+
+    function releaseVirtualNote(sourceId) {
+        const midi = state.virtualPointers.get(sourceId);
+        if (typeof midi !== "number") return;
+        state.virtualPointers.delete(sourceId);
+        if (!virtualNoteIsHeld(midi) && !state.midiNotes.has(midi)) state.activeNotes.delete(midi);
+        updateKeyboard();
+    }
+
+    function handleVirtualKeyDown(event) {
+        if (event.pointerType === "mouse" && event.button !== 0) return;
+        event.preventDefault();
+        const key = event.currentTarget;
+        const sourceId = "pointer-" + event.pointerId;
+        activateVirtualNote(Number(key.dataset.midi), sourceId);
+        if (typeof key.setPointerCapture === "function") key.setPointerCapture(event.pointerId);
+    }
+
+    function releaseVirtualKey(event) {
+        releaseVirtualNote("pointer-" + event.pointerId);
     }
 
     function updateKeyboard() {
@@ -462,7 +528,7 @@
             key.classList.toggle("is-active", state.activeNotes.has(Number(key.dataset.midi)));
         });
         if (!state.activeNotes.size) {
-            elements.noteReadout.textContent = "건반을 누르면 음이 표시됩니다.";
+            elements.noteReadout.textContent = "화면 건반을 누르거나 MIDI 건반을 연주하세요.";
             return;
         }
         const spelling = state.mode === "scale" ? keyById(state.scaleKeyId).spelling : "flat";
@@ -475,12 +541,14 @@
         const midi = event.data[1];
         const velocity = event.data[2] || 0;
         if (command === 0x90 && velocity > 0) {
+            state.midiNotes.add(midi);
             state.activeNotes.add(midi);
             updateKeyboard();
             assessNote(midi);
             window.PianoSampler.playMidi(midi, { volume: Math.max(.045, velocity / 760) }).catch(function () {});
         } else if (command === 0x80 || (command === 0x90 && velocity === 0)) {
-            state.activeNotes.delete(midi);
+            state.midiNotes.delete(midi);
+            if (!virtualNoteIsHeld(midi)) state.activeNotes.delete(midi);
             updateKeyboard();
         }
     }
@@ -575,10 +643,12 @@
     });
     elements.previousPageButton.addEventListener("click", function () {
         state.sourcePageIndex -= 1;
+        resetPractice();
         renderScore();
     });
     elements.nextPageButton.addEventListener("click", function () {
         state.sourcePageIndex += 1;
+        resetPractice();
         renderScore();
     });
     elements.tempo.addEventListener("input", function () {

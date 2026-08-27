@@ -3,6 +3,7 @@
 
     const DATA = window.PianoSkillsData;
     const SOURCE = window.PianoSourceCatalog;
+    const SOURCE_SCORES = window.PianoVoicingSourceData;
     const ROOT_NAMES = ["C", "F", "Bb", "Eb", "Ab", "Db", "F#", "B", "E", "A", "D", "G"];
     const ROOT_LABELS = ["C", "F", "B♭", "E♭", "A♭", "D♭", "F♯", "B", "E", "A", "D", "G"];
     const ROOT_MIDIS = [60, 65, 58, 63, 68, 61, 66, 59, 64, 69, 62, 67];
@@ -175,6 +176,7 @@
                 kind:"scale",
                 up:up,
                 down:down,
+                hand:settings.hand,
                 keyLabel:displayRoot(rootName),
                 typeLabel:SCALE_PAGE_LABELS[settings.scaleType],
                 keySignature:settings.scaleType === "major" ? rootName : MINOR_KEY_SIGNATURES[rootName]
@@ -501,6 +503,9 @@
 
     function buildSkill(skillId) {
         if (skillId <= 20) return buildFoundationSkill(skillId);
+        if (SOURCE_SCORES && SOURCE_SCORES.skills && SOURCE_SCORES.skills[String(skillId)]) {
+            return buildSourceSkill(skillId);
+        }
         if (skillId <= 32) return buildDiatonicSkill(skillId);
         if (skillId <= 36) return buildSimpleCycleSkill(skillId);
         if (skillId <= 39) return buildLinkedCycleSkill(skillId);
@@ -508,6 +513,209 @@
         if (skillId <= 60) return buildModalAndProgressionSkill(skillId);
         if (skillId <= 108) return buildBluesSkill(skillId);
         return buildAdvancedDominantSkill(skillId);
+    }
+
+    function sourceMeasureWeight(measure) {
+        return Math.max(
+            1,
+            measure.right.reduce(function (sum, event) { return sum + (event.rest ? .5 : 1); }, 0),
+            measure.left.reduce(function (sum, event) { return sum + (event.rest ? .5 : 1); }, 0)
+        );
+    }
+
+    function reflowSourceSystems(systems) {
+        const result = [];
+        systems.forEach(function (system) {
+            const weight = system.reduce(function (sum, measure) { return sum + sourceMeasureWeight(measure); }, 0);
+            if (system.length <= 6 && weight <= 10) {
+                result.push(system);
+                return;
+            }
+            let current = [];
+            let currentWeight = 0;
+            system.forEach(function (measure) {
+                const measureWeight = sourceMeasureWeight(measure);
+                if (current.length && (current.length >= 6 || currentWeight + measureWeight > 10)) {
+                    result.push(current);
+                    current = [];
+                    currentWeight = 0;
+                }
+                current.push(measure);
+                currentWeight += measureWeight;
+            });
+            if (current.length) result.push(current);
+        });
+        return result;
+    }
+
+    function sourceAudioGroups(pages) {
+        const groups = [];
+        pages.forEach(function (page) {
+            page.systems.flat().forEach(function (measure) {
+                const onsets = Array.from(new Set(measure.right.concat(measure.left).map(function (event) {
+                    return event.at;
+                }))).sort(function (a, b) { return a - b; });
+                onsets.forEach(function (onset) {
+                    const notes = measure.right.concat(measure.left)
+                        .filter(function (event) { return event.at === onset && !event.rest; })
+                        .flatMap(function (event) { return event.midis || []; });
+                    if (notes.length) groups.push(Array.from(new Set(notes)).sort(function (a, b) { return a - b; }));
+                });
+            });
+        });
+        return groups;
+    }
+
+    function durationBeats(duration) {
+        const base = { w:4, h:2, q:1, "8":.5, "16":.25 }[String(duration).replace(/d/g, "")] || 1;
+        const dots = (String(duration).match(/d/g) || []).length;
+        let total = base;
+        let addition = base / 2;
+        for (let index = 0; index < dots; index += 1) {
+            total += addition;
+            addition /= 2;
+        }
+        return total;
+    }
+
+    function sourcePageAudioEvents(systems) {
+        const events = [];
+        let measureStart = 0;
+        let displayMeasure = 1;
+        systems.flat().forEach(function (measure) {
+            const hands = [measure.right, measure.left];
+            const beatByOnset = new Map();
+            hands.forEach(function (hand) {
+                let beat = 0;
+                hand.forEach(function (event) {
+                    if (!beatByOnset.has(event.at) || beat < beatByOnset.get(event.at)) beatByOnset.set(event.at, beat);
+                    beat += durationBeats(event.d);
+                });
+            });
+            Array.from(beatByOnset.keys()).sort(function (a, b) { return a - b; }).forEach(function (onset, eventIndex) {
+                const attacks = measure.right.concat(measure.left).filter(function (event) {
+                    return event.at === onset && !event.rest;
+                });
+                const notes = Array.from(new Set(attacks.flatMap(function (event) {
+                    return event.midis || [];
+                }))).sort(function (a, b) { return a - b; });
+                if (!notes.length) return;
+                events.push({
+                    at:measureStart + beatByOnset.get(onset),
+                    beats:Math.max.apply(Math, attacks.map(function (event) { return durationBeats(event.d); })),
+                    notes:notes,
+                    label:"Bar " + displayMeasure + (eventIndex ? " · Beat " + (eventIndex + 1) : "")
+                });
+            });
+            const timeParts = String(measure.time || "4/4").split("/").map(Number);
+            measureStart += (timeParts[0] || 4) * (4 / (timeParts[1] || 4));
+            displayMeasure += 1;
+        });
+        return events;
+    }
+
+    function transposeChordSymbol(symbol, semitones, preferSharp) {
+        const match = symbol.match(/^([A-G])([♭♯]?)(.*)$/);
+        if (!match) return symbol;
+        const sourceName = match[1] + (match[2] === "♭" ? "b" : match[2] === "♯" ? "#" : "");
+        const pc = mod(parseRoot(sourceName).pc + semitones, 12);
+        return displayRoot(rootNameAtPc(pc, preferSharp)) + match[3];
+    }
+
+    function sourceAttackLabels(skillId) {
+        if (skillId >= 85 && skillId <= 96) {
+            const template = [
+                "CΔ","Bm7♭5","E7♭9","Am7","D9","Gm7","C9","FΔ","Fm7","B♭9","Em7",
+                "A9","E♭m7","A♭9","Dm7","G9","A♭m9","D♭13","CΔ","A7♭9","Dm7","G7♭9"
+            ];
+            const tonic = ROOT_NAMES[skillId - 85];
+            const semitones = parseRoot(tonic).pc;
+            const preferSharp = tonic.includes("#") || ["B","E","A","D","G"].includes(tonic);
+            return template.map(function (symbol) { return transposeChordSymbol(symbol, semitones, preferSharp); });
+        }
+        if (skillId >= 97 && skillId <= 108) {
+            const template = [
+                "Cm9","Fm6/9","Cm9","C7♯5♯9","Fm6/9","B♭13",
+                "E♭Δ13","A♭Δ13","Dm7♭5","G7♯5♯9","Cm9","G7♯5♯9"
+            ];
+            const tonic = ["C","F","Bb","Eb","G#","C#","F#","B","E","A","D","G"][skillId - 97];
+            const semitones = parseRoot(tonic).pc;
+            const preferSharp = tonic.includes("#") || ["B","E","A","D","G"].includes(tonic);
+            return template.map(function (symbol) { return transposeChordSymbol(symbol, semitones, preferSharp); });
+        }
+        if (skillId >= 118 && skillId <= 123) {
+            const transposition = (skillId - 118) % 3;
+            const pairs = [
+                [["C7","FΔ"],["E♭7","A♭Δ"],["F♯7","BΔ"],["A7","DΔ"]],
+                [["D♭7","G♭Δ"],["E7","AΔ"],["G7","CΔ"],["B♭7","E♭Δ"]],
+                [["D7","GΔ"],["F7","B♭Δ"],["A♭7","D♭Δ"],["B7","EΔ"]]
+            ][transposition];
+            const labels = [];
+            pairs.forEach(function (pair) {
+                labels.push(pair[0], "", "", "", pair[1], pair[0], "", "", "", pair[1]);
+            });
+            return skillId <= 120 ? labels.concat(labels) : labels;
+        }
+        return [];
+    }
+
+    function cloneSourceSystems(systems) {
+        return systems.map(function (system) {
+            return system.map(function (measure) {
+                return Object.assign({}, measure, {
+                    right:measure.right.map(function (event) { return Object.assign({}, event); }),
+                    left:measure.left.map(function (event) { return Object.assign({}, event); })
+                });
+            });
+        });
+    }
+
+    function applySourceAttackLabels(systems, labels, startIndex) {
+        let labelIndex = startIndex;
+        systems.flat().forEach(function (measure) {
+            const onsets = Array.from(new Set(measure.right.concat(measure.left).map(function (event) {
+                return event.at;
+            }))).sort(function (a, b) { return a - b; });
+            onsets.forEach(function (onset) {
+                const label = labels[labelIndex] || "";
+                const target = measure.right.find(function (event) { return event.at === onset && !event.rest; })
+                    || measure.left.find(function (event) { return event.at === onset && !event.rest; });
+                if (target && label) target.label = label;
+                labelIndex += 1;
+            });
+        });
+        return labelIndex;
+    }
+
+    function buildSourceSkill(skillId) {
+        const source = SOURCE_SCORES.skills[String(skillId)];
+        const skill = SOURCE.skills[skillId - 1];
+        const labels = sourceAttackLabels(skillId);
+        let labelIndex = 0;
+        const pages = [];
+        source.pages.forEach(function (sourcePage) {
+            const sourceSystems = cloneSourceSystems(sourcePage.systems);
+            labelIndex = applySourceAttackLabels(sourceSystems, labels, labelIndex);
+            const systems = reflowSourceSystems(sourceSystems);
+            for (let index = 0; index < systems.length; index += 4) {
+                const pageSystems = systems.slice(index, index + 4);
+                pages.push({
+                    kind:"source-chords",
+                    skillId:skillId,
+                    sectionLabel:"Skill " + skillId + " · " + skill.title,
+                    sourcePage:sourcePage.sourcePage,
+                    part:Math.floor(index / 4) + 1,
+                    partCount:Math.ceil(systems.length / 4),
+                    systems:pageSystems,
+                    audioEvents:sourcePageAudioEvents(pageSystems)
+                });
+            }
+        });
+        return {
+            kind:"source-chords",
+            pages:pages,
+            audioGroups:sourceAudioGroups(pages)
+        };
     }
 
     function staveNote(VF, clef, specs, duration, stemDirection) {
@@ -582,6 +790,116 @@
         }
     }
 
+    function sourceStaveNote(VF, event, clef, stemDirection) {
+        const duration = event.d + (event.rest ? "r" : "");
+        const note = new VF.StaveNote({
+            clef:clef,
+            keys:event.rest ? [clef === "treble" ? "b/4" : "d/3"] : event.keys,
+            duration:duration,
+            stem_direction:stemDirection
+        });
+        (event.acc || []).forEach(function (accidental, index) {
+            if (accidental) note.addModifier(new VF.Accidental(accidental), index);
+        });
+        if (event.label) {
+            note.addModifier(
+                new VF.Annotation(event.label)
+                    .setFont("Inter, Arial, sans-serif", 12, "600")
+                    .setVerticalJustification(VF.Annotation.VerticalJustify.TOP),
+                0
+            );
+        }
+        return note;
+    }
+
+    function drawSourceVoice(VF, context, stave, events, clef, stemDirection, time) {
+        if (!events.length) return;
+        const notes = events.map(function (event) {
+            return sourceStaveNote(VF, event, clef, stemDirection);
+        });
+        const timeParts = String(time || "4/4").split("/").map(Number);
+        const voice = new VF.Voice({
+            num_beats:timeParts[0] || 4,
+            beat_value:timeParts[1] || 4
+        }).setStrict(false).addTickables(notes);
+        new VF.Formatter().joinVoices([voice]).formatToStave([voice], stave);
+        voice.draw(context, stave);
+    }
+
+    function drawSourceMeasure(VF, context, measure, x, y, width, firstInSystem, firstOnPage) {
+        const treble = new VF.Stave(x, y, width);
+        const bass = new VF.Stave(x, y + 66, width);
+        if (firstInSystem) {
+            treble.addClef("treble");
+            bass.addClef("bass");
+            if (firstOnPage && measure.time) treble.addTimeSignature(measure.time);
+        }
+        treble.setContext(context).draw();
+        bass.setContext(context).draw();
+        if (firstInSystem) {
+            new VF.StaveConnector(treble, bass)
+                .setType(VF.StaveConnector.type.BRACE)
+                .setContext(context)
+                .draw();
+            new VF.StaveConnector(treble, bass)
+                .setType(VF.StaveConnector.type.SINGLE_LEFT)
+                .setContext(context)
+                .draw();
+        }
+        drawSourceVoice(VF, context, treble, measure.right, "treble", 1, measure.time);
+        drawSourceVoice(VF, context, bass, measure.left, "bass", -1, measure.time);
+    }
+
+    function renderSourceChordPage(container, page, options) {
+        const VF = window.Vex.Flow;
+        const width = 1200;
+        const systemHeight = 154;
+        const height = 106 + page.systems.length * systemHeight;
+        const renderer = new VF.Renderer(container, VF.Renderer.Backends.SVG);
+        renderer.resize(width, height);
+        const context = renderer.getContext();
+        context.setFillStyle("#17201d");
+        context.setStrokeStyle("#17201d");
+        context.setFont("Inter, Arial, sans-serif", 18, "700");
+        context.fillText(page.sectionLabel, 34, 29);
+        context.setFont("Inter, Arial, sans-serif", 12, "500");
+        const sourceLabel = "Source p." + page.sourcePage + (page.partCount > 1 ? " · Part " + page.part + "/" + page.partCount : "");
+        context.fillText(sourceLabel, 34, 50);
+        context.setFont("Inter, Arial, sans-serif", 14, "600");
+        context.fillText("♩ = " + options.tempo, 1080, 31);
+
+        page.systems.forEach(function (system, systemIndex) {
+            const y = 98 + systemIndex * systemHeight;
+            const left = 38;
+            const available = 1124;
+            const weights = system.map(sourceMeasureWeight);
+            const totalWeight = weights.reduce(function (sum, weight) { return sum + weight; }, 0);
+            let x = left;
+            system.forEach(function (measure, measureIndex) {
+                const isFirst = measureIndex === 0;
+                const proportional = available * weights[measureIndex] / totalWeight;
+                const measureWidth = proportional + (isFirst ? 24 : 0);
+                drawSourceMeasure(
+                    VF,
+                    context,
+                    measure,
+                    x,
+                    y,
+                    measureWidth,
+                    isFirst,
+                    systemIndex === 0 && isFirst
+                );
+                x += measureWidth;
+            });
+        });
+        const svg = container.querySelector("svg");
+        if (svg) {
+            svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+            svg.setAttribute("preserveAspectRatio", "xMidYMin meet");
+            svg.setAttribute("aria-label", page.sectionLabel + " · Source page " + page.sourcePage);
+        }
+    }
+
     function scaleStaveNotes(VF, specs, clef, stemDirection, fingerPosition) {
         return specs.map(function (spec, index) {
             const duration = index === specs.length - 1 ? "q" : "8";
@@ -616,22 +934,27 @@
         }).filter(Boolean);
     }
 
-    function drawScaleSystem(VF, context, line, y, label, ascending) {
+    function drawScaleSystem(VF, context, line, y, label, ascending, hand) {
         const width = 1080;
         const stave = new VF.Stave(76, y, width).addClef("treble");
         stave.setContext(context).draw();
         context.setFont("Inter, Arial, sans-serif", 14, "700");
         context.fillText(label, 18, y + 48);
-        const rightNotes = scaleStaveNotes(VF, line.right, "treble", 1, VF.Annotation.VerticalJustify.TOP);
-        const leftNotes = scaleStaveNotes(VF, line.left, "treble", -1, VF.Annotation.VerticalJustify.BOTTOM);
-        const rightBeams = buildFingeringBeams(VF, rightNotes, line.right, ascending);
-        const leftBeams = buildFingeringBeams(VF, leftNotes, line.left, !ascending);
-        const rightVoice = new VF.Voice({ num_beats:8, beat_value:4 }).addTickables(rightNotes);
-        const leftVoice = new VF.Voice({ num_beats:8, beat_value:4 }).addTickables(leftNotes);
-        new VF.Formatter().joinVoices([rightVoice, leftVoice]).format([rightVoice, leftVoice], width - 100);
-        rightVoice.draw(context, stave);
-        leftVoice.draw(context, stave);
-        rightBeams.concat(leftBeams).forEach(function (beam) {
+        const voices = [];
+        const beams = [];
+        if (hand !== "left") {
+            const rightNotes = scaleStaveNotes(VF, line.right, "treble", 1, VF.Annotation.VerticalJustify.TOP);
+            beams.push.apply(beams, buildFingeringBeams(VF, rightNotes, line.right, ascending));
+            voices.push(new VF.Voice({ num_beats:8, beat_value:4 }).addTickables(rightNotes));
+        }
+        if (hand !== "right") {
+            const leftNotes = scaleStaveNotes(VF, line.left, "treble", -1, VF.Annotation.VerticalJustify.BOTTOM);
+            beams.push.apply(beams, buildFingeringBeams(VF, leftNotes, line.left, !ascending));
+            voices.push(new VF.Voice({ num_beats:8, beat_value:4 }).addTickables(leftNotes));
+        }
+        new VF.Formatter().joinVoices(voices).format(voices, width - 100);
+        voices.forEach(function (voice) { voice.draw(context, stave); });
+        beams.forEach(function (beam) {
             beam.setContext(context).draw();
         });
     }
@@ -646,16 +969,17 @@
         context.setFillStyle("#17201d");
         context.setStrokeStyle("#17201d");
         context.setFont("Inter, Arial, sans-serif", 20, "700");
-        context.fillText(page.keyLabel + " " + page.typeLabel + " · Both Hands · Two Octaves", 34, 30);
+        const handLabel = { both:"Both Hands", right:"Right Hand", left:"Left Hand" }[page.hand] || "Both Hands";
+        context.fillText(page.keyLabel + " " + page.typeLabel + " · " + handLabel + " · Two Octaves", 34, 30);
         context.setFont("Inter, Arial, sans-serif", 12, "500");
         context.fillText("Right Hand: upper voice · Left Hand: lower voice · Fingering numbers", 34, 52);
-        drawScaleSystem(VF, context, page.up, 88, "Ascending", true);
-        drawScaleSystem(VF, context, page.down, 340, "Descending", false);
+        drawScaleSystem(VF, context, page.up, 88, "Ascending", true, page.hand);
+        drawScaleSystem(VF, context, page.down, 340, "Descending", false, page.hand);
         const svg = container.querySelector("svg");
         if (svg) {
             svg.setAttribute("viewBox", "0 0 " + width + " " + height);
             svg.setAttribute("preserveAspectRatio", "xMidYMin meet");
-            svg.setAttribute("aria-label", page.keyLabel + " " + page.typeLabel + " Both Hands Two Octaves");
+            svg.setAttribute("aria-label", page.keyLabel + " " + page.typeLabel + " " + handLabel + " Two Octaves");
         }
     }
 
@@ -694,6 +1018,7 @@
         try {
             if (page.kind === "scale") renderScalePage(container, page);
             else if (page.kind === "reference") renderReferencePage(container, page);
+            else if (page.kind === "source-chords") renderSourceChordPage(container, page, options);
             else renderChordPage(container, page, options);
         } catch (error) {
             container.replaceChildren();

@@ -98,5 +98,24 @@
         });
     }
 
-    window.PianoSampler = { preload: preload, playMidi: playMidi, playSequence: playSequence };
+    function playTimeline(events, beatSeconds) {
+        return preload().then(function () {
+            const ctx = audioContext();
+            const start = ctx.currentTime + .06;
+            events.forEach(function (event) {
+                const size = Math.max(1, event.notes.length);
+                const volume = Math.min(.13, .22 / Math.sqrt(size));
+                event.notes.forEach(function (midi) {
+                    playLoaded(
+                        midi,
+                        start + event.at * beatSeconds,
+                        Math.max(.24, event.beats * beatSeconds * .86),
+                        volume
+                    );
+                });
+            });
+        });
+    }
+
+    window.PianoSampler = { preload: preload, playMidi: playMidi, playSequence: playSequence, playTimeline: playTimeline };
 })();

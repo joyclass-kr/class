@@ -6,13 +6,14 @@
     <meta name="theme-color" content="#071816">
     <title>Piano Scales · Voicings</title>
     <meta name="description" content="Piano Scale Fingering과 Jazz Piano Voicing Skills 1–123 MIDI 단계 연습">
-    <link rel="stylesheet" href="styles.css?v=20260827-1">
+    <link rel="stylesheet" href="styles.css?v=20260827-3">
     <script src="vendor/vexflow-4.2.2.js" defer></script>
-    <script src="piano-sampler.js?v=20260826-1" defer></script>
-    <script src="curriculum-data.js?v=20260827-2" defer></script>
-    <script src="source-catalog.js?v=20260827-1" defer></script>
-    <script src="engraved-score.js?v=20260827-3" defer></script>
-    <script src="app.js?v=20260827-2" defer></script>
+    <script src="piano-sampler.js?v=20260827-2" defer></script>
+    <script src="curriculum-data.js?v=20260827-3" defer></script>
+    <script src="source-catalog.js?v=20260827-2" defer></script>
+    <script src="voicing-source-data.js?v=20260827-1" defer></script>
+    <script src="engraved-score.js?v=20260827-4" defer></script>
+    <script src="app.js?v=20260827-4" defer></script>
 </head>
 <body>
     <header class="app-header">
@@ -37,34 +38,34 @@
         <section class="practice-card" aria-labelledby="exerciseTitle">
             <div class="exercise-heading">
                 <div>
-                    <span id="exerciseEyebrow" class="eyebrow">1. 흰건반 시작 · Common Fingering</span>
+                    <span id="exerciseEyebrow" class="eyebrow">1. Common Fingering Keys</span>
                     <h1 id="exerciseTitle">C Major Scale</h1>
                     <p id="exerciseSummary">C·D·E·G·A는 같은 손바꿈 골격으로 먼저 익힙니다.</p>
                 </div>
             </div>
 
-            <div id="scaleControls" class="scale-controls" aria-label="스케일 선택">
+            <div id="scaleControls" class="scale-controls" aria-label="Scale 선택">
                 <div class="key-family-grid">
                     <fieldset class="choice-group">
-                        <legend><strong>1. 흰건반 시작</strong><span>Common Fingering</span></legend>
+                        <legend><strong>1. Common Fingering Keys</strong><span>C·D·E·G·A</span></legend>
                         <div id="whiteKeyChoices" class="choice-buttons five-choices"></div>
                     </fieldset>
                     <fieldset class="choice-group exception-group">
-                        <legend><strong>1-1. 예외</strong><span>F Right Hand · B Left Hand</span></legend>
+                        <legend><strong>1-1. Exception Fingering</strong><span>F Right Hand · B Left Hand</span></legend>
                         <div id="exceptionKeyChoices" class="choice-buttons two-choices"></div>
                     </fieldset>
                     <fieldset class="choice-group">
-                        <legend><strong>2. 검은건반 시작</strong><span>2·3번 출발, 엄지는 흰건반</span></legend>
+                        <legend><strong>2. Black-key-start Keys</strong><span>Finger 2·3으로 시작 · Thumb는 White Key</span></legend>
                         <div id="blackKeyChoices" class="choice-buttons five-choices"></div>
                     </fieldset>
                 </div>
                 <div class="scale-option-grid">
                     <fieldset class="choice-group compact-choice-group">
-                        <legend><strong>Scale</strong><span>3rd·6th·7th의 차이를 비교</span></legend>
+                        <legend><strong>Scale Type</strong><span>3rd·6th·7th를 비교</span></legend>
                         <div id="scaleTypeChoices" class="choice-buttons four-choices"></div>
                     </fieldset>
                     <fieldset class="choice-group compact-choice-group">
-                        <legend><strong>Hands</strong><span>한 손씩 익힌 뒤 두 손을 함께</span></legend>
+                        <legend><strong>Hands</strong><span>한 손씩 익힌 뒤 Both Hands</span></legend>
                         <div id="handChoices" class="choice-buttons three-choices"></div>
                     </fieldset>
                 </div>
@@ -104,23 +105,9 @@
                 <p id="scoreCaption" class="score-caption"></p>
             </section>
 
-            <details id="lessonNotes" class="lesson-notes" open>
-                <summary id="lessonNotesTitle">이 단계의 기본 개념과 연습 방법</summary>
-                <div class="notes-grid">
-                    <section>
-                        <h2>기본 개념</h2>
-                        <ul id="conceptList"></ul>
-                    </section>
-                    <section>
-                        <h2>연습 방법</h2>
-                        <ol id="practiceList"></ol>
-                    </section>
-                </div>
-            </details>
-
             <div id="practiceDock" class="practice-dock">
                 <div class="tempo-control">
-                    <label for="tempo">빠르기 <strong><output id="tempoOutput">60</output> BPM</strong></label>
+                    <label for="tempo">Tempo <strong><output id="tempoOutput">60</output> BPM</strong></label>
                     <input id="tempo" type="range" min="40" max="160" step="2" value="60">
                 </div>
                 <div class="transport" aria-label="연습 재생">
@@ -132,19 +119,33 @@
                 <p id="feedback" class="feedback" aria-live="polite">악보를 보고 먼저 한 손씩 연습하세요.</p>
             </div>
 
+            <details id="lessonNotes" class="lesson-notes" open>
+                <summary id="lessonNotesTitle">이 단계의 기본 개념과 연습 방법</summary>
+                <div class="notes-grid">
+                    <section>
+                        <h2>기본 개념 · Concepts</h2>
+                        <ul id="conceptList"></ul>
+                    </section>
+                    <section>
+                        <h2>연습 방법 · Practice</h2>
+                        <ol id="practiceList"></ol>
+                    </section>
+                </div>
+            </details>
+
             <section id="midiMonitor" class="midi-monitor" aria-labelledby="midiMonitorTitle">
                 <header>
                     <div>
-                        <span class="eyebrow">미디 건반</span>
-                        <h2 id="midiMonitorTitle">건반 입력 확인</h2>
+                        <span class="eyebrow">MIDI Keyboard</span>
+                        <h2 id="midiMonitorTitle">Keyboard Input</h2>
                     </div>
                     <span id="midiStatus">연결된 MIDI 건반 없음</span>
                 </header>
                 <div class="monitor-body">
-                    <div id="noteReadout" class="note-readout">건반을 누르면 음이 표시됩니다.</div>
-                    <div id="miniKeyboard" class="mini-keyboard" aria-label="입력 확인용 축소 건반"></div>
+                    <div id="noteReadout" class="note-readout">화면 건반을 누르거나 MIDI 건반을 연주하세요.</div>
+                    <div id="miniKeyboard" class="mini-keyboard" aria-label="Mouse·touch와 MIDI 입력용 축소 건반"></div>
                 </div>
-                <p>이 건반 그림은 입력 확인용이며 실물 크기가 아닙니다. 크롬북·아이패드·PC에서는 M-Audio, Keystation 같은 USB MIDI 건반의 실제 건반으로 연주하세요.</p>
+                <p>화면 건반은 mouse·touch용 2-octave 입력 건반이며 실물 크기가 아닙니다. M-Audio, Keystation 같은 USB MIDI 건반은 전체 음역으로 연주할 수 있습니다.</p>
             </section>
         </section>
     </main>

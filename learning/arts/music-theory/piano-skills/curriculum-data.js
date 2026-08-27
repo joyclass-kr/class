@@ -109,7 +109,7 @@
             id: "scale-white",
             title: "White-key Starts",
             eyebrow: "C·D·E·G·A",
-            summary: "다섯 Keys는 Common Fingering Pattern으로 먼저 묶어서 익힙니다.",
+            summary: "C·D·E·G·A는 Common Fingering Pattern으로 먼저 묶어서 익힙니다.",
             keys: ["C", "D", "E", "G", "A"],
             concepts: [
                 "Right Hand Ascending의 기본 Pattern은 1-2-3 | 1-2-3-4-5입니다.",
