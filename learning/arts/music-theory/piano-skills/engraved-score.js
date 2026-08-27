@@ -12,6 +12,14 @@
     const FLAT_NAMES = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
     const SHARP_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     const SCALE_KEY_ORDER = ["C", "D", "E", "G", "A", "F", "B", "Db", "Eb", "Gb", "Ab", "Bb"];
+    // Exact written starting registers from the fingering source. Upper tonics
+    // start below middle C instead of being forced above C4 by pitch class.
+    const SCALE_ROOT_MIDIS = {
+        C:60, D:62, E:64, F:65,
+        G:55, A:57, B:59,
+        Db:61, Eb:63,
+        Gb:54, Ab:56, Bb:58
+    };
     const SCALE_PAGE_LABELS = { major:"Major Scale", naturalMinor:"Natural Minor Scale", harmonicMinor:"Harmonic Minor Scale", melodicMinor:"Melodic Minor Scale" };
     const SCALE_ROOT_NAMES = {
         Db:{ major:"Db", minor:"C#" },
@@ -134,7 +142,7 @@
         const rootName = rootNames
             ? (settings.scaleType === "major" ? rootNames.major : rootNames.minor)
             : key.id;
-        const rootMidi = 60 + key.pc;
+        const rootMidi = SCALE_ROOT_MIDIS[key.id];
         const ascendingIntervals = type.intervals.slice(0, -1).concat(type.intervals.map(function (interval) { return interval + 12; }));
         const descendingIntervals = settings.scaleType === "melodicMinor"
             ? [24,22,20,19,17,15,14,12,10,8,7,5,3,2,0]
@@ -928,32 +936,68 @@
             current.push(note);
         });
         if (current.length) groups.push(current);
-        return groups.map(function (group) {
-            const beamable = group.filter(function (note) { return note.getDuration() === "8"; });
-            return beamable.length >= 2 ? new VF.Beam(beamable) : null;
-        }).filter(Boolean);
+        const beamGroups = groups.map(function (group) {
+            return group.filter(function (note) { return note.getDuration() === "8"; });
+        }).filter(function (group) { return group.length; });
+        beamGroups.forEach(function (group, index) {
+            if (group.length !== 1) return;
+            const next = beamGroups[index + 1];
+            const previous = beamGroups[index - 1];
+            if (next) {
+                next.unshift(group[0]);
+                beamGroups[index] = [];
+            } else if (previous) {
+                previous.push(group[0]);
+                beamGroups[index] = [];
+            }
+        });
+        return beamGroups.filter(function (group) {
+            return group.length >= 2;
+        }).map(function (group) {
+            return new VF.Beam(group);
+        });
     }
 
     function drawScaleSystem(VF, context, line, y, label, ascending, hand) {
-        const width = 1080;
-        const stave = new VF.Stave(76, y, width).addClef("treble");
-        stave.setContext(context).draw();
+        const width = 1028;
+        const x = 128;
+        const bothHands = hand === "both";
+        const treble = hand === "left" ? null : new VF.Stave(x, y, width).addClef("treble");
+        const bassY = bothHands ? y + 92 : y;
+        const bass = hand === "right" ? null : new VF.Stave(x, bassY, width).addClef("bass");
         context.setFont("Inter, Arial, sans-serif", 14, "700");
-        context.fillText(label, 18, y + 48);
+        context.fillText(label, 34, y + 48);
+        if (treble) treble.setContext(context).draw();
+        if (bass) bass.setContext(context).draw();
+        if (bothHands) {
+            new VF.StaveConnector(treble, bass)
+                .setType(VF.StaveConnector.type.BRACE)
+                .setContext(context)
+                .draw();
+            new VF.StaveConnector(treble, bass)
+                .setType(VF.StaveConnector.type.SINGLE_LEFT)
+                .setContext(context)
+                .draw();
+        }
         const voices = [];
         const beams = [];
+        let rightVoice = null;
+        let leftVoice = null;
         if (hand !== "left") {
             const rightNotes = scaleStaveNotes(VF, line.right, "treble", 1, VF.Annotation.VerticalJustify.TOP);
             beams.push.apply(beams, buildFingeringBeams(VF, rightNotes, line.right, ascending));
-            voices.push(new VF.Voice({ num_beats:8, beat_value:4 }).addTickables(rightNotes));
+            rightVoice = new VF.Voice({ num_beats:8, beat_value:4 }).addTickables(rightNotes);
+            voices.push(rightVoice);
         }
         if (hand !== "right") {
-            const leftNotes = scaleStaveNotes(VF, line.left, "treble", -1, VF.Annotation.VerticalJustify.BOTTOM);
+            const leftNotes = scaleStaveNotes(VF, line.left, "bass", -1, VF.Annotation.VerticalJustify.BOTTOM);
             beams.push.apply(beams, buildFingeringBeams(VF, leftNotes, line.left, !ascending));
-            voices.push(new VF.Voice({ num_beats:8, beat_value:4 }).addTickables(leftNotes));
+            leftVoice = new VF.Voice({ num_beats:8, beat_value:4 }).addTickables(leftNotes);
+            voices.push(leftVoice);
         }
         new VF.Formatter().joinVoices(voices).format(voices, width - 100);
-        voices.forEach(function (voice) { voice.draw(context, stave); });
+        if (rightVoice) rightVoice.draw(context, treble);
+        if (leftVoice) leftVoice.draw(context, bass);
         beams.forEach(function (beam) {
             beam.setContext(context).draw();
         });
@@ -962,7 +1006,8 @@
     function renderScalePage(container, page) {
         const VF = window.Vex.Flow;
         const width = 1200;
-        const height = 590;
+        const bothHands = page.hand === "both";
+        const height = bothHands ? 620 : 520;
         const renderer = new VF.Renderer(container, VF.Renderer.Backends.SVG);
         renderer.resize(width, height);
         const context = renderer.getContext();
@@ -972,9 +1017,19 @@
         const handLabel = { both:"Both Hands", right:"Right Hand", left:"Left Hand" }[page.hand] || "Both Hands";
         context.fillText(page.keyLabel + " " + page.typeLabel + " · " + handLabel + " · Two Octaves", 34, 30);
         context.setFont("Inter, Arial, sans-serif", 12, "500");
-        context.fillText("Right Hand: upper voice · Left Hand: lower voice · Fingering numbers", 34, 52);
-        drawScaleSystem(VF, context, page.up, 88, "Ascending", true, page.hand);
-        drawScaleSystem(VF, context, page.down, 340, "Descending", false, page.hand);
+        const guide = page.hand === "right"
+            ? "Right Hand · Treble Clef · Fingering numbers above notes"
+            : page.hand === "left"
+                ? "Left Hand · Bass Clef · Fingering numbers below notes"
+                : "Right Hand: upper staff · Left Hand: lower staff · Fingering numbers";
+        context.fillText(guide, 34, 52);
+        if (bothHands) {
+            drawScaleSystem(VF, context, page.up, 100, "Ascending", true, page.hand);
+            drawScaleSystem(VF, context, page.down, 370, "Descending", false, page.hand);
+        } else {
+            drawScaleSystem(VF, context, page.up, 112, "Ascending", true, page.hand);
+            drawScaleSystem(VF, context, page.down, 342, "Descending", false, page.hand);
+        }
         const svg = container.querySelector("svg");
         if (svg) {
             svg.setAttribute("viewBox", "0 0 " + width + " " + height);

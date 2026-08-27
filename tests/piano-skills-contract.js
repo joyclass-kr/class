@@ -58,11 +58,16 @@ assert.doesNotMatch(app, /assets\/scores|scoreImage|원본 악보|scaleKeySelect
 assert.match(engraving, /Renderer\.Backends\.SVG/);
 assert.match(engraving, /new VF\.Stave/);
 assert.match(engraving, /new VF\.StaveNote/);
-assert.match(engraving, /new VF\.Beam\(beamable\)/);
+assert.match(engraving, /new VF\.Beam\(group\)/);
 assert.match(engraving, /buildFingeringBeams/);
-assert.match(engraving, /beams\.push\.apply\(beams, buildFingeringBeams[\s\S]*voices\.forEach[\s\S]*beams\.forEach/, "빔을 음표보다 먼저 등록해 8분음표 꼬리가 중복되지 않아야 합니다.");
+assert.match(engraving, /beams\.push\.apply\(beams, buildFingeringBeams[\s\S]*rightVoice\.draw[\s\S]*leftVoice\.draw[\s\S]*beams\.forEach/, "빔을 음표보다 먼저 등록하고 각 손을 해당 Staff에 그려 8분음표 꼬리가 중복되지 않아야 합니다.");
 assert.match(engraving, /breakBeforeThumb/);
+assert.match(engraving, /beamGroups[\s\S]*next\.unshift[\s\S]*previous\.push[\s\S]*new VF\.Beam/, "한 음짜리 eighth-note group을 인접 beam에 합쳐 flag를 섞지 않아야 합니다.");
 assert.match(engraving, /SCALE_ROOT_NAMES/);
+assert.match(engraving, /SCALE_ROOT_MIDIS/, "원본의 조별 시작 register map을 사용해야 합니다.");
+assert.match(engraving, /addClef\("bass"\)/, "Left Hand는 Bass Clef로 조판해야 합니다.");
+assert.match(engraving, /StaveConnector\.type\.BRACE/, "Both Hands는 Grand Staff로 연결해야 합니다.");
+assert.match(engraving, /Left Hand · Bass Clef/, "선택한 손에 맞는 clef 안내를 표시해야 합니다.");
 assert.match(engraving, /Ascending/);
 assert.match(engraving, /Descending/);
 assert.doesNotMatch(engraving, /"상행"|"하행"|"양손 두 옥타브"/);
@@ -113,6 +118,35 @@ assert.equal(scaleModel.pages[0].up.right.length, 15, "두 옥타브 상행은 1
 assert.equal(scaleModel.pages[0].down.left.length, 15, "두 옥타브 하행은 15개 음이어야 합니다.");
 assert.equal(scaleModel.pages[0].up.right[0].finger, 1);
 assert.equal(scaleModel.pages[0].keyLabel, "C");
+
+const sourceScaleRootMidis = {
+    C:60, D:62, E:64, F:65,
+    G:55, A:57, B:59,
+    Db:61, Eb:63,
+    Gb:54, Ab:56, Bb:58
+};
+Object.entries(sourceScaleRootMidis).forEach(([keyId, rightRoot]) => {
+    Object.keys(data.scaleTypes).forEach((scaleType) => {
+        const both = score.build({ mode:"scale", keyId, scaleType, hand:"both", tempo:60 });
+        const right = score.build({ mode:"scale", keyId, scaleType, hand:"right", tempo:60 });
+        const left = score.build({ mode:"scale", keyId, scaleType, hand:"left", tempo:60 });
+        const page = both.pages[0];
+
+        assert.equal(page.up.right[0].midi, rightRoot, `${keyId} ${scaleType} Right Hand는 원본 register에서 시작해야 합니다.`);
+        assert.equal(page.up.right[14].midi, rightRoot + 24);
+        assert.equal(page.down.right[0].midi, rightRoot + 24);
+        assert.equal(page.down.right[14].midi, rightRoot);
+
+        assert.equal(page.up.left[0].midi, rightRoot - 12, `${keyId} ${scaleType} Left Hand는 Right Hand보다 one octave 아래에서 시작해야 합니다.`);
+        assert.equal(page.up.left[14].midi, rightRoot + 12);
+        assert.equal(page.down.left[0].midi, rightRoot + 12);
+        assert.equal(page.down.left[14].midi, rightRoot - 12);
+
+        assert.deepEqual(Array.from(right.audioGroups[0]), [rightRoot]);
+        assert.deepEqual(Array.from(left.audioGroups[0]), [rightRoot - 12]);
+        assert.deepEqual(Array.from(both.audioGroups[0]), [rightRoot - 12, rightRoot]);
+    });
+});
 
 const cSharpMinor = score.build({ mode:"scale", keyId:"Db", scaleType:"naturalMinor", hand:"both", tempo:60 });
 assert.equal(cSharpMinor.pages[0].keyLabel, "C♯", "D♭ 장조와 짝을 이루는 단음계는 C♯로 표기해야 합니다.");
