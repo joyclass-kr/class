@@ -15,6 +15,7 @@ const curriculum = read(`${courseRoot}/CURRICULUM.md`);
 const glossary = read(`${courseRoot}/GLOSSARY-KO-EN.md`);
 const foundationFiles = [
   "foundation-core.js",
+  "concept-visuals.js",
   "foundation-compact.js",
   "foundation-b.js",
   "foundation-c.js",
@@ -62,10 +63,30 @@ test("the 36-lesson core course is loaded in dependency order", () => {
   assert.match(lessonPage, /id="lessonTitle"/);
   for (const page of [coursePage, lessonPage]) {
     const coreAt = page.indexOf("foundation-core.js");
+    const visualsAt = page.indexOf("concept-visuals.js");
     const compactAt = page.indexOf("foundation-compact.js");
     const courseAt = page.indexOf("foundation-b.js");
     const engineAt = page.indexOf("system-lessons.js");
-    assert.ok(coreAt >= 0 && coreAt < compactAt && compactAt < courseAt && courseAt < engineAt);
+    assert.ok(coreAt >= 0 && coreAt < visualsAt && visualsAt < compactAt && compactAt < courseAt && courseAt < engineAt);
+  }
+});
+
+test("all generated lessons except the direct manipulation lesson use a specific concept visual", () => {
+  const expectedIds = Array.from(generatedLessons, (lesson) => lesson.id).filter((id) => id !== "d01").sort();
+  assert.equal(context.window.COMPUTER_SPECIAL_VISUAL_IDS.length, 29);
+  assert.deepEqual(Array.from(context.window.COMPUTER_SPECIAL_VISUAL_IDS).sort(), expectedIds);
+  for (const lesson of generatedLessons.filter((item) => item.id !== "d01")) {
+    assert.match(lesson.visual, new RegExp(`visual-${lesson.id}`), `${lesson.id} needs its own concept diagram`);
+    assert.doesNotMatch(lesson.visual, /concept-relationship-board/, `${lesson.id} must not fall back to the generic card board`);
+  }
+  const mobileLesson = generatedLessons.find((lesson) => lesson.id === "b02");
+  assert.match(mobileLesson.visual, /smartphone-internals-exploded-768\.webp/);
+  assert.match(mobileLesson.visual, /tablet-internals-exploded-768\.webp/);
+  for (const selector of [
+    ".lesson-specific-figure", ".visual-process", ".touch-screen-demo", ".file-explorer",
+    ".pixel-screen", ".network-map", ".browser-window", ".full-stack-map", ".flowchart", ".debug-console"
+  ]) {
+    assert.ok(lessonStyles.includes(selector), `${selector} needs visual styling`);
   }
 });
 
@@ -225,6 +246,9 @@ test("the primary Chromebook and iPad breakpoints preserve touch-sized controls"
   assert.match(lessonStyles, /touch-action: none/);
   assert.match(lessonStyles, /\.sort-zone-grid \{ grid-template-columns: 1fr; \}/);
   assert.match(lessonStyles, /\.story-steps,[\s\S]*\.comparison-grid \{ grid-template-columns: 1fr; \}/);
+  assert.match(lessonStyles, /\.visual-process \{ grid-template-columns: 1fr; gap: 9px; \}/);
+  assert.match(lessonStyles, /\.touch-screen-demo \{ grid-template-columns: repeat\(2, minmax\(0, 1fr\)\); \}/);
+  assert.match(lessonStyles, /\.network-map \{ grid-template-columns: 1fr \.45fr 1fr; \}/);
 });
 
 test("mobile and Chromebook interiors are project assets used in device comparisons", () => {

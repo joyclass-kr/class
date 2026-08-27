@@ -51,7 +51,7 @@
         title: spec.title,
         english: spec.english,
         conceptTitle: spec.concept,
-        visual: relationshipVisual(spec.nodes, spec.caption),
+        visual: window.COMPUTER_CONCEPT_VISUAL?.(spec, imageAsset) || relationshipVisual(spec.nodes, spec.caption),
         details: spec.details || spec.nodes.map((node) => [node[0], node[1], node[2]]),
         deviceComparison: spec.deviceComparison,
         workedExample: {
