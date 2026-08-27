@@ -204,7 +204,8 @@
     const grand = allParts.some(function (part) { return part.step <= 25; }) && allParts.some(function (part) { return part.step >= 28; });
     const bassOnly = !grand && allParts.every(function (part) { return part.step <= 25; });
     const clef = bassOnly ? "bass" : "treble";
-    const height = grand ? 208 : 150;
+    const height = grand ? 184 : 132;
+    const yShift = grand ? -8 : -12;
     const gap = (width - 92) / Math.max(1, items.length);
     const staff = grand
       ? staffLines([74,84,94,104,114], width) + staffLines([134,144,154,164,174], width)
@@ -217,7 +218,7 @@
       return placeChordParts(item[1], x, grand, clef) +
         '<text class="chord-label" x="'+x+'" y="26" text-anchor="middle">'+escapeHtml(item[0])+'</text>';
     }).join("");
-    return '<div class="score-frame"><p class="score-title">'+escapeHtml(title || "악보로 확인")+'</p><svg class="score-svg" viewBox="0 0 '+width+' '+height+'" role="img" aria-label="'+escapeHtml(title || "화음 악보")+'"><rect width="'+width+'" height="'+height+'" rx="8" fill="#fffdf7"/><g class="staff-lines">'+staff+'</g>'+clefs+events+'</svg></div>';
+    return '<div class="score-frame"><p class="score-title">'+escapeHtml(title || "악보로 확인")+'</p><svg class="score-svg" viewBox="0 0 '+width+' '+height+'" role="img" aria-label="'+escapeHtml(title || "화음 악보")+'"><rect width="'+width+'" height="'+height+'" rx="8" fill="#fffdf7"/><g transform="translate(0 '+yShift+')"><g class="staff-lines">'+staff+'</g>'+clefs+events+'</g></svg></div>';
   }
   function sequenceNote(part, x, clef) {
     const y = noteY(part, clef, false);
@@ -233,6 +234,9 @@
   function sequenceStaffSvg(items, title, key) {
     const width = 520;
     const rows = items.map(function (item) {
+      const hasAnnotations = Boolean(item[2] && item[2].some(Boolean));
+      const height = hasAnnotations ? 116 : 100;
+      const yShift = hasAnnotations ? -29 : -44;
       const parts = item[1].map(noteParts);
       const averageStep = parts.reduce(function (total, part) { return total+part.step; }, 0) / Math.max(1, parts.length);
       const clef = averageStep < 26 ? "bass" : "treble";
@@ -250,7 +254,7 @@
             return '<line class="bar-line" x1="'+x+'" y1="74" x2="'+x+'" y2="114"/>';
           }).join("") + '<line class="bar-line final" x1="'+(width-18)+'" y1="74" x2="'+(width-18)+'" y2="114"/>'
         : "";
-      return '<div class="score-line-card"><strong>'+escapeHtml(item[0])+'</strong><svg class="score-svg sequence-score" viewBox="0 0 '+width+' 150" role="img" aria-label="'+escapeHtml(item[0])+'"><rect width="'+width+'" height="150" rx="8" fill="#fffdf7"/><g class="staff-lines">'+staffLines([74,84,94,104,114],width)+'</g><text class="music-glyph clef '+(clef === "bass" ? "bass-clef" : "")+'" x="28" y="'+(clef === "bass" ? 113 : 116)+'">'+(clef === "bass" ? "𝄢" : "𝄞")+'</text>'+barlines+notes+'</svg></div>';
+      return '<div class="score-line-card"><strong>'+escapeHtml(item[0])+'</strong><svg class="score-svg sequence-score" viewBox="0 0 '+width+' '+height+'" role="img" aria-label="'+escapeHtml(item[0])+'"><rect width="'+width+'" height="'+height+'" rx="8" fill="#fffdf7"/><g transform="translate(0 '+yShift+')"><g class="staff-lines">'+staffLines([74,84,94,104,114],width)+'</g><text class="music-glyph clef '+(clef === "bass" ? "bass-clef" : "")+'" x="28" y="'+(clef === "bass" ? 113 : 116)+'">'+(clef === "bass" ? "𝄢" : "𝄞")+'</text>'+barlines+notes+'</g></svg></div>';
     }).join("");
     return '<div class="score-frame"><p class="score-title">'+escapeHtml(title || "악보로 확인")+'</p><div class="score-compare">'+rows+'</div></div>';
   }

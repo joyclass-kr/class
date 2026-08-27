@@ -36,7 +36,7 @@ test("tablet lesson flow keeps explanation and notation in one reading column", 
 
 test("notation receives a legible width at the primary tablet sizes", () => {
   assert.ok(css.includes("width: min(1180px, calc(100% - 24px));"));
-  assert.ok(css.includes("width: min(100%, 960px);"));
+  assert.ok(css.includes("width: min(100%, 840px);"));
   assert.ok(css.includes(".score-svg {"));
   assert.ok(css.includes("height: auto;"));
 });
@@ -49,7 +49,8 @@ test("body copy and controls remain readable and touchable", () => {
 });
 
 test("the page loads the readability revision", () => {
-  assert.ok(html.includes("harmony-course.css?v=20260827-3"));
+  assert.ok(html.includes("harmony-course.css?v=20260828-1"));
+  assert.ok(html.includes("harmony-course.js?v=20260828-1"));
 });
 
 test("primary tablet notation stays legible without a split column", () => {
@@ -58,11 +59,11 @@ test("primary tablet notation stays legible without a split column", () => {
     const shell = Math.min(viewportWidth - (viewportWidth <= 900 ? 20 : 24), 1180);
     const sectionPadding = clamp(22, viewportWidth * 0.04, 40);
     const boardPadding = clamp(14, viewportWidth * 0.02, 22);
-    return Math.min(shell - sectionPadding * 2 - boardPadding * 2, 960);
+    return Math.min(shell - sectionPadding * 2 - boardPadding * 2, 840);
   };
 
-  assert.ok(scoreWidth(1024) >= 875);
-  assert.equal(scoreWidth(1180), 960);
+  assert.equal(scoreWidth(1024), 840);
+  assert.equal(scoreWidth(1180), 840);
   assert.ok(scoreWidth(768) >= 650);
 });
 test("lesson copy remains scannable and every section supports seeing and hearing", () => {

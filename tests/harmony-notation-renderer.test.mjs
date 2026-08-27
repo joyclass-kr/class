@@ -38,6 +38,8 @@ for (const key of visualKeys) {
 }
 
 const chordScore = notation.render("symbol-anatomy");
+assert.match(chordScore, /viewBox="0 0 520 132"/, "single-staff chord examples need a compact canvas");
+assert.ok(chordScore.includes('transform="translate(0 -12)"'), "single-staff content must be vertically centered");
 assert.equal((chordScore.match(/class="note-head"/g) || []).length, 14, "C, Cm, C7, and Cmaj7 need every chord tone");
 assert.match(chordScore, /y1="114"/, "E4 must sit on the bottom treble-staff line");
 assert.match(chordScore, /class="ledger"[^>]*y1="124"/, "middle C needs its ledger line");
@@ -48,6 +50,8 @@ assert.notEqual(centers[1].x, centers[2].x, "adjacent F4-G4 noteheads must not o
 assert.notEqual(centers[3].x, centers[4].x, "adjacent C4-D4 noteheads must not overlap");
 
 const clefScore = notation.render("staff-clefs");
+assert.match(clefScore, /viewBox="0 0 520 100"/, "plain sequence staves need a compact canvas");
+assert.ok(clefScore.includes('transform="translate(0 -44)"'), "plain sequence content must not sit at the bottom");
 assert.match(clefScore, /𝄞/, "the grand-staff lesson needs a treble clef");
 assert.match(clefScore, /𝄢/, "the grand-staff lesson needs a bass clef");
 assert.equal((clefScore.match(/class="note-head"/g) || []).length, 10);
@@ -62,11 +66,14 @@ assert.equal((scaleScore.match(/class="score-line-card"/g) || []).length, 3, "th
 assert.equal((scaleScore.match(/class="note-head"/g) || []).length, 24);
 
 const mixedScore = notation.render("part-spacing");
-assert.match(mixedScore, /viewBox="0 0 520 208"/, "four-part mixed registers need a grand staff");
+assert.match(mixedScore, /viewBox="0 0 520 184"/, "four-part mixed registers need a compact grand staff");
+assert.ok(mixedScore.includes('transform="translate(0 -8)"'), "grand-staff content must remain vertically centered");
 assert.match(mixedScore, /𝄞/);
 assert.match(mixedScore, /𝄢/);
 
 const leadSheet = notation.render("lead-sheet");
+assert.match(leadSheet, /viewBox="0 0 520 116"/, "annotated sequences need room for chord symbols without dead space");
+assert.ok(leadSheet.includes('transform="translate(0 -29)"'), "annotated sequence content must be vertically centered");
 assert.equal((leadSheet.match(/class="score-line-card"/g) || []).length, 1, "the lead sheet must be one continuous staff");
 assert.equal((leadSheet.match(/class="note-annotation"/g) || []).length, 5, "every melody event needs its chord symbol");
 assert.equal((leadSheet.match(/class="bar-line/g) || []).length, 5, "the lead sheet needs measure lines and a final barline");

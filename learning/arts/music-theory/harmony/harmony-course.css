@@ -539,7 +539,7 @@ button, select, summary {
 }
 
 .score-frame {
-    width: min(100%, 960px);
+    width: min(100%, 840px);
     margin-inline: auto;
 }
 
