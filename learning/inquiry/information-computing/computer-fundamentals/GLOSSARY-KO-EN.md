@@ -177,6 +177,7 @@
 | 제어 센터 | Control Center | iOS·iPadOS에서 자주 쓰는 제어 기능을 여는 화면 |
 | 빠른 설정 | Quick Settings | Android·ChromeOS 등에서 자주 쓰는 설정을 빠르게 바꾸는 화면 |
 | 창 | Window | 앱이나 문서가 열리는 사각형 작업 영역 |
+| 프로세스 | Process | 운영체제가 CPU 시간과 RAM을 배정해 실행하고 있는 프로그램의 작업 단위 |
 | 최소화 | Minimize | 창을 닫지 않고 화면에서 잠시 숨기는 동작 |
 | 최대화 | Maximize | 창을 사용할 수 있는 화면 영역만큼 크게 만드는 동작 |
 | 이전 크기로 복원 | Restore Down | 최대화한 창을 이전 크기로 되돌리는 동작 |
@@ -501,6 +502,7 @@
 | 방화벽 | Firewall | 허용되지 않은 네트워크 통신을 막거나 관리하는 보안 기능 |
 | 암호화 | Encryption | 허가받은 사람만 읽도록 데이터를 변환해 보호하는 방법 |
 | 저작권 | Copyright | 창작물을 만든 사람이 가지는 법적 권리 |
+| 라이선스·이용 허락 | License | 소프트웨어나 창작물을 어떤 조건으로 사용·복사·수정·배포할 수 있는지 정한 허락과 규칙 |
 | 출처 표시 | Attribution / Source Citation | 사용한 자료의 제작자와 출처를 밝히는 것 |
 | 디지털 예절 | Netiquette / Digital Etiquette | 온라인에서 지켜야 할 존중과 소통 규칙 |
 | 사이버 괴롭힘 | Cyberbullying | 디지털 공간에서 반복적으로 다른 사람을 괴롭히는 행동 |
@@ -517,6 +519,7 @@
 | 패턴 찾기 | Pattern Recognition | 반복되거나 비슷한 규칙을 찾는 것 |
 | 추상화 | Abstraction | 중요한 특징만 남겨 문제를 단순하게 표현하는 것 |
 | 알고리즘 | Algorithm | 문제를 해결하기 위한 분명하고 유한한 단계의 순서 |
+| 추적 | Trace / Tracing | 입력값을 넣고 명령이 실행되는 순서와 중간 상태를 한 단계씩 따라가는 것 |
 | 순서 | Sequence | 명령이 실행되는 차례 |
 | 반복 | Loop / Repetition | 같은 명령이나 동작을 되풀이하는 구조 |
 | 조건 | Condition | 어떤 행동을 할지 결정하는 기준 |

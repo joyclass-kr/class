@@ -1,11 +1,23 @@
 (() => {
     "use strict";
     const make = window.COMPUTER_LESSON_FACTORY;
+    const image = window.COMPUTER_IMAGE_ASSET;
     const lessons = [
         {
             id: "b02", number: 7, domain: "하드웨어와 기기", title: "휴대전화와 태블릿 안에도 컴퓨터가 있을까?", english: "Inside Phones and Tablets", concept: "작은 몸체 안에 계산·기억·통신·전원 부품이 함께 들어 있다",
             nodes: [["SoC", "System on a Chip", "CPU·GPU와 여러 제어 장치를 한 칩에 모은다."], ["RAM·저장 장치", "Memory and Storage", "실행 중인 데이터와 오래 보관할 파일을 서로 다른 곳에 둔다."], ["센서·통신", "Sensors and Radios", "카메라·가속도·GPS·Wi-Fi·이동통신이 주변 정보를 주고받는다."], ["배터리·화면", "Battery and Display", "전력을 공급하고 터치 입력과 화면 출력을 맡는다."]],
             caption: "휴대전화도 입력·처리·출력·저장을 수행하는 컴퓨터입니다. 다만 부품을 작게 합치고 배터리로 작동하도록 설계합니다.",
+            deviceComparison: {
+                title: "큰 부품이 작은 기기 안에서 어떻게 달라질까?",
+                english: "How Components Change Across Devices",
+                intro: "같은 처리·작업·저장 역할이 기기의 크기와 전력 조건에 따라 분리되거나 한 칩과 기판에 통합됩니다.",
+                cards: [
+                    { title: "데스크톱 PC", english: "Desktop PC", image: image("desktop-hardware-cutaway-768.webp"), alt: "CPU, RAM, 그래픽 카드와 저장 장치가 나뉘어 연결된 데스크톱 내부", relation: "CPU · 그래픽 카드 · RAM · SSD/HDD · 전원 공급 장치", note: "큰 슬롯과 케이블로 부품이 나뉘어 교체와 냉각이 비교적 쉽습니다." },
+                    { title: "Chromebook", english: "Chromebook", image: image("chromebook-internals-exploded-768.webp"), alt: "화면, 메인 기판, 배터리와 스피커가 분리된 Chromebook형 노트북 내부", relation: "SoC/프로세서 · 기판 부착 RAM · 플래시 저장 · 배터리", note: "키보드와 화면을 포함하면서도 얇게 만들기 위해 여러 부품을 기판에 붙입니다." },
+                    { title: "태블릿·iPad", english: "Tablet / iPad", image: image("tablet-internals-exploded-768.webp"), alt: "터치 화면, 큰 배터리, 좁은 로직 보드와 스피커가 분리된 태블릿 내부", relation: "터치 디스플레이 · SoC · RAM · 플래시 저장 · 큰 배터리", note: "넓은 화면과 배터리가 내부 대부분을 차지하고 주요 칩은 좁은 로직 보드에 모입니다." },
+                    { title: "스마트폰", english: "Smartphone", image: image("smartphone-internals-exploded-768.webp"), alt: "화면, 배터리, 로직 보드, 카메라와 통신 부품이 층별로 분리된 스마트폰 내부", relation: "SoC · RAM · 플래시 저장 · 카메라 · 모뎀 · 안테나 · 배터리", note: "작은 공간에서 계산·그래픽·통신 기능을 통합하고 센서와 안테나를 함께 배치합니다." }
+                ]
+            },
             example: ["사진을 찍어 보내는 과정", "From Camera to Message", "카메라 버튼을 누른 뒤 사진이 상대에게 보일 때까지 여러 부품과 소프트웨어가 차례로 협력합니다."],
             steps: [["1", "카메라 센서가 빛을 전기 신호로 바꾼다."], ["2", "SoC가 색과 밝기를 계산하고 RAM에서 작업한다."], ["3", "완성된 사진을 플래시 저장 장치에 파일로 기록한다."], ["4", "통신 칩과 앱이 네트워크로 사진 데이터를 보낸다."]],
             compare: ["기기 안쪽 비교", "Device Interior Comparison"],
