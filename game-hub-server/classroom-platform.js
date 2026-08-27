@@ -1505,9 +1505,13 @@ function createClassroomPlatform(options = {}) {
     const requestPath = normalizeContentPath(req.originalUrl);
     const assetRootPath = contentRootForStaticAsset(requestPath);
     const globallyDisabledPaths = await getGloballyDisabledContentPaths();
+    let user = null;
     if (requestPath && isGloballyDisabledContent(requestPath, assetRootPath, globallyDisabledPaths)) {
-      if (req.method === "GET") return res.redirect(302, "/?content=globally-disabled");
-      throw new HttpError(403, "CONTENT_GLOBALLY_DISABLED", "This content is currently unavailable.");
+      user = await sessionUser(req);
+      if (user?.role !== "admin") {
+        if (req.method === "GET") return res.redirect(302, "/?content=globally-disabled");
+        throw new HttpError(403, "CONTENT_GLOBALLY_DISABLED", "This content is currently unavailable.");
+      }
     }
 
     const mode = await getSiteAccessMode();
@@ -1515,7 +1519,7 @@ function createClassroomPlatform(options = {}) {
     // name is still useful for game hand-off, but it must not gate routes
     // served by separate learning apps (for example /arithmetic and
     // /hanguksa), because those requests can otherwise lose the guest cookie.
-    const user = mode === "restricted" ? await sessionUser(req) : null;
+    if (mode === "restricted" && !user) user = await sessionUser(req);
     const allowed = mode === "open"
       ? true
       : user

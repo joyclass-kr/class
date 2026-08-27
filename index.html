@@ -1270,6 +1270,7 @@
             let classContentAccessApplies = false;
             let classEnabledPaths = new Set();
             let globallyDisabledPaths = new Set();
+            let canBypassGlobalContentLock = false;
 
             function normalizedContentPath(href) {
                 if (!href) return '';
@@ -1317,16 +1318,19 @@
                 hubLinks.forEach((link) => {
                     const groupControl = accessControlForLink(link);
                     const path = contentPathForLink(link);
-                    const globallyLocked = isGloballyDisabledPath(path)
+                    const globallyDisabled = isGloballyDisabledPath(path)
                         || Boolean(groupControl && isAccessControlGloballyDisabled(groupControl));
+                    const globallyLocked = globallyDisabled && !canBypassGlobalContentLock;
+                    const showGlobalDisabled = globallyDisabled && (globalContentAccessEditing || globallyLocked);
                     const classLocked = classContentAccessApplies && (groupControl
                         ? !isAccessControlEnabled(groupControl)
                         : !classEnabledPaths.has(path));
-                    link.classList.toggle('is-global-locked', globallyLocked);
-                    link.classList.toggle('is-class-locked', classLocked && !globallyLocked);
+                    link.classList.toggle('is-global-locked', showGlobalDisabled);
+                    link.classList.toggle('is-class-locked', classLocked && !showGlobalDisabled);
+                    link.dataset.globalDisabled = String(globallyDisabled);
                     link.dataset.globalLocked = String(globallyLocked);
                     link.dataset.classLocked = String(classLocked);
-                    if (globallyLocked) {
+                    if (globallyLocked || (globalContentAccessEditing && globallyDisabled)) {
                         link.setAttribute('aria-disabled', globalContentAccessEditing ? 'false' : 'true');
                         link.setAttribute('aria-label', `${link.textContent.trim()} · 전체관리자가 사용 중지`);
                     } else if (classLocked) {
@@ -1343,17 +1347,20 @@
                         control.dataset.baseAriaLabel = control.getAttribute('aria-label') || control.textContent.trim();
                     }
                     const globallyLocked = isAccessControlGloballyDisabled(control);
+                    const blockedForViewer = globallyLocked && !canBypassGlobalContentLock;
+                    const showGlobalDisabled = globallyLocked && (globalContentAccessEditing || blockedForViewer);
                     const classLocked = classContentAccessApplies && !isAccessControlEnabled(control);
-                    control.classList.toggle('is-global-locked', globallyLocked);
-                    control.classList.toggle('is-class-locked', classLocked && !globallyLocked);
-                    control.dataset.globalLocked = String(globallyLocked);
+                    control.classList.toggle('is-global-locked', showGlobalDisabled);
+                    control.classList.toggle('is-class-locked', classLocked && !showGlobalDisabled);
+                    control.dataset.globalDisabled = String(globallyLocked);
+                    control.dataset.globalLocked = String(blockedForViewer);
                     control.dataset.classLocked = String(classLocked);
-                    control.setAttribute('aria-label', globallyLocked
+                    control.setAttribute('aria-label', showGlobalDisabled
                         ? `${control.dataset.baseAriaLabel} · 전체관리자가 사용 중지`
                         : classLocked
                             ? `${control.dataset.baseAriaLabel} · 담임교사가 잠금`
                             : control.dataset.baseAriaLabel);
-                    control.setAttribute('aria-disabled', globallyLocked
+                    control.setAttribute('aria-disabled', blockedForViewer
                         ? (globalContentAccessEditing ? 'false' : 'true')
                         : (classLocked && !contentAccessEditing ? 'true' : 'false'));
                 });
@@ -1363,7 +1370,8 @@
                 const result = await api('/api/home-content-access');
                 classEnabledPaths = new Set(result.enabledPaths || []);
                 globallyDisabledPaths = new Set(result.globallyDisabledPaths || []);
-                classContentAccessApplies = result.hasClassAccess === true;
+                canBypassGlobalContentLock = result.canManageGlobally === true;
+                classContentAccessApplies = result.hasClassAccess === true && !canBypassGlobalContentLock;
                 contentAccessButton.hidden = !result.canManage;
                 globalContentAccessButton.hidden = !result.canManageGlobally;
                 renderClassLocks();

@@ -49,8 +49,8 @@ assert.match(
 );
 assert.match(
   serverSource,
-  /isGloballyDisabledContent\(requestPath, assetRootPath, globallyDisabledPaths\)[\s\S]*CONTENT_GLOBALLY_DISABLED/,
-  "Globally disabled content must be blocked on direct requests, not only on the home screen.",
+  /isGloballyDisabledContent\(requestPath, assetRootPath, globallyDisabledPaths\)[\s\S]*sessionUser\(req\)[\s\S]*user\?\.role !== "admin"[\s\S]*CONTENT_GLOBALLY_DISABLED/,
+  "Globally disabled content must block direct requests for non-admin users while allowing the site administrator.",
 );
 assert.match(
   serverSource,
@@ -70,8 +70,18 @@ assert.match(
 );
 assert.match(
   indexSource,
+  /canBypassGlobalContentLock = result\.canManageGlobally === true;[\s\S]*classContentAccessApplies = result\.hasClassAccess === true && !canBypassGlobalContentLock;/,
+  "The home screen must recognize that the site administrator bypasses global and class menu locks.",
+);
+assert.match(
+  indexSource,
+  /const globallyLocked = globallyDisabled && !canBypassGlobalContentLock;[\s\S]*link\.dataset\.globalLocked = String\(globallyLocked\);/,
+  "A globally disabled menu must remain clickable for the site administrator while staying blocked for everyone else.",
+);
+assert.match(
+  indexSource,
   /if \(selectedLink\?\.dataset\.globalLocked === 'true'\) \{[\s\S]*event\.preventDefault\(\);[\s\S]*event\.stopImmediatePropagation\(\);/,
-  "A globally disabled menu click must be cancelled for every user.",
+  "A globally disabled menu click must be cancelled only when the current viewer cannot bypass it.",
 );
 assert.match(
   indexSource,
@@ -80,8 +90,8 @@ assert.match(
 );
 assert.match(
   indexSource,
-  /classList\.toggle\('is-class-locked', classLocked && !globallyLocked\)/,
-  "The global lock must visually take priority over the homeroom lock.",
+  /classList\.toggle\('is-class-locked', classLocked && !showGlobalDisabled\)/,
+  "A visible global disabled state must take visual priority over the homeroom lock.",
 );
 
 console.log("Global content access contract passed.");
