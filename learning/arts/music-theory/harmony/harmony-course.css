@@ -1,5 +1,5 @@
 .course-shell {
-    width: min(1120px, calc(100% - 28px));
+    width: min(1180px, calc(100% - 24px));
 }
 
 button, select, summary {
@@ -293,7 +293,7 @@ button, select, summary {
 
 @media (max-width: 900px) {
     .course-shell {
-        width: min(100% - 24px, 1120px);
+        width: min(100% - 20px, 1180px);
     }
 
     .lesson-section,
@@ -364,7 +364,7 @@ button, select, summary {
 
 @media (max-width: 420px) {
     .course-shell {
-        width: min(100% - 18px, 1120px);
+        width: min(100% - 16px, 1180px);
     }
 
     .skill-strand > summary {
@@ -501,5 +501,56 @@ button, select, summary {
 
     .next-skill-nav span {
         font-size: 18px;
+    }
+}
+
+/* Lesson reading flow: explanation first, then full-width notation. */
+.lesson-section,
+.lesson-section:nth-child(even) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.lesson-section:nth-child(even) .section-copy,
+.lesson-section:nth-child(even) .visual-board {
+    order: initial;
+}
+
+.section-copy {
+    width: min(100%, 72ch);
+}
+
+.section-copy p {
+    line-height: 1.75;
+}
+
+.lesson-title > p {
+    font-size: 14px;
+}
+
+.lesson-outcome {
+    font-size: 15px;
+}
+
+.visual-board {
+    width: 100%;
+    padding: clamp(14px, 2vw, 22px);
+}
+
+.score-frame {
+    width: min(100%, 960px);
+    margin-inline: auto;
+}
+
+.score-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 700px) {
+    .lesson-outcome {
+        font-size: 14px;
     }
 }
