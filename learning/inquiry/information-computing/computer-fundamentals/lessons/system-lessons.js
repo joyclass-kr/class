@@ -963,7 +963,7 @@
             `;
             const partButtons = [...partsMount.querySelectorAll("[data-part-index]")];
             const partPanel = document.getElementById("componentPartPanel");
-            const showPart = (index) => {
+            const showPart = (index, reveal = false) => {
                 const part = lesson.parts[index];
                 partButtons.forEach((button, buttonIndex) => {
                     button.setAttribute("aria-selected", String(buttonIndex === index));
@@ -986,9 +986,15 @@
                         </dl>
                     </div>
                 `;
+                if (reveal && window.matchMedia("(max-width: 520px)").matches) {
+                    requestAnimationFrame(() => {
+                        partButtons[index].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+                        partPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+                    });
+                }
             };
             partButtons.forEach((button, index) => {
-                button.addEventListener("click", () => showPart(index));
+                button.addEventListener("click", () => showPart(index, true));
                 button.addEventListener("keydown", (event) => {
                     const directions = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
                     if (!(event.key in directions)) return;

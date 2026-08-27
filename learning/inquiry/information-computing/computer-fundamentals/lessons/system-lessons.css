@@ -1015,7 +1015,16 @@
 }
 
 @media (max-width: 520px) {
-    .component-tabs { grid-template-columns: 1fr; }
+    .component-tabs {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(175px, 72vw);
+        overflow-x: auto;
+        padding: 4px 4px 11px;
+        scroll-snap-type: x proximity;
+        overscroll-behavior-inline: contain;
+    }
+    .component-tabs button { scroll-snap-align: start; }
     .section-divider { display: grid; gap: 2px; }
 }
 /* Shared A01 flow and cross-device textbook comparison */
