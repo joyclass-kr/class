@@ -208,43 +208,52 @@
 
 62권 프롬프트를 새로 받아 주세요. 앞으로 그리는 모든 그림에 적용됩니다.
 
-### 반쪽이 — 내기 대목을 두 펼침면으로 나눴습니다. 그림 두 장 부탁드립니다
+### 반쪽이 — 두 장만 다시 부탁드립니다
 
-찡긋 눈 방식이 아주 잘 통했습니다. 열네 장 전부 통일됐고 움직이는
-자세에서도 눈·팔·다리가 같은 쪽으로 잘 모였습니다. 고맙습니다.
+열다섯 장을 하나하나 세어 봤습니다. **열세 장이 맞습니다.**
+찡긋 눈 방식이 아주 잘 통했고, 움직이는 자세에서도 눈·팔·다리가
+같은 쪽으로 잘 모입니다. `13-wedding` 에서 형 둘이 상 앞에 앉아
+얼굴 붉힌 채 밥 먹는 것도 본문 그대로입니다.
 
-그런데 **내기 셋이 한 펼침면에 결과만 한 줄씩** 들어가 있었습니다.
-이 책의 절정인데 너무 압축되어 있었습니다. 특히 아까운 것이 둘입니다.
+**`12-jar`** — 이건 반쪽이가 아예 아닙니다.
 
-- **달리기** — 한 다리로 폴짝폴짝 뛰어 이기는 것이 이 책에서 제일 웃긴 그림
-- **물 채우기** — 항아리를 안고 개울로 걸어 들어가는 뒤집기가 제일 통쾌한 대목
+    눈    뜬 눈 하나 + 찡긋 하나    맞음
+    팔    둘 (양팔로 항아리를 안음)  ✗ 하나여야 합니다
+    다리  둘 (물속에 발이 둘)        ✗ 하나여야 합니다
+    매듭  소매도 바짓단도 없음        ✗ 둘 다 있어야 합니다
 
-**글을 다시 써서 두 펼침면으로 나눴습니다.** 그림이 글 나눔을 그대로
-따라가게 했습니다.
+물이 무릎을 가리니 다리가 흐트러지기 쉽습니다. 그림말에 이렇게 박아
+두었습니다.
 
-    11펼침  그림 한 장을 세로선으로 둘로 나눠
-            왼쪽 반 = 기둥 들기 · 오른쪽 반 = 달리기
-    12펼침  그림 한 장을 펼침면 양쪽에 크게
-            항아리를 안고 개울로 걸어 들어가는 장면 (이 책 최고의 대목)
-    13펼침  혼례 (예전 12-wedding 을 그대로 옮김)
+    COUNT HIS LEGS: there is exactly ONE. One thigh, one knee, one shin, one foot,
+    standing in the stream. On his other side the empty trouser leg is rolled up
+    clear of the water and its knot is plainly visible in the air. Take care that
+    ripples, foam and the shadow of the jar are never mistaken for a second leg.
 
-**부탁드릴 그림**
+항아리는 **한 팔로만** 안습니다. 빈 소매는 매듭져 허공에 있어야 합니다.
 
-    11-contest.webp   다시 그려 주세요 (기둥 들기 + 달리기, 좌우로 나눠)
-    12-jar.webp       새로 그려 주세요 (항아리를 안고 개울로 — 크고 시원하게)
+**`11-contest`** — 좌우 두 장면으로 나눠 주세요. 지금은 기둥 들기만
+있고 달리기가 없습니다. 왼쪽 반은 기둥 들기, 오른쪽 반은 달리기입니다.
+글도 그렇게 나뉘어 있습니다.
 
-`13-wedding.webp` 는 예전 `12-wedding` 을 이름만 바꿔 그대로 두었습니다.
-다만 거기에 **형이 셋으로 보이고 다들 벌 받는 것처럼 서 있습니다.**
-형은 둘이고, 본문에서는 반쪽이가 형들을 **윗자리에 앉히고 술을 따라
-올립니다.** 그림말을 고쳐 두었으니 다시 받아 주세요.
+### 김 부자는 여자입니다
 
-### 아직 이상한 것들
+제가 그림말에 `Kim the rich man` 이라고 잘못 적어 두었습니다.
+**본문 어디에도 남자라는 말이 없습니다.** 「김 부자」 「사위로 삼겠소」
+「내 딸을 주고」뿐입니다. 딸을 둔 부자면 여자여도 아무 문제 없습니다.
 
-    09-promise   김 부자가 여자로 그려졌습니다. 남자입니다 (사십 대, 수염)
-                 게다가 파랗게 질린 늙은 얼굴이라 「둥글고 넉넉하게」와 안 맞습니다
-    06-uproot    형 둘이 늙어 보입니다. 이십 대입니다
-                 (눈 튀어나오는 것은 아주 웃깁니다. 그건 그대로 두세요)
-    end          형 둘이 나이 들어 보입니다. 이십 대입니다
+이미 그려 주신 그림들이 여자로 나와 있고 그편이 더 재미있습니다.
+그쪽으로 맞췄습니다.
+
+    Kim the rich WOMAN: a well-fed lady in her forties, mistress of the biggest
+    house in the village, in fine silk with a bright yellow jeogori and a deep wine
+    skirt, hair in a heavy bun with a gold pin. Plump and handsome and pleasant to
+    look at, chin up, very sure of herself - and hugely comic when she is cornered:
+    cheeks puffing, hands fluttering, sweat drops flying. Never ugly, never haggard.
+
+`09-promise` 는 그대로 두셔도 됩니다. 다만 얼굴이 파랗게 질린 늙은
+얼굴이라 「통통하고 보기 좋게」와 안 맞습니다. 다음에 손보실 때
+젊고 곱게, 다만 당황한 표정은 크고 웃기게 해 주세요.
 
 ### 반쪽이(`banjjogi`) — 얼굴은 온전하게, 없는 쪽 눈은 「찡긋」
 

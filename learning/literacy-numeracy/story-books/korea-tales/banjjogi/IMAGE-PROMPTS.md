@@ -36,7 +36,7 @@
 Children's picture book illustration, bright cheerful cel-animation style with
 clean bold outlines and flat vivid colors, similar to a classic Korean animated
 storybook. Traditional Korean rural village of the Joseon era: thatched-roof
-cottages, low stone walls, tile-roofed rich man's house with a big wooden gate,
+cottages, low stone walls, tile-roofed rich family's house with a big wooden gate,
 pine forests, rice paddies, dirt paths, a village well and a stream. Characters
 wear hanbok. Night scenes lit by warm lantern glow and cool blue moonlight. Big
 expressive faces, exaggerated comic gestures, lively motion. No text or letters
@@ -114,9 +114,12 @@ faces.
 The parents: a healthy, plain, kindly couple in their mid thirties who waited ten
 years for a child. Smooth faces, thick black hair, no grey and no wrinkles, no
 stoop. She wears plain white and pale blue, he wears undyed working hanbok.
-Kim the rich man: a well-fed man in his forties in fine wine-coloured silk and a
-black horsehair hat, stroking his beard. Round and prosperous and pleasant to
-look at; comic when cornered.
+Kim the rich WOMAN (she is a woman - the story never says otherwise): a well-fed
+lady in her forties, mistress of the biggest house in the village, in fine silk
+with a bright yellow jeogori and a deep wine skirt, hair in a heavy bun with a
+gold pin. Plump and handsome and pleasant to look at, chin up, very sure of
+herself - and hugely comic when she is cornered: cheeks puffing, hands
+fluttering, sweat drops flying. Never ugly, never haggard.
 His daughter: a calm graceful young woman in a soft pink and mint hanbok, long
 braid, watching everything quietly.
 The tiger: a huge orange-and-black striped Korean folk-painting tiger, round
@@ -282,11 +285,11 @@ one leg.
 ### `09-promise.webp` — 김 부자 대문 앞에 호랑이를 끌고 선다
 
 ```
-Wide panoramic scene. Morning outside a rich man's tile-roofed house with a big
+Wide panoramic scene. Morning outside the rich woman's tile-roofed house with a big
 wooden gate on the right. Banjjogi stands on the left in the lane holding a rope,
 the enormous tiger trussed up like a bundle at his side, sulking. Kim the rich
-man has come out through the gate and stopped dead, his smile frozen, one hand
-half raised, sweat drops flying off his forehead. Villagers peek over the wall,
+man has come out through the gate and stopped dead, her smile frozen, one hand
+half raised, sweat drops flying off her forehead. Villagers peek over the wall,
 delighted.
 Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
 smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
@@ -299,7 +302,7 @@ one leg.
 
 ```
 Wide panoramic scene. The same gateway, now with a crowd. On the right Kim the
-rich man holds up three fingers with a forced hearty smile, stroking his beard
+rich woman holds up three fingers with a forced hearty smile, chin lifted
 with the other hand, eyes sliding sideways. On the left Banjjogi nods calmly,
 arms - arm - at his side, completely unbothered. Between and behind them
 villagers mutter to one another with raised eyebrows and folded arms. Bright
@@ -326,7 +329,7 @@ the pillar towers up and breaks out of the top of the frame.
 RIGHT HALF - the running race: Banjjogi hops across the finish rope on his single
 leg, already sitting down to wait, while two ordinary young men are still far
 behind, red-faced and streaming sweat. Speed lines, a cloud of dust, the crowd
-doubled over laughing. Kim the rich man watches with his mouth open.
+doubled over laughing. Kim the rich woman watches with her mouth open.
 Bright daylight, big cheering crowd, playful comic energy.
 Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
 smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
@@ -348,8 +351,8 @@ so it fills with a great gulp. His single leg is braced in the current, water
 foaming white around it. He is grinning hugely and winking back over his
 shoulder at the crowd.
 On the bank behind him the whole village is packed together, mouths open,
-pointing, some already cheering. Kim the rich man stands at the front with the
-useless bucket dangling forgotten from his hand and his jaw hanging down. A
+pointing, some already cheering. Kim the rich woman stands at the front with the
+useless bucket dangling forgotten from her hand and her jaw hanging down. A
 low angle from the water, so Banjjogi and the jar loom large and the crowd is
 small behind. Bright water sparkle, splashes flying out of the frame.
 

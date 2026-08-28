@@ -168,11 +168,20 @@ with huge frightened eyes. Blue moonlight, dust shaken from the beams.
 ### `05-feast.webp` — 금 나와라, 뚝딱!
 
 ```
-Wide interior scene, the whole floor filled with the party. In the centre, a
-dokkaebi swings his club down onto the floor and a fountain of gold coins and
-silver ingots and rice cakes erupts upward in a glittering spray. All around,
-dokkaebi dance in a ring with their arms up, singing. Amber firelight, sparkles,
-motion lines everywhere. Pure noisy joy.
+Wide interior scene seen from up in the roof beams, looking down. The whole floor
+below is filled with the party: in the centre a dokkaebi swings his club down and
+a fountain of gold coins, silver ingots and rice cakes erupts upward in a
+glittering spray, while all around the others dance in a ring with their arms up,
+singing.
+IMPORTANT - the younger brother must be clearly in the picture and clearly ABOVE
+them. Put him in the upper left corner, lying flat on the boards of the dark loft
+with his chin on his hands, his whole face visible, eyes enormous and round with
+astonishment as the gold flies up toward him. He is small in the frame but never
+cut off by the edge, and there is dark loft timber all around him so it reads at
+once that he is up high and hidden. The gold spray rises between him and the
+dokkaebi.
+Blue shadow in the loft above, warm amber firelight below, sparkles and motion
+lines everywhere. Pure noisy joy, and one wide-eyed boy watching it.
 ```
 
 ### `06-hungry.webp` — 다락 위에서 꼬르륵
