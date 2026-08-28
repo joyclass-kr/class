@@ -5,7 +5,7 @@
 
 ## 지금까지
 
-    본 그림   40장쯤 / 924장
+    본 그림   45장쯤 / 924장
     찾은 것   4건 (반쪽이 전권 포함)
 
 ## 찾은 것
@@ -19,9 +19,10 @@
 
 ## 낮은 순위 (내용 오류는 아님)
 
+*멸치의 꿈은 화풍이 달라 적어 두었으나 사용자가 그대로 두라고 하여 뺐습니다.*
+
 | 자리 | 무엇이 |
 |---|---|
-| `myeolchi-kkum` | 표지는 납작한 벡터풍, 본문은 선 굵은 만화풍. 둘 다 다른 책의 과슈·수채와 다름 |
 | `bak-hyeokgeose/11-thirteen` | 촌장이 넷만 보임 (글은 여섯) |
 
 ## 본 책·본 그림
@@ -41,7 +42,11 @@
     kkongji-datbal      cover
     kongjwi-patjwi      story-01-b
     myeolchi-kkum       cover 09-catfish
+    eunhye-dukkeobi     cover
+    gyeonu-jiknyeo      cover
+    haewa-dari-doen-onui cover
     seok-talhae         12-friend
+    ureongi-gaksi       13-jar
     yeoni-beodeul       02-order 03-snow
 
 ## 배운 것
