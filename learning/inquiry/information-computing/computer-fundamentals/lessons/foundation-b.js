@@ -4,8 +4,8 @@
     const image = window.COMPUTER_IMAGE_ASSET;
     const lessons = [
         {
-            id: "b02", number: 7, domain: "하드웨어와 기기", title: "휴대전화와 태블릿 안에도 컴퓨터가 있을까?", english: "Inside Phones and Tablets", concept: "작은 몸체 안에 계산·기억·통신·전원 부품이 함께 들어 있다",
-            nodes: [["SoC", "System on a Chip", "CPU·GPU와 여러 제어 장치를 한 칩에 모은다."], ["RAM·저장 장치", "Memory and Storage", "실행 중인 데이터와 오래 보관할 파일을 서로 다른 곳에 둔다."], ["센서·통신", "Sensors and Radios", "카메라·가속도·GPS·Wi-Fi·이동통신이 주변 정보를 주고받는다."], ["배터리·화면", "Battery and Display", "전력을 공급하고 터치 입력과 화면 출력을 맡는다."]],
+            id: "b02", number: 7, domain: "하드웨어와 기기", title: "휴대전화와 태블릿 안에도 컴퓨터가 있을까?", english: "Inside Phones and Tablets", concept: "휴대전화도 작은 컴퓨터다. 계산·작업 기억·파일 보관·통신 부품을 좁은 기판에 모아 넣는다",
+            nodes: [["계산을 맡는 칩", "SoC · System on a Chip", "CPU와 GPU를 비롯한 여러 기능을 작은 칩 하나에 모읍니다."], ["작업 기억과 파일 보관", "RAM and Storage", "RAM은 지금 하는 작업을 펼쳐 두고, 플래시 저장 장치는 사진과 앱을 오래 보관합니다."], ["주변을 느끼고 연결하기", "Sensors and Radios", "카메라와 움직임 센서가 주변을 재고, Wi-Fi와 이동통신 부품이 데이터를 주고받습니다."], ["전원·입력·출력", "Battery and Display", "배터리가 전기를 공급하고, 터치 화면이 손가락 위치를 받으면서 그림과 글자를 보여 줍니다."]],
             caption: "휴대전화도 입력·처리·출력·저장을 수행하는 컴퓨터입니다. 다만 부품을 작게 합치고 배터리로 작동하도록 설계합니다.",
             deviceComparison: {
                 title: "큰 부품이 작은 기기 안에서 어떻게 달라질까?",
@@ -34,13 +34,13 @@
             ]
         },
         {
-            id: "b03", number: 8, domain: "하드웨어와 기기", title: "주변 기기와 단자는 어떻게 연결될까?", english: "Peripherals, Ports, and Connections", concept: "장치의 역할과 연결 규격을 함께 알아야 정확히 연결할 수 있다",
-            nodes: [["주변 기기", "Peripheral", "본체 밖에서 입력·출력·저장·통신 기능을 더한다."], ["단자", "Port", "케이블이나 기기를 꽂는 물리적인 연결 부분이다."], ["규격", "Standard", "모양뿐 아니라 전달할 데이터·전력의 약속을 정한다."], ["드라이버", "Device Driver", "운영체제가 하드웨어와 명령을 주고받게 하는 소프트웨어다."]],
+            id: "b03", number: 8, domain: "하드웨어와 기기", title: "주변 기기와 단자는 어떻게 연결될까?", english: "Peripherals, Ports, and Connections", concept: "플러그 모양이 맞아도 보내려는 신호와 전력의 약속이 맞아야 기기가 작동한다",
+            nodes: [["기능을 더하는 기기", "Peripheral", "키보드·모니터·저장 장치처럼 컴퓨터에 입력·출력·저장 기능을 더하는 물건을 주변 기기라고 합니다."], ["꽂는 자리", "Port", "케이블이나 기기의 플러그를 꽂는 물리적인 부분을 단자 또는 포트라고 합니다."], ["무엇을 보낼지 정한 약속", "Standard", "같은 모양이어도 데이터 종류·속도·전력 같은 약속이 맞아야 원하는 기능을 쓸 수 있습니다."], ["기기의 말을 바꾸는 프로그램", "Device Driver", "드라이버는 운영체제의 요청을 연결한 기기가 알아들을 신호로 바꾸는 소프트웨어입니다."]],
             caption: "모양이 맞는 단자, 기능을 지원하는 규격, 장치를 이해하는 드라이버가 함께 맞아야 제대로 작동합니다.",
             example: ["외부 모니터 연결", "Connecting an External Monitor", "USB-C 케이블을 꽂았는데 화면이 나오지 않는 경우에는 연결의 세 층을 차례로 확인합니다."],
             steps: [["1", "모니터와 기기의 단자 모양을 확인한다."], ["2", "케이블과 USB-C 단자가 영상 출력을 지원하는지 확인한다."], ["3", "운영체제가 모니터를 인식했는지 확인한다."], ["4", "디스플레이 설정에서 복제 또는 확장을 선택한다."]],
             compare: ["연결 방법 비교", "Connection Types"],
-            comparisons: [["USB", "Universal Serial Bus", "키보드·저장 장치·충전 등 여러 용도에 쓰며 버전과 기능이 다르다."], ["HDMI", "High-Definition Multimedia Interface", "화면과 소리를 모니터나 TV로 보낸다."], ["Bluetooth", "Bluetooth", "가까운 거리에서 마우스·이어폰 등을 무선 연결한다."], ["Wi-Fi", "Wireless Fidelity", "공유기를 통해 같은 네트워크나 인터넷에 연결한다."]],
+            comparisons: [["USB", "Universal Serial Bus", "키보드·저장 장치·충전 등 여러 용도에 쓰며 버전과 기능이 다르다."], ["HDMI", "High-Definition Multimedia Interface", "화면과 소리를 모니터나 TV로 보낸다."], ["Bluetooth", "Bluetooth", "가까운 거리에서 마우스·이어폰 등을 무선 연결한다."], ["Wi-Fi", "Wi-Fi · No Official Full Form", "Wi-Fi는 공식적으로 풀어 쓰는 약어가 아닌 이름이며, 공유기를 통해 같은 네트워크나 인터넷에 연결한다."]],
             analogy: ["통역이 필요한 출입구", "A Doorway That Needs a Translator", "단자는 출입구, 규격은 어떤 짐을 어떤 방식으로 옮길지 정한 규칙, 드라이버는 운영체제와 장치 사이의 통역사와 비슷합니다.", "실제 단자는 사람이 드나드는 문이 아니며 데이터는 전기·빛·무선 신호로 전달됩니다.", "USB-C 모양이 같아도 기능이 다를 수 있는 까닭을 규격이라는 말로 설명해 보세요."],
             activity: ["연결 목적에 맞추기", "사용 목적을 가장 알맞은 연결 칸으로 옮기세요.", [["usb", "USB", "Universal Serial Bus"], ["hdmi", "HDMI", "High-Definition Multimedia Interface"], ["bt", "블루투스", "Bluetooth"], ["wifi", "와이파이", "Wi-Fi"]], [["b03i1", "USB 메모리에서 파일 읽기", "Read a USB Drive", "usb"], ["b03i2", "유선 키보드 연결", "Connect a Wired Keyboard", "usb"], ["b03i3", "교실 TV로 화면과 소리 보내기", "Send Video and Audio to a TV", "hdmi"], ["b03i4", "무선 이어폰 연결", "Connect Wireless Earbuds", "bt"], ["b03i5", "무선 마우스 페어링", "Pair a Wireless Mouse", "bt"], ["b03i6", "공유기를 통해 인터넷 접속", "Connect Through a Router", "wifi"]], "연결 방식과 쓰임을 구분했습니다."],
             questions: [

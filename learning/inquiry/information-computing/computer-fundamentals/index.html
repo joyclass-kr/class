@@ -7,8 +7,10 @@
     <title>컴퓨터 원리와 활용</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="lessons/system-lessons.css">
+    <link rel="stylesheet" href="lessons/concept-labs.css">
     <script src="lessons/foundation-core.js" defer></script>
     <script src="lessons/concept-visuals.js" defer></script>
+    <script src="lessons/concept-labs.js" defer></script>
     <script src="lessons/foundation-compact.js" defer></script>
     <script src="lessons/foundation-b.js" defer></script>
     <script src="lessons/foundation-c.js" defer></script>
@@ -29,29 +31,45 @@
     <main class="lesson-shell">
         <div class="lesson-meta">
             <span id="lessonMeta">2차시</span>
-            <span id="stepStatus" aria-live="polite">개념 1 / 3</span>
+            <span id="stepStatus" aria-live="polite">장면·원리 1 / 2</span>
         </div>
         <h1 id="lessonTitle"></h1>
 
-        <section id="stageConcept" class="stage is-active" aria-labelledby="conceptTitle">
-            <div class="stage-heading">
+        <section id="stageConcept" class="stage is-active" aria-labelledby="situationTitle">
+            <div class="stage-heading lesson-situation">
                 <div>
-                    <span class="stage-label">개념 설명</span>
-                    <h2 id="conceptTitle"></h2>
+                    <span class="stage-label">장면에서 시작하기 <small>Start with a Situation</small></span>
+                    <h2 id="situationTitle"></h2>
+                    <p id="situationLead" class="stage-lead"></p>
                 </div>
             </div>
             <div id="conceptParts"></div>
             <div id="conceptOverview" class="concept-overview">
                 <div id="conceptVisual"></div>
-                <div id="conceptDetails" class="concept-grid"></div>
             </div>
+            <section class="principle-statement" aria-labelledby="conceptTitle">
+                <span>핵심 원리 <small>Core Principle</small></span>
+                <h2 id="conceptTitle"></h2>
+            </section>
             <div id="conceptDiagram" class="concept-diagram"></div>
             <div id="conceptDevices"></div>
-            <div id="conceptStory"></div>
-            <div id="conceptCompare"></div>
-            <div id="conceptAnalogy"></div>
+            <details id="conceptGlossary" class="concept-glossary">
+                <summary><span>핵심 용어</span><small>Core Terms</small></summary>
+                <div id="conceptDetails" class="concept-grid"></div>
+            </details>
+            <details class="concept-reference">
+                <summary>
+                    <span>동작 순서·개념 비교·비유</span>
+                    <small>Sequence, Comparison, and Analogy</small>
+                </summary>
+                <div class="concept-reference-body">
+                    <div id="conceptStory"></div>
+                    <div id="conceptCompare"></div>
+                    <div id="conceptAnalogy"></div>
+                </div>
+            </details>
             <div class="stage-actions end-aligned">
-                <button id="startActivity" class="primary-button" type="button">활동 시작</button>
+                <button id="startActivity" class="primary-button" type="button">문제 풀기</button>
             </div>
         </section>
 

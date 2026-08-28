@@ -15,7 +15,7 @@
 
 ### 대소문자와 단위
 
-- 약어: `CPU`, `GPU`, `RAM`, `SSD`, `HDD`, `USB`, `URL`, `DNS`, `RGB`
+- 약어: `CPU`, `GPU`, `RAM`, `SSD`, `HDD`, `PSU`, `SoC`, `USB`, `OS`, `API`, `URL`, `DNS`, `IP`, `DB`, `DBMS`, `RGB`, `HTML`, `CSS`, `HTTP`, `HTTPS`
 - 운영체제 제품명: `Windows`, `Android`, `iOS`, `iPadOS`, `macOS`, `ChromeOS`, `Linux`
 - `bit`의 기호는 소문자 `b`, `Byte`의 기호는 대문자 `B`로 구별한다.
 - 파일 크기: `KB`, `MB`, `GB`, `TB`
@@ -80,10 +80,10 @@
 | CPU 코어 | CPU Core | CPU 안에서 명령을 처리하는 독립적인 작업 단위 |
 | 스레드 | Thread | CPU가 처리하는 명령 작업의 흐름 |
 | 클록 속도 | Clock Speed | CPU가 일정 시간 동안 동작하는 기본 속도, 보통 GHz로 표시 |
-| 그래픽 처리 장치 | Graphics Processing Unit, GPU | 많은 그래픽·행렬 계산을 동시에 처리하는 장치 |
+| 그래픽 처리 장치 | Graphics Processing Unit, GPU | 픽셀처럼 같은 종류의 계산을 매우 많이 동시에 처리하도록 설계된 장치. 화면·영상·3D·일부 인공지능 계산에 사용 |
 | 그래픽 카드 | Graphics Card | GPU, 그래픽 메모리, 냉각 장치 등을 포함한 확장 장치 |
 | 비디오 메모리 | Video Random Access Memory, VRAM | GPU가 화면과 그래픽 데이터를 잠시 저장하는 전용 메모리 |
-| 주기억장치·RAM | Random Access Memory, RAM | 현재 사용하는 앱과 데이터를 잠시 올려두는 빠른 작업 공간 |
+| RAM·주기억장치(작업 메모리) | Random Access Memory, RAM | 실행 중인 운영체제·앱의 명령과 작업 데이터를 CPU가 빠르게 꺼내 쓰도록 잠시 두는 공간. 일반적인 RAM은 전원이 끊기면 내용이 사라짐 |
 | 캐시 메모리 | Cache Memory | CPU 가까이에서 자주 쓰는 데이터를 매우 빠르게 보관하는 작은 메모리 |
 | 저장 장치 | Storage Device | 전원을 꺼도 파일과 프로그램을 보관하는 장치 |
 | 솔리드 스테이트 드라이브 | Solid-State Drive, SSD | 반도체 메모리에 데이터를 저장하는 빠른 저장 장치 |
@@ -409,15 +409,14 @@
 | 프론트엔드 | Front End / Frontend | 브라우저나 앱에서 사용자가 보고 조작하는 화면과 그 동작을 구현한 부분 |
 | 백엔드 | Back End / Backend | 서버에서 요청을 검사하고 계산하며 데이터 저장·조회 등을 처리하는 프로그램 부분 |
 | 웹 앱 | Web Application / Web App | 브라우저를 통해 사용하며 입력과 처리 기능을 제공하는 응용 프로그램 |
-| 응용 프로그램 프로그래밍 인터페이스 | Application Programming Interface, API | 프로그램끼리 정해진 방법으로 기능이나 데이터를 요청하고 응답받는 연결 규칙 |
-| 데이터베이스 | Database, DB | 여러 데이터를 정해진 구조로 저장하고 조건에 따라 찾고 수정하도록 관리하는 체계 |
+| 응용 프로그램 프로그래밍 인터페이스 | Application Programming Interface, API | 프로그램끼리 기능이나 데이터를 요청하고 응답받을 때 사용하는 정해진 연결 규칙. 웹 화면과 서버뿐 아니라 앱과 운영체제 사이에도 API가 쓰임 |
+| 데이터베이스 | Database, DB | 서로 관련된 데이터를 정해진 구조로 저장해 조건에 따라 찾고 바꿀 수 있게 한 데이터 체계. 백엔드가 DBMS를 통해 읽고 씀 |
 | 데이터베이스 관리 시스템 | Database Management System, DBMS | 데이터베이스를 만들고 조회·추가·수정·삭제하도록 관리하는 소프트웨어 |
 | 패킷 | Packet | 네트워크에서 전달하기 좋게 나눈 데이터 묶음 |
-| IP 주소 | IP Address | 네트워크에서 기기나 연결 지점을 찾기 위한 숫자 주소 |
+| IP 주소 | Internet Protocol Address, IP Address | 인터넷 규칙을 사용해 데이터를 보낼 목적지를 찾는 네트워크 주소. 한 기기에 언제나 같은 주소가 붙는 것은 아님 |
 | 도메인 이름 | Domain Name | 사람이 읽기 쉽게 만든 인터넷 이름 |
 | 도메인 이름 시스템 | Domain Name System, DNS | 도메인 이름을 IP 주소와 연결해 찾도록 돕는 시스템 |
-| 웹 주소 | Web Address / URL | 웹 자원의 위치를 나타내는 주소 |
-| URL | Uniform Resource Locator, URL | 인터넷 자원의 위치와 접근 방법을 나타내는 주소 |
+| 웹 주소·URL | Uniform Resource Locator, URL | `https` 같은 접근 방법, 도메인 이름, 경로 등을 합쳐 어느 웹 자원을 요청할지 나타내는 전체 주소 |
 | 프로토콜 | Protocol | 기기와 프로그램이 통신할 때 따르는 약속 |
 | HTTP | Hypertext Transfer Protocol, HTTP | 웹 데이터를 주고받는 통신 규칙 |
 | HTTPS | Hypertext Transfer Protocol Secure, HTTPS | 암호화된 연결을 사용하는 HTTP |

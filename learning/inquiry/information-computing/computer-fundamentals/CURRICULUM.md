@@ -4,12 +4,12 @@
 
 ## 수업 구조
 
-1. 개념 관계 그림: 용어가 어느 층에 속하고 무엇과 연결되는지 확인한다.
-2. 실제 흐름: 사진 촬영, 파일 저장, 웹 요청 등 한 가지 작업을 단계별로 추적한다.
-3. 기기 비교: PC, Chromebook, iPad, Android/iPhone에서 같은 원리가 어떻게 구현되는지 비교한다.
-4. 비유와 한계: 비유로 역할을 잡고 실제 구조와 다른 점까지 확인한다.
-5. 직접 조작: 터치, 트랙패드, 마우스, 키보드로 분류·드래그 활동을 수행한다.
-6. 문제 해결: 정답을 제출하기 전에는 판정과 해설을 표시하지 않는다. 문구의 `항상`, `무조건`, `~만`을 단서로 고르는 문제는 사용하지 않는다.
+1. 실제 장면: 학생이 겪을 수 있는 한 가지 상황에서 무엇이 일어나는지 먼저 관찰한다.
+2. 시각 자료와 직접 조작: 그림·실제 화면·시뮬레이션을 터치, 트랙패드, 마우스, 키보드로 조작하며 변화와 연결을 확인한다. 측정·비교가 필요한 경우에만 별도 실험 단계를 둔다.
+3. 핵심 원리와 용어: 장면에서 확인한 관계를 한 문장으로 정리한 뒤 한국어·영어 용어와 약어의 풀네임을 확인한다.
+4. 기기 비교: PC, Chromebook, iPad, Android/iPhone에서 같은 원리가 어떻게 구현되는지 비교한다.
+5. 비유와 한계: 비유로 역할을 잡고 실제 구조와 다른 점까지 확인한다.
+6. 문제 해결: 실제 상황에서 원인·순서·관계를 판단한다. 오답을 골라도 정답과 해설을 바로 표시하지 않고 다시 생각하게 한다. 문구의 `항상`, `무조건`, `~만`을 단서로 고르는 문제는 사용하지 않는다.
 
 ## 전체 36차시
 
@@ -38,13 +38,13 @@
 | C01 | 하드웨어·운영체제·앱은 어떻게 이어질까? / Hardware, Operating System, and Apps | 사용자 → 앱 → OS → 하드웨어 |
 | C02 | Windows·ChromeOS·Android·iOS·iPadOS는 무엇이 다를까? / Comparing Operating Systems | 같은 역할, 다른 인터페이스와 호환 환경 |
 | C03 | 앱·프로그램·프로세스·창은 같은 말일까? / Apps, Programs, Processes, and Windows | 저장된 프로그램 → 실행 프로세스 → 창·탭 |
-| C04 | 설정·제어판·권한·업데이트는 무엇을 바꿀까? / Settings, Control Panel, Permissions, and Updates | 설정 범위·권한·관리자·업데이트 |
+| C04 | 설정에서 무엇을 바꾸고 관리할까? / What Can You Change and Manage in Settings? | 설정·제어판·권한·관리자·업데이트·전원 상태 |
 
 ### D. 포인터·터치·키보드 / Pointer, Touch, and Keyboard
 
 | 차시 | 제목 | 핵심 관계 |
 | --- | --- | --- |
-| D01 | 포인터·커서·클릭·드래그는 어떻게 다를까? / Pointer, Cursor, Click, and Drag | 가리키기·선택·실행·이동 |
+| D01 | 포인터·텍스트 커서·클릭·드래그는 어떻게 다를까? / Pointer, Text Cursor, Click, and Drag | 가리키기·선택·실행·이동 |
 | D02 | 터치·탭·길게 누르기·스크롤·확대는 어떻게 작동할까? / Touch Gestures | 접촉 위치·시간·이동·손가락 수 |
 | D03 | 키보드·단축키·클립보드는 어떻게 이어질까? / Keyboard, Shortcuts, and Clipboard | 문자·기능 키·단축키·임시 데이터 |
 
@@ -79,9 +79,9 @@
 | 차시 | 제목 | 핵심 관계 |
 | --- | --- | --- |
 | H01 | 네트워크·Wi-Fi·공유기·인터넷은 어떻게 이어질까? / Networks, Wi-Fi, Routers, and the Internet | 기기 → Wi-Fi → 공유기 → 인터넷 |
-| H02 | 클라이언트·서버·요청·응답·URL·DNS는 어떻게 이어질까? / Clients, Servers, Requests, URLs, and DNS | URL → DNS → 서버 요청·응답 |
+| H02 | 클라이언트·서버·요청·응답·URL·DNS는 어떻게 이어질까? / Clients, Servers, Requests, Responses, URLs, and DNS | URL → DNS → 서버 요청·응답 |
 | H03 | 브라우저·검색 엔진·웹사이트·탭·링크는 무엇이 다를까? / Browsers, Search Engines, Websites, Tabs, and Links | 여는 앱·찾는 서비스·문서·이동 요소 |
-| H04 | 프론트엔드·백엔드·API·데이터베이스는 어떻게 협력할까? / Frontend, Backend, APIs, and Databases | 화면 → API → 서버 규칙 → 데이터 |
+| H04 | 온라인 문제를 제출하면 어디에서 채점할까? / What Happens After You Submit an Online Answer? | 답 선택 → 제출 → 서버 채점 → 점수 저장 → 결과 표시 |
 | H05 | 다운로드·업로드·쿠키·캐시·배포는 어떤 역할일까? / Downloads, Uploads, Cookies, Caches, and Deployment | 데이터 이동·상태·임시 저장·공개 버전 |
 
 ### I. 계정·보안·디지털 시민성 / Accounts, Security, and Digital Citizenship
@@ -89,7 +89,7 @@
 | 차시 | 제목 | 핵심 관계 |
 | --- | --- | --- |
 | I01 | 계정·프로필·로그인·권한·2단계 인증은 어떻게 이어질까? / Accounts, Profiles, Permissions, and Two-Factor Authentication | 식별 → 인증 → 추가 증거 → 권한 |
-| I02 | 피싱·개인정보·저작권·디지털 발자국은 어떻게 판단할까? / Phishing, Privacy, Copyright, and Digital Footprints | 주소·요구 행동·공개 범위·사용 허락의 증거 |
+| I02 | 피싱·개인정보·저작권·디지털 발자국·기기 건강은 어떻게 판단할까? / Phishing, Privacy, Copyright, Digital Footprints, and Digital Well-being | 주소·요구 행동·공개 범위·사용 허락·사용 환경의 증거 |
 
 ### J. 알고리즘과 코딩 논리 / Algorithms and Coding Logic
 
@@ -97,7 +97,7 @@
 | --- | --- | --- |
 | J01 | 문제를 분해하고 순서가 분명한 알고리즘으로 만들려면? / Decomposition, Sequences, and Algorithms | 분해 → 순서 → 절차 → 검증 |
 | J02 | 이벤트·조건·반복은 프로그램의 흐름을 어떻게 바꿀까? / Events, Conditions, and Loops | 사건 → 판단 → 분기 → 반복 |
-| J03 | 버그를 찾고 입력·처리·출력·저장 프로젝트를 완성하려면? / Debugging an Input–Process–Output–Storage Project | 재현 → 관찰 → 수정 → 재시험 |
+| J03 | 사진이 보이지 않는 프로그램을 입력·처리·출력·저장으로 점검하려면? / Debugging a Photo Program with Input, Processing, Output, and Storage | 재현 → 관찰 → 수정 → 재시험 |
 
 ## 구현·검수 기준
 

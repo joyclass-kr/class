@@ -248,8 +248,8 @@
 
         h02: (spec) => figure(spec, "visual-web-request", `
             ${flow([
-                ["URL 입력", "Enter a URL", "www.example.com/page"],
-                ["DNS 조회", "DNS Lookup", "이름을 서버 주소로 찾기"],
+                ["URL 입력", "Uniform Resource Locator", "www.example.com/page"],
+                ["DNS 조회", "Domain Name System", "도메인 이름 → IP 주소"],
                 ["서버 요청", "Request", "필요한 페이지 데이터 요청"],
                 ["서버 응답", "Response", "상태와 데이터를 돌려보냄"]
             ])}
@@ -268,41 +268,35 @@
             <p class="visual-evidence">브라우저는 페이지를 여는 앱이고, 검색 엔진은 페이지를 찾는 웹 서비스입니다. 탭은 열린 문서를 나눕니다.</p>
         `),
 
-        h04: (spec) => figure(spec, "visual-full-stack", `
-            <section class="stack-transaction-lab" data-stack-lab data-stage="0" aria-label="답 제출 요청과 응답의 이동 과정">
-                <div class="stack-boundary device-boundary">
-                    <h3>학생의 기기 <small>Student Device</small></h3>
-                    <div class="stack-node frontend-node" data-stack-node="1">
-                        <span class="screen-icon"><i></i></span>
-                        <strong>프론트엔드 <small>Frontend</small></strong>
-                        <p>답을 입력하고 제출 단추를 누르는 화면</p>
-                        <span class="result-chip" data-stack-node="6">점수 5점 <small>Score: 5</small></span>
-                    </div>
+        h04: (spec, asset) => figure(spec, "visual-full-stack", `
+            <section class="answer-journey" data-stack-lab data-stage="0" aria-label="온라인 문제에서 답을 제출한 뒤 점수가 돌아오는 과정">
+                <div class="answer-journey-scene">
+                    <picture>
+                        <source media="(min-width: 1100px)" srcset="${asset("web-answer-flow-illustration-1536.webp")}">
+                        <img src="${asset("web-answer-flow-illustration-768.webp")}" width="768" height="364" alt="학생이 태블릿에서 답을 보내면 서버가 정답과 비교하고 점수를 보관한 뒤 결과를 다시 태블릿으로 보내는 모습">
+                    </picture>
+                    <button type="button" class="scene-hotspot hotspot-one" data-stack-node="1"><b>1</b><span>답을 입력</span></button>
+                    <button type="button" class="scene-hotspot hotspot-two" data-stack-node="2"><b>2</b><span>서버로 보냄</span></button>
+                    <button type="button" class="scene-hotspot hotspot-three" data-stack-node="3"><b>3</b><span>정답과 비교</span></button>
+                    <button type="button" class="scene-hotspot hotspot-four" data-stack-node="4"><b>4</b><span>점수를 기록</span></button>
+                    <button type="button" class="scene-hotspot hotspot-five" data-stack-node="5"><b>5</b><span>결과를 돌려보냄</span></button>
+                    <button type="button" class="scene-hotspot hotspot-six" data-stack-node="6"><b>6</b><span>점수를 표시</span></button>
                 </div>
-                <div class="stack-api-lane">
-                    <div class="stack-packet request-direction" data-stack-node="2"><b>POST /answers</b><span>답 데이터 →</span></div>
-                    <div class="api-contract" data-stack-node="2"><b>API</b><span>주소·방법·데이터 형식의 약속</span></div>
-                    <div class="stack-packet response-direction" data-stack-node="5"><span>← 채점 결과</span><b>{ score: 5 }</b></div>
-                </div>
-                <div class="stack-boundary server-boundary">
-                    <h3>서버 <small>Server</small></h3>
-                    <div class="stack-node backend-node" data-stack-node="3">
-                        <span class="gear-icon">⚙</span>
-                        <strong>백엔드 <small>Backend</small></strong>
-                        <p>로그인·권한·정답을 확인하고 점수를 계산</p>
-                    </div>
-                    <div class="database-exchange" data-stack-node="4"><span>문제 읽기 ↓</span><span>점수 저장 ↑</span></div>
-                    <div class="stack-node database-node" data-stack-node="4">
-                        <span class="database-icon"></span>
-                        <strong>데이터베이스 <small>Database</small></strong>
-                        <p>문제·계정·점수를 구조에 맞춰 기록</p>
-                    </div>
-                </div>
-                <div class="stack-lab-controller">
+                <div class="stack-lab-controller answer-journey-controller">
                     <button type="button" data-stack-start>답 제출 <small>Submit Answer</small></button>
-                    <p data-stack-status aria-live="polite">답 제출을 누르면 데이터가 이동하는 순서를 확인할 수 있습니다.</p>
+                    <p data-stack-status aria-live="polite">답 제출을 누르면 점수가 돌아오기까지의 순서를 볼 수 있습니다.</p>
                     <button type="button" data-stack-next disabled>다음 단계 <small>Next Step</small></button>
                 </div>
+                <dl class="answer-journey-terms">
+                    <div><dt>내가 보는 문제 화면 <small>Frontend</small></dt><dd>프론트엔드</dd></div>
+                    <div><dt>화면과 서버가 주고받는 방법 <small>Application Programming Interface</small></dt><dd>API</dd></div>
+                    <div><dt>서버에서 확인하고 계산하는 부분 <small>Backend</small></dt><dd>백엔드</dd></div>
+                    <div><dt>문제와 점수를 보관하는 곳 <small>Database</small></dt><dd>데이터베이스</dd></div>
+                </dl>
+                <details class="developer-notation">
+                    <summary>컴퓨터에서는 어떻게 적을까? <small>Developer Notation</small></summary>
+                    <p><code>POST /answers</code>는 답을 보내는 요청의 한 예이고, <code>{ score: 5 }</code>는 점수 결과를 나타내는 한 예입니다.</p>
+                </details>
             </section>
         `),
 

@@ -10,12 +10,16 @@ const portal = read("index.html");
 const coursePage = read(`${courseRoot}/index.html`);
 const lessonPage = read(`${courseRoot}/lessons/index.html`);
 const lessonSource = read(`${courseRoot}/lessons/system-lessons.js`);
-const lessonStyles = read(`${courseRoot}/lessons/system-lessons.css`);
+const systemLessonStyles = read(`${courseRoot}/lessons/system-lessons.css`);
+const conceptLabStyles = read(`${courseRoot}/lessons/concept-labs.css`);
+const lessonStyles = `${systemLessonStyles}\n${conceptLabStyles}`;
+const conceptLabSource = read(`${courseRoot}/lessons/concept-labs.js`);
 const curriculum = read(`${courseRoot}/CURRICULUM.md`);
 const glossary = read(`${courseRoot}/GLOSSARY-KO-EN.md`);
 const foundationFiles = [
   "foundation-core.js",
   "concept-visuals.js",
+  "concept-labs.js",
   "foundation-compact.js",
   "foundation-b.js",
   "foundation-c.js",
@@ -40,6 +44,13 @@ assert.ok(detailedCut > 0, "detailed lesson extraction marker should exist");
 vm.runInContext(`${lessonSource.slice(0, detailedCut)}\nwindow.__DETAILED_LESSONS = detailedLessons;\n})();`, detailedContext);
 const detailedLessons = detailedContext.window.__DETAILED_LESSONS;
 const allLessons = [...detailedLessons, ...generatedLessons].sort((left, right) => left.number - right.number);
+for (const [lessonId, questionIndex, question] of context.window.COMPUTER_REVIEWED_QUESTIONS || []) {
+  const target = allLessons.find((lesson) => lesson.id === lessonId);
+  if (target?.questions?.[questionIndex]) {
+    const concept = target.number <= 6 ? target.questions[questionIndex].concept : question.concept;
+    target.questions[questionIndex] = { ...question, concept };
+  }
+}
 const componentImages = ["cpu", "ram", "gpu", "ssd", "hdd", "motherboard", "psu", "cooling"];
 
 test("the information and computing menu keeps both course links", () => {
@@ -64,10 +75,11 @@ test("the 36-lesson core course is loaded in dependency order", () => {
   for (const page of [coursePage, lessonPage]) {
     const coreAt = page.indexOf("foundation-core.js");
     const visualsAt = page.indexOf("concept-visuals.js");
+    const labsAt = page.indexOf("concept-labs.js");
     const compactAt = page.indexOf("foundation-compact.js");
     const courseAt = page.indexOf("foundation-b.js");
     const engineAt = page.indexOf("system-lessons.js");
-    assert.ok(coreAt >= 0 && coreAt < visualsAt && visualsAt < compactAt && compactAt < courseAt && courseAt < engineAt);
+    assert.ok(coreAt >= 0 && coreAt < visualsAt && visualsAt < labsAt && labsAt < compactAt && compactAt < courseAt && courseAt < engineAt);
   }
 });
 
@@ -83,37 +95,92 @@ test("all generated lessons except the direct manipulation lesson use a specific
   assert.match(mobileLesson.visual, /smartphone-internals-exploded-768\.webp/);
   assert.match(mobileLesson.visual, /tablet-internals-exploded-768\.webp/);
   for (const selector of [
-    ".lesson-specific-figure", ".visual-process", ".touch-screen-demo", ".file-explorer",
-    ".pixel-screen", ".network-map", ".browser-window", ".full-stack-map", ".flowchart", ".debug-console"
+    ".lesson-specific-figure", ".visual-process", ".file-explorer", ".network-map",
+    ".context-illustration", ".os-workbench", ".gesture-lab", ".display-lab", ".image-workbench",
+    ".browser-state-lab", ".answer-journey-scene", ".debug-lab", ".media-capture-lab",
+    ".actual-compression-lab"
   ]) {
     assert.ok(lessonStyles.includes(selector), `${selector} needs visual styling`);
   }
 });
 
-test("all 36 lessons are covered by a visual teaching mode instead of one repeated card pattern", () => {
-  const directManipulation = ["a05", "b01", "d01", "h04"];
-  const stepSequence = ["a01", "a03", "c01", "c03", "e02", "g03", "h02", "i01", "j01", "j03"];
-  const concreteModel = [
-    "a02", "a04", "b02", "b03", "c02", "c04", "d02", "d03", "e01", "e03", "e04", "e05",
-    "f01", "f02", "f03", "g01", "g02", "h01", "h03", "h05", "i02", "j02"
+test("all 36 lessons use an illustration, a task simulation, or direct manipulation instead of one repeated card pattern", () => {
+  const directManipulation = [
+    "a01", "a02", "a03", "a05", "b01", "b02", "b03", "c01", "c02", "c03", "c04", "d01", "d02", "d03", "e01", "e02", "e03", "e04", "e05", "f01", "f02", "f03",
+    "g01", "g02", "g03", "h01", "h02", "h03", "h04", "h05", "i01", "i02", "j01", "j02", "j03"
   ];
-  const covered = [...directManipulation, ...stepSequence, ...concreteModel].sort();
+  const illustratedSequence = ["a04"];
+  const concreteModel = [];
+  const covered = [...directManipulation, ...illustratedSequence, ...concreteModel].sort();
   assert.deepEqual(covered, Array.from(allLessons, (lesson) => lesson.id).sort());
-  for (const id of ["c01", "c03", "e02", "g03", "h02", "i01", "j01", "j03"]) {
+  const premiumSelectors = {
+    b02: "data-mobile-anatomy", b03: "data-port-lab",
+    c01: "data-request-relay", c02: "data-os-lab", c03: "data-program-lab", c04: "data-settings-lab",
+    d02: "data-gesture-lab", d03: "data-clipboard-lab",
+    e01: "data-path-lab", e02: "data-format-lab", e03: "data-file-operation-lab", e04: "data-reference-lab", e05: "data-storage-lab",
+    f01: "data-pixel-lab", f02: "data-color-lab", f03: "data-media-lab",
+    g01: "data-sampling-lab", g02: "data-bit-lab", g03: "data-compression-lab",
+    h01: "data-network-journey", h02: "data-request-lab", h03: "data-browser-lab", h05: "data-transfer-lab", i01: "data-account-lab",
+    i02: "data-evidence-lab", j01: "data-algorithm-lab", j02: "data-control-lab", j03: "data-debug-lab"
+  };
+  const expectedPremium = [
+    "b02", "b03", "c01", "c02", "c03", "c04", "d02", "d03", "e01", "e02", "e03", "e04", "e05", "f01", "f02",
+    "f03", "g01", "g02", "g03", "h01", "h02", "h03", "h05", "i01", "i02", "j01", "j02", "j03"
+  ].sort();
+  assert.deepEqual(Array.from(context.window.COMPUTER_PREMIUM_VISUAL_IDS).sort(), expectedPremium);
+  for (const [id, selector] of Object.entries(premiumSelectors)) {
     const lesson = generatedLessons.find((item) => item.id === id);
-    assert.match(lesson.visual, /data-concept-sequence/);
-    assert.match(lesson.visual, /data-sequence-next/);
+    assert.match(lesson.visual, new RegExp(selector), `${id} needs a task-specific visual lab`);
+  }
+  assert.match(conceptLabSource, /window\.COMPUTER_SETUP_CONCEPT_LABS/);
+  assert.match(lessonSource, /window\.COMPUTER_SETUP_CONCEPT_LABS\?\.\(\)/);
+  for (const selector of ["data-a01-lab", "data-a02-lab", "data-a03-lab"]) {
+    assert.match(lessonSource, new RegExp(selector), `${selector} needs a direct foundation lab`);
+  }
+  for (const setupName of ["setupA01SignalLab", "setupA02CooperationLab", "setupA03CompatibilityLab"]) {
+    assert.match(lessonSource, new RegExp(`function ${setupName}\\(\\)`), `${setupName} needs a stateful setup`);
+  }
+  const foundationIllustrations = {
+    a01: "a01-input-process-output-storage-illustration-v1",
+    a02: "a02-hardware-software-cooperation-illustration-v1",
+    a03: "a03-device-os-app-layers-illustration-v1"
+  };
+  for (const [id, stem] of Object.entries(foundationIllustrations)) {
+    const lesson = detailedLessons.find((item) => item.id === id);
+    assert.match(lesson.visual, /foundation-context-figure/, `${id} needs a visible contextual illustration`);
+    assert.match(lesson.visual, new RegExp(`${stem}-768\\.webp`), `${id} needs its 768px contextual illustration`);
+    assert.match(lesson.visual, new RegExp(`${stem}-1536\\.webp`), `${id} needs its 1536px contextual illustration`);
+  }
+  assert.match(systemLessonStyles, /\.foundation-lab-heading\.has-context/);
+  const networkIllustrations = {
+    h01: "h01-device-router-internet-illustration-v1",
+    h02: "h02-browser-dns-server-journey-illustration-v1"
+  };
+  for (const [id, stem] of Object.entries(networkIllustrations)) {
+    const lesson = generatedLessons.find((item) => item.id === id);
+    assert.match(lesson.visual, /lab-context-figure/, `${id} needs a visible compact network illustration`);
+    assert.match(lesson.visual, new RegExp(`${stem}-768\\.webp`), `${id} needs its 768px network illustration`);
+    assert.match(lesson.visual, new RegExp(`${stem}-1536\\.webp`), `${id} needs its 1536px network illustration`);
+  }
+  assert.match(conceptLabStyles, /\.network-path-heading\.has-context/);
+  for (const selector of ["data-reference-action", "data-account-name", "data-account-code", "data-permission-attempt", "data-privacy-audience", "data-license-purpose", "data-footprint-action", "data-screen-distance", "data-control-step", "data-loop-count"]) {
+    assert.match(conceptLabSource, new RegExp(selector), `${selector} needs a state-changing control`);
   }
   const fullStackLesson = generatedLessons.find((item) => item.id === "h04");
   assert.match(fullStackLesson.visual, /data-stack-lab/);
+  assert.match(fullStackLesson.visual, /web-answer-flow-illustration-768\.webp/);
+  assert.match(fullStackLesson.visual, /web-answer-flow-illustration-1536\.webp/);
+  assert.match(fullStackLesson.visual, /<details class="developer-notation">/);
   assert.match(fullStackLesson.visual, /POST \/answers/);
   assert.match(fullStackLesson.visual, /data-stack-node="6"/);
   assert.doesNotMatch(fullStackLesson.visual, /class="full-stack-map"/);
   assert.match(lessonSource, /function setupConceptSequences\(\)/);
   assert.match(lessonSource, /function setupFullStackLab\(\)/);
-  assert.match(lessonSource, /프론트엔드가 학생이 입력한 답을 읽어 요청 데이터를 만듭니다/);
+  assert.match(lessonSource, /문제 화면이 학생이 고른 답을 챙깁니다/);
   assert.match(lessonStyles, /\.concept-overview\.has-stack-lab \{ grid-template-columns: 1fr; \}/);
-  assert.match(lessonStyles, /\.stack-transaction-lab/);
+  assert.match(lessonStyles, /\.answer-journey-scene/);
+  assert.match(lessonStyles, /\.scene-hotspot\.is-active/);
+  assert.match(lessonStyles, /\.answer-journey-terms/);
   assert.doesNotMatch(lessonStyles, /\.lesson-specific-board \{[\s\S]{0,120}min-height: 330px/);
 });
 
@@ -129,7 +196,7 @@ test("every generated lesson has substantive bilingual content, manipulation, an
       assert.equal(question.options.length, 4, `${lesson.id} question needs four options`);
       assert.ok(question.answer >= 0 && question.answer < question.options.length);
       assert.ok(question.explanation.length >= 20, `${lesson.id} needs a reasoned explanation`);
-      assert.doesNotMatch(question.options.join(" "), /무조건|항상|전부 다|오직 .*만/);
+      assert.doesNotMatch(question.options.join(" "), /무조건|항상|전부 다|모든|자동으로|저절로|오직 .*만/);
     }
   }
 });
@@ -188,15 +255,33 @@ test("every lesson activity and assessment is internally consistent", () => {
       assert.equal(new Set(question.options).size, 4, `${lesson.id} choices must be distinct`);
       assert.ok(Number.isInteger(question.answer) && question.answer >= 0 && question.answer < 4, `${lesson.id} needs a valid answer index`);
       assert.ok(term && question.explanation.length >= 20, `${lesson.id} needs a term and reasoned feedback`);
-      assert.doesNotMatch([prompt, ...question.options].join(" "), /무조건|항상|전부 다|오직 .*만/);
+      assert.match(term, /[A-Za-z]/, `${lesson.id} question concept needs an English term`);
+      assert.doesNotMatch(question.options.join(" "), /무조건|항상|전부 다|모든|자동으로|저절로|오직 .*만|한 교실 안에서만/);
     }
   }
 
 });
 
 test("every referenced WebP lesson visual exists in the course assets", () => {
-  const source = [lessonSource, ...foundationSources].join("\n");
-  const imageNames = [...source.matchAll(/[A-Za-z0-9-]+\.webp/g)].map((match) => match[0]);
+  const imageNames = [];
+  const collectWebpAssets = (value) => {
+    if (Array.isArray(value)) {
+      value.forEach(collectWebpAssets);
+      return;
+    }
+    if (value && typeof value === "object") {
+      Object.values(value).forEach(collectWebpAssets);
+      return;
+    }
+    if (typeof value !== "string") return;
+    if (!value.includes("<") && /[A-Za-z0-9-]+\.webp$/.test(value)) {
+      imageNames.push(value.match(/([A-Za-z0-9-]+\.webp)$/)[1]);
+    }
+    for (const match of value.matchAll(/(?:src|srcset)="[^"]*?([A-Za-z0-9-]+\.webp)/g)) {
+      imageNames.push(match[1]);
+    }
+  };
+  collectWebpAssets(allLessons);
   assert.ok(imageNames.length >= 20, "the lessons should use a substantial set of visual assets");
   for (const imageName of new Set(imageNames)) {
     assert.ok(exists(`${courseRoot}/assets/images/${imageName}`), `${imageName} should exist`);
@@ -207,8 +292,8 @@ test("the curriculum presents ten progressive modules instead of an unimplemente
     assert.match(curriculum, new RegExp(`### ${moduleCode}\\.`));
   }
   assert.match(curriculum, /B02 \| 휴대전화와 태블릿 안에도 컴퓨터가 있을까/);
-  assert.match(curriculum, /H04 \| 프론트엔드·백엔드·API·데이터베이스는 어떻게 협력할까/);
-  assert.match(curriculum, /J03 \| 버그를 찾고 입력·처리·출력·저장 프로젝트를 완성하려면/);
+  assert.match(curriculum, /H04 \| 온라인 문제를 제출하면 어디에서 채점할까/);
+  assert.match(curriculum, /J03 \| 사진이 보이지 않는 프로그램을 입력·처리·출력·저장으로 점검하려면/);
   assert.match(lessonPage, /id="lessonList" class="course-modules"/);
   assert.match(lessonSource, /<details class="course-module"/);
   assert.match(lessonStyles, /\.course-module summary/);
@@ -294,7 +379,7 @@ test("mobile and Chromebook interiors are project assets used in device comparis
 test("the bilingual glossary covers every core vocabulary family", () => {
   const requiredTerms = [
     "아날로그", "디지털", "하드웨어", "소프트웨어", "입력", "처리", "출력", "저장",
-    "중앙 처리 장치", "그래픽 처리 장치", "주기억장치·RAM", "솔리드 스테이트 드라이브", "하드 디스크 드라이브", "메인보드", "시스템 온 칩", "장치 드라이버",
+    "중앙 처리 장치", "그래픽 처리 장치", "RAM·주기억장치", "솔리드 스테이트 드라이브", "하드 디스크 드라이브", "메인보드", "시스템 온 칩", "장치 드라이버",
     "운영체제", "Windows", "ChromeOS", "Android", "iOS", "iPadOS", "프로그램", "프로세스", "창", "탭", "설정", "제어판", "권한", "업데이트",
     "포인터", "텍스트 커서", "드래그 앤 드롭", "탭", "길게 누르기", "스와이프", "핀치", "키보드 단축키", "클립보드",
     "드라이브", "폴더", "파일", "경로", "확장자", "파일 형식", "아이콘", "원본", "바로가기 아이콘", "북마크", "즐겨찾기", "클라우드 저장소", "동기화", "백업", "압축 파일",
@@ -322,7 +407,112 @@ test("student-facing copy names the content without promotional filler", () => {
   for (const phrase of ["헷갈리지 않기", "쉽게 비유하면", "한눈에 비교", "원리 보기", "직접 확인하기", "앞의 개념을 이해하면"] ) {
     assert.doesNotMatch(studentFacingCopy, new RegExp(phrase));
   }
-  for (const label of ["개념 설명", "활동 시작", "개념 비교", "동작 순서", "명칭과 어원"]) {
+  for (const label of ["장면에서 시작하기", "핵심 원리", "핵심 용어", "개념 비교", "동작 순서", "명칭과 어원"]) {
     assert.match(studentFacingCopy, new RegExp(label));
   }
+});
+
+test("generic sort lessons continue directly to questions while real experiments keep three stages", () => {
+  assert.match(lessonSource, /const hasStandaloneActivity = lesson\.activity\.type !== "sort"/);
+  assert.match(lessonSource, /if \(lesson\.activity\.type === "sort"\) \{\s*resetQuiz\(\);\s*showStage\("quiz", "문제 풀이 2 \/ 2"\)/);
+  assert.match(lessonSource, /hasStandaloneActivity \? "실험 시작" : "문제 풀기"/);
+  assert.match(lessonSource, /"직접 조작 2 \/ 3"/);
+  assert.deepEqual(
+    allLessons.filter((lesson) => lesson.activity.type !== "sort").map((lesson) => lesson.id),
+    ["a04", "a05"]
+  );
+});
+
+test("a wrong choice is disabled for retry without revealing the correct answer", () => {
+  const handler = lessonSource.slice(
+    lessonSource.indexOf('submitAnswer.addEventListener("click"'),
+    lessonSource.indexOf('nextQuestion.addEventListener("click"')
+  );
+  const wrongBranch = handler.slice(handler.indexOf("if (!correct)"), handler.indexOf("if (!questionHadWrong)"));
+  assert.match(wrongBranch, /chosenButton\.disabled = true/);
+  assert.match(wrongBranch, /selectedOption = -1/);
+  assert.match(wrongBranch, /submitAnswer\.disabled = true/);
+  assert.match(wrongBranch, /return;/);
+  assert.doesNotMatch(wrongBranch, /question\.explanation/);
+  assert.doesNotMatch(wrongBranch, /is-answer/);
+});
+
+test("secondary explanations use one progressive disclosure instead of three always-open card walls", () => {
+  for (const page of [coursePage, lessonPage]) {
+    assert.match(page, /<details class="concept-reference">/);
+    assert.match(page, /동작 순서·개념 비교·비유/);
+    assert.match(page, /<div id="conceptStory"><\/div>/);
+    assert.match(page, /<div id="conceptCompare"><\/div>/);
+    assert.match(page, /<div id="conceptAnalogy"><\/div>/);
+  }
+  assert.match(lessonStyles, /\.concept-reference > summary/);
+  assert.match(lessonStyles, /min-height: 56px/);
+  assert.match(lessonStyles, /\.concept-reference \.story-steps li/);
+  assert.match(lessonStyles, /\.concept-reference \.comparison-grid article/);
+  assert.match(lessonSource, /has-premium-visual/);
+  assert.match(lessonStyles, /\.concept-overview\.has-premium-visual/);
+});
+
+test("corrected concept models keep their real hierarchy, sequence, and distinctions", () => {
+  assert.match(conceptLabSource, /data-algo-step="prepare" data-order="1"/);
+  assert.match(conceptLabSource, /data-algo-step="bread" data-order="2"/);
+  assert.match(conceptLabSource, /data-algo-step="cheese" data-order="3"/);
+  assert.match(conceptLabSource, /data-algo-step="close" data-order="4"/);
+  assert.match(conceptLabSource, /기기 저장소\/민준\/그림\/여행/);
+  assert.match(conceptLabSource, /실제 구분 기호는 운영체제에 따라/);
+  assert.match(conceptLabStyles, /data-path-stage="drive"\] \.user-folder/);
+  assert.match(conceptLabStyles, /data-path-stage="user"\] \.pictures-folder/);
+  assert.match(conceptLabStyles, /data-path-stage="pictures"\] \.trip-folder/);
+  assert.match(conceptLabStyles, /data-path-stage="trip"\] \.beach-file/);
+  assert.match(conceptLabStyles, /data-path-stage="file"\] \.beach-file/);
+  assert.match(conceptLabSource, /바다\.jpg/);
+  assert.match(conceptLabSource, /data-transfer-mode-choice="cookie"/);
+  assert.match(conceptLabSource, /data-transfer-mode-choice="cache"/);
+  assert.match(conceptLabSource, /data-transfer-mode-choice="deploy"/);
+  assert.match(conceptLabSource, /data-cookie-store/);
+  assert.match(conceptLabSource, /data-cache-count/);
+  assert.match(conceptLabSource, /data-deploy-server/);
+  assert.doesNotMatch(conceptLabSource, /<progress/);
+  assert.match(conceptLabSource, /이 실험의 기록 규칙:/);
+  assert.match([conceptLabSource, ...foundationSources].join("\n"), /UTF-8/);
+  assert.match(conceptLabSource, /canvas\.toBlob/);
+});
+
+test("new lesson tools expose real state changes and primary-device layout rules", () => {
+  for (const section of ["privacy", "display", "update", "power"]) {
+    assert.ok(conceptLabSource.includes('data-settings-panel="' + section + '"'));
+  }
+  assert.match(conceptLabSource, /data-update-check/);
+  assert.match(conceptLabSource, /chooseSection\("privacy"\)/);
+  assert.match(conceptLabSource, /data-power-action="shutdown"/);
+  assert.match(conceptLabSource, /data-reference-marker/);
+  assert.match(conceptLabSource, /data-browser-search-form/);
+  assert.match(conceptLabSource, /data-browser-back/);
+  assert.match(conceptLabSource, /data-gesture-surface role="button" tabindex="0"/);
+  assert.match(conceptLabSource, /surface\.addEventListener\("pointerdown"/);
+  assert.match(conceptLabSource, /pinchDelta >= 24/);
+  assert.match(conceptLabSource, /data-audio-sample-choice="24"/);
+  assert.match(conceptLabSource, /data-bit-place/);
+  assert.match(conceptLabSource, /data-unit-index/);
+  assert.match(conceptLabSource, /1 KiB = 1024 B/);
+  assert.match(conceptLabSource, /data-citizenship-choice="copyright"/);
+  assert.match(conceptLabSource, /data-debug-code/);
+  assert.doesNotMatch(conceptLabSource, /data-debug-fix/);
+  assert.match(conceptLabSource, /data-algo-check/);
+  assert.match(conceptLabSource, /data-control-run/);
+  assert.match(conceptLabSource, /data-port-lab/);
+  assert.match(conceptLabSource, /data-request-relay/);
+  assert.match(conceptLabSource, /data-program-lab/);
+  assert.match(conceptLabSource, /data-clipboard-lab/);
+  assert.match(conceptLabSource, /data-display-mode/);
+  assert.match(conceptLabSource, /data-image-panel-choice/);
+  assert.match(conceptLabSource, /canvas\.toBlob/);
+  assert.match(conceptLabStyles, /@media \(min-width: 821px\)/);
+  assert.match(conceptLabStyles, /@media \(max-width: 820px\)/);
+  assert.match(conceptLabStyles, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.match(conceptLabStyles, /\[data-mobile-marker\]/);
+  assert.match(conceptLabStyles, /input\[type="range"\][\s\S]{0,180}min-height: 44px/);
+  assert.match(conceptLabSource, /srcset=/);
+  assert.match(conceptLabSource, /768w/);
+  assert.match(conceptLabSource, /1536w/);
 });

@@ -17,27 +17,41 @@
             domain: "컴퓨터의 기본 원리",
             title: "컴퓨터는 무슨 일을 할까?",
             english: "What Does a Computer Do?",
-            conceptTitle: "입력된 데이터는 처리된 뒤 출력되거나 저장된다",
+            conceptTitle: "컴퓨터는 정보를 받아 계산하고, 결과를 보여 주거나 저장한다",
             visual: `
-                <div class="visual-gallery">
-                    <figure class="concept-illustration">
-                        <picture>
-                            <source srcset="${asset("tablet-photo-data-flow-768.webp")} 768w, ${asset("tablet-photo-data-flow-1536.webp")} 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
-                            <img src="${asset("tablet-photo-data-flow-768.webp")}" width="1536" height="1024" alt="나무 블록에서 반사된 빛이 태블릿 카메라 센서로 들어가 처리 칩을 거친 뒤 화면 표시와 내부 저장 장치의 두 갈래로 나뉘는 모습">
-                        </picture>
-                        <figcaption>카메라가 받은 빛은 숫자 데이터로 바뀌고, 처리된 결과는 화면에 보이는 길과 파일로 남는 길로 나뉩니다.</figcaption>
-                    </figure>
-                    <div class="system-visual data-flow-visual" aria-label="입력 처리 출력 저장의 관계">
-                        <div class="flow-role input"><strong>입력 <small>Input</small></strong><span>빛·소리·터치·키 입력을 데이터로 받음</span></div>
-                        <span class="flow-arrow" aria-hidden="true">→</span>
-                        <div class="flow-role processing"><strong>처리 <small>Processing</small></strong><span>명령에 따라 계산·비교·변환</span></div>
-                        <span class="flow-branch" aria-hidden="true">↗<br>↘</span>
-                        <div class="flow-outcomes">
-                            <div class="flow-role output"><strong>출력 <small>Output</small></strong><span>화면·소리·인쇄로 나타냄</span></div>
-                            <div class="flow-role storage"><strong>저장 <small>Storage</small></strong><span>파일로 기록해 다시 사용함</span></div>
+                <section class="foundation-direct-lab a01-signal-lab" data-a01-lab data-input="camera" data-route="preview" data-run-state="idle" aria-labelledby="a01LabTitle">
+                    <header class="foundation-lab-heading has-context">
+                        <div><span>신호 추적 실험 <small>Signal Tracing Lab</small></span><h3 id="a01LabTitle">하나의 입력이 처리된 뒤 출력과 저장 중 어디로 가는지 실행해 보세요.</h3></div>
+                        <button type="button" class="foundation-reset" data-a01-reset>처음 상태 <small>Reset</small></button>
+                        <figure class="foundation-context-figure">
+                            <img src="${asset("a01-input-process-output-storage-illustration-v1-768.webp")}" srcset="${asset("a01-input-process-output-storage-illustration-v1-768.webp")} 768w, ${asset("a01-input-process-output-storage-illustration-v1-1536.webp")} 1536w" sizes="(max-width: 620px) 244px, (max-width: 820px) 144px, (max-width: 1180px) 16vw, 190px" width="1536" height="1024" loading="eager" decoding="async" alt="바람개비에서 온 빛이 태블릿 카메라로 들어가 처리 칩을 거친 뒤 화면에 보이고 사진 파일로 저장되는 흐름">
+                            <figcaption>출력·저장 두 경로<small>Output &amp; Storage</small></figcaption>
+                        </figure>
+                    </header>
+                    <div class="a01-controls">
+                        <fieldset><legend>1. 입력 고르기 <small>Choose Input</small></legend><div class="foundation-choice-row" role="group" aria-label="추적할 입력 선택">
+                            <button type="button" data-a01-input="camera" aria-pressed="true"><span aria-hidden="true">▣</span>카메라 <small>Camera</small></button>
+                            <button type="button" data-a01-input="keyboard" aria-pressed="false"><span aria-hidden="true">⌨</span>키보드 <small>Keyboard</small></button>
+                            <button type="button" data-a01-input="microphone" aria-pressed="false"><span aria-hidden="true">◉</span>마이크 <small>Microphone</small></button>
+                        </div></fieldset>
+                        <fieldset><legend>2. 처리 뒤 보낼 길 <small>Choose Route</small></legend><div class="foundation-choice-row a01-route-row" role="group" aria-label="처리한 데이터의 경로 선택">
+                            <button type="button" data-a01-route="preview" aria-pressed="true">출력만 <small>Output Only</small></button>
+                            <button type="button" data-a01-route="save" aria-pressed="false">출력 + 파일 저장 <small>Output + Save</small></button>
+                        </div></fieldset>
+                        <button type="button" class="foundation-run" data-a01-run>신호 보내기 <small>Run Signal</small></button>
+                    </div>
+                    <div class="a01-signal-stage" aria-label="입력 데이터가 처리된 뒤 출력과 저장으로 갈라지는 경로">
+                        <article class="a01-node a01-input-node" data-a01-node="input"><span>입력 <small>Input</small></span><strong data-a01-input-title>카메라</strong><p data-a01-input-data>센서가 빛의 밝기와 색을 측정</p></article>
+                        <span class="a01-arrow" aria-hidden="true">→</span>
+                        <article class="a01-node a01-process-node" data-a01-node="process"><span>처리 <small>Processing</small></span><strong data-a01-process-title>사진 데이터 만들기</strong><p data-a01-process-data>빛 값을 픽셀로 배열하고 색을 보정</p></article>
+                        <span class="a01-branch" aria-hidden="true"><i></i><b></b></span>
+                        <div class="a01-destinations">
+                            <article class="a01-node a01-output-node" data-a01-node="output"><span>출력 <small>Output</small></span><strong data-a01-output-title>화면 미리보기</strong><p data-a01-output-data>픽셀이 장면을 바로 보여 줌</p><em data-a01-output-state>아직 실행하지 않음</em></article>
+                            <article class="a01-node a01-storage-node" data-a01-node="storage"><span>저장 <small>Storage</small></span><strong data-a01-storage-title>photo.webp</strong><p data-a01-storage-data>저장 장치에 사진 파일 기록</p><em data-a01-storage-state>경로를 선택하지 않음</em></article>
                         </div>
                     </div>
-                </div>`,
+                    <div class="foundation-evidence a01-evidence" aria-live="polite"><strong>실행 증거 <small>Run Evidence</small></strong><p data-a01-status>입력과 경로를 고른 뒤 신호를 보내세요.</p><dl><div><dt>화면·소리</dt><dd data-a01-output-proof>대기 중</dd></div><div><dt>저장 장치</dt><dd data-a01-storage-proof>대기 중</dd></div></dl></div>
+                </section>`,
             details: [
                 ["입력", "Input", "사람의 조작이나 센서의 측정값을 컴퓨터 안으로 받는 역할입니다. 스마트폰의 터치 좌표, 카메라 센서가 측정한 빛, 키보드가 보낸 키 신호가 입력 데이터가 됩니다."],
                 ["처리", "Processing", "CPU·GPU와 실행 중인 앱이 명령에 따라 데이터를 계산·비교·변환합니다. 카메라 앱은 센서 값을 픽셀로 배열하고 밝기와 색을 보정합니다."],
@@ -108,13 +122,13 @@
                 success: "기기의 모양이 달라도 입력–처리–출력–저장이라는 같은 관계로 설명할 수 있음을 확인했습니다."
             },
             questions: [
-                { text: "태블릿 카메라 화면에는 장면이 계속 보이지만 촬영 버튼을 누르지 않았습니다. 현재 일어난 역할의 조합으로 가장 알맞은 것은 무엇입니까?", options: ["센서 입력–영상 처리–화면 출력", "파일 저장–키보드 입력–인쇄 출력", "화면 저장–배터리 처리–센서 출력", "파일 입력–폴더 처리–카메라 저장"], answer: 0, concept: "입력·처리·출력", explanation: "미리보기는 센서가 빛을 입력하고 앱과 처리 장치가 계산한 결과를 화면에 출력한 상태입니다. 촬영 파일 저장은 아직 일어나지 않을 수 있습니다." },
-                { text: "사진을 찍은 뒤 기기를 완전히 종료했다가 다시 켰는데도 사진 앱에서 열 수 있었습니다. 이 사실을 가장 직접적으로 뒷받침하는 것은 무엇입니까?", options: ["사진 데이터가 저장 장치에 파일로 기록되었다", "사진 앱이 카메라 센서에서 이전 장면을 다시 측정했다", "디스플레이 회로가 꺼지기 전 픽셀 빛을 보존했다", "프로세서가 원본 데이터 없이 같은 사진을 다시 계산했다"], answer: 0, concept: "저장", explanation: "전원을 끈 뒤에도 다시 열 수 있으려면 사진 데이터가 비휘발성 저장 장치에 파일로 기록되어 있어야 합니다." },
-                { text: "Chromebook에서 키를 눌렀더니 문서 앱이 글자가 들어갈 위치를 계산했습니다. 키 신호와 위치 계산의 역할을 순서대로 고르면 무엇입니까?", options: ["입력–처리", "처리–저장", "저장–출력", "출력–입력"], answer: 0, concept: "입력과 처리", explanation: "키보드는 눌린 키를 입력으로 보내고, 앱과 CPU는 현재 커서 위치와 입력 규칙을 처리합니다." },
-                { text: "스마트폰에서 음악 파일을 열자 CPU가 파일 형식을 해석하고 스피커가 소리를 냈습니다. CPU와 스피커의 역할을 순서대로 고르면 무엇입니까?", options: ["처리–출력", "입력–저장", "저장–처리", "출력–입력"], answer: 0, concept: "처리와 출력", explanation: "파일 데이터를 해석하는 것은 처리이고, 전기 신호를 실제 소리로 나타내는 스피커는 출력 장치입니다." },
-                { text: "그림 앱에서 선을 그린 직후 저장하지 않고 앱을 강제로 종료했습니다. 다시 열었을 때 선이 사라질 수 있는 이유는 무엇입니까?", options: ["임시 작업 데이터가 RAM에 있었고 저장 장치 기록이 끝나지 않았기 때문이다", "저장된 파일의 화면 해상도가 터치 좌표와 달랐기 때문이다", "터치 센서가 입력 좌표를 디스플레이 픽셀로 출력했기 때문이다", "GPU의 그림 계산 결과가 원본 파일을 대신해 기록되었기 때문이다"], answer: 0, concept: "작업 데이터와 파일", explanation: "실행 중 작업이 RAM에 있고 저장 장치의 파일에 기록되지 않았다면 앱 종료 뒤 변경 내용이 남지 않을 수 있습니다." },
-                { text: "같은 사진 데이터를 화면에 보여 주면서 저장 장치에도 기록했습니다. 이 상황이 가능한 까닭은 무엇입니까?", options: ["처리된 데이터를 출력 경로와 저장 경로에서 각각 사용할 수 있기 때문이다", "화면으로 보낸 데이터가 이동하면서 저장 장치의 원본이 사라지기 때문이다", "저장 장치가 영상 계산을 맡고 디스플레이가 파일 형식을 정하기 때문이다", "카메라 센서가 화면 픽셀을 거쳐 저장 장치에 직접 기록하기 때문이다"], answer: 0, concept: "데이터의 분기", explanation: "처리된 데이터는 복사되거나 서로 다른 경로로 전달되어 화면 출력과 파일 저장에 함께 사용될 수 있습니다." },
-                { text: "PC, Chromebook, 태블릿, 스마트폰에서 공통으로 찾아야 할 관계는 무엇입니까?", options: ["입력을 받고 명령에 따라 처리한 뒤 결과를 출력하거나 저장한다", "처리 장치의 모양과 운영체제 이름이 일치해야 앱을 실행한다", "키보드나 터치 신호가 처리 장치를 거치지 않고 화면에 표시된다", "저장 장치가 앱 명령을 해석하고 CPU가 파일을 장기 보관한다"], answer: 0, concept: "공통 원리", explanation: "부품의 모양과 운영체제는 달라도 데이터를 입력받아 처리하고 출력하거나 저장하는 기본 관계는 공통입니다." }
+                { text: "태블릿 카메라 화면에는 장면이 계속 보이지만 촬영 버튼을 누르지 않았습니다. 현재 일어난 역할의 조합으로 가장 알맞은 것은 무엇입니까?", options: ["센서 입력–영상 처리–화면 출력", "파일 저장–키보드 입력–인쇄 출력", "화면 저장–배터리 처리–센서 출력", "파일 입력–폴더 처리–카메라 저장"], answer: 0, concept: "입력·처리·출력 · Input, Processing, and Output", explanation: "미리보기는 센서가 빛을 입력하고 앱과 처리 장치가 계산한 결과를 화면에 출력한 상태입니다. 촬영 파일 저장은 아직 일어나지 않을 수 있습니다." },
+                { text: "사진을 찍은 뒤 기기를 완전히 종료했다가 다시 켰는데도 사진 앱에서 열 수 있었습니다. 이 사실을 가장 직접적으로 뒷받침하는 것은 무엇입니까?", options: ["사진 데이터가 저장 장치에 파일로 기록되었다", "사진 앱이 카메라 센서에서 이전 장면을 다시 측정했다", "디스플레이 회로가 꺼지기 전 픽셀 빛을 보존했다", "프로세서가 원본 데이터 없이 같은 사진을 다시 계산했다"], answer: 0, concept: "저장 · Storage", explanation: "전원을 끈 뒤에도 다시 열 수 있으려면 사진 데이터가 비휘발성 저장 장치에 파일로 기록되어 있어야 합니다." },
+                { text: "Chromebook에서 키를 눌렀더니 문서 앱이 글자가 들어갈 위치를 계산했습니다. 키 신호와 위치 계산의 역할을 순서대로 고르면 무엇입니까?", options: ["입력–처리", "처리–저장", "저장–출력", "출력–입력"], answer: 0, concept: "입력과 처리 · Input and Processing", explanation: "키보드는 눌린 키를 입력으로 보내고, 앱과 CPU는 현재 커서 위치와 입력 규칙을 처리합니다." },
+                { text: "스마트폰에서 음악 파일을 열자 CPU가 파일 형식을 해석하고 스피커가 소리를 냈습니다. CPU와 스피커의 역할을 순서대로 고르면 무엇입니까?", options: ["처리–출력", "입력–저장", "저장–처리", "출력–입력"], answer: 0, concept: "처리와 출력 · Processing and Output", explanation: "파일 데이터를 해석하는 것은 처리이고, 전기 신호를 실제 소리로 나타내는 스피커는 출력 장치입니다." },
+                { text: "그림 앱에서 선을 그린 직후 저장하지 않고 앱을 강제로 종료했습니다. 다시 열었을 때 선이 사라질 수 있는 이유는 무엇입니까?", options: ["임시 작업 데이터가 RAM에 있었고 저장 장치 기록이 끝나지 않았기 때문이다", "저장된 파일의 화면 해상도가 터치 좌표와 달랐기 때문이다", "터치 센서가 입력 좌표를 디스플레이 픽셀로 출력했기 때문이다", "GPU의 그림 계산 결과가 원본 파일을 대신해 기록되었기 때문이다"], answer: 0, concept: "작업 데이터와 파일 · Working Data and Saved Files", explanation: "실행 중 작업이 RAM에 있고 저장 장치의 파일에 기록되지 않았다면 앱 종료 뒤 변경 내용이 남지 않을 수 있습니다." },
+                { text: "같은 사진 데이터를 화면에 보여 주면서 저장 장치에도 기록했습니다. 이 상황이 가능한 까닭은 무엇입니까?", options: ["처리된 데이터를 출력 경로와 저장 경로에서 각각 사용할 수 있기 때문이다", "화면으로 보낸 데이터가 이동하면서 저장 장치의 원본이 사라지기 때문이다", "저장 장치가 영상 계산을 맡고 디스플레이가 파일 형식을 정하기 때문이다", "카메라 센서가 화면 픽셀을 거쳐 저장 장치에 직접 기록하기 때문이다"], answer: 0, concept: "데이터의 분기 · Branching Data Flow", explanation: "처리된 데이터는 복사되거나 서로 다른 경로로 전달되어 화면 출력과 파일 저장에 함께 사용될 수 있습니다." },
+                { text: "PC, Chromebook, 태블릿, 스마트폰에서 공통으로 찾아야 할 관계는 무엇입니까?", options: ["입력을 받고 명령에 따라 처리한 뒤 결과를 출력하거나 저장한다", "처리 장치의 모양과 운영체제 이름이 일치해야 앱을 실행한다", "키보드나 터치 신호가 처리 장치를 거치지 않고 화면에 표시된다", "저장 장치가 앱 명령을 해석하고 CPU가 파일을 장기 보관한다"], answer: 0, concept: "공통 원리 · Common Computing Principle", explanation: "부품의 모양과 운영체제는 달라도 데이터를 입력받아 처리하고 출력하거나 저장하는 기본 관계는 공통입니다." }
             ]
         },
         {
@@ -122,41 +136,33 @@
             number: 2,
             title: "하드웨어와 소프트웨어는 어떻게 다를까?",
             english: "Hardware and Software",
-            conceptTitle: "물리적인 장치와 실행되는 명령",
+            conceptTitle: "손으로 만지는 부품은 하드웨어이고, 그 부품에 일을 시키는 프로그램은 소프트웨어다",
             visual: `
-                <div class="visual-gallery">
-                    <figure class="concept-illustration">
-                        <picture>
-                            <source srcset="${asset("hardware-software-flow-768.webp")} 768w, ${asset("hardware-software-flow-1536.webp")} 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
-                            <img src="${asset("hardware-software-flow-768.webp")}" width="1536" height="1024" alt="키보드 입력이 노트북 안으로 들어가 소프트웨어 명령, RAM, CPU를 거친 뒤 화면의 결과로 나타나는 네 단계 흐름">
-                        </picture>
-                        <figcaption>키를 누르는 물리적 동작은 소프트웨어의 명령과 데이터를 거쳐 다시 화면의 물리적 빛으로 나타납니다.</figcaption>
-                    </figure>
-                    <div class="system-visual hardware-software-visual" aria-label="하드웨어와 소프트웨어가 협력하는 관계">
-                        <section class="visual-panel">
-                            <h3>하드웨어 <small>Hardware</small></h3>
-                            <div class="part-grid">
-                                <span class="part-chip">CPU<small>명령 실행</small></span>
-                                <span class="part-chip">RAM<small>실행 중 작업</small></span>
-                                <span class="part-chip">디스플레이<small>결과 표시</small></span>
-                                <span class="part-chip">키보드<small>동작 입력</small></span>
-                            </div>
-                        </section>
-                        <div class="execution-arrow" aria-hidden="true">↔<small>요청과<br>결과</small></div>
-                        <section class="visual-panel">
-                            <h3>소프트웨어 <small>Software</small></h3>
-                            <div class="part-grid">
-                                <span class="software-card">운영체제<small>자원 관리</small></span>
-                                <span class="software-card">그림 앱<small>그리기 명령</small></span>
-                                <span class="software-card">웹 브라우저<small>웹 문서 표시</small></span>
-                                <span class="software-card">장치 드라이버<small>장치 제어</small></span>
-                            </div>
-                        </section>
+                <section class="foundation-direct-lab a02-cooperation-lab" data-a02-lab data-hardware="display" data-command="pixels" data-result="idle" aria-labelledby="a02LabTitle">
+                    <header class="foundation-lab-heading has-context">
+                        <div><span>협업 실행 실험 <small>Hardware–Software Cooperation Lab</small></span><h3 id="a02LabTitle">물리 장치와 소프트웨어 명령을 연결해 실제 결과가 생기는 조건을 확인하세요.</h3></div>
+                        <button type="button" class="foundation-reset" data-a02-reset>처음 상태 <small>Reset</small></button>
+                        <figure class="foundation-context-figure">
+                            <img src="${asset("a02-hardware-software-cooperation-illustration-v1-768.webp")}" srcset="${asset("a02-hardware-software-cooperation-illustration-v1-768.webp")} 768w, ${asset("a02-hardware-software-cooperation-illustration-v1-1536.webp")} 1536w" sizes="(max-width: 620px) 244px, (max-width: 820px) 144px, (max-width: 1180px) 16vw, 190px" width="1536" height="1024" loading="eager" decoding="async" alt="학생이 태블릿에서 고른 명령이 투명한 로봇의 회로와 부품을 움직여 펜으로 선을 그리게 하는 모습">
+                            <figcaption>명령과 장치의 협업<small>Software + Hardware</small></figcaption>
+                        </figure>
+                    </header>
+                    <div class="a02-configurator">
+                        <fieldset><legend>하드웨어 선택 <small>Physical Device</small></legend><div class="foundation-choice-row" role="group" aria-label="결과를 만들 하드웨어 선택"><button type="button" data-a02-hardware="display" aria-pressed="true">디스플레이 <small>Display</small></button><button type="button" data-a02-hardware="speaker" aria-pressed="false">스피커 <small>Speaker</small></button><button type="button" data-a02-hardware="printer" aria-pressed="false">프린터 <small>Printer</small></button></div></fieldset>
+                        <fieldset><legend>소프트웨어 명령 선택 <small>Software Command</small></legend><div class="foundation-choice-row" role="group" aria-label="실행할 소프트웨어 명령 선택"><button type="button" data-a02-command="pixels" aria-pressed="true">픽셀 그리기 <small>Draw Pixels</small></button><button type="button" data-a02-command="tone" aria-pressed="false">소리 재생 <small>Play Tone</small></button><button type="button" data-a02-command="page" aria-pressed="false">문서 인쇄 <small>Print Page</small></button></div></fieldset>
                     </div>
-                </div>`,
+                    <div class="a02-presence-row" aria-label="하드웨어와 소프트웨어 준비 상태"><button type="button" data-a02-presence="hardware" aria-pressed="true"><span>하드웨어 연결</span><small data-a02-hardware-presence>연결됨 · Connected</small></button><button type="button" data-a02-presence="software" aria-pressed="true"><span>소프트웨어 명령</span><small data-a02-software-presence>불러옴 · Loaded</small></button><button type="button" class="foundation-run" data-a02-run>협업 실행 <small>Run Together</small></button></div>
+                    <div class="a02-execution-line" aria-label="소프트웨어 명령이 운영체제와 드라이버를 거쳐 하드웨어 결과가 되는 과정">
+                        <article class="a02-stage software-stage" data-a02-stage="software"><span>소프트웨어 <small>Software</small></span><strong data-a02-command-title>픽셀 그리기</strong><p data-a02-command-packet>색·좌표 명령</p></article><span class="a02-link" aria-hidden="true">→</span>
+                        <article class="a02-stage bridge-stage" data-a02-stage="bridge"><span>운영체제·드라이버 <small>OS &amp; Driver</small></span><strong>명령 전달</strong><p data-a02-interface>화면 출력 규칙</p></article><span class="a02-link" aria-hidden="true">→</span>
+                        <article class="a02-stage hardware-stage" data-a02-stage="hardware"><span>하드웨어 <small>Hardware</small></span><strong data-a02-hardware-title>디스플레이</strong><p data-a02-capability>픽셀값을 실제 빛으로 바꿈</p></article><span class="a02-link" aria-hidden="true">→</span>
+                        <div class="a02-result-stage" data-a02-output="display" aria-label="실행 결과 미리보기"><span class="a02-result-object" aria-hidden="true"></span><strong data-a02-result-title>실행 전</strong><p data-a02-result-copy>두 준비 상태와 조합을 확인하세요.</p></div>
+                    </div>
+                    <div class="foundation-evidence a02-evidence" aria-live="polite"><strong>조건 검사 <small>Evidence Check</small></strong><dl><div><dt>물리 장치</dt><dd data-a02-evidence-hardware>디스플레이 연결됨</dd></div><div><dt>실행 명령</dt><dd data-a02-evidence-software>픽셀 그리기 불러옴</dd></div><div><dt>연결 규칙</dt><dd data-a02-evidence-interface>화면 출력 명령과 디스플레이가 맞음</dd></div><div><dt>결과</dt><dd data-a02-evidence-result>아직 실행하지 않음</dd></div></dl></div>
+                </section>`,
             details: [
                 ["하드웨어", "Hardware", "손으로 만질 수 있는 물리적인 장치입니다. CPU·RAM처럼 본체 안에 있는 부품과 키보드·화면처럼 밖에서 보이는 장치가 모두 포함됩니다."],
-                ["소프트웨어", "Software", "하드웨어가 어떤 일을 할지 정한 명령과 데이터입니다. 저장 장치에 기록되어 있다가 실행할 때 RAM으로 불려 오고 CPU가 명령을 처리합니다."],
+                ["소프트웨어", "Software", "하드웨어가 어떤 일을 하도록 만든 프로그램과 명령입니다. 저장 장치에 기록되어 있다가 실행할 때 RAM으로 불려 오고 CPU가 명령을 처리합니다. 사진·문서처럼 프로그램이 다루는 내용은 데이터라고 따로 구분합니다."],
                 ["둘의 관계", "How They Work Together", "그림 앱만 있어도 화면과 CPU가 없으면 실행할 수 없고, 하드웨어만 있어도 실행할 소프트웨어가 없으면 원하는 작업을 지시할 수 없습니다."],
                 ["물리 장치와 명령의 경계", "Boundary Between Device and Instructions", "프린터 본체는 하드웨어이고 프린터 드라이버는 소프트웨어입니다. 같은 기능에 함께 쓰여도 물리 장치와 명령은 구별됩니다."]
             ],
@@ -177,9 +183,9 @@
                 intro: "키 하나를 눌러도 하드웨어와 소프트웨어가 차례로 요청과 결과를 주고받습니다.",
                 steps: [
                     ["키보드", "Keyboard", "키 아래 스위치가 눌린 위치를 전기 신호로 보냅니다. 아직 화면의 글자는 아닙니다."],
-                    ["드라이버와 운영체제", "Driver & OS", "어느 키가 눌렸는지 읽고, 한글 입력 상태와 조합 규칙을 확인합니다."],
-                    ["메모 앱", "Text App", "운영체제에서 받은 글자를 현재 문서의 커서 위치에 넣으라고 요청합니다."],
-                    ["RAM과 CPU", "RAM & CPU", "실행 중인 앱·문서 데이터는 RAM에 펼쳐지고 CPU가 명령을 순서대로 처리합니다."],
+                    ["RAM과 CPU", "RAM & CPU", "실행 중인 드라이버·운영체제·앱의 명령과 작업 데이터가 RAM에 놓이고 CPU가 다음 단계를 처리합니다."],
+                    ["드라이버와 운영체제", "Driver & OS", "CPU가 드라이버와 운영체제의 명령을 실행해 어느 키가 눌렸는지 읽고 한글 입력 상태와 조합 규칙을 확인합니다."],
+                    ["메모 앱", "Text App", "CPU가 메모 앱의 명령을 실행해 받은 글자를 현재 문서의 커서 위치에 넣습니다."],
                     ["화면", "Display", "글자 모양이 픽셀의 밝기와 색 데이터로 바뀌어 디스플레이에 나타납니다."],
                     ["저장 장치", "Storage", "저장 버튼을 눌러야 문서 데이터가 파일로 SSD에 기록되어 전원을 꺼도 남습니다."]
                 ]
@@ -224,42 +230,42 @@
                     text: "학교 PC의 모니터만 새것으로 바꾸었습니다. 저장되어 있던 문서와 그림 앱은 그대로입니다. 바뀐 대상을 가장 정확하게 설명한 것은 무엇입니까?",
                     options: ["출력 하드웨어가 바뀌었다", "운영체제가 바뀌었다", "문서 파일의 형식이 바뀌었다", "그림 앱의 명령이 바뀌었다"],
                     answer: 0,
-                    concept: "하드웨어",
+                    concept: "하드웨어 · Hardware",
                     explanation: "모니터는 처리 결과를 보여 주는 물리적인 출력 장치입니다. 모니터 교체만으로 저장된 소프트웨어와 파일이 바뀌지는 않습니다."
                 },
                 {
                     text: "같은 노트북에 ChromeOS 대신 Linux를 설치했습니다. 이 변화를 설명한 것은 무엇입니까?",
                     options: ["CPU를 다른 부품으로 교체했다", "같은 하드웨어에서 운영체제 소프트웨어를 바꿨다", "화면을 입력 장치로 바꿨다", "저장 장치를 RAM으로 바꿨다"],
                     answer: 1,
-                    concept: "소프트웨어",
+                    concept: "소프트웨어 · Software",
                     explanation: "운영체제는 소프트웨어입니다. 같은 물리 장치에서도 호환되는 다른 운영체제를 설치할 수 있습니다."
                 },
                 {
                     text: "프린터는 연결되어 있지만 운영체제에 알맞은 장치 드라이버가 없어 인쇄 명령을 전달하지 못합니다. 부족한 것은 어느 쪽입니까?",
                     options: ["종이를 잡아 주는 하드웨어", "프린터 본체의 물리적인 외장", "장치와 운영체제를 연결하는 소프트웨어", "모니터가 보여 주는 픽셀"],
                     answer: 2,
-                    concept: "드라이버",
+                    concept: "드라이버 · Device Driver",
                     explanation: "프린터 본체는 이미 있지만 명령을 번역해 전달할 드라이버 소프트웨어가 없는 상황입니다."
                 },
                 {
                     text: "태블릿 화면을 손가락으로 눌러 그림을 그렸습니다. 화면과 그림 앱의 역할을 올바르게 연결한 것은 무엇입니까?",
                     options: ["화면과 앱 모두 물리적인 입력 장치다", "화면은 입출력 하드웨어이고 앱은 좌표를 처리하는 소프트웨어다", "화면은 소프트웨어이고 앱은 저장 장치다", "화면과 앱 모두 운영체제다"],
                     answer: 1,
-                    concept: "협력 관계",
+                    concept: "협력 관계 · Hardware–Software Cooperation",
                     explanation: "터치스크린은 접촉을 입력받고 그림을 출력하는 하드웨어이며, 그림 앱은 좌표와 색을 처리하는 소프트웨어입니다."
                 },
                 {
                     text: "앱 파일이 저장 장치에 있지만 CPU와 RAM이 고장 난 컴퓨터가 있습니다. 앱을 바로 실행할 수 없는 까닭은 무엇입니까?",
                     options: ["앱은 저장되어 있어도 명령을 불러와 처리할 하드웨어가 필요하기 때문이다", "앱은 저장 장치에 기록되는 순간 스스로 실행 상태가 되기 때문이다", "CPU는 앱을 처음 설치할 때 사용되고 실행할 때는 사용되지 않기 때문이다", "RAM은 실행 중인 명령보다 완성된 파일을 장기간 보관하는 장치이기 때문이다"],
                     answer: 0,
-                    concept: "실행",
+                    concept: "실행 · Program Execution",
                     explanation: "저장된 소프트웨어를 실행하려면 명령을 작업 공간으로 불러오고 처리할 RAM과 CPU가 필요합니다."
                 },
 {
                     text: "스마트폰 설명서에 ‘SoC, 8GB RAM, Android, 카메라 앱’이 적혀 있습니다. 하드웨어와 소프트웨어를 올바르게 나눈 것은 무엇입니까?",
                     options: ["SoC·RAM은 하드웨어이고 Android·카메라 앱은 소프트웨어다", "Android·RAM은 하드웨어이고 SoC·카메라 앱은 소프트웨어다", "SoC·Android는 하드웨어이고 RAM·카메라 앱은 소프트웨어다", "네 항목은 모두 스마트폰 안에 있으므로 같은 종류다"],
                     answer: 0,
-                    concept: "모바일 하드웨어와 소프트웨어",
+                    concept: "모바일 하드웨어와 소프트웨어 · Mobile Hardware and Software",
                     explanation: "SoC와 RAM은 물리적인 전자 부품이고, Android는 운영체제 소프트웨어이며 카메라 앱은 응용 소프트웨어입니다."
                 }
             ]
@@ -269,30 +275,27 @@
             number: 3,
             title: "기기·운영체제·앱은 무엇이 다를까?",
             english: "Device, Operating System, and App",
-            conceptTitle: "한 화면 안에 겹쳐 있는 세 층",
+            conceptTitle: "기기는 실제 물건이고, 운영체제는 기기를 관리하며, 앱은 필요한 일을 한다",
             visual: `
-                <div class="visual-gallery">
-                    <figure class="concept-illustration">
-                        <picture>
-                            <source srcset="${asset("device-os-app-layers-768.webp")} 768w, ${asset("device-os-app-layers-1536.webp")} 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
-                            <img src="${asset("device-os-app-layers-768.webp")}" width="1536" height="1024" alt="태블릿, 노트북, 데스크톱, 스마트폰 위에 운영체제 관리층과 앱 작업층이 겹쳐 있는 구조">
-                        </picture>
-                        <figcaption>기기는 아래에서 실제 일을 하고, 운영체제는 가운데에서 자원을 관리하며, 앱은 위에서 사용자가 고른 작업을 요청합니다.</figcaption>
-                    </figure>
-                    <div class="system-visual layer-visual" aria-label="기기 위에서 운영체제가 동작하고 그 위에서 앱이 실행되는 층 구조">
-                        <div class="layer-stack">
-                            <div class="layer-card app-layer"><strong>앱</strong><span><small>Application / App</small>그림·웹·영상처럼 사용자가 고른 작업</span></div>
-                            <div class="layer-card os-layer"><strong>운영체제</strong><span><small>Operating System / OS</small>파일·화면·권한·장치를 관리</span></div>
-                            <div class="layer-card device-layer"><strong>기기</strong><span><small>Device</small>CPU·메모리·화면이 든 물리적 제품</span></div>
-                        </div>
-                        <div class="example-paths">
-                            <div class="example-path"><span>iPad</span><span>iPadOS</span><span>Safari</span></div>
-                            <div class="example-path"><span>Chromebook</span><span>ChromeOS</span><span>Chrome</span></div>
-                            <div class="example-path"><span>PC</span><span>Windows</span><span>그림 앱</span></div>
-                            <div class="example-path"><span>스마트폰</span><span>Android</span><span>카메라 앱</span></div>
-                        </div>
+                <section class="foundation-direct-lab a03-compatibility-lab" data-a03-lab data-device="pc" data-os="windows" data-app="paint" data-outcome="pending" aria-labelledby="a03LabTitle">
+                    <header class="foundation-lab-heading has-context">
+                        <div><span>층 조합 실험 <small>Compatibility Layer Lab</small></span><h3 id="a03LabTitle">기기–운영체제–앱을 바꿔 쌓고, 어디에서 실행이 멈추는지 증거로 확인하세요.</h3></div>
+                        <button type="button" class="foundation-reset" data-a03-reset>처음 상태 <small>Reset</small></button>
+                        <figure class="foundation-context-figure">
+                            <img src="${asset("a03-device-os-app-layers-illustration-v1-768.webp")}" srcset="${asset("a03-device-os-app-layers-illustration-v1-768.webp")} 768w, ${asset("a03-device-os-app-layers-illustration-v1-1536.webp")} 1536w" sizes="(max-width: 620px) 244px, (max-width: 820px) 144px, (max-width: 1180px) 16vw, 190px" width="1536" height="1024" loading="eager" decoding="async" alt="태블릿의 물리 부품 위에 운영체제가 장치를 관리하는 층과 그림 앱을 사용하는 화면 층이 겹쳐 있는 모습">
+                            <figcaption>기기·OS·앱 세 층<small>Device · OS · App</small></figcaption>
+                        </figure>
+                    </header>
+                    <div class="a03-selector-bank">
+                        <fieldset><legend>1. 기기 <small>Device</small></legend><div class="foundation-choice-row" role="group" aria-label="기기 선택"><button type="button" data-a03-device="pc" aria-pressed="true">PC <small>Personal Computer</small></button><button type="button" data-a03-device="chromebook" aria-pressed="false">Chromebook</button><button type="button" data-a03-device="ipad" aria-pressed="false">iPad <small>Tablet</small></button><button type="button" data-a03-device="phone" aria-pressed="false">Phone <small>Android형</small></button></div></fieldset>
+                        <fieldset><legend>2. 운영체제 <small>Operating System</small></legend><div class="foundation-choice-row" role="group" aria-label="운영체제 선택"><button type="button" data-a03-os="windows" aria-pressed="true">Windows</button><button type="button" data-a03-os="chromeos" aria-pressed="false">ChromeOS</button><button type="button" data-a03-os="ipados" aria-pressed="false">iPadOS</button><button type="button" data-a03-os="android" aria-pressed="false">Android</button></div></fieldset>
+                        <fieldset><legend>3. 앱 <small>Application</small></legend><div class="foundation-choice-row" role="group" aria-label="앱 선택"><button type="button" data-a03-app="paint" aria-pressed="true">PC 그림판 <small>Windows App</small></button><button type="button" data-a03-app="chrome-files" aria-pressed="false">파일 앱 <small>ChromeOS App</small></button><button type="button" data-a03-app="ipad-sketch" aria-pressed="false">iPad 스케치 <small>iPadOS App</small></button><button type="button" data-a03-app="android-camera" aria-pressed="false">카메라 <small>Android App</small></button></div></fieldset>
                     </div>
-                </div>`,
+                    <div class="a03-workbench">
+                        <div class="a03-layer-machine" aria-label="선택한 기기 운영체제 앱의 층 구조"><article class="a03-layer app-layer" data-a03-layer="app"><span>앱 <small>App</small></span><strong data-a03-current-app>PC 그림판</strong><p data-a03-app-package>Windows용 .exe와 Windows API 요청</p></article><span class="a03-layer-link" aria-hidden="true">↕</span><article class="a03-layer os-layer" data-a03-layer="os"><span>운영체제 <small>Operating System</small></span><strong data-a03-current-os>Windows</strong><p data-a03-os-job>PC 장치 드라이버와 Windows API 제공</p></article><span class="a03-layer-link" aria-hidden="true">↕</span><article class="a03-layer device-layer" data-a03-layer="device"><span>기기 <small>Device</small></span><strong data-a03-current-device>PC</strong><p data-a03-device-hardware>PC 펌웨어·CPU·메모리·화면</p></article></div>
+                        <aside class="a03-proof-panel" aria-live="polite"><div class="a03-app-preview" data-a03-preview><span aria-hidden="true"></span><strong data-a03-preview-title>실행 확인 전</strong><p data-a03-preview-copy>세 층을 고른 뒤 호환성을 확인하세요.</p></div><ol><li data-a03-proof="boot"><b>① 기기 ↔ OS</b><span data-a03-boot-proof>확인 전</span></li><li data-a03-proof="api"><b>② OS ↔ 앱</b><span data-a03-api-proof>확인 전</span></li><li data-a03-proof="run"><b>③ 실행 결과</b><span data-a03-run-proof>확인 전</span></li></ol><button type="button" class="foundation-run" data-a03-run>호환성 확인 <small>Check &amp; Run</small></button></aside>
+                    </div>
+                </section>`,
             details: [
                 ["기기", "Device", "iPad · Chromebook · 스마트폰 · PC처럼 실제 부품으로 이루어진 제품입니다. 제조사와 제품명은 운영체제 이름과 같지 않을 수 있습니다."],
                 ["운영체제", "Operating System / OS", "Windows · Android · iOS · iPadOS · macOS · ChromeOS · Linux처럼 앱 실행, 파일, 화면, 입력 장치와 권한을 관리하는 기본 소프트웨어입니다."],
@@ -365,42 +368,42 @@
                     text: "Chromebook에서 Chrome을 열어 학교 사이트를 보았습니다. 기기–운영체제–앱 순서로 올바르게 배열한 것은 무엇입니까?",
                     options: ["Chrome–ChromeOS–Chromebook", "Chromebook–ChromeOS–Chrome", "ChromeOS–Chromebook–Chrome", "Chromebook–Chrome–ChromeOS"],
                     answer: 1,
-                    concept: "세 층",
+                    concept: "세 층 · Three Layers",
                     explanation: "Chromebook은 기기, ChromeOS는 기기를 관리하는 운영체제, Chrome은 웹을 여는 앱입니다."
                 },
                 {
                     text: "iPad의 그림 앱이 사진 보관함을 열려고 하자 접근 허용 창이 나타났습니다. 이 허용을 관리하는 층은 무엇입니까?",
                     options: ["그림 앱이 자신의 접근 범위를 직접 결정한다", "iPadOS 운영체제가 앱별 접근 권한을 관리한다", "iPad 기기가 앱 종류가 달라도 이전에 정한 권한을 그대로 적용한다", "사진 보관함의 첫 번째 파일이 다른 앱의 권한을 정한다"],
                     answer: 1,
-                    concept: "운영체제",
+                    concept: "운영체제 · Operating System",
                     explanation: "앱의 사진·카메라·마이크 접근 권한은 운영체제가 관리합니다."
                 },
                 {
                     text: "Android 스마트폰에 설치하려던 앱이 현재 Android 버전을 지원하지 않습니다. 가장 직접적인 관계는 무엇입니까?",
                     options: ["앱과 운영체제의 호환성", "화면 크기와 배터리 색상", "파일 이름과 스피커 크기", "키보드와 카메라 렌즈"],
                     answer: 0,
-                    concept: "호환성",
+                    concept: "호환성 · Compatibility",
                     explanation: "앱은 특정 운영체제가 제공하는 기능과 규칙에 맞게 만들어지므로 지원 버전이 맞아야 합니다."
                 },
                 {
                     text: "같은 웹 서비스를 Windows PC에서는 Edge로, iPad에서는 Safari로 열었습니다. 달라진 앱과 운영체제의 조합은 무엇입니까?",
                     options: ["Edge–Windows와 Safari–iPadOS", "Windows–Edge와 iPad–Safari", "PC–Windows와 iPad–iPadOS", "웹사이트–PC와 인터넷–iPad"],
                     answer: 0,
-                    concept: "플랫폼",
+                    concept: "플랫폼 · Platform",
                     explanation: "Edge와 Safari는 앱이고, Windows와 iPadOS는 각각의 운영체제입니다."
                 },
                 {
                     text: "카메라 앱이 운영체제에 촬영을 요청했습니다. 그다음 운영체제가 직접 제어해야 할 대상은 무엇입니까?",
                     options: ["카메라 센서 하드웨어", "촬영을 요청한 카메라 앱 자체", "사진을 나중에 열 웹 브라우저 앱", "사진 파일을 볼 사용자의 프로필"],
                     answer: 0,
-                    concept: "층 사이 요청",
+                    concept: "층 사이 요청 · Requests Between Layers",
                     explanation: "운영체제는 앱의 요청을 받아 장치 드라이버를 통해 카메라 센서 같은 하드웨어를 제어합니다."
                 },
 {
                     text: "iPhone에서 Safari로 학교 웹사이트를 열었습니다. 회사·기기·운영체제·앱을 순서대로 올바르게 연결한 것은 무엇입니까?",
                     options: ["Apple–iPhone–iOS–Safari", "iPhone–Apple–Safari–iOS", "Apple–iOS–iPhone–Safari", "Safari–iPhone–Apple–iOS"],
                     answer: 0,
-                    concept: "회사·기기·운영체제·앱",
+                    concept: "회사·기기·운영체제·앱 · Company, Device, Operating System, and App",
                     explanation: "Apple은 회사, iPhone은 기기 제품 계열, iOS는 운영체제, Safari는 웹 브라우저 앱입니다."
                 }
             ]
@@ -410,13 +413,13 @@
             number: 4,
             title: "아날로그와 디지털은 무엇이 다를까?",
             english: "Analog and Digital",
-            conceptTitle: "이어지는 변화와 정해진 단계의 기록",
+            conceptTitle: "아날로그 값은 이어져 변하고, 디지털 장치는 그 값을 정해진 숫자로 기록한다",
             visual: `
                 <div class="visual-gallery">
                     <figure class="concept-illustration">
                         <picture>
-                            <source srcset="${asset("analog-digital-measurement-768.webp")} 768w, ${asset("analog-digital-measurement-1536.webp")} 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
-                            <img src="${asset("analog-digital-measurement-768.webp")}" width="1536" height="1024" alt="현실의 매끄러운 온도와 소리 변화가 센서 측정을 거쳐 정해진 단계의 디지털 기록으로 바뀌는 비교 그림">
+                            <source srcset="${asset("a04-analog-digital-representation-illustration-v1-768.webp")} 768w, ${asset("a04-analog-digital-representation-illustration-v1-1536.webp")} 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
+                            <img src="${asset("a04-analog-digital-representation-illustration-v1-768.webp")}" width="1536" height="1024" alt="바람개비의 이어지는 움직임과 파형을 카메라가 일정한 순간마다 픽셀 그림으로 기록하는 비교 장면">
                         </picture>
                         <figcaption>현실의 변화는 이어지지만, 디지털 장치는 일정한 순간과 정해진 값의 칸을 골라 기록합니다.</figcaption>
                     </figure>
@@ -480,42 +483,42 @@
                     text: "실제 온도가 20.14°C와 20.18°C일 때 0.1°C 단위로 반올림하는 온도계는 두 값을 모두 20.2°C로 표시했습니다. 가장 정확한 설명은 무엇입니까?",
                     options: ["센서가 두 순간의 실제 온도를 같은 값으로 바꾸었다", "서로 다른 연속값이 같은 디지털 단계로 기록되었다", "표시된 20.2°C가 교실의 실제 온도를 20.2°C로 맞추었다", "0.1°C 단위 기록에서 20.14와 20.18은 서로 다른 단계에 놓인다"],
                     answer: 1,
-                    concept: "단계 기록",
+                    concept: "단계 기록 · Discrete-Step Recording",
                     explanation: "실제 값은 달랐지만 0.1°C 단위로 반올림하는 과정에서 같은 표시값이 되었습니다."
                 },
                 {
                     text: "마이크 진동판이 공기 떨림에 따라 움직이고, 장치가 그 전기 신호를 일정한 간격으로 숫자로 기록했습니다. 앞과 뒤를 올바르게 구분한 것은 무엇입니까?",
                     options: ["진동판의 연속 움직임은 아날로그, 숫자 기록은 디지털", "진동판은 디지털, 숫자 기록은 아날로그", "둘 다 화면에 보이지 않으므로 아날로그", "둘 다 최신 장치 안에 있으므로 디지털"],
                     answer: 0,
-                    concept: "변환",
+                    concept: "변환 · Analog-to-Digital Conversion",
                     explanation: "연속적으로 변하는 물리적 움직임과 전기 신호를 측정해 숫자 단계로 기록하는 과정입니다."
                 },
                 {
                     text: "바늘식 전압계의 바늘이 2.0V와 2.1V 사이 중간 위치를 가리킵니다. 이 표시가 보여 주는 특징은 무엇입니까?",
                     options: ["측정 순간마다 두 숫자 중 하나를 골라 기록한다", "중간 위치를 이용해 이어지는 값을 나타낼 수 있다", "측정값을 파일 확장자로 저장한다", "전압 변화 전체를 0과 1 두 단계로 압축해 표시한다"],
                     answer: 1,
-                    concept: "연속값",
+                    concept: "연속값 · Continuous Values",
                     explanation: "바늘 위치는 눈금 사이에서도 연속적으로 달라질 수 있어 중간값을 나타냅니다."
                 },
                 {
                     text: "숫자가 적힌 화면이 없는 디지털 카메라가 사진을 메모리 카드의 파일로 저장합니다. 디지털이라고 판단할 근거는 무엇입니까?",
                     options: ["숫자를 보여 주는 화면이 없으므로 디지털 방식으로 볼 수 없다", "사진을 정해진 숫자 데이터와 파일 형식으로 기록한다", "렌즈가 들어온 빛을 JPG 파일로 직접 바꾸므로 별도의 측정 과정이 없다", "전자 부품이 들어 있으면 정보의 기록 방식도 따로 확인할 필요가 없다"],
                     answer: 1,
-                    concept: "디지털 데이터",
+                    concept: "디지털 데이터 · Digital Data",
                     explanation: "디지털 여부는 숫자 화면의 유무가 아니라 정보를 정해진 기호와 숫자 데이터로 표현하는 방식에 달려 있습니다."
                 },
                 {
                     text: "측정 범위가 같은 두 디지털 센서 중 A는 1°C 단위, B는 0.1°C 단위로 기록합니다. 20.3°C와 20.6°C의 차이를 기록하기에 더 알맞은 센서는 무엇입니까?",
                     options: ["A, 기록 단계가 더 크기 때문이다", "B, 더 작은 단계로 값을 구별할 수 있기 때문이다", "A, 표시 자릿수가 적을수록 작은 차이를 더 세밀하게 구별하기 때문이다", "두 센서는 기록 단계가 달라도 20.3°C와 20.6°C를 같은 값으로 묶기 때문이다"],
                     answer: 1,
-                    concept: "분해능",
+                    concept: "분해능 · Resolution",
                     explanation: "0.1°C 단위 센서는 1°C 단위 센서보다 작은 온도 차이를 서로 다른 값으로 기록할 수 있습니다."
                 },
                 {
                     text: "같은 곡을 LP 음반과 MP3 파일로 보관했습니다. 두 기록 방식의 차이를 가장 정확히 설명한 것은 무엇입니까?",
                     options: ["LP와 MP3는 모두 스피커로 재생되므로 기록 방식도 같다", "LP의 홈은 연속적인 물리 변화를 담고 MP3는 측정·부호화된 숫자 데이터를 담는다", "LP는 바늘로 읽으므로 디지털이고 MP3는 소리가 나므로 아날로그다", "MP3 파일 이름에 숫자가 표시될 때만 디지털 기록이 된다"],
                     answer: 1,
-                    concept: "기록 방식 비교",
+                    concept: "기록 방식 비교 · Comparing Recording Methods",
                     explanation: "재생 결과는 모두 소리지만 LP의 홈은 연속적인 물리 모양으로, MP3는 표본화·부호화된 디지털 데이터로 정보를 기록합니다."
                 }
             ]
@@ -525,13 +528,13 @@
             number: 5,
             title: "현실의 소리는 어떻게 숫자 데이터가 될까?",
             english: "From Sound to Digital Data",
-            conceptTitle: "이어진 파형에서 측정점을 고르기",
+            conceptTitle: "소리를 아주 짧은 시간마다 재어 숫자로 적으면 컴퓨터가 저장할 수 있다",
             visual: `
                 <div class="visual-gallery">
                     <figure class="concept-illustration">
                         <picture>
-                            <source srcset="${asset("sound-to-digital-flow-768.webp")} 768w, ${asset("sound-to-digital-flow-1536.webp")} 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
-                            <img src="${asset("sound-to-digital-flow-768.webp")}" width="1536" height="1024" alt="기타 줄의 떨림과 공기 파동이 마이크, 전기 신호, 측정점, 숫자 데이터, 스피커를 거쳐 다시 소리가 되는 흐름">
+                            <source srcset="${asset("a05-sound-sampling-data-illustration-v1-768.webp")} 768w, ${asset("a05-sound-sampling-data-illustration-v1-1536.webp")} 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
+                            <img src="${asset("a05-sound-sampling-data-illustration-v1-768.webp")}" width="1536" height="1024" alt="기타 소리가 마이크에 들어가 일정한 순간마다 측정되고 숫자 데이터로 보관된 뒤 스피커에서 다시 소리로 나오는 장면">
                         </picture>
                         <figcaption>녹음은 공기의 떨림을 숫자로 바꾸는 길이고, 재생은 숫자를 다시 공기의 떨림으로 바꾸는 반대 길입니다.</figcaption>
                     </figure>
@@ -592,42 +595,42 @@
                     text: "같은 1초의 소리를 A는 8번, B는 32번 같은 간격으로 측정했습니다. 빠르게 변하는 구간의 모양을 더 자세히 기록할 가능성이 큰 것은 무엇입니까?",
                     options: ["A, 측정 사이 간격이 더 넓기 때문이다", "B, 같은 시간에 더 많은 지점을 측정했기 때문이다", "A, 만들어지는 숫자가 더 적기 때문이다", "B, 측정 횟수가 늘어나면 측정점 사이의 시간 간격도 더 넓어지기 때문이다"],
                     answer: 1,
-                    concept: "샘플링 레이트",
+                    concept: "샘플링 레이트 · Sampling Rate",
                     explanation: "같은 시간에 더 자주 측정하면 측정점 사이에서 놓치는 빠른 변화가 줄어듭니다."
                 },
                 {
                     text: "파형 높이 0.63을 0.1 단위로만 기록하는 장치가 0.6으로 저장했습니다. 이때 일어난 일은 무엇입니까?",
                     options: ["1초 동안 측정하는 횟수를 늘려 샘플링 레이트를 바꾸었다", "측정값을 가까운 숫자 단계에 맞춰 양자화했다", "연속 신호의 크기를 키워 원래 값 자체를 0.6으로 바꾸었다", "저장된 숫자를 전기 신호로 되돌리는 재생 변환을 했다"],
                     answer: 1,
-                    concept: "양자화",
+                    concept: "양자화 · Quantization",
                     explanation: "측정값을 정해진 숫자 단계에 맞추는 과정을 양자화라고 합니다."
                 },
                 {
                     text: "마이크가 만든 전기 신호가 아직 시간에 따라 매끄럽게 변하고 있습니다. 숫자 배열로 저장하기 전에 필요한 과정은 무엇입니까?",
                     options: ["신호를 일정한 간격으로 측정하고 숫자 단계로 기록한다", "연속 신호의 크기를 키운 상태로 숫자 변환 없이 저장한다", "신호를 스피커로 먼저 재생하고 나온 소리를 다시 마이크로 기록한다", "신호에 WAV라는 파일 이름을 붙이면 내용도 숫자로 바뀐다고 본다"],
                     answer: 0,
-                    concept: "아날로그-디지털 변환",
+                    concept: "아날로그-디지털 변환 · Analog-to-Digital Conversion",
                     explanation: "연속 신호를 샘플링하고 양자화해야 컴퓨터가 저장하고 처리할 숫자 데이터가 됩니다."
                 },
                 {
                     text: "측정 횟수를 네 배로 늘리고 각 측정값의 기록 단계도 더 촘촘하게 했습니다. 일반적으로 예상되는 변화는 무엇입니까?",
                     options: ["기록할 숫자는 줄고 변화는 덜 자세해진다", "기록할 숫자와 정밀도가 늘어 데이터 양도 커질 수 있다", "소리가 더 이상 숫자 데이터가 아니다", "마이크가 출력 장치로 바뀐다"],
                     answer: 1,
-                    concept: "정밀도와 데이터 양",
+                    concept: "정밀도와 데이터 양 · Precision and Data Size",
                     explanation: "더 자주, 더 세밀한 단계로 기록하면 정보량과 필요한 저장 공간이 함께 늘어날 수 있습니다."
                 },
                 {
                     text: "저장된 소리 숫자 데이터를 스피커로 들려줄 때의 흐름으로 알맞은 것은 무엇입니까?",
                     options: ["숫자 데이터→전기 신호→스피커 진동→공기 떨림", "숫자 데이터→화면 픽셀→빛→마이크의 전기 신호", "숫자 데이터→전기 신호→마이크 진동판→공기 떨림", "공기 떨림→마이크 전기 신호→측정→숫자 데이터"],
                     answer: 0,
-                    concept: "재생",
+                    concept: "재생 · Playback",
                     explanation: "재생할 때는 숫자 데이터를 시간 순서대로 전기 신호로 바꾸고, 스피커가 공기를 떨게 해 소리를 만듭니다."
                 },
                 {
                     text: "두 녹음 설정의 샘플링 레이트는 같고, A는 8비트·B는 16비트로 한 측정값을 기록합니다. 가장 타당한 비교는 무엇입니까?",
                     options: ["A가 한 측정값에 더 많은 숫자 단계를 사용한다", "B는 1초에 측정하는 횟수가 A의 두 배다", "B가 한 측정값의 크기를 더 촘촘한 단계로 기록할 수 있다", "비트 수 차이는 파일 이름에만 영향을 준다"],
                     answer: 2,
-                    concept: "비트 깊이",
+                    concept: "비트 깊이 · Bit Depth",
                     explanation: "샘플링 레이트가 시간 방향의 측정 횟수라면 비트 깊이는 한 측정값을 나눌 수 있는 크기 단계의 수와 관련됩니다."
                 }
             ]
@@ -639,7 +642,7 @@
             domain: "컴퓨터 안의 하드웨어",
             title: "본체 안에는 어떤 부품이 있을까?",
             english: "Inside a Desktop Computer",
-            conceptTitle: "CPU·RAM·저장 장치가 연결되어 한 컴퓨터로 작동한다",
+            conceptTitle: "부품은 맡은 일이 다르고, 메인보드에 연결되어 한 컴퓨터로 움직인다",
             visual: `
                 <div class="system-visual hardware-cutaway-grid">
                     <figure class="hardware-photo">
@@ -705,10 +708,10 @@
                     key: "ram",
                     short: "RAM",
                     full: "Random Access Memory",
-                    korean: "임의 접근 기억 장치",
+                    korean: "주기억장치(작업 메모리)",
                     image: asset("component-ram-768.webp"),
                     alt: "검은 메모리 칩과 금색 접점, 끼우는 홈이 보이는 데스크톱 RAM 모듈 확대 사진",
-                    origin: "Random Access는 데이터를 무작위로 고른다는 뜻이 아닙니다. 앞에서부터 차례로 찾지 않고 필요한 주소로 바로 접근할 수 있다는 뜻입니다. Memory는 실행 중 정보를 잠시 기억하는 장치라는 뜻입니다.",
+                    origin: "Random Access는 ‘무작위로 고른다’는 뜻이 아니라, 앞에서부터 찾지 않고 필요한 주소로 바로 접근할 수 있다는 뜻입니다. Memory는 실행 중 정보를 잠시 기억하는 장치라는 뜻입니다.",
                     look: "길고 좁은 회로 기판 위에 여러 메모리 칩이 붙어 있습니다. 아래쪽 금색 접점과 홈의 위치를 RAM 슬롯에 맞추어 꽂습니다.",
                     job: "현재 실행 중인 운영체제·앱의 명령과 작업 중인 데이터를 CPU가 빠르게 꺼내 쓰도록 펼쳐 둡니다. 용량이 넉넉하면 여러 앱과 큰 자료를 동시에 다루기 쉽습니다.",
                     connection: "메인보드의 DIMM 슬롯에 꽂히며 CPU의 메모리 제어 장치와 매우 빠르게 데이터를 주고받습니다.",
@@ -864,28 +867,28 @@
                     text: "문서의 기존 파일은 SSD에 저장되어 있었지만 방금 입력한 문장은 저장하지 않은 채 전원이 꺼졌습니다. 다시 켰을 때 예상할 수 있는 결과는 무엇입니까?",
                     options: ["SSD의 기존 파일은 남고 RAM에 있던 저장 전 변경 내용은 사라질 수 있다", "RAM의 변경 내용은 남고 SSD의 기존 파일은 사라진다", "CPU가 입력 문장을 기억해 두었다가 파일을 다시 만든다", "메인보드의 대기 회로가 저장하지 않은 문장을 장기 보관한다"],
                     answer: 0,
-                    concept: "휘발성과 비휘발성",
+                    concept: "휘발성과 비휘발성 · Volatile and Non-volatile Data Retention",
                     explanation: "SSD는 전원이 꺼져도 저장된 파일을 보관하지만 RAM에만 있던 변경 내용은 사라질 수 있습니다."
                 },
                 {
                     text: "CPU·RAM·GPU가 각각 제 역할을 하지만 서로 데이터를 주고받지 못하는 상황입니다. 먼저 확인할 부품과 기능은 무엇입니까?",
                     options: ["메인보드의 슬롯과 데이터 연결", "SSD의 파일 이름", "모니터의 화면 배율", "스피커의 음량 설정"],
                     answer: 0,
-                    concept: "메인보드",
+                    concept: "메인보드 · Motherboard",
                     explanation: "메인보드는 주요 부품이 꽂히고 전기 신호와 데이터를 주고받을 수 있는 연결 기반을 제공합니다."
                 },
                 {
                     text: "고성능 작업 중 부품 온도가 계속 올라가 CPU가 속도를 낮췄습니다. 성능 저하의 원인과 가장 직접적으로 연결된 장치는 무엇입니까?",
                     options: ["방열판과 냉각 팬", "파일을 보관하는 SSD", "문자를 입력하는 키보드", "웹 주소를 여는 브라우저"],
                     answer: 0,
-                    concept: "냉각",
+                    concept: "냉각 · Cooling",
                     explanation: "방열판과 팬이 열을 충분히 내보내지 못하면 부품은 손상을 막기 위해 처리 속도를 낮출 수 있습니다."
                 },
 {
                     text: "스마트폰은 CPU와 GPU가 SoC에 함께 들어 있고 RAM과 저장 칩이 기판에 붙어 있습니다. 데스크톱과 비교한 설명으로 가장 정확한 것은 무엇입니까?",
                     options: ["같은 처리·작업·저장 역할이 더 작은 부품과 통합된 방식으로 구현된다", "SoC 안에 GPU가 있으므로 CPU는 필요하지 않다", "기판에 붙은 RAM은 파일을 전원이 꺼져도 보관한다", "스마트폰은 저장 칩이 있으므로 운영체제가 필요하지 않다"],
                     answer: 0,
-                    concept: "기기별 부품 대응",
+                    concept: "기기별 부품 대응 · Component Equivalents Across Devices",
                     explanation: "스마트폰도 처리에는 CPU·GPU, 작업 공간에는 RAM, 장기 보관에는 플래시 저장 장치를 사용합니다. 다만 이들이 SoC와 로직 보드에 더 촘촘히 통합됩니다."
                 }
             ]
@@ -894,6 +897,16 @@
 
     const lessons = [...detailedLessons, ...(window.COMPUTER_FOUNDATION_LESSONS || [])]
         .sort((left, right) => left.number - right.number);
+
+    (window.COMPUTER_REVIEWED_QUESTIONS || []).forEach(([lessonId, questionIndex, question]) => {
+        const target = lessons.find((lesson) => lesson.id === lessonId);
+        if (target?.questions?.[questionIndex]) {
+            const concept = target.number <= 6
+                ? target.questions[questionIndex].concept
+                : question.concept;
+            target.questions[questionIndex] = { ...question, concept };
+        }
+    });
 
     const params = new URLSearchParams(window.location.search);
     const requestedId = params.get("lesson") || (isCourseRootPage ? "a01" : "a02");
@@ -930,40 +943,52 @@
         return `
             <section class="pointer-concept-lab" aria-labelledby="pointerLabTitle">
                 <div class="pointer-lab-heading">
-                    <div>
-                        <span>입력 상태 관찰 <small>Input State Lab</small></span>
-                        <h3 id="pointerLabTitle">움직이고·누르고·끌어서 화면의 변화를 확인하세요</h3>
-                    </div>
-                    <p><b>1</b> 빈 곳에서 포인터 이동 <b>2</b> 문장 누르기 <b>3</b> 단추 클릭 <b>4</b> 파일을 폴더로 드래그</p>
+                    <div><span>입력 상태 관찰 <small>Input State Lab</small></span><h3 id="pointerLabTitle">포인터·커서·클릭·드래그를 직접 구분하세요</h3></div>
+                    <p><b>1</b>가리키기　<b>2</b>입력 위치　<b>3</b>짧게 누르기　<b>4</b>누른 채 옮기기</p>
                 </div>
-                <ol class="pointer-lab-states" aria-label="포인터와 입력 동작의 네 상태">
+                <ol class="pointer-lab-states" aria-label="현재 관찰 중인 입력 상태">
                     <li class="is-active" data-lab-state="pointer"><strong>포인터 <small>Pointer</small></strong><span>화면에서 가리키는 위치</span></li>
                     <li data-lab-state="caret"><strong>텍스트 커서 <small>Text Cursor</small></strong><span>다음 글자가 들어갈 위치</span></li>
-                    <li data-lab-state="click"><strong>클릭 <small>Click</small></strong><span>같은 자리에서 짧게 눌렀다 놓기</span></li>
-                    <li data-lab-state="drag"><strong>드래그 앤 드롭 <small>Drag and Drop</small></strong><span>누른 채 이동한 뒤 목표에서 놓기</span></li>
+                    <li data-lab-state="click"><strong>클릭 <small>Click</small></strong><span>같은 자리에서 눌렀다 놓기</span></li>
+                    <li data-lab-state="drag"><strong>드래그 앤 드롭 <small>Drag and Drop</small></strong><span>누른 채 이동해 목표에서 놓기</span></li>
                 </ol>
                 <div class="pointer-lab-workspace" data-pointer-workspace>
                     <div class="demo-pointer" data-demo-pointer aria-hidden="true"><span></span></div>
                     <div class="pointer-lab-toolbar">
-                        <button type="button" data-demo-button><strong>단추 눌러 보기</strong><small>Click the Button · <span data-click-count>0회</span></small></button>
-                        <button type="button" class="pointer-lab-reset" data-demo-reset>실험 초기화 <small>Reset</small></button>
+                        <button type="button" data-demo-button><strong>단추 눌러 보기</strong><small>Click · <span data-click-count>0회</span></small></button>
+                        <button type="button" class="pointer-lab-reset" data-demo-reset>전체 초기화 <small>Reset All</small></button>
                     </div>
-                    <label class="demo-text-field">
-                        <span>문장 안을 눌러 입력 위치 바꾸기 <small>Place the Text Cursor</small></span>
-                        <input data-demo-text type="text" value="파일을 폴더로 옮깁니다." aria-label="텍스트 커서 위치를 확인할 문장">
-                    </label>
-                    <button type="button" class="demo-file" data-demo-file aria-label="관찰 기록 파일">
-                        <span class="demo-file-icon">TXT</span>
-                        <strong>관찰 기록.txt</strong>
-                        <small>누른 채 폴더까지 이동</small>
-                    </button>
-                    <button type="button" class="demo-folder" data-demo-folder aria-label="수업 자료 폴더">
-                        <span class="demo-folder-icon" aria-hidden="true"></span>
-                        <strong>수업 자료</strong>
-                        <small data-folder-state>비어 있음</small>
-                    </button>
-                    <p class="pointer-lab-live" data-pointer-live aria-live="polite">포인터: 작업 화면 안에서 가리키는 위치가 바뀝니다.</p>
+                    <label class="demo-text-field"><span>문장 안의 입력 위치 <small>Place the Text Cursor</small></span><input data-demo-text type="text" value="파일을 폴더로 옮깁니다." aria-label="텍스트 커서 위치를 확인할 문장"></label>
+                    <button type="button" class="demo-file" data-demo-file aria-label="관찰 기록 파일"><span class="demo-file-icon">TXT</span><strong>관찰 기록.txt</strong><small>누른 채 폴더까지 이동</small></button>
+                    <button type="button" class="demo-folder" data-demo-folder aria-label="수업 자료 폴더"><span class="demo-folder-icon" aria-hidden="true"></span><strong>수업 자료</strong><small data-folder-state>비어 있음</small></button>
+                    <p class="pointer-lab-live" data-pointer-live aria-live="polite">포인터: 작업판 안에서 가리키는 위치가 바뀝니다.</p>
                 </div>
+                <section class="pointer-command-lab" data-pointer-command-lab data-command="double" aria-labelledby="pointerCommandTitle">
+                    <header class="pointer-command-heading"><strong id="pointerCommandTitle">추가 조작 실험 <small>Double-click · Context Menu · Scroll</small></strong><span>각 조작 뒤 대상의 상태가 실제로 바뀝니다.</span></header>
+                    <div class="pointer-command-buttons" role="group" aria-label="추가 포인터 조작 선택">
+                        <button type="button" data-pointer-command="double" aria-pressed="true">더블클릭 <small>Double-click</small></button>
+                        <button type="button" data-pointer-command="context" aria-pressed="false">우클릭·길게 누르기 <small>Context Menu</small></button>
+                        <button type="button" data-pointer-command="scroll" aria-pressed="false">휠·두 손가락 이동 <small>Scroll</small></button>
+                    </div>
+                    <div class="pointer-command-stage">
+                        <section class="command-demo-panel double-command-demo" data-command-panel="double">
+                            <button type="button" class="command-folder-target" data-double-target aria-describedby="doubleClickStatus"><i aria-hidden="true"></i><strong>수업 사진</strong><small>짧은 간격으로 두 번 누르기</small></button>
+                            <div class="opened-folder-window" data-double-window hidden><strong>폴더 열림 <small>Folder Opened</small></strong><span>곤충.jpg　우주.png</span></div>
+                            <p id="doubleClickStatus" data-double-status>한 번 누르면 선택, 짧은 간격으로 두 번 누르면 폴더가 열립니다.</p>
+                        </section>
+                        <section class="command-demo-panel context-command-demo" data-command-panel="context" hidden>
+                            <button type="button" class="context-file-target" data-context-target aria-haspopup="menu" aria-expanded="false"><span>TXT</span><strong data-context-file-name>관찰 기록.txt</strong><small>우클릭·길게 누르기·Shift+F10</small></button>
+                            <div class="context-action-menu" data-context-menu role="menu" hidden><button type="button" role="menuitem" data-context-action="rename">이름 바꾸기 <small>Rename</small></button><button type="button" role="menuitem" data-context-action="delete">휴지통으로 이동 <small>Move to Trash</small></button></div>
+                            <p data-context-status>일반 클릭은 선택만 합니다. 메뉴 조작을 하면 파일 이름이나 위치가 바뀝니다.</p>
+                        </section>
+                        <section class="command-demo-panel scroll-command-demo" data-command-panel="scroll" hidden>
+                            <div class="mini-scroll-document" data-scroll-viewport tabindex="0" aria-label="휠, 두 손가락, 스와이프 또는 방향키로 스크롤할 짧은 문서"><h4>관찰 순서</h4><p>1. 잎의 모양을 본다.</p><p>2. 줄기의 색을 기록한다.</p><p>3. 빛이 오는 방향을 확인한다.</p><p>4. 사진을 한 장 찍는다.</p><p>5. 아래쪽 결론을 읽는다.</p><strong>결론: 보이는 위치만 바뀌고 문서 파일의 위치는 바뀌지 않습니다.</strong></div>
+                            <div class="scroll-state-readout"><b data-scroll-position>위쪽 · 0%</b><span class="scroll-meter"><i data-scroll-meter></i></span><button type="button" data-scroll-step>아래로 이동 <small>Scroll Down</small></button></div>
+                            <p>휠·트랙패드·손가락·방향키로 문서의 보이는 부분을 바꿔 보세요.</p>
+                        </section>
+                    </div>
+                    <p class="pointer-command-status" data-pointer-command-status aria-live="polite">더블클릭: 수업 사진 폴더를 짧은 간격으로 두 번 눌러 여세요.</p>
+                </section>
             </section>
         `;
     }
@@ -981,26 +1006,63 @@
         const folderState = lab.querySelector("[data-folder-state]");
         const live = lab.querySelector("[data-pointer-live]");
         const resetButton = lab.querySelector("[data-demo-reset]");
+        const commandLab = lab.querySelector("[data-pointer-command-lab]");
+        const commandStatus = lab.querySelector("[data-pointer-command-status]");
+        const commandButtons = Array.from(commandLab.querySelectorAll("[data-pointer-command]"));
+        const doubleTarget = lab.querySelector("[data-double-target]");
+        const doubleWindow = lab.querySelector("[data-double-window]");
+        const doubleStatus = lab.querySelector("[data-double-status]");
+        const contextTarget = lab.querySelector("[data-context-target]");
+        const contextMenu = lab.querySelector("[data-context-menu]");
+        const contextName = lab.querySelector("[data-context-file-name]");
+        const contextStatus = lab.querySelector("[data-context-status]");
+        const scrollViewport = lab.querySelector("[data-scroll-viewport]");
+        const scrollPosition = lab.querySelector("[data-scroll-position]");
+        const scrollMeter = lab.querySelector("[data-scroll-meter]");
+        const scrollStep = lab.querySelector("[data-scroll-step]");
         let clicks = 0;
         let fileSelected = false;
         let drag = null;
+        let lastFolderClick = 0;
+        let doubleTimer = 0;
+        let contextTimer = 0;
+        let contextLongPressed = false;
+
+        const commandInstructions = {
+            double: "더블클릭: 한 번은 선택, 짧은 간격의 두 번째 누름은 폴더 열기입니다.",
+            context: "우클릭·길게 누르기: 대상에 맞는 메뉴를 열고 메뉴 명령으로 파일 상태를 바꿉니다.",
+            scroll: "스크롤: 문서 안에서 보이는 위치를 바꾸지만 파일이나 문서의 저장 위치는 바꾸지 않습니다."
+        };
+        const chooseCommand = (command) => {
+            commandLab.dataset.command = command;
+            commandButtons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.pointerCommand === command)));
+            commandLab.querySelectorAll("[data-command-panel]").forEach((panel) => { panel.hidden = panel.dataset.commandPanel !== command; });
+            commandStatus.textContent = commandInstructions[command];
+        };
+        commandButtons.forEach((button, index) => {
+            button.addEventListener("click", () => chooseCommand(button.dataset.pointerCommand));
+            button.addEventListener("keydown", (event) => {
+                const moves = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+                if (!(event.key in moves)) return;
+                event.preventDefault();
+                const next = (index + moves[event.key] + commandButtons.length) % commandButtons.length;
+                commandButtons[next].focus();
+                commandButtons[next].click();
+            });
+        });
 
         const setState = (name, message) => {
-            lab.querySelectorAll("[data-lab-state]").forEach((item) => {
-                item.classList.toggle("is-active", item.dataset.labState === name);
-            });
+            lab.querySelectorAll("[data-lab-state]").forEach((item) => item.classList.toggle("is-active", item.dataset.labState === name));
             live.textContent = message;
         };
-
         const moveMarker = (event) => {
             const bounds = workspace.getBoundingClientRect();
             const x = Math.max(10, Math.min(bounds.width - 18, event.clientX - bounds.left));
             const y = Math.max(10, Math.min(bounds.height - 18, event.clientY - bounds.top));
             marker.style.transform = `translate(${x}px, ${y}px)`;
             marker.classList.add("is-visible");
-            if (!drag) setState("pointer", `포인터: 작업 화면의 (${Math.round(x)}, ${Math.round(y)}) 위치를 가리킵니다.`);
+            if (!drag) setState("pointer", `포인터: 작업판의 (${Math.round(x)}, ${Math.round(y)}) 위치를 가리킵니다.`);
         };
-
         const resetFile = () => {
             file.classList.remove("is-held", "is-selected", "is-in-folder");
             file.style.removeProperty("transform");
@@ -1008,7 +1070,6 @@
             folderState.textContent = "비어 있음";
             fileSelected = false;
         };
-
         const placeFile = () => {
             file.classList.remove("is-held", "is-selected");
             file.classList.add("is-in-folder");
@@ -1017,24 +1078,16 @@
             folder.classList.add("has-file");
             folderState.textContent = "관찰 기록.txt 들어 있음";
             fileSelected = false;
-            setState("drag", "드롭 완료: 목표 폴더에서 놓아 파일의 위치가 바뀌었습니다.");
+            setState("drag", "드롭 완료: 폴더에서 놓아 파일의 실제 위치가 바뀌었습니다.");
         };
 
         workspace.addEventListener("pointermove", moveMarker);
-        workspace.addEventListener("pointerleave", () => {
-            if (!drag) marker.classList.remove("is-visible");
-        });
-
-        textInput.addEventListener("focus", () => {
-            setState("caret", "텍스트 커서: 깜박이는 세로선 앞에 다음 글자가 입력됩니다.");
-        });
-        textInput.addEventListener("click", () => {
-            setState("caret", `텍스트 커서: 문장의 ${textInput.selectionStart + 1}번째 입력 위치를 나타냅니다.`);
-        });
-        textInput.addEventListener("keyup", () => {
-            setState("caret", `텍스트 커서: 문장의 ${textInput.selectionStart + 1}번째 입력 위치를 나타냅니다.`);
-        });
-
+        workspace.addEventListener("pointerdown", (event) => { if (event.target === workspace) moveMarker(event); });
+        workspace.addEventListener("pointerleave", () => { if (!drag) marker.classList.remove("is-visible"); });
+        textInput.addEventListener("focus", () => setState("caret", "텍스트 커서: 깜박이는 세로선 앞에 다음 글자가 입력됩니다."));
+        const reportCaret = () => setState("caret", `텍스트 커서: 문장의 ${textInput.selectionStart + 1}번째 입력 위치입니다.`);
+        textInput.addEventListener("click", reportCaret);
+        textInput.addEventListener("keyup", reportCaret);
         clickButton.addEventListener("click", () => {
             clicks += 1;
             clickCount.textContent = `${clicks}회`;
@@ -1050,9 +1103,8 @@
             drag = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, moved: false };
             file.setPointerCapture?.(event.pointerId);
             file.classList.add("is-held");
-            setState("drag", "누르고 유지: 아직 위치는 바뀌지 않았습니다. 누른 채 폴더까지 이동하세요.");
+            setState("drag", "누르고 유지: 누른 채 폴더까지 이동한 다음 놓으세요.");
         });
-
         file.addEventListener("pointermove", (event) => {
             if (!drag || drag.pointerId !== event.pointerId) return;
             event.preventDefault();
@@ -1063,9 +1115,8 @@
             const target = folder.getBoundingClientRect();
             const overFolder = event.clientX >= target.left && event.clientX <= target.right && event.clientY >= target.top && event.clientY <= target.bottom;
             folder.classList.toggle("is-target", overFolder);
-            if (drag.moved) setState("drag", overFolder ? "드래그: 폴더가 강조되었습니다. 여기에서 놓으세요." : "드래그: 누른 상태를 유지하며 파일과 포인터를 함께 이동합니다.");
+            if (drag.moved) setState("drag", overFolder ? "드래그: 폴더가 강조되었습니다. 여기에서 놓으세요." : "드래그: 누른 상태를 유지하며 이동 중입니다.");
         });
-
         const finishFilePointer = (event) => {
             if (!drag || drag.pointerId !== event.pointerId) return;
             const finished = drag;
@@ -1073,20 +1124,15 @@
             try { file.releasePointerCapture?.(event.pointerId); } catch (_) { /* capture may already be released */ }
             const target = folder.getBoundingClientRect();
             const overFolder = event.type !== "pointercancel" && event.clientX >= target.left && event.clientX <= target.right && event.clientY >= target.top && event.clientY <= target.bottom;
-            if (finished.moved && overFolder) {
-                placeFile();
-                return;
-            }
+            if (finished.moved && overFolder) { placeFile(); return; }
             file.style.removeProperty("transform");
             file.classList.remove("is-held");
             folder.classList.remove("is-target");
             if (!finished.moved) {
                 fileSelected = true;
                 file.classList.add("is-selected");
-                setState("click", "클릭: 파일이 선택되었지만 위치는 바뀌지 않았습니다.");
-            } else {
-                setState("drag", "드래그 취소: 폴더 밖에서 놓아 파일이 원래 위치로 돌아왔습니다.");
-            }
+                setState("click", "클릭: 파일이 선택되었지만 위치는 아직 바뀌지 않았습니다.");
+            } else setState("drag", "드래그 취소: 폴더 밖에서 놓아 파일이 원래 자리로 돌아왔습니다.");
         };
         file.addEventListener("pointerup", finishFilePointer);
         file.addEventListener("pointercancel", finishFilePointer);
@@ -1094,18 +1140,481 @@
             if (event.detail !== 0) return;
             fileSelected = true;
             file.classList.add("is-selected");
-            setState("click", "키보드 실행: 파일을 선택했습니다. Tab으로 폴더에 이동해 Enter를 누를 수 있습니다.");
+            setState("click", "키보드 실행: 파일을 선택했습니다. Tab으로 폴더에 이동해 Enter를 누르세요.");
         });
-        folder.addEventListener("click", () => {
-            if (fileSelected) placeFile();
+        folder.addEventListener("click", () => { if (fileSelected) placeFile(); });
+
+        const resetDouble = () => {
+            clearTimeout(doubleTimer);
+            lastFolderClick = 0;
+            doubleTarget.classList.remove("is-selected", "is-open");
+            doubleWindow.hidden = true;
+            doubleStatus.textContent = "한 번 누르면 선택, 짧은 간격으로 두 번 누르면 폴더가 열립니다.";
+        };
+        doubleTarget.addEventListener("click", () => {
+            const now = performance.now();
+            if (lastFolderClick && now - lastFolderClick <= 650) {
+                clearTimeout(doubleTimer);
+                lastFolderClick = 0;
+                doubleTarget.classList.remove("is-selected");
+                doubleTarget.classList.add("is-open");
+                doubleWindow.hidden = false;
+                doubleStatus.textContent = "두 번째 누름이 650ms 안에 들어와 수업 사진 폴더가 열렸습니다.";
+                commandStatus.textContent = "더블클릭 성공: 같은 대상의 첫 누름은 선택, 빠른 두 번째 누름은 열기 명령이 되었습니다.";
+                return;
+            }
+            lastFolderClick = now;
+            doubleTarget.classList.add("is-selected");
+            doubleWindow.hidden = true;
+            doubleStatus.textContent = "1 / 2　폴더가 선택되었습니다. 650ms 안에 같은 곳을 한 번 더 누르세요.";
+            clearTimeout(doubleTimer);
+            doubleTimer = setTimeout(() => {
+                lastFolderClick = 0;
+                doubleStatus.textContent = "간격이 길어 한 번 클릭으로 끝났습니다. 폴더는 선택 상태이고 열리지는 않았습니다.";
+            }, 670);
+        });
+
+        const closeContextMenu = () => {
+            contextMenu.hidden = true;
+            contextTarget.setAttribute("aria-expanded", "false");
+        };
+        const openContextMenu = (method) => {
+            contextMenu.hidden = false;
+            contextTarget.setAttribute("aria-expanded", "true");
+            contextTarget.classList.add("is-selected");
+            contextStatus.textContent = `${method}로 파일에 맞는 메뉴가 열렸습니다. 메뉴 명령을 실행해 보세요.`;
+            commandStatus.textContent = `컨텍스트 메뉴 열림: ${method}는 현재 선택한 파일에 사용할 수 있는 명령을 보여 줍니다.`;
+            requestAnimationFrame(() => contextMenu.querySelector("button")?.focus());
+        };
+        contextTarget.addEventListener("contextmenu", (event) => { event.preventDefault(); openContextMenu("우클릭"); });
+        contextTarget.addEventListener("keydown", (event) => {
+            if (event.key === "ContextMenu" || (event.shiftKey && event.key === "F10")) {
+                event.preventDefault();
+                openContextMenu("키보드 Shift+F10");
+            }
+        });
+        contextTarget.addEventListener("pointerdown", (event) => {
+            if (event.pointerType === "mouse") return;
+            contextLongPressed = false;
+            clearTimeout(contextTimer);
+            contextTimer = setTimeout(() => { contextLongPressed = true; openContextMenu("길게 누르기"); }, 650);
+        });
+        ["pointerup", "pointercancel", "pointerleave"].forEach((name) => contextTarget.addEventListener(name, () => clearTimeout(contextTimer)));
+        contextTarget.addEventListener("click", () => {
+            if (contextLongPressed) { contextLongPressed = false; return; }
+            contextTarget.classList.add("is-selected");
+            contextStatus.textContent = "일반 클릭은 파일을 선택했지만 메뉴는 열지 않았습니다.";
+        });
+        contextMenu.querySelectorAll("[data-context-action]").forEach((button) => button.addEventListener("click", () => {
+            if (button.dataset.contextAction === "rename") {
+                contextName.textContent = "관찰 기록(이름 바꿈).txt";
+                contextTarget.classList.remove("is-deleted");
+                contextStatus.textContent = "이름 바꾸기 실행: 같은 파일의 이름이 바뀌었습니다.";
+            } else {
+                contextTarget.classList.add("is-deleted");
+                contextStatus.textContent = "휴지통으로 이동 실행: 파일의 위치가 휴지통으로 바뀌었습니다.";
+            }
+            commandStatus.textContent = contextStatus.textContent;
+            closeContextMenu();
+            contextTarget.focus();
+        }));
+
+        const updateScroll = () => {
+            const max = Math.max(1, scrollViewport.scrollHeight - scrollViewport.clientHeight);
+            const percent = Math.max(0, Math.min(100, Math.round(scrollViewport.scrollTop / max * 100)));
+            const place = percent <= 5 ? "위쪽" : percent >= 95 ? "아래쪽" : "중간";
+            scrollPosition.textContent = `${place} · ${percent}%`;
+            scrollMeter.style.width = `${percent}%`;
+            scrollStep.innerHTML = percent >= 95 ? "맨 위로 <small>Back to Top</small>" : "아래로 이동 <small>Scroll Down</small>";
+            commandStatus.textContent = `스크롤 위치 ${percent}%: 문서 안에서 보이는 부분만 바뀌고 파일의 저장 위치는 그대로입니다.`;
+        };
+        scrollViewport.addEventListener("scroll", updateScroll, { passive: true });
+        scrollStep.addEventListener("click", () => {
+            const max = scrollViewport.scrollHeight - scrollViewport.clientHeight;
+            scrollViewport.scrollTo({ top: scrollViewport.scrollTop >= max - 2 ? 0 : Math.min(max, scrollViewport.scrollTop + 88), behavior: "smooth" });
         });
 
         resetButton.addEventListener("click", () => {
             clicks = 0;
             clickCount.textContent = "0회";
             resetFile();
-            setState("pointer", "포인터: 작업 화면 안에서 가리키는 위치가 바뀝니다.");
+            resetDouble();
+            clearTimeout(contextTimer);
+            closeContextMenu();
+            contextTarget.classList.remove("is-selected", "is-deleted");
+            contextName.textContent = "관찰 기록.txt";
+            contextStatus.textContent = "일반 클릭은 선택만 합니다. 메뉴 조작을 하면 파일 이름이나 위치가 바뀝니다.";
+            scrollViewport.scrollTop = 0;
+            updateScroll();
+            chooseCommand("double");
+            setState("pointer", "포인터: 작업판 안에서 가리키는 위치가 바뀝니다.");
         });
+        updateScroll();
+        chooseCommand("double");
+    }
+
+    function setupA01SignalLab() {
+        const lab = document.querySelector("[data-a01-lab]");
+        if (!lab) return;
+        const inputs = {
+            camera: {
+                input: ["카메라", "Camera"],
+                inputData: "센서가 빛의 밝기와 색을 측정",
+                process: ["사진 데이터 만들기", "Build Image Data"],
+                processData: "빛 값을 픽셀로 배열하고 색을 보정",
+                output: ["화면 미리보기", "Live Preview"],
+                outputData: "디스플레이 픽셀이 장면을 바로 보여 줌",
+                storage: "photo.webp",
+                storageData: "저장 장치에 사진 파일 기록",
+                outputProof: "화면에 카메라 장면이 보임"
+            },
+            keyboard: {
+                input: ["키보드", "Keyboard"],
+                inputData: "눌린 키의 코드와 누름 상태를 보냄",
+                process: ["문자와 위치 계산", "Resolve Key & Position"],
+                processData: "키 코드를 문자로 바꾸고 커서 위치를 확인",
+                output: ["문서에 A 표시", "Show A in Document"],
+                outputData: "글자 모양을 화면 픽셀로 보여 줌",
+                storage: "notes.txt",
+                storageData: "문서 내용을 텍스트 파일로 기록",
+                outputProof: "문서 화면에 A가 나타남"
+            },
+            microphone: {
+                input: ["마이크", "Microphone"],
+                inputData: "공기 진동을 시간마다 전기 신호로 측정",
+                process: ["소리 데이터 만들기", "Build Audio Data"],
+                processData: "측정값을 샘플로 배열하고 음량을 계산",
+                output: ["화면에 파형 표시", "Show Waveform"],
+                outputData: "소리의 높낮이를 파형으로 보여 줌",
+                storage: "recording.webm",
+                storageData: "소리 샘플을 녹음 파일로 기록",
+                outputProof: "화면에 소리 파형이 움직임"
+            }
+        };
+        const inputButtons = Array.from(lab.querySelectorAll("[data-a01-input]"));
+        const routeButtons = Array.from(lab.querySelectorAll("[data-a01-route]"));
+        const nodes = Array.from(lab.querySelectorAll("[data-a01-node]"));
+        const fields = {
+            inputTitle: lab.querySelector("[data-a01-input-title]"),
+            inputData: lab.querySelector("[data-a01-input-data]"),
+            processTitle: lab.querySelector("[data-a01-process-title]"),
+            processData: lab.querySelector("[data-a01-process-data]"),
+            outputTitle: lab.querySelector("[data-a01-output-title]"),
+            outputData: lab.querySelector("[data-a01-output-data]"),
+            storageTitle: lab.querySelector("[data-a01-storage-title]"),
+            storageData: lab.querySelector("[data-a01-storage-data]"),
+            outputState: lab.querySelector("[data-a01-output-state]"),
+            storageState: lab.querySelector("[data-a01-storage-state]"),
+            outputProof: lab.querySelector("[data-a01-output-proof]"),
+            storageProof: lab.querySelector("[data-a01-storage-proof]"),
+            status: lab.querySelector("[data-a01-status]")
+        };
+        const label = (pair) => `${pair[0]} <small>${pair[1]}</small>`;
+        let selectedInput = "camera";
+        let selectedRoute = "preview";
+
+        const setPressed = (buttons, key, value) => {
+            buttons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset[key] === value)));
+        };
+        const showSelection = () => {
+            const item = inputs[selectedInput];
+            lab.dataset.input = selectedInput;
+            lab.dataset.route = selectedRoute;
+            lab.dataset.runState = "idle";
+            nodes.forEach((node) => node.classList.remove("is-active", "is-skipped"));
+            fields.inputTitle.innerHTML = label(item.input);
+            fields.inputData.textContent = item.inputData;
+            fields.processTitle.innerHTML = label(item.process);
+            fields.processData.textContent = item.processData;
+            fields.outputTitle.innerHTML = label(item.output);
+            fields.outputData.textContent = item.outputData;
+            fields.storageTitle.textContent = item.storage;
+            fields.storageData.textContent = item.storageData;
+            fields.outputState.textContent = "실행 대기 · Ready";
+            fields.storageState.textContent = selectedRoute === "save" ? "실행하면 파일 기록" : "이번 경로에서 제외";
+            fields.outputProof.textContent = "대기 중";
+            fields.storageProof.textContent = selectedRoute === "save" ? "저장 예정" : "저장하지 않음";
+            fields.status.textContent = "신호 보내기를 누르면 입력과 처리를 거쳐 선택한 두 갈래의 상태가 바뀝니다.";
+        };
+
+        inputButtons.forEach((button) => button.addEventListener("click", () => {
+            selectedInput = button.dataset.a01Input;
+            setPressed(inputButtons, "a01Input", selectedInput);
+            showSelection();
+        }));
+        routeButtons.forEach((button) => button.addEventListener("click", () => {
+            selectedRoute = button.dataset.a01Route;
+            setPressed(routeButtons, "a01Route", selectedRoute);
+            showSelection();
+        }));
+        lab.querySelector("[data-a01-run]").addEventListener("click", () => {
+            const item = inputs[selectedInput];
+            lab.dataset.runState = "complete";
+            nodes.forEach((node) => {
+                const isStorage = node.dataset.a01Node === "storage";
+                node.classList.toggle("is-active", !isStorage || selectedRoute === "save");
+                node.classList.toggle("is-skipped", isStorage && selectedRoute !== "save");
+            });
+            fields.outputState.textContent = "출력 완료 · Displayed";
+            fields.outputProof.textContent = item.outputProof;
+            if (selectedRoute === "save") {
+                fields.storageState.textContent = "파일 기록 완료 · Saved";
+                fields.storageProof.textContent = `${item.storage} 파일이 저장 장치에 남음`;
+                fields.status.textContent = "처리한 데이터가 복사되어 한 길은 출력으로, 다른 길은 저장으로 갔습니다. 화면 결과와 파일 기록이 모두 확인됩니다.";
+            } else {
+                fields.storageState.textContent = "건너뜀 · Not Saved";
+                fields.storageProof.textContent = "파일 없음 — 전원을 끄면 다시 열 수 없음";
+                fields.status.textContent = "출력은 되었지만 저장 경로를 사용하지 않았습니다. 화면에 보였다는 사실만으로 파일이 생긴 것은 아닙니다.";
+            }
+        });
+        lab.querySelector("[data-a01-reset]").addEventListener("click", () => {
+            selectedInput = "camera";
+            selectedRoute = "preview";
+            setPressed(inputButtons, "a01Input", selectedInput);
+            setPressed(routeButtons, "a01Route", selectedRoute);
+            showSelection();
+        });
+        showSelection();
+    }
+
+    function setupA02CooperationLab() {
+        const lab = document.querySelector("[data-a02-lab]");
+        if (!lab) return;
+        const hardware = {
+            display: { name: "디스플레이", english: "Display", accepts: "pixels", capability: "픽셀값을 실제 빛으로 바꿈", success: "디스플레이 픽셀이 켜져 파란 도형이 보입니다." },
+            speaker: { name: "스피커", english: "Speaker", accepts: "tone", capability: "전기 신호를 공기 진동으로 바꿈", success: "스피커 진동판이 움직여 소리가 납니다." },
+            printer: { name: "프린터", english: "Printer", accepts: "page", capability: "잉크·토너를 종이에 옮김", success: "프린터가 종이에 문서 한 장을 출력합니다." }
+        };
+        const commands = {
+            pixels: { name: "픽셀 그리기", english: "Draw Pixels", packet: "색·좌표 명령", connection: "화면 출력 규칙" },
+            tone: { name: "소리 재생", english: "Play Tone", packet: "주파수·음량 샘플", connection: "오디오 출력 규칙" },
+            page: { name: "문서 인쇄", english: "Print Page", packet: "글자·그림·용지 배치", connection: "인쇄 드라이버 규칙" }
+        };
+        const hardwareButtons = Array.from(lab.querySelectorAll("[data-a02-hardware]"));
+        const commandButtons = Array.from(lab.querySelectorAll("[data-a02-command]"));
+        const presenceButtons = Array.from(lab.querySelectorAll("[data-a02-presence]"));
+        let selectedHardware = "display";
+        let selectedCommand = "pixels";
+        let hardwareConnected = true;
+        let softwareLoaded = true;
+
+        const markPressed = (buttons, key, value) => buttons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset[key] === value)));
+        const markPending = () => {
+            const device = hardware[selectedHardware];
+            const command = commands[selectedCommand];
+            lab.dataset.hardware = selectedHardware;
+            lab.dataset.command = selectedCommand;
+            lab.dataset.result = "idle";
+            lab.querySelector("[data-a02-output]").dataset.a02Output = selectedHardware;
+            lab.querySelector("[data-a02-command-title]").innerHTML = `${command.name} <small>${command.english}</small>`;
+            lab.querySelector("[data-a02-command-packet]").textContent = command.packet;
+            lab.querySelector("[data-a02-interface]").textContent = command.connection;
+            lab.querySelector("[data-a02-hardware-title]").innerHTML = `${device.name} <small>${device.english}</small>`;
+            lab.querySelector("[data-a02-capability]").textContent = device.capability;
+            lab.querySelector("[data-a02-hardware-presence]").textContent = hardwareConnected ? "연결됨 · Connected" : "연결 끊김 · Disconnected";
+            lab.querySelector("[data-a02-software-presence]").textContent = softwareLoaded ? "불러옴 · Loaded" : "없음 · Not Loaded";
+            presenceButtons.forEach((button) => {
+                const on = button.dataset.a02Presence === "hardware" ? hardwareConnected : softwareLoaded;
+                button.setAttribute("aria-pressed", String(on));
+            });
+            lab.querySelector("[data-a02-evidence-hardware]").textContent = `${device.name} ${hardwareConnected ? "연결됨" : "연결되지 않음"}`;
+            lab.querySelector("[data-a02-evidence-software]").textContent = `${command.name} ${softwareLoaded ? "불러옴" : "불러오지 않음"}`;
+            lab.querySelector("[data-a02-evidence-interface]").textContent = device.accepts === selectedCommand ? `${command.connection}이 ${device.name}와 맞음` : `${command.connection}과 ${device.name}의 기능이 맞지 않음`;
+            lab.querySelector("[data-a02-evidence-result]").textContent = "아직 실행하지 않음";
+            lab.querySelector("[data-a02-result-title]").textContent = "실행 전";
+            lab.querySelector("[data-a02-result-copy]").textContent = "두 준비 상태와 조합을 확인하세요.";
+            lab.querySelectorAll("[data-a02-stage]").forEach((stage) => stage.classList.remove("is-active", "is-blocked"));
+        };
+
+        hardwareButtons.forEach((button) => button.addEventListener("click", () => {
+            selectedHardware = button.dataset.a02Hardware;
+            markPressed(hardwareButtons, "a02Hardware", selectedHardware);
+            markPending();
+        }));
+        commandButtons.forEach((button) => button.addEventListener("click", () => {
+            selectedCommand = button.dataset.a02Command;
+            markPressed(commandButtons, "a02Command", selectedCommand);
+            markPending();
+        }));
+        presenceButtons.forEach((button) => button.addEventListener("click", () => {
+            if (button.dataset.a02Presence === "hardware") hardwareConnected = !hardwareConnected;
+            else softwareLoaded = !softwareLoaded;
+            markPending();
+        }));
+        lab.querySelector("[data-a02-run]").addEventListener("click", () => {
+            const device = hardware[selectedHardware];
+            const command = commands[selectedCommand];
+            const stages = {
+                software: lab.querySelector('[data-a02-stage="software"]'),
+                bridge: lab.querySelector('[data-a02-stage="bridge"]'),
+                hardware: lab.querySelector('[data-a02-stage="hardware"]')
+            };
+            stages.software.classList.toggle("is-active", softwareLoaded);
+            stages.software.classList.toggle("is-blocked", !softwareLoaded);
+            stages.bridge.classList.toggle("is-active", softwareLoaded);
+            stages.bridge.classList.toggle("is-blocked", !softwareLoaded || !hardwareConnected || device.accepts !== selectedCommand);
+            stages.hardware.classList.toggle("is-active", hardwareConnected);
+            stages.hardware.classList.toggle("is-blocked", !hardwareConnected || device.accepts !== selectedCommand);
+            let result;
+            let title;
+            let explanation;
+            if (!softwareLoaded && !hardwareConnected) {
+                result = "missing-both";
+                title = "실행할 수 없음";
+                explanation = "명령도 없고 명령을 실제 결과로 바꿀 장치도 없습니다.";
+            } else if (!softwareLoaded) {
+                result = "missing-software";
+                title = "명령 없음";
+                explanation = `${device.name}은 연결되어 있지만 무엇을 할지 지시하는 소프트웨어 명령이 없습니다.`;
+            } else if (!hardwareConnected) {
+                result = "missing-hardware";
+                title = "물리 장치 없음";
+                explanation = `${command.name} 명령은 준비됐지만 결과를 실제 빛·소리·종이로 바꿀 하드웨어가 없습니다.`;
+            } else if (device.accepts !== selectedCommand) {
+                result = "mismatch";
+                title = "연결 규칙 불일치";
+                explanation = `${command.packet}은 ${command.connection}을 사용하지만 ${device.name}은 ${device.capability} 장치입니다.`;
+            } else {
+                result = "success";
+                title = "협업 성공";
+                explanation = device.success;
+            }
+            lab.dataset.result = result;
+            lab.querySelector("[data-a02-result-title]").textContent = title;
+            lab.querySelector("[data-a02-result-copy]").textContent = explanation;
+            lab.querySelector("[data-a02-evidence-result]").textContent = explanation;
+        });
+        lab.querySelector("[data-a02-reset]").addEventListener("click", () => {
+            selectedHardware = "display";
+            selectedCommand = "pixels";
+            hardwareConnected = true;
+            softwareLoaded = true;
+            markPressed(hardwareButtons, "a02Hardware", selectedHardware);
+            markPressed(commandButtons, "a02Command", selectedCommand);
+            markPending();
+        });
+        markPending();
+    }
+
+    function setupA03CompatibilityLab() {
+        const lab = document.querySelector("[data-a03-lab]");
+        if (!lab) return;
+        const devices = {
+            pc: { name: "PC", english: "Personal Computer", os: "windows", osName: "Windows", hardware: "PC 펌웨어·CPU·메모리·화면" },
+            chromebook: { name: "Chromebook", english: "Chromebook", os: "chromeos", osName: "ChromeOS", hardware: "Chromebook 펌웨어·프로세서·키보드·화면" },
+            ipad: { name: "iPad", english: "Tablet", os: "ipados", osName: "iPadOS", hardware: "iPad 하드웨어·Apple 칩·터치 화면" },
+            phone: { name: "Phone (Android형)", english: "Android Phone", os: "android", osName: "Android", hardware: "Android형 스마트폰 SoC·터치 화면·센서" }
+        };
+        const systems = {
+            windows: { name: "Windows", device: "pc", job: "PC 장치 드라이버와 Windows API 제공" },
+            chromeos: { name: "ChromeOS", device: "chromebook", job: "Chromebook 장치 관리와 ChromeOS API 제공" },
+            ipados: { name: "iPadOS", device: "ipad", job: "iPad 터치·파일·권한과 iPadOS API 관리" },
+            android: { name: "Android", device: "phone", job: "Android형 스마트폰 장치와 Android API 관리" }
+        };
+        const apps = {
+            paint: { name: "PC 그림판", english: "Windows Drawing App", os: "windows", osName: "Windows", package: "Windows용 .exe와 Windows API 요청", result: "그림판 창이 열리고 선을 그릴 수 있습니다." },
+            "chrome-files": { name: "Chromebook 파일 앱", english: "ChromeOS Files App", os: "chromeos", osName: "ChromeOS", package: "ChromeOS 시스템 앱과 ChromeOS 파일 API 요청", result: "파일 앱이 열리고 Chromebook의 파일을 보여 줍니다." },
+            "ipad-sketch": { name: "iPad 스케치", english: "iPadOS Sketch App", os: "ipados", osName: "iPadOS", package: "iPadOS용 앱 묶음과 터치·파일 API 요청", result: "스케치 앱이 열리고 Apple Pencil·터치 입력을 받습니다." },
+            "android-camera": { name: "Android 카메라", english: "Android Camera App", os: "android", osName: "Android", package: "Android용 .apk와 Android 카메라 API 요청", result: "카메라 앱이 열리고 스마트폰 센서 미리보기를 보여 줍니다." }
+        };
+        const deviceButtons = Array.from(lab.querySelectorAll("[data-a03-device]"));
+        const osButtons = Array.from(lab.querySelectorAll("[data-a03-os]"));
+        const appButtons = Array.from(lab.querySelectorAll("[data-a03-app]"));
+        let selectedDevice = "pc";
+        let selectedOs = "windows";
+        let selectedApp = "paint";
+        const setPressed = (buttons, key, value) => buttons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset[key] === value)));
+        const clearProof = () => {
+            lab.dataset.outcome = "pending";
+            lab.querySelectorAll("[data-a03-layer], [data-a03-proof]").forEach((item) => item.classList.remove("is-pass", "is-fail", "is-blocked"));
+            lab.querySelector("[data-a03-preview-title]").textContent = "실행 확인 전";
+            lab.querySelector("[data-a03-preview-copy]").textContent = "세 층을 고른 뒤 호환성을 확인하세요.";
+            lab.querySelector("[data-a03-boot-proof]").textContent = "확인 전";
+            lab.querySelector("[data-a03-api-proof]").textContent = "확인 전";
+            lab.querySelector("[data-a03-run-proof]").textContent = "확인 전";
+        };
+        const showSelection = () => {
+            const device = devices[selectedDevice];
+            const os = systems[selectedOs];
+            const app = apps[selectedApp];
+            lab.dataset.device = selectedDevice;
+            lab.dataset.os = selectedOs;
+            lab.dataset.app = selectedApp;
+            lab.querySelector("[data-a03-current-device]").innerHTML = `${device.name} <small>${device.english}</small>`;
+            lab.querySelector("[data-a03-device-hardware]").textContent = device.hardware;
+            lab.querySelector("[data-a03-current-os]").textContent = os.name;
+            lab.querySelector("[data-a03-os-job]").textContent = os.job;
+            lab.querySelector("[data-a03-current-app]").innerHTML = `${app.name} <small>${app.english}</small>`;
+            lab.querySelector("[data-a03-app-package]").textContent = app.package;
+            clearProof();
+        };
+        const choose = (buttons, key, setValue) => buttons.forEach((button) => button.addEventListener("click", () => {
+            setValue(button.dataset[key]);
+            setPressed(buttons, key, button.dataset[key]);
+            showSelection();
+        }));
+        choose(deviceButtons, "a03Device", (value) => { selectedDevice = value; });
+        choose(osButtons, "a03Os", (value) => { selectedOs = value; });
+        choose(appButtons, "a03App", (value) => { selectedApp = value; });
+
+        lab.querySelector("[data-a03-run]").addEventListener("click", () => {
+            const device = devices[selectedDevice];
+            const os = systems[selectedOs];
+            const app = apps[selectedApp];
+            const deviceLayer = lab.querySelector('[data-a03-layer="device"]');
+            const osLayer = lab.querySelector('[data-a03-layer="os"]');
+            const appLayer = lab.querySelector('[data-a03-layer="app"]');
+            const bootProof = lab.querySelector('[data-a03-proof="boot"]');
+            const apiProof = lab.querySelector('[data-a03-proof="api"]');
+            const runProof = lab.querySelector('[data-a03-proof="run"]');
+            deviceLayer.classList.add("is-pass");
+            if (os.device !== selectedDevice) {
+                lab.dataset.outcome = "os-fail";
+                osLayer.classList.add("is-fail");
+                appLayer.classList.add("is-blocked");
+                bootProof.classList.add("is-fail");
+                apiProof.classList.add("is-blocked");
+                runProof.classList.add("is-blocked");
+                lab.querySelector("[data-a03-preview-title]").textContent = "운영체제에서 멈춤";
+                lab.querySelector("[data-a03-preview-copy]").textContent = `${device.name}의 기본 부팅·드라이버 조합은 ${device.osName}용입니다.`;
+                lab.querySelector("[data-a03-boot-proof]").textContent = `${os.name}의 부팅 파일·장치 드라이버가 이 ${device.name} 조합과 맞지 않습니다.`;
+                lab.querySelector("[data-a03-api-proof]").textContent = "운영체제가 시작되지 않아 앱의 API 요청까지 가지 못함";
+                lab.querySelector("[data-a03-run-proof]").textContent = "앱 실행 안 됨";
+                return;
+            }
+            osLayer.classList.add("is-pass");
+            bootProof.classList.add("is-pass");
+            lab.querySelector("[data-a03-boot-proof]").textContent = `${device.name}이 ${os.name}용 부팅·드라이버 규칙을 제공해 운영체제가 시작됨`;
+            if (app.os !== selectedOs) {
+                lab.dataset.outcome = "app-fail";
+                appLayer.classList.add("is-fail");
+                apiProof.classList.add("is-fail");
+                runProof.classList.add("is-blocked");
+                lab.querySelector("[data-a03-preview-title]").textContent = "앱에서 멈춤";
+                lab.querySelector("[data-a03-preview-copy]").textContent = `${app.name}은 ${app.osName}용이므로 현재 ${os.name}의 앱 규칙과 맞지 않습니다.`;
+                lab.querySelector("[data-a03-api-proof]").textContent = `${app.package} — 현재 운영체제는 필요한 패키지·API를 제공하지 않음`;
+                lab.querySelector("[data-a03-run-proof]").textContent = "운영체제는 켜졌지만 앱 실행 안 됨";
+                return;
+            }
+            lab.dataset.outcome = "success";
+            appLayer.classList.add("is-pass");
+            apiProof.classList.add("is-pass");
+            runProof.classList.add("is-pass");
+            lab.querySelector("[data-a03-preview-title]").textContent = "앱 실행 성공";
+            lab.querySelector("[data-a03-preview-copy]").textContent = app.result;
+            lab.querySelector("[data-a03-api-proof]").textContent = `${app.osName}이 앱이 요구한 패키지·API를 제공함`;
+            lab.querySelector("[data-a03-run-proof]").textContent = app.result;
+        });
+        lab.querySelector("[data-a03-reset]").addEventListener("click", () => {
+            selectedDevice = "pc";
+            selectedOs = "windows";
+            selectedApp = "paint";
+            setPressed(deviceButtons, "a03Device", selectedDevice);
+            setPressed(osButtons, "a03Os", selectedOs);
+            setPressed(appButtons, "a03App", selectedApp);
+            showSelection();
+        });
+        showSelection();
     }
 
     function setupConceptSequences() {
@@ -1154,12 +1663,12 @@
         if (!startButton || !nextButton || !status || !nodes.length) return;
         const messages = [
             "",
-            "1 / 6　프론트엔드가 학생이 입력한 답을 읽어 요청 데이터를 만듭니다.",
-            "2 / 6　API 약속에 맞춰 POST 주소와 데이터 형식을 정해 서버로 보냅니다.",
-            "3 / 6　백엔드가 로그인과 권한을 확인하고 답을 채점합니다.",
-            "4 / 6　백엔드가 데이터베이스에서 문제를 읽고 계산한 점수를 저장합니다.",
-            "5 / 6　백엔드가 JSON 형식의 응답을 프론트엔드로 돌려보냅니다.",
-            "6 / 6　프론트엔드가 응답을 읽고 학생 화면에 점수와 결과를 표시합니다."
+            "1 / 6　문제 화면이 학생이 고른 답을 챙깁니다. 이 화면 부분을 프론트엔드라고 합니다.",
+            "2 / 6　화면은 정해진 방법으로 답을 서버에 보냅니다. 이 프로그램 사이의 약속을 API(Application Programming Interface)라고 합니다.",
+            "3 / 6　서버가 학생을 확인하고 답을 정답과 비교합니다. 이 처리 부분이 백엔드입니다.",
+            "4 / 6　서버가 보관함에서 문제를 찾아보고 새 점수를 기록합니다. 이 보관함이 데이터베이스입니다.",
+            "5 / 6　서버가 채점 결과를 학생의 기기로 돌려보냅니다.",
+            "6 / 6　문제 화면이 받은 점수를 학생에게 보여 줍니다."
         ];
         let stage = 0;
 
@@ -1200,6 +1709,8 @@
         document.title = `${lesson.title} | 컴퓨터 원리와 활용`;
         document.getElementById("lessonMeta").textContent = `${lesson.number}차시`;
         document.getElementById("lessonTitle").innerHTML = `${lesson.title} <small>${lesson.english}</small>`;
+        document.getElementById("situationTitle").innerHTML = `${lesson.workedExample.title} <small>${lesson.workedExample.english}</small>`;
+        document.getElementById("situationLead").textContent = lesson.workedExample.intro;
         document.getElementById("conceptTitle").textContent = lesson.conceptTitle;
         const conceptVisual = document.getElementById("conceptVisual");
         const conceptDiagram = document.getElementById("conceptDiagram");
@@ -1285,14 +1796,29 @@
         `).join("");
         conceptOverview.classList.toggle("has-pointer-lab", hasPointerLab);
         conceptOverview.classList.toggle("has-stack-lab", lesson.id === "h04");
+        const hasFoundationLab = ["a01", "a02", "a03"].includes(lesson.id);
+        const hasPremiumVisual = hasFoundationLab || Boolean(window.COMPUTER_PREMIUM_VISUAL_IDS?.includes(lesson.id));
+        conceptOverview.classList.toggle("has-premium-visual", hasPremiumVisual);
         conceptOverview.hidden = Boolean(lesson.parts?.length);
+        const conceptGlossary = document.getElementById("conceptGlossary");
+        conceptGlossary.hidden = hasPointerLab || !lesson.details?.length;
+        conceptGlossary.open = !(hasPremiumVisual || hasPointerLab || lesson.id === "h04" || lesson.parts?.length);
         if (hasPointerLab) setupPointerConceptLab();
+        if (lesson.id === "a01") setupA01SignalLab();
+        if (lesson.id === "a02") setupA02CooperationLab();
+        if (lesson.id === "a03") setupA03CompatibilityLab();
         setupConceptSequences();
         setupFullStackLab();
+        window.COMPUTER_SETUP_CONCEPT_LABS?.();
         const devicesMount = document.getElementById("conceptDevices");
         const deviceComparison = lesson.deviceComparison;
         if (deviceComparison?.cards?.length) {
             devicesMount.innerHTML = `
+                <details class="device-comparison-disclosure">
+                    <summary>
+                        <span>기기별 구조 비교 <small>Device Structure Comparison</small></span>
+                        <strong>PC·Chromebook·태블릿·스마트폰</strong>
+                    </summary>
                 <section class="device-comparison" aria-labelledby="deviceComparisonTitle">
                     <div class="explanation-heading compact">
                         <span>기기별 구조 비교 <small>Device Structure Comparison</small></span>
@@ -1313,11 +1839,11 @@
                     </div>
                     <p class="representative-note"><strong>대표적인 구조</strong> 제품과 세대에 따라 부품의 위치·크기·결합 방식은 달라질 수 있습니다. 배터리가 있는 기기는 직접 분해하지 않고 시각 자료로 관찰합니다.</p>
                 </section>
+                </details>
             `;
         } else {
             devicesMount.innerHTML = "";
         }
-        if (lesson.parts?.length) partsMount.before(devicesMount);
         const story = lesson.workedExample;
         document.getElementById("conceptStory").innerHTML = `
             <section class="worked-example" aria-labelledby="workedExampleTitle">
@@ -1373,6 +1899,9 @@
         `;
         document.getElementById("activityTitle").textContent = lesson.activity.title;
         document.getElementById("activityInstruction").textContent = lesson.activity.instruction;
+        const hasStandaloneActivity = lesson.activity.type !== "sort";
+        document.getElementById("startActivity").textContent = hasStandaloneActivity ? "실험 시작" : "문제 풀기";
+        stepStatus.textContent = hasStandaloneActivity ? "장면·원리 1 / 3" : "장면·원리 1 / 2";
         renderStaticCanvases();
         renderLessonList();
         const back = document.querySelector(".back-button");
@@ -1693,6 +2222,11 @@
     }
 
     const beginActivity = () => {
+        if (lesson.activity.type === "sort") {
+            resetQuiz();
+            showStage("quiz", "문제 풀이 2 / 2");
+            return;
+        }
         resetActivity();
         showStage("activity", "직접 조작 2 / 3");
     };
@@ -1711,6 +2245,7 @@
     let selectedOption = -1;
     let score = 0;
     let results = [];
+    let questionHadWrong = false;
     const quizCount = document.getElementById("quizCount");
     const questionText = document.getElementById("questionText");
     const questionOptions = document.getElementById("questionOptions");
@@ -1729,6 +2264,7 @@
     function renderQuestion() {
         const question = lesson.questions[questionIndex];
         selectedOption = -1;
+        questionHadWrong = false;
         quizCount.textContent = `문제 ${questionIndex + 1} / ${lesson.questions.length}`;
         questionText.textContent = question.text;
         questionOptions.replaceChildren();
@@ -1762,16 +2298,27 @@
     submitAnswer.addEventListener("click", () => {
         const question = lesson.questions[questionIndex];
         const correct = selectedOption === question.answer;
-        if (correct) score += 1;
-        results.push({ correct, concept: question.concept, explanation: question.explanation });
-        [...questionOptions.children].forEach((button) => {
-            const originalIndex = Number(button.dataset.optionIndex);
+        const buttons = [...questionOptions.children];
+        const chosenButton = buttons.find((button) => Number(button.dataset.optionIndex) === selectedOption);
+        if (!correct) {
+            questionHadWrong = true;
+            chosenButton.disabled = true;
+            chosenButton.classList.add("is-selected-wrong");
+            chosenButton.setAttribute("aria-pressed", "false");
+            selectedOption = -1;
+            submitAnswer.disabled = true;
+            quizFeedback.textContent = `${question.concept}의 조건과 선택한 설명이 상황의 모든 단서에 맞는지 다시 비교하세요.`;
+            quizFeedback.className = "feedback quiz-feedback is-wrong";
+            return;
+        }
+        if (!questionHadWrong) score += 1;
+        results.push({ correct: !questionHadWrong, concept: question.concept, explanation: question.explanation });
+        buttons.forEach((button) => {
             button.disabled = true;
-            if (originalIndex === question.answer) button.classList.add("is-answer");
-            if (originalIndex === selectedOption && !correct) button.classList.add("is-selected-wrong");
+            if (Number(button.dataset.optionIndex) === question.answer) button.classList.add("is-answer");
         });
         quizFeedback.textContent = question.explanation;
-        quizFeedback.className = `feedback quiz-feedback ${correct ? "is-correct" : "is-wrong"}`;
+        quizFeedback.className = "feedback quiz-feedback is-correct";
         submitAnswer.hidden = true;
         nextQuestion.hidden = false;
         nextQuestion.textContent = questionIndex === lesson.questions.length - 1 ? "결과 확인" : "다음 문제";
@@ -1812,7 +2359,7 @@
 
     document.getElementById("retryQuiz").addEventListener("click", () => {
         resetQuiz();
-        showStage("quiz", "문제 풀이 3 / 3");
+        showStage("quiz", lesson.activity.type === "sort" ? "문제 풀이 2 / 2" : "문제 풀이 3 / 3");
     });
 
     const courseDialog = document.getElementById("courseDialog");
