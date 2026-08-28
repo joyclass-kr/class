@@ -154,8 +154,13 @@ one leg.
 ```
 Wide panoramic scene. A humble thatched cottage yard. On the right an elderly
 Buddhist monk in a grey robe, head shaved, a long string of wooden prayer beads
-over one arm, holds out a shallow basket with three plump carp in it, one finger
-raised as if giving careful instructions. On the left a middle-aged couple in plain hanbok receive them with
+over one arm, holds out a shallow basket with carp in it, one finger
+raised as if giving careful instructions.
+COUNT THE CARP: there must be exactly THREE fish in the basket, and all three
+clearly separate and countable - three heads and three tails plainly visible, not
+overlapping into a heap. Three is the whole point of the story: three carp mean
+three sons, and the third one is only half eaten, which is why the youngest is
+born a half boy. Two fish or four fish break the story. On the left a middle-aged couple in plain hanbok receive them with
 both hands, bowing slightly, hopeful faces. Late afternoon, warm gold light.
 Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
 smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
