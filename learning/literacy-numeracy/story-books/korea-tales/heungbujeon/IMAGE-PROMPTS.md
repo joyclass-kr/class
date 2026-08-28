@@ -60,6 +60,12 @@ scowling faces, no warts, no bared yellow teeth, no mean squinting slits, no
 ugly caricature. The reader should enjoy watching them and laugh at them, never
 be disgusted by them. A greedy character can be adorable; what is wrong with
 them shows in what they DO, not in an ugly face.
+Two things that keep going wrong. First, PLUMP IS NOT UGLY. A well-fed character
+is round AND good-looking: soft round face, smooth clear skin, big bright eyes,
+rosy cheeks, glossy hair. Roundness is charm, never the joke. Second, DRAW PEOPLE
+YOUNG unless the story says otherwise. Parents of small children are in their
+twenties or thirties - smooth faces, thick black hair, no wrinkles, no balding,
+no stoop. Only grandparents and village elders are old.
 The same goes for monsters and beasts - they must be FUN to look at too, drawn
 like the monsters in 1980s-90s Korean TV animation. BOLD, SIMPLE and BOUNCY: big
 flat areas of saturated colour, thick clean outlines, rounded cartoon masses,
@@ -75,20 +81,28 @@ big bold cartoon shape that a child would want to draw themselves.
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-Heungbu: a thin gentle-faced man in a much-patched pale hanbok, sleeves too
-short, straw sandals, always slightly stooped as if apologising. Endlessly
-good-humoured even when miserable.
-Heungbu's wife: a worn thin woman in faded indigo, hair in a plain bun, sharper
-and more practical than her husband.
-Their many children: eleven or twelve ragged skinny children of all sizes, always
-in a swarm, big eyes, patched clothes, comic and lively.
-Nolbu: a stout well-fed man in a good brown silk hanbok and a black horsehair
-hat, a permanent scowl, one hand usually on his belly or pointing. Not a monster -
-a small-minded, greedy, frightened man.
-Nolbu's wife: a round well-fed woman in good silk with a neat bun, big round
-eyes and cheeks that puff right up when she is cross. Comic and cute even at her
-worst - the reader should laugh at her, never be disgusted. A rice paddle is
-usually in her hand.
+Heungbu: a YOUNG father in his early thirties - he has twelve small children, so
+draw him young. Thick black hair in a neat topknot, a smooth unlined face, a warm
+open smile. Slim from going hungry, in a much-patched pale hanbok with sleeves
+too short and straw sandals. Endlessly good-humoured even when miserable.
+Heungbu's wife: a YOUNG mother in her late twenties, pretty and clear-faced with
+glossy black hair in a plain bun, slim from going hungry, in faded indigo. She is
+sharper and more practical than her husband.
+Their many children: eleven or twelve children from toddler to about twelve years
+old, always in a swarm, big eyes, patched clothes, thin but bright-faced, comic
+and lively.
+Nolbu: the elder brother, mid thirties, only a few years older than Heungbu.
+Thick black hair, a smooth face, no wrinkles. Stout and well-fed in a good brown
+silk hanbok and a black horsehair hat, one hand usually on his belly or pointing.
+Comic rather than nasty to look at - a small-minded, greedy, frightened man.
+Nolbu's wife: a YOUNG and PRETTY woman in her early thirties. Draw her plump and
+beautiful at the same time - a soft round face, smooth skin with no wrinkles, big
+bright eyes with long lashes, a small neat nose, rosy cheeks, glossy black hair in
+a neat bun with a bright hairpin. She wears fine coloured silk. Being well-fed and
+round is part of her charm, never a joke against her - think of a pretty young
+mistress of a rich house. Her cheeks puff right up when she is cross and that is
+the comedy. A rice paddle is usually in her hand. What is unkind about her shows
+only in what she does with it.
 The swallows: sleek blue-black-and-white birds with forked tails; one nestling
 with a splinted leg wrapped in white thread.
 The gourds: enormous pale green gourds, some as big as a person, growing on the

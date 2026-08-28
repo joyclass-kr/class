@@ -64,6 +64,12 @@ scowling faces, no warts, no bared yellow teeth, no mean squinting slits, no
 ugly caricature. The reader should enjoy watching them and laugh at them, never
 be disgusted by them. A greedy character can be adorable; what is wrong with
 them shows in what they DO, not in an ugly face.
+Two things that keep going wrong. First, PLUMP IS NOT UGLY. A well-fed character
+is round AND good-looking: soft round face, smooth clear skin, big bright eyes,
+rosy cheeks, glossy hair. Roundness is charm, never the joke. Second, DRAW PEOPLE
+YOUNG unless the story says otherwise. Parents of small children are in their
+twenties or thirties - smooth faces, thick black hair, no wrinkles, no balding,
+no stoop. Only grandparents and village elders are old.
 The same goes for monsters and beasts - they must be FUN to look at too, drawn
 like the monsters in 1980s-90s Korean TV animation. BOLD, SIMPLE and BOUNCY: big
 flat areas of saturated colour, thick clean outlines, rounded cartoon masses,

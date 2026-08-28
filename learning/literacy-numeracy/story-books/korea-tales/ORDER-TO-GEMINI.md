@@ -147,6 +147,41 @@
 
 ---
 
+### 사람을 너무 늙고 못생기게 그리지 말아 주세요
+
+흥부가 머리 벗어진 노인으로, 놀부 아내가 못생기고 나이 들게 나왔습니다.
+**이것도 제 설명 잘못입니다.** 흥부전 인물 설명에 **나이가 한 사람도
+적혀 있지 않았습니다.** 게다가 흥부에게는 `always slightly stooped`
+(늘 약간 구부정하게)라고 적어 두었습니다. 제가 늙게 그리라고 민 셈입니다.
+
+흥부와 놀부는 **아이가 열둘인 삼십 대 형제**입니다. 다섯 사람을 고쳤습니다.
+
+    흥부       삼십 대 초반. 숱 많은 검은 머리, 주름 없는 얼굴, 따뜻한 웃음
+    흥부 아내   이십 대 후반. 곱고 맑은 얼굴, 윤나는 머리
+    놀부       삼십 대 중반. 흥부보다 몇 살 위일 뿐. 주름 없음
+    놀부 아내   삼십 대 초반. **통통하면서 예쁘게**
+    아이들      두세 살부터 열두 살까지
+
+놀부 아내는 이렇게 적었습니다.
+
+    Nolbu's wife: a YOUNG and PRETTY woman in her early thirties. Draw her plump and
+    beautiful at the same time - a soft round face, smooth skin with no wrinkles, big
+    bright eyes with long lashes, a small neat nose, rosy cheeks, glossy black hair in
+    a neat bun with a bright hairpin. Being well-fed and round is part of her charm,
+    never a joke against her - think of a pretty young mistress of a rich house.
+
+62권 공통 규칙에도 두 줄을 넣었습니다.
+
+    Two things that keep going wrong. First, PLUMP IS NOT UGLY. A well-fed character
+    is round AND good-looking: soft round face, smooth clear skin, big bright eyes,
+    rosy cheeks, glossy hair. Roundness is charm, never the joke. Second, DRAW PEOPLE
+    YOUNG unless the story says otherwise. Parents of small children are in their
+    twenties or thirties - smooth faces, thick black hair, no wrinkles, no balding,
+    no stoop. Only grandparents and village elders are old.
+
+**뚱뚱한 것과 못생긴 것은 다릅니다.** 통통한 것은 매력이지 웃음거리가
+아닙니다. 못됐다는 것은 하는 짓으로만 드러나면 됩니다.
+
 ### 그림체를 재미있게 — 62권 공통 지시문에 「구도와 움직임」을 넣었습니다
 
 그림이 재미없다는 말을 들었습니다. 프롬프트를 보니 **「깔끔한 윤곽선,
