@@ -35,7 +35,7 @@ body {
 .mc-container { max-width: 900px; margin: 0 auto; }
 
 /* ── Header ─────────────────────────────────────────────── */
-.page-header { text-align: center; margin-bottom: 18px; }
+.page-header { text-align: left; margin-bottom: 10px; }
 
 .back-link {
   display: inline-flex;
@@ -45,7 +45,7 @@ body {
   text-decoration: none;
   font-weight: 600;
   font-size: 13px;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   padding: 10px 14px;
   min-height: 44px;
   border-radius: 16px;

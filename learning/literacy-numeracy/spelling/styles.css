@@ -58,7 +58,7 @@ button {
 
 .topbar {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr auto;
     align-items: center;
     gap: 16px;
     color: #fff8e9;

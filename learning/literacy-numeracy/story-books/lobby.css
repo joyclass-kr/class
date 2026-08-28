@@ -56,6 +56,9 @@ body.shelf-world-novels::after { background: none; }
 }
 
 .back-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
     padding: 8px 15px;
     border: 1px solid var(--gold);
     border-radius: 3px;
@@ -96,7 +99,7 @@ h1 span {
     grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
     gap: 20px;
     max-width: 1060px;
-    margin: 34px auto 0;
+    margin: 10px auto 0;
 }
 
 .book-card {
