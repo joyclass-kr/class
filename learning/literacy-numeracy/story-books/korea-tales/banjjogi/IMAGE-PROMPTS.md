@@ -59,10 +59,12 @@ What makes a monster disgusting is not its teeth but its TEXTURE and DETAIL: wet
 glistening skin, slime, drool, bristles, veins, swarms of small eyes, finely
 segmented insect legs, realistic anatomy. Never draw those. Keep every monster a
 big bold cartoon shape that a child would want to draw themselves.
-Banjjogi is HALF a boy and the missing half is on the PICTURE-LEFT: the straight
-cut edge runs down his picture-left side, and he has ONE eye, ONE arm, ONE leg,
-half a nose and half a mouth, all on the picture-right. Never both eyes. The face
-is halved exactly like the body. The flat side is smooth - never a cutaway.
+Banjjogi is HALF a boy. ONE single straight line runs down through his head AND
+his body together - crown, forehead, between the eyes, nose, mouth, chin, chest,
+belly, to the ground - and everything on the PICTURE-LEFT of that one line is
+gone. The missing eye is on the SAME side as the missing arm and missing leg,
+never opposite sides. Face him straight at the viewer. Smooth flat side, never a
+cutaway.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
@@ -71,24 +73,33 @@ is halved exactly like the body. The flat side is smooth - never a cutaway.
 Banjjogi (Half-boy). READ THIS TWICE - it is the whole point of the book and it
 keeps being drawn wrong.
 
-HE IS HALF A BOY, AND THE MISSING HALF IS ALWAYS ON THE LEFT SIDE OF THE PICTURE.
+HE IS HALF A BOY. THERE IS ONE CUT LINE, AND IT GOES THROUGH HIS FACE AND HIS
+BODY TOGETHER.
 
-Do not think about his left or his right - think about the PICTURE. Draw a whole
-boy facing the viewer, then draw one straight vertical line down the middle of
-his face and body, and erase everything on the LEFT-HAND SIDE OF THE IMAGE. The
-straight cut edge always runs down the picture-left side of him. Everything that
-remains is on the picture-right side of that line:
+Draw him like this, in this order:
 
-  - ONE eye, on the picture-right. The picture-left eye, eyebrow and ear are gone.
-  - HALF a nose and HALF a mouth, the picture-right halves.
-  - ONE arm, on the picture-right. No arm at all on the picture-left.
-  - ONE leg, on the picture-right. He hops on it.
-  - Half a torso, half a topknot - the picture-right halves.
+1. Draw ONE straight vertical line in the picture, from top to bottom.
+2. That single unbroken line passes down through the crown of his head, the
+   middle of his forehead, between his eyes, down the middle of his nose,
+   through the middle of his mouth, down his chin, his throat, the middle of his
+   chest, his belly, and all the way to the ground between where his two legs
+   would have been.
+3. Everything on the PICTURE-LEFT of that line does not exist. Draw only what is
+   on the PICTURE-RIGHT of it.
 
-This is the same in EVERY picture, whichever way he is moving or looking. Cut
-edge always picture-left, single eye and single arm and single leg always
-picture-right. Never both eyes. Never both arms. Never a whole face on a half
-body - THE FACE IS HALVED TOO, exactly like the body.
+It is ONE line, not two. The face is not cut separately from the body - the SAME
+line cuts both, so the missing eye is on the SAME side as the missing arm and the
+missing leg. If the arm is gone on the picture-left, then the eye is gone on the
+picture-left too. They can never be on opposite sides.
+
+What is left on the picture-right: one eye, one eyebrow, one ear, half a nose,
+half a mouth, one shoulder, one arm, half a chest, one leg, half a topknot.
+
+Always draw him facing the viewer straight on, so this line is easy to see. Do
+not draw him in three-quarter view or in profile.
+
+This is the same in EVERY picture, whichever way he is moving. Never both eyes.
+Never both arms. Never a whole face on a half body.
 
 He is NOT a cut-open body. Nothing is exposed - no bone, no organs, no blood, no
 red flesh, never a cutaway. The flat side is simply smooth, like the side of a
@@ -125,11 +136,12 @@ hanging from it. Thick ropes are still wound around his half body. His one eye i
 bright and he wears a huge cheerful grin. Below him at the bottom of the frame, a
 small moonlit village of thatched roofs. Heroic and funny, warm orange sunset
 behind, deep blue sky above.
-Banjjogi is HALF a boy and the missing half is on the PICTURE-LEFT: the straight
-cut edge runs down his picture-left side, and he has ONE eye, ONE arm, ONE leg,
-half a nose and half a mouth, all on the picture-right. The face is halved
-exactly like the body. The flat side is SMOOTH - absolutely no bone, organs,
-blood or red flesh. Never a cutaway.
+Banjjogi is HALF a boy. ONE single straight line runs down through his head AND
+his body together - crown, forehead, between the eyes, nose, mouth, chin, chest,
+belly, to the ground - and everything on the PICTURE-LEFT of that one line is
+gone. The missing eye is on the SAME side as the missing arm and missing leg.
+Face him straight at the viewer. The flat side is SMOOTH - absolutely no bone,
+organs, blood or red flesh. Never a cutaway.
 ```
 
 ## 본문 12장 (모두 가로 2:1)
@@ -142,10 +154,12 @@ traveller in a wide straw hat and grey robe holds out a straw string threaded
 with three plump carp toward the left, one finger raised as if giving careful
 instructions. On the left a middle-aged couple in plain hanbok receive them with
 both hands, bowing slightly, hopeful faces. Late afternoon, warm gold light.
-Banjjogi is HALF a boy and the missing half is on the PICTURE-LEFT: the straight
-cut edge runs down his picture-left side, and he has ONE eye, ONE arm, ONE leg,
-half a nose and half a mouth, all on the picture-right. Never both eyes. The face
-is halved exactly like the body. The flat side is smooth - never a cutaway.
+Banjjogi is HALF a boy. ONE single straight line runs down through his head AND
+his body together - crown, forehead, between the eyes, nose, mouth, chin, chest,
+belly, to the ground - and everything on the PICTURE-LEFT of that one line is
+gone. The missing eye is on the SAME side as the missing arm and missing leg,
+never opposite sides. Face him straight at the viewer. Smooth flat side, never a
+cutaway.
 ```
 
 ### `02-half.webp` — 세 마리째를 반만 먹고, 셋째 아이가 반쪽으로 태어난다
@@ -159,10 +173,12 @@ babies, and the third a cheerful baby who is exactly one vertical half of a baby
 one eye, one arm, one leg, gurgling happily. The old mother looks down at them
 with wide surprised eyes and a soft smile. Never gruesome - the half baby is
 round and cute.
-Banjjogi is HALF a boy and the missing half is on the PICTURE-LEFT: the straight
-cut edge runs down his picture-left side, and he has ONE eye, ONE arm, ONE leg,
-half a nose and half a mouth, all on the picture-right. Never both eyes. The face
-is halved exactly like the body. The flat side is smooth - never a cutaway.
+Banjjogi is HALF a boy. ONE single straight line runs down through his head AND
+his body together - crown, forehead, between the eyes, nose, mouth, chin, chest,
+belly, to the ground - and everything on the PICTURE-LEFT of that one line is
+gone. The missing eye is on the SAME side as the missing arm and missing leg,
+never opposite sides. Face him straight at the viewer. Smooth flat side, never a
+cutaway.
 ```
 
 ### `03-grow.webp` — 한 팔로 쌀가마를 번쩍 든다
@@ -173,10 +189,12 @@ Banjjogi, now grown, balances on his one leg and hoists an enormous rice sack
 high over his head with his single arm, grinning, effortless. On the left a crowd
 of villagers - farmers, an old man, children - throw up their hands and cheer,
 mouths wide open in amazement. Dust motes and straw in the golden air.
-Banjjogi is HALF a boy and the missing half is on the PICTURE-LEFT: the straight
-cut edge runs down his picture-left side, and he has ONE eye, ONE arm, ONE leg,
-half a nose and half a mouth, all on the picture-right. Never both eyes. The face
-is halved exactly like the body. The flat side is smooth - never a cutaway.
+Banjjogi is HALF a boy. ONE single straight line runs down through his head AND
+his body together - crown, forehead, between the eyes, nose, mouth, chin, chest,
+belly, to the ground - and everything on the PICTURE-LEFT of that one line is
+gone. The missing eye is on the SAME side as the missing arm and missing leg,
+never opposite sides. Face him straight at the viewer. Smooth flat side, never a
+cutaway.
 ```
 
 ### `04-jealous.webp` — 형 둘이 시샘하며 수군거린다
@@ -187,10 +205,12 @@ brothers crouch together with their heads almost touching, whispering behind
 cupped hands, eyes narrowed and sour, one jabbing a thumb over his shoulder. On
 the right, far away and out of earshot, Banjjogi hops cheerfully along a path
 carrying a huge bundle of firewood, oblivious. Long blue evening shadows.
-Banjjogi is HALF a boy and the missing half is on the PICTURE-LEFT: the straight
-cut edge runs down his picture-left side, and he has ONE eye, ONE arm, ONE leg,
-half a nose and half a mouth, all on the picture-right. Never both eyes. The face
-is halved exactly like the body. The flat side is smooth - never a cutaway.
+Banjjogi is HALF a boy. ONE single straight line runs down through his head AND
+his body together - crown, forehead, between the eyes, nose, mouth, chin, chest,
+belly, to the ground - and everything on the PICTURE-LEFT of that one line is
+gone. The missing eye is on the SAME side as the missing arm and missing leg,
+never opposite sides. Face him straight at the viewer. Smooth flat side, never a
+cutaway.
 ```
 
 ### `05-tie.webp` — 깊은 산에서 반쪽이를 소나무에 묶는다
@@ -201,10 +221,12 @@ bound with many coils of thick rope to a massive pine trunk, but his expression
 is only mildly puzzled, one eyebrow up, not frightened at all. On the right the
 two brothers hurry away downhill without looking back, glancing sideways at each
 other. Cool dim blue-green light, tall dark trunks.
-Banjjogi is HALF a boy and the missing half is on the PICTURE-LEFT: the straight
-cut edge runs down his picture-left side, and he has ONE eye, ONE arm, ONE leg,
-half a nose and half a mouth, all on the picture-right. Never both eyes. The face
-is halved exactly like the body. The flat side is smooth - never a cutaway.
+Banjjogi is HALF a boy. ONE single straight line runs down through his head AND
+his body together - crown, forehead, between the eyes, nose, mouth, chin, chest,
+belly, to the ground - and everything on the PICTURE-LEFT of that one line is
+gone. The missing eye is on the SAME side as the missing arm and missing leg,
+never opposite sides. Face him straight at the viewer. Smooth flat side, never a
+cutaway.
 ```
 
 ### `06-uproot.webp` — 소나무를 통째로 지고 마당에 나타난다
@@ -216,10 +238,12 @@ falling from their hands, eyes and mouths enormous with shock. On the right
 Banjjogi stands in the yard still wrapped in ropes, the whole uprooted pine tree
 across his back with earth and roots dangling, scratching his head with his one
 hand and smiling apologetically. Dust puffing up around his foot.
-Banjjogi is HALF a boy and the missing half is on the PICTURE-LEFT: the straight
-cut edge runs down his picture-left side, and he has ONE eye, ONE arm, ONE leg,
-half a nose and half a mouth, all on the picture-right. Never both eyes. The face
-is halved exactly like the body. The flat side is smooth - never a cutaway.
+Banjjogi is HALF a boy. ONE single straight line runs down through his head AND
+his body together - crown, forehead, between the eyes, nose, mouth, chin, chest,
+belly, to the ground - and everything on the PICTURE-LEFT of that one line is
+gone. The missing eye is on the SAME side as the missing arm and missing leg,
+never opposite sides. Face him straight at the viewer. Smooth flat side, never a
+cutaway.
 ```
 
 ### `07-tiger.webp` — 밤마다 호랑이가 마을로 내려온다
@@ -230,10 +254,12 @@ and shuttered doors on the right, black pine ridge on the left. A huge striped
 tiger prowls down the empty village lane in the centre, head low, eyes glowing
 yellow, one paw raised. An overturned water jar and a broken fence rail. Every
 window dark. Tense but stylised, not gory.
-Banjjogi is HALF a boy and the missing half is on the PICTURE-LEFT: the straight
-cut edge runs down his picture-left side, and he has ONE eye, ONE arm, ONE leg,
-half a nose and half a mouth, all on the picture-right. Never both eyes. The face
-is halved exactly like the body. The flat side is smooth - never a cutaway.
+Banjjogi is HALF a boy. ONE single straight line runs down through his head AND
+his body together - crown, forehead, between the eyes, nose, mouth, chin, chest,
+belly, to the ground - and everything on the PICTURE-LEFT of that one line is
+gone. The missing eye is on the SAME side as the missing arm and missing leg,
+never opposite sides. Face him straight at the viewer. Smooth flat side, never a
+cutaway.
 ```
 
 ### `08-catch.webp` — 한 팔로 호랑이 목덜미를 붙들어 꽁꽁 묶는다
@@ -245,10 +271,12 @@ neck with his single arm, holding it up so its paws paddle helplessly in the air
 The tiger's face is comically outraged, tongue out, eyes crossed. A coil of thick
 rope is slung over Banjjogi's shoulder and one loop is already around the tiger's
 middle. Moonlight, motion lines, funny not frightening.
-Banjjogi is HALF a boy and the missing half is on the PICTURE-LEFT: the straight
-cut edge runs down his picture-left side, and he has ONE eye, ONE arm, ONE leg,
-half a nose and half a mouth, all on the picture-right. Never both eyes. The face
-is halved exactly like the body. The flat side is smooth - never a cutaway.
+Banjjogi is HALF a boy. ONE single straight line runs down through his head AND
+his body together - crown, forehead, between the eyes, nose, mouth, chin, chest,
+belly, to the ground - and everything on the PICTURE-LEFT of that one line is
+gone. The missing eye is on the SAME side as the missing arm and missing leg,
+never opposite sides. Face him straight at the viewer. Smooth flat side, never a
+cutaway.
 ```
 
 ### `09-promise.webp` — 김 부자 대문 앞에 호랑이를 끌고 선다
@@ -260,10 +288,12 @@ the enormous tiger trussed up like a bundle at his side, sulking. Kim the rich
 man has come out through the gate and stopped dead, his smile frozen, one hand
 half raised, sweat drops flying off his forehead. Villagers peek over the wall,
 delighted.
-Banjjogi is HALF a boy and the missing half is on the PICTURE-LEFT: the straight
-cut edge runs down his picture-left side, and he has ONE eye, ONE arm, ONE leg,
-half a nose and half a mouth, all on the picture-right. Never both eyes. The face
-is halved exactly like the body. The flat side is smooth - never a cutaway.
+Banjjogi is HALF a boy. ONE single straight line runs down through his head AND
+his body together - crown, forehead, between the eyes, nose, mouth, chin, chest,
+belly, to the ground - and everything on the PICTURE-LEFT of that one line is
+gone. The missing eye is on the SAME side as the missing arm and missing leg,
+never opposite sides. Face him straight at the viewer. Smooth flat side, never a
+cutaway.
 ```
 
 ### `10-excuse.webp` — "세 가지 내기를 해서 이기면"
@@ -275,10 +305,12 @@ with the other hand, eyes sliding sideways. On the left Banjjogi nods calmly,
 arms - arm - at his side, completely unbothered. Between and behind them
 villagers mutter to one another with raised eyebrows and folded arms. Bright
 midday.
-Banjjogi is HALF a boy and the missing half is on the PICTURE-LEFT: the straight
-cut edge runs down his picture-left side, and he has ONE eye, ONE arm, ONE leg,
-half a nose and half a mouth, all on the picture-right. Never both eyes. The face
-is halved exactly like the body. The flat side is smooth - never a cutaway.
+Banjjogi is HALF a boy. ONE single straight line runs down through his head AND
+his body together - crown, forehead, between the eyes, nose, mouth, chin, chest,
+belly, to the ground - and everything on the PICTURE-LEFT of that one line is
+gone. The missing eye is on the SAME side as the missing arm and missing leg,
+never opposite sides. Face him straight at the viewer. Smooth flat side, never a
+cutaway.
 ```
 
 ### `11-contest.webp` — 힘겨루기, 달리기, 슬기 겨루기
@@ -290,10 +322,12 @@ onlookers reel back. Centre: he hops across a finish line on his single leg,
 well ahead of two ordinary runners. Right: he wades chest-deep into a clear
 stream carrying a huge earthenware jar in his arm and dunks it straight into the
 water. Bright daylight, cheering crowd, playful energy.
-Banjjogi is HALF a boy and the missing half is on the PICTURE-LEFT: the straight
-cut edge runs down his picture-left side, and he has ONE eye, ONE arm, ONE leg,
-half a nose and half a mouth, all on the picture-right. Never both eyes. The face
-is halved exactly like the body. The flat side is smooth - never a cutaway.
+Banjjogi is HALF a boy. ONE single straight line runs down through his head AND
+his body together - crown, forehead, between the eyes, nose, mouth, chin, chest,
+belly, to the ground - and everything on the PICTURE-LEFT of that one line is
+gone. The missing eye is on the SAME side as the missing arm and missing leg,
+never opposite sides. Face him straight at the viewer. Smooth flat side, never a
+cutaway.
 ```
 
 ### `12-wedding.webp` — 혼례, 형 둘을 윗자리에 앉힌다
@@ -306,10 +340,12 @@ honour under the awning, the two elder brothers sit stiffly on cushions with
 crimson faces, looking at the ground, one scratching his neck. The old mother
 wipes her eyes on the right. Persimmon trees, warm golden autumn light,
 festive.
-Banjjogi is HALF a boy and the missing half is on the PICTURE-LEFT: the straight
-cut edge runs down his picture-left side, and he has ONE eye, ONE arm, ONE leg,
-half a nose and half a mouth, all on the picture-right. Never both eyes. The face
-is halved exactly like the body. The flat side is smooth - never a cutaway.
+Banjjogi is HALF a boy. ONE single straight line runs down through his head AND
+his body together - crown, forehead, between the eyes, nose, mouth, chin, chest,
+belly, to the ground - and everything on the PICTURE-LEFT of that one line is
+gone. The missing eye is on the SAME side as the missing arm and missing leg,
+never opposite sides. Face him straight at the viewer. Smooth flat side, never a
+cutaway.
 ```
 
 ---
@@ -324,8 +360,8 @@ side by side in a row, all three laughing at something one of them has just said
 sleeves rolled up. The old mother and the young wife carry a lunch tray toward
 them along the ridge path. Warm harvest colours, distant blue mountains, wide
 open sky. Peaceful and companionable.
-Banjjogi is HALF a boy and the missing half is on the PICTURE-LEFT - even here
-among his whole-bodied brothers. Cut edge picture-left; ONE eye, ONE arm, ONE leg,
-half a nose and half a mouth on the picture-right. The face is halved too.
-Smooth flat side, never a cutaway.
+Banjjogi is HALF a boy - even here among his whole-bodied brothers. ONE single
+straight line runs down through his head AND his body together, and everything on
+the PICTURE-LEFT of that one line is gone. The missing eye is on the SAME side as
+the missing arm and missing leg. Smooth flat side, never a cutaway.
 ```

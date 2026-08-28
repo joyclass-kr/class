@@ -147,47 +147,61 @@
 
 ---
 
-### 반쪽이(`banjjogi`) — 지시를 「화면 기준」으로 바꿨습니다. 다시 받아 주세요
+### 반쪽이(`banjjogi`) — 「선은 하나」로 다시 썼습니다
 
-보내 주신 열세 장을 다 보았습니다. **어떤 장은 맞고 어떤 장은 틀립니다.**
-`05-tie` 는 얼굴까지 반쪽으로 잘 나왔는데 `03-grow` 는 두 눈이 다 있습니다.
-눈이 왼쪽이 없어졌다 오른쪽이 없어졌다 합니다.
+지금 **팔다리가 없는 쪽과 눈이 없는 쪽이 서로 반대로** 나오고 있습니다.
+이것도 제 지시 잘못입니다. 제가 이렇게 항목으로 늘어놓았습니다.
 
-**제 지시가 잘못이었습니다.** 제가 이렇게 적었습니다.
+    - ONE eye, on the picture-right.
+    - ONE arm, on the picture-right.
+    - ONE leg, on the picture-right.
 
-    ONLY THE RIGHT HALF OF HIS BODY EXISTS ...
+이러면 얼굴은 얼굴대로, 몸은 몸대로 따로 자르게 됩니다. **두 선이 생기고
+서로 어긋납니다.** 그래서 눈은 이쪽, 팔은 저쪽이 됩니다.
 
-「오른쪽」은 **몸 기준**입니다. 그런데 인물이 돌아서면 화면에서는 좌우가
-뒤집힙니다. 그러니 그릴 때마다 「지금은 화면 어느 쪽이지?」를 다시
-판단해야 하고, 그래서 흔들릴 수밖에 없었습니다. 제 잘못입니다.
+**선은 하나입니다.** 그렇게 다시 적었습니다.
 
-**화면 기준으로 바꿨습니다.** 이제 판단할 것이 없습니다.
+    HE IS HALF A BOY. THERE IS ONE CUT LINE, AND IT GOES THROUGH HIS FACE AND HIS
+    BODY TOGETHER.
 
-    HE IS HALF A BOY, AND THE MISSING HALF IS ALWAYS ON THE LEFT SIDE OF THE PICTURE.
+    1. Draw ONE straight vertical line in the picture, from top to bottom.
+    2. That single unbroken line passes down through the crown of his head, the
+       middle of his forehead, between his eyes, down the middle of his nose,
+       through the middle of his mouth, down his chin, his throat, the middle of his
+       chest, his belly, and all the way to the ground.
+    3. Everything on the PICTURE-LEFT of that line does not exist. Draw only what is
+       on the PICTURE-RIGHT of it.
 
-    Do not think about his left or his right - think about the PICTURE. Draw a whole
-    boy facing the viewer, then draw one straight vertical line down the middle of
-    his face and body, and erase everything on the LEFT-HAND SIDE OF THE IMAGE. The
-    straight cut edge always runs down the picture-left side of him.
+    It is ONE line, not two. The face is not cut separately from the body - the SAME
+    line cuts both, so the missing eye is on the SAME side as the missing arm and the
+    missing leg. If the arm is gone on the picture-left, then the eye is gone on the
+    picture-left too. They can never be on opposite sides.
 
-      - ONE eye, on the picture-right. The picture-left eye, eyebrow and ear are gone.
-      - HALF a nose and HALF a mouth, the picture-right halves.
-      - ONE arm, on the picture-right. No arm at all on the picture-left.
-      - ONE leg, on the picture-right. He hops on it.
-      - Half a torso, half a topknot - the picture-right halves.
+    Always draw him facing the viewer straight on, so this line is easy to see. Do
+    not draw him in three-quarter view or in profile.
 
-    This is the same in EVERY picture, whichever way he is moving or looking.
+정면으로만 그려 달라는 것도 넣었습니다. 몸이 비스듬하면 그 선이 어디인지
+매번 다시 따져야 해서 또 어긋납니다.
 
-한 문장으로 하면 이렇습니다.
+### 그리고 — 글로는 여기까지가 한계인 것 같습니다
 
-> **잘린 곧은 선은 언제나 화면에서 그의 왼쪽에 있고,
-> 눈 하나·팔 하나·다리 하나는 언제나 화면 오른쪽에 있습니다.**
+세 번 고쳐 썼는데도 얼굴이 자꾸 온전하게 나옵니다. 저희 쪽에서 본 바로는
+이렇습니다.
 
-인물 설명과 그림말 열네 장 **모두**를 이렇게 고쳤습니다.
-`banjjogi/IMAGE-PROMPTS.md` 를 새로 받아 주세요.
+    팔 하나·다리 하나   대체로 잘 됩니다
+    얼굴 반쪽           거의 안 됩니다
 
-잘 나온 것도 있습니다. **`05-tie` 와 표지가 기준입니다.** 표지에서
-해부도가 사라진 것도 좋습니다. 그 둘처럼만 열네 장을 맞춰 주시면 됩니다.
+가만히 선 정면(`05-tie`, `cover`)은 맞았고, 움직이는 자세(`03-grow`,
+`08-catch`, `11-contest`)는 다 얼굴이 온전했습니다.
+
+**그래서 글 말고 그림을 참고로 넣어 주시는 게 나을 것 같습니다.**
+제대로 나온 두 장이 있습니다.
+
+    banjjogi/images/05-tie.png     얼굴까지 반쪽, 정확함
+    banjjogi/images/cover.png      해부도 사라지고 반쪽, 정확함
+
+이 둘을 참고 그림으로 붙이고 **"이 인물과 똑같이, 얼굴까지 이대로"**
+라고 시키시면 글 백 줄보다 잘 들을 것입니다.
 
     cover  01-carp  02-half  03-grow  04-jealous  05-tie  06-uproot
     07-tiger  08-catch  09-promise  10-excuse  11-contest  12-wedding  end
