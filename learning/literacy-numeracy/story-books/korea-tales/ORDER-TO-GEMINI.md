@@ -208,38 +208,54 @@
 
 62권 프롬프트를 새로 받아 주세요. 앞으로 그리는 모든 그림에 적용됩니다.
 
-### 반쪽이(`banjjogi`) — 설명을 짧게 다시 썼습니다
+### 반쪽이(`banjjogi`) — 얼굴은 온전하게, 없는 쪽 눈은 「찡긋」
 
-계속 어긋난 것은 **제 설명이 나빠서**였습니다. 고칠수록 나빠졌습니다.
-직전 설명은 2천 자에 **부정문이 열세 번**이었습니다.
+**얼굴을 세로로 자르라고 한 것이 애초에 무리였습니다.** 제 잘못입니다.
+빈 살갗으로 두면 휑하고 부자연스럽고, 그려 봐도 계속 어긋났습니다.
 
-    never both eyes / never both arms / no left arm / does not exist ...
+훨씬 나은 방법으로 바꿨습니다.
 
-**그림 모델은 부정을 못 읽습니다.** 「두 눈은 안 된다」고 쓰면 「두 눈」이라는
-말만 남아서 오히려 두 눈이 나옵니다. 제가 누르려던 것을 계속 불러들이고
-있었습니다. 게다가 「선을 긋고 왼쪽을 지워라」는 **그리는 순서**인데,
-그림 모델은 순서를 실행하지 않습니다. 완성된 모습만 알아듣습니다.
+    얼굴  온전하게. 눈썹 둘, 풍성한 댕기머리, 시원하게 웃는 입.
+          다만 한쪽 눈은 크고 땡글하게 뜨고,
+          **반대쪽 눈은 찡긋 감은 눈웃음선(^)** 으로.
+          윙크하며 즐거워하는 얼굴이 됩니다.
 
-**부정문을 하나도 쓰지 않고, 있는 것만 세는 방식으로 다시 썼습니다.**
-길이도 절반으로 줄였습니다.
+    몸    팔 하나, 다리 하나. 둘 다 **뜬 눈과 같은 쪽**.
+          반대쪽 소매와 바짓단은 비어서 매듭으로 묶여 허공에 떠 있고,
+          외다리로 폴짝폴짝 뜁니다.
 
-    Banjjogi (Half-boy) is one half of a boy, split lengthwise - like a wooden doll
-    sawn straight down the middle from the crown of the head to the ground, and the
-    half that is left stands up by itself with real thickness and roundness.
+얼굴과 몸을 이렇게 갈라 놓으면 얼굴은 자연스럽고 반쪽 개성은 살아납니다.
+인물 설명과 그림말 열네 장 **모두**를 이렇게 고쳤습니다.
 
-    Count what he has, and draw exactly this many: ONE eye, ONE eyebrow, ONE ear, ONE
-    shoulder, ONE arm, ONE hand, ONE leg, ONE foot, plus half a nose, half a mouth
-    and half a topknot. Every one of these sits on the same side of him - the side
-    furthest from the flat edge. He balances on that single leg and hops on it, and
-    his sleeve and trouser leg on the flat side are tied off in a neat knot.
+    Banjjogi (Half-boy). His FACE is whole and natural; his BODY is one-sided.
 
-**소매를 묶어 보여 주신 방식은 아주 좋아서 설명에 넣었습니다.** 그대로 해 주세요.
+    HIS FACE - draw it complete and cute, never blank or damaged. Both eyebrows, a
+    full head of thick black hair in a long braid with a ribbon, a wide happy open
+    mouth. The one thing that marks him: ONE eye is big, round and wide open, and the
+    OTHER eye is drawn as a closed, curved-up winking line, like the "^" of a smiling
+    squint. The open eye is on the same side as his arm and his leg.
 
-지금까지 본 것으로는 다리가 계속 둘이었습니다. 다리도 하나입니다.
-한 다리로 균형을 잡고 뛰어다닙니다.
+    HIS BODY - one arm and one leg only, both on the same side as his open eye. On
+    the other side the sleeve of his jacket and the leg of his trousers are empty and
+    tied off in a neat knot, so they hang and swing in the air.
 
-그래도 잘 안 되면 `05-tie.png` 와 `cover.png` 를 참고 그림으로 붙여
-주세요. 그 둘은 제대로 나왔습니다.
+**빈 소매를 매듭으로 묶는 방식은 그쪽에서 찾아낸 것입니다.** 아주 좋아서
+설명에 그대로 넣었습니다.
+
+#### 장면별로 더 짚은 것
+
+- **`01-carp`** — 잉어를 받는 부부를 **삼십 대 중반**으로. 백발도 주름도
+  구부정한 등도 없이. 십 년을 기다린 부부라 지쳐 보이는 것이 아니라
+  기대에 차 있어야 합니다
+- **`02-half`** — 갓난 반쪽이. 같은 규칙으로, **한쪽 다리를 완전히 비우고**
+  아기 옷의 빈 소매와 바짓단을 매듭으로. 어머니도 삼십 대
+- **나머지 열두 장** — 같은 얼굴과 같은 몸 규칙으로 통일
+
+#### 그 밖에 고친 인물
+
+    형 둘        이십 대, 잘생기게. 심술은 하는 짓으로만
+    부모         삼십 대 중반 (「늙은 어머니」였던 것을 고침)
+    김 부자      사십 대, 둥글고 넉넉하고 보기 좋게
 
     cover  01-carp  02-half  03-grow  04-jealous  05-tie  06-uproot
     07-tiger  08-catch  09-promise  10-excuse  11-contest  12-wedding  end

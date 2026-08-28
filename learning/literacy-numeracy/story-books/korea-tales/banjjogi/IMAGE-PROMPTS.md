@@ -91,31 +91,32 @@ cutaway.
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-Banjjogi (Half-boy) is one half of a boy, split lengthwise - like a wooden doll
-sawn straight down the middle from the crown of the head to the ground, and the
-half that is left stands up by itself with real thickness and roundness.
+Banjjogi (Half-boy). His FACE is whole and natural; his BODY is one-sided. Keep
+these two things separate and he comes out right every time.
 
-Count what he has, and draw exactly this many: ONE eye, ONE eyebrow, ONE ear, ONE
-shoulder, ONE arm, ONE hand, ONE leg, ONE foot, plus half a nose, half a mouth
-and half a topknot. Every one of these sits on the same side of him - the side
-furthest from the flat edge. He balances on that single leg and hops on it, and
-his sleeve and trouser leg on the flat side are tied off in a neat knot.
+HIS FACE - draw it complete and cute, never blank or damaged. Both eyebrows, a
+full head of thick black hair in a long braid with a ribbon, a wide happy open
+mouth. The one thing that marks him: ONE eye is big, round and wide open, and the
+OTHER eye is drawn as a closed, curved-up winking line, like the "^" of a smiling
+squint. He looks as if he is winking at you and enjoying it. The open eye is on
+the same side as his arm and his leg.
 
-The flat edge is one smooth straight pale surface, like the sawn face of a
-wooden toy, running from the top of his head down through his cheek, his chest
-and his hip to the ground.
+HIS BODY - one arm and one leg only, both on the same side as his open eye. On
+the other side the sleeve of his jacket and the leg of his trousers are empty and
+tied off in a neat knot, so they hang and swing in the air. He balances and hops
+about on his single leg, quick and sure-footed. His one arm is thick with muscle.
 
-He faces the viewer square on so the whole half-shape reads clearly. He is
-cheerful and strong: his single arm is thick with muscle, his one eye is bright,
-and half a mouth grins wide. He wears a pale hanbok tailored to his half body.
-Draw him warm and heroic.
-The two elder brothers: two ordinary-looking young men in tidy grey and tan
-hanbok, always together, always sulking or whispering behind their hands, small
-mean eyes.
-The old mother: a stooped kindly woman in a plain white and pale-blue hanbok
-with grey hair in a bun.
-Kim the rich man: a stout middle-aged man in a fine wine-coloured silk hanbok
-and a black horsehair hat, stroking his beard, shifty when cornered.
+He wears a simple pale hanbok. Always cheerful, strong and heroic.
+The two elder brothers: two good-looking young men in their twenties in tidy grey
+and tan hanbok, always together, always sulking or whispering behind their hands.
+Draw them handsome and comic - the meanness is in what they do, never in ugly
+faces.
+The parents: a healthy, plain, kindly couple in their mid thirties who waited ten
+years for a child. Smooth faces, thick black hair, no grey and no wrinkles, no
+stoop. She wears plain white and pale blue, he wears undyed working hanbok.
+Kim the rich man: a well-fed man in his forties in fine wine-coloured silk and a
+black horsehair hat, stroking his beard. Round and prosperous and pleasant to
+look at; comic when cornered.
 His daughter: a calm graceful young woman in a soft pink and mint hanbok, long
 braid, watching everything quietly.
 The tiger: a huge orange-and-black striped Korean folk-painting tiger, round
@@ -136,10 +137,11 @@ hanging from it. Thick ropes are still wound around his half body. His one eye i
 bright and he wears a huge cheerful grin. Below him at the bottom of the frame, a
 small moonlit village of thatched roofs. Heroic and funny, warm orange sunset
 behind, deep blue sky above.
-Banjjogi is one half of a boy split lengthwise: ONE eye, ONE eyebrow, ONE ear,
-ONE arm, ONE hand, ONE leg, ONE foot, half a nose and half a mouth, all on the
-same side of him. He hops on that one leg; the empty sleeve and trouser leg are
-knotted. The flat side is one smooth pale surface. Face him square to the viewer.
+Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
+smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
+line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
+empty sleeve and trouser leg are knotted and swing in the air. He hops on his
+one leg.
 ```
 
 ## 본문 12장 (모두 가로 2:1)
@@ -152,10 +154,14 @@ traveller in a wide straw hat and grey robe holds out a straw string threaded
 with three plump carp toward the left, one finger raised as if giving careful
 instructions. On the left a middle-aged couple in plain hanbok receive them with
 both hands, bowing slightly, hopeful faces. Late afternoon, warm gold light.
-Banjjogi is one half of a boy split lengthwise: ONE eye, ONE eyebrow, ONE ear,
-ONE arm, ONE hand, ONE leg, ONE foot, half a nose and half a mouth, all on the
-same side of him. He hops on that one leg; the empty sleeve and trouser leg are
-knotted. The flat side is one smooth pale surface. Face him square to the viewer.
+Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
+smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
+line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
+empty sleeve and trouser leg are knotted and swing in the air. He hops on his
+one leg.
+The couple receiving the carp are in their MID THIRTIES - smooth faces, thick
+black hair, no grey, no wrinkles, no stoop. They have waited ten years for a
+child and they look it: hopeful, not worn out.
 ```
 
 ### `02-half.webp` — 세 마리째를 반만 먹고, 셋째 아이가 반쪽으로 태어난다
@@ -169,10 +175,16 @@ babies, and the third a cheerful baby who is exactly one vertical half of a baby
 one eye, one arm, one leg, gurgling happily. The old mother looks down at them
 with wide surprised eyes and a soft smile. Never gruesome - the half baby is
 round and cute.
-Banjjogi is one half of a boy split lengthwise: ONE eye, ONE eyebrow, ONE ear,
-ONE arm, ONE hand, ONE leg, ONE foot, half a nose and half a mouth, all on the
-same side of him. He hops on that one leg; the empty sleeve and trouser leg are
-knotted. The flat side is one smooth pale surface. Face him square to the viewer.
+Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
+smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
+line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
+empty sleeve and trouser leg are knotted and swing in the air. He hops on his
+one leg.
+Here Banjjogi is a NEWBORN BABY. Same rules: his face is whole and cute with one
+big round open eye and one closed curved-up winking line, and he has one arm and
+one leg only, on the open-eye side. The other sleeve and the other trouser leg of
+his baby clothes are empty and knotted. His mother is in her mid thirties, smooth
+faced and dark haired.
 ```
 
 ### `03-grow.webp` — 한 팔로 쌀가마를 번쩍 든다
@@ -183,10 +195,11 @@ Banjjogi, now grown, balances on his one leg and hoists an enormous rice sack
 high over his head with his single arm, grinning, effortless. On the left a crowd
 of villagers - farmers, an old man, children - throw up their hands and cheer,
 mouths wide open in amazement. Dust motes and straw in the golden air.
-Banjjogi is one half of a boy split lengthwise: ONE eye, ONE eyebrow, ONE ear,
-ONE arm, ONE hand, ONE leg, ONE foot, half a nose and half a mouth, all on the
-same side of him. He hops on that one leg; the empty sleeve and trouser leg are
-knotted. The flat side is one smooth pale surface. Face him square to the viewer.
+Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
+smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
+line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
+empty sleeve and trouser leg are knotted and swing in the air. He hops on his
+one leg.
 ```
 
 ### `04-jealous.webp` — 형 둘이 시샘하며 수군거린다
@@ -197,10 +210,11 @@ brothers crouch together with their heads almost touching, whispering behind
 cupped hands, eyes narrowed and sour, one jabbing a thumb over his shoulder. On
 the right, far away and out of earshot, Banjjogi hops cheerfully along a path
 carrying a huge bundle of firewood, oblivious. Long blue evening shadows.
-Banjjogi is one half of a boy split lengthwise: ONE eye, ONE eyebrow, ONE ear,
-ONE arm, ONE hand, ONE leg, ONE foot, half a nose and half a mouth, all on the
-same side of him. He hops on that one leg; the empty sleeve and trouser leg are
-knotted. The flat side is one smooth pale surface. Face him square to the viewer.
+Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
+smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
+line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
+empty sleeve and trouser leg are knotted and swing in the air. He hops on his
+one leg.
 ```
 
 ### `05-tie.webp` — 깊은 산에서 반쪽이를 소나무에 묶는다
@@ -211,10 +225,11 @@ bound with many coils of thick rope to a massive pine trunk, but his expression
 is only mildly puzzled, one eyebrow up, not frightened at all. On the right the
 two brothers hurry away downhill without looking back, glancing sideways at each
 other. Cool dim blue-green light, tall dark trunks.
-Banjjogi is one half of a boy split lengthwise: ONE eye, ONE eyebrow, ONE ear,
-ONE arm, ONE hand, ONE leg, ONE foot, half a nose and half a mouth, all on the
-same side of him. He hops on that one leg; the empty sleeve and trouser leg are
-knotted. The flat side is one smooth pale surface. Face him square to the viewer.
+Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
+smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
+line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
+empty sleeve and trouser leg are knotted and swing in the air. He hops on his
+one leg.
 ```
 
 ### `06-uproot.webp` — 소나무를 통째로 지고 마당에 나타난다
@@ -226,10 +241,11 @@ falling from their hands, eyes and mouths enormous with shock. On the right
 Banjjogi stands in the yard still wrapped in ropes, the whole uprooted pine tree
 across his back with earth and roots dangling, scratching his head with his one
 hand and smiling apologetically. Dust puffing up around his foot.
-Banjjogi is one half of a boy split lengthwise: ONE eye, ONE eyebrow, ONE ear,
-ONE arm, ONE hand, ONE leg, ONE foot, half a nose and half a mouth, all on the
-same side of him. He hops on that one leg; the empty sleeve and trouser leg are
-knotted. The flat side is one smooth pale surface. Face him square to the viewer.
+Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
+smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
+line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
+empty sleeve and trouser leg are knotted and swing in the air. He hops on his
+one leg.
 ```
 
 ### `07-tiger.webp` — 밤마다 호랑이가 마을로 내려온다
@@ -240,10 +256,11 @@ and shuttered doors on the right, black pine ridge on the left. A huge striped
 tiger prowls down the empty village lane in the centre, head low, eyes glowing
 yellow, one paw raised. An overturned water jar and a broken fence rail. Every
 window dark. Tense but stylised, not gory.
-Banjjogi is one half of a boy split lengthwise: ONE eye, ONE eyebrow, ONE ear,
-ONE arm, ONE hand, ONE leg, ONE foot, half a nose and half a mouth, all on the
-same side of him. He hops on that one leg; the empty sleeve and trouser leg are
-knotted. The flat side is one smooth pale surface. Face him square to the viewer.
+Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
+smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
+line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
+empty sleeve and trouser leg are knotted and swing in the air. He hops on his
+one leg.
 ```
 
 ### `08-catch.webp` — 한 팔로 호랑이 목덜미를 붙들어 꽁꽁 묶는다
@@ -255,10 +272,11 @@ neck with his single arm, holding it up so its paws paddle helplessly in the air
 The tiger's face is comically outraged, tongue out, eyes crossed. A coil of thick
 rope is slung over Banjjogi's shoulder and one loop is already around the tiger's
 middle. Moonlight, motion lines, funny not frightening.
-Banjjogi is one half of a boy split lengthwise: ONE eye, ONE eyebrow, ONE ear,
-ONE arm, ONE hand, ONE leg, ONE foot, half a nose and half a mouth, all on the
-same side of him. He hops on that one leg; the empty sleeve and trouser leg are
-knotted. The flat side is one smooth pale surface. Face him square to the viewer.
+Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
+smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
+line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
+empty sleeve and trouser leg are knotted and swing in the air. He hops on his
+one leg.
 ```
 
 ### `09-promise.webp` — 김 부자 대문 앞에 호랑이를 끌고 선다
@@ -270,10 +288,11 @@ the enormous tiger trussed up like a bundle at his side, sulking. Kim the rich
 man has come out through the gate and stopped dead, his smile frozen, one hand
 half raised, sweat drops flying off his forehead. Villagers peek over the wall,
 delighted.
-Banjjogi is one half of a boy split lengthwise: ONE eye, ONE eyebrow, ONE ear,
-ONE arm, ONE hand, ONE leg, ONE foot, half a nose and half a mouth, all on the
-same side of him. He hops on that one leg; the empty sleeve and trouser leg are
-knotted. The flat side is one smooth pale surface. Face him square to the viewer.
+Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
+smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
+line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
+empty sleeve and trouser leg are knotted and swing in the air. He hops on his
+one leg.
 ```
 
 ### `10-excuse.webp` — "세 가지 내기를 해서 이기면"
@@ -285,10 +304,11 @@ with the other hand, eyes sliding sideways. On the left Banjjogi nods calmly,
 arms - arm - at his side, completely unbothered. Between and behind them
 villagers mutter to one another with raised eyebrows and folded arms. Bright
 midday.
-Banjjogi is one half of a boy split lengthwise: ONE eye, ONE eyebrow, ONE ear,
-ONE arm, ONE hand, ONE leg, ONE foot, half a nose and half a mouth, all on the
-same side of him. He hops on that one leg; the empty sleeve and trouser leg are
-knotted. The flat side is one smooth pale surface. Face him square to the viewer.
+Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
+smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
+line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
+empty sleeve and trouser leg are knotted and swing in the air. He hops on his
+one leg.
 ```
 
 ### `11-contest.webp` — 힘겨루기, 달리기, 슬기 겨루기
@@ -300,10 +320,11 @@ onlookers reel back. Centre: he hops across a finish line on his single leg,
 well ahead of two ordinary runners. Right: he wades chest-deep into a clear
 stream carrying a huge earthenware jar in his arm and dunks it straight into the
 water. Bright daylight, cheering crowd, playful energy.
-Banjjogi is one half of a boy split lengthwise: ONE eye, ONE eyebrow, ONE ear,
-ONE arm, ONE hand, ONE leg, ONE foot, half a nose and half a mouth, all on the
-same side of him. He hops on that one leg; the empty sleeve and trouser leg are
-knotted. The flat side is one smooth pale surface. Face him square to the viewer.
+Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
+smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
+line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
+empty sleeve and trouser leg are knotted and swing in the air. He hops on his
+one leg.
 ```
 
 ### `12-wedding.webp` — 혼례, 형 둘을 윗자리에 앉힌다
@@ -316,10 +337,11 @@ honour under the awning, the two elder brothers sit stiffly on cushions with
 crimson faces, looking at the ground, one scratching his neck. The old mother
 wipes her eyes on the right. Persimmon trees, warm golden autumn light,
 festive.
-Banjjogi is one half of a boy split lengthwise: ONE eye, ONE eyebrow, ONE ear,
-ONE arm, ONE hand, ONE leg, ONE foot, half a nose and half a mouth, all on the
-same side of him. He hops on that one leg; the empty sleeve and trouser leg are
-knotted. The flat side is one smooth pale surface. Face him square to the viewer.
+Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
+smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
+line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
+empty sleeve and trouser leg are knotted and swing in the air. He hops on his
+one leg.
 ```
 
 ---
@@ -334,8 +356,9 @@ side by side in a row, all three laughing at something one of them has just said
 sleeves rolled up. The old mother and the young wife carry a lunch tray toward
 them along the ridge path. Warm harvest colours, distant blue mountains, wide
 open sky. Peaceful and companionable.
-Banjjogi is one half of a boy split lengthwise: ONE eye, ONE eyebrow, ONE ear,
-ONE arm, ONE hand, ONE leg, ONE foot, half a nose and half a mouth, all on the
-same side of him. He hops on that one leg; the empty sleeve and trouser leg are
-knotted. The flat side is one smooth pale surface. Face him square to the viewer.
+Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
+smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
+line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
+empty sleeve and trouser leg are knotted and swing in the air. He hops on his
+one leg.
 ```
