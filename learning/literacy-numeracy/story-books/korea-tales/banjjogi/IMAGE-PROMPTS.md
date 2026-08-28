@@ -352,6 +352,13 @@ pointing, some already cheering. Kim the rich man stands at the front with the
 useless bucket dangling forgotten from his hand and his jaw hanging down. A
 low angle from the water, so Banjjogi and the jar loom large and the crowd is
 small behind. Bright water sparkle, splashes flying out of the frame.
+
+COUNT HIS LEGS: there is exactly ONE. One thigh, one knee, one shin, one foot,
+standing in the stream. On his other side the empty trouser leg is rolled up
+clear of the water and its knot is plainly visible in the air, so anyone can see
+at a glance that nothing is there. Take care that ripples, foam and the shadow of
+the jar are never mistaken for a second leg - keep the water around him clear and
+simple so his single leg reads unmistakably.
 Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
 smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
 line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
@@ -370,6 +377,11 @@ two, both in their twenties, handsome and smooth-faced - sit with crimson faces
 looking at the ground while Banjjogi pours them wine. Their parents, in their
 thirties, watch from the right, the mother wiping her eyes. Persimmon trees,
 warm golden autumn light, festive.
+
+His bridegroom's robe is long, so take care: the hem must be cut or lifted so
+that his ONE leg and ONE foot are clearly visible below it, with the empty
+trouser leg knotted and swinging beside them. A long robe must never hide how
+many legs he has.
 Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
 smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
 line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
