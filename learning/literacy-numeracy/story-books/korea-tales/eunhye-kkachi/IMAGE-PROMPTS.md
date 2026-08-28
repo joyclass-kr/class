@@ -33,6 +33,21 @@ rocky ridges, a narrow forest trail, a small tiled-roof temple high on the slope
 Daytime scenes use warm green and gold; night scenes use deep indigo and
 lamplight. Expressive faces, clear storytelling staging. Suitable for children -
 tense but never gruesome, no blood, no injury shown. No text or letters.
+Make every picture EXCITING to look at, like a frame from 1980s-90s Korean TV
+animation. Never a flat mid-distance shot with everyone standing in a row.
+CAMERA: use a strong angle every time - look up steeply at whoever is powerful,
+look down steeply on whoever is small, push right in close on a face at the
+moment it changes. Let things break out of the frame: a hand, a tail, a swinging
+club, a gourd bigger than the panel. Use deep foreshortening - the fist or the
+foot nearest the viewer is huge.
+BODIES: cartoon proportions, not realistic ones. Big heads on children, squash
+and stretch, whole bodies leaning into what they are doing, fingers splayed,
+feet off the ground.
+MOTION: speed lines, dust clouds at the feet, impact stars, flying sweat drops,
+objects tumbling through the air, hair and clothes streaming.
+LIGHT: strong and graphic - hard shadows, warm light from one side, a bright rim
+where the light hits, deep saturated darks at night.
+Every picture should make a child want to turn the page.
 Villains and unkind characters must be FUN to look at - comic, lively and cute,
 with big round expressive eyes and big exaggerated expressions. Exaggerate
 freely: puffed-up cheeks, enormous grins, comic sweat drops, tiny pupils when

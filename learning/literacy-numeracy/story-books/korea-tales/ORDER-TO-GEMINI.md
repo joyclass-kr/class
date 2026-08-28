@@ -147,61 +147,64 @@
 
 ---
 
-### 반쪽이(`banjjogi`) — 「선은 하나」로 다시 썼습니다
+### 그림체를 재미있게 — 62권 공통 지시문에 「구도와 움직임」을 넣었습니다
 
-지금 **팔다리가 없는 쪽과 눈이 없는 쪽이 서로 반대로** 나오고 있습니다.
-이것도 제 지시 잘못입니다. 제가 이렇게 항목으로 늘어놓았습니다.
+그림이 재미없다는 말을 들었습니다. 프롬프트를 보니 **「깔끔한 윤곽선,
+밝은 색」 정도만 적혀 있었습니다.** 재미를 만드는 것은 색이 아니라
+구도인데 그 이야기가 통째로 빠져 있었습니다.
 
-    - ONE eye, on the picture-right.
-    - ONE arm, on the picture-right.
-    - ONE leg, on the picture-right.
+지금 그림들은 하나같이 **가운데 놓고 눈높이에서 찍은 중간 거리**입니다.
+좋다고 하신 KBS 게 괴물은 아래에서 올려다본 극단적 각도에 화면을
+뚫고 나옵니다. 그 차이를 적었습니다.
 
-이러면 얼굴은 얼굴대로, 몸은 몸대로 따로 자르게 됩니다. **두 선이 생기고
-서로 어긋납니다.** 그래서 눈은 이쪽, 팔은 저쪽이 됩니다.
+    Make every picture EXCITING to look at, like a frame from 1980s-90s Korean TV
+    animation. Never a flat mid-distance shot with everyone standing in a row.
+    CAMERA: use a strong angle every time - look up steeply at whoever is powerful,
+    look down steeply on whoever is small, push right in close on a face at the
+    moment it changes. Let things break out of the frame: a hand, a tail, a swinging
+    club, a gourd bigger than the panel. Use deep foreshortening.
+    BODIES: cartoon proportions, not realistic ones. Big heads on children, squash
+    and stretch, whole bodies leaning into what they are doing, feet off the ground.
+    MOTION: speed lines, dust clouds at the feet, impact stars, flying sweat drops,
+    objects tumbling through the air, hair and clothes streaming.
+    LIGHT: strong and graphic - hard shadows, warm light from one side, a bright rim
+    where the light hits, deep saturated darks at night.
+    Every picture should make a child want to turn the page.
 
-**선은 하나입니다.** 그렇게 다시 적었습니다.
+62권 프롬프트를 새로 받아 주세요. 앞으로 그리는 모든 그림에 적용됩니다.
 
-    HE IS HALF A BOY. THERE IS ONE CUT LINE, AND IT GOES THROUGH HIS FACE AND HIS
-    BODY TOGETHER.
+### 반쪽이(`banjjogi`) — 설명을 짧게 다시 썼습니다
 
-    1. Draw ONE straight vertical line in the picture, from top to bottom.
-    2. That single unbroken line passes down through the crown of his head, the
-       middle of his forehead, between his eyes, down the middle of his nose,
-       through the middle of his mouth, down his chin, his throat, the middle of his
-       chest, his belly, and all the way to the ground.
-    3. Everything on the PICTURE-LEFT of that line does not exist. Draw only what is
-       on the PICTURE-RIGHT of it.
+계속 어긋난 것은 **제 설명이 나빠서**였습니다. 고칠수록 나빠졌습니다.
+직전 설명은 2천 자에 **부정문이 열세 번**이었습니다.
 
-    It is ONE line, not two. The face is not cut separately from the body - the SAME
-    line cuts both, so the missing eye is on the SAME side as the missing arm and the
-    missing leg. If the arm is gone on the picture-left, then the eye is gone on the
-    picture-left too. They can never be on opposite sides.
+    never both eyes / never both arms / no left arm / does not exist ...
 
-    Always draw him facing the viewer straight on, so this line is easy to see. Do
-    not draw him in three-quarter view or in profile.
+**그림 모델은 부정을 못 읽습니다.** 「두 눈은 안 된다」고 쓰면 「두 눈」이라는
+말만 남아서 오히려 두 눈이 나옵니다. 제가 누르려던 것을 계속 불러들이고
+있었습니다. 게다가 「선을 긋고 왼쪽을 지워라」는 **그리는 순서**인데,
+그림 모델은 순서를 실행하지 않습니다. 완성된 모습만 알아듣습니다.
 
-정면으로만 그려 달라는 것도 넣었습니다. 몸이 비스듬하면 그 선이 어디인지
-매번 다시 따져야 해서 또 어긋납니다.
+**부정문을 하나도 쓰지 않고, 있는 것만 세는 방식으로 다시 썼습니다.**
+길이도 절반으로 줄였습니다.
 
-### 그리고 — 글로는 여기까지가 한계인 것 같습니다
+    Banjjogi (Half-boy) is one half of a boy, split lengthwise - like a wooden doll
+    sawn straight down the middle from the crown of the head to the ground, and the
+    half that is left stands up by itself with real thickness and roundness.
 
-세 번 고쳐 썼는데도 얼굴이 자꾸 온전하게 나옵니다. 저희 쪽에서 본 바로는
-이렇습니다.
+    Count what he has, and draw exactly this many: ONE eye, ONE eyebrow, ONE ear, ONE
+    shoulder, ONE arm, ONE hand, ONE leg, ONE foot, plus half a nose, half a mouth
+    and half a topknot. Every one of these sits on the same side of him - the side
+    furthest from the flat edge. He balances on that single leg and hops on it, and
+    his sleeve and trouser leg on the flat side are tied off in a neat knot.
 
-    팔 하나·다리 하나   대체로 잘 됩니다
-    얼굴 반쪽           거의 안 됩니다
+**소매를 묶어 보여 주신 방식은 아주 좋아서 설명에 넣었습니다.** 그대로 해 주세요.
 
-가만히 선 정면(`05-tie`, `cover`)은 맞았고, 움직이는 자세(`03-grow`,
-`08-catch`, `11-contest`)는 다 얼굴이 온전했습니다.
+지금까지 본 것으로는 다리가 계속 둘이었습니다. 다리도 하나입니다.
+한 다리로 균형을 잡고 뛰어다닙니다.
 
-**그래서 글 말고 그림을 참고로 넣어 주시는 게 나을 것 같습니다.**
-제대로 나온 두 장이 있습니다.
-
-    banjjogi/images/05-tie.png     얼굴까지 반쪽, 정확함
-    banjjogi/images/cover.png      해부도 사라지고 반쪽, 정확함
-
-이 둘을 참고 그림으로 붙이고 **"이 인물과 똑같이, 얼굴까지 이대로"**
-라고 시키시면 글 백 줄보다 잘 들을 것입니다.
+그래도 잘 안 되면 `05-tie.png` 와 `cover.png` 를 참고 그림으로 붙여
+주세요. 그 둘은 제대로 나왔습니다.
 
     cover  01-carp  02-half  03-grow  04-jealous  05-tie  06-uproot
     07-tiger  08-catch  09-promise  10-excuse  11-contest  12-wedding  end
