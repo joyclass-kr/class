@@ -96,39 +96,48 @@
 | `hokburi-yeonggam/09-greedy` | 욕심쟁이 얼굴이 아직 딱딱함. 옆의 착한 영감이 둥글둥글한 것과 견주면 차이가 남 |
 | `hokburi-yeonggam/10-sing` | **13:22에 보내 주신 새것은 안 받았습니다.** 아래를 읽어 주세요 |
 
-### 괴물도 혐오스럽게 그리지 말아 주세요
+### 괴물은 크고 시원한 만화 괴물로
 
-앞서 드린 규칙이 **사람 악당만** 다루고 있었습니다. 제 잘못입니다.
-괴물에도 같은 규칙이 필요합니다. 62권 프롬프트에 이 문단을 더 넣었습니다.
+지네가 혐오스럽습니다. 다만 **덜 보여 달라는 뜻이 아닙니다.**
 
-    The same goes for monsters and beasts. A monster may be FRIGHTENING but never
-    DISGUSTING. Scary is about scale, darkness, silence and what you cannot quite
-    see - a huge shadow, two points of light where the eyes are, one clawed foot at
-    the edge of the frame. Disgusting is about detail: segmented legs, wet mouths,
-    dripping fangs, bristles, many small eyes. Draw the first, never the second.
-    When in doubt, show less of the monster, not more.
+기준으로 삼을 것이 있습니다. 1990년 KBS 「배추도사 무도사의 옛날옛적에」에
+나오는 게 괴물입니다. **이빨도 크고 입도 쩍 벌어졌는데 하나도 안 징그럽고
+오히려 신납니다.** 왜 그런가 보면
 
-**무서운 것과 역겨운 것은 다릅니다.** 무서운 것은 이야기에 필요하고,
-역겨운 것은 필요 없습니다.
+| 그 게 괴물 | 지금 우리 지네 |
+|---|---|
+| 큰 면을 시원하게 칠한 단순한 형태 | 마디마디 잔 디테일 |
+| 통통하고 둥근 몸, 굵은 윤곽선 | 가늘고 날카로운 선 |
+| 눈이 자루에 달려 만화처럼 | 번들거리는 눈동자 |
+| 이빨이 큰 세모 몇 개 | 젖은 입, 촘촘한 이 |
+
+**이빨이 문제가 아니라 결과 세부가 문제입니다.**
+괴물은 화면을 꽉 채우고 포효해도 좋습니다. 62권 규칙을 이렇게 고쳤습니다.
+
+    The same goes for monsters and beasts - they must be FUN to look at too, drawn
+    like the monsters in 1980s-90s Korean TV animation. BOLD, SIMPLE and BOUNCY: big
+    flat areas of saturated colour, thick clean outlines, rounded cartoon masses,
+    springy exaggerated poses. Huge fangs, a wide roaring mouth, googly eyes out on
+    stalks, enormous claws are all GOOD - they read as playful because the shapes are
+    simple and the colours are bright. A monster may fill the whole frame and roar.
+    What makes a monster disgusting is not its teeth but its TEXTURE and DETAIL: wet
+    glistening skin, slime, drool, bristles, veins, swarms of small eyes, finely
+    segmented insect legs, realistic anatomy. Never draw those. Keep every monster a
+    big bold cartoon shape that a child would want to draw themselves.
 
 #### 은혜 갚은 두꺼비 — 지네 네 장
 
     cover   08-centipede   09-glow   10-retreat
 
-이 책 그림말에는 처음부터 이렇게 적혀 있었습니다.
+지네 설명도 「숨기기」에서 「크고 시원한 만화 괴물」로 바꿨습니다.
+새 설명을 받아 쓰시면 됩니다. 요지는 이렇습니다.
 
-    The centipede: never drawn in detail - a vast dark coiled silhouette across
-    the shrine rafters, edged in cold blue-green light, with two pale points where
-    the eyes would be. Suggestive, not disgusting.
-
-그런데 지금 그림에는 **다리 마디도 이빨도 눈동자도 다 그려져** 있습니다.
-그림말대로 **어두운 실루엣 + 눈 자리 빛 두 점**으로만 해 주세요.
-서까래를 가로지르는 커다란 그림자, 차가운 푸른빛 테두리, 그것이면 충분합니다.
-아이가 무서워하되 징그러워하지는 않아야 합니다.
+    매끈하고 둥근 보랏빛 몸 하나, 큰 색 띠 몇 개 (마디마디 나누지 말 것)
+    커다랗고 동그란 눈 둘, 큰 세모 이빨 네댓 개, 길게 말린 더듬이 둘
+    다리는 굵고 단순한 곡선 몇 개 (가늘고 촘촘한 것 말 것)
+    젖은 살갗·침·잔털·작은 눈 떼는 없음
 
 #### 같은 눈으로 봐 주실 것
-
-괴물이 나오는 다른 그림입니다. 자세히 그려져 징그러운 것만 고쳐 주세요.
 
     구렁덩덩 신선비   cover 03-third 05-shed 06-promise 07-burn
     삼형제의 재주     cover 08-cliff 11-catch

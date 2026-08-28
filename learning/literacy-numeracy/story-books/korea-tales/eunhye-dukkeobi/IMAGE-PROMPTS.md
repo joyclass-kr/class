@@ -35,8 +35,8 @@ rich colors, similar to a classic Korean animated storybook. Setting is a
 Joseon-era village: a dim kitchen with a clay stove and firewood, a mountain path
 through pines, and an old wooden shrine with a tiled roof and faded paint. Warm
 amber for the kitchen scenes, cold blue and gold for the shrine at night.
-Never grotesque or gory - the centipede is a glowing silhouette, never a detailed
-insect. Nobody is harmed on the page. No text or letters in the image.
+Never gory. The centipede is a big bold cartoon monster, never a detailed insect.
+Nobody is harmed on the page. No text or letters in the image.
 Villains and unkind characters must be FUN to look at - comic, lively and cute,
 with big round expressive eyes and big exaggerated expressions. Exaggerate
 freely: puffed-up cheeks, enormous grins, comic sweat drops, tiny pupils when
@@ -45,12 +45,16 @@ scowling faces, no warts, no bared yellow teeth, no mean squinting slits, no
 ugly caricature. The reader should enjoy watching them and laugh at them, never
 be disgusted by them. A greedy character can be adorable; what is wrong with
 them shows in what they DO, not in an ugly face.
-The same goes for monsters and beasts. A monster may be FRIGHTENING but never
-DISGUSTING. Scary is about scale, darkness, silence and what you cannot quite
-see - a huge shadow, two points of light where the eyes are, one clawed foot at
-the edge of the frame. Disgusting is about detail: segmented legs, wet mouths,
-dripping fangs, bristles, many small eyes. Draw the first, never the second.
-When in doubt, show less of the monster, not more.
+The same goes for monsters and beasts - they must be FUN to look at too, drawn
+like the monsters in 1980s-90s Korean TV animation. BOLD, SIMPLE and BOUNCY: big
+flat areas of saturated colour, thick clean outlines, rounded cartoon masses,
+springy exaggerated poses. Huge fangs, a wide roaring mouth, googly eyes out on
+stalks, enormous claws are all GOOD - they read as playful because the shapes are
+simple and the colours are bright. A monster may fill the whole frame and roar.
+What makes a monster disgusting is not its teeth but its TEXTURE and DETAIL: wet
+glistening skin, slime, drool, bristles, veins, swarms of small eyes, finely
+segmented insect legs, realistic anatomy. Never draw those. Keep every monster a
+big bold cartoon shape that a child would want to draw themselves.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)
@@ -62,9 +66,13 @@ crying or pitiful - she is calm and kind. The toad: a brown-green toad with a
 wide gentle mouth and warm amber eyes. He must visibly GROW across the book -
 palm-sized in picture 3, cat-sized by picture 4, and as large as the girl's torso
 in the shrine scenes. A soft golden glow gathers on his back in the fight. The
-centipede: never drawn in detail - a vast dark coiled silhouette across the shrine
-rafters, edged in cold blue-green light, with two pale points where the eyes
-would be. Suggestive, not disgusting.
+centipede: an enormous bold cartoon monster filling the rafters - one long smooth
+rounded body in deep purple with a few big flat colour bands, NOT finely
+segmented. Two huge round googly eyes, a wide mouth with four or five big simple
+triangular fangs, two long curling feelers. Its legs are a few thick simple
+curves, never many thin bristly ones. Cold blue-green glow around it. Big and
+loud and scary in the way children enjoy. No wet skin, no slime, no drool, no
+swarms of small eyes.
 ```
 
 ---
