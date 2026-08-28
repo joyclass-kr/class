@@ -1,0 +1,24 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>전래동화 62권 넘침</title>
+<style>body{font:14px monospace;margin:16px}iframe{position:fixed;left:-6000px;top:0;border:0}pre{white-space:pre-wrap}</style></head>
+<body><pre id="out">…</pre><iframe id="frame"></iframe><script>
+const out=document.getElementById('out'),frame=document.getElementById('frame');
+const BOOKS=['bak-hyeokgeose','bame-chajaon-dokkaebi','banggwi-myeoneuri','banjjogi','bongi-kimseondal','cheonggaeguri','chunhyangjeon','dangun','deuljwi-sontop','dokkaebi-bangmangi','dokkaebi-gamtu','dukkeobi-tokki-horangi','eunhye-dukkeobi','eunhye-kkachi','gangdo-jabeun-gae','geumdokki-eundokki','geuneul-san-saram','gotgam-horangi','gureongdeongdeong','gyeonu-jiknyeo','haewa-dari-doen-onui','halmikkot','heungbujeon','hokburi-yeonggam','honggildongjeon','horangi-hyeongnim','horangi-sogin-tokki','hwangso-nongbu','imgeumnim-gwi','iyagi-jumeoni','jaringobi','jige-iyagi','jinju-geowi','jopssal-han-tol','juin-guhan-nureongi','jumong','jwi-sawi','kim-suro','kkoe-manheun-sonyeon','kkongji-datbal','kongjwi-patjwi','mangduseok-jaepan','muyeongtap','myeolchi-kkum','nai-jarang','namukkun-seonnyeo','ondal-pyeonggang','onggojipjeon','patjuk-halmeom','ppalgan-buchae','pureun-gusul','samhyeongje-jaeju','samnyeon-gogae','seok-talhae','simcheongjeon','singihan-jeolgu','tokki-jaepan','tokkijeon','uijoheun-hyeongje','ureongi-gaksi','yeoni-beodeul','yosul-hangari'];
+const SIZES=[[1366,768],[1280,720],[1920,1080],[810,1080],[768,1024],[1024,768]];
+function probe(){const bad=[];
+ for(let i=0;i<PAGES.length;i++){ if(PAGES[i].kind==='quiz') continue;   // 문항 쪽은 원래 스크롤이다
+   current=i; paint();
+  document.querySelectorAll('.book *').forEach(el=>{const o=el.scrollHeight-el.clientHeight;
+   if(o>1&&getComputedStyle(el).overflowY!=='visible') bad.push(i+' '+(el.className||el.tagName)+' '+o+'px');});}
+ current=0;paint();return bad;}
+(async()=>{const lines=[];
+ for(const b of BOOKS){const res=[];
+  for(const [w,h] of SIZES){frame.style.width=w+'px';frame.style.height=h+'px';
+   await Promise.all(['app.js','styles.css'].map(f=>fetch(b+'/'+f,{cache:'reload'}).catch(()=>{})));
+   await new Promise(r=>{frame.onload=r;frame.src=b+'/?t='+Date.now();});
+   await new Promise(r=>setTimeout(r,140));
+   try{const v=frame.contentWindow.eval('('+probe.toString()+')()');v.forEach(x=>res.push('  ['+w+'x'+h+'] '+x));}
+   catch(e){res.push('  실패 '+e.message);}}
+  lines.push((res.length?'✗ ':'✔ ')+b+(res.length?'\n'+res.join('\n'):''));
+  out.textContent=lines.join('\n');}
+ out.textContent=lines.join('\n')+'\n\n=== 끝 ===';})();
+</script></body></html>
