@@ -1866,6 +1866,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 선택한 학년의 시정표를 읽기전용 표로 보여준다 (서류 인쇄에 함께 나감).
+    function renderAnnualBellSchedule(grade) {
+        const panel = document.getElementById('annualBellSchedulePanel');
+        const label = document.getElementById('annualBellGradeLabel');
+        const tbody = document.getElementById('annualBellTableBody');
+        if (!panel || !tbody) return;
+        if (label) label.textContent = `${grade}학년`;
+        panel.hidden = false;
+
+        const s = bellScheduleByGrade[grade];
+        if (!s) {
+            tbody.innerHTML = `<tr><td colspan="4" style="color:var(--text-muted);">이 학년의 시정표가 아직 없습니다. "시정표 & 주간 수업 배당" 탭에서 입력하세요.</td></tr>`;
+            return;
+        }
+
+        const periodTimes = s.period_times || {};
+        const lunchAfter = Number(s.lunch_after_period || 0);
+        let rows = '';
+        const addRow = (name, start, end, highlight) => {
+            const mins = computeDurationMinutes(start || '', end || '');
+            rows += `<tr${highlight ? ' style="color:#dc2626; font-weight:700;"' : ''}><td>${name}</td><td>${start || '-'}</td><td>${end || '-'}</td><td>${mins ?? '-'}</td></tr>`;
+        };
+        if (s.arrival_start || s.arrival_end) addRow('등교시간', s.arrival_start, s.arrival_end);
+        const filledPeriods = Object.keys(periodTimes).map(Number).filter(p => periodTimes[p] && (periodTimes[p].start || periodTimes[p].end));
+        const maxPeriod = filledPeriods.length > 0 ? Math.max(...filledPeriods) : 0;
+        for (let p = 1; p <= maxPeriod; p++) {
+            const t = periodTimes[String(p)] || {};
+            addRow(`${p}교시`, t.start, t.end);
+            if (lunchAfter === p && (s.lunch_start || s.lunch_end)) addRow('점심시간', s.lunch_start, s.lunch_end, true);
+        }
+        tbody.innerHTML = rows || `<tr><td colspan="4" style="color:var(--text-muted);">교시별 시각이 입력되지 않았습니다.</td></tr>`;
+    }
+
     async function renderAnnualTimetable34Weeks() {
         if (!annualTimetableTableBody) return;
         annualTimetableTableBody.innerHTML = '';
@@ -1874,7 +1907,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const classNum = Number(annualTimetableClassSelect ? annualTimetableClassSelect.value : 1);
 
         try {
-            const synthData = await api(`/api/school-admin/annual-timetable-34weeks?academicYear=${selectedAcademicYear}&grade=${grade}&classNumber=${classNum}`);
+            const [synthData] = await Promise.all([
+                api(`/api/school-admin/annual-timetable-34weeks?academicYear=${selectedAcademicYear}&grade=${grade}&classNumber=${classNum}`),
+                fetchBellScheduleByGrade()
+            ]);
+            renderAnnualBellSchedule(grade);
             const dailyPeriodsMap = synthData.dailyPeriodsMap || { 1: 6, 2: 6, 3: 5, 4: 6, 5: 6 };
             const schedList = synthData.schedules || [];
             const generalEventList = synthData.generalEvents || [];
