@@ -5,7 +5,7 @@
 
 ## 지금까지
 
-    본 그림   54장쯤 / 924장
+    본 그림   57장쯤 / 924장
     찾은 것   4건 (반쪽이 전권 포함)
 
 ## 찾은 것
@@ -50,7 +50,10 @@
     horangi-sogin-tokki 01-caught
     jwi-sawi            cover
     muyeongtap          cover
+    mangduseok-jaepan   cover
     ppalgan-buchae      cover
+    samnyeon-gogae      cover
+    yosul-hangari       cover
     samhyeongje-jaeju   08-cliff
     ureongi-gaksi       13-jar
     yeoni-beodeul       02-order 03-snow
@@ -71,6 +74,15 @@
     해와 달이 된 오누이 cover
                     오누이는 튼튼한 줄, 호랑이는 썩은 줄이 끊긴다
     빨간 부채 cover   코가 하늘 궁궐까지. 매끈한 관 모양이라 안 징그럽다
+
+## 표지를 훑고 나서
+
+표지를 스물몇 장 봤는데 **하나만 빼고 다 좋다.** 나쁜 하나가
+반쪽이였고, 그것이 해부도였다.
+
+문제가 고루 흩어져 있지 않다. **어긋나는 책은 통째로 어긋나고,
+멀쩡한 책은 표지부터 끝까지 멀쩡하다.** 그래서 책 단위로 훑는 것이
+맞다. 한 책에서 한 장이 이상하면 그 책 전체를 봐야 한다.
 
 ## 배운 것
 
