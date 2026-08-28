@@ -152,10 +152,10 @@ one leg.
 ### `01-carp.webp` — 노인이 잉어 세 마리를 준다
 
 ```
-Wide panoramic scene. A humble thatched cottage yard. On the right an old
-traveller in a wide straw hat and grey robe holds out a straw string threaded
-with three plump carp toward the left, one finger raised as if giving careful
-instructions. On the left a middle-aged couple in plain hanbok receive them with
+Wide panoramic scene. A humble thatched cottage yard. On the right an elderly
+Buddhist monk in a grey robe, head shaved, a long string of wooden prayer beads
+over one arm, holds out a shallow basket with three plump carp in it, one finger
+raised as if giving careful instructions. On the left a middle-aged couple in plain hanbok receive them with
 both hands, bowing slightly, hopeful faces. Late afternoon, warm gold light.
 Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
 smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
