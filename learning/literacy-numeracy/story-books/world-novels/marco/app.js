@@ -422,7 +422,7 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
 const AFTERWORD = {
     title: '읽고 나서',
     emoji: '🚢',
-    art: [],
+    art: ['end.webp'],
     paras: [
         `이 이야기의 원래 제목은 『아펜니노 산맥에서 안데스 산맥까지』입니다. 이탈리아의 산에서 남아메리카의 산까지라는 뜻입니다.`,
         `우리나라에서는 흔히 『엄마 찾아 삼만리』로 알려져 있습니다. 만화영화 제목에서 온 이름입니다.`,
