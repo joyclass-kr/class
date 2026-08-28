@@ -311,15 +311,23 @@ empty sleeve and trouser leg are knotted and swing in the air. He hops on his
 one leg.
 ```
 
-### `11-contest.webp` — 힘겨루기, 달리기, 슬기 겨루기
+### `11-contest.webp` — 기둥 들기와 달리기 (한 장에 두 장면)
+
+**이 그림은 세로선 하나로 좌우를 나눠 두 장면을 담습니다.** 왼쪽 반은
+힘겨루기, 오른쪽 반은 달리기입니다. 글도 그렇게 나뉘어 있습니다.
 
 ```
-Wide panoramic scene showing three moments in one strip, left to right. Left:
-Banjjogi lifts an entire granary pillar off the ground with his one arm while
-onlookers reel back. Centre: he hops across a finish line on his single leg,
-well ahead of two ordinary runners. Right: he wades chest-deep into a clear
-stream carrying a huge earthenware jar in his arm and dunks it straight into the
-water. Bright daylight, cheering crowd, playful energy.
+Wide panoramic scene split down the middle into two moments.
+LEFT HALF - the strength contest: Banjjogi has torn an entire granary pillar
+clean out of the ground and holds it overhead in his one arm, clods of earth
+still raining off the bottom. At his feet five big village men sprawl backwards
+where they have fallen, having just failed to shift it. Seen from a low angle so
+the pillar towers up and breaks out of the top of the frame.
+RIGHT HALF - the running race: Banjjogi hops across the finish rope on his single
+leg, already sitting down to wait, while two ordinary young men are still far
+behind, red-faced and streaming sweat. Speed lines, a cloud of dust, the crowd
+doubled over laughing. Kim the rich man watches with his mouth open.
+Bright daylight, big cheering crowd, playful comic energy.
 Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
 smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
 line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
@@ -327,24 +335,47 @@ empty sleeve and trouser leg are knotted and swing in the air. He hops on his
 one leg.
 ```
 
-### `12-wedding.webp` — 혼례, 형 둘을 윗자리에 앉힌다
+### `12-jar.webp` — 항아리를 통째로 안고 개울로
+
+**이 그림은 펼침면 양쪽을 다 씁니다. 크고 시원하게 그려 주세요.**
+이 책에서 가장 통쾌한 대목입니다.
+
+```
+Wide panoramic scene, the big moment of the book. Banjjogi wades out into a
+clear shallow stream with an enormous earthenware jar - taller than his own
+chest - hugged against him in his one arm, and is tipping it down into the water
+so it fills with a great gulp. His single leg is braced in the current, water
+foaming white around it. He is grinning hugely and winking back over his
+shoulder at the crowd.
+On the bank behind him the whole village is packed together, mouths open,
+pointing, some already cheering. Kim the rich man stands at the front with the
+useless bucket dangling forgotten from his hand and his jaw hanging down. A
+low angle from the water, so Banjjogi and the jar loom large and the crowd is
+small behind. Bright water sparkle, splashes flying out of the frame.
+Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
+smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
+line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
+empty sleeve and trouser leg are knotted and swing in the air. He hops on his
+one leg.
+```
+
+### `13-wedding.webp` — 혼례, 형 둘을 윗자리에 앉힌다
 
 ```
 Wide panoramic scene. An autumn wedding in a courtyard hung with red and blue
 cloth. In the centre Banjjogi in a bridegroom's robe stands beside the bride in
-her red wedding hanbok and headpiece, both smiling. On the left, at the place of
-honour under the awning, the two elder brothers sit stiffly on cushions with
-crimson faces, looking at the ground, one scratching his neck. The old mother
-wipes her eyes on the right. Persimmon trees, warm golden autumn light,
-festive.
+her red wedding hanbok and headpiece, both smiling. On the left, seated at the
+place of honour under the awning on good cushions, the TWO elder brothers - only
+two, both in their twenties, handsome and smooth-faced - sit with crimson faces
+looking at the ground while Banjjogi pours them wine. Their parents, in their
+thirties, watch from the right, the mother wiping her eyes. Persimmon trees,
+warm golden autumn light, festive.
 Banjjogi's FACE is whole and cute - both eyebrows, thick braided hair, a wide
 smile, ONE eye big and round and open, the OTHER eye a closed curved-up winking
 line. His BODY is one-sided: one arm and one leg, both on the open-eye side; the
 empty sleeve and trouser leg are knotted and swing in the air. He hops on his
 one leg.
 ```
-
----
 
 ## 마지막 장 — `end.webp` (가로 2:1)
 
