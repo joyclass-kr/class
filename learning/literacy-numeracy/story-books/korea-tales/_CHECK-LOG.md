@@ -5,7 +5,7 @@
 
 ## 지금까지
 
-    본 그림   62장쯤 / 924장
+    본 그림   67장쯤 / 924장
     찾은 것   4건 (반쪽이 전권 포함)
 
 ## 찾은 것
@@ -53,6 +53,10 @@
     cheonggaeguri       02-backwards
     dokkaebi-bangmangi  04-dokkaebi
     gangdo-jabeun-gae   cover
+    halmikkot           cover
+    hwangso-nongbu      cover
+    jopssal-han-tol     cover
+    juin-guhan-nureongi cover
     jinju-geowi         cover
     mangduseok-jaepan   cover
     ppalgan-buchae      cover
@@ -78,6 +82,13 @@
     해와 달이 된 오누이 cover
                     오누이는 튼튼한 줄, 호랑이는 썩은 줄이 끊긴다
     빨간 부채 cover   코가 하늘 궁궐까지. 매끈한 관 모양이라 안 징그럽다
+    좁쌀 한 톨 cover  좁쌀→쥐→고양이→개→말→소가 위로 커진다.
+                    누적담의 구조가 그림 하나로 보인다
+    누렁이 cover      젖은 풀밭에 물기가 반짝인다. 개가 몸을 적셔
+                    불길을 막은 자리라는 것이 그림에 있다
+    할미꽃 cover      줄기가 활처럼 굽어 꽃이 땅을 본다. 표지 소개 그대로
+    황소가 된 농부 cover
+                    소 탈이 웃고 뒤에서 게으른 농부가 하품한다
 
 ## 표지를 훑고 나서
 
