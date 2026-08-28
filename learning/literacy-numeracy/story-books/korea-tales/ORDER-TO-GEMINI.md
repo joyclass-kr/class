@@ -147,43 +147,47 @@
 
 ---
 
-### 반쪽이(`banjjogi`) — 제 프롬프트가 부실했습니다. 새로 받아 주세요
+### 반쪽이(`banjjogi`) — 지시를 「화면 기준」으로 바꿨습니다. 다시 받아 주세요
 
-계속 잘못 나온 것은 **제 잘못입니다.** 인물 설명에 이렇게만 적혀 있었습니다.
+보내 주신 열세 장을 다 보았습니다. **어떤 장은 맞고 어떤 장은 틀립니다.**
+`05-tie` 는 얼굴까지 반쪽으로 잘 나왔는데 `03-grow` 는 두 눈이 다 있습니다.
+눈이 왼쪽이 없어졌다 오른쪽이 없어졌다 합니다.
 
-    one eye, one arm, one leg
+**제 지시가 잘못이었습니다.** 제가 이렇게 적었습니다.
 
-**어느 쪽 반인지를 안 적었습니다.** 그래서 눈은 눈대로 팔은 팔대로 따로 놀았습니다.
-왼팔·왼다리가 없으면 **왼눈도 없어야** 합니다. 세로로 같은 쪽 반이 통째로 없는 것입니다.
+    ONLY THE RIGHT HALF OF HIS BODY EXISTS ...
 
-게다가 그림말 열네 장 가운데 **여섯 장에는 반쪽 이야기가 한 마디도 없었습니다.**
-`05-tie` 도 그중 하나였습니다. 그 그림들이 멀쩡한 몸으로 나온 것이 당연합니다.
+「오른쪽」은 **몸 기준**입니다. 그런데 인물이 돌아서면 화면에서는 좌우가
+뒤집힙니다. 그러니 그릴 때마다 「지금은 화면 어느 쪽이지?」를 다시
+판단해야 하고, 그래서 흔들릴 수밖에 없었습니다. 제 잘못입니다.
 
-**지금 다 고쳤습니다. `banjjogi/IMAGE-PROMPTS.md` 를 새로 받아 주세요.**
-인물 설명이 이렇게 바뀌었고, 열네 장 그림말 **모두**에 같은 못을 박았습니다.
+**화면 기준으로 바꿨습니다.** 이제 판단할 것이 없습니다.
 
-    ONLY THE RIGHT HALF OF HIS BODY EXISTS. Take a whole boy, draw a single vertical
-    line straight down the middle of his face and body, and DELETE EVERYTHING TO HIS
-    LEFT. What is left is the entire character:
-      - RIGHT eye only. NO left eye, no left eyebrow, no left ear.
-      - RIGHT half of the nose and RIGHT half of the mouth.
-      - RIGHT arm only. NO left arm, no left shoulder.
-      - RIGHT leg only. NO left leg. He hops on it.
-      - RIGHT half of the torso, right half of the topknot.
-    It is ALWAYS the same side in every single picture. Never both eyes. Never both
-    arms. Never a whole face on a half body - the face is halved too.
+    HE IS HALF A BOY, AND THE MISSING HALF IS ALWAYS ON THE LEFT SIDE OF THE PICTURE.
 
-    He is NOT a cut-open body. Nothing is exposed - no bone, no organs, no blood, no
-    red flesh, never a cutaway. The flat side is simply smooth, like the side of a
-    paper cut-out that has been given thickness.
+    Do not think about his left or his right - think about the PICTURE. Draw a whole
+    boy facing the viewer, then draw one straight vertical line down the middle of
+    his face and body, and erase everything on the LEFT-HAND SIDE OF THE IMAGE. The
+    straight cut edge always runs down the picture-left side of him.
 
-**얼굴도 반쪽입니다.** 지금까지 나온 것들은 몸만 반쪽으로 하고 얼굴은
-멀쩡하게 그려서 어긋났습니다. 눈 하나, 눈썹 하나, 귀 하나, 코 반쪽,
-입 반쪽입니다.
+      - ONE eye, on the picture-right. The picture-left eye, eyebrow and ear are gone.
+      - HALF a nose and HALF a mouth, the picture-right halves.
+      - ONE arm, on the picture-right. No arm at all on the picture-left.
+      - ONE leg, on the picture-right. He hops on it.
+      - Half a torso, half a topknot - the picture-right halves.
 
-표지는 여기에 하나 더 있습니다. 지난번 표지에 허파와 심장과 넓적다리뼈가
-다 드러나 있었습니다. **잘린 단면이 아닙니다.** 처음부터 그렇게 생긴
-아이이고, 평평한 쪽은 그냥 매끈합니다.
+    This is the same in EVERY picture, whichever way he is moving or looking.
+
+한 문장으로 하면 이렇습니다.
+
+> **잘린 곧은 선은 언제나 화면에서 그의 왼쪽에 있고,
+> 눈 하나·팔 하나·다리 하나는 언제나 화면 오른쪽에 있습니다.**
+
+인물 설명과 그림말 열네 장 **모두**를 이렇게 고쳤습니다.
+`banjjogi/IMAGE-PROMPTS.md` 를 새로 받아 주세요.
+
+잘 나온 것도 있습니다. **`05-tie` 와 표지가 기준입니다.** 표지에서
+해부도가 사라진 것도 좋습니다. 그 둘처럼만 열네 장을 맞춰 주시면 됩니다.
 
     cover  01-carp  02-half  03-grow  04-jealous  05-tie  06-uproot
     07-tiger  08-catch  09-promise  10-excuse  11-contest  12-wedding  end
