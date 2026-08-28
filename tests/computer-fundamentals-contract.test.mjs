@@ -61,6 +61,9 @@ test("the information and computing menu keeps both course links", () => {
   assert.match(portal, /learning\/inquiry\/information-computing\/computer-fundamentals\//);
   assert.match(portal, /learning\/inquiry\/information-computing\/typing\//);
   assert.doesNotMatch(portal, /learning\/basics\/typing\//);
+  assert.match(portal, /rel="icon" href="favicon\.ico"/);
+  assert.match(coursePage, /rel="icon" href="\.\.\/\.\.\/\.\.\/\.\.\/favicon\.ico"/);
+  assert.match(lessonPage, /rel="icon" href="\.\.\/\.\.\/\.\.\/\.\.\/\.\.\/favicon\.ico"/);
 });
 
 test("the 36-lesson core course is loaded in dependency order", () => {
