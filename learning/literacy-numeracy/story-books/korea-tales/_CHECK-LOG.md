@@ -5,7 +5,7 @@
 
 ## 지금까지
 
-    본 그림   57장쯤 / 924장
+    본 그림   62장쯤 / 924장
     찾은 것   4건 (반쪽이 전권 포함)
 
 ## 찾은 것
@@ -50,6 +50,10 @@
     horangi-sogin-tokki 01-caught
     jwi-sawi            cover
     muyeongtap          cover
+    cheonggaeguri       02-backwards
+    dokkaebi-bangmangi  04-dokkaebi
+    gangdo-jabeun-gae   cover
+    jinju-geowi         cover
     mangduseok-jaepan   cover
     ppalgan-buchae      cover
     samnyeon-gogae      cover
@@ -83,6 +87,17 @@
 문제가 고루 흩어져 있지 않다. **어긋나는 책은 통째로 어긋나고,
 멀쩡한 책은 표지부터 끝까지 멀쩡하다.** 그래서 책 단위로 훑는 것이
 맞다. 한 책에서 한 장이 이상하면 그 책 전체를 봐야 한다.
+
+## 훑는 방법 — 책마다 대표 한 장
+
+문제가 책 단위로 몰리므로, 책마다 **대표 한 장**만 먼저 보고
+어긋난 책을 골라낸다. 그 책만 통째로 들여다본다.
+924장을 다 보는 것보다 훨씬 빠르고, 놓치는 것도 적다.
+
+대표 한 장은 이렇게 고른다.
+- 주인공의 생김새가 특별한 책이면 주인공이 크게 나온 장 (반쪽이가 이 경우)
+- 괴물이 나오면 괴물이 제일 크게 나온 장
+- 그 밖에는 이야기의 고비 (도깨비 방망이의 04-dokkaebi 같은)
 
 ## 배운 것
 
