@@ -5,7 +5,7 @@
 
 ## 지금까지
 
-    본 그림   50장쯤 / 924장
+    본 그림   54장쯤 / 924장
     찾은 것   4건 (반쪽이 전권 포함)
 
 ## 찾은 것
@@ -48,6 +48,9 @@
     haewa-dari-doen-onui cover
     seok-talhae         12-friend
     horangi-sogin-tokki 01-caught
+    jwi-sawi            cover
+    muyeongtap          cover
+    ppalgan-buchae      cover
     samhyeongje-jaeju   08-cliff
     ureongi-gaksi       13-jar
     yeoni-beodeul       02-order 03-snow
@@ -58,6 +61,16 @@
     삼형제의 재주     08-cliff        이무기가 멀리 작게 있어 좋음
     구렁덩덩          05-shed         허물이 반짝이는 흰 껍질로 곱게
     호랑이 속인 토끼   01-caught       민화풍 큰 면, 무섭되 징그럽지 않음
+
+## 특히 잘 나온 것
+
+    무영탑 cover     못에 산과 구름은 비치는데 **탑만 안 비친다.**
+                    「그림자 없는 탑」이라는 뜻이 그림으로 들어갔다
+    쥐의 사위 cover   해·바람·돌부처가 다 나오고 쥐 부부가 아주 작다.
+                    뒤집기가 그림으로 보인다
+    해와 달이 된 오누이 cover
+                    오누이는 튼튼한 줄, 호랑이는 썩은 줄이 끊긴다
+    빨간 부채 cover   코가 하늘 궁궐까지. 매끈한 관 모양이라 안 징그럽다
 
 ## 배운 것
 
