@@ -147,39 +147,43 @@
 
 ---
 
-### 반쪽이(`banjjogi`)는 한 권을 통째로 다시 그려야 합니다
+### 반쪽이(`banjjogi`) — 제 프롬프트가 부실했습니다. 새로 받아 주세요
 
-**가장 급한 것입니다.** 두 가지가 겹쳐 있습니다.
+계속 잘못 나온 것은 **제 잘못입니다.** 인물 설명에 이렇게만 적혀 있었습니다.
 
-**하나. 주인공이 반쪽이 아닙니다.**
-반쪽이는 몸이 세로로 **반만 있는** 아이입니다. 눈 하나, 팔 하나, 다리 하나입니다.
-그것이 이 이야기의 전부입니다. 그런데 지금 그림에서는 팔도 둘, 다리도 둘,
-눈도 둘인 **멀쩡한 장사**로 그려져 있습니다.
+    one eye, one arm, one leg
 
-본문이 이렇게 적혀 있습니다.
+**어느 쪽 반인지를 안 적었습니다.** 그래서 눈은 눈대로 팔은 팔대로 따로 놀았습니다.
+왼팔·왼다리가 없으면 **왼눈도 없어야** 합니다. 세로로 같은 쪽 반이 통째로 없는 것입니다.
 
-    호랑이가 덮치는 순간 반쪽이가 **한 팔로** 목덜미를 붙들었습니다.
-    첫째는 힘겨루기였어요. 반쪽이가 곳간 기둥을 **한 팔로** 들어 올렸지요.
-    둘째는 달리기였어요. 반쪽이가 **한 다리로** 먼저 들어왔습니다.
+게다가 그림말 열네 장 가운데 **여섯 장에는 반쪽 이야기가 한 마디도 없었습니다.**
+`05-tie` 도 그중 하나였습니다. 그 그림들이 멀쩡한 몸으로 나온 것이 당연합니다.
 
-인물 설명에도 이렇게 적혀 있습니다.
+**지금 다 고쳤습니다. `banjjogi/IMAGE-PROMPTS.md` 를 새로 받아 주세요.**
+인물 설명이 이렇게 바뀌었고, 열네 장 그림말 **모두**에 같은 못을 박았습니다.
 
-    Banjjogi (Half-boy): ... drawn as exactly one vertical half of a person -
-    one eye, one arm, one leg, half a torso - but solid and three-dimensional,
-    never gruesome or bloody, never a cutaway. Think of a strongman split down
-    the middle and still standing, hopping easily on his one leg.
+    ONLY THE RIGHT HALF OF HIS BODY EXISTS. Take a whole boy, draw a single vertical
+    line straight down the middle of his face and body, and DELETE EVERYTHING TO HIS
+    LEFT. What is left is the entire character:
+      - RIGHT eye only. NO left eye, no left eyebrow, no left ear.
+      - RIGHT half of the nose and RIGHT half of the mouth.
+      - RIGHT arm only. NO left arm, no left shoulder.
+      - RIGHT leg only. NO left leg. He hops on it.
+      - RIGHT half of the torso, right half of the topknot.
+    It is ALWAYS the same side in every single picture. Never both eyes. Never both
+    arms. Never a whole face on a half body - the face is halved too.
 
-**둘. 표지가 해부도로 그려졌습니다.**
-`cover` 를 열어 보시면 허파와 심장과 위와 넓적다리뼈가 다 드러나 있습니다.
-인물 설명에 **`never a cutaway`** 라고 적어 둔 것이 바로 이것입니다.
-아이들이 보는 책의 표지입니다. **속을 보여 주면 안 됩니다.**
+    He is NOT a cut-open body. Nothing is exposed - no bone, no organs, no blood, no
+    red flesh, never a cutaway. The flat side is simply smooth, like the side of a
+    paper cut-out that has been given thickness.
 
-반쪽이는 **잘린 사람이 아니라 처음부터 그렇게 생긴 아이**입니다.
-가운데를 자른 단면이 아니라, 옆에서 본 사람처럼 매끈하게 그려 주세요.
-피도 뼈도 내장도 없습니다. 씩씩하고 웃는 아이로, 한 다리로 폴짝폴짝
-잘 뛰어다니게 그려 주시면 됩니다.
+**얼굴도 반쪽입니다.** 지금까지 나온 것들은 몸만 반쪽으로 하고 얼굴은
+멀쩡하게 그려서 어긋났습니다. 눈 하나, 눈썹 하나, 귀 하나, 코 반쪽,
+입 반쪽입니다.
 
-**표지 포함 14장 전부입니다.**
+표지는 여기에 하나 더 있습니다. 지난번 표지에 허파와 심장과 넓적다리뼈가
+다 드러나 있었습니다. **잘린 단면이 아닙니다.** 처음부터 그렇게 생긴
+아이이고, 평평한 쪽은 그냥 매끈합니다.
 
     cover  01-carp  02-half  03-grow  04-jealous  05-tie  06-uproot
     07-tiger  08-catch  09-promise  10-excuse  11-contest  12-wedding  end
