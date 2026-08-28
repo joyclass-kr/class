@@ -580,6 +580,16 @@
                         <button class="btn btn-secondary btn-sm" onclick="addShuttle()">+ 추가</button>
                     </div>
                 </div>
+                <!-- 특별실 -->
+                <div class="card" style="margin:0;">
+                    <div class="card-title" style="font-size:14px;">🏫 특별실 목록</div>
+                    <div class="card-desc">과학실, 음악실, 체육관 등. 이 목록이 교육과정 포털의 "특별실 배정" 기준이 됩니다. 목록에서 지우면 그 방의 배정표도 함께 삭제됩니다.</div>
+                    <ul class="settings-list" id="specialRoomList"></ul>
+                    <div class="add-item-row">
+                        <input class="add-item-input" id="newSpecialRoomInput" placeholder="예: 과학실" onkeydown="if(event.key==='Enter')addSpecialRoom()">
+                        <button class="btn btn-secondary btn-sm" onclick="addSpecialRoom()">+ 추가</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -636,7 +646,7 @@
     "use strict";
 
     let currentYear = new Date().getFullYear();
-    let schoolSettings = { clubs: [], afterschool: [], shuttleSlots: [] };
+    let schoolSettings = { clubs: [], afterschool: [], shuttleSlots: [], specialRooms: [] };
     let allStudents = [];
     let parsedStudents = null; // 붙여넣기 파싱 결과
     let isSchoolAdmin = false;
@@ -1264,7 +1274,7 @@
         try {
             const data = await api(`/api/school/settings?year=${currentYear}`);
             isSchoolAdmin = Boolean(data.isAdmin);
-            schoolSettings = { clubs: data.clubs || [], afterschool: data.afterschool || [], shuttleSlots: data.shuttleSlots || [] };
+            schoolSettings = { clubs: data.clubs || [], afterschool: data.afterschool || [], shuttleSlots: data.shuttleSlots || [], specialRooms: data.specialRooms || [] };
             
             if (data.schoolName) {
                 document.getElementById("schoolName").textContent = data.schoolName;
@@ -1287,6 +1297,7 @@
             renderSettingsList("clubList", schoolSettings.clubs, "clubs", "club_name");
             renderSettingsList("afterschoolList", schoolSettings.afterschool, "afterschool", "program_name");
             renderSettingsList("shuttleList", schoolSettings.shuttleSlots, "shuttleSlots", "slot_name");
+            renderSettingsList("specialRoomList", schoolSettings.specialRooms, "specialRooms", "room_name");
             updatePasteColsHint();
         } catch (e) {
             setStatus("settingsStatus", e.message, "error");
@@ -1313,7 +1324,8 @@
                     year: currentYear,
                     clubs: (schoolSettings.clubs || []).map(c => c.club_name || c.name || c),
                     afterschool: (schoolSettings.afterschool || []).map(a => a.program_name || a.name || a),
-                    shuttleSlots: (schoolSettings.shuttleSlots || []).map(s => s.slot_name || s.name || s)
+                    shuttleSlots: (schoolSettings.shuttleSlots || []).map(s => s.slot_name || s.name || s),
+                    specialRooms: (schoolSettings.specialRooms || []).map(r => r.room_name || r.name || r)
                 })
             });
         } catch (e) {}
@@ -1368,7 +1380,8 @@
         if (!confirm(`'${itemName}' 항목을 목록에서 삭제하시겠습니까?`)) return;
 
         schoolSettings[key].splice(idx, 1);
-        renderSettingsList(key === "clubs" ? "clubList" : key === "afterschool" ? "afterschoolList" : "shuttleList", schoolSettings[key], key, nameKey);
+        const listIdMap = { clubs: "clubList", afterschool: "afterschoolList", shuttleSlots: "shuttleList", specialRooms: "specialRoomList" };
+        renderSettingsList(listIdMap[key] || "clubList", schoolSettings[key], key, nameKey);
         updatePasteColsHint();
         setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
     };
@@ -1403,6 +1416,15 @@
         updatePasteColsHint();
         setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
     };
+    window.addSpecialRoom = function() {
+        const input = document.getElementById("newSpecialRoomInput");
+        const name = input.value.replace(/\s+/g, ""); // 띄어쓰기 제거
+        if (!name) return;
+        schoolSettings.specialRooms.push({ room_name: name });
+        renderSettingsList("specialRoomList", schoolSettings.specialRooms, "specialRooms", "room_name");
+        input.value = "";
+        setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
+    };
 
     window.saveSettings = async function() {
         const btn = document.getElementById("saveSettingsBtn");
@@ -1415,7 +1437,8 @@
                     year: currentYear,
                     clubs: schoolSettings.clubs.map(c => c.club_name || c.name || c),
                     afterschool: schoolSettings.afterschool.map(a => a.program_name || a.name || a),
-                    shuttleSlots: schoolSettings.shuttleSlots.map(s => s.slot_name || s.name || s)
+                    shuttleSlots: schoolSettings.shuttleSlots.map(s => s.slot_name || s.name || s),
+                    specialRooms: (schoolSettings.specialRooms || []).map(r => r.room_name || r.name || r)
                 })
             });
             setStatus("settingsStatus", "✅ 설정이 저장되었습니다.", "ok");

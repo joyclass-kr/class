@@ -1680,10 +1680,19 @@
                     placeholderOpt.value = "";
                     placeholderOpt.textContent = "학급을 선택하세요";
                     classSwitcherSelect.appendChild(placeholderOpt);
-                    availableData.classes.forEach(c => {
+                    // 전담교사별 시간표에서 내가 배정된 반(내 수업)을 먼저, ★ 표시와 과목명을 붙여서 보여준다.
+                    const sortedClasses = availableData.classes.slice().sort((a, b) => {
+                        if (Boolean(b.isMyTeaching) !== Boolean(a.isMyTeaching)) return b.isMyTeaching ? 1 : -1;
+                        if (a.grade !== b.grade) return a.grade - b.grade;
+                        return a.classNumber - b.classNumber;
+                    });
+                    sortedClasses.forEach(c => {
                         const opt = document.createElement("option");
                         opt.value = c.id;
-                        opt.textContent = `${c.grade}학년 ${c.classNumber}반 (${c.teacherName})`;
+                        const subjects = Array.isArray(c.myTeachingSubjects) && c.myTeachingSubjects.length ? ` · ${c.myTeachingSubjects.join(",")}` : "";
+                        opt.textContent = c.isMyTeaching
+                            ? `★ ${c.grade}학년 ${c.classNumber}반 (내 수업${subjects})`
+                            : `${c.grade}학년 ${c.classNumber}반 (${c.teacherName})`;
                         classSwitcherSelect.appendChild(opt);
                     });
                     if (classId) classSwitcherSelect.value = classId;

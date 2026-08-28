@@ -868,6 +868,21 @@ function createClassroomPlatform(options = {}) {
       )`,
 
       /* ──────────────────────────────────────────────
+         특별실 목록 (school_special_rooms)
+         과학실, 음악실, 체육관 등 — 학교마다 이름·개수가 다르다.
+         배정 자체는 school_master_timetable.room_name이 담당하고,
+         이 테이블은 방 이름의 공식 명단(드롭다운 후보) 역할만 한다.
+      ────────────────────────────────────────────── */
+      `CREATE TABLE IF NOT EXISTS school_special_rooms (
+        id BIGSERIAL PRIMARY KEY,
+        school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
+        room_name TEXT NOT NULL CHECK (char_length(room_name) BETWEEN 1 AND 30),
+        sort_order INTEGER NOT NULL DEFAULT 0,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE (school_id, room_name)
+      )`,
+
+      /* ──────────────────────────────────────────────
          교사가 직접 개설하는 학급/그룹 (teacher_groups)
          담임반, 동아리, 전담과목반, 방과후반 등 자유롭게 개설.
       ────────────────────────────────────────────── */
@@ -3042,18 +3057,39 @@ function createClassroomPlatform(options = {}) {
        ORDER BY c.grade ASC, c.class_number ASC`,
       [teacherInfo.school_id]
     );
+
+    // 전담교사별 시간표(school_master_timetable.teacher_user_id)에 이 교사가
+    // 배정된 학급 = "내가 가르치는 반". 학급 전환 목록에서 먼저 보여주기 위한 표시용 정보다.
+    const teachingResult = await pool.query(
+      `SELECT DISTINCT academic_year, grade, class_number, subject_name
+       FROM school_master_timetable
+       WHERE school_id = $1 AND teacher_user_id = $2`,
+      [teacherInfo.school_id, teacher.id]
+    );
+    const teachingMap = new Map();
+    teachingResult.rows.forEach(r => {
+      const key = `${r.academic_year}-${r.grade}-${r.class_number}`;
+      if (!teachingMap.has(key)) teachingMap.set(key, new Set());
+      if (r.subject_name) teachingMap.get(key).add(r.subject_name);
+    });
+
     return res.json({
       teacherType: teacherInfo.teacher_type || 'homeroom',
       subjectName: teacherInfo.subject_name || '',
       roomName: teacherInfo.room_name || '',
-      classes: classesResult.rows.map((row) => ({
-        id: row.id,
-        academicYear: row.academic_year,
-        grade: row.grade,
-        classNumber: row.class_number,
-        teacherName: row.teacher_name,
-        studentCount: Number(row.student_count || 0)
-      }))
+      classes: classesResult.rows.map((row) => {
+        const teachingKey = `${row.academic_year}-${row.grade}-${row.class_number}`;
+        return {
+          id: row.id,
+          academicYear: row.academic_year,
+          grade: row.grade,
+          classNumber: row.class_number,
+          teacherName: row.teacher_name,
+          studentCount: Number(row.student_count || 0),
+          isMyTeaching: teachingMap.has(teachingKey),
+          myTeachingSubjects: teachingMap.has(teachingKey) ? Array.from(teachingMap.get(teachingKey)) : []
+        };
+      })
     });
   }));
 
@@ -5508,13 +5544,29 @@ function createClassroomPlatform(options = {}) {
   router.get("/school-admin/rooms", asyncRoute(async (req, res) => {
     const { profile } = await requireSchoolAdmin(req);
     const year = Number(req.query.academicYear || new Date().getFullYear());
-    const result = await pool.query(
-      `SELECT DISTINCT room_name FROM school_master_timetable
-       WHERE school_id = $1 AND academic_year = $2 AND room_name IS NOT NULL
-       ORDER BY room_name`,
-      [profile.school_id, year]
-    );
-    res.json({ rooms: result.rows.map(r => r.room_name) });
+    // 공식 특별실 명단(학교 설정에서 관리) + 시간표에 이미 쓰인 방 이름을 합쳐서 보여준다.
+    // 명단이 우선 정렬되고, 명단에 없지만 과거에 입력된 이름도 사라지지 않는다.
+    const [rosterResult, usedResult] = await Promise.all([
+      pool.query(
+        `SELECT room_name FROM school_special_rooms WHERE school_id = $1 ORDER BY sort_order, id`,
+        [profile.school_id]
+      ),
+      pool.query(
+        `SELECT DISTINCT room_name FROM school_master_timetable
+         WHERE school_id = $1 AND academic_year = $2 AND room_name IS NOT NULL
+         ORDER BY room_name`,
+        [profile.school_id, year]
+      )
+    ]);
+    const seen = new Set();
+    const rooms = [];
+    for (const r of rosterResult.rows.concat(usedResult.rows)) {
+      if (r.room_name && !seen.has(r.room_name)) {
+        seen.add(r.room_name);
+        rooms.push(r.room_name);
+      }
+    }
+    res.json({ rooms });
   }));
 
   router.put("/school-admin/room-timetable", asyncRoute(async (req, res) => {
@@ -5929,10 +5981,11 @@ function createClassroomPlatform(options = {}) {
     const year = Number(req.query.year) || new Date().getFullYear();
     const isAdmin = ["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type);
 
-    const [clubs, afterschool, shuttle] = await Promise.all([
+    const [clubs, afterschool, shuttle, specialRooms] = await Promise.all([
       pool.query(`SELECT id, club_name, sort_order FROM school_clubs WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`, [schoolId, year]),
       pool.query(`SELECT id, program_name, sort_order FROM school_afterschool WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`, [schoolId, year]),
-      pool.query(`SELECT id, slot_name, sort_order FROM school_shuttle_slots WHERE school_id = $1 ORDER BY sort_order, id`, [schoolId])
+      pool.query(`SELECT id, slot_name, sort_order FROM school_shuttle_slots WHERE school_id = $1 ORDER BY sort_order, id`, [schoolId]),
+      pool.query(`SELECT id, room_name, sort_order FROM school_special_rooms WHERE school_id = $1 ORDER BY sort_order, id`, [schoolId])
     ]);
 
     res.json({
@@ -5940,6 +5993,7 @@ function createClassroomPlatform(options = {}) {
       clubs: clubs.rows,
       afterschool: afterschool.rows,
       shuttleSlots: shuttle.rows,
+      specialRooms: specialRooms.rows,
       isAdmin,
       year
     });
@@ -5959,7 +6013,7 @@ function createClassroomPlatform(options = {}) {
     const extractName = (item) => {
       if (!item) return "";
       if (typeof item === "string") return item.trim();
-      if (typeof item === "object") return String(item.club_name || item.program_name || item.slot_name || item.name || "").trim();
+      if (typeof item === "object") return String(item.club_name || item.program_name || item.slot_name || item.room_name || item.name || "").trim();
       return String(item).trim();
     };
 
@@ -5993,6 +6047,23 @@ function createClassroomPlatform(options = {}) {
           `INSERT INTO school_shuttle_slots (school_id, slot_name, sort_order) VALUES ($1, $2, $3)`,
           [schoolId, s.name, s.order]
         );
+      }
+      // Special rooms — 배정표가 room id를 참조하므로 delete-all-reinsert 대신
+      // 이름 기준 upsert로 id를 보존한다. 목록에서 빠진 방만 지운다(배정표는 CASCADE 삭제).
+      // specialRooms 필드를 아예 안 보낸 옛 호출은 특별실을 건드리지 않는다.
+      if (req.body.specialRooms !== undefined) {
+        const specialRooms = (req.body.specialRooms || []).map((item, i) => ({ name: extractName(item), order: i })).filter(r => r.name && r.name !== "[object Object]");
+        await client.query(
+          `DELETE FROM school_special_rooms WHERE school_id = $1 AND NOT (room_name = ANY($2::text[]))`,
+          [schoolId, specialRooms.map(r => r.name)]
+        );
+        for (const r of specialRooms) {
+          await client.query(
+            `INSERT INTO school_special_rooms (school_id, room_name, sort_order) VALUES ($1, $2, $3)
+             ON CONFLICT (school_id, room_name) DO UPDATE SET sort_order = EXCLUDED.sort_order`,
+            [schoolId, r.name, r.order]
+          );
+        }
       }
       await client.query("COMMIT");
     } catch (err) {
