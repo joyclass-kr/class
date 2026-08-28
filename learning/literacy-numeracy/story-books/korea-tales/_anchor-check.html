@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>소설틀 그림 자리</title>
+<style>body{font:13px monospace;margin:16px}iframe{position:fixed;left:-6000px;top:0;border:0}pre{white-space:pre-wrap}</style></head>
+<body><pre id="out">…</pre><iframe id="frame"></iframe><script>
+const out=document.getElementById('out'),frame=document.getElementById('frame');
+const BOOKS=['chunhyangjeon','heungbujeon','honggildongjeon','kongjwi-patjwi','onggojipjeon','simcheongjeon','tokkijeon'];
+// 창이 작을수록 펼침면이 많아져 자리가 정확해진다. 두 크기로 본다.
+const SIZES=[[1366,768],[1024,768]];
+function probe(){
+ const rows=[];let n=0,imgs=0,ahead=0,late=0,total=0;
+ PAGES.forEach(p=>{
+  if(p.kind!=='chapter')return; if(p.first)n=0;
+  if(p.art){imgs++;
+   const k=CHAPTERS[p.chIndex].art.indexOf(p.art);
+   const at=(CHAPTERS[p.chIndex].artAt||[])[k];
+   if(at){total++;
+    const seg=CHAPTER_SEGS[p.chIndex];
+    const si=seg.findIndex(g=>g.html.indexOf(at)>=0);
+    // 그 문구가 몇 번째 펼침면에 있나
+    let want=-1,q=0,m=0;
+    PAGES.forEach(x=>{if(x.kind!=='chapter'||x.chIndex!==p.chIndex)return;
+      if(si>=x.left[0]&&si<x.left[1])want=m; else if(si>=x.right[0]&&si<x.right[1])want=m; m++;});
+    if(want>=0&&n<want){ahead++;rows.push('   ★★앞서 나옴 ch'+p.ch.num+' '+p.art+' 펼침'+n+' 문구는 펼침'+want);}
+    else if(want>=0&&n>want){late++;}
+   }}
+  n++;});
+ return {imgs:imgs,ahead:ahead,late:late,total:total,rows:rows};
+}
+(async()=>{const lines=[];
+ for(const b of BOOKS){const res=[];
+  for(const [w,h] of SIZES){frame.style.width=w+'px';frame.style.height=h+'px';
+   await Promise.all(['app.js','styles.css'].map(f=>fetch(b+'/'+f,{cache:'reload'}).catch(()=>{})));
+   await new Promise(r=>{frame.onload=r;frame.src=b+'/?t='+Date.now();});
+   await new Promise(r=>setTimeout(r,250));
+   try{const v=frame.contentWindow.eval('('+probe.toString()+')()');
+    res.push('  ['+w+'x'+h+'] 그림 '+v.imgs+'장, 문구 있는 것 '+v.total+'개 · 장면보다 앞서 나옴 '+v.ahead+' · 한 쪽 늦음 '+v.late);
+    v.rows.forEach(r=>res.push(r));}
+   catch(e){res.push('  실패 '+e.message);}}
+  lines.push(b+'\n'+res.join('\n'));out.textContent=lines.join('\n');}
+ out.textContent=lines.join('\n')+'\n\n=== 끝 ===';})();
+</script></body></html>

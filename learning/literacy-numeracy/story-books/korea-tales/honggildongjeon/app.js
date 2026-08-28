@@ -7,6 +7,7 @@ const CHAPTERS = [
         num: 1,
         title: "아버지를 아버지라 부르지 못하고",
         art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
+        artAt: ["아버지를 아버지라 부르지 못하고 형을 형이라 부르지 못하니", "달이 밝은 밤, 길동은 뜰에서 칼을 들고", "방 안에 길동이 여럿 앉아 있었습니다"],
         paras: [
             "조선 세종 임금 때, 한양에 홍 판서라는 높은 벼슬아치가 살았습니다. 집안은 대대로 이름난 명문이었고 재산도 넉넉했습니다. 대문 앞에 늘 손님이 끊이지 않았습니다.",
             "홍 판서에게는 아들이 둘 있었습니다. 맏이 인형은 정실부인이 낳았고, 둘째 길동은 몸종이던 춘섬이 낳았습니다. 두 아들은 나이 차이가 두 살밖에 나지 않았습니다.",
@@ -38,6 +39,7 @@ const CHAPTERS = [
         num: 2,
         title: "집을 떠나던 밤",
         art: ["story-02-a.webp", "story-02-b.webp", "story-02-c.webp"],
+        artAt: ["홍 판서에게는 초란이라는 첩이 있었습니다", "방 안에 갑자기 짙은 안개가 피어올랐습니다", "길동은 대문을 나섰습니다"],
         paras: [
             "홍 판서에게는 초란이라는 첩이 있었습니다. 자식이 없어 늘 마음을 졸이던 사람이었습니다. 집안일을 제 손에 쥐려는 마음이 컸습니다.",
             "초란은 길동이 자라는 것을 볼 때마다 불안했습니다. 저 아이가 훗날 이 집을 차지하면 제 자리가 없어질 것이라 여겼습니다. 밤마다 그 걱정으로 뒤척였습니다. 초란은 길동이 글을 잘한다는 말이 들릴 때마다 가슴이 내려앉았습니다.",
@@ -74,6 +76,7 @@ const CHAPTERS = [
         num: 3,
         title: "활빈당",
         art: ["story-03-a.webp", "story-03-b.webp", "story-03-c.webp"],
+        artAt: ["골짜기 안쪽에 커다란 바위 문이 있고", "돌을 번쩍 들어 올렸습니다", "오늘부터 우리 이름은 활빈당이다"],
         paras: [
             "길동은 여러 날을 걸어 깊은 산에 이르렀습니다. 골짜기 안쪽에 커다란 바위 문이 있고 그 너머에 마을이 있었습니다. 사람의 발길이 닿은 적 없는 곳이었습니다. 길동은 낮에는 걷고 밤에는 나무 아래에서 잤습니다. 가진 것이라고는 어머니가 넣어 준 노잣돈뿐이었습니다.",
             "도적들의 소굴이었습니다. 수백 명이 모여 살고 있었습니다. 집이 백 채도 넘었습니다.",
@@ -105,6 +108,7 @@ const CHAPTERS = [
         num: 4,
         title: "여덟 명의 길동",
         art: ["story-04-a.webp", "story-04-b.webp", "story-04-c.webp"],
+        artAt: ["마른 풀더미에 불을 놓았습니다", "이 물건은 활빈당 홍길동이 가져간다", "대궐 마당에 여덟 명의 길동이 나란히 섰습니다"],
         paras: [
             "그 무렵 함경 감사의 악명이 유난했습니다. 흉년에도 세금을 줄이지 않고, 못 내는 집의 솥까지 떼어 갔습니다. 백성들이 굶어 죽어도 곳간 문을 열지 않았습니다. 함경도 백성들은 그해 겨울을 나지 못할 것이라고들 했습니다.",
             "길동이 무리를 모았습니다.<br>\"이번에는 함경도다.\"<br>도적들이 난색을 표했습니다.<br>\"감영은 성이 높고 군사가 많습니다.\" 감영 담이 어른 키의 세 배였습니다.",
@@ -136,6 +140,7 @@ const CHAPTERS = [
         num: 5,
         title: "하루짜리 병조 판서",
         art: ["story-05-a.webp", "story-05-b.webp", "story-05-c.webp"],
+        artAt: ["길동아. 네 어미가 너에게 무어라 하였느냐", "신에게 병조 판서", "하늘로 훌쩍 몸을 솟구쳐 구름 속으로 사라졌습니다"],
         paras: [
             "임금이 홍 판서를 불러들였습니다.<br>\"경은 제 자식을 알아보겠는가.\" 대궐 마당에 숨소리 하나 나지 않았습니다.",
             "홍 판서가 여덟 앞을 하나하나 지나갔습니다. 늙은 눈으로 아무리 들여다보아도 가릴 수가 없었습니다. 점 하나 사마귀 하나 다르지 않았습니다. 손이 자꾸 떨렸습니다. 홍 판서는 여덟의 얼굴을 하나하나 손으로 만져 보기까지 했습니다.",
@@ -167,6 +172,7 @@ const CHAPTERS = [
         num: 6,
         title: "율도국",
         art: ["story-06-a.webp", "story-06-b.webp", "story-06-c.webp"],
+        artAt: ["서른 척의 배가 돛을 올렸습니다", "성문마다 사람들이 스스로 문을 열었습니다", "오늘부터 이 나라에는 양반도 상놈도 없다"],
         paras: [
             "길동은 산으로 돌아와 무리를 모았습니다. 산을 내려온 지 여러 날 만이었습니다.",
             "\"우리는 이 땅에서 할 만큼 했다. 그러나 이 땅에서는 아무것도 바뀌지 않는다.\" 무리가 조용히 길동을 올려다보았습니다. 무리 가운데 여럿이 고개를 끄덕였습니다. 다들 같은 생각을 하고 있었던 것입니다.",
@@ -198,6 +204,7 @@ const CHAPTERS = [
         num: 7,
         title: "이름을 부르는 나라",
         art: ["story-07-a.webp", "story-07-b.webp", "story-07-c.webp"],
+        artAt: ["장터 한복판에 큰 나무판이 세워졌습니다", "아버지의 장례를 치렀습니다", "그 집 마당에는 아이들이 자주 놀러 왔습니다"],
         paras: [
             "율도국의 법은 몇 가지 되지 않았습니다. 그러나 그 몇 가지가 아주 단단했습니다. 누구나 외울 수 있을 만큼 짧았습니다.",
             "첫째, 벼슬은 오직 재주와 사람됨으로만 뽑았습니다. 누구의 자식인지는 아예 묻지 않았습니다. 과거장에는 이름과 답안만 있었고 집안을 적는 칸이 없었습니다. 종의 자식도 과거장에 들어왔습니다. 첫해에 뽑힌 사람 가운데 셋이 종의 아들이었습니다.",
@@ -337,6 +344,45 @@ function runHtml(segs, a, b) {
     return out;
 }
 
+// 그림은 제가 그린 장면보다 **앞에 나오면 안 된다.** 앞에 나오면 아직 읽지도
+// 않은 일을 먼저 보여 주는 셈이라 김이 새고 헷갈린다. 실제로 흥부전 5장에서
+// 사당패 그림이 사당패가 나오기 열일곱 쪽 전에 붙어 있었다.
+// 그래서 장마다 그림 옆에 「이 장면이다」 하는 문구(artAt)를 달아 두고,
+// 그 문구가 든 펼침면에 그림을 얹는다. 두 그림이 같은 쪽으로 몰리면 뒤로 민다.
+function anchorSlots(segs, ranges, count, anchors, total) {
+    // 1) 문구가 든 펼침면을 찾는다. 못 찾으면 예전처럼 고르게 나눈 자리.
+    const want = [];
+    for (let k = 0; k < count; k++) {
+        let at = -1;
+        const a = anchors[k];
+        if (a) {
+            const segIdx = segs.findIndex(g => g.html.indexOf(a) >= 0);
+            if (segIdx >= 0) {
+                for (let p = 0; p < ranges.length; p++) {
+                    if (segIdx >= ranges[p][0] && segIdx < ranges[p][1]) { at = p >> 1; break; }
+                }
+            }
+        }
+        want.push(at < 0 ? Math.min(Math.round((k * total) / count), total - 1) : at);
+    }
+    // 2) 앞으로 훑으며 겹치면 뒤로 민다.
+    for (let k = 1; k < count; k++) {
+        if (want[k] <= want[k - 1]) want[k] = want[k - 1] + 1;
+    }
+    // 3) 뒤로 훑으며 끝을 넘은 것을 앞으로 당긴다.
+    //    이 두 번으로 자리가 반드시 서로 다르고 순서도 범위도 지켜진다.
+    for (let k = count - 1; k >= 0; k--) {
+        const cap = total - 1 - (count - 1 - k);
+        if (want[k] > cap) want[k] = cap;
+        if (k > 0 && want[k - 1] >= want[k]) want[k - 1] = want[k] - 1;
+    }
+    const slots = new Array(total).fill('text');
+    for (let k = 0; k < count; k++) {
+        if (want[k] >= 0 && want[k] < total) slots[want[k]] = 'img';
+    }
+    return slots;
+}
+
 function slotPlan(imgCount, textCount) {
     const total = imgCount + textCount;
     const slots = new Array(total).fill('text');
@@ -420,10 +466,24 @@ function paginateChapter(ch, chIndex) {
         spreadCount++;
     }
 
+    const anchors = (ch.artAt && ch.artAt.length === arts.length) ? ch.artAt : null;
+    let tries = 0;
     let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
     let caps = capsOf(slots);
     let ranges = fillPages(segs, caps, headHtml);
-    for (let guard = 0; guard < 8; guard++) {
+    for (let guard = 0; guard < 24; guard++) {
+        // 그림을 제 장면이 있는 쪽으로 옮긴다. 옮기면 글 나눔이 달라지므로
+        // 자리가 더 안 움직일 때까지 되풀이한다.
+        if (anchors && tries < 10) {
+            const want = anchorSlots(segs, ranges, arts.length, anchors, spreadCount);
+            if (want.join() !== slots.join()) {
+                tries++;
+                slots = want;
+                caps = capsOf(slots);
+                ranges = fillPages(segs, caps, headHtml);
+                continue;
+            }
+        }
         // 한 쪽이라도 넘치면 펼침면을 늘려 다시 나눈다.
         // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
         // 여유를 1px이나 두면 안 된다. 0.8px만 넘쳐도 그 칸에 스크롤 막대가 생기고,
@@ -432,6 +492,7 @@ function paginateChapter(ch, chIndex) {
             PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 0.25);
         if (!over || spreadCount >= maxSpreads) break;
         spreadCount++;
+        tries = 0;
         slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
         caps = capsOf(slots);
         ranges = fillPages(segs, caps, headHtml);

@@ -8,6 +8,7 @@ const CHAPTERS = [
         title: "젖동냥으로 기른 딸",
         emoji: "👶",
         art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
+        artAt: ["우리 아이 한 모금만 먹여 주십시오", "바가지를 들고 이 집 저 집을 다녔습니다", "장 승상 댁 부인이 그 소문을 듣고 심청을 불렀습니다"],
         paras: [
             `옛날 황해도 황주 도화동에 심학규라는 사람이 살았습니다. 본디 글을 읽던 집안이었으나 살림이 기울어 가난하게 지냈습니다.`,
             `심학규는 스무 살 무렵 큰 병을 앓고 나서 앞을 보지 못하게 되었습니다. 그때부터 사람들은 그를 심 봉사<span class="gloss">(앞 못 보는 남자를 가리키던 옛말)</span>라 불렀습니다.`,
@@ -40,6 +41,7 @@ const CHAPTERS = [
         title: "공양미 삼백 석",
         emoji: "🌾",
         art: ["story-02-a.webp", "story-02-b.webp", "story-02-c.webp"],
+        artAt: ["누군가 물속으로 뛰어들었습니다", "댁의 눈은 못 고칠 눈이 아닙니다", "정화수 한 그릇을 떠 놓고 오래도록 빌었습니다"],
         paras: [
             `심청이 열다섯 되던 해 겨울이었습니다. 그날 심청은 장 승상 댁에 바느질감을 가져다주러 갔습니다.`,
             `날이 저물었는데도 딸이 돌아오지 않자 심 봉사는 걱정이 되었습니다.<br>"이것이 왜 이리 늦누."`,
@@ -72,6 +74,7 @@ const CHAPTERS = [
         title: "뱃사람들과 거짓말",
         emoji: "⛵",
         art: ["story-03-a.webp", "story-03-b.webp", "story-03-c.webp"],
+        artAt: ["뱃사람 차림의 사내 여럿이 무언가를 붙이고 있었습니다", "제가 가겠습니다", "잠든 아버지의 곁에 앉아 밤을 새웠습니다"],
         paras: [
             `며칠 뒤 심청은 마을 어귀에서 낯선 사람들을 보았습니다. 뱃사람 차림의 사내 여럿이 무언가를 붙이고 있었습니다.`,
             `심청이 다가가 물었습니다.<br>"무슨 일이신지요."`,
@@ -118,6 +121,7 @@ const CHAPTERS = [
         title: "인당수",
         emoji: "🌊",
         art: ["story-04-a.webp", "story-04-b.webp", "story-04-c.webp"],
+        artAt: ["심청은 아버지의 아침상을 차려 놓고 옷을 갈아입었습니다", "배가 인당수에 이르렀습니다", "소용돌이 속으로 몸을 던졌습니다"],
         paras: [
             `새벽닭이 울었습니다. 심청은 아버지의 아침상을 차려 놓고 옷을 갈아입었습니다.`,
             `그때 대문 밖에서 뱃사람들의 목소리가 들렸습니다.<br>"낭자, 때가 되었소."`,
@@ -150,6 +154,7 @@ const CHAPTERS = [
         title: "물 아래, 그리고 연꽃",
         emoji: "🪷",
         art: ["story-05-a.webp", "story-05-b.webp", "story-05-c.webp"],
+        artAt: ["심청은 물속으로 한없이 가라앉았습니다", "곽 씨 부인이었습니다", "사람 키만 한 붉은 연꽃 한 송이가 떠 있었습니다"],
         paras: [
             `심청은 물속으로 한없이 가라앉았습니다. 이상하게도 숨이 막히지 않았습니다.`,
             `얼마쯤 내려갔을까요. 발밑이 환해지더니 누군가 심청의 몸을 받쳐 들었습니다.`,
@@ -182,6 +187,7 @@ const CHAPTERS = [
         title: "맹인 잔치",
         emoji: "👑",
         art: ["story-06-a.webp", "story-06-b.webp", "story-06-c.webp"],
+        artAt: ["연꽃은 대궐 뜰에 놓였습니다", "이 나라의 앞 못 보는 사람을 모두 대궐로 불러", "지팡이로 문지방을 더듬으며 대궐 안으로 들어섰습니다"],
         paras: [
             `연꽃은 대궐 뜰에 놓였습니다. 임금은 날마다 그 앞에 나와 꽃을 보았습니다.`,
             `며칠이 지난 밤이었습니다. 달빛이 유난히 밝았습니다. 그 빛을 받은 꽃잎이 하나씩 열리기 시작했습니다.`,
@@ -214,6 +220,7 @@ const CHAPTERS = [
         title: "눈을 뜨다",
         emoji: "👁️",
         art: ["story-07-a.webp", "story-07-b.webp", "story-07-c.webp"],
+        artAt: ["잔치 마당에는 앞 못 보는 사람들이 가득 앉아 있었습니다", "심청이 그 노인 앞에 무릎을 꿇었습니다", "스물다섯 해 만에 세상을 보았습니다"],
         paras: [
             `잔치 마당에는 앞 못 보는 사람들이 가득 앉아 있었습니다. 상마다 밥과 국이 올라 있었습니다.`,
             `심청은 발 뒤에 앉아 하루 종일 그 마당을 내려다보았습니다. 벌써 여러 날째였습니다.`,
@@ -353,6 +360,45 @@ function runHtml(segs, a, b) {
     return out;
 }
 
+// 그림은 제가 그린 장면보다 **앞에 나오면 안 된다.** 앞에 나오면 아직 읽지도
+// 않은 일을 먼저 보여 주는 셈이라 김이 새고 헷갈린다. 실제로 흥부전 5장에서
+// 사당패 그림이 사당패가 나오기 열일곱 쪽 전에 붙어 있었다.
+// 그래서 장마다 그림 옆에 「이 장면이다」 하는 문구(artAt)를 달아 두고,
+// 그 문구가 든 펼침면에 그림을 얹는다. 두 그림이 같은 쪽으로 몰리면 뒤로 민다.
+function anchorSlots(segs, ranges, count, anchors, total) {
+    // 1) 문구가 든 펼침면을 찾는다. 못 찾으면 예전처럼 고르게 나눈 자리.
+    const want = [];
+    for (let k = 0; k < count; k++) {
+        let at = -1;
+        const a = anchors[k];
+        if (a) {
+            const segIdx = segs.findIndex(g => g.html.indexOf(a) >= 0);
+            if (segIdx >= 0) {
+                for (let p = 0; p < ranges.length; p++) {
+                    if (segIdx >= ranges[p][0] && segIdx < ranges[p][1]) { at = p >> 1; break; }
+                }
+            }
+        }
+        want.push(at < 0 ? Math.min(Math.round((k * total) / count), total - 1) : at);
+    }
+    // 2) 앞으로 훑으며 겹치면 뒤로 민다.
+    for (let k = 1; k < count; k++) {
+        if (want[k] <= want[k - 1]) want[k] = want[k - 1] + 1;
+    }
+    // 3) 뒤로 훑으며 끝을 넘은 것을 앞으로 당긴다.
+    //    이 두 번으로 자리가 반드시 서로 다르고 순서도 범위도 지켜진다.
+    for (let k = count - 1; k >= 0; k--) {
+        const cap = total - 1 - (count - 1 - k);
+        if (want[k] > cap) want[k] = cap;
+        if (k > 0 && want[k - 1] >= want[k]) want[k - 1] = want[k] - 1;
+    }
+    const slots = new Array(total).fill('text');
+    for (let k = 0; k < count; k++) {
+        if (want[k] >= 0 && want[k] < total) slots[want[k]] = 'img';
+    }
+    return slots;
+}
+
 function slotPlan(imgCount, textCount) {
     const total = imgCount + textCount;
     const slots = new Array(total).fill('text');
@@ -436,10 +482,24 @@ function paginateChapter(ch, chIndex) {
         spreadCount++;
     }
 
+    const anchors = (ch.artAt && ch.artAt.length === arts.length) ? ch.artAt : null;
+    let tries = 0;
     let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
     let caps = capsOf(slots);
     let ranges = fillPages(segs, caps, headHtml);
-    for (let guard = 0; guard < 8; guard++) {
+    for (let guard = 0; guard < 24; guard++) {
+        // 그림을 제 장면이 있는 쪽으로 옮긴다. 옮기면 글 나눔이 달라지므로
+        // 자리가 더 안 움직일 때까지 되풀이한다.
+        if (anchors && tries < 10) {
+            const want = anchorSlots(segs, ranges, arts.length, anchors, spreadCount);
+            if (want.join() !== slots.join()) {
+                tries++;
+                slots = want;
+                caps = capsOf(slots);
+                ranges = fillPages(segs, caps, headHtml);
+                continue;
+            }
+        }
         // 한 쪽이라도 넘치면 펼침면을 늘려 다시 나눈다.
         // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
         // 여유를 1px이나 두면 안 된다. 0.8px만 넘쳐도 그 칸에 스크롤 막대가 생기고,
@@ -448,6 +508,7 @@ function paginateChapter(ch, chIndex) {
             PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 0.25);
         if (!over || spreadCount >= maxSpreads) break;
         spreadCount++;
+        tries = 0;
         slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
         caps = capsOf(slots);
         ranges = fillPages(segs, caps, headHtml);

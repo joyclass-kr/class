@@ -7,6 +7,7 @@ const CHAPTERS = [
         num: 1,
         title: "광한루에서",
         art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
+        artAt: ["그네였습니다", "제가 기생의 딸이기는 하나", "성은 성이요, 이름은 춘향이라 합니다"],
         paras: [
             "전라도 남원 땅에 광한루라는 누각이 있었습니다. 앞으로는 맑은 물이 흐르고 둘레에는 버드나무가 늘어져, 남원에서 경치 좋기로 으뜸가는 자리였습니다. 봄이면 꽃구경 온 사람으로 난간이 비좁았습니다. 난간에 기대면 남원 성안이 한눈에 들어왔습니다. 봄이면 강가에 사람이 그득했습니다.",
             "그해 단오였습니다. 단오는 음력 오월 초닷샛날로, 여자들은 창포물에 머리를 감고 그네를 뛰고 남자들은 씨름을 하는 큰 명절이었습니다. 아침부터 강가에 사람이 그득했습니다.",
@@ -36,6 +37,7 @@ const CHAPTERS = [
         num: 2,
         title: "백년가약",
         art: ["story-02-a.webp", "story-02-b.webp", "story-02-c.webp"],
+        artAt: ["문을 열어 준 것은 춘향의 어머니 월매였습니다", "끝에 제 이름을 적고 손도장을 찍었습니다", "마루에 나란히 앉아 이야기를 했습니다"],
         paras: [
             "춘향의 집은 남원 성 밖 조용한 골목에 있었습니다. 담 안에 대나무가 서 있고 마당에는 국화 화분이 줄지어 놓여 있었습니다. 대나무 잎이 바람에 서걱거렸습니다.",
             "문을 열어 준 것은 춘향의 어머니 월매였습니다. 월매는 젊은 시절 기생이었다가 이제는 딸 하나를 키우며 조용히 사는 사람이었습니다. 손끝에 굳은살이 박여 있었습니다.",
@@ -65,6 +67,7 @@ const CHAPTERS = [
         num: 3,
         title: "이별",
         art: ["story-03-a.webp", "story-03-b.webp", "story-03-c.webp"],
+        artAt: ["손바닥만 한 거울이었습니다", "제 손가락에서 옥가락지를 빼어", "성 밖 오리정"],
         paras: [
             "그날 저녁 이몽룡은 춘향의 집으로 갔습니다. 대문 앞에서 몇 번이나 걸음을 돌렸다가 다시 섰습니다. 손에 아무것도 들지 않은 채였습니다.",
             "방으로 들어서자 춘향이 먼저 알아보았습니다.<br>\"…무슨 일이 있으셨군요.\" 얼굴빛만 보고 알아챈 것이었습니다.",
@@ -94,6 +97,7 @@ const CHAPTERS = [
         num: 4,
         title: "새로 온 사또",
         art: ["story-04-a.webp", "story-04-b.webp", "story-04-c.webp"],
+        artAt: ["부임 행차부터 요란했습니다", "사령들이 춘향의 집으로 갔습니다", "오늘부터 네 이름을 기생 명부에 올리겠다"],
         paras: [
             "두 해가 지나고 이듬해 봄, 남원에 새 사또가 왔습니다. 이름은 변학도라 했습니다. 남원 사람들이 길가에 나와 구경했습니다.",
             "부임 행차부터 요란했습니다. 가마 뒤로 짐수레가 열 대나 따라왔고, 그 안에는 비단이며 그릇이며 세간이 그득했습니다. 구경하던 사람들이 서로 얼굴을 쳐다보았습니다.",
@@ -123,6 +127,7 @@ const CHAPTERS = [
         num: 5,
         title: "옥에 갇히다",
         art: ["story-05-a.webp", "story-05-b.webp", "story-05-c.webp"],
+        artAt: ["매를 맞으면서도 소리를 지르지 않았습니다", "그날로 남원 옥에 갇혔습니다", "저를 암행어사로 보내 주십시오"],
         paras: [
             "변학도의 얼굴에서 웃음이 사라졌습니다.<br>\"지아비라니. 혼서<span class=\"gloss\">(혼인을 약속하며 주고받던 문서)</span>가 있느냐. 나라에 올린 문서가 있느냐.\" 부채를 쥔 손에 힘이 들어갔습니다.",
             "\"종이는 있습니다.\"<br>\"기생의 딸이 도령과 주고받은 종이 쪼가리가 무슨 문서란 말이냐!\"",
@@ -152,6 +157,7 @@ const CHAPTERS = [
         num: 6,
         title: "거지가 되어 온 사람",
         art: ["story-06-a.webp", "story-06-b.webp", "story-06-c.webp"],
+        artAt: ["얼굴에 일부러 흙을 묻혔습니다", "옆자리 사람들이 나누는 이야기가 그대로 들렸습니다", "옥 앞에 이르자 이몽룡이 창살에 얼굴을 붙였습니다"],
         paras: [
             "남원에 가까워지자 이몽룡은 옷을 갈아입었습니다. 다 해진 옷에 짚신을 신고, 갓은 챙이 부러진 것을 썼습니다. 얼굴에 일부러 흙을 묻혔습니다.",
             "암행어사는 그렇게 다녔습니다. 아무도 알아보지 못해야 그 고을의 진짜 모습을 볼 수 있기 때문입니다.",
@@ -181,6 +187,7 @@ const CHAPTERS = [
         num: 7,
         title: "암행어사 출두야",
         art: ["story-07-a.webp", "story-07-b.webp", "story-07-c.webp"],
+        artAt: ["이웃 고을 수령들까지 불려 와 대청에 늘어앉았습니다", "금 술잔에 담긴 좋은 술은 천 사람의 피요", "대문이 부서지듯 열리고 역졸들이 쏟아져 들어왔습니다"],
         paras: [
             "이튿날은 변학도의 생일이었습니다. 관가에서는 아침부터 큰 잔치가 벌어졌습니다. 새벽부터 풍악 소리가 났습니다.",
             "이웃 고을 수령들까지 불려 와 대청에 늘어앉았습니다. 상마다 고기와 술이 그득했습니다. 광에서 곡식이 자루째 실려 나갔습니다. 기생과 악공이 스무 명도 넘게 불려 왔습니다. 상마다 고기가 산처럼 쌓였습니다.",
@@ -320,6 +327,45 @@ function runHtml(segs, a, b) {
     return out;
 }
 
+// 그림은 제가 그린 장면보다 **앞에 나오면 안 된다.** 앞에 나오면 아직 읽지도
+// 않은 일을 먼저 보여 주는 셈이라 김이 새고 헷갈린다. 실제로 흥부전 5장에서
+// 사당패 그림이 사당패가 나오기 열일곱 쪽 전에 붙어 있었다.
+// 그래서 장마다 그림 옆에 「이 장면이다」 하는 문구(artAt)를 달아 두고,
+// 그 문구가 든 펼침면에 그림을 얹는다. 두 그림이 같은 쪽으로 몰리면 뒤로 민다.
+function anchorSlots(segs, ranges, count, anchors, total) {
+    // 1) 문구가 든 펼침면을 찾는다. 못 찾으면 예전처럼 고르게 나눈 자리.
+    const want = [];
+    for (let k = 0; k < count; k++) {
+        let at = -1;
+        const a = anchors[k];
+        if (a) {
+            const segIdx = segs.findIndex(g => g.html.indexOf(a) >= 0);
+            if (segIdx >= 0) {
+                for (let p = 0; p < ranges.length; p++) {
+                    if (segIdx >= ranges[p][0] && segIdx < ranges[p][1]) { at = p >> 1; break; }
+                }
+            }
+        }
+        want.push(at < 0 ? Math.min(Math.round((k * total) / count), total - 1) : at);
+    }
+    // 2) 앞으로 훑으며 겹치면 뒤로 민다.
+    for (let k = 1; k < count; k++) {
+        if (want[k] <= want[k - 1]) want[k] = want[k - 1] + 1;
+    }
+    // 3) 뒤로 훑으며 끝을 넘은 것을 앞으로 당긴다.
+    //    이 두 번으로 자리가 반드시 서로 다르고 순서도 범위도 지켜진다.
+    for (let k = count - 1; k >= 0; k--) {
+        const cap = total - 1 - (count - 1 - k);
+        if (want[k] > cap) want[k] = cap;
+        if (k > 0 && want[k - 1] >= want[k]) want[k - 1] = want[k] - 1;
+    }
+    const slots = new Array(total).fill('text');
+    for (let k = 0; k < count; k++) {
+        if (want[k] >= 0 && want[k] < total) slots[want[k]] = 'img';
+    }
+    return slots;
+}
+
 function slotPlan(imgCount, textCount) {
     const total = imgCount + textCount;
     const slots = new Array(total).fill('text');
@@ -403,10 +449,24 @@ function paginateChapter(ch, chIndex) {
         spreadCount++;
     }
 
+    const anchors = (ch.artAt && ch.artAt.length === arts.length) ? ch.artAt : null;
+    let tries = 0;
     let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
     let caps = capsOf(slots);
     let ranges = fillPages(segs, caps, headHtml);
-    for (let guard = 0; guard < 8; guard++) {
+    for (let guard = 0; guard < 24; guard++) {
+        // 그림을 제 장면이 있는 쪽으로 옮긴다. 옮기면 글 나눔이 달라지므로
+        // 자리가 더 안 움직일 때까지 되풀이한다.
+        if (anchors && tries < 10) {
+            const want = anchorSlots(segs, ranges, arts.length, anchors, spreadCount);
+            if (want.join() !== slots.join()) {
+                tries++;
+                slots = want;
+                caps = capsOf(slots);
+                ranges = fillPages(segs, caps, headHtml);
+                continue;
+            }
+        }
         // 한 쪽이라도 넘치면 펼침면을 늘려 다시 나눈다.
         // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
         // 여유를 1px이나 두면 안 된다. 0.8px만 넘쳐도 그 칸에 스크롤 막대가 생기고,
@@ -415,6 +475,7 @@ function paginateChapter(ch, chIndex) {
             PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 0.25);
         if (!over || spreadCount >= maxSpreads) break;
         spreadCount++;
+        tries = 0;
         slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
         caps = capsOf(slots);
         ranges = fillPages(segs, caps, headHtml);

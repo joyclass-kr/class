@@ -7,6 +7,7 @@ const CHAPTERS = [
         num: 1,
         title: "용왕의 병",
         art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
+        artAt: ["남해 바다 깊은 곳에 수정으로 지은 궁궐", "잉어 의원이 맥을 짚어 보고", "누가 가겠느냐"],
         paras: [
             "남해 바다 깊은 곳에 수정으로 지은 궁궐이 하나 있었습니다. 기둥은 산호요 지붕은 자개라, 물살이 지날 때마다 온 궁이 무지갯빛으로 일렁였습니다. 그곳을 다스리는 이가 남해 용왕이었습니다. 물고기들이 그 앞을 지날 때면 지느러미를 모으고 고개를 숙였습니다.",
             "그해 봄, 용왕은 큰 잔치를 열었습니다. 동해와 서해와 북해의 용왕들까지 불러 모아 사흘 밤낮을 놀았습니다. 풍악이 그치지 않았고 술잔이 마를 새가 없었습니다. 상에 오른 음식만 백 가지가 넘었습니다.",
@@ -37,6 +38,7 @@ const CHAPTERS = [
         num: 2,
         title: "누가 뭍에 오르겠느냐",
         art: ["story-02-a.webp", "story-02-b.webp", "story-02-c.webp"],
+        artAt: ["먼저 문어 승상이 나섰습니다", "내가 그동안 너희를 어떻게 대접하였느냐", "늙은 어머니에게 절을 올렸습니다"],
         paras: [
             "먼저 문어 승상이 나섰습니다.<br>\"신은 다리가 여덟이라 헤엄은 잘 칩니다만, 뭍에 오르면 다리가 하나도 소용이 없습니다. 바싹 말라붙고 말 것이니 아무래도 상어 장군이 마땅할 듯합니다.\" 말끝에 슬쩍 남을 끌어들였습니다.",
             "상어 장군이 펄쩍 뛰었습니다.<br>\"신이 뭍에 오르면 어찌 되겠습니까. 이 큰 몸이 모래밭에 얹히면 그대로 끝입니다. 게다가 신은 생김새가 험해서 토끼가 보기만 해도 달아날 것입니다. 조기 대감이 어떻겠습니까.\" 말하면서도 눈은 조기 대감을 보고 있었습니다.",
@@ -66,6 +68,7 @@ const CHAPTERS = [
         num: 3,
         title: "화상 한 장 들고 뭍으로",
         art: ["story-03-a.webp", "story-03-b.webp", "story-03-c.webp"],
+        artAt: ["수궁에서 가장 그림을 잘 그린다는 화공이 불려 왔습니다", "자라가 처음으로 물 밖에 머리를 내밀었습니다", "넓은 풀밭에 온갖 짐승이 모여 있었습니다"],
         paras: [
             "이튿날 아침, 수궁에서 가장 그림을 잘 그린다는 화공이 불려 왔습니다. 화공은 붓과 벼루를 갖추어 놓고 자리에 앉았습니다. 종이도 수궁에서 가장 좋은 것으로 내왔습니다.",
             "그러나 곧 난처한 얼굴이 되었습니다.<br>\"신도 토끼를 본 적이 없습니다.\" 붓을 든 손이 허공에서 멈추었습니다.",
@@ -97,6 +100,7 @@ const CHAPTERS = [
         num: 4,
         title: "벼슬을 준다는 말",
         art: ["story-04-a.webp", "story-04-b.webp", "story-04-c.webp"],
+        artAt: ["나는 남해 수궁에서 온 별주부라 하오", "수궁에는 사냥꾼이 없소", "토끼가 자라의 등딱지 위에 올라앉았습니다"],
         paras: [
             "자라가 슬금슬금 걸어 나갔습니다. 토끼가 먼저 알아채고 뒷다리에 힘을 주었습니다.<br>\"거 누구요?\" 귀가 자라 쪽으로 쫑긋 섰습니다.",
             "\"놀라지 마시오. 나는 남해 수궁에서 온 별주부라 하오.\"<br>토끼가 자라의 등딱지를 위아래로 훑어보았습니다.<br>\"수궁? 물속에 있다는 그 궁궐 말이오?\"<br>\"그렇소.\" 토끼가 한 걸음 다가왔습니다.",
@@ -128,6 +132,7 @@ const CHAPTERS = [
         num: 5,
         title: "수궁에서 생긴 일",
         art: ["story-05-a.webp", "story-05-b.webp", "story-05-c.webp"],
+        artAt: ["토끼가 눈을 뜬 순간 숨이 멎는 줄 알았습니다", "저 토끼의 배를 갈라 간을 꺼내어라", "소인의 간은 지금 뱃속에 없습니다"],
         paras: [
             "얼마쯤 갔을까요. 자라가 말했습니다.<br>\"이제 눈을 떠도 되오.\" 물살이 한결 부드러워져 있었습니다.",
             "토끼가 눈을 뜬 순간 숨이 멎는 줄 알았습니다. 사방이 푸른 빛으로 가득했습니다. 물고기 떼가 무리 지어 지나가고, 산호가 숲처럼 자라 있고, 바닥에서는 조개가 입을 벌렸다 오므렸다 했습니다. 산에서는 본 적 없는 빛깔들이었습니다.",
@@ -159,6 +164,7 @@ const CHAPTERS = [
         num: 6,
         title: "뭍에 닿은 뒤",
         art: ["story-06-a.webp", "story-06-b.webp", "story-06-c.webp"],
+        artAt: ["용왕이 한참 동안 토끼를 노려보았습니다", "세상에 간을 꺼내 놓고 사는 짐승이 어디 있소", "그 모래밭에 그대로 엎드려 있었습니다"],
         paras: [
             "용왕이 한참 동안 토끼를 노려보았습니다. 토끼는 눈 하나 깜짝하지 않았습니다. 대궐 안이 숨소리도 나지 않았습니다.",
             "문어 승상이 조심스레 아뢰었습니다.<br>\"대왕이시여, 배를 갈랐다가 정말로 간이 없으면 저것도 잃고 약도 잃습니다.\"<br>다른 대신들도 고개를 끄덕였습니다. 말끝을 흐리며 용왕의 눈치를 살폈습니다.",
@@ -299,6 +305,45 @@ function runHtml(segs, a, b) {
     return out;
 }
 
+// 그림은 제가 그린 장면보다 **앞에 나오면 안 된다.** 앞에 나오면 아직 읽지도
+// 않은 일을 먼저 보여 주는 셈이라 김이 새고 헷갈린다. 실제로 흥부전 5장에서
+// 사당패 그림이 사당패가 나오기 열일곱 쪽 전에 붙어 있었다.
+// 그래서 장마다 그림 옆에 「이 장면이다」 하는 문구(artAt)를 달아 두고,
+// 그 문구가 든 펼침면에 그림을 얹는다. 두 그림이 같은 쪽으로 몰리면 뒤로 민다.
+function anchorSlots(segs, ranges, count, anchors, total) {
+    // 1) 문구가 든 펼침면을 찾는다. 못 찾으면 예전처럼 고르게 나눈 자리.
+    const want = [];
+    for (let k = 0; k < count; k++) {
+        let at = -1;
+        const a = anchors[k];
+        if (a) {
+            const segIdx = segs.findIndex(g => g.html.indexOf(a) >= 0);
+            if (segIdx >= 0) {
+                for (let p = 0; p < ranges.length; p++) {
+                    if (segIdx >= ranges[p][0] && segIdx < ranges[p][1]) { at = p >> 1; break; }
+                }
+            }
+        }
+        want.push(at < 0 ? Math.min(Math.round((k * total) / count), total - 1) : at);
+    }
+    // 2) 앞으로 훑으며 겹치면 뒤로 민다.
+    for (let k = 1; k < count; k++) {
+        if (want[k] <= want[k - 1]) want[k] = want[k - 1] + 1;
+    }
+    // 3) 뒤로 훑으며 끝을 넘은 것을 앞으로 당긴다.
+    //    이 두 번으로 자리가 반드시 서로 다르고 순서도 범위도 지켜진다.
+    for (let k = count - 1; k >= 0; k--) {
+        const cap = total - 1 - (count - 1 - k);
+        if (want[k] > cap) want[k] = cap;
+        if (k > 0 && want[k - 1] >= want[k]) want[k - 1] = want[k] - 1;
+    }
+    const slots = new Array(total).fill('text');
+    for (let k = 0; k < count; k++) {
+        if (want[k] >= 0 && want[k] < total) slots[want[k]] = 'img';
+    }
+    return slots;
+}
+
 function slotPlan(imgCount, textCount) {
     const total = imgCount + textCount;
     const slots = new Array(total).fill('text');
@@ -382,10 +427,24 @@ function paginateChapter(ch, chIndex) {
         spreadCount++;
     }
 
+    const anchors = (ch.artAt && ch.artAt.length === arts.length) ? ch.artAt : null;
+    let tries = 0;
     let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
     let caps = capsOf(slots);
     let ranges = fillPages(segs, caps, headHtml);
-    for (let guard = 0; guard < 8; guard++) {
+    for (let guard = 0; guard < 24; guard++) {
+        // 그림을 제 장면이 있는 쪽으로 옮긴다. 옮기면 글 나눔이 달라지므로
+        // 자리가 더 안 움직일 때까지 되풀이한다.
+        if (anchors && tries < 10) {
+            const want = anchorSlots(segs, ranges, arts.length, anchors, spreadCount);
+            if (want.join() !== slots.join()) {
+                tries++;
+                slots = want;
+                caps = capsOf(slots);
+                ranges = fillPages(segs, caps, headHtml);
+                continue;
+            }
+        }
         // 한 쪽이라도 넘치면 펼침면을 늘려 다시 나눈다.
         // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
         // 여유를 1px이나 두면 안 된다. 0.8px만 넘쳐도 그 칸에 스크롤 막대가 생기고,
@@ -394,6 +453,7 @@ function paginateChapter(ch, chIndex) {
             PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 0.25);
         if (!over || spreadCount >= maxSpreads) break;
         spreadCount++;
+        tries = 0;
         slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
         caps = capsOf(slots);
         ranges = fillPages(segs, caps, headHtml);
