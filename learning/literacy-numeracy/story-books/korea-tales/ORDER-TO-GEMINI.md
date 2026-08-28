@@ -90,9 +90,49 @@
 
 | 파일 | 무엇이 어긋나나 |
 |---|---|
+| **`banjjogi` 전권 14장** | **주인공이 반쪽이 아님.** 아래를 꼭 읽어 주세요 |
 | `bak-hyeokgeose/03-horse` | 글도 그림말도 **「앞무릎을 꿇고」**인데 그림은 앞발을 번쩍 든 채 서 있음 |
 | `hokburi-yeonggam/09-greedy` | 욕심쟁이 얼굴이 아직 딱딱함. 옆의 착한 영감이 둥글둥글한 것과 견주면 차이가 남 |
 | `hokburi-yeonggam/10-sing` | **13:22에 보내 주신 새것은 안 받았습니다.** 아래를 읽어 주세요 |
+
+### 반쪽이(`banjjogi`)는 한 권을 통째로 다시 그려야 합니다
+
+**가장 급한 것입니다.** 두 가지가 겹쳐 있습니다.
+
+**하나. 주인공이 반쪽이 아닙니다.**
+반쪽이는 몸이 세로로 **반만 있는** 아이입니다. 눈 하나, 팔 하나, 다리 하나입니다.
+그것이 이 이야기의 전부입니다. 그런데 지금 그림에서는 팔도 둘, 다리도 둘,
+눈도 둘인 **멀쩡한 장사**로 그려져 있습니다.
+
+본문이 이렇게 적혀 있습니다.
+
+    호랑이가 덮치는 순간 반쪽이가 **한 팔로** 목덜미를 붙들었습니다.
+    첫째는 힘겨루기였어요. 반쪽이가 곳간 기둥을 **한 팔로** 들어 올렸지요.
+    둘째는 달리기였어요. 반쪽이가 **한 다리로** 먼저 들어왔습니다.
+
+인물 설명에도 이렇게 적혀 있습니다.
+
+    Banjjogi (Half-boy): ... drawn as exactly one vertical half of a person -
+    one eye, one arm, one leg, half a torso - but solid and three-dimensional,
+    never gruesome or bloody, never a cutaway. Think of a strongman split down
+    the middle and still standing, hopping easily on his one leg.
+
+**둘. 표지가 해부도로 그려졌습니다.**
+`cover` 를 열어 보시면 허파와 심장과 위와 넓적다리뼈가 다 드러나 있습니다.
+인물 설명에 **`never a cutaway`** 라고 적어 둔 것이 바로 이것입니다.
+아이들이 보는 책의 표지입니다. **속을 보여 주면 안 됩니다.**
+
+반쪽이는 **잘린 사람이 아니라 처음부터 그렇게 생긴 아이**입니다.
+가운데를 자른 단면이 아니라, 옆에서 본 사람처럼 매끈하게 그려 주세요.
+피도 뼈도 내장도 없습니다. 씩씩하고 웃는 아이로, 한 다리로 폴짝폴짝
+잘 뛰어다니게 그려 주시면 됩니다.
+
+**표지 포함 14장 전부입니다.**
+
+    cover  01-carp  02-half  03-grow  04-jealous  05-tie  06-uproot
+    07-tiger  08-catch  09-promise  10-excuse  11-contest  12-wedding  end
+
+---
 
 ### `10-sing` 은 한 번만 더 부탁드립니다
 
