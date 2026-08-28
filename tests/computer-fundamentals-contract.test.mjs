@@ -37,7 +37,9 @@ for (let index = 0; index < foundationFiles.length; index += 1) {
 const generatedLessons = context.window.COMPUTER_FOUNDATION_LESSONS;
 const detailedContext = vm.createContext({
   window: {},
-  document: { body: { dataset: { courseRoot: "true" } } }
+  document: { body: { dataset: { courseRoot: "true" } } },
+  a04ConversionMarkup: () => '<section data-a04-lab="concept"></section>',
+  a05DigitizerMarkup: () => '<section data-a05-lab="concept"></section>'
 });
 const detailedCut = lessonSource.indexOf("    const lessons = [...detailedLessons");
 assert.ok(detailedCut > 0, "detailed lesson extraction marker should exist");
@@ -107,17 +109,17 @@ test("all generated lessons except the direct manipulation lesson use a specific
 
 test("all 36 lessons use an illustration, a task simulation, or direct manipulation instead of one repeated card pattern", () => {
   const directManipulation = [
-    "a01", "a02", "a03", "a05", "b01", "b02", "b03", "c01", "c02", "c03", "c04", "d01", "d02", "d03", "e01", "e02", "e03", "e04", "e05", "f01", "f02", "f03",
+    "a01", "a02", "a03", "a04", "a05", "b01", "b02", "b03", "c01", "c02", "c03", "c04", "d01", "d02", "d03", "e01", "e02", "e03", "e04", "e05", "f01", "f02", "f03",
     "g01", "g02", "g03", "h01", "h02", "h03", "h04", "h05", "i01", "i02", "j01", "j02", "j03"
   ];
-  const illustratedSequence = ["a04"];
+  const illustratedSequence = [];
   const concreteModel = [];
   const covered = [...directManipulation, ...illustratedSequence, ...concreteModel].sort();
   assert.deepEqual(covered, Array.from(allLessons, (lesson) => lesson.id).sort());
   const premiumSelectors = {
     b02: "data-mobile-anatomy", b03: "data-port-lab",
     c01: "data-request-relay", c02: "data-os-lab", c03: "data-program-lab", c04: "data-settings-lab",
-    d02: "data-gesture-lab", d03: "data-clipboard-lab",
+    d01: "data-pointer-lab", d02: "data-gesture-lab", d03: "data-clipboard-lab",
     e01: "data-path-lab", e02: "data-format-lab", e03: "data-file-operation-lab", e04: "data-reference-lab", e05: "data-storage-lab",
     f01: "data-pixel-lab", f02: "data-color-lab", f03: "data-media-lab",
     g01: "data-sampling-lab", g02: "data-bit-lab", g03: "data-compression-lab",
@@ -125,7 +127,7 @@ test("all 36 lessons use an illustration, a task simulation, or direct manipulat
     i02: "data-evidence-lab", j01: "data-algorithm-lab", j02: "data-control-lab", j03: "data-debug-lab"
   };
   const expectedPremium = [
-    "b02", "b03", "c01", "c02", "c03", "c04", "d02", "d03", "e01", "e02", "e03", "e04", "e05", "f01", "f02",
+    "b02", "b03", "c01", "c02", "c03", "c04", "d01", "d02", "d03", "e01", "e02", "e03", "e04", "e05", "f01", "f02",
     "f03", "g01", "g02", "g03", "h01", "h02", "h03", "h05", "i01", "i02", "j01", "j02", "j03"
   ].sort();
   assert.deepEqual(Array.from(context.window.COMPUTER_PREMIUM_VISUAL_IDS).sort(), expectedPremium);
@@ -135,11 +137,15 @@ test("all 36 lessons use an illustration, a task simulation, or direct manipulat
   }
   assert.match(conceptLabSource, /window\.COMPUTER_SETUP_CONCEPT_LABS/);
   assert.match(lessonSource, /window\.COMPUTER_SETUP_CONCEPT_LABS\?\.\(\)/);
-  for (const selector of ["data-a01-lab", "data-a02-lab", "data-a03-lab"]) {
+  assert.match(conceptLabSource, /value="혜성의 꼬리는 왜 생길까\?"/, "H03 needs a working default search query");
+  assert.match(conceptLabSource, /혜성의 꼬리는 어떻게 생길까\?/, "H03 needs a reliable comet result");
+  assert.match(conceptLabSource, /혜성은 빨리 달려서 꼬리가 뒤로 생긴다/, "H03 needs a contrasting unsupported result");
+  assert.match(conceptLabSource, /data-browser-suggestion="혜성"/, "H03 needs visible supported-topic controls");
+  for (const selector of ["data-a01-lab", "data-a02-lab", "data-a03-lab", "data-a04-lab", "data-a05-lab"]) {
     assert.match(lessonSource, new RegExp(selector), `${selector} needs a direct foundation lab`);
   }
-  for (const setupName of ["setupA01SignalLab", "setupA02CooperationLab", "setupA03CompatibilityLab"]) {
-    assert.match(lessonSource, new RegExp(`function ${setupName}\\(\\)`), `${setupName} needs a stateful setup`);
+  for (const setupName of ["setupA01SignalLab", "setupA02CooperationLab", "setupA03CompatibilityLab", "setupA04ConversionLab", "setupA05DigitizerLab"]) {
+    assert.match(lessonSource, new RegExp(`function ${setupName}\\(`), `${setupName} needs a stateful setup`);
   }
   const foundationIllustrations = {
     a01: "a01-input-process-output-storage-illustration-v1",
@@ -153,6 +159,13 @@ test("all 36 lessons use an illustration, a task simulation, or direct manipulat
     assert.match(lesson.visual, new RegExp(`${stem}-1536\\.webp`), `${id} needs its 1536px contextual illustration`);
   }
   assert.match(systemLessonStyles, /\.foundation-lab-heading\.has-context/);
+  for (const stem of ["a04-analog-digital-representation-illustration-v1", "a05-sound-sampling-data-illustration-v1"]) {
+    assert.match(lessonSource, new RegExp(`${stem}-768\\.webp`));
+    assert.match(lessonSource, new RegExp(`${stem}-1536\\.webp`));
+  }
+  for (const selector of ["data-a04-capture", "data-a04-bin", "data-a05-rate", "data-a05-bits", "data-a05-code", "data-a05-total-bits"]) {
+    assert.match(lessonSource, new RegExp(selector), `${selector} needs a visible state or control`);
+  }
   const networkIllustrations = {
     h01: "h01-device-router-internet-illustration-v1",
     h02: "h02-browser-dns-server-journey-illustration-v1"
@@ -164,24 +177,29 @@ test("all 36 lessons use an illustration, a task simulation, or direct manipulat
     assert.match(lesson.visual, new RegExp(`${stem}-1536\\.webp`), `${id} needs its 1536px network illustration`);
   }
   assert.match(conceptLabStyles, /\.network-path-heading\.has-context/);
-  for (const selector of ["data-reference-action", "data-account-name", "data-account-code", "data-permission-attempt", "data-privacy-audience", "data-license-purpose", "data-footprint-action", "data-screen-distance", "data-control-choice", "data-control-score"]) {
+  for (const selector of ["data-reference-action", "data-account-name", "data-account-code", "data-permission-attempt", "data-privacy-audience", "data-license-purpose", "data-footprint-action", "data-screen-distance", "data-control-move", "data-control-robot", "data-control-score"]) {
     assert.match(conceptLabSource, new RegExp(selector), `${selector} needs a state-changing control`);
   }
+  assert.match(conceptLabSource, /let runCount = 0;/, "J02 needs an execution counter independent from score and placeholder rows");
+  assert.match(conceptLabSource, /const runNumber = \+\+runCount;/, "J02 must number failed and successful runs in one sequence");
+  assert.match(conceptLabSource, /runCount = 0;\s*running = false;/, "J02 reset must clear its execution counter");
   const fullStackLesson = generatedLessons.find((item) => item.id === "h04");
   assert.match(fullStackLesson.visual, /data-stack-lab/);
-  assert.match(fullStackLesson.visual, /web-answer-flow-illustration-768\.webp/);
-  assert.match(fullStackLesson.visual, /web-answer-flow-illustration-1536\.webp/);
-  assert.match(fullStackLesson.visual, /<details class="developer-notation">/);
+  assert.match(fullStackLesson.visual, /data-stack-answer="3"/);
+  assert.match(fullStackLesson.visual, /data-stack-request/);
+  assert.match(fullStackLesson.visual, /data-stack-db-score/);
+  assert.match(fullStackLesson.visual, /class="stack-state-evidence"/);
   assert.match(fullStackLesson.visual, /POST \/answers/);
-  assert.match(fullStackLesson.visual, /data-stack-node="6"/);
+  assert.match(fullStackLesson.visual, /data-stack-node="1,6"/);
+  assert.match(fullStackLesson.visual, /data-stack-node="4"/);
   assert.doesNotMatch(fullStackLesson.visual, /class="full-stack-map"/);
   assert.match(lessonSource, /function setupConceptSequences\(\)/);
   assert.match(lessonSource, /function setupFullStackLab\(\)/);
-  assert.match(lessonSource, /문제 화면이 학생이 고른 답을 챙깁니다/);
+  assert.match(lessonSource, /프론트엔드가 \{ answer \}라는 약속된 이름으로 답을 요청 봉투에 담아 서버로 보냈습니다/);
   assert.match(lessonStyles, /\.concept-overview\.has-stack-lab \{ grid-template-columns: 1fr; \}/);
-  assert.match(lessonStyles, /\.answer-journey-scene/);
-  assert.match(lessonStyles, /\.scene-hotspot\.is-active/);
-  assert.match(lessonStyles, /\.answer-journey-terms/);
+  assert.match(lessonStyles, /\.stack-answer-choices/);
+  assert.match(lessonStyles, /\.stack-database\.is-active/);
+  assert.match(lessonStyles, /\.stack-state-evidence/);
   assert.doesNotMatch(lessonStyles, /\.lesson-specific-board \{[\s\S]{0,120}min-height: 330px/);
 });
 
@@ -413,7 +431,7 @@ test("student-facing copy names the content without promotional filler", () => {
   for (const phrase of ["헷갈리지 않기", "쉽게 비유하면", "한눈에 비교", "원리 보기", "직접 확인하기", "앞의 개념을 이해하면"] ) {
     assert.doesNotMatch(studentFacingCopy, new RegExp(phrase));
   }
-  for (const label of ["장면에서 시작하기", "핵심 원리", "핵심 용어", "개념 비교", "동작 순서", "명칭과 어원"]) {
+  for (const label of ["개념 설명", "핵심 원리", "핵심 용어", "개념 비교", "동작 순서", "명칭과 어원"]) {
     assert.match(studentFacingCopy, new RegExp(label));
   }
 });
@@ -474,10 +492,11 @@ test("corrected concept models keep their real hierarchy, sequence, and distinct
   const h01 = allLessons.find((lesson) => lesson.id === "h01");
   assert.doesNotMatch(h01.questions[2].text, /이동통신|기지국/);
   assert.match(h01.questions[2].explanation, /기기.+공유기/);
-  assert.match(conceptLabSource, /data-algo-step="open" data-order="1"/);
-  assert.match(conceptLabSource, /data-algo-step="select" data-order="2"/);
-  assert.match(conceptLabSource, /data-algo-step="move" data-order="3"/);
-  assert.match(conceptLabSource, /data-algo-step="verify" data-order="4"/);
+  assert.match(conceptLabSource, /data-algo-trace="open"/);
+  assert.match(conceptLabSource, /data-algo-trace="select"/);
+  assert.match(conceptLabSource, /data-algo-trace="destination"/);
+  assert.match(conceptLabSource, /data-algo-trace="move"/);
+  assert.match(conceptLabSource, /data-algo-trace="verify"/);
   assert.match(conceptLabSource, /data-file-moved/);
   assert.doesNotMatch(conceptLabSource, /sandwich/);
   assert.match(conceptLabSource, /기기 저장소\/민준\/그림\/여행/);
@@ -539,13 +558,14 @@ test("new lesson tools expose real state changes and primary-device layout rules
   assert.match(conceptLabSource, /testedCases\.size === caseButtons\.length/);
   assert.doesNotMatch(conceptLabSource, /data-debug-fix/);
   assert.doesNotMatch(conceptLabStyles, /data-debug-stage="success"\]\s+\.debug-observation li/);
-  assert.match(conceptLabSource, /data-algo-check/);
-  assert.match(conceptLabSource, /data-control-choice="A"/);
+  assert.match(conceptLabSource, /data-algo-verify/);
+  assert.match(conceptLabSource, /data-control-move="1"/);
+  assert.match(conceptLabSource, /data-control-robot/);
   assert.match(conceptLabSource, /data-flow-step="condition"/);
-  assert.match(conceptLabSource, /showQuestion\(true\)/);
-  assert.match(conceptLabSource, /문제 번호 \+1/);
+  assert.match(conceptLabSource, /robot\.addEventListener\("click", runCheck\)/);
+  assert.match(conceptLabSource, /starIndex \+= 1/);
   assert.match(conceptLabSource, /resetButton\.focus\(\)/);
-  assert.match(conceptLabSource, /남은 문제 0개/);
+  assert.match(conceptLabSource, /남은 별 0개/);
   assert.match(conceptLabSource, /data-port-lab/);
   assert.match(conceptLabSource, /data-request-relay/);
   assert.match(conceptLabSource, /data-program-lab/);

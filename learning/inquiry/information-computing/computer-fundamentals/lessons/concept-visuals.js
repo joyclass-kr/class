@@ -269,34 +269,58 @@
         `),
 
         h04: (spec, asset) => figure(spec, "visual-full-stack", `
-            <section class="answer-journey" data-stack-lab data-stage="0" aria-label="온라인 문제에서 답을 제출한 뒤 점수가 돌아오는 과정">
-                <div class="answer-journey-scene">
-                    <picture>
-                        <source media="(min-width: 1100px)" srcset="${asset("web-answer-flow-illustration-1536.webp")}">
-                        <img src="${asset("web-answer-flow-illustration-768.webp")}" width="768" height="364" alt="학생이 태블릿에서 답을 보내면 서버가 정답과 비교하고 점수를 보관한 뒤 결과를 다시 태블릿으로 보내는 모습">
-                    </picture>
-                    <button type="button" class="scene-hotspot hotspot-one" data-stack-node="1"><b>1</b><span>답을 입력</span></button>
-                    <button type="button" class="scene-hotspot hotspot-two" data-stack-node="2"><b>2</b><span>서버로 보냄</span></button>
-                    <button type="button" class="scene-hotspot hotspot-three" data-stack-node="3"><b>3</b><span>정답과 비교</span></button>
-                    <button type="button" class="scene-hotspot hotspot-four" data-stack-node="4"><b>4</b><span>점수를 기록</span></button>
-                    <button type="button" class="scene-hotspot hotspot-five" data-stack-node="5"><b>5</b><span>결과를 돌려보냄</span></button>
-                    <button type="button" class="scene-hotspot hotspot-six" data-stack-node="6"><b>6</b><span>점수를 표시</span></button>
+            <section class="stack-transaction-lab" data-stack-lab data-stage="0" aria-label="온라인 문제에서 답을 제출한 뒤 점수가 돌아오는 실제 데이터 상태">
+                <section class="stack-boundary device-boundary">
+                    <h3>학생의 기기 <small>Student Device</small></h3>
+                    <div class="stack-node frontend-node" data-stack-node="1,6">
+                        <strong>문제 화면 <small>Frontend</small></strong>
+                        <p>2 + 1은?</p>
+                        <div class="stack-answer-choices" role="group" aria-label="제출할 답 선택">
+                            <button type="button" data-stack-answer="2" aria-pressed="false">2</button>
+                            <button type="button" data-stack-answer="3" aria-pressed="false">3</button>
+                            <button type="button" data-stack-answer="4" aria-pressed="false">4</button>
+                        </div>
+                        <output class="frontend-score" data-stack-screen-score>아직 점수 없음</output>
+                    </div>
+                </section>
+                <section class="stack-api-lane" aria-label="정해진 요청과 응답의 이동 통로">
+                    <div class="stack-packet request-direction" data-stack-node="2">
+                        <span>답 요청 봉투 <small>Request Data</small></span>
+                        <b>POST /answers</b>
+                        <code data-stack-request>{ answer: — }</code>
+                    </div>
+                    <div class="api-contract" data-stack-node="2,5"><b>API</b><span>주소·방법·데이터 이름·결과 모양의 약속</span></div>
+                    <div class="stack-packet response-direction" data-stack-node="5">
+                        <span>채점 결과 봉투 <small>Response Data</small></span>
+                        <b>200 OK</b>
+                        <code data-stack-response>{ score: — }</code>
+                    </div>
+                </section>
+                <section class="stack-boundary server-boundary">
+                    <h3>수업 서버 <small>Lesson Server</small></h3>
+                    <div class="stack-node backend-node" data-stack-node="3">
+                        <strong>채점 규칙 <small>Backend</small></strong>
+                        <p>받은 답과 정답을 비교</p>
+                        <code data-stack-comparison>— = 3 ?</code>
+                        <output data-stack-verdict>처리 전</output>
+                    </div>
+                    <div class="database-exchange" data-stack-node="4"><span>정답 읽기 ↓</span><span>점수 쓰기 ↑</span></div>
+                    <div class="stack-database" data-stack-node="4">
+                        <strong>점수표 <small>Database</small></strong>
+                        <table><thead><tr><th>학생</th><th>정답</th><th>점수</th></tr></thead><tbody><tr><td>학생 17</td><td>3</td><td data-stack-db-score>4</td></tr></tbody></table>
+                    </div>
+                </section>
+                <div class="stack-state-evidence" aria-live="polite">
+                    <span><b>고른 답</b><small>Selected Answer</small><em data-stack-selected>선택 전</em></span>
+                    <span><b>서버 계산</b><small>Backend Result</small><em data-stack-result>처리 전</em></span>
+                    <span><b>저장된 점수</b><small>Stored Score</small><em data-stack-stored>4점</em></span>
+                    <span><b>화면 점수</b><small>Displayed Score</small><em data-stack-displayed>표시 전</em></span>
                 </div>
-                <div class="stack-lab-controller answer-journey-controller">
-                    <button type="button" data-stack-start>답 제출 <small>Submit Answer</small></button>
-                    <p data-stack-status aria-live="polite">답 제출을 누르면 점수가 돌아오기까지의 순서를 볼 수 있습니다.</p>
+                <div class="stack-lab-controller">
+                    <button type="button" data-stack-start disabled>답 제출 <small>Submit Answer</small></button>
+                    <p data-stack-status aria-live="polite">먼저 문제 화면에서 답 하나를 고르세요. 답은 아직 학생 기기 안에만 있습니다.</p>
                     <button type="button" data-stack-next disabled>다음 단계 <small>Next Step</small></button>
                 </div>
-                <dl class="answer-journey-terms">
-                    <div><dt>내가 보는 문제 화면 <small>Frontend</small></dt><dd>프론트엔드</dd></div>
-                    <div><dt>화면과 서버가 주고받는 방법 <small>Application Programming Interface</small></dt><dd>API</dd></div>
-                    <div><dt>서버에서 확인하고 계산하는 부분 <small>Backend</small></dt><dd>백엔드</dd></div>
-                    <div><dt>문제와 점수를 보관하는 곳 <small>Database</small></dt><dd>데이터베이스</dd></div>
-                </dl>
-                <details class="developer-notation">
-                    <summary>컴퓨터에서는 어떻게 적을까? <small>Developer Notation</small></summary>
-                    <p><code>POST /answers</code>는 답을 보내는 요청의 한 예이고, <code>{ score: 5 }</code>는 점수 결과를 나타내는 한 예입니다.</p>
-                </details>
             </section>
         `),
 

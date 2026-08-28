@@ -126,27 +126,59 @@
     `);
 
     renderers.b03 = (spec, asset) => figure(spec, "visual-port-bench", `
-        <section class="concept-lab-split">
-            <section class="connection-bench" data-port-lab data-port-device="usb" data-port-state="ready">
-                <div class="port-device-tabs" role="group" aria-label="연결할 주변기기">
-                    <button type="button" data-port-device="usb" aria-pressed="true">USB 메모리 <small>USB Flash Drive</small></button>
-                    <button type="button" data-port-device="monitor" aria-pressed="false">외부 모니터 <small>External Monitor</small></button>
-                    <button type="button" data-port-device="tablet" aria-pressed="false">그림 태블릿 <small>Drawing Tablet</small></button>
+        <section class="usb-c-capability-lab" data-port-lab data-port-device="monitor" data-port-state="ready" data-port-cable="charge">
+            <header class="usb-c-lab-heading">
+                <div>
+                    <h3>모양이 같은 USB-C 케이블도 할 수 있는 일이 다르다 <small>Same Connector Shape, Different Capabilities</small></h3>
+                    <p>케이블을 연결 자리에 끌어다 놓거나 누른 뒤 시험하세요. 물리적으로 꽂히는지와 데이터·영상·전력 신호가 지나가는지는 따로 확인합니다.</p>
                 </div>
-                <div class="connection-scene">
-                    <div class="selected-peripheral"><i data-port-device-icon></i><b data-port-device-name>USB 메모리</b><small data-port-connector-name>USB-A 플러그</small></div>
-                    <div class="connection-cable" aria-hidden="true"><span></span><i></i></div>
-                    <div class="port-socket-board" role="group" aria-label="꽂을 포트">
-                        <button type="button" data-port-socket="usb-a" aria-pressed="true"><i></i><b>USB-A</b></button>
-                        <button type="button" data-port-socket="hdmi" aria-pressed="false"><i></i><b>HDMI</b></button>
-                        <button type="button" data-port-socket="usb-c" aria-pressed="false"><i></i><b>USB-C</b></button>
+                <figure class="usb-c-reference-photo">
+                    <img src="${asset("b03-peripherals-ports-drivers-illustration-v1-768.webp")}" width="768" height="512" alt="노트북의 여러 단자와 주변기기를 케이블로 연결하는 모습">
+                    <figcaption>포트와 케이블의 겉모양은 첫 확인 단계입니다.</figcaption>
+                </figure>
+            </header>
+            <div class="port-device-tabs" role="group" aria-label="연결할 주변기기">
+                <button type="button" data-port-device="monitor" aria-pressed="true">외부 모니터 <small>External Monitor</small></button>
+                <button type="button" data-port-device="tablet" aria-pressed="false">그림 태블릿 <small>Drawing Tablet</small></button>
+            </div>
+            <div class="usb-c-connection-scene">
+                <section class="usb-c-source-device" aria-label="학생의 노트북">
+                    <header><b>학생의 노트북</b><small>Laptop</small></header>
+                    <div class="laptop-display"><span>과제 화면</span><i></i></div>
+                    <div class="usb-c-port-shape"><span>USB-C</span><i aria-hidden="true"></i></div>
+                </section>
+                <div class="usb-c-drop-track" data-port-dropzone tabindex="0" role="button" aria-label="선택한 USB-C 케이블을 연결할 자리">
+                    <span class="usb-c-plug left-plug" aria-hidden="true"></span>
+                    <span class="usb-c-cable-line"></span>
+                    <strong data-port-cable-name>충전 전용 케이블</strong>
+                    <small>여기에 케이블 놓기 <em>Drop Cable Here</em></small>
+                    <span class="usb-c-plug right-plug" aria-hidden="true"></span>
+                </div>
+                <section class="usb-c-target-device" data-port-target>
+                    <header><b data-port-device-name>외부 모니터</b><small data-port-device-english>External Monitor</small></header>
+                    <div class="target-device-screen">
+                        <span class="target-no-signal" data-port-output>연결 시험 전</span>
+                        <div class="target-picture" aria-hidden="true"><i></i><b>과제 화면</b></div>
+                        <div class="target-pen-line" aria-hidden="true"></div>
                     </div>
-                </div>
-                <div class="driver-setting"><span><b>장치 드라이버</b><small>Device Driver</small></span><button type="button" data-driver-toggle aria-pressed="true"><i></i><span data-driver-label>설치됨</span></button></div>
-                <div class="port-actions"><button type="button" data-port-connect>연결해 보기 <small>Connect</small></button><button type="button" data-port-reset>처음 상태 <small>Reset</small></button></div>
-                <p class="lab-readout" data-port-status aria-live="polite"><b>USB 메모리:</b> 플러그 모양과 포트 규격이 맞는 곳을 고른 뒤 연결해 보세요.</p>
-            </section>
-            ${contextImage(asset, "b03-peripherals-ports-drivers-illustration-v1", "노트북의 여러 단자에 모양이 다른 케이블과 저장 장치, 화면, 키보드, 무선 기기가 각기 다른 방법으로 연결되는 장면")}
+                    <div class="usb-c-port-shape"><span>USB-C</span><i aria-hidden="true"></i></div>
+                </section>
+            </div>
+            <div class="usb-c-cable-choices" role="group" aria-label="시험할 USB-C 케이블">
+                <button type="button" draggable="true" data-port-cable-choice="charge" aria-pressed="true"><i></i><span><b>충전 전용</b><small>Power Only</small></span><em>전력 ✓　데이터 —　영상 —</em></button>
+                <button type="button" draggable="true" data-port-cable-choice="data" aria-pressed="false"><i></i><span><b>데이터 케이블</b><small>Power + Data</small></span><em>전력 ✓　데이터 ✓　영상 —</em></button>
+                <button type="button" draggable="true" data-port-cable-choice="video" aria-pressed="false"><i></i><span><b>영상 지원 케이블</b><small>Power + Data + Video</small></span><em>전력 ✓　데이터 ✓　영상 ✓</em></button>
+            </div>
+            <div class="usb-c-signal-ledger" aria-label="연결 시험 결과">
+                <span data-port-check="shape"><b>물리적 모양</b><small>Physical Fit</small><em>시험 전</em></span>
+                <span data-port-check="power"><b>전력</b><small>Power</small><em>시험 전</em></span>
+                <span data-port-check="data"><b>데이터</b><small>Data</small><em>시험 전</em></span>
+                <span data-port-check="video"><b>영상</b><small>Video</small><em>시험 전</em></span>
+                <span data-port-check="driver"><b>드라이버</b><small>Driver</small><em>해당 없음</em></span>
+            </div>
+            <div class="driver-setting" data-port-driver-row hidden><span><b>그림 태블릿 드라이버</b><small>Drawing Tablet Driver</small></span><button type="button" data-driver-toggle aria-pressed="true"><i></i><span data-driver-label>설치됨</span></button></div>
+            <div class="port-actions"><button type="button" data-port-connect>이 연결 시험하기 <small>Test This Connection</small></button><button type="button" data-port-reset>처음 상태 <small>Reset</small></button></div>
+            <p class="lab-readout" data-port-status aria-live="polite"><b>외부 모니터:</b> 세 케이블은 모두 USB-C 모양이라 꽂힙니다. 그러나 화면을 보내려면 영상 신호를 지원하는 케이블과 포트가 필요합니다.</p>
         </section>
     `);
 
@@ -216,61 +248,62 @@
     `);
 
     renderers.c02 = (spec, asset) => figure(spec, "visual-os-workbench", `
-        ${contextImage(asset, "c02-operating-system-devices-illustration-v1", "한 학생이 노트북, Chromebook형 기기, 태블릿, 스마트폰에서 같은 그림 파일을 다루는 모습")}
-        <section class="os-workbench" data-os-lab data-os="windows">
-            <header>
-                <h3>같은 사진 파일을 찾는 다섯 가지 화면 <small>The Same Task on Five Systems</small></h3>
-                <nav aria-label="비교할 운영체제">
-                    <button type="button" data-os-choice="windows" aria-pressed="true">Windows</button>
-                    <button type="button" data-os-choice="chromeos" aria-pressed="false">ChromeOS</button>
-                    <button type="button" data-os-choice="android" aria-pressed="false">Android</button>
-                    <button type="button" data-os-choice="ios" aria-pressed="false">iPhone <small>iOS</small></button>
-                    <button type="button" data-os-choice="ipados" aria-pressed="false">iPad <small>iPadOS</small></button>
-                </nav>
+        <section class="os-workbench" data-os-lab data-os="windows" data-os-task-stage="0">
+            <header class="os-lab-heading">
+                <div>
+                    <h3>운영체제마다 화면은 달라도 파일의 상태는 같다 <small>Different Interfaces, the Same File State</small></h3>
+                    <p>운영체제를 고른 뒤, 아래 모형 화면 안에서 직접 사진 위치를 열고 파일을 선택해 이름을 바꾸세요.</p>
+                </div>
+                <figure><img src="${asset("c02-operating-system-devices-illustration-v1-768.webp")}" width="768" height="512" alt="노트북, Chromebook, 태블릿, 스마트폰에서 같은 그림 파일을 다루는 모습"><figcaption>PC·Chromebook·휴대전화·iPad의 대표 화면</figcaption></figure>
             </header>
-            <div class="os-device-shell">
-                <div class="os-screen os-windows-screen" data-os-panel="windows">
-                    <div class="desktop-icons"><i class="trash-icon"></i><span>휴지통</span></div>
-                    <div class="window-chrome"><span></span><b>파일 탐색기</b><em>— □ ×</em></div>
-                    <div class="window-body"><aside>홈<br><strong>사진</strong><br>다운로드</aside><main><i class="folder-art"></i><b>사진</b><span>바다.jpg</span></main></div>
-                    <div class="taskbar"><i></i><i></i><i></i></div>
-                </div>
-                <div class="os-screen os-chrome-screen" data-os-panel="chromeos" hidden>
-                    <div class="window-chrome"><b>파일</b><em>○ □ ×</em></div>
-                    <div class="window-body"><aside>최근<br><strong>내 파일</strong><br>Google Drive</aside><main><i class="folder-art"></i><b>이미지</b><span>바다.jpg</span></main></div>
-                    <div class="shelf"><i></i><i></i><i></i><time>10:24</time></div>
-                </div>
-                <div class="os-screen os-android-screen" data-os-panel="android" hidden>
-                    <div class="mobile-status"><time>10:24</time><span><i class="signal-bars"></i><i class="battery-status"></i></span></div>
-                    <h4>내 파일</h4><div class="mobile-grid"><i class="download-icon"><span></span><small>다운로드</small></i><i class="image-icon"><span></span><small>이미지</small></i><i class="cloud-folder-icon"><span></span><small>Drive</small></i></div>
-                    <div class="mobile-nav">‹　○　▢</div>
-                </div>
-                <div class="os-screen os-ios-screen" data-os-panel="ios" hidden>
-                    <div class="mobile-status"><time>10:24</time><span>iPhone　Wi-Fi</span></div>
-                    <h4>파일 <small>Files</small></h4><div class="mobile-grid"><i class="cloud-folder-icon"><span></span><small>iCloud Drive</small></i><i class="image-icon"><span></span><small>나의 iPhone</small></i><i class="download-icon"><span></span><small>다운로드</small></i></div>
-                    <div class="home-indicator"></div>
-                </div>
-                <div class="os-screen os-ipad-screen" data-os-panel="ipados" hidden>
-                    <div class="mobile-status"><time>10:24</time><span>iPad　Wi-Fi</span></div>
-                    <div class="ipad-files"><aside><b>파일</b><strong>최근 항목</strong><span>iCloud Drive</span><span>나의 iPad</span></aside><main><h4>사진</h4><i class="folder-art"></i><span>바다.jpg</span></main></div>
-                    <div class="home-indicator"></div>
+            <nav class="os-choice-tabs" aria-label="비교할 운영체제">
+                <button type="button" data-os-choice="windows" aria-pressed="true">Windows</button>
+                <button type="button" data-os-choice="chromeos" aria-pressed="false">ChromeOS</button>
+                <button type="button" data-os-choice="android" aria-pressed="false">Android</button>
+                <button type="button" data-os-choice="ios" aria-pressed="false">iPhone <small>iOS</small></button>
+                <button type="button" data-os-choice="ipados" aria-pressed="false">iPad <small>iPadOS</small></button>
+            </nav>
+            <div class="os-live-device" data-os-live-device>
+                <div class="os-live-screen">
+                    <header class="os-live-titlebar"><span data-os-window-controls>● ● ●</span><strong data-os-app-title>파일 탐색기</strong><time>10:24</time></header>
+                    <div class="os-live-toolbar">
+                        <button type="button" data-os-back disabled aria-label="이전 위치로">←</button>
+                        <span data-os-path>내 PC › 사진</span>
+                        <button type="button" data-os-reset>처음부터 <small>Reset</small></button>
+                    </div>
+                    <div class="os-live-body">
+                        <aside data-os-sidebar><b>홈</b><span>내 PC</span><strong>사진</strong><span>다운로드</span></aside>
+                        <main class="os-file-canvas" data-os-file-canvas>
+                            <button type="button" class="os-location-tile" data-os-open-location>
+                                <i aria-hidden="true"></i><span><b data-os-location-name>사진</b><small data-os-location-english>Pictures</small></span>
+                            </button>
+                            <div class="os-file-row" data-os-file-row hidden>
+                                <button type="button" class="os-photo-file" data-os-file aria-label="바다.jpg 선택">
+                                    <i aria-hidden="true"><span></span></i><span><b data-os-file-name>바다.jpg</b><small>JPEG 사진 · 2.4 MB</small></span>
+                                </button>
+                                <button type="button" class="os-file-menu-button" data-os-file-menu disabled aria-label="선택한 파일 메뉴 열기">⋯</button>
+                            </div>
+                            <div class="os-context-menu" data-os-context-menu hidden>
+                                <button type="button" data-os-rename-command>이름 바꾸기 <small data-os-rename-method>Rename · F2</small></button>
+                                <span>복사 <small>Copy</small></span><span>삭제 <small>Delete</small></span>
+                            </div>
+                            <form class="os-rename-form" data-os-rename-form hidden>
+                                <label>새 파일 이름 <small>New Filename</small><input data-os-rename-input value="바다_여행.jpg" autocomplete="off" spellcheck="false"></label>
+                                <button type="submit">이름 확인 <small>Apply Rename</small></button>
+                            </form>
+                            <p class="os-screen-hint" data-os-screen-hint>사진 폴더를 눌러 여세요.</p>
+                        </main>
+                    </div>
+                    <footer class="os-live-footer" data-os-footer><i></i><i></i><i></i><span>파일 0개 선택</span></footer>
                 </div>
             </div>
-            <div class="os-observation">
-                <strong data-os-name>Windows의 파일 탐색기</strong>
-                <p data-os-description>작업 표시줄과 창을 이용하고, 파일 탐색기에서 드라이브와 폴더를 찾습니다.</p>
+            <div class="os-state-ledger" aria-live="polite">
+                <span><b>운영체제</b><small>Operating System</small><em data-os-name>Windows</em></span>
+                <span><b>현재 위치</b><small>Current Location</small><em data-os-current-location>내 PC › 사진</em></span>
+                <span><b>파일 이름</b><small>Filename</small><em data-os-current-file>바다.jpg</em></span>
+                <span><b>현재 동작</b><small>Current Action</small><em data-os-current-action>위치 열기 전</em></span>
             </div>
-            <section class="os-file-task" data-os-task data-os-task-stage="0">
-                <header><span>모든 운영체제에서 같은 과제 <small>Same Task on Every OS</small></span><strong data-os-task-route>파일 탐색기 → 사진</strong></header>
-                <div class="os-task-file" data-os-task-file><i></i><span><b data-os-task-name>바다.jpg</b><small>JPEG 사진 파일 · 2.4 MB</small></span><em data-os-task-state>폴더를 열기 전</em></div>
-                <div class="os-task-actions" role="group" aria-label="같은 파일 찾고 이름 바꾸기">
-                    <button type="button" data-os-task-action="open">1. 사진 위치 열기 <small>Open Location</small></button>
-                    <button type="button" data-os-task-action="select" disabled>2. 바다.jpg 선택 <small>Select File</small></button>
-                    <button type="button" data-os-task-action="rename" disabled>3. 바다_여행.jpg로 이름 바꾸기 <small>Rename File</small></button>
-                    <button type="button" data-os-task-action="reset">처음부터 <small>Reset</small></button>
-                </div>
-                <p data-os-task-status aria-live="polite">먼저 현재 운영체제의 파일 앱에서 사진이 있는 위치를 여세요.</p>
-            </section>
+            <p class="lab-readout" data-os-status aria-live="polite"><b>Windows:</b> 파일 탐색기 화면 안의 사진 폴더부터 누르세요. 화면 모양은 달라도 저장 위치와 파일 이름이라는 상태를 바꾸는 일은 같습니다.</p>
         </section>
     `);
 
@@ -472,8 +505,8 @@
                 </div>
                 <div class="browser-state-toolbar">
                     <button type="button" data-browser-back aria-label="이 탭의 이전 페이지로 뒤로 가기" disabled>←<small>뒤로</small></button>
-                    <div class="browser-current-address" data-browser-address tabindex="0" aria-label="현재 탭의 주소">
-                        <span>주소 <small>URL</small></span><code data-browser-url>https://search.local/</code>
+                    <div class="browser-current-address" data-browser-address aria-label="현재 탭의 주소 표시(읽기 전용)">
+                        <span>현재 주소 <small>Current URL</small></span><code data-browser-url>https://search.local/</code>
                     </div>
                 </div>
                 <main class="browser-state-viewport" id="browser-state-viewport" data-browser-viewport>
@@ -481,8 +514,18 @@
                         <header><strong>교실 검색 <small>Class Search</small></strong><p>검색어와 관련된 로컬 웹페이지를 찾아 결과 목록으로 보여 주는 검색 서비스입니다.</p></header>
                         <form data-browser-search-form>
                             <label for="browserSearchInput">찾고 싶은 내용 <small>Search Query</small></label>
-                            <div><input id="browserSearchInput" data-browser-search-input value="수달은 어디에서 살까?" autocomplete="off"><button type="submit">검색 <small>Search</small></button></div>
+                            <div><input id="browserSearchInput" data-browser-search-input value="혜성의 꼬리는 왜 생길까?" autocomplete="off"><button type="submit">검색 <small>Search</small></button></div>
                         </form>
+                        <div class="browser-search-topics" aria-label="이 검색 모형에 들어 있는 자료 주제">
+                            <span>검색 가능한 자료 <small>Available Topics</small></span>
+                            <div>
+                                <button type="button" data-browser-suggestion="혜성">혜성 <small>Comet</small></button>
+                                <button type="button" data-browser-suggestion="수달">수달 <small>Otter</small></button>
+                                <button type="button" data-browser-suggestion="강">강 <small>River</small></button>
+                                <button type="button" data-browser-suggestion="달">달 <small>Moon</small></button>
+                                <button type="button" data-browser-suggestion="날씨">날씨 <small>Weather</small></button>
+                            </div>
+                        </div>
                     </section>
                     <section class="browser-search-results" data-browser-page="results" data-search-service hidden>
                         <header><strong><span data-browser-query></span> 검색 결과</strong><small>검색 엔진이 찾은 로컬 웹페이지</small></header>
@@ -726,34 +769,41 @@
     `);
 
     renderers.i02 = (spec, asset) => figure(spec, "visual-evidence-lab", `
-        ${contextImage(asset, "i02-suspicious-message-evidence-illustration-v1", "학생이 의심스러운 메시지를 누르기 전에 보낸 주소와 연결 경로, 개인정보 요구를 확대해 확인하는 장면", 384)}
         <section class="evidence-lab" data-evidence-lab>
+            <header class="evidence-lab-heading">
+                <div><h3>메시지 원문에서 위험 근거 세 곳을 직접 찾는다 <small>Inspect the Message Itself</small></h3><p>이름이나 느낌이 아니라 실제 주소, 요구하는 정보, 재촉하는 표현을 원문에서 눌러 검사 기록에 담으세요.</p></div>
+                ${compactContextImage(asset, "i02-suspicious-message-evidence-illustration-v1", "학생이 의심스러운 메시지의 주소와 정보 요구를 확대해 확인하는 장면", "주소와 요구 정보 대조", "Compare the Address and Request")}
+            </header>
             <div class="message-app">
-                <header><span>받은 메시지</span><b>오늘 10:18</b></header>
+                <header><span>받은 메시지</span><button type="button" data-evidence-choice="time" data-evidence-correct="false" aria-pressed="false">오늘 10:18 <small>Received Time</small></button></header>
                 <div class="official-address-card"><span>학교가 알려 준 공식 주소</span><code>https://portal.school.kr</code><small>Official School Portal</small></div>
                 <div class="sender-row">
-                    <i>?</i><p><strong>학교 포털 지원팀</strong><span>notice@school-help.example</span></p>
+                    <i>?</i><button type="button" data-evidence-choice="name" data-evidence-correct="false" aria-pressed="false"><strong>학교 포털 지원팀</strong><span>notice@school-help.example</span><small>Visible Sender Name</small></button>
                 </div>
                 <div class="message-body">
-                    <h3>10분 안에 계정을 확인하세요</h3>
-                    <p>계정을 계속 쓰려면 비밀번호와 등록 기기에 온 인증번호를 입력하세요.</p>
-                    <span class="suspicious-cta">https://school.kr.login-help.example/login</span>
+                    <button type="button" class="message-urgency" data-evidence-choice="urgency" data-evidence-correct="true" aria-pressed="false">10분 안에 계정을 확인하세요 <small>Urgency</small></button>
+                    <button type="button" class="message-secret-request" data-evidence-choice="secret" data-evidence-correct="true" aria-pressed="false">계정을 계속 쓰려면 비밀번호와 등록 기기에 온 인증번호를 입력하세요. <small>Password and Verification Code Request</small></button>
+                    <button type="button" class="suspicious-cta" data-evidence-choice="link" data-evidence-correct="true" aria-pressed="false">https://school.kr.login-help.example/login <small>Link Address</small></button>
                 </div>
             </div>
             <aside class="evidence-notebook">
-                <h3>판단 근거 고르기 <small>Choose Evidence</small></h3>
-                <p class="evidence-instruction">메시지가 피싱이라고 판단할 수 있는 근거 세 개를 고른 뒤 확인하세요.</p>
-                <div class="evidence-choices" role="group" aria-label="피싱 판단 근거 후보">
-                    <button type="button" data-evidence-choice="link" data-evidence-correct="true" aria-pressed="false">링크도 <code>school.kr</code> 아래가 아니라 <code>example</code> 아래의 주소다.</button>
-                    <button type="button" data-evidence-choice="secret" data-evidence-correct="true" aria-pressed="false">메시지 링크에서 비밀번호와 일회용 인증번호를 함께 요구한다.</button>
-                    <button type="button" data-evidence-choice="urgency" data-evidence-correct="true" aria-pressed="false">‘10분 안에’라는 시간 제한으로 주소와 요구 내용을 확인할 시간을 줄이려 한다.</button>
-                    <button type="button" data-evidence-choice="name" data-evidence-correct="false" aria-pressed="false">보낸 사람 이름에 ‘학교 포털’이라는 글자가 적혀 있다.</button>
-                    <button type="button" data-evidence-choice="time" data-evidence-correct="false" aria-pressed="false">메시지를 받은 시각이 오전 10시 18분이다.</button>
+                <h3>주소 확대와 검사 기록 <small>Address Magnifier and Evidence Record</small></h3>
+                <div class="address-magnifier" aria-label="공식 주소와 의심 주소의 실제 소유 부분 비교">
+                    <div><span>공식 주소 <small>Official</small></span><code><i>portal.</i><b data-address-segment="owner">school.kr</b></code></div>
+                    <div><span>메시지 링크 <small>Message Link</small></span><code><i>school.kr.</i><b data-address-segment="owner">login-help.example</b><em>/login</em></code></div>
+                    <p>앞쪽의 <code>school.kr</code>이 아니라 주소 끝의 <b>login-help.example</b>이 실제 소유 부분입니다.</p>
                 </div>
+                <ol class="evidence-records" aria-label="메시지에서 선택한 세 근거">
+                    <li data-evidence-record="0"><b>1</b><span>선택 안 함</span></li>
+                    <li data-evidence-record="1"><b>2</b><span>선택 안 함</span></li>
+                    <li data-evidence-record="2"><b>3</b><span>선택 안 함</span></li>
+                </ol>
                 <div class="evidence-actions"><button type="button" data-evidence-check disabled>근거 확인 <small>Check Evidence</small></button><button type="button" data-evidence-reset>다시 고르기 <small>Choose Again</small></button></div>
-                <p data-evidence-status role="status" aria-live="polite">각 후보 문장을 학교의 공식 주소와 메시지 원문에 직접 대조하세요.</p>
+                <p data-evidence-status role="status" aria-live="polite">메시지 안에서 근거 세 곳을 누르세요. 세 곳을 모두 고른 뒤에만 전체 판단을 확인할 수 있습니다.</p>
             </aside>
-            <div class="citizenship-check" data-citizenship-check>
+            <details class="citizenship-extension" data-citizenship-details>
+                <summary>개인정보·저작권·디지털 발자국·기기 건강 <small>Privacy, Copyright, Digital Footprint, and Device Health</small></summary>
+                <div class="citizenship-check" data-citizenship-check>
                 <div class="citizenship-tabs" role="group" aria-label="직접 확인할 디지털 생활 원리">
                     <button type="button" data-citizenship-choice="privacy" aria-pressed="true">개인정보 <small>Privacy</small></button>
                     <button type="button" data-citizenship-choice="copyright" aria-pressed="false">저작권·라이선스 <small>Copyright & License</small></button>
@@ -799,14 +849,30 @@
     `);
 
     renderers.j03 = (spec, asset) => figure(spec, "visual-debug-lab", `
-        ${contextImage(asset, "j03-photo-path-debug-illustration-v2", "학생이 파일 앱의 실제 경로와 프로그램에 적힌 경로를 비교하고, 수정 뒤 여러 파일로 다시 시험하는 모습")}
         <section class="debug-lab" data-debug-lab data-debug-stage="start">
+            <header class="debug-lab-heading">
+                ${compactContextImage(asset, "j03-photo-path-debug-illustration-v2", "같은 고양이 사진으로 오류를 다시 만들고, 잘못 적힌 폴더 이름을 고친 뒤 사진이 열리는지 다시 시험하는 과정", "오류 재현 → 경로 수정 → 재시험", "Reproduce → Fix Path → Retest")}
+                <div>
+                    <span>디버깅 절차 <small>Debugging Workflow</small></span>
+                    <h3>같은 입력으로 오류를 다시 만든 뒤 원인 하나만 고친다</h3>
+                    <p><code>cat.webp</code>는 그대로 두고 프로그램의 기본 폴더만 비교합니다. 고친 뒤에는 같은 사진, 다른 사진, 없는 사진을 차례로 시험합니다.</p>
+                </div>
+            </header>
             <div class="mini-photo-app">
                 <header><b>파일 경로 검사기 <small>File Path Tester</small></b><button type="button" data-debug-run>실행 <small>Run</small></button></header>
                 <main>
-                    <div class="photo-output" data-debug-output><span>실행하면 이곳에 결과가 나타납니다.</span></div>
+                    <section class="debug-file-and-preview" aria-label="실제 저장 폴더와 프로그램 출력">
+                        <div class="debug-file-browser">
+                            <header><b>실제 저장 폴더 <small>Actual Storage Folder</small></b><code>/pictures/</code><span>2개 파일</span></header>
+                            <div class="debug-file-list">
+                                <div><img src="${asset("j03-cat-file.webp")}" width="512" height="512" alt="실제 저장 폴더에 있는 주황색 고양이 사진"><span><b>cat.webp</b><small>Image File</small></span></div>
+                                <div><img src="${asset("j03-dog-file.webp")}" width="512" height="512" alt="실제 저장 폴더에 있는 갈색 강아지 사진"><span><b>dog.webp</b><small>Image File</small></span></div>
+                            </div>
+                        </div>
+                        <div class="photo-output" data-debug-output data-preview-state="waiting"><div class="debug-output-message"><i aria-hidden="true">▶</i><b>실행 전</b><span>실행하면 프로그램이 찾은 사진이나 오류가 이곳에 나타납니다.</span></div></div>
+                    </section>
                     <div class="tiny-program">
-                        <p class="debug-fixed-input"><b>선택한 사진 <small>Selected Input</small></b><code>cat.webp</code></p>
+                        <p class="debug-fixed-input"><b>선택한 사진 <small>Selected Input</small></b><code data-debug-selected-name>cat.webp</code></p>
                         <label>프로그램에 적힌 기본 폴더 <small>Base Folder in the Program</small><input data-debug-code value="/picture/" spellcheck="false" aria-describedby="debug-real-path"></label>
                         <p class="actual-path-note" id="debug-real-path">파일 앱에서 확인한 실제 폴더 <small>Actual Folder in the File App</small> <code>/pictures/</code></p>
                         <span>사진 입력은 <code>cat.webp</code>로 그대로 두고, 프로그램이 앞에 붙이는 폴더 이름의 한 글자를 고치세요.</span>
@@ -818,9 +884,9 @@
                 <h4>나머지 입력 두 개 시험하기 <small>Regression Test</small></h4>
                 <p>고양이 사진 재시험이 통과하면 다른 파일과 없는 파일이 활성화됩니다. 수정이 한 사례에만 맞춘 것은 아닌지 확인하세요.</p>
                 <div class="debug-case-buttons">
-                    <button type="button" data-debug-case="cat" disabled>cat.webp <small>Same-input Retest</small></button>
-                    <button type="button" data-debug-case="dog" disabled>dog.webp <small>Existing File</small></button>
-                    <button type="button" data-debug-case="missing" disabled>bird.webp <small>Missing File</small></button>
+                    <button type="button" data-debug-case="cat" data-debug-src="${asset("j03-cat-file.webp")}" data-debug-alt="주황색 고양이 사진" disabled><img src="${asset("j03-cat-file.webp")}" width="512" height="512" alt=""><span><b>cat.webp</b><small>Same-input Retest</small></span></button>
+                    <button type="button" data-debug-case="dog" data-debug-src="${asset("j03-dog-file.webp")}" data-debug-alt="갈색 강아지 사진" disabled><img src="${asset("j03-dog-file.webp")}" width="512" height="512" alt=""><span><b>dog.webp</b><small>Existing File</small></span></button>
+                    <button type="button" data-debug-case="missing" disabled><i class="debug-missing-thumbnail" aria-hidden="true"><svg viewBox="0 0 56 64"><path d="M8 3h27l13 13v45H8Z"/><path d="M35 3v14h13"/><path d="m18 32 20 20m0-20L18 52"/></svg></i><span><b>bird.webp</b><small>Missing File</small></span></button>
                 </div>
                 <ul class="debug-case-results" aria-live="polite">
                     <li data-debug-case-result="cat">cat.webp: 같은 입력 재시험 전</li>
@@ -844,6 +910,49 @@
         </section>
     `);
 
+    renderers.d01 = (spec) => figure(spec, "visual-pointer-lab", `
+        <section class="pointer-operating-lab" data-pointer-lab data-pointer-state="point" data-file-location="desktop">
+            <header class="pointer-lab-heading">
+                <div><h3>한 화면에서 가리키기·클릭·글자 입력·드래그를 구분한다 <small>Point, Click, Type, and Drag in One Screen</small></h3><p>아래는 그림이 아니라 실제로 반응하는 작은 바탕화면입니다. 파일을 선택하고, 문장에 글자를 넣고, 파일을 폴더로 끌어 보세요.</p></div>
+                <button type="button" data-pointer-reset>처음부터 <small>Reset</small></button>
+            </header>
+            <div class="pointer-demo-shell">
+                <div class="pointer-app-bar"><strong>연습용 바탕화면 <small>Practice Desktop</small></strong><span data-pointer-clock>10:24</span></div>
+                <div class="pointer-desktop" data-pointer-surface>
+                    <div class="screen-pointer" data-screen-pointer aria-hidden="true"><svg viewBox="0 0 42 56"><path d="M4 3 35 31 21 34 29 50 20 54 12 38 4 48Z"/></svg><span>포인터 <small>Pointer</small></span></div>
+                    <button type="button" class="pointer-file" data-pointer-file aria-pressed="false">
+                        <svg viewBox="0 0 90 100" aria-hidden="true"><path d="M15 5h39l21 21v69H15Z"/><path d="M54 5v23h21"/><rect x="27" y="45" width="36" height="5"/><rect x="27" y="58" width="29" height="5"/></svg>
+                        <span><b>관찰.txt</b><small>Text File</small></span>
+                    </button>
+                    <button type="button" class="pointer-folder" data-pointer-folder aria-label="과제 폴더">
+                        <svg viewBox="0 0 120 90" aria-hidden="true"><path d="M6 20h43l10 12h55v51H6Z"/><path d="M6 32h108"/></svg>
+                        <span><b>과제 폴더</b><small>Assignment Folder · <em data-folder-count>0개</em></small></span>
+                        <i data-folder-file hidden>관찰.txt</i>
+                    </button>
+                    <label class="pointer-text-editor">
+                        <span>메모 <small>Text Editor</small></span>
+                        <input type="text" value="오늘 관찰한 것은 " data-pointer-input aria-label="텍스트 커서를 확인할 메모 입력 칸">
+                        <em>입력 칸을 누르면 깜박이는 선이 다음 글자 위치를 표시합니다.</em>
+                    </label>
+                    <div class="pointer-drop-label" aria-hidden="true">파일을 이 폴더에 놓기 <small>Drop the File Here</small></div>
+                </div>
+                <footer data-pointer-status role="status" aria-live="polite">화면 위에서 마우스·트랙패드를 움직이면 포인터가 위치를 가리킵니다. 아직 파일은 선택되지 않았습니다.</footer>
+            </div>
+            <dl class="pointer-state-ledger" aria-label="현재 입력과 화면 상태">
+                <div><dt>화면 표시 <small>Screen Indicator</small></dt><dd data-pointer-kind>화살표 포인터</dd></div>
+                <div><dt>누름 상태 <small>Press State</small></dt><dd data-pointer-press>누르지 않음</dd></div>
+                <div><dt>입력 초점 <small>Input Focus</small></dt><dd data-pointer-focus>없음</dd></div>
+                <div><dt>파일 위치 <small>File Location</small></dt><dd data-pointer-location>바탕화면</dd></div>
+            </dl>
+            <ol class="pointer-action-trace" aria-label="파일을 드래그 앤 드롭하는 실제 동작">
+                <li data-pointer-step="point"><b>1</b><span>파일을 가리킨다<small>Point</small></span></li>
+                <li data-pointer-step="press"><b>2</b><span>파일을 누른 채 잡는다<small>Press and Hold</small></span></li>
+                <li data-pointer-step="drag"><b>3</b><span>누른 채 폴더까지 움직인다<small>Drag</small></span></li>
+                <li data-pointer-step="drop"><b>4</b><span>폴더 위에서 놓는다<small>Drop</small></span></li>
+            </ol>
+        </section>
+    `);
+
     renderers.d02 = (spec, asset) => figure(spec, "visual-gesture-lab", `
         ${contextImage(asset, "d02-touch-gesture-signals-illustration-v1", "태블릿 화면에서 한 손가락과 두 손가락의 위치, 이동, 누른 시간이 신호로 측정되는 장면")}
         <section class="gesture-lab" data-gesture-lab data-gesture="tap">
@@ -851,7 +960,7 @@
                 <div class="gesture-surface" data-gesture-surface role="button" tabindex="0" aria-label="선택한 터치 동작을 직접 해 보는 화면">
                     <div class="photo-card"><span></span><b>사진 1</b><em>선택됨</em></div>
                     <div class="photo-card photo-card-next"><span></span><b>사진 2</b></div>
-                    <div class="gesture-context-menu" data-gesture-menu hidden><button type="button">공유 <small>Share</small></button><button type="button">이름 바꾸기 <small>Rename</small></button><button type="button">삭제 <small>Delete</small></button></div>
+                    <div class="gesture-context-menu" data-gesture-menu hidden><button type="button" data-gesture-menu-action="share">공유 <small>Share</small></button><button type="button" data-gesture-menu-action="rename">이름 바꾸기 <small>Rename</small></button><button type="button" data-gesture-menu-action="delete">삭제 <small>Delete</small></button><output data-gesture-action-result>명령을 선택하세요.</output></div>
                     <i class="finger finger-one"></i><i class="finger finger-two"></i><i class="gesture-trail"></i>
                     <div class="gesture-measure"><span>손가락 <b data-finger-count>1</b>개</span><span>누른 시간 <b data-press-time>0.1</b>초</span><span>이동 거리 <b data-move-distance>0</b></span></div>
                 </div>
@@ -927,8 +1036,9 @@
                 <header><b>표시 배율 <small>Display Scaling</small></b><output data-scale-output>100%</output></header>
                 <div class="scale-viewport">
                     <div class="scale-ui">
-                        <strong>과제 파일</strong><button type="button">열기 <small>Open</small></button>
+                        <strong>과제 파일</strong><button type="button" data-scale-open aria-expanded="false">열기 <small>Open</small></button>
                         <span>글자와 단추는 더 많은 픽셀을 차지하지만 화면 해상도는 그대로입니다.</span>
+                        <div class="scale-file-preview" data-scale-file-preview hidden><b>과제.pdf</b><span>파일 내용 미리보기 <small>File Preview</small></span></div>
                         <i></i><i></i><i></i><i></i>
                     </div>
                 </div>
@@ -1238,59 +1348,90 @@
     `);
 
     renderers.j01 = (spec) => figure(spec, "visual-algorithm-builder", `
-        <section class="algorithm-sequencer" data-algorithm-lab data-algorithm-stage="0">
-            <div class="algorithm-file-workspace" aria-label="사진 파일을 과제 폴더로 옮기는 파일 관리자 모형">
-                <header><b>파일 관리자</b><small>File Manager</small></header>
-                <div class="file-path file-path-pair"><span><b>출발지 <small>Source</small></b> 내 파일 › 다운로드</span><span><b>목적지 <small>Destination</small></b> 내 파일 › 과제 사진</span></div>
-                <div class="file-panels">
-                    <section class="file-pane source-pane"><h4>다운로드 <small>Downloads</small></h4><ul><li class="photo-file" data-file-source>▣ river.webp <small>사진 파일</small></li><li>▤ notes.txt <small>글 파일</small></li><li>▦ homework.pdf <small>문서 파일</small></li></ul></section>
-                    <div class="file-move-arrow" aria-hidden="true">→</div>
-                    <section class="file-pane target-pane"><h4>과제 사진 <small>Assignment Photos</small></h4><ul><li class="empty-folder" data-file-empty>아직 사진이 없습니다</li><li class="moved-photo" data-file-moved hidden>▣ river.webp <small>옮긴 사진 파일</small></li></ul></section>
+        <section class="algorithm-file-lab" data-algorithm-lab data-algorithm-stage="0">
+            <header class="algorithm-lab-heading">
+                <div><h3>파일을 실제로 옮기며 실행 순서를 만든다 <small>Build an Algorithm by Operating a File Manager</small></h3><p>문장 카드를 먼저 맞히지 않습니다. 파일 관리자에서 할 수 있는 동작을 차례로 실행하면 그 기록이 알고리즘이 됩니다.</p></div>
+                <button type="button" data-algo-reset>처음부터 <small>Reset</small></button>
+            </header>
+            <div class="algorithm-file-manager" aria-label="river.webp 파일을 과제 사진 폴더로 옮기는 파일 관리자">
+                <header class="algorithm-window-bar"><strong>파일 관리자 <small>File Manager</small></strong><span>— □ ×</span></header>
+                <div class="algorithm-toolbar"><button type="button" data-algo-back disabled>←</button><code data-algo-path>내 파일</code><button type="button" data-algo-move disabled>이동 <small>Move</small></button></div>
+                <div class="algorithm-file-body">
+                    <aside>
+                        <button type="button" data-algo-location="downloads"><i></i><span>다운로드<small>Downloads</small></span></button>
+                        <button type="button" data-algo-location="assignment"><i></i><span>과제 사진<small>Assignment Photos</small></span></button>
+                    </aside>
+                    <main>
+                        <section class="algorithm-source-pane" data-algo-pane="downloads">
+                            <h4>다운로드 <small>Downloads</small></h4>
+                            <button type="button" draggable="true" class="algorithm-photo-file" data-file-source hidden><i><span></span></i><span><b>river.webp</b><small>WebP 사진 · 840 KB</small></span></button>
+                            <span class="algorithm-file-item" data-algo-note hidden>▤ notes.txt</span>
+                            <span class="algorithm-file-item" data-algo-pdf hidden>▦ homework.pdf</span>
+                            <p data-algo-source-empty hidden>river.webp가 이 폴더에 없습니다.</p>
+                        </section>
+                        <section class="algorithm-target-pane" data-algo-pane="assignment" data-algo-dropzone tabindex="0" role="button" aria-label="river.webp를 놓을 과제 사진 폴더">
+                            <h4>과제 사진 <small>Assignment Photos</small></h4>
+                            <p data-file-empty>이곳을 목적지로 고르거나 river.webp를 끌어 놓으세요.</p>
+                            <button type="button" class="algorithm-photo-file moved" data-file-moved hidden><i><span></span></i><span><b>river.webp</b><small>옮겨진 WebP 사진</small></span></button>
+                        </section>
+                    </main>
                 </div>
-                <p data-file-result>사진 파일을 선택하고 과제 사진 폴더로 옮긴 뒤, 폴더 안에서 결과를 확인합니다.</p>
+                <footer data-file-result>왼쪽 위치 목록에서 다운로드 폴더를 먼저 여세요.</footer>
             </div>
-            <div class="algorithm-order-workbench">
-                <div class="algorithm-source" data-algo-source aria-label="순서를 정하지 않은 단계 카드">
-                    <button type="button" draggable="true" data-algo-step="move" data-order="3"><b>과제 사진 폴더로 이동한다</b><small>Move to Assignment Folder</small></button>
-                    <button type="button" draggable="true" data-algo-step="open" data-order="1"><b>다운로드 폴더를 연다</b><small>Open Downloads Folder</small></button>
-                    <button type="button" draggable="true" data-algo-step="verify" data-order="4"><b>과제 사진에는 있고 다운로드에는 없는지 확인한다</b><small>Confirm Destination and Source</small></button>
-                    <button type="button" draggable="true" data-algo-step="select" data-order="2"><b>사진 파일을 선택한다</b><small>Select the Photo File</small></button>
-                </div>
-                <ol class="algorithm-drop-list" data-algo-slots aria-label="정한 알고리즘 순서">
-                    <li data-algo-slot="0"><span>1</span><em>첫 단계 놓기</em></li>
-                    <li data-algo-slot="1"><span>2</span><em>둘째 단계 놓기</em></li>
-                    <li data-algo-slot="2"><span>3</span><em>셋째 단계 놓기</em></li>
-                    <li data-algo-slot="3"><span>4</span><em>마지막 단계 놓기</em></li>
-                </ol>
-            </div>
-            <div class="algorithm-controller"><button type="button" data-algo-check disabled>순서 확인 <small>Check Order</small></button><button type="button" data-algo-reset>처음부터 <small>Reset</small></button><p data-algo-status role="status" aria-live="polite">카드를 누르거나 번호 칸으로 끌어 네 단계를 모두 놓으세요. 확인 전에는 정답을 판단하지 않습니다.</p></div>
+            <ol class="algorithm-runtime-trace" aria-label="실제로 실행한 알고리즘 기록">
+                <li data-algo-trace="open"><b>1</b><span>다운로드 열기<small>Open Downloads</small></span><em>대기</em></li>
+                <li data-algo-trace="select"><b>2</b><span>river.webp 선택<small>Select File</small></span><em>대기</em></li>
+                <li data-algo-trace="destination"><b>3</b><span>목적지 정하기<small>Choose Destination</small></span><em>대기</em></li>
+                <li data-algo-trace="move"><b>4</b><span>파일 이동<small>Move File</small></span><em>대기</em></li>
+                <li data-algo-trace="verify"><b>5</b><span>출발·도착 확인<small>Verify Both Locations</small></span><em>대기</em></li>
+            </ol>
+            <div class="algorithm-controller"><button type="button" data-algo-verify disabled>결과 확인 <small>Verify Move</small></button><p data-algo-status role="status" aria-live="polite">실행 전입니다. 알고리즘은 컴퓨터가 실행할 수 있을 만큼 대상과 순서가 분명해야 합니다.</p></div>
         </section>
     `);
 
     renderers.j02 = (spec) => figure(spec, "visual-control-path-lab", `
         <section class="control-path-lab" data-control-lab data-control-stage="ready" data-result="pending">
-            <div class="mini-quiz-program">
-                <header><b>세 문제 퀴즈 <small>Three-question Quiz</small></b><span>문제 <strong data-control-number>1</strong>/3 · 점수 <strong data-control-score>0</strong></span></header>
-                <div class="mini-quiz-question">
-                    <p data-control-question>2 + 3은 얼마일까요?</p>
-                    <div class="mini-quiz-choices" data-control-choices>
-                        <button type="button" data-control-choice="A"><b>A</b><span data-control-option="A">4</span></button>
-                        <button type="button" data-control-choice="B"><b>B</b><span data-control-option="B">5</span></button>
+            <header class="control-lab-heading">
+                <div><h3>로봇을 별과 같은 칸에 놓고 로봇을 누른다 <small>Place the Robot on the Star, Then Click It</small></h3><p>화살표는 위치만 바꿉니다. 로봇을 누르는 순간 프로그램이 조건을 검사하고 서로 다른 명령을 실행합니다.</p></div>
+                <div class="control-scoreboard"><span>모은 별 <small>Collected</small></span><strong><b data-control-score>0</b> / 3</strong></div>
+            </header>
+            <div class="control-program-stage">
+                <div class="control-world" data-control-world style="--robot-lane:0;--star-lane:2">
+                    <div class="control-sky" aria-hidden="true"><span></span><span></span><span></span></div>
+                    <div class="control-lanes" aria-hidden="true"><span>왼쪽 <small>Left</small></span><span>가운데 <small>Center</small></span><span>오른쪽 <small>Right</small></span></div>
+                    <div class="control-star" data-control-star aria-label="모아야 할 별">
+                        <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 5 61 37 95 38 68 58 77 91 50 72 23 91 32 58 5 38 39 37Z"/></svg>
                     </div>
-                    <button type="button" class="control-next" data-control-next hidden>다음 문제 <small>Next Question</small></button>
+                    <button type="button" class="control-robot" data-control-robot aria-label="로봇을 눌러 조건 검사">
+                        <svg viewBox="0 0 120 140" aria-hidden="true"><path class="antenna" d="M60 10v18M48 10h24"/><rect class="head" x="20" y="28" width="80" height="58" rx="16"/><circle cx="43" cy="55" r="7"/><circle cx="77" cy="55" r="7"/><path class="mouth" d="M42 71h36"/><rect class="body" x="31" y="89" width="58" height="37" rx="10"/><path class="limb" d="M31 99 13 113M89 99l18 14M45 126v10M75 126v10"/></svg>
+                        <span>로봇 누르기<small>Click Robot</small></span>
+                    </button>
+                    <div class="control-result-burst" data-control-burst aria-hidden="true"></div>
+                </div>
+                <div class="control-position-panel">
+                    <div class="control-move-buttons" aria-label="로봇 위치 바꾸기">
+                        <button type="button" data-control-move="-1">← <span>왼쪽</span><small>Move Left</small></button>
+                        <button type="button" data-control-move="1"><span>오른쪽</span> →<small>Move Right</small></button>
+                    </div>
+                    <dl class="control-state-evidence">
+                        <div><dt>로봇 칸 <small>Robot Lane</small></dt><dd data-control-robot-lane>왼쪽</dd></div>
+                        <div><dt>별 칸 <small>Star Lane</small></dt><dd data-control-star-lane>오른쪽</dd></div>
+                        <div><dt>조건 결과 <small>Condition</small></dt><dd data-control-condition>아직 검사 안 함</dd></div>
+                    </dl>
                 </div>
             </div>
-            <ol class="program-flow" aria-label="답을 눌렀을 때 프로그램이 처리하는 순서">
-                <li data-flow-step="event"><b>1</b><span>답 버튼을 누른다<small>Event</small></span></li>
-                <li data-flow-step="condition"><b>2</b><span>고른 답이 정답인가?<small>Condition</small></span></li>
-                <li class="flow-branch" data-flow-step="branch"><b>3</b><span><i>예: 점수 +1</i><i>아니요: 점수 유지</i><small>Branch</small></span></li>
-                <li data-flow-step="loop"><b>4</b><span>남은 문제가 있으면 다음 문제로 돌아간다<small>Loop</small></span></li>
+            <ol class="program-flow" aria-label="로봇을 눌렀을 때 실행되는 프로그램 순서">
+                <li data-flow-step="event"><b>1</b><span>로봇을 누름<small>Event</small></span><em>대기</em></li>
+                <li data-flow-step="condition"><b>2</b><span>로봇 칸 = 별 칸?<small>Condition</small></span><em>대기</em></li>
+                <li class="flow-branch" data-flow-step="branch"><b>3</b><span><i>참: 별 +1</i><i>거짓: 그대로</i><small>Branch</small></span><em>대기</em></li>
+                <li data-flow-step="loop"><b>4</b><span>별이 남으면 새 위치로 반복<small>Loop</small></span><em>대기</em></li>
             </ol>
             <div class="control-observation">
-                <p class="lab-readout" data-control-status aria-live="polite">보기 하나를 누르면 이벤트가 생기고, 프로그램이 조건을 검사해 서로 다른 길로 움직입니다.</p>
-                <ol class="loop-trace" data-loop-trace aria-label="프로그램 실행 기록"><li>아직 답 버튼을 누르지 않았습니다.</li></ol>
+                <p class="lab-readout" data-control-status aria-live="polite">현재 로봇은 왼쪽, 별은 오른쪽에 있습니다. 위치를 바꾸고 로봇을 눌러 보세요.</p>
+                <ol class="loop-trace" data-loop-trace aria-label="프로그램 실행 기록"><li>실행 기록이 여기에 쌓입니다.</li></ol>
                 <button type="button" data-control-reset>처음부터 <small>Reset</small></button>
-            </div>
+                </div>
+            </details>
         </section>
     `);
 
@@ -1301,57 +1442,113 @@
         const driverButton = lab.querySelector("[data-driver-toggle]");
         const driverLabel = lab.querySelector("[data-driver-label]");
         const deviceName = lab.querySelector("[data-port-device-name]");
-        const connectorName = lab.querySelector("[data-port-connector-name]");
+        const deviceEnglish = lab.querySelector("[data-port-device-english]");
+        const cableName = lab.querySelector("[data-port-cable-name]");
+        const output = lab.querySelector("[data-port-output]");
+        const driverRow = lab.querySelector("[data-port-driver-row]");
+        const dropzone = lab.querySelector("[data-port-dropzone]");
+        const checkItems = Object.fromEntries(Array.from(lab.querySelectorAll("[data-port-check]")).map((item) => [item.dataset.portCheck, item]));
         const devices = {
-            usb: { name: "USB 메모리", connector: "USB-A 플러그", port: "usb-a", needsDriver: false, description: "USB 대용량 저장 장치는 운영체제의 기본 드라이버로 인식되는 경우가 많습니다." },
-            monitor: { name: "외부 모니터", connector: "HDMI 플러그", port: "hdmi", needsDriver: false, description: "HDMI는 화면과 소리 신호를 보낼 수 있지만, 전원은 모니터에 따로 연결하는 경우가 많습니다." },
-            tablet: { name: "그림 태블릿", connector: "USB-C 플러그", port: "usb-c", needsDriver: true, description: "케이블이 연결되어도 전용 드라이버가 없으면 펜 압력 같은 기능을 운영체제가 해석하지 못할 수 있습니다." }
+            monitor: { name: "외부 모니터", english: "External Monitor", required: "video", needsDriver: false },
+            tablet: { name: "그림 태블릿", english: "Drawing Tablet", required: "data", needsDriver: true }
         };
-        let device = "usb";
-        let socket = "usb-a";
+        const cables = {
+            charge: { name: "충전 전용 케이블", power: true, data: false, video: false },
+            data: { name: "데이터 케이블", power: true, data: true, video: false },
+            video: { name: "영상 지원 케이블", power: true, data: true, video: true }
+        };
+        let device = "monitor";
+        let cable = "charge";
         let driverInstalled = true;
+        const setCheck = (key, state, label) => {
+            const item = checkItems[key];
+            if (!item) return;
+            item.dataset.state = state;
+            item.querySelector("em").textContent = label;
+        };
+        const resetChecks = () => {
+            ["shape", "power", "data", "video"].forEach((key) => setCheck(key, "idle", "시험 전"));
+            setCheck("driver", device === "tablet" ? "idle" : "neutral", device === "tablet" ? "시험 전" : "해당 없음");
+            output.textContent = "연결 시험 전";
+        };
         const setDevice = (next) => {
             device = next;
             lab.dataset.portDevice = device;
             lab.dataset.portState = "ready";
             lab.querySelectorAll("[data-port-device]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.portDevice === device)));
             deviceName.textContent = devices[device].name;
-            connectorName.textContent = devices[device].connector;
-            status.innerHTML = "<b>" + devices[device].name + ":</b> " + devices[device].description + " 맞는 포트를 고르고 연결해 보세요.";
+            deviceEnglish.textContent = devices[device].english;
+            driverRow.hidden = !devices[device].needsDriver;
+            resetChecks();
+            status.innerHTML = device === "monitor"
+                ? "<b>외부 모니터:</b> 세 케이블은 모두 USB-C 모양이라 꽂힙니다. 그러나 화면을 보내려면 영상 신호를 지원하는 케이블과 포트가 필요합니다."
+                : "<b>그림 태블릿:</b> 펜 좌표를 보내려면 데이터가 지나가야 하고, 운영체제가 그 신호를 해석할 드라이버도 필요합니다.";
         };
-        const setSocket = (next) => {
-            socket = next;
-            lab.querySelectorAll("[data-port-socket]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.portSocket === socket)));
+        const setCable = (next) => {
+            cable = next;
+            lab.dataset.portCable = cable;
             lab.dataset.portState = "ready";
+            lab.querySelectorAll("[data-port-cable-choice]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.portCableChoice === cable)));
+            cableName.textContent = cables[cable].name;
+            resetChecks();
         };
         const setDriver = (installed) => {
             driverInstalled = installed;
             driverButton.setAttribute("aria-pressed", String(installed));
             driverLabel.textContent = installed ? "설치됨" : "없음";
             lab.dataset.portState = "ready";
+            resetChecks();
         };
         const connect = () => {
-            const selected = devices[device];
-            if (socket !== selected.port) {
-                lab.dataset.portState = "mismatch";
-                status.innerHTML = "<b>연결할 수 없음:</b> " + selected.connector + "와 선택한 포트의 물리적 모양·규격이 맞지 않습니다. 억지로 밀어 넣지 않습니다.";
+            const selectedDevice = devices[device];
+            const selectedCable = cables[cable];
+            setCheck("shape", "pass", "꽂힘 ✓");
+            setCheck("power", selectedCable.power ? "pass" : "fail", selectedCable.power ? "지나감 ✓" : "없음");
+            setCheck("data", selectedCable.data ? "pass" : "fail", selectedCable.data ? "지나감 ✓" : "막힘");
+            setCheck("video", selectedCable.video ? "pass" : "fail", selectedCable.video ? "지나감 ✓" : "막힘");
+            setCheck("driver", selectedDevice.needsDriver ? (driverInstalled ? "pass" : "fail") : "neutral", selectedDevice.needsDriver ? (driverInstalled ? "설치됨 ✓" : "없음") : "해당 없음");
+            if (!selectedCable[selectedDevice.required]) {
+                lab.dataset.portState = "signal-blocked";
+                output.textContent = device === "monitor" ? "신호 없음" : "펜 입력 없음";
+                status.innerHTML = `<b>모양은 맞지만 기능이 부족합니다:</b> ${selectedCable.name}에는 ${selectedDevice.required === "video" ? "영상" : "데이터"} 신호가 지나가는 연결선과 규격이 없습니다. USB-C라는 겉모양만으로 기능을 결정할 수 없습니다.`;
                 return;
             }
-            if (selected.needsDriver && !driverInstalled) {
+            if (selectedDevice.needsDriver && !driverInstalled) {
                 lab.dataset.portState = "unknown";
-                status.innerHTML = "<b>케이블 연결됨 · 장치 인식 안 됨:</b> USB-C 규격은 맞지만 그림 태블릿의 신호를 해석할 전용 드라이버가 없습니다.";
+                output.textContent = "알 수 없는 장치";
+                status.innerHTML = "<b>데이터는 도착했지만 해석하지 못했습니다:</b> 케이블은 펜 좌표를 보냈지만 운영체제에 그림 태블릿 드라이버가 없어 입력 장치의 신호로 바꾸지 못했습니다.";
                 return;
             }
             lab.dataset.portState = "recognized";
-            status.innerHTML = "<b>장치 인식됨:</b> 플러그와 포트 규격이 맞고 운영체제가 필요한 드라이버로 " + selected.name + "의 신호를 해석했습니다.";
+            output.textContent = device === "monitor" ? "화면 표시됨" : "펜 선이 그려짐";
+            status.innerHTML = device === "monitor"
+                ? "<b>화면 표시 성공:</b> 같은 USB-C 모양 가운데 영상 신호까지 지원하는 케이블을 사용해 노트북의 픽셀 데이터가 모니터로 전달되었습니다."
+                : "<b>펜 입력 성공:</b> 데이터 케이블로 좌표가 도착했고 드라이버가 그 신호를 앱이 사용할 펜 입력으로 해석했습니다.";
         };
         lab.querySelectorAll("[data-port-device]").forEach((button) => button.addEventListener("click", () => setDevice(button.dataset.portDevice)));
-        lab.querySelectorAll("[data-port-socket]").forEach((button) => button.addEventListener("click", () => setSocket(button.dataset.portSocket)));
+        lab.querySelectorAll("[data-port-cable-choice]").forEach((button) => {
+            button.addEventListener("click", () => setCable(button.dataset.portCableChoice));
+            button.addEventListener("dragstart", (event) => event.dataTransfer?.setData("text/plain", button.dataset.portCableChoice));
+        });
+        dropzone.addEventListener("dragover", (event) => { event.preventDefault(); dropzone.classList.add("is-drop-target"); });
+        dropzone.addEventListener("dragleave", () => dropzone.classList.remove("is-drop-target"));
+        dropzone.addEventListener("drop", (event) => {
+            event.preventDefault();
+            dropzone.classList.remove("is-drop-target");
+            const droppedCable = event.dataTransfer?.getData("text/plain");
+            if (cables[droppedCable]) setCable(droppedCable);
+        });
+        dropzone.addEventListener("click", connect);
+        dropzone.addEventListener("keydown", (event) => {
+            if (event.key !== "Enter" && event.key !== " ") return;
+            event.preventDefault();
+            connect();
+        });
         driverButton.addEventListener("click", () => setDriver(!driverInstalled));
         lab.querySelector("[data-port-connect]").addEventListener("click", connect);
-        lab.querySelector("[data-port-reset]").addEventListener("click", () => { setSocket("usb-a"); setDriver(true); setDevice("usb"); });
-        setDevice("usb");
-        setSocket("usb-a");
+        lab.querySelector("[data-port-reset]").addEventListener("click", () => { setDriver(true); setCable("charge"); setDevice("monitor"); });
+        setDevice("monitor");
+        setCable("charge");
         setDriver(true);
     }
 
@@ -1509,9 +1706,10 @@
         const initialSource = source.value;
         const initialTarget = target.value;
         let clipboard = "";
-        const selectedSourceText = () => source.value.slice(source.selectionStart, source.selectionEnd);
-        const copy = (cut) => {
-            const selected = selectedSourceText();
+        const editorName = (editor) => editor === source ? "원문" : "붙여넣을 문서";
+        const selectedText = (editor) => editor.value.slice(editor.selectionStart, editor.selectionEnd);
+        const copy = (editor, cut) => {
+            const selected = selectedText(editor);
             if (!selected) {
                 status.innerHTML = "<b>선택이 필요합니다:</b> 복사하거나 잘라낼 글자를 먼저 드래그하거나 선택 단추로 고르세요.";
                 return;
@@ -1519,23 +1717,23 @@
             clipboard = selected;
             clipboardOutput.textContent = selected;
             if (cut) {
-                const start = source.selectionStart;
-                source.setRangeText("", source.selectionStart, source.selectionEnd, "start");
-                source.setSelectionRange(start, start);
-                status.innerHTML = "<b>잘라내기:</b> 선택한 ‘" + selected + "’를 원문에서 없애고 그 사본을 클립보드에 임시로 두었습니다.";
+                const start = editor.selectionStart;
+                editor.setRangeText("", editor.selectionStart, editor.selectionEnd, "start");
+                editor.setSelectionRange(start, start);
+                status.innerHTML = "<b>잘라내기:</b> " + editorName(editor) + "에서 선택한 ‘" + selected + "’를 없애고 그 사본을 클립보드에 임시로 두었습니다.";
             } else {
-                status.innerHTML = "<b>복사:</b> 원문은 그대로 두고 선택한 ‘" + selected + "’의 사본을 클립보드에 임시로 두었습니다.";
+                status.innerHTML = "<b>복사:</b> " + editorName(editor) + "은 그대로 두고 선택한 ‘" + selected + "’의 사본을 클립보드에 임시로 두었습니다.";
             }
         };
-        const paste = () => {
+        const paste = (editor) => {
             if (!clipboard) {
                 status.innerHTML = "<b>클립보드가 비어 있습니다:</b> 먼저 원문을 선택해 복사하거나 잘라내세요.";
                 return;
             }
-            target.focus();
-            const start = target.selectionStart;
-            target.setRangeText(clipboard, target.selectionStart, target.selectionEnd, "end");
-            status.innerHTML = "<b>붙여넣기:</b> 클립보드의 ‘" + clipboard + "’ 사본을 대상 문서의 " + (start + 1) + "번째 위치부터 넣었습니다. 클립보드 내용은 남아 다시 붙여넣을 수 있습니다.";
+            editor.focus();
+            const start = editor.selectionStart;
+            editor.setRangeText(clipboard, editor.selectionStart, editor.selectionEnd, "end");
+            status.innerHTML = "<b>붙여넣기:</b> 클립보드의 ‘" + clipboard + "’ 사본을 " + editorName(editor) + "의 " + (start + 1) + "번째 위치부터 넣었습니다. 클립보드 내용은 남아 다시 붙여넣을 수 있습니다.";
         };
         const reset = () => {
             source.value = initialSource;
@@ -1558,19 +1756,21 @@
         }));
         lab.querySelectorAll("[data-clipboard-action]").forEach((button) => button.addEventListener("click", () => {
             const action = button.dataset.clipboardAction;
-            if (action === "copy") copy(false);
-            if (action === "cut") copy(true);
-            if (action === "paste") paste();
+            if (action === "copy") copy(source, false);
+            if (action === "cut") copy(source, true);
+            if (action === "paste") paste(target);
             if (action === "reset") reset();
         }));
         lab.addEventListener("keydown", (event) => {
             if (!(event.ctrlKey || event.metaKey)) return;
+            const editor = event.target;
+            if (editor !== source && editor !== target) return;
             const key = event.key.toLowerCase();
             if (!["c", "x", "v"].includes(key)) return;
             event.preventDefault();
-            if (key === "c") copy(false);
-            if (key === "x") copy(true);
-            if (key === "v") paste();
+            if (key === "c") copy(editor, false);
+            if (key === "x") copy(editor, true);
+            if (key === "v") paste(editor);
         });
         reset();
     }
@@ -1579,60 +1779,143 @@
         const lab = document.querySelector("[data-os-lab]");
         if (!lab) return;
         const copy = {
-            windows: ["Windows의 파일 탐색기", "작업 표시줄과 창을 이용하고, 파일 탐색기에서 드라이브와 폴더를 찾습니다.", "파일 탐색기 → 사진", "파일을 선택한 뒤 F2 또는 ‘이름 바꾸기’를 사용합니다."],
-            chromeos: ["ChromeOS의 파일 앱", "화면 아래 선반과 파일 앱을 이용하고, 내 파일과 Google Drive를 함께 찾을 수 있습니다.", "파일 앱 → 내 파일 → 이미지", "파일을 선택한 뒤 메뉴의 ‘이름 바꾸기’를 사용합니다."],
-            android: ["Android의 내 파일 앱", "손가락으로 큰 항목을 누르며, 이미지·다운로드·클라우드 위치를 찾습니다.", "내 파일 → 이미지", "파일을 길게 눌러 선택하고 더보기의 ‘이름 변경’을 사용합니다."],
-            ios: ["iPhone iOS의 파일 앱", "좁은 화면의 파일 앱에서 iCloud Drive, 나의 iPhone, 다운로드 같은 위치를 큰 항목으로 엽니다.", "파일 앱 → 나의 iPhone → 사진", "파일을 길게 눌러 메뉴의 ‘이름 변경’을 사용합니다."],
-            ipados: ["iPadOS의 파일 앱", "넓은 화면의 왼쪽 위치 목록에서 iCloud Drive와 나의 iPad를 고르고 오른쪽에서 파일을 다룹니다.", "파일 앱 → 나의 iPad → 사진", "파일을 길게 눌러 메뉴의 ‘이름 변경’을 사용합니다."]
+            windows: { name: "Windows", app: "파일 탐색기", path: "내 PC › 사진", location: "사진", english: "Pictures", sidebar: "<b>홈</b><span>내 PC</span><strong>사진</strong><span>다운로드</span>", method: "Rename · F2", intro: "파일 탐색기의 사진 폴더를 누르세요." },
+            chromeos: { name: "ChromeOS", app: "파일", path: "내 파일 › 이미지", location: "이미지", english: "Images", sidebar: "<b>최근</b><strong>내 파일</strong><span>다운로드</span><span>Google Drive</span>", method: "Rename · Menu", intro: "파일 앱의 이미지 위치를 누르세요." },
+            android: { name: "Android", app: "내 파일", path: "내장 저장공간 › 이미지", location: "이미지", english: "Images", sidebar: "<b>최근 파일</b><strong>이미지</strong><span>다운로드</span><span>Drive</span>", method: "Rename · Long Press", intro: "내 파일 앱의 이미지 위치를 탭하세요." },
+            ios: { name: "iOS", app: "파일", path: "나의 iPhone › 사진", location: "사진", english: "Photos", sidebar: "<b>최근 항목</b><span>iCloud Drive</span><strong>나의 iPhone</strong><span>다운로드</span>", method: "Rename · Touch and Hold", intro: "파일 앱에서 나의 iPhone의 사진 위치를 탭하세요." },
+            ipados: { name: "iPadOS", app: "파일", path: "나의 iPad › 사진", location: "사진", english: "Photos", sidebar: "<b>최근 항목</b><span>iCloud Drive</span><strong>나의 iPad</strong><span>다운로드</span>", method: "Rename · Touch and Hold", intro: "왼쪽 위치 목록에서 나의 iPad를 확인하고 사진 위치를 탭하세요." }
         };
-        const task = lab.querySelector("[data-os-task]");
-        const taskRoute = lab.querySelector("[data-os-task-route]");
-        const taskName = lab.querySelector("[data-os-task-name]");
-        const taskState = lab.querySelector("[data-os-task-state]");
-        const taskStatus = lab.querySelector("[data-os-task-status]");
-        const taskActions = Object.fromEntries(Array.from(lab.querySelectorAll("[data-os-task-action]")).map((button) => [button.dataset.osTaskAction, button]));
+        const appTitle = lab.querySelector("[data-os-app-title]");
+        const path = lab.querySelector("[data-os-path]");
+        const sidebar = lab.querySelector("[data-os-sidebar]");
+        const locationName = lab.querySelector("[data-os-location-name]");
+        const locationEnglish = lab.querySelector("[data-os-location-english]");
+        const openLocation = lab.querySelector("[data-os-open-location]");
+        const fileRow = lab.querySelector("[data-os-file-row]");
+        const fileButton = lab.querySelector("[data-os-file]");
+        const fileName = lab.querySelector("[data-os-file-name]");
+        const fileMenu = lab.querySelector("[data-os-file-menu]");
+        const contextMenu = lab.querySelector("[data-os-context-menu]");
+        const renameCommand = lab.querySelector("[data-os-rename-command]");
+        const renameMethod = lab.querySelector("[data-os-rename-method]");
+        const renameForm = lab.querySelector("[data-os-rename-form]");
+        const renameInput = lab.querySelector("[data-os-rename-input]");
+        const resetButton = lab.querySelector("[data-os-reset]");
+        const backButton = lab.querySelector("[data-os-back]");
+        const hint = lab.querySelector("[data-os-screen-hint]");
+        const status = lab.querySelector("[data-os-status]");
+        const ledgerName = lab.querySelector("[data-os-name]");
+        const ledgerLocation = lab.querySelector("[data-os-current-location]");
+        const ledgerFile = lab.querySelector("[data-os-current-file]");
+        const ledgerAction = lab.querySelector("[data-os-current-action]");
         let currentOs = "windows";
         let taskStage = 0;
+        let renamedFile = "바다.jpg";
+        let holdTimer = 0;
+        let holdOpened = false;
+        const actionNames = ["위치 열기 전", "폴더 열림", "파일 선택", "파일 메뉴 열림", "새 이름 입력", "이름 변경 완료"];
         const renderTask = () => {
-            task.dataset.osTaskStage = String(taskStage);
-            taskRoute.textContent = copy[currentOs][2];
-            taskName.textContent = taskStage >= 3 ? "바다_여행.jpg" : "바다.jpg";
-            taskState.textContent = ["폴더를 열기 전", "사진 위치를 열었음", "파일을 선택했음", "새 이름을 확인함"][taskStage];
-            taskActions.open.disabled = taskStage !== 0;
-            taskActions.select.disabled = taskStage !== 1;
-            taskActions.rename.disabled = taskStage !== 2;
+            const item = copy[currentOs];
+            lab.dataset.osTaskStage = String(taskStage);
+            fileRow.hidden = taskStage < 1;
+            fileButton.classList.toggle("is-selected", taskStage >= 2);
+            fileButton.setAttribute("aria-pressed", String(taskStage >= 2));
+            fileMenu.disabled = taskStage < 2;
+            contextMenu.hidden = taskStage !== 3;
+            renameForm.hidden = taskStage !== 4;
+            backButton.disabled = taskStage === 0;
+            fileName.textContent = renamedFile;
+            ledgerName.textContent = item.name;
+            ledgerLocation.textContent = item.path;
+            ledgerFile.textContent = renamedFile;
+            ledgerAction.textContent = actionNames[taskStage];
+            hint.textContent = taskStage === 0 ? item.intro
+                : taskStage === 1 ? `${renamedFile} 파일을 눌러 선택하세요.`
+                    : taskStage === 2 ? "선택한 파일 옆의 ⋯ 메뉴를 여세요. 휴대기기에서는 파일을 길게 눌러도 됩니다."
+                        : taskStage === 3 ? "화면 안 메뉴에서 이름 바꾸기를 고르세요."
+                            : taskStage === 4 ? "새 이름을 확인한 뒤 적용하세요. 확장자 .jpg도 파일 이름의 일부입니다."
+                                : `${renamedFile} 이름이 이 저장 위치의 파일 기록에 반영되었습니다.`;
         };
         const resetTask = () => {
             taskStage = 0;
+            renamedFile = "바다.jpg";
+            renameInput.value = "바다_여행.jpg";
             renderTask();
-            taskStatus.textContent = "먼저 " + copy[currentOs][2] + " 위치를 여세요.";
+            status.innerHTML = `<b>${copy[currentOs].name}:</b> ${copy[currentOs].intro} 운영체제가 파일을 보관하는 장치 자체는 아니며, 저장 장치의 파일을 찾고 다루는 화면과 규칙을 제공합니다.`;
         };
         const choose = (name) => {
             currentOs = name;
             lab.dataset.os = name;
             lab.querySelectorAll("[data-os-choice]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.osChoice === name)));
-            lab.querySelectorAll("[data-os-panel]").forEach((panel) => { panel.hidden = panel.dataset.osPanel !== name; });
-            lab.querySelector("[data-os-name]").textContent = copy[name][0];
-            lab.querySelector("[data-os-description]").textContent = copy[name][1];
+            appTitle.textContent = copy[name].app;
+            path.textContent = copy[name].path;
+            sidebar.innerHTML = copy[name].sidebar;
+            locationName.textContent = copy[name].location;
+            locationEnglish.textContent = copy[name].english;
+            renameMethod.textContent = copy[name].method;
             resetTask();
         };
         lab.querySelectorAll("[data-os-choice]").forEach((button) => button.addEventListener("click", () => choose(button.dataset.osChoice)));
-        taskActions.open.addEventListener("click", () => {
+        openLocation.addEventListener("click", () => {
             taskStage = 1;
             renderTask();
-            taskStatus.textContent = copy[currentOs][2] + " 위치를 열었습니다. 이제 같은 바다.jpg를 선택하세요.";
+            status.innerHTML = `<b>위치 열림:</b> ${copy[currentOs].path}에 들어왔습니다. 이제 화면 안의 바다.jpg를 선택하세요.`;
         });
-        taskActions.select.addEventListener("click", () => {
+        fileButton.addEventListener("click", () => {
+            if (holdOpened) { holdOpened = false; return; }
+            if (taskStage < 1) return;
             taskStage = 2;
             renderTask();
-            taskStatus.textContent = "바다.jpg를 선택했습니다. " + copy[currentOs][3];
+            status.innerHTML = `<b>파일 선택:</b> ${renamedFile}를 선택했습니다. ${copy[currentOs].method} 방식으로 이름 바꾸기 명령을 찾습니다.`;
         });
-        taskActions.rename.addEventListener("click", () => {
+        fileButton.addEventListener("keydown", (event) => {
+            if (event.key !== "F2" || currentOs !== "windows" || taskStage < 2) return;
+            event.preventDefault();
+            taskStage = 4;
+            renderTask();
+            renameInput.focus();
+            renameInput.select();
+        });
+        fileButton.addEventListener("pointerdown", (event) => {
+            if (!["android", "ios", "ipados"].includes(currentOs) || taskStage < 1) return;
+            holdOpened = false;
+            holdTimer = window.setTimeout(() => {
+                taskStage = 3;
+                holdOpened = true;
+                renderTask();
+                status.innerHTML = "<b>길게 누르기 인식:</b> 손을 뗄 때까지 같은 파일을 누르고 있어 파일 명령 메뉴가 열렸습니다.";
+            }, 550);
+            fileButton.setPointerCapture?.(event.pointerId);
+        });
+        ["pointerup", "pointercancel", "pointerleave"].forEach((type) => fileButton.addEventListener(type, () => window.clearTimeout(holdTimer)));
+        fileMenu.addEventListener("click", () => {
+            if (taskStage < 2) return;
             taskStage = 3;
             renderTask();
-            taskStatus.textContent = "이름을 바다_여행.jpg로 바꿨습니다. 운영체제마다 화면과 메뉴는 달라도 같은 파일·경로·이름 상태가 바뀝니다.";
+            status.innerHTML = `<b>파일 메뉴:</b> ${copy[currentOs].method}에 해당하는 화면 메뉴가 열렸습니다. 이름 바꾸기를 누르세요.`;
         });
-        taskActions.reset.addEventListener("click", resetTask);
+        renameCommand.addEventListener("click", () => {
+            taskStage = 4;
+            renderTask();
+            renameInput.focus();
+            renameInput.select();
+            status.innerHTML = "<b>이름 편집:</b> 확장자 .jpg를 포함한 새 파일 이름을 확인하세요.";
+        });
+        renameForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const nextName = renameInput.value.trim();
+            if (!nextName || !nextName.toLowerCase().endsWith(".jpg")) {
+                status.innerHTML = "<b>이름을 적용하지 못했습니다:</b> 파일을 구별할 이름과 JPEG 형식을 나타내는 .jpg 확장자를 함께 남기세요.";
+                renameInput.focus();
+                return;
+            }
+            renamedFile = nextName;
+            taskStage = 5;
+            renderTask();
+            status.innerHTML = `<b>이름 변경 완료:</b> ${copy[currentOs].name} 화면에서 파일 기록의 이름이 ${renamedFile}(으)로 바뀌었습니다. 다른 운영체제를 골라도 같은 종류의 상태 변화를 다시 시험할 수 있습니다.`;
+        });
+        backButton.addEventListener("click", resetTask);
+        resetButton.addEventListener("click", resetTask);
         choose("windows");
     }
 
@@ -2131,7 +2414,6 @@
         const tabList = lab.querySelector("[data-browser-tab-list]");
         const newTabButton = lab.querySelector("[data-browser-new-tab]");
         const backButton = lab.querySelector("[data-browser-back]");
-        const address = lab.querySelector("[data-browser-address]");
         const urlOutput = lab.querySelector("[data-browser-url]");
         const searchForm = lab.querySelector("[data-browser-search-form]");
         const searchInput = lab.querySelector("[data-browser-search-input]");
@@ -2148,8 +2430,23 @@
         const relatedLink = lab.querySelector("[data-page-related-link]");
         const status = lab.querySelector("[data-browser-status]");
         const termButtons = Array.from(lab.querySelectorAll("[data-browser-term]"));
+        const suggestionButtons = Array.from(lab.querySelectorAll("[data-browser-suggestion]"));
         const pageViews = Array.from(lab.querySelectorAll("[data-browser-page]"));
         const catalog = {
+            comet: {
+                site: "어린이 천문 관측소", domain: "astro.local", url: "https://astro.local/comets/tail",
+                title: "혜성의 꼬리는 어떻게 생길까?", summary: "혜성이 태양 가까이 갈 때 얼음과 먼지가 어떻게 꼬리를 만드는지 관측 자료로 설명합니다.",
+                body: "혜성의 얼음이 태양열을 받으면 기체와 먼지가 밖으로 나옵니다. 태양에서 오는 빛과 입자의 흐름이 이 물질을 태양 반대쪽으로 밀어 혜성의 꼬리가 나타납니다.",
+                publisher: "어린이 천문 관측소", author: "별하늘 천문 교육팀", date: "2026-05-18 수정", evidence: "태양 탐사선 공개 사진 4장 · 혜성 꼬리 방향 모형 실험",
+                keywords: ["혜성", "꼬리", "우주", "태양", "얼음", "comet"], related: "moon"
+            },
+            cometRumor: {
+                site: "별빛 자유 게시판", domain: "star-talk.local", url: "https://star-talk.local/posts/comet-tail",
+                title: "혜성은 빨리 달려서 꼬리가 뒤로 생긴다", summary: "작성자의 생각만으로 혜성 꼬리의 방향을 설명한 게시글입니다.",
+                body: "혜성이 아주 빠르게 움직이기 때문에 머리 뒤쪽으로 꼬리가 생긴다고 생각합니다. 관측 자료나 참고 문헌은 따로 적지 않았습니다.",
+                publisher: "운영 기관 표시 없음", author: "별명 ‘밤하늘친구’", date: "게시일 표시 없음", evidence: "관측 사진·자료 출처 링크 없음",
+                keywords: ["혜성", "꼬리", "우주", "태양", "comet"], related: "comet"
+            },
             otter: {
                 site: "동물 관찰 도감", domain: "animals.local", url: "https://animals.local/otter/habitat",
                 title: "수달의 서식지와 생활", summary: "강과 바다 가까이에서 사는 수달의 몸과 생활을 살펴봅니다.",
@@ -2241,8 +2538,20 @@
             if (!resultPage.resultIds.length) {
                 const empty = document.createElement("p");
                 empty.className = "browser-empty-results";
-                empty.textContent = "이 로컬 자료에서는 관련 페이지를 찾지 못했습니다. ‘수달’, ‘강’, ‘달’, ‘날씨’처럼 다시 검색해 보세요.";
-                resultList.append(empty);
+                empty.textContent = "이 검색 모형에는 입력한 주제의 자료가 없습니다. 아래 주제를 골라 실제 결과와 출처를 비교하세요.";
+                const choices = document.createElement("div");
+                choices.className = "browser-empty-actions";
+                ["혜성", "수달", "강", "달", "날씨"].forEach((query) => {
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.textContent = `${query} 검색`;
+                    button.addEventListener("click", () => {
+                        searchInput.value = query;
+                        runSearch(query);
+                    });
+                    choices.append(button);
+                });
+                resultList.append(empty, choices);
                 return;
             }
             resultPage.resultIds.forEach((id) => {
@@ -2337,9 +2646,8 @@
             status.textContent = messages[term];
         };
 
-        searchForm.addEventListener("submit", (event) => {
-            event.preventDefault();
-            const query = searchInput.value.trim();
+        const runSearch = (rawQuery) => {
+            const query = rawQuery.trim();
             if (!query) {
                 status.textContent = "검색할 낱말이나 질문을 입력하세요.";
                 searchInput.focus();
@@ -2350,8 +2658,17 @@
             renderCurrentPage();
             status.textContent = resultIds.length
                 ? `검색 결과는 관련성 순서일 뿐 믿을 만한 순서가 아닙니다. 결과마다 작성자·날짜·근거를 비교한 뒤 원문을 여세요.`
-                : `검색 엔진이 ‘${query}’와 관련된 로컬 페이지를 찾지 못했습니다. 뒤로 가서 다른 검색어를 입력해 보세요.`;
+                : `현재 검색 모형에는 ‘${query}’ 자료가 없습니다. 화면에 표시된 주제 단추를 골라 다시 검색하세요.`;
+        };
+        searchForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            runSearch(searchInput.value);
         });
+        suggestionButtons.forEach((button) => button.addEventListener("click", () => {
+            const query = button.dataset.browserSuggestion;
+            searchInput.value = query;
+            runSearch(query);
+        }));
         newTabButton.addEventListener("click", () => {
             const page = makeHome();
             const newTab = { id: nextTabId, title: page.title, history: [page], historyIndex: 0 };
@@ -2370,12 +2687,6 @@
             status.textContent = `이 탭의 이전 페이지 ‘${currentPage().title}’(으)로 돌아왔습니다. 주소창도 이전 URL로 바뀌었습니다.`;
         });
         termButtons.forEach((button) => button.addEventListener("click", () => highlightTerm(button.dataset.browserTerm)));
-        address.addEventListener("click", () => highlightTerm("address"));
-        address.addEventListener("keydown", (event) => {
-            if (event.key !== "Enter" && event.key !== " ") return;
-            event.preventDefault();
-            highlightTerm("address");
-        });
         renderCurrentPage();
     }
 
@@ -2777,18 +3088,31 @@
         if (!lab) return;
         const status = lab.querySelector("[data-evidence-status]");
         const evidenceChoices = [...lab.querySelectorAll("[data-evidence-choice]")];
+        const evidenceRecords = [...lab.querySelectorAll("[data-evidence-record]")];
         const evidenceCheck = lab.querySelector("[data-evidence-check]");
         const evidenceReset = lab.querySelector("[data-evidence-reset]");
+        const evidenceLabels = {
+            link: "실제 링크 주소가 login-help.example 아래임",
+            secret: "비밀번호와 일회용 인증번호를 함께 요구함",
+            urgency: "10분 제한으로 확인을 재촉함",
+            name: "보이는 이름에 학교 포털이 적혀 있음",
+            time: "오전 10시 18분에 받음"
+        };
         let evidenceSolved = false;
         const updateEvidence = () => {
             const selected = evidenceChoices.filter((button) => button.getAttribute("aria-pressed") === "true");
             evidenceCheck.disabled = selected.length !== 3;
+            evidenceRecords.forEach((record, index) => {
+                const choice = selected[index];
+                record.classList.toggle("is-filled", Boolean(choice));
+                record.querySelector("span").textContent = choice ? evidenceLabels[choice.dataset.evidenceChoice] : "선택 안 함";
+            });
             status.textContent = selected.length === 0
-                ? "각 후보 문장을 학교의 공식 주소와 메시지 원문에 직접 대조하세요."
+                ? "메시지 안에서 근거 세 곳을 누르세요. 세 곳을 모두 고른 뒤에만 전체 판단을 확인할 수 있습니다."
                 : selected.length < 3
                     ? "3개 중 " + selected.length + "개를 골랐습니다. 세 근거를 함께 골라야 확인할 수 있습니다."
                     : selected.length === 3
-                        ? "세 문장을 골랐습니다. 세 문장이 함께 위험을 뒷받침하는지 확인하세요."
+                        ? "세 곳을 골랐습니다. 검사 기록이 모두 위험을 직접 뒷받침하는지 확인하세요."
                         : selected.length + "개를 골랐습니다. 정확히 3개가 되도록 선택을 줄이세요.";
         };
         evidenceChoices.forEach((button) => button.addEventListener("click", () => {
@@ -2810,7 +3134,7 @@
                 return;
             }
             evidenceChoices.forEach((button) => button.classList.remove("is-wrong"));
-            status.textContent = "고른 세 문장 중 하나 이상은 위험을 직접 뒷받침하지 못합니다. 개별 정답 표시는 하지 않습니다. 공식 주소와 메시지 원문을 다시 대조하세요.";
+            status.textContent = "고른 세 곳 중 하나 이상은 위험을 직접 뒷받침하지 못합니다. 개별 정답 표시는 하지 않습니다. 실제 주소·요구 정보·재촉 표현을 다시 대조하세요.";
         });
         evidenceReset.addEventListener("click", () => {
             evidenceSolved = false;
@@ -2945,15 +3269,54 @@
     function setupDebugLab() {
         const lab = document.querySelector("[data-debug-lab]");
         if (!lab) return;
-        const output = lab.querySelector(".photo-output");
+        const output = lab.querySelector("[data-debug-output]");
         const code = lab.querySelector("[data-debug-code]");
         const log = lab.querySelector("[data-debug-log]");
         const run = lab.querySelector("[data-debug-run]");
         const caseButtons = [...lab.querySelectorAll("[data-debug-case]")];
+        const selectedName = lab.querySelector("[data-debug-selected-name]");
         const flowCells = Object.fromEntries([...lab.querySelectorAll("[data-debug-flow]")].map((item) => [item.dataset.debugFlow, item.querySelector("span")]));
         const testedCases = new Set();
         let reproduced = false;
         let exactFixTried = false;
+        const selectInput = (caseName) => {
+            selectedName.textContent = (caseName === "missing" ? "bird" : caseName) + ".webp";
+            caseButtons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.debugCase === caseName)));
+        };
+        const showOutputMessage = (title, detail, state = "message") => {
+            const message = document.createElement("div");
+            message.className = "debug-output-message";
+            const icon = document.createElement("i");
+            icon.setAttribute("aria-hidden", "true");
+            icon.textContent = state === "error" || state === "missing" ? "!" : "▶";
+            const heading = document.createElement("b");
+            heading.textContent = title;
+            const copy = document.createElement("span");
+            copy.textContent = detail;
+            message.append(icon, heading, copy);
+            output.dataset.previewState = state;
+            output.replaceChildren(message);
+        };
+        const showPhotoPreview = (name) => {
+            const sourceButton = caseButtons.find((button) => button.dataset.debugCase === name);
+            if (!sourceButton?.dataset.debugSrc) return;
+            const preview = document.createElement("figure");
+            preview.className = "debug-photo-preview";
+            const image = document.createElement("img");
+            image.src = sourceButton.dataset.debugSrc;
+            image.width = 512;
+            image.height = 512;
+            image.alt = sourceButton.dataset.debugAlt + " 미리보기";
+            const caption = document.createElement("figcaption");
+            const filename = document.createElement("b");
+            filename.textContent = name + ".webp";
+            const path = document.createElement("code");
+            path.textContent = "/pictures/" + name + ".webp";
+            caption.append(filename, path);
+            preview.append(image, caption);
+            output.dataset.previewState = "image";
+            output.replaceChildren(preview);
+        };
         const markStep = (name, complete) => {
             const step = lab.querySelector('[data-debug-step="' + name + '"]');
             if (step) step.classList.toggle("is-complete", complete);
@@ -2968,6 +3331,7 @@
             caseButtons.forEach((button) => { button.disabled = button.dataset.debugCase === "cat"; });
         };
         run.addEventListener("click", () => {
+            selectInput("cat");
             const baseFolder = code.value.trim();
             const normalizedBaseFolder = baseFolder.endsWith("/") ? baseFolder : baseFolder + "/";
             const requestedPath = normalizedBaseFolder + "cat.webp";
@@ -2980,7 +3344,7 @@
                 markStep("retest", false);
                 markStep("regression", false);
                 log.textContent = "오류 재현: 같은 사진 cat.webp를 골랐지만 프로그램이 " + requestedPath + "를 찾아 멈췄습니다. 실제 폴더와 비교하세요.";
-                output.innerHTML = "<span>사진을 불러오지 못했습니다.</span>";
+                showOutputMessage("사진을 불러오지 못했습니다.", "요청한 " + requestedPath + "에 파일이 없습니다.", "error");
                 showDataFlow("선택한 사진 cat.webp", "실제 파일 /pictures/cat.webp", "기본 폴더와 파일 이름 조합 → " + requestedPath, "파일 없음 오류 표시");
                 return;
             }
@@ -2992,14 +3356,14 @@
                 log.textContent = reproduced
                     ? "아직 실제 폴더 /pictures/와 다릅니다. 기본 폴더의 철자를 다시 비교하세요."
                     : "처음 사례를 바꾸지 마세요. 기본 폴더를 /picture/로 되돌려 cat.webp 오류부터 재현하세요.";
-                output.innerHTML = "<span>사진을 불러오지 못했습니다.</span>";
+                showOutputMessage("경로가 일치하지 않습니다.", "프로그램은 " + requestedPath + "를 찾지만 실제 파일은 /pictures/cat.webp에 있습니다.", "error");
                 showDataFlow("선택한 사진 cat.webp", "실제 파일 /pictures/cat.webp", "기본 폴더와 파일 이름 조합 → " + requestedPath, "재현 조건 또는 폴더 이름 확인 필요");
                 return;
             }
             if (!reproduced) {
                 lab.dataset.debugStage = "start";
                 log.textContent = "먼저 처음의 기본 폴더 /picture/와 같은 사진 cat.webp로 실행해 오류를 재현하고 기록하세요.";
-                output.innerHTML = "<span>오류를 재현한 기록이 아직 없습니다.</span>";
+                showOutputMessage("재현 기록이 없습니다.", "기본 폴더를 /picture/로 되돌린 뒤 같은 cat.webp로 먼저 실행하세요.", "message");
                 showDataFlow("선택한 사진 cat.webp", "실제 파일 /pictures/cat.webp", "수정 전에 같은 조건을 재현했는지 확인", "재현 단계로 돌아가기");
                 return;
             }
@@ -3011,8 +3375,10 @@
             const catResult = lab.querySelector('[data-debug-case-result="cat"]');
             catResult.classList.add("is-pass");
             catResult.textContent = "cat.webp: 같은 입력 재시험 통과";
+            const catButton = lab.querySelector('[data-debug-case="cat"]');
+            catButton.classList.add("is-tested");
             log.textContent = "같은 입력 재시험 통과: cat.webp는 그대로 두고 기본 폴더만 고쳐 /pictures/cat.webp를 읽었습니다. 이제 다른 입력도 시험하세요.";
-            output.innerHTML = '<span class="debug-photo debug-photo-cat" aria-label="고양이 사진을 나타내는 예시 그림"><i></i><b>고양이 사진</b></span>';
+            showPhotoPreview("cat");
             showDataFlow("선택한 사진 cat.webp", "실제 파일 /pictures/cat.webp", "기본 폴더 /pictures/ + 파일 이름 → 경로 일치", "cat.webp 사진 표시");
             unlockRegression();
         });
@@ -3026,6 +3392,8 @@
             markStep("retest", false);
             markStep("regression", false);
             caseButtons.forEach((button) => { button.disabled = true; });
+            caseButtons.forEach((button) => button.classList.remove("is-tested"));
+            selectInput("cat");
             exactFixTried = false;
             testedCases.clear();
             lab.querySelectorAll("[data-debug-case-result]").forEach((item) => {
@@ -3036,6 +3404,7 @@
             log.textContent = exact
                 ? "실제 폴더와 같아졌습니다. cat.webp 입력은 그대로 둔 채 다시 실행해 수정 전후를 비교하세요."
                 : "기본 폴더를 편집했습니다. 실제 폴더와 아직 다릅니다. 철자를 다시 비교하세요.";
+            showOutputMessage(exact ? "수정 내용을 실행하기 전입니다." : "경로를 편집하는 중입니다.", exact ? "실행을 눌러 /pictures/cat.webp가 열리는지 확인하세요." : "프로그램 경로와 실제 폴더 /pictures/를 한 글자씩 비교하세요.", exact ? "ready" : "message");
             showDataFlow("선택한 사진 cat.webp", "실제 파일 /pictures/cat.webp", exact ? "요청 경로 " + requestedPath + " · 실행 필요" : "요청 경로 " + requestedPath + " · 아직 다름", "아직 재시험하지 않음");
         });
         caseButtons.forEach((button) => button.addEventListener("click", () => {
@@ -3044,13 +3413,15 @@
             const result = lab.querySelector('[data-debug-case-result="' + name + '"]');
             testedCases.add(name);
             result.classList.add("is-pass");
+            button.classList.add("is-tested");
+            selectInput(name);
             if (name === "missing") {
                 result.textContent = "bird.webp: 없음 오류를 예상대로 처리함";
-                output.innerHTML = "<span>bird.webp는 없으므로 ‘파일을 찾지 못함’을 표시했습니다.</span>";
+                showOutputMessage("bird.webp를 찾지 못했습니다.", "/pictures/ 폴더에는 cat.webp와 dog.webp만 있습니다. 없는 파일을 오류로 처리했습니다.", "missing");
                 showDataFlow("선택한 사진 bird.webp", "실제 파일 없음", "기본 폴더 + 파일 이름 → 존재 여부: 아니요", "파일 없음 오류 표시");
             } else {
                 result.textContent = name + ".webp: 사진 표시 통과";
-                output.innerHTML = '<span class="debug-photo debug-photo-' + name + '" aria-label="' + name + ' 사진을 나타내는 예시 그림"><i></i><b>' + (name === "dog" ? "강아지 사진" : "고양이 사진") + '</b></span>';
+                showPhotoPreview(name);
                 showDataFlow("선택한 사진 " + name + ".webp", "실제 파일 /pictures/" + name + ".webp", "기본 폴더 + 파일 이름 → 존재 여부: 예", (name === "dog" ? "강아지" : "고양이") + " 사진 표시");
             }
             button.disabled = true;
@@ -3062,7 +3433,189 @@
                 log.textContent = "전체 시험 " + testedCases.size + "/3 통과. 남은 입력도 시험하세요.";
             }
         }));
+        selectInput("cat");
         showDataFlow("선택한 사진 cat.webp", "실제 파일 /pictures/cat.webp", "기본 폴더 /picture/ + 파일 이름 → 실행 전", "아직 결과 없음");
+    }
+
+    function setupPointerLab() {
+        const lab = document.querySelector("[data-pointer-lab]");
+        if (!lab) return;
+        const surface = lab.querySelector("[data-pointer-surface]");
+        const screenPointer = lab.querySelector("[data-screen-pointer]");
+        const file = lab.querySelector("[data-pointer-file]");
+        const folder = lab.querySelector("[data-pointer-folder]");
+        const folderFile = lab.querySelector("[data-folder-file]");
+        const folderCount = lab.querySelector("[data-folder-count]");
+        const input = lab.querySelector("[data-pointer-input]");
+        const status = lab.querySelector("[data-pointer-status]");
+        const kind = lab.querySelector("[data-pointer-kind]");
+        const press = lab.querySelector("[data-pointer-press]");
+        const focus = lab.querySelector("[data-pointer-focus]");
+        const location = lab.querySelector("[data-pointer-location]");
+        const resetButton = lab.querySelector("[data-pointer-reset]");
+        const steps = Array.from(lab.querySelectorAll("[data-pointer-step]"));
+        let selected = false;
+        let moved = false;
+        let dragging = false;
+        let dragStarted = false;
+        let suppressClick = false;
+        let startX = 0;
+        let startY = 0;
+
+        const showPointer = (clientX, clientY) => {
+            const rect = surface.getBoundingClientRect();
+            const x = Math.max(8, Math.min(rect.width - 48, clientX - rect.left));
+            const y = Math.max(8, Math.min(rect.height - 70, clientY - rect.top));
+            screenPointer.style.left = `${x}px`;
+            screenPointer.style.top = `${y}px`;
+        };
+        const markSteps = (state) => {
+            const order = ["point", "press", "drag", "drop"];
+            const currentIndex = order.indexOf(state);
+            steps.forEach((item, index) => {
+                item.classList.toggle("is-current", index === currentIndex && state !== "drop");
+                item.classList.toggle("is-complete", state === "drop" || index < currentIndex);
+            });
+        };
+        const render = () => {
+            lab.dataset.fileLocation = moved ? "folder" : "desktop";
+            file.hidden = moved;
+            folderFile.hidden = !moved;
+            folderCount.textContent = moved ? "1개" : "0개";
+            file.setAttribute("aria-pressed", String(selected && !moved));
+            file.classList.toggle("is-selected", selected && !moved);
+            folder.classList.toggle("has-file", moved);
+            location.textContent = moved ? "과제 폴더" : "바탕화면";
+        };
+        const selectFile = () => {
+            if (moved) return;
+            selected = true;
+            lab.dataset.pointerState = "click";
+            kind.textContent = "화살표 포인터";
+            press.textContent = "짧게 눌렀다 놓음";
+            focus.textContent = "관찰.txt 선택";
+            status.textContent = "클릭으로 관찰.txt를 선택했습니다. 테두리만 바뀌었고 파일 위치는 아직 바뀌지 않았습니다.";
+            markSteps("point");
+            render();
+        };
+        const moveFile = () => {
+            if (moved) return;
+            selected = false;
+            moved = true;
+            dragging = false;
+            dragStarted = false;
+            file.style.transform = "";
+            lab.dataset.pointerState = "drop";
+            kind.textContent = "드롭 위치 표시";
+            press.textContent = "폴더 위에서 놓음";
+            focus.textContent = "과제 폴더";
+            status.textContent = "폴더 위에서 놓는 순간 관찰.txt의 위치가 바탕화면에서 과제 폴더로 바뀌었습니다. 이것이 드래그 앤 드롭의 결과입니다.";
+            markSteps("drop");
+            render();
+        };
+        surface.addEventListener("pointermove", (event) => showPointer(event.clientX, event.clientY));
+        file.addEventListener("pointerenter", () => {
+            if (moved || dragging) return;
+            lab.dataset.pointerState = "point";
+            kind.textContent = "화살표 포인터";
+            press.textContent = "누르지 않음";
+            status.textContent = "포인터가 관찰.txt의 화면 위치를 가리킵니다. 가리키기만 해서는 파일이 선택되거나 이동하지 않습니다.";
+            markSteps("point");
+        });
+        file.addEventListener("pointerdown", (event) => {
+            if (moved || event.button > 0) return;
+            dragging = true;
+            dragStarted = false;
+            startX = event.clientX;
+            startY = event.clientY;
+            file.setPointerCapture?.(event.pointerId);
+            lab.dataset.pointerState = "press";
+            press.textContent = "누른 채 유지";
+            focus.textContent = "관찰.txt를 잡음";
+            status.textContent = "파일을 누른 채 잡았습니다. 아직 놓지 않았으므로 저장 위치는 바탕화면 그대로입니다.";
+            markSteps("press");
+        });
+        file.addEventListener("pointermove", (event) => {
+            if (!dragging) return;
+            const dx = event.clientX - startX;
+            const dy = event.clientY - startY;
+            if (Math.hypot(dx, dy) < 7 && !dragStarted) return;
+            dragStarted = true;
+            suppressClick = true;
+            event.preventDefault();
+            file.style.transform = `translate(${dx}px, ${dy}px) scale(.96)`;
+            lab.dataset.pointerState = "drag";
+            press.textContent = "누른 채 이동 중";
+            kind.textContent = "파일과 함께 이동하는 포인터";
+            status.textContent = "누른 상태를 유지한 채 파일을 움직이고 있습니다. 폴더가 강조되면 그 위에서 놓으세요.";
+            const folderRect = folder.getBoundingClientRect();
+            const overFolder = event.clientX >= folderRect.left && event.clientX <= folderRect.right && event.clientY >= folderRect.top && event.clientY <= folderRect.bottom;
+            folder.classList.toggle("is-drop-target", overFolder);
+            markSteps("drag");
+        });
+        const finishPointer = (event) => {
+            if (!dragging) return;
+            dragging = false;
+            folder.classList.remove("is-drop-target");
+            const folderRect = folder.getBoundingClientRect();
+            const dropped = dragStarted && event.clientX >= folderRect.left && event.clientX <= folderRect.right && event.clientY >= folderRect.top && event.clientY <= folderRect.bottom;
+            if (dropped) moveFile();
+            else if (dragStarted) {
+                file.style.transform = "";
+                lab.dataset.pointerState = "click";
+                press.textContent = "놓음";
+                status.textContent = "폴더 밖에서 놓아 파일이 원래 자리로 돌아왔습니다. 드롭 위치가 결과를 결정합니다.";
+                markSteps("drag");
+            } else selectFile();
+            window.setTimeout(() => { suppressClick = false; }, 0);
+        };
+        file.addEventListener("pointerup", finishPointer);
+        file.addEventListener("pointercancel", finishPointer);
+        file.addEventListener("click", () => {
+            if (suppressClick || dragging) return;
+            selectFile();
+        });
+        folder.addEventListener("click", () => {
+            if (selected && !moved) {
+                moveFile();
+                status.textContent = "선택한 관찰.txt에 ‘과제 폴더로 이동’ 명령을 실행했습니다. 키보드에서는 드래그 대신 선택 후 이동 명령을 사용할 수 있습니다.";
+                return;
+            }
+            focus.textContent = "과제 폴더";
+            status.textContent = moved ? "과제 폴더 안에 관찰.txt가 있습니다." : "과제 폴더를 열었습니다. 이동할 파일을 먼저 선택하거나 끌어 놓으세요.";
+        });
+        input.addEventListener("focus", () => {
+            lab.dataset.pointerState = "caret";
+            kind.textContent = "깜박이는 텍스트 커서";
+            press.textContent = "입력 칸 클릭 완료";
+            focus.textContent = "메모 입력 칸";
+            status.textContent = "입력 칸 안의 깜박이는 선은 텍스트 커서입니다. 화살표 포인터와 달리 다음 글자가 들어갈 문장 속 자리를 표시합니다.";
+            markSteps("");
+        });
+        input.addEventListener("input", () => {
+            status.textContent = `텍스트 커서 위치에 글자가 입력되었습니다. 현재 메모는 ${input.value.length}글자입니다.`;
+        });
+        resetButton.addEventListener("click", () => {
+            selected = false;
+            moved = false;
+            dragging = false;
+            dragStarted = false;
+            file.style.transform = "";
+            input.value = "오늘 관찰한 것은 ";
+            lab.dataset.pointerState = "point";
+            kind.textContent = "화살표 포인터";
+            press.textContent = "누르지 않음";
+            focus.textContent = "없음";
+            status.textContent = "화면 위에서 마우스·트랙패드를 움직이면 포인터가 위치를 가리킵니다. 아직 파일은 선택되지 않았습니다.";
+            screenPointer.style.left = "34%";
+            screenPointer.style.top = "31%";
+            markSteps("point");
+            render();
+        });
+        screenPointer.style.left = "34%";
+        screenPointer.style.top = "31%";
+        markSteps("point");
+        render();
     }
 
     function setupGestureLab() {
@@ -3073,6 +3626,9 @@
         const fingerCount = lab.querySelector("[data-finger-count]");
         const pressTime = lab.querySelector("[data-press-time]");
         const moveDistance = lab.querySelector("[data-move-distance]");
+        const photo = surface.querySelector(".photo-card:not(.photo-card-next)");
+        const photoName = photo.querySelector("b");
+        const menuResult = lab.querySelector("[data-gesture-action-result]");
         const copy = {
             tap: [1, "0.1", "0", "<b>탭</b>은 한 손가락으로 짧게 눌렀다 놓는 동작입니다. 앱은 위치와 누른 시간을 함께 봅니다."],
             long: [1, "0.8", "0", "<b>길게 누르기</b>는 같은 위치에서 누르는 시간을 늘린 동작입니다. 보조 메뉴가 열릴 수 있습니다."],
@@ -3162,6 +3718,24 @@
             event.preventDefault();
             present(lab.dataset.gesture || "tap", undefined, true);
         });
+        lab.querySelectorAll("[data-gesture-menu-action]").forEach((button) => button.addEventListener("click", (event) => {
+            event.stopPropagation();
+            const action = button.dataset.gestureMenuAction;
+            surface.dataset.menuAction = action;
+            if (action === "share") {
+                menuResult.textContent = "공유할 사람과 앱을 고르는 화면이 열렸습니다.";
+                status.innerHTML = "<b>공유 명령을 실행했습니다.</b> 사진 자체가 바로 전송된 것이 아니라 다음 대상을 고르는 공유 화면이 열린 상태입니다.";
+            } else if (action === "rename") {
+                photoName.textContent = "과제 사진.webp";
+                menuResult.textContent = "사진 1 → 과제 사진.webp";
+                status.innerHTML = "<b>이름 바꾸기 명령을 실행했습니다.</b> 같은 사진의 표시 이름이 ‘과제 사진.webp’로 바뀌었습니다.";
+            } else {
+                photo.classList.add("is-deleted");
+                photoName.textContent = "최근 삭제됨";
+                menuResult.textContent = "사진이 최근 삭제 항목으로 이동했습니다.";
+                status.innerHTML = "<b>삭제 명령을 실행했습니다.</b> 사진 카드가 최근 삭제 상태로 바뀌고 다음 사진이 앞으로 이동했습니다.";
+            }
+        }));
         present("tap");
     }
 
@@ -3305,6 +3879,8 @@
         if (!lab) return;
         const status = lab.querySelector("[data-display-status]");
         const scaleOutput = lab.querySelector("[data-scale-output]");
+        const openButton = lab.querySelector("[data-scale-open]");
+        const filePreview = lab.querySelector("[data-scale-file-preview]");
         const drawModelGrid = (grid, columns, rows) => {
             grid.replaceChildren();
             grid.style.setProperty("--model-columns", columns);
@@ -3359,6 +3935,15 @@
         };
         lab.querySelectorAll("[data-display-mode]").forEach((button) => button.addEventListener("click", () => setComparison(button.dataset.displayMode)));
         lab.querySelectorAll("[data-ui-scale-choice]").forEach((button) => button.addEventListener("click", () => setDisplayScale(button.dataset.uiScaleChoice)));
+        openButton.addEventListener("click", () => {
+            const opening = filePreview.hidden;
+            filePreview.hidden = !opening;
+            openButton.setAttribute("aria-expanded", String(opening));
+            setBilingualButtonLabel(openButton, opening ? "닫기" : "열기", opening ? "Close" : "Open");
+            status.innerHTML = opening
+                ? "<b>파일 열기:</b> 과제.pdf의 내용 화면이 열렸습니다. 표시 배율과 화면 해상도는 바뀌지 않았습니다."
+                : "<b>파일 닫기:</b> 미리보기만 닫혔습니다. 픽셀 수와 표시 배율은 그대로입니다.";
+        });
         setComparison("same-size");
         setDisplayScale("100");
     }
@@ -4054,189 +4639,277 @@
     function setupAlgorithmLab() {
         const lab = document.querySelector("[data-algorithm-lab]");
         if (!lab) return;
-        const cards = Array.from(lab.querySelectorAll("[data-algo-step]"));
-        const slots = Array.from(lab.querySelectorAll("[data-algo-slot]"));
-        const check = lab.querySelector("[data-algo-check]");
-        const status = lab.querySelector("[data-algo-status]");
-        const emptyFolder = lab.querySelector("[data-file-empty]");
-        const movedPhoto = lab.querySelector("[data-file-moved]");
+        const locationButtons = Array.from(lab.querySelectorAll("[data-algo-location]"));
         const sourcePhoto = lab.querySelector("[data-file-source]");
+        const movedPhoto = lab.querySelector("[data-file-moved]");
+        const sourceEmpty = lab.querySelector("[data-algo-source-empty]");
+        const targetEmpty = lab.querySelector("[data-file-empty]");
+        const note = lab.querySelector("[data-algo-note]");
+        const pdf = lab.querySelector("[data-algo-pdf]");
+        const dropzone = lab.querySelector("[data-algo-dropzone]");
+        const moveButton = lab.querySelector("[data-algo-move]");
+        const verifyButton = lab.querySelector("[data-algo-verify]");
+        const resetButton = lab.querySelector("[data-algo-reset]");
+        const backButton = lab.querySelector("[data-algo-back]");
+        const path = lab.querySelector("[data-algo-path]");
+        const status = lab.querySelector("[data-algo-status]");
         const fileResult = lab.querySelector("[data-file-result]");
-        const cardData = Object.fromEntries(cards.map((card) => [card.dataset.algoStep, { id: card.dataset.algoStep, order: Number(card.dataset.order), title: card.querySelector("b").textContent, english: card.querySelector("small").textContent }]));
-        let placed = [];
-        let draggedId = "";
+        const trace = Array.from(lab.querySelectorAll("[data-algo-trace]"));
+        let stage = 0;
+        let selected = false;
+        let destinationChosen = false;
+        let moved = false;
         const render = () => {
-            cards.forEach((card) => { card.hidden = placed.includes(card.dataset.algoStep); });
-            slots.forEach((slot, index) => {
-                slot.classList.remove("is-error", "is-correct");
-                const old = slot.querySelector("button");
-                if (old) old.remove();
-                const placeholder = slot.querySelector("em");
-                const id = placed[index];
-                placeholder.hidden = Boolean(id);
-                if (!id) return;
-                const data = cardData[id];
-                const button = document.createElement("button");
-                button.type = "button";
-                button.draggable = true;
-                button.dataset.placedStep = id;
-                button.innerHTML = "<b>" + data.title + "</b><small>" + data.english + "</small><i>다시 누르면 빼기</i>";
-                button.addEventListener("click", () => {
-                    placed.splice(index, 1);
-                    lab.dataset.algorithmStage = "0";
-                    status.textContent = "선택한 카드를 뺐습니다. 네 단계가 모두 놓인 뒤 순서를 확인할 수 있습니다.";
-                    render();
-                });
-                button.addEventListener("dragstart", () => { draggedId = id; });
-                slot.append(button);
+            lab.dataset.algorithmStage = String(stage);
+            sourcePhoto.hidden = stage < 1 || moved;
+            note.hidden = stage < 1;
+            pdf.hidden = stage < 1;
+            sourceEmpty.hidden = !moved;
+            targetEmpty.hidden = moved;
+            movedPhoto.hidden = !moved;
+            sourcePhoto.classList.toggle("is-selected", selected && !moved);
+            sourcePhoto.setAttribute("aria-pressed", String(selected && !moved));
+            dropzone.classList.toggle("is-selected", destinationChosen && !moved);
+            moveButton.disabled = !selected || !destinationChosen || moved;
+            verifyButton.disabled = !moved || stage >= 5;
+            backButton.disabled = stage === 0;
+            locationButtons.forEach((button) => button.setAttribute("aria-pressed", String(
+                button.dataset.algoLocation === "downloads" ? stage >= 1 : destinationChosen
+            )));
+            trace.forEach((item, index) => {
+                const complete = stage >= index + 1;
+                item.classList.toggle("is-complete", complete);
+                item.classList.toggle("is-current", !complete && stage === index);
+                item.querySelector("em").textContent = complete ? "완료" : stage === index ? "다음 동작" : "대기";
             });
-            check.disabled = placed.length !== 4;
-        };
-        const insertAt = (id, index) => {
-            placed = placed.filter((item) => item !== id);
-            placed.splice(Math.min(index, placed.length), 0, id);
-            placed = placed.slice(0, 4);
-            lab.dataset.algorithmStage = "0";
-            status.textContent = placed.length === 4
-                ? "네 단계를 모두 놓았습니다. ‘순서 확인’을 눌러 결과를 실행해 보세요."
-                : placed.length + "개 단계를 놓았습니다. 남은 카드를 이어 놓으세요.";
-            render();
         };
         const reset = () => {
-            placed = [];
-            lab.dataset.algorithmStage = "0";
-            emptyFolder.hidden = false;
-            movedPhoto.hidden = true;
-            sourcePhoto.hidden = false;
-            fileResult.textContent = "사진 파일을 선택하고 과제 사진 폴더로 옮긴 뒤, 폴더 안에서 결과를 확인합니다.";
-            status.textContent = "카드를 누르거나 번호 칸으로 끌어 네 단계를 모두 놓으세요. 확인 전에는 정답을 판단하지 않습니다.";
+            stage = 0;
+            selected = false;
+            destinationChosen = false;
+            moved = false;
+            path.textContent = "내 파일";
+            fileResult.textContent = "왼쪽 위치 목록에서 다운로드 폴더를 먼저 여세요.";
+            status.textContent = "실행 전입니다. 알고리즘은 컴퓨터가 실행할 수 있을 만큼 대상과 순서가 분명해야 합니다.";
             render();
         };
-        cards.forEach((card) => {
-            card.addEventListener("click", () => insertAt(card.dataset.algoStep, placed.length));
-            card.addEventListener("dragstart", () => { draggedId = card.dataset.algoStep; });
-        });
-        slots.forEach((slot, index) => {
-            slot.addEventListener("dragover", (event) => event.preventDefault());
-            slot.addEventListener("drop", (event) => {
-                event.preventDefault();
-                if (draggedId) insertAt(draggedId, index);
-                draggedId = "";
-            });
-        });
-        check.addEventListener("click", () => {
-            const firstError = placed.findIndex((id, index) => cardData[id].order !== index + 1);
-            if (firstError >= 0) {
-                slots[firstError].classList.add("is-error");
-                lab.dataset.algorithmStage = "0";
-                status.textContent = (firstError + 1) + "번째 단계에서 앞뒤 결과가 이어지지 않습니다. 정답 카드는 표시하지 않으니 파일 관리자에서 먼저 할 수 있는 일을 보고 순서를 바꿔 보세요.";
+        const openDownloads = () => {
+            if (moved) return;
+            stage = Math.max(stage, 1);
+            path.textContent = "내 파일 › 다운로드";
+            fileResult.textContent = "다운로드 폴더를 열었습니다. 옮길 river.webp를 선택하세요.";
+            status.textContent = "1단계가 실행되었습니다. 시작 위치가 분명해져 다음 동작의 대상 파일을 찾을 수 있습니다.";
+            render();
+        };
+        const chooseDestination = () => {
+            if (!selected || moved) {
+                status.textContent = "먼저 다운로드 폴더를 열고 river.webp를 선택해야 어느 파일을 옮길지 정해집니다.";
                 return;
             }
-            slots.forEach((slot) => slot.classList.add("is-correct"));
-            lab.dataset.algorithmStage = "4";
-            emptyFolder.hidden = true;
-            movedPhoto.hidden = false;
-            sourcePhoto.hidden = true;
-            fileResult.textContent = "river.webp가 과제 사진 폴더에 있고 다운로드 폴더에는 없습니다. 복사가 아니라 이동된 상태입니다.";
-            status.textContent = "실행 가능한 순서입니다. 다운로드 열기 → 사진 선택 → 과제 사진으로 이동 → 목적지에 있고 출발지에 없는지 확인했습니다.";
+            destinationChosen = true;
+            stage = Math.max(stage, 3);
+            path.textContent = "내 파일 › 다운로드　→　과제 사진";
+            fileResult.textContent = "목적지를 과제 사진으로 정했습니다. 이제 이동 명령을 실행할 수 있습니다.";
+            status.textContent = "3단계가 실행되었습니다. ‘어디로’ 옮길지가 정해졌지만 아직 파일의 저장 위치는 바뀌지 않았습니다.";
+            render();
+        };
+        const moveFile = () => {
+            if (!selected) return;
+            destinationChosen = true;
+            moved = true;
+            stage = 4;
+            path.textContent = "내 파일 › 과제 사진";
+            fileResult.textContent = "river.webp가 과제 사진에 나타났습니다. 이동은 복사와 달리 출발 위치에서 원본 항목이 사라져야 합니다.";
+            status.textContent = "4단계가 실행되었습니다. 결과를 바로 믿지 말고 출발 폴더와 도착 폴더를 함께 확인하세요.";
+            render();
+        };
+        locationButtons.forEach((button) => {
+            button.addEventListener("click", () => button.dataset.algoLocation === "downloads" ? openDownloads() : chooseDestination());
         });
-        lab.querySelector("[data-algo-reset]").addEventListener("click", reset);
+        sourcePhoto.addEventListener("click", () => {
+            if (stage < 1 || moved) return;
+            selected = true;
+            stage = Math.max(stage, 2);
+            fileResult.textContent = "river.webp를 선택했습니다. 목적지 과제 사진을 누르거나 파일을 그 칸으로 끌어 놓으세요.";
+            status.textContent = "2단계가 실행되었습니다. 파일 이름과 형식을 확인해 notes.txt나 homework.pdf가 아닌 river.webp를 대상으로 정했습니다.";
+            render();
+        });
+        sourcePhoto.addEventListener("dragstart", (event) => {
+            selected = true;
+            stage = Math.max(stage, 2);
+            event.dataTransfer?.setData("text/plain", "river.webp");
+            render();
+        });
+        dropzone.addEventListener("dragover", (event) => { event.preventDefault(); dropzone.classList.add("is-drop-target"); });
+        dropzone.addEventListener("dragleave", () => dropzone.classList.remove("is-drop-target"));
+        dropzone.addEventListener("drop", (event) => {
+            event.preventDefault();
+            dropzone.classList.remove("is-drop-target");
+            if (event.dataTransfer?.getData("text/plain") === "river.webp") moveFile();
+        });
+        dropzone.addEventListener("click", chooseDestination);
+        dropzone.addEventListener("keydown", (event) => {
+            if (event.key !== "Enter" && event.key !== " ") return;
+            event.preventDefault();
+            chooseDestination();
+        });
+        moveButton.addEventListener("click", moveFile);
+        verifyButton.addEventListener("click", () => {
+            if (!moved) return;
+            stage = 5;
+            fileResult.textContent = "확인 완료: 과제 사진에는 river.webp가 있고 다운로드에는 없습니다. 따라서 복사가 아니라 이동이 끝났습니다.";
+            status.textContent = "다섯 동작이 실제로 이어졌습니다. 앞 단계의 결과가 다음 단계의 시작 조건이 되는 실행 가능한 알고리즘입니다.";
+            render();
+        });
+        backButton.addEventListener("click", reset);
+        resetButton.addEventListener("click", reset);
         reset();
     }
 
     function setupControlLab() {
         const lab = document.querySelector("[data-control-lab]");
         if (!lab) return;
-        const numberOutput = lab.querySelector("[data-control-number]");
+        const world = lab.querySelector("[data-control-world]");
+        const robot = lab.querySelector("[data-control-robot]");
+        const moveButtons = Array.from(lab.querySelectorAll("[data-control-move]"));
         const scoreOutput = lab.querySelector("[data-control-score]");
-        const questionOutput = lab.querySelector("[data-control-question]");
-        const choiceButtons = [...lab.querySelectorAll("[data-control-choice]")];
-        const optionA = lab.querySelector('[data-control-option="A"]');
-        const optionB = lab.querySelector('[data-control-option="B"]');
-        const nextButton = lab.querySelector("[data-control-next]");
-        const trace = lab.querySelector("[data-loop-trace]");
+        const robotLaneOutput = lab.querySelector("[data-control-robot-lane]");
+        const starLaneOutput = lab.querySelector("[data-control-star-lane]");
+        const conditionOutput = lab.querySelector("[data-control-condition]");
         const status = lab.querySelector("[data-control-status]");
         const resetButton = lab.querySelector("[data-control-reset]");
-        const questions = [
-            { text: "2 + 3은 얼마일까요?", A: "4", B: "5", answer: "B" },
-            { text: "파일을 ‘이동’한 뒤 출발 폴더는 어떻게 될까요?", A: "그 파일이 사라진다", B: "같은 파일이 그대로 남는다", answer: "A" },
-            { text: "8 bit는 오늘날 보통 무엇일까요?", A: "2 byte", B: "1 byte", answer: "B" }
-        ];
-        let index = 0;
+        const trace = lab.querySelector("[data-loop-trace]");
+        const flowSteps = Array.from(lab.querySelectorAll("[data-flow-step]"));
+        const laneNames = ["왼쪽", "가운데", "오른쪽"];
+        const starSequence = [2, 0, 1];
+        let robotLane = 0;
+        let starIndex = 0;
         let score = 0;
-        let answered = false;
-        const addTrace = (text, state) => {
-            if (index === 0 && trace.children.length === 1 && !trace.firstElementChild.dataset.traceState) trace.innerHTML = "";
+        let runCount = 0;
+        let running = false;
+        let runToken = 0;
+
+        const wait = (milliseconds) => new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+        const setFlow = (active, completed = []) => {
+            flowSteps.forEach((item) => {
+                const name = item.dataset.flowStep;
+                const isComplete = completed.includes(name);
+                item.classList.toggle("is-active", name === active);
+                item.classList.toggle("is-complete", isComplete);
+                item.querySelector("em").textContent = name === active ? "실행 중" : isComplete ? "완료" : "대기";
+            });
+        };
+        const render = () => {
+            const starLane = starSequence[Math.min(starIndex, starSequence.length - 1)];
+            world.style.setProperty("--robot-lane", String(robotLane));
+            world.style.setProperty("--star-lane", String(starLane));
+            scoreOutput.textContent = String(score);
+            robotLaneOutput.textContent = laneNames[robotLane];
+            starLaneOutput.textContent = score >= 3 ? "모두 모음" : laneNames[starLane];
+            const controlsLocked = running || score >= 3;
+            robot.disabled = controlsLocked;
+            moveButtons[0].disabled = controlsLocked || robotLane === 0;
+            moveButtons[1].disabled = controlsLocked || robotLane === 2;
+            lab.dataset.result = score >= 3 ? "finish" : "pending";
+        };
+        const addTrace = (message, state) => {
+            if (!trace.firstElementChild?.dataset.traceState) trace.innerHTML = "";
             const item = document.createElement("li");
             item.dataset.traceState = state;
-            item.textContent = text;
+            item.textContent = message;
             trace.append(item);
+            while (trace.children.length > 5) trace.firstElementChild.remove();
+            trace.scrollTop = trace.scrollHeight;
         };
-        const showQuestion = (fromLoop = false) => {
-            const question = questions[index];
-            answered = false;
-            lab.dataset.controlStage = fromLoop ? "loop" : "ready";
-            lab.dataset.result = "pending";
-            numberOutput.textContent = String(index + 1);
-            scoreOutput.textContent = String(score);
-            questionOutput.textContent = question.text;
-            optionA.textContent = question.A;
-            optionB.textContent = question.B;
-            choiceButtons.forEach((button) => {
-                button.disabled = false;
-                button.classList.remove("is-selected", "is-yes", "is-no");
-            });
-            nextButton.hidden = true;
-            status.textContent = fromLoop
-                ? "남은 문제가 있어 문제 번호를 1 올리고 다음 문제로 돌아왔습니다. 이제 새 답 클릭 이벤트를 기다립니다."
-                : "보기 하나를 누르면 이벤트가 생기고, 프로그램이 조건을 검사해 서로 다른 길로 움직입니다.";
-        };
-        choiceButtons.forEach((button) => button.addEventListener("click", () => {
-            if (answered) return;
-            answered = true;
-            const choice = button.dataset.controlChoice;
-            const correct = choice === questions[index].answer;
-            if (correct) score += 1;
-            lab.dataset.controlStage = correct ? "yes" : "no";
-            lab.dataset.result = correct ? "yes" : "no";
-            scoreOutput.textContent = String(score);
-            button.classList.add("is-selected", correct ? "is-yes" : "is-no");
-            choiceButtons.forEach((item) => { item.disabled = true; });
-            addTrace((index + 1) + "번: " + choice + " 선택 → 조건 " + (correct ? "참 → 점수 +1" : "거짓 → 점수 유지"), correct ? "finish" : "retry");
-            status.textContent = correct
-                ? "답 버튼 클릭 이벤트 → 정답 조건 ‘참’ → 점수를 1 올렸습니다."
-                : "답 버튼 클릭 이벤트 → 정답 조건 ‘거짓’ → 점수를 그대로 두었습니다.";
-            nextButton.hidden = false;
-            nextButton.innerHTML = index === questions.length - 1
-                ? '결과 보기 <small>Show Result</small>'
-                : '다음 문제 <small>Next Question</small>';
-            nextButton.focus();
-        }));
-        nextButton.addEventListener("click", () => {
-            if (!answered) return;
-            if (index < questions.length - 1) {
-                const remaining = questions.length - index - 1;
-                addTrace("남은 문제 " + remaining + "개 → 문제 번호 +1 → 다음 문제로 반복", "loop");
-                index += 1;
-                showQuestion(true);
-                choiceButtons[0].focus();
+        const runCheck = async () => {
+            if (running || score >= 3) return;
+            running = true;
+            const token = ++runToken;
+            const runNumber = ++runCount;
+            const starLane = starSequence[starIndex];
+            lab.dataset.controlStage = "event";
+            conditionOutput.textContent = "검사하는 중";
+            status.textContent = "1. 로봇을 누른 클릭 이벤트가 발생했습니다.";
+            setFlow("event");
+            render();
+            await wait(320);
+            if (token !== runToken) return;
+            lab.dataset.controlStage = "condition";
+            status.textContent = `2. 로봇 칸 ${laneNames[robotLane]}과 별 칸 ${laneNames[starLane]}이 같은지 비교합니다.`;
+            setFlow("condition", ["event"]);
+            await wait(420);
+            if (token !== runToken) return;
+            const matched = robotLane === starLane;
+            lab.dataset.controlStage = matched ? "yes" : "no";
+            conditionOutput.textContent = matched ? "참 (같은 칸)" : "거짓 (다른 칸)";
+            world.classList.toggle("is-success", matched);
+            world.classList.toggle("is-miss", !matched);
+            setFlow("branch", ["event", "condition"]);
+            if (matched) {
+                score += 1;
+                addTrace(`${runNumber}번째 실행: 같은 칸 → 참 → 별 +1`, "finish");
+                status.textContent = "3. 조건이 참이어서 별을 1개 더했습니다.";
+            } else {
+                addTrace(`${runNumber}번째 실행: 다른 칸 → 거짓 → 점수 그대로`, "retry");
+                status.textContent = "3. 조건이 거짓이어서 점수는 그대로입니다. 위치를 바꾼 뒤 다시 로봇을 누르세요.";
+            }
+            render();
+            await wait(520);
+            if (token !== runToken) return;
+            world.classList.remove("is-success", "is-miss");
+            if (matched && score < 3) {
+                lab.dataset.controlStage = "loop";
+                setFlow("loop", ["event", "condition", "branch"]);
+                starIndex += 1;
+                status.textContent = `4. 별이 ${3 - score}개 남아 있으므로 새 별 위치로 반복합니다.`;
+                render();
+                await wait(420);
+                if (token !== runToken) return;
+            }
+            if (score >= 3) {
+                lab.dataset.controlStage = "finish";
+                conditionOutput.textContent = "반복 종료";
+                setFlow(null, ["event", "condition", "branch", "loop"]);
+                addTrace("남은 별 0개 → 반복 종료", "finish");
+                status.textContent = "별 3개를 모두 모아 반복이 끝났습니다. 같은 명령 묶음을 매번 다시 쓴 것이 아니라 조건이 참일 때 반복 실행했습니다.";
+                running = false;
+                render();
+                resetButton.focus();
                 return;
             }
-            lab.dataset.controlStage = "finish";
-            lab.dataset.result = "finish";
-            nextButton.hidden = true;
-            status.textContent = "세 문제를 모두 처리했습니다. 각 답 클릭마다 같은 이벤트·조건·분기 순서가 반복되었고, 남은 문제가 없어 종료했습니다. 최종 점수는 " + score + "점입니다.";
-            addTrace("남은 문제 0개 → 반복 종료 → 최종 " + score + "/3점", "finish");
-            resetButton.focus();
-        });
+            lab.dataset.controlStage = "ready";
+            setFlow(null);
+            running = false;
+            render();
+        };
+        moveButtons.forEach((button) => button.addEventListener("click", () => {
+            if (running || score >= 3) return;
+            robotLane = Math.max(0, Math.min(2, robotLane + Number(button.dataset.controlMove)));
+            conditionOutput.textContent = "아직 검사 안 함";
+            lab.dataset.controlStage = "ready";
+            setFlow(null);
+            status.textContent = `로봇을 ${laneNames[robotLane]} 칸으로 옮겼습니다. 위치 이동만으로는 조건을 검사하지 않습니다. 로봇을 누르세요.`;
+            render();
+        }));
+        robot.addEventListener("click", runCheck);
         resetButton.addEventListener("click", () => {
-            index = 0;
+            runToken += 1;
+            robotLane = 0;
+            starIndex = 0;
             score = 0;
-            trace.innerHTML = "<li>아직 답 버튼을 누르지 않았습니다.</li>";
-            showQuestion();
-            choiceButtons[0].focus();
+            runCount = 0;
+            running = false;
+            lab.dataset.controlStage = "ready";
+            conditionOutput.textContent = "아직 검사 안 함";
+            status.textContent = "현재 로봇은 왼쪽, 별은 오른쪽에 있습니다. 위치를 바꾸고 로봇을 눌러 보세요.";
+            trace.innerHTML = "<li>실행 기록이 여기에 쌓입니다.</li>";
+            world.classList.remove("is-success", "is-miss");
+            setFlow(null);
+            render();
+            moveButtons[1].focus();
         });
-        showQuestion();
+        setFlow(null);
+        render();
     }
 
     window.COMPUTER_CONCEPT_VISUAL = (spec, asset) => {
@@ -4263,6 +4936,7 @@
         setupAccountLab();
         setupEvidenceLab();
         setupDebugLab();
+        setupPointerLab();
         setupGestureLab();
         setupStorageLab();
         setupPixelLab();

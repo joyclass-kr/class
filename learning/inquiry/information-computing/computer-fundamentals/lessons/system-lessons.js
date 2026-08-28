@@ -415,34 +415,14 @@
             number: 4,
             title: "아날로그와 디지털은 무엇이 다를까?",
             english: "Analog and Digital",
-            conceptTitle: "아날로그 값은 이어져 변하고, 디지털 장치는 그 값을 정해진 숫자로 기록한다",
-            visual: `
-                <div class="visual-gallery">
-                    <figure class="concept-illustration">
-                        <picture>
-                            <source srcset="${asset("a04-analog-digital-representation-illustration-v1-768.webp")} 768w, ${asset("a04-analog-digital-representation-illustration-v1-1536.webp")} 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
-                            <img src="${asset("a04-analog-digital-representation-illustration-v1-768.webp")}" width="1536" height="1024" alt="바람개비의 이어지는 움직임과 파형을 카메라가 일정한 순간마다 픽셀 그림으로 기록하는 비교 장면">
-                        </picture>
-                        <figcaption>현실의 변화는 이어지지만, 디지털 장치는 일정한 순간과 정해진 값의 칸을 골라 기록합니다.</figcaption>
-                    </figure>
-                    <div class="system-visual analog-visual" aria-label="연속적인 아날로그 변화와 단계별 디지털 기록 비교">
-                        <section class="signal-card">
-                            <h3>이어지는 변화 <small>Continuous / Analog</small></h3>
-                            <div class="continuous-line" aria-hidden="true"></div>
-                            <p>눈금 사이의 중간값도 존재합니다. 현실의 온도·빛·소리는 계속 변할 수 있습니다.</p>
-                        </section>
-                        <section class="signal-card digital">
-                            <h3>정해진 칸에 기록 <small>Discrete / Digital</small></h3>
-                            <div class="step-line" aria-hidden="true"></div>
-                            <p>측정 순간과 기록 단계를 정합니다. 다른 실제 값이 같은 칸에 들어갈 수도 있습니다.</p>
-                        </section>
-                    </div>
-                </div>`,
+            conceptTitle: "현실의 값은 이어져 변하지만, 디지털 장치는 특정 순간의 값을 정해진 숫자 칸에 기록한다",
+            visual: a04ConversionMarkup("concept"),
             details: [
                 ["아날로그", "Analog", "값이 중간에서 끊기지 않고 이어집니다. 바늘의 위치, 홈에 새겨진 소리의 흔적처럼 물리량에 대응해 연속적으로 변할 수 있습니다."],
                 ["디지털", "Digital", "정해진 단계의 값과 기호로 표현합니다. 숫자 화면이 없어도 디지털 카메라의 파일이나 컴퓨터 내부 데이터는 디지털입니다."],
                 ["오래됨과 새로움의 구분이 아님", "Not Old versus New", "현대의 마이크 안에도 아날로그 전기 신호가 생기고, 최신 장비에도 아날로그 회로가 사용됩니다. 두 말은 표현 방식의 차이입니다."],
-                ["변환", "Conversion", "센서가 현실의 변화를 측정하고 ADC가 숫자 데이터로 바꿉니다. 스피커는 디지털 데이터를 다시 전기 신호와 공기의 떨림으로 바꿉니다."]
+                ["변환", "Conversion", "센서가 현실의 변화를 측정하고 ADC가 숫자 데이터로 바꿉니다. 스피커는 디지털 데이터를 다시 전기 신호와 공기의 떨림으로 바꿉니다."],
+                ["ADC", "Analog-to-Digital Converter", "센서가 만든 이어지는 전기 신호를 특정 순간에 측정하고, 가장 가까운 숫자 단계와 비트 데이터로 바꾸는 회로입니다."]
             ],
             workedExample: {
                 title: "디지털 온도계가 숫자를 만드는 과정",
@@ -530,30 +510,14 @@
             number: 5,
             title: "현실의 소리는 어떻게 숫자 데이터가 될까?",
             english: "From Sound to Digital Data",
-            conceptTitle: "소리를 아주 짧은 시간마다 재어 숫자로 적으면 컴퓨터가 저장할 수 있다",
-            visual: `
-                <div class="visual-gallery">
-                    <figure class="concept-illustration">
-                        <picture>
-                            <source srcset="${asset("a05-sound-sampling-data-illustration-v1-768.webp")} 768w, ${asset("a05-sound-sampling-data-illustration-v1-1536.webp")} 1536w" sizes="(max-width: 900px) calc(100vw - 60px), 900px" type="image/webp">
-                            <img src="${asset("a05-sound-sampling-data-illustration-v1-768.webp")}" width="1536" height="1024" alt="기타 소리가 마이크에 들어가 일정한 순간마다 측정되고 숫자 데이터로 보관된 뒤 스피커에서 다시 소리로 나오는 장면">
-                        </picture>
-                        <figcaption>녹음은 공기의 떨림을 숫자로 바꾸는 길이고, 재생은 숫자를 다시 공기의 떨림으로 바꾸는 반대 길입니다.</figcaption>
-                    </figure>
-                    <div class="system-visual sample-visual" aria-label="소리 파형을 일정한 간격으로 측정해 숫자로 기록하는 과정">
-                        <div class="sample-canvas-wrap"><canvas class="sample-canvas" data-samples="8" aria-label="연속 파형 위에 여덟 개의 측정점이 표시된 그래프"></canvas></div>
-                        <div class="conversion-chain">
-                            <span><b>1</b>&nbsp; 공기의 떨림</span>
-                            <span><b>2</b>&nbsp; 마이크 전기 신호</span>
-                            <span><b>3</b>&nbsp; 일정 간격 측정</span>
-                            <span><b>4</b>&nbsp; 숫자 단계 기록</span>
-                        </div>
-                    </div>
-                </div>`,
+            conceptTitle: "마이크 신호를 일정한 시간 간격으로 재고, 각 값을 정해진 높이 단계와 비트로 기록한다",
+            visual: a05DigitizerMarkup("concept"),
             details: [
                 ["샘플링", "Sampling", "이어지는 신호의 값을 일정한 시간 간격으로 측정합니다. 한 번 측정해 얻은 값 하나를 샘플이라고 합니다."],
                 ["샘플링 레이트", "Sampling Rate", "1초 동안 몇 번 측정하는지를 나타냅니다. 같은 시간에 더 자주 측정하면 빠른 변화도 더 자세히 기록할 수 있지만 데이터도 많아집니다."],
                 ["양자화", "Quantization", "측정한 높이를 컴퓨터가 기록할 수 있는 정해진 숫자 단계에 맞춥니다. 실제 값과 기록값 사이에 작은 차이가 생길 수 있습니다."],
+                ["비트 깊이", "Bit Depth", "한 샘플을 몇 비트로 기록하는지 나타냅니다. n비트는 2의 n제곱 개 숫자 단계를 구별할 수 있습니다."],
+                ["부호화", "Encoding", "양자화한 단계 번호를 0과 1의 비트 조합으로 적습니다. 이 숫자들이 시간 순서대로 모여 소리 데이터가 됩니다."],
                 ["재생", "Playback", "저장된 숫자를 시간 순서대로 읽고 전기 신호로 바꿔 스피커를 움직이면 다시 공기의 떨림인 소리로 들립니다."]
             ],
             workedExample: {
@@ -588,9 +552,9 @@
             },
             activity: {
                 type: "sampling",
-                title: "측정점 수에 따라 무엇이 달라질까?",
-                instruction: "같은 파형을 적은 측정점과 많은 측정점으로 각각 기록하세요. 파형의 봉우리와 골짜기를 어느 쪽이 더 자세히 따라가는지 비교합니다.",
-                success: "같은 시간 동안 측정점이 많아지면 파형의 빠른 변화를 더 자세히 기록하지만 저장해야 할 숫자도 많아짐을 확인했습니다."
+                title: "시간 간격과 높이 단계를 따로 비교하기",
+                instruction: "A와 B에 기록을 저장하세요. 먼저 비트 깊이를 같게 두고 샘플링 레이트만 비교한 뒤, 샘플링 레이트를 같게 두고 비트 깊이만 비교합니다.",
+                success: "샘플링 레이트는 시간 방향의 측정 횟수, 비트 깊이는 높이 방향의 숫자 단계 수를 바꾸며 둘 다 기록할 데이터 양에 영향을 줌을 확인했습니다."
             },
             questions: [
                 {
@@ -653,16 +617,16 @@
                                 <source srcset="${asset("desktop-hardware-cutaway-768.webp")} 768w, ${asset("desktop-hardware-cutaway-1448.webp")} 1448w" sizes="(max-width: 900px) calc(100vw - 60px), 65vw" type="image/webp">
                                 <img src="${asset("desktop-hardware-cutaway-768.webp")}" width="768" height="576" alt="열린 데스크톱 본체 안의 CPU, RAM, GPU, SSD, 하드 디스크, 메인보드, 전원 공급 장치와 냉각 팬">
                             </picture>
-                            <span class="part-marker marker-cpu" aria-label="1번 CPU"><b>1</b></span>
-                            <span class="part-marker marker-ram" aria-label="2번 RAM"><b>2</b></span>
-                            <span class="part-marker marker-gpu" aria-label="3번 GPU"><b>3</b></span>
-                            <span class="part-marker marker-ssd" aria-label="4번 SSD"><b>4</b></span>
-                            <span class="part-marker marker-hdd" aria-label="5번 HDD"><b>5</b></span>
-                            <span class="part-marker marker-psu" aria-label="6번 전원 공급 장치"><b>6</b></span>
-                            <span class="part-marker marker-board" aria-label="7번 메인보드"><b>7</b></span>
-                            <span class="part-marker marker-cooling" aria-label="8번 냉각 장치"><b>8</b></span>
+                            <button type="button" class="part-marker marker-cpu" data-cutaway-part-index="0" aria-label="1번 CPU 확대"><b>1</b></button>
+                            <button type="button" class="part-marker marker-ram" data-cutaway-part-index="1" aria-label="2번 RAM 확대"><b>2</b></button>
+                            <button type="button" class="part-marker marker-gpu" data-cutaway-part-index="2" aria-label="3번 GPU 확대"><b>3</b></button>
+                            <button type="button" class="part-marker marker-ssd" data-cutaway-part-index="3" aria-label="4번 SSD 확대"><b>4</b></button>
+                            <button type="button" class="part-marker marker-hdd" data-cutaway-part-index="4" aria-label="5번 HDD 확대"><b>5</b></button>
+                            <button type="button" class="part-marker marker-psu" data-cutaway-part-index="6" aria-label="6번 전원 공급 장치 확대"><b>6</b></button>
+                            <button type="button" class="part-marker marker-board" data-cutaway-part-index="5" aria-label="7번 메인보드 확대"><b>7</b></button>
+                            <button type="button" class="part-marker marker-cooling" data-cutaway-part-index="7" aria-label="8번 냉각 장치 확대"><b>8</b></button>
                         </div>
-                        <figcaption>작은 번호는 부품의 위치만 가리킵니다. 아래 카드에서 정식 이름과 핵심 역할을 확인하세요.</figcaption>
+                        <figcaption>번호를 누르면 그 자리에 있는 부품의 확대 사진과 이름의 뜻, 역할, 연결 방식을 함께 볼 수 있습니다.</figcaption>
                     </figure>
                     <div class="component-legend" aria-label="그림 속 부품 번호와 역할">
                         <span class="cpu"><b>1</b> CPU<small>Central Processing Unit<br>명령 해석·계산·작업 순서 제어</small></span>
@@ -1513,16 +1477,16 @@
         const lab = document.querySelector("[data-a03-lab]");
         if (!lab) return;
         const devices = {
-            pc: { name: "PC", english: "Personal Computer", os: "windows", osName: "Windows", hardware: "PC 펌웨어·CPU·메모리·화면" },
-            chromebook: { name: "Chromebook", english: "Chromebook", os: "chromeos", osName: "ChromeOS", hardware: "Chromebook 펌웨어·프로세서·키보드·화면" },
-            ipad: { name: "iPad", english: "Tablet", os: "ipados", osName: "iPadOS", hardware: "iPad 하드웨어·Apple 칩·터치 화면" },
-            phone: { name: "Phone (Android형)", english: "Android Phone", os: "android", osName: "Android", hardware: "Android형 스마트폰 SoC·터치 화면·센서" }
+            pc: { name: "PC", english: "Personal Computer", hardware: "PC 펌웨어·CPU·메모리·화면", osSupport: { windows: "Windows용 펌웨어·장치 드라이버", chromeos: "ChromeOS Flex 지원 PC용 펌웨어·장치 드라이버" } },
+            chromebook: { name: "Chromebook", english: "Chromebook", hardware: "Chromebook 펌웨어·프로세서·키보드·화면", osSupport: { chromeos: "이 Chromebook 모델용 ChromeOS 펌웨어·장치 드라이버" } },
+            ipad: { name: "iPad", english: "Tablet", hardware: "iPad 하드웨어·Apple 칩·터치 화면", osSupport: { ipados: "이 iPad 모델용 iPadOS 부팅 파일·장치 드라이버" } },
+            phone: { name: "Phone (Android형)", english: "Android Phone", hardware: "Android형 스마트폰 SoC·터치 화면·센서", osSupport: { android: "이 스마트폰 모델용 Android 부팅 파일·장치 드라이버" } }
         };
         const systems = {
-            windows: { name: "Windows", device: "pc", job: "PC 장치 드라이버와 Windows API 제공" },
-            chromeos: { name: "ChromeOS", device: "chromebook", job: "Chromebook 장치 관리와 ChromeOS API 제공" },
-            ipados: { name: "iPadOS", device: "ipad", job: "iPad 터치·파일·권한과 iPadOS API 관리" },
-            android: { name: "Android", device: "phone", job: "Android형 스마트폰 장치와 Android API 관리" }
+            windows: { name: "Windows", job: "지원되는 PC의 장치 드라이버와 Windows API 제공" },
+            chromeos: { name: "ChromeOS", job: "지원되는 기기의 장치 관리와 ChromeOS API 제공" },
+            ipados: { name: "iPadOS", job: "지원되는 iPad의 터치·파일·권한과 iPadOS API 관리" },
+            android: { name: "Android", job: "지원되는 스마트폰의 장치와 Android API 관리" }
         };
         const apps = {
             paint: { name: "PC 그림판", english: "Windows Drawing App", os: "windows", osName: "Windows", package: "Windows용 .exe와 Windows API 요청", result: "그림판 창이 열리고 선을 그릴 수 있습니다." },
@@ -1581,7 +1545,8 @@
             const apiProof = lab.querySelector('[data-a03-proof="api"]');
             const runProof = lab.querySelector('[data-a03-proof="run"]');
             deviceLayer.classList.add("is-pass");
-            if (os.device !== selectedDevice) {
+            const bootSupport = device.osSupport[selectedOs];
+            if (!bootSupport) {
                 lab.dataset.outcome = "os-fail";
                 osLayer.classList.add("is-fail");
                 appLayer.classList.add("is-blocked");
@@ -1589,15 +1554,15 @@
                 apiProof.classList.add("is-blocked");
                 runProof.classList.add("is-blocked");
                 lab.querySelector("[data-a03-preview-title]").textContent = "운영체제에서 멈춤";
-                lab.querySelector("[data-a03-preview-copy]").textContent = `${device.name}의 기본 부팅·드라이버 조합은 ${device.osName}용입니다.`;
-                lab.querySelector("[data-a03-boot-proof]").textContent = `${os.name}의 부팅 파일·장치 드라이버가 이 ${device.name} 조합과 맞지 않습니다.`;
+                lab.querySelector("[data-a03-preview-copy]").textContent = `${device.name}이라는 기기 이름만으로 운영체제가 정해지는 것은 아닙니다. 이 모형의 기기는 ${os.name}용 펌웨어·부팅 방식·드라이버 지원이 없습니다.`;
+                lab.querySelector("[data-a03-boot-proof]").textContent = `${os.name}을 시작할 펌웨어·부팅 방식·장치 드라이버 지원을 이 ${device.name}에서 찾지 못했습니다.`;
                 lab.querySelector("[data-a03-api-proof]").textContent = "운영체제가 시작되지 않아 앱의 API 요청까지 가지 못함";
                 lab.querySelector("[data-a03-run-proof]").textContent = "앱 실행 안 됨";
                 return;
             }
             osLayer.classList.add("is-pass");
             bootProof.classList.add("is-pass");
-            lab.querySelector("[data-a03-boot-proof]").textContent = `${device.name}이 ${os.name}용 부팅·드라이버 규칙을 제공해 운영체제가 시작됨`;
+            lab.querySelector("[data-a03-boot-proof]").textContent = `${bootSupport}이 있어 ${os.name}이 시작됨`;
             if (app.os !== selectedOs) {
                 lab.dataset.outcome = "app-fail";
                 appLayer.classList.add("is-fail");
@@ -1628,6 +1593,485 @@
             showSelection();
         });
         showSelection();
+    }
+
+    function a04ConversionMarkup(mode = "concept") {
+        const challenge = mode === "activity";
+        const bins = [20, 20.5, 21, 21.5, 22];
+        return `
+            <section class="foundation-direct-lab a04-conversion-lab" data-a04-lab="${mode}" data-a04-recorded="false" aria-labelledby="a04LabTitle-${mode}">
+                <header class="foundation-lab-heading has-context">
+                    <div>
+                        <span>아날로그→디지털 변환 <small>Analog-to-Digital Conversion</small></span>
+                        <h3 id="a04LabTitle-${mode}">${challenge ? "서로 다른 실제 온도가 같은 숫자 칸에 들어가는지 기록하세요." : "온도를 움직이고, 기록 순간에 어느 숫자 칸이 선택되는지 보세요."}</h3>
+                    </div>
+                    <button type="button" class="foundation-reset" data-a04-reset>처음 상태 <small>Reset</small></button>
+                    <figure class="foundation-context-figure">
+                        <picture>
+                            <source srcset="${asset("a04-analog-digital-representation-illustration-v1-768.webp")} 768w, ${asset("a04-analog-digital-representation-illustration-v1-1536.webp")} 1536w" sizes="(max-width: 620px) 244px, (max-width: 820px) 144px, (max-width: 1180px) 16vw, 190px" type="image/webp">
+                            <img src="${asset("a04-analog-digital-representation-illustration-v1-768.webp")}" width="1536" height="1024" alt="이어지는 현실의 움직임을 일정한 순간과 숫자 단계로 기록하는 장면">
+                        </picture>
+                        <figcaption>이어지는 값→숫자 칸<small>Continuous to Discrete</small></figcaption>
+                    </figure>
+                </header>
+                <div class="a04-control-row">
+                    <label>
+                        <span>공기의 실제 온도 <small>Real Temperature</small></span>
+                        <strong data-a04-raw>20.14°C</strong>
+                        <input data-a04-slider type="range" min="2000" max="2200" step="1" value="2014" aria-label="공기의 실제 온도">
+                    </label>
+                    <button type="button" class="foundation-run" data-a04-capture>이 순간 기록 <small>Capture This Moment</small></button>
+                </div>
+                <div class="a04-conversion-stage">
+                    <section class="a04-analog-source" aria-label="이어지는 아날로그 센서 신호">
+                        <header><span>센서 신호 <small>Analog Signal</small></span><strong>중간에서 끊기지 않음</strong></header>
+                        <div class="a04-thermometer" aria-hidden="true"><i data-a04-liquid></i><b data-a04-needle></b></div>
+                        <div class="a04-continuous-track" aria-hidden="true"><i data-a04-signal-dot></i></div>
+                        <p>슬라이더의 0.01°C 사이에도 더 많은 실제 값이 존재할 수 있습니다.</p>
+                    </section>
+                    <div class="a04-adc-gate" aria-label="아날로그 디지털 변환기">
+                        <span>측정 순간</span>
+                        <strong>ADC</strong>
+                        <small>가까운 숫자 칸 선택</small>
+                        <i aria-hidden="true">→</i>
+                    </div>
+                    <section class="a04-digital-bank" aria-label="0.5도 간격의 디지털 기록 칸">
+                        <header><span>숫자 기록 <small>Digital Record</small></span><strong data-a04-candidate>지금 기록하면 20.0°C</strong></header>
+                        <div class="a04-number-bins">
+                            ${bins.map((value) => `<div data-a04-bin="${value.toFixed(1)}"><span>${value.toFixed(1)}°C</span></div>`).join("")}
+                        </div>
+                        <output data-a04-digital>아직 기록하지 않음</output>
+                        <p>이 모형의 기록 간격은 0.5°C입니다.</p>
+                    </section>
+                </div>
+                <div class="a04-capture-log" aria-label="두 번의 온도 기록">
+                    <strong>기록 두 칸 <small>Two Captures</small></strong>
+                    <div><output data-a04-record="0">첫 번째 기록 전</output><output data-a04-record="1">두 번째 기록 전</output></div>
+                </div>
+                <div class="foundation-evidence a04-evidence" aria-live="polite">
+                    <strong>측정 기록 <small>Measurement Record</small></strong>
+                    <p data-a04-status>온도를 정한 뒤 ‘이 순간 기록’을 누르세요.</p>
+                    <dl>
+                        <div><dt>이어지는 실제 값</dt><dd data-a04-proof-raw>20.14°C</dd></div>
+                        <div><dt>가장 가까운 숫자 칸</dt><dd data-a04-proof-bin>20.0°C</dd></div>
+                        <div><dt>최근 기록 차이</dt><dd data-a04-error>기록 전</dd></div>
+                    </dl>
+                </div>
+            </section>`;
+    }
+
+    function a04RecordedTemperature(raw) {
+        return Math.round(raw * 2) / 2;
+    }
+
+    function setupA04ConversionLab(root = document.querySelector('[data-a04-lab="concept"]'), options = {}) {
+        if (!root || root.dataset.a04Ready === "true") return;
+        root.dataset.a04Ready = "true";
+        const slider = root.querySelector("[data-a04-slider]");
+        const capture = root.querySelector("[data-a04-capture]");
+        const reset = root.querySelector("[data-a04-reset]");
+        const bins = Array.from(root.querySelectorAll("[data-a04-bin]"));
+        const records = Array.from(root.querySelectorAll("[data-a04-record]"));
+        const challenge = root.dataset.a04Lab === "activity";
+        const state = { raw: Number(slider.value) / 100, recorded: null, captures: [] };
+
+        const pairFound = () => state.captures.length === 2
+            && Math.abs(state.captures[0].raw - state.captures[1].raw) > .0001
+            && state.captures[0].digital === state.captures[1].digital;
+
+        const notify = () => options.onState?.({
+            records: state.captures.map((entry) => ({ ...entry })),
+            pairFound: pairFound()
+        });
+
+        const renderRecords = () => {
+            records.forEach((output, index) => {
+                const entry = state.captures[index];
+                output.textContent = entry
+                    ? `실제 ${entry.raw.toFixed(2)}°C → 기록 ${entry.digital.toFixed(1)}°C`
+                    : `${index === 0 ? "첫" : "두"} 번째 기록 전`;
+                output.classList.toggle("is-filled", Boolean(entry));
+                output.classList.toggle("is-pair", Boolean(entry) && pairFound());
+            });
+        };
+
+        const render = () => {
+            const candidate = a04RecordedTemperature(state.raw);
+            const level = ((state.raw - 20) / 2) * 100;
+            root.style.setProperty("--a04-level", `${level}%`);
+            root.querySelector("[data-a04-raw]").textContent = `${state.raw.toFixed(2)}°C`;
+            root.querySelector("[data-a04-proof-raw]").textContent = `${state.raw.toFixed(2)}°C`;
+            root.querySelector("[data-a04-candidate]").textContent = `지금 기록하면 ${candidate.toFixed(1)}°C`;
+            root.querySelector("[data-a04-proof-bin]").textContent = `${candidate.toFixed(1)}°C`;
+            root.querySelector("[data-a04-digital]").textContent = state.recorded === null
+                ? "아직 기록하지 않음"
+                : `${state.recorded.toFixed(1)}°C 기록`;
+            root.querySelector("[data-a04-liquid]").style.height = `${10 + level * .78}%`;
+            root.querySelector("[data-a04-needle]").style.transform = `rotate(${-68 + level * 1.36}deg)`;
+            slider.setAttribute("aria-valuetext", `${state.raw.toFixed(2)}도`);
+            bins.forEach((bin) => {
+                const value = Number(bin.dataset.a04Bin);
+                bin.classList.toggle("is-candidate", value === candidate);
+                bin.classList.toggle("is-recorded", state.recorded !== null && value === state.recorded);
+            });
+            const latest = state.captures.at(-1);
+            root.querySelector("[data-a04-error]").textContent = latest
+                ? `${latest.raw.toFixed(2)} − ${latest.digital.toFixed(1)} = ${(latest.raw - latest.digital).toFixed(2)}°C`
+                : "기록 전";
+            renderRecords();
+        };
+
+        slider.addEventListener("input", () => {
+            state.raw = Number(slider.value) / 100;
+            render();
+        });
+        capture.addEventListener("click", () => {
+            state.recorded = a04RecordedTemperature(state.raw);
+            if (state.captures.length === 2) state.captures.shift();
+            state.captures.push({ raw: state.raw, digital: state.recorded });
+            root.dataset.a04Recorded = "true";
+            render();
+            if (state.captures.length < 2) {
+                root.querySelector("[data-a04-status]").textContent = "첫 기록을 남겼습니다. 실제 온도를 바꾼 뒤 한 번 더 기록하세요.";
+            } else if (challenge) {
+                root.querySelector("[data-a04-status]").textContent = "두 기록을 남겼습니다. ‘확인’을 눌러 실제값과 숫자 칸의 관계를 검사하세요.";
+            } else {
+                root.querySelector("[data-a04-status]").textContent = pairFound()
+                    ? `실제 온도는 다르지만 두 값 모두 ${state.captures[0].digital.toFixed(1)}°C 칸에 기록되었습니다.`
+                    : "두 실제값은 서로 다른 숫자 칸에 기록되었습니다. 값의 간격을 더 좁혀 다시 기록해 보세요.";
+            }
+            notify();
+        });
+        reset.addEventListener("click", () => {
+            slider.value = "2014";
+            state.raw = 20.14;
+            state.recorded = null;
+            state.captures = [];
+            root.dataset.a04Recorded = "false";
+            root.querySelector("[data-a04-status]").textContent = "온도를 정한 뒤 ‘이 순간 기록’을 누르세요.";
+            render();
+            notify();
+        });
+        render();
+        notify();
+    }
+
+    function a05DigitizerMarkup(mode = "concept") {
+        const challenge = mode === "activity";
+        return `
+            <section class="foundation-direct-lab a05-digitizer-lab" data-a05-lab="${mode}" data-a05-recorded="false" aria-labelledby="a05LabTitle-${mode}">
+                <header class="foundation-lab-heading has-context">
+                    <div>
+                        <span>소리의 숫자 기록 <small>Sound Digitization</small></span>
+                        <h3 id="a05LabTitle-${mode}">${challenge ? "한 조건만 바꾼 두 기록을 만들어 시간과 높이 방향을 비교하세요." : "같은 파형의 측정 횟수와 숫자 단계 수를 바꾸어 기록하세요."}</h3>
+                    </div>
+                    <button type="button" class="foundation-reset" data-a05-reset>처음 상태 <small>Reset</small></button>
+                    <figure class="foundation-context-figure">
+                        <picture>
+                            <source srcset="${asset("a05-sound-sampling-data-illustration-v1-768.webp")} 768w, ${asset("a05-sound-sampling-data-illustration-v1-1536.webp")} 1536w" sizes="(max-width: 620px) 244px, (max-width: 820px) 144px, (max-width: 1180px) 16vw, 190px" type="image/webp">
+                            <img src="${asset("a05-sound-sampling-data-illustration-v1-768.webp")}" width="1536" height="1024" alt="기타 소리가 마이크 신호와 측정점을 거쳐 숫자 데이터가 되는 장면">
+                        </picture>
+                        <figcaption>소리→측정점→비트<small>Sound to Bits</small></figcaption>
+                    </figure>
+                </header>
+                <div class="a05-control-row">
+                    <fieldset>
+                        <legend>시간 방향: 1초에 몇 번 측정할까? <small>Sampling Rate</small></legend>
+                        <div class="foundation-choice-row" role="group" aria-label="모형의 샘플링 레이트">
+                            ${[4, 8, 16].map((rate) => `<button type="button" data-a05-rate="${rate}" aria-pressed="${rate === 4}">${rate}번/초<small>${rate} samples/s</small></button>`).join("")}
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>높이 방향: 한 값을 몇 칸으로 나눌까? <small>Bit Depth</small></legend>
+                        <div class="foundation-choice-row" role="group" aria-label="모형의 비트 깊이">
+                            ${[2, 3, 4].map((bits) => `<button type="button" data-a05-bits="${bits}" aria-pressed="${bits === 2}">${bits}비트 · ${2 ** bits}단계<small>${bits}-bit · ${2 ** bits} levels</small></button>`).join("")}
+                        </div>
+                    </fieldset>
+                    <button type="button" class="foundation-run" data-a05-record>1초 기록 <small>Record One Second</small></button>
+                </div>
+                <div class="a05-workbench">
+                    <section class="a05-wave-panel">
+                        <header><strong>이어지는 마이크 신호와 기록점</strong><small>Continuous Signal and Recorded Samples</small></header>
+                        <canvas data-a05-canvas aria-label="이어지는 파형, 측정 순간, 양자화한 숫자 단계를 비교하는 그래프"></canvas>
+                        <div class="a05-graph-legend" aria-label="그래프 표시 뜻"><span class="raw">이어지는 신호</span><span class="measured">측정 높이</span><span class="stored">숫자 단계</span><span class="replay">기록값을 이은 재생 모형</span></div>
+                        <p>점 사이의 청록 점선은 저장된 선이 아니라, 기록값을 시간 순서대로 재생한 모습을 단순화한 것입니다.</p>
+                    </section>
+                    <aside class="a05-sample-inspector">
+                        <span>선택한 샘플 <small>Selected Sample</small></span>
+                        <strong data-a05-selected>기록 전</strong>
+                        <dl>
+                            <div><dt>측정 높이</dt><dd data-a05-raw>—</dd></div>
+                            <div><dt>가까운 단계</dt><dd data-a05-quantized>—</dd></div>
+                            <div><dt>비트 코드</dt><dd><code data-a05-code>—</code></dd></div>
+                            <div><dt>양자화 차이</dt><dd data-a05-error>—</dd></div>
+                        </dl>
+                    </aside>
+                </div>
+                <div class="a05-sample-strip" data-a05-sample-list aria-label="기록한 샘플 목록"><p>‘1초 기록’을 누르면 각 측정값의 비트 코드가 나타납니다.</p></div>
+                <div class="a05-record-summary">
+                    <div><span>측정 횟수</span><strong data-a05-sample-count>4번/초</strong></div>
+                    <div><span>높이 단계</span><strong data-a05-level-count>2비트 · 4단계</strong></div>
+                    <div><span>이 모형의 기록량</span><strong data-a05-total-bits>4 × 2 = 8비트</strong></div>
+                </div>
+                <section class="a05-snapshot-compare" aria-labelledby="a05CompareTitle-${mode}">
+                    <header><strong id="a05CompareTitle-${mode}">A와 B 비교 <small>Compare Two Records</small></strong><span>한 번에 한 조건만 바꾸면 어느 설정이 결과를 바꾸었는지 알 수 있습니다.</span></header>
+                    <div class="a05-snapshot-grid">
+                        <div><button type="button" data-a05-save="a" disabled>현재 기록을 A에 저장 <small>Save as A</small></button><output data-a05-snapshot="a">A: 기록 전</output></div>
+                        <div><button type="button" data-a05-save="b" disabled>현재 기록을 B에 저장 <small>Save as B</small></button><output data-a05-snapshot="b">B: 기록 전</output></div>
+                    </div>
+                    <p data-a05-comparison>A와 B에 기록을 하나씩 저장하세요.</p>
+                    ${challenge ? `<ul class="a05-comparison-progress"><li data-a05-progress="rate">샘플링 레이트만 바꾼 비교</li><li data-a05-progress="bits">비트 깊이만 바꾼 비교</li></ul>` : ""}
+                </section>
+                <div class="foundation-evidence a05-evidence" aria-live="polite">
+                    <strong>기록 상태 <small>Recording State</small></strong>
+                    <p data-a05-status>두 설정을 고른 뒤 ‘1초 기록’을 누르세요.</p>
+                </div>
+            </section>`;
+    }
+
+    function a05WaveValue(fraction) {
+        return Math.sin(fraction * Math.PI * 4) * .58 + Math.sin(fraction * Math.PI * 10) * .16;
+    }
+
+    function a05Quantize(value, bits) {
+        const levels = 2 ** bits;
+        const levelIndex = Math.round(((value + 1) / 2) * (levels - 1));
+        return {
+            levelIndex,
+            value: (levelIndex / (levels - 1)) * 2 - 1,
+            code: levelIndex.toString(2).padStart(bits, "0")
+        };
+    }
+
+    function a05CreateSamples(rate, bits) {
+        return Array.from({ length: rate }, (_, index) => {
+            const fraction = index / rate;
+            const raw = a05WaveValue(fraction);
+            return { sampleIndex: index, fraction, raw, ...a05Quantize(raw, bits) };
+        });
+    }
+
+    function drawA05DigitizationGraph(canvas, state) {
+        if (!canvas) return;
+        const ratio = Math.max(1, window.devicePixelRatio || 1);
+        const rect = canvas.getBoundingClientRect();
+        const width = Math.max(560, Math.round(rect.width || 760));
+        const height = Math.max(260, Math.round(rect.height || 290));
+        const padding = { left: 34, right: 18, top: 18, bottom: 28 };
+        const graphWidth = width - padding.left - padding.right;
+        const graphHeight = height - padding.top - padding.bottom;
+        canvas.width = Math.round(width * ratio);
+        canvas.height = Math.round(height * ratio);
+        const context = canvas.getContext("2d");
+        context.setTransform(ratio, 0, 0, ratio, 0, 0);
+        context.clearRect(0, 0, width, height);
+        const xAt = (fraction) => padding.left + fraction * graphWidth;
+        const yAt = (value) => padding.top + ((1 - value) / 2) * graphHeight;
+        const levels = 2 ** state.bits;
+
+        context.lineWidth = 1;
+        for (let index = 0; index < levels; index += 1) {
+            const value = (index / (levels - 1)) * 2 - 1;
+            context.strokeStyle = index === 0 || index === levels - 1 ? "#a99475" : "rgba(143, 119, 83, .22)";
+            context.beginPath();
+            context.moveTo(padding.left, yAt(value));
+            context.lineTo(width - padding.right, yAt(value));
+            context.stroke();
+        }
+        context.strokeStyle = "#9a642d";
+        context.lineWidth = 3;
+        context.beginPath();
+        for (let index = 0; index <= 240; index += 1) {
+            const fraction = index / 240;
+            const x = xAt(fraction);
+            const y = yAt(a05WaveValue(fraction));
+            if (index === 0) context.moveTo(x, y); else context.lineTo(x, y);
+        }
+        context.stroke();
+
+        if (state.samples.length) {
+            context.strokeStyle = "#08717c";
+            context.lineWidth = 2;
+            context.setLineDash([7, 5]);
+            context.beginPath();
+            state.samples.forEach((sample, index) => {
+                const x = xAt(sample.fraction);
+                const y = yAt(sample.value);
+                if (index === 0) context.moveTo(x, y); else context.lineTo(x, y);
+            });
+            context.stroke();
+            context.setLineDash([]);
+            state.samples.forEach((sample) => {
+                const x = xAt(sample.fraction);
+                const rawY = yAt(sample.raw);
+                const storedY = yAt(sample.value);
+                context.strokeStyle = "#c16d28";
+                context.lineWidth = 2;
+                context.beginPath();
+                context.moveTo(x, rawY);
+                context.lineTo(x, storedY);
+                context.stroke();
+                context.fillStyle = "#fffdf8";
+                context.strokeStyle = "#9a642d";
+                context.lineWidth = 2;
+                context.beginPath();
+                context.arc(x, rawY, 5, 0, Math.PI * 2);
+                context.fill();
+                context.stroke();
+                context.fillStyle = "#08717c";
+                context.fillRect(x - 5, storedY - 5, 10, 10);
+            });
+        }
+        context.fillStyle = "#5a4b3e";
+        context.font = "700 12px system-ui, sans-serif";
+        context.fillText("0초", padding.left, height - 8);
+        context.fillText("1초", width - padding.right - 20, height - 8);
+    }
+
+    function setupA05DigitizerLab(root = document.querySelector('[data-a05-lab="concept"]'), options = {}) {
+        if (!root || root.dataset.a05Ready === "true") return;
+        root.dataset.a05Ready = "true";
+        const rateButtons = Array.from(root.querySelectorAll("[data-a05-rate]"));
+        const bitButtons = Array.from(root.querySelectorAll("[data-a05-bits]"));
+        const saveButtons = Array.from(root.querySelectorAll("[data-a05-save]"));
+        const canvas = root.querySelector("[data-a05-canvas]");
+        const sampleList = root.querySelector("[data-a05-sample-list]");
+        const state = {
+            rate: 4,
+            bits: 2,
+            samples: [],
+            selected: 0,
+            snapshots: { a: null, b: null },
+            rateCompared: false,
+            bitsCompared: false
+        };
+
+        const notify = () => options.onState?.({
+            rateCompared: state.rateCompared,
+            bitsCompared: state.bitsCompared
+        });
+        const setPressed = (buttons, key, value) => buttons.forEach((button) => {
+            button.setAttribute("aria-pressed", String(Number(button.dataset[key]) === value));
+        });
+        const clearRecording = () => {
+            state.samples = [];
+            state.selected = 0;
+            root.dataset.a05Recorded = "false";
+            saveButtons.forEach((button) => { button.disabled = true; });
+            sampleList.innerHTML = "<p>설정을 기록하면 각 측정값의 비트 코드가 나타납니다.</p>";
+            root.querySelector("[data-a05-selected]").textContent = "기록 전";
+            root.querySelector("[data-a05-raw]").textContent = "—";
+            root.querySelector("[data-a05-quantized]").textContent = "—";
+            root.querySelector("[data-a05-code]").textContent = "—";
+            root.querySelector("[data-a05-error]").textContent = "—";
+            drawA05DigitizationGraph(canvas, state);
+        };
+        const renderSummary = () => {
+            root.querySelector("[data-a05-sample-count]").textContent = `${state.rate}번/초`;
+            root.querySelector("[data-a05-level-count]").textContent = `${state.bits}비트 · ${2 ** state.bits}단계`;
+            root.querySelector("[data-a05-total-bits]").textContent = `${state.rate} × ${state.bits} = ${state.rate * state.bits}비트`;
+        };
+        const renderSelected = () => {
+            const sample = state.samples[state.selected];
+            if (!sample) return;
+            root.querySelector("[data-a05-selected]").textContent = `${sample.sampleIndex + 1}번째 · ${sample.fraction.toFixed(2)}초`;
+            root.querySelector("[data-a05-raw]").textContent = sample.raw.toFixed(2);
+            root.querySelector("[data-a05-quantized]").textContent = `${sample.levelIndex}번 단계 → ${sample.value.toFixed(2)}`;
+            root.querySelector("[data-a05-code]").textContent = sample.code;
+            root.querySelector("[data-a05-error]").textContent = Math.abs(sample.raw - sample.value).toFixed(2);
+            sampleList.querySelectorAll("[data-a05-sample-index]").forEach((button) => {
+                const selected = Number(button.dataset.a05SampleIndex) === state.selected;
+                button.setAttribute("aria-pressed", String(selected));
+            });
+        };
+        const renderSamples = () => {
+            sampleList.innerHTML = state.samples.map((sample) => `
+                <button type="button" data-a05-sample-index="${sample.sampleIndex}" aria-pressed="${sample.sampleIndex === state.selected}">
+                    <span>${sample.sampleIndex + 1}</span><code>${sample.code}</code>
+                </button>`).join("");
+            sampleList.querySelectorAll("[data-a05-sample-index]").forEach((button) => button.addEventListener("click", () => {
+                state.selected = Number(button.dataset.a05SampleIndex);
+                renderSelected();
+            }));
+            renderSelected();
+        };
+        const snapshotText = (key) => {
+            const item = state.snapshots[key];
+            return item
+                ? `${key.toUpperCase()}: ${item.rate}번/초 · ${item.bits}비트(${2 ** item.bits}단계) · ${item.rate * item.bits}비트`
+                : `${key.toUpperCase()}: 기록 전`;
+        };
+        const compareSnapshots = () => {
+            const a = state.snapshots.a;
+            const b = state.snapshots.b;
+            const output = root.querySelector("[data-a05-comparison]");
+            if (!a || !b) {
+                output.textContent = "A와 B에 기록을 하나씩 저장하세요.";
+            } else if (a.rate !== b.rate && a.bits === b.bits) {
+                state.rateCompared = true;
+                output.textContent = `비트 깊이는 ${a.bits}비트로 같고 샘플링 레이트만 ${a.rate}→${b.rate}번/초로 달라졌습니다. 시간 방향의 측정점 수가 달라집니다.`;
+            } else if (a.rate === b.rate && a.bits !== b.bits) {
+                state.bitsCompared = true;
+                output.textContent = `샘플링 레이트는 ${a.rate}번/초로 같고 비트 깊이만 ${a.bits}→${b.bits}비트로 달라졌습니다. 높이 방향의 단계 수가 달라집니다.`;
+            } else if (a.rate === b.rate && a.bits === b.bits) {
+                output.textContent = "A와 B의 두 설정이 같습니다. 한 조건만 바꾼 기록을 다시 저장하세요.";
+            } else {
+                output.textContent = "샘플링 레이트와 비트 깊이가 함께 달라졌습니다. 어느 조건의 영향인지 비교하려면 한 번에 하나만 바꾸세요.";
+            }
+            root.querySelectorAll("[data-a05-progress]").forEach((item) => {
+                const done = item.dataset.a05Progress === "rate" ? state.rateCompared : state.bitsCompared;
+                item.classList.toggle("is-complete", done);
+            });
+            notify();
+        };
+        const chooseSetting = (buttons, key, assign, label) => buttons.forEach((button) => button.addEventListener("click", () => {
+            const value = Number(button.dataset[key]);
+            assign(value);
+            setPressed(buttons, key, value);
+            clearRecording();
+            renderSummary();
+            root.querySelector("[data-a05-status]").textContent = `${label}를 바꿨습니다. 이 설정으로 ‘1초 기록’을 누르세요.`;
+        }));
+
+        chooseSetting(rateButtons, "a05Rate", (value) => { state.rate = value; }, "샘플링 레이트");
+        chooseSetting(bitButtons, "a05Bits", (value) => { state.bits = value; }, "비트 깊이");
+        root.querySelector("[data-a05-record]").addEventListener("click", () => {
+            state.samples = a05CreateSamples(state.rate, state.bits);
+            state.selected = 0;
+            root.dataset.a05Recorded = "true";
+            saveButtons.forEach((button) => { button.disabled = false; });
+            renderSummary();
+            renderSamples();
+            drawA05DigitizationGraph(canvas, state);
+            root.querySelector("[data-a05-status]").textContent = `${state.rate}개의 측정값을 ${state.bits}비트(${2 ** state.bits}단계)로 기록했습니다. 표본 하나를 누르면 측정값과 비트 코드를 볼 수 있습니다.`;
+        });
+        saveButtons.forEach((button) => button.addEventListener("click", () => {
+            const key = button.dataset.a05Save;
+            state.snapshots[key] = { rate: state.rate, bits: state.bits };
+            root.querySelector(`[data-a05-snapshot="${key}"]`).textContent = snapshotText(key);
+            compareSnapshots();
+        }));
+        root.querySelector("[data-a05-reset]").addEventListener("click", () => {
+            state.rate = 4;
+            state.bits = 2;
+            state.snapshots = { a: null, b: null };
+            state.rateCompared = false;
+            state.bitsCompared = false;
+            setPressed(rateButtons, "a05Rate", state.rate);
+            setPressed(bitButtons, "a05Bits", state.bits);
+            root.querySelector('[data-a05-snapshot="a"]').textContent = snapshotText("a");
+            root.querySelector('[data-a05-snapshot="b"]').textContent = snapshotText("b");
+            root.querySelector("[data-a05-comparison]").textContent = "A와 B에 기록을 하나씩 저장하세요.";
+            root.querySelectorAll("[data-a05-progress]").forEach((item) => item.classList.remove("is-complete"));
+            root.querySelector("[data-a05-status]").textContent = "두 설정을 고른 뒤 ‘1초 기록’을 누르세요.";
+            clearRecording();
+            renderSummary();
+            notify();
+        });
+        renderSummary();
+        clearRecording();
+        requestAnimationFrame(() => drawA05DigitizationGraph(canvas, state));
+        notify();
     }
 
     function setupConceptSequences() {
@@ -1674,16 +2118,31 @@
         const status = lab.querySelector("[data-stack-status]");
         const nodes = Array.from(lab.querySelectorAll("[data-stack-node]"));
         if (!startButton || !nextButton || !status || !nodes.length) return;
+        const answerButtons = Array.from(lab.querySelectorAll("[data-stack-answer]"));
+        const requestValue = lab.querySelector("[data-stack-request]");
+        const responseValue = lab.querySelector("[data-stack-response]");
+        const comparison = lab.querySelector("[data-stack-comparison]");
+        const verdict = lab.querySelector("[data-stack-verdict]");
+        const dbScore = lab.querySelector("[data-stack-db-score]");
+        const screenScore = lab.querySelector("[data-stack-screen-score]");
+        const selectedEvidence = lab.querySelector("[data-stack-selected]");
+        const resultEvidence = lab.querySelector("[data-stack-result]");
+        const storedEvidence = lab.querySelector("[data-stack-stored]");
+        const displayedEvidence = lab.querySelector("[data-stack-displayed]");
         const messages = [
-            "",
-            "1 / 6　문제 화면이 학생이 고른 답을 챙깁니다. 이 화면 부분을 프론트엔드라고 합니다.",
-            "2 / 6　화면은 정해진 방법으로 답을 서버에 보냅니다. 이 프로그램 사이의 약속을 API(Application Programming Interface)라고 합니다.",
-            "3 / 6　서버가 학생을 확인하고 답을 정답과 비교합니다. 이 처리 부분이 백엔드입니다.",
-            "4 / 6　서버가 보관함에서 문제를 찾아보고 새 점수를 기록합니다. 이 보관함이 데이터베이스입니다.",
-            "5 / 6　서버가 채점 결과를 학생의 기기로 돌려보냅니다.",
-            "6 / 6　문제 화면이 받은 점수를 학생에게 보여 줍니다."
+            "먼저 문제 화면에서 답 하나를 고르세요. 답은 아직 학생 기기 안에만 있습니다.",
+            "1 / 6　문제 화면이 고른 답을 읽었습니다. 사용자가 보고 조작하는 이 화면 부분이 프론트엔드입니다.",
+            "2 / 6　프론트엔드가 { answer }라는 약속된 이름으로 답을 요청 봉투에 담아 서버로 보냈습니다. 이 주소·방법·데이터 모양의 약속이 API입니다.",
+            "3 / 6　서버의 백엔드가 데이터베이스에서 정답 3을 읽어 받은 답과 비교했습니다. 백엔드는 보관함이 아니라 규칙을 실행하는 프로그램입니다.",
+            "4 / 6　백엔드가 계산 결과를 데이터베이스의 학생 17 점수 행에 기록했습니다. 데이터베이스는 관계를 정해 자료를 보관하고 찾게 합니다.",
+            "5 / 6　백엔드가 저장된 점수를 응답 봉투에 담아 학생 기기로 돌려보냈습니다.",
+            "6 / 6　프론트엔드가 응답에서 score 값을 읽어 화면에 표시했습니다. 고른 답부터 화면 결과까지 같은 값이 어떻게 이동하고 바뀌었는지 확인하세요."
         ];
         let stage = 0;
+        let selectedAnswer = null;
+        const baseScore = 4;
+
+        const calculatedScore = () => baseScore + (selectedAnswer === 3 ? 1 : 0);
 
         const activate = (nextStage) => {
             stage = nextStage;
@@ -1694,32 +2153,52 @@
                 node.classList.toggle("is-active", selected);
                 node.setAttribute("aria-pressed", String(selected));
             });
+            const hasRequest = stage >= 2;
+            const hasCalculation = stage >= 3;
+            const hasStored = stage >= 4;
+            const hasResponse = stage >= 5;
+            const hasDisplay = stage >= 6;
+            const score = calculatedScore();
+            requestValue.textContent = hasRequest ? `{ answer: ${selectedAnswer} }` : "{ answer: — }";
+            comparison.textContent = hasCalculation ? `${selectedAnswer} = 3 ?` : "— = 3 ?";
+            verdict.textContent = hasCalculation ? (selectedAnswer === 3 ? "같음 → 1점 더하기" : "다름 → 점수 유지") : "처리 전";
+            dbScore.textContent = String(hasStored ? score : baseScore);
+            responseValue.textContent = hasResponse ? `{ score: ${score} }` : "{ score: — }";
+            screenScore.textContent = hasDisplay ? `${score}점 표시` : "아직 점수 없음";
+            selectedEvidence.textContent = selectedAnswer === null ? "선택 전" : `${selectedAnswer}`;
+            resultEvidence.textContent = hasCalculation ? (selectedAnswer === 3 ? "정답 · +1" : "오답 · +0") : "처리 전";
+            storedEvidence.textContent = `${hasStored ? score : baseScore}점`;
+            displayedEvidence.textContent = hasDisplay ? `${score}점` : "표시 전";
             status.textContent = messages[stage];
-            nextButton.disabled = false;
+            answerButtons.forEach((button) => { button.disabled = stage > 0; });
+            startButton.disabled = stage > 0 || selectedAnswer === null;
+            nextButton.disabled = stage === 0;
             nextButton.innerHTML = stage === 6
-                ? "처음부터 <small>Restart</small>"
+                ? "다른 답 시험 <small>Try Another Answer</small>"
                 : "다음 단계 <small>Next Step</small>";
         };
 
-        nodes.forEach((node) => {
-            node.tabIndex = 0;
-            node.setAttribute("role", "button");
-            node.addEventListener("click", (event) => {
-                event.stopPropagation();
-                activate(Number(node.dataset.stackNode.split(",")[0]));
-            });
-            node.addEventListener("keydown", (event) => {
-                if (event.key !== "Enter" && event.key !== " ") return;
-                event.preventDefault();
-                activate(Number(node.dataset.stackNode.split(",")[0]));
+        const reset = () => {
+            selectedAnswer = null;
+            answerButtons.forEach((button) => button.setAttribute("aria-pressed", "false"));
+            activate(0);
+        };
+        answerButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                if (stage !== 0) return;
+                selectedAnswer = Number(button.dataset.stackAnswer);
+                answerButtons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+                activate(0);
+                status.textContent = `선택한 답은 ${selectedAnswer}입니다. 아직 서버에는 가지 않았습니다. 답 제출을 누르면 프론트엔드가 이 값을 읽습니다.`;
             });
         });
-        startButton.addEventListener("click", () => activate(1));
-        nextButton.addEventListener("click", () => activate(stage >= 6 ? 1 : stage + 1));
+        startButton.addEventListener("click", () => { if (selectedAnswer !== null) activate(1); });
+        nextButton.addEventListener("click", () => stage >= 6 ? reset() : activate(stage + 1));
+        reset();
     }
 
     function renderLesson() {
-        document.title = `${lesson.title} | 컴퓨터 원리와 활용`;
+        document.title = `${lesson.title} | 컴퓨터 이론`;
         document.getElementById("lessonMeta").textContent = `${lesson.number}차시`;
         document.getElementById("lessonTitle").innerHTML = `${lesson.title} <small>${lesson.english}</small>`;
         document.getElementById("situationTitle").innerHTML = `${lesson.workedExample.title} <small>${lesson.workedExample.english}</small>`;
@@ -1741,28 +2220,44 @@
             partsMount.innerHTML = `
                 <section class="component-inspector" aria-labelledby="componentInspectorTitle">
                     <div class="explanation-heading">
-                        <span>부품 확대 사진 <small>Component Close-ups</small></span>
-                        <h2 id="componentInspectorTitle">CPU·GPU·RAM·SSD·HDD·메인보드·전원 공급 장치·냉각 장치</h2>
-                        <p>부품 단추를 누르면 확대 사진과 명칭·어원·역할·연결 방식이 표시됩니다.</p>
+                        <span>본체 위치와 부품 확대 <small>Inside the Case and Component Close-ups</small></span>
+                        <h2 id="componentInspectorTitle">전체 위치에서 부품 하나까지 이어서 보기</h2>
+                        <p>본체 사진의 번호나 아래 부품 단추를 누르세요. 같은 선택이 확대 사진과 설명에 이어집니다.</p>
                     </div>
-                    <div class="component-tabs" role="tablist" aria-label="자세히 볼 컴퓨터 부품">
-                        ${lesson.parts.map((part, index) => `
-                            <button id="componentTab${index}" type="button" role="tab" data-part-index="${index}" aria-controls="componentPartPanel" aria-selected="${index === 0}" tabindex="${index === 0 ? 0 : -1}">
-                                <img src="${part.image}" width="768" height="768" alt="">
-                                <span><strong>${part.short}</strong><small>${part.korean}</small></span>
-                            </button>
-                        `).join("")}
+                    <div class="component-inspector-stage">
+                        <div class="component-cutaway-mount" data-component-cutaway></div>
+                        <div class="component-browser">
+                            <div class="component-tabs" role="tablist" aria-label="자세히 볼 컴퓨터 부품">
+                                ${lesson.parts.map((part, index) => `
+                                    <button id="componentTab${index}" type="button" role="tab" data-part-index="${index}" aria-controls="componentPartPanel" aria-selected="${index === 0}" tabindex="${index === 0 ? 0 : -1}">
+                                        <img src="${part.image}" width="768" height="768" alt="">
+                                        <span><strong>${part.short}</strong><small>${part.korean}</small></span>
+                                    </button>
+                                `).join("")}
+                            </div>
+                            <article id="componentPartPanel" class="component-detail-card" role="tabpanel" aria-live="polite"></article>
+                        </div>
                     </div>
-                    <article id="componentPartPanel" class="component-detail-card" role="tabpanel" aria-live="polite"></article>
                 </section>
             `;
+            const cutawayMount = partsMount.querySelector("[data-component-cutaway]");
+            if (diagram && cutawayMount) {
+                cutawayMount.appendChild(diagram);
+                conceptDiagram.replaceChildren();
+            }
             const partButtons = [...partsMount.querySelectorAll("[data-part-index]")];
+            const cutawayButtons = [...partsMount.querySelectorAll("[data-cutaway-part-index]")];
             const partPanel = document.getElementById("componentPartPanel");
             const showPart = (index, reveal = false) => {
                 const part = lesson.parts[index];
                 partButtons.forEach((button, buttonIndex) => {
                     button.setAttribute("aria-selected", String(buttonIndex === index));
                     button.tabIndex = buttonIndex === index ? 0 : -1;
+                });
+                cutawayButtons.forEach((button) => {
+                    const selected = Number(button.dataset.cutawayPartIndex) === index;
+                    button.setAttribute("aria-pressed", String(selected));
+                    button.classList.toggle("is-selected", selected);
                 });
                 partPanel.setAttribute("aria-labelledby", `componentTab${index}`);
                 partPanel.innerHTML = `
@@ -1799,6 +2294,9 @@
                     partButtons[next].focus();
                 });
             });
+            cutawayButtons.forEach((button) => {
+                button.addEventListener("click", () => showPart(Number(button.dataset.cutawayPartIndex), true));
+            });
             showPart(0);
         } else {
             partsMount.innerHTML = "";
@@ -1809,7 +2307,7 @@
         `).join("");
         conceptOverview.classList.toggle("has-pointer-lab", hasPointerLab);
         conceptOverview.classList.toggle("has-stack-lab", lesson.id === "h04");
-        const hasFoundationLab = ["a01", "a02", "a03"].includes(lesson.id);
+        const hasFoundationLab = ["a01", "a02", "a03", "a04", "a05"].includes(lesson.id);
         const hasPremiumVisual = hasFoundationLab || Boolean(window.COMPUTER_PREMIUM_VISUAL_IDS?.includes(lesson.id));
         conceptOverview.classList.toggle("has-premium-visual", hasPremiumVisual);
         conceptOverview.hidden = Boolean(lesson.parts?.length);
@@ -1820,6 +2318,8 @@
         if (lesson.id === "a01") setupA01SignalLab();
         if (lesson.id === "a02") setupA02CooperationLab();
         if (lesson.id === "a03") setupA03CompatibilityLab();
+        if (lesson.id === "a04") setupA04ConversionLab();
+        if (lesson.id === "a05") setupA05DigitizerLab();
         setupConceptSequences();
         setupFullStackLab();
         window.COMPUTER_SETUP_CONCEPT_LABS?.();
@@ -2078,81 +2578,28 @@
         }
     });
 
-    function digitalTemperature(raw) {
-        return Math.round(raw * 2) / 2;
-    }
-
     function renderAnalogActivity() {
-        activityState = { records: [null, null], raw: 20 };
-        activityMount.innerHTML = `
-            <div class="measurement-lab">
-                <div class="thermometer-pair">
-                    <section class="meter"><strong>바늘 위치</strong><small>Analog indication</small><div class="dial"><i class="dial-needle"></i></div></section>
-                    <section class="meter"><strong>숫자 기록</strong><small>Digital reading: 0.5°C step</small><output class="digital-readout">20.0°C</output></section>
-                </div>
-                <div class="lab-controls">
-                    <p class="exact-reading">실제 온도: <output id="exactTemperature">20.0°C</output></p>
-                    <label for="temperatureSlider">실제 온도 조절</label>
-                    <input id="temperatureSlider" type="range" min="200" max="220" step="1" value="200">
-                    <div class="record-grid">
-                        <div><button type="button" data-record="0">첫 번째 온도 기록 <small>Record First Temperature</small></button><output class="record-value" data-value="0">기록 전</output></div>
-                        <div><button type="button" data-record="1">두 번째 온도 기록 <small>Record Second Temperature</small></button><output class="record-value" data-value="1">기록 전</output></div>
-                    </div>
-                </div>
-            </div>`;
-        const slider = document.getElementById("temperatureSlider");
-        slider.addEventListener("input", updateTemperature);
-        activityMount.querySelectorAll("[data-record]").forEach((button) => button.addEventListener("click", () => {
-            const index = Number(button.dataset.record);
-            const raw = activityState.raw;
-            activityState.records[index] = { raw, digital: digitalTemperature(raw) };
-            activityMount.querySelector(`[data-value="${index}"]`).textContent = `실제 ${raw.toFixed(1)}°C → 표시 ${digitalTemperature(raw).toFixed(1)}°C`;
-            checkActivity.disabled = activityState.records.some((record) => !record);
-        }));
-        updateTemperature();
-    }
-
-    function updateTemperature() {
-        const slider = document.getElementById("temperatureSlider");
-        if (!slider) return;
-        const raw = Number(slider.value) / 10;
-        activityState.raw = raw;
-        document.getElementById("exactTemperature").textContent = `${raw.toFixed(1)}°C`;
-        activityMount.querySelector(".digital-readout").textContent = `${digitalTemperature(raw).toFixed(1)}°C`;
-        const rotation = -70 + ((raw - 20) / 2) * 140;
-        activityMount.querySelector(".dial-needle").style.transform = `rotate(${rotation}deg)`;
+        activityState = { records: [], pairFound: false };
+        activityMount.innerHTML = a04ConversionMarkup("activity");
+        setupA04ConversionLab(activityMount.querySelector('[data-a04-lab="activity"]'), {
+            onState(snapshot) {
+                activityState.records = snapshot.records;
+                activityState.pairFound = snapshot.pairFound;
+                checkActivity.disabled = snapshot.records.length < 2;
+            }
+        });
     }
 
     function renderSamplingActivity() {
-        activityState = { count: 4, low: null, high: null };
-        activityMount.innerHTML = `
-            <div class="sampling-lab">
-                <div class="sample-canvas-wrap"><canvas class="sample-canvas activity-sample-canvas" aria-label="조절한 개수만큼 측정점이 표시되는 파형"></canvas></div>
-                <div class="sampling-controls">
-                    <label for="sampleSlider">같은 시간 동안의 측정점 수</label>
-                    <input id="sampleSlider" type="range" min="4" max="20" step="1" value="4">
-                    <output class="sample-count">4개</output>
-                    <div class="sample-records">
-                        <button type="button" data-sample-record="low">적은 측정점 기록 <small>Record Fewer Samples</small></button><output data-sample-value="low">4~6개일 때 기록하세요.</output>
-                        <button type="button" data-sample-record="high">많은 측정점 기록 <small>Record More Samples</small></button><output data-sample-value="high">14~20개일 때 기록하세요.</output>
-                    </div>
-                </div>
-            </div>`;
-        const slider = document.getElementById("sampleSlider");
-        slider.addEventListener("input", () => {
-            activityState.count = Number(slider.value);
-            activityMount.querySelector(".sample-count").textContent = `${activityState.count}개`;
-            drawWave(activityMount.querySelector(".activity-sample-canvas"), activityState.count);
+        activityState = { rateCompared: false, bitsCompared: false };
+        activityMount.innerHTML = a05DigitizerMarkup("activity");
+        setupA05DigitizerLab(activityMount.querySelector('[data-a05-lab="activity"]'), {
+            onState(snapshot) {
+                activityState.rateCompared = snapshot.rateCompared;
+                activityState.bitsCompared = snapshot.bitsCompared;
+                checkActivity.disabled = !(snapshot.rateCompared && snapshot.bitsCompared);
+            }
         });
-        activityMount.querySelectorAll("[data-sample-record]").forEach((button) => button.addEventListener("click", () => {
-            const key = button.dataset.sampleRecord;
-            activityState[key] = activityState.count;
-            const message = key === "low" ? (activityState.count <= 6 ? `${activityState.count}개 기록 완료` : "6개 이하로 줄인 뒤 기록하세요.") : (activityState.count >= 14 ? `${activityState.count}개 기록 완료` : "14개 이상으로 늘린 뒤 기록하세요.");
-            if ((key === "low" && activityState.count > 6) || (key === "high" && activityState.count < 14)) activityState[key] = null;
-            activityMount.querySelector(`[data-sample-value="${key}"]`).textContent = message;
-            checkActivity.disabled = !(activityState.low && activityState.high);
-        }));
-        drawWave(activityMount.querySelector(".activity-sample-canvas"), 4);
     }
 
     function drawWave(canvas, sampleCount) {
@@ -2225,8 +2672,8 @@
                 return;
             }
         }
-        if (lesson.activity.type === "sampling" && !(activityState.low <= 6 && activityState.high >= 14)) {
-            activityFeedback.textContent = "6개 이하의 기록과 14개 이상의 기록을 하나씩 남겨 비교하세요.";
+        if (lesson.activity.type === "sampling" && !(activityState.rateCompared && activityState.bitsCompared)) {
+            activityFeedback.textContent = "샘플링 레이트만 바꾼 비교와 비트 깊이만 바꾼 비교를 하나씩 완료하세요.";
             activityFeedback.className = "feedback is-wrong";
             return;
         }

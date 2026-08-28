@@ -1,4 +1,4 @@
-# 컴퓨터 원리와 활용 진도표
+# 컴퓨터 이론 진도표
 
 주차를 정하지 않는다. 학습자는 차시별 활동과 문제를 통과한 뒤 다음 차시로 이동한다. 모든 차시는 한국어 개념명과 영어 원어를 함께 표시한다.
 
@@ -20,8 +20,8 @@
 | A01 | 컴퓨터는 무슨 일을 할까? / What Does a Computer Do? | 입력 → 처리 → 출력·저장 |
 | A02 | 하드웨어와 소프트웨어는 어떻게 다를까? / Hardware and Software | 물리 장치 ↔ 실행 명령 |
 | A03 | 기기·운영체제·앱은 무엇이 다를까? / Device, Operating System, and App | 기기 → 운영체제 → 앱 |
-| A04 | 아날로그와 디지털은 무엇이 다를까? / Analog and Digital | 연속 변화 ↔ 구분된 값 |
-| A05 | 현실의 소리는 어떻게 숫자 데이터가 될까? / From Sound to Digital Data | 소리 → 센서 → 샘플 → 데이터 |
+| A04 | 아날로그와 디지털은 무엇이 다를까? / Analog and Digital | 연속 값 → 측정 순간 → ADC → 숫자 단계 |
+| A05 | 현실의 소리는 어떻게 숫자 데이터가 될까? / From Sound to Digital Data | 파형 → 샘플링 레이트 → 양자화 → 비트 깊이·부호화 |
 
 ### B. 하드웨어와 기기 / Hardware and Devices
 

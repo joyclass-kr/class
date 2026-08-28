@@ -62,7 +62,7 @@
         i01: [["계정 정보 입력", "Enter Account Credentials"], ["두 번째 인증", "Enter the Second Factor"], ["허용 기능 요청", "Request an Allowed Action"], ["권한 거부 비교", "Compare a Blocked Action"]],
         i02: [["실제 주소 확인", "Inspect the Actual Address"], ["요구 정보 확인", "Check What Is Requested"], ["공식 주소 직접 열기", "Open the Official Site Directly"], ["별도 확인·신고", "Verify and Report Separately"]],
         j01: [["다운로드 폴더 열기", "Open Downloads"], ["사진 파일 선택", "Select the Photo File"], ["과제 폴더로 이동", "Move to the Assignment Folder"], ["양쪽 위치 확인", "Verify Both Locations"]],
-        j02: [["상태 초기화", "Initialize the State"], ["문제·입력 기다리기", "Show the Question and Wait"], ["조건·점수 분기", "Branch and Update the Score"], ["다음 문제 반복", "Loop to the Next Question"]],
+        j02: [["로봇 위치 바꾸기", "Move the Robot"], ["클릭 사건 받기", "Receive the Click Event"], ["위치 조건·분기", "Compare and Branch"], ["남은 별 반복", "Loop While Stars Remain"]],
         j03: [["오류 재현", "Reproduce the Error"], ["기록 관찰", "Inspect the Log"], ["한 원인 수정", "Fix One Cause"], ["재시험·회귀 시험", "Retest and Run Regression"]]
     });
 
