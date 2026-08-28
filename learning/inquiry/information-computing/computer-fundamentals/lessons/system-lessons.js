@@ -47,7 +47,7 @@
                         <span class="a01-branch" aria-hidden="true"><i></i><b></b></span>
                         <div class="a01-destinations">
                             <article class="a01-node a01-output-node" data-a01-node="output"><span>출력 <small>Output</small></span><strong data-a01-output-title>화면 미리보기</strong><p data-a01-output-data>픽셀이 장면을 바로 보여 줌</p><em data-a01-output-state>아직 실행하지 않음</em></article>
-                            <article class="a01-node a01-storage-node" data-a01-node="storage"><span>저장 <small>Storage</small></span><strong data-a01-storage-title>photo.webp</strong><p data-a01-storage-data>저장 장치에 사진 파일 기록</p><em data-a01-storage-state>경로를 선택하지 않음</em></article>
+                            <article class="a01-node a01-storage-node" data-a01-node="storage"><span>저장 <small>Storage</small></span><strong data-a01-storage-title>photo.jpg</strong><p data-a01-storage-data>저장 장치에 사진 파일 기록</p><em data-a01-storage-state>경로를 선택하지 않음</em></article>
                         </div>
                     </div>
                     <div class="foundation-evidence a01-evidence" aria-live="polite"><strong>실행 증거 <small>Run Evidence</small></strong><p data-a01-status>입력과 경로를 고른 뒤 신호를 보내세요.</p><dl><div><dt>화면·소리</dt><dd data-a01-output-proof>대기 중</dd></div><div><dt>저장 장치</dt><dd data-a01-storage-proof>대기 중</dd></div></dl></div>
@@ -78,7 +78,7 @@
                     ["RAM에 작업 준비", "Working in RAM", "카메라 앱과 센서 데이터가 CPU가 빠르게 사용할 수 있도록 RAM에 놓입니다."],
                     ["사진 처리", "Image Processing", "CPU와 영상 처리 장치가 픽셀 배열, 밝기, 색, 흔들림 보정을 계산합니다."],
                     ["화면 출력", "Display Output", "처리된 픽셀값에 따라 디스플레이의 작은 빛점들이 색과 밝기를 나타냅니다."],
-                    ["파일 만들기", "File Encoding", "사진 데이터와 촬영 정보를 JPG·HEIC 같은 파일 규칙으로 묶습니다."],
+                    ["파일 만들기", "File Encoding", "이 예시에서는 사진 데이터와 촬영 정보를 JPG 파일 규칙으로 묶습니다. 기기에 따라 HEIC 같은 다른 형식도 씁니다."],
                     ["저장 장치 기록", "Storage Write", "완성된 파일을 플래시 저장 장치에 기록해 화면을 끄거나 전원을 꺼도 다시 열 수 있게 합니다."]
                 ]
             },
@@ -122,12 +122,11 @@
                 success: "기기의 모양이 달라도 입력–처리–출력–저장이라는 같은 관계로 설명할 수 있음을 확인했습니다."
             },
             questions: [
-                { text: "태블릿 카메라 화면에는 장면이 계속 보이지만 촬영 버튼을 누르지 않았습니다. 현재 일어난 역할의 조합으로 가장 알맞은 것은 무엇입니까?", options: ["센서 입력–영상 처리–화면 출력", "파일 저장–키보드 입력–인쇄 출력", "화면 저장–배터리 처리–센서 출력", "파일 입력–폴더 처리–카메라 저장"], answer: 0, concept: "입력·처리·출력 · Input, Processing, and Output", explanation: "미리보기는 센서가 빛을 입력하고 앱과 처리 장치가 계산한 결과를 화면에 출력한 상태입니다. 촬영 파일 저장은 아직 일어나지 않을 수 있습니다." },
+                { text: "태블릿 카메라 화면에는 장면이 계속 보이지만 촬영 버튼을 누르지 않았습니다. 현재 일어난 역할의 조합으로 가장 알맞은 것은 무엇입니까?", options: ["센서 입력–영상 처리–화면 출력", "센서 입력–영상 처리–파일 저장", "화면 입력–센서 처리–영상 출력", "센서 입력–파일 저장–화면 출력"], answer: 0, concept: "입력·처리·출력 · Input, Processing, and Output", explanation: "미리보기는 센서가 빛을 입력하고 앱과 처리 장치가 계산한 결과를 화면에 출력한 상태입니다. 촬영 파일 저장은 아직 일어나지 않을 수 있습니다." },
                 { text: "사진을 찍은 뒤 기기를 완전히 종료했다가 다시 켰는데도 사진 앱에서 열 수 있었습니다. 이 사실을 가장 직접적으로 뒷받침하는 것은 무엇입니까?", options: ["사진 데이터가 저장 장치에 파일로 기록되었다", "사진 앱이 카메라 센서에서 이전 장면을 다시 측정했다", "디스플레이 회로가 꺼지기 전 픽셀 빛을 보존했다", "프로세서가 원본 데이터 없이 같은 사진을 다시 계산했다"], answer: 0, concept: "저장 · Storage", explanation: "전원을 끈 뒤에도 다시 열 수 있으려면 사진 데이터가 비휘발성 저장 장치에 파일로 기록되어 있어야 합니다." },
                 { text: "Chromebook에서 키를 눌렀더니 문서 앱이 글자가 들어갈 위치를 계산했습니다. 키 신호와 위치 계산의 역할을 순서대로 고르면 무엇입니까?", options: ["입력–처리", "처리–저장", "저장–출력", "출력–입력"], answer: 0, concept: "입력과 처리 · Input and Processing", explanation: "키보드는 눌린 키를 입력으로 보내고, 앱과 CPU는 현재 커서 위치와 입력 규칙을 처리합니다." },
                 { text: "스마트폰에서 음악 파일을 열자 CPU가 파일 형식을 해석하고 스피커가 소리를 냈습니다. CPU와 스피커의 역할을 순서대로 고르면 무엇입니까?", options: ["처리–출력", "입력–저장", "저장–처리", "출력–입력"], answer: 0, concept: "처리와 출력 · Processing and Output", explanation: "파일 데이터를 해석하는 것은 처리이고, 전기 신호를 실제 소리로 나타내는 스피커는 출력 장치입니다." },
                 { text: "그림 앱에서 선을 그린 직후 저장하지 않고 앱을 강제로 종료했습니다. 다시 열었을 때 선이 사라질 수 있는 이유는 무엇입니까?", options: ["임시 작업 데이터가 RAM에 있었고 저장 장치 기록이 끝나지 않았기 때문이다", "저장된 파일의 화면 해상도가 터치 좌표와 달랐기 때문이다", "터치 센서가 입력 좌표를 디스플레이 픽셀로 출력했기 때문이다", "GPU의 그림 계산 결과가 원본 파일을 대신해 기록되었기 때문이다"], answer: 0, concept: "작업 데이터와 파일 · Working Data and Saved Files", explanation: "실행 중 작업이 RAM에 있고 저장 장치의 파일에 기록되지 않았다면 앱 종료 뒤 변경 내용이 남지 않을 수 있습니다." },
-                { text: "같은 사진 데이터를 화면에 보여 주면서 저장 장치에도 기록했습니다. 이 상황이 가능한 까닭은 무엇입니까?", options: ["처리된 데이터를 출력 경로와 저장 경로에서 각각 사용할 수 있기 때문이다", "화면으로 보낸 데이터가 이동하면서 저장 장치의 원본이 사라지기 때문이다", "저장 장치가 영상 계산을 맡고 디스플레이가 파일 형식을 정하기 때문이다", "카메라 센서가 화면 픽셀을 거쳐 저장 장치에 직접 기록하기 때문이다"], answer: 0, concept: "데이터의 분기 · Branching Data Flow", explanation: "처리된 데이터는 복사되거나 서로 다른 경로로 전달되어 화면 출력과 파일 저장에 함께 사용될 수 있습니다." },
                 { text: "PC, Chromebook, 태블릿, 스마트폰에서 공통으로 찾아야 할 관계는 무엇입니까?", options: ["입력을 받고 명령에 따라 처리한 뒤 결과를 출력하거나 저장한다", "처리 장치의 모양과 운영체제 이름이 일치해야 앱을 실행한다", "키보드나 터치 신호가 처리 장치를 거치지 않고 화면에 표시된다", "저장 장치가 앱 명령을 해석하고 CPU가 파일을 장기 보관한다"], answer: 0, concept: "공통 원리 · Common Computing Principle", explanation: "부품의 모양과 운영체제는 달라도 데이터를 입력받아 처리하고 출력하거나 저장하는 기본 관계는 공통입니다." }
             ]
         },
@@ -209,11 +208,12 @@
             },
             activity: {
                 type: "sort",
-                title: "장치와 프로그램 분류하기",
-                instruction: "각 카드가 물리적인 장치인지, 저장되어 실행되는 명령인지 근거를 생각한 뒤 끌어다 놓으세요.",
+                title: "장치·프로그램·자료 구분하기",
+                instruction: "각 카드가 만질 수 있는 장치인지, 실행되는 명령인지, 프로그램이 다루는 자료인지 근거를 생각한 뒤 끌어다 놓으세요.",
                 categories: [
                     { id: "hardware", label: "하드웨어", english: "Hardware" },
-                    { id: "software", label: "소프트웨어", english: "Software" }
+                    { id: "software", label: "소프트웨어", english: "Software" },
+                    { id: "data", label: "데이터", english: "Data" }
                 ],
                 items: [
                     { id: "keyboard", label: "키보드", english: "Keyboard", category: "hardware" },
@@ -221,9 +221,11 @@
                     { id: "monitor", label: "모니터", english: "Monitor", category: "hardware" },
                     { id: "windows", label: "Windows 11", english: "Operating System", category: "software" },
                     { id: "chromeos", label: "ChromeOS", english: "Operating System", category: "software" },
-                    { id: "paint", label: "그림 앱", english: "Drawing App", category: "software" }
+                    { id: "paint", label: "그림 앱", english: "Drawing App", category: "software" },
+                    { id: "document", label: "내가 쓴 문서 파일", english: "Document File", category: "data" },
+                    { id: "photo", label: "카메라로 찍은 사진", english: "Photo Data", category: "data" }
                 ],
-                success: "물리적인 부품과 실행되는 명령을 구별했습니다. 하드웨어와 소프트웨어는 서로 필요하지만 같은 종류는 아닙니다."
+                success: "물리 장치, 실행 명령, 프로그램이 다루는 자료를 구별했습니다. 세 범주는 함께 작동하지만 같은 종류는 아닙니다."
             },
             questions: [
                 {
@@ -393,11 +395,11 @@
                     explanation: "Edge와 Safari는 앱이고, Windows와 iPadOS는 각각의 운영체제입니다."
                 },
                 {
-                    text: "카메라 앱이 운영체제에 촬영을 요청했습니다. 그다음 운영체제가 직접 제어해야 할 대상은 무엇입니까?",
-                    options: ["카메라 센서 하드웨어", "촬영을 요청한 카메라 앱 자체", "사진을 나중에 열 웹 브라우저 앱", "사진 파일을 볼 사용자의 프로필"],
+                    text: "카메라 앱의 촬영 요청이 실제 카메라 부품까지 전달되는 순서로 알맞은 것은 무엇입니까?",
+                    options: ["앱 → 운영체제 → 장치 드라이버 → 카메라 센서", "앱 → 카메라 센서 → 장치 드라이버 → 운영체제", "운영체제 → 앱 → 카메라 센서 → 장치 드라이버", "장치 드라이버 → 앱 → 운영체제 → 카메라 센서"],
                     answer: 0,
                     concept: "층 사이 요청 · Requests Between Layers",
-                    explanation: "운영체제는 앱의 요청을 받아 장치 드라이버를 통해 카메라 센서 같은 하드웨어를 제어합니다."
+                    explanation: "앱은 운영체제에 요청하고, 운영체제는 장치 드라이버를 거쳐 카메라 센서가 이해할 신호를 전달합니다."
                 },
 {
                     text: "iPhone에서 Safari로 학교 웹사이트를 열었습니다. 회사·기기·운영체제·앱을 순서대로 올바르게 연결한 것은 무엇입니까?",
@@ -488,7 +490,7 @@
                 },
                 {
                     text: "마이크 진동판이 공기 떨림에 따라 움직이고, 장치가 그 전기 신호를 일정한 간격으로 숫자로 기록했습니다. 앞과 뒤를 올바르게 구분한 것은 무엇입니까?",
-                    options: ["진동판의 연속 움직임은 아날로그, 숫자 기록은 디지털", "진동판은 디지털, 숫자 기록은 아날로그", "둘 다 화면에 보이지 않으므로 아날로그", "둘 다 최신 장치 안에 있으므로 디지털"],
+                    options: ["진동판의 연속 움직임은 아날로그, 숫자 기록은 디지털", "진동판은 디지털, 숫자 기록은 아날로그", "진동판과 숫자 기록이 모두 매끄럽게 이어지므로 둘 다 아날로그", "진동판의 움직임도 장치 안에 들어오면 측정 전부터 디지털"],
                     answer: 0,
                     concept: "변환 · Analog-to-Digital Conversion",
                     explanation: "연속적으로 변하는 물리적 움직임과 전기 신호를 측정해 숫자 단계로 기록하는 과정입니다."
@@ -502,7 +504,7 @@
                 },
                 {
                     text: "숫자가 적힌 화면이 없는 디지털 카메라가 사진을 메모리 카드의 파일로 저장합니다. 디지털이라고 판단할 근거는 무엇입니까?",
-                    options: ["숫자를 보여 주는 화면이 없으므로 디지털 방식으로 볼 수 없다", "사진을 정해진 숫자 데이터와 파일 형식으로 기록한다", "렌즈가 들어온 빛을 JPG 파일로 직접 바꾸므로 별도의 측정 과정이 없다", "전자 부품이 들어 있으면 정보의 기록 방식도 따로 확인할 필요가 없다"],
+                    options: ["전자 센서가 들어 있으므로 빛을 숫자로 측정하기 전부터 사진이 디지털이다", "사진을 정해진 숫자 데이터와 파일 형식으로 기록한다", "렌즈가 들어온 빛을 JPG 파일로 직접 바꾸므로 별도의 측정 과정이 없다", "파일 이름 끝에 JPG를 붙이는 순간 사진 내용도 디지털 데이터가 된다"],
                     answer: 1,
                     concept: "디지털 데이터 · Digital Data",
                     explanation: "디지털 여부는 숫자 화면의 유무가 아니라 정보를 정해진 기호와 숫자 데이터로 표현하는 방식에 달려 있습니다."
@@ -516,7 +518,7 @@
                 },
                 {
                     text: "같은 곡을 LP 음반과 MP3 파일로 보관했습니다. 두 기록 방식의 차이를 가장 정확히 설명한 것은 무엇입니까?",
-                    options: ["LP와 MP3는 모두 스피커로 재생되므로 기록 방식도 같다", "LP의 홈은 연속적인 물리 변화를 담고 MP3는 측정·부호화된 숫자 데이터를 담는다", "LP는 바늘로 읽으므로 디지털이고 MP3는 소리가 나므로 아날로그다", "MP3 파일 이름에 숫자가 표시될 때만 디지털 기록이 된다"],
+                    options: ["LP와 MP3는 재생 결과가 소리이므로 둘 다 연속 홈으로 기록한다", "LP의 홈은 연속적인 물리 변화를 담고 MP3는 측정·부호화된 숫자 데이터를 담는다", "LP의 홈도 일정 간격의 숫자 표본이고 MP3도 같은 홈 모양을 파일로 복사한다", "LP는 연속 변화를 담고 MP3는 각 순간의 소리 크기 하나만 반복해 저장한다"],
                     answer: 1,
                     concept: "기록 방식 비교 · Comparing Recording Methods",
                     explanation: "재생 결과는 모두 소리지만 LP의 홈은 연속적인 물리 모양으로, MP3는 표본화·부호화된 디지털 데이터로 정보를 기록합니다."
@@ -607,14 +609,14 @@
                 },
                 {
                     text: "마이크가 만든 전기 신호가 아직 시간에 따라 매끄럽게 변하고 있습니다. 숫자 배열로 저장하기 전에 필요한 과정은 무엇입니까?",
-                    options: ["신호를 일정한 간격으로 측정하고 숫자 단계로 기록한다", "연속 신호의 크기를 키운 상태로 숫자 변환 없이 저장한다", "신호를 스피커로 먼저 재생하고 나온 소리를 다시 마이크로 기록한다", "신호에 WAV라는 파일 이름을 붙이면 내용도 숫자로 바뀐다고 본다"],
+                    options: ["신호를 일정한 간격으로 측정하고 숫자 단계로 기록한다", "신호를 일정한 간격으로 측정하되 각 측정 높이는 연속값 그대로 파일에 넣는다", "신호 높이를 한 번 측정한 뒤 그 숫자 하나를 전체 재생 시간에 반복한다", "측정 간격은 정하지 않고 가장 높은 값과 가장 낮은 값 두 개만 기록한다"],
                     answer: 0,
                     concept: "아날로그-디지털 변환 · Analog-to-Digital Conversion",
                     explanation: "연속 신호를 샘플링하고 양자화해야 컴퓨터가 저장하고 처리할 숫자 데이터가 됩니다."
                 },
                 {
                     text: "측정 횟수를 네 배로 늘리고 각 측정값의 기록 단계도 더 촘촘하게 했습니다. 일반적으로 예상되는 변화는 무엇입니까?",
-                    options: ["기록할 숫자는 줄고 변화는 덜 자세해진다", "기록할 숫자와 정밀도가 늘어 데이터 양도 커질 수 있다", "소리가 더 이상 숫자 데이터가 아니다", "마이크가 출력 장치로 바뀐다"],
+                    options: ["기록할 숫자는 줄고 변화는 덜 자세해진다", "기록할 숫자와 정밀도가 늘어 데이터 양도 커질 수 있다", "측정 횟수만 늘고 값의 단계는 그대로이므로 데이터 양은 같아진다", "기록 단계가 촘촘해지면 숫자를 더 짧게 적을 수 있어 데이터 양이 줄어든다"],
                     answer: 1,
                     concept: "정밀도와 데이터 양 · Precision and Data Size",
                     explanation: "더 자주, 더 세밀한 단계로 기록하면 정보량과 필요한 저장 공간이 함께 늘어날 수 있습니다."
@@ -628,7 +630,7 @@
                 },
                 {
                     text: "두 녹음 설정의 샘플링 레이트는 같고, A는 8비트·B는 16비트로 한 측정값을 기록합니다. 가장 타당한 비교는 무엇입니까?",
-                    options: ["A가 한 측정값에 더 많은 숫자 단계를 사용한다", "B는 1초에 측정하는 횟수가 A의 두 배다", "B가 한 측정값의 크기를 더 촘촘한 단계로 기록할 수 있다", "비트 수 차이는 파일 이름에만 영향을 준다"],
+                    options: ["A는 B보다 한 측정값을 더 촘촘한 크기 단계로 나눈다", "B는 같은 비트 깊이로 1초에 측정하는 횟수만 두 배로 늘린다", "B가 한 측정값의 크기를 더 촘촘한 단계로 기록할 수 있다", "A와 B의 크기 단계 수는 같고 B가 녹음 가능한 시간만 늘어난다"],
                     answer: 2,
                     concept: "비트 깊이 · Bit Depth",
                     explanation: "샘플링 레이트가 시간 방향의 측정 횟수라면 비트 깊이는 한 측정값을 나눌 수 있는 크기 단계의 수와 관련됩니다."
@@ -937,6 +939,17 @@
         });
         stepStatus.textContent = status;
         window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function focusStageHeading(name) {
+        const heading = name === "activity"
+            ? document.getElementById("activityTitle")
+            : name === "result"
+                ? document.getElementById("resultTitle")
+                : null;
+        if (!heading) return;
+        heading.setAttribute("tabindex", "-1");
+        heading.focus({ preventScroll: true });
     }
 
     function pointerConceptLabMarkup() {
@@ -1264,7 +1277,7 @@
                 processData: "빛 값을 픽셀로 배열하고 색을 보정",
                 output: ["화면 미리보기", "Live Preview"],
                 outputData: "디스플레이 픽셀이 장면을 바로 보여 줌",
-                storage: "photo.webp",
+                storage: "photo.jpg",
                 storageData: "저장 장치에 사진 파일 기록",
                 outputProof: "화면에 카메라 장면이 보임"
             },
@@ -1900,7 +1913,9 @@
         document.getElementById("activityTitle").textContent = lesson.activity.title;
         document.getElementById("activityInstruction").textContent = lesson.activity.instruction;
         const hasStandaloneActivity = lesson.activity.type !== "sort";
-        document.getElementById("startActivity").textContent = hasStandaloneActivity ? "실험 시작" : "문제 풀기";
+        document.getElementById("startActivity").innerHTML = hasStandaloneActivity
+            ? "실험 시작 <small>Start Experiment</small>"
+            : "문제 풀기 <small>Start Questions</small>";
         stepStatus.textContent = hasStandaloneActivity ? "장면·원리 1 / 3" : "장면·원리 1 / 2";
         renderStaticCanvases();
         renderLessonList();
@@ -1939,7 +1954,7 @@
         activityFeedback.textContent = "";
         activityFeedback.className = "feedback";
         checkActivity.hidden = false;
-        checkActivity.textContent = "확인";
+        checkActivity.innerHTML = "확인 <small>Check</small>";
         checkActivity.disabled = lesson.activity.type !== "sort";
         if (lesson.activity.type === "sort") renderSortActivity();
         if (lesson.activity.type === "analog") renderAnalogActivity();
@@ -2080,8 +2095,8 @@
                     <label for="temperatureSlider">실제 온도 조절</label>
                     <input id="temperatureSlider" type="range" min="200" max="220" step="1" value="200">
                     <div class="record-grid">
-                        <div><button type="button" data-record="0">첫 번째 온도 기록</button><output class="record-value" data-value="0">기록 전</output></div>
-                        <div><button type="button" data-record="1">두 번째 온도 기록</button><output class="record-value" data-value="1">기록 전</output></div>
+                        <div><button type="button" data-record="0">첫 번째 온도 기록 <small>Record First Temperature</small></button><output class="record-value" data-value="0">기록 전</output></div>
+                        <div><button type="button" data-record="1">두 번째 온도 기록 <small>Record Second Temperature</small></button><output class="record-value" data-value="1">기록 전</output></div>
                     </div>
                 </div>
             </div>`;
@@ -2118,8 +2133,8 @@
                     <input id="sampleSlider" type="range" min="4" max="20" step="1" value="4">
                     <output class="sample-count">4개</output>
                     <div class="sample-records">
-                        <button type="button" data-sample-record="low">적은 측정점 기록</button><output data-sample-value="low">4~6개일 때 기록하세요.</output>
-                        <button type="button" data-sample-record="high">많은 측정점 기록</button><output data-sample-value="high">14~20개일 때 기록하세요.</output>
+                        <button type="button" data-sample-record="low">적은 측정점 기록 <small>Record Fewer Samples</small></button><output data-sample-value="low">4~6개일 때 기록하세요.</output>
+                        <button type="button" data-sample-record="high">많은 측정점 기록 <small>Record More Samples</small></button><output data-sample-value="high">14~20개일 때 기록하세요.</output>
                     </div>
                 </div>
             </div>`;
@@ -2218,17 +2233,19 @@
         activityPassed = true;
         activityFeedback.textContent = lesson.activity.success;
         activityFeedback.className = "feedback is-correct";
-        checkActivity.textContent = "문제 풀기";
+        checkActivity.innerHTML = "문제 풀기 <small>Continue to Questions</small>";
     }
 
     const beginActivity = () => {
         if (lesson.activity.type === "sort") {
             resetQuiz();
             showStage("quiz", "문제 풀이 2 / 2");
+            focusFirstQuizOption();
             return;
         }
         resetActivity();
         showStage("activity", "직접 조작 2 / 3");
+        focusStageHeading("activity");
     };
     document.getElementById("startActivity").addEventListener("click", beginActivity);
     document.getElementById("resetActivity").addEventListener("click", resetActivity);
@@ -2239,6 +2256,7 @@
         }
         resetQuiz();
         showStage("quiz", "문제 풀이 3 / 3");
+        focusFirstQuizOption();
     });
 
     let questionIndex = 0;
@@ -2252,6 +2270,11 @@
     const quizFeedback = document.getElementById("quizFeedback");
     const submitAnswer = document.getElementById("submitAnswer");
     const nextQuestion = document.getElementById("nextQuestion");
+
+    function focusFirstQuizOption() {
+        const firstAvailable = questionOptions.querySelector("button:not(:disabled)");
+        if (firstAvailable) firstAvailable.focus();
+    }
 
     function resetQuiz() {
         questionIndex = 0;
@@ -2307,8 +2330,9 @@
             chosenButton.setAttribute("aria-pressed", "false");
             selectedOption = -1;
             submitAnswer.disabled = true;
-            quizFeedback.textContent = `${question.concept}의 조건과 선택한 설명이 상황의 모든 단서에 맞는지 다시 비교하세요.`;
+            quizFeedback.textContent = "선택한 답을 제외했습니다. 문제에 나온 수치·순서·현재 상태와 남은 설명을 하나씩 다시 대조하세요.";
             quizFeedback.className = "feedback quiz-feedback is-wrong";
+            focusFirstQuizOption();
             return;
         }
         if (!questionHadWrong) score += 1;
@@ -2321,13 +2345,18 @@
         quizFeedback.className = "feedback quiz-feedback is-correct";
         submitAnswer.hidden = true;
         nextQuestion.hidden = false;
-        nextQuestion.textContent = questionIndex === lesson.questions.length - 1 ? "결과 확인" : "다음 문제";
+        nextQuestion.innerHTML = questionIndex === lesson.questions.length - 1
+            ? "결과 확인 <small>View Results</small>"
+            : "다음 문제 <small>Next Question</small>";
         nextQuestion.focus();
     });
 
     nextQuestion.addEventListener("click", () => {
         questionIndex += 1;
-        if (questionIndex < lesson.questions.length) renderQuestion();
+        if (questionIndex < lesson.questions.length) {
+            renderQuestion();
+            focusFirstQuizOption();
+        }
         else showResult();
     });
 
@@ -2349,17 +2378,19 @@
         const nextLink = document.getElementById("nextLesson");
         if (lessonIndex < lessons.length - 1) {
             nextLink.href = lessonHref(lessons[lessonIndex + 1].id);
-            nextLink.textContent = "다음 차시";
+            nextLink.innerHTML = "다음 차시 <small>Next Lesson</small>";
         } else {
             nextLink.href = lessonHref("a01");
-            nextLink.textContent = "첫 차시로 돌아가기";
+            nextLink.innerHTML = "첫 차시로 돌아가기 <small>Back to First Lesson</small>";
         }
         showStage("result", "차시 완료");
+        focusStageHeading("result");
     }
 
     document.getElementById("retryQuiz").addEventListener("click", () => {
         resetQuiz();
         showStage("quiz", lesson.activity.type === "sort" ? "문제 풀이 2 / 2" : "문제 풀이 3 / 3");
+        focusFirstQuizOption();
     });
 
     const courseDialog = document.getElementById("courseDialog");

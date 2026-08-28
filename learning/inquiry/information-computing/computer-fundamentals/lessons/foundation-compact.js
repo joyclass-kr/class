@@ -18,6 +18,7 @@
             title: spec.title,
             english: spec.english,
             concept: spec.concept,
+            details: spec.details,
             nodes: spec.nodes,
             caption: spec.caption,
             example: spec.example,

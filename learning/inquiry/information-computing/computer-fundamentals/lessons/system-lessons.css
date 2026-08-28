@@ -2933,8 +2933,16 @@
     border-bottom: 1px solid #c8a978;
 }
 
+.lesson-situation .stage-label {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 6px;
+    max-width: 100%;
+    overflow: visible;
+}
+
 .lesson-situation .stage-label small {
-    margin-left: 5px;
+    margin-left: 0;
     color: #4d5c5d;
     font-size: 12px;
 }

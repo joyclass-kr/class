@@ -25,7 +25,7 @@
     <header class="app-bar">
         <a class="back-button" href="../" aria-label="이전 차시로 돌아가기">←</a>
 
-        <button id="openCourse" class="course-button" type="button">차시 목록</button>
+        <button id="openCourse" class="course-button" type="button">차시 목록 <small>Course Lessons</small></button>
     </header>
 
     <main class="lesson-shell">
@@ -69,7 +69,7 @@
                 </div>
             </details>
             <div class="stage-actions end-aligned">
-                <button id="startActivity" class="primary-button" type="button">문제 풀기</button>
+                <button id="startActivity" class="primary-button" type="button">문제 풀기 <small>Start Questions</small></button>
             </div>
         </section>
 
@@ -79,13 +79,13 @@
                     <span class="stage-label">직접 조작</span>
                     <h2 id="activityTitle"></h2>
                 </div>
-                <button id="resetActivity" class="text-button" type="button">처음부터</button>
+                <button id="resetActivity" class="text-button" type="button">처음부터 <small>Reset</small></button>
             </div>
             <p id="activityInstruction" class="task-instruction"></p>
             <div id="activityMount"></div>
             <div class="stage-actions">
                 <p id="activityFeedback" class="feedback" aria-live="polite"></p>
-                <button id="checkActivity" class="primary-button" type="button">확인</button>
+                <button id="checkActivity" class="primary-button" type="button">확인 <small>Check</small></button>
             </div>
         </section>
 
@@ -102,8 +102,8 @@
                 <p id="quizFeedback" class="feedback quiz-feedback" aria-live="polite"></p>
             </div>
             <div class="stage-actions end-aligned">
-                <button id="submitAnswer" class="primary-button" type="button" disabled>답 확인</button>
-                <button id="nextQuestion" class="primary-button" type="button" hidden>다음 문제</button>
+                <button id="submitAnswer" class="primary-button" type="button" disabled>답 확인 <small>Check Answer</small></button>
+                <button id="nextQuestion" class="primary-button" type="button" hidden>다음 문제 <small>Next Question</small></button>
             </div>
         </section>
 
@@ -118,8 +118,8 @@
             </div>
             <div id="reviewList" class="review-list"></div>
             <div class="stage-actions result-actions">
-                <button id="retryQuiz" class="secondary-button" type="button">문제 다시 풀기</button>
-                <a id="nextLesson" class="primary-button" href="#">다음 차시</a>
+                <button id="retryQuiz" class="secondary-button" type="button">문제 다시 풀기 <small>Retry Quiz</small></button>
+                <a id="nextLesson" class="primary-button" href="#">다음 차시 <small>Next Lesson</small></a>
             </div>
         </section>
     </main>

@@ -3,6 +3,12 @@
 
     const fallbackRenderer = window.COMPUTER_CONCEPT_VISUAL;
     const renderers = {};
+    const setBilingualButtonLabel = (button, korean, english) => {
+        button.replaceChildren(document.createTextNode(korean + " "));
+        const small = document.createElement("small");
+        small.textContent = english;
+        button.append(small);
+    };
     const figure = (spec, className, body) => `
         <figure class="lesson-specific-figure premium-concept-figure visual-${spec.id} ${className}" aria-label="${spec.concept}">
             <div class="lesson-specific-board">${body}</div>
@@ -10,16 +16,19 @@
         </figure>
     `;
     const contextImage = (asset, basename, alt, height = 512) => `
-        <picture class="context-illustration">
-            <img
-                src="${asset(`${basename}-768.webp`)}"
-                srcset="${asset(`${basename}-768.webp`)} 768w, ${asset(`${basename}-1536.webp`)} 1536w"
-                sizes="(max-width: 820px) calc(100vw - 72px), (max-width: 1180px) calc(100vw - 112px), 1020px"
-                width="768"
-                height="${height}"
-                alt="${alt}"
-            >
-        </picture>
+        <figure class="context-illustration">
+            <picture>
+                <img
+                    src="${asset(`${basename}-768.webp`)}"
+                    srcset="${asset(`${basename}-768.webp`)} 768w, ${asset(`${basename}-1536.webp`)} 1536w"
+                    sizes="(max-width: 820px) calc(100vw - 72px), (max-width: 1180px) calc(100vw - 112px), 1020px"
+                    width="768"
+                    height="${height}"
+                    alt="${alt}"
+                >
+            </picture>
+            <figcaption><b>관찰 <small>Observe</small></b><span>${alt}</span></figcaption>
+        </figure>
     `;
 
     const compactContextImage = (asset, basename, alt, caption, englishCaption) => `
@@ -82,6 +91,37 @@
                     </dl>
                 </aside>
             </div>
+            <section class="mobile-chip-closeup" data-mobile-chip-closeup data-chip="soc" aria-label="스마트폰 로직 보드의 주요 칩 확대">
+                <header><h4>로직 보드를 한 단계 더 확대하기 <small>Inside the Logic Board</small></h4><p>칩은 겉모양이 비슷해 보여도 연결된 회로와 맡은 일이 다릅니다. 번호를 눌러 PC 부품과의 관계까지 확인하세요.</p></header>
+                <div class="mobile-chip-layout">
+                    <div class="mobile-chip-photo">
+                        <picture>
+                            <source media="(min-width: 1100px)" srcset="${asset("b02-smartphone-logic-board-closeup-v1-1536.webp")}">
+                            <img src="${asset("b02-smartphone-logic-board-closeup-v1-768.webp")}" width="768" height="512" alt="SoC, RAM, 저장 칩, 전원 관리 칩, 통신 칩을 구별해 볼 수 있는 스마트폰 로직 보드 확대 사진">
+                        </picture>
+                        <button type="button" data-mobile-chip-choice="soc" style="--chip-x:51%;--chip-y:48%" aria-pressed="true" aria-label="1번 SoC 위치"><b>1</b></button>
+                        <button type="button" data-mobile-chip-choice="ram" style="--chip-x:31%;--chip-y:29%" aria-pressed="false" aria-label="2번 RAM 위치"><b>2</b></button>
+                        <button type="button" data-mobile-chip-choice="storage" style="--chip-x:31%;--chip-y:57%" aria-pressed="false" aria-label="3번 저장 칩 위치"><b>3</b></button>
+                        <button type="button" data-mobile-chip-choice="power" style="--chip-x:68%;--chip-y:66%" aria-pressed="false" aria-label="4번 전원 관리 칩 위치"><b>4</b></button>
+                        <button type="button" data-mobile-chip-choice="radio" style="--chip-x:82%;--chip-y:41%" aria-pressed="false" aria-label="5번 통신 칩 위치"><b>5</b></button>
+                    </div>
+                    <div class="mobile-chip-side">
+                        <div class="mobile-chip-key" role="group" aria-label="설명할 칩 선택">
+                            <button type="button" data-mobile-chip-choice="soc" aria-pressed="true"><b>1</b><span>SoC<small>System on a Chip</small></span></button>
+                            <button type="button" data-mobile-chip-choice="ram" aria-pressed="false"><b>2</b><span>RAM<small>Random Access Memory</small></span></button>
+                            <button type="button" data-mobile-chip-choice="storage" aria-pressed="false"><b>3</b><span>저장 칩<small>NAND Flash Storage</small></span></button>
+                            <button type="button" data-mobile-chip-choice="power" aria-pressed="false"><b>4</b><span>전원 관리 칩<small>Power Management IC</small></span></button>
+                            <button type="button" data-mobile-chip-choice="radio" aria-pressed="false"><b>5</b><span>통신 칩<small>Radio / Modem</small></span></button>
+                        </div>
+                        <article class="mobile-chip-explanation" aria-live="polite">
+                            <h5 data-mobile-chip-title>SoC <small>System on a Chip</small></h5>
+                            <p data-mobile-chip-role>CPU·GPU와 여러 제어 기능을 한 칩에 모아 계산과 장치 제어를 맡습니다.</p>
+                            <dl><div><dt>이름 뜻 <small>Name</small></dt><dd data-mobile-chip-name>‘한 칩 위의 시스템’이라는 뜻입니다.</dd></div><div><dt>PC에서 대응 <small>PC Counterpart</small></dt><dd data-mobile-chip-pc>CPU·GPU와 여러 제어 칩이 합쳐진 모습에 가깝습니다.</dd></div></dl>
+                        </article>
+                    </div>
+                </div>
+                <p class="mobile-chip-caveat"><b>실제 기기마다 배치가 다릅니다. <small>Layout Varies by Device</small></b><span>번호는 이 교육용 대표 이미지에서 역할을 구분하기 위한 위치입니다. 실제 제품을 분해하거나 수리할 때는 해당 모델의 분해도와 회로 자료를 따로 확인해야 합니다.</span></p>
+            </section>
         </section>
     `);
 
@@ -103,7 +143,7 @@
                     </div>
                 </div>
                 <div class="driver-setting"><span><b>장치 드라이버</b><small>Device Driver</small></span><button type="button" data-driver-toggle aria-pressed="true"><i></i><span data-driver-label>설치됨</span></button></div>
-                <div class="port-actions"><button type="button" data-port-connect>연결해 보기 <small>Connect</small></button><button type="button" data-port-reset>처음 상태</button></div>
+                <div class="port-actions"><button type="button" data-port-connect>연결해 보기 <small>Connect</small></button><button type="button" data-port-reset>처음 상태 <small>Reset</small></button></div>
                 <p class="lab-readout" data-port-status aria-live="polite"><b>USB 메모리:</b> 플러그 모양과 포트 규격이 맞는 곳을 고른 뒤 연결해 보세요.</p>
             </section>
             ${contextImage(asset, "b03-peripherals-ports-drivers-illustration-v1", "노트북의 여러 단자에 모양이 다른 케이블과 저장 장치, 화면, 키보드, 무선 기기가 각기 다른 방법으로 연결되는 장면")}
@@ -124,7 +164,7 @@
                     <div data-relay-node="camera"><i></i><b>카메라 센서</b><small>Hardware</small></div>
                 </div>
                 <div class="relay-result"><div data-relay-preview><span>아직 사진 없음</span></div><p data-relay-result-copy>앱은 직접 센서를 움직이지 않고 운영체제에 요청합니다.</p></div>
-                <div class="relay-actions"><button type="button" data-relay-run>사진 찍기 <small>Take Photo</small></button><button type="button" data-relay-reset>처음 상태</button></div>
+                <div class="relay-actions"><button type="button" data-relay-run>사진 찍기 <small>Take Photo</small></button><button type="button" data-relay-reset>처음 상태 <small>Reset</small></button></div>
                 <p class="lab-readout" data-relay-status aria-live="polite"><b>준비:</b> 권한과 카메라 장치 상태를 바꾼 뒤 사진 요청이 어디에서 멈추는지 확인하세요.</p>
             </section>
             ${contextImage(asset, "c01-app-os-hardware-request-illustration-v1", "아이가 태블릿을 누르자 앱의 요청이 운영체제와 처리 부품을 거쳐 카메라와 화면으로 이어지는 장면")}
@@ -135,11 +175,11 @@
         <section class="concept-lab-split">
             <section class="program-process-lab" data-program-lab data-program-state="stopped">
                 <div class="program-state-board">
-                    <section class="program-storage"><h3>저장 장치 <small>Storage</small></h3><div class="program-file"><i></i><b>그림판 프로그램</b><small>paint.app · 저장되어 있음</small></div></section>
-                    <span class="state-arrow">실행 →</span>
-                    <section class="process-memory"><h3>RAM <small>Running Process</small></h3><div data-process-token hidden><i></i><b>그림판 프로세스</b><small data-process-copy>명령 처리 중</small></div><em data-process-empty>실행 중인 작업 없음</em></section>
-                    <span class="state-arrow">표시 →</span>
-                    <section class="window-display"><h3>화면 <small>Windows</small></h3><div class="window-stack" data-window-stack></div><em data-window-empty>열린 창 없음</em></section>
+                    <section class="program-storage"><h3>저장 장치 <small>Storage</small></h3><div class="program-file"><i></i><b>그림 앱</b><small>Drawing App · 저장된 명령과 자료</small></div></section>
+                    <span class="state-arrow"><b>실행 요청</b><i aria-hidden="true">→</i></span>
+                    <section class="process-memory"><h3>실행 중인 프로세스 <small>Running Process</small></h3><div data-process-token hidden><i></i><b>그림 앱 프로세스</b><small data-process-copy>CPU 시간·RAM 공간 사용</small></div><em data-process-empty>실행 중인 프로세스 없음</em></section>
+                    <span class="state-arrow"><b>화면 표시</b><i aria-hidden="true">→</i></span>
+                    <section class="window-display"><h3>창 <small>Window</small></h3><div class="window-stack" data-window-stack></div><em data-window-empty>열린 창 없음</em></section>
                 </div>
                 <div class="program-actions" role="group" aria-label="프로그램 실행 상태 바꾸기">
                     <button type="button" data-program-action="run">프로그램 실행 <small>Run</small></button>
@@ -147,8 +187,8 @@
                     <button type="button" data-program-action="background" disabled>창 숨기기 <small>Keep in Background</small></button>
                     <button type="button" data-program-action="end" disabled>프로세스 끝내기 <small>End Process</small></button>
                 </div>
-                <p class="lab-readout" data-program-status aria-live="polite"><b>저장된 프로그램:</b> 실행 전에도 프로그램 파일은 저장 장치에 남아 있지만 RAM의 프로세스와 화면의 창은 아직 없습니다.</p>
-                <p class="model-note">이 실험의 그림판은 한 프로세스가 여러 창을 관리하는 모형입니다. 실제 앱은 여러 프로세스를 사용하기도 합니다.</p>
+                <p class="lab-readout" data-program-status aria-live="polite"><b>저장된 그림 앱:</b> 앱의 명령과 자료는 저장 장치에 있지만, 운영체제가 시작한 프로세스와 그 프로세스가 보여 주는 창은 아직 없습니다.</p>
+                <p class="model-note">프로세스는 RAM 자체가 아니라 운영체제가 관리하는 실행 상태입니다. 이 실험의 그림 앱은 한 프로세스가 CPU 시간과 RAM 공간을 사용하며 여러 창을 관리하는 모형이고, 실제 앱은 여러 프로세스를 사용하기도 합니다.</p>
             </section>
             ${contextImage(asset, "c03-program-process-window-illustration-v1", "저장된 앱 아이콘에서 실행 중인 작업이 시작되고 여러 창과 탭으로 나타나는 장면")}
         </section>
@@ -162,12 +202,12 @@
                     <div class="clipboard-shelf"><b>클립보드 <small>Clipboard</small></b><output data-clipboard-value>비어 있음</output><span>복사·잘라내기한 내용의 임시 사본</span></div>
                     <label>붙여넣을 문서 <small>Destination Document</small><textarea data-clipboard-target rows="4">관찰한 동물: </textarea></label>
                 </div>
-                <div class="selection-presets" role="group" aria-label="원문에서 선택할 말"><span>선택:</span><button type="button" data-select-text="고양이">고양이</button><button type="button" data-select-text="강아지">강아지</button><button type="button" data-select-text="공원">공원</button></div>
+                <div class="selection-presets" role="group" aria-label="원문에서 선택할 말"><span>선택 <small>Select</small></span><button type="button" data-select-text="고양이">고양이 <small>Cat</small></button><button type="button" data-select-text="강아지">강아지 <small>Dog</small></button><button type="button" data-select-text="공원">공원 <small>Park</small></button></div>
                 <div class="clipboard-actions" role="group" aria-label="클립보드 명령">
                     <button type="button" data-clipboard-action="copy">복사 <small>Ctrl/Cmd+C</small></button>
                     <button type="button" data-clipboard-action="cut">잘라내기 <small>Ctrl/Cmd+X</small></button>
                     <button type="button" data-clipboard-action="paste">붙여넣기 <small>Ctrl/Cmd+V</small></button>
-                    <button type="button" data-clipboard-action="reset">처음 상태</button>
+                    <button type="button" data-clipboard-action="reset">처음 상태 <small>Reset</small></button>
                 </div>
                 <p class="lab-readout" data-clipboard-status aria-live="polite"><b>선택:</b> 원문에서 직접 드래그하거나 말 단추를 누른 뒤 복사·잘라내기를 실행하세요. 붙여넣기는 아래 문서의 커서 위치에 들어갑니다.</p>
             </section>
@@ -179,12 +219,13 @@
         ${contextImage(asset, "c02-operating-system-devices-illustration-v1", "한 학생이 노트북, Chromebook형 기기, 태블릿, 스마트폰에서 같은 그림 파일을 다루는 모습")}
         <section class="os-workbench" data-os-lab data-os="windows">
             <header>
-                <h3>같은 사진 파일을 찾는 네 가지 화면 <small>The Same Task on Four Systems</small></h3>
+                <h3>같은 사진 파일을 찾는 다섯 가지 화면 <small>The Same Task on Five Systems</small></h3>
                 <nav aria-label="비교할 운영체제">
                     <button type="button" data-os-choice="windows" aria-pressed="true">Windows</button>
                     <button type="button" data-os-choice="chromeos" aria-pressed="false">ChromeOS</button>
                     <button type="button" data-os-choice="android" aria-pressed="false">Android</button>
-                    <button type="button" data-os-choice="ipados" aria-pressed="false">iOS·iPadOS</button>
+                    <button type="button" data-os-choice="ios" aria-pressed="false">iPhone <small>iOS</small></button>
+                    <button type="button" data-os-choice="ipados" aria-pressed="false">iPad <small>iPadOS</small></button>
                 </nav>
             </header>
             <div class="os-device-shell">
@@ -204,9 +245,14 @@
                     <h4>내 파일</h4><div class="mobile-grid"><i class="download-icon"><span></span><small>다운로드</small></i><i class="image-icon"><span></span><small>이미지</small></i><i class="cloud-folder-icon"><span></span><small>Drive</small></i></div>
                     <div class="mobile-nav">‹　○　▢</div>
                 </div>
+                <div class="os-screen os-ios-screen" data-os-panel="ios" hidden>
+                    <div class="mobile-status"><time>10:24</time><span>iPhone　Wi-Fi</span></div>
+                    <h4>파일 <small>Files</small></h4><div class="mobile-grid"><i class="cloud-folder-icon"><span></span><small>iCloud Drive</small></i><i class="image-icon"><span></span><small>나의 iPhone</small></i><i class="download-icon"><span></span><small>다운로드</small></i></div>
+                    <div class="home-indicator"></div>
+                </div>
                 <div class="os-screen os-ipad-screen" data-os-panel="ipados" hidden>
-                    <div class="mobile-status"><time>10:24</time><span>iPhone·iPad　Wi-Fi</span></div>
-                    <div class="ipad-files"><aside><b>파일</b><strong>최근 항목</strong><span>iCloud Drive</span><span>나의 iPhone·iPad</span></aside><main><h4>사진</h4><i class="folder-art"></i><span>바다.jpg</span></main></div>
+                    <div class="mobile-status"><time>10:24</time><span>iPad　Wi-Fi</span></div>
+                    <div class="ipad-files"><aside><b>파일</b><strong>최근 항목</strong><span>iCloud Drive</span><span>나의 iPad</span></aside><main><h4>사진</h4><i class="folder-art"></i><span>바다.jpg</span></main></div>
                     <div class="home-indicator"></div>
                 </div>
             </div>
@@ -214,6 +260,17 @@
                 <strong data-os-name>Windows의 파일 탐색기</strong>
                 <p data-os-description>작업 표시줄과 창을 이용하고, 파일 탐색기에서 드라이브와 폴더를 찾습니다.</p>
             </div>
+            <section class="os-file-task" data-os-task data-os-task-stage="0">
+                <header><span>모든 운영체제에서 같은 과제 <small>Same Task on Every OS</small></span><strong data-os-task-route>파일 탐색기 → 사진</strong></header>
+                <div class="os-task-file" data-os-task-file><i></i><span><b data-os-task-name>바다.jpg</b><small>JPEG 사진 파일 · 2.4 MB</small></span><em data-os-task-state>폴더를 열기 전</em></div>
+                <div class="os-task-actions" role="group" aria-label="같은 파일 찾고 이름 바꾸기">
+                    <button type="button" data-os-task-action="open">1. 사진 위치 열기 <small>Open Location</small></button>
+                    <button type="button" data-os-task-action="select" disabled>2. 바다.jpg 선택 <small>Select File</small></button>
+                    <button type="button" data-os-task-action="rename" disabled>3. 바다_여행.jpg로 이름 바꾸기 <small>Rename File</small></button>
+                    <button type="button" data-os-task-action="reset">처음부터 <small>Reset</small></button>
+                </div>
+                <p data-os-task-status aria-live="polite">먼저 현재 운영체제의 파일 앱에서 사진이 있는 위치를 여세요.</p>
+            </section>
         </section>
     `);
 
@@ -247,7 +304,7 @@
                     <section data-settings-panel="update">
                         <p class="settings-path">시스템 › 업데이트</p>
                         <h3>운영체제 새 버전 확인</h3>
-                        <div class="update-setting-demo"><span data-update-result>마지막 확인: 어제</span><button type="button" data-update-check>업데이트 확인</button></div>
+                        <div class="update-setting-demo"><span data-update-result>마지막 확인: 어제</span><button type="button" data-update-check>업데이트 확인 <small>Check for Updates</small></button></div>
                         <p>업데이트는 오류 수정과 보안 개선을 운영체제에 적용합니다.</p>
                     </section>
                     <section data-settings-panel="power">
@@ -316,7 +373,7 @@
         <section class="path-explorer-lab" data-path-lab data-path-stage="drive">
             <div class="path-file-manager">
                 <div class="window-chrome"><b>파일 관리 실습 <small>File Manager</small></b><span>—　□　×</span></div>
-                <div class="path-breadcrumb"><button type="button" data-path-choice="drive">기기 저장소</button><i>›</i><button type="button" data-path-choice="user">민준</button><i>›</i><button type="button" data-path-choice="pictures">그림</button><i>›</i><button type="button" data-path-choice="trip">여행</button></div>
+                <div class="path-breadcrumb"><button type="button" data-path-choice="drive">기기 저장소 <small>Device Storage</small></button><i>›</i><button type="button" data-path-choice="user">민준 <small>Minjun</small></button><i>›</i><button type="button" data-path-choice="pictures">그림 <small>Pictures</small></button><i>›</i><button type="button" data-path-choice="trip">여행 <small>Trip</small></button></div>
                 <div class="path-browser-body">
                     <aside><b>기기 저장소</b><span>└ 민준</span><span>　└ 그림</span><span>　　└ 여행</span></aside>
                     <main>
@@ -348,9 +405,9 @@
                 </div>
             </div>
             <div class="format-controls">
-                <button type="button" data-format-action="rename">이름 끝만 .png로 바꾸기</button>
-                <button type="button" data-format-action="convert">PNG 방식으로 변환해 저장</button>
-                <button type="button" data-format-action="reset">처음으로</button>
+                <button type="button" data-format-action="rename">이름 끝만 .png로 바꾸기 <small>Rename Extension Only</small></button>
+                <button type="button" data-format-action="convert">PNG 방식으로 변환해 저장 <small>Convert and Save as PNG</small></button>
+                <button type="button" data-format-action="reset">처음으로 <small>Reset</small></button>
             </div>
             <p class="lab-readout" data-format-status><b>확장자 .jpg</b>는 사진 데이터가 어떤 방법으로 저장되었는지 알려 주는 이름표입니다.</p>
         </section>
@@ -359,10 +416,19 @@
     renderers.e04 = (spec) => figure(spec, "visual-reference-lab", `
         <section class="reference-workbench" data-reference-lab data-reference="shortcut">
             <nav aria-label="비교할 화면 표시">
-                <button type="button" data-reference-choice="icon" aria-pressed="false">아이콘</button>
-                <button type="button" data-reference-choice="shortcut" aria-pressed="true">바로가기</button>
-                <button type="button" data-reference-choice="bookmark" aria-pressed="false">북마크·즐겨찾기</button>
+                <button type="button" data-reference-choice="icon" aria-pressed="false">아이콘 <small>Icon</small></button>
+                <button type="button" data-reference-choice="shortcut" aria-pressed="true">바로가기 <small>Shortcut</small></button>
+                <button type="button" data-reference-choice="bookmark" aria-pressed="false">북마크·즐겨찾기 <small>Bookmark / Favorite</small></button>
             </nav>
+            <section class="reference-platform-guide" aria-label="기기별 빠른 접근 기능 비교">
+                <header><b>같은 목적, 다른 화면 이름 <small>Same Goal, Different Device Features</small></b><span>자주 쓰는 대상을 빨리 여는 기능은 기기마다 위치와 이름이 다릅니다.</span></header>
+                <div>
+                    <article><strong>Windows PC</strong><span>파일·폴더 바로가기, 작업 표시줄 고정</span><small>Shortcut · Pin to Taskbar</small></article>
+                    <article><strong>Chromebook</strong><span>앱을 선반에 고정, 파일 앱에서 위치 열기</span><small>Pin to Shelf · Files</small></article>
+                    <article><strong>iPad</strong><span>앱을 Dock·홈 화면에 두고 파일 위치를 즐겨찾기</span><small>Dock · Home Screen · Files Favorite</small></article>
+                    <article><strong>웹페이지 <small>Web Page</small></strong><span>Chrome·Safari 북마크 또는 홈 화면 웹 아이콘</span><small>Bookmark · Add to Home Screen</small></article>
+                </div>
+            </section>
             <div class="reference-scenes">
                 <div class="desktop-scene">
                     <span class="desktop-file" data-original-file><i data-file-icon>PDF</i><b>과학보고서.pdf</b><em data-file-path>문서/과학보고서.pdf</em></span>
@@ -372,7 +438,7 @@
                 </div>
                 <div class="browser-scene">
                     <div class="browser-bar"><span>☆</span><b data-page-url>https://science.example/report</b></div>
-                    <button type="button" class="bookmark-row" data-reference-marker="bookmark">★ 과학 보고서 웹페이지</button>
+                    <button type="button" class="bookmark-row" data-reference-marker="bookmark">★ 과학 보고서 웹페이지 <small>Science Report Webpage</small></button>
                     <span class="reference-path-label" data-bookmark-url>저장 주소: https://science.example/report</span>
                     <small>브라우저 <em>Browser</em></small>
                 </div>
@@ -388,10 +454,10 @@
                 <span><small>북마크</small><b data-bookmark-state>주소 저장됨</b></span>
             </div>
             <div class="reference-actions">
-                <button type="button" data-reference-action="open">바로가기로 열기</button>
-                <button type="button" data-reference-action="change">원본 위치 바꾸기</button>
-                <button type="button" data-reference-action="delete">바로가기 삭제</button>
-                <button type="button" data-reference-action="reset">처음 상태</button>
+                <button type="button" data-reference-action="open">바로가기로 열기 <small>Open the Shortcut</small></button>
+                <button type="button" data-reference-action="change">원본 위치 바꾸기 <small>Move the Original</small></button>
+                <button type="button" data-reference-action="delete">바로가기 삭제 <small>Delete the Shortcut</small></button>
+                <button type="button" data-reference-action="reset">처음 상태 <small>Reset</small></button>
             </div>
             <p class="lab-readout" data-reference-status><b>바로가기</b>에는 원본 파일의 경로가 기록되어 있습니다. 열기·이동·삭제를 직접 실행해 원본과 연결의 상태를 비교하세요.</p>
         </section>
@@ -425,6 +491,12 @@
                     <article class="browser-local-page" data-browser-page="page" data-webpage-region hidden>
                         <header data-site-region><span data-page-site></span><small data-page-domain></small></header>
                         <h2 data-page-title></h2>
+                        <dl class="page-source-facts" aria-label="자료의 출처 정보">
+                            <div><dt>운영 기관 <small>Publisher</small></dt><dd data-page-publisher></dd></div>
+                            <div><dt>작성자 <small>Author</small></dt><dd data-page-author></dd></div>
+                            <div><dt>게시·수정일 <small>Date</small></dt><dd data-page-date></dd></div>
+                            <div><dt>근거 <small>Evidence</small></dt><dd data-page-evidence></dd></div>
+                        </dl>
                         <p data-page-body></p>
                         <button type="button" data-page-related-link data-link-region></button>
                     </article>
@@ -434,12 +506,12 @@
             <div class="browser-state-terms" aria-label="현재 화면에서 용어가 가리키는 곳 확인">
                 <span>현재 화면에서 찾기 <small>Locate the Term</small></span>
                 <div>
-                    <button type="button" data-browser-term="address" aria-pressed="false">주소</button>
-                    <button type="button" data-browser-term="tab" aria-pressed="false">탭</button>
-                    <button type="button" data-browser-term="search" aria-pressed="false">검색 엔진</button>
-                    <button type="button" data-browser-term="site" aria-pressed="false">웹사이트</button>
-                    <button type="button" data-browser-term="page" aria-pressed="false">웹페이지</button>
-                    <button type="button" data-browser-term="link" aria-pressed="false">링크</button>
+                    <button type="button" data-browser-term="address" aria-pressed="false">주소 <small>Address</small></button>
+                    <button type="button" data-browser-term="tab" aria-pressed="false">탭 <small>Tab</small></button>
+                    <button type="button" data-browser-term="search" aria-pressed="false">검색 엔진 <small>Search Engine</small></button>
+                    <button type="button" data-browser-term="site" aria-pressed="false">웹사이트 <small>Website</small></button>
+                    <button type="button" data-browser-term="page" aria-pressed="false">웹페이지 <small>Webpage</small></button>
+                    <button type="button" data-browser-term="link" aria-pressed="false">링크 <small>Link</small></button>
                 </div>
             </div>
         </section>
@@ -480,8 +552,8 @@
                 </article>
             </div>
             <div class="network-path-controls">
-                <button type="button" class="network-send-action" data-network-send>패킷 한 단계 보내기</button>
-                <button type="button" data-network-reset>모두 켜고 처음부터</button>
+                <button type="button" class="network-send-action" data-network-send>패킷 한 단계 보내기 <small>Send Packet One Step</small></button>
+                <button type="button" data-network-reset>모두 켜고 처음부터 <small>Reset All Links</small></button>
             </div>
             <p class="lab-readout" data-network-status aria-live="polite">패킷은 내 기기에 있습니다. 연결 하나를 끄거나 그대로 첫 단계를 보내 보세요.</p>
         </section>
@@ -528,8 +600,8 @@
                 </section>
             </div>
             <div class="web-state-controls">
-                <button type="button" class="web-request-action" data-request-action>주소 읽기</button>
-                <button type="button" data-request-reset>처음부터</button>
+                <button type="button" class="web-request-action" data-request-action>주소 읽기 <small>Read the Address</small></button>
+                <button type="button" data-request-reset>처음부터 <small>Reset</small></button>
             </div>
             <p class="lab-readout" data-request-status aria-live="polite">주소창의 URL을 읽기 전입니다. URL은 서버의 숫자 주소나 페이지 내용 그 자체가 아닙니다.</p>
         </section>
@@ -538,11 +610,11 @@
     renderers.h05 = (spec) => figure(spec, "visual-web-transfer-lab", `
         <section class="transfer-state-lab" data-transfer-lab data-transfer-mode="download">
             <div class="transfer-state-tabs" role="tablist" aria-label="웹 데이터 상태 실험">
-                <button type="button" role="tab" id="transfer-tab-download" aria-controls="transfer-panel-download" aria-selected="true" data-transfer-mode-choice="download">다운로드</button>
-                <button type="button" role="tab" id="transfer-tab-upload" aria-controls="transfer-panel-upload" aria-selected="false" data-transfer-mode-choice="upload">업로드</button>
-                <button type="button" role="tab" id="transfer-tab-cookie" aria-controls="transfer-panel-cookie" aria-selected="false" data-transfer-mode-choice="cookie">쿠키</button>
-                <button type="button" role="tab" id="transfer-tab-cache" aria-controls="transfer-panel-cache" aria-selected="false" data-transfer-mode-choice="cache">캐시</button>
-                <button type="button" role="tab" id="transfer-tab-deploy" aria-controls="transfer-panel-deploy" aria-selected="false" data-transfer-mode-choice="deploy">배포</button>
+                <button type="button" role="tab" id="transfer-tab-download" aria-controls="transfer-panel-download" aria-selected="true" data-transfer-mode-choice="download">다운로드 <small>Download</small></button>
+                <button type="button" role="tab" id="transfer-tab-upload" aria-controls="transfer-panel-upload" aria-selected="false" data-transfer-mode-choice="upload">업로드 <small>Upload</small></button>
+                <button type="button" role="tab" id="transfer-tab-cookie" aria-controls="transfer-panel-cookie" aria-selected="false" data-transfer-mode-choice="cookie">쿠키 <small>Cookie</small></button>
+                <button type="button" role="tab" id="transfer-tab-cache" aria-controls="transfer-panel-cache" aria-selected="false" data-transfer-mode-choice="cache">캐시 <small>Cache</small></button>
+                <button type="button" role="tab" id="transfer-tab-deploy" aria-controls="transfer-panel-deploy" aria-selected="false" data-transfer-mode-choice="deploy">배포 <small>Deployment</small></button>
             </div>
             <section class="transfer-state-panel transfer-copy-panel" id="transfer-panel-download" role="tabpanel" aria-labelledby="transfer-tab-download" data-transfer-panel="download" data-transfer-stage="ready">
                 <header><h3>서버 파일을 내 기기로 받기 <small>Download</small></h3><p>서버의 원본을 없애지 않고 내 기기에 사본을 만듭니다.</p></header>
@@ -552,7 +624,7 @@
                     <article class="transfer-file-place device-place"><strong>내 기기 · 다운로드 폴더 <small>Device</small></strong><div class="transfer-empty" data-download-empty>파일 없음</div><div class="transfer-file-row transfer-new-copy" data-download-copy hidden><i class="file-sheet"><b>별자리</b><small>.webp</small></i><span>사본 1개</span></div></article>
                 </div>
                 <p class="lab-readout" data-transfer-status>서버에는 원본 1개가 있고, 내 기기에는 아직 사본이 없습니다.</p>
-                <div class="transfer-state-actions"><button type="button" class="transfer-primary-action" data-transfer-action>내 기기로 다운로드</button><button type="button" data-transfer-reset>초기화</button></div>
+                <div class="transfer-state-actions"><button type="button" class="transfer-primary-action" data-transfer-action>내 기기로 다운로드 <small>Download to My Device</small></button><button type="button" data-transfer-reset>초기화 <small>Reset</small></button></div>
             </section>
 
             <section class="transfer-state-panel transfer-copy-panel" id="transfer-panel-upload" role="tabpanel" aria-labelledby="transfer-tab-upload" data-transfer-panel="upload" data-transfer-stage="ready" hidden>
@@ -563,7 +635,7 @@
                     <article class="transfer-file-place server-place"><strong>수업 서버 · 제출함 <small>Server</small></strong><div class="transfer-empty" data-upload-empty>파일 없음</div><div class="transfer-file-row transfer-new-copy" data-upload-copy hidden><i class="file-sheet"><b>관찰일지</b><small>.pdf</small></i><span>사본 1개</span></div></article>
                 </div>
                 <p class="lab-readout" data-transfer-status>내 기기에는 원본 1개가 있고, 서버 제출함에는 아직 사본이 없습니다.</p>
-                <div class="transfer-state-actions"><button type="button" class="transfer-primary-action" data-transfer-action>서버로 업로드</button><button type="button" data-transfer-reset>초기화</button></div>
+                <div class="transfer-state-actions"><button type="button" class="transfer-primary-action" data-transfer-action>서버로 업로드 <small>Upload to the Server</small></button><button type="button" data-transfer-reset>초기화 <small>Reset</small></button></div>
             </section>
             <section class="transfer-state-panel cookie-request-panel" id="transfer-panel-cookie" role="tabpanel" aria-labelledby="transfer-tab-cookie" data-transfer-panel="cookie" data-transfer-stage="empty" hidden>
                 <header><h3>언어 선택을 다음 요청에 다시 보내기 <small>Cookie</small></h3><p>서버가 준 작은 값을 브라우저가 저장하고, 다음 요청에 붙여 보냅니다.</p></header>
@@ -572,7 +644,7 @@
                     <div class="http-message-log"><div><b>브라우저의 요청</b><code data-cookie-request>Cookie 헤더 없음</code></div><div><b>서버의 처리</b><code data-cookie-server>요청 대기</code></div></div>
                 </div>
                 <p class="lab-readout" data-transfer-status>처음 요청에는 언어 쿠키가 없습니다. 한국어 선택을 서버에 보내 보세요.</p>
-                <div class="transfer-state-actions"><button type="button" class="transfer-primary-action" data-transfer-action>한국어 선택 저장</button><button type="button" data-transfer-reset>초기화</button></div>
+                <div class="transfer-state-actions"><button type="button" class="transfer-primary-action" data-transfer-action>한국어 선택 저장 <small>Save Korean Preference</small></button><button type="button" data-transfer-reset>초기화 <small>Reset</small></button></div>
             </section>
             <section class="transfer-state-panel cache-request-panel" id="transfer-panel-cache" role="tabpanel" aria-labelledby="transfer-tab-cache" data-transfer-panel="cache" data-transfer-stage="empty" hidden>
                 <header><h3>한 번 받은 그림 사본 다시 쓰기 <small>Cache</small></h3><p>첫 요청에서 받은 파일 사본을 브라우저 가까이에 두고 다음 표시에 재사용합니다.</p></header>
@@ -582,7 +654,7 @@
                     <article class="browser-cache-drawer"><strong>브라우저 캐시</strong><div class="transfer-empty" data-cache-empty>사본 없음</div><div class="transfer-file-row transfer-new-copy" data-cache-copy hidden><i class="file-sheet"><b>logo</b><small>.webp</small></i><span>임시 사본</span></div><output data-cache-screen>화면 표시 전</output></article>
                 </div>
                 <p class="lab-readout" data-transfer-status>캐시는 비어 있습니다. 첫 요청은 서버에서 그림을 받아야 합니다.</p>
-                <div class="transfer-state-actions"><button type="button" class="transfer-primary-action" data-transfer-action>그림 처음 열기</button><button type="button" data-transfer-reset>초기화</button></div>
+                <div class="transfer-state-actions"><button type="button" class="transfer-primary-action" data-transfer-action>그림 처음 열기 <small>Open the Image Once</small></button><button type="button" data-transfer-reset>초기화 <small>Reset</small></button></div>
             </section>
             <section class="transfer-state-panel deploy-state-panel" id="transfer-panel-deploy" role="tabpanel" aria-labelledby="transfer-tab-deploy" data-transfer-panel="deploy" data-transfer-stage="local" hidden>
                 <header><h3>내 수정본을 학생 화면까지 보내기 <small>Deploy</small></h3><p>로컬 저장, 공개 서버 배포, 학생 화면 새로고침은 서로 다른 단계입니다.</p></header>
@@ -594,7 +666,7 @@
                     <article class="deploy-environment student-environment"><strong>학생 화면 <small>Student Device</small></strong><span class="version-badge" data-deploy-student>v1</span><p data-deploy-student-note>현재 보이는 버전</p></article>
                 </div>
                 <p class="lab-readout" data-transfer-status>내 컴퓨터에 v2를 저장했지만 공개 서버와 학생 화면은 아직 v1입니다.</p>
-                <div class="transfer-state-actions"><button type="button" class="transfer-primary-action" data-transfer-action>공개 서버에 v2 배포</button><button type="button" data-transfer-reset>초기화</button></div>
+                <div class="transfer-state-actions"><button type="button" class="transfer-primary-action" data-transfer-action>공개 서버에 v2 배포 <small>Deploy v2 Publicly</small></button><button type="button" data-transfer-reset>초기화 <small>Reset</small></button></div>
             </section>
         </section>
     `);
@@ -610,10 +682,10 @@
                         <div class="practice-account-card" aria-label="연습용 계정 카드">
                             <strong>실습 계정 카드</strong>
                             <span>계정 이름 <code>student01</code></span>
-                            <span>비밀 문구 <code>cedar27</code></span>
+                            <span>연습용 비밀번호 <code>cedar27</code></span>
                         </div>
                         <label>계정 이름 <small>Username</small><input data-account-name autocomplete="off" spellcheck="false" placeholder="계정 카드에서 확인"></label>
-                        <label>비밀 문구 <small>Passphrase</small><input data-account-secret type="password" autocomplete="off" placeholder="연습용 비밀 문구 입력"></label>
+                        <label>연습용 비밀번호 <small>Practice Password</small><input data-account-secret type="password" autocomplete="off" placeholder="연습용 비밀번호 입력"></label>
                     </section>
                     <section class="sign-in-panel account-stage-two">
                         <h3>2. 등록 기기로 한 번 더 확인 <small>Two-Factor Authentication</small></h3>
@@ -627,7 +699,16 @@
                             <button type="button" data-permission-attempt="assignment">내 과제 열기 <small>Open My Assignment</small></button>
                             <button type="button" data-permission-attempt="grades">다른 학생 점수 바꾸기 <small>Edit Another Student's Grade</small></button>
                         </div>
-                        <div class="permission-result" data-permission-result><b>요청 전</b><span>서버가 학생 계정에 정해진 권한을 아직 확인하지 않았습니다.</span></div>
+                        <div class="permission-result" data-permission-result role="status" aria-live="polite"><b>요청 전</b><span>서버가 학생 계정에 정해진 권한을 아직 확인하지 않았습니다.</span></div>
+                        <section class="account-profile-demo" aria-label="계정과 프로필 비교">
+                            <div>
+                                <h4>계정과 프로필은 역할이 다르다 <small>Account and Profile</small></h4>
+                                <p><b>계정 ID <small>Account ID</small></b><strong>student01</strong><span>로그인과 자료 소유자를 구별하는 값</span></p>
+                                <p><b>표시 이름 <small>Display Name</small></b><strong data-profile-name>민준</strong><span>다른 사람에게 보이는 프로필 정보</span></p>
+                            </div>
+                            <button type="button" data-profile-change>표시 이름 바꾸기 <small>Change Display Name</small></button>
+                            <p data-profile-status aria-live="polite">표시 이름을 바꾸어도 계정 ID와 로그인 권한은 그대로입니다.</p>
+                        </section>
                     </section>
                 </main>
             </div>
@@ -637,9 +718,9 @@
                 <li data-account-step="3"><b>3</b><span>기능별 권한 확인<small>Authorization</small></span></li>
             </ol>
             <div class="account-controller">
-                <button type="button" data-account-prev disabled>이전</button>
-                <p data-account-status><b>1. 식별·인증</b>　계정 카드와 같은 두 정보를 직접 입력하세요.</p>
-                <button type="button" data-account-next>확인하고 다음</button>
+                <button type="button" data-account-prev disabled>이전 <small>Previous</small></button>
+                <p data-account-status role="status" aria-live="polite"><b>1. 식별·인증</b>　계정 카드와 같은 두 정보를 직접 입력하세요.</p>
+                <button type="button" data-account-next>확인하고 다음 <small>Check and Continue</small></button>
             </div>
         </section>
     `);
@@ -649,48 +730,53 @@
         <section class="evidence-lab" data-evidence-lab>
             <div class="message-app">
                 <header><span>받은 메시지</span><b>오늘 10:18</b></header>
+                <div class="official-address-card"><span>학교가 알려 준 공식 주소</span><code>https://portal.school.kr</code><small>Official School Portal</small></div>
                 <div class="sender-row">
-                    <i>?</i><p><strong>사진 서비스 지원팀</strong><button type="button" data-evidence="sender">support-example.co</button></p>
+                    <i>?</i><p><strong>학교 포털 지원팀</strong><span>notice@school-help.example</span></p>
                 </div>
                 <div class="message-body">
-                    <h3>지금 계정을 확인하세요</h3>
-                    <p>사진을 계속 보려면 10분 안에 <button type="button" data-evidence="secret">비밀번호와 인증번호</button>를 입력하세요.</p>
-                    <button type="button" class="suspicious-cta" data-evidence="link">http://account-check.example</button>
+                    <h3>10분 안에 계정을 확인하세요</h3>
+                    <p>계정을 계속 쓰려면 비밀번호와 등록 기기에 온 인증번호를 입력하세요.</p>
+                    <span class="suspicious-cta">https://school.kr.login-help.example/login</span>
                 </div>
             </div>
             <aside class="evidence-notebook">
-                <h3>찾은 증거 <small>Evidence</small></h3>
-                <ol>
-                    <li data-evidence-note="sender">보낸 주소가 서비스의 공식 주소와 다릅니다.</li>
-                    <li data-evidence-note="secret">비밀번호와 인증번호를 함께 요구합니다.</li>
-                    <li data-evidence-note="link">연결 주소가 보낸 사람의 이름과 맞지 않습니다.</li>
-                </ol>
-                <p data-evidence-status>메시지에서 의심할 근거 세 곳을 직접 눌러 보세요.</p>
+                <h3>판단 근거 고르기 <small>Choose Evidence</small></h3>
+                <p class="evidence-instruction">메시지가 피싱이라고 판단할 수 있는 근거 세 개를 고른 뒤 확인하세요.</p>
+                <div class="evidence-choices" role="group" aria-label="피싱 판단 근거 후보">
+                    <button type="button" data-evidence-choice="link" data-evidence-correct="true" aria-pressed="false">링크도 <code>school.kr</code> 아래가 아니라 <code>example</code> 아래의 주소다.</button>
+                    <button type="button" data-evidence-choice="secret" data-evidence-correct="true" aria-pressed="false">메시지 링크에서 비밀번호와 일회용 인증번호를 함께 요구한다.</button>
+                    <button type="button" data-evidence-choice="urgency" data-evidence-correct="true" aria-pressed="false">‘10분 안에’라는 시간 제한으로 주소와 요구 내용을 확인할 시간을 줄이려 한다.</button>
+                    <button type="button" data-evidence-choice="name" data-evidence-correct="false" aria-pressed="false">보낸 사람 이름에 ‘학교 포털’이라는 글자가 적혀 있다.</button>
+                    <button type="button" data-evidence-choice="time" data-evidence-correct="false" aria-pressed="false">메시지를 받은 시각이 오전 10시 18분이다.</button>
+                </div>
+                <div class="evidence-actions"><button type="button" data-evidence-check disabled>근거 확인 <small>Check Evidence</small></button><button type="button" data-evidence-reset>다시 고르기 <small>Choose Again</small></button></div>
+                <p data-evidence-status role="status" aria-live="polite">각 후보 문장을 학교의 공식 주소와 메시지 원문에 직접 대조하세요.</p>
             </aside>
             <div class="citizenship-check" data-citizenship-check>
-                <div class="citizenship-tabs" role="tablist" aria-label="직접 확인할 디지털 생활 원리">
-                    <button type="button" data-citizenship-choice="privacy" aria-pressed="true">개인정보</button>
-                    <button type="button" data-citizenship-choice="copyright" aria-pressed="false">저작권·라이선스</button>
-                    <button type="button" data-citizenship-choice="footprint" aria-pressed="false">디지털 발자국</button>
-                    <button type="button" data-citizenship-choice="wellbeing" aria-pressed="false">기기 건강</button>
+                <div class="citizenship-tabs" role="group" aria-label="직접 확인할 디지털 생활 원리">
+                    <button type="button" data-citizenship-choice="privacy" aria-pressed="true">개인정보 <small>Privacy</small></button>
+                    <button type="button" data-citizenship-choice="copyright" aria-pressed="false">저작권·라이선스 <small>Copyright & License</small></button>
+                    <button type="button" data-citizenship-choice="footprint" aria-pressed="false">디지털 발자국 <small>Digital Footprint</small></button>
+                    <button type="button" data-citizenship-choice="wellbeing" aria-pressed="false">기기 건강 <small>Digital Well-being</small></button>
                 </div>
                 <div class="citizenship-task-stage">
                     <section data-citizenship-panel="privacy">
                         <div class="privacy-post-card"><strong>사진 게시물에 포함된 정보</strong><span>이름: 민준</span><span>학교 운동장 사진</span><span>촬영 위치</span></div>
                         <div class="citizenship-action-row" role="group" aria-label="게시물 공개 범위">
-                            <button type="button" data-privacy-audience="public" aria-pressed="false">누구나</button>
-                            <button type="button" data-privacy-audience="class" aria-pressed="true">우리 학급</button>
-                            <button type="button" data-privacy-audience="private" aria-pressed="false">나만 보기</button>
+                            <button type="button" data-privacy-audience="public" aria-pressed="false">누구나 <small>Public</small></button>
+                            <button type="button" data-privacy-audience="class" aria-pressed="true">우리 학급 <small>Class</small></button>
+                            <button type="button" data-privacy-audience="private" aria-pressed="false">나만 보기 <small>Private</small></button>
                         </div>
-                        <div class="citizenship-result" data-privacy-result><b>우리 학급 24명</b><span>이름·사진·촬영 위치를 볼 수 있습니다.</span></div>
+                        <div class="citizenship-result" data-privacy-result role="status" aria-live="polite"><b>우리 학급 24명</b><span>이름·사진·촬영 위치를 볼 수 있습니다.</span></div>
                     </section>
                     <section data-citizenship-panel="copyright" hidden>
-                        <div class="license-card"><strong>수달 사진</strong><code>CC BY-NC 4.0</code><span>만든 사람 표시 필요 · 상업적 이용 금지</span></div>
+                        <div class="license-card"><strong>수달 사진 <small>Otter Photo</small></strong><code>CC BY-NC 4.0</code><span>만든 사람 표시 필요 · 상업적 이용 금지 <small>Attribution Required · NonCommercial</small></span></div>
                         <div class="copyright-controls">
-                            <label><input type="checkbox" data-license-credit> 만든 사람과 출처 표시</label>
-                            <label>사용 목적<select data-license-purpose><option value="class">학교 발표 자료</option><option value="sale">판매할 포스터</option></select></label>
+                            <label><input type="checkbox" data-license-credit> 만든 사람과 출처 표시 <small>Credit Creator and Source</small></label>
+                            <label>사용 목적 <small>Purpose of Use</small><select data-license-purpose><option value="class">학교 발표 자료 · School Presentation</option><option value="sale">판매할 포스터 · Poster for Sale</option></select></label>
                         </div>
-                        <div class="citizenship-result" data-license-result><b>조건 확인 전</b><span>사용 계획과 라이선스 조건을 서로 비교하세요.</span></div>
+                        <div class="citizenship-result" data-license-result role="status" aria-live="polite"><b>조건 확인 전</b><span>사용 계획과 라이선스 조건을 서로 비교하세요.</span></div>
                     </section>
                     <section data-citizenship-panel="footprint" hidden>
                         <div class="footprint-copies">
@@ -698,40 +784,62 @@
                             <span data-footprint-copy="friend">친구의 복사본 <b>없음</b></span>
                             <span data-footprint-copy="log">서비스 기록 <b>없음</b></span>
                         </div>
-                        <div class="citizenship-action-row"><button type="button" data-footprint-action="post">게시</button><button type="button" data-footprint-action="copy" disabled>친구가 복사</button><button type="button" data-footprint-action="delete" disabled>내 게시물 삭제</button><button type="button" data-footprint-action="reset">초기화</button></div>
-                        <div class="citizenship-result" data-footprint-result><b>게시 전</b><span>게시·복사·삭제를 차례로 눌러 남는 기록을 관찰하세요.</span></div>
+                        <div class="citizenship-action-row"><button type="button" data-footprint-action="post">게시 <small>Post</small></button><button type="button" data-footprint-action="copy" disabled>친구가 복사 <small>Friend Copies</small></button><button type="button" data-footprint-action="delete" disabled>내 게시물 삭제 <small>Delete My Post</small></button><button type="button" data-footprint-action="reset">초기화 <small>Reset</small></button></div>
+                        <div class="citizenship-result" data-footprint-result role="status" aria-live="polite"><b>게시 전</b><span>게시·복사·삭제를 차례로 눌러 남는 기록을 관찰하세요.</span></div>
                     </section>
                     <section data-citizenship-panel="wellbeing" hidden>
-                        <label class="distance-control">눈과 화면 사이 거리 <input type="range" min="15" max="70" value="35" data-screen-distance><output data-distance-output>35 cm</output></label>
-                        <div class="wellbeing-cycle"><button type="button" data-rest-action="study">25분 학습 기록</button><button type="button" data-rest-action="rest">5분 눈 휴식 기록</button><span>학습 <b data-study-count>0</b>회 · 휴식 <b data-rest-count>0</b>회</span></div>
-                        <div class="citizenship-result" data-wellbeing-result><b>35 cm</b><span>화면이 매우 가깝지는 않지만 자세와 글자 크기도 함께 살펴야 합니다.</span></div>
+                        <label class="distance-control">눈과 화면 사이 거리 <small>Eye–Screen Distance</small><input type="range" min="15" max="70" value="35" data-screen-distance><output data-distance-output>35 cm</output></label>
+                        <div class="wellbeing-cycle"><button type="button" data-rest-action="study">25분 학습 기록 <small>Study 25 Minutes</small></button><button type="button" data-rest-action="rest">5분 눈 휴식 기록 <small>Rest Eyes 5 Minutes</small></button><span>학습 <b data-study-count>0</b>회 · 휴식 <b data-rest-count>0</b>회</span></div>
+                        <div class="citizenship-result" data-wellbeing-result role="status" aria-live="polite"><b>35 cm</b><span>화면이 매우 가깝지는 않지만 자세와 글자 크기도 함께 살펴야 합니다.</span></div>
                     </section>
                 </div>
-                <p data-citizenship-status><b>개인정보 Privacy:</b> 공개 범위를 바꾸면 같은 게시물을 볼 수 있는 사람이 달라집니다.</p>
+                <p data-citizenship-status role="status" aria-live="polite"><b>개인정보 Privacy:</b> 공개 범위를 바꾸면 같은 게시물을 볼 수 있는 사람이 달라집니다.</p>
             </div>
         </section>
     `);
 
     renderers.j03 = (spec, asset) => figure(spec, "visual-debug-lab", `
-        ${contextImage(asset, "j03-photo-path-debug-illustration-v2", "학생이 잘못된 사진 폴더 경로 때문에 고양이 사진이 열리지 않는 장면을 확인하고 한 글자를 고친 뒤 다시 실행하는 모습")}
+        ${contextImage(asset, "j03-photo-path-debug-illustration-v2", "학생이 파일 앱의 실제 경로와 프로그램에 적힌 경로를 비교하고, 수정 뒤 여러 파일로 다시 시험하는 모습")}
         <section class="debug-lab" data-debug-lab data-debug-stage="start">
             <div class="mini-photo-app">
-                <header><b>사진 미리보기</b><button type="button" data-debug-run>실행</button></header>
+                <header><b>파일 경로 검사기 <small>File Path Tester</small></b><button type="button" data-debug-run>실행 <small>Run</small></button></header>
                 <main>
-                    <div class="photo-output"><span>사진이 여기에 나타납니다.</span></div>
+                    <div class="photo-output" data-debug-output><span>실행하면 이곳에 결과가 나타납니다.</span></div>
                     <div class="tiny-program">
-                        <label>프로그램이 사용한 사진 주소 <small>Path Used by the Program</small><input data-debug-code value="/picture/cat.webp" spellcheck="false"></label>
-                        <p class="actual-path-note">파일 앱에서 확인한 실제 위치 <code>/pictures/cat.webp</code></p>
-                        <span>두 주소를 비교해 직접 고친 뒤 다시 실행하세요.</span>
+                        <p class="debug-fixed-input"><b>선택한 사진 <small>Selected Input</small></b><code>cat.webp</code></p>
+                        <label>프로그램에 적힌 기본 폴더 <small>Base Folder in the Program</small><input data-debug-code value="/picture/" spellcheck="false" aria-describedby="debug-real-path"></label>
+                        <p class="actual-path-note" id="debug-real-path">파일 앱에서 확인한 실제 폴더 <small>Actual Folder in the File App</small> <code>/pictures/</code></p>
+                        <span>사진 입력은 <code>cat.webp</code>로 그대로 두고, 프로그램이 앞에 붙이는 폴더 이름의 한 글자를 고치세요.</span>
                     </div>
                 </main>
-                <footer data-debug-log>실행 전입니다.</footer>
+                <footer data-debug-log aria-live="polite">아직 실행하지 않았습니다.</footer>
             </div>
+            <aside class="debug-regression" data-debug-regression aria-label="수정 뒤 다른 입력 시험">
+                <h4>나머지 입력 두 개 시험하기 <small>Regression Test</small></h4>
+                <p>고양이 사진 재시험이 통과하면 다른 파일과 없는 파일이 활성화됩니다. 수정이 한 사례에만 맞춘 것은 아닌지 확인하세요.</p>
+                <div class="debug-case-buttons">
+                    <button type="button" data-debug-case="cat" disabled>cat.webp <small>Same-input Retest</small></button>
+                    <button type="button" data-debug-case="dog" disabled>dog.webp <small>Existing File</small></button>
+                    <button type="button" data-debug-case="missing" disabled>bird.webp <small>Missing File</small></button>
+                </div>
+                <ul class="debug-case-results" aria-live="polite">
+                    <li data-debug-case-result="cat">cat.webp: 같은 입력 재시험 전</li>
+                    <li data-debug-case-result="dog">dog.webp: 아직 시험하지 않음</li>
+                    <li data-debug-case-result="missing">bird.webp: 아직 시험하지 않음</li>
+                </ul>
+            </aside>
+            <ol class="debug-data-trace" aria-label="입력 처리 출력 저장 흐름">
+                <li data-debug-flow="input"><b>입력 <small>Input</small></b><span>선택한 사진 cat.webp</span></li>
+                <li data-debug-flow="storage"><b>저장 <small>Storage</small></b><span>파일 앱의 실제 경로</span></li>
+                <li data-debug-flow="processing"><b>처리 <small>Processing</small></b><span>두 경로가 같은지 검사</span></li>
+                <li data-debug-flow="output"><b>출력 <small>Output</small></b><span>사진 또는 오류 안내</span></li>
+            </ol>
             <ol class="debug-observation">
-                <li data-debug-step="reproduce"><b>1</b><span>같은 순서로 실행</span></li>
-                <li data-debug-step="observe"><b>2</b><span>멈춘 곳 관찰</span></li>
-                <li data-debug-step="fix"><b>3</b><span>한 원인 수정</span></li>
-                <li data-debug-step="retest"><b>4</b><span>다시 실행해 확인</span></li>
+                <li data-debug-step="reproduce"><b>1</b><span>오류 다시 만들기 <small>Reproduce</small></span></li>
+                <li data-debug-step="observe"><b>2</b><span>두 경로 비교하기 <small>Observe</small></span></li>
+                <li data-debug-step="fix"><b>3</b><span>원인 하나 고치기 <small>Fix</small></span></li>
+                <li data-debug-step="retest"><b>4</b><span>같은 입력 재시험 <small>Retest</small></span></li>
+                <li data-debug-step="regression"><b>5</b><span>다른 입력 시험 <small>Regression Test</small></span></li>
             </ol>
         </section>
     `);
@@ -743,7 +851,7 @@
                 <div class="gesture-surface" data-gesture-surface role="button" tabindex="0" aria-label="선택한 터치 동작을 직접 해 보는 화면">
                     <div class="photo-card"><span></span><b>사진 1</b><em>선택됨</em></div>
                     <div class="photo-card photo-card-next"><span></span><b>사진 2</b></div>
-                    <div class="gesture-context-menu" data-gesture-menu hidden><button type="button">공유</button><button type="button">이름 바꾸기</button><button type="button">삭제</button></div>
+                    <div class="gesture-context-menu" data-gesture-menu hidden><button type="button">공유 <small>Share</small></button><button type="button">이름 바꾸기 <small>Rename</small></button><button type="button">삭제 <small>Delete</small></button></div>
                     <i class="finger finger-one"></i><i class="finger finger-two"></i><i class="gesture-trail"></i>
                     <div class="gesture-measure"><span>손가락 <b data-finger-count>1</b>개</span><span>누른 시간 <b data-press-time>0.1</b>초</span><span>이동 거리 <b data-move-distance>0</b></span></div>
                 </div>
@@ -787,7 +895,7 @@
                     <div class="zip-workbench"><div class="zip-originals"><b>원본 폴더</b><span>발표.pptx</span><span>사진1.jpg</span><span>사진2.jpg</span></div><div class="storage-route"><b>하나로 묶기</b><span>ZIP →</span></div><div class="zip-result"><b>묶음 파일</b><span class="storage-file-token" data-storage-result="zip-file" hidden>발표자료.zip</span><em data-storage-empty="zip">아직 ZIP 없음</em><div data-storage-result="zip-extracted" hidden>새 폴더에 3개 파일을 꺼냄</div></div></div>
                 </section>
             </div>
-            <div class="storage-lab-actions"><button type="button" data-storage-action>USB에 사본 만들기</button><button type="button" data-storage-reset>이 실험 처음부터</button></div>
+            <div class="storage-lab-actions"><button type="button" data-storage-action>USB에 사본 만들기 <small>Copy to USB</small></button><button type="button" data-storage-reset>이 실험 처음부터 <small>Reset Experiment</small></button></div>
             <dl class="storage-observation">
                 <div><dt>무엇인가?</dt><dd data-storage-fact="kind">직접 꽂는 별도 저장 위치</dd></div>
                 <div><dt>자동으로 맞춰지나?</dt><dd data-storage-fact="automatic">아니요</dd></div>
@@ -819,7 +927,7 @@
                 <header><b>표시 배율 <small>Display Scaling</small></b><output data-scale-output>100%</output></header>
                 <div class="scale-viewport">
                     <div class="scale-ui">
-                        <strong>과제 파일</strong><button type="button">열기</button>
+                        <strong>과제 파일</strong><button type="button">열기 <small>Open</small></button>
                         <span>글자와 단추는 더 많은 픽셀을 차지하지만 화면 해상도는 그대로입니다.</span>
                         <i></i><i></i><i></i><i></i>
                     </div>
@@ -1093,15 +1201,15 @@
                 <p class="utf8-probe-status" data-utf8-status>영문 A와 한글 가를 함께 인코딩해 바이트 묶음을 비교해 보세요.</p>
             </section>
             <header class="compression-lab-heading">
-                <div><h3>같은 픽셀을 실제 WebP 파일로 만들기</h3><small>Encode the Same Pixels as a Real WebP Blob</small></div>
-                <p>왼쪽 캔버스의 픽셀을 그대로 사용합니다. 품질을 바꿀 때마다 브라우저가 새 WebP Blob을 만들고 실제 바이트 수를 잽니다.</p>
+                <div><h3>같은 그림을 WebP 파일로 저장하기</h3><small>Save the Same Image as a WebP File</small></div>
+                <p>그림은 그대로 두고 사진 품질만 바꿉니다. 저장된 파일의 크기와 전송 시간을 직접 비교하세요.</p>
             </header>
             <div class="actual-compression-comparison">
                 <figure class="compression-source-card">
                     <div class="compression-image-frame"><canvas width="768" height="512" data-compression-source aria-label="WebP로 인코딩할 768 곱하기 512 픽셀 원본 장면"></canvas></div>
                     <figcaption><b>인코딩 전 픽셀 <small>Source Pixels</small></b><span>Canvas 768 × 512 px</span></figcaption>
                 </figure>
-                <div class="compression-encode-arrow" aria-hidden="true"><b>WebP</b><small>toBlob()</small><i>→</i></div>
+                <div class="compression-encode-arrow" aria-hidden="true"><b>WebP</b><small>파일로 저장</small><i>→</i></div>
                 <figure class="compression-result-card">
                     <div class="compression-image-frame result-frame">
                         <img data-compression-preview alt="실제로 WebP로 인코딩한 같은 캔버스" hidden>
@@ -1111,34 +1219,42 @@
                 </figure>
             </div>
             <div class="compression-measurements" aria-live="polite">
-                <div><span>픽셀 메모리 <small>RGBA Pixel Memory</small></span><strong data-raw-size>1,572,864 B</strong><em>파일 크기가 아닌 작업 중 메모리</em></div>
-                <div><span>실제 WebP Blob <small>Actual Encoded Blob</small></span><strong data-file-size>인코딩 중</strong><em data-file-bytes>실제 바이트 수 준비 중</em></div>
-                <div><span>픽셀 메모리 대비 <small>Share of Pixel Memory</small></span><strong data-compression-ratio>—</strong><em data-file-type>image/webp 요청</em></div>
+                <div><span>저장 전 그림 데이터 <small>Image Data Before Saving</small></span><strong data-raw-size>1,572,864 B</strong><em>작업할 때 펼쳐 둔 데이터의 양</em></div>
+                <div><span>저장된 WebP 파일 <small>Saved WebP File</small></span><strong data-file-size>저장 중</strong><em data-file-bytes>파일의 바이트 수를 확인하는 중</em></div>
+                <div><span>저장 전 데이터와 비교 <small>Size Compared with Image Data</small></span><strong data-compression-ratio>—</strong><em data-file-type>WebP 형식</em></div>
             </div>
             <div class="actual-compression-controls">
-                <label><span>WebP 품질 요청 <small>Requested Quality</small></span><input type="range" min="10" max="100" step="5" value="75" data-compression-quality><output data-quality-output>75%</output></label>
+                <label><span>사진 품질 <small>Image Quality</small></span><input type="range" min="10" max="100" step="5" value="75" data-compression-quality><output data-quality-output>75%</output></label>
                 <label><span>전송 속도 <small>Transfer Speed</small></span><input type="range" min="0.1" max="10" step="0.1" value="2" data-transfer-speed><output data-speed-output>2.0 MB/s</output></label>
             </div>
             <div class="actual-transfer-calculation" aria-live="polite">
-                <span>실제 Blob 크기 <b data-calc-size>— MB</b></span><i>÷</i><span>전송 속도 <b data-calc-speed>2.0 MB/s</b></span><i>=</i><strong>예상 전송 시간 <b data-transfer-time>—</b><small>초 seconds</small></strong>
+                <span>파일 크기 <b data-calc-size>— MB</b></span><i>÷</i><span>전송 속도 <b data-calc-speed>2.0 MB/s</b></span><i>=</i><strong>예상 전송 시간 <b data-transfer-time>—</b><small>초 seconds</small></strong>
             </div>
-            <p class="compression-browser-note" data-compression-note><b>실제 측정:</b> 표시된 바이트 수는 이 브라우저의 WebP 인코더가 지금 만든 Blob의 <code>size</code>입니다. 브라우저에 따라 결과가 조금 다를 수 있습니다.</p>
-            <p class="compression-model-note"><b>전송 시간 계산 범위:</b> <code>Blob 바이트 ÷ 1,000,000 ÷ MB/s</code>만 계산합니다. 연결 준비, 요청·응답 머리말, 암호화, 서버 처리, 속도 변화는 포함하지 않습니다.</p>
+            <details class="compression-technical-notes"><summary>실제 측정 방식 더 알아보기 <small>How the Browser Measures It</small></summary><div>
+                <p class="compression-browser-note" data-compression-note>브라우저가 현재 그림을 WebP 파일 데이터로 만든 뒤 그 바이트 수를 직접 잽니다. 브라우저에 따라 결과가 조금 다를 수 있습니다.</p>
+                <p class="compression-model-note">예상 시간은 <code>파일 바이트 ÷ 1,000,000 ÷ MB/s</code>로 계산합니다. 연결 준비, 서버 처리, 순간적인 속도 변화는 포함하지 않습니다.</p>
+            </div></details>
         </section>
     `);
 
-    renderers.j01 = (spec, asset) => figure(spec, "visual-algorithm-builder", `
-        ${contextImage(asset, "j01-sandwich-algorithm-illustration-v2", "학생이 손 씻기와 재료 준비, 식빵 놓기, 치즈와 토마토 올리기, 다른 식빵으로 덮기의 네 장면을 순서대로 배열하는 모습")}
+    renderers.j01 = (spec) => figure(spec, "visual-algorithm-builder", `
         <section class="algorithm-sequencer" data-algorithm-lab data-algorithm-stage="0">
-            <div class="sandwich-scene">
-                <div class="worktop"><span class="bread top"></span><span class="cheese"></span><span class="tomato"></span><span class="bread bottom"></span><i class="finished-sandwich"></i></div>
+            <div class="algorithm-file-workspace" aria-label="사진 파일을 과제 폴더로 옮기는 파일 관리자 모형">
+                <header><b>파일 관리자</b><small>File Manager</small></header>
+                <div class="file-path file-path-pair"><span><b>출발지 <small>Source</small></b> 내 파일 › 다운로드</span><span><b>목적지 <small>Destination</small></b> 내 파일 › 과제 사진</span></div>
+                <div class="file-panels">
+                    <section class="file-pane source-pane"><h4>다운로드 <small>Downloads</small></h4><ul><li class="photo-file" data-file-source>▣ river.webp <small>사진 파일</small></li><li>▤ notes.txt <small>글 파일</small></li><li>▦ homework.pdf <small>문서 파일</small></li></ul></section>
+                    <div class="file-move-arrow" aria-hidden="true">→</div>
+                    <section class="file-pane target-pane"><h4>과제 사진 <small>Assignment Photos</small></h4><ul><li class="empty-folder" data-file-empty>아직 사진이 없습니다</li><li class="moved-photo" data-file-moved hidden>▣ river.webp <small>옮긴 사진 파일</small></li></ul></section>
+                </div>
+                <p data-file-result>사진 파일을 선택하고 과제 사진 폴더로 옮긴 뒤, 폴더 안에서 결과를 확인합니다.</p>
             </div>
             <div class="algorithm-order-workbench">
                 <div class="algorithm-source" data-algo-source aria-label="순서를 정하지 않은 단계 카드">
-                    <button type="button" draggable="true" data-algo-step="bread" data-order="2"><b>식빵 한 장을 놓는다</b><small>Put Down One Slice</small></button>
-                    <button type="button" draggable="true" data-algo-step="cheese" data-order="3"><b>치즈와 토마토를 올린다</b><small>Add Cheese and Tomato</small></button>
-                    <button type="button" draggable="true" data-algo-step="prepare" data-order="1"><b>손을 씻고 재료를 준비한다</b><small>Prepare Hands and Ingredients</small></button>
-                    <button type="button" draggable="true" data-algo-step="close" data-order="4"><b>다른 식빵으로 덮는다</b><small>Close the Sandwich</small></button>
+                    <button type="button" draggable="true" data-algo-step="move" data-order="3"><b>과제 사진 폴더로 이동한다</b><small>Move to Assignment Folder</small></button>
+                    <button type="button" draggable="true" data-algo-step="open" data-order="1"><b>다운로드 폴더를 연다</b><small>Open Downloads Folder</small></button>
+                    <button type="button" draggable="true" data-algo-step="verify" data-order="4"><b>과제 사진에는 있고 다운로드에는 없는지 확인한다</b><small>Confirm Destination and Source</small></button>
+                    <button type="button" draggable="true" data-algo-step="select" data-order="2"><b>사진 파일을 선택한다</b><small>Select the Photo File</small></button>
                 </div>
                 <ol class="algorithm-drop-list" data-algo-slots aria-label="정한 알고리즘 순서">
                     <li data-algo-slot="0"><span>1</span><em>첫 단계 놓기</em></li>
@@ -1147,32 +1263,34 @@
                     <li data-algo-slot="3"><span>4</span><em>마지막 단계 놓기</em></li>
                 </ol>
             </div>
-            <div class="algorithm-controller"><button type="button" data-algo-check disabled>순서 확인</button><button type="button" data-algo-reset>처음부터</button><p data-algo-status>카드를 누르거나 번호 칸으로 끌어 네 단계를 모두 놓으세요. 확인 전에는 정답을 판단하지 않습니다.</p></div>
+            <div class="algorithm-controller"><button type="button" data-algo-check disabled>순서 확인 <small>Check Order</small></button><button type="button" data-algo-reset>처음부터 <small>Reset</small></button><p data-algo-status role="status" aria-live="polite">카드를 누르거나 번호 칸으로 끌어 네 단계를 모두 놓으세요. 확인 전에는 정답을 판단하지 않습니다.</p></div>
         </section>
     `);
 
     renderers.j02 = (spec) => figure(spec, "visual-control-path-lab", `
-        <section class="control-path-lab" data-control-lab data-result="pending" data-control-running="false">
-            <div class="control-flow-scene">
-                <div class="flow-event"><i class="press-icon"></i><b>한 문제 풀기</b><small>명령 Command</small></div>
-                <svg viewBox="0 0 760 280" aria-hidden="true">
-                    <path class="main-path" d="M125 68H365V120"/>
-                    <path class="yes-path" d="M430 170H635V222"/>
-                    <path class="no-path" d="M330 170H120V222"/>
-                    <path class="loop-path" d="M120 250H60V68H125"/>
-                </svg>
-                <div class="flow-condition">점수가 5점 이상인가?<small>조건 Condition</small></div>
-                <div class="flow-result retry"><b>1점 얻고 되돌아가기</b><small>반복 Loop</small></div>
-                <div class="flow-result finish"><b>반복 끝</b><small>Stop</small></div>
-                <i class="path-runner"></i>
+        <section class="control-path-lab" data-control-lab data-control-stage="ready" data-result="pending">
+            <div class="mini-quiz-program">
+                <header><b>세 문제 퀴즈 <small>Three-question Quiz</small></b><span>문제 <strong data-control-number>1</strong>/3 · 점수 <strong data-control-score>0</strong></span></header>
+                <div class="mini-quiz-question">
+                    <p data-control-question>2 + 3은 얼마일까요?</p>
+                    <div class="mini-quiz-choices" data-control-choices>
+                        <button type="button" data-control-choice="A"><b>A</b><span data-control-option="A">4</span></button>
+                        <button type="button" data-control-choice="B"><b>B</b><span data-control-option="B">5</span></button>
+                    </div>
+                    <button type="button" class="control-next" data-control-next hidden>다음 문제 <small>Next Question</small></button>
+                </div>
             </div>
-            <div class="loop-machine">
-                <label class="score-control">시작 점수 <small>Start Score</small><input type="range" min="0" max="5" value="2" data-score-input><output data-score-output>2점</output></label>
-                <div class="loop-counters" aria-live="polite"><span>현재 점수 <b data-loop-score>2</b></span><span>반복 횟수 <b data-loop-count>0</b></span><span>종료 조건 <b>5점 이상</b></span></div>
-                <div class="control-run-panel"><button type="button" data-control-step>한 번 실행 <small>Run One Iteration</small></button><button type="button" data-control-run>끝날 때까지 실행 <small>Run Until Finished</small></button><button type="button" data-control-reset>다시 설정</button></div>
-                <ol class="loop-trace" data-loop-trace aria-label="반복 실행 기록"><li>실행하면 조건 검사와 점수 변화를 차례로 기록합니다.</li></ol>
+            <ol class="program-flow" aria-label="답을 눌렀을 때 프로그램이 처리하는 순서">
+                <li data-flow-step="event"><b>1</b><span>답 버튼을 누른다<small>Event</small></span></li>
+                <li data-flow-step="condition"><b>2</b><span>고른 답이 정답인가?<small>Condition</small></span></li>
+                <li class="flow-branch" data-flow-step="branch"><b>3</b><span><i>예: 점수 +1</i><i>아니요: 점수 유지</i><small>Branch</small></span></li>
+                <li data-flow-step="loop"><b>4</b><span>남은 문제가 있으면 다음 문제로 돌아간다<small>Loop</small></span></li>
+            </ol>
+            <div class="control-observation">
+                <p class="lab-readout" data-control-status aria-live="polite">보기 하나를 누르면 이벤트가 생기고, 프로그램이 조건을 검사해 서로 다른 길로 움직입니다.</p>
+                <ol class="loop-trace" data-loop-trace aria-label="프로그램 실행 기록"><li>아직 답 버튼을 누르지 않았습니다.</li></ol>
+                <button type="button" data-control-reset>처음부터 <small>Reset</small></button>
             </div>
-            <p class="lab-readout" data-control-status>시작 점수를 정하고 한 번씩 실행하거나, 종료 조건을 만족할 때까지 이어서 실행해 보세요.</p>
         </section>
     `);
 
@@ -1341,7 +1459,7 @@
         const render = () => {
             process.hidden = !running;
             processEmpty.hidden = running;
-            processCopy.textContent = hidden ? "백그라운드에서 실행 중" : "명령 처리 중";
+            processCopy.textContent = hidden ? "CPU 시간·RAM 공간을 쓰며 백그라운드 실행" : "CPU 시간·RAM 공간 사용";
             stack.replaceChildren();
             if (running && !hidden) {
                 for (let index = 0; index < windowCount; index += 1) {
@@ -1362,21 +1480,21 @@
         };
         buttons.run.addEventListener("click", () => {
             running = true; windowCount = 1; hidden = false; render();
-            status.innerHTML = "<b>실행:</b> 저장 장치의 프로그램 명령을 읽어 RAM에 실행 중인 프로세스를 만들고, 그 프로세스가 화면에 첫 창을 표시했습니다.";
+            status.innerHTML = "<b>실행:</b> 운영체제가 저장 장치에서 그림 앱의 필요한 명령과 자료를 RAM에 읽고 프로세스를 시작했습니다. 프로세스는 CPU 시간과 RAM 공간을 사용하며 첫 창을 표시합니다.";
         });
         buttons.new.addEventListener("click", () => {
             hidden = false; windowCount += 1; render();
-            status.innerHTML = "<b>새 창:</b> 이 모형에서는 같은 그림판 프로세스가 화면 창을 " + windowCount + "개 관리합니다. 창과 프로세스의 수가 반드시 같은 것은 아닙니다.";
+            status.innerHTML = "<b>새 창:</b> 이 모형에서는 같은 그림 앱 프로세스가 창을 " + windowCount + "개 관리합니다. 창과 프로세스의 수가 반드시 같은 것은 아닙니다.";
         });
         buttons.background.addEventListener("click", () => {
             hidden = !hidden; render();
             status.innerHTML = hidden
-                ? "<b>백그라운드:</b> 화면의 창은 보이지 않지만 RAM의 프로세스는 계속 실행 중입니다."
+                ? "<b>백그라운드:</b> 창은 보이지 않지만 그림 앱 프로세스는 CPU 시간과 RAM 공간을 사용하며 계속 실행 중입니다."
                 : "<b>창 다시 표시:</b> 실행 중이던 같은 프로세스가 창을 다시 화면에 나타냈습니다.";
         });
         buttons.end.addEventListener("click", () => {
             running = false; windowCount = 0; hidden = false; render();
-            status.innerHTML = "<b>프로세스 종료:</b> RAM의 실행 상태와 화면의 창은 사라졌지만 저장 장치의 프로그램 파일은 그대로 남아 다시 실행할 수 있습니다.";
+            status.innerHTML = "<b>프로세스 종료:</b> 운영체제가 실행을 끝내고 프로세스가 쓰던 RAM 공간과 창을 정리했습니다. 저장 장치의 그림 앱 파일은 남아 다시 실행할 수 있습니다.";
         });
         render();
     }
@@ -1461,19 +1579,60 @@
         const lab = document.querySelector("[data-os-lab]");
         if (!lab) return;
         const copy = {
-            windows: ["Windows의 파일 탐색기", "작업 표시줄과 창을 이용하고, 파일 탐색기에서 드라이브와 폴더를 찾습니다."],
-            chromeos: ["ChromeOS의 파일 앱", "화면 아래 선반과 파일 앱을 이용하고, 내 파일과 Google Drive를 함께 찾을 수 있습니다."],
-            android: ["Android의 내 파일 앱", "손가락으로 큰 항목을 누르며, 사진·다운로드·클라우드 위치를 찾습니다."],
-            ipados: ["iOS·iPadOS의 파일 앱", "iPhone과 iPad에서는 파일 앱의 위치 목록에서 iCloud Drive와 나의 iPhone·iPad를 나누어 찾습니다."]
+            windows: ["Windows의 파일 탐색기", "작업 표시줄과 창을 이용하고, 파일 탐색기에서 드라이브와 폴더를 찾습니다.", "파일 탐색기 → 사진", "파일을 선택한 뒤 F2 또는 ‘이름 바꾸기’를 사용합니다."],
+            chromeos: ["ChromeOS의 파일 앱", "화면 아래 선반과 파일 앱을 이용하고, 내 파일과 Google Drive를 함께 찾을 수 있습니다.", "파일 앱 → 내 파일 → 이미지", "파일을 선택한 뒤 메뉴의 ‘이름 바꾸기’를 사용합니다."],
+            android: ["Android의 내 파일 앱", "손가락으로 큰 항목을 누르며, 이미지·다운로드·클라우드 위치를 찾습니다.", "내 파일 → 이미지", "파일을 길게 눌러 선택하고 더보기의 ‘이름 변경’을 사용합니다."],
+            ios: ["iPhone iOS의 파일 앱", "좁은 화면의 파일 앱에서 iCloud Drive, 나의 iPhone, 다운로드 같은 위치를 큰 항목으로 엽니다.", "파일 앱 → 나의 iPhone → 사진", "파일을 길게 눌러 메뉴의 ‘이름 변경’을 사용합니다."],
+            ipados: ["iPadOS의 파일 앱", "넓은 화면의 왼쪽 위치 목록에서 iCloud Drive와 나의 iPad를 고르고 오른쪽에서 파일을 다룹니다.", "파일 앱 → 나의 iPad → 사진", "파일을 길게 눌러 메뉴의 ‘이름 변경’을 사용합니다."]
+        };
+        const task = lab.querySelector("[data-os-task]");
+        const taskRoute = lab.querySelector("[data-os-task-route]");
+        const taskName = lab.querySelector("[data-os-task-name]");
+        const taskState = lab.querySelector("[data-os-task-state]");
+        const taskStatus = lab.querySelector("[data-os-task-status]");
+        const taskActions = Object.fromEntries(Array.from(lab.querySelectorAll("[data-os-task-action]")).map((button) => [button.dataset.osTaskAction, button]));
+        let currentOs = "windows";
+        let taskStage = 0;
+        const renderTask = () => {
+            task.dataset.osTaskStage = String(taskStage);
+            taskRoute.textContent = copy[currentOs][2];
+            taskName.textContent = taskStage >= 3 ? "바다_여행.jpg" : "바다.jpg";
+            taskState.textContent = ["폴더를 열기 전", "사진 위치를 열었음", "파일을 선택했음", "새 이름을 확인함"][taskStage];
+            taskActions.open.disabled = taskStage !== 0;
+            taskActions.select.disabled = taskStage !== 1;
+            taskActions.rename.disabled = taskStage !== 2;
+        };
+        const resetTask = () => {
+            taskStage = 0;
+            renderTask();
+            taskStatus.textContent = "먼저 " + copy[currentOs][2] + " 위치를 여세요.";
         };
         const choose = (name) => {
+            currentOs = name;
             lab.dataset.os = name;
             lab.querySelectorAll("[data-os-choice]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.osChoice === name)));
             lab.querySelectorAll("[data-os-panel]").forEach((panel) => { panel.hidden = panel.dataset.osPanel !== name; });
             lab.querySelector("[data-os-name]").textContent = copy[name][0];
             lab.querySelector("[data-os-description]").textContent = copy[name][1];
+            resetTask();
         };
         lab.querySelectorAll("[data-os-choice]").forEach((button) => button.addEventListener("click", () => choose(button.dataset.osChoice)));
+        taskActions.open.addEventListener("click", () => {
+            taskStage = 1;
+            renderTask();
+            taskStatus.textContent = copy[currentOs][2] + " 위치를 열었습니다. 이제 같은 바다.jpg를 선택하세요.";
+        });
+        taskActions.select.addEventListener("click", () => {
+            taskStage = 2;
+            renderTask();
+            taskStatus.textContent = "바다.jpg를 선택했습니다. " + copy[currentOs][3];
+        });
+        taskActions.rename.addEventListener("click", () => {
+            taskStage = 3;
+            renderTask();
+            taskStatus.textContent = "이름을 바다_여행.jpg로 바꿨습니다. 운영체제마다 화면과 메뉴는 달라도 같은 파일·경로·이름 상태가 바뀝니다.";
+        });
+        taskActions.reset.addEventListener("click", resetTask);
         choose("windows");
     }
 
@@ -1486,6 +1645,12 @@
         const status = lab.querySelector("[data-mobile-status]");
         const location = lab.querySelector("[data-mobile-location]");
         const deviceName = lab.querySelector("[data-mobile-device-name]");
+        const chipCloseup = lab.querySelector("[data-mobile-chip-closeup]");
+        const chipButtons = Array.from(lab.querySelectorAll("[data-mobile-chip-choice]"));
+        const chipTitle = lab.querySelector("[data-mobile-chip-title]");
+        const chipRole = lab.querySelector("[data-mobile-chip-role]");
+        const chipName = lab.querySelector("[data-mobile-chip-name]");
+        const chipPc = lab.querySelector("[data-mobile-chip-pc]");
         const deviceCopy = {
             phone: "스마트폰 · Smartphone",
             tablet: "태블릿·iPad · Tablet / iPad"
@@ -1514,6 +1679,49 @@
         };
         let selectedDevice = lab.dataset.device || "phone";
         let selectedPart = lab.dataset.part || "board";
+        let selectedChip = "soc";
+        const chips = {
+            soc: {
+                title: "SoC", english: "System on a Chip",
+                role: "CPU·GPU와 여러 제어 기능을 한 칩에 모아 계산과 장치 제어를 맡습니다.",
+                name: "‘한 칩 위의 시스템’이라는 뜻입니다.",
+                pc: "PC의 CPU·GPU와 여러 제어 칩이 한 패키지에 합쳐진 모습에 가깝습니다."
+            },
+            ram: {
+                title: "RAM", english: "Random Access Memory",
+                role: "실행 중인 앱의 명령과 작업 데이터를 빠르게 두는 휘발성 작업 공간입니다.",
+                name: "어느 저장 위치든 바로 접근할 수 있다는 뜻의 Random Access Memory입니다.",
+                pc: "PC의 RAM과 같은 역할이지만 스마트폰에서는 보드에 납땜되거나 SoC와 가까이 붙습니다."
+            },
+            storage: {
+                title: "NAND 저장 칩", english: "NAND Flash Storage",
+                role: "앱·사진·문서를 전원이 꺼진 뒤에도 남도록 기록하는 비휘발성 저장 장치입니다.",
+                name: "NAND는 NOT-AND 논리 구조에서 온 이름이고, flash는 전기로 여러 칸을 지우고 다시 기록하는 저장 방식을 가리킵니다.",
+                pc: "PC의 SSD 안에 들어 있는 NAND 플래시 칩과 같은 계열입니다."
+            },
+            power: {
+                title: "전원 관리 칩", english: "Power Management IC",
+                role: "배터리 전압을 각 부품이 필요한 전압으로 바꾸고 공급 순서와 충전을 조절합니다.",
+                name: "PMIC는 Power Management Integrated Circuit의 줄임말입니다.",
+                pc: "PC의 전원 공급 장치와 메인보드 전원 회로가 나누어 맡는 일을 작은 칩에 모은 모습에 가깝습니다."
+            },
+            radio: {
+                title: "통신 칩", english: "Radio and Modem",
+                role: "이동통신·Wi-Fi 같은 무선 신호를 주고받을 수 있는 데이터 신호로 바꿉니다.",
+                name: "modem은 modulator와 demodulator를 합친 말로, 보내는 신호와 받는 신호를 서로 바꾸는 기능을 가리킵니다.",
+                pc: "PC의 Wi-Fi·Bluetooth 어댑터와 유선 네트워크 장치에 대응합니다."
+            }
+        };
+        const renderChip = () => {
+            if (!chipCloseup) return;
+            const chip = chips[selectedChip];
+            chipCloseup.dataset.chip = selectedChip;
+            chipButtons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.mobileChipChoice === selectedChip)));
+            chipTitle.innerHTML = `${chip.title} <small>${chip.english}</small>`;
+            chipRole.textContent = chip.role;
+            chipName.textContent = chip.name;
+            chipPc.textContent = chip.pc;
+        };
 
         const render = () => {
             const copy = descriptions[selectedPart];
@@ -1526,6 +1734,8 @@
             status.textContent = copy.detail;
             location.textContent = copy.location[selectedDevice];
             deviceName.textContent = deviceCopy[selectedDevice];
+            if (chipCloseup) chipCloseup.hidden = selectedPart !== "board";
+            renderChip();
         };
 
         const bindArrowNavigation = (buttons, dataKey, choose, columns) => {
@@ -1543,6 +1753,10 @@
         };
         bindArrowNavigation(deviceButtons, "deviceChoice", (value) => { selectedDevice = value; render(); }, 2);
         bindArrowNavigation(partButtons, "mobilePart", (value) => { selectedPart = value; render(); }, 2);
+        chipButtons.forEach((button) => button.addEventListener("click", () => {
+            selectedChip = button.dataset.mobileChipChoice;
+            renderChip();
+        }));
         render();
     }
 
@@ -1823,9 +2037,9 @@
         let state = initial();
         let choice = "shortcut";
         const labels = {
-            icon: ["아이콘이 표시하는 항목 확인", "아이콘 모양 바꾸기", ""],
-            shortcut: ["바로가기로 열기", "원본을 완료 폴더로 이동", "바로가기 삭제"],
-            bookmark: ["북마크로 열기", "웹페이지 주소 변경", "북마크 삭제"]
+            icon: [["아이콘이 표시하는 항목 확인", "Inspect the Icon's Target"], ["아이콘 모양 바꾸기", "Change the Icon"], ["", ""]],
+            shortcut: [["바로가기로 열기", "Open the Shortcut"], ["원본을 완료 폴더로 이동", "Move the Original"], ["바로가기 삭제", "Delete the Shortcut"]],
+            bookmark: [["북마크로 열기", "Open the Bookmark"], ["웹페이지 주소 변경", "Change the Page Address"], ["북마크 삭제", "Delete the Bookmark"]]
         };
         const defaultMessages = {
             icon: "<b>아이콘</b>은 항목을 화면에서 알아보게 하는 표시입니다. 모양을 바꿔도 파일 이름·경로·내용은 그대로인지 확인하세요.",
@@ -1854,9 +2068,9 @@
             stateOutputs.shortcut.textContent = !state.shortcutExists ? "삭제됨" : shortcutConnected ? "연결됨" : "끊어진 경로";
             stateOutputs.page.textContent = "서버에 있음";
             stateOutputs.bookmark.textContent = !state.bookmarkExists ? "삭제됨" : bookmarkConnected ? "주소 연결됨" : "예전 주소";
-            actions.open.textContent = labels[choice][0];
-            actions.change.textContent = labels[choice][1];
-            actions.delete.textContent = labels[choice][2];
+            setBilingualButtonLabel(actions.open, ...labels[choice][0]);
+            setBilingualButtonLabel(actions.change, ...labels[choice][1]);
+            setBilingualButtonLabel(actions.delete, ...labels[choice][2]);
             actions.delete.hidden = choice === "icon";
             status.innerHTML = message || defaultMessages[choice];
         };
@@ -1927,6 +2141,10 @@
         const pageDomain = lab.querySelector("[data-page-domain]");
         const pageTitle = lab.querySelector("[data-page-title]");
         const pageBody = lab.querySelector("[data-page-body]");
+        const pagePublisher = lab.querySelector("[data-page-publisher]");
+        const pageAuthor = lab.querySelector("[data-page-author]");
+        const pageDate = lab.querySelector("[data-page-date]");
+        const pageEvidence = lab.querySelector("[data-page-evidence]");
         const relatedLink = lab.querySelector("[data-page-related-link]");
         const status = lab.querySelector("[data-browser-status]");
         const termButtons = Array.from(lab.querySelectorAll("[data-browser-term]"));
@@ -1936,24 +2154,35 @@
                 site: "동물 관찰 도감", domain: "animals.local", url: "https://animals.local/otter/habitat",
                 title: "수달의 서식지와 생활", summary: "강과 바다 가까이에서 사는 수달의 몸과 생활을 살펴봅니다.",
                 body: "수달은 깨끗한 강과 바닷가처럼 먹이와 숨을 곳이 있는 물가에서 삽니다. 물갈퀴와 긴 꼬리는 헤엄칠 때 도움이 됩니다.",
+                publisher: "우리생태연구원", author: "김하늘 생태 연구원", date: "2026-03-12 수정", evidence: "현장 관찰 기록 18회 · 생태 보고서 2건",
                 keywords: ["수달", "동물", "서식지", "강", "바다", "otter"], related: "river"
+            },
+            otterStory: {
+                site: "재미있는 동물 이야기", domain: "animal-story.local", url: "https://animal-story.local/posts/otter",
+                title: "수달은 아무 물가에서나 살아요", summary: "여행에서 본 수달 한 마리를 바탕으로 쓴 개인 이야기입니다.",
+                body: "여행 중 물가에서 수달을 보았습니다. 그래서 수달은 물만 있으면 어느 곳에서나 살 수 있다고 생각합니다.",
+                publisher: "운영 기관 표시 없음", author: "작성자 표시 없음", date: "게시·수정일 표시 없음", evidence: "관찰 장소·자료 출처 링크 없음",
+                keywords: ["수달", "동물", "서식지", "강", "바다", "otter"], related: "otter"
             },
             river: {
                 site: "우리 강 연구소", domain: "river.local", url: "https://river.local/ecology/clean-water",
                 title: "깨끗한 강과 물가 생물", summary: "강물의 상태와 물가 생물이 서로 어떤 영향을 주는지 알아봅니다.",
                 body: "강에는 물고기, 곤충, 식물처럼 여러 생물이 함께 삽니다. 물이 오염되면 먹이와 숨을 곳이 줄어 물가 생물도 영향을 받습니다.",
+                publisher: "우리 강 연구소", author: "박샘물 연구팀", date: "2026-02-08 수정", evidence: "수질 측정표 · 물가 생물 조사표",
                 keywords: ["강", "물", "생물", "환경", "수달", "river"], related: "otter"
             },
             moon: {
                 site: "어린이 우주 관측소", domain: "space.local", url: "https://space.local/moon/phases",
                 title: "달의 모양은 왜 달라질까?", summary: "달과 지구, 태양의 위치로 달의 모양 변화를 관찰합니다.",
                 body: "달이 스스로 모양을 바꾸는 것은 아닙니다. 태양빛을 받은 달의 부분 가운데 지구에서 보이는 부분이 달라집니다.",
+                publisher: "어린이 우주 관측소", author: "이별빛 천문 교육팀", date: "2026-01-24 수정", evidence: "한 달 관측 기록 · 달 위치 모형",
                 keywords: ["달", "우주", "태양", "관측", "moon", "space"], related: "weather"
             },
             weather: {
                 site: "교실 날씨 자료실", domain: "weather.local", url: "https://weather.local/clouds/forecast",
                 title: "구름을 보고 날씨 관찰하기", summary: "구름의 양과 모양을 기록하며 날씨 변화를 비교합니다.",
                 body: "날씨를 알아볼 때에는 구름뿐 아니라 기온, 바람, 비처럼 여러 관측 자료를 함께 확인합니다.",
+                publisher: "교실 기상 관찰단", author: "3학년 공동 관찰", date: "2026-04-03 기록", evidence: "기온·바람·강수 관찰표",
                 keywords: ["날씨", "구름", "기온", "비", "관찰", "weather"], related: "moon"
             }
         };
@@ -2031,6 +2260,9 @@
                 link.addEventListener("click", () => openCatalogPage(id, false));
                 const summary = document.createElement("p");
                 summary.textContent = page.summary;
+                const sourceFacts = document.createElement("div");
+                sourceFacts.className = "result-source-facts";
+                sourceFacts.innerHTML = "<span><b>작성자</b> " + page.author + "</span><span><b>날짜</b> " + page.date + "</span><span><b>근거</b> " + page.evidence + "</span>";
                 const footer = document.createElement("footer");
                 const url = document.createElement("code");
                 url.textContent = page.url;
@@ -2040,7 +2272,7 @@
                 newTab.textContent = "새 탭에서 열기";
                 newTab.addEventListener("click", () => openCatalogPage(id, true));
                 footer.append(url, newTab);
-                result.append(site, link, summary, footer);
+                result.append(site, link, summary, sourceFacts, footer);
                 resultList.append(result);
             });
         };
@@ -2050,6 +2282,10 @@
             pageDomain.textContent = record.domain;
             pageTitle.textContent = record.title;
             pageBody.textContent = record.body;
+            pagePublisher.textContent = record.publisher;
+            pageAuthor.textContent = record.author;
+            pageDate.textContent = record.date;
+            pageEvidence.textContent = record.evidence;
             if (record.related && catalog[record.related]) {
                 relatedLink.hidden = false;
                 relatedLink.textContent = `관련 링크: ${catalog[record.related].title}`;
@@ -2084,7 +2320,7 @@
             }
             pushPage(destination);
             renderCurrentPage();
-            status.textContent = `링크를 현재 탭에서 열었습니다. 주소창이 ${destination.url}(으)로 바뀌고 웹페이지 내용이 표시됩니다.`;
+            status.textContent = `링크를 현재 탭에서 열었습니다. 주소창과 함께 운영 기관·작성자·날짜·근거가 실제로 표시되는지 확인하세요.`;
         }
         const highlightTerm = (term) => {
             const page = currentPage();
@@ -2113,7 +2349,7 @@
             pushPage({ type: "results", title: `${query} 검색`, url: `https://search.local/?q=${encodeURIComponent(query)}`, query, resultIds });
             renderCurrentPage();
             status.textContent = resultIds.length
-                ? `검색 엔진이 ‘${query}’와 관련된 로컬 웹페이지를 찾아 결과 목록으로 만들었습니다.`
+                ? `검색 결과는 관련성 순서일 뿐 믿을 만한 순서가 아닙니다. 결과마다 작성자·날짜·근거를 비교한 뒤 원문을 여세요.`
                 : `검색 엔진이 ‘${query}’와 관련된 로컬 페이지를 찾지 못했습니다. 뒤로 가서 다른 검색어를 입력해 보세요.`;
         });
         newTabButton.addEventListener("click", () => {
@@ -2182,7 +2418,12 @@
             });
             nodes[step].append(packet);
             send.disabled = step === nodeNames.length - 1;
-            send.textContent = step === nodeNames.length - 1 ? "서버 도착 완료" : stoppedAt ? "연결을 켠 뒤 다시 보내기" : "패킷 한 단계 보내기";
+            const sendLabel = step === nodeNames.length - 1
+                ? ["서버 도착 완료", "Arrived at the Server"]
+                : stoppedAt
+                    ? ["연결을 켠 뒤 다시 보내기", "Reconnect and Send Again"]
+                    : ["패킷 한 단계 보내기", "Send Packet One Step"];
+            setBilingualButtonLabel(send, ...sendLabel);
             status.textContent = stoppedAt ? stoppedMessages[stoppedAt] : arrivalMessages[step];
         };
         links.forEach((link) => link.addEventListener("click", () => {
@@ -2235,7 +2476,7 @@
         const routeLabel = lab.querySelector("[data-request-wire] span");
         const emptyPage = lab.querySelector(".browser-empty-page");
         const finishedPage = lab.querySelector("[data-finished-page]");
-        const actionLabels = ["주소 읽기", "DNS 이름 조회", "서버 요청 보내기", "응답 받기", "브라우저에 표시", "페이지 표시 완료"];
+        const actionLabels = [["주소 읽기", "Read the Address"], ["DNS 이름 조회", "Look Up the DNS Name"], ["서버 요청 보내기", "Send the Server Request"], ["응답 받기", "Receive the Response"], ["브라우저에 표시", "Display in the Browser"], ["페이지 표시 완료", "Page Display Complete"]];
         const messages = [
             "주소창의 URL을 읽기 전입니다. URL은 서버의 숫자 주소나 페이지 내용 그 자체가 아닙니다.",
             "URL에서 통신 방법·도메인 이름·페이지 경로를 나눴습니다. 아직 서버의 IP 주소는 찾지 않았습니다.",
@@ -2268,7 +2509,7 @@
             finishedPage.hidden = !hasDisplay;
             address.disabled = stage > 0;
             action.disabled = stage === 5;
-            action.textContent = actionLabels[stage];
+            setBilingualButtonLabel(action, ...actionLabels[stage]);
             status.textContent = messages[stage];
         };
         action.addEventListener("click", () => {
@@ -2313,7 +2554,12 @@
             empty.hidden = completed;
             copy.hidden = !completed;
             action.disabled = completed;
-            action.textContent = completed ? "사본 만들기 완료" : mode === "download" ? "내 기기로 다운로드" : "서버로 업로드";
+            const copyLabel = completed
+                ? ["사본 만들기 완료", "Copy Complete"]
+                : mode === "download"
+                    ? ["내 기기로 다운로드", "Download to My Device"]
+                    : ["서버로 업로드", "Upload to the Server"];
+            setBilingualButtonLabel(action, ...copyLabel);
             panel.querySelector("[data-transfer-status]").textContent = completed
                 ? mode === "download"
                     ? "서버의 원본 1개와 내 기기의 사본 1개가 모두 남았습니다."
@@ -2335,7 +2581,12 @@
                     ? "응답: Set-Cookie: language=ko"
                     : "다음 요청의 language=ko를 읽어 한국어 페이지 선택";
             action.disabled = current === 2;
-            action.textContent = current === 0 ? "한국어 선택 저장" : current === 1 ? "다음 요청 보내기" : "다음 요청 확인 완료";
+            const cookieLabel = current === 0
+                ? ["한국어 선택 저장", "Save Korean Preference"]
+                : current === 1
+                    ? ["다음 요청 보내기", "Send the Next Request"]
+                    : ["다음 요청 확인 완료", "Next Request Checked"];
+            setBilingualButtonLabel(action, ...cookieLabel);
             panel.querySelector("[data-transfer-status]").textContent = current === 0
                 ? "처음 요청에는 언어 쿠키가 없습니다. 한국어 선택을 서버에 보내 보세요."
                 : current === 1
@@ -2355,7 +2606,12 @@
             panel.querySelector("[data-cache-route]").textContent = current === 0 ? "첫 요청 전" : current === 1 ? "서버 응답 → 캐시에 저장" : "캐시 사본 → 화면";
             panel.querySelector("[data-cache-screen]").textContent = current === 0 ? "화면 표시 전" : current === 1 ? "서버에서 받은 그림 표시" : "캐시 사본으로 그림 표시";
             action.disabled = current === 2;
-            action.textContent = current === 0 ? "그림 처음 열기" : current === 1 ? "같은 그림 다시 열기" : "캐시 재사용 확인 완료";
+            const cacheLabel = current === 0
+                ? ["그림 처음 열기", "Open the Image Once"]
+                : current === 1
+                    ? ["같은 그림 다시 열기", "Open the Same Image Again"]
+                    : ["캐시 재사용 확인 완료", "Cache Reuse Checked"];
+            setBilingualButtonLabel(action, ...cacheLabel);
             panel.querySelector("[data-transfer-status]").textContent = current === 0
                 ? "캐시는 비어 있습니다. 첫 요청은 서버에서 그림을 받아야 합니다."
                 : current === 1
@@ -2372,7 +2628,12 @@
             panel.querySelector("[data-deploy-student]").textContent = current < 2 ? "v1" : "v2";
             panel.querySelector("[data-deploy-student-note]").textContent = current < 2 ? "현재 보이는 버전" : "새로고침 뒤 v2 표시";
             action.disabled = current === 2;
-            action.textContent = current === 0 ? "공개 서버에 v2 배포" : current === 1 ? "학생 화면 새로고침" : "배포 확인 완료";
+            const deployLabel = current === 0
+                ? ["공개 서버에 v2 배포", "Deploy v2 Publicly"]
+                : current === 1
+                    ? ["학생 화면 새로고침", "Refresh the Student Screen"]
+                    : ["배포 확인 완료", "Deployment Checked"];
+            setBilingualButtonLabel(action, ...deployLabel);
             panel.querySelector("[data-transfer-status]").textContent = current === 0
                 ? "내 컴퓨터에 v2를 저장했지만 공개 서버와 학생 화면은 아직 v1입니다."
                 : current === 1
@@ -2420,6 +2681,9 @@
         const secretInput = lab.querySelector("[data-account-secret]");
         const codeInput = lab.querySelector("[data-account-code]");
         const permissionResult = lab.querySelector("[data-permission-result]");
+        const profileName = lab.querySelector("[data-profile-name]");
+        const profileStatus = lab.querySelector("[data-profile-status]");
+        const profileChange = lab.querySelector("[data-profile-change]");
         let stage = 1;
         const setStatus = (markup, tone = "") => {
             status.innerHTML = markup;
@@ -2428,7 +2692,9 @@
         const show = (message = "") => {
             lab.dataset.accountStage = String(stage);
             previous.disabled = stage === 1;
-            next.textContent = stage === 3 ? "처음부터" : "확인하고 다음";
+            next.innerHTML = stage === 3
+                ? '처음부터 <small>Reset</small>'
+                : '확인하고 다음 <small>Check and Continue</small>';
             lab.querySelectorAll("[data-account-step]").forEach((item) => item.classList.toggle("is-current", item.dataset.accountStep === String(stage)));
             if (message) {
                 setStatus(message);
@@ -2446,6 +2712,9 @@
             lab.dataset.accountAccess = "idle";
             permissionResult.innerHTML = "<b>요청 전</b><span>서버가 학생 계정에 정해진 권한을 아직 확인하지 않았습니다.</span>";
             lab.querySelectorAll("[data-permission-attempt]").forEach((button) => button.setAttribute("aria-pressed", "false"));
+            profileName.textContent = "민준";
+            profileChange.setAttribute("aria-pressed", "false");
+            profileStatus.textContent = "표시 이름을 바꾸어도 계정 ID와 로그인 권한은 그대로입니다.";
             show();
             nameInput.focus();
         };
@@ -2486,6 +2755,14 @@
                 ? "<b>인증과 권한은 다릅니다.</b>　사용자가 누구인지 확인한 뒤에도, 요청한 일을 해도 되는지 다시 검사했습니다."
                 : "<b>권한 거부는 로그인 실패가 아닙니다.</b>　학생 계정으로 확인되었지만 이 기능은 교사 역할에만 허용됩니다.");
         }));
+        profileChange.addEventListener("click", () => {
+            const changed = profileChange.getAttribute("aria-pressed") !== "true";
+            profileChange.setAttribute("aria-pressed", String(changed));
+            profileName.textContent = changed ? "민준 · 과학 모둠" : "민준";
+            profileStatus.innerHTML = changed
+                ? "<b>프로필만 바뀜.</b> 계정 ID는 student01이고, 로그인 정보와 학생 권한도 그대로입니다."
+                : "<b>표시 이름을 되돌림.</b> 프로필 표현은 바뀌어도 계정의 식별값은 student01입니다.";
+        });
         [nameInput, secretInput, codeInput].forEach((input) => input.addEventListener("keydown", (event) => {
             if (event.key === "Enter") next.click();
         }));
@@ -2498,17 +2775,54 @@
     function setupEvidenceLab() {
         const lab = document.querySelector("[data-evidence-lab]");
         if (!lab) return;
-        const found = new Set();
         const status = lab.querySelector("[data-evidence-status]");
-        lab.querySelectorAll("[data-evidence]").forEach((button) => button.addEventListener("click", () => {
-            const key = button.dataset.evidence;
-            found.add(key);
-            button.classList.add("is-found");
-            lab.querySelector(`[data-evidence-note="${key}"]`).classList.add("is-found");
-            status.textContent = found.size === 3
-                ? "세 가지 근거를 모두 찾았습니다. 링크를 열지 말고 선생님이나 보호자에게 확인합니다."
-                : `${found.size} / 3　이름이 그럴듯한지가 아니라 주소와 요구 행동을 근거로 판단합니다.`;
+        const evidenceChoices = [...lab.querySelectorAll("[data-evidence-choice]")];
+        const evidenceCheck = lab.querySelector("[data-evidence-check]");
+        const evidenceReset = lab.querySelector("[data-evidence-reset]");
+        let evidenceSolved = false;
+        const updateEvidence = () => {
+            const selected = evidenceChoices.filter((button) => button.getAttribute("aria-pressed") === "true");
+            evidenceCheck.disabled = selected.length !== 3;
+            status.textContent = selected.length === 0
+                ? "각 후보 문장을 학교의 공식 주소와 메시지 원문에 직접 대조하세요."
+                : selected.length < 3
+                    ? "3개 중 " + selected.length + "개를 골랐습니다. 세 근거를 함께 골라야 확인할 수 있습니다."
+                    : selected.length === 3
+                        ? "세 문장을 골랐습니다. 세 문장이 함께 위험을 뒷받침하는지 확인하세요."
+                        : selected.length + "개를 골랐습니다. 정확히 3개가 되도록 선택을 줄이세요.";
+        };
+        evidenceChoices.forEach((button) => button.addEventListener("click", () => {
+            if (evidenceSolved) return;
+            const pressed = button.getAttribute("aria-pressed") === "true";
+            button.setAttribute("aria-pressed", String(!pressed));
+            evidenceChoices.forEach((item) => item.classList.remove("is-found", "is-wrong"));
+            updateEvidence();
         }));
+        evidenceCheck.addEventListener("click", () => {
+            const selected = evidenceChoices.filter((button) => button.getAttribute("aria-pressed") === "true");
+            const correct = selected.length === 3 && selected.every((button) => button.dataset.evidenceCorrect === "true");
+            if (correct) {
+                evidenceSolved = true;
+                selected.forEach((button) => button.classList.add("is-found"));
+                evidenceChoices.forEach((button) => { button.disabled = true; });
+                status.textContent = "세 근거가 서로 맞물립니다. 링크를 열지 말고 공식 주소를 직접 입력하거나 선생님에게 다른 방법으로 확인하세요.";
+                evidenceCheck.disabled = true;
+                return;
+            }
+            evidenceChoices.forEach((button) => button.classList.remove("is-wrong"));
+            status.textContent = "고른 세 문장 중 하나 이상은 위험을 직접 뒷받침하지 못합니다. 개별 정답 표시는 하지 않습니다. 공식 주소와 메시지 원문을 다시 대조하세요.";
+        });
+        evidenceReset.addEventListener("click", () => {
+            evidenceSolved = false;
+            evidenceChoices.forEach((button) => {
+                button.disabled = false;
+                button.setAttribute("aria-pressed", "false");
+                button.classList.remove("is-found", "is-wrong");
+            });
+            updateEvidence();
+            evidenceChoices[0].focus();
+        });
+        updateEvidence();
         const citizenshipStatus = lab.querySelector("[data-citizenship-status]");
         const citizenshipMessages = {
             privacy: "<b>개인정보 Privacy:</b> 공개 범위를 바꾸면 같은 게시물을 볼 수 있는 사람이 달라집니다.",
@@ -2567,8 +2881,11 @@
             footprintResult.innerHTML = "<b>" + (footprint.original ? "내 게시물 표시 중" : "내 게시물 없음") + "</b><span>" + message + (remaining.length ? " 현재 남은 것: " + remaining.join(", ") + "." : "") + "</span>";
         };
         footprintButtons.post.addEventListener("click", () => {
-            footprint = { original: true, friend: false, log: true };
-            renderFootprint("게시 순간 서비스 기록이 함께 생겼습니다.");
+            footprint.original = true;
+            footprint.log = true;
+            renderFootprint(footprint.friend
+                ? "다시 게시해도 친구 기기에 있던 이전 복사본은 사라지지 않습니다."
+                : "게시 순간 서비스 기록이 함께 생겼습니다.");
         });
         footprintButtons.copy.addEventListener("click", () => {
             footprint.friend = true;
@@ -2588,6 +2905,7 @@
         const wellbeingResult = lab.querySelector("[data-wellbeing-result]");
         let studyCount = 0;
         let restCount = 0;
+        let waitingForRest = false;
         const updateDistance = () => {
             const centimeters = Number(distance.value);
             distanceOutput.textContent = centimeters + " cm";
@@ -2600,11 +2918,24 @@
         };
         distance.addEventListener("input", updateDistance);
         lab.querySelectorAll("[data-rest-action]").forEach((button) => button.addEventListener("click", () => {
-            if (button.dataset.restAction === "study") studyCount += 1;
-            else restCount += 1;
+            if (button.dataset.restAction === "study") {
+                if (waitingForRest) {
+                    wellbeingResult.innerHTML = "<b>먼저 눈 휴식이 필요함</b><span>이미 25분 학습을 기록했습니다. 다음 학습을 더하기 전에 5분 동안 화면에서 눈을 떼세요.</span>";
+                    return;
+                }
+                studyCount += 1;
+                waitingForRest = true;
+            } else {
+                if (!waitingForRest) {
+                    wellbeingResult.innerHTML = "<b>학습 기록이 먼저 필요함</b><span>이 기록표에서는 25분 학습 뒤의 5분 눈 휴식을 한 묶음으로 확인합니다.</span>";
+                    return;
+                }
+                restCount += 1;
+                waitingForRest = false;
+            }
             lab.querySelector("[data-study-count]").textContent = String(studyCount);
             lab.querySelector("[data-rest-count]").textContent = String(restCount);
-            wellbeingResult.innerHTML = restCount < studyCount
+            wellbeingResult.innerHTML = waitingForRest
                 ? "<b>휴식 기록이 부족함</b><span>25분 학습 뒤에는 화면에서 눈을 떼고 먼 곳을 보는 5분 휴식을 기록해 보세요.</span>"
                 : "<b>학습·휴식 한 묶음 기록</b><span>시간표와 몸 상태에 맞게 학습과 눈 휴식을 번갈아 배치했습니다.</span>";
         }));
@@ -2618,22 +2949,120 @@
         const code = lab.querySelector("[data-debug-code]");
         const log = lab.querySelector("[data-debug-log]");
         const run = lab.querySelector("[data-debug-run]");
+        const caseButtons = [...lab.querySelectorAll("[data-debug-case]")];
+        const flowCells = Object.fromEntries([...lab.querySelectorAll("[data-debug-flow]")].map((item) => [item.dataset.debugFlow, item.querySelector("span")]));
+        const testedCases = new Set();
+        let reproduced = false;
+        let exactFixTried = false;
+        const markStep = (name, complete) => {
+            const step = lab.querySelector('[data-debug-step="' + name + '"]');
+            if (step) step.classList.toggle("is-complete", complete);
+        };
+        const showDataFlow = (input, stored, processing, result) => {
+            flowCells.input.textContent = input;
+            flowCells.storage.textContent = stored;
+            flowCells.processing.textContent = processing;
+            flowCells.output.textContent = result;
+        };
+        const unlockRegression = () => {
+            caseButtons.forEach((button) => { button.disabled = button.dataset.debugCase === "cat"; });
+        };
         run.addEventListener("click", () => {
-            const path = code.value.trim();
-            if (path !== "/pictures/cat.webp") {
+            const baseFolder = code.value.trim();
+            const normalizedBaseFolder = baseFolder.endsWith("/") ? baseFolder : baseFolder + "/";
+            const requestedPath = normalizedBaseFolder + "cat.webp";
+            if (baseFolder === "/picture/" && !reproduced) {
                 lab.dataset.debugStage = "error";
-                log.textContent = "오류: " + path + " 위치에서 파일을 찾지 못했습니다.";
+                reproduced = true;
+                markStep("reproduce", true);
+                markStep("observe", true);
+                markStep("fix", false);
+                markStep("retest", false);
+                markStep("regression", false);
+                log.textContent = "오류 재현: 같은 사진 cat.webp를 골랐지만 프로그램이 " + requestedPath + "를 찾아 멈췄습니다. 실제 폴더와 비교하세요.";
                 output.innerHTML = "<span>사진을 불러오지 못했습니다.</span>";
+                showDataFlow("선택한 사진 cat.webp", "실제 파일 /pictures/cat.webp", "기본 폴더와 파일 이름 조합 → " + requestedPath, "파일 없음 오류 표시");
                 return;
             }
-            lab.dataset.debugStage = "success";
-            log.textContent = "성공: 사진 파일을 읽어 화면에 표시했습니다.";
-            output.innerHTML = '<span class="debug-photo" aria-label="고양이 사진을 나타내는 예시 그림"><i></i></span>';
+            if (normalizedBaseFolder !== "/pictures/") {
+                lab.dataset.debugStage = "error";
+                markStep("fix", false);
+                markStep("retest", false);
+                markStep("regression", false);
+                log.textContent = reproduced
+                    ? "아직 실제 폴더 /pictures/와 다릅니다. 기본 폴더의 철자를 다시 비교하세요."
+                    : "처음 사례를 바꾸지 마세요. 기본 폴더를 /picture/로 되돌려 cat.webp 오류부터 재현하세요.";
+                output.innerHTML = "<span>사진을 불러오지 못했습니다.</span>";
+                showDataFlow("선택한 사진 cat.webp", "실제 파일 /pictures/cat.webp", "기본 폴더와 파일 이름 조합 → " + requestedPath, "재현 조건 또는 폴더 이름 확인 필요");
+                return;
+            }
+            if (!reproduced) {
+                lab.dataset.debugStage = "start";
+                log.textContent = "먼저 처음의 기본 폴더 /picture/와 같은 사진 cat.webp로 실행해 오류를 재현하고 기록하세요.";
+                output.innerHTML = "<span>오류를 재현한 기록이 아직 없습니다.</span>";
+                showDataFlow("선택한 사진 cat.webp", "실제 파일 /pictures/cat.webp", "수정 전에 같은 조건을 재현했는지 확인", "재현 단계로 돌아가기");
+                return;
+            }
+            exactFixTried = true;
+            lab.dataset.debugStage = "retested";
+            markStep("fix", true);
+            markStep("retest", true);
+            testedCases.add("cat");
+            const catResult = lab.querySelector('[data-debug-case-result="cat"]');
+            catResult.classList.add("is-pass");
+            catResult.textContent = "cat.webp: 같은 입력 재시험 통과";
+            log.textContent = "같은 입력 재시험 통과: cat.webp는 그대로 두고 기본 폴더만 고쳐 /pictures/cat.webp를 읽었습니다. 이제 다른 입력도 시험하세요.";
+            output.innerHTML = '<span class="debug-photo debug-photo-cat" aria-label="고양이 사진을 나타내는 예시 그림"><i></i><b>고양이 사진</b></span>';
+            showDataFlow("선택한 사진 cat.webp", "실제 파일 /pictures/cat.webp", "기본 폴더 /pictures/ + 파일 이름 → 경로 일치", "cat.webp 사진 표시");
+            unlockRegression();
         });
         code.addEventListener("input", () => {
-            lab.dataset.debugStage = "fixed";
-            log.textContent = "주소를 수정했습니다. 맞는지는 아직 알 수 없으므로 다시 실행해 확인하세요.";
+            const baseFolder = code.value.trim();
+            const normalizedBaseFolder = baseFolder.endsWith("/") ? baseFolder : baseFolder + "/";
+            const exact = normalizedBaseFolder === "/pictures/";
+            const requestedPath = normalizedBaseFolder + "cat.webp";
+            lab.dataset.debugStage = exact ? "fix-ready" : (reproduced ? "editing" : "start");
+            markStep("fix", exact);
+            markStep("retest", false);
+            markStep("regression", false);
+            caseButtons.forEach((button) => { button.disabled = true; });
+            exactFixTried = false;
+            testedCases.clear();
+            lab.querySelectorAll("[data-debug-case-result]").forEach((item) => {
+                item.classList.remove("is-pass");
+                const labels = { cat: "cat.webp: 같은 입력 재시험 전", dog: "dog.webp: 아직 시험하지 않음", missing: "bird.webp: 아직 시험하지 않음" };
+                item.textContent = labels[item.dataset.debugCaseResult];
+            });
+            log.textContent = exact
+                ? "실제 폴더와 같아졌습니다. cat.webp 입력은 그대로 둔 채 다시 실행해 수정 전후를 비교하세요."
+                : "기본 폴더를 편집했습니다. 실제 폴더와 아직 다릅니다. 철자를 다시 비교하세요.";
+            showDataFlow("선택한 사진 cat.webp", "실제 파일 /pictures/cat.webp", exact ? "요청 경로 " + requestedPath + " · 실행 필요" : "요청 경로 " + requestedPath + " · 아직 다름", "아직 재시험하지 않음");
         });
+        caseButtons.forEach((button) => button.addEventListener("click", () => {
+            if (!exactFixTried || button.dataset.debugCase === "cat") return;
+            const name = button.dataset.debugCase;
+            const result = lab.querySelector('[data-debug-case-result="' + name + '"]');
+            testedCases.add(name);
+            result.classList.add("is-pass");
+            if (name === "missing") {
+                result.textContent = "bird.webp: 없음 오류를 예상대로 처리함";
+                output.innerHTML = "<span>bird.webp는 없으므로 ‘파일을 찾지 못함’을 표시했습니다.</span>";
+                showDataFlow("선택한 사진 bird.webp", "실제 파일 없음", "기본 폴더 + 파일 이름 → 존재 여부: 아니요", "파일 없음 오류 표시");
+            } else {
+                result.textContent = name + ".webp: 사진 표시 통과";
+                output.innerHTML = '<span class="debug-photo debug-photo-' + name + '" aria-label="' + name + ' 사진을 나타내는 예시 그림"><i></i><b>' + (name === "dog" ? "강아지 사진" : "고양이 사진") + '</b></span>';
+                showDataFlow("선택한 사진 " + name + ".webp", "실제 파일 /pictures/" + name + ".webp", "기본 폴더 + 파일 이름 → 존재 여부: 예", (name === "dog" ? "강아지" : "고양이") + " 사진 표시");
+            }
+            button.disabled = true;
+            if (testedCases.size === caseButtons.length) {
+                lab.dataset.debugStage = "success";
+                markStep("regression", true);
+                log.textContent = "검증 완료: 같은 입력 재시험, 다른 파일, 없는 파일에서 예상한 결과가 나왔습니다.";
+            } else {
+                log.textContent = "전체 시험 " + testedCases.size + "/3 통과. 남은 입력도 시험하세요.";
+            }
+        }));
+        showDataFlow("선택한 사진 cat.webp", "실제 파일 /pictures/cat.webp", "기본 폴더 /picture/ + 파일 이름 → 실행 전", "아직 결과 없음");
     }
 
     function setupGestureLab() {
@@ -2755,6 +3184,20 @@
             backup: ["현재 작업본 삭제", "<b>백업:</b> 현재 작업본은 v2이고, 복구용 과거 사본 v1은 따로 남아 있습니다."],
             zip: ["ZIP 만들기", "<b>ZIP:</b> 세 원본 파일을 하나의 묶음 파일로 만들어 보세요. 원본은 자동으로 없어지지 않습니다."]
         };
+        const actionEnglish = {
+            "USB에 사본 만들기": "Copy to USB",
+            "클라우드에 저장하기": "Save to the Cloud",
+            "Chromebook에서 v2로 수정": "Edit v2 on the Chromebook",
+            "현재 작업본 삭제": "Delete the Current File",
+            "ZIP 만들기": "Create a ZIP",
+            "작업본을 v2로 수정": "Edit the Working File to v2",
+            "변경 상태 동기화": "Synchronize the Change",
+            "iPad에서 삭제": "Delete on the iPad",
+            "삭제 상태 동기화": "Synchronize the Deletion",
+            "백업에서 복구": "Restore from Backup",
+            "ZIP 풀기": "Extract the ZIP"
+        };
+        const setStorageActionLabel = (label) => setBilingualButtonLabel(action, label, actionEnglish[label]);
         const resetVisuals = () => {
             lab.querySelectorAll("[data-storage-result]").forEach((item) => { item.hidden = true; });
             lab.querySelectorAll("[data-storage-empty]").forEach((item) => { item.hidden = false; });
@@ -2774,7 +3217,7 @@
             lab.querySelectorAll("[data-storage-mode-choice]").forEach((button) => button.setAttribute("aria-selected", String(button.dataset.storageModeChoice === mode)));
             lab.querySelectorAll("[data-storage-panel]").forEach((panel) => { panel.hidden = panel.dataset.storagePanel !== mode; });
             resetVisuals();
-            action.textContent = initial[mode][0];
+            setStorageActionLabel(initial[mode][0]);
             status.innerHTML = initial[mode][1];
             setFacts(mode);
         };
@@ -2786,7 +3229,7 @@
                 if (step === 1) {
                     lab.querySelector('[data-storage-result="usb-copy"]').hidden = false;
                     lab.querySelector('[data-storage-empty="usb"]').hidden = true;
-                    action.textContent = "작업본을 v2로 수정";
+                    setStorageActionLabel("작업본을 v2로 수정");
                     status.innerHTML = "<b>USB 복사 완료:</b> Chromebook 원본은 남고 USB에 별도 사본 v1이 생겼습니다.";
                 } else {
                     action.disabled = true;
@@ -2796,7 +3239,7 @@
                 if (step === 1) {
                     lab.querySelector('[data-storage-result="cloud-copy"]').hidden = false;
                     lab.querySelector('[data-storage-empty="cloud"]').hidden = true;
-                    action.textContent = "작업본을 v2로 수정";
+                    setStorageActionLabel("작업본을 v2로 수정");
                     status.innerHTML = "<b>클라우드 저장 완료:</b> 서버에 v1 사본이 생겼습니다.";
                 } else {
                     lab.querySelector("[data-cloud-device-version]").textContent = "v2";
@@ -2808,16 +3251,16 @@
                 if (step === 1) {
                     sync("chromebook").textContent = "발표.pptx · v2";
                     sync("chromebook").classList.add("is-pending");
-                    action.textContent = "변경 상태 동기화";
+                    setStorageActionLabel("변경 상태 동기화");
                     status.innerHTML = "<b>수정 직후:</b> Chromebook만 v2이고 서버와 iPad는 아직 v1입니다.";
                 } else if (step === 2) {
                     ["chromebook", "cloud", "ipad"].forEach((place) => { sync(place).textContent = "발표.pptx · v2"; sync(place).classList.remove("is-pending"); });
-                    action.textContent = "iPad에서 삭제";
+                    setStorageActionLabel("iPad에서 삭제");
                     status.innerHTML = "<b>동기화 완료:</b> 세 위치의 현재 상태가 v2로 맞춰졌습니다.";
                 } else if (step === 3) {
                     sync("ipad").textContent = "삭제 상태 · 전달 대기";
                     sync("ipad").classList.add("is-pending");
-                    action.textContent = "삭제 상태 동기화";
+                    setStorageActionLabel("삭제 상태 동기화");
                     status.innerHTML = "<b>iPad에서 삭제:</b> 삭제도 현재 상태의 변화이며 아직 다른 위치로 전달되기 전입니다.";
                 } else {
                     ["chromebook", "cloud", "ipad"].forEach((place) => { sync(place).textContent = "파일 삭제됨"; sync(place).classList.remove("is-pending"); sync(place).classList.add("is-deleted"); });
@@ -2829,7 +3272,7 @@
                 if (step === 1) {
                     current.textContent = "현재 파일 삭제됨";
                     current.classList.add("is-deleted");
-                    action.textContent = "백업에서 복구";
+                    setStorageActionLabel("백업에서 복구");
                     status.innerHTML = "<b>현재 파일 삭제:</b> 작업본은 사라졌지만 날짜별 백업 v1은 따로 남아 있습니다.";
                 } else {
                     current.textContent = "발표.pptx · v1 복구";
@@ -2842,7 +3285,7 @@
                 if (step === 1) {
                     lab.querySelector('[data-storage-result="zip-file"]').hidden = false;
                     lab.querySelector('[data-storage-empty="zip"]').hidden = true;
-                    action.textContent = "ZIP 풀기";
+                    setStorageActionLabel("ZIP 풀기");
                     status.innerHTML = "<b>ZIP 만들기:</b> 세 원본은 그대로 남고, 세 파일을 담은 발표자료.zip이 하나 더 생겼습니다.";
                 } else {
                     lab.querySelector('[data-storage-result="zip-extracted"]').hidden = false;
@@ -3615,6 +4058,10 @@
         const slots = Array.from(lab.querySelectorAll("[data-algo-slot]"));
         const check = lab.querySelector("[data-algo-check]");
         const status = lab.querySelector("[data-algo-status]");
+        const emptyFolder = lab.querySelector("[data-file-empty]");
+        const movedPhoto = lab.querySelector("[data-file-moved]");
+        const sourcePhoto = lab.querySelector("[data-file-source]");
+        const fileResult = lab.querySelector("[data-file-result]");
         const cardData = Object.fromEntries(cards.map((card) => [card.dataset.algoStep, { id: card.dataset.algoStep, order: Number(card.dataset.order), title: card.querySelector("b").textContent, english: card.querySelector("small").textContent }]));
         let placed = [];
         let draggedId = "";
@@ -3658,6 +4105,10 @@
         const reset = () => {
             placed = [];
             lab.dataset.algorithmStage = "0";
+            emptyFolder.hidden = false;
+            movedPhoto.hidden = true;
+            sourcePhoto.hidden = false;
+            fileResult.textContent = "사진 파일을 선택하고 과제 사진 폴더로 옮긴 뒤, 폴더 안에서 결과를 확인합니다.";
             status.textContent = "카드를 누르거나 번호 칸으로 끌어 네 단계를 모두 놓으세요. 확인 전에는 정답을 판단하지 않습니다.";
             render();
         };
@@ -3678,12 +4129,16 @@
             if (firstError >= 0) {
                 slots[firstError].classList.add("is-error");
                 lab.dataset.algorithmStage = "0";
-                status.textContent = (firstError + 1) + "번째 단계에서 앞뒤 결과가 자연스럽게 이어지지 않습니다. 정답 카드는 표시하지 않으니 장면과 재료 상태를 보고 순서를 바꿔 보세요.";
+                status.textContent = (firstError + 1) + "번째 단계에서 앞뒤 결과가 이어지지 않습니다. 정답 카드는 표시하지 않으니 파일 관리자에서 먼저 할 수 있는 일을 보고 순서를 바꿔 보세요.";
                 return;
             }
             slots.forEach((slot) => slot.classList.add("is-correct"));
             lab.dataset.algorithmStage = "4";
-            status.textContent = "실행 가능한 순서입니다. 준비 → 식빵 → 속재료 → 덮기의 결과로 샌드위치가 완성되었습니다.";
+            emptyFolder.hidden = true;
+            movedPhoto.hidden = false;
+            sourcePhoto.hidden = true;
+            fileResult.textContent = "river.webp가 과제 사진 폴더에 있고 다운로드 폴더에는 없습니다. 복사가 아니라 이동된 상태입니다.";
+            status.textContent = "실행 가능한 순서입니다. 다운로드 열기 → 사진 선택 → 과제 사진으로 이동 → 목적지에 있고 출발지에 없는지 확인했습니다.";
         });
         lab.querySelector("[data-algo-reset]").addEventListener("click", reset);
         reset();
@@ -3692,86 +4147,96 @@
     function setupControlLab() {
         const lab = document.querySelector("[data-control-lab]");
         if (!lab) return;
-        const input = lab.querySelector("[data-score-input]");
-        const output = lab.querySelector("[data-score-output]");
-        const scoreOutput = lab.querySelector("[data-loop-score]");
-        const countOutput = lab.querySelector("[data-loop-count]");
+        const numberOutput = lab.querySelector("[data-control-number]");
+        const scoreOutput = lab.querySelector("[data-control-score]");
+        const questionOutput = lab.querySelector("[data-control-question]");
+        const choiceButtons = [...lab.querySelectorAll("[data-control-choice]")];
+        const optionA = lab.querySelector('[data-control-option="A"]');
+        const optionB = lab.querySelector('[data-control-option="B"]');
+        const nextButton = lab.querySelector("[data-control-next]");
         const trace = lab.querySelector("[data-loop-trace]");
         const status = lab.querySelector("[data-control-status]");
-        const stepButton = lab.querySelector("[data-control-step]");
-        const runButton = lab.querySelector("[data-control-run]");
         const resetButton = lab.querySelector("[data-control-reset]");
-        let score = Number(input.value);
-        let count = 0;
-        let timer = 0;
-        const setControls = (running) => {
-            lab.dataset.controlRunning = String(running);
-            input.disabled = running;
-            stepButton.disabled = running || score >= 5;
-            runButton.disabled = running || score >= 5;
-        };
+        const questions = [
+            { text: "2 + 3은 얼마일까요?", A: "4", B: "5", answer: "B" },
+            { text: "파일을 ‘이동’한 뒤 출발 폴더는 어떻게 될까요?", A: "그 파일이 사라진다", B: "같은 파일이 그대로 남는다", answer: "A" },
+            { text: "8 bit는 오늘날 보통 무엇일까요?", A: "2 byte", B: "1 byte", answer: "B" }
+        ];
+        let index = 0;
+        let score = 0;
+        let answered = false;
         const addTrace = (text, state) => {
-            if (count === 1) trace.innerHTML = "";
+            if (index === 0 && trace.children.length === 1 && !trace.firstElementChild.dataset.traceState) trace.innerHTML = "";
             const item = document.createElement("li");
             item.dataset.traceState = state;
             item.textContent = text;
             trace.append(item);
         };
-        const show = () => {
-            output.textContent = input.value + "점";
+        const showQuestion = (fromLoop = false) => {
+            const question = questions[index];
+            answered = false;
+            lab.dataset.controlStage = fromLoop ? "loop" : "ready";
+            lab.dataset.result = "pending";
+            numberOutput.textContent = String(index + 1);
             scoreOutput.textContent = String(score);
-            countOutput.textContent = String(count);
+            questionOutput.textContent = question.text;
+            optionA.textContent = question.A;
+            optionB.textContent = question.B;
+            choiceButtons.forEach((button) => {
+                button.disabled = false;
+                button.classList.remove("is-selected", "is-yes", "is-no");
+            });
+            nextButton.hidden = true;
+            status.textContent = fromLoop
+                ? "남은 문제가 있어 문제 번호를 1 올리고 다음 문제로 돌아왔습니다. 이제 새 답 클릭 이벤트를 기다립니다."
+                : "보기 하나를 누르면 이벤트가 생기고, 프로그램이 조건을 검사해 서로 다른 길로 움직입니다.";
         };
-        const prepare = () => {
-            window.clearTimeout(timer);
-            score = Number(input.value);
-            count = 0;
-            lab.dataset.result = score >= 5 ? "finish" : "pending";
-            trace.innerHTML = "<li>시작 점수 " + score + "점. 아직 반복 명령을 실행하지 않았습니다.</li>";
-            status.textContent = score >= 5
-                ? "시작할 때 이미 5점 이상이므로 ‘5점 미만’ 조건이 거짓입니다. 반복 본문은 0번 실행됩니다."
-                : "현재 " + score + "점입니다. ‘5점 미만인 동안 한 문제 풀기’를 실행할 수 있습니다.";
-            setControls(false);
-            show();
-        };
-        const iterate = () => {
-            if (score >= 5) return false;
-            const before = score;
-            count += 1;
-            score += 1;
-            const finished = score >= 5;
-            lab.dataset.result = finished ? "finish" : "retry";
-            addTrace(count + "회: " + before + "점 < 5 → 한 문제 풀기 → " + score + "점", finished ? "finish" : "retry");
-            status.textContent = finished
-                ? count + "번 실행해 " + score + "점이 되었습니다. ‘5점 미만’ 조건이 거짓이 되어 반복을 끝냅니다."
-                : count + "번 실행해 " + score + "점입니다. 아직 5점 미만이므로 시작 지점으로 돌아갑니다.";
-            show();
-            setControls(false);
-            return !finished;
-        };
-        const runUntilFinished = () => {
-            if (score >= 5) return;
-            setControls(true);
-            const tick = () => {
-                const shouldContinue = iterate();
-                if (!shouldContinue) {
-                    setControls(false);
-                    return;
-                }
-                setControls(true);
-                timer = window.setTimeout(tick, 520);
-            };
-            tick();
-        };
-        input.addEventListener("input", prepare);
-        stepButton.addEventListener("click", iterate);
-        runButton.addEventListener("click", runUntilFinished);
-        resetButton.addEventListener("click", () => {
-            input.disabled = false;
-            prepare();
-            input.focus();
+        choiceButtons.forEach((button) => button.addEventListener("click", () => {
+            if (answered) return;
+            answered = true;
+            const choice = button.dataset.controlChoice;
+            const correct = choice === questions[index].answer;
+            if (correct) score += 1;
+            lab.dataset.controlStage = correct ? "yes" : "no";
+            lab.dataset.result = correct ? "yes" : "no";
+            scoreOutput.textContent = String(score);
+            button.classList.add("is-selected", correct ? "is-yes" : "is-no");
+            choiceButtons.forEach((item) => { item.disabled = true; });
+            addTrace((index + 1) + "번: " + choice + " 선택 → 조건 " + (correct ? "참 → 점수 +1" : "거짓 → 점수 유지"), correct ? "finish" : "retry");
+            status.textContent = correct
+                ? "답 버튼 클릭 이벤트 → 정답 조건 ‘참’ → 점수를 1 올렸습니다."
+                : "답 버튼 클릭 이벤트 → 정답 조건 ‘거짓’ → 점수를 그대로 두었습니다.";
+            nextButton.hidden = false;
+            nextButton.innerHTML = index === questions.length - 1
+                ? '결과 보기 <small>Show Result</small>'
+                : '다음 문제 <small>Next Question</small>';
+            nextButton.focus();
+        }));
+        nextButton.addEventListener("click", () => {
+            if (!answered) return;
+            if (index < questions.length - 1) {
+                const remaining = questions.length - index - 1;
+                addTrace("남은 문제 " + remaining + "개 → 문제 번호 +1 → 다음 문제로 반복", "loop");
+                index += 1;
+                showQuestion(true);
+                choiceButtons[0].focus();
+                return;
+            }
+            lab.dataset.controlStage = "finish";
+            lab.dataset.result = "finish";
+            nextButton.hidden = true;
+            status.textContent = "세 문제를 모두 처리했습니다. 각 답 클릭마다 같은 이벤트·조건·분기 순서가 반복되었고, 남은 문제가 없어 종료했습니다. 최종 점수는 " + score + "점입니다.";
+            addTrace("남은 문제 0개 → 반복 종료 → 최종 " + score + "/3점", "finish");
+            resetButton.focus();
         });
-        prepare();
+        resetButton.addEventListener("click", () => {
+            index = 0;
+            score = 0;
+            trace.innerHTML = "<li>아직 답 버튼을 누르지 않았습니다.</li>";
+            showQuestion();
+            choiceButtons[0].focus();
+        });
+        showQuestion();
     }
 
     window.COMPUTER_CONCEPT_VISUAL = (spec, asset) => {

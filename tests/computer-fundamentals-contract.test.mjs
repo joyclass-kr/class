@@ -52,6 +52,7 @@ for (const [lessonId, questionIndex, question] of context.window.COMPUTER_REVIEW
   }
 }
 const componentImages = ["cpu", "ram", "gpu", "ssd", "hdd", "motherboard", "psu", "cooling"];
+const childishAbsoluteTrap = /무조건|항상|전부 다|모든|자동으로|저절로|오직|친구만|정보만|동안에만|RAM에만|화면에만|파일만|이름만|주소만|기기에서만|한 번만/;
 
 test("the information and computing menu keeps both course links", () => {
   assert.match(portal, /data-access-group="information-computing"/);
@@ -163,7 +164,7 @@ test("all 36 lessons use an illustration, a task simulation, or direct manipulat
     assert.match(lesson.visual, new RegExp(`${stem}-1536\\.webp`), `${id} needs its 1536px network illustration`);
   }
   assert.match(conceptLabStyles, /\.network-path-heading\.has-context/);
-  for (const selector of ["data-reference-action", "data-account-name", "data-account-code", "data-permission-attempt", "data-privacy-audience", "data-license-purpose", "data-footprint-action", "data-screen-distance", "data-control-step", "data-loop-count"]) {
+  for (const selector of ["data-reference-action", "data-account-name", "data-account-code", "data-permission-attempt", "data-privacy-audience", "data-license-purpose", "data-footprint-action", "data-screen-distance", "data-control-choice", "data-control-score"]) {
     assert.match(conceptLabSource, new RegExp(selector), `${selector} needs a state-changing control`);
   }
   const fullStackLesson = generatedLessons.find((item) => item.id === "h04");
@@ -196,7 +197,7 @@ test("every generated lesson has substantive bilingual content, manipulation, an
       assert.equal(question.options.length, 4, `${lesson.id} question needs four options`);
       assert.ok(question.answer >= 0 && question.answer < question.options.length);
       assert.ok(question.explanation.length >= 20, `${lesson.id} needs a reasoned explanation`);
-      assert.doesNotMatch(question.options.join(" "), /무조건|항상|전부 다|모든|자동으로|저절로|오직 .*만/);
+      assert.doesNotMatch(question.options.join(" "), childishAbsoluteTrap);
     }
   }
 });
@@ -206,8 +207,8 @@ test("all 36 lessons have complete render data without undefined text", () => {
   assert.equal(allLessons.length, 36);
   assert.deepEqual(allLessons.map((lesson) => lesson.number), Array.from({ length: 36 }, (_, index) => index + 1));
   assert.equal(new Set(allLessons.map((lesson) => lesson.id)).size, 36);
-  const shortQuizzes = allLessons.filter((lesson) => lesson.questions.length < 6).map((lesson) => `${lesson.id}:${lesson.questions.length}`);
-  assert.deepEqual(shortQuizzes, [], "every lesson needs at least six scenario questions");
+  const wrongQuizLengths = allLessons.filter((lesson) => lesson.questions.length !== 6).map((lesson) => `${lesson.id}:${lesson.questions.length}`);
+  assert.deepEqual(wrongQuizLengths, [], "every lesson needs exactly six scenario questions");
   for (const lesson of allLessons) {
     assert.ok(lesson.title && lesson.english, `${lesson.id} needs a bilingual title`);
     assert.ok(lesson.conceptTitle, `${lesson.id} needs a relationship statement`);
@@ -215,6 +216,8 @@ test("all 36 lessons have complete render data without undefined text", () => {
     for (const step of lesson.workedExample.steps) {
       assert.equal(step.length, 3, `${lesson.id} operation steps need title, English, and explanation`);
       assert.ok(step.every((value) => typeof value === "string" && value.trim() && value !== "undefined"));
+      assert.match(step[1], /[A-Za-z]/, `${lesson.id} operation step needs an English label`);
+      assert.doesNotMatch(step[1], /^Step \d+$/, `${lesson.id} needs a semantic English step label, not a number placeholder`);
     }
     assert.ok(lesson.comparisons.cards.length >= 4, `${lesson.id} needs four comparison cards`);
     for (const card of lesson.comparisons.cards) {
@@ -225,9 +228,12 @@ test("all 36 lessons have complete render data without undefined text", () => {
   }
   const mobileLesson = allLessons.find((lesson) => lesson.id === "b02");
   assert.equal(mobileLesson.deviceComparison.cards.length, 4);
+  assert.equal(mobileLesson.activity.categories.length, 6, "B02 must separate SoC, RAM, storage, sensors/radios, battery, and touch display");
   for (const device of ["desktop-hardware-cutaway", "chromebook-internals-exploded", "tablet-internals-exploded", "smartphone-internals-exploded"]) {
     assert.ok(mobileLesson.deviceComparison.cards.some((card) => card.image.includes(device)));
   }
+  const packetLesson = allLessons.find((lesson) => lesson.id === "h01");
+  assert.ok(packetLesson.details.some((detail) => detail[1] === "Packet"), "H01 must define Packet before assessing it");
 });
 
 test("every lesson activity and assessment is internally consistent", () => {
@@ -256,7 +262,7 @@ test("every lesson activity and assessment is internally consistent", () => {
       assert.ok(Number.isInteger(question.answer) && question.answer >= 0 && question.answer < 4, `${lesson.id} needs a valid answer index`);
       assert.ok(term && question.explanation.length >= 20, `${lesson.id} needs a term and reasoned feedback`);
       assert.match(term, /[A-Za-z]/, `${lesson.id} question concept needs an English term`);
-      assert.doesNotMatch(question.options.join(" "), /무조건|항상|전부 다|모든|자동으로|저절로|오직 .*만|한 교실 안에서만/);
+      assert.doesNotMatch(question.options.join(" "), childishAbsoluteTrap);
     }
   }
 
@@ -415,7 +421,7 @@ test("student-facing copy names the content without promotional filler", () => {
 test("generic sort lessons continue directly to questions while real experiments keep three stages", () => {
   assert.match(lessonSource, /const hasStandaloneActivity = lesson\.activity\.type !== "sort"/);
   assert.match(lessonSource, /if \(lesson\.activity\.type === "sort"\) \{\s*resetQuiz\(\);\s*showStage\("quiz", "문제 풀이 2 \/ 2"\)/);
-  assert.match(lessonSource, /hasStandaloneActivity \? "실험 시작" : "문제 풀기"/);
+  assert.match(lessonSource, /hasStandaloneActivity[\s\S]{0,180}"실험 시작 <small>Start Experiment<\/small>"[\s\S]{0,120}"문제 풀기 <small>Start Questions<\/small>"/);
   assert.match(lessonSource, /"직접 조작 2 \/ 3"/);
   assert.deepEqual(
     allLessons.filter((lesson) => lesson.activity.type !== "sort").map((lesson) => lesson.id),
@@ -454,10 +460,26 @@ test("secondary explanations use one progressive disclosure instead of three alw
 });
 
 test("corrected concept models keep their real hierarchy, sequence, and distinctions", () => {
-  assert.match(conceptLabSource, /data-algo-step="prepare" data-order="1"/);
-  assert.match(conceptLabSource, /data-algo-step="bread" data-order="2"/);
-  assert.match(conceptLabSource, /data-algo-step="cheese" data-order="3"/);
-  assert.match(conceptLabSource, /data-algo-step="close" data-order="4"/);
+  const c02 = allLessons.find((lesson) => lesson.id === "c02");
+  assert.deepEqual(Array.from(c02.details, (entry) => entry[0]), ["Windows", "ChromeOS", "Android", "iOS", "iPadOS"]);
+  assert.deepEqual(Array.from(c02.activity.categories, (entry) => entry.label), ["Windows", "ChromeOS", "Android", "iOS", "iPadOS"]);
+  assert.equal(c02.activity.items.find((item) => item.id === "c02i4").category, "ios");
+  assert.equal(c02.activity.items.find((item) => item.id === "c02i5").category, "ipados");
+  const c03 = allLessons.find((lesson) => lesson.id === "c03");
+  assert.match(conceptLabSource, /실행 중인 프로세스 <small>Running Process<\/small>/);
+  assert.match(conceptLabSource, /그림 앱 프로세스/);
+  assert.doesNotMatch(conceptLabSource, /<h3>RAM <small>Running Process<\/small>/);
+  assert.doesNotMatch(c03.questions[1].explanation, /RAM에\s*(?:실행 중인\s*)?프로세스를|RAM에[^.]*프로세스가 생/);
+  assert.match(c03.questions[1].explanation, /CPU 시간을 배정해 프로세스를 시작/);
+  const h01 = allLessons.find((lesson) => lesson.id === "h01");
+  assert.doesNotMatch(h01.questions[2].text, /이동통신|기지국/);
+  assert.match(h01.questions[2].explanation, /기기.+공유기/);
+  assert.match(conceptLabSource, /data-algo-step="open" data-order="1"/);
+  assert.match(conceptLabSource, /data-algo-step="select" data-order="2"/);
+  assert.match(conceptLabSource, /data-algo-step="move" data-order="3"/);
+  assert.match(conceptLabSource, /data-algo-step="verify" data-order="4"/);
+  assert.match(conceptLabSource, /data-file-moved/);
+  assert.doesNotMatch(conceptLabSource, /sandwich/);
   assert.match(conceptLabSource, /기기 저장소\/민준\/그림\/여행/);
   assert.match(conceptLabSource, /실제 구분 기호는 운영체제에 따라/);
   assert.match(conceptLabStyles, /data-path-stage="drive"\] \.user-folder/);
@@ -496,10 +518,34 @@ test("new lesson tools expose real state changes and primary-device layout rules
   assert.match(conceptLabSource, /data-unit-index/);
   assert.match(conceptLabSource, /1 KiB = 1024 B/);
   assert.match(conceptLabSource, /data-citizenship-choice="copyright"/);
+  assert.match(conceptLabSource, /data-profile-change/);
+  assert.match(conceptLabSource, /표시 이름을 바꾸어도 계정 ID와 로그인 권한은 그대로/);
+  assert.match(conceptLabSource, /let evidenceSolved = false/);
+  assert.match(conceptLabSource, /footprint\.original = true/);
+  assert.doesNotMatch(conceptLabSource, /footprint = \{ original: true, friend: false, log: true \}/);
+  assert.match(conceptLabSource, /let waitingForRest = false/);
   assert.match(conceptLabSource, /data-debug-code/);
+  assert.match(conceptLabSource, /data-debug-case="missing"/);
+  assert.match(conceptLabSource, /if \(!reproduced\)/);
+  assert.match(conceptLabSource, /baseFolder === "\/picture\/" && !reproduced/);
+  assert.match(conceptLabSource, /normalizedBaseFolder !== "\/pictures\/"/);
+  assert.match(conceptLabSource, /const exact = normalizedBaseFolder === "\/pictures\/"/);
+  assert.match(conceptLabSource, /evidenceCheck\.disabled = selected\.length !== 3/);
+  assert.doesNotMatch(conceptLabSource, /classList\.toggle\("is-wrong", button\.dataset\.evidenceCorrect/);
+  assert.match(conceptLabSource, /선택한 사진 <small>Selected Input<\/small>/);
+  assert.doesNotMatch(conceptLabSource, /data-debug-code value="\/picture\/cat\.webp"/);
+  assert.match(conceptLabSource, /testedCases\.add\("cat"\)/);
+  assert.match(conceptLabSource, /data-debug-flow="storage"/);
+  assert.match(conceptLabSource, /testedCases\.size === caseButtons\.length/);
   assert.doesNotMatch(conceptLabSource, /data-debug-fix/);
+  assert.doesNotMatch(conceptLabStyles, /data-debug-stage="success"\]\s+\.debug-observation li/);
   assert.match(conceptLabSource, /data-algo-check/);
-  assert.match(conceptLabSource, /data-control-run/);
+  assert.match(conceptLabSource, /data-control-choice="A"/);
+  assert.match(conceptLabSource, /data-flow-step="condition"/);
+  assert.match(conceptLabSource, /showQuestion\(true\)/);
+  assert.match(conceptLabSource, /문제 번호 \+1/);
+  assert.match(conceptLabSource, /resetButton\.focus\(\)/);
+  assert.match(conceptLabSource, /남은 문제 0개/);
   assert.match(conceptLabSource, /data-port-lab/);
   assert.match(conceptLabSource, /data-request-relay/);
   assert.match(conceptLabSource, /data-program-lab/);
@@ -509,10 +555,27 @@ test("new lesson tools expose real state changes and primary-device layout rules
   assert.match(conceptLabSource, /canvas\.toBlob/);
   assert.match(conceptLabStyles, /@media \(min-width: 821px\)/);
   assert.match(conceptLabStyles, /@media \(max-width: 820px\)/);
+  assert.match(conceptLabStyles, /@media \(min-width: 821px\) and \(max-width: 1100px\)[\s\S]{0,240}\.visual-program-process \.concept-lab-split/);
   assert.match(conceptLabStyles, /@media \(prefers-reduced-motion: reduce\)/);
   assert.match(conceptLabStyles, /\[data-mobile-marker\]/);
   assert.match(conceptLabStyles, /input\[type="range"\][\s\S]{0,180}min-height: 44px/);
   assert.match(conceptLabSource, /srcset=/);
+  assert.match(conceptLabSource, /<figcaption><b>관찰 <small>Observe<\/small><\/b>/);
   assert.match(conceptLabSource, /768w/);
   assert.match(conceptLabSource, /1536w/);
+  assert.match(conceptLabSource, /data-os-choice="ios"/);
+  assert.match(conceptLabSource, /data-os-choice="ipados"/);
+  assert.match(conceptLabSource, /data-account-status role="status" aria-live="polite"/);
+  assert.match(conceptLabSource, /data-algo-status role="status" aria-live="polite"/);
+  assert.match(lessonSource, /function focusFirstQuizOption\(\)/);
+  assert.match(lessonSource, /chosenButton\.disabled = true;[\s\S]{0,500}focusFirstQuizOption\(\)/);
+  assert.match(lessonSource, /renderQuestion\(\);\s*focusFirstQuizOption\(\);/);
+  assert.match(lessonSource, /focusStageHeading\("activity"\)/);
+  assert.match(lessonSource, /showStage\("result", "차시 완료"\);\s*focusStageHeading\("result"\);/);
+  assert.match(lessonSource, /실험 시작 <small>Start Experiment<\/small>/);
+  assert.match(lessonSource, /문제 풀기 <small>Continue to Questions<\/small>/);
+  assert.match(lessonSource, /다음 차시 <small>Next Lesson<\/small>/);
+  assert.match(lessonPage, /차시 목록 <small>Course Lessons<\/small>/);
+  assert.match(lessonPage, /처음부터 <small>Reset<\/small>/);
+  assert.match(conceptLabSource, /정확히 3개가 되도록 선택을 줄이세요/);
 });
