@@ -91,9 +91,52 @@
 | 파일 | 무엇이 어긋나나 |
 |---|---|
 | **`banjjogi` 전권 14장** | **주인공이 반쪽이 아님.** 아래를 꼭 읽어 주세요 |
+| `eunhye-dukkeobi` 지네 4장 | **지네가 혐오스럽게 그려짐.** 아래를 읽어 주세요 |
 | `bak-hyeokgeose/03-horse` | 글도 그림말도 **「앞무릎을 꿇고」**인데 그림은 앞발을 번쩍 든 채 서 있음 |
 | `hokburi-yeonggam/09-greedy` | 욕심쟁이 얼굴이 아직 딱딱함. 옆의 착한 영감이 둥글둥글한 것과 견주면 차이가 남 |
 | `hokburi-yeonggam/10-sing` | **13:22에 보내 주신 새것은 안 받았습니다.** 아래를 읽어 주세요 |
+
+### 괴물도 혐오스럽게 그리지 말아 주세요
+
+앞서 드린 규칙이 **사람 악당만** 다루고 있었습니다. 제 잘못입니다.
+괴물에도 같은 규칙이 필요합니다. 62권 프롬프트에 이 문단을 더 넣었습니다.
+
+    The same goes for monsters and beasts. A monster may be FRIGHTENING but never
+    DISGUSTING. Scary is about scale, darkness, silence and what you cannot quite
+    see - a huge shadow, two points of light where the eyes are, one clawed foot at
+    the edge of the frame. Disgusting is about detail: segmented legs, wet mouths,
+    dripping fangs, bristles, many small eyes. Draw the first, never the second.
+    When in doubt, show less of the monster, not more.
+
+**무서운 것과 역겨운 것은 다릅니다.** 무서운 것은 이야기에 필요하고,
+역겨운 것은 필요 없습니다.
+
+#### 은혜 갚은 두꺼비 — 지네 네 장
+
+    cover   08-centipede   09-glow   10-retreat
+
+이 책 그림말에는 처음부터 이렇게 적혀 있었습니다.
+
+    The centipede: never drawn in detail - a vast dark coiled silhouette across
+    the shrine rafters, edged in cold blue-green light, with two pale points where
+    the eyes would be. Suggestive, not disgusting.
+
+그런데 지금 그림에는 **다리 마디도 이빨도 눈동자도 다 그려져** 있습니다.
+그림말대로 **어두운 실루엣 + 눈 자리 빛 두 점**으로만 해 주세요.
+서까래를 가로지르는 커다란 그림자, 차가운 푸른빛 테두리, 그것이면 충분합니다.
+아이가 무서워하되 징그러워하지는 않아야 합니다.
+
+#### 같은 눈으로 봐 주실 것
+
+괴물이 나오는 다른 그림입니다. 자세히 그려져 징그러운 것만 고쳐 주세요.
+
+    구렁덩덩 신선비   cover 03-third 05-shed 06-promise 07-burn
+    삼형제의 재주     cover 08-cliff 11-catch
+    은혜 갚은 까치     08-ring
+    곶감과 호랑이      05-scared
+    호랑이 속인 토끼    01-caught
+
+---
 
 ### 반쪽이(`banjjogi`)는 한 권을 통째로 다시 그려야 합니다
 

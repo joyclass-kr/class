@@ -41,6 +41,12 @@ scowling faces, no warts, no bared yellow teeth, no mean squinting slits, no
 ugly caricature. The reader should enjoy watching them and laugh at them, never
 be disgusted by them. A greedy character can be adorable; what is wrong with
 them shows in what they DO, not in an ugly face.
+The same goes for monsters and beasts. A monster may be FRIGHTENING but never
+DISGUSTING. Scary is about scale, darkness, silence and what you cannot quite
+see - a huge shadow, two points of light where the eyes are, one clawed foot at
+the edge of the frame. Disgusting is about detail: segmented legs, wet mouths,
+dripping fangs, bristles, many small eyes. Draw the first, never the second.
+When in doubt, show less of the monster, not more.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙이세요)
