@@ -496,3 +496,44 @@
   해와 달 04-empty 어머니를 그리지 않고 빈 광주리와 옷자락만으로 알린다
   쥐 사위 end      돌부처 발밑의 쥐구멍
   밤에 찾아온 도깨비 end  빗자루 그림자가 도깨비 모양이다
+
+
+---
+
+# 받은 것 확인 (2026-08-30) — 여덟은 해결, 열넷 남았습니다
+
+새 그림 열다섯 장 받았습니다. **또 이름만 webp고 속은 JPEG**였습니다.
+다시 만들어 넣었습니다. 다음부터는 진짜 webp로 주시면 좋겠습니다.
+
+## 해결됐습니다 ✔
+
+| 자리 | 확인한 것 |
+|---|---|
+| `singihan-jeolgu` 07-more | 영어 「SCREAM!」이 사라졌습니다 |
+| `pureun-gusul` 10-threat | 구슬이 사라졌습니다. 궤짝도 닫혀 있습니다. 고양이 얼굴이 순해진 것도 좋습니다 |
+| `dokkaebi-bangmangi` 05-feast | 아우가 다락 난간 위에서 내려다봅니다. 04-dokkaebi도 같이 고쳐 주셔서 앞뒤가 맞습니다 |
+| `patjuk-halmeom` 05-cry | 밤과 자라가 빠졌습니다. 할머니 혼자 웁니다 |
+| `samnyeon-gogae` 04-stumble | 엽전이 사방으로 흩어집니다 |
+| `uijoheun-hyeongje` 07-morning | 형과 아우가 따로 제 무더기 앞에 섰습니다. 08과 확실히 달라졌습니다 |
+| `tokkijeon` story-05-b · 05-c | 05-b는 질려서 떨고, 05-c는 허리에 손을 얹고 웃습니다. 창도 내려갔습니다 |
+| `dangun` 06-give | 환웅이 수염 없는 젊은이가 되었습니다 |
+
+## 아직입니다
+
+| 자리 | 무엇이 |
+|---|---|
+| `deuljwi-sontop` 03-rat | **새로 주셨는데 아직 쥐가 두 마리입니다.** 담 구멍에서 나오는 쥐 하나, 마당에서 손톱을 먹는 쥐 하나. 가운데 그림자까지 셋으로 보입니다. **한 마리만** 그려 주십시오. 그 한 마리가 손톱을 먹고 사람이 되는 이야기입니다 |
+| `dangun` 05-two | **06만 고쳐져서 05와 어긋났습니다.** 05의 환웅은 아직 수염 난 상투 어른입니다. 06과 같은 젊은 얼굴로 |
+| `geumdokki-eundokki` 09-copy · 10-greedy | 욕심쟁이가 딴사람 (07-iron은 주셨는데 09·10이 아직) |
+| `banggwi-myeoneuri` 05-boom · 06-fly | 같은 그림 |
+| `cheonggaeguri` 05-sick · 06-plan | 같은 그림 |
+| `eunhye-kkachi` 05-coil · 06-revenge | 같은 그림 + 구렁이가 몸을 감고 있지 않음 |
+| `dokkaebi-gamtu` 16-burn | 도깨비 하나여야 하는데 여럿이 잔치 |
+| `bak-hyeokgeose` 03-horse | 말 자세 + 붉은 알이 미리 나옴 |
+| `bak-hyeokgeose` 02-light | 촌장 다섯 (글은 여섯) |
+| `bak-hyeokgeose` 11-thirteen | 촌장 넷 (글은 여섯) |
+| `halmikkot` 10-flower | 할머니가 살아 계신데 할미꽃이 폈음 |
+| `heungbujeon` story-01-b | 놀부 아내가 딴사람 + 흉하게 |
+| `geuneul-san-saram` 10-beg · 11-return | 부자가 딴사람 |
+| `hokburi-yeonggam` 12-two | 혹 둘이 안 보임 |
+| `horangi-sogin-tokki` 01-caught | 앞발로 누르지 않음 |
