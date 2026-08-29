@@ -119,7 +119,12 @@ lady in her forties, mistress of the biggest house in the village, in fine silk
 with a bright yellow jeogori and a deep wine skirt, hair in a heavy bun with a
 gold pin. Plump and handsome and pleasant to look at, chin up, very sure of
 herself - and hugely comic when she is cornered: cheeks puffing, hands
-fluttering, sweat drops flying. Never ugly, never haggard.
+fluttering, sweat drops flying.
+HER FACE AND SKIN - her skin is the SAME warm peachy tone as every other
+villager in the picture, rosy on the cheeks. Her hair is glossy black. Her face
+is round, smooth and full, with no lines. When she is dismayed her cheeks stay
+pink and her mouth makes a small round comic "o" - she is a funny grown-up
+caught out, the kind of face a child laughs at.
 His daughter: a calm graceful young woman in a soft pink and mint hanbok, long
 braid, watching everything quietly.
 The tiger: a huge orange-and-black striped Korean folk-painting tiger, round

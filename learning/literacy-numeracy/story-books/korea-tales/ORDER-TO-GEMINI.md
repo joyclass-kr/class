@@ -354,3 +354,32 @@
 
 소설틀은 그림 이름이 `story-`로 시작하는 책입니다 —
 흥부전, 춘향전, 홍길동전, 심청전, 옹고집전, 토끼전, 콩쥐 팥쥐.
+
+---
+
+## 반쪽이 — 김 부자 얼굴만 넉 장 다시 (09, 10, 11, 12)
+
+반쪽이의 몸(한 눈·한 팔·한 다리·묶은 소매와 바짓가랑이)은 열다섯 장
+모두 맞게 나왔다. **다시 그릴 것은 김 부자 얼굴뿐이다.**
+
+지금 09-promise, 10-excuse, 11-contest, 12-jar 넉 장에서 김 부자만
+**잿빛에 푸르뎅뎅한 낯빛**으로 그려져 있다. 같은 그림 안의 다른 사람들은
+모두 발그레한 살빛인데 김 부자만 회색이라 병든 사람처럼 보인다. 머리도
+반백에 주름이 깊어 할머니로 보인다. 딸을 시집보낼 나이의 사십 대다.
+
+프롬프트에는 이미 "Never ugly, never haggard"라고 적어 두었는데 그 말은
+읽히지 않았다. 하지 말라는 말 대신 **어떻게 생겼는지를 적어야** 한다.
+프롬프트의 김 부자 대목을 이렇게 고쳐 두었다.
+
+    HER FACE AND SKIN - her skin is the SAME warm peachy tone as every other
+    villager in the picture, rosy on the cheeks. Her hair is glossy black. Her
+    face is round, smooth and full, with no lines. When she is dismayed her
+    cheeks stay pink and her mouth makes a small round comic "o" - she is a
+    funny grown-up caught out, the kind of face a child laughs at.
+
+13-wedding의 김 부자(손수건을 들고 우는 보라 저고리)는 이대로 좋다.
+그 얼굴을 본으로 삼으면 된다.
+
+바꾸지 말 것: 반쪽이의 몸, 구경꾼, 배경, 화면 짜임, 10-excuse에서 손가락
+셋을 펴 보이는 것, 11-contest의 두 칸 나눔, 12-jar에서 김 부자가 두레박을
+들고 있는 것.
