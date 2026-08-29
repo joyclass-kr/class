@@ -50,7 +50,7 @@ const CHAPTERS = [
             `그 대답이 전부였습니다. 어디로 가는지도, 언제까지 가는지도 말해 주지 않았습니다. 떠돌이에게는 정해 둔 데가 없습니다. 그러니 그것이 참말이었습니다. 그런데 레미는 그 말에 일어났습니다. 거짓말을 하지 않은 것이었습니다. 어디로 가는지 그 사람도 몰랐기 때문입니다.`,
             `그날 밤 두 사람은 헛간에서 잤습니다. 짚이 깔려 있었고 소 냄새가 났습니다. 그 시절 여관은 값이 비쌌습니다. 그러니 헛간을 빌리는 것이 보통이었습니다. 헛간을 빌리는 데 동전 한 닢을 냈습니다. 그날 번 것이 동전 몇 닢이었습니다. 그 가운데 하나가 나간 것이었습니다. 비탈리스가 주인에게 정중하게 인사를 했습니다. 헛간을 안 빌려주는 데도 있었습니다. 그러면 다리 밑에서 잤습니다.`,
             `레미가 늘 자던 집과 냄새가 비슷했습니다. 그래서 더 견디기 어려웠습니다. 소 냄새가 나면 그 집이 떠올랐습니다. 겨울마다 소와 한 지붕 아래 잤기 때문입니다. 비탈리스가 자기 담요를 레미에게 덮어 주었습니다. 담요가 하나뿐이었습니다. 그것을 그날 밤 레미가 덮었습니다.`,
-            `그리고 이렇게 말했습니다.<br>"나는 너를 때리지 않는다. 그리고 굶기지 않는다. 그 대신 너는 일을 배워야 한다."<br>"무슨 일이요?"<br>"사람 앞에 서는 일이다. 때리지 않는다는 말을 먼저 했습니다. 그것이 그 시절 아이에게 제일 중요한 말이었습니다. "`,
+            `그리고 이렇게 말했습니다.<br>"나는 너를 때리지 않는다. 그리고 굶기지 않는다. 그 대신 너는 일을 배워야 한다."<br>"무슨 일이요?"<br>"사람 앞에 서는 일이다. 때리지 않는다는 말을 먼저 했습니다."<br>그것이 그 시절 아이에게 제일 중요한 말이었습니다.`,
             `이튿날 아침 비탈리스가 카피를 불렀습니다. 짐승들에게 먼저 인사를 시켰습니다. 그것이 그 무리에 들어가는 방식이었습니다. <br>"카피, 이 아이가 우리 식구다. 인사해라."`,
             `카피가 앞발을 들었습니다. 레미가 그 발을 잡았습니다. 그리고 그때 처음으로 조금 웃었습니다. 발바닥이 따뜻했습니다. 그날 레미가 처음으로 웃었습니다. 마을을 떠난 지 하루 만이었습니다.`,
             `카피는 그 뒤로 밤마다 레미 발치에 와서 잤습니다. 아무도 시키지 않았습니다. 카피가 스스로 그 자리를 골랐습니다. 그리고 십 년을 그 자리에서 잤습니다. 추운 밤에는 발 위에 턱을 얹고 잤습니다. 개가 발치에 있으면 발이 따뜻합니다. 그 겨울에 그것이 레미를 여러 번 살립니다.`
@@ -73,9 +73,9 @@ const CHAPTERS = [
             `비탈리스는 사람을 가르칠 때 한 번에 하나씩만 시켰습니다. 짐승을 가르치던 방식이었습니다. 사람에게도 그렇게 했습니다. 그리고 그것이 될 때까지 다음 것을 시키지 않았습니다. 안 되는데 다음 것을 시키면 앞의 것도 무너집니다. 그것을 아는 사람이었습니다.`,
             `그렇게 조금씩 늘려 갔습니다. 옆에 서 있기, 접시 들기, 짐승 데려오기. 그러고 나서 노래였습니다. 한 달쯤 지나자 레미가 노래를 부르게 되었습니다. 광장 한가운데가 아니라 옆에서 불렀습니다. 그러다 조금씩 가운데로 갔습니다. 처음에는 한 곡이었습니다. 그 한 곡을 여러 날 연습했습니다. 걸으면서 불렀습니다. 비탈리스가 하프를 켜고 레미가 노래했습니다. 그 고장의 옛 노래였습니다. 사람들이 아는 노래라 따라 부르기도 했습니다.`,
             `그런데 어느 날 노래가 끝나고 나서 비탈리스가 이상한 얼굴을 했습니다. 사람들이 그날 동전을 평소보다 많이 넣었습니다. 그런데 그 사람은 그것을 세지도 않았습니다. 그리고 아무 말 없이 한참 앉아 있었습니다. 하프를 무릎에 놓은 채였습니다. 손을 줄에서 떼지 않고 있었습니다.`,
-            `"제가 잘못했습니까?"<br>"아니다."<br>"그럼 왜요?"<br>"네 목소리가 좋아서 그런다. 그 말을 하고 나서 오래 말이 없었습니다. 레미는 그것이 무슨 뜻인지 몰랐습니다. "`,
+            `"제가 잘못했습니까?"<br>"아니다."<br>"그럼 왜요?"<br>"네 목소리가 좋아서 그런다."<br>그 말을 하고 나서 오래 말이 없었습니다. 레미는 그것이 무슨 뜻인지 몰랐습니다.`,
             `그러고는 다른 이야기를 했습니다. 그 말이 무슨 뜻인지 레미는 몰랐습니다. 알게 된 것은 네 해 뒤였습니다. 그날 저녁, 비탈리스는 나뭇조각을 깎아 글자를 만들기 시작했습니다. 칼로 깎았습니다. 한 조각을 만드는 데 한참이 걸렸습니다. 한 조각에 한 글자씩 새겼습니다. 종이도 없고 책도 없었습니다. 그러니 나무를 깎을 수밖에 없었습니다. 그것을 늘어놓아 낱말을 만들게 했습니다. 먼저 이름부터 만들게 했습니다. 레미라는 세 글자였습니다.`,
-            `"오늘부터 글을 배운다."<br>"왜요?"<br>"떠돌이라도 글은 알아야 한다. 그 시절 시골에서는 어른도 글을 모르는 사람이 많았습니다. 떠돌이면 더 그랬습니다. "`,
+            `"오늘부터 글을 배운다."<br>"왜요?"<br>"떠돌이라도 글은 알아야 한다."<br>그 시절 시골에서는 어른도 글을 모르는 사람이 많았습니다. 떠돌이면 더 그랬습니다.`,
             `레미는 그 나뭇조각으로 글을 배웠습니다. 스물여섯 조각이었습니다. 그것을 헝겊 주머니에 넣어 다녔습니다. 길가에 늘어놓고 배웠습니다. 비가 오면 그것을 품에 넣었습니다. 나무라 젖으면 상하기 때문입니다. 그리고 나중에는 악보 보는 법도 배웠습니다. 길을 걸으면서 외웠습니다. 악보를 아는 것과 모르는 것은 아주 다릅니다. 아는 사람은 들은 적 없는 곡도 켤 수 있습니다. 밤에는 불빛에 비춰 보았습니다. 악보는 종이에 그려 주었습니다. 종이를 어디서 구했는지는 말해 주지 않았습니다. 악보를 아는 떠돌이 광대는 없었습니다. 다들 귀로 익혀서 켰습니다.`,
             `비탈리스는 음악을 아주 잘 알았습니다. 곡을 여러 개 알고 있었습니다. 그리고 그것을 다 외워서 켰습니다. 하프를 켜면 사람들이 걸음을 멈췄습니다. 장터에서 그런 소리를 들을 일이 없었습니다. 사람들이 그것을 알아보았습니다. 떠돌이 광대의 솜씨가 아니었습니다. 손가락 놀리는 법이 배운 사람의 것이었습니다. 레미는 그것을 나중에야 알아보았습니다.`,
             `레미는 그것이 이상했습니다. 떠돌이 광대가 왜 그렇게 음악을 잘 알까요. 떠돌이 광대는 대개 한두 곡만 켰습니다. 그것으로 하루를 났습니다. 그런데 묻지 않았습니다. 묻지 않는 것이 그 두 사람 사이의 법이었습니다. 누가 정한 것도 아니었습니다. 비탈리스가 자기 이야기를 한 적이 한 번도 없었기 때문입니다.`,
@@ -130,7 +130,7 @@ const CHAPTERS = [
             `아서는 아홉 해 동안 그 널빤지에 묶여 지냈습니다. 그래서 밖에 나가 본 적이 거의 없었습니다. 레미를 처음 보았을 때 아주 부러워한 것도 걸어 다닐 수 있다는 것 때문이었습니다. 아서는 아는 것이 많았고, 레미는 본 것이 많았습니다.`,
             `레미가 본 것을 이야기하면 아서는 눈을 반짝이며 들었습니다. 산, 눈, 늑대, 장터, 물레방아. 아서는 그 이야기를 몇 번씩 다시 해 달라고 했습니다. 아서는 책에서 읽은 것이 많았습니다. 그런데 본 것이 하나도 없었습니다. 레미는 그때 처음으로 자기가 가진 것이 있다는 것을 알았습니다. 그때까지 자기에게 있는 것이 하나도 없다고 여겼습니다. 그런데 본 것이 있었습니다. 밀리건 부인은 레미에게 영어를 가르쳤습니다.`,
             `그리고 어느 날 이런 이야기를 했습니다. 부인에게는 아들이 둘 있었는데, 큰아들이 갓난아기 때 없어졌다는 것이었습니다.`,
-            `"어떻게요?"<br>"모르겠어요. 남편이 세상을 떠난 직후였고, 저는 아주 아팠어요. 깨어 보니 아이가 없었습니다."<br>"찾아보셨어요?"<br>"여덟 해를 찾았습니다. 신문에 광고를 냈고 사람을 사서 찾게 했습니다. 그런데 아무 소식이 없었습니다. "`,
+            `"어떻게요?"<br>"모르겠어요. 남편이 세상을 떠난 직후였고, 저는 아주 아팠어요. 깨어 보니 아이가 없었습니다."<br>"찾아보셨어요?"<br>"여덟 해를 찾았습니다. 신문에 광고를 냈고 사람을 사서 찾게 했습니다."<br>그런데 아무 소식이 없었습니다.`,
             `레미는 그 이야기를 들으며 이런 생각을 했습니다. 세상에는 아이를 잃은 사람도 있고, 부모를 모르는 아이도 있구나. 그때 레미는 그 두 가지가 같은 이야기일 수도 있다는 생각은 하지 못했습니다. 그 배 위에서 두 사람이 마주 앉아 있었습니다. 그런데 둘 다 몰랐습니다. 두 달이 끝나고 비탈리스가 감옥에서 나왔습니다.`,
             `밀리건 부인이 이렇게 말했습니다.<br>"이 아이를 저에게 맡기시겠습니까. 제가 학교에 보내겠습니다."`,
             `학교라는 말을 레미는 그때 처음 들어 보았습니다. 학교가 어떤 데인지도 몰랐습니다. 그 시절 프랑스에서 학교는 값을 내고 다니는 데였습니다. 누구나 다니게 된 것은 몇 해 뒤입니다. 레미는 숨을 죽이고 그 대답을 기다렸습니다. 비탈리스는 한참 아무 말도 하지 않았습니다.`,
@@ -303,7 +303,7 @@ const CHAPTERS = [
             `그때 레미는 자기가 언제 다시 올 수 있을지 몰랐습니다. 그래도 온다고 손짓으로 말했습니다. 두 손을 모았다가 폈습니다. 리즈가 알아듣고 고개를 끄덕였습니다. 두 아이는 그 뒤로 여러 곳을 다녔습니다.`,
             `겨울이 오고 있었습니다. 그리고 레미는 겨울이 무서웠습니다. 겨울에 무슨 일이 나는지 알고 있었기 때문입니다. 레미는 그 겨울에 마티아를 잃고 싶지 않았습니다. 지난겨울에 셋을 잃었습니다. 그것을 잊지 않고 있었습니다.`,
             `그러다 어느 날 마티아가 이런 말을 꺼냈습니다.`,
-            `"레미, 우리 네 어머니를 찾아보자."<br>"내 어머니가 어디 있는지 알 수가 없잖아."<br>"바르베랭 아주머니한테 가서 물어보자. 그 아주머니는 네 배내옷을 봤을 거 아니야. 마티아가 그 생각을 먼저 했습니다. 레미는 그때까지 어머니를 찾을 생각을 못 했습니다. "`,
+            `"레미, 우리 네 어머니를 찾아보자."<br>"내 어머니가 어디 있는지 알 수가 없잖아."<br>"바르베랭 아주머니한테 가서 물어보자. 그 아주머니는 네 배내옷을 봤을 거 아니야."<br>마티아가 그 생각을 먼저 했습니다. 레미는 그때까지 어머니를 찾을 생각을 못 했습니다.`,
             `그래서 두 아이는 샤바농으로 갔습니다. 몇 해 만이었습니다. 마을 어귀의 그 밤나무가 그대로 있었습니다. 집도 그대로 있었습니다. 떠난 지 다섯 해가 넘었습니다. 그런데 마을이 하나도 달라지지 않았습니다.`,
             `그 사이에 바르베랭은 세상을 떠났다고 했습니다. 아주머니는 혼자 그 집에 살고 있었습니다. 아주머니는 레미를 보자마자 알아보았습니다. 그리고 손으로 입을 막았습니다. 팔려 가던 날 마당에 없던 사람이었습니다. 그 뒤로 한 번도 못 본 것이었습니다.`,
             `아주머니가 이렇게 말했습니다.<br>"레미야, 너를 찾는 사람이 왔었다."`
@@ -331,7 +331,7 @@ const CHAPTERS = [
             `둘째, 저 사람들은 레미가 온 날 울기는 했는데, 그 뒤로 레미에게 아무것도 묻지 않았다. 여덟 해 동안 어디서 어떻게 살았는지 한 번도 안 물었다. 셋째, 저 집에는 아기 때 물건이 하나도 없다. 아들을 잃은 집에는 그런 것이 남아 있습니다. 그것이 하나도 없었습니다. 아들을 잃은 집에 그런 것이 하나도 없을 리가 없다.`,
             `레미는 그 말을 듣고 화를 냈습니다.<br>"너는 부모가 없어 봤어?"`,
             `마티아는 잠깐 아무 말도 하지 않았습니다.`,
-            `마티아가 이렇게 말했습니다.<br>"나는 여섯 살에 팔렸어. 그 말을 아주 조용히 했습니다. 화를 내지도 않았습니다. "`,
+            `마티아가 이렇게 말했습니다.<br>"나는 여섯 살에 팔렸어. 그 말을 아주 조용히 했습니다."<br>화를 내지도 않았습니다.`,
             `레미는 그 자리에서 아무 말도 하지 못했습니다. 그리고 미안하다고 하지도 못했습니다. 여섯 살에 팔린 아이에게 부모가 없어 봤느냐고 물은 것이었습니다. 그리고 마티아는 그 말을 되받지 않았습니다. 되받으면 싸움이 됩니다. 마티아는 그런 것도 알고 있었습니다.`,
             `그날 밤 두 아이는 서로 등을 돌리고 잤습니다. 그런데 둘 다 잠을 못 잤습니다. 방이 좁아서 등이 서로 닿았습니다. 둘 다 자는 척했습니다. 그런데 서로 안 자는 것을 알고 있었습니다.`,
             `레미는 마티아 말이 맞다는 것을 이미 알고 있었습니다. 알면서도 인정하기가 싫었던 것입니다. 열네 해 만에 찾은 부모였습니다. 그것이 아니라고 하기가 어려웠습니다.`
@@ -745,57 +745,57 @@ function paginateChapter(ch, chIndex) {
 
 function artFrame(src, emoji) {
     return `
-        <div class="art-frame">
-            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="art-fallback" style="display:none">${emoji}</div>
-        </div>`;
+ <div class="art-frame">
+ <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+ <div class="art-fallback" style="display:none">${emoji}</div>
+ </div>`;
 }
 
 function coverPage() {
     return `
-        <div class="page page-cover">
-            <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '🐕')}
-            </div>
-            <div class="story-page-right">
-                <h1>집없는 소년</h1>
-                <p class="cover-tag">엑토르 말로 원작</p>
-                <p>여덟 살 레미가 사십 프랑에 떠돌이 광대에게 팔려 갑니다. 함께 다니게 된 것은 개 세 마리와 원숭이 한 마리였습니다.</p>
-                <p>가진 것이 아무것도 없는 아이가 길 위에서 사람을 하나씩 얻어 가는 이야기입니다.</p>
-            </div>
-        </div>`;
+ <div class="page page-cover">
+ <div class="story-page-left story-page-left-full">
+ ${artFrame('cover.webp', '🐕')}
+ </div>
+ <div class="story-page-right">
+ <h1>집없는 소년</h1>
+ <p class="cover-tag">엑토르 말로 원작</p>
+ <p>여덟 살 레미가 사십 프랑에 떠돌이 광대에게 팔려 갑니다. 함께 다니게 된 것은 개 세 마리와 원숭이 한 마리였습니다.</p>
+ <p>가진 것이 아무것도 없는 아이가 길 위에서 사람을 하나씩 얻어 가는 이야기입니다.</p>
+ </div>
+ </div>`;
 }
 
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
     const itemHtml = ch => `
-        <li>
-            <button type="button" data-goto="${ch.num}">
-                <span class="toc-num">${ch.num}</span>
-                <span><strong>${ch.title}</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto="${ch.num}">
+ <span class="toc-num">${ch.num}</span>
+ <span><strong>${ch.title}</strong></span>
+ </button>
+ </li>`;
     const extraItems = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">?</span>
-                <span><strong>이야기 문제</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto-kind="quiz">
+ <span class="toc-num">?</span>
+ <span><strong>이야기 문제</strong></span>
+ </button>
+ </li>`;
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
     return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                ${part === 0 ? '<h2>차례</h2>' : ''}
-                <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
-            </div>
-        </div>`;
+ <div class="page page-toc">
+ <div class="story-page-left">
+ ${part === 0 ? '<h2>차례</h2>' : ''}
+ <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
+ </div>
+ <div class="story-page-right">
+ <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
+ </div>
+ </div>`;
 }
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
@@ -812,28 +812,28 @@ function chapterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                </div>
-            </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-            </div>
-        </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
 }
 
 const QUIZ = [
@@ -874,19 +874,19 @@ function quizPage(part) {
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
         return `
-        <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
-            <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
-            </div>
-        </div>`;
+ <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+ <p class="quiz-question">${i + 1}. ${item.q}</p>
+ <div class="quiz-choices">
+ ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ </div>
+ </div>`;
     }).join('');
     return `
-        <div class="page page-quiz">
-            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
-            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
-            <div class="quiz-list">${items}</div>
-        </div>`;
+ <div class="page page-quiz">
+ ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
+ <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+ <div class="quiz-list">${items}</div>
+ </div>`;
 }
 
 /* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
@@ -956,30 +956,30 @@ function afterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story page-after">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                    ${foot}
-                </div>
-            </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story page-after">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-                ${foot}
-            </div>
-        </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
 }
 
 const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);

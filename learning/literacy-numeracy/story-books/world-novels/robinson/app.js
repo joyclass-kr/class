@@ -12,7 +12,7 @@ const CHAPTERS = [
             `저는 천육백삼십이 년 영국 요크에서 태어났습니다. 요크는 잉글랜드 북쪽의 오래된 도시입니다. 바다까지는 하루 길이었습니다. 아버지는 독일에서 건너온 사람이었습니다. 장사를 해서 돈을 모았고, 그럭저럭 살 만했습니다. 집에 하인도 하나 있었습니다. 굶는 일이 없는 집이었습니다. 그런 집이 그 시절 영국에 많지 않았습니다. 본디 성은 크로이츠나에르였다고 합니다. 영국 사람들이 부르기 어려워하다가 크루소가 된 것입니다.`,
             `형이 둘 있었는데, 큰형은 군인이 되어 전쟁터에서 세상을 떠났고, 작은형은 어디로 갔는지 소식이 끊겼습니다. 그래서 아버지는 저 하나만 남았다고 여기고 있었습니다. 아버지는 제가 법을 공부하기를 바랐습니다. 그런데 저는 바다에 나가고 싶었습니다. 법을 하면 자리를 잡고 살 수 있었습니다. 아버지가 아들 하나에게 걸어 둔 것이 그것이었습니다. 형 둘을 잃고 남은 아들이었습니다. 그러니 더 그랬습니다.`,
             `왜 그랬는지는 저도 모릅니다. 그저 배를 보면 마음이 뛰었습니다. 헐 항구에 나가 배가 들어오는 것을 보고 있으면 하루가 다 갔습니다. 멀리서 온 배에는 낯선 물건이 실려 있었습니다. 저는 그것을 내리는 것을 구경했습니다. 어머니가 부르러 나오는 날도 있었습니다. 어머니는 그때마다 아무 말도 하지 않았습니다. 다만 손을 잡고 데려왔습니다. 어머니는 아버지에게 그 이야기를 하지 않았습니다. 그것이 어머니가 하는 편들기였습니다. 돛이 올라가고 밧줄이 풀리고 배가 물살을 가르는 것을 보면, 저 안에 타고 있고 싶었습니다. 어디로 가는 배인지도 몰랐습니다. 가는 데가 중한 것이 아니었습니다.`,
-            `제가 그 말을 꺼내자 아버지가 저를 앉혀 놓고 말했습니다.<br>"세상에는 아주 높은 자리와 아주 낮은 자리가 있는데, 둘 다 고생이 많다. 그 사이 자리가 제일 편하다. 우리 집이 그 자리다. 높은 자리에 있는 사람은 시기를 받고, 낮은 자리에 있는 사람은 굶는다고 했습니다. 그 사이는 둘 다 없다는 것이었습니다. "<br>"그런데 너는 그 자리를 굳이 버리려고 하는구나."<br>"이 집을 나가면 너는 후회할 것이다. 그리고 그때는 도와줄 사람이 없을 것이다. 그 말을 하면서 아버지는 제 눈을 보고 있었습니다. 저는 그 눈을 피했습니다. 그 말이 다 옳다는 것을 저도 알고 있었습니다. 아는 것과 따르는 것이 달랐을 뿐입니다. "`,
+            `제가 그 말을 꺼내자 아버지가 저를 앉혀 놓고 말했습니다.<br>"세상에는 아주 높은 자리와 아주 낮은 자리가 있는데, 둘 다 고생이 많다. 그 사이 자리가 제일 편하다. 우리 집이 그 자리다. 높은 자리에 있는 사람은 시기를 받고, 낮은 자리에 있는 사람은 굶는다고 했습니다."<br>그 사이는 둘 다 없다는 것이었습니다.<br>"그런데 너는 그 자리를 굳이 버리려고 하는구나."<br>"이 집을 나가면 너는 후회할 것이다. 그리고 그때는 도와줄 사람이 없을 것이다. 그 말을 하면서 아버지는 제 눈을 보고 있었습니다. 저는 그 눈을 피했습니다. 그 말이 다 옳다는 것을 저도 알고 있었습니다."<br>아는 것과 따르는 것이 달랐을 뿐입니다.`,
             `아버지는 그렇게 말하고 우셨습니다. 아버지가 우시는 것을 본 것은 그때가 처음이었습니다. 큰형을 전쟁터에서 잃었을 때도 울지 않던 분이었습니다. 그러니 그날이 어떤 날이었는지 알 만합니다. 저는 그날 마음을 고쳐먹었습니다. 법을 배우겠다고 말씀드렸습니다. 아버지가 제 어깨를 두드렸습니다. 그런데 몇 주가 지나자 다시 바다 생각이 났습니다. 마음을 고쳐먹는 것은 하루면 됩니다. 그것을 지키는 것이 어려운 일입니다.`,
             `천육백오십일 년 구월 일 일, 저는 헐 항구에서 친구의 아버지가 모는 배를 얻어 탔습니다. 친구가 그 배를 타고 런던에 간다고 했습니다. 그 말을 듣고 그 자리에서 따라나섰습니다. 아무에게도 알리지 않았습니다. 편지 한 장도 남기지 않았습니다. 지금 생각하면 그것이 제일 모진 일이었습니다. 배가 항구를 벗어난 지 하루 만에 폭풍이 왔습니다. 떠날 때는 바람이 잔잔했습니다. 저는 갑판에 서서 뭍이 멀어지는 것을 보았습니다.`,
             `저는 뱃멀미로 죽는 줄 알았습니다. 뱃전을 붙잡고 토하다가 갑판에 엎어졌습니다. 선원들이 저를 넘어 다니며 일했습니다. 아무도 저를 거들떠보지 않았습니다. 물이 얼굴 위로 넘어오는데도 일어날 힘이 없었습니다. 뱃멀미는 겪어 보지 않으면 모릅니다. 죽는 것이 낫겠다는 생각이 정말로 듭니다.`,
@@ -20,8 +20,8 @@ const CHAPTERS = [
             `배는 다시 항해에 나섰습니다. 저는 며칠 만에 멀미가 가셨습니다. 그러자 바다가 다시 좋아 보였습니다. 그런데 야머스 앞바다에서 더 큰 폭풍을 만났습니다.`,
             `이번에는 배가 물을 먹기 시작했습니다. 선원들이 밤새 물을 퍼냈지만 소용이 없었습니다. 물이 퍼내는 것보다 빨리 들어왔습니다. 밤새 퍼냈는데 물이 무릎까지 찼습니다. 사람들이 하나씩 손을 놓았습니다. 선원들이 무릎을 꿇고 빌기 시작했습니다. 저도 그 사이에 있었습니다. 선장이 대포를 쏘아 신호를 보냈습니다. 세 발을 잇달아 쏘았습니다. 그것이 살려 달라는 신호였습니다. 그 시절 바다에서는 대포로 말을 주고받았습니다. 세 발이면 배가 가라앉는다는 뜻이었습니다.`,
             `결국 다른 배가 보트를 내려 우리를 건져 주었습니다. 그쪽도 목숨을 걸고 온 것이었습니다. 파도가 높아서 보트가 몇 번이나 뒤집힐 뻔했습니다. 우리가 배에서 내리고 십오 분 뒤에 그 배는 가라앉았습니다. 돛대만 한참 물 위에 남아 있었습니다. 그러다 그것도 기울어 사라졌습니다. 아무 소리도 나지 않았습니다. 저는 뭍에 서서 그것을 보았습니다. 제가 처음 탄 배였습니다. 그 배가 눈앞에서 사라졌습니다.`,
-            `그 배의 주인, 그러니까 제 친구의 아버지가 저에게 말했습니다.<br>"젊은이, 자네는 다시는 바다에 나오지 말게. 이건 자네 길이 아니야."<br>"어째서요?"<br>"자네가 탄 첫 배가 이렇게 됐으니까. 이건 표시일세. 그 사람은 제 배를 잃은 참이었습니다. 그러고도 저를 걱정해 준 것이었습니다. "`,
-            `그러고는 이렇게 덧붙였습니다.<br>"집으로 돌아가게. 아버님께 가게. 그 사람은 제 이름도 몰랐습니다. 그런데 그렇게 말해 주었습니다. "`,
+            `그 배의 주인, 그러니까 제 친구의 아버지가 저에게 말했습니다.<br>"젊은이, 자네는 다시는 바다에 나오지 말게. 이건 자네 길이 아니야."<br>"어째서요?"<br>"자네가 탄 첫 배가 이렇게 됐으니까. 이건 표시일세."<br>그 사람은 제 배를 잃은 참이었습니다. 그러고도 저를 걱정해 준 것이었습니다.`,
+            `그러고는 이렇게 덧붙였습니다.<br>"집으로 돌아가게. 아버님께 가게. 그 사람은 제 이름도 몰랐습니다."<br>그런데 그렇게 말해 주었습니다.`,
             `저는 그 말을 들었습니다. 그러나 집으로 가지 않았습니다. 런던까지 걸어갔습니다. 가는 동안 마음이 여러 번 바뀌었습니다. 돌아가면 마을 사람들이 비웃을 것 같았기 때문입니다. 바다에 나가겠다고 큰소리를 치고 나온 참이었습니다. 돌아가면 아버지가 옳았다고 인정하는 셈이 됩니다. 열아홉 살에게는 그것이 제일 어려운 일이었습니다.`,
             `저는 부끄러움 때문에 제 인생을 걸었습니다. 지금 생각하면 그것이 제 첫 번째 잘못이었습니다. 바다에 나간 것이 잘못이 아니었습니다. 부끄러워서 돌아가지 못한 것이 잘못이었습니다.`
         ]
@@ -84,7 +84,7 @@ const CHAPTERS = [
             `그 상자를 발견했을 때 저는 소리를 질렀습니다. 그 섬에서 저를 살린 것이 그 상자였습니다. 먹을 것은 언젠가 떨어집니다. 연장은 그것을 다시 얻게 해 줍니다. 도끼가 있으면 나무를 벨 수 있고, 나무가 있으면 집을 지을 수 있습니다. 연장 하나가 그렇게 이어집니다.`,
             `총 다섯 자루와 화약통, 납덩이. 돛과 밧줄, 천 조각들. 돛 천은 나중에 천막이 되었습니다. 돛 천은 아주 두껍고 질깁니다. 비를 막는 데 그만한 것이 없습니다. 잉크와 종이, 나침반, 지도, 안경. 그리고 성경책 세 권. 그 책을 저는 여러 해 동안 되풀이해 읽었습니다. 읽을 것이 그것뿐이기도 했습니다. 나중에는 어느 쪽에 무슨 말이 있는지까지 외웠습니다. 스물여덟 해면 그렇게 됩니다.`,
             `그리고 배에 실려 있던 개 한 마리와 고양이 두 마리를 데려왔습니다. 그 개는 그 뒤로 여러 해 동안 제 곁에 있었습니다. 밤에 발치에서 잤습니다. 말은 못 해도 곁에 있는 것이 달랐습니다. 고양이 둘은 새끼를 쳐서 섬에 퍼졌습니다. 나중에는 그 수가 너무 늘어 곡식을 축냈습니다. 좋은 일이 늘 좋은 일로 남지는 않습니다.`,
-            `배 안에서 돈이 든 서랍도 찾았습니다. 금화와 은화가 꽤 있었습니다. 작은 자루로 하나쯤 되었습니다. 영국에서라면 큰돈이었습니다. 저는 그것을 한참 들여다보았습니다. 그러고는 웃으며 이렇게 말했습니다.<br>"이 섬에서 너는 아무 쓸모도 없구나. 칼 한 자루만도 못하다. 영국에서 그 돈이면 여러 해를 살 수 있었습니다. 그런데 그 섬에서는 종이보다 못했습니다. "`,
+            `배 안에서 돈이 든 서랍도 찾았습니다. 금화와 은화가 꽤 있었습니다. 작은 자루로 하나쯤 되었습니다. 영국에서라면 큰돈이었습니다. 저는 그것을 한참 들여다보았습니다. 그러고는 웃으며 이렇게 말했습니다.<br>"이 섬에서 너는 아무 쓸모도 없구나. 칼 한 자루만도 못하다."<br>영국에서 그 돈이면 여러 해를 살 수 있었습니다. 그런데 그 섬에서는 종이보다 못했습니다.`,
             `그러면서도 결국 그것을 챙겨 왔습니다. 천에 싸서 상자 밑에 넣어 두었습니다. 쓸모없다는 것을 알면서 챙긴 것입니다. 사람이 그렇습니다. 쓸모로만 정하지 못하는 것이 있습니다. 저는 그것을 스물여덟 해 동안 지니고 있었습니다.`,
             `열이틀째 되는 밤, 다시 폭풍이 왔습니다. 이튿날 아침에 나가 보니 배가 사라져 있었습니다. 모래톱이 비어 있었습니다. 나무 조각만 물가에 밀려와 있었습니다. 그때부터 저는 정말로 혼자였습니다. 그 배가 있는 동안은 아직 뭍과 이어져 있는 것 같았습니다. 그것이 사라지자 줄이 끊긴 셈이었습니다.`,
             `물건을 다 옮기고 나서 저는 그것들을 천막 아래 쌓았습니다. 그리고 하나하나 세었습니다. 세는 데만 한나절이 걸렸습니다. 같은 것끼리 모아 놓고 세었습니다. 그러고는 종이에 옮겨 적었습니다. 몇 개 남았는지 알아야 아껴 쓸 수 있었습니다. 못 하나도 함부로 쓰지 않았습니다. 그리고 이것이 앞으로 제가 가진 전부라는 것을 알았습니다.`,
@@ -279,7 +279,7 @@ const CHAPTERS = [
             `프라이데이는 잠깐 생각하다가 물었습니다.<br>"그러면 당신 나라 사람들은 싸움에서 이기면 어떻게 합니까?"`,
             `저는 대답하려다가 말문이 막혔습니다. 한참 동안 아무 말도 하지 못했습니다. 그 물음이 제 쪽으로 되돌아온 것이었습니다. 저는 그것을 예상하지 못했습니다. 대답할 말이 없었기 때문이 아닙니다. 대답이 너무 잘 떠올랐기 때문입니다. 제 나라 사람들이 하는 일이 떠올랐습니다. 그것을 소리 내어 말할 수가 없었습니다.`,
             `저는 제 나라 사람들이 사람을 배에 실어다 팔던 것을 알고 있었습니다. 저 자신도 아이 하나를 팔았습니다. 제가 노예로 이 년을 살고 나온 뒤의 일이었습니다. 그것을 이 사람에게 말할 수 없었습니다. 슈리라는 이름의 아이였습니다. 그 아이 이름은 알고 있었습니다. 그런데 프라이데이의 이름은 묻지 않았습니다.`,
-            `프라이데이가 다시 물었습니다.<br>"그건 나쁜 일이 아닙니까?"<br>"나쁜 일이다. 그 말을 제 입으로 하고 나서 마음이 무거웠습니다. 그 나쁜 일을 한 사람이 저였기 때문입니다. "`,
+            `프라이데이가 다시 물었습니다.<br>"그건 나쁜 일이 아닙니까?"<br>"나쁜 일이다. 그 말을 제 입으로 하고 나서 마음이 무거웠습니다."<br>그 나쁜 일을 한 사람이 저였기 때문입니다.`,
             `그날 저는 오래 잠들지 못했습니다. 그 뒤로 저는 프라이데이를 대하는 것이 조금씩 달라졌습니다. 일을 시키지 않고 같이 했습니다. 밭에 나갈 때 함께 나갔습니다. 돌아올 때도 함께 돌아왔습니다. 앉는 자리도 달라졌습니다. 그전에는 제가 앉고 그 사람이 서 있었습니다. 그것을 누가 정한 것도 아니었습니다. 저절로 그렇게 되어 있었습니다.`,
             `그리고 그 사람에게 총 쏘는 법을 가르쳤습니다. 사람들은 그것이 위험한 짓이라고 했을 것입니다. 실제로 그런 말을 하는 사람이 있을 것입니다. 저도 그 생각을 안 해 본 것은 아닙니다. 살려 준 사람에게 총을 쥐여 주는 것이니까요.`,
             `총을 쥐여 주던 날, 그 사람은 그것을 한참 들여다보다가 저를 보았습니다. 저는 고개를 끄덕였습니다. 쥐어도 된다는 뜻이었습니다. 그 사람은 그것을 알아들었습니다. 한 사람을 곁에 두면서 그 사람이 나를 해칠까 봐 무기를 감춘다면, 그것은 함께 사는 것이 아닙니다. 그것은 지키는 것이지 함께 사는 것이 아닙니다. 저는 그 둘을 오래 헷갈렸습니다. 지키는 것은 상대를 못 믿는 것입니다. 못 믿으면서 함께 살 수는 없습니다.`,
@@ -287,7 +287,7 @@ const CHAPTERS = [
             `일하면서 우리는 계속 이야기를 했습니다. 밭에서 일하다가 허리를 펴고 서서 이야기하고, 또 일하고, 또 이야기했습니다. 저는 영국 이야기를 했고, 프라이데이는 자기 마을 이야기를 했습니다. 저는 런던의 거리와 배가 드나드는 항구를 말했습니다. 그 사람은 그것을 그려 보려고 했습니다. 그 마을에는 큰 나무가 하나 있는데 그 아래에서 사람들이 모여 일을 정한다고 했습니다. 저는 그 이야기를 들으며 그 마을을 그려 보았습니다. 그전까지는 그런 데가 있다는 생각도 못 했습니다.`,
             `제가 물었습니다.<br>"거기 다시 가고 싶으냐?"<br>"가고 싶습니다."`,
             `저는 그 대답을 듣고 잠깐 말을 잃었습니다. 저는 그때까지 그 사람이 저와 이 섬에서 계속 살 것이라고 여기고 있었습니다. 왜 그렇게 여겼는지는 저도 모르겠습니다. 물어본 적이 없었기 때문입니다. 물었으면 진작 알았을 것입니다. 그 사람에게 돌아갈 데가 있다는 것을 저는 그때 처음 생각했습니다. 제게 영국이 있듯이 그 사람에게도 있었습니다. 그것을 세 해 만에 생각한 것입니다.`,
-            `그날 저는 이렇게 말했습니다.<br>"배가 생기면 데려다주마. 그 말을 하면서 저는 마음이 이상했습니다. 보내고 나면 다시 혼자가 되기 때문입니다. "`,
+            `그날 저는 이렇게 말했습니다.<br>"배가 생기면 데려다주마. 그 말을 하면서 저는 마음이 이상했습니다."<br>보내고 나면 다시 혼자가 되기 때문입니다.`,
             `그러자 그 사람이 물었습니다.<br>"당신은요?"<br>"나도 가야지."<br>"그럼 같이 갑시다."`,
             `저는 그 말이 오래 마음에 남았습니다. 같이 가자는 말을 먼저 한 것은 그 사람이었습니다. 저는 데려다주겠다고 했습니다. 그 사람은 같이 가자고 했습니다.`
         ]
@@ -336,8 +336,8 @@ const CHAPTERS = [
             `저는 그 사람들 얼굴을 보고서야 제가 어떻게 보이는지를 알았습니다. 저는 이십칠 년 동안 제 얼굴을 본 적이 없었습니다. 거울이 없었기 때문입니다. 물에 비춰 볼 생각도 하지 않았습니다.`,
             `묶인 사람 하나가 겨우 입을 열었습니다.<br>"당신은 사람이오, 귀신이오?"<br>"사람입니다. 영국 사람입니다."`,
             `선장이 사정을 이야기했습니다. 배를 빼앗겼고, 자기와 두 사람만 이 섬에 남겨질 참이라고 했습니다.`,
-            `"이 섬에 사람이 사는지도 모릅니다."<br>선장이 말했습니다.<br>"삽니다."<br>제가 말했습니다.<br>"이십칠 년째 살고 있습니다. 선장이 그 말을 듣고 입을 다물지 못했습니다. 옆에 있던 두 사람도 그랬습니다. "`,
-            `저는 이렇게 말했습니다.<br>"제가 돕겠습니다. 그런데 조건이 둘 있습니다."<br>"말씀하십시오."<br>"첫째, 이 섬에 있는 동안은 제 말을 따르십시오. 저는 이 섬을 압니다."<br>"둘째, 배를 되찾으면 저와 제 일행을 영국까지 데려다주십시오. 값은 받지 않겠습니다. 제 일행이라고 말했습니다. 그 말을 제 입으로 한 것이 그때가 처음이었습니다. "`,
+            `"이 섬에 사람이 사는지도 모릅니다."<br>선장이 말했습니다.<br>"삽니다."<br>제가 말했습니다.<br>"이십칠 년째 살고 있습니다."<br>선장이 그 말을 듣고 입을 다물지 못했습니다. 옆에 있던 두 사람도 그랬습니다.`,
+            `저는 이렇게 말했습니다.<br>"제가 돕겠습니다. 그런데 조건이 둘 있습니다."<br>"말씀하십시오."<br>"첫째, 이 섬에 있는 동안은 제 말을 따르십시오. 저는 이 섬을 압니다."<br>"둘째, 배를 되찾으면 저와 제 일행을 영국까지 데려다주십시오. 값은 받지 않겠습니다. 제 일행이라고 말했습니다."<br>그 말을 제 입으로 한 것이 그때가 처음이었습니다.`,
             `선장이 저를 한참 보았습니다. 염소 가죽을 걸친 사람이 조건을 걸고 있었기 때문입니다. 선장이 그러겠다고 했습니다. 다른 수가 없기도 했습니다. 그런데 그 얼굴은 진심이었습니다.`,
             `그날 밤 우리는 잠든 반란 선원들을 덮쳤습니다. 프라이데이는 숲속 여기저기에서 소리를 질러 사람이 아주 많은 것처럼 꾸몄습니다.`,
             `총은 되도록 쏘지 않기로 했습니다. 몽둥이와 밧줄을 챙겼습니다. 소리가 나면 배에 있는 사람들이 알아채기 때문입니다. 배에는 아직 여럿이 남아 있었습니다. 그쪽이 알면 닻을 올리고 가 버릴 것이었습니다.`,
@@ -362,7 +362,7 @@ const CHAPTERS = [
         emoji: "🏴",
         art: ["story-15-a.webp", "story-15-b.webp"],
         paras: [
-            `배를 되찾은 날, 선장이 저에게 인사를 하러 왔습니다.<br>"이제 배가 당신 것입니다. 언제든 떠나십시오. 제가 도운 값이라고 했습니다. 저는 그 말을 듣고 자리에 앉았습니다. "`,
+            `배를 되찾은 날, 선장이 저에게 인사를 하러 왔습니다.<br>"이제 배가 당신 것입니다. 언제든 떠나십시오."<br>제가 도운 값이라고 했습니다. 저는 그 말을 듣고 자리에 앉았습니다.`,
             `저는 그 말을 듣고도 한참 아무 말도 하지 못했습니다. 이십칠 년 동안 기다린 말이었습니다. 그런데 막상 들으니 실감이 나지 않았습니다.`,
             `저는 그 섬을 떠나기 전에 이틀을 더 머물렀습니다. 떠난다고 생각하니 섬이 다르게 보였습니다. 기둥에 새긴 금을 세어 보았습니다. 금이 만 개에 가까웠습니다. 이십칠 년 이 개월 십구 일이었습니다. 하루도 빠뜨리지 않고 그은 금이었습니다. 그것이 제 이십칠 년이었습니다.`,
             `저는 그동안 만든 것들을 하나하나 보았습니다. 절구, 그릇, 양산, 울타리, 염소 우리. 하나하나가 몇 달씩 걸린 것들이었습니다. 그리고 챙 긴 모자와 염소 가죽 옷을 챙겼습니다. 마지막 날 밤에는 담 위에 앉아 바다를 보았습니다. 열다섯 해 동안 배를 기다리며 보던 바다였습니다. 그날은 그것이 다르게 보였습니다.`,
@@ -666,57 +666,57 @@ function paginateChapter(ch, chIndex) {
 
 function artFrame(src, emoji) {
     return `
-        <div class="art-frame">
-            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="art-fallback" style="display:none">${emoji}</div>
-        </div>`;
+ <div class="art-frame">
+ <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+ <div class="art-fallback" style="display:none">${emoji}</div>
+ </div>`;
 }
 
 function coverPage() {
     return `
-        <div class="page page-cover">
-            <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '🏝️')}
-            </div>
-            <div class="story-page-right">
-                <h1>로빈슨 크루소</h1>
-                <p class="cover-tag">대니얼 디포 원작</p>
-                <p>배가 부서져 홀로 무인도에 던져진 사람이 스물여덟 해를 살아 냅니다. 집을 짓고, 밭을 일구고, 빵을 굽기까지 네 해가 걸립니다.</p>
-                <p>혼자 살아남는 이야기이면서, 뒤늦게 만난 사람을 어떻게 대해야 하는지를 스스로 깨쳐 가는 이야기이기도 합니다.</p>
-            </div>
-        </div>`;
+ <div class="page page-cover">
+ <div class="story-page-left story-page-left-full">
+ ${artFrame('cover.webp', '🏝️')}
+ </div>
+ <div class="story-page-right">
+ <h1>로빈슨 크루소</h1>
+ <p class="cover-tag">대니얼 디포 원작</p>
+ <p>배가 부서져 홀로 무인도에 던져진 사람이 스물여덟 해를 살아 냅니다. 집을 짓고, 밭을 일구고, 빵을 굽기까지 네 해가 걸립니다.</p>
+ <p>혼자 살아남는 이야기이면서, 뒤늦게 만난 사람을 어떻게 대해야 하는지를 스스로 깨쳐 가는 이야기이기도 합니다.</p>
+ </div>
+ </div>`;
 }
 
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
     const itemHtml = ch => `
-        <li>
-            <button type="button" data-goto="${ch.num}">
-                <span class="toc-num">${ch.num}</span>
-                <span><strong>${ch.title}</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto="${ch.num}">
+ <span class="toc-num">${ch.num}</span>
+ <span><strong>${ch.title}</strong></span>
+ </button>
+ </li>`;
     const extraItems = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">?</span>
-                <span><strong>이야기 문제</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto-kind="quiz">
+ <span class="toc-num">?</span>
+ <span><strong>이야기 문제</strong></span>
+ </button>
+ </li>`;
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
     return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                ${part === 0 ? '<h2>차례</h2>' : ''}
-                <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
-            </div>
-        </div>`;
+ <div class="page page-toc">
+ <div class="story-page-left">
+ ${part === 0 ? '<h2>차례</h2>' : ''}
+ <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
+ </div>
+ <div class="story-page-right">
+ <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
+ </div>
+ </div>`;
 }
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
@@ -733,28 +733,28 @@ function chapterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                </div>
-            </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-            </div>
-        </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
 }
 
 const QUIZ = [
@@ -795,19 +795,19 @@ function quizPage(part) {
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
         return `
-        <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
-            <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
-            </div>
-        </div>`;
+ <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+ <p class="quiz-question">${i + 1}. ${item.q}</p>
+ <div class="quiz-choices">
+ ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ </div>
+ </div>`;
     }).join('');
     return `
-        <div class="page page-quiz">
-            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
-            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
-            <div class="quiz-list">${items}</div>
-        </div>`;
+ <div class="page page-quiz">
+ ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
+ <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+ <div class="quiz-list">${items}</div>
+ </div>`;
 }
 
 /* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
@@ -877,30 +877,30 @@ function afterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story page-after">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                    ${foot}
-                </div>
-            </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story page-after">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-                ${foot}
-            </div>
-        </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
 }
 
 const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);

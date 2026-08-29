@@ -60,7 +60,7 @@ const CHAPTERS = [
             `바사니오는 그 돈으로 벨몬트에 가서 포샤와 혼인했습니다. 그런데 그때 소식이 왔습니다.`,
             `안토니오의 배가 다 가라앉았다는 것이었습니다. 한 척도 돌아오지 않았습니다. 그리고 샤일록이 재판을 걸었습니다. 문서대로 하겠다는 것이었습니다. 재판이 열렸습니다.`,
             `공작이 샤일록에게 사정했습니다.<br>"돈을 세 배로 받고 물러서시오."`,
-            `샤일록은 거절했습니다. 그리고 이렇게 말했습니다.<br>"유대인에게는 눈이 없습니까? 손이 없습니까? 찔리면 피가 안 납니까? 웃기면 안 웃습니까? 독을 먹이면 안 죽습니까?"<br>"당신들이 우리에게 하는 대로 우리가 배운 것입니다. 이 말은 자기가 옳다는 말이 아닙니다. 당신들도 나와 같은 것을 했다는 말입니다. "`,
+            `샤일록은 거절했습니다. 그리고 이렇게 말했습니다.<br>"유대인에게는 눈이 없습니까? 손이 없습니까? 찔리면 피가 안 납니까? 웃기면 안 웃습니까? 독을 먹이면 안 죽습니까?"<br>"당신들이 우리에게 하는 대로 우리가 배운 것입니다."<br>이 말은 자기가 옳다는 말이 아닙니다. 당신들도 나와 같은 것을 했다는 말입니다.`,
             `이것이 이 작품에서 가장 유명한 대사입니다.`,
             `그때 젊은 법률가가 하나 들어왔습니다. 사실은 포샤가 남자 옷을 입고 온 것이었습니다. 법을 아는 친척에게 미리 배워 온 것이었습니다. 그 시절 여자는 법정에 설 수 없었습니다. 그래서 남자 옷을 입어야 했습니다.`,
             `포샤가 말했습니다.<br>"이 문서는 유효합니다. 살 한 근을 가져가십시오."`,
@@ -129,16 +129,16 @@ const CHAPTERS = [
         art: ["story-06-a.webp", "story-06-b.webp"],
         paras: [
             `옛 브리튼에 리어라는 늙은 왕이 있었습니다. 딸이 셋이었습니다. 고너릴, 리건, 코딜리아였습니다.`,
-            `리어는 나이가 들자 나라를 셋으로 나누어 주기로 했습니다. 그런데 나누기 전에 이런 것을 시켰습니다.<br>"너희가 나를 얼마나 사랑하는지 말해 보아라. 제일 잘 말하는 아이에게 제일 좋은 땅을 주겠다. 땅은 이미 셋으로 나누어 놓은 뒤였습니다. 그러니 그 자리는 시험이 아니라 듣고 싶은 말을 듣는 자리였습니다. "`,
-            `첫째 고너릴이 말했습니다.<br>"저는 아버지를 눈보다, 목숨보다, 자유보다 사랑합니다."<br>둘째 리건이 말했습니다.<br>"언니가 말한 것으로는 모자랍니다. 저는 아버지 말고는 아무것도 기쁘지 않습니다. 두 딸 다 미리 준비해 온 말이었습니다. 그것을 리어는 알아채지 못했습니다. "`,
-            `리어는 흡족했습니다. 그리고 막내 코딜리아를 보았습니다. 코딜리아는 아버지가 제일 아끼는 딸이었습니다. 리어가 물었습니다.<br>"너는 무엇이라고 하겠느냐."<br>코딜리아가 말했습니다.<br>"드릴 말씀이 없습니다."<br>"뭐라고?"<br>"저는 자식으로서 마땅한 만큼 아버지를 사랑합니다. 그 이상도 그 이하도 아닙니다."<br>"저에게 남편이 생기면 그 사람에게도 마음의 절반을 줄 것입니다. 언니들처럼 아버지가 전부라고 말한다면, 그럼 언니들은 왜 혼인을 했겠습니까. 그 자리에서 그 말을 한 사람은 코딜리아뿐이었습니다. 그래서 그 말이 제일 아프게 들렸습니다. "`,
+            `리어는 나이가 들자 나라를 셋으로 나누어 주기로 했습니다. 그런데 나누기 전에 이런 것을 시켰습니다.<br>"너희가 나를 얼마나 사랑하는지 말해 보아라. 제일 잘 말하는 아이에게 제일 좋은 땅을 주겠다."<br>땅은 이미 셋으로 나누어 놓은 뒤였습니다. 그러니 그 자리는 시험이 아니라 듣고 싶은 말을 듣는 자리였습니다.`,
+            `첫째 고너릴이 말했습니다.<br>"저는 아버지를 눈보다, 목숨보다, 자유보다 사랑합니다."<br>둘째 리건이 말했습니다.<br>"언니가 말한 것으로는 모자랍니다. 저는 아버지 말고는 아무것도 기쁘지 않습니다."<br>두 딸 다 미리 준비해 온 말이었습니다. 그것을 리어는 알아채지 못했습니다.`,
+            `리어는 흡족했습니다. 그리고 막내 코딜리아를 보았습니다. 코딜리아는 아버지가 제일 아끼는 딸이었습니다. 리어가 물었습니다.<br>"너는 무엇이라고 하겠느냐."<br>코딜리아가 말했습니다.<br>"드릴 말씀이 없습니다."<br>"뭐라고?"<br>"저는 자식으로서 마땅한 만큼 아버지를 사랑합니다. 그 이상도 그 이하도 아닙니다."<br>"저에게 남편이 생기면 그 사람에게도 마음의 절반을 줄 것입니다. 언니들처럼 아버지가 전부라고 말한다면, 그럼 언니들은 왜 혼인을 했겠습니까."<br>그 자리에서 그 말을 한 사람은 코딜리아뿐이었습니다. 그래서 그 말이 제일 아프게 들렸습니다.`,
             `그 말은 사실 아주 정직한 말이었습니다. 그런데 리어는 그 말을 듣고 화가 났습니다. 그리고 코딜리아를 내쫓았습니다. 땅도 주지 않았습니다. 제일 아끼던 딸에게 그렇게 했습니다. 참말을 들은 자리에서 그렇게 된 것입니다.`,
-            `그 자리에 프랑스 왕이 와 있었습니다. 프랑스 왕이 말했습니다.<br>"저는 저 아가씨를 아내로 맞겠습니다. 땅이 없어도 좋습니다. 그 자리에 있던 다른 구혼자는 땅이 없다는 말을 듣고 물러섰습니다. 그 둘이 그 자리에서 갈렸습니다. "`,
+            `그 자리에 프랑스 왕이 와 있었습니다. 프랑스 왕이 말했습니다.<br>"저는 저 아가씨를 아내로 맞겠습니다. 땅이 없어도 좋습니다."<br>그 자리에 있던 다른 구혼자는 땅이 없다는 말을 듣고 물러섰습니다. 그 둘이 그 자리에서 갈렸습니다.`,
             `코딜리아는 프랑스로 갔습니다. 리어는 나라를 두 딸에게 나누어 주었습니다. 그리고 자기는 기사 백 명을 데리고 두 딸 집에 번갈아 지내기로 했습니다. 그런데 땅을 받고 나자 두 딸이 달라졌습니다.`,
             `첫째 집에서는 기사를 오십 명으로 줄이라고 했습니다. 그래서 둘째 집으로 갔습니다. 둘째는 스물다섯 명으로 줄이라고 했습니다. 그래서 다시 첫째에게 갔습니다.`,
             `이번에는 한 명도 안 된다고 했습니다. 백 명이 오십이 되고 스물다섯이 되고 하나도 안 된 것입니다. 그렇게 줄어드는 데 몇 달이 걸리지 않았습니다. 리어는 그날 밤 두 딸의 집에서 다 쫓겨났습니다. 그리고 폭풍이 치는 벌판으로 나갔습니다.`,
             `그 벌판에서 리어가 미쳐 갑니다. 그런데 이 작품에서 이상한 것이 있습니다. 리어는 미쳐 가면서 처음으로 옳은 말을 하기 시작합니다.`,
-            `벌판에서 리어가 이런 말을 합니다.<br>"헐벗은 자들아, 너희는 어디에 있느냐. 이런 밤을 어떻게 견디느냐."<br>"나는 이것을 너무 늦게 알았다. 왕이었을 때 나는 이런 것을 한 번도 생각한 적이 없다. 지붕 아래에서만 살면 비 맞는 사람이 보이지 않습니다. 리어는 그것을 벌판에서야 알았습니다. "`,
+            `벌판에서 리어가 이런 말을 합니다.<br>"헐벗은 자들아, 너희는 어디에 있느냐. 이런 밤을 어떻게 견디느냐."<br>"나는 이것을 너무 늦게 알았다. 왕이었을 때 나는 이런 것을 한 번도 생각한 적이 없다. 지붕 아래에서만 살면 비 맞는 사람이 보이지 않습니다."<br>리어는 그것을 벌판에서야 알았습니다.`,
             `마지막에 코딜리아가 프랑스에서 군대를 이끌고 아버지를 구하러 옵니다. 그리고 두 사람이 만납니다. 그런데 그 뒤가 좋게 끝나지 않습니다.`,
             `코딜리아는 그 싸움에서 목숨을 잃고, 리어도 딸을 안은 채 세상을 떠납니다.`,
             `셰익스피어가 이 작품을 쓸 때, 원래 전해 오던 이야기에서는 결말이 좋았습니다. 코딜리아가 아버지를 구하고 다 잘되는 것이었습니다.`,
@@ -151,12 +151,12 @@ const CHAPTERS = [
         emoji: "🗡️",
         art: ["story-07-a.webp", "story-07-b.webp"],
         paras: [
-            `스코틀랜드에 맥베스라는 장군이 있었습니다. 던컨 왕이 아끼는 사람이었습니다. 싸움에서 크게 이기고 돌아오는 길이었습니다. 나라를 구한 장수였습니다. 황야에서 세 여자를 만났습니다. 그들이 이렇게 말했습니다. 셋이 한마디씩 이어서 말했습니다.  말을 마치자 그 자리에서 사라졌습니다. 함께 있던 뱅쿠오도 그것을 다 보았습니다. <br>"글래미스의 영주 만세."<br>"코더의 영주 만세."<br>"장차 왕이 되실 분 만세."`,
+            `스코틀랜드에 맥베스라는 장군이 있었습니다. 던컨 왕이 아끼는 사람이었습니다. 싸움에서 크게 이기고 돌아오는 길이었습니다. 나라를 구한 장수였습니다. 황야에서 세 여자를 만났습니다. 그들이 이렇게 말했습니다. 셋이 한마디씩 이어서 말했습니다. 말을 마치자 그 자리에서 사라졌습니다. 함께 있던 뱅쿠오도 그것을 다 보았습니다. <br>"글래미스의 영주 만세."<br>"코더의 영주 만세."<br>"장차 왕이 되실 분 만세."`,
             `맥베스는 그때 글래미스의 영주였습니다. 그것은 누구나 아는 일이었습니다. 코더의 영주는 아니었습니다. 그 자리에는 다른 사람이 있었습니다. 그런데 성에 닿기도 전에 소식이 왔습니다. 말을 탄 사람이 달려와 알렸습니다. 싸움터에서 곧바로 온 전령이었습니다. 맥베스는 그 말을 듣고 한참 서 있었습니다.`,
             `왕이 맥베스를 코더의 영주로 삼았다는 것이었습니다. 그러니까 두 번째 말이 맞은 것입니다. 첫 번째 말도 맞은 셈이었습니다. 맥베스는 그때부터 세 번째 말을 생각하기 시작했습니다. 자다가도 그 생각이 났습니다. 둘이 맞았으니 셋째도 맞을 것 같았습니다. 그 생각이 그때부터 떠나지 않았습니다.`,
             `맥베스는 그 이야기를 아내에게 편지로 알렸습니다. 싸움터에서 바로 부친 편지였습니다. 기쁜 소식을 먼저 알리고 싶었던 것입니다. 그 편지가 어떻게 될지는 몰랐습니다. 맥베스 부인은 그 편지를 읽고 곧바로 마음을 정했습니다.`,
             `며칠 뒤 던컨 왕이 맥베스의 성에 묵으러 왔습니다. 싸움에서 이긴 것을 치하하러 온 것이었습니다. 제 발로 걸어 들어온 것이었습니다. 그만큼 맥베스를 믿었습니다. 그날 밤 맥베스는 여러 번 망설였습니다.<br>"그분은 나를 믿고 여기 오셨소. 나는 그분의 장수이고 친척이오. 손님을 지켜야 하는데 오히려 내가······."`,
-            `맥베스 부인이 말했습니다.<br>"그럼 그만두시오. 다만 앞으로 평생 자기가 겁쟁이인 줄 알고 사시오. 그 한마디가 맥베스를 움직였습니다. 무서운 것보다 겁쟁이 소리가 더 견디기 어려웠던 것입니다. "`,
+            `맥베스 부인이 말했습니다.<br>"그럼 그만두시오. 다만 앞으로 평생 자기가 겁쟁이인 줄 알고 사시오."<br>그 한마디가 맥베스를 움직였습니다. 무서운 것보다 겁쟁이 소리가 더 견디기 어려웠던 것입니다.`,
             `그날 밤 던컨 왕이 세상을 떠났습니다. 그리고 그 죄가 잠든 하인들에게 씌워졌습니다. 맥베스가 왕이 되었습니다. 던컨 왕의 두 아들은 그 밤에 나라를 떠났습니다. 그런데 그때부터가 이 작품의 본론입니다.`,
             `맥베스는 왕이 되고 나서 잠을 자지 못했습니다. 눈을 감으면 그날 밤이 떠올랐습니다. 그리고 자기가 한 일을 아는 사람이 있을까 봐 무서워졌습니다. 신하들의 눈길 하나에도 놀랐습니다. 아무도 모르는데 다들 아는 것 같았습니다. 그것이 잠을 못 자게 했습니다. 그래서 뱅쿠오라는 친구를 없앴습니다. 그 사람도 그 예언을 함께 들었기 때문입니다.`,
             `그리고 그 뒤로 계속 사람을 없앴습니다. 뱅쿠오의 아들까지 쫓았습니다. 한 번 시작하면 멈출 수가 없었습니다. 하나를 없애면 그것을 아는 사람이 또 생겼기 때문입니다. 없애는 일마다 아는 사람이 늘었습니다. 그래서 갈수록 빨라졌습니다.`,
@@ -513,57 +513,57 @@ function paginateChapter(ch, chIndex) {
 
 function artFrame(src, emoji) {
     return `
-        <div class="art-frame">
-            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="art-fallback" style="display:none">${emoji}</div>
-        </div>`;
+ <div class="art-frame">
+ <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+ <div class="art-fallback" style="display:none">${emoji}</div>
+ </div>`;
 }
 
 function coverPage() {
     return `
-        <div class="page page-cover">
-            <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '🎭')}
-            </div>
-            <div class="story-page-right">
-                <h1>셰익스피어 이야기</h1>
-                <p class="cover-tag">윌리엄 셰익스피어 원작</p>
-                <p>사백 년 전 런던, 지붕도 조명도 없는 둥근 극장에서 해가 있는 동안만 하던 연극입니다. 여자 역은 소년 배우가 했고, 관객은 마음에 안 들면 물건을 던졌습니다.</p>
-                <p>그 까다로운 관객 앞에서 쓴 서른일곱 편 가운데 일곱 편을 이야기로 옮겼습니다.</p>
-            </div>
-        </div>`;
+ <div class="page page-cover">
+ <div class="story-page-left story-page-left-full">
+ ${artFrame('cover.webp', '🎭')}
+ </div>
+ <div class="story-page-right">
+ <h1>셰익스피어 이야기</h1>
+ <p class="cover-tag">윌리엄 셰익스피어 원작</p>
+ <p>사백 년 전 런던, 지붕도 조명도 없는 둥근 극장에서 해가 있는 동안만 하던 연극입니다. 여자 역은 소년 배우가 했고, 관객은 마음에 안 들면 물건을 던졌습니다.</p>
+ <p>그 까다로운 관객 앞에서 쓴 서른일곱 편 가운데 일곱 편을 이야기로 옮겼습니다.</p>
+ </div>
+ </div>`;
 }
 
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
     const itemHtml = ch => `
-        <li>
-            <button type="button" data-goto="${ch.num}">
-                <span class="toc-num">${ch.num}</span>
-                <span><strong>${ch.title}</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto="${ch.num}">
+ <span class="toc-num">${ch.num}</span>
+ <span><strong>${ch.title}</strong></span>
+ </button>
+ </li>`;
     const extraItems = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">?</span>
-                <span><strong>이야기 문제</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto-kind="quiz">
+ <span class="toc-num">?</span>
+ <span><strong>이야기 문제</strong></span>
+ </button>
+ </li>`;
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
     return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                ${part === 0 ? '<h2>차례</h2>' : ''}
-                <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
-            </div>
-        </div>`;
+ <div class="page page-toc">
+ <div class="story-page-left">
+ ${part === 0 ? '<h2>차례</h2>' : ''}
+ <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
+ </div>
+ <div class="story-page-right">
+ <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
+ </div>
+ </div>`;
 }
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
@@ -580,28 +580,28 @@ function chapterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                </div>
-            </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-            </div>
-        </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
 }
 
 const QUIZ = [
@@ -642,19 +642,19 @@ function quizPage(part) {
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
         return `
-        <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
-            <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
-            </div>
-        </div>`;
+ <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+ <p class="quiz-question">${i + 1}. ${item.q}</p>
+ <div class="quiz-choices">
+ ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ </div>
+ </div>`;
     }).join('');
     return `
-        <div class="page page-quiz">
-            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
-            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
-            <div class="quiz-list">${items}</div>
-        </div>`;
+ <div class="page page-quiz">
+ ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
+ <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+ <div class="quiz-list">${items}</div>
+ </div>`;
 }
 
 /* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
@@ -724,30 +724,30 @@ function afterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story page-after">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                    ${foot}
-                </div>
-            </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story page-after">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-                ${foot}
-            </div>
-        </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
 }
 
 const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);

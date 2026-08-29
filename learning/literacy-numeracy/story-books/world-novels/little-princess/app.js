@@ -139,7 +139,7 @@ const CHAPTERS = [
             `응접실에는 검은 옷을 입은 신사가 서 있었습니다. 크루 대위의 변호사 배로라는 사람이었습니다. 모자를 손에 들고 서 있었습니다. 앉으라고 해도 앉지 않았습니다. 할 말을 어떻게 꺼낼지 고르는 얼굴이었습니다. 두 가지를 말해야 했습니다. 어느 쪽을 먼저 말해도 나쁜 말이었습니다.`,
             `"크루 대위가 두 달 전에 세상을 떠났습니다." 그가 말했습니다.`,
             `민친 선생은 의자를 붙잡았습니다. 교실 쪽에서 아이들이 웃는 소리가 들려왔습니다. 그 방에서는 아직 잔치가 이어지고 있었습니다. 문 하나 너머였습니다. 그 소리가 그대로 들렸습니다.`,
-            `"병으로요. 열병이었습니다. 다만······ 그 전에 재산을 모두 잃으셨습니다. 친구분이 찾아냈다는 광산에 전부 넣으셨는데, 그 친구분이 돈을 들고 사라졌습니다. 대위께서는 그 소식을 듣고 앓아누우셨지요."<br>"열병이 그 위에 겹쳤습니다."<br>"그럼 저 아이는요?"<br>"한 푼도 없습니다. 친척도 없고요. 저희로서도 해 드릴 것이 없습니다. 광산에 넣은 돈은 한 푼도 남지 않았습니다. 그 친구가 서류를 다 들고 갔기 때문입니다. "`,
+            `"병으로요. 열병이었습니다. 다만······ 그 전에 재산을 모두 잃으셨습니다. 친구분이 찾아냈다는 광산에 전부 넣으셨는데, 그 친구분이 돈을 들고 사라졌습니다. 대위께서는 그 소식을 듣고 앓아누우셨지요."<br>"열병이 그 위에 겹쳤습니다."<br>"그럼 저 아이는요?"<br>"한 푼도 없습니다. 친척도 없고요. 저희로서도 해 드릴 것이 없습니다."<br>광산에 넣은 돈은 한 푼도 남지 않았습니다. 그 친구가 서류를 다 들고 갔기 때문입니다.`,
             `변호사는 그 말을 하고 서둘러 나갔습니다. 변호사가 나간 뒤 민친 선생은 한참을 서 있었습니다. 그 사람이 그때 생각한 것은 세라가 아니었습니다. 받지 못하게 된 돈이었습니다. 잔치 값도 이미 다 쓴 뒤였습니다. 꽃값과 상 차린 값이 적지 않았습니다. 그것을 누가 갚아 주지 않게 된 것이었습니다.`,
             `그리고 교실 문을 열었습니다. 아이들이 웃고 있었고, 세라가 그 가운데 앉아 있었습니다.`,
             `"세라." 민친 선생이 말했습니다.<br>"이리 오너라."`
@@ -385,22 +385,22 @@ const CHAPTERS = [
             `빵집 아주머니는 잘 차려입은 아이를 보고 처음에는 알아보지 못했습니다. 그러다 얼굴을 알아보고 앞치마에 손을 닦았습니다. 그날은 젖은 검은 옷이었습니다. 오늘은 새 외투였습니다.`,
             `"세상에."`,
             `그러고는 세라의 옷을 다시 보고 한 번 더 놀랐습니다.`,
-            `"너, 그때 그 아이구나."<br>"네." 세라가 말했습니다.<br>"그날 빵을 여섯 개 주셨지요."<br>"네 개 값밖에 안 받았는데도 그걸 다 남을 줬잖니." 아주머니가 말했습니다.<br>"나는 그날 일을 아직도 생각한단다. 그 아주머니는 그런 아이를 여럿 보았습니다. 그런데 그런 아이는 처음이었습니다. "`,
+            `"너, 그때 그 아이구나."<br>"네." 세라가 말했습니다.<br>"그날 빵을 여섯 개 주셨지요."<br>"네 개 값밖에 안 받았는데도 그걸 다 남을 줬잖니." 아주머니가 말했습니다.<br>"나는 그날 일을 아직도 생각한단다."<br>그 아주머니는 그런 아이를 여럿 보았습니다. 그런데 그런 아이는 처음이었습니다.`,
             `아주머니는 그날 이후로 빵을 셀 때마다 그 생각을 했습니다. 네 개를 세다가 여섯 개가 되었습니다. 그것이 그 뒤로도 그랬습니다. 그때 가게 안쪽에서 여자아이 하나가 나왔습니다. 얼굴이 깨끗해지고 옷을 갖춰 입었지만, 세라는 그 아이를 알아보았습니다. 그날 계단 밑에 웅크려 있던 아이였습니다.`,
             `얼굴이 달라져 있었습니다. 눈만 그대로였습니다. 머리를 빗고 신발을 신고 있었습니다. 그날은 맨발이었습니다.`,
-            `"앤이라고 한단다." 아주머니가 말했습니다.<br>"그날부터 여기서 지내고 있어."<br>"이제 셈도 곧잘 한단다. 글자는 아직 몰랐습니다. 그래도 빵을 세는 것은 금세 익혔습니다. "`,
+            `"앤이라고 한단다." 아주머니가 말했습니다.<br>"그날부터 여기서 지내고 있어."<br>"이제 셈도 곧잘 한단다."<br>글자는 아직 몰랐습니다. 그래도 빵을 세는 것은 금세 익혔습니다.`,
             `앤은 그 집에서 잠도 자고 밥도 먹었습니다. 그 아이는 세라를 알아보고 얼굴이 빨개졌습니다. 그날의 자기 모습이 떠올랐기 때문입니다. 앤은 그것을 부끄러워했습니다.`,
             `"고마워." 앤이 말했습니다. 그날 했던 말과 같은 말이었습니다.`,
             `세라는 아주머니에게 부탁을 하나 했습니다.`,
             `"저처럼 배고픈 아이가 오면 빵을 주세요. 값은 제가 낼게요. 그 아이들에게는 값을 받지 마시고요."`,
             `세라는 그것을 오래 생각해 두었던 것입니다. 다락방에서부터 생각한 것이었습니다. 굶어 본 사람만 할 수 있는 셈이었습니다. 세라는 그 셈을 두 해 동안 했습니다.`,
-            `"그러면 하루에 몇 명이 올지 모른다."<br>"몇 명이 와도 좋아요."<br>"저도 그 계단 밑에 앉아 봤어요. 그 말을 하고 세라는 잠깐 아무 말도 하지 않았습니다. 아주머니도 그랬습니다. "`,
+            `"그러면 하루에 몇 명이 올지 모른다."<br>"몇 명이 와도 좋아요."<br>"저도 그 계단 밑에 앉아 봤어요."<br>그 말을 하고 세라는 잠깐 아무 말도 하지 않았습니다. 아주머니도 그랬습니다.`,
             `아주머니는 한참 아무 말도 하지 못했습니다. 그러다 웃었습니다.`,
-            `"그럼 앤이 나눠 주면 되겠구나. 그 애가 제일 잘 알 테니까. 어느 아이가 정말 배가 고픈지는 겪어 본 사람이 압니다. 아주머니는 그것을 셈에 넣은 것이었습니다. "`,
+            `"그럼 앤이 나눠 주면 되겠구나. 그 애가 제일 잘 알 테니까. 어느 아이가 정말 배가 고픈지는 겪어 본 사람이 압니다."<br>아주머니는 그것을 셈에 넣은 것이었습니다.`,
             `세라는 앤에게 다가가 말했습니다.<br>"그때 네가 고맙다고 했잖아. 나는 그 말을 아직도 기억해."`,
             `앤은 그날 고맙다는 말밖에 하지 못했습니다. 그런데 세라는 그 말이면 되었다고 여겼습니다. 앤은 대답하지 못하고 앞치마만 만지작거렸습니다. 그 앞치마가 자기 것이었습니다. 그것도 그날 처음 가져 본 것이었습니다.`,
             `그러다 고개를 들었습니다. 그리고 처음으로 웃었습니다.`,
-            `돌아오는 마차에서 캐리스퍼드 씨가 물었습니다.<br>"세라, 그렇게 배가 고팠던 때가 힘들지 않았니?"<br>"힘들었어요." 세라가 말했습니다.<br>"그런데 그때 굶어 보지 않았으면 그 아이가 얼마나 배고픈지 몰랐을 거예요."<br>"그건 이야기로는 안 되는 거였어요. 책에서 굶는 이야기를 여러 번 읽었습니다. 그런데 읽는 것과 겪는 것은 달랐습니다. "`,
+            `돌아오는 마차에서 캐리스퍼드 씨가 물었습니다.<br>"세라, 그렇게 배가 고팠던 때가 힘들지 않았니?"<br>"힘들었어요." 세라가 말했습니다.<br>"그런데 그때 굶어 보지 않았으면 그 아이가 얼마나 배고픈지 몰랐을 거예요."<br>"그건 이야기로는 안 되는 거였어요."<br>책에서 굶는 이야기를 여러 번 읽었습니다. 그런데 읽는 것과 겪는 것은 달랐습니다.`,
             `캐리스퍼드 씨는 한참 창밖을 보다가 말했습니다.<br>"네 아버지가 너를 보셨으면 좋았을 텐데."`,
             `세라는 대답하지 않고 창밖을 보았습니다. 아버지 이야기가 나오면 아직도 말이 잘 나오지 않았습니다. 두 해가 지났는데도 그랬습니다.`
         ]
@@ -419,12 +419,12 @@ const CHAPTERS = [
             `베키는 아침마다 눈을 뜨고 천장을 확인했습니다. 비스듬한 다락방 천장이 아니라는 것을 보고 나서야 다시 누웠습니다. 세라가 그러지 않아도 된다고 여러 번 말했습니다. 베키는 그때마다 알겠다고 했습니다. 그러고는 다음 날 또 다섯 시에 깼습니다.`,
             `민친 선생의 학교는 그 뒤로 학생이 줄었습니다. 라비니아가 세라의 이야기를 떠들고 다녔기 때문에, 그 소문이 부모들에게까지 흘러갔던 것입니다. 부잣집 아이가 하루아침에 부엌데기가 되었다는 이야기였습니다. 부모들은 그 대목에서 마음이 서늘해졌습니다. 자기 아이도 그렇게 될 수 있기 때문입니다. 그런 학교에 아이를 맡기려는 부모는 없었습니다. 한 학기에 몇씩 빠져나갔습니다. 교실 하나가 통째로 비었습니다. 라비니아는 그 이야기로 사람들의 눈길을 끌려던 것이었습니다. 그런데 결과가 그렇게 되었습니다.`,
             `민친 선생은 그 뒤로도 그 학교를 붙들고 있었습니다. 세라는 그 사람을 두고 아무 말도 하지 않았습니다. 좋은 말도 나쁜 말도 하지 않았습니다. 묻는 사람이 있으면 그냥 웃었습니다. 그 사람 이야기를 하면 그 두 해로 돌아가게 됩니다. 세라는 그러고 싶지 않았습니다.`,
-            `어느 날 어먼가드가 물었습니다.<br>"세라, 그때 다락방에서 정말로 네가 공주라고 생각했어?"<br>"응."<br>"진짜로?"<br>"진짜로." 세라가 말했습니다.<br>"그렇게 생각하지 않으면 견딜 수가 없었거든."<br>"그렇게 생각하면 요리사가 소리를 질러도 견딜 수 있었어. 그 말을 할 때 세라의 목소리가 담담했습니다. 어먼가드는 그것이 더 아팠습니다. "`,
+            `어느 날 어먼가드가 물었습니다.<br>"세라, 그때 다락방에서 정말로 네가 공주라고 생각했어?"<br>"응."<br>"진짜로?"<br>"진짜로." 세라가 말했습니다.<br>"그렇게 생각하지 않으면 견딜 수가 없었거든."<br>"그렇게 생각하면 요리사가 소리를 질러도 견딜 수 있었어."<br>그 말을 할 때 세라의 목소리가 담담했습니다. 어먼가드는 그것이 더 아팠습니다.`,
             `어먼가드는 그 말에 아무 말도 하지 못했습니다. 어먼가드는 그 두 해 동안 밤마다 계단을 올랐던 아이였습니다. 그것도 쉬운 일이 아니었습니다. 들키면 벌을 받는 일이었습니다. 어먼가드는 한 번도 그것을 자랑하지 않았습니다. 두 해 동안 거의 날마다 올라왔습니다. 그것을 세어 본 사람은 없었습니다.`,
             `"그럼 지금도 공주야?"`,
             `세라는 창밖을 보았습니다. 광장 건너편에 민친 여학교의 지붕이 보였습니다. 그 꼭대기에 작은 창이 하나 있었습니다. 광장을 사이에 두고 마주 보이는 자리였습니다. 세라의 방 창에서 그것이 보였습니다. 볕이 들지 않는 창이었습니다.`,
             `그 창 안쪽이 어떤 방인지 세라는 알고 있었습니다. 이제는 아무도 살지 않는 방이었습니다. 베키가 나온 뒤로 그 옆방도 비었습니다. 그 학교에는 새 부엌데기가 들어오지 않았습니다. 쓸 돈이 없었기 때문입니다.`,
-            `"공주라는 건 옷 이야기가 아니야." 세라가 말했습니다.<br>"아무것도 없을 때 어떻게 하느냐 하는 이야기야. 화가 나도 함부로 말하지 않고, 배가 고파도 나보다 더 고픈 사람을 보면 나눠 주고."<br>"아무도 안 보고 있을 때도 그렇게 하는 거야."<br>"그때가 제일 어려워. 보는 사람이 있으면 누구나 그렇게 합니다. 아무도 없을 때가 갈림길입니다. "`,
+            `"공주라는 건 옷 이야기가 아니야." 세라가 말했습니다.<br>"아무것도 없을 때 어떻게 하느냐 하는 이야기야. 화가 나도 함부로 말하지 않고, 배가 고파도 나보다 더 고픈 사람을 보면 나눠 주고."<br>"아무도 안 보고 있을 때도 그렇게 하는 거야."<br>"그때가 제일 어려워. 보는 사람이 있으면 누구나 그렇게 합니다. 아무도 없을 때가 갈림길입니다."`,
             `세라는 그 두 해 동안 그것을 배웠습니다. 다락방이 가르쳐 준 것이었습니다. 좋은 옷을 입고 있을 때는 알 수 없던 것이었습니다. 일곱 살에도 세라는 착한 아이였습니다. 그런데 그때는 어려울 것이 없었습니다.`,
             `"그거 어려워."<br>"어려워." 세라가 말했습니다.<br>"그래서 하는 거야."`,
             `어먼가드가 웃었습니다. 로티가 무슨 이야기냐고 끼어들었고, 세라는 로티에게 다시 이야기를 시작했습니다. 그날 저녁, 세라는 다시 그 작은 창을 올려다보았습니다.`,
@@ -730,57 +730,57 @@ function paginateChapter(ch, chIndex) {
 
 function artFrame(src, emoji) {
     return `
-        <div class="art-frame">
-            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="art-fallback" style="display:none">${emoji}</div>
-        </div>`;
+ <div class="art-frame">
+ <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+ <div class="art-fallback" style="display:none">${emoji}</div>
+ </div>`;
 }
 
 function coverPage() {
     return `
-        <div class="page page-cover">
-            <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '👑')}
-            </div>
-            <div class="story-page-right">
-                <h1>소공녀</h1>
-                <p class="cover-tag">프랜시스 호지슨 버넷 원작</p>
-                <p>인도에서 온 부잣집 딸 세라 크루가 런던의 기숙 학교에 들어옵니다. 그러나 열한 번째 생일날, 세라는 하루 만에 가진 것을 모두 잃고 그 학교의 하녀가 됩니다.</p>
-                <p>가진 것이 하나도 없어진 뒤에도 세라가 끝내 놓지 않은 것이 무엇이었는지에 대한 이야기입니다.</p>
-            </div>
-        </div>`;
+ <div class="page page-cover">
+ <div class="story-page-left story-page-left-full">
+ ${artFrame('cover.webp', '👑')}
+ </div>
+ <div class="story-page-right">
+ <h1>소공녀</h1>
+ <p class="cover-tag">프랜시스 호지슨 버넷 원작</p>
+ <p>인도에서 온 부잣집 딸 세라 크루가 런던의 기숙 학교에 들어옵니다. 그러나 열한 번째 생일날, 세라는 하루 만에 가진 것을 모두 잃고 그 학교의 하녀가 됩니다.</p>
+ <p>가진 것이 하나도 없어진 뒤에도 세라가 끝내 놓지 않은 것이 무엇이었는지에 대한 이야기입니다.</p>
+ </div>
+ </div>`;
 }
 
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
     const itemHtml = ch => `
-        <li>
-            <button type="button" data-goto="${ch.num}">
-                <span class="toc-num">${ch.num}</span>
-                <span><strong>${ch.title}</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto="${ch.num}">
+ <span class="toc-num">${ch.num}</span>
+ <span><strong>${ch.title}</strong></span>
+ </button>
+ </li>`;
     const extraItems = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">?</span>
-                <span><strong>이야기 문제</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto-kind="quiz">
+ <span class="toc-num">?</span>
+ <span><strong>이야기 문제</strong></span>
+ </button>
+ </li>`;
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
     return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                ${part === 0 ? '<h2>차례</h2>' : ''}
-                <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
-            </div>
-        </div>`;
+ <div class="page page-toc">
+ <div class="story-page-left">
+ ${part === 0 ? '<h2>차례</h2>' : ''}
+ <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
+ </div>
+ <div class="story-page-right">
+ <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
+ </div>
+ </div>`;
 }
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
@@ -797,28 +797,28 @@ function chapterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                </div>
-            </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-            </div>
-        </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
 }
 
 const QUIZ = [
@@ -859,19 +859,19 @@ function quizPage(part) {
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
         return `
-        <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
-            <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
-            </div>
-        </div>`;
+ <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+ <p class="quiz-question">${i + 1}. ${item.q}</p>
+ <div class="quiz-choices">
+ ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ </div>
+ </div>`;
     }).join('');
     return `
-        <div class="page page-quiz">
-            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
-            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
-            <div class="quiz-list">${items}</div>
-        </div>`;
+ <div class="page page-quiz">
+ ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
+ <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+ <div class="quiz-list">${items}</div>
+ </div>`;
 }
 
 /* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
@@ -941,30 +941,30 @@ function afterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story page-after">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                    ${foot}
-                </div>
-            </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story page-after">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-                ${foot}
-            </div>
-        </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
 }
 
 const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);

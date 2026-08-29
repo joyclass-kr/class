@@ -39,11 +39,11 @@ const CHAPTERS = [
             `어부는 하늘을 보고 한숨을 쉬었습니다. 세 번을 헛되게 던진 날은 오랜만이었습니다. 그래도 규칙은 규칙이었습니다. 그리고 네 번째 그물을 던졌습니다. 그날의 마지막 그물이었습니다. 멀리 던지려고 몸을 크게 돌렸습니다. 그물이 물에 닿는 소리가 났습니다. 이것마저 비면 빈손으로 돌아가야 했습니다. 집에서 아이들이 기다리고 있었습니다. 그러니 그 그물에 하루가 걸려 있었습니다.`,
             `이번에는 놋쇠 항아리가 올라왔습니다. 입구가 납으로 봉해져 있었고, 그 위에 도장이 찍혀 있었습니다. 놋쇠는 그것만으로도 값이 나갔습니다. 그러니 그날은 헛걸음이 아니었습니다. 어부는 '이 안에 무언가 값나가는 것이 들었겠지' 하고 그 봉을 뜯었습니다. 그러자 안에서 연기가 쏟아져 나왔습니다.`,
             `연기가 하늘로 올라가 뭉치더니, 어마어마하게 큰 마신이 되었습니다. 머리가 구름에 닿고 발이 땅에 닿았습니다. 눈이 화로만 했습니다. 이가 바위 같았고 콧구멍에서 김이 났습니다. 그 김이 어부의 얼굴에 닿았습니다. 입을 열자 동굴 같았습니다. 목소리가 땅을 울렸습니다. 강가의 갈대가 다 눕혔습니다. 물결이 뒤로 밀렸습니다. 어부는 다리에 힘이 빠졌습니다.`,
-            `마신이 소리쳤습니다.<br>"준비해라. 나는 너를 죽이겠다."<br>"제가 당신을 꺼내 드렸는데요."<br>"그러니까 죽이겠다는 것이다. 어부는 그 말을 알아듣지 못했습니다. 구해 준 사람을 죽이겠다는 말이었기 때문입니다. "`,
+            `마신이 소리쳤습니다.<br>"준비해라. 나는 너를 죽이겠다."<br>"제가 당신을 꺼내 드렸는데요."<br>"그러니까 죽이겠다는 것이다. 어부는 그 말을 알아듣지 못했습니다."<br>구해 준 사람을 죽이겠다는 말이었기 때문입니다.`,
             `그리고 마신이 이런 이야기를 했습니다. 그는 옛날에 어느 왕의 명을 어겨 그 항아리에 갇혔습니다. 납으로 봉하고 도장을 찍어 바다에 던진 것이었습니다. 그 왕은 마신도 다스릴 줄 아는 사람이었다고 합니다. 그런 이야기가 그 고장에 여럿 전해집니다. 그 도장은 아무나 뜯을 수 없는 것이었습니다. 그 시절 이야기에서 도장은 힘 있는 사람의 이름이었습니다. 그것을 찍어 두면 아무도 손대지 못했습니다. 그래서 사백 년을 그 안에 있었습니다. 항아리 안은 캄캄하고 좁았습니다. 몸을 연기로 바꾸어야 겨우 들어갈 자리였습니다. 첫 백 해 동안 그는 이렇게 생각했습니다.`,
             `'나를 꺼내 주는 자에게 세상의 모든 재물을 주겠다.' 아무도 오지 않았습니다. 두 번째 백 해 동안은 이렇게 생각했습니다. '나를 꺼내 주는 자에게 땅속의 보물을 다 알려 주겠다.' 아무도 오지 않았습니다. 세 번째 백 해 동안은 이렇게 생각했습니다.`,
             `'나를 꺼내 주는 자에게 소원을 세 가지 들어주겠다.' 아무도 오지 않았습니다. 그러다 사백 년이 지나자 그는 이렇게 생각했습니다. 백 년마다 마음이 한 번씩 내려앉은 셈입니다. 그리고 마지막 백 년에 그 마음이 뒤집혔습니다. '이제 누가 나를 꺼내 주든, 나는 그자를 죽이겠다.'`,
-            `어부는 그 이야기를 다 들었습니다. 그리고 벌벌 떨면서 이렇게 말했습니다.<br>"한 가지만 여쭙겠습니다. 정말 그렇게 큰 분이 이 작은 항아리에 들어가 계셨습니까?"<br>"그렇다."<br>"저는 못 믿겠습니다. 발 하나도 안 들어갈 것 같은데요. 어부는 그 말을 하면서 항아리를 슬쩍 발치로 당겼습니다. 손이 떨리는 것을 숨기려고 뒷짐을 졌습니다. "`,
+            `어부는 그 이야기를 다 들었습니다. 그리고 벌벌 떨면서 이렇게 말했습니다.<br>"한 가지만 여쭙겠습니다. 정말 그렇게 큰 분이 이 작은 항아리에 들어가 계셨습니까?"<br>"그렇다."<br>"저는 못 믿겠습니다. 발 하나도 안 들어갈 것 같은데요."<br>어부는 그 말을 하면서 항아리를 슬쩍 발치로 당겼습니다. 손이 떨리는 것을 숨기려고 뒷짐을 졌습니다.`,
             `마신이 화를 냈습니다.<br>"내가 보여 주지."`,
             `그리고 다시 연기가 되어 항아리 속으로 들어갔습니다. 연기가 소용돌이치며 빨려 들어갔습니다. 머리가 먼저 들어가고 어깨가 들어갔습니다. 그러고도 한참이 남아 있었습니다. 들어가는 데도 한참이 걸렸습니다. 그만큼 큰 것이 그 안에 들어간 것입니다. 어부는 그동안 뚜껑을 손에 쥐고 있었습니다. 처음부터 그것을 놓지 않고 있었던 것입니다. 어부는 그 순간 뚜껑을 눌러 닫았습니다.`,
             `"이제 도로 바다에 던지겠습니다."<br>안에서 마신이 사정했습니다.<br>"내가 잘못했다. 꺼내 주면 너를 부자로 만들어 주겠다."<br>"사백 년 동안 마음이 세 번 바뀌신 분을 제가 어떻게 믿습니까."`,
@@ -131,7 +131,7 @@ const CHAPTERS = [
             `그러면 위에서 그 고기를 빼앗는 것이네. 그래서 나는 자루에 다이아몬드를 담고, 그 고깃덩이에 내 몸을 묶었네. 그리고 독수리가 나를 물고 올라갔네.`,
             `절벽 위에서 사람들이 소리를 지르며 달려왔다가, 고기에 사람이 매달려 있는 것을 보고 얼어붙었네. 그 사람들은 여러 해 그 일을 했지만 그런 것은 처음이었네. 나는 그 자리에서 자루를 열어 보였네.`,
             `이야기가 끝나자 짐꾼 신드바드가 물었습니다.<br>"그렇게 무서운 일을 겪고 왜 또 나가셨습니까?"`,
-            `뱃사람 신드바드가 웃었습니다.<br>"자네 말이 맞네. 그런데 뭍에 있으면 또 바다가 생각나네. 짐꾼은 그 말을 오래 생각했네. 그리고 그날부터 그 집에 자주 드나들게 되었다고 하네. "`
+            `뱃사람 신드바드가 웃었습니다.<br>"자네 말이 맞네. 그런데 뭍에 있으면 또 바다가 생각나네. 짐꾼은 그 말을 오래 생각했네. 그리고 그날부터 그 집에 자주 드나들게 되었다고 하네."`
         ]
     },
     {
@@ -219,12 +219,12 @@ const CHAPTERS = [
             `그리고 그 사람이 옷자락을 걷었습니다. 왕이 그쪽으로 몸을 숙였습니다. 허리 아래가 돌이었습니다. 발끝까지 새까만 돌이었습니다. 만져 보니 차가웠습니다. 그리고 아무 느낌이 없다고 했습니다. 왕은 그 자리에 굳었습니다. 손도 발도 움직이지 않았습니다. 그 사람은 반은 사람이고 반은 돌이었습니다. 그런데 아파하지도 않았습니다. 돌은 차가웠습니다. 만져 보니 정말 돌이었습니다.`,
             `젊은이가 이야기를 시작했습니다. 그는 검은 섬이라는 나라의 왕이었습니다. 섬 넷을 다스리던 나라였습니다. 그래서 검은 섬이라는 이름이 붙었습니다. 그 섬 넷이 나중에 호수의 물고기 네 빛깔이 됩니다. 여러 해 전, 그 나라 안에서 큰 배신이 있었습니다. 제일 가까운 데 있던 사람이 한 일이었습니다. 이 책에는 그런 이야기가 여러 번 나옵니다.`,
             `그 일을 꾸민 사람은 마법을 쓸 줄 알았습니다. 아주 오래 마법을 익힌 사람이었습니다. 그 사람이 그것을 배우는 데 여러 해가 걸렸습니다. 그동안 아무도 눈치채지 못했습니다. 그 사람은 왕을 이렇게 만들어 놓고, 나라 전체에도 마법을 걸었습니다. 하룻밤 사이에 벌어진 일이었습니다. 저녁에 자리에 든 사람들이 아침에 물속에 있었던 것입니다. 무슨 일이 일어났는지 아무도 알지 못했습니다. 그 나라의 도시가 통째로 호수가 되었습니다. 집도 길도 다 물속에 잠겼습니다. 그리고 그 도시 사람들이 물고기가 되었습니다. 네 가지 빛깔은 그 나라의 네 부족이었습니다.`,
-            `"저는 날마다 여기 앉아서 그 호수를 봅니다. 그 호수가 원래 자기 나라였기 때문입니다. 백성이 다 그 물속에 있었습니다. "<br>왕은 그 이야기를 다 듣고 이렇게 물었습니다.<br>"그 마법을 푸는 방법이 있소?"<br>"있습니다. 그런데 그것을 하려면 목숨을 걸어야 합니다."`,
+            `"저는 날마다 여기 앉아서 그 호수를 봅니다."<br>그 호수가 원래 자기 나라였기 때문입니다. 백성이 다 그 물속에 있었습니다.<br>왕은 그 이야기를 다 듣고 이렇게 물었습니다.<br>"그 마법을 푸는 방법이 있소?"<br>"있습니다. 그런데 그것을 하려면 목숨을 걸어야 합니다."`,
             `왕은 그것을 하기로 했습니다. 그 방법이 무엇이었는지는 이야기마다 조금씩 다릅니다. 들려주는 사람마다 달리 전했기 때문입니다. 입으로 전해진 이야기는 그렇게 갈라집니다. 어느 것이 처음 모습인지는 아무도 모릅니다. 다만 결과는 같습니다. 어느 이야기에서든 왕이 목숨을 걸었습니다. 남의 나라 일에 목숨을 건 것입니다. 그 대목만은 어느 판본에서도 빠지지 않습니다.`,
             `왕이 그것을 해냈고, 마법이 풀렸습니다. 땅이 크게 울렸습니다. 물이 빠지는 소리가 한참 났습니다. 그리고 젖은 지붕들이 하나씩 드러났습니다. 호수가 사라지고 그 자리에 도시가 다시 나타났습니다. 집과 길과 우물이 그대로 있었습니다. 여러 해 물속에 있었는데도 그대로였습니다. 마법으로 된 일이라 그런 모양이었습니다. 물고기들이 사람이 되었습니다. 물이 빠진 자리에서 사람들이 일어섰습니다.`,
             `장에서 물건을 팔던 사람은 물건을 팔던 자리에 서 있었고, 밥을 짓던 사람은 부뚜막 앞에 서 있었습니다. 불이 그대로 붙어 있었습니다. 솥에서 김이 올랐습니다. 여러 해가 지난 줄도 모르고 있었습니다. 자기가 물고기였던 것도 몰랐습니다. 그 사이에 밖에서는 여러 해가 흘렀습니다. 그 사람들만 그 세월을 겪지 않은 셈입니다. 다만 아이들이 그 사이에 자라 있었습니다.`,
             `그런데 젊은 왕은 자기 나라로 돌아가지 않았습니다. 그 도시가 있던 자리가 너무 외진 곳이라 사람이 살기 어려워졌기 때문입니다. 물길이 끊기고 밭이 다 삭아 있었습니다. 그 자리에서 다시 시작할 수가 없었습니다.`,
-            `늙은 왕이 이렇게 말했습니다.<br>"내 나라로 갑시다. 내게는 아들이 없소. 그 말을 하는 데 오래 걸리지 않았습니다. 두 사람은 그 하루 사이에 그렇게 되었습니다. "`,
+            `늙은 왕이 이렇게 말했습니다.<br>"내 나라로 갑시다. 내게는 아들이 없소."<br>그 말을 하는 데 오래 걸리지 않았습니다. 두 사람은 그 하루 사이에 그렇게 되었습니다.`,
             `그래서 두 나라 사람들이 함께 옮겨 가 살았습니다. 사람과 짐승과 수레가 줄지어 갔습니다. 그 길이 한 해가 걸렸다고 합니다. 길에서 아이가 태어나기도 했습니다. 나라 하나가 통째로 옮겨 가는 일이었습니다. 그런 이야기가 옛이야기에는 이따금 나옵니다. 그 아이는 두 나라 어디에도 속하지 않은 데서 태어난 셈입니다. 그런 아이가 그 해에 여럿이었다고 합니다.`
         ]
     },
@@ -561,57 +561,57 @@ function paginateChapter(ch, chIndex) {
 
 function artFrame(src, emoji) {
     return `
-        <div class="art-frame">
-            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="art-fallback" style="display:none">${emoji}</div>
-        </div>`;
+ <div class="art-frame">
+ <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+ <div class="art-fallback" style="display:none">${emoji}</div>
+ </div>`;
 }
 
 function coverPage() {
     return `
-        <div class="page page-cover">
-            <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '🌙')}
-            </div>
-            <div class="story-page-right">
-                <h1>아라비안나이트</h1>
-                <p class="cover-tag">여러 나라에서 전해 온 이야기</p>
-                <p>사람을 믿지 못하게 된 왕 앞에서, 셰에라자드가 천 하룻밤 동안 이야기를 이어 갑니다. 재미있어지는 대목에서 늘 멈춥니다.</p>
-                <p>그 안에서 나온 이야기 가운데 아홉 편을 골라 담았습니다.</p>
-            </div>
-        </div>`;
+ <div class="page page-cover">
+ <div class="story-page-left story-page-left-full">
+ ${artFrame('cover.webp', '🌙')}
+ </div>
+ <div class="story-page-right">
+ <h1>아라비안나이트</h1>
+ <p class="cover-tag">여러 나라에서 전해 온 이야기</p>
+ <p>사람을 믿지 못하게 된 왕 앞에서, 셰에라자드가 천 하룻밤 동안 이야기를 이어 갑니다. 재미있어지는 대목에서 늘 멈춥니다.</p>
+ <p>그 안에서 나온 이야기 가운데 아홉 편을 골라 담았습니다.</p>
+ </div>
+ </div>`;
 }
 
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
     const itemHtml = ch => `
-        <li>
-            <button type="button" data-goto="${ch.num}">
-                <span class="toc-num">${ch.num}</span>
-                <span><strong>${ch.title}</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto="${ch.num}">
+ <span class="toc-num">${ch.num}</span>
+ <span><strong>${ch.title}</strong></span>
+ </button>
+ </li>`;
     const extraItems = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">?</span>
-                <span><strong>이야기 문제</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto-kind="quiz">
+ <span class="toc-num">?</span>
+ <span><strong>이야기 문제</strong></span>
+ </button>
+ </li>`;
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
     return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                ${part === 0 ? '<h2>차례</h2>' : ''}
-                <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
-            </div>
-        </div>`;
+ <div class="page page-toc">
+ <div class="story-page-left">
+ ${part === 0 ? '<h2>차례</h2>' : ''}
+ <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
+ </div>
+ <div class="story-page-right">
+ <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
+ </div>
+ </div>`;
 }
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
@@ -628,28 +628,28 @@ function chapterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                </div>
-            </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-            </div>
-        </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
 }
 
 const QUIZ = [
@@ -690,19 +690,19 @@ function quizPage(part) {
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
         return `
-        <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
-            <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
-            </div>
-        </div>`;
+ <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+ <p class="quiz-question">${i + 1}. ${item.q}</p>
+ <div class="quiz-choices">
+ ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ </div>
+ </div>`;
     }).join('');
     return `
-        <div class="page page-quiz">
-            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
-            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
-            <div class="quiz-list">${items}</div>
-        </div>`;
+ <div class="page page-quiz">
+ ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
+ <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+ <div class="quiz-list">${items}</div>
+ </div>`;
 }
 
 /* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
@@ -772,30 +772,30 @@ function afterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story page-after">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                    ${foot}
-                </div>
-            </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story page-after">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-                ${foot}
-            </div>
-        </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
 }
 
 const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);

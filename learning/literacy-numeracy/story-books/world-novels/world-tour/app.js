@@ -331,9 +331,9 @@ const CHAPTERS = [
             `아우다 부인은 포그의 손을 잡았습니다. 포그는 아무 말도 하지 않았습니다. 다만 손을 빼지도 않았습니다. 스무 해 동안 사람 손을 잡아 본 적이 없는 사람이었습니다. 그런데 그날은 가만히 있었습니다. 손이 언 채였습니다. 아우다 부인이 그 손을 두 손으로 감쌌습니다.`,
             `그러나 좋아할 겨를이 없었습니다. 그들이 타야 할 기차는 이미 열두 시간 전에 떠난 뒤였습니다. 다음 기차는 이튿날 저녁에나 있었습니다. 그 벌판에는 기차가 하루에 한 번 지납니다. 놓치면 하루를 통째로 잃습니다. 스무 시간이 넘게 남았습니다. 내기를 지는 데 그만큼이면 넉넉했습니다. 그동안 벌어 둔 여유가 다 없어졌습니다. 이제는 모자란 쪽이었습니다. 봄베이에서 이틀, 요코하마에서 하루를 벌었습니다. 그것을 다 쓰고도 모자랐습니다.`,
             `파스파르투는 눈물이 났습니다. 자기를 구하러 간 열두 시간이 주인의 내기를 망친 것이었습니다. 그 열두 시간이면 기차를 탔을 것입니다. 파스파르투는 그것을 셈해 보고 더 괴로웠습니다. 주인이 자기를 두고 갔으면 이기는 것이었습니다. 그 셈이 자꾸 떠올랐습니다.`,
-            `포그는 그 말을 듣고 짧게 대답했습니다.<br>"자네를 두고 갈 수는 없었네. 그 말이 전부였습니다. 그러고는 다시 시간표를 폈습니다. "`,
+            `포그는 그 말을 듣고 짧게 대답했습니다.<br>"자네를 두고 갈 수는 없었네."<br>그 말이 전부였습니다. 그러고는 다시 시간표를 폈습니다.`,
             `파스파르투는 그 말에 더 울었습니다. 뉴욕에서 리버풀로 가는 배는 12월 11일 저녁 아홉 시에 떠납니다. 지금 속도로는 절대 닿을 수 없었습니다. 아무리 셈해도 나오지 않았습니다. 뉴욕까지 이틀이 넘게 걸립니다. 그런데 배는 그 전에 떠납니다. 기차로 가면 사흘입니다. 그러니 셈이 나오지 않았습니다.`,
-            `그때 역에서 서성이던 한 사내가 포그에게 다가왔습니다.<br>"기차보다 빠른 것을 찾으십니까?"<br>"찾고 있습니다."<br>"바람 썰매라는 것이 있습니다. 그 사람은 그 썰매를 모는 사람이었습니다. 겨울에만 하는 일이었습니다. "`,
+            `그때 역에서 서성이던 한 사내가 포그에게 다가왔습니다.<br>"기차보다 빠른 것을 찾으십니까?"<br>"찾고 있습니다."<br>"바람 썰매라는 것이 있습니다."<br>그 사람은 그 썰매를 모는 사람이었습니다. 겨울에만 하는 일이었습니다.`,
             `포그가 그 사람을 돌아보았습니다. 그것은 커다란 썰매에 돛을 단 것이었습니다. 벌판에는 눈이 단단하게 얼어붙어 있었습니다. 그 벌판은 나무 한 그루 없이 평평했습니다. 겨울이면 통째로 얼음판이 됩니다. 눈이 내렸다 얼기를 되풀이하면 그렇게 됩니다. 걸으면 미끄러워 넘어집니다.`,
             `이 지역은 겨울이면 벌판 전체가 얼음판이 되어서, 바람만 좋으면 기차보다 빠르게 달릴 수 있다고 했습니다. 이곳 사람들은 겨울이면 그 얼음판 위로 우편물을 실어 나른다고 했습니다. 바람을 받아 가는 것이니 삯이 들지 않습니다. 다만 바람이 없으면 아무 데도 못 갑니다. 그날은 바람이 뒤에서 세게 불었습니다. 썰매를 모는 사람에게는 좋은 날이었습니다.`,
             `"오마하까지 갈 수 있겠습니까?"<br>"오늘 바람이면 다섯 시간이면 갑니다. 기차로 가면 하루가 걸리는 길이었습니다. 그것을 다섯 시간에 간다는 말이었습니다. 다만 몹시 춥습니다."`,
@@ -383,12 +383,12 @@ const CHAPTERS = [
             `포그는 나무 의자에 앉아 시계를 보고 있었습니다. 한 시가 지나고 두 시가 지났습니다. 얼굴은 조금도 달라지지 않았습니다. 다리를 꼬지도 않았습니다. 화를 내지도 않았고 억울하다고도 하지 않았습니다. 그저 시계를 보고 있었습니다. 세 시간 동안 그 자세로 앉아 있었습니다. 자세를 한 번도 바꾸지 않았습니다. 파스파르투가 그것을 창살 밖에서 보고 있었습니다. 보고 있기가 더 힘들었습니다. 차라리 화를 내면 나았을 것입니다. 아무 말도 하지 않으니 더 그랬습니다.`,
             `한 시 오십 분이 되었을 때 그는 수첩을 꺼내 무언가를 적었습니다. 나중에 보니 그것은 이 여행에서 쓴 돈의 목록이었습니다. 마지막 줄까지 다 적고 나서 그는 수첩을 덮었습니다. 여행에 쓴 돈이 팔만 파운드가 넘었습니다. 이긴다 해도 남는 것이 없는 셈이었습니다. 이만 파운드를 걸고 팔만 파운드를 썼습니다. 셈으로만 보면 이미 진 여행이었습니다. 그래도 그는 그 목록을 적었습니다. 어디에 얼마가 나갔는지를 다 적었습니다. 그래도 마지막 줄까지 다 적었습니다. 코끼리 이천 파운드, 보석금 이천 파운드, 배 값 육만 달러. 하나도 빠뜨리지 않았습니다. 셈이 맞는지를 마지막까지 확인했습니다. 지고 있는 사람이 할 일이 아니었습니다. 그런데 그는 그것을 했습니다. 그것이 그 사람이었습니다. 스무 해 동안 걸음 수를 세던 사람이었습니다. 마지막까지 그 버릇을 지켰습니다.`,
             `두 시 삼십삼 분, 문이 요란하게 열렸습니다.`,
-            `픽스가 뛰어 들어왔습니다. 얼굴이 하얗게 질려 있었습니다.<br>"포그 씨! 용서해 주십시오! 진짜 범인은 사흘 전에 잡혔습니다! 사흘 전이면 배 위에 있을 때였습니다. 그동안 전보가 리버풀에서 기다리고 있었습니다. 제임스 스트랜드라는 사람이 진짜 도둑이었습니다. 포그와는 아무 상관이 없는 사람이었습니다. "`,
+            `픽스가 뛰어 들어왔습니다. 얼굴이 하얗게 질려 있었습니다.<br>"포그 씨! 용서해 주십시오! 진짜 범인은 사흘 전에 잡혔습니다!"<br>사흘 전이면 배 위에 있을 때였습니다. 그동안 전보가 리버풀에서 기다리고 있었습니다. 제임스 스트랜드라는 사람이 진짜 도둑이었습니다. 포그와는 아무 상관이 없는 사람이었습니다.`,
             `픽스는 숨이 넘어갈 듯했습니다. 그가 손에 든 전보에는 이렇게 적혀 있었습니다. 은행에서 돈을 훔친 자는 제임스 스트랜드라는 사람이며 이미 붙잡혔다는 것이었습니다. 픽스가 그 전보를 우체국에서 받아 들고 뛰어온 것이었습니다. 그것을 기다리고 있었던 것입니다. 우체국 쪽을 자꾸 내다보던 까닭이 그것이었습니다. 픽스도 마음 한구석으로는 알고 있었습니다.`,
             `포그는 자리에서 일어나 픽스에게 다가갔습니다. 그러고는 태어나서 처음으로 사람을 때렸습니다. 픽스는 바닥에 나동그라졌습니다. 평생 화를 내지 않던 사람이었습니다. 스무 해 동안 목소리를 높인 적도 없었습니다. 그런데 그날 한 번 그랬습니다. 팔십 일을 잃은 것 때문이 아니었습니다. 그동안 무엇을 잃었는지를 그 순간 다 안 것이었습니다. 오 년을 벼른 사람도 있었고 여든 날을 벼른 사람도 있었습니다. 이 이야기에는 그런 사람이 여럿 나옵니다.`,
-            `"잘 맞혔습니다." 파스파르투가 말했습니다.<br>"프랑스식 계산이라면 그것도 모자랍니다. 파스파르투도 한 대 치고 싶은 것을 참았습니다. 이미 배 위에서 두어 대 쳤기 때문입니다. 그때는 홍콩 술집 값이었습니다. 이번 것은 값이 훨씬 컸습니다. "`,
+            `"잘 맞혔습니다." 파스파르투가 말했습니다.<br>"프랑스식 계산이라면 그것도 모자랍니다."<br>파스파르투도 한 대 치고 싶은 것을 참았습니다. 이미 배 위에서 두어 대 쳤기 때문입니다. 그때는 홍콩 술집 값이었습니다. 이번 것은 값이 훨씬 컸습니다.`,
             `픽스는 아무 말도 하지 못했습니다. 세 사람은 곧장 역으로 달렸습니다. 그러나 런던행 특급은 삼십오 분 전에 떠난 뒤였습니다. 그 삼십오 분이 픽스 때문에 사라진 것이었습니다. 쇠고랑을 찬 시간이 세 시간이 넘었습니다. 그 세 시간이면 런던에 닿고도 남았습니다. 여섯 시간이면 되는 거리에서 세 시간을 앉아 있었습니다. 그것이 오 분으로 돌아왔습니다. 픽스는 아무 말도 못 하고 뒤를 따라왔습니다. 얼굴에 맞은 자국이 그대로 있었습니다. 쫓아오지 말라고 하지도 않았습니다. 픽스는 그 뒤를 그냥 따라왔습니다. 이제는 잡을 사람도 없었습니다. 그런데도 따라왔습니다. 그 사람도 마지막까지 보고 싶었던 것입니다. 자기가 여든 날을 따라다닌 사람이었습니다. 수에즈에서 리버풀까지였습니다. 그 사이에 자기 돈도 다 썼습니다.`,
-            `"특별 열차를 내주십시오." 포그가 역장에게 말했습니다.<br>"이 시간에는 선로가 비어 있지 않습니다. 저녁이라 다른 기차가 여럿 다니고 있었습니다. 그 사이로 한 대를 더 넣어야 했습니다. 역장이 전보를 몇 군데 쳤습니다. 그러고 나서야 길이 났습니다. "<br>"값은 부르는 대로 드리겠습니다."`,
+            `"특별 열차를 내주십시오." 포그가 역장에게 말했습니다.<br>"이 시간에는 선로가 비어 있지 않습니다."<br>저녁이라 다른 기차가 여럿 다니고 있었습니다. 그 사이로 한 대를 더 넣어야 했습니다. 역장이 전보를 몇 군데 쳤습니다. 그러고 나서야 길이 났습니다.<br>"값은 부르는 대로 드리겠습니다."`,
             `역장이 사람을 불렀습니다. 특별 열차는 그 열차 하나를 위해 선로를 비우는 것입니다. 값이 아주 비쌌습니다. 기관차 하나와 객차 하나였습니다. 그것을 통째로 빌린 것이었습니다. 돈이 얼마인지는 묻지도 않았습니다. 이제 그 돈도 남의 돈이 될 참이었습니다. 포그는 특별 열차를 냈습니다.`,
             `기관사는 있는 힘껏 달렸습니다. 리버풀에서 런던까지 삼백 킬로미터가 넘습니다. 그것을 다섯 시간 만에 달렸습니다. 보통 여섯 시간이 걸리는 길이었습니다. 한 시간을 줄인 것이었습니다. 그러나 12월의 영국은 안개가 짙습니다. 신호등이 제때 보이지 않아 몇 번이나 속도를 줄여야 했습니다. 안개가 끼면 앞이 몇 걸음도 보이지 않습니다. 기차는 신호등을 보고 달리니 그러면 속도를 줄여야 합니다. 12월의 영국은 안개가 짙은 철입니다. 그해 그날도 그랬습니다. 런던 가까이 갈수록 안개가 더 짙어졌습니다. 마지막 삼십 킬로미터가 제일 느렸습니다.`,
             `열차가 런던에 닿은 것은 저녁 여덟 시 오십 분이었습니다. 개혁 클럽에 약속한 시간은 여덟 시 사십오 분이었습니다. 오 분이 늦었습니다. 기차에서 내려 시계를 보았습니다. 여덟 시 오십 분이었습니다. 팔십 일을 달려 오 분이 모자란 것이었습니다. 지구를 한 바퀴 돌았습니다. 그 끝에서 오 분이었습니다. 코끼리를 사고 배를 태우고 눈벌판을 건넜습니다. 그러고 나서 안개에 오 분을 잃었습니다.`
@@ -785,57 +785,57 @@ function paginateChapter(ch, chIndex) {
 
 function artFrame(src, emoji) {
     return `
-        <div class="art-frame">
-            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="art-fallback" style="display:none">${emoji}</div>
-        </div>`;
+ <div class="art-frame">
+ <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+ <div class="art-fallback" style="display:none">${emoji}</div>
+ </div>`;
 }
 
 function coverPage() {
     return `
-        <div class="page page-cover">
-            <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '🌍')}
-            </div>
-            <div class="story-page-right">
-                <h1>80일간의 세계 일주</h1>
-                <p class="cover-tag">쥘 베른 원작</p>
-                <p>런던의 신사 필리어스 포그가 팔십 일 안에 지구를 한 바퀴 돌겠다고 내기를 겁니다. 그날 저녁 그는 여행 가방 하나만 들고 기차에 올랐습니다.</p>
-                <p>배와 기차와 코끼리와 썰매를 갈아타며 지구를 도는 동안, 그를 은행 강도로 여긴 형사 하나가 줄곧 뒤를 따릅니다.</p>
-            </div>
-        </div>`;
+ <div class="page page-cover">
+ <div class="story-page-left story-page-left-full">
+ ${artFrame('cover.webp', '🌍')}
+ </div>
+ <div class="story-page-right">
+ <h1>80일간의 세계 일주</h1>
+ <p class="cover-tag">쥘 베른 원작</p>
+ <p>런던의 신사 필리어스 포그가 팔십 일 안에 지구를 한 바퀴 돌겠다고 내기를 겁니다. 그날 저녁 그는 여행 가방 하나만 들고 기차에 올랐습니다.</p>
+ <p>배와 기차와 코끼리와 썰매를 갈아타며 지구를 도는 동안, 그를 은행 강도로 여긴 형사 하나가 줄곧 뒤를 따릅니다.</p>
+ </div>
+ </div>`;
 }
 
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
     const itemHtml = ch => `
-        <li>
-            <button type="button" data-goto="${ch.num}">
-                <span class="toc-num">${ch.num}</span>
-                <span><strong>${ch.title}</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto="${ch.num}">
+ <span class="toc-num">${ch.num}</span>
+ <span><strong>${ch.title}</strong></span>
+ </button>
+ </li>`;
     const extraItems = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">?</span>
-                <span><strong>이야기 문제</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto-kind="quiz">
+ <span class="toc-num">?</span>
+ <span><strong>이야기 문제</strong></span>
+ </button>
+ </li>`;
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
     return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                ${part === 0 ? '<h2>차례</h2>' : ''}
-                <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
-            </div>
-        </div>`;
+ <div class="page page-toc">
+ <div class="story-page-left">
+ ${part === 0 ? '<h2>차례</h2>' : ''}
+ <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
+ </div>
+ <div class="story-page-right">
+ <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
+ </div>
+ </div>`;
 }
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
@@ -852,28 +852,28 @@ function chapterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                </div>
-            </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-            </div>
-        </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
 }
 
 const QUIZ = [
@@ -914,19 +914,19 @@ function quizPage(part) {
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
         return `
-        <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
-            <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
-            </div>
-        </div>`;
+ <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+ <p class="quiz-question">${i + 1}. ${item.q}</p>
+ <div class="quiz-choices">
+ ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ </div>
+ </div>`;
     }).join('');
     return `
-        <div class="page page-quiz">
-            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
-            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
-            <div class="quiz-list">${items}</div>
-        </div>`;
+ <div class="page page-quiz">
+ ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
+ <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+ <div class="quiz-list">${items}</div>
+ </div>`;
 }
 
 /* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
@@ -996,30 +996,30 @@ function afterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story page-after">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                    ${foot}
-                </div>
-            </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story page-after">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-                ${foot}
-            </div>
-        </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
 }
 
 const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);

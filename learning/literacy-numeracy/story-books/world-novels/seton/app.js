@@ -24,7 +24,7 @@ const CHAPTERS = [
             `그 방법이 어떤 것이었는지 시튼은 나중에 아주 자세히 적었습니다. 자기가 한 일을 감추지 않으려고 그렇게 적은 것입니다. 읽는 사람이 자기를 좋게 볼 리 없다는 것도 알고 있었습니다. 그래도 그대로 적었습니다. 자기가 한 일을 좋게 꾸미지 않은 것입니다. 그 대목이 이 책에서 제일 무겁습니다.`,
             `여기서부터가 이 이야기에서 제일 아픈 대목입니다. 시튼은 블랑카를 먼저 덫으로 잡았습니다. 그리고 그 몸을 끌고 다니면서 그 냄새를 온 들판에 묻혔습니다. 말 뒤에 매달고 몇 리를 끌었습니다. 그 자국이 들판을 가로질러 남았습니다. 바람이 부는 쪽까지 헤아려서 끌었습니다. 냄새가 멀리 퍼지게 한 것입니다.`,
             `그 냄새를 따라가면 덫이 있게 해 놓은 것입니다. 로보는 그 뒤로 이틀 동안 그 자리를 맴돌며 울었습니다. 낮에도 울었습니다. 여태 낮에 소리를 낸 적이 없는 짐승이었습니다. 그 소리를 목장 사람들이 다 들었습니다. 이틀 밤 내내 이어졌습니다. 밤에 그 소리가 나면 목장의 개들이 다 숨었습니다. 사람들도 잠을 못 잤습니다. 상금을 건 목장 주인들까지 그랬습니다. 잡히기를 바라던 사람들이었습니다.`,
-            `한 사람은 나중에 이렇게 말했습니다.<br>"짐승이 그렇게 우는 것은 처음 들었습니다. 그 말을 한 사람은 평생 목장에서 일한 이였습니다. 늑대 소리는 수없이 들어 본 사람이었습니다. "`,
+            `한 사람은 나중에 이렇게 말했습니다.<br>"짐승이 그렇게 우는 것은 처음 들었습니다."<br>그 말을 한 사람은 평생 목장에서 일한 이였습니다. 늑대 소리는 수없이 들어 본 사람이었습니다.`,
             `그리고 로보는 그 냄새를 따라갔습니다. 그동안 그렇게 조심하던 짐승이, 그날은 덫을 살피지 않았습니다. 냄새만 따라 곧장 걸어갔습니다. 덫이 넉 줄로 놓인 자리였습니다. 여태 그런 자리는 백 걸음 밖에서 돌아가던 짐승이었습니다. 이틀 뒤 아침, 시튼은 덫에 걸린 로보를 발견했습니다.`,
             `네 발이 다 걸려 있었습니다. 덫 넷을 한꺼번에 밟은 것이었습니다. 그러고도 그 자리에서 버티고 있었습니다. 로보는 시튼을 보고 일어섰습니다. 기운이 다 빠졌는데도 서 있었습니다. 그리고 짖지 않았습니다. 으르렁거리지도 않았습니다. 시튼을 똑바로 보고만 있었습니다.`,
             `시튼은 그 자리에서 로보를 쏘지 못했습니다. 대신 목에 줄을 걸어 목장으로 데려갔습니다. 쏘려고 총을 들었다가 내렸습니다. 왜 그랬는지는 자기도 모르겠다고 적었습니다. 그리고 마당에 매어 두고 고기와 물을 주었습니다. 제일 좋은 고기를 잘라다 놓았습니다. 물그릇도 코앞에 놓아 주었습니다. 아무도 가까이 가지 못하게 했습니다.`,
@@ -51,7 +51,7 @@ const CHAPTERS = [
             `어느 해 봄, 은점박이가 무리와 함께 오지 않았습니다. 시튼은 여러 날 그 골짜기를 뒤졌습니다. 나무 밑을 하나하나 살폈습니다. 무리가 돌아온 자리를 여러 번 세어 보았습니다. 한 마리가 비어 있었습니다. 그리고 언덕 아래에서 그 몸을 찾아냈습니다.`,
             `부엉이에게 당한 것이었습니다. 부엉이는 까마귀의 오랜 적입니다. 밤에는 부엉이 쪽이 훨씬 잘 봅니다. 낮에는 그 반대입니다. 그래서 까마귀는 낮에 부엉이를 보면 떼로 몰려가 쫓습니다. 밤에는 그러지 못합니다. 늙어서 밤에 눈이 어두워진 것이 아닐까 하고 시튼은 적었습니다. 평생 조심하던 새였습니다. 그 조심으로도 안 되는 것이 나이였습니다.`,
             `그 뒤로 그 무리에는 다른 우두머리가 생겼습니다. 그런데 그 뒤로 여러 해 동안, 그 무리는 예전만큼 하지 못했습니다. 보초 서는 차례가 흐트러졌습니다. 사람 앞으로 곧장 날아드는 어린 것도 생겼습니다.`,
-            `시튼은 그 대목에 이렇게 적었습니다.<br>"우리는 짐승이 그저 본능으로 산다고 배웠다. 그런데 저 무리가 잘하던 것들은 은점박이가 죽자 함께 사라졌다."<br>"그것이 본능이라면 사라질 리가 없다. 저것은 가르쳐서 이어지던 것이었다. 이 한 줄이 그 시절에는 아주 낯선 말이었습니다. 짐승이 서로 가르친다는 말이었기 때문입니다. "`
+            `시튼은 그 대목에 이렇게 적었습니다.<br>"우리는 짐승이 그저 본능으로 산다고 배웠다. 그런데 저 무리가 잘하던 것들은 은점박이가 죽자 함께 사라졌다."<br>"그것이 본능이라면 사라질 리가 없다. 저것은 가르쳐서 이어지던 것이었다."<br>이 한 줄이 그 시절에는 아주 낯선 말이었습니다. 짐승이 서로 가르친다는 말이었기 때문입니다.`
         ]
     },
     {
@@ -75,7 +75,7 @@ const CHAPTERS = [
             `개는 그러지 못했습니다. 그 개는 그날 그 늪에서 나오지 못했습니다. 물이 생각보다 깊었습니다. 개는 물가까지는 잘 왔습니다. 그런데 그 가운데를 몰랐습니다. 몰리는 건너편 풀숲에서 그것을 보고 있었습니다. 그러고는 돌아왔습니다.`,
             `랙은 그것을 보고 자랐습니다. 한 해가 지나자 랙은 그 늪에서 제일 빠른 토끼가 되었습니다. 다른 토끼들이 랙을 따라다니게 되었습니다. 랙이 가는 길이 안전했기 때문입니다. 그리고 그 늪을 손금 보듯 알았습니다. 어느 굴에 뱀이 사는지, 어느 자리에 발이 빠지는지, 어느 덤불이 제일 두꺼운지. 눈을 감고도 다닐 수 있었습니다. 어미가 데리고 다니며 하나씩 짚어 준 것이었습니다. 그것이 한 해가 걸렸습니다.`,
             `몰리는 그해 겨울에 세상을 떠났습니다. 누가 놓은 총에 맞은 것이었습니다. 겨울에는 덤불에 잎이 없어 몸이 드러납니다. 그래서 겨울에 토끼가 제일 많이 죽습니다. 랙을 쫓던 총이었습니다. 몰리가 랙 앞으로 나갔던 것입니다. 사냥개 때 한 것과 똑같이 한 것입니다. 그때는 살아 돌아왔고 그때는 그러지 못했습니다.`,
-            `랙은 그 늪에서 오래 살았습니다. 그 뒤로도 시튼은 그 찢어진 귀를 여러 해 보았습니다. 랙은 어미가 가르친 것을 하나도 잊지 않았습니다. 시튼은 이 이야기 끝에 이렇게 적었습니다.<br>"토끼가 오래 사는 것은 빠르기 때문이 아니다. 아는 것이 많기 때문이다."<br>"그리고 그 아는 것은 다 어미에게서 온 것이다. 빠르기는 타고나지만 아는 것은 그렇지 않습니다. 시튼이 이 이야기에서 하고 싶었던 말이 그것입니다. "`
+            `랙은 그 늪에서 오래 살았습니다. 그 뒤로도 시튼은 그 찢어진 귀를 여러 해 보았습니다. 랙은 어미가 가르친 것을 하나도 잊지 않았습니다. 시튼은 이 이야기 끝에 이렇게 적었습니다.<br>"토끼가 오래 사는 것은 빠르기 때문이 아니다. 아는 것이 많기 때문이다."<br>"그리고 그 아는 것은 다 어미에게서 온 것이다. 빠르기는 타고나지만 아는 것은 그렇지 않습니다."<br>시튼이 이 이야기에서 하고 싶었던 말이 그것입니다.`
         ]
     },
     {
@@ -168,7 +168,7 @@ const CHAPTERS = [
             `붉은 목은 발톱으로 얼음을 깨고 나왔습니다. 부리가 다 깨졌습니다. 발톱이 부러진 자리도 있었습니다. 그러고도 나온 것입니다. 그런데 그해 봄까지 살아남은 것은 붉은 목 하나였습니다.`,
             `그리고 그해 겨울 끝에 붉은 목도 덫에 걸렸습니다. 사람이 놓은 올가미였습니다. 얼음을 뚫고 나온 새였습니다. 그런데 철사 한 가닥에 걸렸습니다.`,
             `시튼은 이 이야기를 이렇게 맺었습니다.`,
-            `"이 골짜기에는 그해에 뇌조가 백 마리 넘게 있었다. 봄이 되었을 때 남은 것은 없었다."<br>"우리는 이런 새를 두고 흔하다고 말한다. 흔하다는 것은 많이 죽어도 된다는 뜻이 아니다. 이 한 줄 때문에 이 이야기가 오래 읽힙니다. 그 시절에는 그렇게 말하는 사람이 드물었습니다. "`
+            `"이 골짜기에는 그해에 뇌조가 백 마리 넘게 있었다. 봄이 되었을 때 남은 것은 없었다."<br>"우리는 이런 새를 두고 흔하다고 말한다. 흔하다는 것은 많이 죽어도 된다는 뜻이 아니다. 이 한 줄 때문에 이 이야기가 오래 읽힙니다."<br>그 시절에는 그렇게 말하는 사람이 드물었습니다.`
         ]
     },
     {
@@ -188,7 +188,7 @@ const CHAPTERS = [
             `아이들을 숲으로 데려가 불 피우는 법과 발자국 읽는 법을 가르쳤습니다. 천막 치는 법과 별 보는 법도 가르쳤습니다. 그 지방에 살던 원주민에게 배운 것들이었습니다. 시튼은 그 단체에 등수를 두지 않았습니다. 아이들끼리 견주게 하고 싶지 않았기 때문입니다. 잘한 아이에게 깃털을 주었습니다. 남보다 잘한 것이 아니라 어제보다 잘한 것에 주었습니다. 그러니 누구나 받을 수 있었습니다. 다만 아무것도 안 하면 못 받았습니다. 등수를 매기면 꼴찌가 생깁니다. 시튼은 그 아이가 어떻게 되는지 알고 있었습니다.`,
             `시튼의 이야기에는 한 가지 규칙이 있습니다. 주인공이 대개 마지막에 죽습니다. 로보도, 은점박이도, 왑도, 붉은 목도 그렇습니다. 살아서 끝나는 것은 솜꼬리토끼 랙 하나뿐입니다. 그 랙도 어미를 잃습니다. 좋게 끝나는 이야기가 하나도 없는 셈입니다. 그런데도 이 책은 백 해 넘게 읽히고 있습니다. 슬프게 끝난다고 안 읽히는 것은 아닙니다. 오히려 그 끝 때문에 남습니다. 잊히지 않기 때문입니다.`,
             `사람들이 그것을 두고 시튼을 여러 번 나무랐습니다. 아이들이 읽는 책인데 왜 그렇게 쓰느냐는 것이었습니다. 아이들이 울면서 읽는다는 편지도 왔습니다. 그래도 고치지 않았습니다. 그때마다 시튼은 물러서지 않았습니다. 출판사에서도 고치자고 한 적이 있었습니다. 시튼은 그것을 받아들이지 않았습니다. 고치면 더 팔릴 것이라는 말도 들었습니다. 그래도 그대로 두었습니다.`,
-            `시튼은 이렇게 대답했습니다.<br>"야생 동물의 삶은 언제나 끝이 좋지 않다. 그것이 사실이다."<br>"내가 그것을 바꿔 쓰면, 읽는 사람은 저 짐승들이 잘 지내고 있다고 생각할 것이다."<br>"그러면 아무도 저들을 지키려고 하지 않을 것이다. 슬프게 쓰려고 그렇게 쓴 것이 아니었습니다. 사실이 그랬기 때문에 그렇게 쓴 것입니다. 그리고 그 사실을 바꾸려고 평생을 썼습니다. 국립 공원을 만드는 일에도 힘을 보탰습니다. 짐승이 살 자리를 남겨 두자는 것이었습니다. 글로는 사실대로 쓰고, 몸으로는 그것을 바꾸려 한 것입니다. "`,
+            `시튼은 이렇게 대답했습니다.<br>"야생 동물의 삶은 언제나 끝이 좋지 않다. 그것이 사실이다."<br>"내가 그것을 바꿔 쓰면, 읽는 사람은 저 짐승들이 잘 지내고 있다고 생각할 것이다."<br>"그러면 아무도 저들을 지키려고 하지 않을 것이다."<br>슬프게 쓰려고 그렇게 쓴 것이 아니었습니다. 사실이 그랬기 때문에 그렇게 쓴 것입니다. 그리고 그 사실을 바꾸려고 평생을 썼습니다. 국립 공원을 만드는 일에도 힘을 보탰습니다. 짐승이 살 자리를 남겨 두자는 것이었습니다. 글로는 사실대로 쓰고, 몸으로는 그것을 바꾸려 한 것입니다.`,
             `한번은 이름난 학자가 시튼의 글을 두고 지어낸 이야기라고 했습니다. 시튼은 그 자리에서 자기 공책을 내놓았습니다. 날짜와 자리와 잰 것이 다 적혀 있었습니다. 발자국 그림과 날씨까지 있었습니다. 그 학자는 더 말하지 못했습니다. 그 무렵에는 짐승 이야기를 지어내는 사람이 많았습니다. 그래서 그런 말이 나온 것입니다. 당시 미국 대통령까지 나서서 그 논쟁에 끼어들었습니다. 시튼의 편에 선 사람도 여럿이었습니다.`,
             `시튼의 이야기가 그전의 동물 이야기와 다른 점이 하나 더 있습니다. 그전까지 동물 이야기는 대개 사람 이야기를 짐승에 빗댄 것이었습니다. 여우가 꾀를 부리고 토끼가 게으르고 하는 식입니다. 짐승은 사람 성질을 담는 그릇이었습니다. 실제 그 짐승이 어떻게 사는지는 상관없었습니다. 여우가 정말 꾀가 많은지는 아무도 재 보지 않았습니다. 이야기에 필요한 대로 쓴 것입니다.`,
             `시튼은 그렇게 쓰지 않았습니다. 실제로 그 짐승이 무엇을 먹고 어떻게 새끼를 기르고 어떻게 위험을 피하는지를 적었습니다. 그것을 알아내려고 여러 해씩 한 짐승을 따라다녔습니다. 까마귀는 다섯 해, 뇌조는 세 해를 보았습니다. 로보는 넉 달이었지만 하루도 빠지지 않았습니다. 그래서 시튼의 책은 이야기이면서 관찰 기록입니다. 읽으면 재미있고, 읽고 나면 그 짐승을 알게 됩니다. 그런 책이 그때는 없었습니다. 그래서 이 책이 나왔을 때 아주 새로웠습니다. 지금은 그런 책이 흔합니다.`,
@@ -509,57 +509,57 @@ function paginateChapter(ch, chIndex) {
 
 function artFrame(src, emoji) {
     return `
-        <div class="art-frame">
-            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="art-fallback" style="display:none">${emoji}</div>
-        </div>`;
+ <div class="art-frame">
+ <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+ <div class="art-fallback" style="display:none">${emoji}</div>
+ </div>`;
 }
 
 function coverPage() {
     return `
-        <div class="page page-cover">
-            <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '🐺')}
-            </div>
-            <div class="story-page-right">
-                <h1>시튼 동물기</h1>
-                <p class="cover-tag">어니스트 톰프슨 시튼 원작</p>
-                <p>늑대를 잡아 상금을 받던 사냥꾼이 로보를 잡은 뒤로 사냥을 그만두고, 평생 야생 동물을 지키는 일을 했습니다.</p>
-                <p>여덟 편을 골라 담았습니다. 대개 주인공이 마지막에 죽습니다. 시튼이 왜 그렇게 썼는지도 함께 실었습니다.</p>
-            </div>
-        </div>`;
+ <div class="page page-cover">
+ <div class="story-page-left story-page-left-full">
+ ${artFrame('cover.webp', '🐺')}
+ </div>
+ <div class="story-page-right">
+ <h1>시튼 동물기</h1>
+ <p class="cover-tag">어니스트 톰프슨 시튼 원작</p>
+ <p>늑대를 잡아 상금을 받던 사냥꾼이 로보를 잡은 뒤로 사냥을 그만두고, 평생 야생 동물을 지키는 일을 했습니다.</p>
+ <p>여덟 편을 골라 담았습니다. 대개 주인공이 마지막에 죽습니다. 시튼이 왜 그렇게 썼는지도 함께 실었습니다.</p>
+ </div>
+ </div>`;
 }
 
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
     const itemHtml = ch => `
-        <li>
-            <button type="button" data-goto="${ch.num}">
-                <span class="toc-num">${ch.num}</span>
-                <span><strong>${ch.title}</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto="${ch.num}">
+ <span class="toc-num">${ch.num}</span>
+ <span><strong>${ch.title}</strong></span>
+ </button>
+ </li>`;
     const extraItems = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">?</span>
-                <span><strong>이야기 문제</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto-kind="quiz">
+ <span class="toc-num">?</span>
+ <span><strong>이야기 문제</strong></span>
+ </button>
+ </li>`;
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
     return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                ${part === 0 ? '<h2>차례</h2>' : ''}
-                <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
-            </div>
-        </div>`;
+ <div class="page page-toc">
+ <div class="story-page-left">
+ ${part === 0 ? '<h2>차례</h2>' : ''}
+ <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
+ </div>
+ <div class="story-page-right">
+ <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
+ </div>
+ </div>`;
 }
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
@@ -576,28 +576,28 @@ function chapterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                </div>
-            </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-            </div>
-        </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
 }
 
 const QUIZ = [
@@ -638,19 +638,19 @@ function quizPage(part) {
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
         return `
-        <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
-            <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
-            </div>
-        </div>`;
+ <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+ <p class="quiz-question">${i + 1}. ${item.q}</p>
+ <div class="quiz-choices">
+ ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ </div>
+ </div>`;
     }).join('');
     return `
-        <div class="page page-quiz">
-            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
-            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
-            <div class="quiz-list">${items}</div>
-        </div>`;
+ <div class="page page-quiz">
+ ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
+ <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+ <div class="quiz-list">${items}</div>
+ </div>`;
 }
 
 /* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
@@ -720,30 +720,30 @@ function afterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story page-after">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                    ${foot}
-                </div>
-            </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story page-after">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-                ${foot}
-            </div>
-        </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
 }
 
 const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);

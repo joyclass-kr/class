@@ -381,7 +381,7 @@ const CHAPTERS = [
             `"자네가 백작을 아주 싫어한다고 들었네." 백작이 말했습니다.`,
             `홉스 씨는 얼굴이 새빨개졌습니다.<br>"그건······ 잘 몰랐을 때 이야기입니다."`,
             `세드릭이 옆에서 웃었습니다. 두 사람이 만나는 것을 보려고 아침부터 기다렸습니다. 그것이 그날 세드릭의 가장 큰 일이었습니다. 백작이 웃었습니다. 그날 백작은 여러 번 웃었습니다. 통풍이 도지면 웃는 것도 힘든 병입니다. 그날은 그것이 아무렇지도 않았습니다. 마당까지 그 웃음소리가 들렸습니다. 사람들이 그 소리를 듣고 서로 얼굴을 보았습니다. 그것이 백작의 웃음이라는 것을 믿지 못했습니다. 해가 기울 무렵 백작이 계단 위에 올라섰습니다. 사람들이 다 조용해졌습니다. 악대도 나팔을 내렸습니다. 아이들도 뛰던 것을 멈췄습니다. 백작은 지팡이를 짚고 서서 마당을 둘러보았습니다. 여러 해 동안 이 사람들 앞에 서 본 적이 없는 사람이었습니다. 그는 짧게 말했습니다. 오늘은 내 손자의 생일이라고, 그리고 그 아이가 이 땅을 물려받을 것이라고요. 사람들이 모자를 벗어 던지며 소리를 질렀습니다. 소리가 성벽에 부딪혀 되돌아왔습니다. 백작은 그 소리 속에 한참 서 있었습니다. 그러고는 옆에 선 며느리 쪽으로 몸을 조금 돌렸습니다. 사람들은 그것도 보았습니다. 그날 밤 언쇼 사람들은 걸어서 돌아가면서 그 이야기만 했습니다.`,
-            `그날 저녁, 홉스 씨는 세드릭에게 말했습니다.<br>"세드릭, 나는 뉴욕에 안 돌아가겠다."<br>"정말요?"<br>"저 아래 마을에 가게 자리가 하나 났더구나. 내가 하기로 했다." 홉스 씨가 말했습니다.<br>"가게를 내면 네가 상자 위에 앉을 자리를 하나 만들어 두마. 뉴욕 가게는 팔기로 했습니다. 그 골목에서 이십 년을 산 사람이었습니다. "`,
+            `그날 저녁, 홉스 씨는 세드릭에게 말했습니다.<br>"세드릭, 나는 뉴욕에 안 돌아가겠다."<br>"정말요?"<br>"저 아래 마을에 가게 자리가 하나 났더구나. 내가 하기로 했다." 홉스 씨가 말했습니다.<br>"가게를 내면 네가 상자 위에 앉을 자리를 하나 만들어 두마. 뉴욕 가게는 팔기로 했습니다."<br>그 골목에서 이십 년을 산 사람이었습니다.`,
             `세드릭은 그 말에 홉스 씨의 팔을 붙잡았습니다. 그 팔이 여전히 세드릭의 허리만 했습니다. 뉴욕 골목에서 잡던 그 팔이었습니다.`,
             `딕은 뉴욕으로 돌아갔습니다. 형과 함께 서부로 갈 생각이었습니다. 조카 톰도 그곳에서 함께 지내게 되었습니다. 그 아이는 어머니를 다시 만나지 못했습니다. 대신 아버지와 삼촌이 생겼습니다. 배가 그다음 주에 떠났고, 세드릭이 부두까지 배웅을 나갔습니다. 성에서 항구까지 마차로 반나절이 걸렸습니다. 백작이 마차를 내주었습니다. 부두에는 갈매기가 시끄러웠습니다. 딕은 배에 오르기 전에 여러 번 돌아보았습니다. 그러고는 얼른 올라갔습니다.`,
             `떠나기 전날 딕이 세드릭에게 말했습니다.<br>"네가 그때 솔이랑 약을 사 줬잖아. 그게 시작이었어."<br>"그거 얼마 안 하는 건데."<br>"나한테는 아니었어." 딕이 말했습니다.`,
@@ -713,57 +713,57 @@ function paginateChapter(ch, chIndex) {
 
 function artFrame(src, emoji) {
     return `
-        <div class="art-frame">
-            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="art-fallback" style="display:none">${emoji}</div>
-        </div>`;
+ <div class="art-frame">
+ <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+ <div class="art-fallback" style="display:none">${emoji}</div>
+ </div>`;
 }
 
 function coverPage() {
     return `
-        <div class="page page-cover">
-            <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '🏰')}
-            </div>
-            <div class="story-page-right">
-                <h1>소공자</h1>
-                <p class="cover-tag">프랜시스 호지슨 버넷 원작</p>
-                <p>뉴욕 뒷골목에 사는 일곱 살 세드릭에게 어느 날 낯선 변호사가 찾아옵니다. 한 번도 본 적 없는 영국의 할아버지가 그를 부른다는 것이었습니다.</p>
-                <p>평생 남에게 미움만 받고 살아온 노인이, 자기를 좋은 사람이라고 믿는 아이 하나를 만나면서 어떻게 달라지는지에 대한 이야기입니다.</p>
-            </div>
-        </div>`;
+ <div class="page page-cover">
+ <div class="story-page-left story-page-left-full">
+ ${artFrame('cover.webp', '🏰')}
+ </div>
+ <div class="story-page-right">
+ <h1>소공자</h1>
+ <p class="cover-tag">프랜시스 호지슨 버넷 원작</p>
+ <p>뉴욕 뒷골목에 사는 일곱 살 세드릭에게 어느 날 낯선 변호사가 찾아옵니다. 한 번도 본 적 없는 영국의 할아버지가 그를 부른다는 것이었습니다.</p>
+ <p>평생 남에게 미움만 받고 살아온 노인이, 자기를 좋은 사람이라고 믿는 아이 하나를 만나면서 어떻게 달라지는지에 대한 이야기입니다.</p>
+ </div>
+ </div>`;
 }
 
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
     const itemHtml = ch => `
-        <li>
-            <button type="button" data-goto="${ch.num}">
-                <span class="toc-num">${ch.num}</span>
-                <span><strong>${ch.title}</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto="${ch.num}">
+ <span class="toc-num">${ch.num}</span>
+ <span><strong>${ch.title}</strong></span>
+ </button>
+ </li>`;
     const extraItems = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">?</span>
-                <span><strong>이야기 문제</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto-kind="quiz">
+ <span class="toc-num">?</span>
+ <span><strong>이야기 문제</strong></span>
+ </button>
+ </li>`;
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
     return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                ${part === 0 ? '<h2>차례</h2>' : ''}
-                <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
-            </div>
-        </div>`;
+ <div class="page page-toc">
+ <div class="story-page-left">
+ ${part === 0 ? '<h2>차례</h2>' : ''}
+ <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
+ </div>
+ <div class="story-page-right">
+ <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
+ </div>
+ </div>`;
 }
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
@@ -780,28 +780,28 @@ function chapterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                </div>
-            </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-            </div>
-        </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
 }
 
 const QUIZ = [
@@ -842,19 +842,19 @@ function quizPage(part) {
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
         return `
-        <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
-            <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
-            </div>
-        </div>`;
+ <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+ <p class="quiz-question">${i + 1}. ${item.q}</p>
+ <div class="quiz-choices">
+ ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ </div>
+ </div>`;
     }).join('');
     return `
-        <div class="page page-quiz">
-            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
-            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
-            <div class="quiz-list">${items}</div>
-        </div>`;
+ <div class="page page-quiz">
+ ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
+ <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+ <div class="quiz-list">${items}</div>
+ </div>`;
 }
 
 /* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
@@ -924,30 +924,30 @@ function afterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story page-after">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                    ${foot}
-                </div>
-            </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story page-after">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-                ${foot}
-            </div>
-        </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
 }
 
 const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);

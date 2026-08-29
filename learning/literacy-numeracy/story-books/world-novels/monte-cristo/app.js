@@ -101,14 +101,14 @@ const CHAPTERS = [
         paras: [
             `당테스는 이야기했습니다. 말이 서툴러져서 처음에는 더듬거렸습니다. 여러 해 동안 말을 해 본 적이 없었기 때문입니다. 혀가 굳어 있었습니다. 첫마디를 꺼내는 데 한참이 걸렸습니다. 배가 들어온 날, 선장이 된 일, 엘바 섬의 편지, 약혼 잔치, 헌병, 빌포르의 방. 빠뜨린 것 없이 다 말했습니다. 신부는 눈을 감고 들었습니다. 눈을 감으면 사람 말이 더 잘 들립니다. 신부는 그것을 오래 해 온 사람이었습니다.`,
             `한 번도 끊지 않았습니다. 끊으면 이야기가 그 사람 셈으로 끌려갑니다. 신부는 그것을 알고 있었습니다.`,
-            `그리고 물었습니다.<br>"자네가 선장이 되면 손해를 보는 사람이 있었나?"<br>"당글라르가 선장이 되고 싶어 했습니다. 그러나 그 사람은 저에게 나쁘게 대한 적이 없습니다. 당테스는 그 사람이 자기를 미워한다는 생각을 해 본 적이 없었습니다. 미워할 까닭이 있는 줄도 몰랐습니다. "`,
+            `그리고 물었습니다.<br>"자네가 선장이 되면 손해를 보는 사람이 있었나?"<br>"당글라르가 선장이 되고 싶어 했습니다. 그러나 그 사람은 저에게 나쁘게 대한 적이 없습니다."<br>당테스는 그 사람이 자기를 미워한다는 생각을 해 본 적이 없었습니다. 미워할 까닭이 있는 줄도 몰랐습니다.`,
             `신부가 고개를 저었습니다. 나쁘게 대하지 않는 것과 미워하지 않는 것은 다릅니다. 신부는 그 둘을 갈라서 셈했습니다.`,
             `"자네가 결혼하면 손해를 보는 사람은?"<br>"페르낭이라는 사람이 메르세데스를 좋아했습니다. 하지만 그 사람은 제 친구입니다."`,
             `당테스는 그렇게 믿고 있었습니다. 친구라는 말을 당테스가 먼저 썼습니다. 페르낭은 한 번도 그렇게 부르지 않았습니다.`,
             `"약혼 잔치 전날 밤, 그 두 사람이 함께 있었나?"<br>"카드루스의 집에서 술을 마셨다고 들었습니다."`,
             `신부는 한참 말이 없었습니다. 머릿속에서 셈을 하고 있었습니다. 누가 무엇을 얻는지를 하나씩 놓아 보았습니다. 그러면 대개 답이 나옵니다.`,
             `"그 편지의 수신인 이름을 빌포르에게 말했다고 했지. 그 이름이 무엇이었나?"<br>"노아르티에였습니다."`,
-            `신부가 눈을 떴습니다.<br>"노아르티에라. 그 사람은 황제 편의 유명한 인물일세. 그리고 빌포르라는 검사의 아버지 이름이기도 하지. 신부는 갇히기 전에 그 나라의 정치를 잘 알던 사람이었습니다. 그래서 그 이름을 알고 있었습니다. "`,
+            `신부가 눈을 떴습니다.<br>"노아르티에라. 그 사람은 황제 편의 유명한 인물일세. 그리고 빌포르라는 검사의 아버지 이름이기도 하지."<br>신부는 갇히기 전에 그 나라의 정치를 잘 알던 사람이었습니다. 그래서 그 이름을 알고 있었습니다.`,
             `그 말이 마지막 조각이었습니다. 당테스는 그 자리에서 일어섰습니다. 숨이 가빠졌습니다. 네 해 동안 알 수 없던 것이 몇 마디로 풀렸습니다. 그것이 더 견디기 어려웠습니다.`,
             `"이제 알겠나." 신부가 조용히 말했습니다.<br>"당글라르가 편지를 썼고, 페르낭이 그것을 보냈고, 카드루스는 알면서도 입을 다물었네. 그리고 빌포르는 자기 아버지를 지키려고 자네를 여기 묻었지. 자네가 살아서 나가면 자기 앞길이 끝나니까."`,
             `넷이었습니다. 당글라르, 페르낭, 카드루스, 빌포르. 이름 네 개였습니다. 그날 밤 당테스는 잠들지 못했습니다. 네 사람의 이름을 밤새 되뇌었습니다. 이튿날부터 신부는 당테스를 가르치기 시작했습니다. 아침에 일어나면 벽을 넘어와 저녁까지 있다가 돌아갔습니다. 간수가 오는 시각을 둘 다 외우고 있었습니다. 그 시각에는 각자 방에 있었습니다.`,
@@ -753,57 +753,57 @@ function paginateChapter(ch, chIndex) {
 
 function artFrame(src, emoji) {
     return `
-        <div class="art-frame">
-            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="art-fallback" style="display:none">${emoji}</div>
-        </div>`;
+ <div class="art-frame">
+ <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+ <div class="art-fallback" style="display:none">${emoji}</div>
+ </div>`;
 }
 
 function coverPage() {
     return `
-        <div class="page page-cover">
-            <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '🗝️')}
-            </div>
-            <div class="story-page-right">
-                <h1>몽테크리스토 백작</h1>
-                <p class="cover-tag">알렉상드르 뒤마 원작</p>
-                <p>선장이 되고 결혼을 앞둔 열아홉 살 뱃사람이, 자기가 무슨 죄를 지었는지도 모른 채 바다 한가운데 감옥에 갇힙니다. 그가 그곳에서 보낸 세월은 열네 해였습니다.</p>
-                <p>그 사람이 어떻게 다시 세상으로 나왔는지, 그리고 자기를 그곳에 보낸 사람들을 어떻게 찾아냈는지에 대한 이야기입니다.</p>
-            </div>
-        </div>`;
+ <div class="page page-cover">
+ <div class="story-page-left story-page-left-full">
+ ${artFrame('cover.webp', '🗝️')}
+ </div>
+ <div class="story-page-right">
+ <h1>몽테크리스토 백작</h1>
+ <p class="cover-tag">알렉상드르 뒤마 원작</p>
+ <p>선장이 되고 결혼을 앞둔 열아홉 살 뱃사람이, 자기가 무슨 죄를 지었는지도 모른 채 바다 한가운데 감옥에 갇힙니다. 그가 그곳에서 보낸 세월은 열네 해였습니다.</p>
+ <p>그 사람이 어떻게 다시 세상으로 나왔는지, 그리고 자기를 그곳에 보낸 사람들을 어떻게 찾아냈는지에 대한 이야기입니다.</p>
+ </div>
+ </div>`;
 }
 
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
     const itemHtml = ch => `
-        <li>
-            <button type="button" data-goto="${ch.num}">
-                <span class="toc-num">${ch.num}</span>
-                <span><strong>${ch.title}</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto="${ch.num}">
+ <span class="toc-num">${ch.num}</span>
+ <span><strong>${ch.title}</strong></span>
+ </button>
+ </li>`;
     const extraItems = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">?</span>
-                <span><strong>이야기 문제</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto-kind="quiz">
+ <span class="toc-num">?</span>
+ <span><strong>이야기 문제</strong></span>
+ </button>
+ </li>`;
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
     return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                ${part === 0 ? '<h2>차례</h2>' : ''}
-                <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
-            </div>
-        </div>`;
+ <div class="page page-toc">
+ <div class="story-page-left">
+ ${part === 0 ? '<h2>차례</h2>' : ''}
+ <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
+ </div>
+ <div class="story-page-right">
+ <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
+ </div>
+ </div>`;
 }
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
@@ -820,28 +820,28 @@ function chapterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                </div>
-            </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-            </div>
-        </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
 }
 
 const QUIZ = [
@@ -882,19 +882,19 @@ function quizPage(part) {
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
         return `
-        <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
-            <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
-            </div>
-        </div>`;
+ <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+ <p class="quiz-question">${i + 1}. ${item.q}</p>
+ <div class="quiz-choices">
+ ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ </div>
+ </div>`;
     }).join('');
     return `
-        <div class="page page-quiz">
-            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
-            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
-            <div class="quiz-list">${items}</div>
-        </div>`;
+ <div class="page page-quiz">
+ ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
+ <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+ <div class="quiz-list">${items}</div>
+ </div>`;
 }
 
 /* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
@@ -964,30 +964,30 @@ function afterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story page-after">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                    ${foot}
-                </div>
-            </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story page-after">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-                ${foot}
-            </div>
-        </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
 }
 
 const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);

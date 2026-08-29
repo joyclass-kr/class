@@ -22,7 +22,7 @@ const CHAPTERS = [
             `"아까 그 기차로 온 남자아이가 없었습니까?" 매슈가 역장에게 물었습니다.`,
             `"남자아이는 없었는데요." 역장이 말했습니다.<br>"여자아이가 하나 왔습니다. 저기 널빤지 위에 앉아 있는데요. 안으로 들어오라고 했더니 밖이 더 상상할 거리가 많다면서 저러고 있습니다."`,
             `역장이 어깨를 으쓱했습니다.`,
-            `"말이 아주 많은 아이더군요. 역장은 그 말을 하면서 웃었습니다. 아이가 한 말을 다 기억하고 있는 얼굴이었습니다. "`,
+            `"말이 아주 많은 아이더군요."<br>역장은 그 말을 하면서 웃었습니다. 아이가 한 말을 다 기억하고 있는 얼굴이었습니다.`,
             `매슈가 돌아보았습니다. 그리고 그 자리에서 발이 굳었습니다. 남자아이가 아니었습니다.`,
             `승강장 끝의 널빤지 더미 위에 여자아이가 하나 앉아 있었습니다. 발이 땅에 닿지 않아 다리를 흔들고 있었습니다. 열한 살쯤 되어 보였습니다. 몸에 맞지 않는 낡은 옷을 입었고, 낡은 여행 가방을 무릎에 안고 있었습니다. 그 가방이 아이가 가진 것 전부였습니다. 손잡이가 끊어져서 끈으로 묶어 놓았습니다. 여러 집을 거쳐 온 가방이었습니다.`,
             `옷 두 벌과 낡은 빗 하나가 들어 있었습니다. 가장 먼저 눈에 들어온 것은 머리카락이었습니다. 두 갈래로 땋아 늘였는데 아주 새빨간 빛이었습니다. 그 머리 때문에 앤은 여러 해 동안 마음고생을 하게 됩니다. 그 시절에는 빨간 머리를 두고 놀리는 일이 흔했습니다. 앤도 그것을 여러 번 겪었습니다.`,
@@ -45,7 +45,7 @@ const CHAPTERS = [
         paras: [
             `마차가 달리는 동안 아이는 쉬지 않고 말했습니다.<br>"제 이름은 앤 셜리예요. 그런데 부르실 때는 코딜리아라고 불러 주시면 안 될까요? 아, 안 되겠죠. 그럼 앤이라고 불러 주세요. 대신 꼭 끝에 이(e)가 붙은 앤이에요. 앤(Ann)은 밋밋한데 앤(Anne)은 훨씬 근사해 보이거든요."<br>`,
             `"아저씨, 제가 너무 말을 많이 하나요? 그러면 그만하라고 하세요. 저는 그만할 수 있어요. 어려운 일이지만 마음먹으면 할 수 있어요."<br>`,
-            `"괜찮다." 매슈가 말했습니다.<br>"얼마든지 하려무나. 앤이 그 말을 듣고 눈이 커졌습니다. 여태 그런 말을 들어 본 적이 없었습니다. "`,
+            `"괜찮다." 매슈가 말했습니다.<br>"얼마든지 하려무나. 앤이 그 말을 듣고 눈이 커졌습니다."<br>여태 그런 말을 들어 본 적이 없었습니다.`,
             `그것은 매슈가 살면서 처음 해 보는 말이었습니다. 그는 남의 말을 듣는 것을 좋아했지만, 대개는 아무도 그에게 말을 걸지 않았습니다. 수줍은 사람에게는 말을 잘 걸지 않습니다. 그래서 매슈는 늘 조용했습니다. 앤은 자기 이야기를 했습니다. 묻지 않았는데도 다 했습니다.`,
             `부모는 앤이 태어난 지 석 달 만에 열병으로 세상을 떠났습니다. 앤은 토머스 아주머니 집에서 아이 넷을 돌보며 자랐고, 그 집이 어려워지자 해먼드 아주머니 집으로 갔습니다. 그 집에는 아이가 여덟이었고 그중 쌍둥이가 세 쌍이었습니다. 그 집도 무너지자 고아원으로 갔습니다. 두 집 다 형편이 어려워졌습니다. 그러면 제일 먼저 나가야 하는 것이 앤이었습니다.`,
             `열한 해 사이에 집을 셋 옮긴 것이었습니다. 어느 집에서도 앤은 손님이 아니었습니다. 밥을 얻어먹는 값으로 아이를 봐야 했습니다. 그것을 앤은 당연한 일로 알고 자랐습니다. 다른 아이들이 어떻게 사는지를 몰랐기 때문입니다. 학교를 다녀 본 적이 없었습니다.`,
@@ -54,9 +54,9 @@ const CHAPTERS = [
             `그래도 글은 읽을 줄 안다고 했습니다. 시도 여러 편 외우고 있다고 했습니다. 토머스 아주머니 집에 있던 낡은 시집 한 권을 다 외웠다고 했습니다. 그 집에 책이 그것 하나였습니다. 그래서 그것만 여러 번 읽었습니다. 길이 굽어지자 앞이 온통 하얘졌습니다. 벚나무와 사과나무가 길 양쪽에서 가지를 뻗어 꽃 지붕을 이루고 있었습니다.`,
             `저녁 해가 그 꽃 사이로 들어와 길에 얼룩을 만들었습니다. 꽃잎이 바람에 떨어져 마차 위로 내려앉았습니다. 앤이 그것을 손으로 받았습니다. 앤은 말을 멈추었습니다. 그리고 두 손을 모으고 그것을 올려다보았습니다. 마차가 그 아래를 지나는 동안 아무 말도 하지 않았습니다. 말이 많던 아이가 처음으로 조용해진 것이었습니다. 매슈는 그것이 오히려 이상했습니다.`,
             `한참이 지나서야 아이가 말했습니다. 목소리가 조금 잠겨 있었습니다.`,
-            `"이 길 이름이 뭐예요?"<br>"가로수 길이라고 부른다."<br>"그건 이 길에 안 어울려요. 아무 뜻도 없잖아요. 저는 이 길을 환희의 하얀 길이라고 부르겠어요. 그 이름을 그 자리에서 지어냈습니다. 그러고는 몇 번 소리 내어 불러 보았습니다. "`,
+            `"이 길 이름이 뭐예요?"<br>"가로수 길이라고 부른다."<br>"그건 이 길에 안 어울려요. 아무 뜻도 없잖아요. 저는 이 길을 환희의 하얀 길이라고 부르겠어요. 그 이름을 그 자리에서 지어냈습니다."<br>그러고는 몇 번 소리 내어 불러 보았습니다.`,
             `매슈는 그 말에 대답하지 못했습니다. 그런 말을 들어 본 적이 없었기 때문입니다. 그 길을 예순 해 동안 다녔습니다. 그런데 그런 생각을 해 본 적이 없었습니다. 조금 더 가자 다리 아래로 호수가 보였습니다. 저녁 해를 받아 물빛이 붉게 물들어 있었습니다.`,
-            `"저건 배리네 연못이라고 한다."<br>"그것도 안 어울려요. 저건······ 빛나는 물의 호수예요. 해가 물에 닿아 붉게 번지고 있었습니다. 그 이름이 그 자리에 딱 맞았습니다. "`,
+            `"저건 배리네 연못이라고 한다."<br>"그것도 안 어울려요. 저건······ 빛나는 물의 호수예요."<br>해가 물에 닿아 붉게 번지고 있었습니다. 그 이름이 그 자리에 딱 맞았습니다.`,
             `앤은 그 이름을 그 자리에서 지어냈습니다. 앤은 그런 식으로 가는 길에 있는 것마다 이름을 새로 붙였습니다. 해가 질 무렵 마차가 초록 지붕 집 앞에 닿았습니다. 앤은 마차에서 내려 그 집을 올려다보았습니다.`,
             `그리고 한참 서 있었습니다. 창에 불이 켜져 있었습니다. 부엌 창이었습니다. 마릴라가 저녁을 차리고 있었습니다.`,
             `"여기가······ 제 집이에요?"`,
@@ -75,7 +75,7 @@ const CHAPTERS = [
             `아이는 가방을 바닥에 내려놓았습니다. 가방 소리가 났습니다. 그 소리가 부엌에 크게 울렸습니다. 아무도 아무 말도 하지 않았습니다.`,
             `"저를 원하지 않으시는군요." 앤이 말했습니다.<br>"제가 남자아이가 아니라서요."`,
             `그러고는 식탁에 엎드려 울기 시작했습니다. 마릴라가 지금까지 본 어떤 울음보다 큰 울음이었습니다. 어깨가 들썩였습니다. 소리를 참지도 않았습니다. 마릴라는 그런 울음을 처음 보았습니다.`,
-            `"얘야, 그만하렴. 그런 일로 울 것까지는……."<br>"울 일이에요!" 앤이 고개를 들었습니다. 얼굴이 눈물범벅이었습니다.<br>"아주머니도 고아였다가 어떤 집에 갔는데, 그 집이 남자아이를 원했다는 걸 알게 되면 우실 거예요. 이건 제 인생에서 가장 비극적인 일이에요. 열한 살짜리가 하는 말이었습니다. 마릴라는 웃어야 할지 나무라야 할지 몰랐습니다. "`,
+            `"얘야, 그만하렴. 그런 일로 울 것까지는……."<br>"울 일이에요!" 앤이 고개를 들었습니다. 얼굴이 눈물범벅이었습니다.<br>"아주머니도 고아였다가 어떤 집에 갔는데, 그 집이 남자아이를 원했다는 걸 알게 되면 우실 거예요. 이건 제 인생에서 가장 비극적인 일이에요."<br>열한 살짜리가 하는 말이었습니다. 마릴라는 웃어야 할지 나무라야 할지 몰랐습니다.`,
             `앤은 그런 말을 어른처럼 했습니다. 책에서 읽은 말을 그대로 가져다 쓰는 아이였습니다. 마릴라는 그날 밤 앤을 다락방에 재웠습니다. 손님방에 재우기에는 아침에 보낼 아이였기 때문입니다. 다락방은 좁고 가구가 없었습니다. 침대 하나와 의자 하나뿐이었습니다.`,
             `아이가 올라간 뒤 마릴라가 말했습니다.<br>"내일 스펜서 부인에게 데려다주고 사정을 이야기해야겠다."<br>"그래야겠지." 매슈가 말했습니다. 그러고는 잠깐 있다가 덧붙였습니다.<br>"그런데 마릴라, 저 아이는 참 재미있는 아이더구나."`,
             `매슈가 사람을 두고 그런 말을 한 것은 처음이었습니다. 평생 남을 두고 무엇이라고 한 적이 없는 사람이었습니다. 마릴라는 그것을 놓치지 않았습니다.`,
@@ -109,7 +109,7 @@ const CHAPTERS = [
             `마릴라는 그렇게밖에 말하지 못했습니다. 마음이 정해진 것을 스스로 인정하기가 싫었기 때문입니다. 아직 모르겠다고 해 두면 물릴 수 있습니다. 마릴라는 그런 사람이었습니다.`,
             `앤이 갑자기 마릴라의 팔을 붙잡았습니다.<br>"아주머니, 정말이에요? 정말요?"<br>"팔을 놓으렴. 마차가 흔들린다."`,
             `앤은 팔을 놓고 두 손을 무릎에 얹었습니다. 그리고 남은 길 내내 아무 말도 하지 않았습니다. 입술을 꼭 다물고 있었습니다. 말을 하면 울 것 같았기 때문입니다.`,
-            `그날 저녁, 마릴라는 매슈에게 말했습니다. 부엌에서 그릇을 닦으면서 말했습니다. <br>"저 아이를 데리고 있기로 했다. 다만 내가 제대로 가르칠 거야. 저 애는 지금 머릿속에 뜬구름만 가득해. 마릴라는 그 말을 아주 딱딱하게 했습니다. 그래야 마음을 들키지 않기 때문입니다. "`,
+            `그날 저녁, 마릴라는 매슈에게 말했습니다. 부엌에서 그릇을 닦으면서 말했습니다. <br>"저 아이를 데리고 있기로 했다. 다만 내가 제대로 가르칠 거야. 저 애는 지금 머릿속에 뜬구름만 가득해. 마릴라는 그 말을 아주 딱딱하게 했습니다."<br>그래야 마음을 들키지 않기 때문입니다.`,
             `매슈가 고개를 끄덕였습니다. 매슈는 아무 말도 하지 않았습니다. 다만 그날 저녁 내내 웃는 얼굴이었습니다. 파이프를 물고 앉아 혼자 웃었습니다. 불도 붙이지 않은 파이프였습니다. 마릴라가 그것을 보고 아무 말도 하지 않았습니다.`,
             `그날 밤 앤은 창가에 무릎을 꿇고 앉아 말했습니다.<br>"이제 저 벚나무를 눈의 여왕이라고 불러도 되겠어."`
         ]
@@ -132,7 +132,7 @@ const CHAPTERS = [
             `린드 부인의 입이 벌어졌습니다.`,
             `"앤!" 마릴라가 소리쳤습니다.`,
             `앤은 멈추지 않았습니다.`,
-            `"그런 말을 듣고도 아무렇지 않을 수는 없어요. 저는 아주머니를 절대로 용서하지 않겠어요. 절대로요! 발을 한 번 더 굴렀습니다. 마룻바닥이 울렸습니다. "`,
+            `"그런 말을 듣고도 아무렇지 않을 수는 없어요. 저는 아주머니를 절대로 용서하지 않겠어요. 절대로요!"<br>발을 한 번 더 굴렀습니다. 마룻바닥이 울렸습니다.`,
             `부엌이 조용해졌습니다. 아무도 그런 말을 린드 부인에게 한 적이 없었습니다. 어른들도 그 앞에서는 말을 골랐습니다. 그런데 열한 살짜리가 그렇게 한 것입니다. 앤은 방으로 뛰어 올라가 문을 쾅 닫았습니다.`,
             `린드 부인은 어이가 없어 한동안 말을 못 했습니다. 그러고는 "그런 아이를 데려오다니, 나중에 후회할 거예요" 하고 돌아갔습니다.`,
             `돌아가면서 문을 세게 닫았습니다. 마릴라는 문 앞까지 배웅하지 못했습니다. 무슨 말을 해야 할지 몰랐기 때문입니다. 마릴라는 앤의 방으로 올라갔습니다. 앤은 침대에 엎드려 있었습니다.`,
@@ -158,10 +158,10 @@ const CHAPTERS = [
         art: ["story-06-a.webp", "story-06-b.webp"],
         paras: [
             `앤에게는 오래전부터 바라던 것이 하나 있었습니다.`,
-            `"마음의 친구요." 앤이 말했습니다.<br>"속에 있는 것을 다 이야기할 수 있는 친구요. 앤은 그 말을 책에서 읽었습니다. 그리고 그것을 오래 마음에 두고 있었습니다. "`,
+            `"마음의 친구요." 앤이 말했습니다.<br>"속에 있는 것을 다 이야기할 수 있는 친구요."<br>앤은 그 말을 책에서 읽었습니다. 그리고 그것을 오래 마음에 두고 있었습니다.`,
             `앤은 그런 친구를 한 번도 가져 본 적이 없었습니다. 돌보아야 할 아이는 많았지만 이야기를 들어 줄 사람은 없었습니다. 어른들은 늘 바빴습니다. 아이들은 너무 어렸습니다. 언덕 아래 과수원 집에 다이애나 배리라는 아이가 살았습니다. 앤과 같은 나이였습니다. 마릴라가 그 집에 데려가 주기로 했습니다. 배리네는 그 마을에서 잘사는 집이었습니다. 과수원이 아주 넓었습니다.`,
             `처음 만나는 날, 앤은 손이 떨렸습니다. 밤에 잠도 설쳤습니다. 옷을 두 번 갈아입고 머리를 세 번 다시 땋았습니다. 거울 앞에서 인사말을 연습하기도 했습니다. 그것을 마릴라가 보고 웃었습니다.`,
-            `"마릴라 아주머니, 만약 저 아이가 저를 좋아하지 않으면 어떡하죠?"<br>"쓸데없는 걱정 말고 가자. 마릴라는 그렇게 말했지만 앤의 옷깃을 한 번 여며 주었습니다. 그러고는 얼른 손을 뗐습니다. "`,
+            `"마릴라 아주머니, 만약 저 아이가 저를 좋아하지 않으면 어떡하죠?"<br>"쓸데없는 걱정 말고 가자."<br>마릴라는 그렇게 말했지만 앤의 옷깃을 한 번 여며 주었습니다. 그러고는 얼른 손을 뗐습니다.`,
             `다이애나는 검은 머리에 볼이 발그레한 아이였습니다. 앤과는 아주 달랐습니다. 조용했고, 상상하는 것보다 있는 그대로를 좋아했습니다. 그런데 두 아이는 이상하게 잘 맞았습니다. 닮아서 맞는 것이 아니었습니다. 서로 없는 것을 가지고 있어서 그랬습니다.`,
             `두 아이는 과수원에서 마주 섰습니다. 배리 부인과 마릴라는 조금 떨어져서 지켜보았습니다. 앤은 미리 연습한 말을 다 잊어버렸습니다. 다이애나도 무슨 말을 해야 할지 몰라 발끝만 보고 있었습니다. 과수원에 벌 소리만 났습니다. 사과꽃이 지고 잎이 나던 무렵이었습니다. 볕이 나뭇잎 사이로 들어왔습니다.`,
             `"다이애나, 나랑 마음의 친구가 되어 줄래?" 앤이 물었습니다.<br>"그러면 맹세를 해야 해."<br>"맹세? 그건 나쁜 말 아니야?"<br>"이 맹세는 달라. 아주 엄숙하게 약속하는 거야."`,
@@ -174,7 +174,7 @@ const CHAPTERS = [
             `그것이 앤에게는 초록 지붕 집 다음으로 큰 일이었습니다. 열한 해 만에 처음이었습니다. 그전에는 함께 놀 아이도 없었습니다. 그해 가을부터 앤은 에이번리 학교에 다니기 시작했습니다.`,
             `학교에는 아이들이 스무 명 남짓 있었습니다. 한 교실에 여섯 살부터 열여섯 살까지 함께 앉았습니다. 앤은 곧 공부에서 앞자리에 섰습니다. 책을 좋아했고, 한 번 본 것은 잘 잊지 않았습니다. 역사와 시를 특히 잘했습니다. 외우는 것이 빨랐습니다. 한 번 읽으면 거의 그대로 옮길 수 있었습니다.`,
             `다만 산수만은 잘하지 못했습니다.<br>"산수에는 상상할 것이 하나도 없어요." 앤이 말했습니다.`,
-            `"삼각형은 왜 삼각형이어야 하는지 아무도 설명해 주지 않아요. 앤은 그것을 진지하게 물었습니다. 선생님도 대답하지 못했습니다. " 앤이 말했습니다.`,
+            `"삼각형은 왜 삼각형이어야 하는지 아무도 설명해 주지 않아요." 앤이 말했습니다.<br>앤은 그것을 진지하게 물었습니다. 선생님도 대답하지 못했습니다.`,
             `마릴라는 그런 말에 대답하는 법을 끝내 배우지 못했습니다. 그래서 그냥 산수를 하라고만 했습니다. 그러면 앤이 한숨을 쉬었습니다. 그러고는 결국 했습니다.`
         ]
     },
@@ -336,7 +336,7 @@ const CHAPTERS = [
             `사흘째 되던 날, 그는 린드 부인을 찾아갔습니다.`,
             `"레이철, 부탁이 하나 있소." 매슈가 말했습니다.<br>"앤에게 옷을 하나 지어 주고 싶은데, 내가 그런 걸 몰라서."`,
             `매슈는 그 말을 하면서 모자를 만지작거렸습니다. 그 말을 하기까지 사흘이 걸렸습니다. 매슈에게는 아주 큰일이었습니다.`,
-            `린드 부인이 웃었습니다.<br>"매슈 커스버트, 드디어 알아차렸군요. 마릴라가 지어 준 옷은 다 튼튼하기만 하지요. 요새 아이들은 소매에 주름을 넣은 옷을 입어요. 앤이 그 소매를 오래 갖고 싶어 했습니다. 린드 부인은 그것을 알고 있었습니다. "`,
+            `린드 부인이 웃었습니다.<br>"매슈 커스버트, 드디어 알아차렸군요. 마릴라가 지어 준 옷은 다 튼튼하기만 하지요. 요새 아이들은 소매에 주름을 넣은 옷을 입어요. 앤이 그 소매를 오래 갖고 싶어 했습니다."<br>린드 부인은 그것을 알고 있었습니다.`,
             `린드 부인은 그날부터 그 옷을 짓기 시작했습니다. 천도 부인이 골랐습니다. 갈색이 앤에게 어울린다고 했습니다. 그 머리 빛깔과 잘 맞는다고 했습니다. 그해 성탄절 아침, 앤은 방에서 내려오다가 걸음을 멈추었습니다. 부엌 문 옆에 갈색 옷이 하나 걸려 있었습니다. 부드러운 천에 소매에는 크게 주름이 잡혀 있었습니다.`,
             `앤이 오래 갖고 싶어 하던 그 소매였습니다. 학교 아이들이 다 그런 소매를 입고 있었습니다. 앤만 그렇지 않았습니다.`,
             `"이건······."<br>"매슈가 너에게 주는 거란다." 마릴라가 말했습니다.`,
@@ -724,57 +724,57 @@ function paginateChapter(ch, chIndex) {
 
 function artFrame(src, emoji) {
     return `
-        <div class="art-frame">
-            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="art-fallback" style="display:none">${emoji}</div>
-        </div>`;
+ <div class="art-frame">
+ <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+ <div class="art-fallback" style="display:none">${emoji}</div>
+ </div>`;
 }
 
 function coverPage() {
     return `
-        <div class="page page-cover">
-            <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '🍁')}
-            </div>
-            <div class="story-page-right">
-                <h1>빨간 머리 앤</h1>
-                <p class="cover-tag">루시 모드 몽고메리 원작</p>
-                <p>나이 든 남매가 농장 일을 도울 남자아이를 하나 데려오기로 합니다. 그런데 역에 나가 보니 널빤지 위에 빨간 머리 여자아이가 앉아 있었습니다.</p>
-                <p>착오로 초록 지붕 집에 오게 된 열한 살 앤 셜리가 그 집과 그 마을을 어떻게 바꾸어 놓았는지에 대한 이야기입니다.</p>
-            </div>
-        </div>`;
+ <div class="page page-cover">
+ <div class="story-page-left story-page-left-full">
+ ${artFrame('cover.webp', '🍁')}
+ </div>
+ <div class="story-page-right">
+ <h1>빨간 머리 앤</h1>
+ <p class="cover-tag">루시 모드 몽고메리 원작</p>
+ <p>나이 든 남매가 농장 일을 도울 남자아이를 하나 데려오기로 합니다. 그런데 역에 나가 보니 널빤지 위에 빨간 머리 여자아이가 앉아 있었습니다.</p>
+ <p>착오로 초록 지붕 집에 오게 된 열한 살 앤 셜리가 그 집과 그 마을을 어떻게 바꾸어 놓았는지에 대한 이야기입니다.</p>
+ </div>
+ </div>`;
 }
 
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
     const itemHtml = ch => `
-        <li>
-            <button type="button" data-goto="${ch.num}">
-                <span class="toc-num">${ch.num}</span>
-                <span><strong>${ch.title}</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto="${ch.num}">
+ <span class="toc-num">${ch.num}</span>
+ <span><strong>${ch.title}</strong></span>
+ </button>
+ </li>`;
     const extraItems = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">?</span>
-                <span><strong>이야기 문제</strong></span>
-            </button>
-        </li>`;
+ <li>
+ <button type="button" data-goto-kind="quiz">
+ <span class="toc-num">?</span>
+ <span><strong>이야기 문제</strong></span>
+ </button>
+ </li>`;
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
     return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                ${part === 0 ? '<h2>차례</h2>' : ''}
-                <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
-            </div>
-        </div>`;
+ <div class="page page-toc">
+ <div class="story-page-left">
+ ${part === 0 ? '<h2>차례</h2>' : ''}
+ <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
+ </div>
+ <div class="story-page-right">
+ <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
+ </div>
+ </div>`;
 }
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
@@ -791,28 +791,28 @@ function chapterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                </div>
-            </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-            </div>
-        </div>`;
+ <div class="page page-story">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ </div>
+ </div>`;
 }
 
 const QUIZ = [
@@ -853,19 +853,19 @@ function quizPage(part) {
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
         return `
-        <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
-            <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
-            </div>
-        </div>`;
+ <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+ <p class="quiz-question">${i + 1}. ${item.q}</p>
+ <div class="quiz-choices">
+ ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ </div>
+ </div>`;
     }).join('');
     return `
-        <div class="page page-quiz">
-            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
-            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
-            <div class="quiz-list">${items}</div>
-        </div>`;
+ <div class="page page-quiz">
+ ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
+ <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+ <div class="quiz-list">${items}</div>
+ </div>`;
 }
 
 /* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
@@ -935,30 +935,30 @@ function afterSpreadPage(spread) {
 
     if (spread.art) {
         return `
-            <div class="page page-story page-after">
-                <div class="story-page-left">
-                    ${head}
-                    ${runHtml(segs, spread.left[0], spread.left[1])}
-                </div>
-                <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
-                    ${runHtml(segs, spread.right[0], spread.right[1])}
-                    ${foot}
-                </div>
-            </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-image">
+ <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
     }
 
     return `
-        <div class="page page-story page-after">
-            <div class="story-page-left">
-                ${head}
-                ${runHtml(segs, spread.left[0], spread.left[1])}
-            </div>
-            <div class="story-page-right story-page-right-text">
-                ${runHtml(segs, spread.right[0], spread.right[1])}
-                ${foot}
-            </div>
-        </div>`;
+ <div class="page page-story page-after">
+ <div class="story-page-left">
+ ${head}
+ ${runHtml(segs, spread.left[0], spread.left[1])}
+ </div>
+ <div class="story-page-right story-page-right-text">
+ ${runHtml(segs, spread.right[0], spread.right[1])}
+ ${foot}
+ </div>
+ </div>`;
 }
 
 const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
