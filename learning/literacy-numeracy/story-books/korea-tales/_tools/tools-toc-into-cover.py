@@ -10,7 +10,7 @@
 """
 import io, os, re, sys
 
-BOOKS = os.path.dirname(os.path.abspath(__file__))
+BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 
 COVER_TOC = u'''function coverToc() {
     const item = s => `

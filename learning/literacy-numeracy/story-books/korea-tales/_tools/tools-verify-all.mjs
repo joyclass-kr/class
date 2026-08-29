@@ -3,7 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const BOOKS = path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Z]:)/, '$1'));
+const BOOKS = path.dirname(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Z]:)/, '$1')));  // _tools/ 위가 책 폴더
 const issues = [];
 const bad = (s, k, m) => issues.push([s, k, m]);
 

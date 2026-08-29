@@ -13,7 +13,7 @@
 """
 import io, os, re, sys
 
-BOOKS = os.path.dirname(os.path.abspath(__file__))
+BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 
 # 조사·어미를 떼어 알맹이만 남긴다. 완벽하지 않아도 실마리로는 넉넉하다.
 TAIL = re.compile(u'(을|를|이|가|은|는|에|에서|으로|로|와|과|도|만|의|께|한테|에게)$')

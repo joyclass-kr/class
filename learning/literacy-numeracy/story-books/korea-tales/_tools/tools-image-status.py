@@ -14,7 +14,7 @@ try:
 except Exception:
     pass
 
-BOOKS = os.path.dirname(os.path.abspath(__file__))
+BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 rows, need_all, have_all = [], 0, 0
 
 for slug in sorted(os.listdir(BOOKS)):

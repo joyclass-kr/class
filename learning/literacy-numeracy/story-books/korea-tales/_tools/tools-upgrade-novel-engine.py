@@ -11,7 +11,7 @@
 """
 import io, os, re, shutil, sys
 
-BOOKS = os.path.dirname(os.path.abspath(__file__))
+BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 DONOR = os.path.join(os.path.dirname(BOOKS), 'world-novels', 'jean-valjean')
 
 

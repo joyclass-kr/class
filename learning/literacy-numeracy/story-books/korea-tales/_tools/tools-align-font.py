@@ -12,7 +12,7 @@
 """
 import io, os
 
-BOOKS = os.path.dirname(os.path.abspath(__file__))
+BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 
 # (바꿀 것, 바꿀 값) — 명작동화 styles.css에서 그대로 가져온 값이다
 RULES = [

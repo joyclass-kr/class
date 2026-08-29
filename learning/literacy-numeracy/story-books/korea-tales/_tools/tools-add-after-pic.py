@@ -20,7 +20,7 @@
 import io, json, os, re, sys
 
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
-BOOKS = os.path.dirname(os.path.abspath(__file__))
+BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 
 BLOCK = u'''
 /* 읽고 나서 — 세계명작 트랙과 같은 형식이다. 동화틀은 쪽을 재서 나누지 않으므로

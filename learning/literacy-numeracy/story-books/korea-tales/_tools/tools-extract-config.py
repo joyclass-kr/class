@@ -9,7 +9,7 @@ app.js를 직접 건드려야 하는데 그러다 따옴표를 깨뜨리기 쉽�
 """
 import io, os, re, sys
 
-BOOKS = os.path.dirname(os.path.abspath(__file__))
+BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 
 
 def extract(slug, out=None):

@@ -9,7 +9,7 @@
 """
 import io, os, re
 
-BOOKS = os.path.dirname(os.path.abspath(__file__))
+BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 
 OLD_ROW = u'| 본문 그림 10장 (`01`~`10`) | 1.92 : 1 | **가로 16 : 세로 9** |'
 OLD_NOTE = (u'제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 '

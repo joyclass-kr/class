@@ -20,7 +20,7 @@
 import io, json, os, re, sys
 
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
-BOOKS = os.path.dirname(os.path.abspath(__file__))
+BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 STR = r'"((?:[^"\\]|\\.)*)"'
 
 

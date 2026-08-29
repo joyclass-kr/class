@@ -21,7 +21,7 @@
 import io, json, os, re, sys
 
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
-BOOKS = os.path.dirname(os.path.abspath(__file__))
+BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 
 BLOCK = u'''
 /* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */

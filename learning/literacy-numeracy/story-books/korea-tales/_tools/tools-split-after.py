@@ -21,7 +21,7 @@
 import io, json, os, re, sys
 
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
-BOOKS = os.path.dirname(os.path.abspath(__file__))
+BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 STR = r'"((?:[^"\\]|\\.)*)"'
 PARA_COST = 45
 COL = 620          # 세로에서 「읽고 나서」 글씨를 2cqh 로 줄인 뒤 다시 잰 값

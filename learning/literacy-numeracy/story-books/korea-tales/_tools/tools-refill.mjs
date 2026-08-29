@@ -13,7 +13,7 @@ import path from 'path';
 import { execSync } from 'child_process';
 
 const [slug, jsonPath] = process.argv.slice(2);
-const dir = path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Z]:)/, '$1'));
+const dir = path.dirname(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Z]:)/, '$1')));  // _tools/ 위가 책 폴더
 const appPath = path.join(dir, slug, 'app.js');
 const src = fs.readFileSync(appPath, 'utf8');
 const backup = src;

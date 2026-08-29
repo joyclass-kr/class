@@ -20,7 +20,7 @@
 import io, os, re, sys
 
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
-BOOKS = os.path.dirname(os.path.abspath(__file__))
+BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 STR = r'"((?:[^"\\]|\\.)*)"'
 TELL = ('결말', '마지막에', '끝내', '결국', '끝에는', '끝이 납', '끝난답', '되고 만')
 MIN_MORAL = 0.30

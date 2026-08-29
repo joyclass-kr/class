@@ -17,7 +17,7 @@ B*0.14472 는 책 높이 691px(=1366x768)에서 정확히 B가 되는 값이다.
 """
 import io, os, re, sys
 
-BOOKS = os.path.dirname(os.path.abspath(__file__))
+BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 args = sys.argv[1:]
 FRAME = '--frame' in args
 slugs = [a for a in args if not a.startswith('--')]

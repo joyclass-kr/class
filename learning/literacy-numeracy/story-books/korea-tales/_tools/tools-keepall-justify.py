@@ -14,7 +14,7 @@ text-align: justify 를 걸어 양쪽을 맞춘다. 사용자가 직접 짚은 �
 """
 import io, os, re
 
-BOOKS = os.path.dirname(os.path.abspath(__file__))
+BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 KEEP = ("""    /* 한글은 기본값이면 낱말 가운데서도 줄이 넘어간다.
        '먹지 못했습 / 니다'처럼 끊기지 않도록 띄어쓰기에서만 넘긴다. */
     word-break: keep-all;

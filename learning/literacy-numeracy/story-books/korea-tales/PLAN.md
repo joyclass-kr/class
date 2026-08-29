@@ -2025,3 +2025,22 @@ png를 전부 없앴다. 세 트랙을 한꺼번에 봤다.
 반대로 13-wedding의 어머니는 02-half와 나란히 놓으니 대번에 보였다.
 02에서는 검은 머리 젊은 얼굴인데 13에서는 반백에 주름이다. 그것이
 진짜 잘못이다.
+
+
+## 도구를 _tools/ 로 옮겼다 (2026-08-29)
+
+책 폴더 예순둘 사이에 스크립트가 마흔일곱 개 섞여 있어 눈에 걸렸다.
+`tools-*.py`, `tools-*.mjs`, `_dangling.py`, `_left-over.py`를 모두
+`_tools/` 로 옮겼다. **이 글에 적힌 옛 명령줄에는 `_tools/` 를 앞에
+붙여야 한다.**
+
+    (옛) python tools-verify-all.mjs
+    (새) node _tools/tools-verify-all.mjs
+
+브라우저로 여는 `_*.html` 검사기는 그대로 두었다. `책이름/app.js`를
+브라우저가 상대 경로로 읽으므로 옮기면 못 쓴다.
+
+이번에 만든 검사기 여섯도 `_tools/` 에 함께 넣었다.
+dup.py(비슷한 문장) · quote.py(대사 안 서술) · read.py(동화틀 읽기) ·
+readn.py(소설 읽기) · anchor.py(그림 닻) · imgcheck.py(그림 짝맞춤).
+쓰는 법은 `_tools/README.md` 에 적었다.

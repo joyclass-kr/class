@@ -9,7 +9,7 @@
 """
 import io, os, re
 
-BOOKS = os.path.dirname(os.path.abspath(__file__))
+BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 
 # 우리 옛이야기에서 자주 쓰는 소리말·흉내말
 SOUND = u"""쿵 쾅 펄쩍 훌쩍 슬금 살금 덥석 우르르 뚝딱 팟 톡 툭 척 쑥 슥 홱 휙

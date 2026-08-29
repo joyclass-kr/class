@@ -20,7 +20,7 @@ try:
 except Exception:
     pass
 
-BOOKS = os.path.dirname(os.path.abspath(__file__))
+BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 FFMPEG = (r'C:\Users\A\AppData\Local\Microsoft\WinGet\Packages'
           r'\Gyan.FFmpeg.Shared_Microsoft.Winget.Source_8wekyb3d8bbwe'
           r'\ffmpeg-8.1.2-full_build-shared\bin\ffmpeg.exe')
