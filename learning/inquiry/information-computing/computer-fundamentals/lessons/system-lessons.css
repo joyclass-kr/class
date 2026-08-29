@@ -3152,8 +3152,10 @@
 .principle-statement h2 {
     margin: -3px 0 0;
     color: #2d1a0d;
-    font-size: clamp(21px, 2.5vw, 28px);
-    line-height: 1.35;
+    font-size: clamp(18px, 1.75vw, 21px);
+    font-weight: 800;
+    line-height: 1.5;
+    letter-spacing: -.01em;
 }
 
 .concept-glossary {
@@ -3483,11 +3485,63 @@
 .a01-evidence dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .a01-evidence dl > div + div { border-left: 1px solid #b9cecc; }
 
-.a02-configurator {
+.a02-step-heading {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+    grid-template-columns: 38px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
     margin-top: 16px;
+    padding: 10px 12px;
+    border-left: 5px solid #08717c;
+    background: #eef8f7;
+}
+.a02-step-heading > b {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #08717c;
+    color: #fff;
+    font-size: 17px;
+}
+.a02-step-heading strong {
+    color: #2d1a0d;
+    font-size: 17px;
+}
+.a02-step-heading small {
+    margin-left: 6px;
+    color: #006675;
+    font-size: 11px;
+    font-weight: 850;
+}
+.a02-step-heading p {
+    margin: 3px 0 0;
+    color: #493e34;
+    font-size: 14px;
+    line-height: 1.45;
+}
+.a02-ready-heading {
+    margin-top: 14px;
+}
+.a02-task-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 10px;
+}
+.a02-task-row button {
+    min-height: 68px;
+    display: grid;
+    align-content: center;
+    text-align: left;
+    padding: 10px 14px;
+}
+.a02-task-row button span {
+    font-size: 16px;
+    font-weight: 900;
+}
+.a02-task-row button small {
+    margin-top: 3px;
+    font-size: 11px;
 }
 .a02-presence-row {
     display: grid;
@@ -3580,11 +3634,9 @@
     background: repeating-linear-gradient(#fff 0 7px, #b9c6c5 8px 9px);
 }
 .a02-cooperation-lab[data-result="success"] .a02-result-stage { border-color: #2c7a54; background: #eaf7ef; }
-.a02-cooperation-lab[data-result^="missing"] .a02-result-stage,
-.a02-cooperation-lab[data-result="mismatch"] .a02-result-stage { border-color: #a85f4c; background: #fff1ec; }
-.a02-cooperation-lab[data-result^="missing"] .a02-result-object,
-.a02-cooperation-lab[data-result="mismatch"] .a02-result-object { opacity: .32; }
-.a02-evidence dl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.a02-cooperation-lab[data-result^="missing"] .a02-result-stage { border-color: #a85f4c; background: #fff1ec; }
+.a02-cooperation-lab[data-result^="missing"] .a02-result-object { opacity: .32; }
+.a02-evidence dl { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .a02-evidence dl > div + div { border-left: 1px solid #b9cecc; }
 
 .a03-selector-bank { display: grid; gap: 12px; margin-top: 16px; }
@@ -3682,16 +3734,14 @@
     .a02-execution-line { grid-template-columns: 1fr; }
     .a02-link { height: 26px; line-height: 26px; transform: rotate(90deg); }
     .a02-stage, .a02-result-stage { min-height: 118px; }
-    .a02-evidence dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .a02-evidence dl > div:nth-child(3) { border-left: 0; border-top: 1px solid #b9cecc; }
-    .a02-evidence dl > div:nth-child(4) { border-top: 1px solid #b9cecc; }
+    .a02-evidence dl { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .a03-workbench { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 820px) {
     .foundation-lab-heading { grid-template-columns: 1fr; }
     .foundation-reset { justify-self: start; }
-    .a01-controls, .a02-configurator { grid-template-columns: 1fr; }
+    .a01-controls { grid-template-columns: 1fr; }
     .a01-controls .foundation-run { grid-column: auto; }
     .a02-presence-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .a02-presence-row .foundation-run { grid-column: 1 / -1; justify-self: end; min-width: 180px; }
@@ -3701,6 +3751,7 @@
 @media (max-width: 620px) {
     .foundation-direct-lab { padding: 12px; border-radius: 4px; }
     .foundation-choice-row, .a01-route-row { grid-template-columns: 1fr; }
+    .a02-task-row { grid-template-columns: 1fr; }
     .a01-signal-stage { grid-template-columns: 1fr; }
     .a01-arrow { height: 27px; line-height: 27px; transform: rotate(90deg); }
     .a01-branch { grid-column: 1; }
@@ -4234,6 +4285,7 @@
     background: #fff3d9;
     text-align: center;
 }
+.a02-link { pointer-events: none; }
 
 .a04-adc-gate span,
 .a04-adc-gate small {

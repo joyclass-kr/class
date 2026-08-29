@@ -233,6 +233,7 @@ test("all 36 lessons have complete render data without undefined text", () => {
   for (const lesson of allLessons) {
     assert.ok(lesson.title && lesson.english, `${lesson.id} needs a bilingual title`);
     assert.ok(lesson.conceptTitle, `${lesson.id} needs a relationship statement`);
+    assert.match(lesson.conceptTitle, /니다\.$/, `${lesson.id} core principle must use polite student-facing Korean`);
     assert.ok(lesson.workedExample.steps.length >= 4, `${lesson.id} needs at least four operation steps`);
     for (const step of lesson.workedExample.steps) {
       assert.equal(step.length, 3, `${lesson.id} operation steps need title, English, and explanation`);
@@ -437,6 +438,23 @@ test("student-facing copy names the content without promotional filler", () => {
   for (const label of ["개념 설명", "핵심 원리", "핵심 용어", "개념 비교", "동작 순서", "명칭과 어원"]) {
     assert.match(studentFacingCopy, new RegExp(label));
   }
+  assert.doesNotMatch(studentFacingCopy, /이\(가\)|을\(를\)|은\(는\)/, "student copy must not use mechanical particle placeholders");
+});
+
+test("A02 shows one clear goal and a matching software-hardware pair", () => {
+  const a02 = detailedLessons.find((lesson) => lesson.id === "a02");
+  assert.match(a02.visual, /data-a02-task="display"/);
+  assert.match(a02.visual, /화면에 파란 원 보기/);
+  assert.match(a02.visual, /스피커로 ‘도’ 듣기/);
+  assert.match(a02.visual, /문서 한 장 인쇄하기/);
+  assert.match(a02.visual, /결과를 고르면 필요한 프로그램과 물리 장치가 한 쌍으로 나타납니다/);
+  assert.doesNotMatch(a02.visual, /data-a02-command=/);
+  assert.doesNotMatch(a02.visual, /data-a02-hardware=/);
+  assert.doesNotMatch(lessonSource, /연결 규칙 불일치/);
+  assert.match(lessonSource, /const tasks = \{/);
+  assert.match(lessonSource, /프로그램이 꺼져 있습니다/);
+  assert.match(lessonSource, /장치가 연결되어 있지 않습니다/);
+  assert.match(systemLessonStyles, /font-size: clamp\(18px, 1\.75vw, 21px\)/);
 });
 
 test("generic sort lessons continue directly to questions while real experiments keep three stages", () => {

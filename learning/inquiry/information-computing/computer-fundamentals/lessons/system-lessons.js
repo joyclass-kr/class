@@ -17,7 +17,7 @@
             domain: "컴퓨터의 기본 원리",
             title: "컴퓨터는 무슨 일을 할까?",
             english: "What Does a Computer Do?",
-            conceptTitle: "컴퓨터는 정보를 받아 계산하고, 결과를 보여 주거나 저장한다",
+            conceptTitle: "컴퓨터는 정보를 받아 계산하고, 결과를 보여 주거나 저장합니다.",
             visual: `
                 <section class="foundation-direct-lab a01-signal-lab" data-a01-lab data-input="camera" data-route="preview" data-run-state="idle" aria-labelledby="a01LabTitle">
                     <header class="foundation-lab-heading has-context">
@@ -135,29 +135,32 @@
             number: 2,
             title: "하드웨어와 소프트웨어는 어떻게 다를까?",
             english: "Hardware and Software",
-            conceptTitle: "손으로 만지는 부품은 하드웨어이고, 그 부품에 일을 시키는 프로그램은 소프트웨어다",
+            conceptTitle: "손으로 만질 수 있는 부품을 하드웨어라고 하고, 그 부품에 일을 시키는 프로그램을 소프트웨어라고 합니다.",
             visual: `
-                <section class="foundation-direct-lab a02-cooperation-lab" data-a02-lab data-hardware="display" data-command="pixels" data-result="idle" aria-labelledby="a02LabTitle">
+                <section class="foundation-direct-lab a02-cooperation-lab" data-a02-lab data-task="display" data-result="idle" aria-labelledby="a02LabTitle">
                     <header class="foundation-lab-heading has-context">
-                        <div><span>협업 실행 실험 <small>Hardware–Software Cooperation Lab</small></span><h3 id="a02LabTitle">물리 장치와 소프트웨어 명령을 연결해 실제 결과가 생기는 조건을 확인하세요.</h3></div>
+                        <div><span>하드웨어·소프트웨어 모형 <small>Hardware–Software Model</small></span><h3 id="a02LabTitle">할 일을 고르고, 프로그램과 장치가 각각 무엇을 하는지 확인하세요.</h3></div>
                         <button type="button" class="foundation-reset" data-a02-reset>처음 상태 <small>Reset</small></button>
                         <figure class="foundation-context-figure">
                             <img src="${asset("a02-hardware-software-cooperation-illustration-v1-768.webp")}" srcset="${asset("a02-hardware-software-cooperation-illustration-v1-768.webp")} 768w, ${asset("a02-hardware-software-cooperation-illustration-v1-1536.webp")} 1536w" sizes="(max-width: 620px) 244px, (max-width: 820px) 144px, (max-width: 1180px) 16vw, 190px" width="1536" height="1024" loading="eager" decoding="async" alt="학생이 태블릿에서 고른 명령이 투명한 로봇의 회로와 부품을 움직여 펜으로 선을 그리게 하는 모습">
                             <figcaption>명령과 장치의 협업<small>Software + Hardware</small></figcaption>
                         </figure>
                     </header>
-                    <div class="a02-configurator">
-                        <fieldset><legend>하드웨어 선택 <small>Physical Device</small></legend><div class="foundation-choice-row" role="group" aria-label="결과를 만들 하드웨어 선택"><button type="button" data-a02-hardware="display" aria-pressed="true">디스플레이 <small>Display</small></button><button type="button" data-a02-hardware="speaker" aria-pressed="false">스피커 <small>Speaker</small></button><button type="button" data-a02-hardware="printer" aria-pressed="false">프린터 <small>Printer</small></button></div></fieldset>
-                        <fieldset><legend>소프트웨어 명령 선택 <small>Software Command</small></legend><div class="foundation-choice-row" role="group" aria-label="실행할 소프트웨어 명령 선택"><button type="button" data-a02-command="pixels" aria-pressed="true">픽셀 그리기 <small>Draw Pixels</small></button><button type="button" data-a02-command="tone" aria-pressed="false">소리 재생 <small>Play Tone</small></button><button type="button" data-a02-command="page" aria-pressed="false">문서 인쇄 <small>Print Page</small></button></div></fieldset>
+                    <div class="a02-step-heading"><b>1</b><div><strong>만들 결과를 고르세요.</strong><small>Choose a Result</small><p>결과를 고르면 필요한 프로그램과 물리 장치가 한 쌍으로 나타납니다.</p></div></div>
+                    <div class="foundation-choice-row a02-task-row" role="group" aria-label="만들 결과 선택">
+                        <button type="button" data-a02-task="display" aria-pressed="true"><span>화면에 파란 원 보기</span><small>Show a Blue Circle</small></button>
+                        <button type="button" data-a02-task="speaker" aria-pressed="false"><span>스피커로 ‘도’ 듣기</span><small>Hear a C Note</small></button>
+                        <button type="button" data-a02-task="printer" aria-pressed="false"><span>문서 한 장 인쇄하기</span><small>Print One Page</small></button>
                     </div>
-                    <div class="a02-presence-row" aria-label="하드웨어와 소프트웨어 준비 상태"><button type="button" data-a02-presence="hardware" aria-pressed="true"><span>하드웨어 연결</span><small data-a02-hardware-presence>연결됨 · Connected</small></button><button type="button" data-a02-presence="software" aria-pressed="true"><span>소프트웨어 명령</span><small data-a02-software-presence>불러옴 · Loaded</small></button><button type="button" class="foundation-run" data-a02-run>협업 실행 <small>Run Together</small></button></div>
                     <div class="a02-execution-line" aria-label="소프트웨어 명령이 운영체제와 드라이버를 거쳐 하드웨어 결과가 되는 과정">
-                        <article class="a02-stage software-stage" data-a02-stage="software"><span>소프트웨어 <small>Software</small></span><strong data-a02-command-title>픽셀 그리기</strong><p data-a02-command-packet>색·좌표 명령</p></article><span class="a02-link" aria-hidden="true">→</span>
-                        <article class="a02-stage bridge-stage" data-a02-stage="bridge"><span>운영체제·드라이버 <small>OS &amp; Driver</small></span><strong>명령 전달</strong><p data-a02-interface>화면 출력 규칙</p></article><span class="a02-link" aria-hidden="true">→</span>
-                        <article class="a02-stage hardware-stage" data-a02-stage="hardware"><span>하드웨어 <small>Hardware</small></span><strong data-a02-hardware-title>디스플레이</strong><p data-a02-capability>픽셀값을 실제 빛으로 바꿈</p></article><span class="a02-link" aria-hidden="true">→</span>
-                        <div class="a02-result-stage" data-a02-output="display" aria-label="실행 결과 미리보기"><span class="a02-result-object" aria-hidden="true"></span><strong data-a02-result-title>실행 전</strong><p data-a02-result-copy>두 준비 상태와 조합을 확인하세요.</p></div>
+                        <article class="a02-stage software-stage" data-a02-stage="software"><span>소프트웨어 <small>Software</small></span><strong data-a02-software-title>그림 앱</strong><p data-a02-command-copy>“파란 원을 그려 주세요.”</p></article><span class="a02-link" aria-hidden="true">→</span>
+                        <article class="a02-stage bridge-stage" data-a02-stage="bridge"><span>운영체제·드라이버 <small>OS &amp; Driver</small></span><strong>명령 전달</strong><p data-a02-bridge-copy>디스플레이가 알아들을 신호로 전달합니다.</p></article><span class="a02-link" aria-hidden="true">→</span>
+                        <article class="a02-stage hardware-stage" data-a02-stage="hardware"><span>하드웨어 <small>Hardware</small></span><strong data-a02-hardware-title>디스플레이</strong><p data-a02-capability>픽셀을 빛내 화면을 보여 줍니다.</p></article><span class="a02-link" aria-hidden="true">→</span>
+                        <div class="a02-result-stage" data-a02-output="display" aria-label="실행 결과 미리보기"><span class="a02-result-object" aria-hidden="true"></span><strong data-a02-result-title>실행 전</strong><p data-a02-result-copy>프로그램과 장치가 모두 준비되어 있습니다.</p></div>
                     </div>
-                    <div class="foundation-evidence a02-evidence" aria-live="polite"><strong>조건 검사 <small>Evidence Check</small></strong><dl><div><dt>물리 장치</dt><dd data-a02-evidence-hardware>디스플레이 연결됨</dd></div><div><dt>실행 명령</dt><dd data-a02-evidence-software>픽셀 그리기 불러옴</dd></div><div><dt>연결 규칙</dt><dd data-a02-evidence-interface>화면 출력 명령과 디스플레이가 맞음</dd></div><div><dt>결과</dt><dd data-a02-evidence-result>아직 실행하지 않음</dd></div></dl></div>
+                    <div class="a02-step-heading a02-ready-heading"><b>2</b><div><strong>두 준비 상태를 바꾸고 실행해 보세요.</strong><small>Change a State and Run</small><p>프로그램이나 장치 중 하나가 없으면 결과가 만들어지지 않습니다.</p></div></div>
+                    <div class="a02-presence-row" aria-label="소프트웨어와 하드웨어 준비 상태"><button type="button" data-a02-presence="software" aria-pressed="true"><span>프로그램 상태</span><small data-a02-software-presence>그림 앱 실행 중 · On</small></button><button type="button" data-a02-presence="hardware" aria-pressed="true"><span>장치 상태</span><small data-a02-hardware-presence>디스플레이 연결됨 · Connected</small></button><button type="button" class="foundation-run" data-a02-run>함께 실행 <small>Run Together</small></button></div>
+                    <div class="foundation-evidence a02-evidence" aria-live="polite"><strong>지금 확인한 것 <small>What You Observed</small></strong><dl><div><dt>소프트웨어</dt><dd data-a02-evidence-software>그림 앱이 명령을 준비했습니다.</dd></div><div><dt>하드웨어</dt><dd data-a02-evidence-hardware>디스플레이가 연결되어 있습니다.</dd></div><div><dt>실행 결과</dt><dd data-a02-evidence-result>아직 실행하지 않았습니다.</dd></div></dl></div>
                 </section>`,
             details: [
                 ["하드웨어", "Hardware", "손으로 만질 수 있는 물리적인 장치입니다. CPU·RAM처럼 본체 안에 있는 부품과 키보드·화면처럼 밖에서 보이는 장치가 모두 포함됩니다."],
@@ -277,7 +280,7 @@
             number: 3,
             title: "기기·운영체제·앱은 무엇이 다를까?",
             english: "Device, Operating System, and App",
-            conceptTitle: "기기는 실제 물건이고, 운영체제는 기기를 관리하며, 앱은 필요한 일을 한다",
+            conceptTitle: "기기는 실제 물건이고, 운영체제는 기기를 관리하며, 앱은 필요한 일을 합니다.",
             visual: `
                 <section class="foundation-direct-lab a03-compatibility-lab" data-a03-lab data-device="pc" data-os="windows" data-app="paint" data-outcome="pending" aria-labelledby="a03LabTitle">
                     <header class="foundation-lab-heading has-context">
@@ -415,7 +418,7 @@
             number: 4,
             title: "아날로그와 디지털은 무엇이 다를까?",
             english: "Analog and Digital",
-            conceptTitle: "현실의 값은 이어져 변하지만, 디지털 장치는 특정 순간의 값을 정해진 숫자 칸에 기록한다",
+            conceptTitle: "현실의 값은 이어져 변하지만, 디지털 장치는 특정 순간의 값을 정해진 숫자 칸에 기록합니다.",
             visual: a04ConversionMarkup("concept"),
             details: [
                 ["아날로그", "Analog", "값이 중간에서 끊기지 않고 이어집니다. 바늘의 위치, 홈에 새겨진 소리의 흔적처럼 물리량에 대응해 연속적으로 변할 수 있습니다."],
@@ -510,7 +513,7 @@
             number: 5,
             title: "현실의 소리는 어떻게 숫자 데이터가 될까?",
             english: "From Sound to Digital Data",
-            conceptTitle: "마이크 신호를 일정한 시간 간격으로 재고, 각 값을 정해진 높이 단계와 비트로 기록한다",
+            conceptTitle: "마이크 신호를 일정한 시간 간격으로 재고, 각 값을 정해진 높이 단계와 비트로 기록합니다.",
             visual: a05DigitizerMarkup("concept"),
             details: [
                 ["샘플링", "Sampling", "이어지는 신호의 값을 일정한 시간 간격으로 측정합니다. 한 번 측정해 얻은 값 하나를 샘플이라고 합니다."],
@@ -608,7 +611,7 @@
             domain: "컴퓨터 안의 하드웨어",
             title: "본체 안에는 어떤 부품이 있을까?",
             english: "Inside a Desktop Computer",
-            conceptTitle: "부품은 맡은 일이 다르고, 메인보드에 연결되어 한 컴퓨터로 움직인다",
+            conceptTitle: "부품은 맡은 일이 다르고, 메인보드에 연결되어 한 컴퓨터로 움직입니다.",
             visual: `
                 <div class="system-visual hardware-cutaway-grid">
                     <figure class="hardware-photo">
@@ -1357,60 +1360,66 @@
     function setupA02CooperationLab() {
         const lab = document.querySelector("[data-a02-lab]");
         if (!lab) return;
-        const hardware = {
-            display: { name: "디스플레이", english: "Display", accepts: "pixels", capability: "픽셀값을 실제 빛으로 바꿈", success: "디스플레이 픽셀이 켜져 파란 도형이 보입니다." },
-            speaker: { name: "스피커", english: "Speaker", accepts: "tone", capability: "전기 신호를 공기 진동으로 바꿈", success: "스피커 진동판이 움직여 소리가 납니다." },
-            printer: { name: "프린터", english: "Printer", accepts: "page", capability: "잉크·토너를 종이에 옮김", success: "프린터가 종이에 문서 한 장을 출력합니다." }
+        const tasks = {
+            display: {
+                software: "그림 앱",
+                command: "“파란 원을 그려 주세요.”",
+                bridge: "디스플레이가 알아들을 신호로 전달합니다.",
+                hardware: "디스플레이",
+                capability: "픽셀을 빛내 화면을 보여 줍니다.",
+                success: "그림 앱의 명령을 받아 디스플레이에 파란 원이 나타났습니다."
+            },
+            speaker: {
+                software: "음악 앱",
+                command: "“‘도’ 음을 재생해 주세요.”",
+                bridge: "스피커가 알아들을 오디오 신호로 전달합니다.",
+                hardware: "스피커",
+                capability: "전기 신호를 공기 진동으로 바꿉니다.",
+                success: "음악 앱의 명령을 받아 스피커에서 ‘도’ 음이 납니다."
+            },
+            printer: {
+                software: "문서 앱",
+                command: "“이 문서를 종이에 인쇄해 주세요.”",
+                bridge: "프린터가 알아들을 인쇄 신호로 전달합니다.",
+                hardware: "프린터",
+                capability: "잉크나 토너를 종이에 옮깁니다.",
+                success: "문서 앱의 명령을 받아 프린터에서 문서 한 장이 나옵니다."
+            }
         };
-        const commands = {
-            pixels: { name: "픽셀 그리기", english: "Draw Pixels", packet: "색·좌표 명령", connection: "화면 출력 규칙" },
-            tone: { name: "소리 재생", english: "Play Tone", packet: "주파수·음량 샘플", connection: "오디오 출력 규칙" },
-            page: { name: "문서 인쇄", english: "Print Page", packet: "글자·그림·용지 배치", connection: "인쇄 드라이버 규칙" }
-        };
-        const hardwareButtons = Array.from(lab.querySelectorAll("[data-a02-hardware]"));
-        const commandButtons = Array.from(lab.querySelectorAll("[data-a02-command]"));
+        const taskButtons = Array.from(lab.querySelectorAll("[data-a02-task]"));
         const presenceButtons = Array.from(lab.querySelectorAll("[data-a02-presence]"));
-        let selectedHardware = "display";
-        let selectedCommand = "pixels";
+        let selectedTask = "display";
         let hardwareConnected = true;
         let softwareLoaded = true;
 
         const markPressed = (buttons, key, value) => buttons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset[key] === value)));
         const markPending = () => {
-            const device = hardware[selectedHardware];
-            const command = commands[selectedCommand];
-            lab.dataset.hardware = selectedHardware;
-            lab.dataset.command = selectedCommand;
+            const task = tasks[selectedTask];
+            lab.dataset.task = selectedTask;
             lab.dataset.result = "idle";
-            lab.querySelector("[data-a02-output]").dataset.a02Output = selectedHardware;
-            lab.querySelector("[data-a02-command-title]").innerHTML = `${command.name} <small>${command.english}</small>`;
-            lab.querySelector("[data-a02-command-packet]").textContent = command.packet;
-            lab.querySelector("[data-a02-interface]").textContent = command.connection;
-            lab.querySelector("[data-a02-hardware-title]").innerHTML = `${device.name} <small>${device.english}</small>`;
-            lab.querySelector("[data-a02-capability]").textContent = device.capability;
-            lab.querySelector("[data-a02-hardware-presence]").textContent = hardwareConnected ? "연결됨 · Connected" : "연결 끊김 · Disconnected";
-            lab.querySelector("[data-a02-software-presence]").textContent = softwareLoaded ? "불러옴 · Loaded" : "없음 · Not Loaded";
+            lab.querySelector("[data-a02-output]").dataset.a02Output = selectedTask;
+            lab.querySelector("[data-a02-software-title]").textContent = task.software;
+            lab.querySelector("[data-a02-command-copy]").textContent = task.command;
+            lab.querySelector("[data-a02-bridge-copy]").textContent = task.bridge;
+            lab.querySelector("[data-a02-hardware-title]").textContent = task.hardware;
+            lab.querySelector("[data-a02-capability]").textContent = task.capability;
+            lab.querySelector("[data-a02-hardware-presence]").textContent = hardwareConnected ? `${task.hardware} 연결됨 · Connected` : `${task.hardware} 연결 끊김 · Disconnected`;
+            lab.querySelector("[data-a02-software-presence]").textContent = softwareLoaded ? `${task.software} 실행 중 · On` : `${task.software} 꺼짐 · Off`;
             presenceButtons.forEach((button) => {
                 const on = button.dataset.a02Presence === "hardware" ? hardwareConnected : softwareLoaded;
                 button.setAttribute("aria-pressed", String(on));
             });
-            lab.querySelector("[data-a02-evidence-hardware]").textContent = `${device.name} ${hardwareConnected ? "연결됨" : "연결되지 않음"}`;
-            lab.querySelector("[data-a02-evidence-software]").textContent = `${command.name} ${softwareLoaded ? "불러옴" : "불러오지 않음"}`;
-            lab.querySelector("[data-a02-evidence-interface]").textContent = device.accepts === selectedCommand ? `${command.connection}이 ${device.name}와 맞음` : `${command.connection}과 ${device.name}의 기능이 맞지 않음`;
-            lab.querySelector("[data-a02-evidence-result]").textContent = "아직 실행하지 않음";
+            lab.querySelector("[data-a02-evidence-hardware]").textContent = hardwareConnected ? `${task.hardware}가 연결되어 있습니다.` : `${task.hardware}가 연결되어 있지 않습니다.`;
+            lab.querySelector("[data-a02-evidence-software]").textContent = softwareLoaded ? "선택한 프로그램이 명령을 준비했습니다." : "선택한 프로그램이 꺼져 있습니다.";
+            lab.querySelector("[data-a02-evidence-result]").textContent = "아직 실행하지 않았습니다.";
             lab.querySelector("[data-a02-result-title]").textContent = "실행 전";
-            lab.querySelector("[data-a02-result-copy]").textContent = "두 준비 상태와 조합을 확인하세요.";
+            lab.querySelector("[data-a02-result-copy]").textContent = softwareLoaded && hardwareConnected ? "프로그램과 장치가 모두 준비되어 있습니다." : "꺼진 프로그램이나 연결되지 않은 장치가 있습니다.";
             lab.querySelectorAll("[data-a02-stage]").forEach((stage) => stage.classList.remove("is-active", "is-blocked"));
         };
 
-        hardwareButtons.forEach((button) => button.addEventListener("click", () => {
-            selectedHardware = button.dataset.a02Hardware;
-            markPressed(hardwareButtons, "a02Hardware", selectedHardware);
-            markPending();
-        }));
-        commandButtons.forEach((button) => button.addEventListener("click", () => {
-            selectedCommand = button.dataset.a02Command;
-            markPressed(commandButtons, "a02Command", selectedCommand);
+        taskButtons.forEach((button) => button.addEventListener("click", () => {
+            selectedTask = button.dataset.a02Task;
+            markPressed(taskButtons, "a02Task", selectedTask);
             markPending();
         }));
         presenceButtons.forEach((button) => button.addEventListener("click", () => {
@@ -1419,8 +1428,7 @@
             markPending();
         }));
         lab.querySelector("[data-a02-run]").addEventListener("click", () => {
-            const device = hardware[selectedHardware];
-            const command = commands[selectedCommand];
+            const task = tasks[selectedTask];
             const stages = {
                 software: lab.querySelector('[data-a02-stage="software"]'),
                 bridge: lab.querySelector('[data-a02-stage="bridge"]'),
@@ -1428,33 +1436,29 @@
             };
             stages.software.classList.toggle("is-active", softwareLoaded);
             stages.software.classList.toggle("is-blocked", !softwareLoaded);
-            stages.bridge.classList.toggle("is-active", softwareLoaded);
-            stages.bridge.classList.toggle("is-blocked", !softwareLoaded || !hardwareConnected || device.accepts !== selectedCommand);
+            stages.bridge.classList.toggle("is-active", softwareLoaded && hardwareConnected);
+            stages.bridge.classList.toggle("is-blocked", !softwareLoaded || !hardwareConnected);
             stages.hardware.classList.toggle("is-active", hardwareConnected);
-            stages.hardware.classList.toggle("is-blocked", !hardwareConnected || device.accepts !== selectedCommand);
+            stages.hardware.classList.toggle("is-blocked", !hardwareConnected);
             let result;
             let title;
             let explanation;
             if (!softwareLoaded && !hardwareConnected) {
                 result = "missing-both";
-                title = "실행할 수 없음";
-                explanation = "명령도 없고 명령을 실제 결과로 바꿀 장치도 없습니다.";
+                title = "둘 다 준비되지 않았습니다";
+                explanation = `${task.software}도 꺼져 있고 ${task.hardware}도 연결되어 있지 않아 결과를 만들 수 없습니다.`;
             } else if (!softwareLoaded) {
                 result = "missing-software";
-                title = "명령 없음";
-                explanation = `${device.name}은 연결되어 있지만 무엇을 할지 지시하는 소프트웨어 명령이 없습니다.`;
+                title = "프로그램이 꺼져 있습니다";
+                explanation = `${task.hardware}가 연결되어 있어도 ${task.software}의 명령이 없으면 무엇을 할지 알 수 없습니다.`;
             } else if (!hardwareConnected) {
                 result = "missing-hardware";
-                title = "물리 장치 없음";
-                explanation = `${command.name} 명령은 준비됐지만 결과를 실제 빛·소리·종이로 바꿀 하드웨어가 없습니다.`;
-            } else if (device.accepts !== selectedCommand) {
-                result = "mismatch";
-                title = "연결 규칙 불일치";
-                explanation = `${command.packet}은 ${command.connection}을 사용하지만 ${device.name}은 ${device.capability} 장치입니다.`;
+                title = "장치가 연결되어 있지 않습니다";
+                explanation = `${task.software}의 명령은 준비됐지만 ${task.hardware}가 없어 실제 결과로 바꿀 수 없습니다.`;
             } else {
                 result = "success";
-                title = "협업 성공";
-                explanation = device.success;
+                title = "함께 작동했습니다";
+                explanation = task.success;
             }
             lab.dataset.result = result;
             lab.querySelector("[data-a02-result-title]").textContent = title;
@@ -1462,12 +1466,10 @@
             lab.querySelector("[data-a02-evidence-result]").textContent = explanation;
         });
         lab.querySelector("[data-a02-reset]").addEventListener("click", () => {
-            selectedHardware = "display";
-            selectedCommand = "pixels";
+            selectedTask = "display";
             hardwareConnected = true;
             softwareLoaded = true;
-            markPressed(hardwareButtons, "a02Hardware", selectedHardware);
-            markPressed(commandButtons, "a02Command", selectedCommand);
+            markPressed(taskButtons, "a02Task", selectedTask);
             markPending();
         });
         markPending();
