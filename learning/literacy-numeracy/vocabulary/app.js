@@ -239,19 +239,31 @@
 
     function renderLevelGroups() {
         elements.stageGroups.replaceChildren();
+        const preferredLevel = Number(state.currentLevel || state.recommendedLesson?.level || 1);
         STAGES.forEach((stage) => {
-            const section = document.createElement("section");
+            const section = document.createElement("details");
             section.className = "stage-group";
-            section.innerHTML = `
-                <div class="stage-heading">
+            section.open = stage.levels.includes(preferredLevel);
+
+            const heading = document.createElement("summary");
+            heading.className = "stage-heading";
+            heading.innerHTML = `
+                <div class="stage-heading-copy">
                     <h2>${stage.name}</h2>
                     <p>${stage.description}</p>
                 </div>
             `;
+
             const grid = document.createElement("div");
             grid.className = "level-grid";
             stage.levels.forEach((level) => grid.appendChild(createLevelButton(level, state.levels.get(level))));
-            section.appendChild(grid);
+            section.append(heading, grid);
+            section.addEventListener("toggle", () => {
+                if (!section.open) return;
+                elements.stageGroups.querySelectorAll(".stage-group[open]").forEach((other) => {
+                    if (other !== section) other.open = false;
+                });
+            });
             elements.stageGroups.appendChild(section);
         });
     }
