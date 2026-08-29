@@ -11,6 +11,10 @@ vm.createContext(context);
 vm.runInContext(dataSource, context);
 const curriculum = context.window.HarmonyCurriculum;
 
+const META_QUESTION_PATTERN = /가장 먼저|첫 단계|연주 전략|편곡을 판단|수정 방식|완성.*증거|효과적인 수정|최종 선택 근거/;
+const NON_MUSICAL_CHOICE_PATTERN = /음표 색|악기 가격|코드 글자 수|제목의 글꼴|마디 번호 색|연주자 이름|악기 교체|음량이|음량 증가|페달만|페달을 더|악기 음색|손 크기|곡 삭제|모든 코드 삭제|멜로디 생략|알파벳 순서|건반의 흰색|템포가 느림|멜로디가 삭제|배운 기술|차시 수|다시 듣지|모든 음 암기|코드가 하나뿐|멜로디가 없음/;
+const META_QUESTION_KINDS = new Set(["연주 전략", "분석 순서", "편곡 판단", "수정 방법", "완성 증거"]);
+
 const midiGroups = [];
 const collectGroups = (groups, where) => {
   if (!groups) return;
@@ -38,6 +42,11 @@ for (const [id, skill] of Object.entries(curriculum.skills)) {
     assert.equal(question.choices.filter((choice) => choice === question.answer).length, 1, id + " question " + questionIndex + " answer is duplicated");
     assert.equal(new Set(question.choices).size, question.choices.length, id + " question " + questionIndex + " has duplicate choices");
     assert.ok(question.explain && question.explain.length >= 12, id + " question " + questionIndex + " needs useful feedback");
+    assert.doesNotMatch(question.prompt, META_QUESTION_PATTERN, id + " question " + questionIndex + " asks about learning procedure instead of music");
+    assert.ok(!META_QUESTION_KINDS.has(question.kind), id + " question " + questionIndex + " uses a meta-learning question kind");
+    for (const choice of question.choices) {
+      assert.doesNotMatch(choice, NON_MUSICAL_CHOICE_PATTERN, id + " question " + questionIndex + " contains a non-musical distractor: " + choice);
+    }
     collectGroups(question.audioGroups, id + " question audio");
   }
 
