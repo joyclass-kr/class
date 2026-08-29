@@ -1,6 +1,6 @@
 const BOOK_TITLE = "사랑의 요정";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => `${n}장 ·`;
 
 const CHAPTERS = [
     {
@@ -147,9 +147,9 @@ const CHAPTERS = [
             `실비네는 울면서 말했습니다.<br>"집에 못 가겠어."<br>"왜."<br>"내가 집을 나오면 다들 나를 찾을 줄 알았어. 그런데 막상 아무도 안 오니까······."<br>"다들 밤새 찾았어."`,
             `실비네는 그것을 몰랐던 것입니다. 풀숲 안에서는 아무 소리도 들리지 않았습니다. 종소리도 그 자리까지는 오지 않았습니다. 그 말을 듣고 더 울었습니다. 아무도 안 온 것이 아니었습니다. 그 자리가 보이지 않는 자리였을 뿐입니다.`,
             `랑드리는 형을 업고 집으로 갔습니다. 가면서 뒤를 돌아보았는데 팡셰는 이미 없었습니다. 언제 갔는지도 몰랐습니다. 고맙다는 말도 하지 못했습니다. 그것이 랑드리에게 오래 걸렸습니다. 형은 등에서 잠들었습니다. 업고 걸으니 무게가 거의 없었습니다. 랑드리는 그것 때문에 걸음이 더 빨라졌습니다.`,
-            `집에 닿았을 때는 한밤중이었습니다. 불이 켜져 있었습니다. 창마다 불이 켜져 있었습니다. 이틀 동안 그렇게 켜 두었습니다. 아무도 자지 않고 있었던 것입니다. 어머니가 뛰어나와 실비네를 안았습니다. 맨발로 뛰어나왔습니다. 마당의 돌을 밟는 것도 몰랐습니다. 온 집이 울었습니다. 이웃집 사람들도 건너왔습니다. 그날 밤 그 집에 불이 새벽까지 켜져 있었습니다.`,
+            `집에 닿았을 때는 한밤중이었습니다. 창마다 불이 켜져 있었습니다. 이틀 동안 그렇게 켜 두었습니다. 아무도 자지 않고 있었던 것입니다. 어머니가 뛰어나와 실비네를 안았습니다. 맨발로 뛰어나왔습니다. 마당의 돌을 밟는 것도 몰랐습니다. 온 집이 울었습니다. 이웃집 사람들도 건너왔습니다. 그날 밤 그 집에 불이 새벽까지 켜져 있었습니다.`,
             `바르보 영감은 아무 말도 하지 않고 그 자리에 서 있었습니다. 그러고는 밖으로 나가 한참 뒤에 들어왔습니다. 헛간 쪽으로 갔습니다. 아무도 따라가지 않았습니다. 아버지도 우는 것을 아무에게도 보이지 않았습니다. 그 시절 시골 아버지들은 그랬습니다. 우는 것은 밖에서 하고 들어왔습니다.`,
-            `그날 밤 랑드리는 프리슈로 돌아가지 않고 집에서 잤습니다. 두 해 만에 형 옆에서 잔 것이었습니다. 그런데 잠이 오지 않았습니다. 카요 영감에게는 이튿날 아침에 사람을 보내 알렸습니다. 말없이 하루를 비우면 안 되는 자리였습니다. 그래서 아침 일찍 사람을 보냈습니다. 형 옆에 누웠는데 잠이 오지 않았습니다. 팡셰가 한 말이 자꾸 생각났기 때문입니다. 무엇을 시킬지 아직 안 정했다는 말이었습니다. 언제 그것이 올지 알 수 없었습니다. 그것이 두 해를 갔습니다.`,
+            `그날 밤 랑드리는 프리슈로 돌아가지 않고 집에서 잤습니다. 두 해 만에 형 옆에서 잔 것이었습니다. 카요 영감에게는 이튿날 아침에 사람을 보내 알렸습니다. 말없이 하루를 비우면 안 되는 자리였습니다. 그래서 아침 일찍 사람을 보냈습니다. 형 옆에 누웠는데 잠이 오지 않았습니다. 팡셰가 한 말이 자꾸 생각났기 때문입니다. 무엇을 시킬지 아직 안 정했다는 말이었습니다. 언제 그것이 올지 알 수 없었습니다. 그것이 두 해를 갔습니다.`,
             `랑드리는 그것이 두 해 뒤에 무엇이 되는지 그때는 몰랐습니다.`
         ]
     },
@@ -403,7 +403,7 @@ const CHAPTERS = [
             `바르보 영감의 얼굴이 붉어졌습니다. 들킨 사람의 얼굴이었습니다. 자기가 사흘 동안 그 생각을 하고 있었기 때문입니다. 팡셰가 그것을 알고 있었습니다. 그래서 먼저 말한 것이었습니다.`,
             `팡셰가 이어서 말했습니다.<br>"그 대신 이걸 봐 주십시오. 저는 어른 아드님을 개울에서 찾아 드렸습니다. 그리고 이번에 또 한 번 일으켜 드렸습니다."<br>"그때마다 저는 아무것도 받지 않았습니다. 그러니 저를 판단하실 거면 그걸로 판단해 주십시오."`,
             `그것이 팡셰가 하고 싶은 말이었습니다. 삯도 받지 않았고, 아무에게도 말하지 않았습니다. 개울에서 실비네를 찾아 준 일도 마을에서는 마법이라고만 했습니다.`,
-            `바르보 영감은 오래 앉아 있었습니다. 손을 무릎에 놓고 있었습니다. 아주 오래 앉아 있었습니다.`,
+            `바르보 영감은 오래 앉아 있었습니다. 손을 무릎에 놓고 있었습니다.`,
             `그리고 이렇게 말했습니다.<br>"내가 부끄럽구나."`,
             `그 말이 나오기까지 십 년이 걸린 셈이었습니다. 그 사람은 평생 남에게 잘못했다는 말을 해 본 적이 없었습니다. 농부에게 그런 말은 쉽지 않습니다. 더구나 아이에게 하는 말이었습니다.`,
             `팡셰는 고개를 저었습니다.<br>"어른만 그러신 게 아닙니다. 이 마을이 다 그랬습니다."`,
@@ -755,16 +755,14 @@ function paginateChapter(ch, chIndex) {
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
-    return `
- <div class="art-frame">
+    return `<div class="art-frame">
  <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
  <div class="art-fallback" style="display:none">${emoji}</div>
  </div>`;
 }
 
 function coverPage() {
-    return `
- <div class="page page-cover">
+    return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🌿')}
  </div>
@@ -780,15 +778,13 @@ function coverPage() {
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
-    const itemHtml = ch => `
- <li>
+    const itemHtml = ch => `<li>
  <button type="button" data-goto="${ch.num}">
  <span class="toc-num">${ch.num}</span>
  <span><strong>${ch.title}</strong></span>
  </button>
  </li>`;
-    const extraItems = `
- <li>
+    const extraItems = `<li>
  <button type="button" data-goto-kind="quiz">
  <span class="toc-num">?</span>
  <span><strong>이야기 문제</strong></span>
@@ -797,8 +793,7 @@ function tocPage(part) {
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
-    return `
- <div class="page page-toc">
+    return `<div class="page page-toc">
  <div class="story-page-left">
  ${part === 0 ? '<h2>차례</h2>' : ''}
  <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
@@ -822,8 +817,7 @@ function chapterSpreadPage(spread) {
     const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story">
+        return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -835,8 +829,7 @@ function chapterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story">
+    return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -884,16 +877,14 @@ function quizPage(part) {
         const cls = ci => graded
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
-        return `
- <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+        return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices">
- ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
-    return `
- <div class="page page-quiz">
+    return `<div class="page page-quiz">
  ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
  <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
  <div class="quiz-list">${items}</div>
@@ -966,8 +957,7 @@ function afterSpreadPage(spread) {
     const foot = spread.last ? AFTER_FOOT : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story page-after">
+        return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -980,8 +970,7 @@ function afterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story page-after">
+    return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}

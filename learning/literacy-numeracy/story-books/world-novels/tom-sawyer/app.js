@@ -1,6 +1,6 @@
 const BOOK_TITLE = "톰 소여의 모험";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => `${n}장 ·`;
 
 const CHAPTERS = [
     {
@@ -40,7 +40,7 @@ const CHAPTERS = [
             `옷이 다 찢어졌습니다. 얼굴에도 상처가 났습니다. 그런데 그 아이가 도망가면서 톰의 등에 돌을 던졌습니다. 톰은 그 아이 집까지 쫓아갔다가 돌아왔습니다.`,
             `해가 진 뒤였습니다. 그날 밤 톰이 창문으로 몰래 들어오다가 이모에게 붙잡혔습니다.`,
             `이모는 옷을 보고, 얼굴의 상처를 보고, 한참 있다가 말했습니다.<br>"내일 토요일에 울타리를 칠하거라."`,
-            `토요일은 아이들이 다 노는 날이었습니다. 낚시를 가거나 물놀이를 가거나 숲에 갔습니다. 그러니 온 마을 아이가 그 울타리 앞을 지나갈 것이었습니다. 그러니 온 마을 아이가 그 앞을 지나갈 것이었습니다. 그것은 톰에게 세상에서 가장 무거운 벌이었습니다.`
+            `토요일은 아이들이 다 노는 날이었습니다. 낚시를 가거나 물놀이를 가거나 숲에 갔습니다. 그러니 온 마을 아이가 그 울타리 앞을 지나갈 것이었습니다. 그것은 톰에게 세상에서 가장 무거운 벌이었습니다.`
         ]
     },
     {
@@ -160,7 +160,7 @@ const CHAPTERS = [
             `톰은 널빤지 조각을 하나 주워 왔습니다. 그리고 붉은 분필로 이렇게 썼습니다. 맹세는 종이에 쓰면 안 된다고 헉이 말했습니다. 종이는 물에 지워지기 때문이라고요. 헉은 그런 것을 어디서 들었는지 다 알고 있었습니다. 톰은 그 말을 그대로 따랐습니다.`,
             `"헉 핀과 톰 소여는 이 일에 대해 입을 다물 것을 맹세한다. 만약 입을 열면 그 자리에서 쓰러져 썩어 죽을 것이다."`,
             `두 아이는 바늘로 엄지손가락을 찔러 그 밑에 이름의 첫 글자를 썼습니다. 톰이 먼저 하고 헉이 뒤따라 했습니다. 피가 잘 나오지 않아 여러 번 찔렀습니다. 바늘은 헉이 옷깃에 꽂아 두고 다니던 것이었습니다. 그런 것을 늘 지니고 다녔습니다. 그러고는 널빤지를 벽 밑에 묻었습니다.`,
-            `이튿날 아침, 마을이 뒤집혔습니다. 가게 앞에 사람들이 모여 서서 그 이야기만 했습니다. 학교도 쉬고 밭일도 쉬었습니다. 묘지에서 사람이 죽었다는 소식이 퍼진 것입니다. 학교도 쉬었습니다. 그 마을에서 그런 일은 몇십 년 만이었습니다. 다들 그 이야기만 했습니다.`,
+            `이튿날 아침, 마을이 뒤집혔습니다. 가게 앞에 사람들이 모여 서서 그 이야기만 했습니다. 학교도 쉬고 밭일도 쉬었습니다. 묘지에서 사람이 죽었다는 소식이 퍼진 것입니다. 학교도 쉬었습니다. 그 마을에서 그런 일은 몇십 년 만이었습니다.`,
             `그리고 흉터 조가 나서서 이렇게 말했습니다. 제 발로 나서서 증언을 한 것이었습니다. 자기가 그 자리에 있었는데, 머프 포터가 취해서 그런 짓을 했다고요. 아무도 그 말을 의심하지 않았습니다. 제 발로 나서서 말하는 사람을 의심하기는 어렵습니다. 흉터 조는 그것을 알고 있었습니다.`,
             `머프 포터는 그날 붙잡혔습니다. 톰과 헉은 그 광경을 사람들 틈에서 보았습니다. 두 아이는 서로 손을 잡고 있었습니다. 머프 포터가 끌려가면서 아이들 쪽을 보았습니다. 손이 묶여 있었습니다. 그런데 저항하지 않았습니다.`,
             `"톰아, 헉아." 그가 말했습니다.<br>"나는 아무 기억이 안 난다. 그런데 다들 내가 그랬다는구나."`,
@@ -411,7 +411,7 @@ const CHAPTERS = [
         emoji: "💰",
         art: ["story-14-a.webp", "story-14-b.webp"],
         paras: [
-            `두 아이는 그 돈을 자루에 나눠 담아 배로 옮겼습니다. 한 번에 다 못 들어서 몇 번을 오갔습니다. 금화는 부피는 작은데 아주 무거웠습니다. 자루 하나를 들면 어깨가 처졌습니다. 금은 아주 무겁습니다. 같은 부피의 돌보다 일곱 배가 넘습니다. 금화는 아주 무거웠습니다. 자루가 몇 번이나 찢어질 뻔했습니다. 무거워서 몇 번이나 쉬어야 했습니다. 동굴에서 배까지 자루를 끌고 갔습니다. 여러 번 오갔습니다.`,
+            `두 아이는 그 돈을 자루에 나눠 담아 배로 옮겼습니다. 한 번에 다 못 들어서 몇 번을 오갔습니다. 금화는 부피는 작은데 아주 무거웠습니다. 자루 하나를 들면 어깨가 처졌습니다. 금은 아주 무겁습니다. 같은 부피의 돌보다 일곱 배가 넘습니다. 자루가 몇 번이나 찢어질 뻔했습니다. 무거워서 몇 번이나 쉬어야 했습니다. 동굴에서 배까지 자루를 끌고 갔습니다. 여러 번 오갔습니다.`,
             `둘이서 겨우 끌었습니다. 아무에게도 들키지 않으려고 밤을 기다렸습니다. 밤에 마을에 닿아 손수레를 빌려 끌고 가는데, 언덕길에서 존스 씨를 만났습니다. 두 아이는 자루를 얼른 덮었습니다. 헌 옷을 덮어 두었습니다. 그런데 자루 모양이 그대로 났습니다.`,
             `그런데 존스 씨는 그것을 눈여겨보지 않았습니다.`,
             `"자네들 마침 잘 만났네. 더글러스 부인 댁에 사람들이 모여 있으니 어서 가세."`,
@@ -769,16 +769,14 @@ function paginateChapter(ch, chIndex) {
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
-    return `
- <div class="art-frame">
+    return `<div class="art-frame">
  <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
  <div class="art-fallback" style="display:none">${emoji}</div>
  </div>`;
 }
 
 function coverPage() {
-    return `
- <div class="page page-cover">
+    return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🖌️')}
  </div>
@@ -794,15 +792,13 @@ function coverPage() {
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
-    const itemHtml = ch => `
- <li>
+    const itemHtml = ch => `<li>
  <button type="button" data-goto="${ch.num}">
  <span class="toc-num">${ch.num}</span>
  <span><strong>${ch.title}</strong></span>
  </button>
  </li>`;
-    const extraItems = `
- <li>
+    const extraItems = `<li>
  <button type="button" data-goto-kind="quiz">
  <span class="toc-num">?</span>
  <span><strong>이야기 문제</strong></span>
@@ -811,8 +807,7 @@ function tocPage(part) {
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
-    return `
- <div class="page page-toc">
+    return `<div class="page page-toc">
  <div class="story-page-left">
  ${part === 0 ? '<h2>차례</h2>' : ''}
  <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
@@ -836,8 +831,7 @@ function chapterSpreadPage(spread) {
     const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story">
+        return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -849,8 +843,7 @@ function chapterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story">
+    return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -898,16 +891,14 @@ function quizPage(part) {
         const cls = ci => graded
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
-        return `
- <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+        return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices">
- ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
-    return `
- <div class="page page-quiz">
+    return `<div class="page page-quiz">
  ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
  <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
  <div class="quiz-list">${items}</div>
@@ -980,8 +971,7 @@ function afterSpreadPage(spread) {
     const foot = spread.last ? AFTER_FOOT : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story page-after">
+        return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -994,8 +984,7 @@ function afterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story page-after">
+    return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}

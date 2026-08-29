@@ -1,6 +1,6 @@
 const BOOK_TITLE = "80일간의 세계 일주";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => `${n}장 ·`;
 
 const CHAPTERS = [
     {
@@ -375,12 +375,12 @@ const CHAPTERS = [
         emoji: "🔒",
         art: ["story-13-a.webp", "story-13-b.webp"],
         paras: [
-            `포그는 아무 말 없이 손을 내밀었습니다. 쇠고랑이 채워졌습니다. 저항하지도 않았고 아니라고 하지도 않았습니다. 그저 손을 내밀었습니다. 둘레에 사람이 여럿 있었습니다. 다들 그 광경을 보고 있었습니다. 그는 리버풀 세관의 유치장에 갇혔습니다. 벽에 시계가 하나 걸려 있었습니다. 세관 건물 안의 작은 방이었습니다. 창에 쇠창살이 있었습니다. 의자 하나와 탁자 하나가 전부였습니다. 바닥이 돌이라 발이 시렸습니다. 바닷바람이 창살 사이로 들어왔습니다. 12월의 리버풀이었습니다.`,
-            `초침 소리가 났습니다. 그 방에서 들리는 소리가 그것뿐이었습니다. 창살 안은 아주 조용했습니다. 밖에서 나는 소리가 하나도 들리지 않았습니다. 벽이 두꺼운 건물이었습니다. 시계 소리와 자기 숨소리뿐이었습니다. 시간이 아주 느리게 갔습니다. 창살 밖으로 부두가 보였습니다. 배들이 드나들고 짐이 오르내렸습니다. 리버풀은 그 시절 영국에서 제일 큰 항구였습니다. 미국과 오가는 배가 다 그리로 들어왔습니다. 창살 밖에서 짐을 부리는 소리가 났습니다. 사람들은 아무 일 없이 일하고 있었습니다. 런던까지는 기차로 여섯 시간이면 되는 거리였습니다. 여섯 시간이면 되는 거리에 여기 앉아 있었습니다. 그것이 제일 견디기 어려운 것이었습니다. 기차역이 걸어서 십 분 거리에 있었습니다. 그 십 분을 갈 수가 없었습니다. 팔십 일을 달려온 사람이었습니다. 마지막 십 분에서 멈춘 것이었습니다.`,
+            `포그는 아무 말 없이 손을 내밀었습니다. 쇠고랑이 채워졌습니다. 저항하지도 않았고 아니라고 하지도 않았습니다. 둘레에 사람이 여럿 있었습니다. 다들 그 광경을 보고 있었습니다. 그는 리버풀 세관의 유치장에 갇혔습니다. 벽에 시계가 하나 걸려 있었습니다. 세관 건물 안의 작은 방이었습니다. 창에 쇠창살이 있었습니다. 의자 하나와 탁자 하나가 전부였습니다. 바닥이 돌이라 발이 시렸습니다. 바닷바람이 창살 사이로 들어왔습니다. 12월의 리버풀이었습니다.`,
+            `그 방에서 들리는 소리가 그것뿐이었습니다. 창살 안은 아주 조용했습니다. 밖에서 나는 소리가 하나도 들리지 않았습니다. 벽이 두꺼운 건물이었습니다. 시계 소리와 자기 숨소리뿐이었습니다. 시간이 아주 느리게 갔습니다. 창살 밖으로 부두가 보였습니다. 배들이 드나들고 짐이 오르내렸습니다. 리버풀은 그 시절 영국에서 제일 큰 항구였습니다. 미국과 오가는 배가 다 그리로 들어왔습니다. 창살 밖에서 짐을 부리는 소리가 났습니다. 사람들은 아무 일 없이 일하고 있었습니다. 런던까지는 기차로 여섯 시간이면 되는 거리였습니다. 여섯 시간이면 되는 거리에 여기 앉아 있었습니다. 그것이 제일 견디기 어려운 것이었습니다. 기차역이 걸어서 십 분 거리에 있었습니다. 그 십 분을 갈 수가 없었습니다. 팔십 일을 달려온 사람이었습니다. 마지막 십 분에서 멈춘 것이었습니다.`,
             `그리고 남은 시간은 아홉 시간이 되지 않았습니다. 파스파르투는 창살을 붙잡고 울부짖었습니다. 세관 사람들이 몇 번이나 떼어 놓았습니다. 그런데 다시 가서 붙잡았습니다. 울다가 소리를 지르다가 다시 울었습니다. 아우다 부인이 그 어깨를 잡았습니다. 자기가 홍콩에서 픽스의 말을 주인에게 전했더라면, 그랬더라면 이렇게 되지 않았을 것이라고요. 파스파르투는 그것을 몇 번이나 되뇌었습니다. 홍콩에서 들은 말을 주인에게 하지 않았습니다. 픽스가 편이 되었다고 여겼기 때문입니다. 태평양 위에서 픽스가 한 말이 맞는 말이었기 때문입니다. 그런데 영장이 결국 왔습니다. 영국 땅에 발을 딛는 그 순간에 왔습니다. 하루만 늦었어도 소용없는 종이였습니다. 봄베이에서도 홍콩에서도 오지 않던 종이였습니다. 그것이 마지막 항구에 와 있었습니다.`,
             `아우다 부인은 픽스를 찾아가 사정했습니다. 픽스는 고개를 저었습니다. 영장이 나온 이상 자기 마음대로 할 수 있는 일이 아니라고 했습니다. 그 말은 맞는 말이었습니다. 형사가 영장을 마음대로 거두지는 못합니다. 영장을 낸 것도 픽스였습니다. 그것을 거두려면 런던에서 답이 와야 했습니다. 그러면서도 그는 자꾸 창밖을 내다보았습니다. 우체국 쪽을 보고 있었습니다. 무언가를 기다리는 사람 같았습니다. 런던에 다시 물어 두었던 것입니다. 그 답이 오기를 기다리고 있었습니다. 픽스도 무언가 이상하다고 느끼고 있었던 것입니다. 다만 늦었습니다. 수에즈에서부터 여든 날을 그 생각 하나로 왔습니다. 그것을 하루아침에 놓기가 어려웠습니다. 틀렸다고 인정하면 그 여든 날이 다 헛일이 됩니다. 사람이 제일 하기 어려운 일입니다.`,
             `픽스도 마음이 편하지 않았던 것입니다. 아우다 부인은 아무 말도 하지 못했습니다. 그 사람도 자기가 옳다고 여기며 여기까지 온 것입니다. 다만 옳지 않았습니다. 옳다고 여기는 것과 옳은 것은 다릅니다. 픽스는 그 둘을 여든 날 동안 헷갈렸습니다. 그는 나쁜 사람이 아니었습니다. 다만 한번 정한 것을 바꾸지 못하는 사람이었습니다.`,
-            `포그는 나무 의자에 앉아 시계를 보고 있었습니다. 한 시가 지나고 두 시가 지났습니다. 얼굴은 조금도 달라지지 않았습니다. 다리를 꼬지도 않았습니다. 화를 내지도 않았고 억울하다고도 하지 않았습니다. 그저 시계를 보고 있었습니다. 세 시간 동안 그 자세로 앉아 있었습니다. 자세를 한 번도 바꾸지 않았습니다. 파스파르투가 그것을 창살 밖에서 보고 있었습니다. 보고 있기가 더 힘들었습니다. 차라리 화를 내면 나았을 것입니다. 아무 말도 하지 않으니 더 그랬습니다.`,
+            `포그는 나무 의자에 앉아 시계를 보고 있었습니다. 한 시가 지나고 두 시가 지났습니다. 얼굴은 조금도 달라지지 않았습니다. 다리를 꼬지도 않았습니다. 화를 내지도 않았고 억울하다고도 하지 않았습니다. 세 시간 동안 그 자세로 앉아 있었습니다. 자세를 한 번도 바꾸지 않았습니다. 파스파르투가 그것을 창살 밖에서 보고 있었습니다. 보고 있기가 더 힘들었습니다. 차라리 화를 내면 나았을 것입니다. 아무 말도 하지 않으니 더 그랬습니다.`,
             `한 시 오십 분이 되었을 때 그는 수첩을 꺼내 무언가를 적었습니다. 나중에 보니 그것은 이 여행에서 쓴 돈의 목록이었습니다. 마지막 줄까지 다 적고 나서 그는 수첩을 덮었습니다. 여행에 쓴 돈이 팔만 파운드가 넘었습니다. 이긴다 해도 남는 것이 없는 셈이었습니다. 이만 파운드를 걸고 팔만 파운드를 썼습니다. 셈으로만 보면 이미 진 여행이었습니다. 그래도 그는 그 목록을 적었습니다. 어디에 얼마가 나갔는지를 다 적었습니다. 그래도 마지막 줄까지 다 적었습니다. 코끼리 이천 파운드, 보석금 이천 파운드, 배 값 육만 달러. 하나도 빠뜨리지 않았습니다. 셈이 맞는지를 마지막까지 확인했습니다. 지고 있는 사람이 할 일이 아니었습니다. 그런데 그는 그것을 했습니다. 그것이 그 사람이었습니다. 스무 해 동안 걸음 수를 세던 사람이었습니다. 마지막까지 그 버릇을 지켰습니다.`,
             `두 시 삼십삼 분, 문이 요란하게 열렸습니다.`,
             `픽스가 뛰어 들어왔습니다. 얼굴이 하얗게 질려 있었습니다.<br>"포그 씨! 용서해 주십시오! 진짜 범인은 사흘 전에 잡혔습니다!"<br>사흘 전이면 배 위에 있을 때였습니다. 그동안 전보가 리버풀에서 기다리고 있었습니다. 제임스 스트랜드라는 사람이 진짜 도둑이었습니다. 포그와는 아무 상관이 없는 사람이었습니다.`,
@@ -391,7 +391,7 @@ const CHAPTERS = [
             `"특별 열차를 내주십시오." 포그가 역장에게 말했습니다.<br>"이 시간에는 선로가 비어 있지 않습니다."<br>저녁이라 다른 기차가 여럿 다니고 있었습니다. 그 사이로 한 대를 더 넣어야 했습니다. 역장이 전보를 몇 군데 쳤습니다. 그러고 나서야 길이 났습니다.<br>"값은 부르는 대로 드리겠습니다."`,
             `역장이 사람을 불렀습니다. 특별 열차는 그 열차 하나를 위해 선로를 비우는 것입니다. 값이 아주 비쌌습니다. 기관차 하나와 객차 하나였습니다. 그것을 통째로 빌린 것이었습니다. 돈이 얼마인지는 묻지도 않았습니다. 이제 그 돈도 남의 돈이 될 참이었습니다. 포그는 특별 열차를 냈습니다.`,
             `기관사는 있는 힘껏 달렸습니다. 리버풀에서 런던까지 삼백 킬로미터가 넘습니다. 그것을 다섯 시간 만에 달렸습니다. 보통 여섯 시간이 걸리는 길이었습니다. 한 시간을 줄인 것이었습니다. 그러나 12월의 영국은 안개가 짙습니다. 신호등이 제때 보이지 않아 몇 번이나 속도를 줄여야 했습니다. 안개가 끼면 앞이 몇 걸음도 보이지 않습니다. 기차는 신호등을 보고 달리니 그러면 속도를 줄여야 합니다. 12월의 영국은 안개가 짙은 철입니다. 그해 그날도 그랬습니다. 런던 가까이 갈수록 안개가 더 짙어졌습니다. 마지막 삼십 킬로미터가 제일 느렸습니다.`,
-            `열차가 런던에 닿은 것은 저녁 여덟 시 오십 분이었습니다. 개혁 클럽에 약속한 시간은 여덟 시 사십오 분이었습니다. 오 분이 늦었습니다. 기차에서 내려 시계를 보았습니다. 여덟 시 오십 분이었습니다. 팔십 일을 달려 오 분이 모자란 것이었습니다. 지구를 한 바퀴 돌았습니다. 그 끝에서 오 분이었습니다. 코끼리를 사고 배를 태우고 눈벌판을 건넜습니다. 그러고 나서 안개에 오 분을 잃었습니다.`
+            `열차가 런던에 닿은 것은 저녁 개혁 클럽에 약속한 시간은 여덟 시 사십오 분이었습니다. 오 분이 늦었습니다. 기차에서 내려 시계를 보았습니다. 여덟 시 오십 분이었습니다. 팔십 일을 달려 오 분이 모자란 것이었습니다. 지구를 한 바퀴 돌았습니다. 그 끝에서 오 분이었습니다. 코끼리를 사고 배를 태우고 눈벌판을 건넜습니다. 그러고 나서 안개에 오 분을 잃었습니다.`
         ]
     },
     {
@@ -784,16 +784,14 @@ function paginateChapter(ch, chIndex) {
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
-    return `
- <div class="art-frame">
+    return `<div class="art-frame">
  <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
  <div class="art-fallback" style="display:none">${emoji}</div>
  </div>`;
 }
 
 function coverPage() {
-    return `
- <div class="page page-cover">
+    return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🌍')}
  </div>
@@ -809,15 +807,13 @@ function coverPage() {
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
-    const itemHtml = ch => `
- <li>
+    const itemHtml = ch => `<li>
  <button type="button" data-goto="${ch.num}">
  <span class="toc-num">${ch.num}</span>
  <span><strong>${ch.title}</strong></span>
  </button>
  </li>`;
-    const extraItems = `
- <li>
+    const extraItems = `<li>
  <button type="button" data-goto-kind="quiz">
  <span class="toc-num">?</span>
  <span><strong>이야기 문제</strong></span>
@@ -826,8 +822,7 @@ function tocPage(part) {
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
-    return `
- <div class="page page-toc">
+    return `<div class="page page-toc">
  <div class="story-page-left">
  ${part === 0 ? '<h2>차례</h2>' : ''}
  <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
@@ -851,8 +846,7 @@ function chapterSpreadPage(spread) {
     const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story">
+        return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -864,8 +858,7 @@ function chapterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story">
+    return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -913,16 +906,14 @@ function quizPage(part) {
         const cls = ci => graded
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
-        return `
- <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+        return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices">
- ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
-    return `
- <div class="page page-quiz">
+    return `<div class="page page-quiz">
  ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
  <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
  <div class="quiz-list">${items}</div>
@@ -995,8 +986,7 @@ function afterSpreadPage(spread) {
     const foot = spread.last ? AFTER_FOOT : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story page-after">
+        return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -1009,8 +999,7 @@ function afterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story page-after">
+    return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}

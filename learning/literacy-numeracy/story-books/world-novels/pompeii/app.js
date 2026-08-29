@@ -1,6 +1,6 @@
 const BOOK_TITLE = "폼페이 최후의 날";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => `${n}장 ·`;
 
 const CHAPTERS = [
     {
@@ -92,7 +92,7 @@ const CHAPTERS = [
         emoji: "🌋",
         art: ["story-04-a.webp", "story-04-b.webp"],
         paras: [
-            `그 도시 뒤에 산이 하나 있었습니다. 베수비오였습니다. 높이가 천 미터가 넘었습니다. 지금보다 훨씬 높았습니다. 그날 산꼭대기가 날아갔기 때문입니다. 지금 베수비오는 천이백팔십일 미터입니다. 그날 이전에는 그보다 훨씬 높았습니다. 도시에서 십 킬로미터쯤 떨어져 있어서, 그 도시 어느 길에서나 그 산이 보였습니다.`,
+            `그 도시 뒤에 산이 하나 있었습니다. 베수비오였습니다. 높이가 천 미터가 넘었습니다. 그날 산꼭대기가 날아갔기 때문입니다. 지금 베수비오는 천이백팔십일 미터입니다. 그날 이전에는 그보다 훨씬 높았습니다. 도시에서 십 킬로미터쯤 떨어져 있어서, 그 도시 어느 길에서나 그 산이 보였습니다.`,
             `그런데 그때 사람들은 그 산을 화산으로 여기지 않았습니다. 아주 오랫동안 조용했기 때문입니다. 화산이라는 말 자체가 그때는 없었습니다. 산이 터진다는 생각을 아무도 하지 않았습니다. 그런 일을 본 사람이 없었습니다. 그 산이 마지막으로 터진 것이 그로부터 수백 년 전이었습니다. 기억하는 사람이 하나도 없었습니다.`,
             `산기슭이 아주 기름졌습니다. 화산재가 쌓인 땅이라 그런 것인데, 그때는 그 까닭을 몰랐습니다. 화산재에는 식물이 좋아하는 것이 많이 들어 있습니다. 그래서 화산 둘레의 땅이 기름집니다. 그래서 그 비탈에 포도밭이 가득했습니다. 폼페이의 포도주가 로마에까지 팔렸습니다. 항아리에 담아 배로 실어 보냈습니다. 그 항아리도 발굴에서 여럿 나왔습니다. 항아리에 어느 밭에서 난 것인지 적어 두었습니다. 그것까지 남아 있습니다.`,
             `봄이면 그 산이 온통 초록이었습니다. 사람들은 그 산을 보고 그해 농사를 점쳤습니다. 그저 좋은 산으로 알고 있었던 것입니다. 그 산을 그린 벽화도 나왔습니다. 포도밭이 그려져 있습니다. 그런데 그 열일곱 해 전에 일이 하나 있었습니다.`,
@@ -638,16 +638,14 @@ function paginateChapter(ch, chIndex) {
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
-    return `
- <div class="art-frame">
+    return `<div class="art-frame">
  <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
  <div class="art-fallback" style="display:none">${emoji}</div>
  </div>`;
 }
 
 function coverPage() {
-    return `
- <div class="page page-cover">
+    return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🌋')}
  </div>
@@ -663,15 +661,13 @@ function coverPage() {
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
-    const itemHtml = ch => `
- <li>
+    const itemHtml = ch => `<li>
  <button type="button" data-goto="${ch.num}">
  <span class="toc-num">${ch.num}</span>
  <span><strong>${ch.title}</strong></span>
  </button>
  </li>`;
-    const extraItems = `
- <li>
+    const extraItems = `<li>
  <button type="button" data-goto-kind="quiz">
  <span class="toc-num">?</span>
  <span><strong>이야기 문제</strong></span>
@@ -680,8 +676,7 @@ function tocPage(part) {
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
-    return `
- <div class="page page-toc">
+    return `<div class="page page-toc">
  <div class="story-page-left">
  ${part === 0 ? '<h2>차례</h2>' : ''}
  <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
@@ -705,8 +700,7 @@ function chapterSpreadPage(spread) {
     const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story">
+        return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -718,8 +712,7 @@ function chapterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story">
+    return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -767,16 +760,14 @@ function quizPage(part) {
         const cls = ci => graded
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
-        return `
- <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+        return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices">
- ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
-    return `
- <div class="page page-quiz">
+    return `<div class="page page-quiz">
  ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
  <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
  <div class="quiz-list">${items}</div>
@@ -849,8 +840,7 @@ function afterSpreadPage(spread) {
     const foot = spread.last ? AFTER_FOOT : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story page-after">
+        return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -863,8 +853,7 @@ function afterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story page-after">
+    return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}

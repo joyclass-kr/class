@@ -1,6 +1,6 @@
 const BOOK_TITLE = "몽테크리스토 백작";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => `${n}장 ·`;
 
 const CHAPTERS = [
     {
@@ -193,7 +193,7 @@ const CHAPTERS = [
             `아들이 그 소식을 들은 것은 그때가 처음이었습니다. 신부의 손이 떨렸습니다. 카드루스는 눈치채지 못했습니다. 다이아몬드만 보고 있었습니다.`,
             `"모렐 씨는 지금 어떻습니까?"<br>"딱하게 되었습니다. 배를 잇달아 잃고 이제 파산 직전이랍니다. 다음 달에 갚을 돈을 못 갚으면 끝이라고 하더군요."`,
             `신부는 그 말을 새겨들었습니다. 신부는 다이아몬드를 카드루스에게 주고 나왔습니다. 그것도 갚음이었습니다. 며칠 뒤, 영국 은행에서 왔다는 사람이 모렐 씨의 사무실을 찾아왔습니다. 검은 옷을 입고 안경을 쓴 사람이었습니다.`,
-            `영국 말을 아주 잘했습니다. 그는 장부를 살펴보고 갚을 돈의 기한을 미뤄 주었습니다. 석 달을 미뤄 주었습니다.`,
+            `영국 말을 아주 잘했습니다. 그는 장부를 살펴보고 갚을 돈의 기한을 미뤄 주었습니다.`,
             `그러나 그 달이 다 가도록 배는 돌아오지 않았습니다. 모렐 씨는 날마다 부두에 나가 수평선을 보았습니다. 모렐 씨의 마지막 배 파라온 호가 바다에서 가라앉았다는 소식이 왔습니다. 그것으로 끝이었습니다. 약속한 날 아침, 모렐 씨는 서재 문을 잠갔습니다.`,
             `딸 쥘리가 문을 두드렸지만 열어 주지 않았습니다. 안에서 아무 소리도 나지 않았습니다. 그때 하인이 편지 한 통과 지갑 하나를 들고 뛰어왔습니다.`,
             `지갑 안에는 모렐 씨가 갚아야 할 돈만큼의 어음이 들어 있었고, 그 위에 커다란 다이아몬드 하나가 얹혀 있었습니다. 어음의 날짜가 그날로 맞춰져 있었습니다. 쥘리의 혼인 자금이라고 적혀 있었습니다. 아무도 그런 것을 보낸 적이 없었습니다.`,
@@ -249,7 +249,7 @@ const CHAPTERS = [
             `백작은 그의 은행에 어마어마한 돈을 맡겼습니다. 로마의 어느 은행이 보증을 섰습니다. 그 은행도 백작이 미리 손을 써 둔 곳이었습니다. 당글라르는 그것을 알아보지 않았습니다. 얼마든지 찾아 쓸 수 있는 조건으로요. 그것이 나중에 그 은행을 무너뜨립니다. 당글라르는 그것을 몰랐습니다. 큰돈을 맡기는 손님은 은행에 좋은 손님입니다. 그런데 언제든 다 찾아갈 수 있는 돈이면 다릅니다.`,
             `당글라르는 그 액수를 보고 손이 떨렸습니다.<br>"저 사람은 대체 얼마나 가진 거야."`,
             `그때부터 당글라르는 백작을 아주 잘 대했습니다. 둘째는 빌포르 검사장의 집이었습니다. 법원 가까이에 있는 조용한 집이었습니다. 빌포르는 파리에서 가장 무서운 검사로 이름이 나 있었습니다. 사형을 많이 내리는 것으로도 이름이 났습니다. 그것을 자기 자랑으로 여겼습니다. 법정에서 그 말을 여러 번 했습니다.`,
-            `누구도 봐주지 않는다는 것이 그의 자랑이었습니다. 스물네 해 전에 자기가 한 일만 빼고요. 그 일은 아무에게도 말하지 않았습니다. 아내에게도 말하지 않았습니다. 스물네 해 동안 그랬습니다.`,
+            `누구도 봐주지 않는다는 것이 그의 자랑이었습니다. 스물네 해 전에 자기가 한 일만 빼고요. 그 일은 아무에게도 말하지 않았습니다. 스물네 해 동안 그랬습니다.`,
             `셋째는 모르세르 백작의 집이었습니다. 문 앞에 하인이 둘 서 있었습니다. 페르낭은 이제 장군이자 귀족원 의원이었습니다. 어부의 아들이 거기까지 간 것이었습니다. 아무도 그 시작을 몰랐습니다. 귀족원은 그 나라에서 법을 만드는 자리였습니다. 아무나 앉는 자리가 아니었습니다.`,
             `그가 어떻게 그 자리까지 올랐는지 파리에서는 아무도 자세히 알지 못했습니다. 그리스의 어느 전투에서 큰 공을 세웠다는 이야기만 돌 뿐이었습니다. 그 이야기가 뒤집히는 데 오래 걸리지 않습니다. 야니나라는 데에서 있었던 일이었습니다. 지금의 그리스 북쪽입니다. 세 사람 가운데 누구도 몽테크리스토 백작이 누구인지 몰랐습니다.`,
             `스물네 해가 지났고, 그 사람은 죽은 줄 알고 있었습니다. 이프 섬에서 나온 사람이 없었기 때문입니다. 그러니 셈에 넣을 까닭도 없었습니다. 다만 메르세데스 부인만은 달랐습니다. 그녀는 첫날 그 얼굴을 알아보았습니다. 목소리도 알아보았습니다.`,
@@ -752,16 +752,14 @@ function paginateChapter(ch, chIndex) {
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
-    return `
- <div class="art-frame">
+    return `<div class="art-frame">
  <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
  <div class="art-fallback" style="display:none">${emoji}</div>
  </div>`;
 }
 
 function coverPage() {
-    return `
- <div class="page page-cover">
+    return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🗝️')}
  </div>
@@ -777,15 +775,13 @@ function coverPage() {
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
-    const itemHtml = ch => `
- <li>
+    const itemHtml = ch => `<li>
  <button type="button" data-goto="${ch.num}">
  <span class="toc-num">${ch.num}</span>
  <span><strong>${ch.title}</strong></span>
  </button>
  </li>`;
-    const extraItems = `
- <li>
+    const extraItems = `<li>
  <button type="button" data-goto-kind="quiz">
  <span class="toc-num">?</span>
  <span><strong>이야기 문제</strong></span>
@@ -794,8 +790,7 @@ function tocPage(part) {
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
-    return `
- <div class="page page-toc">
+    return `<div class="page page-toc">
  <div class="story-page-left">
  ${part === 0 ? '<h2>차례</h2>' : ''}
  <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
@@ -819,8 +814,7 @@ function chapterSpreadPage(spread) {
     const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story">
+        return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -832,8 +826,7 @@ function chapterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story">
+    return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -881,16 +874,14 @@ function quizPage(part) {
         const cls = ci => graded
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
-        return `
- <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+        return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices">
- ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
-    return `
- <div class="page page-quiz">
+    return `<div class="page page-quiz">
  ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
  <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
  <div class="quiz-list">${items}</div>
@@ -963,8 +954,7 @@ function afterSpreadPage(spread) {
     const foot = spread.last ? AFTER_FOOT : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story page-after">
+        return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -977,8 +967,7 @@ function afterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story page-after">
+    return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}

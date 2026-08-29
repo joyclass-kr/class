@@ -212,7 +212,7 @@ const CHAPTERS = [
         art: ["story-09-a.webp", "story-09-b.webp"],
         paras: [
             `어느 왕이 사냥을 나갔다가 길을 잃었습니다. 사슴을 쫓다가 일행과 떨어진 것이었습니다. 해가 기울도록 사람을 찾지 못했습니다. 뿔피리를 불어도 대답이 없었습니다. 그러다 큰 호수를 하나 발견했습니다. 물이 아주 맑았습니다. 바닥의 돌이 다 보일 만큼 맑았습니다. 그런데 물가에 사람 자취가 하나도 없었습니다. 그 호수에는 물고기가 네 가지 빛깔로 헤엄치고 있었습니다. 흰 것과 붉은 것과 파란 것과 노란 것이었습니다. 수가 고르게 섞여 있었습니다. 헤엄치는 모양도 빛깔마다 달랐습니다. 왕은 그것을 한참 들여다보았습니다.`,
-            `그리고 호수 건너편에 궁전이 하나 있었습니다. 왕은 그 궁전으로 갔습니다. 문이 열려 있었습니다. 대문이 활짝 열려 있었습니다. 지키는 사람도 없었습니다.`,
+            `그리고 호수 건너편에 궁전이 하나 있었습니다. 왕은 그 궁전으로 갔습니다. 대문이 활짝 열려 있었습니다. 지키는 사람도 없었습니다.`,
             `안에 들어가 보니 사람이 하나도 없었습니다. 방마다 등이 켜져 있고, 상에 밥이 차려져 있었습니다. 뜰에 물이 흐르고 나무가 잘 다듬어져 있었습니다. 누군가 돌보고 있는 집이었습니다. 그런데 사람이 없었습니다. 밥에서 김이 오르고 있었습니다. 방금까지 사람이 있었던 것처럼 보였습니다. 그런데 아무 소리도 나지 않았습니다. 발소리도 말소리도 없었습니다.`,
             `왕이 큰 소리로 불렀습니다. 소리가 빈 방들을 돌아 되울렸습니다. 자기 목소리가 되돌아오는 것을 왕이 처음 들었습니다. 그만큼 조용한 집이었습니다. 아무 대답이 없었습니다. 그러다 안쪽 방에서 우는 소리가 났습니다. 아주 낮게 흐느끼는 소리였습니다. 소리가 나는 쪽으로 가는 동안 왕은 여러 번 멈췄습니다. 그 궁전이 아주 컸기 때문입니다. 참다가 새어 나오는 소리였습니다. 왕은 그 소리를 따라갔습니다.`,
             `왕이 그 방에 들어갔습니다. 젊은 남자가 하나 옥좌에 앉아 있었습니다. 잘생긴 사람이었는데 얼굴이 몹시 슬펐습니다. 옷차림이 임금의 것이었습니다. 그런데 자리에서 일어나지 않았습니다. 그 사람이 말했습니다.<br>"어서 오십시오. 일어나 맞지 못하는 것을 용서하십시오."<br>"괜찮소."<br>"제가 일어날 수 없어서 그럽니다."`,
@@ -240,7 +240,7 @@ const CHAPTERS = [
             `그리고 한 가지가 더 있습니다.`,
             `알라딘과 알리바바는 사실 원래 아랍어 원본에 없었습니다. 제일 유명한 두 편이 그렇습니다. 삼백 년쯤 전에 프랑스 사람 앙투안 갈랑이 이 책을 유럽에 소개하면서 함께 실은 이야기입니다. 갈랑이 옮긴 뒤로 이 책이 온 유럽에서 읽혔습니다. 그전까지 유럽 사람들은 이 책을 몰랐습니다. 옮긴이 하나가 책 한 권의 운명을 바꾼 것입니다.`,
             `그가 시리아에서 온 어떤 사람에게 들은 것이라고 적어 두었습니다. 그 사람의 이름은 한나 디아브였다고 전해집니다. 그래서 그 두 편은 아라비안나이트에서 제일 유명한데, 원본에는 없습니다. 이야기라는 것이 그렇게 흘러다닙니다. 어디서 시작했는지 아무도 모르게 됩니다. 입에서 입으로 옮겨 다니는 동안 주인이 없어지는 것입니다. 그러면서 오래 살아남습니다.`,
-            `이제 셰에라자드의 이야기로 돌아가겠습니다. 이 책의 처음이자 마지막 이야기입니다. 셰에라자드는 천 하룻밤 동안 이야기를 했습니다. 하루도 거르지 않았습니다. 햇수로 거의 세 해였습니다. 천 하룻밤을 한 밤도 거르지 않았습니다. 그 사이에 아이가 셋 태어났습니다. 이야기를 하면서 아이를 셋 낳고 길렀습니다. 그동안 하루도 이야기를 거르지 않았습니다.`,
+            `이제 셰에라자드의 이야기로 돌아가겠습니다. 이 책의 처음이자 마지막 이야기입니다. 셰에라자드는 천 하룻밤 동안 이야기를 했습니다. 햇수로 거의 세 해였습니다. 천 하룻밤을 한 밤도 거르지 않았습니다. 그 사이에 아이가 셋 태어났습니다. 이야기를 하면서 아이를 셋 낳고 길렀습니다. 그동안 하루도 이야기를 거르지 않았습니다.`,
             `천 하룻날 밤, 셰에라자드가 이야기를 마치고 이렇게 말했습니다.<br>"임금님, 이제 제가 아는 이야기가 다 떨어졌습니다."`,
             `그리고 아이 셋을 데려오게 했습니다.<br>"이 아이들을 어미 없이 두지는 마십시오."`,
             `왕은 한참 아무 말도 하지 않았습니다. 그러다 이렇게 말했습니다.<br>"나는 그대를 죽이지 않겠소."<br>"고맙습니다."<br>"그런데 그것은 오늘 정한 것이 아니오."<br>"언제 정하셨습니까."<br>왕이 말했습니다.<br>"아주 오래되었소. 나도 정확히 언제인지는 모르겠소."`,
@@ -560,16 +560,14 @@ function paginateChapter(ch, chIndex) {
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
-    return `
- <div class="art-frame">
+    return `<div class="art-frame">
  <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
  <div class="art-fallback" style="display:none">${emoji}</div>
  </div>`;
 }
 
 function coverPage() {
-    return `
- <div class="page page-cover">
+    return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🌙')}
  </div>
@@ -585,15 +583,13 @@ function coverPage() {
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
-    const itemHtml = ch => `
- <li>
+    const itemHtml = ch => `<li>
  <button type="button" data-goto="${ch.num}">
  <span class="toc-num">${ch.num}</span>
  <span><strong>${ch.title}</strong></span>
  </button>
  </li>`;
-    const extraItems = `
- <li>
+    const extraItems = `<li>
  <button type="button" data-goto-kind="quiz">
  <span class="toc-num">?</span>
  <span><strong>이야기 문제</strong></span>
@@ -602,8 +598,7 @@ function tocPage(part) {
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
-    return `
- <div class="page page-toc">
+    return `<div class="page page-toc">
  <div class="story-page-left">
  ${part === 0 ? '<h2>차례</h2>' : ''}
  <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
@@ -627,8 +622,7 @@ function chapterSpreadPage(spread) {
     const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story">
+        return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -640,8 +634,7 @@ function chapterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story">
+    return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -689,16 +682,14 @@ function quizPage(part) {
         const cls = ci => graded
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
-        return `
- <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+        return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices">
- ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
-    return `
- <div class="page page-quiz">
+    return `<div class="page page-quiz">
  ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
  <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
  <div class="quiz-list">${items}</div>
@@ -771,8 +762,7 @@ function afterSpreadPage(spread) {
     const foot = spread.last ? AFTER_FOOT : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story page-after">
+        return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -785,8 +775,7 @@ function afterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story page-after">
+    return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}

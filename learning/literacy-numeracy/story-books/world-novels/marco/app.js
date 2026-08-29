@@ -1,6 +1,6 @@
 const BOOK_TITLE = "엄마 찾아 삼만리";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => `${n}장 ·`;
 
 const CHAPTERS = [
     {
@@ -205,7 +205,7 @@ const CHAPTERS = [
             `마르코는 그 말을 듣고 어머니가 어떤 사람인지 다시 생각났습니다. 두 해 만에 그 성질이 떠오른 것이었습니다. 얼굴은 흐려졌는데 그것은 또렷했습니다. 얼굴은 잊혀도 성질은 남습니다. 마르코는 그것을 그때 알았습니다.`,
             `그날 밤 마르코는 잠들지 못했습니다. 그리고 새벽에 다시 길을 나섰습니다. 아무에게도 인사하지 않고 나갔습니다. 붙잡힐까 봐 그랬습니다. 그 집에서도 말렸을 것입니다. 그 길이 어떤 길인지 알았기 때문입니다.`,
             `이번에는 삯을 낼 것이 아무것도 없었습니다. 그래서 걸었습니다. 북쪽으로 난 길을 따라 걸었습니다. 길이라고 해야 수레 자국이 난 자리였습니다. 그것을 따라갔습니다. 갈림길이 나오면 지나가는 사람에게 물었습니다. 사람을 못 만나면 해를 보고 방향을 잡았습니다.`,
-            `가는 길에 마르코는 어느 농가에서 며칠 일을 하고 밥을 얻어먹었습니다. 그리고 또 걸었습니다. 길에서 자고, 얻어먹고, 또 걸었습니다. 자는 자리는 나무 밑이나 헛간이었습니다. 비가 오면 다리 밑에 들어갔습니다. 밤에는 짐승 소리가 났습니다. 그래도 잠은 잤습니다.`,
+            `가는 길에 마르코는 어느 농가에서 며칠 일을 하고 밥을 얻어먹었습니다. 길에서 자고, 얻어먹고, 또 걸었습니다. 자는 자리는 나무 밑이나 헛간이었습니다. 비가 오면 다리 밑에 들어갔습니다. 밤에는 짐승 소리가 났습니다. 그래도 잠은 잤습니다.`,
             `마르코는 그때 이미 열 달째 길 위에 있었습니다. 떠날 때는 사월이었습니다. 그 사이에 계절이 두 번 바뀌었습니다. 떠날 때 열세 살이었습니다. 그 사이에 한 살을 더 먹었습니다.`,
             `그러다 어느 마을에서 이탈리아 사람을 만났습니다. 그 사람이 사정을 듣고 말을 한 마리 빌려주었습니다. 늙은 말이었습니다. 걸음이 느렸습니다. 그래도 걸어가는 것보다는 훨씬 나았습니다. 하루에 갈 수 있는 거리가 두 배가 되었습니다. 그것이 아주 컸습니다. 발이 성해야 걸을 수 있었습니다. 그 무렵 마르코의 발은 성하지 않았습니다.`,
             `"살타까지 타고 가라. 그리고 그쪽 여관에 맡겨 두면 내가 찾아온다."`,
@@ -246,7 +246,7 @@ const CHAPTERS = [
         emoji: "🚪",
         art: ["story-09-a.webp", "story-09-b.webp"],
         paras: [
-            `방문 앞에서 마르코가 걸음을 멈췄습니다. 그리고 한참 서 있었습니다. 무서웠기 때문입니다. 손잡이에 손을 얹어 놓고 그대로 있었습니다. 안에서는 아무 소리도 나지 않았습니다. 숨소리도 들리지 않았습니다. 마르코는 귀를 문에 대 보았습니다. 아무 소리도 나지 않았습니다. 그것이 더 무서웠습니다.`,
+            `방문 앞에서 마르코가 걸음을 멈췄습니다. 그리고 한참 서 있었습니다. 무서웠기 때문입니다. 손잡이에 손을 얹어 놓고 그대로 있었습니다. 안에서는 숨소리도 들리지 않았습니다. 마르코는 귀를 문에 대 보았습니다. 아무 소리도 나지 않았습니다. 그것이 더 무서웠습니다.`,
             `그 문 하나를 열면 되는 것이었습니다. 배를 스물일곱 날 타고, 소달구지 옆에서 몇 주를 걷고, 산을 넘어온 끝이 그 문 하나였습니다. 열 달이 걸린 문이었습니다. 그 문 하나가 여태 온 길보다 무거웠습니다. 손이 움직이지 않았습니다. 열 달 동안 그 문만 생각했습니다. 그런데 막상 앞에 서니 그랬습니다.`,
             `문을 열고 들어갔는데 어머니가 자기를 못 알아보면 어떻게 하나. 그리고 열 달 동안 걸어온 것이 다 무엇이 되나. 마르코는 문을 열었습니다. 그 생각을 하다가 그냥 열었습니다. 더 서 있으면 못 열 것 같았습니다. 눈을 감고 밀었습니다. 그러고는 눈을 떴습니다.`,
             `문이 소리를 냈습니다. 마르코는 그 소리에 놀라서 잠깐 멈췄습니다. 돌쩌귀가 오래된 소리였습니다. 그 소리가 방 안에 크게 울렸습니다. 마르코는 숨을 죽였습니다. 그 소리가 방 안 사람을 깨울까 봐 그랬습니다. 그런데 아무 기척도 없었습니다.`,
@@ -618,16 +618,14 @@ function paginateChapter(ch, chIndex) {
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
-    return `
- <div class="art-frame">
+    return `<div class="art-frame">
  <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
  <div class="art-fallback" style="display:none">${emoji}</div>
  </div>`;
 }
 
 function coverPage() {
-    return `
- <div class="page page-cover">
+    return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🚢')}
  </div>
@@ -643,15 +641,13 @@ function coverPage() {
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
-    const itemHtml = ch => `
- <li>
+    const itemHtml = ch => `<li>
  <button type="button" data-goto="${ch.num}">
  <span class="toc-num">${ch.num}</span>
  <span><strong>${ch.title}</strong></span>
  </button>
  </li>`;
-    const extraItems = `
- <li>
+    const extraItems = `<li>
  <button type="button" data-goto-kind="quiz">
  <span class="toc-num">?</span>
  <span><strong>이야기 문제</strong></span>
@@ -660,8 +656,7 @@ function tocPage(part) {
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
-    return `
- <div class="page page-toc">
+    return `<div class="page page-toc">
  <div class="story-page-left">
  ${part === 0 ? '<h2>차례</h2>' : ''}
  <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
@@ -685,8 +680,7 @@ function chapterSpreadPage(spread) {
     const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story">
+        return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -698,8 +692,7 @@ function chapterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story">
+    return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -747,16 +740,14 @@ function quizPage(part) {
         const cls = ci => graded
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
-        return `
- <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+        return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices">
- ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
-    return `
- <div class="page page-quiz">
+    return `<div class="page page-quiz">
  ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
  <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
  <div class="quiz-list">${items}</div>
@@ -829,8 +820,7 @@ function afterSpreadPage(spread) {
     const foot = spread.last ? AFTER_FOOT : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story page-after">
+        return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -843,8 +833,7 @@ function afterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story page-after">
+    return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}

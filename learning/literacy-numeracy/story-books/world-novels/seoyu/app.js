@@ -1,6 +1,6 @@
 const BOOK_TITLE = "서유기";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => `${n}장 ·`;
 
 const CHAPTERS = [
     {
@@ -180,7 +180,7 @@ const CHAPTERS = [
             `말도 잘 타지 못해서, 요괴가 쫓아오면 뒤를 돌아보다가 말에서 떨어집니다. 그러고는 일어나지도 못하고 붙잡힙니다. 사람도 잘 알아보지 못합니다. 제자들이 그것 때문에 여러 번 곤란해집니다. 요괴가 사람으로 변해 오면 그대로 믿습니다. 그리고 알아본 제자를 오히려 나무랍니다.`,
             `그런데 이 사람에게 하나 있는 것이 있습니다. 가겠다고 한 것을 끝까지 지킵니다. 열네 해 동안 하루도 그만두겠다고 하지 않습니다. 이 여행에서 그만두자는 말을 한 번도 안 한 사람은 삼장과 사오정뿐입니다. 이 소설은 그것 하나면 된다고 말합니다. 재주가 있는 이는 여럿이었습니다. 그런데 그만두지 않은 사람이 그 무리를 끝까지 끌고 갔습니다.`,
             `길을 떠난 지 얼마 되지 않아 삼장은 오행산을 지나게 되었습니다. 그 산 아래에서 소리가 났습니다.<br>"스님! 저를 꺼내 주십시오!"`,
-            `삼장은 걸음을 멈췄습니다. 바위밖에 없는데 사람 소리가 났기 때문입니다. 가 보니 바위 틈에서 원숭이 머리가 하나 나와 있었습니다. 머리 말고는 아무것도 보이지 않았습니다. 이끼가 끼어 있었고, 얼굴에는 풀이 자라 있었습니다. 눈만 아주 밝게 빛났습니다. 오백 해 동안 그 눈만 그대로였습니다. 삼장은 그 눈을 보고 걸음을 멈췄습니다.`,
+            `바위밖에 없는데 사람 소리가 났기 때문입니다. 가 보니 바위 틈에서 원숭이 머리가 하나 나와 있었습니다. 머리 말고는 아무것도 보이지 않았습니다. 이끼가 끼어 있었고, 얼굴에는 풀이 자라 있었습니다. 눈만 아주 밝게 빛났습니다. 오백 해 동안 그 눈만 그대로였습니다. 삼장은 그 눈을 보고 걸음을 멈췄습니다.`,
             `삼장이 놀라 뒤로 물러섰습니다.<br>"너는 무엇이냐."<br>"원숭이입니다."<br>원숭이가 대답했습니다.<br>"저는 오백 해 동안 여기 있었습니다. 꺼내 주시면 스님을 지켜 서쪽까지 모시겠습니다."<br>오백 해 동안 그 자리에서 그 길을 지나가는 사람을 기다린 것이었습니다. 지나간 사람이 없지는 않았습니다. 다들 달아났을 뿐입니다.`,
             `삼장이 산꼭대기에 올라가 부적을 떼자 산이 쩍 갈라졌습니다. 흙과 돌이 사방으로 튀었습니다. 산꼭대기가 통째로 무너져 내렸습니다. 삼장은 눈을 감고 땅에 엎드렸습니다. 부적을 뗄 때 손이 떨렸습니다. 무엇이 나올지 몰랐기 때문입니다.`,
             `손오공이 오백 해 만에 밖으로 나왔습니다. 나오자마자 한 일은 삼장 앞에 엎드려 절을 한 것이었습니다. 털에 낀 이끼를 손으로 툭툭 털어 냈습니다. 오백 해치 이끼가 우수수 떨어졌습니다. 그 절이 진심이었는지 아닌지는 그다음 장에서 곧 드러납니다. 고맙기는 했을 것입니다. 다만 고마운 것과 말을 듣는 것은 다른 일이었습니다.`
@@ -738,16 +738,14 @@ function paginateChapter(ch, chIndex) {
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
-    return `
- <div class="art-frame">
+    return `<div class="art-frame">
  <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
  <div class="art-fallback" style="display:none">${emoji}</div>
  </div>`;
 }
 
 function coverPage() {
-    return `
- <div class="page page-cover">
+    return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🐒')}
  </div>
@@ -763,15 +761,13 @@ function coverPage() {
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
-    const itemHtml = ch => `
- <li>
+    const itemHtml = ch => `<li>
  <button type="button" data-goto="${ch.num}">
  <span class="toc-num">${ch.num}</span>
  <span><strong>${ch.title}</strong></span>
  </button>
  </li>`;
-    const extraItems = `
- <li>
+    const extraItems = `<li>
  <button type="button" data-goto-kind="quiz">
  <span class="toc-num">?</span>
  <span><strong>이야기 문제</strong></span>
@@ -780,8 +776,7 @@ function tocPage(part) {
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
-    return `
- <div class="page page-toc">
+    return `<div class="page page-toc">
  <div class="story-page-left">
  ${part === 0 ? '<h2>차례</h2>' : ''}
  <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
@@ -805,8 +800,7 @@ function chapterSpreadPage(spread) {
     const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story">
+        return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -818,8 +812,7 @@ function chapterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story">
+    return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -867,16 +860,14 @@ function quizPage(part) {
         const cls = ci => graded
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
-        return `
- <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+        return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices">
- ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
-    return `
- <div class="page page-quiz">
+    return `<div class="page page-quiz">
  ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
  <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
  <div class="quiz-list">${items}</div>
@@ -949,8 +940,7 @@ function afterSpreadPage(spread) {
     const foot = spread.last ? AFTER_FOOT : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story page-after">
+        return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -963,8 +953,7 @@ function afterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story page-after">
+    return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}

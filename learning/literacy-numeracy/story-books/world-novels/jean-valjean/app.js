@@ -1,6 +1,6 @@
 const BOOK_TITLE = "장발장";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => `${n}장 ·`;
 
 const CHAPTERS = [
     {
@@ -350,7 +350,7 @@ const CHAPTERS = [
             `그날 밤 장 발장은 쪽지 한 장을 손에 넣었습니다. 코제트에게 전해 달라며 어떤 아이가 가져온 것이었습니다. 거리에서 사는 아이였습니다. 열 살이나 되었을까 한 아이였습니다. 신발을 신지 않은 아이였습니다. 그 시절 파리에는 그런 아이가 아주 많았습니다. 심부름을 하고 몇 푼을 받았습니다.`,
             `쪽지에는 마리우스의 이름이 적혀 있었습니다. 그리고 이런 말이 있었습니다.<br>"나는 죽으러 갑니다. 당신이 이 글을 읽을 때 나는 이미 없을 것입니다."`,
             `열아홉 살이 쓴 글이었습니다. 장 발장은 그 종이를 오래 들여다보았습니다. 손이 떨렸습니다. 글을 늦게 배운 사람이라 읽는 데 시간이 걸렸습니다. 두 번 읽었습니다. 코제트가 무엇 때문에 요즘 그러는지 그제야 다 알았습니다.`,
-            `이 젊은이가 죽으면 코제트는 자기 곁에 남을 것이었습니다. 아무것도 하지 않으면 되는 일이었습니다. 여덟 해 전 아라스로 가던 밤과 똑같은 물음이었습니다. 그때도 아무것도 하지 않으면 되는 일이었습니다. 여덟 해 전에는 남의 목숨이었습니다. 이번에는 딸의 앞날이었습니다.`,
+            `이 젊은이가 죽으면 코제트는 자기 곁에 남을 것이었습니다. 여덟 해 전 아라스로 가던 밤과 똑같은 물음이었습니다. 그때도 아무것도 하지 않으면 되는 일이었습니다. 여덟 해 전에는 남의 목숨이었습니다. 이번에는 딸의 앞날이었습니다.`,
             `그는 옷을 갈아입고 밖으로 나갔습니다. 손에는 총 한 자루가 들려 있었습니다. 예순이 넘은 사람이었습니다. 그리고 그 젊은이를 좋아하지도 않았습니다. 얼굴도 제대로 본 적이 없었습니다. 딸을 데려갈 사람이었습니다.`,
             `바리케이드는 좁은 골목을 가로막고 서 있었습니다. 스무 명 남짓한 젊은이들이 그 뒤에 있었습니다. 군대는 골목 양쪽 끝을 막고 있었습니다. 나갈 데가 없었습니다. 창마다 덧문이 닫혀 있었습니다. 그 골목 사람들은 다 피해 나갔습니다. 남은 것은 그 젊은이들뿐이었습니다.`,
             `장 발장이 나타났을 때 아무도 그가 누구인지 몰랐습니다. 그는 총을 쏘지 않았습니다. 대신 벽 위로 올라가 다친 사람을 끌어내리고, 무너진 자리를 다시 쌓았습니다. 젊은이들은 그가 왜 왔는지 몰랐습니다. 예순이 넘은 사람이었습니다. 그 자리에 그런 사람이 있을 까닭이 없었습니다.`,
@@ -714,16 +714,14 @@ function paginateChapter(ch, chIndex) {
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
-    return `
- <div class="art-frame">
+    return `<div class="art-frame">
  <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
  <div class="art-fallback" style="display:none">${emoji}</div>
  </div>`;
 }
 
 function coverPage() {
-    return `
- <div class="page page-cover">
+    return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🕯️')}
  </div>
@@ -739,15 +737,13 @@ function coverPage() {
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
-    const itemHtml = ch => `
- <li>
+    const itemHtml = ch => `<li>
  <button type="button" data-goto="${ch.num}">
  <span class="toc-num">${ch.num}</span>
  <span><strong>${ch.title}</strong></span>
  </button>
  </li>`;
-    const extraItems = `
- <li>
+    const extraItems = `<li>
  <button type="button" data-goto-kind="quiz">
  <span class="toc-num">?</span>
  <span><strong>이야기 문제</strong></span>
@@ -756,8 +752,7 @@ function tocPage(part) {
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
-    return `
- <div class="page page-toc">
+    return `<div class="page page-toc">
  <div class="story-page-left">
  ${part === 0 ? '<h2>차례</h2>' : ''}
  <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
@@ -781,8 +776,7 @@ function chapterSpreadPage(spread) {
     const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story">
+        return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -794,8 +788,7 @@ function chapterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story">
+    return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -843,16 +836,14 @@ function quizPage(part) {
         const cls = ci => graded
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
-        return `
- <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+        return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices">
- ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
-    return `
- <div class="page page-quiz">
+    return `<div class="page page-quiz">
  ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
  <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
  <div class="quiz-list">${items}</div>
@@ -925,8 +916,7 @@ function afterSpreadPage(spread) {
     const foot = spread.last ? AFTER_FOOT : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story page-after">
+        return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -939,8 +929,7 @@ function afterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story page-after">
+    return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}

@@ -1,6 +1,6 @@
 const BOOK_TITLE = "비밀의 화원";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => `${n}장 ·`;
 
 const CHAPTERS = [
     {
@@ -195,7 +195,7 @@ const CHAPTERS = [
             `메리는 그 아이 곁에 앉았습니다. 그 방에는 장난감도 책도 있었습니다. 값비싼 것들이었습니다. 상아로 만든 것도 있었습니다. 책도 그림이 든 좋은 책이었습니다. 그런데 펴 본 자리가 없었습니다. 책장에 먼지가 앉아 있었습니다. 그런데 아무도 만진 흔적이 없었습니다. 값비싼 것을 사다 주는 것과 곁에 앉아 주는 것은 다릅니다. 그 방에는 앞의 것만 있었습니다. 장난감이 방 안에 가득했습니다. 손도 대지 않은 것이 대부분이었습니다. 아버지가 여행지에서 사 보낸 것들이었습니다. 편지는 없고 물건만 왔습니다. 어디서 보낸 것인지도 몰랐습니다. 상자만 오고 사람은 오지 않았습니다. 그래서 콜린은 그 상자를 열어 보지도 않았습니다. 열어 봐야 아버지가 오는 것이 아니었기 때문입니다.`,
             `콜린은 그것들을 쳐다보지도 않았습니다.`,
             `"나는 메리 레녹스야. 네 아버지가 내 이모부야."<br>두 아이가 그 집에서 몇 달을 같이 살고 있었습니다. 그런데 서로 있는 줄도 몰랐습니다. 복도 하나만 지나면 되는 거리였습니다. 그런데 그 복도가 열 해 동안 닫혀 있었습니다. 그 복도에는 커튼이 쳐져 있었습니다. 그리고 아무도 그 커튼을 젖히지 않았습니다. 그렇게 하라는 말을 들었기 때문입니다. 그리고 그 말을 열 해 동안 지켰습니다.`,
-            `두 아이는 그 밤에 오래 이야기했습니다. 콜린은 열 해 동안 그 방에서만 살았습니다. 밖에 나가면 아프다고 해서요. 천장에 무슨 무늬가 있는지까지 다 알고 있었습니다. 누워서 그것만 보고 지냈기 때문입니다. 몇 개인지도 세어 두었습니다. 천장에 무늬가 있었습니다. 그것을 열 해 동안 보고 지냈습니다. 천장 말고는 볼 것이 없었습니다. 창가로 옮겨 달라고 해도 바람이 든다고 안 해 주었습니다. 바람을 쐬면 안 된다는 것이 그 시절 생각이었습니다. 그래서 창을 늘 닫아 두었습니다. 지금은 그 반대로 합니다. 아픈 사람일수록 바깥공기를 쐬어야 한다고 합니다.`,
+            `두 아이는 그 밤에 오래 이야기했습니다. 콜린은 열 해 동안 그 방에서만 살았습니다. 밖에 나가면 아프다고 해서요. 천장에 무슨 무늬가 있는지까지 다 알고 있었습니다. 누워서 그것만 보고 지냈기 때문입니다. 몇 개인지도 세어 두었습니다. 그것을 열 해 동안 보고 지냈습니다. 천장 말고는 볼 것이 없었습니다. 창가로 옮겨 달라고 해도 바람이 든다고 안 해 주었습니다. 바람을 쐬면 안 된다는 것이 그 시절 생각이었습니다. 그래서 창을 늘 닫아 두었습니다. 지금은 그 반대로 합니다. 아픈 사람일수록 바깥공기를 쐬어야 한다고 합니다.`,
             `그리고 자기가 싫어하는 것이 하나 있으면 온 집안이 그것을 치웠습니다. 아이가 화를 내면 몸이 나빠진다고 했기 때문입니다. 그러니까 콜린은 이 집에서 가장 힘이 센 사람이었고, 가장 갇힌 사람이었습니다. 무엇을 시켜도 다 되었습니다. 다만 밖에 나가겠다는 것만 안 되었습니다. 무엇이든 다 되는데 그 하나만 안 되었습니다. 그러니 그것만 하고 싶어졌습니다. 안 되는 것이 하나 있으면 그것만 커집니다. 다른 것이 다 되어도 그렇습니다. 오히려 다른 것이 다 되니까 그것만 더 크게 보였습니다. 하나가 안 되면 그 하나가 전부가 됩니다.`,
             `콜린이 물었습니다.<br>"너는 왜 나를 안 무서워해?"<br>"네가 뭐가 무서운데?"<br>콜린은 그 질문에 대답하지 못했습니다. 그때까지 아무도 그렇게 물어본 적이 없었기 때문입니다. 다들 무서워하거나 딱하게 여겼습니다. 되묻는 사람은 없었습니다. 메리는 되물었습니다. 그것이 그날 밤 그 방에서 처음 있는 일이었습니다. 메리는 무섭지 않았습니다. 자기와 닮은 아이라고 여겼기 때문입니다. 성질을 부려서 얻어 온 아이끼리는 서로를 알아봅니다. 메리는 그날 밤 그것을 알았습니다. 그리고 무섭기는커녕 조금 반가웠습니다. 그 집에 자기 같은 아이가 하나 더 있었던 것입니다.`
         ]
@@ -228,7 +228,7 @@ const CHAPTERS = [
             `콜린이 숨을 멈추었습니다. 방 안이 조용해졌습니다.`,
             `간호사가 문가에서 말했습니다.<br>"저도 늘 그렇게 말씀드렸습니다, 도련님. 도련님 등에는 아무 문제가 없습니다. 다만 도련님이 안 믿으셔서요."<br>간호사는 그 말을 여러 번 했었습니다. 그런데 그때마다 달래는 말투였습니다. 달래는 말투로 하면 안 믿깁니다. 오히려 감추는 것처럼 들립니다.`,
             `의사도 여러 번 그렇게 말했다고 했습니다. 그런데 콜린은 어른들이 자기를 안심시키려고 거짓말을 한다고 여겼습니다. 또래 아이가 만져 보고 아무것도 없다고 한 것은 그날이 처음이었습니다. 어른의 말은 위로로 들리고 또래의 말은 사실로 들립니다. 그래서 그 한마디가 그렇게 컸습니다. 콜린은 베개에 얼굴을 묻었습니다. 열 해 동안 누구도 그렇게 딱 잘라 말해 준 적이 없었습니다. 다들 그럴 리 없다고만 했습니다. 그럴 리 없다는 말과 없다는 말은 다릅니다. 앞의 말은 확인해 보지 않은 말입니다.`,
-            `한참 아무 소리도 나지 않았습니다. 간호사가 문가에서 그것을 보고 있었습니다. 그 방이 그렇게 조용한 것은 처음이었습니다. 울음소리도 나지 않았습니다. 아이 둘이 나란히 있었습니다. 둘 다 아무 말도 하지 않았습니다. 그런데 그 조용한 것이 편했습니다.`,
+            `한참 아무 소리도 나지 않았습니다. 간호사가 문가에서 그것을 보고 있었습니다. 그 방이 그렇게 조용한 것은 처음이었습니다. 아이 둘이 나란히 있었습니다. 둘 다 아무 말도 하지 않았습니다. 그런데 그 조용한 것이 편했습니다.`,
             `그리고 아주 작은 소리로 말했습니다.<br>"메리. 내일 나 정원에 데려가 줄래?"`
         ]
     },
@@ -358,7 +358,7 @@ const CHAPTERS = [
         emoji: "🌻",
         art: ["story-15-a.webp", "story-15-b.webp"],
         paras: [
-            `콜린은 아버지에게 다 이야기했습니다. 메리가 열쇠를 찾아낸 일, 문을 찾아낸 일, 디콘이 가지를 잘라 살아 있다는 것을 보여 준 일. 그리고 자기가 처음 일어섰던 자리도 보여 주었습니다. 담 옆의 어느 자리였습니다. 거기에 돌 하나를 표로 놓아 두었습니다. 그 돌은 그 뒤로도 그 자리에 있었습니다. 아무도 치우지 않았습니다. 그 뒤로도 그 자리에 있었습니다. 아이들이 그 돌을 지나갈 때마다 손으로 만졌습니다.`,
+            `콜린은 아버지에게 다 이야기했습니다. 메리가 열쇠를 찾아낸 일, 문을 찾아낸 일, 디콘이 가지를 잘라 살아 있다는 것을 보여 준 일. 그리고 자기가 처음 일어섰던 자리도 보여 주었습니다. 담 옆의 어느 자리였습니다. 거기에 돌 하나를 표로 놓아 두었습니다. 그 돌은 아무도 치우지 않았습니다. 그 뒤로도 그 자리에 있었습니다. 아이들이 그 돌을 지나갈 때마다 손으로 만졌습니다.`,
             `말이 끊이지 않았습니다. 열 해 동안 할 말이 쌓여 있었던 것입니다. 손으로 여기저기 가리키며 말했습니다. 저 나무 아래에서 처음 섰다고 하고, 저 담 밑에서 열쇠가 나왔다고 했습니다. 벤 웨더스태프가 담 위에서 울던 이야기도 했습니다. 수전 소워비가 빵과 우유를 보내 준 이야기도 했습니다. 밥을 남기는 척하던 이야기도 했습니다. 그 이야기를 할 때 콜린이 크게 웃었습니다. 아버지는 그 웃음소리를 처음 들었습니다. <br>"저는 아버지가 돌아오시면 걸어서 만나러 가려고 했어요." 콜린이 말했습니다.<br>"그런데 뛰어나오다가 부딪쳐 버렸네요. 그 말을 하면서 웃었습니다. 아버지도 따라 웃었습니다. 그 웃음소리를 그 집 사람들이 다 들었습니다. 열 해 만에 나는 소리였습니다."<br>부엌에서 일하던 사람들이 손을 멈추었습니다. 무슨 소리인지 몰라서였습니다.`,
             `크레이븐 씨는 아무 말도 하지 못했습니다. 아들이 하는 말을 다 들었습니다. 한 번도 자르지 않았습니다. 열 해 동안 들어 주지 못한 것을 그 자리에서 다 들었습니다. 해가 기울 때까지 앉아 있었습니다. 열 해 치 이야기가 하루에 다 나오지는 않았습니다. 그래도 그날 시작한 것이었습니다. 열 해 동안 못 한 이야기는 하루에 다 하지 못합니다. 다만 시작이 있어야 이어집니다. 그날 이후로 두 사람이 날마다 그 정원에 갔습니다. 그리고 거기서 이야기를 이어 갔습니다.`,
             `그는 열 해 동안 이 아이를 보지 않았습니다. 볼 때마다 자기가 그 아이에게 준 것이 몸이 약한 것뿐이라는 생각이 들었기 때문입니다. 그것이 미안해서 보지 않았고, 보지 않아서 더 미안해졌습니다. 미안한 마음이 사람을 멀어지게도 합니다. 이 이야기는 그것을 보여 줍니다. 그런데 눈앞에 있는 아이는 볕에 그을리고 흙투성이였고, 웃고 있었습니다. 흙이 묻은 것이 그렇게 반가운 것인 줄 몰랐습니다. 그동안 그 아이는 늘 깨끗했습니다. 깨끗한 것이 좋은 것만은 아니었습니다. 흙을 만질 일이 없었다는 뜻이기 때문입니다. 깨끗한 아이는 밖에 나가지 않은 아이입니다. 그것을 그날 처음 알았습니다.`,
@@ -666,16 +666,14 @@ function paginateChapter(ch, chIndex) {
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
-    return `
- <div class="art-frame">
+    return `<div class="art-frame">
  <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
  <div class="art-fallback" style="display:none">${emoji}</div>
  </div>`;
 }
 
 function coverPage() {
-    return `
- <div class="page page-cover">
+    return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🌿')}
  </div>
@@ -691,15 +689,13 @@ function coverPage() {
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
-    const itemHtml = ch => `
- <li>
+    const itemHtml = ch => `<li>
  <button type="button" data-goto="${ch.num}">
  <span class="toc-num">${ch.num}</span>
  <span><strong>${ch.title}</strong></span>
  </button>
  </li>`;
-    const extraItems = `
- <li>
+    const extraItems = `<li>
  <button type="button" data-goto-kind="quiz">
  <span class="toc-num">?</span>
  <span><strong>이야기 문제</strong></span>
@@ -708,8 +704,7 @@ function tocPage(part) {
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
-    return `
- <div class="page page-toc">
+    return `<div class="page page-toc">
  <div class="story-page-left">
  ${part === 0 ? '<h2>차례</h2>' : ''}
  <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
@@ -733,8 +728,7 @@ function chapterSpreadPage(spread) {
     const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story">
+        return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -746,8 +740,7 @@ function chapterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story">
+    return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -795,16 +788,14 @@ function quizPage(part) {
         const cls = ci => graded
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
-        return `
- <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+        return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices">
- ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
-    return `
- <div class="page page-quiz">
+    return `<div class="page page-quiz">
  ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
  <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
  <div class="quiz-list">${items}</div>
@@ -877,8 +868,7 @@ function afterSpreadPage(spread) {
     const foot = spread.last ? AFTER_FOOT : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story page-after">
+        return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -891,8 +881,7 @@ function afterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story page-after">
+    return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}

@@ -1,6 +1,6 @@
 const BOOK_TITLE = "톰 아저씨의 오두막";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => `${n}장 ·`;
 
 const CHAPTERS = [
     {
@@ -155,7 +155,7 @@ const CHAPTERS = [
         art: ["story-06-a.webp", "story-06-b.webp"],
         paras: [
             `그 배에 승객이 하나 타고 있었습니다. 뉴올리언스의 부자 오귀스탱 생클레어였습니다. 그리고 그 딸 에반젤린이 함께 타고 있었습니다. 다들 에바라고 불렀습니다. 여섯 살이었고, 몸이 약했습니다. 머리가 길고 얼굴이 하얬습니다. 오래 걸으면 숨이 찼습니다.`,
-            `일등실 승객이었습니다. 갑판 아래에 누가 실려 가는지는 일등실 승객이 알 필요가 없었습니다. 위층에서는 저녁마다 음악이 흘렀습니다. 손님들이 춤을 추기도 했습니다. 아래층에서는 그 소리가 천장을 타고 들렸습니다. 같은 배 안이었습니다. 위와 아래가 그렇게 달랐습니다.`,
+            `갑판 아래에 누가 실려 가는지는 일등실 승객이 알 필요가 없었습니다. 위층에서는 저녁마다 음악이 흘렀습니다. 손님들이 춤을 추기도 했습니다. 아래층에서는 그 소리가 천장을 타고 들렸습니다. 같은 배 안이었습니다. 위와 아래가 그렇게 달랐습니다.`,
             `에바는 배 안을 돌아다니며 사람들에게 말을 걸었습니다. 갑판 아래로 내려가 본 유일한 승객이었습니다. 아무도 그러지 말라고 하지 않았기 때문입니다. 여섯 살짜리가 가는 데를 아무도 막지 않았습니다. 그래서 그 아이만 아래를 보았습니다.`,
             `그러다 톰과 친해졌습니다. 톰이 나무를 깎아 장난감을 만들어 주었기 때문입니다. 버찌 씨로 바구니를 만들고 나뭇조각으로 새를 깎았습니다. 새 날개까지 따로 깎아 붙였습니다. 톰은 손이 아주 좋았습니다. 오두막의 문틀도 톰이 깎은 것이었습니다. 나무를 만지는 손이었습니다.`,
             `어느 날 에바가 뱃전에서 몸을 내밀다가 물에 빠졌습니다. 물살이 세서 아이가 금방 떠내려갔습니다. 톰은 마침 쇠사슬이 풀려 있던 참이었습니다. 톰이 그대로 뛰어들었습니다. 쇠사슬이 채워져 있었으면 못 했을 일이었습니다. 그날 마침 풀려 있었습니다.`,
@@ -272,7 +272,7 @@ const CHAPTERS = [
             `가는 배 안에서 리그리가 톰에게 말했습니다.<br>"너, 내가 어떤 사람인지 아나."<br>"모릅니다."`,
             `리그리가 주먹을 들어 보였습니다. 손등이 굳은살로 두꺼웠습니다. 그 손으로 여러 사람을 쳤습니다. 그것을 보이려고 든 것이었습니다.`,
             `"이게 무엇 같나."<br>"주먹입니다."<br>"쇠다. 사람을 치면 뼈가 부러진다. 처음 만난 자리에서 그 말을 했습니다."<br>겁을 주는 것이 그 사람의 방식이었습니다.`,
-            `그리고 톰의 옷을 벗겨 좋은 것을 빼앗고 낡은 것을 주었습니다. 사람이 가진 것을 빼앗는 것은 값 때문만이 아닙니다. 그렇게 하면 그 사람이 자기가 누구인지 잊게 되기 때문입니다. 이름을 부르지 않는 것도 같은 까닭이었습니다. 리그리는 그것을 알고 있었습니다. 이름 대신 번호를 부르는 데도 있었습니다. 그것도 같은 까닭이었습니다.`,
+            `그리고 톰의 옷을 벗겨 좋은 것을 빼앗고 낡은 것을 주었습니다. 사람이 가진 것을 빼앗는 것은 값 때문만이 아닙니다. 그렇게 하면 그 사람이 자기가 누구인지 잊게 되기 때문입니다. 이름을 부르지 않는 것도 같은 까닭이었습니다. 리그리는 그것을 알고 있었습니다. 이름 대신 번호를 부르는 데도 있었습니다.`,
             `조지 도련님이 걸어 준 은화도 그때 빼앗겼습니다. 그런데 톰이 그것만은 되찾았습니다. 리그리가 값이 안 나가는 것이라고 던져 준 것입니다. 은화라고 해야 아주 작은 것이었습니다. 그러니 값을 쳐 주지 않은 것입니다.`,
             `그 농장에는 사람이 쉰 명쯤 있었습니다. 다들 마르고 말이 없었습니다. 얼굴에 표정이 없었고, 서로 돕지 않았습니다. 새로 온 사람에게 아무도 말을 걸지 않았습니다. 말을 걸면 나중에 곤란해지기 때문입니다. 누구와 가까운지 알려지면 그것이 쓰였습니다. 그래서 다들 혼자 있었습니다.`,
             `리그리가 그렇게 만들어 놓았기 때문입니다. 리그리는 사람들 가운데 둘을 골라 감독으로 세웠습니다. 샘보와 큄보였습니다. 둘 다 그 농장에서 오래 있던 사람이었습니다. 밭에서 일하던 사람들이었습니다.`,
@@ -720,16 +720,14 @@ function paginateChapter(ch, chIndex) {
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
-    return `
- <div class="art-frame">
+    return `<div class="art-frame">
  <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
  <div class="art-fallback" style="display:none">${emoji}</div>
  </div>`;
 }
 
 function coverPage() {
-    return `
- <div class="page page-cover">
+    return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🏚️')}
  </div>
@@ -745,15 +743,13 @@ function coverPage() {
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
-    const itemHtml = ch => `
- <li>
+    const itemHtml = ch => `<li>
  <button type="button" data-goto="${ch.num}">
  <span class="toc-num">${ch.num}</span>
  <span><strong>${ch.title}</strong></span>
  </button>
  </li>`;
-    const extraItems = `
- <li>
+    const extraItems = `<li>
  <button type="button" data-goto-kind="quiz">
  <span class="toc-num">?</span>
  <span><strong>이야기 문제</strong></span>
@@ -762,8 +758,7 @@ function tocPage(part) {
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
-    return `
- <div class="page page-toc">
+    return `<div class="page page-toc">
  <div class="story-page-left">
  ${part === 0 ? '<h2>차례</h2>' : ''}
  <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
@@ -787,8 +782,7 @@ function chapterSpreadPage(spread) {
     const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story">
+        return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -800,8 +794,7 @@ function chapterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story">
+    return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -849,16 +842,14 @@ function quizPage(part) {
         const cls = ci => graded
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
-        return `
- <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+        return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices">
- ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
-    return `
- <div class="page page-quiz">
+    return `<div class="page page-quiz">
  ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
  <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
  <div class="quiz-list">${items}</div>
@@ -931,8 +922,7 @@ function afterSpreadPage(spread) {
     const foot = spread.last ? AFTER_FOOT : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story page-after">
+        return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -945,8 +935,7 @@ function afterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story page-after">
+    return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}

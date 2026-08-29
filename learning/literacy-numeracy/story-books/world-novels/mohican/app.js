@@ -1,6 +1,6 @@
 const BOOK_TITLE = "모히컨 족의 최후";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => `${n}장 ·`;
 
 const CHAPTERS = [
     {
@@ -129,7 +129,7 @@ const CHAPTERS = [
         emoji: "🌅",
         art: ["story-05-a.webp", "story-05-b.webp"],
         paras: [
-            `그날 밤 불가에서 칭가치국이 이런 이야기를 했습니다. 묻지도 않았는데 시작했습니다. 그런 이야기를 하는 것은 처음이라고 했습니다. 여러 해 동안 아무에게도 하지 않았습니다. 아들에게도 하지 않았습니다. 웅카스도 그날 처음 들은 것이었습니다.`,
+            `그날 밤 불가에서 칭가치국이 이런 이야기를 했습니다. 묻지도 않았는데 시작했습니다. 그런 이야기를 하는 것은 처음이라고 했습니다. 여러 해 동안 아무에게도 하지 않았습니다. 웅카스도 그날 처음 들은 것이었습니다.`,
             `"내 부족은 원래 저 아래 바다 쪽에 살았소."<br>"우리는 그곳을 흐르는 물의 땅이라고 불렀소."<br>"거기서 우리는 오래 살았소. 마을이 여럿이었고, 강마다 우리 사람이 있었소."<br>"그러다 큰 배가 왔소."<br>"처음에는 사이가 나쁘지 않았소. 우리가 그 사람들에게 먹을 것을 주었고, 그 사람들이 우리에게 물건을 주었소."<br>"그런데 그 사람들이 자꾸 늘었소."<br>"그리고 우리는 자꾸 줄었소."<br>"병이 먼저 왔소. 한 마을이 한 달 만에 비었소."<br>"그다음에 땅이 갔소."<br>"우리는 서쪽으로 옮겼고, 또 옮겼고, 또 옮겼소."<br>"옮길 때마다 조약을 맺었소."<br>"여기까지가 너희 땅이라고 종이에 적었소."<br>"그리고 그 종이가 몇 해를 못 갔소."<br>"나는 그런 종이를 여러 장 보았소."`,
             `헤이워드가 물었습니다.<br>"지금은 몇 분이나 남으셨습니까."`,
             `칭가치국이 불을 오래 보았습니다. 대답하는 데 한참이 걸렸습니다. 세어 볼 것도 없는 수였습니다. 둘이었습니다. 그 물음에 대답하기까지가 제일 길었습니다. 불을 오래 보고 있었습니다.`,
@@ -166,7 +166,7 @@ const CHAPTERS = [
             `먼로 대령은 그 말을 오래 생각했습니다. 항복하면 요새를 잃습니다. 버티면 사람을 잃습니다. 믿어도 되는 말인지 알 수 없었습니다. 몽칼름은 규칙을 지킨다고 알려져 있었습니다. 그것 하나를 믿는 수밖에 없었습니다. 그 시절 전쟁에서는 그런 방식이 있었습니다. 싸움을 끝내는 대신 진 쪽이 안전하게 물러가게 해 주는 것이었습니다. 그렇게 하면 서로 사람을 덜 잃습니다. 다음에 또 싸울 사람들이었기 때문입니다.`,
             `명예로운 항복이라고 불렀습니다. 깃발을 내리지 않고 나가게 해 주기도 했습니다. 그것이 그 시절 군인들이 지키던 것이었습니다. 무기를 들고 나가게 해 주는 것이 그 표시였습니다. 먼로 대령은 그것을 받아들였습니다. 다른 수가 없었기 때문입니다.`,
             `더 버티면 다 죽습니다. 성벽이 무너지면 그다음은 셈할 것이 없었습니다. 먼로 대령은 그것을 여러 번 보아 온 사람이었습니다. 병사와 여자와 아이가 이천 명 가까이 되었습니다. 물도 떨어져 가고 있었습니다. 앓는 사람도 늘었습니다. 이튿날 아침, 안개가 짙은 가운데 그 사람들이 요새를 나섰습니다. 줄이 아주 길었습니다. 앞이 안 보일 만큼 안개가 짙었습니다. 그러니 줄의 앞뒤가 서로를 보지 못했습니다.`,
-            `그런데 몽칼름이 미처 생각하지 못한 것이 있었습니다. 프랑스군과 함께 싸운 여러 부족 사람들이었습니다. 그 사람들은 그 조건에 동의한 적이 없었습니다. 회담 자리에 부르지도 않았습니다. 프랑스군은 그 사람들을 셈에 넣지 않았습니다. 함께 싸운 사람들이었는데도 그랬습니다. 함께 싸운 사람들이었는데도요. 천오백 명이 넘었다고 합니다. 여러 부족에서 온 사람들이었습니다.`,
+            `그런데 몽칼름이 미처 생각하지 못한 것이 있었습니다. 프랑스군과 함께 싸운 여러 부족 사람들이었습니다. 그 사람들은 그 조건에 동의한 적이 없었습니다. 회담 자리에 부르지도 않았습니다. 프랑스군은 그 사람들을 셈에 넣지 않았습니다. 함께 싸운 사람들이었는데도 그랬습니다. 천오백 명이 넘었다고 합니다. 여러 부족에서 온 사람들이었습니다.`,
             `그리고 그 사람들에게 프랑스군이 약속한 것을 주지 않았습니다. 싸움에 이기면 얻을 것이 있다고 하고 데려온 것이었습니다. 그런데 그 약속이 지켜지지 않았습니다.`,
             `그 사람들은 먼 데서 여러 달을 걸어와 싸웠습니다. 그런데 아무것도 받지 못한 채 돌아가게 되어 있었습니다. 그 일이 그날 아침의 배경입니다. 어떤 사람은 한 달을 걸어왔습니다. 겨울에 먹을 것을 마련하러 온 사람도 있었습니다. 그날 그 길에서 큰일이 났습니다. 약속을 지키지 않은 쪽이 먼저 있었습니다. 그것이 앞이었습니다.`,
             `몽칼름은 그 뒤로 오랫동안 그 일로 비난을 받았습니다. 그리고 그 사람 자신도 그 일을 무겁게 여겼다는 기록이 있습니다. 막지 못한 것도 잘못이라고 했습니다. 함께 싸운 사람들에게 약속을 지키지 않은 것이 앞에 있었습니다. 그것을 몽칼름도 알고 있었습니다.`
@@ -257,7 +257,7 @@ const CHAPTERS = [
         paras: [
             `마과는 코라를 데리고 벼랑 쪽으로 달아났습니다. 무리 둘이 함께 갔습니다. 코라는 걸어서 갔습니다. 손목이 묶이지 않은 채였습니다. 마과는 그 여자가 달아나지 않으리라는 것을 알고 있었습니다. 코라는 뒤를 한 번도 돌아보지 않았습니다. 돌아보면 쫓아오는 사람이 보입니다. 그러면 마과도 그것을 압니다.`,
             `웅카스가 그 뒤를 쫓았습니다. 아주 빨랐습니다. 델라웨어 사람들이 그 뒤를 따랐습니다. 웅카스가 제일 빨랐습니다. 뒤따르던 사람들이 따라잡지 못했습니다.`,
-            `벼랑 위 좁은 바위 길에서 마과가 걸음을 멈췄습니다. 더 갈 데가 없었습니다. 아래는 낭떠러지였습니다. 바위 길이 한 사람 폭이었습니다. 옆으로 비켜설 데가 없었습니다.`,
+            `벼랑 위 좁은 바위 길에서 마과가 걸음을 멈췄습니다. 아래는 낭떠러지였습니다. 바위 길이 한 사람 폭이었습니다. 옆으로 비켜설 데가 없었습니다.`,
             `그리고 코라에게 말했습니다.<br>"함께 가겠느냐, 여기 남겠느냐."<br>코라가 말했습니다.<br>"저는 가지 않겠습니다."`,
             `코라는 그 자리에 섰습니다. 도망가지도 않았습니다. 바위 끝에서 한 걸음도 물러서지 않았습니다. 아래는 사람 키의 여러 배였습니다. 발을 조금만 옮기면 떨어지는 자리였습니다. 코라는 그것을 알고 서 있었습니다.`,
             `마과가 칼을 들었습니다. 그런데 내리치지 못했습니다. 코라가 그 얼굴을 똑바로 보고 있었습니다. 눈을 감지도 않았습니다. 한참 그대로 서 있었습니다. 칼을 든 손이 내려오지 않았습니다. 몇 해를 벼른 자리였습니다. 그런데 손이 움직이지 않았습니다.`,
@@ -626,16 +626,14 @@ function paginateChapter(ch, chIndex) {
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
-    return `
- <div class="art-frame">
+    return `<div class="art-frame">
  <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
  <div class="art-fallback" style="display:none">${emoji}</div>
  </div>`;
 }
 
 function coverPage() {
-    return `
- <div class="page page-cover">
+    return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🌲')}
  </div>
@@ -651,15 +649,13 @@ function coverPage() {
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
-    const itemHtml = ch => `
- <li>
+    const itemHtml = ch => `<li>
  <button type="button" data-goto="${ch.num}">
  <span class="toc-num">${ch.num}</span>
  <span><strong>${ch.title}</strong></span>
  </button>
  </li>`;
-    const extraItems = `
- <li>
+    const extraItems = `<li>
  <button type="button" data-goto-kind="quiz">
  <span class="toc-num">?</span>
  <span><strong>이야기 문제</strong></span>
@@ -668,8 +664,7 @@ function tocPage(part) {
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
-    return `
- <div class="page page-toc">
+    return `<div class="page page-toc">
  <div class="story-page-left">
  ${part === 0 ? '<h2>차례</h2>' : ''}
  <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
@@ -693,8 +688,7 @@ function chapterSpreadPage(spread) {
     const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story">
+        return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -706,8 +700,7 @@ function chapterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story">
+    return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -755,16 +748,14 @@ function quizPage(part) {
         const cls = ci => graded
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
-        return `
- <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+        return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices">
- ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
-    return `
- <div class="page page-quiz">
+    return `<div class="page page-quiz">
  ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
  <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
  <div class="quiz-list">${items}</div>
@@ -837,8 +828,7 @@ function afterSpreadPage(spread) {
     const foot = spread.last ? AFTER_FOOT : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story page-after">
+        return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -851,8 +841,7 @@ function afterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story page-after">
+    return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}

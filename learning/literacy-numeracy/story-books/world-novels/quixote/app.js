@@ -1,6 +1,6 @@
 const BOOK_TITLE = "돈키호테";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => `${n}장 ·`;
 
 const CHAPTERS = [
     {
@@ -41,7 +41,7 @@ const CHAPTERS = [
         art: ["story-02-a.webp", "story-02-b.webp"],
         paras: [
             `한 가지가 더 필요했습니다. 기사에게는 반드시 사랑하는 여인이 있어야 했습니다. 사랑하는 여인이 없는 기사는 잎이 없는 나무와 같다고 책에 적혀 있었기 때문입니다. 돈키호테는 그 대목을 외우고 있었습니다. 책에 적힌 것은 다 규칙이었습니다. 하나도 빠뜨리면 안 되었습니다. 기사가 하는 모든 일은 그 여인에게 바치는 것이었습니다.`,
-            `돈키호테는 한참 생각했습니다. 그러다 이웃 마을의 어느 농사꾼 딸을 떠올렸습니다. 그 여자의 이름은 알돈사 로렌소였습니다. 알돈사라는 이름은 그 고장에서 아주 흔한 이름이었습니다. 한 마을에 알돈사가 서넛씩 있었습니다. 아주 흔한 이름이었습니다. 그러니 특별할 것이 하나도 없었습니다.`,
+            `돈키호테는 한참 생각했습니다. 그러다 이웃 마을의 어느 농사꾼 딸을 떠올렸습니다. 그 여자의 이름은 알돈사 로렌소였습니다. 알돈사라는 이름은 그 고장에서 한 마을에 알돈사가 서넛씩 있었습니다. 아주 흔한 이름이었습니다. 그러니 특별할 것이 하나도 없었습니다.`,
             `젊었을 때 몇 번 본 적이 있었습니다. 그런데 말을 걸어 본 적은 없었습니다. 길에서 마주쳐도 그 여자는 인사도 하지 않았습니다. 누구인지 몰랐기 때문입니다. 같은 고장에 살아도 서로 모르는 사이가 있습니다. 두 사람이 그런 사이였습니다.`,
             `그 여자는 돈키호테가 자기를 좋아하는 줄도 몰랐습니다. 평생 몰랐습니다. 그러니까 이 이야기에서 가장 아름다운 여인은, 자기가 그렇게 불리는 줄도 모르고 밀을 까부르고 있었습니다. 그 여자는 이 책에 한 번도 나오지 않습니다. 이름만 여러 번 나옵니다.`,
             `그 여자는 밭일을 하는 사람이었습니다. 팔이 굵고 목소리가 크고, 밀을 까부르는 솜씨가 마을에서 제일이었습니다. 목소리가 커서 밭 저쪽 끝까지 들렸습니다. 일 잘하기로 이름난 사람이었습니다. 남자 몫을 하는 사람이라고들 했습니다. 그런 사람이었습니다. 이름을 붙이는 데 또 여러 날이 걸렸습니다.`,
@@ -117,7 +117,7 @@ const CHAPTERS = [
             `돈키호테는 산초에게 이렇게 말했습니다.<br>"나와 함께 가자. 나중에 내가 섬을 하나 정복하면 너를 그 섬의 총독으로 삼겠다."`,
             `산초는 그 말을 들었습니다. 그리고 이렇게 생각했습니다. '섬이라······.' 섬이 어떻게 생긴 것인지도 몰랐습니다. 다만 총독이라는 말은 알았습니다.`,
             `산초는 그 말을 반쯤 믿었습니다. 섬이 무엇인지도 잘 몰랐습니다. 바다를 본 적이 없었기 때문입니다. 아주 믿은 것은 아니었습니다. 그런데 반쯤 믿은 것만으로도 집을 나서기에는 충분했습니다. 사람이 집을 나서는 데는 확실한 것이 필요하지 않습니다. 반쯤만 믿어도 발이 먼저 나갑니다. 아주 안 믿으면 안 갑니다. 다 믿어도 안 갑니다. 반쯤 믿을 때 갑니다.`,
-            `어느 밤, 두 사람은 마을을 빠져나갔습니다. 돈키호테는 로시난테를 탔고, 산초는 자기 나귀를 탔습니다. 아무에게도 말하지 않았습니다. 산초는 아내에게도 말하지 않았습니다. 말하면 못 나갈 것을 알았기 때문입니다. 아내가 알면 붙잡을 것이었습니다. 아이가 둘 있는 집이었습니다.`
+            `어느 밤, 두 사람은 마을을 빠져나갔습니다. 돈키호테는 로시난테를 탔고, 산초는 자기 나귀를 탔습니다. 산초는 아내에게도 말하지 않았습니다. 말하면 못 나갈 것을 알았기 때문입니다. 아내가 알면 붙잡을 것이었습니다. 아이가 둘 있는 집이었습니다.`
         ]
     },
     {
@@ -199,7 +199,7 @@ const CHAPTERS = [
             `길에서 만난 아이들이 뒤를 따라오며 소리를 질렀습니다. 어른들은 문간에 나와서 구경했습니다. 장날처럼 사람이 모였습니다. 그날 그 마을에서는 다른 이야기가 나오지 않았습니다. 개들도 짖었습니다. 마을을 지날 때마다 그랬습니다. 그것이 여러 달 이어졌습니다.`,
             `아이들은 돌멩이를 던지기도 했습니다. 맞아도 돈키호테는 돌아보지 않았습니다. 놋대야가 햇빛을 받아 번쩍였기 때문입니다. 돈키호테에게는 그것이 자기를 알아보는 것으로 보였습니다. 그래서 더 꼿꼿하게 앉았습니다.`,
             `그런데 산초는 조금 달랐습니다. 산초는 그것이 놋대야라는 것을 알고 있었습니다. 그런데 사람들이 나리를 보고 웃으면 기분이 좋지 않았습니다.`,
-            `자기가 웃을 때는 괜찮았습니다. 남이 웃는 것은 달랐습니다. 왜 그런지는 산초도 잘 몰랐습니다. 산초는 아직 자기 마음을 설명할 말을 가지고 있지 않았습니다. 그런 말은 배운 적이 없었습니다. 속담은 많이 알았습니다. 그런데 자기 속을 설명하는 말은 배운 적이 없었습니다.`,
+            `자기가 웃을 때는 괜찮았습니다. 남이 웃는 것은 달랐습니다. 왜 그런지는 산초도 잘 몰랐습니다. 산초는 아직 자기 마음을 설명할 말을 가지고 있지 않았습니다. 속담은 많이 알았습니다. 그런데 자기 속을 설명하는 말은 배운 적이 없었습니다.`,
             `그날 밤 산초가 물었습니다.<br>"나리, 왜 이러고 다니십니까."<br>"무슨 말이냐."<br>"집에 밭도 있고 조카딸도 있는데, 왜 얻어맞으면서 다니십니까. 산초가 그 말을 하기까지 여러 달이 걸렸습니다."<br>그날 밤에는 물어야 할 것 같았습니다.`,
             `돈키호테는 한참 있다가 대답했습니다.<br>"산초야, 세상에는 두 가지 사람이 있다. 세상을 있는 그대로 두는 사람과, 조금이라도 낫게 하려는 사람이다."<br>"저는 앞쪽인 것 같습니다."<br>"너는 아직 모른다."<br>나무라는 말이 아니었습니다. 그런데 산초는 그날 그것을 알아채지 못했습니다.`,
             `산초는 그 말을 오래 기억했습니다. 나중에 이 이야기가 다 끝난 뒤에도 기억했습니다. 밭을 갈다가도 그 말이 떠올랐고, 아이들을 재우다가도 떠올랐습니다. 무슨 뜻인지 다 알아서 기억한 것은 아니었습니다. 모르는 채로 오래 지니고 있었습니다. 그런 말이 나중에 뜻이 열립니다.`,
@@ -297,7 +297,7 @@ const CHAPTERS = [
             `산초는 길가에 앉아서 한참 생각했습니다. 그러다 시골 처녀 셋이 나귀를 타고 지나가는 것을 보았습니다. 산초는 뛰어가서 돈키호테를 데려왔습니다. 그 자리에서 생각해 낸 것이었습니다. 다른 수가 떠오르지 않았습니다.`,
             `"나리! 저기 둘시네아 부인이 오십니다! 시녀 둘을 데리고요!"`,
             `산초는 그 말을 아주 힘주어 했습니다. 돈키호테가 보았습니다. 볕에 그은 시골 처녀 셋이 나귀를 타고 오고 있었습니다. 옷은 낡았고, 한 사람은 마늘 냄새가 났습니다. 셋 다 맨발이었습니다. 신을 손에 들고 있었습니다. 길이 진흙이라 아껴 신는 것이었습니다.`,
-            `나귀 등에는 짚단이 실려 있었습니다. 셋 다 밭에서 돌아오는 길이었습니다. 그 처녀들은 밀을 팔러 가는 길이었습니다. 장이 서는 날이었습니다. 서둘러 가는 길이었습니다.`,
+            `나귀 등에는 짚단이 실려 있었습니다. 셋 다 밭에서 돌아오는 길이었습니다. 그 처녀들은 밀을 팔러 가는 길이었습니다. 장이 서는 날이었습니다.`,
             `"산초야, 저건 시골 처녀들 아니냐."<br>"나리, 눈이 어떻게 되셨습니까? 저 아름다운 얼굴이 안 보이십니까?"<br>산초는 나리가 늘 하던 말투를 그대로 흉내 냈습니다. 마법사 이야기까지 꺼냈습니다.`,
             `돈키호테는 무릎을 꿇었습니다. 그리고 정중하게 인사했습니다. 처녀가 소리를 질렀습니다. 길 한가운데에 갑옷 입은 노인이 무릎을 꿇고 있으니 나귀가 놀라 멈춰 섰습니다.`,
             `길바닥이 진흙이었습니다. 무릎이 다 젖었습니다. 돈키호테는 그것도 몰랐습니다.`,
@@ -761,16 +761,14 @@ function paginateChapter(ch, chIndex) {
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
-    return `
- <div class="art-frame">
+    return `<div class="art-frame">
  <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
  <div class="art-fallback" style="display:none">${emoji}</div>
  </div>`;
 }
 
 function coverPage() {
-    return `
- <div class="page page-cover">
+    return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🌬️')}
  </div>
@@ -786,15 +784,13 @@ function coverPage() {
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
-    const itemHtml = ch => `
- <li>
+    const itemHtml = ch => `<li>
  <button type="button" data-goto="${ch.num}">
  <span class="toc-num">${ch.num}</span>
  <span><strong>${ch.title}</strong></span>
  </button>
  </li>`;
-    const extraItems = `
- <li>
+    const extraItems = `<li>
  <button type="button" data-goto-kind="quiz">
  <span class="toc-num">?</span>
  <span><strong>이야기 문제</strong></span>
@@ -803,8 +799,7 @@ function tocPage(part) {
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
-    return `
- <div class="page page-toc">
+    return `<div class="page page-toc">
  <div class="story-page-left">
  ${part === 0 ? '<h2>차례</h2>' : ''}
  <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
@@ -828,8 +823,7 @@ function chapterSpreadPage(spread) {
     const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story">
+        return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -841,8 +835,7 @@ function chapterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story">
+    return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -890,16 +883,14 @@ function quizPage(part) {
         const cls = ci => graded
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
-        return `
- <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+        return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices">
- ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
-    return `
- <div class="page page-quiz">
+    return `<div class="page page-quiz">
  ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
  <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
  <div class="quiz-list">${items}</div>
@@ -972,8 +963,7 @@ function afterSpreadPage(spread) {
     const foot = spread.last ? AFTER_FOOT : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story page-after">
+        return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -986,8 +976,7 @@ function afterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story page-after">
+    return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}

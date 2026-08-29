@@ -1,6 +1,6 @@
 const BOOK_TITLE = "백마의 기수";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => `${n}장 ·`;
 
 const CHAPTERS = [
     {
@@ -282,13 +282,13 @@ const CHAPTERS = [
         art: ["story-10-a.webp", "story-10-b.webp"],
         paras: [
             `늙은 선생이 이야기를 마쳤습니다. 여관 안이 조용했습니다. 난롯불만 타고 있었습니다. 이야기가 몇 시간 이어졌습니다. 그 사이에 아무도 일어서지 않았습니다. 이야기가 시작될 때 방에 있던 사람들이 그대로 앉아 있었습니다. 잔이 다 비어 있었습니다. 이야기가 시작될 때 누가 잔을 채웠는지도 아무도 몰랐습니다. 그만큼 빠져 있었습니다. 아무도 자러 가지 않았습니다. 밤새 이야기가 이어진 것이었습니다. 아무도 그것을 끊지 않았습니다.`,
-            `밖에서는 바람이 조금 잦아들어 있었습니다. 밤새 창을 흔들던 바람이었습니다. 그것이 새벽에 그쳤습니다. 여관 주인이 난롯불을 다시 지폈습니다. 장작을 두 개 더 얹었습니다. 이야기가 밤새 이어졌습니다. 난롯불도 밤새 살려 두었습니다. 창밖이 벌써 희끄무레했습니다. 그 지방은 가을에 해가 늦게 뜹니다. 그래도 밤이 다 간 것이었습니다. 밤이 다 간 것이었습니다. 바람이 잦아든 것은 새벽이었습니다. 그러니 그해에는 제방이 터지지 않았습니다.`,
-            `나그네는 자기가 밤새 앉아 있었다는 것을 그제야 알았습니다. 다리가 저려 일어서지 못했습니다. 그 자리에서 한 번도 일어서지 않았습니다. 그것을 그제야 알았습니다.`,
+            `밖에서는 바람이 조금 잦아들어 있었습니다. 밤새 창을 흔들던 바람이었습니다. 그것이 새벽에 그쳤습니다. 여관 주인이 난롯불을 다시 지폈습니다. 장작을 두 개 더 얹었습니다. 이야기가 밤새 이어졌습니다. 난롯불도 밤새 살려 두었습니다. 창밖이 벌써 희끄무레했습니다. 그 지방은 가을에 해가 늦게 뜹니다. 그래도 밤이 다 간 것이었습니다. 바람이 잦아든 것은 새벽이었습니다. 그러니 그해에는 제방이 터지지 않았습니다.`,
+            `나그네는 자기가 밤새 앉아 있었다는 것을 그제야 알았습니다. 다리가 저려 일어서지 못했습니다. 그 자리에서 한 번도 일어서지 않았습니다.`,
             `나그네가 물었습니다.<br>"그럼 그 백마의 기수는······."<br>"사람들이 그렇게 말합니다."<br>"선생님은 어떻게 생각하십니까."`,
             `그 늙은 선생은 그 마을에서 쉰 해 동안 아이들을 가르친 사람이었습니다. 그 마을 사람들의 조부모 이름까지 다 알고 있었습니다. 그 마을 아이들을 다 가르친 사람이었습니다. 그러니 그 마을 이야기를 다 알았습니다. 그 마을에서 나고 그 마을에서 늙은 사람이었습니다. 그 마을에서 글을 아는 사람 가운데 하나였습니다. 그러니 그 이야기를 제대로 아는 사람이었습니다.`,
             `늙은 선생이 말했습니다.<br>"나는 그런 것을 믿지 않습니다."<br>쉰 해 동안 아이들을 가르친 사람이었습니다. 그러니 그런 말을 함부로 하지 않았습니다.<br>"그럼 오늘 밤에 제가 본 것은 무엇입니까."<br>"비가 오고 바람이 부는 밤에 제방 위를 지나면, 사람이 여러 가지를 봅니다. 어두운 데서는 눈이 없는 것을 만들어 냅니다."<br>그것을 그 선생은 알고 있었습니다.`,
             `나그네는 자기가 본 것을 다시 떠올려 보았습니다. 비가 뿌리고 있었고, 등불도 없었고, 잠도 모자란 밤이었습니다. 그런 밤에는 나무도 사람으로 보입니다. 그것을 그 사람도 알고 있었습니다. 그런 밤에 본 것을 그대로 믿기는 어려웠습니다. 그런데 그 사람은 그것을 분명히 보았다고 여겼습니다. 본 것을 아니라고 하기가 어려웠습니다.`,
-            `"그런데 한 가지는 말씀드릴 수 있습니다."<br>"무엇입니까."<br>"저 제방 말입니다. 하우케 하이엔 제방이라고 부르는 저것 말입니다."<br>여관 창으로 그 제방이 보였습니다. 손가락으로 그쪽을 가리켰습니다. 백 년이 되었는데 아직 한 번도 터지지 않았습니다. 그동안 큰 폭풍이 여러 번 왔습니다. 백 년이면 여러 대가 지난 것입니다. 그동안 한 번도 터지지 않았습니다.<br>"그리고 그 뒤로 이 지방의 제방을 다 그 모양으로 고쳤습니다."<br>백 해 동안 한 번도 터지지 않았습니다. 그것이 숫자로 남은 것이었습니다.`,
+            `"그런데 한 가지는 말씀드릴 수 있습니다."<br>"무엇입니까."<br>"저 제방 말입니다. 하우케 하이엔 제방이라고 부르는 저것 말입니다."<br>여관 창으로 그 제방이 보였습니다. 손가락으로 그쪽을 가리켰습니다. 백 년이 되었는데 아직 한 번도 터지지 않았습니다. 그동안 큰 폭풍이 여러 번 왔습니다. 백 년이면 여러 대가 지난 것입니다.<br>"그리고 그 뒤로 이 지방의 제방을 다 그 모양으로 고쳤습니다."<br>백 해 동안 한 번도 터지지 않았습니다. 그것이 숫자로 남은 것이었습니다.`,
             `나그네가 물었습니다.<br>"그 사람이 옳았는데 왜 그렇게 되었습니까."`,
             `늙은 선생이 잠깐 아무 말도 하지 않았습니다. 그 물음을 여러 번 들어 본 얼굴이었습니다. 그리고 그때마다 같은 대답을 했을 것입니다.`,
             `그러고는 이렇게 말했습니다.<br>"옳은 것을 아는 것과, 그것을 사람들에게 하게 만드는 것은 다른 일입니다."<br>"하우케는 앞의 것은 아주 잘했습니다."<br>제방을 아는 것으로는 그 지방에서 제일이었습니다. 그것을 아무도 아니라고 하지 않았습니다. 그리고 뒤의 것은 하지 않았습니다. 할 줄 몰랐던 것인지 하기 싫었던 것인지는 모릅니다.<br>"자기가 옳으니까 그것으로 됐다고 여긴 것입니다. 그런데 그렇게 되지 않습니다."<br>옳은 것이 저절로 통하면 세상이 아주 편할 것입니다. 그런데 그렇지 않습니다.`,
@@ -601,16 +601,14 @@ function paginateChapter(ch, chIndex) {
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
-    return `
- <div class="art-frame">
+    return `<div class="art-frame">
  <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
  <div class="art-fallback" style="display:none">${emoji}</div>
  </div>`;
 }
 
 function coverPage() {
-    return `
- <div class="page page-cover">
+    return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🌊')}
  </div>
@@ -626,15 +624,13 @@ function coverPage() {
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
-    const itemHtml = ch => `
- <li>
+    const itemHtml = ch => `<li>
  <button type="button" data-goto="${ch.num}">
  <span class="toc-num">${ch.num}</span>
  <span><strong>${ch.title}</strong></span>
  </button>
  </li>`;
-    const extraItems = `
- <li>
+    const extraItems = `<li>
  <button type="button" data-goto-kind="quiz">
  <span class="toc-num">?</span>
  <span><strong>이야기 문제</strong></span>
@@ -643,8 +639,7 @@ function tocPage(part) {
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
-    return `
- <div class="page page-toc">
+    return `<div class="page page-toc">
  <div class="story-page-left">
  ${part === 0 ? '<h2>차례</h2>' : ''}
  <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
@@ -668,8 +663,7 @@ function chapterSpreadPage(spread) {
     const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story">
+        return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -681,8 +675,7 @@ function chapterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story">
+    return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -730,16 +723,14 @@ function quizPage(part) {
         const cls = ci => graded
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
-        return `
- <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+        return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices">
- ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
-    return `
- <div class="page page-quiz">
+    return `<div class="page page-quiz">
  ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
  <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
  <div class="quiz-list">${items}</div>
@@ -812,8 +803,7 @@ function afterSpreadPage(spread) {
     const foot = spread.last ? AFTER_FOOT : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story page-after">
+        return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -826,8 +816,7 @@ function afterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story page-after">
+    return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}

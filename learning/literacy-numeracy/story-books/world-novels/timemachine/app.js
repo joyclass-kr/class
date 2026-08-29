@@ -1,6 +1,6 @@
 const BOOK_TITLE = "타임 머신";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => `${n}장 ·`;
 
 const CHAPTERS = [
     {
@@ -92,7 +92,7 @@ const CHAPTERS = [
             `그리고 작업실을 보니 이상했습니다. 눈앞의 것들이 그대로 있었습니다. 그런데 움직이는 것만 빨라져 있었습니다. 벽에 걸린 시계의 바늘이 아주 빨리 돌고 있었습니다. 조금 뒤에는 바늘이 보이지 않을 만큼 빨라졌습니다. 짧은 바늘이 긴 바늘처럼 돌았습니다. 그러다 그것도 보이지 않게 되었습니다. 창밖에서 해가 하늘을 가로질러 지나갔습니다. 동쪽에서 서쪽으로 눈 깜짝할 사이에 지나갔습니다. 하루가 몇 초라는 것은 한 시간이 눈 깜빡할 새라는 뜻입니다. 그러니 사람이 지나가는 것을 볼 수 없습니다.`,
             `그리고 밤이 왔습니다. 그리고 다시 낮이 왔습니다. 창밖이 밝았다 어두웠다 했습니다. 그것이 점점 빨라졌습니다. 하루가 몇 초였습니다. 그러다 곧 하루가 일 초도 안 되게 되었습니다. 그러면 밤낮이 하나로 이어집니다.`,
             `그것이 점점 빨라져서 나중에는 깜빡거리는 것처럼 되었습니다. 그러다 아예 하나로 이어졌습니다. 눈이 따라가지 못하면 하나로 보입니다. 바퀴살이 그렇게 보이는 것과 같습니다. 하늘이 짙푸른 빛이 되고, 해는 하늘을 도는 불의 띠가 되었습니다. 그 띠가 계절에 따라 위아래로 조금씩 오르내렸습니다. 해는 여름에 높이 뜨고 겨울에 낮게 뜹니다. 한 해가 몇 초가 되면 그것이 물결처럼 보입니다.`,
-            `달도 띠가 되었습니다. 다만 그것은 흐릿한 은빛이었습니다. 달은 한 달에 한 바퀴를 돕니다. 그래서 해보다 느린 띠가 되었습니다. 별은 하나도 보이지 않았습니다. 별빛도 다 이어져 버렸기 때문입니다. 별은 하룻밤에 하늘을 한 바퀴 돕니다. 그러니 밤이 빨라지면 별도 띠가 됩니다.`,
+            `다만 그것은 흐릿한 은빛이었습니다. 달은 한 달에 한 바퀴를 돕니다. 그래서 해보다 느린 띠가 되었습니다. 별은 하나도 보이지 않았습니다. 별빛도 다 이어져 버렸기 때문입니다. 별은 하룻밤에 하늘을 한 바퀴 돕니다. 그러니 밤이 빨라지면 별도 띠가 됩니다.`,
             `작업실 벽이 흐릿해지더니 사라졌습니다. 그 집이 무너진 것이었습니다. 그리고 그 자리에 다른 것이 섰습니다. 제가 앉아 있는 자리에 다른 건물이 서고, 그것이 무너지고, 또 다른 것이 섰습니다. 너무 빨라서 형태를 알아볼 수가 없었습니다. 연기가 피어올랐다가 사라지는 것 같았습니다. 집 한 채가 서고 무너지는 데 백 년쯤 걸립니다. 그런데 그것이 눈 한 번 깜빡할 새였습니다.`,
             `나무 한 그루가 제 옆에서 솟아올랐다가 사라졌습니다. 씨앗에서 큰 나무가 되었다가 쓰러지는 데 눈 한 번 깜빡할 새도 걸리지 않았습니다. 나무 한 그루가 이백 해를 삽니다. 그것이 그렇게 보이는 빠르기였습니다.`,
             `땅도 가만있지 않았습니다. 땅은 늘 조금씩 움직입니다. 다만 사람이 살아 있는 동안에는 그것이 안 보입니다. 언덕이 부풀어 오르고 다시 꺼졌습니다. 산도 물결처럼 움직였습니다. 땅은 아주 천천히 움직입니다. 만 년 단위로 보면 물결처럼 보입니다.`,
@@ -156,7 +156,7 @@ const CHAPTERS = [
             `저는 여러 날 동안 그 사람들을 지켜보았습니다. 학자는 먼저 보고 나서 셈합니다. 저는 그것부터 하려고 했습니다. 그리고 이런 것들을 알게 되었습니다. 저는 그것을 하나씩 적어 두었습니다. 학자의 버릇이었습니다.`,
             `그 사람들은 일을 하지 않았습니다. 일이라고 할 만한 것이 하나도 없었습니다. 물을 긷는 것도 못 보았습니다. 밭도 없고 공장도 없었습니다. 하루 종일 놀고, 노래하고, 물에서 헤엄치고, 꽃을 땄습니다. 놀이라고 할 만한 것도 몇 가지뿐이었습니다. 같은 것을 되풀이했습니다. 그리고 밤이 되면 무리 지어 그 큰 건물 안에 들어가 잤습니다. 혼자 사는 집이 없었습니다. 다들 큰 건물 안에서 함께 잤습니다.`,
             `노래에는 가사가 없었습니다. 소리만 이어졌습니다. 뜻이 있는 말을 붙이지 않았습니다. 그러니 노래라기보다 소리였습니다.`,
-            `싸우는 것도 못 보았습니다. 목소리를 높이는 것도 못 보았습니다. 그런 소리를 낼 줄 모르는 것 같았습니다. 누가 무엇을 빼앗는 일도 없었습니다. 빼앗을 것이 없었기 때문입니다. 가진 것이 없으면 다툴 일도 없습니다. 처음에는 그것이 좋아 보였습니다. 싸움이 없으면 좋은 세상으로 보입니다. 그런데 싸울 것이 없어진 것과 싸우지 않기로 한 것은 다릅니다.`,
+            `목소리를 높이는 것도 못 보았습니다. 그런 소리를 낼 줄 모르는 것 같았습니다. 누가 무엇을 빼앗는 일도 없었습니다. 빼앗을 것이 없었기 때문입니다. 가진 것이 없으면 다툴 일도 없습니다. 처음에는 그것이 좋아 보였습니다. 싸움이 없으면 좋은 세상으로 보입니다. 그런데 싸울 것이 없어진 것과 싸우지 않기로 한 것은 다릅니다.`,
             `저는 그것을 여러 날 확인했습니다. 아침에 일어나 하루를 따라다녀 보았습니다. 정말로 아무 일도 하지 않았습니다. 밥을 짓는 것도 못 보았습니다. 과일을 그냥 따 먹었습니다.`,
             `그런데 그 사람들이 입은 옷은 낡지 않았습니다. 헐거나 해진 옷이 하나도 없었습니다. 그것이 이상한 일이었습니다. 건물 바닥에는 먼지가 없었습니다. 누군가 옷을 짓고 바닥을 쓸고 있다는 뜻이었습니다. 그 누군가를 저는 아직 보지 못했습니다. 옷에 바느질 자국이 없었습니다. 그러니 누가 어디선가 짜고 있다는 뜻이었습니다.`,
             `혼자 자는 사람은 하나도 없었습니다. 그것을 저는 처음에 다정한 것으로 여겼습니다. 그런데 그것이 아니었습니다. 그 사람들은 몹시 약했습니다. 조금만 걸어도 지쳤습니다. 그리고 어른이 되어도 아이 같았습니다. 오래 걸으면 앉아 버렸습니다. 무거운 것은 아예 들지 못했습니다.`,
@@ -204,7 +204,7 @@ const CHAPTERS = [
             `그다음 날 강가에서 일이 하나 있었습니다. 그 강은 넓고 물살이 느렸습니다. 물빛이 초록에 가까웠습니다. 그런데 한가운데에 물이 빠르게 도는 데가 있었습니다. 엘로이 여럿이 물에서 놀고 있었는데, 그 가운데 하나가 물살에 휩쓸렸습니다. 그 사람들은 물에서 자주 놀았습니다. 그런데 헤엄을 잘 치지는 못했습니다.`,
             `저는 그것을 보고 물에 뛰어들어 건져 냈습니다. 아주 가벼웠습니다. 제 팔 하나로 들 수 있었습니다. 어른인데 그렇게 가벼웠습니다. 뼈가 아주 가는 사람들이었습니다. 물가로 나와 눕히자 물을 조금 뱉었습니다. 그러고는 곧 눈을 떴습니다.`,
             `그런데 이상한 일이 있었습니다. 물가에 있던 다른 엘로이들이 아무도 나서지 않았던 것입니다.`,
-            `누가 물에 빠져 떠내려가는데 다들 그냥 보고 있었습니다. 무섭거나 슬퍼 보이지도 않았습니다. 놀라는 사람도 없었습니다. 소리를 지른 사람도 없었습니다. 그것이 제일 이상했습니다. 그것이 저에게는 제일 이상했습니다.`,
+            `누가 물에 빠져 떠내려가는데 다들 그냥 보고 있었습니다. 무섭거나 슬퍼 보이지도 않았습니다. 놀라는 사람도 없었습니다. 소리를 지른 사람도 없었습니다. 그것이 저에게는 제일 이상했습니다.`,
             `한 사람은 그쪽을 보면서 꽃을 엮고 있었습니다. 손을 멈추지도 않았습니다. 제가 물에 뛰어드는 것도 그냥 보았습니다. 도우러 오는 사람이 없었습니다.`,
             `제가 살던 곳에서는 누가 물에 빠지면 다들 뛰어듭니다. 뛰어들지 못하는 사람도 소리는 지릅니다. 그런데 그 사람들은 소리도 지르지 않았습니다. 물장난을 그대로 계속했습니다. 그때 저는 그것을 매정하다고 여겼습니다. 나중에 다르게 알게 됩니다.`,
             `제가 물에서 나오자 몇이 다가와 제 젖은 옷을 보고 웃었습니다. 물에 빠진 사람 쪽은 보지 않았습니다. 잠깐 그쪽을 보다가 다시 놀던 것을 계속했습니다.`,
@@ -686,16 +686,14 @@ function paginateChapter(ch, chIndex) {
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
-    return `
- <div class="art-frame">
+    return `<div class="art-frame">
  <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
  <div class="art-fallback" style="display:none">${emoji}</div>
  </div>`;
 }
 
 function coverPage() {
-    return `
- <div class="page page-cover">
+    return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🕰️')}
  </div>
@@ -711,15 +709,13 @@ function coverPage() {
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
-    const itemHtml = ch => `
- <li>
+    const itemHtml = ch => `<li>
  <button type="button" data-goto="${ch.num}">
  <span class="toc-num">${ch.num}</span>
  <span><strong>${ch.title}</strong></span>
  </button>
  </li>`;
-    const extraItems = `
- <li>
+    const extraItems = `<li>
  <button type="button" data-goto-kind="quiz">
  <span class="toc-num">?</span>
  <span><strong>이야기 문제</strong></span>
@@ -728,8 +724,7 @@ function tocPage(part) {
     const group = TOC_GROUPS[part];
     const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
-    return `
- <div class="page page-toc">
+    return `<div class="page page-toc">
  <div class="story-page-left">
  ${part === 0 ? '<h2>차례</h2>' : ''}
  <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
@@ -753,8 +748,7 @@ function chapterSpreadPage(spread) {
     const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story">
+        return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -766,8 +760,7 @@ function chapterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story">
+    return `<div class="page page-story">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -815,16 +808,14 @@ function quizPage(part) {
         const cls = ci => graded
             ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
             : '';
-        return `
- <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
+        return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices">
- ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
-    return `
- <div class="page page-quiz">
+    return `<div class="page page-quiz">
  ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
  <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
  <div class="quiz-list">${items}</div>
@@ -897,8 +888,7 @@ function afterSpreadPage(spread) {
     const foot = spread.last ? AFTER_FOOT : '';
 
     if (spread.art) {
-        return `
- <div class="page page-story page-after">
+        return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
@@ -911,8 +901,7 @@ function afterSpreadPage(spread) {
  </div>`;
     }
 
-    return `
- <div class="page page-story page-after">
+    return `<div class="page page-story page-after">
  <div class="story-page-left">
  ${head}
  ${runHtml(segs, spread.left[0], spread.left[1])}
