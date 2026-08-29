@@ -15,7 +15,11 @@ const books = ONLY ? [ONLY] : JSON.parse(fs.readFileSync(path.join(DIR, '_books.
 const GOOD = ['진짜','착한','착하','정직','도와','도왔','도우','용서','나누','나눠','베풀','참','고맙','고마','정성','사랑','약속을 지','열심','부지런','솔직','양보','구해','살려'];
 const clean = t => String(t).replace(/<[^>]*>/g, '');
 // 두 글자 이상 이어진 한글 덩어리만 본다. 조사는 앞 두 글자로 견준다.
-const stems = s => (clean(s).match(/[가-힣]{2,}/g) || []).map(w => w.slice(0, 3));
+// 조사를 떼고 낱말 뿌리만 남긴다. 「빵을」은 「빵」, 「머리가」는 「머리」.
+const JOSA = /(으로|에서|에게|께서|한테|보다|처럼|까지|부터|마다|이나|이랑|을|를|이|가|은|는|에|의|도|과|와|로|만)$/;
+const stems = s => (clean(s).match(/[가-힣]{2,}/g) || [])
+    .map(w => { const b = w.replace(JOSA, ''); return (b || w).slice(0, 2); })
+    .filter(Boolean);
 
 let total = 0, leaky = 0;
 for (const slug of books) {
