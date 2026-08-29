@@ -19,7 +19,9 @@ const clean = t => String(t).replace(/<[^>]*>/g, '');
 const JOSA = /(으로|에서|에게|께서|한테|보다|처럼|까지|부터|마다|이나|이랑|을|를|이|가|은|는|에|의|도|과|와|로|만)$/;
 const stems = s => (clean(s).match(/[가-힣]{2,}/g) || [])
     .map(w => { const b = w.replace(JOSA, ''); return (b || w).slice(0, 2); })
-    .filter(Boolean);
+    .filter(w => w && !STOP.has(w));
+// 「것·무엇·누구」 같은 매인말은 견주어 봐야 뜻이 없다
+const STOP = new Set(['것','거','수','때','일','말','이것','저것','그것','무엇','누구','어디','어떻','무슨','모두','다시','아주','정말','자기','사람']);
 
 let total = 0, leaky = 0;
 for (const slug of books) {
