@@ -40,10 +40,14 @@ const SCHOOL_CLASSES = [
 ];
 
 let sessionRows = [];
+let teacherGroups = [];
+let studentGroups = [];
 let postDeleteRows = [];
 let commentDeleteRows = [];
+let unreadRows = [];
 const deleteAttempts = [];
 const insertedPosts = [];
+const readMarks = [];
 
 function answer(sql, params) {
   const text = String(sql);
@@ -81,10 +85,22 @@ function answer(sql, params) {
   if (text.includes("FROM classroom_classes WHERE id") && text.includes("teacher_user_id")) {
     return { rows: Number(params?.[1]) === 1 ? [{ ok: 1 }] : [] };
   }
+  // classboardBoards: groups a teacher runs, or groups a student belongs to
+  if (text.includes("FROM teacher_groups g") && text.includes("g.teacher_user_id = $1")) {
+    return { rows: teacherGroups };
+  }
+  if (text.includes("FROM teacher_groups g") && text.includes("JOIN school_students ss")) {
+    return { rows: studentGroups };
+  }
   if (text.includes("INSERT INTO classroom_classboard_posts")) {
     insertedPosts.push(params);
     return { rows: [{ id: 7 }] };
   }
+  if (text.includes("INSERT INTO classroom_classboard_reads")) {
+    readMarks.push(params);
+    return { rows: [] };
+  }
+  if (text.includes("classroom_classboard_reads r")) return { rows: unreadRows };
   if (text.includes("DELETE FROM classroom_classboard_posts")) {
     deleteAttempts.push({ sql: text, params });
     return { rows: postDeleteRows, rowCount: postDeleteRows.length };
@@ -158,8 +174,10 @@ const asStudent = () => { sessionRows = [{ id: 3, email: "kid@x.kr", role: "stud
     const subjectPost = await post("/api/classboard/posts", { content: "음악 준비물", classId: "101" });
     assert.equal(subjectPost.status, 200, `Expected 200, got ${subjectPost.status}: ${await subjectPost.clone().text()}`);
     assert.equal(insertedPosts.length, 1, "The subject teacher's post must be stored.");
+    // params: (class_id, group_id, author_user_id, content)
     assert.equal(String(insertedPosts[0][0]), "101", "It must land on the class they chose.");
-    assert.equal(insertedPosts[0][1], 2, "The author must be the subject teacher.");
+    assert.equal(insertedPosts[0][1], null, "A class post must not also carry a group.");
+    assert.equal(insertedPosts[0][2], 2, "The author must be the subject teacher.");
 
     // 2. They may only post to classes in their own school's list.
     insertedPosts.length = 0;
@@ -173,6 +191,22 @@ const asStudent = () => { sessionRows = [{ id: 3, email: "kid@x.kr", role: "stud
     const hrPost = await post("/api/classboard/posts", { content: "알림장" });
     assert.equal(hrPost.status, 200, `Expected 200, got ${hrPost.status}: ${await hrPost.clone().text()}`);
     assert.equal(String(insertedPosts[0][0]), "100", "It must default to their own class.");
+
+    // 3b. 동아리·방과후 게시판. 그룹을 연 교사는 그 게시판에 글을 쓸 수 있고,
+    //     글은 학급이 아니라 그룹에 달린다.
+    teacherGroups = [{ id: 55, group_name: "오케스트라", group_type: "club" }];
+    insertedPosts.length = 0;
+    const clubPost = await post("/api/classboard/posts", { content: "합주 안내", board: "group:55" });
+    assert.equal(clubPost.status, 200, `Expected 200, got ${clubPost.status}: ${await clubPost.clone().text()}`);
+    assert.equal(insertedPosts[0][0], null, "A group post must not carry a class.");
+    assert.equal(String(insertedPosts[0][1]), "55", "It must land on the group board.");
+
+    // 3c. 남의 그룹 게시판에는 쓸 수 없다.
+    insertedPosts.length = 0;
+    const otherGroup = await post("/api/classboard/posts", { content: "x", board: "group:999" });
+    assert.equal(otherGroup.status, 403, "Posting to a group you don't run must be refused.");
+    assert.equal(insertedPosts.length, 0);
+    teacherGroups = [];
 
     // 4. A subject teacher may not delete someone else's post. The SQL must
     //    carry the author/homeroom condition, not just the class.
@@ -219,6 +253,44 @@ const asStudent = () => { sessionRows = [{ id: 3, email: "kid@x.kr", role: "stud
     assert.equal(list.canPost, true);
     assert.equal(list.classes.length, 2, "The subject teacher can switch between classes.");
     assert.equal(list.classes[0].teaching, true, "Classes they teach come first.");
+
+    // 9. A student's board list is their class plus every club / after-school
+    //    group they belong to -- the point of the picker.
+    asStudent();
+    studentGroups = [
+      { id: 55, group_name: "오케스트라", group_type: "club" },
+      { id: 56, group_name: "방송부", group_type: "afterschool" }
+    ];
+    unreadRows = [{ board_key: "group:55", unread: "3" }];
+    const boardsRes = await get("/api/classboard/boards");
+    assert.equal(boardsRes.status, 200);
+    const { boards } = await boardsRes.json();
+    assert.equal(boards.length, 3, "The student sees their class and both groups.");
+    assert.equal(boards[0].kind, "class", "Their own class comes first.");
+    assert.deepEqual(
+      boards.map(b => b.label),
+      ["3학년 2반", "오케스트라", "방송부"],
+      "Each board is named for what it is."
+    );
+    assert.equal(boards[1].typeLabel, "동아리");
+    assert.equal(boards[2].typeLabel, "방과후");
+    assert.equal(boards.every(b => b.canPost === false), true, "Students may not post to any board.");
+
+    // 10. Unread counts ride along so the picker can flag boards with new posts.
+    assert.equal(boards[1].unreadCount, 3, "The club board reports its unread posts.");
+    assert.equal(boards[0].unreadCount, 0, "A board with nothing new stays quiet.");
+
+    // 11. Opening a board marks it read.
+    readMarks.length = 0;
+    await get("/api/classboard/posts?board=group:55");
+    assert.equal(readMarks.length, 1, "Opening a board must record the visit.");
+    assert.equal(readMarks[0][1], "group:55", "It must record which board was opened.");
+
+    // 12. A student cannot read a board they don't belong to.
+    const foreignBoard = await get("/api/classboard/posts?board=group:777");
+    const foreignBody = await foreignBoard.json();
+    assert.deepEqual(foreignBody.posts, [], "An unrelated group's board must stay empty.");
+    assert.equal(foreignBody.board, null);
 
     console.log("Classboard permissions contract: OK");
   } finally {
