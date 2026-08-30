@@ -107,5 +107,5 @@ side table, two armchairs by a coal fire, a bay window onto a foggy street.
 | 파일명 | 장면 |
 |---|---|
 | `images/story-08-a.webp` | A dim study: a very tall stooping older man with a domed forehead and hooded eyes standing across the desk from a seated detective, both perfectly still, lamplight between them. |
-| `images/story-08-b.webp` | The Reichenbach Falls: a huge torrent plunging into a black chasm, spray rising, a narrow path ending at the cliff edge where a walking stick leans against a rock, a lone figure arriving in the distance. |
+| `images/story-08-b.webp` | The Reichenbach Falls: a huge torrent plunging into a black chasm, spray rising, a narrow path ending at the cliff edge where the detective's walking stick leans against a rock with a sealed letter under a cigarette case on top of it. The only person is Dr Watson arriving alone down the path - a solid moustached man in a brown suit and bowler hat, NOT the detective and NOT wearing a deerstalker. Two sets of footprints lead toward the falls in the mud and none come back. |
 | `images/story-08-c.webp` | A doctor's consulting room: an old stooped bookseller straightening up and throwing off his disguise to reveal the tall thin detective smiling, while the doctor staggers back against a bookcase in shock. |

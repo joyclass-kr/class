@@ -65,7 +65,7 @@ sailcloth pinned together with brass buttons and twigs, wild hair and beard.
 | 파일명 | 장면 |
 |---|---|
 | `images/cover.webp` (세로 2:3 비율) | A tall portrait-format adventure novel cover: Jim Hawkins standing on a windswept clifftop at dusk holding a rolled sea chart, the sea and a distant tall ship behind him, an old sailor's sea chest at his feet, stormy sky, dramatic and inviting adventure-book cover composition. |
-| `images/end.webp` | A brass ship's compass and a folded old sea chart lying on weathered planking, warm lantern light, quiet closing mood. |
+| `images/end.webp` | A brass ship's compass and a folded old sea chart lying on weathered planking, warm lantern light, quiet closing mood. The chart is blank coastline and soundings only - absolutely NO lettering, NO place names, NO numbers, NO book titles, NO writing of any kind anywhere in the picture. No weapons. |
 
 ## 1장 · 벤보 여관의 손님
 
@@ -162,7 +162,7 @@ sailcloth pinned together with brass buttons and twigs, wild hair and beard.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-14-a.webp` | A boy at the tilted deck rail hauling down a black pirate flag and flinging it into the sea, a lean sailor slumped against the bulwark watching him. |
+| `images/story-14-a.webp` | A boy at the tilted deck rail hauling down a black pirate flag and flinging it into the sea, a lean sailor sitting against the bulwark watching him, his clothes torn but NO blood, NO bandage and NO wound anywhere on him or on the deck. |
 | `images/story-14-b.webp` | High on the mast: a boy braced on the crosstrees aiming two pistols downward, a wounded sailor climbing toward him hand over hand with a long dirk gripped in his teeth, empty blue sea far below. |
 
 ## 15장 · 적의 손에
