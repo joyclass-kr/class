@@ -9,14 +9,13 @@ const feedSection = document.getElementById('feedSection');
 const postTemplate = document.getElementById('postTemplate');
 const commentTemplate = document.getElementById('commentTemplate');
 
-const classPickerSection = document.getElementById('classPickerSection');
-const classSelect = document.getElementById('classSelect');
+const boardPickerSection = document.getElementById('boardPickerSection');
 const filterSection = document.getElementById('filterSection');
 const composerTargetEl = document.getElementById('composerTarget');
 
 let currentUser = null;
-let boardClasses = [];
-let activeClassId = null;
+let boards = [];
+let activeBoardKey = null;
 let canPost = false;
 // 과목별 보기. null이면 전체.
 let activeSubjectFilter = null;
@@ -71,7 +70,7 @@ async function initApp() {
             userInfoEl.appendChild(settingsLink);
         }
 
-        await loadClasses();
+        await loadBoards();
         loadPosts();
     } catch (e) {
         console.error('Failed to init app', e);
@@ -79,44 +78,74 @@ async function initApp() {
     }
 }
 
-// 담임은 자기 반 하나, 전담·관리자는 학교의 여러 반. 두 개 이상일 때만 고르는 칸을 보인다.
-async function loadClasses() {
+// 우리 반, 동아리, 방과후… 내가 볼 수 있는 게시판들. 안 읽은 글이 있으면 표시한다.
+async function loadBoards() {
     try {
-        const res = await fetch(`${API_BASE}/classboard/classes`);
+        const res = await fetch(`${API_BASE}/classboard/boards`);
         if (!res.ok) return;
         const data = await res.json();
-        boardClasses = data.classes || [];
-        canPost = Boolean(data.canPost);
+        boards = data.boards || [];
+        canPost = boards.some(b => b.canPost);
 
-        if (boardClasses.length > 0) activeClassId = boardClasses[0].id;
-
+        if (boards.length > 0 && !activeBoardKey) activeBoardKey = boards[0].key;
         if (canPost) composerSection.classList.remove('hidden');
 
-        if (boardClasses.length > 1) {
-            classPickerSection.classList.remove('hidden');
-            classSelect.replaceChildren(...boardClasses.map(c => {
-                const opt = document.createElement('option');
-                opt.value = c.id;
-                opt.textContent = `${c.grade}학년 ${c.classNumber}반${c.teaching ? ' · 내 수업' : ''}`;
-                return opt;
-            }));
-            classSelect.value = activeClassId;
-            classSelect.addEventListener('change', () => {
-                activeClassId = classSelect.value;
-                activeSubjectFilter = null;
-                loadPosts();
-            });
-        }
+        renderBoardPicker();
         updateComposerTarget();
     } catch (e) {
-        console.error('Failed to load classes', e);
+        console.error('Failed to load boards', e);
     }
+}
+
+function renderBoardPicker() {
+    // 게시판이 하나뿐이면 고를 것이 없다.
+    if (boards.length < 2) {
+        boardPickerSection.classList.add('hidden');
+        return;
+    }
+    boardPickerSection.classList.remove('hidden');
+    boardPickerSection.replaceChildren(...boards.map(b => {
+        const btn = document.createElement('button');
+        btn.className = 'board-tab';
+        if (b.key === activeBoardKey) btn.classList.add('active');
+
+        const name = document.createElement('span');
+        name.className = 'board-tab-name';
+        name.textContent = b.label;
+        btn.appendChild(name);
+
+        const kind = document.createElement('span');
+        kind.className = 'board-tab-kind';
+        kind.textContent = b.typeLabel;
+        btn.appendChild(kind);
+
+        // 안 읽은 글 개수. 들어가 보면 사라진다.
+        if (b.unreadCount > 0) {
+            const dot = document.createElement('span');
+            dot.className = 'board-tab-unread';
+            dot.textContent = b.unreadCount > 99 ? '99+' : String(b.unreadCount);
+            dot.title = `안 읽은 글 ${b.unreadCount}개`;
+            btn.appendChild(dot);
+        }
+
+        btn.addEventListener('click', () => {
+            if (activeBoardKey === b.key) return;
+            activeBoardKey = b.key;
+            activeSubjectFilter = null;
+            renderBoardPicker();
+            updateComposerTarget();
+            loadPosts();
+        });
+        return btn;
+    }));
 }
 
 function updateComposerTarget() {
     if (!composerTargetEl) return;
-    const target = boardClasses.find(c => c.id === activeClassId);
-    composerTargetEl.textContent = target ? `${target.grade}학년 ${target.classNumber}반에 게시` : '';
+    const target = boards.find(b => b.key === activeBoardKey);
+    composerTargetEl.textContent = target ? `${target.label}에 게시` : '';
+    // 학생이 소속된 게시판이어도 글은 교사만 쓴다.
+    composerSection.classList.toggle('hidden', !(target && target.canPost));
 }
 
 // 한 게시판에 담임과 여러 전담이 함께 쓰므로, 누가 쓴 글만 볼지 고를 수 있게 한다.
@@ -144,7 +173,7 @@ function renderFilters() {
 
 async function loadPosts() {
     try {
-        const query = activeClassId ? `?classId=${encodeURIComponent(activeClassId)}` : '';
+        const query = activeBoardKey ? `?board=${encodeURIComponent(activeBoardKey)}` : '';
         const res = await fetch(`${API_BASE}/classboard/posts${query}`);
         const data = await res.json();
 
@@ -153,6 +182,13 @@ async function loadPosts() {
         loadedPosts = data.posts || [];
         renderFilters();
         renderFeed();
+
+        // 방금 이 게시판을 읽었으니 표시를 지운다.
+        const board = boards.find(b => b.key === activeBoardKey);
+        if (board && board.unreadCount) {
+            board.unreadCount = 0;
+            renderBoardPicker();
+        }
     } catch (e) {
         console.error(e);
         feedSection.innerHTML = '<div class="loader" style="color: #ff5252;">게시물을 불러오지 못했습니다.</div>';
@@ -317,7 +353,7 @@ postSubmitBtn.addEventListener('click', async () => {
         const res = await fetch(`${API_BASE}/classboard/posts`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ content, classId: activeClassId })
+            body: JSON.stringify({ content, board: activeBoardKey })
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error);

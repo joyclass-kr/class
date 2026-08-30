@@ -134,28 +134,64 @@ body::before {
     color: var(--text-muted);
 }
 
-/* 여러 반을 가르치는 전담 교사용 학급 선택 */
-.class-picker {
+/* 게시판 고르기: 우리 반 / 동아리 / 방과후 … */
+.board-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 1.25rem;
+}
+
+.board-tab {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 1rem;
-}
-
-.class-picker label {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-}
-
-.class-picker select {
-    flex: 0 1 260px;
-    padding: 8px 12px;
-    background: var(--bg-input);
-    color: var(--text-main);
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 12px;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 0.95rem;
+    background: var(--bg-card);
+    color: var(--text-muted);
     font-family: inherit;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.board-tab:hover {
+    color: var(--text-main);
+    border-color: var(--border-highlight);
+}
+
+.board-tab.active {
+    background: rgba(77, 166, 255, 0.14);
+    border-color: var(--accent);
+    color: var(--text-main);
+}
+
+.board-tab-name {
+    font-weight: 700;
+}
+
+.board-tab-kind {
+    font-size: 0.75rem;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* 안 읽은 글이 있는 게시판에 켜 주는 불 */
+.board-tab-unread {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: var(--danger);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* 담임 글만, 또는 과목별로 걸러 보기 */

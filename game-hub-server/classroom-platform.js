@@ -912,6 +912,29 @@ function createClassroomPlatform(options = {}) {
         sort_order INTEGER NOT NULL DEFAULT 0,
         PRIMARY KEY (group_id, student_id)
       )`,
+      /* ──────────────────────────────────────────────
+         알림장 게시판은 학급뿐 아니라 동아리·방과후 그룹에도 달린다.
+         한 글은 학급 게시판이거나 그룹 게시판이거나 둘 중 하나다.
+         (teacher_groups 가 만들어진 뒤여야 해서 여기에 둔다.)
+      ────────────────────────────────────────────── */
+      `ALTER TABLE classroom_classboard_posts
+        ADD COLUMN IF NOT EXISTS group_id BIGINT REFERENCES teacher_groups(id) ON DELETE CASCADE`,
+      `ALTER TABLE classroom_classboard_posts
+        ALTER COLUMN class_id DROP NOT NULL`,
+      `ALTER TABLE classroom_classboard_posts
+        DROP CONSTRAINT IF EXISTS classroom_classboard_posts_one_board_check`,
+      `ALTER TABLE classroom_classboard_posts
+        ADD CONSTRAINT classroom_classboard_posts_one_board_check
+        CHECK ((class_id IS NOT NULL) <> (group_id IS NOT NULL))`,
+      `CREATE INDEX IF NOT EXISTS classroom_classboard_posts_group_idx
+        ON classroom_classboard_posts (group_id, created_at DESC)`,
+      // 게시판마다 마지막으로 열어 본 시각. 이보다 뒤에 올라온 남의 글이 '안 읽은 글'.
+      `CREATE TABLE IF NOT EXISTS classroom_classboard_reads (
+        user_id BIGINT NOT NULL REFERENCES classroom_users(id) ON DELETE CASCADE,
+        board_key TEXT NOT NULL,
+        last_read_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        PRIMARY KEY (user_id, board_key)
+      )`,
       `CREATE TABLE IF NOT EXISTS school_annual_schedules (
         id BIGSERIAL PRIMARY KEY,
         school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
@@ -4803,13 +4826,139 @@ function createClassroomPlatform(options = {}) {
     };
   }
 
+  const GROUP_TYPE_LABELS = {
+    club: "동아리",
+    afterschool: "방과후",
+    subject: "교과",
+    activity: "활동",
+    shuttle: "차량",
+    other: "기타"
+  };
+
+  // Group membership. Deliberately narrower than the teacher-facing roster count
+  // in /teacher/groups, which also does a `custom_fields::text ILIKE '%name%'`
+  // catch-all: that is fine for an approximate headcount but far too loose to
+  // decide who may read a board (a group named "1" would match nearly everyone).
+  // Here only the named attribute columns and explicit membership count.
+  const GROUP_MEMBER_SQL = `
+    (g.group_type = 'homeroom' AND g.grade = ss.grade AND g.class_number = ss.class_number)
+    OR (g.group_type <> 'homeroom' AND (
+          ss.custom_fields->>'club' = g.group_name
+          OR ss.custom_fields->>'afterschool' = g.group_name
+          OR ss.custom_fields->>'shuttle' = g.group_name
+          OR ss.custom_fields->>'bus' = g.group_name
+          OR ss.custom_fields->>'subject' = g.group_name
+          OR ss.custom_fields->>'group' = g.group_name
+       ))
+    OR EXISTS (SELECT 1 FROM teacher_group_students gs
+               WHERE gs.group_id = g.id AND gs.student_id = ss.id)`;
+
+  // Every board this user can open: their class board plus each club /
+  // after-school group they belong to (students) or run (teachers). A board is
+  // addressed by a single key -- "class:100" or "group:5".
+  async function classboardBoards(user) {
+    const scope = await classboardScope(user);
+    const boards = scope.classes.map(c => ({
+      key: `class:${c.id}`,
+      kind: "class",
+      id: c.id,
+      label: `${c.grade}학년 ${c.classNumber}반`,
+      typeLabel: "학급",
+      teaching: c.teaching,
+      canPost: scope.canPost
+    }));
+
+    let groupRows;
+    if (scope.canPost) {
+      // Teachers get the groups they opened.
+      groupRows = await pool.query(
+        `SELECT g.id, g.group_name, g.group_type
+         FROM teacher_groups g
+         WHERE g.teacher_user_id = $1 AND g.group_type <> 'homeroom'
+         ORDER BY g.sort_order, g.id`,
+        [user.id]
+      );
+    } else {
+      groupRows = await pool.query(
+        `SELECT DISTINCT g.id, g.group_name, g.group_type
+         FROM teacher_groups g
+         JOIN school_students ss
+           ON ss.school_id = g.school_id AND ss.academic_year = g.academic_year
+         WHERE g.group_type <> 'homeroom'
+           AND (ss.user_id = $1
+                OR (ss.student_email IS NOT NULL
+                    AND LOWER(ss.student_email) = (SELECT LOWER(email) FROM classroom_users WHERE id = $1)))
+           AND (${GROUP_MEMBER_SQL})
+         ORDER BY g.id`,
+        [user.id]
+      );
+    }
+
+    for (const g of groupRows.rows) {
+      boards.push({
+        key: `group:${g.id}`,
+        kind: "group",
+        id: String(g.id),
+        label: g.group_name,
+        typeLabel: GROUP_TYPE_LABELS[g.group_type] || "그룹",
+        teaching: true,
+        canPost: scope.canPost
+      });
+    }
+    return boards;
+  }
+
   function pickClassboardClass(scope, requestedId) {
     const requested = String(requestedId || "").trim();
     if (!requested) return scope.classes[0] || null;
     return scope.classes.find(c => c.id === requested) || null;
   }
 
-  // Which classes this user may switch between, for the board's class picker.
+  // Accepts "class:100" / "group:5", or a bare class id for older callers.
+  function pickBoard(boards, requested) {
+    const key = String(requested || "").trim();
+    if (!key) return boards[0] || null;
+    return boards.find(b => b.key === key)
+      || boards.find(b => b.kind === "class" && b.id === key)
+      || null;
+  }
+
+  // Posts in a board that arrived after this user last opened it, ignoring
+  // their own. Drives the unread dot on the board picker.
+  async function classboardUnreadCounts(user, boards) {
+    if (boards.length === 0) return new Map();
+    const classIds = boards.filter(b => b.kind === "class").map(b => b.id);
+    const groupIds = boards.filter(b => b.kind === "group").map(b => b.id);
+
+    const result = await pool.query(
+      `SELECT CASE WHEN p.group_id IS NULL THEN 'class:' || p.class_id
+                   ELSE 'group:' || p.group_id END AS board_key,
+              COUNT(*) AS unread
+       FROM classroom_classboard_posts p
+       LEFT JOIN classroom_classboard_reads r
+         ON r.user_id = $1
+        AND r.board_key = CASE WHEN p.group_id IS NULL THEN 'class:' || p.class_id
+                               ELSE 'group:' || p.group_id END
+       WHERE (p.class_id = ANY($2::BIGINT[]) OR p.group_id = ANY($3::BIGINT[]))
+         AND p.author_user_id <> $1
+         AND (r.last_read_at IS NULL OR p.created_at > r.last_read_at)
+       GROUP BY board_key`,
+      [user.id, classIds, groupIds]
+    );
+    return new Map(result.rows.map(r => [r.board_key, Number(r.unread)]));
+  }
+
+  // Which boards this user may switch between, with unread counts.
+  router.get("/classboard/boards", asyncRoute(async (req, res) => {
+    const user = await requireUser(req);
+    const boards = await classboardBoards(user);
+    const unread = await classboardUnreadCounts(user, boards);
+    res.json({
+      boards: boards.map(b => ({ ...b, unreadCount: unread.get(b.key) || 0 }))
+    });
+  }));
+
+  // Older name, kept so a cached page keeps working.
   router.get("/classboard/classes", asyncRoute(async (req, res) => {
     const user = await requireUser(req);
     const scope = await classboardScope(user);
@@ -4818,10 +4967,13 @@ function createClassroomPlatform(options = {}) {
 
   router.get("/classboard/posts", asyncRoute(async (req, res) => {
     const user = await requireUser(req);
-    const scope = await classboardScope(user);
-    const target = pickClassboardClass(scope, req.query.classId);
-    if (!target) return res.json({ posts: [], classId: null, canPost: false });
-    const classId = target.id;
+    const boards = await classboardBoards(user);
+    const target = pickBoard(boards, req.query.board || req.query.classId);
+    if (!target) return res.json({ posts: [], board: null, canPost: false });
+
+    // One board or the other -- the table's CHECK keeps exactly one set.
+    const classId = target.kind === "class" ? target.id : null;
+    const groupId = target.kind === "group" ? target.id : null;
 
     const postsResult = await pool.query(
       `SELECT p.id, p.content, p.created_at, p.updated_at,
@@ -4831,9 +4983,10 @@ function createClassroomPlatform(options = {}) {
        FROM classroom_classboard_posts p
        JOIN classroom_users u ON u.id = p.author_user_id
        LEFT JOIN classroom_teachers ct ON ct.user_id = p.author_user_id AND ct.active = TRUE
-       WHERE p.class_id = $1
+       WHERE p.class_id IS NOT DISTINCT FROM $1::BIGINT
+         AND p.group_id IS NOT DISTINCT FROM $2::BIGINT
        ORDER BY p.created_at DESC`,
-      [classId]
+      [classId, groupId]
     );
 
     const commentsResult = await pool.query(
@@ -4843,18 +4996,25 @@ function createClassroomPlatform(options = {}) {
        FROM classroom_classboard_comments c
        JOIN classroom_classboard_posts p ON p.id = c.post_id
        JOIN classroom_users u ON u.id = c.author_user_id
-       WHERE p.class_id = $1
+       WHERE p.class_id IS NOT DISTINCT FROM $1::BIGINT
+         AND p.group_id IS NOT DISTINCT FROM $2::BIGINT
        ORDER BY c.created_at ASC`,
-      [classId]
+      [classId, groupId]
     );
 
     // 담임이면 이 반 게시판을 관리할 수 있다. 버튼을 서버 규칙과 맞추기 위해
     // 삭제 가능 여부를 여기서 계산해 내려 준다.
-    const homeroomRes = await pool.query(
-      `SELECT 1 FROM classroom_classes WHERE id = $1 AND teacher_user_id = $2`,
-      [classId, user.id]
-    );
-    const isHomeroom = homeroomRes.rowCount > 0;
+    // 학급 게시판은 그 반 담임이, 그룹 게시판은 그 그룹을 만든 교사가 관리한다.
+    const ownerRes = classId
+      ? await pool.query(
+          `SELECT 1 FROM classroom_classes WHERE id = $1 AND teacher_user_id = $2`,
+          [classId, user.id]
+        )
+      : await pool.query(
+          `SELECT 1 FROM teacher_groups WHERE id = $1 AND teacher_user_id = $2`,
+          [groupId, user.id]
+        );
+    const isHomeroom = ownerRes.rowCount > 0;
 
     const posts = postsResult.rows.map(row => {
       const postComments = commentsResult.rows
@@ -4889,72 +5049,94 @@ function createClassroomPlatform(options = {}) {
       };
     });
 
-    res.json({ posts, classId, canPost: scope.canPost });
+    // 이 게시판을 열어 본 시각을 남긴다. 다음부터 이후에 올라온 글만 '안 읽은 글'.
+    await pool.query(
+      `INSERT INTO classroom_classboard_reads (user_id, board_key, last_read_at)
+       VALUES ($1, $2, NOW())
+       ON CONFLICT (user_id, board_key) DO UPDATE SET last_read_at = NOW()`,
+      [user.id, target.key]
+    );
+
+    res.json({ posts, board: target, classId, canPost: target.canPost });
   }));
 
   router.post("/classboard/posts", asyncRoute(async (req, res) => {
     const user = await requireTeacher(req);
-    const scope = await classboardScope(user);
-    const target = pickClassboardClass(scope, req.body?.classId);
-    if (!scope.canPost || !target) {
-      throw new HttpError(403, "NO_CLASS", "글을 올릴 수 있는 학급이 없습니다.");
+    const boards = await classboardBoards(user);
+    const target = pickBoard(boards, req.body?.board || req.body?.classId);
+    if (!target || !target.canPost) {
+      throw new HttpError(403, "NO_BOARD", "글을 올릴 수 있는 게시판이 없습니다.");
     }
 
     const content = String(req.body?.content || "").trim();
     if (!content) throw new HttpError(400, "INVALID_CONTENT", "내용을 입력해주세요.");
 
     const result = await pool.query(
-      `INSERT INTO classroom_classboard_posts (class_id, author_user_id, content)
-       VALUES ($1, $2, $3) RETURNING id`,
-      [target.id, user.id, content]
+      `INSERT INTO classroom_classboard_posts (class_id, group_id, author_user_id, content)
+       VALUES ($1, $2, $3, $4) RETURNING id`,
+      [
+        target.kind === "class" ? target.id : null,
+        target.kind === "group" ? target.id : null,
+        user.id,
+        content
+      ]
     );
-    res.json({ ok: true, id: String(result.rows[0].id), classId: target.id });
+    res.json({ ok: true, id: String(result.rows[0].id), board: target.key });
   }));
 
   router.delete("/classboard/posts/:postId", asyncRoute(async (req, res) => {
     const user = await requireTeacher(req);
-    const scope = await classboardScope(user);
+    const boards = await classboardBoards(user);
     const postId = Number(req.params.postId);
     if (!Number.isInteger(postId)) throw new HttpError(400, "INVALID_POST", "잘못된 요청입니다.");
 
     // Several teachers share one board, so a post may only be removed by whoever
-    // wrote it or by that class's homeroom teacher. (This used to delete by
-    // class alone, which would have let any subject teacher wipe the homeroom
-    // teacher's 알림장.)
-    const allowedClassIds = scope.classes.map(c => c.id);
-    if (allowedClassIds.length === 0) throw new HttpError(403, "NO_CLASS", "권한이 없습니다.");
+    // wrote it or by the board's owner -- that class's homeroom teacher, or the
+    // teacher who opened the group. (This used to delete by class alone, which
+    // would have let any subject teacher wipe the homeroom teacher's 알림장.)
+    const classIds = boards.filter(b => b.kind === "class").map(b => b.id);
+    const groupIds = boards.filter(b => b.kind === "group").map(b => b.id);
+    if (classIds.length === 0 && groupIds.length === 0) {
+      throw new HttpError(403, "NO_BOARD", "권한이 없습니다.");
+    }
 
     const result = await pool.query(
       `DELETE FROM classroom_classboard_posts p
        WHERE p.id = $1
-         AND p.class_id = ANY($2::BIGINT[])
+         AND (p.class_id = ANY($2::BIGINT[]) OR p.group_id = ANY($3::BIGINT[]))
          AND (
-           p.author_user_id = $3
+           p.author_user_id = $4
            OR EXISTS (SELECT 1 FROM classroom_classes c
-                      WHERE c.id = p.class_id AND c.teacher_user_id = $3)
+                      WHERE c.id = p.class_id AND c.teacher_user_id = $4)
+           OR EXISTS (SELECT 1 FROM teacher_groups g
+                      WHERE g.id = p.group_id AND g.teacher_user_id = $4)
          )
        RETURNING p.id`,
-      [postId, allowedClassIds, user.id]
+      [postId, classIds, groupIds, user.id]
     );
     if (result.rowCount === 0) {
-      throw new HttpError(403, "NOT_ALLOWED", "본인이 쓴 글이거나 담임인 경우에만 삭제할 수 있습니다.");
+      throw new HttpError(403, "NOT_ALLOWED", "본인이 쓴 글이거나 게시판을 만든 선생님만 삭제할 수 있습니다.");
     }
     res.json({ ok: true });
   }));
 
   router.post("/classboard/posts/:postId/comments", asyncRoute(async (req, res) => {
     const user = await requireUser(req);
-    const scope = await classboardScope(user);
-    const allowedClassIds = scope.classes.map(c => c.id);
-    if (allowedClassIds.length === 0) throw new HttpError(403, "NO_CLASS", "소속된 학급이 없습니다.");
+    const boards = await classboardBoards(user);
+    const classIds = boards.filter(b => b.kind === "class").map(b => b.id);
+    const groupIds = boards.filter(b => b.kind === "group").map(b => b.id);
+    if (classIds.length === 0 && groupIds.length === 0) {
+      throw new HttpError(403, "NO_BOARD", "소속된 게시판이 없습니다.");
+    }
 
     const postId = Number(req.params.postId);
     const content = String(req.body?.content || "").trim();
     if (!content) throw new HttpError(400, "INVALID_CONTENT", "내용을 입력해주세요.");
 
     const postCheck = await pool.query(
-      `SELECT 1 FROM classroom_classboard_posts WHERE id = $1 AND class_id = ANY($2::BIGINT[])`,
-      [postId, allowedClassIds]
+      `SELECT 1 FROM classroom_classboard_posts
+       WHERE id = $1 AND (class_id = ANY($2::BIGINT[]) OR group_id = ANY($3::BIGINT[]))`,
+      [postId, classIds, groupIds]
     );
     if (postCheck.rowCount === 0) throw new HttpError(404, "NOT_FOUND", "게시글을 찾을 수 없습니다.");
 
@@ -4968,28 +5150,33 @@ function createClassroomPlatform(options = {}) {
 
   router.delete("/classboard/posts/:postId/comments/:commentId", asyncRoute(async (req, res) => {
     const user = await requireUser(req);
-    const scope = await classboardScope(user);
-    const allowedClassIds = scope.classes.map(c => c.id);
-    if (allowedClassIds.length === 0) throw new HttpError(403, "NO_CLASS", "소속된 학급이 없습니다.");
+    const boards = await classboardBoards(user);
+    const classIds = boards.filter(b => b.kind === "class").map(b => b.id);
+    const groupIds = boards.filter(b => b.kind === "group").map(b => b.id);
+    if (classIds.length === 0 && groupIds.length === 0) {
+      throw new HttpError(403, "NO_BOARD", "소속된 게시판이 없습니다.");
+    }
 
     const commentId = Number(req.params.commentId);
     if (!Number.isInteger(commentId)) throw new HttpError(400, "INVALID_COMMENT", "잘못된 요청입니다.");
 
     // Anyone may remove their own comment; a teacher may also moderate comments
-    // on a post they wrote or on a class they are homeroom teacher of.
+    // on a post they wrote or on a board they own.
     const result = await pool.query(
       `DELETE FROM classroom_classboard_comments c
        USING classroom_classboard_posts p
        WHERE c.id = $1 AND c.post_id = p.id
-         AND p.class_id = ANY($2::BIGINT[])
+         AND (p.class_id = ANY($2::BIGINT[]) OR p.group_id = ANY($3::BIGINT[]))
          AND (
-           c.author_user_id = $3
-           OR p.author_user_id = $3
+           c.author_user_id = $4
+           OR p.author_user_id = $4
            OR EXISTS (SELECT 1 FROM classroom_classes cc
-                      WHERE cc.id = p.class_id AND cc.teacher_user_id = $3)
+                      WHERE cc.id = p.class_id AND cc.teacher_user_id = $4)
+           OR EXISTS (SELECT 1 FROM teacher_groups g
+                      WHERE g.id = p.group_id AND g.teacher_user_id = $4)
          )
        RETURNING c.id`,
-      [commentId, allowedClassIds, user.id]
+      [commentId, classIds, groupIds, user.id]
     );
     if (result.rowCount === 0) {
       throw new HttpError(403, "NOT_ALLOWED", "삭제 권한이 없습니다.");
