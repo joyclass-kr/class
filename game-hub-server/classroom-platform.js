@@ -4749,17 +4749,88 @@ function createClassroomPlatform(options = {}) {
   }));
 
   // --- Classboard (학급 알리미) API ---
+  // Teacher types that work across classes rather than owning one.
+  const CLASSBOARD_WIDE_SCOPE = new Set(["전담", "관리자", "교장", "교감"]);
+
+  // Which classes a user may read and post to on the class board.
+  //
+  // Students and homeroom teachers get their own class. Subject teachers (전담)
+  // and school admins get every class in their school -- the same scope
+  // /teacher/available-classes already hands them -- with the classes they
+  // actually teach in the master timetable listed first. Posts are keyed only by
+  // class, so a subject teacher's post lands on the same board the homeroom
+  // teacher posts to and every student in that class sees both.
+  async function classboardScope(user) {
+    const teacherRes = await pool.query(
+      `SELECT school_id, teacher_type FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
+      [user.id]
+    );
+    const info = teacherRes.rows[0];
+
+    if (!info || !CLASSBOARD_WIDE_SCOPE.has(info.teacher_type)) {
+      const classId = await userClassId(user);
+      if (!classId) return { canPost: false, classes: [] };
+      const own = await pool.query(
+        `SELECT id, grade, class_number FROM classroom_classes WHERE id = $1`,
+        [classId]
+      );
+      return {
+        canPost: Boolean(info),
+        classes: own.rows.map(c => ({
+          id: String(c.id), grade: c.grade, classNumber: c.class_number, teaching: true
+        }))
+      };
+    }
+
+    const listRes = await pool.query(
+      `SELECT c.id, c.grade, c.class_number,
+              EXISTS (
+                SELECT 1 FROM school_master_timetable m
+                WHERE m.school_id = c.school_id AND m.teacher_user_id = $2
+                  AND m.academic_year = c.academic_year
+                  AND m.grade = c.grade AND m.class_number = c.class_number
+              ) AS teaching
+       FROM classroom_classes c
+       WHERE c.school_id = $1
+       ORDER BY teaching DESC, c.grade, c.class_number`,
+      [info.school_id, user.id]
+    );
+    return {
+      canPost: true,
+      classes: listRes.rows.map(c => ({
+        id: String(c.id), grade: c.grade, classNumber: c.class_number, teaching: c.teaching
+      }))
+    };
+  }
+
+  function pickClassboardClass(scope, requestedId) {
+    const requested = String(requestedId || "").trim();
+    if (!requested) return scope.classes[0] || null;
+    return scope.classes.find(c => c.id === requested) || null;
+  }
+
+  // Which classes this user may switch between, for the board's class picker.
+  router.get("/classboard/classes", asyncRoute(async (req, res) => {
+    const user = await requireUser(req);
+    const scope = await classboardScope(user);
+    res.json({ canPost: scope.canPost, classes: scope.classes });
+  }));
+
   router.get("/classboard/posts", asyncRoute(async (req, res) => {
     const user = await requireUser(req);
-    const classId = await userClassId(user);
-    if (!classId) return res.json({ posts: [] });
+    const scope = await classboardScope(user);
+    const target = pickClassboardClass(scope, req.query.classId);
+    if (!target) return res.json({ posts: [], classId: null, canPost: false });
+    const classId = target.id;
 
     const postsResult = await pool.query(
       `SELECT p.id, p.content, p.created_at, p.updated_at,
               u.display_name as author_name, u.picture_url as author_picture,
-              u.role as author_role, p.author_user_id
+              u.role as author_role, p.author_user_id,
+              ct.teacher_type AS author_teacher_type, ct.subject_name AS author_subject
        FROM classroom_classboard_posts p
        JOIN classroom_users u ON u.id = p.author_user_id
+       LEFT JOIN classroom_teachers ct ON ct.user_id = p.author_user_id AND ct.active = TRUE
        WHERE p.class_id = $1
        ORDER BY p.created_at DESC`,
       [classId]
@@ -4777,6 +4848,14 @@ function createClassroomPlatform(options = {}) {
       [classId]
     );
 
+    // 담임이면 이 반 게시판을 관리할 수 있다. 버튼을 서버 규칙과 맞추기 위해
+    // 삭제 가능 여부를 여기서 계산해 내려 준다.
+    const homeroomRes = await pool.query(
+      `SELECT 1 FROM classroom_classes WHERE id = $1 AND teacher_user_id = $2`,
+      [classId, user.id]
+    );
+    const isHomeroom = homeroomRes.rowCount > 0;
+
     const posts = postsResult.rows.map(row => {
       const postComments = commentsResult.rows
         .filter(c => String(c.post_id) === String(row.id))
@@ -4787,63 +4866,95 @@ function createClassroomPlatform(options = {}) {
           authorPicture: c.author_picture,
           authorRole: c.author_role,
           isMine: c.author_user_id === user.id,
+          canDelete: c.author_user_id === user.id || row.author_user_id === user.id || isHomeroom,
           createdAt: c.created_at
         }));
+      // 담임인지 전담인지, 전담이면 무슨 과목인지. 한 게시판에 여러 선생님이
+      // 글을 쓰므로 학생이 누가 쓴 글인지 구별할 수 있어야 한다.
+      const isHomeroomAuthor = row.author_teacher_type === "homeroom" || row.author_teacher_type === "담임";
       return {
         id: String(row.id),
         content: row.content,
         authorName: row.author_name,
         authorPicture: row.author_picture,
         authorRole: row.author_role,
+        authorLabel: row.author_role !== "teacher"
+          ? "학생"
+          : (isHomeroomAuthor || !row.author_subject ? "담임" : row.author_subject),
+        authorSubject: row.author_role === "teacher" && !isHomeroomAuthor ? (row.author_subject || "") : "",
         isMine: row.author_user_id === user.id,
+        canDelete: row.author_user_id === user.id || isHomeroom,
         createdAt: row.created_at,
         comments: postComments
       };
     });
 
-    res.json({ posts });
+    res.json({ posts, classId, canPost: scope.canPost });
   }));
 
   router.post("/classboard/posts", asyncRoute(async (req, res) => {
     const user = await requireTeacher(req);
-    const classId = await userClassId(user);
-    if (!classId) throw new HttpError(403, "NO_CLASS", "선생님은 배정된 학급이 없습니다.");
-    
+    const scope = await classboardScope(user);
+    const target = pickClassboardClass(scope, req.body?.classId);
+    if (!scope.canPost || !target) {
+      throw new HttpError(403, "NO_CLASS", "글을 올릴 수 있는 학급이 없습니다.");
+    }
+
     const content = String(req.body?.content || "").trim();
     if (!content) throw new HttpError(400, "INVALID_CONTENT", "내용을 입력해주세요.");
 
     const result = await pool.query(
       `INSERT INTO classroom_classboard_posts (class_id, author_user_id, content)
        VALUES ($1, $2, $3) RETURNING id`,
-      [classId, user.id, content]
+      [target.id, user.id, content]
     );
-    res.json({ ok: true, id: String(result.rows[0].id) });
+    res.json({ ok: true, id: String(result.rows[0].id), classId: target.id });
   }));
 
   router.delete("/classboard/posts/:postId", asyncRoute(async (req, res) => {
     const user = await requireTeacher(req);
-    const classId = await userClassId(user);
+    const scope = await classboardScope(user);
     const postId = Number(req.params.postId);
+    if (!Number.isInteger(postId)) throw new HttpError(400, "INVALID_POST", "잘못된 요청입니다.");
 
-    await pool.query(
-      `DELETE FROM classroom_classboard_posts WHERE id = $1 AND class_id = $2`,
-      [postId, classId]
+    // Several teachers share one board, so a post may only be removed by whoever
+    // wrote it or by that class's homeroom teacher. (This used to delete by
+    // class alone, which would have let any subject teacher wipe the homeroom
+    // teacher's 알림장.)
+    const allowedClassIds = scope.classes.map(c => c.id);
+    if (allowedClassIds.length === 0) throw new HttpError(403, "NO_CLASS", "권한이 없습니다.");
+
+    const result = await pool.query(
+      `DELETE FROM classroom_classboard_posts p
+       WHERE p.id = $1
+         AND p.class_id = ANY($2::BIGINT[])
+         AND (
+           p.author_user_id = $3
+           OR EXISTS (SELECT 1 FROM classroom_classes c
+                      WHERE c.id = p.class_id AND c.teacher_user_id = $3)
+         )
+       RETURNING p.id`,
+      [postId, allowedClassIds, user.id]
     );
+    if (result.rowCount === 0) {
+      throw new HttpError(403, "NOT_ALLOWED", "본인이 쓴 글이거나 담임인 경우에만 삭제할 수 있습니다.");
+    }
     res.json({ ok: true });
   }));
 
   router.post("/classboard/posts/:postId/comments", asyncRoute(async (req, res) => {
     const user = await requireUser(req);
-    const classId = await userClassId(user);
-    if (!classId) throw new HttpError(403, "NO_CLASS", "소속된 학급이 없습니다.");
+    const scope = await classboardScope(user);
+    const allowedClassIds = scope.classes.map(c => c.id);
+    if (allowedClassIds.length === 0) throw new HttpError(403, "NO_CLASS", "소속된 학급이 없습니다.");
 
     const postId = Number(req.params.postId);
     const content = String(req.body?.content || "").trim();
     if (!content) throw new HttpError(400, "INVALID_CONTENT", "내용을 입력해주세요.");
 
     const postCheck = await pool.query(
-      `SELECT 1 FROM classroom_classboard_posts WHERE id = $1 AND class_id = $2`,
-      [postId, classId]
+      `SELECT 1 FROM classroom_classboard_posts WHERE id = $1 AND class_id = ANY($2::BIGINT[])`,
+      [postId, allowedClassIds]
     );
     if (postCheck.rowCount === 0) throw new HttpError(404, "NOT_FOUND", "게시글을 찾을 수 없습니다.");
 
@@ -4857,25 +4968,31 @@ function createClassroomPlatform(options = {}) {
 
   router.delete("/classboard/posts/:postId/comments/:commentId", asyncRoute(async (req, res) => {
     const user = await requireUser(req);
-    const classId = await userClassId(user);
-    if (!classId) throw new HttpError(403, "NO_CLASS", "소속된 학급이 없습니다.");
+    const scope = await classboardScope(user);
+    const allowedClassIds = scope.classes.map(c => c.id);
+    if (allowedClassIds.length === 0) throw new HttpError(403, "NO_CLASS", "소속된 학급이 없습니다.");
 
     const commentId = Number(req.params.commentId);
-    
-    if (user.role === 'teacher') {
-      await pool.query(
-        `DELETE FROM classroom_classboard_comments c
-         USING classroom_classboard_posts p
-         WHERE c.id = $1 AND c.post_id = p.id AND p.class_id = $2`,
-        [commentId, classId]
-      );
-    } else {
-      await pool.query(
-        `DELETE FROM classroom_classboard_comments c
-         USING classroom_classboard_posts p
-         WHERE c.id = $1 AND c.post_id = p.id AND p.class_id = $2 AND c.author_user_id = $3`,
-        [commentId, classId, user.id]
-      );
+    if (!Number.isInteger(commentId)) throw new HttpError(400, "INVALID_COMMENT", "잘못된 요청입니다.");
+
+    // Anyone may remove their own comment; a teacher may also moderate comments
+    // on a post they wrote or on a class they are homeroom teacher of.
+    const result = await pool.query(
+      `DELETE FROM classroom_classboard_comments c
+       USING classroom_classboard_posts p
+       WHERE c.id = $1 AND c.post_id = p.id
+         AND p.class_id = ANY($2::BIGINT[])
+         AND (
+           c.author_user_id = $3
+           OR p.author_user_id = $3
+           OR EXISTS (SELECT 1 FROM classroom_classes cc
+                      WHERE cc.id = p.class_id AND cc.teacher_user_id = $3)
+         )
+       RETURNING c.id`,
+      [commentId, allowedClassIds, user.id]
+    );
+    if (result.rowCount === 0) {
+      throw new HttpError(403, "NOT_ALLOWED", "삭제 권한이 없습니다.");
     }
     res.json({ ok: true });
   }));
