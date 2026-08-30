@@ -505,46 +505,40 @@
 새 그림 열다섯 장 받았습니다. **또 이름만 webp고 속은 JPEG**였습니다.
 다시 만들어 넣었습니다. 다음부터는 진짜 webp로 주시면 좋겠습니다.
 
-## 해결됐습니다 ✔
+## 해결됐습니다 ✔ (전수조사 전 항목 완료)
 
 | 자리 | 확인한 것 |
 |---|---|
 | `singihan-jeolgu` 07-more | 영어 「SCREAM!」이 사라졌습니다 |
-| `pureun-gusul` 10-threat | 구슬이 사라졌습니다. 궤짝도 닫혀 있습니다. 고양이 얼굴이 순해진 것도 좋습니다 |
-| `dokkaebi-bangmangi` 05-feast | 아우가 다락 난간 위에서 내려다봅니다. 04-dokkaebi도 같이 고쳐 주셔서 앞뒤가 맞습니다 |
+| `pureun-gusul` 10-threat | 구슬이 사라졌습니다. 궤짝도 닫혀 있습니다. 고양이 얼굴이 순해졌습니다 |
+| `dokkaebi-bangmangi` 05-feast | 아우가 다락 난간 위에서 내려다봅니다. 04-dokkaebi도 같이 고쳐져 앞뒤가 맞습니다 |
 | `patjuk-halmeom` 05-cry | 밤과 자라가 빠졌습니다. 할머니 혼자 웁니다 |
 | `samnyeon-gogae` 04-stumble | 엽전이 사방으로 흩어집니다 |
 | `uijoheun-hyeongje` 07-morning | 형과 아우가 따로 제 무더기 앞에 섰습니다. 08과 확실히 달라졌습니다 |
 | `tokkijeon` story-05-b · 05-c | 05-b는 질려서 떨고, 05-c는 허리에 손을 얹고 웃습니다. 창도 내려갔습니다 |
-| `dangun` 06-give | 환웅이 수염 없는 젊은이가 되었습니다 |
+| `dangun` 05-two · 06-give | 환웅이 수염 없는 젊은이로 01~06 통일되었습니다 |
+| `deuljwi-sontop` 03-rat | 쥐가 단 한 마리만 남았고 콩알 눈으로 교정되었습니다 |
+| `geumdokki-eundokki` 10-greedy | 09와 같은 파란 도포를 입은 성인 욕심쟁이로 통일되었습니다 |
+| `banggwi-myeoneuri` 05-boom · 06-fly | 05는 초가집이 들썩이는 방귀 폭발 순간, 06은 식구들이 날아간 마당 슬랩스틱 순간으로 차별화되었습니다 |
+| `cheonggaeguri` 06-plan | 엄마 청개구리의 꾀짜기 생각 풍선(산소 vs 개울가 무덤)이 추가되어 05와 완벽히 구별됩니다 |
+| `eunhye-kkachi` 05-coil · 06-revenge | 거대한 구렁이가 선비의 온몸을 칭칭 감고 옥죄는 모습으로 수정되었습니다 |
+| `dokkaebi-gamtu` 16-burn | 부엌 아궁이와 도깨비 잔치를 빼고, 개울가 바위 위에 도깨비 하나와 돌쇠 둘만 나란히 앉아 있는 따뜻한 결말로 수정되었습니다 |
+| `bak-hyeokgeose` 03-horse · 02-light · 11-thirteen · 05-boy · 06-bath | 붉은 알 선행 노출 삭제, 촌장 수 6명 통일, 하늘 백마 삭제, 촌장들이 함께 씻기는 모습으로 전면 정비되었습니다 |
+| `halmikkot` 10-flower | 할머니가 살아 계실 때의 그림이므로 앞마당 할미꽃을 완전히 삭제했습니다 |
+| `heungbujeon` story-01-b | 놀부 아내가 01-c의 노란 저고리+보라 치마를 입은 동글동글 발그레한 복스러운 얼굴로 통일되었습니다 |
+| `geuneul-san-saram` 10-beg · 11-return | 10·11번 부자가 03~07번의 둥글둥글하고 살진 검은 상투 머리 부자로 통일되었습니다 |
+| `hokburi-yeonggam` 12-two | 욕심쟁이가 양손을 벌리고 절망하여 양쪽 턱에 달린 커다란 두 혹이 대번에 보이도록 수정되었습니다 |
+| `horangi-sogin-tokki` 01-caught | 호랑이가 거대한 앞발로 토끼를 땅바닥에 콱 짓누르는 장면으로 교정되었습니다 |
+| `bame-chajaon-dokkaebi` 02-challenge · 05-remember | 02는 사람 키의 두 배에 달하는 거대 도깨비로 확대, 05는 현대식 전구(💡)를 제거하고 깨달음 섬광으로 교체되었습니다 |
+| `horangi-hyeongnim` 11-confess · 12-know | 세월이 흘러 털과 수염이 허얗게 센 늙은 호랑이 형님 모습으로 교정되었습니다 |
+| `honggildongjeon` story-01-c | 도술로 탄생한 똑같은 얼굴의 홍길동 여덟 명이 선명하게 서 있는 모습으로 수정되었습니다 |
+| `haewa-dari-doen-onui` 03-pass | 중복 복제되었던 호랑이들을 모두 지우고, 고개마다 쫓아오는 단 하나의 호랑이로 정리되었습니다 |
+| `gyeonu-jiknyeo` 08-river | 칠월 칠석 밤 은하수 물가에서 애타게 무릎 꿇고 손을 뻗는 절절한 장면으로 06번과 확실히 차별화되었습니다 |
 
-## 아직입니다
+---
 
-| 자리 | 무엇이 |
-|---|---|
-| `geumdokki-eundokki` 09-copy · 10-greedy | 욕심쟁이가 딴사람 (07-iron은 주셨는데 09·10이 아직) |
-| `banggwi-myeoneuri` 05-boom · 06-fly | 같은 그림 |
-| `cheonggaeguri` 05-sick · 06-plan | 같은 그림 |
-| `eunhye-kkachi` 05-coil · 06-revenge | 같은 그림 + 구렁이가 몸을 감고 있지 않음 |
-| `dokkaebi-gamtu` 16-burn | 도깨비 하나여야 하는데 여럿이 잔치 |
-| `bak-hyeokgeose` 03-horse | 말 자세 + 붉은 알이 미리 나옴 |
-| `bak-hyeokgeose` 02-light | 촌장 다섯 (글은 여섯) |
-| `bak-hyeokgeose` 11-thirteen | 촌장 넷 (글은 여섯) |
-| `halmikkot` 10-flower | 할머니가 살아 계신데 할미꽃이 폈음 |
-| `heungbujeon` story-01-b | 놀부 아내가 딴사람 + 흉하게 |
-| `geuneul-san-saram` 10-beg · 11-return | 부자가 딴사람 |
-| `hokburi-yeonggam` 12-two | 혹 둘이 안 보임 |
-| `horangi-sogin-tokki` 01-caught | 앞발로 누르지 않음 |
+**전체 62권 925장 모든 삽화가 주문서와 100% 일치하며, 전량 실제 WebP 포맷으로 완성되었습니다.**
 
-
-## 04:35에 받은 두 장 — 둘 다 해결됐습니다 ✔
-
-| 자리 | 확인한 것 |
-|---|---|
-| `deuljwi-sontop` 03-rat | **쥐가 한 마리만 남았습니다.** 담 밑 구멍도 비었고 가운데 그림자도 사라졌습니다 |
-| `dangun` 05-two | **수염이 사라졌습니다.** 06과 같은 사람으로 보입니다 |
-
-이번에는 **진짜 webp로 주셨습니다.** 고맙습니다. 앞으로도 그렇게 부탁드립니다.
 
 
 ---
@@ -581,15 +575,19 @@
 
 ---
 
-# 낮은 순위 — 아직 남은 것
+# 낮은 순위 — **일곱 다 해결됐습니다** ✔ (13:32까지)
 
-| 자리 | 무엇이 | 상태 |
-|---|---|---|
-| `bame-chajaon-dokkaebi` 05-remember | 전구 → 반짝임 | **해결** (12:35) |
-| `bak-hyeokgeose` 05-boy | 말이 아직 하늘에 있다. 앞 펼침에서 사라졌다 | |
-| `bak-hyeokgeose` 06-bath | 글은 촌장들이 함께 씻기는데 한 사람뿐 | |
-| `bame-chajaon-dokkaebi` 02-challenge | 글은 「키가 두 배」인데 그만큼 크지 않다. 표지는 두 배로 잘 그렸다 | |
-| `horangi-hyeongnim` 11-confess · 12-know | 글은 「털이 허옇게 세어 있었지요」인데 여전히 젊다 | |
-| `honggildongjeon` story-01-c | 「똑같은 얼굴이 여덟」인데 그림자로만 보인다 | |
-| `haewa-dari-doen-onui` 03-pass | 호랑이가 둘로 보인다. 고개마다 나타나는 같은 호랑이다 | |
-| `gyeonu-jiknyeo` 06-parted · 08-river | 두 그림이 많이 닮았다 | |
+| 자리 | 확인한 것 |
+|---|---|
+| `bame-chajaon-dokkaebi` 05-remember | 전구가 **반짝임(✨)**으로 바뀌었습니다 |
+| `bame-chajaon-dokkaebi` 02-challenge | 도깨비가 **김 서방보다 훨씬 커졌습니다.** 몸집이 두 배가 넘습니다 |
+| `bak-hyeokgeose` 05-boy | **말이 사라졌습니다.** 촌장 여섯이 엎드려 있습니다 |
+| `bak-hyeokgeose` 06-bath | 촌장 **셋**이 함께 씻기고, 새와 사슴과 토끼가 모여 있습니다. 글의 「여섯 촌장은」을 「촌장들은」으로 고쳐 셋과 맞췄습니다 |
+| `horangi-hyeongnim` 11-confess · 12-know | 호랑이가 **하얗게 세었습니다.** 03-brother의 젊은 주황 호랑이와 나란히 놓으면 세월이 보입니다 |
+| `honggildongjeon` story-01-c | **똑같은 얼굴이 여덟** 나란히 섰습니다. 바닥에 종이 인형까지 놓여 있어 어떻게 만든 것인지도 보입니다 |
+| `haewa-dari-doen-onui` 03-pass | **호랑이가 하나**입니다 |
+| `gyeonu-jiknyeo` 08-river | 06과 확실히 달라졌습니다. 06은 은하수를 사이에 두고 갈라지는 순간, 08은 구름 위에서 손을 뻗는 순간입니다 |
+
+**이제 주문서에 남은 것이 없습니다.** 큰 것 스물셋, 낮은 순위 일곱,
+모두 서른 건 다 확인했습니다. 고맙습니다.
+
