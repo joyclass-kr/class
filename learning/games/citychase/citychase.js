@@ -8,7 +8,6 @@
   const ASSET = Object.freeze({
     gem: "assets/secret-gem.png",
     alarm: "assets/secret-alarm.png",
-    plot: "assets/building-plot.png",
     shop: "assets/shop-building.png"
   });
   const $ = id => document.getElementById(id);
@@ -142,10 +141,10 @@
       const inner = isRail ? "#d99c45" : isRound ? "#ffe0a0" : isThief ? "#ee5e78" : isPolice ? "#5d9fe5" : "#fff8df";
       ctx.globalAlpha = isRail || isThief || isPolice ? .96 : .86;
       ctx.strokeStyle = accent;
-      ctx.lineWidth = isRail ? 14 : isRound ? 30 : isBuildingLane ? 25 : isThief || isPolice ? 18 : 16;
+      ctx.lineWidth = isRail ? 18 : isRound ? 38 : isBuildingLane ? 34 : isThief || isPolice ? 30 : 32;
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       ctx.strokeStyle = inner;
-      ctx.lineWidth = isRail ? 7 : isRound ? 20 : isBuildingLane ? 15 : isThief || isPolice ? 10 : 10;
+      ctx.lineWidth = isRail ? 9 : isRound ? 28 : isBuildingLane ? 24 : isThief || isPolice ? 20 : 22;
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       ctx.globalAlpha = 1;
       if (edge.oneWay || edge.displayArrow) drawArrow(ctx, a, b, accent);
@@ -250,6 +249,40 @@
     $("startBtn").textContent = canStart ? `게임 시작 · ${state.players.length}명` : role === "host" ? "팀 자리를 모두 채워주세요" : "방장이 게임을 시작합니다";
   }
 
+  const SCENERY = Object.freeze([
+    { src: "assets/city-kid-dog.svg", x: 205, y: 475, width: 58 },
+    { src: "assets/city-girl-kite.svg", x: 805, y: 470, width: 54 },
+    { src: "assets/city-animal-friends.svg", x: 285, y: 595, width: 52 },
+    { src: "assets/city-bike-kid.svg", x: 720, y: 600, width: 56 }
+  ]);
+
+  function renderScenery() {
+    const layer = $("sceneryLayer");
+    const fragment = document.createDocumentFragment();
+    for (const item of SCENERY) {
+      const image = document.createElement("img");
+      image.src = item.src;
+      image.alt = "";
+      image.style.cssText = `${positionStyle(item.x, item.y)};width:${(item.width / Board.WIDTH) * 100}%`;
+      fragment.appendChild(image);
+    }
+    layer.replaceChildren(fragment);
+  }
+
+  function renderLots() {
+    const layer = $("lotsLayer");
+    const fragment = document.createDocumentFragment();
+    for (const building of Board.BUILDINGS) {
+      const lot = building.lot || { width: 130, height: 120, style: "stone" };
+      const element = document.createElement("div");
+      element.className = `buildingLot ${lot.style}`;
+      element.style.cssText = `${positionStyle(building.x, building.y)};width:${(lot.width / Board.WIDTH) * 100}%;height:${(lot.height / Board.HEIGHT) * 100}%`;
+      element.innerHTML = '<span></span>';
+      fragment.appendChild(element);
+    }
+    layer.replaceChildren(fragment);
+  }
+
   function renderBuildings() {
     const layer = $("buildingsLayer");
     const fragment = document.createDocumentFragment();
@@ -272,7 +305,7 @@
       if (searchable) button.classList.add("searchable");
       if (occupied) button.classList.add("occupied");
       if (captainSetup) button.dataset.sfx = "stone";
-      button.innerHTML = `<img class="buildingPlot" src="${ASSET.plot}" alt=""><img class="buildingPiece" src="${ASSET.shop}" alt=""><span class="buildingIcon">${building.icon}</span><span class="buildingName">${escapeHtml(building.name)}</span><span class="buildingStatus">${searchable ? "수색 가능" : occupied ? "수색 중" : ""}</span><span class="buildingKnowledge">${selectedKey ? contentBadge(selectedKey === "undercover" ? "undercover" : "gem") : contentBadge(knowledge.content)}</span>`;
+      button.innerHTML = `<img class="buildingPiece" src="${ASSET.shop}" alt=""><span class="buildingIcon">${building.icon}</span><span class="buildingName">${escapeHtml(building.name)}</span><span class="buildingStatus">${searchable ? "수색 가능" : occupied ? "수색 중" : ""}</span><span class="buildingKnowledge">${selectedKey ? contentBadge(selectedKey === "undercover" ? "undercover" : "gem") : contentBadge(knowledge.content)}</span>`;
       button.addEventListener("click", () => selectSetupBuilding(building.id));
       fragment.appendChild(button);
     }
@@ -675,6 +708,8 @@
   }
 
   function init() {
+    renderScenery();
+    renderLots();
     drawBoard();
     lobby = window.ClassroomMultiplayerLobby.create({
       gameId: GAME_ID,

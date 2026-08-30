@@ -20,10 +20,20 @@
     </header>
 
     <main class="container">
+        <!-- 학급 선택 (여러 반을 가르치는 전담 교사용) -->
+        <section id="classPickerSection" class="class-picker hidden">
+            <label for="classSelect">학급</label>
+            <select id="classSelect"></select>
+        </section>
+
+        <!-- 과목별 보기 -->
+        <section id="filterSection" class="board-filters hidden"></section>
+
         <!-- 교사용 새 글 작성 영역 -->
         <section id="composerSection" class="post-composer hidden">
             <textarea id="postContent" class="post-input" placeholder="새로운 공지사항이나 글을 작성해보세요... (http:// 링크 자동 변환)"></textarea>
             <div class="post-actions">
+                <span id="composerTarget" class="composer-target"></span>
                 <button id="postSubmitBtn" class="btn">게시하기</button>
             </div>
         </section>

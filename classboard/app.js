@@ -9,7 +9,18 @@ const feedSection = document.getElementById('feedSection');
 const postTemplate = document.getElementById('postTemplate');
 const commentTemplate = document.getElementById('commentTemplate');
 
+const classPickerSection = document.getElementById('classPickerSection');
+const classSelect = document.getElementById('classSelect');
+const filterSection = document.getElementById('filterSection');
+const composerTargetEl = document.getElementById('composerTarget');
+
 let currentUser = null;
+let boardClasses = [];
+let activeClassId = null;
+let canPost = false;
+// 과목별 보기. null이면 전체.
+let activeSubjectFilter = null;
+let loadedPosts = [];
 
 // Utility: Autolink URL conversion
 function linkify(text) {
@@ -60,10 +71,7 @@ async function initApp() {
             userInfoEl.appendChild(settingsLink);
         }
 
-        if (currentUser.role === 'teacher') {
-            composerSection.classList.remove('hidden');
-        }
-
+        await loadClasses();
         loadPosts();
     } catch (e) {
         console.error('Failed to init app', e);
@@ -71,26 +79,100 @@ async function initApp() {
     }
 }
 
+// 담임은 자기 반 하나, 전담·관리자는 학교의 여러 반. 두 개 이상일 때만 고르는 칸을 보인다.
+async function loadClasses() {
+    try {
+        const res = await fetch(`${API_BASE}/classboard/classes`);
+        if (!res.ok) return;
+        const data = await res.json();
+        boardClasses = data.classes || [];
+        canPost = Boolean(data.canPost);
+
+        if (boardClasses.length > 0) activeClassId = boardClasses[0].id;
+
+        if (canPost) composerSection.classList.remove('hidden');
+
+        if (boardClasses.length > 1) {
+            classPickerSection.classList.remove('hidden');
+            classSelect.replaceChildren(...boardClasses.map(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id;
+                opt.textContent = `${c.grade}학년 ${c.classNumber}반${c.teaching ? ' · 내 수업' : ''}`;
+                return opt;
+            }));
+            classSelect.value = activeClassId;
+            classSelect.addEventListener('change', () => {
+                activeClassId = classSelect.value;
+                activeSubjectFilter = null;
+                loadPosts();
+            });
+        }
+        updateComposerTarget();
+    } catch (e) {
+        console.error('Failed to load classes', e);
+    }
+}
+
+function updateComposerTarget() {
+    if (!composerTargetEl) return;
+    const target = boardClasses.find(c => c.id === activeClassId);
+    composerTargetEl.textContent = target ? `${target.grade}학년 ${target.classNumber}반에 게시` : '';
+}
+
+// 한 게시판에 담임과 여러 전담이 함께 쓰므로, 누가 쓴 글만 볼지 고를 수 있게 한다.
+function renderFilters() {
+    const labels = [...new Set(loadedPosts.map(p => p.authorLabel).filter(Boolean))];
+    if (labels.length < 2) {
+        filterSection.classList.add('hidden');
+        filterSection.replaceChildren();
+        return;
+    }
+    filterSection.classList.remove('hidden');
+    filterSection.replaceChildren(...['전체', ...labels].map(label => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-chip';
+        const isActive = label === '전체' ? activeSubjectFilter === null : activeSubjectFilter === label;
+        if (isActive) btn.classList.add('active');
+        btn.textContent = label;
+        btn.addEventListener('click', () => {
+            activeSubjectFilter = label === '전체' ? null : label;
+            renderFeed();
+        });
+        return btn;
+    }));
+}
+
 async function loadPosts() {
     try {
-        const res = await fetch(`${API_BASE}/classboard/posts`);
+        const query = activeClassId ? `?classId=${encodeURIComponent(activeClassId)}` : '';
+        const res = await fetch(`${API_BASE}/classboard/posts${query}`);
         const data = await res.json();
-        
-        if (!res.ok) throw new Error(data.error || 'Failed to load posts');
-        
-        feedSection.innerHTML = '';
-        if (data.posts.length === 0) {
-            feedSection.innerHTML = '<div class="loader" style="color: #666;">아직 게시물이 없습니다.</div>';
-            return;
-        }
 
-        data.posts.forEach(post => {
-            renderPost(post);
-        });
+        if (!res.ok) throw new Error(data.error || 'Failed to load posts');
+
+        loadedPosts = data.posts || [];
+        renderFilters();
+        renderFeed();
     } catch (e) {
         console.error(e);
         feedSection.innerHTML = '<div class="loader" style="color: #ff5252;">게시물을 불러오지 못했습니다.</div>';
     }
+}
+
+function renderFeed() {
+    renderFilters();
+    feedSection.innerHTML = '';
+    const shown = activeSubjectFilter
+        ? loadedPosts.filter(p => p.authorLabel === activeSubjectFilter)
+        : loadedPosts;
+
+    if (shown.length === 0) {
+        feedSection.innerHTML = `<div class="loader" style="color: #666;">${
+            loadedPosts.length === 0 ? '아직 게시물이 없습니다.' : '이 과목의 게시물이 없습니다.'
+        }</div>`;
+        return;
+    }
+    shown.forEach(post => renderPost(post));
 }
 
 function renderPost(post) {
@@ -107,15 +189,19 @@ function renderPost(post) {
     }
     
     clone.querySelector('[data-type="post-author-name"]').textContent = post.authorName;
-    clone.querySelector('[data-type="post-author-role"]').textContent = post.authorRole === 'teacher' ? '교사' : '학생';
+    // 담임인지 과목 전담인지 한눈에. 한 게시판에 여러 선생님이 글을 쓴다.
+    const roleEl = clone.querySelector('[data-type="post-author-role"]');
+    roleEl.textContent = post.authorLabel || (post.authorRole === 'teacher' ? '교사' : '학생');
+    if (post.authorSubject) roleEl.classList.add('subject');
     clone.querySelector('[data-type="post-date"]').textContent = formatDate(post.createdAt);
     
     // Post Content (with linkify)
     clone.querySelector('[data-type="post-content"]').innerHTML = linkify(post.content);
     
     // Delete Post button
+    // 본인 글이거나 이 반 담임일 때만. 서버도 같은 규칙으로 거른다.
     const deletePostBtn = clone.querySelector('[data-type="delete-post"]');
-    if (currentUser.role === 'teacher') {
+    if (post.canDelete) {
         deletePostBtn.classList.remove('hidden');
         deletePostBtn.addEventListener('click', () => deletePost(post.id, article));
     }
@@ -158,6 +244,7 @@ function renderPost(post) {
                 authorPicture: currentUser.picture,
                 authorRole: currentUser.role,
                 isMine: true,
+                canDelete: true,
                 createdAt: new Date().toISOString()
             };
             commentsList.appendChild(createCommentNode(newComment, post.id));
@@ -200,7 +287,7 @@ function createCommentNode(comment, postId) {
     clone.querySelector('[data-type="comment-content"]').innerHTML = linkify(comment.content);
 
     const deleteBtn = clone.querySelector('[data-type="delete-comment"]');
-    if (comment.isMine || currentUser.role === 'teacher') {
+    if (comment.canDelete ?? comment.isMine) {
         deleteBtn.classList.remove('hidden');
         deleteBtn.addEventListener('click', async () => {
             if (!confirm('댓글을 삭제하시겠습니까?')) return;
@@ -230,7 +317,7 @@ postSubmitBtn.addEventListener('click', async () => {
         const res = await fetch(`${API_BASE}/classboard/posts`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ content })
+            body: JSON.stringify({ content, classId: activeClassId })
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error);

@@ -124,7 +124,75 @@ body::before {
 .post-actions {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
     margin-top: 1rem;
+}
+
+.composer-target {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* 여러 반을 가르치는 전담 교사용 학급 선택 */
+.class-picker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.class-picker label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.class-picker select {
+    flex: 0 1 260px;
+    padding: 8px 12px;
+    background: var(--bg-input);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+}
+
+/* 담임 글만, 또는 과목별로 걸러 보기 */
+.board-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 1rem;
+}
+
+.filter-chip {
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.filter-chip:hover {
+    color: var(--text-main);
+    border-color: var(--border-highlight);
+}
+
+.filter-chip.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #06121f;
+}
+
+/* 전담 교사 글은 과목명을 강조해 담임 알림장과 구별되게 */
+.author-role.subject {
+    background: rgba(77, 166, 255, 0.18);
+    color: var(--accent);
 }
 
 .btn {
