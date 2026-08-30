@@ -115,7 +115,7 @@ Evans: a weather-beaten sailor of thirty.
 | 파일명 | 장면 |
 |---|---|
 | `images/story-08-a.webp` | A big kite high in the evening sky with a lantern hanging from it, and boys far below on a headland watching it, hoping. |
-| `images/story-08-b.webp` | A boy of eleven fetching water alone at dawn, before anyone else is up, his face closed. |
+| `images/story-08-b.webp` | A boy of nine fetching water alone at dawn, before anyone else is up, his face closed. |
 
 ## 9장 · 자크의 고백
 
