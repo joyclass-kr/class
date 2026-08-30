@@ -227,9 +227,9 @@ button:disabled { cursor: not-allowed; opacity: .36; box-shadow: none; }
 .boardViewport { display: grid; width: 100%; height: 100%; place-items: center; overflow: hidden; overscroll-behavior: contain; background: #182f28; }
 .boardStage {
   position: relative;
-  width: min(100%, calc((100dvh - 93px) * 1.5625));
+  width: min(100%, calc(100dvh - 93px));
   min-width: 0;
-  aspect-ratio: 1000 / 640;
+  aspect-ratio: 1 / 1;
   min-height: 0;
   overflow: hidden;
   background-color: #8dbb70;
@@ -240,10 +240,13 @@ button:disabled { cursor: not-allowed; opacity: .36; box-shadow: none; }
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(90deg, #13342d22, transparent 8%, transparent 92%, #13342d22), url("assets/city-board-v8.png") center / 100% 100% no-repeat;
+  background: linear-gradient(90deg, #13342d18, transparent 8%, transparent 92%, #13342d18), url("assets/city-board-v10.webp") center / 100% 100% no-repeat;
 }
 .boardCanvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; filter: drop-shadow(0 2px 0 #fff9); }
 .boardShade { position: absolute; inset: 0; pointer-events: none; z-index: 2; box-shadow: inset 0 0 34px #0d2b2455, inset 0 0 0 4px #17372d99; }
+.roundZoneCaption { position: absolute; z-index: 3; left: 20.5%; top: 76%; display: grid; transform: translateX(-50%); padding: 4px 9px; border: 2px solid #21463e; border-radius: 10px; background: #fff7d9e8; color: #173d36; text-align: center; box-shadow: 0 3px 0 #183c3488; pointer-events: none; }
+.roundZoneCaption strong { font-size: 12px; line-height: 1.1; }
+.roundZoneCaption span { margin-top: 1px; font-size: 8px; font-weight: 850; }
 
 .building {
   position: absolute;
@@ -306,8 +309,8 @@ button.building { cursor: pointer; }
 .node {
   position: absolute;
   z-index: 4;
-  width: 34px;
-  height: 24px;
+  width: clamp(22px, 2vw, 28px);
+  height: clamp(17px, 1.55vw, 21px);
   min-height: 0;
   transform: translate(-50%, -50%);
   padding: 0;
@@ -318,7 +321,7 @@ button.building { cursor: pointer; }
   box-shadow: 0 2px 0 #1b302f8c, inset 0 1px #fff;
   cursor: default;
 }
-.node[data-dense="true"] { width: 30px; height: 22px; background: #fff9e8; }
+.node[data-dense="true"] { width: clamp(19px, 1.7vw, 24px); height: clamp(15px, 1.3vw, 19px); background: #fff9e8; }
 .node::after {
   content: "";
   position: absolute;
@@ -326,13 +329,13 @@ button.building { cursor: pointer; }
   border-radius: 13px;
 }
 .node:disabled { opacity: 1; }
-.node[data-tone="red"] { width: 39px; height: 28px; background: #ef4f63; color: #fff; }
-.node[data-tone="blue"] { width: 39px; height: 28px; background: #3b8dd0; color: #fff; }
-.node[data-tone="pink"] { width: 39px; height: 28px; background: #f29bc5; }
+.node[data-tone="red"] { width: 33px; height: 24px; background: #ef4f63; color: #fff; }
+.node[data-tone="blue"] { width: 33px; height: 24px; background: #3b8dd0; color: #fff; }
+.node[data-tone="pink"] { width: 33px; height: 24px; background: #f29bc5; }
 .node[data-tone="white"] { background: #fffdf5; }
-.node[data-station] { width: 34px; height: 34px; border-radius: 7px; background: #e88b2d; color: #fff; font-weight: 950; }
-.node[data-kind="building"] { z-index: 6; width: 48px; height: 29px; border: 3px solid #274a46; border-radius: 8px; background: linear-gradient(#ffe98a, #efbd45); font-size: 10px; font-weight: 950; box-shadow: 0 3px 0 #6f4c16, 0 0 0 3px #fff7cfbb; }
-.node[data-start] { z-index: 6; width: 104px; height: 48px; padding: 3px 8px; border: 3px solid #fff8df; border-radius: 11px; color: #fff; font-size: 12px; font-weight: 950; line-height: 1.05; letter-spacing: -.02em; box-shadow: 0 0 0 3px #203238, 0 5px 0 #13252c99; }
+.node[data-station] { z-index: 8; width: 34px; height: 34px; border-radius: 8px; background: #e88b2d; color: #fff; font-weight: 950; box-shadow: 0 3px 0 #744316, 0 0 0 3px #fff4c5; }
+.node[data-kind="building"] { z-index: 6; width: 48px; height: 29px; border: 3px solid #762137; border-radius: 8px; background: linear-gradient(#ff7185, #e43e59); color: #fff; font-size: 10px; font-weight: 950; box-shadow: 0 3px 0 #741c31, 0 0 0 3px #fff7cfbb; }
+.node[data-start] { z-index: 6; width: 94px; height: 44px; padding: 3px 7px; border: 3px solid #fff8df; border-radius: 11px; color: #fff; font-size: 11px; font-weight: 950; line-height: 1.05; letter-spacing: -.02em; box-shadow: 0 0 0 3px #203238, 0 5px 0 #13252c99; }
 .node[data-start="thief"] { background: #8e2638; }
 .node[data-start="police"] { background: #24598b; }
 .node[data-start]::before { display: block; margin-bottom: 2px; font-size: 16px; line-height: 1; }
@@ -519,7 +522,7 @@ button.building { cursor: pointer; }
   .miniBrand small { display: none; }
   .turnHeadline { grid-column: 1 / -1; grid-row: 2; padding-bottom: 2px; }
   .gameLayout { height: auto; min-height: 0; grid-template-columns: 1fr; }
-  .boardPanel { height: auto; aspect-ratio: 1000 / 640; }
+  .boardPanel { height: auto; aspect-ratio: 1 / 1; }
   .boardStage { width: 100%; }
   .controlPanel { min-height: 350px; display: grid; grid-template-columns: 1fr 1fr; gap: 7px; overflow: visible; }
   .sideCard { margin: 0; }
@@ -533,6 +536,7 @@ button.building { cursor: pointer; }
   .gameHeader { margin-bottom: 5px; }
   .miniBrand strong { font-size: 16px; }
   .roomMini { min-width: 54px; }
+  .roundZoneCaption span { display: none; }
   .boardPanel { height: auto; }
   .controlPanel { grid-template-columns: 1fr; }
   .setupTools, .turnCard { grid-column: auto; }

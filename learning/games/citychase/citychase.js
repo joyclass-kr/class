@@ -49,6 +49,11 @@
 
   function showToast(message) {
     clearTimeout(toastTimer);
+    $("toast").textContent = message;
+    $("toast").classList.remove("hidden");
+    toastTimer = setTimeout(() => $("toast").classList.add("hidden"), 2600);
+  }
+
   function playSfx(name) {
     window.ClassGameSfx?.play(name);
   }
@@ -85,11 +90,6 @@
     const effect = actionEffect(nextState.lastAction, previousState, nextState);
     if (effect) window.requestAnimationFrame(() => showBoardEffect(effect));
   }
-    $("toast").textContent = message;
-    $("toast").classList.remove("hidden");
-    toastTimer = setTimeout(() => $("toast").classList.add("hidden"), 2600);
-  }
-
   function sendAction(action, data = {}) {
     if (actionPending) return false;
     actionPending = true;
@@ -134,19 +134,21 @@
       const b = nodeMeta(edge.b);
       if (!a || !b) continue;
       const isRail = edge.kind === "rail";
-      const isThief = edge.kind === "thief-lane";
+      const isRound = edge.kind === "round-zone";
+      const isBuildingLane = edge.kind === "building-lane";
+      const isThief = edge.kind === "thief-lane" || isBuildingLane;
       const isPolice = edge.kind === "police-lane";
-      const accent = isRail ? "#8e5c23" : isThief ? "#c92f4f" : isPolice ? "#2362b7" : "#233d31";
-      const inner = isRail ? "#efb75a" : isThief ? "#ee5e78" : isPolice ? "#5d9fe5" : "#fff8df";
-      ctx.globalAlpha = isRail || isThief || isPolice ? .92 : .86;
+      const accent = isRail ? "#6f451e" : isRound ? "#9b6528" : isThief ? "#c92f4f" : isPolice ? "#2362b7" : "#233d31";
+      const inner = isRail ? "#d99c45" : isRound ? "#ffe0a0" : isThief ? "#ee5e78" : isPolice ? "#5d9fe5" : "#fff8df";
+      ctx.globalAlpha = isRail || isThief || isPolice ? .96 : .86;
       ctx.strokeStyle = accent;
-      ctx.lineWidth = isRail ? 14 : isThief || isPolice ? 13 : 16;
+      ctx.lineWidth = isRail ? 14 : isRound ? 30 : isBuildingLane ? 25 : isThief || isPolice ? 18 : 16;
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       ctx.strokeStyle = inner;
-      ctx.lineWidth = isRail ? 7 : isThief || isPolice ? 7 : 10;
+      ctx.lineWidth = isRail ? 7 : isRound ? 20 : isBuildingLane ? 15 : isThief || isPolice ? 10 : 10;
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       ctx.globalAlpha = 1;
-      if (edge.oneWay) drawArrow(ctx, a, b, accent);
+      if (edge.oneWay || edge.displayArrow) drawArrow(ctx, a, b, accent);
     }
   }
 
@@ -162,6 +164,9 @@
     if (content === "gem") {
       return `<img class="secretIcon gemIcon" src="${ASSET.gem}" alt="">`;
     }
+    if (content === "undercover") {
+      return `<img class="secretIcon undercoverIcon" src="${ASSET.alarm}" alt="">`;
+    }
     if (content === "empty") {
       return `<svg class="secretIcon emptyIcon" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13"/><path d="m9 16 5 5 9-11"/></svg>`;
     }
@@ -176,9 +181,6 @@
         : `<span class="pawnInitial">${escapeHtml(firstLetter(player.name))}</span>`;
     }).join("");
     return `<span class="pawnFaces${controllers.length > 1 ? " shared" : ""}">${faces || '<span class="pawnInitial">?</span>'}</span>`;
-    if (content === "undercover") {
-      return `<img class="secretIcon undercoverIcon" src="${ASSET.alarm}" alt="">`;
-    }
   }
 
   function seatDuty(slot, teamSize) {
@@ -253,6 +255,9 @@
     const fragment = document.createDocumentFragment();
     const captainSetup = !!state?.canSetup;
     for (const building of Board.BUILDINGS) {
+      const entrance = Object.values(Board.NODES).find(node => node.building === building.id);
+      const searchable = !!entrance && (state?.validMoves || []).includes(entrance.id);
+      const occupied = !!entrance && !!state?.pawns.some(pawn => pawn.position === entrance.id);
       const knowledge = state?.buildings.find(item => item.id === building.id) || { content: "hidden" };
       const button = document.createElement("button");
       button.type = "button";
@@ -264,18 +269,16 @@
       if (captainSetup) button.classList.add("setupTarget");
       if (selectedKey?.startsWith("gem")) button.classList.add("selectedGem");
       if (selectedKey === "undercover") button.classList.add("selectedUndercover");
+      if (searchable) button.classList.add("searchable");
+      if (occupied) button.classList.add("occupied");
+      if (captainSetup) button.dataset.sfx = "stone";
       button.innerHTML = `<img class="buildingPlot" src="${ASSET.plot}" alt=""><img class="buildingPiece" src="${ASSET.shop}" alt=""><span class="buildingIcon">${building.icon}</span><span class="buildingName">${escapeHtml(building.name)}</span><span class="buildingStatus">${searchable ? "수색 가능" : occupied ? "수색 중" : ""}</span><span class="buildingKnowledge">${selectedKey ? contentBadge(selectedKey === "undercover" ? "undercover" : "gem") : contentBadge(knowledge.content)}</span>`;
-      const entrance = Object.values(Board.NODES).find(node => node.building === building.id);
-      const searchable = entrance && (state?.validMoves || []).includes(entrance.id);
-      const occupied = entrance && state?.pawns.some(pawn => pawn.position === entrance.id);
       button.addEventListener("click", () => selectSetupBuilding(building.id));
       fragment.appendChild(button);
     }
     layer.replaceChildren(fragment);
   }
 
-      if (searchable) button.classList.add("searchable");
-      if (occupied) button.classList.add("occupied");
   function emptyNodeForCard(id) {
     return !state.pawns.some(pawn => pawn.position === id) && !state.tricks.some(card => card.nodeId === id) && !state.checks.some(card => card.nodeId === id);
   }
@@ -285,7 +288,6 @@
     return Board.neighbors(trickNode, "police").map(item => item.id);
   }
 
-      if (captainSetup) button.dataset.sfx = "stone";
   function nodeTargetClass(id) {
     if (!state) return "";
     if (state.turnMode === "moving" && state.validMoves.includes(id)) return "valid";
@@ -317,7 +319,7 @@
         ? "도둑팀 비밀기지"
         : node.start === "police"
           ? "경찰팀 구금 구역"
-          : node.station ? String(node.station) : node.kind === "building" ? "입구" : node.effect ? "!" : "";
+          : node.station ? String(node.station) : node.kind === "building" ? "수색" : node.effect ? "!" : "";
       button.addEventListener("click", () => handleNodeClick(node.id));
       fragment.appendChild(button);
     }
