@@ -35,7 +35,7 @@ stage it so a child wants to look at it for a while.
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-Tom Canty: a thin boy of about thirteen with untidy brown hair, in rags at
+Tom Canty: a thin boy of about nine with untidy brown hair, in rags at
 first, later in stiff royal clothes he plainly does not know how to wear.
 Prince Edward: exactly the same face — same hair, same eyes, same height — but
 upright and used to being obeyed; velvet, a gold chain, a short sword at his hip.

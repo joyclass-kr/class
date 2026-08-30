@@ -42,7 +42,8 @@ stage it so a child wants to look at it for a while.
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-Mowgli: an Indian boy, about ten in the early chapters and fifteen at the end;
+Mowgli: an Indian boy, nine in the early chapters, eleven or twelve in the middle,
+and seventeen at the end;
 brown skin, long black hair, no clothes at first and a simple cloth later;
 scars on his arms; he always looks directly at whoever he faces.
 Mother Wolf (Raksha): a large grey she-wolf, scarred, very steady eyes.
@@ -87,7 +88,7 @@ Buldeo: a village hunter with an old matchlock gun and a big moustache.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-a.webp` | A big brown bear teaching: a boy of ten sitting in front of him reciting, the bear's paw raised; forest floor, dappled light. |
+| `images/story-04-a.webp` | A big brown bear teaching: a boy of nine sitting in front of him reciting, the bear's paw raised; forest floor, dappled light. |
 | `images/story-04-b.webp` | A boy and a black panther face to face very close, the boy looking straight into the panther's eyes and the panther looking slightly away. |
 
 ## 5장 · 반다르로그
