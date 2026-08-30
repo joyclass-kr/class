@@ -5,6 +5,12 @@
   const NAME_KEY = "classPlayerName";
   const MESSAGE = Object.freeze({ ACTION: "CITYCHASE_ACTION", STATE: "CITYCHASE_STATE", ERROR: "CITYCHASE_ERROR" });
   const Board = window.CityChaseData;
+  const ASSET = Object.freeze({
+    gem: "assets/secret-gem.png",
+    alarm: "assets/secret-alarm.png",
+    plot: "assets/building-plot.png",
+    shop: "assets/shop-building.png"
+  });
   const $ = id => document.getElementById(id);
   const savedName = String(localStorage.getItem(NAME_KEY) || "").trim();
 
@@ -43,6 +49,42 @@
 
   function showToast(message) {
     clearTimeout(toastTimer);
+  function playSfx(name) {
+    window.ClassGameSfx?.play(name);
+  }
+
+  function actionEffect(action, previousState, nextState) {
+    if (!action || action === previousState?.lastAction) return null;
+    if (nextState.phase === "ended") {
+      return { type: nextState.winnerTeam === "thief" ? "gem" : "alarm", sound: "success", label: "게임 승리!" };
+    }
+    if (/경보 장치|체포|구금/.test(action)) return { type: "alarm", sound: "error", label: "경보 작동!" };
+    if (/보석/.test(action)) return { type: "gem", sound: "success", label: /찾았습니다/.test(action) ? "보석 발견!" : "보석 이동!" };
+    if (/가짜 단서|차단 표지/.test(action)) return { type: "card", sound: "card", label: /가짜 단서/.test(action) ? "가짜 단서!" : "길목 차단!" };
+    if (/굴렸습니다|탈출 성공/.test(action)) return { type: "dice", sound: "stone", label: "주사위 결과" };
+    return null;
+  }
+
+  function showBoardEffect(effect) {
+    const layer = $("boardEffects");
+    if (!layer || !effect) return;
+    const image = effect.type === "gem" ? ASSET.gem : effect.type === "alarm" ? ASSET.alarm : "";
+    const symbol = effect.type === "card" ? "➜" : effect.type === "dice" ? "⚄" : "";
+    layer.className = `boardEffects showing ${effect.type}`;
+    layer.innerHTML = `<div class="effectBurst"><span class="effectRing"></span>${image ? `<img src="${image}" alt="">` : `<span class="effectSymbol">${symbol}</span>`}<strong>${escapeHtml(effect.label)}</strong>${Array.from({ length: 8 }, (_, index) => `<i style="--i:${index}"></i>`).join("")}</div>`;
+    playSfx(effect.sound);
+    window.clearTimeout(showBoardEffect.timer);
+    showBoardEffect.timer = window.setTimeout(() => {
+      layer.className = "boardEffects";
+      layer.replaceChildren();
+    }, 1450);
+  }
+
+  function scheduleStateEffect(previousState, nextState) {
+    if (!previousState) return;
+    const effect = actionEffect(nextState.lastAction, previousState, nextState);
+    if (effect) window.requestAnimationFrame(() => showBoardEffect(effect));
+  }
     $("toast").textContent = message;
     $("toast").classList.remove("hidden");
     toastTimer = setTimeout(() => $("toast").classList.add("hidden"), 2600);
@@ -118,10 +160,7 @@
 
   function contentBadge(content) {
     if (content === "gem") {
-      return `<svg class="secretIcon gemIcon" viewBox="0 0 32 32" aria-hidden="true"><path d="M8 5h16l6 8-14 16L2 13z"/><path class="facet" d="m8 5 8 24 8-24M2 13h28M8 5l-6 8m22-8 6 8"/></svg>`;
-    }
-    if (content === "undercover") {
-      return `<svg class="secretIcon undercoverIcon" viewBox="0 0 32 32" aria-hidden="true"><path class="hat" d="M5 12h22l-4-7H9z"/><circle class="face" cx="16" cy="18" r="10"/><path class="glasses" d="M7 16h4l2 4h3l2-4h7M7 16l1 5h5l1-5m4 0 1 5h5l1-5"/><path class="smile" d="M13 24q3 2 6 0"/></svg>`;
+      return `<img class="secretIcon gemIcon" src="${ASSET.gem}" alt="">`;
     }
     if (content === "empty") {
       return `<svg class="secretIcon emptyIcon" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13"/><path d="m9 16 5 5 9-11"/></svg>`;
@@ -137,6 +176,9 @@
         : `<span class="pawnInitial">${escapeHtml(firstLetter(player.name))}</span>`;
     }).join("");
     return `<span class="pawnFaces${controllers.length > 1 ? " shared" : ""}">${faces || '<span class="pawnInitial">?</span>'}</span>`;
+    if (content === "undercover") {
+      return `<img class="secretIcon undercoverIcon" src="${ASSET.alarm}" alt="">`;
+    }
   }
 
   function seatDuty(slot, teamSize) {
@@ -222,13 +264,18 @@
       if (captainSetup) button.classList.add("setupTarget");
       if (selectedKey?.startsWith("gem")) button.classList.add("selectedGem");
       if (selectedKey === "undercover") button.classList.add("selectedUndercover");
-      button.innerHTML = `<span class="buildingIcon">${building.icon}</span><span class="buildingName">${escapeHtml(building.name)}</span><span class="buildingKnowledge">${selectedKey ? contentBadge(selectedKey === "undercover" ? "undercover" : "gem") : contentBadge(knowledge.content)}</span>`;
+      button.innerHTML = `<img class="buildingPlot" src="${ASSET.plot}" alt=""><img class="buildingPiece" src="${ASSET.shop}" alt=""><span class="buildingIcon">${building.icon}</span><span class="buildingName">${escapeHtml(building.name)}</span><span class="buildingStatus">${searchable ? "수색 가능" : occupied ? "수색 중" : ""}</span><span class="buildingKnowledge">${selectedKey ? contentBadge(selectedKey === "undercover" ? "undercover" : "gem") : contentBadge(knowledge.content)}</span>`;
+      const entrance = Object.values(Board.NODES).find(node => node.building === building.id);
+      const searchable = entrance && (state?.validMoves || []).includes(entrance.id);
+      const occupied = entrance && state?.pawns.some(pawn => pawn.position === entrance.id);
       button.addEventListener("click", () => selectSetupBuilding(building.id));
       fragment.appendChild(button);
     }
     layer.replaceChildren(fragment);
   }
 
+      if (searchable) button.classList.add("searchable");
+      if (occupied) button.classList.add("occupied");
   function emptyNodeForCard(id) {
     return !state.pawns.some(pawn => pawn.position === id) && !state.tricks.some(card => card.nodeId === id) && !state.checks.some(card => card.nodeId === id);
   }
@@ -238,6 +285,7 @@
     return Board.neighbors(trickNode, "police").map(item => item.id);
   }
 
+      if (captainSetup) button.dataset.sfx = "stone";
   function nodeTargetClass(id) {
     if (!state) return "";
     if (state.turnMode === "moving" && state.validMoves.includes(id)) return "valid";
@@ -269,7 +317,7 @@
         ? "도둑팀 비밀기지"
         : node.start === "police"
           ? "경찰팀 구금 구역"
-          : node.station ? String(node.station) : node.kind === "building" ? "⌂" : node.effect ? "!" : "";
+          : node.station ? String(node.station) : node.kind === "building" ? "입구" : node.effect ? "!" : "";
       button.addEventListener("click", () => handleNodeClick(node.id));
       fragment.appendChild(button);
     }
@@ -591,6 +639,7 @@
       renderTeamSeats();
       return;
     }
+    const previousState = state;
     if (previousPhase !== "setup" && state.phase === "setup") {
       setupSelection = { gem1: null, gem2: null, undercover: null };
       activeSecret = "gem1";
@@ -609,6 +658,7 @@
       if (state?.phase === "lobby") renderTeamSeats();
       else if (state) renderGame();
     }
+    scheduleStateEffect(previousState, state);
   }
 
   function syncLobby(snapshot) {

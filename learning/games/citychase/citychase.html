@@ -7,7 +7,7 @@
   <meta name="description" content="경찰팀과 도둑팀이 각자의 기기로 접속해 보석을 둘러싼 추격전을 벌이는 2~6인 실시간 보드게임">
   <title>경찰과 도둑 (Cops and Robbers) · 실시간 추격 보드게임</title>
   <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
-  <link rel="stylesheet" href="citychase.css?v=20260826a">
+  <link rel="stylesheet" href="citychase.css?v=20260830a">
   <script src="../../../assets/sound/music-control.js?v=20260825-compact-vertical-1" defer></script>
   <script src="../../../assets/network/game-network.js?v=20260821"></script>
   <script src="../../../assets/network/multiplayer-lobby.js?v=20260821"></script>
@@ -115,6 +115,7 @@
               <div id="cardsLayer" class="cardsLayer"></div>
               <div id="piecesLayer" class="piecesLayer"></div>
             </div>
+              <div id="boardEffects" class="boardEffects" aria-hidden="true"></div>
           </div>
         </section>
 
@@ -133,9 +134,9 @@
             <h3 id="setupTitle">비밀 물건 배치</h3>
             <p id="setupGuide">경찰팀만 볼 수 있습니다. 서로 다른 장소에 보석 2개와 경보 장치를 배치하세요.</p>
             <div id="secretTabs" class="secretTabs">
-              <button class="secretTab active" type="button" data-secret="gem1">◆ 보석 1</button>
-              <button class="secretTab" type="button" data-secret="gem2">◆ 보석 2</button>
-              <button class="secretTab undercover" type="button" data-secret="undercover">♜ 경보</button>
+              <button class="secretTab active" type="button" data-secret="gem1"><img class="secretTabIcon" src="assets/secret-gem.png" alt="">보석 1</button>
+              <button class="secretTab" type="button" data-secret="gem2"><img class="secretTabIcon" src="assets/secret-gem.png" alt="">보석 2</button>
+              <button class="secretTab undercover" type="button" data-secret="undercover"><img class="secretTabIcon" src="assets/secret-alarm.png" alt="">경보 장치</button>
             </div>
             <div id="setupSummary" class="setupSummary"></div>
             <button id="confirmSetupBtn" class="primary" type="button" disabled>배치 완료</button>
@@ -201,6 +202,6 @@
   </section>
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
-  <script src="citychase.js?v=20260826a"></script>
+  <script src="citychase.js?v=20260830a"></script>
 </body>
 </html>

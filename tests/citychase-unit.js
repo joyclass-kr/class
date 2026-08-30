@@ -166,7 +166,11 @@ assert.match(client, /도둑팀 비밀기지[\s\S]*경찰팀 구금 구역/, "�
 assert.match(css, /\.node::after\s*\{[^}]*inset:\s*-11px/s, "작은 보드 칸에도 44px 이상의 터치 영역이 필요합니다.");
 assert.match(client, /lineWidth = isRail \? 14/, "실제 이동 칸은 굵은 보드게임 경로로 연결되어야 합니다.");
 assert.match(css, /width: 54px;\s*\n\s*height: 54px;/, "플레이어 말은 배경 시민보다 확실히 크게 보여야 합니다.");
-assert.match(css, /width: clamp\(72px, 6vw, 94px\)/, "상가 말은 축소된 부지 안에 들어가야 합니다.");
+assert.match(css, /width: clamp\(70px, 6vw, 90px\)/, "상가 말은 축소된 부지 안에 들어가야 합니다.");
+assert.match(client, /building-plot\.png[\s\S]*shop-building\.png/, "상가 말은 빈 부지와 설치된 건물 그림을 분리해 보여줘야 합니다.");
+assert.match(client, /node\.kind === "building" \? "입구"/, "건물에 들어가는 실제 칸은 입구라고 명확히 표시해야 합니다.");
+assert.match(client, /secret-gem\.png[\s\S]*secret-alarm\.png/, "보석과 경보 장치는 전용 그림 자산을 사용해야 합니다.");
+assert.match(client, /function playSfx[\s\S]*ClassGameSfx[\s\S]*function showBoardEffect/, "중요 사건은 시각효과와 사이트 공용 효과음을 함께 사용해야 합니다.");
 assert.match(css, /height: 100dvh; min-height: 0; overflow: hidden/, "가로 화면에서는 게임 전체가 뷰포트 안에 고정되어야 합니다.");
 assert.match(css, /width: min\(100%, calc\(\(100dvh - 93px\) \* 1\.5625\)\)/, "보드 크기는 남은 화면 높이를 넘지 않아야 합니다.");
 assert.doesNotMatch(css, /min-width:\s*(?:820|900)px/, "Chromebook과 iPad에서 보드가 강제로 잘리면 안 됩니다.");
@@ -199,10 +203,10 @@ assert.match(client, /말 1 \+ 말 3 공동[\s\S]*말 2 \+ 말 3 공동/, "2인 
 assert.match(server, /action === "CHOOSE_SEAT"/, "팀 슬롯 선택은 서버 권한 상태로 동기화해야 합니다.");
 assert.match(css, /--police: #2374cc/, "경찰 말은 명확한 파란색이어야 합니다.");
 assert.match(css, /--thief: #e9475f/, "도둑 말은 명확한 빨간색이어야 합니다.");
-assert.match(client, /class="secretIcon gemIcon"/, "보석은 문자 기호 대신 선명한 SVG 배지를 사용해야 합니다.");
-assert.match(client, /class="secretIcon undercoverIcon"/, "잠복경찰은 문자 기호 대신 선명한 SVG 배지를 사용해야 합니다.");
+assert.match(client, /class="secretIcon gemIcon"/, "보석은 문자 기호 대신 선명한 전용 이미지 배지를 사용해야 합니다.");
+assert.match(client, /class="secretIcon undercoverIcon"/, "경보 장치는 문자 기호 대신 선명한 전용 이미지 배지를 사용해야 합니다.");
 assert.match(css, /\.pawn:disabled \{ opacity: 1; \}/, "대기 중인 플레이어 말도 흐려지지 않아야 합니다.");
-assert.match(css, /\.pawn\.carrying::after[\s\S]*clip-path: polygon/, "말이 든 보석도 선명한 다면체 배지로 보여야 합니다.");
+assert.match(css, /\.pawn\.carrying::after[\s\S]*secret-gem\.png/, "말이 든 보석도 선명한 전용 이미지 배지로 보여야 합니다.");
 assert.match(server, /citychase:\s*6/);
 assert.match(server, /CITYCHASE_ACTION/);
 assert.match(server, /CityChase\.stateFor/);
