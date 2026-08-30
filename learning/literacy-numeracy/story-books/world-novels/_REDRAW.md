@@ -1,6 +1,6 @@
 # 다시 그려야 할 그림 (제미나이에 그대로 넣으세요)
 
-2026-08-30 점검에서 걸린 세 장입니다. 아래 덩어리를 통째로 복사해서 넣으면 됩니다.
+2026-08-30 점검에서 걸린 네 장입니다. 아래 덩어리를 통째로 복사해서 넣으면 됩니다.
 파일명을 그대로 맞춰 원래 자리에 덮어쓰면 책에 바로 나타납니다.
 
 ---
@@ -94,9 +94,39 @@ and none come back.
 
 ---
 
+## 4. 셜록 홈스 — `sherlock-holmes/images/story-08-c.webp`
+
+**왜 다시 그리나:** 흰 가발을 벗어 던지는 장면인데 벗은 뒤의 홈스까지 백발 노인으로 그려졌습니다.
+인물 설명에는 검은 머리라고 되어 있고, 같은 장 첫 그림에서도 검은 머리입니다.
+벽에 붙은 해부도와 약병에도 잔글씨가 들어가 있습니다.
+
+```
+Classic children's literature illustration in the style of 1980s Korean
+illustrated classics: gouache and watercolor, bold clean outlines, saturated
+but slightly muted colors, realistic human proportions with expressive faces,
+late Victorian London 1894, no text or letters anywhere in the image - the
+posters on the wall and the labels on the bottles must be completely blank.
+Draw the moment in motion, not a posed portrait. Faces are big and expressive.
+
+Sherlock Holmes: very tall and thin, sharp hawk-like nose, DARK hair swept
+back, NOT grey and NOT white, a man of about forty and clearly younger than
+the disguise he has just thrown off, piercing grey eyes, dark frock coat and
+waistcoat.
+Dr John Watson: a solid, moustached man of middle height, brown hair, in
+shirtsleeves and a dark waistcoat, kind steady face.
+
+Scene: A doctor's consulting room: an old stooped bookseller straightening up
+and throwing off his disguise to reveal the tall thin detective smiling, while
+the doctor staggers back against a bookcase in shock. The white wig and the
+tinted spectacles are in the detective's raised hand, and his own hair
+underneath is DARK - he is not an old man.
+
+4:3 landscape.
+```
+
+---
+
 ## 아직 안 그려진 것
 
-- `sherlock-holmes/images/story-08-c.webp` — 8장 셋째 그림
-- `sherlock-holmes/images/end.webp` — 읽고 나서 그림
-
-두 장 주문은 `sherlock-holmes/IMAGE-PROMPTS.md`에 그대로 있습니다.
+없습니다. 장 발장 35장, 보물섬 35장, 셜록 홈스 19장이 모두 찼습니다.
+남은 39권은 아직 한 장도 그리지 않았습니다.
