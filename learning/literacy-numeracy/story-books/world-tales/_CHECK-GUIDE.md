@@ -214,6 +214,13 @@ node _check/bait.mjs ..            # 예순 권 전부
 node _check/bait.mjs .. 책이름     # 한 권만
 ```
 
+다른 방으로 넘길 때는 [QUIZ-CHECK-HANDOFF.md](QUIZ-CHECK-HANDOFF.md) 한 장이면 됩니다.
+도구는 `_books.json`만 있으면 어느 책 폴더든 그대로 잽니다.
+
+```bash
+node world-tales/_check/bait.mjs korea-tales
+```
+
 숫자를 묻는 문제는 오답도 **이야기에 나온 수**로 씁니다.
 「스무 장 / 마흔 장 / 한 장」은 셋 다 본문에 있는 수라 읽어야 고릅니다.
 
