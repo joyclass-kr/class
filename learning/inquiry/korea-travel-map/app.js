@@ -23,7 +23,8 @@
     center: [36.15, 127.75], zoom: 7, minZoom: 6, maxZoom: 14,
     zoomControl: true, attributionControl: true, preferCanvas: true
   });
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+  const CARTO_BASEMAP_KEY = 'cb1_2lqh_1_23aa6103cd67c20c2791ad29';
+  L.tileLayer(`https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png?key=${CARTO_BASEMAP_KEY}`, {
     attribution: '&copy; OpenStreetMap &copy; CARTO', subdomains: 'abcd', maxZoom: 20
   }).addTo(map);
 
@@ -31,7 +32,7 @@
     center: [36.15, 127.75], zoom: 6, minZoom: 5, maxZoom: 15,
     zoomControl: true, attributionControl: true
   });
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  L.tileLayer(`https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=${CARTO_BASEMAP_KEY}`, {
     attribution: '&copy; OpenStreetMap &copy; CARTO', subdomains: 'abcd', maxZoom: 20
   }).addTo(modalRouteMap);
 
