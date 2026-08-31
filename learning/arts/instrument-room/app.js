@@ -11,6 +11,10 @@
     ];
     const GRAND_SAMPLE_STEP = 1;
     const KEYBOARD_SAMPLE_CACHE_LIMIT = 24;
+    // Exported OGG notes contain a short encoder/room pre-roll (~35–42 ms).
+    // Skip it at playback time so a press produces an immediate attack without
+    // rewriting the entire sample library.
+    const SAMPLED_NOTE_START_OFFSET = .035;
     const KEYBOARD_SAMPLE_SETS = Object.freeze({
         "concert-grand": Object.freeze({ id: "concert-grand", root: "assets/audio/concert-grand/", min: 21, max: 108, fileMin: 21, step: 1, gainDb: 6.03 }),
         "upright-piano": Object.freeze({ id: "upright-piano", root: "assets/audio/upright-piano/", min: 21, max: 108, fileMin: 21, step: 1, gainDb: 9.0 }),
@@ -666,7 +670,7 @@
         const voice = { source, gain, anchor, sampleSet, sampleKey: sampleSet + ":" + anchor, sampledPiano: true, released: false, held: false, percussiveDecay: decay };
         state.pianoVoices.set(midi, voice);
         source.onended = function () { if (state.pianoVoices.get(midi) === voice) state.pianoVoices.delete(midi); };
-        source.start(now);
+        source.start(now, Math.min(SAMPLED_NOTE_START_OFFSET, Math.max(0, buffer.duration - .01)));
         if (decay) source.stop(now + decay + .08);
         return voice;
     }
