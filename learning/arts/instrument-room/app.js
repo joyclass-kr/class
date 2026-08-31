@@ -28,6 +28,19 @@
         "hybrid-la-mks": Object.freeze({ id: "hybrid-la-mks", root: "assets/audio/hybrid-la-mks/", min: 21, max: 108, fileMin: 21, step: 1, gainDb: 5.82 }),
         "hammond-organ": Object.freeze({ id: "hammond-organ", root: "assets/audio/hammond-organ/", min: 36, max: 96, fileMin: 21, step: 1, gainDb: 4.94 }),
         "pipe-organ": Object.freeze({ id: "pipe-organ", root: "assets/audio/pipe-organ/", min: 36, max: 96, fileMin: 21, step: 1, gainDb: 7.72 }),
+        "haegeum": Object.freeze({ id: "haegeum", root: "assets/audio/haegeum/", min: 55, max: 79, fileMin: 21, step: 1, gainDb: -1.46, startOffset: 0, loopStart: 1.1, loopEnd: 3.85 }),
+        "haegeum-vibrato": Object.freeze({ id: "haegeum-vibrato", root: "assets/audio/haegeum-vibrato/", min: 59, max: 79, fileMin: 21, step: 1, gainDb: -1.63, startOffset: 0, loopStart: 1.1, loopEnd: 3.8 }),
+        "daegeum": Object.freeze({ id: "daegeum", root: "assets/audio/daegeum/", min: 59, max: 89, fileMin: 21, step: 1, gainDb: -5.69, startOffset: 0, loopStart: 1.1, loopEnd: 3.8 }),
+        "daegeum-vibrato": Object.freeze({ id: "daegeum-vibrato", root: "assets/audio/daegeum-vibrato/", min: 59, max: 89, fileMin: 21, step: 1, gainDb: -2.91, startOffset: 0, loopStart: 1.1, loopEnd: 3.8 }),
+        "hyangpiri": Object.freeze({ id: "hyangpiri", root: "assets/audio/hyangpiri/", min: 59, max: 77, fileMin: 21, step: 1, gainDb: 6.5, startOffset: 0, loopStart: 1.1, loopEnd: 3.8 }),
+        "hyangpiri-vibrato": Object.freeze({ id: "hyangpiri-vibrato", root: "assets/audio/hyangpiri-vibrato/", min: 59, max: 77, fileMin: 21, step: 1, gainDb: 6.18, startOffset: 0, loopStart: 1.1, loopEnd: 3.8 }),
+        "taepyeongso": Object.freeze({ id: "taepyeongso", root: "assets/audio/taepyeongso/", min: 68, max: 89, fileMin: 21, step: 1, gainDb: -4.5, startOffset: 0, loopStart: 1.1, loopEnd: 3.8 }),
+        "gayageum": Object.freeze({ id: "gayageum", root: "assets/audio/gayageum-sanjo/", min: 43, max: 77, fileMin: 21, step: 1, gainDb: 6.43, startOffset: 0 }),
+        "gayageum-slow-vibrato": Object.freeze({ id: "gayageum-slow-vibrato", root: "assets/audio/gayageum-sanjo-slow-vibrato/", min: 43, max: 77, fileMin: 21, step: 1, gainDb: 2.25, startOffset: 0 }),
+        "gayageum-fast-vibrato": Object.freeze({ id: "gayageum-fast-vibrato", root: "assets/audio/gayageum-sanjo-fast-vibrato/", min: 43, max: 77, fileMin: 21, step: 1, gainDb: 1.84, startOffset: 0 }),
+        "gayageum-roll": Object.freeze({ id: "gayageum-roll", root: "assets/audio/gayageum-sanjo-roll/", min: 43, max: 77, fileMin: 21, step: 1, gainDb: 4.07, startOffset: 0 }),
+        "gayageum-bend-down": Object.freeze({ id: "gayageum-bend-down", root: "assets/audio/gayageum-sanjo-bend-down/", min: 43, max: 77, fileMin: 21, step: 1, gainDb: 4.23, startOffset: 0 }),
+        "gayageum-bend-up": Object.freeze({ id: "gayageum-bend-up", root: "assets/audio/gayageum-sanjo-bend-up/", min: 43, max: 77, fileMin: 21, step: 1, gainDb: 9, startOffset: 0 }),
         "flute": Object.freeze({ id: "flute", root: "assets/audio/flute/", min: 60, max: 96, fileMin: 21, step: 1, gainDb: 6.83 }),
         "oboe": Object.freeze({ id: "oboe", root: "assets/audio/oboe/", min: 58, max: 91, fileMin: 21, step: 1, gainDb: 4.35 }),
         "trumpet": Object.freeze({ id: "trumpet", root: "assets/audio/trumpet/", min: 52, max: 97, fileMin: 21, step: 1, gainDb: -2.92 }),
@@ -265,13 +278,13 @@
     MODEL_LIBRARY.drums = mixedPercussion.filter(function (model) { return ["drums", "machine", "linn"].includes(model.stage); });
     MODEL_LIBRARY.percussion = mixedPercussion.filter(function (model) { return !["drums", "machine", "linn", "samul"].includes(model.stage); });
     MODEL_LIBRARY.korean = [
-        { id: "gayageum", room: "melody", name: "가야금", tag: "PLUCKED STRING", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-gayageum.png", expressive: true, range: [48, 84], size: "전체 길이 약 160 cm", visualScale: .9, scalePercent: 89, badge: "KOREAN STRING", model: "12현 가야금", expression: "농현 깊이", description: "열두 현과 안족의 구조를 보며 농현과 뜯는 위치를 다루는 국악 선율악기예요." },
+        { id: "gayageum", room: "melody", name: "산조가야금", tag: "PLUCKED STRING", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-gayageum.png", expressive: true, range: [43, 77], size: "전체 길이 약 160 cm", visualScale: .9, scalePercent: 89, badge: "35-NOTE · 6 ARTICULATIONS", model: "산조가야금", expression: "농현 깊이", description: "실제 산조가야금 원음 G2–F5를 기본 뜯기·느린 농현·빠른 농현·트레몰로·퇴성·추성 여섯 주법으로 연주해요." },
         { id: "geomungo", room: "melody", name: "거문고", tag: "PLUCKED STRING", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-geomungo.png", expressive: true, range: [36, 72], size: "전체 길이 약 162 cm", visualScale: .92, scalePercent: 90, badge: "KOREAN STRING", model: "6현 거문고", expression: "술대 강도", description: "여섯 현과 괘, 술대의 관계가 보이는 거문고 연주 화면이에요." },
-        { id: "haegeum", room: "melody", name: "해금", tag: "BOWED STRING", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-haegeum.png", expressive: true, range: [55, 96], size: "전체 높이 약 70 cm", visualScale: .58, scalePercent: 39, badge: "KOREAN BOWED STRING", model: "2현 해금", expression: "활 압력", description: "두 현 사이를 지나는 활과 연속적인 음정 표현을 중심으로 한 해금 화면이에요." },
+        { id: "haegeum", room: "melody", name: "해금", tag: "BOWED STRING", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-haegeum.png", expressive: true, range: [55, 79], size: "전체 높이 약 70 cm", visualScale: .58, scalePercent: 39, badge: "2 ARTICULATIONS", model: "2현 해금", expression: "활 압력", description: "실제 해금 기본음 G3–G5와 비브라토 B3–G5를 주법별 원음으로 바꾸어 연주해요." },
         { id: "ajaeng", room: "melody", name: "아쟁", tag: "BOWED ZITHER", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-ajaeng.png", expressive: true, range: [36, 72], size: "전체 길이 약 160 cm", visualScale: .96, scalePercent: 89, badge: "KOREAN BOWED STRING", model: "아쟁", expression: "활 압력", description: "굵은 현과 개나리 활의 거친 저음을 표현하는 아쟁 화면이에요." },
-        { id: "daegeum", room: "melody", name: "대금", tag: "TRANSVERSE FLUTE", engine: "guitar", stage: "korean-wind", art: "assets/instruments/korean-daegeum.png", expressive: true, range: [50, 86], size: "전체 길이 약 80 cm", visualScale: .68, scalePercent: 44, badge: "KOREAN WIND", model: "대금", expression: "호흡 압력", description: "청공의 떨림과 호흡을 다루는 대표적인 가로 부는 국악 관악기예요." },
-        { id: "hyangpiri", room: "melody", name: "향피리", tag: "DOUBLE REED", engine: "guitar", stage: "korean-wind", art: "assets/instruments/korean-hyangpiri.png", expressive: true, range: [60, 84], size: "전체 길이 약 27 cm", visualScale: .4, scalePercent: 15, badge: "KOREAN DOUBLE REED", model: "향피리", expression: "호흡 압력", description: "짧고 굵은 대나무 관과 겹서의 강한 소리를 표현하는 향피리 화면이에요." },
-        { id: "taepyeongso", room: "melody", name: "태평소", tag: "DOUBLE REED HORN", engine: "guitar", stage: "korean-wind", art: "assets/instruments/korean-taepyeongso.webp", expressive: true, range: [55, 84], size: "전체 길이 약 40 cm", visualScale: .48, scalePercent: 22, badge: "KOREAN SHAWM", model: "태평소", expression: "호흡 압력", description: "나무 관과 금속 나팔이 결합된 강렬한 태평소 화면이에요." },
+        { id: "daegeum", room: "melody", name: "대금", tag: "TRANSVERSE FLUTE", engine: "guitar", stage: "korean-wind", art: "assets/instruments/korean-daegeum.png", expressive: true, range: [59, 89], size: "전체 길이 약 80 cm", visualScale: .68, scalePercent: 44, badge: "31-NOTE · 2 ARTICULATIONS", model: "대금", expression: "호흡 압력", description: "실제 대금 원음 B3–F6를 기본음과 비브라토 두 주법으로 바꾸어 반음마다 연주해요." },
+        { id: "hyangpiri", room: "melody", name: "향피리", tag: "DOUBLE REED", engine: "guitar", stage: "korean-wind", art: "assets/instruments/korean-hyangpiri.png", expressive: true, range: [59, 77], size: "전체 길이 약 27 cm", visualScale: .4, scalePercent: 15, badge: "19-NOTE · 2 ARTICULATIONS", model: "향피리", expression: "호흡 압력", description: "실제 향피리 원음 B3–F5를 기본음과 비브라토 두 주법으로 바꾸어 반음마다 연주해요." },
+        { id: "taepyeongso", room: "melody", name: "태평소", tag: "DOUBLE REED HORN", engine: "guitar", stage: "korean-wind", art: "assets/instruments/korean-taepyeongso.webp", expressive: true, range: [68, 89], size: "전체 길이 약 40 cm", visualScale: .48, scalePercent: 22, badge: "22-NOTE OGG", model: "태평소", expression: "호흡 압력", description: "실제 태평소 원음 G♯4–F6를 반음마다 연주하고, 누르는 동안 강한 겹서 소리를 이어 가요." },
         { id: "janggu-samul", room: "folk", name: "사물장구", tag: "13 ARTICULATIONS", engine: "drums", stage: "korean-percussion", art: "assets/instruments/korean-janggu-samul.webp", badge: "13-HIT OGG", model: "사물장구", description: "궁채와 열채를 사용하는 사물장구의 궁편·채편·양편 주법 13가지를 실제 원샷으로 연주해요." },
         { id: "janggu-sanjo", room: "folk", name: "산조장구", tag: "15 ARTICULATIONS", engine: "drums", stage: "korean-percussion", art: "assets/instruments/korean-janggu-sanjo.webp", badge: "15-HIT OGG", model: "산조장구", description: "열채와 왼손을 사용하는 산조장구의 궁편·채편·양편 주법 15가지를 실제 원샷으로 연주해요." },
         { id: "buk-samul", room: "folk", name: "사물북", tag: "19 ARTICULATIONS", engine: "drums", stage: "korean-percussion", art: "assets/instruments/korean-buk-samul.webp", badge: "19-HIT OGG", model: "사물북", description: "줄로 가죽을 조인 사물북의 북면·가장자리·북통·막음 주법 19가지를 연주해요." },
@@ -615,6 +628,10 @@
         if (state.currentModel.id === "metal-seven") return KEYBOARD_SAMPLE_SETS["guitar-superstrat"];
         if (state.currentModel.id === "hollow-jazz") return KEYBOARD_SAMPLE_SETS["guitar-hollow"];
         if (state.currentModel.id === "classical-guitar") return KEYBOARD_SAMPLE_SETS["guitar-nylon"];
+        if (state.currentModel.id === "gayageum") return KEYBOARD_SAMPLE_SETS[state.articulation === "pluck" ? "gayageum" : "gayageum-" + state.articulation];
+        if (state.currentModel.id === "haegeum") return KEYBOARD_SAMPLE_SETS[state.articulation === "vibrato" ? "haegeum-vibrato" : "haegeum"];
+        if (state.currentModel.id === "daegeum") return KEYBOARD_SAMPLE_SETS[state.articulation === "vibrato" ? "daegeum-vibrato" : "daegeum"];
+        if (state.currentModel.id === "hyangpiri") return KEYBOARD_SAMPLE_SETS[state.articulation === "vibrato" ? "hyangpiri-vibrato" : "hyangpiri"];
         const pizzicatoModel = ["violin", "viola", "cello", "upright-bass"].includes(state.currentModel.id) && state.articulation === "pizzicato";
         const sampleId = pizzicatoModel ? state.currentModel.id + "-pizz" : state.currentModel.id;
         return KEYBOARD_SAMPLE_SETS[sampleId] || null;
@@ -715,13 +732,13 @@
         const velocityGain = Math.max(.08, Math.min(1.7, Math.pow(velocity, .9) * 1.22 * highNoteCompensation));
         const peak = Math.min(12, velocityGain * calibratedGain);
         const decay = pluckedKeyboardDecay(sampleSet);
-        const heldTone = sampleSet === "hammond-organ" || sampleSet === "pipe-organ" || ["flute", "oboe", "trumpet", "piccolo-trumpet", "clarinet", "bass-clarinet", "piccolo-flute", "french-horn", "english-horn", "soprano-sax", "saxophone", "tenor-sax", "baritone-sax", "bassoon", "contrabassoon", "flugelhorn", "alto-trombone", "trombone", "bass-trombone", "euphonium", "tuba", "violin", "viola", "cello", "upright-bass"].includes(sampleSet);
+        const heldTone = sampleSet === "hammond-organ" || sampleSet === "pipe-organ" || ["flute", "oboe", "trumpet", "piccolo-trumpet", "clarinet", "bass-clarinet", "piccolo-flute", "french-horn", "english-horn", "soprano-sax", "saxophone", "tenor-sax", "baritone-sax", "bassoon", "contrabassoon", "flugelhorn", "alto-trombone", "trombone", "bass-trombone", "euphonium", "tuba", "violin", "viola", "cello", "upright-bass", "haegeum", "haegeum-vibrato", "daegeum", "daegeum-vibrato", "hyangpiri", "hyangpiri-vibrato", "taepyeongso"].includes(sampleSet);
         source.buffer = buffer;
         source.playbackRate.value = Math.pow(2, (midi - anchor) / 12);
         if (heldTone && buffer.duration > 1.25) {
             source.loop = true;
-            source.loopStart = Math.min(1.2, buffer.duration * .28);
-            source.loopEnd = Math.max(source.loopStart + .25, buffer.duration - .08);
+            source.loopStart = Math.min((sampleConfig && sampleConfig.loopStart) || 1.2, buffer.duration * .72);
+            source.loopEnd = Math.max(source.loopStart + .25, Math.min((sampleConfig && sampleConfig.loopEnd) || buffer.duration - .08, buffer.duration - .08));
         }
         gain.gain.setValueAtTime(.0001, now);
         gain.gain.exponentialRampToValueAtTime(peak, now + .0025);
@@ -735,7 +752,8 @@
         const voice = { source, gain, anchor, sampleSet, sampleKey: sampleSet + ":" + anchor, sampledPiano: true, released: false, held: false, percussiveDecay: decay };
         state.pianoVoices.set(midi, voice);
         source.onended = function () { if (state.pianoVoices.get(midi) === voice) state.pianoVoices.delete(midi); };
-        source.start(now, Math.min(SAMPLED_NOTE_START_OFFSET, Math.max(0, buffer.duration - .01)));
+        const startOffset = sampleConfig && Number.isFinite(sampleConfig.startOffset) ? sampleConfig.startOffset : SAMPLED_NOTE_START_OFFSET;
+        source.start(now, Math.min(startOffset, Math.max(0, buffer.duration - .01)));
         if (decay) source.stop(now + decay + .08);
         return voice;
     }
@@ -1598,6 +1616,10 @@
     }
 
     function currentPitchRange() {
+        if (state.family === "korean") {
+            const sampleConfig = sampledPianoConfig();
+            if (sampleConfig) return { start: sampleConfig.min, end: sampleConfig.max };
+        }
         if (state.family === "keyboard") return { start: DISPLAY_RANGE.start, end: DISPLAY_RANGE.end };
         if (state.currentModel && Array.isArray(state.currentModel.range)) return { start: state.currentModel.range[0], end: state.currentModel.range[1] };
         return core.getInstrumentRange(state.instrument === "guitar" ? "guitar" : state.instrument);
@@ -1737,15 +1759,26 @@
         const bowed = ["violin", "viola", "cello", "upright-bass"].includes(model.id);
         const plucked = model.id === "harp" || ["gayageum", "geomungo"].includes(model.id);
         const koreanBowed = ["haegeum", "ajaeng"].includes(model.id);
+        const daegeum = model.id === "daegeum";
+        const hyangpiri = model.id === "hyangpiri";
+        const gayageum = model.id === "gayageum";
         const wind = model.stage === "wind" || model.stage === "brass" || model.stage === "korean-wind";
         const options = bowed ? [["sustain", "활긋기"], ["pizzicato", "피치카토"]]
+            : gayageum ? [["pluck", "기본 뜯기"], ["slow-vibrato", "느린 농현"], ["fast-vibrato", "빠른 농현"], ["roll", "트레몰로"], ["bend-down", "퇴성"], ["bend-up", "추성"]]
             : plucked ? [["pluck", "뜯기"]]
+            : model.id === "haegeum" ? [["sustain", "기본 활긋기"], ["vibrato", "비브라토"]]
             : koreanBowed ? [["sustain", "활긋기"]]
+            : daegeum ? [["sustain", "기본음"], ["vibrato", "비브라토"]]
+            : hyangpiri ? [["sustain", "기본음"], ["vibrato", "비브라토"]]
             : wind ? [["sustain", "지속음"]]
             : [["sustain", "기본 주법"]];
         const hint = bowed ? "활로 긋는 지속음과 손가락으로 뜯는 피치카토 원음을 바꿉니다."
+            : gayageum ? "뜯기와 농현의 빠르기, 트레몰로, 음을 흘려 내리거나 밀어 올리는 주법 원음을 바꿉니다."
             : plucked ? "현을 뜯은 뒤 자연스럽게 줄어드는 실제 악기 특성을 따릅니다."
+            : model.id === "haegeum" ? "곧게 긋는 기본음과 농현이 담긴 비브라토 활긋기 원음을 바꿉니다."
             : koreanBowed ? "활로 현을 마찰해 소리를 이어 가는 기본 주법입니다."
+            : daegeum ? "곧게 이어 부는 기본음과 농음이 담긴 비브라토 원음을 바꿉니다."
+            : hyangpiri ? "곧게 이어 부는 기본음과 농음이 담긴 비브라토 원음을 바꿉니다."
             : wind ? "한 번의 호흡으로 음을 이어 내는 기본 지속음입니다."
             : "현재 제공되는 기본 주법입니다.";
         if (!options.some(function (item) { return item[0] === state.articulation; })) state.articulation = options[0][0];
@@ -1760,6 +1793,7 @@
                 allNotesOff();
                 state.articulation = option[0];
                 renderClassicalArticulations(model);
+                renderKeyboard();
                 preloadConcertGrandRange();
             });
             box.appendChild(button);

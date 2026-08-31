@@ -106,7 +106,65 @@ test('plucked keyboards decay without an ADSR sustain stage', () => {
   assert.match(app, /NO_PIANO_SUSTAIN_MODELS = new Set\(\["harpsichord", "clavinet", "hammond-organ", "pipe-organ"\]\)/);
   assert.match(app, /event\.code === "Space" && supportsPianoSustain\(\)/);
 });
-test('completed orchestral renders use compact note-grid Ogg samples', () => {
+test('haegeum uses the exact 25-note recorded range without synthetic extension', () => {
+  const sampleRoot = path.join(root, 'assets', 'audio', 'haegeum');
+  const samples = fs.readdirSync(sampleRoot).filter((name) => name.endsWith('.ogg')).sort();
+  const totalBytes = samples.reduce((sum, name) => sum + fs.statSync(path.join(sampleRoot, name)).size, 0);
+  assert.equal(samples.length, 25);
+  assert.equal(samples[0], '035_g3.ogg');
+  assert.equal(samples.at(-1), '059_g5.ogg');
+  assert.ok(totalBytes < 2 * 1024 * 1024);
+  assert.match(app, /"haegeum": Object\.freeze\(\{ id: "haegeum", root: "assets\/audio\/haegeum\/", min: 55, max: 79/);
+  assert.match(app, /gainDb: -1\.46, startOffset: 0, loopStart: 1\.1, loopEnd: 3\.85/);
+  assert.match(app, /Number\.isFinite\(sampleConfig\.startOffset\)/);
+  assert.match(app, /id: "haegeum"[\s\S]*?range: \[55, 79\][\s\S]*?badge: "2 ARTICULATIONS"/);
+  assert.match(app, /state\.articulation === "vibrato" \? "haegeum-vibrato" : "haegeum"/);
+});
+test('daegeum switches between complete basic and vibrato multisample sets', () => {
+  for (const folder of ['daegeum', 'daegeum-vibrato']) {
+    const sampleRoot = path.join(root, 'assets', 'audio', folder);
+    const samples = fs.readdirSync(sampleRoot).filter((name) => name.endsWith('.ogg')).sort();
+    const totalBytes = samples.reduce((sum, name) => sum + fs.statSync(path.join(sampleRoot, name)).size, 0);
+    assert.equal(samples.length, 31, folder);
+    assert.equal(samples[0], '039_b3.ogg', folder);
+    assert.equal(samples.at(-1), '069_f6.ogg', folder);
+    assert.ok(totalBytes < 3 * 1024 * 1024, folder);
+  }
+  assert.match(app, /"daegeum": Object\.freeze\(\{ id: "daegeum", root: "assets\/audio\/daegeum\/", min: 59, max: 89/);
+  assert.match(app, /"daegeum-vibrato": Object\.freeze\(\{ id: "daegeum-vibrato", root: "assets\/audio\/daegeum-vibrato\/", min: 59, max: 89/);
+  assert.match(app, /state\.articulation === "vibrato" \? "daegeum-vibrato" : "daegeum"/);
+  assert.match(app, /id: "daegeum"[\s\S]*?range: \[59, 89\][\s\S]*?badge: "31-NOTE · 2 ARTICULATIONS"/);
+  assert.match(app, /\[\["sustain", "기본음"\], \["vibrato", "비브라토"\]\]/);
+  assert.match(app, /"haegeum", "haegeum-vibrato", "daegeum", "daegeum-vibrato"/);
+});
+test('new Korean melodic recordings expose their exact ranges and techniques', () => {
+  for (const [folder, count, first, last] of [
+    ['haegeum-vibrato', 21, '039_b3.ogg', '059_g5.ogg'],
+    ['hyangpiri', 19, '039_b3.ogg', '057_f5.ogg'],
+    ['hyangpiri-vibrato', 19, '039_b3.ogg', '057_f5.ogg'],
+    ['taepyeongso', 22, '048_gs4.ogg', '069_f6.ogg'],
+    ['gayageum-sanjo', 35, '023_g2.ogg', '057_f5.ogg'],
+    ['gayageum-sanjo-slow-vibrato', 35, '023_g2.ogg', '057_f5.ogg'],
+    ['gayageum-sanjo-fast-vibrato', 35, '023_g2.ogg', '057_f5.ogg'],
+    ['gayageum-sanjo-roll', 35, '023_g2.ogg', '057_f5.ogg'],
+    ['gayageum-sanjo-bend-down', 35, '023_g2.ogg', '057_f5.ogg'],
+    ['gayageum-sanjo-bend-up', 35, '023_g2.ogg', '057_f5.ogg'],
+  ]) {
+    const sampleRoot = path.join(root, 'assets', 'audio', folder);
+    const samples = fs.readdirSync(sampleRoot).filter((name) => name.endsWith('.ogg')).sort();
+    const totalBytes = samples.reduce((sum, name) => sum + fs.statSync(path.join(sampleRoot, name)).size, 0);
+    assert.equal(samples.length, count, folder);
+    assert.equal(samples[0], first, folder);
+    assert.equal(samples.at(-1), last, folder);
+    assert.ok(totalBytes < 3 * 1024 * 1024, folder);
+  }
+  assert.match(app, /state\.currentModel\.id === "gayageum"/);
+  assert.match(app, /\[\["pluck", "기본 뜯기"\],[\s\S]*?\["bend-up", "추성"\]\]/);
+  assert.match(app, /id: "hyangpiri"[\s\S]*?range: \[59, 77\][\s\S]*?badge: "19-NOTE · 2 ARTICULATIONS"/);
+  assert.match(app, /id: "taepyeongso"[\s\S]*?range: \[68, 89\][\s\S]*?badge: "22-NOTE OGG"/);
+  assert.match(app, /state\.family === "korean"[\s\S]*?sampleConfig\.min[\s\S]*?sampleConfig\.max/);
+  assert.match(app, /"hyangpiri", "hyangpiri-vibrato", "taepyeongso"/);
+});test('completed orchestral renders use compact note-grid Ogg samples', () => {
   for (const [folder, count, first, last] of [
     ['flute', 37, '040_c4.ogg', '076_c7.ogg'],
     ['oboe', 34, '038_as3.ogg', '071_g6.ogg'],
