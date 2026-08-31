@@ -4835,15 +4835,23 @@ function createClassroomPlatform(options = {}) {
     other: "기타"
   };
 
-  // Group membership. Deliberately narrower than the teacher-facing roster count
-  // in /teacher/groups, which also does a `custom_fields::text ILIKE '%name%'`
-  // catch-all: that is fine for an approximate headcount but far too loose to
-  // decide who may read a board (a group named "1" would match nearly everyone).
-  // Here only the named attribute columns and explicit membership count.
+  // Group membership.
+  //
+  // The roster stores each club / after-school / shuttle column under its own
+  // name, so a student in the 오케스트라 club has custom_fields = {"오케스트라": "..."}
+  // -- the KEY is the group name. (Looking up a fixed 'club' key, as the roster
+  // count query does, therefore never matches real roster data; that query only
+  // appears to work because it also runs a `custom_fields::text ILIKE '%name%'`
+  // catch-all. That catch-all is far too loose to decide who may read a board --
+  // a group named "1" would match nearly every student -- so it is not used here.)
+  //
+  // The `->>` forms are kept for the other shape a school might use: a single
+  // "동아리" column whose value is the club name.
   const GROUP_MEMBER_SQL = `
     (g.group_type = 'homeroom' AND g.grade = ss.grade AND g.class_number = ss.class_number)
     OR (g.group_type <> 'homeroom' AND (
-          ss.custom_fields->>'club' = g.group_name
+          jsonb_exists(ss.custom_fields, g.group_name)
+          OR ss.custom_fields->>'club' = g.group_name
           OR ss.custom_fields->>'afterschool' = g.group_name
           OR ss.custom_fields->>'shuttle' = g.group_name
           OR ss.custom_fields->>'bus' = g.group_name
@@ -6699,7 +6707,10 @@ function createClassroomPlatform(options = {}) {
     const classNumber = req.body.classNumber ? Number(req.body.classNumber) : null;
 
     if (!groupName || groupName.length > 60) throw new HttpError(400, "INVALID_GROUP_NAME", "그룹 이름을 확인해 주세요 (1~60자).");
-    if (!["homeroom", "subject", "activity", "club", "afterschool", "shuttle", "other"].includes(groupType))
+    // Must match teacher_groups_group_type_check exactly. 'activity' used to be
+    // accepted here but is not in that constraint, so every group created from
+    // the roster's "동아리·방과후·셔틀" option failed on insert.
+    if (!["homeroom", "subject", "club", "afterschool", "shuttle", "other"].includes(groupType))
       throw new HttpError(400, "INVALID_GROUP_TYPE", "그룹 유형이 올바르지 않습니다.");
 
     const result = await pool.query(

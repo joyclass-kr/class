@@ -617,12 +617,19 @@
             <select class="form-control" id="newGroupType">
                 <option value="homeroom">🏫 담임반 (학급 전체)</option>
                 <option value="subject">📖 전담 과목반 (학급 묶음)</option>
-                <option value="activity">🎯 동아리·방과후·셔틀 그룹 (다학급/무학년 조합)</option>
+                <option value="club">🎯 동아리 (무학년 조합)</option>
+                <option value="afterschool">🕔 방과후 (무학년 조합)</option>
+                <option value="shuttle">🚌 셔틀 (무학년 조합)</option>
+                <option value="other">📌 기타 그룹 (회장단·위원회 등)</option>
             </select>
         </div>
         <div class="form-field">
             <label>그룹 이름 <span style="color:var(--danger)">*</span></label>
             <input class="form-control" id="newGroupName" placeholder="예: 5학년 1반, 뮤지컬 동아리" maxlength="60">
+            <p style="margin:6px 0 0; font-size:12px; color:var(--muted); line-height:1.5;">
+                동아리·방과후·셔틀은 <strong>학교 설정에 등록된 이름과 똑같이</strong> 적어야
+                전교생 명단에서 소속 학생을 자동으로 찾아옵니다.
+            </p>
         </div>
         <div class="form-field" id="gradeClassField" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
             <div>
