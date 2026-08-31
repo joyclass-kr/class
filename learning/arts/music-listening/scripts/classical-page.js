@@ -17,9 +17,14 @@ let activeEra='baroque';
 
 function renderCards(era=activeEra){
   const cards=pieces.filter(piece=>era==='all'||piece.era===era);
-  playlist.innerHTML=cards.length?cards.map(piece=>`<article class="piece"><p class="meta">${piece.period} · ${piece.form}</p><h3>${piece.title}</h3><p class="original">${piece.originalTitle}</p><p class="artist">${piece.composer} · ${piece.year}</p><p class="point">${piece.feature}</p><div class="actions">${piece.audio?`<audio controls preload="none" src="../../assets/audio/classical/${piece.audio.file}"></audio>`:`<a href="${piece.url}" target="_blank" rel="noopener">찾아 듣기</a>`}<button data-piece="${piece.no}">자세한 해설</button></div></article>`).join(''):`<p class="empty-state">현재 50곡 감상 목록은 바로크 이후 작품으로 구성되어 있습니다. 이 시대의 역사적 특징을 먼저 살펴보세요.</p>`;
+  playlist.innerHTML=cards.length?cards.map(piece=>`<article class="piece"><p class="meta">${piece.period} · ${piece.form}</p><h3>${piece.title}</h3><p class="original">${piece.originalTitle}</p><p class="artist">${piece.composer} · ${piece.year}</p><p class="point">${piece.feature}</p><div class="actions">${piece.audio?`<audio controls controlsList="nodownload noplaybackrate" preload="none" src="../../assets/audio/classical/${piece.audio.file}"></audio>`:`<a href="${piece.url}" target="_blank" rel="noopener">찾아 듣기</a>`}<button data-piece="${piece.no}">자세한 해설</button></div></article>`).join(''):`<p class="empty-state">현재 50곡 감상 목록은 바로크 이후 작품으로 구성되어 있습니다. 이 시대의 역사적 특징을 먼저 살펴보세요.</p>`;
   playlist.querySelectorAll('[data-piece]').forEach(button=>button.addEventListener('click',()=>openDetail(button.dataset.piece)));
 }
+// 'play' doesn't bubble on <audio>, so listen in the capture phase to catch it from any card.
+playlist.addEventListener('play',event=>{
+  if(event.target.tagName!=='AUDIO')return;
+  playlist.querySelectorAll('audio').forEach(audio=>{if(audio!==event.target)audio.pause()});
+},true);
 function renderEra(key=activeEra){
   activeEra=key;
   const era=eras.find(item=>item.key===key);
