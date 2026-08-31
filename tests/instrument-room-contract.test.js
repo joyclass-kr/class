@@ -48,6 +48,18 @@ test('keyboard library covers AP, EP, Hybrid, and Organ', () => {
   assert.match(app, /tag: "ORGAN"/);
 });
 
+test('concert grand uses a compact zoned multisample across all 88 keys', () => {
+  const sampleRoot = path.join(root, 'assets', 'audio', 'concert-grand');
+  const samples = fs.readdirSync(sampleRoot).filter((name) => name.endsWith('.mp3'));
+  const totalBytes = samples.reduce((sum, name) => sum + fs.statSync(path.join(sampleRoot, name)).size, 0);
+  assert.equal(samples.length, 30);
+  assert.ok(totalBytes < 3 * 1024 * 1024);
+  assert.match(app, /GRAND_SAMPLE_STEP = 3/);
+  assert.match(app, /GRAND_SAMPLE_CACHE_LIMIT = 16/);
+  assert.match(app, /range: \[21, 108\]/);
+  assert.match(app, /state\.family === "keyboard"/);
+  assert.match(app, /\(state\.keyboardOctave \+ 1\) \* 12/);
+});
 test('keyboard and electronic machines use non-interactive premium artwork', () => {
   for (const asset of [
     'keyboard-concert-grand.webp', 'keyboard-upright-piano.webp',
