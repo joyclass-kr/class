@@ -11,10 +11,10 @@
     <link rel="preload" href="../music-studio/assets/piano/C4.ogg" as="fetch" type="audio/ogg" crossorigin>
     <link rel="preload" href="../music-studio/assets/piano/C5.ogg" as="fetch" type="audio/ogg" crossorigin>
     <link rel="preload" href="instrument-worklet-v2.js?v=20260824-fast-adsr" as="script">
-    <link rel="stylesheet" href="styles.css?v=20260826-readable-type">
+    <link rel="stylesheet" href="styles.css?v=20260901-articulations-v4">
     <script src="instrument-core.js?v=20260824-physical-room" defer></script>
-    <script src="instrument-details.js?v=20260826-complete-guide" defer></script>
-    <script src="app.js?v=20260901-dry-samples" defer></script>
+    <script src="instrument-details.js?v=20260901-articulations-v4" defer></script>
+    <script src="app.js?v=20260901-articulations-v4" defer></script>
 </head>
 <body>
     <div class="room-glow" aria-hidden="true"></div>
@@ -50,21 +50,6 @@
             </section>
 
             <section class="instrument-console" aria-labelledby="instrumentName">
-                <div class="console-head">
-                    <div class="screen-reader-only">
-                        <span id="modelBadge" class="model-badge">30-ZONE MULTISAMPLE</span>
-                        <h1 id="instrumentName">그랜드 피아노</h1>
-                        <p id="instrumentDescription">Cubase 콘서트 그랜드 원음으로 A0–C8 전 음역을 연주해요.</p>
-                    </div>
-                    <button id="instrumentInfoButton" class="instrument-info-button" type="button" aria-haspopup="dialog">
-                        <span>악기 자세히</span><b aria-hidden="true">i</b>
-                    </button>
-                    <div id="guitarModeSwitch" class="mode-switch hidden" role="group" aria-label="기타 입력 방식">
-                        <button class="active" type="button" data-guitar-mode="keyboard">건반</button>
-                        <button type="button" data-guitar-mode="chords">코드패드</button>
-                    </div>
-                </div>
-
                 <div class="console-body">
                     <div class="instrument-visual stage-piano" id="instrumentVisual">
                         <div class="visual-label"><span id="visualFamily">ACOUSTIC</span><b id="visualModel">88 GRAND</b></div>
@@ -85,21 +70,50 @@
                     </div>
 
                     <aside class="control-panel" aria-label="악기 설정">
+                        <div class="console-head">
+                            <div class="screen-reader-only">
+                                <span id="modelBadge" class="model-badge">30-ZONE MULTISAMPLE</span>
+                                <h1 id="instrumentName">그랜드 피아노</h1>
+                                <p id="instrumentDescription">Cubase 콘서트 그랜드 원음으로 A0–C8 전 음역을 연주해요.</p>
+                            </div>
+                            <button id="instrumentInfoButton" class="instrument-info-button" type="button" aria-haspopup="dialog">
+                                <span>악기 자세히</span><b aria-hidden="true">i</b>
+                            </button>
+                            <div id="guitarModeSwitch" class="mode-switch hidden" role="group" aria-label="기타 입력 방식">
+                                <button class="active" type="button" data-guitar-mode="keyboard">건반</button>
+                                <button type="button" data-guitar-mode="chords">코드패드</button>
+                            </div>
+                        </div>
                         <div id="pianoControls" class="control-set">
                             <div id="keyboardPatchControls" class="keyboard-patch-controls hidden"></div>
                             <button id="sustainButton" class="sustain-button" type="button" aria-pressed="false"><span>서스테인</span><b>SPACE</b></button>
                             <p>길게 누르거나 고정해서 사용할 수 있어요.</p>
                         </div>
                         <div id="stringControls" class="control-set hidden">
-                            <div id="articulationButtons" class="articulation-buttons" aria-label="주법 선택"></div>
-                            <label><span>톤 <output id="toneOutput">64</output></span><input id="toneSlider" type="range" min="10" max="95" value="64"></label>
-                            <label><span>뮤트 <output id="muteOutput">10</output></span><input id="muteSlider" type="range" min="0" max="82" value="10"></label>
-                            <label><span>피킹 위치 <output id="pickOutput">28</output></span><input id="pickSlider" type="range" min="8" max="90" value="28"></label>
-                            <label><span>드라이브 <output id="driveOutput">8</output></span><input id="driveSlider" type="range" min="0" max="65" value="8"></label>
-                            <div id="guitarFxControls" class="fx-strip hidden"><label><span>디스토션 <output>0</output></span><input type="range" min="0" max="100" value="0"></label><label><span>딜레이 <output>18</output></span><input type="range" min="0" max="100" value="18"></label><label><span>리버브 <output>12</output></span><input type="range" min="0" max="100" value="12"></label></div>
+                            <section class="technique-card" aria-labelledby="stringTechniqueLabel">
+                                <span id="stringTechniqueLabel" class="control-eyebrow">연주 주법</span>
+                                <div id="articulationButtons" class="articulation-buttons" aria-label="주법 선택"></div>
+                                <p id="articulationHint" class="technique-hint"></p>
+                            </section>
+                            <section id="soundPresetGroup" class="technique-card hidden" aria-labelledby="soundPresetLabel">
+                                <span id="soundPresetLabel" class="control-eyebrow">음색 프리셋</span>
+                                <div id="soundPresetButtons" class="articulation-buttons tone-preset-buttons" aria-label="음색 프리셋 선택"></div>
+                                <p id="soundPresetHint" class="technique-hint"></p>
+                            </section>
+                            <div id="physicalStringControls" class="physical-string-controls">
+                                <label><span>톤 <output id="toneOutput">64</output></span><input id="toneSlider" type="range" min="10" max="95" value="64"></label>
+                                <label><span>댐핑 <output id="muteOutput">10</output></span><input id="muteSlider" type="range" min="0" max="82" value="10"></label>
+                                <label><span>피킹 위치 <output id="pickOutput">28</output></span><input id="pickSlider" type="range" min="8" max="90" value="28"></label>
+                                <label><span>드라이브 <output id="driveOutput">8</output></span><input id="driveSlider" type="range" min="0" max="65" value="8"></label>
+                                <div id="guitarFxControls" class="fx-strip hidden"><label><span>디스토션 <output>0</output></span><input type="range" min="0" max="100" value="0"></label><label><span>딜레이 <output>18</output></span><input type="range" min="0" max="100" value="18"></label><label><span>리버브 <output>12</output></span><input type="range" min="0" max="100" value="12"></label></div>
+                            </div>
                         </div>
                         <div id="classicalControls" class="control-set classical-controls hidden">
-                            <div class="expression-tabs"><button class="active" type="button">표현</button><button type="button">주법</button><button type="button">음색</button></div><div id="classicalArticulationButtons" class="articulation-buttons" aria-label="관현악 주법 선택"></div><label><span>다이내믹 <output>72</output></span><input type="range" min="0" max="127" value="72"></label><label><span id="expressionLabel">보우 압력</span><input type="range" min="0" max="100" value="48"></label><div class="expression-actions"><button type="button">비브라토</button><button type="button">레가토</button></div>
+                            <section class="technique-card" aria-labelledby="classicalTechniqueLabel">
+                                <span id="classicalTechniqueLabel" class="control-eyebrow">연주 주법</span>
+                                <div id="classicalArticulationButtons" class="articulation-buttons" aria-label="관현악 주법 선택"></div>
+                                <p id="classicalArticulationHint" class="technique-hint"></p>
+                            </section>
                         </div>
                         <div id="drumControls" class="control-set hidden">
                             <div class="kit-readout"><span id="drumSystemLabel">MODAL KIT</span><b id="drumSystemDescription">막과 금속의 공명을 계산해 소리를 만들어요.</b></div>

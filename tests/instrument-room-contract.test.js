@@ -14,6 +14,17 @@ require('node:vm').createContext(detailContext);
 require('node:vm').runInContext(detailSource, detailContext);
 const instrumentDetails = detailContext.window.INSTRUMENT_DETAILS;
 
+test('corrects guitar and bass artwork orientation in the stage and detail views', () => {
+  assert.match(css, /\.stage-bass \.instrument-artwork, \.stage-guitar \.instrument-artwork \{[^}]*scale: -1 1;/);
+  assert.match(css, /\.detail-artwork-frame > img\.corrected-handedness \{ scale: -1 1; \}/);
+  assert.match(app, /elements\.detailArtwork\.classList\.toggle\("corrected-handedness"/);
+});
+
+test('keeps the instrument details button inside the control panel flow', () => {
+  assert.match(html, /<aside class="control-panel"[^>]*>[\s\S]*?<div class="console-head">[\s\S]*?id="instrumentInfoButton"/);
+  assert.match(css, /\.control-panel \{[^}]*display: grid;[^}]*grid-template-rows: auto minmax\(0,1fr\);/);
+  assert.doesNotMatch(css, /\.instrument-info-button \{ position: fixed;/);
+});
 test('uses dedicated rooms for the nine primary instrument groups', () => {
   for (const family of ['keyboard', 'guitar', 'bass', 'drums', 'strings', 'woodwind', 'brass', 'percussion', 'korean']) {
     assert.match(html, new RegExp(`data-family="${family}"`));
@@ -63,7 +74,7 @@ test('keyboard models use compact per-note Ogg multisamples with recorded range 
     assert.ok(totalBytes < 6 * 1024 * 1024, folder);
   }
   for (const [folder, count, first, last] of [
-    ['harpsichord', 58, '009_f1.ogg', '066_d6.ogg'],
+    ['harpsichord', 39, '028_c3.ogg', '066_d6.ogg'],
     ['hammond-organ', 61, '016_c2.ogg', '076_c7.ogg'],
     ['pipe-organ', 61, '016_c2.ogg', '076_c7.ogg']
   ]) {
@@ -106,8 +117,11 @@ test('completed orchestral renders use compact note-grid Ogg samples', () => {
     ['tenor-sax', 50, '033_f3.ogg', '082_fs7.ogg'],
     ['baritone-sax', 56, '025_a2.ogg', '080_e7.ogg'],
     ['bassoon', 42, '014_as1.ogg', '055_ds5.ogg'],
+    ['contrabassoon', 49, '012_gs1.ogg', '060_gs5.ogg'],
     ['tenor-trombone', 46, '032_e3.ogg', '077_cs7.ogg'],
     ['bass-trombone', 58, '015_b1.ogg', '072_gs6.ogg'],
+    ['flugelhorn', 41, '032_e3.ogg', '072_gs6.ogg'],
+    ['euphonium', 55, '020_e2.ogg', '074_as6.ogg'],
     ['bass-tuba', 57, '020_e2.ogg', '076_c7.ogg'],
     ['viola', 61, '028_c3.ogg', '088_c8.ogg'],
     ['viola-pizz', 42, '028_c3.ogg', '069_f6.ogg'],
@@ -116,7 +130,33 @@ test('completed orchestral renders use compact note-grid Ogg samples', () => {
     ['cello', 61, '028_c3.ogg', '088_c8.ogg'],
     ['cello-pizz', 26, '028_c3.ogg', '053_cs5.ogg'],
     ['upright-bass', 57, '032_e3.ogg', '088_c8.ogg'],
-    ['upright-bass-pizz', 57, '032_e3.ogg', '088_c8.ogg']
+    ['upright-bass-pizz', 57, '032_e3.ogg', '088_c8.ogg'],
+    ['timpani', 18, '016_c2.ogg', '033_f3.ogg'],
+    ['marimba', 61, '016_c2.ogg', '076_c7.ogg'],
+    ['vibraphone', 37, '033_f3.ogg', '069_f6.ogg'],
+    ['xylophone', 42, '028_c3.ogg', '069_f6.ogg'],
+    ['glockenspiel', 17, '059_g5.ogg', '075_b6.ogg'],
+    ['p-bass-finger', 36, '008_e1.ogg', '043_ds4.ogg'],
+    ['p-bass-pick', 36, '008_e1.ogg', '043_ds4.ogg'],
+    ['p-bass-slap', 35, '008_e1.ogg', '042_d4.ogg'],
+    ['j-bass-finger', 35, '008_e1.ogg', '042_d4.ogg'],
+    ['j-bass-pick', 35, '008_e1.ogg', '042_d4.ogg'],
+    ['j-bass-slap', 35, '008_e1.ogg', '042_d4.ogg'],
+    ['active-bass-finger', 40, '003_b0.ogg', '042_d4.ogg'],
+    ['active-bass-pick', 40, '003_b0.ogg', '042_d4.ogg'],
+    ['active-bass-slap', 40, '003_b0.ogg', '042_d4.ogg'],
+    ['fretless-bass-finger', 35, '008_e1.ogg', '042_d4.ogg'],
+    ['fretless-bass-pick', 35, '008_e1.ogg', '042_d4.ogg'],
+    ['fretless-bass-slap', 35, '008_e1.ogg', '042_d4.ogg'],
+    ['guitar-s-clean', 47, '020_e2.ogg', '066_d6.ogg'],
+    ['guitar-s-blues', 47, '020_e2.ogg', '066_d6.ogg'],
+    ['guitar-s-funk', 47, '020_e2.ogg', '066_d6.ogg'],
+    ['guitar-s-rock', 47, '020_e2.ogg', '066_d6.ogg'],
+    ['guitar-superstrat', 45, '020_e2.ogg', '064_c6.ogg'],
+    ['guitar-hollow', 46, '020_e2.ogg', '065_cs6.ogg'],
+    ['guitar-nylon', 45, '020_e2.ogg', '064_c6.ogg'],
+    ['harp', 78, '005_cs1.ogg', '082_fs7.ogg'],
+    ['piccolo-trumpet', 49, '032_e3.ogg', '080_e7.ogg']
   ]) {
     const sampleRoot = path.join(root, 'assets', 'audio', folder);
     const samples = fs.readdirSync(sampleRoot).filter((name) => name.endsWith('.ogg')).sort();
@@ -126,11 +166,14 @@ test('completed orchestral renders use compact note-grid Ogg samples', () => {
   }
   assert.match(app, /isSampledPiano\(\) \|\| state\.instrument === "piano"/);
   assert.match(app, /sampleSet === "hammond-organ"[\s\S]*?"tuba"/);
+  assert.match(app, /"contrabassoon"[\s\S]*?"flugelhorn"[\s\S]*?"euphonium"/);
+  assert.match(app, /ONE_SHOT_SAMPLE_SETS = new Set\(\["timpani", "glockenspiel", "marimba", "vibraphone", "xylophone", "harp"\]\)/);
+  assert.match(app, /const peak = Math\.min\(12, velocityGain \* calibratedGain\)/);
   assert.match(app, /const calibratedGain = Math\.pow/);
   assert.match(app, /gainDb: -5\.68/);
-  assert.match(app, /gainDb: 15\.0/);
+  assert.match(app, /gainDb: 20\.0/);
   assert.match(app, /\["violin", "viola", "cello", "upright-bass"\]\.includes\(state\.currentModel\.id\) && state\.articulation === "pizzicato"/);
-  assert.match(app, /\[\["sustain", "서스테인"\], \["pizzicato", "피치카토"\]\]/);
+  assert.match(app, /\[\["sustain", "활긋기"\], \["pizzicato", "피치카토"\]\]/);
 });
 
 test('keyboard and electronic machines use non-interactive premium artwork', () => {
@@ -164,32 +207,56 @@ test('percussion library includes dedicated kits and essential orchestral instru
   assert.match(app, /id: "midtom"/);
   assert.match(app, /id: "subtom"/);
   assert.match(app, /function activeDrums/);
-  assert.match(app, /"jazz-kit": \["kick", "snare", "hat", "openhat", "hightom", "lowtom", "crash", "ride"\]/);
-  assert.match(app, /"metal-kit": \["kick", "snare", "hat", "openhat", "hightom", "midtom", "lowtom", "subtom", "crash", "ride"\]/);
+  assert.match(app, /"jazz-kit": ACOUSTIC_DRUM_ARTICULATIONS\.concat\(\["hightom", "lowtom", "crash", "ride", "ridebell"\]\)/);
+  assert.match(app, /"metal-kit": ACOUSTIC_DRUM_ARTICULATIONS\.concat\(\["hightom", "midtom", "lowtom", "subtom", "crash", "ride", "ridebell"\]\)/);
   assert.match(app, /drums\.length >= 9/);
   assert.match(worklet, /subtom: \{ family: "membrane", base: 72/);
   assert.match(css, /\.drum-pads\.extended/);
+  for (const folder of ['drums-rock', 'drums-metal', 'drums-pop', 'drums-jazz', 'drums-funk', 'drums-linn', 'drums-808']) {
+    const files = fs.readdirSync(path.join(root, 'assets', 'audio', folder)).filter((name) => name.endsWith('.ogg')).sort();
+    assert.equal(files.length, 16, folder);
+    assert.equal(files[0], 'clap.ogg', folder);
+    assert.equal(files.at(-1), 'subtom.ogg', folder);
+  }
+  for (const id of ['ghost', 'sidestick', 'rimshot', 'clap', 'pedalhat', 'openhat', 'ridebell']) {
+    assert.match(app, new RegExp(`id: "${id}"`));
+  }
+  assert.match(app, /ACOUSTIC_DRUM_ARTICULATIONS = \["kick", "snare", "ghost", "sidestick", "rimshot", "hat", "pedalhat", "openhat"\]/);
+  assert.match(app, /ELECTRONIC_DRUM_ARTICULATIONS = \["kick", "snare", "rimshot", "clap", "hat", "pedalhat", "openhat"\]/);
+  assert.doesNotMatch(app, /ELECTRONIC_DRUM_ARTICULATIONS\.concat\([^\r\n]*ridebell/);
+  assert.match(app, /function chokeOpenHat/);
+  assert.match(app, /\["hat", "pedalhat", "openhat"\]\.includes\(id\)/);
+  assert.match(app, /const DRUM_SAMPLE_SETS/);
+  assert.match(app, /function playSampledDrum/);
+  assert.match(app, /preloadDrumSamples\(\)/);
+  assert.match(app, /gainDb = Number\(current\.gainDb\[id\]/);
+  assert.match(css, /#drumControls\.sampled-kit label \{ display: none; \}/);
 });
 
 test('string and expressive families expose virtual-instrument presentation', () => {
-  for (const model of ['p-bass', 's-style', 'metal-seven', 'upright-bass', 'violin', 'flute', 'trumpet']) {
+  for (const model of ['p-bass', 's-style', 'metal-seven', 'upright-bass', 'violin', 'harp', 'flute', 'contrabassoon', 'trumpet', 'piccolo-trumpet', 'flugelhorn', 'euphonium']) {
     assert.match(app, new RegExp(`id: "${model}"`));
   }
   assert.match(html, /id="classicalControls"/);
   assert.match(html, /id="guitarFxControls"/);
+  assert.match(html, /id="soundPresetGroup"/);
+  assert.match(html, /id="physicalStringControls"/);
+  assert.doesNotMatch(html, /expression-tabs|expression-actions/);
+  assert.match(app, /\[\["finger", "핑거"\], \["pick", "피크"\], \["slap", "슬랩"\]\]/);
+  assert.match(app, /\[\["clean", "클린"\], \["blues", "블루스"\], \["funk", "펑크"\], \["rock", "록"\]\]/);
   assert.match(css, /\.classical-render/);
   assert.match(css, /\.machine-deck/);
 });
 
 test('project-bound instrument artwork exists', () => {
-  for (const asset of ['bass-p-style.png', 'bass-j-style.png', 'bass-active-five.png', 'bass-fretless.png', 'guitar-s-style.png', 'guitar-metal-seven.png', 'guitar-hollowbody-jazz.png', 'guitar-dreadnought.png', 'guitar-classical-nylon.png', 'drum-rock-kit.webp', 'drum-metal-kit.webp', 'drum-pop-kit.webp', 'drum-jazz-kit.webp', 'drum-funk-kit.webp', 'violin-expressive.png', 'viola-expressive.png', 'cello-expressive.png', 'double-bass-expressive.png', 'flute-expressive.png', 'oboe-expressive.png', 'clarinet-expressive.png', 'bassoon-expressive.png', 'alto-sax-expressive.png', 'trumpet-expressive.png', 'trombone-expressive.png', 'french-horn-expressive.png', 'tuba-expressive.png', 'timpani-bank.png', 'glockenspiel-concert.png', 'marimba-concert.png', 'vibraphone-concert.png', 'xylophone-compact-concert.webp', 'orchestral-percussion-station.png', 'korean-gayageum.png', 'korean-geomungo.png', 'korean-haegeum.png', 'korean-ajaeng.png', 'korean-daegeum.png', 'korean-hyangpiri.png', 'korean-taepyeongso.png', 'korean-samulnori-station.png']) {
+  for (const asset of ['bass-p-style.png', 'bass-j-style.png', 'bass-active-five.png', 'bass-fretless.png', 'guitar-s-style.png', 'guitar-metal-seven.png', 'guitar-hollowbody-jazz.png', 'guitar-dreadnought.png', 'guitar-classical-nylon.png', 'drum-rock-kit.webp', 'drum-metal-kit.webp', 'drum-pop-kit.webp', 'drum-jazz-kit.webp', 'drum-funk-kit.webp', 'violin-expressive-v2.webp', 'viola-expressive-v2.webp', 'cello-expressive.png', 'double-bass-expressive.png', 'flute-expressive.png', 'oboe-expressive.png', 'clarinet-expressive.png', 'bassoon-expressive.png', 'contrabassoon-expressive.webp', 'alto-sax-expressive.png', 'soprano-sax-expressive-v2.webp', 'tenor-sax-expressive-v2.webp', 'baritone-sax-expressive-v2.webp', 'bass-clarinet-expressive-v2.webp', 'piccolo-flute-expressive-v2.webp', 'english-horn-expressive-v2.webp', 'trumpet-expressive.png', 'flugelhorn-expressive.webp', 'euphonium-expressive.webp', 'trombone-expressive.png', 'alto-trombone-expressive-v2.webp', 'bass-trombone-expressive-v2.webp', 'french-horn-expressive.png', 'tuba-expressive-v2.webp', 'harp-concert-v2.webp', 'piccolo-trumpet-expressive.webp', 'timpani-bank.png', 'glockenspiel-concert.png', 'marimba-concert.png', 'vibraphone-concert.png', 'xylophone-compact-concert.webp', 'orchestral-percussion-station.png', 'korean-gayageum.png', 'korean-geomungo.png', 'korean-haegeum.png', 'korean-ajaeng.png', 'korean-daegeum.png', 'korean-hyangpiri.png', 'korean-taepyeongso.png', 'korean-samulnori-station.png']) {
     assert.equal(fs.existsSync(path.join(root, 'assets', 'instruments', asset)), true, asset);
   }
 });
 
 test('range controls keep computer-keyboard performance available', () => {
   assert.match(app, /event\.target\.type !== "range"/);
-  assert.match(app, /id: "viola"[\s\S]*?viola-expressive\.png/);
+  assert.match(app, /id: "viola"[\s\S]*?viola-expressive-v2\.webp/);
 });
 
 test('shows actual-size guidance and keeps related instruments at different visual scales', () => {
@@ -238,9 +305,9 @@ test('provides complete long-form guides for every model and grouped instrument'
     'fm-dx7', 'jd800', 'hybrid-la-rhodes', 'hybrid-la-mks', 'hammond-organ', 'pipe-organ',
     'p-bass', 'j-bass', 'active-bass',
     'fretless-bass', 'upright-bass', 's-style', 'metal-seven', 'hollow-jazz', 'dreadnought',
-    'classical-guitar', 'violin', 'viola', 'cello', 'piccolo-flute', 'flute', 'oboe',
-    'english-horn', 'clarinet', 'bass-clarinet', 'bassoon', 'soprano-sax', 'saxophone', 'tenor-sax', 'baritone-sax',
-    'trumpet', 'alto-trombone', 'trombone', 'bass-trombone', 'french-horn', 'tuba',
+    'classical-guitar', 'violin', 'viola', 'cello', 'harp', 'piccolo-flute', 'flute', 'oboe',
+    'english-horn', 'clarinet', 'bass-clarinet', 'bassoon', 'contrabassoon', 'soprano-sax', 'saxophone', 'tenor-sax', 'baritone-sax',
+    'trumpet', 'piccolo-trumpet', 'flugelhorn', 'alto-trombone', 'trombone', 'bass-trombone', 'french-horn', 'euphonium', 'tuba',
     'rock-kit', 'metal-kit',
     'pop-kit', 'jazz-kit', 'funk-kit', 'drum-808', 'linn-machine', 'timpani', 'glockenspiel',
     'marimba', 'vibraphone', 'xylophone', 'orchestral-percussion', 'orchestral-snare',

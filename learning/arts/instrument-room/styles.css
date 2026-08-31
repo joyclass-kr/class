@@ -47,11 +47,11 @@ main { display: grid; gap: 12px; padding-top: 12px; }
 .instrument-tabs button:active { transform: scale(.985); }
 
 .instrument-console { position: relative; border: 1px solid var(--line); border-radius: 18px; background: rgba(16,24,27,.9); overflow: hidden; box-shadow: 0 18px 45px rgba(0,0,0,.25); }
-.console-head { position: absolute; z-index: 12; top: 10px; right: 10px; min-height: 0; padding: 0; border: 0; display: flex; pointer-events: none; }
+.console-head { position: relative; z-index: 12; min-height: 0; padding: 0; border: 0; display: grid; gap: 8px; margin-bottom: 10px; pointer-events: auto; }
 .console-head h1 { margin: 2px 0 2px; font-size: clamp(20px, 2.4vw, 28px); line-height: 1; letter-spacing: -.04em; }
 .console-head p { margin: 0; color: var(--muted); font-size: 12px; }
 .model-badge { color: var(--accent); font-size: 8px; font-weight: 900; letter-spacing: .14em; }
-.mode-switch { min-width: 180px; padding: 4px; border: 1px solid var(--line); border-radius: 11px; display: grid; grid-template-columns: 1fr 1fr; background: #0b1214; pointer-events: auto; }
+.mode-switch { width: 100%; min-width: 0; padding: 4px; border: 1px solid var(--line); border-radius: 11px; display: grid; grid-template-columns: 1fr 1fr; background: #0b1214; pointer-events: auto; }
 .mode-switch button { min-height: 42px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-weight: 800; cursor: pointer; }
 .mode-switch button.active { background: var(--accent); color: #092016; }
 .console-body { min-height: 205px; display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(270px, .72fr); }
@@ -70,15 +70,21 @@ main { display: grid; gap: 12px; padding-top: 12px; }
 .signal-meter i { width: 4px; height: 6px; border-radius: 3px; background: #33433f; transition: height .08s, background .08s; }
 .signal-meter i.live { background: var(--accent-2); }
 
-.control-panel { padding: 14px 16px; border-left: 1px solid var(--line); background: rgba(8,14,16,.55); }
-.control-set { height: 100%; display: grid; align-content: center; gap: 10px; }
+.control-panel { padding: 14px 16px; border-left: 1px solid var(--line); background: rgba(8,14,16,.55); display: grid; grid-template-rows: auto minmax(0,1fr); }
+.control-set { min-height: 0; display: grid; align-content: center; gap: 10px; }
 .sustain-button { min-height: 64px; border: 1px solid rgba(142,240,198,.38); border-radius: 13px; padding: 0 15px; display: flex; align-items: center; justify-content: space-between; background: rgba(142,240,198,.07); cursor: pointer; }
 .sustain-button span { font-size: 15px; font-weight: 900; }.sustain-button b { padding: 7px 9px; border-radius: 7px; background: rgba(255,255,255,.08); color: var(--muted); font-size: 9px; }
 .sustain-button.active { background: var(--accent); color: #082017; }.sustain-button.active b { background: rgba(0,0,0,.14); color: #082017; }
 .control-set > p { margin: 0; color: var(--muted); font-size: 11px; }
-.articulation-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
-.articulation-buttons button { min-height: 42px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,.03); color: var(--muted); font-size: 10px; font-weight: 900; cursor: pointer; }
+.technique-card { padding: 11px; border: 1px solid rgba(255,255,255,.085); border-radius: 11px; display: grid; gap: 8px; background: rgba(255,255,255,.022); }
+.control-eyebrow { color: #9df3ce; font-size: 9px; font-weight: 900; letter-spacing: .11em; }
+.technique-hint { min-height: 32px; margin: 0; color: #aab8b4; font-size: 11px; line-height: 1.45; word-break: keep-all; }
+.articulation-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(72px, 1fr)); gap: 6px; }
+.articulation-buttons button { min-height: 44px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,.03); color: var(--muted); font-size: 11px; font-weight: 900; cursor: pointer; }
 .articulation-buttons button.active { background: var(--accent); border-color: var(--accent); color: #082017; }
+.articulation-buttons button:disabled { opacity: 1; cursor: default; }
+.tone-preset-buttons button.active { background: var(--orange); border-color: var(--orange); color: #211006; }
+.physical-string-controls { display: grid; gap: 10px; }
 .control-set label { display: grid; gap: 3px; }
 .control-set label > span { display: flex; justify-content: space-between; color: var(--muted); font-size: 10px; font-weight: 800; }
 .control-set output { color: var(--accent); font-variant-numeric: tabular-nums; }
@@ -86,6 +92,8 @@ input[type="range"] { width: 100%; height: 20px; margin: 0; accent-color: var(--
 .kit-readout { display: grid; gap: 3px; padding: 10px 11px; border: 1px solid var(--line); border-radius: 10px; background: rgba(255,255,255,.025); }
 .kit-readout span { color: var(--orange); font-size: 9px; font-weight: 900; letter-spacing: .12em; }.kit-readout b { font-size: 11px; line-height: 1.35; }
 .kit-readout i, .control-set label span i { color: inherit; font-style: normal; }
+#drumControls.sampled-kit label { display: none; }
+#drumControls.sampled-kit .kit-readout { min-height: 96px; align-content: center; }
 
 .play-surface { border: 1px solid var(--line); border-radius: 16px; background: #0c1315; overflow: hidden; }
 .play-toolbar { min-height: 46px; padding: 0 12px 0 15px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--line); }
@@ -193,7 +201,7 @@ input[type="range"] { width: 100%; height: 20px; margin: 0; accent-color: var(--
 .instrument-layers[data-layout="pyeongyeong"] .tone-marker { width: 62%; height: 74%; border-radius: 16% 42% 24% 16%; clip-path: polygon(0 0,100% 0,100% 38%,48% 38%,48% 100%,0 100%); }
 @keyframes tone-flash { 0% { opacity: .35; transform: scale(.86); } 45% { opacity: 1; transform: scale(1.08); } 100% { opacity: .12; transform: scale(1); } }
 @keyframes instrument-flash { 0% { transform: scale(.97); } 45% { transform: scale(1.045); } 100% { transform: scale(1); } }
-.stage-bass .instrument-artwork, .stage-guitar .instrument-artwork { mix-blend-mode: screen; }
+.stage-bass .instrument-artwork, .stage-guitar .instrument-artwork { mix-blend-mode: screen; scale: -1 1; }
 .stage-drums .instrument-artwork { inset: 0 2%; width: 96%; height: 100%; object-fit: contain; mix-blend-mode: normal; transform: scale(var(--object-scale, 1)); }
 .stage-orchestral .instrument-artwork, .stage-timpani .instrument-artwork, .stage-mallet .instrument-artwork, .stage-metal .instrument-artwork { inset: 4px 7% 0; width: 86%; height: 100%; object-fit: contain; mix-blend-mode: screen; transform: scale(var(--object-scale, 1)); }
 .scale-guide { position: absolute; z-index: 7; right: 13px; top: 13px; width: 178px; padding: 9px 10px; border: 1px solid rgba(142,240,198,.24); border-radius: 9px; display: grid; gap: 4px; background: rgba(5,10,11,.78); box-shadow: 0 8px 18px rgba(0,0,0,.25); backdrop-filter: blur(6px); }
@@ -272,11 +280,8 @@ input[type="range"] { width: 100%; height: 20px; margin: 0; accent-color: var(--
 .control-set { align-content: start; }
 .fx-strip { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; padding-top: 7px; border-top: 1px solid var(--line); }
 .fx-strip label span { font-size: 8px; }
-.classical-controls { align-content: center; }
-.expression-tabs { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; }
-.expression-tabs button, .expression-actions button { min-height: 44px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,.035); font-size: 10px; font-weight: 900; cursor: pointer; }
-.expression-tabs button.active { color: #082017; background: var(--accent); }
-.expression-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.classical-controls { align-content: start; }
+
 
 @media (max-width: 860px) {
     .model-browser { grid-template-columns: 96px minmax(0,1fr); }
@@ -330,12 +335,14 @@ input[type="range"] { width: 100%; height: 20px; margin: 0; accent-color: var(--
 
 /* Instrument encyclopedia dialog */
 .instrument-info-button {
+    width: 100%;
     min-height: 44px;
     padding: 0 13px;
     border: 1px solid rgba(142,240,198,.38);
     border-radius: 11px;
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    justify-content: center;
     gap: 9px;
     background: rgba(7,17,18,.88);
     color: #dce8e4;
@@ -427,6 +434,7 @@ body.detail-open { overflow: hidden; }
 }
 .detail-artwork-frame::after { content: ""; position: absolute; left: 16%; right: 16%; bottom: 9%; height: 14px; border-radius: 50%; background: rgba(0,0,0,.58); filter: blur(9px); }
 .detail-artwork-frame > img { position: relative; z-index: 2; width: 92%; height: 92%; object-fit: contain; filter: drop-shadow(0 16px 18px rgba(0,0,0,.5)); }
+.detail-artwork-frame > img.corrected-handedness { scale: -1 1; }
 .detail-artwork-layers { position: absolute; z-index: 2; inset: 10px; display: grid; grid-template-columns: repeat(var(--detail-part-count,3),minmax(0,1fr)); align-items: center; gap: 4px; }
 .detail-artwork-layers img { width: 100%; height: 100%; min-width: 0; object-fit: contain; filter: drop-shadow(0 10px 10px rgba(0,0,0,.55)); }
 .detail-artwork-layers[data-layout="daechwita"] { grid-template-columns: repeat(3,minmax(0,1fr)); grid-template-rows: repeat(2,minmax(0,1fr)); }
@@ -462,8 +470,6 @@ body.detail-open { overflow: hidden; }
     .detail-layout { grid-template-columns: minmax(270px,.72fr) minmax(0,1.28fr); }
     .detail-visual-column { padding: 12px; }
     .detail-article { padding: 22px; }
-    .instrument-info-button span { display: none; }
-    .instrument-info-button { width: 44px; padding: 0; justify-content: center; }
 }
 @media (orientation: portrait), (max-width: 700px) {
     .instrument-detail-modal { padding: 0; }
@@ -479,7 +485,6 @@ body.detail-open { overflow: hidden; }
     .detail-article { min-height: 520px; overflow: visible; }
 }
 @media (max-width: 520px) {
-    .instrument-info-button { position: fixed; z-index: 30; right: 10px; bottom: 12px; border-radius: 50%; background: #123229; box-shadow: 0 10px 28px rgba(0,0,0,.55); }
     .detail-header { grid-template-columns: minmax(0,1fr) auto; }
     .detail-heading h2 { font-size: 24px; }
     .detail-heading p { max-width: 58vw; font-size: 13px; white-space: normal; }
