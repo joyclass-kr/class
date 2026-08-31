@@ -9,11 +9,47 @@
         { midi: 72, file: "C5.ogg" }, { midi: 78, file: "Fs5.ogg" },
         { midi: 84, file: "C6.ogg" }
     ];
-    const GRAND_SAMPLE_ROOT = "assets/audio/concert-grand/";
-    const GRAND_SAMPLE_MIN = 21;
-    const GRAND_SAMPLE_MAX = 108;
-    const GRAND_SAMPLE_STEP = 3;
-    const GRAND_SAMPLE_CACHE_LIMIT = 16;
+    const GRAND_SAMPLE_STEP = 1;
+    const KEYBOARD_SAMPLE_CACHE_LIMIT = 24;
+    const KEYBOARD_SAMPLE_SETS = Object.freeze({
+        "concert-grand": Object.freeze({ id: "concert-grand", root: "assets/audio/concert-grand/", min: 21, max: 108, fileMin: 21, step: 1, gainDb: 6.03 }),
+        "upright-piano": Object.freeze({ id: "upright-piano", root: "assets/audio/upright-piano/", min: 21, max: 108, fileMin: 21, step: 1, gainDb: 9.0 }),
+        "harpsichord": Object.freeze({ id: "harpsichord", root: "assets/audio/harpsichord/", min: 29, max: 86, fileMin: 21, step: 1, gainDb: 15.0 }),
+        "tine-ep": Object.freeze({ id: "tine-ep", root: "assets/audio/fender-rhodes/", min: 21, max: 108, fileMin: 21, step: 1, gainDb: 1.89 }),
+        "reed-ep": Object.freeze({ id: "reed-ep", root: "assets/audio/wurlitzer/", min: 21, max: 108, fileMin: 21, step: 1, gainDb: 1.68 }),
+        "clavinet": Object.freeze({ id: "clavinet", root: "assets/audio/clavinet/", min: 21, max: 108, fileMin: 21, step: 1, gainDb: 9.0 }),
+        "fm-dx7": Object.freeze({ id: "fm-dx7", root: "assets/audio/fm-dx7/", min: 21, max: 108, fileMin: 21, step: 1, gainDb: 7.07 }),
+        "jd800": Object.freeze({ id: "jd800", root: "assets/audio/jd800/", min: 21, max: 108, fileMin: 21, step: 1, gainDb: 6.58 }),
+        "hybrid-la-rhodes": Object.freeze({ id: "hybrid-la-rhodes", root: "assets/audio/hybrid-la-rhodes/", min: 21, max: 108, fileMin: 21, step: 1, gainDb: 6.04 }),
+        "hybrid-la-mks": Object.freeze({ id: "hybrid-la-mks", root: "assets/audio/hybrid-la-mks/", min: 21, max: 108, fileMin: 21, step: 1, gainDb: 5.82 }),
+        "hammond-organ": Object.freeze({ id: "hammond-organ", root: "assets/audio/hammond-organ/", min: 36, max: 96, fileMin: 21, step: 1, gainDb: 4.94 }),
+        "pipe-organ": Object.freeze({ id: "pipe-organ", root: "assets/audio/pipe-organ/", min: 36, max: 96, fileMin: 21, step: 1, gainDb: 7.72 }),
+        "flute": Object.freeze({ id: "flute", root: "assets/audio/flute/", min: 60, max: 96, fileMin: 21, step: 1, gainDb: 6.83 }),
+        "oboe": Object.freeze({ id: "oboe", root: "assets/audio/oboe/", min: 58, max: 91, fileMin: 21, step: 1, gainDb: 4.35 }),
+        "trumpet": Object.freeze({ id: "trumpet", root: "assets/audio/trumpet/", min: 52, max: 97, fileMin: 21, step: 1, gainDb: -2.92 }),
+        "clarinet": Object.freeze({ id: "clarinet", root: "assets/audio/clarinet/", min: 50, max: 88, fileMin: 21, step: 1, gainDb: 2.89 }),
+        "bass-clarinet": Object.freeze({ id: "bass-clarinet", root: "assets/audio/bass-clarinet/", min: 44, max: 95, fileMin: 21, step: 1, gainDb: 0.05 }),
+        "piccolo-flute": Object.freeze({ id: "piccolo-flute", root: "assets/audio/piccolo-flute/", min: 72, max: 108, fileMin: 21, step: 1, gainDb: 9.0 }),
+        "french-horn": Object.freeze({ id: "french-horn", root: "assets/audio/french-horn/", min: 47, max: 93, fileMin: 21, step: 1, gainDb: -2.93 }),
+        "english-horn": Object.freeze({ id: "english-horn", root: "assets/audio/english-horn/", min: 52, max: 83, fileMin: 21, step: 1, gainDb: 4.38 }),
+        "soprano-sax": Object.freeze({ id: "soprano-sax", root: "assets/audio/soprano-sax/", min: 53, max: 94, fileMin: 21, step: 1, gainDb: -1.38 }),
+        "saxophone": Object.freeze({ id: "saxophone", root: "assets/audio/alto-sax/", min: 46, max: 92, fileMin: 21, step: 1, gainDb: -0.11 }),
+        "tenor-sax": Object.freeze({ id: "tenor-sax", root: "assets/audio/tenor-sax/", min: 53, max: 102, fileMin: 21, step: 1, gainDb: 0.37 }),
+        "baritone-sax": Object.freeze({ id: "baritone-sax", root: "assets/audio/baritone-sax/", min: 45, max: 100, fileMin: 21, step: 1, gainDb: -0.93 }),
+        "bassoon": Object.freeze({ id: "bassoon", root: "assets/audio/bassoon/", min: 34, max: 75, fileMin: 21, step: 1, gainDb: 6.91 }),
+        "alto-trombone": Object.freeze({ id: "alto-trombone", root: "assets/audio/alto-trombone/", min: 45, max: 88, fileMin: 21, step: 1, gainDb: -4.59 }),
+        "trombone": Object.freeze({ id: "trombone", root: "assets/audio/tenor-trombone/", min: 52, max: 97, fileMin: 21, step: 1, gainDb: -5.68 }),
+        "bass-trombone": Object.freeze({ id: "bass-trombone", root: "assets/audio/bass-trombone/", min: 35, max: 92, fileMin: 21, step: 1, gainDb: -3.85 }),
+        "tuba": Object.freeze({ id: "tuba", root: "assets/audio/bass-tuba/", min: 40, max: 96, fileMin: 21, step: 1, gainDb: -4.31 }),
+        "viola": Object.freeze({ id: "viola", root: "assets/audio/viola/", min: 48, max: 108, fileMin: 21, step: 1, gainDb: 0.59 }),
+        "viola-pizz": Object.freeze({ id: "viola-pizz", root: "assets/audio/viola-pizz/", min: 48, max: 89, fileMin: 21, step: 1, gainDb: 9.0 }),
+        "violin": Object.freeze({ id: "violin", root: "assets/audio/violin/", min: 55, max: 108, fileMin: 21, step: 1, gainDb: 1.45 }),
+        "violin-pizz": Object.freeze({ id: "violin-pizz", root: "assets/audio/violin-pizz/", min: 55, max: 100, fileMin: 21, step: 1, gainDb: 9.0 }),
+        "cello": Object.freeze({ id: "cello", root: "assets/audio/cello/", min: 48, max: 108, fileMin: 21, step: 1, gainDb: -3.85 }),
+        "cello-pizz": Object.freeze({ id: "cello-pizz", root: "assets/audio/cello-pizz/", min: 48, max: 73, fileMin: 21, step: 1, gainDb: 9.0 }),
+        "upright-bass": Object.freeze({ id: "upright-bass", root: "assets/audio/upright-bass/", min: 52, max: 108, fileMin: 21, step: 1, gainDb: -4.1 }),
+        "upright-bass-pizz": Object.freeze({ id: "upright-bass-pizz", root: "assets/audio/upright-bass-pizz/", min: 52, max: 108, fileMin: 21, step: 1, gainDb: 1.16 })
+    });
     const COMPUTER_KEYS = [
         ["KeyA", 0, "A"], ["KeyW", 1, "W"], ["KeyS", 2, "S"], ["KeyE", 3, "E"],
         ["KeyD", 4, "D"], ["KeyF", 5, "F"], ["KeyT", 6, "T"], ["KeyG", 7, "G"],
@@ -82,7 +118,7 @@
         return parts.map(function (id) { return DRUMS.find(function (drum) { return drum.id === id; }); }).filter(Boolean);
     }
     const INSTRUMENT_COPY = {
-        piano: { name: "그랜드 피아노", badge: "30-ZONE MULTISAMPLE", family: "ACOUSTIC", model: "88 GRAND", description: "Cubase에서 렌더한 콘서트 그랜드를 30개 음역 구간으로 최적화했어요. 건반 길이와 서스테인 페달에 따라 울림이 달라집니다." },
+        piano: { name: "피아노", badge: "88-NOTE OGG MULTISAMPLE", family: "KEYBOARD", model: "A0–C8", description: "실제 가상악기에서 렌더한 88개 음을 건반마다 독립적으로 불러와 연주해요." },
         bass: { name: "모델링 베이스", badge: "DIGITAL WAVEGUIDE", family: "ELECTRIC BASS", model: "4 STRING", description: "현의 길이와 감쇠, 피킹 위치를 실시간으로 계산해요. A–K 키로도 연주할 수 있어요." },
         guitar: { name: "모델링 기타", badge: "DIGITAL WAVEGUIDE", family: "ELECTRIC GUITAR", model: "6 STRING", description: "건반으로 단음을 연주하거나 코드패드로 스트로크하세요. WAV 음원을 사용하지 않아요." },
         drums: { name: "모델링 드럼", badge: "MODAL RESONATOR", family: "ACOUSTIC KIT", model: "8 PIECE", description: "막과 금속의 여러 공진 모드를 합성해요. 패드 또는 A–K 키로 바로 연주하세요." }
@@ -94,43 +130,54 @@
     };
     const MODEL_LIBRARY = {
         keyboard: [
-            { id: "concert-grand", name: "콘서트 그랜드", tag: "AP · ACOUSTIC", engine: "piano", stage: "piano", art: "assets/instruments/keyboard-concert-grand.webp", badge: "30-ZONE MULTISAMPLE", model: "88 GRAND", range: [21, 108], description: "Cubase 콘서트 그랜드 원음을 30개 구간으로 최적화해 A0–C8 전 음역을 연주해요." },
-            { id: "upright-piano", name: "업라이트 피아노", tag: "AP · ACOUSTIC", engine: "piano", stage: "piano", art: "assets/instruments/keyboard-upright-piano.webp", badge: "UPRIGHT PIANO", model: "STUDIO UPRIGHT", description: "가정과 연습실에서 익숙한 업라이트 피아노 화면이에요." },
-            { id: "tine-ep", name: "Tine EP", tag: "EP · ELECTRIC", engine: "piano", stage: "ep", art: "assets/instruments/keyboard-tine-ep.webp", badge: "TINE ELECTRIC PIANO", model: "TINE 73", description: "금속 타인과 픽업의 반응을 다루는 대표적인 일렉트릭 피아노예요." },
-            { id: "reed-ep", name: "Reed EP", tag: "EP · ELECTRIC", engine: "piano", stage: "ep", art: "assets/instruments/keyboard-reed-ep.webp", badge: "REED ELECTRIC PIANO", model: "REED 64", description: "리드의 거친 어택과 따뜻한 중음을 가진 일렉트릭 피아노예요." },
-            { id: "pop-grand-fm", name: "Pop Grand + FM", tag: "HYBRID", engine: "piano", stage: "hybrid", art: "assets/instruments/keyboard-pop-grand-fm.webp", badge: "AP + FM EP LAYER", model: "POP GRAND + FM", description: "밝은 그랜드 어택 위에 FM 일렉트릭 피아노를 겹친 팝 발라드 톤이에요." },
-            { id: "grand-tine-duo", name: "Grand + Tine", tag: "HYBRID", engine: "piano", stage: "hybrid", art: "assets/instruments/keyboard-grand-tine-duo.webp", badge: "AP + TINE EP LAYER", model: "GRAND + TINE", description: "어쿠스틱 그랜드와 타인 EP를 함께 연주하는 넓은 레이어 톤이에요." },
-            { id: "ballad-digital", name: "Ballad + Digital EP", tag: "HYBRID", engine: "piano", stage: "hybrid", art: "assets/instruments/keyboard-ballad-digital.webp", badge: "AP + DIGITAL EP", model: "BALLAD DUO", description: "부드러운 발라드 그랜드 뒤에 디지털 EP의 선명함을 더한 톤이에요." },
-            { id: "tonewheel-organ", name: "Tonewheel Organ", tag: "ORGAN", engine: "piano", stage: "organ", art: "assets/instruments/keyboard-tonewheel-organ.webp", badge: "TONEWHEEL ORGAN", model: "DRAWBAR B3 STYLE", description: "드로바와 로터리 스피커가 중심인 톤휠 오르간 화면이에요." },
-            { id: "pipe-organ", name: "Pipe Organ", tag: "ORGAN", engine: "piano", stage: "organ", art: "assets/instruments/keyboard-pipe-organ.webp", badge: "PIPE ORGAN", model: "CHURCH PIPE", description: "스톱과 매뉴얼을 중심으로 정리한 파이프 오르간 화면이에요." }
+            { id: "concert-grand", name: "콘서트 그랜드", tag: "AP · ACOUSTIC", engine: "piano", stage: "piano", art: "assets/instruments/keyboard-concert-grand.webp", badge: "88-NOTE OGG", model: "88 GRAND", range: [21, 108], description: "콘서트 그랜드 원음을 건반마다 따로 담아 A0–C8 전 음역을 연주해요." },
+            { id: "upright-piano", name: "업라이트 피아노", tag: "AP · ACOUSTIC", engine: "piano", stage: "piano", art: "assets/instruments/keyboard-upright-piano.webp", badge: "88-NOTE OGG", model: "STUDIO UPRIGHT", range: [21, 108], description: "업라이트 피아노 원음을 건반마다 따로 담아 A0–C8 전 음역을 연주해요." },
+            { id: "harpsichord", name: "하프시코드", tag: "ACOUSTIC · PLUCKED", engine: "piano", stage: "harpsichord", art: "assets/instruments/keyboard-harpsichord.webp", badge: "58-NOTE SOURCE · EXTENDED", model: "HARPSICHORD", range: [21, 108], description: "현을 뜯어 내는 하프시코드 원음 F1–D6을 바탕으로 88건반 전체를 연주해요." },
+            { id: "tine-ep", name: "펜더 로즈", tag: "EP · TINE", engine: "piano", stage: "ep", art: "assets/instruments/keyboard-tine-ep.webp", badge: "88-NOTE OGG", model: "FENDER RHODES", range: [21, 108], description: "금속 타인 특유의 둥근 울림을 A0–C8 전 음역에서 연주해요." },
+            { id: "reed-ep", name: "월리처", tag: "EP · REED", engine: "piano", stage: "ep", art: "assets/instruments/keyboard-reed-ep.webp", badge: "88-NOTE OGG", model: "WURLITZER", range: [21, 108], description: "금속 리드의 단단하고 거친 어택을 A0–C8 전 음역에서 연주해요." },
+            { id: "clavinet", name: "클라비넷", tag: "ELECTROMECHANICAL", engine: "piano", stage: "clavinet", art: "assets/instruments/keyboard-clavinet.webp", badge: "88-NOTE OGG", model: "CLAVINET", range: [21, 108], description: "현을 고무 패드로 눌러 튕기는 짧고 펑키한 소리를 전 음역에서 연주해요." },
+            { id: "fm-dx7", name: "FM 피아노 · DX7", tag: "DIGITAL · FM", engine: "piano", stage: "digital", art: "assets/instruments/keyboard-fm-dx7.webp", badge: "88-NOTE OGG", model: "FM · DX7", range: [21, 108], description: "FM 합성 특유의 벨 같은 전기피아노 음색을 전 음역에서 연주해요." },
+            { id: "jd800", name: "JD-800", tag: "DIGITAL · PCM", engine: "piano", stage: "digital", art: "assets/instruments/keyboard-jd800.webp", badge: "88-NOTE OGG", model: "JD-800", range: [21, 108], description: "PCM 파형과 감산 합성이 결합된 밝고 넓은 디지털 건반 음색이에요." },
+            { id: "hybrid-la-rhodes", name: "LA 피아노 + LA 로즈", tag: "HYBRID · LA", engine: "piano", stage: "hybrid", art: "assets/instruments/keyboard-grand-tine-duo.webp", badge: "88-NOTE OGG", model: "LA PIANO + LA RHODES", range: [21, 108], description: "LA 방식 피아노와 로즈 계열의 따뜻한 배음을 한 음색으로 겹쳤어요." },
+            { id: "hybrid-la-mks", name: "LA 피아노 + MKS", tag: "HYBRID · LA", engine: "piano", stage: "hybrid", art: "assets/instruments/keyboard-ballad-digital.webp", badge: "88-NOTE OGG", model: "LA PIANO + MKS", range: [21, 108], description: "LA 피아노의 어택과 MKS 계열 디지털 피아노의 넓은 몸통을 겹쳤어요." },
+            { id: "hammond-organ", name: "해먼드 오르간", tag: "ORGAN · TONEWHEEL", engine: "piano", stage: "organ", art: "assets/instruments/keyboard-tonewheel-organ.webp", badge: "61-NOTE SOURCE · EXTENDED", model: "HAMMOND ORGAN", range: [21, 108], description: "C2–C7 해먼드 원음을 바탕으로 88건반 전체를 연주하며 드로바 구조를 살펴봐요." },
+            { id: "pipe-organ", name: "파이프오르간", tag: "ORGAN · PIPE", engine: "piano", stage: "organ", art: "assets/instruments/keyboard-pipe-organ.webp", badge: "61-NOTE SOURCE · EXTENDED", model: "PIPE ORGAN", range: [21, 108], description: "C2–C7 파이프오르간 원음을 바탕으로 88건반 전체를 연주해요." }
         ],
         strings: [
             { id: "p-bass", name: "P-Style 4", tag: "ELECTRIC BASS", engine: "bass", stage: "bass", art: "assets/instruments/bass-p-style.png", badge: "PASSIVE SPLIT COIL", model: "P-STYLE 4", range: [28, 67], size: "전체 길이 약 116 cm", visualScale: .82, scalePercent: 64, description: "굵고 단단한 기본음을 내는 클래식 4현 패시브 베이스예요." },
             { id: "j-bass", name: "J-Style 4", tag: "ELECTRIC BASS", engine: "bass", stage: "bass", art: "assets/instruments/bass-j-style.png", badge: "DUAL SINGLE COIL", model: "J-STYLE 4", range: [28, 67], size: "전체 길이 약 117 cm", visualScale: .83, scalePercent: 65, description: "두 픽업의 균형과 선명한 어택을 다루는 4현 베이스예요." },
             { id: "active-bass", name: "Modern Active 5", tag: "ELECTRIC BASS", engine: "bass", stage: "bass", art: "assets/instruments/bass-active-five.png", badge: "ACTIVE 5 STRING", model: "MODERN ACTIVE 5", range: [23, 72], size: "전체 길이 약 118 cm", visualScale: .84, scalePercent: 66, description: "넓은 음역과 적극적인 톤 설계를 위한 5현 액티브 베이스예요." },
             { id: "fretless-bass", name: "Fretless 4", tag: "ELECTRIC BASS", engine: "bass", stage: "bass", art: "assets/instruments/bass-fretless.png", badge: "FRETLESS", model: "FRETLESS 4", range: [28, 67], size: "전체 길이 약 116 cm", visualScale: .82, scalePercent: 64, description: "미끄러지는 음정과 부드러운 어택을 표현하는 프렛리스 베이스예요." },
-            { id: "upright-bass", name: "콘트라베이스", tag: "ORCHESTRAL", engine: "guitar", stage: "classical", art: "assets/instruments/double-bass-expressive.png", badge: "ACOUSTIC STRING", model: "DOUBLE BASS", range: [28, 79], size: "전체 높이 약 180 cm", visualScale: 1, scalePercent: 100, expression: "보우 압력", description: "피치카토와 아르코를 오가는 SWAM식 표현 화면이에요." },
+            { id: "upright-bass", name: "콘트라베이스", tag: "ORCHESTRAL", engine: "guitar", stage: "classical", art: "assets/instruments/double-bass-expressive.png", badge: "57-NOTE SUSTAIN · 57-NOTE PIZZ", model: "DOUBLE BASS", range: [52, 108], size: "전체 높이 약 180 cm", visualScale: 1, scalePercent: 100, expression: "보우 압력", description: "콘트라베이스 서스테인과 피치카토를 실제 샘플로 바꾸어 연주해요." },
             { id: "s-style", name: "Rock S-Style", tag: "ELECTRIC GUITAR", engine: "guitar", stage: "guitar", art: "assets/instruments/guitar-s-style.png", badge: "TRUE SSS · 5 WAY", model: "ROCK S-STYLE", range: [40, 88], size: "전체 길이 약 100 cm", visualScale: .7, scalePercent: 56, guitar: true, description: "근본적인 SSS 픽업과 5단 셀렉터를 갖춘 록 기타예요." },
             { id: "metal-seven", name: "Modern Metal 7", tag: "ELECTRIC GUITAR", engine: "guitar", stage: "guitar", art: "assets/instruments/guitar-metal-seven.png", badge: "ACTIVE HH · 7 STRING", model: "MODERN METAL 7", range: [35, 88], size: "전체 길이 약 103 cm", visualScale: .72, scalePercent: 57, guitar: true, description: "액티브 험버커와 낮은 7번 현을 위한 메탈 전용 기타예요." },
             { id: "hollow-jazz", name: "Hollowbody Jazz", tag: "ELECTRIC GUITAR", engine: "guitar", stage: "guitar", art: "assets/instruments/guitar-hollowbody-jazz.png", badge: "HOLLOWBODY", model: "JAZZ ARCHTOP", range: [40, 88], size: "전체 길이 약 105 cm", visualScale: .73, scalePercent: 58, guitar: true, description: "따뜻하고 둥근 어택을 위한 할로우바디 재즈 기타예요." },
             { id: "dreadnought", name: "Dreadnought", tag: "ACOUSTIC GUITAR", engine: "guitar", stage: "guitar", art: "assets/instruments/guitar-dreadnought.png", badge: "STEEL STRING", model: "DREADNOUGHT", range: [40, 88], size: "전체 길이 약 104 cm", visualScale: .72, scalePercent: 58, guitar: true, description: "대표적인 스틸 스트링 통기타 구성이에요." },
             { id: "classical-guitar", name: "Classical Nylon", tag: "ACOUSTIC GUITAR", engine: "guitar", stage: "guitar", art: "assets/instruments/guitar-classical-nylon.png", badge: "NYLON STRING", model: "CLASSICAL", range: [40, 88], size: "전체 길이 약 99 cm", visualScale: .69, scalePercent: 55, guitar: true, description: "부드러운 나일론 현과 핑거스타일 중심의 클래식 기타예요." },
-            { id: "violin", name: "바이올린", tag: "BOWED STRING", engine: "guitar", stage: "classical", art: "assets/instruments/violin-expressive.png", badge: "EXPRESSIVE STRING", model: "VIOLIN", range: [55, 105], size: "전체 길이 약 59 cm", visualScale: .48, scalePercent: 33, expression: "보우 압력", description: "다이내믹과 보우 압력, 비브라토를 중심으로 다루는 표현형 화면이에요." },
-            { id: "viola", name: "비올라", tag: "BOWED STRING", engine: "guitar", stage: "classical", art: "assets/instruments/viola-expressive.png", badge: "EXPRESSIVE STRING", model: "VIOLA", range: [48, 88], size: "전체 길이 약 66 cm", visualScale: .53, scalePercent: 37, expression: "보우 압력", description: "바이올린보다 넓고 큰 몸통과 낮은 중음역을 구별할 수 있는 비올라 화면이에요." },
-            { id: "cello", name: "첼로", tag: "BOWED STRING", engine: "guitar", stage: "classical", art: "assets/instruments/cello-expressive.png", badge: "EXPRESSIVE STRING", model: "CELLO", range: [36, 84], size: "전체 높이 약 121 cm", visualScale: .78, scalePercent: 67, expression: "보우 압력", description: "활의 압력과 속도, 비브라토를 중심으로 설계한 첼로 화면이에요." }
+            { id: "violin", name: "바이올린", tag: "BOWED STRING", engine: "guitar", stage: "classical", art: "assets/instruments/violin-expressive.png", badge: "54-NOTE SUSTAIN · 46-NOTE PIZZ", model: "VIOLIN", range: [55, 108], size: "전체 길이 약 59 cm", visualScale: .48, scalePercent: 33, expression: "보우 압력", description: "바이올린 서스테인과 피치카토를 실제 샘플로 바꾸어 연주해요." },
+            { id: "viola", name: "비올라", tag: "BOWED STRING", engine: "guitar", stage: "classical", art: "assets/instruments/viola-expressive.png", badge: "61-NOTE SUSTAIN · 42-NOTE PIZZ", model: "VIOLA", range: [48, 108], size: "전체 길이 약 66 cm", visualScale: .53, scalePercent: 37, expression: "보우 압력", description: "비올라 서스테인과 피치카토를 주법 버튼으로 바꾸어 실제 샘플로 연주해요." },
+            { id: "cello", name: "첼로", tag: "BOWED STRING", engine: "guitar", stage: "classical", art: "assets/instruments/cello-expressive.png", badge: "61-NOTE SUSTAIN · 26-NOTE PIZZ", model: "CELLO", range: [48, 108], size: "전체 높이 약 121 cm", visualScale: .78, scalePercent: 67, expression: "보우 압력", description: "첼로 서스테인과 피치카토를 실제 샘플로 바꾸어 연주해요." }
         ],
         woodwind: [
-            { id: "flute", name: "플루트", tag: "AIR JET", engine: "guitar", stage: "wind", art: "assets/instruments/flute-expressive.png", badge: "EXPRESSIVE WOODWIND", model: "CONCERT FLUTE", range: [60, 98], size: "전체 길이 약 67 cm", visualScale: .46, scalePercent: 37, expression: "호흡 압력", description: "호흡과 레가토, 비브라토를 중심으로 연주하는 목관 화면이에요." },
-            { id: "oboe", name: "오보에", tag: "DOUBLE REED", engine: "guitar", stage: "wind", art: "assets/instruments/oboe-expressive.png", badge: "DOUBLE REED", model: "OBOE", range: [58, 93], size: "전체 길이 약 65 cm", visualScale: .45, scalePercent: 36, expression: "호흡 압력", description: "더블 리드의 압력과 밝기를 다루는 표현형 화면이에요." },
-            { id: "clarinet", name: "클라리넷", tag: "SINGLE REED", engine: "guitar", stage: "wind", art: "assets/instruments/clarinet-expressive.png", badge: "SINGLE REED", model: "CLARINET", range: [50, 94], size: "전체 길이 약 66 cm", visualScale: .46, scalePercent: 37, expression: "호흡 압력", description: "호흡과 레가토 전환을 중심으로 한 클라리넷 화면이에요." },
-            { id: "bassoon", name: "바순", tag: "DOUBLE REED", engine: "guitar", stage: "wind", art: "assets/instruments/bassoon-expressive.png", badge: "LOW WOODWIND", model: "BASSOON", range: [34, 76], size: "전체 높이 약 134 cm", visualScale: .78, scalePercent: 74, expression: "호흡 압력", description: "낮은 음역과 더블 리드 반응을 다루는 바순 화면이에요." },
-            { id: "saxophone", name: "알토 색소폰", tag: "SINGLE REED", engine: "guitar", stage: "wind", art: "assets/instruments/alto-sax-expressive.png", badge: "EXPRESSIVE REED", model: "ALTO SAX", range: [49, 80], size: "전체 높이 약 65 cm", visualScale: .46, scalePercent: 36, expression: "호흡 압력", description: "호흡, 벤드, 비브라토가 전면에 놓인 색소폰 화면이에요." }
+            { id: "piccolo-flute", name: "피콜로", tag: "AIR JET · HIGH", engine: "guitar", stage: "wind", art: "assets/instruments/flute-expressive.png", badge: "37-NOTE OGG", model: "PICCOLO FLUTE", range: [72, 108], size: "전체 길이 약 33 cm", visualScale: .28, scalePercent: 18, expression: "호흡 압력", description: "새 피콜로 원음 C5–C8을 반음마다 연주해요." },
+            { id: "flute", name: "플루트", tag: "AIR JET", engine: "guitar", stage: "wind", art: "assets/instruments/flute-expressive.png", badge: "37-NOTE OGG", model: "CONCERT FLUTE", range: [60, 96], size: "전체 길이 약 67 cm", visualScale: .46, scalePercent: 37, expression: "호흡 압력", description: "플루트 원음 C4–C7을 반음마다 연주해요." },
+            { id: "oboe", name: "오보에", tag: "DOUBLE REED", engine: "guitar", stage: "wind", art: "assets/instruments/oboe-expressive.png", badge: "34-NOTE OGG", model: "OBOE", range: [58, 91], size: "전체 길이 약 65 cm", visualScale: .45, scalePercent: 36, expression: "호흡 압력", description: "새 오보에 원음 A♯3–G6을 반음마다 연주해요." },
+            { id: "english-horn", name: "잉글리시 호른", tag: "DOUBLE REED · ALTO", engine: "guitar", stage: "wind", art: "assets/instruments/oboe-expressive.png", badge: "42-NOTE OGG", model: "ENGLISH HORN", range: [49, 90], size: "전체 길이 약 81 cm", visualScale: .54, scalePercent: 45, expression: "호흡 압력", description: "오보에보다 낮고 어두운 잉글리시 호른 원음을 연주해요." },
+            { id: "clarinet", name: "클라리넷", tag: "SINGLE REED", engine: "guitar", stage: "wind", art: "assets/instruments/clarinet-expressive.png", badge: "48-NOTE OGG", model: "CLARINET", range: [48, 95], size: "전체 길이 약 66 cm", visualScale: .46, scalePercent: 37, expression: "호흡 압력", description: "클라리넷 원음 C3–B6을 반음마다 연주해요." },
+            { id: "bass-clarinet", name: "베이스 클라리넷", tag: "SINGLE REED · BASS", engine: "guitar", stage: "wind", art: "assets/instruments/clarinet-expressive.png", badge: "52-NOTE OGG", model: "BASS CLARINET", range: [44, 95], size: "전체 높이 약 95 cm", visualScale: .61, scalePercent: 53, expression: "호흡 압력", description: "깊은 저음부터 높은 음까지 베이스 클라리넷 원음을 연주해요." },
+            { id: "bassoon", name: "바순", tag: "DOUBLE REED · BASS", engine: "guitar", stage: "wind", art: "assets/instruments/bassoon-expressive.png", badge: "48-NOTE OGG", model: "BASSOON", range: [44, 91], size: "전체 높이 약 134 cm", visualScale: .78, scalePercent: 74, expression: "호흡 압력", description: "바순 원음 G♯2–G6을 반음마다 연주해요." },
+            { id: "soprano-sax", name: "소프라노 색소폰", tag: "SINGLE REED · SOPRANO", engine: "guitar", stage: "wind", art: "assets/instruments/alto-sax-expressive.png", badge: "42-NOTE OGG", model: "SOPRANO SAX", range: [53, 94], size: "전체 길이 약 65 cm", visualScale: .45, scalePercent: 36, expression: "호흡 압력", description: "곧고 밝은 소프라노 색소폰 원음을 연주해요." },
+            { id: "saxophone", name: "알토 색소폰", tag: "SINGLE REED · ALTO", engine: "guitar", stage: "wind", art: "assets/instruments/alto-sax-expressive.png", badge: "47-NOTE OGG", model: "ALTO SAX", range: [46, 92], size: "전체 높이 약 65 cm", visualScale: .46, scalePercent: 36, expression: "호흡 압력", description: "알토 색소폰 원음 A♯2–G♯6을 반음마다 연주해요." },
+            { id: "tenor-sax", name: "테너 색소폰", tag: "SINGLE REED · TENOR", engine: "guitar", stage: "wind", art: "assets/instruments/alto-sax-expressive.png", badge: "50-NOTE OGG", model: "TENOR SAX", range: [53, 102], size: "전체 높이 약 79 cm", visualScale: .53, scalePercent: 44, expression: "호흡 압력", description: "테너 색소폰 원음 F3–F♯7을 반음마다 연주해요." },
+            { id: "baritone-sax", name: "바리톤 색소폰", tag: "SINGLE REED · BARITONE", engine: "guitar", stage: "wind", art: "assets/instruments/alto-sax-expressive.png", badge: "56-NOTE OGG", model: "BARITONE SAX", range: [45, 100], size: "전체 높이 약 110 cm", visualScale: .68, scalePercent: 61, expression: "호흡 압력", description: "바리톤 색소폰 원음 A2–E7을 반음마다 연주해요." }
         ],
         brass: [
-            { id: "trumpet", name: "트럼펫", tag: "HIGH BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/trumpet-expressive.png", badge: "EXPRESSIVE BRASS", model: "TRUMPET", range: [54, 86], size: "외형 길이 약 48 cm", visualScale: .38, scalePercent: 27, expression: "호흡 압력", description: "호흡 압력과 립 텐션을 중심으로 한 트럼펫 화면이에요." },
-            { id: "trombone", name: "트롬본", tag: "SLIDE BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/trombone-expressive.png", badge: "SLIDE BRASS", model: "TENOR TROMBONE", range: [40, 70], size: "슬라이드 닫힘 약 114 cm", visualScale: .7, scalePercent: 63, expression: "립 텐션", description: "슬라이드와 립 텐션을 표현하는 트롬본 화면이에요." },
-            { id: "french-horn", name: "호른", tag: "ORCHESTRAL BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/french-horn-expressive.png", badge: "ORCHESTRAL BRASS", model: "FRENCH HORN", range: [35, 77], size: "벨 포함 너비 약 58 cm", visualScale: .42, scalePercent: 32, expression: "호흡 압력", description: "부드러운 어택부터 포르테까지 연속적으로 다루는 호른 화면이에요." },
-            { id: "tuba", name: "튜바", tag: "LOW BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/tuba-expressive.png", badge: "LOW BRASS", model: "TUBA", range: [26, 65], size: "전체 높이 약 100 cm", visualScale: .62, scalePercent: 56, expression: "호흡 압력", description: "낮은 금관의 공기 흐름과 어택을 다루는 튜바 화면이에요." }
+            { id: "trumpet", name: "트럼펫", tag: "HIGH BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/trumpet-expressive.png", badge: "46-NOTE OGG", model: "TRUMPET", range: [52, 97], size: "외형 길이 약 48 cm", visualScale: .38, scalePercent: 27, expression: "호흡 압력", description: "트럼펫 원음 E3–C♯7을 반음마다 연주해요." },
+            { id: "french-horn", name: "호른", tag: "ORCHESTRAL BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/french-horn-expressive.png", badge: "47-NOTE OGG", model: "FRENCH HORN", range: [47, 93], size: "벨 포함 너비 약 58 cm", visualScale: .42, scalePercent: 32, expression: "호흡 압력", description: "호른 원음 B2–A6을 반음마다 연주해요." },
+            { id: "alto-trombone", name: "알토 트롬본", tag: "SLIDE BRASS · ALTO", engine: "guitar", stage: "brass", art: "assets/instruments/trombone-expressive.png", badge: "44-NOTE OGG", model: "ALTO TROMBONE", range: [45, 88], size: "전체 길이 약 90 cm", visualScale: .58, scalePercent: 50, expression: "호흡 압력", description: "가볍고 높은 알토 트롬본 원음을 연주해요." },
+            { id: "trombone", name: "테너 트롬본", tag: "SLIDE BRASS · TENOR", engine: "guitar", stage: "brass", art: "assets/instruments/trombone-expressive.png", badge: "46-NOTE OGG", model: "TENOR TROMBONE", range: [52, 97], size: "슬라이드 닫힘 약 114 cm", visualScale: .7, scalePercent: 63, expression: "호흡 압력", description: "테너 트롬본 원음 E3–C♯7을 반음마다 연주해요." },
+            { id: "bass-trombone", name: "베이스 트롬본", tag: "SLIDE BRASS · BASS", engine: "guitar", stage: "brass", art: "assets/instruments/trombone-expressive.png", badge: "58-NOTE OGG", model: "BASS TROMBONE", range: [35, 92], size: "전체 길이 약 120 cm", visualScale: .74, scalePercent: 67, expression: "호흡 압력", description: "넓고 무거운 베이스 트롬본 원음을 연주해요." },
+            { id: "tuba", name: "베이스 튜바", tag: "LOW BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/tuba-expressive.png", badge: "57-NOTE OGG", model: "BASS TUBA", range: [40, 96], size: "전체 높이 약 100 cm", visualScale: .62, scalePercent: 56, expression: "호흡 압력", description: "베이스 튜바 원음 E2–C7을 반음마다 연주해요." }
         ],
         percussion: [
             { id: "rock-kit", name: "Rock Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-rock-kit.webp", badge: "ACOUSTIC KIT", model: "ROCK", description: "큰 킥과 2개의 랙 탐·1개의 플로어 탐을 갖춘 표준 5피스 락 세트예요." },
@@ -159,7 +206,7 @@
     const mixedPercussion = MODEL_LIBRARY.percussion.slice();
     MODEL_LIBRARY.guitar = mixedStrings.filter(function (model) { return Boolean(model.guitar); });
     MODEL_LIBRARY.bass = mixedStrings.filter(function (model) { return model.engine === "bass" || model.id === "upright-bass"; });
-    MODEL_LIBRARY.strings = mixedStrings.filter(function (model) { return ["violin", "viola", "cello"].includes(model.id); });
+    MODEL_LIBRARY.strings = mixedStrings.filter(function (model) { return ["violin", "viola", "cello", "upright-bass"].includes(model.id); });
     MODEL_LIBRARY.drums = mixedPercussion.filter(function (model) { return ["drums", "machine", "linn"].includes(model.stage); });
     MODEL_LIBRARY.percussion = mixedPercussion.filter(function (model) { return !["drums", "machine", "linn", "samul"].includes(model.stage); });
     MODEL_LIBRARY.korean = [
@@ -211,8 +258,8 @@
         pianoSamples: new Map(),
         pianoLoading: null,
         pianoVoices: new Map(),
-        grandSamples: new Map(),
-        grandSampleLoads: new Map(),
+        keyboardSamples: new Map(),
+        keyboardSampleLoads: new Map(),
         sustain: false,
         sustainLatched: false,
         stringNode: null,
@@ -247,7 +294,7 @@
     function cacheElements() {
         [
             "audioButton", "modelBadge", "instrumentName", "instrumentDescription", "guitarModeSwitch", "instrumentVisual", "familyEyebrow", "familyName", "modelChooser", "koreanRoomSwitch",
-            "visualFamily", "visualModel", "studioStage", "instrumentArtwork", "instrumentLayers", "scaleGuide", "scaleBar", "scaleValue", "scaleNote", "classicalRender", "machineDeck", "malletRender", "stringCanvas", "pianoControls", "keyboardPatchControls", "stringControls", "classicalControls", "expressionLabel", "guitarFxControls", "drumControls", "drumSystemLabel", "drumSystemDescription", "drumResonanceLabel", "drumToneLabel", "sustainButton",
+            "visualFamily", "visualModel", "studioStage", "instrumentArtwork", "instrumentLayers", "scaleGuide", "scaleBar", "scaleValue", "scaleNote", "classicalRender", "machineDeck", "malletRender", "stringCanvas", "pianoControls", "keyboardPatchControls", "stringControls", "classicalControls", "classicalArticulationButtons", "expressionLabel", "guitarFxControls", "drumControls", "drumSystemLabel", "drumSystemDescription", "drumResonanceLabel", "drumToneLabel", "sustainButton",
             "articulationButtons", "toneSlider", "toneOutput", "muteSlider", "muteOutput", "pickSlider", "pickOutput",
             "driveSlider", "driveOutput", "drumResonanceSlider", "drumResonanceOutput", "drumToneSlider", "drumToneOutput",
             "noteReadout", "rangeLegend", "rangeReadout", "octaveControls", "octaveReadout", "octaveDown", "octaveUp", "keyboardViewport",
@@ -368,7 +415,7 @@
         if (!voice || voice.released || !state.audioContext) return;
         voice.released = true;
         const now = state.audioContext.currentTime;
-        const release = quick ? (voice.concertGrand ? .035 : .08) : (voice.concertGrand ? .16 : .86);
+        const release = quick ? (voice.sampledPiano ? .035 : .08) : (voice.sampledPiano ? .16 : .86);
         if (typeof voice.gain.gain.cancelAndHoldAtTime === "function") voice.gain.gain.cancelAndHoldAtTime(now);
         else voice.gain.gain.cancelScheduledValues(now);
         voice.gain.gain.setTargetAtTime(.0001, now, release / 5);
@@ -430,19 +477,22 @@
     }
 
     function pianoNoteOn(midi, velocity) {
-        if (isConcertGrand()) {
-            const anchor = concertGrandAnchor(midi);
-            const cached = state.grandSamples.get(anchor);
+        if (isSampledPiano()) {
+            const config = sampledPianoConfig();
+            const anchor = concertGrandAnchor(midi, config);
+            const key = sampledPianoKey(config, anchor);
+            const cached = state.keyboardSamples.get(key);
             if (cached) {
-                rememberConcertGrandSample(anchor, cached);
-                startConcertGrandSample(midi, velocity, anchor, cached);
+                rememberConcertGrandSample(config, anchor, cached);
+                startConcertGrandSample(midi, velocity, anchor, cached, config.id);
                 return;
             }
             loadConcertGrandSample(midi).then(function (sample) {
+                if (!sampledPianoConfig() || sampledPianoConfig().id !== sample.sampleSet) return;
                 if (!state.activeNotes.has(midi) && !state.sustain) return;
-                const voice = startConcertGrandSample(midi, velocity, sample.anchor, sample.buffer);
+                const voice = startConcertGrandSample(midi, velocity, sample.anchor, sample.buffer, sample.sampleSet);
                 if (voice && !state.activeNotes.has(midi)) voice.held = true;
-            }).catch(function () { showToast("콘서트 그랜드 음색을 불러오지 못했어요."); });
+            }).catch(function () { showToast("건반 음색을 불러오지 못했어요. iPadOS 18.4 이상인지 확인하세요."); });
             return;
         }
         if (samplePianoNoteOn(midi, velocity)) return;
@@ -496,67 +546,95 @@
         return Boolean(state.currentModel && state.currentModel.id === "concert-grand");
     }
 
-    function concertGrandAnchor(midi) {
-        const clamped = Math.max(GRAND_SAMPLE_MIN, Math.min(GRAND_SAMPLE_MAX, Number(midi)));
-        return GRAND_SAMPLE_MIN + Math.round((clamped - GRAND_SAMPLE_MIN) / GRAND_SAMPLE_STEP) * GRAND_SAMPLE_STEP;
+    function sampledPianoConfig() {
+        if (!state.currentModel) return null;
+        const pizzicatoModel = ["violin", "viola", "cello", "upright-bass"].includes(state.currentModel.id) && state.articulation === "pizzicato";
+        const sampleId = pizzicatoModel ? state.currentModel.id + "-pizz" : state.currentModel.id;
+        return KEYBOARD_SAMPLE_SETS[sampleId] || null;
     }
 
-    function concertGrandSampleFile(anchor) {
-        const index = String(anchor - GRAND_SAMPLE_MIN + 1).padStart(3, "0");
+    function isSampledPiano() {
+        return Boolean(sampledPianoConfig());
+    }
+
+    function sampledPianoKey(config, anchor) {
+        return config.id + ":" + anchor;
+    }
+
+    function concertGrandAnchor(midi, config) {
+        const sampleConfig = config || sampledPianoConfig();
+        const clamped = Math.max(sampleConfig.min, Math.min(sampleConfig.max, Number(midi)));
+        return sampleConfig.min + Math.round((clamped - sampleConfig.min) / sampleConfig.step) * sampleConfig.step;
+    }
+
+    function concertGrandSampleFile(anchor, config) {
+        const sampleConfig = config || sampledPianoConfig();
+        const index = String(anchor - (sampleConfig.fileMin || sampleConfig.min) + 1).padStart(3, "0");
         const note = core.noteLabel(anchor).toLowerCase().replace("♯", "s");
-        return index + "_" + note + ".mp3";
+        return index + "_" + note + ".ogg";
     }
 
-    function rememberConcertGrandSample(anchor, buffer) {
-        state.grandSamples.delete(anchor);
-        state.grandSamples.set(anchor, buffer);
-        while (state.grandSamples.size > GRAND_SAMPLE_CACHE_LIMIT) {
-            const removable = Array.from(state.grandSamples.keys()).find(function (candidate) {
+    function rememberConcertGrandSample(config, anchor, buffer) {
+        const key = sampledPianoKey(config, anchor);
+        state.keyboardSamples.delete(key);
+        state.keyboardSamples.set(key, buffer);
+        while (state.keyboardSamples.size > KEYBOARD_SAMPLE_CACHE_LIMIT) {
+            const removable = Array.from(state.keyboardSamples.keys()).find(function (candidate) {
                 return !Array.from(state.pianoVoices.values()).some(function (voice) {
-                    return voice.concertGrand && voice.anchor === candidate && !voice.released;
+                    return voice.sampledPiano && voice.sampleKey === candidate && !voice.released;
                 });
             });
-            if (!Number.isFinite(removable)) break;
-            state.grandSamples.delete(removable);
+            if (!removable) break;
+            state.keyboardSamples.delete(removable);
         }
     }
 
     function loadConcertGrandSample(midi) {
         const context = ensureAudio();
-        if (!context) return Promise.reject(new Error("AudioContext unavailable"));
-        const anchor = concertGrandAnchor(midi);
-        const cached = state.grandSamples.get(anchor);
+        const config = sampledPianoConfig();
+        if (!context || !config) return Promise.reject(new Error("Sampled piano unavailable"));
+        const anchor = concertGrandAnchor(midi, config);
+        const key = sampledPianoKey(config, anchor);
+        const cached = state.keyboardSamples.get(key);
         if (cached) {
-            rememberConcertGrandSample(anchor, cached);
-            return Promise.resolve({ anchor, buffer: cached });
+            rememberConcertGrandSample(config, anchor, cached);
+            return Promise.resolve({ anchor, buffer: cached, sampleSet: config.id });
         }
-        if (state.grandSampleLoads.has(anchor)) return state.grandSampleLoads.get(anchor);
-        const task = fetch(GRAND_SAMPLE_ROOT + concertGrandSampleFile(anchor))
+        if (state.keyboardSampleLoads.has(key)) return state.keyboardSampleLoads.get(key);
+        const task = fetch(config.root + concertGrandSampleFile(anchor, config))
             .then(function (response) { if (!response.ok) throw new Error(response.url); return response.arrayBuffer(); })
             .then(function (data) { return context.decodeAudioData(data); })
             .then(function (buffer) {
-                rememberConcertGrandSample(anchor, buffer);
-                state.grandSampleLoads.delete(anchor);
-                return { anchor, buffer };
+                rememberConcertGrandSample(config, anchor, buffer);
+                state.keyboardSampleLoads.delete(key);
+                return { anchor, buffer, sampleSet: config.id };
             })
             .catch(function (error) {
-                state.grandSampleLoads.delete(anchor);
+                state.keyboardSampleLoads.delete(key);
                 throw error;
             });
-        state.grandSampleLoads.set(anchor, task);
+        state.keyboardSampleLoads.set(key, task);
         return task;
     }
 
     function preloadConcertGrandRange() {
-        if (!isConcertGrand()) return Promise.resolve([]);
+        const config = sampledPianoConfig();
+        if (!config) return Promise.resolve([]);
         const first = (state.keyboardOctave + 1) * 12;
         const last = first + COMPUTER_KEYS[COMPUTER_KEYS.length - 1][1];
         const anchors = new Set();
-        for (let midi = first; midi <= last; midi += 1) anchors.add(concertGrandAnchor(midi));
+        for (let midi = first; midi <= last; midi += 1) anchors.add(concertGrandAnchor(midi, config));
         return Promise.allSettled(Array.from(anchors).map(loadConcertGrandSample));
     }
 
-    function startConcertGrandSample(midi, velocity, anchor, buffer) {
+    function pluckedKeyboardDecay(sampleSet) {
+        if (sampleSet === "clavinet") return 1.65;
+        if (["violin-pizz", "viola-pizz", "cello-pizz", "upright-bass-pizz"].includes(sampleSet)) return 2.2;
+        if (sampleSet === "harpsichord") return 3.4;
+        return 0;
+    }
+
+    function startConcertGrandSample(midi, velocity, anchor, buffer, sampleSet) {
         const context = ensureAudio();
         if (!context || !buffer) return;
         const existing = state.pianoVoices.get(midi);
@@ -565,17 +643,31 @@
         const gain = context.createGain();
         const now = context.currentTime;
         const highNoteCompensation = 1 + Math.max(0, midi - 60) / 64;
-        const peak = Math.max(.2, Math.min(1.7, Math.pow(velocity, .9) * 1.22 * highNoteCompensation));
+        const sampleConfig = KEYBOARD_SAMPLE_SETS[sampleSet];
+        const calibratedGain = Math.pow(10, ((sampleConfig && sampleConfig.gainDb) || 0) / 20);
+        const peak = Math.max(.08, Math.min(1.7, Math.pow(velocity, .9) * 1.22 * highNoteCompensation * calibratedGain));
+        const decay = pluckedKeyboardDecay(sampleSet);
+        const heldTone = sampleSet === "hammond-organ" || sampleSet === "pipe-organ" || ["flute", "oboe", "trumpet", "clarinet", "bass-clarinet", "piccolo-flute", "french-horn", "english-horn", "soprano-sax", "saxophone", "tenor-sax", "baritone-sax", "bassoon", "alto-trombone", "trombone", "bass-trombone", "tuba", "violin", "viola", "cello", "upright-bass"].includes(sampleSet);
         source.buffer = buffer;
         source.playbackRate.value = Math.pow(2, (midi - anchor) / 12);
+        if (heldTone && buffer.duration > 1.25) {
+            source.loop = true;
+            source.loopStart = Math.min(1.2, buffer.duration * .28);
+            source.loopEnd = Math.max(source.loopStart + .25, buffer.duration - .08);
+        }
         gain.gain.setValueAtTime(.0001, now);
         gain.gain.exponentialRampToValueAtTime(peak, now + .0025);
+        if (decay) {
+            gain.gain.exponentialRampToValueAtTime(Math.max(.0001, peak * .68), now + .045);
+            gain.gain.exponentialRampToValueAtTime(.0001, now + decay);
+        }
         source.connect(gain);
         connectToMix(gain, .035);
-        const voice = { source, gain, anchor, concertGrand: true, released: false, held: false };
+        const voice = { source, gain, anchor, sampleSet, sampleKey: sampleSet + ":" + anchor, sampledPiano: true, released: false, held: false, percussiveDecay: decay };
         state.pianoVoices.set(midi, voice);
         source.onended = function () { if (state.pianoVoices.get(midi) === voice) state.pianoVoices.delete(midi); };
         source.start(now);
+        if (decay) source.stop(now + decay + .08);
         return voice;
     }
     function ensureStringEngine() {
@@ -828,9 +920,24 @@
         noteActivity(id, velocity);
     }
 
+    const NO_PIANO_SUSTAIN_MODELS = new Set(["harpsichord", "clavinet", "hammond-organ", "pipe-organ"]);
+
+    function supportsPianoSustain() {
+        return Boolean(state.instrument === "piano" && state.currentModel && !NO_PIANO_SUSTAIN_MODELS.has(state.currentModel.id));
+    }
+
+    function updateSustainAvailability() {
+        const supported = supportsPianoSustain();
+        elements.sustainButton.classList.toggle("hidden", !supported);
+        elements.sustainButton.disabled = !supported;
+        elements.sustainButton.setAttribute("aria-hidden", String(!supported));
+        if (elements.sustainButton.nextElementSibling) elements.sustainButton.nextElementSibling.classList.toggle("hidden", !supported);
+        if (!supported && state.sustain) setSustain(false, false);
+    }
+
     function setSustain(on, latched) {
-        state.sustain = Boolean(on);
-        if (typeof latched === "boolean") state.sustainLatched = latched;
+        state.sustain = supportsPianoSustain() && Boolean(on);
+        if (typeof latched === "boolean") state.sustainLatched = state.sustain && latched;
         elements.sustainButton.classList.toggle("active", state.sustain);
         elements.sustainButton.setAttribute("aria-pressed", String(state.sustain));
         if (!state.sustain) {
@@ -1176,22 +1283,28 @@
     function renderKeyboardPatchControls(model) {
         const box = elements.keyboardPatchControls;
         box.innerHTML = "";
-        box.classList.toggle("hidden", !["ep", "hybrid", "organ"].includes(model.stage));
-        if (box.classList.contains("hidden")) return;
-        const controls = model.stage === "ep" ? [["Bark", 46], ["Tremolo", 28]] : model.stage === "hybrid" ? [["AP / EP Layer", 44], ["Stereo Width", 68]] : [["Drawbar Body", 72], ["Rotary Speed", 32]];
+        const controlMap = {
+            ep: [["어택의 거칠기", 46], ["트레몰로", 28]],
+            clavinet: [["픽업 혼합", 56], ["뮤트", 18]],
+            digital: [["밝기", 62], ["코러스", 34]],
+            hybrid: [["레이어 균형", 48], ["스테레오 폭", 68]],
+            organ: model.id === "hammond-organ" ? [["드로바 바디", 72], ["로터리 속도", 32]] : [["스톱 혼합", 64], ["익스프레션", 72]]
+        };
+        const controls = controlMap[model.stage] || null;
+        box.classList.toggle("hidden", !controls);
+        if (!controls) return;
         controls.forEach(function (entry) {
             const label = document.createElement("label");
-            label.innerHTML = "<span>" + entry[0] + " <output>" + entry[1] + "</output></span><input type=\"range\" min=\"0\" max=\"100\" value=\"" + entry[1] + "\">";
+            label.innerHTML = `<span>${entry[0]} <output>${entry[1]}</output></span><input type="range" min="0" max="100" value="${entry[1]}">`;
             const slider = label.querySelector("input"); const output = label.querySelector("output");
             slider.addEventListener("input", function () { output.textContent = slider.value; });
             box.appendChild(label);
         });
-        if (model.stage === "organ") {
+        if (model.id === "hammond-organ") {
             const drawbars = document.createElement("div"); drawbars.className = "drawbars";
             [8,8,6,5,4,3,2,2,1].forEach(function (value) { const bar = document.createElement("i"); bar.style.setProperty("--draw", value); drawbars.appendChild(bar); }); box.prepend(drawbars);
         }
     }
-
     function renderDrumControlCopy(model) {
         if (model.engine !== "drums") return;
         const machine = model.stage === "machine" || model.stage === "linn";
@@ -1233,6 +1346,8 @@
         if (model.expression) elements.expressionLabel.textContent = model.expression;
         updateInstrumentStage(model);
         renderKeyboardPatchControls(model);
+        renderClassicalArticulations(model);
+        updateSustainAvailability();
         renderDrumControlCopy(model);
         renderDrumPads();
         renderModelBrowser();
@@ -1279,7 +1394,7 @@
         state.activeNotes.add(midi);
         const key = elements.keyboard.querySelector('[data-midi="' + midi + '"]');
         if (key) key.classList.add("active");
-        if (state.instrument === "piano") pianoNoteOn(midi, velocity);
+        if (isSampledPiano() || state.instrument === "piano") pianoNoteOn(midi, velocity);
         else stringNoteOn(midi, velocity);
         noteActivity(core.noteLabel(midi), velocity, midi);
     }
@@ -1288,7 +1403,7 @@
         state.activeNotes.delete(midi);
         const key = elements.keyboard.querySelector('[data-midi="' + midi + '"]');
         if (key) key.classList.remove("active");
-        if (state.instrument === "piano") pianoNoteOff(midi);
+        if (isSampledPiano() || state.instrument === "piano") pianoNoteOff(midi);
         else stringNoteOff(midi);
     }
 
@@ -1447,6 +1562,27 @@
         });
     }
 
+    function renderClassicalArticulations(model) {
+        const box = elements.classicalArticulationButtons;
+        box.innerHTML = "";
+        const options = ["violin", "viola", "cello", "upright-bass"].includes(model.id) ? [["sustain", "서스테인"], ["pizzicato", "피치카토"]] : [["sustain", "서스테인"]];
+        if (!options.some(function (item) { return item[0] === state.articulation; })) state.articulation = options[0][0];
+        options.forEach(function (option) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.textContent = option[1];
+            button.classList.toggle("active", option[0] === state.articulation);
+            button.addEventListener("click", function () {
+                allNotesOff();
+                state.articulation = option[0];
+                renderClassicalArticulations(model);
+                preloadConcertGrandRange();
+            });
+            box.appendChild(button);
+        });
+        box.classList.toggle("hidden", !(model.stage === "classical" || model.stage === "wind" || model.stage === "brass"));
+    }
+
     function renderArticulations() {
         const options = state.instrument === "bass"
             ? [["finger", "핑거"], ["pick", "피크"], ["slap", "슬랩"], ["mute", "뮤트"]]
@@ -1505,7 +1641,7 @@
         if (instrument !== "drums" || isPitchedPercussion()) renderKeyboard();
         updatePlaySurface();
         updateStringChain();
-        if (instrument === "piano" && isConcertGrand()) preloadConcertGrandRange();
+        if (isSampledPiano()) preloadConcertGrandRange();
         else if (instrument === "bass" || instrument === "guitar") ensureStringEngine();
         else if (instrument === "drums" && !isPitchedPercussion()) ensureDrumEngine();
         else if (isPitchedPercussion()) ensureStringEngine();
@@ -1543,7 +1679,7 @@
         const tag = event.target && event.target.tagName;
         const textEntry = tag === "TEXTAREA" || tag === "SELECT" || (tag === "INPUT" && event.target.type !== "range");
         if (textEntry) return;
-        if (event.code === "Space" && state.instrument === "piano") {
+        if (event.code === "Space" && supportsPianoSustain()) {
             event.preventDefault();
             setSustain(true);
             return;
@@ -1573,7 +1709,7 @@
     }
 
     function handleComputerKeyUp(event) {
-        if (event.code === "Space" && state.instrument === "piano") {
+        if (event.code === "Space" && supportsPianoSustain()) {
             if (!state.sustainLatched) setSustain(false);
             return;
         }
@@ -1616,7 +1752,7 @@
         document.querySelectorAll("[data-strum]").forEach(function (button) {
             button.addEventListener("pointerdown", function (event) { event.preventDefault(); strum(button.dataset.strum); });
         });
-        elements.sustainButton.addEventListener("click", function () { setSustain(!state.sustain, !state.sustain); });
+        elements.sustainButton.addEventListener("click", function () { if (supportsPianoSustain()) setSustain(!state.sustain, !state.sustain); });
         [elements.toneSlider, elements.muteSlider, elements.pickSlider, elements.driveSlider, elements.drumResonanceSlider, elements.drumToneSlider]
             .forEach(function (slider) { slider.addEventListener("input", syncRangeOutputs); });
         elements.octaveDown.addEventListener("click", function () { state.keyboardOctave = Math.max(0, state.keyboardOctave - 1); renderKeyboard(); preloadConcertGrandRange(); });
