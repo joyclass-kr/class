@@ -666,7 +666,8 @@
             gain.gain.exponentialRampToValueAtTime(.0001, now + decay);
         }
         source.connect(gain);
-        connectToMix(gain, .035);
+        // Recorded samples already contain their own body and room tone; keep their timbre intact.
+        connectFastToMix(gain, 0);
         const voice = { source, gain, anchor, sampleSet, sampleKey: sampleSet + ":" + anchor, sampledPiano: true, released: false, held: false, percussiveDecay: decay };
         state.pianoVoices.set(midi, voice);
         source.onended = function () { if (state.pianoVoices.get(midi) === voice) state.pianoVoices.delete(midi); };
