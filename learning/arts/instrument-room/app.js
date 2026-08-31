@@ -9,6 +9,11 @@
         { midi: 72, file: "C5.ogg" }, { midi: 78, file: "Fs5.ogg" },
         { midi: 84, file: "C6.ogg" }
     ];
+    const GRAND_SAMPLE_ROOT = "assets/audio/concert-grand/";
+    const GRAND_SAMPLE_MIN = 21;
+    const GRAND_SAMPLE_MAX = 108;
+    const GRAND_SAMPLE_STEP = 3;
+    const GRAND_SAMPLE_CACHE_LIMIT = 16;
     const COMPUTER_KEYS = [
         ["KeyA", 0, "A"], ["KeyW", 1, "W"], ["KeyS", 2, "S"], ["KeyE", 3, "E"],
         ["KeyD", 4, "D"], ["KeyF", 5, "F"], ["KeyT", 6, "T"], ["KeyG", 7, "G"],
@@ -77,7 +82,7 @@
         return parts.map(function (id) { return DRUMS.find(function (drum) { return drum.id === id; }); }).filter(Boolean);
     }
     const INSTRUMENT_COPY = {
-        piano: { name: "그랜드 피아노", badge: "SAMPLED GRAND", family: "ACOUSTIC", model: "88 GRAND", description: "화성학 연습실과 같은 피아노예요. 건반을 누르고 스페이스바로 서스테인을 사용해 보세요." },
+        piano: { name: "그랜드 피아노", badge: "30-ZONE MULTISAMPLE", family: "ACOUSTIC", model: "88 GRAND", description: "Cubase에서 렌더한 콘서트 그랜드를 30개 음역 구간으로 최적화했어요. 건반 길이와 서스테인 페달에 따라 울림이 달라집니다." },
         bass: { name: "모델링 베이스", badge: "DIGITAL WAVEGUIDE", family: "ELECTRIC BASS", model: "4 STRING", description: "현의 길이와 감쇠, 피킹 위치를 실시간으로 계산해요. A–K 키로도 연주할 수 있어요." },
         guitar: { name: "모델링 기타", badge: "DIGITAL WAVEGUIDE", family: "ELECTRIC GUITAR", model: "6 STRING", description: "건반으로 단음을 연주하거나 코드패드로 스트로크하세요. WAV 음원을 사용하지 않아요." },
         drums: { name: "모델링 드럼", badge: "MODAL RESONATOR", family: "ACOUSTIC KIT", model: "8 PIECE", description: "막과 금속의 여러 공진 모드를 합성해요. 패드 또는 A–K 키로 바로 연주하세요." }
@@ -89,7 +94,7 @@
     };
     const MODEL_LIBRARY = {
         keyboard: [
-            { id: "concert-grand", name: "콘서트 그랜드", tag: "AP · ACOUSTIC", engine: "piano", stage: "piano", art: "assets/instruments/keyboard-concert-grand.webp", badge: "SAMPLED GRAND", model: "88 GRAND", description: "화성학 연습실과 같은 빠른 반응의 그랜드 피아노예요." },
+            { id: "concert-grand", name: "콘서트 그랜드", tag: "AP · ACOUSTIC", engine: "piano", stage: "piano", art: "assets/instruments/keyboard-concert-grand.webp", badge: "30-ZONE MULTISAMPLE", model: "88 GRAND", range: [21, 108], description: "Cubase 콘서트 그랜드 원음을 30개 구간으로 최적화해 A0–C8 전 음역을 연주해요." },
             { id: "upright-piano", name: "업라이트 피아노", tag: "AP · ACOUSTIC", engine: "piano", stage: "piano", art: "assets/instruments/keyboard-upright-piano.webp", badge: "UPRIGHT PIANO", model: "STUDIO UPRIGHT", description: "가정과 연습실에서 익숙한 업라이트 피아노 화면이에요." },
             { id: "tine-ep", name: "Tine EP", tag: "EP · ELECTRIC", engine: "piano", stage: "ep", art: "assets/instruments/keyboard-tine-ep.webp", badge: "TINE ELECTRIC PIANO", model: "TINE 73", description: "금속 타인과 픽업의 반응을 다루는 대표적인 일렉트릭 피아노예요." },
             { id: "reed-ep", name: "Reed EP", tag: "EP · ELECTRIC", engine: "piano", stage: "ep", art: "assets/instruments/keyboard-reed-ep.webp", badge: "REED ELECTRIC PIANO", model: "REED 64", description: "리드의 거친 어택과 따뜻한 중음을 가진 일렉트릭 피아노예요." },
@@ -206,6 +211,8 @@
         pianoSamples: new Map(),
         pianoLoading: null,
         pianoVoices: new Map(),
+        grandSamples: new Map(),
+        grandSampleLoads: new Map(),
         sustain: false,
         sustainLatched: false,
         stringNode: null,
@@ -361,7 +368,7 @@
         if (!voice || voice.released || !state.audioContext) return;
         voice.released = true;
         const now = state.audioContext.currentTime;
-        const release = quick ? .08 : .86;
+        const release = quick ? (voice.concertGrand ? .035 : .08) : (voice.concertGrand ? .16 : .86);
         if (typeof voice.gain.gain.cancelAndHoldAtTime === "function") voice.gain.gain.cancelAndHoldAtTime(now);
         else voice.gain.gain.cancelScheduledValues(now);
         voice.gain.gain.setTargetAtTime(.0001, now, release / 5);
@@ -423,6 +430,21 @@
     }
 
     function pianoNoteOn(midi, velocity) {
+        if (isConcertGrand()) {
+            const anchor = concertGrandAnchor(midi);
+            const cached = state.grandSamples.get(anchor);
+            if (cached) {
+                rememberConcertGrandSample(anchor, cached);
+                startConcertGrandSample(midi, velocity, anchor, cached);
+                return;
+            }
+            loadConcertGrandSample(midi).then(function (sample) {
+                if (!state.activeNotes.has(midi) && !state.sustain) return;
+                const voice = startConcertGrandSample(midi, velocity, sample.anchor, sample.buffer);
+                if (voice && !state.activeNotes.has(midi)) voice.held = true;
+            }).catch(function () { showToast("콘서트 그랜드 음색을 불러오지 못했어요."); });
+            return;
+        }
         if (samplePianoNoteOn(midi, velocity)) return;
         fallbackPiano(midi, velocity);
         loadPianoSamples().catch(function () { showToast("피아노 음원을 불러오지 못했어요."); });
@@ -434,7 +456,6 @@
         if (state.sustain) voice.held = true;
         else releasePianoVoice(voice, false);
     }
-
     function makeDriveCurve(amount) {
         const samples = 1024;
         const curve = new Float32Array(samples);
@@ -471,6 +492,92 @@
         return state.workletModuleLoading;
     }
 
+    function isConcertGrand() {
+        return Boolean(state.currentModel && state.currentModel.id === "concert-grand");
+    }
+
+    function concertGrandAnchor(midi) {
+        const clamped = Math.max(GRAND_SAMPLE_MIN, Math.min(GRAND_SAMPLE_MAX, Number(midi)));
+        return GRAND_SAMPLE_MIN + Math.round((clamped - GRAND_SAMPLE_MIN) / GRAND_SAMPLE_STEP) * GRAND_SAMPLE_STEP;
+    }
+
+    function concertGrandSampleFile(anchor) {
+        const index = String(anchor - GRAND_SAMPLE_MIN + 1).padStart(3, "0");
+        const note = core.noteLabel(anchor).toLowerCase().replace("♯", "s");
+        return index + "_" + note + ".mp3";
+    }
+
+    function rememberConcertGrandSample(anchor, buffer) {
+        state.grandSamples.delete(anchor);
+        state.grandSamples.set(anchor, buffer);
+        while (state.grandSamples.size > GRAND_SAMPLE_CACHE_LIMIT) {
+            const removable = Array.from(state.grandSamples.keys()).find(function (candidate) {
+                return !Array.from(state.pianoVoices.values()).some(function (voice) {
+                    return voice.concertGrand && voice.anchor === candidate && !voice.released;
+                });
+            });
+            if (!Number.isFinite(removable)) break;
+            state.grandSamples.delete(removable);
+        }
+    }
+
+    function loadConcertGrandSample(midi) {
+        const context = ensureAudio();
+        if (!context) return Promise.reject(new Error("AudioContext unavailable"));
+        const anchor = concertGrandAnchor(midi);
+        const cached = state.grandSamples.get(anchor);
+        if (cached) {
+            rememberConcertGrandSample(anchor, cached);
+            return Promise.resolve({ anchor, buffer: cached });
+        }
+        if (state.grandSampleLoads.has(anchor)) return state.grandSampleLoads.get(anchor);
+        const task = fetch(GRAND_SAMPLE_ROOT + concertGrandSampleFile(anchor))
+            .then(function (response) { if (!response.ok) throw new Error(response.url); return response.arrayBuffer(); })
+            .then(function (data) { return context.decodeAudioData(data); })
+            .then(function (buffer) {
+                rememberConcertGrandSample(anchor, buffer);
+                state.grandSampleLoads.delete(anchor);
+                return { anchor, buffer };
+            })
+            .catch(function (error) {
+                state.grandSampleLoads.delete(anchor);
+                throw error;
+            });
+        state.grandSampleLoads.set(anchor, task);
+        return task;
+    }
+
+    function preloadConcertGrandRange() {
+        if (!isConcertGrand()) return Promise.resolve([]);
+        const first = (state.keyboardOctave + 1) * 12;
+        const last = first + COMPUTER_KEYS[COMPUTER_KEYS.length - 1][1];
+        const anchors = new Set();
+        for (let midi = first; midi <= last; midi += 1) anchors.add(concertGrandAnchor(midi));
+        return Promise.allSettled(Array.from(anchors).map(loadConcertGrandSample));
+    }
+
+    function startConcertGrandSample(midi, velocity, anchor, buffer) {
+        const context = ensureAudio();
+        if (!context || !buffer) return;
+        const existing = state.pianoVoices.get(midi);
+        if (existing) releasePianoVoice(existing, true);
+        const source = context.createBufferSource();
+        const gain = context.createGain();
+        const now = context.currentTime;
+        const highNoteCompensation = 1 + Math.max(0, midi - 60) / 64;
+        const peak = Math.max(.2, Math.min(1.7, Math.pow(velocity, .9) * 1.22 * highNoteCompensation));
+        source.buffer = buffer;
+        source.playbackRate.value = Math.pow(2, (midi - anchor) / 12);
+        gain.gain.setValueAtTime(.0001, now);
+        gain.gain.exponentialRampToValueAtTime(peak, now + .0025);
+        source.connect(gain);
+        connectToMix(gain, .035);
+        const voice = { source, gain, anchor, concertGrand: true, released: false, held: false };
+        state.pianoVoices.set(midi, voice);
+        source.onended = function () { if (state.pianoVoices.get(midi) === voice) state.pianoVoices.delete(midi); };
+        source.start(now);
+        return voice;
+    }
     function ensureStringEngine() {
         const context = ensureAudio();
         if (!context) return Promise.reject(new Error("AudioContext unavailable"));
@@ -1222,6 +1329,7 @@
     }
 
     function currentPitchRange() {
+        if (state.family === "keyboard") return { start: DISPLAY_RANGE.start, end: DISPLAY_RANGE.end };
         if (state.currentModel && Array.isArray(state.currentModel.range)) return { start: state.currentModel.range[0], end: state.currentModel.range[1] };
         return core.getInstrumentRange(state.instrument === "guitar" ? "guitar" : state.instrument);
     }
@@ -1240,7 +1348,7 @@
         const layout = core.keyboardLayout(DISPLAY_RANGE.start, DISPLAY_RANGE.end);
         const whiteWidth = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--key-width")) || 48;
         const blackWidth = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--black-width")) || 31;
-        const shortcutByMidi = new Map(COMPUTER_KEYS.map(function (entry) { return [state.keyboardOctave * 12 + entry[1], entry[2]]; }));
+        const shortcutByMidi = new Map(COMPUTER_KEYS.map(function (entry) { return [(state.keyboardOctave + 1) * 12 + entry[1], entry[2]]; }));
         elements.keyboard.innerHTML = "";
         elements.keyboard.style.width = (layout.whiteCount * whiteWidth) + "px";
         layout.notes.forEach(function (note) {
@@ -1389,7 +1497,7 @@
             state.articulation = "pick";
             elements.toneSlider.value = 69; elements.muteSlider.value = 5; elements.pickSlider.value = 24; elements.driveSlider.value = 12;
         } else if (instrument === "piano") state.keyboardOctave = 4;
-        if (state.currentModel && Array.isArray(state.currentModel.range)) {
+        if (instrument !== "piano" && state.currentModel && Array.isArray(state.currentModel.range)) {
             state.keyboardOctave = Math.max(1, Math.min(8, Math.floor(state.currentModel.range[0] / 12)));
         }
         renderArticulations();
@@ -1397,7 +1505,8 @@
         if (instrument !== "drums" || isPitchedPercussion()) renderKeyboard();
         updatePlaySurface();
         updateStringChain();
-        if (instrument === "bass" || instrument === "guitar") ensureStringEngine();
+        if (instrument === "piano" && isConcertGrand()) preloadConcertGrandRange();
+        else if (instrument === "bass" || instrument === "guitar") ensureStringEngine();
         else if (instrument === "drums" && !isPitchedPercussion()) ensureDrumEngine();
         else if (isPitchedPercussion()) ensureStringEngine();
         elements.noteReadout.textContent = "준비됨";
@@ -1454,7 +1563,7 @@
         const mapping = COMPUTER_KEYS.find(function (item) { return item[0] === event.code; });
         if (!mapping) return;
         event.preventDefault();
-        const midi = state.keyboardOctave * 12 + mapping[1];
+        const midi = (state.keyboardOctave + 1) * 12 + mapping[1];
         if (!isPitchPlayable(midi)) {
             showToast("이 악기의 연주 음역 밖이에요.");
             return;
@@ -1486,7 +1595,7 @@
         elements.audioButton.addEventListener("click", function () {
             ensureAudio();
             elements.audioButton.textContent = "준비 중…";
-            const tasks = [loadPianoSamples(), ensureStringEngine(), ensureDrumEngine()];
+            const tasks = [preloadConcertGrandRange(), loadPianoSamples(), ensureStringEngine(), ensureDrumEngine()];
             Promise.all(tasks).then(function () {
                 elements.audioButton.classList.add("hidden");
                 showToast("소리가 준비됐어요.");
@@ -1510,8 +1619,8 @@
         elements.sustainButton.addEventListener("click", function () { setSustain(!state.sustain, !state.sustain); });
         [elements.toneSlider, elements.muteSlider, elements.pickSlider, elements.driveSlider, elements.drumResonanceSlider, elements.drumToneSlider]
             .forEach(function (slider) { slider.addEventListener("input", syncRangeOutputs); });
-        elements.octaveDown.addEventListener("click", function () { state.keyboardOctave = Math.max(2, state.keyboardOctave - 1); renderKeyboard(); });
-        elements.octaveUp.addEventListener("click", function () { state.keyboardOctave = Math.min(6, state.keyboardOctave + 1); renderKeyboard(); });
+        elements.octaveDown.addEventListener("click", function () { state.keyboardOctave = Math.max(0, state.keyboardOctave - 1); renderKeyboard(); preloadConcertGrandRange(); });
+        elements.octaveUp.addEventListener("click", function () { state.keyboardOctave = Math.min(7, state.keyboardOctave + 1); renderKeyboard(); preloadConcertGrandRange(); });
         document.addEventListener("keydown", handleComputerKeyDown);
         document.addEventListener("keyup", handleComputerKeyUp);
         window.addEventListener("blur", allNotesOff);
