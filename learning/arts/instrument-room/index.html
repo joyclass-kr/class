@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="styles.css?v=20260826-readable-type">
     <script src="instrument-core.js?v=20260824-physical-room" defer></script>
     <script src="instrument-details.js?v=20260826-complete-guide" defer></script>
-    <script src="app.js?v=20260831-sampled-grand" defer></script>
+    <script src="app.js?v=20260831-strings-complete" defer></script>
 </head>
 <body>
     <div class="room-glow" aria-hidden="true"></div>
@@ -99,7 +99,7 @@
                             <div id="guitarFxControls" class="fx-strip hidden"><label><span>디스토션 <output>0</output></span><input type="range" min="0" max="100" value="0"></label><label><span>딜레이 <output>18</output></span><input type="range" min="0" max="100" value="18"></label><label><span>리버브 <output>12</output></span><input type="range" min="0" max="100" value="12"></label></div>
                         </div>
                         <div id="classicalControls" class="control-set classical-controls hidden">
-                            <div class="expression-tabs"><button class="active" type="button">표현</button><button type="button">주법</button><button type="button">음색</button></div><label><span>다이내믹 <output>72</output></span><input type="range" min="0" max="127" value="72"></label><label><span id="expressionLabel">보우 압력</span><input type="range" min="0" max="100" value="48"></label><div class="expression-actions"><button type="button">비브라토</button><button type="button">레가토</button></div>
+                            <div class="expression-tabs"><button class="active" type="button">표현</button><button type="button">주법</button><button type="button">음색</button></div><div id="classicalArticulationButtons" class="articulation-buttons" aria-label="관현악 주법 선택"></div><label><span>다이내믹 <output>72</output></span><input type="range" min="0" max="127" value="72"></label><label><span id="expressionLabel">보우 압력</span><input type="range" min="0" max="100" value="48"></label><div class="expression-actions"><button type="button">비브라토</button><button type="button">레가토</button></div>
                         </div>
                         <div id="drumControls" class="control-set hidden">
                             <div class="kit-readout"><span id="drumSystemLabel">MODAL KIT</span><b id="drumSystemDescription">막과 금속의 공명을 계산해 소리를 만들어요.</b></div>

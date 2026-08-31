@@ -38,35 +38,108 @@ test('keeps the instrument header compact and hides normal audio status', () => 
   assert.match(app, /audioButton\.classList\.remove\("hidden"\)/);
 });
 
-test('keyboard library covers AP, EP, Hybrid, and Organ', () => {
-  for (const model of ['concert-grand', 'tine-ep', 'pop-grand-fm', 'tonewheel-organ']) {
+test('keyboard library matches the twelve supplied keyboard instruments', () => {
+  for (const model of [
+    'concert-grand', 'upright-piano', 'harpsichord', 'tine-ep', 'reed-ep', 'clavinet',
+    'fm-dx7', 'jd800', 'hybrid-la-rhodes', 'hybrid-la-mks', 'hammond-organ', 'pipe-organ'
+  ]) {
     assert.match(app, new RegExp(`id: "${model}"`));
   }
   assert.match(app, /AP · ACOUSTIC/);
-  assert.match(app, /EP · ELECTRIC/);
-  assert.match(app, /tag: "HYBRID"/);
-  assert.match(app, /tag: "ORGAN"/);
+  assert.match(app, /EP · TINE/);
+  assert.match(app, /HYBRID · LA/);
+  assert.match(app, /ORGAN · TONEWHEEL/);
 });
 
-test('concert grand uses a compact zoned multisample across all 88 keys', () => {
-  const sampleRoot = path.join(root, 'assets', 'audio', 'concert-grand');
-  const samples = fs.readdirSync(sampleRoot).filter((name) => name.endsWith('.mp3'));
-  const totalBytes = samples.reduce((sum, name) => sum + fs.statSync(path.join(sampleRoot, name)).size, 0);
-  assert.equal(samples.length, 30);
-  assert.ok(totalBytes < 3 * 1024 * 1024);
-  assert.match(app, /GRAND_SAMPLE_STEP = 3/);
-  assert.match(app, /GRAND_SAMPLE_CACHE_LIMIT = 16/);
+test('keyboard models use compact per-note Ogg multisamples with recorded range metadata', () => {
+  const fullRange = ['concert-grand', 'upright-piano', 'fender-rhodes', 'wurlitzer', 'clavinet', 'fm-dx7', 'jd800', 'hybrid-la-rhodes', 'hybrid-la-mks'];
+  for (const folder of fullRange) {
+    const sampleRoot = path.join(root, 'assets', 'audio', folder);
+    const samples = fs.readdirSync(sampleRoot).filter((name) => name.endsWith('.ogg')).sort();
+    const totalBytes = samples.reduce((sum, name) => sum + fs.statSync(path.join(sampleRoot, name)).size, 0);
+    assert.equal(samples.length, 88, folder);
+    assert.equal(samples[0], '001_a0.ogg', folder);
+    assert.equal(samples.at(-1), '088_c8.ogg', folder);
+    assert.ok(totalBytes < 6 * 1024 * 1024, folder);
+  }
+  for (const [folder, count, first, last] of [
+    ['harpsichord', 58, '009_f1.ogg', '066_d6.ogg'],
+    ['hammond-organ', 61, '016_c2.ogg', '076_c7.ogg'],
+    ['pipe-organ', 61, '016_c2.ogg', '076_c7.ogg']
+  ]) {
+    const sampleRoot = path.join(root, 'assets', 'audio', folder);
+    const samples = fs.readdirSync(sampleRoot).filter((name) => name.endsWith('.ogg')).sort();
+    const totalBytes = samples.reduce((sum, name) => sum + fs.statSync(path.join(sampleRoot, name)).size, 0);
+    assert.equal(samples.length, count, folder);
+    assert.equal(samples[0], first, folder);
+    assert.equal(samples.at(-1), last, folder);
+    assert.ok(totalBytes < 6 * 1024 * 1024, folder);
+  }
+  assert.match(app, /fileMin: 21/);
+  assert.match(app, /GRAND_SAMPLE_STEP = 1/);
+  assert.match(app, /KEYBOARD_SAMPLE_CACHE_LIMIT = 24/);
   assert.match(app, /range: \[21, 108\]/);
   assert.match(app, /state\.family === "keyboard"/);
   assert.match(app, /\(state\.keyboardOctave \+ 1\) \* 12/);
 });
+
+test('plucked keyboards decay without an ADSR sustain stage', () => {
+  assert.match(app, /sampleSet === "clavinet"/);
+  assert.match(app, /sampleSet === "harpsichord"/);
+  assert.match(app, /gain\.gain\.exponentialRampToValueAtTime\(\.0001, now \+ decay\)/);
+  assert.match(app, /NO_PIANO_SUSTAIN_MODELS = new Set\(\["harpsichord", "clavinet", "hammond-organ", "pipe-organ"\]\)/);
+  assert.match(app, /event\.code === "Space" && supportsPianoSustain\(\)/);
+});
+test('completed orchestral renders use compact note-grid Ogg samples', () => {
+  for (const [folder, count, first, last] of [
+    ['flute', 37, '040_c4.ogg', '076_c7.ogg'],
+    ['oboe', 34, '038_as3.ogg', '071_g6.ogg'],
+    ['trumpet', 46, '032_e3.ogg', '077_cs7.ogg'],
+    ['clarinet', 39, '030_d3.ogg', '068_e6.ogg'],
+    ['bass-clarinet', 52, '024_gs2.ogg', '075_b6.ogg'],
+    ['piccolo-flute', 37, '052_c5.ogg', '088_c8.ogg'],
+    ['french-horn', 47, '027_b2.ogg', '073_a6.ogg'],
+    ['english-horn', 32, '032_e3.ogg', '063_b5.ogg'],
+    ['soprano-sax', 42, '033_f3.ogg', '074_as6.ogg'],
+    ['alto-trombone', 44, '025_a2.ogg', '068_e6.ogg'],
+    ['alto-sax', 47, '026_as2.ogg', '072_gs6.ogg'],
+    ['tenor-sax', 50, '033_f3.ogg', '082_fs7.ogg'],
+    ['baritone-sax', 56, '025_a2.ogg', '080_e7.ogg'],
+    ['bassoon', 42, '014_as1.ogg', '055_ds5.ogg'],
+    ['tenor-trombone', 46, '032_e3.ogg', '077_cs7.ogg'],
+    ['bass-trombone', 58, '015_b1.ogg', '072_gs6.ogg'],
+    ['bass-tuba', 57, '020_e2.ogg', '076_c7.ogg'],
+    ['viola', 61, '028_c3.ogg', '088_c8.ogg'],
+    ['viola-pizz', 42, '028_c3.ogg', '069_f6.ogg'],
+    ['violin', 54, '035_g3.ogg', '088_c8.ogg'],
+    ['violin-pizz', 46, '035_g3.ogg', '080_e7.ogg'],
+    ['cello', 61, '028_c3.ogg', '088_c8.ogg'],
+    ['cello-pizz', 26, '028_c3.ogg', '053_cs5.ogg'],
+    ['upright-bass', 57, '032_e3.ogg', '088_c8.ogg'],
+    ['upright-bass-pizz', 57, '032_e3.ogg', '088_c8.ogg']
+  ]) {
+    const sampleRoot = path.join(root, 'assets', 'audio', folder);
+    const samples = fs.readdirSync(sampleRoot).filter((name) => name.endsWith('.ogg')).sort();
+    assert.equal(samples.length, count, folder);
+    assert.equal(samples[0], first, folder);
+    assert.equal(samples.at(-1), last, folder);
+  }
+  assert.match(app, /isSampledPiano\(\) \|\| state\.instrument === "piano"/);
+  assert.match(app, /sampleSet === "hammond-organ"[\s\S]*?"tuba"/);
+  assert.match(app, /const calibratedGain = Math\.pow/);
+  assert.match(app, /gainDb: -5\.68/);
+  assert.match(app, /gainDb: 15\.0/);
+  assert.match(app, /\["violin", "viola", "cello", "upright-bass"\]\.includes\(state\.currentModel\.id\) && state\.articulation === "pizzicato"/);
+  assert.match(app, /\[\["sustain", "서스테인"\], \["pizzicato", "피치카토"\]\]/);
+});
+
 test('keyboard and electronic machines use non-interactive premium artwork', () => {
   for (const asset of [
     'keyboard-concert-grand.webp', 'keyboard-upright-piano.webp',
-    'keyboard-tine-ep.webp', 'keyboard-reed-ep.webp',
-    'keyboard-pop-grand-fm.webp', 'keyboard-grand-tine-duo.webp',
-    'keyboard-ballad-digital.webp', 'keyboard-tonewheel-organ.webp',
-    'keyboard-pipe-organ.webp', 'drum-808-machine.webp',
+    'keyboard-harpsichord.webp', 'keyboard-tine-ep.webp', 'keyboard-reed-ep.webp',
+    'keyboard-clavinet.webp', 'keyboard-fm-dx7.webp', 'keyboard-jd800.webp',
+    'keyboard-grand-tine-duo.webp', 'keyboard-ballad-digital.webp',
+    'keyboard-tonewheel-organ.webp', 'keyboard-pipe-organ.webp', 'drum-808-machine.webp',
     'drum-linn-machine.webp'
   ]) {
     assert.match(app, new RegExp(asset.replace('.', '\\.')));
@@ -161,11 +234,14 @@ test('offers a single-scroll accessible encyclopedia dialog without external lin
 
 test('provides complete long-form guides for every model and grouped instrument', () => {
   const required = [
-    'concert-grand', 'upright-piano', 'tine-ep', 'reed-ep', 'pop-grand-fm', 'grand-tine-duo',
-    'ballad-digital', 'tonewheel-organ', 'pipe-organ', 'p-bass', 'j-bass', 'active-bass',
+    'concert-grand', 'upright-piano', 'harpsichord', 'tine-ep', 'reed-ep', 'clavinet',
+    'fm-dx7', 'jd800', 'hybrid-la-rhodes', 'hybrid-la-mks', 'hammond-organ', 'pipe-organ',
+    'p-bass', 'j-bass', 'active-bass',
     'fretless-bass', 'upright-bass', 's-style', 'metal-seven', 'hollow-jazz', 'dreadnought',
-    'classical-guitar', 'violin', 'viola', 'cello', 'flute', 'oboe', 'clarinet', 'bassoon',
-    'saxophone', 'trumpet', 'trombone', 'french-horn', 'tuba', 'rock-kit', 'metal-kit',
+    'classical-guitar', 'violin', 'viola', 'cello', 'piccolo-flute', 'flute', 'oboe',
+    'english-horn', 'clarinet', 'bass-clarinet', 'bassoon', 'soprano-sax', 'saxophone', 'tenor-sax', 'baritone-sax',
+    'trumpet', 'alto-trombone', 'trombone', 'bass-trombone', 'french-horn', 'tuba',
+    'rock-kit', 'metal-kit',
     'pop-kit', 'jazz-kit', 'funk-kit', 'drum-808', 'linn-machine', 'timpani', 'glockenspiel',
     'marimba', 'vibraphone', 'xylophone', 'orchestral-percussion', 'orchestral-snare',
     'orchestral-bass-drum', 'orchestral-suspended-cymbal', 'orchestral-tamtam',
