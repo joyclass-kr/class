@@ -292,6 +292,40 @@ const asStudent = () => { sessionRows = [{ id: 3, email: "kid@x.kr", role: "stud
     assert.deepEqual(foreignBody.posts, [], "An unrelated group's board must stay empty.");
     assert.equal(foreignBody.board, null);
 
+    // 13. 그룹 유형 목록은 DB의 CHECK 제약과 정확히 같아야 한다. 전에는 라우트가
+    //     'activity'를 받아 주는데 제약에는 없어서, 명단 화면의 '동아리·방과후·셔틀'
+    //     선택지로 만든 그룹이 전부 insert 단계에서 터졌다.
+    const fs = require("node:fs");
+    const platformSource = fs.readFileSync(platformPath, "utf8");
+    const constraintTypes = platformSource
+      .match(/teacher_groups_group_type_check[\s\S]*?CHECK \(group_type IN \(([^)]*)\)\)/)[1]
+      .match(/'([a-z]+)'/g).map(t => t.replace(/'/g, "")).sort();
+    const routeTypes = platformSource
+      .match(/\[([^\]]*)\]\.includes\(groupType\)/)[1]
+      .match(/"([a-z]+)"/g).map(t => t.replace(/"/g, "")).sort();
+    assert.deepEqual(routeTypes, constraintTypes,
+      "The group-type list the route accepts must match the database CHECK constraint.");
+
+    // 14. 명단 화면이 보내는 유형도 그 목록 안에 있어야 한다.
+    const rosterHtml = fs.readFileSync(
+      path.join(__dirname, "..", "classtools", "school-roster.html"), "utf8");
+    const typeSelect = rosterHtml.match(/id="newGroupType"[\s\S]*?<\/select>/)[0];
+    const offered = [...typeSelect.matchAll(/value="([a-z]+)"/g)].map(m => m[1]);
+    assert.ok(offered.length > 0, "The roster must offer group types to pick from.");
+    for (const t of offered) {
+      assert.ok(constraintTypes.includes(t),
+        `The roster offers group type "${t}", which the database would reject.`);
+    }
+    assert.ok(offered.includes("club"), "동아리 그룹을 만들 수 있어야 한다.");
+
+    // 15. 소속 판정은 custom_fields의 '키'가 그룹 이름인 실제 명단 모양을 따라야
+    //     한다. 고정된 'club' 키만 보면 어떤 학생도 매칭되지 않는다.
+    assert.match(platformSource, /jsonb_exists\(ss\.custom_fields, g\.group_name\)/,
+      "Membership must match the roster's real shape (club name as the key).");
+    const memberSql = platformSource.match(/const GROUP_MEMBER_SQL = `[\s\S]*?`;/)[0];
+    assert.doesNotMatch(memberSql, /ILIKE/,
+      "Board membership must not fall back to a substring match.");
+
     console.log("Classboard permissions contract: OK");
   } finally {
     server.close();
