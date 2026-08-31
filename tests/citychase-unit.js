@@ -5,7 +5,14 @@ const fs = require("node:fs");
 const path = require("node:path");
 const CityChase = require(path.resolve(__dirname, "..", "game-hub-server", "citychase"));
 
-assert.ok(Object.keys(CityChase.BOARD.NODES).length >= 140, "원작 사진처럼 촘촘한 이동 칸이 필요합니다.");
+assert.ok(Object.keys(CityChase.BOARD.NODES).length >= 120, "원작 사진 수준의 이동 칸을 유지해야 합니다.");
+const boardNodes = Object.values(CityChase.BOARD.NODES);
+for (let i = 0; i < boardNodes.length; i += 1) {
+  for (let j = i + 1; j < boardNodes.length; j += 1) {
+    const distance = Math.hypot(boardNodes[i].x - boardNodes[j].x, boardNodes[i].y - boardNodes[j].y);
+    assert.ok(distance >= 24, `이동 칸 ${boardNodes[i].id}와 ${boardNodes[j].id}가 겹치면 안 됩니다.`);
+  }
+}
 assert.equal(CityChase.BOARD.BUILDINGS.length, 7, "원본 사진의 건물은 7곳이어야 합니다.");
 assert.equal(CityChase.BOARD.WIDTH, 1000);
 assert.equal(CityChase.BOARD.HEIGHT, 1000, "게임판은 원본처럼 정사각형이어야 합니다.");
@@ -182,7 +189,9 @@ assert.ok(CityChase.BOARD.EDGES.filter(edge => edge.kind === "building-lane").ev
 assert.match(client, /secret-gem\.png[\s\S]*secret-alarm\.png/, "보석과 경보 장치는 전용 그림 자산을 사용해야 합니다.");
 assert.match(client, /function playSfx[\s\S]*ClassGameSfx[\s\S]*function showBoardEffect/, "중요 사건은 시각효과와 사이트 공용 효과음을 함께 사용해야 합니다.");
 assert.match(css, /height: 100dvh; min-height: 0; overflow: hidden/, "가로 화면에서는 게임 전체가 뷰포트 안에 고정되어야 합니다.");
-assert.match(css, /width: min\(100%, calc\(100dvh - 93px\)\)/, "정사각형 보드는 남은 화면 높이를 넘지 않아야 합니다.");
+assert.match(css, /width: min\(100%, calc\(100dvh - 68px\)\)/, "압축된 헤더 아래에서 정사각형 보드를 최대한 크게 보여줘야 합니다.");
+assert.match(css, /\.gameHeader \{[^}]*min-height: 48px/s, "작은 화면의 게임 헤더는 한 줄 48px로 압축해야 합니다.");
+assert.match(client, /const showName = pawns\.length === 1 \|\| index === 0/, "같은 위치의 동일 학생 이름은 한 번만 표시해야 합니다.");
 assert.doesNotMatch(css, /min-width:\s*(?:820|900)px/, "Chromebook과 iPad에서 보드가 강제로 잘리면 안 됩니다.");
 assert.match(css, /\.boardViewport[^}]*place-items: center[^}]*overflow: hidden/s, "가로 화면 보드는 스크롤 없이 전체가 보여야 합니다.");
 assert.match(css, /\.boardPanel \{ height: auto; aspect-ratio: 1 \/ 1; \}/, "iPad 세로 화면에서도 정사각형 보드 전체를 보여야 합니다.");

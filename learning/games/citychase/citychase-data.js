@@ -81,7 +81,7 @@
   addEdge("d2", "p9"); addEdge("d3", "p12");
 
   // 하단의 원형 구역 + 철도 왼쪽 건물 + 오른쪽 건물.
-  addPoints("q", [[190,620],[280,645],[345,710],[360,795],[325,875],[245,920],[150,900],[85,835],[75,745],[115,665]], { label: "원형 이동 구역", zone: "circle" });
+  addPoints("q", [[190,620],[280,645],[345,710],[315,790],[325,875],[225,910],[150,900],[85,835],[100,745],[115,665]], { label: "원형 이동 구역", zone: "circle" });
   addLoop(Array.from({ length: 10 }, (_, index) => `q${index}`), { kind: "round-zone", oneWay: true });
   addPlaza("f", 415, 790, 62, 105);
   addPlaza("g", 800, 790, 100, 110);
@@ -107,7 +107,7 @@
   addRoute(["d6","pr0","pr1","pr2","g1"], { teams: ["police"], oneWay: true, kind: "police-lane" });
 
   addNode("hideout", 100, 105, { label: "도둑팀 비밀기지", safe: true, start: "thief", effect: "hideout" });
-  addNode("jail", 895, 890, { label: "경찰팀 구금 구역", safe: true, start: "police", effect: "jail" });
+  addNode("jail", 925, 875, { label: "경찰팀 구금 구역", safe: true, start: "police", effect: "jail" });
   addEdge("hideout", "p0", { teams: ["thief"] });
   addEdge("jail", "p19");
   addEdge("jail", "g6");
@@ -132,26 +132,11 @@
     addEdge(link, id, { teams: ["thief"], kind: "building-lane", displayArrow: true });
   });
 
-  // 일반 선분을 두 칸으로 나눠 사진의 촘촘한 이동 칸 밀도를 만든다.
-  const originalEdges = edges.splice(0, edges.length);
-  let denseIndex = 0;
-  for (const edge of originalEdges) {
-    const fixedEndpoint = [edge.a, edge.b].some(id => id === "hideout" || id === "jail" || id.startsWith("e"));
-    if (edge.visualOnly || edge.kind === "round-zone" || fixedEndpoint) {
-      edges.push(edge);
-      continue;
-    }
-    const from = nodes[edge.a];
-    const to = nodes[edge.b];
-    const midpoint = `x${denseIndex++}`;
-    addNode(midpoint, Math.round((from.x + to.x) / 2), Math.round((from.y + to.y) / 2), {
-      label: edge.kind === "police-lane" ? "경찰 전용 화살표" : "거리",
-      dense: true,
-      lane: edge.kind === "police-lane" ? "police" : null
-    });
-    addEdge(edge.a, midpoint, edge);
-    addEdge(midpoint, edge.b, edge);
-  }
+  // 가까운 교차점의 칸은 서로 덮이지 않도록 원작 사진의 빈 공간 쪽으로 벌린다.
+  Object.assign(nodes.d3, { x: 890 });
+  Object.assign(nodes.a7, { x: 95 });
+  Object.assign(nodes.c3, { x: 700 });
+  Object.assign(nodes.d7, { x: 750 });
 
   Object.assign(nodes.p2, { label: "도둑 위치 이동", effect: "thiefTeleport", tone: "red" });
   Object.assign(nodes.p12, { label: "도둑 위치 이동", effect: "thiefTeleport", tone: "red" });
