@@ -398,9 +398,10 @@
         const button = document.createElement("button");
         button.type = "button";
         const choice = state.pending && ["transfer", "rescue"].includes(state.pending.type) && state.pending.options.includes(pawn.id);
-        const offsetX = (index % 3 - Math.min(1, pawns.length - 1)) * 60;
+        const offsetX = (index % 3 - Math.min(1, pawns.length - 1)) * 72;
         const offsetY = Math.floor(index / 3) * 25 - (pawns.length > 3 ? 11 : 0);
-        button.className = `pawn ${pawn.team}${pawn.carryingGem ? " carrying" : ""}${pawn.status === "jailed" ? " jailed" : ""}${pawn.id === state.turnPawnId ? " current" : ""}${choice ? " choice" : ""}`;
+        const showName = pawns.length === 1 || index === 0 || pawn.id === state.turnPawnId || choice;
+        button.className = `pawn ${pawn.team}${pawn.carryingGem ? " carrying" : ""}${pawn.status === "jailed" ? " jailed" : ""}${pawn.id === state.turnPawnId ? " current" : ""}${choice ? " choice" : ""}${showName ? " showName" : ""}`;
         button.style.cssText = positionStyle(node.x + offsetX, node.y + offsetY);
         const controllers = pawnControllers(pawn.id);
         const names = controllers.map(player => player.name).join("·") || `${teamName(pawn.team)}팀`;
