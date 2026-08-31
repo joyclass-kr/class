@@ -26,7 +26,7 @@
   라이선스: 퍼블릭 도메인 (PD-USGov)
   https://commons.wikimedia.org/wiki/File:Handel's_Water_Music_-_12._Alla_hornpipe_-_Chamber_Orchestra_-_United_States_Marine_Band.opus
 
-- 05 캐논 라장조 — `canon.ogg`
+- 05 카논 라장조 — `canon.ogg`
   연주: Lee Galloway (피아노 편곡)
   라이선스: CC BY-SA 3.0 / GFDL 1.2+
   원곡은 현악 합주지만 이 녹음은 피아노 독주로 편곡한 것입니다.
