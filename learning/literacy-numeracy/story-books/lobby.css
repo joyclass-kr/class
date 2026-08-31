@@ -178,6 +178,11 @@ h1 span {
     letter-spacing: 1px;
 }
 
+/* 한국 전래 동화 목록은 순서가 아닌 이야기 선택 메뉴이므로 권수 표기를 숨긴다. */
+.shelf-korea .book-title b {
+    display: none;
+}
+
 @media (max-width: 600px) {
     body { padding: 14px 14px 40px; }
     h1 { font-size: 24px; }
