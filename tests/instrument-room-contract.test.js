@@ -9,10 +9,15 @@ const css = fs.readFileSync(path.join(root, 'styles.css'), 'utf8');
 const app = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
 const worklet = fs.readFileSync(path.join(root, 'instrument-worklet-v2.js'), 'utf8');
 const detailSource = fs.readFileSync(path.join(root, 'instrument-details.js'), 'utf8');
+const koreanPercussionSource = fs.readFileSync(path.join(root, 'korean-percussion-data.js'), 'utf8');
 const detailContext = { window: {} };
 require('node:vm').createContext(detailContext);
 require('node:vm').runInContext(detailSource, detailContext);
 const instrumentDetails = detailContext.window.INSTRUMENT_DETAILS;
+const koreanContext = { window: {} };
+require('node:vm').createContext(koreanContext);
+require('node:vm').runInContext(koreanPercussionSource, koreanContext);
+const koreanPercussion = koreanContext.window.KOREAN_PERCUSSION_DATA;
 
 test('corrects guitar and bass artwork orientation in the stage and detail views', () => {
   assert.match(css, /\.stage-bass \.instrument-artwork, \.stage-guitar \.instrument-artwork \{[^}]*scale: -1 1;/);
@@ -195,7 +200,7 @@ test('keyboard and electronic machines use non-interactive premium artwork', () 
 });
 
 test('percussion library includes dedicated kits and essential orchestral instruments', () => {
-  for (const model of ['rock-kit', 'metal-kit', 'pop-kit', 'jazz-kit', 'funk-kit', 'timpani', 'glockenspiel', 'marimba', 'vibraphone', 'xylophone', 'orchestral-percussion', 'drum-808', 'linn-machine', 'samulnori']) {
+  for (const model of ['rock-kit', 'metal-kit', 'pop-kit', 'jazz-kit', 'funk-kit', 'timpani', 'glockenspiel', 'marimba', 'vibraphone', 'xylophone', 'orchestral-percussion', 'drum-808', 'linn-machine']) {
     assert.match(app, new RegExp(`id: "${model}"`));
   }
   assert.match(app, /renderMachine/);
@@ -229,10 +234,41 @@ test('percussion library includes dedicated kits and essential orchestral instru
   assert.match(app, /const DRUM_SAMPLE_SETS/);
   assert.match(app, /function playSampledDrum/);
   assert.match(app, /preloadDrumSamples\(\)/);
-  assert.match(app, /gainDb = Number\(current\.gainDb\[id\]/);
+  assert.match(app, /typeof current\.gainDb === "number"/);
   assert.match(css, /#drumControls\.sampled-kit label \{ display: none; \}/);
 });
 
+test('Korean folk percussion exposes each instrument and official articulation as an independent recorded pad', () => {
+  const expected = {
+    'janggu-samul': 13,
+    'janggu-sanjo': 15,
+    'buk-samul': 19,
+    'buk-sori': 21,
+    sogo: 17,
+    kkwaenggwari: 9,
+    jing: 6
+  };
+  assert.deepEqual(Object.keys(koreanPercussion.pads).sort(), Object.keys(expected).sort());
+  for (const [id, count] of Object.entries(expected)) {
+    const pads = koreanPercussion.pads[id];
+    assert.equal(pads.length, count, id + ' articulation count');
+    assert.equal(new Set(pads.map((pad) => pad.id)).size, count, id + ' unique ids');
+    assert.equal(new Set(pads.map((pad) => pad.code)).size, count, id + ' unique keyboard bindings');
+    const sampleRoot = path.join(root, 'assets', 'audio', 'korean-percussion', id);
+    const samples = fs.readdirSync(sampleRoot).filter((name) => name.endsWith('.ogg'));
+    assert.equal(samples.length, count, id + ' sample count');
+    for (const pad of pads) {
+      assert.equal(typeof pad.sourceName, 'string', id + ' official source name');
+      assert.equal(fs.existsSync(path.join(sampleRoot, pad.id + '.ogg')), true, id + '/' + pad.id);
+    }
+    assert.match(app, new RegExp('id: "' + id + '"'));
+  }
+  assert.doesNotMatch(app, /id: "samulnori", name: "사물놀이"/);
+  assert.match(app, /KOREAN_PERCUSSION_PADS/);
+  assert.match(app, /KOREAN_PERCUSSION_SAMPLE_SETS/);
+  assert.match(app, /korean-articulations/);
+  assert.match(css, /\.drum-pads\.korean-articulations/);
+});
 test('string and expressive families expose virtual-instrument presentation', () => {
   for (const model of ['p-bass', 's-style', 'metal-seven', 'upright-bass', 'violin', 'harp', 'flute', 'contrabassoon', 'trumpet', 'piccolo-trumpet', 'flugelhorn', 'euphonium']) {
     assert.match(app, new RegExp(`id: "${model}"`));
@@ -249,7 +285,7 @@ test('string and expressive families expose virtual-instrument presentation', ()
 });
 
 test('project-bound instrument artwork exists', () => {
-  for (const asset of ['bass-p-style.png', 'bass-j-style.png', 'bass-active-five.png', 'bass-fretless.png', 'guitar-s-style.png', 'guitar-metal-seven.png', 'guitar-hollowbody-jazz.png', 'guitar-dreadnought.png', 'guitar-classical-nylon.png', 'drum-rock-kit.webp', 'drum-metal-kit.webp', 'drum-pop-kit.webp', 'drum-jazz-kit.webp', 'drum-funk-kit.webp', 'violin-expressive-v2.webp', 'viola-expressive-v2.webp', 'cello-expressive.png', 'double-bass-expressive.png', 'flute-expressive.png', 'oboe-expressive.png', 'clarinet-expressive.png', 'bassoon-expressive.png', 'contrabassoon-expressive.webp', 'alto-sax-expressive.png', 'soprano-sax-expressive-v2.webp', 'tenor-sax-expressive-v2.webp', 'baritone-sax-expressive-v2.webp', 'bass-clarinet-expressive-v2.webp', 'piccolo-flute-expressive-v2.webp', 'english-horn-expressive-v2.webp', 'trumpet-expressive.png', 'flugelhorn-expressive.webp', 'euphonium-expressive.webp', 'trombone-expressive.png', 'alto-trombone-expressive-v2.webp', 'bass-trombone-expressive-v2.webp', 'french-horn-expressive.png', 'tuba-expressive-v2.webp', 'harp-concert-v2.webp', 'piccolo-trumpet-expressive.webp', 'timpani-bank.png', 'glockenspiel-concert.png', 'marimba-concert.png', 'vibraphone-concert.png', 'xylophone-compact-concert.webp', 'orchestral-percussion-station.png', 'korean-gayageum.png', 'korean-geomungo.png', 'korean-haegeum.png', 'korean-ajaeng.png', 'korean-daegeum.png', 'korean-hyangpiri.png', 'korean-taepyeongso.png', 'korean-samulnori-station.png']) {
+  for (const asset of ['bass-p-style.png', 'bass-j-style.png', 'bass-active-five.png', 'bass-fretless.png', 'guitar-s-style.png', 'guitar-metal-seven.png', 'guitar-hollowbody-jazz.png', 'guitar-dreadnought.png', 'guitar-classical-nylon.png', 'drum-rock-kit.webp', 'drum-metal-kit.webp', 'drum-pop-kit.webp', 'drum-jazz-kit.webp', 'drum-funk-kit.webp', 'violin-expressive-v2.webp', 'viola-expressive-v2.webp', 'cello-expressive.png', 'double-bass-expressive.png', 'flute-expressive.png', 'oboe-expressive.png', 'clarinet-expressive.png', 'bassoon-expressive.png', 'contrabassoon-expressive.webp', 'alto-sax-expressive.png', 'soprano-sax-expressive-v2.webp', 'tenor-sax-expressive-v2.webp', 'baritone-sax-expressive-v2.webp', 'bass-clarinet-expressive-v2.webp', 'piccolo-flute-expressive-v2.webp', 'english-horn-expressive-v2.webp', 'trumpet-expressive.png', 'flugelhorn-expressive.webp', 'euphonium-expressive.webp', 'trombone-expressive.png', 'alto-trombone-expressive-v2.webp', 'bass-trombone-expressive-v2.webp', 'french-horn-expressive.png', 'tuba-expressive-v2.webp', 'harp-concert-v2.webp', 'piccolo-trumpet-expressive.webp', 'timpani-bank.png', 'glockenspiel-concert.png', 'marimba-concert.png', 'vibraphone-concert.png', 'xylophone-compact-concert.webp', 'orchestral-percussion-station.png', 'korean-gayageum.png', 'korean-geomungo.png', 'korean-haegeum.png', 'korean-ajaeng.png', 'korean-daegeum.png', 'korean-hyangpiri.png', 'korean-taepyeongso.png', 'korean-samulnori-station.png', 'korean-janggu-samul.webp', 'korean-janggu-sanjo.webp', 'korean-buk-samul.webp', 'korean-buk-sori.webp']) {
     assert.equal(fs.existsSync(path.join(root, 'assets', 'instruments', asset)), true, asset);
   }
 });
@@ -313,7 +349,7 @@ test('provides complete long-form guides for every model and grouped instrument'
     'marimba', 'vibraphone', 'xylophone', 'orchestral-percussion', 'orchestral-snare',
     'orchestral-bass-drum', 'orchestral-suspended-cymbal', 'orchestral-tamtam',
     'orchestral-triangle', 'gayageum', 'geomungo', 'haegeum', 'ajaeng', 'daegeum',
-    'hyangpiri', 'taepyeongso', 'samulnori', 'janggu', 'buk', 'sogo', 'kkwaenggwari',
+    'hyangpiri', 'taepyeongso', 'samulnori', 'janggu', 'buk', 'janggu-samul', 'janggu-sanjo', 'buk-samul', 'buk-sori', 'sogo', 'kkwaenggwari',
     'jing', 'pyeonjong', 'pyeongyeong', 'ritual-signals', 'bak', 'chuk', 'eo',
     'daechwita-station', 'nabal', 'nagak', 'yonggo', 'jabara'
   ];
@@ -340,11 +376,11 @@ test('separates Korean melody, folk, and court instrument rooms', () => {
     assert.match(app, new RegExp('room: "' + room + '"'));
   }
   assert.match(app, /function selectKoreanRoom/);
-  assert.match(app, /model: "장구 · 북 · 소고 · 꽹과리 · 징"/);
+  assert.doesNotMatch(app, /model: "장구 · 북 · 소고 · 꽹과리 · 징"/);
   assert.match(app, /model: "박 · 축 · 어"/);
   assert.match(app, /model: "나발 · 나각 · 용고 · 자바라 · 징 · 태평소"/);
   assert.doesNotMatch(app, /model: "(?:SAMULNORI|JANGGU|BAK · CHUK|NABAL · NAGAK|AJAENG|DAEGEUM|HYANGPIRI|TAEPYEONGSO)"/);
-  for (const model of ['gayageum', 'geomungo', 'haegeum', 'ajaeng', 'daegeum', 'hyangpiri', 'taepyeongso', 'samulnori', 'pyeonjong', 'pyeongyeong', 'ritual-signals', 'daechwita-station']) {
+  for (const model of ['gayageum', 'geomungo', 'haegeum', 'ajaeng', 'daegeum', 'hyangpiri', 'taepyeongso', 'janggu-samul', 'janggu-sanjo', 'buk-samul', 'buk-sori', 'sogo', 'kkwaenggwari', 'jing', 'pyeonjong', 'pyeongyeong', 'ritual-signals', 'daechwita-station']) {
     assert.match(app, new RegExp('id: "' + model + '"'));
   }
 });
@@ -360,8 +396,8 @@ test('renders grouped percussion as independent glowing artwork layers', () => {
   for (const asset of [
     'orchestral-snare.webp', 'orchestral-bass-drum.webp',
     'orchestral-suspended-cymbal.webp', 'orchestral-tamtam.webp',
-    'orchestral-triangle.webp', 'korean-janggu.webp', 'korean-buk.webp',
-    'korean-sogo.webp', 'korean-kkwaenggwari.webp', 'korean-jing.webp',
+    'orchestral-triangle.webp',
+
     'korean-pyeonjong.webp', 'korean-pyeongyeong.webp'
   ]) {
     assert.match(app, new RegExp(asset.replace('.', '\\.')));
