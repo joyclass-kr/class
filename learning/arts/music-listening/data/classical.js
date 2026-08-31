@@ -1,3 +1,50 @@
+// 저작권이 만료됐거나(원곡·연주 모두) CC 라이선스로 공개된 실연 녹음만 골라 담았습니다.
+// 출처와 라이선스 전문은 assets/audio/classical/AUDIO_CREDITS.md 에 있습니다.
+const AUDIO_LOCAL = {
+  '01': { file: 'vivaldi-spring.ogg', performer: 'John Harrison(바이올린) · Wichita State University Chamber Players', license: 'CC BY-SA 4.0' },
+  '02': { file: 'air-on-g-string.ogg', performer: 'US Air Force Strings(지휘 Keith H. Bland)', license: '퍼블릭 도메인' },
+  '03': { file: 'brandenburg-concerto5.ogg', performer: 'Advent Chamber Orchestra', license: 'CC BY-SA 2.0' },
+  '04': { file: 'water-music-hornpipe.ogg', performer: 'US Marine Band(지휘 Michelle Rakers)', license: '퍼블릭 도메인' },
+  '05': { file: 'canon.ogg', performer: 'Lee Galloway(피아노 편곡)', license: 'CC BY-SA 3.0', note: '원곡은 현악 합주지만 이 녹음은 피아노 독주 편곡입니다.' },
+  '06': { file: 'symphony5-fate.ogg', performer: 'Skidmore College Orchestra(Musopen)', license: '퍼블릭 도메인' },
+  '08': { file: 'eine-kleine-nachtmusik.ogg', performer: 'Advent Chamber Orchestra', license: 'CC BY-SA 2.0' },
+  '09': { file: 'twinkle-variations.ogg', performer: 'Andriy Bondarenko(피아노)', license: 'CC BY-SA 4.0' },
+  '10': { file: 'haydn-surprise.ogg', performer: '보스턴 교향악단 · 세르게 쿠세비츠키 지휘(1929년 녹음)', license: '퍼블릭 도메인' },
+  '11': { file: 'trumpet-concerto3.ogg', performer: 'Harry Mortimer(트럼펫) · Philharmonia Orchestra(지휘 George Weldon, 1946년 녹음)', license: '퍼블릭 도메인' },
+  '12': { file: 'william-tell-finale.ogg', performer: 'US Marine Band(지휘 Timothy Foley)', license: '퍼블릭 도메인', note: '관악합주 편곡이며 전곡 녹음 중 7분 30초부터가 피날레입니다.' },
+  '14': { file: 'erlking.ogg', performer: 'Ernestine Schumann-Heink(콘트랄토, 1913년 녹음)', license: '퍼블릭 도메인' },
+  '15': { file: 'nocturne-op9-2.ogg', performer: 'Frank Lévy(피아노)', license: '퍼블릭 도메인' },
+  '16': { file: 'hungarian-dance5.ogg', performer: 'Artur Nikisch(피아노, 1906년 피아노 롤 녹음)', license: '퍼블릭 도메인', note: '원곡은 관현악이지만 이 녹음은 피아노 독주입니다.' },
+  '17': { file: 'waltz-of-flowers.ogg', performer: 'US Air Force Band(편곡 Lawrence Odom)', license: '퍼블릭 도메인', note: '관악합주 편곡입니다.' },
+  '18': { file: 'swan-lake-scene.ogg', performer: 'London Philharmonic Orchestra(지휘 John Barbirolli, 1933년 녹음)', license: '퍼블릭 도메인' },
+  '19': { file: 'the-swan.ogg', performer: 'Alisa Weilerstein(첼로) · Jason Yoder(피아노), 백악관 콘서트(2009년)', license: '퍼블릭 도메인' },
+  '20': { file: 'great-gate-of-kiev.ogg', performer: 'Musopen 제공(연주자 정보 미표기)', license: '퍼블릭 도메인' },
+  '21': { file: 'new-world-symphony2.ogg', performer: 'Musopen 제공(연주 단체 정보 미표기)', license: '퍼블릭 도메인' },
+  '22': { file: 'bolero.ogg', performer: '모리스 라벨 본인 지휘(1930년 녹음)', license: '퍼블릭 도메인' },
+  '23': { file: 'prelude-faun.ogg', performer: 'Straram Symphony Orchestra(지휘 Walther Straram, 1930년 녹음)', license: '퍼블릭 도메인' },
+  '24': { file: 'jupiter.ogg', performer: 'Skidmore College Orchestra(Musopen)', license: '퍼블릭 도메인' },
+  '27': { file: 'hallelujah-chorus.ogg', performer: 'London Symphony Orchestra · London Philharmonic Choir(지휘 Hermann Scherchen, 1953년 녹음)', license: '퍼블릭 도메인' },
+  '28': { file: 'turkish-march.ogg', performer: 'Romuald Greiss(피아노, 2000년 실황)', license: '퍼블릭 도메인' },
+  '29': { file: 'moldau.ogg', performer: 'Musopen Symphony Orchestra(2012년)', license: 'CC0' },
+  '31': { file: 'toccata-fugue-dminor.ogg', performer: 'Ashtar Moïra(오르간)', license: '퍼블릭 도메인' },
+  '32': { file: 'vivaldi-winter.ogg', performer: 'John Harrison(바이올린) · Wichita State University Chamber Players', license: 'CC BY-SA 4.0' },
+  '33': { file: 'fur-elise.ogg', performer: 'Jason M. C. Han(피아노)', license: 'CC BY-SA 4.0' },
+  '34': { file: 'moonlight.ogg', performer: 'Paul Pitman(피아노, Musopen)', license: '퍼블릭 도메인' },
+  '35': { file: 'symphony40.ogg', performer: 'Tsumugi Orchestra(지휘 Takashi Inoue, 2010년 실황)', license: 'CC BY 3.0' },
+  '36': { file: 'queen-of-night-aria.ogg', performer: 'Sandra Partridge(소프라노) · Bangkok Opera(2006년 실황)', license: 'CC BY 2.5' },
+  '37': { file: 'carmen-prelude.ogg', performer: 'Philadelphia Symphony Orchestra(지휘 Leopold Stokowski, 1919년 녹음)', license: '퍼블릭 도메인', note: '1923년 이전 녹음이라 미국에서 저작인접권이 만료됐습니다.' },
+  '39': { file: 'blue-danube.ogg', performer: 'US Marine Band(지휘 Albert F. Schoepper)', license: '퍼블릭 도메인', note: '취주악(윈드밴드) 편곡입니다.' },
+  '40': { file: 'ride-of-valkyries.ogg', performer: 'American Symphony Orchestra(Edison Records, 1921년 녹음)', license: '퍼블릭 도메인' },
+  '41': { file: 'morning-mood.ogg', performer: 'Czech National Symphony Orchestra(Musopen Symphony, 2012년)', license: '퍼블릭 도메인' },
+  '42': { file: 'hall-of-mountain-king.ogg', performer: 'Czech National Symphony Orchestra(Musopen Symphony, 2012년)', license: '퍼블릭 도메인' },
+  '43': { file: 'wedding-march.ogg', performer: 'European Archive 소장 녹음(연주 단체 정보 미표기)', license: '퍼블릭 도메인' },
+  '44': { file: '1812-overture-finale.ogg', performer: 'Concertgebouw Orchestra of Amsterdam(지휘 Paul van Kempen)', license: '퍼블릭 도메인' },
+  '45': { file: 'flight-of-bumblebee.ogg', performer: 'US Army Band', license: '퍼블릭 도메인' },
+  '46': { file: 'hungarian-rhapsody2.ogg', performer: 'US Navy Band Concert Band', license: '퍼블릭 도메인' },
+  '47': { file: 'clair-de-lune.ogg', performer: 'Laurens Goedhart(피아노)', license: 'CC BY 3.0' },
+  '50': { file: 'rhapsody-in-blue.ogg', performer: 'Paul Whiteman Orchestra · 조지 거슈윈(피아노, 1924년 최초 녹음)', license: '퍼블릭 도메인' },
+};
+
 const pieces = [
   ['01','baroque','바로크','사계 〈봄〉 1악장','비발디','협주곡','바이올린','4박자','빠르게','밝고 생기 있게','새소리와 천둥을 묘사하는 독주 바이올린','표제 음악','봄 풍경을 소리로 그린 음악'],
   ['02','baroque','바로크','G선상의 아리아','바흐','관현악 모음곡','현악 합주','4박자','느리게','평온하고 장중하게','길게 이어지는 선율과 고른 저음','선율','숨을 길게 이어 가는 듯한 노래'],
@@ -49,7 +96,7 @@ const pieces = [
   ['48','modern','20세기','로미오와 줄리엣 〈기사들의 춤〉','프로코피예프','발레 음악','관현악','4박자','보통 빠르게','무겁고 위압적으로','낮은 금관과 현악기의 강한 오스티나토','오스티나토','짧고 무거운 리듬이 반복되어 위압감을 만듦'],
   ['49','modern','20세기','카르미나 부라나 〈오 운명의 여신이여〉','오르프','칸타타','합창과 관현악','3박자','보통 빠르게','운명적이고 폭발적으로','속삭임에서 포효로 커지는 합창과 반복 리듬','크레셴도','영화 예고편 같은 극적 합창으로 널리 알려짐'],
   ['50','modern','20세기','랩소디 인 블루','거슈윈','랩소디','피아노와 관현악','4박자','보통 빠르게','세련되고 활기차게','클라리넷 글리산도와 재즈풍 당김음','글리산도','재즈 어법과 클래식 협주곡의 규모를 결합']
-].map(([no,era,period,title,composer,form,lead,meter,tempo,mood,feature,concept,note])=>({no,era,period,title,composer,form,lead,meter,tempo,mood,feature,concept,note,url:`https://www.youtube.com/results?search_query=${encodeURIComponent(`${composer} ${title}`)}`}));
+].map(([no,era,period,title,composer,form,lead,meter,tempo,mood,feature,concept,note])=>({no,era,period,title,composer,form,lead,meter,tempo,mood,feature,concept,note,url:`https://www.youtube.com/results?search_query=${encodeURIComponent(`${composer} ${title}`)}`,audio:AUDIO_LOCAL[no]||null}));
 
 const originalTitles=[
   'Le quattro stagioni: “La primavera”, I','Air from Orchestral Suite No. 3 in D major','Brandenburg Concerto No. 5 in D major, I','Water Music: “Alla Hornpipe”','Canon in D major',

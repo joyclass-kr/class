@@ -1,0 +1,249 @@
+# 클래식 감상 음원 출처
+
+이 페이지에서 화면에 바로 재생되는 곡은 원곡·연주 모두 저작권 문제가 없는
+녹음만 실었습니다. 모두 위키미디어 공용(Wikimedia Commons)에서 받아
+용량을 줄여(Vorbis, 약 112kbps) 실었습니다. 원본 링크는 아래에 있습니다.
+
+## 목록 (곡 번호는 classical.js의 no 기준)
+
+- 01 사계 〈봄〉 1악장 — `vivaldi-spring.ogg`
+  연주: John Harrison(바이올린) · Wichita State University Chamber Players
+  라이선스: CC BY-SA 4.0
+  https://commons.wikimedia.org/wiki/File:Vivaldi_-_Four_Seasons_1_Spring_mvt_1_Allegro_-_John_Harrison_violin.oga
+
+- 02 G선상의 아리아 — `air-on-g-string.ogg`
+  연주: US Air Force Strings(지휘 Keith H. Bland)
+  라이선스: 퍼블릭 도메인 (PD-USGov)
+  https://commons.wikimedia.org/wiki/File:Air.ogg
+
+- 03 브란덴부르크 협주곡 5번 1악장 — `brandenburg-concerto5.ogg`
+  연주: Advent Chamber Orchestra
+  라이선스: CC BY-SA 2.0
+  https://commons.wikimedia.org/wiki/File:Bach_-_Brandenburg_Concerto_5_-_1._Allegro.ogg
+
+- 04 수상 음악 〈알라 혼파이프〉 — `water-music-hornpipe.ogg`
+  연주: US Marine Band(지휘 Michelle Rakers, 2017년 실황)
+  라이선스: 퍼블릭 도메인 (PD-USGov)
+  https://commons.wikimedia.org/wiki/File:Handel's_Water_Music_-_12._Alla_hornpipe_-_Chamber_Orchestra_-_United_States_Marine_Band.opus
+
+- 05 캐논 라장조 — `canon.ogg`
+  연주: Lee Galloway (피아노 편곡)
+  라이선스: CC BY-SA 3.0 / GFDL 1.2+
+  원곡은 현악 합주지만 이 녹음은 피아노 독주로 편곡한 것입니다.
+  https://commons.wikimedia.org/wiki/File:Pachelbel%27s_Canon.ogg
+
+- 06 교향곡 5번 〈운명〉 1악장 — `symphony5-fate.ogg`
+  연주: Skidmore College Orchestra (Musopen)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Ludwig_van_Beethoven_-_symphony_no._5_in_c_minor,_op._67_-_i._allegro_con_brio.ogg
+
+- 08 아이네 클라이네 나흐트무지크 1악장 — `eine-kleine-nachtmusik.ogg`
+  연주: Advent Chamber Orchestra
+  라이선스: CC BY-SA 2.0
+  https://commons.wikimedia.org/wiki/File:Mozart_-_Eine_kleine_Nachtmusik_-_1._Allegro.ogg
+
+- 09 작은 별 변주곡 — `twinkle-variations.ogg`
+  연주: Andriy Bondarenko (피아노, 2016)
+  라이선스: CC BY-SA 4.0
+  https://commons.wikimedia.org/wiki/File:Mozart_Ah_vous_dirai-je,_Maman.ogg
+
+- 10 놀람 교향곡 2악장 — `haydn-surprise.ogg`
+  연주: 보스턴 교향악단 · 세르게 쿠세비츠키 지휘 (1929년 녹음)
+  라이선스: 퍼블릭 도메인 (연주자·제작자 권리 만료)
+  https://commons.wikimedia.org/wiki/File:Haydn;_Symphony_No._94_%22Surprise%22,_2._Andante.ogg
+
+- 11 트럼펫 협주곡 3악장 — `trumpet-concerto3.ogg`
+  연주: Harry Mortimer(트럼펫) · Philharmonia Orchestra(지휘 George Weldon, 1946년 EMI 녹음)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Columbia-dx1536-cax9565.ogg
+
+- 12 윌리엄 텔 서곡 〈피날레〉 — `william-tell-finale.ogg`
+  연주: US Marine Band(지휘 Timothy Foley, 관악합주 편곡, 2000년)
+  라이선스: 퍼블릭 도메인
+  전곡 녹음이며 피날레 부분은 7분 30초부터입니다.
+  https://commons.wikimedia.org/wiki/File:Gioachino_Rossini,_William_Tell_Overture_(military_band_version,_2000).ogg
+
+- 14 마왕 — `erlking.ogg`
+  연주: Ernestine Schumann-Heink (콘트랄토, 1913년 Victor 녹음)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Schubert_-_Schumann-Heink_-_Erlkönig.ogg
+
+- 15 녹턴 작품 9-2 — `nocturne-op9-2.ogg`
+  연주: Frank Lévy (피아노)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Chopin_-_Nocturne_No._2_in_E-flat_major,_Op._9_No._2_(Frank_Levy).flac
+
+- 16 헝가리 무곡 5번 — `hungarian-dance5.ogg`
+  연주: Artur Nikisch (피아노, Welte-Mignon 재생 피아노 롤, 1906년)
+  라이선스: 퍼블릭 도메인
+  원곡은 관현악이지만 이 녹음은 피아노 독주(편곡)입니다.
+  https://commons.wikimedia.org/wiki/File:Brahms_nikisch_hd5.ogg
+
+- 17 호두까기 인형 〈꽃의 왈츠〉 — `waltz-of-flowers.ogg`
+  연주: US Air Force Band(콘서트 밴드, 편곡 Lawrence Odom, 1996년 실황)
+  라이선스: 퍼블릭 도메인
+  관현악이 아닌 관악합주(콘서트 밴드) 편곡입니다.
+  https://commons.wikimedia.org/wiki/File:Waltz_of_the_Flowers_-_Concert_Band_-_United_States_Air_Force_Band.mp3
+
+- 18 백조의 호수 〈정경〉 — `swan-lake-scene.ogg`
+  연주: London Philharmonic Orchestra(지휘 John Barbirolli, 1933년 HMV 녹음)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Tchaikovsky_Swan_Lake_Op.20_No.10._Scène.ogg
+
+- 19 동물의 사육제 〈백조〉 — `the-swan.ogg`
+  연주: Alisa Weilerstein(첼로) · Jason Yoder(피아노), 백악관 클래식 콘서트(2009년)
+  라이선스: 퍼블릭 도메인 (미국 연방정부 공무 저작물)
+  https://commons.wikimedia.org/wiki/File:20091104_Alisa_Weilerstein_and_Jason_Yoder_-_Saint_Saëns'_The_Swan.ogg
+
+- 20 전람회의 그림 〈키예프의 대문〉 — `great-gate-of-kiev.ogg`
+  연주: Musopen 제공(연주자 정보 미표기)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Modest_Mussorgsky_-_pictures_at_an_exhibition_-_x._la_grande_porte_de_kiev_-_allegro_alla_breve._maestoso._con_grandezza.ogg
+
+- 21 신세계 교향곡 2악장 — `new-world-symphony2.ogg`
+  연주: Musopen 제공(연주 단체 정보 미표기)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Antonin_Dvorak_-_symphony_no._9_in_e_minor_'from_the_new_world',_op._95_-_ii._largo.ogg
+
+- 22 볼레로 — `bolero.ogg`
+  연주: 모리스 라벨 본인 지휘(1930년 녹음)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Bolero-Maurice_Ravel-1930.ogg
+
+- 23 목신의 오후에의 전주곡 — `prelude-faun.ogg`
+  연주: Straram Symphony Orchestra(지휘 Walther Straram, 1930년 2월 24일 녹음)
+  라이선스: 퍼블릭 도메인
+  78회전판 앞뒤 두 면으로 나뉘어 있던 것을 이어붙였습니다.
+  https://commons.wikimedia.org/wiki/File:Columbia-dwx1550ix-c-wlx1289.ogg
+  https://commons.wikimedia.org/wiki/File:Columbia-dwx1550iix-c-wlx1290.ogg
+
+- 24 행성 〈목성〉 — `jupiter.ogg`
+  연주: Skidmore College Orchestra (Musopen)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Gustav_Holst_-_the_planets,_op._32_-_iv._jupiter,_the_bringer_of_jollity.ogg
+
+- 27 메시아 〈할렐루야〉 — `hallelujah-chorus.ogg`
+  연주: London Symphony Orchestra · London Philharmonic Choir(지휘 Hermann Scherchen, 1953년)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Handel_-_Messiah,_Part_2_(Scherchen)_-_45._Hallelujah.ogg
+
+- 28 피아노 소나타 11번 〈터키 행진곡〉 — `turkish-march.ogg`
+  연주: Romuald Greiss(피아노, 1850년산 Budynowicz 피아노, 2000년 실황)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Mozart-Marsz_turecki-(Romuald_Greiss).ogg
+
+- 29 나의 조국 〈몰다우〉 — `moldau.ogg`
+  연주: Musopen Symphony Orchestra(2012)
+  라이선스: CC0 1.0
+  https://commons.wikimedia.org/wiki/File:Smetana,_Má_vlast_-_Vltava_-_The_Moldau.ogg
+
+- 31 토카타와 푸가 라단조 — `toccata-fugue-dminor.ogg`
+  연주: Ashtar Moïra (오르간)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Toccata_et_Fugue_BWV565.ogg
+
+- 32 사계 〈겨울〉 1악장 — `vivaldi-winter.ogg`
+  연주: John Harrison(바이올린) · Wichita State University Chamber Players
+  라이선스: CC BY-SA 4.0
+  https://commons.wikimedia.org/wiki/File:Vivaldi_-_Four_Seasons_4_Winter_mvt_1_Allegro_non_molto_-_John_Harrison_violin.oga
+
+- 33 엘리제를 위하여 — `fur-elise.ogg`
+  연주: Jason M. C. Han(피아노)
+  라이선스: CC BY-SA 4.0
+  https://commons.wikimedia.org/wiki/File:For_Elise_(Für_Elise)_Beethoven_JMC_Han.ogg
+
+- 34 월광 소나타 1악장 — `moonlight.ogg`
+  연주: Paul Pitman(피아노, Musopen)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Ludwig_van_Beethoven_-_sonata_no._14_in_c_sharp_minor_'moonlight',_op._27_no._2_-_i._adagio_sostenuto.ogg
+
+- 35 교향곡 40번 1악장 — `symphony40.ogg`
+  연주: Tsumugi Orchestra(지휘 Takashi Inoue, 2010년 후쿠오카 실황)
+  라이선스: CC BY 3.0
+  https://commons.wikimedia.org/wiki/File:Mozart_Symphony_40_G_minor_-_1_Molto_allegro.oga
+
+- 36 마술피리 〈밤의 여왕의 아리아〉 — `queen-of-night-aria.ogg`
+  연주: Sandra Partridge(소프라노) · Siam Philharmonic Orchestra(지휘 Trisdee na Patalung, Bangkok Opera 2006년 실황)
+  라이선스: CC BY 2.5
+  https://commons.wikimedia.org/wiki/File:Der_Hoelle_Rache.ogg
+
+- 37 카르멘 〈전주곡〉 — `carmen-prelude.ogg`
+  연주: Philadelphia Symphony Orchestra(지휘 Leopold Stokowski, 1919년 5월 8일 녹음)
+  라이선스: 퍼블릭 도메인 (1923년 이전 미국 녹음은 저작인접권 만료)
+  출처: 위키미디어가 아니라 인터넷 아카이브(Internet Archive)의 78회전판 컬렉션에서 받았습니다.
+  https://archive.org/details/78_carmen---prelude-to-act-1_philadelphia-symphony-orchestra-leopold-stokowski-bizet_gbia0010961a
+
+- 39 아름답고 푸른 도나우 — `blue-danube.ogg`
+  연주: US Marine Band(지휘 Albert F. Schoepper, 1972년경)
+  라이선스: 퍼블릭 도메인
+  원곡은 관현악이지만 이 녹음은 취주악(윈드밴드) 편성입니다.
+  https://commons.wikimedia.org/wiki/File:%22An_der_schönen,_blauen_Donau%22,_performed_by_the_US_Marine_Band.mp3
+
+- 40 발퀴레의 기행 — `ride-of-valkyries.ogg`
+  연주: American Symphony Orchestra(Edison Records, 1921년 12월 녹음, Edison Diamond Disc 복원)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Richard_Wagner_-_Ride_of_the_Valkyries.ogg
+
+- 41 페르 귄트 〈아침 기분〉 — `morning-mood.ogg`
+  연주: Czech National Symphony Orchestra("Musopen Symphony", 2012)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Musopen_-_Morning.ogg
+
+- 42 페르 귄트 〈산왕의 궁전에서〉 — `hall-of-mountain-king.ogg`
+  연주: Czech National Symphony Orchestra("Musopen Symphony", 2012)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Musopen_-_In_the_Hall_Of_The_Mountain_King.ogg
+
+- 43 한여름 밤의 꿈 〈결혼행진곡〉 — `wedding-march.ogg`
+  연주: European Archive 소장 녹음(연주 단체 정보 미표기)
+  라이선스: 퍼블릭 도메인 (PD-EU)
+  https://commons.wikimedia.org/wiki/File:A_Midsummer_Night's_Dream_Op._61_Wedding_March_(Mendelssohn)_European_Archive.ogg
+
+- 44 1812년 서곡 〈피날레〉 — `1812-overture-finale.ogg`
+  연주: Concertgebouw Orchestra of Amsterdam(지휘 Paul van Kempen)
+  라이선스: 퍼블릭 도메인 (PD-EU)
+  https://commons.wikimedia.org/wiki/File:Tchaikovsky_-_Op.49_Ouverture_solennelle_1812.ogg
+
+- 45 술탄 황제의 이야기 〈왕벌의 비행〉 — `flight-of-bumblebee.ogg`
+  연주: United States Army Band
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Rimsky-Korsakov_-_flight_of_the_bumblebee.oga
+
+- 46 헝가리 광시곡 2번 — `hungarian-rhapsody2.ogg`
+  연주: U.S. Navy Band Concert Band
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:Hungarian_Rhapsody_No_2.ogg
+
+- 47 베르가마스크 모음곡 〈달빛〉 — `clair-de-lune.ogg`
+  연주: Laurens Goedhart(피아노)
+  라이선스: CC BY 3.0
+  https://commons.wikimedia.org/wiki/File:Clair_de_lune_(Claude_Debussy)_Suite_bergamasque.ogg
+
+- 50 랩소디 인 블루 — `rhapsody-in-blue.ogg`
+  연주: Paul Whiteman Orchestra · 조지 거슈윈(피아노, 1924년 최초 녹음)
+  라이선스: 퍼블릭 도메인
+  https://commons.wikimedia.org/wiki/File:1st_recording_of_Rhapsody_In_Blue_-_Paul_Whiteman_Orch._and_George_Gershwin_piano_(1924_version).ogg
+
+## 못 찾았거나 뺀 곡 (음원 없이 기존 "찾아 듣기" 링크만 남음)
+
+- 07 교향곡 9번 〈합창〉 4악장 — 찾은 녹음(Horenstein 1956, 110.9MB)은 라이선스가
+  EU 실연권 만료 태그뿐이라 이 목록의 다른 곡들만큼 명확하지 않고 용량도 커서 보류.
+- 13 피아노 5중주 〈송어〉 4악장 — 위키미디어 공용에 실제 연주 녹음이 없음.
+- 25 피터와 늑대 — 위키미디어 공용에 오디오 파일 자체가 없음(사진 자료만 있음).
+- 26 청소년을 위한 관현악 입문(브리튼) — 작곡가 사후 70년이 아직 지나지 않아 원곡 저작권이 살아 있음(2046년까지).
+- 30 사브르 댄스(하차투리안) — 위와 같은 이유로 제외(2048년까지).
+- 38 천국과 지옥 〈캉캉〉 — 실제 연주 녹음을 찾지 못함(합성음만 있음). 인터넷 아카이브의 1952년 녹음은 1923년 이후라 자동 PD가 아니고 별도 권리 표기도 없어 제외.
+- 48 로미오와 줄리엣 〈기사들의 춤〉 — 실제 연주 녹음을 찾지 못함(합성음만 있음).
+- 49 카르미나 부라나 〈오 운명의 여신이여〉(오르프) — 작곡가 사후 70년이 아직 지나지 않아 원곡 저작권이 살아 있음(2052년까지).
+
+## 다음에 곡을 더 늘릴 때
+
+같은 방식으로 찾으면 됩니다: 위키미디어 공용에서 곡 검색 → 파일 설명 페이지에서
+라이선스 확인 → 퍼블릭 도메인을 우선하고, CC BY 계열만 이 표에 추가.
+작곡가 사후 70년이 안 지난 곡은 연주 라이선스와 무관하게 원곡 저작권이
+남아 있으므로 제외합니다.
+
+위키미디어 공용은 짧은 시간에 요청을 몰아치면 429(속도 제한)를 걸고,
+한 번 걸리면 다음 요청이 다시 카운트다운을 리셋시키는 것으로 보입니다.
+파일 하나당 5~10초 이상 간격을 두고, 429를 맞으면 최소 10분은 아예
+요청을 보내지 않고 기다린 뒤 다시 시도하세요.
