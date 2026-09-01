@@ -32,6 +32,9 @@ are big and expressive. Pick the most interesting instant in the scene and
 stage it so a child wants to look at it for a while.
 No blood, no wounds and no cruelty shown: when something violent happens,
 draw the moment just before or just after it instead.
+The artwork must bleed to all four edges of the image: no white or cream
+margin, no border, no frame line, no painted paper edge, no matting.
+The picture fills the whole canvas corner to corner.
 ```
 
 **돈키호테를 우스꽝스러운 캐리커처로 그리지 마세요.**

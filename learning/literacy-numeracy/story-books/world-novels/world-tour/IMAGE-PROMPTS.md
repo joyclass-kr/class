@@ -31,6 +31,9 @@ are big and expressive. Pick the most interesting instant in the scene and
 stage it so a child wants to look at it for a while.
 No blood, no wounds and no cruelty shown: when something violent happens,
 draw the moment just before or just after it instead.
+The artwork must bleed to all four edges of the image: no white or cream
+margin, no border, no frame line, no painted paper edge, no matting.
+The picture fills the whole canvas corner to corner.
 ```
 
 **사람을 그릴 때 지켜 주세요.** 이 이야기는 인도, 중국, 일본, 미국을 지나갑니다.

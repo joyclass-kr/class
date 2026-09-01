@@ -31,6 +31,9 @@ Draw the moment in motion, not a posed portrait: catch people mid-stride,
 mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
 are big and expressive. Pick the most interesting instant in the scene and
 stage it so a child wants to look at it for a while.
+The artwork must bleed to all four edges of the image: no white or cream
+margin, no border, no frame line, no painted paper edge, no matting.
+The picture fills the whole canvas corner to corner.
 ```
 
 **가난을 예쁘게 그리지 마세요.** 이 책에는 여덟 살에 팔려 가고 열세 살에 탄광에

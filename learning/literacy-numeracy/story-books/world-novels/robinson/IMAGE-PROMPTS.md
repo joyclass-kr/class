@@ -31,6 +31,9 @@ are big and expressive. Pick the most interesting instant in the scene and
 stage it so a child wants to look at it for a while.
 No blood, no wounds and no cruelty shown: when something violent happens,
 draw the moment just before or just after it instead.
+The artwork must bleed to all four edges of the image: no white or cream
+margin, no border, no frame line, no painted paper edge, no matting.
+The picture fills the whole canvas corner to corner.
 ```
 
 **프라이데이를 반드시 존엄하게 그려 주세요.** 이 지시문을 그 인물이 나오는 모든 프롬프트에 넣으세요.

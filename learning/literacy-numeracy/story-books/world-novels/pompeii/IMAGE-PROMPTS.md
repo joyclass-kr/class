@@ -32,6 +32,9 @@ Draw the moment in motion, not a posed portrait: catch people mid-stride,
 mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
 are big and expressive. Pick the most interesting instant in the scene and
 stage it so a child wants to look at it for a while.
+The artwork must bleed to all four edges of the image: no white or cream
+margin, no border, no frame line, no painted paper edge, no matting.
+The picture fills the whole canvas corner to corner.
 ```
 
 **폼페이를 실제 발굴 자료대로 그려 주세요.** 이 책은 발굴에서 나온 것들을 본문에

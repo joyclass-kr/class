@@ -31,6 +31,9 @@ are big and expressive. Pick the most interesting instant in the scene and
 stage it so a child wants to look at it for a while.
 No blood, no wounds and no cruelty shown: when something violent happens,
 draw the moment just before or just after it instead.
+The artwork must bleed to all four edges of the image: no white or cream
+margin, no border, no frame line, no painted paper edge, no matting.
+The picture fills the whole canvas corner to corner.
 ```
 
 **램 다스를 그릴 때 지켜 주세요.** 인도 사람인 램 다스는 솜씨 있고 사려 깊은 어른으로 그려 주세요.

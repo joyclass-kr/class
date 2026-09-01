@@ -30,6 +30,9 @@ Draw the moment in motion, not a posed portrait: catch people mid-stride,
 mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
 are big and expressive. Pick the most interesting instant in the scene and
 stage it so a child wants to look at it for a while.
+The artwork must bleed to all four edges of the image: no white or cream
+margin, no border, no frame line, no painted paper edge, no matting.
+The picture fills the whole canvas corner to corner.
 ```
 
 **짐을 그릴 때 반드시 지켜 주세요.** 짐은 이 이야기에서 가장 어른스럽고 지혜로운 인물입니다.
