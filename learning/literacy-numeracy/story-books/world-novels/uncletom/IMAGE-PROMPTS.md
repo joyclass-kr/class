@@ -6,6 +6,8 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
+그림이 칸을 꽉 채워야 하니 가장자리에 흰 여백이나 테두리를 두지 마세요. 그림이 네 변 끝까지 닿아야 합니다.
+
 **단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 이 책은 그림 지시를 특히 조심해서 쓰세요
@@ -74,7 +76,7 @@ appearance. Do not make him look like a monster.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a log cabin at evening in Kentucky with warm light in the one window and people gathered inside; and in the foreground, seen from behind, a broad-shouldered man standing at the gate looking down the road, a bundle at his feet. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a log cabin at evening in Kentucky with warm light in the one window and people gathered inside; and in the foreground, seen from behind, a broad-shouldered man standing at the gate looking down the road, a bundle at his feet. The picture must bleed to all four edges: no white margin, no white border, no frame, no matting around the artwork. |
 | `images/end.webp` | A plain wooden grave marker on a low rise above a cotton field at sunrise, no name carved on it, a hat resting on top. |
 
 ## 1장 · 사람을 사고팔던 시절

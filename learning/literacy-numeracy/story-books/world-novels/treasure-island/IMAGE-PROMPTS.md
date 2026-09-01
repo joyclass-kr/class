@@ -6,6 +6,8 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
+그림이 칸을 꽉 채워야 하니 가장자리에 흰 여백이나 테두리를 두지 마세요. 그림이 네 변 끝까지 닿아야 합니다.
+
 **단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.** 표지 그림칸은 책을 펼쳤을 때 왼쪽 반쪽 전체를 채우는데,
 그 칸 자체가 가로로 넓은 4:3이 아니라 세로로 긴 2:3 모양입니다. 4:3 가로 그림을 넣으면 양옆이 절반 가까이 잘려 나갑니다.
 
@@ -64,7 +66,7 @@ sailcloth pinned together with brass buttons and twigs, wild hair and beard.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format adventure novel cover: Jim Hawkins standing on a windswept clifftop at dusk holding a rolled sea chart, the sea and a distant tall ship behind him, an old sailor's sea chest at his feet, stormy sky, dramatic and inviting adventure-book cover composition. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format adventure novel cover: Jim Hawkins standing on a windswept clifftop at dusk holding a rolled sea chart, the sea and a distant tall ship behind him, an old sailor's sea chest at his feet, stormy sky, dramatic and inviting adventure-book cover composition. The picture must bleed to all four edges: no white margin, no white border, no frame, no matting around the artwork. |
 | `images/end.webp` | A brass ship's compass and a folded old sea chart lying on weathered planking, warm lantern light, quiet closing mood. The chart is blank coastline and soundings only - absolutely NO lettering, NO place names, NO numbers, NO book titles, NO writing of any kind anywhere in the picture. No weapons. |
 
 ## 1장 · 벤보 여관의 손님

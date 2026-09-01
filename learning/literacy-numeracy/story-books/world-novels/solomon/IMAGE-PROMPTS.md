@@ -6,6 +6,8 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
+그림이 칸을 꽉 채워야 하니 가장자리에 흰 여백이나 테두리를 두지 마세요. 그림이 네 변 끝까지 닿아야 합니다.
+
 **단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 이 책은 그림 지시를 특히 조심해서 쓰세요
@@ -75,7 +77,7 @@ grotesque.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: an ancient stone-paved road running down out of snow-capped mountains toward a green highland, cut into the cliff face and bridged across a gorge; five small travellers on it, the tallest of them ahead of the others looking down at the country below. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: an ancient stone-paved road running down out of snow-capped mountains toward a green highland, cut into the cliff face and bridged across a gorge; five small travellers on it, the tallest of them ahead of the others looking down at the country below. The picture must bleed to all four edges: no white margin, no white border, no frame, no matting around the artwork. |
 | `images/end.webp` | An old hand-drawn map on a scrap of cloth lying on a table with a lamp beside it, one corner of the route deliberately smudged out. |
 
 ## 1장 · 이 책을 읽기 전에

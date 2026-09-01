@@ -6,6 +6,8 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
+그림이 칸을 꽉 채워야 하니 가장자리에 흰 여백이나 테두리를 두지 마세요. 그림이 네 변 끝까지 닿아야 합니다.
+
 **단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
@@ -56,7 +58,7 @@ Wilson: his shorter, rounder English companion.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: an elegant man in evening dress and a top hat stepping through a tall window onto a Paris balcony at night with a small bundle under his arm, lifting his hat toward the reader; behind him a lit ballroom nobody has noticed anything in, below him the gaslit street. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: an elegant man in evening dress and a top hat stepping through a tall window onto a Paris balcony at night with a small bundle under his arm, lifting his hat toward the reader; behind him a lit ballroom nobody has noticed anything in, below him the gaslit street. The picture must bleed to all four edges: no white margin, no white border, no frame, no matting around the artwork. |
 | `images/end.webp` | An empty chair in a police office with a calling card lying on the desk in front of it, a coat still swinging on the hook by the open door. |
 
 ## 1편 · 대서양 위의 도둑

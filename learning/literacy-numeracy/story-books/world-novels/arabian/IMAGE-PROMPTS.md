@@ -6,6 +6,8 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
+그림이 칸을 꽉 채워야 하니 가장자리에 흰 여백이나 테두리를 두지 마세요. 그림이 네 변 끝까지 닿아야 합니다.
+
 **단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
@@ -65,7 +67,7 @@ state robes by day.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a young woman seated upright on cushions in a lamplit palace chamber, speaking, one hand raised; a king listening from the shadows; and behind and above them, painted faint like a tapestry, the shapes of the stories — a jinni of smoke, a great bird, a wooden horse, a cave mouth. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a young woman seated upright on cushions in a lamplit palace chamber, speaking, one hand raised; a king listening from the shadows; and behind and above them, painted faint like a tapestry, the shapes of the stories — a jinni of smoke, a great bird, a wooden horse, a cave mouth. The picture must bleed to all four edges: no white margin, no white border, no frame, no matting around the artwork. |
 | `images/end.webp` | A window of a palace at dawn with the last lamp still burning inside and the sky going pale outside, a stack of story-worn cushions on the floor. |
 
 ## 1편 · 천 하룻밤을 벌다

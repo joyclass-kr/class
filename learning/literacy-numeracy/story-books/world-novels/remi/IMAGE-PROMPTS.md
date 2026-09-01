@@ -6,6 +6,8 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
+그림이 칸을 꽉 채워야 하니 가장자리에 흰 여백이나 테두리를 두지 마세요. 그림이 네 변 끝까지 닿아야 합니다.
+
 **단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
@@ -62,7 +64,7 @@ Père Acquin: a broad gardener of fifty with earth under his nails.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a small boy walking away down a long empty country road at dawn with a bundle on his back, a tall old man ahead of him and three dogs and a small monkey around them; the village behind already out of sight around the bend. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a small boy walking away down a long empty country road at dawn with a bundle on his back, a tall old man ahead of him and three dogs and a small monkey around them; the village behind already out of sight around the bend. The picture must bleed to all four edges: no white margin, no white border, no frame, no matting around the artwork. |
 | `images/end.webp` | A very old white dog asleep in a patch of sun on a stone step, one front paw stretched out. |
 
 ## 1장 · 주워 온 아이

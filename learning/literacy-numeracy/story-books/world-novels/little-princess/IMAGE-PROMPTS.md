@@ -6,6 +6,8 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
+그림이 칸을 꽉 채워야 하니 가장자리에 흰 여백이나 테두리를 두지 마세요. 그림이 네 변 끝까지 닿아야 합니다.
+
 **단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.** 표지 그림칸은 책을 펼쳤을 때 왼쪽 반쪽 전체를 채우는데,
 그 칸 자체가 세로로 긴 2:3 모양입니다. 4:3 가로 그림을 넣으면 양옆이 절반 가까이 잘려 나갑니다.
 
@@ -59,7 +61,7 @@ Mr Carrisford: a gaunt, ill gentleman wrapped in shawls in a deep armchair.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a thin girl in a shabby black dress standing very straight at the top of a snowy London street at dusk, chin lifted, a large doll under one arm; behind and above her the attic window of a tall dark house with one small light in it, snow falling. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a thin girl in a shabby black dress standing very straight at the top of a snowy London street at dusk, chin lifted, a large doll under one arm; behind and above her the attic window of a tall dark house with one small light in it, snow falling. The picture must bleed to all four edges: no white margin, no white border, no frame, no matting around the artwork. |
 | `images/end.webp` | An empty attic room seen from the doorway, swept clean, a small window with light coming through, one chair by a cold grate. |
 
 ## 1장 · 마차에서 내린 아이

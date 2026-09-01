@@ -6,6 +6,8 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
+그림이 칸을 꽉 채워야 하니 가장자리에 흰 여백이나 테두리를 두지 마세요. 그림이 네 변 끝까지 닿아야 합니다.
+
 **단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 이 책은 그림 지시를 특히 조심해서 쓰세요
@@ -76,7 +78,7 @@ Tamenund: an extremely old Delaware leader, over a hundred, seated.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: an old-growth forest gorge with a river below, three figures on a rock ledge looking down a trail — a frontiersman with a long rifle and two Mohican men — drawn as three individual people with distinct faces, not as a heroic tableau. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: an old-growth forest gorge with a river below, three figures on a rock ledge looking down a trail — a frontiersman with a long rifle and two Mohican men — drawn as three individual people with distinct faces, not as a heroic tableau. The picture must bleed to all four edges: no white margin, no white border, no frame, no matting around the artwork. |
 | `images/end.webp` | A modern-looking wooden signboard at the edge of a wooded road in Wisconsin marking a tribal community, with a school building visible beyond it — quiet, ordinary, present-day. |
 
 ## 1장 · 이 이야기를 읽기 전에

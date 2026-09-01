@@ -6,6 +6,8 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
+그림이 칸을 꽉 채워야 하니 가장자리에 흰 여백이나 테두리를 두지 마세요. 그림이 네 변 끝까지 닿아야 합니다.
+
 **단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
@@ -61,7 +63,7 @@ later a magnificent white horse — always a real horse, never a phantom.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a grass dike running away to the horizon under a huge black storm sky, the sea pushed right up to the dike's shoulder on one side and farmland far below on the other; a single rider on a white horse small on the crest, seen from behind through rain. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a grass dike running away to the horizon under a huge black storm sky, the sea pushed right up to the dike's shoulder on one side and farmland far below on the other; a single rider on a white horse small on the crest, seen from behind through rain. The picture must bleed to all four edges: no white margin, no white border, no frame, no matting around the artwork. |
 | `images/end.webp` | The same dike a century later on a calm bright day, its seaward face long and gently sloped, sheep grazing on it, the sea flat beyond. |
 
 ## 1장 · 제방 위의 그림자

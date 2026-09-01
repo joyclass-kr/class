@@ -6,6 +6,8 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
+그림이 칸을 꽉 채워야 하니 가장자리에 흰 여백이나 테두리를 두지 마세요. 그림이 네 변 끝까지 닿아야 합니다.
+
 **단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
@@ -60,7 +62,7 @@ Narcissus: a beautiful young man, always alone in the frame.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a bearded man climbing down a mountainside at night carrying a hollow fennel stalk with a single ember glowing in its end; far below, dark huts with no lights at all, and above him the lit halls of the gods on the peak. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a bearded man climbing down a mountainside at night carrying a hollow fennel stalk with a single ember glowing in its end; far below, dark huts with no lights at all, and above him the lit halls of the gods on the peak. The picture must bleed to all four edges: no white margin, no white border, no frame, no matting around the artwork. |
 | `images/end.webp` | An archaeological trench in a dry hillside with the burnt stone foundations of a wall exposed in it, measuring rods and a brush lying beside them, the sea in the distance. |
 
 ## 1편 · 불을 훔친 프로메테우스

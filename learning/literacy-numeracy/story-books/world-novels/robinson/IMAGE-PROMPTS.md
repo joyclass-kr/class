@@ -6,6 +6,8 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
+그림이 칸을 꽉 채워야 하니 가장자리에 흰 여백이나 테두리를 두지 마세요. 그림이 네 변 끝까지 닿아야 합니다.
+
 **단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
@@ -61,7 +63,7 @@ The parrot: a green parrot that appears from chapter 8 on.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a bearded man in goatskins with a tall flapped cap standing on a headland with a musket and a goatskin parasol, looking out over an empty ocean; behind and below him the palisade, the goat pen and the forest of his island. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a bearded man in goatskins with a tall flapped cap standing on a headland with a musket and a goatskin parasol, looking out over an empty ocean; behind and below him the palisade, the goat pen and the forest of his island. The picture must bleed to all four edges: no white margin, no white border, no frame, no matting around the artwork. |
 | `images/end.webp` | A ship's rail at sea at evening, and a low green island shrinking on the horizon behind it. |
 
 ## 1장 · 집을 나가다

@@ -6,6 +6,8 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
+그림이 칸을 꽉 채워야 하니 가장자리에 흰 여백이나 테두리를 두지 마세요. 그림이 네 변 끝까지 닿아야 합니다.
+
 **단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
@@ -64,7 +66,7 @@ Olinthus: a plain-dressed man of about forty, calm.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: an ordinary Pompeii street at midday — stepping stones, cart ruts, painted walls, an awning, people shopping — and filling the whole upper half of the picture behind the rooftops, Vesuvius with a thin thread of smoke just starting from its summit that nobody in the street has noticed. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: an ordinary Pompeii street at midday — stepping stones, cart ruts, painted walls, an awning, people shopping — and filling the whole upper half of the picture behind the rooftops, Vesuvius with a thin thread of smoke just starting from its summit that nobody in the street has noticed. The picture must bleed to all four edges: no white margin, no white border, no frame, no matting around the artwork. |
 | `images/end.webp` | A modern excavation trench: a plaster cast of a figure lying in the ash on one side, and on the other a low wall with faded painted letters still on it, a rope barrier and daylight. |
 
 ## 1장 · 이 도시가 어떻게 남았나

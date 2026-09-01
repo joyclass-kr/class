@@ -6,6 +6,8 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
+그림이 칸을 꽉 채워야 하니 가장자리에 흰 여백이나 테두리를 두지 마세요. 그림이 네 변 끝까지 닿아야 합니다.
+
 **단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.** 표지 그림칸은 책을 펼쳤을 때 왼쪽 반쪽 전체를 채우는데,
 그 칸 자체가 세로로 긴 2:3 모양입니다. 4:3 가로 그림을 넣으면 양옆이 절반 가까이 잘려 나갑니다.
 
@@ -53,7 +55,7 @@ Draw him as a man, not a monster — the fear comes from the situation.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a barefoot boy in a straw hat sitting on top of a long whitewashed fence with a dripping brush in one hand, grinning down at the viewer; behind and below him the fence runs away toward a small river town and a steamboat on a wide brown river, tall summer sky. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a barefoot boy in a straw hat sitting on top of a long whitewashed fence with a dripping brush in one hand, grinning down at the viewer; behind and below him the fence runs away toward a small river town and a steamboat on a wide brown river, tall summer sky. The picture must bleed to all four edges: no white margin, no white border, no frame, no matting around the artwork. |
 | `images/end.webp` | An empty raft tied at a riverbank at sunset, a straw hat and a fishing pole lying on it, the wide river going gold. |
 
 ## 1장 · 톰!

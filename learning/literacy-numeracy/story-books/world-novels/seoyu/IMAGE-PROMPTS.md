@@ -6,6 +6,8 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
 
 권장 크기: **가로 4 : 세로 3** 비율, PNG.
+그림이 칸을 꽉 채워야 하니 가장자리에 흰 여백이나 테두리를 두지 마세요. 그림이 네 변 끝까지 닿아야 합니다.
+
 **단 표지(`cover.webp`)만 예외 — 세로 2 : 3 비율입니다.**
 
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
@@ -63,7 +65,7 @@ The Jade Emperor: an elderly ruler on a jade throne who never looks confident.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: four travellers and a white horse crossing a vast desert dune at sunset, tiny against the sky — a monk on horseback, a monkey striding ahead with a staff on his shoulder, a pig-headed man trudging, and a broad man behind carrying all the luggage; far above them in the clouds, faint, a giant open hand. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: four travellers and a white horse crossing a vast desert dune at sunset, tiny against the sky — a monk on horseback, a monkey striding ahead with a staff on his shoulder, a pig-headed man trudging, and a broad man behind carrying all the luggage; far above them in the clouds, faint, a giant open hand. The picture must bleed to all four edges: no white margin, no white border, no frame, no matting around the artwork. |
 | `images/end.webp` | A monkey's hand raised to his own forehead, and nothing there — no band, just fur; behind him a sunrise over mountains. |
 
 ## 1장 · 돌에서 난 원숭이
