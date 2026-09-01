@@ -10,6 +10,7 @@ const app = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
 const worklet = fs.readFileSync(path.join(root, 'instrument-worklet-v2.js'), 'utf8');
 const detailSource = fs.readFileSync(path.join(root, 'instrument-details.js'), 'utf8');
 const koreanPercussionSource = fs.readFileSync(path.join(root, 'korean-percussion-data.js'), 'utf8');
+const drumSplitSource = fs.readFileSync(path.join(__dirname, '..', 'tools', 'split_drum_grid_ogg.py'), 'utf8');
 const detailContext = { window: {} };
 require('node:vm').createContext(detailContext);
 require('node:vm').runInContext(detailSource, detailContext);
@@ -164,7 +165,51 @@ test('new Korean melodic recordings expose their exact ranges and techniques', (
   assert.match(app, /id: "taepyeongso"[\s\S]*?range: \[68, 89\][\s\S]*?badge: "22-NOTE OGG"/);
   assert.match(app, /state\.family === "korean"[\s\S]*?sampleConfig\.min[\s\S]*?sampleConfig\.max/);
   assert.match(app, /"hyangpiri", "hyangpiri-vibrato", "taepyeongso"/);
-});test('completed orchestral renders use compact note-grid Ogg samples', () => {
+});
+
+test('new Korean, ocarina, court chime, and tam-tam sources use their recorded ranges', () => {
+  for (const [folder, count, first, last] of [
+    ['geomungo', 10, '023_g2.ogg', '032_e3.ogg'],
+    ['yanggeum', 30, '031_ds3.ogg', '060_gs5.ogg'],
+    ['yanggeum-tremolo', 30, '031_ds3.ogg', '060_gs5.ogg'],
+    ['sogeum', 24, '050_as4.ogg', '073_a6.ogg'],
+    ['danso', 27, '046_fs4.ogg', '072_gs6.ogg'],
+    ['danso-vibrato', 27, '046_fs4.ogg', '072_gs6.ogg'],
+    ['ajaeng', 36, '023_g2.ogg', '058_fs5.ogg'],
+    ['ajaeng-vibrato', 36, '023_g2.ogg', '058_fs5.ogg'],
+    ['gayageum-25', 39, '023_g2.ogg', '061_a5.ogg'],
+    ['hun', 12, '040_c4.ogg', '051_b4.ogg'],
+    ['pyeonjong', 16, '040_c4.ogg', '055_ds5.ogg'],
+    ['pyeongyeong', 16, '052_c5.ogg', '067_ds6.ogg'],
+    ['ocarina', 27, '040_c4.ogg', '066_d6.ogg']
+  ]) {
+    const sampleRoot = path.join(root, 'assets', 'audio', folder);
+    const samples = fs.readdirSync(sampleRoot).filter((name) => name.endsWith('.ogg')).sort();
+    const totalBytes = samples.reduce((sum, name) => sum + fs.statSync(path.join(sampleRoot, name)).size, 0);
+    assert.equal(samples.length, count, folder);
+    assert.equal(samples[0], first, folder);
+    assert.equal(samples.at(-1), last, folder);
+    assert.ok(totalBytes < 3 * 1024 * 1024, folder);
+  }
+  for (const asset of [
+    'korean-yanggeum-v1.webp', 'korean-sogeum-v1.webp', 'korean-danso-v1.webp',
+    'korean-hun-v1.webp', 'korean-gayageum-25-v1.webp', 'ocarina-concert-v1.webp'
+  ]) {
+    assert.equal(fs.existsSync(path.join(root, 'assets', 'instruments', asset)), true, asset);
+    assert.match(app, new RegExp(asset.replace('.', '\\.')));
+  }
+  assert.match(app, /state\.currentModel\.id === "yanggeum"[\s\S]*?"yanggeum-tremolo"/);
+  assert.match(app, /state\.currentModel\.id === "ajaeng"[\s\S]*?"ajaeng-vibrato"/);
+  assert.match(app, /state\.currentModel\.id === "danso"[\s\S]*?"danso-vibrato"/);
+  assert.match(app, /id: "pyeongyeong"[\s\S]*?range: \[72, 87\]/);
+  assert.match(app, /id: "ocarina"[\s\S]*?range: \[60, 86\]/);
+  const tamTam = path.join(root, 'assets', 'audio', 'orchestral-percussion', 'ride.ogg');
+  assert.equal(fs.existsSync(tamTam), true);
+  assert.ok(fs.statSync(tamTam).size > 32 * 1024);
+  assert.match(app, /"orchestral-percussion": Object\.freeze\(\{ id: "orchestral-percussion"[\s\S]*?ride: 3/);
+});
+
+test('completed orchestral renders use compact note-grid Ogg samples', () => {
   for (const [folder, count, first, last] of [
     ['flute', 37, '040_c4.ogg', '076_c7.ogg'],
     ['oboe', 34, '038_as3.ogg', '071_g6.ogg'],
@@ -230,8 +275,11 @@ test('new Korean melodic recordings expose their exact ranges and techniques', (
   assert.match(app, /isSampledPiano\(\) \|\| state\.instrument === "piano"/);
   assert.match(app, /sampleSet === "hammond-organ"[\s\S]*?"tuba"/);
   assert.match(app, /"contrabassoon"[\s\S]*?"flugelhorn"[\s\S]*?"euphonium"/);
-  assert.match(app, /ONE_SHOT_SAMPLE_SETS = new Set\(\["timpani", "glockenspiel", "marimba", "vibraphone", "xylophone", "harp"\]\)/);
-  assert.match(app, /const peak = Math\.min\(12, velocityGain \* calibratedGain\)/);
+  assert.match(app, /ONE_SHOT_SAMPLE_SETS = new Set\(\[[^\]]*"harp"[^\]]*"geomungo"[^\]]*"pyeongyeong"\]\)/);
+  assert.match(app, /const peak = volumeOnlyGain\(buffer, velocityGain \* calibratedGain\)/);
+  assert.match(app, /function decodedBufferPeak\(buffer\)/);
+  assert.match(app, /const safeGain = \.68 \/ decodedBufferPeak\(buffer\)/);
+  assert.match(app, /source\.connect\(state\.masterGain\)/);
   assert.match(app, /const calibratedGain = Math\.pow/);
   assert.match(app, /gainDb: -5\.68/);
   assert.match(app, /gainDb: 20\.0/);
@@ -268,25 +316,27 @@ test('percussion library includes dedicated kits and essential orchestral instru
     assert.match(app, new RegExp(asset.replace('.', '\\.')));
   }
   assert.match(app, /id: "midtom"/);
-  assert.match(app, /id: "subtom"/);
   assert.match(app, /function activeDrums/);
-  assert.match(app, /"jazz-kit": ACOUSTIC_DRUM_ARTICULATIONS\.concat\(\["hightom", "lowtom", "crash", "ride", "ridebell"\]\)/);
-  assert.match(app, /"metal-kit": ACOUSTIC_DRUM_ARTICULATIONS\.concat\(\["hightom", "midtom", "lowtom", "subtom", "crash", "ride", "ridebell"\]\)/);
+  assert.match(app, /const AD2_DRUM_ARTICULATIONS = Object\.freeze/);
+  for (const kit of ['rock-kit', 'metal-kit', 'pop-kit', 'jazz-kit', 'funk-kit', 'drum-808', 'linn-machine']) {
+    assert.match(app, new RegExp(`"${kit}": AD2_DRUM_ARTICULATIONS`));
+  }
   assert.match(app, /drums\.length >= 9/);
-  assert.match(worklet, /subtom: \{ family: "membrane", base: 72/);
   assert.match(css, /\.drum-pads\.extended/);
   for (const folder of ['drums-rock', 'drums-metal', 'drums-pop', 'drums-jazz', 'drums-funk', 'drums-linn', 'drums-808']) {
     const files = fs.readdirSync(path.join(root, 'assets', 'audio', folder)).filter((name) => name.endsWith('.ogg')).sort();
-    assert.equal(files.length, 16, folder);
-    assert.equal(files[0], 'clap.ogg', folder);
-    assert.equal(files.at(-1), 'subtom.ogg', folder);
+    assert.equal(files.length, 15, folder);
+    assert.equal(files[0], 'crash.ogg', folder);
+    assert.equal(files.at(-1), 'snare.ogg', folder);
   }
-  for (const id of ['ghost', 'sidestick', 'rimshot', 'clap', 'pedalhat', 'openhat', 'ridebell']) {
+  for (const id of ['ghost', 'sidestick', 'rimshot', 'rimclick', 'pedalhat', 'openhat', 'ridebell']) {
     assert.match(app, new RegExp(`id: "${id}"`));
   }
-  assert.match(app, /ACOUSTIC_DRUM_ARTICULATIONS = \["kick", "snare", "ghost", "sidestick", "rimshot", "hat", "pedalhat", "openhat"\]/);
-  assert.match(app, /ELECTRONIC_DRUM_ARTICULATIONS = \["kick", "snare", "rimshot", "clap", "hat", "pedalhat", "openhat"\]/);
-  assert.doesNotMatch(app, /ELECTRONIC_DRUM_ARTICULATIONS\.concat\([^\r\n]*ridebell/);
+  assert.doesNotMatch(app, /id: "clap"/);
+  assert.doesNotMatch(app, /id: "subtom"/);
+  assert.match(drumSplitSource, /"kick": 1,[\s\S]*?"snare": 2,[\s\S]*?"rimshot": 3,[\s\S]*?"sidestick": 4,[\s\S]*?"rimclick": 5/);
+  assert.match(drumSplitSource, /"pedalhat": 8,[\s\S]*?"hat": 9,[\s\S]*?"openhat": 17/);
+  assert.match(drumSplitSource, /"ride": 20,[\s\S]*?"ridebell": 21/);
   assert.match(app, /function chokeOpenHat/);
   assert.match(app, /\["hat", "pedalhat", "openhat"\]\.includes\(id\)/);
   assert.match(app, /const DRUM_SAMPLE_SETS/);
@@ -406,8 +456,8 @@ test('provides complete long-form guides for every model and grouped instrument'
     'pop-kit', 'jazz-kit', 'funk-kit', 'drum-808', 'linn-machine', 'timpani', 'glockenspiel',
     'marimba', 'vibraphone', 'xylophone', 'orchestral-percussion', 'orchestral-snare',
     'orchestral-bass-drum', 'orchestral-suspended-cymbal', 'orchestral-tamtam',
-    'orchestral-triangle', 'gayageum', 'geomungo', 'haegeum', 'ajaeng', 'daegeum',
-    'hyangpiri', 'taepyeongso', 'samulnori', 'janggu', 'buk', 'janggu-samul', 'janggu-sanjo', 'buk-samul', 'buk-sori', 'sogo', 'kkwaenggwari',
+    'orchestral-triangle', 'gayageum', 'gayageum-25', 'geomungo', 'yanggeum', 'haegeum', 'ajaeng', 'daegeum',
+    'sogeum', 'danso', 'hun', 'hyangpiri', 'taepyeongso', 'ocarina', 'samulnori', 'janggu', 'buk', 'janggu-samul', 'janggu-sanjo', 'buk-samul', 'buk-sori', 'sogo', 'kkwaenggwari',
     'jing', 'pyeonjong', 'pyeongyeong', 'ritual-signals', 'bak', 'chuk', 'eo',
     'daechwita-station', 'nabal', 'nagak', 'yonggo', 'jabara'
   ];

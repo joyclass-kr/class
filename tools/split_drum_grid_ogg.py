@@ -7,25 +7,27 @@ import subprocess
 from pathlib import Path
 
 
-# Source tracks contain ascending GM drum notes 35–64. Keep only the parts
-# exposed by the instrument-room pads; the one-based value is the grid slot.
+# Every source track was rendered from the same user-provided AD2 MIDI file.
+# These are its 30 MIDI notes in playback order, not an ascending GM grid:
+# 36, 38, 41, 42, 44, 45, 46, 48, 49, 50, 51, 52, 53, 54, 55,
+# 56, 57, 58, 59, 60, 61, 62, 63, 65, 69, 72, 75, 77, 79, 81.
+# Slot choices below follow XLN Audio's official Addictive Drums 2 keymap.
 PAD_SLOTS = {
-    "kick": 1,
-    "sidestick": 3,
-    "snare": 4,
-    "ghost": 4,
-    "clap": 5,
-    "rimshot": 6,
-    "hat": 8,
-    "pedalhat": 10,
-    "openhat": 12,
-    "hightom": 16,
-    "midtom": 14,
-    "lowtom": 11,
-    "subtom": 7,
-    "crash": 15,
-    "ride": 17,
-    "ridebell": 19,
+    "kick": 1,       # 36 Kick
+    "snare": 2,      # 38 Snare Open Hit
+    "ghost": 2,      # derived quietly from Snare Open Hit
+    "rimshot": 3,    # 41 Snare Shallow Rimshot
+    "sidestick": 4,  # 42 Snare SideStick
+    "rimclick": 5,   # 44 Snare RimClick
+    "pedalhat": 8,   # 48 HiHat Pedal Closed
+    "hat": 9,        # 49 HiHat Closed 1 Tip
+    "openhat": 17,   # 57 HiHat Open D
+    "lowtom": 24,    # 65 Tom 4 Open Hit
+    "midtom": 25,    # 69 Tom 2 Open Hit
+    "hightom": 26,   # 72 Tom 1 Rimshot
+    "crash": 28,     # 77 Cymbal 1 Hit
+    "ride": 20,      # 60 Ride 1 Tip
+    "ridebell": 21,  # 61 Ride 1 Bell
 }
 
 
