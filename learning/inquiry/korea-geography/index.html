@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#123c46">
+  <title>수능 한국지리 지도 학습 | Joyclass</title>
+  <link rel="stylesheet" href="../korean-museum/vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="styles.css?v=20260901-1">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="back-link" href="../../../" aria-label="학습 메뉴로 돌아가기">←</a>
+      <div class="topbar-copy">
+        <strong>수능 한국지리 지도 학습</strong>
+        <span>현행 선택과목 핵심 · 통합사회 지리 기초</span>
+      </div>
+      <button class="progress-button" id="progressButton" type="button" aria-label="학습 기록 보기">
+        <span>누적 정답</span><strong id="progressScore">0 / 0</strong>
+      </button>
+    </header>
+
+    <nav class="theme-tabs" aria-label="지도 학습 주제">
+      <button class="theme-tab is-active" type="button" data-theme="terrain" aria-pressed="true"><span>⛰️</span> 지형</button>
+      <button class="theme-tab" type="button" data-theme="climate" aria-pressed="false"><span>🌦️</span> 기후</button>
+      <button class="theme-tab" type="button" data-theme="population" aria-pressed="false"><span>🏙️</span> 인구·도시</button>
+      <button class="theme-tab" type="button" data-theme="industry" aria-pressed="false"><span>🏭</span> 산업·교통</button>
+      <button class="theme-tab" type="button" data-theme="region" aria-pressed="false"><span>🧭</span> 권역</button>
+    </nav>
+
+    <main class="study-layout">
+      <section class="map-stage" aria-label="한국지리 주제 지도">
+        <div id="map" role="application" aria-label="대한민국 한국지리 학습 지도"></div>
+        <div class="map-key" id="mapKey" aria-live="polite"></div>
+        <button class="reset-map" id="resetMap" type="button">전국 보기</button>
+      </section>
+
+      <aside class="study-panel">
+        <section class="concept-card" aria-labelledby="conceptTitle">
+          <div class="section-kicker" id="conceptKicker">지형 환경</div>
+          <h1 id="conceptTitle">동고서저와 산맥의 방향</h1>
+          <p id="conceptSummary"></p>
+          <div class="concept-points" id="conceptPoints"></div>
+          <div class="feature-list" id="featureList" aria-label="지도 핵심 지점"></div>
+        </section>
+
+        <section class="practice-launch" aria-labelledby="practiceTitle">
+          <div>
+            <span class="section-kicker">실전 연습</span>
+            <h2 id="practiceTitle">오늘의 5문제</h2>
+            <p>지도 위치, 자료 해석, 지역 추론을 섞어 출제해요.</p>
+          </div>
+          <div class="practice-controls">
+            <label>
+              <span>범위</span>
+              <select id="practiceTopic">
+                <option value="all">전 범위</option>
+                <option value="terrain">지형</option>
+                <option value="climate">기후</option>
+                <option value="population">인구·도시</option>
+                <option value="industry">산업·교통</option>
+                <option value="region">권역</option>
+              </select>
+            </label>
+            <label>
+              <span>난이도</span>
+              <select id="practiceDifficulty">
+                <option value="mixed">혼합</option>
+                <option value="basic">기본 중심</option>
+                <option value="advanced">실전 중심</option>
+              </select>
+            </label>
+          </div>
+          <button class="primary-button" id="startPractice" type="button">5문제 풀기</button>
+        </section>
+
+        <details class="source-note">
+          <summary>학습 자료 기준</summary>
+          <p>교육과정의 한국지리 핵심 개념과 평가원형 자료 해석 방식을 바탕으로 재구성한 자체 문항입니다. 실제 기출문항을 복제하지 않습니다.</p>
+          <div class="source-links">
+            <a href="https://nationalatlas.ngii.go.kr/" target="_blank" rel="noopener noreferrer">대한민국 국가지도집</a>
+            <a href="https://www.suneung.re.kr/" target="_blank" rel="noopener noreferrer">대학수학능력시험</a>
+          </div>
+        </details>
+      </aside>
+    </main>
+  </div>
+
+  <dialog class="practice-dialog" id="practiceDialog" aria-labelledby="questionTitle">
+    <form method="dialog" class="dialog-topbar">
+      <div>
+        <strong id="questionProgress">1 / 5</strong>
+        <span id="questionTopic">지형</span>
+      </div>
+      <button type="submit" aria-label="문제 풀이 닫기">×</button>
+    </form>
+    <div class="progress-track" aria-hidden="true"><span id="questionProgressBar"></span></div>
+    <section class="question-body">
+      <div class="question-copy">
+        <span class="difficulty-badge" id="questionDifficulty">기본</span>
+        <h2 id="questionTitle"></h2>
+        <div id="questionStimulus"></div>
+        <div class="answer-options" id="answerOptions"></div>
+      </div>
+      <div class="question-map-wrap">
+        <div id="questionMap" aria-label="문제 관련 위치 지도"></div>
+        <div class="question-map-caption" id="questionMapCaption">문제의 단서를 지도에서 확인하세요.</div>
+      </div>
+    </section>
+    <section class="answer-feedback" id="answerFeedback" aria-live="polite" hidden>
+      <strong id="feedbackTitle"></strong>
+      <p id="feedbackExplanation"></p>
+    </section>
+    <div class="dialog-actions">
+      <button class="secondary-button" id="showHint" type="button">지도 단서</button>
+      <button class="primary-button" id="nextQuestion" type="button" disabled>다음 문제</button>
+    </div>
+  </dialog>
+
+  <dialog class="result-dialog" id="resultDialog" aria-labelledby="resultTitle">
+    <div class="result-visual" id="resultVisual">5</div>
+    <h2 id="resultTitle">5문제 완료</h2>
+    <p id="resultSummary"></p>
+    <div class="result-breakdown" id="resultBreakdown"></div>
+    <div class="result-actions">
+      <button class="secondary-button" id="reviewWrong" type="button">틀린 문제 복습</button>
+      <button class="primary-button" id="finishPractice" type="button">지도 학습으로</button>
+    </div>
+  </dialog>
+
+  <script src="../korean-museum/vendor/leaflet/leaflet.js"></script>
+  <script src="data.js?v=20260901-1"></script>
+  <script src="app.js?v=20260901-1"></script>
+</body>
+</html>
