@@ -102,8 +102,13 @@ assert.match(indexSource, /\u2705 \uC0AC\uC6A9 \uC911\uC9C0 \uBC84\uD2BC \uC120\
   "The active administrator control must say that it ends button selection, not that every item is already disabled.");
 assert.match(
   indexSource,
-  /\.is-global-locked[\s\S]*filter: grayscale\(100%\) opacity\(0\.55\)/,
-  "A globally disabled menu must render in gray.",
+  /\.is-global-locked[\s\S]*background: linear-gradient\(135deg, rgba\(53, 58, 61, 0\.97\), rgba\(31, 34, 36, 0\.98\)\)[\s\S]*filter: none !important/,
+  "A globally disabled menu must render as a legible, nearly opaque gray card.",
+);
+assert.doesNotMatch(
+  indexSource,
+  /filter: grayscale\(100%\) opacity\(/,
+  "Disabled menu cards must not fade their text and background with whole-card opacity.",
 );
 assert.match(
   indexSource,

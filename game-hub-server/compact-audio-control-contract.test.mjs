@@ -47,3 +47,11 @@ test("every page requests the cache-busted compact control", () => {
   const control = read("assets/sound/music-control.js");
   assert.match(control, new RegExp(`stylesheetUrl\\.searchParams\\.set\\("v", "${version}"\\)`));
 });
+
+test("hanja progress uses the shared site audio state", () => {
+  const hanja = read("learning/literacy-numeracy/hanja-meaning/v2/index.html");
+
+  assert.match(hanja, new RegExp(`music-control\\.js\\?v=${version}`));
+  assert.doesNotMatch(hanja, /hanjaMenuMusicMuted/);
+  assert.doesNotMatch(hanja, /id="musicToggle"/);
+});
