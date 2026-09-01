@@ -29,7 +29,9 @@
     "압록강": [39.83, 124.18],
     "두만강": [42.43, 130.60],
     "대동강": [38.71, 125.22],
-    "청천강": [39.67, 125.55]
+    "청천강": [39.67, 125.55],
+    "북한강": [37.53, 127.31],
+    "임진강": [37.76, 126.70]
   };
 
   let currentTheme = "terrain";
@@ -178,7 +180,7 @@
 
   async function loadMajorRivers() {
     try {
-      const response = await fetch("data/major-rivers.geojson?v=20260901-2");
+      const response = await fetch("data/major-rivers.geojson?v=20260901-3");
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       majorRivers = await response.json();
       if (currentTheme === "terrain") renderTheme("terrain");
@@ -329,13 +331,14 @@
     const distanceFromMouth = L.latLng(coordinate[1], coordinate[0]).distanceTo(L.latLng(mouth[0], mouth[1]));
     const downstreamRatio = 1 - Math.min(1, distanceFromMouth / Math.max(1, maxDistance));
     const minWidth = name === "남한강" ? 1 : 1.15;
-    const maxWidth = ["한강", "낙동강", "압록강", "두만강"].includes(name) ? 4.8 : name === "남한강" ? 3.7 : 4.2;
+    const maxWidth = ["한강", "낙동강", "압록강", "두만강"].includes(name) ? 4.8 : ["남한강", "북한강"].includes(name) ? 3.7 : 4.2;
     return minWidth + ((maxWidth - minWidth) * Math.pow(downstreamRatio, 0.78));
   }
 
   function drawMajorRivers(group, interactive) {
     majorRivers.features.forEach((feature) => {
       const name = feature.properties && feature.properties.name;
+      const system = feature.properties && feature.properties.system;
       const mouth = RIVER_MOUTHS[name];
       const lines = riverCoordinateLines(feature.geometry).filter((line) => Array.isArray(line) && line.length >= 2);
       if (!mouth || !lines.length) return;
@@ -358,7 +361,7 @@
             pane: "themeLines", color: "#087eaf", weight, opacity: 0.96,
             lineCap: "round", lineJoin: "round", interactive, className: "major-river-path"
           }).addTo(group);
-          if (interactive) path.bindTooltip(name, { sticky: true, className: "river-tooltip" });
+          if (interactive) path.bindTooltip(system ? `${name} · ${system}` : name, { sticky: true, className: "river-tooltip" });
         }
       });
     });

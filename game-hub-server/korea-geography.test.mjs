@@ -44,9 +44,12 @@ const sandbox = { window: {} };
 vm.runInNewContext(dataSource, sandbox, { filename: "data.js" });
 const dataset = sandbox.window.KOREA_GEOGRAPHY;
 assert.ok(dataset, "The static geography dataset must be exposed.");
-assert.equal(riverData.features.length, 10, "Ten actual major-river centerlines across the Korean Peninsula are required.");
+assert.equal(riverData.features.length, 12, "Twelve actual major-river centerlines across the Korean Peninsula are required.");
 const riverNames = new Set(riverData.features.map((feature) => feature.properties.name));
-for (const name of ["압록강", "두만강", "대동강", "청천강"]) assert.ok(riverNames.has(name), `${name} must be included.`);
+for (const name of ["압록강", "두만강", "대동강", "청천강", "북한강", "임진강"]) assert.ok(riverNames.has(name), `${name} must be included.`);
+for (const name of ["한강", "남한강", "북한강", "임진강"]) {
+  assert.equal(riverData.features.find((feature) => feature.properties.name === name)?.properties.system, "한강 수계", `${name} must be grouped into the Han River system.`);
+}
 assert.ok(riverData.features.every((feature) => /LineString$/.test(feature.geometry.type)), "Every river must use line geometry.");
 assert.deepEqual(Object.keys(dataset.themes), ["terrain", "climate", "population", "industry", "region"]);
 assert.ok(dataset.questions.length >= 25, "At least 25 reviewed questions are required for varied five-question sets.");
