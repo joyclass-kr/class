@@ -523,31 +523,38 @@ function coverPage() {
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
     // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
-    const itemHtml = ch => `
+    // 쪽수는 화면 아래에 뜨는 그 번호(FOLIOS)를 그대로 가져다 쓴다.
+    const folioOf = idx => (idx >= 0 ? FOLIOS[idx].start : '');
+    const pageOfChapter = num => folioOf(PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === num));
+    const pageOfKind = kind => folioOf(PAGES.findIndex(p => p.kind === kind && p.first !== false));
+    const rowHtml = (attr, mark, title, page) => `
         <li>
-            <button type="button" data-goto="${ch.num}">
-                <span class="toc-num">${ch.num}</span>
-                <span><strong>${ch.title}</strong></span>
+            <button type="button" ${attr}>
+                <span class="toc-num">${mark}</span>
+                <span>
+                    <strong>${title}</strong>
+                    <small>${page}쪽</small>
+                </span>
             </button>
         </li>`;
-    const extraItems = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">?</span>
-                <span><strong>이야기 문제</strong></span>
-            </button>
-        </li>`;
+    const itemHtml = ch => rowHtml(`data-goto="${ch.num}"`, ch.num, ch.title, pageOfChapter(ch.num));
+    const extraItems = [
+        rowHtml('data-goto-kind="quiz"', '❓', '이야기 문제', pageOfKind('quiz')),
+        rowHtml('data-goto-kind="after"', '📖', '읽고 나서', pageOfKind('after')),
+    ];
     const group = TOC_GROUPS[part];
-    const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
+    const items = group.map(itemHtml).concat(last ? extraItems : []);
+    const half = Math.ceil(items.length / 2);
     return `
         <div class="page page-toc">
             <div class="story-page-left">
                 ${part === 0 ? '<h2>차례</h2>' : ''}
-                <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
+                <ul class="toc-list">${items.slice(0, half).join('')}</ul>
             </div>
             <div class="story-page-right">
-                <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
+                ${part === 0 ? '<h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>' : ''}
+                <ul class="toc-list">${items.slice(half).join('')}</ul>
             </div>
         </div>`;
 }

@@ -349,6 +349,13 @@ body {
     font-size: clamp(18px, 3.763cqh, 39px);
 }
 
+.toc-h2-ghost { visibility: hidden; }
+
+.page-toc .story-page-left,
+.page-toc .story-page-right {
+    justify-content: flex-start;
+}
+
 .toc-list {
     list-style: none;
     margin: 0;
@@ -392,8 +399,18 @@ body {
     font-weight: 800;
 }
 
-.toc-list strong { font-size: 14.5px; }
-.toc-list small { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+.toc-list strong { font-size: clamp(14px, 2.315cqh, 24px); }
+.toc-list small { color: var(--muted); font-size: clamp(11px, 1.7cqh, 15px); flex: 0 0 auto; }
+
+/* 제목과 쪽수를 한 줄에 나란히 둔다. 두 줄로 쌓으면 작은 화면에서 차례가 넘친다. */
+.toc-list button > span:last-child {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+}
 
 /* quiz */
 .page-quiz {
