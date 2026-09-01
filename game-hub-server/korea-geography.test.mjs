@@ -17,9 +17,11 @@ assert.match(html, /id="map"/);
 assert.match(html, /id="startPractice"/);
 assert.match(html, /id="practiceTopic"/);
 assert.match(html, /id="practiceDifficulty"/);
+assert.match(html, /id="practiceCount"/);
 assert.match(html, /id="principleGuide"/);
 assert.match(html, /principles\.js\?v=20260901-7/);
-assert.match(html, /오늘의 5문제/);
+assert.match(html, /연습 세트 구성/);
+assert.doesNotMatch(html, /오늘의 5문제/);
 assert.doesNotMatch(html, /<h1>한국지리 수능<\/h1>/);
 
 assert.match(styles, /\.back-link,[\s\S]*?min-height:\s*44px/);
@@ -52,7 +54,10 @@ assert.match(dataSource, /name: "개마고원"/);
 assert.doesNotMatch(dataSource, /name: "태백산맥", kind: "mountain", coords/);
 assert.doesNotMatch(dataSource, /name: "한강", kind: "river", coords/);
 assert.match(app, /localStorage\.setItem\(PROGRESS_KEY/);
-assert.match(app, /shuffle\(pool\)\.slice\(0, 5\)/);
+assert.match(app, /function getPracticeCount/);
+assert.match(app, /selected === "all" \? poolLength/);
+assert.match(app, /shuffle\(pool\)\.slice\(0, count\)/);
+assert.match(app, /lastTotal = total/);
 
 const sandbox = { window: {} };
 vm.runInNewContext(dataSource, sandbox, { filename: "data.js" });
@@ -85,7 +90,7 @@ for (const [themeKey, theme] of Object.entries(dataset.themes)) {
 for (const requiredTitle of ["수계와 양수리 두물머리", "대관령: 고개·기후·교통의 연결", "간척지는 어떻게 만들어지는가", "관동·관서·관북·해서", "금강·섬진강과 도 경계"]) {
   assert.ok(Object.values(dataset.themes).flatMap((theme) => theme.principles).some((principle) => principle.title === requiredTitle), `${requiredTitle} must be taught.`);
 }
-assert.ok(dataset.questions.length >= 25, "At least 25 reviewed questions are required for varied five-question sets.");
+assert.ok(dataset.questions.length >= 30, "At least 30 reviewed questions are required for varied selectable practice sets.");
 
 for (const topic of Object.keys(dataset.themes)) {
   const topicQuestions = dataset.questions.filter((question) => question.topic === topic);

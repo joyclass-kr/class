@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#123c46">
   <title>한국지리 지도 학습 | Joyclass</title>
   <link rel="stylesheet" href="../korean-museum/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="styles.css?v=20260902-3">
+  <link rel="stylesheet" href="styles.css?v=20260902-4">
 </head>
 <body>
   <div class="app-shell">
@@ -47,9 +47,9 @@
 
         <section class="practice-launch" aria-labelledby="practiceTitle">
           <div>
-            <span class="section-kicker">실전 연습</span>
-            <h2 id="practiceTitle">오늘의 5문제</h2>
-            <p>지도 위치, 자료 해석, 지역 추론을 섞어 출제해요.</p>
+            <span class="section-kicker" id="questionBankSummary">문제은행</span>
+            <h2 id="practiceTitle">연습 세트 구성</h2>
+            <p id="practiceAvailability" aria-live="polite">선택한 조건에 맞는 문항 수를 계산하고 있어요.</p>
           </div>
           <div class="practice-controls">
             <label>
@@ -67,12 +67,20 @@
               <span>난이도</span>
               <select id="practiceDifficulty">
                 <option value="mixed">혼합</option>
-                <option value="basic">기본 중심</option>
-                <option value="advanced">실전 중심</option>
+                <option value="basic">기본</option>
+                <option value="advanced">실전</option>
+              </select>
+            </label>
+            <label class="practice-count-control">
+              <span>문항 수</span>
+              <select id="practiceCount">
+                <option value="5">5문제</option>
+                <option value="10">10문제</option>
+                <option value="all">현재 조건 전체</option>
               </select>
             </label>
           </div>
-          <button class="primary-button" id="startPractice" type="button">5문제 풀기</button>
+          <button class="primary-button" id="startPractice" type="button">5문제 시작</button>
         </section>
 
         <details class="source-note">
@@ -90,7 +98,7 @@
   <dialog class="practice-dialog" id="practiceDialog" aria-labelledby="questionTitle">
     <form method="dialog" class="dialog-topbar">
       <div>
-        <strong id="questionProgress">1 / 5</strong>
+        <strong id="questionProgress">1 / 1</strong>
         <span id="questionTopic">지형</span>
       </div>
       <button type="submit" aria-label="문제 풀이 닫기">×</button>
@@ -119,8 +127,8 @@
   </dialog>
 
   <dialog class="result-dialog" id="resultDialog" aria-labelledby="resultTitle">
-    <div class="result-visual" id="resultVisual">5</div>
-    <h2 id="resultTitle">5문제 완료</h2>
+    <div class="result-visual" id="resultVisual">0/0</div>
+    <h2 id="resultTitle">연습 완료</h2>
     <p id="resultSummary"></p>
     <div class="result-breakdown" id="resultBreakdown"></div>
     <div class="result-actions">
@@ -132,6 +140,6 @@
   <script src="../korean-museum/vendor/leaflet/leaflet.js"></script>
   <script src="data.js?v=20260902-3"></script>
   <script src="principles.js?v=20260901-7"></script>
-  <script src="app.js?v=20260902-3"></script>
+  <script src="app.js?v=20260902-4"></script>
 </body>
 </html>

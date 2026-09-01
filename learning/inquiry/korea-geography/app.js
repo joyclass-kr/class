@@ -59,6 +59,7 @@
   function init() {
     initMaps();
     bindControls();
+    updatePracticeAvailability();
     renderTheme(currentTheme);
     renderProgress();
     loadProvinceBoundaries();
@@ -144,6 +145,9 @@
     });
     $("#resetMap").addEventListener("click", () => fitKorea(mainMap));
     $("#startPractice").addEventListener("click", startPractice);
+    ["#practiceTopic", "#practiceDifficulty", "#practiceCount"].forEach((selector) => {
+      $(selector).addEventListener("change", updatePracticeAvailability);
+    });
     $("#showHint").addEventListener("click", showQuestionHint);
     $("#nextQuestion").addEventListener("click", nextQuestion);
     $("#finishPractice").addEventListener("click", finishPractice);
@@ -152,14 +156,18 @@
       const progress = readProgress();
       const message = progress.total
         ? `누적 ${progress.total}문제 중 ${progress.correct}문제를 맞혔어요. (${Math.round(progress.correct / progress.total * 100)}%)`
-        : "아직 푼 문제가 없어요. 오늘의 5문제로 시작해 보세요.";
+        : "아직 푼 문제가 없어요. 원하는 범위와 문항 수를 골라 시작해 보세요.";
       $("#conceptSummary").textContent = message;
       $("#conceptTitle").textContent = "나의 학습 기록";
       $("#conceptKicker").textContent = "누적 진도";
       $("#conceptPoints").replaceChildren();
       const point = document.createElement("div");
       point.className = "concept-point";
-      point.textContent = progress.lastScore == null ? "첫 세트를 풀면 최근 점수가 기록됩니다." : `최근 세트: 5문제 중 ${progress.lastScore}문제 정답`;
+      point.textContent = progress.lastScore == null
+        ? "첫 세트를 풀면 최근 점수가 기록됩니다."
+        : progress.lastTotal == null
+          ? "최근 세트: " + progress.lastScore + "문제 정답"
+          : "최근 세트: " + progress.lastTotal + "문제 중 " + progress.lastScore + "문제 정답";
       $("#conceptPoints").append(point);
     });
     $("#practiceDialog").addEventListener("close", () => {
@@ -493,15 +501,33 @@
     return node;
   }
 
-  function startPractice() {
+  function getPracticePool() {
     const topic = $("#practiceTopic").value;
     const difficulty = $("#practiceDifficulty").value;
     let pool = questions.filter((question) => topic === "all" || question.topic === topic);
     if (difficulty !== "mixed") pool = pool.filter((question) => question.difficulty === difficulty);
-    if (pool.length < 5) {
-      pool = questions.filter((question) => topic === "all" || question.topic === topic);
-    }
-    sessionQuestions = shuffle(pool).slice(0, 5);
+    return pool;
+  }
+
+  function getPracticeCount(poolLength) {
+    const selected = $("#practiceCount").value;
+    return selected === "all" ? poolLength : Math.min(Number(selected) || 5, poolLength);
+  }
+
+  function updatePracticeAvailability() {
+    const pool = getPracticePool();
+    const count = getPracticeCount(pool.length);
+    const allSelected = $("#practiceCount").value === "all";
+    $("#questionBankSummary").textContent = "문제은행 " + questions.length + "문항";
+    $("#practiceAvailability").textContent = "현재 조건에서 " + pool.length + "문항 출제 가능 · 매번 순서를 섞어 새로 구성합니다.";
+    $("#startPractice").textContent = allSelected ? count + "문제 모두 풀기" : count + "문제 시작";
+    $("#startPractice").disabled = count === 0;
+  }
+
+  function startPractice() {
+    const pool = getPracticePool();
+    const count = getPracticeCount(pool.length);
+    sessionQuestions = shuffle(pool).slice(0, count);
     sessionAnswers = [];
     questionIndex = 0;
     openPracticeDialog();
@@ -612,10 +638,13 @@
     saveProgress(correct, sessionQuestions.length);
     renderProgress();
     $("#practiceDialog").close();
-    $("#resultVisual").textContent = correct;
-    $("#resultSummary").textContent = correct === 5
+    const total = sessionQuestions.length;
+    const scoreRate = total ? correct / total : 0;
+    $("#resultVisual").textContent = correct + "/" + total;
+    $("#resultTitle").textContent = total + "문제 완료";
+    $("#resultSummary").textContent = correct === total
       ? "위치와 개념의 연결이 아주 정확해요."
-      : correct >= 3
+      : scoreRate >= 0.6
         ? "좋아요. 틀린 문제의 지도 단서를 한 번 더 확인해 보세요."
         : "지도 위치부터 다시 연결하면 점수가 빠르게 올라가요.";
     const wrongCount = sessionQuestions.length - correct;
@@ -665,10 +694,11 @@
       return {
         correct: Number(parsed.correct) || 0,
         total: Number(parsed.total) || 0,
-        lastScore: Number.isFinite(parsed.lastScore) ? parsed.lastScore : null
+        lastScore: Number.isFinite(parsed.lastScore) ? parsed.lastScore : null,
+        lastTotal: Number.isFinite(parsed.lastTotal) ? parsed.lastTotal : null
       };
     } catch (_) {
-      return { correct: 0, total: 0, lastScore: null };
+      return { correct: 0, total: 0, lastScore: null, lastTotal: null };
     }
   }
 
@@ -677,6 +707,7 @@
     progress.correct += correct;
     progress.total += total;
     progress.lastScore = correct;
+    progress.lastTotal = total;
     localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
   }
 
