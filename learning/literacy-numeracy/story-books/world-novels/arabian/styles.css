@@ -584,3 +584,23 @@ body {
 @media (max-width: 540px) {
     .page-toc h2.toc-h2-ghost { display: none; }
 }
+
+/* 손가락으로 누르는 자리는 44x44 아래로 내려가지 않는다 (AGENTS.md).
+   넷 다 가로는 넉넉하고 높이만 모자랐다. 글씨 크기는 건드리지 않고
+   최소 높이만 잡고 가운데로 맞춘다. */
+.back-link,
+.toc-link,
+.home-btn {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.quiz-choice {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+}
