@@ -1157,3 +1157,7 @@ a:focus-visible {
 .history-settings[open] { padding: 10px 0; }
 .history-settings[open] .reset-progress-button { margin-top: 8px; }
 @media (max-width: 640px) { .history-settings { width: min(100% - 24px, 1160px); } }
+
+.section-heading-actions { justify-content: flex-end; margin-bottom: 18px; }
+
+.home-back, .quiz-shell-solving .quiz-nav .text-button { border-color: rgba(255, 255, 255, 0.18); background: rgba(33, 38, 48, 0.94); color: #fff; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28); }

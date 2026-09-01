@@ -444,9 +444,8 @@ export function StudyApp() {
     <main className="site-shell home-shell">
       <a className="home-back" href="/" aria-label="포털 메인으로 돌아가기">←</a>
 
-      <section className="study-section" id="top" aria-labelledby="unit-title">
-        <div className="section-heading">
-          <h2 id="unit-title">단원 선택</h2>
+      <section className="study-section" id="top" aria-label="문제 설정과 단원 목록">
+        <div className="section-heading section-heading-actions">
           <div className="section-actions">
             <div className="count-picker" aria-label="한 번에 풀 문제 수">
               <span>문제 수</span>
