@@ -831,9 +831,12 @@ body {
 /* display:flex 가 [hidden] 을 이겨 버린다. 우리말로 읽을 때는 아예 없애야 한다. */
 .screen[hidden] { display: none; }
 
+/* 아래 화면은 한 화면을 다 차지하지 않는다. 높이는 JS가 그림선에 맞춰 준다.
+   그래야 더 내려갈 데가 없어 딱 그 자리에 걸린다. */
 .screen-vocab {
+    min-height: 0;
     align-items: flex-start;
-    padding-top: 16px;
+    padding-top: 14px;
 }
 
 .vocab-panel {
@@ -847,16 +850,7 @@ body {
     color: var(--ink);
 }
 
-.vocab-panel h2 {
-    margin: 0 0 2px;
-    font-size: clamp(17px, 2.4vh, 25px);
-}
 
-.vocab-where {
-    margin: 0 0 14px;
-    color: var(--muted);
-    font-size: clamp(12px, 1.6vh, 16px);
-}
 
 .vocab-list {
     list-style: none;
@@ -872,6 +866,38 @@ body {
     background: #fffaf0;
     border: 1px solid var(--parchment-shade);
     border-radius: 9px;
+}
+
+.vocab-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+/* 듣기 단추 — 손가락 규칙대로 44x44 아래로 내려가지 않는다. */
+.vocab-say {
+    flex: none;
+    min-width: 44px;
+    min-height: 44px;
+    margin: -4px -4px 0 0;
+    padding: 0;
+    border: 1px solid var(--parchment-shade);
+    border-radius: 10px;
+    background: #fff;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.vocab-say:hover,
+.vocab-say:focus-visible {
+    border-color: var(--wood);
+    background: var(--moral-bg, #fff4e0);
+}
+
+.vocab-say:active {
+    transform: scale(0.94);
 }
 
 .vocab-word {
