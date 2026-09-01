@@ -13,6 +13,8 @@ function probe(){const bad=[];
 (async()=>{const lines=[];
  for(const b of BOOKS){const res=[];
   for(const [w,h] of SIZES){frame.style.width=w+'px';frame.style.height=h+'px';
+   // 브라우저에 영어가 저장돼 있으면 영어로 열린다. 우리말로 못 박고 잰다.
+   try{localStorage.setItem('korea-tales-lang','ko');}catch(e){}
    await Promise.all(['app.js','styles.css'].map(f=>fetch(b+'/'+f,{cache:'reload'}).catch(()=>{})));
    await new Promise(r=>{frame.onload=r;frame.src=b+'/?t='+Date.now();});
    await new Promise(r=>setTimeout(r,140));

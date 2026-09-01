@@ -663,7 +663,10 @@ body {
     .book { width: min(900px, 96vw, calc((100dvh - 46px) * 3 / 4)); aspect-ratio: 3 / 4; }
     .nav-prev { left: 6px; }
     .nav-next { right: 6px; }
-    .page-cover { grid-template-columns: 1fr; grid-template-rows: 26% 74%; }
+    .page-cover { grid-template-columns: 1fr; grid-template-rows: 24% 76%; }
+    /* 세로에서는 책이 길어 글씨가 커진다. 소개글이 네 문단인 책은 그대로 두면
+       표지 칸이 넘친다. 표지 소개글만 조금 줄인다. 본문은 그대로다. */
+    .page-cover .story-page-right p { font-size: clamp(13px, 2.05cqh, 21px); }
     .page-toc { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
     .page-toc .story-page-left { border-right: none; border-bottom: 1px solid rgba(92, 58, 34, 0.22); }
     /* 세로 화면은 한 쪽만 보이므로 두 칸을 나란히 두면 글줄이 너무 짧아진다.
