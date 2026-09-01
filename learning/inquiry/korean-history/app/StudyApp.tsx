@@ -291,7 +291,7 @@ export function StudyApp() {
       <main className={`site-shell quiz-shell quiz-shell-solving ${selectedAnswer !== null ? "quiz-shell-answered" : ""}`}>
         <header className="quiz-header">
           <nav className="quiz-nav" aria-label="바로가기">
-            <button className="text-button" onClick={goHome} aria-label="단원 선택으로 돌아가기">← 단원 선택</button>
+            <button className="text-button" onClick={goHome} aria-label="단원 선택으로 돌아가기">←</button>
           </nav>
           <div className="quiz-heading">
             <span>{quizTitle}</span>
@@ -442,28 +442,11 @@ export function StudyApp() {
 
   return (
     <main className="site-shell home-shell">
-      <header className="topbar">
-        <div className="brand-group">
-          <a className="portal-link" href="/">← 포털 메인</a>
-          <a className="brand" href="#top" aria-label="한능검 기본 단원별 기출문제 홈">
-            <span className="brand-mark">기</span>
-            <span>한능검 기본 단원별 기출문제</span>
-          </a>
-        </div>
-        <div className="topbar-actions">
-          {playerName && <span className="player-name">{playerName} 님</span>}
-          <span className="basic-badge">기본 문제만</span>
-          <span className="progress-copy"><strong>{solvedIds.length}</strong> / {questions.length}문제</span>
-          <button className="reset-progress-button" type="button" onClick={resetProgress} disabled={totalTried === 0 && solvedIds.length === 0 && wrongIds.length === 0}>기록 초기화</button>
-        </div>
-      </header>
+      <a className="home-back" href="/" aria-label="포털 메인으로 돌아가기">←</a>
 
       <section className="study-section" id="top" aria-labelledby="unit-title">
         <div className="section-heading">
-          <div>
-            <p className="eyebrow">단원별 기출문제</p>
-            <h2 id="unit-title">단원 선택</h2>
-          </div>
+          <h2 id="unit-title">단원 선택</h2>
           <div className="section-actions">
             <div className="count-picker" aria-label="한 번에 풀 문제 수">
               <span>문제 수</span>
@@ -520,10 +503,10 @@ export function StudyApp() {
         </div>
       </section>
 
-      <footer className="site-footer">
-        <p>국사편찬위원회 공개 기출문제를 학습용으로 단원별 분류했습니다.</p>
-        <span>기본 {examNumbers.length}개 회차 · {questions.length}문항</span>
-      </footer>
+      <details className="history-settings">
+        <summary>학습 기록 관리</summary>
+        <button className="reset-progress-button" type="button" onClick={resetProgress} disabled={totalTried === 0 && solvedIds.length === 0 && wrongIds.length === 0}>기록 초기화</button>
+      </details>
     </main>
   );
 }

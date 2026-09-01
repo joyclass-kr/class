@@ -52,6 +52,26 @@ a:focus-visible {
   overflow: hidden;
 }
 
+.home-back {
+  position: fixed;
+  z-index: 40;
+  top: max(8px, env(safe-area-inset-top));
+  left: max(8px, env(safe-area-inset-left));
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(16, 38, 71, 0.16);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--navy);
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(16, 38, 71, 0.2);
+}
+
 .topbar {
   width: min(1160px, calc(100% - 40px));
   height: 86px;
@@ -191,7 +211,7 @@ a:focus-visible {
 
 .study-section {
   width: min(1160px, calc(100% - 40px));
-  margin: 32px auto 90px;
+  margin: 20px auto 40px;
 }
 
 .section-heading {
@@ -709,6 +729,29 @@ a:focus-visible {
   padding: 3px 0;
 }
 
+.quiz-shell-solving .quiz-nav {
+  position: fixed;
+  z-index: 40;
+  top: max(8px, env(safe-area-inset-top));
+  left: max(8px, env(safe-area-inset-left));
+  display: block;
+}
+
+.quiz-shell-solving .quiz-nav .text-button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(16, 38, 71, 0.16);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--navy);
+  font-size: 22px;
+  line-height: 1;
+  box-shadow: 0 4px 14px rgba(16, 38, 71, 0.2);
+}
+
 .quiz-shell-solving .quiz-heading {
   margin: 3px 0 6px;
   font-size: 16px;
@@ -1108,3 +1151,9 @@ a:focus-visible {
     transition: none !important;
   }
 }
+
+.history-settings { width: min(1160px, calc(100% - 40px)); margin: 0 auto 32px; text-align: right; color: var(--muted); font-size: 13px; font-weight: 800; }
+.history-settings summary { display: inline-block; min-height: 44px; line-height: 44px; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
+.history-settings[open] { padding: 10px 0; }
+.history-settings[open] .reset-progress-button { margin-top: 8px; }
+@media (max-width: 640px) { .history-settings { width: min(100% - 24px, 1160px); } }
