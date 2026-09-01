@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#123c46">
   <title>수능 한국지리 지도 학습 | Joyclass</title>
   <link rel="stylesheet" href="../korean-museum/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="styles.css?v=20260901-6">
+  <link rel="stylesheet" href="styles.css?v=20260901-7">
 </head>
 <body>
   <div class="app-shell">
@@ -39,6 +39,10 @@
           <p id="conceptSummary"></p>
           <div class="concept-points" id="conceptPoints"></div>
           <div class="feature-list" id="featureList" aria-label="지도 핵심 지점"></div>
+          <details class="principle-guide" id="principleGuide">
+            <summary><span>핵심 원리</span><strong id="principleCount"></strong></summary>
+            <div class="principle-list" id="principleList" aria-label="주제별 핵심 원리"></div>
+          </details>
         </section>
 
         <section class="practice-launch" aria-labelledby="practiceTitle">
@@ -126,7 +130,8 @@
   </dialog>
 
   <script src="../korean-museum/vendor/leaflet/leaflet.js"></script>
-  <script src="data.js?v=20260901-6"></script>
-  <script src="app.js?v=20260901-6"></script>
+  <script src="data.js?v=20260901-7"></script>
+  <script src="principles.js?v=20260901-7"></script>
+  <script src="app.js?v=20260901-7"></script>
 </body>
 </html>

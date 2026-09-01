@@ -212,6 +212,14 @@ button { cursor: pointer; }
 .feature-button:hover, .feature-button:focus-visible { border-color: var(--deep-2); outline: 3px solid rgba(24, 86, 97, 0.15); }
 .feature-symbol { display: inline-flex; width: 25px; height: 25px; flex: 0 0 25px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: var(--feature-color); font-size: 12px; }
 
+.principle-guide { margin-top: 13px; border-top: 1px solid var(--line); }
+.principle-guide summary { min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--deep); font-size: 13px; font-weight: 900; cursor: pointer; }
+.principle-guide summary strong { color: #a65d00; font-size: 11px; }
+.principle-list { display: grid; gap: 6px; padding: 2px 0 4px; }
+.principle-button { min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 11px; border: 1px solid #d5dfdc; border-radius: 10px; color: #29474e; background: #fff; text-align: left; font-size: 12px; font-weight: 850; line-height: 1.35; }
+.principle-button::after { content: "→"; flex: 0 0 auto; color: #a65d00; }
+.principle-button:hover, .principle-button:focus-visible, .principle-button.is-active { border-color: var(--deep-2); color: var(--deep); background: #eef5f2; outline: 3px solid rgba(24, 86, 97, 0.12); }
+
 .practice-launch { padding: 15px; }
 .practice-launch h2 { margin: 3px 0 2px; font-size: 20px; letter-spacing: -0.035em; }
 .practice-launch p { margin: 0 0 10px; color: var(--muted); font-size: 12px; }

@@ -9,18 +9,22 @@ const html = read("learning/inquiry/korea-geography/index.html");
 const styles = read("learning/inquiry/korea-geography/styles.css");
 const app = read("learning/inquiry/korea-geography/app.js");
 const dataSource = read("learning/inquiry/korea-geography/data.js");
+const principlesSource = read("learning/inquiry/korea-geography/principles.js");
 const riverData = JSON.parse(read("learning/inquiry/korea-geography/data/major-rivers.geojson"));
 
 assert.match(html, /id="map"/);
 assert.match(html, /id="startPractice"/);
 assert.match(html, /id="practiceTopic"/);
 assert.match(html, /id="practiceDifficulty"/);
+assert.match(html, /id="principleGuide"/);
+assert.match(html, /principles\.js\?v=20260901-7/);
 assert.match(html, /오늘의 5문제/);
 assert.doesNotMatch(html, /<h1>한국지리 수능<\/h1>/);
 
 assert.match(styles, /\.back-link,[\s\S]*?min-height:\s*44px/);
 assert.match(styles, /@media \(max-width: 820px\)[\s\S]*?\.map-stage \{ height: 50dvh; min-height: 390px; \}/);
 assert.match(styles, /grid-template-columns: minmax\(0, 1\.7fr\) minmax\(320px, 0\.82fr\)/);
+assert.match(styles, /\.principle-button \{[^}]*min-height:\s*44px/s);
 
 assert.match(app, /korean-museum\/data\/skorea-provinces-topo-simple\.json/);
 assert.match(app, /voyager_nolabels/);
@@ -28,6 +32,8 @@ assert.match(app, /World_Hillshade/);
 assert.match(app, /World_Terrain_Base/);
 assert.match(app, /major-rivers\.geojson/);
 assert.match(app, /function riverWidthAt/);
+assert.match(app, /function renderPrinciples/);
+assert.match(app, /function showPrinciple/);
 assert.match(app, /distanceFromMouth \/ Math\.max/);
 assert.match(app, /maxWidth - minWidth/);
 assert.match(app, /43\.15, 131\.35/, "The default extent must include the full Korean Peninsula.");
@@ -42,6 +48,7 @@ assert.match(app, /shuffle\(pool\)\.slice\(0, 5\)/);
 
 const sandbox = { window: {} };
 vm.runInNewContext(dataSource, sandbox, { filename: "data.js" });
+vm.runInNewContext(principlesSource, sandbox, { filename: "principles.js" });
 const dataset = sandbox.window.KOREA_GEOGRAPHY;
 assert.ok(dataset, "The static geography dataset must be exposed.");
 assert.equal(riverData.features.length, 12, "Twelve actual major-river centerlines across the Korean Peninsula are required.");
@@ -52,6 +59,18 @@ for (const name of ["한강", "남한강", "북한강", "임진강"]) {
 }
 assert.ok(riverData.features.every((feature) => /LineString$/.test(feature.geometry.type)), "Every river must use line geometry.");
 assert.deepEqual(Object.keys(dataset.themes), ["terrain", "climate", "population", "industry", "region"]);
+assert.ok(dataset.themes.terrain.principles.length >= 13, "Terrain needs a complete CSAT principle set.");
+for (const [themeKey, theme] of Object.entries(dataset.themes)) {
+  assert.ok(theme.principles.length >= 5, `${themeKey} needs at least five core principles.`);
+  for (const principle of theme.principles) {
+    assert.ok(principle.title && principle.explanation.length >= 45, `${themeKey} has an incomplete principle explanation.`);
+    assert.ok(Array.isArray(principle.steps) && principle.steps.length >= 3, `${principle.title} needs at least three reasoning steps.`);
+    assert.ok(principle.focus && Number.isFinite(principle.focus.lat) && Number.isFinite(principle.focus.lng), `${principle.title} needs a map focus.`);
+  }
+}
+for (const requiredTitle of ["수계와 양수리 두물머리", "대관령: 고개·기후·교통의 연결", "간척지는 어떻게 만들어지는가", "관동·관서·관북·해서", "금강·섬진강과 도 경계"]) {
+  assert.ok(Object.values(dataset.themes).flatMap((theme) => theme.principles).some((principle) => principle.title === requiredTitle), `${requiredTitle} must be taught.`);
+}
 assert.ok(dataset.questions.length >= 25, "At least 25 reviewed questions are required for varied five-question sets.");
 
 for (const topic of Object.keys(dataset.themes)) {

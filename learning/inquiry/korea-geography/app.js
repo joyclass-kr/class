@@ -291,6 +291,7 @@
     $("#conceptSummary").textContent = theme.summary;
     $("#conceptPoints").replaceChildren(...theme.points.map((text) => element("div", "concept-point", text)));
     renderFeatureButtons(theme.features || []);
+    renderPrinciples(theme.principles || []);
     renderLegend(theme.legend || []);
     drawThemeOnMap(mainMap, mainThemeLayer, theme, true);
   }
@@ -308,6 +309,45 @@
     $("#featureList").replaceChildren(fragment);
   }
 
+  function renderPrinciples(items) {
+    const guide = $("#principleGuide");
+    const list = $("#principleList");
+    guide.hidden = !items.length;
+    guide.open = false;
+    $("#principleCount").textContent = `${items.length}개`;
+    const fragment = document.createDocumentFragment();
+    items.forEach((principle) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "principle-button";
+      button.textContent = principle.title;
+      button.setAttribute("aria-pressed", "false");
+      button.addEventListener("click", () => showPrinciple(principle, button));
+      fragment.append(button);
+    });
+    list.replaceChildren(fragment);
+  }
+
+  function showPrinciple(principle, activeButton) {
+    $$("#principleList .principle-button").forEach((button) => {
+      const active = button === activeButton;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+    $("#conceptKicker").textContent = "핵심 원리";
+    $("#conceptTitle").textContent = principle.title;
+    $("#conceptSummary").textContent = principle.explanation;
+    $("#conceptPoints").replaceChildren(...(principle.steps || []).map((text) => element("div", "concept-point", text)));
+    if (principle.focus) {
+      mainMap.flyTo([principle.focus.lat, principle.focus.lng], principle.focus.zoom || 8, { duration: 0.45 });
+      const marker = L.circleMarker([principle.focus.lat, principle.focus.lng], {
+        pane: "studyMarkers", radius: 9, color: "#ffffff", weight: 3,
+        fillColor: "#f5aa25", fillOpacity: 1, interactive: false
+      }).addTo(mainThemeLayer);
+      marker.bindTooltip(principle.focus.label, { permanent: true, direction: "top", offset: [0, -10], className: "study-tooltip" }).openTooltip();
+      setTimeout(() => mainThemeLayer.removeLayer(marker), 4200);
+    }
+  }
   function renderLegend(items) {
     const nodes = items.map((item) => {
       const node = document.createElement("span");
