@@ -182,6 +182,276 @@ const CHAPTERS = [
     }
 ];
 
+/* 표지 글 — 말에 따라 갈아 끼우려고 자료로 뺐다. */
+const COVER = {
+    emoji: '🌾',
+    art: 'cover.webp',
+    title: "좁쌀 한 톨",
+    intro: [
+        "좁쌀 한 톨은 지은이가 없는 구전 설화예요. 좁쌀 한 톨로 부자 되기라는 이름으로도 전해진답니다.",
+        "작은 것이 점점 큰 것으로 바뀌어 가는 짜임을 누적담이라고 불러요. 같은 일이 되풀이되면서 조금씩 커지기 때문에, 듣는 사람이 다음에는 무엇이 나올지 저절로 기다리게 되지요. 세계 곳곳에 같은 짜임의 이야기가 있는데 일본의 볏짚 부자 이야기가 특히 닮았답니다.",
+        "좁쌀은 조라는 곡식의 알갱이예요. 쌀보다 훨씬 작아서 한 톨은 눈에 겨우 보일 정도지요. 하필 가장 작은 곡식을 고른 것은 시작이 작을수록 끝이 놀라워지기 때문이랍니다."
+    ]
+};
+
+/* 영어판 — 우리말 이야기를 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: '🌾',
+        title: 'A Single Grain of Millet',
+        intro: [
+            "A Single Grain of Millet is an old Korean tale with no known author.",
+            "A story where something tiny keeps turning into something bigger is called a chain tale. The same thing happens again and again, growing each time, so the listener keeps guessing what comes next. Such tales are told worldwide; Japan's straw millionaire is a close cousin.",
+            "Millet seeds are far smaller than rice — one grain is barely big enough to see. The tiniest grain was chosen on purpose: the smaller the beginning, the more astonishing the end."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · A Single Grain of Millet",
+            beats: [
+                {
+                    art: "01-depart.webp",
+                    emoji: "🌾",
+                    left: [
+                        "Long ago there lived a very poor boy. He and his mother shared a thatched hut that was falling down around them.",
+                        "One day the boy made up his mind to go and see the wide world. He could not go on living like this forever.",
+                        "\"Mother, I am going out to see the wide world.\""
+                    ],
+                    right: [
+                        "Before he left he shook out his bundle, but nothing came of it. He shook it this way and that, and still nothing.",
+                        "Just one thing rolled out. A single grain of millet.",
+                        "\"Well, at least I have this.\"",
+                        "The boy wrapped it carefully in a sheet of paper and tucked it deep inside his coat."
+                    ]
+                },
+                {
+                    art: "02-first.webp",
+                    emoji: "🏠",
+                    left: [
+                        "He walked all day, and the sun went down. The boy knocked at a house where a light was burning.",
+                        "\"Could I stay just one night?\"",
+                        "The boy bowed low.",
+                        "\"Of course you can. Come in.\"",
+                        "The owner opened the door without a fuss."
+                    ],
+                    right: [
+                        "The boy drew the paper from his coat and unfolded it ever so carefully. Inside lay a single grain of millet.",
+                        "\"This is everything I own. Please keep it safe.\"",
+                        "\"What an odd little fellow.\"",
+                        "The owner swallowed a laugh and set it up on a shelf."
+                    ]
+                },
+                {
+                    art: "03-mouse.webp",
+                    emoji: "🐭",
+                    left: [
+                        "Next morning the boy looked up at the shelf. The grain of millet was gone.",
+                        "\"Oh? Where has it gone?\"",
+                        "\"Oh no! A mouse must have eaten it in the night.\"",
+                        "The owner turned red and did not know where to look."
+                    ],
+                    right: [
+                        "\"I am sorry. Let me at least catch you that mouse.\"",
+                        "He turned the whole house upside down until he caught one, sweating all the while.",
+                        "\"Thank you. I will keep it safe.\"",
+                        "The boy took the mouse, bowed, and set off down the road again."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · From a Mouse to a Horse",
+            beats: [
+                {
+                    art: "04-cat.webp",
+                    emoji: "🐱",
+                    left: [
+                        "At the next house the boy said exactly the same thing. He held the mouse out in both hands.",
+                        "\"This is everything I own. Please take good care of it.\"",
+                        "The owner took it in both hands.",
+                        "\"...A mouse, you say?\"",
+                        "He was so baffled that he could only blink."
+                    ],
+                    right: [
+                        "But in the morning the house cat had carried the mouse off. All that was left in the yard was one small tail.",
+                        "\"Oh dear, what do we do now.\"",
+                        "\"I am sorry about this.\"",
+                        "\"Nothing for it. Take the cat instead.\""
+                    ]
+                },
+                {
+                    art: "05-dog.webp",
+                    emoji: "🐕",
+                    left: [
+                        "The boy tucked the cat under his arm and set off again.",
+                        "At the next house he left the cat. He said the very same words.",
+                        "\"This is everything I own. Please take good care of it.\"",
+                        "\"Ha! You do say that often.\"",
+                        "The owner laughed out loud."
+                    ],
+                    right: [
+                        "But in the morning the house dog had chased the cat over the wall. The cat ran off and was never seen again.",
+                        "The owner scratched his head, then untied the dog.",
+                        "\"What am I to do.\"",
+                        "\"Nothing for it. Take the dog.\""
+                    ]
+                },
+                {
+                    art: "06-horse.webp",
+                    emoji: "🐴",
+                    left: [
+                        "This time he left the dog. The owner tied it to a post beside the stable.",
+                        "But in the night the horse kicked out, and the dog was so startled that it snapped its rope and ran. No one could call it back.",
+                        "The owner searched the whole village all night for nothing."
+                    ],
+                    right: [
+                        "In the morning he buried his face in his hands. He could not bring himself to look at the boy.",
+                        "\"Oh dear... you had better take the horse.\"",
+                        "\"The horse?\"",
+                        "\"What else can I do? A promise is a promise.\"",
+                        "The boy took the reins in both hands."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Leading the Ox",
+            beats: [
+                {
+                    art: "07-ox.webp",
+                    emoji: "🐂",
+                    left: [
+                        "The boy walked on, leading the big horse. Its hooves went clop, clop along the road.",
+                        "That night the house he stayed at tied the horse in the barn. In that barn stood a great ox.",
+                        "The horse followed the boy nicely."
+                    ],
+                    right: [
+                        "In the morning the ox swung its horns and drove the horse right out of the barn.",
+                        "\"Well, I never saw the like.\"",
+                        "\"...Might I have that ox?\"",
+                        "\"Ha! How did you know I would say yes?\"",
+                        "The owner sighed and handed the boy the ox's rope."
+                    ]
+                },
+                {
+                    art: "08-road.webp",
+                    emoji: "🛤️",
+                    left: [
+                        "The boy walked steadily along the road, leading the great ox. It stood twice as tall as he did.",
+                        "Everyone who passed opened their eyes wide.",
+                        "The boy walked very proudly."
+                    ],
+                    right: [
+                        "\"What is that little one doing with a whole ox?\"",
+                        "\"He must be some rich man's son.\"",
+                        "People turned to look after him.",
+                        "\"This is everything I own.\"",
+                        "The boy smiled as he answered. This time nobody laughed."
+                    ]
+                },
+                {
+                    art: "09-home.webp",
+                    emoji: "🏡",
+                    left: [
+                        "After many days of walking the boy reached home at last. The same old thatched hut stood just as it had when he left.",
+                        "His mother's shoes sat in the yard.",
+                        "\"Mother, I am home!\"",
+                        "The boy called out loudly from the yard."
+                    ],
+                    right: [
+                        "His mother opened the door and her eyes went round. There in the yard stood an ox, big as you please.",
+                        "\"Goodness, wherever did this ox come from?\"",
+                        "\"Mother, do not be alarmed.\"",
+                        "She looked from the yard to her son and back again."
+                    ]
+                },
+                {
+                    art: "10-millet.webp",
+                    emoji: "📜",
+                    left: [
+                        "The boy drew a sheet of paper from his coat and opened it out. It was the very paper the millet had been wrapped in. Every fold was still creased into it.",
+                        "\"There was one grain of millet in here, remember?\"",
+                        "The boy's face was bright."
+                    ],
+                    right: [
+                        "\"That one grain is how all of this began.\"",
+                        "Only then did his mother pull him into her arms.",
+                        "For a long while she could not say a word.",
+                        "Out in the yard the ox let out a great moooo. The sound carried all through the village."
+                    ]
+                }
+            ],
+            moral: "A heart that never treats a small thing carelessly turned one grain of millet into an ox. The boy never once made a fuss. He simply valued what was his, right to the end.",
+            question: "Of the small things in your hands right now, which one is worth taking care of?"
+        }
+    ],
+    quiz: [
+        { q: "What did the boy tell his mother as he left home?", choices: ["That he would bring back rice", "That he would see the wide world", "That he would buy an ox"], answer: 1 },
+        { q: "What ate the grain of millet?", choices: ["A bird", "A dog", "A mouse"], answer: 2 },
+        { q: "What carried the mouse off?", choices: ["A cat", "A dog", "An ox"], answer: 0 },
+        { q: "How did the dog leave that house?", choices: ["It was chased over the wall", "It snapped its rope and ran", "It bit through the reins"], answer: 1 },
+        { q: "What did the boy get last of all?", choices: ["A horse", "A cat", "An ox"], answer: 2 },
+        { q: "What did the boy take out of his coat and unfold?", choices: ["The ox's rope", "An old bundle", "A folded sheet of paper"], answer: 2 }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐮',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "A story like this one makes the listener guess what is coming next. After the millet, a mouse. After the mouse, a cat. That guessing game is why it has been told for so long.",
+                    "Chain tales are fun to listen to, so they turn up all over the world. Japan has one that starts with a single straw. The West has ones where a thing is traded on and on.",
+                    "What the boy did do was say plainly that what was his had been lost. Each time, the person who heard it felt sorry and handed him something bigger.",
+                    "So it was not the millet that carried the boy so far. It was the way he kept treating that one grain as truly his own."
+                ],
+                right: [
+                    "A heart that never treats a small thing carelessly turned one grain of millet into an ox. The boy never once made a fuss. He simply valued what was his, right to the end.",
+                    "Of the small things in your hands right now, which one is worth taking care of?"
+                ]
+            }
+        ]
+    }
+};
+
+/* ── 한국어·영어 ────────────────────────────────────────────
+   글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'korea-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
+
+// 「1장 · 」이든 「Chapter 1 · 」이든 앞머리를 뗀다.
+const bareTitle = t => t.replace(/^(\d+장|Chapter \d+) · /, '');
+
+
 function artFrame(src, emoji) {
     return `
         <div class="art-frame">
@@ -194,30 +464,29 @@ function coverToc() {
     const item = s => `
         <button type="button" data-goto="${s.num}">
             <span class="toc-num">${s.num}</span>
-            <span>${s.title.replace(/^\d+장 · /, '')}</span>
+            <span>${bareTitle(s.title)}</span>
         </button>`;
     return `
         <nav class="cover-toc">
-            <h2>차례</h2>
-            ${CHAPTERS.map(item).join('')}
+            <h2>${T().toc}</h2>
+            ${CH().map(item).join('')}
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
-                <span>이야기 문제</span>
+                <span>${T().quiz}</span>
             </button>
         </nav>`;
 }
 
 function coverPage() {
+    const c = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '🌾')}
+                ${artFrame(c.art || COVER.art, c.emoji)}
             </div>
             <div class="story-page-right">
-                <h1>좁쌀 한 톨</h1>
-                <p>좁쌀 한 톨은 지은이가 없는 구전 설화예요. 좁쌀 한 톨로 부자 되기라는 이름으로도 전해진답니다.</p>
-                <p>작은 것이 점점 큰 것으로 바뀌어 가는 짜임을 누적담이라고 불러요. 같은 일이 되풀이되면서 조금씩 커지기 때문에, 듣는 사람이 다음에는 무엇이 나올지 저절로 기다리게 되지요. 세계 곳곳에 같은 짜임의 이야기가 있는데 일본의 볏짚 부자 이야기가 특히 닮았답니다.</p>
-                <p>좁쌀은 조라는 곡식의 알갱이예요. 쌀보다 훨씬 작아서 한 톨은 눈에 겨우 보일 정도지요. 하필 가장 작은 곡식을 고른 것은 시작이 작을수록 끝이 놀라워지기 때문이랍니다.</p>
+                <h1>${c.title}</h1>
+                ${c.intro.map(t => `<p>${t}</p>`).join('')}
                 ${coverToc()}
             </div>
         </div>`;
@@ -251,7 +520,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -260,8 +529,8 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
@@ -290,10 +559,10 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 칸 맨 위 모서리에 꽉 붙인다. 학습 허브로 가는 길은 그 칸 맨 아래에 둔다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
-    const foot = spread.last ? `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
+    const foot = spread.last ? `<p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -309,22 +578,29 @@ function afterPage(spread, isFirst) {
         </div>`;
 }
 
-const PAGES = [
-    { kind: 'cover' },
-    ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0, last: i === AFTERWORD.spreads.length - 1 })),
-];
-
 const TWO_PAGE_KINDS = new Set(['spread', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const after = AF();
+    PAGES = [
+        { kind: 'cover' },
+        ...CH().flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
+        { kind: 'quiz' },
+        ...after.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0, last: i === after.spreads.length - 1 })),
+    ];
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
+
+buildPages();
 
 function renderPage(page) {
     switch (page.kind) {
@@ -395,7 +671,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -407,7 +683,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -442,4 +718,33 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        // 같은 자리로 돌아간다. 쪽 수가 같으므로 번호를 그대로 쓴다.
+        current = Math.min(current, PAGES.length - 1);
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+applyLang();
 paint();
