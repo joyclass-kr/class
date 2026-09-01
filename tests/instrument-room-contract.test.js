@@ -114,7 +114,7 @@ test('haegeum uses the exact 25-note recorded range without synthetic extension'
   assert.equal(samples.length, 25);
   assert.equal(samples[0], '035_g3.ogg');
   assert.equal(samples.at(-1), '059_g5.ogg');
-  assert.ok(totalBytes < 2 * 1024 * 1024);
+  assert.ok(totalBytes < 4 * 1024 * 1024);
   assert.match(app, /"haegeum": Object\.freeze\(\{ id: "haegeum", root: "assets\/audio\/haegeum\/", min: 55, max: 79/);
   assert.match(app, /gainDb: -1\.46, startOffset: 0, loopStart: 1\.1, loopEnd: 3\.85/);
   assert.match(app, /Number\.isFinite\(sampleConfig\.startOffset\)/);
@@ -129,7 +129,7 @@ test('daegeum switches between complete basic and vibrato multisample sets', () 
     assert.equal(samples.length, 31, folder);
     assert.equal(samples[0], '039_b3.ogg', folder);
     assert.equal(samples.at(-1), '069_f6.ogg', folder);
-    assert.ok(totalBytes < 3 * 1024 * 1024, folder);
+    assert.ok(totalBytes < 6 * 1024 * 1024, folder);
   }
   assert.match(app, /"daegeum": Object\.freeze\(\{ id: "daegeum", root: "assets\/audio\/daegeum\/", min: 59, max: 89/);
   assert.match(app, /"daegeum-vibrato": Object\.freeze\(\{ id: "daegeum-vibrato", root: "assets\/audio\/daegeum-vibrato\/", min: 59, max: 89/);
@@ -157,7 +157,7 @@ test('new Korean melodic recordings expose their exact ranges and techniques', (
     assert.equal(samples.length, count, folder);
     assert.equal(samples[0], first, folder);
     assert.equal(samples.at(-1), last, folder);
-    assert.ok(totalBytes < 3 * 1024 * 1024, folder);
+    assert.ok(totalBytes < 6 * 1024 * 1024, folder);
   }
   assert.match(app, /state\.currentModel\.id === "gayageum"/);
   assert.match(app, /\[\["pluck", "기본 뜯기"\],[\s\S]*?\["bend-up", "추성"\]\]/);
@@ -191,7 +191,7 @@ test('new Korean, ocarina, court chime, and tam-tam sources use their recorded r
     assert.equal(samples.length, count, folder);
     assert.equal(samples[0], first, folder);
     assert.equal(samples.at(-1), last, folder);
-    assert.ok(totalBytes < 3 * 1024 * 1024, folder);
+    assert.ok(totalBytes < 6 * 1024 * 1024, folder);
   }
   assert.match(app, /id: "geomungo"[\s\S]*?range: \[46, 77\][\s\S]*?badge: "32-NOTE · 3 ARTICULATIONS"/);
   assert.match(app, /state\.currentModel\.id === "geomungo"[\s\S]*?"geomungo-" \+ state\.articulation/);
@@ -350,8 +350,9 @@ test('percussion library includes dedicated kits and essential orchestral instru
   assert.match(app, /hat: -9/);
   assert.match(app, /crash: -6/);
   assert.ok(app.includes("gainDb + perceptualTrimDb"));
+  assert.match(app, /const AUDIO_SAMPLE_REVISION = "20260901-hq128-v1"/);
   assert.match(app, /const AD2_DRUM_SAMPLE_REVISION = "20260901-ad2-note49-v1"/);
-  assert.match(app, /config\.root \+ id \+ "\.ogg" \+ ad2Revision/);
+  assert.match(app, /config\.root \+ id \+ "\.ogg" \+ sampleRevision/);
   assert.match(app, /function playSampledDrum/);
   assert.match(app, /preloadDrumSamples\(\)/);
   assert.match(app, /typeof current\.gainDb === "number"/);

@@ -158,6 +158,7 @@
 
     // The official XLN Audio AD2 keymap assigns note 49 to HiHat Closed 1 Tip.
     // Keep this revision in the URL so a previously cached, mis-mapped hat cannot survive a remap.
+    const AUDIO_SAMPLE_REVISION = "20260901-hq128-v1";
     const AD2_DRUM_SAMPLE_REVISION = "20260901-ad2-note49-v1";
 
     const DRUM_SAMPLE_SETS = Object.freeze({
@@ -778,7 +779,9 @@
             return Promise.resolve({ anchor, buffer: cached, sampleSet: config.id });
         }
         if (state.keyboardSampleLoads.has(key)) return state.keyboardSampleLoads.get(key);
-        const revision = config.revision ? "?v=" + encodeURIComponent(config.revision) : "";
+        const revision = "?v=" + encodeURIComponent(
+            [AUDIO_SAMPLE_REVISION, config.revision].filter(Boolean).join("-")
+        );
         const task = fetch(config.root + concertGrandSampleFile(anchor, config) + revision)
             .then(function (response) { if (!response.ok) throw new Error(response.url); return response.arrayBuffer(); })
             .then(function (data) { return context.decodeAudioData(data); })
@@ -1093,8 +1096,10 @@
         const key = config.id + ":" + id;
         if (state.drumSamples.has(key)) return Promise.resolve({ buffer: state.drumSamples.get(key), sampleSet: config.id, id });
         if (state.drumSampleLoads.has(key)) return state.drumSampleLoads.get(key);
-        const ad2Revision = config.id.startsWith("drums-") ? "?v=" + AD2_DRUM_SAMPLE_REVISION : "";
-        const task = fetch(config.root + id + ".ogg" + ad2Revision)
+        const sampleRevision = "?v=" + encodeURIComponent(
+            [AUDIO_SAMPLE_REVISION, config.id.startsWith("drums-") ? AD2_DRUM_SAMPLE_REVISION : ""].filter(Boolean).join("-")
+        );
+        const task = fetch(config.root + id + ".ogg" + sampleRevision)
             .then(function (response) { if (!response.ok) throw new Error(response.url); return response.arrayBuffer(); })
             .then(function (data) { return context.decodeAudioData(data); })
             .then(function (buffer) {
