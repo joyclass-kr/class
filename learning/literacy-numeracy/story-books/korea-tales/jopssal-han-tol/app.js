@@ -403,6 +403,56 @@ const EN = {
        초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
        본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
     words: {
+        "cover": [
+            { w: "millet", k: "조 (좁쌀이 나는 곡식)", s: "A Single Grain of Millet" },
+            { w: "an old Korean tale", k: "우리나라 옛이야기", s: "is an old Korean tale with no known author" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "tiny", k: "아주 작은", s: "A story where something tiny keeps turning into something bigger" },
+            { w: "keeps turning into ~", k: "자꾸 ~으로 바뀌다", s: "something tiny keeps turning into something bigger" },
+            { w: "is called ~", k: "~라고 부른다", s: "is called a chain tale" },
+            { w: "a chain tale", k: "누적담 (되풀이되며 커지는 이야기)", s: "is called a chain tale" },
+            { w: "listener", k: "듣는 사람", s: "The listener keeps guessing what comes next." },
+            { w: "keeps guessing", k: "자꾸 알아맞혀 본다", s: "The listener keeps guessing what comes next." },
+            { w: "what comes next", k: "다음에 무엇이 오는지", s: "keeps guessing what comes next" },
+            { w: "straw", k: "짚", s: "Japan's straw millionaire is a close cousin." },
+            { w: "millionaire", k: "큰 부자", s: "Japan's straw millionaire is a close cousin." },
+            { w: "a close cousin", k: "아주 닮은 이야기", s: "Japan's straw millionaire is a close cousin." },
+            { w: "seeds", k: "씨앗, 알갱이", s: "Millet seeds are far smaller than rice" },
+            { w: "far smaller than ~", k: "~보다 훨씬 작은", s: "Millet seeds are far smaller than rice" },
+            { w: "grain", k: "낟알, 톨", s: "one grain is barely big enough to see" },
+            { w: "barely", k: "겨우, 간신히", s: "one grain is barely big enough to see" },
+            { w: "big enough to see", k: "눈에 보일 만큼 큰", s: "barely big enough to see" },
+            { w: "the tiniest", k: "가장 작은", s: "The tiniest grain was chosen on purpose." },
+            { w: "was chosen (choose)", k: "골랐다, 골라졌다", s: "The tiniest grain was chosen on purpose." },
+            { w: "on purpose", k: "일부러", s: "The tiniest grain was chosen on purpose." }
+        ],
+        "after": [
+            { w: "makes you guess", k: "알아맞혀 보게 만든다", s: "A story like this one makes you guess what's coming next." },
+            { w: "what's coming next", k: "다음에 무엇이 올지", s: "makes you guess what's coming next" },
+            { w: "guessing game", k: "알아맞히기 놀이", s: "That guessing game is why it's been told for so long." },
+            { w: "it's been told", k: "전해져 왔다", s: "why it's been told for so long" },
+            { w: "for so long", k: "그토록 오래", s: "why it's been told for so long" },
+            { w: "turn up", k: "나타나다, 여기저기 있다", s: "so they turn up all over the world" },
+            { w: "all over the world", k: "세계 곳곳에", s: "so they turn up all over the world" },
+            { w: "a single straw", k: "짚 한 오라기", s: "Japan has one that starts with a single straw." },
+            { w: "the West", k: "서양", s: "The West has ones where a thing is traded on and on." },
+            { w: "traded on and on", k: "자꾸 바꿔 가는", s: "where a thing is traded on and on" },
+            { w: "plainly", k: "또박또박, 분명히", s: "was say plainly that what was his had been lost" },
+            { w: "had been lost", k: "없어져 있었다", s: "that what was his had been lost" },
+            { w: "each time", k: "그때마다", s: "Each time, the person who heard it felt sorry" },
+            { w: "felt sorry", k: "미안해했다", s: "the person who heard it felt sorry" },
+            { w: "handed", k: "건네주었다", s: "handed him something bigger" },
+            { w: "it wasn't ~ that ...", k: "...한 것은 ~이 아니었다", s: "So it wasn't the millet that carried the boy so far." },
+            { w: "carried ~ so far", k: "~을 그렇게 멀리까지 데려갔다", s: "the millet that carried the boy so far" },
+            { w: "the way he kept ~ing", k: "그가 계속 ~한 그 방식", s: "It was the way he kept treating that one grain" },
+            { w: "truly his own", k: "정말로 제 것인", s: "treating that one grain as truly his own" },
+            { w: "treats ~ carelessly", k: "~을 함부로 여기다", s: "A heart that never treats a small thing carelessly" },
+            { w: "turned ~ into ...", k: "~을 ...으로 바꾸었다", s: "turned one grain of millet into an ox" },
+            { w: "made a fuss", k: "억지를 부렸다", s: "The boy never once made a fuss." },
+            { w: "looked after", k: "소중히 돌보았다", s: "He simply looked after what was his" },
+            { w: "right to the end", k: "끝까지", s: "what was his, right to the end" },
+            { w: "worth ~ing", k: "~할 만한", s: "which one is worth looking after?" }
+        ],
         "01-depart.webp": [
             { w: "long ago", k: "옛날 옛적에", s: "Long ago there was a very poor boy." },
             { w: "poor", k: "가난한", s: "a very poor boy" },
@@ -687,10 +737,11 @@ function coverPage() {
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame(c.art || COVER.art, c.emoji)}
+                ${readBtnHtml()}
             </div>
             <div class="story-page-right">
-                <h1>${c.title}</h1>
-                ${c.intro.map(t => `<p>${t}</p>`).join('')}
+                <h1 data-say="0">${c.title}</h1>
+                ${c.intro.map((t, i) => `<p data-say="${i + 1}">${t}</p>`).join('')}
                 ${coverToc()}
             </div>
         </div>`;
@@ -698,9 +749,7 @@ function coverPage() {
 
 function spreadPage(chapter, beat, isFirst) {
     const badgeHtml = isFirst ? `<div class="spread-chapter-badge">${chapter.title}</div>` : '';
-    const readBtn = (LANG === 'en' && CAN_SPEAK)
-        ? `<button type="button" class="read-btn" id="readBtn">${reading ? '■' : '▶'}</button>`
-        : '';
+    const readBtn = readBtnHtml();
     const n = beat.left.length;
     const leftHtml = beat.left.map((p, i) => `<p data-say="${i}">${textOf(p)}</p>`).join('');
     const rightHtml = beat.right.map((p, i) => `<p data-say="${n + i}">${textOf(p)}</p>`).join('');
@@ -772,16 +821,18 @@ function afterPage(spread, isFirst) {
     // 그림은 오른쪽 칸 맨 위 모서리에 꽉 붙인다. 학습 허브로 가는 길은 그 칸 맨 아래에 둔다.
     const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const foot = spread.last ? `<p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>` : '';
-    const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
+    const n = spread.left.length;
+    const col = (ps, from) => ps.map((t, i) => `<p data-say="${from + i}">${t}</p>`).join('');
     return `
         <div class="page page-after">
             <div class="after-col after-col-left">
                 ${head}
-                ${col(spread.left)}
+                ${col(spread.left, 0)}
             </div>
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
-                ${col(spread.right)}
+                ${readBtnHtml()}
+                ${col(spread.right, n)}
                 ${foot}
             </div>
         </div>`;
@@ -874,7 +925,7 @@ function paint() {
     }
 
     const readBtn = document.getElementById('readBtn');
-    if (readBtn) readBtn.addEventListener('click', () => (reading ? stopReading() : readSpread()));
+    if (readBtn) readBtn.addEventListener('click', () => (reading ? stopReading() : readPage()));
 
     renderVocab();
     fitVocabScreen();
@@ -942,6 +993,22 @@ document.addEventListener('keydown', (e) => {
    기기에 남녀 목소리가 있으면 골라 쓰고, 없으면 음높이만으로 가른다.
    아이 목소리는 어느 기기에도 없어서 음높이를 올려 흉내 낸다. */
 const textOf = p => (typeof p === 'string' ? p : p.t);
+
+/* 읽기 단추 — 표지·펼침면·읽고 나서에 똑같이 붙는다. 영어일 때만 나온다. */
+function readBtnHtml() {
+    return (LANG === 'en' && CAN_SPEAK)
+        ? `<button type="button" class="read-btn" id="readBtn">${reading ? '■' : '▶'}</button>`
+        : '';
+}
+
+/* 그 쪽에서 읽어 줄 글. 화면에 보이는 차례 그대로다. */
+function pageParts(page) {
+    if (!page) return [];
+    if (page.kind === 'spread') return page.beat.left.concat(page.beat.right);
+    if (page.kind === 'cover') return [CV().title].concat(CV().intro);
+    if (page.kind === 'after') return page.spread.left.concat(page.spread.right);
+    return [];
+}
 const roleOf = p => (typeof p === 'string' ? 'narration' : (p.v || 'narration'));
 
 const SAY_AS = {
@@ -991,10 +1058,11 @@ function stopReading() {
     if (b) b.textContent = '▶';
 }
 
-function readSpread() {
+function readPage() {
     const page = PAGES[current];
-    if (!CAN_SPEAK || !page || page.kind !== 'spread') return;
-    const parts = page.beat.left.concat(page.beat.right);
+    if (!CAN_SPEAK || !page) return;
+    const parts = pageParts(page);
+    if (!parts.length) return;
     reading = true;
     const mine = ++readToken;
     const btn = document.getElementById('readBtn');
@@ -1031,12 +1099,18 @@ const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
 function vocabFor() {
     const all = (HAS_WORDS && EN.words) || {};
     const page = PAGES[current];
-    if (page && page.kind === 'spread' && all[page.beat.art]) {
-        return { list: all[page.beat.art] };
-    }
-    // 펼침면이 아닌 쪽에서는 책에 나온 낱말을 다 보여 준다.
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'cover' ? 'cover'
+        : page.kind === 'after' ? 'after'
+        : null;
+    if (key && all[key]) return { list: all[key] };
+    // 문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
     const list = [];
+    (all.cover || []).forEach(w => list.push(w));
     EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    (all.after || []).forEach(w => list.push(w));
     return { list };
 }
 
@@ -1100,9 +1174,25 @@ if (vocabPanelEl) {
 /* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 글과 단어장이 함께 보인다.
    아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가 없어져 저절로 그 자리에 걸린다. */
 function artLine() {
-    const art = document.querySelector('.spread-art');
-    if (!art) return 0;
-    return Math.max(0, Math.round(art.getBoundingClientRect().bottom + window.scrollY));
+    const page = PAGES[current];
+    // 쪽마다 그림이 끝나는 자리가 경계선이다. 거기까지만 내려가면
+    // 그림만 위로 빠지고 읽던 글은 화면에 남는다.
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 가로 화면 표지처럼 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라
+    // 책이 통째로 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
 }
 
 function fitVocabScreen() {

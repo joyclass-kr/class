@@ -964,6 +964,10 @@ html[lang="en"] .vocab-sent {
     font-weight: 400;
 }
 
+/* 단추를 그림 모서리에 붙이려면 그 칸이 자리 기준이 되어야 한다. */
+.page-cover .story-page-left-full,
+.after-col-right { position: relative; }
+
 /* 읽어 주기 — 그림 오른쪽 위. 넘김 단추는 가운데라 겹치지 않는다. */
 .read-btn {
     position: absolute;
