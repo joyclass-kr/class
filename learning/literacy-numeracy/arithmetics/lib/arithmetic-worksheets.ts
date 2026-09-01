@@ -189,6 +189,11 @@ export const arithmeticWorksheetCatalog: ArithmeticWorksheet[] = worksheetNames.
 
 const mergedMiddleSchoolRoutes = new Set([
   "/arithmetic/middle-school/core-calculations?kind=linear-equation-application",
+  "/arithmetic/middle-school/core-calculations?kind=linear-inequality-application",
+  "/arithmetic/middle-school/core-calculations?kind=simultaneous-substitution",
+  "/arithmetic/middle-school/core-calculations?kind=simultaneous-elimination",
+  "/arithmetic/middle-school/core-calculations?kind=simultaneous-application",
+  "/arithmetic/middle-school/core-calculations?kind=simultaneous-special",
   "/arithmetic/middle-school/core-calculations?kind=square-roots-real",
   "/arithmetic/middle-school/quadratic-equations?kind=roots-and-squares",
   "/arithmetic/middle-school/trigonometry?kind=special-angles",
@@ -196,10 +201,14 @@ const mergedMiddleSchoolRoutes = new Set([
   "/arithmetic/middle-school/circle-properties?kind=angle-applications",
   "/arithmetic/middle-school/circle-properties?kind=comprehensive",
   "/arithmetic/middle-school/statistics?kind=mean-applications",
+  "/arithmetic/middle-school/factorization?kind=common-factor",
+  "/arithmetic/middle-school/factorization?kind=multiple-variables",
+  "/arithmetic/middle-school/factorization?kind=grouping",
 ]);
 
 const combinedMiddleSchoolTitles: Record<string, string> = {
   "/arithmetic/middle-school/core-calculations?kind=linear-equation": "일차방정식과 활용 계산",
+  "/arithmetic/middle-school/core-calculations?kind=linear-inequality": "일차부등식과 활용",
   "/arithmetic/middle-school/core-calculations?kind=radical-calculation": "제곱근과 근호 계산",
   "/arithmetic/middle-school/trigonometry?kind=ratios": "삼각비의 값과 특수각",
   "/arithmetic/middle-school/circle-properties?kind=inscribed-angles": "원주각과 각의 응용",
@@ -210,7 +219,6 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "중1", name: "소인수분해", title: "소인수분해", route: "/arithmetic/middle-school/core-calculations?kind=prime-factorization" },
   { grade: "중1", name: "최대공약수와 최소공배수", title: "최대공약수와 최소공배수", route: "/arithmetic/middle-school/core-calculations?kind=gcd-lcm" },
   { grade: "중1", name: "정수와 유리수의 기초·혼합계산", title: "정수와 유리수의 기초·혼합계산", route: "/arithmetic/middle-school/rational-mixed" },
-  { grade: "중1", name: "일차식의 계산", title: "일차식의 계산", route: "/arithmetic/middle-school/core-calculations?kind=linear-expression" },
   { grade: "중1", name: "일차방정식", title: "일차방정식", route: "/arithmetic/middle-school/core-calculations?kind=linear-equation" },
   { grade: "중1", name: "일차방정식 활용 계산", title: "일차방정식 활용 계산", route: "/arithmetic/middle-school/core-calculations?kind=linear-equation-application" },
   { grade: "중1", name: "좌표·정비례·반비례 계산", title: "좌표·정비례·반비례 계산", route: "/arithmetic/middle-school/curriculum-calculations?kind=coordinate-proportion" },
@@ -224,6 +232,7 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "중2", name: "문자식 기본연산 종합", title: "문자식 기본연산 종합", route: "/arithmetic/middle-school/core-calculations?kind=polynomial-add-subtract" },
   { grade: "중2", name: "일차부등식", title: "일차부등식", route: "/arithmetic/middle-school/core-calculations?kind=linear-inequality" },
   { grade: "중2", name: "일차부등식 활용", title: "일차부등식 활용", route: "/arithmetic/middle-school/core-calculations?kind=linear-inequality-application" },
+  { grade: "중2", name: "연립방정식", title: "연립방정식", route: "/arithmetic/middle-school/core-calculations?kind=linear-system-comprehensive" },
   { grade: "중2", name: "연립방정식 대입법", title: "연립방정식 대입법", route: "/arithmetic/middle-school/core-calculations?kind=simultaneous-substitution" },
   { grade: "중2", name: "연립방정식 가감법", title: "연립방정식 가감법", route: "/arithmetic/middle-school/core-calculations?kind=simultaneous-elimination" },
   { grade: "중2", name: "연립방정식 활용", title: "연립방정식 활용", route: "/arithmetic/middle-school/core-calculations?kind=simultaneous-application" },
@@ -247,7 +256,7 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
 
 
   { grade: "중3", name: "인수분해: 식 정리 후 인수분해", title: "인수분해: 식 정리 후 인수분해", route: "/arithmetic/middle-school/factorization?kind=normalize-first" },
-  { grade: "중3", name: "인수분해 종합", title: "인수분해 종합", route: "/arithmetic/middle-school/factorization?kind=comprehensive" },
+  { grade: "중3", name: "인수분해", title: "인수분해", route: "/arithmetic/middle-school/factorization?kind=comprehensive" },
   { grade: "중3", name: "이차방정식: 제곱근·완전제곱", title: "이차방정식: 제곱근·완전제곱", route: "/arithmetic/middle-school/quadratic-equations?kind=roots-and-squares" },
   { grade: "중3", name: "이차방정식: 기본·인수분해", title: "이차방정식: 기본·인수분해", route: "/arithmetic/middle-school/quadratic-equations?kind=factorization" },
   { grade: "중3", name: "이차방정식: 근의 공식", title: "이차방정식: 근의 공식", route: "/arithmetic/middle-school/quadratic-equations?kind=quadratic-formula" },

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import InlineMathText from "../../../components/inline-math-text";
 import MathFormula from "../../../components/math-formula";
 import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
@@ -20,6 +20,12 @@ import {
 
 const DEFAULT_KIND: MiddleCoreKind = "prime-factorization";
 const INITIAL_SEED = 20260803;
+const MERGED_LINEAR_SYSTEM_KINDS = new Set([
+  "simultaneous-substitution",
+  "simultaneous-elimination",
+  "simultaneous-application",
+  "simultaneous-special",
+]);
 function choiceProblem(problem: MiddleCoreProblem): WorksheetChoiceProblem {
   const choices = [
     { id: `${problem.id}-correct`, latex: problem.answerLatex, correct: true },
@@ -41,6 +47,7 @@ function choiceProblem(problem: MiddleCoreProblem): WorksheetChoiceProblem {
 }
 
 export default function MiddleCoreCalculationsPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [kind, setKind] = useState<MiddleCoreKind>(DEFAULT_KIND);
   const [problemSet, setProblemSet] = useState(() => (
@@ -54,13 +61,25 @@ export default function MiddleCoreCalculationsPage() {
 
   useEffect(() => {
     const requestedKind = searchParams.get("kind");
+    if (requestedKind === "linear-expression") {
+      router.replace("/arithmetic/middle-school/core-calculations?kind=linear-equation");
+      return;
+    }
+    if (requestedKind === "linear-inequality-application") {
+      router.replace("/arithmetic/middle-school/core-calculations?kind=linear-inequality");
+      return;
+    }
+    if (requestedKind && MERGED_LINEAR_SYSTEM_KINDS.has(requestedKind)) {
+      router.replace("/arithmetic/middle-school/core-calculations?kind=linear-system-comprehensive");
+      return;
+    }
     if (!isMiddleCoreKind(requestedKind) || requestedKind === kind) return;
     setKind(requestedKind);
     setProblemSet(createMiddleCoreProblemSet(requestedKind, INITIAL_SEED));
     setReviews([]);
     setSelected({});
     setResults({});
-  }, [kind, searchParams]);
+  }, [kind, router, searchParams]);
 
   useEffect(() => {
     const fit = () => setScale(Math.min((window.innerWidth - 32) / 794, 1));

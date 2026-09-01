@@ -257,6 +257,15 @@ test("인수분해 오답은 임의의 수를 덧붙이지 않고 실제로 틀�
   }
 });
 
+test("통합 인수분해 한 장에는 공통인수·여러 문자·두 항씩 묶기가 모두 들어간다", () => {
+  const kinds = new Set(
+    createMiddleFactorizationProblemSet("comprehensive", 20260727).problems.map(({ kind }) => kind),
+  );
+  assert.ok(kinds.has("common-factor"));
+  assert.ok(kinds.has("multiple-variables"));
+  assert.ok(kinds.has("grouping"));
+});
+
 test("중등 종합 카드는 고등 선행을 제외한 핵심 유형만 균등하게 순환한다", () => {
   const counts = new Map<string, number>();
   for (let seed = 1; seed <= 5; seed += 1) {

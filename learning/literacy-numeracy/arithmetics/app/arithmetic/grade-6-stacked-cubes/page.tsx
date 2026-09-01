@@ -105,7 +105,7 @@ export default function GradeSixStackedCubesPage() {
       <article className="stack-problem stack-count-problem" data-testid="stack-problem" key={problem.id}>
         <p><b>{index + 1}</b>쌓기나무의 개수를 구하시오.</p>
         <div className="stack-count-body">
-          <StackedCubesDiagram heights={problem.heights} showMap={problem.kind === "count-map"} showDirection={index === 0 || index === 5} />
+          <StackedCubesDiagram heights={problem.heights} showMap={problem.kind === "count-map"} />
           <div className="stack-count-answer">
             <span>→</span>
             {answerSheet
@@ -133,7 +133,7 @@ export default function GradeSixStackedCubesPage() {
       <article className="stack-problem stack-view-problem" data-testid="stack-problem" key={problem.id}>
         <p><b>{index + 1}</b>쌓기나무를 위, 앞, 옆에서 본 모양을 그리시오.</p>
         <div className="stack-view-body">
-          <StackedCubesDiagram heights={problem.heights} showDirection={index === 0 || index === 5} />
+          <StackedCubesDiagram heights={problem.heights} showDirection />
           <div className="stack-view-grids">
             {VIEW_FIELDS.map(({ field, label }) => (
               <StackedCubesViewGrid

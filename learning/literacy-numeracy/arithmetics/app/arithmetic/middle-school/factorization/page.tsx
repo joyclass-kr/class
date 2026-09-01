@@ -17,8 +17,9 @@ import {
   type MiddleFactorizationProblem,
 } from "../../../../lib/middle-factorization-workouts";
 
-const DEFAULT_KIND: MiddleFactorizationKind = "common-factor";
+const DEFAULT_KIND: MiddleFactorizationKind = "comprehensive";
 const INITIAL_SEED = 20260727;
+const MERGED_FACTORIZATION_KINDS = new Set(["common-factor", "multiple-variables", "grouping"]);
 function choiceProblem(problem: MiddleFactorizationProblem): WorksheetChoiceProblem {
   const choices = [
     { id: `${problem.id}-correct`, latex: problem.answerLatex, correct: true },
@@ -54,6 +55,10 @@ export default function MiddleFactorizationPage() {
 
   useEffect(() => {
     const requestedKind = searchParams.get("kind");
+    if (requestedKind && MERGED_FACTORIZATION_KINDS.has(requestedKind)) {
+      router.replace("/arithmetic/middle-school/factorization?kind=comprehensive");
+      return;
+    }
     if (requestedKind === "cubic-grouping") {
       router.replace("/arithmetic/high-school/advanced-factorization");
       return;

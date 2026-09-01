@@ -7,8 +7,9 @@ test("problem set always has 10 problems in a fixed kind order with positive tot
   for (let seed = 1; seed <= 30; seed += 1) {
     const set = createStackedCubesProblemSet(seed);
     assert.deepEqual(set.problems.map(({ kind }) => kind), [
-      "three-view", "count", "count", "count-map", "count-map",
-      "three-view", "count", "count", "count-map", "count-map",
+      "three-view", "three-view",
+      "count", "count", "count", "count",
+      "count-map", "count-map", "count-map", "count-map",
     ]);
     for (const problem of set.problems) {
       const summed = problem.heights.reduce((sum, row) => sum + row.reduce((a, b) => a + b, 0), 0);

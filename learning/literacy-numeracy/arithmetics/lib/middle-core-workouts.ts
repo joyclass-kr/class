@@ -1,7 +1,6 @@
 export type MiddleCoreKind =
   | "prime-factorization"
   | "gcd-lcm"
-  | "linear-expression"
   | "linear-equation"
   | "linear-equation-application"
   | "repeating-decimal"
@@ -43,7 +42,6 @@ export type MiddleCoreProblem = {
 export const MIDDLE_CORE_KINDS: MiddleCoreKind[] = [
   "prime-factorization",
   "gcd-lcm",
-  "linear-expression",
   "linear-equation",
   "linear-equation-application",
   "repeating-decimal",
@@ -70,7 +68,6 @@ export const MIDDLE_CORE_KINDS: MiddleCoreKind[] = [
 export const MIDDLE_CORE_TITLES: Record<MiddleCoreKind, string> = {
   "prime-factorization": "소인수분해",
   "gcd-lcm": "최대공약수와 최소공배수",
-  "linear-expression": "일차식의 계산",
   "linear-equation": "일차방정식",
   "linear-equation-application": "일차방정식 활용 계산",
   "repeating-decimal": "유리수와 순환소수",
@@ -79,13 +76,13 @@ export const MIDDLE_CORE_TITLES: Record<MiddleCoreKind, string> = {
   "monomial-divide": "단항식의 나눗셈",
   "monomial-comprehensive": "단항식의 곱셈과 나눗셈",
   "polynomial-add-subtract": "문자식 기본연산 종합",
-  "linear-inequality": "일차부등식",
+  "linear-inequality": "일차부등식과 활용",
   "linear-inequality-application": "일차부등식 활용",
   "simultaneous-substitution": "연립일차방정식 대입법",
   "simultaneous-elimination": "연립일차방정식 가감법",
   "simultaneous-application": "연립일차방정식 활용",
   "simultaneous-special": "연립일차방정식의 해의 개수",
-  "linear-system-comprehensive": "일차부등식과 연립일차방정식",
+  "linear-system-comprehensive": "연립방정식",
   "square-roots-real": "제곱근과 실수",
   "radical-calculation": "근호를 포함한 식의 계산",
   "polynomial-multiply": "다항식의 곱셈",
@@ -118,13 +115,13 @@ const ALGEBRAIC_EXPRESSION_COMPREHENSIVE_PARTS: AtomicMiddleCoreKind[] = [
   "polynomial-add-subtract",
 ];
 const LINEAR_SYSTEM_COMPREHENSIVE_PARTS: AtomicMiddleCoreKind[] = [
-  "linear-inequality",
   "simultaneous-substitution",
   "simultaneous-elimination",
-  "linear-inequality-application",
-  "simultaneous-application",
   "simultaneous-application",
   "simultaneous-special",
+  "simultaneous-substitution",
+  "simultaneous-elimination",
+  "simultaneous-application",
   "simultaneous-special",
 ];
 const FORMULA_COMPREHENSIVE_PARTS: AtomicMiddleCoreKind[] = [
@@ -207,12 +204,6 @@ function monomial(coef: number, xPower: number, yPower = 0) {
   return symbols ? coefficient(coef, symbols) : `${coef}`;
 }
 
-function multipliedGroup(value: number, contents: string) {
-  if (value === 1) return `(${contents})`;
-  if (value === -1) return `-(${contents})`;
-  return `${value}(${contents})`;
-}
-
 function uniqueDistractors(answer: string, candidates: string[]) {
   const realisticFallbacks = [
     `-(${answer})`,
@@ -283,7 +274,6 @@ function questionFor(kind: MiddleCoreKind, structure: string) {
   const questions: Record<MiddleCoreKind, string> = {
     "prime-factorization": "소인수분해한 결과는?",
     "gcd-lcm": "최대공약수 또는 최소공배수는?",
-    "linear-expression": "정리한 식은?",
     "linear-equation": "x의 값은?",
     "linear-equation-application": "x의 값은?",
     "repeating-decimal": "기약분수는?",
@@ -494,37 +484,6 @@ function build(
   if (kind === "prime-factorization") return buildPrimeFactorization(id, index);
   if (kind === "gcd-lcm") return buildGcdLcm(id, index);
   if (kind === "polynomial-add-subtract") return buildPolynomialAddSubtract(id, index);
-
-  if (kind === "linear-expression") {
-    const mode = index % 4;
-    const a = mode === 0 ? nonzero(next, -7, 7) : nonUnit(next, -7, 7);
-    const b = nonzero(next, -6, 6);
-    const c = mode === 0 ? nonzero(next, -5, 5) : nonUnit(next, -5, 5);
-    const d = mode === 2 ? nonzero(next, -8, 8) : integer(next, -8, 8);
-    if (mode === 0) {
-      const answer = linear(a + b, d);
-      return make(id, kind, `${linear(a, d)}${b > 0 ? "+" : ""}${coefficient(b, "x")}`, answer,
-        "x항끼리 계수를 더하고 상수항은 그대로 둔다.",
-        [linear(a - b, d), linear(a + b, -d), linear(a * b, d)], "combine-like-terms");
-    }
-    if (mode === 1) {
-      const answer = linear(a + c, a * b);
-      return make(id, kind, `${a}(x${signed(b)})${c > 0 ? "+" : ""}${coefficient(c, "x")}`, answer,
-        "괄호 앞의 수를 분배한 뒤 x항끼리 합친다.",
-        [linear(a + c, b), linear(a * c, a * b), linear(a - c, a * b)], "distribute-add");
-    }
-    if (mode === 2) {
-      const answer = linear(a - c, a * b + c * d);
-      const secondGroup = multipliedGroup(-c, `x${signed(-d)}`);
-      return make(id, kind, `${multipliedGroup(a, `x${signed(b)}`)}${secondGroup.startsWith("-") ? "" : "+"}${secondGroup}`, answer,
-        "두 괄호를 각각 분배하고 동류항을 정리한다.",
-        [linear(a + c, a * b - c * d), linear(a - c, a * b - c * d), linear(a * c, b + d)], "distribute-subtract");
-    }
-    const answer = linear(a * b + c, a * d);
-    return make(id, kind, `${a}(${linear(b, d)})${c > 0 ? "+" : ""}${coefficient(c, "x")}`, answer,
-      "괄호를 먼저 분배하고 x항과 상수항을 각각 정리한다.",
-      [linear(a * b - c, a * d), linear(a + b + c, d), linear(a * b + c, d)], "nested-linear");
-  }
 
   if (kind === "linear-equation") {
     const solution = nonzero(next, -8, 8);
@@ -1039,6 +998,9 @@ function build(
 function actualKind(kind: MiddleCoreKind, index: number): AtomicMiddleCoreKind {
   if (kind === "linear-equation" && index >= 5) {
     return "linear-equation-application";
+  }
+  if (kind === "linear-inequality" && index >= 6) {
+    return "linear-inequality-application";
   }
   if (kind === "monomial-comprehensive") {
     return MONOMIAL_COMPREHENSIVE_PARTS[index % MONOMIAL_COMPREHENSIVE_PARTS.length];

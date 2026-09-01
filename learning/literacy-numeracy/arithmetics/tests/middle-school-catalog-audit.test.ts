@@ -14,17 +14,17 @@ const physicalPages = fs.readdirSync(pageRoot, { withFileTypes: true })
 
 const baseRoute = (route: string | null) => route?.split("?")[0].split("/").at(-1) ?? "";
 
-test("중등 48개 필수 목차는 중복 없이 모두 실제 페이지에 연결된다", () => {
-  assert.equal(middleSchoolWorksheetCatalog.length, 48);
+test("중등 40개 필수 목차는 중복 없이 모두 실제 페이지에 연결된다", () => {
+  assert.equal(middleSchoolWorksheetCatalog.length, 40);
   assert.deepEqual(
     middleSchoolWorksheetCatalog.reduce<Record<string, number>>((counts, worksheet) => {
       counts[worksheet.grade] = (counts[worksheet.grade] ?? 0) + 1;
       return counts;
     }, {}),
-    { 중1: 10, 중2: 13, 중3: 25 },
+    { 중1: 9, 중2: 9, 중3: 22 },
   );
-  assert.equal(new Set(middleSchoolWorksheetCatalog.map(({ name }) => name)).size, 48);
-  assert.equal(new Set(middleSchoolWorksheetCatalog.map(({ route }) => route)).size, 48);
+  assert.equal(new Set(middleSchoolWorksheetCatalog.map(({ name }) => name)).size, 40);
+  assert.equal(new Set(middleSchoolWorksheetCatalog.map(({ route }) => route)).size, 40);
   assert.deepEqual(
     middleSchoolWorksheetCatalog
       .filter(({ route }) => !physicalPages.includes(baseRoute(route)))
@@ -39,7 +39,6 @@ test("필수 연산 영역은 목차에 하나도 빠지지 않는다", () => {
     "/arithmetic/middle-school/core-calculations?kind=prime-factorization",
     "/arithmetic/middle-school/core-calculations?kind=gcd-lcm",
     "/arithmetic/middle-school/rational-mixed",
-    "/arithmetic/middle-school/core-calculations?kind=linear-expression",
     "/arithmetic/middle-school/core-calculations?kind=linear-equation",
     "/arithmetic/middle-school/curriculum-calculations?kind=coordinate-proportion",
     "/arithmetic/middle-school/curriculum-calculations?kind=construction-congruence",
@@ -50,11 +49,7 @@ test("필수 연산 영역은 목차에 하나도 빠지지 않는다", () => {
     "/arithmetic/middle-school/core-calculations?kind=exponent-laws",
     "/arithmetic/middle-school/core-calculations?kind=polynomial-add-subtract",
     "/arithmetic/middle-school/core-calculations?kind=linear-inequality",
-    "/arithmetic/middle-school/core-calculations?kind=linear-inequality-application",
-    "/arithmetic/middle-school/core-calculations?kind=simultaneous-substitution",
-    "/arithmetic/middle-school/core-calculations?kind=simultaneous-elimination",
-    "/arithmetic/middle-school/core-calculations?kind=simultaneous-application",
-    "/arithmetic/middle-school/core-calculations?kind=simultaneous-special",
+    "/arithmetic/middle-school/core-calculations?kind=linear-system-comprehensive",
     "/arithmetic/middle-school/curriculum-calculations?kind=linear-function-basics",
     "/arithmetic/middle-school/curriculum-calculations?kind=triangle-quadrilateral",
     "/arithmetic/middle-school/curriculum-calculations?kind=pythagorean",
@@ -75,6 +70,12 @@ test("필수 연산 영역은 목차에 하나도 빠지지 않는다", () => {
 test("개별 반복 가치가 낮은 쉬운 유형은 한 페이지에 통합한다", () => {
   const routes = middleSchoolWorksheetCatalog.map(({ route }) => route);
   for (const mergedRoute of [
+    "/arithmetic/middle-school/core-calculations?kind=linear-expression",
+    "/arithmetic/middle-school/core-calculations?kind=linear-inequality-application",
+    "/arithmetic/middle-school/core-calculations?kind=simultaneous-substitution",
+    "/arithmetic/middle-school/core-calculations?kind=simultaneous-elimination",
+    "/arithmetic/middle-school/core-calculations?kind=simultaneous-application",
+    "/arithmetic/middle-school/core-calculations?kind=simultaneous-special",
     "/arithmetic/middle-school/core-calculations?kind=linear-equation-application",
     "/arithmetic/middle-school/core-calculations?kind=square-roots-real",
     "/arithmetic/middle-school/quadratic-equations?kind=roots-and-squares",
@@ -85,11 +86,26 @@ test("개별 반복 가치가 낮은 쉬운 유형은 한 페이지에 통합한
     "/arithmetic/middle-school/circle-properties?kind=comprehensive",
     "/arithmetic/middle-school/statistics?kind=mean-applications",
     "/arithmetic/middle-school/core-calculations?kind=monomial-comprehensive",
+    "/arithmetic/middle-school/factorization?kind=common-factor",
+    "/arithmetic/middle-school/factorization?kind=multiple-variables",
+    "/arithmetic/middle-school/factorization?kind=grouping",
     "/arithmetic/middle-school/factorization?kind=cubic-grouping",
     "/arithmetic/middle-school/factorization?kind=cubic-sum-difference",
   ]) {
     assert.ok(!routes.includes(mergedRoute), mergedRoute);
   }
+});
+
+test("옛 연립방정식 세부 주소는 한 통합 학습지로 이동한다", () => {
+  const source = fs.readFileSync(path.join(pageRoot, "core-calculations", "page.tsx"), "utf8");
+  assert.match(source, /simultaneous-substitution[\s\S]*simultaneous-elimination[\s\S]*simultaneous-application[\s\S]*simultaneous-special/);
+  assert.match(source, /MERGED_LINEAR_SYSTEM_KINDS[\s\S]*linear-system-comprehensive/);
+});
+
+test("옛 인수분해 기초 주소는 한 종합 학습지로 이동한다", () => {
+  const source = fs.readFileSync(path.join(pageRoot, "factorization", "page.tsx"), "utf8");
+  assert.match(source, /common-factor.*multiple-variables.*grouping/);
+  assert.match(source, /MERGED_FACTORIZATION_KINDS[\s\S]*factorization\?kind=comprehensive/);
 });
 
 test("중등 범위를 벗어난 3차식 주소는 공수1 학습지로 이동한다", () => {

@@ -9,8 +9,8 @@ import {
 } from "../lib/middle-core-workouts.ts";
 import { middleSchoolWorksheetCatalog } from "../lib/arithmetic-worksheets.ts";
 
-test("학등 핵심 연산 24개 유형이 각각 8문제를 생성한다", () => {
-  assert.equal(MIDDLE_CORE_KINDS.length, 24);
+test("학등 핵심 연산 23개 유형이 각각 8문제를 생성한다", () => {
+  assert.equal(MIDDLE_CORE_KINDS.length, 23);
   for (const kind of MIDDLE_CORE_KINDS) {
     const set = createMiddleCoreProblemSet(kind, 20260803);
     assert.equal(set.problems.length, 8);
@@ -70,15 +70,6 @@ test("한 학습지 안에서 같은 문제와 정답 조합을 반복하지 않
   }
 });
 
-test("분배법칙 문제는 의미 없는 1배와 상수 없는 괄호를 만들지 않는다", () => {
-  for (let seed = 1; seed <= 100; seed += 1) {
-    const problems = createMiddleCoreProblemSet("linear-expression", seed).problems;
-    for (const problem of problems.filter(({ structure }) => structure.startsWith("distribute"))) {
-      assert.doesNotMatch(problem.latex, /(?:^|[+\-])1\(/);
-      assert.doesNotMatch(problem.latex, /\(x\)/);
-    }
-  }
-});
 
 test("종합 곱셈공식은 다항식의 곱셈, 완전제곱식, 합과 차를 순환한다", () => {
   const structures = createMiddleCoreProblemSet("formula-comprehensive", 31).problems
@@ -98,38 +89,39 @@ test("통합 학습지는 쉬운 하위 유형을 한 문제지 안에서 순환
   assert.deepEqual(
     new Set(createMiddleCoreProblemSet("linear-system-comprehensive", 31).problems.map(({ kind }) => kind)),
     new Set([
-      "linear-inequality",
       "simultaneous-substitution",
       "simultaneous-elimination",
-      "linear-inequality-application",
       "simultaneous-application",
       "simultaneous-special",
     ]),
   );
 });
 
-test("학2 통합 학습지는 쉬운 풀이를 한 문제씩만 두고 활용·특수 유형에 다섯 문제를 배정한다", () => {
+test("일차부등식은 기본 6문제 뒤에 활용 2문제만 통합한다", () => {
+  const problems = createMiddleCoreProblemSet("linear-inequality", 20260809).problems;
+  assert.deepEqual(problems.map(({ kind }) => kind), [
+    "linear-inequality", "linear-inequality", "linear-inequality",
+    "linear-inequality", "linear-inequality", "linear-inequality",
+    "linear-inequality-application", "linear-inequality-application",
+  ]);
+  assert.ok(problems.slice(6).every(({ structure }) => structure === "budget-maximum"));
+});
+
+test("연립방정식 한 장은 대입법·가감법·활용·해의 개수를 두 문제씩 섞는다", () => {
   const problems = createMiddleCoreProblemSet("linear-system-comprehensive", 20260809).problems;
-  assert.deepEqual(
-    problems.map(({ kind }) => kind),
-    [
-      "linear-inequality",
-      "simultaneous-substitution",
-      "simultaneous-elimination",
-      "linear-inequality-application",
-      "simultaneous-application",
-      "simultaneous-application",
-      "simultaneous-special",
-      "simultaneous-special",
-    ],
-  );
-  assert.deepEqual(
-    problems.slice(3).map(({ structure }) => structure),
-    ["budget-maximum", "rectangle-dimensions", "two-digit-number", "no-solution", "infinitely-many"],
-  );
-  assert.equal(problems.filter(({ kind }) => kind === "linear-inequality").length, 1);
-  assert.equal(problems.filter(({ kind }) => kind === "simultaneous-substitution").length, 1);
-  assert.equal(problems.filter(({ kind }) => kind === "simultaneous-elimination").length, 1);
+  assert.deepEqual(problems.map(({ kind }) => kind), [
+    "simultaneous-substitution",
+    "simultaneous-elimination",
+    "simultaneous-application",
+    "simultaneous-special",
+    "simultaneous-substitution",
+    "simultaneous-elimination",
+    "simultaneous-application",
+    "simultaneous-special",
+  ]);
+  for (const kind of new Set(problems.map(({ kind }) => kind))) {
+    assert.equal(problems.filter((problem) => problem.kind === kind).length, 2);
+  }
 });
 
 test("연립방정식은 두 식이나 등식의 좌우만 바꾼 문제를 학복으로 세지 않는다", () => {
@@ -200,8 +192,8 @@ test("오답 보충은 서로 다른 유형에서 최대 두 문제만 만든다
   assert.ok(reviews.every(({ difficulty }) => difficulty === "advanced"));
 });
 
-test("중학교 필수 목록 48개는 쉬운 유형을 통합하고 모두 연결된다", () => {
-  assert.equal(middleSchoolWorksheetCatalog.length, 48);
+test("중학교 필수 목록 40개는 쉬운 유형을 통합하고 모두 연결된다", () => {
+  assert.equal(middleSchoolWorksheetCatalog.length, 40);
   assert.ok(middleSchoolWorksheetCatalog.every(({ route }) => route !== null));
   assert.equal(
     new Set(middleSchoolWorksheetCatalog.map(({ name }) => name)).size,
@@ -215,6 +207,7 @@ test("중학교 필수 목록 48개는 쉬운 유형을 통합하고 모두 연�
 
 test("통합된 쉬운 학등 학습지는 목록에서 별도 페이지로 학복 노출하지 않는다", () => {
   const routes = middleSchoolWorksheetCatalog.map(({ route }) => route);
+  assert.ok(!routes.some((route) => route?.includes("linear-expression")));
   assert.ok(!routes.some((route) => route?.includes("linear-equation-application")));
   assert.ok(!routes.some((route) => route?.includes("kind=square-roots-real")));
   assert.ok(!routes.some((route) => route?.includes("kind=roots-and-squares")));

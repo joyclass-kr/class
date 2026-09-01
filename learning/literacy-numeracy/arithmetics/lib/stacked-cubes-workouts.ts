@@ -17,8 +17,9 @@ export const GRID_SIZE = 3;
 export const MAX_HEIGHT = 3;
 
 const KIND_PLAN: StackKind[] = [
-  "three-view", "count", "count", "count-map", "count-map",
-  "three-view", "count", "count", "count-map", "count-map",
+  "three-view", "three-view",
+  "count", "count", "count", "count",
+  "count-map", "count-map", "count-map", "count-map",
 ];
 
 function random(seed: number) {

@@ -9847,7 +9847,7 @@ main {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: repeat(5, minmax(0, 1fr));
-  grid-auto-flow: column;
+  grid-auto-flow: row;
   gap: 8px;
   margin-top: 12px;
   overflow: hidden;
@@ -9905,7 +9905,7 @@ main {
 }
 
 .stack-view-body .stacked-cubes-diagram {
-  width: 80px;
+  width: 100px;
 }
 
 .stacked-cube-face {
@@ -10001,8 +10001,8 @@ main {
 }
 
 .stack-view-grid {
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   display: grid;
   border: 1.5px solid #928979;
   border-radius: 4px;
@@ -10029,7 +10029,7 @@ main {
 
 .stack-view small {
   color: #7c7468;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
 }
 

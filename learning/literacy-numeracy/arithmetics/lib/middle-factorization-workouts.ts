@@ -56,7 +56,7 @@ export const MIDDLE_FACTORIZATION_TITLES: Record<MiddleFactorizationKind, string
   "cubic-grouping": "인수분해: 3차식 묶어내기",
   "cubic-sum-difference": "인수분해: 세제곱의 합과 차",
   "normalize-first": "인수분해: 식 정리 후 인수분해",
-  comprehensive: "인수분해 종합",
+  comprehensive: "인수분해",
 };
 
 const MIDDLE_FACTORIZATION_LABELS: Record<MiddleFactorizationKind, string> = {
@@ -72,7 +72,7 @@ const MIDDLE_FACTORIZATION_LABELS: Record<MiddleFactorizationKind, string> = {
   "cubic-grouping": "3차식 묶어내기",
   "cubic-sum-difference": "세제곱의 합과 차",
   "normalize-first": "식 정리 후 인수분해",
-  comprehensive: "인수분해 종합",
+  comprehensive: "인수분해",
 };
 
 const MIDDLE_FACTORIZATION_SOLUTION_HINTS: Record<MiddleFactorizationKind, string> = {
