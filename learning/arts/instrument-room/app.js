@@ -153,6 +153,10 @@
         "linn-machine": AD2_DRUM_ARTICULATIONS
     };
 
+    // The official XLN Audio AD2 keymap assigns note 49 to HiHat Closed 1 Tip.
+    // Keep this revision in the URL so a previously cached, mis-mapped hat cannot survive a remap.
+    const AD2_DRUM_SAMPLE_REVISION = "20260901-ad2-note49-v1";
+
     const DRUM_SAMPLE_SETS = Object.freeze({
         "rock-kit": Object.freeze({ id: "drums-rock", root: "assets/audio/drums-rock/", gainDb: Object.freeze({ crash: 9.3, ghost: 2.1, hat: 23.4, hightom: 10.5, kick: 1.4, lowtom: 5.9, midtom: 2.8, openhat: 15.2, pedalhat: 19.6, ride: 18.7, ridebell: 11.1, rimclick: 20.2, rimshot: 1.7, sidestick: 14.2, snare: 2 }) }),
         "metal-kit": Object.freeze({ id: "drums-metal", root: "assets/audio/drums-metal/", gainDb: Object.freeze({ crash: 9.6, ghost: 0.8, hat: 22.5, hightom: 1.3, kick: -2.4, lowtom: 2.5, midtom: -0.2, openhat: 7, pedalhat: 22.6, ride: 10.6, ridebell: 4.7, rimclick: 6.9, rimshot: -3.1, sidestick: -1, snare: 0.7 }) }),
@@ -1043,7 +1047,8 @@
         const key = config.id + ":" + id;
         if (state.drumSamples.has(key)) return Promise.resolve({ buffer: state.drumSamples.get(key), sampleSet: config.id, id });
         if (state.drumSampleLoads.has(key)) return state.drumSampleLoads.get(key);
-        const task = fetch(config.root + id + ".ogg")
+        const ad2Revision = config.id.startsWith("drums-") ? "?v=" + AD2_DRUM_SAMPLE_REVISION : "";
+        const task = fetch(config.root + id + ".ogg" + ad2Revision)
             .then(function (response) { if (!response.ok) throw new Error(response.url); return response.arrayBuffer(); })
             .then(function (data) { return context.decodeAudioData(data); })
             .then(function (buffer) {
