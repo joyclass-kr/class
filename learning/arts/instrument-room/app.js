@@ -245,8 +245,8 @@
             { id: "pipe-organ", name: "파이프오르간", tag: "ORGAN · PIPE", engine: "piano", stage: "organ", art: "assets/instruments/keyboard-pipe-organ.webp", badge: "61-NOTE SOURCE · EXTENDED", model: "PIPE ORGAN", range: [21, 108], description: "C2–C7 파이프오르간 원음을 바탕으로 88건반 전체를 연주해요." }
         ],
         strings: [
-            { id: "p-bass", name: "P-Style 4", tag: "ELECTRIC BASS", engine: "bass", stage: "bass", art: "assets/instruments/bass-p-style.png", badge: "FINGER · PICK · SLAP", model: "P-STYLE 4", range: [28, 67], size: "전체 길이 약 116 cm", visualScale: .82, scalePercent: 64, description: "P-Style 베이스의 핑거·피크·슬랩 원음을 주법 버튼으로 바꾸어 연주해요." },
-            { id: "j-bass", name: "J-Style 4", tag: "ELECTRIC BASS", engine: "bass", stage: "bass", art: "assets/instruments/bass-j-style.png", badge: "FINGER · PICK · SLAP", model: "J-STYLE 4", range: [28, 67], size: "전체 길이 약 117 cm", visualScale: .83, scalePercent: 65, description: "J-Style 베이스의 핑거·피크·슬랩 원음을 주법 버튼으로 바꾸어 연주해요." },
+            { id: "p-bass", name: "P-Style 4", tag: "ELECTRIC BASS", engine: "bass", stage: "bass", art: "assets/instruments/bass-p-style.png", badge: "FINGER · PICK · SLAP", model: "P-STYLE 4", range: [28, 67], size: "전체 길이 약 116 cm", visualScale: .82, scalePercent: 64, description: "P-Style은 Fender Precision Bass에서 유래한 계열명입니다. 전용 핑거·피크·슬랩 원음을 주법별로 연주해요." },
+            { id: "j-bass", name: "J-Style 4", tag: "ELECTRIC BASS", engine: "bass", stage: "bass", art: "assets/instruments/bass-j-style.png", badge: "FINGER · PICK · SLAP", model: "J-STYLE 4", range: [28, 67], size: "전체 길이 약 117 cm", visualScale: .83, scalePercent: 65, description: "J-Style은 Fender Jazz Bass에서 유래한 계열명입니다. 전용 핑거·피크·슬랩 원음을 주법별로 연주해요." },
             { id: "active-bass", name: "Modern Active 5", tag: "ELECTRIC BASS", engine: "bass", stage: "bass", art: "assets/instruments/bass-active-five.png", badge: "FINGER · PICK · SLAP", model: "MODERN ACTIVE 5", range: [23, 72], size: "전체 길이 약 118 cm", visualScale: .84, scalePercent: 66, description: "5현 액티브 베이스의 핑거·피크·슬랩 원음을 낮은 B음부터 연주해요." },
             { id: "fretless-bass", name: "Fretless 4", tag: "ELECTRIC BASS", engine: "bass", stage: "bass", art: "assets/instruments/bass-fretless.png", badge: "FINGER · PICK · SLAP", model: "FRETLESS 4", range: [28, 67], size: "전체 길이 약 116 cm", visualScale: .82, scalePercent: 64, description: "프렛리스 베이스의 핑거·피크·슬랩 원음을 주법별로 바꾸어 연주해요." },
             { id: "upright-bass", name: "콘트라베이스", tag: "ORCHESTRAL", engine: "guitar", stage: "classical", art: "assets/instruments/double-bass-expressive.png", badge: "57-NOTE SUSTAIN · 57-NOTE PIZZ", model: "DOUBLE BASS", range: [52, 108], size: "전체 높이 약 180 cm", visualScale: 1, scalePercent: 100, expression: "보우 압력", description: "콘트라베이스 서스테인과 피치카토를 실제 샘플로 바꾸어 연주해요." },
@@ -1921,6 +1921,11 @@
     function renderClassicalArticulations(model) {
         const box = elements.classicalArticulationButtons;
         box.innerHTML = "";
+        const expressive = Boolean(model.expressive) || ["classical", "wind", "brass"].includes(model.stage);
+        if (!expressive) {
+            elements.classicalArticulationHint.textContent = "";
+            return;
+        }
         const bowed = ["violin", "viola", "cello", "upright-bass"].includes(model.id);
         const plucked = model.id === "harp" || ["gayageum", "gayageum-25", "geomungo", "yanggeum"].includes(model.id);
         const koreanBowed = ["haegeum", "ajaeng"].includes(model.id);

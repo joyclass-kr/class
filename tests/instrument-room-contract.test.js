@@ -409,6 +409,25 @@ test('Korean folk percussion exposes each instrument and official articulation a
   assert.match(app, /decodedBufferPeak\(sample\.buffer\)/);
   assert.match(css, /user-select: none/);
 });
+test('keeps the recorded bass finger articulation active on first model selection', () => {
+  const start = app.indexOf('function renderClassicalArticulations(model)');
+  const end = app.indexOf('function renderSoundPresets()', start);
+  const articulationRenderer = app.slice(start, end);
+  assert.ok(start >= 0 && end > start);
+  assert.match(articulationRenderer, /const expressive = Boolean\(model\.expressive\)/);
+  assert.ok(articulationRenderer.indexOf('if (!expressive)') < articulationRenderer.indexOf('state.articulation = options[0][0]'));
+  assert.match(app, /state\.currentModel\.id \+ "-" \+ state\.articulation/);
+});
+
+test('explains the model-name origins for P, J, and guitar styles', () => {
+  assert.match(app, /P-Style은 Fender Precision Bass에서 유래한 계열명/);
+  assert.match(app, /J-Style은 Fender Jazz Bass에서 유래한 계열명/);
+  assert.match(detailSource, /P는 Fender가 1951년에 선보인 Precision Bass/);
+  assert.match(detailSource, /J는 Fender가 1960년에 선보인 Jazz Bass/);
+  assert.match(detailSource, /S-Style의 S는 Fender가 1954년에 선보인 Stratocaster/);
+  assert.match(detailSource, /Superstrat은 Fender Stratocaster 계열/);
+  assert.match(detailSource, /C\. F\. Martin이 1916년 Oliver Ditson을 위해 만든/);
+});
 test('string and expressive families expose virtual-instrument presentation', () => {
   for (const model of ['p-bass', 's-style', 'metal-seven', 'dreadnought', 'upright-bass', 'violin', 'harp', 'flute', 'contrabassoon', 'trumpet', 'piccolo-trumpet', 'flugelhorn', 'euphonium']) {
     assert.match(app, new RegExp(`id: "${model}"`));
