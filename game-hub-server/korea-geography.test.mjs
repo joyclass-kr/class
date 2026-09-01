@@ -23,6 +23,11 @@ assert.match(styles, /grid-template-columns: minmax\(0, 1\.7fr\) minmax\(320px, 
 
 assert.match(app, /korean-museum\/data\/skorea-provinces-topo-simple\.json/);
 assert.match(app, /voyager_nolabels/);
+assert.match(app, /World_Hillshade/);
+assert.match(dataSource, /relief: true/);
+assert.match(dataSource, /featureMarkers: false/);
+assert.doesNotMatch(dataSource, /name: "태백산맥", kind: "mountain", coords/);
+assert.doesNotMatch(dataSource, /name: "한강", kind: "river", coords/);
 assert.match(app, /localStorage\.setItem\(PROGRESS_KEY/);
 assert.match(app, /shuffle\(pool\)\.slice\(0, 5\)/);
 

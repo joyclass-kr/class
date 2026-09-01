@@ -15,21 +15,23 @@
       legend: [
         { label: "산맥", color: "#8b5a2b" },
         { label: "하천", color: "#2377b7" },
-        { label: "지형 핵심", color: "#bd5b34" }
+        { label: "음영기복", color: "#6f8a68" }
       ],
-      lines: [
-        { name: "태백산맥", kind: "mountain", coords: [[38.25, 128.18], [37.75, 128.48], [37.15, 128.58], [36.55, 129.03], [35.85, 129.15]], color: "#8b5a2b" },
-        { name: "소백산맥", kind: "mountain", coords: [[37.05, 128.55], [36.75, 128.12], [36.30, 127.95], [35.85, 127.68], [35.25, 127.63]], color: "#a56c38" },
-        { name: "한강", kind: "river", coords: [[37.20, 128.75], [37.32, 128.10], [37.52, 127.55], [37.53, 127.05], [37.58, 126.78]], color: "#2377b7" },
-        { name: "낙동강", kind: "river", coords: [[36.95, 128.75], [36.45, 128.65], [35.95, 128.45], [35.45, 128.60], [35.12, 128.93]], color: "#2377b7" },
-        { name: "금강", kind: "river", coords: [[36.08, 127.65], [36.35, 127.40], [36.45, 127.05], [36.10, 126.72]], color: "#3b8bc5" },
-        { name: "영산강", kind: "river", coords: [[35.35, 126.98], [35.15, 126.85], [34.83, 126.54]], color: "#3b8bc5" }
+      relief: true,
+      featureMarkers: false,
+      annotations: [
+        { name: "태백산맥", kind: "mountain", lat: 37.22, lng: 128.78 },
+        { name: "소백산맥", kind: "mountain", lat: 36.20, lng: 128.03 },
+        { name: "한강", kind: "river", lat: 37.47, lng: 127.48 },
+        { name: "금강", kind: "river", lat: 36.28, lng: 127.05 },
+        { name: "낙동강", kind: "river", lat: 35.82, lng: 128.47 },
+        { name: "영산강", kind: "river", lat: 35.05, lng: 126.68 }
       ],
       features: [
-        { name: "태백산맥", icon: "⛰", color: "#8b5a2b", lat: 37.25, lng: 128.72, zoom: 8, note: "동해안 가까이 뻗은 1차 산맥" },
-        { name: "대관령", icon: "↗", color: "#a56c38", lat: 37.69, lng: 128.75, zoom: 10, note: "영서와 영동을 잇는 고개" },
-        { name: "제주 화산 지형", icon: "🌋", color: "#bd5b34", lat: 33.38, lng: 126.53, zoom: 9, note: "한라산·오름·용암 동굴" },
-        { name: "한반도 서남해안", icon: "〰", color: "#277a8f", lat: 35.05, lng: 126.25, zoom: 8, note: "복잡한 해안선과 넓은 갯벌" }
+        { name: "태백산맥", icon: "▲", color: "#8b5a2b", lat: 37.25, lng: 128.72, zoom: 8, note: "동해안 가까이 뻗은 1차 산맥" },
+        { name: "대관령", icon: "고", color: "#a56c38", lat: 37.69, lng: 128.75, zoom: 10, note: "영서와 영동을 잇는 고개" },
+        { name: "제주 화산 지형", icon: "火", color: "#bd5b34", lat: 33.38, lng: 126.53, zoom: 9, note: "한라산·오름·용암 동굴" },
+        { name: "한반도 서남해안", icon: "灣", color: "#277a8f", lat: 35.05, lng: 126.25, zoom: 8, note: "복잡한 해안선과 넓은 갯벌" }
       ]
     },
     climate: {

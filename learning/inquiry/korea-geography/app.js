@@ -66,10 +66,16 @@
 
   function initMaps() {
     mainMap = createBaseMap("map", { zoomControl: true });
+    mainMap.createPane("reliefPane");
+    mainMap.getPane("reliefPane").style.zIndex = "220";
+    mainMap.getPane("reliefPane").style.pointerEvents = "none";
     mainMap.createPane("themeZones");
     mainMap.getPane("themeZones").style.zIndex = "420";
     mainMap.createPane("themeLines");
     mainMap.getPane("themeLines").style.zIndex = "450";
+    mainMap.createPane("themeLabels");
+    mainMap.getPane("themeLabels").style.zIndex = "580";
+    mainMap.getPane("themeLabels").style.pointerEvents = "none";
     mainMap.createPane("studyMarkers");
     mainMap.getPane("studyMarkers").style.zIndex = "610";
     mainMap.createPane("adminLabels");
@@ -82,10 +88,16 @@
     fitKorea(mainMap);
 
     questionMap = createBaseMap("questionMap", { zoomControl: false, attributionControl: false, dragging: true });
+    questionMap.createPane("reliefPane");
+    questionMap.getPane("reliefPane").style.zIndex = "220";
+    questionMap.getPane("reliefPane").style.pointerEvents = "none";
     questionMap.createPane("themeZones");
     questionMap.getPane("themeZones").style.zIndex = "420";
     questionMap.createPane("themeLines");
     questionMap.getPane("themeLines").style.zIndex = "450";
+    questionMap.createPane("themeLabels");
+    questionMap.getPane("themeLabels").style.zIndex = "580";
+    questionMap.getPane("themeLabels").style.pointerEvents = "none";
     questionMap.createPane("studyMarkers");
     questionMap.getPane("studyMarkers").style.zIndex = "610";
     questionBoundaryLayer = L.layerGroup().addTo(questionMap);
@@ -271,15 +283,23 @@
 
   function drawThemeOnMap(map, group, theme, interactive) {
     group.clearLayers();
+    if (theme.relief) {
+      L.tileLayer("https://services.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}", {
+        pane: "reliefPane",
+        opacity: 0.28,
+        maxZoom: 16,
+        attribution: "Terrain &copy; Esri"
+      }).addTo(group);
+    }
     (theme.zones || []).forEach((zone) => {
       const polygon = L.polygon(zone.coords, {
         pane: "themeZones",
         color: zone.color,
-        weight: 1.6,
-        opacity: 0.8,
+        weight: 1.1,
+        opacity: 0.66,
         fillColor: zone.color,
-        fillOpacity: 0.18,
-        dashArray: "5 5",
+        fillOpacity: 0.12,
+        dashArray: "4 5",
         interactive
       }).addTo(group);
       if (interactive) polygon.bindTooltip(zone.name, { sticky: true, className: "study-tooltip" });
@@ -288,21 +308,34 @@
       const polyline = L.polyline(line.coords, {
         pane: "themeLines",
         color: line.color,
-        weight: line.kind === "river" ? 4 : 5,
-        opacity: 0.86,
-        dashArray: line.kind === "transport" ? "10 7" : null,
+        weight: line.kind === "transport" ? 2.2 : 2,
+        opacity: 0.68,
+        dashArray: line.kind === "transport" ? "7 7" : null,
         lineCap: "round",
+        lineJoin: "round",
         interactive
       }).addTo(group);
       if (interactive) polyline.bindTooltip(line.name, { sticky: true, className: "study-tooltip" });
     });
-    (theme.features || []).forEach((feature) => {
-      const marker = createStudyMarker(feature, false, interactive).addTo(group);
-      if (interactive) {
-        marker.bindTooltip(`${feature.name} · ${feature.note}`, { direction: "top", offset: [0, -15], className: "study-tooltip" });
-        marker.on("click", () => focusFeature(feature));
-      }
-    });
+    if (interactive) {
+      (theme.annotations || []).forEach((annotation) => {
+        const icon = L.divIcon({
+          className: "geo-annotation-wrapper",
+          html: `<span class="geo-annotation geo-annotation--${annotation.kind}">${annotation.name}</span>`,
+          iconSize: [0, 0]
+        });
+        L.marker([annotation.lat, annotation.lng], { icon, pane: "themeLabels", interactive: false }).addTo(group);
+      });
+    }
+    if (theme.featureMarkers !== false) {
+      (theme.features || []).forEach((feature) => {
+        const marker = createStudyMarker(feature, false, interactive).addTo(group);
+        if (interactive) {
+          marker.bindTooltip(`${feature.name} · ${feature.note}`, { direction: "top", offset: [0, -15], className: "study-tooltip" });
+          marker.on("click", () => focusFeature(feature));
+        }
+      });
+    }
   }
 
   function createStudyMarker(feature, focused, interactive) {
