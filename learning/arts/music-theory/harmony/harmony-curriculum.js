@@ -6,8 +6,9 @@
   }
 
   const strands = [
-    { id:"fundamentals", title:"기초악전", description:"오선과 음이름, 음자리표, 음표와 쉼표, 박자, 음계와 조표를 단계별로 익힙니다.", skills:["NOTATION_BASICS","STAFF_PITCH","RHYTHM_NOTATION","KEY_MAP"] },
+    { id:"fundamentals", title:"기초악전", description:"오선과 음이름, 음자리표, 음표와 쉼표, 박자표를 악보 읽기의 순서대로 익힙니다.", skills:["NOTATION_BASICS","STAFF_PITCH","RHYTHM_NOTATION"] },
     { id:"interval", title:"음정", description:"도수와 반음 수를 따로 계산하고 완전·장·단·증·감과 전위를 충분히 연습합니다.", skills:["INTERVAL_SPELLING"] },
+    { id:"scale-basics", title:"음계와 조표 기초", description:"악보 읽기를 마친 뒤 장음계의 음 순서와 조표가 생기는 이유를 천천히 익힙니다.", skills:["KEY_MAP"] },
     { id:"chord-language", title:"화음의 구성", description:"3화음·7화음·코드 기호·전위를 실제 음과 소리로 연결합니다.", skills:["TRIAD_BUILD","SYMBOL_READ","QUALITY_HEAR","SLASH_BASS","SEVENTH_BUILD"] },
     { id:"tonal-map", title:"조성과 기능", description:"음계에서 다이어토닉 화음을 만들고 장조와 단조의 기능을 익힙니다.", skills:["DIATONIC_BUILD","MINOR_HARMONY","FUNCTION_HEAR"] },
     { id:"part-writing", title:"성부 연결", description:"각 성부의 선율, 비화성음, 가이드톤을 자연스럽게 연결합니다.", skills:["VOICE_LEAD","PART_WRITING","NON_CHORD_TONES","GUIDE_TONE"] },
@@ -266,7 +267,7 @@
     },
 
     KEY_MAP: {
-      title:"장음계의 순서와 조표 읽기",english:"Read Major Scales and Key Signatures",summary:"장음계의 온음·반음 순서와 이끎음을 먼저 익히고, 그 결과로 생기는 조표를 읽습니다.",
+      title:"장음계와 조표의 기초",english:"Learn Major Scales and Key Signatures",summary:"도레미 음의 순서와 온음·반음부터 익힌 뒤, 조표가 왜 생기는지 읽습니다.",
       outcome:"주어진 장조의 음을 악보와 건반에서 선택하고 조표의 변화음이 생기는 이유를 설명합니다.",prereqs:["RHYTHM_NOTATION"],tags:["조표","음계","건반 지도"],
       terms:[["으뜸음","조의 중심음"],["이끎음","으뜸음 반음 아래의 7음"],["조표","곡 전체에 적용되는 변화표"]],
       sections:[
@@ -542,7 +543,7 @@
 
   skills.INTERVAL_NUMBER = {
     title:"음정의 도수 세기",english:"Count Interval Numbers",summary:"오선의 줄과 칸, 두 음이름을 양 끝까지 세어 1도부터 8도의 도수를 정확히 찾습니다.",
-    outcome:"상행·하행·같은 음의 두 음을 보고 방향과 도수를 말하며 건반에서도 같은 거리를 찾습니다.",prereqs:["KEY_MAP"],tags:["도수","상행·하행","오선 세기"],
+    outcome:"상행·하행·같은 음의 두 음을 보고 방향과 도수를 말하며 건반에서도 같은 거리를 찾습니다.",prereqs:["RHYTHM_NOTATION"],tags:["도수","상행·하행","오선 세기"],
     terms:[["음정","두 음 사이의 높이 관계"],["도수","두 음이름을 양 끝 포함해 센 수"],["1도","같은 음이름끼리의 거리"],["8도","같은 음이름이 한 옥타브 떨어진 거리"]],
     sections:[
       {label:"1차시 · 세기",title:"도수는 출발음과 도착음을 모두 포함해 셉니다",body:["C에서 E는 C–D–E처럼 출발 C와 도착 E를 모두 세므로 3도입니다. 사이의 D만 세어 1도라고 하지 않습니다.","오선에서는 줄과 칸을 한 자리씩 번갈아 이동합니다. 변화표는 도수를 바꾸지 않으므로 C–E♭도 여전히 3도입니다."],takeaway:"두 음이름을 양 끝 포함해 세고, 변화표는 다음 단계에서 확인합니다.",visual:"interval-spelling",audioOptions:[{label:"C–E, 3도",groups:[[60],[64]]},{label:"C–A, 6도",groups:[[60],[69]]}],worked:{title:"D–B의 도수 세기",steps:["출발 D를 1로 둡니다.","D–E–F–G–A–B를 차례로 셉니다.","도착 B가 여섯 번째인지 확인합니다."],answer:"D–B는 6도입니다."},mistake:"두 음 사이에 낀 음만 세면 실제 도수보다 항상 하나 작아집니다."},
