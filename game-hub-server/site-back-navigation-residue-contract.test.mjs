@@ -35,6 +35,14 @@ test("in-activity navigation controls remain available", () => {
 test("client-rendered legacy navigation is observed and hidden", () => {
   assert.match(navigation, /new MutationObserver/);
   assert.match(navigation, /mutation\.addedNodes/);
-  assert.match(navigation, /attributeFilter: \["aria-label"\]/);
+  assert.match(navigation, /attributeFilter: \["aria-label", "hidden"\]/);
   assert.match(navigation, /\[data-site-back-legacy\]\{display:none!important\}/);
+});
+
+test("top rows collapse when legacy navigation is their only content", () => {
+  assert.match(navigation, /hasMeaningfulContainerContent/);
+  assert.match(navigation, /container\.toggleAttribute\("data-site-back-empty"/);
+  assert.match(navigation, /\[data-site-back-empty\]\{display:none!important\}/);
+  assert.match(navigation, /characterData: true/);
+  assert.match(navigation, /attributeFilter: \["aria-label", "hidden"\]/);
 });

@@ -8,6 +8,9 @@
   const LEGACY_LABEL = /^(?:[←‹◀🏠🏡🌌]\s*)?(?:(?:메인(?:\s*(?:페이지|화면))?|홈|학습\s*홈|기초학력(?:\s*목록)?|연산|학생\s*화면|교사\s*메인|교사\s*도구\s*홈|포털\s*(?:메인|홈)|우주\s*관찰\s*(?:메인|홈)|첫\s*화면|(?:게임\s*)?(?:로비|대기실)(?:\s*로)?(?:\s*돌아가기)?|RETURN\s+TO\s+(?:THE\s+)?LOBBY|BACK\s+TO\s+(?:THE\s+)?LOBBY)(?:\s*(?:으)?로)?(?:\s*돌아가기)?)$/i;
   const BACK_LINK_LABEL = /^(?:←|‹|◀)\s*\S/;
   const LEGACY_LINK_SELECTOR = "a.back, a.back-link, a.home, a.home-link, a.counting-back, a.catalog-back";
+  const LEGACY_CONTAINER_SELECTOR = "header, nav, .topbar, .top-bar, .toolbar, .app-header, .page-header";
+  const LEGACY_AUDIO_SELECTOR = ".music-control, .volume-control, .volume-container, .ingame-controls-wrapper, .music, .legacy-music-control";
+  const legacyContainers = new Set();
   const normalizeLabel = value => String(value || "").replace(/\s+/g, " ").trim();
 
   const isLegacyControl = control => {
@@ -19,7 +22,7 @@
   };
 
   const shouldReserveBackSpace = control => {
-    const container = control.closest("header, nav, .topbar, .top-bar, .toolbar, .app-header, .page-header");
+    const container = control.closest(LEGACY_CONTAINER_SELECTOR);
     if (!container) return false;
     const rect = control.getBoundingClientRect();
     const containerRect = container.getBoundingClientRect();
@@ -28,6 +31,8 @@
 
   const hideLegacyControl = control => {
     if (control.dataset.siteBackLegacy === "true" || !isLegacyControl(control)) return;
+    const container = control.closest(LEGACY_CONTAINER_SELECTOR);
+    if (container) legacyContainers.add(container);
     if (shouldReserveBackSpace(control)) control.dataset.siteBackSpacer = "true";
     if (control instanceof HTMLAnchorElement && control.href) {
       try {
@@ -40,6 +45,23 @@
     control.setAttribute("tabindex", "-1");
   };
 
+  const hasMeaningfulContainerContent = container => {
+    const copy = container.cloneNode(true);
+    copy.querySelectorAll(`[data-site-back-legacy], ${LEGACY_AUDIO_SELECTOR}, script, style, template, [hidden]`).forEach(node => node.remove());
+    if (normalizeLabel(copy.textContent)) return true;
+    return Boolean(copy.querySelector("a, button, input, select, textarea, img, svg, canvas, video, iframe, [data-site-back-keep]"));
+  };
+
+  const refreshLegacyContainers = () => {
+    for (const container of legacyContainers) {
+      if (!container.isConnected) {
+        legacyContainers.delete(container);
+        continue;
+      }
+      container.toggleAttribute("data-site-back-empty", !hasMeaningfulContainerContent(container));
+    }
+  };
+
   const hideLegacyControls = root => {
     if (!(root instanceof Element)) return;
     const containingControl = root.closest("a, button");
@@ -48,6 +70,7 @@
   };
 
   hideLegacyControls(document.documentElement);
+  refreshLegacyContainers();
 
   const legacyObserver = new MutationObserver(mutations => {
     for (const mutation of mutations) {
@@ -57,16 +80,18 @@
         else if (node.parentElement) hideLegacyControls(node.parentElement);
       });
     }
+    refreshLegacyContainers();
   });
   legacyObserver.observe(document.body, {
     childList: true,
     subtree: true,
+    characterData: true,
     attributes: true,
-    attributeFilter: ["aria-label"]
+    attributeFilter: ["aria-label", "hidden"]
   });
 
   const legacyStyle = document.createElement("style");
-  legacyStyle.textContent = "[data-site-back-legacy]{display:none!important}[data-site-back-spacer]{display:inline-block!important;visibility:hidden!important;pointer-events:none!important;width:44px!important;min-width:44px!important;height:44px!important;margin:0!important;padding:0!important;flex:0 0 44px!important}";
+  legacyStyle.textContent = "[data-site-back-legacy]{display:none!important}[data-site-back-empty]{display:none!important}[data-site-back-spacer]{display:inline-block!important;visibility:hidden!important;pointer-events:none!important;width:44px!important;min-width:44px!important;height:44px!important;margin:0!important;padding:0!important;flex:0 0 44px!important}";
   document.head.append(legacyStyle);
 
   const host = document.createElement("site-back-navigation");

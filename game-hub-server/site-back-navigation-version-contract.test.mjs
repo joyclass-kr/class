@@ -12,6 +12,6 @@ test("the circular back control bypasses the previous cached asset", () => {
   const musicControl = read("assets/sound/music-control.js");
 
   assert.match(server, /data-site-back-navigation="true"/);
-  assert.match(server, /site-back-navigation\.js\?v=20260825-circle-1/);
-  assert.match(musicControl, /backScriptUrl\.searchParams\.set\("v", "20260825-circle-1"\)/);
+  assert.match(server, /site-back-navigation\.js\?v=20260901-empty-shell-1/);
+  assert.match(musicControl, /backScriptUrl\.searchParams\.set\("v", "20260901-empty-shell-1"\)/);
 });

@@ -16,7 +16,8 @@ test("back control is a small circle inside a 44px touch target", () => {
 
 test("top-left legacy links reserve title-safe space", () => {
   assert.match(navigation, /shouldReserveBackSpace/);
-  assert.match(navigation, /control\.closest\("header, nav, \.topbar/);
+  assert.match(navigation, /LEGACY_CONTAINER_SELECTOR = "header, nav, \.topbar/);
+  assert.match(navigation, /control\.closest\(LEGACY_CONTAINER_SELECTOR\)/);
   assert.match(navigation, /control\.dataset\.siteBackSpacer = "true"/);
   assert.match(navigation, /\[data-site-back-spacer\][^{]*\{[^}]*width:44px!important/);
   assert.match(navigation, /flex:0 0 44px!important/);
