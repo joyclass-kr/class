@@ -698,13 +698,18 @@ function coverPage() {
 
 function spreadPage(chapter, beat, isFirst) {
     const badgeHtml = isFirst ? `<div class="spread-chapter-badge">${chapter.title}</div>` : '';
-    const leftHtml = beat.left.map(p => `<p>${p}</p>`).join('');
-    const rightHtml = beat.right.map(p => `<p>${p}</p>`).join('');
+    const readBtn = (LANG === 'en' && CAN_SPEAK)
+        ? `<button type="button" class="read-btn" id="readBtn">${reading ? '■' : '▶'}</button>`
+        : '';
+    const n = beat.left.length;
+    const leftHtml = beat.left.map((p, i) => `<p data-say="${i}">${p}</p>`).join('');
+    const rightHtml = beat.right.map((p, i) => `<p data-say="${n + i}">${p}</p>`).join('');
     return `
         <div class="page page-story">
             <div class="spread-art">
                 ${badgeHtml}
                 ${artFrame(beat.art, beat.emoji)}
+                ${readBtn}
             </div>
             <div class="spread-text">
                 <div class="spread-text-left">${leftHtml}</div>
@@ -868,6 +873,9 @@ function paint() {
         initQuiz();
     }
 
+    const readBtn = document.getElementById('readBtn');
+    if (readBtn) readBtn.addEventListener('click', () => (reading ? stopReading() : readSpread()));
+
     renderVocab();
     fitVocabScreen();
 }
@@ -898,6 +906,7 @@ function initQuiz() {
 
 function goTo(index) {
     if (animating || index === current || index < 0 || index >= PAGES.length) return;
+    stopReading();
     animating = true;
     const dir = index > current ? 'flip-next' : 'flip-prev';
     spreadEl.classList.add(dir);
@@ -925,6 +934,51 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+
+
+/* ── 읽어 주기 ─────────────────────────────────────────────────
+   펼침면 글을 왼쪽부터 차례로 읽는다. 읽는 문단에 표시가 따라간다.
+   다시 누르면 멈춘다. 쪽을 넘기거나 우리말로 돌아가면 저절로 멈춘다. */
+let reading = false;
+let readToken = 0;
+
+function stopReading() {
+    reading = false;
+    readToken++;
+    if (CAN_SPEAK) { try { speechSynthesis.cancel(); } catch (e) {} }
+    document.querySelectorAll('.saying').forEach(el => el.classList.remove('saying'));
+    const b = document.getElementById('readBtn');
+    if (b) b.textContent = '▶';
+}
+
+function readSpread() {
+    const page = PAGES[current];
+    if (!CAN_SPEAK || !page || page.kind !== 'spread') return;
+    const parts = page.beat.left.concat(page.beat.right);
+    reading = true;
+    const mine = ++readToken;
+    const btn = document.getElementById('readBtn');
+    if (btn) btn.textContent = '■';
+
+    const step = (i) => {
+        if (mine !== readToken) return;
+        document.querySelectorAll('.saying').forEach(el => el.classList.remove('saying'));
+        if (i >= parts.length) { stopReading(); return; }
+        const here = document.querySelector(`[data-say="${i}"]`);
+        if (here) {
+            here.classList.add('saying');
+            // 아래쪽 문단이 칸 밖에 있으면 끌어올린다
+            here.scrollIntoView({ block: 'nearest' });
+        }
+        const u = new SpeechSynthesisUtterance(parts[i].replace(/"/g, ''));
+        u.lang = 'en-US';
+        u.rate = 0.85;
+        u.onend = () => step(i + 1);
+        u.onerror = () => step(i + 1);
+        try { speechSynthesis.speak(u); } catch (e) { stopReading(); }
+    };
+    step(0);
+}
 
 /* ── 단어장 ────────────────────────────────────────────────────
    책 아래에 있는 또 한 장의 화면이다. 책은 손대지 않는다.
@@ -1030,6 +1084,7 @@ window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(
 /* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
 const langBtn = document.getElementById('langLink');
 function applyLang() {
+    if (typeof stopReading === 'function') stopReading();
     document.documentElement.lang = LANG;
     document.title = CV().title;
     if (langBtn) {

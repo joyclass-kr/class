@@ -952,3 +952,46 @@ body {
 html[lang="en"] body {
     font-family: "Roboto Slab", "Noto Serif KR", "Apple SD Gothic Neo", Georgia, serif;
 }
+
+/* 한글 명조는 500이 보통으로 보이지만 슬래브 명조는 500이면 확 두꺼워진다.
+   우리말 쪽과 획 굵기를 맞추려면 영어 글은 400이라야 한다.
+   글 요소마다 500이 따로 걸려 있어서 body 만 내려서는 안 먹는다. */
+html[lang="en"] .spread-text p,
+html[lang="en"] .moral-box p,
+html[lang="en"] .page-cover .story-page-right p,
+html[lang="en"] .page-after p,
+html[lang="en"] .vocab-sent {
+    font-weight: 400;
+}
+
+/* 읽어 주기 — 그림 오른쪽 위. 넘김 단추는 가운데라 겹치지 않는다. */
+.read-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 12;
+    min-width: 46px;
+    min-height: 46px;
+    padding: 0;
+    border: 1px solid rgba(215, 171, 95, 0.55);
+    border-radius: 50%;
+    background: rgba(27, 15, 16, 0.78);
+    color: var(--gold-bright);
+    font-size: 17px;
+    line-height: 1;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+}
+
+.read-btn:hover,
+.read-btn:focus-visible {
+    border-color: var(--gold-bright);
+    background: rgba(92, 58, 34, 0.9);
+}
+
+/* 지금 읽고 있는 문단 */
+.spread-text p.saying {
+    background: rgba(215, 171, 95, 0.3);
+    border-radius: 6px;
+    box-shadow: 0 0 0 4px rgba(215, 171, 95, 0.3);
+}
