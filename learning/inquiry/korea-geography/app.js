@@ -16,6 +16,15 @@
     ["제주", 33.38, 126.53]
   ];
 
+  const RIVER_MOUTHS = {
+    "한강": [37.65, 126.42],
+    "남한강": [37.54, 127.31],
+    "낙동강": [35.10, 128.96],
+    "금강": [36.01, 126.76],
+    "영산강": [34.77, 126.34],
+    "섬진강": [34.94, 127.77]
+  };
+
   let currentTheme = "terrain";
   let provinceFeatures = [];
   let majorRivers = null;
@@ -300,6 +309,54 @@
     $("#mapKey").replaceChildren(...nodes);
   }
 
+  function riverCoordinateLines(geometry) {
+    if (!geometry) return [];
+    if (geometry.type === "LineString") return [geometry.coordinates];
+    if (geometry.type === "MultiLineString") return geometry.coordinates;
+    return [];
+  }
+
+  function riverWidthAt(name, coordinate, maxDistance) {
+    const mouth = RIVER_MOUTHS[name];
+    if (!mouth) return 2;
+    const distanceFromMouth = L.latLng(coordinate[1], coordinate[0]).distanceTo(L.latLng(mouth[0], mouth[1]));
+    const downstreamRatio = 1 - Math.min(1, distanceFromMouth / Math.max(1, maxDistance));
+    const minWidth = name === "남한강" ? 1 : 1.15;
+    const maxWidth = name === "한강" || name === "낙동강" ? 4.8 : name === "남한강" ? 3.7 : 4.2;
+    return minWidth + ((maxWidth - minWidth) * Math.pow(downstreamRatio, 0.78));
+  }
+
+  function drawMajorRivers(group, interactive) {
+    majorRivers.features.forEach((feature) => {
+      const name = feature.properties && feature.properties.name;
+      const mouth = RIVER_MOUTHS[name];
+      const lines = riverCoordinateLines(feature.geometry).filter((line) => Array.isArray(line) && line.length >= 2);
+      if (!mouth || !lines.length) return;
+      const mouthPoint = L.latLng(mouth[0], mouth[1]);
+      const distances = lines.flatMap((line) => line.map((coordinate) => L.latLng(coordinate[1], coordinate[0]).distanceTo(mouthPoint)));
+      const maxDistance = Math.max(1, ...distances);
+
+      lines.forEach((line) => {
+        for (let start = 0; start < line.length - 1; start += 8) {
+          const coordinates = line.slice(start, Math.min(line.length, start + 9));
+          if (coordinates.length < 2) continue;
+          const midpoint = coordinates[Math.floor(coordinates.length / 2)];
+          const weight = riverWidthAt(name, midpoint, maxDistance);
+          const latLngs = coordinates.map((coordinate) => [coordinate[1], coordinate[0]]);
+          L.polyline(latLngs, {
+            pane: "themeLines", color: "#ffffff", weight: weight + 2.4, opacity: 0.8,
+            lineCap: "round", lineJoin: "round", interactive: false, className: "major-river-casing"
+          }).addTo(group);
+          const path = L.polyline(latLngs, {
+            pane: "themeLines", color: "#087eaf", weight, opacity: 0.96,
+            lineCap: "round", lineJoin: "round", interactive, className: "major-river-path"
+          }).addTo(group);
+          if (interactive) path.bindTooltip(name, { sticky: true, className: "river-tooltip" });
+        }
+      });
+    });
+  }
+
   function drawThemeOnMap(map, group, theme, interactive) {
     group.clearLayers();
     if (theme.relief) {
@@ -316,27 +373,7 @@
         attribution: "Hillshade &copy; Esri"
       }).addTo(group);
     }
-    if (theme.rivers && majorRivers) {
-      const riverWidth = (feature) => {
-        const name = feature.properties && feature.properties.name;
-        if (name === "한강" || name === "낙동강") return 3.8;
-        if (name === "남한강") return 2.7;
-        return 3.2;
-      };
-      L.geoJSON(majorRivers, {
-        pane: "themeLines",
-        interactive: false,
-        style: (feature) => ({ color: "#ffffff", weight: riverWidth(feature) + 3, opacity: 0.78, lineCap: "round", lineJoin: "round", className: "major-river-casing" })
-      }).addTo(group);
-      L.geoJSON(majorRivers, {
-        pane: "themeLines",
-        interactive,
-        style: (feature) => ({ color: "#087eaf", weight: riverWidth(feature), opacity: 0.96, lineCap: "round", lineJoin: "round", className: "major-river-path" }),
-        onEachFeature(feature, layer) {
-          if (interactive) layer.bindTooltip(feature.properties.name, { sticky: true, className: "river-tooltip" });
-        }
-      }).addTo(group);
-    }
+    if (theme.rivers && majorRivers) drawMajorRivers(group, interactive);
     (theme.zones || []).forEach((zone) => {
       const polygon = L.polygon(zone.coords, {
         pane: "themeZones",
