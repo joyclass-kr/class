@@ -1445,18 +1445,14 @@
 
   const filterNav = document.getElementById("filterNav");
   const questionsList = document.getElementById("questionsList");
-  const answeredCountEl = document.getElementById("answeredCount");
-  const totalCountEl = document.getElementById("totalCount");
-  const progressFill = document.getElementById("progressFill");
 
   function init() {
     renderFilters();
     renderQuestions();
-    updateProgress();
   }
 
   function renderFilters() {
-    const subjects = ["초3", "초4", "초5", "초6", "중1", "중2", "중3", "공수1", "공수2", "대수", "미적1", "확률과 통계", "기하", "전체"];
+    const subjects = ["초3", "초4", "초5", "초6", "중1", "중2", "중3", "공수1", "공수2", "대수", "미적1", "확률과 통계", "기하"];
     filterNav.innerHTML = subjects
       .map(
         (subj) =>
@@ -1475,9 +1471,6 @@
   }
 
   function getFilteredData() {
-    if (currentSubject === "전체") {
-      return mathOxData;
-    }
     return mathOxData.filter((item) => item.subject === currentSubject);
   }
 
@@ -1497,14 +1490,13 @@
         const selectedChoice = isAnswered ? userState.selectedChoice : null;
 
         const relIndexStr = String(idx + 1).padStart(2, "0");
-        const numberLabel = currentSubject === "전체" ? `문항 ${relIndexStr}` : `${q.subject} 문항 ${relIndexStr}`;
+        const numberLabel = `${q.subject} 문항 ${relIndexStr}`;
 
         return `
           <div class="question-card ${isAnswered ? "answered " + (isCorrect ? "correct" : "wrong") : ""}" id="q-card-${q.id}">
             <div class="card-header">
               <div class="badge-group">
                 <span class="q-number">${numberLabel}</span>
-                <span class="q-subject">${q.subject}</span>
                 <span class="q-topic">${q.topic}</span>
               </div>
             </div>
@@ -1573,19 +1565,8 @@
     answeredState[id] = { selectedChoice: choice, isCorrect };
 
     renderQuestions();
-    updateProgress();
   }
 
-  function updateProgress() {
-    const filtered = getFilteredData();
-    const total = filtered.length;
-    const answered = filtered.filter((q) => answeredState[q.id]).length;
-    const percentage = total > 0 ? Math.round((answered / total) * 100) : 0;
-
-    answeredCountEl.textContent = answered;
-    totalCountEl.textContent = total;
-    progressFill.style.width = `${percentage}%`;
-  }
 
   document.addEventListener("DOMContentLoaded", init);
 })();

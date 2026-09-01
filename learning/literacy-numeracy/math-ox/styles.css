@@ -22,10 +22,12 @@
 
 body {
   min-height: 100vh;
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(79, 70, 229, 0.15) 0%, transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 40%),
-    var(--bg-dark);
+  background-color: var(--bg-dark);
+  background-image: linear-gradient(rgba(7, 10, 24, 0.72), rgba(7, 10, 24, 0.9)), url("/assets/images/math-ox-bg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: var(--text-main);
   font-family: var(--font-sans);
   line-height: 1.5;
@@ -111,47 +113,6 @@ body {
   box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
 }
 
-/* Stats Progress Bar */
-.stats-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--panel-bg);
-  border: 1px solid var(--panel-border);
-  border-radius: 14px;
-  padding: 10px 16px;
-  margin-bottom: 18px;
-  backdrop-filter: blur(10px);
-}
-
-.stats-count {
-  font-size: 14px;
-  color: var(--text-muted);
-}
-
-.stats-count strong {
-  color: var(--accent-gold);
-  font-size: 16px;
-}
-
-.progress-track {
-  flex: 1;
-  max-width: 240px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  overflow: hidden;
-  margin: 0 16px;
-}
-
-.progress-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--accent-cyan), var(--correct-green));
-  border-radius: 4px;
-  transition: width 0.3s ease;
-}
-
 /* Question Card List */
 .questions-list {
   display: flex;
@@ -160,7 +121,7 @@ body {
 }
 
 .question-card {
-  background: var(--panel-bg);
+  background: linear-gradient(rgba(20, 24, 42, 0.9), rgba(20, 24, 42, 0.94)), url("/assets/images/mainbg2.webp") center / cover;
   border: 1px solid var(--panel-border);
   border-radius: 20px;
   padding: 24px;
@@ -195,14 +156,6 @@ body {
   border-radius: 8px;
 }
 
-.q-subject {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--accent-cyan);
-  background: rgba(6, 182, 212, 0.12);
-  padding: 3px 10px;
-  border-radius: 8px;
-}
 
 .q-topic {
   font-size: 13px;
@@ -260,12 +213,12 @@ body {
 /* Answered State Styles */
 .question-card.answered.correct {
   border-color: var(--correct-green);
-  background: linear-gradient(180deg, var(--correct-bg), var(--panel-bg));
+  background: linear-gradient(rgba(22, 70, 50, 0.86), rgba(20, 24, 42, 0.94)), url("/assets/images/mainbg2.webp") center / cover;
 }
 
 .question-card.answered.wrong {
   border-color: var(--wrong-red);
-  background: linear-gradient(180deg, var(--wrong-bg), var(--panel-bg));
+  background: linear-gradient(rgba(88, 34, 48, 0.86), rgba(20, 24, 42, 0.94)), url("/assets/images/mainbg2.webp") center / cover;
 }
 
 .ox-btn.selected-correct {
@@ -369,6 +322,4 @@ body {
   .page-title { font-size: 24px; }
   .question-card { padding: 18px; }
   .q-prompt { font-size: 16px; }
-  .stats-bar { flex-direction: column; gap: 12px; text-align: center; }
-  .progress-track { width: 100%; max-width: 100%; margin: 0; }
 }
