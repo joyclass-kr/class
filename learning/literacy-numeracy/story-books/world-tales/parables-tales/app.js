@@ -1111,25 +1111,45 @@ function coverPage() {
 
 function tocPage(part) {
     // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
-    // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
+    const pageOf = num => {
+        const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === num);
+        return idx >= 0 ? FOLIOS[idx].start : '';
+    };
     const itemHtml = ch => `
         <li>
             <button type="button" data-goto="${ch.num}">
                 <span class="toc-num">${ch.num}</span>
-                <span><strong>${ch.title}</strong></span>
+                <span>
+                    <strong>${ch.title}</strong>
+                    <small>${pageOf(ch.num)}쪽</small>
+                </span>
             </button>
         </li>`;
+    const quizIdx = PAGES.findIndex(p => p.kind === 'quiz');
+    const afterIdx = PAGES.findIndex(p => p.kind === 'after' && p.first);
     const extraItems = `
         <li>
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">?</span>
-                <span><strong>이야기 문제</strong></span>
+                <span>
+                    <strong>이야기 문제</strong>
+                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                </span>
+            </button>
+        </li>
+        <li>
+            <button type="button" data-goto-kind="after">
+                <span class="toc-num">📖</span>
+                <span>
+                    <strong>읽고 나서</strong>
+                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                </span>
             </button>
         </li>`;
     const group = TOC_GROUPS[part];
     const last = part === TOC_GROUPS.length - 1;
-    // '이야기 문제' 줄까지 셈해서 좌우를 고르게 나눈다
-    const half = Math.ceil((group.length + (last ? 1 : 0)) / 2);
+    // '이야기 문제'와 '읽고 나서' 줄까지 셈해서 좌우를 고르게 나눈다
+    const half = Math.ceil((group.length + (last ? 2 : 0)) / 2);
     return `
         <div class="page page-toc">
             <div class="story-page-left">
@@ -1137,6 +1157,7 @@ function tocPage(part) {
                 <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
             </div>
             <div class="story-page-right">
+                ${part === 0 ? '<h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>' : ''}
                 <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
             </div>
         </div>`;

@@ -734,27 +734,45 @@ function coverPage() {
 }
 
 function tocPage() {
+    const pageOf = num => {
+        const idx = PAGES.findIndex(p => p.kind === 'spread' && p.fable.num === num && p.isFirst);
+        return idx >= 0 ? FOLIOS[idx].start : '';
+    };
     const itemHtml = s => `
         <li>
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
                     <strong>${s.title}</strong>
+                    <small>${pageOf(s.num)}쪽</small>
                 </span>
             </button>
         </li>`;
+    const quizIdx = PAGES.findIndex(p => p.kind === 'quiz');
     const quizItemHtml = `
         <li>
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
                     <strong>이야기 문제</strong>
+                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                </span>
+            </button>
+        </li>`;
+    const afterIdx = PAGES.findIndex(p => p.kind === 'after' && p.isFirst);
+    const afterItemHtml = `
+        <li>
+            <button type="button" data-goto-kind="after">
+                <span class="toc-num">📖</span>
+                <span>
+                    <strong>읽고 나서</strong>
+                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
                 </span>
             </button>
         </li>`;
     const half = Math.ceil(FABLES.length / 2);
     const leftItems = FABLES.slice(0, half).map(itemHtml).join('');
-    const rightItems = FABLES.slice(half).map(itemHtml).join('') + quizItemHtml;
+    const rightItems = FABLES.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
@@ -762,6 +780,7 @@ function tocPage() {
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
+                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;

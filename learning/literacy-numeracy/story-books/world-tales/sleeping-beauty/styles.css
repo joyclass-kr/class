@@ -235,11 +235,11 @@ body {
     left: 0;
     z-index: 5;
     max-width: 72%;
-    padding: 7px 18px 8px;
+    padding: 5px 14px 6px;
     border-radius: 0 0 14px 0;
     background: rgba(24, 13, 14, 0.88);
     color: #fff;
-    font-size: clamp(13px, 2.605cqh, 27px);
+    font-size: clamp(12px, 1.9cqh, 19px);
     font-weight: 700;
     letter-spacing: 0.01em;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
@@ -402,6 +402,13 @@ body {
     font-size: clamp(18px, 3.763cqh, 39px);
 }
 
+.toc-h2-ghost { visibility: hidden; }
+
+.page-toc .story-page-left,
+.page-toc .story-page-right {
+    justify-content: flex-start;
+}
+
 .toc-list {
     list-style: none;
     margin: 0;
@@ -445,8 +452,8 @@ body {
     font-weight: 800;
 }
 
-.toc-list strong { font-size: 14.5px; }
-.toc-list small { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+.toc-list strong { font-size: clamp(14px, 2.315cqh, 24px); }
+.toc-list small { display: block; color: var(--muted); font-size: clamp(11px, 1.7cqh, 15px); margin-top: 2px; }
 
 /* 읽고 나서 — 그림 없이 글만 두 칸으로 놓는다. 글씨는 본문과 같은 크기다. */
 .page-after {
