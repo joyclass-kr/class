@@ -627,3 +627,21 @@ body {
     display: inline-block;
     width: 1em;
 }
+
+/* 손가락으로 누르는 자리는 44x44 아래로 내려가지 않는다 (AGENTS.md). */
+.back-link,
+.toc-link,
+.home-btn {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.quiz-choice {
+    min-height: 44px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+}
