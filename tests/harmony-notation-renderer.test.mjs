@@ -66,7 +66,7 @@ for (const key of visualKeys) {
 }
 
 const allowedGrandStaff = new Set([
-  "part-spacing", "voice-ranges", "doubling-rule", "open-close",
+  "grand-staff-bridge", "part-spacing", "voice-ranges", "doubling-rule", "open-close",
   "motion-directions", "similar-parallel", "contrary-oblique",
   "voice-crossing", "parallel-errors", "hidden-perfect",
   "secondary-voices", "secondary-domino"
@@ -77,7 +77,7 @@ for (const key of notation.scoreKeys) {
   assert.doesNotMatch(score, /NaN|undefined/, key + " must render valid notation coordinates");
   if (score.includes('viewBox="0 0 520 184"')) renderedGrandStaff.add(key);
 }
-assert.deepEqual(renderedGrandStaff, allowedGrandStaff, "only explicit SATB and voice-motion lessons may use a grand staff");
+assert.deepEqual(renderedGrandStaff, allowedGrandStaff, "only the grand-staff lesson and explicit SATB or voice-motion lessons may use a grand staff");
 for (const key of ["sequence-cycle","neapolitan-sixth","tonicization-modulation","pivot-modulation","diatonic-sevenths","seventh-family","tension-map","secondary-leading-tone","secondary-targets","secondary-dominant-compare","flat-two-compare","tension-stack"]) {
   assert.doesNotMatch(notation.render(key), /viewBox="0 0 520 184"/, key + " must use one compact theory staff");
 }
@@ -133,7 +133,18 @@ for (const label of ["1줄 E", "1칸 F", "5줄 F"]) assert.match(staffBasics, ne
 
 const noteValues = notation.render("note-values");
 assert.equal((noteValues.match(/class="duration-lane /g) || []).length, 4, "four core note values need aligned duration lanes");
-assert.match(notation.render("rest-values"), /class="rest-pair-grid"/, "rests need their own note-to-rest relationship diagram");
+const restValues = notation.render("rest-values");
+assert.equal((restValues.match(/class="duration-lane /g) || []).length, 4, "rests need the same aligned four-beat duration lanes as notes");
+assert.match(restValues, /온쉼표 1/);
+const meterBasics = notation.render("meter-basics");
+assert.equal((meterBasics.match(/class="meter-score"/g) || []).length, 4, "each meter needs actual beamed notation instead of pulse dots");
+assert.match(meterBasics, /2 \+ 2 \+ 2/);
+assert.match(meterBasics, /3 \+ 3/);
+assert.doesNotMatch(meterBasics, /meter-pulses/, "meter visuals must not be dot-counting cards");
+
+for (const key of ["treble-clef-map","bass-clef-map","grand-staff-bridge"]) {
+  assert.match(notation.render(key), /class="score-svg/, key + " needs a real staff example");
+}
 assert.match(notation.render("key-scale"), /class="concept-diagram fifths-wheel-diagram"/, "key signatures need a circle-of-fifths relationship diagram");
 assert.match(notation.render("roman-transfer"), /class="concept-diagram analysis-symbol-diagram"/, "Roman-numeral harmony analysis needs an explicit symbol key");
 const meters = notation.render("meter-basics");

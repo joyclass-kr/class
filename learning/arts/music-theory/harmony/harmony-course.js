@@ -23,7 +23,10 @@
   const SCORE_SETS = {
     "staff-basics": [["높은음자리표의 다섯 줄과 네 칸",["E4","F4","G4","A4","B4","C5","D5","E5","F5"],["1줄 E","1칸 F","2줄 G","2칸 A","3줄 B","3칸 C","4줄 D","4칸 E","5줄 F"]]],
     "pitch-alphabet": [["음이름은 C에서 B까지 반복됩니다",["C4","D4","E4","F4","G4","A4","B4","C5"],["C(다)","D(라)","E(마)","F(바)","G(사)","A(가)","B(나)","C(다)"]]],
+    "treble-clef-map": [["높은음자리표 줄: E–G–B–D–F",["E4","G4","B4","D5","F5"],["1줄 E","2줄 G","3줄 B","4줄 D","5줄 F"]],["높은음자리표 칸: F–A–C–E",["F4","A4","C5","E5"],["1칸 F","2칸 A","3칸 C","4칸 E"]]],
+    "bass-clef-map": [["낮은음자리표 줄: G–B–D–F–A",["G2","B2","D3","F3","A3"],["1줄 G","2줄 B","3줄 D","4줄 F","5줄 A"]],["낮은음자리표 칸: A–C–E–G",["A2","C3","E3","G3"],["1칸 A","2칸 C","3칸 E","4칸 G"]]],
     "staff-clefs": [["낮은음자리표: C3–G3",["C3","D3","E3","F3","G3"],["C3","D3","E3","F3","G3"]],["높은음자리표: C4–G4",["C4","D4","E4","F4","G4"],["C4","D4","E4","F4","G4"]]],
+    "grand-staff-bridge": [["C3–C4–C5",["C3","C4","C5"]]],
     "enharmonic-spelling": [["C♯로 읽기",["C4","C#4","D4"],["C","C♯","D"]],["D♭로 읽기",["C4","Db4","D4"],["C","D♭","D"]]],
     "interval-spelling": [["장3도",["C4","E4"]],["단3도",["C4","Eb4"]],["증4도",["C4","F#4"]],["감5도",["C4","Gb4"]]],
     "interval-inversion": [["단3도",["C4","Eb4"]],["장6도",["Eb4","C5"]],["완전4도",["C4","F4"]],["완전5도",["F4","C5"]]],
@@ -156,14 +159,14 @@
   }
 
   const SEQUENCE_KEYS = new Set([
-    "staff-basics", "pitch-alphabet", "staff-clefs", "enharmonic-spelling", "part-motion", "nonchord-motion", "suspension-resolution", "minor-scales", "sequence-voices",
+    "staff-basics", "pitch-alphabet", "treble-clef-map", "bass-clef-map", "staff-clefs", "enharmonic-spelling", "part-motion", "nonchord-motion", "suspension-resolution", "minor-scales", "sequence-voices",
     "key-scale", "leading-tone", "roman-transfer", "practice-layers",
     "transpose-map", "transpose-melody", "harmonic-rhythm", "rhythm-density",
     "harmonize-options", "melody-register", "secondary-chain",
     "lead-sheet", "arrangement-layers", "revision-loop"
   ]);
   const GRAND_STAFF_KEYS = new Set([
-    "part-spacing", "voice-ranges", "doubling-rule", "open-close",
+    "grand-staff-bridge", "part-spacing", "voice-ranges", "doubling-rule", "open-close",
     "motion-directions", "similar-parallel", "contrary-oblique",
     "voice-crossing", "parallel-errors", "hidden-perfect",
     "secondary-voices", "secondary-domino"
@@ -360,9 +363,13 @@
       ["quarter","4분음표","4분쉼표","1박"],
       ["eighth","8분음표","8분쉼표","1/2박"]
     ];
-    return '<div class="notation-diagram rest-values-diagram" role="img" aria-label="각 음표와 같은 길이의 쉼표를 일대일로 연결한 표"><div class="rest-pair-grid">'+values.map(function (value) {
-      return '<div class="rest-pair"><div>'+noteValueIcon(value[0])+'<strong>'+value[1]+'</strong></div><span>= <b>'+value[3]+'</b></span><div>'+restValueIcon(value[0])+'<strong>'+value[2]+'</strong></div></div>';
-    }).join("")+'</div><div class="silent-beat-line"><strong>4/4 한 마디</strong><span class="sound">1<br><small>소리</small></span><span class="silent">2<br><small>쉼</small></span><span class="sound">3<br><small>소리</small></span><span class="silent">4<br><small>쉼</small></span><b>박은 멈추지 않음 →</b></div></div>';
+    return '<div class="notation-diagram rest-values-diagram" role="img" aria-label="같은 네 박의 시간 폭에서 온쉼표 하나, 2분쉼표 둘, 4분쉼표 넷, 8분쉼표 여덟의 실제 길이를 비교">'+
+      '<div class="duration-equation"><strong>온쉼표 1</strong><span>=</span><strong>2분쉼표 2</strong><span>=</span><strong>4분쉼표 4</strong><span>=</span><strong>8분쉼표 8</strong></div>'+
+      '<div class="duration-lanes rest-duration-lanes">'+values.map(function (value) {
+        const count = { whole:1, half:2, quarter:4, eighth:8 }[value[0]];
+        return '<div class="duration-lane '+value[0]+'"><div class="duration-label rest-duration-label">'+noteValueIcon(value[0])+'<b>=</b>'+restValueIcon(value[0])+'<span><strong>'+value[2]+'</strong><small>'+value[3]+'씩</small></span></div><div class="duration-track">'+Array.from({ length:count }, function (_, index) { return '<i><b>'+(index+1)+'</b></i>'; }).join("")+'</div></div>';
+      }).join("")+'</div><p class="duration-rule">소리는 사라져도 시간 폭은 그대로입니다. 아래로 갈수록 쉼표 한 개의 길이가 절반이 됩니다.</p>'+
+      '<div class="silent-beat-line"><strong>4/4 한 마디</strong><span class="sound">1<br><small>소리</small></span><span class="silent">2<br><small>쉼</small></span><span class="sound">3<br><small>소리</small></span><span class="silent">4<br><small>쉼</small></span><b>쉼에서도 박은 같은 속도로 계속 흐릅니다 →</b></div></div>';
   }
   function fifthsWheelDiagram() {
     const keys = [
@@ -377,15 +384,38 @@
     }).join("");
     return '<div class="concept-diagram fifths-wheel-diagram" role="img" aria-label="C에서 오른쪽으로 완전5도씩 가면 샵이 하나씩, 왼쪽으로 가면 플랫이 하나씩 늘어나는 오도권"><svg viewBox="0 0 520 310"><circle class="wheel-ring outer" cx="260" cy="154" r="122"/><circle class="wheel-ring inner" cx="260" cy="154" r="70"/>'+nodes+'<g class="wheel-center"><text x="260" y="140">5도권</text><text x="260" y="160">장조 · 관계단조</text><text x="260" y="181">← ♭ 추가 · ♯ 추가 →</text></g></svg><div class="wheel-reading"><span><b>시계 방향</b> C→G→D · 완전5도 위 · ♯ 하나씩</span><span><b>반시계 방향</b> C→F→B♭ · 완전5도 아래 · ♭ 하나씩</span></div></div>';
   }
+  function meterScore(top, bottom, groups) {
+    const total = groups.reduce(function (sum, count) { return sum + count; }, 0);
+    const startX = 74;
+    const endX = 246;
+    const gap = (endX - startX) / Math.max(1, total - 1);
+    let noteIndex = 0;
+    const notes = [];
+    const beams = [];
+    const accents = [];
+    groups.forEach(function (groupSize, groupIndex) {
+      const first = noteIndex;
+      for (let index = 0; index < groupSize; index += 1) {
+        const x = startX + noteIndex * gap;
+        notes.push('<ellipse cx="'+x.toFixed(1)+'" cy="61" rx="6" ry="4" transform="rotate(-18 '+x.toFixed(1)+' 61)"/><line x1="'+(x+5).toFixed(1)+'" y1="60" x2="'+(x+5).toFixed(1)+'" y2="31"/>');
+        noteIndex += 1;
+      }
+      const x1 = startX + first * gap + 5;
+      const x2 = startX + (noteIndex - 1) * gap + 5;
+      beams.push('<line class="meter-beam" x1="'+x1.toFixed(1)+'" y1="31" x2="'+x2.toFixed(1)+'" y2="31"/>');
+      accents.push('<text class="meter-accent" x="'+(startX + first * gap).toFixed(1)+'" y="21">'+(groupIndex === 0 ? '강' : '박')+'</text>');
+    });
+    return '<svg class="meter-score" viewBox="0 0 270 86" aria-hidden="true"><g class="meter-staff"><line x1="18" y1="45" x2="258" y2="45"/><line x1="18" y1="53" x2="258" y2="53"/><line x1="18" y1="61" x2="258" y2="61"/><line x1="18" y1="69" x2="258" y2="69"/><line x1="18" y1="77" x2="258" y2="77"/></g><g class="meter-numbers"><text x="35" y="58">'+top+'</text><text x="35" y="75">'+bottom+'</text></g><g class="meter-notes">'+notes.join("")+beams.join("")+'</g>'+accents.join("")+'</svg>';
+  }
   function meterBasicsDiagram() {
     const meters = [
-      ["2","4","강 · 약",["strong",""]],
-      ["3","4","강 · 약 · 약",["strong","",""]],
-      ["4","4","강 · 약 · 중강 · 약",["strong","","secondary",""]],
-      ["6","8","3개 + 3개",["strong","","","secondary","",""]]
+      ["2","4","2 + 2",[2,2],"두 박 · 각 박을 8분음표 2개로"],
+      ["3","4","2 + 2 + 2",[2,2,2],"세 박 · 각 박을 8분음표 2개로"],
+      ["4","4","2 + 2 + 2 + 2",[2,2,2,2],"네 박 · 각 박을 8분음표 2개로"],
+      ["6","8","3 + 3",[3,3],"큰 두 박 · 각 박을 8분음표 3개로"]
     ];
-    return '<div class="notation-diagram meter-diagram" role="img" aria-label="2분의 4, 3분의 4, 4분의 4, 8분의 6 박자 묶음 비교">'+meters.map(function (meter) {
-      return '<div class="meter-card"><span class="meter-sign"><b>'+meter[0]+'</b><b>'+meter[1]+'</b></span><div class="meter-pulses">'+meter[3].map(function (kind) { return '<i class="'+kind+'"></i>'; }).join("")+'</div><strong>'+meter[2]+'</strong></div>';
+    return '<div class="notation-diagram meter-diagram" role="img" aria-label="실제 8분음표의 빔 묶음으로 2분의 4, 3분의 4, 4분의 4와 8분의 6을 비교">'+meters.map(function (meter) {
+      return '<div class="meter-card"><header><strong>'+meter[0]+'/'+meter[1]+'</strong><span>'+meter[4]+'</span></header>'+meterScore(meter[0], meter[1], meter[3])+'<p><b>'+meter[2]+'</b><span>빔 하나가 한 박의 묶음</span></p></div>';
     }).join("")+'</div>';
   }
   window.HarmonyNotation = {
@@ -801,6 +831,7 @@
     els.constructionLab.className = "construction-lab lab-" + lab.type;
     if (lab.type === "keyboard") renderKeyboardLab(lab);
     else if (lab.type === "aural") renderAuralLab(lab);
+    else if (lab.type === "rhythm") renderRhythmLab(lab);
     else renderProgressionLab(lab);
   }
   function renderKeyboardLab(lab) {
@@ -830,8 +861,8 @@
     byId("constructionLab").querySelector("[data-lab-reference]").addEventListener("click", function () { playGroups([lab.reference]); });
   }
   function renderAuralLab(lab) {
-    els.constructionLab.innerHTML = labHeader(lab) + '<div class="aural-console"><button class="lab-reference aural-play" type="button" id="auralPlay">♪ 문제 다시 듣기</button><div class="aural-choices">'+lab.choices.map(function (choice) { return '<button type="button" data-aural-choice="'+escapeHtml(choice)+'">'+escapeHtml(choice)+'</button>'; }).join("")+'</div><p id="labFeedback" class="lab-feedback" aria-live="polite">소리를 두 번 이상 비교해도 괜찮습니다.</p></div>';
-    byId("auralPlay").addEventListener("click", function () { playGroups(lab.groups); });
+    els.constructionLab.innerHTML = labHeader(lab) + '<div class="aural-console"><button class="lab-reference aural-play" type="button" id="auralPlay">♪ 문제 소리 듣기</button><div class="aural-choices">'+lab.choices.map(function (choice) { return '<button type="button" data-aural-choice="'+escapeHtml(choice)+'">'+escapeHtml(choice)+'</button>'; }).join("")+'</div><p id="labFeedback" class="lab-feedback" aria-live="polite">횟수만 세지 말고 강세와 묶임을 들으세요.</p></div>';
+    byId("auralPlay").addEventListener("click", function () { playGroups(lab.groups, lab); });
     els.constructionLab.querySelectorAll("[data-aural-choice]").forEach(function (button) {
       button.addEventListener("click", function () {
         const correct = button.dataset.auralChoice === lab.answer;
@@ -839,6 +870,46 @@
         setLabFeedback(correct, correct ? lab.success : lab.hint);
       });
     });
+  }
+  function renderRhythmLab(lab) {
+    const optionById = new Map(lab.options.map(function (option) { return [option.id, option]; }));
+    let selected = [];
+    const optionButtons = lab.options.map(function (option) {
+      return '<button type="button" data-rhythm-option="'+escapeHtml(option.id)+'"><b>'+escapeHtml(option.symbol)+'</b><span>'+escapeHtml(option.label)+'</span><small>'+option.beats+'박</small></button>';
+    }).join("");
+    els.constructionLab.innerHTML = labHeader(lab) + '<div class="rhythm-builder"><div class="rhythm-options">'+optionButtons+'</div><div class="rhythm-measure"><strong>4/4</strong><div id="rhythmSequence" class="rhythm-sequence"></div></div><p id="rhythmTotal" class="rhythm-total">선택: 0 / 4박</p><div class="lab-actions"><button class="lab-check" type="button" id="rhythmCheck">마디 확인</button><button class="lab-reset" type="button" id="rhythmReset">다시 만들기</button></div><p id="labFeedback" class="lab-feedback" aria-live="polite">지시된 순서대로 기호를 놓아 정확히 네 박을 채우세요.</p></div>';
+    function redraw() {
+      const options = selected.map(function (id) { return optionById.get(id); });
+      const total = options.reduce(function (sum, option) { return sum + option.beats; }, 0);
+      byId("rhythmSequence").innerHTML = options.map(function (option, index) {
+        return '<span class="rhythm-piece '+(option.silent ? 'is-rest' : 'is-sound')+'" style="--units:'+(option.beats*2)+'" data-rhythm-index="'+index+'"><b>'+escapeHtml(option.symbol)+'</b><small>'+escapeHtml(option.label)+'</small></span>';
+      }).join("");
+      byId("rhythmTotal").textContent = "선택: " + total + " / " + lab.beats + "박";
+      byId("rhythmTotal").className = "rhythm-total " + (total === lab.beats ? "is-complete" : total > lab.beats ? "is-over" : "");
+    }
+    els.constructionLab.querySelectorAll("[data-rhythm-option]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        selected.push(button.dataset.rhythmOption);
+        redraw();
+      });
+    });
+    byId("rhythmSequence").addEventListener("click", function (event) {
+      const piece = event.target.closest("[data-rhythm-index]");
+      if (!piece) return;
+      selected.splice(Number(piece.dataset.rhythmIndex), 1);
+      redraw();
+    });
+    byId("rhythmCheck").addEventListener("click", function () {
+      const correct = selected.length === lab.answer.length && selected.every(function (id, index) { return id === lab.answer[index]; });
+      setLabFeedback(correct, correct ? lab.success : lab.hint);
+    });
+    byId("rhythmReset").addEventListener("click", function () {
+      selected = [];
+      redraw();
+      byId("labFeedback").textContent = "선택을 지웠습니다. 지시된 순서와 총길이를 다시 확인하세요.";
+      byId("labFeedback").className = "lab-feedback";
+    });
+    redraw();
   }
   function renderProgressionLab(lab) {
     const selects = Array.from({ length:lab.slots }, function (_, index) { return '<label><span>'+(index+1)+'마디</span><select class="progression-slot" aria-label="'+(index+1)+'마디 코드"><option value="">코드 선택</option>'+lab.options.map(function (option) { return '<option>'+escapeHtml(option)+'</option>'; }).join("")+'</select></label>'; }).join("");

@@ -39,7 +39,7 @@ for (const [order, id] of listedIds.entries()) {
   assert.ok(Array.isArray(skill.tags) && skill.tags.length >= 2, id + " needs searchable concept tags");
   assert.ok(Array.isArray(skill.terms) && skill.terms.length >= 3, id + " needs defined terms");
   assert.ok(skill.sections.length >= 2, id + " needs more than a one-line explanation");
-  assert.ok(skill.lab && ["keyboard", "aural", "progression"].includes(skill.lab.type), id + " needs a direct activity");
+  assert.ok(skill.lab && ["keyboard", "aural", "rhythm", "progression"].includes(skill.lab.type), id + " needs a direct activity");
   assert.ok(skill.evidence.length >= 3, id + " needs several answerable checks");
 
   for (const prerequisite of skill.prereqs) {
@@ -57,7 +57,7 @@ for (const [order, id] of listedIds.entries()) {
 
 assert.ok(new Set(listedIds.map((id) => curriculum.skills[id].sections.length)).size > 1, "section counts must follow the concept instead of a fixed template");
 assert.ok(new Set(listedIds.map((id) => curriculum.skills[id].evidence.length)).size > 1, "question counts must follow the concept instead of a fixed template");
-assert.deepEqual(new Set(listedIds.map((id) => curriculum.skills[id].lab.type)), new Set(["keyboard", "aural", "progression"]), "the course needs construction, listening, and progression activities");
+assert.deepEqual(new Set(listedIds.map((id) => curriculum.skills[id].lab.type)), new Set(["keyboard", "aural", "rhythm", "progression"]), "the course needs keyboard, listening, rhythm construction, and progression activities");
 
 assert.match(index, /<title>화성학<\/title>/);
 assert.match(index, /harmony-curriculum\.js/);
@@ -73,6 +73,7 @@ assert.doesNotMatch(index + courseSource, /위에서부터 차례로|앞에서�
 assert.doesNotMatch(courseSource, /currentLesson\.textContent\s*=\s*"학습 "/, "the study footer must not present the item count as a fixed session count");
 assert.doesNotMatch(courseSource, /progressText\.textContent\s*=\s*state\.completed\.size\s*\+\s*" \/ "/, "progress must not foreground a fixed total as class periods");
 assert.equal(curriculum.strands[0].title, "기초악전");
+assert.deepEqual(Array.from(curriculum.strands[0].skills), ["NOTATION_BASICS","TREBLE_CLEF","BASS_CLEF","STAFF_PITCH","ACCIDENTAL_READING","RHYTHM_NOTATION","REST_NOTATION","METER_READING"], "fundamentals must teach clefs and duration as independent ordered lessons");
 assert.equal(curriculum.strands[1].title, "음정");
 const intervalLessonIds = ["INTERVAL_NUMBER","INTERVAL_FORM","INTERVAL_SPELLING","INTERVAL_ALTERED","INTERVAL_INVERSION","INTERVAL_COMPOUND","INTERVAL_CONSONANCE","INTERVAL_EAR"];
 assert.deepEqual(Array.from(curriculum.strands[1].skills), intervalLessonIds);

@@ -65,6 +65,15 @@ for (const [id, skill] of Object.entries(curriculum.skills)) {
   } else if (lab.type === "aural") {
     collectGroups(lab.groups, id + " aural activity");
     assert.ok(lab.choices.includes(lab.answer), id + " aural answer is absent");
+  } else if (lab.type === "rhythm") {
+    assert.ok(lab.beats > 0, id + " rhythm activity needs a target measure length");
+    assert.ok(Array.isArray(lab.options) && lab.options.length >= 3, id + " rhythm activity needs several usable symbols");
+    const optionIds = new Set(lab.options.map((option) => option.id));
+    assert.equal(optionIds.size, lab.options.length, id + " rhythm activity has duplicate symbol ids");
+    assert.ok(Array.isArray(lab.answer) && lab.answer.length >= 2, id + " rhythm activity needs one explicit ordered answer");
+    for (const answerId of lab.answer) assert.ok(optionIds.has(answerId), id + " rhythm answer contains an unavailable symbol");
+    const answerBeats = lab.answer.reduce((sum, answerId) => sum + lab.options.find((option) => option.id === answerId).beats, 0);
+    assert.equal(answerBeats, lab.beats, id + " rhythm answer does not fill the target measure");
   } else {
     assert.ok(lab.slots >= 3, id + " progression activity is too small to show a progression");
     assert.ok(lab.accepted.length >= 1, id + " progression activity needs an accepted result");
