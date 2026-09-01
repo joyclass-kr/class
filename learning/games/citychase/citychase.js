@@ -182,6 +182,25 @@
     return `<span class="pawnFaces${controllers.length > 1 ? " shared" : ""}">${faces || '<span class="pawnInitial">?</span>'}</span>`;
   }
 
+  function pawnClusterOffset(node, index, count) {
+    if (count <= 1) return { x: 0, y: 0 };
+    const row = Math.floor(index / 3);
+    const rows = Math.ceil(count / 3);
+    const rowStart = row * 3;
+    const rowCount = Math.min(3, count - rowStart);
+    const column = index - rowStart;
+    const halfSpan = ((rowCount - 1) / 2) * 72;
+    let x = (column - (rowCount - 1) / 2) * 72;
+    let y = (row - (rows - 1) / 2) * 82;
+
+    // 가장자리에서는 첫 말을 원래 칸에 두고 나머지 말과 이름표를 보드 안쪽으로 펼칩니다.
+    if (node.x < 130) x += halfSpan;
+    else if (node.x > 870) x -= halfSpan;
+    if (node.y < 120 && rows > 1) y += ((rows - 1) / 2) * 82;
+    else if (node.y > 880 && rows > 1) y -= ((rows - 1) / 2) * 82;
+    return { x, y };
+  }
+
   function seatDuty(slot, teamSize) {
     if (teamSize === 1) return "말 1·2·3 담당";
     if (teamSize === 2) return slot === 1 ? "말 1 + 말 3 공동" : "말 2 + 말 3 공동";
@@ -398,11 +417,9 @@
         const button = document.createElement("button");
         button.type = "button";
         const choice = state.pending && ["transfer", "rescue"].includes(state.pending.type) && state.pending.options.includes(pawn.id);
-        const offsetX = (index % 3 - Math.min(1, pawns.length - 1)) * 72;
-        const offsetY = Math.floor(index / 3) * 25 - (pawns.length > 3 ? 11 : 0);
-        const showName = pawns.length === 1 || index === 0 || pawn.id === state.turnPawnId || choice;
-        button.className = `pawn ${pawn.team}${pawn.carryingGem ? " carrying" : ""}${pawn.status === "jailed" ? " jailed" : ""}${pawn.id === state.turnPawnId ? " current" : ""}${choice ? " choice" : ""}${showName ? " showName" : ""}`;
-        button.style.cssText = positionStyle(node.x + offsetX, node.y + offsetY);
+        const offset = pawnClusterOffset(node, index, pawns.length);
+        button.className = `pawn ${pawn.team}${pawn.carryingGem ? " carrying" : ""}${pawn.status === "jailed" ? " jailed" : ""}${pawn.id === state.turnPawnId ? " current" : ""}${choice ? " choice" : ""}`;
+        button.style.cssText = positionStyle(node.x + offset.x, node.y + offset.y);
         const controllers = pawnControllers(pawn.id);
         const names = controllers.map(player => player.name).join("·") || `${teamName(pawn.team)}팀`;
         button.innerHTML = `<span class="pawnName">${escapeHtml(names)}</span>${pawnFaceMarkup(controllers)}<span class="pawnNumber">${pawn.number}</span>`;
@@ -528,11 +545,19 @@
     $("actionCard").classList.toggle("hidden", !show);
     if (!show) return;
     const pawn = currentPawn();
+    const controllerNames = state.turnControllers.map(id => playerById(id)?.name).filter(Boolean).join(" · ");
+    const actorLabel = controllerNames || teamName(pawn.team);
     $("pawnTitle").textContent = `${teamName(pawn.team)} ${pawn.number}번 차례${state.canAct ? " · 나" : ""}`;
     $("turnMessage").textContent = state.lastAction;
     $("dieFace").textContent = state.die || "·";
-    $("remainingText").textContent = state.turnMode === "moving" ? `${state.remaining}칸 남음` : state.turnMode === "pending" ? "선택 대기" : pawn.status === "jailed" ? "탈출 주사위" : "주사위 대기";
-    $("movementHint").textContent = state.turnMode === "moving" ? "말판의 빛나는 칸을 누르세요." : state.canAct ? "아래에서 행동을 선택하세요." : "현재 플레이어의 행동을 기다립니다.";
+    $("remainingText").textContent = state.turnMode === "moving"
+      ? `${state.remaining}칸 남음`
+      : state.turnMode === "pending" ? "선택 대기"
+        : pawn.status === "jailed" ? (state.canAct ? "탈출 주사위" : `${actorLabel} 탈출 차례`)
+          : state.canAct ? "내 행동 선택" : `${actorLabel} 행동 중`;
+    $("movementHint").textContent = state.turnMode === "moving"
+      ? "말판의 빛나는 칸을 누르세요."
+      : state.canAct ? "아래에서 행동을 선택하세요." : `${actorLabel}님의 행동을 기다립니다.`;
   }
 
   function makeAction(label, className, handler, disabled = false) {

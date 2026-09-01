@@ -486,7 +486,7 @@ function roll(game, playerId, suppliedRoll) {
   const die = typeof suppliedRoll === "number" ? Math.max(1, Math.min(6, Math.floor(suppliedRoll))) : randomIndex(6) + 1;
   if (pawn.status === "jailed") {
     if (die !== 1) {
-      advanceTurn(game, `도둑 ${pawn.number}번의 탈출 주사위는 ${die}. 1이 아니어서 구금 구역에 남습니다.`);
+      advanceTurn(game, `도둑 ${pawn.number}번이 ${die}을 굴려 탈출에 실패했습니다. 구금 구역에 남습니다.`);
       game.revision += 1;
       return { ok: true, die };
     }
@@ -497,7 +497,7 @@ function roll(game, playerId, suppliedRoll) {
     game.remaining = moveDie;
     game.path = [pawn.position];
     game.turnMode = "moving";
-    game.lastAction = `1이 나와 탈출 성공! 다시 ${moveDie}칸 이동합니다.`;
+    game.lastAction = `도둑 ${pawn.number}번이 탈출했습니다. 이어서 ${moveDie}칸 이동하세요.`;
     game.revision += 1;
     return { ok: true, die, escapeMove: moveDie };
   }

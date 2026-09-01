@@ -117,6 +117,20 @@ assert.equal(rescuer.position, "hideout");
 assert.equal(captive.position, "hideout");
 assert.equal(captive.status, "active", "동료가 구금 구역으로 들어와 구출하면 두 도둑 모두 비밀기지로 돌아와야 합니다.");
 
+const failedEscapeGame = CityChase.createGame("p", "경찰");
+CityChase.addPlayer(failedEscapeGame, "t", "도둑");
+assignSeats(failedEscapeGame);
+CityChase.startGame(failedEscapeGame);
+CityChase.placeSecrets(failedEscapeGame, "p", { gems: ["market", "air"], undercover: "burger" });
+const failedEscapePawn = failedEscapeGame.pawns.find(pawn => pawn.id === "thief-1");
+failedEscapePawn.position = "jail";
+failedEscapePawn.status = "jailed";
+assert.equal(CityChase.roll(failedEscapeGame, "t", 3).ok, true);
+assert.equal(
+  failedEscapeGame.lastAction,
+  "도둑 1번이 3을 굴려 탈출에 실패했습니다. 구금 구역에 남습니다."
+);
+
 const cardGame = CityChase.createGame("p", "경찰");
 CityChase.addPlayer(cardGame, "t", "도둑");
 assignSeats(cardGame);
@@ -191,7 +205,12 @@ assert.match(client, /function playSfx[\s\S]*ClassGameSfx[\s\S]*function showBoa
 assert.match(css, /height: 100dvh; min-height: 0; overflow: hidden/, "가로 화면에서는 게임 전체가 뷰포트 안에 고정되어야 합니다.");
 assert.match(css, /width: min\(100%, calc\(100dvh - 68px\)\)/, "압축된 헤더 아래에서 정사각형 보드를 최대한 크게 보여줘야 합니다.");
 assert.match(css, /\.gameHeader \{[^}]*min-height: 48px/s, "작은 화면의 게임 헤더는 한 줄 48px로 압축해야 합니다.");
-assert.match(client, /const showName = pawns\.length === 1 \|\| index === 0/, "같은 위치의 동일 학생 이름은 한 번만 표시해야 합니다.");
+assert.match(css, /\.pawnName \{ display: block;/, "학생 이름표는 모든 말에서 항상 보여야 합니다.");
+assert.doesNotMatch(css, /\.pawnName \{[^}]*display:\s*none/s, "학생 이름표를 숨기면 안 됩니다.");
+assert.doesNotMatch(client, /showName/, "말이 겹쳐도 학생 이름표를 임의로 숨기면 안 됩니다.");
+assert.match(client, /function pawnClusterOffset[\s\S]*node\.x < 130[\s\S]*node\.x > 870/, "겹친 말과 이름표는 보드 안쪽으로 펼쳐야 합니다.");
+assert.match(css, /@keyframes currentPawnGlow/, "현재 차례 말에는 쉽게 찾을 수 있는 발광 외곽선이 있어야 합니다.");
+assert.match(client, /`\$\{actorLabel\} 행동 중`/, "대기 중에는 누가 행동 중인지 바로 보여야 합니다.");
 assert.doesNotMatch(css, /min-width:\s*(?:820|900)px/, "Chromebook과 iPad에서 보드가 강제로 잘리면 안 됩니다.");
 assert.match(css, /\.boardViewport[^}]*place-items: center[^}]*overflow: hidden/s, "가로 화면 보드는 스크롤 없이 전체가 보여야 합니다.");
 assert.match(css, /\.boardPanel \{ height: auto; aspect-ratio: 1 \/ 1; \}/, "iPad 세로 화면에서도 정사각형 보드 전체를 보여야 합니다.");
