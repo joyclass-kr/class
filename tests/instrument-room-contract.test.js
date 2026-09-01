@@ -249,12 +249,12 @@ test('completed orchestral renders use compact note-grid Ogg samples', () => {
     ['vibraphone', 37, '033_f3.ogg', '069_f6.ogg'],
     ['xylophone', 42, '028_c3.ogg', '069_f6.ogg'],
     ['glockenspiel', 17, '059_g5.ogg', '075_b6.ogg'],
-    ['p-bass-finger', 36, '008_e1.ogg', '043_ds4.ogg'],
-    ['p-bass-pick', 36, '008_e1.ogg', '043_ds4.ogg'],
-    ['p-bass-slap', 35, '008_e1.ogg', '042_d4.ogg'],
-    ['j-bass-finger', 36, '008_e1.ogg', '043_ds4.ogg'],
-    ['j-bass-pick', 35, '008_e1.ogg', '042_d4.ogg'],
-    ['j-bass-slap', 35, '008_e1.ogg', '042_d4.ogg'],
+    ['p-bass-finger-v4', 36, '008_e1.ogg', '043_ds4.ogg'],
+    ['p-bass-pick-v4', 36, '008_e1.ogg', '043_ds4.ogg'],
+    ['p-bass-slap-v4', 35, '008_e1.ogg', '042_d4.ogg'],
+    ['j-bass-finger-v4', 36, '008_e1.ogg', '043_ds4.ogg'],
+    ['j-bass-pick-v4', 35, '008_e1.ogg', '042_d4.ogg'],
+    ['j-bass-slap-v4', 35, '008_e1.ogg', '042_d4.ogg'],
     ['active-bass-finger', 40, '003_b0.ogg', '042_d4.ogg'],
     ['active-bass-pick', 40, '003_b0.ogg', '042_d4.ogg'],
     ['active-bass-slap', 40, '003_b0.ogg', '042_d4.ogg'],
@@ -278,6 +278,17 @@ test('completed orchestral renders use compact note-grid Ogg samples', () => {
     assert.equal(samples[0], first, folder);
     assert.equal(samples.at(-1), last, folder);
   }
+  for (const [articulation, sample] of [
+    ['finger', '008_e1.ogg'],
+    ['pick', '008_e1.ogg'],
+    ['slap', '008_e1.ogg']
+  ]) {
+    const pBass = fs.readFileSync(path.join(root, 'assets', 'audio', `p-bass-${articulation}-v4`, sample));
+    const jBass = fs.readFileSync(path.join(root, 'assets', 'audio', `j-bass-${articulation}-v4`, sample));
+    assert.notDeepEqual(pBass, jBass, `${articulation}: P/J samples must remain distinct`);
+  }
+  assert.match(app, /root: "assets\/audio\/p-bass-finger-v4\/"/);
+  assert.match(app, /root: "assets\/audio\/j-bass-finger-v4\/"/);
   assert.match(app, /isSampledPiano\(\) \|\| state\.instrument === "piano"/);
   assert.match(app, /sampleSet === "hammond-organ"[\s\S]*?"tuba"/);
   assert.match(app, /"contrabassoon"[\s\S]*?"flugelhorn"[\s\S]*?"euphonium"/);
