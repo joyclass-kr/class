@@ -130,9 +130,9 @@ input[type="range"] { width: 100%; height: 20px; margin: 0; accent-color: var(--
 
 .drum-pads { min-height: 224px; padding: 10px; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .drum-pads.extended { grid-template-columns: repeat(5, 1fr); }
-.drum-pad { min-height: 98px; border: 1px solid var(--pad-color, var(--line)); border-radius: 14px; padding: 12px; display: grid; align-content: space-between; text-align: left; background: radial-gradient(circle at 70% 20%, color-mix(in srgb, var(--pad-color) 18%, transparent), transparent 52%), #131c1f; cursor: pointer; touch-action: manipulation; }
+.drum-pad { min-height: 98px; border: 1px solid var(--pad-color, var(--line)); border-radius: 14px; padding: 12px; display: grid; align-content: space-between; text-align: left; background: radial-gradient(circle at 70% 20%, color-mix(in srgb, var(--pad-color) 18%, transparent), transparent 52%), #131c1f; cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
 .drum-pad span { color: var(--pad-color); font-size: 10px; font-weight: 900; letter-spacing: .1em; }.drum-pad b { font-size: 15px; }.drum-pad small { color: var(--muted); font-size: 9px; }
-.drum-pad.active { transform: scale(.97); background: color-mix(in srgb, var(--pad-color) 24%, #101719); box-shadow: 0 0 22px color-mix(in srgb, var(--pad-color) 36%, transparent); }
+.drum-pad.active { transform: scale(.97); background: color-mix(in srgb, var(--pad-color) 24%, #101719); box-shadow: 0 0 22px color-mix(in srgb, var(--pad-color) 42%, transparent); outline: 2px solid var(--pad-color); outline-offset: -3px; filter: brightness(1.16); }
 .drum-pads.korean-articulations .drum-pad { min-height: 72px; padding: 9px 10px; }
 .drum-pads.korean-articulations .drum-pad b { font-size: 13px; line-height: 1.25; }
 
@@ -169,7 +169,7 @@ input[type="range"] { width: 100%; height: 20px; margin: 0; accent-color: var(--
 .browser-title span { color: var(--accent); font-size: 8px; font-weight: 900; letter-spacing: .16em; }
 .browser-title b { margin-top: 3px; font-size: 13px; }
 .korean-room-switch { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; padding: 4px; border: 1px solid rgba(229,255,117,.24); border-radius: 10px; background: #091012; }
-.korean-room-switch button { min-width: 84px; min-height: 44px; padding: 5px 9px; border: 0; border-radius: 7px; background: transparent; color: #8b9995; font-size: 10px; font-weight: 900; cursor: pointer; touch-action: manipulation; }
+.korean-room-switch button { min-width: 84px; min-height: 44px; padding: 5px 9px; border: 0; border-radius: 7px; background: transparent; color: #8b9995; font-size: 10px; font-weight: 900; cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
 .korean-room-switch button.active { background: var(--accent-2); color: #1b2008; box-shadow: 0 0 16px rgba(229,255,117,.13); }
 .model-chooser { display: flex; gap: 7px; overflow-x: auto; padding: 2px 1px 4px; scrollbar-width: thin; scrollbar-color: #3d514c transparent; }
 .model-chooser button { flex: 0 0 auto; min-width: 118px; min-height: 48px; padding: 6px 11px; border: 1px solid var(--line); border-radius: 10px; display: grid; align-content: center; gap: 2px; background: #151f22; text-align: left; cursor: pointer; }
