@@ -268,6 +268,7 @@ test('completed orchestral renders use compact note-grid Ogg samples', () => {
     ['guitar-superstrat', 45, '020_e2.ogg', '064_c6.ogg'],
     ['guitar-hollow', 46, '020_e2.ogg', '065_cs6.ogg'],
     ['guitar-nylon', 45, '020_e2.ogg', '064_c6.ogg'],
+    ['guitar-steel', 29, '020_e2.ogg', '055_ds5.ogg'],
     ['harp', 78, '005_cs1.ogg', '082_fs7.ogg'],
     ['piccolo-trumpet', 49, '032_e3.ogg', '080_e7.ogg']
   ]) {
@@ -397,7 +398,7 @@ test('Korean folk percussion exposes each instrument and official articulation a
   assert.match(css, /user-select: none/);
 });
 test('string and expressive families expose virtual-instrument presentation', () => {
-  for (const model of ['p-bass', 's-style', 'metal-seven', 'upright-bass', 'violin', 'harp', 'flute', 'contrabassoon', 'trumpet', 'piccolo-trumpet', 'flugelhorn', 'euphonium']) {
+  for (const model of ['p-bass', 's-style', 'metal-seven', 'dreadnought', 'upright-bass', 'violin', 'harp', 'flute', 'contrabassoon', 'trumpet', 'piccolo-trumpet', 'flugelhorn', 'euphonium']) {
     assert.match(app, new RegExp(`id: "${model}"`));
   }
   assert.match(html, /id="classicalControls"/);
@@ -407,6 +408,9 @@ test('string and expressive families expose virtual-instrument presentation', ()
   assert.doesNotMatch(html, /expression-tabs|expression-actions/);
   assert.match(app, /\[\["finger", "핑거"\], \["pick", "피크"\], \["slap", "슬랩"\]\]/);
   assert.match(app, /\[\["clean", "클린"\], \["blues", "블루스"\], \["funk", "펑크"\], \["rock", "록"\]\]/);
+  assert.match(app, /"guitar-steel": Object\.freeze/);
+  assert.match(app, /id === "dreadnought"\) return KEYBOARD_SAMPLE_SETS\["guitar-steel"\]/);
+  assert.match(app, /anchors: Object\.freeze\(\[40,/);
   assert.match(css, /\.classical-render/);
   assert.match(css, /\.machine-deck/);
 });
