@@ -1,0 +1,48 @@
+/* The selected genre is already known from the previous screen. Keep only a
+   compact escape control and give the full first row to the listening task. */
+.music-room-home,
+.genre-room {
+  padding-left: 60px;
+}
+
+.music-room-home > .page-back,
+.genre-room > .page-back {
+  position: fixed;
+  top: 10px;
+  left: 8px;
+  z-index: 40;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  background: rgba(28, 32, 34, 0.9);
+  color: #fff;
+  font: 800 22px/1 system-ui, sans-serif;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+}
+
+.music-room-home > .page-back:focus-visible,
+.genre-room > .page-back:focus-visible {
+  outline: 3px solid #d2a451;
+  outline-offset: 2px;
+}
+
+.music-room-home main,
+.genre-room main {
+  margin-top: 10px;
+}
+
+@media (max-width: 460px) {
+  .music-room-home,
+  .genre-room {
+    padding-left: 52px;
+  }
+
+  .music-room-home > .page-back,
+  .genre-room > .page-back {
+    left: 4px;
+  }
+}
