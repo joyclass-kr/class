@@ -4,14 +4,17 @@
 const out=document.getElementById('out'),frame=document.getElementById('frame');
 const BOOKS=['chunhyangjeon','heungbujeon','honggildongjeon','kongjwi-patjwi','onggojipjeon','simcheongjeon','tokkijeon'];
 // 창이 작을수록 펼침면이 많아져 자리가 정확해진다. 두 크기로 본다.
-const SIZES=[[1366,768],[1024,768]];
+const SIZES=[[1366,768],[1024,768],[1180,820],[768,1024]];
 function probe(){
  const rows=[];let n=0,imgs=0,ahead=0,late=0,total=0;
  PAGES.forEach(p=>{
   if(p.kind!=='chapter')return; if(p.first)n=0;
   if(p.art){imgs++;
-   const k=CHAPTERS[p.chIndex].art.indexOf(p.art);
-   const at=(CHAPTERS[p.chIndex].artAt||[])[k];
+   // 영어판이 붙은 책은 CHAPTERS(우리말)와 지금 나뉜 쪽이 다를 수 있다.
+   // 지금 보고 있는 말의 글을 써야 닻이 맞는다.
+   const CHS=(typeof CH==='function')?CH():CHAPTERS;
+   const k=CHS[p.chIndex].art.indexOf(p.art);
+   const at=(CHS[p.chIndex].artAt||[])[k];
    if(at){total++;
     const seg=CHAPTER_SEGS[p.chIndex];
     const si=seg.findIndex(g=>g.html.indexOf(at)>=0);
@@ -28,6 +31,8 @@ function probe(){
 (async()=>{const lines=[];
  for(const b of BOOKS){const res=[];
   for(const [w,h] of SIZES){frame.style.width=w+'px';frame.style.height=h+'px';
+   // 브라우저에 영어가 저장돼 있으면 영어로 열린다. 우리말로 못 박고 잰다.
+   try{localStorage.setItem('korea-tales-lang','ko');}catch(e){}
    await Promise.all(['app.js','styles.css'].map(f=>fetch(b+'/'+f,{cache:'reload'}).catch(()=>{})));
    await new Promise(r=>{frame.onload=r;frame.src=b+'/?t='+Date.now();});
    await new Promise(r=>setTimeout(r,250));
