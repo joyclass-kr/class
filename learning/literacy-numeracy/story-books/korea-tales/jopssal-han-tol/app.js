@@ -203,8 +203,8 @@ const EN = {
         title: 'A Single Grain of Millet',
         intro: [
             "A Single Grain of Millet is an old Korean tale with no known author.",
-            "A story where something tiny keeps turning into something bigger is called a chain tale. The same thing happens again and again, growing each time, so the listener keeps guessing what comes next. Such tales are told worldwide; Japan's straw millionaire is a close cousin.",
-            "Millet seeds are far smaller than rice — one grain is barely big enough to see. The tiniest grain was chosen on purpose: the smaller the beginning, the more astonishing the end."
+            "A story where something tiny keeps turning into something bigger is called a chain tale. The listener keeps guessing what comes next. Japan's straw millionaire is a close cousin.",
+            "Millet seeds are far smaller than rice — one grain is barely big enough to see. The tiniest grain was chosen on purpose."
         ]
     },
     chapters: [
