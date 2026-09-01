@@ -6,11 +6,13 @@ import vm from "node:vm";
 const root = path.resolve(import.meta.dirname, "..");
 const harmony = path.join(root, "learning", "arts", "music-theory", "harmony");
 const dataSource = fs.readFileSync(path.join(harmony, "harmony-curriculum.js"), "utf8");
+const traditionalSource = fs.readFileSync(path.join(harmony, "harmony-traditional-extension.js"), "utf8");
 const courseSource = fs.readFileSync(path.join(harmony, "harmony-course.js"), "utf8");
 
 const dataContext = { window: {} };
 vm.createContext(dataContext);
 vm.runInContext(dataSource, dataContext);
+vm.runInContext(traditionalSource, dataContext);
 
 const renderContext = {
   window: { HarmonyCurriculum: dataContext.window.HarmonyCurriculum },
@@ -29,12 +31,25 @@ assert.equal(notation.noteParts("F#4").midi, 66);
 assert.equal(notation.noteParts("C#4").midi, notation.noteParts("Db4").midi, "enharmonic spellings must sound at the same pitch");
 assert.notEqual(notation.noteParts("C#4").step, notation.noteParts("Db4").step, "enharmonic spellings must occupy different staff positions");
 
-const visualKeys = new Set([...dataSource.matchAll(/visual:"([^"]+)"/g)].map((match) => match[1]));
+const visualKeys = new Set([...(dataSource + traditionalSource).matchAll(/visual:"([^"]+)"/g)].map((match) => match[1]));
 for (const key of visualKeys) {
   const score = notation.render(key);
-  assert.match(score, /class="score-svg/, key + " must render a score");
+  assert.match(score, /class="(?:score-svg|notation-diagram)/, key + " must render a score or notation diagram");
   assert.doesNotMatch(score, /NaN|undefined/, key + " contains an invalid coordinate or label");
-  assert.ok((score.match(/class="note-head"/g) || []).length >= 2, key + " must show actual notes");
+  const preview = notation.preview(key);
+  assert.match(preview, /class="skill-preview"/, key + " needs a visual preview on the progress screen");
+  assert.match(preview, /<svg viewBox="0 0 72 48">/, key + " progress preview must contain drawn notation");
+  assert.doesNotMatch(preview, /undefined/, key + " progress preview contains an invalid label");
+  if (!score.includes('class="notation-diagram')) {
+    assert.ok((score.match(/class="note-head"/g) || []).length >= 2, key + " must show actual notes");
+  }
+}
+
+for (const key of ["pitch-alphabet","interval-spelling","interval-inversion","inversion-score","diatonic-map","function-flow","cadence-compare","guide-tone","secondary-dominant","borrowed-compare","tension-map"]) {
+  assert.match(notation.render(key), /class="concept-diagram/, key + " needs a relationship diagram in addition to the staff example");
+}
+for (const key of ["voice-ranges","motion-directions","voice-crossing","parallel-errors","secondary-targets","secondary-resolution","secondary-domino","borrowed-family","flat-two-compare","tension-stack","tension-available","tension-avoid"]) {
+  assert.match(notation.render(key), /class="concept-diagram/, key + " needs a textbook-style explanatory diagram");
 }
 
 const chordScore = notation.render("symbol-anatomy");
@@ -50,11 +65,24 @@ assert.notEqual(centers[1].x, centers[2].x, "adjacent F4-G4 noteheads must not o
 assert.notEqual(centers[3].x, centers[4].x, "adjacent C4-D4 noteheads must not overlap");
 
 const clefScore = notation.render("staff-clefs");
-assert.match(clefScore, /viewBox="0 0 520 100"/, "plain sequence staves need a compact canvas");
-assert.ok(clefScore.includes('transform="translate(0 -44)"'), "plain sequence content must not sit at the bottom");
+assert.match(clefScore, /viewBox="0 0 520 116"/, "labeled clef examples need room for note names");
+assert.ok(clefScore.includes('transform="translate(0 -29)"'), "labeled clef content must remain vertically centered");
 assert.match(clefScore, /𝄞/, "the grand-staff lesson needs a treble clef");
 assert.match(clefScore, /𝄢/, "the grand-staff lesson needs a bass clef");
 assert.equal((clefScore.match(/class="note-head"/g) || []).length, 10);
+assert.match(clefScore, /bass-clef" x="28" y="103"/, "the bass-clef dots must straddle the F3 line");
+assert.match(clefScore, /cy="99"/, "bass-clef C3 must sit in the second space from the top");
+assert.match(clefScore, /cy="124"/, "treble-clef middle C must sit on its ledger line");
+for (const label of ["C3", "F3", "G3", "C4", "F4", "G4"]) assert.match(clefScore, new RegExp(">" + label + "<"));
+
+const staffBasics = notation.render("staff-basics");
+assert.equal((staffBasics.match(/class="note-head"/g) || []).length, 9, "five lines and four spaces need nine labeled positions");
+for (const label of ["1줄 E", "1칸 F", "5줄 F"]) assert.match(staffBasics, new RegExp(">" + label + "<"));
+
+const noteValues = notation.render("note-values");
+assert.equal((noteValues.match(/class="note-value-card"/g) || []).length, 4, "four core note and rest values need separate cards");
+const meters = notation.render("meter-basics");
+assert.equal((meters.match(/class="meter-card"/g) || []).length, 4, "four core meters need separate cards");
 
 const spellingScore = notation.render("enharmonic-spelling");
 assert.match(spellingScore, />♯<|>♭</, "enharmonic examples need visible accidentals");
@@ -82,5 +110,11 @@ for (const label of ["C", "G/B", "Am", "F"]) assert.match(leadSheet, new RegExp(
 const registerScore = notation.render("melody-register");
 assert.equal((registerScore.match(/class="note-head"/g) || []).length, 6, "the accompaniment triad and three melody notes must all appear");
 assert.equal((registerScore.match(/class="note-stem"/g) || []).length, 4, "the accompaniment is one chord while the melody is sequential");
+
+for (const key of ["passing-six-four", "auxiliary-six-four", "arpeggio-six-four"]) {
+  const sixFourScore = notation.render(key);
+  assert.equal((sixFourScore.match(/class="note-head"/g) || []).length, 9, key + " needs all three complete triads");
+  assert.match(sixFourScore, /6\/4/, key + " needs a visible six-four label");
+}
 
 console.log("harmony notation renderer: ok");

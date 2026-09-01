@@ -17,21 +17,34 @@ const html = fs.readFileSync(
   path.join(root, "learning/arts/music-theory/harmony/index.html"),
   "utf8"
 );
+const courseSource = fs.readFileSync(
+  path.join(root, "learning/arts/music-theory/harmony/harmony-course.js"),
+  "utf8"
+);
 
 const curriculumSource = fs.readFileSync(
   path.join(root, "learning/arts/music-theory/harmony/harmony-curriculum.js"),
   "utf8"
 );
+const traditionalSource = fs.readFileSync(
+  path.join(root, "learning/arts/music-theory/harmony/harmony-traditional-extension.js"),
+  "utf8"
+);
 const context = { window: {} };
 vm.createContext(context);
 vm.runInContext(curriculumSource, context);
+vm.runInContext(traditionalSource, context);
 const skills = Object.values(context.window.HarmonyCurriculum.skills);
 
-test("tablet lesson flow keeps explanation and notation in one reading column", () => {
-  assert.ok(css.includes("grid-template-columns: minmax(0, 1fr);"));
-  assert.ok(css.includes(".lesson-section:nth-child(even) .section-copy,"));
-  assert.ok(css.includes("order: initial;"));
+test("tablet lesson flow shows the visual before detailed solving", () => {
+  assert.ok(css.includes('"lead visual"'));
+  assert.ok(css.includes('"detail visual"'));
+  assert.ok(css.includes('"lead"'));
+  assert.ok(css.includes('"visual"'));
+  assert.ok(css.includes('"detail"'));
   assert.ok(css.includes("width: min(100%, 72ch);"));
+  assert.match(courseSource, /section-lead[\s\S]*?visual-board lesson-visual[\s\S]*?section-detail/, "notation must precede the worked example and misconception detail");
+  assert.match(courseSource, /skillPreviewMarkup\(skill\)/, "the progress screen must visibly preview each learning item");
 });
 
 test("notation receives a legible width at the primary tablet sizes", () => {
@@ -49,21 +62,24 @@ test("body copy and controls remain readable and touchable", () => {
 });
 
 test("the page loads the readability revision", () => {
-  assert.ok(html.includes("harmony-course.css?v=20260828-1"));
-  assert.ok(html.includes("harmony-course.js?v=20260828-1"));
+  assert.ok(html.includes("harmony-course.css?v=20260901-7"));
+  assert.ok(html.includes("harmony-course.js?v=20260901-7"));
+  assert.ok(html.includes("harmony-traditional-extension.js?v=20260901-7"));
 });
 
-test("primary tablet notation stays legible without a split column", () => {
+test("primary tablet notation stays legible in landscape and portrait", () => {
   const clamp = (minimum, preferred, maximum) => Math.max(minimum, Math.min(preferred, maximum));
   const scoreWidth = (viewportWidth) => {
     const shell = Math.min(viewportWidth - (viewportWidth <= 900 ? 20 : 24), 1180);
     const sectionPadding = clamp(22, viewportWidth * 0.04, 40);
     const boardPadding = clamp(14, viewportWidth * 0.02, 22);
-    return Math.min(shell - sectionPadding * 2 - boardPadding * 2, 840);
+    const content = shell - sectionPadding * 2;
+    const visualColumn = viewportWidth <= 900 ? content : (content - 18) * .64;
+    return Math.min(visualColumn - boardPadding * 2, 840);
   };
 
-  assert.equal(scoreWidth(1024), 840);
-  assert.equal(scoreWidth(1180), 840);
+  assert.ok(scoreWidth(1024) >= 520);
+  assert.ok(scoreWidth(1180) >= 600);
   assert.ok(scoreWidth(768) >= 650);
 });
 test("lesson copy remains scannable and every section supports seeing and hearing", () => {

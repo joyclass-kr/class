@@ -21,7 +21,9 @@
   };
 
   const SCORE_SETS = {
-    "staff-clefs": [["낮은음자리표 C3–G3",["C3","D3","E3","F3","G3"]],["높은음자리표 C4–G4",["C4","D4","E4","F4","G4"]]],
+    "staff-basics": [["높은음자리표의 다섯 줄과 네 칸",["E4","F4","G4","A4","B4","C5","D5","E5","F5"],["1줄 E","1칸 F","2줄 G","2칸 A","3줄 B","3칸 C","4줄 D","4칸 E","5줄 F"]]],
+    "pitch-alphabet": [["음이름은 C에서 B까지 반복됩니다",["C4","D4","E4","F4","G4","A4","B4","C5"],["C(다)","D(라)","E(마)","F(바)","G(사)","A(가)","B(나)","C(다)"]]],
+    "staff-clefs": [["낮은음자리표: C3–G3",["C3","D3","E3","F3","G3"],["C3","D3","E3","F3","G3"]],["높은음자리표: C4–G4",["C4","D4","E4","F4","G4"],["C4","D4","E4","F4","G4"]]],
     "enharmonic-spelling": [["C♯로 읽기",["C4","C#4","D4"],["C","C♯","D"]],["D♭로 읽기",["C4","Db4","D4"],["C","D♭","D"]]],
     "interval-spelling": [["장3도",["C4","E4"]],["단3도",["C4","Eb4"]],["증4도",["C4","F#4"]],["감5도",["C4","Gb4"]]],
     "interval-inversion": [["단3도",["C4","Eb4"]],["장6도",["Eb4","C5"]],["완전4도",["C4","F4"]],["완전5도",["F4","C5"]]],
@@ -58,6 +60,9 @@
     "cadence-voices": [["G7",["G3","B3","F4"]],["강한 I",["C3","C4","E4"]],["약한 I6",["E3","C4","G4"]]],
     "deceptive-cadence": [["V",["B3","D4","G4"]],["vi",["C4","E4","A4"]]],
     "cadential-six-four": [["I6/4",["G3","C4","E4"]],["V",["G3","B3","D4"]],["I",["C3","G3","E4"]]],
+    "passing-six-four": [["I",["C3","G3","E4"]],["V6/4",["D3","G3","B3"]],["I6",["E3","G3","C4"]]],
+    "auxiliary-six-four": [["I",["C3","G3","E4"]],["IV6/4",["C3","F3","A3"]],["I",["C3","G3","E4"]]],
+    "arpeggio-six-four": [["I",["C3","G3","E4"]],["I6/4",["G2","C3","E3"]],["I6",["E3","G3","C4"]]],
     "loop-leadsheet": [["C",["C4","E4","G4"]],["G/B",["B3","D4","G4"]],["Am",["C4","E4","A4"]],["F",["C4","F4","A4"]]],
     "practice-layers": [["베이스",["C3","G2","A2","F2"]],["가까운 윗성부",["C4","B3","C4","C4"]],["코드 완성",["E4","D4","E4","F4"]]],
     "seventh-family": [["Cmaj7",["C4","E4","G4","B4"]],["Dm7",["D4","F4","A4","C5"]],["G7",["G3","B3","D4","F4"]],["Bm7♭5",["B3","D4","F4","A4"]]],
@@ -81,7 +86,29 @@
     "borrowed-resolution": [["Fm",["F4","Ab4","C5"]],["C",["E4","G4","C5"]]],
     "lead-sheet": [["멜로디와 코드",["E4","D4","C4","A3","C4"],["C","G/B","Am","F","C"]]],
     "arrangement-layers": [["베이스",["C3","B2","A2","F2","C3"]],["보이싱",["E4","D4","E4","F4","E4"]],["멜로디",["E5","D5","C5","A4","C5"]]],
-    "revision-loop": [["초안",["C4","G4","A4","F4"]],["가까운 연결",["C4","B3","C4","C4"]]]
+    "revision-loop": [["초안",["C4","G4","A4","F4"]],["가까운 연결",["C4","B3","C4","C4"]]],
+    "voice-ranges": [["S: C4–A5",["C4","A5"]],["A: G3–D5",["G3","D5"]],["T: C3–G4",["C3","G4"]],["B: E2–C4",["E2","C4"]]],
+    "doubling-rule": [["근음 C 중복",["C3","G3","C4","E4"]],["이끎음 B 중복",["G2","B3","B4","D5"]]],
+    "open-close": [["밀집위치",["C3","G3","C4","E4"]],["개리위치",["C3","E3","C4","G4"]]],
+    "motion-directions": [["동진행 시작",["C3","E4"]],["둘 다 ↑",["D3","G4"]],["반진행 시작",["C3","G4"]],["아래↑ 위↓",["D3","F4"]]],
+    "similar-parallel": [["동진행 3도",["C3","E4"]],["도착 4도",["D3","G4"]],["병진행 장3도",["C3","E4"]],["도착 단3도",["D3","F4"]]],
+    "contrary-oblique": [["반진행 시작",["C3","G4"]],["↑ · ↓",["D3","F4"]],["사진행 시작",["C3","E4"]],["― · ↑",["C3","F4"]]],
+    "voice-crossing": [["정상 B–T–A–S",["C3","G3","C4","E4"]],["교차 T E4 > A C4",["C3","C4","E4","G4"]]],
+    "voice-overlap": [["첫 S E4 · A C4",["C4","E4"]],["다음 A F4 · S A4",["F4","A4"]]],
+    "parallel-errors": [["완전5도",["C3","G3"]],["같이 ↑ 완전5도",["D3","A3"]],["완전8도",["C3","C4"]],["같이 ↑ 완전8도",["D3","D4"]]],
+    "hidden-perfect": [["바깥 성부 시작",["C3","E4"]],["같이 ↑, S 도약",["D3","A4"]]],
+    "secondary-targets": [["V7/V D7",["D4","F#4","A4","C5"]],["목표 V G",["G3","B3","D4"]],["V7/vi E7",["E4","G#4","B4","D5"]],["목표 vi Am",["A3","C4","E4"]]],
+    "secondary-root-motion": [["D→G",["D3","G2"]],["A→D",["A2","D3"]],["E→A",["E3","A2"]]],
+    "secondary-resolution": [["D7 경향음",["F#4","C5"]],["G 해결",["G4","B4"]],["A7 경향음",["C#4","G4"]],["Dm 해결",["D4","F4"]]],
+    "secondary-voices": [["D7",["D3","F#3","C4","A4"]],["G",["G2","G3","B3","G4"]]],
+    "secondary-domino": [["A7",["A3","C#4","E4","G4"]],["D7",["D3","F#3","A3","C4"]],["G7",["G2","B3","D4","F4"]],["C",["C3","G3","C4","E4"]]],
+    "secondary-leading-resolution": [["vii°7/V",["F#3","A3","C4","Eb4"]],["V",["G3","B3","D4"]]],
+    "secondary-dominant-compare": [["D7 = V7/V",["D4","F#4","A4","C5"]],["F♯°7 = vii°7/V",["F#3","A3","C4","Eb4"]],["목표 G",["G3","B3","D4"]]],
+    "borrowed-family": [["iv Fm",["F4","Ab4","C5"]],["♭VI A♭",["Ab3","C4","Eb4"]],["♭VII B♭",["Bb3","D4","F4"]],["I C",["C4","E4","G4"]]],
+    "flat-two-compare": [["N6: F–A♭–D♭",["F3","Ab3","Db4"]],["V: G",["G3","B3","D4"]],["D♭7",["Db3","F3","Ab3","Cb4"]],["I: C",["C3","G3","E4"]]],
+    "tension-stack": [["Cmaj7",["C4","E4","G4","B4"]],["+9 D",["C4","E4","G4","B4","D5"]],["G13",["G3","B3","F4","E5"]]],
+    "tension-available": [["Cmaj9",["C4","E4","G4","B4","D5"]],["Cmaj7♯11",["C4","E4","G4","B4","F#5"]],["Dm11",["D4","F4","A4","C5","G5"]]],
+    "tension-avoid": [["Cmaj7 + F",["C4","E4","G4","B4","F5"]],["E–F 단2도",["E4","F4"]],["Cmaj7♯11",["C4","E4","G4","B4","F#5"]]]
   };
 
   function byId(id) { return document.getElementById(id); }
@@ -110,14 +137,16 @@
   function getStrand(id) { return curriculum.strands.find(function (strand) { return strand.skills.includes(id); }); }
   function prereqsMet(id) { return curriculum.skills[id].prereqs.every(function (prereq) { return state.completed.has(prereq); }); }
   function recommendedId() {
-    return allSkillIds().find(function (id) { return !state.completed.has(id) && prereqsMet(id); }) ||
-      allSkillIds().find(function (id) { return !state.completed.has(id); }) || "LEAD_SHEET_PROJECT";
+    const ids = allSkillIds();
+    return ids.find(function (id) { return !state.completed.has(id) && prereqsMet(id); }) ||
+      ids.find(function (id) { return !state.completed.has(id); }) || ids[ids.length-1];
   }
-  function playGroups(groups) {
+  function playGroups(groups, options) {
     if (!window.HarmonyPiano || !groups || !groups.length) return;
+    const settings = options || {};
     const normalized = Array.isArray(groups[0]) ? groups : [groups];
-    if (normalized.length === 1) window.HarmonyPiano.playNotes(normalized[0], { duration:.9, arpeggio:.018 });
-    else window.HarmonyPiano.playSequence(normalized, .58);
+    if (normalized.length === 1) window.HarmonyPiano.playNotes(normalized[0], { duration:settings.duration || .9, arpeggio:.018 });
+    else window.HarmonyPiano.playSequence(normalized, settings.stepDuration || .58);
   }
   function showToast(message) {
     els.toast.textContent = message;
@@ -127,7 +156,7 @@
   }
 
   const SEQUENCE_KEYS = new Set([
-    "staff-clefs", "enharmonic-spelling", "part-motion", "nonchord-motion", "suspension-resolution", "minor-scales", "sequence-voices",
+    "staff-basics", "pitch-alphabet", "staff-clefs", "enharmonic-spelling", "part-motion", "nonchord-motion", "suspension-resolution", "minor-scales", "sequence-voices",
     "key-scale", "leading-tone", "roman-transfer", "practice-layers",
     "transpose-map", "transpose-melody", "harmonic-rhythm", "rhythm-density",
     "harmonize-options", "melody-register", "secondary-chain",
@@ -211,8 +240,8 @@
       ? staffLines([74,84,94,104,114], width) + staffLines([134,144,154,164,174], width)
       : staffLines([74,84,94,104,114], width);
     const clefs = grand
-      ? '<text class="music-glyph clef" x="28" y="116">𝄞</text><text class="music-glyph clef bass-clef" x="29" y="174">𝄢</text>'
-      : '<text class="music-glyph clef '+(clef === "bass" ? "bass-clef" : "")+'" x="28" y="'+(clef === "bass" ? 113 : 116)+'">'+(clef === "bass" ? "𝄢" : "𝄞")+'</text>';
+      ? '<text class="music-glyph clef" x="28" y="116">𝄞</text><text class="music-glyph clef bass-clef" x="29" y="164">𝄢</text>'
+      : '<text class="music-glyph clef '+(clef === "bass" ? "bass-clef" : "")+'" x="28" y="'+(clef === "bass" ? 103 : 116)+'">'+(clef === "bass" ? "𝄢" : "𝄞")+'</text>';
     const events = items.map(function (item, index) {
       const x = 66 + gap * index + gap / 2;
       return placeChordParts(item[1], x, grand, clef) +
@@ -254,15 +283,45 @@
             return '<line class="bar-line" x1="'+x+'" y1="74" x2="'+x+'" y2="114"/>';
           }).join("") + '<line class="bar-line final" x1="'+(width-18)+'" y1="74" x2="'+(width-18)+'" y2="114"/>'
         : "";
-      return '<div class="score-line-card"><strong>'+escapeHtml(item[0])+'</strong><svg class="score-svg sequence-score" viewBox="0 0 '+width+' '+height+'" role="img" aria-label="'+escapeHtml(item[0])+'"><rect width="'+width+'" height="'+height+'" rx="8" fill="#fffdf7"/><g transform="translate(0 '+yShift+')"><g class="staff-lines">'+staffLines([74,84,94,104,114],width)+'</g><text class="music-glyph clef '+(clef === "bass" ? "bass-clef" : "")+'" x="28" y="'+(clef === "bass" ? 113 : 116)+'">'+(clef === "bass" ? "𝄢" : "𝄞")+'</text>'+barlines+notes+'</g></svg></div>';
+      return '<div class="score-line-card"><strong>'+escapeHtml(item[0])+'</strong><svg class="score-svg sequence-score" viewBox="0 0 '+width+' '+height+'" role="img" aria-label="'+escapeHtml(item[0])+'"><rect width="'+width+'" height="'+height+'" rx="8" fill="#fffdf7"/><g transform="translate(0 '+yShift+')"><g class="staff-lines">'+staffLines([74,84,94,104,114],width)+'</g><text class="music-glyph clef '+(clef === "bass" ? "bass-clef" : "")+'" x="28" y="'+(clef === "bass" ? 103 : 116)+'">'+(clef === "bass" ? "𝄢" : "𝄞")+'</text>'+barlines+notes+'</g></svg></div>';
     }).join("");
     return '<div class="score-frame"><p class="score-title">'+escapeHtml(title || "악보로 확인")+'</p><div class="score-compare">'+rows+'</div></div>';
   }
   function staffSvg(items, title, key) {
     return SEQUENCE_KEYS.has(key) ? sequenceStaffSvg(items, title, key) : chordStaffSvg(items, title);
   }
+
+  function noteValueIcon(kind) {
+    const open = kind === "whole" || kind === "half";
+    const stem = kind !== "whole" ? '<line x1="40" y1="31" x2="40" y2="7"/>' : "";
+    const flag = kind === "eighth" ? '<path d="M40 7 C52 10 53 18 47 25"/>' : "";
+    return '<svg class="value-note" viewBox="0 0 64 44" aria-hidden="true"><g transform="rotate(-18 32 31)"><ellipse cx="32" cy="31" rx="10" ry="6" '+(open ? 'fill="none"' : 'fill="currentColor"')+'/></g>'+stem+flag+'</svg>';
+  }
+  function noteValuesDiagram() {
+    const values = [
+      ["whole","온음표","4박","𝄻","온쉼표"],
+      ["half","2분음표","2박","𝄼","2분쉼표"],
+      ["quarter","4분음표","1박","𝄽","4분쉼표"],
+      ["eighth","8분음표","1/2박","𝄾","8분쉼표"]
+    ];
+    return '<div class="notation-diagram note-values-diagram" role="img" aria-label="온음표부터 8분음표까지 음표와 쉼표의 길이 비교">'+values.map(function (value) {
+      return '<div class="note-value-card">'+noteValueIcon(value[0])+'<strong>'+value[1]+'</strong><b>'+value[2]+'</b><span class="rest-symbol" aria-hidden="true">'+value[3]+'</span><small>'+value[4]+'</small></div>';
+    }).join("")+'</div>';
+  }
+  function meterBasicsDiagram() {
+    const meters = [
+      ["2","4","강 · 약",["strong",""]],
+      ["3","4","강 · 약 · 약",["strong","",""]],
+      ["4","4","강 · 약 · 중강 · 약",["strong","","secondary",""]],
+      ["6","8","3개 + 3개",["strong","","","secondary","",""]]
+    ];
+    return '<div class="notation-diagram meter-diagram" role="img" aria-label="2분의 4, 3분의 4, 4분의 4, 8분의 6 박자 묶음 비교">'+meters.map(function (meter) {
+      return '<div class="meter-card"><span class="meter-sign"><b>'+meter[0]+'</b><b>'+meter[1]+'</b></span><div class="meter-pulses">'+meter[3].map(function (kind) { return '<i class="'+kind+'"></i>'; }).join("")+'</div><strong>'+meter[2]+'</strong></div>';
+    }).join("")+'</div>';
+  }
   window.HarmonyNotation = {
-    render:function (key) { return staffSvg(SCORE_SETS[key], "악보 검수", key); },
+    render:function (key) { return renderVisual(key); },
+    preview:function (key) { return skillPreviewMarkup({ sections:[{ visual:key }] }); },
     noteParts:noteParts
   };
   function formulaVisual(key) {
@@ -275,27 +334,172 @@
     if (!rows) return "";
     return '<div class="chord-formula-grid">'+rows.map(function (row) { return '<div class="formula-card"><strong>'+row[0]+'</strong><b>'+row[1]+'</b></div>'; }).join("")+'</div>';
   }
+
+  function flowDiagram(label, steps) {
+    return '<div class="concept-diagram flow-diagram" role="img" aria-label="'+escapeHtml(label)+'">'+steps.map(function (step, index) {
+      return (index ? '<span class="concept-arrow" aria-hidden="true">→</span>' : '')+
+        '<div class="concept-node '+escapeHtml(step.tone || '')+'"><strong>'+escapeHtml(step.head)+'</strong><span>'+escapeHtml(step.detail)+'</span></div>';
+    }).join("")+'</div>';
+  }
+
+  function conceptVisual(key) {
+    if (key === "pitch-alphabet") {
+      return flowDiagram("음이름 C부터 B까지 순환", [
+        { head:"C", detail:"다" }, { head:"D", detail:"라" }, { head:"E", detail:"마" }, { head:"F", detail:"바" },
+        { head:"G", detail:"사" }, { head:"A", detail:"가" }, { head:"B", detail:"나" }, { head:"C", detail:"다시 시작", tone:"accent" }
+      ]);
+    }
+    if (key === "voice-ranges") {
+      return '<div class="concept-diagram voice-range-diagram" role="img" aria-label="SATB 네 성부의 기본 활동 음역"><div><strong>S</strong><span>C4</span><i></i><span>A5</span></div><div><strong>A</strong><span>G3</span><i></i><span>D5</span></div><div><strong>T</strong><span>C3</span><i></i><span>G4</span></div><div><strong>B</strong><span>E2</span><i></i><span>C4</span></div></div>';
+    }
+    if (key === "motion-directions" || key === "similar-parallel" || key === "contrary-oblique") {
+      return '<div class="concept-diagram motion-card-grid" role="img" aria-label="동진행 병진행 반진행 사진행의 방향 비교"><div><strong>동진행</strong><b>↑ ↑</b><span>도수 바뀜</span></div><div><strong>병진행</strong><b>↑ ↑</b><span>도수 유지</span></div><div><strong>반진행</strong><b>↑ ↓</b><span>반대 방향</span></div><div><strong>사진행</strong><b>― ↑</b><span>한 성부 유지</span></div></div>';
+    }
+    if (["voice-crossing","voice-overlap","parallel-errors","hidden-perfect"].includes(key)) {
+      const rows = {
+        "voice-crossing":["같은 순간","T E4 > A C4","성부 교차"],
+        "voice-overlap":["두 순간","다음 A F4 > 이전 S E4","성부 중복"],
+        "parallel-errors":["같은 성부 쌍","P5 → P5 · 같은 방향","병행5도"],
+        "hidden-perfect":["바깥 성부","같은 방향 + S 도약 → P5","숨은5도"]
+      }[key];
+      return '<div class="concept-diagram error-map" role="img" aria-label="'+escapeHtml(rows[2])+' 판정 조건"><span>'+escapeHtml(rows[0])+'</span><strong>'+escapeHtml(rows[1])+'</strong><b>'+escapeHtml(rows[2])+'</b></div>';
+    }
+    if (key === "interval-spelling") {
+      return '<div class="concept-diagram interval-diagram" role="img" aria-label="C에서 E까지 음이름 세 개와 반음 네 칸을 세어 장3도를 찾는 과정"><div class="interval-count"><strong>1 · 2 · 3</strong><span>C — D — E</span><b>음이름 3개 = 3도</b></div><span class="concept-plus" aria-hidden="true">+</span><div class="interval-count semitone-count"><strong>½ + ½ + ½ + ½</strong><span>C에서 E까지 4반음</span><b>4반음 = 장</b></div><span class="concept-result">장3도</span></div>';
+    }
+    if (key === "interval-inversion") {
+      return '<div class="concept-diagram inversion-diagram" role="img" aria-label="음정 전위에서 도수의 합은 9, 성질은 장과 단 또는 완전과 완전으로 바뀜"><div><strong>단3도</strong><span>3</span></div><span class="concept-swap">뒤집기</span><div><strong>장6도</strong><span>6</span></div><b>3 + 6 = 9</b><div><strong>완전4도</strong><span>4</span></div><span class="concept-swap">뒤집기</span><div><strong>완전5도</strong><span>5</span></div><b>4 + 5 = 9</b></div>';
+    }
+    if (key === "inversion-score") {
+      return '<div class="concept-diagram bass-focus-diagram" role="img" aria-label="C화음의 베이스가 C면 기본위치, E면 1전위, G면 2전위"><div><strong>C</strong><span class="bass-note">C</span><small>기본위치</small></div><div><strong>C/E</strong><span class="bass-note">E</span><small>1전위</small></div><div><strong>C/G</strong><span class="bass-note">G</span><small>2전위</small></div></div>';
+    }
+    if (key === "diatonic-map") {
+      return flowDiagram("C장조 다이어토닉 화음과 기능 묶음", [
+        { head:"I · vi", detail:"토닉", tone:"tonic" }, { head:"ii · IV", detail:"프리도미넌트", tone:"predominant" },
+        { head:"V · vii°", detail:"도미넌트", tone:"dominant" }, { head:"I", detail:"귀환", tone:"tonic" }
+      ]);
+    }
+    if (key === "function-flow") {
+      return flowDiagram("토닉에서 프리도미넌트와 도미넌트를 지나 토닉으로 돌아가는 흐름", [
+        { head:"T", detail:"안정", tone:"tonic" }, { head:"PD", detail:"출발", tone:"predominant" },
+        { head:"D", detail:"긴장", tone:"dominant" }, { head:"T", detail:"해결", tone:"tonic" }
+      ]);
+    }
+    if (key === "cadence-compare") {
+      return '<div class="concept-diagram cadence-diagram" role="img" aria-label="정격종지 V에서 I, 변격종지 IV에서 I의 방향 비교"><div><small>정격종지</small><strong>V</strong><span>→</span><strong>I</strong><b>긴장 → 해결</b></div><div><small>변격종지</small><strong>IV</strong><span>→</span><strong>I</strong><b>부드러운 닫힘</b></div></div>';
+    }
+    if (key === "guide-tone" || key === "two-five-one-guides") {
+      return '<div class="concept-diagram tendency-diagram" role="img" aria-label="G7의 B는 C로 반음 상행하고 F는 E로 반음 하행"><div><strong>B</strong><span>반음 ↑</span><b>C</b></div><div class="resolution-brace">G7의 3음·7음</div><div><strong>F</strong><span>반음 ↓</span><b>E</b></div></div>';
+    }
+    if (key === "secondary-dominant") {
+      return flowDiagram("C장조에서 D7이 G를 잠시 으뜸처럼 밀고 G가 C로 해결", [
+        { head:"D7", detail:"V/V", tone:"secondary" }, { head:"G", detail:"V", tone:"dominant" }, { head:"C", detail:"I", tone:"tonic" }
+      ]);
+    }
+    if (key === "secondary-targets") {
+      return flowDiagram("세컨더리 도미넌트는 목표 화음에서 거꾸로 계산", [
+        { head:"목표 G", detail:"C장조의 V", tone:"tonic" }, { head:"5도 위 D", detail:"도미넌트 근음", tone:"secondary" },
+        { head:"D7", detail:"V7/V", tone:"dominant" }, { head:"G", detail:"해결", tone:"tonic" }
+      ]);
+    }
+    if (key === "secondary-root-motion") {
+      return flowDiagram("연속 도미넌트의 근음이 5도씩 하행", [
+        { head:"A7", detail:"D 목표", tone:"secondary" }, { head:"D7", detail:"G 목표", tone:"secondary" },
+        { head:"G7", detail:"C 목표", tone:"dominant" }, { head:"C", detail:"I", tone:"tonic" }
+      ]);
+    }
+    if (key === "secondary-resolution" || key === "secondary-leading-resolution") {
+      const leading = key === "secondary-resolution" ? ["F♯","G","C","B","D7의 3음·7음"] : ["F♯","G","E♭","D","vii°7/V의 바깥음"];
+      return '<div class="concept-diagram tendency-diagram" role="img" aria-label="'+escapeHtml(leading[4])+' 반음 해결"><div><strong>'+leading[0]+'</strong><span>반음 ↑</span><b>'+leading[1]+'</b></div><div class="resolution-brace">'+escapeHtml(leading[4])+'</div><div><strong>'+leading[2]+'</strong><span>반음 ↓</span><b>'+leading[3]+'</b></div></div>';
+    }
+    if (key === "secondary-domino") {
+      return flowDiagram("A7에서 D7, G7, C로 이어지는 도미넌트 연쇄", [
+        { head:"A7", detail:"V7/V/V", tone:"secondary" }, { head:"D7", detail:"V7/V", tone:"secondary" },
+        { head:"G7", detail:"V7", tone:"dominant" }, { head:"C", detail:"I", tone:"tonic" }
+      ]);
+    }
+    if (key === "secondary-dominant-compare") {
+      return '<div class="concept-diagram theory-compare" role="img" aria-label="G로 가는 D7과 F샤프 감7화음 비교"><div><small>목표의 5도 위</small><strong>D7</strong><span>V7/V</span></div><b>→ G ←</b><div><small>목표의 반음 아래</small><strong>F♯°7</strong><span>vii°7/V</span></div></div>';
+    }
+    if (key === "borrowed-compare") {
+      return '<div class="concept-diagram borrowed-diagram" role="img" aria-label="C장조의 IV F장화음과 평행단조에서 빌린 iv F단화음 비교"><div><small>C장조 안</small><strong>IV · F</strong><span>F — <b>A</b> — C</span></div><span class="borrow-arrow">A → A♭</span><div><small>C단조에서 빌림</small><strong>iv · Fm</strong><span>F — <b>A♭</b> — C</span></div></div>';
+    }
+    if (key === "borrowed-family") {
+      return '<div class="concept-diagram borrowed-family-diagram" role="img" aria-label="C장조에서 빌린 iv 플랫6 플랫7 화음"><div><strong>iv</strong><span>F–A♭–C</span><b>♭6</b></div><div><strong>♭VI</strong><span>A♭–C–E♭</span><b>♭6·♭3</b></div><div><strong>♭VII</strong><span>B♭–D–F</span><b>♭7</b></div></div>';
+    }
+    if (key === "flat-two-compare") {
+      return '<div class="concept-diagram theory-compare" role="img" aria-label="N6와 플랫2 도미넌트7화음의 구성과 기능 비교"><div><small>♭II 3화음·제1전위</small><strong>N6</strong><span>F–A♭–D♭ → G</span></div><b>같은 ♭II 계열<br>다른 기능</b><div><small>♭II 도미넌트7화음</small><strong>D♭7</strong><span>D♭–F–A♭–C♭ → C</span></div></div>';
+    }
+    if (key === "tension-map") {
+      return '<div class="concept-diagram tension-diagram" role="img" aria-label="코드톤 위에 9, 11, 13 텐션이 한 음씩 쌓이는 구조"><div class="chord-floor"><small>기본 골격</small><span><b>1</b><b>3</b><b>5</b><b>7</b></span></div><span class="concept-plus">+</span><div class="tension-floor"><small>색채음</small><span><b>9</b><b>11</b><b>13</b></span></div><strong class="tension-name">Cmaj9 · G13</strong></div>';
+    }
+    if (key === "tension-stack") {
+      return '<div class="concept-diagram tension-diagram" role="img" aria-label="9 11 13은 2 4 6에 옥타브를 더한 자리"><div class="chord-floor"><small>단순음정</small><span><b>2</b><b>4</b><b>6</b></span></div><span class="concept-plus">+ 8</span><div class="tension-floor"><small>텐션 이름</small><span><b>9</b><b>11</b><b>13</b></span></div><strong class="tension-name">2+7=9 · 4+7=11 · 6+7=13</strong></div>';
+    }
+    if (key === "tension-available") {
+      return '<div class="concept-diagram borrowed-family-diagram" role="img" aria-label="기본 규칙의 코드별 가용 텐션"><div><strong>Cmaj7</strong><span>9 · ♯11 · 13</span><b>D · F♯ · A</b></div><div><strong>Dm7</strong><span>9 · 11 · 13</span><b>E · G · B</b></div><div><strong>G7</strong><span>9 · 13</span><b>A · E</b></div></div>';
+    }
+    if (key === "tension-avoid") {
+      return '<div class="concept-diagram theory-compare" role="img" aria-label="C메이저7에서 자연11과 샤프11의 충돌 비교"><div><small>지속 텐션 주의</small><strong>E–F</strong><span>단2도 충돌</span></div><b>F → F♯</b><div><small>이 과정의 기본 선택</small><strong>E–F♯</strong><span>장2도</span></div></div>';
+    }
+    return "";
+  }
+
   function renderVisual(key) {
+    if (key === "note-values") return noteValuesDiagram();
+    if (key === "meter-basics") return meterBasicsDiagram();
     const score = SCORE_SETS[key];
     const formula = formulaVisual(key);
     if (!score) return '<div class="concept-map"><div class="concept-row"><strong>보기</strong><span>악보와 소리를 함께 비교하세요.</span></div></div>';
-    const title = key === "lead-sheet" ? "리드시트의 코드와 멜로디" : "오선에서 음의 배치 비교";
-    return (formula ? formula : "") + staffSvg(score, title, key);
+    const title = key === "lead-sheet" ? "리드시트의 코드와 멜로디"
+      : key === "staff-basics" ? "다섯 줄과 네 칸"
+      : key === "staff-clefs" ? "두 음자리표의 기준 음"
+      : "악보에서 음의 위치 확인";
+    return conceptVisual(key) + (formula ? formula : "") + staffSvg(score, title, key);
+  }
+
+  const PREVIEW_LABELS = {
+    "staff-basics":"5선", "pitch-alphabet":"C–B", "staff-clefs":"𝄞·𝄢", "enharmonic-spelling":"♯=♭", "voice-ranges":"SATB",
+    "note-values":"♩·𝅗𝅥", "meter-basics":"4/4", "interval-spelling":"M3", "interval-inversion":"3↔6",
+    "part-spacing":"SATB", "part-motion":"7→1", "motion-directions":"↑↓―", "voice-crossing":"교차", "nonchord-motion":"C–D–E", "suspension-resolution":"4–3",
+    "minor-scales":"m scale", "minor-dominant":"V7–i", "sequence-cycle":"vi–ii–V–I", "sequence-voices":"성부선",
+    "symbol-anatomy":"C△7", "symbol-contrast":"sus·add", "triad-stack":"1·3·5", "triad-transpose":"D→E♭",
+    "quality-pairs":"4+3", "quality-motion":"△·m·°", "inversion-score":"C/E", "bass-line":"Bass",
+    "voice-compare":"최소이동", "voice-path":"성부선", "key-scale":"Key", "leading-tone":"7→1",
+    "diatonic-map":"I–vii°", "roman-transfer":"Ⅰ→Ⅴ", "diatonic-sevenths":"7th", "function-flow":"T–PD–D",
+    "function-options":"기능", "cadence-compare":"V–I", "cadence-voices":"종지선", "deceptive-cadence":"V–vi",
+    "cadential-six-four":"I6/4–V", "passing-six-four":"경과6/4", "auxiliary-six-four":"보조6/4", "arpeggio-six-four":"분산6/4",
+    "loop-leadsheet":"Loop", "practice-layers":"층쌓기", "seventh-family":"7th", "diminished-sevenths":"ø7·°7",
+    "seventh-inversions":"7/B", "guide-tone":"3·7", "two-five-one-guides":"ii–V–I", "sus-add":"sus·add",
+    "tension-map":"9·11·13", "transpose-map":"이조", "transpose-melody":"C→G", "harmonic-rhythm":"화성리듬",
+    "rhythm-density":"밀도", "melody-candidates":"멜로디", "harmonize-options":"화음붙이기", "melody-register":"음역",
+    "secondary-dominant":"V/V", "secondary-targets":"목표→V", "secondary-root-motion":"A→D→G", "secondary-chain":"V/x", "secondary-leading-tone":"vii°/V", "borrowed-compare":"IV↔iv",
+    "borrowed-resolution":"iv–I", "lead-sheet":"Lead", "arrangement-layers":"편곡층", "revision-loop":"수정"
+  };
+
+  function skillPreviewMarkup(skill) {
+    const key = skill.sections[0].visual;
+    const label = PREVIEW_LABELS[key] || "보기";
+    let seed = 0;
+    for (let index = 0; index < key.length; index += 1) seed += key.charCodeAt(index);
+    const firstY = 22 + (seed % 5) * 4;
+    const secondY = 22 + ((seed + 2) % 5) * 4;
+    return '<span class="skill-preview" aria-hidden="true"><svg viewBox="0 0 72 48"><g class="preview-staff"><line x1="5" y1="20" x2="67" y2="20"/><line x1="5" y1="24" x2="67" y2="24"/><line x1="5" y1="28" x2="67" y2="28"/><line x1="5" y1="32" x2="67" y2="32"/><line x1="5" y1="36" x2="67" y2="36"/></g><ellipse cx="26" cy="'+firstY+'" rx="5" ry="3.5"/><ellipse cx="47" cy="'+secondY+'" rx="5" ry="3.5"/><line class="preview-stem" x1="31" y1="'+firstY+'" x2="31" y2="'+(firstY-14)+'"/><line class="preview-stem" x1="52" y1="'+secondY+'" x2="52" y2="'+(secondY-14)+'"/></svg><b>'+escapeHtml(label)+'</b></span>';
   }
 
   function renderDashboard() {
     const nextId = recommendedId();
     const next = curriculum.skills[nextId];
-    els.progressText.textContent = state.completed.size
-      ? "배운 항목 " + state.completed.size + "개 · 다음: " + next.title
-      : "첫 항목부터 차례로 시작하세요.";
+    const allComplete = state.completed.size >= allSkillIds().length;
+    els.progressText.textContent = allComplete ? "전체 학습 완료" :
+      (state.completed.size ? "완료한 학습 " + state.completed.size + "개 · 다음: " + next.title : "첫 학습: " + next.title);
     els.unitList.innerHTML = curriculum.strands.map(function (group) {
       const active = group.skills.includes(state.currentId || nextId);
       return '<details class="unit-block skill-strand" '+(active ? "open" : "")+'><summary><span class="strand-mark" aria-hidden="true">'+strandIcon(group.id)+'</span><span class="unit-summary-copy"><strong>'+escapeHtml(group.title)+'</strong><small>'+escapeHtml(group.description)+'</small></span></summary><div class="lesson-list">'+group.skills.map(skillButtonMarkup).join("")+'</div></details>';
     }).join("");
   }
   function strandIcon(id) {
-    return { notation:"𝄞", "chord-language":"C△", "tonal-map":"Ⅰ", "part-writing":"4", progression:"→", chromatic:"♭♯", application:"♪" }[id] || "♪";
+    return { fundamentals:"𝄞", interval:"m3", "chord-language":"C△", "tonal-map":"Ⅰ", "part-writing":"4", progression:"→", application:"♪", "basic-extension":"V/x" }[id] || "♪";
   }
   function prereqMarkup(skill) {
     if (!skill.prereqs.length) return "";
@@ -305,8 +509,7 @@
     const skill = curriculum.skills[id];
     const complete = state.completed.has(id);
     const ready = prereqsMet(id);
-    const order = allSkillIds().indexOf(id) + 1;
-    return '<button class="lesson-button skill-button '+(complete ? "completed" : ready ? "ready" : "needs-prereq")+'" type="button" data-open-skill="'+id+'"><span class="skill-id" aria-hidden="true">'+order+'</span><span class="lesson-copy"><strong>'+escapeHtml(skill.title)+'</strong><small>'+escapeHtml(skill.summary)+'</small>'+(!ready && !complete ? '<span class="prereq-note">앞 진도를 먼저 익히면 이해하기 쉽습니다.</span>' : "")+'</span><span class="skill-status">'+(complete ? "✓ 완료" : id === state.currentId ? "학습 중" : "열기")+'</span></button>';
+    return '<button class="lesson-button skill-button '+(complete ? "completed" : ready ? "ready" : "needs-prereq")+'" type="button" data-open-skill="'+id+'">'+skillPreviewMarkup(skill)+'<span class="lesson-copy"><strong>'+escapeHtml(skill.title)+'</strong><small>'+escapeHtml(skill.summary)+'</small>'+(!ready && !complete ? '<span class="prereq-note">앞 진도를 먼저 익히면 이해하기 쉽습니다.</span>' : "")+'</span><span class="skill-status">'+(complete ? "✓ 완료" : id === state.currentId ? "학습 중" : "열기")+'</span></button>';
   }
 
   function openSkill(id) {
@@ -324,7 +527,7 @@
     const ids = allSkillIds();
     const order = ids.indexOf(id);
     const followingId = ids[order+1] || "";
-    els.currentLesson.textContent = "학습 " + (order+1) + " / " + ids.length;
+    els.currentLesson.textContent = strand.title + " · " + skill.title;
     els.nextSkillNav.disabled = !followingId;
     els.nextSkillNav.dataset.nextSkill = followingId;
     els.nextSkillNav.innerHTML = followingId ? '다음 학습 <span aria-hidden="true">→</span>' : '마지막 학습';
@@ -334,11 +537,18 @@
     els.lessonOutcome.innerHTML = '<strong>이번에 할 일</strong> '+escapeHtml(skill.outcome);
     els.lessonSections.innerHTML = skill.sections.map(function (section) {
       const audio = section.audioOptions && section.audioOptions.length ? '<div class="section-audio" aria-label="비교 청음">'+section.audioOptions.map(function (option, index) { return '<button type="button" data-section-audio="'+index+'">♪ '+escapeHtml(option.label)+'</button>'; }).join("")+'</div>' : "";
-      return '<section class="lesson-section"><div class="section-copy"><span class="section-label">'+escapeHtml(section.label)+'</span><h2>'+escapeHtml(section.title)+'</h2>'+section.body.map(function (paragraph) { return '<p>'+escapeHtml(paragraph)+'</p>'; }).join("")+'<p class="section-takeaway"><strong>핵심 정리</strong> '+escapeHtml(section.takeaway)+'</p>'+audio+'</div><div class="visual-board">'+renderVisual(section.visual)+'</div></section>';
+      const worked = section.worked ? '<div class="worked-example"><strong>'+escapeHtml(section.worked.title || "같이 풀기")+'</strong><ol>'+section.worked.steps.map(function (step) { return '<li>'+escapeHtml(step)+'</li>'; }).join("")+'</ol>'+(section.worked.answer ? '<p><b>답</b> '+escapeHtml(section.worked.answer)+'</p>' : "")+'</div>' : "";
+      const mistake = section.mistake ? '<p class="common-mistake"><strong>자주 하는 실수</strong> '+escapeHtml(section.mistake)+'</p>' : "";
+      const intro = section.body.length ? '<p>'+escapeHtml(section.body[0])+'</p>' : "";
+      const detail = section.body.slice(1).map(function (paragraph) { return '<p>'+escapeHtml(paragraph)+'</p>'; }).join("");
+      return '<section class="lesson-section"><div class="section-copy section-lead"><span class="section-label">'+escapeHtml(section.label)+'</span><h2>'+escapeHtml(section.title)+'</h2>'+intro+'</div><div class="visual-board lesson-visual"><span class="visual-kicker">그림으로 먼저 확인</span>'+renderVisual(section.visual)+'</div><div class="section-copy section-detail">'+detail+worked+mistake+'<p class="section-takeaway"><strong>핵심 정리</strong> '+escapeHtml(section.takeaway)+'</p>'+audio+'</div></section>';
     }).join("");
     Array.from(els.lessonSections.querySelectorAll(".lesson-section")).forEach(function (sectionEl, sectionIndex) {
       sectionEl.querySelectorAll("[data-section-audio]").forEach(function (button) {
-        button.addEventListener("click", function () { playGroups(skill.sections[sectionIndex].audioOptions[Number(button.dataset.sectionAudio)].groups); });
+        button.addEventListener("click", function () {
+          const option = skill.sections[sectionIndex].audioOptions[Number(button.dataset.sectionAudio)];
+          playGroups(option.groups, option);
+        });
       });
     });
     els.termList.innerHTML = skill.terms.map(function (term) { return '<div class="term-item"><strong>'+escapeHtml(term[0])+'</strong><span>'+escapeHtml(term[1])+'</span></div>'; }).join("");
@@ -558,8 +768,7 @@
     renderDashboard();
     renderFreePiano();
     bindEvents();
-    const savedId = readStorage(CURRENT_KEY);
-    openSkill(curriculum.skills[savedId] ? savedId : recommendedId());
+    showDashboard();
     if (window.HarmonyPiano) window.setTimeout(function () { window.HarmonyPiano.preload().catch(function () { /* First user action will use the synthesized fallback. */ }); }, 1200);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

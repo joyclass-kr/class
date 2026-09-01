@@ -6,22 +6,29 @@ import vm from "node:vm";
 const root = path.resolve(import.meta.dirname, "..");
 const harmony = path.join(root, "learning", "arts", "music-theory", "harmony");
 const dataSource = fs.readFileSync(path.join(harmony, "harmony-curriculum.js"), "utf8");
+const traditionalSource = fs.readFileSync(path.join(harmony, "harmony-traditional-extension.js"), "utf8");
 const context = { window: {} };
 vm.createContext(context);
 vm.runInContext(dataSource, context);
+vm.runInContext(traditionalSource, context);
 const curriculum = context.window.HarmonyCurriculum;
 
 const META_QUESTION_PATTERN = /가장 먼저|첫 단계|연주 전략|편곡을 판단|수정 방식|완성.*증거|효과적인 수정|최종 선택 근거/;
 const NON_MUSICAL_CHOICE_PATTERN = /음표 색|악기 가격|코드 글자 수|제목의 글꼴|마디 번호 색|연주자 이름|악기 교체|음량이|음량 증가|페달만|페달을 더|악기 음색|손 크기|곡 삭제|모든 코드 삭제|멜로디 생략|알파벳 순서|건반의 흰색|템포가 느림|멜로디가 삭제|배운 기술|차시 수|다시 듣지|모든 음 암기|코드가 하나뿐|멜로디가 없음/;
 const META_QUESTION_KINDS = new Set(["연주 전략", "분석 순서", "편곡 판단", "수정 방법", "완성 증거"]);
+const AMBIGUOUS_PROMPT_PATTERN = /가장|알맞은|적절한|자연스러운|좋은|효과적인|일반적인|보통|주로|대표적인/;
 
 const midiGroups = [];
-const collectGroups = (groups, where) => {
+const collectGroups = (groups, where, allowRests = false) => {
   if (!groups) return;
   assert.ok(Array.isArray(groups), where + " audio must be an array");
   const normalized = Array.isArray(groups[0]) ? groups : [groups];
   for (const group of normalized) {
-    assert.ok(Array.isArray(group) && group.length > 0, where + " contains an empty audio event");
+    assert.ok(Array.isArray(group), where + " contains an invalid audio event");
+    if (group.length === 0) {
+      assert.ok(allowRests, where + " contains an undeclared empty audio event");
+      continue;
+    }
     for (const midi of group) {
       assert.ok(Number.isInteger(midi) && midi >= 36 && midi <= 84, where + " has an out-of-range MIDI note " + midi);
       midiGroups.push(midi);
@@ -33,7 +40,7 @@ for (const [id, skill] of Object.entries(curriculum.skills)) {
   for (const [sectionIndex, section] of skill.sections.entries()) {
     for (const option of section.audioOptions) {
       assert.ok(option.label, id + " section " + sectionIndex + " has an unlabeled audio button");
-      collectGroups(option.groups, id + " section audio");
+      collectGroups(option.groups, id + " section audio", option.allowRests === true);
     }
   }
 
@@ -44,6 +51,7 @@ for (const [id, skill] of Object.entries(curriculum.skills)) {
     assert.ok(question.explain && question.explain.length >= 12, id + " question " + questionIndex + " needs useful feedback");
     assert.doesNotMatch(question.prompt, META_QUESTION_PATTERN, id + " question " + questionIndex + " asks about learning procedure instead of music");
     assert.ok(!META_QUESTION_KINDS.has(question.kind), id + " question " + questionIndex + " uses a meta-learning question kind");
+    assert.doesNotMatch(question.prompt, AMBIGUOUS_PROMPT_PATTERN, id + " question " + questionIndex + " needs a single rule-bound answer");
     for (const choice of question.choices) {
       assert.doesNotMatch(choice, NON_MUSICAL_CHOICE_PATTERN, id + " question " + questionIndex + " contains a non-musical distractor: " + choice);
     }
