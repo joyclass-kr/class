@@ -663,7 +663,7 @@ body {
     .book { width: min(900px, 96vw, calc((100dvh - 46px) * 3 / 4)); aspect-ratio: 3 / 4; }
     .nav-prev { left: 6px; }
     .nav-next { right: 6px; }
-    .page-cover { grid-template-columns: 1fr; grid-template-rows: 24% 76%; }
+    .page-cover { grid-template-columns: 1fr; grid-template-rows: 26% 74%; }
     .page-toc { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
     .page-toc .story-page-left { border-right: none; border-bottom: 1px solid rgba(92, 58, 34, 0.22); }
     /* 세로 화면은 한 쪽만 보이므로 두 칸을 나란히 두면 글줄이 너무 짧아진다.
@@ -688,9 +688,8 @@ body {
         align-self: stretch;
         margin: calc(-1 * var(--after-pad-y)) calc(-1 * var(--after-pad-x)) 6px;
     }
-    /* 세로 화면은 책이 길어 글씨가 커진다(2.315cqh). 그러면 「읽고 나서」가 넘친다.
-       뒷이야기 쪽만 조금 줄인다. 가로 화면과 본문은 그대로 둔다. */
-    .page-after p { font-size: clamp(13px, 1.9cqh, 20px); }
+    /* 글씨는 전권·전화면이 같다. 세로에서 「읽고 나서」가 칸을 넘으면
+       글씨를 줄이지 않고 그 칸을 굴린다(.after-col 은 overflow-y: auto). */
 }
 
 /* 그림책은 장이 서넛뿐이라 차례가 펼침 하나를 쓸 만큼이 못 된다.

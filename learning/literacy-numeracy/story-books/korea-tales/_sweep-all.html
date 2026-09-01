@@ -4,23 +4,33 @@
 const out=document.getElementById('out'),frame=document.getElementById('frame');
 const BOOKS=['bak-hyeokgeose','bame-chajaon-dokkaebi','banggwi-myeoneuri','banjjogi','bongi-kimseondal','cheonggaeguri','chunhyangjeon','dangun','deuljwi-sontop','dokkaebi-bangmangi','dokkaebi-gamtu','dukkeobi-tokki-horangi','eunhye-dukkeobi','eunhye-kkachi','gangdo-jabeun-gae','geumdokki-eundokki','geuneul-san-saram','gotgam-horangi','gureongdeongdeong','gyeonu-jiknyeo','haewa-dari-doen-onui','halmikkot','heungbujeon','hokburi-yeonggam','honggildongjeon','horangi-hyeongnim','horangi-sogin-tokki','hwangso-nongbu','imgeumnim-gwi','iyagi-jumeoni','jaringobi','jige-iyagi','jinju-geowi','jopssal-han-tol','juin-guhan-nureongi','jumong','jwi-sawi','kim-suro','kkoe-manheun-sonyeon','kkongji-datbal','kongjwi-patjwi','mangduseok-jaepan','muyeongtap','myeolchi-kkum','nai-jarang','namukkun-seonnyeo','ondal-pyeonggang','onggojipjeon','patjuk-halmeom','ppalgan-buchae','pureun-gusul','samhyeongje-jaeju','samnyeon-gogae','seok-talhae','simcheongjeon','singihan-jeolgu','tokki-jaepan','tokkijeon','uijoheun-hyeongje','ureongi-gaksi','yeoni-beodeul','yosul-hangari'];
 const SIZES=[[1366,768],[1280,720],[1920,1080],[810,1080],[768,1024],[1024,768]];
-function probe(){const bad=[];
+// 글씨는 전권·전화면이 같다. 칸이 모자라면 그 칸을 굴리면 그만이므로
+// 굴러가는 넘침은 흠이 아니다. 잘려서 못 읽는 것만 흠이다.
+function probe(){const bad=[],roll=[];
  for(let i=0;i<PAGES.length;i++){ if(PAGES[i].kind==='quiz') continue;   // 문항 쪽은 원래 스크롤이다
    current=i; paint();
   document.querySelectorAll('.book *').forEach(el=>{const o=el.scrollHeight-el.clientHeight;
-   if(o>1&&getComputedStyle(el).overflowY!=='visible') bad.push(i+' '+(el.className||el.tagName)+' '+o+'px');});}
- current=0;paint();return bad;}
+   if(o<=1) return;
+   const oy=getComputedStyle(el).overflowY;
+   if(oy==='visible') return;
+   const t=el.scrollTop; el.scrollTop=o; const moved=el.scrollTop>0; el.scrollTop=t;
+   const line=i+' '+(el.className||el.tagName)+' '+o+'px';
+   if(moved) roll.push(line); else bad.push(line+' \u2717\uc798\ub9bc('+oy+')');});}
+ current=0;paint();return {bad:bad,roll:roll};}
 (async()=>{const lines=[];
  for(const b of BOOKS){const res=[];
+  const roll=[];
   for(const [w,h] of SIZES){frame.style.width=w+'px';frame.style.height=h+'px';
    // 브라우저에 영어가 저장돼 있으면 영어로 열린다. 우리말로 못 박고 잰다.
    try{localStorage.setItem('korea-tales-lang','ko');}catch(e){}
    await Promise.all(['app.js','styles.css'].map(f=>fetch(b+'/'+f,{cache:'reload'}).catch(()=>{})));
    await new Promise(r=>{frame.onload=r;frame.src=b+'/?t='+Date.now();});
    await new Promise(r=>setTimeout(r,140));
-   try{const v=frame.contentWindow.eval('('+probe.toString()+')()');v.forEach(x=>res.push('  ['+w+'x'+h+'] '+x));}
+   try{const v=frame.contentWindow.eval('('+probe.toString()+')()');
+    v.bad.forEach(x=>res.push('  ['+w+'x'+h+'] '+x));
+    if(v.roll.length) roll.push('  ['+w+'x'+h+'] \uad74\ub824\uc11c \ubcf4\ub294 \uce78 '+v.roll.length+'\uacf3');}
    catch(e){res.push('  실패 '+e.message);}}
-  lines.push((res.length?'✗ ':'✔ ')+b+(res.length?'\n'+res.join('\n'):''));
+  lines.push((res.length?'✗ ':'✔ ')+b+(res.length?'\n'+res.join('\n'):'')+(roll.length?'\n'+roll.join('\n'):''));
   out.textContent=lines.join('\n');}
  out.textContent=lines.join('\n')+'\n\n=== 끝 ===';})();
 </script></body></html>
