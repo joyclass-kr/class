@@ -63,7 +63,7 @@ test("body copy and controls remain readable and touchable", () => {
 
 test("the page loads the readability revision", () => {
   assert.ok(html.includes("harmony-course.css?v=20260901-12"));
-  assert.ok(html.includes("harmony-curriculum.js?v=20260901-10"));
+  assert.ok(html.includes("harmony-curriculum.js?v=20260901-11"));
   assert.ok(html.includes("harmony-course.js?v=20260901-16"));
   assert.ok(html.includes("harmony-traditional-extension.js?v=20260901-7"));
 });

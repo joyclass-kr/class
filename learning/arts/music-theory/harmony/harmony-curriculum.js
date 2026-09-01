@@ -983,42 +983,6 @@
   const harmonyAnalysisStrand = strands.find(function (strand) { return strand.id === "chord-language"; });
   harmonyAnalysisStrand.skills.splice(harmonyAnalysisStrand.skills.indexOf("SYMBOL_READ") + 1, 0, "ANALYSIS_SYMBOLS");
 
-  const missingDepth = {
-    NOTATION_BASICS:{section:0,worked:{title:"높은음자리표 첫째 줄부터 음이름 읽기",steps:["첫째 줄의 기준 음 E4를 확인합니다.","줄과 칸을 번갈아 위로 이동하며 F4·G4를 말합니다.","음표가 셋째 칸에 있으면 C5인지 다시 셉니다."],answer:"첫째 줄 E4에서 줄·칸을 번갈아 세면 셋째 칸은 C5입니다."},mistake:"줄 번호와 칸 번호를 같은 순서로 세면 음이름이 한 칸씩 어긋납니다."},
-    STAFF_PITCH:{section:0,worked:{title:"낮은음자리표 C3 찾기",steps:["낮은음자리표 넷째 줄 F3를 기준으로 잡습니다.","아래로 E3·D3·C3를 줄과 칸을 번갈아 셉니다.","둘째 칸 C3의 실제 건반을 확인합니다."],answer:"낮은음자리표 둘째 칸은 C3입니다."},mistake:"낮은음자리표 음을 높은음자리표처럼 읽으면 한 옥타브 이상의 잘못된 음이 됩니다."},
-    RHYTHM_NOTATION:{section:0,worked:{title:"4/4 한 마디를 같은 길이로 바꾸기",steps:["온음표 한 개의 총길이가 4박임을 적습니다.","2분음표 두 개가 2+2=4박인지 확인합니다.","4분음표 네 개와 8분음표 여덟 개도 같은 세로 시간선에 맞춥니다."],answer:"온음표 1 = 2분음표 2 = 4분음표 4 = 8분음표 8입니다."},mistake:"8분음표의 숫자 8을 8박으로 읽지 않습니다. 8분음표 두 개가 1박입니다."},
-    SYMBOL_READ:{section:0,worked:{title:"F♯m7 코드 기호 해독하기",steps:["첫 글자와 변화표 F♯을 근음으로 읽습니다.","m을 단3화음 성질로 읽어 F♯–A–C♯을 만듭니다.","7을 근음에서 단7음 E로 읽어 더합니다."],answer:"F♯m7 = F♯–A–C♯–E입니다."},mistake:"m7의 m은 7음만 단으로 만들라는 뜻이 아니라 기본 3화음의 단 성질을 표시합니다."},
-    FUNCTION_HEAR:{section:0,worked:{title:"C–Am–Dm–G의 기능 묶기",steps:["C와 Am이 토닉 기능의 공통음 C·E를 가지는지 봅니다.","Dm이 G를 준비하는 프리도미넌트인지 확인합니다.","G의 B가 C로 해결하려는 도미넌트인지 듣습니다."],answer:"T–T–PD–D이며 다음 C에서 해결됩니다."},mistake:"장화음은 모두 토닉, 단화음은 모두 프리도미넌트라고 성질만으로 기능을 정하지 않습니다."},
-    VOICE_LEAD:{section:0,worked:{title:"C–G/B를 최소 이동으로 연결하기",steps:["두 화음의 공통음 G를 같은 성부에 둡니다.","E를 가까운 D로, C를 가까운 B로 내립니다.","베이스 C–B와 윗성부의 병행5도·8도를 검사합니다."],answer:"G 유지, E→D, C→B가 기본 최소 이동입니다."},mistake:"모든 음을 C 화음 모양 그대로 G 화음까지 평행 이동하면 병행 완전음정이 생기기 쉽습니다."},
-    GUIDE_TONE:{section:0,worked:{title:"G7–C에서 두 가이드톤 해결하기",steps:["G7의 3음 B와 7음 F를 표시합니다.","B를 C로 반음 올립니다.","F를 E로 반음 내린 뒤 나머지 성부를 가까이 연결합니다."],answer:"B→C, F→E가 핵심 해결입니다."},mistake:"코드의 근음 G만 따라가면 실제 진행을 결정하는 3음과 7음의 반음 해결을 놓칩니다."},
-    SEQUENCE_PLAY:{section:0,worked:{title:"Am–Dm–G–C 모형 옮기기",steps:["근음 A–D–G–C가 5도씩 하행하는지 봅니다.","각 화음의 같은 성부 모양을 다음 위치로 옮깁니다.","조표와 병행 완전음정을 다시 검사합니다."],answer:"vi–ii–V–I의 5도권 연속진행입니다."},mistake:"코드 이름만 반복하고 성부별 선율을 검사하지 않으면 연속 병행이 숨어들 수 있습니다."},
-    PROGRESSION_PLAY:{section:0,worked:{title:"Am–F–C–G 네 마디 루프 만들기",steps:["각 마디의 코드 순서를 먼저 고정합니다.","베이스에 A–F–C–G 근음을 놓습니다.","공통음 C·E를 가능한 성부에 유지해 마지막 G에서 처음 Am으로도 이어 봅니다."],answer:"마지막 화음에서 첫 화음으로 돌아갈 때까지 끊기지 않아야 루프가 완성됩니다."},mistake:"마지막 G까지만 자연스럽고 다시 Am으로 돌아갈 때 큰 도약이 생기면 반복 진행으로 완성되지 않은 것입니다."},
-    HARMONIC_RHYTHM:{section:0,worked:{title:"4/4에서 두 코드 배치하기",steps:["한 마디의 네 박을 1·2·3·4로 표시합니다.","C를 1–2박, G를 3–4박에 놓습니다.","코드 변화가 3박에서 한 번 일어나는지 셉니다."],answer:"한 마디 두 화음이며 변화 시점은 3박입니다."},mistake:"연주한 음표 수를 화성 리듬으로 세지 않습니다. 코드가 바뀐 순간만 셉니다."},
-    TRANSPOSE:{section:0,worked:{title:"C조 I–IV–V–I를 D조로 옮기기",steps:["진행을 C–F–G–C가 아니라 I–IV–V–I로 바꿔 씁니다.","D 장조의 1·4·5음 D·G·A를 찾습니다.","각 화음에 F♯과 C♯ 조표가 필요한지 확인합니다."],answer:"D–G–A–D입니다."},mistake:"모든 코드의 글자 이름에 2만 더하는 식으로 옮기면 변화표와 화음 성질을 놓칠 수 있습니다."},
-    MELODY_HARMONIZE:{section:0,worked:{title:"강박 멜로디 E에 후보 화음 붙이기",steps:["E를 포함하는 C 장조 다이어토닉 화음 C·Am·Em을 찾습니다.","앞 화음이 Dm이고 뒤가 G라면 기능 흐름을 비교합니다.","PD–T–D보다 PD–D 연결이 필요한지 문맥과 소리로 선택합니다."],answer:"한 음에는 여러 후보가 있으며 앞뒤 기능까지 보아 하나를 선택합니다."},mistake:"멜로디 음 하나에 정답 코드가 항상 하나뿐이라고 가정하면 자연스러운 대안 화성화를 만들 수 없습니다."}
-  };
-  Object.entries(missingDepth).forEach(function (entry) {
-    const skill = skills[entry[0]];
-    const upgrade = entry[1];
-    const section = skill.sections[upgrade.section];
-    if (!section.worked) section.worked = upgrade.worked;
-    if (!section.mistake) section.mistake = upgrade.mistake;
-  });
-
-  const missingQuestions = {
-    STAFF_PITCH:Q("임시표 범위","마디 안 C♯ 뒤 같은 옥타브의 C가 다시 나오고 취소표가 없다면?",["C♯으로 연주","C로 연주","D♭으로 연주","쉼표로 처리"],"C♯으로 연주","임시표는 그 마디의 같은 음이름과 옥타브에 계속 적용됩니다."),
-    SYMBOL_READ:Q("슬래시","C/E에서 E가 가리키는 것은?",["베이스 음","근음","멜로디 최고음","조 이름"],"베이스 음","슬래시 뒤의 E가 가장 낮은 음입니다."),
-    FUNCTION_HEAR:Q("문맥","C 장조에서 Am이 I를 대신해 안정 영역에 놓일 때 기능은?",["토닉 대리","도미넌트","프리도미넌트만","전조"],"토닉 대리","Am은 C와 E를 I와 공유합니다."),
-    VOICE_LEAD:Q("공통음","C–G 진행에서 두 화음에 공통으로 있는 음은?",["G","C","E","B"],"G","C–E–G와 G–B–D에 모두 들어 있습니다."),
-    GUIDE_TONE:Q("도미넌트7화음","G7의 트라이톤을 이루며 C와 E로 해결하는 두 음은?",["B와 F","G와 D","G와 B","D와 F"],"B와 F","3음과 7음이 트라이톤을 만들고 C와 E로 해결합니다."),
-    SEQUENCE_PLAY:Q("모형","연속진행에서 반복되어야 하는 핵심은?",["근음 이동과 성부 모형","코드 이름의 첫 글자만","항상 같은 음높이","항상 같은 베이스 한 음"],"근음 이동과 성부 모형","관계를 다른 음높이에서 반복합니다."),
-    PROGRESSION_PLAY:Q("루프","반복 진행을 완성할 때 반드시 검사할 경계는?",["마지막 코드에서 첫 코드로 돌아가는 연결","첫 두 코드만","가장 높은 음 하나","마지막 코드의 근음만"],"마지막 코드에서 첫 코드로 돌아가는 연결","반복 지점이 끊기면 루프가 아닙니다."),
-    HARMONIC_RHYTHM:Q("세기","4/4 한 마디에서 C가 1–2박, G가 3–4박이면 코드 변화 횟수는?",["1번","2번","4번","0번"],"1번","3박에서 C가 G로 한 번 바뀝니다."),
-    TRANSPOSE:Q("기능 유지","C 장조 V를 G 장조로 옮기면?",["D","G","C","A"],"D","G 장조의 5음 D 위의 장3화음입니다."),
-    MELODY_HARMONIZE:Q("후보","C 장조 멜로디 E를 포함하는 다이어토닉 3화음은?",["C·Am·Em","Dm·F·G","G·Bdim만","C 하나만"],"C·Am·Em","E는 C의 3음, Am의 5음, Em의 근음입니다.")
-  };
-  Object.entries(missingQuestions).forEach(function (entry) { skills[entry[0]].evidence.push(entry[1]); });
-
   const progressionStrand = strands.find(function (strand) { return strand.id === "progression"; });
   progressionStrand.title = "종지와 기본 진행";
   progressionStrand.description = "종지·연속진행·화성 리듬을 듣고 짧은 기본 진행을 직접 만듭니다.";
