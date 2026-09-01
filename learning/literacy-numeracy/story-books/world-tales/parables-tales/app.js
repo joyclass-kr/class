@@ -1163,12 +1163,34 @@ function tocPage(part) {
         </div>`;
 }
 
-// 차례는 한 펼침면에 다 담는 것을 먼저 노린다. 마지막 '이야기 문제' 한 줄 때문에
-// 거의 빈 펼침면이 하나 더 생기면 보기 흉하다. 한 칸에 아홉 줄까지는 들어간다.
-const TOC_PER_SPREAD = 10;
-const TOC_GROUPS = [];
-for (let i = 0; i < CHAPTERS.length; i += TOC_PER_SPREAD) {
-    TOC_GROUPS.push(CHAPTERS.slice(i, i + TOC_PER_SPREAD));
+// 차례는 화면에 실제로 들어가는 만큼 먼저 채우고, 남는 장만 다음 펼침면으로 넘긴다.
+// 고정 숫자로 자르면 넓은 화면에서는 텅 비고 좁은 화면에서는 넘친다.
+let TOC_GROUPS = [];
+function computeTocGroups() {
+    const sample = ch => `<li><button type="button"><span class="toc-num">${ch.num}</span><span><strong>${ch.title}</strong><small>000쪽</small></span></button></li>`;
+    // 1쪽에는 "차례" 제목이 얹히므로 그만큼 뺀 자리를 기준으로 잰다.
+    const budget = Math.max(120, PROBE.usable - PROBE.headHeight);
+    let perCol = CHAPTERS.length;
+    for (let k = 1; k <= CHAPTERS.length; k++) {
+        const h = PROBE.measure(`<ul class="toc-list">${CHAPTERS.slice(0, k).map(sample).join('')}</ul>`);
+        if (h > budget) { perCol = k - 1; break; }
+        perCol = k;
+    }
+    perCol = Math.max(1, perCol);
+    const perPage = perCol * 2;
+    const groups = [];
+    let i = 0;
+    while (i < CHAPTERS.length) {
+        let end = Math.min(i + perPage, CHAPTERS.length);
+        // 마지막 펼침면이면 "이야기 문제"·"읽고 나서" 두 줄이 오른쪽 칸에 더 붙으므로
+        // 자리를 미리 둘 비워 둔다.
+        if (end === CHAPTERS.length && (end - i) + 2 > perPage) {
+            end = i + Math.max(1, perPage - 2);
+        }
+        groups.push(CHAPTERS.slice(i, end));
+        i = end;
+    }
+    TOC_GROUPS = groups.length ? groups : [[]];
 }
 
 function chapterSpreadPage(spread) {
@@ -1388,6 +1410,7 @@ let FOLIOS = [];
 
 function buildPages() {
     PROBE = makeProbe();
+    computeTocGroups();
     PAGES = [
         { kind: 'cover' },
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
