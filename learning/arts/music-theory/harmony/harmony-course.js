@@ -330,16 +330,52 @@
     const flag = kind === "eighth" ? '<path d="M40 7 C52 10 53 18 47 25"/>' : "";
     return '<svg class="value-note" viewBox="0 0 64 44" aria-hidden="true"><g transform="rotate(-18 32 31)"><ellipse cx="32" cy="31" rx="10" ry="6" '+(open ? 'fill="none"' : 'fill="currentColor"')+'/></g>'+stem+flag+'</svg>';
   }
+  function restValueIcon(kind) {
+    const drawings = {
+      whole:'<path d="M8 13H56"/><rect x="24" y="13" width="17" height="8" rx="1"/>',
+      half:'<path d="M8 29H56"/><rect x="24" y="21" width="17" height="8" rx="1"/>',
+      quarter:'<path d="M38 5L25 19L39 28L26 42M26 42L38 34"/>',
+      eighth:'<circle cx="25" cy="13" r="5"/><path d="M29 15C43 19 38 31 28 41"/>'
+    };
+    return '<svg class="value-rest '+kind+'" viewBox="0 0 64 48" aria-hidden="true">'+drawings[kind]+'</svg>';
+  }
   function noteValuesDiagram() {
     const values = [
-      ["whole","온음표","4박","𝄻","온쉼표"],
-      ["half","2분음표","2박","𝄼","2분쉼표"],
-      ["quarter","4분음표","1박","𝄽","4분쉼표"],
-      ["eighth","8분음표","1/2박","𝄾","8분쉼표"]
+      ["whole","온음표","1개 = 4박"],
+      ["half","2분음표","2개 = 4박"],
+      ["quarter","4분음표","4개 = 4박"],
+      ["eighth","8분음표","8개 = 4박"]
     ];
-    return '<div class="notation-diagram note-values-diagram" role="img" aria-label="온음표부터 8분음표까지 음표와 쉼표의 길이 비교">'+values.map(function (value) {
-      return '<div class="note-value-card">'+noteValueIcon(value[0])+'<strong>'+value[1]+'</strong><b>'+value[2]+'</b><span class="rest-symbol" aria-hidden="true">'+value[3]+'</span><small>'+value[4]+'</small></div>';
-    }).join("")+'</div>';
+    return '<div class="notation-diagram note-values-diagram" role="img" aria-label="온음표 한 개는 2분음표 두 개, 4분음표 네 개, 8분음표 여덟 개와 같은 네 박">'+
+      '<div class="duration-equation"><strong>온음표 1</strong><span>=</span><strong>2분음표 2</strong><span>=</span><strong>4분음표 4</strong><span>=</span><strong>8분음표 8</strong></div>'+
+      '<div class="duration-lanes">'+values.map(function (value) {
+        const count = { whole:1, half:2, quarter:4, eighth:8 }[value[0]];
+        return '<div class="duration-lane '+value[0]+'"><div class="duration-label">'+noteValueIcon(value[0])+'<span><strong>'+value[1]+'</strong><small>'+value[2]+'</small></span></div><div class="duration-track">'+Array.from({ length:count }, function (_, index) { return '<i><b>'+(index+1)+'</b></i>'; }).join("")+'</div></div>';
+      }).join("")+'</div><p class="duration-rule">세로선은 같은 시간 지점입니다. 아래로 갈수록 한 기호의 길이가 절반이 됩니다.</p></div>';
+  }
+  function restValuesDiagram() {
+    const values = [
+      ["whole","온음표","온쉼표","4박"],
+      ["half","2분음표","2분쉼표","2박"],
+      ["quarter","4분음표","4분쉼표","1박"],
+      ["eighth","8분음표","8분쉼표","1/2박"]
+    ];
+    return '<div class="notation-diagram rest-values-diagram" role="img" aria-label="각 음표와 같은 길이의 쉼표를 일대일로 연결한 표"><div class="rest-pair-grid">'+values.map(function (value) {
+      return '<div class="rest-pair"><div>'+noteValueIcon(value[0])+'<strong>'+value[1]+'</strong></div><span>= <b>'+value[3]+'</b></span><div>'+restValueIcon(value[0])+'<strong>'+value[2]+'</strong></div></div>';
+    }).join("")+'</div><div class="silent-beat-line"><strong>4/4 한 마디</strong><span class="sound">1<br><small>소리</small></span><span class="silent">2<br><small>쉼</small></span><span class="sound">3<br><small>소리</small></span><span class="silent">4<br><small>쉼</small></span><b>박은 멈추지 않음 →</b></div></div>';
+  }
+  function fifthsWheelDiagram() {
+    const keys = [
+      ["C","Am","0"],["G","Em","1♯"],["D","Bm","2♯"],["A","F♯m","3♯"],["E","C♯m","4♯"],["B","G♯m","5♯"],
+      ["F♯·G♭","D♯m·E♭m","6♯·6♭"],["D♭","B♭m","5♭"],["A♭","Fm","4♭"],["E♭","Cm","3♭"],["B♭","Gm","2♭"],["F","Dm","1♭"]
+    ];
+    const nodes = keys.map(function (item, index) {
+      const angle = (-90 + index * 30) * Math.PI / 180;
+      const x = 260 + Math.cos(angle) * 122;
+      const y = 154 + Math.sin(angle) * 122;
+      return '<g class="fifths-node" transform="translate('+x.toFixed(1)+' '+y.toFixed(1)+')"><circle r="34"/><text class="wheel-major" y="-8">'+item[0]+'</text><text class="wheel-minor" y="8">'+item[1]+'</text><text class="wheel-count" y="23">'+item[2]+'</text></g>';
+    }).join("");
+    return '<div class="concept-diagram fifths-wheel-diagram" role="img" aria-label="C에서 오른쪽으로 완전5도씩 가면 샵이 하나씩, 왼쪽으로 가면 플랫이 하나씩 늘어나는 오도권"><svg viewBox="0 0 520 310"><circle class="wheel-ring outer" cx="260" cy="154" r="122"/><circle class="wheel-ring inner" cx="260" cy="154" r="70"/>'+nodes+'<g class="wheel-center"><text x="260" y="140">5도권</text><text x="260" y="160">장조 · 관계단조</text><text x="260" y="181">← ♭ 추가 · ♯ 추가 →</text></g></svg><div class="wheel-reading"><span><b>시계 방향</b> C→G→D · 완전5도 위 · ♯ 하나씩</span><span><b>반시계 방향</b> C→F→B♭ · 완전5도 아래 · ♭ 하나씩</span></div></div>';
   }
   function meterBasicsDiagram() {
     const meters = [
@@ -356,7 +392,8 @@
     render:function (key) { return renderVisual(key); },
     preview:function (key) { return skillPreviewMarkup({ sections:[{ visual:key }] }); },
     noteParts:noteParts,
-    scoreKeys:Object.keys(SCORE_SETS)
+    scoreKeys:Object.keys(SCORE_SETS),
+    keyboardRange:keyboardLabRange
   };
   function formulaVisual(key) {
     const formulas = {
@@ -382,6 +419,30 @@
         { head:"C", detail:"다" }, { head:"D", detail:"라" }, { head:"E", detail:"마" }, { head:"F", detail:"바" },
         { head:"G", detail:"사" }, { head:"A", detail:"가" }, { head:"B", detail:"나" }, { head:"C", detail:"다시 시작", tone:"accent" }
       ]);
+    }
+    if (key === "whole-half-map") {
+      return '<div class="concept-diagram whole-half-diagram" role="img" aria-label="피아노에서 바로 이웃한 건반은 반음, 건반 하나를 건너뛴 거리는 온음이며 B C와 E F 사이는 흰건반끼리도 반음"><div class="step-keys"><span class="white">C</span><span class="black">C♯<small>D♭</small></span><span class="white">D</span><span class="black">D♯<small>E♭</small></span><span class="white">E</span><span class="white close">F</span><span class="black">F♯<small>G♭</small></span><span class="white">G</span></div><div class="step-rules"><span><b>C→C♯</b><strong>반음 1칸</strong></span><span><b>C→D</b><strong>온음 = 반음 2칸</strong></span><span><b>B–C · E–F</b><strong>흰건반 사이의 반음</strong></span></div></div>';
+    }
+    if (key === "sharp-order" || key === "flat-order") {
+      const sharp = key === "sharp-order";
+      const notes = sharp ? ["F","C","G","D","A","E","B"] : ["B","E","A","D","G","C","F"];
+      const keys = sharp ? ["G","D","A","E","B","F♯","C♯"] : ["F","B♭","E♭","A♭","D♭","G♭","C♭"];
+      return '<div class="concept-diagram accidental-order-diagram '+(sharp ? "sharp" : "flat")+'" role="img" aria-label="'+(sharp ? "샵 조표 순서 F C G D A E B와 마지막 샵의 반음 위가 장조 으뜸음인 관계" : "플랫 조표 순서 B E A D G C F와 끝에서 두 번째 플랫이 장조 으뜸음인 관계")+'"><header><strong>'+(sharp ? "♯ 붙는 순서" : "♭ 붙는 순서")+'</strong><span>'+notes.join(" → ")+'</span></header><div class="accidental-steps">'+notes.map(function (note, index) { return '<div><b>'+(index+1)+(sharp ? "♯" : "♭")+'</b><strong>'+keys[index]+'장조</strong><small>'+notes.slice(0,index+1).join("·")+'</small></div>'; }).join("")+'</div><p>'+(sharp ? "마지막 ♯에서 반음 위 = 장조 이름" : "끝에서 두 번째 ♭ = 장조 이름 · F장조는 ♭ 1개")+'</p></div>';
+    }
+    if (key === "fifths-wheel") return fifthsWheelDiagram();
+    if (key === "relative-keys") {
+      return '<div class="concept-diagram relative-key-diagram" role="img" aria-label="같은 조표를 공유하는 관계장조와 관계단조, 같은 으뜸음을 공유하는 나란한조 비교"><div class="relative-pairs"><span><strong>C장조</strong><b>조표 없음</b><strong>A단조</strong></span><span><strong>G장조</strong><b>♯ 1개</b><strong>E단조</strong></span><span><strong>E♭장조</strong><b>♭ 3개</b><strong>C단조</strong></span></div><div class="key-relation-rule"><p><b>관계조</b> 조표가 같음<br>장조 6음 = 관계단조 으뜸음</p><p><b>나란한조</b> 으뜸음이 같음<br>C장조 ↔ C단조 · 조표는 다름</p></div></div>';
+    }
+    if (key === "scale-degree-map") {
+      const degrees = [["1","으뜸음","안정"],["2","위으뜸음","진행"],["3","가온음","장·단 결정"],["4","버금딸림음","3으로"],["5","딸림음","중심 지지"],["6","버금가온음","색채"],["7","이끎음","1로 반음"]];
+      return '<div class="concept-diagram scale-degree-diagram" role="img" aria-label="장음계의 1음부터 7음까지 이름과 주요 경향"><div class="degree-line">'+degrees.map(function (degree) { return '<div class="degree-'+degree[0]+'"><b>'+degree[0]+'</b><strong>'+degree[1]+'</strong><small>'+degree[2]+'</small></div>'; }).join('<span>→</span>')+'</div><p><b>안정:</b> 1·3·5 &nbsp; <b>강한 경향:</b> 7→1, 4→3 &nbsp; <b>화음 분석:</b> 각 음계도 위에 I·ii·iii…를 쌓습니다.</p></div>';
+    }
+    if (key === "mode-map") {
+      const modes = [["Ionian","아이오니안","장음계"],["Dorian","도리안","♭3 · ♭7"],["Phrygian","프리지안","♭2 · ♭3 · ♭6 · ♭7"],["Lydian","리디안","♯4"],["Mixolydian","믹솔리디안","♭7"],["Aeolian","에올리안","자연단음계"],["Locrian","로크리안","♭2 · ♭3 · ♭5 · ♭6 · ♭7"]];
+      return '<div class="concept-diagram mode-map-diagram" role="img" aria-label="일곱 교회선법의 기준 장음계 대비 변화음"><header><strong>같은 일곱 음</strong><span>출발음이 바뀌면 중심과 반음 위치가 바뀝니다</span></header><div>'+modes.map(function (mode, index) { return '<span><b>'+(index+1)+'</b><strong>'+mode[1]+'</strong><small>'+mode[0]+'</small><em>'+mode[2]+'</em></span>'; }).join("")+'</div></div>';
+    }
+    if (key === "pentatonic-map") {
+      return '<div class="concept-diagram pentatonic-diagram" role="img" aria-label="장음계에서 4음과 7음을 빼 장5음음계를 만들고 단5음음계에 플랫5를 더해 블루스음계를 만드는 관계"><div><small>장음계</small><strong>1 · 2 · 3 · 4 · 5 · 6 · 7</strong><span>4와 7을 뺌</span></div><b>↓</b><div class="pentatonic-core"><small>장5음음계</small><strong>1 · 2 · 3 · 5 · 6</strong><span>C–D–E–G–A</span></div><div class="pentatonic-core minor"><small>단5음음계</small><strong>1 · ♭3 · 4 · 5 · ♭7</strong><span>A–C–D–E–G</span></div><b>+ ♭5</b><div><small>블루스음계</small><strong>1 · ♭3 · 4 · ♭5 · 5 · ♭7</strong><span>긴장음을 지나 해결</span></div></div>';
     }
     if (key === "voice-ranges") {
       return '<div class="concept-diagram voice-range-diagram" role="img" aria-label="SATB 네 성부의 기본 활동 음역"><div><strong>S</strong><span>C4</span><i></i><span>A5</span></div><div><strong>A</strong><span>G3</span><i></i><span>D5</span></div><div><strong>T</strong><span>C3</span><i></i><span>G4</span></div><div><strong>B</strong><span>E2</span><i></i><span>C4</span></div></div>';
@@ -420,7 +481,7 @@
       ]);
     }
     if (key === "interval-family" || key === "interval-quality-ladder") {
-      return '<div class="concept-diagram interval-family-diagram" role="img" aria-label="완전계열 1 4 5 8도는 감 완전 증, 장단계열 2 3 6 7도는 감 단 장 증으로 나뉘는 음정 성질표"><div class="interval-family-row perfect"><strong>완전계열</strong><b>1 · 4 · 5 · 8도</b><span><i>감</i><em>← 반음 →</em><i class="core">완전</i><em>← 반음 →</em><i>증</i></span></div><div class="interval-family-row major-minor"><strong>장·단계열</strong><b>2 · 3 · 6 · 7도</b><span><i>감</i><em>← 반음 →</em><i>단</i><em>← 반음 →</em><i class="core">장</i><em>← 반음 →</em><i>증</i></span></div></div>';
+      return '<div class="concept-diagram interval-family-diagram" role="img" aria-label="도수가 1 4 5 8이면 완전계열, 2 3 6 7이면 장단계열을 선택하고 반음 수에 따라 겹감 감 완전 또는 단 장 증 겹증으로 이동하는 음정 성질 관계도"><div class="quality-start"><strong>먼저 도수를 센다</strong><span>1·4·5·8도</span><span>2·3·6·7도</span></div><div class="interval-family-row perfect"><strong>완전계열</strong><b>1 · 4 · 5 · 8도</b><span><i>겹감</i><em>+½</em><i>감</i><em>+½</em><i class="core">완전</i><em>+½</em><i>증</i><em>+½</em><i>겹증</i></span></div><div class="interval-family-row major-minor"><strong>장·단계열</strong><b>2 · 3 · 6 · 7도</b><span><i>겹감</i><em>+½</em><i>감</i><em>+½</em><i>단</i><em>+½</em><i class="core">장</i><em>+½</em><i>증</i><em>+½</em><i>겹증</i></span></div><p>오른쪽으로 한 칸 갈 때 반음이 하나 늘고, 왼쪽으로 한 칸 갈 때 반음이 하나 줄어듭니다.</p></div>';
     }
     if (key === "interval-inversion") {
       return '<div class="concept-diagram inversion-diagram" role="img" aria-label="음정 전위에서 도수의 합은 9, 성질은 장과 단 또는 완전과 완전으로 바뀜"><div><strong>단3도</strong><span>3</span></div><span class="concept-swap">뒤집기</span><div><strong>장6도</strong><span>6</span></div><b>3 + 6 = 9</b><div><strong>완전4도</strong><span>4</span></div><span class="concept-swap">뒤집기</span><div><strong>완전5도</strong><span>5</span></div><b>4 + 5 = 9</b></div>';
@@ -439,6 +500,13 @@
     }
     if (key === "inversion-score") {
       return '<div class="concept-diagram bass-focus-diagram" role="img" aria-label="C화음의 베이스가 C면 기본위치, E면 1전위, G면 2전위"><div><strong>C</strong><span class="bass-note">C</span><small>기본위치</small></div><div><strong>C/E</strong><span class="bass-note">E</span><small>1전위</small></div><div><strong>C/G</strong><span class="bass-note">G</span><small>2전위</small></div></div>';
+    }
+    if (key === "symbol-anatomy") {
+      return '<div class="concept-diagram symbol-anatomy-diagram" role="img" aria-label="코드 기호를 근음, 3화음 성질, 7음, 부가 또는 대체 지시의 네 칸으로 나누어 읽는 방법"><div class="symbol-slots"><div><strong>C</strong><span>① 근음</span><small>C·D♭·F♯</small></div><b>+</b><div><strong>m · dim · aug</strong><span>② 3화음 성질</span><small>단·감·증</small></div><b>+</b><div><strong>7 · maj7</strong><span>③ 7음 종류</span><small>단7도·장7도</small></div><b>+</b><div><strong>sus · add · 9·11·13</strong><span>④ 대체·추가</span><small>3음 교체·색채음</small></div></div><div class="symbol-worked"><strong>Gm7</strong><span>=</span><b>G 근음</b><span>+</span><b>단3화음</b><span>+</span><b>단7음</b><span>→</span><em>G–B♭–D–F</em></div></div>';
+    }
+    if (key === "key-scale") return fifthsWheelDiagram();
+    if (key === "roman-transfer") {
+      return '<div class="concept-diagram analysis-symbol-diagram" role="img" aria-label="로마숫자 대소문자와 감 기호, 전위 숫자를 해석하는 화성 분석기호 표"><div class="analysis-grammar"><div><strong>I · IV · V</strong><span>대문자 = 장3화음</span></div><div><strong>ii · iii · vi</strong><span>소문자 = 단3화음</span></div><div><strong>vii° · viiø7</strong><span>° 감 · ø 반감</span></div></div><div class="analysis-inversions"><span><b>3화음</b> I · I6 · I6/4</span><span><b>7화음</b> V7 · V6/5 · V4/3 · V4/2</span></div><div class="analysis-flow"><strong>ii7</strong><i>→</i><strong>V7</strong><i>→</i><strong>Imaj7</strong><small>프리도미넌트 → 도미넌트 → 토닉</small></div><p>예: <b>V7/V</b>는 ‘V로 향하는 도미넌트7화음’입니다. 로마숫자는 조 안의 위치, 숫자는 전위와 7음 유무를 표시합니다.</p></div>';
     }
     if (key === "diatonic-map") {
       return flowDiagram("C장조 다이어토닉 화음과 기능 묶음", [
@@ -517,6 +585,7 @@
 
   function renderVisual(key) {
     if (key === "note-values") return noteValuesDiagram();
+    if (key === "rest-values") return restValuesDiagram();
     if (key === "meter-basics") return meterBasicsDiagram();
     const score = SCORE_SETS[key];
     const formula = formulaVisual(key);
@@ -529,8 +598,8 @@
   }
 
   const PREVIEW_LABELS = {
-    "staff-basics":"5선", "pitch-alphabet":"C–B", "staff-clefs":"𝄞·𝄢", "enharmonic-spelling":"♯=♭", "voice-ranges":"SATB",
-    "note-values":"♩·𝅗𝅥", "meter-basics":"4/4", "interval-spelling":"M3", "interval-number":"1·2·3", "interval-direction":"↑↓", "interval-form":"→ / +", "interval-simple":"1–8", "interval-family":"P·M·m", "interval-quality-ladder":"°·m·M·+", "interval-inversion":"3↔6", "interval-compound":"2→9", "interval-consonance":"협화", "interval-ear-process":"듣기",
+    "staff-basics":"5선", "pitch-alphabet":"C–B", "staff-clefs":"𝄞·𝄢", "enharmonic-spelling":"♯=♭", "voice-ranges":"SATB", "whole-half-map":"½·1", "sharp-order":"♯순서", "flat-order":"♭순서", "fifths-wheel":"5도권", "relative-keys":"장↔단", "scale-degree-map":"1–7", "mode-map":"Mode", "pentatonic-map":"5음",
+    "note-values":"♩·𝅗𝅥", "rest-values":"쉼=박", "meter-basics":"4/4", "interval-spelling":"M3", "interval-number":"1·2·3", "interval-direction":"↑↓", "interval-form":"→ / +", "interval-simple":"1–8", "interval-family":"P·M·m", "interval-quality-ladder":"°·m·M·+", "interval-inversion":"3↔6", "interval-compound":"2→9", "interval-consonance":"협화", "interval-ear-process":"듣기",
     "part-spacing":"SATB", "part-motion":"7→1", "motion-directions":"↑↓―", "voice-crossing":"교차", "nonchord-motion":"C–D–E", "suspension-resolution":"4–3",
     "minor-scales":"m scale", "minor-dominant":"V7–i", "sequence-cycle":"vi–ii–V–I", "sequence-voices":"성부선",
     "symbol-anatomy":"C△7", "symbol-contrast":"sus·add", "triad-stack":"1·3·5", "triad-transpose":"D→E♭",
@@ -565,7 +634,7 @@
 
   function previewKind(key) {
     if (key.startsWith("interval") || key === "enharmonic-spelling") return "interval";
-    if (["note-values","meter-basics","harmonic-rhythm","rhythm-density"].includes(key)) return "rhythm";
+    if (["note-values","rest-values","meter-basics","harmonic-rhythm","rhythm-density"].includes(key)) return "rhythm";
     if (key.startsWith("staff-") || key === "pitch-alphabet") return "staff";
     if (key.includes("scale") || key.startsWith("key-") || key === "leading-tone" || key.startsWith("transpose")) return "scale";
     if (key.includes("voice") || key.startsWith("part-") || key.includes("motion") || key.startsWith("nonchord") || key.startsWith("suspension") || key.includes("guide")) return "voice";
@@ -610,7 +679,7 @@
     const lessonNumber = strand.skills.indexOf(id) + 1;
     const complete = state.completed.has(id);
     const ready = prereqsMet(id);
-    return '<button class="lesson-button skill-button '+(complete ? "completed" : ready ? "ready" : "needs-prereq")+'" type="button" data-open-skill="'+id+'">'+skillPreviewMarkup(skill)+'<span class="lesson-copy"><span class="lesson-order">'+lessonNumber+'차시</span><strong>'+escapeHtml(skill.title)+'</strong><small>'+escapeHtml(skill.summary)+'</small>'+(!ready && !complete ? '<span class="prereq-note">앞 진도를 먼저 익히면 이해하기 쉽습니다.</span>' : "")+'</span><span class="skill-status">'+(complete ? "✓ 완료" : id === state.currentId ? "학습 중" : "열기")+'</span></button>';
+    return '<button class="lesson-button skill-button '+(complete ? "completed" : ready ? "ready" : "needs-prereq")+'" type="button" data-open-skill="'+id+'"><span class="lesson-copy"><span class="lesson-order">'+lessonNumber+'차시</span><strong>'+escapeHtml(skill.title)+'</strong><small>'+escapeHtml(skill.summary)+'</small>'+(!ready && !complete ? '<span class="prereq-note">앞 진도를 먼저 익히면 이해하기 쉽습니다.</span>' : "")+'</span><span class="skill-status">'+(complete ? "✓ 완료" : id === state.currentId ? "학습 중" : "열기")+'</span></button>';
   }
 
   function dashboardUrl() {
@@ -689,7 +758,10 @@
   }
   function renderKeyboardLab(lab) {
     els.constructionLab.innerHTML = labHeader(Object.assign({}, lab, { reference:true })) + '<div id="labPiano" class="piano lab-piano" aria-label="구성 실습 건반"></div><div class="lab-readout"><strong>선택한 음</strong><span id="labSelection">아직 선택한 음이 없습니다.</span></div><div class="lab-actions"><button class="lab-check" type="button" id="labCheck">구성 확인</button><button class="lab-reset" type="button" id="labReset">선택 지우기</button></div><p id="labFeedback" class="lab-feedback" aria-live="polite">악보와 소리를 참고한 뒤 직접 건반을 선택하세요.</p>';
-    buildPiano(byId("labPiano"), 48, 72, function (midi, button) {
+    const range = keyboardLabRange(lab);
+    const piano = byId("labPiano");
+    piano.setAttribute("aria-label", "구성 실습 건반 "+midiName(range.from)+"부터 "+midiName(range.to)+"까지");
+    buildPiano(piano, range.from, range.to, function (midi, button) {
       if (state.selectedMidis.has(midi)) { state.selectedMidis.delete(midi); button.classList.remove("selected"); }
       else { state.selectedMidis.add(midi); button.classList.add("selected"); window.HarmonyPiano.playMidi(midi, { duration:.55 }); }
       byId("labSelection").textContent = state.selectedMidis.size ? Array.from(state.selectedMidis).sort(function (a,b) { return a-b; }).map(midiName).join(" · ") : "아직 선택한 음이 없습니다.";
@@ -819,6 +891,22 @@
   }
 
   function midiName(midi) { return NOTE_NAMES[midi % 12] + (Math.floor(midi / 12) - 1); }
+  function keyboardLabRange(lab) {
+    const reference = Array.isArray(lab && lab.reference) ? lab.reference : [];
+    const exactTargets = Array.isArray(lab && lab.targetMidis) ? lab.targetMidis : [];
+    const required = (lab && lab.mode === "exact" ? exactTargets.concat(reference) : reference).filter(Number.isFinite);
+    if (!required.length) return { from:48, to:72 };
+    const cAtOrBelow = function (midi) { return midi - ((midi % 12) + 12) % 12; };
+    let from = cAtOrBelow(Math.min.apply(null, required));
+    let to = cAtOrBelow(Math.max.apply(null, required)) + 12;
+    while (to - from < 24) {
+      if (from >= 48) from -= 12;
+      else to += 12;
+    }
+    while (from < 24) { from += 12; to += 12; }
+    while (to > 108) { from -= 12; to -= 12; }
+    return { from:from, to:to };
+  }
   function buildPiano(container, fromMidi, toMidi, onPress) {
     const whitePitchClasses = new Set([0,2,4,5,7,9,11]);
     const notes = [];
