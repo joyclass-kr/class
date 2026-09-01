@@ -809,3 +809,113 @@ body {
     display: inline-flex;
     align-items: center;
 }
+
+/* ── 단어장 ────────────────────────────────────────────────────
+   책은 아이패드·크롬북 화면에 꽉 차게 맞춰 두었으므로 손대지 않는다.
+   책 아래에 화면을 한 장 더 두고, 볼 때만 밀어 내린다. */
+body {
+    display: block;
+    padding: 0;
+}
+
+.screen {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* display:flex 가 [hidden] 을 이겨 버린다. 우리말로 읽을 때는 아예 없애야 한다. */
+.screen[hidden] { display: none; }
+
+.screen-vocab {
+    align-items: flex-start;
+    padding-top: 16px;
+}
+
+.vocab-panel {
+    width: min(1300px, 96vw, calc((100dvh - 46px) * 4 / 3));
+    box-sizing: border-box;
+    padding: 20px 24px 26px;
+    background: var(--parchment);
+    border: 10px solid var(--wood);
+    border-radius: 10px;
+    box-shadow: var(--shadow), inset 0 0 0 2px rgba(255, 255, 255, 0.4);
+    color: var(--ink);
+}
+
+.vocab-panel h2 {
+    margin: 0 0 2px;
+    font-size: clamp(17px, 2.4vh, 25px);
+}
+
+.vocab-where {
+    margin: 0 0 14px;
+    color: var(--muted);
+    font-size: clamp(12px, 1.6vh, 16px);
+}
+
+.vocab-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 8px 12px;
+}
+
+.vocab-list li {
+    padding: 8px 12px;
+    background: #fffaf0;
+    border: 1px solid var(--parchment-shade);
+    border-radius: 9px;
+}
+
+.vocab-word {
+    margin: 0;
+    font-weight: 700;
+    font-size: clamp(14px, 2vh, 21px);
+}
+
+.vocab-mean {
+    margin: 1px 0 0;
+    font-size: clamp(13px, 1.8vh, 19px);
+}
+
+.vocab-sent {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: clamp(12px, 1.6vh, 17px);
+    font-style: italic;
+}
+
+/* 아래에 무엇이 더 있는지 알려 주는 단추. 트랙패드로도 굴릴 수 있지만
+   책이 화면에 딱 맞아 아래가 있는 줄 모르기 쉽다. */
+.scroll-down {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
+    z-index: 40;
+    min-width: 96px;
+    min-height: 44px;
+    padding: 6px 18px;
+    border: 1px solid rgba(215, 171, 95, 0.5);
+    border-radius: 999px;
+    background: rgba(27, 15, 16, 0.78);
+    color: var(--gold-bright);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+}
+
+.scroll-down:hover,
+.scroll-down:focus-visible {
+    border-color: var(--gold-bright);
+    background: rgba(92, 58, 34, 0.85);
+}

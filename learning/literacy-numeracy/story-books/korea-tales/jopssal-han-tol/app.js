@@ -398,6 +398,66 @@ const EN = {
         { q: "What did the boy get last of all?", choices: ["A horse", "A cat", "An ox"], answer: 2 },
         { q: "What did the boy take out of his coat and unfold?", choices: ["The ox's rope", "An old bundle", "A folded sheet of paper"], answer: 2 }
     ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 어려운 낱말만 모았다.
+       그림 파일 이름으로 묶어 두어 우리말 쪽과 짝이 어긋나지 않는다. */
+    words: {
+        "01-depart.webp": [
+            { w: "thatched", k: "짚으로 지붕을 인", s: "a thatched hut that was falling down" },
+            { w: "bundle", k: "봇짐, 보따리", s: "he shook out his bundle" },
+            { w: "millet", k: "조 (곡식)", s: "a single grain of millet" },
+            { w: "tuck", k: "쑤셔 넣다, 챙겨 넣다", s: "tucked it deep inside his coat" }
+        ],
+        "02-first.webp": [
+            { w: "bow", k: "고개 숙여 절하다", s: "The boy bowed low." },
+            { w: "fuss", k: "야단, 성가시게 굶", s: "opened the door without a fuss" },
+            { w: "unfold", k: "펴다, 펼치다", s: "unfolded it ever so carefully" },
+            { w: "shelf", k: "선반", s: "set it up on a shelf" }
+        ],
+        "03-mouse.webp": [
+            { w: "upside down", k: "뒤집어, 발칵", s: "turned the whole house upside down" },
+            { w: "sweat", k: "땀을 흘리다", s: "sweating all the while" },
+            { w: "set off", k: "길을 나서다", s: "set off down the road again" }
+        ],
+        "04-cat.webp": [
+            { w: "baffled", k: "어리둥절한", s: "He was so baffled that he could only blink." },
+            { w: "blink", k: "눈을 껌뻑이다", s: "he could only blink" },
+            { w: "carry off", k: "물고 가다, 채 가다", s: "the house cat had carried the mouse off" },
+            { w: "Nothing for it.", k: "별수 없구먼.", s: "\"Nothing for it. Take the cat instead.\"" }
+        ],
+        "05-dog.webp": [
+            { w: "tuck under one's arm", k: "품에 안다, 겨드랑이에 끼다", s: "tucked the cat under his arm" },
+            { w: "chase", k: "쫓다, 쫓아내다", s: "the house dog had chased the cat over the wall" },
+            { w: "scratch one's head", k: "머리를 긁적이다", s: "The owner scratched his head." },
+            { w: "untie", k: "풀다, 끄르다", s: "then untied the dog" }
+        ],
+        "06-horse.webp": [
+            { w: "kick out", k: "뒷발질하다", s: "the horse kicked out" },
+            { w: "startled", k: "깜짝 놀란", s: "the dog was so startled" },
+            { w: "snap", k: "뚝 끊다, 끊어지다", s: "it snapped its rope and ran" },
+            { w: "bury one's face", k: "얼굴을 파묻다", s: "he buried his face in his hands" }
+        ],
+        "07-ox.webp": [
+            { w: "hoof (hooves)", k: "발굽", s: "Its hooves went clop, clop." },
+            { w: "barn", k: "외양간, 헛간", s: "tied the horse in the barn" },
+            { w: "swing", k: "휘두르다", s: "the ox swung its horns" },
+            { w: "sigh", k: "한숨을 쉬다", s: "The owner sighed." }
+        ],
+        "08-road.webp": [
+            { w: "steadily", k: "뚜벅뚜벅, 꾸준히", s: "walked steadily along the road" },
+            { w: "twice as tall", k: "키가 두 배인", s: "It stood twice as tall as he did." },
+            { w: "proudly", k: "당당하게", s: "The boy walked very proudly." }
+        ],
+        "09-home.webp": [
+            { w: "reach", k: "닿다, 이르다", s: "the boy reached home at last" },
+            { w: "go round", k: "휘둥그레지다", s: "her eyes went round" },
+            { w: "alarmed", k: "놀란, 겁먹은", s: "\"Mother, do not be alarmed.\"" }
+        ],
+        "10-millet.webp": [
+            { w: "crease", k: "접은 자국을 내다", s: "Every fold was still creased into it." },
+            { w: "pull into one's arms", k: "끌어안다", s: "his mother pull him into her arms" },
+            { w: "carry", k: "소리가 퍼지다", s: "The sound carried all through the village." }
+        ]
+    },
     afterword: {
         title: 'After Reading',
         emoji: '🐮',
@@ -431,6 +491,7 @@ const UI = {
     en: {
         toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
         home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        wordsDown: 'Words ⌄', wordsHere: 'Words on this page', wordsAll: 'All the words in this book',
         done: (n, all) => `${n} of ${all} answered`
     }
 };
@@ -663,6 +724,8 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+
+    renderVocab();
 }
 
 function initQuiz() {
@@ -717,6 +780,57 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') goTo(current + 1);
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
+
+
+/* ── 단어장 ────────────────────────────────────────────────────
+   책 아래에 있는 또 한 장의 화면이다. 책은 손대지 않는다.
+   펼침면을 넘기면 그 쪽에 나온 낱말로 따라 바뀐다. 영어로 읽을 때만 생긴다. */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    if (page && page.kind === 'spread' && all[page.beat.art]) {
+        return { where: UI.en.wordsHere, list: all[page.beat.art] };
+    }
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    return { where: UI.en.wordsAll, list };
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) {
+        scrollDownEl.hidden = !on;
+        scrollDownEl.textContent = T().wordsDown || 'Words ⌄';
+    }
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const { where, list } = vocabFor();
+    vocabPanelEl.innerHTML = `
+        <h2>${EN.cover.title}</h2>
+        <p class="vocab-where">${where}</p>
+        <ul class="vocab-list">
+            ${list.map(w => `
+            <li>
+                <p class="vocab-word">${w.w}</p>
+                <p class="vocab-mean">${w.k}</p>
+                <p class="vocab-sent">${w.s}</p>
+            </li>`).join('')}
+        </ul>`;
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        vocabScreenEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+}
 
 /* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
 const langBtn = document.getElementById('langLink');

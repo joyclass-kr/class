@@ -16,17 +16,24 @@
         <button class="toc-link" id="langLink" type="button" hidden>EN</button>
     </div>
 
-    <div class="book-stage">
-        <div class="book" id="book">
-            <div class="book-spread" id="spread"></div>
-            <span class="folio folio-left" id="folioLeft"></span>
-            <span class="folio folio-right" id="folioRight"></span>
+    <div class="screen screen-book">
+        <div class="book-stage">
+            <div class="book" id="book">
+                <div class="book-spread" id="spread"></div>
+                <span class="folio folio-left" id="folioLeft"></span>
+                <span class="folio folio-right" id="folioRight"></span>
 
-            <button class="nav-btn nav-prev" id="prevBtn" type="button" aria-label="이전 페이지">‹</button>
-            <button class="nav-btn nav-next" id="nextBtn" type="button" aria-label="다음 페이지">›</button>
+                <button class="nav-btn nav-prev" id="prevBtn" type="button" aria-label="이전 페이지">‹</button>
+                <button class="nav-btn nav-next" id="nextBtn" type="button" aria-label="다음 페이지">›</button>
+            </div>
+
+            <div class="page-indicator" id="pageIndicator"></div>
         </div>
+        <button class="scroll-down" id="scrollDown" type="button" hidden>단어장 ⌄</button>
+    </div>
 
-        <div class="page-indicator" id="pageIndicator"></div>
+    <div class="screen screen-vocab" id="vocabScreen" hidden>
+        <div class="vocab-panel" id="vocabPanel"></div>
     </div>
 
     <script src="app.js"></script>
