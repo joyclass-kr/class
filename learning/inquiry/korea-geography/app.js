@@ -370,8 +370,9 @@
     if (!mouth) return 2;
     const distanceFromMouth = L.latLng(coordinate[1], coordinate[0]).distanceTo(L.latLng(mouth[0], mouth[1]));
     const downstreamRatio = 1 - Math.min(1, distanceFromMouth / Math.max(1, maxDistance));
-    const minWidth = name === "남한강" ? 1 : 1.15;
-    const maxWidth = ["한강", "낙동강", "압록강", "두만강"].includes(name) ? 4.8 : ["남한강", "북한강"].includes(name) ? 3.7 : 4.2;
+    // 한강 선형은 두물머리 합류점부터 시작하므로 지류의 상류 폭으로 초기화하지 않는다.
+    const minWidth = name === "한강" ? 3.6 : name === "남한강" ? 0.75 : name === "북한강" ? 0.85 : 1.15;
+    const maxWidth = name === "한강" ? 5.2 : ["낙동강", "압록강", "두만강"].includes(name) ? 4.8 : ["남한강", "북한강"].includes(name) ? 2.8 : 4.2;
     return minWidth + ((maxWidth - minWidth) * Math.pow(downstreamRatio, 0.78));
   }
 
@@ -413,6 +414,9 @@
       L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}", {
         pane: "terrainPane",
         opacity: 1,
+        // 한국에서는 z9 이후 원본 지형 타일 대신 안내 문구 타일이 반환된다.
+        // 마지막 정상 타일을 확대 재사용해 안내 문구가 반복되지 않게 한다.
+        maxNativeZoom: 9,
         maxZoom: 13,
         attribution: "Terrain &copy; Esri"
       }).addTo(group);

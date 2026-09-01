@@ -30,12 +30,15 @@ assert.match(app, /korean-museum\/data\/skorea-provinces-topo-simple\.json/);
 assert.match(app, /voyager_nolabels/);
 assert.match(app, /World_Hillshade/);
 assert.match(app, /World_Terrain_Base/);
+assert.match(app, /maxNativeZoom:\s*9/, "Terrain tiles must stop before Esri's unavailable-detail placeholders.");
 assert.match(app, /major-rivers\.geojson/);
 assert.match(app, /function riverWidthAt/);
 assert.match(app, /function renderPrinciples/);
 assert.match(app, /function showPrinciple/);
 assert.match(app, /distanceFromMouth \/ Math\.max/);
 assert.match(app, /maxWidth - minWidth/);
+assert.match(app, /name === "한강" \? 3\.6/, "The Han main stem must widen after the Dumulmeori confluence.");
+assert.match(app, /\["남한강", "북한강"\]\.includes\(name\) \? 2\.8/, "The two tributaries must stay visually narrower before Dumulmeori.");
 assert.match(app, /43\.15, 131\.35/, "The default extent must include the full Korean Peninsula.");
 assert.match(dataSource, /relief: true/);
 assert.match(dataSource, /featureMarkers: false/);
@@ -59,6 +62,12 @@ for (const name of ["한강", "남한강", "북한강", "임진강"]) {
 }
 assert.ok(riverData.features.every((feature) => /LineString$/.test(feature.geometry.type)), "Every river must use line geometry.");
 assert.deepEqual(Object.keys(dataset.themes), ["terrain", "climate", "population", "industry", "region"]);
+const terrainRiverLabels = dataset.themes.terrain.annotations.filter((annotation) => annotation.kind === "river");
+for (const name of ["북한강", "남한강", "한강"]) {
+  assert.ok(terrainRiverLabels.some((annotation) => annotation.name === name), `${name} needs its own map label.`);
+}
+const chongchonLabel = terrainRiverLabels.find((annotation) => annotation.name === "청천강");
+assert.ok(chongchonLabel.lat >= 40 && chongchonLabel.lng >= 126.1, "The Chongchon label must sit on the Chongchon River, not near the upper Taedong.");
 assert.ok(dataset.themes.terrain.principles.length >= 13, "Terrain needs a complete CSAT principle set.");
 for (const [themeKey, theme] of Object.entries(dataset.themes)) {
   assert.ok(theme.principles.length >= 5, `${themeKey} needs at least five core principles.`);
