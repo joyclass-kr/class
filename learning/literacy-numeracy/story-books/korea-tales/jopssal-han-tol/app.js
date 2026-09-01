@@ -219,12 +219,12 @@ const EN = {
                     left: [
                         "Long ago there was a very poor boy. He and his mother shared a thatched hut that was falling down around them.",
                         "One day the boy made up his mind to go and see the wide world. He couldn't go on living like this forever.",
-                        "\"Mother, I'm going out to see the wide world.\""
+                        { t: "\"Mother, I'm going out to see the wide world.\"", v: "boy" }
                     ],
                     right: [
                         "Before he left he shook out his bundle, but nothing came out. He shook it this way and that, and still nothing.",
                         "Then one thing rolled out. A single grain of millet.",
-                        "\"Well, at least I've got this.\"",
+                        { t: "\"Well, at least I've got this.\"", v: "boy" },
                         "The boy wrapped it up carefully in a sheet of paper and tucked it deep inside his coat."
                     ]
                 },
@@ -233,15 +233,15 @@ const EN = {
                     emoji: "🏠",
                     left: [
                         "He walked all day, and the sun went down. The boy knocked at a house with a light burning inside.",
-                        "\"Could I stay just one night?\"",
+                        { t: "\"Could I stay just one night?\"", v: "boy" },
                         "The boy bowed low.",
-                        "\"Of course you can. Come in.\"",
+                        { t: "\"Of course you can. Come in.\"", v: "man" },
                         "The owner opened the door without any fuss."
                     ],
                     right: [
                         "The boy took the paper out of his coat and unfolded it very carefully. Inside was a single grain of millet.",
-                        "\"This is everything I own. Please keep it safe.\"",
-                        "\"What a funny little fellow.\"",
+                        { t: "\"This is everything I own. Please keep it safe.\"", v: "boy" },
+                        { t: "\"What a funny little fellow.\"", v: "man" },
                         "The owner held back a laugh and put it up on a shelf."
                     ]
                 },
@@ -250,14 +250,14 @@ const EN = {
                     emoji: "🐭",
                     left: [
                         "The next morning the boy looked up at the shelf. The grain of millet was gone.",
-                        "\"Oh? Where did it go?\"",
-                        "\"Oh no! A mouse must have eaten it in the night.\"",
+                        { t: "\"Oh? Where did it go?\"", v: "boy" },
+                        { t: "\"Oh no! A mouse must have eaten it in the night.\"", v: "man" },
                         "The owner turned red and didn't know where to look."
                     ],
                     right: [
-                        "\"I'm sorry. Let me catch you that mouse, at least.\"",
+                        { t: "\"I'm sorry. Let me catch you that mouse, at least.\"", v: "man" },
                         "He turned the whole house upside down until he caught one, sweating the whole time.",
-                        "\"Thank you. I'll keep it safe.\"",
+                        { t: "\"Thank you. I'll keep it safe.\"", v: "boy" },
                         "The boy took the mouse, bowed, and set off down the road again."
                     ]
                 }
@@ -272,16 +272,16 @@ const EN = {
                     emoji: "🐱",
                     left: [
                         "At the next house the boy said exactly the same thing. He held the mouse out in both hands.",
-                        "\"This is everything I own. Please take good care of it.\"",
+                        { t: "\"This is everything I own. Please take good care of it.\"", v: "boy" },
                         "The owner took it in both hands.",
-                        "\"...A mouse?\"",
+                        { t: "\"...A mouse?\"", v: "man" },
                         "He was so puzzled that he could only blink."
                     ],
                     right: [
                         "But in the morning the house cat had carried the mouse off. All that was left in the yard was one small tail.",
-                        "\"Oh dear. What do we do now?\"",
-                        "\"I'm so sorry about this.\"",
-                        "\"Well, then. Take the cat instead.\""
+                        { t: "\"Oh dear. What do we do now?\"", v: "man" },
+                        { t: "\"I'm so sorry about this.\"", v: "man" },
+                        { t: "\"Well, then. Take the cat instead.\"", v: "man" }
                     ]
                 },
                 {
@@ -290,15 +290,15 @@ const EN = {
                     left: [
                         "The boy tucked the cat under his arm and set off again.",
                         "At the next house he left the cat. He said the very same words.",
-                        "\"This is everything I own. Please take good care of it.\"",
-                        "\"Ha! You say that a lot.\"",
+                        { t: "\"This is everything I own. Please take good care of it.\"", v: "boy" },
+                        { t: "\"Ha! You say that a lot.\"", v: "man" },
                         "The owner laughed out loud."
                     ],
                     right: [
                         "But in the morning the house dog had chased the cat over the wall. The cat ran off and was never seen again.",
                         "The owner scratched his head, then untied the dog.",
-                        "\"What do I do now.\"",
-                        "\"Well, then. Take the dog.\""
+                        { t: "\"What do I do now.\"", v: "man" },
+                        { t: "\"Well, then. Take the dog.\"", v: "man" }
                     ]
                 },
                 {
@@ -311,9 +311,9 @@ const EN = {
                     ],
                     right: [
                         "In the morning he buried his face in his hands. He couldn't look the boy in the eye.",
-                        "\"Oh dear... you'd better take the horse.\"",
-                        "\"The horse?\"",
-                        "\"What else can I do? A promise is a promise.\"",
+                        { t: "\"Oh dear... you'd better take the horse.\"", v: "man" },
+                        { t: "\"The horse?\"", v: "boy" },
+                        { t: "\"What else can I do? A promise is a promise.\"", v: "man" },
                         "The boy took the reins in both hands."
                     ]
                 }
@@ -333,9 +333,9 @@ const EN = {
                     ],
                     right: [
                         "In the morning the ox swung its horns and drove the horse right out of the barn.",
-                        "\"Well, I've never seen anything like it.\"",
-                        "\"...Could I have that ox?\"",
-                        "\"Ha! How did you know I'd say yes?\"",
+                        { t: "\"Well, I've never seen anything like it.\"", v: "man" },
+                        { t: "\"...Could I have that ox?\"", v: "boy" },
+                        { t: "\"Ha! How did you know I'd say yes?\"", v: "man" },
                         "The owner sighed and handed the boy the ox's rope."
                     ]
                 },
@@ -348,10 +348,10 @@ const EN = {
                         "The boy walked very proudly."
                     ],
                     right: [
-                        "\"What's that little one doing with a whole ox?\"",
-                        "\"He must be some rich man's son.\"",
+                        { t: "\"What's that little one doing with a whole ox?\"", v: "man" },
+                        { t: "\"He must be some rich man's son.\"", v: "man" },
                         "People turned to look after him.",
-                        "\"This is everything I own.\"",
+                        { t: "\"This is everything I own.\"", v: "boy" },
                         "The boy smiled as he answered. This time nobody laughed."
                     ]
                 },
@@ -361,13 +361,13 @@ const EN = {
                     left: [
                         "After many days of walking the boy reached home at last. The same old thatched hut was standing just as it was when he left.",
                         "His mother's shoes were sitting in the yard.",
-                        "\"Mother, I'm home!\"",
+                        { t: "\"Mother, I'm home!\"", v: "boy" },
                         "The boy called out loudly from the yard."
                     ],
                     right: [
                         "His mother opened the door and her eyes went round. There was an ox standing right there in the yard.",
-                        "\"Goodness! Where did this ox come from?\"",
-                        "\"Mother, don't be scared.\"",
+                        { t: "\"Goodness! Where did this ox come from?\"", v: "mother" },
+                        { t: "\"Mother, don't be scared.\"", v: "boy" },
                         "She looked from the yard to her son and back again."
                     ]
                 },
@@ -376,11 +376,11 @@ const EN = {
                     emoji: "📜",
                     left: [
                         "The boy took a sheet of paper out of his coat and opened it out. It was the very paper the millet had been wrapped in. Every fold was still creased into it.",
-                        "\"There was one grain of millet in here, remember?\"",
+                        { t: "\"There was one grain of millet in here, remember?\"", v: "boy" },
                         "The boy's face was bright."
                     ],
                     right: [
-                        "\"That one grain is how all of this started.\"",
+                        { t: "\"That one grain is how all of this started.\"", v: "boy" },
                         "Then his mother pulled him into her arms.",
                         "For a long time she couldn't say a word.",
                         "Out in the yard the ox let out a great moooo. The sound carried all through the village."
@@ -702,8 +702,8 @@ function spreadPage(chapter, beat, isFirst) {
         ? `<button type="button" class="read-btn" id="readBtn">${reading ? '■' : '▶'}</button>`
         : '';
     const n = beat.left.length;
-    const leftHtml = beat.left.map((p, i) => `<p data-say="${i}">${p}</p>`).join('');
-    const rightHtml = beat.right.map((p, i) => `<p data-say="${n + i}">${p}</p>`).join('');
+    const leftHtml = beat.left.map((p, i) => `<p data-say="${i}">${textOf(p)}</p>`).join('');
+    const rightHtml = beat.right.map((p, i) => `<p data-say="${n + i}">${textOf(p)}</p>`).join('');
     return `
         <div class="page page-story">
             <div class="spread-art">
@@ -936,6 +936,46 @@ document.addEventListener('keydown', (e) => {
 
 
 
+
+/* ── 목소리 ────────────────────────────────────────────────────
+   대사에는 말하는 이를 표시해 두었다(v: 'boy' | 'mother' | 'man').
+   기기에 남녀 목소리가 있으면 골라 쓰고, 없으면 음높이만으로 가른다.
+   아이 목소리는 어느 기기에도 없어서 음높이를 올려 흉내 낸다. */
+const textOf = p => (typeof p === 'string' ? p : p.t);
+const roleOf = p => (typeof p === 'string' ? 'narration' : (p.v || 'narration'));
+
+const SAY_AS = {
+    narration: { pitch: 1.00, rate: 0.85, want: 'any' },
+    boy:       { pitch: 1.50, rate: 0.92, want: 'male' },
+    mother:    { pitch: 1.25, rate: 0.85, want: 'female' },
+    man:       { pitch: 0.80, rate: 0.80, want: 'male' }
+};
+
+const VOICES = { any: null, male: null, female: null };
+
+function pickVoices() {
+    // 이 자리는 CAN_SPEAK 선언보다 앞이라 직접 확인한다.
+    if (typeof speechSynthesis === 'undefined') return;
+    const vs = speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang));
+    if (!vs.length) return;
+    VOICES.any = vs.find(v => /^en[-_]US/i.test(v.lang)) || vs[0];
+    VOICES.female = vs.find(v => /samantha|karen|moira|tessa|victoria|zira|serena|allison|ava|susan|fiona|joanna|female|woman/i.test(v.name)) || null;
+    VOICES.male = vs.find(v => /daniel|alex|fred|tom|david|oliver|arthur|aaron|matthew|guy|ryan|male|man/i.test(v.name)) || null;
+}
+
+if (typeof speechSynthesis !== 'undefined') {
+    pickVoices();
+    speechSynthesis.onvoiceschanged = pickVoices;
+}
+
+function dressVoice(u, role) {
+    const a = SAY_AS[role] || SAY_AS.narration;
+    u.pitch = a.pitch;
+    u.rate = a.rate;
+    const want = VOICES[a.want] || VOICES.any;
+    if (want) u.voice = want;
+}
+
 /* ── 읽어 주기 ─────────────────────────────────────────────────
    펼침면 글을 왼쪽부터 차례로 읽는다. 읽는 문단에 표시가 따라간다.
    다시 누르면 멈춘다. 쪽을 넘기거나 우리말로 돌아가면 저절로 멈춘다. */
@@ -970,9 +1010,9 @@ function readSpread() {
             // 아래쪽 문단이 칸 밖에 있으면 끌어올린다
             here.scrollIntoView({ block: 'nearest' });
         }
-        const u = new SpeechSynthesisUtterance(parts[i].replace(/"/g, ''));
+        const u = new SpeechSynthesisUtterance(textOf(parts[i]).replace(/"/g, ''));
         u.lang = 'en-US';
-        u.rate = 0.85;
+        dressVoice(u, roleOf(parts[i]));
         u.onend = () => step(i + 1);
         u.onerror = () => step(i + 1);
         try { speechSynthesis.speak(u); } catch (e) { stopReading(); }
@@ -1040,10 +1080,11 @@ function sayWord(item) {
         const bare = item.w.replace(/\s*\([^)]*\)/g, '').trim();
         const word = new SpeechSynthesisUtterance(bare);
         word.lang = 'en-US';
+        dressVoice(word, 'narration');
         word.rate = 0.75;
         const sent = new SpeechSynthesisUtterance(item.s);
         sent.lang = 'en-US';
-        sent.rate = 0.85;
+        dressVoice(sent, 'narration');
         speechSynthesis.speak(word);
         speechSynthesis.speak(sent);
     } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
