@@ -547,9 +547,25 @@
     return '<button class="lesson-button skill-button '+(complete ? "completed" : ready ? "ready" : "needs-prereq")+'" type="button" data-open-skill="'+id+'">'+skillPreviewMarkup(skill)+'<span class="lesson-copy"><span class="lesson-order">'+lessonNumber+'차시</span><strong>'+escapeHtml(skill.title)+'</strong><small>'+escapeHtml(skill.summary)+'</small>'+(!ready && !complete ? '<span class="prereq-note">앞 진도를 먼저 익히면 이해하기 쉽습니다.</span>' : "")+'</span><span class="skill-status">'+(complete ? "✓ 완료" : id === state.currentId ? "학습 중" : "열기")+'</span></button>';
   }
 
-  function openSkill(id) {
+  function dashboardUrl() {
+    return window.location.pathname + window.location.search;
+  }
+
+  function skillUrl(id) {
+    return dashboardUrl() + "#skill=" + encodeURIComponent(id);
+  }
+
+  function rememberSkillView(id) {
+    const currentView = window.history.state && window.history.state.harmonyView;
+    const stateValue = { harmonyView:"skill", skillId:id };
+    if (currentView === "skill") window.history.replaceState(stateValue, "", skillUrl(id));
+    else window.history.pushState(stateValue, "", skillUrl(id));
+  }
+
+  function openSkill(id, options) {
     const skill = curriculum.skills[id];
     if (!skill) return;
+    if (!options || !options.fromHistory) rememberSkillView(id);
     state.currentId = id;
     writeStorage(CURRENT_KEY, id);
     state.questionIndex = 0;
@@ -779,6 +795,14 @@
     renderDashboard();
     window.scrollTo({ top:0, behavior:"smooth" });
   }
+  function returnToDashboard() {
+    if (window.history.state && window.history.state.harmonyView === "skill") {
+      window.history.back();
+      return;
+    }
+    window.history.replaceState({ harmonyView:"dashboard" }, "", dashboardUrl());
+    showDashboard();
+  }
   function resetProgress() {
     if (!window.confirm("이 브라우저에 저장된 화성학 학습 기록을 지울까요?")) return;
     state.completed.clear();
@@ -791,7 +815,7 @@
       const button = event.target.closest("[data-open-skill]");
       if (button) openSkill(button.dataset.openSkill);
     });
-    els.backToCourse.addEventListener("click", showDashboard);
+    els.backToCourse.addEventListener("click", returnToDashboard);
     els.nextSkillNav.addEventListener("click", function () {
       if (els.nextSkillNav.dataset.nextSkill) openSkill(els.nextSkillNav.dataset.nextSkill);
     });
@@ -800,10 +824,18 @@
   }
   function init() {
     ["dashboard","study","progressText","resetProgress","unitList","backToCourse","nextSkillNav","currentLesson","lessonUnit","lessonTitle","lessonEnglish","lessonOutcome","lessonSections","constructionLab","termList","practicePanel","roundCounter","scoreText","questionKind","questionPrompt","listenButton","questionVisual","answerChoices","feedback","nextButton","piano","toast"].forEach(function (id) { els[id] = byId(id); });
+    const requestedSkill = new URLSearchParams(window.location.hash.slice(1)).get("skill");
+    window.history.replaceState({ harmonyView:"dashboard" }, "", dashboardUrl());
     renderDashboard();
     renderFreePiano();
     bindEvents();
     showDashboard();
+    if (requestedSkill && curriculum.skills[requestedSkill]) openSkill(requestedSkill);
+    window.addEventListener("popstate", function (event) {
+      const view = event.state || {};
+      if (view.harmonyView === "skill" && curriculum.skills[view.skillId]) openSkill(view.skillId, { fromHistory:true });
+      else showDashboard();
+    });
     if (window.HarmonyPiano) window.setTimeout(function () { window.HarmonyPiano.preload().catch(function () { /* First user action will use the synthesized fallback. */ }); }, 1200);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
