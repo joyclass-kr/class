@@ -51,6 +51,11 @@ for (const key of ["pitch-alphabet","interval-spelling","interval-inversion","in
 for (const key of ["voice-ranges","motion-directions","voice-crossing","parallel-errors","secondary-targets","secondary-resolution","secondary-domino","borrowed-family","flat-two-compare","tension-stack","tension-available","tension-avoid"]) {
   assert.match(notation.render(key), /class="concept-diagram/, key + " needs a textbook-style explanatory diagram");
 }
+const augmentedSixth = notation.render("augmented-sixth");
+assert.match(augmentedSixth, /class="concept-diagram/, "augmented sixths need a visible outward-resolution diagram");
+assert.match(augmentedSixth, />A♭</);
+assert.match(augmentedSixth, />F♯</);
+assert.doesNotMatch(augmentedSixth, /bass-clef/, "a compact three-note spelling example must not create an empty bass staff");
 for (const key of ["interval-number","interval-direction","interval-form","interval-simple","interval-family","interval-quality-ladder","interval-compound","interval-consonance","interval-ear-process"]) {
   assert.match(notation.render(key), /class="concept-diagram/, key + " needs its own interval-learning diagram");
 }

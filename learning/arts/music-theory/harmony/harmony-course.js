@@ -36,7 +36,7 @@
     "sequence-cycle": [["vi (Am)",["A3","C4","E4"]],["ii (Dm)",["A3","D4","F4"]],["V (G)",["G3","B3","D4"]],["I (C)",["G3","C4","E4"]]],
     "sequence-voices": [["베이스",["A2","D3","G2","C3"],["vi","ii","V","I"]],["공통·순차 성부",["C4","D4","B3","C4"]],["윗성부",["E4","F4","G4","E4"]]],
     "neapolitan-sixth": [["iv",["F3","Ab3","C4"]],["N6",["F3","Ab3","Db4"]],["V",["G3","B3","D4"]],["i",["C3","G3","Eb4"]]],
-    "augmented-sixth": [["It+6",["Ab3","C4","F#4"]],["V",["G3","B3","D4"]],["Ger+6",["Ab3","C4","Eb4","F#4"]],["I6/4",["G3","C4","E4"]]],
+    "augmented-sixth": [["It+6",["Ab4","C5","F#5"]],["V",["G4","B4","D5"]],["Ger+6",["Ab4","C5","Eb5","F#5"]],["I6/4",["G4","C5","E5"]]],
     "tonicization-modulation": [["C: I",["C3","G3","E4"]],["V/V",["D3","C4","F#4"]],["V",["G2","G3","B3"]],["G: V",["D3","C4","F#4"]],["G: I",["G2","G3","B3"]]],
     "pivot-modulation": [["C: I",["C3","G3","E4"]],["C: vi = G: ii",["A2","A3","C4","E4"]],["G: V7",["D3","C4","F#4"]],["G: I",["G2","G3","B3"]]],
     "symbol-anatomy": [["C",["C4","E4","G4"]],["Cm",["C4","Eb4","G4"]],["C7",["C4","E4","G4","Bb4"]],["Cmaj7",["C4","E4","G4","B4"]]],
@@ -453,6 +453,9 @@
     }
     if (key === "secondary-dominant-compare") {
       return '<div class="concept-diagram theory-compare" role="img" aria-label="G로 가는 D7과 F샤프 감7화음 비교"><div><small>목표의 5도 위</small><strong>D7</strong><span>V7/V</span></div><b>→ G ←</b><div><small>목표의 반음 아래</small><strong>F♯°7</strong><span>vii°7/V</span></div></div>';
+    }
+    if (key === "augmented-sixth") {
+      return '<div class="concept-diagram tendency-diagram" role="img" aria-label="증6화음의 바깥음 A플랫과 F샤프가 도미넌트 G로 반음 해결"><div><strong>A♭</strong><span>반음 ↓</span><b>G</b></div><div class="resolution-brace">증6도 바깥음이 V의 근음으로 벌어져 해결</div><div><strong>F♯</strong><span>반음 ↑</span><b>G</b></div></div>';
     }
     if (key === "borrowed-compare") {
       return '<div class="concept-diagram borrowed-diagram" role="img" aria-label="C장조의 IV F장화음과 평행단조에서 빌린 iv F단화음 비교"><div><small>C장조 안</small><strong>IV · F</strong><span>F — <b>A</b> — C</span></div><span class="borrow-arrow">A → A♭</span><div><small>C단조에서 빌림</small><strong>iv · Fm</strong><span>F — <b>A♭</b> — C</span></div></div>';
