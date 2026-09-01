@@ -421,11 +421,11 @@
   function drawThemeOnMap(map, group, theme, interactive) {
     group.clearLayers();
     if (theme.relief) {
-      L.imageOverlay("assets/korea-hillshade.webp?v=20260902-3", KOREA_BOUNDS, {
+      L.imageOverlay("assets/korea-physical-relief.webp?v=20260902-5", KOREA_BOUNDS, {
         pane: "reliefPane",
-        opacity: 0.58,
+        opacity: 0.84,
         interactive: false,
-        className: "korea-local-hillshade"
+        className: "korea-physical-relief"
       }).addTo(group);
     }
     if (theme.rivers && majorRivers) drawMajorRivers(group, interactive);

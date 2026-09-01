@@ -15,9 +15,10 @@
         "신생대 화산 활동은 제주도·울릉도·독도·철원 일대의 지형에 흔적을 남겼다."
       ],
       legend: [
-        { label: "산맥", color: "#8b5a2b" },
-        { label: "하천", color: "#2377b7" },
-        { label: "음영기복", color: "#6f8a68" }
+        { label: "저지대", color: "#dce2ae" },
+        { label: "중산지", color: "#8bb270" },
+        { label: "고산지", color: "#977e52" },
+        { label: "하천", color: "#2377b7" }
       ],
       relief: true,
       rivers: true,

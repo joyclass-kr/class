@@ -13,9 +13,9 @@
 The file is a display layer, not a legal river-boundary dataset.
 
 
-## Regional hillshade
+## Korean Peninsula physical relief
 
-`../assets/korea-hillshade.webp` is a self-hosted shaded-relief overlay cropped to the Korean Peninsula study bounds (`123.85–131.35°E`, `32.95–43.15°N`).
+`../assets/korea-physical-relief.webp` is a self-hosted 2.5D physical-relief overlay cropped to the Korean Peninsula study bounds (`123.85–131.35°E`, `32.95–43.15°N`). It combines hypsometric elevation tint with multidirectional slope shading derived from Mapzen Terrain Tiles on AWS Open Data.
 
 - Source: Mapzen Terrain Tiles in the AWS Registry of Open Data
 - Accessed: 2026-09-02
