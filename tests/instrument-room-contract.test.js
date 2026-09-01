@@ -266,9 +266,9 @@ test('completed orchestral renders use compact note-grid Ogg samples', () => {
     ['guitar-s-funk', 47, '020_e2.ogg', '066_d6.ogg'],
     ['guitar-s-rock', 47, '020_e2.ogg', '066_d6.ogg'],
     ['guitar-superstrat', 45, '020_e2.ogg', '064_c6.ogg'],
-    ['guitar-hollow', 46, '020_e2.ogg', '065_cs6.ogg'],
+    ['guitar-hollow', 47, '020_e2.ogg', '066_d6.ogg'],
     ['guitar-nylon', 45, '020_e2.ogg', '064_c6.ogg'],
-    ['guitar-steel', 29, '020_e2.ogg', '055_ds5.ogg'],
+    ['guitar-steel', 45, '020_e2.ogg', '064_c6.ogg'],
     ['harp', 78, '005_cs1.ogg', '082_fs7.ogg'],
     ['piccolo-trumpet', 49, '032_e3.ogg', '080_e7.ogg']
   ]) {
@@ -304,6 +304,24 @@ test('completed orchestral renders use compact note-grid Ogg samples', () => {
   assert.match(app, /\[\["sustain", "활긋기"\], \["pizzicato", "피치카토"\]\]/);
 });
 
+test('guitar sample maps contain every supplied MIDI note exactly once', () => {
+  for (const folder of [
+    'guitar-s-clean', 'guitar-s-blues', 'guitar-s-funk', 'guitar-s-rock',
+    'guitar-superstrat', 'guitar-hollow', 'guitar-nylon', 'guitar-steel'
+  ]) {
+    const sampleRoot = path.join(root, 'assets', 'audio', folder);
+    const expectedMidi = fs.readdirSync(sampleRoot)
+      .filter((name) => name.endsWith('.ogg'))
+      .sort()
+      .map((name) => Number(name.slice(0, 3)) + 20);
+    const escapedFolder = folder.replaceAll('-', '\\-');
+    const configMatch = app.match(new RegExp(`"${escapedFolder}": Object\\.freeze\\(\\{[^\\n]+anchors: Object\\.freeze\\(\\[([^\\]]+)\\]\\)`));
+    assert.ok(configMatch, `${folder}: missing explicit anchor map`);
+    const anchors = configMatch[1].split(',').map((value) => Number(value.trim()));
+    assert.deepEqual(anchors, expectedMidi, `${folder}: config anchors must match supplied files`);
+    assert.match(configMatch[0], new RegExp(`min: ${expectedMidi[0]}, max: ${expectedMidi.at(-1)}`), `${folder}: recorded range`);
+  }
+});
 test('keyboard and electronic machines use non-interactive premium artwork', () => {
   for (const asset of [
     'keyboard-concert-grand.webp', 'keyboard-upright-piano.webp',
@@ -357,12 +375,15 @@ test('percussion library includes dedicated kits and essential orchestral instru
   assert.match(app, /function chokeOpenHat/);
   assert.match(app, /\["hat", "pedalhat", "openhat"\]\.includes\(id\)/);
   assert.match(app, /const DRUM_SAMPLE_SETS/);
-  assert.match(app, /const DRUM_PERCEPTUAL_TRIM_DB = Object.freeze/);
-  assert.match(app, /hat: -9/);
-  assert.match(app, /crash: -6/);
-  assert.ok(app.includes("gainDb + perceptualTrimDb"));
-  assert.match(app, /const AUDIO_SAMPLE_REVISION = "20260901-hq128-v1"/);
-  assert.match(app, /const AD2_DRUM_SAMPLE_REVISION = "20260901-ad2-note49-v1"/);
+  assert.match(app, /const DRUM_KIT_GAIN_DB = Object.freeze/);
+  for (const folder of ['drums-rock', 'drums-metal', 'drums-pop', 'drums-jazz', 'drums-funk', 'drums-linn', 'drums-808']) {
+    assert.match(app, new RegExp(`gainDb: DRUM_KIT_GAIN_DB\\["${folder}"\\]`));
+  }
+  assert.doesNotMatch(app, /DRUM_PERCEPTUAL_TRIM_DB|perceptualTrimDb/);
+  assert.match(app, /sampledVelocity \* Math\.pow\(10, gainDb \/ 20\)/);
+  assert.match(drumSplitSource, /parser\.add_argument\("--bitrate", default="192k"\)/);
+  assert.match(app, /const AUDIO_SAMPLE_REVISION = "20260902-hq192-v2"/);
+  assert.match(app, /const AD2_DRUM_SAMPLE_REVISION = "20260902-ad2-original-balance-v2"/);
   assert.match(app, /config\.root \+ id \+ "\.ogg" \+ sampleRevision/);
   assert.match(app, /function playSampledDrum/);
   assert.match(app, /preloadDrumSamples\(\)/);

@@ -1,4 +1,4 @@
-"""Extract the playable GM drum-pad hits from a fixed five-second grid."""
+"""Extract fixed-grid drum hits as high-quality stereo Ogg Opus samples."""
 
 from __future__ import annotations
 
@@ -58,7 +58,7 @@ def main() -> None:
     parser.add_argument("--interval", type=float, default=5.0)
     parser.add_argument("--offset", type=float, default=0.02)
     parser.add_argument("--duration", type=float, default=4.75)
-    parser.add_argument("--bitrate", default="48k")
+    parser.add_argument("--bitrate", default="192k")
     args = parser.parse_args()
     split(args.source, args.destination, args.ffmpeg, args.interval, args.offset, args.duration, args.bitrate)
 
