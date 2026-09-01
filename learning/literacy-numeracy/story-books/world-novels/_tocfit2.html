@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>명작 소설 차례 맞춤 2차</title>
+<style>body{font:14px monospace;margin:16px}iframe{position:fixed;left:-6000px;top:0;border:0}pre{white-space:pre-wrap}</style></head>
+<body><pre id="out">…</pre><iframe id="frame"></iframe><script>
+const out=document.getElementById('out'),frame=document.getElementById('frame');
+const BOOKS=['anne-green-gables','arabian','benhur','fadette','fifteen','flanders','greek','heidi','huck-finn','invisible','jean-valjean','jekyll','jungle','little-lord','little-princess','little-women','lupin','marco','mohican','monte-cristo','musketeers','nils','oliver','pompeii','prince-pauper','quixote','remi','robinhood','robinson','samguk','schimmel','secret-garden','seoyu','seton','shakespeare','sherlock-holmes','solomon','timemachine','tom-sawyer','treasure-island','uncletom','world-tour'];
+const SIZES=[[820,1180],[1180,820],[375,812],[834,1194],[912,1368]];
+// 차례 쪽만 그려서 ① 넘침 ② 좌우 첫 줄 높이를 잰다.
+function probe(){const bad=[];
+ for(let i=0;i<PAGES.length;i++){ if(PAGES[i].kind!=='toc') continue; current=i; paint();
+  const L=document.querySelector('.page-toc .story-page-left'),R=document.querySelector('.page-toc .story-page-right');
+  if(!L||!R){bad.push(i+' 차례 칸을 못 찾음');continue;}
+  [['왼',L],['오',R]].forEach(([n,el])=>{const o=el.scrollHeight-el.clientHeight; if(o>1) bad.push(i+' '+n+'쪽 넘침 '+o+'px');});
+  const a=L.querySelector('.toc-list li:first-child button'),b=R.querySelector('.toc-list li:first-child button');
+  if(a&&b){const d=Math.round(b.getBoundingClientRect().top-a.getBoundingClientRect().top);
+   if(Math.abs(d)>1) bad.push(i+' 첫 줄 어긋남 '+d+'px');}
+  const st=document.querySelector('.page-toc .toc-list strong');
+  if(st) bad.push('#글씨 '+i+' '+getComputedStyle(st).fontSize);}
+ current=0;paint();return bad;}
+(async()=>{const lines=[];
+ for(const b of BOOKS){const res=[],sizes=[];
+  for(const [w,h] of SIZES){frame.style.width=w+'px';frame.style.height=h+'px';
+   await Promise.all(['app.js','styles.css'].map(f=>fetch(b+'/'+f,{cache:'reload'}).catch(()=>{})));
+   await new Promise(r=>{frame.onload=r;frame.src=b+'/?t='+Date.now();});
+   await new Promise(r=>setTimeout(r,120));
+   try{const v=frame.contentWindow.eval('('+probe.toString()+')()');
+    v.forEach(x=>{ if(x.startsWith('#글씨')) sizes.push(w+'x'+h+'→'+x.split(' ').pop()); else res.push('  ['+w+'x'+h+'] '+x);});}
+   catch(e){res.push('  실패 '+e.message);}}
+  lines.push((res.length?'✗ ':'✔ ')+b+' ['+sizes.join(' ')+']'+(res.length?'\n'+res.join('\n'):''));
+  out.textContent=lines.join('\n');}
+ out.textContent=lines.join('\n')+'\n\n=== 끝 ===';})();
+</script></body></html>

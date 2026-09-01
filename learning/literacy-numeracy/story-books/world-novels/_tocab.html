@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>차례 폰 넘침 전후 비교</title>
+<style>body{font:14px monospace;margin:16px}iframe{position:fixed;left:-6000px;top:0;border:0}pre{white-space:pre-wrap}</style></head>
+<body><pre id="out">…</pre><iframe id="frame"></iframe><script>
+const out=document.getElementById('out'),frame=document.getElementById('frame');
+const BOOKS=['anne-green-gables','arabian','benhur','fadette','fifteen','flanders','greek','heidi','huck-finn','invisible','jean-valjean','jekyll','jungle','little-lord','little-princess','little-women','lupin','marco','mohican','monte-cristo','musketeers','nils','oliver','pompeii','prince-pauper','quixote','remi','robinhood','robinson','samguk','schimmel','secret-garden','seoyu','seton','shakespeare','sherlock-holmes','solomon','timemachine','tom-sawyer','treasure-island','uncletom','world-tour'];
+// 375x812(폰) 한 크기에서, 고친 뒤와 고치기 전(고정 14.5px + 유령 h2 없음)을 같은 자리에서 잰다.
+function probe(){
+ const styleId='__ab';
+ const measure=()=>{let sum=0;
+  for(let i=0;i<PAGES.length;i++){ if(PAGES[i].kind!=='toc') continue; current=i; paint();
+   document.querySelectorAll('.page-toc .story-page-left,.page-toc .story-page-right')
+    .forEach(el=>{const o=el.scrollHeight-el.clientHeight; if(o>1) sum+=o;});}
+  return sum;};
+ const after=measure();
+ const st=document.createElement('style'); st.id=styleId;
+ st.textContent='.toc-list strong{font-size:14.5px !important}.toc-h2-ghost{display:none !important}';
+ document.head.appendChild(st);
+ const before=measure();
+ st.remove(); current=0; paint();
+ return {before,after};}
+(async()=>{const lines=[];let worse=0,better=0,same=0;
+ for(const b of BOOKS){let r=null;
+  frame.style.width='375px';frame.style.height='812px';
+  await Promise.all(['app.js','styles.css'].map(f=>fetch(b+'/'+f,{cache:'reload'}).catch(()=>{})));
+  await new Promise(x=>{frame.onload=x;frame.src=b+'/?t='+Date.now();});
+  await new Promise(x=>setTimeout(x,120));
+  try{r=frame.contentWindow.eval('('+probe.toString()+')()');}catch(e){r={before:-1,after:-1,err:e.message};}
+  const d=r.after-r.before;
+  if(d>1)worse++;else if(d<-1)better++;else same++;
+  lines.push((d>1?'✗ ':'✔ ')+b+'  고치기 전 '+r.before+'px  고친 뒤 '+r.after+'px  차이 '+(d>0?'+':'')+d+'px'+(r.err?' '+r.err:''));
+  out.textContent=lines.join('\n');}
+ out.textContent=lines.join('\n')+'\n\n더 나빠짐 '+worse+'권 / 나아짐 '+better+'권 / 그대로 '+same+'권\n\n=== 끝 ===';})();
+</script></body></html>
