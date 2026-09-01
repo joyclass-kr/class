@@ -1000,6 +1000,7 @@ html[lang="en"] .vocab-sent {
     box-shadow: 0 0 0 4px rgba(215, 171, 95, 0.3);
 }
 
-/* 영어로 읽을 때는 문단을 눌러 그 자리부터 들을 수 있다. */
-html[lang="en"] [data-say] { cursor: pointer; }
-html[lang="en"] [data-say]:hover { background: rgba(215, 171, 95, 0.14); border-radius: 6px; }
+/* 읽어 주는 동안에만 문단을 눌러 그 자리로 옮길 수 있다.
+   읽지도 않는데 눌러서 소리가 나면 곤란하므로 그때만 손 모양을 준다. */
+html[lang="en"] .is-reading [data-say] { cursor: pointer; }
+html[lang="en"] .is-reading [data-say]:hover { background: rgba(215, 171, 95, 0.14); border-radius: 6px; }

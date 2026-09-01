@@ -927,10 +927,14 @@ function paint() {
     const readBtn = document.getElementById('readBtn');
     if (readBtn) readBtn.addEventListener('click', () => (reading ? stopReading() : readPage(0)));
 
-    // 문단을 누르면 그 문단부터 읽는다. 읽는 중이든 아니든 똑같다.
+    // 읽는 중일 때만 문단을 눌러 그 자리로 옮긴다.
+    // 그냥 눌렀다고 소리가 나면 곤란하니, 스피커 단추를 누른 뒤에만 먹는다.
     if (LANG === 'en' && CAN_SPEAK) {
         spreadEl.querySelectorAll('[data-say]').forEach(el => {
-            el.addEventListener('click', () => readPage(Number(el.dataset.say)));
+            el.addEventListener('click', () => {
+                if (!reading) return;
+                readPage(Number(el.dataset.say));
+            });
         });
     }
 
@@ -1058,6 +1062,7 @@ let readToken = 0;
 
 function stopReading() {
     reading = false;
+    if (typeof spreadEl !== 'undefined' && spreadEl) spreadEl.classList.remove('is-reading');
     readToken++;
     if (CAN_SPEAK) { try { speechSynthesis.cancel(); } catch (e) {} }
     document.querySelectorAll('.saying').forEach(el => el.classList.remove('saying'));
@@ -1073,6 +1078,7 @@ function readPage(from) {
     // 읽던 것이 있으면 끊는다. 안 그러면 새 글이 뒤에 줄을 선다.
     try { speechSynthesis.cancel(); } catch (e) {}
     reading = true;
+    if (spreadEl) spreadEl.classList.add('is-reading');
     const mine = ++readToken;
     const btn = document.getElementById('readBtn');
     if (btn) btn.textContent = '■';
