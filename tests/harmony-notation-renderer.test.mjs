@@ -121,7 +121,7 @@ assert.match(clefScore, /viewBox="0 0 520 116"/, "labeled clef examples need roo
 assert.ok(clefScore.includes('transform="translate(0 -29)"'), "labeled clef content must remain vertically centered");
 assert.match(clefScore, /𝄞/, "the grand-staff lesson needs a treble clef");
 assert.match(clefScore, /𝄢/, "the grand-staff lesson needs a bass clef");
-assert.match(clefScore, /class="music-glyph clef ?" x="28" y="120"/, "the treble-clef spiral must sit on the G line at textbook scale");
+assert.match(clefScore, /class="music-glyph clef ?" x="28" y="112"/, "the treble-clef spiral must sit on the G line at textbook scale");
 assert.equal((clefScore.match(/class="note-head"/g) || []).length, 10);
 assert.match(clefScore, /bass-clef" x="28" y="103"/, "the bass-clef dots must straddle the F3 line");
 assert.match(clefScore, /cy="99"/, "bass-clef C3 must sit in the second space from the top");
@@ -129,7 +129,7 @@ assert.match(clefScore, /cy="124"/, "treble-clef middle C must sit on its ledger
 for (const label of ["C3", "F3", "G3", "C4", "F4", "G4"]) assert.match(clefScore, new RegExp(">" + label + "<"));
 
 const staffBasics = notation.render("staff-basics");
-assert.match(staffBasics, /class="music-glyph clef " x="28" y="120"/, "every treble staff must use the corrected clef baseline");
+assert.match(staffBasics, /class="music-glyph clef " x="28" y="112"/, "every treble staff must use the corrected clef baseline");
 assert.equal((staffBasics.match(/class="note-head"/g) || []).length, 9, "five lines and four spaces need nine labeled positions");
 for (const label of ["1줄 E", "1칸 F", "5줄 F"]) assert.match(staffBasics, new RegExp(">" + label + "<"));
 
