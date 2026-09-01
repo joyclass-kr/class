@@ -31,6 +31,15 @@ assert.equal(notation.noteParts("F#4").midi, 66);
 assert.equal(notation.noteParts("C#4").midi, notation.noteParts("Db4").midi, "enharmonic spellings must sound at the same pitch");
 assert.notEqual(notation.noteParts("C#4").step, notation.noteParts("Db4").step, "enharmonic spellings must occupy different staff positions");
 
+for (const [skillId, skill] of Object.entries(dataContext.window.HarmonyCurriculum.skills)) {
+  const visuals = [...new Set(skill.sections.map((section) => section.visual))];
+  const hasExplanation = visuals.some((key) => {
+    const output = notation.render(key);
+    return output.includes('class="concept-diagram') || output.includes('class="notation-diagram');
+  });
+  assert.ok(hasExplanation, skillId + " needs at least one explanatory relationship diagram, not score examples alone");
+}
+
 {
   const skills = dataContext.window.HarmonyCurriculum.skills;
   let keyboardLabCount = 0;

@@ -447,6 +447,53 @@
     if (key === "voice-ranges") {
       return '<div class="concept-diagram voice-range-diagram" role="img" aria-label="SATB 네 성부의 기본 활동 음역"><div><strong>S</strong><span>C4</span><i></i><span>A5</span></div><div><strong>A</strong><span>G3</span><i></i><span>D5</span></div><div><strong>T</strong><span>C3</span><i></i><span>G4</span></div><div><strong>B</strong><span>E2</span><i></i><span>C4</span></div></div>';
     }
+    if (key === "staff-clefs") {
+      return flowDiagram("낮은음자리표 F3에서 가온도 C4를 지나 높은음자리표 G4로 이어지는 큰보표 기준", [
+        { head:"𝄢 F3", detail:"낮은음자리표 4째 줄" }, { head:"C4", detail:"두 보표 사이 가온도", tone:"accent" },
+        { head:"𝄞 G4", detail:"높은음자리표 2째 줄" }
+      ]);
+    }
+    if (key === "quality-pairs") {
+      return '<div class="concept-diagram theory-compare" role="img" aria-label="장 단 감 증 3화음은 아래 3도와 위 3도의 반음 수 조합으로 구별"><div><small>장3화음</small><strong>4 + 3</strong><span>장3도 + 단3도</span></div><b>3음이 반음 내려가면<br>장 → 단</b><div><small>단3화음</small><strong>3 + 4</strong><span>단3도 + 장3도</span></div></div>';
+    }
+    if (key === "minor-scales") {
+      return flowDiagram("자연단음계를 기준으로 화성형은 7음, 가락형 상행은 6음과 7음을 올리는 관계", [
+        { head:"자연형", detail:"♭3 · ♭6 · ♭7" }, { head:"화성형", detail:"자연형 + ♯7", tone:"dominant" },
+        { head:"가락형 ↑", detail:"자연형 + ♯6 · ♯7", tone:"accent" }, { head:"가락형 ↓", detail:"보통 자연형 복귀" }
+      ]);
+    }
+    if (key === "voice-compare") {
+      return '<div class="concept-diagram theory-compare" role="img" aria-label="C에서 G로 갈 때 모든 성부를 크게 옮기는 연결과 공통음 G를 유지해 최소 이동하는 연결 비교"><div><small>피해야 할 기본값</small><strong>모두 도약</strong><span>C–E–G → G–B–D</span></div><b>공통음 G 유지<br>나머지는 가까운 음</b><div><small>기본 연결</small><strong>최소 이동</strong><span>G 유지 · E→D · C→B</span></div></div>';
+    }
+    if (key === "nonchord-motion") {
+      return flowDiagram("비화성음을 앞뒤 진행 모양으로 판별", [
+        { head:"경과음", detail:"화음음 → 같은 방향 → 화음음" }, { head:"보조음", detail:"화음음 → 이웃 → 원래 음" },
+        { head:"계류음", detail:"준비 · 유지 · 순차 해결" }, { head:"앞꾸밈음", detail:"도약 진입 · 순차 해결", tone:"accent" }
+      ]);
+    }
+    if (key === "sequence-cycle") {
+      return flowDiagram("같은 근음 이동과 화음 모형을 다른 음높이에서 반복하는 연속진행", [
+        { head:"vi", detail:"Am" }, { head:"ii", detail:"Dm" }, { head:"V", detail:"G" }, { head:"I", detail:"C", tone:"tonic" }
+      ]);
+    }
+    if (key === "loop-leadsheet") {
+      return flowDiagram("반복 진행을 코드 이름, 베이스, 리듬, 성부 연결의 네 층으로 완성", [
+        { head:"1 코드", detail:"기능 순서" }, { head:"2 베이스", detail:"근음·전위" },
+        { head:"3 리듬", detail:"마디별 교체" }, { head:"4 연결", detail:"공통음·최소 이동", tone:"accent" }
+      ]);
+    }
+    if (key === "harmonic-rhythm") {
+      return '<div class="concept-diagram theory-compare" role="img" aria-label="한 마디에 코드 한 번과 두 번 바뀌는 화성 리듬 비교"><div><small>느린 화성 리듬</small><strong>| C — — — |</strong><span>한 마디 1화음</span></div><b>코드 수가 아니라<br>바뀌는 시점을 셈</b><div><small>빠른 화성 리듬</small><strong>| C — G — |</strong><span>한 마디 2화음</span></div></div>';
+    }
+    if (key === "transpose-map") {
+      return '<div class="concept-diagram theory-compare" role="img" aria-label="C장조 진행과 G장조 진행에서 음이름은 바뀌지만 음계도와 기능은 유지"><div><small>C 장조</small><strong>C–F–G–C</strong><span>I–IV–V–I</span></div><b>모든 음을 같은 간격 이동<br>음계도는 유지</b><div><small>G 장조</small><strong>G–C–D–G</strong><span>I–IV–V–I</span></div></div>';
+    }
+    if (key === "melody-candidates") {
+      return flowDiagram("강박의 멜로디 음에서 후보 화음을 찾고 앞뒤 기능으로 하나를 선택", [
+        { head:"멜로디 E", detail:"강박 음" }, { head:"후보", detail:"C · Am · Em" },
+        { head:"앞뒤 기능", detail:"T–PD–D–T" }, { head:"선택 C", detail:"E는 3음", tone:"accent" }
+      ]);
+    }
     if (key === "motion-directions" || key === "similar-parallel" || key === "contrary-oblique") {
       return '<div class="concept-diagram motion-card-grid" role="img" aria-label="동진행 병진행 반진행 사진행의 방향 비교"><div><strong>동진행</strong><b>↑ ↑</b><span>도수 바뀜</span></div><div><strong>병진행</strong><b>↑ ↑</b><span>도수 유지</span></div><div><strong>반진행</strong><b>↑ ↓</b><span>반대 방향</span></div><div><strong>사진행</strong><b>― ↑</b><span>한 성부 유지</span></div></div>';
     }
