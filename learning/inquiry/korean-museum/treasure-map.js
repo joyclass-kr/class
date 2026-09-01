@@ -160,9 +160,9 @@
     }).addTo(leafletMap);
 
     leafletMap.createPane('adminLabels');
-    // Administrative names provide context, but relic markers must stay clickable
-    // and visually dominant whenever the two overlap.
-    leafletMap.getPane('adminLabels').style.zIndex = 550;
+    // Keep administrative names readable above relic icons without intercepting
+    // clicks or touch input intended for the markers below.
+    leafletMap.getPane('adminLabels').style.zIndex = 625;
     leafletMap.getPane('adminLabels').style.pointerEvents = 'none';
 
     leafletMap.createPane('provinceBoundaries');
