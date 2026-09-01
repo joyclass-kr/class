@@ -925,7 +925,14 @@ function paint() {
     }
 
     const readBtn = document.getElementById('readBtn');
-    if (readBtn) readBtn.addEventListener('click', () => (reading ? stopReading() : readPage()));
+    if (readBtn) readBtn.addEventListener('click', () => (reading ? stopReading() : readPage(0)));
+
+    // 문단을 누르면 그 문단부터 읽는다. 읽는 중이든 아니든 똑같다.
+    if (LANG === 'en' && CAN_SPEAK) {
+        spreadEl.querySelectorAll('[data-say]').forEach(el => {
+            el.addEventListener('click', () => readPage(Number(el.dataset.say)));
+        });
+    }
 
     renderVocab();
     fitVocabScreen();
@@ -1058,11 +1065,13 @@ function stopReading() {
     if (b) b.textContent = '▶';
 }
 
-function readPage() {
+function readPage(from) {
     const page = PAGES[current];
     if (!CAN_SPEAK || !page) return;
     const parts = pageParts(page);
     if (!parts.length) return;
+    // 읽던 것이 있으면 끊는다. 안 그러면 새 글이 뒤에 줄을 선다.
+    try { speechSynthesis.cancel(); } catch (e) {}
     reading = true;
     const mine = ++readToken;
     const btn = document.getElementById('readBtn');
@@ -1085,7 +1094,7 @@ function readPage() {
         u.onerror = () => step(i + 1);
         try { speechSynthesis.speak(u); } catch (e) { stopReading(); }
     };
-    step(0);
+    step(Math.max(0, Math.min(from | 0, parts.length - 1)));
 }
 
 /* ── 단어장 ────────────────────────────────────────────────────

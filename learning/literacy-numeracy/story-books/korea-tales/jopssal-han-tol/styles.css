@@ -999,3 +999,7 @@ html[lang="en"] .vocab-sent {
     border-radius: 6px;
     box-shadow: 0 0 0 4px rgba(215, 171, 95, 0.3);
 }
+
+/* 영어로 읽을 때는 문단을 눌러 그 자리부터 들을 수 있다. */
+html[lang="en"] [data-say] { cursor: pointer; }
+html[lang="en"] [data-say]:hover { background: rgba(215, 171, 95, 0.14); border-radius: 6px; }
