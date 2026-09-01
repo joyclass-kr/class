@@ -1,8 +1,9 @@
 # 클래식 감상 음원 출처
 
 이 페이지에서 화면에 바로 재생되는 곡은 원곡·연주 모두 저작권 문제가 없는
-녹음만 실었습니다. 모두 위키미디어 공용(Wikimedia Commons)에서 받아
-용량을 줄여(Vorbis, 약 112kbps) 실었습니다. 원본 링크는 아래에 있습니다.
+녹음만 실었습니다. 위키미디어 공용(Wikimedia Commons)을 중심으로 공개
+아카이브와 역사 음반 복원 자료에서 받아 용량을 줄여(Vorbis, 약 112kbps)
+실었습니다. 원본 링크는 아래에 있습니다.
 
 ## 목록 (곡 번호는 classical.js의 no 기준)
 
@@ -36,6 +37,12 @@
   연주: Skidmore College Orchestra (Musopen)
   라이선스: 퍼블릭 도메인
   https://commons.wikimedia.org/wiki/File:Ludwig_van_Beethoven_-_symphony_no._5_in_c_minor,_op._67_-_i._allegro_con_brio.ogg
+
+- 07 교향곡 9번 〈합창〉 4악장 — `symphony9-choral4.ogg`
+  연주: Symphony Orchestra · 합창단과 독창자 · Albert Coates 지휘 (1923년 녹음, 1924년 발매)
+  라이선스: 퍼블릭 도메인 (1924년 발매 음반의 저작인접권 만료)
+  원본 페이지에서 두 파일로 나뉜 피날레를 내려받아 이어 붙였습니다. 합창은 영어로 노래합니다.
+  https://music.damians78s.co.uk/2024/05/07/albert-coates-conducts-beethovens-9th-1923/
 
 - 08 아이네 클라이네 나흐트무지크 1악장 — `eine-kleine-nachtmusik.ogg`
   연주: Advent Chamber Orchestra
@@ -173,6 +180,12 @@
   출처: 위키미디어가 아니라 인터넷 아카이브(Internet Archive)의 78회전판 컬렉션에서 받았습니다.
   https://archive.org/details/78_carmen---prelude-to-act-1_philadelphia-symphony-orchestra-leopold-stokowski-bizet_gbia0010961a
 
+- 38 천국과 지옥 〈캉캉〉 — `can-can.ogg`
+  연주: Musopen 제공(연주자 정보 미표기)
+  라이선스: 퍼블릭 도메인 헌정 (CC-PD)
+  위키미디어 공용의 원본이 이미 Ogg Vorbis 111kbps라 재인코딩 없이 사용했습니다.
+  https://commons.wikimedia.org/wiki/File:Offenbach_-_Orpheus_in_the_Underworld_-_Overture,_Can_Can_section.ogg
+
 - 39 아름답고 푸른 도나우 — `blue-danube.ogg`
   연주: US Marine Band(지휘 Albert F. Schoepper, 1972년경)
   라이선스: 퍼블릭 도메인
@@ -226,13 +239,11 @@
 
 ## 못 찾았거나 뺀 곡 (음원 없이 기존 "찾아 듣기" 링크만 남음)
 
-- 07 교향곡 9번 〈합창〉 4악장 — 찾은 녹음(Horenstein 1956, 110.9MB)은 라이선스가
-  EU 실연권 만료 태그뿐이라 이 목록의 다른 곡들만큼 명확하지 않고 용량도 커서 보류.
-- 13 피아노 5중주 〈송어〉 4악장 — 위키미디어 공용에 실제 연주 녹음이 없음.
+- 13 피아노 5중주 〈송어〉 4악장 — Musopen에 European Archive 실연이 있으나
+  자동 다운로드 차단 때문에 이번 작업에서는 원본 파일 주소를 확보하지 못해 보류.
 - 25 피터와 늑대 — 위키미디어 공용에 오디오 파일 자체가 없음(사진 자료만 있음).
 - 26 청소년을 위한 관현악 입문(브리튼) — 작곡가 사후 70년이 아직 지나지 않아 원곡 저작권이 살아 있음(2046년까지).
 - 30 사브르 댄스(하차투리안) — 위와 같은 이유로 제외(2048년까지).
-- 38 천국과 지옥 〈캉캉〉 — 실제 연주 녹음을 찾지 못함(합성음만 있음). 인터넷 아카이브의 1952년 녹음은 1923년 이후라 자동 PD가 아니고 별도 권리 표기도 없어 제외.
 - 48 로미오와 줄리엣 〈기사들의 춤〉 — 실제 연주 녹음을 찾지 못함(합성음만 있음).
 - 49 카르미나 부라나 〈오 운명의 여신이여〉(오르프) — 작곡가 사후 70년이 아직 지나지 않아 원곡 저작권이 살아 있음(2052년까지).
 
