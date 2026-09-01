@@ -7,7 +7,7 @@ const CHAPTERS = [
         num: 1,
         title: "쫓겨난 아우",
         art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
-        artAt: ["오늘부터 나가 살아라", "주걱이 흥부의 뺨을 후려쳤습니다", "이쪽도 한 번만 때려 주십시오"],
+        artAt: ["오늘부터 나가 살아라", "손에는 밥주걱이 들려 있었습니다", "이쪽도 한 번만 때려 주십시오"],
         paras: [
             "옛날 전라도 어느 고을에 형제가 살았습니다. 형은 놀부요 아우는 흥부였습니다. 집안은 논밭이 제법 되어 먹고살 걱정은 없었습니다.",
             "한배에서 났는데도 두 사람은 물과 불처럼 달랐습니다. 흥부는 마음이 여려서 남의 일에 먼저 소매를 걷었고, 놀부는 제 것 아니면 눈길도 주지 않았습니다. 한 사람은 주려고 태어났고 한 사람은 받으려고 태어난 듯했습니다.",
@@ -104,7 +104,7 @@ const CHAPTERS = [
         num: 4,
         title: "놀부의 제비",
         art: ["story-04-a.webp", "story-04-b.webp", "story-04-c.webp"],
-        artAt: ["제비라니", "뚝, 하고 소리가 났습니다", "잊지 마라! 나다! 놀부다!"],
+        artAt: ["제비라니", "새끼 한 마리를 꺼냈습니다", "잊지 마라! 나다! 놀부다!"],
         paras: [
             "놀부는 소문을 듣고도 처음에는 믿지 않았습니다.<br>\"그 거지 같은 것이 부자가 됐다고? 헛소리다.\" 듣고도 코웃음을 쳤습니다.",
             "그러나 사흘이 지나도 소문이 잦아들지 않았습니다. 놀부는 결국 아우의 집으로 향했습니다. 장에 다녀온 종까지 같은 말을 했기 때문입니다.",
@@ -319,19 +319,21 @@ function runHtml(segs, a, b) {
 // 그 문구가 든 펼침면에 그림을 얹는다. 두 그림이 같은 쪽으로 몰리면 뒤로 민다.
 function anchorSlots(segs, ranges, count, anchors, total) {
     // 1) 문구가 든 펼침면을 찾는다. 못 찾으면 예전처럼 고르게 나눈 자리.
+    const at = [];
     const want = [];
     for (let k = 0; k < count; k++) {
-        let at = -1;
+        let found = -1;
         const a = anchors[k];
         if (a) {
             const segIdx = segs.findIndex(g => g.html.indexOf(a) >= 0);
             if (segIdx >= 0) {
                 for (let p = 0; p < ranges.length; p++) {
-                    if (segIdx >= ranges[p][0] && segIdx < ranges[p][1]) { at = p >> 1; break; }
+                    if (segIdx >= ranges[p][0] && segIdx < ranges[p][1]) { found = p >> 1; break; }
                 }
             }
         }
-        want.push(at < 0 ? Math.min(Math.round((k * total) / count), total - 1) : at);
+        at.push(found);
+        want.push(found < 0 ? Math.min(Math.round((k * total) / count), total - 1) : found);
     }
     // 2) 앞으로 훑으며 겹치면 뒤로 민다.
     for (let k = 1; k < count; k++) {
@@ -348,7 +350,36 @@ function anchorSlots(segs, ranges, count, anchors, total) {
     for (let k = 0; k < count; k++) {
         if (want[k] >= 0 && want[k] < total) slots[want[k]] = 'img';
     }
-    return slots;
+    // 3)에서 앞으로 당겨진 그림이 몇인지 센다. 뒤로 밀린 것(늦음)은 괜찮지만
+    // 앞으로 당겨진 것은 아직 읽지도 않은 일을 먼저 보여 주는 셈이라 안 된다.
+    let early = 0;
+    for (let k = 0; k < count; k++) {
+        if (at[k] >= 0 && want[k] < at[k]) early++;
+    }
+    return { slots, early };
+}
+
+// 지금 나눠진 대로 배치가 얼마나 좋은지 점수를 매긴다. 낮을수록 좋다.
+// 그림이 장면보다 **앞서는 것**이 가장 나쁘다. 그 다음이 장면에서 먼 것이다.
+function anchorScore(segs, ranges, count, anchors, slots) {
+    const spreadOfSeg = si => {
+        for (let p = 0; p < ranges.length; p++) {
+            if (si >= ranges[p][0] && si < ranges[p][1]) return p >> 1;
+        }
+        return -1;
+    };
+    const imgAt = [];
+    slots.forEach((kind, s) => { if (kind === 'img') imgAt.push(s); });
+    let early = 0, dist = 0;
+    for (let k = 0; k < count; k++) {
+        const a = anchors[k];
+        const si = a ? segs.findIndex(g => g.html.indexOf(a) >= 0) : -1;
+        const at = si >= 0 ? spreadOfSeg(si) : -1;
+        if (at < 0 || imgAt[k] === undefined) continue;
+        if (imgAt[k] < at) early++;
+        dist += Math.abs(imgAt[k] - at);
+    }
+    return { early, dist, score: early * 1000 + dist };
 }
 
 function slotPlan(imgCount, textCount) {
@@ -408,6 +439,9 @@ function fillPages(segs, caps, headHtml) {
     return ranges;
 }
 
+// 그림 자리가 안 맞을 때 펼침면을 몇 장까지 늘려 볼지. 늘리면 책이 성겨진다.
+const GROW_LIMIT = 1;
+
 function paginateChapter(ch, chIndex) {
     const segs = CHAPTER_SEGS[chIndex];
     const arts = (ch.art && ch.art.length) ? ch.art : [];
@@ -439,31 +473,66 @@ function paginateChapter(ch, chIndex) {
     let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
     let caps = capsOf(slots);
     let ranges = fillPages(segs, caps, headHtml);
-    for (let guard = 0; guard < 24; guard++) {
-        // 그림을 제 장면이 있는 쪽으로 옮긴다. 옮기면 글 나눔이 달라지므로
-        // 자리가 더 안 움직일 때까지 되풀이한다.
-        if (anchors && tries < 10) {
-            const want = anchorSlots(segs, ranges, arts.length, anchors, spreadCount);
-            if (want.join() !== slots.join()) {
-                tries++;
-                slots = want;
-                caps = capsOf(slots);
-                ranges = fillPages(segs, caps, headHtml);
-                continue;
-            }
-        }
+    let grows = 0;
+    let best = null;
+    for (let guard = 0; guard < 40; guard++) {
         // 한 쪽이라도 넘치면 펼침면을 늘려 다시 나눈다.
         // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
         // 여유를 1px이나 두면 안 된다. 0.8px만 넘쳐도 그 칸에 스크롤 막대가 생기고,
         // 막대가 칸을 15px 좁히면 글이 다시 길어져 넘침이 32px로 불어난다.
         const over = ranges.some(([a, b], n) =>
             PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 0.25);
+
+        // 넘치지 않는 배치는 점수를 매겨 둔다. 되풀이가 두 자리를 오갈 때
+        // 하필 나쁜 쪽에서 멈추는 일이 있어서, 끝나면 가장 좋았던 것으로 돌아간다.
+        if (!over && anchors) {
+            const sc = anchorScore(segs, ranges, arts.length, anchors, slots);
+            if (!best || sc.score < best.score) {
+                best = {
+                    score: sc.score, slots: slots.slice(), caps: caps.slice(),
+                    ranges: ranges.map(r => r.slice()), spreadCount
+                };
+            }
+        }
+
+        // 그림을 제 장면이 있는 쪽으로 옮긴다. 옮기면 글 나눔이 달라지므로
+        // 자리가 더 안 움직일 때까지 되풀이한다.
+        if (anchors && tries < 10) {
+            const plan = anchorSlots(segs, ranges, arts.length, anchors, spreadCount);
+            // 닻 둘이 같은 펼침면을 원하는데 뒤에 자리가 없으면 앞엣것이
+            // 앞으로 당겨진다. 당기는 대신 펼침면을 한 장 늘려 자리를 만든다.
+            // 그러면 글이 조금 성겨지지만, 그림이 장면보다 먼저 나오지는 않는다.
+            if (plan.early > 0 && grows < GROW_LIMIT && spreadCount < maxSpreads) {
+                grows++;
+                spreadCount++;
+                tries = 0;
+                slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+                caps = capsOf(slots);
+                ranges = fillPages(segs, caps, headHtml);
+                continue;
+            }
+            if (plan.slots.join() !== slots.join()) {
+                tries++;
+                slots = plan.slots;
+                caps = capsOf(slots);
+                ranges = fillPages(segs, caps, headHtml);
+                continue;
+            }
+        }
         if (!over || spreadCount >= maxSpreads) break;
         spreadCount++;
         tries = 0;
         slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
         caps = capsOf(slots);
         ranges = fillPages(segs, caps, headHtml);
+    }
+
+    // 오가는 동안 가장 좋았던 배치로 돌아간다.
+    if (best) {
+        slots = best.slots;
+        caps = best.caps;
+        ranges = best.ranges;
+        spreadCount = best.spreadCount;
     }
 
     const spreads = [];
@@ -778,7 +847,7 @@ const EN = {
             num: 1,
             title: "The Brother Turned Out",
             art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
-            artAt: ["From today you live somewhere else", "The rice paddle struck Heungbu on the cheek", "hit this side too"],
+            artAt: ["From today you live somewhere else", "She had a rice paddle in her hand", "hit this side too"],
             paras: [
                 "Long ago, in a village in Jeolla, there lived two brothers. The elder was Nolbu and the younger was Heungbu. The family had a fair bit of land, so there was no worry about food.",
                 "They came from the same mother, and yet the two were as different as water and fire. Heungbu was soft-hearted and rolled up his sleeves for other people first. Nolbu never even glanced at anything that wasn't his. One was born to give and one was born to take.",
@@ -875,7 +944,7 @@ const EN = {
             num: 4,
             title: "Nolbu's Swallow",
             art: ["story-04-a.webp", "story-04-b.webp", "story-04-c.webp"],
-            artAt: ["Swallows?", "There was a snap", "Don't forget! It's me! It's Nolbu!"],
+            artAt: ["Swallows?", "took out one chick", "Don't forget! It's me! It's Nolbu!"],
             paras: [
                 "At first Nolbu did not believe the story.<br>\"That beggar has got rich? Nonsense.\" He heard it and snorted.",
                 "But three days went by and the story did not die down. In the end Nolbu set off for his brother's house. Even the servant back from the market was saying the same thing.",

@@ -315,19 +315,21 @@ function runHtml(segs, a, b) {
 // 그 문구가 든 펼침면에 그림을 얹는다. 두 그림이 같은 쪽으로 몰리면 뒤로 민다.
 function anchorSlots(segs, ranges, count, anchors, total) {
     // 1) 문구가 든 펼침면을 찾는다. 못 찾으면 예전처럼 고르게 나눈 자리.
+    const at = [];
     const want = [];
     for (let k = 0; k < count; k++) {
-        let at = -1;
+        let found = -1;
         const a = anchors[k];
         if (a) {
             const segIdx = segs.findIndex(g => g.html.indexOf(a) >= 0);
             if (segIdx >= 0) {
                 for (let p = 0; p < ranges.length; p++) {
-                    if (segIdx >= ranges[p][0] && segIdx < ranges[p][1]) { at = p >> 1; break; }
+                    if (segIdx >= ranges[p][0] && segIdx < ranges[p][1]) { found = p >> 1; break; }
                 }
             }
         }
-        want.push(at < 0 ? Math.min(Math.round((k * total) / count), total - 1) : at);
+        at.push(found);
+        want.push(found < 0 ? Math.min(Math.round((k * total) / count), total - 1) : found);
     }
     // 2) 앞으로 훑으며 겹치면 뒤로 민다.
     for (let k = 1; k < count; k++) {
@@ -344,7 +346,36 @@ function anchorSlots(segs, ranges, count, anchors, total) {
     for (let k = 0; k < count; k++) {
         if (want[k] >= 0 && want[k] < total) slots[want[k]] = 'img';
     }
-    return slots;
+    // 3)에서 앞으로 당겨진 그림이 몇인지 센다. 뒤로 밀린 것(늦음)은 괜찮지만
+    // 앞으로 당겨진 것은 아직 읽지도 않은 일을 먼저 보여 주는 셈이라 안 된다.
+    let early = 0;
+    for (let k = 0; k < count; k++) {
+        if (at[k] >= 0 && want[k] < at[k]) early++;
+    }
+    return { slots, early };
+}
+
+// 지금 나눠진 대로 배치가 얼마나 좋은지 점수를 매긴다. 낮을수록 좋다.
+// 그림이 장면보다 **앞서는 것**이 가장 나쁘다. 그 다음이 장면에서 먼 것이다.
+function anchorScore(segs, ranges, count, anchors, slots) {
+    const spreadOfSeg = si => {
+        for (let p = 0; p < ranges.length; p++) {
+            if (si >= ranges[p][0] && si < ranges[p][1]) return p >> 1;
+        }
+        return -1;
+    };
+    const imgAt = [];
+    slots.forEach((kind, s) => { if (kind === 'img') imgAt.push(s); });
+    let early = 0, dist = 0;
+    for (let k = 0; k < count; k++) {
+        const a = anchors[k];
+        const si = a ? segs.findIndex(g => g.html.indexOf(a) >= 0) : -1;
+        const at = si >= 0 ? spreadOfSeg(si) : -1;
+        if (at < 0 || imgAt[k] === undefined) continue;
+        if (imgAt[k] < at) early++;
+        dist += Math.abs(imgAt[k] - at);
+    }
+    return { early, dist, score: early * 1000 + dist };
 }
 
 function slotPlan(imgCount, textCount) {
@@ -404,6 +435,9 @@ function fillPages(segs, caps, headHtml) {
     return ranges;
 }
 
+// 그림 자리가 안 맞을 때 펼침면을 몇 장까지 늘려 볼지. 늘리면 책이 성겨진다.
+const GROW_LIMIT = 1;
+
 function paginateChapter(ch, chIndex) {
     const segs = CHAPTER_SEGS[chIndex];
     const arts = (ch.art && ch.art.length) ? ch.art : [];
@@ -435,31 +469,66 @@ function paginateChapter(ch, chIndex) {
     let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
     let caps = capsOf(slots);
     let ranges = fillPages(segs, caps, headHtml);
-    for (let guard = 0; guard < 24; guard++) {
-        // 그림을 제 장면이 있는 쪽으로 옮긴다. 옮기면 글 나눔이 달라지므로
-        // 자리가 더 안 움직일 때까지 되풀이한다.
-        if (anchors && tries < 10) {
-            const want = anchorSlots(segs, ranges, arts.length, anchors, spreadCount);
-            if (want.join() !== slots.join()) {
-                tries++;
-                slots = want;
-                caps = capsOf(slots);
-                ranges = fillPages(segs, caps, headHtml);
-                continue;
-            }
-        }
+    let grows = 0;
+    let best = null;
+    for (let guard = 0; guard < 40; guard++) {
         // 한 쪽이라도 넘치면 펼침면을 늘려 다시 나눈다.
         // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
         // 여유를 1px이나 두면 안 된다. 0.8px만 넘쳐도 그 칸에 스크롤 막대가 생기고,
         // 막대가 칸을 15px 좁히면 글이 다시 길어져 넘침이 32px로 불어난다.
         const over = ranges.some(([a, b], n) =>
             PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 0.25);
+
+        // 넘치지 않는 배치는 점수를 매겨 둔다. 되풀이가 두 자리를 오갈 때
+        // 하필 나쁜 쪽에서 멈추는 일이 있어서, 끝나면 가장 좋았던 것으로 돌아간다.
+        if (!over && anchors) {
+            const sc = anchorScore(segs, ranges, arts.length, anchors, slots);
+            if (!best || sc.score < best.score) {
+                best = {
+                    score: sc.score, slots: slots.slice(), caps: caps.slice(),
+                    ranges: ranges.map(r => r.slice()), spreadCount
+                };
+            }
+        }
+
+        // 그림을 제 장면이 있는 쪽으로 옮긴다. 옮기면 글 나눔이 달라지므로
+        // 자리가 더 안 움직일 때까지 되풀이한다.
+        if (anchors && tries < 10) {
+            const plan = anchorSlots(segs, ranges, arts.length, anchors, spreadCount);
+            // 닻 둘이 같은 펼침면을 원하는데 뒤에 자리가 없으면 앞엣것이
+            // 앞으로 당겨진다. 당기는 대신 펼침면을 한 장 늘려 자리를 만든다.
+            // 그러면 글이 조금 성겨지지만, 그림이 장면보다 먼저 나오지는 않는다.
+            if (plan.early > 0 && grows < GROW_LIMIT && spreadCount < maxSpreads) {
+                grows++;
+                spreadCount++;
+                tries = 0;
+                slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+                caps = capsOf(slots);
+                ranges = fillPages(segs, caps, headHtml);
+                continue;
+            }
+            if (plan.slots.join() !== slots.join()) {
+                tries++;
+                slots = plan.slots;
+                caps = capsOf(slots);
+                ranges = fillPages(segs, caps, headHtml);
+                continue;
+            }
+        }
         if (!over || spreadCount >= maxSpreads) break;
         spreadCount++;
         tries = 0;
         slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
         caps = capsOf(slots);
         ranges = fillPages(segs, caps, headHtml);
+    }
+
+    // 오가는 동안 가장 좋았던 배치로 돌아간다.
+    if (best) {
+        slots = best.slots;
+        caps = best.caps;
+        ranges = best.ranges;
+        spreadCount = best.spreadCount;
     }
 
     const spreads = [];

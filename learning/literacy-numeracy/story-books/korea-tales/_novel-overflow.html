@@ -8,16 +8,20 @@ function probe(){const bad=[];
  for(let i=0;i<PAGES.length;i++){ if(PAGES[i].kind==='quiz') continue; current=i; paint();
   document.querySelectorAll('.book *').forEach(el=>{const o=el.scrollHeight-el.clientHeight;
    if(o>1&&getComputedStyle(el).overflowY!=='visible') bad.push(i+' '+(el.className||el.tagName)+' '+o+'px');});}
- current=0;paint();return bad;}
+ current=0;paint();return {bad:bad,pages:PAGES.length};}
 (async()=>{const lines=[];
  for(const b of BOOKS){const res=[];
   for(const [w,h] of SIZES){frame.style.width=w+'px';frame.style.height=h+'px';
+   // 브라우저에 영어가 저장돼 있으면 영어로 열린다. 우리말로 못 박고 잰다.
+   try{localStorage.setItem('korea-tales-lang','ko');}catch(e){}
    await Promise.all(['app.js','styles.css'].map(f=>fetch(b+'/'+f,{cache:'reload'}).catch(()=>{})));
    await new Promise(r=>{frame.onload=r;frame.src=b+'/?t='+Date.now();});
    await new Promise(r=>setTimeout(r,120));
-   try{const v=frame.contentWindow.eval('('+probe.toString()+')()');v.forEach(x=>res.push('  ['+w+'x'+h+'] '+x));}
+   try{const v=frame.contentWindow.eval('('+probe.toString()+')()');
+    res.push('  ['+w+'x'+h+'] '+v.pages+'쪽'+(v.bad.length?'':' · 넘침 없음'));
+    v.bad.forEach(x=>res.push('   ✗ '+x));}
    catch(e){res.push('  실패 '+e.message);}}
-  lines.push((res.length?'✗ ':'✔ ')+b+(res.length?'\n'+res.join('\n'):''));
+  lines.push(b+'\n'+res.join('\n'));
   out.textContent=lines.join('\n');}
  out.textContent=lines.join('\n')+'\n\n=== 끝 ===';})();
 </script></body></html>
