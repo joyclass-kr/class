@@ -951,6 +951,14 @@ footer a {
     }
 }
 
+/* Float secondary page controls instead of reserving a toolbar row. */
+.page-shell { padding-top: 8px; }
+.page-shell > main { margin-top: 0; }
+.topbar { position: fixed; z-index: 40; top: 8px; left: 8px; right: 64px; display: block; pointer-events: none; }
+.back-link { width: 44px; height: 44px; padding: 0; display: grid; place-items: center; border-radius: 50%; font-size: 22px; pointer-events: auto; }
+.topbar-actions { position: fixed; right: 64px; bottom: 16px; pointer-events: auto; }
+@media (max-width: 620px) { .topbar { top: auto; right: auto; bottom: 16px; left: 8px; } }
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

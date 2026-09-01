@@ -161,3 +161,10 @@ button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset:
 .course-nav .stage-list { grid-template-columns: repeat(2,minmax(0,1fr)); max-height: min(52vh,460px); padding: 10px; }
 .lesson-heading { display: none !important; }
 @media (max-width: 600px) { .course-shell { width: min(100% - 24px,760px); } .course-nav .stage-list { grid-template-columns: 1fr; } }
+
+/* Page controls should not reserve a full-width row above the lesson. */
+.topbar { position: fixed; z-index: 40; top: 8px; left: 8px; right: 8px; min-height: 0; padding: 0; border: 0; display: block; background: transparent; backdrop-filter: none; pointer-events: none; }
+.back-link { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: rgba(23,16,17,.94); color: var(--ink); font-size: 22px; box-shadow: 0 4px 14px rgba(0,0,0,.3); pointer-events: auto; }
+.quiet-button { position: fixed; right: 16px; bottom: 16px; min-height: 44px; padding: 0 14px; border: 1px solid var(--line); border-radius: 12px; background: rgba(23,16,17,.94); color: var(--muted); box-shadow: 0 4px 14px rgba(0,0,0,.3); pointer-events: auto; }
+.course-shell { width: min(980px,calc(100% - 112px)); margin-top: 10px; }
+@media (max-width: 420px) { .topbar { top: auto; bottom: 16px; right: auto; } .course-shell { width: min(100% - 24px,760px); } }
