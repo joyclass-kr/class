@@ -194,7 +194,8 @@ const COVER = {
     ]
 };
 
-/* 영어판 — 우리말 이야기를 줄 단위로 옮기지 않고 영어로 다시 썼다.
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고(I'm, couldn't), 영국 옛말투는 쉬운 말로 바꾼다.
    왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
 const EN = {
     lang: 'en',
@@ -216,47 +217,47 @@ const EN = {
                     art: "01-depart.webp",
                     emoji: "🌾",
                     left: [
-                        "Long ago there lived a very poor boy. He and his mother shared a thatched hut that was falling down around them.",
-                        "One day the boy made up his mind to go and see the wide world. He could not go on living like this forever.",
-                        "\"Mother, I am going out to see the wide world.\""
+                        "Long ago there was a very poor boy. He and his mother shared a thatched hut that was falling down around them.",
+                        "One day the boy made up his mind to go and see the wide world. He couldn't go on living like this forever.",
+                        "\"Mother, I'm going out to see the wide world.\""
                     ],
                     right: [
-                        "Before he left he shook out his bundle, but nothing came of it. He shook it this way and that, and still nothing.",
-                        "Just one thing rolled out. A single grain of millet.",
-                        "\"Well, at least I have this.\"",
-                        "The boy wrapped it carefully in a sheet of paper and tucked it deep inside his coat."
+                        "Before he left he shook out his bundle, but nothing came out. He shook it this way and that, and still nothing.",
+                        "Then one thing rolled out. A single grain of millet.",
+                        "\"Well, at least I've got this.\"",
+                        "The boy wrapped it up carefully in a sheet of paper and tucked it deep inside his coat."
                     ]
                 },
                 {
                     art: "02-first.webp",
                     emoji: "🏠",
                     left: [
-                        "He walked all day, and the sun went down. The boy knocked at a house where a light was burning.",
+                        "He walked all day, and the sun went down. The boy knocked at a house with a light burning inside.",
                         "\"Could I stay just one night?\"",
                         "The boy bowed low.",
                         "\"Of course you can. Come in.\"",
-                        "The owner opened the door without a fuss."
+                        "The owner opened the door without any fuss."
                     ],
                     right: [
-                        "The boy drew the paper from his coat and unfolded it ever so carefully. Inside lay a single grain of millet.",
+                        "The boy took the paper out of his coat and unfolded it very carefully. Inside was a single grain of millet.",
                         "\"This is everything I own. Please keep it safe.\"",
-                        "\"What an odd little fellow.\"",
-                        "The owner swallowed a laugh and set it up on a shelf."
+                        "\"What a funny little fellow.\"",
+                        "The owner held back a laugh and put it up on a shelf."
                     ]
                 },
                 {
                     art: "03-mouse.webp",
                     emoji: "🐭",
                     left: [
-                        "Next morning the boy looked up at the shelf. The grain of millet was gone.",
-                        "\"Oh? Where has it gone?\"",
+                        "The next morning the boy looked up at the shelf. The grain of millet was gone.",
+                        "\"Oh? Where did it go?\"",
                         "\"Oh no! A mouse must have eaten it in the night.\"",
-                        "The owner turned red and did not know where to look."
+                        "The owner turned red and didn't know where to look."
                     ],
                     right: [
-                        "\"I am sorry. Let me at least catch you that mouse.\"",
-                        "He turned the whole house upside down until he caught one, sweating all the while.",
-                        "\"Thank you. I will keep it safe.\"",
+                        "\"I'm sorry. Let me catch you that mouse, at least.\"",
+                        "He turned the whole house upside down until he caught one, sweating the whole time.",
+                        "\"Thank you. I'll keep it safe.\"",
                         "The boy took the mouse, bowed, and set off down the road again."
                     ]
                 }
@@ -273,14 +274,14 @@ const EN = {
                         "At the next house the boy said exactly the same thing. He held the mouse out in both hands.",
                         "\"This is everything I own. Please take good care of it.\"",
                         "The owner took it in both hands.",
-                        "\"...A mouse, you say?\"",
-                        "He was so baffled that he could only blink."
+                        "\"...A mouse?\"",
+                        "He was so puzzled that he could only blink."
                     ],
                     right: [
                         "But in the morning the house cat had carried the mouse off. All that was left in the yard was one small tail.",
-                        "\"Oh dear, what do we do now.\"",
-                        "\"I am sorry about this.\"",
-                        "\"Nothing for it. Take the cat instead.\""
+                        "\"Oh dear. What do we do now?\"",
+                        "\"I'm so sorry about this.\"",
+                        "\"Well, then. Take the cat instead.\""
                     ]
                 },
                 {
@@ -290,14 +291,14 @@ const EN = {
                         "The boy tucked the cat under his arm and set off again.",
                         "At the next house he left the cat. He said the very same words.",
                         "\"This is everything I own. Please take good care of it.\"",
-                        "\"Ha! You do say that often.\"",
+                        "\"Ha! You say that a lot.\"",
                         "The owner laughed out loud."
                     ],
                     right: [
                         "But in the morning the house dog had chased the cat over the wall. The cat ran off and was never seen again.",
                         "The owner scratched his head, then untied the dog.",
-                        "\"What am I to do.\"",
-                        "\"Nothing for it. Take the dog.\""
+                        "\"What do I do now.\"",
+                        "\"Well, then. Take the dog.\""
                     ]
                 },
                 {
@@ -305,12 +306,12 @@ const EN = {
                     emoji: "🐴",
                     left: [
                         "This time he left the dog. The owner tied it to a post beside the stable.",
-                        "But in the night the horse kicked out, and the dog was so startled that it snapped its rope and ran. No one could call it back.",
-                        "The owner searched the whole village all night for nothing."
+                        "But in the night the horse kicked out, and the dog was so startled that it snapped its rope and ran. Nobody could call it back.",
+                        "The owner searched the whole village all night, but it was no use."
                     ],
                     right: [
-                        "In the morning he buried his face in his hands. He could not bring himself to look at the boy.",
-                        "\"Oh dear... you had better take the horse.\"",
+                        "In the morning he buried his face in his hands. He couldn't look the boy in the eye.",
+                        "\"Oh dear... you'd better take the horse.\"",
                         "\"The horse?\"",
                         "\"What else can I do? A promise is a promise.\"",
                         "The boy took the reins in both hands."
@@ -327,14 +328,14 @@ const EN = {
                     emoji: "🐂",
                     left: [
                         "The boy walked on, leading the big horse. Its hooves went clop, clop along the road.",
-                        "That night the house he stayed at tied the horse in the barn. In that barn stood a great ox.",
+                        "That night the house he stayed at tied the horse in the barn. A great ox was standing in that barn.",
                         "The horse followed the boy nicely."
                     ],
                     right: [
                         "In the morning the ox swung its horns and drove the horse right out of the barn.",
-                        "\"Well, I never saw the like.\"",
-                        "\"...Might I have that ox?\"",
-                        "\"Ha! How did you know I would say yes?\"",
+                        "\"Well, I've never seen anything like it.\"",
+                        "\"...Could I have that ox?\"",
+                        "\"Ha! How did you know I'd say yes?\"",
                         "The owner sighed and handed the boy the ox's rope."
                     ]
                 },
@@ -342,12 +343,12 @@ const EN = {
                     art: "08-road.webp",
                     emoji: "🛤️",
                     left: [
-                        "The boy walked steadily along the road, leading the great ox. It stood twice as tall as he did.",
+                        "The boy walked steadily along the road, leading the great ox. It was twice as tall as he was.",
                         "Everyone who passed opened their eyes wide.",
                         "The boy walked very proudly."
                     ],
                     right: [
-                        "\"What is that little one doing with a whole ox?\"",
+                        "\"What's that little one doing with a whole ox?\"",
                         "\"He must be some rich man's son.\"",
                         "People turned to look after him.",
                         "\"This is everything I own.\"",
@@ -358,15 +359,15 @@ const EN = {
                     art: "09-home.webp",
                     emoji: "🏡",
                     left: [
-                        "After many days of walking the boy reached home at last. The same old thatched hut stood just as it had when he left.",
-                        "His mother's shoes sat in the yard.",
-                        "\"Mother, I am home!\"",
+                        "After many days of walking the boy reached home at last. The same old thatched hut was standing just as it was when he left.",
+                        "His mother's shoes were sitting in the yard.",
+                        "\"Mother, I'm home!\"",
                         "The boy called out loudly from the yard."
                     ],
                     right: [
-                        "His mother opened the door and her eyes went round. There in the yard stood an ox, big as you please.",
-                        "\"Goodness, wherever did this ox come from?\"",
-                        "\"Mother, do not be alarmed.\"",
+                        "His mother opened the door and her eyes went round. There was an ox standing right there in the yard.",
+                        "\"Goodness! Where did this ox come from?\"",
+                        "\"Mother, don't be scared.\"",
                         "She looked from the yard to her son and back again."
                     ]
                 },
@@ -374,162 +375,159 @@ const EN = {
                     art: "10-millet.webp",
                     emoji: "📜",
                     left: [
-                        "The boy drew a sheet of paper from his coat and opened it out. It was the very paper the millet had been wrapped in. Every fold was still creased into it.",
+                        "The boy took a sheet of paper out of his coat and opened it out. It was the very paper the millet had been wrapped in. Every fold was still creased into it.",
                         "\"There was one grain of millet in here, remember?\"",
                         "The boy's face was bright."
                     ],
                     right: [
-                        "\"That one grain is how all of this began.\"",
-                        "Only then did his mother pull him into her arms.",
-                        "For a long while she could not say a word.",
+                        "\"That one grain is how all of this started.\"",
+                        "Then his mother pulled him into her arms.",
+                        "For a long time she couldn't say a word.",
                         "Out in the yard the ox let out a great moooo. The sound carried all through the village."
                     ]
                 }
             ],
-            moral: "A heart that never treats a small thing carelessly turned one grain of millet into an ox. The boy never once made a fuss. He simply valued what was his, right to the end.",
-            question: "Of the small things in your hands right now, which one is worth taking care of?"
+            moral: "A heart that never treats a small thing carelessly turned one grain of millet into an ox. The boy never once made a fuss. He simply looked after what was his, right to the end.",
+            question: "Of the small things in your hands right now, which one is worth looking after?"
         }
     ],
     quiz: [
-        { q: "What did the boy tell his mother as he left home?", choices: ["That he would bring back rice", "That he would see the wide world", "That he would buy an ox"], answer: 1 },
+        { q: "What did the boy tell his mother as he left home?", choices: ["That he'd bring back rice", "That he'd see the wide world", "That he'd buy an ox"], answer: 1 },
         { q: "What ate the grain of millet?", choices: ["A bird", "A dog", "A mouse"], answer: 2 },
         { q: "What carried the mouse off?", choices: ["A cat", "A dog", "An ox"], answer: 0 },
         { q: "How did the dog leave that house?", choices: ["It was chased over the wall", "It snapped its rope and ran", "It bit through the reins"], answer: 1 },
         { q: "What did the boy get last of all?", choices: ["A horse", "A cat", "An ox"], answer: 2 },
-        { q: "What did the boy take out of his coat and unfold?", choices: ["The ox's rope", "An old bundle", "A folded sheet of paper"], answer: 2 }
+        { q: "What did the boy take out of his coat and open up?", choices: ["The ox's rope", "An old bundle", "A folded sheet of paper"], answer: 2 }
     ],
     /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
-       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 본문에 나온 꼴(shook out 같은
-       과거형·변화형)을 앞에 적고 기본형을 괄호에 넣는다.
-       그림 파일 이름으로 묶어 두어 우리말 쪽과 짝이 어긋나지 않는다. */
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
     words: {
         "01-depart.webp": [
-            { w: "long ago", k: "옛날 옛적에", s: "Long ago there lived a very poor boy." },
-            { w: "there lived ~", k: "~가 살고 있었다", s: "there lived a very poor boy" },
+            { w: "long ago", k: "옛날 옛적에", s: "Long ago there was a very poor boy." },
             { w: "poor", k: "가난한", s: "a very poor boy" },
             { w: "shared (share)", k: "함께 쓰다, 같이 살다", s: "He and his mother shared a thatched hut" },
             { w: "thatched", k: "짚으로 지붕을 인", s: "a thatched hut" },
             { w: "hut", k: "오두막", s: "a thatched hut" },
-            { w: "was falling down", k: "무너져 가고 있었다", s: "a hut that was falling down around them" },
+            { w: "was falling down", k: "무너져 가고 있었다", s: "a thatched hut that was falling down around them" },
             { w: "around them", k: "그들 둘레로", s: "falling down around them" },
             { w: "made up his mind (make up one's mind)", k: "마음먹다, 결심하다", s: "the boy made up his mind to go" },
             { w: "the wide world", k: "넓은 세상", s: "to go and see the wide world" },
-            { w: "could not go on ~ing", k: "더는 ~하며 살 수 없었다", s: "He could not go on living like this" },
-            { w: "like this", k: "이렇게, 이런 식으로", s: "go on living like this forever" },
+            { w: "couldn't (could not)", k: "~할 수 없었다", s: "He couldn't go on living like this" },
+            { w: "go on ~ing", k: "계속 ~하며 살다", s: "go on living like this forever" },
             { w: "forever", k: "언제까지나", s: "living like this forever" },
+            { w: "I'm (I am)", k: "나는 ~이다", s: "Mother, I'm going out to see the wide world." },
             { w: "shook out (shake out)", k: "탈탈 털어 내다", s: "he shook out his bundle" },
             { w: "bundle", k: "봇짐, 보따리", s: "he shook out his bundle" },
-            { w: "nothing came of it", k: "아무것도 나오지 않았다", s: "but nothing came of it" },
+            { w: "nothing came out", k: "아무것도 안 나왔다", s: "but nothing came out" },
             { w: "this way and that", k: "이리저리", s: "He shook it this way and that" },
             { w: "still nothing", k: "그래도 아무것도 없었다", s: "and still nothing" },
-            { w: "rolled out (roll out)", k: "굴러 나오다", s: "Just one thing rolled out." },
+            { w: "rolled out (roll out)", k: "굴러 나왔다", s: "Then one thing rolled out." },
             { w: "a single grain of ~", k: "~ 딱 한 톨", s: "A single grain of millet." },
             { w: "millet", k: "조 (좁쌀이 나는 곡식)", s: "A single grain of millet." },
-            { w: "at least", k: "적어도, 그나마", s: "Well, at least I have this." },
-            { w: "wrapped (wrap)", k: "싸다, 감싸다", s: "The boy wrapped it carefully" },
-            { w: "a sheet of paper", k: "종이 한 장", s: "wrapped it carefully in a sheet of paper" },
+            { w: "at least", k: "적어도, 그나마", s: "Well, at least I've got this." },
+            { w: "I've got (I have got)", k: "나에게 ~이 있다", s: "at least I've got this" },
+            { w: "wrapped ~ up (wrap up)", k: "~을 싸다", s: "The boy wrapped it up carefully" },
+            { w: "a sheet of paper", k: "종이 한 장", s: "wrapped it up carefully in a sheet of paper" },
             { w: "tucked (tuck)", k: "쑤셔 넣다, 챙겨 넣다", s: "tucked it deep inside his coat" },
             { w: "deep inside", k: "깊숙이 안쪽에", s: "tucked it deep inside his coat" },
-            { w: "coat", k: "겉옷, 두루마기", s: "deep inside his coat" }
+            { w: "coat", k: "겉옷", s: "deep inside his coat" }
         ],
         "02-first.webp": [
             { w: "all day", k: "하루 종일", s: "He walked all day" },
             { w: "the sun went down", k: "해가 졌다", s: "He walked all day, and the sun went down." },
-            { w: "knocked at ~ (knock at)", k: "~을 두드리다", s: "The boy knocked at a house" },
-            { w: "where a light was burning", k: "불이 켜져 있는", s: "a house where a light was burning" },
+            { w: "knocked at ~ (knock at)", k: "~을 두드렸다", s: "The boy knocked at a house" },
+            { w: "with a light burning inside", k: "안에 불이 켜져 있는", s: "a house with a light burning inside" },
             { w: "Could I ~?", k: "~해도 될까요?", s: "Could I stay just one night?" },
             { w: "stay", k: "묵다, 머물다", s: "Could I stay just one night?" },
             { w: "just one night", k: "딱 하룻밤만", s: "Could I stay just one night?" },
-            { w: "bowed low (bow low)", k: "고개 숙여 절하다", s: "The boy bowed low." },
-            { w: "Of course", k: "물론이지", s: "Of course you can. Come in." },
+            { w: "bowed low (bow low)", k: "고개 숙여 절했다", s: "The boy bowed low." },
+            { w: "Of course you can.", k: "물론이지.", s: "Of course you can. Come in." },
             { w: "owner", k: "주인", s: "The owner opened the door" },
-            { w: "without a fuss", k: "두말없이, 군말 없이", s: "opened the door without a fuss" },
-            { w: "drew ~ from ... (draw)", k: "...에서 ~을 꺼내다", s: "The boy drew the paper from his coat" },
-            { w: "unfolded (unfold)", k: "펴다, 펼치다", s: "and unfolded it ever so carefully" },
-            { w: "ever so carefully", k: "아주아주 조심스럽게", s: "unfolded it ever so carefully" },
-            { w: "Inside lay ~", k: "그 안에 ~가 놓여 있었다", s: "Inside lay a single grain of millet." },
+            { w: "without any fuss", k: "두말없이, 군말 없이", s: "opened the door without any fuss" },
+            { w: "took ~ out of ... (take out of)", k: "...에서 ~을 꺼냈다", s: "The boy took the paper out of his coat" },
+            { w: "unfolded (unfold)", k: "펴다, 펼치다", s: "and unfolded it very carefully" },
+            { w: "Inside was ~", k: "그 안에는 ~이 있었다", s: "Inside was a single grain of millet." },
             { w: "everything I own", k: "내가 가진 전부", s: "This is everything I own." },
             { w: "keep ~ safe", k: "~을 잘 간수하다", s: "Please keep it safe." },
-            { w: "What an odd ~!", k: "참 별난 ~로구나!", s: "What an odd little fellow." },
-            { w: "odd", k: "별난, 이상한", s: "What an odd little fellow." },
-            { w: "fellow", k: "녀석, 사람", s: "What an odd little fellow." },
-            { w: "swallowed a laugh", k: "웃음을 삼켰다, 참았다", s: "The owner swallowed a laugh" },
-            { w: "set ~ up on ...", k: "~을 ... 위에 올려 두다", s: "set it up on a shelf" },
-            { w: "shelf", k: "선반", s: "set it up on a shelf" }
+            { w: "What a funny ~!", k: "참 별난 ~로구나!", s: "What a funny little fellow." },
+            { w: "fellow", k: "녀석, 사람", s: "What a funny little fellow." },
+            { w: "held back a laugh", k: "웃음을 참았다", s: "The owner held back a laugh" },
+            { w: "put ~ up on ...", k: "~을 ... 위에 올려 두었다", s: "put it up on a shelf" },
+            { w: "shelf", k: "선반", s: "put it up on a shelf" }
         ],
         "03-mouse.webp": [
-            { w: "next morning", k: "이튿날 아침", s: "Next morning the boy looked up at the shelf." },
-            { w: "looked up at ~", k: "~을 올려다보다", s: "the boy looked up at the shelf" },
-            { w: "was gone (be gone)", k: "없어지다, 사라지다", s: "The grain of millet was gone." },
-            { w: "Where has it gone?", k: "어디로 갔지?", s: "Oh? Where has it gone?" },
+            { w: "the next morning", k: "이튿날 아침", s: "The next morning the boy looked up at the shelf." },
+            { w: "looked up at ~", k: "~을 올려다보았다", s: "the boy looked up at the shelf" },
+            { w: "was gone (be gone)", k: "없어졌다, 사라졌다", s: "The grain of millet was gone." },
+            { w: "Where did it go?", k: "어디로 갔지?", s: "Oh? Where did it go?" },
             { w: "must have eaten", k: "먹었음이 틀림없다", s: "A mouse must have eaten it" },
             { w: "in the night", k: "밤사이에", s: "must have eaten it in the night" },
-            { w: "turned red (turn red)", k: "얼굴이 벌게지다", s: "The owner turned red" },
-            { w: "did not know where to look", k: "어쩔 줄 몰랐다", s: "did not know where to look" },
-            { w: "Let me ~", k: "제가 ~하겠습니다", s: "Let me at least catch you that mouse." },
-            { w: "catch", k: "잡다", s: "Let me at least catch you that mouse." },
+            { w: "turned red (turn red)", k: "얼굴이 벌게졌다", s: "The owner turned red" },
+            { w: "didn't (did not)", k: "~하지 않았다", s: "and didn't know where to look" },
+            { w: "didn't know where to look", k: "어쩔 줄 몰랐다", s: "didn't know where to look" },
+            { w: "Let me ~", k: "제가 ~하게 해 주세요", s: "Let me catch you that mouse, at least." },
+            { w: "catch", k: "잡다", s: "Let me catch you that mouse" },
             { w: "turned ~ upside down", k: "~을 발칵 뒤집었다", s: "He turned the whole house upside down" },
             { w: "the whole house", k: "온 집을", s: "turned the whole house upside down" },
             { w: "until he caught one", k: "한 마리 잡을 때까지", s: "upside down until he caught one" },
-            { w: "sweating (sweat)", k: "땀을 흘리며", s: "sweating all the while" },
-            { w: "all the while", k: "그러는 내내", s: "sweating all the while" },
-            { w: "took (take)", k: "받아 들다", s: "The boy took the mouse, bowed" },
-            { w: "set off (set off)", k: "길을 나서다", s: "set off down the road again" },
+            { w: "sweating (sweat)", k: "땀을 흘리며", s: "sweating the whole time" },
+            { w: "the whole time", k: "그러는 내내", s: "sweating the whole time" },
+            { w: "I'll (I will)", k: "내가 ~하겠다", s: "Thank you. I'll keep it safe." },
+            { w: "set off (set off)", k: "길을 나섰다", s: "set off down the road again" },
             { w: "down the road", k: "길을 따라", s: "set off down the road again" }
         ],
         "04-cat.webp": [
             { w: "at the next house", k: "다음 집에서", s: "At the next house the boy said exactly the same thing." },
             { w: "exactly the same", k: "똑같은", s: "said exactly the same thing" },
-            { w: "held ~ out (hold out)", k: "~을 내밀다", s: "He held the mouse out in both hands." },
+            { w: "held ~ out (hold out)", k: "~을 내밀었다", s: "He held the mouse out in both hands." },
             { w: "in both hands", k: "두 손으로", s: "He held the mouse out in both hands." },
             { w: "take good care of ~", k: "~을 잘 돌보다, 간수하다", s: "Please take good care of it." },
-            { w: "~, you say?", k: "~라고요?", s: "A mouse, you say?" },
-            { w: "baffled", k: "어리둥절한", s: "He was so baffled" },
-            { w: "so ~ that ...", k: "너무 ~해서 ...하다", s: "so baffled that he could only blink" },
+            { w: "puzzled", k: "어리둥절한", s: "He was so puzzled" },
+            { w: "so ~ that ...", k: "너무 ~해서 ...하다", s: "so puzzled that he could only blink" },
             { w: "could only blink", k: "눈만 껌뻑일 뿐이었다", s: "he could only blink" },
             { w: "had carried ~ off (carry off)", k: "물고 가 버렸다", s: "the house cat had carried the mouse off" },
             { w: "house cat", k: "그 집 고양이", s: "the house cat had carried the mouse off" },
             { w: "All that was left", k: "남은 것이라고는", s: "All that was left in the yard" },
             { w: "yard", k: "마당", s: "All that was left in the yard" },
             { w: "tail", k: "꼬리", s: "was one small tail" },
-            { w: "Oh dear", k: "아이고, 저런", s: "Oh dear, what do we do now." },
-            { w: "I am sorry about this.", k: "미안하게 됐네.", s: "I am sorry about this." },
-            { w: "Nothing for it.", k: "별수 없구먼.", s: "Nothing for it. Take the cat instead." },
+            { w: "Oh dear.", k: "아이고, 저런.", s: "Oh dear. What do we do now?" },
+            { w: "Well, then.", k: "할 수 없구먼.", s: "Well, then. Take the cat instead." },
             { w: "instead", k: "대신에", s: "Take the cat instead." }
         ],
         "05-dog.webp": [
-            { w: "tucked ~ under his arm", k: "~을 옆구리에 끼다, 품에 안다", s: "The boy tucked the cat under his arm" },
-            { w: "set off again", k: "다시 길을 나서다", s: "and set off again" },
+            { w: "tucked ~ under his arm", k: "~을 품에 안았다", s: "The boy tucked the cat under his arm" },
+            { w: "set off again", k: "다시 길을 나섰다", s: "and set off again" },
             { w: "left (leave)", k: "맡기다, 두고 가다", s: "At the next house he left the cat." },
             { w: "the very same words", k: "똑같은 그 말", s: "He said the very same words." },
-            { w: "You do say that often.", k: "그 말 참 자주 하는구먼.", s: "Ha! You do say that often." },
+            { w: "a lot", k: "자주, 많이", s: "Ha! You say that a lot." },
             { w: "laughed out loud", k: "소리 내어 웃었다", s: "The owner laughed out loud." },
             { w: "had chased (chase)", k: "쫓아냈다", s: "the house dog had chased the cat" },
             { w: "over the wall", k: "담 너머로", s: "chased the cat over the wall" },
             { w: "ran off (run off)", k: "달아나 버렸다", s: "The cat ran off" },
             { w: "was never seen again", k: "다시는 보이지 않았다", s: "and was never seen again" },
             { w: "scratched his head", k: "머리를 긁적였다", s: "The owner scratched his head" },
-            { w: "untied (untie)", k: "풀다, 끄르다", s: "then untied the dog" },
-            { w: "What am I to do.", k: "이걸 어쩐다.", s: "What am I to do." }
+            { w: "untied (untie)", k: "풀었다, 끌렀다", s: "then untied the dog" },
+            { w: "What do I do now.", k: "이걸 어쩐다.", s: "What do I do now." }
         ],
         "06-horse.webp": [
             { w: "this time", k: "이번에는", s: "This time he left the dog." },
-            { w: "tied ~ to ... (tie)", k: "~을 ...에 매다", s: "The owner tied it to a post" },
+            { w: "tied ~ to ... (tie)", k: "~을 ...에 맸다", s: "The owner tied it to a post" },
             { w: "post", k: "기둥, 말뚝", s: "tied it to a post beside the stable" },
             { w: "beside", k: "~ 옆에", s: "a post beside the stable" },
             { w: "stable", k: "마구간", s: "a post beside the stable" },
-            { w: "in the night", k: "한밤중에", s: "But in the night the horse kicked out" },
             { w: "kicked out (kick out)", k: "뒷발질했다", s: "the horse kicked out" },
             { w: "startled", k: "깜짝 놀란", s: "the dog was so startled" },
-            { w: "snapped (snap)", k: "뚝 끊다", s: "it snapped its rope and ran" },
+            { w: "snapped (snap)", k: "뚝 끊었다", s: "it snapped its rope and ran" },
             { w: "rope", k: "줄, 밧줄", s: "it snapped its rope and ran" },
-            { w: "call it back", k: "그것을 불러들이다", s: "No one could call it back." },
-            { w: "searched (search)", k: "뒤지다, 찾아다니다", s: "The owner searched the whole village" },
+            { w: "nobody", k: "아무도 ~ 않다", s: "Nobody could call it back." },
+            { w: "call it back", k: "그것을 불러들이다", s: "Nobody could call it back." },
+            { w: "searched (search)", k: "뒤졌다, 찾아다녔다", s: "The owner searched the whole village" },
             { w: "all night", k: "밤새도록", s: "searched the whole village all night" },
-            { w: "for nothing", k: "헛되이, 헛일로", s: "all night for nothing" },
+            { w: "it was no use", k: "헛일이었다", s: "all night, but it was no use" },
             { w: "buried his face in his hands", k: "두 손으로 얼굴을 감쌌다", s: "he buried his face in his hands" },
-            { w: "could not bring himself to ~", k: "차마 ~할 수 없었다", s: "He could not bring himself to look at the boy." },
-            { w: "had better ~", k: "~하는 편이 낫다", s: "you had better take the horse" },
+            { w: "look ~ in the eye", k: "~의 눈을 마주 보다", s: "He couldn't look the boy in the eye." },
+            { w: "you'd better ~ (you had better)", k: "~하는 편이 낫겠다", s: "you'd better take the horse" },
             { w: "What else can I do?", k: "그럼 어쩌겠나?", s: "What else can I do?" },
             { w: "A promise is a promise.", k: "약속은 약속이지.", s: "A promise is a promise." },
             { w: "reins", k: "고삐", s: "The boy took the reins in both hands." }
@@ -542,26 +540,25 @@ const EN = {
             { w: "along the road", k: "길을 따라", s: "clop, clop along the road" },
             { w: "the house he stayed at", k: "그가 묵은 집", s: "the house he stayed at tied the horse in the barn" },
             { w: "barn", k: "외양간, 헛간", s: "tied the horse in the barn" },
-            { w: "In that barn stood ~", k: "그 외양간에는 ~가 있었다", s: "In that barn stood a great ox." },
-            { w: "a great ox", k: "커다란 황소 한 마리", s: "In that barn stood a great ox." },
+            { w: "a great ox", k: "커다란 황소 한 마리", s: "A great ox was standing in that barn." },
             { w: "followed ~ nicely", k: "~을 잘 따랐다", s: "The horse followed the boy nicely." },
             { w: "swung (swing)", k: "휘둘렀다", s: "the ox swung its horns" },
             { w: "horns (horn)", k: "뿔", s: "the ox swung its horns" },
             { w: "drove ~ out (drive out)", k: "~을 몰아냈다", s: "drove the horse right out of the barn" },
             { w: "right out of ~", k: "~ 밖으로 곧장", s: "drove the horse right out of the barn" },
-            { w: "I never saw the like.", k: "이런 일은 처음 보네.", s: "Well, I never saw the like." },
-            { w: "Might I ~?", k: "~해도 될까요? (아주 공손하게)", s: "Might I have that ox?" },
-            { w: "How did you know ~?", k: "어떻게 알았나?", s: "How did you know I would say yes?" },
+            { w: "I've never seen anything like it.", k: "이런 건 처음 봐.", s: "Well, I've never seen anything like it." },
+            { w: "I'd (I would)", k: "나는 ~할 것이다", s: "How did you know I'd say yes?" },
             { w: "sighed (sigh)", k: "한숨을 쉬었다", s: "The owner sighed" },
             { w: "handed ~ ... (hand)", k: "~에게 ...을 건네주었다", s: "handed the boy the ox's rope" }
         ],
         "08-road.webp": [
             { w: "steadily", k: "뚜벅뚜벅, 꾸준히", s: "The boy walked steadily along the road" },
-            { w: "stood twice as tall as ~", k: "~보다 키가 두 배였다", s: "It stood twice as tall as he did." },
+            { w: "twice as tall as ~", k: "~보다 키가 두 배인", s: "It was twice as tall as he was." },
             { w: "everyone who passed", k: "지나가는 사람마다", s: "Everyone who passed opened their eyes wide." },
             { w: "opened their eyes wide", k: "눈을 크게 떴다", s: "Everyone who passed opened their eyes wide." },
             { w: "proudly", k: "당당하게", s: "The boy walked very proudly." },
-            { w: "that little one", k: "저 어린 것", s: "What is that little one doing with a whole ox?" },
+            { w: "What's (What is)", k: "무엇이 ~인가", s: "What's that little one doing with a whole ox?" },
+            { w: "that little one", k: "저 어린 것", s: "What's that little one doing with a whole ox?" },
             { w: "a whole ox", k: "황소를 통째로", s: "doing with a whole ox" },
             { w: "must be ~", k: "~임이 틀림없다", s: "He must be some rich man's son." },
             { w: "some rich man's son", k: "어느 부잣집 아들", s: "He must be some rich man's son." },
@@ -571,22 +568,21 @@ const EN = {
         ],
         "09-home.webp": [
             { w: "After many days of walking", k: "여러 날을 걸은 끝에", s: "After many days of walking the boy reached home" },
-            { w: "reached (reach)", k: "닿다, 이르다", s: "the boy reached home at last" },
+            { w: "reached (reach)", k: "닿았다, 이르렀다", s: "the boy reached home at last" },
             { w: "at last", k: "마침내", s: "reached home at last" },
             { w: "the same old ~", k: "예전 그대로의 ~", s: "The same old thatched hut" },
-            { w: "just as it had when he left", k: "떠날 때 그 모습 그대로", s: "stood just as it had when he left" },
-            { w: "sat (sit)", k: "놓여 있었다 (물건이)", s: "His mother's shoes sat in the yard." },
+            { w: "just as it was when he left", k: "떠날 때 그 모습 그대로", s: "standing just as it was when he left" },
+            { w: "were sitting (sit)", k: "놓여 있었다 (물건이)", s: "His mother's shoes were sitting in the yard." },
             { w: "called out loudly", k: "큰 소리로 불렀다", s: "The boy called out loudly from the yard." },
             { w: "her eyes went round", k: "눈이 휘둥그레졌다", s: "His mother opened the door and her eyes went round." },
-            { w: "There ~ stood an ox", k: "거기에 황소가 서 있었다", s: "There in the yard stood an ox" },
-            { w: "big as you please", k: "떡하니 크게", s: "stood an ox, big as you please" },
-            { w: "Goodness", k: "아이고, 세상에", s: "Goodness, wherever did this ox come from?" },
-            { w: "wherever ~ come from?", k: "대체 어디서 났느냐?", s: "wherever did this ox come from?" },
-            { w: "do not be alarmed", k: "놀라지 마세요", s: "Mother, do not be alarmed." },
+            { w: "right there", k: "바로 거기에", s: "There was an ox standing right there in the yard." },
+            { w: "Goodness!", k: "아이고, 세상에!", s: "Goodness! Where did this ox come from?" },
+            { w: "Where did ~ come from?", k: "~은 어디서 났느냐?", s: "Where did this ox come from?" },
+            { w: "don't be scared", k: "놀라지 마세요", s: "Mother, don't be scared." },
             { w: "looked from ~ to ... and back again", k: "~와 ...을 번갈아 보았다", s: "She looked from the yard to her son and back again." }
         ],
         "10-millet.webp": [
-            { w: "drew (draw)", k: "꺼냈다", s: "The boy drew a sheet of paper from his coat" },
+            { w: "took ~ out of ... (take out of)", k: "...에서 ~을 꺼냈다", s: "The boy took a sheet of paper out of his coat" },
             { w: "opened it out", k: "펼쳤다", s: "and opened it out" },
             { w: "the very paper", k: "바로 그 종이", s: "It was the very paper the millet had been wrapped in." },
             { w: "had been wrapped in", k: "~에 싸여 있던", s: "the very paper the millet had been wrapped in" },
@@ -595,11 +591,10 @@ const EN = {
             { w: "in here", k: "이 안에", s: "There was one grain of millet in here, remember?" },
             { w: "remember?", k: "기억나지요?", s: "one grain of millet in here, remember?" },
             { w: "bright", k: "환한", s: "The boy's face was bright." },
-            { w: "how all of this began", k: "이 모든 게 어떻게 시작됐는지", s: "That one grain is how all of this began." },
-            { w: "Only then did ~", k: "그제야 비로소 ~했다", s: "Only then did his mother pull him into her arms." },
-            { w: "pull ~ into her arms", k: "~을 끌어안다", s: "pull him into her arms" },
-            { w: "For a long while", k: "한참 동안", s: "For a long while she could not say a word." },
-            { w: "could not say a word", k: "한마디도 못 했다", s: "she could not say a word" },
+            { w: "how all of this started", k: "이 모든 게 어떻게 시작됐는지", s: "That one grain is how all of this started." },
+            { w: "pulled ~ into her arms", k: "~을 끌어안았다", s: "Then his mother pulled him into her arms." },
+            { w: "for a long time", k: "한참 동안", s: "For a long time she couldn't say a word." },
+            { w: "couldn't say a word", k: "한마디도 못 했다", s: "she couldn't say a word" },
             { w: "Out in the yard", k: "마당에서는", s: "Out in the yard the ox let out a great moooo." },
             { w: "let out (let out)", k: "소리를 내다", s: "the ox let out a great moooo" },
             { w: "carried (carry)", k: "소리가 퍼졌다", s: "The sound carried all through the village." },
@@ -613,14 +608,14 @@ const EN = {
             {
                 art: 'end.webp',
                 left: [
-                    "A story like this one makes the listener guess what is coming next. After the millet, a mouse. After the mouse, a cat. That guessing game is why it has been told for so long.",
+                    "A story like this one makes you guess what's coming next. After the millet, a mouse. After the mouse, a cat. That guessing game is why it's been told for so long.",
                     "Chain tales are fun to listen to, so they turn up all over the world. Japan has one that starts with a single straw. The West has ones where a thing is traded on and on.",
                     "What the boy did do was say plainly that what was his had been lost. Each time, the person who heard it felt sorry and handed him something bigger.",
-                    "So it was not the millet that carried the boy so far. It was the way he kept treating that one grain as truly his own."
+                    "So it wasn't the millet that carried the boy so far. It was the way he kept treating that one grain as truly his own."
                 ],
                 right: [
-                    "A heart that never treats a small thing carelessly turned one grain of millet into an ox. The boy never once made a fuss. He simply valued what was his, right to the end.",
-                    "Of the small things in your hands right now, which one is worth taking care of?"
+                    "A heart that never treats a small thing carelessly turned one grain of millet into an ox. The boy never once made a fuss. He simply looked after what was his, right to the end.",
+                    "Of the small things in your hands right now, which one is worth looking after?"
                 ]
             }
         ]

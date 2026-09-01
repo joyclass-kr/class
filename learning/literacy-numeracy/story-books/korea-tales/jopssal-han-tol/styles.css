@@ -945,3 +945,10 @@ body {
     border-color: var(--gold-bright);
     background: rgba(92, 58, 34, 0.85);
 }
+
+/* 영어로 읽을 때만 글꼴을 바꾼다. 한글 명조의 알파벳은 영어 읽기용이 아니다.
+   Roboto Slab 은 슬래브 명조라 지금 결을 크게 흔들지 않으면서 g 가 한 층이다.
+   단어장의 우리말 뜻은 Roboto Slab 에 한글이 없어 저절로 본래 글꼴로 떨어진다. */
+html[lang="en"] body {
+    font-family: "Roboto Slab", "Noto Serif KR", "Apple SD Gothic Neo", Georgia, serif;
+}
