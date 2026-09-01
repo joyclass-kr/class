@@ -18,6 +18,7 @@
         { label: "음영기복", color: "#6f8a68" }
       ],
       relief: true,
+      rivers: true,
       featureMarkers: false,
       annotations: [
         { name: "태백산맥", kind: "mountain", lat: 37.22, lng: 128.78 },

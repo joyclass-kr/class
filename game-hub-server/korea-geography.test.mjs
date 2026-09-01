@@ -9,6 +9,7 @@ const html = read("learning/inquiry/korea-geography/index.html");
 const styles = read("learning/inquiry/korea-geography/styles.css");
 const app = read("learning/inquiry/korea-geography/app.js");
 const dataSource = read("learning/inquiry/korea-geography/data.js");
+const riverData = JSON.parse(read("learning/inquiry/korea-geography/data/major-rivers.geojson"));
 
 assert.match(html, /id="map"/);
 assert.match(html, /id="startPractice"/);
@@ -24,6 +25,8 @@ assert.match(styles, /grid-template-columns: minmax\(0, 1\.7fr\) minmax\(320px, 
 assert.match(app, /korean-museum\/data\/skorea-provinces-topo-simple\.json/);
 assert.match(app, /voyager_nolabels/);
 assert.match(app, /World_Hillshade/);
+assert.match(app, /World_Terrain_Base/);
+assert.match(app, /major-rivers\.geojson/);
 assert.match(dataSource, /relief: true/);
 assert.match(dataSource, /featureMarkers: false/);
 assert.doesNotMatch(dataSource, /name: "태백산맥", kind: "mountain", coords/);
@@ -35,6 +38,8 @@ const sandbox = { window: {} };
 vm.runInNewContext(dataSource, sandbox, { filename: "data.js" });
 const dataset = sandbox.window.KOREA_GEOGRAPHY;
 assert.ok(dataset, "The static geography dataset must be exposed.");
+assert.equal(riverData.features.length, 6, "Six actual major-river centerlines are required.");
+assert.ok(riverData.features.every((feature) => /LineString$/.test(feature.geometry.type)), "Every river must use line geometry.");
 assert.deepEqual(Object.keys(dataset.themes), ["terrain", "climate", "population", "industry", "region"]);
 assert.ok(dataset.questions.length >= 25, "At least 25 reviewed questions are required for varied five-question sets.");
 

@@ -18,6 +18,7 @@
 
   let currentTheme = "terrain";
   let provinceFeatures = [];
+  let majorRivers = null;
   let sessionQuestions = [];
   let sessionAnswers = [];
   let questionIndex = 0;
@@ -43,6 +44,7 @@
     renderTheme(currentTheme);
     renderProgress();
     loadProvinceBoundaries();
+    loadMajorRivers();
   }
 
   function createBaseMap(elementId, options) {
@@ -66,6 +68,9 @@
 
   function initMaps() {
     mainMap = createBaseMap("map", { zoomControl: true });
+    mainMap.createPane("terrainPane");
+    mainMap.getPane("terrainPane").style.zIndex = "210";
+    mainMap.getPane("terrainPane").style.pointerEvents = "none";
     mainMap.createPane("reliefPane");
     mainMap.getPane("reliefPane").style.zIndex = "220";
     mainMap.getPane("reliefPane").style.pointerEvents = "none";
@@ -88,6 +93,9 @@
     fitKorea(mainMap);
 
     questionMap = createBaseMap("questionMap", { zoomControl: false, attributionControl: false, dragging: true });
+    questionMap.createPane("terrainPane");
+    questionMap.getPane("terrainPane").style.zIndex = "210";
+    questionMap.getPane("terrainPane").style.pointerEvents = "none";
     questionMap.createPane("reliefPane");
     questionMap.getPane("reliefPane").style.zIndex = "220";
     questionMap.getPane("reliefPane").style.pointerEvents = "none";
@@ -149,6 +157,17 @@
       drawBoundaries(questionMap, questionBoundaryLayer, false);
     } catch (error) {
       console.warn("시도 경계를 불러오지 못했습니다.", error);
+    }
+  }
+
+  async function loadMajorRivers() {
+    try {
+      const response = await fetch("data/major-rivers.geojson?v=20260901-1");
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      majorRivers = await response.json();
+      if (currentTheme === "terrain") renderTheme("terrain");
+    } catch (error) {
+      console.warn("주요 하천 선형을 불러오지 못했습니다.", error);
     }
   }
 
@@ -284,11 +303,38 @@
   function drawThemeOnMap(map, group, theme, interactive) {
     group.clearLayers();
     if (theme.relief) {
+      L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}", {
+        pane: "terrainPane",
+        opacity: 1,
+        maxZoom: 13,
+        attribution: "Terrain &copy; Esri"
+      }).addTo(group);
       L.tileLayer("https://services.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}", {
         pane: "reliefPane",
-        opacity: 0.28,
+        opacity: 0.36,
         maxZoom: 16,
-        attribution: "Terrain &copy; Esri"
+        attribution: "Hillshade &copy; Esri"
+      }).addTo(group);
+    }
+    if (theme.rivers && majorRivers) {
+      const riverWidth = (feature) => {
+        const name = feature.properties && feature.properties.name;
+        if (name === "한강" || name === "낙동강") return 3.8;
+        if (name === "남한강") return 2.7;
+        return 3.2;
+      };
+      L.geoJSON(majorRivers, {
+        pane: "themeLines",
+        interactive: false,
+        style: (feature) => ({ color: "#ffffff", weight: riverWidth(feature) + 3, opacity: 0.78, lineCap: "round", lineJoin: "round", className: "major-river-casing" })
+      }).addTo(group);
+      L.geoJSON(majorRivers, {
+        pane: "themeLines",
+        interactive,
+        style: (feature) => ({ color: "#087eaf", weight: riverWidth(feature), opacity: 0.96, lineCap: "round", lineJoin: "round", className: "major-river-path" }),
+        onEachFeature(feature, layer) {
+          if (interactive) layer.bindTooltip(feature.properties.name, { sticky: true, className: "river-tooltip" });
+        }
       }).addTo(group);
     }
     (theme.zones || []).forEach((zone) => {
