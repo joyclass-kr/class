@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>누르는 자리 44x44 검사</title>
+<style>body{font:14px monospace;margin:16px}iframe{position:fixed;left:-6000px;top:0;border:0}pre{white-space:pre-wrap}</style></head>
+<body><pre id="out">…</pre><iframe id="frame"></iframe><script>
+const out=document.getElementById('out'),frame=document.getElementById('frame');
+const BOOKS=['anne-green-gables','arabian','benhur','fadette','fifteen','flanders','greek','heidi','huck-finn','invisible','jean-valjean','jekyll','jungle','little-lord','little-princess','little-women','lupin','marco','mohican','monte-cristo','musketeers','nils','oliver','pompeii','prince-pauper','quixote','remi','robinhood','robinson','samguk','schimmel','secret-garden','seoyu','seton','shakespeare','sherlock-holmes','solomon','timemachine','tom-sawyer','treasure-island','uncletom','world-tour'];
+// AGENTS.md가 정한 차례: 1024x768과 1180x820 가로를 먼저, 그다음 768x1024 세로.
+const SIZES=[[1024,768],[1180,820],[768,1024]];
+// 책의 모든 쪽을 그려 가며, 눌러야 하는 자리가 44x44보다 작은지 본다.
+function probe(){const small={};
+ for(let i=0;i<PAGES.length;i++){ current=i; paint();
+  document.querySelectorAll('button, a').forEach(el=>{
+   const r=el.getBoundingClientRect();
+   if(!r.width||!r.height) return;
+   if(r.width>=44&&r.height>=44) return;
+   const k=(el.className||el.tagName)+'';
+   const v=Math.round(r.width)+'x'+Math.round(r.height);
+   if(!small[k]||small[k]>v) small[k]=v;});}
+ current=0;paint();return small;}
+(async()=>{const lines=[];const all={};
+ for(const b of BOOKS){const res=[];
+  for(const [w,h] of SIZES){frame.style.width=w+'px';frame.style.height=h+'px';
+   await Promise.all(['app.js','styles.css'].map(f=>fetch(b+'/'+f,{cache:'reload'}).catch(()=>{})));
+   await new Promise(r=>{frame.onload=r;frame.src=b+'/?t='+Date.now();});
+   await new Promise(r=>setTimeout(r,120));
+   try{const v=frame.contentWindow.eval('('+probe.toString()+')()');
+    Object.keys(v).forEach(k=>{res.push('  ['+w+'x'+h+'] '+k+' '+v[k]); all[k]=(all[k]||0)+1;});}
+   catch(e){res.push('  실패 '+e.message);}}
+  lines.push((res.length?'✗ ':'✔ ')+b+(res.length?'\n'+res.join('\n'):''));
+  out.textContent=lines.join('\n');}
+ out.textContent=lines.join('\n')+'\n\n=== 작은 자리 모음 ===\n'+Object.keys(all).sort().map(k=>k+' — '+all[k]+'번').join('\n')+'\n\n=== 끝 ===';})();
+</script></body></html>

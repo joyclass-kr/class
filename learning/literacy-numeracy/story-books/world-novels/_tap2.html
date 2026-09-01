@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>누르는 자리 44x44 · 넘침 재검사</title>
+<style>body{font:14px monospace;margin:16px}iframe{position:fixed;left:-6000px;top:0;border:0}pre{white-space:pre-wrap}</style></head>
+<body><pre id="out">…</pre><iframe id="frame"></iframe><script>
+const out=document.getElementById('out'),frame=document.getElementById('frame');
+const BOOKS=['anne-green-gables','arabian','benhur','fadette','fifteen','flanders','greek','heidi','huck-finn','invisible','jean-valjean','jekyll','jungle','little-lord','little-princess','little-women','lupin','marco','mohican','monte-cristo','musketeers','nils','oliver','pompeii','prince-pauper','quixote','remi','robinhood','robinson','samguk','schimmel','secret-garden','seoyu','seton','shakespeare','sherlock-holmes','solomon','timemachine','tom-sawyer','treasure-island','uncletom','world-tour'];
+const SIZES=[[1024,768],[1180,820],[768,1024]];
+// 모든 쪽을 그려 가며 ① 44x44보다 작은 누름 자리 ② 넘침을 함께 본다.
+// 문제 쪽까지 포함한다 — 보기 단추를 키웠으니 거기가 제일 위험하다.
+function probe(){const small={},over=[];
+ for(let i=0;i<PAGES.length;i++){ current=i; paint();
+  document.querySelectorAll('button, a').forEach(el=>{
+   const r=el.getBoundingClientRect();
+   if(!r.width||!r.height) return;
+   if(r.width<44||r.height<44){const k=(el.className||el.tagName)+'';
+    const v=Math.round(r.width)+'x'+Math.round(r.height); if(!small[k]) small[k]=v;}});
+  document.querySelectorAll('.book *').forEach(el=>{
+   const o=el.scrollHeight-el.clientHeight;
+   if(o>1&&getComputedStyle(el).overflowY!=='visible') over.push(PAGES[i].kind+i+' '+(el.className||el.tagName)+' '+o+'px');});}
+ current=0;paint();return {small,over};}
+(async()=>{const lines=[];const allS={};let overN=0;
+ for(const b of BOOKS){const res=[];
+  for(const [w,h] of SIZES){frame.style.width=w+'px';frame.style.height=h+'px';
+   await Promise.all(['app.js','styles.css'].map(f=>fetch(b+'/'+f,{cache:'reload'}).catch(()=>{})));
+   await new Promise(r=>{frame.onload=r;frame.src=b+'/?t='+Date.now();});
+   await new Promise(r=>setTimeout(r,120));
+   try{const v=frame.contentWindow.eval('('+probe.toString()+')()');
+    Object.keys(v.small).forEach(k=>{res.push('  ['+w+'x'+h+'] 작음 '+k+' '+v.small[k]); allS[k]=(allS[k]||0)+1;});
+    v.over.forEach(x=>{res.push('  ['+w+'x'+h+'] 넘침 '+x); overN++;});}
+   catch(e){res.push('  실패 '+e.message);}}
+  lines.push((res.length?'✗ ':'✔ ')+b+(res.length?'\n'+res.join('\n'):''));
+  out.textContent=lines.join('\n');}
+ out.textContent=lines.join('\n')+'\n\n작은 자리: '+(Object.keys(allS).length?Object.keys(allS).sort().map(k=>k+' '+allS[k]+'번').join(', '):'없음')+'\n넘침: '+overN+'건\n\n=== 끝 ===';})();
+</script></body></html>
