@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#5a3fc0">
   <title>영단어 기초</title>
-  <link rel="stylesheet" href="styles.css?v=20260901-compact-progress">
+  <link rel="stylesheet" href="styles.css?v=20260901-reset-settings">
   <script src="../../../assets/sound/music-control.js?v=20260825-compact-vertical-1" defer></script>
   <script src="curriculum.js" defer></script>
   <script src="app.js?v=c6671e67" defer></script>
@@ -13,13 +13,12 @@
 <body>
   <nav class="topbar" aria-label="페이지 기능">
     <a class="home-link" href="../../../" aria-label="학습 홈으로 돌아가기">←</a>
-    <button id="reset" class="text-button" type="button">진도 초기화</button>
   </nav>
 
   <main>
     <section id="dashboard">
       <section class="progress-card" aria-labelledby="progressTitle">
-        <div class="progress-copy"><span id="progressKicker">학습 진도</span><strong id="progressTitle">완료한 차시가 없습니다.</strong></div>
+        <div class="progress-copy"><strong id="progressTitle">완료한 차시가 없습니다.</strong></div>
         <div class="progress-numbers"><b id="progressPercent">0%</b><span id="progressText">0 / 34 차시</span></div>
         <div class="progress-track"><i id="progressBar"></i></div>
         <div class="progress-actions">
@@ -28,6 +27,7 @@
             <div><b id="masteryCount">0</b><span>차시 완료</span></div>
             <div><b id="starsCount">0</b><span>문제 정답</span></div>
             <div><b id="streakCount">0</b><span>일 연속</span></div>
+            <button id="reset" class="progress-reset" type="button">진도 초기화</button>
           </div>
         </div>
       </section>

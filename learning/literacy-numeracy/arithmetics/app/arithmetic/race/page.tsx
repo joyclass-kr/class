@@ -150,7 +150,7 @@ export default function ArithmeticRaceJoinPage() {
   return (
     <main className="portal-page race-entry-page">
       <div className="race-entry-shell">
-        <header className="catalog-header"><a className="catalog-back" href="/arithmetic">← 연산</a><div><p>친구들과 하는 연산 대결</p><h1>순위 모드</h1></div></header>
+        <header className="catalog-header"><a className="catalog-back" href="/arithmetic" aria-label="기초 연산 목록으로 돌아가기">←</a><div><p>친구들과 하는 연산 대결</p><h1>순위 모드</h1></div></header>
         {joined ? (
           <section className="race-waiting-card" aria-live="polite">
             <span>방 코드</span><strong className="race-room-code">{joined.roomCode}</strong>

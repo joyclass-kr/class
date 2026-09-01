@@ -5961,7 +5961,7 @@ button.division-option {
   .catalog-header {
     position: relative;
     display: grid;
-    grid-template-columns: 120px minmax(0, 1fr);
+    grid-template-columns: 64px minmax(0, 1fr);
     align-items: center;
     gap: 24px;
     border-bottom: 0;
@@ -5971,18 +5971,24 @@ button.division-option {
   }
 
   .catalog-back {
-    width: fit-content;
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
+    position: fixed;
+    z-index: 40;
+    top: max(8px, env(safe-area-inset-top));
+    left: max(8px, env(safe-area-inset-left));
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
     border: 1px solid var(--line);
-    border-radius: 999px;
-    background: rgba(255, 253, 248, 0.85);
-    padding: 9px 15px;
+    border-radius: 50%;
+    background: rgba(255, 253, 248, 0.92);
     color: var(--ink);
-    font-size: 14px;
+    font: inherit;
+    font-size: 22px;
     font-weight: 900;
-    text-decoration: none;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
   }
 
   .catalog-header h1 {
@@ -6296,9 +6302,9 @@ button.division-option {
     }
 
     .catalog-header {
-      grid-template-columns: 1fr;
-      align-items: start;
-      gap: 18px;
+      grid-template-columns: 56px minmax(0, 1fr);
+      align-items: center;
+      gap: 12px;
       padding: 24px;
     }
 
