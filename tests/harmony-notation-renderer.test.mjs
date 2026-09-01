@@ -37,8 +37,8 @@ for (const key of visualKeys) {
   assert.match(score, /class="(?:score-svg|notation-diagram)/, key + " must render a score or notation diagram");
   assert.doesNotMatch(score, /NaN|undefined/, key + " contains an invalid coordinate or label");
   const preview = notation.preview(key);
-  assert.match(preview, /class="skill-preview"/, key + " needs a visual preview on the progress screen");
-  assert.match(preview, /<svg viewBox="0 0 72 48">/, key + " progress preview must contain drawn notation");
+  assert.match(preview, /class="skill-preview [^"]+"/, key + " needs a visual preview on the progress screen");
+  assert.match(preview, /<svg viewBox="0 0 80 60">/, key + " progress preview must contain a legible relation diagram");
   assert.doesNotMatch(preview, /undefined/, key + " progress preview contains an invalid label");
   if (!score.includes('class="notation-diagram')) {
     assert.ok((score.match(/class="note-head"/g) || []).length >= 2, key + " must show actual notes");

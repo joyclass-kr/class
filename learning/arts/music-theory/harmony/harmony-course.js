@@ -512,12 +512,29 @@
 
   function skillPreviewMarkup(skill) {
     const key = skill.sections[0].visual;
-    const label = PREVIEW_LABELS[key] || "보기";
-    let seed = 0;
-    for (let index = 0; index < key.length; index += 1) seed += key.charCodeAt(index);
-    const firstY = 22 + (seed % 5) * 4;
-    const secondY = 22 + ((seed + 2) % 5) * 4;
-    return '<span class="skill-preview" aria-hidden="true"><svg viewBox="0 0 72 48"><g class="preview-staff"><line x1="5" y1="20" x2="67" y2="20"/><line x1="5" y1="24" x2="67" y2="24"/><line x1="5" y1="28" x2="67" y2="28"/><line x1="5" y1="32" x2="67" y2="32"/><line x1="5" y1="36" x2="67" y2="36"/></g><ellipse cx="26" cy="'+firstY+'" rx="5" ry="3.5"/><ellipse cx="47" cy="'+secondY+'" rx="5" ry="3.5"/><line class="preview-stem" x1="31" y1="'+firstY+'" x2="31" y2="'+(firstY-14)+'"/><line class="preview-stem" x1="52" y1="'+secondY+'" x2="52" y2="'+(secondY-14)+'"/></svg><b>'+escapeHtml(label)+'</b></span>';
+    const kind = previewKind(key);
+    const drawings = {
+      staff:'<g class="preview-staff"><path d="M8 18H72M8 24H72M8 30H72M8 36H72M8 42H72"/></g><ellipse class="preview-ink" cx="28" cy="36" rx="6" ry="4"/><path class="preview-ink" d="M34 36V16"/><ellipse class="preview-accent" cx="54" cy="24" rx="6" ry="4"/><path class="preview-accent" d="M60 24V8"/>',
+      rhythm:'<path class="preview-soft" d="M10 45H70"/><g class="preview-ink"><ellipse cx="18" cy="39" rx="5" ry="3.5"/><path d="M23 39V16"/><ellipse cx="38" cy="39" rx="5" ry="3.5"/><path d="M43 39V12M43 12H63V16"/><ellipse cx="58" cy="39" rx="5" ry="3.5"/><path d="M63 39V16"/></g><path class="preview-accent" d="M12 51H31M35 51H66"/>',
+      interval:'<g class="preview-staff"><path d="M8 22H72M8 28H72M8 34H72M8 40H72"/></g><ellipse class="preview-ink" cx="22" cy="40" rx="6" ry="4"/><ellipse class="preview-accent" cx="58" cy="22" rx="6" ry="4"/><path class="preview-bracket" d="M22 15Q40 3 58 15M22 15V20M58 15V20"/>',
+      scale:'<path class="preview-soft" d="M10 48H70"/><path class="preview-accent" d="M13 43L24 38L35 34L46 27L57 21L68 13"/><g class="preview-dots"><circle cx="13" cy="43" r="3"/><circle cx="24" cy="38" r="3"/><circle cx="35" cy="34" r="3"/><circle cx="46" cy="27" r="3"/><circle cx="57" cy="21" r="3"/><circle cx="68" cy="13" r="3"/></g>',
+      chord:'<g class="preview-staff"><path d="M8 20H72M8 27H72M8 34H72M8 41H72"/></g><ellipse class="preview-ink" cx="38" cy="41" rx="7" ry="4"/><ellipse class="preview-accent" cx="38" cy="34" rx="7" ry="4"/><ellipse class="preview-ink" cx="38" cy="27" rx="7" ry="4"/><path class="preview-bracket" d="M53 42Q63 34 53 25"/>',
+      voice:'<path class="preview-voice one" d="M10 15C26 10 37 25 70 17"/><path class="preview-voice two" d="M10 26C28 34 44 17 70 29"/><path class="preview-voice three" d="M10 38C28 30 48 47 70 37"/><path class="preview-voice four" d="M10 49C28 45 48 52 70 47"/><circle class="preview-node" cx="10" cy="15" r="3"/><circle class="preview-node" cx="70" cy="17" r="3"/>',
+      melody:'<path class="preview-accent" d="M9 19C18 9 27 28 37 17S55 10 70 20"/><circle class="preview-ink" cx="9" cy="19" r="3"/><circle class="preview-ink" cx="37" cy="17" r="3"/><circle class="preview-ink" cx="70" cy="20" r="3"/><g class="preview-chord-blocks"><rect x="11" y="37" width="16" height="10" rx="2"/><rect x="32" y="37" width="16" height="10" rx="2"/><rect x="53" y="37" width="16" height="10" rx="2"/></g>',
+      flow:'<path class="preview-flow-line" d="M17 30H63"/><path class="preview-flow-line" d="M57 24L63 30L57 36"/><circle class="preview-node start" cx="16" cy="30" r="8"/><circle class="preview-node middle" cx="40" cy="30" r="8"/><circle class="preview-node end" cx="64" cy="30" r="8"/>'
+    };
+    return '<span class="skill-preview preview-'+kind+'" aria-hidden="true"><svg viewBox="0 0 80 60">'+drawings[kind]+'</svg></span>';
+  }
+
+  function previewKind(key) {
+    if (key.startsWith("interval") || key === "enharmonic-spelling") return "interval";
+    if (["note-values","meter-basics","harmonic-rhythm","rhythm-density"].includes(key)) return "rhythm";
+    if (key.startsWith("staff-") || key === "pitch-alphabet") return "staff";
+    if (key.includes("scale") || key.startsWith("key-") || key === "leading-tone" || key.startsWith("transpose")) return "scale";
+    if (key.includes("voice") || key.startsWith("part-") || key.includes("motion") || key.startsWith("nonchord") || key.startsWith("suspension") || key.includes("guide")) return "voice";
+    if (key.includes("melody") || key.includes("harmonize") || key === "lead-sheet" || key.includes("arrangement") || key.includes("revision")) return "melody";
+    if (key.includes("triad") || key.includes("seventh") || key.includes("quality") || key.includes("symbol") || key.includes("inversion") || key.includes("tension") || key === "sus-add") return "chord";
+    return "flow";
   }
 
   function renderDashboard() {
@@ -532,7 +549,19 @@
     }).join("");
   }
   function strandIcon(id) {
-    return { fundamentals:"𝄞", interval:"m3", "chord-language":"C△", "tonal-map":"Ⅰ", "part-writing":"4", progression:"→", application:"♪", "basic-extension":"V/x" }[id] || "♪";
+    const icons = {
+      fundamentals:'<path d="M6 12H34M6 17H34M6 22H34M6 27H34M6 32H34"/><ellipse cx="25" cy="27" rx="5" ry="3.5"/><path d="M30 27V10"/>',
+      interval:'<circle cx="10" cy="29" r="4"/><circle cx="30" cy="14" r="4"/><path d="M10 20Q20 8 30 8M10 20V24M30 8V10"/>',
+      "scale-basics":'<path d="M7 31L13 27L19 24L25 19L31 15L35 9"/><circle cx="7" cy="31" r="2"/><circle cx="19" cy="24" r="2"/><circle cx="31" cy="15" r="2"/>',
+      "chord-language":'<ellipse cx="20" cy="30" rx="5" ry="3"/><ellipse cx="20" cy="22" rx="5" ry="3"/><ellipse cx="20" cy="14" rx="5" ry="3"/><path d="M29 31Q35 22 29 13"/>',
+      "tonal-map":'<circle cx="9" cy="22" r="5"/><circle cx="20" cy="11" r="5"/><circle cx="31" cy="22" r="5"/><path d="M13 18L16 15M24 15L27 18M27 26L13 26"/>',
+      "part-writing":'<path d="M6 9C14 7 21 16 34 11M6 17C16 25 24 13 34 20M6 26C16 20 25 34 34 27M6 34C17 30 25 37 34 33"/>',
+      progression:'<circle cx="8" cy="20" r="4"/><circle cx="20" cy="20" r="4"/><circle cx="32" cy="20" r="4"/><path d="M12 20H16M24 20H28M29 16L33 20L29 24"/>',
+      chromatic:'<path d="M6 29C14 29 16 12 24 12S30 22 35 22"/><path d="M20 9L24 5L28 9L24 13Z"/>',
+      application:'<path d="M6 13C13 5 20 20 27 12S34 10 36 13"/><rect x="7" y="26" width="8" height="7" rx="1"/><rect x="17" y="26" width="8" height="7" rx="1"/><rect x="27" y="26" width="8" height="7" rx="1"/>',
+      "basic-extension":'<circle cx="8" cy="26" r="4"/><circle cx="20" cy="14" r="4"/><circle cx="32" cy="26" r="4"/><path d="M11 23L17 17M23 17L29 23M12 28H28"/>'
+    };
+    return '<svg class="strand-icon" viewBox="0 0 40 40">'+(icons[id] || icons.application)+'</svg>';
   }
   function prereqMarkup(skill) {
     if (!skill.prereqs.length) return "";

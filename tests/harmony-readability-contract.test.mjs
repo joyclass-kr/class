@@ -62,8 +62,8 @@ test("body copy and controls remain readable and touchable", () => {
 });
 
 test("the page loads the readability revision", () => {
-  assert.ok(html.includes("harmony-course.css?v=20260901-9"));
-  assert.ok(html.includes("harmony-course.js?v=20260901-10"));
+  assert.ok(html.includes("harmony-course.css?v=20260901-11"));
+  assert.ok(html.includes("harmony-course.js?v=20260901-11"));
   assert.ok(html.includes("harmony-traditional-extension.js?v=20260901-7"));
 });
 
@@ -71,6 +71,14 @@ test("every progress card exposes its lesson order", () => {
   assert.ok(courseSource.includes('class="lesson-order"'));
   assert.ok(courseSource.includes("lessonNumber+'차시"));
   assert.ok(css.includes(".lesson-order"));
+});
+
+test("progress icons use a consistent graphic system instead of text tokens", () => {
+  assert.ok(courseSource.includes('class="strand-icon"'));
+  assert.ok(courseSource.includes('viewBox="0 0 80 60"'));
+  assert.ok(courseSource.includes('previewKind(key)'));
+  assert.ok(css.includes(".preview-flow-line"));
+  assert.ok(css.includes(".preview-voice.one"));
 });
 
 test("browser back returns from a lesson to the progress list", () => {
