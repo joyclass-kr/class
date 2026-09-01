@@ -5,9 +5,10 @@
     terrain: {
       label: "지형",
       kicker: "지형 환경",
-      title: "동고서저와 산맥의 방향",
-      summary: "높고 연속적인 산지는 동쪽에 치우치고, 큰 하천은 대체로 서쪽과 남쪽으로 흐릅니다. 산맥·하천·해안의 관계를 한 지도에서 연결해 보세요.",
+      title: "한반도의 동고서저와 산지 체계",
+      summary: "백두산·개마고원에서 태백산맥으로 이어지는 높은 산지는 한반도 동쪽에 치우치고, 큰 하천은 대체로 서쪽과 남쪽으로 흐릅니다. 남북 전체의 산지·하천·해안 관계를 연결해 보세요.",
       points: [
+        "백두산·개마고원과 낭림·함경산맥은 북부의 높고 험준한 산지를 이룬다.",
         "태백산맥은 동해안 가까이에 있어 동해안 하천은 짧고 경사가 급하다.",
         "서·남해안은 수심이 얕고 해안선이 복잡하며 조차가 큰 편이다.",
         "신생대 화산 활동은 제주도·울릉도·독도·철원 일대의 지형에 흔적을 남겼다."
@@ -21,6 +22,14 @@
       rivers: true,
       featureMarkers: false,
       annotations: [
+        { name: "백두산", kind: "mountain", lat: 42.01, lng: 128.06 },
+        { name: "개마고원", kind: "mountain", lat: 41.25, lng: 127.95 },
+        { name: "낭림산맥", kind: "mountain", lat: 40.65, lng: 127.30 },
+        { name: "함경산맥", kind: "mountain", lat: 40.85, lng: 128.65 },
+        { name: "압록강", kind: "river", lat: 40.55, lng: 125.45 },
+        { name: "두만강", kind: "river", lat: 42.25, lng: 129.60 },
+        { name: "대동강", kind: "river", lat: 39.15, lng: 125.70 },
+        { name: "청천강", kind: "river", lat: 39.75, lng: 126.15 },
         { name: "태백산맥", kind: "mountain", lat: 37.22, lng: 128.78 },
         { name: "소백산맥", kind: "mountain", lat: 36.20, lng: 128.03 },
         { name: "한강", kind: "river", lat: 37.47, lng: 127.48 },
@@ -29,6 +38,8 @@
         { name: "영산강", kind: "river", lat: 35.05, lng: 126.68 }
       ],
       features: [
+        { name: "백두산·개마고원", icon: "▲", color: "#75481f", lat: 41.60, lng: 128.02, zoom: 7, note: "한반도에서 가장 높고 험준한 북부 산지" },
+        { name: "북부 4대 하천", icon: "川", color: "#2377b7", lat: 40.35, lng: 126.65, zoom: 7, note: "압록강·두만강·대동강·청천강" },
         { name: "태백산맥", icon: "▲", color: "#8b5a2b", lat: 37.25, lng: 128.72, zoom: 8, note: "동해안 가까이 뻗은 1차 산맥" },
         { name: "대관령", icon: "고", color: "#a56c38", lat: 37.69, lng: 128.75, zoom: 10, note: "영서와 영동을 잇는 고개" },
         { name: "제주 화산 지형", icon: "火", color: "#bd5b34", lat: 33.38, lng: 126.53, zoom: 9, note: "한라산·오름·용암 동굴" },
@@ -365,6 +376,22 @@
       answer: 0,
       explanation: "A의 연교차는 25℃, B는 30℃입니다. 바다의 완화 작용을 더 크게 받는 해안 지역은 일반적으로 겨울이 덜 춥고 연교차가 작습니다.",
       focus: { theme: "climate", lat: 36.70, lng: 129.00, zoom: 7, label: "해안과 내륙의 연교차 차이가 핵심 단서입니다." }
+    },
+    {
+      id: "terrain-07", topic: "terrain", difficulty: "basic",
+      prompt: "한반도 북부 지형의 특징으로 가장 적절한 것은?",
+      options: ["서쪽보다 동쪽의 산지가 낮다.", "백두산 주변과 개마고원 일대의 해발 고도가 높다.", "압록강과 두만강은 모두 남해로 흐른다.", "평양은 태백산맥 동쪽에 있다.", "북부에는 큰 하천이 전혀 없다."],
+      answer: 1,
+      explanation: "한반도 북부는 백두산과 개마고원을 중심으로 높고 험준한 산지가 넓게 나타납니다. 낭림산맥은 관서와 관북을 구분하는 중요한 지형 축입니다.",
+      focus: { theme: "terrain", lat: 41.35, lng: 128.05, zoom: 7, label: "백두산에서 개마고원으로 이어지는 높은 지형을 보세요." }
+    },
+    {
+      id: "terrain-08", topic: "terrain", difficulty: "advanced",
+      prompt: "한반도 북부의 하천을 위치와 함께 바르게 연결한 것은?",
+      options: ["압록강－중국과의 서북쪽 국경", "두만강－남서해안의 하구", "대동강－동해로 유입", "청천강－제주도 남쪽", "낙동강－북한과 중국의 국경"],
+      answer: 0,
+      explanation: "압록강은 한반도 서북쪽에서 중국과의 국경을 이루며 황해로 흐릅니다. 두만강은 북동쪽 국경을 이루고, 대동강과 청천강은 서쪽으로 흐릅니다.",
+      focus: { theme: "terrain", lat: 40.65, lng: 125.55, zoom: 7, label: "압록강과 두만강이 북쪽 국경을 이루는 모습을 비교하세요." }
     }
   ];
 

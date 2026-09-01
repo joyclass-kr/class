@@ -5,10 +5,13 @@
   const themes = dataset.themes || {};
   const questions = Array.isArray(dataset.questions) ? dataset.questions : [];
   const THEME_ORDER = ["terrain", "climate", "population", "industry", "region"];
-  const KOREA_BOUNDS = L.latLngBounds([[33.05, 124.55], [38.72, 131.05]]);
+  const KOREA_BOUNDS = L.latLngBounds([[32.95, 123.85], [43.15, 131.35]]);
   const BASEMAP_KEY = "cb1_2lqh_1_23aa6103cd67c20c2791ad29";
   const PROGRESS_KEY = "joyclass-korea-geography-progress-v1";
   const provinceLabels = [
+    ["평북", 40.12, 125.18], ["평남", 39.43, 126.02], ["황북", 38.62, 126.23], ["황남", 38.38, 125.52],
+    ["자강", 40.92, 126.45], ["양강", 41.45, 128.05], ["함북", 41.75, 129.45], ["함남", 40.28, 127.75],
+    ["평양", 39.03, 125.75], ["신의주", 40.10, 124.40], ["원산", 39.15, 127.45], ["함흥", 39.91, 127.54], ["청진", 41.79, 129.78],
     ["서울", 37.57, 126.98], ["인천", 37.46, 126.70], ["경기", 37.35, 127.20], ["강원", 37.65, 128.25],
     ["충북", 36.75, 127.75], ["충남", 36.48, 126.82], ["대전", 36.35, 127.38], ["세종", 36.48, 127.29],
     ["전북", 35.75, 127.12], ["전남", 34.88, 126.82], ["광주", 35.16, 126.85], ["경북", 36.36, 128.72],
@@ -22,7 +25,11 @@
     "낙동강": [35.10, 128.96],
     "금강": [36.01, 126.76],
     "영산강": [34.77, 126.34],
-    "섬진강": [34.94, 127.77]
+    "섬진강": [34.94, 127.77],
+    "압록강": [39.83, 124.18],
+    "두만강": [42.43, 130.60],
+    "대동강": [38.71, 125.22],
+    "청천강": [39.67, 125.55]
   };
 
   let currentTheme = "terrain";
@@ -58,9 +65,9 @@
 
   function createBaseMap(elementId, options) {
     const map = L.map(elementId, {
-      center: [36.1, 127.65],
-      zoom: 7,
-      minZoom: 6,
+      center: [38.05, 127.65],
+      zoom: 6,
+      minZoom: 5,
       maxZoom: 12,
       zoomControl: true,
       attributionControl: true,
@@ -171,7 +178,7 @@
 
   async function loadMajorRivers() {
     try {
-      const response = await fetch("data/major-rivers.geojson?v=20260901-1");
+      const response = await fetch("data/major-rivers.geojson?v=20260901-2");
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       majorRivers = await response.json();
       if (currentTheme === "terrain") renderTheme("terrain");
@@ -322,7 +329,7 @@
     const distanceFromMouth = L.latLng(coordinate[1], coordinate[0]).distanceTo(L.latLng(mouth[0], mouth[1]));
     const downstreamRatio = 1 - Math.min(1, distanceFromMouth / Math.max(1, maxDistance));
     const minWidth = name === "남한강" ? 1 : 1.15;
-    const maxWidth = name === "한강" || name === "낙동강" ? 4.8 : name === "남한강" ? 3.7 : 4.2;
+    const maxWidth = ["한강", "낙동강", "압록강", "두만강"].includes(name) ? 4.8 : name === "남한강" ? 3.7 : 4.2;
     return minWidth + ((maxWidth - minWidth) * Math.pow(downstreamRatio, 0.78));
   }
 
