@@ -349,12 +349,19 @@ body {
     font-size: clamp(18px, 3.763cqh, 39px);
 }
 
+/* 차례는 줄이 많아 쪽 여백을 본문보다 좁게 쓴다.
+   세로로도 벌고, 칸이 넓어져 제목이 덜 접히니 줄 높이도 준다. */
+.page-toc .story-page-left,
+.page-toc .story-page-right {
+    --page-pad: clamp(14px, 3.9cqh, 40px);
+}
+
 .toc-list {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 10px;
+    gap: 8px;
 }
 
 .toc-list button {
@@ -393,7 +400,16 @@ body {
 }
 
 .toc-list strong { font-size: clamp(14px, 2.315cqh, 24px); }
-.toc-list small { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+/* 쪽수는 제목과 한 줄에 나란히 둔다. 아래에 쌓으면 줄 높이가 갑절이 되어 차례가 넘친다. */
+.toc-list button > span:last-child {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+}
+.toc-list small { color: var(--muted); font-size: clamp(11px, 1.7cqh, 15px); flex: 0 0 auto; }
 
 /* quiz */
 .page-quiz {
