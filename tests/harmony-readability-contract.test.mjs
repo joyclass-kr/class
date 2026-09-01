@@ -62,9 +62,15 @@ test("body copy and controls remain readable and touchable", () => {
 });
 
 test("the page loads the readability revision", () => {
-  assert.ok(html.includes("harmony-course.css?v=20260901-7"));
-  assert.ok(html.includes("harmony-course.js?v=20260901-7"));
+  assert.ok(html.includes("harmony-course.css?v=20260901-9"));
+  assert.ok(html.includes("harmony-course.js?v=20260901-9"));
   assert.ok(html.includes("harmony-traditional-extension.js?v=20260901-7"));
+});
+
+test("every progress card exposes its lesson order", () => {
+  assert.ok(courseSource.includes('class="lesson-order"'));
+  assert.ok(courseSource.includes("lessonNumber+'차시"));
+  assert.ok(css.includes(".lesson-order"));
 });
 
 test("primary tablet notation stays legible in landscape and portrait", () => {

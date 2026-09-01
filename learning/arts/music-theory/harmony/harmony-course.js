@@ -367,8 +367,41 @@
     if (key === "interval-spelling") {
       return '<div class="concept-diagram interval-diagram" role="img" aria-label="C에서 E까지 음이름 세 개와 반음 네 칸을 세어 장3도를 찾는 과정"><div class="interval-count"><strong>1 · 2 · 3</strong><span>C — D — E</span><b>음이름 3개 = 3도</b></div><span class="concept-plus" aria-hidden="true">+</span><div class="interval-count semitone-count"><strong>½ + ½ + ½ + ½</strong><span>C에서 E까지 4반음</span><b>4반음 = 장</b></div><span class="concept-result">장3도</span></div>';
     }
+    if (key === "interval-number") {
+      return flowDiagram("C에서 G까지 양 끝을 포함하여 다섯 음이름을 세는 방법", [
+        { head:"C", detail:"1 · 출발" }, { head:"D", detail:"2" }, { head:"E", detail:"3" },
+        { head:"F", detail:"4" }, { head:"G", detail:"5 · 도착", tone:"accent" }
+      ]);
+    }
+    if (key === "interval-direction") {
+      return '<div class="concept-diagram theory-compare" role="img" aria-label="상행5도와 하행5도, 완전1도와 완전8도의 차이"><div><small>높이 방향</small><strong>C4 ↑ G4</strong><span>상행5도</span></div><b>방향과 도수는<br>따로 읽기</b><div><small>같은 음이름</small><strong>C4 → C5</strong><span>한 옥타브 = 8도</span></div></div>';
+    }
+    if (key === "interval-form") {
+      return '<div class="concept-diagram theory-compare" role="img" aria-label="C와 E가 차례로 울리는 선율3도와 동시에 울리는 화성3도 비교"><div><small>차례로</small><strong>C → E</strong><span>선율3도</span></div><b>울리는 시간으로<br>구별</b><div><small>동시에</small><strong>C + E</strong><span>화성3도</span></div></div>';
+    }
+    if (key === "interval-simple") {
+      return flowDiagram("한 옥타브 안의 단순음정 1도부터 8도", [
+        { head:"1", detail:"같은 음" }, { head:"2·3", detail:"가까운 거리" }, { head:"4·5", detail:"가운데" },
+        { head:"6·7", detail:"먼 거리" }, { head:"8", detail:"옥타브", tone:"accent" }
+      ]);
+    }
+    if (key === "interval-family" || key === "interval-quality-ladder") {
+      return '<div class="concept-diagram interval-family-diagram" role="img" aria-label="완전계열 1 4 5 8도는 감 완전 증, 장단계열 2 3 6 7도는 감 단 장 증으로 나뉘는 음정 성질표"><div class="interval-family-row perfect"><strong>완전계열</strong><b>1 · 4 · 5 · 8도</b><span><i>감</i><em>← 반음 →</em><i class="core">완전</i><em>← 반음 →</em><i>증</i></span></div><div class="interval-family-row major-minor"><strong>장·단계열</strong><b>2 · 3 · 6 · 7도</b><span><i>감</i><em>← 반음 →</em><i>단</i><em>← 반음 →</em><i class="core">장</i><em>← 반음 →</em><i>증</i></span></div></div>';
+    }
     if (key === "interval-inversion") {
       return '<div class="concept-diagram inversion-diagram" role="img" aria-label="음정 전위에서 도수의 합은 9, 성질은 장과 단 또는 완전과 완전으로 바뀜"><div><strong>단3도</strong><span>3</span></div><span class="concept-swap">뒤집기</span><div><strong>장6도</strong><span>6</span></div><b>3 + 6 = 9</b><div><strong>완전4도</strong><span>4</span></div><span class="concept-swap">뒤집기</span><div><strong>완전5도</strong><span>5</span></div><b>4 + 5 = 9</b></div>';
+    }
+    if (key === "interval-compound") {
+      return '<div class="concept-diagram interval-compound-diagram" role="img" aria-label="단순음정에 한 옥타브를 더하면 2도는 9도, 3도는 10도, 4도는 11도, 6도는 13도가 되는 관계"><div><small>단순음정</small><b>2도</b><b>3도</b><b>4도</b><b>6도</b></div><span>+ 한 옥타브<br><strong>도수에는 +7</strong></span><div><small>겹음정</small><b>9도</b><b>10도</b><b>11도</b><b>13도</b></div></div>';
+    }
+    if (key === "interval-consonance") {
+      return '<div class="concept-diagram interval-consonance-diagram" role="img" aria-label="완전협화 불완전협화 불협화 음정 분류표"><div><strong>완전협화</strong><b>완전1 · 5 · 8도</b><span>매우 안정</span></div><div><strong>불완전협화</strong><b>장·단3 · 6도</b><span>부드러운 색채</span></div><div><strong>불협화</strong><b>2 · 7도, 증·감</b><span>긴장과 해결</span></div><small>완전4도는 성부 위치와 문맥을 확인합니다.</small></div>';
+    }
+    if (key === "interval-ear-process") {
+      return flowDiagram("음정 청음의 네 단계", [
+        { head:"1", detail:"첫 음 기억" }, { head:"2", detail:"방향 듣기" }, { head:"3", detail:"도수 후보" },
+        { head:"4", detail:"반음으로 성질", tone:"accent" }
+      ]);
     }
     if (key === "inversion-score") {
       return '<div class="concept-diagram bass-focus-diagram" role="img" aria-label="C화음의 베이스가 C면 기본위치, E면 1전위, G면 2전위"><div><strong>C</strong><span class="bass-note">C</span><small>기본위치</small></div><div><strong>C/E</strong><span class="bass-note">E</span><small>1전위</small></div><div><strong>C/G</strong><span class="bass-note">G</span><small>2전위</small></div></div>';
@@ -450,7 +483,7 @@
     if (key === "meter-basics") return meterBasicsDiagram();
     const score = SCORE_SETS[key];
     const formula = formulaVisual(key);
-    if (!score) return '<div class="concept-map"><div class="concept-row"><strong>보기</strong><span>악보와 소리를 함께 비교하세요.</span></div></div>';
+    if (!score) return conceptVisual(key) || '<div class="concept-map"><div class="concept-row"><strong>보기</strong><span>악보와 소리를 함께 비교하세요.</span></div></div>';
     const title = key === "lead-sheet" ? "리드시트의 코드와 멜로디"
       : key === "staff-basics" ? "다섯 줄과 네 칸"
       : key === "staff-clefs" ? "두 음자리표의 기준 음"
@@ -460,7 +493,7 @@
 
   const PREVIEW_LABELS = {
     "staff-basics":"5선", "pitch-alphabet":"C–B", "staff-clefs":"𝄞·𝄢", "enharmonic-spelling":"♯=♭", "voice-ranges":"SATB",
-    "note-values":"♩·𝅗𝅥", "meter-basics":"4/4", "interval-spelling":"M3", "interval-inversion":"3↔6",
+    "note-values":"♩·𝅗𝅥", "meter-basics":"4/4", "interval-spelling":"M3", "interval-number":"1·2·3", "interval-direction":"↑↓", "interval-form":"→ / +", "interval-simple":"1–8", "interval-family":"P·M·m", "interval-quality-ladder":"°·m·M·+", "interval-inversion":"3↔6", "interval-compound":"2→9", "interval-consonance":"협화", "interval-ear-process":"듣기",
     "part-spacing":"SATB", "part-motion":"7→1", "motion-directions":"↑↓―", "voice-crossing":"교차", "nonchord-motion":"C–D–E", "suspension-resolution":"4–3",
     "minor-scales":"m scale", "minor-dominant":"V7–i", "sequence-cycle":"vi–ii–V–I", "sequence-voices":"성부선",
     "symbol-anatomy":"C△7", "symbol-contrast":"sus·add", "triad-stack":"1·3·5", "triad-transpose":"D→E♭",
@@ -507,9 +540,11 @@
   }
   function skillButtonMarkup(id) {
     const skill = curriculum.skills[id];
+    const strand = getStrand(id);
+    const lessonNumber = strand.skills.indexOf(id) + 1;
     const complete = state.completed.has(id);
     const ready = prereqsMet(id);
-    return '<button class="lesson-button skill-button '+(complete ? "completed" : ready ? "ready" : "needs-prereq")+'" type="button" data-open-skill="'+id+'">'+skillPreviewMarkup(skill)+'<span class="lesson-copy"><strong>'+escapeHtml(skill.title)+'</strong><small>'+escapeHtml(skill.summary)+'</small>'+(!ready && !complete ? '<span class="prereq-note">앞 진도를 먼저 익히면 이해하기 쉽습니다.</span>' : "")+'</span><span class="skill-status">'+(complete ? "✓ 완료" : id === state.currentId ? "학습 중" : "열기")+'</span></button>';
+    return '<button class="lesson-button skill-button '+(complete ? "completed" : ready ? "ready" : "needs-prereq")+'" type="button" data-open-skill="'+id+'">'+skillPreviewMarkup(skill)+'<span class="lesson-copy"><span class="lesson-order">'+lessonNumber+'차시</span><strong>'+escapeHtml(skill.title)+'</strong><small>'+escapeHtml(skill.summary)+'</small>'+(!ready && !complete ? '<span class="prereq-note">앞 진도를 먼저 익히면 이해하기 쉽습니다.</span>' : "")+'</span><span class="skill-status">'+(complete ? "✓ 완료" : id === state.currentId ? "학습 중" : "열기")+'</span></button>';
   }
 
   function openSkill(id) {

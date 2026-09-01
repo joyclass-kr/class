@@ -684,6 +684,17 @@
   intervalStrand.description = "도수부터 청음까지 여덟 차시로 나누어 계산·철자·전위·협화와 불협화를 충분히 연습합니다.";
   intervalStrand.skills = ["INTERVAL_NUMBER","INTERVAL_FORM","INTERVAL_SPELLING","INTERVAL_ALTERED","INTERVAL_INVERSION","INTERVAL_COMPOUND","INTERVAL_CONSONANCE","INTERVAL_EAR"];
 
+  skills.INTERVAL_NUMBER.sections[0].visual = "interval-number";
+  skills.INTERVAL_NUMBER.sections[1].visual = "interval-direction";
+  skills.INTERVAL_FORM.sections[0].visual = "interval-form";
+  skills.INTERVAL_FORM.sections[1].visual = "interval-simple";
+  skills.INTERVAL_SPELLING.sections[0].visual = "interval-family";
+  skills.INTERVAL_SPELLING.sections[1].visual = "interval-quality-ladder";
+  skills.INTERVAL_ALTERED.sections[0].visual = "interval-quality-ladder";
+  skills.INTERVAL_COMPOUND.sections.forEach(function (section) { section.visual = "interval-compound"; });
+  skills.INTERVAL_CONSONANCE.sections[0].visual = "interval-consonance";
+  skills.INTERVAL_EAR.sections.forEach(function (section) { section.visual = "interval-ear-process"; });
+
   addLessonDepth("TRIAD_BUILD", {
     terms:[["주3화음","조의 I·IV·V 위에 만든 세 화음"],["근음·3음·5음","3화음을 아래부터 이루는 세 자리"]],
     sections:[

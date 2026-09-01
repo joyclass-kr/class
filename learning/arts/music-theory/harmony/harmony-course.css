@@ -119,6 +119,19 @@ button, select, summary {
     min-width: 0;
 }
 
+.lesson-order {
+    display: block;
+    margin-bottom: 4px;
+    color: #e7bd5d;
+    font-size: 11px;
+    font-weight: 950;
+    letter-spacing: .04em;
+}
+
+.lesson-order + strong {
+    display: block;
+}
+
 .prereq-note {
     display: block;
     margin-top: 7px;
@@ -894,6 +907,80 @@ button, select, summary {
 .interval-count b { color: #505b68; font-size: 11px; }
 .concept-plus { color: #7c5a18; font-size: 23px; font-weight: 950; }
 .concept-result { padding: 10px 12px; border-radius: 8px; color: #fff; background: #314e71; font-size: 16px; font-weight: 950; white-space: nowrap; }
+
+.interval-family-diagram {
+    display: grid;
+    gap: 10px;
+}
+
+.interval-family-row {
+    display: grid;
+    grid-template-columns: 110px 120px minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border: 2px solid #8b7442;
+    border-radius: 9px;
+    background: #fffdfa;
+}
+
+.interval-family-row.major-minor { border-color: #496f91; }
+.interval-family-row > strong { color: #604514; font-size: 15px; }
+.interval-family-row > b { color: #243c58; font-size: 16px; text-align: center; }
+.interval-family-row > span { display: flex; align-items: center; justify-content: center; gap: 7px; }
+.interval-family-row i { min-width: 38px; padding: 7px; border-radius: 7px; color: #fff; background: #7a5b23; font-style: normal; font-weight: 950; text-align: center; }
+.interval-family-row i.core { background: #315b7d; }
+.interval-family-row em { color: #73706a; font-size: 10px; font-style: normal; font-weight: 900; white-space: nowrap; }
+
+.interval-compound-diagram {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+}
+
+.interval-compound-diagram > div {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 7px;
+    padding: 11px;
+    border-radius: 8px;
+    background: #fffdfa;
+}
+
+.interval-compound-diagram small { grid-column: 1 / -1; color: #5a6470; font-weight: 900; text-align: center; }
+.interval-compound-diagram b { padding: 8px 5px; border-radius: 7px; color: #fff; background: #315b7d; text-align: center; }
+.interval-compound-diagram > span { color: #6c511a; font-size: 11px; font-weight: 900; line-height: 1.5; text-align: center; }
+
+.interval-consonance-diagram {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px;
+}
+
+.interval-consonance-diagram > div {
+    min-height: 94px;
+    display: grid;
+    place-items: center;
+    gap: 5px;
+    padding: 10px;
+    border: 1px solid #b9ac8d;
+    border-radius: 8px;
+    background: #fffdfa;
+    text-align: center;
+}
+
+.interval-consonance-diagram > div strong { color: #604514; }
+.interval-consonance-diagram > div b { color: #243c58; font-size: 12px; }
+.interval-consonance-diagram > div span { color: #68727d; font-size: 10px; font-weight: 850; }
+.interval-consonance-diagram > small { grid-column: 1 / -1; color: #8a4c3f; font-weight: 850; text-align: center; }
+
+@media (max-width: 700px) {
+    .interval-family-row { grid-template-columns: 1fr; text-align: center; }
+    .interval-family-row > span { flex-wrap: wrap; }
+    .interval-compound-diagram { grid-template-columns: 1fr; }
+    .interval-consonance-diagram { grid-template-columns: 1fr; }
+}
 
 .inversion-diagram {
     display: grid;

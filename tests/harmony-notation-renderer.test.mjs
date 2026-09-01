@@ -51,6 +51,13 @@ for (const key of ["pitch-alphabet","interval-spelling","interval-inversion","in
 for (const key of ["voice-ranges","motion-directions","voice-crossing","parallel-errors","secondary-targets","secondary-resolution","secondary-domino","borrowed-family","flat-two-compare","tension-stack","tension-available","tension-avoid"]) {
   assert.match(notation.render(key), /class="concept-diagram/, key + " needs a textbook-style explanatory diagram");
 }
+for (const key of ["interval-number","interval-direction","interval-form","interval-simple","interval-family","interval-quality-ladder","interval-compound","interval-consonance","interval-ear-process"]) {
+  assert.match(notation.render(key), /class="concept-diagram/, key + " needs its own interval-learning diagram");
+}
+const intervalFamily = notation.render("interval-family");
+for (const label of ["완전계열","1 · 4 · 5 · 8도","장·단계열","2 · 3 · 6 · 7도","감","완전","단","장","증"]) {
+  assert.match(intervalFamily, new RegExp(label.replace(/[·]/g, "\\·")), "interval quality family chart must show " + label);
+}
 
 const chordScore = notation.render("symbol-anatomy");
 assert.match(chordScore, /viewBox="0 0 520 132"/, "single-staff chord examples need a compact canvas");
