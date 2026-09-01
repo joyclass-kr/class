@@ -77,7 +77,7 @@
       ...options
     });
     L.tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png?key=${BASEMAP_KEY}`, {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a> · Elevation: <a href="https://registry.opendata.aws/terrain-tiles/">AWS Open Data Terrain Tiles</a>',
       subdomains: "abcd",
       maxZoom: 20
     }).addTo(map);
@@ -130,6 +130,8 @@
     questionThemeLayer = L.layerGroup().addTo(questionMap);
     questionFocusLayer = L.layerGroup().addTo(questionMap);
     fitKorea(questionMap);
+    mainMap.on("zoomend", () => drawBoundaries(mainMap, mainBoundaryLayer, true));
+    questionMap.on("zoomend", () => drawBoundaries(questionMap, questionBoundaryLayer, false));
   }
 
   function fitKorea(map) {
@@ -191,7 +193,7 @@
 
   function drawBoundaries(map, group, interactive) {
     group.clearLayers();
-    if (!provinceFeatures.length) return;
+    if (map.getZoom() > 8 || !provinceFeatures.length) return;
     L.geoJSON({ type: "FeatureCollection", features: provinceFeatures }, {
       interactive,
       pane: "overlayPane",
@@ -411,20 +413,11 @@
   function drawThemeOnMap(map, group, theme, interactive) {
     group.clearLayers();
     if (theme.relief) {
-      L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}", {
-        pane: "terrainPane",
-        opacity: 1,
-        // 한국에서는 z9 이후 원본 지형 타일 대신 안내 문구 타일이 반환된다.
-        // 마지막 정상 타일을 확대 재사용해 안내 문구가 반복되지 않게 한다.
-        maxNativeZoom: 9,
-        maxZoom: 13,
-        attribution: "Terrain &copy; Esri"
-      }).addTo(group);
-      L.tileLayer("https://services.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}", {
+      L.imageOverlay("assets/korea-hillshade.webp?v=20260902-3", KOREA_BOUNDS, {
         pane: "reliefPane",
-        opacity: 0.36,
-        maxZoom: 16,
-        attribution: "Hillshade &copy; Esri"
+        opacity: 0.58,
+        interactive: false,
+        className: "korea-local-hillshade"
       }).addTo(group);
     }
     if (theme.rivers && majorRivers) drawMajorRivers(group, interactive);

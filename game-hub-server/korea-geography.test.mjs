@@ -11,6 +11,7 @@ const app = read("learning/inquiry/korea-geography/app.js");
 const dataSource = read("learning/inquiry/korea-geography/data.js");
 const principlesSource = read("learning/inquiry/korea-geography/principles.js");
 const riverData = JSON.parse(read("learning/inquiry/korea-geography/data/major-rivers.geojson"));
+const hillshade = fs.readFileSync(new URL("learning/inquiry/korea-geography/assets/korea-hillshade.webp", root));
 
 assert.match(html, /id="map"/);
 assert.match(html, /id="startPractice"/);
@@ -28,9 +29,13 @@ assert.match(styles, /\.principle-button \{[^}]*min-height:\s*44px/s);
 
 assert.match(app, /korean-museum\/data\/skorea-provinces-topo-simple\.json/);
 assert.match(app, /voyager_nolabels/);
-assert.match(app, /World_Hillshade/);
-assert.match(app, /World_Terrain_Base/);
-assert.match(app, /maxNativeZoom:\s*9/, "Terrain tiles must stop before Esri's unavailable-detail placeholders.");
+assert.doesNotMatch(app, /World_Hillshade|World_Terrain_Base/, "The geography map must not depend on Esri world terrain tiles.");
+assert.match(app, /L\.imageOverlay\("assets\/korea-hillshade\.webp/, "The terrain theme must use the self-hosted Korean Peninsula hillshade.");
+assert.ok(hillshade.byteLength > 200_000, "The regional hillshade asset is missing or unexpectedly empty.");
+
+
+
+assert.match(app, /map\.getZoom\(\) > 8/, "Maritime province outlines must be hidden at close zoom.");
 assert.match(app, /major-rivers\.geojson/);
 assert.match(app, /function riverWidthAt/);
 assert.match(app, /function renderPrinciples/);

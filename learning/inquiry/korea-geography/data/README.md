@@ -11,3 +11,14 @@
 - Purpose: local, stable rendering of major rivers in the Korean Geography study map
 
 The file is a display layer, not a legal river-boundary dataset.
+
+
+## Regional hillshade
+
+`../assets/korea-hillshade.webp` is a self-hosted shaded-relief overlay cropped to the Korean Peninsula study bounds (`123.85–131.35°E`, `32.95–43.15°N`).
+
+- Source: Mapzen Terrain Tiles in the AWS Registry of Open Data
+- Accessed: 2026-09-02
+- Processing: 66 Terrarium DEM tiles at zoom 8 were decoded, cropped, hillshaded, and exported as a transparent 1366×2365 WebP.
+- Runtime behavior: the site loads only this local regional image; it does not request Esri world terrain or hillshade tiles.
+- Source and attribution: https://registry.opendata.aws/terrain-tiles/
