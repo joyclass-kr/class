@@ -23,7 +23,7 @@
 body {
   min-height: 100vh;
   background-color: var(--bg-dark);
-  background-image: linear-gradient(rgba(7, 10, 24, 0.72), rgba(7, 10, 24, 0.9)), url("/assets/images/math-ox-bg.jpg");
+  background-image: linear-gradient(rgba(7, 10, 24, 0.38), rgba(7, 10, 24, 0.58)), url("/assets/images/math-ox-bg.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -121,11 +121,12 @@ body {
 }
 
 .question-card {
-  background: linear-gradient(rgba(20, 24, 42, 0.9), rgba(20, 24, 42, 0.94)), url("/assets/images/mainbg2.webp") center / cover;
+  background: rgba(20, 24, 42, 0.68);
   border: 1px solid var(--panel-border);
   border-radius: 20px;
   padding: 24px;
-  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(6px) saturate(115%);
+  backdrop-filter: blur(6px) saturate(115%);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
@@ -213,12 +214,12 @@ body {
 /* Answered State Styles */
 .question-card.answered.correct {
   border-color: var(--correct-green);
-  background: linear-gradient(rgba(22, 70, 50, 0.86), rgba(20, 24, 42, 0.94)), url("/assets/images/mainbg2.webp") center / cover;
+  background: linear-gradient(rgba(22, 70, 50, 0.7), rgba(20, 24, 42, 0.76));
 }
 
 .question-card.answered.wrong {
   border-color: var(--wrong-red);
-  background: linear-gradient(rgba(88, 34, 48, 0.86), rgba(20, 24, 42, 0.94)), url("/assets/images/mainbg2.webp") center / cover;
+  background: linear-gradient(rgba(88, 34, 48, 0.7), rgba(20, 24, 42, 0.76));
 }
 
 .ox-btn.selected-correct {
