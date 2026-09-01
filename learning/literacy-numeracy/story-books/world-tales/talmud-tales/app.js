@@ -1290,7 +1290,7 @@ function tocPage(part) {
 
 // 차례는 한 펼침면에 다 담는 것을 먼저 노린다. 마지막 '이야기 문제' 한 줄 때문에
 // 거의 빈 펼침면이 하나 더 생기면 보기 흉하다. 한 칸에 아홉 줄까지는 들어간다.
-const TOC_PER_SPREAD = 18;
+const TOC_PER_SPREAD = 10;
 const TOC_GROUPS = [];
 for (let i = 0; i < CHAPTERS.length; i += TOC_PER_SPREAD) {
     TOC_GROUPS.push(CHAPTERS.slice(i, i + TOC_PER_SPREAD));

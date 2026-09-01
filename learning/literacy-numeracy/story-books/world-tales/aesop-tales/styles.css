@@ -453,7 +453,16 @@ body {
 }
 
 .toc-list strong { font-size: clamp(14px, 2.315cqh, 24px); }
-.toc-list small { display: block; color: var(--muted); font-size: clamp(11px, 1.7cqh, 15px); margin-top: 2px; }
+.toc-list small { color: var(--muted); font-size: clamp(11px, 1.7cqh, 15px); flex: 0 0 auto; }
+
+.toc-list button > span:last-child {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+}
 
 /* 읽고 나서 — 그림 없이 글만 두 칸으로 놓는다. 글씨는 본문과 같은 크기다. */
 .page-after {
