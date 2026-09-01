@@ -1534,6 +1534,18 @@ function createClassroomPlatform(options = {}) {
     ));
   }
 
+  async function isContentGloballyDisabled(contentPath) {
+    const requestPath = normalizeContentPath(contentPath);
+    if (!requestPath) return false;
+    const globallyDisabledPaths = await getGloballyDisabledContentPaths();
+    return isGloballyDisabledContent(requestPath, "", globallyDisabledPaths);
+  }
+
+  async function canBypassGlobalContentLock(req) {
+    const user = await sessionUser(req);
+    return user?.role === "admin";
+  }
+
   const requireSiteAccess = asyncRoute(async (req, res, next) => {
     // mode and user are each resolved once per request and reused below --
     // this used to call getSiteAccessMode() and sessionUser() twice per
@@ -6789,6 +6801,8 @@ function createClassroomPlatform(options = {}) {
     initialize,
     configuration,
     requireSiteAccess,
+    isContentGloballyDisabled,
+    canBypassGlobalContentLock,
     verifyMuseumPresenceTicket,
     // 152개 정식 키만 통과시키므로 클라이언트가 보낸 값을 그대로 검증하는 데 쓴다.
     listFinisherRecords,

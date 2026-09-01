@@ -4,6 +4,57 @@
   if (window.self !== window.top || document.querySelector("site-back-navigation")) return;
   if (["/", "/index.html"].includes(location.pathname)) return;
 
+  const GLOBAL_CONTENT_ACCESS_POLL_MS = 5000;
+  const GLOBAL_CONTENT_ROOTS = ["/learning", "/learn", "/arithmetic", "/fraction", "/hanguksa"];
+  const shouldMonitorGlobalContentAccess = GLOBAL_CONTENT_ROOTS.some(root =>
+    location.pathname === root || location.pathname.startsWith(`${root}/`));
+  let globalContentAccessCheckInFlight = false;
+
+  const normalizedContentPath = value => {
+    const path = String(value || "");
+    return path.length > 1 ? path.replace(/\/+$/, "") : path;
+  };
+
+  const isPathDisabled = (path, disabledPaths) => disabledPaths.some(disabledPath => (
+    path === disabledPath || path.startsWith(`${disabledPath}/`)
+  ));
+
+  const enforceGlobalContentAccess = async () => {
+    if (globalContentAccessCheckInFlight) return;
+    globalContentAccessCheckInFlight = true;
+    try {
+      const response = await fetch("/api/home-content-access", {
+        credentials: "same-origin",
+        cache: "no-store",
+        headers: { Accept: "application/json" }
+      });
+      if (!response.ok) return;
+      const access = await response.json();
+      if (access.canManageGlobally === true) return;
+      const currentPath = normalizedContentPath(location.pathname);
+      const disabledPaths = Array.isArray(access.globallyDisabledPaths)
+        ? access.globallyDisabledPaths.map(normalizedContentPath).filter(Boolean)
+        : [];
+      if (isPathDisabled(currentPath, disabledPaths)) {
+        location.replace("/?content=globally-disabled");
+      }
+    } catch (_) {
+      // Direct navigation is still enforced by the server. Keep the current
+      // page usable during a transient status-check failure.
+    } finally {
+      globalContentAccessCheckInFlight = false;
+    }
+  };
+
+  if (shouldMonitorGlobalContentAccess) {
+    void enforceGlobalContentAccess();
+    window.setInterval(enforceGlobalContentAccess, GLOBAL_CONTENT_ACCESS_POLL_MS);
+    window.addEventListener("focus", enforceGlobalContentAccess);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") void enforceGlobalContentAccess();
+    });
+  }
+
   let fallbackHref = "/";
   const LEGACY_LABEL = /^(?:[←‹◀🏠🏡🌌]\s*)?(?:(?:메인(?:\s*(?:페이지|화면))?|홈|학습\s*홈|기초학력(?:\s*목록)?|연산|학생\s*화면|교사\s*메인|교사\s*도구\s*홈|포털\s*(?:메인|홈)|우주\s*관찰\s*(?:메인|홈)|첫\s*화면|(?:게임\s*)?(?:로비|대기실)(?:\s*로)?(?:\s*돌아가기)?|RETURN\s+TO\s+(?:THE\s+)?LOBBY|BACK\s+TO\s+(?:THE\s+)?LOBBY)(?:\s*(?:으)?로)?(?:\s*돌아가기)?)$/i;
   const BACK_LINK_LABEL = /^(?:←|‹|◀)\s*\S/;

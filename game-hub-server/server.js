@@ -220,7 +220,7 @@ const staticAssetOptions = {
   }
 };
 
-const SITE_BACK_SCRIPT_TAG = '<script data-site-back-navigation="true" src="/assets/site-back-navigation.js?v=20260901-empty-shell-1" defer></script>';
+const SITE_BACK_SCRIPT_TAG = '<script data-site-back-navigation="true" src="/assets/site-back-navigation.js?v=20260901-global-lock-1" defer></script>';
 
 function sendSiteHtml(req, res, filepath, next) {
   fs.readFile(filepath, "utf8", (error, htmlSource) => {
@@ -350,6 +350,39 @@ const MAX_ROOM_PLAYERS = {
   excretion: 61,
   temperature: 61
 };
+
+const MULTIPLAYER_CONTENT_PATHS = Object.freeze({
+  setgame: "/learning/games/setgame/setgame",
+  nimgame: "/learning/games/nimgame/nimgame",
+  janggi: "/learning/games/janggi/janggi",
+  omok: "/learning/games/omok/omok",
+  connect6: "/learning/games/connect6/connect6",
+  diamondgame: "/learning/games/diamondgame/diamondgame",
+  lastcard: "/learning/games/lastcard/lastcard",
+  bomb77: "/learning/games/bomb77/bomb77",
+  loveletter: "/learning/games/loveletter/loveletter",
+  rummikub: "/learning/games/rummikub/rummikub",
+  gemguild: "/learning/games/gemguild/gemguild",
+  citychase: "/learning/games/citychase/citychase",
+  kingdomtrails: "/learning/games/kingdom-trails/kingdom-trails",
+  blokus: "/learning/games/blokus/blokus",
+  honeycomb: "/learning/games/honeycomb/honeycomb",
+  drawrelay: "/learning/games/drawrelay/drawrelay",
+  expedition: "/learning/games/expedition/expedition",
+  avalon: "/learning/games/avalon/avalon",
+  clue: "/learning/games/clue/clue",
+  codenames: "/learning/games/codenames/codenames",
+  dobble: "/learning/games/dobble/dobble",
+  spelling: "/learning/literacy-numeracy/spelling",
+  circulation: "/learning/inquiry/body-explorer",
+  digestion: "/learning/inquiry/body-explorer",
+  respiration: "/learning/inquiry/body-explorer",
+  nervous: "/learning/inquiry/body-explorer",
+  immune: "/learning/inquiry/body-explorer",
+  movement: "/learning/inquiry/body-explorer",
+  excretion: "/learning/inquiry/body-explorer",
+  temperature: "/learning/inquiry/body-explorer"
+});
 
 const FINISHER_GAMES = new Set(["coinweighing", "hanoitower", "sphinx", "slidingpuzzle", "nonogram"]);
 
@@ -1726,8 +1759,12 @@ app.post("/api/finishers", async (req, res) => {
   }
 });
 
-wss.on("connection", socket => {
+wss.on("connection", (socket, request) => {
   let playerId = crypto.randomUUID();
+  const globalContentLockBypass = classroomPlatform.canBypassGlobalContentLock(request).catch(error => {
+    console.error("Failed to resolve WebSocket content-lock bypass:", error);
+    return false;
+  });
   socket.isAlive = true;
   socket.on("pong", () => { socket.isAlive = true; });
   socket.meta = {
@@ -1754,6 +1791,33 @@ wss.on("connection", socket => {
     }
 
     const type = cleanToken(message.type, 30);
+
+    const requestedGameId = type === "CREATE_ROOM" || type === "JOIN_ROOM"
+      ? cleanToken(message.gameId, 30)
+      : cleanToken(String(socket.meta.roomKey || "").split(":", 1)[0], 30);
+    const requestedContentPath = MULTIPLAYER_CONTENT_PATHS[requestedGameId];
+    if (requestedContentPath && !await globalContentLockBypass) {
+      try {
+        if (await classroomPlatform.isContentGloballyDisabled(requestedContentPath)) {
+          safeSend(socket, {
+            type: "ERROR",
+            code: "CONTENT_GLOBALLY_DISABLED",
+            message: "The administrator has disabled this game."
+          });
+          try { socket.close(4003, "CONTENT_GLOBALLY_DISABLED"); } catch (_) {}
+          return;
+        }
+      } catch (error) {
+        console.error("Failed to check WebSocket content lock:", error);
+        safeSend(socket, {
+          type: "ERROR",
+          code: "CONTENT_ACCESS_UNAVAILABLE",
+          message: "Game access cannot be verified. Try again shortly."
+        });
+        try { socket.close(1013, "CONTENT_ACCESS_UNAVAILABLE"); } catch (_) {}
+        return;
+      }
+    }
 
     if (type === "MUSEUM_JOIN") {
       const identity = classroomPlatform.verifyMuseumPresenceTicket(cleanToken(message.ticket, 2048));

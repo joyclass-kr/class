@@ -2140,7 +2140,7 @@
                 globalContentAccessEditing = !globalContentAccessEditing;
                 globalContentAccessButton.setAttribute('aria-pressed', String(globalContentAccessEditing));
                 globalContentAccessButton.textContent = globalContentAccessEditing
-                    ? '✅ 전체 사용 중지 설정 완료'
+                    ? '✅ 사용 중지 버튼 선택 끝내기'
                     : '⛔ 전체 메뉴/게임 사용 중지 설정';
                 document.body.classList.toggle('global-content-access-editing', globalContentAccessEditing);
                 if (globalContentAccessEditing) {
@@ -2252,7 +2252,14 @@
                     currentPlayerName = guest.name;
                     localStorage.setItem('classPlayerName', guest.name);
                     updatePlayerLearningLinks(guest.name);
+                    // A guest has no class membership, so the site-wide lock is
+                    // the only content policy that applies. Load it before
+                    // releasing the sign-in preview lock; otherwise a freshly
+                    // created guest session sees every link as enabled until the
+                    // next full-page refresh.
+                    await loadClassContentAccess();
                     setHubLocked(false);
+                    renderClassLocks();
                     restrictedPreview = false;
                     setStatus('');
                     authTitle.textContent = 'GUEST PLAYER';
