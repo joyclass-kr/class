@@ -59,12 +59,15 @@ test("body copy and controls remain readable and touchable", () => {
   assert.ok(baseCss.includes(".example-button { min-height: 44px;"));
   assert.ok(css.includes(".section-audio button {"));
   assert.ok(css.includes("min-height: 44px;"));
+  assert.ok(css.includes("font-size: 64px;"), "the treble clef must be large enough to span the staff");
+  assert.match(css, /\.score-svg \.note-annotation,[\s\S]*?\.score-svg \.chord-label[\s\S]*?font-size: 13px;/, "score labels must not fall below the tablet reading scale");
+  assert.match(css, /\.theory-compare > div small,[\s\S]*?font-size: 12px;/, "diagram explanations must not use the former 9-10px microtype");
 });
 
 test("the page loads the readability revision", () => {
-  assert.ok(html.includes("harmony-course.css?v=20260902-13"));
+  assert.ok(html.includes("harmony-course.css?v=20260902-14"));
   assert.ok(html.includes("harmony-curriculum.js?v=20260902-12"));
-  assert.ok(html.includes("harmony-course.js?v=20260902-17"));
+  assert.ok(html.includes("harmony-course.js?v=20260902-18"));
   assert.ok(html.includes("harmony-traditional-extension.js?v=20260901-7"));
 });
 

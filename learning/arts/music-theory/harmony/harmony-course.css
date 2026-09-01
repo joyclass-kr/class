@@ -281,7 +281,7 @@ button, select, summary {
 
 .score-svg .clef {
     fill: #20252d;
-    font-size: 48px;
+    font-size: 64px;
 }
 
 .construction-lab {
@@ -1561,5 +1561,138 @@ button, select, summary {
     .inversion-diagram > b,
     .tension-name {
         grid-column: 1;
+    }
+}
+
+/* Keep textbook diagrams readable on the primary iPad and Chromebook sizes. */
+.lesson-title h1 {
+    font-size: clamp(24px, 2.4vw, 27px);
+}
+
+.section-copy h2 {
+    font-size: clamp(21px, 2vw, 23px);
+}
+
+.lesson-title > p,
+.score-title,
+.score-line-card > strong {
+    font-size: 14px;
+}
+
+.lesson-outcome {
+    font-size: 16px;
+}
+
+.section-label,
+.visual-kicker,
+.lesson-order,
+.prereq-note {
+    font-size: 12px;
+}
+
+.score-svg .note-annotation,
+.score-svg .chord-label {
+    font-size: 13px;
+}
+
+:is(
+    .concept-node span,
+    .voice-range-diagram span,
+    .motion-card-grid span,
+    .borrowed-family-diagram span,
+    .borrowed-family-diagram b,
+    .theory-compare > div small,
+    .theory-compare > div span,
+    .theory-compare > b,
+    .interval-count b,
+    .interval-family-row em,
+    .interval-family-diagram > p,
+    .symbol-slots span,
+    .symbol-slots small,
+    .symbol-worked,
+    .wheel-reading span,
+    .analysis-grammar span,
+    .analysis-symbol-diagram > p,
+    .step-rules strong,
+    .accidental-steps b,
+    .accidental-steps small,
+    .accidental-order-diagram > p,
+    .relative-pairs b,
+    .key-relation-rule p,
+    .degree-line strong,
+    .degree-line small,
+    .scale-degree-diagram > p,
+    .mode-map-diagram header span,
+    .mode-map-diagram strong,
+    .mode-map-diagram small,
+    .mode-map-diagram em,
+    .pentatonic-diagram span,
+    .interval-compound-diagram > span,
+    .interval-consonance-diagram > div b,
+    .interval-consonance-diagram > div span,
+    .concept-swap,
+    .bass-focus-diagram small,
+    .cadence-diagram small,
+    .borrowed-diagram small,
+    .cadence-diagram b,
+    .resolution-brace,
+    .chord-floor small,
+    .tension-floor small,
+    .duration-label strong,
+    .duration-label small,
+    .duration-track b,
+    .rest-pair > div strong,
+    .silent-beat-line > strong,
+    .silent-beat-line small,
+    .silent-beat-line > b,
+    .note-value-card > small,
+    .meter-card header span,
+    .meter-card > p span,
+    .roman-chord small,
+    .function-card span,
+    .lead-measure small,
+    .formula-card small
+) {
+    font-size: 12px;
+}
+
+.duration-rule,
+.rest-pair > span,
+.meter-card > p b,
+.wheel-reading b,
+.key-relation-rule b,
+.relative-pairs b,
+.concept-row strong,
+.concept-row span,
+.lead-measure b {
+    font-size: 13px;
+}
+
+.wheel-minor { font-size: 11px; }
+.wheel-count { font-size: 10px; }
+.wheel-center text { font-size: 12px; }
+.meter-accent { font-size: 11px; }
+.step-keys .black small { font-size: 10px; }
+
+.theory-compare > div strong,
+.meter-card header strong {
+    font-size: 20px;
+}
+
+.inversion-diagram > div span,
+.cadence-diagram strong,
+.tendency-diagram strong,
+.tendency-diagram b,
+.lead-measure strong {
+    font-size: 21px;
+}
+
+.key-transform > b {
+    font-size: 23px;
+}
+
+@media (max-width: 700px) {
+    .lesson-outcome {
+        font-size: 15px;
     }
 }
