@@ -152,7 +152,8 @@
 
     // Use a label-free basemap so shops and restaurants do not compete with relics.
     // Korean administrative labels are rendered locally in a separate layer below.
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+    const CARTO_BASEMAP_KEY = 'cb1_2lqh_1_23aa6103cd67c20c2791ad29';
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png?key=' + CARTO_BASEMAP_KEY, {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
       subdomains: 'abcd',
       maxZoom: 20
