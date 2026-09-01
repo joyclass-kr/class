@@ -41,9 +41,29 @@ for (const key of visualKeys) {
   assert.match(preview, /<svg viewBox="0 0 80 60">/, key + " progress preview must contain a legible relation diagram");
   assert.doesNotMatch(preview, /undefined/, key + " progress preview contains an invalid label");
   if (!score.includes('class="notation-diagram')) {
-    assert.ok((score.match(/class="note-head"/g) || []).length >= 2, key + " must show actual notes");
+    assert.ok((score.match(/class="note-head(?: |\")/g) || []).length >= 2, key + " must show actual notes");
   }
 }
+
+const allowedGrandStaff = new Set([
+  "part-spacing", "voice-ranges", "doubling-rule", "open-close",
+  "motion-directions", "similar-parallel", "contrary-oblique",
+  "voice-crossing", "parallel-errors", "hidden-perfect",
+  "secondary-voices", "secondary-domino"
+]);
+const renderedGrandStaff = new Set();
+for (const key of notation.scoreKeys) {
+  const score = notation.render(key);
+  assert.doesNotMatch(score, /NaN|undefined/, key + " must render valid notation coordinates");
+  if (score.includes('viewBox="0 0 520 184"')) renderedGrandStaff.add(key);
+}
+assert.deepEqual(renderedGrandStaff, allowedGrandStaff, "only explicit SATB and voice-motion lessons may use a grand staff");
+for (const key of ["sequence-cycle","neapolitan-sixth","tonicization-modulation","pivot-modulation","diatonic-sevenths","seventh-family","tension-map","secondary-leading-tone","secondary-targets","secondary-dominant-compare","flat-two-compare","tension-stack"]) {
+  assert.doesNotMatch(notation.render(key), /viewBox="0 0 520 184"/, key + " must use one compact theory staff");
+}
+const satbDomino = notation.render("secondary-domino");
+assert.equal((satbDomino.match(/class="note-head satb-note/g) || []).length, 16, "four SATB chords need sixteen separately voiced noteheads");
+assert.equal((satbDomino.match(/class="note-stem voice-stem/g) || []).length, 16, "every SATB voice needs its own stem");
 
 for (const key of ["pitch-alphabet","interval-spelling","interval-inversion","inversion-score","diatonic-map","function-flow","cadence-compare","guide-tone","secondary-dominant","borrowed-compare","tension-map"]) {
   assert.match(notation.render(key), /class="concept-diagram/, key + " needs a relationship diagram in addition to the staff example");

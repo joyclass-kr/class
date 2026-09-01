@@ -162,6 +162,12 @@
     "harmonize-options", "melody-register", "secondary-chain",
     "lead-sheet", "arrangement-layers", "revision-loop"
   ]);
+  const GRAND_STAFF_KEYS = new Set([
+    "part-spacing", "voice-ranges", "doubling-rule", "open-close",
+    "motion-directions", "similar-parallel", "contrary-oblique",
+    "voice-crossing", "parallel-errors", "hidden-perfect",
+    "secondary-voices", "secondary-domino"
+  ]);
   const LETTER_PITCHES = { C:0, D:2, E:4, F:5, G:7, A:9, B:11 };
 
   function noteParts(note) {
@@ -198,8 +204,9 @@
       return '<line class="ledger" x1="'+(x-13)+'" y1="'+lineY+'" x2="'+(x+13)+'" y2="'+lineY+'"/>';
     }).join("");
   }
-  function placeChordParts(noteStrings, x, grand, singleClef) {
+  function placeChordParts(noteStrings, x, grand, singleClef, stepShift) {
     const parts = noteStrings.map(noteParts).map(function (part) {
+      part.step += stepShift || 0;
       const clef = grand ? (part.step >= 28 ? "treble" : "bass") : singleClef;
       return Object.assign(part, { clef:clef, y:noteY(part, clef, grand), shift:0 });
     });
@@ -227,12 +234,37 @@
         : '<line class="note-stem" x1="'+stemX+'" y1="'+(minY-1)+'" x2="'+stemX+'" y2="'+(maxY+27)+'"/>';
     }).join("");
   }
-  function chordStaffSvg(items, title) {
+  function placeSatbParts(noteStrings, x) {
+    const roles = ["bass","tenor","alto","soprano"];
+    const parts = noteStrings.map(noteParts).sort(function (a,b) { return a.step-b.step; }).map(function (part, index) {
+      const role = roles[index];
+      const stemUp = role === "tenor" || role === "soprano";
+      return Object.assign(part, { role:role, clef:index < 2 ? "bass" : "treble", y:noteY(part, index < 2 ? "bass" : "treble", true), stemUp:stemUp, shift:stemUp ? 4 : -4 });
+    });
+    return parts.map(function (part, index) {
+      const noteX = x + part.shift;
+      const accidentalColumn = parts.slice(0,index).some(function (other) { return other.accidental && Math.abs(other.y-part.y) < 14; }) ? 29 : 21;
+      const accidental = part.accidental ? '<text class="accidental" x="'+(noteX-accidentalColumn)+'" y="'+(part.y+5)+'">'+part.accidental+'</text>' : "";
+      const stemX = part.stemUp ? noteX+7 : noteX-7;
+      const stem = part.stemUp
+        ? '<line class="note-stem voice-stem" x1="'+stemX+'" y1="'+(part.y+1)+'" x2="'+stemX+'" y2="'+(part.y-25)+'"/>'
+        : '<line class="note-stem voice-stem" x1="'+stemX+'" y1="'+(part.y-1)+'" x2="'+stemX+'" y2="'+(part.y+25)+'"/>';
+      return ledgerLines(part.y, noteX, part.clef, true) + accidental +
+        '<ellipse class="note-head satb-note voice-'+part.role+'" cx="'+noteX+'" cy="'+part.y+'" rx="7" ry="5" transform="rotate(-18 '+noteX+' '+part.y+')"/>' + stem;
+    }).join("");
+  }
+  function chordStaffSvg(items, title, key) {
     const width = 520;
     const allParts = items.flatMap(function (item) { return item[1].map(noteParts); });
-    const grand = allParts.some(function (part) { return part.step <= 25; }) && allParts.some(function (part) { return part.step >= 28; });
-    const bassOnly = !grand && allParts.every(function (part) { return part.step <= 25; });
-    const clef = bassOnly ? "bass" : "treble";
+    const spansGrandRange = allParts.some(function (part) { return part.step <= 25; }) && allParts.some(function (part) { return part.step >= 28; });
+    const grand = GRAND_STAFF_KEYS.has(key) && spansGrandRange;
+    const clef = "treble";
+    const averageStep = allParts.reduce(function (total, part) { return total+part.step; }, 0) / Math.max(1, allParts.length);
+    let displayStepShift = 0;
+    if (!grand) {
+      while (averageStep + displayStepShift < 31) displayStepShift += 7;
+      while (averageStep + displayStepShift > 35) displayStepShift -= 7;
+    }
     const height = grand ? 184 : 132;
     const yShift = grand ? -8 : -12;
     const gap = (width - 92) / Math.max(1, items.length);
@@ -241,10 +273,11 @@
       : staffLines([74,84,94,104,114], width);
     const clefs = grand
       ? '<text class="music-glyph clef" x="28" y="116">𝄞</text><text class="music-glyph clef bass-clef" x="29" y="164">𝄢</text>'
-      : '<text class="music-glyph clef '+(clef === "bass" ? "bass-clef" : "")+'" x="28" y="'+(clef === "bass" ? 103 : 116)+'">'+(clef === "bass" ? "𝄢" : "𝄞")+'</text>';
+      : '<text class="music-glyph clef" x="28" y="116">𝄞</text>';
     const events = items.map(function (item, index) {
       const x = 66 + gap * index + gap / 2;
-      return placeChordParts(item[1], x, grand, clef) +
+      const notes = grand && item[1].length === 4 ? placeSatbParts(item[1], x) : placeChordParts(item[1], x, grand, clef, displayStepShift);
+      return notes +
         '<text class="chord-label" x="'+x+'" y="26" text-anchor="middle">'+escapeHtml(item[0])+'</text>';
     }).join("");
     return '<div class="score-frame"><p class="score-title">'+escapeHtml(title || "악보로 확인")+'</p><svg class="score-svg" viewBox="0 0 '+width+' '+height+'" role="img" aria-label="'+escapeHtml(title || "화음 악보")+'"><rect width="'+width+'" height="'+height+'" rx="8" fill="#fffdf7"/><g transform="translate(0 '+yShift+')"><g class="staff-lines">'+staff+'</g>'+clefs+events+'</g></svg></div>';
@@ -288,7 +321,7 @@
     return '<div class="score-frame"><p class="score-title">'+escapeHtml(title || "악보로 확인")+'</p><div class="score-compare">'+rows+'</div></div>';
   }
   function staffSvg(items, title, key) {
-    return SEQUENCE_KEYS.has(key) ? sequenceStaffSvg(items, title, key) : chordStaffSvg(items, title);
+    return SEQUENCE_KEYS.has(key) ? sequenceStaffSvg(items, title, key) : chordStaffSvg(items, title, key);
   }
 
   function noteValueIcon(kind) {
@@ -322,7 +355,8 @@
   window.HarmonyNotation = {
     render:function (key) { return renderVisual(key); },
     preview:function (key) { return skillPreviewMarkup({ sections:[{ visual:key }] }); },
-    noteParts:noteParts
+    noteParts:noteParts,
+    scoreKeys:Object.keys(SCORE_SETS)
   };
   function formulaVisual(key) {
     const formulas = {
