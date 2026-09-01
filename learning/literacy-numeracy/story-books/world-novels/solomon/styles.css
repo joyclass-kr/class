@@ -392,7 +392,7 @@ body {
     font-weight: 800;
 }
 
-.toc-list strong { font-size: 14.5px; }
+.toc-list strong { font-size: clamp(14px, 2.315cqh, 24px); }
 .toc-list small { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
 
 /* quiz */
@@ -574,4 +574,13 @@ body {
 .page-story .ln {
     display: inline-block;
     width: 1em;
+}
+/* 오른쪽 칸에도 '차례' 높이만큼 자리를 잡아 좌우 첫 줄을 맞춘다. */
+.page-toc h2.toc-h2-ghost { visibility: hidden; }
+
+/* 폰처럼 좁은 화면에서는 차례가 어차피 넘쳐 스스로 굴러간다.
+   그럴 때 이 자리까지 얹으면 넘침만 42px 늘어난다. 그래서 빼 준다.
+   아이패드 세로(820px)는 넘치지 않으므로 그대로 둔다. */
+@media (max-width: 540px) {
+    .page-toc h2.toc-h2-ghost { display: none; }
 }

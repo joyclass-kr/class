@@ -734,6 +734,7 @@ function tocPage(part) {
  <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
  </div>
  <div class="story-page-right">
+ ${part === 0 ? '<h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>' : ''}
  <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
  </div>
  </div>`;
