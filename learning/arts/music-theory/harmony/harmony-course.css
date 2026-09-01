@@ -1119,7 +1119,7 @@ button, select, summary {
 .interval-family-row > strong { color: #604514; font-size: 15px; }
 .interval-family-row > b { color: #243c58; font-size: 16px; text-align: center; }
 .interval-family-row > span { display: flex; align-items: center; justify-content: center; gap: 7px; }
-.interval-family-row i { min-width: 38px; padding: 7px; border-radius: 7px; color: #fff; background: #7a5b23; font-style: normal; font-weight: 950; text-align: center; }
+.interval-family-row i { min-width: 44px; flex: 0 0 auto; padding: 7px 5px; border-radius: 7px; color: #fff; background: #7a5b23; font-style: normal; font-weight: 950; text-align: center; white-space: nowrap; }
 .interval-family-row i.core { background: #315b7d; }
 .interval-family-row em { color: #73706a; font-size: 10px; font-style: normal; font-weight: 900; white-space: nowrap; }
 .interval-family-diagram > p { margin: 0; padding: 8px; border-radius: 7px; color: #fff; background: #477263; font-size: 11px; font-weight: 850; text-align: center; }
