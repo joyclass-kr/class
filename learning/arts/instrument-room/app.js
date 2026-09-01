@@ -168,6 +168,18 @@
         "orchestral-percussion": Object.freeze({ id: "orchestral-percussion", root: "assets/audio/orchestral-percussion/", available: Object.freeze(["ride"]), gainDb: Object.freeze({ ride: 3 }) })
     });
 
+    // Peak-normalized metal sounds feel louder because their bright energy and tails
+    // last much longer than a kick or snare. Keep the recordings untouched and apply
+    // only a playback-level trim to the hi-hat and cymbal family.
+    const DRUM_PERCEPTUAL_TRIM_DB = Object.freeze({
+        hat: -9,
+        openhat: -9,
+        pedalhat: -8,
+        crash: -6,
+        ride: -7,
+        ridebell: -5
+    });
+
     const KOREAN_PERCUSSION_PADS = window.KOREAN_PERCUSSION_DATA ? window.KOREAN_PERCUSSION_DATA.pads : Object.freeze({});
     const KOREAN_PERCUSSION_SAMPLE_SETS = window.KOREAN_PERCUSSION_DATA ? window.KOREAN_PERCUSSION_DATA.samples : Object.freeze({});
 
@@ -1092,8 +1104,9 @@
             const source = context.createBufferSource();
             const gain = context.createGain();
             const gainDb = typeof current.gainDb === "number" ? current.gainDb : Number(current.gainDb[id] || 0);
+            const perceptualTrimDb = Number(DRUM_PERCEPTUAL_TRIM_DB[id] || 0);
             source.buffer = sample.buffer;
-            gain.gain.value = volumeOnlyGain(sample.buffer, Math.max(.08, Math.min(1.2, velocity)) * Math.pow(10, gainDb / 20));
+            gain.gain.value = volumeOnlyGain(sample.buffer, Math.max(.08, Math.min(1.2, velocity)) * Math.pow(10, (gainDb + perceptualTrimDb) / 20));
             source.connect(gain);
             connectFastToMix(gain, 0);
             if (id === "openhat") {

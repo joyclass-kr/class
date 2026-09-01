@@ -340,6 +340,10 @@ test('percussion library includes dedicated kits and essential orchestral instru
   assert.match(app, /function chokeOpenHat/);
   assert.match(app, /\["hat", "pedalhat", "openhat"\]\.includes\(id\)/);
   assert.match(app, /const DRUM_SAMPLE_SETS/);
+  assert.match(app, /const DRUM_PERCEPTUAL_TRIM_DB = Object.freeze/);
+  assert.match(app, /hat: -9/);
+  assert.match(app, /crash: -6/);
+  assert.ok(app.includes("gainDb + perceptualTrimDb"));
   assert.match(app, /const AD2_DRUM_SAMPLE_REVISION = "20260901-ad2-note49-v1"/);
   assert.match(app, /config\.root \+ id \+ "\.ogg" \+ ad2Revision/);
   assert.match(app, /function playSampledDrum/);
