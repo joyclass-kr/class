@@ -1022,11 +1022,16 @@ function pageParts(page) {
 }
 const roleOf = p => (typeof p === 'string' ? 'narration' : (p.v || 'narration'));
 
+/* 속도는 넷 다 같다. 읽다가 대사에서 갑자기 빨라지면 귀에 턱턱 걸리고,
+   대사야말로 아이가 알아들어야 할 자리라 늦추면 늦췄지 빠르게 할 이유가 없다.
+   인물 구분은 음높이에만 맡긴다. */
+const SAY_RATE = 0.85;
+
 const SAY_AS = {
-    narration: { pitch: 1.00, rate: 0.85, want: 'any' },
-    boy:       { pitch: 1.50, rate: 0.92, want: 'male' },
-    mother:    { pitch: 1.25, rate: 0.85, want: 'female' },
-    man:       { pitch: 0.80, rate: 0.80, want: 'male' }
+    narration: { pitch: 1.00, rate: SAY_RATE, want: 'any' },
+    boy:       { pitch: 1.40, rate: SAY_RATE, want: 'male' },
+    mother:    { pitch: 1.20, rate: SAY_RATE, want: 'female' },
+    man:       { pitch: 0.80, rate: SAY_RATE, want: 'male' }
 };
 
 const VOICES = { any: null, male: null, female: null };
