@@ -280,7 +280,7 @@ const CHAPTERS = [
                     "사람들은 어리둥절해서 서로를 쳐다보았습니다.",
                     "그러다 하나둘 웃기 시작했지요. 길에 있던 사람들도 모두 따라 웃었습니다. 성 창가에서는 공주가 아직도 웃고 있었지요.",
                     "임금님은 그 소리를 듣고 달려 나왔습니다.",
-                    "몇 해 만에 듣는 웃음소리였지요. 임금님도 그만 눈시울이 붉어졌습니다."
+                    "몇 해 만에 듣는 웃음소리였지요. 임금님도 그만 눈가가 붉어졌습니다."
                 ]
             },
             {
@@ -1077,7 +1077,7 @@ const EN = {
             { word: 'come away', meaning: '떨어지다', sentence: 'All the stuck hands came away.' },
             { word: 'free', meaning: '자유로운', sentence: 'The three sisters were free.' },
             { word: 'bewildered', meaning: '어리둥절한', sentence: 'People stood staring at one another, bewildered.' },
-            { word: 'go red', meaning: '눈시울이 붉어지다', sentence: 'His own eyes went red with it.' }
+            { word: 'go red', meaning: '눈가가 붉어지다', sentence: 'His own eyes went red with it.' }
         ],
         '08-ending-2.webp': [
             { word: 'send for', meaning: '부르다', sentence: 'The king sent for the youngest son.' },

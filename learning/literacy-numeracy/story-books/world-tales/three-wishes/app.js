@@ -149,7 +149,7 @@ const CHAPTERS = [
                     "나무꾼도 지지 않았습니다.",
                     "\"그럼 당신은 뭐 하고 있었소!\"",
                     "\"옆에서 아무 말도 안 했잖소!\"",
-                    "아내가 삿대질을 하며 되받았지요.",
+                    "아내가 손가락질을 하며 되받았지요.",
                     "\"제가 어떻게 알았겠어요!\"",
                     "두 사람의 목소리가 오두막을 울렸습니다."
                 ],
@@ -222,7 +222,7 @@ const CHAPTERS = [
                 "art": "06-try-2.webp",
                 "emoji": "🧈",
                 "left": [
-                    "기진맥진해서 마루에 주저앉았습니다. 숨이 차서 말도 나오지 않았지요. 아내는 코를 감싸 쥐고 훌쩍였습니다.",
+                    "지칠 대로 지쳐 마루에 주저앉았습니다. 숨이 차서 말도 나오지 않았지요. 아내는 코를 감싸 쥐고 훌쩍였습니다.",
                     "\"이대로 어떻게 밖에 나가요.\"",
                     "\"장에도 못 가고 이웃도 못 만나잖아요.\"",
                     "나무꾼은 헛기침만 했지요."
@@ -1072,7 +1072,7 @@ const EN = {
             { word: 'blankly', meaning: '멀뚱히', sentence: 'They stared blankly at each other.' }
         ],
         '06-try-2.webp': [
-            { word: 'worn out', meaning: '기진맥진한', sentence: 'Worn out, they sank down onto the floor.' },
+            { word: 'worn out', meaning: '지칠 대로 지친', sentence: 'Worn out, they sank down onto the floor.' },
             { word: 'sniff', meaning: '훌쩍이다', sentence: 'His wife held her nose and sniffed.' },
             { word: 'clear one’s throat', meaning: '헛기침하다', sentence: 'The woodcutter only cleared his throat.' },
             { word: 'crackle', meaning: '타닥타닥 소리 내다', sentence: 'Only the fire crackled in the grate.' },

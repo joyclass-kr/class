@@ -8,21 +8,15 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-> **⚠️ 다시 그려 주실 것 (2026-09-03)**
-> - `cover` — 지금 파일에 **파란 군복을 입은 늙은 병사**가 그려져 있습니다.
->   그 인물은 안데르센 원작에는 나오지만 **이 책에는 나오지 않습니다.** 우리 책에
->   나오는 사람은 카렌, 할머니, 구둣방 주인, 숲속 나무꾼의 아내뿐입니다.
->   주문서에 적힌 대로 **사람은 한 명도 넣지 말고**, 달빛 어린 마을 광장에 빨강 구두
->   한 켤레만 놓인 그림으로 다시 그려 주세요.
-
-> **그림 놓는 자리 (2026-09-03)**
-> 파일은 1376×768로 주시는데 화면의 그림칸은 약 2.13:1이라 **위아래가 잘립니다.**
-> 위 61px, 아래 61px을 하늘이나 바닥 같은 **빈 띠**로 두세요. 얼굴·손·발이 그 안에
-> 들어가면 잘려 나갑니다. 그림 안에 테두리나 가로줄은 그리지 마세요.
-> (지금 파일 가운데 `01-barefoot`·`02-adopted`·`05-dance` 석 장이 띠 없이 꽉 차 있어
-> 위아래로 61px씩 잘립니다. `05-dance`에는 흰 가로줄도 하나 들어가 있습니다.)
+> **그림 놓는 자리 — 위아래가 잘립니다 (2026-09-03)**
+> 파일은 1376×768로 주시는데 화면의 그림칸은 약 2.13:1입니다. 가로를 채우고
+> **위아래를 61px씩 잘라 냅니다.** 지금 열여덟 장 가운데 `08-ending` 한 장만
+> 위아래에 빈 띠가 있고, 나머지는 가장자리까지 꽉 차 있어 그만큼 잘려 나갑니다.
 >
-> 아직 없는 그림: `08-ending-2.webp`, `end.webp`
+> 다음부터는 **위 61px, 아래 61px을 하늘이나 바닥 같은 빈 띠**로 두세요.
+> 얼굴·손·발이 그 안에 들어가면 잘립니다. 그림 안에 테두리나 가로줄도 넣지 마세요.
+>
+> 표지는 세로 2:3, 마무리(`end`)는 가로 3:2 그대로면 됩니다. 둘 다 지금 맞습니다.
 
 > **한 파일 = 한 장면입니다. 앞질러 가지 마세요.**
 > 파일마다 뒤에 〔이 쪽에 실린 글〕을 붙여 두었습니다. 그 쪽에 실제로 실리는 글이에요.
@@ -63,7 +57,7 @@ woman with kind eyes and flour on her hands.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover with NO PEOPLE IN IT AT ALL - no girl, no soldier, nobody: just a pair of bright red shoes standing alone in the middle of a moonlit village square, faint dancing footprints circling them, a small church and dark trees beyond, striking and slightly mysterious but not frightening. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: Karen dancing in her bright red shoes down a sunny cobbled village street, half-timbered houses and flowers to either side. Only Karen - no soldier and no other named character. (An alternative: a pair of bright red shoes standing alone in the middle of a moonlit village square, faint dancing footprints circling them, a small church and dark trees beyond, striking and slightly mysterious but not frightening. |
 | `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 맨발의 아이

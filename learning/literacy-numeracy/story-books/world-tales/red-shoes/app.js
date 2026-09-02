@@ -137,7 +137,7 @@ const CHAPTERS = [
                     "그 무렵 부인이 자리에 눕고 말았습니다."
                 ],
                 "right": [
-                    "기침이 심하고 얼굴이 파리했지요. 이웃 사람들이 걱정하며 찾아왔습니다.",
+                    "기침이 심하고 얼굴에 핏기가 없었지요. 이웃 사람들이 걱정하며 찾아왔습니다.",
                     "\"곁을 잘 지켜 드려야 한다.\"",
                     "카렌은 건성으로 대답했지요.",
                     "눈은 여전히 구두에 가 있었지요. 마음이 콩밭에 가 있었던 것입니다."
@@ -1022,7 +1022,7 @@ const EN = {
         ],
         '04-church-2.webp': [
             { word: 'rub at', meaning: '문지르다', sentence: 'Rubbing at them with a cloth.' },
-            { word: 'pale', meaning: '파리한', sentence: 'Her cough was bad and her face was pale.' },
+            { word: 'pale', meaning: '핏기 없는', sentence: 'Her cough was bad and her face was pale.' },
             { word: 'sit with', meaning: '곁을 지키다', sentence: 'You must sit with her properly.' },
             { word: 'somewhere else', meaning: '딴 데에', sentence: 'Her mind was somewhere else entirely.' }
         ],

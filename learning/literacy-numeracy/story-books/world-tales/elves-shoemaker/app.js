@@ -156,7 +156,7 @@ const CHAPTERS = [
                 "left": [
                     "\"여보, 봤소? 그 옷차림을.\"",
                     "\"한겨울에 저러고 있으니 어쩐대요.\"",
-                    "아내가 눈시울을 붉혔습니다.",
+                    "아내가 눈가를 훔쳤습니다.",
                     "\"우리가 뭐라도 해 줍시다.\"",
                     "\"옷을 지어 주면 어떨까요?\""
                 ],
@@ -916,7 +916,7 @@ const EN = {
         ],
         '05-clothes.webp': [
             { word: 'the state of', meaning: '~의 꼴', sentence: 'The state of their clothes.' },
-            { word: 'go red', meaning: '눈시울이 붉어지다', sentence: 'Her eyes went red.' },
+            { word: 'go red', meaning: '눈가가 붉어지다', sentence: 'Her eyes went red.' },
             { word: 'pick out', meaning: '고르다', sentence: "His wife's eyes shone as she picked out the cloth." },
             { word: 'millet', meaning: '좁쌀', sentence: 'The buttons were the size of millet grains.' }
         ],

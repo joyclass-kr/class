@@ -89,7 +89,7 @@ const CHAPTERS = [
                 ],
                 "right": [
                     "\"내 등에 올라타.\"",
-                    "이반은 반신반의하며 올라탔지요.",
+                    "이반은 긴가민가하면서 올라탔지요.",
                     "그런데 조랑말은 바람처럼 달렸습니다. 작은데도 어찌나 빠른지 몰랐지요.",
                     "금세 형들을 따라잡았습니다. 형들은 눈이 휘둥그레졌지요."
                 ]
@@ -245,7 +245,7 @@ const CHAPTERS = [
                     "\"가마솥을 셋 걸어 주세요.\"",
                     "\"끓는 물과 찬물에 차례로 들어가시면요.\"",
                     "\"다시 젊어지신답니다.\"",
-                    "임금님은 반신반의했지요. 그래도 젊어진다는 말에 마음이 흔들렸습니다."
+                    "임금님은 긴가민가했지요. 그래도 젊어진다는 말에 마음이 흔들렸습니다."
                 ]
             },
             {
@@ -1011,7 +1011,7 @@ const EN = {
             { word: 'in secret', meaning: '몰래', sentence: 'They led them away in secret.' },
             { word: 'mean to', meaning: '~할 셈이다', sentence: 'They meant to sell them.' },
             { word: 'prick up', meaning: '쫑긋 세우다', sentence: 'The little horse pricked up his ears.' },
-            { word: 'half believing', meaning: '반신반의하며', sentence: 'Ivan climbed on, half believing it.' },
+            { word: 'half believing', meaning: '긴가민가하며', sentence: 'Ivan climbed on, half believing it.' },
             { word: 'keep up with', meaning: '따라잡다', sentence: 'There was no keeping up with him.' }
         ],
         '03-palace-2.webp': [

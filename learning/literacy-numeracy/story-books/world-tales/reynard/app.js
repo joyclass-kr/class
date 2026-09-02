@@ -67,7 +67,7 @@ const CHAPTERS = [
                     "재판정이 겨우 잠잠해졌습니다."
                 ],
                 "right": [
-                    "임금님은 이맛살을 찌푸렸지요.",
+                    "임금님은 이마를 찌푸렸지요.",
                     "\"본인 말도 들어 봐야 하지 않겠느냐.\"",
                     "\"그 여우를 당장 데려오너라.\"",
                     "\"누가 다녀오겠느냐?\"",
@@ -1013,7 +1013,7 @@ const EN = {
         '02-accusations-2.webp': [
             { word: 'cluck', meaning: '꼬꼬댁거리다', sentence: 'The hens came crowding out, clucking.' },
             { word: 'boil over', meaning: '들끓다', sentence: 'The forest was boiling over about the fox.' },
-            { word: 'draw one’s brows together', meaning: '이맛살을 찌푸리다', sentence: 'The king drew his brows together.' },
+            { word: 'draw one’s brows together', meaning: '이마를 찌푸리다', sentence: 'The king drew his brows together.' },
             { word: 'fetch', meaning: '데려오다', sentence: 'Fetch that fox here at once.' },
             { word: 'have to do with', meaning: '얽히다', sentence: 'None of them wanted anything to do with the fox.' }
         ],
