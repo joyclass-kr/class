@@ -282,17 +282,26 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '빨간 모자',
+    intro: [
+        '빨간 모자는 유럽에서 아주 오래전부터 입에서 입으로 전해 내려온 이야기예요. 지금 우리가 읽는 형태로 처음 책에 실린 것은 1697년, 프랑스의 샤를 페로가 펴낸 이야기집에서였답니다.',
+        '그로부터 백여 년 뒤, 독일의 그림 형제가 이 이야기를 다시 모아 자신들의 책에 실었어요. 페로가 적은 이야기는 늑대가 이기는 것으로 끝나지만, 그림 형제가 옮긴 이야기에는 지나가던 사냥꾼이 나타나 두 사람을 구해 냅니다. 이 책은 그림 형제가 옮긴 쪽을 따랐어요.',
+        '같은 이야기라도 옮기는 사람과 시대에 따라 결말이 달라지기도 해요.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🔴')}
             </div>
             <div class="story-page-right">
-                <h1>빨간 모자</h1>
-                <p>빨간 모자는 유럽에서 아주 오래전부터 입에서 입으로 전해 내려온 이야기예요. 지금 우리가 읽는 형태로 처음 책에 실린 것은 1697년, 프랑스의 샤를 페로가 펴낸 이야기집에서였답니다.</p>
-                <p>그로부터 백여 년 뒤, 독일의 그림 형제가 이 이야기를 다시 모아 자신들의 책에 실었어요. 페로가 적은 이야기는 늑대가 이기는 것으로 끝나지만, 그림 형제가 옮긴 이야기에는 지나가던 사냥꾼이 나타나 두 사람을 구해 냅니다. 이 책은 그림 형제가 옮긴 쪽을 따랐어요.</p>
-                <p>같은 이야기라도 옮기는 사람과 시대에 따라 결말이 달라지기도 해요.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -307,8 +316,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -318,8 +327,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -329,22 +338,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -394,9 +404,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -407,7 +417,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -479,7 +489,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -488,34 +498,520 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   "What big ears you have!" 문답은 영어권에서 굳어진 형태를 그대로 살렸다.
+   좌우 칸 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Little Red Riding Hood',
+        intro: [
+            "Little Red Riding Hood was written down in France by Charles Perrault in 1697, and again in Germany by the Brothers Grimm in 1812. In Perrault's telling the story ends darkly. The Grimms added the huntsman, and that is the ending most people know today.",
+            "This book follows the Grimm ending. The wolf is driven off, and no one is harmed."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Red Hood',
+            beats: [
+                {
+                    art: '01-errand.webp',
+                    emoji: '🧺',
+                    left: [
+                        "There was once a little girl. Her grandmother had made her a hood.",
+                        "It was sewn from soft red cloth, and it was very fine indeed.",
+                        "She loved it so much that she wore it in rain and in snow, every single day.",
+                        "So everyone called her Little Red Riding Hood."
+                    ],
+                    right: [
+                        "One morning her mother called her over.",
+                        "\"Your grandmother is ill.\"",
+                        "\"Take her this basket.\"",
+                        "Inside were fresh-baked bread and milk.",
+                        "\"This will put the strength back in her.\"",
+                        "Little Red Riding Hood nodded firmly."
+                    ]
+                },
+                {
+                    art: '01-errand-2.webp',
+                    emoji: '🧺',
+                    left: [
+                        "At the door her mother said it once more.",
+                        "\"Keep to the big road.\"",
+                        "\"Don't go into the woods.\"",
+                        "\"And mind the basket.\"",
+                        "\"I will!\"",
+                        "And out she went, brave as anything."
+                    ],
+                    right: [
+                        "Grandmother's house was on the far side of the woods, beside the old mill.",
+                        "It was about an hour's walk.",
+                        "It was a fine sunny morning. Birds were singing everywhere.",
+                        "Little Red Riding Hood found herself humming as she went."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · Someone on the Road',
+            beats: [
+                {
+                    art: '02-wolf-meets.webp',
+                    emoji: '🐺',
+                    left: [
+                        "She had walked a good while when someone spoke to her.",
+                        "\"Good morning, Little Red Riding Hood.\"",
+                        "She turned and saw a tall, long-legged wolf.",
+                        "But she was not afraid at all. She did not know that wolves were wicked."
+                    ],
+                    right: [
+                        "\"Good morning to you.\"",
+                        "\"And where are you off to?\"",
+                        "\"To my grandmother's house.\"",
+                        "\"And whereabouts would that be?\"",
+                        "\"By the old mill, at the end of the woods.\"",
+                        "\"Where the three big oak trees stand.\"",
+                        "The wolf smiled to himself."
+                    ]
+                },
+                {
+                    art: '02-wolf-meets-2.webp',
+                    emoji: '🌼',
+                    left: [
+                        "The wolf pointed off to the side of the road.",
+                        "\"What lovely flowers over there.\"",
+                        "\"Wouldn't your grandmother like some?\"",
+                        "Little Red Riding Hood turned to look. The meadow really was bright with them.",
+                        "Yellow, blue and purple, everywhere she looked."
+                    ],
+                    right: [
+                        "\"Perhaps I'll pick just a few.\"",
+                        "But every time she picked one, a finer one seemed to grow further off.",
+                        "One more, and one more after that.",
+                        "Little by little she wandered away from the road. Her mother's words went clean out of her head.",
+                        "And by then the wolf was nowhere to be seen."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · At the Door',
+            beats: [
+                {
+                    art: '03-wolf-arrives.webp',
+                    emoji: '🐺',
+                    left: [
+                        "The wolf cut straight through the woods and ran.",
+                        "Soon the old mill came into view. There stood the three big oaks in a row.",
+                        "\"This is the place, right enough.\"",
+                        "He caught his breath and stepped up to the door."
+                    ],
+                    right: [
+                        "Knock, knock.",
+                        "\"Grandmother, it's me. Little Red Riding Hood.\"",
+                        "He made his voice as sweet as he could.",
+                        "\"Just pull the latch, dear.\"",
+                        "The door swung slowly open.",
+                        "Grandmother took one look at the wolf and hid herself in the wardrobe. The wolf never noticed, and in he strode."
+                    ]
+                },
+                {
+                    art: '03-wolf-arrives-2.webp',
+                    emoji: '🛏️',
+                    left: [
+                        "The wolf looked about the room. There was a nightgown hanging on the peg.",
+                        "He pulled it on and tied a nightcap over his head.",
+                        "He even perched a pair of spectacles on his nose.",
+                        "Then he tucked his tail up under the hem."
+                    ],
+                    right: [
+                        "He looked in the glass and grinned.",
+                        "\"That should do nicely.\"",
+                        "Then he flopped down on the bed and drew the covers up to his chin.",
+                        "He half closed the curtains, and the room went dim.",
+                        "The wolf shut his eyes and waited. Before long there were footsteps in the yard."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · What Big Eyes You Have',
+            beats: [
+                {
+                    art: '04-questions.webp',
+                    emoji: '👀',
+                    left: [
+                        "Little Red Riding Hood arrived with an armful of flowers.",
+                        "The door was standing a little open.",
+                        "\"Grandmother, I'm here.\"",
+                        "But no one answered.",
+                        "The room seemed strangely dark. A thin line of light came through the curtains."
+                    ],
+                    right: [
+                        "Her grandmother was lying in the bed with her nightcap pulled low.",
+                        "Little Red Riding Hood set down the flowers and came closer.",
+                        "Something was not right.",
+                        "\"Grandmother, are you feeling poorly?\""
+                    ]
+                },
+                {
+                    art: '04-questions-2.webp',
+                    emoji: '🐺',
+                    left: [
+                        "\"Grandmother, what big ears you have!\"",
+                        "\"All the better to hear you with.\"",
+                        "\"What big eyes you have!\"",
+                        "\"All the better to see you with.\"",
+                        "\"What big hands you have!\"",
+                        "\"All the better to hug you with.\""
+                    ],
+                    right: [
+                        "Little Red Riding Hood took a step back. A foot was sticking out from under the covers.",
+                        "\"Then what a big mouth you have!\"",
+                        "The wolf threw off the blanket.",
+                        "\"All the better to eat you with!\"",
+                        "Little Red Riding Hood cried out, but it was no use."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Huntsman Passes By',
+            beats: [
+                {
+                    art: '05-snoring.webp',
+                    emoji: '😴',
+                    left: [
+                        "The wolf's belly was very full now, and he felt very sleepy.",
+                        "He flopped back down on the bed and was asleep in no time.",
+                        "Snore. Snore.",
+                        "It was loud enough to shake the whole house."
+                    ],
+                    right: [
+                        "Just then a huntsman happened to pass by. He always came along that road.",
+                        "\"What a snore Grandmother has on her today.\"",
+                        "\"Is she unwell, I wonder?\"",
+                        "He stopped and listened. Something was not right at all."
+                    ]
+                },
+                {
+                    art: '05-snoring-2.webp',
+                    emoji: '✂️',
+                    left: [
+                        "The huntsman looked in at the window. There in the bed lay the wolf, large as life.",
+                        "\"So this is where you've got to!\"",
+                        "It was the wolf he had hunted for so long — the very one that had carried off the village sheep."
+                    ],
+                    right: [
+                        "He raised his gun, then lowered it again. Something had struck him.",
+                        "\"But where is Grandmother?\"",
+                        "The wolf's belly was oddly round. And it was moving, too.",
+                        "The huntsman held the sill and looked a long while.",
+                        "\"She may be alive in there yet.\"",
+                        "He opened his bag and took out his shears."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Out at Last',
+            beats: [
+                {
+                    art: '06-rescue.webp',
+                    emoji: '🎉',
+                    left: [
+                        "The huntsman crept into the room. The wolf was snoring away still.",
+                        "Very carefully, he cut the belly open.",
+                        "And out popped Little Red Riding Hood.",
+                        "\"Oh, it was so dark in there!\"",
+                        "She took a long, deep breath."
+                    ],
+                    right: [
+                        "But Grandmother was nowhere to be seen.",
+                        "The huntsman searched the room this way and that.",
+                        "Then the wardrobe door rattled.",
+                        "The real grandmother was in there all along.",
+                        "\"My goodness, what a fright I had!\"",
+                        "The three of them looked at one another and laughed and laughed."
+                    ]
+                },
+                {
+                    art: '06-rescue-2.webp',
+                    emoji: '🪨',
+                    left: [
+                        "The three of them put their heads together and made a plan.",
+                        "They gathered stones from the yard — round, heavy ones.",
+                        "Little Red Riding Hood carried them in her apron.",
+                        "They packed them into the wolf's belly until it was full."
+                    ],
+                    right: [
+                        "Grandmother stitched it up tight while the huntsman held the thread.",
+                        "Grandmother was very good with a needle.",
+                        "And all that while the wolf snored on, with no idea what was happening.",
+                        "The three of them hid behind the door and held their breath.",
+                        "At last the wolf stirred. Then slowly he opened his eyes."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Long Way Home',
+            beats: [
+                {
+                    art: '07-lesson.webp',
+                    emoji: '🐺',
+                    left: [
+                        "\"Oof, why is my belly so heavy?\"",
+                        "The wolf tried to stand and swayed. His belly hung down in front of him.",
+                        "He could barely take a step.",
+                        "Out of the door he went, waddling as he walked."
+                    ],
+                    right: [
+                        "Then away into the woods, and he never came back again.",
+                        "The woods grew quiet once more. The birds began to sing again.",
+                        "Grandmother ate the bread and the milk with great appetite, and her strength came back to her at once.",
+                        "\"My granddaughter has saved us all.\"",
+                        "Little Red Riding Hood's face went quite pink."
+                    ]
+                },
+                {
+                    art: '07-lesson-2.webp',
+                    emoji: '🌼',
+                    left: [
+                        "Little Red Riding Hood arranged the flowers she had brought, putting them one by one into the vase by the bed.",
+                        "\"Grandmother, I did a wrong thing.\"",
+                        "\"You told me not to go into the woods, and I…\"",
+                        "Grandmother took her hand and held it."
+                    ],
+                    right: [
+                        "\"Knowing it is enough.\"",
+                        "As the sun sank, Little Red Riding Hood set off home. This time she kept to the big road.",
+                        "On the way she saw the meadow of flowers again.",
+                        "She slowed down. And then she walked right past.",
+                        "\"Not today.\""
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: "What did Little Red Riding Hood's mother tell her?",
+            choices: ['Pick some flowers', 'Carry the basket on her head', 'Keep to the big road'],
+            answer: 2
+        },
+        {
+            q: 'How did the wolf get her off the road?',
+            choices: ['He asked about the mill', 'He pointed at the flowers', 'He asked for the bread'],
+            answer: 1
+        },
+        {
+            q: "What did the wolf do at Grandmother's door?",
+            choices: ['He made his voice sweet', 'He broke the door down', 'He climbed in the window'],
+            answer: 0
+        },
+        {
+            q: 'Where was the real grandmother?',
+            choices: ['Under the bed', 'In the yard', 'In the wardrobe'],
+            answer: 2
+        },
+        {
+            q: 'What made Little Red Riding Hood suspicious?',
+            choices: ['The voice was deep', 'A foot was showing', 'The spectacles'],
+            answer: 1
+        },
+        {
+            q: 'What did the huntsman take out of his bag?',
+            choices: ['Shears', 'A gun', 'Thread'],
+            answer: 0
+        },
+        {
+            q: 'What did she do at the meadow on the way home?',
+            choices: ['She picked flowers', 'She went in again', 'She walked right past'],
+            answer: 2
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🧺',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This tale was written down twice. Charles Perrault put it on paper in France in 1697; the Brothers Grimm did the same in Germany in 1812.",
+                    "In Perrault's version there is no huntsman, and the story ends there. The Grimms brought him in, and that is the ending most people know.",
+                    "The wolf never forces the door. He asks the way, and he is told. He knocks, and the latch is lifted.",
+                    "That is why the mother's words at the start matter so much — keep to the big road."
+                ],
+                right: [
+                    "At the end she passes the flowers by. Nobody makes her do it. She simply decides for herself.",
+                    "Was the wolf wrong, or was going into the woods wrong? What do you think?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-errand.webp': [
+            { word: 'hood', meaning: '(머리에 쓰는) 모자, 두건', sentence: 'Her grandmother had made her a hood.' },
+            { word: 'sew', meaning: '바느질해 짓다', sentence: 'It was sewn from soft red cloth.' },
+            { word: 'ill', meaning: '아픈', sentence: 'Your grandmother is ill.' },
+            { word: 'strength', meaning: '기운, 힘', sentence: 'This will put the strength back in her.' }
+        ],
+        '01-errand-2.webp': [
+            { word: 'keep to', meaning: '~에서 벗어나지 않다', sentence: 'Keep to the big road.' },
+            { word: 'mind', meaning: '조심하다', sentence: 'And mind the basket.' },
+            { word: 'mill', meaning: '물레방앗간', sentence: "Grandmother's house was beside the old mill." },
+            { word: 'hum', meaning: '콧노래를 부르다', sentence: 'She found herself humming as she went.' }
+        ],
+        '02-wolf-meets.webp': [
+            { word: 'a good while', meaning: '한참 동안', sentence: 'She had walked a good while.' },
+            { word: 'long-legged', meaning: '다리가 긴', sentence: 'She saw a tall, long-legged wolf.' },
+            { word: 'wicked', meaning: '나쁜, 못된', sentence: 'She did not know that wolves were wicked.' },
+            { word: 'oak', meaning: '참나무', sentence: 'Where the three big oak trees stand.' }
+        ],
+        '02-wolf-meets-2.webp': [
+            { word: 'meadow', meaning: '풀밭, 꽃밭', sentence: 'The meadow really was bright with them.' },
+            { word: 'further off', meaning: '더 멀리', sentence: 'A finer one seemed to grow further off.' },
+            { word: 'wander', meaning: '헤매다, 벗어나다', sentence: 'Little by little she wandered away from the road.' },
+            { word: 'clean out of', meaning: '까맣게 (잊다)', sentence: "Her mother's words went clean out of her head." }
+        ],
+        '03-wolf-arrives.webp': [
+            { word: 'cut through', meaning: '가로지르다', sentence: 'The wolf cut straight through the woods.' },
+            { word: 'come into view', meaning: '눈에 들어오다', sentence: 'Soon the old mill came into view.' },
+            { word: 'latch', meaning: '문고리', sentence: 'Just pull the latch, dear.' },
+            { word: 'wardrobe', meaning: '옷장, 벽장', sentence: 'Grandmother hid herself in the wardrobe.' }
+        ],
+        '03-wolf-arrives-2.webp': [
+            { word: 'nightgown', meaning: '잠옷', sentence: 'There was a nightgown hanging on the peg.' },
+            { word: 'spectacles', meaning: '안경', sentence: 'He perched a pair of spectacles on his nose.' },
+            { word: 'hem', meaning: '옷자락', sentence: 'He tucked his tail up under the hem.' },
+            { word: 'dim', meaning: '어둑한', sentence: 'He half closed the curtains, and the room went dim.' }
+        ],
+        '04-questions.webp': [
+            { word: 'an armful of', meaning: '한 아름의', sentence: 'She arrived with an armful of flowers.' },
+            { word: 'poorly', meaning: '몸이 안 좋은', sentence: 'Grandmother, are you feeling poorly?' }
+        ],
+        '04-questions-2.webp': [
+            { word: 'all the better to', meaning: '더 잘 ~하려고', sentence: 'All the better to hear you with.' },
+            { word: 'stick out', meaning: '삐죽 나오다', sentence: 'A foot was sticking out from under the covers.' },
+            { word: 'throw off', meaning: '확 걷어차다', sentence: 'The wolf threw off the blanket.' }
+        ],
+        '05-snoring.webp': [
+            { word: 'belly', meaning: '배', sentence: "The wolf's belly was very full now." },
+            { word: 'snore', meaning: '코를 골다', sentence: 'Snore. Snore.' },
+            { word: 'huntsman', meaning: '사냥꾼', sentence: 'Just then a huntsman happened to pass by.' },
+            { word: 'unwell', meaning: '편찮은', sentence: 'Is she unwell, I wonder?' }
+        ],
+        '05-snoring-2.webp': [
+            { word: 'large as life', meaning: '떡하니', sentence: 'There in the bed lay the wolf, large as life.' },
+            { word: 'carry off', meaning: '물어 가다', sentence: 'The very one that had carried off the village sheep.' },
+            { word: 'strike', meaning: '문득 떠오르다', sentence: 'Something had struck him.' },
+            { word: 'shears', meaning: '가위', sentence: 'He opened his bag and took out his shears.' }
+        ],
+        '06-rescue.webp': [
+            { word: 'creep', meaning: '살금살금 가다', sentence: 'The huntsman crept into the room.' },
+            { word: 'pop out', meaning: '쏙 나오다', sentence: 'And out popped Little Red Riding Hood.' },
+            { word: 'rattle', meaning: '덜컹거리다', sentence: 'Then the wardrobe door rattled.' },
+            { word: 'fright', meaning: '놀람, 무서움', sentence: 'My goodness, what a fright I had!' }
+        ],
+        '06-rescue-2.webp': [
+            { word: 'put heads together', meaning: '머리를 맞대다', sentence: 'The three of them put their heads together.' },
+            { word: 'apron', meaning: '앞치마', sentence: 'She carried them in her apron.' },
+            { word: 'thread', meaning: '실을 꿰다; 실', sentence: 'Grandmother threaded a needle and stitched it up tight.' },
+            { word: 'stir', meaning: '몸을 뒤척이다', sentence: 'At last the wolf stirred.' }
+        ],
+        '07-lesson.webp': [
+            { word: 'sway', meaning: '휘청하다', sentence: 'The wolf tried to stand and swayed.' },
+            { word: 'waddle', meaning: '뒤뚱뒤뚱 걷다', sentence: 'Out of the door he went, waddling as he walked.' },
+            { word: 'appetite', meaning: '입맛, 식욕', sentence: 'Grandmother ate the bread with great appetite.' }
+        ],
+        '07-lesson-2.webp': [
+            { word: 'arrange', meaning: '(꽃을) 꽂다', sentence: 'She arranged the flowers she had brought.' },
+            { word: 'vase', meaning: '꽃병', sentence: 'Putting them one by one into the vase by the bed.' },
+            { word: 'sink', meaning: '(해가) 지다', sentence: 'As the sun sank, she set off home.' },
+            { word: 'walk past', meaning: '그냥 지나치다', sentence: 'And then she walked right past.' }
+        ],
+        'end.webp': [
+            { word: 'version', meaning: '판, 이야기의 형태', sentence: "In Perrault's version there is no huntsman." },
+            { word: 'bring in', meaning: '(인물을) 등장시키다', sentence: 'The Grimms brought him in.' },
+            { word: 'force', meaning: '억지로 열다', sentence: 'The wolf never forces the door.' },
+            { word: 'pass by', meaning: '그냥 지나가다', sentence: 'At the end she passes the flowers by.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -580,6 +1076,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -588,7 +1085,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -600,7 +1097,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -634,4 +1131,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+

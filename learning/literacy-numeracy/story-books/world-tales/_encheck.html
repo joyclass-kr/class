@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>영어판 검사</title>
+<style>
+    body { font: 14px monospace; margin: 16px; }
+    iframe { position: fixed; left: -9000px; top: 0; border: 0; }
+    pre { white-space: pre-wrap; }
+    .bad { color: #b00; font-weight: 700; }
+</style>
+</head>
+<body>
+<h1>영어판 — 넘침 · 책 크기 · 터치 자리</h1>
+<p>AGENTS.md가 정한 세 화면에서, 영어 원고가 있는 책만 잽니다.</p>
+<pre id="out">…</pre>
+<iframe id="frame"></iframe>
+<script>
+/* 화면 크기를 먼저 정하고 새로 열어야 한다. 열어 둔 채 크기만 바꾸면
+   처음 크기에 맞춰 짠 쪽이 그대로 남는다. */
+const SIZES = [[1024, 768], [1180, 820], [768, 1024]];
+const out = document.getElementById('out');
+const frame = document.getElementById('frame');
+const STAMP = Date.now();
+
+function measure(W, doc) {
+    const res = { over: [], book: 0, touch: [] };
+    const P = W.PAGES || [];
+    const book = doc.querySelector('.book');
+    res.book = book ? Math.round(book.getBoundingClientRect().height) : 0;
+    for (let i = 0; i < P.length; i++) {
+        W.current = i;
+        W.paint();
+        const pairs = [
+            ['.spread-text-left', '.spread-text-right'],
+            ['.story-page-left', '.story-page-right'],
+            ['.after-col-left', '.after-col-right']
+        ];
+        let lo = 0, ro = 0;
+        for (const [a, b] of pairs) {
+            const L = doc.querySelector(a), R = doc.querySelector(b);
+            if (L) lo = Math.max(lo, L.scrollHeight - L.clientHeight);
+            if (R) ro = Math.max(ro, R.scrollHeight - R.clientHeight);
+        }
+        if (lo > 0 || ro > 0) res.over.push(`${i}(${P[i].kind}) ${lo}/${ro}`);
+    }
+    doc.querySelectorAll('button, a').forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.width && !(r.width >= 44 && r.height >= 44)) {
+            res.touch.push(el.className + ' ' + Math.round(r.width) + 'x' + Math.round(r.height));
+        }
+    });
+    return res;
+}
+
+async function run() {
+    const slugs = await (await fetch('_books.json')).json();
+    const lines = [];
+    for (const slug of slugs) {
+        // 영어 원고가 있는 책만 잰다
+        const src = await (await fetch(slug + '/app.js?t=' + STAMP)).text();
+        if (!src.includes('const EN = {')) continue;
+
+        for (const [W, H] of SIZES) {
+            frame.style.width = W + 'px';
+            frame.style.height = H + 'px';
+            for (const lang of ['ko', 'en']) {
+                await new Promise(r => {
+                    frame.onload = r;
+                    frame.src = slug + '/?t=' + STAMP + '&' + Math.random();
+                });
+                const win = frame.contentWindow, doc = frame.contentDocument;
+                try {
+                    win.localStorage.setItem('world-tales-lang', lang);
+                } catch (e) { /* 막힌 곳도 있다 */ }
+                // 말을 정한 뒤 다시 열어야 그 말로 쪽이 짜인다
+                await new Promise(r => { frame.onload = r; frame.src = slug + '/?t=' + STAMP + '&' + Math.random(); });
+                await new Promise(r => setTimeout(r, 60));
+                const w2 = frame.contentWindow, d2 = frame.contentDocument;
+                const m = measure(w2, d2);
+                const tag = `${slug.padEnd(18)} ${String(W).padStart(4)}x${H} ${lang}`;
+                const bad = m.over.length || m.touch.length;
+                lines.push(
+                    (bad ? '<span class="bad">' : '') +
+                    `${tag}  책 ${m.book}  넘침 ${m.over.length ? m.over.join(' ') : '0'}  터치 ${m.touch.length ? m.touch.join(' ') : '0'}` +
+                    (bad ? '</span>' : '')
+                );
+                out.innerHTML = lines.join('\n');
+            }
+        }
+    }
+    lines.push('');
+    lines.push('끝. 붉은 줄이 없으면 통과입니다.');
+    out.innerHTML = lines.join('\n');
+}
+run();
+</script>
+</body>
+</html>
