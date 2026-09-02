@@ -317,6 +317,20 @@ dialog::backdrop { background: rgba(9, 30, 36, 0.68); backdrop-filter: blur(3px)
 .difficulty-badge { display: inline-flex; align-items: center; min-height: 28px; padding: 3px 9px; border-radius: 999px; color: #815000; background: var(--accent-soft); font-size: 11px; font-weight: 900; }
 .question-copy h2 { margin: 10px 0 14px; font-size: clamp(19px, 2.1vw, 25px); line-height: 1.45; letter-spacing: -0.035em; }
 .stimulus-card { margin-bottom: 14px; padding: 12px 14px; border-left: 4px solid var(--accent); border-radius: 8px; color: #38545a; background: #f4f7f5; font-size: 13px; line-height: 1.55; }
+.stimulus-title { margin-bottom: 9px; color: var(--deep); font-weight: 900; }
+.stimulus-table-wrap { overflow-x: auto; border: 1px solid #c8d7d3; border-radius: 8px; background: #fff; }
+.stimulus-table { width: 100%; border-collapse: collapse; text-align: center; white-space: nowrap; }
+.stimulus-table th, .stimulus-table td { padding: 7px 9px; border-right: 1px solid #dbe5e2; border-bottom: 1px solid #dbe5e2; }
+.stimulus-table th { color: var(--deep); background: #eaf2f0; font-weight: 900; }
+.stimulus-table tr:last-child > * { border-bottom: 0; }
+.stimulus-table tr > *:last-child { border-right: 0; }
+.stimulus-bars { display: grid; gap: 7px; }
+.stimulus-bar-row { display: grid; grid-template-columns: 64px minmax(100px, 1fr) 42px; align-items: center; gap: 8px; }
+.stimulus-bar-row > span { font-size: 12px; font-weight: 800; }
+.stimulus-bar-row > strong { color: var(--deep); font-size: 12px; text-align: right; }
+.stimulus-bar-track { height: 16px; overflow: hidden; border-radius: 999px; background: #dce8e5; }
+.stimulus-bar-track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #2d8592, #f0a51f); }
+.stimulus-note { margin: 8px 0 0; color: #647b80; font-size: 11px; }
 .answer-options { display: grid; gap: 8px; }
 .answer-button { display: grid; grid-template-columns: 30px 1fr; align-items: center; gap: 9px; width: 100%; padding: 8px 12px; border: 1px solid #ccd7d4; border-radius: 11px; color: #243f46; background: #fff; text-align: left; font-size: 13px; font-weight: 750; line-height: 1.4; }
 .answer-number { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; color: var(--deep); background: #e8f0ee; font-size: 12px; font-weight: 950; }

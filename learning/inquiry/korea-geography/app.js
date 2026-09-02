@@ -599,7 +599,7 @@
     $("#questionTopic").textContent = themes[question.topic].label;
     $("#questionDifficulty").textContent = question.difficulty === "advanced" ? "실전" : "기본";
     $("#questionTitle").innerHTML = question.prompt;
-    $("#questionStimulus").replaceChildren();
+    renderQuestionStimulus(question);
     $("#answerFeedback").hidden = true;
     $("#answerFeedback").classList.remove("is-wrong");
     $("#nextQuestion").disabled = true;
@@ -615,6 +615,81 @@
     requestAnimationFrame(() => questionMap.invalidateSize());
   }
 
+  function renderQuestionStimulus(question) {
+    const container = $("#questionStimulus");
+    container.replaceChildren();
+    const stimulus = question.stimulus;
+    if (!stimulus) return;
+
+    const card = document.createElement("figure");
+    card.className = "stimulus-card";
+
+    const title = document.createElement("figcaption");
+    title.className = "stimulus-title";
+    title.textContent = stimulus.title;
+    card.append(title);
+
+    if (stimulus.type === "table") {
+      const wrapper = document.createElement("div");
+      wrapper.className = "stimulus-table-wrap";
+      const table = document.createElement("table");
+      table.className = "stimulus-table";
+      const head = document.createElement("thead");
+      const headRow = document.createElement("tr");
+      stimulus.columns.forEach((column) => {
+        const cell = document.createElement("th");
+        cell.scope = "col";
+        cell.textContent = column;
+        headRow.append(cell);
+      });
+      head.append(headRow);
+      const body = document.createElement("tbody");
+      stimulus.rows.forEach((row) => {
+        const tableRow = document.createElement("tr");
+        row.forEach((value, index) => {
+          const cell = document.createElement(index === 0 ? "th" : "td");
+          if (index === 0) cell.scope = "row";
+          cell.textContent = value;
+          tableRow.append(cell);
+        });
+        body.append(tableRow);
+      });
+      table.append(head, body);
+      wrapper.append(table);
+      card.append(wrapper);
+    }
+
+    if (stimulus.type === "bars") {
+      const max = Math.max(...stimulus.items.map((item) => item.value), 1);
+      const chart = document.createElement("div");
+      chart.className = "stimulus-bars";
+      stimulus.items.forEach((item) => {
+        const row = document.createElement("div");
+        row.className = "stimulus-bar-row";
+        const label = document.createElement("span");
+        label.textContent = item.label;
+        const track = document.createElement("div");
+        track.className = "stimulus-bar-track";
+        const fill = document.createElement("span");
+        fill.style.width = Math.max(8, (item.value / max) * 100) + "%";
+        track.append(fill);
+        const value = document.createElement("strong");
+        value.textContent = item.value + (stimulus.unit || "");
+        row.append(label, track, value);
+        chart.append(row);
+      });
+      card.append(chart);
+    }
+
+    if (stimulus.note) {
+      const note = document.createElement("p");
+      note.className = "stimulus-note";
+      note.textContent = stimulus.note;
+      card.append(note);
+    }
+
+    container.append(card);
+  }
   function renderAnswerOptions(question) {
     const fragment = document.createDocumentFragment();
     question.options.forEach((option, index) => {

@@ -67,6 +67,11 @@ assert.match(app, /selected === "all" \? poolLength/);
 assert.match(app, /shuffle\(pool\)\.slice\(0, count\)/);
 assert.match(app, /\.map\(shuffleQuestionOptions\)/, "Answer options must be shuffled for every new practice set.");
 assert.match(app, /answer: shuffledOptions\.findIndex/, "Shuffling options must preserve the correct answer index.");
+assert.match(app, /function renderQuestionStimulus/, "CSAT-style visual stimuli need a reusable renderer.");
+assert.match(app, /stimulus\.type === "table"/);
+assert.match(app, /stimulus\.type === "bars"/);
+assert.match(styles, /\.stimulus-table-wrap/);
+assert.match(styles, /\.stimulus-bar-track/);
 assert.match(app, /lastTotal = total/);
 
 const sandbox = { window: {} };
@@ -101,6 +106,10 @@ for (const requiredTitle of ["수계와 양수리 두물머리", "대관령: 고
   assert.ok(Object.values(dataset.themes).flatMap((theme) => theme.principles).some((principle) => principle.title === requiredTitle), `${requiredTitle} must be taught.`);
 }
 assert.equal(dataset.questions.length, 50, "The reviewed practice bank must contain exactly 50 questions.");
+const stimulusQuestions = dataset.questions.filter((question) => question.stimulus);
+assert.ok(stimulusQuestions.length >= 5, "At least five advanced questions need visual data stimuli.");
+assert.ok(stimulusQuestions.some((question) => question.stimulus.type === "table"), "The bank needs table-reading questions.");
+assert.ok(stimulusQuestions.some((question) => question.stimulus.type === "bars"), "The bank needs chart-reading questions.");
 
 for (const topic of Object.keys(dataset.themes)) {
   const topicQuestions = dataset.questions.filter((question) => question.topic === topic);
