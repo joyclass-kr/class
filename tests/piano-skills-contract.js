@@ -90,6 +90,7 @@ assert.match(css, /\.score-surface svg[\s\S]*width:\s*100%\s*!important/);
 assert.match(css, /\.score-viewport[\s\S]*overflow:\s*hidden/);
 assert.match(css, /\.score-surface[\s\S]*min-width:\s*0/);
 assert.match(css, /@media \(min-width: 1024px\) and \(max-height: 850px\)/);
+assert.doesNotMatch(css, /\.practice-dock\s*\{[^}]*position:\s*sticky/, "Practice transport must not cover the score on Chromebook or iPad landscape.");
 assert.match(css, /@media \(max-width: 820px\)/);
 assert.match(css, /@media \(max-width: 620px\)/);
 assert.match(css, /\.piano-key[\s\S]*pointer-events:\s*auto/);
@@ -179,6 +180,27 @@ assert.deepEqual(Array.from(bFlatMelodic.pages[0].down.right, (note) => note.fin
 const bFlatMajor = score.build({ mode:"scale", keyId:"Bb", scaleType:"major", hand:"both", tempo:60 });
 assert.deepEqual(Array.from(bFlatMajor.pages[0].up.right, (note) => note.finger), [2,1,2,3,4,1,2,3,1,2,3,4,1,2,3], "B♭ Major와 Minor의 Right Hand 운지를 구분해야 합니다.");
 
+const sourceFingeringSnapshots = {
+    C:{ major:["123123412312345","543213214321321"], minor:["123123412312345","543213214321321"] },
+    D:{ major:["123123412312345","543213214321321"], minor:["123123412312345","543213214321321"] },
+    E:{ major:["123123412312345","543213214321321"], minor:["123123412312345","543213214321321"] },
+    G:{ major:["123123412312345","543213214321321"], minor:["123123412312345","543213214321321"] },
+    A:{ major:["123123412312345","543213214321321"], minor:["123123412312345","543213214321321"] },
+    F:{ major:["123412341234123","543213214321321"], minor:["123412341234123","543213214321321"] },
+    B:{ major:["123123412312345","432143214321432"], minor:["123123412312345","432143214321432"] },
+    Db:{ major:["231234123123412","321432132143213"], minor:["231234123123412","321432132143213"] },
+    Eb:{ major:["312341231234123","321432132143213"], minor:["212341231234123","214321321432132"] },
+    Gb:{ major:["234123123412312","432132143213214"], minor:["234123123412312","432132143213214"] },
+    Ab:{ major:["341231234123123","321432132143213"], minor:["231231234123123","321321432132143"] },
+    Bb:{ major:["212341231234123","321432132143213"], minor:["212312341231234","213214321321432"] }
+};
+Object.entries(sourceFingeringSnapshots).forEach(([keyId, expected]) => {
+    Object.entries(expected).forEach(([quality, hands]) => {
+        assert.equal(data.fingering[keyId][quality].right.join(""), hands[0], `${keyId} ${quality} Right Hand fingering은 원본과 같아야 합니다.`);
+        assert.equal(data.fingering[keyId][quality].left.join(""), hands[1], `${keyId} ${quality} Left Hand fingering은 원본과 같아야 합니다.`);
+    });
+});
+
 Object.keys(data.fingering).forEach((keyId) => {
     Object.keys(data.scaleTypes).forEach((scaleType) => {
         const model = score.build({ mode:"scale", keyId, scaleType, hand:"both", tempo:60 });
@@ -196,8 +218,15 @@ assert.deepEqual(Array.from(skill2.pages[0].groups[0].right, (note) => note.midi
 assert.equal(skill2.pages[0].groups[0].left[0].midi, 48);
 
 const skill21 = score.build({ mode:"voicing", skillId:21, tempo:120 });
-assert.equal(skill21.pages.length, 2, "다이어토닉 7화음의 상행·하행을 빠짐없이 조판해야 합니다.");
-assert.ok(skill21.pages.flatMap((page) => page.systems.flat()).length >= 12);
+assert.equal(skill21.pages.length, 1, "Diatonic 7th Chords의 Ascending·Descending을 한 source page에 유지해야 합니다.");
+assert.equal(skill21.pages[0].systems.length, 2, "Skill 21은 원본처럼 Ascending·Descending 두 systems여야 합니다.");
+assert.equal(skill21.audioGroups.length, 15, "Skill 21은 root octave를 포함한 15 attacks여야 합니다.");
+assert.deepEqual(
+    Array.from(skill21.pages[0].systems.flat().flatMap((measure) =>
+        measure.right.concat(measure.left).filter((event) => event.label).map((event) => event.label)
+    )),
+    ["CΔ","Dm7","Em7","FΔ","G7","Am7","Bø","CΔ","Bø","Am7","G7","FΔ","Em7","Dm7","CΔ"]
+);
 
 const skill117 = score.build({ mode:"voicing", skillId:117, tempo:96 });
 assert.ok(skill117.pages.length >= 1, "고급 폴리코드 단계도 새 악보를 생성해야 합니다.");
@@ -220,6 +249,48 @@ assert.deepEqual(
 const skill85 = score.build({ mode:"voicing", skillId:85, tempo:120 });
 assert.equal(skill85.pages[0].audioEvents.length, 22);
 assert.equal(skill85.pages[0].systems[0][0].right.find((event) => event.label).label, "CΔ");
+
+
+const sourceRepairExpectations = new Map([
+    [21,{ attacks:15, systems:2 }],
+    [25,{ attacks:15, systems:2 }],
+    [26,{ attacks:15, systems:2 }],
+    [27,{ attacks:15, systems:2 }],
+    [45,{ attacks:84, systems:12 }],
+    [47,{ attacks:180, systems:12 }],
+    [48,{ attacks:36, systems:6 }],
+    [55,{ attacks:36, systems:6 }],
+    [118,{ attacks:40, systems:4 }]
+]);
+sourceRepairExpectations.forEach((expected, skillId) => {
+    const model = score.build({ mode:"voicing", skillId, tempo:120 });
+    const systems = model.pages.flatMap((page) => page.systems);
+    const measures = systems.flat();
+    assert.equal(systems.length, expected.systems, `Skill ${skillId} source systems를 원본 줄 수로 복원해야 합니다.`);
+    assert.equal(model.audioGroups.length, expected.attacks, `Skill ${skillId} playback attacks를 원본 수와 맞춰야 합니다.`);
+    assert.ok(measures.every((measure) =>
+        measure.right.some((event) => !event.rest) && measure.left.some((event) => !event.rest)
+    ), `Skill ${skillId}의 분리된 treble/bass fragments를 Grand Staff로 다시 결합해야 합니다.`);
+    assert.ok(measures.every((measure) =>
+        measure.right.concat(measure.left).every((event) =>
+            event.rest || new Set(event.midis).size === event.midis.length
+        )
+    ), `Skill ${skillId}에서 duplicated noteheads를 제거해야 합니다.`);
+    assert.ok(measures.every((measure) =>
+        measure.right.concat(measure.left).every((event) => !event.rest)
+    ), `Skill ${skillId}에서 OMR spurious rests를 제거해야 합니다.`);
+});
+
+for (let skillId = 21; skillId <= 123; skillId += 1) {
+    const model = score.build({ mode:"voicing", skillId, tempo:120 });
+    model.pages.flatMap((page) => page.systems).flat().forEach((measure) => {
+        measure.right.concat(measure.left).forEach((event) => {
+            if (event.rest) return;
+            assert.equal(event.keys.length, event.midis.length, `Skill ${skillId} key/MIDI shape가 같아야 합니다.`);
+            assert.equal(new Set(event.midis).size, event.midis.length, `Skill ${skillId} chord에 duplicated MIDI가 없어야 합니다.`);
+        });
+    });
+}
 
 const sourceData = sandbox.window.PianoVoicingSourceData;
 assert.equal(sourceData.skillCount, 123);

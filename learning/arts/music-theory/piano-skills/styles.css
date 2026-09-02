@@ -590,12 +590,7 @@ input[type="range"] {
     .practice-card { padding: 11px; }
     .score-panel { margin-top: 9px; }
     .practice-dock {
-        position: sticky;
-        bottom: 8px;
-        z-index: 12;
         margin-top: 8px;
-        background: rgba(13, 40, 35, .97);
-        backdrop-filter: blur(12px);
     }
     .lesson-notes,
     .midi-monitor { margin-top: 8px; }

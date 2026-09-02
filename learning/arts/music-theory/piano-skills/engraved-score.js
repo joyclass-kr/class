@@ -541,7 +541,7 @@
         const result = [];
         systems.forEach(function (system) {
             const weight = system.reduce(function (sum, measure) { return sum + sourceMeasureWeight(measure); }, 0);
-            if (system.length <= 6 && weight <= 10) {
+            if (system.length <= 6 && weight <= 18) {
                 result.push(system);
                 return;
             }
@@ -549,7 +549,7 @@
             let currentWeight = 0;
             system.forEach(function (measure) {
                 const measureWeight = sourceMeasureWeight(measure);
-                if (current.length && (current.length >= 6 || currentWeight + measureWeight > 10)) {
+                if (current.length && (current.length >= 6 || currentWeight + measureWeight > 18)) {
                     result.push(current);
                     current = [];
                     currentWeight = 0;
@@ -563,21 +563,9 @@
     }
 
     function sourceAudioGroups(pages) {
-        const groups = [];
-        pages.forEach(function (page) {
-            page.systems.flat().forEach(function (measure) {
-                const onsets = Array.from(new Set(measure.right.concat(measure.left).map(function (event) {
-                    return event.at;
-                }))).sort(function (a, b) { return a - b; });
-                onsets.forEach(function (onset) {
-                    const notes = measure.right.concat(measure.left)
-                        .filter(function (event) { return event.at === onset && !event.rest; })
-                        .flatMap(function (event) { return event.midis || []; });
-                    if (notes.length) groups.push(Array.from(new Set(notes)).sort(function (a, b) { return a - b; }));
-                });
-            });
+        return pages.flatMap(function (page) {
+            return page.audioEvents.map(function (event) { return event.notes; });
         });
-        return groups;
     }
 
     function durationBeats(duration) {
@@ -592,30 +580,37 @@
         return total;
     }
 
+    function sourceMeasureTimeline(measure) {
+        const byBeat = new Map();
+        [measure.right, measure.left].forEach(function (hand) {
+            let beat = 0;
+            hand.forEach(function (event) {
+                if (!event.rest) {
+                    if (!byBeat.has(beat)) byBeat.set(beat, []);
+                    byBeat.get(beat).push(event);
+                }
+                beat += durationBeats(event.d);
+            });
+        });
+        return Array.from(byBeat.entries()).sort(function (first, second) {
+            return first[0] - second[0];
+        });
+    }
+
     function sourcePageAudioEvents(systems) {
         const events = [];
         let measureStart = 0;
         let displayMeasure = 1;
         systems.flat().forEach(function (measure) {
-            const hands = [measure.right, measure.left];
-            const beatByOnset = new Map();
-            hands.forEach(function (hand) {
-                let beat = 0;
-                hand.forEach(function (event) {
-                    if (!beatByOnset.has(event.at) || beat < beatByOnset.get(event.at)) beatByOnset.set(event.at, beat);
-                    beat += durationBeats(event.d);
-                });
-            });
-            Array.from(beatByOnset.keys()).sort(function (a, b) { return a - b; }).forEach(function (onset, eventIndex) {
-                const attacks = measure.right.concat(measure.left).filter(function (event) {
-                    return event.at === onset && !event.rest;
-                });
+            sourceMeasureTimeline(measure).forEach(function (entry, eventIndex) {
+                const beat = entry[0];
+                const attacks = entry[1];
                 const notes = Array.from(new Set(attacks.flatMap(function (event) {
                     return event.midis || [];
                 }))).sort(function (a, b) { return a - b; });
                 if (!notes.length) return;
                 events.push({
-                    at:measureStart + beatByOnset.get(onset),
+                    at:measureStart + beat,
                     beats:Math.max.apply(Math, attacks.map(function (event) { return durationBeats(event.d); })),
                     notes:notes,
                     label:"Bar " + displayMeasure + (eventIndex ? " · Beat " + (eventIndex + 1) : "")
@@ -637,6 +632,17 @@
     }
 
     function sourceAttackLabels(skillId) {
+        if (skillId >= 21 && skillId <= 32) {
+            const tonicName = ROOT_NAMES[skillId - 21];
+            const tonicPc = parseRoot(tonicName).pc;
+            const offsets = [0,2,4,5,7,9,11,12,11,9,7,5,4,2,0];
+            const degrees = [1,2,3,4,5,6,7,8,7,6,5,4,3,2,1];
+            const suffixes = ["Δ","m7","m7","Δ","7","m7","ø","Δ","ø","m7","7","Δ","m7","m7","Δ"];
+            return offsets.map(function (offset, index) {
+                const name = diatonicRootName(tonicName, mod(tonicPc + offset, 12), degrees[index]);
+                return displayRoot(name) + suffixes[index];
+            });
+        }
         if (skillId >= 85 && skillId <= 96) {
             const template = [
                 "CΔ","Bm7♭5","E7♭9","Am7","D9","Gm7","C9","FΔ","Fm7","B♭9","Em7",
@@ -673,27 +679,268 @@
         return [];
     }
 
+    function sanitizeSourceEvent(event) {
+        const copy = Object.assign({}, event);
+        if (event.rest || !event.midis || !event.keys) return copy;
+        const byMidi = new Map();
+        event.midis.forEach(function (midi, index) {
+            const candidate = {
+                midi:midi,
+                key:event.keys[index],
+                accidental:event.acc ? event.acc[index] || null : null
+            };
+            const previous = byMidi.get(midi);
+            // OMR occasionally reads one notehead twice. When two readings are
+            // enharmonic, keep the spelling that has an explicit accidental.
+            if (!previous || (!previous.accidental && candidate.accidental)) byMidi.set(midi, candidate);
+        });
+        const notes = Array.from(byMidi.values()).sort(function (a, b) { return a.midi - b.midi; });
+        copy.midis = notes.map(function (note) { return note.midi; });
+        copy.keys = notes.map(function (note) { return note.key; });
+        if (event.acc) copy.acc = notes.map(function (note) { return note.accidental; });
+        return copy;
+    }
+
+    function sanitizeSourceHand(events) {
+        const cleaned = events.map(sanitizeSourceEvent).filter(function (event) { return !event.rest; });
+        return cleaned.filter(function (event, index) {
+            if (!event.midis || !event.midis.length) return true;
+            return !cleaned.some(function (other, otherIndex) {
+                if (otherIndex === index || other.rest || !other.midis || other.midis.length <= event.midis.length) return false;
+                const sameOnsetReading = other.at === event.at && other.d === event.d;
+                const adjacentShortSingleton = event.midis.length === 1
+                    && Math.abs(otherIndex - index) === 1
+                    && durationBeats(event.d) < durationBeats(other.d);
+                if (!sameOnsetReading && !adjacentShortSingleton) return false;
+                return event.midis.every(function (midi) { return other.midis.includes(midi); });
+            });
+        });
+    }
+
     function cloneSourceSystems(systems) {
         return systems.map(function (system) {
             return system.map(function (measure) {
                 return Object.assign({}, measure, {
-                    right:measure.right.map(function (event) { return Object.assign({}, event); }),
-                    left:measure.left.map(function (event) { return Object.assign({}, event); })
+                    right:sanitizeSourceHand(measure.right),
+                    left:sanitizeSourceHand(measure.left)
                 });
             });
         });
     }
 
+    const SOURCE_FRAGMENT_REPAIR_SKILLS = new Set([21,25,26,27,45,47,48,55,118]);
+
+    function sourcePitchedEvents(measure, side) {
+        return measure[side].filter(function (event) {
+            return !event.rest && event.midis && event.midis.length;
+        });
+    }
+
+    function sourceMeasureOccupancy(measure) {
+        const right = sourcePitchedEvents(measure, "right").length > 0;
+        const left = sourcePitchedEvents(measure, "left").length > 0;
+        if (right && left) return "both";
+        if (right) return "right";
+        if (left) return "left";
+        return "empty";
+    }
+
+    function sourceLaneEvents(measure) {
+        const events = sourcePitchedEvents(measure, "right").length ? measure.right : measure.left;
+        return events.filter(function (event) { return !event.rest; });
+    }
+
+    function sourceFragmentAverageMidi(fragment) {
+        const midis = fragment.measures.flatMap(function (measure) {
+            return sourceLaneEvents(measure)
+                .filter(function (event) { return !event.rest; })
+                .flatMap(function (event) { return event.midis || []; });
+        });
+        return midis.reduce(function (sum, midi) { return sum + midi; }, 0) / Math.max(1, midis.length);
+    }
+
+    function sourceFragmentAttackCounts(fragment) {
+        return fragment.measures.map(function (measure) {
+            return sourceLaneEvents(measure).filter(function (event) { return !event.rest; }).length;
+        });
+    }
+
+    function sourceFragmentDurations(fragment) {
+        return fragment.measures.map(function (measure) {
+            return sourceLaneEvents(measure).reduce(function (sum, event) {
+                return sum + durationBeats(event.d);
+            }, 0);
+        });
+    }
+
+    function sameNumberArray(first, second) {
+        return first.length === second.length && first.every(function (value, index) {
+            return Math.abs(value - second[index]) < .001;
+        });
+    }
+
+    function sourceFragmentPairScore(first, second) {
+        if (first.measures.length !== second.measures.length) return -Infinity;
+        const registerDistance = Math.abs(sourceFragmentAverageMidi(first) - sourceFragmentAverageMidi(second));
+        if (registerDistance < 5) return -Infinity;
+        const firstNumbers = first.measures.map(function (measure) { return Number(measure.n); });
+        const secondNumbers = second.measures.map(function (measure) { return Number(measure.n); });
+        let score = 20 - Math.abs(first.order - second.order);
+        if (sameNumberArray(firstNumbers, secondNumbers)) score += 100;
+        const firstAttacks = sourceFragmentAttackCounts(first);
+        const secondAttacks = sourceFragmentAttackCounts(second);
+        const firstDurations = sourceFragmentDurations(first);
+        const secondDurations = sourceFragmentDurations(second);
+        if (sameNumberArray(firstAttacks, secondAttacks)) score += 35;
+        if (firstAttacks.reduce(function (sum, value) { return sum + value; }, 0) === secondAttacks.reduce(function (sum, value) { return sum + value; }, 0)) score += 35;
+        if (sameNumberArray(firstDurations, secondDurations)) score += 45;
+        if (Math.abs(
+            firstDurations.reduce(function (sum, value) { return sum + value; }, 0)
+            - secondDurations.reduce(function (sum, value) { return sum + value; }, 0)
+        ) < .001) score += 45;
+        return score;
+    }
+
+    function mergeSourceFragments(first, second) {
+        const upper = sourceFragmentAverageMidi(first) >= sourceFragmentAverageMidi(second) ? first : second;
+        const lower = upper === first ? second : first;
+        const upperCounts = sourceFragmentAttackCounts(upper);
+        const lowerCounts = sourceFragmentAttackCounts(lower);
+        const equalAttackTotal = upperCounts.reduce(function (sum, value) { return sum + value; }, 0)
+            === lowerCounts.reduce(function (sum, value) { return sum + value; }, 0);
+        const lowerEvents = lower.measures.flatMap(sourceLaneEvents);
+        let lowerOffset = 0;
+        return {
+            order:Math.min(first.order, second.order),
+            sortNumber:Math.min(Number(first.measures[0].n) || 0, Number(second.measures[0].n) || 0),
+            measures:upper.measures.map(function (measure, index) {
+                const lowerMeasure = lower.measures[index];
+                let alignedLower = sourceLaneEvents(lowerMeasure);
+                if (equalAttackTotal && !sameNumberArray(upperCounts, lowerCounts)) {
+                    alignedLower = lowerEvents.slice(lowerOffset, lowerOffset + upperCounts[index]);
+                    lowerOffset += upperCounts[index];
+                }
+                return Object.assign({}, measure, {
+                    right:sourceLaneEvents(measure),
+                    left:alignedLower,
+                    time:measure.time || lowerMeasure.time
+                });
+            })
+        };
+    }
+
+    function normalizeSourceSystems(systems, skillId) {
+        const cloned = cloneSourceSystems(systems);
+        if (skillId === 45) {
+            const splitDominant = cloned.flat().find(function (measure) {
+                return Number(measure.n) === 15
+                    && Number(measure.fifths) === -5
+                    && sourcePitchedEvents(measure, "right").length === 3;
+            });
+            if (splitDominant) {
+                splitDominant.right = [
+                    splitDominant.right[0],
+                    {
+                        at:2,
+                        d:"h",
+                        keys:["eb/4","a/4","c/5"],
+                        midis:[63,69,72],
+                        acc:[null,"n",null]
+                    }
+                ];
+            }
+        }
+        if (skillId === 27) {
+            const missingTonicMeasure = cloned.flat().find(function (measure) {
+                return Number(measure.n) === 2
+                    && Number(measure.fifths) === 6
+                    && sourcePitchedEvents(measure, "left").length === 0
+                    && sourcePitchedEvents(measure, "right").length === 5
+                    && sourcePitchedEvents(measure, "right").every(function (event) { return event.midis.length === 3; });
+            });
+            if (missingTonicMeasure) {
+                missingTonicMeasure.right.push({
+                    at:22,
+                    d:"h",
+                    keys:["e#/5","a#/5","c#/6"],
+                    midis:[77,82,85]
+                });
+            }
+        }
+        if (!SOURCE_FRAGMENT_REPAIR_SKILLS.has(skillId)) return cloned;
+
+        const fragments = [];
+        let order = 0;
+        cloned.forEach(function (system) {
+            let current = null;
+            let previousNumber = null;
+            const flush = function () {
+                if (current && current.measures.length) {
+                    current.order = order;
+                    current.sortNumber = Number(current.measures[0].n) || 0;
+                    fragments.push(current);
+                    order += 1;
+                }
+                current = null;
+            };
+            system.forEach(function (measure) {
+                const occupancy = sourceMeasureOccupancy(measure);
+                const measureNumber = Number(measure.n);
+                const reset = current && Number.isFinite(measureNumber) && Number.isFinite(previousNumber) && measureNumber <= previousNumber;
+                if (occupancy === "empty") {
+                    flush();
+                    previousNumber = null;
+                    return;
+                }
+                const kind = occupancy === "both" ? "both" : "single";
+                const rawSide = kind === "single" ? occupancy : "both";
+                if (!current || reset || current.kind !== kind || (kind === "single" && current.rawSide !== rawSide)) {
+                    flush();
+                    current = { kind:kind, rawSide:rawSide, measures:[] };
+                }
+                current.measures.push(measure);
+                previousNumber = measureNumber;
+            });
+            flush();
+        });
+
+        const rebuilt = fragments.filter(function (fragment) { return fragment.kind === "both"; });
+        const singles = fragments.filter(function (fragment) { return fragment.kind === "single"; });
+        const used = new Set();
+        singles.forEach(function (fragment, index) {
+            if (used.has(index)) return;
+            let bestIndex = -1;
+            let bestScore = -Infinity;
+            for (let candidateIndex = index + 1; candidateIndex < singles.length; candidateIndex += 1) {
+                if (used.has(candidateIndex)) continue;
+                const score = sourceFragmentPairScore(fragment, singles[candidateIndex]);
+                if (score > bestScore) {
+                    bestIndex = candidateIndex;
+                    bestScore = score;
+                }
+            }
+            if (bestIndex >= 0 && bestScore >= 50) {
+                rebuilt.push(mergeSourceFragments(fragment, singles[bestIndex]));
+                used.add(index);
+                used.add(bestIndex);
+            } else {
+                rebuilt.push(fragment);
+                used.add(index);
+            }
+        });
+
+        rebuilt.sort(function (first, second) {
+            return first.sortNumber - second.sortNumber || first.order - second.order;
+        });
+        return rebuilt.map(function (fragment) { return fragment.measures; });
+    }
+
     function applySourceAttackLabels(systems, labels, startIndex) {
         let labelIndex = startIndex;
         systems.flat().forEach(function (measure) {
-            const onsets = Array.from(new Set(measure.right.concat(measure.left).map(function (event) {
-                return event.at;
-            }))).sort(function (a, b) { return a - b; });
-            onsets.forEach(function (onset) {
+            sourceMeasureTimeline(measure).forEach(function (entry) {
                 const label = labels[labelIndex] || "";
-                const target = measure.right.find(function (event) { return event.at === onset && !event.rest; })
-                    || measure.left.find(function (event) { return event.at === onset && !event.rest; });
+                const target = entry[1][0];
                 if (target && label) target.label = label;
                 labelIndex += 1;
             });
@@ -708,7 +955,7 @@
         let labelIndex = 0;
         const pages = [];
         source.pages.forEach(function (sourcePage) {
-            const sourceSystems = cloneSourceSystems(sourcePage.systems);
+            const sourceSystems = normalizeSourceSystems(sourcePage.systems, skillId);
             labelIndex = applySourceAttackLabels(sourceSystems, labels, labelIndex);
             const systems = reflowSourceSystems(sourceSystems);
             for (let index = 0; index < systems.length; index += 4) {
@@ -840,13 +1087,25 @@
         voice.draw(context, stave);
     }
 
-    function drawSourceMeasure(VF, context, measure, x, y, width, firstInSystem, firstOnPage) {
+    const SOURCE_KEY_SIGNATURES = {
+        "-7":"Cb", "-6":"Gb", "-5":"Db", "-4":"Ab", "-3":"Eb", "-2":"Bb", "-1":"F",
+        "0":"C", "1":"G", "2":"D", "3":"A", "4":"E", "5":"B", "6":"F#", "7":"C#"
+    };
+
+    function drawSourceMeasure(VF, context, measure, x, y, width, firstInSystem, firstOnPage, keySignature) {
         const treble = new VF.Stave(x, y, width);
         const bass = new VF.Stave(x, y + 66, width);
         if (firstInSystem) {
             treble.addClef("treble");
             bass.addClef("bass");
-            if (firstOnPage && measure.time) treble.addTimeSignature(measure.time);
+        }
+        if (keySignature) {
+            treble.addKeySignature(keySignature);
+            bass.addKeySignature(keySignature);
+        }
+        if (firstInSystem && firstOnPage && measure.time) {
+            treble.addTimeSignature(measure.time);
+            bass.addTimeSignature(measure.time);
         }
         treble.setContext(context).draw();
         bass.setContext(context).draw();
@@ -889,8 +1148,13 @@
             const weights = system.map(sourceMeasureWeight);
             const totalWeight = weights.reduce(function (sum, weight) { return sum + weight; }, 0);
             let x = left;
+            let previousFifths = null;
             system.forEach(function (measure, measureIndex) {
                 const isFirst = measureIndex === 0;
+                const fifths = Number(measure.fifths) || 0;
+                const keySignature = page.skillId <= 117 && (isFirst || fifths !== previousFifths)
+                    ? SOURCE_KEY_SIGNATURES[String(fifths)]
+                    : null;
                 const proportional = available * weights[measureIndex] / totalWeight;
                 const measureWidth = proportional + (isFirst ? 24 : 0);
                 drawSourceMeasure(
@@ -901,9 +1165,11 @@
                     y,
                     measureWidth,
                     isFirst,
-                    systemIndex === 0 && isFirst
+                    systemIndex === 0 && isFirst,
+                    keySignature
                 );
                 x += measureWidth;
+                previousFifths = fifths;
             });
         });
         const svg = container.querySelector("svg");
