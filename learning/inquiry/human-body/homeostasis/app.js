@@ -113,7 +113,7 @@
     }
 
     function renderLoop(time) {
-        var dt = (time - lastTime) / 1000 || 0.016;
+        var dt = Math.min(0.05, (time - lastTime) / 1000 || 0.016);
         lastTime = time;
 
         if (isRunning) {
@@ -250,7 +250,7 @@
             ctx.font = 'bold 11px Pretendard, sans-serif';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(s.title.split(' ')[0], sx, sy);
+            ctx.fillText(SimEngine.pinLabel(s), sx, sy);
             ctx.restore();
         }
     }

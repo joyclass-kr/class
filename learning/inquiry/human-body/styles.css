@@ -79,7 +79,8 @@ html, body {
     gap: 12px;
 }
 
-.sim-header-left,
+/* 제목은 감추되 [◀ 목록] 뒤로가기는 남긴다 */
+.sim-title-group,
 .curriculum-badge,
 .exam-trap-badge,
 [data-tab="traps"],

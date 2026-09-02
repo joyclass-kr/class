@@ -120,6 +120,34 @@
             } catch (e) {}
         },
 
+        playPulse: function () {
+            try {
+                var ctx = getAudioContext();
+                if (!ctx) return;
+                var now = ctx.currentTime;
+
+                // Rising zap (action potential / power stroke / handle grab)
+                var osc = ctx.createOscillator();
+                var gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, now);
+                osc.frequency.exponentialRampToValueAtTime(1200, now + 0.09);
+                gain.gain.setValueAtTime(0.001, now);
+                gain.gain.linearRampToValueAtTime(0.14, now + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+
+                var filter = ctx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(2400, now);
+
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.19);
+            } catch (e) {}
+        },
+
         playCorrect: function () {
             try {
                 var ctx = getAudioContext();
@@ -279,10 +307,30 @@
         });
     }
 
+    /**
+     * 캔버스 핀에 붙일 짧은 이름표를 고른다.
+     * spot.label 이 있으면 그대로 쓰고, 없으면 title 앞머리를 다듬어 쓴다.
+     * ('1. 사구체 여과 (Filtration)' -> '사구체 여과')
+     */
+    function pinLabel(spot) {
+        if (!spot) return '';
+        if (spot.label) return spot.label;
+
+        var text = String(spot.title || '');
+        text = text.replace(/^\s*\d+[.)]\s*/, '');          // 앞의 번호 제거
+        text = text.split(/\s*[(（]|\s+[-–—]\s+|\s*&\s*/)[0]; // 괄호·붙임표·& 앞까지
+        text = text.trim();
+
+        if (!text) text = String(spot.title || '').trim();
+        if (text.length > 10) text = text.slice(0, 9) + '…';
+        return text;
+    }
+
     return {
         SoundFX: SoundFX,
         setupCanvas: setupCanvas,
         bindDrag: bindDrag,
-        renderQuiz: renderQuiz
+        renderQuiz: renderQuiz,
+        pinLabel: pinLabel
     };
 });

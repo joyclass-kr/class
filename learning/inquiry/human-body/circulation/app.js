@@ -158,7 +158,7 @@
     }
 
     function renderLoop(time) {
-        var dt = (time - lastTime) / 1000 || 0.016;
+        var dt = Math.min(0.05, (time - lastTime) / 1000 || 0.016);
         lastTime = time;
 
         if (isRunning) {
@@ -481,7 +481,7 @@
             ctx.fill();
 
             // Tag Label Pill
-            var labelText = s.title.split(' ')[0];
+            var labelText = SimEngine.pinLabel(s);
             ctx.font = 'bold 11px Pretendard, sans-serif';
             var txtMetrics = ctx.measureText(labelText);
             var pillW = txtMetrics.width + 16;
