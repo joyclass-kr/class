@@ -156,7 +156,14 @@
                 dx = 0; dy = (height - dh) / 2;
             }
 
+            // 배경 그림은 눈금이 고정된 설명도라 실제로 미끄러지지 않는다.
+            // 흐리게 깔고, 그 위에 근절 길이를 따라 진짜로 움직이는 모형을 그린다.
+            ctx.save();
+            ctx.globalAlpha = 0.35;
             ctx.drawImage(sceneImg, dx, dy, dw, dh);
+            ctx.restore();
+
+            drawSlidingRig(dx, dy, dw, dh, time);
 
             // Overlay Sliding Filament Particles & Cross-Bridge Glow
             drawFilamentOverlay(dx, dy, dw, dh, time);
@@ -170,6 +177,96 @@
             ctx.font = 'bold 16px Pretendard, sans-serif';
             ctx.textAlign = 'center';
             ctx.fillText('자료를 불러오는 중입니다.', width / 2, height / 2);
+        }
+    }
+
+    /**
+     * 근절 길이에 따라 실제로 미끄러지는 활주설 모형.
+     * 마이오신(A대)은 길이가 고정이고, Z선과 액틴만 안쪽으로 들어온다.
+     */
+    function drawSlidingRig(dx, dy, dw, dh, time) {
+        var cx = dx + 0.50 * dw;
+        var cy = dy + 0.50 * dh;
+
+        // 1 μm이 몇 픽셀인가. 가장 늘어난 3.0 μm이 화면 너비의 62%가 되게 잡는다.
+        var pxPerUm = (0.62 * dw) / 3.0;
+
+        var halfX = (sarcomereLength / 2) * pxPerUm;   // Z선까지 거리
+        var halfA = (aBandLength / 2) * pxPerUm;       // A대 절반 (변하지 않음)
+        var actinPx = actinLength * pxPerUm;          // 액틴 한 가닥
+        var leftZ = cx - halfX;
+        var rightZ = cx + halfX;
+
+        var rowTop = cy - 26;
+        var rowBottom = cy + 26;
+        var halfH = Math.max(0, Math.min(aBandLength, sarcomereLength - 2 * actinLength)) / 2 * pxPerUm;
+
+        ctx.save();
+
+        // 겹치는 구간 — 액틴과 마이오신이 맞물린 곳
+        ctx.fillStyle = 'rgba(250, 204, 21, 0.18)';
+        ctx.fillRect(cx - halfA, cy - 44, halfA - halfH, 88);
+        ctx.fillRect(cx + halfH, cy - 44, halfA - halfH, 88);
+
+        // 마이오신(굵은 필라멘트) — A대. 길이 불변
+        ctx.strokeStyle = '#f43f5e';
+        ctx.lineWidth = 14;
+        ctx.lineCap = 'round';
+        ctx.shadowBlur = 18;
+        ctx.shadowColor = '#f43f5e';
+        ctx.beginPath();
+        ctx.moveTo(cx - halfA, cy);
+        ctx.lineTo(cx + halfA, cy);
+        ctx.stroke();
+
+        // 액틴(가는 필라멘트) — Z선에 붙어 안쪽으로 미끄러진다
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 7;
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = '#38bdf8';
+        ctx.beginPath();
+        [rowTop, rowBottom].forEach(function (y) {
+            ctx.moveTo(leftZ, y);
+            ctx.lineTo(leftZ + actinPx, y);
+            ctx.moveTo(rightZ, y);
+            ctx.lineTo(rightZ - actinPx, y);
+        });
+        ctx.stroke();
+
+        // Z선
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.lineWidth = 6;
+        ctx.shadowBlur = 14;
+        ctx.shadowColor = '#94a3b8';
+        ctx.beginPath();
+        ctx.moveTo(leftZ, cy - 60);
+        ctx.lineTo(leftZ, cy + 60);
+        ctx.moveTo(rightZ, cy - 60);
+        ctx.lineTo(rightZ, cy + 60);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // 이름표(핀)를 모형의 실제 위치로 옮긴다. 고정해 두면 근절이 줄어들 때
+        // 이름표만 제자리에 남아 엉뚱한 곳을 가리킨다.
+        var iHalf = Math.max(0, (halfX - halfA) / 2);
+        // 윗줄과 아랫줄로 나눠 이름표가 서로 걹치지 않게 한다
+        moveSpot('Z선', leftZ, cy - 92, dx, dy, dw, dh);
+        moveSpot('H대', cx, cy - 92, dx, dy, dw, dh);
+        moveSpot('마이오신', cx + halfA * 0.95, cy - 92, dx, dy, dw, dh);
+        moveSpot('I대', leftZ + iHalf, cy + 92, dx, dy, dw, dh);
+        moveSpot('A대', cx, cy + 92, dx, dy, dw, dh);
+
+        ctx.restore();
+    }
+
+    /** 핀 하나를 화면 좌표로 옮긴다 (hotspots는 0~1 비율로 저장돼 있다) */
+    function moveSpot(head, px, py, dx, dy, dw, dh) {
+        for (var i = 0; i < hotspots.length; i++) {
+            if (hotspots[i].title.indexOf(head) === 0) {
+                hotspots[i].x = (px - dx) / dw;
+                hotspots[i].y = (py - dy) / dh;
+                return;
+            }
         }
     }
 

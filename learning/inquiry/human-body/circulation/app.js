@@ -228,20 +228,38 @@
 
         // Draw ECG
         ecgCtx.clearRect(0, 0, ew, eh);
-        ecgCtx.strokeStyle = '#ef4444';
-        ecgCtx.lineWidth = 1.8;
-        ecgCtx.shadowBlur = 8;
+
+        var midY = eh / 2;
+
+        // 기준선 — 이게 없으면 파형이 허공에 뜬 실처럼 보인다
+        ecgCtx.save();
+        ecgCtx.strokeStyle = 'rgba(239, 68, 68, 0.22)';
+        ecgCtx.lineWidth = 1;
+        ecgCtx.setLineDash([4, 4]);
+        ecgCtx.beginPath();
+        ecgCtx.moveTo(0, midY);
+        ecgCtx.lineTo(ew, midY);
+        ecgCtx.stroke();
+        ecgCtx.restore();
+
+        // 칸 높이에 맞춰 진폭을 키운다. 전에는 고정 크기라 너무 납작했다.
+        var amp = Math.max(1, eh / 62);
+
+        ecgCtx.strokeStyle = '#f87171';
+        ecgCtx.lineWidth = 2.4;
+        ecgCtx.lineJoin = 'round';
+        ecgCtx.shadowBlur = 12;
         ecgCtx.shadowColor = '#ef4444';
 
         ecgCtx.beginPath();
-        var midY = eh / 2;
         for (var p = 0; p < ecgPoints.length; p++) {
             var px = p;
-            var py = midY - ecgPoints[p];
+            var py = midY - ecgPoints[p] * amp;
             if (p === 0) ecgCtx.moveTo(px, py);
             else ecgCtx.lineTo(px, py);
         }
         ecgCtx.stroke();
+        ecgCtx.shadowBlur = 0;
     }
 
     function drawScene(time) {

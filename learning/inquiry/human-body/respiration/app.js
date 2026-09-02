@@ -81,6 +81,7 @@
         initParticles();
         bindDOM();
         renderSidebar();
+        showBreathMode();
 
         handleResize();
         window.addEventListener('resize', handleResize);
@@ -128,6 +129,7 @@
 
     // Direct Canvas Drag State for Diaphragm Puller
     var isDraggingDiaphragm = false;
+    var autoBreathing = true;   // 켜면 저절로 숨쉬고, 가로막을 직접 건드리면 꺼진다
     var dragStartY = 0;
     var airwayAirFlow = [];
 
@@ -139,24 +141,34 @@
         if (!diaphragmValEl) return;
 
         if (diaphragmPosition > 52) {
-            diaphragmValEl.textContent = '하강 (들숨 Inhale 🫁)';
+            diaphragmValEl.textContent = '하강 · 들숨';
             diaphragmValEl.style.color = '#38bdf8';
         } else if (diaphragmPosition < 48) {
-            diaphragmValEl.textContent = '상승 (날숨 Exhale 💨)';
+            diaphragmValEl.textContent = '상승 · 날숨';
             diaphragmValEl.style.color = '#f59e0b';
         } else {
-            diaphragmValEl.textContent = '평형 상태';
+            diaphragmValEl.textContent = '평형';
             diaphragmValEl.style.color = '#94a3b8';
         }
     }
 
+    /**
+     * 호흡수 칸 옆에 지금이 저절로 숨쉬는 중인지 손으로 잡은 중인지 적는다.
+     */
+    function showBreathMode() {
+        if (!rateValEl) return;
+        rateValEl.textContent = breathRate + ' 회/분 · ' + (autoBreathing ? '자동' : '수동');
+        rateValEl.style.color = autoBreathing ? '#34d399' : '#f59e0b';
+    }
+
     function updatePhysics(dt, time) {
-        // Automatic breathing mode when not dragging
-        if (!isDraggingDiaphragm) {
-            var breathCycle = (time * 0.001 * (breathRate / 60) * Math.PI * 2);
+        // 저절로 숨쉬기. 전에는 이 계산을 해 놓고 결과를 버려서(주석 처리)
+        // 호흡수 슬라이더가 숫자만 바꾸고 폐는 꿈쩍도 하지 않았다.
+        if (autoBreathing && !isDraggingDiaphragm) {
+            var breathCycle = time * 0.001 * (breathRate / 60) * Math.PI * 2;
             var autoWave = (Math.sin(breathCycle) + 1) / 2; // 0 ~ 1
-            // Smoothly ease position if in auto
-            // diaphragmPosition = Math.round(autoWave * 100);
+            diaphragmPosition = Math.round(autoWave * 100);
+            if (diaphragmSlider) diaphragmSlider.value = diaphragmPosition;
         }
 
         // Boyle's law pressure calculation: P * V = const
@@ -478,6 +490,8 @@
         if (diaphragmSlider) {
             diaphragmSlider.addEventListener('input', function () {
                 diaphragmPosition = parseInt(diaphragmSlider.value, 10);
+                autoBreathing = false;  // 직접 잡았으니 저절로 숨쉬기는 멈춘다
+                showBreathMode();
                 showDiaphragmState();
             });
         }
@@ -485,7 +499,8 @@
         if (rateSlider) {
             rateSlider.addEventListener('input', function () {
                 breathRate = parseInt(rateSlider.value, 10);
-                if (rateValEl) rateValEl.textContent = breathRate + ' 회/분';
+                autoBreathing = true;   // 호흡수를 만지면 저절로 숨쉬기로 돌아온다
+                showBreathMode();
             });
         }
 
@@ -520,6 +535,8 @@
 
                     if (distHandle <= 40 || clickY > dy + 0.55 * dh) {
                         isDraggingDiaphragm = true;
+                        autoBreathing = false;  // 손으로 잡는 순간 저절로 숨쉬기는 멈춘다
+                        showBreathMode();
                         canvas.setPointerCapture(event.pointerId);
                         if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playPulse();
                         return;
