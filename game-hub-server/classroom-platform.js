@@ -4951,26 +4951,22 @@ function createClassroomPlatform(options = {}) {
 
   // Group membership.
   //
-  // The roster stores each club / after-school / shuttle column under its own
-  // name, so a student in the 오케스트라 club has custom_fields = {"오케스트라": "..."}
-  // -- the KEY is the group name. (Looking up a fixed 'club' key, as the roster
-  // count query does, therefore never matches real roster data; that query only
-  // appears to work because it also runs a `custom_fields::text ILIKE '%name%'`
-  // catch-all. That catch-all is far too loose to decide who may read a board --
-  // a group named "1" would match nearly every student -- so it is not used here.)
+  // 동아리는 학급 안의 모둠이 아니라 전교생을 배정하는 무학년 모임이다. 그래서
+  // 소속은 학년·반이 아니라 전교생 명단의 사용자 정의 열에서 온다. 학교마다
+  // 그 열을 두 가지 모양 중 하나로 쓴다.
   //
-  // The `->>` forms are kept for the other shape a school might use: a single
-  // "동아리" column whose value is the club name.
+  //   1) 동아리마다 열이 하나씩:  {"오케스트라": "O"}      -> 열 이름이 동아리 이름
+  //   2) '동아리' 열 하나에 배정:  {"동아리": "오케스트라"} -> 열 값이 동아리 이름
+  //
+  // 둘 다 정확히 일치할 때만 인정한다. (교사용 인원수 쿼리에는
+  // `custom_fields::text ILIKE '%이름%'` 같은 통짜 검색이 있는데, 게시판을 읽을
+  // 권한을 정하는 데 쓰면 '1' 같은 이름의 그룹에 전교생이 들어간다. 여기서는 쓰지 않는다.)
   const GROUP_MEMBER_SQL = `
     (g.group_type = 'homeroom' AND g.grade = ss.grade AND g.class_number = ss.class_number)
     OR (g.group_type <> 'homeroom' AND (
           jsonb_exists(ss.custom_fields, g.group_name)
-          OR ss.custom_fields->>'club' = g.group_name
-          OR ss.custom_fields->>'afterschool' = g.group_name
-          OR ss.custom_fields->>'shuttle' = g.group_name
-          OR ss.custom_fields->>'bus' = g.group_name
-          OR ss.custom_fields->>'subject' = g.group_name
-          OR ss.custom_fields->>'group' = g.group_name
+          OR EXISTS (SELECT 1 FROM jsonb_each_text(ss.custom_fields) f
+                     WHERE f.value = g.group_name)
        ))
     OR EXISTS (SELECT 1 FROM teacher_group_students gs
                WHERE gs.group_id = g.id AND gs.student_id = ss.id)`;

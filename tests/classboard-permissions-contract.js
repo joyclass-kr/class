@@ -320,9 +320,20 @@ const asStudent = () => { sessionRows = [{ id: 3, email: "kid@x.kr", role: "stud
 
     // 15. 소속 판정은 custom_fields의 '키'가 그룹 이름인 실제 명단 모양을 따라야
     //     한다. 고정된 'club' 키만 보면 어떤 학생도 매칭되지 않는다.
-    assert.match(platformSource, /jsonb_exists\(ss\.custom_fields, g\.group_name\)/,
-      "Membership must match the roster's real shape (club name as the key).");
     const memberSql = platformSource.match(/const GROUP_MEMBER_SQL = `[\s\S]*?`;/)[0];
+
+    // 동아리는 전교생을 배정하는 무학년 모임이라 소속이 명단의 사용자 정의 열에서
+    // 온다. 학교가 쓰는 두 모양을 모두 받아야 한다.
+    assert.match(memberSql, /jsonb_exists\(ss\.custom_fields, g\.group_name\)/,
+      "동아리마다 열이 하나씩인 명단({\"오케스트라\":\"O\"})을 인정해야 한다.");
+    assert.match(memberSql, /jsonb_each_text\(ss\.custom_fields\)[\s\S]*?f\.value = g\.group_name/,
+      "'동아리' 열 하나에 배정한 명단({\"동아리\":\"오케스트라\"})도 인정해야 한다.");
+
+    // 학년·반으로 좁히면 무학년 동아리가 깨진다. homeroom 가지에만 있어야 한다.
+    const nonHomeroomBranch = memberSql.split("g.group_type <> 'homeroom'")[1] || "";
+    assert.doesNotMatch(nonHomeroomBranch, /ss\.grade|ss\.class_number/,
+      "무학년 그룹의 소속을 학년·반으로 좁혀서는 안 된다.");
+
     assert.doesNotMatch(memberSql, /ILIKE/,
       "Board membership must not fall back to a substring match.");
 
