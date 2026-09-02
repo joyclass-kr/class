@@ -1,6 +1,5 @@
 /* The selected genre is already known from the previous screen. Keep only a
    compact escape control and give the full first row to the listening task. */
-.music-room-home,
 .genre-room {
   padding-left: 60px;
 }
