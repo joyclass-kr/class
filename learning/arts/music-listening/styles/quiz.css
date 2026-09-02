@@ -5,3 +5,5 @@
 
 /* The work is identified before listening so familiar pieces can be answered directly. */
 .quiz-work{display:grid;gap:3px;min-width:0}.quiz-work strong{color:var(--ink);font-size:.95rem}.quiz-work small{color:#74695d;font-size:.8rem;line-height:1.4}
+/* Compact listening quiz: keep the student task above the fold. */
+.history-line{margin-top:12px}.quiz{padding:18px clamp(18px,2.4vw,26px)}.quiz-title{margin:0;font-size:.95rem;line-height:1.25}.quiz-toolbar{margin-top:10px}.quiz-box:empty{display:none}

@@ -6,7 +6,7 @@
   <meta name="description" content="클래식 음악사, 50곡 감상 카드와 감상 퀴즈">
   <title>음악 감상</title>
   <link rel="stylesheet" href="../../styles/genre.css?v=room-backgrounds-1">
-  <link rel="stylesheet" href="../../styles/quiz.css?v=quiz-work-1">
+  <link rel="stylesheet" href="../../styles/quiz.css?v=compact-quiz-1">
   <link rel="stylesheet" href="../../headerless.css?v=20260901-1">
 </head>
 <body class="genre-room genre-classical">
@@ -17,22 +17,18 @@
         <div><span>HISTORY</span><h2>클래식 음악사의 큰 흐름</h2></div>
         <p>사회와 예술관, 악기와 연주 공간의 변화가 음악의 형식과 소리를 바꾸었습니다.</p>
       </div>
-      <p class="period-note">시대를 선택하면 역사·음악적 특징·대표곡이 함께 바뀝니다.</p>
       <ol id="classical-periods" class="history-line" aria-label="클래식 시대 선택"></ol>
       <article id="classical-era-panel" class="era-panel" aria-live="polite"></article>
       <div id="playlist" class="playlist"></div>
     </section>
     <section id="quiz" class="quiz">
-      <div class="section-head">
-        <div><span>LISTENING QUIZ</span><h2>클래식 감상 퀴즈</h2></div>
-        <p>곡을 들은 뒤 박자·빠르기·분위기·소리의 특징만 확인합니다.</p>
-      </div>
+      <h2 class="quiz-title">감상 문제</h2>
       <div class="quiz-toolbar">
         <label>시대<select id="quiz-era"><option value="all">전 시대</option><option value="baroque">바로크</option><option value="classical">고전주의</option><option value="romantic">낭만주의</option><option value="modern">20세기</option></select></label>
         <label>문제 수<select id="quiz-count"><option selected>4</option><option>8</option></select></label>
         <button id="new-quiz">새 문제 시작</button>
       </div>
-      <div id="quiz-box" class="quiz-box"><p>‘새 문제 시작’을 누르면 퀴즈가 시작됩니다.</p></div>
+      <div id="quiz-box" class="quiz-box"></div>
       <div class="quiz-actions" hidden><button id="check-answer">채점하기</button></div>
       <div id="quiz-result" aria-live="polite"></div>
     </section>
