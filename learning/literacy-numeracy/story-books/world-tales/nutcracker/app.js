@@ -921,11 +921,6 @@ const EN = {
             q: 'Why did Marie decide to go home?',
             choices: ['She did not like the Land of Sweets', 'She thought of her mother, Fritz and the doll under the tree', 'The prince asked her to go'],
             answer: 1
-        },
-        {
-            q: 'What did Marie find under the tree in the morning?',
-            choices: ['The doll, with his jaw whole again', 'Her lost slipper', 'A crown from the Mouse King'],
-            answer: 0
         }
     ],
     afterword: {

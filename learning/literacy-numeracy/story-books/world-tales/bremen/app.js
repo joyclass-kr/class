@@ -914,11 +914,6 @@ const EN = {
             q: 'What did the robber tell his captain?',
             choices: ['That the house was full of a witch, a knife-man, a club-man and a judge', 'That the sacks had gone', 'That four animals had taken the house'],
             answer: 0
-        },
-        {
-            q: 'Why did the four of them not go on to Bremen?',
-            choices: ['The road was blocked', 'The robbers were waiting for them', 'The cottage suited them better'],
-            answer: 2
         }
     ],
     afterword: {

@@ -928,11 +928,6 @@ const EN = {
             q: 'What did Oz turn out to be?',
             choices: ['An old man who had come down in a balloon', 'A great floating head', 'A witch in disguise'],
             answer: 0
-        },
-        {
-            q: 'What did Glinda tell Dorothy about the silver shoes?',
-            choices: ['They belonged to the Witch of the North', 'They only worked in the Emerald City', 'They would carry her anywhere she wished'],
-            answer: 2
         }
     ],
     afterword: {

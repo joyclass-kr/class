@@ -907,11 +907,6 @@ const EN = {
             q: 'What did the harp do when Jack lifted it?',
             choices: ['It went on singing', 'It broke in two', 'It cried out for its master'],
             answer: 2
-        },
-        {
-            q: 'What did Jack say after he cut down the beanstalk?',
-            choices: ['That he would grow another one', "That he had climbed enough", 'That he wanted the gold back'],
-            answer: 1
         }
     ],
     afterword: {

@@ -304,16 +304,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '개구리 왕자',
+    intro: [
+        '개구리 왕자는 독일의 그림 형제가 1812년에 펴낸 옛이야기 모음집의 맨 첫 번째 이야기예요. 그만큼 오래되고 널리 알려진 이야기랍니다.',
+        '한 번 한 약속을 지키느냐 마느냐가 이야기의 전부라고 할 만해요. 마법이 풀리는 순간도 그 약속과 이어져 있답니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🐸')}
             </div>
             <div class="story-page-right">
-                <h1>개구리 왕자</h1>
-                <p>개구리 왕자는 독일의 그림 형제가 1812년에 펴낸 옛이야기 모음집의 맨 첫 번째 이야기예요. 그만큼 오래되고 널리 알려진 이야기랍니다.</p>
-                <p>한 번 한 약속을 지키느냐 마느냐가 이야기의 전부라고 할 만해요. 마법이 풀리는 순간도 그 약속과 이어져 있답니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -328,8 +337,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -339,8 +348,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -350,22 +359,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -415,9 +425,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -428,7 +438,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -500,7 +510,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -509,34 +519,609 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   충직한 하인리히는 원작 이름 그대로 Faithful Henry 로 둔다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Frog Prince',
+        intro: [
+            "The Frog Prince is the very first story in the collection of old tales the Brothers Grimm published in Germany in 1812. That is how old and how well known it is.",
+            "You could say the whole story is about whether a promise once given is kept. Even the moment the spell breaks is tied to that promise."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Golden Ball',
+            beats: [
+                {
+                    art: '01-ball.webp',
+                    emoji: '🟡',
+                    left: [
+                        "A golden ball caught the sun and shone until it dazzled you. It was the youngest princess's dearest thing.",
+                        "People said the sun himself paused a moment when he looked at her face.",
+                        "The king had several daughters, and the youngest was the loveliest of them.",
+                        "She kept that ball beside her pillow even when she slept."
+                    ],
+                    right: [
+                        "Behind the palace there was a deep wood,",
+                        "and in the middle of it an old pond.",
+                        "The water was so deep you could not see the bottom.",
+                        "Every day the princess played under the lime tree by that pond.",
+                        "The shade was cool and she liked the sound of the water.",
+                        "And often enough you could hear frogs."
+                    ]
+                },
+                {
+                    art: '01-ball-2.webp',
+                    emoji: '🟡',
+                    left: [
+                        "That day too the princess threw the ball high and caught it.",
+                        "Once, twice, three times.",
+                        "The ball flashed in the sunlight,",
+                        "and that flash was the thing she liked best about it.",
+                        "And then came the fourth time."
+                    ],
+                    right: [
+                        "The ball grazed her fingers and went off sideways.",
+                        "It rolled away and dropped into the pond.",
+                        "There was a splash, and the ball was gone.",
+                        "\"Oh no — my ball!\"",
+                        "The princess sat down and burst into tears.",
+                        "Look as she might, the water was black underneath."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · A Voice from the Pond',
+            beats: [
+                {
+                    art: '02-frog.webp',
+                    emoji: '🐸',
+                    left: [
+                        "The princess cried for a long while.",
+                        "Crying did not bring the ball back up.",
+                        "The evening sun slanted down through the leaves.",
+                        "It would be dark before long.",
+                        "And then the water rippled,",
+                        "and something put its head out."
+                    ],
+                    right: [
+                        "It was a frog with very large eyes.",
+                        "The princess started back in fright.",
+                        "And then the frog spoke.",
+                        "\"Princess, why are you crying like that?\" His voice was quite dignified.",
+                        "The princess forgot to cry and stared at him."
+                    ]
+                },
+                {
+                    art: '02-frog-2.webp',
+                    emoji: '🐸',
+                    left: [
+                        "She wiped her eyes and answered.",
+                        "\"My ball has gone into the pond. It is too deep to get out.\"",
+                        "The frog blinked",
+                        "and tapped the water with one short forefoot.",
+                        "\"I could fetch it out for you.\""
+                    ],
+                    right: [
+                        "\"But you must make me a promise first.\"",
+                        "The princess jumped to her feet.",
+                        "\"Anything at all. Jewels, a crown — anything!\"",
+                        "And the frog shook his head.",
+                        "\"I have no use for such things.\" The frog was in no hurry at all."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · An Easy Promise',
+            beats: [
+                {
+                    art: '03-promise.webp',
+                    emoji: '🤝',
+                    left: [
+                        "The frog floated quietly on the water and said it slowly.",
+                        "\"Take me for your friend.\"",
+                        "\"Let me eat at your table.\"",
+                        "\"And let me sleep in your room.\"",
+                        "\"Do that, and I shall bring the ball up.\"",
+                        "The frog looked her straight in the face as he said it."
+                    ],
+                    right: [
+                        "The princess laughed at him inwardly.",
+                        "How could a frog possibly get as far as the palace?",
+                        "It was a long walk from the pond to the palace,",
+                        "and no distance at all for a frog's legs.",
+                        "The princess waved a hand.",
+                        "\"Very well, very well. Only fetch it, quickly.\""
+                    ]
+                },
+                {
+                    art: '03-promise-2.webp',
+                    emoji: '🤝',
+                    left: [
+                        "The frog went straight down into the water.",
+                        "A long while later he came up with the ball in his mouth.",
+                        "The water ran off his back in drops,",
+                        "and he set the ball down on the grass.",
+                        "The princess snatched it up",
+                        "and ran off without looking back."
+                    ],
+                    right: [
+                        "\"Princess — take me with you!\"",
+                        "the frog called after her.",
+                        "But a frog's legs could not keep up.",
+                        "And the princess went straight back to the palace.",
+                        "By that night she had forgotten the frog entirely."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · A Knock at the Door',
+            beats: [
+                {
+                    art: '04-knock.webp',
+                    emoji: '🚪',
+                    left: [
+                        "It was the next evening.",
+                        "The whole family was sitting round the great table,",
+                        "with steaming dishes set out in a row.",
+                        "The princess had put the day before quite out of her mind.",
+                        "And then there was a sound at the door.",
+                        "Tap, tap, tap."
+                    ],
+                    right: [
+                        "And a voice she knew came after it.",
+                        "\"Princess, open the door for me.\"",
+                        "The princess dropped her spoon.",
+                        "And she walked toward the door",
+                        "with her heart thumping.",
+                        "Only now did yesterday come back to her."
+                    ]
+                },
+                {
+                    art: '04-knock-2.webp',
+                    emoji: '🚪',
+                    left: [
+                        "She opened the door and went stiff where she stood.",
+                        "There was the frog sitting on the threshold.",
+                        "He seemed to have hopped all night.",
+                        "There was dirt all over him",
+                        "and dry grass stuck to his feet.",
+                        "The princess slammed the door and came back. The blood had gone out of her face.",
+                        "And outside there came the tapping again."
+                    ],
+                    right: [
+                        "The hand that held her spoon shook.",
+                        "\"Whatever is the matter?\"",
+                        "asked her sister, beside her.",
+                        "The princess could not answer.",
+                        "The whole family put their spoons down and looked at her.",
+                        "The table went quiet."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · What the King Said',
+            beats: [
+                {
+                    art: '05-king.webp',
+                    emoji: '👑',
+                    left: [
+                        "The king looked at his daughter's face and asked,",
+                        "\"What is it? What has frightened you so?\"",
+                        "The princess could not answer straight away.",
+                        "She did not know how to begin about the frog.",
+                        "\"Is there a giant standing out there, perhaps?\" said the king, half joking."
+                    ],
+                    right: [
+                        "\"Not a giant… a frog.\"",
+                        "The king put down his spoon,",
+                        "and her sisters exchanged looks.",
+                        "There was nothing for it but to tell them about the day before.",
+                        "She told it all — dropping the ball, and the promise.",
+                        "Her face burned while she said it.",
+                        "Why ever had she promised such a thing?"
+                    ]
+                },
+                {
+                    art: '05-king-2.webp',
+                    emoji: '👑',
+                    left: [
+                        "The king said nothing for a moment.",
+                        "Then he stroked his beard once and spoke quietly.",
+                        "\"If you gave your word, must you not keep it?\"",
+                        "\"You do not turn your back on somebody who helped you when you were in trouble.\" His voice was low, and firm."
+                    ],
+                    right: [
+                        "The princess looked at her own feet.",
+                        "There was nothing she could say back.",
+                        "She knew her father was right.",
+                        "So in the end she went to the door again.",
+                        "She opened it, and the frog was sitting exactly where he had been.",
+                        "\"You may come in.\" And the frog hopped over the threshold."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · At the Same Table',
+            beats: [
+                {
+                    art: '06-dinner.webp',
+                    emoji: '🍽️',
+                    left: [
+                        "The frog came hopping in,",
+                        "climbed the chair and got right up onto the table,",
+                        "and picked his way carefully between the dishes.",
+                        "\"Push your plate over here, princess.\"",
+                        "\"We agreed to eat together, did we not.\" The frog blinked at her."
+                    ],
+                    right: [
+                        "Wet footprints went across the tablecloth,",
+                        "and the princess screwed up her face.",
+                        "And still, with her father watching, she pushed the plate over.",
+                        "The frog ate with great enjoyment.",
+                        "The princess could not get a mouthful down.",
+                        "Her sisters were having trouble keeping straight faces.",
+                        "Only the king went on eating as if nothing were the matter."
+                    ]
+                },
+                {
+                    art: '06-dinner-2.webp',
+                    emoji: '🍽️',
+                    left: [
+                        "The frog patted his stomach.",
+                        "\"That was excellent. Shall we go to bed now?\"",
+                        "\"I beg your pardon?\"",
+                        "The princess pushed back her chair and stood straight up.",
+                        "Her face went scarlet."
+                    ],
+                    right: [
+                        "\"Sleep in the same room as a frog?\" she cried.",
+                        "The king cleared his throat,",
+                        "and the princess had to shut her mouth.",
+                        "A promise was a promise.",
+                        "So in the end she picked the frog up with the tips of her fingers",
+                        "and went up the stairs holding him out at arm's length."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · Inside the Room',
+            beats: [
+                {
+                    art: '07-room.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "The moment she was in her room the princess set the frog down —",
+                        "in a corner, a long way from her soft bed.",
+                        "\"Stay there. Do not come up here.\"",
+                        "The stone floor was cold enough to sting your hand.",
+                        "And she got in and pulled the blanket over her head.",
+                        "The frog said nothing.",
+                        "The room went very quiet."
+                    ],
+                    right: [
+                        "The princess shut her eyes under the blanket,",
+                        "and the wind went past outside the window.",
+                        "But that corner would not leave her alone.",
+                        "She could not get to sleep.",
+                        "What her father had said kept coming back.",
+                        "\"You do not turn your back on somebody who helped you when you were in trouble.\""
+                    ]
+                },
+                {
+                    art: '07-room-2.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "After a long while the princess sat up.",
+                        "She took a candle and went over to the corner.",
+                        "The frog was hunched down on the cold stone,",
+                        "and his small body was shaking a little.",
+                        "The floor was bitterly cold.",
+                        "And the feet that had come all the way from the pond were worn raw.",
+                        "The princess let out a breath,",
+                        "and gathered the frog up in both hands."
+                    ],
+                    right: [
+                        "\"…I am sorry. A promise is a promise.\"",
+                        "The frog still said nothing,",
+                        "and she stroked his back gently with one finger.",
+                        "Then she set him down beside her pillow.",
+                        "Her palms were warm.",
+                        "And only then did the frog stretch himself out."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · The Spell Broken',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '✨',
+                    left: [
+                        "And in that moment",
+                        "the room went as bright as noon.",
+                        "The princess covered her face with both hands against the glare.",
+                        "She thought something dreadful had happened.",
+                        "Only when the light went did she open her eyes again.",
+                        "The air in the room had changed,",
+                        "and the candle flickered all by itself."
+                    ],
+                    right: [
+                        "Where the frog had been, a young man was standing —",
+                        "a prince with clear eyes, finely dressed.",
+                        "\"I am the prince of the next country, and I was under a spell.\"",
+                        "\"It could only be broken by somebody who kept a promise to me.\" The princess could not find her voice.",
+                        "She only looked at the golden ball on the windowsill."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '✨',
+                    left: [
+                        "It was the next morning.",
+                        "A carriage drawn by eight white horses stopped in front of the palace.",
+                        "The driver was a man called Henry, who had served the prince since he was a boy —",
+                        "the man who, on the day the prince became a frog, had bound iron bands round his own chest for fear it would burst."
+                    ],
+                    right: [
+                        "He had waited like that for years.",
+                        "As the carriage rolled along there came a crack, and then another, from behind.",
+                        "The prince asked in alarm,",
+                        "\"What is that breaking?\"",
+                        "\"The iron bands round my chest. I have no need of them now.\" And the carriage went on down the bright road.",
+                        "And the two of them lived happily together for a long time."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did the frog ask for in return?',
+            choices: ['Jewels and a crown', 'The golden ball itself', 'To be her friend, eat at her table and sleep in her room'],
+            answer: 2
+        },
+        {
+            q: 'Why did the princess promise so easily?',
+            choices: ['She liked the frog', 'She thought a frog could never reach the palace', 'Her father had told her to'],
+            answer: 1
+        },
+        {
+            q: 'What did the princess do once she had the ball back?',
+            choices: ['She ran off without looking back', 'She carried the frog home', 'She thanked him and stayed'],
+            answer: 0
+        },
+        {
+            q: 'What did the king say when he heard the story?',
+            choices: ['That she should send the frog away', 'That the frog could stay one night only', 'That a promise once given must be kept'],
+            answer: 2
+        },
+        {
+            q: 'What happened at the dinner table?',
+            choices: ['The frog would not come in', 'The frog ate from her plate and she could not eat at all', 'Her sisters chased the frog out'],
+            answer: 1
+        },
+        {
+            q: 'Why did the princess get up in the night?',
+            choices: ['Her father’s words kept coming back to her', 'The frog was calling her', 'The candle had gone out'],
+            answer: 0
+        },
+        {
+            q: 'What broke the spell?',
+            choices: ['A kiss', 'The golden ball', 'The princess keeping her promise'],
+            answer: 2
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐸',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story stands first in the collection the Brothers Grimm gathered. They thought enough of it to put it at the front.",
+                    "The promise the princess made to the frog cost her nothing. Fetch up the ball and I shall do anything — she said it easily because she had no intention of keeping it.",
+                    "And then the frog hops all night to get there. He was the one who had not forgotten.",
+                    "The king does not scold his daughter. He says one thing only: a word once given is kept."
+                ],
+                right: [
+                    "The princess did not dislike the frog out of spite. He was damp and strange to her. Disliking something and keeping a promise are two separate things.",
+                    "What should the princess have done at the pond?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-ball.webp': [
+            { word: 'dazzle', meaning: '눈부시게 하다', sentence: 'It shone until it dazzled you.' },
+            { word: 'dearest', meaning: '가장 아끼는', sentence: "It was the princess's dearest thing." },
+            { word: 'pause', meaning: '걸음을 멈추다', sentence: 'The sun himself paused a moment.' },
+            { word: 'lime tree', meaning: '보리수', sentence: 'She played under the lime tree by that pond.' }
+        ],
+        '01-ball-2.webp': [
+            { word: 'flash', meaning: '반짝임', sentence: 'The ball flashed in the sunlight.' },
+            { word: 'graze', meaning: '스치다', sentence: 'The ball grazed her fingers.' },
+            { word: 'splash', meaning: '풍덩 소리', sentence: 'There was a splash, and the ball was gone.' },
+            { word: 'burst into tears', meaning: '울음을 터뜨리다', sentence: 'The princess burst into tears.' }
+        ],
+        '02-frog.webp': [
+            { word: 'slant down', meaning: '비껴들다', sentence: 'The evening sun slanted down through the leaves.' },
+            { word: 'ripple', meaning: '일렁이다', sentence: 'And then the water rippled.' },
+            { word: 'start back', meaning: '깜짝 놀라 물러서다', sentence: 'The princess started back in fright.' },
+            { word: 'dignified', meaning: '점잖은', sentence: 'His voice was quite dignified.' }
+        ],
+        '02-frog-2.webp': [
+            { word: 'wipe', meaning: '닦다', sentence: 'She wiped her eyes and answered.' },
+            { word: 'blink', meaning: '눈을 껌뻑이다', sentence: 'The frog blinked.' },
+            { word: 'fetch out', meaning: '꺼내 오다', sentence: 'I could fetch it out for you.' },
+            { word: 'have no use for', meaning: '필요 없다', sentence: 'I have no use for such things.' }
+        ],
+        '03-promise.webp': [
+            { word: 'float', meaning: '떠 있다', sentence: 'The frog floated quietly on the water.' },
+            { word: 'take for', meaning: '~로 삼다', sentence: 'Take me for your friend.' },
+            { word: 'inwardly', meaning: '속으로', sentence: 'The princess laughed at him inwardly.' },
+            { word: 'no distance at all', meaning: '어림도 없는 거리', sentence: "No distance at all for a frog's legs." }
+        ],
+        '03-promise-2.webp': [
+            { word: 'in drops', meaning: '뚝뚝', sentence: 'The water ran off his back in drops.' },
+            { word: 'set down', meaning: '내려놓다', sentence: 'He set the ball down on the grass.' },
+            { word: 'snatch up', meaning: '얼른 집어 들다', sentence: 'The princess snatched it up.' },
+            { word: 'keep up', meaning: '따라가다', sentence: "A frog's legs could not keep up." }
+        ],
+        '04-knock.webp': [
+            { word: 'steaming', meaning: '김이 오르는', sentence: 'Steaming dishes set out in a row.' },
+            { word: 'put out of one’s mind', meaning: '까맣게 잊다', sentence: 'She had put the day before out of her mind.' },
+            { word: 'thump', meaning: '쿵쿵 뛰다', sentence: 'Her heart was thumping.' },
+            { word: 'come back to', meaning: '떠오르다', sentence: 'Only now did yesterday come back to her.' }
+        ],
+        '04-knock-2.webp': [
+            { word: 'go stiff', meaning: '얼어붙다', sentence: 'She went stiff where she stood.' },
+            { word: 'threshold', meaning: '문턱', sentence: 'The frog was sitting on the threshold.' },
+            { word: 'slam', meaning: '쾅 닫다', sentence: 'The princess slammed the door.' },
+            { word: 'exchange looks', meaning: '눈짓을 주고받다', sentence: 'Her sisters exchanged looks.' }
+        ],
+        '05-king.webp': [
+            { word: 'frighten', meaning: '무섭게 하다', sentence: 'What has frightened you so?' },
+            { word: 'half joking', meaning: '농담처럼', sentence: 'said the king, half joking.' },
+            { word: 'nothing for it but to', meaning: '~하는 수밖에 없다', sentence: 'There was nothing for it but to tell them.' },
+            { word: 'burn', meaning: '화끈거리다', sentence: 'Her face burned while she said it.' }
+        ],
+        '05-king-2.webp': [
+            { word: 'stroke one’s beard', meaning: '수염을 쓸다', sentence: 'He stroked his beard once.' },
+            { word: 'give one’s word', meaning: '약속하다', sentence: 'If you gave your word.' },
+            { word: 'turn one’s back on', meaning: '모른 척하다', sentence: 'You do not turn your back on somebody.' },
+            { word: 'firm', meaning: '단단한', sentence: 'His voice was low, and firm.' }
+        ],
+        '06-dinner.webp': [
+            { word: 'pick one’s way', meaning: '조심조심 지나가다', sentence: 'He picked his way between the dishes.' },
+            { word: 'tablecloth', meaning: '상보', sentence: 'Wet footprints went across the tablecloth.' },
+            { word: 'screw up one’s face', meaning: '인상을 찌푸리다', sentence: 'The princess screwed up her face.' },
+            { word: 'keep a straight face', meaning: '웃음을 참다', sentence: 'Her sisters had trouble keeping straight faces.' }
+        ],
+        '06-dinner-2.webp': [
+            { word: 'pat', meaning: '두드리다', sentence: 'The frog patted his stomach.' },
+            { word: 'I beg your pardon', meaning: '뭐라고요', sentence: 'I beg your pardon?' },
+            { word: 'scarlet', meaning: '새빨간', sentence: 'Her face went scarlet.' },
+            { word: 'at arm’s length', meaning: '팔을 뻗은 채', sentence: 'Holding him out at arm’s length.' }
+        ],
+        '07-room.webp': [
+            { word: 'sting', meaning: '시리게 하다', sentence: 'Cold enough to sting your hand.' },
+            { word: 'leave alone', meaning: '가만두다', sentence: 'That corner would not leave her alone.' },
+            { word: 'get to sleep', meaning: '잠들다', sentence: 'She could not get to sleep.' },
+            { word: 'keep coming back', meaning: '자꾸 떠오르다', sentence: 'What her father had said kept coming back.' }
+        ],
+        '07-room-2.webp': [
+            { word: 'sit up', meaning: '몸을 일으키다', sentence: 'The princess sat up.' },
+            { word: 'hunch down', meaning: '웅크리다', sentence: 'The frog was hunched down on the cold stone.' },
+            { word: 'bitterly', meaning: '몹시', sentence: 'The floor was bitterly cold.' },
+            { word: 'worn raw', meaning: '헐어 벗겨진', sentence: 'His feet were worn raw.' },
+            { word: 'gather up', meaning: '감싸 올리다', sentence: 'She gathered the frog up in both hands.' }
+        ],
+        '08-ending.webp': [
+            { word: 'as bright as noon', meaning: '대낮처럼 환한', sentence: 'The room went as bright as noon.' },
+            { word: 'glare', meaning: '눈부신 빛', sentence: 'She covered her face against the glare.' },
+            { word: 'flicker', meaning: '흔들리다', sentence: 'The candle flickered all by itself.' },
+            { word: 'under a spell', meaning: '마법에 걸린', sentence: 'I was under a spell.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'carriage', meaning: '마차', sentence: 'A carriage drawn by eight white horses.' },
+            { word: 'serve', meaning: '모시다', sentence: 'A man who had served the prince since he was a boy.' },
+            { word: 'iron band', meaning: '쇠테', sentence: 'He had bound iron bands round his own chest.' },
+            { word: 'burst', meaning: '터지다', sentence: 'For fear it would burst.' },
+            { word: 'in alarm', meaning: '놀라서', sentence: 'The prince asked in alarm.' }
+        ],
+        'end.webp': [
+            { word: 'stand first', meaning: '맨 앞에 실려 있다', sentence: 'This story stands first in the collection.' },
+            { word: 'cost nothing', meaning: '아무것도 들지 않다', sentence: 'The promise cost her nothing.' },
+            { word: 'intention', meaning: '생각, 의도', sentence: 'She had no intention of keeping it.' },
+            { word: 'scold', meaning: '나무라다', sentence: 'The king does not scold his daughter.' },
+            { word: 'out of spite', meaning: '미워서', sentence: 'She did not dislike the frog out of spite.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -601,6 +1186,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -609,7 +1195,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -621,7 +1207,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -655,4 +1241,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+

@@ -895,11 +895,6 @@ const EN = {
             q: 'How did the king get the story out of her?',
             choices: ['He ordered her to speak', 'He told her to tell it to the stove', 'He asked Conrad instead'],
             answer: 1
-        },
-        {
-            q: 'Who decided the maid’s punishment?',
-            choices: ['The maid herself, without knowing it', 'The prince', 'The princess'],
-            answer: 0
         }
     ],
     afterword: {

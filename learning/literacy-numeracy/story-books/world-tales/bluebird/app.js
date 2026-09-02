@@ -1007,6 +1007,11 @@ const EN = {
             q: 'Where was the blue bird in the end?',
             choices: ['In the Land of the Future', 'With the grandparents', 'In the cage in their own house'],
             answer: 2
+        },
+        {
+            q: 'What were the babies in the Land of the Future doing?',
+            choices: ['Learning beforehand what they would do on Earth', 'Waiting for the blue bird', 'Playing with the Fairy of Light'],
+            answer: 0
         }
     ],
     afterword: {

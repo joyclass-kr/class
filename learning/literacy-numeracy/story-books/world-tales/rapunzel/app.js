@@ -925,11 +925,6 @@ const EN = {
             q: 'What happened to the prince at the tower?',
             choices: ['The witch drove him away', 'He climbed down the ladder', 'He fell into thorns and lost his sight'],
             answer: 2
-        },
-        {
-            q: 'What made the prince see again?',
-            choices: ['The witch lifted the spell', 'Rapunzel’s tears fell on his eyes', 'He found the green from the garden'],
-            answer: 1
         }
     ],
     afterword: {

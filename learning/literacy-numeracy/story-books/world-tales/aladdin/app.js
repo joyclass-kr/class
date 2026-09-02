@@ -921,11 +921,6 @@ const EN = {
             q: 'How did Aladdin get the lamp back from the magician?',
             choices: ['He took it while the magician hunted', 'The princess gave him a sleeping draught at supper', 'The genie of the ring fetched it'],
             answer: 1
-        },
-        {
-            q: 'Why did people remember Aladdin’s name?',
-            choices: ['He shared grain and mended broken houses', 'He owned the wonderful lamp', 'He had married the princess'],
-            answer: 0
         }
     ],
     afterword: {
