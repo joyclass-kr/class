@@ -310,16 +310,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '하늘을 나는 가방',
+    intro: [
+        '하늘을 나는 가방은 덴마크의 작가 한스 크리스티안 안데르센이 1839년에 펴낸 이야기예요.',
+        '이야기 속 주인공이 다른 사람들에게 이야기를 들려주는 장면이 나와요. 이야기 안에 이야기가 들어 있는 짜임이랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🧳')}
             </div>
             <div class="story-page-right">
-                <h1>하늘을 나는 가방</h1>
-                <p>하늘을 나는 가방은 덴마크의 작가 한스 크리스티안 안데르센이 1839년에 펴낸 이야기예요.</p>
-                <p>이야기 속 주인공이 다른 사람들에게 이야기를 들려주는 장면이 나와요. 이야기 안에 이야기가 들어 있는 짜임이랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -334,8 +343,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -345,8 +354,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -356,22 +365,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -421,9 +431,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -434,7 +444,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -506,7 +516,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -515,34 +525,632 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Flying Trunk',
+        intro: [
+            "The Flying Trunk was published by the Danish author Hans Christian Andersen in 1839.",
+            "There is a scene in it where the hero tells a story to other people — a story inside the story."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · A Fortune Spent',
+            beats: [
+                {
+                    art: '01-spend.webp',
+                    emoji: '💰',
+                    left: [
+                        "Long ago in a certain town there lived a great merchant.",
+                        "He had so much money that he could have paved the whole street with silver.",
+                        "And then the merchant died,",
+                        "and everything went to his only son.",
+                        "The son was delighted.",
+                        "\"Now I may spend as I please.\"",
+                        "And he threw the doors of the store room wide open."
+                    ],
+                    right: [
+                        "The son spent money like water.",
+                        "He had fine clothes made and bought new shoes,",
+                        "and stood a treat for people every day of the week.",
+                        "\"There is nobody like you!\"",
+                        "\"You'll stand us another today, won't you!\"",
+                        "People made a great deal of him,",
+                        "and he found it very pleasant to hear.",
+                        "And meanwhile the store room was emptying."
+                    ]
+                },
+                {
+                    art: '01-spend-2.webp',
+                    emoji: '💰',
+                    left: [
+                        "But a fortune has an end to it.",
+                        "After a few years the store room was bare.",
+                        "He sold the house and he sold the furniture,",
+                        "and there were a few coins left, and no more.",
+                        "And his friends stopped coming, one after another.",
+                        "\"Now who was that again?\""
+                    ],
+                    right: [
+                        "The son sat alone in an empty room.",
+                        "And then an old friend came to see him,",
+                        "carrying a great worn leather trunk.",
+                        "\"You may as well have this. You will want it for packing.\"",
+                        "\"Meaning I should pack and be off, I suppose.\" The son smiled rather bitterly."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Trunk Went Up',
+            beats: [
+                {
+                    art: '02-fly.webp',
+                    emoji: '🧳',
+                    left: [
+                        "But there was nothing to pack,",
+                        "because he had nothing at all.",
+                        "For something to do, the son climbed into the trunk and sat down.",
+                        "It was wide and soft enough to sit in comfortably.",
+                        "\"I shall be the luggage myself, then.\"",
+                        "And he stretched his legs out inside it."
+                    ],
+                    right: [
+                        "For a joke he pressed the lock.",
+                        "There was a click.",
+                        "And in that instant the trunk went up into the air.",
+                        "\"Ah — what is happening!\"",
+                        "The son shut his eyes tight.",
+                        "The trunk went once round the room",
+                        "and then straight out up the chimney.",
+                        "The son held on to the edges with both hands."
+                    ]
+                },
+                {
+                    art: '02-fly-2.webp',
+                    emoji: '🧳',
+                    left: [
+                        "The trunk went up above the clouds.",
+                        "Below him the town shrank to the size of a thumbnail,",
+                        "and the river looked like a thread.",
+                        "The wind roared in his ears.",
+                        "At first the son was frightened,",
+                        "and gripped the edges in case he lost hold of them.",
+                        "And little by little he grew easier."
+                    ],
+                    right: [
+                        "\"This is rather fine, in fact.\"",
+                        "Lean forward and the trunk went forward.",
+                        "Lean to one side and it turned that way.",
+                        "The son went racing about the night sky, delighted with it.",
+                        "The stars looked near enough to touch.",
+                        "\"Now then. Where shall I go?\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Tower in a Strange Country',
+            beats: [
+                {
+                    art: '03-tower.webp',
+                    emoji: '🕌',
+                    left: [
+                        "After a long flight a strange city came into view,",
+                        "with round roofs and pointed towers.",
+                        "The trunk came down lightly in a wood at the edge of it,",
+                        "and the son hid the trunk in a thicket",
+                        "and covered it over well with leaves.",
+                        "Then he walked into the streets."
+                    ],
+                    right: [
+                        "The market was full of strange fruit and spices.",
+                        "The son asked the people going past about this and that.",
+                        "And then he noticed a high tower away in the distance.",
+                        "\"Who lives in that tower?\"",
+                        "The fruit seller dropped his voice",
+                        "and even glanced round him first."
+                    ]
+                },
+                {
+                    art: '03-tower-2.webp',
+                    emoji: '🕌',
+                    left: [
+                        "\"That is where the princess is kept.\"",
+                        "\"A fortune teller gave out a prophecy, you see.\"",
+                        "\"That the princess would be made unhappy by love.\"",
+                        "\"So the king put her up in that tower.\"",
+                        "\"Where nobody can get to her.\""
+                    ],
+                    right: [
+                        "The son's eyes lit up.",
+                        "\"Nobody by land, at any rate.\"",
+                        "\"I beg your pardon?\"",
+                        "\"Nothing, nothing. Thank you.\"",
+                        "And the son moved off quickly.",
+                        "He waited only for the sun to go down."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · In at the Window',
+            beats: [
+                {
+                    art: '04-window.webp',
+                    emoji: '🌙',
+                    left: [
+                        "When night came the son went back to the wood",
+                        "and got the trunk out of the thicket.",
+                        "He climbed in and pressed the lock,",
+                        "and the trunk lifted quietly into the air.",
+                        "The son went straight up to the top of the tower.",
+                        "There was a window standing half open."
+                    ],
+                    right: [
+                        "He climbed over the sill and stepped softly in.",
+                        "There was one lamp burning in the room",
+                        "and books lying open here and there.",
+                        "The princess was asleep on a long couch.",
+                        "She started awake at the sound of him.",
+                        "\"Wh-who are you!\" The princess pulled the blanket up.",
+                        "And the son quickly held up both hands."
+                    ]
+                },
+                {
+                    art: '04-window-2.webp',
+                    emoji: '🌙',
+                    left: [
+                        "He bowed at once.",
+                        "\"Do not be alarmed.\"",
+                        "\"I have come from the sky.\"",
+                        "The princess's eyes went round.",
+                        "\"From the sky?\"",
+                        "\"Indeed. I came on a cloud.\""
+                    ],
+                    right: [
+                        "\"I have come a long way to see you.\"",
+                        "The princess was more curious than frightened.",
+                        "He was the first visitor she had had since she was shut in the tower.",
+                        "\"Truly? What is it like up there?\"",
+                        "The son smiled",
+                        "and sat himself down on the windowsill."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · He Tells Her a Story',
+            beats: [
+                {
+                    art: '05-story.webp',
+                    emoji: '🔥',
+                    left: [
+                        "And sitting there he began a story,",
+                        "about the kitchen things arguing among themselves.",
+                        "\"And the basket said this.\"",
+                        "\"That she was the most useful of the lot!\"",
+                        "\"And that put the saucepan's back up.\"",
+                        "\"And who is it that sits on the fire and puts up with it!\""
+                    ],
+                    right: [
+                        "\"And the matches said, very grandly,\"",
+                        "\"Without fire you can none of you do anything.\"",
+                        "The son did all the voices,",
+                        "and the princess laughed until she had to hold her sides.",
+                        "She could not remember when she had last laughed like that.",
+                        "The story went on until the lamp had burned right down."
+                    ]
+                },
+                {
+                    art: '05-story-2.webp',
+                    emoji: '🔥',
+                    left: [
+                        "When the story ended, the window was already going grey.",
+                        "\"I must be going.\"",
+                        "The princess put out a hand quickly.",
+                        "\"You will come again tomorrow?\"",
+                        "\"Of course.\"",
+                        "And the son waved as he climbed over the sill."
+                    ],
+                    right: [
+                        "After that he came to the tower every night,",
+                        "and made up something new each time.",
+                        "Some nights he told a funny story.",
+                        "Some nights he told a sad one.",
+                        "The princess counted the hours until he came.",
+                        "And the two of them grew very close."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Before the King',
+            beats: [
+                {
+                    art: '06-parents.webp',
+                    emoji: '👑',
+                    left: [
+                        "One day the king and queen came up to the tower.",
+                        "They wanted to know why the princess had grown so much brighter.",
+                        "And the princess could not hide it and told them.",
+                        "\"There is somebody who comes from the sky.\"",
+                        "\"And the stories he tells!\" Her face was shining with it."
+                    ],
+                    right: [
+                        "The king frowned.",
+                        "The queen, though, was curious.",
+                        "\"He tells stories well, does he?\"",
+                        "\"We might hear one ourselves, perhaps.\"",
+                        "And in the end the king nodded.",
+                        "\"Bring the man here, then.\""
+                    ]
+                },
+                {
+                    art: '06-parents-2.webp',
+                    emoji: '👑',
+                    left: [
+                        "That evening the son went to the palace.",
+                        "The king and queen sat side by side,",
+                        "with the court standing round them.",
+                        "The son cleared his throat and began.",
+                        "This time it was a very long story,",
+                        "and the hall went as quiet as still water.",
+                        "The queen wiped her eyes.",
+                        "And the king slapped his knee."
+                    ],
+                    right: [
+                        "\"I have never seen a gift like it!\"",
+                        "\"Where should we find a better son-in-law!\"",
+                        "The wedding day was fixed there and then.",
+                        "The princess went pink,",
+                        "and the whole country set about getting ready for the feast.",
+                        "The smell of baking filled the streets for days."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · Fireworks in the Sky',
+            beats: [
+                {
+                    art: '07-fireworks.webp',
+                    emoji: '🎆',
+                    left: [
+                        "It was the night before the wedding,",
+                        "and the whole city was keeping the feast.",
+                        "There were lamps along every street and drums beating.",
+                        "The son wanted to give the people a surprise.",
+                        "\"And if I am going to do it, it shall be from the sky.\"",
+                        "So he bought a great load of fireworks in the market,",
+                        "more than a cart could carry."
+                    ],
+                    right: [
+                        "He spent the last of his money on them,",
+                        "loaded them into the trunk and went out to the wood.",
+                        "And then he went up in the trunk into the sky.",
+                        "The city glittered below him.",
+                        "And the son lit the fireworks, one after another.",
+                        "The fuses burned down with a hiss."
+                    ]
+                },
+                {
+                    art: '07-fireworks-2.webp',
+                    emoji: '🎆',
+                    left: [
+                        "The fireworks went off, bang after bang.",
+                        "Red and blue and yellow came pouring down the sky.",
+                        "People tipped their heads back and cheered.",
+                        "\"Whatever is that!\"",
+                        "\"The sky itself is blessing them!\"",
+                        "Children jumped about clapping,",
+                        "and the whole city was on its feet."
+                    ],
+                    right: [
+                        "The son looked down at it, well pleased with himself.",
+                        "When the last firework had gone he brought the trunk down",
+                        "and left it standing in a clearing in the wood.",
+                        "Then he went down into the town to see the feast.",
+                        "And he did not once look back."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · The Burnt Trunk',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🌑',
+                    left: [
+                        "The son watched the feast until late in the night.",
+                        "Everybody was talking about the sky,",
+                        "and he could hardly keep his face straight.",
+                        "It was near dawn when he went back to the wood.",
+                        "And something was wrong where the trunk had been.",
+                        "The trunk was not there."
+                    ],
+                    right: [
+                        "There was a burnt smell in the air.",
+                        "In its place lay a heap of ashes.",
+                        "One firework had gone across and set it alight.",
+                        "The son sat down hard in front of it",
+                        "and put his hands through the ashes.",
+                        "There was nothing left at all.",
+                        "Only one piece of the lock, burnt black."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🌑',
+                    left: [
+                        "There was no way of getting up to the tower now.",
+                        "He was the man who had come from the sky,",
+                        "and he could hardly walk to the palace on his own two feet.",
+                        "So the son left the city",
+                        "and went from place to place telling stories —",
+                        "in market squares and at the ends of villages."
+                    ],
+                    right: [
+                        "People liked those stories very much.",
+                        "And the son always looked up at the sky.",
+                        "Meanwhile the princess waited, from that night on.",
+                        "She is at the tower window still, looking up.",
+                        "Waiting for the day a trunk comes up again between the clouds."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did the old friend bring him?',
+            choices: ['A great worn leather trunk', 'A bag of money', 'A new coat'],
+            answer: 0
+        },
+        {
+            q: 'How did the trunk start to fly?',
+            choices: ['He wished it into the air', 'The friend told him the words', 'He pressed the lock while sitting in it'],
+            answer: 2
+        },
+        {
+            q: 'Why was the princess kept in a tower?',
+            choices: ['She had asked to be alone', 'A fortune teller said love would make her unhappy', 'The city was at war'],
+            answer: 1
+        },
+        {
+            q: 'What did he tell the princess he was?',
+            choices: ['Somebody who had come from the sky', 'A merchant’s son', 'A servant of the king'],
+            answer: 0
+        },
+        {
+            q: 'What was his story about?',
+            choices: ['The stars above the clouds', 'The tower and the fortune teller', 'Kitchen things arguing about who was most useful'],
+            answer: 2
+        },
+        {
+            q: 'Why did the king agree to the marriage?',
+            choices: ['The man was rich', 'He was amazed at how well the man told stories', 'The queen insisted'],
+            answer: 1
+        },
+        {
+            q: 'What happened to the trunk?',
+            choices: ['One of his own fireworks set it alight', 'Somebody stole it from the wood', 'It flew away by itself'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🧳',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Andersen liked putting a story inside a story. Here the matches and the saucepan have a conversation of their own.",
+                    "The merchant's son spends everything he inherited. What is left is one old trunk. And that trunk flew.",
+                    "When he goes to see the princess he tells her a story — matches and pots and dishes all boasting at each other. He had nothing to bring, so he went with a story.",
+                    "Before the wedding he puts on a firework display, so the whole city will look up. And one of those fireworks lands on the trunk."
+                ],
+                right: [
+                    "Once the trunk is burnt he cannot go up any more. The thing he did to show off is the thing that cut the road.",
+                    "What could he have done instead of the fireworks?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-spend.webp': [
+            { word: 'merchant', meaning: '장사꾼', sentence: 'There lived a great merchant.' },
+            { word: 'pave', meaning: '덮다, 깔다', sentence: 'He could have paved the street with silver.' },
+            { word: 'store room', meaning: '곳간', sentence: 'He threw the doors of the store room open.' },
+            { word: 'stand a treat', meaning: '한턱내다', sentence: 'He stood a treat for people every day.' },
+            { word: 'make a great deal of', meaning: '떠받들다', sentence: 'People made a great deal of him.' }
+        ],
+        '01-spend-2.webp': [
+            { word: 'fortune', meaning: '재산', sentence: 'But a fortune has an end to it.' },
+            { word: 'bare', meaning: '텅 빈', sentence: 'The store room was bare.' },
+            { word: 'furniture', meaning: '세간', sentence: 'He sold the house and the furniture.' },
+            { word: 'worn', meaning: '낡은', sentence: 'A great worn leather trunk.' },
+            { word: 'bitterly', meaning: '쓰게', sentence: 'The son smiled rather bitterly.' }
+        ],
+        '02-fly.webp': [
+            { word: 'luggage', meaning: '짐', sentence: 'I shall be the luggage myself, then.' },
+            { word: 'for a joke', meaning: '장난삼아', sentence: 'For a joke he pressed the lock.' },
+            { word: 'click', meaning: '딸깍 소리', sentence: 'There was a click.' },
+            { word: 'chimney', meaning: '굴뚝', sentence: 'Straight out up the chimney.' },
+            { word: 'hold on to', meaning: '붙잡다', sentence: 'He held on to the edges.' }
+        ],
+        '02-fly-2.webp': [
+            { word: 'shrink', meaning: '작아지다', sentence: 'The town shrank to the size of a thumbnail.' },
+            { word: 'grip', meaning: '꽉 쥐다', sentence: 'He gripped the edges.' },
+            { word: 'in case', meaning: '~할까 봐', sentence: 'In case he lost hold of them.' },
+            { word: 'lean', meaning: '기울이다', sentence: 'Lean forward and the trunk went forward.' },
+            { word: 'race about', meaning: '달리다', sentence: 'He went racing about the night sky.' }
+        ],
+        '03-tower.webp': [
+            { word: 'come into view', meaning: '나타나다', sentence: 'A strange city came into view.' },
+            { word: 'thicket', meaning: '덤불', sentence: 'He hid the trunk in a thicket.' },
+            { word: 'spice', meaning: '향신료', sentence: 'The market was full of strange fruit and spices.' },
+            { word: 'drop one’s voice', meaning: '목소리를 낮추다', sentence: 'The fruit seller dropped his voice.' },
+            { word: 'glance round', meaning: '둘레를 살피다', sentence: 'He even glanced round him first.' }
+        ],
+        '03-tower-2.webp': [
+            { word: 'fortune teller', meaning: '점쟁이', sentence: 'A fortune teller gave out a prophecy.' },
+            { word: 'prophecy', meaning: '점괘', sentence: 'A fortune teller gave out a prophecy.' },
+            { word: 'get to', meaning: '닿다', sentence: 'Where nobody can get to her.' },
+            { word: 'by land', meaning: '땅으로는', sentence: 'Nobody by land, at any rate.' },
+            { word: 'move off', meaning: '자리를 뜨다', sentence: 'The son moved off quickly.' }
+        ],
+        '04-window.webp': [
+            { word: 'lock', meaning: '자물쇠', sentence: 'He climbed in and pressed the lock.' },
+            { word: 'sill', meaning: '창턱', sentence: 'He climbed over the sill.' },
+            { word: 'softly', meaning: '살그머니', sentence: 'And stepped softly in.' },
+            { word: 'couch', meaning: '긴 의자', sentence: 'The princess was asleep on a long couch.' },
+            { word: 'start awake', meaning: '깜짝 놀라 깨다', sentence: 'She started awake at the sound of him.' }
+        ],
+        '04-window-2.webp': [
+            { word: 'bow', meaning: '고개를 숙이다', sentence: 'He bowed at once.' },
+            { word: 'alarmed', meaning: '놀란', sentence: 'Do not be alarmed.' },
+            { word: 'curious', meaning: '신기해하는', sentence: 'She was more curious than frightened.' },
+            { word: 'shut in', meaning: '갇힌', sentence: 'Since she was shut in the tower.' }
+        ],
+        '05-story.webp': [
+            { word: 'argue', meaning: '다투다', sentence: 'The kitchen things arguing among themselves.' },
+            { word: 'useful', meaning: '쓸모 있는', sentence: 'She was the most useful of the lot.' },
+            { word: 'put one’s back up', meaning: '발끈하게 하다', sentence: "That put the saucepan's back up." },
+            { word: 'put up with', meaning: '참다', sentence: 'Who sits on the fire and puts up with it!' },
+            { word: 'grandly', meaning: '콧대 높게', sentence: 'And the matches said, very grandly.' }
+        ],
+        '05-story-2.webp': [
+            { word: 'go grey', meaning: '뿌옇게 밝아 오다', sentence: 'The window was already going grey.' },
+            { word: 'wave', meaning: '손을 흔들다', sentence: 'The son waved as he climbed over the sill.' },
+            { word: 'make up', meaning: '지어내다', sentence: 'And made up something new each time.' },
+            { word: 'count the hours', meaning: '손꼽아 기다리다', sentence: 'The princess counted the hours until he came.' }
+        ],
+        '06-parents.webp': [
+            { word: 'brighter', meaning: '밝아진', sentence: 'Why the princess had grown so much brighter.' },
+            { word: 'hide', meaning: '숨기다', sentence: 'The princess could not hide it.' },
+            { word: 'frown', meaning: '눈살을 찌푸리다', sentence: 'The king frowned.' },
+            { word: 'perhaps', meaning: '~하면 어떨까', sentence: 'We might hear one ourselves, perhaps.' }
+        ],
+        '06-parents-2.webp': [
+            { word: 'court', meaning: '신하들', sentence: 'With the court standing round them.' },
+            { word: 'as quiet as still water', meaning: '물을 끼얹은 듯 조용한', sentence: 'The hall went as quiet as still water.' },
+            { word: 'slap one’s knee', meaning: '무릎을 치다', sentence: 'And the king slapped his knee.' },
+            { word: 'son-in-law', meaning: '사윗감', sentence: 'Where should we find a better son-in-law!' },
+            { word: 'there and then', meaning: '그 자리에서', sentence: 'The wedding day was fixed there and then.' }
+        ],
+        '07-fireworks.webp': [
+            { word: 'keep the feast', meaning: '잔치를 벌이다', sentence: 'The whole city was keeping the feast.' },
+            { word: 'surprise', meaning: '놀랄 일', sentence: 'He wanted to give the people a surprise.' },
+            { word: 'firework', meaning: '불꽃', sentence: 'He bought a great load of fireworks.' },
+            { word: 'glitter', meaning: '반짝이다', sentence: 'The city glittered below him.' },
+            { word: 'fuse', meaning: '심지', sentence: 'The fuses burned down with a hiss.' }
+        ],
+        '07-fireworks-2.webp': [
+            { word: 'go off', meaning: '터지다', sentence: 'The fireworks went off, bang after bang.' },
+            { word: 'tip one’s head back', meaning: '고개를 젖히다', sentence: 'People tipped their heads back and cheered.' },
+            { word: 'bless', meaning: '축복하다', sentence: 'The sky itself is blessing them!' },
+            { word: 'clearing', meaning: '빈터', sentence: 'He left it standing in a clearing.' }
+        ],
+        '08-ending.webp': [
+            { word: 'keep one’s face straight', meaning: '웃음을 참다', sentence: 'He could hardly keep his face straight.' },
+            { word: 'burnt smell', meaning: '매캐한 냄새', sentence: 'There was a burnt smell in the air.' },
+            { word: 'ashes', meaning: '재', sentence: 'In its place lay a heap of ashes.' },
+            { word: 'set alight', meaning: '불붙이다', sentence: 'One firework had set it alight.' },
+            { word: 'burnt black', meaning: '까맣게 탄', sentence: 'Only one piece of the lock, burnt black.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'on one’s own two feet', meaning: '제 발로', sentence: 'He could hardly walk there on his own two feet.' },
+            { word: 'market square', meaning: '장터', sentence: 'In market squares and at the ends of villages.' },
+            { word: 'look up at', meaning: '올려다보다', sentence: 'The son always looked up at the sky.' },
+            { word: 'from that night on', meaning: '그 밤 이후로', sentence: 'The princess waited, from that night on.' }
+        ],
+        'end.webp': [
+            { word: 'inherit', meaning: '물려받다', sentence: 'He spends everything he inherited.' },
+            { word: 'boast', meaning: '자랑하다', sentence: 'Matches and pots all boasting at each other.' },
+            { word: 'display', meaning: '벌이는 행사', sentence: 'He puts on a firework display.' },
+            { word: 'show off', meaning: '자랑하다', sentence: 'The thing he did to show off.' },
+            { word: 'cut', meaning: '끊다', sentence: 'The thing that cut the road.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -607,6 +1215,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -615,7 +1224,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -627,7 +1236,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -661,4 +1270,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
