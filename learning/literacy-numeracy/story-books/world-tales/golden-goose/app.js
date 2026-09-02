@@ -312,16 +312,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '황금 거위',
+    intro: [
+        '황금 거위는 독일의 그림 형제가 모아 적은 옛이야기예요. 막내가 주인공이 되는 옛이야기의 짜임을 잘 보여 준답니다.',
+        '거위에 손을 대면 떨어지지 않아 줄줄이 매달려 걷게 되는데, 그 모습이 이야기의 가장 큰 볼거리예요. 웃지 않던 공주를 웃게 만드는 것도 바로 그 장면이랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🪿')}
             </div>
             <div class="story-page-right">
-                <h1>황금 거위</h1>
-                <p>황금 거위는 독일의 그림 형제가 모아 적은 옛이야기예요. 막내가 주인공이 되는 옛이야기의 짜임을 잘 보여 준답니다.</p>
-                <p>거위에 손을 대면 떨어지지 않아 줄줄이 매달려 걷게 되는데, 그 모습이 이야기의 가장 큰 볼거리예요. 웃지 않던 공주를 웃게 만드는 것도 바로 그 장면이랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -336,8 +345,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -347,8 +356,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -358,22 +367,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -423,9 +433,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -436,7 +446,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -508,7 +518,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -517,34 +527,631 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Golden Goose',
+        intro: [
+            "The Golden Goose is one of the old tales the Brothers Grimm collected in Germany. It shows very clearly the shape of an old story in which the youngest son is the hero.",
+            "Once you touch the goose you cannot let go, and people end up walking along in a string — that is the great sight of the story. And it is exactly that which makes the princess who never laughed laugh at last."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Eldest Goes to the Wood',
+            beats: [
+                {
+                    art: '01-eldest.webp',
+                    emoji: '🪓',
+                    left: [
+                        "There were three sons in one house.",
+                        "The eldest was tall and strong.",
+                        "The second was well built and could talk his way anywhere.",
+                        "The youngest was neither of those things,",
+                        "and the family always looked down on him.",
+                        "\"That boy is no use for anything.\""
+                    ],
+                    right: [
+                        "One day the eldest went into the wood to cut wood.",
+                        "His mother baked him good bread",
+                        "and filled a jar with wine for him.",
+                        "\"It is hard work. You must eat properly.\"",
+                        "The eldest went off with his shoulders back.",
+                        "The morning sun was slanting in among the trees."
+                    ]
+                },
+                {
+                    art: '01-eldest-2.webp',
+                    emoji: '🪓',
+                    left: [
+                        "The eldest put down his axe and sat.",
+                        "And then a small old man came up to him,",
+                        "with a beard down to his waist.",
+                        "\"I am very hungry.\"",
+                        "\"Would you share a little with me?\"",
+                        "The eldest put both arms round his bread."
+                    ],
+                    right: [
+                        "\"I have hardly enough for myself.\"",
+                        "The old man turned away without a word,",
+                        "and the eldest picked up his axe again.",
+                        "And at the very first stroke his hand slipped.",
+                        "The eldest hurt his arm,",
+                        "and he came home limping that day without one load of wood."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Second Son Does the Same',
+            beats: [
+                {
+                    art: '02-second.webp',
+                    emoji: '🌲',
+                    left: [
+                        "Next day the second son went into the wood.",
+                        "He too took good bread and wine along.",
+                        "\"My brother was simply unlucky.\"",
+                        "The second son went humming down the road,",
+                        "and the shade of the trees was cool when he got there.",
+                        "After a while the old man appeared."
+                    ],
+                    right: [
+                        "He was sitting in exactly the same place as the day before.",
+                        "\"I am very hungry.\"",
+                        "\"Would you share a little with me?\"",
+                        "The second son waved him off with both hands.",
+                        "\"Out of the way. I am working here.\" The old man stood quietly where he was."
+                    ]
+                },
+                {
+                    art: '02-second-2.webp',
+                    emoji: '🌲',
+                    left: [
+                        "The old man went quietly away,",
+                        "and the second son started swinging his axe again.",
+                        "And it was not long before something happened.",
+                        "The tree he was cutting came down the wrong way",
+                        "and caught him on the foot.",
+                        "\"Oh, my foot!\""
+                    ],
+                    right: [
+                        "The second son came home limping too.",
+                        "Now there were two brothers laid up side by side in the room,",
+                        "and their mother sighed over them.",
+                        "\"Whatever are we to do.\"",
+                        "There was groaning from the room, first one and then the other,",
+                        "and there was no firewood left at all.",
+                        "And then the youngest spoke up, carefully."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Youngest Goes',
+            beats: [
+                {
+                    art: '03-share.webp',
+                    emoji: '🍞',
+                    left: [
+                        "\"I shall go and cut the wood.\"",
+                        "His brothers snorted under their blankets.",
+                        "\"You? Can you even hold an axe?\"",
+                        "His mother had no faith in it either,",
+                        "and there was nothing else for it.",
+                        "\"Go on with you, then.\""
+                    ],
+                    right: [
+                        "His mother wrapped him up some hard, stale bread,",
+                        "and there was nothing to drink but sour beer.",
+                        "The youngest took it and set off in good spirits.",
+                        "\"That will do me nicely.\"",
+                        "When he got to the wood the birds were singing.",
+                        "The youngest rolled up his sleeves and looked over the trees."
+                    ]
+                },
+                {
+                    art: '03-share-2.webp',
+                    emoji: '🍞',
+                    left: [
+                        "At midday the old man appeared again.",
+                        "\"I am very hungry.\"",
+                        "\"Would you share a little with me?\"",
+                        "The youngest made room for him at once.",
+                        "\"It is nothing much, but sit down and eat with me if you like.\"",
+                        "And he spread out his cloth."
+                    ],
+                    right: [
+                        "And the hard bread had turned into fine bread.",
+                        "The sour beer had turned into good sweet wine.",
+                        "The youngest opened his eyes wide.",
+                        "The old man only smiled.",
+                        "The two of them sat side by side and ate their fill,",
+                        "and talked away comfortably as they did it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Goose in the Tree Stump',
+            beats: [
+                {
+                    art: '04-goose.webp',
+                    emoji: '🌳',
+                    left: [
+                        "When they had finished the old man got up.",
+                        "\"You have a good heart.\"",
+                        "\"Cut down that tree over there.\"",
+                        "And he pointed at one old tree.",
+                        "\"There will be something good in the stump.\"",
+                        "So the youngest set about cutting it."
+                    ],
+                    right: [
+                        "After a long while the tree came down with a crack",
+                        "and the stump lay open.",
+                        "And the inside of it was hollow.",
+                        "Something was shining down in there.",
+                        "The youngest bent over to look,",
+                        "and put a hand carefully in to feel about."
+                    ]
+                },
+                {
+                    art: '04-goose-2.webp',
+                    emoji: '🌳',
+                    left: [
+                        "There was a goose sitting inside the stump,",
+                        "with every feather shining gold.",
+                        "\"Well I never — a goose like this!\"",
+                        "The youngest lifted her out in both hands,",
+                        "and the goose sat quietly in his arms.",
+                        "When he looked round, the old man was already gone."
+                    ],
+                    right: [
+                        "The youngest carried the goose out of the wood.",
+                        "The sun was going down and it was getting dark.",
+                        "He decided to stop for the night at an inn.",
+                        "When he reached the door people stared at him,",
+                        "because the golden goose shone even in the half light.",
+                        "The youngest held her close."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · Their Hands Stuck Fast',
+            beats: [
+                {
+                    art: '05-stuck.webp',
+                    emoji: '✋',
+                    left: [
+                        "The innkeeper had three daughters,",
+                        "and their eyes went round at the golden feathers.",
+                        "It was after the youngest had gone in and fallen asleep.",
+                        "The eldest daughter crept over.",
+                        "\"Just one. Shall I pull out just one?\"",
+                        "And she put her hand on a feather."
+                    ],
+                    right: [
+                        "And her hand stuck fast.",
+                        "Pull as she might, it would not come away.",
+                        "She braced a foot against the wall and heaved.",
+                        "And still the hand did not move.",
+                        "\"Whatever is the matter?\"",
+                        "The second daughter came and pulled at her sister's arm in fright.",
+                        "And the second one's hand stuck to her sister's arm."
+                    ]
+                },
+                {
+                    art: '05-stuck-2.webp',
+                    emoji: '✋',
+                    left: [
+                        "The third daughter came running and took hold of her sisters,",
+                        "and you can guess the rest.",
+                        "The three of them hung there in a row.",
+                        "\"It won't come off! I tell you it won't come off!\"",
+                        "The three sisters struggled all night,",
+                        "and the youngest slept soundly and knew nothing about it."
+                    ],
+                    right: [
+                        "Next morning the youngest woke up",
+                        "and went out of the room with the goose in his arms,",
+                        "with no idea what was trailing behind him.",
+                        "The three sisters were dragged along at a trot.",
+                        "Their skirts caught on the threshold",
+                        "and the three of them very nearly went over.",
+                        "\"Excuse me! Would you stop a moment!\" But the youngest did not hear."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · A String of People',
+            beats: [
+                {
+                    art: '06-parade.webp',
+                    emoji: '🎪',
+                    left: [
+                        "The youngest walked down the village road with the goose in his arms",
+                        "and three sisters strung out behind him.",
+                        "People at the roadside laughed until they had to hold their sides.",
+                        "And then the priest saw it.",
+                        "\"Children, what a way to carry on!\"",
+                        "And he took hold of the last daughter."
+                    ],
+                    right: [
+                        "And the priest stuck fast as well.",
+                        "\"Wh-what is the meaning of this!\"",
+                        "The baker happened to be passing and pulled at the priest,",
+                        "and the baker stuck too.",
+                        "The line got longer and longer,",
+                        "and there was flour flying everywhere.",
+                        "\"And what about my dough!\""
+                    ]
+                },
+                {
+                    art: '06-parade-2.webp',
+                    emoji: '🎪',
+                    left: [
+                        "Two farmers came running from the fields.",
+                        "\"Let us pull them apart!\"",
+                        "And the two of them stuck fast as well.",
+                        "Now the line was as long as the village street.",
+                        "When the youngest walked, the whole lot came stumbling after.",
+                        "\"Right! Turn right!\""
+                    ],
+                    right: [
+                        "\"Keep in step, will you!\"",
+                        "People got their feet tangled and went down,",
+                        "and even going down their hands did not come loose.",
+                        "The youngest strode on with nothing but the goose.",
+                        "He had no idea what was going on behind him.",
+                        "Only the goose gave a squawk in his arms,",
+                        "and the youngest grinned at the sound of it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Princess Who Never Laughed',
+            beats: [
+                {
+                    art: '07-princess.webp',
+                    emoji: '😐',
+                    left: [
+                        "About that time a king in that country had a great worry.",
+                        "His daughter had never once laughed since the day she was born.",
+                        "The king sent for every kind of entertainer.",
+                        "Clowns came, and acrobats came,",
+                        "and the princess did not move an eyebrow.",
+                        "At last the king put out word through the whole country."
+                    ],
+                    right: [
+                        "\"Whoever makes my daughter laugh shall have a reward.\"",
+                        "A great many people came to the castle",
+                        "and put on funny clothes and did their tricks.",
+                        "And the princess's face stayed exactly as it was.",
+                        "The king sighed over it every day.",
+                        "\"If only she would laugh, just once.\""
+                    ]
+                },
+                {
+                    art: '07-princess-2.webp',
+                    emoji: '😐',
+                    left: [
+                        "And that day the strange procession came along the high road in front of the castle.",
+                        "In front walked a young man with a golden goose in his arms,",
+                        "and behind him people were strung out in a line,",
+                        "arms going one way and legs the other.",
+                        "Anybody would have laughed at the sight of it.",
+                        "And the princess happened to be standing at her window."
+                    ],
+                    right: [
+                        "The princess looked steadily at that procession,",
+                        "and the corners of her mouth began to twitch.",
+                        "And at last she could not hold it in.",
+                        "\"Ha ha ha ha!\"",
+                        "The laughter rang through the whole castle.",
+                        "It was the first time she had laughed in her life."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · The Day Their Hands Came Loose',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '😂',
+                    left: [
+                        "The moment the princess laughed, something remarkable happened.",
+                        "All the stuck hands came away, one after another.",
+                        "The three sisters were free, and so was the priest.",
+                        "The baker looked at his own hand,",
+                        "and the two farmers looked at each other.",
+                        "\"Now what in the world was all that?\""
+                    ],
+                    right: [
+                        "People stood staring at one another, bewildered.",
+                        "And then one by one they began to laugh.",
+                        "Everybody in the road laughed with them,",
+                        "and up at the castle window the princess was laughing still.",
+                        "The king heard it and came running out.",
+                        "It was the first laughter he had heard in years,",
+                        "and his own eyes went red with it."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '😂',
+                    left: [
+                        "The king sent for the youngest son.",
+                        "\"It was you who made my daughter laugh.\"",
+                        "\"You shall have your reward, as I promised. What would you like?\"",
+                        "The youngest looked down at the goose.",
+                        "The goose stretched out her neck,",
+                        "and her feathers shone in the morning sun.",
+                        "\"I should like to take this goose back to the wood.\""
+                    ],
+                    right: [
+                        "\"She is not mine.\"",
+                        "The king laughed out loud and nodded.",
+                        "So the youngest went to the wood and let the goose go,",
+                        "and she opened her wings and flew away.",
+                        "And after that he lived very well at the castle.",
+                        "And in time his brothers came to see him differently."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did the two elder brothers do when the old man asked for food?',
+            choices: ['They both refused him', 'They both shared with him', 'They gave him wine only'],
+            answer: 0
+        },
+        {
+            q: 'What did the youngest take with him into the wood?',
+            choices: ['Good bread and wine', 'Nothing at all', 'Hard stale bread and sour beer'],
+            answer: 2
+        },
+        {
+            q: 'What happened to the youngest son’s food?',
+            choices: ['The old man took it away', 'It turned into fine bread and sweet wine', 'It ran out at once'],
+            answer: 1
+        },
+        {
+            q: 'Where was the golden goose?',
+            choices: ['Inside a hollow tree stump', 'At the inn', 'In the castle garden'],
+            answer: 0
+        },
+        {
+            q: 'Why did the second daughter stick fast?',
+            choices: ['She touched a feather herself', 'She held the youngest son’s coat', 'She pulled at her sister’s arm'],
+            answer: 2
+        },
+        {
+            q: 'What made the princess laugh?',
+            choices: ['The clowns and acrobats', 'The string of people trailing after the goose', 'The golden feathers'],
+            answer: 1
+        },
+        {
+            q: 'What did the youngest ask the king for?',
+            choices: ['To take the goose back to the wood', 'Gold and land', 'Nothing at all'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🪿',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Whether or not you share your food with the old man in the wood — the whole story turns on that. The Brothers Grimm collected it.",
+                    "The two elder brothers meet the old man and will not share their bread and wine, because it would leave them less. The youngest shares, and he had less to start with.",
+                    "The golden goose was not something the youngest found. It was under the tree the old man pointed at.",
+                    "Look at the people stuck to that goose. Every one of them only touched one thing. They pulled at the person in front without knowing they would stick — and so the whole line grew."
+                ],
+                right: [
+                    "What made the princess laugh was not a performance. Nobody there was trying to be funny at all.",
+                    "At the end the youngest sends the goose back to the wood. Why do you think he did?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-eldest.webp': [
+            { word: 'well built', meaning: '몸집이 좋은', sentence: 'The second was well built.' },
+            { word: 'talk one’s way', meaning: '말솜씨로 해결하다', sentence: 'He could talk his way anywhere.' },
+            { word: 'look down on', meaning: '얕보다', sentence: 'The family always looked down on him.' },
+            { word: 'no use', meaning: '쓸모없는', sentence: 'That boy is no use for anything.' },
+            { word: 'slant in', meaning: '비껴들다', sentence: 'The morning sun was slanting in.' }
+        ],
+        '01-eldest-2.webp': [
+            { word: 'beard', meaning: '수염', sentence: 'With a beard down to his waist.' },
+            { word: 'share', meaning: '나누다', sentence: 'Would you share a little with me?' },
+            { word: 'stroke', meaning: '내리치기', sentence: 'At the very first stroke his hand slipped.' },
+            { word: 'limp', meaning: '절뚝거리다', sentence: 'He came home limping.' },
+            { word: 'load', meaning: '짐', sentence: 'Without one load of wood.' }
+        ],
+        '02-second.webp': [
+            { word: 'unlucky', meaning: '운이 나쁜', sentence: 'My brother was simply unlucky.' },
+            { word: 'hum', meaning: '콧노래를 부르다', sentence: 'He went humming down the road.' },
+            { word: 'shade', meaning: '그늘', sentence: 'The shade of the trees was cool.' },
+            { word: 'wave off', meaning: '손을 홰홰 젓다', sentence: 'He waved him off with both hands.' }
+        ],
+        '02-second-2.webp': [
+            { word: 'swing', meaning: '휘두르다', sentence: 'He started swinging his axe again.' },
+            { word: 'the wrong way', meaning: '엉뚱한 쪽으로', sentence: 'The tree came down the wrong way.' },
+            { word: 'laid up', meaning: '앓아누운', sentence: 'Two brothers laid up side by side.' },
+            { word: 'groan', meaning: '앓는 소리', sentence: 'There was groaning from the room.' },
+            { word: 'speak up', meaning: '입을 열다', sentence: 'And then the youngest spoke up.' }
+        ],
+        '03-share.webp': [
+            { word: 'snort', meaning: '코웃음 치다', sentence: 'His brothers snorted under their blankets.' },
+            { word: 'have faith in', meaning: '미더워하다', sentence: 'His mother had no faith in it either.' },
+            { word: 'stale', meaning: '딱딱하게 굳은', sentence: 'Some hard, stale bread.' },
+            { word: 'sour', meaning: '시어 버린', sentence: 'There was nothing to drink but sour beer.' },
+            { word: 'in good spirits', meaning: '기분 좋게', sentence: 'He set off in good spirits.' }
+        ],
+        '03-share-2.webp': [
+            { word: 'make room', meaning: '자리를 내주다', sentence: 'The youngest made room for him at once.' },
+            { word: 'nothing much', meaning: '변변찮은 것', sentence: 'It is nothing much.' },
+            { word: 'spread out', meaning: '펴다', sentence: 'And he spread out his cloth.' },
+            { word: 'eat one’s fill', meaning: '배불리 먹다', sentence: 'They ate their fill.' }
+        ],
+        '04-goose.webp': [
+            { word: 'a good heart', meaning: '고운 마음씨', sentence: 'You have a good heart.' },
+            { word: 'stump', meaning: '나무 밑동', sentence: 'There will be something good in the stump.' },
+            { word: 'set about', meaning: '~하기 시작하다', sentence: 'The youngest set about cutting it.' },
+            { word: 'hollow', meaning: '텅 빈', sentence: 'And the inside of it was hollow.' },
+            { word: 'feel about', meaning: '더듬어 보다', sentence: 'He put a hand in to feel about.' }
+        ],
+        '04-goose-2.webp': [
+            { word: 'well I never', meaning: '세상에', sentence: 'Well I never — a goose like this!' },
+            { word: 'lift out', meaning: '안아 올리다', sentence: 'He lifted her out in both hands.' },
+            { word: 'inn', meaning: '주막', sentence: 'He decided to stop for the night at an inn.' },
+            { word: 'stare at', meaning: '쳐다보다', sentence: 'People stared at him.' },
+            { word: 'half light', meaning: '어스름', sentence: 'The goose shone even in the half light.' }
+        ],
+        '05-stuck.webp': [
+            { word: 'innkeeper', meaning: '주막 주인', sentence: 'The innkeeper had three daughters.' },
+            { word: 'creep over', meaning: '살금살금 다가가다', sentence: 'The eldest daughter crept over.' },
+            { word: 'stick fast', meaning: '딱 붙다', sentence: 'And her hand stuck fast.' },
+            { word: 'brace', meaning: '버티다', sentence: 'She braced a foot against the wall.' },
+            { word: 'heave', meaning: '힘껏 당기다', sentence: 'She braced a foot and heaved.' }
+        ],
+        '05-stuck-2.webp': [
+            { word: 'guess the rest', meaning: '뻔한 결과', sentence: 'And you can guess the rest.' },
+            { word: 'in a row', meaning: '줄줄이', sentence: 'The three of them hung there in a row.' },
+            { word: 'struggle', meaning: '낑낑거리다', sentence: 'The three sisters struggled all night.' },
+            { word: 'trail behind', meaning: '뒤에 딸려 오다', sentence: 'With no idea what was trailing behind him.' },
+            { word: 'at a trot', meaning: '종종걸음으로', sentence: 'They were dragged along at a trot.' }
+        ],
+        '06-parade.webp': [
+            { word: 'strung out', meaning: '줄줄이 늘어선', sentence: 'Three sisters strung out behind him.' },
+            { word: 'carry on', meaning: '행동하다, 굴다', sentence: 'What a way to carry on!' },
+            { word: 'priest', meaning: '신부님', sentence: 'And then the priest saw it.' },
+            { word: 'baker', meaning: '빵집 주인', sentence: 'The baker happened to be passing.' },
+            { word: 'dough', meaning: '반죽', sentence: 'And what about my dough!' }
+        ],
+        '06-parade-2.webp': [
+            { word: 'pull apart', meaning: '떼어 놓다', sentence: 'Let us pull them apart!' },
+            { word: 'in step', meaning: '발을 맞추어', sentence: 'Keep in step, will you!' },
+            { word: 'tangled', meaning: '엉킨', sentence: 'People got their feet tangled.' },
+            { word: 'come loose', meaning: '떨어지다', sentence: 'Their hands did not come loose.' },
+            { word: 'squawk', meaning: '꽥 소리', sentence: 'The goose gave a squawk.' }
+        ],
+        '07-princess.webp': [
+            { word: 'worry', meaning: '걱정', sentence: 'A king in that country had a great worry.' },
+            { word: 'entertainer', meaning: '재주꾼', sentence: 'The king sent for every kind of entertainer.' },
+            { word: 'acrobat', meaning: '곡예사', sentence: 'Clowns came, and acrobats came.' },
+            { word: 'put out word', meaning: '알리다', sentence: 'The king put out word through the country.' },
+            { word: 'reward', meaning: '상', sentence: 'Whoever makes her laugh shall have a reward.' }
+        ],
+        '07-princess-2.webp': [
+            { word: 'procession', meaning: '행렬', sentence: 'The strange procession came along the road.' },
+            { word: 'high road', meaning: '큰길', sentence: 'Along the high road in front of the castle.' },
+            { word: 'steadily', meaning: '물끄러미', sentence: 'The princess looked steadily at that procession.' },
+            { word: 'twitch', meaning: '씰룩거리다', sentence: 'The corners of her mouth began to twitch.' },
+            { word: 'hold in', meaning: '참다', sentence: 'She could not hold it in.' }
+        ],
+        '08-ending.webp': [
+            { word: 'come away', meaning: '떨어지다', sentence: 'All the stuck hands came away.' },
+            { word: 'free', meaning: '자유로운', sentence: 'The three sisters were free.' },
+            { word: 'bewildered', meaning: '어리둥절한', sentence: 'People stood staring at one another, bewildered.' },
+            { word: 'go red', meaning: '눈시울이 붉어지다', sentence: 'His own eyes went red with it.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'send for', meaning: '부르다', sentence: 'The king sent for the youngest son.' },
+            { word: 'stretch out', meaning: '길게 빼다', sentence: 'The goose stretched out her neck.' },
+            { word: 'let go', meaning: '놓아주다', sentence: 'He went to the wood and let the goose go.' },
+            { word: 'see differently', meaning: '달리 보다', sentence: 'His brothers came to see him differently.' }
+        ],
+        'end.webp': [
+            { word: 'turn on', meaning: '~에 달려 있다', sentence: 'The whole story turns on that.' },
+            { word: 'to start with', meaning: '애초에', sentence: 'He had less to start with.' },
+            { word: 'point at', meaning: '가리키다', sentence: 'The tree the old man pointed at.' },
+            { word: 'performance', meaning: '재주, 공연', sentence: 'What made her laugh was not a performance.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -609,6 +1216,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -617,7 +1225,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -629,7 +1237,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -663,4 +1271,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
