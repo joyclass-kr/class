@@ -886,6 +886,16 @@ function createClassroomPlatform(options = {}) {
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         UNIQUE (school_id, academic_year, program_name)
       )`,
+      // 돌봄반. 동아리·방과후와 같은 모양이라 명단의 열로 소속을 받는다.
+      `CREATE TABLE IF NOT EXISTS school_care (
+        id BIGSERIAL PRIMARY KEY,
+        school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
+        academic_year INTEGER NOT NULL,
+        care_name TEXT NOT NULL CHECK (char_length(care_name) BETWEEN 1 AND 60),
+        sort_order INTEGER NOT NULL DEFAULT 0,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE (school_id, academic_year, care_name)
+      )`,
       `CREATE TABLE IF NOT EXISTS school_student_afterschool (
         student_id BIGINT NOT NULL REFERENCES school_students(id) ON DELETE CASCADE,
         program_id BIGINT NOT NULL REFERENCES school_afterschool(id) ON DELETE CASCADE,
@@ -947,7 +957,7 @@ function createClassroomPlatform(options = {}) {
         DROP CONSTRAINT IF EXISTS teacher_groups_group_type_check`,
       `ALTER TABLE teacher_groups
         ADD CONSTRAINT teacher_groups_group_type_check
-        CHECK (group_type IN ('homeroom', 'subject', 'club', 'afterschool', 'shuttle', 'other'))`,
+        CHECK (group_type IN ('homeroom', 'subject', 'club', 'afterschool', 'care', 'shuttle', 'other'))`,
       `CREATE INDEX IF NOT EXISTS teacher_groups_teacher_idx
         ON teacher_groups (teacher_user_id, academic_year)`,
       `CREATE TABLE IF NOT EXISTS teacher_group_students (
@@ -4941,11 +4951,11 @@ function createClassroomPlatform(options = {}) {
   }
 
   const GROUP_TYPE_LABELS = {
+    subject: "전담 교과",
     club: "동아리",
-    afterschool: "방과후",
-    subject: "교과",
-    activity: "활동",
-    shuttle: "차량",
+    afterschool: "방과후부",
+    care: "돌봄반",
+    shuttle: "통학버스",
     other: "기타"
   };
 
@@ -6403,9 +6413,10 @@ function createClassroomPlatform(options = {}) {
     const year = Number(req.query.year) || new Date().getFullYear();
     const isAdmin = ["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type);
 
-    const [clubs, afterschool, shuttle, specialRooms] = await Promise.all([
+    const [clubs, afterschool, care, shuttle, specialRooms] = await Promise.all([
       pool.query(`SELECT id, club_name, sort_order FROM school_clubs WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`, [schoolId, year]),
       pool.query(`SELECT id, program_name, sort_order FROM school_afterschool WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`, [schoolId, year]),
+      pool.query(`SELECT id, care_name, sort_order FROM school_care WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`, [schoolId, year]),
       pool.query(`SELECT id, slot_name, sort_order FROM school_shuttle_slots WHERE school_id = $1 ORDER BY sort_order, id`, [schoolId]),
       pool.query(`SELECT id, room_name, sort_order FROM school_special_rooms WHERE school_id = $1 ORDER BY sort_order, id`, [schoolId])
     ]);
@@ -6414,6 +6425,7 @@ function createClassroomPlatform(options = {}) {
       schoolName: tp.rows[0].school_name,
       clubs: clubs.rows,
       afterschool: afterschool.rows,
+      care: care.rows,
       shuttleSlots: shuttle.rows,
       specialRooms: specialRooms.rows,
       isAdmin,
@@ -6435,12 +6447,13 @@ function createClassroomPlatform(options = {}) {
     const extractName = (item) => {
       if (!item) return "";
       if (typeof item === "string") return item.trim();
-      if (typeof item === "object") return String(item.club_name || item.program_name || item.slot_name || item.room_name || item.name || "").trim();
+      if (typeof item === "object") return String(item.club_name || item.program_name || item.care_name || item.slot_name || item.room_name || item.name || "").trim();
       return String(item).trim();
     };
 
     const clubs = (req.body.clubs || []).map((item, i) => ({ name: extractName(item), order: i })).filter(c => c.name && c.name !== "[object Object]");
     const afterschool = (req.body.afterschool || []).map((item, i) => ({ name: extractName(item), order: i })).filter(a => a.name && a.name !== "[object Object]");
+    const care = (req.body.care || []).map((item, i) => ({ name: extractName(item), order: i })).filter(c => c.name && c.name !== "[object Object]");
     const shuttleSlots = (req.body.shuttleSlots || []).map((item, i) => ({ name: extractName(item), order: i })).filter(s => s.name && s.name !== "[object Object]");
 
     const client = await pool.connect();
@@ -6460,6 +6473,14 @@ function createClassroomPlatform(options = {}) {
         await client.query(
           `INSERT INTO school_afterschool (school_id, academic_year, program_name, sort_order) VALUES ($1, $2, $3, $4)`,
           [schoolId, year, a.name, a.order]
+        );
+      }
+      // Care rooms (돌봄반)
+      await client.query(`DELETE FROM school_care WHERE school_id = $1 AND academic_year = $2`, [schoolId, year]);
+      for (const c of care) {
+        await client.query(
+          `INSERT INTO school_care (school_id, academic_year, care_name, sort_order) VALUES ($1, $2, $3, $4)`,
+          [schoolId, year, c.name, c.order]
         );
       }
       // Shuttle slots
@@ -6663,6 +6684,13 @@ function createClassroomPlatform(options = {}) {
     res.json({ ok: true, saved: cleanTeachers.length });
   }));
 
+  // 그룹을 개설할 때 고를 수 있는 이름들. 학교 설정에 등록된 목록이 유일한 출처다.
+  //
+  // 예전에는 school_students.custom_fields->>'club' 같은 고정 키를 읽고, 비어 있으면
+  // '오케스트라·로봇코딩부' 같은 예시 이름으로 채웠다. 명단은 동아리 이름을 키로
+  // 저장하므로 그 조회는 언제나 비었고, 결국 학교에 없는 이름만 목록에 떴다.
+  // 그 이름으로 그룹을 만들면 소속 학생이 한 명도 안 잡힌다.
+  // (게다가 school_clubs 에는 name 열이 없어 이 라우트 자체가 500으로 죽고 있었다.)
   router.get("/teacher/available-groups", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const tp = await pool.query(
@@ -6673,66 +6701,49 @@ function createClassroomPlatform(options = {}) {
     const schoolId = tp.rows[0].school_id;
     const year = Number(req.query.year) || new Date().getFullYear();
 
-    // 1. Homeroom classes in school_students
-    const classesRes = await pool.query(
-      `SELECT DISTINCT grade, class_number
-       FROM school_students
-       WHERE school_id = $1 AND academic_year = $2
-       ORDER BY grade, class_number`,
-      [schoolId, year]
-    );
+    const [classesRes, clubsRes, afterschoolRes, careRes, shuttleRes] = await Promise.all([
+      pool.query(
+        `SELECT DISTINCT grade, class_number FROM school_students
+         WHERE school_id = $1 AND academic_year = $2
+         ORDER BY grade, class_number`,
+        [schoolId, year]
+      ),
+      pool.query(
+        `SELECT club_name AS name FROM school_clubs
+         WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`,
+        [schoolId, year]
+      ),
+      pool.query(
+        `SELECT program_name AS name FROM school_afterschool
+         WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`,
+        [schoolId, year]
+      ),
+      pool.query(
+        `SELECT care_name AS name FROM school_care
+         WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`,
+        [schoolId, year]
+      ),
+      pool.query(
+        `SELECT slot_name AS name FROM school_shuttle_slots
+         WHERE school_id = $1 ORDER BY sort_order, id`,
+        [schoolId]
+      )
+    ]);
 
-    // 2. Clubs in school_students custom_fields & school_clubs
-    const clubsRes = await pool.query(
-      `SELECT DISTINCT name FROM (
-         SELECT custom_fields->>'club' AS name FROM school_students WHERE school_id = $1 AND academic_year = $2 AND custom_fields->>'club' IS NOT NULL
-         UNION
-         SELECT name FROM school_clubs WHERE school_id = $1 AND academic_year = $2
-       ) t WHERE name IS NOT NULL AND name != '' ORDER BY name`,
-      [schoolId, year]
-    );
+    const names = (rows) => rows.map(r => r.name).filter(Boolean);
 
-    // 3. Afterschool in school_students custom_fields
-    const afterschoolRes = await pool.query(
-      `SELECT DISTINCT custom_fields->>'afterschool' AS name
-       FROM school_students
-       WHERE school_id = $1 AND academic_year = $2 AND custom_fields->>'afterschool' IS NOT NULL AND custom_fields->>'afterschool' != ''
-       ORDER BY name`,
-      [schoolId, year]
-    );
-
-    // 4. Shuttle bus in school_students custom_fields (1호차, 2호차 등)
-    const shuttleRes = await pool.query(
-      `SELECT DISTINCT name FROM (
-         SELECT custom_fields->>'shuttle' AS name FROM school_students WHERE school_id = $1 AND academic_year = $2 AND custom_fields->>'shuttle' IS NOT NULL
-         UNION
-         SELECT custom_fields->>'bus' AS name FROM school_students WHERE school_id = $1 AND academic_year = $2 AND custom_fields->>'bus' IS NOT NULL
-       ) t WHERE name IS NOT NULL AND name != '' ORDER BY name`,
-      [schoolId, year]
-    );
-
-    // Fallback default choices if database doesn't have custom_fields populated yet
-    const homerooms = classesRes.rows.length > 0 ? classesRes.rows.map(r => ({ name: `${r.grade}-${r.class_number}`, label: `${r.grade}학년 ${r.class_number}반 (${r.grade}-${r.class_number})`, grade: r.grade, class_number: r.class_number })) : [
-      { name: '1-1', label: '1학년 1반 (1-1)', grade: 1, class_number: 1 },
-      { name: '1-2', label: '1학년 2반 (1-2)', grade: 1, class_number: 2 },
-      { name: '2-1', label: '2학년 1반 (2-1)', grade: 2, class_number: 1 },
-      { name: '3-1', label: '3학년 1반 (3-1)', grade: 3, class_number: 1 },
-      { name: '4-1', label: '4학년 1반 (4-1)', grade: 4, class_number: 1 },
-      { name: '5-1', label: '5학년 1반 (5-1)', grade: 5, class_number: 1 },
-      { name: '6-1', label: '6학년 1반 (6-1)', grade: 6, class_number: 1 },
-      { name: '6-2', label: '6학년 2반 (6-2)', grade: 6, class_number: 2 }
-    ];
-
-    const defaultClubs = ['오케스트라', '로봇코딩부', '방송부', '수학탐구부', '연극부', '미술부', '합창단', '도서부'];
-    const clubs = Array.from(new Set([...clubsRes.rows.map(r => r.name), ...defaultClubs]));
-
-    const defaultAfterschool = ['축구부', '농구부', '바둑교실', '컴퓨터교실', '영어회화부', '우쿨렐레교실'];
-    const afterschools = Array.from(new Set([...afterschoolRes.rows.map(r => r.name).filter(Boolean), ...defaultAfterschool]));
-
-    const defaultShuttles = ['1호차', '2호차', '3호차', '4호차', '5호차'];
-    const shuttles = Array.from(new Set([...shuttleRes.rows.map(r => r.name).filter(Boolean), ...defaultShuttles]));
-
-    res.json({ homerooms, clubs, afterschools, shuttles });
+    res.json({
+      homerooms: classesRes.rows.map(r => ({
+        name: `${r.grade}-${r.class_number}`,
+        label: `${r.grade}학년 ${r.class_number}반`,
+        grade: r.grade,
+        class_number: r.class_number
+      })),
+      clubs: names(clubsRes.rows),
+      afterschools: names(afterschoolRes.rows),
+      care: names(careRes.rows),
+      shuttles: names(shuttleRes.rows)
+    });
   }));
 
   router.get("/teacher/groups", asyncRoute(async (req, res) => {
@@ -6820,7 +6831,7 @@ function createClassroomPlatform(options = {}) {
     // Must match teacher_groups_group_type_check exactly. 'activity' used to be
     // accepted here but is not in that constraint, so every group created from
     // the roster's "동아리·방과후·셔틀" option failed on insert.
-    if (!["homeroom", "subject", "club", "afterschool", "shuttle", "other"].includes(groupType))
+    if (!["homeroom", "subject", "club", "afterschool", "care", "shuttle", "other"].includes(groupType))
       throw new HttpError(400, "INVALID_GROUP_TYPE", "그룹 유형이 올바르지 않습니다.");
 
     const result = await pool.query(

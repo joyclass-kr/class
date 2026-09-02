@@ -273,7 +273,7 @@ const asStudent = () => { sessionRows = [{ id: 3, email: "kid@x.kr", role: "stud
       "Each board is named for what it is."
     );
     assert.equal(boards[1].typeLabel, "동아리");
-    assert.equal(boards[2].typeLabel, "방과후");
+    assert.equal(boards[2].typeLabel, "방과후부");
     assert.equal(boards.every(b => b.canPost === false), true, "Students may not post to any board.");
 
     // 10. Unread counts ride along so the picker can flag boards with new posts.
@@ -316,7 +316,32 @@ const asStudent = () => { sessionRows = [{ id: 3, email: "kid@x.kr", role: "stud
       assert.ok(constraintTypes.includes(t),
         `The roster offers group type "${t}", which the database would reject.`);
     }
-    assert.ok(offered.includes("club"), "동아리 그룹을 만들 수 있어야 한다.");
+    // 쓰기로 정한 여섯 가지가 모두 있어야 한다.
+    for (const t of ["homeroom", "subject", "club", "afterschool", "care", "shuttle"]) {
+      assert.ok(offered.includes(t), `그룹 유형 "${t}"를 명단 화면에서 고를 수 있어야 한다.`);
+    }
+
+    // 교사용 교실 도구의 개설 창도 같은 유형을 보내야 한다.
+    const hubHtml = fs.readFileSync(
+      path.join(__dirname, "..", "classtools", "index.html"), "utf8");
+    const hubSelect = hubHtml.match(/id="modal-group-type"[\s\S]*?<\/select>/)[0];
+    const hubOffered = [...hubSelect.matchAll(/value="([a-z]+)"/g)].map(m => m[1]);
+    for (const t of hubOffered) {
+      assert.ok(constraintTypes.includes(t),
+        `교실 도구가 그룹 유형 "${t}"를 보내는데 데이터베이스가 거부한다.`);
+    }
+    assert.ok(hubOffered.includes("care"), "돌봄반을 교실 도구에서도 만들 수 있어야 한다.");
+
+    // 그룹 이름 후보는 학교가 등록한 목록에서만 와야 한다. 예시 이름을 채워 넣으면
+    // 학교에 없는 이름으로 그룹이 만들어지고 소속 학생이 한 명도 안 잡힌다.
+    const availableRoute = platformSource.match(
+      /router\.get\("\/teacher\/available-groups"[\s\S]*?\n  \}\)\);/)[0];
+    assert.doesNotMatch(availableRoute, /오케스트라|로봇코딩부|축구부|1호차/,
+      "개설 목록에 예시 이름을 섞으면 안 된다.");
+    assert.match(availableRoute, /club_name AS name FROM school_clubs/,
+      "동아리 후보는 학교 설정의 school_clubs에서 와야 한다.");
+    assert.match(availableRoute, /care_name AS name FROM school_care/,
+      "돌봄반 후보는 학교 설정의 school_care에서 와야 한다.");
 
     // 15. 소속 판정은 custom_fields의 '키'가 그룹 이름인 실제 명단 모양을 따라야
     //     한다. 고정된 'club' 키만 보면 어떤 학생도 매칭되지 않는다.

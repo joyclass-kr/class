@@ -343,11 +343,12 @@
             <div style="margin-bottom:18px;">
                 <label style="display:block; font-size:0.88rem; font-weight:800; margin-bottom:6px; color:#75d69f;">1. 그룹 유형 선택</label>
                 <select id="modal-group-type" style="width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.2); background:#111512; color:#fff; font-size:1rem; font-weight:700; outline:none;">
-                    <option value="homeroom">🏫 담임 학급 (1-1, 1-2, 2-1 등)</option>
-                    <option value="club" selected>🤖 동아리 (오케스트라, 로봇코딩부 등)</option>
-                    <option value="afterschool">⚽ 방과후 (축구부, 농구부 등)</option>
-                    <option value="shuttle">🚌 통학버스 (1호차, 2호차, 3호차 등)</option>
-                    <option value="subject">🧪 전담 교과반 (과학, 체육 등)</option>
+                    <option value="homeroom">🏫 담임 학급</option>
+                    <option value="subject">📖 전담 교과</option>
+                    <option value="club" selected>🎯 동아리</option>
+                    <option value="afterschool">⚽ 방과후부</option>
+                    <option value="care">🧸 돌봄반</option>
+                    <option value="shuttle">🚌 통학버스</option>
                 </select>
             </div>
 
@@ -428,19 +429,21 @@
                     
                     const groupTypeIcons = {
                         homeroom: '🏫',
-                        club: '🤖',
+                        subject: '📖',
+                        club: '🎯',
                         afterschool: '⚽',
-                        subject: '🧪',
-                        activity: '🎨',
+                        care: '🧸',
+                        shuttle: '🚌',
                         other: '📌'
                     };
 
                     const typeLabels = {
-                        homeroom: '담임반',
-                        subject: '전담 과목반',
+                        homeroom: '담임 학급',
+                        subject: '전담 교과',
                         club: '동아리',
-                        afterschool: '방과후',
-                        activity: '활동그룹',
+                        afterschool: '방과후부',
+                        care: '돌봄반',
+                        shuttle: '통학버스',
                         other: '기타'
                     };
 
@@ -490,7 +493,7 @@
                 location.href = `/classtools/dashboard.html?groupId=${groupId}`;
             };
 
-            let availableData = { homerooms: [], clubs: [], afterschools: [] };
+            let availableData = { homerooms: [], clubs: [], afterschools: [], care: [], shuttles: [] };
 
             window.handleCreateGroupClick = async function() {
                 try {
@@ -542,6 +545,13 @@
                         opt.textContent = `⚽ ${a}`;
                         nameSelect.appendChild(opt);
                     });
+                } else if (type === 'care') {
+                    (availableData.care || []).forEach(c => {
+                        const opt = document.createElement('option');
+                        opt.value = c;
+                        opt.textContent = `🧸 ${c}`;
+                        nameSelect.appendChild(opt);
+                    });
                 } else if (type === 'shuttle') {
                     (availableData.shuttles || []).forEach(s => {
                         const opt = document.createElement('option');
@@ -549,15 +559,10 @@
                         opt.textContent = `🚌 ${s}`;
                         nameSelect.appendChild(opt);
                     });
-                } else if (type === 'subject') {
-                    const subjects = ['5학년 과학전담', '6학년 체육전담', '4학년 영어전담', '3학년 음악전담', '미술전담', '실과전담'];
-                    subjects.forEach(s => {
-                        const opt = document.createElement('option');
-                        opt.value = s;
-                        opt.textContent = `🧪 ${s}`;
-                        nameSelect.appendChild(opt);
-                    });
                 }
+                // 전담 교과는 학교 설정에 등록하는 목록이 없어 직접 입력만 받는다.
+                // (예전에는 '5학년 과학전담' 같은 예시 이름을 목록처럼 보여 줬는데,
+                //  학교에 없는 이름이라 고르면 소속 학생이 잡히지 않았다.)
 
                 const customOpt = document.createElement('option');
                 customOpt.value = '__CUSTOM__';

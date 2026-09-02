@@ -570,6 +570,16 @@
                         <button class="btn btn-secondary btn-sm" onclick="addAfterSchool()">+ 추가</button>
                     </div>
                 </div>
+                <!-- 돌봄반 -->
+                <div class="card" style="margin:0;">
+                    <div class="card-title" style="font-size:14px;">🧸 돌봄반 목록</div>
+                    <div class="card-desc">이 목록이 전교생 명단의 돌봄 열이 됩니다.</div>
+                    <ul class="settings-list" id="careList"></ul>
+                    <div class="add-item-row">
+                        <input class="add-item-input" id="newCareInput" placeholder="돌봄반 이름 입력" onkeydown="if(event.key==='Enter')addCare()">
+                        <button class="btn btn-secondary btn-sm" onclick="addCare()">+ 추가</button>
+                    </div>
+                </div>
                 <!-- 셔틀 슬롯 -->
                 <div class="card" style="margin:0;">
                     <div class="card-title" style="font-size:14px;">🚌 셔틀 슬롯 목록</div>
@@ -615,12 +625,13 @@
         <div class="form-field">
             <label>그룹 유형</label>
             <select class="form-control" id="newGroupType">
-                <option value="homeroom">🏫 담임반 (학급 전체)</option>
-                <option value="subject">📖 전담 과목반 (학급 묶음)</option>
-                <option value="club">🎯 동아리 (무학년 조합)</option>
-                <option value="afterschool">🕔 방과후 (무학년 조합)</option>
-                <option value="shuttle">🚌 셔틀 (무학년 조합)</option>
-                <option value="other">📌 기타 그룹 (회장단·위원회 등)</option>
+                <option value="homeroom">🏫 담임 학급</option>
+                <option value="subject">📖 전담 교과</option>
+                <option value="club">🎯 동아리</option>
+                <option value="afterschool">⚽ 방과후부</option>
+                <option value="care">🧸 돌봄반</option>
+                <option value="shuttle">🚌 통학버스</option>
+                <option value="other">📌 기타</option>
             </select>
         </div>
         <div class="form-field">
@@ -656,7 +667,7 @@
     "use strict";
 
     let currentYear = new Date().getFullYear();
-    let schoolSettings = { clubs: [], afterschool: [], shuttleSlots: [], specialRooms: [] };
+    let schoolSettings = { clubs: [], afterschool: [], care: [], shuttleSlots: [], specialRooms: [] };
     let allStudents = [];
     let parsedStudents = null; // 붙여넣기 파싱 결과
     let isSchoolAdmin = false;
@@ -962,6 +973,7 @@
         // Build dynamic columns
         const allClubs = (schoolSettings.clubs || []).map(c => c.club_name || c.name || c);
         const allAfter = (schoolSettings.afterschool || []).map(a => a.program_name || a.name || a);
+        const allCare = (schoolSettings.care || []).map(c => c.care_name || c.name || c);
         const allShuttle = (schoolSettings.shuttleSlots || []).map(s => s.slot_name || s.name || s);
 
         const fixedLeft = ["학년","반","번호","성명","성별"];
@@ -970,6 +982,7 @@
         const dynamicCols = [
             ...allClubs.map(c => ({ name: c, key: c, category: "clubs" })),
             ...allAfter.map(a => ({ name: a, key: a, category: "afterschool" })),
+            ...allCare.map(c => ({ name: c, key: c, category: "care" })),
             ...allShuttle.map(s => ({ name: s, key: s, category: "shuttleSlots" }))
         ];
 
@@ -1011,6 +1024,7 @@
                 `<td>${cellInput("gender", s.gender, "40px", false, "", "남/여")}</td>`,
                 ...allClubs.map(c => `<td>${cellInput("", cf[c] || (Array.isArray(s.clubs) && s.clubs.includes(c) ? c : ""), "80px", true, c)}</td>`),
                 ...allAfter.map(a => `<td>${cellInput("", cf[a] || (Array.isArray(s.afterschool) && s.afterschool.includes(a) ? a : ""), "80px", true, a)}</td>`),
+                ...allCare.map(c => `<td>${cellInput("", cf[c] || "", "80px", true, c)}</td>`),
                 ...allShuttle.map(sl => `<td>${cellInput("", cf[sl] || (s.shuttle || {})[sl] || "", "65px", true, sl)}</td>`),
                 `<td style="font-size:11px;">${cellInput("student_email", s.student_email, "140px")} ${linkedBadge}</td>`,
                 `<td style="font-size:11px;">${cellInput("guardian1_email", s.guardian1_email, "140px")}</td>`,
@@ -1085,6 +1099,7 @@
 
         const clubHeaders = schoolSettings.clubs.map(c => ({ name: c.club_name || c.name || c, idx: headers.indexOf((c.club_name || c.name || c).replace(/\s/g,"").toLowerCase()) }));
         const afterHeaders = schoolSettings.afterschool.map(a => ({ name: a.program_name || a.name || a, idx: headers.indexOf((a.program_name || a.name || a).replace(/\s/g,"").toLowerCase()) }));
+        const careHeaders = (schoolSettings.care || []).map(c => ({ name: c.care_name || c.name || c, idx: headers.indexOf((c.care_name || c.name || c).replace(/\s/g,"").toLowerCase()) }));
         const shuttleHeaders = schoolSettings.shuttleSlots.map(s => ({ name: s.slot_name || s.name || s, idx: headers.indexOf((s.slot_name || s.name || s).replace(/\s/g,"").toLowerCase()) }));
 
         const students = [];
@@ -1109,6 +1124,10 @@
         afterHeaders.forEach(a => {
             const val = get(a.idx).replace(/\s+/g, "");
             if (val && val !== "-") { customFields[a.name] = val; afterArr.push(val); }
+        });
+        careHeaders.forEach(c => {
+            const val = get(c.idx).replace(/\s+/g, "");
+            if (val && val !== "-") { customFields[c.name] = val; }
         });
         shuttleHeaders.forEach(s => {
             const val = get(s.idx).replace(/\s+/g, "");
@@ -1171,11 +1190,12 @@
     window.downloadExcelTemplate = function() {
         const allClubs = schoolSettings.clubs.map(c => (c.club_name || c.name || c).replace(/\s+/g, ""));
         const allAfter = schoolSettings.afterschool.map(a => (a.program_name || a.name || a).replace(/\s+/g, ""));
+        const allCare = (schoolSettings.care || []).map(c => (c.care_name || c.name || c).replace(/\s+/g, ""));
         const allShuttle = schoolSettings.shuttleSlots.map(s => (s.slot_name || s.name || s).replace(/\s+/g, ""));
 
         const fixedLeft = ["학년", "반", "번호", "성명", "성별"];
         const fixedRight = ["학생구글계정", "보호자1계정", "보호자2계정"];
-        const headers = [...fixedLeft, ...allClubs, ...allAfter, ...allShuttle, ...fixedRight];
+        const headers = [...fixedLeft, ...allClubs, ...allAfter, ...allCare, ...allShuttle, ...fixedRight];
 
         const sampleRow1 = [
             "1", "1", "1", "홍길동", "남",
@@ -1284,7 +1304,7 @@
         try {
             const data = await api(`/api/school/settings?year=${currentYear}`);
             isSchoolAdmin = Boolean(data.isAdmin);
-            schoolSettings = { clubs: data.clubs || [], afterschool: data.afterschool || [], shuttleSlots: data.shuttleSlots || [], specialRooms: data.specialRooms || [] };
+            schoolSettings = { clubs: data.clubs || [], afterschool: data.afterschool || [], care: data.care || [], shuttleSlots: data.shuttleSlots || [], specialRooms: data.specialRooms || [] };
             
             if (data.schoolName) {
                 document.getElementById("schoolName").textContent = data.schoolName;
@@ -1306,6 +1326,7 @@
 
             renderSettingsList("clubList", schoolSettings.clubs, "clubs", "club_name");
             renderSettingsList("afterschoolList", schoolSettings.afterschool, "afterschool", "program_name");
+            renderSettingsList("careList", schoolSettings.care, "care", "care_name");
             renderSettingsList("shuttleList", schoolSettings.shuttleSlots, "shuttleSlots", "slot_name");
             renderSettingsList("specialRoomList", schoolSettings.specialRooms, "specialRooms", "room_name");
             updatePasteColsHint();
@@ -1334,6 +1355,7 @@
                     year: currentYear,
                     clubs: (schoolSettings.clubs || []).map(c => c.club_name || c.name || c),
                     afterschool: (schoolSettings.afterschool || []).map(a => a.program_name || a.name || a),
+                    care: (schoolSettings.care || []).map(c => c.care_name || c.name || c),
                     shuttleSlots: (schoolSettings.shuttleSlots || []).map(s => s.slot_name || s.name || s),
                     specialRooms: (schoolSettings.specialRooms || []).map(r => r.room_name || r.name || r)
                 })
@@ -1359,6 +1381,7 @@
         renderRosterTable();
         renderSettingsList("clubList", schoolSettings.clubs, "clubs", "club_name");
         renderSettingsList("afterschoolList", schoolSettings.afterschool, "afterschool", "program_name");
+            renderSettingsList("careList", schoolSettings.care, "care", "care_name");
         renderSettingsList("shuttleList", schoolSettings.shuttleSlots, "shuttleSlots", "slot_name");
         updatePasteColsHint();
         setStatus("rosterStatus", `'${name}' 열이 성공적으로 추가되었습니다.`, "ok");
@@ -1379,6 +1402,7 @@
         renderRosterTable();
         renderSettingsList("clubList", schoolSettings.clubs, "clubs", "club_name");
         renderSettingsList("afterschoolList", schoolSettings.afterschool, "afterschool", "program_name");
+            renderSettingsList("careList", schoolSettings.care, "care", "care_name");
         renderSettingsList("shuttleList", schoolSettings.shuttleSlots, "shuttleSlots", "slot_name");
         updatePasteColsHint();
         setStatus("rosterStatus", `'${colName}' 열이 삭제되었습니다.`, "ok");
@@ -1390,7 +1414,7 @@
         if (!confirm(`'${itemName}' 항목을 목록에서 삭제하시겠습니까?`)) return;
 
         schoolSettings[key].splice(idx, 1);
-        const listIdMap = { clubs: "clubList", afterschool: "afterschoolList", shuttleSlots: "shuttleList", specialRooms: "specialRoomList" };
+        const listIdMap = { clubs: "clubList", afterschool: "afterschoolList", care: "careList", shuttleSlots: "shuttleList", specialRooms: "specialRoomList" };
         renderSettingsList(listIdMap[key] || "clubList", schoolSettings[key], key, nameKey);
         updatePasteColsHint();
         setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
@@ -1412,6 +1436,17 @@
         if (!name) return;
         schoolSettings.afterschool.push({ program_name: name });
         renderSettingsList("afterschoolList", schoolSettings.afterschool, "afterschool", "program_name");
+            renderSettingsList("careList", schoolSettings.care, "care", "care_name");
+        input.value = "";
+        updatePasteColsHint();
+        setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
+    };
+    window.addCare = function() {
+        const input = document.getElementById("newCareInput");
+        const name = input.value.replace(/\s+/g, ""); // 띄어쓰기 제거
+        if (!name) return;
+        schoolSettings.care.push({ care_name: name });
+        renderSettingsList("careList", schoolSettings.care, "care", "care_name");
         input.value = "";
         updatePasteColsHint();
         setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
@@ -1468,8 +1503,8 @@
         try {
             const data = await api(`/api/teacher/groups?year=${currentYear}`);
             const groups = data.groups || [];
-            const badgeMap = { homeroom: "badge-homeroom", subject: "badge-subject", activity: "badge-club", club: "badge-club", afterschool: "badge-afterschool", shuttle: "badge-shuttle", other: "badge-other" };
-            const typeLabel = { homeroom: "담임반", subject: "전담 과목반", activity: "동아리·방과후·셔틀", club: "동아리", afterschool: "방과후", shuttle: "셔틀", other: "기타" };
+            const badgeMap = { homeroom: "badge-homeroom", subject: "badge-subject", club: "badge-club", afterschool: "badge-afterschool", care: "badge-afterschool", shuttle: "badge-shuttle", other: "badge-other" };
+            const typeLabel = { homeroom: "담임 학급", subject: "전담 교과", club: "동아리", afterschool: "방과후부", care: "돌봄반", shuttle: "통학버스", other: "기타" };
 
             grid.innerHTML = groups.map(g => `
                 <div class="group-card">
@@ -1493,6 +1528,7 @@
     const GROUP_NAME_SOURCES = {
         club: () => (schoolSettings.clubs || []).map(c => c.club_name || c.name || c),
         afterschool: () => (schoolSettings.afterschool || []).map(a => a.program_name || a.name || a),
+        care: () => (schoolSettings.care || []).map(c => c.care_name || c.name || c),
         shuttle: () => (schoolSettings.shuttleSlots || []).map(s => s.slot_name || s.name || s)
     };
 
