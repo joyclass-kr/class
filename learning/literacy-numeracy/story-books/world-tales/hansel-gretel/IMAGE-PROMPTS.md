@@ -8,10 +8,22 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-> **⚠️ 다시 그려 주실 것 (2026-08-28 점검)**
-> - `06-oven-2` — **글이 바뀌었습니다.** 할머니가 화덕에 머리를 들이밀었다가 **연기를 뒤집어쓰고 눈을 감싸 쥔 채 뒤로 나자빠지는 순간**으로. 화덕 문을 닫아거는 그림이 아닙니다.
-> - `07-home-2` — 아버지 집이 **한옥(기와 지붕·창살)**입니다. 독일 숲가 통나무 오두막으로.
-> - 남매 옷이 장마다 다릅니다. 헨젤은 초록 조끼 + 파란 바지, 그레텔은 노란 원피스로 통일해 주세요.
+> **⚠️ 다시 그려 주실 것 (2026-09-03)**
+> - `06-oven-2` — **두 번 다 옛 장면으로 나왔습니다.** 지금 파일은 그레텔이 할머니를
+>   화덕에 밀어 넣고 쇠문을 닫는 그림입니다. 그 장면은 글에서 없앴습니다.
+>   **할머니가 제 손으로 화덕에 머리를 들이밀었다가 연기를 뒤집어쓰고, 눈을 감싸 쥔 채
+>   뒤로 나자빠지는 순간**을 그려 주세요. 그레텔은 할머니를 건드리지 않습니다.
+>   화덕 문은 닫지 않습니다. 그레텔이 닫아거는 것은 **부엌문**입니다.
+> - `07-home` — **흰 오리를 그리지 마세요.** 오리는 다음 장(`07-home-2`)에 나옵니다.
+>   이 쪽은 "건널 다리가 어디에도 없었습니다"로 끝납니다. 폭이 넓고 다리가 없는 강가에
+>   남매만 서 있는, 막막한 그림이라야 합니다.
+> - `01-pebbles` — 그림 안쪽에 얇은 **흰 사각 테두리**가 그려져 들어갔습니다. 테두리 없이.
+> - 열네 장 모두 위아래에 흰 띠가 있습니다. **가로 2 : 세로 1 칸을 그림이 가득 채우도록**
+>   해 주세요. 흰 여백을 넣지 마세요.
+> - 남매 옷은 **이미 그려진 열네 장에 맞춰** 주세요. 헨젤은 노란 셔츠 + 파란 조끼 + 붉은 바지,
+>   그레텔은 분홍 원피스에 큰 리본입니다. 새로 그리는 장도 이대로 맞춰야 앞뒤가 이어집니다.
+>
+> (2026-08-28에 적어 둔 `07-home-2` 한옥 지붕 건은 고쳐졌습니다. 지금은 독일 통나무집입니다.)
 
 > **한 파일 = 한 장면입니다. 앞질러 가지 마세요.**
 > 파일마다 뒤에 〔이 쪽에 실린 글〕을 붙여 두었습니다. 그 쪽에 실제로 실리는 글이에요.
@@ -42,8 +54,9 @@ comically odd rather than menacing.
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-Hansel: a boy about 10 with a patched jacket and pockets full of pebbles, quick
-thinking. Gretel: his younger sister with braids and an apron, brave when it
+Hansel: a boy about 10 in a yellow shirt, blue waistcoat and rust-red breeches,
+pockets full of pebbles, quick thinking. Gretel: his younger sister in a pink
+dress with a large sash bow and short auburn hair, brave when it
 counts. The father: a stooped woodcutter with sad eyes and an axe. The
 stepmother: a thin sharp-faced woman. The witch: a small hunched old woman with
 huge spectacles and a comical stoop, never ugly or frightening. A white duck on
@@ -103,7 +116,7 @@ the river.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-home.webp` | A candy cottage interior where two children fill their pockets from chests of pearls and jewels, and then walking away through the forest to the bank of a wide river with no bridge, hopeful. 〔이 쪽에 실린 글 (13/14) — 그림에 글자는 넣지 마세요. 왼쪽: 남매는 집 안을 찬찬히 둘러봤습니다. 구석에 궤짝이 여럿 놓여 있었지요. 뚜껑을 하나 열어 봤습니다. 안에는 진주와 보석이 가득했지요. 이거면 아버지가 겨울을 사시겠다. / 오른쪽: 그러고는 과자 집을 나섰지요. 뒤는 한 번도 돌아보지 않았습니다. 둘은 숲길을 걷고 또 걸었지요. 반나절쯤 갔을 때였습니다. 앞에 큰 강이 나타났지요. 건널 다리가 어디에도 없었습니다.〕 |
+| `images/07-home.webp` | A candy cottage interior where two children fill their pockets from chests of pearls and jewels, and then walking away through the forest to the bank of a WIDE river with a strong current and NO bridge and NO stepping stones, the far bank a long way off, the two standing at the water's edge at a loss. NO duck and NO bird anywhere in this picture - the duck belongs to the next page. 〔이 쪽에 실린 글 (13/14) — 그림에 글자는 넣지 마세요. 왼쪽: 남매는 집 안을 찬찬히 둘러봤습니다. 구석에 궤짝이 여럿 놓여 있었지요. 뚜껑을 하나 열어 봤습니다. 안에는 진주와 보석이 가득했지요. 이거면 아버지가 겨울을 사시겠다. / 오른쪽: 그러고는 과자 집을 나섰지요. 뒤는 한 번도 돌아보지 않았습니다. 둘은 숲길을 걷고 또 걸었지요. 반나절쯤 갔을 때였습니다. 앞에 큰 강이 나타났지요. 건널 다리가 어디에도 없었습니다.〕 |
 | `images/07-home-2.webp` | Two children crossing a wide river one at a time on the back of a white duck, and beyond the far bank a woodcutter running from his cottage door with open arms, warm and joyful. 〔이 쪽에 실린 글 (14/14) — 그림에 글자는 넣지 마세요. 왼쪽: 그때 하얀 오리 한 마리가 헤엄쳐 왔습니다. 그레텔이 물가에 앉아 살며시 물었지요. 오리야, 우리를 태워 줄 수 있니? 오리가 고개를 끄덕였습니다. 둘이 함께 타기에는 무거워서 한 사람씩 등에 태웠지요. 건너편에 닿자 낯익은 길이 보였습니다. / 오른쪽: 우리 동네야! 남매는 그 길을 내달렸지요. 저 멀리 오두막이 나타났습니다. 아버지가 문 앞에 서 있었지요. 날마다 그러고 있었답니다.〕 |
 
 ## 사용 팁

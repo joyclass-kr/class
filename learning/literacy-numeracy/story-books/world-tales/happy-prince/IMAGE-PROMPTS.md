@@ -8,6 +8,26 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
+> **⚠️ 다시 그려 주실 것 (2026-09-03)**
+> - `05-eyes-2` — 동상이 받침대에서 **떨어져 공중에 떠 있습니다.** 게다가 마을에 견줘
+>   터무니없이 큽니다. 받침대 위에 발을 딛고 선 보통 크기의 동상으로.
+> - `06-snow` — 이때 왕자는 **두 눈을 다 내주어 앞을 못 봅니다.** 그런데 눈동자가 또렷한
+>   뜬 눈으로 그려져 있어요. 같은 책 `06-snow-2`·`07-ending`은 제대로 빈 눈이라 서로 어긋납니다.
+>   빈 눈구멍으로 다시.
+>
+> **동상의 단계표** — 그림마다 이 상태를 지켜 주세요.
+>
+> | 파일 | 금박 | 두 눈 | 칼자루 루비 |
+> |---|---|---|---|
+> | `01-statue` ~ `03-ruby` | 금빛 | 파란 사파이어 | 있음 |
+> | `03-ruby-2` | 금빛 | 파란 사파이어 | **없음** |
+> | `04-sapphire`, `04-sapphire-2`, `05-eyes` | 금빛 | **한쪽만 빔** | 없음 |
+> | `05-eyes-2` | 금빛 | **둘 다 빔** | 없음 |
+> | `06-snow` | **벗겨져 잿빛 납** | 둘 다 빔 | 없음 |
+> | `06-snow-2`, `07-ending` | 잿빛 납 | 둘 다 빔 | 없음 |
+>
+> 본문 13번째 펼침면에 시장이 "루비도 없고 눈도 없구먼" 하고 말합니다. 그림이 그걸 받쳐 줘야 합니다.
+
 > **한 파일 = 한 장면입니다. 앞질러 가지 마세요.**
 > 파일마다 뒤에 〔이 쪽에 실린 글〕을 붙여 두었습니다. 그 쪽에 실제로 실리는 글이에요.
 > 그림은 **그 글에 나오는 장면만** 그려 주세요. 다음 쪽 이야기를 미리 그리면
@@ -37,8 +57,13 @@ never grim.
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-The happy prince: a tall gilded statue of a young prince with sapphire eyes and
-a ruby on his sword hilt, growing plainer as the story goes. The swallow: a small
+The happy prince: a tall statue of a young prince standing on a stone column.
+He gives his jewels away one at a time, so HIS STATE CHANGES BY STAGE and every
+picture must match its own stage (see the table below). His empty eye sockets are
+a FACT OF THE STORY, not a mark of anything bad - once the sapphires are gone he
+is blind and must be drawn with plain hollow sockets or closed lids, never with
+seeing eyes. Always show him standing ON his column, joined to it, at the scale
+of a real statue in a small town square - never floating free of the pedestal. The swallow: a small
 sleek bird with a white throat and quick bright eyes. The seamstress: a tired
 woman sewing by candlelight. Her son: a small boy with a fever. The young writer:
 a thin man at a desk in a cold attic. The match girl: a small child in a thin
@@ -85,20 +110,20 @@ dress. The mayor and councillors: pompous men in gold chains.
 | 파일명 | 장면 |
 |---|---|
 | `images/05-eyes.webp` | A city square where a small match seller weeps over matches fallen in a gutter, and a swallow carrying a sapphire down to press it into her palm, her face lighting up, moving. 〔이 쪽에 실린 글 (9/14) — 그림에 글자는 넣지 마세요. 왼쪽: 며칠 뒤 광장에 아이 하나가 서 있었습니다. 성냥을 팔러 나온 아이였지요. 그런데 그만 성냥을 도랑에 다 빠뜨리고 말았습니다. 아이는 주저앉아 울음을 터뜨렸지요. 지나가는 사람마다 힐끗 보고는 그냥 갔습니다. 엄마한테 뭐라고 하지…. / 오른쪽: 왕자가 조용히 말했지요. 제비야, 남은 눈도 빼 다오. 안 됩니다. 그러면 아무것도 못 보시잖아요.〕 |
-| `images/05-eyes-2.webp` | A blind gilded statue with a swallow perched on its shoulder describing the city, and the bird peeling thin sheets of gold leaf from the statue to carry away, poignant and warm. 〔이 쪽에 실린 글 (10/14) — 그림에 글자는 넣지 마세요. 왼쪽: 아이는 그것을 쥐고 웃으며 달려갔습니다. 제비는 동상으로 돌아왔지요. 이제 앞을 못 보시잖아요. 저는 안 갈래요. 제가 눈이 되어 드릴게요. / 오른쪽: 굴뚝 위에 굴뚝새가 새끼를 쳤어요. 그러던 어느 날 제비가 이렇게 말했지요. 저 골목에 사는 아이들은 날마다 굶어요.〕 |
+| `images/05-eyes-2.webp` | A gilded statue standing ON ITS STONE COLUMN (feet on the pedestal, ordinary statue scale, NOT floating), BLIND with two hollow eye sockets, a swallow perched on its shoulder describing the city, and the bird peeling thin sheets of gold leaf from the statue to carry away, poignant and warm. 〔이 쪽에 실린 글 (10/14) — 그림에 글자는 넣지 마세요. 왼쪽: 아이는 그것을 쥐고 웃으며 달려갔습니다. 제비는 동상으로 돌아왔지요. 이제 앞을 못 보시잖아요. 저는 안 갈래요. 제가 눈이 되어 드릴게요. / 오른쪽: 굴뚝 위에 굴뚝새가 새끼를 쳤어요. 그러던 어느 날 제비가 이렇게 말했지요. 저 골목에 사는 아이들은 날마다 굶어요.〕 |
 
 ## 6장 · 첫눈이 내리던 밤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-snow.webp` | Children in narrow streets eating bread and laughing as a swallow flits away, and the statue above now stripped to dull grey lead, passersby frowning up at it, bittersweet. 〔이 쪽에 실린 글 (11/14) — 그림에 글자는 넣지 마세요. 왼쪽: 제비는 금박을 한 장씩 떼어 날랐습니다. 굶는 집마다 찾아가 창턱에 놓아 주었지요. 아이들 얼굴이 하루가 다르게 밝아졌습니다. 빵을 배불리 먹고 골목으로 뛰어나왔지요. 이제 배가 안 고파! / 오른쪽: 거리에 아이들 웃음소리가 돌아왔습니다. 저 집 아이는 오늘 처음 웃었어요. 제비가 그렇게 전하면 왕자는 조용히 웃었지요. 그러는 사이 금박이 한 장도 남지 않아 잿빛 납덩이가 드러났습니다.〕 |
-| `images/06-snow-2.webp` | A statue in falling snow with a small swallow huddled at its feet, the bird reaching up to touch the gilded cheek one last time, quiet snowfall, deeply tender. 〔이 쪽에 실린 글 (12/14) — 그림에 글자는 넣지 마세요. 왼쪽: 겨울이 깊어졌습니다. 어느 밤 첫눈이 소복소복 내렸지요. 제비는 몸이 몹시 추웠습니다. 날개가 무거워 잘 펴지지도 않았지요. 그래도 제비는 떠나지 않고 왕자의 발치에 가만히 앉아 있었습니다. 도시의 불빛이 눈앞에서 하나씩 흐려졌지요. / 오른쪽: 이제 정말 가야겠어요. 따뜻한 나라로 가는 게냐? 아니요. 아주 먼 곳이요.〕 |
+| `images/06-snow.webp` | Children in narrow streets eating bread and laughing as a swallow flits away, and the statue above now stripped to dull grey lead, BLIND with two plain hollow eye sockets (the sapphires are long gone - do NOT give him seeing eyes), no ruby on his sword hilt, standing firmly on his stone column, passersby frowning up at it, bittersweet. 〔이 쪽에 실린 글 (11/14) — 그림에 글자는 넣지 마세요. 왼쪽: 제비는 금박을 한 장씩 떼어 날랐습니다. 굶는 집마다 찾아가 창턱에 놓아 주었지요. 아이들 얼굴이 하루가 다르게 밝아졌습니다. 빵을 배불리 먹고 골목으로 뛰어나왔지요. 이제 배가 안 고파! / 오른쪽: 거리에 아이들 웃음소리가 돌아왔습니다. 저 집 아이는 오늘 처음 웃었어요. 제비가 그렇게 전하면 왕자는 조용히 웃었지요. 그러는 사이 금박이 한 장도 남지 않아 잿빛 납덩이가 드러났습니다.〕 |
+| `images/06-snow-2.webp` | A dull grey lead statue in falling snow, BLIND with hollow eye sockets and not a scrap of gold left on him, a small swallow huddled at his feet reaching up to touch his bare grey cheek one last time, quiet snowfall, deeply tender. 〔이 쪽에 실린 글 (12/14) — 그림에 글자는 넣지 마세요. 왼쪽: 겨울이 깊어졌습니다. 어느 밤 첫눈이 소복소복 내렸지요. 제비는 몸이 몹시 추웠습니다. 날개가 무거워 잘 펴지지도 않았지요. 그래도 제비는 떠나지 않고 왕자의 발치에 가만히 앉아 있었습니다. 도시의 불빛이 눈앞에서 하나씩 흐려졌지요. / 오른쪽: 이제 정말 가야겠어요. 따뜻한 나라로 가는 게냐? 아니요. 아주 먼 곳이요.〕 |
 
 ## 7장 · 가장 귀한 것 둘
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-ending.webp` | A snowy square in morning light where a pompous mayor and councillors in gold chains stare up at a dull stripped statue with a small dead swallow at its feet, cold and ironic. 〔이 쪽에 실린 글 (13/14) — 그림에 글자는 넣지 마세요. 왼쪽: 납으로 된 심장이 두 쪽으로 갈라진 것이었습니다. 그만큼 추운 밤이었지요. 이튿날 아침 시장이 신하들을 데리고 광장을 지나갔습니다. 기둥을 올려다보던 시장이 걸음을 뚝 멈췄지요. 저게 무슨 꼴인가! 루비도 없고 눈도 없구먼. / 오른쪽: 이래서야 거지나 다름없지. 녹여서 다른 동상을 세우지요. 신하들이 서로 눈치를 보며 고개를 끄덕였습니다.〕 |
+| `images/07-ending.webp` | A snowy square in morning light where a pompous mayor and councillors in gold chains stare up at a dull stripped statue - BLIND with hollow eye sockets, no gold, no ruby on the sword hilt - standing on its column with a small dead swallow at its feet, cold and ironic. 〔이 쪽에 실린 글 (13/14) — 그림에 글자는 넣지 마세요. 왼쪽: 납으로 된 심장이 두 쪽으로 갈라진 것이었습니다. 그만큼 추운 밤이었지요. 이튿날 아침 시장이 신하들을 데리고 광장을 지나갔습니다. 기둥을 올려다보던 시장이 걸음을 뚝 멈췄지요. 저게 무슨 꼴인가! 루비도 없고 눈도 없구먼. / 오른쪽: 이래서야 거지나 다름없지. 녹여서 다른 동상을 세우지요. 신하들이 서로 눈치를 보며 고개를 끄덕였습니다.〕 |
 | `images/07-ending-2.webp` | A foundry where a cracked lead heart refuses to melt and is tossed onto a rubbish heap beside a small dead swallow, and later children in bright warm clothes playing in the same street, quietly redemptive. 〔이 쪽에 실린 글 (14/14) — 그림에 글자는 넣지 마세요. 왼쪽: 동상은 용광로에 넣어졌습니다. 쇳물이 부글부글 끓고 쇠망치 소리가 쨍쨍 울렸지요. 그런데 납으로 된 심장만은 아무리 넣어도 녹지 않았습니다. 이건 왜 안 녹지? 참 이상한 납덩이일세. / 오른쪽: 하필 죽은 제비가 놓인 자리였습니다. 그 도시에서 가장 귀한 것 둘이 그렇게 나란히 놓이게 된 것이지요. 세월이 한참 흐른 뒤에도 이야기는 그대로 전해졌습니다. 그 많던 금박은 다 어디 갔을까? 저 골목 아이들 손으로 갔지.〕 |
 
 ## 사용 팁
