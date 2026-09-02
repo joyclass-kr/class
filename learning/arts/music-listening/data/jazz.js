@@ -1,7 +1,9 @@
 window.MUSIC_GENRE={
+  label:'재즈',
   integrated:'era',
-  lineages:[['early','초기·스윙 (Early & Swing)'],['bop','비밥·하드 밥 (Bop & Hard Bop)'],['modern','쿨·모달·프리·영적 (Cool, Modal, Free & Spiritual)'],['latin','라틴 재즈 (Latin Jazz)'],['fusion','재즈 퓨전 (Jazz Fusion)'],['contemporary','컨템퍼러리·스무스 (Contemporary & Smooth)']],
+  lineages:[['blues','블루스 (Blues)'],['early','초기·스윙 (Early & Swing)'],['bop','비밥·하드 밥 (Bop & Hard Bop)'],['modern','쿨·모달·프리·영적 (Cool, Modal, Free & Spiritual)'],['latin','라틴 재즈 (Latin Jazz)'],['fusion','재즈 퓨전 (Jazz Fusion)'],['contemporary','컨템퍼러리·스무스 (Contemporary & Smooth)']],
   subgroups:{
+    blues:[['all','블루스 전체'],['classic','클래식 블루스 (Classic Blues)'],['delta','델타 블루스 (Delta Blues)'],['electric','시카고·일렉트릭 블루스 (Chicago & Electric Blues)'],['bluesrock','블루스 록 (Blues Rock)']],
     early:[['all','초기·스윙 전체'],['earlyjazz','초기 재즈 (Early Jazz)'],['swing','스윙 (Swing)']],
     bop:[['all','비밥·하드 밥 전체'],['bebop','비밥 (Bebop)'],['hardbop','하드 밥 (Hard Bop)'],['postbop','포스트 밥 (Post-Bop)']],
     modern:[['all','쿨·모달·프리·영적 전체'],['cool','쿨 재즈 (Cool Jazz)'],['modal','모달 재즈 (Modal Jazz)'],['free','프리 재즈 (Free Jazz)'],['spiritual','영적 재즈 (Spiritual Jazz)']],
@@ -10,6 +12,11 @@ window.MUSIC_GENRE={
     contemporary:[['all','컨템퍼러리·스무스 전체'],['smooth','스무스 재즈 (Smooth Jazz)'],['contemp','컨템퍼러리 재즈 (Contemporary Jazz)']]
   },
   guides:{
+    blues:{title:'블루스 비교 듣기',question:'같은 열두 마디가 돌고 도는 동안 목소리와 악기가 어떻게 서로 말을 주고받는지 들어 보세요.',traits:'열두 마디 형식 · 블루 노트 · 콜 앤드 리스폰스 · 밀고 당기는 박자'},
+    'blues:classic':{title:'클래식 블루스 비교 듣기',question:'가수가 한 줄을 부르고 나면 관악기가 어떻게 대답하는지 찾아보세요.',traits:'여성 가수 · 재즈 밴드 반주 · 콜 앤드 리스폰스'},
+    'blues:delta':{title:'델타 블루스 비교 듣기',question:'기타 한 대가 반주와 대답을 어떻게 혼자 다 해내는지 들어 보세요.',traits:'혼자 부르고 치기 · 슬라이드 기타 · 자유로운 박자'},
+    'blues:electric':{title:'시카고·일렉트릭 블루스 비교 듣기',question:'기타에 전기를 물린 뒤 소리가 얼마나 굵고 거칠어졌는지 앞 시대의 어쿠스틱 블루스와 견주어 보세요.',traits:'전기 기타 · 하모니카 · 밴드 합주 · 굵은 저음'},
+    'blues:bluesrock':{title:'블루스 록 비교 듣기',question:'옛 블루스에서 그대로 남은 것과 록이 새로 얹은 것을 갈라 보세요.',traits:'큰 음량의 전기 기타 · 긴 기타 솔로 · 열두 마디 형식'},
     early:{title:'초기·스윙 재즈 비교 듣기',question:'여러 악기가 동시에 꾸미는 초기 재즈와, 섹션이 정돈되게 주고받는 스윙의 차이를 들어 보세요.',traits:'블루 노트 · 집단 즉흥연주 · 스윙 리듬 · 빅밴드 리프'},
     'early:earlyjazz':{title:'초기 재즈 비교 듣기',question:'여러 악기가 동시에 자유롭게 선율을 꾸미는 소리를 찾아보세요.',traits:'블루 노트 · 집단 즉흥연주 · 뉴올리언스 스타일'},
     'early:swing':{title:'스윙 비교 듣기',question:'관악기 섹션이 짧은 구절을 주고받으며 춤추기 좋은 리듬을 만드는 방식을 들어 보세요.',traits:'스윙 리듬 · 빅밴드 리프 · 섹션 합주'},
@@ -34,6 +41,11 @@ window.MUSIC_GENRE={
     'contemporary:contemp':{title:'컨템퍼러리 재즈 비교 듣기',question:'키보드와 베이스가 만드는 정교한 반주 위에서 리드 악기가 어떻게 두드러지는지 들어 보세요.',traits:'정교한 리듬 섹션 · 강렬한 리드 악기 · R&B 제작'}
   },
   descriptions:{
+    blues:'블루스는 1900년대 초 미국 남부에서 아프리카계 미국인들이 부르던 노래에서 태어났어요. 재즈보다 조금 먼저 자리를 잡아 재즈의 뿌리가 되었고, 뒤에는 로큰롤과 록의 뿌리까지 되었습니다. 열두 마디가 돌고 도는 단순한 틀 위에서 노래하는 사람이 한 줄을 부르면 악기가 그 빈자리에 대답하고, 음을 살짝 낮게 흐려 부르는 블루 노트가 특유의 쓸쓸한 맛을 냅니다.',
+    'blues:classic':'1920년대에 처음 음반으로 팔린 블루스로, 여성 가수들이 재즈 밴드의 반주를 받으며 무대에서 부르던 스타일이에요. 가수가 한 줄을 부르면 트럼펫이나 클라리넷이 그 빈자리에 대답하는 주고받음이 뚜렷합니다.',
+    'blues:delta':'미시시피강 하류의 농촌에서 부르던 가장 오래된 형태의 블루스예요. 반주해 줄 밴드가 없으니 기타 한 대로 반주와 대답을 함께 해내고, 병목이나 쇠막대를 줄 위에 미끄러뜨려 사람 목소리처럼 흐느끼는 슬라이드 기타 소리를 냅니다.',
+    'blues:electric':'남부의 흑인들이 일자리를 찾아 시카고 같은 북부 도시로 옮겨 가면서, 시끄러운 술집에서도 소리가 들리도록 기타에 전기를 물렸어요. 굵고 거칠어진 기타에 하모니카·베이스·드럼이 더해져 밴드 음악이 되었고, 여기에서 로큰롤이 갈라져 나왔습니다.',
+    'blues:bluesrock':'1960년대 영국과 미국의 젊은 연주자들이 시카고 블루스 음반을 들으며 자라, 같은 곡을 훨씬 큰 음량과 긴 기타 솔로로 다시 연주하기 시작했어요. 열두 마디 블루스의 뼈대는 그대로 두고 록의 소리를 얹은 스타일입니다.',
     early:'재즈는 1900년대 초 미국 뉴올리언스에서 블루스·래그타임·행진 음악이 만나며 태어났어요. 여러 악기가 동시에 자유롭게 선율을 꾸미는 초기 재즈에서 시작해, 1930년대에는 여러 명이 모인 빅밴드가 짧은 연주 구절을 주고받으며 춤추기 좋은 스윙 리듬으로 발전했습니다.',
     'early:earlyjazz':'블루스, 래그타임, 행진 음악과 아프리카계 미국인의 음악 전통이 뉴올리언스에서 만나 태어났어요. 한 사람이 이끄는 게 아니라 여러 악기가 동시에 자유롭게 선율을 꾸미는 "집단 즉흥연주"가 특징입니다.',
     'early:swing':'많은 연주자가 모인 빅밴드가 이끌었던 1930년대의 인기 스타일이에요. 관악기들이 짧은 연주 구절을 정돈되게 주고받고, 통통 튀는 스윙 리듬 위에서 사람들이 신나게 춤을 췄습니다.',
@@ -67,6 +79,17 @@ window.MUSIC_GENRE={
     {years:'1980s–Now',startYear:1980,endYear:Infinity,name:'컨템퍼러리·스무스와 오늘의 재즈',english:'Contemporary, Smooth and Jazz Today',story:'1980년대 이후에는 R&B와 팝의 정교한 스튜디오 제작을 받아들인 컨템퍼러리·스무스 재즈가 성장했습니다. 동시에 오늘의 재즈는 힙합, 전자음악과 세계 여러 전통을 계속 받아들입니다.',turn:'선명한 리드 악기, 매끄러운 제작, R&B 그루브, 장르 간 협업'}
   ],
   cards:[
+    {years:'1920',lineage:'blues',subgroup:'classic',style:'클래식 블루스',styleEn:'Classic Blues',title:'크레이지 블루스',original:'Crazy Blues',artist:'Mamie Smith',history:'흑인 가수가 부른 블루스가 처음으로 음반이 되어 크게 팔린 녹음입니다. 이 성공을 보고 음반 회사들이 앞다투어 블루스를 녹음하기 시작했어요.',sound:'가수의 한 줄이 끝날 때마다 관악기가 짧게 대답하고, 밴드가 느긋한 박자로 뒤를 받칩니다.',point:'노래와 악기가 번갈아 말을 주고받는 자리를 세어 보세요.'},
+    {years:'1925',lineage:'blues',subgroup:'classic',style:'클래식 블루스',styleEn:'Classic Blues',title:'세인트루이스 블루스',original:'St. Louis Blues',artist:'Bessie Smith & Louis Armstrong',history:'블루스의 여왕으로 불린 가수와 젊은 재즈 트럼펫 연주자가 함께 남긴 녹음으로, 블루스와 재즈가 한 곡 안에서 만나는 순간을 보여 줍니다.',sound:'무겁고 힘 있는 목소리 뒤로 트럼펫이 한 마디씩 끼어들며 대답합니다.',point:'목소리가 쉬는 짧은 틈마다 트럼펫이 무슨 말을 하는지 들어 보세요.'},
+    {years:'1929',lineage:'blues',subgroup:'delta',style:'델타 블루스',styleEn:'Delta Blues',title:'포니 블루스',original:'Pony Blues',artist:'Charley Patton',history:'델타 블루스의 출발점으로 꼽히는 연주자가 남긴 대표 녹음입니다.',sound:'거친 목소리와 기타를 두드리듯 치는 연주가 한 사람에게서 동시에 나옵니다.',point:'노래와 기타가 서로 다른 박자로 밀고 당기는 순간을 찾아보세요.'},
+    {years:'1936',lineage:'blues',subgroup:'delta',style:'델타 블루스',styleEn:'Delta Blues',title:'크로스 로드 블루스',original:'Cross Road Blues',artist:'Robert Johnson',history:'뒷날 수많은 록 연주자들이 다시 연주하면서 블루스를 상징하는 곡이 되었습니다.',sound:'슬라이드 기타가 목소리를 따라 흐느끼고, 낮은 줄이 걸음처럼 쉬지 않고 움직입니다.',point:'기타 한 대가 반주와 대답을 동시에 해내는 방식을 들어 보세요.'},
+    {years:'1948',lineage:'blues',subgroup:'electric',style:'초기 시카고 블루스',styleEn:'Early Chicago Blues',title:'아이 캔트 비 새티스파이드',original:'I Can’t Be Satisfied',artist:'Muddy Waters',history:'미시시피에서 시카고로 옮겨 간 연주자가 델타 블루스를 전기 기타로 옮겨 낸 첫 성공작입니다.',sound:'슬라이드 기타에 전기가 물려 소리는 굵어졌지만, 연주하는 방식은 아직 델타 블루스 그대로입니다.',point:'앞의 델타 블루스와 무엇이 그대로이고 소리만 어떻게 달라졌는지 견주어 보세요.'},
+    {years:'1954',lineage:'blues',subgroup:'electric',style:'시카고 블루스',styleEn:'Chicago Blues',title:'후치 쿠치 맨',original:'Hoochie Coochie Man',artist:'Muddy Waters',history:'혼자 부르던 블루스가 기타·하모니카·베이스·드럼이 함께하는 밴드 음악으로 자리 잡은 시카고 블루스의 대표곡입니다.',sound:'모든 악기가 같은 짧은 구절을 한꺼번에 내지른 뒤 목소리가 들어오는 구조가 되풀이됩니다.',point:'밴드가 멈추고 목소리만 남는 자리와 다 함께 밀어붙이는 자리를 나누어 들어 보세요.'},
+    {years:'1956',lineage:'blues',subgroup:'electric',style:'시카고 블루스',styleEn:'Chicago Blues',title:'스모크스택 라이트닝',original:'Smokestack Lightning',artist:'Howlin’ Wolf',history:'화음이 거의 바뀌지 않고 짧은 구절 하나만 계속 도는 구조여서, 뒤에 록 밴드들이 즐겨 따라 한 곡입니다.',sound:'굵고 거친 목소리와 길게 뻗는 울음소리, 하모니카가 기차 소리처럼 겹쳐집니다.',point:'화음이 바뀌지 않는데도 지루해지지 않는 까닭이 무엇인지 찾아보세요.'},
+    {years:'1968',lineage:'blues',subgroup:'bluesrock',style:'블루스 록',styleEn:'Blues Rock',title:'크로스로즈',original:'Crossroads',artist:'Cream',history:'32년 전 Robert Johnson이 기타 한 대로 부른 「Cross Road Blues」를 영국 록 밴드가 세 사람의 큰 소리로 다시 연주한 실황 녹음입니다.',sound:'빠른 드럼과 굵은 베이스 위에서 일그러진 전기 기타가 긴 솔로를 이어 갑니다.',point:'Robert Johnson의 녹음과 나란히 듣고, 무엇이 남았고 무엇이 새로 얹혔는지 갈라 보세요.'},
+    {years:'1969',lineage:'blues',subgroup:'electric',style:'일렉트릭 블루스',styleEn:'Electric Blues',title:'더 스릴 이즈 곤',original:'The Thrill Is Gone',artist:'B.B. King',history:'블루스에 현악 편곡을 더해 대중 차트에서도 성공하며, 블루스 기타 연주의 본보기가 된 곡입니다.',sound:'짧게 떠는 비브라토와 한 음을 밀어 올리는 벤딩이 사람 목소리처럼 노래합니다.',point:'기타가 화음을 잔뜩 치기보다 한 음 한 음을 어떻게 노래하듯 다루는지 들어 보세요.'},
+    {years:'1983',lineage:'blues',subgroup:'bluesrock',style:'텍사스 블루스 록',styleEn:'Texas Blues Rock',title:'프라이드 앤드 조이',original:'Pride and Joy',artist:'Stevie Ray Vaughan',history:'전자음악이 유행하던 1980년대에 텍사스 출신 기타 연주자가 옛 블루스의 소리를 그대로 들고나와 다시 유행시킨 곡입니다.',sound:'통통 튀는 셔플 리듬 위에서 기타 한 대가 반주와 솔로를 혼자 오갑니다.',point:'1950년대 시카고 블루스와 리듬의 뼈대가 얼마나 닮았는지 확인해 보세요.'},
+    {years:'1990',lineage:'blues',subgroup:'bluesrock',style:'한국의 블루스',styleEn:'Blues in Korea',homage:true,original:'어느 60대 노부부 이야기',artist:'김목경 (Kim Mok-kyung)',history:'영국에서 블루스 기타를 익히고 돌아온 연주자가 만든 곡으로, 1995년 김광석이 다시 부르며 널리 알려졌습니다.',sound:'어쿠스틱 기타의 담담한 반주 위에 이야기하듯 부르는 목소리가 놓입니다.',point:'미국 남부에서 태어난 형식이 한국말 노랫말과 만났을 때 어떤 느낌이 되는지 들어 보세요.'},
     {years:'1928',lineage:'early',subgroup:'earlyjazz',style:'초기 재즈',styleEn:'Early Jazz',title:'웨스트 엔드 블루스',original:'West End Blues',artist:'Louis Armstrong',history:'독주자의 개성과 즉흥연주가 재즈의 중심이 되는 변화를 보여 준 녹음입니다.',sound:'트럼펫 카덴차, 스캣 보컬과 콤보의 주고받음이 돋보입니다.',point:'도입 트럼펫이 박자와 선율을 자유롭게 다루는 방식을 들어 보세요.'},
     {years:'1932',lineage:'early',subgroup:'swing',style:'스윙',styleEn:'Swing',title:'잇 돈트 민 어 싱',original:'It Don’t Mean a Thing',artist:'Duke Ellington',history:'스윙이라는 말을 대중에게 각인시킨 빅밴드 시대의 대표곡입니다.',sound:'관악기 섹션의 리프와 스윙하는 리듬, 스캣 후렴이 특징입니다.',point:'긴 음과 짧은 음이 튕기듯 이어지는 스윙감을 몸으로 느껴 보세요.'},
     {years:'1937',lineage:'early',subgroup:'swing',style:'빅밴드 스윙',styleEn:'Big Band Swing',title:'싱 싱 싱',original:'Sing, Sing, Sing',artist:'Benny Goodman',history:'댄스홀의 에너지와 긴 드럼 솔로를 담은 스윙 시대의 상징적 녹음입니다.',sound:'톰톰 중심의 드럼과 반복 리프, 클라리넷 솔로가 긴 흐름을 만듭니다.',point:'합주 리프와 솔로가 교대할 때 긴장감이 어떻게 커지는지 들어 보세요.'},

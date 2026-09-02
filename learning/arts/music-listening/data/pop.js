@@ -1,4 +1,5 @@
 window.MUSIC_GENRE={
+  label:'팝',
   integrated:'era',
   lineages:[['rock','록 (Rock)'],['rnb','R&B·소울 (R&B & Soul)'],['hiphop','힙합 (Hip-Hop)'],['dance','댄스·전자 (Dance & Electronic)'],['world','월드뮤직 (World Music)']],
   subgroups:{

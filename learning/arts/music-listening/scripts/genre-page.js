@@ -12,6 +12,7 @@ const subfilters=data.subgroups?document.createElement('div'):null;
 let eraIndex=0;
 let currentLineage='all';
 let currentSubgroup='all';
+const genreLabel=data.label||'팝';
 
 if(studyGuide){
   studyGuide.id='study-guide';
@@ -30,9 +31,9 @@ if(data.integrated){
   const eraMode=data.integrated==='era';
   document.body.classList.add(eraMode?'era-integrated':'lineage-integrated');
   eraTabs.hidden=!eraMode;
-  filters.setAttribute('aria-label',eraMode?'팝 장르 선택':'재즈 시대와 양식 선택');
+  filters.setAttribute('aria-label',eraMode?`${genreLabel} 장르 선택`:`${genreLabel} 시대와 양식 선택`);
   if(eraMode){
-    eraTabs.setAttribute('aria-label','팝 시대 선택');
+    eraTabs.setAttribute('aria-label',`${genreLabel} 시대 선택`);
     history.append(eraTabs,filters);
     if(subfilters)history.append(subfilters);
     history.append(eraPanel,playlist);
@@ -89,7 +90,7 @@ function renderEra(lineage=currentLineage,subgroup=currentSubgroup){
     const count=data.cards.filter(card=>cardInEra(card)&&(lineage==='all'||card.lineage===lineage)&&(subgroup==='all'||card.subgroup===subgroup)).length;
     const allYears=eraIndex==='all';
     const matchedYears=data.cards.filter(card=>!card.homage&&(lineage==='all'||card.lineage===lineage)&&(subgroup==='all'||card.subgroup===subgroup)).map(card=>Number.parseInt(card.years)).sort((a,b)=>a-b);
-    const allYearsName=lineage==='all'?'팝 음악 전체':(guide?.title||'장르 전체').replace(/\s*\d+곡/,'').replace(' 비교 듣기','');
+    const allYearsName=lineage==='all'?`${genreLabel} 음악 전체`:(guide?.title||'장르 전체').replace(/\s*\d+곡/,'').replace(' 비교 듣기','');
     const allYearsRange=subgroup==='all'?`${matchedYears[0]}–현재`:`${matchedYears[0]}–${matchedYears.at(-1)}`;
     const era=allYears?{years:allYearsRange,name:allYearsName,english:'',story:description||'연도 제한 없이 이 장르의 시작부터 최근 흐름까지 대표곡을 한 번에 비교합니다.',turn:guide?.traits||'리듬 · 음색 · 보컬 · 제작 방식'}:data.eras[eraIndex];
     const genreName=allYears?'':(subgroup!=='all'?(guide?.title||'세부 장르'):lineage!=='all'?(guide?.title||'장르'):'').replace(/\d+곡/,`${count}곡`);
