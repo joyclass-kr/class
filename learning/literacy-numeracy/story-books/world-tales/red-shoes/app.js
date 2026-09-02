@@ -305,16 +305,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '빨강 구두',
+    intro: [
+        '빨강 구두는 덴마크의 작가 한스 크리스티안 안데르센이 1845년에 펴낸 이야기예요. 안데르센이 어릴 적 처음 신어 본 새 구두를 자랑하다 꾸중을 들었던 기억에서 나온 이야기라고 합니다.',
+        '원래 이야기는 끝이 아주 무서운데, 이 책에서는 아이들이 읽기 좋게 결말을 부드럽게 옮겼어요. 무언가에 마음을 온통 빼앗겼을 때 어떤 일이 벌어지는지 보여 주는 이야기랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '👠')}
             </div>
             <div class="story-page-right">
-                <h1>빨강 구두</h1>
-                <p>빨강 구두는 덴마크의 작가 한스 크리스티안 안데르센이 1845년에 펴낸 이야기예요. 안데르센이 어릴 적 처음 신어 본 새 구두를 자랑하다 꾸중을 들었던 기억에서 나온 이야기라고 합니다.</p>
-                <p>원래 이야기는 끝이 아주 무서운데, 이 책에서는 아이들이 읽기 좋게 결말을 부드럽게 옮겼어요. 무언가에 마음을 온통 빼앗겼을 때 어떤 일이 벌어지는지 보여 주는 이야기랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -329,8 +338,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -340,8 +349,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -351,22 +360,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -416,9 +426,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -429,7 +439,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -501,7 +511,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -510,34 +520,630 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   한국어판과 마찬가지로 원작의 무서운 끝은 부드럽게 옮긴다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Red Shoes',
+        intro: [
+            "The Red Shoes was published by the Danish author Hans Christian Andersen in 1845. It is said to have come out of his memory of showing off the first new shoes he ever wore, and being told off for it.",
+            "The original ending is a frightening one, and this book gives it a gentler one for younger readers. It shows what happens when your whole mind is taken up by one thing."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Barefoot Child',
+            beats: [
+                {
+                    art: '01-barefoot.webp',
+                    emoji: '👣',
+                    left: [
+                        "Karen went barefoot all summer long.",
+                        "It was a house with no money for shoes.",
+                        "And Karen was a child who laughed easily.",
+                        "The dirt road pricked at the soles of her feet.",
+                        "In winter she wore wooden clogs.",
+                        "The clogs were hard and her heels went red and swollen,",
+                        "and Karen never let it show."
+                    ],
+                    right: [
+                        "They went clack, clack as she walked,",
+                        "and the other children turned round at the sound.",
+                        "There was a kind woman in the village",
+                        "who sewed her a pair of shoes out of old rags —",
+                        "rough shoes pieced together out of red cloth.",
+                        "\"Oh, I have never had such pretty shoes!\" And Karen jumped up and down in them."
+                    ]
+                },
+                {
+                    art: '01-barefoot-2.webp',
+                    emoji: '👣',
+                    left: [
+                        "Karen thought a great deal of those shoes.",
+                        "She walked carefully so as not to get dirt on them,",
+                        "and kept them by her pillow to look at before she slept.",
+                        "And a little while later her mother took to her bed.",
+                        "Karen sat up with her through the nights.",
+                        "And then Karen was left on her own."
+                    ],
+                    right: [
+                        "It was the day of her mother's burial,",
+                        "and Karen wore the red rag shoes to it,",
+                        "because they were the only shoes she had.",
+                        "People murmured about it.",
+                        "\"Red shoes, on a day like this.\" And Karen hung her head."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · To the Old Lady's House",
+            beats: [
+                {
+                    art: '02-adopted.webp',
+                    emoji: '🏡',
+                    left: [
+                        "There was a lady passing through that village,",
+                        "an old lady with white hair and spectacles.",
+                        "She looked at Karen for a long while,",
+                        "sorry for so small and thin a child.",
+                        "\"Are you left all alone?\"",
+                        "And Karen nodded."
+                    ],
+                    right: [
+                        "\"Then come and live with me.\"",
+                        "So Karen went with her.",
+                        "The lady's house was warm and clean,",
+                        "with the fire always burning.",
+                        "The lady gave Karen good clothes,",
+                        "and taught her her letters and how to sew."
+                    ]
+                },
+                {
+                    art: '02-adopted-2.webp',
+                    emoji: '🏡',
+                    left: [
+                        "Only one thing did not sit well.",
+                        "The lady saw the red rag shoes.",
+                        "\"You will have no more need of these.\"",
+                        "And she put them into the fire.",
+                        "Karen's head went down.",
+                        "The red cloth was ashes in a moment."
+                    ],
+                    right: [
+                        "Karen stood there looking at it a long time.",
+                        "Something in her chest felt tight.",
+                        "That night Karen could not sleep,",
+                        "because the red shoes kept coming back to her.",
+                        "And she never forgot that colour afterwards.",
+                        "When she shut her eyes there was red behind them."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · At the Shoemaker's Window",
+            beats: [
+                {
+                    art: '03-shop.webp',
+                    emoji: '👠',
+                    left: [
+                        "One day the lady took Karen out with her.",
+                        "There was a great occasion coming and they were to buy new shoes.",
+                        "The two of them went to the shoemaker's shop.",
+                        "There were shoes along every wall,",
+                        "and the smell of leather went right up your nose.",
+                        "The lady's eyes were very weak,",
+                        "and she could not see the display properly."
+                    ],
+                    right: [
+                        "\"Choose whichever pair you like.\"",
+                        "Karen looked at them one by one.",
+                        "The black shoes did not draw her at all,",
+                        "and nor did the brown ones.",
+                        "And then something on a shelf at the back caught her eye.",
+                        "A pair of red leather shoes."
+                    ]
+                },
+                {
+                    art: '03-shop-2.webp',
+                    emoji: '👠',
+                    left: [
+                        "They were polished until they shone.",
+                        "Karen could not take her eyes off them.",
+                        "She thought of those red rag shoes,",
+                        "and carefully pointed at them.",
+                        "\"I shall have these.\"",
+                        "And the shoemaker smiled."
+                    ],
+                    right: [
+                        "It was a smile as though he knew something.",
+                        "The lady paid, believing they were black.",
+                        "\"You have chosen well.\"",
+                        "And Karen held the shoes tight against her.",
+                        "Her heart beat all the way home.",
+                        "She could not wait to put them on."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · Nothing But the Shoes',
+            beats: [
+                {
+                    art: '04-church.webp',
+                    emoji: '⛪',
+                    left: [
+                        "Sunday morning came,",
+                        "and Karen wore the shoes to church.",
+                        "When she came in, people turned to look,",
+                        "and every eye went to her feet.",
+                        "Karen felt her shoulders go back,",
+                        "and even sitting down she looked at nothing but her feet."
+                    ],
+                    right: [
+                        "She did not hear a word of what was said at the front.",
+                        "Her head was full of nothing but the red shoes.",
+                        "\"Where shall I wear them tomorrow?\"",
+                        "\"People will look again.\"",
+                        "She did not notice the service had ended,",
+                        "and only came to herself when everybody stood up."
+                    ]
+                },
+                {
+                    art: '04-church-2.webp',
+                    emoji: '⛪',
+                    left: [
+                        "It was the same when she got home.",
+                        "Karen polished the shoes and polished them again,",
+                        "rubbing at them with a cloth and looking at them,",
+                        "and she did not hear the lady calling.",
+                        "\"Karen, would you bring me some water.\"",
+                        "About that time the lady took to her bed."
+                    ],
+                    right: [
+                        "Her cough was bad and her face was pale.",
+                        "Neighbours came, worried about her.",
+                        "\"You must sit with her properly.\"",
+                        "And Karen answered without really listening.",
+                        "Her eyes were still on the shoes.",
+                        "Her mind was somewhere else entirely."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Dance That Would Not Stop',
+            beats: [
+                {
+                    art: '05-dance.webp',
+                    emoji: '💃',
+                    left: [
+                        "That evening there was a feast in the village.",
+                        "Lamps were hung in the square and the musicians gathered.",
+                        "Karen looked out of the window,",
+                        "and her feet itched.",
+                        "The lady was asleep in her bed.",
+                        "Karen quietly put on the shoes",
+                        "and slipped out of the house.",
+                        "When she reached the square the music struck up."
+                    ],
+                    right: [
+                        "And in that instant her feet began to move by themselves.",
+                        "Karen went round and round, delighted.",
+                        "People clapped for her,",
+                        "and Karen was more delighted still.",
+                        "Her skirt spun round like a top,",
+                        "and the lamps went past her eyes in a blur."
+                    ]
+                },
+                {
+                    art: '05-dance-2.webp',
+                    emoji: '💃',
+                    left: [
+                        "But when one tune ended her feet did not stop.",
+                        "And they did not stop after the second one either.",
+                        "\"What? What is happening?\"",
+                        "Karen tried to take hold of her own feet.",
+                        "\"Stop! Stop now!\"",
+                        "And the shoes would not listen."
+                    ],
+                    right: [
+                        "They carried her out of the square.",
+                        "People stood back in surprise,",
+                        "and the shoes took her across the fields and toward the wood.",
+                        "They danced her along under the moon all night.",
+                        "Karen could hardly breathe,",
+                        "and branches brushed her face.",
+                        "And still her feet did not stop."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Shoes Would Not Come Off',
+            beats: [
+                {
+                    art: '06-stuck.webp',
+                    emoji: '🌲',
+                    left: [
+                        "Dawn came and the dancing did not stop.",
+                        "Her clothes were wet with dew and her hair was all undone.",
+                        "Karen took hold of a tree",
+                        "and pulled at the shoes with all her strength.",
+                        "But the shoes were stuck fast to her feet.",
+                        "Pull as she might, they did not move."
+                    ],
+                    right: [
+                        "And her feet started again by themselves.",
+                        "\"Please… I want to stop now.\"",
+                        "Karen was near to crying.",
+                        "The sun came up grey over the wood",
+                        "and the birds began to sing.",
+                        "And still her feet did not stop.",
+                        "The soles of them burned.",
+                        "And now Karen had no voice left."
+                    ]
+                },
+                {
+                    art: '06-stuck-2.webp',
+                    emoji: '🌲',
+                    left: [
+                        "And only then did Karen think of the lady.",
+                        "That face, lying there in the bed, came back to her.",
+                        "\"And she is ill.\"",
+                        "\"What have I been doing?\"",
+                        "The tears came down.",
+                        "She remembered the voice asking for water,"
+                    ],
+                    right: [
+                        "and how she had answered without listening.",
+                        "Karen could not bear the shame of it.",
+                        "\"I want to go back.\"",
+                        "\"I do not want these shoes any more.\"",
+                        "And her feet went on carrying her along,",
+                        "and the wood grew deeper."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: "Chapter 7 · The Woodcutter's Cottage",
+            beats: [
+                {
+                    art: '07-cottage.webp',
+                    emoji: '🏚️',
+                    left: [
+                        "The dancing carried her to a clearing in the wood,",
+                        "where a small cottage stood",
+                        "with smoke coming up from the chimney.",
+                        "A woodcutter's wife opened the door and came out",
+                        "with her hands thick with flour.",
+                        "\"Well now, you have been out all night.\""
+                    ],
+                    right: [
+                        "And the woman took hold of Karen,",
+                        "and her feet stopped for a moment.",
+                        "The woman sat her down on the doorstep",
+                        "and fetched her a bowl of warm water.",
+                        "Karen drank it straight down,",
+                        "and only then could she breathe again.",
+                        "Her hands were still shaking,",
+                        "and the woman took them in her own."
+                    ]
+                },
+                {
+                    art: '07-cottage-2.webp',
+                    emoji: '🏚️',
+                    left: [
+                        "The woman looked down at the shoes.",
+                        "\"Do you truly want those shoes off?\"",
+                        "Karen nodded without hesitating.",
+                        "\"Yes. Truly.\"",
+                        "\"They do not look pretty to me at all now.\"",
+                        "And then something remarkable happened."
+                    ],
+                    right: [
+                        "The shoes slid off her feet",
+                        "and dropped onto the grass.",
+                        "Karen looked down at her own feet.",
+                        "Bare, they felt lighter than before.",
+                        "\"Thank you.\" And the woman only smiled."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Home Again',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "Karen walked home barefoot.",
+                        "The gravel hurt her feet,",
+                        "and her heart was lighter for all that.",
+                        "It was near midday",
+                        "when she saw a roof she knew.",
+                        "There was no smoke from the chimney.",
+                        "Karen walked faster.",
+                        "She opened the door and the room was quiet."
+                    ],
+                    right: [
+                        "The lady was lying in her bed,",
+                        "and turned her head slowly at the sight of Karen.",
+                        "\"And where have you been all this time?\"",
+                        "Her voice was very small.",
+                        "The tears came up in Karen at once,",
+                        "and she went down on her knees beside the bed.",
+                        "\"I am sorry. I am so very sorry.\""
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "Karen knelt beside the bed.",
+                        "\"I am sorry.\"",
+                        "\"I shall stay with you now.\"",
+                        "The lady took Karen's hand",
+                        "and smiled quietly.",
+                        "\"You have come back. That is enough.\""
+                    ],
+                    right: [
+                        "From that day Karen stayed at the lady's side.",
+                        "She brewed her medicine and made her porridge,",
+                        "and before long the lady was up out of bed.",
+                        "The two of them lived together a long, long time.",
+                        "The red shoes stayed where they were on the grass in the wood.",
+                        "And Karen never went to look for them again."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What were Karen’s first shoes?',
+            choices: ['Red shoes sewn out of old rags', 'Wooden clogs', 'Red leather shoes'],
+            answer: 0
+        },
+        {
+            q: 'What did the old lady do with the rag shoes?',
+            choices: ['She kept them in a box', 'She gave them away', 'She put them into the fire'],
+            answer: 2
+        },
+        {
+            q: 'How did Karen get red leather shoes?',
+            choices: ['The shoemaker gave them to her', 'The lady’s eyes were weak and she thought they were black', 'She bought them herself'],
+            answer: 1
+        },
+        {
+            q: 'What was Karen thinking about in church?',
+            choices: ['The red shoes and who would look at them', 'The lady’s illness', 'The feast in the square'],
+            answer: 0
+        },
+        {
+            q: 'What happened when the music started at the feast?',
+            choices: ['The shoes came off', 'She fell over', 'Her feet began to move and would not stop'],
+            answer: 2
+        },
+        {
+            q: 'What made Karen want the shoes off?',
+            choices: ['Her feet hurt too much', 'She remembered the lady lying ill at home', 'People laughed at her'],
+            answer: 1
+        },
+        {
+            q: 'Who stopped the dancing?',
+            choices: ['A woodcutter’s wife who took hold of her', 'The shoemaker', 'The old lady'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '👠',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Andersen is said to have remembered the first new shoes he ever wore for a very long time. That memory became this story.",
+                    "Karen went barefoot all summer. The first shoes she ever wore were red ones a kind woman sewed for her out of rags.",
+                    "She could choose the red leather shoes in the shop because the lady's eyes were too weak to see them. Karen knew that, and said nothing.",
+                    "On the night she slipped out to the feast, her feet begin to move by themselves. She wanted to stop and could not."
+                ],
+                right: [
+                    "The person who stops her is a woman in a cottage in the wood. She takes hold of her, sits her down and fetches her a bowl of water.",
+                    "What should Karen have said in that shop?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-barefoot.webp': [
+            { word: 'barefoot', meaning: '맨발로', sentence: 'Karen went barefoot all summer long.' },
+            { word: 'prick', meaning: '따끔거리게 하다', sentence: 'The dirt road pricked at the soles of her feet.' },
+            { word: 'clog', meaning: '나막신', sentence: 'In winter she wore wooden clogs.' },
+            { word: 'swollen', meaning: '부은', sentence: 'Her heels went red and swollen.' },
+            { word: 'rag', meaning: '헝겊', sentence: 'Shoes out of old rags.' }
+        ],
+        '01-barefoot-2.webp': [
+            { word: 'so as not to', meaning: '~하지 않도록', sentence: 'She walked carefully so as not to get dirt on them.' },
+            { word: 'take to one’s bed', meaning: '몸져눕다', sentence: 'Her mother took to her bed.' },
+            { word: 'sit up with', meaning: '곁에서 밤을 새우다', sentence: 'Karen sat up with her through the nights.' },
+            { word: 'burial', meaning: '장례', sentence: "It was the day of her mother's burial." },
+            { word: 'murmur', meaning: '수군거리다', sentence: 'People murmured about it.' }
+        ],
+        '02-adopted.webp': [
+            { word: 'spectacles', meaning: '안경', sentence: 'An old lady with white hair and spectacles.' },
+            { word: 'sorry for', meaning: '안쓰러워하는', sentence: 'Sorry for so small and thin a child.' },
+            { word: 'letters', meaning: '글', sentence: 'And taught her her letters.' },
+            { word: 'sew', meaning: '바느질하다', sentence: 'And how to sew.' }
+        ],
+        '02-adopted-2.webp': [
+            { word: 'sit well', meaning: '마음에 걸리지 않다', sentence: 'Only one thing did not sit well.' },
+            { word: 'have need of', meaning: '필요하다', sentence: 'You will have no more need of these.' },
+            { word: 'ashes', meaning: '재', sentence: 'The red cloth was ashes in a moment.' },
+            { word: 'tight', meaning: '답답한', sentence: 'Something in her chest felt tight.' }
+        ],
+        '03-shop.webp': [
+            { word: 'occasion', meaning: '행사', sentence: 'There was a great occasion coming.' },
+            { word: 'leather', meaning: '가죽', sentence: 'The smell of leather.' },
+            { word: 'weak', meaning: '어두운, 약한', sentence: "The lady's eyes were very weak." },
+            { word: 'display', meaning: '진열장', sentence: 'She could not see the display properly.' },
+            { word: 'catch one’s eye', meaning: '눈에 들어오다', sentence: 'Something caught her eye.' }
+        ],
+        '03-shop-2.webp': [
+            { word: 'polish', meaning: '윤을 내다', sentence: 'They were polished until they shone.' },
+            { word: 'point at', meaning: '가리키다', sentence: 'And carefully pointed at them.' },
+            { word: 'as though', meaning: '마치 ~인 듯', sentence: 'A smile as though he knew something.' },
+            { word: 'can’t wait to', meaning: '어서 ~하고 싶다', sentence: 'She could not wait to put them on.' }
+        ],
+        '04-church.webp': [
+            { word: 'turn to look', meaning: '돌아보다', sentence: 'People turned to look.' },
+            { word: 'shoulders go back', meaning: '어깨가 으쓱해지다', sentence: 'Karen felt her shoulders go back.' },
+            { word: 'service', meaning: '예배', sentence: 'She did not notice the service had ended.' },
+            { word: 'come to oneself', meaning: '정신이 들다', sentence: 'And only came to herself when everybody stood up.' }
+        ],
+        '04-church-2.webp': [
+            { word: 'rub at', meaning: '문지르다', sentence: 'Rubbing at them with a cloth.' },
+            { word: 'pale', meaning: '파리한', sentence: 'Her cough was bad and her face was pale.' },
+            { word: 'sit with', meaning: '곁을 지키다', sentence: 'You must sit with her properly.' },
+            { word: 'somewhere else', meaning: '딴 데에', sentence: 'Her mind was somewhere else entirely.' }
+        ],
+        '05-dance.webp': [
+            { word: 'feast', meaning: '잔치', sentence: 'There was a feast in the village.' },
+            { word: 'itch', meaning: '근질근질하다', sentence: 'And her feet itched.' },
+            { word: 'slip out', meaning: '몰래 빠져나가다', sentence: 'And slipped out of the house.' },
+            { word: 'strike up', meaning: '연주가 시작되다', sentence: 'The music struck up.' },
+            { word: 'in a blur', meaning: '어른어른', sentence: 'The lamps went past her eyes in a blur.' }
+        ],
+        '05-dance-2.webp': [
+            { word: 'tune', meaning: '곡', sentence: 'When one tune ended her feet did not stop.' },
+            { word: 'take hold of', meaning: '붙잡다', sentence: 'Karen tried to take hold of her own feet.' },
+            { word: 'stand back', meaning: '길을 비키다', sentence: 'People stood back in surprise.' },
+            { word: 'brush', meaning: '스치다', sentence: 'Branches brushed her face.' }
+        ],
+        '06-stuck.webp': [
+            { word: 'dew', meaning: '이슬', sentence: 'Her clothes were wet with dew.' },
+            { word: 'undone', meaning: '헝클어진', sentence: 'Her hair was all undone.' },
+            { word: 'stuck fast', meaning: '딱 붙은', sentence: 'The shoes were stuck fast to her feet.' },
+            { word: 'pull as she might', meaning: '아무리 당겨도', sentence: 'Pull as she might, they did not move.' },
+            { word: 'burn', meaning: '화끈거리다', sentence: 'The soles of them burned.' }
+        ],
+        '06-stuck-2.webp': [
+            { word: 'come back to', meaning: '떠오르다', sentence: 'That face came back to her.' },
+            { word: 'bear', meaning: '견디다', sentence: 'Karen could not bear the shame of it.' },
+            { word: 'shame', meaning: '부끄러움', sentence: 'The shame of it.' },
+            { word: 'carry along', meaning: '끌고 가다', sentence: 'Her feet went on carrying her along.' }
+        ],
+        '07-cottage.webp': [
+            { word: 'clearing', meaning: '빈터', sentence: 'A clearing in the wood.' },
+            { word: 'woodcutter', meaning: '나무꾼', sentence: "A woodcutter's wife opened the door." },
+            { word: 'flour', meaning: '밀가루', sentence: 'With her hands thick with flour.' },
+            { word: 'doorstep', meaning: '문지방', sentence: 'The woman sat her down on the doorstep.' },
+            { word: 'straight down', meaning: '단숨에', sentence: 'Karen drank it straight down.' }
+        ],
+        '07-cottage-2.webp': [
+            { word: 'truly', meaning: '정말로', sentence: 'Do you truly want those shoes off?' },
+            { word: 'hesitate', meaning: '망설이다', sentence: 'Karen nodded without hesitating.' },
+            { word: 'slide off', meaning: '스르르 벗겨지다', sentence: 'The shoes slid off her feet.' },
+            { word: 'lighter', meaning: '홀가분한', sentence: 'Bare, they felt lighter than before.' }
+        ],
+        '08-ending.webp': [
+            { word: 'gravel', meaning: '자갈', sentence: 'The gravel hurt her feet.' },
+            { word: 'for all that', meaning: '그래도', sentence: 'And her heart was lighter for all that.' },
+            { word: 'midday', meaning: '한낮', sentence: 'It was near midday.' },
+            { word: 'go down on one’s knees', meaning: '무릎을 꿇다', sentence: 'She went down on her knees beside the bed.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'kneel', meaning: '무릎을 꿇다', sentence: 'Karen knelt beside the bed.' },
+            { word: 'that is enough', meaning: '그것으로 됐다', sentence: 'You have come back. That is enough.' },
+            { word: 'brew', meaning: '달이다', sentence: 'She brewed her medicine.' },
+            { word: 'look for', meaning: '찾다', sentence: 'Karen never went to look for them again.' }
+        ],
+        'end.webp': [
+            { word: 'show off', meaning: '자랑하다', sentence: 'His memory of showing off his first new shoes.' },
+            { word: 'tell off', meaning: '꾸중하다', sentence: 'And being told off for it.' },
+            { word: 'say nothing', meaning: '말하지 않다', sentence: 'Karen knew that, and said nothing.' },
+            { word: 'by themselves', meaning: '저절로', sentence: 'Her feet begin to move by themselves.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -602,6 +1208,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -610,7 +1217,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -622,7 +1229,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -656,4 +1263,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
