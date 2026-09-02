@@ -313,16 +313,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '백조의 호수',
+    intro: [
+        '백조의 호수는 러시아의 작곡가 표트르 차이콥스키가 1876년에 만든 발레 음악으로 유명해진 이야기예요. 독일과 러시아에 전해 오던 백조 처녀 이야기를 바탕으로 삼았답니다.',
+        '무대에서는 말 대신 춤과 음악으로 이야기를 들려줘요. 흰 백조와 검은 백조를 한 사람이 함께 추는 것이 이 작품의 큰 볼거리랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🩰')}
             </div>
             <div class="story-page-right">
-                <h1>백조의 호수</h1>
-                <p>백조의 호수는 러시아의 작곡가 표트르 차이콥스키가 1876년에 만든 발레 음악으로 유명해진 이야기예요. 독일과 러시아에 전해 오던 백조 처녀 이야기를 바탕으로 삼았답니다.</p>
-                <p>무대에서는 말 대신 춤과 음악으로 이야기를 들려줘요. 흰 백조와 검은 백조를 한 사람이 함께 추는 것이 이 작품의 큰 볼거리랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -337,8 +346,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -348,8 +357,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -359,22 +368,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -424,9 +434,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -437,7 +447,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -509,7 +519,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -518,34 +528,603 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Swan Lake',
+        intro: [
+            "Swan Lake became famous as the ballet the Russian composer Pyotr Tchaikovsky wrote the music for in 1876. He built it on the swan-maiden stories told in Germany and Russia.",
+            "On stage the story is told in dance and music instead of words. One dancer taking both the white swan and the black swan is the great set piece of the whole thing."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · A Twentieth Birthday',
+            beats: [
+                {
+                    art: '01-birthday.webp',
+                    emoji: '🎂',
+                    left: [
+                        "Flags were hung in the palace yard and the musicians gathered. It was the day Prince Siegfried turned twenty,",
+                        "and there was a great feast.",
+                        "The drums carried right over the wall and into the village.",
+                        "The village people danced, and the prince laughed among his friends."
+                    ],
+                    right: [
+                        "It was near sunset when his mother called him quietly aside.",
+                        "\"You are a grown man now, and there is something to be done.\"",
+                        "\"Tomorrow we shall hold a ball.\"",
+                        "\"And there you will choose your bride.\"",
+                        "The prince's face went stiff.",
+                        "All the feeling of the feast went out of him at once."
+                    ]
+                },
+                {
+                    art: '01-birthday-2.webp',
+                    emoji: '🎂',
+                    left: [
+                        "\"What does choosing mean, when it has been decided beforehand?\"",
+                        "The prince felt shut in. He could not hear the feast any more.",
+                        "He slipped quietly away",
+                        "and took his bow down from the wall.",
+                        "\"I shall get some air.\""
+                    ],
+                    right: [
+                        "The prince walked into the wood. Dead leaves crackled under his feet,",
+                        "and somewhere an owl called.",
+                        "The sun went down and the moon came up, and it grew darker between the trees.",
+                        "But there was a brightness ahead of him.",
+                        "He pushed the branches apart, and there was a wide lake."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Swans on the Lake',
+            beats: [
+                {
+                    art: '02-lake.webp',
+                    emoji: '🌙',
+                    left: [
+                        "The moonlight lay all over the water, and it shone like silver.",
+                        "A flock of white swans was gliding across it,",
+                        "without a sound.",
+                        "The prince watched, holding his breath.",
+                        "He had never seen anything so beautiful."
+                    ],
+                    right: [
+                        "Before he knew it he had lifted his bow and drawn the string tight.",
+                        "And at that very moment",
+                        "one of the swans stepped up onto the bank.",
+                        "And her feathers slid away.",
+                        "The prince dropped the bow, and the string hummed as it fell."
+                    ]
+                },
+                {
+                    art: '02-lake-2.webp',
+                    emoji: '🌙',
+                    left: [
+                        "Where the swan had been, a young woman was standing,",
+                        "dressed in white feathers",
+                        "with a small crown on her head.",
+                        "She held out both hands.",
+                        "\"Do not shoot.\"",
+                        "\"We are people, truly.\""
+                    ],
+                    right: [
+                        "The prince stood frozen where he was, and could not shut his mouth.",
+                        "\"Who… who are you?\"",
+                        "For a moment she said nothing.",
+                        "Then she spoke, quietly.",
+                        "Her voice was as level as the water."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Odette's Story",
+            beats: [
+                {
+                    art: '03-odette.webp',
+                    emoji: '🦢',
+                    left: [
+                        "\"My name is Odette.\"",
+                        "\"And all those swans are my friends.\"",
+                        "\"A man named Rothbart put a spell on us.\"",
+                        "\"Since that day we are swans by daylight.\"",
+                        "\"We can only be ourselves at night.\""
+                    ],
+                    right: [
+                        "The prince felt it heavy in his chest.",
+                        "\"Is there no way to break it?\"",
+                        "Odette lifted her head.",
+                        "\"There is one.\"",
+                        "\"Someone who has never loved another.\"",
+                        "\"If he swears his love to me alone, it breaks.\""
+                    ]
+                },
+                {
+                    art: '03-odette-2.webp',
+                    emoji: '🦢',
+                    left: [
+                        "The prince took Odette's hand.",
+                        "\"Then I shall be that person.\"",
+                        "\"There is a ball at the palace tomorrow night.\"",
+                        "\"Come to it.\"",
+                        "\"I shall swear it in front of them all.\"",
+                        "Odette's eyes went wet."
+                    ],
+                    right: [
+                        "\"Will you truly?\"",
+                        "And just then a black shadow went over the wood,",
+                        "with the sound of great wings.",
+                        "Odette started back in fright.",
+                        "\"Be careful. He is watching.\"",
+                        "And the swans put their heads down under the water."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Lady in Black',
+            beats: [
+                {
+                    art: '04-ball.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "The next evening came, and the ballroom was bright with candles.",
+                        "The musicians took their places,",
+                        "and one after another young women from many countries made their bows,",
+                        "every one of them finely dressed.",
+                        "And the prince looked only at the door."
+                    ],
+                    right: [
+                        "He was waiting for Odette to come.",
+                        "His mother frowned.",
+                        "\"Choose one of them, and be quick about it.\"",
+                        "The prince did not answer.",
+                        "And then there was a stir at the door,",
+                        "and every head turned at once."
+                    ]
+                },
+                {
+                    art: '04-ball-2.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "A lady in black came in, and behind her stood a man in a black cloak.",
+                        "The prince sprang to his feet at the sight of her face.",
+                        "It was exactly Odette's face.",
+                        "\"Odette! You came!\"",
+                        "Instead of answering, she smiled.",
+                        "There was something sharp about that smile."
+                    ],
+                    right: [
+                        "But the prince did not notice it.",
+                        "The two of them took hands and danced.",
+                        "The musicians struck up something fast,",
+                        "and the black skirts went round and round.",
+                        "People stood about them clapping.",
+                        "Only the man in the black cloak did not smile."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Swan at the Window',
+            beats: [
+                {
+                    art: '05-window.webp',
+                    emoji: '💔',
+                    left: [
+                        "The prince danced far into the night. He did not see any of the others at all.",
+                        "At last he raised his hand,",
+                        "and the musicians stopped playing.",
+                        "The ballroom went quiet,",
+                        "and everybody looked at him."
+                    ],
+                    right: [
+                        "And the prince said, out loud,",
+                        "\"Hear me, all of you.\"",
+                        "\"I shall marry this lady!\"",
+                        "\"I swear my love to her and to no one else!\"",
+                        "The man in the black cloak laughed —",
+                        "a very low, very long laugh."
+                    ]
+                },
+                {
+                    art: '05-window-2.webp',
+                    emoji: '💔',
+                    left: [
+                        "In that instant a white shape went past outside the window.",
+                        "Everybody looked at it at once.",
+                        "Odette was clinging to the glass,",
+                        "beating on it with both hands,",
+                        "her face wet with tears.",
+                        "The blood went out of the prince's face.",
+                        "He turned to the lady in black. There was nobody there."
+                    ],
+                    right: [
+                        "And the black cloak had gone with her.",
+                        "\"What… what have I done.\"",
+                        "The prince very nearly sank to the floor.",
+                        "Outside the window there was the sound of wings.",
+                        "Beat, beat.",
+                        "And it went further and further away."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Back to the Lake',
+            beats: [
+                {
+                    art: '06-return.webp',
+                    emoji: '🏃',
+                    left: [
+                        "The prince ran out of the ballroom. He did not hear his mother calling after him.",
+                        "He went out through the palace gate and into the wood.",
+                        "Branches whipped his face,",
+                        "and he ran and ran until he could hardly breathe.",
+                        "At last he reached the lakeside."
+                    ],
+                    right: [
+                        "The swans were gathered at the water's edge,",
+                        "and Odette sat on a rock with her head down.",
+                        "The prince went carefully toward her.",
+                        "At his footsteps her shoulders drew in,",
+                        "and still she did not look up.",
+                        "\"I am sorry. I was deceived.\""
+                    ]
+                },
+                {
+                    art: '06-return-2.webp',
+                    emoji: '🏃',
+                    left: [
+                        "Odette raised her head slowly.",
+                        "\"I know.\"",
+                        "\"He put my face on his daughter.\"",
+                        "\"But the promise is broken all the same.\"",
+                        "Her voice shook.",
+                        "\"Now we must be swans for ever.\""
+                    ],
+                    right: [
+                        "The prince could not get his breath.",
+                        "And then a wind got up on the lake,",
+                        "and the water heaved.",
+                        "Great black wings opened out above the wood.",
+                        "Rothbart had come.",
+                        "And in a moment the lake went dark."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · Face to Face',
+            beats: [
+                {
+                    art: '07-confront.webp',
+                    emoji: '🌑',
+                    left: [
+                        "Rothbart put himself between the two of them. Black feathers went flying everywhere",
+                        "and the wind came hard.",
+                        "The swans wheeled over the water in fright, and the waves ran high.",
+                        "The moonlight broke into pieces.",
+                        "\"Go home now, prince.\""
+                    ],
+                    right: [
+                        "The prince did not give ground.",
+                        "He put himself in front of Odette instead.",
+                        "\"I was deceived.\"",
+                        "\"But one mistake\"",
+                        "\"does not make my heart a lie.\"",
+                        "His voice went straight through the wind."
+                    ]
+                },
+                {
+                    art: '07-confront-2.webp',
+                    emoji: '🌑',
+                    left: [
+                        "Odette came to the prince's side and stood there with him.",
+                        "The two of them took hands.",
+                        "The swans came up out of the water and stood round them,",
+                        "every one of them facing Rothbart.",
+                        "The black wings began to waver,",
+                        "and the feathers came away one by one.",
+                        "Rothbart cried out."
+                    ],
+                    right: [
+                        "But the sound got smaller and smaller.",
+                        "The hand he put out caught nothing but air.",
+                        "The eastern sky began to lighten,",
+                        "and then the dawn wind came.",
+                        "And the black shadow scattered like mist.",
+                        "The lake went smooth again."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · The Lake in the Morning',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🌅',
+                    left: [
+                        "The eastern sky turned red.",
+                        "The sun came slowly up",
+                        "and the lake turned to gold.",
+                        "The prince looked round at Odette.",
+                        "It was almost time for her to become a swan.",
+                        "And nothing happened at all."
+                    ],
+                    right: [
+                        "Odette was still herself.",
+                        "And the swans' feathers began coming away too.",
+                        "Young women walked up out of the water",
+                        "and threw their arms round one another, laughing.",
+                        "The spell was broken.",
+                        "Because the prince's heart had not been a lie."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🌅',
+                    left: [
+                        "Odette looked down at her own hands.",
+                        "The sunlight lay warm across them.",
+                        "\"I am not afraid of the morning now.\"",
+                        "The prince took that hand quietly,",
+                        "and nodded without saying anything."
+                    ],
+                    right: [
+                        "His chest was too full for words.",
+                        "The two of them stood side by side at the water,",
+                        "and the morning mist lifted off the lake.",
+                        "One by one the young women set off to find their homes.",
+                        "The prince and Odette stayed to the last,",
+                        "and the two of them looked out a long while over the morning lake."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why did the prince go into the wood?',
+            choices: ['He felt shut in by the ball his mother had arranged', 'He was hunting swans', 'He had heard of the lake'],
+            answer: 0
+        },
+        {
+            q: 'What made him drop his bow?',
+            choices: ['Rothbart flew over the wood', 'His mother called him', 'A swan stepped ashore and her feathers slid away'],
+            answer: 2
+        },
+        {
+            q: 'What would break the spell on Odette?',
+            choices: ['Killing Rothbart', 'Someone who had never loved another swearing his love to her alone', 'Waiting until dawn on the lake'],
+            answer: 1
+        },
+        {
+            q: 'Why did the prince not recognise the trick at the ball?',
+            choices: ['The lady in black had exactly Odette’s face', 'The room was too dark', 'Odette had told him to expect her in black'],
+            answer: 0
+        },
+        {
+            q: 'Where was Odette while the prince was swearing his promise?',
+            choices: ['Waiting at the lake', 'Hidden among the musicians', 'Outside the window, beating on the glass'],
+            answer: 2
+        },
+        {
+            q: 'What did the prince say when he faced Rothbart?',
+            choices: ['That he would fight him for Odette', 'That one mistake did not make his heart a lie', 'That he would leave and never return'],
+            answer: 1
+        },
+        {
+            q: 'How did they know the spell was broken?',
+            choices: ['The sun came up and Odette stayed herself', 'Rothbart gave them his word', 'The lake turned to gold'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🦢',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Swan Lake is a dance before it is a story to read. Tchaikovsky wrote the music for it in Russia about a hundred and fifty years ago.",
+                    "When it was first put on stage it was not well received. It only became famous after Tchaikovsky had died.",
+                    "The prince went into the wood because the feast made him feel shut in. He did not like being told whom to choose.",
+                    "And that is also why he was fooled at the ball. The face was exactly Odette's. He had been looking only at the face."
+                ],
+                right: [
+                    "When Odette appeared at the window, the prince ran out at once. Once he knew he was wrong, he moved quickly.",
+                    "What should the prince have looked at to know Odette?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-birthday.webp': [
+            { word: 'flag', meaning: '깃발', sentence: 'Flags were hung in the palace yard.' },
+            { word: 'carry', meaning: '소리가 퍼지다', sentence: 'The drums carried right over the wall.' },
+            { word: 'bride', meaning: '신붓감', sentence: 'And there you will choose your bride.' },
+            { word: 'go stiff', meaning: '굳어지다', sentence: "The prince's face went stiff." }
+        ],
+        '01-birthday-2.webp': [
+            { word: 'beforehand', meaning: '미리', sentence: 'When it has been decided beforehand?' },
+            { word: 'shut in', meaning: '답답한', sentence: 'The prince felt shut in.' },
+            { word: 'bow', meaning: '활', sentence: 'He took his bow down from the wall.' },
+            { word: 'crackle', meaning: '바스락거리다', sentence: 'Dead leaves crackled under his feet.' },
+            { word: 'owl', meaning: '부엉이', sentence: 'Somewhere an owl called.' }
+        ],
+        '02-lake.webp': [
+            { word: 'moonlight', meaning: '달빛', sentence: 'The moonlight lay all over the water.' },
+            { word: 'flock', meaning: '떼', sentence: 'A flock of white swans.' },
+            { word: 'glide', meaning: '미끄러지듯 나아가다', sentence: 'A flock of swans was gliding across it.' },
+            { word: 'string', meaning: '시위', sentence: 'He had drawn the string tight.' },
+            { word: 'hum', meaning: '붕 울리다', sentence: 'The string hummed as it fell.' }
+        ],
+        '02-lake-2.webp': [
+            { word: 'feather', meaning: '깃털', sentence: 'Dressed in white feathers.' },
+            { word: 'hold out', meaning: '내밀다', sentence: 'She held out both hands.' },
+            { word: 'frozen', meaning: '굳은', sentence: 'The prince stood frozen where he was.' },
+            { word: 'level', meaning: '잔잔한, 고른', sentence: 'Her voice was as level as the water.' }
+        ],
+        '03-odette.webp': [
+            { word: 'spell', meaning: '마법', sentence: 'A man named Rothbart put a spell on us.' },
+            { word: 'by daylight', meaning: '낮에는', sentence: 'We are swans by daylight.' },
+            { word: 'break', meaning: '풀다', sentence: 'Is there no way to break it?' },
+            { word: 'swear', meaning: '맹세하다', sentence: 'If he swears his love to me alone.' }
+        ],
+        '03-odette-2.webp': [
+            { word: 'ball', meaning: '무도회', sentence: 'There is a ball at the palace tomorrow night.' },
+            { word: 'shadow', meaning: '그림자', sentence: 'A black shadow went over the wood.' },
+            { word: 'start back', meaning: '화들짝 물러서다', sentence: 'Odette started back in fright.' },
+            { word: 'watch', meaning: '지켜보다', sentence: 'Be careful. He is watching.' }
+        ],
+        '04-ball.webp': [
+            { word: 'ballroom', meaning: '무도회장', sentence: 'The ballroom was bright with candles.' },
+            { word: 'make a bow', meaning: '인사하다', sentence: 'Young women made their bows.' },
+            { word: 'frown', meaning: '눈살을 찌푸리다', sentence: 'His mother frowned.' },
+            { word: 'stir', meaning: '술렁임', sentence: 'And then there was a stir at the door.' }
+        ],
+        '04-ball-2.webp': [
+            { word: 'cloak', meaning: '망토', sentence: 'A man in a black cloak.' },
+            { word: 'spring to one’s feet', meaning: '벌떡 일어나다', sentence: 'The prince sprang to his feet.' },
+            { word: 'sharp', meaning: '날카로운', sentence: 'There was something sharp about that smile.' },
+            { word: 'strike up', meaning: '연주를 시작하다', sentence: 'The musicians struck up something fast.' }
+        ],
+        '05-window.webp': [
+            { word: 'far into', meaning: '깊도록', sentence: 'The prince danced far into the night.' },
+            { word: 'out loud', meaning: '큰 소리로', sentence: 'And the prince said, out loud.' },
+            { word: 'no one else', meaning: '다른 누구도 아닌', sentence: 'To her and to no one else!' }
+        ],
+        '05-window-2.webp': [
+            { word: 'cling to', meaning: '매달리다', sentence: 'Odette was clinging to the glass.' },
+            { word: 'beat on', meaning: '두드리다', sentence: 'Beating on it with both hands.' },
+            { word: 'sink', meaning: '주저앉다', sentence: 'The prince very nearly sank to the floor.' },
+            { word: 'further away', meaning: '점점 멀리', sentence: 'It went further and further away.' }
+        ],
+        '06-return.webp': [
+            { word: 'call after', meaning: '뒤에서 부르다', sentence: 'He did not hear his mother calling after him.' },
+            { word: 'whip', meaning: '때리다', sentence: 'Branches whipped his face.' },
+            { word: 'draw in', meaning: '움츠리다', sentence: 'At his footsteps her shoulders drew in.' },
+            { word: 'deceive', meaning: '속이다', sentence: 'I am sorry. I was deceived.' }
+        ],
+        '06-return-2.webp': [
+            { word: 'all the same', meaning: '그래도', sentence: 'But the promise is broken all the same.' },
+            { word: 'for ever', meaning: '영영', sentence: 'Now we must be swans for ever.' },
+            { word: 'get up', meaning: '(바람이) 일다', sentence: 'A wind got up on the lake.' },
+            { word: 'heave', meaning: '크게 출렁이다', sentence: 'And the water heaved.' }
+        ],
+        '07-confront.webp': [
+            { word: 'put oneself between', meaning: '사이를 가로막다', sentence: 'Rothbart put himself between the two of them.' },
+            { word: 'wheel', meaning: '맴돌다', sentence: 'The swans wheeled over the water.' },
+            { word: 'give ground', meaning: '물러서다', sentence: 'The prince did not give ground.' },
+            { word: 'go through', meaning: '뚫고 나가다', sentence: 'His voice went straight through the wind.' }
+        ],
+        '07-confront-2.webp': [
+            { word: 'take hands', meaning: '손을 맞잡다', sentence: 'The two of them took hands.' },
+            { word: 'waver', meaning: '흔들리다', sentence: 'The black wings began to waver.' },
+            { word: 'lighten', meaning: '밝아 오다', sentence: 'The eastern sky began to lighten.' },
+            { word: 'scatter', meaning: '흩어지다', sentence: 'The black shadow scattered like mist.' }
+        ],
+        '08-ending.webp': [
+            { word: 'come up', meaning: '떠오르다', sentence: 'The sun came slowly up.' },
+            { word: 'look round at', meaning: '돌아보다', sentence: 'The prince looked round at Odette.' },
+            { word: 'come away', meaning: '벗겨지다', sentence: "The swans' feathers began coming away." },
+            { word: 'lie', meaning: '거짓', sentence: "Because the prince's heart had not been a lie." }
+        ],
+        '08-ending-2.webp': [
+            { word: 'lie warm', meaning: '따뜻하게 닿다', sentence: 'The sunlight lay warm across them.' },
+            { word: 'too full for words', meaning: '벅차서 말이 안 나오는', sentence: 'His chest was too full for words.' },
+            { word: 'lift', meaning: '걷히다', sentence: 'The morning mist lifted off the lake.' },
+            { word: 'set off', meaning: '떠나다', sentence: 'The young women set off to find their homes.' }
+        ],
+        'end.webp': [
+            { word: 'put on stage', meaning: '무대에 올리다', sentence: 'When it was first put on stage.' },
+            { word: 'well received', meaning: '좋은 평을 받는', sentence: 'It was not well received.' },
+            { word: 'be told', meaning: '이래라저래라 듣다', sentence: 'He did not like being told whom to choose.' },
+            { word: 'fool', meaning: '속이다', sentence: 'That is also why he was fooled at the ball.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -610,6 +1189,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -618,7 +1198,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -630,7 +1210,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -664,4 +1244,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
