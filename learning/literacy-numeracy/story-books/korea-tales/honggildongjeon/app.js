@@ -1,6 +1,6 @@
 const BOOK_TITLE = "홍길동전";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => (LANG === 'en' ? `Chapter ${n} · ` : `${n}장 · `);
 
 const CHAPTERS = [
     {
@@ -312,15 +312,18 @@ function splitSegments(html) {
     return segs.length ? segs : [html];
 }
 
-const CHAPTER_SEGS = CHAPTERS.map(ch => {
+// 말을 바꾸면 글이 통째로 갈리므로 조각도 다시 나눈다.
+function segsOf(paras) {
     const segs = [];
-    ch.paras.forEach((html, paraIdx) => {
+    paras.forEach((html, paraIdx) => {
         splitSegments(html).forEach((piece, k) => {
             segs.push({ paraIdx, html: piece, start: k === 0 });
         });
     });
     return segs;
-});
+}
+
+let CHAPTER_SEGS = [];
 
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
@@ -338,7 +341,7 @@ function runHtml(segs, a, b) {
         // 쪽 끝에 걸린 <br>는 빈 줄만 만드니 떼어 낸다.
         inner = inner.replace(/(<br\s*\/?>)+\s*$/i, '')
             .replace(/<br\s*\/?>/gi, '<br><span class="ln"></span>');
-        out += `<p${contd ? ' class="cont"' : ''}>${inner}</p>`;
+        out += `<p${contd ? ' class="cont"' : ''} data-say="${pi}">${inner}</p>`;
         i = j;
     }
     return out;
@@ -580,6 +583,17 @@ function paginateChapter(ch, chIndex) {
     });
     return spreads;
 }
+const COVER = {
+    emoji: '⚔️',
+    title: '홍길동전',
+    intro: [
+        "홍길동전은 조선 중기의 문인 허균이 지었다고 전해지는 소설이에요. 우리나라에서 한글로 쓰인 최초의 소설로 꼽힌답니다.",
+        "허균은 1569년에 태어나 1618년에 세상을 떠났어요. 벼슬은 높이 올랐지만 신분으로 사람을 가르는 제도를 평생 못마땅해했고, 서얼 출신 벗들과 가까이 지낸 일로 벼슬에서 쫓겨나기도 했답니다.",
+        "서얼은 양반 아버지와 신분이 낮은 어머니 사이에서 난 자식을 가리키는 말이에요. 아무리 재주가 뛰어나도 높은 벼슬에 오를 수 없었고, 아버지를 아버지라 부르지 못하는 일도 흔했지요.",
+        "실록에는 연산군 때 홍길동이라는 도적이 잡혔다는 기록이 남아 있어요. 소설 속 인물과 같은 사람인지는 알 수 없지만, 그 이름이 오래 오르내린 것만은 분명하답니다."
+    ]
+};
+
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
@@ -591,17 +605,15 @@ function artFrame(src, emoji) {
 }
 
 function coverPage() {
+    const c = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '⚔️')}
+                ${artFrame('cover.webp', c.emoji)}
             </div>
             <div class="story-page-right">
-                <h1>홍길동전</h1>
-                <p>홍길동전은 조선 중기의 문인 허균이 지었다고 전해지는 소설이에요. 우리나라에서 한글로 쓰인 최초의 소설로 꼽힌답니다.</p>
-                <p>허균은 1569년에 태어나 1618년에 세상을 떠났어요. 벼슬은 높이 올랐지만 신분으로 사람을 가르는 제도를 평생 못마땅해했고, 서얼 출신 벗들과 가까이 지낸 일로 벼슬에서 쫓겨나기도 했답니다.</p>
-                <p>서얼은 양반 아버지와 신분이 낮은 어머니 사이에서 난 자식을 가리키는 말이에요. 아무리 재주가 뛰어나도 높은 벼슬에 오를 수 없었고, 아버지를 아버지라 부르지 못하는 일도 흔했지요.</p>
-                <p>실록에는 연산군 때 홍길동이라는 도적이 잡혔다는 기록이 남아 있어요. 소설 속 인물과 같은 사람인지는 알 수 없지만, 그 이름이 오래 오르내린 것만은 분명하답니다.</p>
+                <h1 data-say="0">${c.title}</h1>
+                ${c.intro.map((p, i) => `<p data-say="${i + 1}">${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -619,14 +631,14 @@ function tocPage(part) {
                 <span class="toc-num">${mark}</span>
                 <span>
                     <strong>${title}</strong>
-                    <small>${page}쪽</small>
+                    <small>${page}${T().folio}</small>
                 </span>
             </button>
         </li>`;
     const itemHtml = ch => rowHtml(`data-goto="${ch.num}"`, ch.num, ch.title, pageOfChapter(ch.num));
     const extraItems = [
-        rowHtml('data-goto-kind="quiz"', '❓', '이야기 문제', pageOfKind('quiz')),
-        rowHtml('data-goto-kind="after"', '📖', '읽고 나서', pageOfKind('after')),
+        rowHtml('data-goto-kind="quiz"', '❓', T().quiz, pageOfKind('quiz')),
+        rowHtml('data-goto-kind="after"', '📖', T().after, pageOfKind('after')),
     ];
     const group = TOC_GROUPS[part];
     const last = part === TOC_GROUPS.length - 1;
@@ -635,11 +647,11 @@ function tocPage(part) {
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                ${part === 0 ? '<h2>차례</h2>' : ''}
+                ${part === 0 ? `<h2>${T().toc}</h2>` : ''}
                 <ul class="toc-list">${items.slice(0, half).join('')}</ul>
             </div>
             <div class="story-page-right">
-                ${part === 0 ? '<h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>' : ''}
+                ${part === 0 ? `<h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>` : ''}
                 <ul class="toc-list">${items.slice(half).join('')}</ul>
             </div>
         </div>`;
@@ -647,10 +659,7 @@ function tocPage(part) {
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
 const TOC_PER_SPREAD = 16;
-const TOC_GROUPS = [];
-for (let i = 0; i < CHAPTERS.length; i += TOC_PER_SPREAD) {
-    TOC_GROUPS.push(CHAPTERS.slice(i, i + TOC_PER_SPREAD));
-}
+let TOC_GROUPS = [];
 
 function chapterSpreadPage(spread) {
     const ch = spread.ch;
@@ -703,13 +712,13 @@ const QUIZ = [
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
 // 문제는 한 쪽에 다 넣고 스크롤해서 푼다.
 // 쪽을 쪼개 놓으면 쪽마다 절반이 비고, 답을 고르려고 여러 번 넘겨야 한다.
-const QUIZ_GROUPS = [{ from: 0, items: QUIZ }];
+const QUIZ_GROUPS = [{ from: 0 }];
 
 // 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
 const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
 
 function quizPage(part) {
-    const group = QUIZ_GROUPS[part];
+    const group = { from: QUIZ_GROUPS[part].from, items: QZ() };
     const done = QUIZ_PICKED.filter(v => v !== null).length;
     const items = group.items.map((item, k) => {
         const i = group.from + k;
@@ -728,8 +737,8 @@ function quizPage(part) {
     }).join('');
     return `
         <div class="page page-quiz">
-            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
-            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+            ${part === 0 ? `<h2>${T().quiz}</h2>` : ''}
+            <p class="quiz-intro-text" id="quizProgress">${T().done(done, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
@@ -760,30 +769,22 @@ const AFTERWORD = {
     ]
 };
 
-const AFTER_SEGS = (() => {
-    const segs = [];
-    AFTERWORD.paras.forEach((html, paraIdx) => {
-        splitSegments(html).forEach((piece, k) => {
-            segs.push({ paraIdx, html: piece, start: k === 0 });
-        });
-    });
-    return segs;
-})();
+let AFTER_SEGS = [];
 
-const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+const AFTER_FOOT = () => `<p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>`;
 
 function paginateAfterword() {
     const segs = AFTER_SEGS;
-    const arts = AFTERWORD.art || [];
+    const arts = AF().art || [];
     const { usable, headHeight, artHeight } = PROBE;
-    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const headHtml = `<h2>${AF().title}</h2>`;
     const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
 
     const underArt = Math.max(60, usable - artHeight);
 
     // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
     // 마지막 쪽만 넘친다.
-    const footH = PROBE.measure(AFTER_FOOT);
+    const footH = PROBE.measure(AFTER_FOOT());
 
     const capsOf = slots => {
         const caps = [];
@@ -830,9 +831,9 @@ function paginateAfterword() {
 
 function afterSpreadPage(spread) {
     const segs = AFTER_SEGS;
-    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = spread.first ? `<h2>${AF().title}</h2>` : '';
     // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
-    const foot = spread.last ? AFTER_FOOT : '';
+    const foot = spread.last ? AFTER_FOOT() : '';
 
     if (spread.art) {
         return `
@@ -842,7 +843,7 @@ function afterSpreadPage(spread) {
                     ${runHtml(segs, spread.left[0], spread.left[1])}
                 </div>
                 <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    <div class="story-art-top">${artFrame(spread.art, AF().emoji)}</div>
                     ${runHtml(segs, spread.right[0], spread.right[1])}
                     ${foot}
                 </div>
@@ -862,17 +863,652 @@ function afterSpreadPage(spread) {
         </div>`;
 }
 
+
+/* ── 영어판 ────────────────────────────────────────────────────
+   우리말 글과 영어 글을 나란히 두고, 단추 하나로 갈아 끼운다.
+   쪽은 재어서 나누므로 말을 바꾸면 처음부터 다시 나눈다. */
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   artAt 닻은 영어 문장 조각으로 새로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: '🗡️',
+        title: 'The Tale of Hong Gildong',
+        intro: [
+            "The Tale of Hong Gildong is different from the other old stories in this shelf. It has an author.",
+            "It is said to have been written by Heo Gyun, a man of the middle Joseon period. So it is not a story that grew from singing; it is one man's argument, written down.",
+            "Its subject is the seoeol. A nobleman's son by a low-born mother could not sit the state examination, could not call his father father, and stood at the back at the family rites.",
+            "There really was a bandit named Hong Gildong. His capture is recorded in the annals of King Yeonsan. That name was borrowed for this story."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "He Could Not Call His Father Father",
+            art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
+            artAt: ["cannot call my father father", "On a bright moonlit night", "several Gildongs sitting in the room"],
+            paras: [
+                "In the reign of King Sejong of Joseon there lived in Hanyang a high official called Minister Hong. His family had been famous for generations and he was a wealthy man. There were always guests at his gate.",
+                "Minister Hong had two sons. The elder, Inhyeong, was born to his lawful wife; the younger, Gildong, was born to Chunseom, who had been a serving maid. There were only two years between them.",
+                "Gildong was out of the ordinary from the day he was born. He read at three and wrote at five. By ten he had read the books of war<span class=\"gloss\">(books on how to command soldiers and fight battles)</span> and understood all of it. His schoolmaster gave up and left, saying there was nothing more he could teach. At twelve he answered anything a grown man asked him without a pause.",
+                "Every time Minister Hong looked at that son his heart grew heavy. The boy's gifts were a waste, and there was nothing to be done about it. So he kept his distance from Gildong all the more.",
+                "That was the law of Joseon. If the mother was a servant the child was a seoeol<span class=\"gloss\">(a child born to a nobleman father and a low-born mother)</span>, and however fine his gifts, a seoeol could not sit the state examination. That law had not changed once since the country was founded.",
+                "Nor was that all. A seoeol could not call his own father father but had to call him my lord, and could not call his brother brother but had to call him sir. Even the household servants knew it. He could not eat at the same table, and at the family rites he stood in the very last row.",
+                "It was autumn in the year Gildong turned eleven. On a bright moonlit night Gildong was in the yard with a sword, moving through his forms, and then he put the sword down. The hand on the hilt was shaking. Fallen leaves lay across the yard, and beyond the wall a dog was barking.",
+                "Minister Hong happened to be crossing the yard and saw him.<br>\"Why are you out here and not asleep?\" The blade shone white in the moonlight.",
+                "Gildong knelt.<br>\"My lord.\"<br>\"Speak.\"",
+                "\"I have heard that when heaven made all things it held human beings dearest of all. Yet it seems to me that I have none of that worth.\" His voice was low but clear. Gildong knelt with both hands laid neatly on his knees.",
+                "\"What do you mean?\"<br>\"I cannot call my father father, and I cannot call my brother brother. How then am I a person at all?\" The end of it shook before he could help it.",
+                "The colour went out of Minister Hong's face. It was a long moment before his voice came.<br>\"And how many sons like you do you think there are in noble houses? Speak of it again and I will not forgive it.\"<br>Gildong bowed his head. He had said that, and yet Minister Hong could not leave the spot quickly either. Gildong sat in the yard the whole of that night.",
+                "After that Gildong said nothing by day and did not sleep at night. There were many days when he skipped his meals.",
+                "Gildong barred his door and read the books of war. He learned how to divide soldiers, how to set a formation, how to read waterways and mountain paths. The lamp oil ran dry every night.",
+                "And there was more. From somewhere Gildong got hold of a few old books. They were books on dosul<span class=\"gloss\">(the art of working wonders by commanding one's mind and one's inner force)</span>. The covers were quite worn away.",
+                "Gildong read those books all night and practised in the yard. At first nothing happened at all. After half a year the wind moved when his hand moved. The leaves in the yard leaned all one way.",
+                "After a year Gildong could make himself unseen. After two years, if he drew a man on paper and cut it out and said the words over it, it would get up and walk about. The paper men looked exactly like Gildong.",
+                "One night Minister Hong was passing Gildong's room and felt something odd inside. He looked through the crack of the door and there were several Gildongs sitting in the room. Eight of them, all with the same face. All eight sat in the same posture and turned the pages together.",
+                "Minister Hong froze where he stood. His legs went and he caught hold of a pillar.",
+                "The next day Minister Hong called Gildong.<br>\"What was it I saw in your room last night?\"<br>\"...It is a skill of mine.\" His voice was stiff.",
+                "\"And what do you mean to use such a skill for?\"<br>Gildong answered after a long moment.<br>\"I learned it because there is nowhere to use anything. I cannot sit the examination, so there is no place for any skill of mine, is there?\" There was no bitterness in his voice.",
+                "Minister Hong had no answer. Then he said heavily,<br>\"Never show that skill in front of anyone again. If people learn of it your life is in danger.\" The end of it wavered.",
+                "Gildong did not answer. He only bowed his head lower.",
+                "From that time Minister Hong slept badly every night. He could not guess what that son would become. It was half fear and half sorrow. It was because he knew he had no power to stop him, whatever he became."
+            ]
+        },
+        {
+            num: 2,
+            title: "The Night He Left the House",
+            art: ["story-02-a.webp", "story-02-b.webp", "story-02-c.webp"],
+            artAt: ["a concubine called Choran", "a thick mist suddenly rose", "walked out through the gate"],
+            paras: [
+                "Minister Hong had a concubine called Choran. She had no children of her own and it was always on her mind. She badly wanted the running of the house in her own hands.",
+                "Every time Choran watched Gildong growing she felt uneasy. She believed that if that boy took the house one day there would be no place left for her. She turned it over every night. Whenever Choran heard that Gildong was doing well at his books her heart sank.",
+                "Choran brought in a shaman to put words into Minister Hong's ear.<br>\"Looking at that young master's face, he will one day turn the country over. Great trouble will come to this house.\" The shaman said what Choran had told her to say. She said her piece and withdrew.",
+                "Minister Hong did not believe it. But Choran did not give up. In the end she hired a man to be rid of Gildong. She spent three days choosing him, then gave him a hundred silver pieces and named the night of the new moon.",
+                "It was the night of the new moon. Gildong was in his room reading. Then all at once the candle flickered strangely. There was not a breath of wind that night. For several days Gildong had been sleeping lightly. He had felt something coming.",
+                "Gildong shut his eyes and felt out the air. There was a man lying flat on the roof. He did not miss one breath of him.",
+                "Then the door opened without a sound and a dark shape came in with a sword. The footfall over the threshold was lighter than a cat's. The blade caught the lamplight and glittered, and then the shape brought the sword down on the bedding. The sound of the blade cutting the quilt was loud.",
+                "But there was nobody inside the bedding. The moment the assassin turned in surprise, a thick mist suddenly rose in the room and filled it from wall to wall.",
+                "Out of the mist came Gildong's voice.<br>\"I have no quarrel with you. Who sent you?\" The voice came from every side at once.",
+                "The assassin put down the sword and knelt. And he gave Choran's name. His forehead touched the floor. He shut his eyes, expecting to lose his head.",
+                "Gildong let him go.<br>\"Go. And never climb another man's wall on this kind of errand again.\" The assassin went over the wall without looking back.",
+                "That night Gildong went to his father's room. He knelt in the yard and bowed to the ground.<br>\"I am leaving this house.\" The earth of the yard was cold. He had lived eighteen years in it. The persimmon tree in the yard, the stones by the well, he knew them all by heart.",
+                "Minister Hong opened the door and came out. His son was on the ground in the yard. Minister Hong was in his night clothes and barefoot.",
+                "\"Where will you go?\"<br>\"I don't know. Only that if I stay in this house I shall never become anything.\" Minister Hong's voice was thick. The lamp at the edge of the floor wavered.",
+                "Minister Hong's eyes went toward Gildong's room. Through the open door he could see the cut quilt.<br>\"...What happened here last night?\"",
+                "\"Someone came over the wall. I am not hurt.\"",
+                "\"Who? Who sent him?\" Minister Hong's voice rose.",
+                "For a long while Gildong did not answer. Then he said,<br>\"I will not tell you. If I am not in this house, that person has no reason to harm me either.\"",
+                "Minister Hong could ask no further. He had guessed who his son was shielding. And he knew, too, that it was he himself who had brought that person into the house.",
+                "Minister Hong looked down at his son for a long time. Then he spoke, heavily.<br>\"...I know what is in your heart.\" His son's back shook. Minister Hong had known all along that the boy sat in the yard night after night.",
+                "\"My lord.\"<br>\"Do not call me that today.\"",
+                "Gildong raised his head.<br>\"Then what am I to call you?\" His voice was thick.",
+                "\"...Call me father.\"",
+                "For a while Gildong could not get another word out. It was a word he had waited eighteen years for. His throat closed and no sound would come. He had lived eighteen years to hear that one word.",
+                "\"Father.\"<br>\"Yes.\"<br>\"Father.\"<br>\"Yes. Yes.\" He said it again and again.",
+                "Minister Hong came down off the floor and took hold of his son's shoulders. The two of them stood there for a long time. They stood like that until the cock crowed. The servants saw it from a distance and turned their heads away.",
+                "His mother Chunseom came out from the inner rooms. Gildong bowed to her too.<br>\"Mother, forgive me for being a poor son.\"<br>Chunseom tucked travelling money into the fold of his coat and said,<br>\"Wherever you are, do not harm people. Keep that one thing.\" Chunseom held on to her son's collar a long while.",
+                "Gildong walked out through the gate. He did not look back once. He felt that if he looked back he would not be able to take another step.",
+                "The mist lay thick on the road at dawn. Gildong walked into it. He was eighteen years old. Minister Hong stood looking a long time at the place where his son had gone."
+            ]
+        },
+        {
+            num: 3,
+            title: "The Hwalbindang",
+            art: ["story-03-a.webp", "story-03-b.webp", "story-03-c.webp"],
+            artAt: ["a great stone gate", "lifted the stone clean up", "our name is the Hwalbindang"],
+            paras: [
+                "Gildong walked by day and slept under trees at night. All he had was the travelling money his mother had given him. After many days' walking he came to a deep mountain, and at the head of a valley there was a great stone gate, and beyond it a village. From outside you would never have known it was there.",
+                "It was a bandits' stronghold. Several hundred people lived there. There were more than a hundred houses.",
+                "When Gildong walked straight in the bandits levelled their spears at him.<br>\"Who are you?\"<br>\"I have come to live here.\" Gildong did not back away at all. The spear points came up to his throat and he did not blink.",
+                "The bandits laughed.<br>\"Do you think anyone may walk in here? We have no chief, so we are not even taking men in.\" They nudged one another with their elbows.",
+                "\"Why have you no chief?\"<br>\"We agreed that whoever lifts that stone would be chief, and nobody has lifted it yet.\" One of them jerked his chin at the middle of the yard. Even among the bandits that stone was an old story.",
+                "In the middle of the yard lay one huge stone. It took several grown men working together to shift it at all. It was an old stone with moss on it.",
+                "Gildong walked over to the stone.<br>\"With those thin arms?\" The bandits held their sides laughing.",
+                "Gildong rolled up his sleeves and set his hands on the stone. Then he took one steady breath and lifted the stone clean up. It went up as high as his shoulder. There was not a sound of effort in him. The veins stood out on Gildong's forearms.",
+                "The bandits' mouths fell open. Gildong carried the stone once round the yard and set it back where it had been. One by one the men who had been laughing shut their mouths.",
+                "The bandits knelt all together.<br>\"We will serve you as our general!\" The yard went as quiet as if water had been thrown over it. The men who had levelled their spears knelt first.",
+                "That same day Gildong became the chief of the band. They gathered round him. From the first day Gildong nailed down one thing.",
+                "\"From today this band has a rule. We do not lay a fingertip on anything belonging to the common people. And we do not kill.\"<br>The bandits murmured.<br>\"Then what are we to live on?\"<br>\"You will see soon enough.\" There was weight in Gildong's voice.",
+                "The bandits all gathered in the yard. Gildong asked them,<br>\"Who in this country eats best?\"",
+                "\"The officials, of course.\"<br>\"And where did their wealth come from?\"<br>\"...It was taken from the people.\" The bandits glanced at one another. Their voices grew smaller as they answered.",
+                "\"Then whose is it, really?\"<br>The bandits looked at each other. Not one of them could answer.",
+                "Gildong said,<br>\"We are not robbing. We are putting things back where they belong.\" The bandits' faces went serious.",
+                "Then he wrote three great characters on a length of cotton cloth and made a flag of it.<br>\"From today our name is the Hwalbindang. It means the band that keeps the poor alive.\" The flag snapped in the wind. Gildong wrote the characters with his own hand. The strokes were thick and straight.",
+                "The Hwalbindang began to move at once. But they were not a band that struck at any house they pleased.",
+                "First Gildong sent men out to look over the towns. He wrote down the names of magistrates who took several times the grain that was owed, of officials who held feasts in front of starving people, of men who had bought their posts with money. It filled a whole ledger. Every name in it belonged to a man the people had reason to hate.",
+                "And they opened only those men's storehouses. They opened them at night, and not one person was hurt. Even going over the wall they made no sound with their feet.",
+                "The grain and money they took was shared out that same day among the poor houses of that town. They set it down at the door without a word and withdrew. There were no labels on the sacks. At one house it was rice, at another the price of medicine, at another a debt paper.",
+                "In the morning talk like this went round the village.<br>\"There were two sacks of rice at my door last night.\"<br>\"At my house too. And nobody saw a thing.\" Nobody could explain it.",
+                "The name of the Hwalbindang spread across all eight provinces. The common people smiled every time they said it, and officials bolted their doors at night at the sound of it. Even the children made songs about the Hwalbindang.",
+                "The court sent soldiers out several times. But they could not even find out where the Hwalbindang was. They searched the mountains and searched the valleys and it came to nothing."
+            ]
+        },
+        {
+            num: 4,
+            title: "Eight Gildongs",
+            art: ["story-04-a.webp", "story-04-b.webp", "story-04-c.webp"],
+            artAt: ["set fire to a heap of dry grass", "Hong Gildong of the Hwalbindang has taken these goods", "eight Gildongs stood in a row"],
+            paras: [
+                "About that time the governor of Hamgyeong was worse than most. He did not cut the tax even in a bad year, and he took the cooking pots from houses that could not pay. People starved and he did not open the storehouse. They said the people of Hamgyeong would not live through that winter.",
+                "Gildong called his men together.<br>\"This time it is Hamgyeong.\"<br>The bandits pulled faces.<br>\"The provincial seat has high walls and many soldiers.\" The wall was three times a grown man's height.",
+                "\"Then we make them open the gate.\" Gildong spread out a map. There was a soldier every ten paces along the top of the wall, he was told.",
+                "On the night they had agreed, a few of the Hwalbindang went out into the fields south of the wall and set fire to a heap of dry grass. The wind happened to be blowing toward the wall and the flames leapt high into the sky.",
+                "A bell rang inside the wall.<br>\"Fire! Outside the south gate!\" The soldiers went pouring out.",
+                "The governor drove his soldiers out beyond the wall. The gates were flung wide on both sides. There was a wild noise of hooves.",
+                "In that gap Gildong and his men went in by the opposite gate and opened the storehouse. Grain and silk and money were piled up like a mountain. Not one gatekeeper was hurt. They did not even need a key to open the storehouse door.",
+                "While the men carried the loads out, Gildong wrote on the storehouse wall with a brush.<br>\"Hong Gildong of the Hwalbindang has taken these goods.\" The characters were written large in the middle of the wall.",
+                "The governor came back from putting out the fire, saw the writing, and sat straight down where he was. The ink was not even dry. He left his post that same day.",
+                "The next day sacks of grain stood at the doors of poor houses in town after town in Hamgyeong. Nobody saw who put them there. Every sack held exactly as much as that household had mouths to feed.",
+                "The court was in an uproar. The king gathered his officials and thundered at them.<br>\"Who on earth is this Hong Gildong! Where is there a man who walks in and out of eight provinces as if they were his own yard!\" The officials pressed their foreheads to the floor. Reports came in from the provinces several a day.",
+                "Then one official spoke up.<br>\"Your Majesty, they say that name is the same as that of the seoeol son of Hong, the former minister.\" The hall went quiet. The king glared at him.",
+                "The king summoned Minister Hong and his elder son Inhyeong.",
+                "Minister Hong, old and ill, lay on the floor and asked to be punished.<br>\"It is my own child who has done this. Punish me.\" There was a cough between every few words. After that day Minister Hong never rose from his bed again.",
+                "Instead of imprisoning Minister Hong, the king gave Inhyeong an order.<br>\"Go out as governor of Gyeongsang and bring in your younger brother. If you fail, your father will take the punishment instead.\" Inhyeong's face went white.",
+                "Inhyeong went down to Gyeongsang and put up a notice. It was not an official notice but a letter from an elder brother to a younger one. He sent men to post it in every town. Official notices were stiff writing; Inhyeong's was not.",
+                "\"Gildong. Your brother knows what is in your heart when you do these things. But our father is old. If you do not come, he will be punished in your place. Come to your brother.\" People crowded round every notice to read it.",
+                "Three days later Gildong walked into the Gyeongsang provincial office on his own feet. Inhyeong wept at the sight of his brother. It was years since the two of them had stood face to face. His brother saw how thin Gildong's wrists were and could not speak.",
+                "Gildong let them bind him without a struggle. He was put in a prison cart<span class=\"gloss\">(a cart with a cage, used to carry prisoners)</span> and taken toward Hanyang. He did not say one word in his own defence.",
+                "But then a strange thing happened.",
+                "On the same day a report came up from Gangwon that Gildong had been taken there. And one from Jeolla, and one from Chungcheong, and one from Hwanghae. Riders came in from eight places on the same day.",
+                "There were eight Hong Gildongs taken in the eight provinces. The same man could not be taken in eight places on the same day. Eight prison carts reached Hanyang on the same day. Crowds ringed the palace wall.",
+                "In the palace yard eight Gildongs stood in a row. The faces, the heights, the voices were all the same. The officials stared, lost. There was no telling one from another. Even their clothes and the way they walked were no different.",
+                "The king asked,<br>\"Which of you is the real Hong Gildong?\"<br>All eight answered at once.<br>\"I am, Your Majesty.\" The eight voices came together as one."
+            ]
+        },
+        {
+            num: 5,
+            title: "Minister of War for One Day",
+            art: ["story-05-a.webp", "story-05-b.webp", "story-05-c.webp"],
+            artAt: ["What did your mother say to you", "Give me the post of Minister of War", "up into the sky and vanished into the clouds"],
+            paras: [
+                "The king summoned Minister Hong.<br>\"Can you tell which is your own son?\" There was not a breath to be heard in the palace yard.",
+                "Minister Hong went along the row of eight, one by one. However hard his old eyes looked, he could not tell them apart. Not one mole, not one mark was different. His hands kept shaking. Minister Hong went so far as to touch each of the eight faces with his hand.",
+                "Then Minister Hong stopped in the middle of the yard. And he spoke out loud. His voice carried to the far end of the yard.",
+                "\"Gildong. What did your mother say to you?\"",
+                "Seven of the eight said nothing at all. But the one at the very end answered quietly.<br>\"She said, wherever I am, do not harm people.\" The voice was low and quiet. At that voice Minister Hong's shoulders shook hard.",
+                "Minister Hong stood in front of him.<br>\"...Gildong.\"<br>\"Father.\" Tears ran from the old man's eyes.",
+                "In that moment the other seven collapsed all at once. The clothes sank down empty and dry straw came pouring out of them. The smell of straw spread across the yard. Straw scattered over the ground and blew about in the wind.",
+                "Seven heaps of straw were left in the palace yard. The officials cried out and stepped back. Only the clothes and the hats were left where they had stood.",
+                "The king rose from his seat.<br>\"Are you the real Hong Gildong?\"<br>\"I am, Your Majesty.\"",
+                "\"Why have you done all this? With such gifts you might have used them for the country.\" There was more regret than blame in the king's voice.",
+                "Gildong raised his head.<br>\"Your Majesty, I wanted to use them. But this country gave me no place to use them in.\" The officials held their breath.",
+                "\"What do you mean?\"<br>\"I am a seoeol. However much I read I cannot sit the examination, and however well I learn the art of war I cannot be given soldiers. So the only place left for me to use anything was up in the mountains.\" There was not the least tremble at the end of it. Gildong lifted his head and looked the king straight in the face.",
+                "The palace yard went quiet. The officials only glanced at one another. Half the men standing there had got their own posts under that same law.",
+                "After a long moment the king asked,<br>\"Then what is it you want?\" The king looked down at Gildong for a long while.",
+                "\"Give me the post of Minister of War<span class=\"gloss\">(the highest office in charge of the country's soldiers)</span>.\" Every official turned to look at him. Since the country was founded no seoeol had ever asked to be a minister.",
+                "The officials broke into noise.<br>\"Your Majesty, it cannot be! A minister's post for a bandit!\"<br>\"And a seoeol at that!\" Voices went up against it on every side.",
+                "The king raised a hand and quieted them. Then he asked Gildong,<br>\"And what will you do with that post if you take it?\"",
+                "\"One day will do.\"<br>\"One day?\"<br>\"I shall hold the post for one day and then give it back. Then I shall want nothing more.\" The king's eyes widened.",
+                "The king thought for a long time and then took up his brush. A warrant went out with the words Minister of War, Hong Gildong. Not one official could say a word.",
+                "The next day Gildong came into the palace in full official robes<span class=\"gloss\">(the coat and hat an official wore on duty)</span>. He walked between the ranks of civil and military officers and stood in his place. Nobody could meet his eye. The officials passing by all slowed their steps to look.",
+                "Gildong stood in that place all day long. He did nothing and gave no order. He did not once sit down.",
+                "When the sun went down Gildong took off the robes, folded them neatly and laid them on a table. Then he went before the king and bowed. There was not a crease in the robes.",
+                "\"Your Majesty, I withdraw now.\"<br>\"Why such haste?\"<br>\"I did not want this post because I wanted office. I only wanted to show, once, that a seoeol can stand in this place too.\" The king could make no answer to that.",
+                "Gildong stepped down into the palace yard. Then he sprang up into the sky and vanished into the clouds. The whole court stood staring up at the sky. Nobody ever saw Gildong again."
+            ]
+        },
+        {
+            num: 6,
+            title: "Yuldoguk",
+            art: ["story-06-a.webp", "story-06-b.webp", "story-06-c.webp"],
+            artAt: ["thirty ships raised their sails", "people opened the gates themselves", "there is no nobleman and no commoner"],
+            paras: [
+                "Gildong went back to the mountain and gathered his men. It was many days since he had gone down from it.",
+                "\"We have done what we can in this land. But nothing in this land will change.\" His men looked up at him quietly. Several of them nodded. They had all been thinking the same thing.",
+                "\"What will you do?\"<br>\"We go across the sea.\" The men looked at one another.",
+                "There was a stir among them.<br>\"Go where?\"<br>\"There is an island called Yuldoguk. I hear the soil is rich and there are few people. We will build our own country there.\" Gildong pointed toward the sea. He had been listening to sailors talk about that island for a long time.",
+                "From that day Gildong had ships built. Everything the Hwalbindang had gathered was turned into ships and seed grain and tools. The sound of sawing rang round the valley. The seed grain was put into separate sacks, one kind to a sack.",
+                "Thirty ships were built. On the night before they left, Gildong went alone to Hanyang. He went without telling anyone.",
+                "His father Minister Hong was deep in illness and lay in his bed. Gildong sat down beside his head. The room was full of the smell of medicine. A medicine bowl stood untouched beside the pillow.",
+                "\"Father.\"<br>Minister Hong opened his eyes.<br>\"...You've come.\" The room was dark.",
+                "\"I am going far away. It will be hard to see you again.\"<br>\"Where are you going?\"<br>\"To a place where people are not divided by rank.\" Minister Hong looked at his son's face a long while. Tears ran from his eyes and wet the pillow.",
+                "Minister Hong took his son's hand.<br>\"There is much I never did for you.\"<br>\"You called me your son. That is enough.\" The hand was dry as a twig.",
+                "Gildong brought his mother Chunseom out with him. His brother Inhyeong came out to the gate too and took his shoulders.<br>\"Take care of yourself.\"<br>\"And you.\" Chunseom held her son's hand tight.",
+                "Three days later thirty ships raised their sails. On board were the Hwalbindang and their families, and several thousand ordinary people who had asked to come. The sails filled and swelled in the wind.",
+                "After many days at sea the ships came to an island. Gulls circled over them. The sailors saw the island and all shouted together.",
+                "The land was wide and rich. A river ran through it and fields spread out. People came down from the ships and took up a handful of the earth. The earth smelled good.",
+                "But there was a country on that island too. It was a small country called Yuldoguk.",
+                "The king of that country had long neglected his people. The taxes were heavy and the punishments cruel. The islanders' bitterness reached to heaven. It was a country where, when a child was born, a tax was set on that child as well.",
+                "When Gildong led his men forward, at every gate the people opened the gates themselves. There was never a real battle. The people showed them the way instead.",
+                "The king of Yuldoguk tried to leave the fortress and run. Gildong caught him but did not harm him. The soldiers laid down their spears. The officials behind him knelt first.",
+                "\"I will not kill you. Only give up this country.\"<br>There was no anger in Gildong's voice. The king handed over the royal seal where he stood.",
+                "Gildong put that king and his family on a ship and sent them to the mainland. He even loaded plenty of money for the journey. Gildong stood on the shore until the ship was out of sight.",
+                "His men asked,<br>\"Why do you let an enemy go alive?\"<br>\"What did we come all this way for? Did we not come so as not to treat people carelessly?\" Not one of them could answer.",
+                "That autumn Gildong became king of Yuldoguk. The islanders came out to the roadside and bowed.",
+                "On the day he took the throne, Gildong gathered all his officials and all the people and gave his first order. The wide yard in front of the fortress was full of people. From the platform Gildong's voice carried a long way.",
+                "\"From today, in this country there is no nobleman and no commoner. There is no lawful son and no seoeol. A person is only a person.\" At those words the people could not make a sound for a long while."
+            ]
+        },
+        {
+            num: 7,
+            title: "A Country Where Names Are Spoken",
+            art: ["story-07-a.webp", "story-07-b.webp", "story-07-c.webp"],
+            artAt: ["a great wooden board was set up", "held his father's funeral", "Children often came to play"],
+            paras: [
+                "Yuldoguk did not have many laws. But the few it had were very firm. They were short enough for anyone to learn by heart.",
+                "First, offices were given for ability and character alone. Whose child you were was not asked at all. In the examination hall there was a name and an answer paper, and no box for the family. Of those chosen in the first year, three were the sons of servants.",
+                "Second, whatever taxes were collected had to be written up where the people could see them. Anyone could read what had been spent and on what. In the middle of the marketplace a great wooden board was set up.",
+                "Third, if anyone was going hungry, the magistrate of that town had to open the storehouse first. A magistrate who did not open it lost his post. The storehouse key was not held by the magistrate but by the village together. After that law was made, nobody on the island ever spoke of a person starving again.",
+                "Even after he was king, Gildong walked outside the fortress alone at night. He sat in the market street and listened to what people said. He wore the same clothes as anyone else. They were so plain that nobody ever knew him for the king.",
+                "Once an old man who did not know him asked,<br>\"And what work do you do?\"<br>\"...I do a little government work.\"<br>\"The country's worth living in these days. In the last king's time I had three sons and all three could only be porters. Now the youngest goes to learn to read.\" The old man's face was bright.",
+                "For a long while Gildong could not answer. His throat had closed.",
+                "Some years later a man came from Joseon. The news was that his father Minister Hong had died. In the letter his brother Inhyeong sent, his father's last words were written down.",
+                "Gildong put on mourning and wept for three days. Then he took a ship across to Joseon and held his father's funeral. His brother Inhyeong held his hand and cried.",
+                "When the funeral was over Gildong said this to his brother Inhyeong.<br>\"Brother, come whenever you like. Over there is nobody who would call you sir.\"",
+                "Inhyeong laughed and patted his brother's back.<br>\"Is there really such a country?\"<br>\"There is. I made it.\" Gildong's voice shook a little as he said it. Inhyeong's eyes went red. The brothers held on to each other's hands a long while.",
+                "Chunseom bowed at her husband's grave and went aboard the ship. Gildong brought his mother home to Yuldoguk. Inhyeong came down to the landing and stood there until the ship was out of sight.",
+                "Yuldoguk was at peace for a long time. Each year more ships came to the island. Not a few of the people came over from Joseon.",
+                "Gildong ruled for thirty years. In that time the island had several bad harvests, but nobody starved. It never took more than a day to open a storehouse.",
+                "Gildong had several sons. But Gildong did not hand the country to his eldest. It was not because the eldest was unfit. His officials could not understand what he meant by it.",
+                "Instead he gathered the officials and said,<br>\"You will choose the next king. It makes no difference whether he is my child or not.\" The officials looked at one another.",
+                "The officials were astonished.<br>\"Your Majesty, where is there such a law?\"<br>\"If there is none, we can make one now.\"",
+                "In his old age Gildong gave up the throne and moved to a small house outside the fortress. All he took with him was a few books. He kept house himself, without a single servant.",
+                "Children often came to play in that yard. Gildong taught them to read. The sound of reading never stopped in that yard.",
+                "One child asked,<br>\"Grandfather, what sort of country is this Joseon?\" The child's eyes were bright.",
+                "Gildong answered after a while.<br>\"It is the country where I was born and grew up.\"<br>\"Is it good there?\"<br>\"The hills are lovely and the water is clear.\" The child tipped its head. Gildong's voice was very low.",
+                "\"Then why did you leave?\"",
+                "Gildong smiled and stroked the child's hair.<br>\"Because there I could not call my father father.\"",
+                "The child's eyes went round.<br>\"What does that mean? You call your father father. What else would you call him?\" The children's laughter went round the yard.",
+                "Gildong did not answer that question. He only looked into the child's face for a long time. The child's eyes were very clear.",
+                "It was to make a country where a child could grow up unable to understand that question that Gildong had staked his whole life. That was the last thing Gildong meant to leave behind."
+            ]
+        }
+    ],
+    /* 단어장 — 그림책은 펼침면마다 묶지만, 소설은 장마다 묶는다.
+       쪽은 재어서 나누므로 미리 알 수 없기 때문이다.
+       화면에는 그 쪽에 실제로 나온 낱말만 골라 보여 준다(vocabFor). */
+    words: {
+        "cover": [
+            { w: "It has an author", k: "지은이가 있다", s: "It has an author" },
+            { w: "is said to have been written (say)", k: "지었다고 전해 온다", s: "It is said to have been written by Heo Gyun" },
+            { w: "grew from ~ (grow)", k: "~에서 자라난", s: "it is not a story that grew from singing" },
+            { w: "argument", k: "주장", s: "it is one man's argument, written down" },
+            { w: "sit the state examination (sit)", k: "과거를 보다", s: "could not sit the state examination" },
+            { w: "rite", k: "제사", s: "stood at the back at the family rites" },
+            { w: "bandit", k: "도적", s: "There really was a bandit named Hong Gildong" },
+            { w: "capture", k: "붙잡힘", s: "His capture is recorded in the annals of King Yeonsan" },
+            { w: "borrowed (borrow)", k: "빌려 왔다", s: "That name was borrowed for this story" }
+        ],
+        "ch1": [
+            { w: "reign", k: "임금이 다스리던 때", s: "In the reign of King Sejong of Joseon" },
+            { w: "for generations", k: "대대로", s: "His family had been famous for generations" },
+            { w: "lawful wife", k: "정실부인", s: "was born to his lawful wife" },
+            { w: "serving maid", k: "몸종", s: "who had been a serving maid" },
+            { w: "out of the ordinary", k: "남다른", s: "Gildong was out of the ordinary from the day he was born" },
+            { w: "gave up and left (give up)", k: "물러갔다", s: "His schoolmaster gave up and left" },
+            { w: "without a pause", k: "막힘없이", s: "answered anything a grown man asked him without a pause" },
+            { w: "grew heavy (grow heavy)", k: "무거워졌다", s: "Every time Minister Hong looked at that son his heart grew heavy" },
+            { w: "a waste", k: "아까운 것", s: "The boy's gifts were a waste" },
+            { w: "kept his distance (keep one's distance)", k: "멀리했다", s: "he kept his distance from Gildong all the more" },
+            { w: "however fine ~", k: "아무리 뛰어나도", s: "however fine his gifts" },
+            { w: "was founded (found)", k: "세워졌다", s: "since the country was founded" },
+            { w: "Nor was that all", k: "그뿐이 아니었다", s: "Nor was that all" },
+            { w: "the very last row", k: "맨 뒷줄", s: "he stood in the very last row" },
+            { w: "moving through his forms (move)", k: "몸을 놀리며", s: "moving through his forms" },
+            { w: "hilt", k: "칼자루", s: "The hand on the hilt was shaking" },
+            { w: "happened to be ~ing (happen)", k: "마침 ~하고 있었다", s: "Minister Hong happened to be crossing the yard" },
+            { w: "knelt (kneel)", k: "무릎을 꿇었다", s: "Gildong knelt" },
+            { w: "held ~ dearest (hold dear)", k: "가장 귀하게 여겼다", s: "it held human beings dearest of all" },
+            { w: "worth", k: "귀함, 값어치", s: "it seems to me that I have none of that worth" },
+            { w: "before he could help it", k: "저도 모르게", s: "The end of it shook before he could help it" },
+            { w: "The colour went out of ~ (go out of)", k: "얼굴빛이 변했다", s: "The colour went out of Minister Hong's face" },
+            { w: "skipped his meals (skip)", k: "끼니를 걸렀다", s: "There were many days when he skipped his meals" },
+            { w: "barred his door (bar)", k: "문을 걸어 잠갔다", s: "Gildong barred his door and read the books of war" },
+            { w: "formation", k: "진", s: "how to set a formation" },
+            { w: "ran dry (run dry)", k: "바닥났다", s: "The lamp oil ran dry every night" },
+            { w: "got hold of ~ (get hold of)", k: "손에 넣었다", s: "From somewhere Gildong got hold of a few old books" },
+            { w: "worn away (wear away)", k: "다 해졌다", s: "The covers were quite worn away" },
+            { w: "leaned all one way (lean)", k: "한쪽으로 쏠렸다", s: "The leaves in the yard leaned all one way" },
+            { w: "make himself unseen", k: "몸을 감추다", s: "Gildong could make himself unseen" },
+            { w: "cut it out (cut out)", k: "오려 냈다", s: "if he drew a man on paper and cut it out" },
+            { w: "froze (freeze)", k: "얼어붙었다", s: "Minister Hong froze where he stood" },
+            { w: "caught hold of ~ (catch hold of)", k: "붙들었다", s: "His legs went and he caught hold of a pillar" },
+            { w: "stiff", k: "딱딱한", s: "His voice was stiff" },
+            { w: "bitterness", k: "원망", s: "There was no bitterness in his voice" },
+            { w: "wavered (waver)", k: "흔들렸다", s: "The end of it wavered" },
+            { w: "half fear and half sorrow", k: "두려움 반 안타까움 반", s: "It was half fear and half sorrow" }
+        ],
+        "ch2": [
+            { w: "concubine", k: "첩", s: "Minister Hong had a concubine called Choran" },
+            { w: "uneasy", k: "불안한", s: "Every time Choran watched Gildong growing she felt uneasy" },
+            { w: "turned it over (turn over)", k: "곱씹었다", s: "She turned it over every night" },
+            { w: "her heart sank (sink)", k: "가슴이 내려앉았다", s: "her heart sank" },
+            { w: "put words into ~'s ear (put)", k: "말을 넣다", s: "to put words into Minister Hong's ear" },
+            { w: "turn the country over", k: "나라를 뒤집다", s: "he will one day turn the country over" },
+            { w: "said her piece (say one's piece)", k: "시킨 말만 했다", s: "She said her piece and withdrew" },
+            { w: "did not give up (give up)", k: "물러서지 않았다", s: "But Choran did not give up" },
+            { w: "be rid of ~", k: "없애다", s: "she hired a man to be rid of Gildong" },
+            { w: "the new moon", k: "그믐", s: "named the night of the new moon" },
+            { w: "flickered (flicker)", k: "흔들렸다", s: "the candle flickered strangely" },
+            { w: "not a breath of wind", k: "바람 한 점 없는", s: "There was not a breath of wind that night" },
+            { w: "sleeping lightly (sleep)", k: "잠을 얕게 자다", s: "Gildong had been sleeping lightly" },
+            { w: "felt out the air (feel out)", k: "기운을 살폈다", s: "Gildong shut his eyes and felt out the air" },
+            { w: "lying flat (lie flat)", k: "엎드려 있는", s: "There was a man lying flat on the roof" },
+            { w: "threshold", k: "문지방", s: "The footfall over the threshold was lighter than a cat's" },
+            { w: "glittered (glitter)", k: "번득였다", s: "The blade caught the lamplight and glittered" },
+            { w: "brought ~ down (bring down)", k: "내리쳤다", s: "the shape brought the sword down on the bedding" },
+            { w: "from wall to wall", k: "방 안 가득", s: "a thick mist suddenly rose in the room and filled it from wall to wall" },
+            { w: "have no quarrel with ~", k: "원한이 없다", s: "I have no quarrel with you" },
+            { w: "gave ~'s name (give)", k: "이름을 댔다", s: "And he gave Choran's name" },
+            { w: "expecting to ~ (expect)", k: "~할 줄 알고", s: "expecting to lose his head" },
+            { w: "let him go (let go)", k: "놓아주었다", s: "Gildong let him go" },
+            { w: "on this kind of errand", k: "이런 일로", s: "never climb another man's wall on this kind of errand again" },
+            { w: "bowed to the ground (bow)", k: "엎드려 절했다", s: "He knelt in the yard and bowed to the ground" },
+            { w: "knew them all by heart", k: "다 눈에 익었다", s: "he knew them all by heart" },
+            { w: "barefoot", k: "맨발로", s: "Minister Hong was in his night clothes and barefoot" },
+            { w: "thick", k: "잠긴", s: "Minister Hong's voice was thick" },
+            { w: "shielding (shield)", k: "감싸는", s: "He had guessed who his son was shielding" },
+            { w: "had brought ~ into the house (bring)", k: "집에 들였다", s: "it was he himself who had brought that person into the house" },
+            { w: "heavily", k: "무겁게", s: "Then he spoke, heavily" },
+            { w: "His throat closed (close)", k: "목이 메었다", s: "His throat closed and no sound would come" },
+            { w: "until the cock crowed (crow)", k: "새벽닭이 울 때까지", s: "They stood like that until the cock crowed" },
+            { w: "turned their heads away (turn away)", k: "고개를 돌렸다", s: "The servants saw it from a distance and turned their heads away" },
+            { w: "travelling money", k: "노잣돈", s: "Chunseom tucked travelling money into the fold of his coat" },
+            { w: "did not look back once (look back)", k: "한 번도 돌아보지 않았다", s: "He did not look back once" }
+        ],
+        "ch3": [
+            { w: "stronghold", k: "소굴", s: "It was a bandits' stronghold" },
+            { w: "levelled their spears (level)", k: "창을 겨누었다", s: "the bandits levelled their spears at him" },
+            { w: "did not back away (back away)", k: "물러서지 않았다", s: "Gildong did not back away at all" },
+            { w: "did not blink (blink)", k: "눈을 깜짝하지 않았다", s: "The spear points came up to his throat and he did not blink" },
+            { w: "nudged (nudge)", k: "팔꿈치로 찔렀다", s: "They nudged one another with their elbows" },
+            { w: "jerked his chin (jerk)", k: "턱으로 가리켰다", s: "One of them jerked his chin at the middle of the yard" },
+            { w: "shift (shift)", k: "움직이다", s: "It took several grown men working together to shift it at all" },
+            { w: "moss", k: "이끼", s: "It was an old stone with moss on it" },
+            { w: "held their sides laughing (hold one's sides)", k: "배를 잡고 웃었다", s: "The bandits held their sides laughing" },
+            { w: "rolled up his sleeves (roll up)", k: "소매를 걷었다", s: "Gildong rolled up his sleeves" },
+            { w: "lifted ~ clean up (lift)", k: "번쩍 들어 올렸다", s: "lifted the stone clean up" },
+            { w: "not a sound of effort", k: "숨소리 하나 없이", s: "There was not a sound of effort in him" },
+            { w: "veins stood out (stand out)", k: "핏줄이 섰다", s: "The veins stood out on Gildong's forearms" },
+            { w: "mouths fell open (fall open)", k: "입을 벌렸다", s: "The bandits' mouths fell open" },
+            { w: "one by one", k: "하나둘씩", s: "One by one the men who had been laughing shut their mouths" },
+            { w: "as quiet as ~", k: "~한 듯 조용한", s: "The yard went as quiet as if water had been thrown over it" },
+            { w: "nailed down (nail down)", k: "못 박았다", s: "From the first day Gildong nailed down one thing" },
+            { w: "a fingertip", k: "손끝 하나", s: "We do not lay a fingertip on anything belonging to the common people" },
+            { w: "murmured (murmur)", k: "웅성거렸다", s: "The bandits murmured" },
+            { w: "You will see soon enough", k: "곧 알게 될 것이다", s: "You will see soon enough" },
+            { w: "eats best (eat)", k: "가장 배부르다", s: "Who in this country eats best" },
+            { w: "was taken from ~ (take)", k: "~에게서 걷은 것이다", s: "It was taken from the people" },
+            { w: "putting things back (put back)", k: "제자리로 돌려놓는", s: "We are putting things back where they belong" },
+            { w: "went serious (go serious)", k: "굳어졌다", s: "The bandits' faces went serious" },
+            { w: "made a flag of it (make)", k: "깃발을 만들었다", s: "made a flag of it" },
+            { w: "snapped (snap)", k: "펄럭였다", s: "The flag snapped in the wind" },
+            { w: "stroke", k: "획", s: "The strokes were thick and straight" },
+            { w: "struck at ~ (strike)", k: "쳤다", s: "they were not a band that struck at any house they pleased" },
+            { w: "look over ~ (look over)", k: "살피다", s: "First Gildong sent men out to look over the towns" },
+            { w: "several times the ~", k: "몇 곱절의", s: "who took several times the grain that was owed" },
+            { w: "bought their posts (buy)", k: "벼슬을 돈으로 샀다", s: "of men who had bought their posts with money" },
+            { w: "had reason to hate", k: "원망을 살 만했다", s: "belonged to a man the people had reason to hate" },
+            { w: "was shared out (share out)", k: "나누어 주었다", s: "was shared out that same day among the poor houses" },
+            { w: "debt paper", k: "빚 문서", s: "at another a debt paper" },
+            { w: "bolted their doors (bolt)", k: "문단속을 했다", s: "officials bolted their doors at night" },
+            { w: "came to nothing (come to nothing)", k: "헛일이 되었다", s: "They searched the mountains and searched the valleys and it came to nothing" }
+        ],
+        "ch4": [
+            { w: "worse than most", k: "유난히 악명 높은", s: "the governor of Hamgyeong was worse than most" },
+            { w: "in a bad year", k: "흉년에도", s: "He did not cut the tax even in a bad year" },
+            { w: "starved (starve)", k: "굶었다", s: "People starved and he did not open the storehouse" },
+            { w: "pulled faces (pull a face)", k: "난색을 표했다", s: "The bandits pulled faces" },
+            { w: "provincial seat", k: "감영", s: "The provincial seat has high walls and many soldiers" },
+            { w: "spread out a map (spread out)", k: "지도를 펼쳤다", s: "Gildong spread out a map" },
+            { w: "every ten paces", k: "열 걸음마다", s: "There was a soldier every ten paces along the top of the wall" },
+            { w: "set fire to ~ (set fire)", k: "불을 놓았다", s: "set fire to a heap of dry grass" },
+            { w: "leapt high (leap)", k: "크게 치솟았다", s: "the flames leapt high into the sky" },
+            { w: "went pouring out (pour out)", k: "우르르 몰려나갔다", s: "The soldiers went pouring out" },
+            { w: "flung wide (fling wide)", k: "활짝 젖혀졌다", s: "The gates were flung wide on both sides" },
+            { w: "hooves", k: "말발굽", s: "There was a wild noise of hooves" },
+            { w: "in that gap", k: "그 틈에", s: "In that gap Gildong and his men went in by the opposite gate" },
+            { w: "piled up like a mountain (pile up)", k: "산더미처럼 쌓였다", s: "Grain and silk and money were piled up like a mountain" },
+            { w: "gatekeeper", k: "문지기", s: "Not one gatekeeper was hurt" },
+            { w: "sat straight down (sit down)", k: "그 자리에 주저앉았다", s: "and sat straight down where he was" },
+            { w: "was not even dry (dry)", k: "마르지도 않았다", s: "The ink was not even dry" },
+            { w: "exactly as much as ~", k: "꼭 맞는 양", s: "Every sack held exactly as much as that household had mouths to feed" },
+            { w: "thundered at ~ (thunder)", k: "호통을 쳤다", s: "The king gathered his officials and thundered at them" },
+            { w: "as if they were his own yard", k: "제 집 마당처럼", s: "as if they were his own yard" },
+            { w: "pressed their foreheads (press)", k: "이마를 조아렸다", s: "The officials pressed their foreheads to the floor" },
+            { w: "spoke up (speak up)", k: "아뢰었다", s: "Then one official spoke up" },
+            { w: "glared at ~ (glare)", k: "노려보았다", s: "The king glared at him" },
+            { w: "summoned (summon)", k: "불러들였다", s: "The king summoned Minister Hong and his elder son Inhyeong" },
+            { w: "asked to be punished (ask)", k: "죄를 청했다", s: "lay on the floor and asked to be punished" },
+            { w: "never rose from his bed again (rise)", k: "자리에서 일어나지 못했다", s: "Minister Hong never rose from his bed again" },
+            { w: "in your place", k: "네 대신에", s: "he will be punished in your place" },
+            { w: "put up a notice (put up)", k: "방을 붙였다", s: "Inhyeong went down to Gyeongsang and put up a notice" },
+            { w: "crowded round ~ (crowd)", k: "몰려들었다", s: "People crowded round every notice to read it" },
+            { w: "on his own feet", k: "제 발로", s: "Gildong walked into the Gyeongsang provincial office on his own feet" },
+            { w: "face to face", k: "마주 서서", s: "It was years since the two of them had stood face to face" },
+            { w: "without a struggle", k: "순순히", s: "Gildong let them bind him without a struggle" },
+            { w: "in his own defence", k: "변명으로", s: "He did not say one word in his own defence" },
+            { w: "on the same day", k: "같은 날에", s: "The same man could not be taken in eight places on the same day" },
+            { w: "ringed ~ (ring)", k: "둘러쌌다", s: "Crowds ringed the palace wall" },
+            { w: "stared, lost (stare)", k: "넋을 잃고 보았다", s: "The officials stared, lost" },
+            { w: "There was no telling ~", k: "가릴 수가 없었다", s: "There was no telling one from another" },
+            { w: "came together as one (come together)", k: "하나처럼 겹쳤다", s: "The eight voices came together as one" }
+        ],
+        "ch5": [
+            { w: "tell ~ apart", k: "가려내다", s: "he could not tell them apart" },
+            { w: "mole", k: "점", s: "Not one mole, not one mark was different" },
+            { w: "went so far as to ~ (go so far as)", k: "~하기까지 했다", s: "Minister Hong went so far as to touch each of the eight faces" },
+            { w: "out loud", k: "큰 소리로", s: "And he spoke out loud" },
+            { w: "collapsed (collapse)", k: "무너져 내렸다", s: "the other seven collapsed all at once" },
+            { w: "sank down empty (sink)", k: "힘없이 주저앉았다", s: "The clothes sank down empty" },
+            { w: "came pouring out (pour out)", k: "우수수 쏟아졌다", s: "dry straw came pouring out of them" },
+            { w: "blew about (blow about)", k: "굴러다녔다", s: "Straw scattered over the ground and blew about in the wind" },
+            { w: "cried out (cry out)", k: "비명을 질렀다", s: "The officials cried out and stepped back" },
+            { w: "rose from his seat (rise)", k: "자리에서 일어섰다", s: "The king rose from his seat" },
+            { w: "might have ~ed (might have)", k: "~할 수도 있었을 것이다", s: "With such gifts you might have used them for the country" },
+            { w: "regret", k: "아까움", s: "There was more regret than blame in the king's voice" },
+            { w: "gave me no place (give)", k: "자리를 주지 않았다", s: "But this country gave me no place to use them in" },
+            { w: "held their breath (hold one's breath)", k: "숨을 죽였다", s: "The officials held their breath" },
+            { w: "however much ~", k: "아무리 ~해도", s: "However much I read I cannot sit the examination" },
+            { w: "not the least tremble", k: "조금도 흔들림 없이", s: "There was not the least tremble at the end of it" },
+            { w: "looked ~ straight in the face (look)", k: "똑바로 보았다", s: "Gildong lifted his head and looked the king straight in the face" },
+            { w: "under that same law", k: "그 법으로", s: "Half the men standing there had got their own posts under that same law" },
+            { w: "no ~ had ever ...", k: "~한 일이 없었다", s: "no seoeol had ever asked to be a minister" },
+            { w: "broke into noise (break into)", k: "술렁였다", s: "The officials broke into noise" },
+            { w: "went up against it (go up against)", k: "반대하는 소리가 터졌다", s: "Voices went up against it on every side" },
+            { w: "quieted them (quiet)", k: "조용히 시켰다", s: "The king raised a hand and quieted them" },
+            { w: "One day will do", k: "하루면 됩니다", s: "One day will do" },
+            { w: "give it back (give back)", k: "내놓다", s: "I shall hold the post for one day and then give it back" },
+            { w: "warrant", k: "교지", s: "A warrant went out with the words Minister of War" },
+            { w: "on duty", k: "벼슬 자리에서", s: "the coat and hat an official wore on duty" },
+            { w: "meet his eye (meet)", k: "눈을 마주치다", s: "Nobody could meet his eye" },
+            { w: "slowed their steps (slow)", k: "걸음을 늦추었다", s: "The officials passing by all slowed their steps to look" },
+            { w: "did not once sit down (sit down)", k: "한 번도 앉지 않았다", s: "He did not once sit down" },
+            { w: "folded ~ neatly (fold)", k: "곱게 갰다", s: "folded them neatly and laid them on a table" },
+            { w: "crease", k: "주름", s: "There was not a crease in the robes" },
+            { w: "Why such haste?", k: "어찌 이리 서두르느냐", s: "Why such haste" },
+            { w: "sprang up (spring)", k: "훌쩍 솟구쳤다", s: "Then he sprang up into the sky and vanished into the clouds" },
+            { w: "staring up (stare)", k: "올려다보며", s: "The whole court stood staring up at the sky" }
+        ],
+        "ch6": [
+            { w: "nothing will change (change)", k: "아무것도 바뀌지 않는다", s: "But nothing in this land will change" },
+            { w: "nodded (nod)", k: "고개를 끄덕였다", s: "Several of them nodded" },
+            { w: "a stir", k: "술렁임", s: "There was a stir among them" },
+            { w: "the soil is rich", k: "땅이 기름지다", s: "I hear the soil is rich and there are few people" },
+            { w: "seed grain", k: "곡식 씨앗", s: "was turned into ships and seed grain and tools" },
+            { w: "rang round ~ (ring)", k: "울렸다", s: "The sound of sawing rang round the valley" },
+            { w: "one kind to a sack", k: "종류마다 따로", s: "one kind to a sack" },
+            { w: "without telling anyone (tell)", k: "아무에게도 말하지 않고", s: "He went without telling anyone" },
+            { w: "deep in illness", k: "병이 깊은", s: "Minister Hong was deep in illness" },
+            { w: "untouched", k: "그대로 놓인", s: "A medicine bowl stood untouched beside the pillow" },
+            { w: "wet the pillow (wet)", k: "베개를 적셨다", s: "Tears ran from his eyes and wet the pillow" },
+            { w: "dry as a twig", k: "나뭇가지처럼 마른", s: "The hand was dry as a twig" },
+            { w: "took his shoulders (take)", k: "어깨를 붙들었다", s: "came out to the gate too and took his shoulders" },
+            { w: "raised their sails (raise)", k: "돛을 올렸다", s: "thirty ships raised their sails" },
+            { w: "swelled (swell)", k: "부풀었다", s: "The sails filled and swelled in the wind" },
+            { w: "circled over ~ (circle)", k: "맴돌았다", s: "Gulls circled over them" },
+            { w: "spread out (spread out)", k: "펼쳐졌다", s: "A river ran through it and fields spread out" },
+            { w: "a handful of ~", k: "한 줌의", s: "took up a handful of the earth" },
+            { w: "neglected (neglect)", k: "돌보지 않았다", s: "The king of that country had long neglected his people" },
+            { w: "cruel", k: "가혹한", s: "The taxes were heavy and the punishments cruel" },
+            { w: "reached to heaven (reach)", k: "하늘에 닿았다", s: "The islanders' bitterness reached to heaven" },
+            { w: "a tax was set on ~ (set)", k: "세금이 매겨졌다", s: "a tax was set on that child as well" },
+            { w: "opened the gates themselves (open)", k: "스스로 문을 열었다", s: "at every gate the people opened the gates themselves" },
+            { w: "a real battle", k: "싸움다운 싸움", s: "There was never a real battle" },
+            { w: "showed them the way (show)", k: "길을 안내했다", s: "The people showed them the way instead" },
+            { w: "laid down (lay down)", k: "내려놓았다", s: "The soldiers laid down their spears" },
+            { w: "royal seal", k: "옥새", s: "The king handed over the royal seal where he stood" },
+            { w: "plenty of ~", k: "넉넉한", s: "He even loaded plenty of money for the journey" },
+            { w: "out of sight", k: "보이지 않을 때까지", s: "Gildong stood on the shore until the ship was out of sight" },
+            { w: "let an enemy go alive (let go)", k: "원수를 살려 보내다", s: "Why do you let an enemy go alive" },
+            { w: "treat ~ carelessly", k: "함부로 하다", s: "Did we not come so as not to treat people carelessly" },
+            { w: "took the throne (take the throne)", k: "임금 자리에 올랐다", s: "On the day he took the throne" },
+            { w: "platform", k: "단", s: "From the platform Gildong's voice carried a long way" },
+            { w: "A person is only a person", k: "사람은 다만 사람일 뿐이다", s: "A person is only a person" }
+        ],
+        "ch7": [
+            { w: "firm", k: "단단한", s: "But the few it had were very firm" },
+            { w: "learn by heart", k: "외우다", s: "They were short enough for anyone to learn by heart" },
+            { w: "ability and character", k: "재주와 사람됨", s: "offices were given for ability and character alone" },
+            { w: "was not asked at all (ask)", k: "아예 묻지 않았다", s: "Whose child you were was not asked at all" },
+            { w: "answer paper", k: "답안", s: "there was a name and an answer paper" },
+            { w: "had to be written up (write up)", k: "적어 두게 했다", s: "whatever taxes were collected had to be written up" },
+            { w: "wooden board", k: "나무판", s: "a great wooden board was set up" },
+            { w: "lost his post (lose)", k: "벼슬을 잃었다", s: "A magistrate who did not open it lost his post" },
+            { w: "the village together", k: "마을이 함께", s: "but by the village together" },
+            { w: "plain", k: "수수한", s: "They were so plain that nobody ever knew him for the king" },
+            { w: "porter", k: "지게꾼", s: "all three could only be porters" },
+            { w: "bright", k: "환한", s: "The old man's face was bright" },
+            { w: "put on mourning (put on)", k: "상복을 입었다", s: "Gildong put on mourning and wept for three days" },
+            { w: "held his father's funeral (hold)", k: "아버지의 장례를 치렀다", s: "held his father's funeral" },
+            { w: "whenever you like", k: "언제든지", s: "Brother, come whenever you like" },
+            { w: "patted (pat)", k: "두드렸다", s: "Inhyeong laughed and patted his brother's back" },
+            { w: "went red (go red)", k: "붉어졌다", s: "Inhyeong's eyes went red" },
+            { w: "landing", k: "나루", s: "Inhyeong came down to the landing" },
+            { w: "at peace", k: "편안한", s: "Yuldoguk was at peace for a long time" },
+            { w: "Not a few of ~", k: "적지 않은", s: "Not a few of the people came over from Joseon" },
+            { w: "bad harvest", k: "흉년", s: "the island had several bad harvests" },
+            { w: "unfit", k: "못난", s: "It was not because the eldest was unfit" },
+            { w: "It makes no difference whether ~", k: "~이든 아니든 상관없다", s: "It makes no difference whether he is my child or not" },
+            { w: "astonished", k: "놀란", s: "The officials were astonished" },
+            { w: "we can make one now (make)", k: "지금 만들면 된다", s: "If there is none, we can make one now" },
+            { w: "gave up the throne (give up)", k: "임금 자리를 내놓았다", s: "Gildong gave up the throne" },
+            { w: "kept house (keep house)", k: "살림을 꾸렸다", s: "He kept house himself, without a single servant" },
+            { w: "came to play (come)", k: "놀러 왔다", s: "Children often came to play in that yard" },
+            { w: "never stopped (stop)", k: "끊이지 않았다", s: "The sound of reading never stopped in that yard" },
+            { w: "tipped its head (tip)", k: "고개를 갸웃했다", s: "The child tipped its head" },
+            { w: "stroked ~'s hair (stroke)", k: "머리를 쓰다듬었다", s: "Gildong smiled and stroked the child's hair" },
+            { w: "went round (go round)", k: "휘둥그레졌다", s: "The child's eyes went round" },
+            { w: "What else would you ~?", k: "그럼 뭐라고 ~?", s: "What else would you call him" },
+            { w: "unable to understand ~", k: "알아듣지 못하는", s: "a country where a child could grow up unable to understand that question" },
+            { w: "staked his whole life (stake)", k: "평생을 걸었다", s: "that Gildong had staked his whole life" }
+        ],
+        "after": [
+            { w: "born in ~ and dead in ...", k: "~년에 나서 …년에 죽었다", s: "born in 1569 and dead in 1618" },
+            { w: "collected works", k: "문집", s: "noted in his own collected works" },
+            { w: "looking again at ~ (look again)", k: "다시 따져 보는", s: "who are looking again at whether he really did" },
+            { w: "kept close company with ~ (keep company)", k: "가까이 지냈다", s: "he kept close company with men born seoeol" },
+            { w: "bear it quietly (bear)", k: "가만히 참다", s: "not the ones who bear it quietly" },
+            { w: "plotting against the throne (plot)", k: "역모를 꾀함", s: "on a charge of plotting against the throne" },
+            { w: "closer to ~ than to ...", k: "…보다 ~에 가깝다", s: "this book is closer to an argument than to an old tale" },
+            { w: "annals", k: "실록", s: "In the annals of King Yeonsan" },
+            { w: "law book", k: "법전", s: "It was written that way in the country's law book" },
+            { w: "a wild temper", k: "사나운 성질", s: "Gildong did not leave home because he had a wild temper" },
+            { w: "Follow ~ to the end (follow)", k: "끝까지 따라가 보다", s: "Follow to the end what Gildong is trying to get in this book" },
+            { w: "the thing was finished", k: "그것으로 끝난 일이다", s: "the thing was finished" },
+            { w: "picked and chose (pick and choose)", k: "가려서 했다", s: "They were bandits who picked and chose their robbing" },
+            { w: "the most argued over (argue over)", k: "가장 논란이 많은", s: "Yuldoguk is the last part of the book and the most argued over" },
+            { w: "stopped short (stop short)", k: "끝까지 밀지 못했다", s: "One is that he stopped short and drew back" },
+            { w: "would not have survived (survive)", k: "남아나지 못했을 것이다", s: "a book about replacing a king would not have survived" },
+            { w: "hard to settle", k: "정하기 어려운", s: "is hard to settle" },
+            { w: "Count up ~ (count up)", k: "세어 보다", s: "Count up the wonders as well" },
+            { w: "was done away with (do away with)", k: "없어졌다", s: "The law that set the seoeol apart was done away with around 1894" },
+            { w: "which is harder", k: "무엇이 더 어려운지", s: "Say which is harder" },
+            { w: "where the line should be drawn (draw)", k: "선을 어디에 그을지", s: "about where the line should be drawn" },
+            { w: "shut in by ~ (shut in)", k: "~에 갇힌", s: "is he a man shut in by that law as well" }
+        ]
+    },
+    quiz: [
+        { q: "Why could Gildong not call his father father?", choices: ["He left home too young", "His father forbade it", "He was born a seoeol"], answer: 2 },
+        { q: "What could Gildong do after two years of practice?", choices: ["Make himself unseen", "Make paper men walk", "Move the wind with his hand"], answer: 1 },
+        { q: "Who hired a man to be rid of Gildong?", choices: ["Choran", "His elder brother Inhyeong", "The shaman"], answer: 0 },
+        { q: "What did his mother Chunseom ask of Gildong?", choices: ["To be careful with his money", "Never to look back", "Never to harm people"], answer: 2 },
+        { q: "How did Gildong become chief of the band?", choices: ["He lifted a stone nobody could lift", "He wrote the best poem", "He was the oldest of them"], answer: 0 },
+        { q: "What was at the head of the valley Gildong came to?", choices: ["A village beyond a stone gate", "A shaman's house", "A great persimmon tree"], answer: 0 },
+        { q: "What did Gildong's band agree never to touch?", choices: ["The wealth of temples", "Anything belonging to the common people", "The grain in town offices"], answer: 1 },
+        { q: "How did Gildong get into the governor of Hamgyeong's storehouse?", choices: ["They went over the wall in secret at night", "They paid the gatekeeper to open it", "They lit a fire outside to draw the soldiers away"], answer: 2 },
+        { q: "What did Minister Hong see through the crack of the door?", choices: ["A sword cut in the bedding", "Eight identical faces", "A room full of mist"], answer: 1 },
+        { q: "What happened to the Gildongs who were brought in together?", choices: ["They all ran away", "All but one disappeared", "They turned into straw figures"], answer: 2 },
+        { q: "What did Gildong ask the king for?", choices: ["The post of Minister of War", "A great deal of money", "To be forgiven his crimes"], answer: 0 },
+        { q: "What did Gildong do after he was given the post?", choices: ["He served in it for many years", "He gave it up after one day and left", "He went back to being a bandit"], answer: 1 },
+        { q: "Where did Gildong lead his people?", choices: ["Deep into the northern mountains", "Across the sea to Yuldoguk", "To a large town in the south"], answer: 1 },
+        { q: "What was the first thing Gildong did away with in Yuldoguk?", choices: ["The people's heavy taxes", "The soldiers who guarded the country", "The law that divided people by rank"], answer: 2 }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🗡️',
+        art: ['end.webp'],
+        paras: [
+            "There is one big difference between this book and the other old stories on this shelf. It has an author.",
+            "It is said to have been written by Heo Gyun, a man of the middle Joseon period, born in 1569 and dead in 1618. But even that is not something he said himself. The main ground for it is that a later writer, Yi Sik, noted in his own collected works that Heo Gyun wrote The Tale of Hong Gildong. So there are scholars today who are looking again at whether he really did.",
+            "Heo Gyun was born into a famous family and rose high in office. Yet he kept close company with men born seoeol, whose way to office was shut. He also left a piece of writing saying that the people to fear are not the ones who bear it quietly but the ones who will not bear it. In the end he was seized and put to death on a charge of plotting against the throne.",
+            "So this book is closer to an argument than to an old tale. It is not a story that grew up from being sung; it is a story a man made because he had something he wanted to say.",
+            "The name Hong Gildong is not invented either. In the annals of King Yeonsan there is an entry saying a bandit called Hong Gildong was caught. The name of a real bandit has been borrowed. But there is nothing on record to say that the Hong Gildong in the annals lived as the one in this book does.",
+            "What this book is aiming at is exactly the title of the first chapter. Not being able to call your father father. That is not a sorrow invented for the story; it was the law of the time.",
+            "A son a nobleman had by a concubine was called a seoeol. That son could not call his father father or his brother brother, and stood at the back at the family rites. Above all, he could not sit the state examination. That means that however well he wrote, he could hold no office. It was written that way in the country's law book.",
+            "So Gildong did not leave home because he had a wild temper. It was because as long as he stayed in that house he could never become anything. Follow to the end what Gildong is trying to get in this book and you find it is not wealth and not office. It is a name.",
+            "Look again at chapter five. When the king gives him the post of Minister of War, Gildong holds it for one day and gives it back. He had not pressed for it because he wanted office. Once he had shown, one time, that a seoeol could sit in that seat, the thing was finished.",
+            "The name Hwalbindang is worth turning over too. It means the band that keeps the poor alive. The one thing Gildong nailed down for his men was that they touch nothing belonging to the common people. They were bandits who picked and chose their robbing.",
+            "Yuldoguk is the last part of the book and the most argued over. Gildong cannot mend Joseon, so he goes across the sea. He does not overturn the country; he founds a separate new one.",
+            "There are two ways of reading that. One is that he stopped short and drew back. The other is that in those days a book about replacing a king would not have survived, and neither would its author. Which of the two it is, is hard to settle.",
+            "Count up the wonders as well. What Gildong does is mostly to make himself into many, to call up mist, to make people out of straw. None of it harms anyone. They are skills for not being caught, skills for hiding. They are the skills of someone who can only live by not being caught.",
+            "Four hundred years have passed since this book appeared. The law that set the seoeol apart was done away with around 1894. It took a very long time after Gildong won his one-day ministry and crossed the sea.",
+            "Was Gildong right to cross the sea? There was also the road of staying and fighting. Say which is harder: leaving a place that cannot be mended, or staying and holding on.",
+            "The Hwalbindang are bandits. Even if they took only from bad officials, they took what was not theirs. Think about whether taking is all right if it is going to be put to good use, and about where the line should be drawn.",
+            "Minister Hong loved his son and yet never let him call him father. It was because he was afraid of the law. How should we see this father? Is he a man who did wrong, or is he a man shut in by that law as well?"
+        ]
+    }
+};
+
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서', folio: '쪽',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading', folio: '',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        wordsDown: 'Words ⌄',
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'korea-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+// 글꼴 규칙이 html[lang] 에 걸려 있다. 쪽을 재기 전에 미리 걸어 두어야
+// 영어 글을 영어 글꼴로 잰다. 늦게 걸면 첫 쪽나눔이 통째로 어긋난다.
+document.documentElement.lang = LANG;
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
+
 const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
 
 function buildPages() {
+    CHAPTER_SEGS = CH().map(ch => segsOf(ch.paras));
+    AFTER_SEGS = segsOf(AF().paras);
+    TOC_GROUPS = [];
+    for (let i = 0; i < CH().length; i += TOC_PER_SPREAD) {
+        TOC_GROUPS.push(CH().slice(i, i + TOC_PER_SPREAD));
+    }
+
     PROBE = makeProbe();
     PAGES = [
         { kind: 'cover' },
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
-        ...CHAPTERS.flatMap(paginateChapter),
+        ...CH().flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
         ...paginateAfterword()
     ];
@@ -942,6 +1578,21 @@ function paint() {
     });
 
     if (PAGES[current].kind === 'quiz') initQuiz();
+
+    paintReadBtn();
+    // 읽는 중일 때만 문단을 눌러 그 자리로 옮긴다.
+    // 그냥 눌렀다고 소리가 나면 곤란하니, 스피커 단추를 누른 뒤에만 먹는다.
+    if (LANG === 'en' && CAN_SPEAK) {
+        spreadEl.querySelectorAll('[data-say]').forEach(el => {
+            el.addEventListener('click', () => {
+                if (!reading) return;
+                readPage(Number(el.dataset.say));
+            });
+        });
+    }
+
+    renderVocab();
+    fitVocabScreen();
 }
 
 function initQuiz() {
@@ -949,7 +1600,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -962,7 +1613,7 @@ function initQuiz() {
                 });
                 QUIZ_PICKED[qi] = chosen;
                 const done = QUIZ_PICKED.filter(v => v !== null).length;
-                progressEl.textContent = `${done} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(done, QZ().length);
             });
         });
     });
@@ -970,6 +1621,7 @@ function initQuiz() {
 
 function goTo(index) {
     if (animating || index === current || index < 0 || index >= PAGES.length) return;
+    stopReading();
     animating = true;
     const dir = index > current ? 'flip-next' : 'flip-prev';
     spreadEl.classList.add(dir);
@@ -996,6 +1648,320 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+
+
+/* ── 읽어 주기 ─────────────────────────────────────────────────
+   소설은 한 문단 안에 서술과 대사가 섞여 있다. 그림책처럼 말하는 이를
+   따로 적어 둘 수가 없으므로, 큰따옴표 안팎으로만 목소리를 가른다.
+   속도는 둘 다 같다. 대사에서 갑자기 빨라지면 귀에 턱턱 걸린다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+
+const SAY_RATE = 0.85;
+const SAY_AS = {
+    narration: { pitch: 1.00, rate: SAY_RATE },
+    speech:    { pitch: 1.24, rate: SAY_RATE },
+    speech2:   { pitch: 0.78, rate: SAY_RATE }
+};
+
+let SAY_VOICE = null;
+
+function pickVoices() {
+    if (typeof speechSynthesis === 'undefined') return;
+    const vs = speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang));
+    if (!vs.length) return;
+    SAY_VOICE = vs.find(v => /^en[-_]US/i.test(v.lang)) || vs[0];
+}
+
+if (typeof speechSynthesis !== 'undefined') {
+    pickVoices();
+    speechSynthesis.onvoiceschanged = pickVoices;
+}
+
+function dressVoice(u, role) {
+    const a = SAY_AS[role] || SAY_AS.narration;
+    u.pitch = a.pitch;
+    u.rate = a.rate;
+    if (SAY_VOICE) u.voice = SAY_VOICE;
+}
+
+/* 낱말 뜻풀이는 소리 내어 읽지 않는다. 나머지 표시는 떼고 글자만 남긴다. */
+const plainText = h => h
+    .replace(/<span class="gloss">[\s\S]*?<\/span>/g, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+/* 큰따옴표 안은 대사다. 서술과 목소리를 가른다.
+   한 문단 안에서 따옴표가 잇달아 나오면 대개 두 사람이 주고받는 자리다.
+   그래서 두 번째 대사부터 목소리를 번갈아 바꾼다. 말하는 이를 일일이
+   적어 둘 수 없는 소설틀에서 낼 수 있는 가장 가까운 흉내다. */
+function sayChunks(text) {
+    const out = [];
+    const re = /"([^"]*)"/g;
+    let last = 0, q = 0, m;
+    while ((m = re.exec(text)) !== null) {
+        if (m.index > last) out.push({ t: text.slice(last, m.index), v: 'narration' });
+        out.push({ t: m[1], v: (q++ % 2) ? 'speech2' : 'speech' });
+        last = re.lastIndex;
+    }
+    if (last < text.length) out.push({ t: text.slice(last), v: 'narration' });
+    return out.filter(c => /\S/.test(c.t));
+}
+
+/* 그 쪽에 있는 문단들. 쪽에 걸쳐 잘린 문단은 한 번만 센다. */
+function pageParts(page) {
+    if (!page) return [];
+    if (page.kind === 'cover') {
+        return [CV().title].concat(CV().intro).map((t, i) => ({ i, raw: t }));
+    }
+    const segs = page.kind === 'chapter' ? CHAPTER_SEGS[page.chIndex]
+        : page.kind === 'after' ? AFTER_SEGS : null;
+    if (!segs) return [];
+    const src = page.kind === 'chapter' ? CH()[page.chIndex].paras : AF().paras;
+    const seen = {};
+    const out = [];
+    [page.left, page.right].forEach(r => {
+        if (!r) return;
+        for (let k = r[0]; k < r[1]; k++) {
+            const pi = segs[k].paraIdx;
+            if (seen[pi]) continue;
+            seen[pi] = 1;
+            out.push({ i: pi, raw: src[pi] });
+        }
+    });
+    return out;
+}
+
+/* 읽기 단추는 책틀에 붙박이로 있다. 영어로 읽을 때만 보인다. */
+const readBtnEl = document.getElementById('readBtn');
+let reading = false;
+let readToken = 0;
+
+function paintReadBtn() {
+    if (!readBtnEl) return;
+    readBtnEl.hidden = !(LANG === 'en' && CAN_SPEAK);
+    readBtnEl.textContent = reading ? '■' : '▶';
+}
+
+function stopReading() {
+    reading = false;
+    if (spreadEl) spreadEl.classList.remove('is-reading');
+    readToken++;
+    if (CAN_SPEAK) { try { speechSynthesis.cancel(); } catch (e) {} }
+    document.querySelectorAll('.saying').forEach(el => el.classList.remove('saying'));
+    paintReadBtn();
+}
+
+function readPage(fromParaIdx) {
+    const page = PAGES[current];
+    if (!CAN_SPEAK || !page) return;
+    const parts = pageParts(page);
+    if (!parts.length) return;
+    // 읽던 것이 있으면 끊는다. 안 그러면 새 글이 뒤에 줄을 선다.
+    try { speechSynthesis.cancel(); } catch (e) {}
+    reading = true;
+    if (spreadEl) spreadEl.classList.add('is-reading');
+    paintReadBtn();
+    const mine = ++readToken;
+
+    let start = parts.findIndex(p => p.i === fromParaIdx);
+    if (start < 0) start = 0;
+
+    const step = (k) => {
+        if (mine !== readToken) return;
+        document.querySelectorAll('.saying').forEach(el => el.classList.remove('saying'));
+        if (k >= parts.length) { stopReading(); return; }
+        const here = spreadEl.querySelector(`[data-say="${parts[k].i}"]`);
+        if (here) {
+            here.classList.add('saying');
+            here.scrollIntoView({ block: 'nearest' });
+        }
+        const chunks = sayChunks(plainText(parts[k].raw));
+        const go = (c) => {
+            if (mine !== readToken) return;
+            if (c >= chunks.length) { step(k + 1); return; }
+            const u = new SpeechSynthesisUtterance(chunks[c].t);
+            u.lang = 'en-US';
+            dressVoice(u, chunks[c].v);
+            u.onend = () => go(c + 1);
+            u.onerror = () => go(c + 1);
+            try { speechSynthesis.speak(u); } catch (e) { stopReading(); }
+        };
+        go(0);
+    };
+    step(start);
+}
+
+if (readBtnEl) {
+    readBtnEl.addEventListener('click', () => (reading ? stopReading() : readPage(-1)));
+}
+
+/* ── 단어장 ────────────────────────────────────────────────────
+   책 아래에 있는 또 한 장의 화면이다. 책은 손대지 않는다.
+   낱말은 장마다 묶어 두었고, 그 쪽에 실제로 나온 것만 골라 보여 준다. */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+let VOCAB_NOW = [];
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    if (!page) return { list: [] };
+    if (page.kind === 'cover') return { list: all.cover || [] };
+    if (page.kind === 'chapter' || page.kind === 'after') {
+        const pool = page.kind === 'chapter' ? (all['ch' + page.ch.num] || []) : (all.after || []);
+        const text = pageParts(page).map(p => p.raw).join(' ');
+        return { list: pool.filter(w => text.indexOf(w.s) >= 0) };
+    }
+    // 문제 쪽에는 글이 없다. 답을 고르기 전에 훑어볼 수 있게 책에 나온 낱말을 다 보여 준다.
+    // 차례에는 볼 글이 없으므로 단어장을 아예 열지 않는다.
+    if (page.kind !== 'quiz') return { list: [] };
+    const list = [];
+    Object.keys(all).forEach(k => all[k].forEach(w => list.push(w)));
+    return { list };
+}
+
+function renderVocab() {
+    const { list } = (HAS_WORDS && LANG === 'en') ? vocabFor() : { list: [] };
+    // 볼 낱말이 없는 쪽에서는 아래 화면을 아예 열지 않는다.
+    const on = list.length > 0;
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) {
+        scrollDownEl.hidden = !on;
+        scrollDownEl.textContent = T().wordsDown || 'Words ⌄';
+    }
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.w}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.k}</p>
+                <p class="vocab-sent">${w.s}</p>
+            </li>`).join('')}
+        </ul>`;
+}
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다. */
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        // 「went without (go without)」처럼 괄호로 적어 둔 기본형은 읽지 않는다.
+        const bare = item.w.replace(/\s*\([^)]*\)/g, '').replace(/~/g, '').trim();
+        const word = new SpeechSynthesisUtterance(bare);
+        word.lang = 'en-US';
+        dressVoice(word, 'narration');
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.s);
+        sent.lang = 'en-US';
+        dressVoice(sent, 'narration');
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 글과 단어장이 함께 보인다.
+   소설은 그림 없는 펼침면이 더 많다. 그때는 책 아랫부분만 남기고 멈춘다. */
+function artLine() {
+    const page = PAGES[current];
+    if (!page) return 0;
+    const book = document.querySelector('.book');
+    const bookBox = book ? book.getBoundingClientRect() : null;
+    const capLine = () => (bookBox
+        ? Math.max(0, Math.round(bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45)))
+        : 0);
+    const el = page.kind === 'cover'
+        ? document.querySelector('.page-cover .story-page-left-full')
+        : spreadEl.querySelector('.story-art-top');
+    if (!el) return capLine();
+    const box = el.getBoundingClientRect();
+    const line = Math.max(0, Math.round(box.bottom + window.scrollY));
+    // 표지처럼 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라
+    // 책이 통째로 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (!bookBox || box.height < bookBox.height * 0.8) return line;
+    return Math.max(0, Math.min(line, capLine()));
+}
+
+/* 쪽을 다시 나눌 때는 단어장을 먼저 접는다.
+   아래 화면이 펼쳐진 채로 재면 문서가 길어져 세로 막대가 생기고,
+   그만큼 칸이 좁아져 쪽이 잘못 나뉜다. 세로 화면에서 두 쪽이 어긋났다. */
+function rebuildPages() {
+    if (vocabScreenEl) vocabScreenEl.hidden = true;
+    window.scrollTo(0, 0);
+    buildPages();
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* ── 말 바꾸기 ─────────────────────────────────────────────────
+   쪽은 재어서 나누므로 글을 갈아 끼우면 처음부터 다시 나눈다.
+   보던 장으로 돌아간다. 쪽 수는 말마다 다르다. */
+const langBtn = document.getElementById('langLink');
+
+function applyLang() {
+    stopReading();
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        // 글꼴 규칙(html[lang])을 먼저 바꾸고 나서 재야 한다. 순서를 바꾸면
+        // 영어 글을 한글 글꼴 규칙으로 재게 되어 쪽 수가 열 쪽 넘게 어긋난다.
+        applyLang();
+        rebuildPages();
+        current = Math.min(current, PAGES.length - 1);
+        if (here && here.kind === 'chapter') {
+            const i = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
+            if (i >= 0) current = i;
+        } else if (here) {
+            const i = PAGES.findIndex(p => p.kind === here.kind);
+            if (i >= 0) current = i;
+        }
+        paint();
+    });
+}
+
+applyLang();
 paint();
 
 // 본문 글꼴은 늦게 내려온다. 글꼴이 바뀌면 한 줄에 들어가는 글자 수가 달라져서
@@ -1003,7 +1969,7 @@ paint();
 if (document.fonts && document.fonts.status !== 'loaded') {
     document.fonts.ready.then(() => {
         const here = PAGES[current];
-        buildPages();
+        rebuildPages();
         current = Math.min(current, PAGES.length - 1);
         if (here && here.kind === 'chapter') {
             const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
