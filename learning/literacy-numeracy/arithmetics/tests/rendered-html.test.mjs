@@ -716,28 +716,23 @@ test("renders the derivative symbol instead of the word prime", async () => {
   assert.match(html, /f/);
 });
 
-test("renders student and teacher ranking mode entry screens", async () => {
+test("renders the student-hosted ranking mode entry screen", async () => {
   const studentResponse = await render("/arithmetic/race");
   assert.equal(studentResponse.status, 200);
   const studentHtml = await studentResponse.text();
-  assert.match(studentHtml, /학생 입장/);
-  assert.match(studentHtml, /방 번호/);
-  assert.match(studentHtml, /class="race-teacher-button" href="\/arithmetic\/race\/teacher">교사용 페이지<\/a>/);
-
-  const teacherResponse = await render("/arithmetic/race/teacher");
-  assert.equal(teacherResponse.status, 200);
-  const teacherHtml = await teacherResponse.text();
-  assert.match(teacherHtml, /연산 순위판/);
-  assert.match(teacherHtml, /교사 PIN/);
-  assert.match(teacherHtml, /방 만들기/);
-  assert.match(teacherHtml, /2구구단⑤/);
+  assert.match(studentHtml, /내가 방장/);
+  assert.match(studentHtml, /방 만들기/);
+  assert.match(studentHtml, /방 참가/);
+  assert.match(studentHtml, /방 코드/);
+  assert.doesNotMatch(studentHtml, /교사용 페이지|교사 PIN/);
 
   const catalogSource = await readFile(new URL("../app/arithmetic/catalog.tsx", import.meta.url), "utf8");
   const raceSource = await readFile(new URL("../app/arithmetic/race/page.tsx", import.meta.url), "utf8");
   assert.match(catalogSource, /href="\/arithmetic\/race"/);
-  assert.match(raceSource, /setName\(resolvedName\)/);
+  assert.match(raceSource, /classPlayerName/);
+  assert.match(raceSource, /hostToken/);
+  assert.doesNotMatch(raceSource, /race\/teacher|교사 PIN/);
 });
-
 test("keeps every race-ready worksheet connected to grading and score reading", async () => {
   const worksheetSource = await readFile(new URL("../lib/arithmetic-worksheets.ts", import.meta.url), "utf8");
   const controllerSource = await readFile(new URL("../app/components/arithmetic-race-controller.tsx", import.meta.url), "utf8");
@@ -746,7 +741,7 @@ test("keeps every race-ready worksheet connected to grading and score reading", 
   const selectorsBlock = controllerSource.match(/const questionSelectors = \[([\s\S]*?)\n\];/)?.[1] ?? "";
   const selectors = [...selectorsBlock.matchAll(/"(\.[^"]+)"/g)].map((match) => match[1]);
 
-  assert.equal(routes.length, 63);
+  assert.equal(routes.length, 64);
   assert.ok(selectors.includes(".multiplication-five-question"));
   assert.ok(selectors.includes(".clock-question"));
   assert.ok(selectors.includes(".division-story-problem"));
@@ -2376,7 +2371,6 @@ test("uses arrived-only mistake-first ranking with correction attempts", async (
   const routeSource = await readFile(new URL("../app/api/arithmetic-race/route.ts", import.meta.url), "utf8");
   const controllerSource = await readFile(new URL("../app/components/arithmetic-race-controller.tsx", import.meta.url), "utf8");
   const rankingSource = await readFile(new URL("../lib/arithmetic-race-ranking.ts", import.meta.url), "utf8");
-  const teacherSource = await readFile(new URL("../app/arithmetic/race/teacher/page.tsx", import.meta.url), "utf8");
   const schemaSource = await readFile(new URL("../db/schema.ts", import.meta.url), "utf8");
   const migrationSource = await readFile(new URL("../drizzle/0001_youthful_king_cobra.sql", import.meta.url), "utf8");
   const hosting = JSON.parse(await readFile(new URL("../.openai/hosting.json", import.meta.url), "utf8"));
@@ -2388,15 +2382,12 @@ test("uses arrived-only mistake-first ranking with correction attempts", async (
   assert.match(routeSource, /const completed = wrongCount === 0/);
   assert.match(routeSource, /mistake_count = CASE WHEN total_count IS NULL THEN \? ELSE mistake_count END/);
   assert.match(routeSource, /rank: completed \? ranking\.find/);
-  assert.match(routeSource, /ARITHMETIC_TEACHER_PIN/);
-  assert.doesNotMatch(routeSource, /2468/);
+  assert.match(routeSource, /hostToken/);
+  assert.doesNotMatch(routeSource, /ARITHMETIC_TEACHER_PIN|2468/);
   assert.doesNotMatch(controllerSource, /최종 제출 후에는 답을 고칠 수 없습니다/);
   assert.match(controllerSource, /if \(!result\.completed\) setAttemptMessage/);
   assert.match(controllerSource, /채점·도착/);
   assert.match(controllerSource, /\.worksheet-stage/);
-  assert.match(teacherSource, /전부 맞힌 학생만 · 오답이 적은 순 · 같으면 도착 시간/);
-  assert.match(teacherSource, /오답 \{participant\.mistakeCount\}개/);
-  assert.match(teacherSource, /<h3>미도착<\/h3>/);
   assert.match(schemaSource, /mistakeCount: integer\("mistake_count"\)\.notNull\(\)\.default\(0\)/);
   assert.match(migrationSource, /ADD `mistake_count` integer DEFAULT 0 NOT NULL/);
 });

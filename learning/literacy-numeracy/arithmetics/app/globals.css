@@ -961,10 +961,7 @@
 .arithmetic-mode-card > i { align-self: flex-end; font-size: 30px; font-style: normal; }
 
 .race-join-card,
-.race-waiting-card,
-.race-create-panel,
-.race-room-panel,
-.race-ranking-panel {
+.race-waiting-card {
   border: 1px solid var(--line);
   border-radius: 18px;
   background: white;
@@ -977,13 +974,9 @@
   padding: 28px;
 }
 
-.race-join-card h2,
-.race-ranking-panel h2 { margin: 0; }
-.race-join-card label,
-.race-create-panel label { display: grid; gap: 7px; color: var(--muted); font-weight: 800; }
-.race-join-card input,
-.race-create-panel input,
-.race-create-panel select {
+.race-join-card h2 { margin: 0; }
+.race-join-card label { display: grid; gap: 7px; color: var(--muted); font-weight: 800; }
+.race-join-card input {
   min-height: 48px;
   border: 1px solid var(--line);
   border-radius: 9px;
@@ -995,8 +988,6 @@
 }
 
 .race-join-card button,
-.race-create-panel button,
-.race-room-panel button,
 .race-submit-bar button {
   min-height: 48px;
   border: 0;
@@ -1010,35 +1001,8 @@
 }
 
 .race-join-card button:disabled,
-.race-create-panel button:disabled,
-.race-room-panel button:disabled,
 .race-submit-bar button:disabled { opacity: .5; cursor: default; }
 
-.race-teacher-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: -6px;
-}
-
-.race-teacher-button {
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: white;
-  color: var(--muted);
-  padding: 6px 11px;
-  font-size: 12px;
-  font-weight: 900;
-  text-decoration: none;
-  box-shadow: 0 4px 12px rgba(24, 35, 59, 0.06);
-}
-
-.race-teacher-button:hover {
-  border-color: var(--coral);
-  color: var(--coral);
-}
 
 .race-waiting-card {
   margin-top: 30px;
@@ -1050,44 +1014,6 @@
 .race-waiting-card > strong { color: var(--muted); }
 .race-form-error { color: var(--red); font-weight: 800; text-align: center; }
 
-.race-teacher-page {
-  min-height: 100dvh;
-  padding: 22px;
-  background: var(--paper-deep);
-  color: var(--ink);
-}
-
-.race-teacher-header {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  margin-bottom: 18px;
-}
-.race-teacher-header a { color: var(--muted); text-decoration: none; font-weight: 800; }
-.race-teacher-header h1 { margin: 0; }
-.race-create-panel { width: min(760px, 100%); display: grid; grid-template-columns: 160px 1fr auto; gap: 12px; padding: 20px; }
-.race-teacher-layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 18px; align-items: start; }
-.race-room-panel { display: grid; gap: 14px; padding: 22px; text-align: center; }
-.race-room-panel > span { color: var(--muted); font-weight: 800; }
-.race-room-panel > strong { color: var(--coral); font-size: 54px; letter-spacing: .08em; }
-.race-room-panel h2 { margin: 0; }
-.race-room-panel p { margin: 0; color: var(--muted); }
-.race-room-panel button.race-close { min-height: 40px; background: #6d7480; }
-.race-live { border-radius: 9px; background: var(--green-soft); color: var(--green); padding: 14px; }
-.race-ranking-panel { padding: 20px; }
-.race-ranking-panel > header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
-.race-ranking-panel > header span { color: var(--muted); font-size: 13px; }
-.race-ranking-list { display: grid; gap: 8px; margin-top: 16px; }
-.race-ranking-row { display: grid; grid-template-columns: 70px minmax(110px, 1fr) 120px 70px; gap: 10px; align-items: center; padding: 13px; border: 1px solid var(--line); border-radius: 10px; }
-.race-ranking-row > strong { color: var(--coral); font-size: 20px; }
-.race-ranking-row.rank-1 { background: #fff7d9; border-color: #e7c65d; }
-.race-ranking-row.rank-2 { background: #f2f5f7; border-color: #bdc7ce; }
-.race-ranking-row.rank-3 { background: #fff0e5; border-color: #cf9c77; }
-.race-ranking-row time { text-align: right; font-variant-numeric: tabular-nums; }
-.race-ranking-panel h3 { margin: 24px 0 10px; }
-.race-waiting-list { display: flex; flex-wrap: wrap; gap: 7px; }
-.race-waiting-list > span { border-radius: 999px; background: var(--teal-soft); padding: 7px 11px; font-weight: 800; }
-.race-empty { color: var(--muted); }
 
 .race-submit-bar {
   position: fixed;
@@ -1120,14 +1046,8 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 
 @media (max-width: 720px) {
   .arithmetic-mode-grid,
-  .race-entry-grid,
-  .race-teacher-layout { grid-template-columns: 1fr; }
+  .race-entry-grid { grid-template-columns: 1fr; }
   .arithmetic-mode-card { min-height: 180px; }
-  .race-create-panel { grid-template-columns: 1fr; }
-  .race-ranking-panel > header { align-items: flex-start; flex-direction: column; }
-  .race-ranking-row { grid-template-columns: 55px 1fr; }
-  .race-ranking-row > span,
-  .race-ranking-row > time { grid-column: 2; text-align: left; }
   .race-submit-bar { gap: 8px; }
   .race-submit-bar .race-room { display: none; }
 }
