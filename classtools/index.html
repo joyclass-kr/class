@@ -305,6 +305,11 @@
                 <h3 class="tool-name" style="color: #75d69f;">📬 가정통신문 & 출결 결재함</h3>
             </a>
 
+            <!-- 4b. 학급 알리미 (알림장) -->
+            <a class="tool-card" href="/classboard/" style="border-color: #4da6ff; background: linear-gradient(135deg, rgba(23, 58, 95, 0.5), rgba(12, 30, 50, 0.7));">
+                <h3 class="tool-name" style="color: #7cc0ff;">📢 학급 알리미 (알림장)</h3>
+            </a>
+
             <!-- 5. AI 생기부 조수 (개선 대상) -->
             <a class="tool-card" href="record-ai" style="border-color: #fca5a5; background: linear-gradient(135deg, rgba(127, 29, 29, 0.4), rgba(69, 10, 10, 0.6));">
                 <h3 class="tool-name" style="color: #fca5a5;">📝 AI 생기부 조수</h3>
@@ -396,14 +401,20 @@
 
                 const classStr = grade && classNum ? `${grade}학년 ${classNum}반` : '학급 미설정';
 
-                schoolDisp.textContent = school;
-                classDisp.textContent = classStr;
-                teacherDisp.textContent = teacher;
+                // 머리말 칩은 화면에서 빠질 수 있는 장식이다. chip-class/chip-teacher는
+                // 실제로 없어진 상태였고, 그대로 값을 넣다가 예외가 나서 이 함수 뒤의
+                // loadTeacherGroups()까지 통째로 건너뛰었다. 그래서 '새 그룹 개설' 칸이
+                // 아예 그려지지 않았다.
+                const setText = (el, value) => { if (el) el.textContent = value; };
 
-                chipSchool.textContent = school;
-                chipYear.textContent = `${year}학년도`;
-                chipClass.textContent = classStr;
-                chipTeacher.textContent = `${teacher} 선생님`;
+                setText(schoolDisp, school);
+                setText(classDisp, classStr);
+                setText(teacherDisp, teacher);
+
+                setText(chipSchool, school);
+                setText(chipYear, `${year}학년도`);
+                setText(chipClass, classStr);
+                setText(chipTeacher, `${teacher} 선생님`);
             }
 
             const activeGroupSelect = document.getElementById('active-group-select');
