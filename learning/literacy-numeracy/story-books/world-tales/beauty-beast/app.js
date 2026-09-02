@@ -302,16 +302,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '미녀와 야수',
+    intro: [
+        '미녀와 야수는 프랑스에서 전해지던 이야기를 보몽 부인이 1756년에 아이들이 읽기 좋게 다시 쓴 작품이에요.',
+        '겉모습만 보고 사람을 판단하는 일에 대한 이야기랍니다. 야수의 성에서 시간이 흐를수록 무엇이 달라지는지 지켜보면 재미있어요.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🌹')}
             </div>
             <div class="story-page-right">
-                <h1>미녀와 야수</h1>
-                <p>미녀와 야수는 프랑스에서 전해지던 이야기를 보몽 부인이 1756년에 아이들이 읽기 좋게 다시 쓴 작품이에요.</p>
-                <p>겉모습만 보고 사람을 판단하는 일에 대한 이야기랍니다. 야수의 성에서 시간이 흐를수록 무엇이 달라지는지 지켜보면 재미있어요.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -326,8 +335,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -337,8 +346,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -348,22 +357,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -413,9 +423,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -426,7 +436,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -498,7 +508,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -507,34 +517,616 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Beauty and the Beast',
+        intro: [
+            "Beauty and the Beast is Madame de Beaumont's 1756 retelling, for children, of a story that had been told in France before her.",
+            "It is about judging people by how they look. Watching what changes as the days go by in the Beast's castle is the pleasure of it."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Merchant's Three Daughters",
+            beats: [
+                {
+                    art: '01-family.webp',
+                    emoji: '📚',
+                    left: [
+                        "Long ago in a port town there lived a great merchant, a rich man with several ships.",
+                        "He had three daughters,",
+                        "and there were always visitors coming and going in that house.",
+                        "The two elder girls talked of nothing but clothes and jewels,",
+                        "and hardly ever left the mirror."
+                    ],
+                    right: [
+                        "The youngest was called Belle,",
+                        "and Belle went about with a book under her arm.",
+                        "Her sisters found her tiresome.",
+                        "\"What good is all that reading?\"",
+                        "\"You'll never get married at this rate.\"",
+                        "And Belle only smiled. She read the same books over and over, until the corners of the pages went round with use."
+                    ]
+                },
+                {
+                    art: '01-family-2.webp',
+                    emoji: '📚',
+                    left: [
+                        "And then one year",
+                        "their father's ships were caught in a storm and every one of them went down. Nothing was left of the goods in his warehouse either,",
+                        "and they had to sell the big house and move out to the country.",
+                        "The family unpacked in an old cottage,",
+                        "and the two elder sisters sat down on the floor and cried."
+                    ],
+                    right: [
+                        "There was only one room, so the three of them had to lie down side by side.",
+                        "\"However are we to live now!\"",
+                        "Only Belle said nothing and rolled up her sleeves.",
+                        "She lit the fire and baked the bread.",
+                        "Their father watched her doing it for a long while.",
+                        "And then he went out, without a word, to chop wood."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Their Father's Presents",
+            beats: [
+                {
+                    art: '02-rose.webp',
+                    emoji: '🌹',
+                    left: [
+                        "Some years later a message came to their father.",
+                        "One of the ships he had thought lost had come back in.",
+                        "So he had to set out on a long journey to find it,",
+                        "and with luck they might get on their feet again.",
+                        "The two elder sisters caught his sleeves."
+                    ],
+                    right: [
+                        "\"A silk dress for me!\"",
+                        "\"A pearl necklace for me!\"",
+                        "Their father turned to his youngest.",
+                        "\"And what would you like, Belle?\"",
+                        "\"One rose would do me.\" That answer stayed with him a long time."
+                    ]
+                },
+                {
+                    art: '02-rose-2.webp',
+                    emoji: '🌹',
+                    left: [
+                        "But when he got to the port the ship had already passed into other hands, and he had to turn back empty-handed.",
+                        "On the road home a snowstorm came down on him.",
+                        "He could not see the way,",
+                        "and as he led his horse about, a great door appeared in front of him.",
+                        "And the door swung open by itself."
+                    ],
+                    right: [
+                        "It was an enormous castle.",
+                        "He went in, and there was not a soul in it.",
+                        "His footsteps rang down the corridor.",
+                        "And yet a fire was burning and a table was laid.",
+                        "He was hungry, so he ate, and slept there that night.",
+                        "Nobody appeared before morning.",
+                        "The candles burned quietly all night long."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Flower He Should Not Have Picked',
+            beats: [
+                {
+                    art: '03-plucked.webp',
+                    emoji: '❄️',
+                    left: [
+                        "It was the next morning.",
+                        "Crossing the garden of the castle, he stopped.",
+                        "There were red roses in full bloom in a garden deep with snow.",
+                        "How that could be in midwinter he could not tell.",
+                        "The scent of them filled the whole garden,",
+                        "and he went toward them as though he were under a spell."
+                    ],
+                    right: [
+                        "A few red petals lay on the snow.",
+                        "And he remembered what Belle had asked for.",
+                        "\"Ah — this was what she wanted.\"",
+                        "He reached out and picked one rose.",
+                        "And at that moment a great voice came from behind him.",
+                        "\"I fed you and gave you a bed, and now you take my flowers as well!\""
+                    ]
+                },
+                {
+                    art: '03-plucked-2.webp',
+                    emoji: '❄️',
+                    left: [
+                        "He turned round, and an enormous shaggy creature was standing there.",
+                        "The merchant sank down where he stood.",
+                        "\"Spare me. It was a flower my youngest asked for, and I…\"",
+                        "The Beast looked down at him a long while.",
+                        "His breathing was as loud as wind.",
+                        "\"Then send me that daughter.\""
+                    ],
+                    right: [
+                        "\"And if she does not come, you must come back yourself.\"",
+                        "The merchant carried the rose home inside his coat.",
+                        "His feet were heavy the whole way,",
+                        "and he did not know what to say to his daughter.",
+                        "When he opened the door Belle came running out.",
+                        "And he could not bring himself to look at her face."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · Belle Steps Forward',
+            beats: [
+                {
+                    art: '04-belle.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "Their father told them the whole thing, leaving nothing out.",
+                        "The room went quiet.",
+                        "The two elder sisters spoke first.",
+                        "\"It is your rose that did this!\"",
+                        "\"Whatever made you ask for a rose of all things.\""
+                    ],
+                    right: [
+                        "Belle did not answer them at all.",
+                        "She only looked a long while at the rose in her father's hand.",
+                        "And then she quietly put on her coat.",
+                        "\"I shall go.\"",
+                        "Their father sprang up out of his chair,",
+                        "and the stick in his hand fell to the floor."
+                    ]
+                },
+                {
+                    art: '04-belle-2.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "\"You shall not! I gave the promise, so I must go.\"",
+                        "\"Father, it was I who asked for that flower.\"",
+                        "Belle's voice did not shake.",
+                        "Before dawn the next day she set off with her father,",
+                        "and they walked the snow road to the castle.",
+                        "The horse's hooves sank deep into it."
+                    ],
+                    right: [
+                        "The great door opened without a sound,",
+                        "and warm air came out from inside.",
+                        "Her father could not let go of her hand.",
+                        "It kept shaking.",
+                        "\"Go home. I shall be all right.\"",
+                        "Belle managed a smile and went in alone.",
+                        "And the door shut quietly behind her."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Days in the Castle',
+            beats: [
+                {
+                    art: '05-castle.webp',
+                    emoji: '🏰',
+                    left: [
+                        "Belle was treated in a way she had not expected.",
+                        "There was writing on a door.",
+                        "\"Belle's Room.\"",
+                        "She opened it, and the walls were solid with books.",
+                        "Shelves ran up to the ceiling, one after another.",
+                        "A sound came out of her before she could stop it."
+                    ],
+                    right: [
+                        "\"Good heavens. I have never seen so many books.\"",
+                        "There was a soft seat by the window,",
+                        "and the fire kept itself going.",
+                        "She never once saw who was doing the work.",
+                        "That night Belle fell asleep reading.",
+                        "And the fear in her went down a little."
+                    ]
+                },
+                {
+                    art: '05-castle-2.webp',
+                    emoji: '🏰',
+                    left: [
+                        "The Beast came to the table every evening.",
+                        "At first Belle could hardly get a word out to him.",
+                        "That great body barely fitted the chair.",
+                        "And the Beast did not know what to say either, and only cleared his throat.",
+                        "The fork kept slipping out of his hand.",
+                        "\"Was the book… good today?\""
+                    ],
+                    right: [
+                        "\"Yes. I shall tell you about it when I finish.\"",
+                        "And so one day went by, and then another.",
+                        "Before long the two of them were talking late into the night.",
+                        "When Belle laughed, the Beast laughed with her.",
+                        "Belle thought his eyes were very sad.",
+                        "There seemed to be something else inside that frightening face."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Home in the Mirror',
+            beats: [
+                {
+                    art: '06-mirror.webp',
+                    emoji: '🪞',
+                    left: [
+                        "One day Belle found a hand mirror in her room.",
+                        "It showed whatever place you thought of.",
+                        "Belle thought of home.",
+                        "The room of the cottage came up in the glass.",
+                        "Her father was lying ill in bed,",
+                        "with the blanket half slipped off him.",
+                        "His face looked very thin."
+                    ],
+                    right: [
+                        "Belle stood holding the mirror a long time.",
+                        "She could see that her sisters were not sitting with him,",
+                        "and that the fire had gone out.",
+                        "That evening she told the Beast.",
+                        "She could not pick up her spoon at the table.",
+                        "\"My father is ill.\" Her voice caught."
+                    ]
+                },
+                {
+                    art: '06-mirror-2.webp',
+                    emoji: '🪞',
+                    left: [
+                        "The Beast sat with his head down for a long while.",
+                        "His great hands shook a little.",
+                        "\"Then go to him.\"",
+                        "\"Only come back within seven days.\"",
+                        "\"I cannot bear it here without you.\"",
+                        "\"I promise.\""
+                    ],
+                    right: [
+                        "Belle said it looking straight into his eyes.",
+                        "The Beast gave her the mirror and a ring.",
+                        "Turn the ring, he said, and it would take her anywhere.",
+                        "Next morning Belle was standing in the yard of the cottage.",
+                        "Her father saw his daughter and got up out of his bed,",
+                        "with the tears standing in his eyes."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Day She Was Late',
+            beats: [
+                {
+                    art: '07-late.webp',
+                    emoji: '⏳',
+                    left: [
+                        "Her father picked up noticeably the moment he saw Belle.",
+                        "In a few days he was up and out into the yard,",
+                        "and Belle stayed beside him, boiling him porridge and brewing his medicine.",
+                        "There was laughter in that house again after a long time.",
+                        "Her father would not let go of her hand.",
+                        "The sun lay well on the yard, day after day."
+                    ],
+                    right: [
+                        "But the two elder sisters were not easy about it.",
+                        "Belle's ring and Belle's clothes kept catching their eyes.",
+                        "\"Stay a little longer. What are a few days?\"",
+                        "Every day they caught at her sleeve,",
+                        "and Belle liked being with her father and put it off, one day at a time.",
+                        "She did not notice that the seven days had gone."
+                    ]
+                },
+                {
+                    art: '07-late-2.webp',
+                    emoji: '⏳',
+                    left: [
+                        "And then, on the eighth night,",
+                        "Belle had a dream.",
+                        "She dreamed the Beast was lying in the rose garden of the castle.",
+                        "She thought she could hear him calling her.",
+                        "Belle woke straight up out of it.",
+                        "\"I have broken my promise!\""
+                    ],
+                    right: [
+                        "She looked into the mirror.",
+                        "Her hands were shaking.",
+                        "The Beast lay there in the glass.",
+                        "Belle turned the ring at once,",
+                        "and opened her eyes in the castle garden.",
+                        "She ran for the rose garden.",
+                        "Her heart felt fit to burst, and she never noticed she was barefoot."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · The Beast in the Garden',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '💗',
+                    left: [
+                        "The Beast lay under the rose bushes,",
+                        "and his breathing was very small.",
+                        "Belle ran and put her arms round him.",
+                        "\"I am sorry. I am so late.\"",
+                        "The Beast just managed to open his eyes.",
+                        "His voice was as small as wind.",
+                        "There was white frost on his fur.",
+                        "\"The castle was too quiet without you.\""
+                    ],
+                    right: [
+                        "\"I am not going anywhere now.\"",
+                        "Belle took his hand in both of hers.",
+                        "\"This is my home. I shall stay beside you.\"",
+                        "Her tears fell onto his fur,",
+                        "and only then did Belle know her own mind."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '💗',
+                    left: [
+                        "The moment she said it, light poured into the garden.",
+                        "It dazzled her so that she could not see,",
+                        "and when it lifted Belle opened her eyes.",
+                        "Where the Beast had been, a young man was sitting.",
+                        "And there was something she knew about his eyes.",
+                        "They were the sad eyes she had sat opposite every evening.",
+                        "\"I am the master of this castle, and I was under a spell.\""
+                    ],
+                    right: [
+                        "\"It could only be broken by somebody who looked past what I seemed to be.\"",
+                        "Lights came on in every window of the castle and people appeared.",
+                        "The whole place, stopped for so long, had woken at once.",
+                        "And Belle sent for her father and her sisters to come and live there."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did Belle ask her father to bring her?',
+            choices: ['One rose', 'A silk dress', 'A pearl necklace'],
+            answer: 0
+        },
+        {
+            q: 'Why did the Beast get angry with the merchant?',
+            choices: ['He took gold from the castle', 'He stayed a second night', 'He picked a rose after being fed and given a bed'],
+            answer: 2
+        },
+        {
+            q: 'Why did Belle go to the castle?',
+            choices: ['Her sisters made her go', 'It was her rose that had caused it', 'The Beast came and fetched her'],
+            answer: 1
+        },
+        {
+            q: 'What was in the room the castle had made ready for her?',
+            choices: ['Walls of books up to the ceiling', 'Silk dresses and jewels', 'A garden of roses'],
+            answer: 0
+        },
+        {
+            q: 'What did Belle see in the hand mirror?',
+            choices: ['The Beast in the garden', 'Her sisters at a feast', 'Her father lying ill at home'],
+            answer: 2
+        },
+        {
+            q: 'Why was Belle late going back?',
+            choices: ['The ring stopped working', 'She was glad to be with her father and her sisters kept her', 'The snow blocked the road'],
+            answer: 1
+        },
+        {
+            q: 'What broke the spell?',
+            choices: ['Belle saying she would stay beside him', 'The rose growing again', 'The mirror breaking'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌹',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story came out of France. The version that spread was the one Madame de Beaumont shaped for children about two hundred and seventy years ago.",
+                    "What the father picked was one rose. He did not steal a treasure. And of the three daughters, only the youngest had asked for it.",
+                    "The elder sisters asked for clothes and jewels. Belle asked for a flower. The cheapest request turned out to have the highest price.",
+                    "There was nothing missing from the Beast's castle. Only somebody to talk to. After Belle came, there was talk at the table every evening."
+                ],
+                right: [
+                    "Belle did not change her mind on any one day. It happened after a great many evenings. Seeing somebody differently takes time.",
+                    "The Beast let Belle go home, when she might never have come back. Why do you think he did?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-family.webp': [
+            { word: 'merchant', meaning: '장사꾼', sentence: 'In a port town there lived a great merchant.' },
+            { word: 'port', meaning: '항구', sentence: 'Long ago in a port town.' },
+            { word: 'tiresome', meaning: '답답한', sentence: 'Her sisters found her tiresome.' },
+            { word: 'at this rate', meaning: '그러다가는', sentence: "You'll never get married at this rate." }
+        ],
+        '01-family-2.webp': [
+            { word: 'go down', meaning: '가라앉다', sentence: 'Every one of them went down.' },
+            { word: 'warehouse', meaning: '창고', sentence: 'Nothing was left of the goods in his warehouse.' },
+            { word: 'unpack', meaning: '짐을 풀다', sentence: 'The family unpacked in an old cottage.' },
+            { word: 'roll up one’s sleeves', meaning: '소매를 걷어붙이다', sentence: 'Belle rolled up her sleeves.' },
+            { word: 'chop wood', meaning: '장작을 패다', sentence: 'He went out to chop wood.' }
+        ],
+        '02-rose.webp': [
+            { word: 'set out', meaning: '길을 떠나다', sentence: 'He had to set out on a long journey.' },
+            { word: 'get on one’s feet', meaning: '다시 일어서다', sentence: 'With luck they might get on their feet again.' },
+            { word: 'necklace', meaning: '목걸이', sentence: 'A pearl necklace for me!' },
+            { word: 'stay with', meaning: '마음에 남다', sentence: 'That answer stayed with him a long time.' }
+        ],
+        '02-rose-2.webp': [
+            { word: 'pass into other hands', meaning: '남의 손에 넘어가다', sentence: 'The ship had passed into other hands.' },
+            { word: 'empty-handed', meaning: '빈손으로', sentence: 'He had to turn back empty-handed.' },
+            { word: 'snowstorm', meaning: '눈보라', sentence: 'A snowstorm came down on him.' },
+            { word: 'not a soul', meaning: '사람 하나 없는', sentence: 'There was not a soul in it.' },
+            { word: 'lay', meaning: '차려진', sentence: 'A fire was burning and a table was laid.' }
+        ],
+        '03-plucked.webp': [
+            { word: 'in full bloom', meaning: '활짝 핀', sentence: 'There were red roses in full bloom.' },
+            { word: 'midwinter', meaning: '한겨울', sentence: 'How that could be in midwinter he could not tell.' },
+            { word: 'scent', meaning: '향기', sentence: 'The scent of them filled the whole garden.' },
+            { word: 'petal', meaning: '꽃잎', sentence: 'A few red petals lay on the snow.' },
+            { word: 'pick', meaning: '꺾다', sentence: 'He reached out and picked one rose.' }
+        ],
+        '03-plucked-2.webp': [
+            { word: 'shaggy', meaning: '털이 북슬북슬한', sentence: 'An enormous shaggy creature was standing there.' },
+            { word: 'sink down', meaning: '주저앉다', sentence: 'The merchant sank down where he stood.' },
+            { word: 'spare', meaning: '살려 주다', sentence: 'Spare me.' },
+            { word: 'bring oneself to', meaning: '차마 ~하다', sentence: 'He could not bring himself to look at her face.' }
+        ],
+        '04-belle.webp': [
+            { word: 'leave nothing out', meaning: '빼놓지 않다', sentence: 'He told them the whole thing, leaving nothing out.' },
+            { word: 'of all things', meaning: '하필', sentence: 'A rose of all things.' },
+            { word: 'put on', meaning: '걸치다', sentence: 'She quietly put on her coat.' },
+            { word: 'spring up', meaning: '벌떡 일어나다', sentence: 'Their father sprang up out of his chair.' }
+        ],
+        '04-belle-2.webp': [
+            { word: 'shake', meaning: '떨리다', sentence: "Belle's voice did not shake." },
+            { word: 'before dawn', meaning: '새벽에', sentence: 'Before dawn the next day she set off.' },
+            { word: 'sink into', meaning: '푹푹 빠지다', sentence: "The horse's hooves sank deep into it." },
+            { word: 'let go of', meaning: '손을 놓다', sentence: 'Her father could not let go of her hand.' },
+            { word: 'manage a smile', meaning: '웃어 보이다', sentence: 'Belle managed a smile.' }
+        ],
+        '05-castle.webp': [
+            { word: 'treat', meaning: '대접하다', sentence: 'Belle was treated in a way she had not expected.' },
+            { word: 'solid with', meaning: '~으로 가득 찬', sentence: 'The walls were solid with books.' },
+            { word: 'shelf', meaning: '책장', sentence: 'Shelves ran up to the ceiling.' },
+            { word: 'keep itself going', meaning: '저절로 타다', sentence: 'The fire kept itself going.' }
+        ],
+        '05-castle-2.webp': [
+            { word: 'get a word out', meaning: '말을 붙이다', sentence: 'Belle could hardly get a word out to him.' },
+            { word: 'clear one’s throat', meaning: '헛기침하다', sentence: 'He only cleared his throat.' },
+            { word: 'slip out of', meaning: '미끄러지다', sentence: 'The fork kept slipping out of his hand.' },
+            { word: 'late into the night', meaning: '밤늦도록', sentence: 'They were talking late into the night.' }
+        ],
+        '06-mirror.webp': [
+            { word: 'hand mirror', meaning: '손거울', sentence: 'Belle found a hand mirror in her room.' },
+            { word: 'come up', meaning: '나타나다', sentence: 'The room of the cottage came up in the glass.' },
+            { word: 'slip off', meaning: '흘러내리다', sentence: 'With the blanket half slipped off him.' },
+            { word: 'catch', meaning: '(목소리가) 잠기다', sentence: 'Her voice caught.' }
+        ],
+        '06-mirror-2.webp': [
+            { word: 'bear', meaning: '견디다', sentence: 'I cannot bear it here without you.' },
+            { word: 'within', meaning: '~ 안에', sentence: 'Only come back within seven days.' },
+            { word: 'take anywhere', meaning: '어디로든 데려가다', sentence: 'Turn the ring and it would take her anywhere.' },
+            { word: 'stand in', meaning: '(눈물이) 그렁그렁하다', sentence: 'With the tears standing in his eyes.' }
+        ],
+        '07-late.webp': [
+            { word: 'pick up', meaning: '기운을 차리다', sentence: 'Her father picked up noticeably.' },
+            { word: 'brew', meaning: '달이다', sentence: 'Brewing his medicine.' },
+            { word: 'not easy about', meaning: '속이 편치 않은', sentence: 'The sisters were not easy about it.' },
+            { word: 'put off', meaning: '미루다', sentence: 'Belle put it off, one day at a time.' }
+        ],
+        '07-late-2.webp': [
+            { word: 'wake straight up', meaning: '벌떡 깨다', sentence: 'Belle woke straight up out of it.' },
+            { word: 'break a promise', meaning: '약속을 어기다', sentence: 'I have broken my promise!' },
+            { word: 'fit to burst', meaning: '터질 것 같은', sentence: 'Her heart felt fit to burst.' },
+            { word: 'barefoot', meaning: '맨발인', sentence: 'She never noticed she was barefoot.' }
+        ],
+        '08-ending.webp': [
+            { word: 'bush', meaning: '덤불', sentence: 'The Beast lay under the rose bushes.' },
+            { word: 'just manage to', meaning: '겨우 ~하다', sentence: 'The Beast just managed to open his eyes.' },
+            { word: 'frost', meaning: '서리', sentence: 'There was white frost on his fur.' },
+            { word: 'know one’s own mind', meaning: '제 마음을 알다', sentence: 'Only then did Belle know her own mind.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'pour into', meaning: '쏟아지다', sentence: 'Light poured into the garden.' },
+            { word: 'lift', meaning: '걷히다', sentence: 'When it lifted Belle opened her eyes.' },
+            { word: 'opposite', meaning: '마주 보고', sentence: 'The eyes she had sat opposite every evening.' },
+            { word: 'look past', meaning: '겉모습 너머를 보다', sentence: 'Somebody who looked past what I seemed to be.' },
+            { word: 'send for', meaning: '불러오다', sentence: 'Belle sent for her father and her sisters.' }
+        ],
+        'end.webp': [
+            { word: 'shape', meaning: '다듬다', sentence: 'The version Madame de Beaumont shaped for children.' },
+            { word: 'request', meaning: '부탁', sentence: 'The cheapest request had the highest price.' },
+            { word: 'missing', meaning: '없는, 빠진', sentence: "There was nothing missing from the Beast's castle." },
+            { word: 'take time', meaning: '시간이 들다', sentence: 'Seeing somebody differently takes time.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -599,6 +1191,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -607,7 +1200,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -619,7 +1212,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -653,4 +1246,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
