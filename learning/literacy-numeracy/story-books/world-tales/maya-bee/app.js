@@ -315,16 +315,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '꿀벌 마야',
+    intro: [
+        '꿀벌 마야는 독일의 작가 발데마르 본젤스가 1912년에 펴낸 이야기예요. 벌집을 뛰쳐나온 어린 꿀벌이 넓은 들판에서 여러 벌레를 만나며 겪는 일을 담았답니다.',
+        '이야기에 나오는 메뚜기, 잠자리, 쇠똥구리는 실제 곤충의 생김새와 살아가는 모습을 꽤 그대로 옮겨 놓았어요. 이야기를 읽다 보면 들판의 작은 이웃들이 눈에 들어옵니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🐝')}
             </div>
             <div class="story-page-right">
-                <h1>꿀벌 마야</h1>
-                <p>꿀벌 마야는 독일의 작가 발데마르 본젤스가 1912년에 펴낸 이야기예요. 벌집을 뛰쳐나온 어린 꿀벌이 넓은 들판에서 여러 벌레를 만나며 겪는 일을 담았답니다.</p>
-                <p>이야기에 나오는 메뚜기, 잠자리, 쇠똥구리는 실제 곤충의 생김새와 살아가는 모습을 꽤 그대로 옮겨 놓았어요. 이야기를 읽다 보면 들판의 작은 이웃들이 눈에 들어옵니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -339,8 +348,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -350,8 +359,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -361,22 +370,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -426,9 +436,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -439,7 +449,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -511,7 +521,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -520,34 +530,627 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Maya the Bee',
+        intro: [
+            "Maya the Bee was published by the German writer Waldemar Bonsels in 1912. It follows a young bee who leaves the hive and meets one creature after another out in the wide meadow.",
+            "The grasshopper, the dragonfly and the dung beetle in it are drawn fairly closely from the real insects and how they live. Read it, and you start noticing the small neighbours in the grass."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · Leaving the Hive',
+            beats: [
+                {
+                    art: '01-hive.webp',
+                    emoji: '🍯',
+                    left: [
+                        "Inside a great tree there was a hive.",
+                        "It was home to thousands of honeybees.",
+                        "Every room was packed with six-sided cells.",
+                        "One day a young bee woke up there.",
+                        "Her name was Maya.",
+                        "She was a bee with large eyes and a great deal of curiosity.",
+                        "Cassandra, a teacher bee, took charge of her."
+                    ],
+                    right: [
+                        "She was an old bee with spectacles on her feelers.",
+                        "Cassandra told her the rules one by one.",
+                        "\"Gathering pollen is our work.\"",
+                        "\"And you must always be back before the sun goes down.\"",
+                        "\"Outside the hive is a dangerous place.\" And Maya did not quite feel the weight of it."
+                    ]
+                },
+                {
+                    art: '01-hive-2.webp',
+                    emoji: '🍯',
+                    left: [
+                        "Maya put a foreleg straight up.",
+                        "\"What is out there, then?\"",
+                        "Cassandra straightened her spectacles.",
+                        "\"A honeybee does not ask such things.\"",
+                        "\"Flowers and the hive — that is all you need to know.\"",
+                        "Maya nodded her head."
+                    ],
+                    right: [
+                        "But inside she did not agree at all.",
+                        "If anything she was more curious than before.",
+                        "That night Maya could not sleep.",
+                        "The smell of the wind came in at the door.",
+                        "Grass and flowers, all mixed together.",
+                        "And Maya lay smelling it all night."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The First Morning',
+            beats: [
+                {
+                    art: '02-meadow.webp',
+                    emoji: '🌼',
+                    left: [
+                        "It was very early the next morning.",
+                        "Nobody else was up yet.",
+                        "Maya crept along to the door of the hive.",
+                        "She hesitated a moment, and then she went out.",
+                        "And then she stopped where she was.",
+                        "A meadow stretched away in front of her without end."
+                    ],
+                    right: [
+                        "The flowers were many times her own size.",
+                        "There were poppies, and there were cornflowers.",
+                        "Every one of them smelled different.",
+                        "Dew glittered in the sunlight.",
+                        "\"So the world was as big as this!\" said Maya without meaning to say anything."
+                    ]
+                },
+                {
+                    art: '02-meadow-2.webp',
+                    emoji: '🌼',
+                    left: [
+                        "Maya flew about beside herself with it.",
+                        "She sat on this flower and moved to that one.",
+                        "Every flower tasted different.",
+                        "She met a butterfly and she met a ladybird.",
+                        "They were all neighbours she had never seen.",
+                        "And before she knew it the sun was overhead."
+                    ],
+                    right: [
+                        "Only then did Maya look about her.",
+                        "She had no idea at all which way was which.",
+                        "She could not even see the tree the hive was in.",
+                        "\"Oh. Which way is home?\"",
+                        "And even so Maya was not much afraid.",
+                        "There was still so much to see."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · Peppi the Grasshopper',
+            beats: [
+                {
+                    art: '03-grasshopper.webp',
+                    emoji: '🦗',
+                    left: [
+                        "Maya came down into the long grass.",
+                        "The blades stood up around her like green pillars.",
+                        "Then something sprang out at her.",
+                        "Maya jumped back in fright.",
+                        "It was a green creature with very long legs.",
+                        "\"Who are you?\"",
+                        "\"And why do you jump about so noisily?\""
+                    ],
+                    right: [
+                        "\"Because jumping is my work!\"",
+                        "\"I am Peppi. A grasshopper,\" he said, sticking out his chest.",
+                        "He jumped three times while he was saying it.",
+                        "Every jump set the grass swaying.",
+                        "Maya felt as though her head were spinning.",
+                        "\"Could you not sit down and talk?\""
+                    ]
+                },
+                {
+                    art: '03-grasshopper-2.webp',
+                    emoji: '🦗',
+                    left: [
+                        "\"You are a bee out of the hive, are you not?\"",
+                        "\"How did you know that?\"",
+                        "\"You are covered in pollen, that is how.\"",
+                        "And Peppi laughed out loud.",
+                        "\"So what will you do now?\"",
+                        "Maya smiled instead of answering."
+                    ],
+                    right: [
+                        "\"I do not know. Look about a little longer.\"",
+                        "\"When you do not know the way home?\"",
+                        "\"Yes. It does not matter.\"",
+                        "Peppi shook his head as if she were hopeless.",
+                        "And then he leapt away and was gone.",
+                        "Maya watched after him a long time."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · Kurt the Beetle',
+            beats: [
+                {
+                    art: '04-beetle.webp',
+                    emoji: '🪲',
+                    left: [
+                        "Maya set off again.",
+                        "She flew low along a dirt path.",
+                        "Something was struggling away up ahead.",
+                        "It was a beetle rolling a great ball.",
+                        "He wore a stiff collar round his neck.",
+                        "His face was red all over.",
+                        "The ball kept rolling back down on him.",
+                        "And Maya felt sorry for him."
+                    ],
+                    right: [
+                        "Roll, roll.",
+                        "And down it went again.",
+                        "\"Shall I help you?\"",
+                        "The beetle raised his head.",
+                        "\"No need. This is my work,\" he said shortly."
+                    ]
+                },
+                {
+                    art: '04-beetle-2.webp',
+                    emoji: '🪲',
+                    left: [
+                        "\"My name is Kurt, since you ask.\"",
+                        "Kurt cleared his throat and pushed at the ball again.",
+                        "\"If a fellow hands his own work to somebody else,\"",
+                        "\"what sort of grown-up is that?\"",
+                        "It sounded a little gruff to Maya.",
+                        "But she stayed and watched all the same."
+                    ],
+                    right: [
+                        "And Kurt got the ball up the slope at last.",
+                        "He was streaming with sweat and smiling.",
+                        "He never noticed his collar had gone crooked.",
+                        "And Maya could not help laughing.",
+                        "\"There. It can be done, you see.\"",
+                        "Maya kept those words a long while.",
+                        "\"I ought to do my own work too.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Web',
+            beats: [
+                {
+                    art: '05-web.webp',
+                    emoji: '🕸️',
+                    left: [
+                        "It was one evening.",
+                        "The sun was going down and the meadow had turned red.",
+                        "Maya saw something glittering.",
+                        "Fine threads were strung between the grass stems.",
+                        "Dew hung on them and shone like jewels.",
+                        "\"Oh, how pretty that is.\""
+                    ],
+                    right: [
+                        "So Maya went closer.",
+                        "She only meant to look a little longer.",
+                        "And then her wing stuck fast to a thread.",
+                        "\"What? What is this?\"",
+                        "\"Oh no! This is a spider's web!\" And only then did she understand."
+                    ]
+                },
+                {
+                    art: '05-web-2.webp',
+                    emoji: '🕸️',
+                    left: [
+                        "Maya twisted her body.",
+                        "And the more she moved, the more it wound about her.",
+                        "Now her legs were stuck as well.",
+                        "Maya was suddenly frightened.",
+                        "The spider might come at any moment.",
+                        "\"Help me! Is anybody there?\""
+                    ],
+                    right: [
+                        "The meadow was perfectly quiet.",
+                        "And then somewhere she heard singing.",
+                        "Somebody was coming towards her in hops.",
+                        "Green legs appeared above the grass.",
+                        "It was Peppi the grasshopper.",
+                        "And Maya called out, so glad to see him."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Neighbour Who Helped',
+            beats: [
+                {
+                    art: '06-rescue.webp',
+                    emoji: '🤝',
+                    left: [
+                        "\"Well, what are you doing up there?\"",
+                        "\"Can you not see! Help me down!\"",
+                        "Peppi came over at once.",
+                        "\"Hold still now. Moving winds it tighter.\"",
+                        "He snapped the threads with his back legs.",
+                        "He cut them one strand at a time, carefully."
+                    ],
+                    right: [
+                        "The silk was sticky on his feet.",
+                        "\"Quickly, before the spider comes.\"",
+                        "And at last Maya was free of it.",
+                        "The two of them rolled over into the grass.",
+                        "Maya took a great breath.",
+                        "\"Thank you. Thank you truly.\"",
+                        "\"That was nothing at all,\" said Peppi with a shrug."
+                    ]
+                },
+                {
+                    art: '06-rescue-2.webp',
+                    emoji: '🤝',
+                    left: [
+                        "Peppi looked shy and leapt up.",
+                        "\"Go carefully from now on.\"",
+                        "And then he was gone into the grass.",
+                        "Maya lay down under a leaf.",
+                        "The stars came out one by one.",
+                        "And Maya went back over the day in her mind."
+                    ],
+                    right: [
+                        "She thought of Kurt, and she thought of Peppi.",
+                        "\"There is not one creature that lives alone.\"",
+                        "And then she thought of the hive.",
+                        "And of Cassandra too.",
+                        "Maya turned over a long time that night.",
+                        "She had begun to want to go back."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: "Chapter 7 · The Hornets' Plan",
+            beats: [
+                {
+                    art: '07-hornets.webp',
+                    emoji: '⚡',
+                    left: [
+                        "A few days went by.",
+                        "Maya was passing an old tree.",
+                        "There was a great hole in the trunk of it.",
+                        "Low voices came out of the hole.",
+                        "Maya pressed herself against the bark.",
+                        "She looked in, and there were hornets gathered inside.",
+                        "They were several times the size of a honeybee."
+                    ],
+                    right: [
+                        "They were making some plan together.",
+                        "\"Tonight we strike the bee tree.\"",
+                        "\"Watch for the moment the door opens.\"",
+                        "Maya felt her breath stop.",
+                        "Her legs were shaking.",
+                        "A foot slipped on the bark.",
+                        "And Maya pressed herself flat again."
+                    ]
+                },
+                {
+                    art: '07-hornets-2.webp',
+                    emoji: '⚡',
+                    left: [
+                        "\"I must tell them. This minute.\"",
+                        "Maya let go of the tree.",
+                        "And then she flew with all her strength.",
+                        "Her wings felt as though they would break.",
+                        "She was gasping for breath.",
+                        "And still Maya did not stop."
+                    ],
+                    right: [
+                        "But she did not know which way to go.",
+                        "So Maya climbed high and looked all round.",
+                        "Far off she saw a tree she knew.",
+                        "The sun was going down and down.",
+                        "Maya flew straight for it.",
+                        "The wind beat hard against her face.",
+                        "\"A little further, a little further!\" And she set her teeth."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Maya Comes Home',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🐝',
+                    left: [
+                        "It was night before Maya reached the hive.",
+                        "The guard bees stood in her way.",
+                        "\"Are you not the bee who went out?\"",
+                        "\"Never mind that now! There is trouble!\"",
+                        "\"The hornets are coming! Tonight, they attack tonight!\"",
+                        "And the hive was turned upside down."
+                    ],
+                    right: [
+                        "Cassandra came hurrying out.",
+                        "\"Are you certain of it?\"",
+                        "\"I heard it with my own ears.\"",
+                        "And Cassandra gave the order at once.",
+                        "\"Narrow the door! Everyone, into line!\" And the whole hive moved."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🐝',
+                    left: [
+                        "The bees stood packed close in front of the door.",
+                        "Shoulder to shoulder, and not one of them moved.",
+                        "At midnight the hornets came.",
+                        "The humming of them rang through the whole tree.",
+                        "The bees held their breath.",
+                        "Maya was standing in the front rank."
+                    ],
+                    right: [
+                        "But the door was blocked solid.",
+                        "The hornets circled a long while.",
+                        "And then they simply withdrew.",
+                        "A great cheer went up in the hive.",
+                        "Cassandra tapped Maya on the shoulder.",
+                        "\"So wondering about the outside was not wasted after all.\"",
+                        "And only then did Maya smile."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did Cassandra tell Maya?',
+            choices: ['Beware of hornets', 'Become a guard bee', 'Know only flowers and the hive'],
+            answer: 2
+        },
+        {
+            q: 'When did Maya leave the hive?',
+            choices: ['At midnight', 'Early in the morning', 'In the evening'],
+            answer: 1
+        },
+        {
+            q: 'Who was the long-legged creature she met in the grass?',
+            choices: ['Peppi', 'Kurt', 'Cassandra'],
+            answer: 0
+        },
+        {
+            q: 'Who was the beetle rolling a ball?',
+            choices: ['Peppi', 'Maya', 'Kurt'],
+            answer: 2
+        },
+        {
+            q: 'What wound round Maya so she could not move?',
+            choices: ['A leaf', "A spider's web", 'Pollen'],
+            answer: 1
+        },
+        {
+            q: 'What did Maya hear in the hole in the tree?',
+            choices: ['The hornets talking', 'The bees singing', 'Cassandra speaking'],
+            answer: 0
+        },
+        {
+            q: 'What did Maya go back to the hive to tell them?',
+            choices: ['A spider is coming', 'The flowers are out', 'They attack tonight'],
+            answer: 2
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐝',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "A German writer named Waldemar Bonsels wrote this about a hundred and ten years ago. It follows one bee round a whole countryside.",
+                    "Maya leaves the hive. That is breaking the rule: a bee does not leave the swarm.",
+                    "What she meets out there is one insect after another. Peppi the grasshopper, Kurt the beetle, and a spider's web.",
+                    "Look again at what Kurt says. That you do not hand your own work to somebody else. Maya remembers it for a long time."
+                ],
+                right: [
+                    "When she hears about the hornets she goes back — back to the swarm that will scold her for leaving. That is the hardest step in the story.",
+                    "Was Maya right to leave the hive?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-hive.webp': [
+            { word: 'hive', meaning: '벌집', sentence: 'Inside a great tree there was a hive.' },
+            { word: 'cell', meaning: '칸', sentence: 'Every room was packed with six-sided cells.' },
+            { word: 'curiosity', meaning: '호기심', sentence: 'A bee with a great deal of curiosity.' },
+            { word: 'feeler', meaning: '더듬이', sentence: 'Spectacles on her feelers.' },
+            { word: 'pollen', meaning: '꽃가루', sentence: 'Gathering pollen is our work.' }
+        ],
+        '01-hive-2.webp': [
+            { word: 'straighten', meaning: '고쳐 쓰다', sentence: 'Cassandra straightened her spectacles.' },
+            { word: 'agree', meaning: '그렇다고 여기다', sentence: 'Inside she did not agree at all.' },
+            { word: 'if anything', meaning: '오히려', sentence: 'If anything she was more curious.' },
+            { word: 'mixed together', meaning: '섞인', sentence: 'Grass and flowers, all mixed together.' }
+        ],
+        '02-meadow.webp': [
+            { word: 'creep', meaning: '살그머니 가다', sentence: 'Maya crept along to the door.' },
+            { word: 'hesitate', meaning: '망설이다', sentence: 'She hesitated a moment.' },
+            { word: 'stretch away', meaning: '펼쳐지다', sentence: 'A meadow stretched away without end.' },
+            { word: 'poppy', meaning: '양귀비', sentence: 'There were poppies and cornflowers.' },
+            { word: 'dew', meaning: '이슬', sentence: 'Dew glittered in the sunlight.' }
+        ],
+        '02-meadow-2.webp': [
+            { word: 'beside oneself', meaning: '정신없이', sentence: 'Maya flew about beside herself with it.' },
+            { word: 'ladybird', meaning: '무당벌레', sentence: 'She met a ladybird.' },
+            { word: 'before one knows it', meaning: '어느새', sentence: 'Before she knew it the sun was overhead.' },
+            { word: 'look about', meaning: '둘레를 살피다', sentence: 'Only then did Maya look about her.' }
+        ],
+        '03-grasshopper.webp': [
+            { word: 'blade', meaning: '풀잎', sentence: 'The blades stood up like green pillars.' },
+            { word: 'spring out', meaning: '폴짝 튀어나오다', sentence: 'Something sprang out at her.' },
+            { word: 'grasshopper', meaning: '메뚜기', sentence: 'I am Peppi. A grasshopper.' },
+            { word: 'sway', meaning: '흔들리다', sentence: 'Every jump set the grass swaying.' },
+            { word: 'spin', meaning: '핑핑 돌다', sentence: 'Her head felt as though it were spinning.' }
+        ],
+        '03-grasshopper-2.webp': [
+            { word: 'covered in', meaning: '잔뜩 묻은', sentence: 'You are covered in pollen.' },
+            { word: 'instead of', meaning: '~ 대신', sentence: 'Maya smiled instead of answering.' },
+            { word: 'hopeless', meaning: '어이없는', sentence: 'He shook his head as if she were hopeless.' },
+            { word: 'leap away', meaning: '훌쩍 뛰어 사라지다', sentence: 'He leapt away and was gone.' }
+        ],
+        '04-beetle.webp': [
+            { word: 'struggle', meaning: '꿈틀거리다', sentence: 'Something was struggling up ahead.' },
+            { word: 'roll', meaning: '굴리다', sentence: 'A beetle rolling a great ball.' },
+            { word: 'stiff collar', meaning: '빳빳한 깃', sentence: 'He wore a stiff collar.' },
+            { word: 'feel sorry for', meaning: '딱하게 여기다', sentence: 'Maya felt sorry for him.' },
+            { word: 'shortly', meaning: '퉁명스럽게', sentence: 'This is my work, he said shortly.' }
+        ],
+        '04-beetle-2.webp': [
+            { word: 'hand to', meaning: '미루다', sentence: 'If a fellow hands his work to somebody else.' },
+            { word: 'gruff', meaning: '무뚝뚝한', sentence: 'It sounded a little gruff to Maya.' },
+            { word: 'slope', meaning: '언덕', sentence: 'Kurt got the ball up the slope.' },
+            { word: 'crooked', meaning: '삐뚤어진', sentence: 'His collar had gone crooked.' },
+            { word: 'can’t help', meaning: '그만 ~하다', sentence: 'Maya could not help laughing.' }
+        ],
+        '05-web.webp': [
+            { word: 'thread', meaning: '실', sentence: 'Fine threads were strung between the stems.' },
+            { word: 'string', meaning: '걸다', sentence: 'Threads strung between the grass stems.' },
+            { word: 'jewel', meaning: '보석', sentence: 'Dew hung on them and shone like jewels.' },
+            { word: 'stick fast', meaning: '척 붙다', sentence: 'Her wing stuck fast to a thread.' },
+            { word: 'web', meaning: '거미줄', sentence: "This is a spider's web!" }
+        ],
+        '05-web-2.webp': [
+            { word: 'twist', meaning: '비틀다', sentence: 'Maya twisted her body.' },
+            { word: 'wind about', meaning: '감기다', sentence: 'The more she moved, the more it wound about her.' },
+            { word: 'at any moment', meaning: '언제라도', sentence: 'The spider might come at any moment.' },
+            { word: 'in hops', meaning: '폴짝폴짝', sentence: 'Somebody was coming towards her in hops.' }
+        ],
+        '06-rescue.webp': [
+            { word: 'hold still', meaning: '가만있다', sentence: 'Hold still now.' },
+            { word: 'snap', meaning: '툭 끊다', sentence: 'He snapped the threads with his back legs.' },
+            { word: 'strand', meaning: '가닥', sentence: 'One strand at a time.' },
+            { word: 'sticky', meaning: '끈적끈적한', sentence: 'The silk was sticky on his feet.' },
+            { word: 'shrug', meaning: '어깨를 으쓱함', sentence: 'Said Peppi with a shrug.' }
+        ],
+        '06-rescue-2.webp': [
+            { word: 'shy', meaning: '쑥스러운', sentence: 'Peppi looked shy and leapt up.' },
+            { word: 'go over', meaning: '되짚어 보다', sentence: 'Maya went back over the day in her mind.' },
+            { word: 'alone', meaning: '혼자', sentence: 'Not one creature lives alone.' },
+            { word: 'turn over', meaning: '뒤척이다', sentence: 'Maya turned over a long time.' }
+        ],
+        '07-hornets.webp': [
+            { word: 'trunk', meaning: '나무줄기', sentence: 'A great hole in the trunk.' },
+            { word: 'bark', meaning: '나무껍질', sentence: 'Maya pressed herself against the bark.' },
+            { word: 'hornet', meaning: '말벌', sentence: 'There were hornets gathered inside.' },
+            { word: 'strike', meaning: '치다', sentence: 'Tonight we strike the bee tree.' },
+            { word: 'slip', meaning: '미끄러지다', sentence: 'A foot slipped on the bark.' }
+        ],
+        '07-hornets-2.webp': [
+            { word: 'let go of', meaning: '몸을 떼다', sentence: 'Maya let go of the tree.' },
+            { word: 'with all one’s strength', meaning: '있는 힘껏', sentence: 'She flew with all her strength.' },
+            { word: 'gasp for breath', meaning: '숨이 차다', sentence: 'She was gasping for breath.' },
+            { word: 'set one’s teeth', meaning: '이를 악물다', sentence: 'And she set her teeth.' }
+        ],
+        '08-ending.webp': [
+            { word: 'guard', meaning: '문지기', sentence: 'The guard bees stood in her way.' },
+            { word: 'never mind', meaning: '나중에', sentence: 'Never mind that now!' },
+            { word: 'attack', meaning: '쳐들어오다', sentence: 'They attack tonight!' },
+            { word: 'certain', meaning: '틀림없는', sentence: 'Are you certain of it?' },
+            { word: 'order', meaning: '명', sentence: 'Cassandra gave the order at once.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'packed close', meaning: '빽빽이', sentence: 'The bees stood packed close.' },
+            { word: 'hold one’s breath', meaning: '숨을 죽이다', sentence: 'The bees held their breath.' },
+            { word: 'withdraw', meaning: '물러가다', sentence: 'And then they simply withdrew.' },
+            { word: 'cheer', meaning: '환호성', sentence: 'A great cheer went up in the hive.' },
+            { word: 'wasted', meaning: '헛일인', sentence: 'It was not wasted after all.' }
+        ],
+        'end.webp': [
+            { word: 'follow', meaning: '따라가다', sentence: 'It follows one bee round a countryside.' },
+            { word: 'swarm', meaning: '무리', sentence: 'A bee does not leave the swarm.' },
+            { word: 'scold', meaning: '나무라다', sentence: 'The swarm that will scold her.' },
+            { word: 'step', meaning: '걸음', sentence: 'That is the hardest step in the story.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -612,6 +1215,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -620,7 +1224,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -632,7 +1236,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -666,4 +1270,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
