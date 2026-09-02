@@ -107,7 +107,7 @@ cap, funny rather than scary. Glinda: a beautiful red-haired witch in a white go
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-balloon.webp` | An enormous striped silk balloon lifting above a green city square packed with cheering people, a small old man alone in the basket, and a girl below turning back with her dog in her arms as the mooring rope snaps, lively and bittersweet. 〔이 쪽에 실린 글 (15/16) — 그림에 글자는 넣지 마세요. 왼쪽: 나는 어떡하죠? 저는 캔자스로 가야 해요. 내 열기구를 고쳐 봅시다. 나도 고향에 가고 싶소. 둘은 비단을 이어 붙여 커다란 기구를 만들었습니다. / 오른쪽: 허수아비를 임금으로 삼으시오! 할아버지가 바구니에 올라탔습니다. 도로시도 타려는데— 토토가 고양이를 보고 쪼르르 달려갔지요.〕 |
+| `images/08-balloon.webp` | An enormous striped silk balloon lifting above a green city square packed with cheering people, a small old man alone in the basket, and a girl below turning back with her dog in her arms as the mooring rope snaps, lively and bittersweet. 〔이 쪽에 실린 글 (15/16) — 그림에 글자는 넣지 마세요. 왼쪽: 나는 어떡하죠? 저는 캔자스로 가야 해요. 내 열기구를 고쳐 봅시다. 나도 고향에 가고 싶소. 둘은 비단을 이어 붙여 커다란 기구를 만들었습니다. / 오른쪽: 허수아비를 임금으로 삼으시오! 할아버지가 바구니에 올라탔습니다. 도로시도 타려는데— 토토가 왁자한 소리에 놀라 품에서 뛰쳐나갔지요.〕 |
 | `images/08-home.webp` | A beautiful red-haired witch in a white gown smiling in a rose-filled palace hall as a girl in silver shoes hugs a scarecrow, a tin man and a lion goodbye one by one, tender and glowing. 〔이 쪽에 실린 글 (16/16) — 그림에 글자는 넣지 마세요. 왼쪽: 도로시는 그만 주저앉아 울었습니다. 그때 남쪽에 글린다라는 착한 마녀가 있다는 말을 들었지요. 넷은 다시 먼 길을 걸어 글린다를 찾아갔습니다. / 오른쪽: 그 구두가 너를 어디든 데려다준단다. 처음부터요? 그럼 이 고생을 안 해도 됐잖아요! 그랬다면 좋은 친구 셋을 못 만났겠지.〕 |
 
 ## 사용 팁
