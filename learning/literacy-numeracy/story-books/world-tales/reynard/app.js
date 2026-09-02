@@ -327,16 +327,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '여우의 재판',
+    intro: [
+        '여우의 재판은 중세 유럽에서 아주 널리 읽히던 이야기예요. 여우 르나르가 주인공이라 프랑스에서는 이 이름이 아예 여우를 가리키는 낱말이 되었답니다.',
+        '짐승들이 사람처럼 재판을 열고 다투는 이야기인데, 그 시절 사람들의 세상을 빗대어 놓은 것이에요. 꾀 많은 여우가 어떻게 빠져나가는지 지켜보는 재미가 있습니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🦊')}
             </div>
             <div class="story-page-right">
-                <h1>여우의 재판</h1>
-                <p>여우의 재판은 중세 유럽에서 아주 널리 읽히던 이야기예요. 여우 르나르가 주인공이라 프랑스에서는 이 이름이 아예 여우를 가리키는 낱말이 되었답니다.</p>
-                <p>짐승들이 사람처럼 재판을 열고 다투는 이야기인데, 그 시절 사람들의 세상을 빗대어 놓은 것이에요. 꾀 많은 여우가 어떻게 빠져나가는지 지켜보는 재미가 있습니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -351,8 +360,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -362,8 +371,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -373,22 +382,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -438,9 +448,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -451,7 +461,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -523,7 +533,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -532,34 +542,627 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Trial of the Fox',
+        intro: [
+            "The Trial of the Fox was one of the most widely read stories in medieval Europe. The hero is Reynard the fox, and in France his name came to be the ordinary word for a fox.",
+            "The beasts hold a court and quarrel just as people do, and that was the point: it held up a mirror to the world of the time. Half the pleasure is watching a clever fox slip out of trouble."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The King's Summons",
+            beats: [
+                {
+                    art: '01-court.webp',
+                    emoji: '🦁',
+                    left: [
+                        "The king of the forest kingdom was Noble the lion.",
+                        "He was a lion with a mane like gold.",
+                        "Every spring a great court was held.",
+                        "Anybody with a grievance could stand up and speak.",
+                        "This year too the beasts gathered in the wide meadow.",
+                        "From the smallest mouse to the biggest bear, they sat round in a ring."
+                    ],
+                    right: [
+                        "The king took his place on a mossy rock.",
+                        "\"Now. Let anyone with something to say come forward.\"",
+                        "But one seat was empty.",
+                        "It was in the middle of the front row.",
+                        "It was the seat of Reynard the fox.",
+                        "The beasts exchanged looks with one another."
+                    ]
+                },
+                {
+                    art: '01-court-2.webp',
+                    emoji: '🦁',
+                    left: [
+                        "Isengrim the wolf sprang to his feet.",
+                        "He was a wolf in a battered helmet.",
+                        "\"My lord, hear me first.\"",
+                        "\"That fox has carried off every hen I had!\"",
+                        "The wolf thumped the ground with his forepaws.",
+                        "\"And that is not the half of it.\""
+                    ],
+                    right: [
+                        "\"He made game of me in front of my own cubs.\"",
+                        "The beasts began to murmur.",
+                        "The king stroked his chin.",
+                        "\"Hm. That fox again.\"",
+                        "\"And it seems he has not come this year either.\"",
+                        "The one empty seat sat there on its own.",
+                        "The beasts kept glancing over at it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Charges Pour In',
+            beats: [
+                {
+                    art: '02-accusations.webp',
+                    emoji: '🐻',
+                    left: [
+                        "When the wolf had finished, paws went up all round.",
+                        "Bruin the bear stood up first.",
+                        "His nose was swollen right up.",
+                        "\"Just look at me!\"",
+                        "\"I went for honey and came back like this.\"",
+                        "\"I was caught by the nose in a tree and nearly died of it.\""
+                    ],
+                    right: [
+                        "Then Tibert the cat came forward.",
+                        "He had a bandage wound round his tail.",
+                        "\"I went to catch mice,\"",
+                        "\"and hung all night in a snare!\"",
+                        "The whole court went noisy at once.",
+                        "Every one of them held out an injury.",
+                        "The king brought a paw down with a thump."
+                    ]
+                },
+                {
+                    art: '02-accusations-2.webp',
+                    emoji: '🐻',
+                    left: [
+                        "The hens came crowding out, clucking.",
+                        "The rabbit had a word to say, and so did the mole.",
+                        "The whole forest was boiling over about the fox.",
+                        "The king raised a great paw.",
+                        "\"Quiet! Quiet there!\"",
+                        "And the court settled down at last."
+                    ],
+                    right: [
+                        "The king drew his brows together.",
+                        "\"We must hear the fox himself as well.\"",
+                        "\"Fetch that fox here at once.\"",
+                        "\"Who will go?\"",
+                        "For a while nobody moved.",
+                        "None of them wanted anything to do with the fox."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Bear Goes',
+            beats: [
+                {
+                    art: '03-bear.webp',
+                    emoji: '🍯',
+                    left: [
+                        "At last Bruin the bear got up.",
+                        "\"I shall go.\"",
+                        "\"A fellow my size will frighten him.\"",
+                        "The bear shrugged and set off into the forest.",
+                        "The fox's earth was at the foot of a hill.",
+                        "And the fox met him at the door, delighted."
+                    ],
+                    right: [
+                        "\"Well now, you have come at just the right time!\"",
+                        "The bear cleared his throat and said his piece.",
+                        "\"The king summons you. Come along.\"",
+                        "\"Of course, of course. I shall come.\"",
+                        "\"But before we go —\" and the fox dropped his voice."
+                    ]
+                },
+                {
+                    art: '03-bear-2.webp',
+                    emoji: '🍯',
+                    left: [
+                        "\"That tree over there is full of honey.\"",
+                        "\"Do have some before we set off.\"",
+                        "And the bear forgot the court and everything else.",
+                        "He swallowed hard.",
+                        "There was a split in the great trunk.",
+                        "And the bear pushed his head into it."
+                    ],
+                    right: [
+                        "Then the fox quietly pulled out the wedge.",
+                        "The split shut fast.",
+                        "\"Ow! You villain of a fox!\"",
+                        "The bear struggled, and it did no good at all.",
+                        "The fox went off to his earth humming.",
+                        "And the bees stung the bear's nose."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Cat Goes Too',
+            beats: [
+                {
+                    art: '04-cat.webp',
+                    emoji: '🐈',
+                    left: [
+                        "The bear got himself free at last and came back.",
+                        "His nose was swollen worse than before.",
+                        "The king sighed.",
+                        "\"Somebody else had better go.\"",
+                        "Tibert the cat stepped forward.",
+                        "\"I am not so simple as a bear.\""
+                    ],
+                    right: [
+                        "The cat put his tail up and went into the forest.",
+                        "And this time too the fox met him smiling.",
+                        "\"Come in, come in. You are just in time.\"",
+                        "\"You would not believe the mice in that barn.\"",
+                        "The cat's eyes glittered.",
+                        "He had gone three days without eating."
+                    ]
+                },
+                {
+                    art: '04-cat-2.webp',
+                    emoji: '🐈',
+                    left: [
+                        "\"I shall take just one, and then we go.\"",
+                        "The cat swallowed hard.",
+                        "And then he sprang into the barn.",
+                        "But there was a rope across the doorway.",
+                        "The noose caught him neatly round the neck.",
+                        "\"Miaow! Help, somebody!\""
+                    ],
+                    right: [
+                        "The cat hung there swinging.",
+                        "The farmer came running out with a stick.",
+                        "And the fox turned away from the noise of it.",
+                        "\"Dear me. What a shame.\"",
+                        "And off he went for his afternoon nap.",
+                        "There was an uproar in the barn for a long while."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: "Chapter 5 · The Badger's Argument",
+            beats: [
+                {
+                    art: '05-badger.webp',
+                    emoji: '🦡',
+                    left: [
+                        "Now nobody would go at all.",
+                        "Then Grimbart the badger stood up.",
+                        "He was a badger in a scholar's cap.",
+                        "\"I shall try.\"",
+                        "\"He is a relation of mine, after all.\"",
+                        "And the badger went to the fox's earth."
+                    ],
+                    right: [
+                        "The fox was stretched out in front of it.",
+                        "\"Now what story about honey is coming?\"",
+                        "The badger waved a paw at him.",
+                        "\"That will not work on me.\"",
+                        "\"Reynard, this time you really must come,\" said the badger seriously."
+                    ]
+                },
+                {
+                    art: '05-badger-2.webp',
+                    emoji: '🦡',
+                    left: [
+                        "\"If you do not, the whole forest will come for you.\"",
+                        "\"The bear and the cat are both waiting their chance.\"",
+                        "The fox thought about it a long while.",
+                        "He scratched his chin with a forepaw.",
+                        "\"Hm. So that is how it stands.\"",
+                        "\"Very well. I shall come.\""
+                    ],
+                    right: [
+                        "\"I shall go and have my say.\"",
+                        "And the badger was relieved.",
+                        "But there was a glint in the fox's eye.",
+                        "It was the eye of somebody with a plan.",
+                        "And the badger did not notice it.",
+                        "The two beasts set off side by side."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: "Chapter 6 · The Fox's Story",
+            beats: [
+                {
+                    art: '06-trial.webp',
+                    emoji: '⚖️',
+                    left: [
+                        "The next day the fox appeared in court.",
+                        "The beasts stirred at the sight of him.",
+                        "The wolf showed his teeth.",
+                        "The bear and the cat glared at him.",
+                        "And the fox did not tremble in the least.",
+                        "Instead he put on a very sorrowful face."
+                    ],
+                    right: [
+                        "He laid a forepaw on his chest and spoke.",
+                        "\"My lord, I have been wronged.\"",
+                        "\"They say all manner of things about me,\"",
+                        "\"and none of it is so.\"",
+                        "The king raised an eyebrow.",
+                        "\"Then how does the matter stand?\""
+                    ]
+                },
+                {
+                    art: '06-trial-2.webp',
+                    emoji: '⚖️',
+                    left: [
+                        "\"I have been working on your behalf, my lord.\"",
+                        "\"There is a band of them plotting against you.\"",
+                        "The court went quiet.",
+                        "\"I have been following them in secret.\"",
+                        "\"That is why I could not come to court.\"",
+                        "The wolf gave a snort."
+                    ],
+                    right: [
+                        "\"How the lies do come pouring out!\"",
+                        "The fox did not so much as blink.",
+                        "\"And I know where they have hidden their treasure.\"",
+                        "At the word treasure the king's ears went up.",
+                        "\"Treasure, you say? Where is it?\" The wolf's words were forgotten already."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · A Treasure That Was Not There',
+            beats: [
+                {
+                    art: '07-treasure.webp',
+                    emoji: '💰',
+                    left: [
+                        "And the fox made up the place, smooth as anything.",
+                        "\"Past the eastern marsh there is a dry well.\"",
+                        "\"Under it lies a whole chest of gold.\"",
+                        "\"My father risked his life to find it out.\"",
+                        "The king's eyes flashed.",
+                        "\"Go there this instant!\""
+                    ],
+                    right: [
+                        "The wolf and the bear led the way.",
+                        "The beasts went streaming down to the marsh.",
+                        "But the marsh was a bog that swallowed their feet.",
+                        "There was floundering to be heard on every side.",
+                        "\"Ow! There is nothing here at all!\"",
+                        "The bear was plastered with mud.",
+                        "The wolf went in up to his waist."
+                    ]
+                },
+                {
+                    art: '07-treasure-2.webp',
+                    emoji: '💰',
+                    left: [
+                        "Meanwhile the fox quietly took himself off.",
+                        "He set out with a staff in his paw.",
+                        "\"I shall go on a pilgrimage, my lord!\"",
+                        "\"I am going to repent of my faults.\"",
+                        "The king nodded, well pleased.",
+                        "\"That is very proper. Go and come safely.\""
+                    ],
+                    right: [
+                        "The fox bowed politely.",
+                        "And then he went over the hill and out of sight.",
+                        "The moment he was over it he threw the staff away.",
+                        "\"Well. Out of it again.\"",
+                        "The fox walked on, humming.",
+                        "The road ahead was bright.",
+                        "The sun warmed his back.",
+                        "And his tail swung of its own accord."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · The Forest Goes On',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🍂',
+                    left: [
+                        "The beasts searched the marsh until sundown.",
+                        "There was no gold, nor so much as a pebble.",
+                        "They never even found the dry well.",
+                        "And only then did they see they had been fooled.",
+                        "The wolf came back puffing with rage.",
+                        "He was mud from head to foot."
+                    ],
+                    right: [
+                        "\"Let us fetch that fox back again!\"",
+                        "\"And this time I shall deal out the punishment!\"",
+                        "The king looked round the circle.",
+                        "\"Then who will go and bring him?\"",
+                        "Nobody came forward.",
+                        "They all studied their own toes."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🍂',
+                    left: [
+                        "The bear felt his own nose.",
+                        "The cat hid his tail.",
+                        "The badger looked the other way.",
+                        "Not one of them would speak first.",
+                        "Somebody cleared a throat and they all flinched.",
+                        "\"I — I have nothing to say.\"",
+                        "\"Nor I.\""
+                    ],
+                    right: [
+                        "Last time was still fresh in their minds.",
+                        "There was not a breath to be heard in the court.",
+                        "The king cleared his throat.",
+                        "\"That will do for today.\"",
+                        "And he brought the court to an end.",
+                        "The beasts went home one by one.",
+                        "And the dead leaves came drifting down in the forest.",
+                        "There was talk of that fox in the forest ever after."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why did Isengrim the wolf accuse the fox?',
+            choices: ['He took his honey', 'He carried off his hens', 'He got him caught in a snare'],
+            answer: 1
+        },
+        {
+            q: 'What happened to Bruin the bear through the fox?',
+            choices: ['His nose was caught in a tree', 'He was caught in a snare', 'He ate all the honey'],
+            answer: 0
+        },
+        {
+            q: 'What happened to Tibert the cat?',
+            choices: ['His nose swelled up', 'He was caught in a tree', 'He was caught in a snare'],
+            answer: 2
+        },
+        {
+            q: 'Who brought the fox to the court?',
+            choices: ['Bruin the bear', 'Grimbart the badger', 'Tibert the cat'],
+            answer: 1
+        },
+        {
+            q: 'What did the fox say in court?',
+            choices: ['That he had been working for the king', 'That he never took the hens', 'That he had buried a treasure'],
+            answer: 0
+        },
+        {
+            q: 'Where did the fox say the treasure was?',
+            choices: ['In a split tree', 'Inside a barn', 'Under a dry well'],
+            answer: 2
+        },
+        {
+            q: 'What came of searching the marsh?',
+            choices: ['They found gold', 'There was nothing there', 'They caught the fox'],
+            answer: 1
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🦊',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story has been told in Europe for more than eight hundred years. There are whole books that collect only the tales of Reynard the fox.",
+                    "The beasts gather in court and each of them tells on the fox. And the fox is never there.",
+                    "What the fox uses is not strength but words. He invents a treasure out of nothing, and says he is off on a pilgrimage.",
+                    "Look again at why the king was taken in. Not because the fox lied so well, but because the king wanted the treasure."
+                ],
+                right: [
+                    "And the beasts' injuries are not all the fox's doing. Honey or mice, each of them went after what he wanted.",
+                    "How should the king have listened to what the fox said?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-court.webp': [
+            { word: 'mane', meaning: '갈기', sentence: 'He was a lion with a mane like gold.' },
+            { word: 'court', meaning: '재판', sentence: 'Every spring a great court was held.' },
+            { word: 'grievance', meaning: '억울한 일', sentence: 'Anybody with a grievance could speak.' },
+            { word: 'meadow', meaning: '풀밭', sentence: 'The beasts gathered in the wide meadow.' },
+            { word: 'mossy', meaning: '이끼 낀', sentence: 'The king took his place on a mossy rock.' }
+        ],
+        '01-court-2.webp': [
+            { word: 'battered', meaning: '찌그러진', sentence: 'A wolf in a battered helmet.' },
+            { word: 'carry off', meaning: '물어 가다', sentence: 'That fox has carried off every hen.' },
+            { word: 'make game of', meaning: '놀리다', sentence: 'He made game of me.' },
+            { word: 'murmur', meaning: '웅성거리다', sentence: 'The beasts began to murmur.' },
+            { word: 'glance', meaning: '힐끔거리다', sentence: 'The beasts kept glancing over at it.' }
+        ],
+        '02-accusations.webp': [
+            { word: 'swollen', meaning: '퉁퉁 부은', sentence: 'His nose was swollen right up.' },
+            { word: 'bandage', meaning: '붕대', sentence: 'He had a bandage round his tail.' },
+            { word: 'snare', meaning: '덫', sentence: 'And hung all night in a snare.' },
+            { word: 'injury', meaning: '다친 데', sentence: 'Every one of them held out an injury.' }
+        ],
+        '02-accusations-2.webp': [
+            { word: 'cluck', meaning: '꼬꼬댁거리다', sentence: 'The hens came crowding out, clucking.' },
+            { word: 'boil over', meaning: '들끓다', sentence: 'The forest was boiling over about the fox.' },
+            { word: 'draw one’s brows together', meaning: '이맛살을 찌푸리다', sentence: 'The king drew his brows together.' },
+            { word: 'fetch', meaning: '데려오다', sentence: 'Fetch that fox here at once.' },
+            { word: 'have to do with', meaning: '얽히다', sentence: 'None of them wanted anything to do with the fox.' }
+        ],
+        '03-bear.webp': [
+            { word: 'shrug', meaning: '어깨를 으쓱하다', sentence: 'The bear shrugged and set off.' },
+            { word: 'earth', meaning: '굴', sentence: "The fox's earth was at the foot of a hill." },
+            { word: 'clear one’s throat', meaning: '헛기침하다', sentence: 'The bear cleared his throat.' },
+            { word: 'summon', meaning: '부르다', sentence: 'The king summons you.' },
+            { word: 'drop one’s voice', meaning: '목소리를 낮추다', sentence: 'The fox dropped his voice.' }
+        ],
+        '03-bear-2.webp': [
+            { word: 'split', meaning: '틈', sentence: 'There was a split in the great trunk.' },
+            { word: 'wedge', meaning: '쐐기', sentence: 'The fox quietly pulled out the wedge.' },
+            { word: 'villain', meaning: '못된 놈', sentence: 'You villain of a fox!' },
+            { word: 'struggle', meaning: '발버둥 치다', sentence: 'The bear struggled.' },
+            { word: 'sting', meaning: '쏘다', sentence: "The bees stung the bear's nose." }
+        ],
+        '04-cat.webp': [
+            { word: 'sigh', meaning: '한숨을 쉬다', sentence: 'The king sighed.' },
+            { word: 'simple', meaning: '어수룩한', sentence: 'I am not so simple as a bear.' },
+            { word: 'barn', meaning: '헛간', sentence: 'You would not believe the mice in that barn.' },
+            { word: 'glitter', meaning: '반짝하다', sentence: "The cat's eyes glittered." }
+        ],
+        '04-cat-2.webp': [
+            { word: 'noose', meaning: '올가미', sentence: 'The noose caught him round the neck.' },
+            { word: 'swing', meaning: '대롱대롱 매달리다', sentence: 'The cat hung there swinging.' },
+            { word: 'what a shame', meaning: '안됐군요', sentence: 'Dear me. What a shame.' },
+            { word: 'uproar', meaning: '소동', sentence: 'There was an uproar in the barn.' }
+        ],
+        '05-badger.webp': [
+            { word: 'badger', meaning: '오소리', sentence: 'Grimbart the badger stood up.' },
+            { word: 'scholar', meaning: '학자', sentence: "A badger in a scholar's cap." },
+            { word: 'relation', meaning: '친척', sentence: 'He is a relation of mine.' },
+            { word: 'stretch out', meaning: '늘어지다', sentence: 'The fox was stretched out in front of it.' },
+            { word: 'seriously', meaning: '진지하게', sentence: 'Said the badger seriously.' }
+        ],
+        '05-badger-2.webp': [
+            { word: 'wait one’s chance', meaning: '벼르다', sentence: 'The bear and the cat are waiting their chance.' },
+            { word: 'scratch', meaning: '긁적이다', sentence: 'He scratched his chin.' },
+            { word: 'relieved', meaning: '마음이 놓인', sentence: 'The badger was relieved.' },
+            { word: 'glint', meaning: '반짝임', sentence: "There was a glint in the fox's eye." }
+        ],
+        '06-trial.webp': [
+            { word: 'stir', meaning: '술렁이다', sentence: 'The beasts stirred at the sight of him.' },
+            { word: 'glare', meaning: '노려보다', sentence: 'The bear and the cat glared at him.' },
+            { word: 'tremble', meaning: '떨다', sentence: 'The fox did not tremble in the least.' },
+            { word: 'sorrowful', meaning: '슬픈', sentence: 'He put on a sorrowful face.' },
+            { word: 'wrong', meaning: '억울하게 하다', sentence: 'My lord, I have been wronged.' }
+        ],
+        '06-trial-2.webp': [
+            { word: 'on one’s behalf', meaning: '~를 위해', sentence: 'I have been working on your behalf.' },
+            { word: 'plot', meaning: '노리다', sentence: 'A band of them plotting against you.' },
+            { word: 'snort', meaning: '코웃음', sentence: 'The wolf gave a snort.' },
+            { word: 'not so much as', meaning: '~조차 하지 않다', sentence: 'The fox did not so much as blink.' },
+            { word: 'treasure', meaning: '보물', sentence: 'I know where they have hidden their treasure.' }
+        ],
+        '07-treasure.webp': [
+            { word: 'make up', meaning: '지어내다', sentence: 'The fox made up the place.' },
+            { word: 'marsh', meaning: '늪', sentence: 'Past the eastern marsh there is a dry well.' },
+            { word: 'chest', meaning: '궤짝', sentence: 'A whole chest of gold.' },
+            { word: 'bog', meaning: '진창', sentence: 'The marsh was a bog.' },
+            { word: 'flounder', meaning: '허우적대다', sentence: 'There was floundering on every side.' }
+        ],
+        '07-treasure-2.webp': [
+            { word: 'take oneself off', meaning: '자리를 뜨다', sentence: 'The fox quietly took himself off.' },
+            { word: 'staff', meaning: '지팡이', sentence: 'He set out with a staff in his paw.' },
+            { word: 'pilgrimage', meaning: '순례', sentence: 'I shall go on a pilgrimage.' },
+            { word: 'repent', meaning: '뉘우치다', sentence: 'I am going to repent of my faults.' },
+            { word: 'of its own accord', meaning: '절로', sentence: 'His tail swung of its own accord.' }
+        ],
+        '08-ending.webp': [
+            { word: 'sundown', meaning: '해질녘', sentence: 'They searched the marsh until sundown.' },
+            { word: 'pebble', meaning: '돌멩이', sentence: 'Nor so much as a pebble.' },
+            { word: 'fool', meaning: '속이다', sentence: 'They saw they had been fooled.' },
+            { word: 'deal out', meaning: '내리다', sentence: 'I shall deal out the punishment!' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'flinch', meaning: '움찔하다', sentence: 'They all flinched.' },
+            { word: 'fresh', meaning: '생생한', sentence: 'Last time was still fresh in their minds.' },
+            { word: 'bring to an end', meaning: '끝내다', sentence: 'He brought the court to an end.' },
+            { word: 'drift down', meaning: '사르르 떨어지다', sentence: 'The dead leaves came drifting down.' }
+        ],
+        'end.webp': [
+            { word: 'collect', meaning: '따로 묶다', sentence: 'Whole books collect the tales of Reynard.' },
+            { word: 'tell on', meaning: '일러바치다', sentence: 'Each of them tells on the fox.' },
+            { word: 'out of nothing', meaning: '없는 것을', sentence: 'He invents a treasure out of nothing.' },
+            { word: 'take in', meaning: '넘어가게 하다', sentence: 'Look again at why the king was taken in.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -624,6 +1227,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -632,7 +1236,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -644,7 +1248,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -678,4 +1282,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
