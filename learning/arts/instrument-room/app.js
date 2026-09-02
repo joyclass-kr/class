@@ -1814,7 +1814,7 @@
         });
         elements.octaveReadout.textContent = state.keyboardOctave;
         elements.rangeLegend.classList.remove("hidden");
-        elements.rangeReadout.textContent = "연주 음역 " + core.noteLabel(range.start) + "–" + core.noteLabel(range.end) + " · 회색 건반은 소리가 나지 않아요";
+        elements.rangeReadout.textContent = "연주 음역 " + core.noteLabel(range.start) + "–" + core.noteLabel(range.end);
         window.requestAnimationFrame(centerKeyboardOnComputerOctave);
     }
 
