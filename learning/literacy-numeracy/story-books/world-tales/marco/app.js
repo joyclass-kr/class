@@ -303,16 +303,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '어머니를 찾아서',
+    intro: [
+        '어머니를 찾아서는 이탈리아의 작가 에드몬도 데 아미치스가 1886년에 펴낸 책 쿠오레에 실린 이야기예요. 원래 제목은 아펜니노 산맥에서 안데스 산맥까지라는 뜻이랍니다.',
+        '이 이야기가 쓰인 무렵 이탈리아에서는 일자리를 찾아 남아메리카로 떠나는 사람이 아주 많았어요. 가족과 멀리 떨어져 지내야 했던 그 시절의 사정이 이야기에 그대로 담겨 있습니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🚢')}
             </div>
             <div class="story-page-right">
-                <h1>어머니를 찾아서</h1>
-                <p>어머니를 찾아서는 이탈리아의 작가 에드몬도 데 아미치스가 1886년에 펴낸 책 쿠오레에 실린 이야기예요. 원래 제목은 아펜니노 산맥에서 안데스 산맥까지라는 뜻이랍니다.</p>
-                <p>이 이야기가 쓰인 무렵 이탈리아에서는 일자리를 찾아 남아메리카로 떠나는 사람이 아주 많았어요. 가족과 멀리 떨어져 지내야 했던 그 시절의 사정이 이야기에 그대로 담겨 있습니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -327,8 +336,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -338,8 +347,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -349,22 +358,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -414,9 +424,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -427,7 +437,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -499,7 +509,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -508,34 +518,634 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'From the Apennines to the Andes',
+        intro: [
+            "This story is part of Cuore, a book the Italian writer Edmondo De Amicis published in 1886. Its own title is From the Apennines to the Andes.",
+            "When it was written, a great many people were leaving Italy for South America to look for work. What it was like to live far from your family in those years is all here in the story."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Letters Stop',
+            beats: [
+                {
+                    art: '01-letter.webp',
+                    emoji: '✉️',
+                    left: [
+                        "In Genoa in Italy there lived a boy called Marco.",
+                        "He was thirteen years old.",
+                        "Things at home were very hard.",
+                        "The debts kept growing.",
+                        "So his mother went away to a distant country.",
+                        "It was Argentina, across the sea."
+                    ],
+                    right: [
+                        "She was to work there and send money home.",
+                        "At first a letter came every month.",
+                        "\"We are all well here, so do not worry.\"",
+                        "Marco read those letters over and over.",
+                        "His father took heart from them too.",
+                        "And then at some point the letters simply stopped.",
+                        "The whole family was sick with worry."
+                    ]
+                },
+                {
+                    art: '01-letter-2.webp',
+                    emoji: '✉️',
+                    left: [
+                        "A month went by, and then two.",
+                        "And still there was no word.",
+                        "His father wrote to one place after another.",
+                        "No answer came back from anywhere.",
+                        "All they had was the address of the house where she had worked.",
+                        "His father sighed every night.",
+                        "There was no money to go, and nobody to send."
+                    ],
+                    right: [
+                        "Then Marco spoke.",
+                        "The supper table went quiet.",
+                        "His brother put down his spoon.",
+                        "\"I shall go and find her.\"",
+                        "His father was astonished.",
+                        "But Marco would not give way.",
+                        "He begged and begged for days."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Port of Genoa',
+            beats: [
+                {
+                    art: '02-harbor.webp',
+                    emoji: '🚢',
+                    left: [
+                        "His father asked a favour of somebody he knew.",
+                        "They just managed to find the fare.",
+                        "Marco packed one small bundle.",
+                        "A few clothes and a photograph of his mother, and that was all.",
+                        "The morning of the sailing came.",
+                        "The port of Genoa was full of people.",
+                        "A great ship sounded her horn."
+                    ],
+                    right: [
+                        "Black smoke rose from the funnel.",
+                        "Booooo—",
+                        "The sound went right through you.",
+                        "A great many were leaving for South America.",
+                        "On the quay they were all weeping and waving.",
+                        "And Marco went up onto the deck."
+                    ]
+                },
+                {
+                    art: '02-harbor-2.webp',
+                    emoji: '🚢',
+                    left: [
+                        "His father waved from the quay.",
+                        "His face was hard to make out.",
+                        "And Marco shouted with all his voice.",
+                        "\"I shall bring Mother home, I promise!\"",
+                        "His father seemed to nod.",
+                        "The ship drew slowly out of the harbour.",
+                        "The houses grew smaller and smaller."
+                    ],
+                    right: [
+                        "And at last the land was gone.",
+                        "There was nothing in front of him but sea.",
+                        "A voyage of more than a month had begun.",
+                        "Marco held tight to the rail.",
+                        "He was not so much afraid as impatient.",
+                        "He took the photograph out of his coat.",
+                        "\"Only wait a little longer.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · Across the Sea',
+            beats: [
+                {
+                    art: '03-voyage.webp',
+                    emoji: '🌊',
+                    left: [
+                        "There was no room to put a foot down on that ship.",
+                        "Even the hold below was packed with people.",
+                        "Marco made himself a place in a corner of the deck.",
+                        "He slept with his bundle for a pillow.",
+                        "When the waves came he rolled this way and that.",
+                        "Some days he was too seasick to eat anything at all."
+                    ],
+                    right: [
+                        "He was often hungry as well.",
+                        "And Marco bore it.",
+                        "He could think of nothing but seeing his mother.",
+                        "At night he looked up at the sky.",
+                        "There were more stars than he had ever seen.",
+                        "\"Mother is looking at these stars too.\" Thinking that, he could bear it."
+                    ]
+                },
+                {
+                    art: '03-voyage-2.webp',
+                    emoji: '🌊',
+                    left: [
+                        "There were all sorts of people aboard.",
+                        "Farmers, and carpenters too.",
+                        "Every one of them leaving to look for work.",
+                        "They were sorry for Marco when they heard his story.",
+                        "One woman shared her bread with him.",
+                        "Marco thanked her again and again.",
+                        "\"A good boy. I hope he finds her.\""
+                    ],
+                    right: [
+                        "And so the days went by.",
+                        "Twenty-seven nights passed.",
+                        "One morning there was a stir on the deck.",
+                        "Land had come into sight.",
+                        "It was Buenos Aires.",
+                        "Marco gripped the rail and opened his eyes wide."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · Already Gone',
+            beats: [
+                {
+                    art: '04-moved.webp',
+                    emoji: '🏘️',
+                    left: [
+                        "Marco came down off the ship.",
+                        "There was strange speech on every side.",
+                        "The streets were wide and the houses brightly painted.",
+                        "Marco took out the paper with the address on it.",
+                        "He asked his way from one person to the next.",
+                        "He had no words, so he used his hands."
+                    ],
+                    right: [
+                        "The paper went soft with the sweat of his hand.",
+                        "At last he stood in front of the house.",
+                        "Marco caught his breath and knocked.",
+                        "His heart was thumping.",
+                        "And then the door opened.",
+                        "But it was a stranger who came out.",
+                        "\"Who are you looking for?\" And the words would not come."
+                    ]
+                },
+                {
+                    art: '04-moved-2.webp',
+                    emoji: '🏘️',
+                    left: [
+                        "Marco said his mother's name.",
+                        "And the man shook his head.",
+                        "\"Those people moved away long ago.\"",
+                        "\"They went to a city called Rosario.\"",
+                        "The strength went out of Marco's legs.",
+                        "\"And where is that?\""
+                    ],
+                    right: [
+                        "\"More than three hundred kilometres north of here.\"",
+                        "Marco went through his pockets.",
+                        "There was hardly any money left.",
+                        "And still Marco lifted his head.",
+                        "\"I have come this far, after all.\" And he set off walking again."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The People Who Helped',
+            beats: [
+                {
+                    art: '05-help.webp',
+                    emoji: '🤝',
+                    left: [
+                        "Marco made for Rosario.",
+                        "He walked, and got a lift, and walked again.",
+                        "The road went on without end.",
+                        "The plains stretched away to the edge of the sky.",
+                        "Cattle moved in the grass far off.",
+                        "And everywhere he went, strangers helped him."
+                    ],
+                    right: [
+                        "\"How far are you going?\"",
+                        "\"I am going to find my mother.\"",
+                        "And people stopped where they stood at that.",
+                        "\"We left our own country too, you know.\"",
+                        "And then they shared whatever they had.",
+                        "Every one of them had family left behind."
+                    ]
+                },
+                {
+                    art: '05-help-2.webp',
+                    emoji: '🤝',
+                    left: [
+                        "One put bread into his hand.",
+                        "One gave him a corner of a cart to ride in.",
+                        "One gave him a bed for the night.",
+                        "And every time Marco bowed his head.",
+                        "\"Thank you. I shall not forget this.\"",
+                        "And he kept their names in his heart."
+                    ],
+                    right: [
+                        "At night he looked at the stars and said the names over.",
+                        "And so he went on, mile after mile.",
+                        "The soles of his shoes wore through.",
+                        "His face went black with the sun.",
+                        "His clothes were thick with dust.",
+                        "And still he did not stop walking."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Missed Again',
+            beats: [
+                {
+                    art: '06-again.webp',
+                    emoji: '😔',
+                    left: [
+                        "At last he reached Rosario.",
+                        "Marco went straight to the house.",
+                        "This time, he thought, there could be no mistake.",
+                        "And once again he was a step too late.",
+                        "\"That family moved on to Tucumán, they say.\"",
+                        "And Marco sat straight down where he stood.",
+                        "Everything went dark in front of him."
+                    ],
+                    right: [
+                        "Pale dust rose about his feet.",
+                        "His throat burned and there was no water.",
+                        "\"And how far is Tucumán?\"",
+                        "\"Six hundred kilometres. Right up to the mountains.\"",
+                        "Marco could not get up for a long while.",
+                        "\"Perhaps I should turn back here.\" Even that came into his mind."
+                    ]
+                },
+                {
+                    art: '06-again-2.webp',
+                    emoji: '😔',
+                    left: [
+                        "Then his hand touched his pocket.",
+                        "He felt his mother's photograph.",
+                        "Marco took it out and looked at it.",
+                        "His mother was smiling, her hair tied back.",
+                        "It was her face exactly as on the day she left.",
+                        "And Marco wiped his eyes."
+                    ],
+                    right: [
+                        "\"I cannot turn back after coming this far.\"",
+                        "Marco got to his feet again.",
+                        "He shifted the bundle on his shoulder.",
+                        "His feet hurt, and he decided to bear it.",
+                        "Tucumán was a very long road away yet.",
+                        "And Marco began walking north again."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Last Road',
+            beats: [
+                {
+                    art: '07-final.webp',
+                    emoji: '⛰️',
+                    left: [
+                        "Marco crossed the plains.",
+                        "He forded rivers and went over hills.",
+                        "He walked for days and days.",
+                        "His shoes wore through and his feet showed.",
+                        "The soles were blistered and every step hurt.",
+                        "He tripped on stones and fell more than once.",
+                        "There were scabs on his knees."
+                    ],
+                    right: [
+                        "Some days he went the whole day without food.",
+                        "And then a line of mountains came into sight.",
+                        "It was the Andes.",
+                        "Marco took heart at the sight of them.",
+                        "\"Almost there. Only a little more.\"",
+                        "The sun was going down.",
+                        "And the sky had turned red."
+                    ]
+                },
+                {
+                    art: '07-final-2.webp',
+                    emoji: '⛰️',
+                    left: [
+                        "At last a few earth houses came into view.",
+                        "It was a small village.",
+                        "Marco walked on with the last of his strength.",
+                        "A woman hanging out washing turned round.",
+                        "And then her hands stopped.",
+                        "She looked hard at Marco.",
+                        "\"You… surely not.\"",
+                        "\"Are you the Italian woman's son?\""
+                    ],
+                    right: [
+                        "Marco's heart hammered.",
+                        "The bundle dropped out of his hand.",
+                        "The woman picked it up for him quickly.",
+                        "\"You know my mother?\" Marco was out of breath.",
+                        "The woman's eyes went red.",
+                        "\"Come inside, quickly.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: "Chapter 8 · His Mother's Room",
+            beats: [
+                {
+                    art: '08-reunion.webp',
+                    emoji: '💞',
+                    left: [
+                        "The woman took Marco inside.",
+                        "There was a bed in a small room.",
+                        "And his mother was lying in it.",
+                        "Her face was as white as paper.",
+                        "She was very ill.",
+                        "She needed an operation.",
+                        "But she had let go of hope already."
+                    ],
+                    right: [
+                        "It was a long time since she had heard from her family.",
+                        "Marco knelt down beside the bed.",
+                        "His voice shook.",
+                        "His mother's hand was very light.",
+                        "Marco took it in both of his.",
+                        "\"Mother, it is me. Marco.\""
+                    ]
+                },
+                {
+                    art: '08-reunion-2.webp',
+                    emoji: '💞',
+                    left: [
+                        "His mother slowly opened her eyes.",
+                        "She looked at Marco for a long while.",
+                        "\"Marco…?\"",
+                        "\"However did you come all this way…\"",
+                        "Her words kept breaking off.",
+                        "And Marco only shook his head instead of answering."
+                    ],
+                    right: [
+                        "The tears ran down his mother's face.",
+                        "The two of them held each other a long time.",
+                        "And from that day his mother took heart again.",
+                        "She had the operation and took her medicine.",
+                        "Little by little she grew stronger.",
+                        "And when the spring came round,",
+                        "the two of them took ship together and went home."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why did the mother go so far away?',
+            choices: ['Because they were moving house', 'Because of a job offer', 'Because of the debts'],
+            answer: 2
+        },
+        {
+            q: 'What did Marco put in his bundle?',
+            choices: ['Bread and water', 'A few clothes', 'Letters'],
+            answer: 1
+        },
+        {
+            q: 'What was he told at the first house?',
+            choices: ['She had gone to Rosario', 'She was in Tucumán', 'She had gone back to Genoa'],
+            answer: 0
+        },
+        {
+            q: 'What was he told in Rosario?',
+            choices: ['She was in Rosario', 'She had taken ship', 'She had moved on to Tucumán'],
+            answer: 2
+        },
+        {
+            q: 'What did the people he met on the road do for him?',
+            choices: ['They paid his fare', 'They gave him bread', 'They gave him a photograph'],
+            answer: 1
+        },
+        {
+            q: 'What did Marco take out whenever it grew hard?',
+            choices: ['A photograph', 'The paper with the address', "His father's letter"],
+            answer: 0
+        },
+        {
+            q: 'How did Marco find his mother at the end?',
+            choices: ['She was hanging out washing', 'She was at work', 'She was lying ill in bed'],
+            answer: 2
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🚢',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This is one part of Cuore, a book by the Italian writer De Amicis. It came out about a hundred and forty years ago.",
+                    "About the time Marco takes ship, a great many people were leaving Italy for South America to find work. None of that was invented.",
+                    "That is also why the letters stopped. In those days letters went by ship, and they took months.",
+                    "Everywhere Marco goes he is one step behind. In Buenos Aires, and again in Rosario. Each time he asks the way and walks on."
+                ],
+                right: [
+                    "What saved his mother was not the medicine. It was that her son had come. That is what somebody who has let go of hope needs.",
+                    "Where do you think Marco most wanted to give up?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-letter.webp': [
+            { word: 'debt', meaning: '빚', sentence: 'The debts kept growing.' },
+            { word: 'distant', meaning: '먼', sentence: 'His mother went away to a distant country.' },
+            { word: 'take heart', meaning: '힘을 내다', sentence: 'His father took heart from them.' },
+            { word: 'sick with worry', meaning: '애를 태우는', sentence: 'The family was sick with worry.' }
+        ],
+        '01-letter-2.webp': [
+            { word: 'word', meaning: '소식', sentence: 'Still there was no word.' },
+            { word: 'address', meaning: '주소', sentence: 'All they had was the address.' },
+            { word: 'astonished', meaning: '깜짝 놀란', sentence: 'His father was astonished.' },
+            { word: 'give way', meaning: '뜻을 굽히다', sentence: 'Marco would not give way.' },
+            { word: 'beg', meaning: '조르다', sentence: 'He begged and begged for days.' }
+        ],
+        '02-harbor.webp': [
+            { word: 'favour', meaning: '부탁', sentence: 'His father asked a favour.' },
+            { word: 'fare', meaning: '뱃삯', sentence: 'They just managed to find the fare.' },
+            { word: 'bundle', meaning: '보따리', sentence: 'Marco packed one small bundle.' },
+            { word: 'funnel', meaning: '굴뚝', sentence: 'Black smoke rose from the funnel.' },
+            { word: 'quay', meaning: '부두', sentence: 'On the quay they were waving.' }
+        ],
+        '02-harbor-2.webp': [
+            { word: 'make out', meaning: '알아보다', sentence: 'His face was hard to make out.' },
+            { word: 'draw out', meaning: '빠져나가다', sentence: 'The ship drew out of the harbour.' },
+            { word: 'voyage', meaning: '항해', sentence: 'A voyage of more than a month.' },
+            { word: 'rail', meaning: '난간', sentence: 'Marco held tight to the rail.' },
+            { word: 'impatient', meaning: '마음이 급한', sentence: 'He was impatient rather than afraid.' }
+        ],
+        '03-voyage.webp': [
+            { word: 'hold', meaning: '짐칸', sentence: 'The hold below was packed with people.' },
+            { word: 'pillow', meaning: '베개', sentence: 'He slept with his bundle for a pillow.' },
+            { word: 'seasick', meaning: '멀미하는', sentence: 'He was too seasick to eat.' },
+            { word: 'bear', meaning: '참다', sentence: 'And Marco bore it.' }
+        ],
+        '03-voyage-2.webp': [
+            { word: 'aboard', meaning: '배에', sentence: 'There were all sorts of people aboard.' },
+            { word: 'share', meaning: '나눠 주다', sentence: 'One woman shared her bread.' },
+            { word: 'stir', meaning: '술렁임', sentence: 'There was a stir on the deck.' },
+            { word: 'come into sight', meaning: '보이다', sentence: 'Land had come into sight.' },
+            { word: 'grip', meaning: '붙잡다', sentence: 'Marco gripped the rail.' }
+        ],
+        '04-moved.webp': [
+            { word: 'speech', meaning: '말소리', sentence: 'There was strange speech on every side.' },
+            { word: 'brightly painted', meaning: '알록달록한', sentence: 'The houses were brightly painted.' },
+            { word: 'ask one’s way', meaning: '길을 묻다', sentence: 'He asked his way from one person to the next.' },
+            { word: 'catch one’s breath', meaning: '숨을 고르다', sentence: 'Marco caught his breath and knocked.' },
+            { word: 'stranger', meaning: '낯선 사람', sentence: 'It was a stranger who came out.' }
+        ],
+        '04-moved-2.webp': [
+            { word: 'move away', meaning: '이사 가다', sentence: 'Those people moved away long ago.' },
+            { word: 'strength', meaning: '힘', sentence: "The strength went out of Marco's legs." },
+            { word: 'go through', meaning: '뒤지다', sentence: 'Marco went through his pockets.' },
+            { word: 'this far', meaning: '여기까지', sentence: 'I have come this far.' }
+        ],
+        '05-help.webp': [
+            { word: 'make for', meaning: '~로 향하다', sentence: 'Marco made for Rosario.' },
+            { word: 'lift', meaning: '얻어 타기', sentence: 'He walked, and got a lift.' },
+            { word: 'plain', meaning: '들판', sentence: 'The plains stretched away.' },
+            { word: 'cattle', meaning: '소 떼', sentence: 'Cattle moved in the grass far off.' },
+            { word: 'leave behind', meaning: '두고 오다', sentence: 'Every one had family left behind.' }
+        ],
+        '05-help-2.webp': [
+            { word: 'cart', meaning: '짐수레', sentence: 'A corner of a cart to ride in.' },
+            { word: 'bow one’s head', meaning: '고개를 숙이다', sentence: 'Marco bowed his head.' },
+            { word: 'say over', meaning: '되뇌다', sentence: 'He said the names over.' },
+            { word: 'wear through', meaning: '닳아 구멍 나다', sentence: 'The soles of his shoes wore through.' }
+        ],
+        '06-again.webp': [
+            { word: 'a step too late', meaning: '한발 늦은', sentence: 'He was a step too late.' },
+            { word: 'move on', meaning: '옮겨 가다', sentence: 'That family moved on to Tucumán.' },
+            { word: 'go dark', meaning: '눈앞이 캄캄해지다', sentence: 'Everything went dark in front of him.' },
+            { word: 'burn', meaning: '타다', sentence: 'His throat burned.' },
+            { word: 'turn back', meaning: '돌아가다', sentence: 'Perhaps I should turn back.' }
+        ],
+        '06-again-2.webp': [
+            { word: 'tied back', meaning: '뒤로 묶은', sentence: 'His mother, her hair tied back.' },
+            { word: 'exactly as', meaning: '그대로', sentence: 'Exactly as on the day she left.' },
+            { word: 'get to one’s feet', meaning: '일어서다', sentence: 'Marco got to his feet again.' },
+            { word: 'shift', meaning: '고쳐 메다', sentence: 'He shifted the bundle on his shoulder.' }
+        ],
+        '07-final.webp': [
+            { word: 'ford', meaning: '강을 건너다', sentence: 'He forded rivers.' },
+            { word: 'blistered', meaning: '부르튼', sentence: 'The soles were blistered.' },
+            { word: 'trip', meaning: '걸려 넘어지다', sentence: 'He tripped on stones.' },
+            { word: 'scab', meaning: '딱지', sentence: 'There were scabs on his knees.' },
+            { word: 'take heart', meaning: '힘을 내다', sentence: 'Marco took heart at the sight.' }
+        ],
+        '07-final-2.webp': [
+            { word: 'come into view', meaning: '보이다', sentence: 'A few earth houses came into view.' },
+            { word: 'hang out washing', meaning: '빨래를 널다', sentence: 'A woman hanging out washing turned round.' },
+            { word: 'hammer', meaning: '쿵쾅거리다', sentence: "Marco's heart hammered." },
+            { word: 'out of breath', meaning: '숨이 가쁜', sentence: 'Marco was out of breath.' }
+        ],
+        '08-reunion.webp': [
+            { word: 'as white as paper', meaning: '종잇장처럼 하얀', sentence: 'Her face was as white as paper.' },
+            { word: 'operation', meaning: '수술', sentence: 'She needed an operation.' },
+            { word: 'let go of hope', meaning: '마음을 놓아 버리다', sentence: 'She had let go of hope already.' },
+            { word: 'kneel', meaning: '무릎을 꿇다', sentence: 'Marco knelt down beside the bed.' }
+        ],
+        '08-reunion-2.webp': [
+            { word: 'break off', meaning: '끊기다', sentence: 'Her words kept breaking off.' },
+            { word: 'take heart', meaning: '마음을 고쳐먹다', sentence: 'His mother took heart again.' },
+            { word: 'little by little', meaning: '조금씩', sentence: 'Little by little she grew stronger.' },
+            { word: 'take ship', meaning: '배를 타다', sentence: 'The two of them took ship together.' }
+        ],
+        'end.webp': [
+            { word: 'invent', meaning: '지어내다', sentence: 'None of that was invented.' },
+            { word: 'by ship', meaning: '배로', sentence: 'Letters went by ship.' },
+            { word: 'one step behind', meaning: '한발 늦은', sentence: 'Marco is one step behind.' },
+            { word: 'give up', meaning: '그만두다', sentence: 'Where did Marco most want to give up?' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -600,6 +1210,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -608,7 +1219,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -620,7 +1231,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -654,4 +1265,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
