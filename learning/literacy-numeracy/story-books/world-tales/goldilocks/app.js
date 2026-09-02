@@ -309,16 +309,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '곰 세 마리와 금발 아이',
+    intro: [
+        '곰 세 마리 이야기는 영국에서 오래전부터 전해 오던 이야기예요. 1837년에 로버트 사우디가 책으로 옮겨 적으면서 널리 알려졌답니다.',
+        '처음에는 주인공이 할머니였는데, 뒤에 금발 머리 아이로 바뀌었어요. 이야기가 전해지면서 이렇게 조금씩 달라지기도 한답니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🐻')}
             </div>
             <div class="story-page-right">
-                <h1>곰 세 마리와 금발 아이</h1>
-                <p>곰 세 마리 이야기는 영국에서 오래전부터 전해 오던 이야기예요. 1837년에 로버트 사우디가 책으로 옮겨 적으면서 널리 알려졌답니다.</p>
-                <p>처음에는 주인공이 할머니였는데, 뒤에 금발 머리 아이로 바뀌었어요. 이야기가 전해지면서 이렇게 조금씩 달라지기도 한답니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -333,8 +342,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -344,8 +353,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -355,22 +364,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -420,9 +430,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -433,7 +443,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -505,7 +515,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -514,34 +524,631 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Goldilocks and the Three Bears',
+        intro: [
+            "The story of the three bears has been told in England for a very long time. It became widely known when Robert Southey wrote it down in a book in 1837.",
+            "In the first version the visitor was an old woman, and only later did she become a girl with golden hair. Stories do change little by little as they are passed along."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · Porridge Too Hot',
+            beats: [
+                {
+                    art: '01-porridge.webp',
+                    emoji: '🐻',
+                    left: [
+                        "There was a log house in a wood thick with birch trees, and three bears lived in it —",
+                        "Father Bear, Mother Bear and Baby Bear.",
+                        "Father Bear was very big indeed.",
+                        "Mother Bear was a little smaller.",
+                        "And Baby Bear was small and round.",
+                        "The three of them got on very well."
+                    ],
+                    right: [
+                        "There were three of everything in that house —",
+                        "three bowls, three chairs, three beds:",
+                        "a big one, a middle one and a very small one.",
+                        "One morning Mother Bear made porridge",
+                        "and served it out steaming into the three bowls.",
+                        "She did not forget a spoonful of honey on each."
+                    ]
+                },
+                {
+                    art: '01-porridge-2.webp',
+                    emoji: '🐻',
+                    left: [
+                        "Baby Bear picked up his spoon first.",
+                        "He took one mouthful and jumped up.",
+                        "\"Ow, hot! I've burnt my tongue!\"",
+                        "Father Bear laughed out loud.",
+                        "\"What a hurry you are in.\" Baby Bear put out his tongue and fanned it with his paw."
+                    ],
+                    right: [
+                        "Mother Bear set the bowls out on the table.",
+                        "\"Let us go for a walk, then, until it cools.\"",
+                        "And the three of them went off into the wood together.",
+                        "But they forgot to lock the door.",
+                        "It was left standing a little open.",
+                        "And that was how the day's business began."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Door Is Open',
+            beats: [
+                {
+                    art: '02-door.webp',
+                    emoji: '🚪',
+                    left: [
+                        "About that time there was a child wandering in the wood,",
+                        "a child whose hair shone gold.",
+                        "She had come out that morning to pick flowers, and got lost.",
+                        "Trees this way and trees that way.",
+                        "However far she walked it looked like the same place.",
+                        "Her legs ached and she was very hungry.",
+                        "She was near to crying."
+                    ],
+                    right: [
+                        "\"Mother, I'm here!\"",
+                        "The wood did not answer her at all.",
+                        "And then she saw a roof between the trees.",
+                        "She ran toward it, glad of it.",
+                        "It was a pretty house built of logs.",
+                        "She knocked at the door.",
+                        "\"Hello? Is anybody at home?\""
+                    ]
+                },
+                {
+                    art: '02-door-2.webp',
+                    emoji: '🚪',
+                    left: [
+                        "Call as she might, there was no answer.",
+                        "So she went up to the window and looked in.",
+                        "White steam was rising off the table.",
+                        "A good smell came out through the crack of the door,",
+                        "and her stomach rumbled.",
+                        "It was hard to bear.",
+                        "She swallowed hard",
+                        "and gave the door a small push."
+                    ],
+                    right: [
+                        "The door swung open.",
+                        "\"Just a peep. Only a moment.\"",
+                        "She went in on tiptoe.",
+                        "A floorboard creaked under her,",
+                        "and she stopped dead where she was.",
+                        "Her heart was going pit-a-pat."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · Three Bowls of Porridge',
+            beats: [
+                {
+                    art: '03-bowls.webp',
+                    emoji: '🥣',
+                    left: [
+                        "There were three bowls of porridge on the table —",
+                        "a big bowl, a middle bowl and a very small one.",
+                        "She was too hungry to stop herself.",
+                        "First she took a spoonful from the biggest bowl,",
+                        "the one with the steam rolling off it.",
+                        "And straight away she had her mouth open, fanning it."
+                    ],
+                    right: [
+                        "\"Ugh, far too hot!\"",
+                        "Next she tried the middle bowl.",
+                        "The moment the spoon went in her mouth",
+                        "her tongue went cold.",
+                        "She screwed up her face.",
+                        "\"And this one is far too cold.\" That porridge had gone quite cold already."
+                    ]
+                },
+                {
+                    art: '03-bowls-2.webp',
+                    emoji: '🥣',
+                    left: [
+                        "Last of all she tried the smallest bowl.",
+                        "Her eyes went round.",
+                        "\"Oh — that's just right!\"",
+                        "It was neither hot nor cold.",
+                        "And she cleared the bowl out entirely,",
+                        "scraping the bottom with the spoon.",
+                        "Then she patted her stomach."
+                    ],
+                    right: [
+                        "\"That's better.\"",
+                        "She did not notice the porridge round her mouth,",
+                        "and wiped it off with the back of her hand.",
+                        "It never crossed her mind that it was Baby Bear's porridge.",
+                        "She left the empty bowl where it was and got up.",
+                        "It did not occur to her to clear it away."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · Three Chairs',
+            beats: [
+                {
+                    art: '04-chairs.webp',
+                    emoji: '🪑',
+                    left: [
+                        "With her stomach full she looked for somewhere to sit.",
+                        "There were three chairs by the fire —",
+                        "a big one, a middle one and a small one, again.",
+                        "First she climbed the big chair.",
+                        "She got up onto it with some trouble, and her feet did not reach the floor.",
+                        "It was so high up that it made her dizzy.",
+                        "And the back was as hard as a plank."
+                    ],
+                    right: [
+                        "\"Much too hard.\"",
+                        "So she moved to the middle chair.",
+                        "And the cushion was so soft that she sank right down into it.",
+                        "\"And this one is much too squashy.\" She only just got herself out of it and stood up."
+                    ]
+                },
+                {
+                    art: '04-chairs-2.webp',
+                    emoji: '🪑',
+                    left: [
+                        "Then she sat down in the smallest chair.",
+                        "It took her exactly, and her back fitted the back of it.",
+                        "\"This one — just right!\"",
+                        "She swung her legs happily,",
+                        "her toes touching the floor and lifting again.",
+                        "She rocked herself back and forth and even sang.",
+                        "And that was the trouble."
+                    ],
+                    right: [
+                        "Creak. Creak.",
+                        "The chair kept making a noise.",
+                        "And then one leg snapped clean off.",
+                        "Crash!",
+                        "The chair went down under her,",
+                        "and she landed hard on the floor.",
+                        "The broken leg went rolling away."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · Three Beds',
+            beats: [
+                {
+                    art: '05-beds.webp',
+                    emoji: '🛏️',
+                    left: [
+                        "She looked at the broken chair and stopped short.",
+                        "And still she did not say sorry.",
+                        "Nobody had seen her, after all.",
+                        "There was no way of being found out, she thought.",
+                        "So this time she crept up the stairs,",
+                        "up a narrow wooden staircase."
+                    ],
+                    right: [
+                        "There were three beds in a row in the attic room.",
+                        "She climbed onto the big bed first and lay down.",
+                        "But the head of it was far too high.",
+                        "It made her neck ache and she could not stay there.",
+                        "\"That will not do.\" She scrambled down off the bed again."
+                    ]
+                },
+                {
+                    art: '05-beds-2.webp',
+                    emoji: '🛏️',
+                    left: [
+                        "She moved to the middle bed and lay down.",
+                        "This time the foot of it was far too soft,",
+                        "and she kept sliding down it.",
+                        "So she got up again,",
+                        "and struggled a good while with the blanket wound round her feet.",
+                        "Last of all she lay down in the small bed.",
+                        "The pillow smelled of grass.",
+                        "\"Like our pillow at home.\""
+                    ],
+                    right: [
+                        "This time it was neither too high nor too low,",
+                        "and the blanket fitted her exactly.",
+                        "\"Just right…\"",
+                        "The sunlight coming in at the window was warm.",
+                        "She gave an enormous yawn.",
+                        "And there she fell fast asleep."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Bears Come Home',
+            beats: [
+                {
+                    art: '06-return.webp',
+                    emoji: '🍯',
+                    left: [
+                        "About then the three bears finished their walk.",
+                        "\"The porridge will have cooled nicely by now.\"",
+                        "The three of them came home in good spirits.",
+                        "And the door was standing wide open.",
+                        "Father Bear tilted his head.",
+                        "\"I shut that when we went out.\""
+                    ],
+                    right: [
+                        "Baby Bear took hold of Mother Bear's arm.",
+                        "Father Bear looked at the table and stopped.",
+                        "There was a spoon standing in his bowl.",
+                        "Father Bear said in his deep voice,",
+                        "\"Who has been eating my porridge?\"",
+                        "Mother Bear straightened her spectacles and looked into her own bowl.",
+                        "There was a little less in it than there had been."
+                    ]
+                },
+                {
+                    art: '06-return-2.webp',
+                    emoji: '🍯',
+                    left: [
+                        "\"Somebody has been eating mine as well.\"",
+                        "Baby Bear ran to his own bowl.",
+                        "There was nothing at all in it.",
+                        "He even turned it upside down.",
+                        "There were only spoon marks on the bottom,",
+                        "and not one drop of honey left."
+                    ],
+                    right: [
+                        "Baby Bear's lip began to come out.",
+                        "\"Somebody has eaten all of mine!\"",
+                        "And he burst into tears.",
+                        "Mother Bear patted his back.",
+                        "The three of them looked at one another.",
+                        "Somebody had plainly been in that house."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Broken Chair',
+            beats: [
+                {
+                    art: '07-broken.webp',
+                    emoji: '💥',
+                    left: [
+                        "The three of them went over to the fire.",
+                        "The cushion of Father Bear's chair was crooked.",
+                        "\"Who has been sitting in my chair?\"",
+                        "The middle of Mother Bear's chair had gone right down.",
+                        "\"Somebody has been sitting in mine as well.\"",
+                        "And Baby Bear looked toward his own chair."
+                    ],
+                    right: [
+                        "And there he went stiff where he stood.",
+                        "His eyes got rounder and rounder.",
+                        "The little chair lay on its side with a leg broken off.",
+                        "\"Somebody has broken my chair!\"",
+                        "And Baby Bear burst into tears again.",
+                        "Father Bear picked up the broken leg."
+                    ]
+                },
+                {
+                    art: '07-broken-2.webp',
+                    emoji: '💥',
+                    left: [
+                        "Father Bear sniffed at the air.",
+                        "\"I think they are still in the house.\"",
+                        "The three of them held their breath.",
+                        "Baby Bear only blinked.",
+                        "And they went carefully up the stairs, keeping their feet quiet.",
+                        "The stairs creaked all the same.",
+                        "Baby Bear kept close behind Father Bear."
+                    ],
+                    right: [
+                        "His fur was standing up.",
+                        "Mother Bear patted his back.",
+                        "\"I'm frightened.\"",
+                        "\"I shall go first.\" And Father Bear stepped out in front.",
+                        "The three of them stood at the attic door.",
+                        "There was the sound of soft breathing inside."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Eye to Eye',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '👀',
+                    left: [
+                        "The attic door swung open.",
+                        "Father Bear looked at his own bed.",
+                        "The blanket was all rumpled,",
+                        "and the pillow was crooked.",
+                        "\"Who has been lying in my bed?\"",
+                        "The foot of Mother Bear's bed was pressed down too,",
+                        "and the blanket pushed over to one side."
+                    ],
+                    right: [
+                        "\"Somebody has been lying in mine as well.\"",
+                        "And then Baby Bear pointed at his own bed.",
+                        "His small finger was shaking.",
+                        "\"There — they're still in it!\"",
+                        "All three of them looked into the little bed at once.",
+                        "Golden hair was showing above the blanket."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '👀',
+                    left: [
+                        "At the sound the child's eyes flew open.",
+                        "And there in front of her were three bears.",
+                        "She screamed and jumped up.",
+                        "\"Aaah!\"",
+                        "She kicked off the blanket and ran to the window,",
+                        "went straight out of it and rolled over on the grass."
+                    ],
+                    right: [
+                        "And away she ran into the wood without once looking back.",
+                        "The three bears looked out of the window after her.",
+                        "And after a while Baby Bear spoke.",
+                        "\"I think she was hungry.\"",
+                        "She never went near that house again.",
+                        "And the bears had to make a new chair."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why did the bears go out for a walk?',
+            choices: ['To look for honey', 'To let the porridge cool', 'To find the lost child'],
+            answer: 1
+        },
+        {
+            q: 'How did the child get into the house?',
+            choices: ['The door had been left open', 'She climbed in the window', 'Baby Bear let her in'],
+            answer: 0
+        },
+        {
+            q: 'What was wrong with the middle bowl?',
+            choices: ['It was too hot', 'It was empty', 'It had gone cold'],
+            answer: 2
+        },
+        {
+            q: 'What happened to the smallest chair?',
+            choices: ['The cushion sank', 'A leg snapped off and it went down', 'It was too hard to sit on'],
+            answer: 1
+        },
+        {
+            q: 'Why did she not say sorry about the chair?',
+            choices: ['She thought nobody had seen her', 'She did not notice it was broken', 'She was in too much of a hurry'],
+            answer: 0
+        },
+        {
+            q: 'What was wrong with the middle bed?',
+            choices: ['The head was too high', 'It was too small for her', 'The foot was so soft she kept sliding down'],
+            answer: 2
+        },
+        {
+            q: 'What did Baby Bear say after she ran away?',
+            choices: ['That she should be caught', 'That he thought she had been hungry', 'That he wanted a new chair'],
+            answer: 1
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐻',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "In the first written version it is not a golden-haired girl who goes in but an old woman. It came out in England about a hundred and eighty years ago.",
+                    "The child chose in the same order all three times: the big one, the middle one, the small one. And all three times the small one was right.",
+                    "The small one was right because she was the smallest. She was not picking the best thing. She was picking the thing that fitted her.",
+                    "She stops short when she sees the broken chair. And then she walks on past it, because nobody had seen her."
+                ],
+                right: [
+                    "The three bears are not fierce animals. They came home from a walk and looked at their own table. If anyone was startled, it was the bears.",
+                    "What should she have done about the broken chair?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-porridge.webp': [
+            { word: 'birch', meaning: '자작나무', sentence: 'A wood thick with birch trees.' },
+            { word: 'get on well', meaning: '사이좋게 지내다', sentence: 'The three of them got on very well.' },
+            { word: 'porridge', meaning: '죽', sentence: 'One morning Mother Bear made porridge.' },
+            { word: 'serve out', meaning: '나누어 푸다', sentence: 'She served it out into the three bowls.' },
+            { word: 'spoonful', meaning: '한 숟가락', sentence: 'A spoonful of honey on each.' }
+        ],
+        '01-porridge-2.webp': [
+            { word: 'mouthful', meaning: '한 입', sentence: 'He took one mouthful and jumped up.' },
+            { word: 'burn one’s tongue', meaning: '혀를 데다', sentence: "I've burnt my tongue!" },
+            { word: 'in a hurry', meaning: '성미가 급한', sentence: 'What a hurry you are in.' },
+            { word: 'fan', meaning: '부채질하다', sentence: 'He fanned it with his paw.' },
+            { word: 'stand open', meaning: '열린 채로 있다', sentence: 'It was left standing a little open.' }
+        ],
+        '02-door.webp': [
+            { word: 'wander', meaning: '돌아다니다', sentence: 'A child wandering in the wood.' },
+            { word: 'get lost', meaning: '길을 잃다', sentence: 'She came out to pick flowers, and got lost.' },
+            { word: 'ache', meaning: '아프다', sentence: 'Her legs ached.' },
+            { word: 'near to crying', meaning: '울고 싶은', sentence: 'She was near to crying.' },
+            { word: 'glad of', meaning: '반가워서', sentence: 'She ran toward it, glad of it.' }
+        ],
+        '02-door-2.webp': [
+            { word: 'call as she might', meaning: '아무리 불러도', sentence: 'Call as she might, there was no answer.' },
+            { word: 'rumble', meaning: '꼬르륵거리다', sentence: 'Her stomach rumbled.' },
+            { word: 'bear', meaning: '참다', sentence: 'It was hard to bear.' },
+            { word: 'on tiptoe', meaning: '발끝으로', sentence: 'She went in on tiptoe.' },
+            { word: 'pit-a-pat', meaning: '콩닥콩닥', sentence: 'Her heart was going pit-a-pat.' }
+        ],
+        '03-bowls.webp': [
+            { word: 'stop oneself', meaning: '참다', sentence: 'She was too hungry to stop herself.' },
+            { word: 'roll off', meaning: '뭉게뭉게 오르다', sentence: 'The one with the steam rolling off it.' },
+            { word: 'straight away', meaning: '그러자마자', sentence: 'Straight away she had her mouth open.' },
+            { word: 'screw up one’s face', meaning: '얼굴을 찌푸리다', sentence: 'She screwed up her face.' }
+        ],
+        '03-bowls-2.webp': [
+            { word: 'just right', meaning: '딱 좋은', sentence: "Oh — that's just right!" },
+            { word: 'clear out', meaning: '싹 비우다', sentence: 'She cleared the bowl out entirely.' },
+            { word: 'scrape', meaning: '긁다', sentence: 'Scraping the bottom with the spoon.' },
+            { word: 'cross one’s mind', meaning: '생각이 나다', sentence: 'It never crossed her mind.' },
+            { word: 'clear away', meaning: '치우다', sentence: 'It did not occur to her to clear it away.' }
+        ],
+        '04-chairs.webp': [
+            { word: 'reach', meaning: '닿다', sentence: 'Her feet did not reach the floor.' },
+            { word: 'dizzy', meaning: '어지러운', sentence: 'It was so high up that it made her dizzy.' },
+            { word: 'plank', meaning: '나무판', sentence: 'The back was as hard as a plank.' },
+            { word: 'squashy', meaning: '물렁물렁한', sentence: 'This one is much too squashy.' },
+            { word: 'sink into', meaning: '푹 꺼지다', sentence: 'She sank right down into it.' }
+        ],
+        '04-chairs-2.webp': [
+            { word: 'take exactly', meaning: '딱 맞다', sentence: 'It took her exactly.' },
+            { word: 'swing one’s legs', meaning: '다리를 흔들다', sentence: 'She swung her legs happily.' },
+            { word: 'rock', meaning: '몸을 흔들다', sentence: 'She rocked herself back and forth.' },
+            { word: 'snap off', meaning: '뚝 부러지다', sentence: 'One leg snapped clean off.' }
+        ],
+        '05-beds.webp': [
+            { word: 'stop short', meaning: '멈칫하다', sentence: 'She looked at the broken chair and stopped short.' },
+            { word: 'be found out', meaning: '들키다', sentence: 'There was no way of being found out.' },
+            { word: 'creep up', meaning: '슬금슬금 올라가다', sentence: 'She crept up the stairs.' },
+            { word: 'attic', meaning: '다락방', sentence: 'Three beds in a row in the attic room.' },
+            { word: 'scramble down', meaning: '낑낑거리며 내려오다', sentence: 'She scrambled down off the bed.' }
+        ],
+        '05-beds-2.webp': [
+            { word: 'slide down', meaning: '미끄러지다', sentence: 'She kept sliding down it.' },
+            { word: 'wind round', meaning: '감기다', sentence: 'The blanket wound round her feet.' },
+            { word: 'smell of', meaning: '~ 냄새가 나다', sentence: 'The pillow smelled of grass.' },
+            { word: 'yawn', meaning: '하품', sentence: 'She gave an enormous yawn.' }
+        ],
+        '06-return.webp': [
+            { word: 'in good spirits', meaning: '기분 좋게', sentence: 'They came home in good spirits.' },
+            { word: 'tilt one’s head', meaning: '고개를 갸웃하다', sentence: 'Father Bear tilted his head.' },
+            { word: 'deep voice', meaning: '굵은 목소리', sentence: 'Father Bear said in his deep voice.' },
+            { word: 'straighten', meaning: '고쳐 쓰다', sentence: 'Mother Bear straightened her spectacles.' }
+        ],
+        '06-return-2.webp': [
+            { word: 'upside down', meaning: '뒤집어', sentence: 'He even turned it upside down.' },
+            { word: 'mark', meaning: '자국', sentence: 'There were only spoon marks on the bottom.' },
+            { word: 'lip comes out', meaning: '입술이 삐죽 나오다', sentence: "Baby Bear's lip began to come out." },
+            { word: 'plainly', meaning: '분명히', sentence: 'Somebody had plainly been in that house.' }
+        ],
+        '07-broken.webp': [
+            { word: 'crooked', meaning: '삐뚜름한', sentence: 'The cushion was crooked.' },
+            { word: 'go down', meaning: '푹 꺼지다', sentence: 'The middle had gone right down.' },
+            { word: 'go stiff', meaning: '굳어 버리다', sentence: 'He went stiff where he stood.' },
+            { word: 'on its side', meaning: '옆으로 뒹구는', sentence: 'The little chair lay on its side.' }
+        ],
+        '07-broken-2.webp': [
+            { word: 'sniff', meaning: '킁킁거리다', sentence: 'Father Bear sniffed at the air.' },
+            { word: 'hold one’s breath', meaning: '숨을 죽이다', sentence: 'The three of them held their breath.' },
+            { word: 'keep close behind', meaning: '바짝 붙다', sentence: 'Baby Bear kept close behind Father Bear.' },
+            { word: 'stand up', meaning: '곤두서다', sentence: 'His fur was standing up.' },
+            { word: 'step out in front', meaning: '앞으로 나서다', sentence: 'Father Bear stepped out in front.' }
+        ],
+        '08-ending.webp': [
+            { word: 'rumpled', meaning: '헝클어진', sentence: 'The blanket was all rumpled.' },
+            { word: 'press down', meaning: '눌리다', sentence: 'The foot of the bed was pressed down.' },
+            { word: 'point at', meaning: '가리키다', sentence: 'Baby Bear pointed at his own bed.' },
+            { word: 'show', meaning: '보이다', sentence: 'Golden hair was showing above the blanket.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'fly open', meaning: '번쩍 뜨이다', sentence: "The child's eyes flew open." },
+            { word: 'kick off', meaning: '걷어차다', sentence: 'She kicked off the blanket.' },
+            { word: 'roll over', meaning: '구르다', sentence: 'And rolled over on the grass.' },
+            { word: 'go near', meaning: '가까이 가다', sentence: 'She never went near that house again.' }
+        ],
+        'end.webp': [
+            { word: 'version', meaning: '판', sentence: 'In the first written version.' },
+            { word: 'in the same order', meaning: '같은 순서로', sentence: 'She chose in the same order all three times.' },
+            { word: 'fit', meaning: '맞다', sentence: 'She was picking the thing that fitted her.' },
+            { word: 'walk past', meaning: '그냥 지나가다', sentence: 'She walks on past it.' },
+            { word: 'fierce', meaning: '사나운', sentence: 'The three bears are not fierce animals.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -606,6 +1213,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -614,7 +1222,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -626,7 +1234,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -660,4 +1268,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
