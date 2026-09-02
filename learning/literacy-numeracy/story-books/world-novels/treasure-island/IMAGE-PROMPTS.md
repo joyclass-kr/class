@@ -54,9 +54,14 @@ is calm, not because he looks it.
 Blind Pew: a bent old blind man in an enormous ragged hooded sea-cloak far too
 big for him, green shade over his eyes, tapping a stick.
 Jim's mother: a thin tired woman in a plain apron and white cap.
-Long John Silver: a very tall powerful man about fifty, left leg gone at the
-hip, a wooden crutch under his left arm, broad sun-browned intelligent face,
-almost always smiling, a green parrot on his shoulder.
+Long John Silver: a very tall powerful man about fifty, LEFT LEG COMPLETELY
+GONE AT THE HIP - the empty left trouser leg is pinned or folded up, there is
+NO left foot, NO boot and NO wooden peg on that side. He stands and walks on
+his one right leg and a wooden crutch under his left arm. This missing leg is
+not a mark of evil, it is a plain fact of the story - the boy has been warned
+all his life about "the one-legged sailor", so it must be plainly visible in
+every picture he appears in. Broad sun-browned intelligent face, almost always
+smiling, a green parrot on his shoulder.
 Squire Trelawney: a large loud red-faced gentleman in a fine coat.
 Captain Smollett: a compact stern officer in a plain blue naval coat, sharp
 eyes, never smiling.
