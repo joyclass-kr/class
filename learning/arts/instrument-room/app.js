@@ -2076,7 +2076,13 @@
             state.stringPreset = "clean";
             elements.toneSlider.value = 69; elements.muteSlider.value = 5; elements.pickSlider.value = 24; elements.driveSlider.value = 12;
         } else if (instrument === "piano") state.keyboardOctave = 4;
-        if (state.currentModel && Array.isArray(state.currentModel.range)) {`r`n            const start = state.currentModel.range[0];`r`n            const end = state.currentModel.range[1];`r`n            const target = start + Math.round((end - start) * 0.2);`r`n            const cMidi = Math.max(0, Math.min(108, Math.round(target / 12) * 12));`r`n            state.keyboardOctave = Math.max(0, Math.min(7, Math.round(cMidi / 12) - 1));`r`n        }
+        if (state.currentModel && Array.isArray(state.currentModel.range)) {
+            const start = state.currentModel.range[0];
+            const end = state.currentModel.range[1];
+            const target = start + Math.round((end - start) * 0.2);
+            const cMidi = Math.max(0, Math.min(108, Math.round(target / 12) * 12));
+            state.keyboardOctave = Math.max(0, Math.min(7, Math.round(cMidi / 12) - 1));
+        }
         renderArticulations();
         syncRangeOutputs();
         if (instrument !== "drums" || isPitchedPercussion()) renderKeyboard();
