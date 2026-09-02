@@ -273,16 +273,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '잠자는 숲속의 공주',
+    intro: [
+        '잠자는 숲속의 공주는 프랑스의 샤를 페로가 1697년에 펴낸 이야기집에 처음 실렸어요. 백여 년 뒤 독일의 그림 형제도 자기들이 모은 옛이야기집에 비슷한 이야기를 담았답니다.',
+        '초대받지 못한 손님이 잔치에 나타나 저주를 내린다는 이야기 짜임은 유럽 여러 나라의 옛이야기에 되풀이해 나와요. 잔치에 누구를 부르고 누구를 빠뜨리는가가 그만큼 중요한 일이었기 때문이지요.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🌹')}
             </div>
             <div class="story-page-right">
-                <h1>잠자는 숲속의 공주</h1>
-                <p>잠자는 숲속의 공주는 프랑스의 샤를 페로가 1697년에 펴낸 이야기집에 처음 실렸어요. 백여 년 뒤 독일의 그림 형제도 자기들이 모은 옛이야기집에 비슷한 이야기를 담았답니다.</p>
-                <p>초대받지 못한 손님이 잔치에 나타나 저주를 내린다는 이야기 짜임은 유럽 여러 나라의 옛이야기에 되풀이해 나와요. 잔치에 누구를 부르고 누구를 빠뜨리는가가 그만큼 중요한 일이었기 때문이지요.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -297,8 +306,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -308,8 +317,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -319,22 +328,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -384,9 +394,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -397,7 +407,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -469,7 +479,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -478,34 +488,501 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Sleeping Beauty',
+        intro: [
+            "The Sleeping Beauty first appeared in a book of tales published in France by Charles Perrault in 1697. About a hundred years later the Brothers Grimm put a very similar story into the collection they gathered in Germany.",
+            "A guest who was not invited turns up at the feast and lays a curse — that shape comes back again and again in old European stories. Who was asked to a feast, and who was left out, mattered a great deal in those days."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Long-Awaited Princess',
+            beats: [
+                {
+                    art: '01-birth.webp',
+                    emoji: '👑',
+                    left: [
+                        "Year after year the king and queen made the same wish. They had no child, and the palace was always quiet.",
+                        "\"If only we had a daughter.\"",
+                        "And so a good many years went by.",
+                        "Then one spring a daughter was born at last, and the whole country was in an uproar."
+                    ],
+                    right: [
+                        "The bells rang all night long, and the king decided to hold a great feast.",
+                        "\"Invite every one of the fairies.\"",
+                        "There were thirteen fairies in that country.",
+                        "But an official came to him looking troubled.",
+                        "\"There are only twelve golden plates, Your Majesty.\""
+                    ]
+                },
+                {
+                    art: '01-birth-2.webp',
+                    emoji: '👑',
+                    left: [
+                        "\"Then invite twelve.\"",
+                        "The king thought nothing of it, and only twelve invitations went out.",
+                        "One fairy had been left off.",
+                        "At last the day of the feast came, and the great hall filled with people."
+                    ],
+                    right: [
+                        "The fairies came forward one at a time and gave the baby their gifts.",
+                        "\"I give her beauty.\"",
+                        "\"I give her a lovely voice.\"",
+                        "\"I give her a kind heart.\"",
+                        "The hall was full of laughter."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Guest Who Was Not Asked',
+            beats: [
+                {
+                    art: '02-curse.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "The eleventh fairy stepped back. Only one was left to go.",
+                        "Then the door flew open with a bang and a cold wind swept through the hall.",
+                        "Every candle flickered at once.",
+                        "It was the thirteenth fairy."
+                    ],
+                    right: [
+                        "\"And why was I not invited?\"",
+                        "The hall went dead quiet. The king could not say a word.",
+                        "The fairy walked slowly forward and stood in front of the cradle.",
+                        "For a long while she looked down at the child without speaking."
+                    ]
+                },
+                {
+                    art: '02-curse-2.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "\"I shall give her a gift as well.\"",
+                        "Her voice was cold.",
+                        "\"On the day the princess turns fifteen,\"",
+                        "\"she shall prick her finger on a spindle.\"",
+                        "\"And she shall fall down where she stands.\"",
+                        "The queen screamed."
+                    ],
+                    right: [
+                        "The king sprang out of his chair.",
+                        "But the fairy simply turned and was gone through the door.",
+                        "The hall was frozen. Nobody could move, and not even a golden plate clinked.",
+                        "The king ran to the cradle. The baby knew nothing of any of it and was fast asleep."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Last Fairy's Gift",
+            beats: [
+                {
+                    art: '03-softened.webp',
+                    emoji: '✨',
+                    left: [
+                        "Then the twelfth fairy came forward. She had not yet given her gift.",
+                        "\"I cannot undo what has been said.\"",
+                        "\"But I can change it.\"",
+                        "The hall began to breathe again."
+                    ],
+                    right: [
+                        "\"The princess will fall,\"",
+                        "\"but she will not die.\"",
+                        "\"She will only sleep for a hundred years.\"",
+                        "\"And she will most certainly wake.\"",
+                        "The queen caught hold of the fairy's hand, and the tears came down."
+                    ]
+                },
+                {
+                    art: '03-softened-2.webp',
+                    emoji: '✨',
+                    left: [
+                        "That very day the king gave his order.",
+                        "\"Destroy every spindle in the kingdom.\"",
+                        "Soldiers went from house to house, and the spinning wheels were carted away.",
+                        "They were piled up in the square and burnt. The smoke went up for days."
+                    ],
+                    right: [
+                        "All that while the princess was growing up, exactly as the fairies had promised.",
+                        "She was lovely, she was kind, and she sang beautifully. Everybody adored her.",
+                        "So fifteen years went by.",
+                        "And still nobody had forgotten that day."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Room at the Top of the Tower',
+            beats: [
+                {
+                    art: '04-spindle.webp',
+                    emoji: '🧵',
+                    left: [
+                        "At last it was the princess's fifteenth birthday.",
+                        "As it happened, the king and queen were away from the castle that day, and the princess wandered about it on her own. There was a great deal of it she had never seen.",
+                        "At the north end stood an old tower with a narrow stair going up. She climbed it one careful step at a time."
+                    ],
+                    right: [
+                        "There was thick dust on every step.",
+                        "At the top was a little door with a rusty key still in the lock.",
+                        "She turned it, and it gave a creak.",
+                        "The door swung slowly open."
+                    ]
+                },
+                {
+                    art: '04-spindle-2.webp',
+                    emoji: '🧵',
+                    left: [
+                        "An old woman was sitting in the room, turning something round and round.",
+                        "\"What is that, grandmother?\"",
+                        "\"A spinning wheel, my dear. It spins the thread.\"",
+                        "The princess had never seen such a thing in her life. The thread came running out from under the old woman's fingers."
+                    ],
+                    right: [
+                        "\"Might I try it?\"",
+                        "\"Of course. Come and sit here.\"",
+                        "The princess reached out her hand. And in that moment the point of the spindle touched her finger.",
+                        "\"Oh!\"",
+                        "A tiny drop of blood came up. And down she fell, where she stood."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Whole Castle Sleeps',
+            beats: [
+                {
+                    art: '05-sleep.webp',
+                    emoji: '😴',
+                    left: [
+                        "At that instant the whole castle came to a stop.",
+                        "In the kitchen the cook stopped, with the ladle still lifted in the air.",
+                        "The dog in the yard fell asleep lying down, and the pigeon on the roof stayed with its wings spread. Even the fire in the hearth stood still.",
+                        "The king had just come home, and it caught him too."
+                    ],
+                    right: [
+                        "He fell asleep in the middle of stepping over the threshold.",
+                        "The wind dropped dead away.",
+                        "The fountain in the garden held its water standing straight up.",
+                        "Not one leaf stirred, and the castle went very quiet.",
+                        "Only the sound of even breathing was left. And so it would stay for a hundred years."
+                    ]
+                },
+                {
+                    art: '05-sleep-2.webp',
+                    emoji: '😴',
+                    left: [
+                        "By and by a hedge of thorns began to grow up all round the castle. It stretched further every day.",
+                        "It covered the walls and hid the windows, and before long it reached the roof.",
+                        "The thorns came out sharp as spear points, and nobody could get inside."
+                    ],
+                    right: [
+                        "And the sun rose and set, over and over.",
+                        "In spring, roses came out on the hedge.",
+                        "In winter, the snow lay deep on top of it. And in the village they told this story:",
+                        "\"There's a princess asleep in there.\"",
+                        "And so a hundred years went by."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Through the Thorns',
+            beats: [
+                {
+                    art: '06-prince.webp',
+                    emoji: '🌹',
+                    left: [
+                        "It was the hundredth year when a prince happened to pass through that country. In the village he heard the tale of the hedge of thorns.",
+                        "\"There's a castle in there?\"",
+                        "\"Plenty of men have tried to get in.\"",
+                        "\"Not one of them ever managed it.\""
+                    ],
+                    right: [
+                        "The prince walked up to the hedge. The thorns were woven together in a thick tangle.",
+                        "He was reaching for his sword when the hedge parted of its own accord.",
+                        "One after another the thorns turned into flowers, and a path opened wide in front of him."
+                    ]
+                },
+                {
+                    art: '06-prince-2.webp',
+                    emoji: '🌹',
+                    left: [
+                        "The prince walked in along that path. The dog in the yard lay asleep, and in the kitchen the cook was standing with the ladle still in his hand.",
+                        "Dust lay thick over everything, and cobwebs hung from every candlestick.",
+                        "The prince walked quietly, went up the stairs, and opened one door after another."
+                    ],
+                    right: [
+                        "\"They are all asleep.\"",
+                        "In every room, people lay just as they had been.",
+                        "At the north end stood an old tower with a narrow stair going up.",
+                        "The prince climbed it slowly, one step at a time, and the stairs creaked under his feet."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · A Morning a Hundred Years Late',
+            beats: [
+                {
+                    art: '07-wake.webp',
+                    emoji: '🔔',
+                    left: [
+                        "It was the room at the top of the tower. The door stood half open, and the morning sun came slanting in at the window.",
+                        "The princess lay asleep there, exactly as she had been a hundred years before. Only the dust on the windowsill told of the years.",
+                        "The prince stood in front of her for a long while.",
+                        "Then a sound came from somewhere in the castle."
+                    ],
+                    right: [
+                        "Tick, tick, tick.",
+                        "The clock that had stopped was going again. Downstairs, people were stirring.",
+                        "The princess's fingers gave a twitch.",
+                        "And then she slowly opened her eyes.",
+                        "\"Have I slept a long time?\""
+                    ]
+                },
+                {
+                    art: '07-wake-2.webp',
+                    emoji: '🔔',
+                    left: [
+                        "The castle was waking up. The dog in the yard jumped to its feet and barked, and the cook set down his ladle.",
+                        "\"Now then — what was I doing?\"",
+                        "The fire in the hearth burned up again, and the pigeon went flapping off the roof.",
+                        "The king and queen opened their eyes too."
+                    ],
+                    right: [
+                        "They looked at one another across the threshold, and the whole castle was full of voices.",
+                        "The hedge of thorns had gone, every bit of it. Only the roses were left where it had been.",
+                        "And that day there was a great feast in the castle."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why was one fairy left out of the feast?',
+            choices: ['There were only twelve golden plates', 'Nobody knew where she lived', 'She had quarrelled with the king'],
+            answer: 0
+        },
+        {
+            q: 'What did the thirteenth fairy say would happen?',
+            choices: ['The castle would be swallowed by thorns', 'The king would lose his kingdom', 'The princess would prick her finger on a spindle and fall'],
+            answer: 2
+        },
+        {
+            q: 'What could the twelfth fairy do about the curse?',
+            choices: ['Undo it completely', 'Change it, though she could not undo it', 'Pass it on to somebody else'],
+            answer: 1
+        },
+        {
+            q: 'What did the king order after the feast?',
+            choices: ['That every spindle in the kingdom be destroyed', 'That the tower be pulled down', 'That the princess never leave the castle'],
+            answer: 0
+        },
+        {
+            q: 'Why did the princess not know what a spinning wheel was?',
+            choices: ['She had never left her own room', 'The old woman had hidden it from her', 'They had all been burnt before she was born'],
+            answer: 2
+        },
+        {
+            q: 'How did the prince get through the hedge of thorns?',
+            choices: ['He cut a path with his sword', 'It parted on its own and the thorns turned to flowers', 'The villagers showed him a hidden gate'],
+            answer: 1
+        },
+        {
+            q: 'What told the prince that the castle was waking?',
+            choices: ['The stopped clock started ticking again', 'The dog began to bark', 'The roses came into bloom'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌹',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Perrault's version and the Grimms' version are not the same. The one in this book is closer to the Grimms'.",
+                    "Everything begins with there being only twelve golden plates. That is the whole reason the thirteenth fairy was not invited. A very small thing brought on a very large one.",
+                    "The king burnt every spinning wheel in the kingdom. And still there was one at the top of the tower. He only thought he had got rid of them all.",
+                    "That is also why the princess had never seen one. If you sweep a dangerous thing entirely out of sight, the chance to recognise it goes with it."
+                ],
+                right: [
+                    "The twelfth fairy could not undo the curse. She could only change it. Even in front of something you cannot stop, there is usually something left that you can do.",
+                    "Instead of burning the spinning wheels, what else could the king have done?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-birth.webp': [
+            { word: 'palace', meaning: '궁궐', sentence: 'They had no child, and the palace was always quiet.' },
+            { word: 'uproar', meaning: '들썩임, 큰 소동', sentence: 'The whole country was in an uproar.' },
+            { word: 'feast', meaning: '잔치', sentence: 'The king decided to hold a great feast.' },
+            { word: 'official', meaning: '신하, 관리', sentence: 'An official came to him looking troubled.' }
+        ],
+        '01-birth-2.webp': [
+            { word: 'think nothing of', meaning: '대수롭지 않게 여기다', sentence: 'The king thought nothing of it.' },
+            { word: 'invitation', meaning: '초대장', sentence: 'Only twelve invitations went out.' },
+            { word: 'leave off', meaning: '빠뜨리다', sentence: 'One fairy had been left off.' },
+            { word: 'come forward', meaning: '앞으로 나오다', sentence: 'The fairies came forward one at a time.' }
+        ],
+        '02-curse.webp': [
+            { word: 'step back', meaning: '물러서다', sentence: 'The eleventh fairy stepped back.' },
+            { word: 'sweep through', meaning: '훑고 지나가다', sentence: 'A cold wind swept through the hall.' },
+            { word: 'flicker', meaning: '흔들리다', sentence: 'Every candle flickered at once.' },
+            { word: 'cradle', meaning: '요람', sentence: 'She stood in front of the cradle.' }
+        ],
+        '02-curse-2.webp': [
+            { word: 'prick', meaning: '찌르다', sentence: 'She shall prick her finger on a spindle.' },
+            { word: 'spindle', meaning: '물레 바늘', sentence: 'She shall prick her finger on a spindle.' },
+            { word: 'spring out of', meaning: '벌떡 일어나다', sentence: 'The king sprang out of his chair.' },
+            { word: 'clink', meaning: '쨍그랑 소리 내다', sentence: 'Not even a golden plate clinked.' }
+        ],
+        '03-softened.webp': [
+            { word: 'undo', meaning: '지우다, 되돌리다', sentence: 'I cannot undo what has been said.' },
+            { word: 'most certainly', meaning: '반드시', sentence: 'She will most certainly wake.' },
+            { word: 'catch hold of', meaning: '덥석 잡다', sentence: "The queen caught hold of the fairy's hand." }
+        ],
+        '03-softened-2.webp': [
+            { word: 'destroy', meaning: '없애다', sentence: 'Destroy every spindle in the kingdom.' },
+            { word: 'cart away', meaning: '수레로 실어 가다', sentence: 'The spinning wheels were carted away.' },
+            { word: 'pile up', meaning: '쌓아 올리다', sentence: 'They were piled up in the square and burnt.' },
+            { word: 'adore', meaning: '아주 좋아하다', sentence: 'Everybody adored her.' }
+        ],
+        '04-spindle.webp': [
+            { word: 'wander about', meaning: '이리저리 돌아다니다', sentence: 'The princess wandered about the castle on her own.' },
+            { word: 'narrow', meaning: '좁은', sentence: 'An old tower with a narrow stair going up.' },
+            { word: 'rusty', meaning: '녹슨', sentence: 'A little door with a rusty key still in the lock.' },
+            { word: 'creak', meaning: '삐걱 소리', sentence: 'She turned it, and it gave a creak.' }
+        ],
+        '04-spindle-2.webp': [
+            { word: 'spinning wheel', meaning: '물레', sentence: 'A spinning wheel, my dear. It spins the thread.' },
+            { word: 'thread', meaning: '실', sentence: 'The thread came running out from under her fingers.' },
+            { word: 'reach out', meaning: '손을 뻗다', sentence: 'The princess reached out her hand.' },
+            { word: 'drop of blood', meaning: '핏방울', sentence: 'A tiny drop of blood came up.' }
+        ],
+        '05-sleep.webp': [
+            { word: 'come to a stop', meaning: '우뚝 멈추다', sentence: 'The whole castle came to a stop.' },
+            { word: 'ladle', meaning: '국자', sentence: 'The cook stopped with the ladle still lifted.' },
+            { word: 'threshold', meaning: '문턱', sentence: 'He fell asleep stepping over the threshold.' },
+            { word: 'stir', meaning: '흔들리다, 움직이다', sentence: 'Not one leaf stirred.' }
+        ],
+        '05-sleep-2.webp': [
+            { word: 'hedge', meaning: '덤불 울타리', sentence: 'A hedge of thorns began to grow up.' },
+            { word: 'thorn', meaning: '가시', sentence: 'The thorns came out sharp as spear points.' },
+            { word: 'stretch', meaning: '뻗어 나가다', sentence: 'It stretched further every day.' },
+            { word: 'lie deep', meaning: '소복이 쌓이다', sentence: 'The snow lay deep on top of it.' }
+        ],
+        '06-prince.webp': [
+            { word: 'happen to', meaning: '마침 ~하게 되다', sentence: 'A prince happened to pass through that country.' },
+            { word: 'tangle', meaning: '얽힘', sentence: 'The thorns were woven together in a thick tangle.' },
+            { word: 'part', meaning: '갈라지다', sentence: 'The hedge parted of its own accord.' },
+            { word: 'of one’s own accord', meaning: '저절로', sentence: 'The hedge parted of its own accord.' }
+        ],
+        '06-prince-2.webp': [
+            { word: 'cobweb', meaning: '거미줄', sentence: 'Cobwebs hung from every candlestick.' },
+            { word: 'candlestick', meaning: '촛대', sentence: 'Cobwebs hung from every candlestick.' },
+            { word: 'one after another', meaning: '하나씩 차례로', sentence: 'He opened one door after another.' }
+        ],
+        '07-wake.webp': [
+            { word: 'slant in', meaning: '비껴들다', sentence: 'The morning sun came slanting in at the window.' },
+            { word: 'windowsill', meaning: '창턱', sentence: 'Only the dust on the windowsill told of the years.' },
+            { word: 'twitch', meaning: '움찔 움직임', sentence: "The princess's fingers gave a twitch." }
+        ],
+        '07-wake-2.webp': [
+            { word: 'jump to one’s feet', meaning: '벌떡 일어나다', sentence: 'The dog jumped to its feet and barked.' },
+            { word: 'set down', meaning: '내려놓다', sentence: 'The cook set down his ladle.' },
+            { word: 'burn up', meaning: '다시 타오르다', sentence: 'The fire in the hearth burned up again.' },
+            { word: 'flap off', meaning: '푸드덕 날아오르다', sentence: 'The pigeon went flapping off the roof.' }
+        ],
+        'end.webp': [
+            { word: 'version', meaning: '판, 이본', sentence: "Perrault's version and the Grimms' version are not the same." },
+            { word: 'bring on', meaning: '불러오다', sentence: 'A very small thing brought on a very large one.' },
+            { word: 'get rid of', meaning: '없애다', sentence: 'He only thought he had got rid of them all.' },
+            { word: 'recognise', meaning: '알아보다', sentence: 'The chance to recognise it goes with it.' },
+            { word: 'in front of', meaning: '~ 앞에서', sentence: 'Even in front of something you cannot stop.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -570,6 +1047,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -578,7 +1056,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -590,7 +1068,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -624,4 +1102,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
