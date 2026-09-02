@@ -3,7 +3,7 @@ window.MUSIC_GENRE={
   integrated:'era',
   lineages:[['rock','록 (Rock)'],['rnb','R&B·소울 (R&B & Soul)'],['hiphop','힙합 (Hip-Hop)'],['dance','댄스·전자 (Dance & Electronic)'],['world','월드뮤직 (World Music)']],
   subgroups:{
-    rock:[['all','록 전체'],['rockroll','로큰롤 (Rock & Roll)'],['classic','클래식·사이키델릭 록'],['punk','펑크 록 (Punk Rock)'],['alternative','얼터너티브·그런지']],
+    rock:[['all','록 전체'],['rockroll','로큰롤 (Rock & Roll)'],['bluesrock','블루스 록 (Blues Rock)'],['classic','클래식·사이키델릭 록'],['punk','펑크 록 (Punk Rock)'],['alternative','얼터너티브·그런지']],
     rnb:[['all','R&B·소울 전체'],['motown','모타운 (Motown)'],['soul','소울·펑크 (Soul & Funk)'],['disco','디스코 (Disco)'],['newjack','뉴 잭 스윙 (New Jack Swing)'],['citypop','시티팝 (City Pop)'],['contemporary','컨템퍼러리·네오 소울']],
     hiphop:[['all','힙합 전체'],['oldschool','올드 스쿨 (Old School)'],['boombap','붐뱁 (Boom Bap)'],['gfunk','G-펑크 (G-Funk)'],['alternative','얼터너티브·컨셔스'],['trap','트랩 (Trap)']],
     dance:[['all','댄스·전자 전체'],['miamibass','마이애미 베이스 (Miami Bass)'],['dancepop','댄스 팝 (Dance-Pop)'],['house','하우스 (House)'],['electropop','신스·일렉트로팝']],
@@ -12,6 +12,7 @@ window.MUSIC_GENRE={
   guides:{
     rock:{title:'록 비교 듣기',question:'기타 리프, 2·4박의 강세, 절과 후렴의 에너지가 곡마다 어떻게 달라질까요?',traits:'기타 리프 · 백비트 · 밴드 사운드'},
     'rock:rockroll':{title:'로큰롤 5곡 비교 듣기',question:'피아노·기타 리프와 2·4박의 강한 백비트를 공통으로 찾아보세요.',traits:'셔플 · 백비트 · 짧은 리프 · 외치는 보컬'},
+    'rock:bluesrock':{title:'블루스 록 비교 듣기',question:'옛 블루스에서 그대로 남은 것과 록이 새로 얹은 것을 갈라 보세요.',traits:'열두 마디 형식 · 큰 음량의 전기 기타 · 긴 기타 솔로'},
     'rock:classic':{title:'클래식·사이키델릭 록 5곡 비교 듣기',question:'기타 음색과 스튜디오 효과가 곡의 규모를 어떻게 키우는지 비교하세요.',traits:'전기 기타 · 음향 실험 · 긴 구성 · 강약 대비'},
     'rock:punk':{title:'펑크 록 5곡 비교 듣기',question:'짧고 빠른 곡에서 반복과 강세가 에너지를 만드는 방식을 찾으세요.',traits:'빠른 템포 · 단순 코드 · 직선적 보컬 · 반복'},
     'rock:alternative':{title:'얼터너티브·그런지 5곡 비교 듣기',question:'주류 록과 다른 거친 음색, 조용함과 폭발의 대비를 찾아보세요.',traits:'왜곡 기타 · 강약 대비 · 불안한 정서 · DIY 감각'},
@@ -38,8 +39,9 @@ window.MUSIC_GENRE={
     'world:salsa':{title:'살사 비교 듣기',question:'클라베 리듬 위에서 타악기와 관악 합주가 춤의 흥을 어떻게 끌어올리는지 들어보세요.',traits:'클라베 리듬 · 콩가·팀발레스 · 관악 합주 · 즉흥 코러스'}
   },
   descriptions:{
-    rock:'록은 1950년대에 리듬 앤 블루스와 컨트리 음악이 만나 태어난 장르로, 전기 기타 소리를 가장 중요하게 여겨요. 흥겹게 춤추기 좋던 초기 로큰롤에서 시작해, 긴 기타 솔로와 화려한 사운드로 커진 사이키델릭 록, 짧고 빠르게 몰아치는 펑크 록("하찮은 녀석"이라는 뜻의 옛 속어를 반항의 의미로 바꿔 쓴 이름이에요), 일부러 지저분하게 낸 기타 소리가 특징인 얼터너티브·그런지(영어로 "때·먼지"라는 뜻이에요)까지, 전기 기타가 시대마다 다른 표정으로 이어져 왔습니다.',
+    rock:'록은 1950년대에 리듬 앤 블루스와 컨트리 음악이 만나 태어난 장르로, 전기 기타 소리를 가장 중요하게 여겨요. 흥겹게 춤추기 좋던 초기 로큰롤에서 시작해, 옛 블루스를 큰 음량으로 다시 연주한 블루스 록, 긴 기타 솔로와 화려한 사운드로 커진 사이키델릭 록, 짧고 빠르게 몰아치는 펑크 록("하찮은 녀석"이라는 뜻의 옛 속어를 반항의 의미로 바꿔 쓴 이름이에요), 일부러 지저분하게 낸 기타 소리가 특징인 얼터너티브·그런지(영어로 "때·먼지"라는 뜻이에요)까지, 전기 기타가 시대마다 다른 표정으로 이어져 왔습니다.',
     'rock:rockroll':'1950년대에 리듬 앤 블루스의 통통 튀는 리듬과 컨트리 음악의 기타 연주법이 만나 태어났어요. 둘째·넷째 박자마다 드럼을 세게 치고, 피아노와 기타가 짧은 구절을 계속 반복하면서 거칠게 외치는 노래와 함께 신나게 춤출 수 있는 힘을 만듭니다.',
+    'rock:bluesrock':'1960년대 영국의 젊은 연주자들이 시카고 블루스 음반을 들으며 자라, 같은 곡을 훨씬 큰 음량과 긴 기타 솔로로 다시 연주하기 시작했어요. 열두 마디 블루스의 뼈대는 그대로 두고 록의 소리를 얹은 스타일이며, 여기에서 하드 록이 갈라져 나왔습니다. 블루스가 어떻게 시작됐는지는 재즈 감상실의 블루스 갈래에서 들을 수 있어요.',
     'rock:classic':'블루스에서 배운 전기 기타 연주를 중심에 두고, 곡의 길이를 늘리고 기타 소리를 일부러 찌그러뜨리며 녹음실에서 다양한 소리 실험을 한 록입니다. 반복되는 기타 연주 구절과 즉흥 솔로, 조용했다 커졌다 하는 변화가 곡 전체의 흐름을 만듭니다.',
     'rock:punk':'복잡한 연주 실력을 뽐내기보다 빠른 속도, 단순한 코드, 짧은 곡 길이와 직설적인 가사를 앞세웁니다. 기타 줄을 아래로만 계속 긁어 내리는 주법과 쉬지 않는 리듬이 멈추지 않는 에너지를 만듭니다.',
     'rock:alternative':'"때·먼지"를 뜻하는 영어 단어 grunge에서 이름을 가져왔어요. 그 시절 인기 있던 매끈하고 깔끔한 록 사운드에서 벗어나, 일부러 지저분한 기타 소리와 불안한 감정을 강조합니다. 조용한 소절과 갑자기 폭발하듯 커지는 후렴이 크게 대비되는 경우가 많습니다.',
@@ -78,6 +80,9 @@ window.MUSIC_GENRE={
     {years:'1995',lineage:'world',subgroup:'reggae',style:'레게 재현',styleEn:'Reggae, Recreated',homage:true,original:'핑계',artist:'김건모',history:'레게가 세계적으로 유행한 지 20년 가까이 지난 뒤, 한국 가수가 이 리듬을 그대로 가져와 만든 대표적인 히트곡입니다.',sound:'오프비트로 튕기는 기타와 통통 튀는 리듬이 레게 특유의 흥을 그대로 가져옵니다.',point:'절과 후렴에서 레게 리듬이 한국어 노랫말과 어떻게 자연스럽게 어우러지는지 들어보세요.'},
     {years:'1978',lineage:'world',subgroup:'salsa',style:'살사',styleEn:'Salsa',original:'El Cantante',artist:'Héctor Lavoe',history:'살사 역사상 가장 상징적인 곡으로 꼽히며, Héctor Lavoe에게 "가수 중의 가수"라는 별명을 안겨 주었습니다.',sound:'타악기와 관악 합주가 클라베 리듬 위에서 힘차게 몰아치고, 즉흥적인 코러스가 주고받습니다.',point:'반복되는 클라베 리듬 위에서 타악기와 관악기가 켜켜이 쌓이는 방식을 들어보세요.'},
     {years:'2000',lineage:'world',subgroup:'salsa',style:'살사 재현',styleEn:'Salsa, Recreated',homage:true,original:'Sad Salsa',artist:'백지영',history:'살사가 유행하던 시기가 지난 뒤, 한국 가수가 이 리듬을 그대로 가져와 화려한 살사 댄스와 함께 큰 인기를 얻은 곡입니다.',sound:'경쾌한 살사 리듬과 관악 편곡 위에 감성적인 한국어 보컬이 놓입니다.',point:'살사 특유의 빠른 리듬이 슬픈 가사와 어떻게 대비를 이루는지 느껴보세요.'},
+    {years:'1966',lineage:'rock',subgroup:'bluesrock',style:'브리티시 블루스 록',styleEn:'British Blues Rock',title:'하이드어웨이',original:'Hideaway',artist:'John Mayall & the Bluesbreakers with Eric Clapton',history:'미국 시카고 블루스 연주자 Freddie King의 기타 곡을 영국 밴드가 다시 연주한 녹음으로, 뒤이은 영국 블루스 록의 출발점이 된 음반에 실렸습니다.',sound:'노래 없이 전기 기타가 처음부터 끝까지 주인공을 맡고, 앰프를 크게 올려 만든 두툼한 음색이 특징입니다.',point:'노래가 하던 자리를 기타가 대신 맡았다고 생각하고, 기타가 어떤 말을 하는지 들어 보세요.'},
+    {years:'1968',lineage:'rock',subgroup:'bluesrock',style:'블루스 록',styleEn:'Blues Rock',title:'크로스로즈',original:'Crossroads',artist:'Cream',history:'1936년 Robert Johnson이 기타 한 대로 부른 「Cross Road Blues」를 32년 뒤 영국 3인조가 큰 소리로 다시 연주한 실황 녹음입니다.',sound:'빠른 드럼과 굵은 베이스 위에서 일그러진 전기 기타가 긴 솔로를 이어 갑니다.',point:'재즈 감상실에 있는 Robert Johnson의 녹음과 나란히 듣고, 무엇이 남았고 무엇이 새로 얹혔는지 갈라 보세요.'},
+    {years:'1983',lineage:'rock',subgroup:'bluesrock',style:'텍사스 블루스 록',styleEn:'Texas Blues Rock',title:'프라이드 앤드 조이',original:'Pride and Joy',artist:'Stevie Ray Vaughan',history:'전자음악이 유행하던 1980년대에 텍사스 출신 기타 연주자가 옛 블루스의 소리를 그대로 들고나와 다시 유행시킨 곡입니다.',sound:'통통 튀는 셔플 리듬 위에서 기타 한 대가 반주와 솔로를 혼자 오갑니다.',point:'1950년대 시카고 블루스와 리듬의 뼈대가 얼마나 닮았는지 확인해 보세요.'},
     {years:'1958',lineage:'rock',subgroup:'rockroll',style:'로큰롤',styleEn:'Rock and Roll',title:'조니 비 굿',original:'Johnny B. Goode',artist:'Chuck Berry',history:'초기 로큰롤의 기타 언어와 청년 서사를 대표하는 곡입니다.',sound:'짧고 반복적인 기타 리프와 셔플에 가까운 리듬이 곡을 이끕니다.',point:'도입 기타 리프와 2·4박에서 강하게 들리는 스네어를 들어 보세요.'},
     {years:'1974',lineage:'rock',subgroup:'classic',style:'한국 록',styleEn:'Korean Rock',original:'미인',artist:'신중현과 엽전들',history:'서양 록에 한국 전통·포크 어법을 접목한 "한국형 록"의 대표작으로, 당시 "3천만이 부른 노래"라 불릴 만큼 국민적으로 사랑받았습니다.',sound:'단순하고 중독성 있는 기타 리프와 힘찬 보컬이 반복되며 흥을 끌어올립니다.',point:'서양 록 어법 위에 한국어 노랫말이 자연스럽게 얹히는 방식을 들어보세요.'},
     {years:'1986',lineage:'rock',subgroup:'classic',style:'한국 포크 록',styleEn:'Korean Folk Rock',original:'담배가게 아가씨',artist:'송창식',history:'직설적이면서도 해학적인 가사로 사랑받은 한국 포크 록의 대표곡으로, 이후 YB(윤도현 밴드) 등 여러 록 밴드가 다시 연주했습니다.',sound:'통기타 중심의 편안한 리듬 위에 이야기하듯 풀어내는 보컬이 놓입니다.',point:'포크 특유의 통기타 리듬과 해학적인 노랫말이 어떻게 어우러지는지 들어보세요.'},
