@@ -269,16 +269,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '난쟁이와 구둣방',
+    intro: [
+        '난쟁이와 구둣방은 독일의 그림 형제가 모아 펴낸 이야기집에 실린 짧은 이야기예요.',
+        '유럽에는 밤사이 몰래 집안일을 도와주는 작은 요정 이야기가 여러 나라에 전해집니다. 다만 그 요정들은 고맙다는 인사를 받으면 슬며시 떠나 버린다고 하지요. 이 이야기도 그런 규칙을 따르고 있답니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '👞')}
             </div>
             <div class="story-page-right">
-                <h1>난쟁이와 구둣방</h1>
-                <p>난쟁이와 구둣방은 독일의 그림 형제가 모아 펴낸 이야기집에 실린 짧은 이야기예요.</p>
-                <p>유럽에는 밤사이 몰래 집안일을 도와주는 작은 요정 이야기가 여러 나라에 전해집니다. 다만 그 요정들은 고맙다는 인사를 받으면 슬며시 떠나 버린다고 하지요. 이 이야기도 그런 규칙을 따르고 있답니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -293,8 +302,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -304,8 +313,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -315,22 +324,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -380,9 +390,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -393,7 +403,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -465,7 +475,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -474,34 +484,541 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Elves and the Shoemaker',
+        intro: [
+            "The Elves and the Shoemaker is a short tale from the collection the Brothers Grimm gathered in Germany.",
+            "Many countries in Europe tell of little folk who come in at night and do the housework. But they are said to slip away for good once anybody thanks them. This story follows that rule too."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Last Piece of Leather',
+            beats: [
+                {
+                    art: '01-leather.webp',
+                    emoji: '👞',
+                    left: [
+                        "In the shoemaker's shop at the end of the lane the hammer went on late into the night. It was an old shoemaker beating out his leather.",
+                        "The whole town knew that shoes from that shop were easy on the feet.",
+                        "And still things kept getting harder, because he charged far too little.",
+                        "\"How can I take full price from somebody in difficulty?\""
+                    ],
+                    right: [
+                        "Then one winter's day he searched the store room and found it quite bare.",
+                        "There was one single piece of leather left —",
+                        "enough for one pair of shoes.",
+                        "\"This is the last of it.\"",
+                        "His wife said it quietly."
+                    ]
+                },
+                {
+                    art: '01-leather-2.webp',
+                    emoji: '👞',
+                    left: [
+                        "The shoemaker spread the last piece out on the bench. He measured it and marked it,",
+                        "and cut it out very carefully with his shears, wasting not a scrap.",
+                        "The night grew late while he worked and his eyes went dim. The candle burned low and the light wavered.",
+                        "He rubbed his eyes again and again."
+                    ],
+                    right: [
+                        "\"I shall stitch them in the morning.\"",
+                        "He laid the cut pieces out neatly on the bench.",
+                        "And then he blew out the candle.",
+                        "\"It will come right.\"",
+                        "His wife cleared away the cold porridge bowls and patted his shoulder.",
+                        "And the two of them went to bed."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Shoes That Made Themselves',
+            beats: [
+                {
+                    art: '02-shoes.webp',
+                    emoji: '✨',
+                    left: [
+                        "It was the next morning. The shoemaker rubbed his eyes and went to the bench.",
+                        "But the cut pieces were not there at all.",
+                        "In their place stood a pair of shoes — finished, every one of them.",
+                        "New shoes, with the smell of the leather still on them.",
+                        "The shoemaker could not believe his own eyes."
+                    ],
+                    right: [
+                        "He picked them up and carried them to the window.",
+                        "The stitching was so fine that not one stitch was out of line,",
+                        "and he could not even find where the thread ends had been hidden.",
+                        "\"I have never seen work like this in my life.\"",
+                        "\"Wife — come and look at this!\"",
+                        "And she came running and stood there stock still."
+                    ]
+                },
+                {
+                    art: '02-shoes-2.webp',
+                    emoji: '✨',
+                    left: [
+                        "A customer came in that morning. He looked at the shoes and his eyes went wide.",
+                        "\"I shall have to pay you more than that.\"",
+                        "He paid twice the price and went out.",
+                        "The shoemaker counted the money over, quite bewildered."
+                    ],
+                    right: [
+                        "\"Let us buy leather with this.\"",
+                        "This time he bought enough for two pairs.",
+                        "In the evening he cut it out and laid it on the bench.",
+                        "\"Surely it will not happen again.\"",
+                        "The two of them went to bed,",
+                        "and outside the window the snow came softly down."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · More Shoes Every Night',
+            beats: [
+                {
+                    art: '03-more.webp',
+                    emoji: '🥾',
+                    left: [
+                        "In the morning the two of them hurried to the bench.",
+                        "And there were the shoes again — two pairs standing side by side, finer than before.",
+                        "\"Good heavens.\"",
+                        "His wife looked at them for a long while.",
+                        "They sold quickly that day too, and at a good price."
+                    ],
+                    right: [
+                        "The next day it was four pairs, and the day after that eight. Every morning there were new shoes standing in a row on the bench.",
+                        "Word of the shop went all round the district,",
+                        "and people came from villages a long way off.",
+                        "\"Their shoes don't hurt your feet, however far you walk.\"",
+                        "There was a queue outside from first thing in the morning."
+                    ]
+                },
+                {
+                    art: '03-more-2.webp',
+                    emoji: '🥾',
+                    left: [
+                        "Things soon came right for them. They bought a warm quilt, and his wife got a new apron.",
+                        "For the first time in a long while the two of them ate well and slept soundly.",
+                        "They did not have to work late into the night any more.",
+                        "But there was one thing they wondered about.",
+                        "\"Who on earth is making them?\""
+                    ],
+                    right: [
+                        "the shoemaker said, putting down his spoon.",
+                        "\"We ought at least to say thank you, ought we not?\"",
+                        "His wife nodded.",
+                        "\"Let us watch tonight.\"",
+                        "\"And pretend to be asleep.\"",
+                        "So that is what they decided to do."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Night They Watched',
+            beats: [
+                {
+                    art: '04-watching.webp',
+                    emoji: '👀',
+                    left: [
+                        "That night the two of them put out the candle and hid behind the wardrobe.",
+                        "Through a gap in the curtain they could see the bench plainly.",
+                        "His wife put a hand over her mouth in case her breathing gave them away.",
+                        "The room was so quiet that all they could hear was the clock ticking.",
+                        "They were holding their breath when the clock struck twelve."
+                    ],
+                    right: [
+                        "And at that moment there was a stir at the door.",
+                        "Two little things no bigger than a hand slipped in,",
+                        "walked lightly across and climbed up the leg of the bench.",
+                        "They wore threads of clothes — very nearly nothing at all —",
+                        "in the middle of winter. And their feet were bare.",
+                        "His wife clapped her hand over her mouth."
+                    ]
+                },
+                {
+                    art: '04-watching-2.webp',
+                    emoji: '👀',
+                    left: [
+                        "The two hopped onto the bench and took up the tools. They worked so fast the eye could hardly follow.",
+                        "\"Now then, in with the nails.\"",
+                        "Tap, tap. Tap, tap.",
+                        "\"And I shall polish them till they shine.\"",
+                        "Rub, rub. Buff, buff."
+                    ],
+                    right: [
+                        "The pieces of leather turned into shoes in their hands,",
+                        "and they hummed away while they worked.",
+                        "By the time the sky outside began to go grey, every shoe was finished.",
+                        "They set them out in a neat row and slipped away through the crack in the door.",
+                        "The shoemaker stood where he was for a long time. His chest had gone warm."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · Making the Little Clothes',
+            beats: [
+                {
+                    art: '05-clothes.webp',
+                    emoji: '🧵',
+                    left: [
+                        "\"Did you see, wife? The state of their clothes.\"",
+                        "\"Out like that in the middle of winter — whatever shall we do.\"",
+                        "Her eyes went red.",
+                        "\"Let us do something for them.\"",
+                        "\"What if we made them clothes?\""
+                    ],
+                    right: [
+                        "The shoemaker slapped his knee. And from that day the two of them were very busy indeed.",
+                        "His wife's eyes shone as she picked out the cloth.",
+                        "She made two tiny jackets in red and green,",
+                        "and trousers, and caps as well.",
+                        "The buttons were the size of millet grains."
+                    ]
+                },
+                {
+                    art: '05-clothes-2.webp',
+                    emoji: '🧵',
+                    left: [
+                        "The shoemaker was not idle either.",
+                        "He fetched the very best leather out of the store room",
+                        "and made shoes the size of a thumbnail.",
+                        "He unpicked the stitching and did it again more times than he could count.",
+                        "\"Those will do us no shame.\""
+                    ],
+                    right: [
+                        "It was Christmas Eve.",
+                        "The two of them cleared the bench right off,",
+                        "and instead of leather they laid out the clothes and the shoes side by side.",
+                        "\"Do you suppose it will startle them?\"",
+                        "\"They will love it.\"",
+                        "And they hid behind the wardrobe and blew out the candle."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Dressed, and Dancing',
+            beats: [
+                {
+                    art: '06-dance.webp',
+                    emoji: '🎉',
+                    left: [
+                        "At midnight the two little things came in and hopped up on the bench as they always did.",
+                        "But there was no leather.",
+                        "Instead there were little clothes, laid out side by side.",
+                        "The two stopped short and looked at each other.",
+                        "At first they only walked round them without daring to touch."
+                    ],
+                    right: [
+                        "Then one of them carefully picked up a jacket and held it against himself.",
+                        "It fitted exactly.",
+                        "\"They're ours!\"",
+                        "The two of them jumped up and down with delight,",
+                        "and hurried into the clothes — the trousers, the caps, the shoes and all.",
+                        "Then they looked at each other and laughed until they had to hold their sides."
+                    ]
+                },
+                {
+                    art: '06-dance-2.webp',
+                    emoji: '🎉',
+                    left: [
+                        "The two of them skipped about on the bench and took hands and danced round and round.",
+                        "They sang at the tops of their voices,",
+                        "so pleased with themselves that the bench shook.",
+                        "\"Now we are fine gentlemen!\"",
+                        "\"And all the shoes are made!\"",
+                        "\"So it is time for us to go!\""
+                    ],
+                    right: [
+                        "The two of them ran for the door,",
+                        "hopped over the threshold and out into the snowy yard.",
+                        "A line of small footprints was left across the white.",
+                        "The shoemaker and his wife pressed their faces to the window and looked at those footprints a long time.",
+                        "Soon fresh snow covered them over.",
+                        "And the two little ones never came back."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · What Was Left',
+            beats: [
+                {
+                    art: '07-after.webp',
+                    emoji: '🔨',
+                    left: [
+                        "Morning came, and the bench was bare.",
+                        "His wife looked a little sorry about it.",
+                        "There was not so much as a thread end left on it.",
+                        "\"Did we do wrong?\"",
+                        "The shoemaker shook his head."
+                    ],
+                    right: [
+                        "\"They had finished what they came to do.\"",
+                        "And he rolled up his sleeves.",
+                        "\"We can manage it ourselves now.\"",
+                        "The two of them sat down side by side at the bench and spread out the leather.",
+                        "It had been a long time, and his hand was not what it had been.",
+                        "But between them they made one pair, slowly."
+                    ]
+                },
+                {
+                    art: '07-after-2.webp',
+                    emoji: '🔨',
+                    left: [
+                        "From that day the shop was running again.",
+                        "This time it was shoes the two of them had made,",
+                        "and the customers still came pushing in at the door.",
+                        "The sound of the hammer rang down the lane again.",
+                        "\"There's still no shop like it.\"",
+                        "And this time he charged a proper price."
+                    ],
+                    right: [
+                        "Though anyone in difficulty still got them cheap.",
+                        "And every winter, when it came round, his wife made a set of very small clothes",
+                        "and laid it quietly on the windowsill.",
+                        "In the morning it was always exactly where she had left it.",
+                        "And still she made one every year.",
+                        "\"In case they are cold again.\""
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why were the shoemaker and his wife so poor?',
+            choices: ['He charged far too little for his shoes', 'Nobody wanted his shoes', 'He had stopped working'],
+            answer: 0
+        },
+        {
+            q: 'What did the shoemaker do with the last piece of leather?',
+            choices: ['He sold it in the market', 'He put it away in the store room', 'He cut it out and left the pieces on the bench'],
+            answer: 2
+        },
+        {
+            q: 'How did they know the work was not their own?',
+            choices: ['The shoes were the wrong size', 'Not one stitch was out of line and no thread ends showed', 'The leather smelled different'],
+            answer: 1
+        },
+        {
+            q: 'What did the two little ones wear when they came in?',
+            choices: ['Almost nothing, and no shoes at all', 'Red and green jackets', 'Long grey cloaks'],
+            answer: 0
+        },
+        {
+            q: 'What did the shoemaker and his wife decide to make?',
+            choices: ['A bigger workbench', 'More shoes to sell', 'Tiny clothes and shoes for the two helpers'],
+            answer: 2
+        },
+        {
+            q: 'What did the little ones do when they saw the clothes?',
+            choices: ['They left the clothes and went on working', 'They dressed and danced and then went away', 'They took the clothes and hid them'],
+            answer: 1
+        },
+        {
+            q: 'What did the wife do every winter afterwards?',
+            choices: ['She left a set of tiny clothes on the windowsill', 'She left leather on the bench', 'She kept the shop closed at night'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '👞',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Germany has a good many tales about little people who come in at night and help with the work. The Brothers Grimm wrote down one of them.",
+                    "The shoemaker was poor, but he was not idle. Even with one piece of leather left, he measured it and cut it out before he went to bed.",
+                    "What the elves worked on was that cut leather. They did not make something out of nothing. There was help because there was something ready for it.",
+                    "Look again at why the shoes sold so well. They were beautifully made — but the good prices came because word had got round."
+                ],
+                right: [
+                    "Once they had money, the two of them set out to find who had been helping. And then they made them clothes. They found a way to pay it back.",
+                    "The elves took the clothes and never came again. Why do you think that was?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-leather.webp': [
+            { word: 'lane', meaning: '골목', sentence: "The shoemaker's shop at the end of the lane." },
+            { word: 'leather', meaning: '가죽', sentence: 'An old shoemaker beating out his leather.' },
+            { word: 'charge', meaning: '값을 받다', sentence: 'He charged far too little.' },
+            { word: 'bare', meaning: '텅 빈', sentence: 'He searched the store room and found it quite bare.' }
+        ],
+        '01-leather-2.webp': [
+            { word: 'bench', meaning: '작업대', sentence: 'He spread the last piece out on the bench.' },
+            { word: 'shears', meaning: '가위', sentence: 'He cut it out carefully with his shears.' },
+            { word: 'scrap', meaning: '조각', sentence: 'Wasting not a scrap.' },
+            { word: 'waver', meaning: '흔들리다', sentence: 'The candle burned low and the light wavered.' },
+            { word: 'stitch', meaning: '꿰매다', sentence: 'I shall stitch them in the morning.' }
+        ],
+        '02-shoes.webp': [
+            { word: 'in their place', meaning: '그 자리에', sentence: 'In their place stood a pair of shoes.' },
+            { word: 'stitching', meaning: '바느질', sentence: 'The stitching was so fine.' },
+            { word: 'out of line', meaning: '어긋난', sentence: 'Not one stitch was out of line.' },
+            { word: 'stock still', meaning: '굳은 듯 가만히', sentence: 'She came running and stood there stock still.' }
+        ],
+        '02-shoes-2.webp': [
+            { word: 'customer', meaning: '손님', sentence: 'A customer came in that morning.' },
+            { word: 'twice the price', meaning: '두 배 값', sentence: 'He paid twice the price.' },
+            { word: 'bewildered', meaning: '어리둥절한', sentence: 'He counted the money over, quite bewildered.' },
+            { word: 'surely', meaning: '설마', sentence: 'Surely it will not happen again.' }
+        ],
+        '03-more.webp': [
+            { word: 'side by side', meaning: '나란히', sentence: 'Two pairs standing side by side.' },
+            { word: 'district', meaning: '고을', sentence: 'Word of the shop went all round the district.' },
+            { word: 'queue', meaning: '줄', sentence: 'There was a queue outside from first thing.' },
+            { word: 'however far', meaning: '아무리 멀리 ~해도', sentence: "They don't hurt your feet, however far you walk." }
+        ],
+        '03-more-2.webp': [
+            { word: 'come right', meaning: '나아지다, 펴지다', sentence: 'Things soon came right for them.' },
+            { word: 'quilt', meaning: '이불', sentence: 'They bought a warm quilt.' },
+            { word: 'apron', meaning: '앞치마', sentence: 'His wife got a new apron.' },
+            { word: 'soundly', meaning: '푹', sentence: 'They ate well and slept soundly.' },
+            { word: 'pretend', meaning: '~인 척하다', sentence: 'And pretend to be asleep.' }
+        ],
+        '04-watching.webp': [
+            { word: 'wardrobe', meaning: '옷장', sentence: 'They hid behind the wardrobe.' },
+            { word: 'plainly', meaning: '빤히', sentence: 'They could see the bench plainly.' },
+            { word: 'give away', meaning: '들키게 하다', sentence: 'In case her breathing gave them away.' },
+            { word: 'strike twelve', meaning: '열두 시를 치다', sentence: 'The clock struck twelve.' },
+            { word: 'bare', meaning: '맨~', sentence: 'And their feet were bare.' }
+        ],
+        '04-watching-2.webp': [
+            { word: 'take up', meaning: '집어 들다', sentence: 'They took up the tools.' },
+            { word: 'polish', meaning: '광을 내다', sentence: 'I shall polish them till they shine.' },
+            { word: 'hum', meaning: '흥얼거리다', sentence: 'They hummed away while they worked.' },
+            { word: 'slip away', meaning: '쏙 사라지다', sentence: 'They slipped away through the crack in the door.' }
+        ],
+        '05-clothes.webp': [
+            { word: 'the state of', meaning: '~의 꼴', sentence: 'The state of their clothes.' },
+            { word: 'go red', meaning: '눈시울이 붉어지다', sentence: 'Her eyes went red.' },
+            { word: 'pick out', meaning: '고르다', sentence: "His wife's eyes shone as she picked out the cloth." },
+            { word: 'millet', meaning: '좁쌀', sentence: 'The buttons were the size of millet grains.' }
+        ],
+        '05-clothes-2.webp': [
+            { word: 'idle', meaning: '가만있는, 게으른', sentence: 'The shoemaker was not idle either.' },
+            { word: 'thumbnail', meaning: '엄지손톱', sentence: 'Shoes the size of a thumbnail.' },
+            { word: 'unpick', meaning: '뜯어내다', sentence: 'He unpicked the stitching and did it again.' },
+            { word: 'startle', meaning: '놀라게 하다', sentence: 'Do you suppose it will startle them?' }
+        ],
+        '06-dance.webp': [
+            { word: 'stop short', meaning: '멈칫하다', sentence: 'The two stopped short.' },
+            { word: 'dare', meaning: '감히 ~하다', sentence: 'Without daring to touch.' },
+            { word: 'hold against', meaning: '몸에 대 보다', sentence: 'He held it against himself.' },
+            { word: 'fit', meaning: '맞다', sentence: 'It fitted exactly.' },
+            { word: 'hold one’s sides', meaning: '배를 잡고 웃다', sentence: 'They laughed until they had to hold their sides.' }
+        ],
+        '06-dance-2.webp': [
+            { word: 'skip about', meaning: '팔짝팔짝 뛰다', sentence: 'They skipped about on the bench.' },
+            { word: 'at the top of one’s voice', meaning: '큰 소리로', sentence: 'They sang at the tops of their voices.' },
+            { word: 'threshold', meaning: '문지방', sentence: 'They hopped over the threshold.' },
+            { word: 'footprint', meaning: '발자국', sentence: 'A line of small footprints was left across the white.' }
+        ],
+        '07-after.webp': [
+            { word: 'thread end', meaning: '실밥', sentence: 'There was not so much as a thread end left.' },
+            { word: 'do wrong', meaning: '잘못하다', sentence: 'Did we do wrong?' },
+            { word: 'roll up one’s sleeves', meaning: '소매를 걷다', sentence: 'And he rolled up his sleeves.' },
+            { word: 'manage', meaning: '해내다', sentence: 'We can manage it ourselves now.' }
+        ],
+        '07-after-2.webp': [
+            { word: 'ring', meaning: '울려 퍼지다', sentence: 'The sound of the hammer rang down the lane.' },
+            { word: 'a proper price', meaning: '제값', sentence: 'This time he charged a proper price.' },
+            { word: 'in difficulty', meaning: '딱한 처지의', sentence: 'Anyone in difficulty still got them cheap.' },
+            { word: 'in case', meaning: '혹시 ~할까 봐', sentence: 'In case they are cold again.' }
+        ],
+        'end.webp': [
+            { word: 'little people', meaning: '작은 사람들', sentence: 'Tales about little people who help with the work.' },
+            { word: 'out of nothing', meaning: '아무것도 없는 데서', sentence: 'They did not make something out of nothing.' },
+            { word: 'ready', meaning: '준비된', sentence: 'There was something ready for it.' },
+            { word: 'get round', meaning: '소문이 나다', sentence: 'The good prices came because word had got round.' },
+            { word: 'pay back', meaning: '갚다', sentence: 'They found a way to pay it back.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -566,6 +1083,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -574,7 +1092,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -586,7 +1104,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -620,4 +1138,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
