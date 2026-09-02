@@ -32,10 +32,11 @@ vm.runInContext(extraQuestionsSource, questionContext, { filename: extraQuestion
 
 const questions = questionContext.window.SPELLING_QUESTIONS;
 assert.ok(Array.isArray(questions), "Question bank must be an array.");
-assert.strictEqual(questions.length, 230, "Question bank should contain 230 questions.");
+assert.strictEqual(questions.length, 231, "Question bank should contain 231 questions.");
 
 for (const requiredId of [
     "danhap", "damhap", "jiyang-avoid", "jihyang-aim", "bangjeung", "banjeung",
+    "heojeom",
     "an-haetda", "natda-better", "natda-happen", "nahda-birth",
     "ttida-have", "ttuida-notice", "jotda-follow", "jjotda-chase"
 ]) {

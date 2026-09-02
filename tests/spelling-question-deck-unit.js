@@ -36,8 +36,8 @@ for (let round = 0; round < roundsToExhaust; round += 1) {
 }
 
 const completeBankPass = firstCycle.slice(0, questions.length);
-assert.equal(completeBankPass.length, 230);
-assert.equal(new Set(completeBankPass).size, 230, "All 230 questions must appear before any question repeats.");
+assert.equal(completeBankPass.length, 231);
+assert.equal(new Set(completeBankPass).size, 231, "All 231 questions must appear before any question repeats.");
 assert.deepEqual(
     [...new Set(completeBankPass)].sort(),
     Array.from(questions, (question) => question.id).sort(),
@@ -53,4 +53,4 @@ const recovered = deck.take({ questions, size: 10, storageKey: "corrupt-deck", s
 assert.equal(recovered.length, 10);
 assert.equal(new Set(recovered).size, 10, "A corrupted saved deck should recover without duplicates.");
 
-console.log("spelling-question-deck-unit: 230 unique questions before repeat, storage recovery ok");
+console.log("spelling-question-deck-unit: 231 unique questions before repeat, storage recovery ok");
