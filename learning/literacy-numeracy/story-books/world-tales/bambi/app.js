@@ -312,16 +312,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '아기 사슴 이야기',
+    intro: [
+        '아기 사슴 이야기는 오스트리아의 작가 펠릭스 잘텐이 1923년에 펴낸 작품이에요. 원래 제목은 밤비, 숲속의 삶이라는 뜻이랍니다.',
+        '숲에서 태어난 새끼 노루가 계절을 여러 번 겪으며 자라는 이야기예요. 사슴의 눈으로 본 숲을 그리다 보니, 사람은 늘 멀리서 다가오는 낯선 존재로 그려진답니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🦌')}
             </div>
             <div class="story-page-right">
-                <h1>아기 사슴 이야기</h1>
-                <p>아기 사슴 이야기는 오스트리아의 작가 펠릭스 잘텐이 1923년에 펴낸 작품이에요. 원래 제목은 밤비, 숲속의 삶이라는 뜻이랍니다.</p>
-                <p>숲에서 태어난 새끼 노루가 계절을 여러 번 겪으며 자라는 이야기예요. 사슴의 눈으로 본 숲을 그리다 보니, 사람은 늘 멀리서 다가오는 낯선 존재로 그려진답니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -336,8 +345,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -347,8 +356,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -358,22 +367,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -423,9 +433,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -436,7 +446,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -508,7 +518,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -517,34 +527,611 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Bambi',
+        intro: [
+            "Bambi was published by the Austrian writer Felix Salten in 1923. Its full title means Bambi, a Life in the Woods.",
+            "It is the story of a fawn born in the forest, growing up through one season after another. Because the woods are shown through a deer's eyes, people always appear as something strange coming toward you from far off."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · In the Thicket',
+            beats: [
+                {
+                    art: '01-birth.webp',
+                    emoji: '🦌',
+                    left: [
+                        "Deep in the wood there was a place thick with undergrowth, so overgrown with fern that nobody could see into it.",
+                        "One summer morning a fawn was born there. His name was Bambi,",
+                        "and he had white spots all over him.",
+                        "His eyes were big and dark, and the tip of his nose was black and wet."
+                    ],
+                    right: [
+                        "His legs were as thin as twigs. He tried to stand and kept sliding down again.",
+                        "His mother licked him all over, carefully.",
+                        "And after a long while Bambi got up.",
+                        "All four legs shook under him.",
+                        "His mother stood and watched him quietly.",
+                        "The morning sun came in through the thicket."
+                    ]
+                },
+                {
+                    art: '01-birth-2.webp',
+                    emoji: '🦌',
+                    left: [
+                        "The news went round the wood very quickly, and one after another the neighbours came to look.",
+                        "The rabbit came first, twitching his nose as he peered in.",
+                        "\"Well I never — his eyes are open already!\"",
+                        "The magpie chattered from a branch."
+                    ],
+                    right: [
+                        "The squirrel ran up and down a tree to get a better look.",
+                        "Bambi heard every word of it,",
+                        "though he did not know yet what any of it meant.",
+                        "He only pressed himself close against his mother.",
+                        "The sun moved about between the leaves,",
+                        "and Bambi fell asleep where he was."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Wide Meadow',
+            beats: [
+                {
+                    art: '02-meadow.webp',
+                    emoji: '🌾',
+                    left: [
+                        "A few days later Bambi could walk quite well.",
+                        "One morning his mother said,",
+                        "\"Let us go to the meadow today.\"",
+                        "The two of them walked a narrow path, and the trees grew thinner and thinner.",
+                        "And then it opened out bright in front of them."
+                    ],
+                    right: [
+                        "There was a meadow going on and on,",
+                        "as though the whole sky had come down onto the ground.",
+                        "\"Oh — is the sky as wide as this?\"",
+                        "Bambi wanted to run straight out into it.",
+                        "But his mother stood in his way.",
+                        "\"Wait a moment.\""
+                    ]
+                },
+                {
+                    art: '02-meadow-2.webp',
+                    emoji: '🌾',
+                    left: [
+                        "\"On the meadow you must always take care.\"",
+                        "\"It is not at all like the wood.\"",
+                        "\"Out there is nowhere to hide.\"",
+                        "His mother stood with her neck stretched up.",
+                        "\"First you stand still and you listen.\"",
+                        "\"And you smell what is on the wind.\""
+                    ],
+                    right: [
+                        "\"And then you go out.\"",
+                        "Bambi nodded.",
+                        "And then he saw the meadow and forgot every word of it.",
+                        "He simply bolted out into it.",
+                        "His mother came out quickly after him,",
+                        "looking every way at once and not easy in her mind."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · Friends in the Wood',
+            beats: [
+                {
+                    art: '03-friends.webp',
+                    emoji: '🌼',
+                    left: [
+                        "There were other deer out on the meadow,",
+                        "and some of them Bambi's own age.",
+                        "One was a young doe called Faline,",
+                        "with a white mark on her throat.",
+                        "\"Hullo! Is it your first time out too?\"",
+                        "The two of them were friends in no time."
+                    ],
+                    right: [
+                        "They ran about the whole day long.",
+                        "\"Catch me!\"",
+                        "The grass had grown as high as Bambi himself,",
+                        "and it parted like water as they ran through it.",
+                        "Butterflies went up in front of them.",
+                        "The two of them never seemed to tire."
+                    ]
+                },
+                {
+                    art: '03-friends-2.webp',
+                    emoji: '🌼',
+                    left: [
+                        "There were plenty of neighbours on the meadow.",
+                        "The rabbit always had his ears up,",
+                        "and the smallest sound had him on his feet.",
+                        "The squirrel talked away from up in his tree.",
+                        "\"The acorns have come on nicely this year!\"",
+                        "And there was a young deer called Gobo."
+                    ],
+                    right: [
+                        "He was not strong, and he was soon out of breath.",
+                        "\"Let's rest a minute, shall we?\"",
+                        "So Bambi and Faline slowed down,",
+                        "and the three of them lay down together in the grass.",
+                        "The sun warmed their backs.",
+                        "Bambi wished the days would go on like that."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Old Stag',
+            beats: [
+                {
+                    art: '04-old-stag.webp',
+                    emoji: '👑',
+                    left: [
+                        "One day the meadow went suddenly quiet.",
+                        "Even the birds stopped singing.",
+                        "Every grown deer lifted its head.",
+                        "Something was walking out of the edge of the wood —",
+                        "an enormous stag, with antlers spread wide like branches,",
+                        "and grey all round his muzzle."
+                    ],
+                    right: [
+                        "But there was no sound of his feet at all,",
+                        "and the grass did not move.",
+                        "Bambi watched, holding his breath.",
+                        "He had never seen a deer like that.",
+                        "\"Who is he?\"",
+                        "Instead of answering, his mother only bowed her head."
+                    ]
+                },
+                {
+                    art: '04-old-stag-2.webp',
+                    emoji: '👑',
+                    left: [
+                        "The old stag stopped in front of Bambi",
+                        "and looked down at him for a long while.",
+                        "Bambi could not raise his head.",
+                        "At last the old stag spoke.",
+                        "\"Can you go about by yourself?\"",
+                        "Bambi could not answer."
+                    ],
+                    right: [
+                        "He had never left his mother's side.",
+                        "The old stag asked nothing more.",
+                        "He left those words and went off into the wood,",
+                        "as silently as he had come.",
+                        "From that day the question kept coming back to Bambi.",
+                        "He heard that voice even in his sleep."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The First Snow',
+            beats: [
+                {
+                    art: '05-winter.webp',
+                    emoji: '❄️',
+                    left: [
+                        "Summer went and autumn came, and the leaves turned red.",
+                        "And then one morning",
+                        "the whole wood had gone white.",
+                        "Bambi put his nose to the strange new stuff.",
+                        "\"It's cold!\"",
+                        "There was white all over the top of his nose."
+                    ],
+                    right: [
+                        "He jumped back in surprise,",
+                        "and his mother smiled.",
+                        "\"That is snow. Winter has come.\"",
+                        "Bambi went bounding about over the snow,",
+                        "leaving a line of prints behind him.",
+                        "His mother laughed for the first time in a while.",
+                        "It squeaked and crunched under his feet."
+                    ]
+                },
+                {
+                    art: '05-winter-2.webp',
+                    emoji: '❄️',
+                    left: [
+                        "But the winter went on far longer than he expected. The snow lay deeper and deeper.",
+                        "The grass was buried under it,",
+                        "and food became very hard to find.",
+                        "The deer stripped bark off the trees to eat,",
+                        "and Bambi pulled at the bark with his teeth too.",
+                        "It was bitter and hard, and he ate it anyway."
+                    ],
+                    right: [
+                        "His mother kept pushing her own share over to him.",
+                        "The bones of her back were beginning to show.",
+                        "\"What about you, Mother?\"",
+                        "\"I have had plenty.\"",
+                        "The nights in the wood were very quiet.",
+                        "Dry branches knocked together in the wind."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Day He Was Left Alone',
+            beats: [
+                {
+                    art: '06-alone.webp',
+                    emoji: '🌫️',
+                    left: [
+                        "It was a winter morning, and Bambi and his mother were at the edge of the meadow.",
+                        "Then his mother's head went up suddenly.",
+                        "One ear turned.",
+                        "There was a noise beyond the meadow.",
+                        "It was people.",
+                        "His mother pushed Bambi toward the thicket.",
+                        "There were dogs barking in it too."
+                    ],
+                    right: [
+                        "\"Run!\"",
+                        "\"Run, and don't look back!\"",
+                        "And Bambi ran.",
+                        "He ran until he could hardly breathe.",
+                        "There were sounds behind him and he did not look round,",
+                        "because his mother had told him not to."
+                    ]
+                },
+                {
+                    art: '06-alone-2.webp',
+                    emoji: '🌫️',
+                    left: [
+                        "The trees went past him on either side and the snow flew up.",
+                        "He had no idea how far he had run.",
+                        "There was no strength left in his legs at all.",
+                        "After a long while Bambi stopped",
+                        "and looked back."
+                    ],
+                    right: [
+                        "His mother was not there.",
+                        "Bambi called for her.",
+                        "There was no answer at all.",
+                        "The snow came down quietly.",
+                        "Everything was white in every direction.",
+                        "Bambi stood there a long time.",
+                        "That night he spent alone for the first time, curled up in a thicket."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · Spring Again',
+            beats: [
+                {
+                    art: '07-spring.webp',
+                    emoji: '🌱',
+                    left: [
+                        "The winter ended and the snow melted. Green shoots came up out of the ground",
+                        "and the wood turned green again.",
+                        "Bambi had grown a great deal too,",
+                        "and small antlers had come up on his head.",
+                        "One day on the meadow he met a face he knew.",
+                        "It was Faline."
+                    ],
+                    right: [
+                        "Faline had shot up too.",
+                        "\"How tall you've got!\"",
+                        "\"So have you. And Gobo came through the winter. He still puffs if he runs at all.\"",
+                        "The two of them walked along together for the first time in a long while.",
+                        "When Bambi told her about putting his nose into the snow, Faline laughed out loud."
+                    ]
+                },
+                {
+                    art: '07-spring-2.webp',
+                    emoji: '🌱',
+                    left: [
+                        "Faline started out onto the meadow.",
+                        "And Bambi stopped where he was.",
+                        "\"Wait a moment.\"",
+                        "Bambi stood with his neck stretched up",
+                        "and turned his ears one way and the other.",
+                        "And he smelled what was on the wind."
+                    ],
+                    right: [
+                        "After a long while Bambi nodded.",
+                        "\"All right. We can go.\"",
+                        "Faline's eyes went round.",
+                        "\"When did you learn to do that?\"",
+                        "It was exactly what his mother had taught him.",
+                        "Bambi had not forgotten it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · How to Walk in the Wood',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🌲',
+                    left: [
+                        "It was an evening, and the wood was very still.",
+                        "The sun came slanting a long way in between the trees,",
+                        "and Bambi was walking alone.",
+                        "Then something was standing ahead of him.",
+                        "It was the old stag.",
+                        "\"Come with me.\""
+                    ],
+                    right: [
+                        "The old stag walked away into the deep part of the wood, and Bambi followed him.",
+                        "There was no path at all.",
+                        "At last the old stag stopped.",
+                        "\"Look closely,\" he said, low.",
+                        "There were the prints of a person on the ground under their feet."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🌲',
+                    left: [
+                        "Without saying much, the old stag showed him how to read the wood.",
+                        "He showed him where the wind came from",
+                        "and where to put himself out of sight,",
+                        "and pointed out the tracks people use.",
+                        "Bambi took in every one of them."
+                    ],
+                    right: [
+                        "By and by it went dark all round them,",
+                        "and the old stag looked back at Bambi.",
+                        "\"You can go about by yourself now.\"",
+                        "And then he walked quietly away.",
+                        "His shape went out of sight between the trees.",
+                        "And Bambi walked the wood alone from then on."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did Bambi’s mother teach him about the meadow?',
+            choices: ['To run as fast as he could across it', 'Never to go out on it at all', 'To stand still, listen and smell the wind before going out'],
+            answer: 2
+        },
+        {
+            q: 'What did Bambi actually do the first time he saw the meadow?',
+            choices: ['He waited as she had told him', 'He bolted straight out into it', 'He hid in the fern'],
+            answer: 1
+        },
+        {
+            q: 'Who was Gobo?',
+            choices: ['A young deer who was not strong and tired quickly', 'The old stag’s son', 'The squirrel in the tree'],
+            answer: 0
+        },
+        {
+            q: 'What did his mother do when the old stag appeared?',
+            choices: ['She told Bambi his name', 'She led Bambi away', 'She said nothing and bowed her head'],
+            answer: 2
+        },
+        {
+            q: 'What did the deer eat when the snow lay deep?',
+            choices: ['Acorns from the squirrel', 'Bark stripped off the trees', 'Grass from under the snow'],
+            answer: 1
+        },
+        {
+            q: 'Why did Bambi not look back while he ran?',
+            choices: ['His mother had told him not to', 'The snow was in his eyes', 'The dogs were too close'],
+            answer: 0
+        },
+        {
+            q: 'What surprised Faline in the spring?',
+            choices: ['Bambi had grown antlers', 'Bambi ran faster than her', 'Bambi stopped to listen and smell before going out'],
+            answer: 2
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🦌',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Felix Salten wrote this about a hundred years ago. It was written for grown-ups to begin with.",
+                    "What Bambi's mother taught him was not how to run. It was how to stop first and listen.",
+                    "Even going out onto the meadow, she does not simply go. She stands a long while, listening and smelling, and only then puts a foot out. That is what living in a wood is.",
+                    "When Bambi first sees the old stag, his mother says nothing at all. She only bows her head. That was enough to say who he was."
+                ],
+                right: [
+                    "In winter deer really do eat bark. Salten spent years walking in woods, and details like that are exact.",
+                    "The old stag never tells Bambi his name, right to the end. Why do you think that is?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-birth.webp': [
+            { word: 'undergrowth', meaning: '덤불', sentence: 'A place thick with undergrowth.' },
+            { word: 'fern', meaning: '고사리', sentence: 'So overgrown with fern that nobody could see in.' },
+            { word: 'fawn', meaning: '새끼 노루', sentence: 'One summer morning a fawn was born there.' },
+            { word: 'twig', meaning: '잔가지', sentence: 'His legs were as thin as twigs.' },
+            { word: 'lick', meaning: '핥다', sentence: 'His mother licked him all over.' }
+        ],
+        '01-birth-2.webp': [
+            { word: 'go round', meaning: '퍼지다', sentence: 'The news went round the wood very quickly.' },
+            { word: 'twitch', meaning: '씰룩거리다', sentence: 'Twitching his nose as he peered in.' },
+            { word: 'magpie', meaning: '까치', sentence: 'The magpie chattered from a branch.' },
+            { word: 'chatter', meaning: '재잘거리다', sentence: 'The magpie chattered from a branch.' },
+            { word: 'squirrel', meaning: '다람쥐', sentence: 'The squirrel ran up and down a tree.' }
+        ],
+        '02-meadow.webp': [
+            { word: 'meadow', meaning: '풀밭', sentence: 'Let us go to the meadow today.' },
+            { word: 'thin', meaning: '성글어지다', sentence: 'The trees grew thinner and thinner.' },
+            { word: 'open out', meaning: '트이다', sentence: 'And then it opened out bright in front of them.' },
+            { word: 'stand in one’s way', meaning: '앞을 막다', sentence: 'But his mother stood in his way.' }
+        ],
+        '02-meadow-2.webp': [
+            { word: 'take care', meaning: '조심하다', sentence: 'On the meadow you must always take care.' },
+            { word: 'nowhere to hide', meaning: '숨을 데가 없는', sentence: 'Out there is nowhere to hide.' },
+            { word: 'stretch up', meaning: '길게 빼다', sentence: 'She stood with her neck stretched up.' },
+            { word: 'bolt', meaning: '뛰쳐나가다', sentence: 'He simply bolted out into it.' },
+            { word: 'not easy in one’s mind', meaning: '마음이 놓이지 않는', sentence: 'She was not easy in her mind.' }
+        ],
+        '03-friends.webp': [
+            { word: 'doe', meaning: '암노루', sentence: 'One was a young doe called Faline.' },
+            { word: 'throat', meaning: '목', sentence: 'With a white mark on her throat.' },
+            { word: 'in no time', meaning: '금세', sentence: 'The two of them were friends in no time.' },
+            { word: 'part', meaning: '갈라지다', sentence: 'It parted like water as they ran through it.' },
+            { word: 'tire', meaning: '지치다', sentence: 'The two of them never seemed to tire.' }
+        ],
+        '03-friends-2.webp': [
+            { word: 'have one’s ears up', meaning: '귀를 쫑긋 세우다', sentence: 'The rabbit always had his ears up.' },
+            { word: 'acorn', meaning: '도토리', sentence: 'The acorns have come on nicely this year!' },
+            { word: 'out of breath', meaning: '숨이 찬', sentence: 'He was soon out of breath.' },
+            { word: 'slow down', meaning: '걸음을 늦추다', sentence: 'Bambi and Faline slowed down.' }
+        ],
+        '04-old-stag.webp': [
+            { word: 'stag', meaning: '수사슴', sentence: 'An enormous stag.' },
+            { word: 'antler', meaning: '뿔', sentence: 'With antlers spread wide like branches.' },
+            { word: 'muzzle', meaning: '주둥이', sentence: 'And grey all round his muzzle.' },
+            { word: 'bow one’s head', meaning: '고개를 숙이다', sentence: 'His mother only bowed her head.' }
+        ],
+        '04-old-stag-2.webp': [
+            { word: 'go about', meaning: '돌아다니다', sentence: 'Can you go about by yourself?' },
+            { word: 'raise', meaning: '들다', sentence: 'Bambi could not raise his head.' },
+            { word: 'silently', meaning: '소리 없이', sentence: 'As silently as he had come.' },
+            { word: 'come back to', meaning: '자꾸 떠오르다', sentence: 'The question kept coming back to Bambi.' }
+        ],
+        '05-winter.webp': [
+            { word: 'turn red', meaning: '붉게 물들다', sentence: 'The leaves turned red.' },
+            { word: 'bound', meaning: '폴짝폴짝 뛰다', sentence: 'Bambi went bounding about over the snow.' },
+            { word: 'print', meaning: '발자국', sentence: 'Leaving a line of prints behind him.' },
+            { word: 'crunch', meaning: '뽀드득 소리 나다', sentence: 'It squeaked and crunched under his feet.' }
+        ],
+        '05-winter-2.webp': [
+            { word: 'bury', meaning: '파묻다', sentence: 'The grass was buried under it.' },
+            { word: 'strip', meaning: '벗기다', sentence: 'The deer stripped bark off the trees to eat.' },
+            { word: 'bark', meaning: '나무껍질', sentence: 'The deer stripped bark off the trees.' },
+            { word: 'bitter', meaning: '쓴', sentence: 'It was bitter and hard.' },
+            { word: 'share', meaning: '몫', sentence: 'She kept pushing her own share over to him.' }
+        ],
+        '06-alone.webp': [
+            { word: 'beyond', meaning: '~ 너머에', sentence: 'There was a noise beyond the meadow.' },
+            { word: 'bark', meaning: '짖다', sentence: 'There were dogs barking in it too.' },
+            { word: 'push toward', meaning: '~쪽으로 밀다', sentence: 'His mother pushed Bambi toward the thicket.' },
+            { word: 'look back', meaning: '뒤돌아보다', sentence: "Run, and don't look back!" }
+        ],
+        '06-alone-2.webp': [
+            { word: 'either side', meaning: '양옆', sentence: 'The trees went past him on either side.' },
+            { word: 'have no idea', meaning: '알 수 없다', sentence: 'He had no idea how far he had run.' },
+            { word: 'call for', meaning: '부르다', sentence: 'Bambi called for her.' },
+            { word: 'curl up', meaning: '몸을 웅크리다', sentence: 'Curled up in a thicket.' }
+        ],
+        '07-spring.webp': [
+            { word: 'melt', meaning: '녹다', sentence: 'The winter ended and the snow melted.' },
+            { word: 'shoot', meaning: '새싹', sentence: 'Green shoots came up out of the ground.' },
+            { word: 'shoot up', meaning: '훌쩍 자라다', sentence: 'Faline had shot up too.' },
+            { word: 'puff', meaning: '헉헉대다', sentence: 'He still puffs if he runs at all.' }
+        ],
+        '07-spring-2.webp': [
+            { word: 'start out', meaning: '나가려 하다', sentence: 'Faline started out onto the meadow.' },
+            { word: 'one way and the other', meaning: '이쪽저쪽으로', sentence: 'He turned his ears one way and the other.' },
+            { word: 'go round', meaning: '동그래지다', sentence: "Faline's eyes went round." },
+            { word: 'forget', meaning: '잊다', sentence: 'Bambi had not forgotten it.' }
+        ],
+        '08-ending.webp': [
+            { word: 'still', meaning: '고요한', sentence: 'The wood was very still.' },
+            { word: 'slant', meaning: '비껴들다', sentence: 'The sun came slanting in between the trees.' },
+            { word: 'ahead of', meaning: '앞쪽에', sentence: 'Something was standing ahead of him.' },
+            { word: 'low', meaning: '낮게', sentence: '"Look closely," he said, low.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'read', meaning: '읽어 내다', sentence: 'He showed him how to read the wood.' },
+            { word: 'out of sight', meaning: '보이지 않게', sentence: 'Where to put himself out of sight.' },
+            { word: 'track', meaning: '다니는 길', sentence: 'And pointed out the tracks people use.' },
+            { word: 'take in', meaning: '마음에 새기다', sentence: 'Bambi took in every one of them.' }
+        ],
+        'end.webp': [
+            { word: 'to begin with', meaning: '원래는', sentence: 'It was written for grown-ups to begin with.' },
+            { word: 'exact', meaning: '정확한', sentence: 'Details like that are exact.' },
+            { word: 'right to the end', meaning: '마지막까지', sentence: 'The old stag never tells Bambi his name, right to the end.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -609,6 +1196,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -617,7 +1205,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -629,7 +1217,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -663,4 +1251,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
