@@ -299,16 +299,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '장난감 병정',
+    intro: [
+        '장난감 병정은 덴마크의 작가 한스 크리스티안 안데르센이 1838년에 펴낸 이야기예요. 원래 제목은 굳센 주석 병정이라는 뜻이랍니다.',
+        '주석을 녹여 만든 장난감 병정 스물다섯 개 가운데, 주석이 모자라 다리가 하나뿐인 병정이 주인공이에요. 남들과 다른 몸을 가진 주인공이 나오는 아주 드문 옛이야기랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🪖')}
             </div>
             <div class="story-page-right">
-                <h1>장난감 병정</h1>
-                <p>장난감 병정은 덴마크의 작가 한스 크리스티안 안데르센이 1838년에 펴낸 이야기예요. 원래 제목은 굳센 주석 병정이라는 뜻이랍니다.</p>
-                <p>주석을 녹여 만든 장난감 병정 스물다섯 개 가운데, 주석이 모자라 다리가 하나뿐인 병정이 주인공이에요. 남들과 다른 몸을 가진 주인공이 나오는 아주 드문 옛이야기랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -323,8 +332,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -334,8 +343,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -345,22 +354,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -410,9 +420,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -423,7 +433,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -495,7 +505,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -504,34 +514,639 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   영어권 제목은 The Steadfast Tin Soldier 로 알려져 있다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Steadfast Tin Soldier',
+        intro: [
+            "The Tin Soldier was published by the Danish author Hans Christian Andersen in 1838. The title means the tin soldier who stood firm.",
+            "Of twenty-five toy soldiers cast out of melted tin, the hero is the one who came out with only one leg, because the tin ran short. It is a very rare old story with a hero whose body is not like everybody else's."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Soldier with One Leg',
+            beats: [
+                {
+                    art: '01-soldier.webp',
+                    emoji: '🎖️',
+                    left: [
+                        "A child was given a birthday present —",
+                        "one long box.",
+                        "He lifted the lid and it was full of toy soldiers.",
+                        "There were twenty-five of them,",
+                        "cast out of melted tin —",
+                        "brothers made out of one old spoon."
+                    ],
+                    right: [
+                        "They wore blue coats and red trousers",
+                        "with muskets smartly on their shoulders.",
+                        "The child stood them in a row along the table.",
+                        "And the last one was rather different,",
+                        "because he had only one leg.",
+                        "\"Hullo? What is wrong with this one?\"",
+                        "The child set him on his palm and looked at him."
+                    ]
+                },
+                {
+                    art: '01-soldier-2.webp',
+                    emoji: '🎖️',
+                    left: [
+                        "There had not been quite enough tin to finish him.",
+                        "He was the last one poured.",
+                        "And that soldier stood perfectly well.",
+                        "He stood upright on the one leg,",
+                        "and his face was braver than any of theirs.",
+                        "The child played a while and then went to bed,",
+                        "and only the toys were left in the room."
+                    ],
+                    right: [
+                        "The toys went round the soldier teasing him.",
+                        "\"And what can you do on one leg?\"",
+                        "The soldier stood quite still.",
+                        "And the one who did not tease him was a paper dancer, standing with one leg raised.",
+                        "The soldier's eyes stayed on one place.",
+                        "He did not see any of the other toys at all."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Paper Dancer',
+            beats: [
+                {
+                    art: '02-ballerina.webp',
+                    emoji: '💃',
+                    left: [
+                        "At the far end of the table stood a castle made of paper,",
+                        "with thin paper pasted over every window.",
+                        "In front of the castle they had made a little lake",
+                        "out of a piece of looking-glass.",
+                        "And in front of that stood the paper dancer,",
+                        "with her white skirt standing out round her.",
+                        "There was a blue ribbon over her shoulder",
+                        "and a spangle at her waist."
+                    ],
+                    right: [
+                        "The dancer stood lightly on one foot,",
+                        "and the soldier could not take his eyes off her.",
+                        "Something turned over strangely in his chest.",
+                        "He had never felt anything like it.",
+                        "However noisy the table got, he did not hear it.",
+                        "And the soldier stood there a long while with his musket on his shoulder."
+                    ]
+                },
+                {
+                    art: '02-ballerina-2.webp',
+                    emoji: '💃',
+                    left: [
+                        "The soldier thought to himself,",
+                        "\"She has only one leg as well.\"",
+                        "\"Just like me.\"",
+                        "But it was not so.",
+                        "The dancer simply had the other leg lifted high behind her,",
+                        "and the soldier did not know it.",
+                        "\"Somebody like that might be a match for me.\""
+                    ],
+                    right: [
+                        "But the dancer lived in a castle,",
+                        "and the soldier lived in a box with twenty-four others.",
+                        "\"Still, I should like to say good evening to her.\" And he hesitated a long while.",
+                        "The soldier hid himself behind a snuffbox",
+                        "and watched the dancer all night."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · Out of the Window',
+            beats: [
+                {
+                    art: '03-fall.webp',
+                    emoji: '🃏',
+                    left: [
+                        "It got late, and midnight struck.",
+                        "And then the lid of the snuffbox flew open,",
+                        "and out came a goblin in a black hat —",
+                        "a toy on a spring.",
+                        "\"You there, soldier!\"",
+                        "The goblin stretched his neck out."
+                    ],
+                    right: [
+                        "\"Keep your eyes off what is not yours!\"",
+                        "The soldier pretended not to hear and looked straight ahead.",
+                        "The goblin flared up.",
+                        "\"We shall see about that tomorrow!\"",
+                        "And he went back down into the box.",
+                        "The room went quiet again,",
+                        "and the soldier stood there all night."
+                    ]
+                },
+                {
+                    art: '03-fall-2.webp',
+                    emoji: '🃏',
+                    left: [
+                        "It was the next morning.",
+                        "Somebody set the soldier on the windowsill.",
+                        "The window was standing wide open,",
+                        "and the soldier looked down at the street below,",
+                        "at the carriages and the people going by.",
+                        "And then a gust of wind came,",
+                        "and the soldier went straight out of the window —",
+                        "three floors down."
+                    ],
+                    right: [
+                        "His musket went into the paving first,",
+                        "and he stuck there head down, propped on it.",
+                        "The child came running down and looked everywhere,",
+                        "and in the end he went back without finding him.",
+                        "And the soldier could not call out.",
+                        "He wanted to shout \"here I am\", and he could not."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · In a Paper Boat',
+            beats: [
+                {
+                    art: '04-boat.webp',
+                    emoji: '⛵',
+                    left: [
+                        "Then the rain came down hard,",
+                        "and the water went rushing along the street.",
+                        "When it stopped, two boys came past.",
+                        "\"Look, there's a soldier here!\"",
+                        "And they picked him up.",
+                        "\"Let us sail him!\""
+                    ],
+                    right: [
+                        "The boys folded a boat out of newspaper",
+                        "and stood the soldier up inside it.",
+                        "Then they set it on the water in the gutter,",
+                        "and the paper boat went off like an arrow.",
+                        "The boys ran along beside it, clapping,",
+                        "and lost sight of it round a corner."
+                    ]
+                },
+                {
+                    art: '04-boat-2.webp',
+                    emoji: '⛵',
+                    left: [
+                        "The water ran faster and faster.",
+                        "The boat spun round and round,",
+                        "and water came in over the side.",
+                        "The paper was going soft with it.",
+                        "And still the soldier stood upright,",
+                        "with his musket held just as it had been.",
+                        "He did not so much as blink.",
+                        "The water came up to his knees."
+                    ],
+                    right: [
+                        "\"Because I am a soldier.\"",
+                        "The boys' voices got further and further away,",
+                        "and at last there was no sound of them at all.",
+                        "Ahead of him was a dark opening,",
+                        "and the water was being sucked into it.",
+                        "The rushing sound got louder and louder."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Dark Waterway',
+            beats: [
+                {
+                    art: '05-tunnel.webp',
+                    emoji: '🐀',
+                    left: [
+                        "The gutter ran on into a dark tunnel,",
+                        "and the boat was sucked into it.",
+                        "It was black on every side.",
+                        "He could not see anything at all.",
+                        "The soldier stood absolutely still,",
+                        "and the water echoed off the walls.",
+                        "And then a sound came from somewhere.",
+                        "A great rat appeared."
+                    ],
+                    right: [
+                        "\"Pay the toll!\"",
+                        "\"Nobody passes here without paying!\"",
+                        "Instead of answering, the soldier gripped his musket,",
+                        "and the boat went past the rat like an arrow.",
+                        "The rat jumped into the water and came after him,",
+                        "and the squeaking followed along behind."
+                    ]
+                },
+                {
+                    art: '05-tunnel-2.webp',
+                    emoji: '🐀',
+                    left: [
+                        "The rat shouted after him.",
+                        "\"Stop him! He has not paid!\"",
+                        "The water ran faster and faster,",
+                        "and away ahead it began to get light.",
+                        "That was where the tunnel ended.",
+                        "But the sound of it was not a good sound.",
+                        "It was the sound of water falling."
+                    ],
+                    right: [
+                        "At the end of the tunnel the water went down like a waterfall,",
+                        "and the boat went straight over it.",
+                        "The soldier did not let go of his musket.",
+                        "His body went under the water.",
+                        "The paper boat had already gone soft and shapeless,",
+                        "and the sunlight moved on the surface above."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Inside a Fish',
+            beats: [
+                {
+                    art: '06-fish.webp',
+                    emoji: '🐟',
+                    left: [
+                        "The paper boat took in water and went down,",
+                        "and the soldier went down with it.",
+                        "Blue water closed round him on every side,",
+                        "and he went down and down.",
+                        "And then everything went dark in front of him.",
+                        "A great fish had opened its mouth."
+                    ],
+                    right: [
+                        "The soldier went straight down inside it.",
+                        "It was darker in there than in the tunnel,",
+                        "and very cramped besides.",
+                        "And still the soldier squared his shoulders,",
+                        "and the end of his musket touched the belly of the fish.",
+                        "\"Wherever I am, I am a soldier.\" He said it over to himself."
+                    ]
+                },
+                {
+                    art: '06-fish-2.webp',
+                    emoji: '🐟',
+                    left: [
+                        "The fish swam this way and that,",
+                        "and every time it moved the soldier moved with it.",
+                        "And then the fish stopped suddenly",
+                        "and was pulled straight upward.",
+                        "It had gone into a fisherman's net,",
+                        "and the fish was sold at the market."
+                    ],
+                    right: [
+                        "It went into the kitchen of a house.",
+                        "A maid put the fish on the board",
+                        "and took a knife to open it up.",
+                        "And in that moment the maid cried out,",
+                        "because the knife had caught on something hard.",
+                        "\"Good gracious! However did a soldier get in here?\" Out of the fish had come the tin soldier."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · Back Where He Started',
+            beats: [
+                {
+                    art: '07-return.webp',
+                    emoji: '🏠',
+                    left: [
+                        "The maid picked the soldier up in both hands,",
+                        "wiped the water off him and turned him about.",
+                        "\"He has only one leg.\"",
+                        "And the maid carried him through to a room.",
+                        "\"Come and look at this, young master!\"",
+                        "And, remarkably, it was a room he knew."
+                    ],
+                    right: [
+                        "It was the very house the soldier had lived in.",
+                        "The window he had fallen out of was still there.",
+                        "The child came running and took him,",
+                        "\"But that's my soldier! Wherever have you been?\"",
+                        "and set him on the table",
+                        "in his old place beside his brothers."
+                    ]
+                },
+                {
+                    art: '07-return-2.webp',
+                    emoji: '🏠',
+                    left: [
+                        "The soldier looked round him.",
+                        "The toys were all there as they had been,",
+                        "and the paper castle stood where it always had.",
+                        "And in front of it stood the paper dancer,",
+                        "still standing lightly on one foot.",
+                        "Something went warm in the soldier's chest."
+                    ],
+                    right: [
+                        "They had met again after so long a way round.",
+                        "And he could not say one word.",
+                        "The soldier only looked at her,",
+                        "and she seemed to be looking back at him.",
+                        "Her skirt moved a little.",
+                        "And the two toys stood facing each other a long while."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · A Little Tin Heart',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🔥',
+                    left: [
+                        "And then a child came over.",
+                        "What was in his mind nobody could say.",
+                        "He picked the soldier up",
+                        "and tossed him into the fire.",
+                        "Perhaps it was the goblin's spite.",
+                        "The soldier's body went red hot."
+                    ],
+                    right: [
+                        "He was burning all over,",
+                        "and still the soldier did not let go of his musket.",
+                        "His shoulders stayed square,",
+                        "and his eyes were turned toward the dancer.",
+                        "He never once looked away.",
+                        "And the tin began to melt."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🔥',
+                    left: [
+                        "And then the door opened and the wind came in,",
+                        "and the paper dancer lifted lightly off the table.",
+                        "She flew across and came down beside the soldier.",
+                        "The two of them lay together in the firelight.",
+                        "It was only a moment, and they were together."
+                    ],
+                    right: [
+                        "It was the next morning.",
+                        "The maid cleared out the ashes from the stove,",
+                        "and she found something in them.",
+                        "There was a small tin heart,",
+                        "and beside it a spangle, burnt quite black.",
+                        "And the maid stood looking at the two of them for a long time."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why did the soldier have only one leg?',
+            choices: ['He was broken in the box', 'The goblin took it', 'There was not enough tin left when he was poured'],
+            answer: 2
+        },
+        {
+            q: 'What did the soldier think about the paper dancer?',
+            choices: ['That she lived in the box too', 'That she had one leg like him', 'That she was made of tin'],
+            answer: 1
+        },
+        {
+            q: 'What came out of the snuffbox at midnight?',
+            choices: ['A goblin on a spring', 'A paper dancer', 'A rat'],
+            answer: 0
+        },
+        {
+            q: 'How did the soldier end up in the street?',
+            choices: ['The boys took him out', 'The goblin pushed him', 'A gust of wind blew him off the windowsill'],
+            answer: 2
+        },
+        {
+            q: 'What did the rat in the tunnel want?',
+            choices: ['The paper boat', 'A toll for passing through', 'The soldier’s musket'],
+            answer: 1
+        },
+        {
+            q: 'How did the soldier get back to the house?',
+            choices: ['A fish swallowed him and was sold at the market', 'The boys found him again', 'The maid picked him up in the street'],
+            answer: 0
+        },
+        {
+            q: 'What was left in the ashes?',
+            choices: ['The musket', 'Nothing at all', 'A small tin heart and a blackened spangle'],
+            answer: 2
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🎖️',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Tin soldiers were the toys Andersen played with as a boy. In those days people melted down spoons to make them.",
+                    "Of the twenty-five tin soldiers, only one had a single leg. The tin ran short and he was the last one poured. He was not badly made — he was made out of what was left.",
+                    "The soldier believes the paper dancer has one leg too. In fact she simply had the other one raised high behind her. He took her for somebody like himself.",
+                    "He goes out of a window, along in a boat, through a drain and into the belly of a fish. And in all that time the soldier never makes a sound."
+                ],
+                right: [
+                    "Where the soldier ends up is the room he started from. He went right round the world and came back to the same place.",
+                    "Why do you think the soldier never said anything, right to the end?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-soldier.webp': [
+            { word: 'lid', meaning: '뚜껑', sentence: 'He lifted the lid.' },
+            { word: 'cast', meaning: '(녹여) 부어 만들다', sentence: 'Cast out of melted tin.' },
+            { word: 'tin', meaning: '주석', sentence: 'Cast out of melted tin.' },
+            { word: 'musket', meaning: '총', sentence: 'With muskets smartly on their shoulders.' },
+            { word: 'palm', meaning: '손바닥', sentence: 'The child set him on his palm.' }
+        ],
+        '01-soldier-2.webp': [
+            { word: 'run short', meaning: '모자라다', sentence: 'There had not been quite enough tin.' },
+            { word: 'pour', meaning: '붓다', sentence: 'He was the last one poured.' },
+            { word: 'upright', meaning: '꼿꼿하게', sentence: 'He stood upright on the one leg.' },
+            { word: 'tease', meaning: '놀리다', sentence: 'The toys went round the soldier teasing him.' },
+            { word: 'raised', meaning: '들어 올린', sentence: 'Standing with one leg raised.' }
+        ],
+        '02-ballerina.webp': [
+            { word: 'paste', meaning: '바르다, 붙이다', sentence: 'Thin paper pasted over every window.' },
+            { word: 'looking-glass', meaning: '거울', sentence: 'Out of a piece of looking-glass.' },
+            { word: 'ribbon', meaning: '띠', sentence: 'A blue ribbon over her shoulder.' },
+            { word: 'spangle', meaning: '반짝이', sentence: 'And a spangle at her waist.' },
+            { word: 'take one’s eyes off', meaning: '눈을 떼다', sentence: 'He could not take his eyes off her.' }
+        ],
+        '02-ballerina-2.webp': [
+            { word: 'a match for', meaning: '~의 짝', sentence: 'Somebody like that might be a match for me.' },
+            { word: 'hesitate', meaning: '망설이다', sentence: 'And he hesitated a long while.' },
+            { word: 'snuffbox', meaning: '코담뱃갑', sentence: 'The soldier hid behind a snuffbox.' },
+            { word: 'all night', meaning: '밤새', sentence: 'And watched the dancer all night.' }
+        ],
+        '03-fall.webp': [
+            { word: 'strike', meaning: '(시각이) 되다', sentence: 'It got late, and midnight struck.' },
+            { word: 'goblin', meaning: '도깨비', sentence: 'Out came a goblin in a black hat.' },
+            { word: 'spring', meaning: '용수철', sentence: 'A toy on a spring.' },
+            { word: 'stretch out', meaning: '길게 빼다', sentence: 'The goblin stretched his neck out.' },
+            { word: 'flare up', meaning: '발끈하다', sentence: 'The goblin flared up.' }
+        ],
+        '03-fall-2.webp': [
+            { word: 'windowsill', meaning: '창턱', sentence: 'Somebody set the soldier on the windowsill.' },
+            { word: 'gust', meaning: '한 줄기 바람', sentence: 'And then a gust of wind came.' },
+            { word: 'paving', meaning: '길바닥', sentence: 'His musket went into the paving first.' },
+            { word: 'prop', meaning: '받치다', sentence: 'He stuck there head down, propped on it.' },
+            { word: 'call out', meaning: '소리쳐 부르다', sentence: 'And the soldier could not call out.' }
+        ],
+        '04-boat.webp': [
+            { word: 'rush along', meaning: '콸콸 흐르다', sentence: 'The water went rushing along the street.' },
+            { word: 'fold', meaning: '접다', sentence: 'The boys folded a boat out of newspaper.' },
+            { word: 'gutter', meaning: '도랑', sentence: 'On the water in the gutter.' },
+            { word: 'like an arrow', meaning: '쏜살같이', sentence: 'The paper boat went off like an arrow.' },
+            { word: 'lose sight of', meaning: '놓치다', sentence: 'And lost sight of it round a corner.' }
+        ],
+        '04-boat-2.webp': [
+            { word: 'spin', meaning: '빙글빙글 돌다', sentence: 'The boat spun round and round.' },
+            { word: 'go soft', meaning: '축축해지다', sentence: 'The paper was going soft with it.' },
+            { word: 'blink', meaning: '눈을 깜짝이다', sentence: 'He did not so much as blink.' },
+            { word: 'opening', meaning: '구멍', sentence: 'Ahead of him was a dark opening.' },
+            { word: 'suck in', meaning: '빨아들이다', sentence: 'The water was being sucked into it.' }
+        ],
+        '05-tunnel.webp': [
+            { word: 'tunnel', meaning: '굴', sentence: 'The gutter ran on into a dark tunnel.' },
+            { word: 'echo', meaning: '울리다', sentence: 'The water echoed off the walls.' },
+            { word: 'rat', meaning: '쥐', sentence: 'A great rat appeared.' },
+            { word: 'toll', meaning: '통행세', sentence: 'Pay the toll!' },
+            { word: 'squeak', meaning: '찍찍 소리', sentence: 'And the squeaking followed along behind.' }
+        ],
+        '05-tunnel-2.webp': [
+            { word: 'waterfall', meaning: '폭포', sentence: 'The water went down like a waterfall.' },
+            { word: 'go over', meaning: '넘어가다, 곤두박질치다', sentence: 'The boat went straight over it.' },
+            { word: 'let go of', meaning: '놓다', sentence: 'The soldier did not let go of his musket.' },
+            { word: 'shapeless', meaning: '흐물흐물한', sentence: 'The paper boat had gone soft and shapeless.' },
+            { word: 'surface', meaning: '수면', sentence: 'The sunlight moved on the surface above.' }
+        ],
+        '06-fish.webp': [
+            { word: 'take in', meaning: '(물을) 먹다', sentence: 'The paper boat took in water and went down.' },
+            { word: 'close round', meaning: '감싸다', sentence: 'Blue water closed round him.' },
+            { word: 'cramped', meaning: '비좁은', sentence: 'And very cramped besides.' },
+            { word: 'square one’s shoulders', meaning: '어깨를 펴다', sentence: 'The soldier squared his shoulders.' },
+            { word: 'say over', meaning: '되뇌다', sentence: 'He said it over to himself.' }
+        ],
+        '06-fish-2.webp': [
+            { word: 'net', meaning: '그물', sentence: "It had gone into a fisherman's net." },
+            { word: 'board', meaning: '도마', sentence: 'A maid put the fish on the board.' },
+            { word: 'open up', meaning: '배를 가르다', sentence: 'And took a knife to open it up.' },
+            { word: 'catch on', meaning: '걸리다', sentence: 'The knife had caught on something hard.' },
+            { word: 'good gracious', meaning: '어머나', sentence: 'Good gracious! However did a soldier get in here?' }
+        ],
+        '07-return.webp': [
+            { word: 'wipe off', meaning: '닦아 내다', sentence: 'Wiped the water off him.' },
+            { word: 'turn about', meaning: '이리저리 살펴보다', sentence: 'And turned him about.' },
+            { word: 'remarkably', meaning: '놀랍게도', sentence: 'And, remarkably, it was a room he knew.' },
+            { word: 'the very', meaning: '바로 그', sentence: 'It was the very house he had lived in.' }
+        ],
+        '07-return-2.webp': [
+            { word: 'as they had been', meaning: '그대로', sentence: 'The toys were all there as they had been.' },
+            { word: 'go warm', meaning: '뜨거워지다', sentence: "Something went warm in the soldier's chest." },
+            { word: 'a way round', meaning: '돌아가는 길', sentence: 'After so long a way round.' },
+            { word: 'facing', meaning: '마주 보는', sentence: 'The two toys stood facing each other.' }
+        ],
+        '08-ending.webp': [
+            { word: 'toss', meaning: '툭 던지다', sentence: 'And tossed him into the fire.' },
+            { word: 'spite', meaning: '심술', sentence: "Perhaps it was the goblin's spite." },
+            { word: 'red hot', meaning: '발갛게 달아오른', sentence: "The soldier's body went red hot." },
+            { word: 'look away', meaning: '눈을 떼다', sentence: 'He never once looked away.' },
+            { word: 'melt', meaning: '녹다', sentence: 'And the tin began to melt.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'lift off', meaning: '사뿐 떠오르다', sentence: 'The paper dancer lifted lightly off the table.' },
+            { word: 'firelight', meaning: '불빛', sentence: 'They lay together in the firelight.' },
+            { word: 'clear out', meaning: '치우다', sentence: 'The maid cleared out the ashes.' },
+            { word: 'ashes', meaning: '재', sentence: 'The maid cleared out the ashes from the stove.' },
+            { word: 'burnt black', meaning: '새까맣게 그을린', sentence: 'A spangle, burnt quite black.' }
+        ],
+        'end.webp': [
+            { word: 'melt down', meaning: '녹이다', sentence: 'People melted down spoons to make them.' },
+            { word: 'badly made', meaning: '못 만든', sentence: 'He was not badly made.' },
+            { word: 'take for', meaning: '~로 여기다', sentence: 'He took her for somebody like himself.' },
+            { word: 'drain', meaning: '하수구', sentence: 'Through a drain and into the belly of a fish.' },
+            { word: 'right round', meaning: '온 바퀴 돌아', sentence: 'He went right round the world.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -596,6 +1211,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -604,7 +1220,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -616,7 +1232,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -650,4 +1266,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
