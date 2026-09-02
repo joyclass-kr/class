@@ -6,6 +6,8 @@
   const questions = Array.isArray(dataset.questions) ? dataset.questions : [];
   const THEME_ORDER = ["terrain", "climate", "population", "industry", "region"];
   const KOREA_BOUNDS = L.latLngBounds([[32.95, 123.85], [43.15, 131.35]]);
+  const REGIONAL_RELIEF_BOUNDS = L.latLngBounds([[8.407168, 90], [60.239811, 171.5625]]);
+  const DETAIL_RELIEF_BOUNDS = L.latLngBounds([[32.546813, 123.75], [43.580391, 131.484375]]);
   const BASEMAP_KEY = "cb1_2lqh_1_23aa6103cd67c20c2791ad29";
   const PROGRESS_KEY = "joyclass-korea-geography-progress-v1";
   const provinceLabels = [
@@ -50,6 +52,8 @@
   let questionBoundaryLayer;
   let questionThemeLayer;
   let questionFocusLayer;
+  const reliefZoomSync = new WeakMap();
+  const annotationZoomSync = new WeakMap();
 
   const $ = (selector) => document.querySelector(selector);
   const $$ = (selector) => [...document.querySelectorAll(selector)];
@@ -419,14 +423,41 @@
   }
 
   function drawThemeOnMap(map, group, theme, interactive) {
+    const previousReliefSync = reliefZoomSync.get(map);
+    if (previousReliefSync) {
+      map.off("zoomend", previousReliefSync);
+      reliefZoomSync.delete(map);
+    }
+    const previousAnnotationSync = annotationZoomSync.get(map);
+    if (previousAnnotationSync) {
+      map.off("zoomend", previousAnnotationSync);
+      annotationZoomSync.delete(map);
+    }
     group.clearLayers();
     if (theme.relief) {
-      L.imageOverlay("assets/korea-physical-relief.webp?v=20260902-5", KOREA_BOUNDS, {
+      L.imageOverlay("assets/east-asia-physical-relief.webp?v=20260902-6", REGIONAL_RELIEF_BOUNDS, {
         pane: "reliefPane",
-        opacity: 0.84,
+        opacity: 0.76,
+        interactive: false,
+        className: "east-asia-physical-relief"
+      }).addTo(group);
+
+      const detailRelief = L.imageOverlay("assets/korea-physical-relief.webp?v=20260902-6", DETAIL_RELIEF_BOUNDS, {
+        pane: "reliefPane",
+        opacity: 0.58,
         interactive: false,
         className: "korea-physical-relief"
-      }).addTo(group);
+      });
+      const syncDetailRelief = () => {
+        if (map.getZoom() >= 7) {
+          if (!group.hasLayer(detailRelief)) group.addLayer(detailRelief);
+        } else if (group.hasLayer(detailRelief)) {
+          group.removeLayer(detailRelief);
+        }
+      };
+      reliefZoomSync.set(map, syncDetailRelief);
+      map.on("zoomend", syncDetailRelief);
+      syncDetailRelief();
     }
     if (theme.rivers && majorRivers) drawMajorRivers(group, interactive);
     (theme.zones || []).forEach((zone) => {
@@ -456,14 +487,29 @@
       if (interactive) polyline.bindTooltip(line.name, { sticky: true, className: "study-tooltip" });
     });
     if (interactive) {
-      (theme.annotations || []).forEach((annotation) => {
+      const annotationMarkers = (theme.annotations || []).map((annotation) => {
         const icon = L.divIcon({
           className: "geo-annotation-wrapper",
           html: `<span class="geo-annotation geo-annotation--${annotation.kind}">${annotation.name}</span>`,
           iconSize: [0, 0]
         });
-        L.marker([annotation.lat, annotation.lng], { icon, pane: "themeLabels", interactive: false }).addTo(group);
+        return {
+          marker: L.marker([annotation.lat, annotation.lng], { icon, pane: "themeLabels", interactive: false }),
+          minZoom: annotation.minZoom || 5
+        };
       });
+      const syncAnnotationVisibility = () => {
+        annotationMarkers.forEach(({ marker, minZoom }) => {
+          if (map.getZoom() >= minZoom) {
+            if (!group.hasLayer(marker)) group.addLayer(marker);
+          } else if (group.hasLayer(marker)) {
+            group.removeLayer(marker);
+          }
+        });
+      };
+      annotationZoomSync.set(map, syncAnnotationVisibility);
+      map.on("zoomend", syncAnnotationVisibility);
+      syncAnnotationVisibility();
     }
     if (theme.featureMarkers !== false) {
       (theme.features || []).forEach((feature) => {

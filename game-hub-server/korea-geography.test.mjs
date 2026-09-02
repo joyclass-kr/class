@@ -12,6 +12,7 @@ const dataSource = read("learning/inquiry/korea-geography/data.js");
 const principlesSource = read("learning/inquiry/korea-geography/principles.js");
 const riverData = JSON.parse(read("learning/inquiry/korea-geography/data/major-rivers.geojson"));
 const physicalRelief = fs.readFileSync(new URL("learning/inquiry/korea-geography/assets/korea-physical-relief.webp", root));
+const regionalRelief = fs.readFileSync(new URL("learning/inquiry/korea-geography/assets/east-asia-physical-relief.webp", root));
 
 assert.match(html, /id="map"/);
 assert.match(html, /id="startPractice"/);
@@ -32,10 +33,13 @@ assert.match(styles, /\.principle-button \{[^}]*min-height:\s*44px/s);
 assert.match(app, /korean-museum\/data\/skorea-provinces-topo-simple\.json/);
 assert.match(app, /voyager_nolabels/);
 assert.doesNotMatch(app, /World_Hillshade|World_Terrain_Base/, "The geography map must not depend on Esri world terrain tiles.");
-assert.match(app, /L\.imageOverlay\("assets\/korea-physical-relief\.webp/, "The terrain theme must use the self-hosted Korean Peninsula physical relief.");
-assert.match(app, /opacity:\s*0\.84/, "The physical relief must remain prominent enough to reveal mountain systems.");
+assert.match(app, /L\.imageOverlay\("assets\/east-asia-physical-relief\.webp/, "The terrain theme must use a broad self-hosted East Asia relief without visible rectangular edges.");
+assert.match(app, /L\.imageOverlay\("assets\/korea-physical-relief\.webp/, "The terrain theme must retain a detailed Korean Peninsula relief for close zoom.");
+assert.match(app, /map\.getZoom\(\) >= 7/, "The detailed relief must load only when students zoom in.");
+assert.match(app, /annotation\.minZoom \|\| 5/, "Dense terrain labels must progressively appear as students zoom in.");
 assert.doesNotMatch(styles, /leaflet-relief-pane[^}]*mix-blend-mode:\s*multiply/s, "The colored physical relief must not be flattened by multiply blending.");
-assert.ok(physicalRelief.byteLength > 1_000_000, "The high-resolution physical-relief asset is missing or unexpectedly empty.");
+assert.ok(physicalRelief.byteLength > 600_000, "The high-resolution physical-relief asset is missing or unexpectedly empty.");
+assert.ok(regionalRelief.byteLength > 800_000, "The regional physical-relief asset is missing or unexpectedly empty.");
 
 
 
@@ -53,6 +57,8 @@ assert.match(dataSource, /relief: true/);
 assert.match(dataSource, /featureMarkers: false/);
 assert.match(dataSource, /name: "백두산"/);
 assert.match(dataSource, /name: "개마고원"/);
+assert.match(dataSource, /name: "섬진강", kind: "river"/);
+assert.match(dataSource, /name: "북한강", kind: "river"[^\n]*minZoom: 7/);
 assert.doesNotMatch(dataSource, /name: "태백산맥", kind: "mountain", coords/);
 assert.doesNotMatch(dataSource, /name: "한강", kind: "river", coords/);
 assert.match(app, /localStorage\.setItem\(PROGRESS_KEY/);

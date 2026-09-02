@@ -13,12 +13,14 @@
 The file is a display layer, not a legal river-boundary dataset.
 
 
-## Korean Peninsula physical relief
+## Physical relief
 
-`../assets/korea-physical-relief.webp` is a self-hosted 2.5D physical-relief overlay cropped to the Korean Peninsula study bounds (`123.85–131.35°E`, `32.95–43.15°N`). It combines hypsometric elevation tint with multidirectional slope shading derived from Mapzen Terrain Tiles on AWS Open Data.
+`../assets/east-asia-physical-relief.webp` and `../assets/korea-physical-relief.webp` are self-hosted 2.5D relief overlays. The broad East Asia layer keeps the terrain tone continuous across China, the Korean Peninsula, the Russian Far East, and Japan. The detailed Korean Peninsula layer has a feathered outer edge and appears only from zoom 7 onward.
 
 - Source: Mapzen Terrain Tiles in the AWS Registry of Open Data
 - Accessed: 2026-09-02
-- Processing: 66 Terrarium DEM tiles at zoom 8 were decoded, cropped, hillshaded, and exported as a transparent 1366×2365 WebP.
-- Runtime behavior: the site loads only this local regional image; it does not request Esri world terrain or hillshade tiles.
+- Processing: the RGB surface normals and alpha-channel quantized elevations from 696 zoom-7 regional tiles and 220 zoom-9 detail tiles were converted to hypsometric tint plus directional slope shading.
+- Output: 4096×3390 regional WebP and 2048×3724 feathered detail WebP, both with transparent sea pixels.
+- Runtime behavior: the site requests only these local relief assets; it does not request Esri world terrain or hillshade tiles.
+- Rebuild script: `../tools/generate-relief.ps1`
 - Source and attribution: https://registry.opendata.aws/terrain-tiles/
