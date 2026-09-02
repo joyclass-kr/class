@@ -25,7 +25,8 @@
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 사용하세요)
 
 ```
-Children's picture book illustration, warm watercolor and colored-pencil style,
+Children's picture book illustration in 1980s Japanese-Korean TV animation cel
+style: flat clean cel shading, crisp uniform outlines, painted background art,
 soft golden lighting, gentle rounded shapes, storybook atmosphere, no text or
 letters in the image, consistent warm earthy color palette (parchment, gold,
 terracotta, deep brown), expressive character faces, dynamic staging.

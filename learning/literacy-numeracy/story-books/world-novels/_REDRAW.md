@@ -1,112 +1,14 @@
 # 다시 그려야 할 그림 (제미나이에 그대로 넣으세요)
 
-2026-09-03 점검에서 걸린 일곱 장입니다. 아래 덩어리를 통째로 복사해서 넣으면 됩니다.
+2026-09-03 점검에서 걸린 다섯 장입니다. 아래 덩어리를 통째로 복사해서 넣으면 됩니다.
 파일명을 그대로 맞춰 원래 자리에 덮어쓰면 책에 바로 나타납니다.
 
-앞서 다시 그려 달라고 했던 네 장(보물섬 14장 첫 그림·읽고 나서, 셜록 8장 둘째·셋째 그림)은
-모두 다시 그려져 들어왔고 확인했습니다.
+앞서 다시 그려 달라고 했던 것들은 모두 들어왔고 확인했습니다.
+보물섬 14장 첫 그림과 읽고 나서, 셜록 8장 둘째·셋째 그림, 그리고 탈무드 12장 두 장입니다.
 
----
-
-## 탈무드 — `talmud-tales/images/story-12-chicken.webp`
-
-**왜 다시 그리나:** 본문은 식탁에 **일곱 명**이라고 못 박는데(아버지, 어머니, 아들 둘,
-딸 둘, 나그네) 그림에는 다섯 명뿐입니다. 아들 하나와 딸 하나가 빠졌습니다.
-뒤에 「두 아들에게 다리를 한 짝씩」 「두 딸에게 날개를 하나씩」 주는 대목이 있어
-아이가 넷이라야 이야기가 맞습니다.
-
-또 나그네가 배낭 멘 아이로 그려졌는데, 본문의 나그네는 저녁에 문을 두드려
-하룻밤 재워 달라 청하고 닭을 손수 나누는 어른입니다.
-
-```
-Children's picture book illustration, warm watercolor and colored-pencil
-style with visible paper texture and soft pencil outlines - NOT flat digital
-anime, NOT cel shading. Soft golden lighting, gentle rounded shapes, storybook
-atmosphere, no text or letters in the image, consistent warm earthy color
-palette (parchment, gold, terracotta, deep brown), expressive character faces.
-The artwork must bleed to all four edges: no white margin, no border, no frame.
-
-THE SEVEN PEOPLE AT THE TABLE - count them, no more and no fewer:
-  1. the father - a grown man with a moustache
-  2. the mother - a grown woman in an apron
-  3. the elder son - a boy of about twelve
-  4. the younger son - a boy of about eight
-  5. the elder daughter - a girl of about ten, brown hair
-  6. the younger daughter - a girl of about six, brown hair in a braid
-  7. the guest - a GROWN MAN of about thirty-five with a short beard, a worn
-     travelling cloak and a staff. He is an adult, taller than the father when
-     standing. He is NOT a boy, NOT a teenager, NOT carrying a backpack.
-The two sons wear plain earth-coloured tunics; the two daughters wear plain
-dresses. Keep their clothes the same in both pictures of this chapter.
-
-Scene: A poor family's plain wooden dinner table in a simple cottage. A small
-roasted chicken sits on a platter in the middle, WHOLE and UNCARVED - head,
-neck, both legs and both wings still attached, nobody has touched it yet.
-All seven are seated around the table looking at it. The mother has just set
-it down. Warm candlelight, hopeful expectant faces, the house poor but the
-table laid with care.
-
-4:3 landscape.
-```
-
----
-
-## 탈무드 — `talmud-tales/images/story-12-chicken-2.webp`
-
-**왜 다시 그리나:** 이 장이 더 어긋납니다.
-
-- 사람이 다섯뿐입니다. 위와 같은 까닭으로 일곱이어야 합니다.
-- 나그네가 또 배낭 멘 아이입니다.
-- **접시 위 통닭이 손도 안 댄 온전한 상태입니다.** 이 장면은 머리·목·다리 둘·날개 둘을
-  다 잘라 나눠 준 뒤입니다. 가족들은 벌써 제 몫을 들고 있는데 닭만 멀쩡해서
-  한 그림 안에서 앞뒤가 어긋납니다.
-- 나그네가 닭다리를 양손에 하나씩 들었습니다. 다리 두 짝은 두 아들 몫이고
-  나그네 몫은 남은 몸통입니다. 접시 위 닭에도 다리가 그대로라 다리가 넷이 됩니다.
-- 아버지가 든 닭 머리가 볏이 새빨갛고 눈이 살아 있어, 구운 닭이 아니라
-  산 수탉의 목을 쥔 것처럼 보입니다.
-- **그림체가 다릅니다.** 나머지 37장은 수채와 색연필인데 이 장만 납작한
-  애니메이션 그림체입니다.
-
-```
-Children's picture book illustration, warm watercolor and colored-pencil
-style with visible paper texture and soft pencil outlines - NOT flat digital
-anime, NOT cel shading. Soft golden lighting, gentle rounded shapes, storybook
-atmosphere, no text or letters in the image, consistent warm earthy color
-palette (parchment, gold, terracotta, deep brown), expressive character faces.
-The artwork must bleed to all four edges: no white margin, no border, no frame.
-
-THE SEVEN PEOPLE AT THE TABLE - count them, no more and no fewer:
-  1. the father - a grown man with a moustache
-  2. the mother - a grown woman in an apron
-  3. the elder son - a boy of about twelve
-  4. the younger son - a boy of about eight
-  5. the elder daughter - a girl of about ten, brown hair
-  6. the younger daughter - a girl of about six, brown hair in a braid
-  7. the guest - a GROWN MAN of about thirty-five with a short beard, a worn
-     travelling cloak and a staff. He is an adult, taller than the father when
-     standing. He is NOT a boy, NOT a teenager, NOT carrying a backpack.
-The two sons wear plain earth-coloured tunics; the two daughters wear plain
-dresses. Keep their clothes the same in both pictures of this chapter.
-
-WHO IS HOLDING WHAT - this is the whole point of the story:
-  the father holds the chicken's HEAD on his plate - a cooked, roasted head,
-    dull brown, eyes closed, comb limp and browned. NOT a live rooster, NOT a
-    bright red comb, NOT an open beak.
-  the mother holds the NECK on her plate
-  each of the two sons holds ONE LEG - one leg each, two legs in all
-  each of the two daughters holds ONE WING - one wing each, two wings in all
-  the guest has the whole REMAINING BODY of the chicken on his own plate -
-    the breast and body meat, and nothing else. He holds NO drumstick.
-
-Scene: The same cottage table just after the carving. The platter in the
-middle now holds only the CARVED CARCASS - head gone, neck gone, BOTH legs
-gone, BOTH wings gone, the breast cut away. There must be NO whole chicken and
-NO leftover drumsticks on the platter. The guest is eating the body meat with
-quiet enjoyment while the six family members look at their small pieces with
-puzzled faces. Warm candlelight, comic warm dinner scene.
-
-4:3 landscape.
-```
+탈무드 12장은 사람 일곱, 나눠 준 뒤의 뼈만 남은 닭, 아들 둘의 다리와 딸 둘의 날개까지
+다 맞게 고쳐졌습니다. 다만 아버지가 든 닭 머리의 볏이 아직 빨개서 산 닭처럼 보입니다.
+크게 거슬리지 않아 다시 그리라고 하지는 않았습니다.
 
 ---
 
