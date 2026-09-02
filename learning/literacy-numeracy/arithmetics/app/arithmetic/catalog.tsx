@@ -42,9 +42,7 @@ export default function ArithmeticCatalog() {
           <button className="catalog-back" type="button" onClick={goBack} aria-label="이전 화면으로 돌아가기">←</button>
           <div className="catalog-header-copy">
             <a className="catalog-race-link" href="/arithmetic/race">순위 모드 <span aria-hidden="true">→</span></a>
-            <div className="catalog-title-row">
-
-              <nav className="catalog-stage-nav" aria-label="수학 과정">
+            <nav className="catalog-stage-nav" aria-label="수학 과정">
                 {(Object.keys(stageMeta) as LearningStage[]).map((stage) => {
                   const meta = stageMeta[stage];
                   const isAvailable = availableStages.has(stage);
@@ -52,9 +50,7 @@ export default function ArithmeticCatalog() {
                     ? <button key={stage} className={`catalog-stage-link stage-${stage}`} type="button" onClick={() => scrollToStage(stage)}>{meta.label}</button>
                     : <span key={stage} className={`catalog-stage-link stage-${stage} is-upcoming`} aria-disabled="true">{meta.label}<small>준비 중</small></span>;
                 })}
-              </nav>
-            </div>
-          </div>
+            </nav>`r`n          </div>
         </header>
         <ol className="worksheet-catalog" aria-label="연산 학습지 목록">
           {learningWorksheetCatalog.map(({ route, grade, title, badge }, index) => {

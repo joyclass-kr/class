@@ -6054,7 +6054,7 @@ button.division-option {
     padding: 0;
     background: transparent;
     box-shadow: none;
-    backdrop-filter: none;
+    backdrop-filter: none;`r`n    padding-right: 170px;
   }
 
   .catalog-stage-link {
