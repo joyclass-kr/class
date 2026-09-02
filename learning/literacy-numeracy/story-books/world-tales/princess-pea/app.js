@@ -315,16 +315,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '완두콩 위의 공주',
+    intro: [
+        '완두콩 위의 공주는 덴마크의 작가 한스 크리스티안 안데르센이 1835년에 펴낸 아주 짧은 이야기예요.',
+        '안데르센의 이야기 가운데 손꼽히게 짧지만, 마지막 한 줄 때문에 오래 기억되는 작품이랍니다. 이 책에서는 그 짧은 이야기를 장면마다 늘려 담았어요.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🫛')}
             </div>
             <div class="story-page-right">
-                <h1>완두콩 위의 공주</h1>
-                <p>완두콩 위의 공주는 덴마크의 작가 한스 크리스티안 안데르센이 1835년에 펴낸 아주 짧은 이야기예요.</p>
-                <p>안데르센의 이야기 가운데 손꼽히게 짧지만, 마지막 한 줄 때문에 오래 기억되는 작품이랍니다. 이 책에서는 그 짧은 이야기를 장면마다 늘려 담았어요.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -339,8 +348,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -350,8 +359,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -361,22 +370,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -426,9 +436,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -439,7 +449,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -511,7 +521,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -520,34 +530,636 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Princess and the Pea',
+        intro: [
+            "The Princess and the Pea is a very short story published by the Danish author Hans Christian Andersen in 1835.",
+            "It is one of the shortest things he ever wrote, and it has stayed in people's heads because of its last line. This book takes that short story and spreads it out scene by scene."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · Looking for a Real Princess',
+            beats: [
+                {
+                    art: '01-prince.webp',
+                    emoji: '👑',
+                    left: [
+                        "Long ago in a small country there was a prince,",
+                        "and he came in time to the age for marrying.",
+                        "The king and queen began looking about for a bride.",
+                        "But the prince wanted one thing in particular.",
+                        "\"I want to marry a real princess.\"",
+                        "\"If she is not real, I would rather not.\""
+                    ],
+                    right: [
+                        "So the prince set out to find one.",
+                        "He took ship and crossed the sea,",
+                        "and went over mountains into far countries.",
+                        "There were princesses everywhere —",
+                        "in the big countries and the small ones.",
+                        "And every time, the prince had his hopes up."
+                    ]
+                },
+                {
+                    art: '01-prince-2.webp',
+                    emoji: '👑',
+                    left: [
+                        "But when he met them there was always something not quite right.",
+                        "One princess walked oddly.",
+                        "One did not talk like a princess at all.",
+                        "And one was not a princess in the first place.",
+                        "The prince shook his head over every one of them.",
+                        "And so some years went by."
+                    ],
+                    right: [
+                        "In the end he came home empty-handed.",
+                        "His clothes were worn through and his shoes were finished.",
+                        "The prince sat at the window and sighed.",
+                        "\"Is there really no such thing as a real princess?\"",
+                        "The sky that day was heavy with cloud,",
+                        "and there was something in the wind."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Night of the Storm',
+            beats: [
+                {
+                    art: '02-storm.webp',
+                    emoji: '⛈️',
+                    left: [
+                        "That night a fearful storm came down.",
+                        "Lightning split the sky open, crack after crack.",
+                        "The rain came down as though it were being poured out of buckets,",
+                        "and the wind rattled the windows.",
+                        "Everybody in the castle had gone to bed,",
+                        "and the lamps had been put out one by one."
+                    ],
+                    right: [
+                        "And then there was a banging at the castle gate,",
+                        "so mixed up with the thunder that you could hardly hear it.",
+                        "The old king went out with a candle.",
+                        "\"Who is there at this hour?\"",
+                        "The heavy gate creaked open,",
+                        "and the rain came driving in."
+                    ]
+                },
+                {
+                    art: '02-storm-2.webp',
+                    emoji: '⛈️',
+                    left: [
+                        "Outside the gate stood a young woman",
+                        "with water running off her from head to foot.",
+                        "Her hair was plastered to her face,",
+                        "water was pouring out of her shoes,",
+                        "and the rain dripped off the hem of her dress.",
+                        "She said, in a shaking voice,"
+                    ],
+                    right: [
+                        "\"I am a princess.\"",
+                        "\"Would you give me a bed for one night?\"",
+                        "The king's eyes went round.",
+                        "\"A princess? At this hour?\"",
+                        "And still the king got her inside at once.",
+                        "You could hardly leave anybody standing out in rain like that."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · Is She Really a Princess?',
+            beats: [
+                {
+                    art: '03-doubt.webp',
+                    emoji: '💧',
+                    left: [
+                        "The young woman stepped into the hall,",
+                        "and a puddle formed under her at once.",
+                        "She was in a dreadful state,",
+                        "with the water still running off her clothes.",
+                        "Servants ran to fetch towels.",
+                        "And the prince came down at the sound of it."
+                    ],
+                    right: [
+                        "And he could not take his eyes off her.",
+                        "Wet through as she was, there was something about her.",
+                        "The prince's heart began to beat faster.",
+                        "\"Could it be, this time…\"",
+                        "The prince turned to his mother.",
+                        "He was about to say that a bed should be got ready quickly."
+                    ]
+                },
+                {
+                    art: '03-doubt-2.webp',
+                    emoji: '💧',
+                    left: [
+                        "The queen only stood watching with her arms folded.",
+                        "Her eyes were very sharp.",
+                        "\"A princess, in that state.\"",
+                        "\"We shall see about that.\"",
+                        "That is what the queen thought to herself.",
+                        "Out loud she was all sweetness."
+                    ],
+                    right: [
+                        "\"What a journey you must have had.\"",
+                        "\"I shall see to your bed myself.\"",
+                        "And she went up to the guest room without another word.",
+                        "There was something behind that face,",
+                        "and the prince watched her go and wondered,",
+                        "because she was walking rather fast."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Pea Under the Bed',
+            beats: [
+                {
+                    art: '04-pea.webp',
+                    emoji: '🫛',
+                    left: [
+                        "The queen went into the guest room,",
+                        "shut the door firmly and turned back her sleeves.",
+                        "She stripped every quilt and mattress off the bed",
+                        "until there was nothing but the bare boards.",
+                        "And then she took something out of her pocket.",
+                        "It was one pea."
+                    ],
+                    right: [
+                        "A very small, round pea.",
+                        "The queen put it in the middle of the bed.",
+                        "\"A real princess will feel that.\"",
+                        "And then she called the servants.",
+                        "\"Bring me twenty mattresses.\"",
+                        "The servants looked at each other,",
+                        "because they thought they had misheard her."
+                    ]
+                },
+                {
+                    art: '04-pea-2.webp',
+                    emoji: '🫛',
+                    left: [
+                        "The servants carried in twenty mattresses",
+                        "and laid them one on top of another over the pea.",
+                        "Then she had them fetch eiderdown quilts —",
+                        "twenty of those as well,",
+                        "and they went on top of the mattresses.",
+                        "The bed came up almost to the ceiling,",
+                        "far higher than the doorway."
+                    ],
+                    right: [
+                        "The servants brought a ladder and leaned it against the bed.",
+                        "\"However is she to get up there?\"",
+                        "one of them whispered.",
+                        "The queen turned her head as though she had not heard.",
+                        "\"There. That will do.\"",
+                        "And she went out of the room looking thoroughly pleased."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · A Sleepless Night',
+            beats: [
+                {
+                    art: '05-sleepless.webp',
+                    emoji: '🌙',
+                    left: [
+                        "The young woman was shown to the room.",
+                        "Her eyes went round at the sight of the bed.",
+                        "And still she said nothing at all,",
+                        "and climbed the ladder to the very top.",
+                        "The top of the quilts was higher than the windowsill.",
+                        "\"Sleep well.\"",
+                        "The queen shut the door",
+                        "and put her ear against it."
+                    ],
+                    right: [
+                        "The young woman lay down among the quilts.",
+                        "She ached all over with tiredness.",
+                        "And there was something hard pressing into her back.",
+                        "She turned this way and that,",
+                        "and every time, all forty layers rolled with her.",
+                        "\"Whatever is that?\"",
+                        "Whichever way she lay, that one spot pressed into her."
+                    ]
+                },
+                {
+                    art: '05-sleepless-2.webp',
+                    emoji: '🌙',
+                    left: [
+                        "She sat up and lifted the quilts one after another,",
+                        "and there was nothing to be found.",
+                        "She could hardly pull off twenty mattresses.",
+                        "Outside the door the queen had her ear pressed to the wood.",
+                        "\"She is turning over. She is turning over!\"",
+                        "The queen very nearly clapped her hands."
+                    ],
+                    right: [
+                        "Outside the window it was still raining,",
+                        "and the night went on and on with no end to it.",
+                        "The young woman shut her eyes and opened them again.",
+                        "It was near cockcrow before the window began to go grey.",
+                        "She got herself down the ladder at last,",
+                        "with her legs shaking under her.",
+                        "And there was one hollow in the bed where she had turned all night."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Good Morning',
+            beats: [
+                {
+                    art: '06-morning.webp',
+                    emoji: '🍳',
+                    left: [
+                        "Breakfast was laid,",
+                        "and the prince and the king sat down.",
+                        "The young woman came in rubbing her eyes,",
+                        "looking thoroughly worn out.",
+                        "The queen asked her sweetly,",
+                        "\"And did you sleep well last night?\""
+                    ],
+                    right: [
+                        "The young woman hesitated a moment.",
+                        "She did not want to tell a lie.",
+                        "\"To be honest, I did not sleep at all.\"",
+                        "\"There must have been something hard in the bed.\"",
+                        "\"I feel black and blue all over.\"",
+                        "The queen and the king caught each other's eye."
+                    ]
+                },
+                {
+                    art: '06-morning-2.webp',
+                    emoji: '🍳',
+                    left: [
+                        "The prince put down his spoon.",
+                        "\"Was the bed as uncomfortable as that?\"",
+                        "\"I am sorry. That is our fault.\"",
+                        "The young woman waved a hand.",
+                        "\"Not at all. I am grateful to have had a bed.\""
+                    ],
+                    right: [
+                        "The queen got up quietly",
+                        "and went out of the room,",
+                        "and everybody watched her go, quite bewildered.",
+                        "Her footsteps went away down the corridor,",
+                        "and the breakfast table went silent.",
+                        "A little later the queen came back in",
+                        "with one hand closed tight,",
+                        "and a smile spreading over her face."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · Under Twenty Mattresses',
+            beats: [
+                {
+                    art: '07-reveal.webp',
+                    emoji: '🔍',
+                    left: [
+                        "The queen stood at the head of the table.",
+                        "\"Do you know what was under that bed?\"",
+                        "Everybody shook their heads,",
+                        "and the queen slowly opened her hand.",
+                        "There was something small and round on her palm.",
+                        "It was one little pea.",
+                        "\"I put it at the very bottom of the bed last night.\""
+                    ],
+                    right: [
+                        "\"And I laid twenty mattresses on top of it.\"",
+                        "\"And twenty quilts on top of those.\"",
+                        "There was a murmur all round the table,",
+                        "and the young woman's eyes went round too.",
+                        "\"That little thing?\"",
+                        "And the pea rolled about on her palm."
+                    ]
+                },
+                {
+                    art: '07-reveal-2.webp',
+                    emoji: '🔍',
+                    left: [
+                        "The queen turned to her son.",
+                        "\"Under twenty mattresses and twenty quilts.\"",
+                        "\"And she felt it all the same.\"",
+                        "\"There is nobody in the world with skin as fine as that.\"",
+                        "\"This lady is a real princess and no mistake.\"",
+                        "And the prince's face lit up."
+                    ],
+                    right: [
+                        "Because the person he had searched so long for was in front of him.",
+                        "\"Will you marry me?\"",
+                        "The prince's voice shook a little.",
+                        "The room went as quiet as a stone,",
+                        "and the princess went pink.",
+                        "And then she quietly nodded.",
+                        "The king clapped his hands,",
+                        "and the laughter went right round the room."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · The Pea in the Museum',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🎉',
+                    left: [
+                        "The wedding was settled that same day,",
+                        "and the news went out over the whole country.",
+                        "There was feasting at the castle for three days,",
+                        "and people danced in the streets.",
+                        "The prince did not sigh any more,",
+                        "and the princess slept soundly that night.",
+                        "\"Now I feel better.\""
+                    ],
+                    right: [
+                        "The princess put her face into the pillow.",
+                        "This time there was exactly one mattress.",
+                        "The queen was very fond of her son's wife,",
+                        "and the two of them got on well.",
+                        "And what became of that pea?",
+                        "It was not thrown away, but kept carefully.",
+                        "It was much too remarkable a pea to throw out."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🎉',
+                    left: [
+                        "The pea was put into a glass case",
+                        "and set in a museum,",
+                        "sitting quietly on a small stand.",
+                        "People came crowding up in front of it.",
+                        "\"That is the famous pea, they say.\"",
+                        "\"And she felt a thing that size?\""
+                    ],
+                    right: [
+                        "The glass kept misting over,",
+                        "and the attendant had to keep wiping it with a handkerchief.",
+                        "Children pressed their noses to the glass to look in.",
+                        "The pea is probably still there now,",
+                        "unless somebody has taken it away.",
+                        "And there — that is a true story."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did the prince want?',
+            choices: ['To marry a real princess', 'To travel the world', 'To find a bigger castle'],
+            answer: 0
+        },
+        {
+            q: 'Who came to the gate in the storm?',
+            choices: ['A servant with a message', 'A princess in a carriage', 'A young woman soaked through'],
+            answer: 2
+        },
+        {
+            q: 'What did the queen put on the bare boards of the bed?',
+            choices: ['A stone', 'One pea', 'A pin'],
+            answer: 1
+        },
+        {
+            q: 'How many mattresses and quilts went on top of it?',
+            choices: ['Twenty of each', 'Ten of each', 'Forty mattresses only'],
+            answer: 0
+        },
+        {
+            q: 'What did the young woman say at breakfast?',
+            choices: ['That she had slept very well', 'That the bed was too high', 'That she had not slept at all'],
+            answer: 2
+        },
+        {
+            q: 'Why did the queen decide she was a real princess?',
+            choices: ['She spoke like a princess', 'She felt the pea through forty layers', 'She had a fine dress'],
+            answer: 1
+        },
+        {
+            q: 'What became of the pea?',
+            choices: ['It was put in a glass case in a museum', 'It was planted in the garden', 'It was thrown away'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🛏️',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This is among the shortest things Andersen wrote. And it has lasted nearly two hundred years all the same.",
+                    "The prince travelled through country after country. There were plenty of princesses, and no way of knowing which were real — because if you ask, everybody says yes.",
+                    "Look again at the queen's test. She did not ask a question. What you ask about can be made up.",
+                    "She lays twenty mattresses and twenty quilts on one pea. Enough that nobody could possibly feel it."
+                ],
+                right: [
+                    "And the young woman says straight out that she did not sleep. She could have got through the morning by saying she slept beautifully.",
+                    "Was that a fair test?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-prince.webp': [
+            { word: 'bride', meaning: '신붓감', sentence: 'They began looking about for a bride.' },
+            { word: 'in particular', meaning: '특히, 한 가지', sentence: 'The prince wanted one thing in particular.' },
+            { word: 'take ship', meaning: '배를 타다', sentence: 'He took ship and crossed the sea.' },
+            { word: 'have one’s hopes up', meaning: '기대를 걸다', sentence: 'The prince had his hopes up.' }
+        ],
+        '01-prince-2.webp': [
+            { word: 'not quite right', meaning: '어딘가 미심쩍은', sentence: 'There was always something not quite right.' },
+            { word: 'oddly', meaning: '이상하게', sentence: 'One princess walked oddly.' },
+            { word: 'in the first place', meaning: '애초에', sentence: 'One was not a princess in the first place.' },
+            { word: 'empty-handed', meaning: '빈손으로', sentence: 'He came home empty-handed.' },
+            { word: 'wear through', meaning: '해지다', sentence: 'His clothes were worn through.' }
+        ],
+        '02-storm.webp': [
+            { word: 'fearful', meaning: '무서운', sentence: 'A fearful storm came down.' },
+            { word: 'lightning', meaning: '번개', sentence: 'Lightning split the sky open.' },
+            { word: 'bucket', meaning: '양동이', sentence: 'As though it were poured out of buckets.' },
+            { word: 'rattle', meaning: '덜컹거리게 하다', sentence: 'The wind rattled the windows.' },
+            { word: 'creak open', meaning: '삐걱 열리다', sentence: 'The heavy gate creaked open.' }
+        ],
+        '02-storm-2.webp': [
+            { word: 'run off', meaning: '흘러내리다', sentence: 'With water running off her.' },
+            { word: 'plastered to', meaning: '착 달라붙은', sentence: 'Her hair was plastered to her face.' },
+            { word: 'hem', meaning: '옷자락', sentence: 'The rain dripped off the hem of her dress.' },
+            { word: 'at this hour', meaning: '이 밤중에', sentence: 'A princess? At this hour?' }
+        ],
+        '03-doubt.webp': [
+            { word: 'hall', meaning: '현관', sentence: 'She stepped into the hall.' },
+            { word: 'puddle', meaning: '물웅덩이', sentence: 'A puddle formed under her at once.' },
+            { word: 'in a dreadful state', meaning: '몰골이 말이 아닌', sentence: 'She was in a dreadful state.' },
+            { word: 'wet through', meaning: '흠뻑 젖은', sentence: 'Wet through as she was.' }
+        ],
+        '03-doubt-2.webp': [
+            { word: 'arms folded', meaning: '팔짱을 낀', sentence: 'The queen stood with her arms folded.' },
+            { word: 'sharp', meaning: '매서운', sentence: 'Her eyes were very sharp.' },
+            { word: 'all sweetness', meaning: '아주 상냥한', sentence: 'Out loud she was all sweetness.' },
+            { word: 'see to', meaning: '보아 주다, 챙기다', sentence: 'I shall see to your bed myself.' }
+        ],
+        '04-pea.webp': [
+            { word: 'turn back one’s sleeves', meaning: '소매를 걷다', sentence: 'She turned back her sleeves.' },
+            { word: 'strip', meaning: '걷어 내다', sentence: 'She stripped every quilt off the bed.' },
+            { word: 'mattress', meaning: '요', sentence: 'Every quilt and mattress.' },
+            { word: 'bare boards', meaning: '맨 나무 바닥', sentence: 'Nothing but the bare boards.' },
+            { word: 'mishear', meaning: '잘못 듣다', sentence: 'They thought they had misheard her.' }
+        ],
+        '04-pea-2.webp': [
+            { word: 'eiderdown', meaning: '오리털 이불', sentence: 'She had them fetch eiderdown quilts.' },
+            { word: 'doorway', meaning: '방문', sentence: 'Far higher than the doorway.' },
+            { word: 'ladder', meaning: '사다리', sentence: 'The servants brought a ladder.' },
+            { word: 'lean against', meaning: '기대어 놓다', sentence: 'And leaned it against the bed.' },
+            { word: 'thoroughly', meaning: '아주', sentence: 'Looking thoroughly pleased.' }
+        ],
+        '05-sleepless.webp': [
+            { word: 'show to', meaning: '안내하다', sentence: 'She was shown to the room.' },
+            { word: 'windowsill', meaning: '창턱', sentence: 'Higher than the windowsill.' },
+            { word: 'ache', meaning: '아프다, 노곤하다', sentence: 'She ached all over with tiredness.' },
+            { word: 'press into', meaning: '배기다', sentence: 'Something hard pressing into her back.' },
+            { word: 'layer', meaning: '겹', sentence: 'All forty layers rolled with her.' }
+        ],
+        '05-sleepless-2.webp': [
+            { word: 'sit up', meaning: '일어나 앉다', sentence: 'She sat up and lifted the quilts.' },
+            { word: 'turn over', meaning: '뒤척이다', sentence: 'She is turning over!' },
+            { word: 'clap one’s hands', meaning: '손뼉을 치다', sentence: 'The queen very nearly clapped her hands.' },
+            { word: 'cockcrow', meaning: '닭 울 무렵', sentence: 'It was near cockcrow.' },
+            { word: 'hollow', meaning: '옴폭 꺼진 자리', sentence: 'There was one hollow in the bed.' }
+        ],
+        '06-morning.webp': [
+            { word: 'lay', meaning: '차려지다', sentence: 'Breakfast was laid.' },
+            { word: 'worn out', meaning: '몹시 피곤한', sentence: 'Looking thoroughly worn out.' },
+            { word: 'to be honest', meaning: '사실은', sentence: 'To be honest, I did not sleep at all.' },
+            { word: 'black and blue', meaning: '시퍼렇게 멍든', sentence: 'I feel black and blue all over.' },
+            { word: 'catch one’s eye', meaning: '눈을 마주치다', sentence: "They caught each other's eye." }
+        ],
+        '06-morning-2.webp': [
+            { word: 'uncomfortable', meaning: '불편한', sentence: 'Was the bed as uncomfortable as that?' },
+            { word: 'fault', meaning: '잘못', sentence: 'That is our fault.' },
+            { word: 'grateful', meaning: '고마워하는', sentence: 'I am grateful to have had a bed.' },
+            { word: 'bewildered', meaning: '어리둥절한', sentence: 'Everybody watched her go, quite bewildered.' }
+        ],
+        '07-reveal.webp': [
+            { word: 'palm', meaning: '손바닥', sentence: 'Something small and round on her palm.' },
+            { word: 'pea', meaning: '완두콩', sentence: 'It was one little pea.' },
+            { word: 'the very bottom', meaning: '맨 밑', sentence: 'At the very bottom of the bed.' },
+            { word: 'murmur', meaning: '웅성거림', sentence: 'There was a murmur all round the table.' }
+        ],
+        '07-reveal-2.webp': [
+            { word: 'all the same', meaning: '그런데도', sentence: 'And she felt it all the same.' },
+            { word: 'fine', meaning: '여린, 고운', sentence: 'Nobody with skin as fine as that.' },
+            { word: 'no mistake', meaning: '틀림없이', sentence: 'A real princess and no mistake.' },
+            { word: 'light up', meaning: '환해지다', sentence: "The prince's face lit up." },
+            { word: 'go pink', meaning: '발그레해지다', sentence: 'The princess went pink.' }
+        ],
+        '08-ending.webp': [
+            { word: 'settle', meaning: '정해지다', sentence: 'The wedding was settled that same day.' },
+            { word: 'feasting', meaning: '잔치', sentence: 'There was feasting at the castle.' },
+            { word: 'soundly', meaning: '푹', sentence: 'The princess slept soundly.' },
+            { word: 'be fond of', meaning: '아끼다', sentence: "The queen was very fond of her son's wife." },
+            { word: 'remarkable', meaning: '귀한, 놀라운', sentence: 'Much too remarkable a pea to throw out.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'glass case', meaning: '유리 상자', sentence: 'The pea was put into a glass case.' },
+            { word: 'stand', meaning: '받침대', sentence: 'Sitting quietly on a small stand.' },
+            { word: 'mist over', meaning: '김이 서리다', sentence: 'The glass kept misting over.' },
+            { word: 'attendant', meaning: '지키는 사람', sentence: 'The attendant had to keep wiping it.' },
+            { word: 'unless', meaning: '~하지 않았다면', sentence: 'Unless somebody has taken it away.' }
+        ],
+        'end.webp': [
+            { word: 'last', meaning: '남다, 이어지다', sentence: 'And it has lasted nearly two hundred years.' },
+            { word: 'plenty of', meaning: '많은', sentence: 'There were plenty of princesses.' },
+            { word: 'test', meaning: '시험', sentence: "Look again at the queen's test." },
+            { word: 'make up', meaning: '꾸며 내다', sentence: 'What you ask about can be made up.' },
+            { word: 'fair', meaning: '옳은, 공정한', sentence: 'Was that a fair test?' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -612,6 +1224,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -620,7 +1233,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -632,7 +1245,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -666,4 +1279,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
