@@ -83,7 +83,8 @@
             width: 48px;
             height: 48px;
             border-radius: var(--radius-sm);
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.06) !important;
+            border: 1px solid var(--card-accent, #38bdf8) !important;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -96,10 +97,21 @@
         }
 
         .card-title {
+            font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
             font-size: 17px;
             font-weight: 800;
             color: #ffffff;
             margin-bottom: 3px;
+        }
+
+        .card-title-en {
+            margin-top: 5px;
+            font-family: Inter, Arial, sans-serif;
+            font-size: 11px;
+            font-weight: 650;
+            line-height: 1.35;
+            color: #94a3b8;
+            letter-spacing: 0.02em;
         }
 
         .card-sub {
@@ -159,6 +171,23 @@
         .hub-page .card-sub,
         .hub-page .card-features,
         .hub-page .card-btn { display: none; }
+
+        .hub-page .hub-card {
+            grid-column: auto !important;
+            background: rgba(15, 23, 42, 0.8) !important;
+            border-color: var(--border-subtle) !important;
+            box-shadow: none !important;
+        }
+
+        .hub-page .hub-card[href="circulation/"] { order: 1; }
+        .hub-page .hub-card[href="respiration/"] { order: 2; }
+        .hub-page .hub-card[href="digestion/"] { order: 3; }
+        .hub-page .hub-card[href="excretion/"] { order: 4; }
+        .hub-page .hub-card[href="nervous/"] { order: 5; }
+        .hub-page .hub-card[href="homeostasis/"] { order: 6; }
+        .hub-page .hub-card[href="skeleton/"] { order: 7; }
+        .hub-page .hub-card[href="muscle/"] { order: 8; }
+        .hub-page .hub-card[href="synapse/"] { order: 9; }
     </style>
 </head>
 <body class="hub-page">
@@ -173,7 +202,8 @@
                     <div class="card-top">
                         <div class="card-icon-box" style="background:rgba(56, 189, 248, 0.2); border:1.5px solid #38bdf8;">🧠</div>
                         <div class="card-title-group">
-                            <div class="card-title" style="font-size:19px; color:#38bdf8;">뉴런 시냅스 &amp; 신경전달물질</div>
+                            <div class="card-title">뉴런 시냅스와 신경전달물질</div>
+                            <div class="card-title-en" lang="en">Neural Synapse &amp; Neurotransmitters</div>
                             <div class="card-sub" style="color:#34d399;">초등 [6과04-06] · 중등 [9과20-02] · 고등 [12생과Ⅰ03] 활동전위 &amp; 시냅스 소포 분비</div>
                         </div>
                     </div>
@@ -191,7 +221,8 @@
                     <div class="card-top">
                         <div class="card-icon-box" style="background:rgba(244, 63, 94, 0.18); border:1px solid #f43f5e;">💪</div>
                         <div class="card-title-group">
-                            <div class="card-title">근육 수축 &amp; 액틴-마이오신 활주설</div>
+                            <div class="card-title">근육 수축과 활주설</div>
+                            <div class="card-title-en" lang="en">Muscle Contraction &amp; Sliding Filament Theory</div>
                             <div class="card-sub">중등 [9과14-05] · 고등 [12생과Ⅰ03] 근절 수치 계산 1순위</div>
                         </div>
                     </div>
@@ -209,7 +240,8 @@
                     <div class="card-top">
                         <div class="card-icon-box" style="background:rgba(56, 189, 248, 0.18); border:1px solid #38bdf8;">🦾</div>
                         <div class="card-title-group">
-                            <div class="card-title">골격계 &amp; 관절</div>
+                            <div class="card-title">골격계와 관절</div>
+                            <div class="card-title-en" lang="en">Skeletal System &amp; Joints</div>
                             <div class="card-sub">초등 [6과04-01] · 중등 [9과14-05] 관절 ROM &amp; 길항 작용</div>
                         </div>
                     </div>
@@ -227,7 +259,8 @@
                     <div class="card-top">
                         <div class="card-icon-box">❤️</div>
                         <div class="card-title-group">
-                            <div class="card-title">1. 순환계 &amp; 심장 펌프</div>
+                            <div class="card-title">순환계와 심장 펌프</div>
+                            <div class="card-title-en" lang="en">Circulatory System &amp; Heart Pump</div>
                             <div class="card-sub">초등 [6과04-03] · 중등 [9과14-02] 심장과 순환</div>
                         </div>
                     </div>
@@ -245,7 +278,8 @@
                     <div class="card-top">
                         <div class="card-icon-box">🫁</div>
                         <div class="card-title-group">
-                            <div class="card-title">2. 호흡계 &amp; 기체 교환</div>
+                            <div class="card-title">호흡계와 기체 교환</div>
+                            <div class="card-title-en" lang="en">Respiratory System &amp; Gas Exchange</div>
                             <div class="card-sub">초등 [6과04-04] · 중등 [9과14-03] 호흡과 확산</div>
                         </div>
                     </div>
@@ -263,7 +297,8 @@
                     <div class="card-top">
                         <div class="card-icon-box">🥪</div>
                         <div class="card-title-group">
-                            <div class="card-title">3. 소화계 &amp; 영양소 검출</div>
+                            <div class="card-title">소화계와 영양소 검출</div>
+                            <div class="card-title-en" lang="en">Digestive System &amp; Nutrient Tests</div>
                             <div class="card-sub">초등 [6과04-02] · 중등 [9과14-01] 소화와 효소</div>
                         </div>
                     </div>
@@ -281,7 +316,8 @@
                     <div class="card-top">
                         <div class="card-icon-box">🫘</div>
                         <div class="card-title-group">
-                            <div class="card-title">4. 배설계 &amp; 네프론 여과</div>
+                            <div class="card-title">배설계와 네프론 여과</div>
+                            <div class="card-title-en" lang="en">Excretory System &amp; Nephron Filtration</div>
                             <div class="card-sub">초등 [6과04-05] · 중등 [9과14-04] 배설과 여과</div>
                         </div>
                     </div>
@@ -299,7 +335,8 @@
                     <div class="card-top">
                         <div class="card-icon-box">⚡</div>
                         <div class="card-title-group">
-                            <div class="card-title">5. 신경계 &amp; 자극과 반응</div>
+                            <div class="card-title">신경계와 자극·반응</div>
+                            <div class="card-title-en" lang="en">Nervous System &amp; Stimulus Response</div>
                             <div class="card-sub">초등 [6과04-06] · 중등 [9과20-01~03] 자극과 반응</div>
                         </div>
                     </div>
@@ -317,7 +354,8 @@
                     <div class="card-top">
                         <div class="card-icon-box">🌡️</div>
                         <div class="card-title-group">
-                            <div class="card-title">6. 통합 항상성 피드백</div>
+                            <div class="card-title">항상성 조절</div>
+                            <div class="card-title-en" lang="en">Homeostatic Regulation</div>
                             <div class="card-sub">초등 [6과04-07] · 중등 [9과20-04] · 고등 항상성</div>
                         </div>
                     </div>
