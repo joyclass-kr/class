@@ -303,16 +303,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '밤꾀꼬리',
+    intro: [
+        '밤꾀꼬리는 덴마크의 작가 한스 크리스티안 안데르센이 1843년에 펴낸 이야기예요. 중국을 무대로 삼은 작품이랍니다.',
+        '보석으로 만든 기계 새와 숲에서 온 진짜 새가 나란히 놓여요. 어느 쪽이 정말 귀한지 이야기가 천천히 알려 준답니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🐦')}
             </div>
             <div class="story-page-right">
-                <h1>밤꾀꼬리</h1>
-                <p>밤꾀꼬리는 덴마크의 작가 한스 크리스티안 안데르센이 1843년에 펴낸 이야기예요. 중국을 무대로 삼은 작품이랍니다.</p>
-                <p>보석으로 만든 기계 새와 숲에서 온 진짜 새가 나란히 놓여요. 어느 쪽이 정말 귀한지 이야기가 천천히 알려 준답니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -327,8 +336,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -338,8 +347,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -349,22 +358,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -414,9 +424,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -427,7 +437,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -499,7 +509,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -508,34 +518,614 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Nightingale',
+        intro: [
+            "The Nightingale was published by the Danish author Hans Christian Andersen in 1843. He set it in China.",
+            "A mechanical bird covered in jewels is put side by side with a real bird out of the wood. The story takes its time telling you which of them is the precious one."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Loveliest Palace in the World',
+            beats: [
+                {
+                    art: '01-palace.webp',
+                    emoji: '🏯',
+                    left: [
+                        "Long ago in China there was a palace built of porcelain.",
+                        "The pillars and the roof were porcelain too,",
+                        "and it was so beautiful that people came from far countries to look at it.",
+                        "Only it was so thin that you had to walk carefully.",
+                        "In the garden grew flowers with little silver bells on them.",
+                        "And behind the palace a great deep wood went on and on."
+                    ],
+                    right: [
+                        "Beyond the wood was the sea.",
+                        "And in that wood lived one small bird.",
+                        "She sang so well that even the fishermen would stop working to listen.",
+                        "She was a nightingale — grey, and small.",
+                        "\"You forget your troubles listening to that.\"",
+                        "\"I don't suppose even our emperor has heard it.\""
+                    ]
+                },
+                {
+                    art: '01-palace-2.webp',
+                    emoji: '🏯',
+                    left: [
+                        "People from far countries saw the palace and wrote books about it,",
+                        "and the books went out to one country after another.",
+                        "And at last one of them came into the emperor's hands.",
+                        "The emperor turned the pages, well pleased.",
+                        "There was nothing but praise for the palace and for the garden,",
+                        "and the emperor felt very grand indeed.",
+                        "And then, at the end, he read this."
+                    ],
+                    right: [
+                        "\"The palace and the garden are fine, but the finest thing of all is the nightingale.\"",
+                        "The emperor tilted his head.",
+                        "\"A nightingale? Have we one of those in this palace?\"",
+                        "Think as he might, he had never heard of it.",
+                        "The emperor closed the book and got to his feet."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Bird Nobody Knew',
+            beats: [
+                {
+                    art: '02-search.webp',
+                    emoji: '🔍',
+                    left: [
+                        "The emperor sent for an official at once.",
+                        "\"Bring me the nightingale by this evening.\"",
+                        "\"And if you do not, it will go badly for you.\"",
+                        "The official went white.",
+                        "He had never heard the word nightingale in his life.",
+                        "He turned the palace upside down looking,",
+                        "and stopped everybody he met to ask."
+                    ],
+                    right: [
+                        "But not one person knew.",
+                        "\"Would that be the noise a cow makes?\"",
+                        "\"Or a frog, perhaps?\" The official was frantic.",
+                        "The sun was already going down.",
+                        "Nobody in that palace had ever heard the singing.",
+                        "Nobody knew anything about the world outside the gates."
+                    ]
+                },
+                {
+                    art: '02-search-2.webp',
+                    emoji: '🔍',
+                    left: [
+                        "The sun went right down and still he had not found the bird.",
+                        "The official was hopping from foot to foot.",
+                        "And then a small voice came from the kitchen.",
+                        "It was a child who worked there.",
+                        "\"I know it.\"",
+                        "\"I hear it in the wood every night.\""
+                    ],
+                    right: [
+                        "The child carried food down to her mother by the sea every day,",
+                        "and had heard the singing going to and fro.",
+                        "She had always liked that sound.",
+                        "The official caught the child's hand.",
+                        "\"Then take me there, quickly!\" And he set off for the wood with the child in front.",
+                        "The other officials all came trailing after them."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Guest from the Wood',
+            beats: [
+                {
+                    art: '03-nightingale.webp',
+                    emoji: '🌲',
+                    left: [
+                        "The child took the officials into the wood,",
+                        "a whole line of people in silk following behind.",
+                        "On the way a cow mooed.",
+                        "\"Ah — that will be it!\"",
+                        "The child smiled and shook her head.",
+                        "\"That is a cow. We must go further.\""
+                    ],
+                    right: [
+                        "Then a frog croaked.",
+                        "\"This time it must be!\"",
+                        "\"That is a frog.\"",
+                        "The officials cleared their throats, rather put out.",
+                        "Their coats kept catching on branches and tearing,",
+                        "and their silk shoes were thick with mud."
+                    ]
+                },
+                {
+                    art: '03-nightingale-2.webp',
+                    emoji: '🌲',
+                    left: [
+                        "At last the child stopped.",
+                        "\"Hush — there she is.\"",
+                        "There was a small bird on a low branch,",
+                        "a plain grey bird.",
+                        "\"What? That shabby little thing?\"",
+                        "And then the bird cleared her throat."
+                    ],
+                    right: [
+                        "And she began to sing.",
+                        "The whole wood went quiet.",
+                        "The officials stood frozen where they were,",
+                        "and one of them found himself crying.",
+                        "\"To think there was a sound like that in the world.\" The child smiled to herself."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · An Evening at the Palace',
+            beats: [
+                {
+                    art: '04-court.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "The nightingale was invited to the palace.",
+                        "The little bird found the strange place rather frightening.",
+                        "That evening the palace was full of lamps,",
+                        "and the silver bells on the flowers went tinkle, tinkle.",
+                        "Everybody in the palace sat down together,",
+                        "and the nightingale took her place on a golden perch.",
+                        "And the little bird sang in front of the emperor."
+                    ],
+                    right: [
+                        "Some of the songs made you laugh and some of them made you cry.",
+                        "When she finished, the palace was as quiet as a stone.",
+                        "Nobody so much as breathed,",
+                        "and only the candles moved.",
+                        "The ladies of the court pressed their sleeves to their eyes."
+                    ]
+                },
+                {
+                    art: '04-court-2.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "At last the emperor raised his head.",
+                        "There were tears on his cheeks.",
+                        "\"I have never heard such a sound in my life.\"",
+                        "He wanted to give her a gold chain as a reward.",
+                        "And the nightingale would not take it."
+                    ],
+                    right: [
+                        "\"Your Majesty's tears are enough for me.\"",
+                        "From that day the nightingale lived at the palace,",
+                        "with a golden cage and people to wait on her.",
+                        "But when she went out, a thread was tied to her foot.",
+                        "That made the nightingale a little sad.",
+                        "She kept thinking of the branches in the wood,",
+                        "and she missed the smell of the wind."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Bird Made of Jewels',
+            beats: [
+                {
+                    art: '05-machine.webp',
+                    emoji: '💎',
+                    left: [
+                        "One day a present came from a neighbouring country,",
+                        "a box wrapped in silk.",
+                        "They lifted the lid and everybody gasped.",
+                        "It was a mechanical bird covered all over in jewels,",
+                        "exactly the size of the real one.",
+                        "Rubies and sapphires were set close together over it."
+                    ],
+                    right: [
+                        "Wind it up and it sang.",
+                        "\"Good heavens! Far finer than the real bird!\"",
+                        "However many times they asked, the mechanical bird sang it exactly the same,",
+                        "and never a note wrong.",
+                        "People thought that made it better,",
+                        "and the emperor nodded, pleased."
+                    ]
+                },
+                {
+                    art: '05-machine-2.webp',
+                    emoji: '💎',
+                    left: [
+                        "They tried making the two birds sing together.",
+                        "And it would not fit at all,",
+                        "because the real bird sang it differently every time.",
+                        "\"That bird does as it pleases.\"",
+                        "\"The mechanical one is much better, surely.\"",
+                        "And people crowded round the mechanical bird."
+                    ],
+                    right: [
+                        "They heard the same song thirty-three times over,",
+                        "and nobody looked back at the window.",
+                        "And in that time the real nightingale flew out of it",
+                        "and went home to the wood.",
+                        "The emperor was angry and ordered her banished from the country.",
+                        "The empty perch stayed where it was."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Song Stops',
+            beats: [
+                {
+                    art: '06-broken.webp',
+                    emoji: '⚙️',
+                    left: [
+                        "The mechanical bird sang night and day,",
+                        "and people learned the song by heart.",
+                        "They hummed it in the street.",
+                        "And so a year went by, and then one day",
+                        "the emperor asked for the song at bedtime,",
+                        "and the mechanical bird began as it always did."
+                    ],
+                    right: [
+                        "In the middle of the song there was a snap.",
+                        "Then a grinding sound, and the song stopped.",
+                        "A part inside the works had worn out.",
+                        "The palace people went white,",
+                        "and the emperor sent quickly for the clockmaker.",
+                        "The room was suddenly far too quiet."
+                    ]
+                },
+                {
+                    art: '06-broken-2.webp',
+                    emoji: '⚙️',
+                    left: [
+                        "A very good clockmaker looked into it for a long while.",
+                        "He fitted a new little cog and oiled it,",
+                        "and he did get the sound going again.",
+                        "But the clockmaker shook his head.",
+                        "\"The inside of it is badly worn.\""
+                    ],
+                    right: [
+                        "\"You must let it sing only once a year now.\"",
+                        "And there was nothing for it but to do as he said.",
+                        "From that day the palace was very quiet.",
+                        "The mechanical bird went into a glass case,",
+                        "and people kept glancing at the place where the song used to be.",
+                        "And still nobody thought of the bird in the wood."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Emperor Falls Ill',
+            beats: [
+                {
+                    art: '07-illness.webp',
+                    emoji: '🌑',
+                    left: [
+                        "Some years went by after that.",
+                        "And the emperor fell ill and took to his bed.",
+                        "His face went white and thin.",
+                        "The palace people were already talking about the next emperor,",
+                        "and you could hear them whispering in the corridors.",
+                        "Nobody at all was left in the great room.",
+                        "The window stood open and only the moonlight came in."
+                    ],
+                    right: [
+                        "The emperor could not move.",
+                        "It was hard even to lift a finger.",
+                        "There was a weight on his chest,",
+                        "and he wished somebody — anybody — would sit with him.",
+                        "But there was not one footstep to be heard.",
+                        "The corridor outside the door was empty."
+                    ]
+                },
+                {
+                    art: '07-illness-2.webp',
+                    emoji: '🌑',
+                    left: [
+                        "The emperor looked at the mechanical bird beside his bed.",
+                        "The jewels glittered cold in the moonlight.",
+                        "\"Sing something for me.\"",
+                        "The mechanical bird made no sound at all,",
+                        "because there was nobody there to wind it.",
+                        "And the emperor closed his eyes."
+                    ],
+                    right: [
+                        "One thing after another came back to him.",
+                        "And the small grey bird out of the wood came back too.",
+                        "\"It was I who drove her away.\" He lay thinking about that a long while.",
+                        "The night was very long.",
+                        "Outside the window there was nothing but the wind."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · The Song at the Window',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🌅',
+                    left: [
+                        "And then singing came in at the window,",
+                        "clear and lovely.",
+                        "The emperor just managed to turn his head.",
+                        "There was a small grey bird on the windowsill.",
+                        "It was the nightingale, back from the wood.",
+                        "\"I have come to sing for you.\""
+                    ],
+                    right: [
+                        "\"I heard that you were ill.\"",
+                        "And the nightingale sang the whole night through —",
+                        "songs with the wood in them, and the sea, and the morning.",
+                        "As he listened, the colour came back into the emperor's face,",
+                        "and by morning he could sit up in his bed.",
+                        "The morning sun came in at the window."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🌅',
+                    left: [
+                        "The emperor held out a hand to the bird.",
+                        "\"I drove you away, and you came all the same.\"",
+                        "\"Will you live here in this palace?\"",
+                        "The nightingale tilted her head a little",
+                        "and answered quietly.",
+                        "\"I shall live in the wood and come now and then.\""
+                    ],
+                    right: [
+                        "\"That is better for both of us.\"",
+                        "\"Only promise me one thing.\"",
+                        "\"Keep it a secret that I come.\"",
+                        "And the nightingale flew away to the wood.",
+                        "And after that the emperor was well for a long, long time."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'How did the emperor learn about the nightingale?',
+            choices: ['An official told him', 'He heard her from the palace', 'From a book written by people from far countries'],
+            answer: 2
+        },
+        {
+            q: 'Who in the palace knew where the nightingale was?',
+            choices: ['The head official', 'A child who worked in the kitchen', 'Nobody at all'],
+            answer: 1
+        },
+        {
+            q: 'What did the officials mistake for the nightingale on the way?',
+            choices: ['A cow and a frog', 'The wind and the sea', 'Silver bells in the garden'],
+            answer: 0
+        },
+        {
+            q: 'What did the nightingale want as her reward?',
+            choices: ['A gold chain', 'A golden cage', 'Nothing but the emperor’s tears'],
+            answer: 2
+        },
+        {
+            q: 'Why did people prefer the mechanical bird?',
+            choices: ['It was louder', 'It sang the same song exactly the same way every time', 'It could fly higher'],
+            answer: 1
+        },
+        {
+            q: 'What happened to the mechanical bird after a year?',
+            choices: ['A part inside wore out and the song stopped', 'It was given away', 'It flew out of the window'],
+            answer: 0
+        },
+        {
+            q: 'What did the nightingale ask for at the end?',
+            choices: ['A perch by the window', 'That the mechanical bird be broken up', 'That her visits be kept secret'],
+            answer: 2
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐦',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Andersen set this in a China he had never been to. He read about the palace in books and made the rest up.",
+                    "The emperor only learned about the nightingale in his own country by reading a book — one written down by somebody from far away.",
+                    "It is the kitchen child who finds the bird. She was the only person in that palace who knew the sound.",
+                    "The mechanical bird repeats one tune. And that is exactly why so many people preferred it: you always knew what you were going to get."
+                ],
+                right: [
+                    "When the machine stopped, nobody could mend it. What came back then was the nightingale at the window.",
+                    "Why do you think the nightingale would not stay at the palace?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-palace.webp': [
+            { word: 'porcelain', meaning: '도자기', sentence: 'A palace built of porcelain.' },
+            { word: 'pillar', meaning: '기둥', sentence: 'The pillars and the roof were porcelain too.' },
+            { word: 'nightingale', meaning: '밤꾀꼬리', sentence: 'She was a nightingale — grey, and small.' },
+            { word: 'fisherman', meaning: '고기잡이', sentence: 'Even the fishermen would stop working to listen.' }
+        ],
+        '01-palace-2.webp': [
+            { word: 'praise', meaning: '칭찬', sentence: 'There was nothing but praise for the palace.' },
+            { word: 'grand', meaning: '으쓱한, 대단한', sentence: 'The emperor felt very grand indeed.' },
+            { word: 'tilt one’s head', meaning: '고개를 갸웃하다', sentence: 'The emperor tilted his head.' },
+            { word: 'think as he might', meaning: '아무리 생각해도', sentence: 'Think as he might, he had never heard of it.' }
+        ],
+        '02-search.webp': [
+            { word: 'send for', meaning: '부르다', sentence: 'The emperor sent for an official at once.' },
+            { word: 'go white', meaning: '새파랗게 질리다', sentence: 'The official went white.' },
+            { word: 'turn upside down', meaning: '이 잡듯 뒤지다', sentence: 'He turned the palace upside down looking.' },
+            { word: 'frantic', meaning: '애가 타는', sentence: 'The official was frantic.' }
+        ],
+        '02-search-2.webp': [
+            { word: 'hop from foot to foot', meaning: '발을 동동 구르다', sentence: 'The official was hopping from foot to foot.' },
+            { word: 'to and fro', meaning: '오가며', sentence: 'She had heard the singing going to and fro.' },
+            { word: 'set off for', meaning: '~로 향하다', sentence: 'He set off for the wood.' },
+            { word: 'trail after', meaning: '우르르 따라가다', sentence: 'The other officials came trailing after them.' }
+        ],
+        '03-nightingale.webp': [
+            { word: 'moo', meaning: '음매 하고 울다', sentence: 'On the way a cow mooed.' },
+            { word: 'croak', meaning: '개굴개굴 울다', sentence: 'Then a frog croaked.' },
+            { word: 'put out', meaning: '머쓱한', sentence: 'The officials cleared their throats, rather put out.' },
+            { word: 'catch on', meaning: '걸리다', sentence: 'Their coats kept catching on branches.' }
+        ],
+        '03-nightingale-2.webp': [
+            { word: 'hush', meaning: '쉿', sentence: 'Hush — there she is.' },
+            { word: 'plain', meaning: '볼품없는', sentence: 'A plain grey bird.' },
+            { word: 'shabby', meaning: '초라한', sentence: 'That shabby little thing?' },
+            { word: 'frozen', meaning: '얼어붙은', sentence: 'The officials stood frozen where they were.' }
+        ],
+        '04-court.webp': [
+            { word: 'invite', meaning: '초대하다', sentence: 'The nightingale was invited to the palace.' },
+            { word: 'lamp', meaning: '등불', sentence: 'The palace was full of lamps.' },
+            { word: 'perch', meaning: '횃대', sentence: 'The nightingale took her place on a golden perch.' },
+            { word: 'as quiet as a stone', meaning: '쥐 죽은 듯 조용한', sentence: 'The palace was as quiet as a stone.' }
+        ],
+        '04-court-2.webp': [
+            { word: 'reward', meaning: '상', sentence: 'He wanted to give her a gold chain as a reward.' },
+            { word: 'wait on', meaning: '시중들다', sentence: 'With people to wait on her.' },
+            { word: 'thread', meaning: '실', sentence: 'A thread was tied to her foot.' },
+            { word: 'miss', meaning: '그리워하다', sentence: 'She missed the smell of the wind.' }
+        ],
+        '05-machine.webp': [
+            { word: 'wrap', meaning: '싸다', sentence: 'A box wrapped in silk.' },
+            { word: 'gasp', meaning: '탄성을 지르다', sentence: 'They lifted the lid and everybody gasped.' },
+            { word: 'mechanical', meaning: '기계로 된', sentence: 'It was a mechanical bird.' },
+            { word: 'wind up', meaning: '태엽을 감다', sentence: 'Wind it up and it sang.' },
+            { word: 'note', meaning: '음', sentence: 'And never a note wrong.' }
+        ],
+        '05-machine-2.webp': [
+            { word: 'fit', meaning: '맞다', sentence: 'And it would not fit at all.' },
+            { word: 'as one pleases', meaning: '제멋대로', sentence: 'That bird does as it pleases.' },
+            { word: 'crowd round', meaning: '몰려들다', sentence: 'People crowded round the mechanical bird.' },
+            { word: 'banish', meaning: '내쫓다', sentence: 'He ordered her banished from the country.' }
+        ],
+        '06-broken.webp': [
+            { word: 'by heart', meaning: '외워서', sentence: 'People learned the song by heart.' },
+            { word: 'hum', meaning: '흥얼거리다', sentence: 'They hummed it in the street.' },
+            { word: 'snap', meaning: '뚝 하는 소리', sentence: 'In the middle of the song there was a snap.' },
+            { word: 'wear out', meaning: '닳다', sentence: 'A part inside the works had worn out.' },
+            { word: 'clockmaker', meaning: '시계장이', sentence: 'The emperor sent for the clockmaker.' }
+        ],
+        '06-broken-2.webp': [
+            { word: 'cog', meaning: '톱니', sentence: 'He fitted a new little cog.' },
+            { word: 'oil', meaning: '기름을 치다', sentence: 'He fitted a new cog and oiled it.' },
+            { word: 'glass case', meaning: '유리 상자', sentence: 'The mechanical bird went into a glass case.' },
+            { word: 'glance at', meaning: '돌아보다', sentence: 'People kept glancing at the place.' }
+        ],
+        '07-illness.webp': [
+            { word: 'take to one’s bed', meaning: '자리에 눕다', sentence: 'The emperor fell ill and took to his bed.' },
+            { word: 'whisper', meaning: '소곤거리다', sentence: 'You could hear them whispering.' },
+            { word: 'corridor', meaning: '복도', sentence: 'Whispering in the corridors.' },
+            { word: 'weight', meaning: '답답함, 무게', sentence: 'There was a weight on his chest.' }
+        ],
+        '07-illness-2.webp': [
+            { word: 'glitter', meaning: '반짝이다', sentence: 'The jewels glittered cold in the moonlight.' },
+            { word: 'wind', meaning: '태엽을 감다', sentence: 'There was nobody there to wind it.' },
+            { word: 'come back to', meaning: '떠오르다', sentence: 'One thing after another came back to him.' },
+            { word: 'drive away', meaning: '내쫓다', sentence: 'It was I who drove her away.' }
+        ],
+        '08-ending.webp': [
+            { word: 'just manage to', meaning: '겨우 ~하다', sentence: 'The emperor just managed to turn his head.' },
+            { word: 'windowsill', meaning: '창턱', sentence: 'A small grey bird on the windowsill.' },
+            { word: 'the whole night through', meaning: '밤새', sentence: 'The nightingale sang the whole night through.' },
+            { word: 'colour', meaning: '핏기', sentence: 'The colour came back into his face.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'hold out', meaning: '내밀다', sentence: 'The emperor held out a hand.' },
+            { word: 'all the same', meaning: '그런데도', sentence: 'And you came all the same.' },
+            { word: 'now and then', meaning: '이따금', sentence: 'I shall live in the wood and come now and then.' },
+            { word: 'keep a secret', meaning: '비밀로 하다', sentence: 'Keep it a secret that I come.' }
+        ],
+        'end.webp': [
+            { word: 'set in', meaning: '~을 무대로 삼다', sentence: 'Andersen set this in a China he had never been to.' },
+            { word: 'make up', meaning: '지어내다', sentence: 'He made the rest up.' },
+            { word: 'repeat', meaning: '되풀이하다', sentence: 'The mechanical bird repeats one tune.' },
+            { word: 'prefer', meaning: '더 좋아하다', sentence: 'That is why so many people preferred it.' },
+            { word: 'mend', meaning: '고치다', sentence: 'Nobody could mend it.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -600,6 +1190,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -608,7 +1199,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -620,7 +1211,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -654,4 +1245,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
