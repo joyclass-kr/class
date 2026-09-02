@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#fff7e8">
   <title>타자</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="guide.css">
+  <link rel="stylesheet" href="style.css?v=20260902-center-cards">
+  <link rel="stylesheet" href="guide.css?v=20260902-center-cards">
   <script src="typing-bgm.js" defer></script>
   <script src="../../../../assets/sound/music-control.js?v=20260825-compact-vertical-1" defer></script>
 </head>
@@ -20,9 +20,58 @@
   <main>
     <section id="typingHome" class="typing-home" aria-label="타자 연습 선택">
       <div class="practice-menu">
-        <button type="button" data-practice-mode="position"><span>1</span><strong>자리 익히기</strong></button>
-        <button type="button" data-practice-mode="words"><span>2</span><strong>단어 연습</strong></button>
-        <button type="button" data-practice-mode="sentences"><span>3</span><strong>문장 연습</strong></button>
+        <button type="button" class="mode-card mode-position" data-practice-mode="position" aria-label="자리 익히기">
+          <div class="card-glow" aria-hidden="true"></div>
+          <div class="card-icon-wrap" aria-hidden="true">
+            <svg class="mode-icon" viewBox="0 0 48 48" fill="none">
+              <!-- 키캡 & 손가락 터치 -->
+              <rect x="9" y="11" width="30" height="26" rx="6" fill="currentColor" fill-opacity="0.22" stroke="currentColor" stroke-width="2"/>
+              <rect x="14" y="15" width="20" height="15" rx="3" fill="#ffffff" fill-opacity="0.15" stroke="currentColor" stroke-width="1.2"/>
+              <text x="24" y="26.5" fill="currentColor" font-size="11" font-weight="900" text-anchor="middle" font-family="system-ui">F</text>
+              <circle cx="24" cy="28.5" r="1" fill="currentColor"/>
+              <path d="M24 5 L24 8 M17 6.5 L18.5 8.5 M31 6.5 L29.5 8.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="card-body">
+            <span class="mode-en">Key Position</span>
+            <strong class="mode-ko">자리 익히기</strong>
+          </div>
+        </button>
+
+        <button type="button" class="mode-card mode-words" data-practice-mode="words" aria-label="단어 연습">
+          <div class="card-glow" aria-hidden="true"></div>
+          <div class="card-icon-wrap" aria-hidden="true">
+            <svg class="mode-icon" viewBox="0 0 48 48" fill="none">
+              <!-- 단어 카드 블록 -->
+              <rect x="10" y="10" width="28" height="28" rx="6" fill="currentColor" fill-opacity="0.22" stroke="currentColor" stroke-width="2"/>
+              <text x="18" y="27" fill="currentColor" font-size="13" font-weight="900" text-anchor="middle" font-family="sans-serif">가</text>
+              <text x="29.5" y="29" fill="currentColor" font-size="12" font-weight="900" text-anchor="middle" font-family="system-ui">A</text>
+              <line x1="14" y1="32" x2="34" y2="32" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="card-body">
+            <span class="mode-en">Word Drill</span>
+            <strong class="mode-ko">단어 연습</strong>
+          </div>
+        </button>
+
+        <button type="button" class="mode-card mode-sentences" data-practice-mode="sentences" aria-label="문장 연습">
+          <div class="card-glow" aria-hidden="true"></div>
+          <div class="card-icon-wrap" aria-hidden="true">
+            <svg class="mode-icon" viewBox="0 0 48 48" fill="none">
+              <!-- 문장 타이핑 스트림 -->
+              <rect x="9" y="11" width="30" height="26" rx="6" fill="currentColor" fill-opacity="0.22" stroke="currentColor" stroke-width="2"/>
+              <line x1="15" y1="18" x2="33" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="15" y1="24" x2="28" y2="24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="15" y1="30" x2="23" y2="30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="26" y1="28" x2="26" y2="32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="card-body">
+            <span class="mode-en">Sentence Practice</span>
+            <strong class="mode-ko">문장 연습</strong>
+          </div>
+        </button>
       </div>
     </section>
 
