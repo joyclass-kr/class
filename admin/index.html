@@ -248,27 +248,27 @@
                     <button id="signOutButton" class="text-button" type="button">SIGN OUT</button>
                 </div>
                 <section class="management" aria-labelledby="school-management-title">
-                    <h2 id="school-management-title">School management</h2>
-                    <p class="management-copy">Assign each homeroom teacher a school year, grade, and class. Teachers can manage only the student roster for the class assigned here.</p>
+                    <h2 id="school-management-title">학교·교육기관 관리</h2>
+                    <p class="management-copy">학교는 NEIS에서, 교육부와 시도교육청은 공식 기관 목록에서 검색해 등록합니다.</p>
                     <div class="form-row" style="position: relative;">
                         <div style="position: relative; flex: 1;">
-                            <input class="control" id="newSchoolName" maxlength="80" placeholder="학교명을 검색한 뒤 결과에서 선택" autocomplete="off" style="width: 100%;">
+                            <input class="control" id="newSchoolName" maxlength="80" placeholder="학교 또는 교육기관명을 검색한 뒤 결과에서 선택" autocomplete="off" style="width: 100%;">
                             <div id="schoolSearchResults" class="search-results-dropdown" hidden></div>
                         </div>
-                        <button class="action-button" id="addSchoolButton" type="button" disabled>ADD SCHOOL</button>
+                        <button class="action-button" id="addSchoolButton" type="button" disabled>기관 추가</button>
                     </div>
-                    <div class="school-directory" id="schoolDirectory" aria-label="All schools"></div>
+                    <div class="school-directory" id="schoolDirectory" aria-label="등록된 학교 및 교육기관"></div>
                     <div class="school-tools">
-                        <select class="control" id="schoolSelect"><option value="">Select school</option></select>
+                        <select class="control" id="schoolSelect"><option value="">학교·교육기관 선택</option></select>
                         <label class="check-label"><input id="schoolEnabled" type="checkbox"> Enabled</label>
-                        <button class="action-button" id="saveSchoolButton" type="button">SAVE SCHOOL</button>
-                        <button class="action-button danger-button" id="deleteSchoolButton" type="button">DELETE SCHOOL</button>
+                        <button class="action-button" id="saveSchoolButton" type="button">사용 설정 저장</button>
+                        <button class="action-button danger-button" id="deleteSchoolButton" type="button">기관 삭제</button>
                     </div>
                     <div id="teacherManagement" hidden style="margin-top:24px; padding-top:20px; border-top:1px solid var(--line);">
-                        <p style="margin:0 0 6px; font-size:14px; font-weight:800; color:var(--green);">🏫 학교 마스터 관리자 계정 지정</p>
+                        <p style="margin:0 0 6px; font-size:14px; font-weight:800; color:var(--green);">🏫 기관 마스터 관리자 계정 지정</p>
                         <p style="margin:0 0 16px; color:var(--muted); font-size:13px; line-height:1.5;">
-                            이 학교의 전교생 명단, 학사일정, 교직원 명단 및 그룹 배정을 관리할 <b>학교 마스터 관리자 구글 계정</b>을 지정하세요.<br>
-                            (예: master@kyesang.sen.es.kr 또는 정보부장/교감선생님 계정)
+                            이 학교 또는 교육기관을 이용할 <b>기관 마스터 관리자 구글 계정</b>을 지정하세요.<br>
+                            (예: 학교 관리자, 교육청 장학사 또는 교육연구사 계정)
                         </p>
                         <div style="display:flex; gap:12px; align-items:center;">
                             <input id="masterEmailInput" class="control" type="email" placeholder="master@school.es.kr" style="flex:1;">
@@ -361,11 +361,11 @@
 
             async function deleteSchool(school) {
                 if (!school) return;
-                if (!confirm(`[경고] 정말 ${school.name} 학교를 삭제하시겠습니까?\n\n이 학교에 등록된 모든 교사, 학급, 학생 정보 및 관련 기록이 영구적으로 삭제되며 복구할 수 없습니다.`)) return;
+                if (!confirm(`[경고] 정말 ${school.name} 항목을 삭제하시겠습니까?\n\n이 항목에 등록된 모든 계정, 학급, 학생 정보 및 관련 기록이 영구적으로 삭제되며 복구할 수 없습니다.`)) return;
                 try {
                     await api(`/api/admin/schools/${school.id}`, { method: "DELETE" });
                     await loadSchools("");
-                    setStatus("School deleted.");
+                    setStatus("기관이 삭제되었습니다.");
                 } catch (error) { setStatus(error.message, true); }
             }
 
@@ -379,7 +379,7 @@
                     name.className = "school-directory-name";
                     name.append(school.name);
 
-                    if (school.locationName || school.schoolCode) {
+                    if (school.locationName || school.schoolCode || school.institutionCode) {
                         const meta = document.createElement("span");
                         meta.className = "school-directory-state";
                         meta.style.color = "#75d69f";
@@ -388,6 +388,7 @@
                         const metaParts = [];
                         if (school.locationName) metaParts.push(school.locationName);
                         if (school.schoolCode) metaParts.push(`NEIS: ${school.schoolCode}`);
+                        if (school.institutionCode) metaParts.push(school.organizationType === "ministry" ? "교육부" : "시도교육청");
                         meta.textContent = `[${metaParts.join(" | ")}]`;
                         name.append(meta);
                     }
@@ -444,7 +445,7 @@
                         body: JSON.stringify({ email })
                     });
                     await loadSchools(school.id);
-                    setStatus(`'${school.name}'의 학교 마스터 관리자가 설정되었습니다: ${email}`);
+                    setStatus(`'${school.name}'의 기관 마스터 관리자가 설정되었습니다: ${email}`);
                 } catch (error) {
                     setStatus(error.message, true);
                 } finally {
@@ -456,7 +457,7 @@
             async function loadSchools(preferredId = schoolSelect.value) {
                 const result = await api("/api/admin/schools");
                 schools = result.schools;
-                schoolSelect.replaceChildren(new Option("Select school", ""));
+                schoolSelect.replaceChildren(new Option("학교·교육기관 선택", ""));
                 schools.forEach((school) => schoolSelect.add(new Option(school.name, school.id)));
                 const selectedId = schools.some((school) => school.id === preferredId)
                     ? preferredId
@@ -504,7 +505,7 @@
                             
                             const sub = document.createElement("div");
                             sub.className = "search-result-sub";
-                            sub.textContent = `${item.locationName} · ${item.address || "나이스 연동"}`;
+                            sub.textContent = `${item.typeLabel || "학교"} · ${item.locationName} · ${item.address || "나이스 연동"}`;
 
                             el.append(title, sub);
                             el.addEventListener("click", () => {
@@ -539,7 +540,9 @@
                         name: selectedNeisSchool.name,
                         officeCode: selectedNeisSchool.officeCode,
                         schoolCode: selectedNeisSchool.schoolCode,
-                        locationName: selectedNeisSchool.locationName
+                        locationName: selectedNeisSchool.locationName,
+                        organizationType: selectedNeisSchool.organizationType || "school",
+                        institutionCode: selectedNeisSchool.institutionCode || ""
                     };
                     const result = await api("/api/admin/schools", { method: "POST", body: JSON.stringify(payload) });
                     newSchoolName.value = "";
@@ -547,7 +550,7 @@
                     addSchoolButton.disabled = true;
                     schoolSearchResults.hidden = true;
                     await loadSchools(result.school.id);
-                    setStatus(`School added: ${result.school.name}`);
+                    setStatus(`등록 완료: ${result.school.name}`);
                 } catch (error) { setStatus(error.message, true); }
             });
 
@@ -557,7 +560,7 @@
                 try {
                     await api(`/api/admin/schools/${school.id}`, { method: "PATCH", body: JSON.stringify({ name: school.name, enabled: schoolEnabled.checked }) });
                     await loadSchools(school.id);
-                    setStatus("School access saved.");
+                    setStatus("사용 설정이 저장되었습니다.");
                 } catch (error) { setStatus(error.message, true); }
             });
 

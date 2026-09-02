@@ -14,6 +14,26 @@ const JOIN_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const AUTH_FAILURE_LIMIT = 30;
 const AUTH_FAILURE_WINDOW_MS = 15 * 60 * 1000;
 const AUTH_FAILURE_MAX_ENTRIES = 5000;
+const EDUCATION_AUTHORITIES = Object.freeze([
+  { name: "교육부", institutionCode: "MOE", officeCode: "", locationName: "중앙행정기관" },
+  { name: "서울특별시교육청", institutionCode: "EDU-B10", officeCode: "B10", locationName: "서울특별시" },
+  { name: "부산광역시교육청", institutionCode: "EDU-C10", officeCode: "C10", locationName: "부산광역시" },
+  { name: "대구광역시교육청", institutionCode: "EDU-D10", officeCode: "D10", locationName: "대구광역시" },
+  { name: "인천광역시교육청", institutionCode: "EDU-E10", officeCode: "E10", locationName: "인천광역시" },
+  { name: "광주광역시교육청", institutionCode: "EDU-F10", officeCode: "F10", locationName: "광주광역시" },
+  { name: "대전광역시교육청", institutionCode: "EDU-G10", officeCode: "G10", locationName: "대전광역시" },
+  { name: "울산광역시교육청", institutionCode: "EDU-H10", officeCode: "H10", locationName: "울산광역시" },
+  { name: "세종특별자치시교육청", institutionCode: "EDU-I10", officeCode: "I10", locationName: "세종특별자치시" },
+  { name: "경기도교육청", institutionCode: "EDU-J10", officeCode: "J10", locationName: "경기도" },
+  { name: "강원특별자치도교육청", institutionCode: "EDU-K10", officeCode: "K10", locationName: "강원특별자치도" },
+  { name: "충청북도교육청", institutionCode: "EDU-M10", officeCode: "M10", locationName: "충청북도" },
+  { name: "충청남도교육청", institutionCode: "EDU-N10", officeCode: "N10", locationName: "충청남도" },
+  { name: "전북특별자치도교육청", institutionCode: "EDU-P10", officeCode: "P10", locationName: "전북특별자치도" },
+  { name: "전라남도교육청", institutionCode: "EDU-Q10", officeCode: "Q10", locationName: "전라남도" },
+  { name: "경상북도교육청", institutionCode: "EDU-R10", officeCode: "R10", locationName: "경상북도" },
+  { name: "경상남도교육청", institutionCode: "EDU-S10", officeCode: "S10", locationName: "경상남도" },
+  { name: "제주특별자치도교육청", institutionCode: "EDU-T10", officeCode: "T10", locationName: "제주특별자치도" }
+]);
 const AVATAR_DIRECTORY = path.join(__dirname, "..", "classtools", "assets", "avatars");
 const AVATAR_KEYS = Object.freeze(
   fs.readdirSync(AVATAR_DIRECTORY)
@@ -167,6 +187,23 @@ function normalizeEmail(value) {
 
 function normalizePersonName(value) {
   return String(value || "").normalize("NFC").replace(/[^가-힣]/g, "");
+}
+
+function searchEducationAuthorities(query) {
+  const normalizedQuery = String(query || "").normalize("NFKC").trim().toLowerCase();
+  if (!normalizedQuery) return [];
+  return EDUCATION_AUTHORITIES
+    .filter((authority) => authority.name.toLowerCase().includes(normalizedQuery))
+    .map((authority) => ({
+      name: authority.name,
+      officeCode: authority.officeCode,
+      schoolCode: "",
+      institutionCode: authority.institutionCode,
+      organizationType: authority.institutionCode === "MOE" ? "ministry" : "education_office",
+      typeLabel: authority.institutionCode === "MOE" ? "교육부" : "시도교육청",
+      locationName: authority.locationName,
+      address: "교육행정기관"
+    }));
 }
 
 function parseTeacherEmails(value) {
@@ -365,6 +402,10 @@ function createClassroomPlatform(options = {}) {
         ADD COLUMN IF NOT EXISTS school_code TEXT`,
       `ALTER TABLE classroom_schools
         ADD COLUMN IF NOT EXISTS location_name TEXT`,
+      `ALTER TABLE classroom_schools
+        ADD COLUMN IF NOT EXISTS organization_type TEXT NOT NULL DEFAULT 'school'`,
+      `ALTER TABLE classroom_schools
+        ADD COLUMN IF NOT EXISTS institution_code TEXT`,
 
       `ALTER TABLE classroom_schools
         ADD COLUMN IF NOT EXISTS enabled BOOLEAN NOT NULL DEFAULT TRUE`,
@@ -373,6 +414,9 @@ function createClassroomPlatform(options = {}) {
       `CREATE UNIQUE INDEX IF NOT EXISTS classroom_schools_code_idx
         ON classroom_schools (UPPER(school_code))
         WHERE school_code IS NOT NULL`,
+      `CREATE UNIQUE INDEX IF NOT EXISTS classroom_institutions_code_idx
+        ON classroom_schools (UPPER(institution_code))
+        WHERE institution_code IS NOT NULL`,
       `CREATE TABLE IF NOT EXISTS classroom_teachers (
         id BIGSERIAL PRIMARY KEY,
         school_id BIGINT NOT NULL REFERENCES classroom_schools(id),
@@ -2609,7 +2653,8 @@ function createClassroomPlatform(options = {}) {
 
   router.get("/school/search", asyncRoute(async (req, res) => {
     const query = String(req.query?.query || "").trim();
-    if (!query) return res.json({ schools: [] });
+    if (!query) return res.json({ schools: [], organizations: [] });
+    const authorities = searchEducationAuthorities(query);
     const keyParam = process.env.NEIS_API_KEY ? `&KEY=${process.env.NEIS_API_KEY}` : "";
     const neisUrl = `https://open.neis.go.kr/hub/schoolInfo?Type=json&pIndex=1&pSize=20${keyParam}&SCHUL_NM=${encodeURIComponent(query)}`;
     try {
@@ -2620,15 +2665,18 @@ function createClassroomPlatform(options = {}) {
         name: r.SCHUL_NM,
         officeCode: r.ATPT_OFCDC_SC_CODE,
         schoolCode: r.SD_SCHUL_CODE,
+        institutionCode: "",
+        organizationType: "school",
+        typeLabel: "학교",
         locationName: r.LCTN_SC_NM || r.ATPT_OFCDC_SC_NM || "",
         address: r.ORG_RDNMA || ""
       }));
-      res.json({ schools });
+      const organizations = [...authorities, ...schools].slice(0, 20);
+      res.json({ schools: organizations, organizations });
     } catch (err) {
-      res.json({ schools: [] });
+      res.json({ schools: authorities, organizations: authorities });
     }
   }));
-
   router.get("/school/meal", asyncRoute(async (req, res) => {
     const { officeCode, schoolCode, date } = req.query;
     if (!officeCode || !schoolCode) {
@@ -2668,7 +2716,8 @@ function createClassroomPlatform(options = {}) {
   router.get("/admin/schools", asyncRoute(async (req, res) => {
     await requireAdmin(req);
     const schoolsResult = await pool.query(
-      `SELECT s.id, s.name, s.google_domain, s.office_code, s.school_code, s.location_name, s.enabled,
+      `SELECT s.id, s.name, s.google_domain, s.office_code, s.school_code, s.location_name,
+              s.organization_type, s.institution_code, s.enabled,
               (SELECT google_email FROM classroom_teachers WHERE school_id = s.id AND (teacher_type IN ('관리자', '교장', '교감') OR teacher_name IN ('학교관리자', '학교 관리자', '관리자')) LIMIT 1) AS master_email
        FROM classroom_schools s
        ORDER BY s.name, s.id`
@@ -2699,6 +2748,8 @@ function createClassroomPlatform(options = {}) {
         domain: school.google_domain || "",
         officeCode: school.office_code || "",
         schoolCode: school.school_code || "",
+        institutionCode: school.institution_code || "",
+        organizationType: school.organization_type || "school",
         locationName: school.location_name || "",
         enabled: school.enabled,
         masterEmail: school.master_email || "",
@@ -2712,59 +2763,116 @@ function createClassroomPlatform(options = {}) {
     const name = String(req.body?.name || "").trim();
     const officeCode = String(req.body?.officeCode || "").trim();
     const schoolCode = String(req.body?.schoolCode || "").trim();
+    const requestedType = String(req.body?.organizationType || "school").trim();
+    const requestedInstitutionCode = String(req.body?.institutionCode || "").trim();
 
-    if (!name || name.length > 80 || !officeCode || !schoolCode) {
-      throw new HttpError(400, "INVALID_SCHOOL_SELECTION", "검색 결과에서 학교를 선택하세요.");
+    if (!name || name.length > 80) {
+      throw new HttpError(400, "INVALID_ORGANIZATION_SELECTION", "검색 결과에서 학교 또는 교육기관을 선택하세요.");
     }
 
-    const keyParam = process.env.NEIS_API_KEY ? `&KEY=${process.env.NEIS_API_KEY}` : "";
-    const neisUrl = `https://open.neis.go.kr/hub/schoolInfo?Type=json&pIndex=1&pSize=1${keyParam}&ATPT_OFCDC_SC_CODE=${encodeURIComponent(officeCode)}&SD_SCHUL_CODE=${encodeURIComponent(schoolCode)}`;
-    let verifiedSchool;
-    try {
-      const response = await fetch(neisUrl, { signal: AbortSignal.timeout(8000) });
-      if (!response.ok) throw new Error(`NEIS responded with ${response.status}`);
-      const data = await response.json();
-      verifiedSchool = data?.schoolInfo?.[1]?.row?.[0] || null;
-    } catch (error) {
-      console.warn("NEIS school verification failed:", error.message);
-      throw new HttpError(502, "SCHOOL_VERIFICATION_FAILED", "학교 정보를 확인하지 못했습니다. 잠시 후 다시 시도하세요.");
+    let verifiedName;
+    let verifiedOfficeCode;
+    let verifiedSchoolCode;
+    let verifiedLocationName;
+    let verifiedInstitutionCode = "";
+    let organizationType = "school";
+
+    if (["education_office", "ministry"].includes(requestedType)) {
+      const authority = EDUCATION_AUTHORITIES.find((item) => item.institutionCode === requestedInstitutionCode);
+      if (!authority || authority.name !== name) {
+        throw new HttpError(400, "INVALID_INSTITUTION_SELECTION", "검색 결과와 일치하는 교육기관만 등록할 수 있습니다.");
+      }
+      verifiedName = authority.name;
+      verifiedOfficeCode = authority.officeCode;
+      verifiedSchoolCode = "";
+      verifiedLocationName = authority.locationName;
+      verifiedInstitutionCode = authority.institutionCode;
+      organizationType = authority.institutionCode === "MOE" ? "ministry" : "education_office";
+    } else {
+      if (!name || name.length > 80 || !officeCode || !schoolCode) {
+        throw new HttpError(400, "INVALID_SCHOOL_SELECTION", "검색 결과에서 학교를 선택하세요.");
+      }
+
+      const keyParam = process.env.NEIS_API_KEY ? "&KEY=" + process.env.NEIS_API_KEY : "";
+      const neisUrl = "https://open.neis.go.kr/hub/schoolInfo?Type=json&pIndex=1&pSize=1"
+        + keyParam
+        + "&ATPT_OFCDC_SC_CODE=" + encodeURIComponent(officeCode)
+        + "&SD_SCHUL_CODE=" + encodeURIComponent(schoolCode);
+      let verifiedSchool;
+      try {
+        const response = await fetch(neisUrl, { signal: AbortSignal.timeout(8000) });
+        if (!response.ok) throw new Error("NEIS responded with " + response.status);
+        const data = await response.json();
+        verifiedSchool = data?.schoolInfo?.[1]?.row?.[0] || null;
+      } catch (error) {
+        console.warn("NEIS school verification failed:", error.message);
+        throw new HttpError(502, "SCHOOL_VERIFICATION_FAILED", "학교 정보를 확인하지 못했습니다. 잠시 후 다시 시도하세요.");
+      }
+
+      verifiedName = String(verifiedSchool?.SCHUL_NM || "").trim();
+      verifiedOfficeCode = String(verifiedSchool?.ATPT_OFCDC_SC_CODE || "").trim();
+      verifiedSchoolCode = String(verifiedSchool?.SD_SCHUL_CODE || "").trim();
+      verifiedLocationName = String(verifiedSchool?.LCTN_SC_NM || verifiedSchool?.ATPT_OFCDC_SC_NM || "").trim();
+      if (
+        !verifiedName
+        || verifiedName !== name
+        || verifiedOfficeCode !== officeCode
+        || verifiedSchoolCode !== schoolCode
+      ) {
+        throw new HttpError(400, "INVALID_SCHOOL_SELECTION", "NEIS 검색 결과와 일치하는 학교만 등록할 수 있습니다.");
+      }
     }
 
-    const verifiedName = String(verifiedSchool?.SCHUL_NM || "").trim();
-    const verifiedOfficeCode = String(verifiedSchool?.ATPT_OFCDC_SC_CODE || "").trim();
-    const verifiedSchoolCode = String(verifiedSchool?.SD_SCHUL_CODE || "").trim();
-    const verifiedLocationName = String(verifiedSchool?.LCTN_SC_NM || verifiedSchool?.ATPT_OFCDC_SC_NM || "").trim();
-    if (
-      !verifiedName
-      || verifiedName !== name
-      || verifiedOfficeCode !== officeCode
-      || verifiedSchoolCode !== schoolCode
-    ) {
-      throw new HttpError(400, "INVALID_SCHOOL_SELECTION", "NEIS 검색 결과와 일치하는 학교만 등록할 수 있습니다.");
-    }
-    const existing = await pool.query(
-      `UPDATE classroom_schools
-       SET enabled = TRUE,
-           office_code = COALESCE(NULLIF($2, ''), office_code),
-           school_code = COALESCE(NULLIF($3, ''), school_code),
-           location_name = COALESCE(NULLIF($4, ''), location_name),
-           updated_at = NOW()
-       WHERE id = (
-         SELECT id
-         FROM classroom_schools
-         WHERE school_code = $3
-            OR ((school_code IS NULL OR school_code = '') AND name = $1)
-         ORDER BY CASE WHEN school_code = $3 THEN 0 ELSE 1 END, id
-         LIMIT 1
-       )
-       RETURNING id, name, office_code, school_code, location_name, enabled`,
-      [verifiedName, verifiedOfficeCode, verifiedSchoolCode, verifiedLocationName]
-    );
+    const existing = organizationType === "school"
+      ? await pool.query(
+        `UPDATE classroom_schools
+         SET name = $1,
+             enabled = TRUE,
+             office_code = $2,
+             school_code = $3,
+             location_name = $4,
+             organization_type = 'school',
+             institution_code = NULL,
+             updated_at = NOW()
+         WHERE id = (
+           SELECT id
+           FROM classroom_schools
+           WHERE school_code = $3
+              OR ((school_code IS NULL OR school_code = '') AND name = $1)
+           ORDER BY CASE WHEN school_code = $3 THEN 0 ELSE 1 END, id
+           LIMIT 1
+         )
+         RETURNING id, name, office_code, school_code, location_name, organization_type, institution_code, enabled`,
+        [verifiedName, verifiedOfficeCode, verifiedSchoolCode, verifiedLocationName]
+      )
+      : await pool.query(
+        `UPDATE classroom_schools
+         SET name = $1,
+             enabled = TRUE,
+             office_code = $2,
+             school_code = NULL,
+             location_name = $3,
+             organization_type = $4,
+             institution_code = $5,
+             updated_at = NOW()
+         WHERE id = (
+           SELECT id
+           FROM classroom_schools
+           WHERE institution_code = $5
+              OR ((institution_code IS NULL OR institution_code = '') AND name = $1)
+           ORDER BY CASE WHEN institution_code = $5 THEN 0 ELSE 1 END, id
+           LIMIT 1
+         )
+         RETURNING id, name, office_code, school_code, location_name, organization_type, institution_code, enabled`,
+        [verifiedName, verifiedOfficeCode, verifiedLocationName, organizationType, verifiedInstitutionCode]
+      );
+
     const result = existing.rows[0] ? existing : await pool.query(
-      `INSERT INTO classroom_schools (name, google_domain, office_code, school_code, location_name, enabled)
-       VALUES ($1, '', $2, $3, $4, TRUE)
-       RETURNING id, name, office_code, school_code, location_name, enabled`,
-      [verifiedName, verifiedOfficeCode, verifiedSchoolCode, verifiedLocationName]
+      `INSERT INTO classroom_schools
+         (name, google_domain, office_code, school_code, location_name, organization_type, institution_code, enabled)
+       VALUES ($1, '', $2, NULLIF($3, ''), $4, $5, NULLIF($6, ''), TRUE)
+       RETURNING id, name, office_code, school_code, location_name, organization_type, institution_code, enabled`,
+      [verifiedName, verifiedOfficeCode, verifiedSchoolCode, verifiedLocationName, organizationType, verifiedInstitutionCode]
     );
     const row = result.rows[0];
     res.json({
@@ -2774,40 +2882,34 @@ function createClassroomPlatform(options = {}) {
         name: row.name,
         officeCode: row.office_code || "",
         schoolCode: row.school_code || "",
+        institutionCode: row.institution_code || verifiedInstitutionCode,
+        organizationType: row.organization_type || organizationType,
         locationName: row.location_name || "",
         enabled: row.enabled
       }
     });
   }));
-
   router.patch("/admin/schools/:schoolId", asyncRoute(async (req, res) => {
     await requireAdmin(req);
     const schoolId = Number(req.params.schoolId);
     const name = String(req.body?.name || "").trim();
     const enabled = req.body?.enabled;
-    const officeCode = String(req.body?.officeCode || "").trim();
-    const schoolCode = String(req.body?.schoolCode || "").trim();
-    const locationName = String(req.body?.locationName || "").trim();
 
     if (!Number.isInteger(schoolId) || schoolId < 1 || !name || name.length > 80 || typeof enabled !== "boolean") {
-      throw new HttpError(400, "INVALID_SCHOOL", "Check the school name and access setting.");
+      throw new HttpError(400, "INVALID_SCHOOL", "기관명과 사용 설정을 확인하세요.");
     }
     const result = await pool.query(
       `UPDATE classroom_schools
        SET name = $1,
            enabled = $2,
-           office_code = $3,
-           school_code = $4,
-           location_name = $5,
            updated_at = NOW()
-       WHERE id = $6
+       WHERE id = $3
        RETURNING id`,
-      [name, enabled, officeCode, schoolCode, locationName, schoolId]
+      [name, enabled, schoolId]
     );
-    if (!result.rows[0]) throw new HttpError(404, "SCHOOL_NOT_FOUND", "School not found.");
+    if (!result.rows[0]) throw new HttpError(404, "SCHOOL_NOT_FOUND", "기관을 찾을 수 없습니다.");
     res.json({ ok: true });
   }));
-
   // Sets only the school's single "관리자" (master admin) teacher row.
   router.put("/admin/schools/:schoolId/master-email", asyncRoute(async (req, res) => {
     await requireAdmin(req);
@@ -6815,6 +6917,8 @@ function createClassroomPlatform(options = {}) {
 
 module.exports = {
   createClassroomPlatform,
+  EDUCATION_AUTHORITIES,
+  searchEducationAuthorities,
   AVATAR_KEYS,
   avatarCapacity,
   avatarChangeWindow,
