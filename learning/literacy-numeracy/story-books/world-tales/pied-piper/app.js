@@ -284,16 +284,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '피리 부는 사나이',
+    intro: [
+        '피리 부는 사나이는 독일 하멜른이라는 마을에 오래도록 전해 온 이야기예요. 그림 형제도 자기들이 모은 전설집에 이 이야기를 실었습니다.',
+        '하멜른에는 지금도 이 전설을 새긴 옛 건물이 남아 있어요. 마을 사람들이 약속을 지키지 않았다는 대목만은 어느 판본에서나 똑같이 전해진답니다. 이 책에서는 아이들이 무사히 돌아오는 쪽으로 이야기를 맺었어요.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🎶')}
             </div>
             <div class="story-page-right">
-                <h1>피리 부는 사나이</h1>
-                <p>피리 부는 사나이는 독일 하멜른이라는 마을에 오래도록 전해 온 이야기예요. 그림 형제도 자기들이 모은 전설집에 이 이야기를 실었습니다.</p>
-                <p>하멜른에는 지금도 이 전설을 새긴 옛 건물이 남아 있어요. 마을 사람들이 약속을 지키지 않았다는 대목만은 어느 판본에서나 똑같이 전해진답니다. 이 책에서는 아이들이 무사히 돌아오는 쪽으로 이야기를 맺었어요.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -308,8 +317,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -319,8 +328,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -330,22 +339,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -395,9 +405,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -408,7 +418,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -480,7 +490,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -489,34 +499,544 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   한국어판과 마찬가지로 아이들이 무사히 돌아오는 쪽으로 맺는다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Pied Piper of Hamelin',
+        intro: [
+            "The Pied Piper has been told for a very long time in the German town of Hamelin. The Brothers Grimm put it into the book of legends they collected.",
+            "There are still old buildings in Hamelin with the legend carved on them. Whatever else changes between one version and another, the part where the townspeople break their promise is always the same. In this book the story ends with the children coming safely home."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · A Town Overrun with Rats',
+            beats: [
+                {
+                    art: '01-rats.webp',
+                    emoji: '🐀',
+                    left: [
+                        "There was a town called Hamelin, a fine town standing on a river.",
+                        "But that summer was strange.",
+                        "The rats began to multiply.",
+                        "At first they were only in the storehouses."
+                    ],
+                    right: [
+                        "Then very soon they were all over the town. They gnawed the dishes in the kitchens,",
+                        "climbed into the cradles and swam in the soup pots.",
+                        "At night there was a scampering across the ceilings, and nobody could get any sleep.",
+                        "\"This will be the end of the town!\""
+                    ]
+                },
+                {
+                    art: '01-rats-2.webp',
+                    emoji: '🐀',
+                    left: [
+                        "At last the people could bear it no longer and went in a crowd to the town hall.",
+                        "\"Mayor, you must do something!\"",
+                        "The mayor sweated. He bought cats by the dozen from the next town,",
+                        "and set traps in every alley.",
+                        "And none of it made the slightest difference."
+                    ],
+                    right: [
+                        "The councillors sat with their heads together.",
+                        "\"Shall we drive them into the river?\"",
+                        "\"Shall we set fires?\"",
+                        "\"And if the houses burn?\"",
+                        "Nobody had an answer.",
+                        "And then there was a knock at the door."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Stranger',
+            beats: [
+                {
+                    art: '02-piper.webp',
+                    emoji: '🎺',
+                    left: [
+                        "A very tall man came in, dressed in the oddest clothes —",
+                        "a coat made of scraps of cloth sewn together,",
+                        "red and yellow and blue all mixed up in it.",
+                        "There was a wooden pipe at his belt.",
+                        "\"You are having trouble with rats, I hear.\""
+                    ],
+                    right: [
+                        "\"I shall get rid of them for you.\"",
+                        "The mayor sprang out of his chair.",
+                        "\"Truly? And what would you want for it?\"",
+                        "\"A thousand gold pieces.\"",
+                        "\"A thousand?\"",
+                        "The mayor hesitated a moment."
+                    ]
+                },
+                {
+                    art: '02-piper-2.webp',
+                    emoji: '🎺',
+                    left: [
+                        "And then he nodded quickly.",
+                        "\"Very well. A thousand it is.\"",
+                        "\"If you clear the rats I would give you twenty thousand.\"",
+                        "The councillors clapped as well.",
+                        "\"You have given your word.\"",
+                        "the man said quietly."
+                    ],
+                    right: [
+                        "\"Of course. Of course I have.\"",
+                        "The man walked straight out of the hall and stood in the middle of the square.",
+                        "He raised the pipe slowly to his lips.",
+                        "People crowded at every window.",
+                        "And then the first note sounded."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · Following the Pipe',
+            beats: [
+                {
+                    art: '03-rats-follow.webp',
+                    emoji: '🎶',
+                    left: [
+                        "It was a thin, clear sound.",
+                        "At first nothing happened at all.",
+                        "Then a noise came from somewhere.",
+                        "Scratching, and squeaking.",
+                        "A cellar door rattled.",
+                        "And then the rats came pouring out."
+                    ],
+                    right: [
+                        "They crawled out under every door in the town, and came showering down off the roofs.",
+                        "The alleys turned entirely grey.",
+                        "And every one of them went toward the pipe —",
+                        "big rats and little rats alike.",
+                        "The people held their breath at the windows."
+                    ]
+                },
+                {
+                    art: '03-rats-follow-2.webp',
+                    emoji: '🎶',
+                    left: [
+                        "The man began to walk, slowly.",
+                        "And the rats came trailing along behind him.",
+                        "The line filled the alleys from side to side.",
+                        "It went past the square and out onto the high road,",
+                        "and at last it came to the river."
+                    ],
+                    right: [
+                        "But the man did not stop. He walked straight down to the water, still playing,",
+                        "and the rats went in after him as though they were spellbound.",
+                        "The current carried them away downstream.",
+                        "After a long while the river was quiet again.",
+                        "There was not one rat left in the town, and the people cheered."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Town Breaks Its Word',
+            beats: [
+                {
+                    art: '04-refuse.webp',
+                    emoji: '💰',
+                    left: [
+                        "The man came back to the town hall.",
+                        "\"My payment, if you please.\"",
+                        "And the mayor's face went stiff.",
+                        "\"Well now… a thousand is rather a lot, is it not?\"",
+                        "\"You gave your word.\"",
+                        "\"You only played a pipe.\""
+                    ],
+                    right: [
+                        "The councillors joined in from the side.",
+                        "\"The rats would have gone soon anyway.\"",
+                        "\"Fifty is more than generous.\"",
+                        "The mayor pushed a small bag of coins across.",
+                        "The man did not take it.",
+                        "He simply stood where he was for a long time."
+                    ]
+                },
+                {
+                    art: '04-refuse-2.webp',
+                    emoji: '💰',
+                    left: [
+                        "\"A promise is a promise.\"",
+                        "\"Take it and have done!\"",
+                        "The mayor waved him away with both hands.",
+                        "The man spoke in a low voice.",
+                        "\"I do not ask for my payment twice.\"",
+                        "\"Then I shall take something else.\""
+                    ],
+                    right: [
+                        "\"What did you say?\"",
+                        "The man did not answer. He opened the door and went out.",
+                        "The mayor snorted behind his back.",
+                        "\"What a very odd fellow.\"",
+                        "And that evening the town kept a feast until late."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Pipe Plays Again',
+            beats: [
+                {
+                    art: '05-children.webp',
+                    emoji: '🧒',
+                    left: [
+                        "It was the next morning. All the grown-ups had gone to church,",
+                        "and only the children were left in the streets.",
+                        "They were all playing ball, and it went bouncing off the walls.",
+                        "Then a sound came from the direction of the square.",
+                        "It was yesterday's pipe.",
+                        "But it did not sound the same as yesterday."
+                    ],
+                    right: [
+                        "It was a bright, merry tune — the kind that gets into your feet.",
+                        "The children stopped their game dead.",
+                        "\"What's that noise?\"",
+                        "\"It sounds like the best fun!\"",
+                        "And one after another they went running to the square."
+                    ]
+                },
+                {
+                    art: '05-children-2.webp',
+                    emoji: '🧒',
+                    left: [
+                        "The children fell in behind the man, laughing and skipping as they went.",
+                        "The line grew longer and longer,",
+                        "until it was every child in the town.",
+                        "Some had run out barefoot.",
+                        "But one child came along behind. He was lame, and had to work hard on his crutch."
+                    ],
+                    right: [
+                        "\"Wait for me! Wait!\"",
+                        "But nobody heard him. Every one of them was listening to the pipe.",
+                        "And the line went straight out of the town.",
+                        "Just then the church bell rang,",
+                        "and the grown-ups began to come outside."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · At the Foot of the Hill',
+            beats: [
+                {
+                    art: '06-mountain.webp',
+                    emoji: '⛰️',
+                    left: [
+                        "The grown-ups stood frozen where they were. The streets were empty.",
+                        "\"Where have our children gone?\"",
+                        "\"There — over that hill!\"",
+                        "Everyone began to run at once.",
+                        "But the children were already far away."
+                    ],
+                    right: [
+                        "The line had come to the foot of a hill, green all over with grass.",
+                        "The man stopped playing,",
+                        "and the children stopped walking too.",
+                        "\"Where is this?\"",
+                        "\"A little further and you will know.\""
+                    ]
+                },
+                {
+                    art: '06-mountain-2.webp',
+                    emoji: '⛰️',
+                    left: [
+                        "And then a sound came from behind them.",
+                        "Tap. Tap.",
+                        "It was a crutch.",
+                        "The child who had fallen behind had caught up at last, out of breath.",
+                        "\"Please… take me too.\"",
+                        "The man looked at him quietly."
+                    ],
+                    right: [
+                        "He looked down at him for a long while.",
+                        "And then he slowly bent his knees.",
+                        "\"You came all this way on your own.\"",
+                        "\"Yes. Everybody else had gone.\"",
+                        "Something changed in the man's face,",
+                        "and he lowered the pipe."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Children Come Home',
+            beats: [
+                {
+                    art: '07-return.webp',
+                    emoji: '🔔',
+                    left: [
+                        "\"I came for my payment.\"",
+                        "\"The grown-ups broke their word.\"",
+                        "The child tilted his head.",
+                        "\"So you were going to take us away?\"",
+                        "\"That was my intention.\"",
+                        "The man let out a long breath."
+                    ],
+                    right: [
+                        "\"But watching you come along behind…\"",
+                        "\"I wonder what I thought I was doing.\"",
+                        "And just then people came running from far off.",
+                        "The mayor was at the front,",
+                        "so out of breath he could hardly speak.",
+                        "\"Please — please give them back!\""
+                    ]
+                },
+                {
+                    art: '07-return-2.webp',
+                    emoji: '🔔',
+                    left: [
+                        "Without a word the man held out a sack.",
+                        "The mayor counted a thousand gold pieces into it then and there,",
+                        "with his hands shaking.",
+                        "\"If only we had done this at the start.\"",
+                        "The man took the sack and swung it over his shoulder.",
+                        "And then he sent every child home."
+                    ],
+                    right: [
+                        "In a moment the hillside was one great flood of crying.",
+                        "The man turned quietly away.",
+                        "And at the end of the road he looked back once.",
+                        "The child with the crutch was waving to him.",
+                        "And the man raised his hand as well."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did the mayor try before the stranger came?',
+            choices: ['Burning the storehouses', 'Buying cats and setting traps', 'Moving the town'],
+            answer: 1
+        },
+        {
+            q: 'What did the stranger ask for?',
+            choices: ['A thousand gold pieces', 'A house in the town', 'Fifty gold pieces'],
+            answer: 0
+        },
+        {
+            q: 'How did the rats leave the town?',
+            choices: ['The cats drove them out', 'They went into the hill', 'They followed the pipe into the river'],
+            answer: 2
+        },
+        {
+            q: 'Why did the mayor refuse to pay?',
+            choices: ['The town had no money left', 'He said the piper had only played a pipe', 'The rats had come back'],
+            answer: 1
+        },
+        {
+            q: 'Where were the grown-ups when the pipe played again?',
+            choices: ['At church', 'At the town hall', 'Down by the river'],
+            answer: 0
+        },
+        {
+            q: 'Why did one child fall behind the others?',
+            choices: ['He had stayed to finish his game', 'He did not like the tune', 'He was lame and walked with a crutch'],
+            answer: 2
+        },
+        {
+            q: 'What made the piper change his mind?',
+            choices: ['The mayor’s shouting', 'The child who came all that way on his own', 'The church bell'],
+            answer: 1
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🎺',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story really is told in the German town of Hamelin. It is said to have been painted on a window of the town church.",
+                    "There is a record that children disappeared from Hamelin more than seven hundred years ago. Nobody knows what happened. The story grew up to fill that gap.",
+                    "The man really did clear the rats out. The town really did not pay him. What they argued about was the price.",
+                    "It was only once the rats were gone that the money began to feel like too much. The sum you would pay in trouble is not the sum you would pay after it."
+                ],
+                right: [
+                    "When the child who fell behind catches up, the man kneels down. That is where his mind changes. The one who came to collect his money was a person too.",
+                    "Where did the mayor first go wrong?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-rats.webp': [
+            { word: 'multiply', meaning: '불어나다', sentence: 'The rats began to multiply.' },
+            { word: 'storehouse', meaning: '창고', sentence: 'At first they were only in the storehouses.' },
+            { word: 'gnaw', meaning: '갉아 먹다', sentence: 'They gnawed the dishes in the kitchens.' },
+            { word: 'cradle', meaning: '요람', sentence: 'They climbed into the cradles.' },
+            { word: 'scamper', meaning: '다다다 뛰어다니다', sentence: 'There was a scampering across the ceilings.' }
+        ],
+        '01-rats-2.webp': [
+            { word: 'bear', meaning: '참다', sentence: 'The people could bear it no longer.' },
+            { word: 'mayor', meaning: '시장', sentence: 'Mayor, you must do something!' },
+            { word: 'by the dozen', meaning: '잔뜩', sentence: 'He bought cats by the dozen.' },
+            { word: 'trap', meaning: '덫', sentence: 'And set traps in every alley.' },
+            { word: 'councillor', meaning: '의원', sentence: 'The councillors sat with their heads together.' }
+        ],
+        '02-piper.webp': [
+            { word: 'scrap', meaning: '조각', sentence: 'A coat made of scraps of cloth.' },
+            { word: 'pipe', meaning: '피리', sentence: 'There was a wooden pipe at his belt.' },
+            { word: 'get rid of', meaning: '없애다', sentence: 'I shall get rid of them for you.' },
+            { word: 'hesitate', meaning: '망설이다', sentence: 'The mayor hesitated a moment.' }
+        ],
+        '02-piper-2.webp': [
+            { word: 'give one’s word', meaning: '약속하다', sentence: 'You have given your word.' },
+            { word: 'crowd at', meaning: '다닥다닥 매달리다', sentence: 'People crowded at every window.' },
+            { word: 'note', meaning: '소리, 음', sentence: 'And then the first note sounded.' }
+        ],
+        '03-rats-follow.webp': [
+            { word: 'thin', meaning: '가는', sentence: 'It was a thin, clear sound.' },
+            { word: 'squeak', meaning: '찍찍거리다', sentence: 'Scratching, and squeaking.' },
+            { word: 'cellar', meaning: '지하실', sentence: 'A cellar door rattled.' },
+            { word: 'pour out', meaning: '쏟아져 나오다', sentence: 'And then the rats came pouring out.' },
+            { word: 'alike', meaning: '똑같이', sentence: 'Big rats and little rats alike.' }
+        ],
+        '03-rats-follow-2.webp': [
+            { word: 'trail along', meaning: '졸졸 따르다', sentence: 'The rats came trailing along behind him.' },
+            { word: 'high road', meaning: '큰길', sentence: 'It went out onto the high road.' },
+            { word: 'spellbound', meaning: '홀린', sentence: 'As though they were spellbound.' },
+            { word: 'current', meaning: '물살', sentence: 'The current carried them away downstream.' },
+            { word: 'cheer', meaning: '환호하다', sentence: 'And the people cheered.' }
+        ],
+        '04-refuse.webp': [
+            { word: 'payment', meaning: '값, 삯', sentence: 'My payment, if you please.' },
+            { word: 'go stiff', meaning: '굳어지다', sentence: "The mayor's face went stiff." },
+            { word: 'join in', meaning: '거들다', sentence: 'The councillors joined in from the side.' },
+            { word: 'generous', meaning: '넉넉한', sentence: 'Fifty is more than generous.' }
+        ],
+        '04-refuse-2.webp': [
+            { word: 'have done', meaning: '그만하다', sentence: 'Take it and have done!' },
+            { word: 'wave away', meaning: '손을 내젓다', sentence: 'The mayor waved him away.' },
+            { word: 'snort', meaning: '코웃음 치다', sentence: 'The mayor snorted behind his back.' },
+            { word: 'keep a feast', meaning: '잔치를 벌이다', sentence: 'The town kept a feast until late.' }
+        ],
+        '05-children.webp': [
+            { word: 'bounce', meaning: '통통 튀다', sentence: 'It went bouncing off the walls.' },
+            { word: 'merry', meaning: '신나는', sentence: 'It was a bright, merry tune.' },
+            { word: 'tune', meaning: '가락', sentence: 'It was a bright, merry tune.' },
+            { word: 'dead', meaning: '뚝', sentence: 'The children stopped their game dead.' }
+        ],
+        '05-children-2.webp': [
+            { word: 'fall in behind', meaning: '뒤를 따르다', sentence: 'The children fell in behind the man.' },
+            { word: 'skip', meaning: '깡충거리다', sentence: 'Laughing and skipping as they went.' },
+            { word: 'barefoot', meaning: '맨발로', sentence: 'Some had run out barefoot.' },
+            { word: 'lame', meaning: '다리를 저는', sentence: 'He was lame.' },
+            { word: 'crutch', meaning: '목발', sentence: 'And had to work hard on his crutch.' }
+        ],
+        '06-mountain.webp': [
+            { word: 'frozen', meaning: '얼어붙은', sentence: 'The grown-ups stood frozen where they were.' },
+            { word: 'at the foot of', meaning: '~ 아래에', sentence: 'The line had come to the foot of a hill.' },
+            { word: 'further', meaning: '더 멀리', sentence: 'A little further and you will know.' }
+        ],
+        '06-mountain-2.webp': [
+            { word: 'catch up', meaning: '따라잡다', sentence: 'The child had caught up at last.' },
+            { word: 'out of breath', meaning: '숨이 찬', sentence: 'He caught up at last, out of breath.' },
+            { word: 'bend one’s knees', meaning: '무릎을 굽히다', sentence: 'He slowly bent his knees.' },
+            { word: 'lower', meaning: '내리다', sentence: 'And he lowered the pipe.' }
+        ],
+        '07-return.webp': [
+            { word: 'break one’s word', meaning: '약속을 어기다', sentence: 'The grown-ups broke their word.' },
+            { word: 'tilt one’s head', meaning: '고개를 갸웃하다', sentence: 'The child tilted his head.' },
+            { word: 'intention', meaning: '생각, 의도', sentence: 'That was my intention.' },
+            { word: 'let out a breath', meaning: '한숨을 쉬다', sentence: 'The man let out a long breath.' }
+        ],
+        '07-return-2.webp': [
+            { word: 'sack', meaning: '자루', sentence: 'The man held out a sack.' },
+            { word: 'then and there', meaning: '그 자리에서', sentence: 'The mayor counted it then and there.' },
+            { word: 'swing over', meaning: '둘러메다', sentence: 'He swung it over his shoulder.' },
+            { word: 'flood', meaning: '바다, 홍수', sentence: 'The hillside was one great flood of crying.' },
+            { word: 'look back', meaning: '돌아보다', sentence: 'He looked back once.' }
+        ],
+        'end.webp': [
+            { word: 'legend', meaning: '전설', sentence: 'The Grimms put it into their book of legends.' },
+            { word: 'record', meaning: '기록', sentence: 'There is a record that children disappeared.' },
+            { word: 'gap', meaning: '빈자리', sentence: 'The story grew up to fill that gap.' },
+            { word: 'argue about', meaning: '~을 두고 다투다', sentence: 'What they argued about was the price.' },
+            { word: 'sum', meaning: '금액', sentence: 'The sum you would pay in trouble.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -581,6 +1101,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -589,7 +1110,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -601,7 +1122,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -635,4 +1156,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
