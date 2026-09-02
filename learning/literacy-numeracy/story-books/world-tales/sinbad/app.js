@@ -291,16 +291,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '신드바드의 모험',
+    intro: [
+        '신드바드의 모험은 천일야화에 실린 이야기예요. 알라딘, 알리바바와 같은 책에서 나온 이야기랍니다.',
+        '신드바드는 일곱 번이나 바다로 나가는데, 이 책에는 그 가운데 널리 알려진 항해들을 담았어요. 옛날 아라비아 상인들이 실제로 오갔던 바닷길이 이야기의 바탕이랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '⛵')}
             </div>
             <div class="story-page-right">
-                <h1>신드바드의 모험</h1>
-                <p>신드바드의 모험은 천일야화에 실린 이야기예요. 알라딘, 알리바바와 같은 책에서 나온 이야기랍니다.</p>
-                <p>신드바드는 일곱 번이나 바다로 나가는데, 이 책에는 그 가운데 널리 알려진 항해들을 담았어요. 옛날 아라비아 상인들이 실제로 오갔던 바닷길이 이야기의 바탕이랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -315,8 +324,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -326,8 +335,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -337,22 +346,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -402,9 +412,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -415,7 +425,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -487,7 +497,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -496,34 +506,631 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Voyages of Sindbad',
+        intro: [
+            "Sindbad the Sailor comes from the Thousand and One Nights — the same book that gave us Aladdin and Ali Baba.",
+            "Sindbad goes to sea seven times, and this book holds the best known of those voyages. The sea roads in it are the ones Arab merchants really sailed in those days."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · Out to Sea',
+            beats: [
+                {
+                    art: '01-port.webp',
+                    emoji: '⛵',
+                    left: [
+                        "Long ago in Baghdad there lived a young man called Sindbad. His father had been a great merchant, and he had inherited a good deal.",
+                        "Sindbad spent it on feasts, one after another,",
+                        "calling his friends in and setting good food in front of them.",
+                        "Then one day he opened his store room.",
+                        "There were a few sacks rolling about in a corner.",
+                        "Sindbad stood in front of it a long while."
+                    ],
+                    right: [
+                        "There was almost nothing left.",
+                        "And only then did he come to his senses.",
+                        "\"This will not do.\"",
+                        "He sold what was in the house and raised some money,",
+                        "and with it he bought goods to trade.",
+                        "In a far country, they said, they would be worth several times as much."
+                    ]
+                },
+                {
+                    art: '01-port-2.webp',
+                    emoji: '⛵',
+                    left: [
+                        "Sindbad carried his goods down to the harbour,",
+                        "where the masts stood as thick as a wood.",
+                        "Porters went to and fro under great loads,",
+                        "and there were strange languages on every side.",
+                        "Sindbad went aboard a large ship,",
+                        "and the sailors let out the sails."
+                    ],
+                    right: [
+                        "The ship went slowly out of the harbour.",
+                        "The houses got smaller and then they were gone,",
+                        "and ahead there was nothing but sea.",
+                        "\"What is there at the end of the sea?\" Sindbad said to himself, standing at the bow.",
+                        "His heart was beating fast."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · It Was Not an Island',
+            beats: [
+                {
+                    art: '02-whale.webp',
+                    emoji: '🐋',
+                    left: [
+                        "The ship went on for many days.",
+                        "One morning the lookout shouted,",
+                        "\"An island! There is an island ahead!\"",
+                        "There was a small low island floating there,",
+                        "with grass growing on it and soil underfoot.",
+                        "After so long at sea, the men were glad of it."
+                    ],
+                    right: [
+                        "They all went ashore and stood on the ground.",
+                        "They hung out the washing and gathered sticks.",
+                        "It was the first ground they had felt in days.",
+                        "Then they lit a fire and cooked a meal,",
+                        "and the smoke went straight up into the sky.",
+                        "There was laughing for the first time in a long while,",
+                        "and Sindbad ran about the place, delighted."
+                    ]
+                },
+                {
+                    art: '02-whale-2.webp',
+                    emoji: '🐋',
+                    left: [
+                        "And then the ground heaved.",
+                        "Men went over and a pot rolled away,",
+                        "and the washing was swept into the water.",
+                        "The captain shouted from the ship.",
+                        "\"That is no island! It is the back of a great fish!\"",
+                        "\"Get back aboard, quickly!\""
+                    ],
+                    right: [
+                        "The fire had startled the fish and it had turned over.",
+                        "The island went straight down under the water,",
+                        "and the men fell into the sea.",
+                        "Sindbad got hold of a wooden cask.",
+                        "The ship was already far away,",
+                        "and shout as he might, nobody heard him."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Enormous Bird',
+            beats: [
+                {
+                    art: '03-roc.webp',
+                    emoji: '🥚',
+                    left: [
+                        "Sindbad held on to the cask and drifted all night.",
+                        "Next day the water pushed him up onto an island.",
+                        "When he had his strength back he walked inland.",
+                        "There was not the shadow of a person on it.",
+                        "He ate what fruit he could find and drank from a spring,",
+                        "and only then did he feel he might live."
+                    ],
+                    right: [
+                        "After a long walk Sindbad stopped.",
+                        "In the middle of the island something white and round stood up out of the ground.",
+                        "At first he took it for a great roof.",
+                        "But there were no windows and no door.",
+                        "Close up, it was an enormous egg.",
+                        "Sindbad walked all the way round it."
+                    ]
+                },
+                {
+                    art: '03-roc-2.webp',
+                    emoji: '🥚',
+                    left: [
+                        "And then the sky went dark.",
+                        "Something had come in front of the sun.",
+                        "He looked up and an enormous shadow was coming down.",
+                        "It was a bird with wings as big as clouds.",
+                        "It could only be the roc he had heard of in old stories.",
+                        "Sindbad hid behind the egg."
+                    ],
+                    right: [
+                        "The bird settled quietly on the egg.",
+                        "Its legs were as thick as tree trunks.",
+                        "Sindbad unwound his turban and tied himself to one of them.",
+                        "\"Only take me somewhere!\"",
+                        "The bird's feathers were the size of shields,",
+                        "and the ground shook when it breathed."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Valley of Jewels',
+            beats: [
+                {
+                    art: '04-valley.webp',
+                    emoji: '💎',
+                    left: [
+                        "In the morning the bird opened its wings,",
+                        "and Sindbad was lifted into the air.",
+                        "The sea and the island grew smaller and smaller beneath him.",
+                        "The wind beat hard against his face,",
+                        "and Sindbad shut his eyes tight.",
+                        "He was afraid the turban would give way.",
+                        "After a long while the bird came down somewhere."
+                    ],
+                    right: [
+                        "Sindbad untied himself quickly.",
+                        "The bird never saw him and flew off again.",
+                        "He looked about and found himself in a deep, narrow valley.",
+                        "Cliffs went up on both sides to the sky,",
+                        "and the sky itself was a thin strip overhead.",
+                        "The floor of it was covered in something that glittered.",
+                        "It was all diamonds."
+                    ]
+                },
+                {
+                    art: '04-valley-2.webp',
+                    emoji: '💎',
+                    left: [
+                        "Sindbad looked down at the ground.",
+                        "The whole floor was shining.",
+                        "He bent down and picked one up.",
+                        "It was a diamond the size of his fist.",
+                        "Everything under his feet was jewels —",
+                        "diamonds and rubies and blue stones as well."
+                    ],
+                    right: [
+                        "\"If I could carry all of this…\"",
+                        "Sindbad went at the jewels as fast as he could.",
+                        "And then his hands stopped.",
+                        "There was no way out of that valley anywhere.",
+                        "Sindbad sat down and thought for a long time.",
+                        "However many jewels he had, they were no use if he could not get out."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · Riding a Piece of Meat',
+            beats: [
+                {
+                    art: '05-meat.webp',
+                    emoji: '🦅',
+                    left: [
+                        "And then something dropped from above.",
+                        "It was a great piece of meat.",
+                        "And then another came down after it.",
+                        "Sindbad looked up at the top of the cliff.",
+                        "There were shapes of people moving up there.",
+                        "Sindbad narrowed his eyes.",
+                        "Merchants had thrown the meat down to get the jewels."
+                    ],
+                    right: [
+                        "When the meat landed, the jewels stuck fast to it.",
+                        "And then the eagles carried the meat back up,",
+                        "and the merchants picked the jewels off it.",
+                        "Sindbad slapped his knee.",
+                        "\"I shall ride the meat up!\"",
+                        "And another piece came down with a thud."
+                    ]
+                },
+                {
+                    art: '05-meat-2.webp',
+                    emoji: '🦅',
+                    left: [
+                        "Sindbad filled a bag with jewels",
+                        "and tied it firmly at his waist.",
+                        "Then he got underneath the largest piece of meat,",
+                        "unwound his turban and lashed himself to it.",
+                        "And he held his breath and waited.",
+                        "By and by came the sound of great wings."
+                    ],
+                    right: [
+                        "An eagle came down and took the meat in its claws,",
+                        "and up he went.",
+                        "The cliff went rushing past in front of his eyes.",
+                        "Sindbad set his teeth and hung on.",
+                        "His hands went numb and his arms felt ready to come off.",
+                        "The wind roared in his ears,",
+                        "and when he looked down the valley was as thin as a thread."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Back to Sea',
+            beats: [
+                {
+                    art: '06-sea.webp',
+                    emoji: '🏠',
+                    left: [
+                        "The eagle set the meat down in its nest on the clifftop,",
+                        "and the merchants came running and shouting.",
+                        "And there was a person attached to the meat.",
+                        "The merchants' eyes went round.",
+                        "\"I have never seen a man come up on the meat before!\" they said, laughing."
+                    ],
+                    right: [
+                        "Sindbad told them everything that had happened,",
+                        "and the merchants only looked at one another.",
+                        "Then Sindbad shared out his jewels among them.",
+                        "\"That is for showing me the way.\"",
+                        "The merchants took him as far as a ship,",
+                        "and so Sindbad was able to set off safely for home."
+                    ]
+                },
+                {
+                    art: '06-sea-2.webp',
+                    emoji: '🏠',
+                    left: [
+                        "Back in Baghdad, Sindbad became a very rich man.",
+                        "He bought a large house and had fine clothes made.",
+                        "People came in crowds to hear his story,",
+                        "and they were all amazed at the island that was a fish.",
+                        "He lived like that for a while,",
+                        "eating well every morning and sleeping late."
+                    ],
+                    right: [
+                        "And after some months he began to itch again.",
+                        "At night the sound of the waves came back to him.",
+                        "His bed felt close and stuffy,",
+                        "and Sindbad took to leaving the window open.",
+                        "\"I keep thinking about the sound of the sea.\"",
+                        "So Sindbad packed his things",
+                        "and went aboard a ship again —",
+                        "this time one bound for further waters still."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Old Man on His Shoulders',
+            beats: [
+                {
+                    art: '07-old-man.webp',
+                    emoji: '👴',
+                    left: [
+                        "On this voyage too Sindbad lost his ship.",
+                        "He barely swam as far as an island,",
+                        "where the trees grew thick and a stream ran through.",
+                        "There was an old man sitting by the stream.",
+                        "It was the last thing he expected on so lonely an island.",
+                        "He was thin, and his legs were thin,",
+                        "and he did not look able to cross the stream alone."
+                    ],
+                    right: [
+                        "The old man pointed across to the other side.",
+                        "He seemed to be asking to be carried.",
+                        "He did not say one word.",
+                        "Sindbad felt sorry for him",
+                        "and readily offered his back.",
+                        "The old man was lighter than he had expected."
+                    ]
+                },
+                {
+                    art: '07-old-man-2.webp',
+                    emoji: '👴',
+                    left: [
+                        "Sindbad carried the old man across the stream.",
+                        "\"There now. We are over. You may get down.\"",
+                        "And the old man did not get down.",
+                        "He had locked both legs round Sindbad's neck,",
+                        "and he was so strong that Sindbad could not move.",
+                        "\"Get down! I cannot breathe!\""
+                    ],
+                    right: [
+                        "The old man only cackled.",
+                        "He even kicked Sindbad in the ribs with his heels —",
+                        "go this way, go that way.",
+                        "And only then did Sindbad see he had been tricked.",
+                        "He was driven about like that for days.",
+                        "The old man did not get down even at night."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · The Last Voyage',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🍇',
+                    left: [
+                        "One day Sindbad was taken past a vineyard.",
+                        "And there a good idea came to him.",
+                        "Sindbad picked a great many ripe grapes",
+                        "and put them into a gourd he had hollowed out.",
+                        "After a few days they had turned to a sweet juice,",
+                        "strong enough to make you dizzy at the smell of it."
+                    ],
+                    right: [
+                        "Sindbad made a show of drinking it with great enjoyment.",
+                        "The old man put out a hand and asked for some,",
+                        "and Sindbad handed him the gourd.",
+                        "The old man drank it down without leaving a drop.",
+                        "Before long he went limp,",
+                        "and the legs round Sindbad's neck loosened."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🍇',
+                    left: [
+                        "Sindbad got the old man off his shoulders at once",
+                        "and ran without looking back.",
+                        "He ran the whole way to the shore.",
+                        "As it happened a passing ship saw him and stopped,",
+                        "and he could see somebody waving.",
+                        "The sailors pulled him aboard."
+                    ],
+                    right: [
+                        "Sindbad lay on the deck and looked at the sky.",
+                        "His shoulders still ached,",
+                        "and the clouds went slowly over.",
+                        "\"Now I really must give this up.\"",
+                        "And so Sindbad came home to Baghdad.",
+                        "After that he lived quietly at home —",
+                        "and told the story of the sea to everybody who came."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why did Sindbad first go to sea?',
+            choices: ['He had spent nearly all his money', 'He wanted adventures', 'His father sent him'],
+            answer: 0
+        },
+        {
+            q: 'What was the island the sailors landed on?',
+            choices: ['A floating raft', 'A sandbank', 'The back of a great fish'],
+            answer: 2
+        },
+        {
+            q: 'What did Sindbad take for a great roof?',
+            choices: ['A white cliff', 'An enormous egg', 'A ship’s sail'],
+            answer: 1
+        },
+        {
+            q: 'How did Sindbad get out of the valley of jewels?',
+            choices: ['He tied himself under a piece of meat', 'He climbed the cliff', 'The roc came back for him'],
+            answer: 0
+        },
+        {
+            q: 'What did the merchants throw down into the valley?',
+            choices: ['Ropes', 'Empty baskets', 'Great pieces of meat'],
+            answer: 2
+        },
+        {
+            q: 'Why did Sindbad go to sea again after he was rich?',
+            choices: ['He had lost his money again', 'He kept thinking of the sound of the waves', 'The merchants asked him to'],
+            answer: 1
+        },
+        {
+            q: 'How did Sindbad get the old man off his shoulders?',
+            choices: ['He gave him the juice from the gourd', 'He ran into the stream', 'The sailors pulled him off'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '⛵',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Sindbad goes to sea seven times. Only some of those voyages are in this book.",
+                    "The reason he went the first time was that he had spent all his money. It was not because he liked adventures.",
+                    "And then he goes again after he is rich. And again after that. The reason he went the first time is not the reason he kept going.",
+                    "Look again at what he did in the valley. He did not invent anything new. He simply used the merchants' own method backwards."
+                ],
+                right: [
+                    "The sea roads in the story are not all made up. Arab merchants of that time really did sail their ships as far as India and China.",
+                    "Why do you think Sindbad kept going back to sea?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-port.webp': [
+            { word: 'inherit', meaning: '물려받다', sentence: 'He had inherited a good deal.' },
+            { word: 'store room', meaning: '곳간', sentence: 'One day he opened his store room.' },
+            { word: 'come to one’s senses', meaning: '정신이 들다', sentence: 'Only then did he come to his senses.' },
+            { word: 'raise money', meaning: '돈을 마련하다', sentence: 'He sold what was in the house and raised some money.' },
+            { word: 'goods', meaning: '물건', sentence: 'He bought goods to trade.' }
+        ],
+        '01-port-2.webp': [
+            { word: 'harbour', meaning: '항구', sentence: 'Sindbad carried his goods down to the harbour.' },
+            { word: 'mast', meaning: '돛대', sentence: 'The masts stood as thick as a wood.' },
+            { word: 'porter', meaning: '짐꾼', sentence: 'Porters went to and fro under great loads.' },
+            { word: 'let out', meaning: '펴다', sentence: 'The sailors let out the sails.' },
+            { word: 'bow', meaning: '뱃머리', sentence: 'Standing at the bow.' }
+        ],
+        '02-whale.webp': [
+            { word: 'lookout', meaning: '망보는 사람', sentence: 'The lookout shouted.' },
+            { word: 'go ashore', meaning: '뭍에 내리다', sentence: 'They all went ashore.' },
+            { word: 'hang out', meaning: '널다', sentence: 'They hung out the washing.' },
+            { word: 'delighted', meaning: '신이 난', sentence: 'Sindbad ran about the place, delighted.' }
+        ],
+        '02-whale-2.webp': [
+            { word: 'heave', meaning: '출렁 흔들리다', sentence: 'And then the ground heaved.' },
+            { word: 'sweep', meaning: '휩쓸다', sentence: 'The washing was swept into the water.' },
+            { word: 'startle', meaning: '놀라게 하다', sentence: 'The fire had startled the fish.' },
+            { word: 'cask', meaning: '나무통', sentence: 'Sindbad got hold of a wooden cask.' }
+        ],
+        '03-roc.webp': [
+            { word: 'drift', meaning: '떠다니다', sentence: 'He held on to the cask and drifted all night.' },
+            { word: 'inland', meaning: '안쪽으로', sentence: 'He walked inland.' },
+            { word: 'spring', meaning: '샘', sentence: 'And drank from a spring.' },
+            { word: 'take for', meaning: '~인 줄 알다', sentence: 'At first he took it for a great roof.' }
+        ],
+        '03-roc-2.webp': [
+            { word: 'shadow', meaning: '그림자', sentence: 'An enormous shadow was coming down.' },
+            { word: 'roc', meaning: '로크 (거대한 새)', sentence: 'It could only be the roc.' },
+            { word: 'trunk', meaning: '나무 기둥', sentence: 'Its legs were as thick as tree trunks.' },
+            { word: 'turban', meaning: '터번', sentence: 'Sindbad unwound his turban.' },
+            { word: 'shield', meaning: '방패', sentence: "The bird's feathers were the size of shields." }
+        ],
+        '04-valley.webp': [
+            { word: 'beat against', meaning: '때리다', sentence: 'The wind beat hard against his face.' },
+            { word: 'give way', meaning: '끊어지다', sentence: 'He was afraid the turban would give way.' },
+            { word: 'cliff', meaning: '절벽', sentence: 'Cliffs went up on both sides.' },
+            { word: 'strip', meaning: '띠', sentence: 'The sky was a thin strip overhead.' },
+            { word: 'glitter', meaning: '반짝이다', sentence: 'Covered in something that glittered.' }
+        ],
+        '04-valley-2.webp': [
+            { word: 'fist', meaning: '주먹', sentence: 'A diamond the size of his fist.' },
+            { word: 'ruby', meaning: '홍옥', sentence: 'Diamonds and rubies.' },
+            { word: 'go at', meaning: '정신없이 달려들다', sentence: 'Sindbad went at the jewels as fast as he could.' },
+            { word: 'no use', meaning: '소용없는', sentence: 'They were no use if he could not get out.' }
+        ],
+        '05-meat.webp': [
+            { word: 'drop', meaning: '떨어지다', sentence: 'Something dropped from above.' },
+            { word: 'narrow one’s eyes', meaning: '눈을 가늘게 뜨다', sentence: 'Sindbad narrowed his eyes.' },
+            { word: 'stick fast', meaning: '척척 달라붙다', sentence: 'The jewels stuck fast to it.' },
+            { word: 'slap one’s knee', meaning: '무릎을 치다', sentence: 'Sindbad slapped his knee.' },
+            { word: 'thud', meaning: '쿵 소리', sentence: 'Another piece came down with a thud.' }
+        ],
+        '05-meat-2.webp': [
+            { word: 'lash', meaning: '붙들어 매다', sentence: 'He lashed himself to it.' },
+            { word: 'claw', meaning: '발톱', sentence: 'An eagle took the meat in its claws.' },
+            { word: 'set one’s teeth', meaning: '이를 악물다', sentence: 'Sindbad set his teeth and hung on.' },
+            { word: 'numb', meaning: '저린', sentence: 'His hands went numb.' },
+            { word: 'roar', meaning: '쌩쌩 울다', sentence: 'The wind roared in his ears.' }
+        ],
+        '06-sea.webp': [
+            { word: 'nest', meaning: '둥지', sentence: 'The eagle set the meat down in its nest.' },
+            { word: 'attached to', meaning: '붙어 있는', sentence: 'There was a person attached to the meat.' },
+            { word: 'share out', meaning: '나누어 주다', sentence: 'Sindbad shared out his jewels among them.' },
+            { word: 'set off', meaning: '떠나다', sentence: 'He was able to set off safely for home.' }
+        ],
+        '06-sea-2.webp': [
+            { word: 'in crowds', meaning: '몰려서', sentence: 'People came in crowds to hear his story.' },
+            { word: 'amazed', meaning: '놀란', sentence: 'They were all amazed at the island that was a fish.' },
+            { word: 'itch', meaning: '좀이 쑤시다', sentence: 'He began to itch again.' },
+            { word: 'stuffy', meaning: '답답한', sentence: 'His bed felt close and stuffy.' },
+            { word: 'bound for', meaning: '~으로 가는', sentence: 'One bound for further waters still.' }
+        ],
+        '07-old-man.webp': [
+            { word: 'barely', meaning: '겨우', sentence: 'He barely swam as far as an island.' },
+            { word: 'stream', meaning: '개울', sentence: 'A stream ran through.' },
+            { word: 'the last thing one expects', meaning: '뜻밖의 일', sentence: 'It was the last thing he expected.' },
+            { word: 'readily', meaning: '선뜻', sentence: 'He readily offered his back.' }
+        ],
+        '07-old-man-2.webp': [
+            { word: 'lock round', meaning: '꽉 감다', sentence: 'He had locked both legs round his neck.' },
+            { word: 'cackle', meaning: '낄낄 웃다', sentence: 'The old man only cackled.' },
+            { word: 'ribs', meaning: '옆구리', sentence: 'He kicked Sindbad in the ribs.' },
+            { word: 'trick', meaning: '속이다', sentence: 'Only then did Sindbad see he had been tricked.' },
+            { word: 'drive about', meaning: '끌고 다니다', sentence: 'He was driven about like that for days.' }
+        ],
+        '08-ending.webp': [
+            { word: 'vineyard', meaning: '포도밭', sentence: 'Sindbad was taken past a vineyard.' },
+            { word: 'ripe', meaning: '잘 익은', sentence: 'Sindbad picked a great many ripe grapes.' },
+            { word: 'gourd', meaning: '조롱박', sentence: 'A gourd he had hollowed out.' },
+            { word: 'hollow out', meaning: '속을 파내다', sentence: 'A gourd he had hollowed out.' },
+            { word: 'go limp', meaning: '몸이 늘어지다', sentence: 'Before long he went limp.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'without looking back', meaning: '뒤도 돌아보지 않고', sentence: 'And ran without looking back.' },
+            { word: 'shore', meaning: '바닷가', sentence: 'He ran the whole way to the shore.' },
+            { word: 'pull aboard', meaning: '끌어 올리다', sentence: 'The sailors pulled him aboard.' },
+            { word: 'deck', meaning: '갑판', sentence: 'Sindbad lay on the deck.' },
+            { word: 'give up', meaning: '그만두다', sentence: 'Now I really must give this up.' }
+        ],
+        'end.webp': [
+            { word: 'voyage', meaning: '항해', sentence: 'Only some of those voyages are in this book.' },
+            { word: 'adventure', meaning: '모험', sentence: 'It was not because he liked adventures.' },
+            { word: 'invent', meaning: '지어내다', sentence: 'He did not invent anything new.' },
+            { word: 'method', meaning: '방법', sentence: "He used the merchants' own method backwards." },
+            { word: 'made up', meaning: '지어낸', sentence: 'The sea roads are not all made up.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -588,6 +1195,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -596,7 +1204,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -608,7 +1216,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -642,4 +1250,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
