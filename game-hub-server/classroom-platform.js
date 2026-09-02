@@ -398,6 +398,15 @@ function createClassroomPlatform(options = {}) {
       )`,
       `ALTER TABLE classroom_schools
         ADD COLUMN IF NOT EXISTS office_code TEXT`,
+      // 방과후는 요일마다 다른 프로그램을 들으므로 명단에 칸이 여럿 필요하다.
+      // 몇 칸을 둘지는 학교마다 달라서 관리자가 정한다.
+      `ALTER TABLE classroom_schools
+        ADD COLUMN IF NOT EXISTS afterschool_slots INTEGER NOT NULL DEFAULT 3`,
+      `ALTER TABLE classroom_schools
+        DROP CONSTRAINT IF EXISTS classroom_schools_afterschool_slots_check`,
+      `ALTER TABLE classroom_schools
+        ADD CONSTRAINT classroom_schools_afterschool_slots_check
+        CHECK (afterschool_slots BETWEEN 1 AND 6)`,
       `ALTER TABLE classroom_schools
         ADD COLUMN IF NOT EXISTS school_code TEXT`,
       `ALTER TABLE classroom_schools
@@ -886,6 +895,33 @@ function createClassroomPlatform(options = {}) {
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         UNIQUE (school_id, academic_year, program_name)
       )`,
+      /* ──────────────────────────────────────────────
+         전교생 명단의 소속 열. 학교마다 필요한 것이 달라서(돌봄이 없는 학교,
+         버스가 없는 학교, 걸스카우트가 있는 학교) 열 자체를 관리자가 정의한다.
+         동아리·방과후·돌봄반·통학버스·자치임원도 전부 이 열의 하나일 뿐이다.
+
+         slot_count: 한 학생이 여럿을 가질 수 있는 열(방과후처럼 요일마다 다른
+         프로그램)은 칸을 여러 개 둔다. 명단에는 방과후①·방과후②로 나온다.
+      ────────────────────────────────────────────── */
+      `CREATE TABLE IF NOT EXISTS school_roster_columns (
+        id BIGSERIAL PRIMARY KEY,
+        school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
+        academic_year INTEGER NOT NULL,
+        column_name TEXT NOT NULL CHECK (char_length(column_name) BETWEEN 1 AND 30),
+        slot_count INTEGER NOT NULL DEFAULT 1 CHECK (slot_count BETWEEN 1 AND 6),
+        sort_order INTEGER NOT NULL DEFAULT 0,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE (school_id, academic_year, column_name)
+      )`,
+      `CREATE TABLE IF NOT EXISTS school_roster_column_options (
+        id BIGSERIAL PRIMARY KEY,
+        column_id BIGINT NOT NULL REFERENCES school_roster_columns(id) ON DELETE CASCADE,
+        option_name TEXT NOT NULL CHECK (char_length(option_name) BETWEEN 1 AND 60),
+        sort_order INTEGER NOT NULL DEFAULT 0,
+        UNIQUE (column_id, option_name)
+      )`,
+      `CREATE INDEX IF NOT EXISTS school_roster_columns_school_idx
+        ON school_roster_columns (school_id, academic_year, sort_order)`,
       // 돌봄반. 동아리·방과후와 같은 모양이라 명단의 열로 소속을 받는다.
       `CREATE TABLE IF NOT EXISTS school_care (
         id BIGSERIAL PRIMARY KEY,
@@ -6398,7 +6434,76 @@ function createClassroomPlatform(options = {}) {
     res.json({ ok: true, saved: clean.length });
   }));
 
-  // GET: 학교 설정 (동아리/방과후/셔틀 목록)
+  // 명단 열은 학교가 정의한다. 예전에 동아리·방과후·돌봄·셔틀을 따로 두던 표는
+  // 처음 한 번 읽어 열로 옮겨 준다(옮긴 뒤에는 열 표만 쓴다).
+  async function seedRosterColumnsIfEmpty(schoolId, year) {
+    const existing = await pool.query(
+      `SELECT 1 FROM school_roster_columns WHERE school_id = $1 AND academic_year = $2 LIMIT 1`,
+      [schoolId, year]
+    );
+    if (existing.rowCount > 0) return;
+
+    const legacy = [
+      { name: "동아리", slots: 1, byYear: true, sql: `SELECT club_name AS n FROM school_clubs WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id` },
+      { name: "방과후", slots: 3, byYear: true, sql: `SELECT program_name AS n FROM school_afterschool WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id` },
+      { name: "돌봄반", slots: 1, byYear: true, sql: `SELECT care_name AS n FROM school_care WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id` },
+      { name: "통학버스", slots: 1, byYear: false, sql: `SELECT slot_name AS n FROM school_shuttle_slots WHERE school_id = $1 ORDER BY sort_order, id` }
+    ];
+
+    let order = 0;
+    for (const def of legacy) {
+      const rows = await pool.query(def.sql, def.byYear ? [schoolId, year] : [schoolId]);
+      if (rows.rowCount === 0) continue; // 안 쓰던 갈래는 열도 만들지 않는다
+      const col = await pool.query(
+        `INSERT INTO school_roster_columns (school_id, academic_year, column_name, slot_count, sort_order)
+         VALUES ($1, $2, $3, $4, $5)
+         ON CONFLICT (school_id, academic_year, column_name) DO NOTHING
+         RETURNING id`,
+        [schoolId, year, def.name, def.slots, order]
+      );
+      order += 1;
+      if (!col.rows[0]) continue;
+      let optOrder = 0;
+      for (const r of rows.rows) {
+        if (!r.n) continue;
+        await pool.query(
+          `INSERT INTO school_roster_column_options (column_id, option_name, sort_order)
+           VALUES ($1, $2, $3) ON CONFLICT DO NOTHING`,
+          [col.rows[0].id, r.n, optOrder]
+        );
+        optOrder += 1;
+      }
+    }
+  }
+
+  async function readRosterColumns(schoolId, year) {
+    const cols = await pool.query(
+      `SELECT id, column_name, slot_count, sort_order
+       FROM school_roster_columns
+       WHERE school_id = $1 AND academic_year = $2
+       ORDER BY sort_order, id`,
+      [schoolId, year]
+    );
+    if (cols.rowCount === 0) return [];
+    const opts = await pool.query(
+      `SELECT column_id, option_name FROM school_roster_column_options
+       WHERE column_id = ANY($1::BIGINT[]) ORDER BY sort_order, id`,
+      [cols.rows.map(c => c.id)]
+    );
+    const byCol = new Map();
+    for (const o of opts.rows) {
+      const key = String(o.column_id);
+      if (!byCol.has(key)) byCol.set(key, []);
+      byCol.get(key).push(o.option_name);
+    }
+    return cols.rows.map(c => ({
+      id: String(c.id),
+      name: c.column_name,
+      slots: c.slot_count,
+      options: byCol.get(String(c.id)) || []
+    }));
+  }
+
   router.get("/school/settings", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const tp = await pool.query(
@@ -6413,27 +6518,22 @@ function createClassroomPlatform(options = {}) {
     const year = Number(req.query.year) || new Date().getFullYear();
     const isAdmin = ["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type);
 
-    const [clubs, afterschool, care, shuttle, specialRooms] = await Promise.all([
-      pool.query(`SELECT id, club_name, sort_order FROM school_clubs WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`, [schoolId, year]),
-      pool.query(`SELECT id, program_name, sort_order FROM school_afterschool WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`, [schoolId, year]),
-      pool.query(`SELECT id, care_name, sort_order FROM school_care WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`, [schoolId, year]),
-      pool.query(`SELECT id, slot_name, sort_order FROM school_shuttle_slots WHERE school_id = $1 ORDER BY sort_order, id`, [schoolId]),
+    await seedRosterColumnsIfEmpty(schoolId, year);
+    const [columns, specialRooms] = await Promise.all([
+      readRosterColumns(schoolId, year),
       pool.query(`SELECT id, room_name, sort_order FROM school_special_rooms WHERE school_id = $1 ORDER BY sort_order, id`, [schoolId])
     ]);
 
     res.json({
       schoolName: tp.rows[0].school_name,
-      clubs: clubs.rows,
-      afterschool: afterschool.rows,
-      care: care.rows,
-      shuttleSlots: shuttle.rows,
+      columns,
       specialRooms: specialRooms.rows,
       isAdmin,
       year
     });
   }));
 
-  // PUT: 학교 설정 저장 (동아리/방과후/셔틀 목록)
+  // PUT: 학교 설정 저장 (명단 열 + 특별실)
   router.put("/school/settings", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const tp = await pool.query(
@@ -6441,82 +6541,77 @@ function createClassroomPlatform(options = {}) {
       [teacher.id]
     );
     if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
+    if (!["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type)) {
+      throw new HttpError(403, "ADMIN_ONLY", "학교 설정은 학교 관리자만 바꿀 수 있습니다.");
+    }
     const schoolId = tp.rows[0].school_id;
     const year = Number(req.body.year) || new Date().getFullYear();
 
-    const extractName = (item) => {
-      if (!item) return "";
-      if (typeof item === "string") return item.trim();
-      if (typeof item === "object") return String(item.club_name || item.program_name || item.care_name || item.slot_name || item.room_name || item.name || "").trim();
-      return String(item).trim();
-    };
+    const cleanName = (v, max) => String(v == null ? "" : v).trim().slice(0, max);
+    const columns = (Array.isArray(req.body.columns) ? req.body.columns : [])
+      .map((c, i) => ({
+        name: cleanName(c && c.name, 30),
+        slots: Math.min(6, Math.max(1, Math.round(Number(c && c.slots) || 1))),
+        options: (Array.isArray(c && c.options) ? c.options : [])
+          .map(o => cleanName(typeof o === "string" ? o : (o && o.name), 60))
+          .filter(Boolean),
+        order: i
+      }))
+      .filter(c => c.name);
 
-    const clubs = (req.body.clubs || []).map((item, i) => ({ name: extractName(item), order: i })).filter(c => c.name && c.name !== "[object Object]");
-    const afterschool = (req.body.afterschool || []).map((item, i) => ({ name: extractName(item), order: i })).filter(a => a.name && a.name !== "[object Object]");
-    const care = (req.body.care || []).map((item, i) => ({ name: extractName(item), order: i })).filter(c => c.name && c.name !== "[object Object]");
-    const shuttleSlots = (req.body.shuttleSlots || []).map((item, i) => ({ name: extractName(item), order: i })).filter(s => s.name && s.name !== "[object Object]");
+    const specialRooms = (req.body.specialRooms || [])
+      .map((r, i) => ({ name: cleanName(typeof r === "string" ? r : (r && (r.room_name || r.name)), 60), order: i }))
+      .filter(r => r.name);
 
     const client = await pool.connect();
     try {
       await client.query("BEGIN");
-      // Clubs
-      await client.query(`DELETE FROM school_clubs WHERE school_id = $1 AND academic_year = $2`, [schoolId, year]);
-      for (const c of clubs) {
-        await client.query(
-          `INSERT INTO school_clubs (school_id, academic_year, club_name, sort_order) VALUES ($1, $2, $3, $4)`,
-          [schoolId, year, c.name, c.order]
+      // 이름이 같은 열은 지우지 않고 갱신한다. 열을 지우면 명단에 적힌 값도 함께
+      // 사라지므로, 관리자가 목록에서 뺀 열만 없앤다.
+      await client.query(
+        `DELETE FROM school_roster_columns
+         WHERE school_id = $1 AND academic_year = $2
+           AND NOT (column_name = ANY($3::TEXT[]))`,
+        [schoolId, year, columns.map(c => c.name)]
+      );
+      for (const c of columns) {
+        const upserted = await client.query(
+          `INSERT INTO school_roster_columns (school_id, academic_year, column_name, slot_count, sort_order)
+           VALUES ($1, $2, $3, $4, $5)
+           ON CONFLICT (school_id, academic_year, column_name)
+           DO UPDATE SET slot_count = EXCLUDED.slot_count, sort_order = EXCLUDED.sort_order
+           RETURNING id`,
+          [schoolId, year, c.name, c.slots, c.order]
         );
-      }
-      // Afterschool
-      await client.query(`DELETE FROM school_afterschool WHERE school_id = $1 AND academic_year = $2`, [schoolId, year]);
-      for (const a of afterschool) {
-        await client.query(
-          `INSERT INTO school_afterschool (school_id, academic_year, program_name, sort_order) VALUES ($1, $2, $3, $4)`,
-          [schoolId, year, a.name, a.order]
-        );
-      }
-      // Care rooms (돌봄반)
-      await client.query(`DELETE FROM school_care WHERE school_id = $1 AND academic_year = $2`, [schoolId, year]);
-      for (const c of care) {
-        await client.query(
-          `INSERT INTO school_care (school_id, academic_year, care_name, sort_order) VALUES ($1, $2, $3, $4)`,
-          [schoolId, year, c.name, c.order]
-        );
-      }
-      // Shuttle slots
-      await client.query(`DELETE FROM school_shuttle_slots WHERE school_id = $1`, [schoolId]);
-      for (const s of shuttleSlots) {
-        await client.query(
-          `INSERT INTO school_shuttle_slots (school_id, slot_name, sort_order) VALUES ($1, $2, $3)`,
-          [schoolId, s.name, s.order]
-        );
-      }
-      // Special rooms — 배정표가 room id를 참조하므로 delete-all-reinsert 대신
-      // 이름 기준 upsert로 id를 보존한다. 목록에서 빠진 방만 지운다(배정표는 CASCADE 삭제).
-      // specialRooms 필드를 아예 안 보낸 옛 호출은 특별실을 건드리지 않는다.
-      if (req.body.specialRooms !== undefined) {
-        const specialRooms = (req.body.specialRooms || []).map((item, i) => ({ name: extractName(item), order: i })).filter(r => r.name && r.name !== "[object Object]");
-        await client.query(
-          `DELETE FROM school_special_rooms WHERE school_id = $1 AND NOT (room_name = ANY($2::text[]))`,
-          [schoolId, specialRooms.map(r => r.name)]
-        );
-        for (const r of specialRooms) {
+        const columnId = upserted.rows[0].id;
+        await client.query(`DELETE FROM school_roster_column_options WHERE column_id = $1`, [columnId]);
+        let optOrder = 0;
+        for (const o of c.options) {
           await client.query(
-            `INSERT INTO school_special_rooms (school_id, room_name, sort_order) VALUES ($1, $2, $3)
-             ON CONFLICT (school_id, room_name) DO UPDATE SET sort_order = EXCLUDED.sort_order`,
-            [schoolId, r.name, r.order]
+            `INSERT INTO school_roster_column_options (column_id, option_name, sort_order)
+             VALUES ($1, $2, $3) ON CONFLICT DO NOTHING`,
+            [columnId, o, optOrder]
           );
+          optOrder += 1;
         }
       }
+
+      await client.query(`DELETE FROM school_special_rooms WHERE school_id = $1`, [schoolId]);
+      for (const r of specialRooms) {
+        await client.query(
+          `INSERT INTO school_special_rooms (school_id, room_name, sort_order) VALUES ($1, $2, $3)`,
+          [schoolId, r.name, r.order]
+        );
+      }
       await client.query("COMMIT");
-    } catch (err) {
+    } catch (error) {
       await client.query("ROLLBACK");
-      throw err;
+      throw error;
     } finally {
       client.release();
     }
 
-    res.json({ ok: true });
+    res.json({ ok: true, columns: await readRosterColumns(schoolId, year) });
   }));
 
   // GET: 학교 교사 명단 조회
@@ -6684,13 +6779,9 @@ function createClassroomPlatform(options = {}) {
     res.json({ ok: true, saved: cleanTeachers.length });
   }));
 
-  // 그룹을 개설할 때 고를 수 있는 이름들. 학교 설정에 등록된 목록이 유일한 출처다.
-  //
-  // 예전에는 school_students.custom_fields->>'club' 같은 고정 키를 읽고, 비어 있으면
-  // '오케스트라·로봇코딩부' 같은 예시 이름으로 채웠다. 명단은 동아리 이름을 키로
-  // 저장하므로 그 조회는 언제나 비었고, 결국 학교에 없는 이름만 목록에 떴다.
-  // 그 이름으로 그룹을 만들면 소속 학생이 한 명도 안 잡힌다.
-  // (게다가 school_clubs 에는 name 열이 없어 이 라우트 자체가 500으로 죽고 있었다.)
+  // 그룹을 개설할 때 고를 수 있는 이름들. 학교 관리자가 만든 명단 열의 선택지가
+  // 그대로 후보가 된다. 명단에 없는 이름으로 그룹을 만들면 소속 학생이 한 명도
+  // 잡히지 않으므로, 예시 이름 같은 것은 섞지 않는다.
   router.get("/teacher/available-groups", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const tp = await pool.query(
@@ -6701,36 +6792,13 @@ function createClassroomPlatform(options = {}) {
     const schoolId = tp.rows[0].school_id;
     const year = Number(req.query.year) || new Date().getFullYear();
 
-    const [classesRes, clubsRes, afterschoolRes, careRes, shuttleRes] = await Promise.all([
-      pool.query(
-        `SELECT DISTINCT grade, class_number FROM school_students
-         WHERE school_id = $1 AND academic_year = $2
-         ORDER BY grade, class_number`,
-        [schoolId, year]
-      ),
-      pool.query(
-        `SELECT club_name AS name FROM school_clubs
-         WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`,
-        [schoolId, year]
-      ),
-      pool.query(
-        `SELECT program_name AS name FROM school_afterschool
-         WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`,
-        [schoolId, year]
-      ),
-      pool.query(
-        `SELECT care_name AS name FROM school_care
-         WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`,
-        [schoolId, year]
-      ),
-      pool.query(
-        `SELECT slot_name AS name FROM school_shuttle_slots
-         WHERE school_id = $1 ORDER BY sort_order, id`,
-        [schoolId]
-      )
-    ]);
-
-    const names = (rows) => rows.map(r => r.name).filter(Boolean);
+    const classesRes = await pool.query(
+      `SELECT DISTINCT grade, class_number FROM school_students
+       WHERE school_id = $1 AND academic_year = $2
+       ORDER BY grade, class_number`,
+      [schoolId, year]
+    );
+    const columns = await readRosterColumns(schoolId, year);
 
     res.json({
       homerooms: classesRes.rows.map(r => ({
@@ -6739,10 +6807,7 @@ function createClassroomPlatform(options = {}) {
         grade: r.grade,
         class_number: r.class_number
       })),
-      clubs: names(clubsRes.rows),
-      afterschools: names(afterschoolRes.rows),
-      care: names(careRes.rows),
-      shuttles: names(shuttleRes.rows)
+      columns: columns.map(c => ({ name: c.name, options: c.options }))
     });
   }));
 

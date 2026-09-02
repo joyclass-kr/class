@@ -435,7 +435,6 @@
                 <div style="display:flex;gap:8px;flex-wrap:wrap;" id="rosterAdminActions">
                     <button class="btn btn-secondary btn-sm" id="downloadTemplateBtn" onclick="downloadExcelTemplate()">📊 엑셀 양식 다운로드</button>
                     <button class="btn btn-secondary btn-sm" id="pasteSectionBtn" onclick="togglePasteSection()">📥 붙여넣기로 입력</button>
-                    <button class="btn btn-secondary btn-sm" id="addColumnBtn" onclick="promptAddColumn()" style="display:none;">➕ 열 추가</button>
                     <button class="btn btn-secondary btn-sm" id="addStudentBtn" onclick="addSingleStudent()" style="display:none;">+ 학생 추가</button>
                     <button class="btn btn-primary btn-sm" id="saveRosterBtn" onclick="saveRoster()" style="display:none;">💾 저장</button>
                 </div>
@@ -550,44 +549,14 @@
             </div>
             <p class="status-msg" id="settingsStatus"></p>
             <div class="settings-grid">
-                <!-- 동아리 -->
-                <div class="card" style="margin:0;">
-                    <div class="card-title" style="font-size:14px;">🎯 동아리 목록</div>
-                    <div class="card-desc">이 목록이 전교생 명단의 동아리 열이 됩니다.</div>
-                    <ul class="settings-list" id="clubList"></ul>
+                <!-- 명단 소속 열 -->
+                <div class="card" style="margin:0;grid-column:1/-1;">
+                    <div class="card-title" style="font-size:14px;">🧩 명단 소속 열</div>
+                    <div class="card-desc">전교생 명단에 어떤 열을 둘지 학교가 정합니다. 동아리·방과후·돌봄반·통학버스·자치임원처럼 필요한 것만 만들어 쓰세요. 여기 적은 항목이 명단 칸의 선택지가 되고, 그룹을 개설할 때 고르는 이름도 이 목록에서 나옵니다.</div>
+                    <div id="rosterColumnList"></div>
                     <div class="add-item-row">
-                        <input class="add-item-input" id="newClubInput" placeholder="동아리 이름 입력" onkeydown="if(event.key==='Enter')addClub()">
-                        <button class="btn btn-secondary btn-sm" onclick="addClub()">+ 추가</button>
-                    </div>
-                </div>
-                <!-- 방과후 -->
-                <div class="card" style="margin:0;">
-                    <div class="card-title" style="font-size:14px;">📚 방과후 프로그램 목록</div>
-                    <div class="card-desc">이 목록이 전교생 명단의 방과후 열이 됩니다.</div>
-                    <ul class="settings-list" id="afterschoolList"></ul>
-                    <div class="add-item-row">
-                        <input class="add-item-input" id="newAfterInput" placeholder="방과후 프로그램명 입력" onkeydown="if(event.key==='Enter')addAfterSchool()">
-                        <button class="btn btn-secondary btn-sm" onclick="addAfterSchool()">+ 추가</button>
-                    </div>
-                </div>
-                <!-- 돌봄반 -->
-                <div class="card" style="margin:0;">
-                    <div class="card-title" style="font-size:14px;">🧸 돌봄반 목록</div>
-                    <div class="card-desc">이 목록이 전교생 명단의 돌봄 열이 됩니다.</div>
-                    <ul class="settings-list" id="careList"></ul>
-                    <div class="add-item-row">
-                        <input class="add-item-input" id="newCareInput" placeholder="돌봄반 이름 입력" onkeydown="if(event.key==='Enter')addCare()">
-                        <button class="btn btn-secondary btn-sm" onclick="addCare()">+ 추가</button>
-                    </div>
-                </div>
-                <!-- 셔틀 슬롯 -->
-                <div class="card" style="margin:0;">
-                    <div class="card-title" style="font-size:14px;">🚌 셔틀 슬롯 목록</div>
-                    <div class="card-desc">요일·등하교 방향별 슬롯. 예: <code style="font-family:monospace;background:#eee;padding:1px 4px;border-radius:4px;">월·등교</code>, <code style="font-family:monospace;background:#eee;padding:1px 4px;border-radius:4px;">화·하교</code></div>
-                    <ul class="settings-list" id="shuttleList"></ul>
-                    <div class="add-item-row">
-                        <input class="add-item-input" id="newShuttleInput" placeholder="예: 월·등교" onkeydown="if(event.key==='Enter')addShuttle()">
-                        <button class="btn btn-secondary btn-sm" onclick="addShuttle()">+ 추가</button>
+                        <input class="add-item-input" id="newColumnInput" placeholder="열 이름 (예: 동아리, 걸스카우트)" maxlength="30" onkeydown="if(event.key===&quot;Enter&quot;)addRosterColumn()">
+                        <button class="btn btn-secondary btn-sm" onclick="addRosterColumn()">+ 열 추가</button>
                     </div>
                 </div>
                 <!-- 특별실 -->
@@ -667,7 +636,9 @@
     "use strict";
 
     let currentYear = new Date().getFullYear();
-    let schoolSettings = { clubs: [], afterschool: [], care: [], shuttleSlots: [], specialRooms: [] };
+    let schoolSettings = { columns: [], specialRooms: [] };
+
+    const SLOT_MARKS = ["①", "②", "③", "④", "⑤", "⑥"];
     let allStudents = [];
     let parsedStudents = null; // 붙여넣기 파싱 결과
     let isSchoolAdmin = false;
@@ -971,23 +942,24 @@
         );
 
         // Build dynamic columns
-        const allClubs = (schoolSettings.clubs || []).map(c => c.club_name || c.name || c);
-        const allAfter = (schoolSettings.afterschool || []).map(a => a.program_name || a.name || a);
-        const allCare = (schoolSettings.care || []).map(c => c.care_name || c.name || c);
-        const allShuttle = (schoolSettings.shuttleSlots || []).map(s => s.slot_name || s.name || s);
+        const definedColumns = schoolSettings.columns || [];
 
         const fixedLeft = ["학년","반","번호","성명","성별"];
         const fixedRight = ["학생 구글계정","보호자1 계정","보호자2 계정"];
 
-        // 갈래마다 열 하나. 학교 설정에 등록한 목록은 그 열에서 고를 수 있는
-        // 값이 된다. (예전에는 등록한 항목마다 열이 하나씩 생겨서, 전교생을
-        // 스무 개 동아리에 배정하는 학교는 열이 스무 개가 됐다.)
-        const dynamicCols = [
-            { name: "동아리", options: allClubs, category: "clubs" },
-            { name: "방과후부", options: allAfter, category: "afterschool" },
-            { name: "돌봄반", options: allCare, category: "care" },
-            { name: "통학버스", options: allShuttle, category: "shuttleSlots" }
-        ].filter(col => col.options.length > 0);
+        // 학교가 만든 열을 그대로 쓴다. 한 학생이 여럿을 가질 수 있는 열(방과후처럼
+        // 요일마다 다른 프로그램)은 칸이 여러 개라 방과후①·방과후②로 나뉜다.
+        const dynamicCols = definedColumns.flatMap(def => {
+            const slots = Math.min(6, Math.max(1, def.slots || 1));
+            if (slots === 1) {
+                return [{ name: def.name, options: def.options || [], slotIndex: 0 }];
+            }
+            return Array.from({ length: slots }, (_, i) => ({
+                name: def.name + SLOT_MARKS[i],
+                options: def.options || [],
+                slotIndex: i
+            }));
+        });
 
         const headerHtmls = [
             ...fixedLeft.map(h => `<th>${h}</th>`),
@@ -1024,6 +996,8 @@
             // 등록한 항목 이름(오케스트라)을 키로 썼으므로 둘 다 읽어 준다.
             const categoryValue = (student, custom, col) => {
                 if (custom[col.name]) return custom[col.name];
+                // 예전 명단은 항목 이름이 키였다. 그 값은 첫 칸에만 끌어온다.
+                if (col.slotIndex !== 0) return "";
                 const hit = col.options.find(o => custom[o]);
                 return hit ? (custom[hit] === "O" || custom[hit] === "o" ? hit : custom[hit]) : "";
             };
@@ -1078,13 +1052,11 @@
             `<span class="col-chip required">성별</span>`,
         ];
         // 갈래마다 열 하나. 학교 설정에 등록한 갈래만 보여 준다.
-        const categoryChips = [
-            ["동아리", schoolSettings.clubs],
-            ["방과후부", schoolSettings.afterschool],
-            ["돌봄반", schoolSettings.care],
-            ["통학버스", schoolSettings.shuttleSlots]
-        ].filter(([, list]) => (list || []).length > 0)
-         .map(([label]) => `<span class="col-chip dynamic">${label}</span>`);
+        const categoryChips = (schoolSettings.columns || []).flatMap(col => {
+            const slots = Math.min(6, Math.max(1, col.slots || 1));
+            const names = slots === 1 ? [col.name] : Array.from({ length: slots }, (_, i) => col.name + SLOT_MARKS[i]);
+            return names.map(n => `<span class="col-chip dynamic">${esc(n)}</span>`);
+        });
         const fixedRightChips = [
             `<span class="col-chip">학생구글계정</span>`,
             `<span class="col-chip">보호자1계정</span>`,
@@ -1125,18 +1097,16 @@
         // 갈래마다 열 하나(동아리·방과후부·돌봄반·통학버스). 예전 명단은 항목마다
         // 열이 하나씩이었으므로 그 머리글도 계속 읽어 준다.
         const findCol = (label) => headers.indexOf(label.replace(/\s/g,"").toLowerCase());
-        const categoryHeaders = [
-            { name: "동아리", idx: findCol("동아리") },
-            { name: "방과후부", idx: findCol("방과후부") },
-            { name: "돌봄반", idx: findCol("돌봄반") },
-            { name: "통학버스", idx: findCol("통학버스") }
-        ].filter(c => c.idx >= 0);
-        const legacyHeaders = [
-            ...schoolSettings.clubs.map(c => c.club_name || c.name || c),
-            ...schoolSettings.afterschool.map(a => a.program_name || a.name || a),
-            ...(schoolSettings.care || []).map(c => c.care_name || c.name || c),
-            ...schoolSettings.shuttleSlots.map(s => s.slot_name || s.name || s)
-        ].map(name => ({ name, idx: findCol(name) })).filter(c => c.idx >= 0);
+        const categoryHeaders = (schoolSettings.columns || []).flatMap(col => {
+            const slots = Math.min(6, Math.max(1, col.slots || 1));
+            const names = slots === 1 ? [col.name] : Array.from({ length: slots }, (_, i) => col.name + SLOT_MARKS[i]);
+            return names.map(name => ({ name, idx: findCol(name) }));
+        }).filter(c => c.idx >= 0);
+        // 예전 명단은 항목 이름이 그대로 열이었다. 그 머리글도 계속 읽어 준다.
+        const legacyHeaders = (schoolSettings.columns || [])
+            .flatMap(col => col.options || [])
+            .map(name => ({ name, idx: findCol(name) }))
+            .filter(c => c.idx >= 0);
 
         const students = [];
         for (let i = 1; i < lines.length; i++) {
@@ -1207,18 +1177,13 @@
     };
 
     window.downloadExcelTemplate = function() {
-        // 갈래마다 열 하나. 칸에는 학교 설정에 등록한 이름을 적는다.
-        const first = (list, nameKey) => {
-            const item = (list || [])[0];
-            if (!item) return "";
-            return String(item[nameKey] || item.name || item).replace(/\s+/g, "");
-        };
-        const cats = [
-            { name: "동아리", sample: first(schoolSettings.clubs, "club_name"), has: (schoolSettings.clubs || []).length > 0 },
-            { name: "방과후부", sample: first(schoolSettings.afterschool, "program_name"), has: (schoolSettings.afterschool || []).length > 0 },
-            { name: "돌봄반", sample: first(schoolSettings.care, "care_name"), has: (schoolSettings.care || []).length > 0 },
-            { name: "통학버스", sample: first(schoolSettings.shuttleSlots, "slot_name"), has: (schoolSettings.shuttleSlots || []).length > 0 }
-        ].filter(c => c.has);
+        // 학교가 만든 열 그대로. 칸에는 그 열에 등록한 항목 이름을 적는다.
+        const cats = (schoolSettings.columns || []).flatMap(col => {
+            const slots = Math.min(6, Math.max(1, col.slots || 1));
+            const sample = (col.options || [])[0] || "";
+            const names = slots === 1 ? [col.name] : Array.from({ length: slots }, (_, i) => col.name + SLOT_MARKS[i]);
+            return names.map(name => ({ name, sample }));
+        });
 
         const fixedLeft = ["학년", "반", "번호", "성명", "성별"];
         const fixedRight = ["학생구글계정", "보호자1계정", "보호자2계정"];
@@ -1327,7 +1292,7 @@
         try {
             const data = await api(`/api/school/settings?year=${currentYear}`);
             isSchoolAdmin = Boolean(data.isAdmin);
-            schoolSettings = { clubs: data.clubs || [], afterschool: data.afterschool || [], care: data.care || [], shuttleSlots: data.shuttleSlots || [], specialRooms: data.specialRooms || [] };
+            schoolSettings = { columns: data.columns || [], specialRooms: data.specialRooms || [] };
             
             if (data.schoolName) {
                 document.getElementById("schoolName").textContent = data.schoolName;
@@ -1347,10 +1312,7 @@
                 setStatus("settingsStatus", "🔒 학교 설정 변경 권한은 학교 관리자에게만 부여되어 있습니다.");
             }
 
-            renderSettingsList("clubList", schoolSettings.clubs, "clubs", "club_name");
-            renderSettingsList("afterschoolList", schoolSettings.afterschool, "afterschool", "program_name");
-            renderSettingsList("careList", schoolSettings.care, "care", "care_name");
-            renderSettingsList("shuttleList", schoolSettings.shuttleSlots, "shuttleSlots", "slot_name");
+            renderRosterColumns();
             renderSettingsList("specialRoomList", schoolSettings.specialRooms, "specialRooms", "room_name");
             updatePasteColsHint();
         } catch (e) {
@@ -1358,142 +1320,135 @@
         }
     }
 
+    // ─── 명단 소속 열 관리 ────────────────────────────────────
+    // 학교마다 필요한 열이 다르다(돌봄이 없는 학교, 걸스카우트가 있는 학교).
+    // 그래서 열 자체를 관리자가 만들고, 각 열의 항목이 명단 칸의 선택지가 된다.
+    function renderRosterColumns() {
+        const box = document.getElementById("rosterColumnList");
+        if (!box) return;
+        const cols = schoolSettings.columns || [];
+        if (cols.length === 0) {
+            box.innerHTML = `<p style="color:var(--muted);font-size:12px;margin:0 0 10px;">아직 만든 열이 없습니다. 아래에서 열을 추가하세요.</p>`;
+            return;
+        }
+        box.innerHTML = cols.map((col, ci) => `
+            <div style="border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px;background:#fff;">
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+                    <strong style="font-size:14px;">${esc(col.name)}</strong>
+                    ${isSchoolAdmin ? `
+                        <label style="font-size:12px;color:var(--muted);margin-left:auto;">한 학생이 최대
+                            <input type="number" min="1" max="6" value="${col.slots || 1}" style="width:56px;margin:0 4px;padding:2px 4px;border:1px solid var(--line);border-radius:4px;"
+                                   onchange="updateColumnSlots(${ci}, this.value)">칸
+                        </label>
+                        <button class="delete-item-btn" onclick="deleteRosterColumn(${ci})" title="열 삭제">×</button>
+                    ` : `<span style="font-size:12px;color:var(--muted);margin-left:auto;">최대 ${col.slots || 1}칸</span>`}
+                </div>
+                <ul class="settings-list">
+                    ${(col.options || []).length === 0
+                        ? `<li style="color:var(--muted);font-size:12px;justify-content:center;border:none;background:none;">항목이 비어 있습니다.</li>`
+                        : col.options.map((o, oi) => `
+                            <li>
+                                <span class="item-name">${esc(o)}</span>
+                                ${isSchoolAdmin ? `<button class="delete-item-btn" onclick="deleteColumnOption(${ci}, ${oi})" title="삭제">×</button>` : ''}
+                            </li>`).join("")}
+                </ul>
+                ${isSchoolAdmin ? `
+                    <div class="add-item-row">
+                        <input class="add-item-input" id="newOptionInput${ci}" placeholder="항목 이름 (예: 오케스트라)" maxlength="60"
+                               onkeydown="if(event.key==='Enter')addColumnOption(${ci})">
+                        <button class="btn btn-secondary btn-sm" onclick="addColumnOption(${ci})">+ 항목</button>
+                    </div>` : ''}
+            </div>`).join("");
+    }
+
+    function settingsChanged() {
+        renderRosterColumns();
+        renderRosterTable();
+        updatePasteColsHint();
+        setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
+    }
+
+    window.addRosterColumn = function() {
+        const input = document.getElementById("newColumnInput");
+        const name = input.value.trim().replace(/\s+/g, "");
+        if (!name) return;
+        if (!schoolSettings.columns) schoolSettings.columns = [];
+        if (schoolSettings.columns.some(c => c.name === name)) {
+            setStatus("settingsStatus", `'${name}' 열은 이미 있습니다.`, "error");
+            return;
+        }
+        schoolSettings.columns.push({ name, slots: 1, options: [] });
+        input.value = "";
+        settingsChanged();
+    };
+
+    window.deleteRosterColumn = function(ci) {
+        const col = (schoolSettings.columns || [])[ci];
+        if (!col) return;
+        if (!confirm(`'${col.name}' 열을 없애시겠습니까?\n명단에 적힌 ${col.name} 값도 함께 사라집니다.`)) return;
+        schoolSettings.columns.splice(ci, 1);
+        settingsChanged();
+    };
+
+    window.updateColumnSlots = function(ci, val) {
+        const col = (schoolSettings.columns || [])[ci];
+        if (!col) return;
+        col.slots = Math.min(6, Math.max(1, Math.round(Number(val) || 1)));
+        settingsChanged();
+    };
+
+    window.addColumnOption = function(ci) {
+        const col = (schoolSettings.columns || [])[ci];
+        const input = document.getElementById("newOptionInput" + ci);
+        if (!col || !input) return;
+        const name = input.value.trim().replace(/\s+/g, "");
+        if (!name) return;
+        if (col.options.includes(name)) {
+            setStatus("settingsStatus", `'${name}' 항목은 이미 있습니다.`, "error");
+            return;
+        }
+        col.options.push(name);
+        input.value = "";
+        settingsChanged();
+    };
+
+    window.deleteColumnOption = function(ci, oi) {
+        const col = (schoolSettings.columns || [])[ci];
+        if (!col) return;
+        col.options.splice(oi, 1);
+        settingsChanged();
+    };
+
     function renderSettingsList(listId, items, key, nameKey) {
         const ul = document.getElementById(listId);
+        if (!ul) return;
         ul.innerHTML = items.length === 0
             ? `<li style="color:var(--muted);font-size:12px;justify-content:center;border:none;background:none;">목록이 비어 있습니다.</li>`
             : items.map((item, i) => `
                 <li>
-                    ${isSchoolAdmin ? '<span class="drag-handle">⠿</span>' : ''}
-                    <span class="item-name">${item[nameKey] || item.name || item}</span>
+                    <span class="item-name">${esc(item[nameKey] || item.name || item)}</span>
                     ${isSchoolAdmin ? `<button class="delete-item-btn" onclick="deleteSettingItem('${key}','${nameKey}',${i})" title="삭제">×</button>` : ''}
                 </li>`).join("");
     }
-
-    async function saveSettingsSilent() {
-        try {
-            await api("/api/school/settings", {
-                method: "PUT",
-                body: JSON.stringify({
-                    year: currentYear,
-                    clubs: (schoolSettings.clubs || []).map(c => c.club_name || c.name || c),
-                    afterschool: (schoolSettings.afterschool || []).map(a => a.program_name || a.name || a),
-                    care: (schoolSettings.care || []).map(c => c.care_name || c.name || c),
-                    shuttleSlots: (schoolSettings.shuttleSlots || []).map(s => s.slot_name || s.name || s),
-                    specialRooms: (schoolSettings.specialRooms || []).map(r => r.room_name || r.name || r)
-                })
-            });
-        } catch (e) {}
-    }
-
-    window.promptAddColumn = async function() {
-        const input = prompt("추가할 열(컬럼) 이름을 입력하세요.\n(예: 자율동아리, 학급동아리, 방과후1부, 방과후2부, 1호차 등 / 띄어쓰기 금지):", "자율동아리");
-        if (!input) return;
-        const name = input.trim().replace(/\s+/g, "");
-        if (!name) return;
-
-        if (name.includes("방과후")) {
-            schoolSettings.afterschool.push({ program_name: name });
-        } else if (name.includes("셔틀") || name.includes("차") || name.includes("승차")) {
-            schoolSettings.shuttleSlots.push({ slot_name: name });
-        } else {
-            schoolSettings.clubs.push({ club_name: name });
-        }
-
-        await saveSettingsSilent();
-        renderRosterTable();
-        renderSettingsList("clubList", schoolSettings.clubs, "clubs", "club_name");
-        renderSettingsList("afterschoolList", schoolSettings.afterschool, "afterschool", "program_name");
-            renderSettingsList("careList", schoolSettings.care, "care", "care_name");
-        renderSettingsList("shuttleList", schoolSettings.shuttleSlots, "shuttleSlots", "slot_name");
-        updatePasteColsHint();
-        setStatus("rosterStatus", `'${name}' 열이 성공적으로 추가되었습니다.`, "ok");
-    };
-
-    window.deleteColumnDirectly = async function(category, colName) {
-        if (!confirm(`'${colName}' 열을 명단에서 삭제하시겠습니까?`)) return;
-        
-        if (category === "clubs") {
-            schoolSettings.clubs = schoolSettings.clubs.filter(c => (c.club_name || c.name || c) !== colName);
-        } else if (category === "afterschool") {
-            schoolSettings.afterschool = schoolSettings.afterschool.filter(a => (a.program_name || a.name || a) !== colName);
-        } else if (category === "shuttleSlots") {
-            schoolSettings.shuttleSlots = schoolSettings.shuttleSlots.filter(s => (s.slot_name || s.name || s) !== colName);
-        }
-
-        await saveSettingsSilent();
-        renderRosterTable();
-        renderSettingsList("clubList", schoolSettings.clubs, "clubs", "club_name");
-        renderSettingsList("afterschoolList", schoolSettings.afterschool, "afterschool", "program_name");
-            renderSettingsList("careList", schoolSettings.care, "care", "care_name");
-        renderSettingsList("shuttleList", schoolSettings.shuttleSlots, "shuttleSlots", "slot_name");
-        updatePasteColsHint();
-        setStatus("rosterStatus", `'${colName}' 열이 삭제되었습니다.`, "ok");
-    };
 
     window.deleteSettingItem = function(key, nameKey, idx) {
         const item = schoolSettings[key][idx];
         const itemName = item ? (item[nameKey] || item.name || item) : "이";
         if (!confirm(`'${itemName}' 항목을 목록에서 삭제하시겠습니까?`)) return;
-
         schoolSettings[key].splice(idx, 1);
-        const listIdMap = { clubs: "clubList", afterschool: "afterschoolList", care: "careList", shuttleSlots: "shuttleList", specialRooms: "specialRoomList" };
-        renderSettingsList(listIdMap[key] || "clubList", schoolSettings[key], key, nameKey);
-        updatePasteColsHint();
+        renderSettingsList("specialRoomList", schoolSettings.specialRooms, "specialRooms", "room_name");
         setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
     };
 
-    window.addClub = function() {
-        const input = document.getElementById("newClubInput");
-        const name = input.value.replace(/\s+/g, ""); // 띄어쓰기 제거
-        if (!name) return;
-        schoolSettings.clubs.push({ club_name: name });
-        renderSettingsList("clubList", schoolSettings.clubs, "clubs", "club_name");
-        input.value = "";
-        updatePasteColsHint();
-        setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
-    };
-    window.addAfterSchool = function() {
-        const input = document.getElementById("newAfterInput");
-        const name = input.value.replace(/\s+/g, ""); // 띄어쓰기 제거
-        if (!name) return;
-        schoolSettings.afterschool.push({ program_name: name });
-        renderSettingsList("afterschoolList", schoolSettings.afterschool, "afterschool", "program_name");
-            renderSettingsList("careList", schoolSettings.care, "care", "care_name");
-        input.value = "";
-        updatePasteColsHint();
-        setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
-    };
-    window.addCare = function() {
-        const input = document.getElementById("newCareInput");
-        const name = input.value.replace(/\s+/g, ""); // 띄어쓰기 제거
-        if (!name) return;
-        schoolSettings.care.push({ care_name: name });
-        renderSettingsList("careList", schoolSettings.care, "care", "care_name");
-        input.value = "";
-        updatePasteColsHint();
-        setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
-    };
-    window.addShuttle = function() {
-        const input = document.getElementById("newShuttleInput");
-        const name = input.value.replace(/\s+/g, ""); // 띄어쓰기 제거
-        if (!name) return;
-        schoolSettings.shuttleSlots.push({ slot_name: name });
-        renderSettingsList("shuttleList", schoolSettings.shuttleSlots, "shuttleSlots", "slot_name");
-        input.value = "";
-        updatePasteColsHint();
-        setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
-    };
     window.addSpecialRoom = function() {
         const input = document.getElementById("newSpecialRoomInput");
-        const name = input.value.replace(/\s+/g, ""); // 띄어쓰기 제거
+        const name = input.value.replace(/\s+/g, "");
         if (!name) return;
         schoolSettings.specialRooms.push({ room_name: name });
         renderSettingsList("specialRoomList", schoolSettings.specialRooms, "specialRooms", "room_name");
         input.value = "";
         setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
     };
-
     window.saveSettings = async function() {
         const btn = document.getElementById("saveSettingsBtn");
         btn.disabled = true;
@@ -1503,9 +1458,7 @@
                 method: "PUT",
                 body: JSON.stringify({
                     year: currentYear,
-                    clubs: schoolSettings.clubs.map(c => c.club_name || c.name || c),
-                    afterschool: schoolSettings.afterschool.map(a => a.program_name || a.name || a),
-                    shuttleSlots: schoolSettings.shuttleSlots.map(s => s.slot_name || s.name || s),
+                    columns: schoolSettings.columns || [],
                     specialRooms: (schoolSettings.specialRooms || []).map(r => r.room_name || r.name || r)
                 })
             });
@@ -1548,12 +1501,10 @@
     }
 
     // 학교 설정에 등록된 이름 목록. 그룹 유형에 따라 무엇을 고르게 할지 정한다.
-    const GROUP_NAME_SOURCES = {
-        club: () => (schoolSettings.clubs || []).map(c => c.club_name || c.name || c),
-        afterschool: () => (schoolSettings.afterschool || []).map(a => a.program_name || a.name || a),
-        care: () => (schoolSettings.care || []).map(c => c.care_name || c.name || c),
-        shuttle: () => (schoolSettings.shuttleSlots || []).map(s => s.slot_name || s.name || s)
-    };
+    // 그룹 이름 후보. 학교가 만든 열의 항목이 그대로 후보가 된다.
+    function groupNameOptions() {
+        return (schoolSettings.columns || []).flatMap(col => col.options || []);
+    }
 
     window.syncGroupNameField = function() {
         const type = document.getElementById("newGroupType").value;
@@ -1565,8 +1516,8 @@
         // 학년·반은 담임반에만 쓴다.
         gradeClass.style.display = type === "homeroom" ? "grid" : "none";
 
-        const source = GROUP_NAME_SOURCES[type];
-        const names = source ? source() : null;
+        // 담임 학급·전담 교과는 등록 목록이 없어 직접 입력을 받는다.
+        const names = ["homeroom", "subject"].includes(type) ? null : groupNameOptions();
 
         if (!names) {
             select.style.display = "none";

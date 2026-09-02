@@ -338,10 +338,21 @@ const asStudent = () => { sessionRows = [{ id: 3, email: "kid@x.kr", role: "stud
       /router\.get\("\/teacher\/available-groups"[\s\S]*?\n  \}\)\);/)[0];
     assert.doesNotMatch(availableRoute, /오케스트라|로봇코딩부|축구부|1호차/,
       "개설 목록에 예시 이름을 섞으면 안 된다.");
-    assert.match(availableRoute, /club_name AS name FROM school_clubs/,
-      "동아리 후보는 학교 설정의 school_clubs에서 와야 한다.");
-    assert.match(availableRoute, /care_name AS name FROM school_care/,
-      "돌봄반 후보는 학교 설정의 school_care에서 와야 한다.");
+    assert.match(availableRoute, /readRosterColumns\(schoolId, year\)/,
+      "그룹 이름 후보는 학교가 만든 명단 열에서 와야 한다.");
+
+    // 16. 명단 열은 학교가 정의한다. 갈래를 코드에 박아 두면 돌봄이 없는 학교,
+    //     걸스카우트가 있는 학교를 담을 수 없다.
+    assert.match(platformSource, /CREATE TABLE IF NOT EXISTS school_roster_columns/,
+      "명단 열을 담는 표가 있어야 한다.");
+    assert.match(platformSource, /slot_count INTEGER NOT NULL DEFAULT 1/,
+      "한 학생이 여럿을 가지는 열(방과후)을 위해 칸 수를 저장해야 한다.");
+
+    const rosterJs = rosterHtml;
+    assert.doesNotMatch(rosterJs, /schoolSettings\.(clubs|afterschool|care|shuttleSlots)\b/,
+      "명단 화면이 갈래를 코드에 박아 두면 안 된다.");
+    assert.match(rosterJs, /schoolSettings\.columns/,
+      "명단 화면은 학교가 만든 열 목록을 그대로 써야 한다.");
 
     // 15. 소속 판정은 custom_fields의 '키'가 그룹 이름인 실제 명단 모양을 따라야
     //     한다. 고정된 'club' 키만 보면 어떤 학생도 매칭되지 않는다.

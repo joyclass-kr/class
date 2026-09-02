@@ -493,7 +493,7 @@
                 location.href = `/classtools/dashboard.html?groupId=${groupId}`;
             };
 
-            let availableData = { homerooms: [], clubs: [], afterschools: [], care: [], shuttles: [] };
+            let availableData = { homerooms: [], columns: [] };
 
             window.handleCreateGroupClick = async function() {
                 try {
@@ -531,38 +531,23 @@
                         opt.textContent = h.label;
                         nameSelect.appendChild(opt);
                     });
-                } else if (type === 'club') {
-                    (availableData.clubs || []).forEach(c => {
-                        const opt = document.createElement('option');
-                        opt.value = c;
-                        opt.textContent = `🤖 ${c}`;
-                        nameSelect.appendChild(opt);
-                    });
-                } else if (type === 'afterschool') {
-                    (availableData.afterschools || []).forEach(a => {
-                        const opt = document.createElement('option');
-                        opt.value = a;
-                        opt.textContent = `⚽ ${a}`;
-                        nameSelect.appendChild(opt);
-                    });
-                } else if (type === 'care') {
-                    (availableData.care || []).forEach(c => {
-                        const opt = document.createElement('option');
-                        opt.value = c;
-                        opt.textContent = `🧸 ${c}`;
-                        nameSelect.appendChild(opt);
-                    });
-                } else if (type === 'shuttle') {
-                    (availableData.shuttles || []).forEach(s => {
-                        const opt = document.createElement('option');
-                        opt.value = s;
-                        opt.textContent = `🚌 ${s}`;
-                        nameSelect.appendChild(opt);
+                } else if (type !== 'subject') {
+                    // 학교가 만든 명단 열의 항목이 그대로 후보다. 어느 열에서 온
+                    // 이름인지 보이게 열 이름으로 묶어 준다.
+                    (availableData.columns || []).forEach(col => {
+                        if (!(col.options || []).length) return;
+                        const group = document.createElement('optgroup');
+                        group.label = col.name;
+                        col.options.forEach(o => {
+                            const opt = document.createElement('option');
+                            opt.value = o;
+                            opt.textContent = o;
+                            group.appendChild(opt);
+                        });
+                        nameSelect.appendChild(group);
                     });
                 }
-                // 전담 교과는 학교 설정에 등록하는 목록이 없어 직접 입력만 받는다.
-                // (예전에는 '5학년 과학전담' 같은 예시 이름을 목록처럼 보여 줬는데,
-                //  학교에 없는 이름이라 고르면 소속 학생이 잡히지 않았다.)
+                // 전담 교과는 등록 목록이 없어 직접 입력만 받는다.
 
                 const customOpt = document.createElement('option');
                 customOpt.value = '__CUSTOM__';
