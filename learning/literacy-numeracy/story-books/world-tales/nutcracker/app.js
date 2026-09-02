@@ -309,16 +309,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '호두까기 인형',
+    intro: [
+        '호두까기 인형은 독일의 작가 E. T. A. 호프만이 1816년에 쓴 이야기예요. 뒷날 러시아의 작곡가 차이콥스키가 이 이야기로 발레 음악을 만들면서 온 세계에 알려졌습니다.',
+        '지금도 해마다 겨울이면 여러 나라의 극장에서 이 발레가 공연돼요. 크리스마스 하면 떠오르는 이야기가 된 지 오래랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🎄')}
             </div>
             <div class="story-page-right">
-                <h1>호두까기 인형</h1>
-                <p>호두까기 인형은 독일의 작가 E. T. A. 호프만이 1816년에 쓴 이야기예요. 뒷날 러시아의 작곡가 차이콥스키가 이 이야기로 발레 음악을 만들면서 온 세계에 알려졌습니다.</p>
-                <p>지금도 해마다 겨울이면 여러 나라의 극장에서 이 발레가 공연돼요. 크리스마스 하면 떠오르는 이야기가 된 지 오래랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -333,8 +342,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -344,8 +353,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -355,22 +364,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -420,9 +430,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -433,7 +443,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -505,7 +515,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -514,34 +524,601 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Nutcracker',
+        intro: [
+            "The Nutcracker was written by the German author E. T. A. Hoffmann in 1816. Later the Russian composer Tchaikovsky made a ballet out of it, and that is how it became known all over the world.",
+            "Theatres in many countries still put the ballet on every winter. It has been a Christmas story for a very long time now."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Christmas Eve Presents',
+            beats: [
+                {
+                    art: '01-gift.webp',
+                    emoji: '🎄',
+                    left: [
+                        "It was Christmas Eve, and a great tree stood in the middle of the sitting room.",
+                        "There were candles on every branch and gilded apples hanging down.",
+                        "Marie and Fritz waited outside the door, hopping from foot to foot.",
+                        "\"Is it much longer?\""
+                    ],
+                    right: [
+                        "\"Just a little more patience.\"",
+                        "At last the doors were thrown open. Under the tree lay a heap of presents.",
+                        "Fritz got soldiers, and Marie got a new doll.",
+                        "Then their godfather came in. He made clocks,",
+                        "and every year he brought something remarkable."
+                    ]
+                },
+                {
+                    art: '01-gift-2.webp',
+                    emoji: '🎄',
+                    left: [
+                        "Their godfather opened a large box. Inside it was a little castle.",
+                        "He wound the key, and the figures inside the castle began to move.",
+                        "The gates opened and people came walking out in a line.",
+                        "\"Ooh!\"",
+                        "Everybody clapped."
+                    ],
+                    right: [
+                        "But Marie was looking at something else.",
+                        "There was a doll lying under the tree — a soldier in a red coat.",
+                        "His jaw opened and shut with a clack.",
+                        "He was made for cracking nuts.",
+                        "His face was rather comical.",
+                        "And still Marie liked him better than anything else there."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Broken Jaw',
+            beats: [
+                {
+                    art: '02-broken.webp',
+                    emoji: '🌰',
+                    left: [
+                        "Marie carried the doll about with her everywhere.",
+                        "Fritz saw it and came over.",
+                        "\"Give him here a minute.\"",
+                        "Fritz fetched a handful of nuts and picked out the biggest one.",
+                        "And he pushed it into the doll's mouth."
+                    ],
+                    right: [
+                        "\"Don't — it's much too big!\"",
+                        "Marie cried out, and Fritz bore down with all his weight.",
+                        "Crack.",
+                        "The doll's jaw broke.",
+                        "\"Well, he's no good.\"",
+                        "Fritz put him down and walked off."
+                    ]
+                },
+                {
+                    art: '02-broken-2.webp',
+                    emoji: '🌰',
+                    left: [
+                        "Marie picked the doll up carefully and tied her handkerchief round his jaw.",
+                        "\"Does it hurt? I'll mend you.\"",
+                        "Her godfather saw her doing it and came over.",
+                        "\"There is a story about that doll.\""
+                    ],
+                    right: [
+                        "\"They say he was a prince of a far country.\"",
+                        "\"And that the Mouse King put a spell on him and left him like that.\"",
+                        "\"They say the spell breaks if somebody stands by him.\"",
+                        "Marie turned that over in her mind again and again.",
+                        "Late that night she laid the doll down under the tree and covered him with a little blanket."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Clock at Midnight',
+            beats: [
+                {
+                    art: '03-midnight.webp',
+                    emoji: '🕛',
+                    left: [
+                        "That night Marie could not get to sleep at all. She crept out to the sitting room,",
+                        "and the floorboards were cold under her toes.",
+                        "The candles had nearly burned out and the tree stood dim in the dark.",
+                        "Then the tall clock began to strike.",
+                        "One, two, three…"
+                    ],
+                    right: [
+                        "The chimes rang out very loud in the dark.",
+                        "At the twelfth stroke the room shook, and a scratching came from inside the walls.",
+                        "Marie hid herself behind the tree.",
+                        "A crack in the floorboards slid open,",
+                        "and mice came pouring out of it — too many to count."
+                    ]
+                },
+                {
+                    art: '03-midnight-2.webp',
+                    emoji: '🕛',
+                    left: [
+                        "In the middle of them was one enormous mouse, wearing several small crowns on his head.",
+                        "It was the Mouse King.",
+                        "Marie backed away without meaning to.",
+                        "And at that very moment something moved under the tree.",
+                        "The Nutcracker had got to his feet."
+                    ],
+                    right: [
+                        "\"Soldiers — fall in!\"",
+                        "He drew a little sword, and Fritz's soldiers came scrambling into line.",
+                        "Boom, boom, boom.",
+                        "The drums sounded, and the toy cannon came rolling out.",
+                        "In a moment the sitting room was a battlefield."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Fight with the Mouse King',
+            beats: [
+                {
+                    art: '04-battle.webp',
+                    emoji: '⚔️',
+                    left: [
+                        "The soldiers went forward one step at a time, and the cannon banged out sweets.",
+                        "Mice went over in rows where the sweets hit them.",
+                        "\"Hold your ground!\"",
+                        "But the mice kept on coming and coming. The soldiers fell one by one and the line got shorter.",
+                        "The Nutcracker went out in front."
+                    ],
+                    right: [
+                        "And at last he stood face to face with the Mouse King.",
+                        "\"Come on, then!\"",
+                        "The two of them met with a clash, and the sound of sword against teeth rang round the room.",
+                        "With his broken jaw the Nutcracker was driven back and back.",
+                        "Marie could hardly watch."
+                    ]
+                },
+                {
+                    art: '04-battle-2.webp',
+                    emoji: '⚔️',
+                    left: [
+                        "At last the Nutcracker went down.",
+                        "The Mouse King came striding toward him.",
+                        "And Marie moved before she knew she had.",
+                        "She pulled off the slipper she was wearing.",
+                        "\"Get away from him!\"",
+                        "And she threw it with all her strength."
+                    ],
+                    right: [
+                        "It caught the Mouse King square on the head.",
+                        "The mice scattered in fright and were gone through the crack in the floor in a moment.",
+                        "The room went quiet again.",
+                        "Marie sat down where she was.",
+                        "Everything spun in front of her, and she fainted away."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Doll Becomes a Prince',
+            beats: [
+                {
+                    art: '05-prince.webp',
+                    emoji: '🤴',
+                    left: [
+                        "She opened her eyes to light on every side, and a sweet smell in the air.",
+                        "Somebody was standing in front of her — a young man in a red coat.",
+                        "There was something familiar about his face.",
+                        "\"You stood by me.\"",
+                        "\"And that is what broke the spell.\""
+                    ],
+                    right: [
+                        "\"Are you… the doll?\"",
+                        "The prince smiled and bowed his head. There was not a mark where the jaw had broken.",
+                        "\"I should like to show you my country.\"",
+                        "He held out his hand.",
+                        "Marie took it, and a door slid open under the tree."
+                    ]
+                },
+                {
+                    art: '05-prince-2.webp',
+                    emoji: '🤴',
+                    left: [
+                        "Beyond the door was another world altogether. When she looked back the sitting room was far, far away.",
+                        "Something crunched and glittered underfoot.",
+                        "The road was strewn with sugar.",
+                        "\"We follow this road.\"",
+                        "And the two of them walked side by side."
+                    ],
+                    right: [
+                        "Soldiers stood in ranks along the way,",
+                        "and when they saw the prince they came to a smart salute.",
+                        "\"You have come back!\"",
+                        "\"We have waited a long time.\"",
+                        "The prince took each of their greetings in turn,",
+                        "and Marie stood quietly watching him."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Wood Where the Snow Dances',
+            beats: [
+                {
+                    art: '06-snow.webp',
+                    emoji: '❄️',
+                    left: [
+                        "The road soon led into a wood, and every tree was hung with ice.",
+                        "The branches were as clear as glass.",
+                        "When the wind moved, they made a sound.",
+                        "Tinkle, tinkle.",
+                        "It was exactly like small bells."
+                    ],
+                    right: [
+                        "Marie stopped and listened. The sound changed a little with every branch that moved.",
+                        "And then it began to snow.",
+                        "But there was something odd about it.",
+                        "The snowflakes opened their arms like people and turned round and round, dancing.",
+                        "Music came from somewhere, and the whole wood swayed with it."
+                    ]
+                },
+                {
+                    art: '06-snow-2.webp',
+                    emoji: '❄️',
+                    left: [
+                        "The snowflakes drew back and opened a path, and the two of them went through.",
+                        "Where the wood ended there was a wide river.",
+                        "But what ran in it was not water.",
+                        "It was orange juice.",
+                        "A little boat was waiting at the bank — a boat made of a seashell,",
+                        "and two dolphins were harnessed to it."
+                    ],
+                    right: [
+                        "\"Do get in.\"",
+                        "The prince handed Marie into the boat.",
+                        "Flowers grew thick along both banks, and every one of them was made of sugar.",
+                        "Marie dipped a fingertip in the river, licked it, and laughed.",
+                        "A sweet smell went right up her nose."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Land of Sweets',
+            beats: [
+                {
+                    art: '07-candy.webp',
+                    emoji: '🍬',
+                    left: [
+                        "Where the river ended there was a city, and every house in it was built of sweets.",
+                        "The roofs were chocolate and the walls were gingerbread,",
+                        "and the streets were laid with almonds.",
+                        "Marie went up on her toes and turned right round.",
+                        "\"Is this place really here?\""
+                    ],
+                    right: [
+                        "And then people came pouring out.",
+                        "\"The prince has come back!\"",
+                        "Petals came down over their heads.",
+                        "The prince lifted Marie's hand and said,",
+                        "\"This is the one who saved me.\"",
+                        "And every one of them bowed low."
+                    ]
+                },
+                {
+                    art: '07-candy-2.webp',
+                    emoji: '🍬',
+                    left: [
+                        "There was a great feast in the square.",
+                        "Chocolate stamped its feet.",
+                        "Tea opened out a fan with a snap.",
+                        "Candy spun round and round and sprang into the air.",
+                        "And at the end the flowers came swaying out to dance.",
+                        "\"My hands hurt from clapping!\""
+                    ],
+                    right: [
+                        "When the feast was at its height the prince sat down beside her.",
+                        "\"Will you not stay here with me?\"",
+                        "Marie sat thinking for a moment. She thought of home,",
+                        "and of her mother's face, and of Fritz.",
+                        "And she thought of the doll she had laid down under the tree.",
+                        "\"I think I have to go back.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Morning Under the Tree',
+            beats: [
+                {
+                    art: '08-morning.webp',
+                    emoji: '🌅',
+                    left: [
+                        "The prince nodded quietly.",
+                        "\"I thought you would say that.\"",
+                        "\"I shall open the way for you.\"",
+                        "The two of them walked down to the river together, where the seashell boat was waiting.",
+                        "\"Thank you, Marie.\""
+                    ],
+                    right: [
+                        "\"And thank you.\"",
+                        "Marie held his hand for a long while.",
+                        "When she got into the boat, the current carried her away.",
+                        "Her eyelids grew heavier and heavier and the music went far off.",
+                        "And Marie fell asleep in the boat."
+                    ]
+                },
+                {
+                    art: '08-morning-2.webp',
+                    emoji: '🌅',
+                    left: [
+                        "She woke in the morning sunlight.",
+                        "She was lying on the sitting-room floor, asleep under the tree with no blanket over her.",
+                        "Then her mother came in.",
+                        "\"Did you sleep here? You'll catch cold.\"",
+                        "Marie sat straight up."
+                    ],
+                    right: [
+                        "\"Mother, last night —\"",
+                        "\"You must have been dreaming.\"",
+                        "Marie went looking for the doll at once.",
+                        "He was under the tree, exactly where she had left him.",
+                        "But the broken jaw was whole again,",
+                        "as though somebody had mended it without leaving a mark."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Which present did Marie like best?',
+            choices: ['The new doll', 'The soldier doll made for cracking nuts', 'The little clockwork castle'],
+            answer: 1
+        },
+        {
+            q: 'How did the Nutcracker’s jaw break?',
+            choices: ['Fritz pushed the biggest nut into his mouth', 'Marie dropped him on the floor', 'The Mouse King bit it'],
+            answer: 0
+        },
+        {
+            q: 'What did the godfather say about the doll?',
+            choices: ['That he was made in a far country', 'That he could not be mended', 'That he was a prince under the Mouse King’s spell'],
+            answer: 2
+        },
+        {
+            q: 'What happened at the twelfth stroke of the clock?',
+            choices: ['The candles went out', 'Mice came pouring out of a crack in the floor', 'The tree began to move'],
+            answer: 1
+        },
+        {
+            q: 'What came out of the toy cannon?',
+            choices: ['Sweets', 'Nuts', 'Snowflakes'],
+            answer: 0
+        },
+        {
+            q: 'What did Marie do when the Nutcracker went down?',
+            choices: ['She picked the Nutcracker up and ran', 'She called for her mother', 'She threw her slipper at the Mouse King'],
+            answer: 2
+        },
+        {
+            q: 'Why did Marie decide to go home?',
+            choices: ['She did not like the Land of Sweets', 'She thought of her mother, Fritz and the doll under the tree', 'The prince asked her to go'],
+            answer: 1
+        },
+        {
+            q: 'What did Marie find under the tree in the morning?',
+            choices: ['The doll, with his jaw whole again', 'Her lost slipper', 'A crown from the Mouse King'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🎄',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Hoffmann wrote the story, and Tchaikovsky later turned it into ballet music. That is why so many people know it.",
+                    "The Nutcracker was the least impressive present of the lot — a doll with a stiff jaw and teeth missing. Nobody gave him a second look.",
+                    "Only Marie carried him about. She even tied her handkerchief round his jaw. And that is why she is the only one who sees what happens at night.",
+                    "When the fight came, Marie did not hide. She pulled off her slipper and threw it. That one throw turned the whole thing."
+                ],
+                right: [
+                    "The grown-ups do not believe her. They say she was dreaming. The story never quite comes down on one side.",
+                    "Do you think that night really happened?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-gift.webp': [
+            { word: 'gilded', meaning: '금박을 입힌', sentence: 'Gilded apples hanging down.' },
+            { word: 'hop from foot to foot', meaning: '발을 동동 구르다', sentence: 'They waited, hopping from foot to foot.' },
+            { word: 'godfather', meaning: '대부님', sentence: 'Then their godfather came in.' },
+            { word: 'remarkable', meaning: '신기한', sentence: 'Every year he brought something remarkable.' }
+        ],
+        '01-gift-2.webp': [
+            { word: 'wind', meaning: '태엽을 감다', sentence: 'He wound the key.' },
+            { word: 'in a line', meaning: '줄줄이', sentence: 'People came walking out in a line.' },
+            { word: 'jaw', meaning: '턱', sentence: 'His jaw opened and shut with a clack.' },
+            { word: 'comical', meaning: '우스꽝스러운', sentence: 'His face was rather comical.' }
+        ],
+        '02-broken.webp': [
+            { word: 'handful', meaning: '한 움큼', sentence: 'Fritz fetched a handful of nuts.' },
+            { word: 'pick out', meaning: '골라내다', sentence: 'And picked out the biggest one.' },
+            { word: 'bear down', meaning: '힘껏 누르다', sentence: 'Fritz bore down with all his weight.' },
+            { word: 'no good', meaning: '쓸모없는', sentence: "Well, he's no good." }
+        ],
+        '02-broken-2.webp': [
+            { word: 'handkerchief', meaning: '손수건', sentence: 'She tied her handkerchief round his jaw.' },
+            { word: 'mend', meaning: '고치다', sentence: "I'll mend you." },
+            { word: 'spell', meaning: '마법', sentence: 'The Mouse King put a spell on him.' },
+            { word: 'stand by', meaning: '지켜 주다', sentence: 'The spell breaks if somebody stands by him.' },
+            { word: 'turn over in one’s mind', meaning: '곱씹다', sentence: 'Marie turned that over in her mind.' }
+        ],
+        '03-midnight.webp': [
+            { word: 'creep out', meaning: '살금살금 나가다', sentence: 'She crept out to the sitting room.' },
+            { word: 'dim', meaning: '어둑한', sentence: 'The tree stood dim in the dark.' },
+            { word: 'strike', meaning: '(시계가) 치다', sentence: 'The tall clock began to strike.' },
+            { word: 'chime', meaning: '종소리', sentence: 'The chimes rang out very loud.' },
+            { word: 'scratching', meaning: '사각거리는 소리', sentence: 'A scratching came from inside the walls.' }
+        ],
+        '03-midnight-2.webp': [
+            { word: 'crown', meaning: '왕관', sentence: 'Wearing several small crowns on his head.' },
+            { word: 'back away', meaning: '뒷걸음질 치다', sentence: 'Marie backed away without meaning to.' },
+            { word: 'fall in', meaning: '집합하다', sentence: 'Soldiers — fall in!' },
+            { word: 'cannon', meaning: '대포', sentence: 'The toy cannon came rolling out.' },
+            { word: 'battlefield', meaning: '전쟁터', sentence: 'The sitting room was a battlefield.' }
+        ],
+        '04-battle.webp': [
+            { word: 'bang out', meaning: '펑펑 쏘아 내다', sentence: 'The cannon banged out sweets.' },
+            { word: 'hold one’s ground', meaning: '물러서지 않다', sentence: 'Hold your ground!' },
+            { word: 'face to face', meaning: '마주 선', sentence: 'He stood face to face with the Mouse King.' },
+            { word: 'clash', meaning: '쨍 하고 부딪침', sentence: 'The two of them met with a clash.' },
+            { word: 'drive back', meaning: '밀리다', sentence: 'The Nutcracker was driven back.' }
+        ],
+        '04-battle-2.webp': [
+            { word: 'go down', meaning: '쓰러지다', sentence: 'At last the Nutcracker went down.' },
+            { word: 'stride', meaning: '성큼성큼 걷다', sentence: 'The Mouse King came striding toward him.' },
+            { word: 'slipper', meaning: '신발', sentence: 'She pulled off the slipper she was wearing.' },
+            { word: 'square on', meaning: '딱 정통으로', sentence: 'It caught him square on the head.' },
+            { word: 'faint away', meaning: '정신을 잃다', sentence: 'Everything spun, and she fainted away.' }
+        ],
+        '05-prince.webp': [
+            { word: 'familiar', meaning: '익숙한', sentence: 'There was something familiar about his face.' },
+            { word: 'break a spell', meaning: '마법을 풀다', sentence: 'That is what broke the spell.' },
+            { word: 'mark', meaning: '흉터, 자국', sentence: 'There was not a mark where the jaw had broken.' },
+            { word: 'hold out', meaning: '내밀다', sentence: 'He held out his hand.' }
+        ],
+        '05-prince-2.webp': [
+            { word: 'altogether', meaning: '완전히', sentence: 'Another world altogether.' },
+            { word: 'crunch', meaning: '사각거리다', sentence: 'Something crunched underfoot.' },
+            { word: 'strew', meaning: '뿌리다', sentence: 'The road was strewn with sugar.' },
+            { word: 'in ranks', meaning: '줄지어', sentence: 'Soldiers stood in ranks along the way.' },
+            { word: 'salute', meaning: '경례', sentence: 'They came to a smart salute.' }
+        ],
+        '06-snow.webp': [
+            { word: 'hung with', meaning: '~이 맺힌', sentence: 'Every tree was hung with ice.' },
+            { word: 'tinkle', meaning: '딸랑거리다', sentence: 'Tinkle, tinkle.' },
+            { word: 'odd', meaning: '이상한', sentence: 'There was something odd about it.' },
+            { word: 'sway', meaning: '흔들리다', sentence: 'The whole wood swayed with it.' }
+        ],
+        '06-snow-2.webp': [
+            { word: 'draw back', meaning: '물러나다', sentence: 'The snowflakes drew back and opened a path.' },
+            { word: 'seashell', meaning: '조개껍데기', sentence: 'A boat made of a seashell.' },
+            { word: 'harness', meaning: '매어 끌게 하다', sentence: 'Two dolphins were harnessed to it.' },
+            { word: 'dip', meaning: '담그다', sentence: 'Marie dipped a fingertip in the river.' }
+        ],
+        '07-candy.webp': [
+            { word: 'gingerbread', meaning: '생강빵', sentence: 'The walls were gingerbread.' },
+            { word: 'almond', meaning: '아몬드', sentence: 'The streets were laid with almonds.' },
+            { word: 'on one’s toes', meaning: '발끝을 들고', sentence: 'Marie went up on her toes.' },
+            { word: 'petal', meaning: '꽃잎', sentence: 'Petals came down over their heads.' },
+            { word: 'bow low', meaning: '고개를 깊이 숙이다', sentence: 'Every one of them bowed low.' }
+        ],
+        '07-candy-2.webp': [
+            { word: 'stamp', meaning: '발을 구르다', sentence: 'Chocolate stamped its feet.' },
+            { word: 'with a snap', meaning: '촤르르', sentence: 'Tea opened out a fan with a snap.' },
+            { word: 'spring', meaning: '폴짝 뛰다', sentence: 'Candy sprang into the air.' },
+            { word: 'at its height', meaning: '무르익을 무렵', sentence: 'When the feast was at its height.' }
+        ],
+        '08-morning.webp': [
+            { word: 'open the way', meaning: '길을 열어 주다', sentence: 'I shall open the way for you.' },
+            { word: 'current', meaning: '물결', sentence: 'The current carried her away.' },
+            { word: 'eyelid', meaning: '눈꺼풀', sentence: 'Her eyelids grew heavier and heavier.' },
+            { word: 'far off', meaning: '아득한', sentence: 'The music went far off.' }
+        ],
+        '08-morning-2.webp': [
+            { word: 'catch cold', meaning: '감기 들다', sentence: "You'll catch cold." },
+            { word: 'sit straight up', meaning: '벌떡 일어나 앉다', sentence: 'Marie sat straight up.' },
+            { word: 'whole', meaning: '멀쩡한', sentence: 'The broken jaw was whole again.' },
+            { word: 'as though', meaning: '마치 ~인 것처럼', sentence: 'As though somebody had mended it.' }
+        ],
+        'end.webp': [
+            { word: 'impressive', meaning: '볼품 있는', sentence: 'The least impressive present of the lot.' },
+            { word: 'stiff', meaning: '굳은', sentence: 'A doll with a stiff jaw.' },
+            { word: 'a second look', meaning: '거들떠보기', sentence: 'Nobody gave him a second look.' },
+            { word: 'turn', meaning: '판을 가르다', sentence: 'That one throw turned the whole thing.' },
+            { word: 'come down on one side', meaning: '한쪽으로 딱 잘라 말하다', sentence: 'The story never quite comes down on one side.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -606,6 +1183,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -614,7 +1192,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -626,7 +1204,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -660,4 +1238,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
