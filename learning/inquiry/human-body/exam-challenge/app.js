@@ -121,7 +121,7 @@
 
     var currentIdx = 0;
     var userAnswers = [];
-    var score = 0;
+    var correctCount = 0;
 
     // DOM Elements
     var progressFillEl, qNumEl, qTopicEl, qTextEl, optContainerEl, expBoxEl, nextBtnEl;
@@ -145,7 +145,22 @@
             nextBtnEl.addEventListener('click', handleNext);
         }
 
+        var retryBtnEl = document.getElementById('retryBtn');
+        if (retryBtnEl) {
+            retryBtnEl.addEventListener('click', restartExam);
+        }
+
         renderQuestion();
+    }
+
+    function restartExam() {
+        currentIdx = 0;
+        correctCount = 0;
+        userAnswers.length = 0;
+        reportSectionEl.style.display = 'none';
+        quizSectionEl.style.display = 'block';
+        renderQuestion();
+        if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
     }
 
     function renderQuestion() {
@@ -193,7 +208,7 @@
             moduleUrl: q.moduleUrl
         });
 
-        if (isCorrect) score += Math.round(100 / questions.length);
+        if (isCorrect) correctCount++;
 
         btns.forEach(function (b, idx) {
             b.disabled = true;
@@ -221,7 +236,8 @@
         quizSectionEl.style.display = 'none';
         reportSectionEl.style.display = 'block';
 
-        var finalScore = Math.min(100, score);
+        // 12문항이라 문항당 8점씩 더하면 만점이 96점이 된다. 맞힌 비율로 환산한다.
+        var finalScore = Math.round((correctCount / questions.length) * 100);
         scoreValEl.textContent = finalScore + '점';
 
         var incorrects = userAnswers.filter(function (a) { return !a.isCorrect; });

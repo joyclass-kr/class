@@ -104,12 +104,13 @@
         }
 
         // Calculate Sarcomere Band Dimensions
-        // X = Sarcomere Length (1.8 ~ 3.0)
-        // A = 1.6 (Constant)
-        // I = X - A
-        // H = X - 2*(Actin - I/2) = X - 2*Actin + I = X - 2.0 + (X - 1.6) = 2X - 3.6
+        // X = 근절 길이 (1.8 ~ 3.0), A = 1.60 (불변), 액틴 한 가닥 = 1.00
+        // I = X - A,  I의 한쪽 = (X - A) / 2
+        // 한쪽 겹침 = 액틴 - I의 한쪽 = 1.0 - (X - 1.6) / 2
+        // H = A - 2*(한쪽 겹침) = 1.6 - 2.0 + (X - 1.6) = X - 2.0
+        // H는 A대 안쪽 구간이므로 0 ~ A 범위를 벗어날 수 없다.
         var iBand = Math.max(0.2, sarcomereLength - aBandLength);
-        var hZone = Math.max(0.0, 2 * sarcomereLength - 3.6);
+        var hZone = Math.max(0.0, Math.min(aBandLength, sarcomereLength - 2.0));
         var overlap = Math.max(0.0, (aBandLength - hZone) / 2);
 
         if (lengthValEl) lengthValEl.textContent = sarcomereLength.toFixed(2) + ' μm';
@@ -117,7 +118,7 @@
         if (statAEl) statAEl.textContent = aBandLength.toFixed(2) + ' μm (불변)';
         if (statIEl) statIEl.textContent = iBand.toFixed(2) + ' μm';
         if (statHEl) statHEl.textContent = hZone.toFixed(2) + ' μm';
-        if (statOverlapEl) statOverlapEl.textContent = (overlap * 2).toFixed(2) + ' μm (증가)';
+        if (statOverlapEl) statOverlapEl.textContent = (overlap * 2).toFixed(2) + ' μm';
 
         // Particle diffusion
         for (var i = 0; i < caIons.length; i++) {
