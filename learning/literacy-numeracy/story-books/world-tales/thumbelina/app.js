@@ -313,16 +313,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '엄지 공주',
+    intro: [
+        '엄지 공주는 덴마크의 작가 한스 크리스티안 안데르센이 1835년에 발표한 이야기예요.',
+        '엄지손가락만 한 아이가 커다란 세상을 홀로 헤쳐 나간다는 이야기 짜임은 여러 나라의 옛이야기에 나옵니다. 작은 존재가 큰 세상에서 어떻게 살아가는지를 지켜보는 재미가 있기 때문이지요.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🌷')}
             </div>
             <div class="story-page-right">
-                <h1>엄지 공주</h1>
-                <p>엄지 공주는 덴마크의 작가 한스 크리스티안 안데르센이 1835년에 발표한 이야기예요.</p>
-                <p>엄지손가락만 한 아이가 커다란 세상을 홀로 헤쳐 나간다는 이야기 짜임은 여러 나라의 옛이야기에 나옵니다. 작은 존재가 큰 세상에서 어떻게 살아가는지를 지켜보는 재미가 있기 때문이지요.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -337,8 +346,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -348,8 +357,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -359,22 +368,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -424,9 +434,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -437,7 +447,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -509,7 +519,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -518,34 +528,565 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Thumbelina',
+        intro: [
+            "Thumbelina was written by the Danish author Hans Christian Andersen and published in 1835.",
+            "A child no bigger than a thumb making her own way through an enormous world — that shape of story turns up in many countries. There is a particular pleasure in watching something very small get along in something very large."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Child in the Flower',
+            beats: [
+                {
+                    art: '01-flower.webp',
+                    emoji: '🌷',
+                    left: [
+                        "There was a woman who had no child. She lived alone in a big house, and an empty cradle still stood in the corner of one room.",
+                        "One day she went to see a magician.",
+                        "\"I don't mind how small.\"",
+                        "\"If only I had a child.\""
+                    ],
+                    right: [
+                        "The magician said nothing, and handed her a single barley seed.",
+                        "She planted it in a pot and watered it.",
+                        "By the next morning a shoot had come up.",
+                        "In a few days there was a great bud on it, shaped like a tulip.",
+                        "The woman kissed the flower, and the petals opened wide."
+                    ]
+                },
+                {
+                    art: '01-flower-2.webp',
+                    emoji: '🌷',
+                    left: [
+                        "Inside the flower sat a child, no taller than a thumb.",
+                        "\"Oh my goodness!\"",
+                        "The woman gave the child a name.",
+                        "\"You shall be Thumbelina.\"",
+                        "And the child smiled up at her."
+                    ],
+                    right: [
+                        "The woman made her a bed out of a walnut shell, with a rose petal for a blanket and a violet petal for a pillow.",
+                        "In the daytime Thumbelina played on a plate of water, floating about on a flower petal for a boat.",
+                        "She sang beautifully, and the whole house was brighter for it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Night the Toad Came',
+            beats: [
+                {
+                    art: '02-toad.webp',
+                    emoji: '🐸',
+                    left: [
+                        "One night the window had been left a little open, and a toad came hopping in through the gap — a great damp toad.",
+                        "She looked into the walnut bed.",
+                        "\"Just the wife for my son.\"",
+                        "And she carried Thumbelina out, bed and all."
+                    ],
+                    right: [
+                        "Thumbelina slept through the whole thing and knew nothing about it.",
+                        "The toad went to her mud house by the brook.",
+                        "\"Look here, my boy.\"",
+                        "The son toad sat with his mouth hanging open.",
+                        "\"Croak. Croak.\"",
+                        "It was all he could say."
+                    ]
+                },
+                {
+                    art: '02-toad-2.webp',
+                    emoji: '🐸',
+                    left: [
+                        "The toad picked out a broad leaf floating in the middle of the brook and set Thumbelina down on it.",
+                        "\"She can't run off from there.\"",
+                        "And away she went to get the house ready. Thumbelina was left alone on the leaf."
+                    ],
+                    right: [
+                        "By and by the morning sun came up.",
+                        "She opened her eyes, and there was water on every side of her.",
+                        "Thumbelina burst into tears.",
+                        "\"Mother, I want to go home.\"",
+                        "The tears fell onto the water.",
+                        "And just then something moved down below."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Fish Helped Her',
+            beats: [
+                {
+                    art: '03-fish.webp',
+                    emoji: '🐟',
+                    left: [
+                        "Little fish came gathering round, one after another, all looking up at her.",
+                        "They had heard her crying from under the water.",
+                        "\"Let's help her.\"",
+                        "The fish took hold of the stem of the leaf and began to gnaw at it with their small teeth."
+                    ],
+                    right: [
+                        "Nibble, nibble.",
+                        "After a long while the stem gave way, and the leaf began drifting slowly off.",
+                        "Thumbelina clapped her hands.",
+                        "\"Thank you, thank you!\"",
+                        "The brook carried the leaf along, and the toad's house fell further and further behind."
+                    ]
+                },
+                {
+                    art: '03-fish-2.webp',
+                    emoji: '🦋',
+                    left: [
+                        "Then a white butterfly came flying and settled lightly on the leaf.",
+                        "Thumbelina undid her sash and tied one end of it to the butterfly.",
+                        "\"Will you come along with me?\"",
+                        "The butterfly waved its feelers, and opened its wings wide."
+                    ],
+                    right: [
+                        "The leaf went along much faster now, and the water shot past on either side.",
+                        "The brook grew wider and wider, and green meadows opened out on both banks.",
+                        "It was all new to Thumbelina — frightening and wonderful at once.",
+                        "As the sun climbed, the water glittered all over."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · A Summer in the Meadow',
+            beats: [
+                {
+                    art: '04-summer.webp',
+                    emoji: '🪲',
+                    left: [
+                        "Then a great shadow came over her. A beetle had come dropping down like an arrow.",
+                        "He snatched Thumbelina up and carried her into a tree.",
+                        "\"What a pretty little thing.\"",
+                        "And he called his friends over to show her off. The beetles came crowding in."
+                    ],
+                    right: [
+                        "But every one of them shook his head.",
+                        "\"She has only two legs.\"",
+                        "\"And no feelers at all.\"",
+                        "\"She really is ugly.\"",
+                        "Hearing that, the beetle went and put Thumbelina down in the grass again."
+                    ]
+                },
+                {
+                    art: '04-summer-2.webp',
+                    emoji: '🪲',
+                    left: [
+                        "Thumbelina was left alone in the wide meadow, and she stayed there by herself all that summer.",
+                        "She wove a bed out of grass blades and got honey from the flowers. In the morning she drank the dew off a leaf.",
+                        "The butterflies and the birds soon became her friends, and in the afternoons she ran about catching dandelion seeds."
+                    ],
+                    right: [
+                        "But autumn came soon enough. One by one the flowers withered and the birds went away.",
+                        "Then the first snow fell, and Thumbelina pulled a dry leaf over herself.",
+                        "A single snowflake was bigger than she was.",
+                        "She was so cold that she could hardly take a step."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: "Chapter 5 · The Field Mouse's House",
+            beats: [
+                {
+                    art: '05-mouse.webp',
+                    emoji: '🐀',
+                    left: [
+                        "Wandering the fields, Thumbelina found a small burrow. She knocked with a shaking hand.",
+                        "\"Excuse me…\"",
+                        "A field mouse opened the door.",
+                        "\"Goodness, you poor little thing!\"",
+                        "\"Come in, come in.\""
+                    ],
+                    right: [
+                        "Inside the burrow it was snug and warm, with grain stacked up to the ceiling. Thumbelina ate her fill for the first time in a long while.",
+                        "\"You can help me about the house.\"",
+                        "\"And tell me a story in the evenings.\"",
+                        "Thumbelina agreed. She had somewhere to spend the winter."
+                    ]
+                },
+                {
+                    art: '05-mouse-2.webp',
+                    emoji: '🐀',
+                    left: [
+                        "One day the field mouse spoke up, quite excited.",
+                        "\"My neighbour is coming to call.\"",
+                        "\"A very rich gentleman — the mole.\"",
+                        "In due course the mole arrived, dressed all in black. His eyes were so weak that he walked with a stick.",
+                        "And more than anything, he hated the sunlight."
+                    ],
+                    right: [
+                        "\"Underground is best.\"",
+                        "\"Sun, flowers — no use at all.\"",
+                        "The field mouse asked Thumbelina to sing, and the mole liked her singing very much indeed.",
+                        "\"I should like to marry this child.\"",
+                        "Thumbelina felt a weight settle on her chest."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Wounded Swallow',
+            beats: [
+                {
+                    art: '06-swallow.webp',
+                    emoji: '🐦',
+                    left: [
+                        "A few days later the mole showed them his own tunnels — long dark passages going on and on, and the smell of earth in her nose.",
+                        "Then her foot caught on something.",
+                        "A bird was lying there on the floor.",
+                        "\"A swallow. Dead, I suppose.\""
+                    ],
+                    right: [
+                        "The mole gave it a shove with his foot.",
+                        "Thumbelina stopped where she stood. Her chest ached so that she could not bear it.",
+                        "She thought of the birds she had played with all summer.",
+                        "That night she went back to the tunnel in secret, carrying an armful of hay, and covered the swallow over.",
+                        "Then she laid her ear gently against its chest."
+                    ]
+                },
+                {
+                    art: '06-swallow-2.webp',
+                    emoji: '🐦',
+                    left: [
+                        "Thump. Thump.",
+                        "The heart was beating!",
+                        "\"He's alive!\"",
+                        "Thumbelina went back to that tunnel every day. She brought water to wet his beak and piled on more hay.",
+                        "And after many days the swallow opened his eyes."
+                    ],
+                    right: [
+                        "\"Thank you, little lady.\"",
+                        "\"I froze, and I fell.\"",
+                        "\"When spring comes I shall go away.\"",
+                        "\"Will you not come with me?\"",
+                        "Thumbelina shook her head.",
+                        "\"The field mouse has been good to me.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: "Chapter 7 · On the Swallow's Back",
+            beats: [
+                {
+                    art: '07-flight.webp',
+                    emoji: '☀️',
+                    left: [
+                        "Before she knew it the winter was ending, and the wedding day had been set. Thumbelina's heart got heavier and heavier.",
+                        "Now she would live underground for the rest of her life, where there was no sun and no flowers.",
+                        "It seemed to her that if she sang, nobody would be there to hear it.",
+                        "\"If I could have just one more day.\""
+                    ],
+                    right: [
+                        "At last it was the day before the wedding. Thumbelina went out of the burrow to look at the sun one last time.",
+                        "The light was pouring down over the barley field.",
+                        "And then a voice came from above her.",
+                        "\"Little lady!\"",
+                        "It was the swallow, strong again."
+                    ]
+                },
+                {
+                    art: '07-flight-2.webp',
+                    emoji: '☀️',
+                    left: [
+                        "\"I am going to the warm countries now.\"",
+                        "\"This time, come with me.\"",
+                        "Thumbelina hesitated a moment. Then she slowly nodded.",
+                        "She climbed onto the swallow's back and tied herself on firmly with her sash."
+                    ],
+                    right: [
+                        "\"Hold tight!\"",
+                        "The swallow rose into the sky, and the meadow shrank to the size of her palm. They crossed forests and rivers and a wide sea.",
+                        "The wind grew warmer as they went, and the scent of flowers came to her.",
+                        "And at last, below them, an endless field of flowers opened out."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · In the Country of Flowers',
+            beats: [
+                {
+                    art: '08-prince.webp',
+                    emoji: '👑',
+                    left: [
+                        "The swallow came down on a white pillar. Below it lay a great flower garden.",
+                        "\"Go and choose whichever flower you like.\"",
+                        "Thumbelina stepped lightly down into the garden and stopped in front of the largest white flower of all.",
+                        "And then the flower moved."
+                    ],
+                    right: [
+                        "There was somebody among the petals — somebody exactly her own size.",
+                        "He wore a small crown on his head, and on his back were dragonfly wings.",
+                        "The two of them looked at each other for a long while, and neither could find anything to say."
+                    ]
+                },
+                {
+                    art: '08-prince-2.webp',
+                    emoji: '👑',
+                    left: [
+                        "\"I am the prince of this country.\"",
+                        "\"Our people live in the flowers, one to each.\"",
+                        "The prince held out his hand.",
+                        "\"Will you stay here with us?\"",
+                        "And heads came popping up out of flower after flower, everyone clapping to welcome her."
+                    ],
+                    right: [
+                        "Somebody brought a pair of wings as a gift and fastened them to Thumbelina's back.",
+                        "And for the first time she flew up under her own power.",
+                        "The swallow watched her, well pleased.",
+                        "\"I shall be off now.\"",
+                        "And he flew away into the northern sky."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Where did Thumbelina come from?',
+            choices: ['Out of a walnut shell', 'Out of a flower grown from a barley seed', 'Out of the brook'],
+            answer: 1
+        },
+        {
+            q: 'Why did the toad put Thumbelina on a leaf in the brook?',
+            choices: ['So that she could not run away', 'So that she could sleep there', 'To show her to the fish'],
+            answer: 0
+        },
+        {
+            q: 'How did Thumbelina get free of the leaf?',
+            choices: ['The butterfly lifted it', 'The toad let her go', 'The fish gnawed through the stem'],
+            answer: 2
+        },
+        {
+            q: 'Why did the beetle put Thumbelina down again?',
+            choices: ['She would not stop crying', 'His friends said she was ugly', 'The birds frightened him off'],
+            answer: 1
+        },
+        {
+            q: 'What did the mole say about the world above ground?',
+            choices: ['That sun and flowers were no use at all', 'That he missed it very much', 'That it was too far to walk'],
+            answer: 0
+        },
+        {
+            q: 'What did Thumbelina do for the swallow?',
+            choices: ['She carried him up out of the tunnel', 'She asked the mole to help him', 'She covered him with hay and brought him water for days'],
+            answer: 2
+        },
+        {
+            q: 'What did Thumbelina receive in the country of flowers?',
+            choices: ['A small crown', 'A pair of wings of her own', 'A white flower'],
+            answer: 1
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌷',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Andersen liked very small heroes. He puts a child the size of a thumb in the middle of the page and the whole world turns enormous around her.",
+                    "Thumbelina never once leaves a house on her own feet. The toad carries her off, the beetle snatches her up, the field mouse takes her in. She is always moved to somewhere somebody else has chosen.",
+                    "But there is one thing she decides for herself: she saves the wounded swallow. Nobody asked her to, and nobody was watching.",
+                    "The field mouse is not a wicked person. She got Thumbelina through the winter. She simply decided by herself what would be good for her."
+                ],
+                right: [
+                    "And the one who carries her away at the end is that same swallow. What she did came back to her — though she had no way of knowing it would.",
+                    "Life with the mole would not have been all bad. Why do you think Thumbelina refused it?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-flower.webp': [
+            { word: 'cradle', meaning: '요람', sentence: 'An empty cradle still stood in the corner.' },
+            { word: 'barley', meaning: '보리', sentence: 'He handed her a single barley seed.' },
+            { word: 'shoot', meaning: '싹', sentence: 'By the next morning a shoot had come up.' },
+            { word: 'bud', meaning: '꽃봉오리', sentence: 'There was a great bud on it.' },
+            { word: 'petal', meaning: '꽃잎', sentence: 'The petals opened wide.' }
+        ],
+        '01-flower-2.webp': [
+            { word: 'no taller than', meaning: '~만 한 키의', sentence: 'A child no taller than a thumb.' },
+            { word: 'walnut shell', meaning: '호두 껍데기', sentence: 'A bed out of a walnut shell.' },
+            { word: 'violet', meaning: '제비꽃', sentence: 'A violet petal for a pillow.' },
+            { word: 'float about', meaning: '둥둥 떠다니다', sentence: 'She played floating about on a flower petal.' }
+        ],
+        '02-toad.webp': [
+            { word: 'toad', meaning: '두꺼비', sentence: 'A toad came hopping in through the gap.' },
+            { word: 'damp', meaning: '축축한', sentence: 'A great damp toad.' },
+            { word: 'hop', meaning: '폴짝 뛰다', sentence: 'A toad came hopping in.' },
+            { word: 'croak', meaning: '개굴 소리', sentence: 'Croak. Croak. It was all he could say.' }
+        ],
+        '02-toad-2.webp': [
+            { word: 'broad', meaning: '넓은', sentence: 'The toad picked out a broad leaf.' },
+            { word: 'run off', meaning: '도망가다', sentence: "She can't run off from there." },
+            { word: 'burst into tears', meaning: '울음을 터뜨리다', sentence: 'Thumbelina burst into tears.' }
+        ],
+        '03-fish.webp': [
+            { word: 'gather round', meaning: '모여들다', sentence: 'Little fish came gathering round.' },
+            { word: 'stem', meaning: '줄기', sentence: 'The fish took hold of the stem of the leaf.' },
+            { word: 'gnaw', meaning: '갉다', sentence: 'They began to gnaw at it with their small teeth.' },
+            { word: 'give way', meaning: '툭 끊어지다', sentence: 'After a long while the stem gave way.' },
+            { word: 'drift off', meaning: '떠내려가다', sentence: 'The leaf began drifting slowly off.' }
+        ],
+        '03-fish-2.webp': [
+            { word: 'settle', meaning: '내려앉다', sentence: 'A white butterfly settled lightly on the leaf.' },
+            { word: 'sash', meaning: '허리띠', sentence: 'Thumbelina undid her sash.' },
+            { word: 'feeler', meaning: '더듬이', sentence: 'The butterfly waved its feelers.' },
+            { word: 'bank', meaning: '기슭', sentence: 'Green meadows opened out on both banks.' }
+        ],
+        '04-summer.webp': [
+            { word: 'beetle', meaning: '풍뎅이', sentence: 'A beetle had come dropping down.' },
+            { word: 'snatch up', meaning: '낚아채다', sentence: 'He snatched Thumbelina up.' },
+            { word: 'show off', meaning: '자랑하다', sentence: 'He called his friends over to show her off.' },
+            { word: 'shake one’s head', meaning: '고개를 젓다', sentence: 'Every one of them shook his head.' }
+        ],
+        '04-summer-2.webp': [
+            { word: 'weave', meaning: '엮다', sentence: 'She wove a bed out of grass blades.' },
+            { word: 'dew', meaning: '이슬', sentence: 'She drank the dew off a leaf.' },
+            { word: 'dandelion', meaning: '민들레', sentence: 'She ran about catching dandelion seeds.' },
+            { word: 'wither', meaning: '시들다', sentence: 'One by one the flowers withered.' },
+            { word: 'snowflake', meaning: '눈송이', sentence: 'A single snowflake was bigger than she was.' }
+        ],
+        '05-mouse.webp': [
+            { word: 'burrow', meaning: '굴', sentence: 'Thumbelina found a small burrow.' },
+            { word: 'snug', meaning: '아늑한', sentence: 'Inside the burrow it was snug and warm.' },
+            { word: 'grain', meaning: '곡식', sentence: 'Grain was stacked up to the ceiling.' },
+            { word: 'eat one’s fill', meaning: '배불리 먹다', sentence: 'Thumbelina ate her fill.' }
+        ],
+        '05-mouse-2.webp': [
+            { word: 'call', meaning: '놀러 오다', sentence: 'My neighbour is coming to call.' },
+            { word: 'mole', meaning: '두더지', sentence: 'A very rich gentleman — the mole.' },
+            { word: 'in due course', meaning: '이윽고', sentence: 'In due course the mole arrived.' },
+            { word: 'weak', meaning: '어두운, 약한', sentence: 'His eyes were so weak that he walked with a stick.' }
+        ],
+        '06-swallow.webp': [
+            { word: 'tunnel', meaning: '굴, 통로', sentence: 'The mole showed them his own tunnels.' },
+            { word: 'passage', meaning: '통로', sentence: 'Long dark passages going on and on.' },
+            { word: 'swallow', meaning: '제비', sentence: 'A swallow. Dead, I suppose.' },
+            { word: 'shove', meaning: '툭 밀다', sentence: 'The mole gave it a shove with his foot.' },
+            { word: 'hay', meaning: '건초', sentence: 'She carried an armful of hay.' }
+        ],
+        '06-swallow-2.webp': [
+            { word: 'beat', meaning: '뛰다', sentence: 'The heart was beating!' },
+            { word: 'wet', meaning: '적시다', sentence: 'She brought water to wet his beak.' },
+            { word: 'pile on', meaning: '더 덮다', sentence: 'She piled on more hay.' },
+            { word: 'freeze', meaning: '얼다', sentence: 'I froze, and I fell.' }
+        ],
+        '07-flight.webp': [
+            { word: 'set', meaning: '정해지다', sentence: 'The wedding day had been set.' },
+            { word: 'for the rest of one’s life', meaning: '평생', sentence: 'She would live underground for the rest of her life.' },
+            { word: 'pour down', meaning: '쏟아지다', sentence: 'The light was pouring down over the barley field.' }
+        ],
+        '07-flight-2.webp': [
+            { word: 'hesitate', meaning: '망설이다', sentence: 'Thumbelina hesitated a moment.' },
+            { word: 'tie oneself on', meaning: '몸을 묶다', sentence: 'She tied herself on firmly with her sash.' },
+            { word: 'shrink', meaning: '작아지다', sentence: 'The meadow shrank to the size of her palm.' },
+            { word: 'scent', meaning: '향기', sentence: 'The scent of flowers came to her.' }
+        ],
+        '08-prince.webp': [
+            { word: 'pillar', meaning: '기둥', sentence: 'The swallow came down on a white pillar.' },
+            { word: 'step down', meaning: '내려서다', sentence: 'Thumbelina stepped lightly down into the garden.' },
+            { word: 'dragonfly', meaning: '잠자리', sentence: 'On his back were dragonfly wings.' }
+        ],
+        '08-prince-2.webp': [
+            { word: 'hold out', meaning: '내밀다', sentence: 'The prince held out his hand.' },
+            { word: 'pop up', meaning: '쏙 나오다', sentence: 'Heads came popping up out of flower after flower.' },
+            { word: 'fasten', meaning: '달아 주다', sentence: 'Somebody fastened them to her back.' },
+            { word: 'under one’s own power', meaning: '스스로', sentence: 'For the first time she flew up under her own power.' }
+        ],
+        'end.webp': [
+            { word: 'hero', meaning: '주인공', sentence: 'Andersen liked very small heroes.' },
+            { word: 'carry off', meaning: '업어 가다', sentence: 'The toad carries her off.' },
+            { word: 'take in', meaning: '데려가 돌보다', sentence: 'The field mouse takes her in.' },
+            { word: 'wicked', meaning: '나쁜', sentence: 'The field mouse is not a wicked person.' },
+            { word: 'come back to', meaning: '돌아오다', sentence: 'What she did came back to her.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -610,6 +1151,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -618,7 +1160,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -630,7 +1172,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -664,4 +1206,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
