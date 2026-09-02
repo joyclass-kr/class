@@ -5881,7 +5881,7 @@ button.division-option {
   .catalog-header {
     position: relative;
     display: grid;
-    grid-template-columns: 64px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     align-items: center;
     gap: 24px;
     border-bottom: 0;
@@ -5890,6 +5890,15 @@ button.division-option {
     backdrop-filter: none;
   }
 
+  .race-entry-header {
+    padding-block: 8px 16px;
+  }
+
+  .race-entry-header h1 {
+    color: var(--ink);
+    font-size: 26px;
+    text-shadow: none;
+  }
   .catalog-back {
     position: fixed;
     z-index: 40;
@@ -5929,13 +5938,6 @@ button.division-option {
     line-height: 1.55;
   }
 
-  .catalog-title-row {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px 16px;
-    padding-right: 170px;
-  }
 
   .catalog-race-link {
     position: absolute;
@@ -6223,7 +6225,7 @@ button.division-option {
     }
 
     .catalog-header {
-      grid-template-columns: 56px minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr);
       align-items: center;
       gap: 12px;
       padding: 24px;
@@ -6235,7 +6237,8 @@ button.division-option {
       margin-bottom: 8px;
     }
 
-    .catalog-title-row {
+
+    .catalog-stage-nav {
       padding-right: 0;
     }
 
