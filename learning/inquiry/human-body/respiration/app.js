@@ -44,7 +44,7 @@
     var hotspots = {
         alveoli: [
             { x: 0.35, y: 0.35, r: 50, title: '폐포 (Alveoli) - 기체 교환 표면', desc: '약 3~5억 개로 총 표면적이 약 100㎡(테니스 코트 크기)에 달해 모세혈관과의 기체 교환 효율을 극대화합니다.' },
-            { x: 0.65, y: 0.65, r: 45, title: '모세혈관망 & 산소/이산화탄소 확산', desc: '분압차에 의한 확산으로 에너지를 쓰지 않고 산소는 혈액으로($104 \rightarrow 40$), 이산화탄소는 폐포로($46 \rightarrow 40\text{ mmHg}$) 이동합니다.' }
+            { x: 0.65, y: 0.65, r: 45, title: '모세혈관망 & 산소/이산화탄소 확산', desc: '분압차에 의한 확산으로 에너지를 쓰지 않고 산소는 혈액으로(104 ➔ 40 mmHg), 이산화탄소는 폐포로(46 ➔ 40 mmHg) 이동합니다.' }
         ],
         airway: [
             { x: 0.50, y: 0.25, r: 40, title: '기관 (Trachea)', desc: '안쪽에 섬모와 점액이 있어 먼지와 세균을 걸러내는 원통형 기도.' },
@@ -131,6 +131,25 @@
     var dragStartY = 0;
     var airwayAirFlow = [];
 
+    /**
+     * 가로막 상태 글자. 50은 올라간 것도 내려간 것도 아닌 평형이라
+     * 전처럼 50에서 "상승 (날숨)"이라고 적으면 안 된다.
+     */
+    function showDiaphragmState() {
+        if (!diaphragmValEl) return;
+
+        if (diaphragmPosition > 52) {
+            diaphragmValEl.textContent = '하강 (들숨 Inhale 🫁)';
+            diaphragmValEl.style.color = '#38bdf8';
+        } else if (diaphragmPosition < 48) {
+            diaphragmValEl.textContent = '상승 (날숨 Exhale 💨)';
+            diaphragmValEl.style.color = '#f59e0b';
+        } else {
+            diaphragmValEl.textContent = '평형 상태';
+            diaphragmValEl.style.color = '#94a3b8';
+        }
+    }
+
     function updatePhysics(dt, time) {
         // Automatic breathing mode when not dragging
         if (!isDraggingDiaphragm) {
@@ -147,10 +166,21 @@
         var volumeL = 1.8 + (diaphragmPosition / 100) * 2.5; // 1.8L ~ 4.3L
         thoracicPressure = 760 - (diaphragmPosition - 50) * 0.16;
 
+        showDiaphragmState();
+
         if (statPressureEl) {
             var pDiff = thoracicPressure - 760;
-            statPressureEl.textContent = thoracicPressure.toFixed(1) + ' mmHg (' + (pDiff < 0 ? pDiff.toFixed(1) + ' mmHg 음압 ➔ 들숨' : '+' + pDiff.toFixed(1) + ' mmHg 양압 ➔ 날숨') + ')';
-            statPressureEl.style.color = pDiff < 0 ? '#38bdf8' : '#f59e0b';
+            // 0은 양압도 음압도 아니다. 전에는 +0.0에도 "양압 ➔ 날숨"이라고 적었다.
+            var pText;
+            if (pDiff < -0.05) {
+                pText = pDiff.toFixed(1) + ' mmHg 음압 ➔ 들숨';
+            } else if (pDiff > 0.05) {
+                pText = '+' + pDiff.toFixed(1) + ' mmHg 양압 ➔ 날숨';
+            } else {
+                pText = '대기압과 같음 ➔ 평형';
+            }
+            statPressureEl.textContent = thoracicPressure.toFixed(1) + ' mmHg (' + pText + ')';
+            statPressureEl.style.color = pDiff < -0.05 ? '#38bdf8' : (pDiff > 0.05 ? '#f59e0b' : '#94a3b8');
         }
 
         if (statVolumeEl) {
@@ -448,10 +478,7 @@
         if (diaphragmSlider) {
             diaphragmSlider.addEventListener('input', function () {
                 diaphragmPosition = parseInt(diaphragmSlider.value, 10);
-                if (diaphragmValEl) {
-                    diaphragmValEl.textContent = diaphragmPosition > 50 ? '하강 (들숨 Inhale)' : '상승 (날숨 Exhale)';
-                    diaphragmValEl.style.color = diaphragmPosition > 50 ? '#38bdf8' : '#f59e0b';
-                }
+                showDiaphragmState();
             });
         }
 
@@ -535,10 +562,7 @@
 
                 diaphragmPosition = Math.round(newPos);
                 if (diaphragmSlider) diaphragmSlider.value = diaphragmPosition;
-                if (diaphragmValEl) {
-                    diaphragmValEl.textContent = diaphragmPosition > 50 ? '하강 (들숨 Inhale 🫁)' : '상승 (날숨 Exhale 💨)';
-                    diaphragmValEl.style.color = diaphragmPosition > 50 ? '#38bdf8' : '#f59e0b';
-                }
+                showDiaphragmState();
             });
 
             canvas.addEventListener('pointerup', function (event) {
@@ -601,7 +625,7 @@
         }
 
         if (quizContainerEl && data.quizzes && data.quizzes.length > 0 && typeof SimEngine !== 'undefined') {
-            SimEngine.renderQuiz(quizContainerEl, data.quizzes[0]);
+            SimEngine.renderQuizSet(quizContainerEl, data.quizzes);
         }
     }
 

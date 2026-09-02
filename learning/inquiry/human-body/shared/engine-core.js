@@ -308,6 +308,54 @@
     }
 
     /**
+     * 문제 여러 개를 차례로 풀게 한다.
+     * 전에는 각 쪽이 quizzes[0] 하나만 그려서 2번 문제가 나오지 않았다.
+     */
+    function renderQuizSet(containerEl, quizzes) {
+        if (!containerEl || !quizzes || !quizzes.length) return;
+
+        var idx = 0;
+
+        function show() {
+            renderQuiz(containerEl, quizzes[idx], function () {
+                if (quizzes.length < 2) return;
+
+                var nav = document.createElement('div');
+                nav.className = 'sim-quiz-nav';
+
+                var counter = document.createElement('span');
+                counter.className = 'sim-quiz-counter';
+                counter.textContent = (idx + 1) + ' / ' + quizzes.length;
+                nav.appendChild(counter);
+
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'sim-quiz-next-btn';
+                btn.textContent = idx < quizzes.length - 1 ? '다음 문제 ➔' : '처음부터 다시 ↺';
+                btn.addEventListener('click', function () {
+                    idx = (idx + 1) % quizzes.length;
+                    show();
+                    SoundFX.playClick();
+                });
+                nav.appendChild(btn);
+
+                containerEl.querySelector('.sim-quiz-container').appendChild(nav);
+            });
+
+            // 문제를 넘기기 전에도 몇 번째인지는 보이게 한다
+            if (quizzes.length > 1) {
+                var head = document.createElement('div');
+                head.className = 'sim-quiz-counter';
+                head.textContent = '문제 ' + (idx + 1) + ' / ' + quizzes.length;
+                var box = containerEl.querySelector('.sim-quiz-container');
+                if (box) box.insertBefore(head, box.firstChild);
+            }
+        }
+
+        show();
+    }
+
+    /**
      * 캔버스 핀에 붙일 짧은 이름표를 고른다.
      * spot.label 이 있으면 그대로 쓰고, 없으면 title 앞머리를 다듬어 쓴다.
      * ('1. 사구체 여과 (Filtration)' -> '사구체 여과')
@@ -331,6 +379,7 @@
         setupCanvas: setupCanvas,
         bindDrag: bindDrag,
         renderQuiz: renderQuiz,
+        renderQuizSet: renderQuizSet,
         pinLabel: pinLabel
     };
 });

@@ -638,7 +638,7 @@
         }
 
         if (quizContainerEl && data.quizzes && data.quizzes.length > 0 && typeof SimEngine !== 'undefined') {
-            SimEngine.renderQuiz(quizContainerEl, data.quizzes[0]);
+            SimEngine.renderQuizSet(quizContainerEl, data.quizzes);
         }
     }
 

@@ -25,6 +25,49 @@
     display: block;
 }
 
+/* 장면 전환 바 — 이 규칙이 없어서 단추들이 그림 한복판에 떨어져 있었다.
+   다른 쪽들과 같은 모양으로 위쪽 가운데에 띄운다. */
+.scene-switcher {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    background: rgba(10, 15, 30, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    z-index: 40;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.scene-btn {
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 999px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.scene-btn.active, .scene-btn:hover {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    color: #ffffff;
+    border-color: #22d3ee;
+    box-shadow: 0 0 14px rgba(6, 182, 212, 0.5);
+}
+
 /* Joint Angle HUD Meter */
 .joint-angle-meter {
     padding: 12px;
