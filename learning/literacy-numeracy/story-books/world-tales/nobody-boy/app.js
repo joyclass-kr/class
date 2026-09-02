@@ -306,16 +306,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '집 없는 아이',
+    intro: [
+        '집 없는 아이는 프랑스의 작가 엑토르 말로가 1878년에 펴낸 이야기예요. 원래 제목은 가족 없이라는 뜻이랍니다.',
+        '떠돌이 악사와 개 두 마리, 원숭이 한 마리와 함께 프랑스 곳곳을 걸어 다니는 아이의 이야기예요. 그 시절 시골 마을과 광산의 모습이 이야기 속에 그대로 담겨 있습니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🎻')}
             </div>
             <div class="story-page-right">
-                <h1>집 없는 아이</h1>
-                <p>집 없는 아이는 프랑스의 작가 엑토르 말로가 1878년에 펴낸 이야기예요. 원래 제목은 가족 없이라는 뜻이랍니다.</p>
-                <p>떠돌이 악사와 개 두 마리, 원숭이 한 마리와 함께 프랑스 곳곳을 걸어 다니는 아이의 이야기예요. 그 시절 시골 마을과 광산의 모습이 이야기 속에 그대로 담겨 있습니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -330,8 +339,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -341,8 +350,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -352,22 +361,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -417,9 +427,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -430,7 +440,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -502,7 +512,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -511,34 +521,634 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Nobody’s Boy',
+        intro: [
+            "Nobody's Boy was published by the French writer Hector Malot in 1878. Its own title means Without a Family.",
+            "It is the story of a boy who walks all over France with a travelling musician, two dogs and a monkey. The villages and the mines of that time are in it just as they were."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · Mother Barberin',
+            beats: [
+                {
+                    art: '01-home.webp',
+                    emoji: '🏡',
+                    left: [
+                        "In a small country village in France there lived a boy called Rémi.",
+                        "He had curly hair and large eyes.",
+                        "Mother Barberin brought him up.",
+                        "The house was very poor.",
+                        "And the kitchen was always warm.",
+                        "A copper pot hung over the hearth.",
+                        "She was always gentle with Rémi.",
+                        "In the evening the pot smelled of boiling potatoes."
+                    ],
+                    right: [
+                        "\"Have another one tonight.\"",
+                        "She always pushed her own share across to him.",
+                        "In winter she sat him on her knee and told him stories.",
+                        "That was the hour Rémi liked best.",
+                        "His father worked far away in Paris.",
+                        "He had not come home for years.",
+                        "Rémi could not really call his face to mind."
+                    ]
+                },
+                {
+                    art: '01-home-2.webp',
+                    emoji: '🏡',
+                    left: [
+                        "And then one day it came.",
+                        "She held Rémi tight in her arms.",
+                        "For a long while she said nothing.",
+                        "And then at last she spoke.",
+                        "\"The truth is, you are not a child I bore.\"",
+                        "Rémi did not understand what she meant."
+                    ],
+                    right: [
+                        "\"You were left on the road, and we took you in.\"",
+                        "\"And now the time has come for you to know it.\"",
+                        "Rémi's lips only moved.",
+                        "There was a strange ache in his chest.",
+                        "The tears ran down her face.",
+                        "And Rémi held her hand tight."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · Old Vitalis',
+            beats: [
+                {
+                    art: '02-vitalis.webp',
+                    emoji: '🎩',
+                    left: [
+                        "A while later a stranger came into the village.",
+                        "He was a travelling musician.",
+                        "He had white hair and a broad-brimmed hat.",
+                        "His cloak was old, but he walked upright.",
+                        "His name was Vitalis.",
+                        "Three dogs came along behind him."
+                    ],
+                    right: [
+                        "A white poodle and two small dogs.",
+                        "And a monkey sat on his shoulder.",
+                        "A little monkey in a red jacket.",
+                        "The whole village came crowding round.",
+                        "Rémi squeezed in among them to watch.",
+                        "He had never seen such a show in his life."
+                    ]
+                },
+                {
+                    art: '02-vitalis-2.webp',
+                    emoji: '🎩',
+                    left: [
+                        "When the show was over the old man looked at Rémi.",
+                        "He did not take his eyes off him for a long while.",
+                        "And then he talked with Mother Barberin.",
+                        "Rémi could not tell what they were saying.",
+                        "Their voices kept dropping lower.",
+                        "She kept twisting the corner of her apron.",
+                        "And at last the old man stood in front of Rémi."
+                    ],
+                    right: [
+                        "\"Well, my boy. Will you come along the road with me?\"",
+                        "Rémi turned to look at her.",
+                        "She was wiping her eyes.",
+                        "And then she slowly nodded.",
+                        "\"Go with him. It will be better so.\"",
+                        "And the next morning Rémi left the village."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · A Family on the Road',
+            beats: [
+                {
+                    art: '03-troupe.webp',
+                    emoji: '🐩',
+                    left: [
+                        "The days on the road were hard.",
+                        "They walked in the morning and performed in the afternoon.",
+                        "At night they slept in barns or under trees.",
+                        "When it rained they were soaked through.",
+                        "And still Rémi soon came to love the others.",
+                        "At night Capi slept pressed close against him."
+                    ],
+                    right: [
+                        "His fur was warm and Rémi never felt the cold.",
+                        "Capi the white poodle was very clever.",
+                        "He could even do sums with his forepaws.",
+                        "The little dogs Zerbino and Dolce had tricks of their own.",
+                        "Joli-Cœur the monkey took off his cap and bowed.",
+                        "And people burst out laughing every time.",
+                        "\"These are your brothers, you know.\""
+                    ]
+                },
+                {
+                    art: '03-troupe-2.webp',
+                    emoji: '🐩',
+                    left: [
+                        "Old Vitalis taught him the harp as well.",
+                        "At first his fingertips hurt.",
+                        "The strings would not sound as he wanted them to.",
+                        "And still Rémi practised every night.",
+                        "His fingertips blistered and scabbed over.",
+                        "And still he did not let go of the strings."
+                    ],
+                    right: [
+                        "\"That is a better sound today.\"",
+                        "After a few months it began to come.",
+                        "The old man taught him his letters too.",
+                        "He wrote them in the dirt with a stick.",
+                        "\"Learn it, and one day it will be of use.\"",
+                        "Rémi took that to heart.",
+                        "The road was hard and there was much to learn.",
+                        "And little by little Rémi grew."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Night of the Blizzard',
+            beats: [
+                {
+                    art: '04-snow.webp',
+                    emoji: '❄️',
+                    left: [
+                        "When winter came the road grew far harder.",
+                        "People shut their doors and stayed inside.",
+                        "They could perform and still gather few coins.",
+                        "Food ran short again and again.",
+                        "And one night a blizzard caught them.",
+                        "They could not see a thing ahead."
+                    ],
+                    right: [
+                        "They lost the road and wandered in the woods.",
+                        "Far off they heard wolves.",
+                        "The dogs growled low in their throats.",
+                        "Rémi was frightened and held on to the old man's coat.",
+                        "\"Rémi, sit back to back with me,\" the old man said quietly."
+                    ]
+                },
+                {
+                    art: '04-snow-2.webp',
+                    emoji: '❄️',
+                    left: [
+                        "The old man found a hollow under a tree.",
+                        "He sat Rémi down in it.",
+                        "And then he took off his own coat.",
+                        "And laid it over Rémi.",
+                        "\"Are you not cold, grandfather?\"",
+                        "\"I am well enough.\""
+                    ],
+                    right: [
+                        "The dogs pressed themselves close too.",
+                        "Capi curled up at Rémi's feet.",
+                        "Joli-Cœur burrowed inside his coat.",
+                        "And so they all waited together for the morning.",
+                        "The snow did not stop all night.",
+                        "It was daylight before they found the road again."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · Parting',
+            beats: [
+                {
+                    art: '05-parting.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "After that winter the old man coughed often.",
+                        "His walk grew noticeably slower.",
+                        "And still the performances did not stop.",
+                        "\"Do rest a while, grandfather.\"",
+                        "\"Rest, and we go hungry.\"",
+                        "He smiled and put the harp on his shoulder again."
+                    ],
+                    right: [
+                        "But his step kept faltering.",
+                        "Rémi took his arm quickly.",
+                        "It was a cold dawn in some city.",
+                        "The two of them had nowhere to sleep.",
+                        "They sat down under a wall.",
+                        "The old man took Rémi's hand.",
+                        "It was very cold.",
+                        "\"Rémi. Listen to me.\""
+                    ]
+                },
+                {
+                    art: '05-parting-2.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "\"Take good care of Capi.\"",
+                        "\"He will look after you.\"",
+                        "\"And wherever you are, do not stop singing.\"",
+                        "Rémi thought he understood what that meant.",
+                        "\"Grandfather, do not talk so.\"",
+                        "And the old man only smiled at him."
+                    ],
+                    right: [
+                        "And then he quietly closed his eyes.",
+                        "Rémi held Capi and wept a long time.",
+                        "And Capi stretched out his neck and howled.",
+                        "The sun rose and people came and went in the street.",
+                        "From that day Rémi walked the road alone.",
+                        "With only Capi beside him."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · A House on the Water',
+            beats: [
+                {
+                    art: '06-barge.webp',
+                    emoji: '⛵',
+                    left: [
+                        "Rémi walked on with Capi.",
+                        "He played the harp and just about earned their meals.",
+                        "One day he came to a river.",
+                        "It was a quiet bank with willows hanging over it.",
+                        "A cool wind came off the water.",
+                        "Rémi put his feet in and sat there a long while."
+                    ],
+                    right: [
+                        "A boat was moored there.",
+                        "A boat with flowerpots in the windows.",
+                        "A lady was out on the deck.",
+                        "And beside her lay a pale child.",
+                        "A child who had been ill a long time.",
+                        "The lady called to Rémi.",
+                        "\"If you like, will you stay on our boat?\" And Rémi bowed his head."
+                    ]
+                },
+                {
+                    art: '06-barge-2.webp',
+                    emoji: '⛵',
+                    left: [
+                        "Rémi went aboard.",
+                        "For the first time in a long while he slept under a roof.",
+                        "In the mornings he sat at the bow and played.",
+                        "The river went slowly by.",
+                        "The sick child loved the sound of it.",
+                        "\"Play it once more.\"",
+                        "And he put a hand out from under the blanket."
+                    ],
+                    right: [
+                        "One day that child smiled for the first time.",
+                        "The lady's eyes filled.",
+                        "\"That is your doing.\"",
+                        "And Rémi felt warm inside.",
+                        "It was as though he had a home of his own.",
+                        "And so the summer went by.",
+                        "Rémi had more days of laughing than not."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Dark Gallery',
+            beats: [
+                {
+                    art: '07-mine.webp',
+                    emoji: '⛏️',
+                    left: [
+                        "When autumn came Rémi took to the road again.",
+                        "He wanted to make his own way.",
+                        "He walked a long time and came to a mining town.",
+                        "Black smoke rose from the chimneys.",
+                        "And Rémi got work there.",
+                        "The gallery ran deep under the ground.",
+                        "They went down by the light of a single lamp."
+                    ],
+                    right: [
+                        "The air was close and water dripped from above.",
+                        "The miners chipped at the walls with picks.",
+                        "Clang, clang, clang.",
+                        "The sound rang round the tunnel.",
+                        "And then that day there was a strange noise.",
+                        "Water was pouring into the gallery.",
+                        "The miners shouted."
+                    ]
+                },
+                {
+                    art: '07-mine-2.webp',
+                    emoji: '⛏️',
+                    left: [
+                        "\"Water! Get up top, quickly!\"",
+                        "But the way was blocked already.",
+                        "Rémi and the miners were shut into a narrow tunnel.",
+                        "One lamp was all that was left.",
+                        "\"Everyone, sit with your backs to the wall!\"",
+                        "The time went by terribly slowly."
+                    ],
+                    right: [
+                        "They were hungry and shivering.",
+                        "Somebody began to sob.",
+                        "And then Rémi quietly sang.",
+                        "In the dark there was nothing but that sound.",
+                        "On the fourteenth day they heard picks.",
+                        "And the men threw their arms round one another."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · The Family He Found',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '💫',
+                    left: [
+                        "The rescuers broke through the wall.",
+                        "Rémi and the miners came out at last.",
+                        "The sunlight was so bright he could not see.",
+                        "The whole town came out and clapped.",
+                        "Rémi stayed in that town a while.",
+                        "It took days just to wash the coal dust off his face.",
+                        "And Capi kept licking his cheek."
+                    ],
+                    right: [
+                        "And then he decided to walk on again.",
+                        "Capi and the harp were always with him.",
+                        "One day some strangers came looking for him.",
+                        "They had been searching for him for years, they said.",
+                        "Rémi had a mother and brothers of his own after all.",
+                        "For a long while he could not believe it."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '💫',
+                    left: [
+                        "Rémi went to live with his new family.",
+                        "But there was one thing he did first.",
+                        "He brought Mother Barberin to come and live with them.",
+                        "She looked at Rémi and wept a long time.",
+                        "And Capi was there too, of course.",
+                        "\"And where have you put the pot?\""
+                    ],
+                    right: [
+                        "One evening Rémi took out his harp.",
+                        "People sat round in the yard.",
+                        "\"My grandfather told me something.\"",
+                        "\"That wherever I was, I should not stop singing.\"",
+                        "And Rémi went on teaching children the harp ever after.",
+                        "With Capi always lying at his feet."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Who brought Rémi up?',
+            choices: ['Vitalis', 'Mother Barberin', 'Capi'],
+            answer: 1
+        },
+        {
+            q: 'Who was the travelling musician who took Rémi away?',
+            choices: ['Vitalis', 'Capi', 'Rémi'],
+            answer: 0
+        },
+        {
+            q: 'What did the old man teach Rémi?',
+            choices: ['Singing', 'Performing', 'The harp'],
+            answer: 2
+        },
+        {
+            q: 'What did the old man do on the night of the blizzard?',
+            choices: ['He played the harp', 'He gave Rémi his coat', 'He led them into a cave'],
+            answer: 1
+        },
+        {
+            q: 'What were the old man’s last words?',
+            choices: ['Do not stop singing', 'Go to the mines', 'Go back home'],
+            answer: 0
+        },
+        {
+            q: 'What happened to Rémi in the mine?',
+            choices: ['There was smoke', 'He lost his harp', 'Water rose and shut them in'],
+            answer: 2
+        },
+        {
+            q: 'What did Rémi do first after finding his new family?',
+            choices: ['He went back to the mine', 'He brought Mother Barberin', 'He sold the harp'],
+            answer: 1
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🎻',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story is Nobody's Boy, by the French writer Hector Malot. It came out about a hundred and forty years ago.",
+                    "What old Vitalis taught Rémi was not only the harp. He wrote letters in the dirt with a stick.",
+                    "Learn it, he said, and one day it will be of use. He taught what was of no use that day.",
+                    "Look again at the family on the road: Capi, Zerbino, Dolce and Joli-Cœur. The old man called them Rémi's brothers."
+                ],
+                right: [
+                    "The first thing Rémi did on finding his family was to fetch Mother Barberin. He did not forget the one who raised him.",
+                    "What do you think family meant to Rémi?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-home.webp': [
+            { word: 'bring up', meaning: '기르다', sentence: 'Mother Barberin brought him up.' },
+            { word: 'hearth', meaning: '아궁이', sentence: 'A copper pot hung over the hearth.' },
+            { word: 'gentle', meaning: '다정한', sentence: 'She was always gentle with Rémi.' },
+            { word: 'share', meaning: '몫', sentence: 'She pushed her own share across to him.' },
+            { word: 'call to mind', meaning: '떠올리다', sentence: 'He could not call his face to mind.' }
+        ],
+        '01-home-2.webp': [
+            { word: 'bear', meaning: '낳다', sentence: 'You are not a child I bore.' },
+            { word: 'take in', meaning: '데려오다', sentence: 'We took you in.' },
+            { word: 'ache', meaning: '먹먹함', sentence: 'There was a strange ache in his chest.' },
+            { word: 'tight', meaning: '꼭', sentence: 'Rémi held her hand tight.' }
+        ],
+        '02-vitalis.webp': [
+            { word: 'travelling musician', meaning: '떠돌이 악사', sentence: 'He was a travelling musician.' },
+            { word: 'broad-brimmed', meaning: '챙이 넓은', sentence: 'A broad-brimmed hat.' },
+            { word: 'cloak', meaning: '망토', sentence: 'His cloak was old.' },
+            { word: 'upright', meaning: '반듯하게', sentence: 'He walked upright.' },
+            { word: 'poodle', meaning: '푸들', sentence: 'A white poodle and two small dogs.' }
+        ],
+        '02-vitalis-2.webp': [
+            { word: 'take one’s eyes off', meaning: '눈을 떼다', sentence: 'He did not take his eyes off him.' },
+            { word: 'apron', meaning: '앞치마', sentence: 'She kept twisting the corner of her apron.' },
+            { word: 'wipe', meaning: '닦다', sentence: 'She was wiping her eyes.' },
+            { word: 'so', meaning: '그편이', sentence: 'It will be better so.' }
+        ],
+        '03-troupe.webp': [
+            { word: 'perform', meaning: '공연하다', sentence: 'They performed in the afternoon.' },
+            { word: 'barn', meaning: '헛간', sentence: 'They slept in barns.' },
+            { word: 'soaked through', meaning: '흠뻑 젖은', sentence: 'When it rained they were soaked through.' },
+            { word: 'sums', meaning: '셈', sentence: 'He could do sums with his forepaws.' },
+            { word: 'trick', meaning: '재주', sentence: 'The little dogs had tricks of their own.' }
+        ],
+        '03-troupe-2.webp': [
+            { word: 'fingertip', meaning: '손끝', sentence: 'At first his fingertips hurt.' },
+            { word: 'string', meaning: '줄', sentence: 'The strings would not sound.' },
+            { word: 'practise', meaning: '연습하다', sentence: 'Rémi practised every night.' },
+            { word: 'be of use', meaning: '쓸 데가 있다', sentence: 'One day it will be of use.' },
+            { word: 'take to heart', meaning: '새겨듣다', sentence: 'Rémi took that to heart.' }
+        ],
+        '04-snow.webp': [
+            { word: 'run short', meaning: '떨어지다', sentence: 'Food ran short again and again.' },
+            { word: 'blizzard', meaning: '눈보라', sentence: 'One night a blizzard caught them.' },
+            { word: 'wander', meaning: '헤매다', sentence: 'They wandered in the woods.' },
+            { word: 'growl', meaning: '으르렁거리다', sentence: 'The dogs growled low.' },
+            { word: 'back to back', meaning: '등을 맞대고', sentence: 'Sit back to back with me.' }
+        ],
+        '04-snow-2.webp': [
+            { word: 'hollow', meaning: '우묵한 곳', sentence: 'He found a hollow under a tree.' },
+            { word: 'lay over', meaning: '덮어 주다', sentence: 'He laid it over Rémi.' },
+            { word: 'curl up', meaning: '웅크리다', sentence: "Capi curled up at Rémi's feet." },
+            { word: 'burrow', meaning: '파고들다', sentence: 'Joli-Cœur burrowed inside his coat.' }
+        ],
+        '05-parting.webp': [
+            { word: 'cough', meaning: '기침하다', sentence: 'The old man coughed often.' },
+            { word: 'noticeably', meaning: '눈에 띄게', sentence: 'His walk grew noticeably slower.' },
+            { word: 'go hungry', meaning: '굶다', sentence: 'Rest, and we go hungry.' },
+            { word: 'falter', meaning: '비틀거리다', sentence: 'His step kept faltering.' },
+            { word: 'dawn', meaning: '새벽', sentence: 'It was a cold dawn in some city.' }
+        ],
+        '05-parting-2.webp': [
+            { word: 'take care of', meaning: '돌보다', sentence: 'Take good care of Capi.' },
+            { word: 'look after', meaning: '지켜 주다', sentence: 'He will look after you.' },
+            { word: 'wherever', meaning: '어디서든', sentence: 'Wherever you are, do not stop singing.' },
+            { word: 'howl', meaning: '길게 울다', sentence: 'Capi stretched out his neck and howled.' }
+        ],
+        '06-barge.webp': [
+            { word: 'earn', meaning: '벌다', sentence: 'He just about earned their meals.' },
+            { word: 'willow', meaning: '버드나무', sentence: 'A bank with willows hanging over it.' },
+            { word: 'moor', meaning: '매어 두다', sentence: 'A boat was moored there.' },
+            { word: 'pale', meaning: '창백한', sentence: 'Beside her lay a pale child.' },
+            { word: 'aboard', meaning: '배에', sentence: 'Rémi went aboard.' }
+        ],
+        '06-barge-2.webp': [
+            { word: 'bow', meaning: '뱃머리', sentence: 'He sat at the bow and played.' },
+            { word: 'blanket', meaning: '담요', sentence: 'He put a hand out from under the blanket.' },
+            { word: 'fill', meaning: '눈물이 글썽이다', sentence: "The lady's eyes filled." },
+            { word: 'one’s doing', meaning: '~ 덕분', sentence: 'That is your doing.' }
+        ],
+        '07-mine.webp': [
+            { word: 'make one’s own way', meaning: '제 힘으로 살다', sentence: 'He wanted to make his own way.' },
+            { word: 'gallery', meaning: '갱도', sentence: 'The gallery ran deep under the ground.' },
+            { word: 'close', meaning: '답답한', sentence: 'The air was close.' },
+            { word: 'pick', meaning: '곡괭이', sentence: 'The miners chipped with picks.' },
+            { word: 'pour into', meaning: '밀려들다', sentence: 'Water was pouring into the gallery.' }
+        ],
+        '07-mine-2.webp': [
+            { word: 'block', meaning: '막다', sentence: 'The way was blocked already.' },
+            { word: 'shut in', meaning: '가두다', sentence: 'They were shut into a narrow tunnel.' },
+            { word: 'shiver', meaning: '몸이 떨리다', sentence: 'They were hungry and shivering.' },
+            { word: 'sob', meaning: '흐느끼다', sentence: 'Somebody began to sob.' }
+        ],
+        '08-ending.webp': [
+            { word: 'rescuer', meaning: '구조대', sentence: 'The rescuers broke through the wall.' },
+            { word: 'coal dust', meaning: '검댕', sentence: 'It took days to wash the coal dust off.' },
+            { word: 'lick', meaning: '핥다', sentence: 'Capi kept licking his cheek.' },
+            { word: 'search for', meaning: '찾아다니다', sentence: 'They had been searching for him for years.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'go to live with', meaning: '함께 지내다', sentence: 'Rémi went to live with his new family.' },
+            { word: 'fetch', meaning: '모셔 오다', sentence: 'He brought Mother Barberin.' },
+            { word: 'ever after', meaning: '그 뒤로도', sentence: 'He went on teaching ever after.' },
+            { word: 'at one’s feet', meaning: '발치에', sentence: 'With Capi always lying at his feet.' }
+        ],
+        'end.webp': [
+            { word: 'come out', meaning: '나오다', sentence: 'It came out a hundred and forty years ago.' },
+            { word: 'of no use', meaning: '쓸 데가 없는', sentence: 'He taught what was of no use that day.' },
+            { word: 'raise', meaning: '기르다', sentence: 'He did not forget the one who raised him.' },
+            { word: 'mean to', meaning: '~에게 뜻하다', sentence: 'What did family mean to Rémi?' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -603,6 +1213,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -611,7 +1222,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -623,7 +1234,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -657,4 +1268,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
