@@ -8,20 +8,21 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
-> **⚠️ 글이 바뀌었습니다 (2026-09-03) — 세 장 다시**
-> 원작에 있는 **늙은 병사**를 이야기에 넣었습니다. 구두에 마법을 거는 사람입니다.
-> - `04-church` — 교회 안이 아니라 **교회 문 앞**입니다. 늙은 병사가 목발을 옆에 두고
->   앉아, 카렌의 구두 밑창을 톡톡 두드리는 장면으로.
-> - `05-dance` — 잔치 마당에 **그 병사가 등불 아래 서서 씩 웃고 있어야** 합니다.
->   카렌은 막 춤이 시작되어 오른발이 앞으로 쑥 나간 참입니다.
-> - `05-dance-2` — 들판을 지나 **가시덤불로 뛰어드는** 장면을 넣어 주세요.
->   치맛자락이 가시에 찢깁니다. 피는 그리지 마세요.
->
-> `cover`는 지금 파일 그대로 좋습니다. 병사도 가시덤불도 이제 본문에 있습니다.
->
-> **그림 놓는 자리** — 파일은 1376×768인데 화면 칸은 약 2.13:1이라 위아래가 잘립니다.
+> **⚠️ 다시 그려 주실 것 (2026-09-03)**
+> - `cover` — 지금 파일에 **파란 군복을 입은 늙은 병사**가 그려져 있습니다.
+>   그 인물은 안데르센 원작에는 나오지만 **이 책에는 나오지 않습니다.** 우리 책에
+>   나오는 사람은 카렌, 할머니, 구둣방 주인, 숲속 나무꾼의 아내뿐입니다.
+>   주문서에 적힌 대로 **사람은 한 명도 넣지 말고**, 달빛 어린 마을 광장에 빨강 구두
+>   한 켤레만 놓인 그림으로 다시 그려 주세요.
+
+> **그림 놓는 자리 (2026-09-03)**
+> 파일은 1376×768로 주시는데 화면의 그림칸은 약 2.13:1이라 **위아래가 잘립니다.**
 > 위 61px, 아래 61px을 하늘이나 바닥 같은 **빈 띠**로 두세요. 얼굴·손·발이 그 안에
-> 들어가면 잘려 나갑니다. 그림 안에 테두리나 가로줄은 넣지 마세요.
+> 들어가면 잘려 나갑니다. 그림 안에 테두리나 가로줄은 그리지 마세요.
+> (지금 파일 가운데 `01-barefoot`·`02-adopted`·`05-dance` 석 장이 띠 없이 꽉 차 있어
+> 위아래로 61px씩 잘립니다. `05-dance`에는 흰 가로줄도 하나 들어가 있습니다.)
+>
+> 아직 없는 그림: `08-ending-2.webp`, `end.webp`
 
 > **한 파일 = 한 장면입니다. 앞질러 가지 마세요.**
 > 파일마다 뒤에 〔이 쪽에 실린 글〕을 붙여 두었습니다. 그 쪽에 실제로 실리는 글이에요.
@@ -55,18 +56,14 @@ Karen: a girl about 10 with fair braids, first barefoot in a patched dress,
 later in a neat dark dress with bright red shoes. The old lady: a kind
 white-haired woman with spectacles and a lace collar. The shoemaker: a stooped
 man with a leather apron and a curious half-smile. A woodcutter's wife: a sturdy
-woman with kind eyes and flour on her hands. The old soldier: a bent old man in
-a worn blue uniform with brass buttons and a tall cap, a crutch propped beside
-him and a strange reddish beard, grinning as if he knows something. He is odd
-and a little eerie, never frightening, and he appears twice - at the church door
-and again at the feast.
+woman with kind eyes and flour on her hands.
 ```
 
 ## 표지 · 마무리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a girl in a purple dress dancing helplessly on in her bright red shoes with a thorny bramble catching at her skirt, and the bent old soldier behind her raising one finger, a green hillside and evening sky beyond. Or, if a quieter cover is wanted, a pair of bright red shoes standing alone in the middle of a moonlit village square, faint dancing footprints circling them, a small church and dark trees beyond, striking and slightly mysterious but not frightening. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover with NO PEOPLE IN IT AT ALL - no girl, no soldier, nobody: just a pair of bright red shoes standing alone in the middle of a moonlit village square, faint dancing footprints circling them, a small church and dark trees beyond, striking and slightly mysterious but not frightening. |
 | `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 맨발의 아이
@@ -94,15 +91,15 @@ and again at the feast.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-church.webp` | The steps outside a village church where a bent old soldier in a worn blue uniform sits with his crutch beside him, bowing to a girl and tapping the soles of her bright red shoes with one finger while she looks down puzzled, morning light, odd and a little eerie but never frightening. 〔이 쪽에 실린 글 (7/16) — 그림에 글자는 넣지 마세요. 왼쪽: 일요일 아침이 되었습니다. 카렌은 그 구두를 신고 예배당에 갔지요. 문을 들어서자 사람들이 돌아보았습니다. 눈길이 모두 발끝으로 모였지요. 카렌은 어깨가 으쓱해졌습니다. 자리에 앉아서도 발만 내려다보았지요. / 오른쪽: 앞에서 무슨 말을 하는지 들리지 않았습니다. 머릿속은 온통 빨간 구두 생각뿐이었지요. 내일은 어디에 신고 갈까. 사람들이 또 쳐다보겠지.〕 |
+| `images/04-church.webp` | A village church interior where a girl in a pew stares down at her bright red shoes while everyone else looks forward, sunlight catching only the shoes, telling. 〔이 쪽에 실린 글 (7/16) — 그림에 글자는 넣지 마세요. 왼쪽: 일요일 아침이 되었습니다. 카렌은 그 구두를 신고 예배당에 갔지요. 문을 들어서자 사람들이 돌아보았습니다. 눈길이 모두 발끝으로 모였지요. 카렌은 어깨가 으쓱해졌습니다. 자리에 앉아서도 발만 내려다보았지요. / 오른쪽: 앞에서 무슨 말을 하는지 들리지 않았습니다. 머릿속은 온통 빨간 구두 생각뿐이었지요. 내일은 어디에 신고 갈까. 사람들이 또 쳐다보겠지.〕 |
 | `images/04-church-2.webp` | A girl polishing red shoes obsessively by a window while an old lady lies pale in bed behind her calling for water, neighbours at the door, telling and sad. 〔이 쪽에 실린 글 (8/16) — 그림에 글자는 넣지 마세요. 왼쪽: 집에 돌아와서도 마찬가지였습니다. 카렌은 구두만 닦고 또 닦았지요. 헝겊으로 문지르며 들여다보았습니다. 부인이 부르는 소리도 듣지 못했지요. 카렌아, 물 좀 다오. / 오른쪽: 기침이 심하고 얼굴이 파리했지요. 이웃 사람들이 걱정하며 찾아왔습니다. 곁을 잘 지켜 드려야 한다. 카렌은 건성으로 대답했지요.〕 |
 
 ## 5장 · 멈추지 않는 춤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-dance.webp` | A lantern-lit village square with musicians where a girl in red shoes has just begun to dance, her right foot shooting out in front of her as if it moved on its own, and the same old soldier standing under a lantern at the edge of the crowd grinning at her, festive and warm with one uneasy note. 〔이 쪽에 실린 글 (9/16) — 그림에 글자는 넣지 마세요. 왼쪽: 그날 저녁 마을에 잔치가 열렸습니다. 광장에 등불이 걸리고 악사들이 모였지요. 카렌은 창밖을 내다보았습니다. 발이 근질근질했지요. 부인은 자리에 누워 잠들어 있었습니다. 카렌은 살그머니 구두를 신었지요. 그러고는 몰래 집을 빠져나갔습니다. 광장에 이르자 음악이 울렸지요. / 오른쪽: 그 순간 발이 저절로 움직였습니다. 카렌은 신이 나서 빙글빙글 돌았지요. 사람들이 손뼉을 쳐 주었지요. 카렌은 더욱 신이 났습니다. 치맛자락이 팽이처럼 돌았지요. 등불이 눈앞에서 어른거렸습니다.〕 |
-| `images/05-dance-2.webp` | A girl carried away by her own dancing feet out of a village square, across a moonlit field and straight into a thorn hedge that catches and rips her skirt, startled villagers far behind, dramatic but not scary and with no blood. 〔이 쪽에 실린 글 (10/16) — 그림에 글자는 넣지 마세요. 왼쪽: 그런데 한 곡이 끝나도 발이 멈추지 않았습니다. 두 곡이 끝나도 마찬가지였지요. 어? 왜 이러지? 카렌은 발을 붙잡으려 했습니다. / 오른쪽: 카렌을 이끌고 광장 밖으로 나갔습니다. 사람들이 놀라 길을 비켰지요. 구두는 들판을 지나 숲으로 향했습니다. 달빛 아래를 밤새 춤추며 갔지요. 카렌은 숨이 턱까지 찼습니다. 나뭇가지가 얼굴을 스쳤지요. 그래도 발은 멈추지 않았습니다.〕 |
+| `images/05-dance.webp` | A lantern-lit village square with musicians where a girl in red shoes slips in and begins to dance, villagers clapping, festive and warm. 〔이 쪽에 실린 글 (9/16) — 그림에 글자는 넣지 마세요. 왼쪽: 그날 저녁 마을에 잔치가 열렸습니다. 광장에 등불이 걸리고 악사들이 모였지요. 카렌은 창밖을 내다보았습니다. 발이 근질근질했지요. 부인은 자리에 누워 잠들어 있었습니다. 카렌은 살그머니 구두를 신었지요. 그러고는 몰래 집을 빠져나갔습니다. 광장에 이르자 음악이 울렸지요. / 오른쪽: 그 순간 발이 저절로 움직였습니다. 카렌은 신이 나서 빙글빙글 돌았지요. 사람들이 손뼉을 쳐 주었지요. 카렌은 더욱 신이 났습니다. 치맛자락이 팽이처럼 돌았지요. 등불이 눈앞에서 어른거렸습니다.〕 |
+| `images/05-dance-2.webp` | A girl carried away by her own dancing feet out of a village square and across a moonlit field toward dark woods, startled villagers behind, dramatic but not scary. 〔이 쪽에 실린 글 (10/16) — 그림에 글자는 넣지 마세요. 왼쪽: 그런데 한 곡이 끝나도 발이 멈추지 않았습니다. 두 곡이 끝나도 마찬가지였지요. 어? 왜 이러지? 카렌은 발을 붙잡으려 했습니다. / 오른쪽: 카렌을 이끌고 광장 밖으로 나갔습니다. 사람들이 놀라 길을 비켰지요. 구두는 들판을 지나 숲으로 향했습니다. 달빛 아래를 밤새 춤추며 갔지요. 카렌은 숨이 턱까지 찼습니다. 나뭇가지가 얼굴을 스쳤지요. 그래도 발은 멈추지 않았습니다.〕 |
 
 ## 6장 · 벗겨지지 않는 구두
 

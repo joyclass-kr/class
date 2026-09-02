@@ -117,16 +117,14 @@ const CHAPTERS = [
                 "emoji": "⛪",
                 "left": [
                     "일요일 아침이 되었습니다. 카렌은 그 구두를 신고 예배당에 갔지요.",
-                    "그런데 문 앞에 늙은 병사가 앉아 있었습니다. 목발을 옆에 세워 두었고, 수염이 불그스름했지요.",
-                    "\"구두를 닦아 드릴까요, 아가씨.\"",
-                    "병사가 굽신 인사를 하더니 구두 밑창을 두드렸습니다. 톡, 톡, 톡."
+                    "문을 들어서자 사람들이 돌아보았습니다. 눈길이 모두 발끝으로 모였지요.",
+                    "카렌은 어깨가 으쓱해졌습니다. 자리에 앉아서도 발만 내려다보았지요."
                 ],
                 "right": [
-                    "\"허, 참 예쁜 춤 구두로구나.\"",
-                    "\"춤출 때 꼭 붙어 있거라.\"",
-                    "카렌은 무슨 말인지 몰라 그냥 웃었습니다. 그런데 구두가 발밑에서 꿈틀한 것 같았지요.",
-                    "문을 들어서자 사람들이 돌아보았습니다. 눈길이 모두 발끝으로 모였지요.",
-                    "카렌은 자리에 앉아서도 발끝만 내려다보았습니다."
+                    "앞에서 무슨 말을 하는지 들리지 않았습니다. 머릿속은 온통 빨간 구두 생각뿐이었지요.",
+                    "\"내일은 어디에 신고 갈까.\"",
+                    "\"사람들이 또 쳐다보겠지.\"",
+                    "예배가 끝난 줄도 몰랐지요. 사람들이 일어서고서야 정신이 들었습니다."
                 ]
             },
             {
@@ -155,15 +153,14 @@ const CHAPTERS = [
                 "art": "05-dance.webp",
                 "emoji": "💃",
                 "left": [
-                    "그날 저녁 마을에 잔치가 열렸습니다. 광장에 등불이 걸리고 악사들이 모였지요.",
-                    "부인은 자리에 누워 잠들어 있었습니다. 카렌은 살그머니 구두를 신고 집을 빠져나갔지요.",
-                    "광장에 이르자 음악이 울렸습니다. 카렌은 사람들 틈으로 뛰어들었지요."
+                    "그날 저녁 마을에 잔치가 열렸습니다. 광장에 등불이 걸리고 악사들이 모였지요. 카렌은 창밖을 내다보았습니다.",
+                    "발이 근질근질했지요. 부인은 자리에 누워 잠들어 있었습니다. 카렌은 살그머니 구두를 신었지요.",
+                    "그러고는 몰래 집을 빠져나갔습니다. 광장에 이르자 음악이 울렸지요."
                 ],
                 "right": [
-                    "그런데 등불 아래에 그 병사가 서 있었습니다. 카렌을 보더니 씩 웃었지요.",
-                    "\"허, 참 예쁜 춤 구두로구나!\"",
-                    "그 말이 끝나기가 무섭게 오른발이 쑥 나갔습니다. 이어서 왼발이 따라 나갔지요.",
-                    "카렌은 빙글, 또 빙글 돌았습니다. 등불이 눈앞에서 어른거렸지요."
+                    "그 순간 발이 저절로 움직였습니다. 카렌은 신이 나서 빙글빙글 돌았지요.",
+                    "사람들이 손뼉을 쳐 주었지요. 카렌은 더욱 신이 났습니다.",
+                    "치맛자락이 팽이처럼 돌았지요. 등불이 눈앞에서 어른거렸습니다."
                 ]
             },
             {
@@ -177,9 +174,8 @@ const CHAPTERS = [
                     "하지만 구두는 말을 듣지 않았지요."
                 ],
                 "right": [
-                    "카렌을 이끌고 광장 밖으로 나갔습니다. 사람들이 놀라 길을 비켰지요.",
-                    "구두는 들판을 지나 가시덤불로 뛰어들었습니다. 가시가 치맛자락을 죽 찢었지요.",
-                    "달빛 아래를 밤새 춤추며 갔습니다. 카렌은 숨이 턱까지 찼지요.",
+                    "카렌을 이끌고 광장 밖으로 나갔습니다. 사람들이 놀라 길을 비켰지요. 구두는 들판을 지나 숲으로 향했습니다.",
+                    "달빛 아래를 밤새 춤추며 갔지요. 카렌은 숨이 턱까지 찼습니다. 나뭇가지가 얼굴을 스쳤지요.",
                     "그래도 발은 멈추지 않았습니다."
                 ]
             }
@@ -419,7 +415,7 @@ const AFTERWORD = {
                 "안데르센은 어릴 적 처음 신은 새 구두를 오래 기억했다고 합니다. 그 기억이 이 이야기가 되었지요.",
                 "카렌은 여름 내내 맨발이었습니다. 처음 신은 것은 아주머니가 헝겊을 이어 만들어 준 빨간 신이었지요.",
                 "구둣방에서 빨간 구두를 고른 것은 눈이 어두운 부인이 못 보았기 때문입니다. 카렌은 그것을 알고도 말하지 않았고요.",
-                "구두에 마법을 건 사람은 교회 문 앞의 늙은 병사입니다. 밑창을 톡톡 두드리며 춤출 때 꼭 붙어 있으라고 했지요. 잔치 마당에 그가 다시 나타나 같은 말을 하자, 그때부터 발이 말을 듣지 않습니다."
+                "잔치에 몰래 나간 밤, 발이 저절로 움직입니다. 그만두고 싶어도 그만둘 수가 없었지요."
             ],
             right: [
                 "카렌을 멈춰 세운 것은 숲속 오두막의 아주머니입니다. 붙잡아 앉히고 물 한 그릇을 떠 주었지요.",
@@ -690,17 +686,20 @@ const EN = {
                     art: '04-church.webp',
                     emoji: '⛪',
                     left: [
-                        "Sunday morning came, and Karen wore the shoes to church.",
-                        "But there was an old soldier sitting by the door, his crutch propped beside him and his beard a strange reddish colour.",
-                        "\"Shall I dust your shoes for you, my lady?\"",
-                        "He bowed low, and then he tapped the soles. Tap, tap, tap."
+                        "Sunday morning came,",
+                        "and Karen wore the shoes to church.",
+                        "When she came in, people turned to look,",
+                        "and every eye went to her feet.",
+                        "Karen felt her shoulders go back,",
+                        "and even sitting down she looked at nothing but her feet."
                     ],
                     right: [
-                        "\"Well now! What pretty dancing shoes.\"",
-                        "\"Sit fast when you dance.\"",
-                        "Karen did not know what he meant, so she only smiled. But the shoes seemed to twitch under her feet.",
-                        "When she came in, people turned to look, and every eye went to her feet.",
-                        "And even sitting down, Karen looked at nothing but her toes."
+                        "She did not hear a word of what was said at the front.",
+                        "Her head was full of nothing but the red shoes.",
+                        "\"Where shall I wear them tomorrow?\"",
+                        "\"People will look again.\"",
+                        "She did not notice the service had ended,",
+                        "and only came to herself when everybody stood up."
                     ]
                 },
                 {
@@ -733,15 +732,22 @@ const EN = {
                     art: '05-dance.webp',
                     emoji: '💃',
                     left: [
-                        "That evening there was a feast in the village. Lamps were hung in the square and the musicians gathered.",
-                        "The lady was asleep in her bed. Karen quietly put on the shoes and slipped out of the house.",
-                        "When she reached the square the music struck up, and Karen ran in among the dancers."
+                        "That evening there was a feast in the village.",
+                        "Lamps were hung in the square and the musicians gathered.",
+                        "Karen looked out of the window,",
+                        "and her feet itched.",
+                        "The lady was asleep in her bed.",
+                        "Karen quietly put on the shoes",
+                        "and slipped out of the house.",
+                        "When she reached the square the music struck up."
                     ],
                     right: [
-                        "And there under the lamps stood that same old soldier. He saw Karen and grinned at her.",
-                        "\"Well now! What pretty dancing shoes!\"",
-                        "The words were hardly out before her right foot shot forward. Then the left came after it.",
-                        "Karen spun round, and round again. The lamps went past her eyes in a blur."
+                        "And in that instant her feet began to move by themselves.",
+                        "Karen went round and round, delighted.",
+                        "People clapped for her,",
+                        "and Karen was more delighted still.",
+                        "Her skirt spun round like a top,",
+                        "and the lamps went past her eyes in a blur."
                     ]
                 },
                 {
@@ -756,8 +762,9 @@ const EN = {
                         "And the shoes would not listen."
                     ],
                     right: [
-                        "They carried her out of the square. People stood back in surprise.",
-                        "The shoes took her across the fields and straight into a thorn hedge. The thorns tore a long rip down her skirt.",
+                        "They carried her out of the square.",
+                        "People stood back in surprise,",
+                        "and the shoes took her across the fields and toward the wood.",
                         "They danced her along under the moon all night.",
                         "Karen could hardly breathe,",
                         "and branches brushed her face.",
@@ -958,7 +965,7 @@ const EN = {
                     "Andersen is said to have remembered the first new shoes he ever wore for a very long time. That memory became this story.",
                     "Karen went barefoot all summer. The first shoes she ever wore were red ones a kind woman sewed for her out of rags.",
                     "She could choose the red leather shoes in the shop because the lady's eyes were too weak to see them. Karen knew that, and said nothing.",
-                    "It is the old soldier at the church door who puts the spell on the shoes. He taps the soles and tells them to sit fast when she dances. When he turns up again at the feast and says it a second time, her feet stop obeying her."
+                    "On the night she slipped out to the feast, her feet begin to move by themselves. She wanted to stop and could not."
                 ],
                 right: [
                     "The person who stops her is a woman in a cottage in the wood. She takes hold of her, sits her down and fetches her a bowl of water.",
@@ -1009,11 +1016,9 @@ const EN = {
         ],
         '04-church.webp': [
             { word: 'turn to look', meaning: '돌아보다', sentence: 'People turned to look.' },
-            { word: 'crutch', meaning: '목발', sentence: 'His crutch was propped beside him.' },
-            { word: 'bow low', meaning: '굽신 인사하다', sentence: 'He bowed low, and then he tapped the soles.' },
-            { word: 'sole', meaning: '구두 밑창', sentence: 'He tapped the soles. Tap, tap, tap.' },
-            { word: 'sit fast', meaning: '꼭 붙어 있다', sentence: 'Sit fast when you dance.' },
-            { word: 'twitch', meaning: '꿈틀하다', sentence: 'The shoes seemed to twitch under her feet.' }
+            { word: 'shoulders go back', meaning: '어깨가 으쓱해지다', sentence: 'Karen felt her shoulders go back.' },
+            { word: 'service', meaning: '예배', sentence: 'She did not notice the service had ended.' },
+            { word: 'come to oneself', meaning: '정신이 들다', sentence: 'And only came to herself when everybody stood up.' }
         ],
         '04-church-2.webp': [
             { word: 'rub at', meaning: '문지르다', sentence: 'Rubbing at them with a cloth.' },
@@ -1023,9 +1028,8 @@ const EN = {
         ],
         '05-dance.webp': [
             { word: 'feast', meaning: '잔치', sentence: 'There was a feast in the village.' },
-            { word: 'slip out', meaning: '몰래 빠져나가다', sentence: 'She quietly slipped out of the house.' },
-            { word: 'grin', meaning: '씩 웃다', sentence: 'He saw Karen and grinned at her.' },
-            { word: 'shoot forward', meaning: '쑥 나가다', sentence: 'Her right foot shot forward.' },
+            { word: 'itch', meaning: '근질근질하다', sentence: 'And her feet itched.' },
+            { word: 'slip out', meaning: '몰래 빠져나가다', sentence: 'And slipped out of the house.' },
             { word: 'strike up', meaning: '연주가 시작되다', sentence: 'The music struck up.' },
             { word: 'in a blur', meaning: '어른어른', sentence: 'The lamps went past her eyes in a blur.' }
         ],
@@ -1033,8 +1037,7 @@ const EN = {
             { word: 'tune', meaning: '곡', sentence: 'When one tune ended her feet did not stop.' },
             { word: 'take hold of', meaning: '붙잡다', sentence: 'Karen tried to take hold of her own feet.' },
             { word: 'stand back', meaning: '길을 비키다', sentence: 'People stood back in surprise.' },
-            { word: 'thorn hedge', meaning: '가시덤불', sentence: 'The shoes took her straight into a thorn hedge.' },
-            { word: 'tear', meaning: '찢다', sentence: 'The thorns tore a long rip down her skirt.' }
+            { word: 'brush', meaning: '스치다', sentence: 'Branches brushed her face.' }
         ],
         '06-stuck.webp': [
             { word: 'dew', meaning: '이슬', sentence: 'Her clothes were wet with dew.' },
@@ -1078,7 +1081,7 @@ const EN = {
             { word: 'show off', meaning: '자랑하다', sentence: 'His memory of showing off his first new shoes.' },
             { word: 'tell off', meaning: '꾸중하다', sentence: 'And being told off for it.' },
             { word: 'say nothing', meaning: '말하지 않다', sentence: 'Karen knew that, and said nothing.' },
-            { word: 'put a spell on', meaning: '마법을 걸다', sentence: 'The old soldier puts the spell on the shoes.' }
+            { word: 'by themselves', meaning: '저절로', sentence: 'Her feet begin to move by themselves.' }
         ]
     }
 };
