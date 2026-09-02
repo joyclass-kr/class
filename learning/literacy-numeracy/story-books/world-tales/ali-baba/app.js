@@ -273,16 +273,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '알리바바와 40인의 도적',
+    intro: [
+        '알리바바와 40인의 도적 역시 아라비안나이트, 곧 천일야화에 실린 이야기예요.',
+        '이 이야기에서 가장 크게 활약하는 사람은 알리바바가 아니라 하녀 모르지아나입니다. 힘이나 재산이 아니라 눈썰미와 침착함으로 위기를 넘기는 인물이 주인공 노릇을 하는 것이 이 이야기의 재미랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🗝️')}
             </div>
             <div class="story-page-right">
-                <h1>알리바바와 40인의 도적</h1>
-                <p>알리바바와 40인의 도적 역시 아라비안나이트, 곧 천일야화에 실린 이야기예요.</p>
-                <p>이 이야기에서 가장 크게 활약하는 사람은 알리바바가 아니라 하녀 모르지아나입니다. 힘이나 재산이 아니라 눈썰미와 침착함으로 위기를 넘기는 인물이 주인공 노릇을 하는 것이 이 이야기의 재미랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -297,8 +306,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -308,8 +317,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -319,22 +328,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -384,9 +394,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -397,7 +407,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -469,7 +479,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -478,34 +488,531 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Ali Baba and the Forty Thieves',
+        intro: [
+            "Ali Baba and the Forty Thieves also comes from the Arabian Nights, the thousand and one nights of tales.",
+            "The one who does most in this story is not Ali Baba but Morgiana, the servant. What makes it such good reading is that the person who carries it is somebody with neither strength nor money — only a sharp eye and a steady head."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · Open Sesame',
+            beats: [
+                {
+                    art: '01-cave.webp',
+                    emoji: '🪓',
+                    left: [
+                        "One axe and three donkeys.",
+                        "That was everything Ali Baba owned. His brother Cassim was the richest man in the same village — two brothers who lived very different lives.",
+                        "That day, as usual, Ali Baba went up the hill at dawn to cut wood.",
+                        "He was hard at work when a cloud of dust went up in the distance."
+                    ],
+                    right: [
+                        "Drumming, drumming.",
+                        "The sound of hooves came shaking the ground, closer and closer.",
+                        "Ali Baba scrambled quickly up a tree.",
+                        "He held his breath and looked down: a whole troop of riders was coming."
+                    ]
+                },
+                {
+                    art: '01-cave-2.webp',
+                    emoji: '🪓',
+                    left: [
+                        "Ali Baba counted them on his fingers. There were forty of them.",
+                        "Every one had a cloth over his face,",
+                        "and every one carried a heavy sack on his back.",
+                        "Then a man who looked like the captain came forward and stood before a great rock."
+                    ],
+                    right: [
+                        "\"Open, Sesame!\"",
+                        "And the rock split apart. The thieves went in one behind another.",
+                        "A long while later they all came out empty-handed.",
+                        "\"Shut, Sesame!\"",
+                        "And the rock closed up without a seam."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Cave Full of Treasure',
+            beats: [
+                {
+                    art: '02-treasure.webp',
+                    emoji: '💰',
+                    left: [
+                        "When the thieves were well away, Ali Baba climbed carefully down.",
+                        "He hung about behind the tree for a long while.",
+                        "Then he screwed up his courage and stood in front of the rock.",
+                        "\"O-open, Sesame.\"",
+                        "And the rock really did split apart."
+                    ],
+                    right: [
+                        "Inside, the light dazzled him. Gold coins lay heaped up like hills,",
+                        "and there were silks and jewels besides.",
+                        "Ali Baba rubbed his eyes over and over.",
+                        "\"Wherever did they get all this?\"",
+                        "He stood there a long time."
+                    ]
+                },
+                {
+                    art: '02-treasure-2.webp',
+                    emoji: '💰',
+                    left: [
+                        "Ali Baba decided to take only a little of the gold. He divided it into three sacks, loaded them on the donkeys,",
+                        "and heaped firewood on top.",
+                        "\"Shut, Sesame.\"",
+                        "The rock closed again, and Ali Baba went down the hill without looking back."
+                    ],
+                    right: [
+                        "When he got home and untied the sacks, his wife's eyes went round.",
+                        "\"We must count all this.\"",
+                        "\"Never mind counting. Let us bury it.\"",
+                        "But his wife could not leave it alone.",
+                        "In the end she went to his brother's house to borrow a measure —",
+                        "the wooden bowl for measuring grain."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Brother's Greed",
+            beats: [
+                {
+                    art: '03-brother.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "Cassim's wife thought it very odd.",
+                        "\"What can a poor house have to measure?\"",
+                        "So she smeared a little soft wax on the bottom of the measure.",
+                        "Next day she turned it over when it came back.",
+                        "A gold coin was stuck fast in the wax.",
+                        "She ran straight to Cassim with it."
+                    ],
+                    right: [
+                        "\"Where has this gold come from!\"",
+                        "Ali Baba could not keep it back in the end. He told the whole thing, leaving nothing out.",
+                        "\"Then take me to that cave.\"",
+                        "\"Brother, you must not be greedy about this.\"",
+                        "But Cassim would not hear a word of it."
+                    ]
+                },
+                {
+                    art: '03-brother-2.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "Next day Cassim went up the hill, and he took ten mules with him.",
+                        "\"Open, Sesame!\"",
+                        "The rock split apart.",
+                        "Once inside, Cassim quite lost his head, and filled sack after sack to the brim with gold."
+                    ],
+                    right: [
+                        "\"That will do.\"",
+                        "But when he came to go out, the words would not come to him.",
+                        "\"Open, Barley!\"",
+                        "\"Open, Beans!\"",
+                        "The rock did not move.",
+                        "And while he stood there, the thieves came back."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Mark on the Door',
+            beats: [
+                {
+                    art: '04-chalk.webp',
+                    emoji: '🚪',
+                    left: [
+                        "Cassim never came home.",
+                        "Next day Ali Baba went up the hill. He found his brother at the cave and brought him home at last, and Cassim's wife sat down where she stood and wept.",
+                        "The house was in an uproar.",
+                        "And then Morgiana stepped forward."
+                    ],
+                    right: [
+                        "She was a servant in his brother's house, and very quick indeed.",
+                        "\"If word of this gets about we are finished.\"",
+                        "\"Leave it to me.\"",
+                        "Morgiana held the funeral quietly and left the door exactly as it always was, as though nothing had happened.",
+                        "Not one neighbour guessed a thing."
+                    ]
+                },
+                {
+                    art: '04-chalk-2.webp',
+                    emoji: '🚪',
+                    left: [
+                        "Meanwhile the thieves had found the body gone.",
+                        "\"So somebody else knows about the cave.\"",
+                        "One of them went down into the village, going from house to house and asking about.",
+                        "At last he found the right one,",
+                        "and quietly put a chalk mark on the door."
+                    ],
+                    right: [
+                        "Next morning Morgiana came out to fetch water, and stopped dead at the sight of the mark.",
+                        "'What is that doing there?'",
+                        "Morgiana fetched a piece of chalk at once,",
+                        "and drew exactly the same mark on every door in the neighbourhood.",
+                        "Twenty houses, thirty houses."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Oil Jars',
+            beats: [
+                {
+                    art: '05-jars.webp',
+                    emoji: '🏺',
+                    left: [
+                        "That night the thieves went for nothing. The same mark was on every door in the place.",
+                        "\"Which house is it, then!\"",
+                        "In the end the captain went himself. This time he made no mark.",
+                        "He fixed the shape of the house firmly in his head instead."
+                    ],
+                    right: [
+                        "\"That will do it.\"",
+                        "A few days later a guest came to Ali Baba's house, dressed as an oil merchant.",
+                        "\"Might I have a bed for one night?\"",
+                        "Ali Baba gave him a room readily enough.",
+                        "The guest set down great jars in the yard.",
+                        "There were forty of them."
+                    ]
+                },
+                {
+                    art: '05-jars-2.webp',
+                    emoji: '🏺',
+                    left: [
+                        "The night grew late. Morgiana went to light the lamp and found the oil was gone.",
+                        "\"I shall take a little from the jars in the yard.\"",
+                        "She went up to one of them.",
+                        "And a voice came out of it.",
+                        "\"Captain — is it now?\""
+                    ],
+                    right: [
+                        "Morgiana's breath stopped.",
+                        "But she kept her voice low and answered as if she were he.",
+                        "\"Not yet. Wait.\"",
+                        "\"Yes, captain.\"",
+                        "There was a man inside every jar.",
+                        "Only one of them held any oil at all."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: "Chapter 6 · Morgiana's Dance",
+            beats: [
+                {
+                    art: '06-dance.webp',
+                    emoji: '🔥',
+                    left: [
+                        "Morgiana did not hurry. She went to the jar with the oil in it and drew off a great potful,",
+                        "and set it boiling in the kitchen.",
+                        "Bubble, bubble.",
+                        "The steam went up to the ceiling.",
+                        "Then she carried the pot out into the yard."
+                    ],
+                    right: [
+                        "And she poured the hot oil into every jar.",
+                        "There was an uproar inside them.",
+                        "\"Aah — it's hot!\"",
+                        "The thieves came leaping out of the jars, hopping about, and went over the wall and away in every direction.",
+                        "The captain in his room heard the noise and slipped out by the back door."
+                    ]
+                },
+                {
+                    art: '06-dance-2.webp',
+                    emoji: '💃',
+                    left: [
+                        "Next day the captain came back, this time dressed as a merchant.",
+                        "He made friends, little by little, with Ali Baba's son,",
+                        "and got himself invited to supper.",
+                        "But Morgiana, laying the table, saw his face.",
+                        "'I have seen that face somewhere.'"
+                    ],
+                    right: [
+                        "She thought hard, and then it came to her.",
+                        "At the meal, Morgiana asked leave to dance.",
+                        "Boom, boom, boom.",
+                        "She turned and turned to the drum,",
+                        "with a small dagger at her waist.",
+                        "The dance stopped dead in front of the guest, and her sleeve brushed his coat open."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · Found Out',
+            beats: [
+                {
+                    art: '07-revealed.webp',
+                    emoji: '⚔️',
+                    left: [
+                        "And in that instant they saw what was under his coat: a great sword hidden at his waist.",
+                        "\"Master — look at this man!\"",
+                        "Morgiana called out.",
+                        "\"This is the oil merchant from the other night.\"",
+                        "The room froze in a moment."
+                    ],
+                    right: [
+                        "The son dropped the cup he was holding.",
+                        "The captain sprang up and made for the door.",
+                        "But the doorway was packed with people —",
+                        "the neighbours, standing guard.",
+                        "Morgiana had called them in before she ever began to dance.",
+                        "And the captain was taken there and then."
+                    ]
+                },
+                {
+                    art: '07-revealed-2.webp',
+                    emoji: '⚔️',
+                    left: [
+                        "Ali Baba was silent for a long while.",
+                        "Then he looked at Morgiana.",
+                        "\"You have saved this whole house.\"",
+                        "\"You are no servant now.\"",
+                        "Morgiana shook her head.",
+                        "\"I only did what there was to do.\""
+                    ],
+                    right: [
+                        "Some time later Ali Baba went back to the cave, and this time he took his son.",
+                        "The gold he brought out he shared evenly among the villagers.",
+                        "With it they dug a well and mended the broken road.",
+                        "Only the words he told to nobody.",
+                        "They stayed a thing that one house alone knew."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What was Ali Baba doing when he saw the thieves?',
+            choices: ['Taking grain to market', 'Visiting his brother', 'Cutting wood on the hill'],
+            answer: 2
+        },
+        {
+            q: 'How did Cassim’s wife find out about the gold?',
+            choices: ['She followed Ali Baba up the hill', 'She waxed the bottom of the measure she lent them', 'A thief told her'],
+            answer: 1
+        },
+        {
+            q: 'Why could Cassim not get out of the cave?',
+            choices: ['He had forgotten the words', 'The thieves had blocked the entrance', 'His sacks were too heavy'],
+            answer: 0
+        },
+        {
+            q: 'What did Morgiana do about the chalk mark?',
+            choices: ['She rubbed it off', 'She told the neighbours to watch', 'She put the same mark on every door in the neighbourhood'],
+            answer: 2
+        },
+        {
+            q: 'What was really inside the oil jars?',
+            choices: ['Gold from the cave', 'A thief in each one, and oil in only one', 'Nothing at all'],
+            answer: 1
+        },
+        {
+            q: 'How did Morgiana show who the guest was?',
+            choices: ['Her dance brushed his coat open and showed the sword', 'She asked him his name', 'She found his chalk'],
+            answer: 0
+        },
+        {
+            q: 'Why could the captain not escape through the door?',
+            choices: ['The son held him back', 'The door was locked', 'Morgiana had called the neighbours in beforehand'],
+            answer: 2
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🏺',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Ali Baba was not in the Arabian Nights to begin with. A Frenchman added it about three hundred years ago while translating the book.",
+                    "Ali Baba was not a rich man. He cut wood and sold it. He only saw the thieves open that door because he had gone up the hill to cut wood.",
+                    "'Open, Sesame' is very short. His brother forgot those few words and was shut in the cave. Ali Baba did not forget them because he had said them over to himself again and again.",
+                    "And it was not Ali Baba who sent his brother to that cave. His sister-in-law lent them a measure and waxed the bottom of it, and that is how she found out."
+                ],
+                right: [
+                    "The person who saves lives most often in this story is Morgiana, the servant — hearing the voice inside the jar, putting the same chalk mark on every house in the street.",
+                    "How much should Ali Baba have taken out of that cave?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-cave.webp': [
+            { word: 'axe', meaning: '도끼', sentence: 'One axe and three donkeys.' },
+            { word: 'own', meaning: '가지다', sentence: 'That was everything Ali Baba owned.' },
+            { word: 'hooves', meaning: '말발굽', sentence: 'The sound of hooves came shaking the ground.' },
+            { word: 'scramble up', meaning: '기어오르다', sentence: 'Ali Baba scrambled quickly up a tree.' }
+        ],
+        '01-cave-2.webp': [
+            { word: 'count on one’s fingers', meaning: '손가락을 꼽아 세다', sentence: 'Ali Baba counted them on his fingers.' },
+            { word: 'captain', meaning: '두목', sentence: 'A man who looked like the captain came forward.' },
+            { word: 'split apart', meaning: '쩍 갈라지다', sentence: 'And the rock split apart.' },
+            { word: 'empty-handed', meaning: '빈손으로', sentence: 'They all came out empty-handed.' },
+            { word: 'seam', meaning: '이음매', sentence: 'The rock closed up without a seam.' }
+        ],
+        '02-treasure.webp': [
+            { word: 'hang about', meaning: '망설이며 서성이다', sentence: 'He hung about behind the tree for a long while.' },
+            { word: 'screw up one’s courage', meaning: '큰맘 먹다', sentence: 'Then he screwed up his courage.' },
+            { word: 'dazzle', meaning: '눈부시게 하다', sentence: 'Inside, the light dazzled him.' },
+            { word: 'silk', meaning: '비단', sentence: 'There were silks and jewels besides.' }
+        ],
+        '02-treasure-2.webp': [
+            { word: 'divide', meaning: '나누다', sentence: 'He divided it into three sacks.' },
+            { word: 'heap on', meaning: '수북이 덮다', sentence: 'And heaped firewood on top.' },
+            { word: 'bury', meaning: '묻다', sentence: 'Never mind counting. Let us bury it.' },
+            { word: 'measure', meaning: '됫박', sentence: 'She went to borrow a measure.' }
+        ],
+        '03-brother.webp': [
+            { word: 'odd', meaning: '이상한', sentence: "Cassim's wife thought it very odd." },
+            { word: 'smear', meaning: '바르다', sentence: 'She smeared a little soft wax on the bottom.' },
+            { word: 'wax', meaning: '밀랍', sentence: 'A gold coin was stuck fast in the wax.' },
+            { word: 'leave nothing out', meaning: '빠짐없이 말하다', sentence: 'He told the whole thing, leaving nothing out.' },
+            { word: 'greedy', meaning: '욕심내는', sentence: 'You must not be greedy about this.' }
+        ],
+        '03-brother-2.webp': [
+            { word: 'mule', meaning: '노새', sentence: 'He took ten mules with him.' },
+            { word: 'lose one’s head', meaning: '정신이 나가다', sentence: 'Cassim quite lost his head.' },
+            { word: 'to the brim', meaning: '그득그득', sentence: 'He filled sack after sack to the brim.' },
+            { word: 'barley', meaning: '보리', sentence: 'Open, Barley!' }
+        ],
+        '04-chalk.webp': [
+            { word: 'weep', meaning: '울다', sentence: 'She sat down where she stood and wept.' },
+            { word: 'uproar', meaning: '발칵 뒤집힘', sentence: 'The house was in an uproar.' },
+            { word: 'get about', meaning: '소문이 나다', sentence: 'If word of this gets about we are finished.' },
+            { word: 'funeral', meaning: '장례', sentence: 'Morgiana held the funeral quietly.' }
+        ],
+        '04-chalk-2.webp': [
+            { word: 'ask about', meaning: '수소문하다', sentence: 'Going from house to house and asking about.' },
+            { word: 'chalk mark', meaning: '분필 표시', sentence: 'He put a chalk mark on the door.' },
+            { word: 'stop dead', meaning: '걸음을 뚝 멈추다', sentence: 'She stopped dead at the sight of the mark.' },
+            { word: 'neighbourhood', meaning: '동네', sentence: 'On every door in the neighbourhood.' }
+        ],
+        '05-jars.webp': [
+            { word: 'go for nothing', meaning: '헛걸음하다', sentence: 'That night the thieves went for nothing.' },
+            { word: 'fix in one’s head', meaning: '눈에 담아 두다', sentence: 'He fixed the shape of the house in his head.' },
+            { word: 'merchant', meaning: '장수, 장사꾼', sentence: 'A guest came dressed as an oil merchant.' },
+            { word: 'readily', meaning: '선뜻', sentence: 'Ali Baba gave him a room readily enough.' }
+        ],
+        '05-jars-2.webp': [
+            { word: 'lamp', meaning: '등잔', sentence: 'Morgiana went to light the lamp.' },
+            { word: 'as if', meaning: '~인 것처럼', sentence: 'She answered as if she were he.' },
+            { word: 'hold', meaning: '담고 있다', sentence: 'Only one of them held any oil at all.' }
+        ],
+        '06-dance.webp': [
+            { word: 'draw off', meaning: '퍼내다', sentence: 'She drew off a great potful.' },
+            { word: 'boil', meaning: '끓이다', sentence: 'And set it boiling in the kitchen.' },
+            { word: 'pour', meaning: '붓다', sentence: 'She poured the hot oil into every jar.' },
+            { word: 'in every direction', meaning: '뿔뿔이', sentence: 'They went over the wall and away in every direction.' }
+        ],
+        '06-dance-2.webp': [
+            { word: 'little by little', meaning: '슬슬, 조금씩', sentence: 'He made friends little by little with the son.' },
+            { word: 'lay the table', meaning: '상을 차리다', sentence: 'Morgiana, laying the table, saw his face.' },
+            { word: 'ask leave', meaning: '청하다', sentence: 'Morgiana asked leave to dance.' },
+            { word: 'dagger', meaning: '단검', sentence: 'With a small dagger at her waist.' },
+            { word: 'brush open', meaning: '스치듯 젖히다', sentence: 'Her sleeve brushed his coat open.' }
+        ],
+        '07-revealed.webp': [
+            { word: 'hidden', meaning: '숨겨진', sentence: 'A great sword hidden at his waist.' },
+            { word: 'freeze', meaning: '얼어붙다', sentence: 'The room froze in a moment.' },
+            { word: 'make for', meaning: '~쪽으로 향하다', sentence: 'The captain sprang up and made for the door.' },
+            { word: 'stand guard', meaning: '지키고 서다', sentence: 'The neighbours, standing guard.' },
+            { word: 'there and then', meaning: '그길로 바로', sentence: 'The captain was taken there and then.' }
+        ],
+        '07-revealed-2.webp': [
+            { word: 'servant', meaning: '하녀, 하인', sentence: 'You are no servant now.' },
+            { word: 'evenly', meaning: '고루', sentence: 'He shared it evenly among the villagers.' },
+            { word: 'dig a well', meaning: '우물을 파다', sentence: 'With it they dug a well.' },
+            { word: 'mend', meaning: '고치다', sentence: 'And mended the broken road.' }
+        ],
+        'end.webp': [
+            { word: 'to begin with', meaning: '원래', sentence: 'Ali Baba was not in the Arabian Nights to begin with.' },
+            { word: 'say over', meaning: '되뇌다', sentence: 'He had said them over to himself again and again.' },
+            { word: 'sister-in-law', meaning: '형수', sentence: 'His sister-in-law lent them a measure.' },
+            { word: 'find out', meaning: '알아내다', sentence: 'And that is how she found out.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -570,6 +1077,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -578,7 +1086,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -590,7 +1098,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -624,4 +1132,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
