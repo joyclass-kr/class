@@ -50,7 +50,8 @@ export default function ArithmeticCatalog() {
                     ? <button key={stage} className={`catalog-stage-link stage-${stage}`} type="button" onClick={() => scrollToStage(stage)}>{meta.label}</button>
                     : <span key={stage} className={`catalog-stage-link stage-${stage} is-upcoming`} aria-disabled="true">{meta.label}<small>준비 중</small></span>;
                 })}
-            </nav>`r`n          </div>
+            </nav>
+          </div>
         </header>
         <ol className="worksheet-catalog" aria-label="연산 학습지 목록">
           {learningWorksheetCatalog.map(({ route, grade, title, badge }, index) => {
