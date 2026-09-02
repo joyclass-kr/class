@@ -325,16 +325,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '황금 사슴',
+    intro: [
+        '황금 사슴은 인도에서 아주 오래전부터 전해 오는 이야기예요. 부처의 전생 이야기를 모은 자타카라는 옛 책에 실려 있답니다.',
+        '사슴 무리를 이끄는 우두머리가 자기 목숨을 걸고 임금님 앞에 나서는 이야기예요. 인도와 동남아시아의 옛 그림과 조각에도 자주 등장한답니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🦌')}
             </div>
             <div class="story-page-right">
-                <h1>황금 사슴</h1>
-                <p>황금 사슴은 인도에서 아주 오래전부터 전해 오는 이야기예요. 부처의 전생 이야기를 모은 자타카라는 옛 책에 실려 있답니다.</p>
-                <p>사슴 무리를 이끄는 우두머리가 자기 목숨을 걸고 임금님 앞에 나서는 이야기예요. 인도와 동남아시아의 옛 그림과 조각에도 자주 등장한답니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -349,8 +358,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -360,8 +369,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -371,22 +380,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -436,9 +446,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -449,7 +459,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -521,7 +531,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -530,34 +540,621 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Golden Deer',
+        intro: [
+            "The Golden Deer is a story told in India from very ancient times. It is found in the Jataka, an old book that collects the tales of the Buddha's former lives.",
+            "It is about the leader of a herd of deer who stands before a king at the cost of his own life. He appears often in the old paintings and carvings of India and Southeast Asia."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Leader of the Forest',
+            beats: [
+                {
+                    art: '01-forest.webp',
+                    emoji: '🌳',
+                    left: [
+                        "This happened long ago in a great forest in India.",
+                        "A herd of deer lived in that forest.",
+                        "It was a large herd, several hundred strong.",
+                        "And there was one deer who led them.",
+                        "His coat shone like gold.",
+                        "His antlers glittered silver.",
+                        "People called him the Golden Deer."
+                    ],
+                    right: [
+                        "The Golden Deer always walked at the front.",
+                        "He found the water and the grazing first.",
+                        "When a young deer fell behind he slowed his pace.",
+                        "\"Come along in your own time.\"",
+                        "\"We leave nobody behind.\" The herd grew up hearing him say it."
+                    ]
+                },
+                {
+                    art: '01-forest-2.webp',
+                    emoji: '🌳',
+                    left: [
+                        "The forest was at peace for a long time.",
+                        "In spring the new shoots came up.",
+                        "In summer the river ran cool.",
+                        "In autumn there was fruit enough for all.",
+                        "The deer lived without a care.",
+                        "The young ones ran and played as they pleased."
+                    ],
+                    right: [
+                        "The mothers minded their fawns in the shade.",
+                        "The Golden Deer was always up on a high rock.",
+                        "He watched what was happening in every part of the forest.",
+                        "The herd trusted him completely.",
+                        "They thought such days would go on and on.",
+                        "But they did not."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Hunt Begins',
+            beats: [
+                {
+                    art: '02-hunt.webp',
+                    emoji: '🏹',
+                    left: [
+                        "And then one day it came.",
+                        "Horns sounded outside the forest.",
+                        "The king had come out hunting.",
+                        "The hoofbeats shook the ground.",
+                        "The hunters ringed the whole forest round.",
+                        "The Golden Deer sprang up from his rock."
+                    ],
+                    right: [
+                        "\"Scatter, all of you! Run!\"",
+                        "The deer ran in every direction.",
+                        "The thickets were torn to pieces.",
+                        "The young ones lost their mothers and wandered about.",
+                        "The whole forest was turned upside down.",
+                        "The Golden Deer stayed behind and watched over the herd."
+                    ]
+                },
+                {
+                    art: '02-hunt-2.webp',
+                    emoji: '🏹',
+                    left: [
+                        "At sundown the hunt was over.",
+                        "The forest went quiet again.",
+                        "But there was groaning here and there.",
+                        "A great many of them had been hurt.",
+                        "The Golden Deer tended the herd all night.",
+                        "He licked their wounds and made them places to lie."
+                    ],
+                    right: [
+                        "As it grew light he said to himself,",
+                        "\"At this rate we shall all die.\"",
+                        "\"Being driven and injured is the worse thing.\"",
+                        "The Golden Deer made up his mind to something.",
+                        "And then he went out of the forest alone.",
+                        "He told nobody at all."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · Before the King',
+            beats: [
+                {
+                    art: '03-king.webp',
+                    emoji: '👑',
+                    left: [
+                        "The Golden Deer went towards the palace.",
+                        "He crossed the fields and passed through the villages.",
+                        "People were astonished at the sight of him.",
+                        "\"Look at that! A deer of gold!\"",
+                        "And nobody dared to stand in his way.",
+                        "At last he came to the palace gate."
+                    ],
+                    right: [
+                        "The Golden Deer walked straight in.",
+                        "The soldiers levelled their spears at him.",
+                        "And still the deer did not stop.",
+                        "He walked right to the middle of the courtyard.",
+                        "The king stood up from his seat in astonishment.",
+                        "The cup fell out of his hand."
+                    ]
+                },
+                {
+                    art: '03-king-2.webp',
+                    emoji: '👑',
+                    left: [
+                        "\"How does a beast walk in here like a man?\"",
+                        "The Golden Deer bowed his head.",
+                        "\"I have come because I have something to say.\"",
+                        "When the deer spoke in human words the courtyard went still.",
+                        "The courtiers held their breath.",
+                        "\"My lord, I shall ask you one thing only.\""
+                    ],
+                    right: [
+                        "\"How many deer do you need in a day?\"",
+                        "The king quietly lowered his bow.",
+                        "\"One would be plenty.\"",
+                        "\"Then let us do it this way.\"",
+                        "\"One of us shall come to you each day, of our own accord.\" The courtyard stirred."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · A Strange Bargain',
+            beats: [
+                {
+                    art: '04-promise.webp',
+                    emoji: '🤝',
+                    left: [
+                        "\"It is better than being driven and dying scattered.\"",
+                        "\"When you hunt, ten of us are hurt.\"",
+                        "\"One can save the other nine.\"",
+                        "The king said nothing for a long while.",
+                        "He had never heard such words in his life.",
+                        "\"You are saying I need not hunt at all.\""
+                    ],
+                    right: [
+                        "\"That is so.\"",
+                        "\"In return, do not trample the forest for sport.\"",
+                        "And the king slowly nodded his head.",
+                        "\"Very well. So let it be.\"",
+                        "The courtiers looked at one another.",
+                        "And the Golden Deer left the palace quietly."
+                    ]
+                },
+                {
+                    art: '04-promise-2.webp',
+                    emoji: '🤝',
+                    left: [
+                        "The Golden Deer told the herd of it.",
+                        "For a long while none of them could speak.",
+                        "And then, one by one, they nodded.",
+                        "\"That is the better way.\"",
+                        "So the herd settled the order of turns.",
+                        "And from that day the deer went to the palace themselves."
+                    ],
+                    right: [
+                        "Nobody was driven any more.",
+                        "Quiet days came back to the forest.",
+                        "The young deer ran and played in the meadows.",
+                        "Only the mornings when a turn came round were different.",
+                        "They all went out in silence to see the one off.",
+                        "And the one who went did not look back."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Young Mother',
+            beats: [
+                {
+                    art: '05-doe.webp',
+                    emoji: '🌿',
+                    left: [
+                        "Many days went by like that.",
+                        "One morning a deer's turn came round.",
+                        "She was a very young doe.",
+                        "Her eyes were large and her body slight.",
+                        "But her belly was round.",
+                        "She was close to bearing a fawn.",
+                        "The doe hesitated a long time.",
+                        "And then she came to the Golden Deer."
+                    ],
+                    right: [
+                        "\"Might my turn be put off by only one day?\"",
+                        "\"I should like to go after the fawn is born.\"",
+                        "Her voice shook a little.",
+                        "The Golden Deer looked at her a long while.",
+                        "The doe could not raise her head.",
+                        "Only the wind moved in the forest."
+                    ]
+                },
+                {
+                    art: '05-doe-2.webp',
+                    emoji: '🌿',
+                    left: [
+                        "The Golden Deer looked round the herd.",
+                        "\"Is there one who will go in her place today?\"",
+                        "The deer turned their heads away, every one.",
+                        "Not one of them came forward.",
+                        "The forest went very quiet.",
+                        "The doe bowed her head again.",
+                        "Dry leaves rustled under her feet."
+                    ],
+                    right: [
+                        "Nobody would meet anybody's eyes.",
+                        "\"I shall go.\"",
+                        "\"I should not have asked.\"",
+                        "And the doe made to walk away.",
+                        "Then the Golden Deer stepped in front of her.",
+                        "\"Wait a moment.\" His voice was quiet."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Road He Walked Himself',
+            beats: [
+                {
+                    art: '06-walk.webp',
+                    emoji: '✨',
+                    left: [
+                        "The Golden Deer quietly raised his head.",
+                        "The morning light lay on his golden coat.",
+                        "\"Today I shall go.\"",
+                        "A great stir went through the herd.",
+                        "An old deer came forward.",
+                        "\"You must not!\""
+                    ],
+                    right: [
+                        "\"If our leader goes, what becomes of us!\"",
+                        "The Golden Deer smiled at him.",
+                        "\"And if I do not go, what then?\"",
+                        "\"That child must go instead.\"",
+                        "\"And the one inside her with her.\" The herd fell silent."
+                    ]
+                },
+                {
+                    art: '06-walk-2.webp',
+                    emoji: '✨',
+                    left: [
+                        "Nobody could say any more.",
+                        "The doe sank down where she stood.",
+                        "\"You must not. I shall go.\"",
+                        "The Golden Deer shook his head.",
+                        "\"Your share will be carried on by the child you bear.\"",
+                        "And the Golden Deer stepped onto the forest road."
+                    ],
+                    right: [
+                        "He walked slowly, and he did not stop.",
+                        "The herd stood where they were and watched.",
+                        "Not one of them could bar his way.",
+                        "The golden back grew smaller between the trees.",
+                        "Not one bird sang in the forest.",
+                        "And the doe wept for a long time."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: "Chapter 7 · The King's Question",
+            beats: [
+                {
+                    art: '07-question.webp',
+                    emoji: '❓',
+                    left: [
+                        "That morning the palace courtyard was in a stir.",
+                        "For there stood the deer of gold.",
+                        "A soldier ran to tell the king.",
+                        "And the king came out barefoot.",
+                        "\"Why have you come?\"",
+                        "\"This is not what was agreed.\""
+                    ],
+                    right: [
+                        "\"I never asked for you.\"",
+                        "The Golden Deer answered quietly.",
+                        "\"The deer whose turn it is today will soon be a mother.\"",
+                        "\"That is not one life but two.\"",
+                        "\"So I have come in her place.\" And the king could not go on."
+                    ]
+                },
+                {
+                    art: '07-question-2.webp',
+                    emoji: '❓',
+                    left: [
+                        "For a long time the king could not speak.",
+                        "His hands were shaking.",
+                        "\"Are you not the leader of them?\"",
+                        "\"Could you not have sent another deer?\"",
+                        "The Golden Deer quietly shook his head.",
+                        "\"It is because I am the leader.\""
+                    ],
+                    right: [
+                        "\"If I do not carry it, who will?\"",
+                        "The courtyard went as still as still water.",
+                        "The courtiers bowed their heads.",
+                        "The king's eyes reddened.",
+                        "\"I am ashamed,\" said the king in a low voice.",
+                        "And then he came slowly down from his seat.",
+                        "And stood face to face with the Golden Deer."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · The Day the Forest Opened',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🕊️',
+                    left: [
+                        "At last the king spoke.",
+                        "\"You are a beast, and you are better than a man.\"",
+                        "\"I am a man, and I was less than a beast.\"",
+                        "And the king set down the bow in his hand.",
+                        "It fell on the stone floor with a knock.",
+                        "The courtiers caught their breath."
+                    ],
+                    right: [
+                        "\"From now on no deer will be killed in this land.\"",
+                        "\"Go home.\"",
+                        "The courtiers stirred.",
+                        "But the Golden Deer did not move.",
+                        "\"I shall ask one thing more.\"",
+                        "The king raised his head."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🕊️',
+                    left: [
+                        "\"The deer are safe now.\"",
+                        "\"Then what of the birds?\"",
+                        "\"And the fish, and the other creatures?\"",
+                        "The king said nothing for a moment.",
+                        "And then he smiled.",
+                        "\"Them I shall protect as well.\""
+                    ],
+                    right: [
+                        "\"I shall protect every life in this land.\"",
+                        "The Golden Deer bowed low.",
+                        "And then he went home to the forest.",
+                        "The herd came running out to meet him.",
+                        "From that day no hunter came into that forest.",
+                        "And the deer lived at peace for a long, long time."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What was the Golden Deer in the herd?',
+            choices: ['The youngest deer', 'The oldest deer', 'The leader'],
+            answer: 2
+        },
+        {
+            q: 'Why did the king come to the forest?',
+            choices: ['To meet the deer', 'To hunt', 'To blow his horns'],
+            answer: 1
+        },
+        {
+            q: 'What did the Golden Deer say at the palace?',
+            choices: ['One of us will come each day', 'Give up hunting', 'Protect our herd'],
+            answer: 0
+        },
+        {
+            q: 'What was the matter with the young doe whose turn came?',
+            choices: ['She was wounded', 'She was only a fawn', 'She was carrying a fawn'],
+            answer: 2
+        },
+        {
+            q: 'Who went to the palace instead that day?',
+            choices: ['The old deer', 'The Golden Deer', 'The young doe'],
+            answer: 1
+        },
+        {
+            q: 'What did the king say when he saw the Golden Deer?',
+            choices: ['That he was better than a man', 'That this was not agreed', 'That he should send another deer'],
+            answer: 0
+        },
+        {
+            q: 'What did the king promise to protect at the end?',
+            choices: ['Only the deer', 'Only birds and fish', 'Every life in the land'],
+            answer: 2
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🦌',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story comes from India. It is in a book that collects the old tales of the Buddha, and it is more than two thousand years old.",
+                    "Look again at what the Golden Deer offers the king. A hunt drives the herd and injures many. One a day, he says, and that will be enough.",
+                    "It is a sad sum, but it is the sum that hurts the herd least. He did what a leader could do.",
+                    "And then the turn falls to a deer carrying a fawn. When he asks who will go instead, nobody comes forward."
+                ],
+                right: [
+                    "The Golden Deer goes himself, and not because he is kind. Because he is the leader, he says.",
+                    "What do you think the king was ashamed of, hearing that?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-forest.webp': [
+            { word: 'herd', meaning: '무리', sentence: 'A herd of deer lived in that forest.' },
+            { word: 'coat', meaning: '털', sentence: 'His coat shone like gold.' },
+            { word: 'antler', meaning: '뿔', sentence: 'His antlers glittered silver.' },
+            { word: 'grazing', meaning: '풀밭', sentence: 'He found the water and the grazing first.' },
+            { word: 'fall behind', meaning: '뒤처지다', sentence: 'When a young deer fell behind.' }
+        ],
+        '01-forest-2.webp': [
+            { word: 'shoot', meaning: '새싹', sentence: 'In spring the new shoots came up.' },
+            { word: 'fawn', meaning: '새끼 사슴', sentence: 'The mothers minded their fawns.' },
+            { word: 'shade', meaning: '그늘', sentence: 'In the shade.' },
+            { word: 'trust', meaning: '믿다', sentence: 'The herd trusted him completely.' }
+        ],
+        '02-hunt.webp': [
+            { word: 'horn', meaning: '나팔', sentence: 'Horns sounded outside the forest.' },
+            { word: 'hoofbeat', meaning: '말발굽 소리', sentence: 'The hoofbeats shook the ground.' },
+            { word: 'ring round', meaning: '에워싸다', sentence: 'The hunters ringed the forest round.' },
+            { word: 'scatter', meaning: '흩어지다', sentence: 'Scatter, all of you!' },
+            { word: 'thicket', meaning: '덤불', sentence: 'The thickets were torn to pieces.' }
+        ],
+        '02-hunt-2.webp': [
+            { word: 'groan', meaning: '신음', sentence: 'There was groaning here and there.' },
+            { word: 'tend', meaning: '돌보다', sentence: 'He tended the herd all night.' },
+            { word: 'lick', meaning: '핥다', sentence: 'He licked their wounds.' },
+            { word: 'at this rate', meaning: '이대로는', sentence: 'At this rate we shall all die.' },
+            { word: 'drive', meaning: '쫓다', sentence: 'Being driven and injured is worse.' }
+        ],
+        '03-king.webp': [
+            { word: 'astonished', meaning: '놀란', sentence: 'People were astonished at the sight.' },
+            { word: 'dare', meaning: '감히 ~하다', sentence: 'Nobody dared to stand in his way.' },
+            { word: 'level', meaning: '겨누다', sentence: 'The soldiers levelled their spears.' },
+            { word: 'courtyard', meaning: '뜰', sentence: 'He walked to the middle of the courtyard.' }
+        ],
+        '03-king-2.webp': [
+            { word: 'bow one’s head', meaning: '고개를 숙이다', sentence: 'The Golden Deer bowed his head.' },
+            { word: 'still', meaning: '조용한', sentence: 'The courtyard went still.' },
+            { word: 'plenty', meaning: '넉넉한', sentence: 'One would be plenty.' },
+            { word: 'of one’s own accord', meaning: '스스로', sentence: 'One shall come of our own accord.' },
+            { word: 'stir', meaning: '술렁이다', sentence: 'The courtyard stirred.' }
+        ],
+        '04-promise.webp': [
+            { word: 'scattered', meaning: '흩어져', sentence: 'Dying scattered.' },
+            { word: 'save', meaning: '살리다', sentence: 'One can save the other nine.' },
+            { word: 'trample', meaning: '짓밟다', sentence: 'Do not trample the forest for sport.' },
+            { word: 'so let it be', meaning: '그리하자', sentence: 'Very well. So let it be.' }
+        ],
+        '04-promise-2.webp': [
+            { word: 'settle', meaning: '정하다', sentence: 'The herd settled the order of turns.' },
+            { word: 'turn', meaning: '차례', sentence: 'The order of turns.' },
+            { word: 'see off', meaning: '배웅하다', sentence: 'They went out to see the one off.' },
+            { word: 'look back', meaning: '뒤를 돌아보다', sentence: 'The one who went did not look back.' }
+        ],
+        '05-doe.webp': [
+            { word: 'doe', meaning: '암사슴', sentence: 'She was a very young doe.' },
+            { word: 'slight', meaning: '가는', sentence: 'Her body was slight.' },
+            { word: 'bear', meaning: '낳다', sentence: 'She was close to bearing a fawn.' },
+            { word: 'put off', meaning: '미루다', sentence: 'Might my turn be put off?' },
+            { word: 'hesitate', meaning: '망설이다', sentence: 'The doe hesitated a long time.' }
+        ],
+        '05-doe-2.webp': [
+            { word: 'in one’s place', meaning: '대신', sentence: 'Who will go in her place?' },
+            { word: 'come forward', meaning: '나서다', sentence: 'Not one of them came forward.' },
+            { word: 'rustle', meaning: '바스락거리다', sentence: 'Dry leaves rustled under her feet.' },
+            { word: 'meet one’s eyes', meaning: '눈을 마주치다', sentence: "Nobody would meet anybody's eyes." },
+            { word: 'step in front of', meaning: '앞을 막다', sentence: 'The Golden Deer stepped in front of her.' }
+        ],
+        '06-walk.webp': [
+            { word: 'lie on', meaning: '내려앉다', sentence: 'The morning light lay on his coat.' },
+            { word: 'go through', meaning: '술렁이다', sentence: 'A great stir went through the herd.' },
+            { word: 'become of', meaning: '어떻게 되다', sentence: 'What becomes of us?' },
+            { word: 'instead', meaning: '대신에', sentence: 'That child must go instead.' }
+        ],
+        '06-walk-2.webp': [
+            { word: 'sink down', meaning: '주저앉다', sentence: 'The doe sank down where she stood.' },
+            { word: 'share', meaning: '몫', sentence: 'Your share will be carried on.' },
+            { word: 'carry on', meaning: '이어 가다', sentence: 'Carried on by the child you bear.' },
+            { word: 'bar', meaning: '막다', sentence: 'Not one of them could bar his way.' },
+            { word: 'weep', meaning: '울다', sentence: 'The doe wept for a long time.' }
+        ],
+        '07-question.webp': [
+            { word: 'in a stir', meaning: '술렁이는', sentence: 'The courtyard was in a stir.' },
+            { word: 'barefoot', meaning: '맨발로', sentence: 'The king came out barefoot.' },
+            { word: 'agree', meaning: '약속하다', sentence: 'This is not what was agreed.' },
+            { word: 'in one’s place', meaning: '대신하여', sentence: 'I have come in her place.' }
+        ],
+        '07-question-2.webp': [
+            { word: 'shake', meaning: '떨리다', sentence: 'His hands were shaking.' },
+            { word: 'carry', meaning: '지다', sentence: 'If I do not carry it, who will?' },
+            { word: 'as still as', meaning: '~처럼 조용한', sentence: 'The courtyard went as still as still water.' },
+            { word: 'redden', meaning: '붉어지다', sentence: "The king's eyes reddened." },
+            { word: 'ashamed', meaning: '부끄러운', sentence: 'I am ashamed.' }
+        ],
+        '08-ending.webp': [
+            { word: 'set down', meaning: '내려놓다', sentence: 'The king set down the bow.' },
+            { word: 'catch one’s breath', meaning: '숨을 삼키다', sentence: 'The courtiers caught their breath.' },
+            { word: 'from now on', meaning: '이제부터', sentence: 'From now on no deer will be killed.' },
+            { word: 'one thing more', meaning: '한 가지만 더', sentence: 'I shall ask one thing more.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'safe', meaning: '안전한', sentence: 'The deer are safe now.' },
+            { word: 'what of', meaning: '~는 어찌합니까', sentence: 'Then what of the birds?' },
+            { word: 'protect', meaning: '지키다', sentence: 'I shall protect every life in this land.' },
+            { word: 'bow low', meaning: '깊이 고개를 숙이다', sentence: 'The Golden Deer bowed low.' }
+        ],
+        'end.webp': [
+            { word: 'collect', meaning: '모으다', sentence: 'A book that collects the old tales.' },
+            { word: 'sum', meaning: '셈', sentence: 'It is a sad sum.' },
+            { word: 'least', meaning: '가장 적게', sentence: 'The sum that hurts the herd least.' },
+            { word: 'fall to', meaning: '차례가 돌아오다', sentence: 'The turn falls to a deer carrying a fawn.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -622,6 +1219,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -630,7 +1228,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -642,7 +1240,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -676,4 +1274,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
