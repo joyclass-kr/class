@@ -1,6 +1,6 @@
 const BOOK_TITLE = "효녀 심청";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => (LANG === 'en' ? `Chapter ${n} · ` : `${n}장 · `);
 
 const CHAPTERS = [
     {
@@ -328,15 +328,18 @@ function splitSegments(html) {
     return segs.length ? segs : [html];
 }
 
-const CHAPTER_SEGS = CHAPTERS.map(ch => {
+// 말을 바꾸면 글이 통째로 갈리므로 조각도 다시 나눈다.
+function segsOf(paras) {
     const segs = [];
-    ch.paras.forEach((html, paraIdx) => {
+    paras.forEach((html, paraIdx) => {
         splitSegments(html).forEach((piece, k) => {
             segs.push({ paraIdx, html: piece, start: k === 0 });
         });
     });
     return segs;
-});
+}
+
+let CHAPTER_SEGS = [];
 
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
@@ -354,7 +357,7 @@ function runHtml(segs, a, b) {
         // 쪽 끝에 걸린 <br>는 빈 줄만 만드니 떼어 낸다.
         inner = inner.replace(/(<br\s*\/?>)+\s*$/i, '')
             .replace(/<br\s*\/?>/gi, '<br><span class="ln"></span>');
-        out += `<p${contd ? ' class="cont"' : ''}>${inner}</p>`;
+        out += `<p${contd ? ' class="cont"' : ''} data-say="${pi}">${inner}</p>`;
         i = j;
     }
     return out;
@@ -596,6 +599,17 @@ function paginateChapter(ch, chIndex) {
     });
     return spreads;
 }
+const COVER = {
+    emoji: '🪷',
+    title: '효녀 심청',
+    intro: [
+        "심청전은 지은이가 알려지지 않은 조선 후기 소설이에요. 판소리 심청가로 불리던 것이 글로 옮겨진 것이지요.",
+        "이야기의 무대인 인당수는 황해도 앞바다에 있었다고 전해지는 물길이에요. 물살이 사납기로 이름나, 뱃사람들은 그 바다를 지날 때 제사를 지냈답니다.",
+        "사람을 제물로 바쳐 물길을 달랜다는 이야기는 아주 오래된 것이에요. 심청전은 그 옛 이야기를 뒤집어 놓았어요. 물에 빠진 사람이 죽지 않고 도로 살아 돌아오고, 그 힘으로 온 나라의 눈먼 사람이 눈을 뜨거든요.",
+        "판소리 심청가에서 가장 유명한 대목은 심 봉사가 눈을 뜨는 마지막 장면이에요. 소리꾼이 그 대목에 이르면 듣는 사람들이 다 같이 울었다고 전해진답니다."
+    ]
+};
+
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
@@ -607,17 +621,15 @@ function artFrame(src, emoji) {
 }
 
 function coverPage() {
+    const c = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '🪷')}
+                ${artFrame('cover.webp', c.emoji)}
             </div>
             <div class="story-page-right">
-                <h1>효녀 심청</h1>
-                <p>심청전은 지은이가 알려지지 않은 조선 후기 소설이에요. 판소리 심청가로 불리던 것이 글로 옮겨진 것이지요.</p>
-                <p>이야기의 무대인 인당수는 황해도 앞바다에 있었다고 전해지는 물길이에요. 물살이 사납기로 이름나, 뱃사람들은 그 바다를 지날 때 제사를 지냈답니다.</p>
-                <p>사람을 제물로 바쳐 물길을 달랜다는 이야기는 아주 오래된 것이에요. 심청전은 그 옛 이야기를 뒤집어 놓았어요. 물에 빠진 사람이 죽지 않고 도로 살아 돌아오고, 그 힘으로 온 나라의 눈먼 사람이 눈을 뜨거든요.</p>
-                <p>판소리 심청가에서 가장 유명한 대목은 심 봉사가 눈을 뜨는 마지막 장면이에요. 소리꾼이 그 대목에 이르면 듣는 사람들이 다 같이 울었다고 전해진답니다.</p>
+                <h1 data-say="0">${c.title}</h1>
+                ${c.intro.map((p, i) => `<p data-say="${i + 1}">${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -635,14 +647,14 @@ function tocPage(part) {
                 <span class="toc-num">${mark}</span>
                 <span>
                     <strong>${title}</strong>
-                    <small>${page}쪽</small>
+                    <small>${page}${T().folio}</small>
                 </span>
             </button>
         </li>`;
     const itemHtml = ch => rowHtml(`data-goto="${ch.num}"`, ch.num, ch.title, pageOfChapter(ch.num));
     const extraItems = [
-        rowHtml('data-goto-kind="quiz"', '❓', '이야기 문제', pageOfKind('quiz')),
-        rowHtml('data-goto-kind="after"', '📖', '읽고 나서', pageOfKind('after')),
+        rowHtml('data-goto-kind="quiz"', '❓', T().quiz, pageOfKind('quiz')),
+        rowHtml('data-goto-kind="after"', '📖', T().after, pageOfKind('after')),
     ];
     const group = TOC_GROUPS[part];
     const last = part === TOC_GROUPS.length - 1;
@@ -651,11 +663,11 @@ function tocPage(part) {
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                ${part === 0 ? '<h2>차례</h2>' : ''}
+                ${part === 0 ? `<h2>${T().toc}</h2>` : ''}
                 <ul class="toc-list">${items.slice(0, half).join('')}</ul>
             </div>
             <div class="story-page-right">
-                ${part === 0 ? '<h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>' : ''}
+                ${part === 0 ? `<h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>` : ''}
                 <ul class="toc-list">${items.slice(half).join('')}</ul>
             </div>
         </div>`;
@@ -663,10 +675,7 @@ function tocPage(part) {
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
 const TOC_PER_SPREAD = 16;
-const TOC_GROUPS = [];
-for (let i = 0; i < CHAPTERS.length; i += TOC_PER_SPREAD) {
-    TOC_GROUPS.push(CHAPTERS.slice(i, i + TOC_PER_SPREAD));
-}
+let TOC_GROUPS = [];
 
 function chapterSpreadPage(spread) {
     const ch = spread.ch;
@@ -719,13 +728,13 @@ const QUIZ = [
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
 // 문제는 한 쪽에 다 넣고 스크롤해서 푼다.
 // 쪽을 쪼개 놓으면 쪽마다 절반이 비고, 답을 고르려고 여러 번 넘겨야 한다.
-const QUIZ_GROUPS = [{ from: 0, items: QUIZ }];
+const QUIZ_GROUPS = [{ from: 0 }];
 
 // 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
 const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
 
 function quizPage(part) {
-    const group = QUIZ_GROUPS[part];
+    const group = { from: QUIZ_GROUPS[part].from, items: QZ() };
     const done = QUIZ_PICKED.filter(v => v !== null).length;
     const items = group.items.map((item, k) => {
         const i = group.from + k;
@@ -744,8 +753,8 @@ function quizPage(part) {
     }).join('');
     return `
         <div class="page page-quiz">
-            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
-            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+            ${part === 0 ? `<h2>${T().quiz}</h2>` : ''}
+            <p class="quiz-intro-text" id="quizProgress">${T().done(done, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
@@ -781,30 +790,22 @@ const AFTERWORD = {
     ]
 };
 
-const AFTER_SEGS = (() => {
-    const segs = [];
-    AFTERWORD.paras.forEach((html, paraIdx) => {
-        splitSegments(html).forEach((piece, k) => {
-            segs.push({ paraIdx, html: piece, start: k === 0 });
-        });
-    });
-    return segs;
-})();
+let AFTER_SEGS = [];
 
-const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+const AFTER_FOOT = () => `<p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>`;
 
 function paginateAfterword() {
     const segs = AFTER_SEGS;
-    const arts = AFTERWORD.art || [];
+    const arts = AF().art || [];
     const { usable, headHeight, artHeight } = PROBE;
-    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const headHtml = `<h2>${AF().title}</h2>`;
     const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
 
     const underArt = Math.max(60, usable - artHeight);
 
     // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
     // 마지막 쪽만 넘친다.
-    const footH = PROBE.measure(AFTER_FOOT);
+    const footH = PROBE.measure(AFTER_FOOT());
 
     const capsOf = slots => {
         const caps = [];
@@ -851,9 +852,9 @@ function paginateAfterword() {
 
 function afterSpreadPage(spread) {
     const segs = AFTER_SEGS;
-    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = spread.first ? `<h2>${AF().title}</h2>` : '';
     // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
-    const foot = spread.last ? AFTER_FOOT : '';
+    const foot = spread.last ? AFTER_FOOT() : '';
 
     if (spread.art) {
         return `
@@ -863,7 +864,7 @@ function afterSpreadPage(spread) {
                     ${runHtml(segs, spread.left[0], spread.left[1])}
                 </div>
                 <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    <div class="story-art-top">${artFrame(spread.art, AF().emoji)}</div>
                     ${runHtml(segs, spread.right[0], spread.right[1])}
                     ${foot}
                 </div>
@@ -883,17 +884,589 @@ function afterSpreadPage(spread) {
         </div>`;
 }
 
+
+/* ── 영어판 ────────────────────────────────────────────────────
+   우리말 글과 영어 글을 나란히 두고, 단추 하나로 갈아 끼운다.
+   쪽은 재어서 나누므로 말을 바꾸면 처음부터 다시 나눈다. */
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   artAt 닻은 영어 문장 조각으로 새로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: '🪷',
+        title: 'Simcheong the Devoted Daughter',
+        intro: [
+            "This story was a song before it was a book. Simcheong-ga, sung as pansori by one singer with one drummer for three or four hours, came first.",
+            "There is no author. Singers sang it and sang it and changed it a little each time, so every old copy is different.",
+            "Indangsu, the sea where Simcheong throws herself in, is not invented. It is what people called a stretch of hard water off Baengnyeongdo in the West Sea.",
+            "If reading it makes you uncomfortable, that is right. We no longer think it beautiful for a daughter to give her life for her father."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "The Daughter Raised on Begged Milk",
+            art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
+            artAt: ["Just one mouthful for my child", "went from house to house with a bowl", "heard of it and sent for Simcheong"],
+            paras: [
+                "Long ago in Dohwadong, in Hwangju in Hwanghae province, there lived a man called Sim Hakgyu. His family had been a reading family once, but the household had come down in the world and they were poor.",
+                "When Sim Hakgyu was about twenty he had a bad illness, and after it he could not see. From then on people called him Sim Bongsa<span class=\"gloss\">(the old word for a blind man)</span>.",
+                "His wife, Lady Gwak, took in sewing and pounded other people's grain, and kept the two of them fed. They were poor, but there was no better-matched couple.",
+                "After more than ten years of marriage Lady Gwak was going to have a child. Sim Bongsa could not sleep all night for the news.",
+                "The next spring a daughter was born. They named her Cheong.",
+                "But seven days after the child was born, Lady Gwak died. She had been weak, and there had been no proper rest for her after the birth.",
+                "Sim Bongsa sat down in the yard with the newborn in his arms and wept. How is a man who cannot see to raise a baby at the breast?",
+                "But Sim Bongsa did not only weep. From the next day he wrapped the child on his back and began going round the village.",
+                "\"I hear there is a nursing mother in this house. Just one mouthful for my child, please.\"",
+                "The women of the village took the baby and fed her. In one house they made her thin gruel; in another they gave out old clothes.",
+                "Sim Bongsa went out in the morning and came home in the evening. He went to more than ten houses a day. There was always a stick in his hand and always a child on his back.",
+                "So Cheong grew up on the milk of the whole village. People said,<br>\"That child was raised by all of Dohwadong together.\"",
+                "As she grew, Cheong became her father's eyes.",
+                "At six she was already leading him by the hand.<br>\"Father, there's a stone here.\"<br>\"Father, turn left now.\"",
+                "At seven she cooked the rice. The stove was so high that she had to put down a block and stand on it.",
+                "At eight she left her father at home and went out to beg alone.<br>\"Stay here, father. I'll go.\"<br>\"You must not. What has a small child to do with begging?\"<br>\"If you go out I worry so that I can't do anything.\"",
+                "Cheong went from house to house with a bowl. People felt for the little thing and put in two extra spoonfuls.",
+                "But Cheong never ate first what she had been given. She always set it in front of her father and asked,<br>\"Father, have you eaten?\"<br>\"Yes, I've eaten.\"",
+                "Only when Sim Bongsa had emptied his bowl would Cheong crouch at the stove and eat what was left. On some days there was nothing left and she drank water.",
+                "At twelve Cheong learned to take in sewing. It was her mother's work. Her hands were deft and the village soon knew her name for it.",
+                "At fifteen Cheong was the hardest-working young woman in Dohwadong. The village called her Simcheong and thought a great deal of her.",
+                "The lady of the Jang household heard of it and sent for Simcheong. The lady liked her the moment she saw her.<br>\"Will you not be my adopted daughter? I will look after your father as well.\"",
+                "Simcheong bowed her head.<br>\"You are very kind. But without me my father cannot even fetch himself a bowl of water.\"",
+                "The lady's eyes reddened at that. And then she said,<br>\"If ever you are in trouble, come to me.\""
+            ]
+        },
+        {
+            num: 2,
+            title: "Three Hundred Sacks of Rice",
+            art: ["story-02-a.webp", "story-02-b.webp", "story-02-c.webp"],
+            artAt: ["somebody jumped into the water", "not eyes that cannot be cured", "a bowl of fresh water"],
+            paras: [
+                "It was the winter of the year Simcheong turned fifteen. That day Simcheong had gone to the Jang household to take back some sewing.",
+                "The sun went down and his daughter did not come home, and Sim Bongsa began to worry.<br>\"Why is the child so late?\"",
+                "In the end he could not wait, and he took his stick and went out to meet her. The road was frozen over.",
+                "As he was crossing the bridge over the stream, the end of his stick slipped on the ice.",
+                "There was a splash and Sim Bongsa went into the water. The winter water cut like a knife. Sim Bongsa could not tell which way the bank was and only thrashed about.",
+                "\"Help! Somebody help!\"<br>His voice grew fainter and fainter.",
+                "Then somebody jumped into the water. He pulled Sim Bongsa out, laid him on the bank and beat his back.",
+                "Sim Bongsa brought up the water and barely came to himself.<br>\"Who... who is it?\"<br>\"A monk from Mongunsa.\"",
+                "The monk held him up and took him all the way home. He got him into dry clothes and lit the fire for him.",
+                "Sim Bongsa took the monk's hand and sobbed.<br>\"How am I to repay this? The truth is I am not afraid of dying. I am afraid that if I die my Cheong will be left alone.\"",
+                "The monk looked into Sim Bongsa's face for a long while.<br>\"Your eyes are not eyes that cannot be cured.\"",
+                "Sim Bongsa's head came up.<br>\"What... what do you mean?\"",
+                "\"Offer three hundred sacks of temple rice<span class=\"gloss\">(rice offered to the Buddha)</span> to the Buddha of our temple and pray with a whole heart, and you will see.\"",
+                "The moment Sim Bongsa heard it he did not stop to think.<br>\"I will offer them! I will offer three hundred sacks!\"",
+                "The monk was startled and asked,<br>\"Is three hundred sacks anywhere near possible for a household like yours?\"<br>\"It is! Write it down!\"",
+                "Unwillingly the monk wrote the name Sim Hakgyu and three hundred sacks in the offering book. And he went back to the temple, looking round several times as he went.",
+                "Only when the monk had gone did Sim Bongsa come to his senses.",
+                "Three hundred sacks. There were not three measures of rice in that house. How was a man without one plot of paddy or one plot of field to find three hundred sacks?",
+                "Sim Bongsa beat the floor and regretted it.<br>\"Oh, I was mad. How am I to bear the sin of lying to the Buddha?\"",
+                "Late that night Simcheong came home. Her father was lying with the quilt over his head.<br>\"Father, are you ill?\"",
+                "At first Sim Bongsa did not mean to tell her. But his daughter kept asking, and in the end it all came out.",
+                "When she had heard the whole of it Simcheong said nothing for a long while. And then she said,<br>\"You did well, father.\"",
+                "\"Did well? How are we to manage it?\"<br>\"It is a promise the Buddha made. Surely he will not let us fail to keep it. Don't worry, and go to sleep.\"",
+                "That night Simcheong went out to the back garden, set out a bowl of fresh water and prayed for a long time. It was exactly what her mother had done when she was alive."
+            ]
+        },
+        {
+            num: 3,
+            title: "The Sailors and the Lie",
+            art: ["story-03-a.webp", "story-03-b.webp", "story-03-c.webp"],
+            artAt: ["Several men dressed as sailors", "I will go", "sat beside her sleeping father"],
+            paras: [
+                "A few days later Simcheong saw strangers at the mouth of the village. Several men dressed as sailors were putting something up.",
+                "Simcheong went over and asked,<br>\"What is happening?\"",
+                "The one who looked like their leader answered,<br>\"We are sailors who trade down to Nanjing. On the way we have to pass a place called Indangsu, and that water is so wild that several ships go over every year.\"",
+                "\"And?\"<br>\"They have always said that sea grows calm if it is given a girl of fifteen. So we are looking for someone. We will pay whatever it takes.\"",
+                "Simcheong's heart began to beat hard.",
+                "\"...You said whatever it takes?\"<br>\"I did.\"<br>\"Would three hundred sacks of rice be possible?\"",
+                "The men turned and looked at her.<br>\"It would. But why do you ask?\"",
+                "\"I will go.\"",
+                "For a long moment the men could not speak. The leader looked into her face.<br>\"Young woman, this is not a game. It means throwing yourself into the sea.\"<br>\"I know.\"",
+                "\"What has brought you to such a decision?\"<br>Simcheong said it calmly.<br>\"My father cannot see. They say that if three hundred sacks of rice are offered to the temple he will see again.\"",
+                "The leader turned his head away. A young sailor beside him pressed his sleeve to his eyes.",
+                "\"...When shall we send the rice?\"<br>\"Send it to Mongunsa today, please. I will come on the day the ship sails.\"<br>\"We sail on the fifteenth of the third month.\"",
+                "That evening Simcheong sat down in front of her father.",
+                "\"Father, there is good news. The three hundred sacks of temple rice have been found.\"",
+                "Sim Bongsa sprang up.<br>\"What! How?\"",
+                "Simcheong brought out the words she had thought over beforehand.<br>\"The lady of the Jang household wanted me for an adopted daughter, you remember. I have agreed to go into that house. And in return she is sending the three hundred sacks to the temple.\"",
+                "\"An adopted daughter. Then you will be living in that house?\"<br>\"I go on the fifteenth. I'll come and see you often.\"",
+                "At first Sim Bongsa was sorry. But then he was glad.<br>\"That's good. That's good. In that house you'll be spared this hard life.\"",
+                "Simcheong smiled and answered,<br>\"Yes, father.\"<br>And then she went quickly out to the kitchen. Never had she been so glad that her father could not see.",
+                "From that day Simcheong sewed every night. She made her father's clothes for all four seasons. Spring clothes, summer clothes, autumn clothes, winter clothes, folded in turn and put away in the chest.",
+                "She made several pairs of socks as well. And she asked the women of the village, quietly,<br>\"While I am away, will you see that my father eats?\"",
+                "A few days later someone came in haste from the Jang household.",
+                "When Simcheong came in the lady sprang to her feet.<br>\"Is it true that you have sold yourself to the sailors?\"",
+                "Instead of answering, Simcheong bowed her head. The lady took her two hands. It was the lady's hands that shook the more.<br>\"Why did you not come to me? Did I not say to come to me if you were in trouble?\"",
+                "There and then the lady called her storekeeper.<br>\"Take out three hundred sacks of rice and send them to Mongunsa today. And give back what the sailors have paid.\"",
+                "Simcheong caught hold of the lady's sleeve.<br>\"My lady, please do not.\"",
+                "The lady turned to her.<br>\"What are you saying? You can live, and you say you will die?\"",
+                "\"I have already taken the payment. That rice has already gone to Mongunsa, and I said I would come on the fifteenth. If I go back on it now, I am a person who has cheated others.\"",
+                "\"It is a matter of a person living or dying. What is a promise beside that?\"",
+                "Simcheong was silent for a long while. Then she spoke quietly.<br>\"If you pay it for me, my father will see. But those eyes will not be what I gave him.\"",
+                "\"And what does that matter? If he can see, he can see.\"",
+                "\"The only thing I have to give my father is myself. If even that is somebody else's, then I am a daughter who gave her father nothing at all.\"",
+                "The lady could say no more. After a long moment she took Simcheong's face in both hands.<br>\"...I cannot win against you.\"",
+                "Simcheong asked one last thing.<br>\"Say nothing to my father. He believes I am becoming your adopted daughter.\"",
+                "On the way home Simcheong did not once look back.",
+                "It was the night before the fifteenth of the third month. Simcheong set her father's table more carefully than she ever had.",
+                "Sim Bongsa stopped in the middle of eating and asked,<br>\"The dishes are unusual today. Is it some special day?\"<br>\"...No reason.\"",
+                "That night Simcheong sat beside her sleeping father and stayed awake until morning. She took his hand and let it go and took it again, and looked at his face for a long, long time."
+            ]
+        },
+        {
+            num: 4,
+            title: "Indangsu",
+            art: ["story-04-a.webp", "story-04-b.webp", "story-04-c.webp"],
+            artAt: ["set her father's breakfast", "the ship reached Indangsu", "threw herself into the whirlpool"],
+            paras: [
+                "The cock crowed at dawn. Simcheong set her father's breakfast on the table and changed her clothes.",
+                "Then voices came from outside the gate.<br>\"Young woman, it is time.\"",
+                "Sim Bongsa woke.<br>\"Who has come?\"<br>\"They have come from the Jang household to fetch me.\"",
+                "But the voices outside the gate were men's voices. Sim Bongsa tipped his head.<br>\"Why would the Jang household send men?\"",
+                "Simcheong knelt in front of her father. And she made her last bow.",
+                "\"Father.\"<br>\"Yes.\"<br>\"Take care of yourself. Don't miss your meals.\"<br>\"Yes, yes. You look after yourself.\"",
+                "Simcheong stood up. She could not get her feet over the threshold.",
+                "Then one of the village women could not hold it in and burst out crying.<br>\"Oh, Simcheong...\"",
+                "Sim Bongsa heard it.<br>\"Why is that woman crying?\"",
+                "There was no answer. Only then did Sim Bongsa understand that something was wrong. He ran out into the yard without even his stick.",
+                "\"Cheong! Cheong! Where are you!\"<br>Sim Bongsa felt about in the empty air of the yard. His hands closed on nothing.",
+                "\"You men! Where are you taking my daughter! What do my eyes matter! I don't want to see! Give me my daughter!\"<br>Sim Bongsa ran a few steps out of the gate after them, caught his foot on a stone and fell. The villagers ran and held him. Far down the road Simcheong looked back exactly once.",
+                "The ship sailed for three days. Simcheong sat in the bow and looked only at the sea.",
+                "The sailors treated her with great care. They cooked good food for her and made her a place apart at night. And still not one of them could meet her eye.",
+                "One young sailor came to her side in the night and said,<br>\"Young woman, change your mind even now. We will set you down on land. The rice has gone to the temple already; we can just leave it.\"",
+                "Simcheong shook her head.<br>\"Then we would be lying to the Buddha. My father would not see.\"",
+                "On the morning of the fourth day the ship reached Indangsu.",
+                "The sea changed all at once. Water that had been smooth a moment before began to turn black and whirl. The ship pitched up and down.",
+                "The sailors took in the sails and set out an offering table. They burned incense and bowed.",
+                "The leader came and knelt in front of Simcheong.<br>\"Young woman, we shall carry this sin all our lives.\"",
+                "Simcheong raised him to his feet.<br>\"I came of my own will. Only, I ask you one thing.\"<br>\"Anything. Say it.\"<br>\"On your way home, stop at Dohwadong and see whether my father is still alive.\"",
+                "Simcheong walked to the bow. And she put her two hands together toward the western sky.",
+                "\"Heaven. This body of mine is no loss, but let my father's eyes be opened.\"",
+                "And then she pulled her skirt up over her head and threw herself into the whirlpool. The water heaved once and then went smooth. The sailors lay against the rail and wept aloud."
+            ]
+        },
+        {
+            num: 5,
+            title: "Under the Water, and the Lotus",
+            art: ["story-05-a.webp", "story-05-b.webp", "story-05-c.webp"],
+            artAt: ["sank down and down", "It was Lady Gwak", "one red lotus as tall as a person"],
+            paras: [
+                "Simcheong sank down and down through the water. Strangely, she could not feel herself smothering.",
+                "How far down she went she did not know. Then it grew bright beneath her feet and somebody took her body up.",
+                "When she opened her eyes she was in a palanquin made of jade. On both sides strangers stood in rows and bowed.",
+                "\"You are welcome.\"<br>\"...Where is this?\"<br>\"It is the Dragon Palace under the water.\"",
+                "Simcheong was led into a great palace. The pillars were coral and the floor was pearl. They seated her in the highest place and set a table before her.",
+                "\"I am a body given as an offering. There is no reason for me to be treated so.\"<br>\"You are no offering. Heaven has sent you here.\"",
+                "Some days later the screen of the hall was drawn back and a woman came in.",
+                "Simcheong had never seen that face. And still her heart knew it first.",
+                "\"...Mother?\"<br>It was Lady Gwak. She held Simcheong and did not let go for a long time.",
+                "\"How big my daughter has grown. And how did these hands get so rough?\"<br>In her mother's arms Simcheong cried out loud for the first time in her life. It was fifteen years of crying held back.",
+                "A few days later her mother said,<br>\"Now you must go back.\"<br>\"Mother, may I not stay here?\"<br>\"Your father's eyes are not open yet.\"",
+                "Simcheong raised her head.<br>\"Even with three hundred sacks offered?\"<br>\"They are not eyes that open for rice. They are eyes that open when you go.\"",
+                "On the day they parted, her mother seated Simcheong inside a great lotus bud.",
+                "\"Sleep in here. When you open your eyes it will be the world again.\"<br>\"And you, mother?\"<br>\"I shall be watching from here always.\"",
+                "The petals closed one by one. Inside them Simcheong drifted into sleep.",
+                "The lotus rose slowly. Swaying with the current, it came after several days to the middle of Indangsu.",
+                "About that time a ship coming back from trading in Nanjing was passing Indangsu. It was the very ship that had taken Simcheong.",
+                "Whenever they passed that sea the sailors poured wine and bowed. That day too they were setting out a table at the rail when they saw something floating on the water.",
+                "\"What is that?\"<br>\"A flower! It is a lotus!\"",
+                "Out of season, and not in a pond but in the middle of the open sea, one red lotus as tall as a person was floating there.",
+                "The leader had the ship brought alongside. When they lifted the flower aboard, a faint scent spread through the whole ship.",
+                "\"This is no ordinary flower.\"<br>The sailors set the flower in the middle of the ship and made for land.",
+                "When they reached land the story spread in no time. The tale of a strange lotus taken out of the sea soon reached the palace.",
+                "At that time the king of the country had lost his queen and was living alone. When he heard about the flower he sent for the sailors.<br>\"Bring that flower into the palace.\""
+            ]
+        },
+        {
+            num: 6,
+            title: "The Feast for the Blind",
+            art: ["story-06-a.webp", "story-06-b.webp", "story-06-c.webp"],
+            artAt: ["The lotus was set in the palace garden", "Call every blind person in this country", "feeling for the threshold with his stick"],
+            paras: [
+                "The lotus was set in the palace garden. Every day the king came out and looked at the flower.",
+                "It was a night some days later. The moon was unusually bright. In that light the petals began to open, one by one.",
+                "Inside the flower a young woman was sitting. The palace was thrown into an uproar.",
+                "The king asked,<br>\"Who are you?\"<br>\"I am Simcheong, and I lived in Dohwadong in Hwangju.\"",
+                "Simcheong told him everything without hiding any of it. Her blind father, the three hundred sacks of temple rice, Indangsu.",
+                "The king heard it all and said nothing for a long time. And then he said,<br>\"This is a person heaven has sent to this country.\"",
+                "That autumn Simcheong became queen. The whole country celebrated the wedding.",
+                "But Simcheong did not smile. Neither the silk of the palace nor the finest dishes reached her.",
+                "The king asked,<br>\"What weighs on you so?\"<br>\"I do not even know whether my father is alive.\"",
+                "The king sent men to search Dohwadong in Hwangju. But the man called Sim Hakgyu had already left that village. They said that after his daughter died he could not stay there and had gone away somewhere.",
+                "Simcheong lay awake many nights. Then one morning she went before the king and said,",
+                "\"Call every blind person in this country to the palace and hold a feast for them. Three days, or ten days. Keep it open until they have all come.\"<br>The king nodded.<br>\"Let it be so.\"",
+                "Notices went up across the eight provinces. Anyone who could not see was to come to the palace. Food and lodging on the road would be paid for by the state.",
+                "People set out. Leaning on sticks, holding one another's shoulders, led by the hand of a child, they made their way to Hanyang.",
+                "About that time Sim Bongsa was wandering in some strange district. After he sent his daughter away he had left Dohwadong and gone about with nowhere to go.",
+                "When he heard about the notice Sim Bongsa did not want to go at first.<br>\"With what face am I to go and be fed?\"",
+                "But a villager pushed him along.<br>\"Go. Go and have at least one good meal.\"",
+                "Sim Bongsa took his stick and set out. All he had for the journey was a few coins.",
+                "Things happened on the way. A man he met at an inn offered to show him a good road and went ahead of him, and then made off with his bundle and all his money while he slept.",
+                "Sim Bongsa was left with nothing. Still he walked. He slept under other people's eaves, was given food, and walked on.",
+                "He missed his footing and fell into a ditch, and he took a wrong road and wandered a whole day.",
+                "By the time he reached Hanyang the feast had been going for many days already. His clothes were worn through and his feet were blistered.",
+                "At the palace gate an official said,<br>\"Today is the last day. Go in quickly.\"",
+                "Sim Bongsa was relieved to hear it. And then he went into the palace, feeling for the threshold with his stick."
+            ]
+        },
+        {
+            num: 7,
+            title: "His Eyes Are Opened",
+            art: ["story-07-a.webp", "story-07-b.webp", "story-07-c.webp"],
+            artAt: ["The feast yard was full of people who could not see", "knelt in front of that old man", "saw the world for the first time in twenty-five years"],
+            paras: [
+                "The feast yard was full of people who could not see. There was rice and soup on every table.",
+                "Simcheong sat behind a screen and looked down at that yard all day long. She had done it for many days now.",
+                "An official went about with a register writing down the names. Simcheong checked every name. The name Sim Hakgyu did not come.",
+                "It was the evening of the last day. The tables were nearly all cleared and people were getting up, one by one.",
+                "Then an old man who had come in late sat down at the far end of the yard. His clothes were badly worn and his hair was quite white.",
+                "The official went over and asked,<br>\"Give your name.\"<br>\"...Sim Hakgyu, of Dohwadong in Hwangju.\"",
+                "There was a sound of something falling behind the screen. Simcheong had sprung to her feet and knocked over a folding screen.",
+                "Simcheong pushed the screen aside and ran down into the yard. The hem of a queen's robe dragged in the dirt and nobody dared stop her.",
+                "Simcheong knelt in front of that old man. Her throat closed and no words came.",
+                "The old man heard someone there and raised his head.<br>\"Who is it?\"",
+                "Simcheong barely got it out.<br>\"Father.\"",
+                "The old man's body went stiff. The stick fell out of his hand.<br>\"...What did you say?\"<br>\"Father. It's me. It's Cheong.\"",
+                "Sim Bongsa put out a hand and felt at the empty air.<br>\"No. No. My Cheong drowned. I am the man who sold that child into the water.\"",
+                "\"I'm alive, father. I'm here.\"<br>Simcheong took her father's hand and put it against her face.",
+                "Sim Bongsa's fingertips went over his daughter's forehead, her eyes, her cheek. His hands shook badly.",
+                "\"Is it Cheong? Is it really Cheong? And I never once saw your face. I don't even know what you look like.\"",
+                "\"Father.\"<br>\"Oh, my daughter! Let me see you! Let me see you!\"",
+                "Sim Bongsa opened his eyes wide. And that was the moment.",
+                "There was a flash before him and something lifted away. Light came into the place that had been dark.",
+                "What was blurred grew slowly clear. And Sim Bongsa saw the world for the first time in twenty-five years.",
+                "The first thing he saw was the face of his daughter, kneeling in front of him.",
+                "\"...Cheong.\"<br>Father and daughter held each other in the middle of the yard.",
+                "And then voices broke out all over the yard.<br>\"I can see!\"<br>\"I can see!\"",
+                "One after another the people who had come to the feast opened their eyes. The sound of sticks falling on the ground rang all across the yard. Even those who had come late and were still outside the gate opened their eyes.",
+                "They say that on that day every blind person in the whole country opened their eyes in the palace yard. People said Simcheong's love for her father had reached heaven.",
+                "Sim Bongsa lived a long time after that. When people asked him to boast about his daughter, they say he always said this.<br>\"They tell me my daughter saved me. That's not it. She did not open my eyes. She made me want to open them.\""
+            ]
+        }
+    ],
+    /* 단어장 — 그림책은 펼침면마다 묶지만, 소설은 장마다 묶는다.
+       쪽은 재어서 나누므로 미리 알 수 없기 때문이다.
+       화면에는 그 쪽에 실제로 나온 낱말만 골라 보여 준다(vocabFor). */
+    words: {
+        "cover": [
+            { w: "There is no author", k: "지은이가 없다", s: "There is no author" },
+            { w: "changed it a little each time (change)", k: "그때마다 조금씩 고쳤다", s: "changed it a little each time" },
+            { w: "is not invented (invent)", k: "지어낸 것이 아니다", s: "is not invented" },
+            { w: "a stretch of hard water", k: "물살이 센 자리", s: "a stretch of hard water" },
+            { w: "makes you uncomfortable (make)", k: "마음을 불편하게 한다", s: "If reading it makes you uncomfortable" },
+            { w: "no longer ~", k: "더는 ~않는다", s: "We no longer think it beautiful" }
+        ],
+        "ch1": [
+            { w: "had come down in the world (come down)", k: "가세가 기울었다", s: "the household had come down in the world" },
+            { w: "took in sewing (take in)", k: "삯바느질을 했다", s: "took in sewing and pounded other people's grain" },
+            { w: "no better-matched couple", k: "더없이 잘 맞는 부부", s: "there was no better-matched couple" },
+            { w: "no proper rest", k: "몸조리를 제대로 못 함", s: "there had been no proper rest for her after the birth" },
+            { w: "a baby at the breast", k: "젖먹이", s: "to raise a baby at the breast" },
+            { w: "wrapped the child on his back (wrap)", k: "아이를 업었다", s: "he wrapped the child on his back" },
+            { w: "Just one mouthful", k: "한 모금만", s: "Just one mouthful for my child" },
+            { w: "thin gruel", k: "미음", s: "In one house they made her thin gruel" },
+            { w: "became her father's eyes (become)", k: "아버지의 눈이 되었다", s: "Cheong became her father's eyes" },
+            { w: "leading him by the hand (lead)", k: "손을 잡고 이끌며", s: "she was already leading him by the hand" },
+            { w: "put down a block and stand on it (put)", k: "받침을 놓고 올라서다", s: "she had to put down a block and stand on it" },
+            { w: "felt for ~ (feel for)", k: "안쓰럽게 여겼다", s: "People felt for the little thing" },
+            { w: "two extra spoonfuls", k: "두 숟갈 더", s: "put in two extra spoonfuls" },
+            { w: "crouch at the stove", k: "부뚜막에 쭈그려 앉다", s: "Cheong crouch at the stove and eat what was left" },
+            { w: "Her hands were deft", k: "손이 야무졌다", s: "Her hands were deft" },
+            { w: "thought a great deal of ~ (think)", k: "아주 대단하게 여겼다", s: "thought a great deal of her" },
+            { w: "sent for ~ (send)", k: "사람을 보내 불렀다", s: "heard of it and sent for Simcheong" },
+            { w: "adopted daughter", k: "수양딸", s: "Will you not be my adopted daughter?" },
+            { w: "fetch himself a bowl of water", k: "물 한 그릇도 못 떠 먹는다", s: "my father cannot even fetch himself a bowl of water" },
+            { w: "reddened (redden)", k: "붉어졌다", s: "The lady's eyes reddened at that" }
+        ],
+        "ch2": [
+            { w: "take back some sewing (take back)", k: "바느질감을 돌려주다", s: "gone to the Jang household to take back some sewing" },
+            { w: "frozen over (freeze)", k: "꽁꽁 얼었다", s: "The road was frozen over" },
+            { w: "slipped on the ice (slip)", k: "얼음에 미끄러졌다", s: "the end of his stick slipped on the ice" },
+            { w: "cut like a knife (cut)", k: "칼처럼 에었다", s: "The winter water cut like a knife" },
+            { w: "only thrashed about (thrash)", k: "허우적거리기만 했다", s: "only thrashed about" },
+            { w: "grew fainter and fainter (grow)", k: "점점 잦아들었다", s: "His voice grew fainter and fainter" },
+            { w: "beat his back (beat)", k: "등을 두드렸다", s: "laid him on the bank and beat his back" },
+            { w: "brought up the water (bring up)", k: "물을 토해 냈다", s: "Sim Bongsa brought up the water" },
+            { w: "came to himself (come to)", k: "정신을 차렸다", s: "barely came to himself" },
+            { w: "lit the fire (light)", k: "불을 지폈다", s: "lit the fire for him" },
+            { w: "How am I to repay this", k: "이 은혜를 어떻게 갚나", s: "How am I to repay this?" },
+            { w: "will be left alone (leave)", k: "혼자 남는다", s: "my Cheong will be left alone" },
+            { w: "not eyes that cannot be cured (cure)", k: "못 고칠 눈이 아니다", s: "Your eyes are not eyes that cannot be cured" },
+            { w: "temple rice", k: "공양미", s: "three hundred sacks of temple rice" },
+            { w: "with a whole heart", k: "정성을 다해", s: "pray with a whole heart" },
+            { w: "did not stop to think (stop)", k: "생각해 보지도 않았다", s: "he did not stop to think" },
+            { w: "anywhere near possible", k: "가당키나 한가", s: "Is three hundred sacks anywhere near possible" },
+            { w: "Unwillingly", k: "마지못해", s: "Unwillingly the monk wrote the name" },
+            { w: "came to his senses (come to)", k: "제정신이 들었다", s: "did Sim Bongsa come to his senses" },
+            { w: "beat the floor (beat)", k: "방바닥을 쳤다", s: "Sim Bongsa beat the floor and regretted it" },
+            { w: "bear the sin (bear)", k: "죄를 짊어지다", s: "How am I to bear the sin of lying to the Buddha" },
+            { w: "with the quilt over his head", k: "이불을 뒤집어쓰고", s: "lying with the quilt over his head" },
+            { w: "it all came out (come out)", k: "다 털어놓게 되었다", s: "in the end it all came out" },
+            { w: "a bowl of fresh water", k: "정화수 한 그릇", s: "set out a bowl of fresh water" }
+        ],
+        "ch3": [
+            { w: "at the mouth of the village", k: "마을 어귀에서", s: "saw strangers at the mouth of the village" },
+            { w: "who looked like their leader (look like)", k: "우두머리로 보이는", s: "The one who looked like their leader" },
+            { w: "so wild that ~", k: "어찌나 사나운지", s: "that water is so wild that several ships go over every year" },
+            { w: "go over (go)", k: "뒤집힌다", s: "several ships go over every year" },
+            { w: "grows calm (grow)", k: "잔잔해진다", s: "that sea grows calm" },
+            { w: "whatever it takes (take)", k: "얼마가 들든", s: "We will pay whatever it takes" },
+            { w: "began to beat hard (begin)", k: "크게 뛰기 시작했다", s: "Simcheong's heart began to beat hard" },
+            { w: "this is not a game", k: "장난이 아니다", s: "this is not a game" },
+            { w: "throwing yourself into the sea (throw)", k: "바다에 몸을 던지는 것", s: "It means throwing yourself into the sea" },
+            { w: "brought you to such a decision (bring)", k: "그런 결심을 하게 했다", s: "What has brought you to such a decision?" },
+            { w: "said it calmly (say)", k: "담담하게 말했다", s: "Simcheong said it calmly" },
+            { w: "pressed his sleeve to his eyes (press)", k: "소매로 눈을 눌렀다", s: "pressed his sleeve to his eyes" },
+            { w: "the day the ship sails (sail)", k: "배 떠나는 날", s: "I will come on the day the ship sails" },
+            { w: "had thought over beforehand (think over)", k: "미리 생각해 두었다", s: "the words she had thought over beforehand" },
+            { w: "be spared ~ (spare)", k: "~을 면하다", s: "you'll be spared this hard life" },
+            { w: "Never had she been so glad", k: "그렇게 다행스러운 적이 없었다", s: "Never had she been so glad that her father could not see" },
+            { w: "folded in turn (fold)", k: "차례로 개어", s: "folded in turn and put away in the chest" },
+            { w: "see that ~ eats (see)", k: "밥을 챙겨 주다", s: "will you see that my father eats?" },
+            { w: "in haste", k: "급히", s: "someone came in haste from the Jang household" },
+            { w: "sold yourself to ~ (sell)", k: "몸을 팔았다", s: "you have sold yourself to the sailors" },
+            { w: "shook the more (shake)", k: "더 떨렸다", s: "It was the lady's hands that shook the more" },
+            { w: "give back what ~ have paid (give back)", k: "받은 값을 돌려주다", s: "give back what the sailors have paid" },
+            { w: "caught hold of ~ (catch hold)", k: "붙들었다", s: "Simcheong caught hold of the lady's sleeve" },
+            { w: "go back on it (go back on)", k: "무르다", s: "If I go back on it now" },
+            { w: "has cheated others (cheat)", k: "사람을 속였다", s: "I am a person who has cheated others" },
+            { w: "What is a promise beside that", k: "그깟 약속이 무슨 대수냐", s: "What is a promise beside that?" },
+            { w: "somebody else's", k: "남의 것", s: "If even that is somebody else's" },
+            { w: "cannot win against ~ (win)", k: "~를 못 이기겠다", s: "I cannot win against you" },
+            { w: "did not once look back (look back)", k: "한 번도 뒤돌아보지 않았다", s: "Simcheong did not once look back" },
+            { w: "more carefully than she ever had", k: "어느 때보다 정성껏", s: "more carefully than she ever had" },
+            { w: "stopped in the middle of eating (stop)", k: "밥을 먹다 말고", s: "stopped in the middle of eating" },
+            { w: "stayed awake until morning (stay)", k: "밤을 새웠다", s: "stayed awake until morning" }
+        ],
+        "ch4": [
+            { w: "The cock crowed at dawn (crow)", k: "새벽닭이 울었다", s: "The cock crowed at dawn" },
+            { w: "changed her clothes (change)", k: "옷을 갈아입었다", s: "changed her clothes" },
+            { w: "it is time", k: "때가 되었다", s: "Young woman, it is time" },
+            { w: "tipped his head (tip)", k: "고개를 갸웃했다", s: "Sim Bongsa tipped his head" },
+            { w: "made her last bow (make)", k: "마지막 절을 올렸다", s: "she made her last bow" },
+            { w: "Don't miss your meals (miss)", k: "진지 거르지 마세요", s: "Don't miss your meals" },
+            { w: "get her feet over the threshold (get)", k: "문지방을 넘다", s: "She could not get her feet over the threshold" },
+            { w: "could not hold it in (hold in)", k: "참지 못했다", s: "could not hold it in and burst out crying" },
+            { w: "something was wrong", k: "무언가 잘못되었다", s: "understand that something was wrong" },
+            { w: "felt about in the empty air (feel about)", k: "허공을 더듬었다", s: "felt about in the empty air of the yard" },
+            { w: "closed on nothing (close)", k: "아무것도 잡히지 않았다", s: "His hands closed on nothing" },
+            { w: "What do my eyes matter (matter)", k: "눈이 다 무엇이냐", s: "What do my eyes matter!" },
+            { w: "caught his foot on a stone (catch)", k: "돌부리에 걸렸다", s: "caught his foot on a stone and fell" },
+            { w: "looked back exactly once (look back)", k: "딱 한 번 돌아보았다", s: "Simcheong looked back exactly once" },
+            { w: "treated her with great care (treat)", k: "정성껏 대접했다", s: "The sailors treated her with great care" },
+            { w: "meet her eye (meet)", k: "눈을 마주치다", s: "not one of them could meet her eye" },
+            { w: "change your mind (change)", k: "마음을 돌리다", s: "change your mind even now" },
+            { w: "set you down on land (set down)", k: "뭍에 내려 주다", s: "We will set you down on land" },
+            { w: "shook her head (shake)", k: "고개를 저었다", s: "Simcheong shook her head" },
+            { w: "turn black and whirl (turn)", k: "시커멓게 소용돌이치다", s: "began to turn black and whirl" },
+            { w: "pitched up and down (pitch)", k: "위아래로 크게 흔들렸다", s: "The ship pitched up and down" },
+            { w: "took in the sails (take in)", k: "돛을 내렸다", s: "The sailors took in the sails" },
+            { w: "carry this sin all our lives (carry)", k: "평생 이 죄를 지고 살다", s: "we shall carry this sin all our lives" },
+            { w: "of my own will", k: "제 발로", s: "I came of my own will" },
+            { w: "put her two hands together (put)", k: "두 손을 모았다", s: "she put her two hands together toward the western sky" },
+            { w: "is no loss", k: "아깝지 않다", s: "This body of mine is no loss" },
+            { w: "threw herself into ~ (throw)", k: "몸을 던졌다", s: "threw herself into the whirlpool" },
+            { w: "went smooth (go)", k: "잔잔해졌다", s: "The water heaved once and then went smooth" },
+            { w: "wept aloud (weep)", k: "통곡했다", s: "lay against the rail and wept aloud" }
+        ],
+        "ch5": [
+            { w: "sank down and down (sink)", k: "한없이 가라앉았다", s: "Simcheong sank down and down through the water" },
+            { w: "smothering (smother)", k: "숨이 막히는 것", s: "she could not feel herself smothering" },
+            { w: "took her body up (take up)", k: "몸을 받쳐 들었다", s: "somebody took her body up" },
+            { w: "made of jade (make)", k: "옥으로 만든 가마", s: "she was in a palanquin made of jade" },
+            { w: "stood in rows (stand)", k: "늘어서 있었다", s: "strangers stood in rows and bowed" },
+            { w: "the Dragon Palace", k: "용궁", s: "It is the Dragon Palace under the water" },
+            { w: "coral", k: "산호", s: "The pillars were coral and the floor was pearl" },
+            { w: "seated her in the highest place (seat)", k: "상석에 앉혔다", s: "They seated her in the highest place" },
+            { w: "given as an offering (give)", k: "제물로 바쳐진", s: "I am a body given as an offering" },
+            { w: "was drawn back (draw back)", k: "걷혔다", s: "the screen of the hall was drawn back" },
+            { w: "her heart knew it first (know)", k: "가슴이 먼저 알아보았다", s: "her heart knew it first" },
+            { w: "did not let go (let go)", k: "놓지 않았다", s: "held Simcheong and did not let go for a long time" },
+            { w: "get so rough (get)", k: "이리 거칠어지다", s: "how did these hands get so rough" },
+            { w: "cried out loud (cry)", k: "소리 내어 울었다", s: "cried out loud for the first time in her life" },
+            { w: "held back (hold back)", k: "참았던", s: "It was fifteen years of crying held back" },
+            { w: "not eyes that open for rice (open)", k: "쌀로 뜨는 눈이 아니다", s: "They are not eyes that open for rice" },
+            { w: "a lotus bud", k: "연꽃 봉오리", s: "inside a great lotus bud" },
+            { w: "drifted into sleep (drift)", k: "스르르 잠이 들었다", s: "Inside them Simcheong drifted into sleep" },
+            { w: "Swaying with the current (sway)", k: "물살을 따라 흔들리며", s: "Swaying with the current" },
+            { w: "the very ship", k: "바로 그 배", s: "It was the very ship that had taken Simcheong" },
+            { w: "poured wine and bowed (pour)", k: "술을 붓고 절했다", s: "the sailors poured wine and bowed" },
+            { w: "at the rail", k: "뱃전에", s: "setting out a table at the rail" },
+            { w: "Out of season", k: "제철도 아닌데", s: "Out of season, and not in a pond" },
+            { w: "as tall as a person", k: "사람 키만 한", s: "one red lotus as tall as a person" },
+            { w: "brought alongside (bring)", k: "배를 대게 했다", s: "had the ship brought alongside" },
+            { w: "a faint scent", k: "은은한 향", s: "a faint scent spread through the whole ship" },
+            { w: "no ordinary flower", k: "예사 꽃이 아니다", s: "This is no ordinary flower" },
+            { w: "made for land (make for)", k: "뭍으로 향했다", s: "made for land" },
+            { w: "in no time", k: "삽시간에", s: "the story spread in no time" },
+            { w: "had lost his queen (lose)", k: "왕후를 여의었다", s: "the king of the country had lost his queen" }
+        ],
+        "ch6": [
+            { w: "came out and looked at ~ (come out)", k: "나와서 들여다보았다", s: "the king came out and looked at the flower" },
+            { w: "unusually bright", k: "유난히 밝은", s: "The moon was unusually bright" },
+            { w: "was thrown into an uproar (throw)", k: "발칵 뒤집혔다", s: "The palace was thrown into an uproar" },
+            { w: "without hiding any of it (hide)", k: "하나도 숨기지 않고", s: "everything without hiding any of it" },
+            { w: "said nothing for a long time (say)", k: "한참 동안 말이 없었다", s: "said nothing for a long time" },
+            { w: "heaven has sent (send)", k: "하늘이 보냈다", s: "This is a person heaven has sent to this country" },
+            { w: "became queen (become)", k: "왕후가 되었다", s: "Simcheong became queen" },
+            { w: "celebrated the wedding (celebrate)", k: "혼례를 축하했다", s: "The whole country celebrated the wedding" },
+            { w: "the finest dishes", k: "산해진미", s: "nor the finest dishes reached her" },
+            { w: "What weighs on you so (weigh)", k: "무엇이 그리 마음에 걸리오", s: "What weighs on you so?" },
+            { w: "sent men to search ~ (send)", k: "사람을 풀어 뒤졌다", s: "The king sent men to search Dohwadong" },
+            { w: "had already left (leave)", k: "이미 떠난 뒤였다", s: "had already left that village" },
+            { w: "lay awake many nights (lie)", k: "여러 날 밤을 새웠다", s: "Simcheong lay awake many nights" },
+            { w: "Keep it open until ~ (keep)", k: "~할 때까지 열어 두다", s: "Keep it open until they have all come" },
+            { w: "Notices went up (go up)", k: "방이 붙었다", s: "Notices went up across the eight provinces" },
+            { w: "the eight provinces", k: "팔도", s: "across the eight provinces" },
+            { w: "paid for by the state (pay)", k: "나라에서 대 준다", s: "would be paid for by the state" },
+            { w: "led by the hand of a child (lead)", k: "아이 손에 이끌려", s: "led by the hand of a child" },
+            { w: "with nowhere to go", k: "정처 없이", s: "gone about with nowhere to go" },
+            { w: "With what face ~", k: "무슨 낯으로 ~", s: "With what face am I to go and be fed?" },
+            { w: "pushed him along (push)", k: "등을 떠밀었다", s: "a villager pushed him along" },
+            { w: "a few coins", k: "몇 푼", s: "All he had for the journey was a few coins" },
+            { w: "went ahead of him (go ahead)", k: "앞장섰다", s: "went ahead of him" },
+            { w: "made off with ~ (make off)", k: "들고 달아났다", s: "made off with his bundle and all his money" },
+            { w: "was left with nothing (leave)", k: "빈손으로 남았다", s: "Sim Bongsa was left with nothing" },
+            { w: "under other people's eaves", k: "남의 집 처마 밑에서", s: "He slept under other people's eaves" },
+            { w: "missed his footing (miss)", k: "발을 헛디뎠다", s: "He missed his footing and fell into a ditch" },
+            { w: "took a wrong road (take)", k: "길을 잘못 들었다", s: "he took a wrong road and wandered a whole day" },
+            { w: "worn through (wear)", k: "다 해졌다", s: "His clothes were worn through" },
+            { w: "blistered (blister)", k: "부르텄다", s: "his feet were blistered" },
+            { w: "feeling for the threshold (feel for)", k: "문지방을 더듬으며", s: "feeling for the threshold with his stick" }
+        ],
+        "ch7": [
+            { w: "a register", k: "명부", s: "went about with a register writing down the names" },
+            { w: "were nearly all cleared (clear)", k: "거의 다 치워졌다", s: "The tables were nearly all cleared" },
+            { w: "at the far end of the yard", k: "마당 끝자리에", s: "sat down at the far end of the yard" },
+            { w: "badly worn (wear)", k: "몹시 해진", s: "His clothes were badly worn" },
+            { w: "quite white", k: "온통 하얀", s: "his hair was quite white" },
+            { w: "Give your name (give)", k: "이름을 대시오", s: "Give your name" },
+            { w: "had sprung to her feet (spring)", k: "벌떡 일어섰다", s: "Simcheong had sprung to her feet" },
+            { w: "knocked over ~ (knock over)", k: "넘어뜨렸다", s: "knocked over a folding screen" },
+            { w: "dragged in the dirt (drag)", k: "흙에 끌렸다", s: "a queen's robe dragged in the dirt" },
+            { w: "dared stop her (dare)", k: "감히 말리지 못했다", s: "nobody dared stop her" },
+            { w: "Her throat closed (close)", k: "목이 메었다", s: "Her throat closed and no words came" },
+            { w: "raised his head (raise)", k: "고개를 들었다", s: "heard someone there and raised his head" },
+            { w: "barely got it out (get out)", k: "겨우 입을 열었다", s: "Simcheong barely got it out" },
+            { w: "went stiff (go)", k: "굳었다", s: "The old man's body went stiff" },
+            { w: "fell out of his hand (fall)", k: "손에서 떨어졌다", s: "The stick fell out of his hand" },
+            { w: "felt at the empty air (feel)", k: "허공을 더듬었다", s: "put out a hand and felt at the empty air" },
+            { w: "sold that child into the water (sell)", k: "그 아이를 물에 팔았다", s: "I am the man who sold that child into the water" },
+            { w: "put it against her face (put)", k: "제 얼굴에 갖다 댔다", s: "put it against her face" },
+            { w: "went over ~ (go over)", k: "더듬었다", s: "fingertips went over his daughter's forehead" },
+            { w: "shook badly (shake)", k: "몹시 떨렸다", s: "His hands shook badly" },
+            { w: "never once (never)", k: "한 번도 ~않다", s: "I never once saw your face" },
+            { w: "Let me see you (let)", k: "어디 좀 보자", s: "Let me see you!" },
+            { w: "opened his eyes wide (open)", k: "두 눈을 부릅떴다", s: "Sim Bongsa opened his eyes wide" },
+            { w: "a flash before him", k: "눈앞이 번쩍", s: "There was a flash before him" },
+            { w: "something lifted away (lift)", k: "무언가 걷혔다", s: "something lifted away" },
+            { w: "grew slowly clear (grow)", k: "차츰 또렷해졌다", s: "What was blurred grew slowly clear" },
+            { w: "for the first time in twenty-five years", k: "스물다섯 해 만에", s: "saw the world for the first time in twenty-five years" },
+            { w: "held each other (hold)", k: "서로를 끌어안았다", s: "Father and daughter held each other" },
+            { w: "broke out (break out)", k: "터져 나왔다", s: "voices broke out all over the yard" },
+            { w: "One after another", k: "하나둘", s: "One after another the people" },
+            { w: "rang all across the yard (ring)", k: "마당 가득 울렸다", s: "rang all across the yard" },
+            { w: "had reached heaven (reach)", k: "하늘에 닿았다", s: "Simcheong's love for her father had reached heaven" },
+            { w: "boast about ~ (boast)", k: "자랑하다", s: "When people asked him to boast about his daughter" },
+            { w: "made me want to ~ (make)", k: "~하고 싶게 만들었다", s: "She made me want to open them" }
+        ]
+    },
+    quiz: [
+        { q: "When did Sim Bongsa lose his sight?", choices: ["He is said to have been so from birth", "After an illness at about twenty", "From a bad hurt in a fight"], answer: 1 },
+        { q: "What kept the baby Simcheong alive?", choices: ["Rice sent down from the temple", "Money sent by her mother's family", "Milk begged from the village women"], answer: 2 },
+        { q: "Who pulled Sim Bongsa out of the water?", choices: ["A monk from Mongunsa", "One of the sailors", "An old man from next door"], answer: 0 },
+        { q: "What did the monk say was needed for his eyes to open?", choices: ["A bowl of fresh water", "Three measures of rice", "Three hundred sacks of temple rice"], answer: 2 },
+        { q: "Why were the sailors looking for someone?", choices: ["To get across Indangsu safely", "Because they had nobody to work the ship", "Because the king had ordered it"], answer: 0 },
+        { q: "What did Simcheong tell her father instead of the truth?", choices: ["That she was going to work at Mongunsa", "That she was becoming the Jang household's adopted daughter", "That she was visiting distant relatives"], answer: 1 },
+        { q: "On what day did Simcheong leave for Indangsu?", choices: ["The winter of the year she turned fifteen", "The fifteenth of the third month", "The seventh day"], answer: 1 },
+        { q: "Who took Simcheong up after she went into the water?", choices: ["A fishing boat passing by", "One great turtle", "People from the Dragon Palace"], answer: 2 },
+        { q: "What did the sailors do whenever they passed that sea?", choices: ["They poured wine and bowed", "They set a table at the rail", "They set a flower in the ship"], answer: 0 },
+        { q: "What did the sailors do with the lotus?", choices: ["They left it where it was and went on", "They took it to a temple near by", "They carried it back and gave it to the king"], answer: 2 },
+        { q: "What did Simcheong hold once she was queen?", choices: ["A feast for the blind", "A contest of writing", "A great state sacrifice"], answer: 0 },
+        { q: "Why was Sim Bongsa late for the feast?", choices: ["He lost his way", "He fell ill and had to lie up", "He lost every coin he had for the road"], answer: 2 },
+        { q: "When did Sim Bongsa's eyes open?", choices: ["After he ate the feast food", "The moment he knew his daughter", "After the queen gave him medicine"], answer: 1 },
+        { q: "What happened when Sim Bongsa's eyes opened?", choices: ["Flowers rained down out of the sky", "The water of Indangsu went smooth", "Everyone who had come to the feast opened their eyes too"], answer: 2 }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '👁️',
+        art: ['end.webp'],
+        paras: [
+            "This story was a song before it was a book. Simcheong-ga came first — one singer with one drummer, singing for three or four hours together — and what you have just read is that song written down.",
+            "Five pansori pieces still survive as song: Chunhyang-ga, Simcheong-ga, Heungbo-ga, Sugung-ga and Jeokbyeok-ga. Three of those five are on this shelf as novels: Chunhyangjeon, Simcheongjeon and Heungbujeon. Sugung-ga became the Tale of the Rabbit, so that makes four.",
+            "So this story has no author. One person did not sit down and make it up. Singers sang it and sang it and changed it a little each time. The parts where people cried grew longer, and the parts where they were bored shrank of themselves.",
+            "That is why every copy is different. Set the ones printed and sold in Seoul beside the ones printed in Jeonju and the length alone differs by nearly three times. There is no arguing which is the real one. They are both real.",
+            "This book has left something out too. In the original story a woman called Ppaengdeok's mother appears after Simcheong has gone. She attaches herself to Sim Bongsa, eats up bit by bit what his daughter left behind, and on the road to the feast for the blind she takes even that and runs. She is what leaves Sim Bongsa arriving at the palace with nothing.",
+            "Three older stories are usually named as the roots of this one. The devoted daughter Jieun, in the History of the Three Kingdoms, is a poor girl who sells herself into another house to feed her mother. The Geotaji story, in the Memorabilia of the Three Kingdoms, has a sea that is given people as an offering. And the Won Hongjang story handed down at Gwaneumsa in Jeolla is about a girl with a blind father who is sold to sailors.",
+            "Stories about giving a person to the sea are not only ours. Anywhere people had to go out on deep water to live, there is a story like it. That is how frightening the sea was.",
+            "But Simcheong differs from those stories in one place. She was not dragged off; she went on her own feet. It was Simcheong herself who set the price and made the bargain. She is not a person made into an offering but a person who decided to sell herself. That single difference changes the whole story.",
+            "The sum of three hundred sacks is worth working out. Three hundred sacks is more rice than a hundred grown people eat in a year. It is not an amount a household that raised its daughter on begging could ever find. It was a price that could not be paid from the start.",
+            "That is where this story is tender. Sim Bongsa could not see, so he could not see how big a heap three hundred sacks makes in a yard. If he had seen it he would have caught the monk's sleeve on the spot. He did not make a promise; he nodded without knowing how large a promise it was.",
+            "Open chapter three again. There is the place where Simcheong tells her father she is going to the Jang household as an adopted daughter. It is the only lie Simcheong tells in this book. A daughter praised for devotion left home by deceiving her father. It is worth thinking about why the story does not scold her for that lie.",
+            "The same goes for her refusing the lady of the Jang household when the lady offered to pay the three hundred sacks. Counting money alone, taking it was better. Simcheong refused because she did not think her father's eyes should be a thing got without paying for it.",
+            "Indangsu is not an invented place. It is said to be what people called a stretch of hard water off Baengnyeongdo in the West Sea. Even now there is a hall on Baengnyeongdo in Simcheong's memory, and along with it the saying that the village where Simcheong was born and grew up lay on the Hwanghae shore opposite.",
+            "There is a reason, too, that a lotus is what Simcheong comes back inside. Lotuses do not open in clear water. They set their roots in the mud and push a clean flower up above it. Remembering how close the people who built this story were to the temples, choosing a lotus was no accident.",
+            "In the last chapter Sim Bongsa's eyes did not open because he took medicine. Nor because three hundred sacks went to the temple. The rice had gone in long before and his eyes were the same. They opened on the spot where he heard his daughter's voice.",
+            "And Sim Bongsa was not the only one whose eyes opened that day. Those who had come to the feast, and those who had come late and were standing outside the gate, all opened them. The story does not end it as one man's business. That is mostly how old stories finish a good thing.",
+            "Read this only as a story about devotion to a parent and you have read half of it. If it were a story about devotion it should end where Simcheong throws herself into Indangsu. But the story does not end there; it insists on bringing Simcheong back. The people who built this story could not simply let her go either.",
+            "Sim Bongsa is a person to look at twice as well. He is a father who got his eyes by selling his daughter. Think about how a man lived after learning that, and what he says on the last page sounds different. He said she did not open his eyes but made him want to open them.",
+            "If reading this today made you uncomfortable, that is right. We no longer say it is beautiful for a daughter to lay down her life for her father. What people long ago thought beautiful does not have to be thought beautiful now. Stories stay; the weighing of them changes.",
+            "Was Simcheong right to sell herself? Her father's eyes did open. But there is no chance her father wanted it that way. If a thing done for somebody is a thing that person did not want, who is it done for?",
+            "What if Sim Bongsa had known how big three hundred sacks was? This whole story comes out of not being able to see. His daughter paid the price of a promise made in ignorance — so where does the fault lie?",
+            "And why did the monk of Mongunsa say three hundred sacks of all numbers? Had he said thirty, Simcheong would not have been sold. What the monk was thinking when he named that price is a question the story never answers."
+        ]
+    }
+};
+
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서', folio: '쪽',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading', folio: '',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        wordsDown: 'Words ⌄',
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'korea-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+// 글꼴 규칙이 html[lang] 에 걸려 있다. 쪽을 재기 전에 미리 걸어 두어야
+// 영어 글을 영어 글꼴로 잰다. 늦게 걸면 첫 쪽나눔이 통째로 어긋난다.
+document.documentElement.lang = LANG;
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
+
 const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
 
 function buildPages() {
+    CHAPTER_SEGS = CH().map(ch => segsOf(ch.paras));
+    AFTER_SEGS = segsOf(AF().paras);
+    TOC_GROUPS = [];
+    for (let i = 0; i < CH().length; i += TOC_PER_SPREAD) {
+        TOC_GROUPS.push(CH().slice(i, i + TOC_PER_SPREAD));
+    }
+
     PROBE = makeProbe();
     PAGES = [
         { kind: 'cover' },
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
-        ...CHAPTERS.flatMap(paginateChapter),
+        ...CH().flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
         ...paginateAfterword()
     ];
@@ -963,6 +1536,21 @@ function paint() {
     });
 
     if (PAGES[current].kind === 'quiz') initQuiz();
+
+    paintReadBtn();
+    // 읽는 중일 때만 문단을 눌러 그 자리로 옮긴다.
+    // 그냥 눌렀다고 소리가 나면 곤란하니, 스피커 단추를 누른 뒤에만 먹는다.
+    if (LANG === 'en' && CAN_SPEAK) {
+        spreadEl.querySelectorAll('[data-say]').forEach(el => {
+            el.addEventListener('click', () => {
+                if (!reading) return;
+                readPage(Number(el.dataset.say));
+            });
+        });
+    }
+
+    renderVocab();
+    fitVocabScreen();
 }
 
 function initQuiz() {
@@ -970,7 +1558,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -983,7 +1571,7 @@ function initQuiz() {
                 });
                 QUIZ_PICKED[qi] = chosen;
                 const done = QUIZ_PICKED.filter(v => v !== null).length;
-                progressEl.textContent = `${done} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(done, QZ().length);
             });
         });
     });
@@ -991,6 +1579,7 @@ function initQuiz() {
 
 function goTo(index) {
     if (animating || index === current || index < 0 || index >= PAGES.length) return;
+    stopReading();
     animating = true;
     const dir = index > current ? 'flip-next' : 'flip-prev';
     spreadEl.classList.add(dir);
@@ -1017,6 +1606,320 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+
+
+/* ── 읽어 주기 ─────────────────────────────────────────────────
+   소설은 한 문단 안에 서술과 대사가 섞여 있다. 그림책처럼 말하는 이를
+   따로 적어 둘 수가 없으므로, 큰따옴표 안팎으로만 목소리를 가른다.
+   속도는 둘 다 같다. 대사에서 갑자기 빨라지면 귀에 턱턱 걸린다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+
+const SAY_RATE = 0.85;
+const SAY_AS = {
+    narration: { pitch: 1.00, rate: SAY_RATE },
+    speech:    { pitch: 1.24, rate: SAY_RATE },
+    speech2:   { pitch: 0.78, rate: SAY_RATE }
+};
+
+let SAY_VOICE = null;
+
+function pickVoices() {
+    if (typeof speechSynthesis === 'undefined') return;
+    const vs = speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang));
+    if (!vs.length) return;
+    SAY_VOICE = vs.find(v => /^en[-_]US/i.test(v.lang)) || vs[0];
+}
+
+if (typeof speechSynthesis !== 'undefined') {
+    pickVoices();
+    speechSynthesis.onvoiceschanged = pickVoices;
+}
+
+function dressVoice(u, role) {
+    const a = SAY_AS[role] || SAY_AS.narration;
+    u.pitch = a.pitch;
+    u.rate = a.rate;
+    if (SAY_VOICE) u.voice = SAY_VOICE;
+}
+
+/* 낱말 뜻풀이는 소리 내어 읽지 않는다. 나머지 표시는 떼고 글자만 남긴다. */
+const plainText = h => h
+    .replace(/<span class="gloss">[\s\S]*?<\/span>/g, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+/* 큰따옴표 안은 대사다. 서술과 목소리를 가른다.
+   한 문단 안에서 따옴표가 잇달아 나오면 대개 두 사람이 주고받는 자리다.
+   그래서 두 번째 대사부터 목소리를 번갈아 바꾼다. 말하는 이를 일일이
+   적어 둘 수 없는 소설틀에서 낼 수 있는 가장 가까운 흉내다. */
+function sayChunks(text) {
+    const out = [];
+    const re = /"([^"]*)"/g;
+    let last = 0, q = 0, m;
+    while ((m = re.exec(text)) !== null) {
+        if (m.index > last) out.push({ t: text.slice(last, m.index), v: 'narration' });
+        out.push({ t: m[1], v: (q++ % 2) ? 'speech2' : 'speech' });
+        last = re.lastIndex;
+    }
+    if (last < text.length) out.push({ t: text.slice(last), v: 'narration' });
+    return out.filter(c => /\S/.test(c.t));
+}
+
+/* 그 쪽에 있는 문단들. 쪽에 걸쳐 잘린 문단은 한 번만 센다. */
+function pageParts(page) {
+    if (!page) return [];
+    if (page.kind === 'cover') {
+        return [CV().title].concat(CV().intro).map((t, i) => ({ i, raw: t }));
+    }
+    const segs = page.kind === 'chapter' ? CHAPTER_SEGS[page.chIndex]
+        : page.kind === 'after' ? AFTER_SEGS : null;
+    if (!segs) return [];
+    const src = page.kind === 'chapter' ? CH()[page.chIndex].paras : AF().paras;
+    const seen = {};
+    const out = [];
+    [page.left, page.right].forEach(r => {
+        if (!r) return;
+        for (let k = r[0]; k < r[1]; k++) {
+            const pi = segs[k].paraIdx;
+            if (seen[pi]) continue;
+            seen[pi] = 1;
+            out.push({ i: pi, raw: src[pi] });
+        }
+    });
+    return out;
+}
+
+/* 읽기 단추는 책틀에 붙박이로 있다. 영어로 읽을 때만 보인다. */
+const readBtnEl = document.getElementById('readBtn');
+let reading = false;
+let readToken = 0;
+
+function paintReadBtn() {
+    if (!readBtnEl) return;
+    readBtnEl.hidden = !(LANG === 'en' && CAN_SPEAK);
+    readBtnEl.textContent = reading ? '■' : '▶';
+}
+
+function stopReading() {
+    reading = false;
+    if (spreadEl) spreadEl.classList.remove('is-reading');
+    readToken++;
+    if (CAN_SPEAK) { try { speechSynthesis.cancel(); } catch (e) {} }
+    document.querySelectorAll('.saying').forEach(el => el.classList.remove('saying'));
+    paintReadBtn();
+}
+
+function readPage(fromParaIdx) {
+    const page = PAGES[current];
+    if (!CAN_SPEAK || !page) return;
+    const parts = pageParts(page);
+    if (!parts.length) return;
+    // 읽던 것이 있으면 끊는다. 안 그러면 새 글이 뒤에 줄을 선다.
+    try { speechSynthesis.cancel(); } catch (e) {}
+    reading = true;
+    if (spreadEl) spreadEl.classList.add('is-reading');
+    paintReadBtn();
+    const mine = ++readToken;
+
+    let start = parts.findIndex(p => p.i === fromParaIdx);
+    if (start < 0) start = 0;
+
+    const step = (k) => {
+        if (mine !== readToken) return;
+        document.querySelectorAll('.saying').forEach(el => el.classList.remove('saying'));
+        if (k >= parts.length) { stopReading(); return; }
+        const here = spreadEl.querySelector(`[data-say="${parts[k].i}"]`);
+        if (here) {
+            here.classList.add('saying');
+            here.scrollIntoView({ block: 'nearest' });
+        }
+        const chunks = sayChunks(plainText(parts[k].raw));
+        const go = (c) => {
+            if (mine !== readToken) return;
+            if (c >= chunks.length) { step(k + 1); return; }
+            const u = new SpeechSynthesisUtterance(chunks[c].t);
+            u.lang = 'en-US';
+            dressVoice(u, chunks[c].v);
+            u.onend = () => go(c + 1);
+            u.onerror = () => go(c + 1);
+            try { speechSynthesis.speak(u); } catch (e) { stopReading(); }
+        };
+        go(0);
+    };
+    step(start);
+}
+
+if (readBtnEl) {
+    readBtnEl.addEventListener('click', () => (reading ? stopReading() : readPage(-1)));
+}
+
+/* ── 단어장 ────────────────────────────────────────────────────
+   책 아래에 있는 또 한 장의 화면이다. 책은 손대지 않는다.
+   낱말은 장마다 묶어 두었고, 그 쪽에 실제로 나온 것만 골라 보여 준다. */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+let VOCAB_NOW = [];
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    if (!page) return { list: [] };
+    if (page.kind === 'cover') return { list: all.cover || [] };
+    if (page.kind === 'chapter' || page.kind === 'after') {
+        const pool = page.kind === 'chapter' ? (all['ch' + page.ch.num] || []) : (all.after || []);
+        const text = pageParts(page).map(p => p.raw).join(' ');
+        return { list: pool.filter(w => text.indexOf(w.s) >= 0) };
+    }
+    // 문제 쪽에는 글이 없다. 답을 고르기 전에 훑어볼 수 있게 책에 나온 낱말을 다 보여 준다.
+    // 차례에는 볼 글이 없으므로 단어장을 아예 열지 않는다.
+    if (page.kind !== 'quiz') return { list: [] };
+    const list = [];
+    Object.keys(all).forEach(k => all[k].forEach(w => list.push(w)));
+    return { list };
+}
+
+function renderVocab() {
+    const { list } = (HAS_WORDS && LANG === 'en') ? vocabFor() : { list: [] };
+    // 볼 낱말이 없는 쪽에서는 아래 화면을 아예 열지 않는다.
+    const on = list.length > 0;
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) {
+        scrollDownEl.hidden = !on;
+        scrollDownEl.textContent = T().wordsDown || 'Words ⌄';
+    }
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.w}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.k}</p>
+                <p class="vocab-sent">${w.s}</p>
+            </li>`).join('')}
+        </ul>`;
+}
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다. */
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        // 「went without (go without)」처럼 괄호로 적어 둔 기본형은 읽지 않는다.
+        const bare = item.w.replace(/\s*\([^)]*\)/g, '').replace(/~/g, '').trim();
+        const word = new SpeechSynthesisUtterance(bare);
+        word.lang = 'en-US';
+        dressVoice(word, 'narration');
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.s);
+        sent.lang = 'en-US';
+        dressVoice(sent, 'narration');
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 글과 단어장이 함께 보인다.
+   소설은 그림 없는 펼침면이 더 많다. 그때는 책 아랫부분만 남기고 멈춘다. */
+function artLine() {
+    const page = PAGES[current];
+    if (!page) return 0;
+    const book = document.querySelector('.book');
+    const bookBox = book ? book.getBoundingClientRect() : null;
+    const capLine = () => (bookBox
+        ? Math.max(0, Math.round(bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45)))
+        : 0);
+    const el = page.kind === 'cover'
+        ? document.querySelector('.page-cover .story-page-left-full')
+        : spreadEl.querySelector('.story-art-top');
+    if (!el) return capLine();
+    const box = el.getBoundingClientRect();
+    const line = Math.max(0, Math.round(box.bottom + window.scrollY));
+    // 표지처럼 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라
+    // 책이 통째로 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (!bookBox || box.height < bookBox.height * 0.8) return line;
+    return Math.max(0, Math.min(line, capLine()));
+}
+
+/* 쪽을 다시 나눌 때는 단어장을 먼저 접는다.
+   아래 화면이 펼쳐진 채로 재면 문서가 길어져 세로 막대가 생기고,
+   그만큼 칸이 좁아져 쪽이 잘못 나뉜다. 세로 화면에서 두 쪽이 어긋났다. */
+function rebuildPages() {
+    if (vocabScreenEl) vocabScreenEl.hidden = true;
+    window.scrollTo(0, 0);
+    buildPages();
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* ── 말 바꾸기 ─────────────────────────────────────────────────
+   쪽은 재어서 나누므로 글을 갈아 끼우면 처음부터 다시 나눈다.
+   보던 장으로 돌아간다. 쪽 수는 말마다 다르다. */
+const langBtn = document.getElementById('langLink');
+
+function applyLang() {
+    stopReading();
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        // 글꼴 규칙(html[lang])을 먼저 바꾸고 나서 재야 한다. 순서를 바꾸면
+        // 영어 글을 한글 글꼴 규칙으로 재게 되어 쪽 수가 열 쪽 넘게 어긋난다.
+        applyLang();
+        rebuildPages();
+        current = Math.min(current, PAGES.length - 1);
+        if (here && here.kind === 'chapter') {
+            const i = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
+            if (i >= 0) current = i;
+        } else if (here) {
+            const i = PAGES.findIndex(p => p.kind === here.kind);
+            if (i >= 0) current = i;
+        }
+        paint();
+    });
+}
+
+applyLang();
 paint();
 
 // 본문 글꼴은 늦게 내려온다. 글꼴이 바뀌면 한 줄에 들어가는 글자 수가 달라져서
@@ -1024,7 +1927,7 @@ paint();
 if (document.fonts && document.fonts.status !== 'loaded') {
     document.fonts.ready.then(() => {
         const here = PAGES[current];
-        buildPages();
+        rebuildPages();
         current = Math.min(current, PAGES.length - 1);
         if (here && here.kind === 'chapter') {
             const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
