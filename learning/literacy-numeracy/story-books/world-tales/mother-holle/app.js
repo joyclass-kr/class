@@ -298,16 +298,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '홀레 할머니',
+    intro: [
+        '홀레 할머니는 독일의 그림 형제가 모아 적은 옛이야기예요. 독일에서는 눈이 펑펑 내리면 홀레 할머니가 이불을 턴다고 말하곤 했답니다.',
+        '우물 속으로 떨어졌더니 다른 세상이 나오는 짜임이 재미있어요. 부지런히 일한 아이와 꾀만 부린 아이가 어떻게 달라지는지 지켜보세요.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '❄️')}
             </div>
             <div class="story-page-right">
-                <h1>홀레 할머니</h1>
-                <p>홀레 할머니는 독일의 그림 형제가 모아 적은 옛이야기예요. 독일에서는 눈이 펑펑 내리면 홀레 할머니가 이불을 턴다고 말하곤 했답니다.</p>
-                <p>우물 속으로 떨어졌더니 다른 세상이 나오는 짜임이 재미있어요. 부지런히 일한 아이와 꾀만 부린 아이가 어떻게 달라지는지 지켜보세요.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -322,8 +331,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -333,8 +342,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -344,22 +353,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -409,9 +419,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -422,7 +432,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -494,7 +504,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -503,34 +513,629 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Mother Holle',
+        intro: [
+            "Mother Holle is one of the old tales the Brothers Grimm collected in Germany. In Germany people used to say that when the snow came down thickly, Mother Holle was shaking out her quilt.",
+            "Falling down a well and finding another world at the bottom is a fine shape for a story. Watch how differently things go for the girl who works hard and the girl who only looks for shortcuts."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Spinning Wheel by the Well',
+            beats: [
+                {
+                    art: '01-well.webp',
+                    emoji: '🧵',
+                    left: [
+                        "Before the sun was up there was the sound of a spinning wheel at the well.",
+                        "A girl was spinning thread there.",
+                        "There were two daughters in that house, and the work was always hers.",
+                        "One was the woman's own daughter.",
+                        "The other was the daughter of her sister, who had died.",
+                        "And she felt very differently about the two of them."
+                    ],
+                    right: [
+                        "Her own daughter could play all day and nobody minded.",
+                        "The other girl worked from before dawn until night —",
+                        "fetching the water, cooking the meals, sweeping the yard.",
+                        "The next job was waiting before the breakfast things were cleared.",
+                        "And after all that she had to sit at the well and spin.",
+                        "Her fingertips cracked and still she could not rest.",
+                        "And she never once complained about it."
+                    ]
+                },
+                {
+                    art: '01-well-2.webp',
+                    emoji: '🧵',
+                    left: [
+                        "That day too she was spinning at the well.",
+                        "After a long while her fingers began to hurt,",
+                        "and she saw blood on the spindle.",
+                        "There were red marks even on the thread.",
+                        "She dipped it in the well water to wash it off.",
+                        "And her hand slipped."
+                    ],
+                    right: [
+                        "The spindle went straight down into the well.",
+                        "\"Oh no — it's gone in!\"",
+                        "She looked down into the well, hopping from foot to foot.",
+                        "Then she ran to her stepmother and told her.",
+                        "Her face had gone white.",
+                        "That spindle had been in the house a long time."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · Down the Well',
+            beats: [
+                {
+                    art: '02-fall.webp',
+                    emoji: '🕳️',
+                    left: [
+                        "Her stepmother glared at her.",
+                        "\"You dropped it, so you can fetch it up!\"",
+                        "\"And do not think of coming into this house without it.\"",
+                        "There was a lump in the girl's throat,",
+                        "and she trailed back to the well.",
+                        "The sun was already going down."
+                    ],
+                    right: [
+                        "She looked down into the well for a long time.",
+                        "It was so deep and dark that she could not see the bottom,",
+                        "and look as she might, there was no sign of the spindle.",
+                        "The girl shut her eyes tight,",
+                        "and jumped into the well.",
+                        "Everything went black,",
+                        "and the wind roared in her ears."
+                    ]
+                },
+                {
+                    art: '02-fall-2.webp',
+                    emoji: '🕳️',
+                    left: [
+                        "Down and down she fell.",
+                        "She fell like that for a long while.",
+                        "And oddly enough she was not frightened.",
+                        "There was no feeling of going into water either.",
+                        "The girl opened her eyes carefully.",
+                        "Everything in front of her was bright."
+                    ],
+                    right: [
+                        "It was a wide meadow with the sun pouring down on it,",
+                        "and flowers all over the grass under her feet.",
+                        "There was no well anywhere.",
+                        "The sky and the ground were both strange to her.",
+                        "She brushed the grass off her clothes and got up",
+                        "and began to walk across the meadow.",
+                        "She had no idea which way to go,",
+                        "and a butterfly went fluttering ahead of her as though leading the way."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · Take the Bread Out',
+            beats: [
+                {
+                    art: '03-bread.webp',
+                    emoji: '🍞',
+                    left: [
+                        "She had walked a good way when a voice came from somewhere.",
+                        "\"Take me out! I shall burn to a cinder!\"",
+                        "The girl stopped and looked about her.",
+                        "There was a baking oven beside the road,",
+                        "with smoke coming out through the crack of the door.",
+                        "She looked in, and it was full of bread."
+                    ],
+                    right: [
+                        "The edges were already going brown.",
+                        "The girl found a paddle and took it up,",
+                        "and lifted the loaves out one by one.",
+                        "Hot steam came billowing out of the oven,",
+                        "and her hands went red with it, and she did not stop.",
+                        "She got every last one of them out."
+                    ]
+                },
+                {
+                    art: '03-bread-2.webp',
+                    emoji: '🍞',
+                    left: [
+                        "When the bread was all out the voice came again.",
+                        "\"Thank you. I was very nearly burnt black.\"",
+                        "The girl laid the loaves out neatly,",
+                        "blowing on her hands as she did it,",
+                        "and left space between them to cool.",
+                        "The steam rose gently off the bread."
+                    ],
+                    right: [
+                        "Then she dusted off her hands and walked on.",
+                        "A good smell came after her down the road,",
+                        "and the girl felt rather cheerful.",
+                        "Helping somebody had made her light.",
+                        "Strange as the place was, she was not frightened.",
+                        "The sun lay warm over the meadow,",
+                        "and the wind brought the smell of grass."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · Shake the Apples Down',
+            beats: [
+                {
+                    art: '04-apples.webp',
+                    emoji: '🍎',
+                    left: [
+                        "A little further on stood an apple tree,",
+                        "with its branches bent down almost to the ground.",
+                        "\"Please shake me.\"",
+                        "\"The fruit is so heavy my branches will break.\" The girl looked up toward the voice.",
+                        "Every branch was hung with red apples."
+                    ],
+                    right: [
+                        "And she went up to the tree,",
+                        "put both arms round the trunk and shook it hard.",
+                        "The apples came showering down,",
+                        "bouncing off her head and her shoulders.",
+                        "She shook until the tree was light again.",
+                        "Her arms ached and she did not stop.",
+                        "There were leaves all over her hair."
+                    ]
+                },
+                {
+                    art: '04-apples-2.webp',
+                    emoji: '🍎',
+                    left: [
+                        "Then the girl picked the fallen apples up one by one",
+                        "and piled them neatly on the grass.",
+                        "She put the ones with worms in to one side.",
+                        "The tree stretched out its branches as though it felt lighter,",
+                        "and the leaves stirred softly.",
+                        "\"That is better!\""
+                    ],
+                    right: [
+                        "\"Thank you. Go carefully on your way.\"",
+                        "The girl took one apple with her and walked on,",
+                        "and it was very sweet when she bit into it.",
+                        "Away across the meadow a small house came into sight,",
+                        "with smoke coming up from the chimney.",
+                        "And she went toward it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Woman Shaking the Quilt',
+            beats: [
+                {
+                    art: '05-holle.webp',
+                    emoji: '🛏️',
+                    left: [
+                        "At last the girl came to the little house.",
+                        "There was a very large old woman standing at the door,",
+                        "and the girl looked up to greet her.",
+                        "The old woman looked twice her size.",
+                        "And her teeth were so big that the girl started back.",
+                        "The old woman laughed."
+                    ],
+                    right: [
+                        "It was not a frightening face at all.",
+                        "\"Don't be afraid. My name is Holle.\"",
+                        "\"Would you come and work for me?\"",
+                        "\"You only have to shake out the quilts well.\"",
+                        "\"When the feathers fly, it snows in the world below.\" The girl had not known that was how the snow came."
+                    ]
+                },
+                {
+                    art: '05-holle-2.webp',
+                    emoji: '🛏️',
+                    left: [
+                        "The girl nodded.",
+                        "The house was clean and snug inside,",
+                        "and Mother Holle set out plenty of food for her",
+                        "and gave her a warm bed.",
+                        "The girl ate her fill for the first time in a long while,",
+                        "and fell asleep the moment she lay down.",
+                        "And from the next day she shook the quilts."
+                    ],
+                    right: [
+                        "She shook them hard at the window,",
+                        "and the feathers went flying like snowflakes.",
+                        "And every time, the snow came down thickly in the world below.",
+                        "The girl thought that was quite wonderful.",
+                        "She put her head out of the window and watched a long while,",
+                        "and far below the roofs were turning white."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · A Shower of Gold',
+            beats: [
+                {
+                    art: '06-gold.webp',
+                    emoji: '✨',
+                    left: [
+                        "The girl worked hard every day —",
+                        "shaking the quilts, sweeping the house, washing the dishes.",
+                        "Mother Holle was very pleased with her.",
+                        "She never once found fault,",
+                        "and told her instead that she did it well.",
+                        "\"You have a good pair of hands on you.\""
+                    ],
+                    right: [
+                        "And after a while something began to weigh on the girl.",
+                        "There was plenty to eat and the work was bearable.",
+                        "And still she kept thinking about home.",
+                        "She spoke up carefully.",
+                        "\"There is something I must say.\"",
+                        "\"I miss my home.\" Mother Holle stopped what she was doing."
+                    ]
+                },
+                {
+                    art: '06-gold-2.webp',
+                    emoji: '✨',
+                    left: [
+                        "Mother Holle nodded.",
+                        "\"I thought as much.\"",
+                        "\"You have worked well, so you shall have your reward.\"",
+                        "She took the girl to a great door.",
+                        "\"Go through this door and you are home.\" The door swung slowly open."
+                    ],
+                    right: [
+                        "And the moment the girl passed through it,",
+                        "a shower of gold came down from above.",
+                        "The gold stuck to her from head to foot.",
+                        "\"And here is the spindle you lost.\"",
+                        "The girl stood at the well shining gold all over.",
+                        "It was the yard she knew."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · I Want to Go Too',
+            beats: [
+                {
+                    art: '07-lazy.webp',
+                    emoji: '😒',
+                    left: [
+                        "The whole house was in an uproar at the sight of the golden girl,",
+                        "and the stepmother's eyes lit up.",
+                        "The girl told them everything that had happened,",
+                        "and the stepmother turned to her own daughter.",
+                        "\"Then you get into that well at once!\""
+                    ],
+                    right: [
+                        "The lazy daughter sat down at the well.",
+                        "Spinning was too much bother,",
+                        "and she never touched the wheel at all.",
+                        "She pricked her finger on a thorn to get blood,",
+                        "smeared it on the spindle and dropped it in the well.",
+                        "Then she shut her eyes and jumped in after it.",
+                        "She was in a hurry for the gold."
+                    ]
+                },
+                {
+                    art: '07-lazy-2.webp',
+                    emoji: '😒',
+                    left: [
+                        "Down in the meadow she came past the bread oven as well.",
+                        "\"Take me out! I shall burn to a cinder!\"",
+                        "She held her nose and walked past.",
+                        "There was a burnt smell coming out of the oven.",
+                        "\"Too hot. No thank you.\" And the bread burned black.",
+                        "A little further on she came to the apple tree."
+                    ],
+                    right: [
+                        "\"Please shake me!\"",
+                        "And she did not even pretend to hear.",
+                        "\"Why should I shake it and tire my arms?\" And the apples stayed hanging where they were.",
+                        "She went off humming to herself,",
+                        "and the apple tree let its branches down again."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Through the Door',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🖤',
+                    left: [
+                        "It was the same at Mother Holle's house.",
+                        "The first day she at least pretended to work hard,",
+                        "because she wanted the gold.",
+                        "And from the second day she slept late.",
+                        "She gave the quilt a few taps and left it,",
+                        "and a handful of feathers came out and no more.",
+                        "\"That will do.\"",
+                        "And down below the snow came and stopped and came again."
+                    ],
+                    right: [
+                        "The dishes piled up and dust settled on the floor.",
+                        "Mother Holle did not say a word about it.",
+                        "The daughter sat at the window yawning even in the daytime.",
+                        "Mother Holle simply watched, quietly, for a few days.",
+                        "And then one day she took her to the door.",
+                        "The daughter was delighted — here it came at last."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🖤',
+                    left: [
+                        "She stood in front of the door in high spirits.",
+                        "Now, she thought, it would be the gold's turn.",
+                        "Mother Holle said quietly,",
+                        "\"You shall have exactly what you have worked for.\"",
+                        "The daughter went straight through,",
+                        "with both hands held out wide in front of her."
+                    ],
+                    right: [
+                        "And what came down was not gold.",
+                        "Black pitch came pouring over her head,",
+                        "and she stood at the well black from head to foot.",
+                        "And no amount of washing would ever get the pitch off.",
+                        "The cockerel by the house saw the state of her and crowed.",
+                        "\"Cock-a-doodle-doo, our dirty girl is home!\""
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why did the girl jump into the well?',
+            choices: ['Her stepmother told her to fetch the spindle back', 'She wanted to see the other world', 'She was running away from home'],
+            answer: 0
+        },
+        {
+            q: 'What did the bread in the oven ask for?',
+            choices: ['To be given away', 'To be put back in', 'To be taken out before it burned'],
+            answer: 2
+        },
+        {
+            q: 'What did the apple tree ask for?',
+            choices: ['To be watered', 'To be shaken so the branches would not break', 'To be left alone'],
+            answer: 1
+        },
+        {
+            q: 'What happens in the world below when Mother Holle’s quilts are shaken?',
+            choices: ['It snows', 'It rains', 'The wind gets up'],
+            answer: 0
+        },
+        {
+            q: 'Why did the first girl want to go home?',
+            choices: ['She did not like the work', 'Mother Holle sent her away', 'She missed it, even though she was well looked after'],
+            answer: 2
+        },
+        {
+            q: 'What did the lazy daughter do at the oven and the apple tree?',
+            choices: ['She helped the oven but not the tree', 'She walked straight past both of them', 'She took the bread and the apples'],
+            answer: 1
+        },
+        {
+            q: 'What came down on the lazy daughter at the door?',
+            choices: ['Black pitch', 'Gold', 'Snow'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🧹',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "When Mother Holle shakes out her quilt, they say, it snows in the world below. That is what people in Germany used to say about snow.",
+                    "The elder girl jumps in after a spindle that fell down a well. She must have been frightened. She went to get back with her own hands what she had lost.",
+                    "The bread and the apple tree speak to her. Take me out, shake me down. And she stops what she is doing and does it.",
+                    "The younger girl hears the same words on the same road. And she walks straight past, because she is on her way to fetch some gold."
+                ],
+                right: [
+                    "What Mother Holle was watching was not how well the quilts were shaken. It was what each of them had done on the way there.",
+                    "The younger girl wanted the gold. Why did she not get it?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-well.webp': [
+            { word: 'spinning wheel', meaning: '물레', sentence: 'The sound of a spinning wheel at the well.' },
+            { word: 'spin', meaning: '실을 잣다', sentence: 'A girl was spinning thread there.' },
+            { word: 'fetch', meaning: '길어 오다', sentence: 'Fetching the water, cooking the meals.' },
+            { word: 'sweep', meaning: '쓸다', sentence: 'Sweeping the yard.' },
+            { word: 'complain', meaning: '군소리하다', sentence: 'She never once complained about it.' }
+        ],
+        '01-well-2.webp': [
+            { word: 'spindle', meaning: '물레가락', sentence: 'She saw blood on the spindle.' },
+            { word: 'dip', meaning: '담그다', sentence: 'She dipped it in the well water.' },
+            { word: 'slip', meaning: '미끄러지다', sentence: 'And her hand slipped.' },
+            { word: 'go white', meaning: '새하얗게 질리다', sentence: 'Her face had gone white.' }
+        ],
+        '02-fall.webp': [
+            { word: 'glare at', meaning: '눈을 부라리다', sentence: 'Her stepmother glared at her.' },
+            { word: 'a lump in one’s throat', meaning: '목이 메임', sentence: "There was a lump in the girl's throat." },
+            { word: 'trail back', meaning: '터덜터덜 돌아가다', sentence: 'She trailed back to the well.' },
+            { word: 'look as she might', meaning: '아무리 봐도', sentence: 'Look as she might, there was no sign of it.' },
+            { word: 'roar', meaning: '윙 하고 울다', sentence: 'The wind roared in her ears.' }
+        ],
+        '02-fall-2.webp': [
+            { word: 'oddly enough', meaning: '이상하게도', sentence: 'And oddly enough she was not frightened.' },
+            { word: 'meadow', meaning: '들판', sentence: 'It was a wide meadow.' },
+            { word: 'brush off', meaning: '털다', sentence: 'She brushed the grass off her clothes.' },
+            { word: 'flutter', meaning: '팔랑팔랑 날다', sentence: 'A butterfly went fluttering ahead of her.' }
+        ],
+        '03-bread.webp': [
+            { word: 'cinder', meaning: '숯덩이', sentence: 'I shall burn to a cinder!' },
+            { word: 'oven', meaning: '가마', sentence: 'There was a baking oven beside the road.' },
+            { word: 'loaf', meaning: '빵 덩이', sentence: 'She lifted the loaves out one by one.' },
+            { word: 'paddle', meaning: '주걱', sentence: 'The girl found a paddle.' },
+            { word: 'billow', meaning: '확 올라오다', sentence: 'Hot steam came billowing out.' }
+        ],
+        '03-bread-2.webp': [
+            { word: 'burnt black', meaning: '새까맣게 탄', sentence: 'I was very nearly burnt black.' },
+            { word: 'blow on', meaning: '호호 불다', sentence: 'Blowing on her hands as she did it.' },
+            { word: 'dust off', meaning: '툭툭 털다', sentence: 'She dusted off her hands.' },
+            { word: 'cheerful', meaning: '기분 좋은', sentence: 'The girl felt rather cheerful.' }
+        ],
+        '04-apples.webp': [
+            { word: 'bend down', meaning: '늘어지다', sentence: 'Its branches bent down almost to the ground.' },
+            { word: 'shake', meaning: '흔들다', sentence: 'Please shake me.' },
+            { word: 'trunk', meaning: '줄기', sentence: 'She put both arms round the trunk.' },
+            { word: 'shower down', meaning: '우수수 떨어지다', sentence: 'The apples came showering down.' },
+            { word: 'bounce off', meaning: '부딪혀 튀다', sentence: 'Bouncing off her head and her shoulders.' }
+        ],
+        '04-apples-2.webp': [
+            { word: 'pile', meaning: '쌓다', sentence: 'And piled them neatly on the grass.' },
+            { word: 'worm', meaning: '벌레', sentence: 'She put the ones with worms in to one side.' },
+            { word: 'stretch out', meaning: '펴다', sentence: 'The tree stretched out its branches.' },
+            { word: 'come into sight', meaning: '보이기 시작하다', sentence: 'A small house came into sight.' },
+            { word: 'chimney', meaning: '굴뚝', sentence: 'With smoke coming up from the chimney.' }
+        ],
+        '05-holle.webp': [
+            { word: 'greet', meaning: '인사하다', sentence: 'The girl looked up to greet her.' },
+            { word: 'twice one’s size', meaning: '두 배는 큰', sentence: 'The old woman looked twice her size.' },
+            { word: 'start back', meaning: '흠칫 물러서다', sentence: 'The girl started back.' },
+            { word: 'quilt', meaning: '이불', sentence: 'You only have to shake out the quilts.' },
+            { word: 'feather', meaning: '깃털', sentence: 'When the feathers fly, it snows below.' }
+        ],
+        '05-holle-2.webp': [
+            { word: 'snug', meaning: '아늑한', sentence: 'The house was clean and snug inside.' },
+            { word: 'eat one’s fill', meaning: '배불리 먹다', sentence: 'The girl ate her fill.' },
+            { word: 'snowflake', meaning: '눈송이', sentence: 'The feathers went flying like snowflakes.' },
+            { word: 'thickly', meaning: '펑펑', sentence: 'The snow came down thickly in the world below.' }
+        ],
+        '06-gold.webp': [
+            { word: 'find fault', meaning: '나무라다', sentence: 'She never once found fault.' },
+            { word: 'weigh on', meaning: '마음을 무겁게 하다', sentence: 'Something began to weigh on the girl.' },
+            { word: 'bearable', meaning: '할 만한', sentence: 'The work was bearable.' },
+            { word: 'speak up', meaning: '입을 열다', sentence: 'She spoke up carefully.' }
+        ],
+        '06-gold-2.webp': [
+            { word: 'I thought as much', meaning: '그럴 줄 알았다', sentence: 'I thought as much.' },
+            { word: 'reward', meaning: '상', sentence: 'You shall have your reward.' },
+            { word: 'shower', meaning: '소나기', sentence: 'A shower of gold came down.' },
+            { word: 'stick to', meaning: '붙다', sentence: 'The gold stuck to her from head to foot.' }
+        ],
+        '07-lazy.webp': [
+            { word: 'uproar', meaning: '뒤집힘, 소동', sentence: 'The whole house was in an uproar.' },
+            { word: 'light up', meaning: '번쩍하다', sentence: "The stepmother's eyes lit up." },
+            { word: 'bother', meaning: '귀찮은 일', sentence: 'Spinning was too much bother.' },
+            { word: 'prick', meaning: '찌르다', sentence: 'She pricked her finger on a thorn.' },
+            { word: 'smear', meaning: '묻히다', sentence: 'Smeared it on the spindle.' }
+        ],
+        '07-lazy-2.webp': [
+            { word: 'hold one’s nose', meaning: '코를 막다', sentence: 'She held her nose and walked past.' },
+            { word: 'burnt smell', meaning: '매캐한 냄새', sentence: 'There was a burnt smell coming out.' },
+            { word: 'pretend to hear', meaning: '들은 척하다', sentence: 'She did not even pretend to hear.' },
+            { word: 'tire', meaning: '아프게 하다, 지치게 하다', sentence: 'Why should I shake it and tire my arms?' },
+            { word: 'let down', meaning: '늘어뜨리다', sentence: 'The apple tree let its branches down again.' }
+        ],
+        '08-ending.webp': [
+            { word: 'pretend', meaning: '~인 척하다', sentence: 'She at least pretended to work hard.' },
+            { word: 'sleep late', meaning: '늦잠 자다', sentence: 'From the second day she slept late.' },
+            { word: 'tap', meaning: '툭툭 치다', sentence: 'She gave the quilt a few taps.' },
+            { word: 'pile up', meaning: '쌓이다', sentence: 'The dishes piled up.' },
+            { word: 'yawn', meaning: '하품하다', sentence: 'She sat at the window yawning.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'in high spirits', meaning: '신이 나서', sentence: 'She stood in front of the door in high spirits.' },
+            { word: 'work for', meaning: '일해서 얻다', sentence: 'Exactly what you have worked for.' },
+            { word: 'pitch', meaning: '송진', sentence: 'Black pitch came pouring over her head.' },
+            { word: 'no amount of', meaning: '아무리 ~해도', sentence: 'No amount of washing would get the pitch off.' },
+            { word: 'the state of', meaning: '~의 꼴', sentence: 'The cockerel saw the state of her.' }
+        ],
+        'end.webp': [
+            { word: 'used to say', meaning: '~라고 말하곤 했다', sentence: 'That is what people used to say about snow.' },
+            { word: 'with one’s own hands', meaning: '제 손으로', sentence: 'To get back with her own hands what she had lost.' },
+            { word: 'stop what one is doing', meaning: '하던 일을 멈추다', sentence: 'She stops what she is doing and does it.' },
+            { word: 'walk straight past', meaning: '그냥 지나가다', sentence: 'And she walks straight past.' },
+            { word: 'on the way', meaning: '가는 길에', sentence: 'What each of them had done on the way there.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -595,6 +1200,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -603,7 +1209,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -615,7 +1221,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -649,4 +1255,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
