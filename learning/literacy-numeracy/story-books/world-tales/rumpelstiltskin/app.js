@@ -319,16 +319,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '이름을 맞혀 보시오',
+    intro: [
+        '이름을 맞혀 보시오는 독일의 그림 형제가 모아 적은 옛이야기예요. 원래 제목은 룸펠슈틸츠헨이라는 난쟁이의 이름이랍니다.',
+        '유럽에는 이름을 알아맞히면 상대가 힘을 잃는다는 옛 믿음이 있었어요. 이 이야기의 마지막 장면이 바로 그 믿음에서 나온 것이랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🧵')}
             </div>
             <div class="story-page-right">
-                <h1>이름을 맞혀 보시오</h1>
-                <p>이름을 맞혀 보시오는 독일의 그림 형제가 모아 적은 옛이야기예요. 원래 제목은 룸펠슈틸츠헨이라는 난쟁이의 이름이랍니다.</p>
-                <p>유럽에는 이름을 알아맞히면 상대가 힘을 잃는다는 옛 믿음이 있었어요. 이 이야기의 마지막 장면이 바로 그 믿음에서 나온 것이랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -343,8 +352,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -354,8 +363,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -365,22 +374,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -430,9 +440,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -443,7 +453,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -515,7 +525,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -524,34 +534,627 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   영어권 제목은 난쟁이 이름 그대로 Rumpelstiltskin 이다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Rumpelstiltskin',
+        intro: [
+            "Rumpelstiltskin is one of the old tales the Brothers Grimm collected in Germany. The title is simply the little man's name.",
+            "There was an old belief in Europe that if you guessed somebody's name, they lost their power over you. The last scene of this story comes straight out of that belief."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Miller's Boast",
+            beats: [
+                {
+                    art: '01-boast.webp',
+                    emoji: '🌾',
+                    left: [
+                        "The miller was poor, but there was nobody to touch him for boasting.",
+                        "Wherever he went he told people how fine he was,",
+                        "until they shook their heads at him.",
+                        "He had one daughter,",
+                        "a girl who was clever with her hands.",
+                        "And one day the miller met the king."
+                    ],
+                    right: [
+                        "Standing in front of a great man, his tongue itched.",
+                        "He wanted to say something — anything.",
+                        "And out came a piece of nonsense.",
+                        "\"My daughter can spin straw into gold thread!\"",
+                        "He knew it was a mistake the moment he said it, and it was too late.",
+                        "Because the king's eyes had opened wide."
+                    ]
+                },
+                {
+                    art: '01-boast-2.webp',
+                    emoji: '🌾',
+                    left: [
+                        "\"What a remarkable gift.\"",
+                        "\"Bring that daughter to me at once.\"",
+                        "The cold sweat came out on the miller's back.",
+                        "He could hardly say now that it had been a lie.",
+                        "He went home and told his daughter.",
+                        "And the blood went out of her face."
+                    ],
+                    right: [
+                        "\"Father, I have no such gift.\"",
+                        "\"What can be done? The king has said it.\"",
+                        "Next morning the girl was taken to the castle,",
+                        "and the gate shut behind her with a thud.",
+                        "She was frightened, and she could see no way out.",
+                        "And she could not begin to guess why her father had said such a thing."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · A Room Full of Straw',
+            beats: [
+                {
+                    art: '02-straw.webp',
+                    emoji: '🧺',
+                    left: [
+                        "The girl was shown to a room.",
+                        "When the door opened, the straw was heaped up like a hill,",
+                        "very nearly to the ceiling.",
+                        "In the middle of it stood a spinning wheel.",
+                        "And the king said as he closed the door,",
+                        "\"Spin all this straw into gold thread by morning.\""
+                    ],
+                    right: [
+                        "\"If you cannot, it will cost you your life.\"",
+                        "The door was locked from outside.",
+                        "The girl sat down hard in front of the wheel.",
+                        "There was no possible way she could know how to spin straw into gold.",
+                        "Try as she might, straw was straw.",
+                        "And the girl burst into tears."
+                    ]
+                },
+                {
+                    art: '02-straw-2.webp',
+                    emoji: '🧺',
+                    left: [
+                        "How long she cried, who can say.",
+                        "And then something came slipping in under the door.",
+                        "The girl wiped her eyes, startled.",
+                        "It was a very small man",
+                        "in a pointed cap and a green coat,",
+                        "with a beard like thread moving in the wind.",
+                        "The little man tilted his head and asked,"
+                    ],
+                    right: [
+                        "\"Why are you crying like that?\"",
+                        "The girl sniffed and told him what had happened.",
+                        "\"I cannot spin this straw into gold.\"",
+                        "The little man rubbed his hands together.",
+                        "\"Oh, that is nothing difficult.\"",
+                        "The girl's eyes went round."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Little Man',
+            beats: [
+                {
+                    art: '03-little-man.webp',
+                    emoji: '🎩',
+                    left: [
+                        "\"I shall do it for you.\"",
+                        "The girl caught her breath.",
+                        "\"Truly? You can do it?\"",
+                        "\"And what will you give me for it?\"",
+                        "The girl looked at what she had on her.",
+                        "All she owned was one necklace."
+                    ],
+                    right: [
+                        "\"I could give you this necklace.\"",
+                        "The little man took it and put it in his pocket,",
+                        "and sat down at the wheel.",
+                        "He worked the treadle with his small feet,",
+                        "and it began to whirr and whirr.",
+                        "Straw went in, and gold thread came out onto the spindle."
+                    ]
+                },
+                {
+                    art: '03-little-man-2.webp',
+                    emoji: '🎩',
+                    left: [
+                        "The little man kept the wheel going all night.",
+                        "One spool after another filled up gold.",
+                        "The girl fell asleep beside him without meaning to,",
+                        "and when she opened her eyes the window was bright.",
+                        "There was not one stalk of straw left in the room.",
+                        "And the little man was gone."
+                    ],
+                    right: [
+                        "When the king opened the door in the morning he stopped dead,",
+                        "because gold thread was heaped along the walls.",
+                        "\"I don't believe it!\"",
+                        "And the king was not grateful.",
+                        "He only became greedier.",
+                        "How fine it would be, he thought, to have that much gold every day."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · A Bigger Room',
+            beats: [
+                {
+                    art: '04-bigger.webp',
+                    emoji: '🔒',
+                    left: [
+                        "That evening the king took the girl to another room,",
+                        "twice as large as the one before,",
+                        "and full of straw again.",
+                        "\"Tonight you will fill this room.\"",
+                        "The door was locked once more.",
+                        "The girl sat down at the wheel and sighed,",
+                        "wondering whether the little man would come tonight as well."
+                    ],
+                    right: [
+                        "And it was not long before",
+                        "the same little man came in under the door.",
+                        "\"And what will you give me this time?\"",
+                        "The girl took the ring off her finger and gave it to him.",
+                        "\"This ring is all I have left.\"",
+                        "The little man pocketed the ring and sat down at the wheel."
+                    ]
+                },
+                {
+                    art: '04-bigger-2.webp',
+                    emoji: '🔒',
+                    left: [
+                        "That night too the wheel whirred until morning,",
+                        "and by dawn the room was full of gold thread.",
+                        "The king's face went red with it.",
+                        "He ran his hands over the gold and laughed.",
+                        "And still he was not satisfied.",
+                        "\"Do it once more tonight.\""
+                    ],
+                    right: [
+                        "\"And if you do, I shall make you my queen.\"",
+                        "The girl's fingertips shook.",
+                        "The room she was taken to on the third night was the size of a barn,",
+                        "and the straw in it was a mountain.",
+                        "The door shut and the girl was alone.",
+                        "The room was thick with the smell of straw."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · Nothing Left to Give',
+            beats: [
+                {
+                    art: '05-promise.webp',
+                    emoji: '🤲',
+                    left: [
+                        "The little man appeared again.",
+                        "This time he seemed in no hurry at all.",
+                        "He held out a hand.",
+                        "\"And what will you give me this time?\"",
+                        "The girl opened both her hands to show him.",
+                        "\"I have truly nothing left to give.\""
+                    ],
+                    right: [
+                        "The little man stroked his chin and thought.",
+                        "And then his eyes gleamed.",
+                        "\"Then let us do it this way.\"",
+                        "\"When you are queen, give me your first child.\"",
+                        "Everything went dark in front of the girl.",
+                        "And in the end she said that she would."
+                    ]
+                },
+                {
+                    art: '05-promise-2.webp',
+                    emoji: '🤲',
+                    left: [
+                        "The little man kept the wheel going all night.",
+                        "By morning the whole barn was gold.",
+                        "The king kept his word and made the girl his queen,",
+                        "and the whole country kept a feast.",
+                        "The miller went about with his shoulders back.",
+                        "The queen smiled outwardly, and her heart was heavy."
+                    ],
+                    right: [
+                        "The promise she had made that night kept coming back to her.",
+                        "And as time went on she thought about it less.",
+                        "One year went by, and then another.",
+                        "The queen had a lovely child,",
+                        "and the whole palace was in an uproar over it.",
+                        "There were flowers all round the cradle."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Promise Comes Back',
+            beats: [
+                {
+                    art: '06-baby.webp',
+                    emoji: '👶',
+                    left: [
+                        "The queen doted on that child",
+                        "and would not leave her side all day.",
+                        "She had forgotten the promise entirely.",
+                        "And then one night",
+                        "the candle in the room suddenly flickered,",
+                        "and the window opened by itself.",
+                        "The queen looked up.",
+                        "The little man was standing on the windowsill."
+                    ],
+                    right: [
+                        "The pointed cap and the green coat, just as before.",
+                        "\"I have come for what I was promised.\"",
+                        "The queen gathered the child up in her arms.",
+                        "\"No! I shall give you anything at all!\"",
+                        "The child stirred in her sleep,",
+                        "and the queen held her tighter."
+                    ]
+                },
+                {
+                    art: '06-baby-2.webp',
+                    emoji: '👶',
+                    left: [
+                        "\"I shall give you every treasure in the kingdom.\"",
+                        "\"Only not the child.\"",
+                        "The little man shook his head.",
+                        "\"Gold is of no use to me whatever.\"",
+                        "The queen went down on her knees and wept.",
+                        "And the little man looked down at her for a long while."
+                    ],
+                    right: [
+                        "Then he held up three fingers.",
+                        "\"Very well. I shall give you three days.\"",
+                        "\"Guess my name within three days and we shall say no more about it.\"",
+                        "And with that he was gone.",
+                        "The queen did not sleep a wink all night.",
+                        "The window shut by itself,",
+                        "and the candle stood straight again."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · Every Name in the Country',
+            beats: [
+                {
+                    art: '07-names.webp',
+                    emoji: '📜',
+                    left: [
+                        "Next day the queen sent messengers out in every direction",
+                        "to gather up every name in the country.",
+                        "The scrolls trailed down onto the floor.",
+                        "That night the little man appeared again,",
+                        "and the queen read out the names one by one.",
+                        "\"Caspar? Melchior? Balthasar?\"",
+                        "And every time he shook his head."
+                    ],
+                    right: [
+                        "\"No. No indeed.\"",
+                        "The queen read out names until it was light,",
+                        "and not one of them was right.",
+                        "The little man went off cackling.",
+                        "\"I shall come again tomorrow.\"",
+                        "And the queen sat clutching her scrolls."
+                    ]
+                },
+                {
+                    art: '07-names-2.webp',
+                    emoji: '📜',
+                    left: [
+                        "The next day she gathered the odd names.",
+                        "\"Ribsy? Muttonchops? Stringbean?\"",
+                        "And still he shook his head.",
+                        "\"No. No indeed.\"",
+                        "Now there was only one day left,",
+                        "and the queen sat up all night at the window."
+                    ],
+                    right: [
+                        "It was the afternoon of the last day.",
+                        "One of the messengers came running in,",
+                        "still in his muddy boots.",
+                        "\"Your Majesty! I have seen the strangest thing!\"",
+                        "The queen sprang to her feet.",
+                        "\"Tell me at once.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · The Song in the Wood',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🔥',
+                    left: [
+                        "\"I was going through the deep part of the wood.\"",
+                        "\"There was a fire lit outside a hut at the foot of a hill.\"",
+                        "\"And a very small man was hopping about in front of it.\"",
+                        "\"Hopping on one leg and singing, if you please.\"",
+                        "\"Today I bake, tomorrow I brew!\""
+                    ],
+                    right: [
+                        "\"And soon the queen's child is mine!\"",
+                        "\"And nobody knows my name is Rumpelstiltskin!\"",
+                        "The queen said that name over to herself again and again.",
+                        "She gave the messenger a great reward,",
+                        "and then she waited for the night to come.",
+                        "\"Rumpelstiltskin. Rumpelstiltskin.\"",
+                        "The laughter kept getting out of her."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🔥',
+                    left: [
+                        "When night came the little man appeared.",
+                        "\"Now then. Let us hear the name.\"",
+                        "The queen kept a perfectly straight face.",
+                        "\"Might your name be Conrad?\"",
+                        "\"It is not.\"",
+                        "\"Then is it Heinz?\""
+                    ],
+                    right: [
+                        "\"Nor that.\"",
+                        "And he was already reaching toward the child.",
+                        "And then the queen said, quietly,",
+                        "\"Might it be… Rumpelstiltskin?\"",
+                        "The little man leapt in the air and let out a shriek,",
+                        "and out of the door he went, and he never came back."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did the miller tell the king about his daughter?',
+            choices: ['That she could spin straw into gold thread', 'That she was the cleverest girl alive', 'That she could sing better than anyone'],
+            answer: 0
+        },
+        {
+            q: 'What did the girl give the little man the first night?',
+            choices: ['Her ring', 'Her first child', 'Her necklace'],
+            answer: 2
+        },
+        {
+            q: 'Why did the king make her spin a third time?',
+            choices: ['He did not believe the first two rooms', 'He grew greedier and wanted more gold', 'The little man asked him to'],
+            answer: 1
+        },
+        {
+            q: 'What did the little man ask for the third night?',
+            choices: ['Her first child, once she was queen', 'The whole treasury', 'Her crown'],
+            answer: 0
+        },
+        {
+            q: 'What did the little man offer instead of taking the child?',
+            choices: ['All the gold thread back', 'One year’s delay', 'Three days to guess his name'],
+            answer: 2
+        },
+        {
+            q: 'How did the queen learn the name?',
+            choices: ['She read it in the scrolls', 'A messenger heard him singing it in the wood', 'The king told her'],
+            answer: 1
+        },
+        {
+            q: 'What did the little man do when she said his name?',
+            choices: ['He leapt up, shrieked and never came back', 'He asked for gold instead', 'He took the child anyway'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🧵',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Stories about somebody losing their power once their name is guessed are told all over Europe. The Grimms' version is the best known of them.",
+                    "Everything begins with the miller's boasting. He said his daughter could spin straw into gold — he said she had a gift she did not have.",
+                    "And the daughter could not take it back. She could hardly stand in front of the king and call her own father a liar.",
+                    "The little man helps her three times: for a necklace, for a ring, and for a child not yet born."
+                ],
+                right: [
+                    "What saved the queen was not cleverness. It was what a messenger happened to see — a song somebody was singing to himself in the wood.",
+                    "Why do you think the little man gave her three days at all?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-boast.webp': [
+            { word: 'boast', meaning: '허풍, 자랑', sentence: 'There was nobody to touch him for boasting.' },
+            { word: 'shake one’s head', meaning: '고개를 절레절레 흔들다', sentence: 'Until they shook their heads at him.' },
+            { word: 'one’s tongue itches', meaning: '입이 근질거리다', sentence: 'Standing in front of a great man, his tongue itched.' },
+            { word: 'nonsense', meaning: '말도 안 되는 소리', sentence: 'And out came a piece of nonsense.' },
+            { word: 'spin', meaning: '실을 잣다', sentence: 'My daughter can spin straw into gold thread!' }
+        ],
+        '01-boast-2.webp': [
+            { word: 'gift', meaning: '재주', sentence: 'What a remarkable gift.' },
+            { word: 'cold sweat', meaning: '식은땀', sentence: "The cold sweat came out on the miller's back." },
+            { word: 'take back', meaning: '되돌리다', sentence: 'He could hardly say now that it had been a lie.' },
+            { word: 'thud', meaning: '쿵 소리', sentence: 'The gate shut behind her with a thud.' }
+        ],
+        '02-straw.webp': [
+            { word: 'heap up', meaning: '산더미처럼 쌓다', sentence: 'The straw was heaped up like a hill.' },
+            { word: 'ceiling', meaning: '천장', sentence: 'Very nearly to the ceiling.' },
+            { word: 'spinning wheel', meaning: '물레', sentence: 'In the middle of it stood a spinning wheel.' },
+            { word: 'cost one’s life', meaning: '목숨을 잃게 하다', sentence: 'It will cost you your life.' },
+            { word: 'try as she might', meaning: '아무리 애를 써도', sentence: 'Try as she might, straw was straw.' }
+        ],
+        '02-straw-2.webp': [
+            { word: 'slip in', meaning: '스르륵 들어오다', sentence: 'Something came slipping in under the door.' },
+            { word: 'pointed cap', meaning: '뾰족한 모자', sentence: 'In a pointed cap and a green coat.' },
+            { word: 'tilt one’s head', meaning: '고개를 갸웃하다', sentence: 'The little man tilted his head.' },
+            { word: 'sniff', meaning: '훌쩍이다', sentence: 'The girl sniffed and told him.' },
+            { word: 'rub one’s hands', meaning: '손을 비비다', sentence: 'The little man rubbed his hands together.' }
+        ],
+        '03-little-man.webp': [
+            { word: 'catch one’s breath', meaning: '숨을 삼키다', sentence: 'The girl caught her breath.' },
+            { word: 'own', meaning: '가지다', sentence: 'All she owned was one necklace.' },
+            { word: 'treadle', meaning: '발판', sentence: 'He worked the treadle with his small feet.' },
+            { word: 'whirr', meaning: '드르륵 소리 내다', sentence: 'It began to whirr and whirr.' }
+        ],
+        '03-little-man-2.webp': [
+            { word: 'spool', meaning: '실패', sentence: 'One spool after another filled up gold.' },
+            { word: 'stalk', meaning: '오라기, 줄기', sentence: 'There was not one stalk of straw left.' },
+            { word: 'stop dead', meaning: '멈춰 서다', sentence: 'The king stopped dead.' },
+            { word: 'grateful', meaning: '고마워하는', sentence: 'And the king was not grateful.' },
+            { word: 'greedy', meaning: '욕심 많은', sentence: 'He only became greedier.' }
+        ],
+        '04-bigger.webp': [
+            { word: 'twice as large', meaning: '두 배는 넓은', sentence: 'Twice as large as the one before.' },
+            { word: 'sigh', meaning: '한숨 쉬다', sentence: 'The girl sat down and sighed.' },
+            { word: 'wonder whether', meaning: '~인지 궁금해하다', sentence: 'Wondering whether he would come tonight.' },
+            { word: 'pocket', meaning: '주머니에 넣다', sentence: 'The little man pocketed the ring.' }
+        ],
+        '04-bigger-2.webp': [
+            { word: 'run one’s hands over', meaning: '손으로 쓸다', sentence: 'He ran his hands over the gold.' },
+            { word: 'satisfied', meaning: '만족한', sentence: 'And still he was not satisfied.' },
+            { word: 'barn', meaning: '창고', sentence: 'The room was the size of a barn.' },
+            { word: 'thick with', meaning: '~으로 가득한', sentence: 'The room was thick with the smell of straw.' }
+        ],
+        '05-promise.webp': [
+            { word: 'in no hurry', meaning: '느긋한', sentence: 'He seemed in no hurry at all.' },
+            { word: 'hold out', meaning: '내밀다', sentence: 'He held out a hand.' },
+            { word: 'stroke one’s chin', meaning: '턱을 쓰다듬다', sentence: 'The little man stroked his chin.' },
+            { word: 'gleam', meaning: '반짝이다', sentence: 'And then his eyes gleamed.' }
+        ],
+        '05-promise-2.webp': [
+            { word: 'keep one’s word', meaning: '약속을 지키다', sentence: 'The king kept his word.' },
+            { word: 'outwardly', meaning: '겉으로는', sentence: 'The queen smiled outwardly.' },
+            { word: 'keep coming back', meaning: '자꾸 떠오르다', sentence: 'The promise kept coming back to her.' },
+            { word: 'cradle', meaning: '요람', sentence: 'There were flowers all round the cradle.' }
+        ],
+        '06-baby.webp': [
+            { word: 'dote on', meaning: '끔찍이 아끼다', sentence: 'The queen doted on that child.' },
+            { word: 'flicker', meaning: '흔들리다', sentence: 'The candle suddenly flickered.' },
+            { word: 'by itself', meaning: '저절로', sentence: 'The window opened by itself.' },
+            { word: 'gather up', meaning: '끌어안다', sentence: 'The queen gathered the child up.' },
+            { word: 'stir', meaning: '뒤척이다', sentence: 'The child stirred in her sleep.' }
+        ],
+        '06-baby-2.webp': [
+            { word: 'treasure', meaning: '보물', sentence: 'Every treasure in the kingdom.' },
+            { word: 'of no use', meaning: '아무 소용 없는', sentence: 'Gold is of no use to me whatever.' },
+            { word: 'go down on one’s knees', meaning: '무릎을 꿇다', sentence: 'The queen went down on her knees.' },
+            { word: 'not a wink', meaning: '한숨도 (못 자다)', sentence: 'She did not sleep a wink all night.' }
+        ],
+        '07-names.webp': [
+            { word: 'messenger', meaning: '심부름꾼', sentence: 'The queen sent messengers out.' },
+            { word: 'scroll', meaning: '두루마리', sentence: 'The scrolls trailed down onto the floor.' },
+            { word: 'read out', meaning: '소리 내어 읽다', sentence: 'The queen read out the names one by one.' },
+            { word: 'cackle', meaning: '낄낄 웃다', sentence: 'The little man went off cackling.' },
+            { word: 'clutch', meaning: '움켜쥐다', sentence: 'The queen sat clutching her scrolls.' }
+        ],
+        '07-names-2.webp': [
+            { word: 'odd', meaning: '별난', sentence: 'The next day she gathered the odd names.' },
+            { word: 'sit up', meaning: '밤을 새우다', sentence: 'The queen sat up all night.' },
+            { word: 'muddy', meaning: '진흙 묻은', sentence: 'Still in his muddy boots.' },
+            { word: 'spring to one’s feet', meaning: '벌떡 일어나다', sentence: 'The queen sprang to her feet.' }
+        ],
+        '08-ending.webp': [
+            { word: 'hut', meaning: '오두막', sentence: 'A fire lit outside a hut.' },
+            { word: 'hop', meaning: '껑충껑충 뛰다', sentence: 'A very small man was hopping about.' },
+            { word: 'brew', meaning: '삶다, 끓이다', sentence: 'Today I bake, tomorrow I brew!' },
+            { word: 'say over', meaning: '되뇌다', sentence: 'The queen said that name over to herself.' },
+            { word: 'reward', meaning: '상', sentence: 'She gave the messenger a great reward.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'a straight face', meaning: '시치미 뗀 얼굴', sentence: 'The queen kept a perfectly straight face.' },
+            { word: 'reach toward', meaning: '손을 뻗다', sentence: 'He was already reaching toward the child.' },
+            { word: 'leap', meaning: '펄쩍 뛰다', sentence: 'The little man leapt in the air.' },
+            { word: 'shriek', meaning: '비명', sentence: 'And let out a shriek.' }
+        ],
+        'end.webp': [
+            { word: 'lose one’s power', meaning: '힘을 잃다', sentence: 'Somebody losing their power once their name is guessed.' },
+            { word: 'liar', meaning: '거짓말쟁이', sentence: 'To call her own father a liar.' },
+            { word: 'not yet born', meaning: '아직 태어나지 않은', sentence: 'And for a child not yet born.' },
+            { word: 'happen to', meaning: '우연히 ~하다', sentence: 'It was what a messenger happened to see.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -616,6 +1219,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -624,7 +1228,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -636,7 +1240,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -670,4 +1274,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
