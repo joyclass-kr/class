@@ -318,7 +318,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '당나귀가 된 나그네',
     intro: [
-        '당나귀가 된 나그네는 유럽 여러 나라에 비슷한 형태로 전해 오는 옛이야기예요.',
+        '유럽 여러 나라에 비슷한 형태로 전해 오는 옛이야기예요.',
         '먹으면 당나귀가 되는 열매와 다시 사람으로 돌아오게 하는 열매가 나오는데, 이런 짜임은 옛이야기에서 흔히 볼 수 있어요. 욕심을 부린 사람이 스스로 판 함정에 빠지는 이야기랍니다.'
     ]
 };
@@ -541,7 +541,7 @@ const EN = {
     cover: {
         title: 'The Traveller Who Became a Donkey',
         intro: [
-            "The Traveller Who Became a Donkey is an old tale told in much the same shape all over Europe.",
+            "An old tale told in much the same shape all over Europe.",
             "There is a fruit that turns you into a donkey and another that turns you back, and that pattern turns up often in old stories. It is a tale about a greedy man falling into the pit he dug himself."
         ]
     },

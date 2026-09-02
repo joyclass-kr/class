@@ -295,7 +295,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '신드바드의 모험',
     intro: [
-        '신드바드의 모험은 천일야화에 실린 이야기예요. 알라딘, 알리바바와 같은 책에서 나온 이야기랍니다.',
+        '천일야화에 실린 이야기예요. 알라딘, 알리바바와 같은 책에서 나온 이야기랍니다.',
         '신드바드는 일곱 번이나 바다로 나가는데, 이 책에는 그 가운데 널리 알려진 항해들을 담았어요. 옛날 아라비아 상인들이 실제로 오갔던 바닷길이 이야기의 바탕이랍니다.'
     ]
 };
@@ -519,7 +519,7 @@ const EN = {
     cover: {
         title: 'The Voyages of Sindbad',
         intro: [
-            "Sindbad the Sailor comes from the Thousand and One Nights — the same book that gave us Aladdin and Ali Baba.",
+            "From the Thousand and One Nights — the same book that gave us Aladdin and Ali Baba.",
             "Sindbad goes to sea seven times, and this book holds the best known of those voyages. The sea roads in it are the ones Arab merchants really sailed in those days."
         ]
     },

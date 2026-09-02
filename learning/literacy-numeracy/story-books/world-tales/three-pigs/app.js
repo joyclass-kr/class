@@ -295,7 +295,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '아기돼지 삼형제',
     intro: [
-        '아기돼지 삼형제는 영국에서 오래전부터 전해 내려온 이야기예요. 1890년, 영국의 조지프 제이컵스가 여러 지방을 다니며 모은 영국 옛이야기집에 실리면서 지금의 모습으로 널리 알려졌답니다.',
+        '영국에서 오래전부터 전해 내려온 이야기예요. 1890년, 영국의 조지프 제이컵스가 여러 지방을 다니며 모은 영국 옛이야기집에 실리면서 지금의 모습으로 널리 알려졌답니다.',
         '이야기에는 같은 일이 세 번 되풀이돼요. 늑대가 세 집을 차례로 찾아가 똑같은 말을 외치는데, 결과는 점점 달라지지요. 옛이야기에는 이렇게 셋씩 짝을 지어 되풀이되는 구조가 자주 나와요. 듣는 사람이 다음에 무슨 일이 벌어질지 짐작하며 따라올 수 있고, 입으로 전하기도 쉽기 때문이랍니다.'
     ]
 };
@@ -521,7 +521,7 @@ const EN = {
     cover: {
         title: 'The Three Little Pigs',
         intro: [
-            "The Three Little Pigs is an old English tale. In 1890 Joseph Jacobs collected it, along with many other English tales, and printed it in the shape we know today.",
+            "An old English tale. In 1890 Joseph Jacobs collected it, along with many other English tales, and printed it in the shape we know today.",
             "The same thing happens three times in this story. The wolf goes to three houses and shouts the very same words at each door — but what happens after is not the same at all. Old tales love threes. A listener can guess what is coming next, and a teller can hold the whole story in mind."
         ]
     },

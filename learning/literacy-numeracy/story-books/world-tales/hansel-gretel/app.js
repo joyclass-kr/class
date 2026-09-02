@@ -284,7 +284,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '헨젤과 그레텔',
     intro: [
-        '헨젤과 그레텔은 독일의 그림 형제가 1812년에 펴낸 이야기집에 실린 이야기예요. 그림 형제는 고향 헤센 지방을 다니며 사람들이 들려주는 옛이야기를 받아 적었는데, 이 이야기도 그렇게 모은 것 가운데 하나랍니다.',
+        '독일의 그림 형제가 1812년에 펴낸 이야기집에 실린 이야기예요. 그림 형제는 고향 헤센 지방을 다니며 사람들이 들려주는 옛이야기를 받아 적었는데, 이 이야기도 그렇게 모은 것 가운데 하나랍니다.',
         '이 이야기가 만들어질 무렵 유럽에는 큰 흉년이 자주 들었어요. 먹을 것이 없어 온 마을이 굶던 시절의 두려움이 이야기 속에 그대로 담겨 있지요.'
     ]
 };
@@ -509,7 +509,7 @@ const EN = {
     cover: {
         title: 'Hansel and Gretel',
         intro: [
-            "This tale is in the collection the Brothers Grimm published in Germany in 1812. They travelled about their home region of Hesse writing down the old stories people told them, and this was one of them.",
+            "In the collection the Brothers Grimm published in Germany in 1812. They travelled about their home region of Hesse writing down the old stories people told them, and this was one of them.",
             "When the story took shape, Europe went through one bad harvest after another. The fear of a whole village with nothing to eat is right there in it."
         ]
     },

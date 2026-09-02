@@ -339,7 +339,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '오즈의 마법사',
     intro: [
-        '오즈의 마법사는 미국의 작가 라이먼 프랭크 바움이 1900년에 펴낸 이야기예요. 미국에서 나온 첫 창작 동화로 손꼽히는 작품이랍니다.',
+        '미국의 작가 라이먼 프랭크 바움이 1900년에 펴낸 이야기예요. 미국에서 나온 첫 창작 동화로 손꼽히는 작품이랍니다.',
         '회오리바람에 실려 낯선 나라에 떨어진 도로시가 허수아비, 양철 나무꾼, 겁쟁이 사자와 함께 집으로 돌아가는 길을 찾는 이야기예요.'
     ]
 };
@@ -564,7 +564,7 @@ const EN = {
     cover: {
         title: 'The Wonderful Wizard of Oz',
         intro: [
-            "The Wonderful Wizard of Oz was written by the American author L. Frank Baum and published in 1900. It is counted as the first fairy tale America made for itself.",
+            "Written by the American author L. Frank Baum and published in 1900. It is counted as the first fairy tale America made for itself.",
             "A cyclone carries Dorothy off to a country she has never seen, and with a Scarecrow, a Tin Woodman and a Cowardly Lion she goes looking for the road home."
         ]
     },

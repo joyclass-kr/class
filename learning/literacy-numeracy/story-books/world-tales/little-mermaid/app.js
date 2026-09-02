@@ -318,8 +318,8 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '인어공주',
     intro: [
-        '인어공주는 덴마크의 작가 한스 크리스티안 안데르센이 1837년에 발표한 이야기예요.',
-        '덴마크의 수도 코펜하겐 항구에는 이 이야기를 기념해 만든 인어공주 동상이 백 년 넘게 바다를 바라보고 앉아 있답니다. 안데르센의 이야기 가운데 가장 널리 알려진 작품이지요.'
+        '덴마크의 작가 한스 크리스티안 안데르센이 1837년에 발표한 이야기예요.',
+        '덴마크의 수도 코펜하겐 항구에는 이 이야기를 기념해 만든 인어공주 동상이 백 년 넘게 바다를 바라보고 앉아 있답니다.'
     ]
 };
 
@@ -542,8 +542,8 @@ const EN = {
     cover: {
         title: 'The Little Mermaid',
         intro: [
-            "The Little Mermaid was written by the Danish author Hans Christian Andersen and published in 1837.",
-            "In the harbour at Copenhagen, the capital of Denmark, a statue made in honour of this story has sat looking out to sea for more than a hundred years. It is the best known of all Andersen's tales."
+            "Written by the Danish author Hans Christian Andersen and published in 1837.",
+            "In the harbour at Copenhagen, the capital of Denmark, a statue made in honour of this story has sat looking out to sea for more than a hundred years."
         ]
     },
     chapters: [

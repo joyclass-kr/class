@@ -302,8 +302,8 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '홀레 할머니',
     intro: [
-        '홀레 할머니는 독일의 그림 형제가 모아 적은 옛이야기예요. 독일에서는 눈이 펑펑 내리면 홀레 할머니가 이불을 턴다고 말하곤 했답니다.',
-        '우물 속으로 떨어졌더니 다른 세상이 나오는 짜임이 재미있어요. 부지런히 일한 아이와 꾀만 부린 아이가 어떻게 달라지는지 지켜보세요.'
+        '독일의 그림 형제가 모아 적은 옛이야기예요. 독일에서는 눈이 펑펑 내리면 홀레 할머니가 이불을 턴다고 말하곤 했답니다.',
+        '우물 속으로 떨어졌더니 다른 세상이 나오는 짜임이에요. 홀레 할머니는 두 아이에게 각각 일한 만큼을 그대로 돌려줍니다.'
     ]
 };
 
@@ -526,8 +526,8 @@ const EN = {
     cover: {
         title: 'Mother Holle',
         intro: [
-            "Mother Holle is one of the old tales the Brothers Grimm collected in Germany. In Germany people used to say that when the snow came down thickly, Mother Holle was shaking out her quilt.",
-            "Falling down a well and finding another world at the bottom is a fine shape for a story. Watch how differently things go for the girl who works hard and the girl who only looks for shortcuts."
+            "One of the old tales the Brothers Grimm collected in Germany. In Germany people used to say that when the snow came down thickly, Mother Holle was shaking out her quilt.",
+            "Falling down a well and finding another world at the bottom is the shape of it. Mother Holle gives each girl back exactly what she put in."
         ]
     },
     chapters: [

@@ -326,7 +326,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '알라딘과 요술 램프',
     intro: [
-        '알라딘과 요술 램프는 아라비안나이트, 곧 천일야화에 실린 이야기예요. 천일야화는 아라비아와 페르시아, 인도 지방에서 오래도록 전해 오던 이야기들을 한데 모은 책이랍니다.',
+        '아라비안나이트, 곧 천일야화에 실린 이야기예요. 천일야화는 아라비아와 페르시아, 인도 지방에서 오래도록 전해 오던 이야기들을 한데 모은 책이랍니다.',
         '왕비가 천 하루 동안 밤마다 이야기를 이어 간다는 액자 구성 안에, 뱃사람 신드바드와 알리바바 같은 인물들의 모험담이 줄줄이 담겨 있어요. 알라딘 이야기는 그 가운데 가장 널리 알려진 편이지요.'
     ]
 };
@@ -550,7 +550,7 @@ const EN = {
     cover: {
         title: 'Aladdin and the Wonderful Lamp',
         intro: [
-            "Aladdin and the Wonderful Lamp comes from the Arabian Nights, the great collection of tales long told across Arabia, Persia and India.",
+            "From the Arabian Nights, the great collection of tales long told across Arabia, Persia and India.",
             "Inside the frame of a queen who keeps a story going every night for a thousand and one nights sit the adventures of Sindbad the Sailor, Ali Baba and many others. Aladdin is among the best known of them all."
         ]
     },

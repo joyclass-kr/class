@@ -306,8 +306,8 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '미녀와 야수',
     intro: [
-        '미녀와 야수는 프랑스에서 전해지던 이야기를 보몽 부인이 1756년에 아이들이 읽기 좋게 다시 쓴 작품이에요.',
-        '겉모습만 보고 사람을 판단하는 일에 대한 이야기랍니다. 야수의 성에서 시간이 흐를수록 무엇이 달라지는지 지켜보면 재미있어요.'
+        '프랑스에서 전해지던 이야기를 보몽 부인이 1756년에 아이들이 읽기 좋게 다시 쓴 작품이에요.',
+        '겉모습만 보고 사람을 판단하는 일에 대한 이야기랍니다. 야수의 성에서 지내는 동안 벨의 눈에 비친 야수가 조금씩 달라집니다.'
     ]
 };
 
@@ -530,8 +530,8 @@ const EN = {
     cover: {
         title: 'Beauty and the Beast',
         intro: [
-            "Beauty and the Beast is Madame de Beaumont's 1756 retelling, for children, of a story that had been told in France before her.",
-            "It is about judging people by how they look. Watching what changes as the days go by in the Beast's castle is the pleasure of it."
+            "Madame de Beaumont's 1756 retelling, for children, of a story that had been told in France before her.",
+            "It is about judging people by how they look. As the days go by in the Beast's castle, what Beauty sees when she looks at him slowly changes."
         ]
     },
     chapters: [

@@ -289,7 +289,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '늑대와 일곱 마리 아기 염소',
     intro: [
-        '늑대와 일곱 마리 아기 염소는 독일의 그림 형제가 1812년에 펴낸 어린이와 가정을 위한 이야기집에 실린 이야기예요.',
+        '독일의 그림 형제가 1812년에 펴낸 어린이와 가정을 위한 이야기집에 실린 이야기예요.',
         '그림 형제는 이야기를 지어낸 사람들이 아니에요. 형 야코프와 동생 빌헬름은 독일어를 연구하던 학자였는데, 1806년 무렵부터 고향 주변을 다니며 사람들이 들려주는 옛이야기를 받아 적었답니다.',
         '이 이야기는 빨간 모자처럼 늑대가 다른 사람인 척 꾸며 다가가는 이야기예요. 속이는 방법이 하나씩 늘어나는 짜임이 이런 옛이야기의 특징이랍니다.'
     ]
@@ -515,7 +515,7 @@ const EN = {
     cover: {
         title: 'The Wolf and the Seven Little Kids',
         intro: [
-            "This tale is in the collection the Brothers Grimm published in Germany in 1812. They did not invent it — they wrote down what village people told them.",
+            "In the collection the Brothers Grimm published in Germany in 1812. They did not invent it — they wrote down what village people told them.",
             "The wolf comes three times, and each time he mends the very thing that gave him away. His voice was too rough, so he swallowed chalk; his paws were too dark, so he floured them. The trickster gets better at tricking every time he fails."
         ]
     },

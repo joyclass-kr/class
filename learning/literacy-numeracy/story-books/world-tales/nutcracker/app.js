@@ -313,8 +313,8 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '호두까기 인형',
     intro: [
-        '호두까기 인형은 독일의 작가 E. T. A. 호프만이 1816년에 쓴 이야기예요. 뒷날 러시아의 작곡가 차이콥스키가 이 이야기로 발레 음악을 만들면서 온 세계에 알려졌습니다.',
-        '지금도 해마다 겨울이면 여러 나라의 극장에서 이 발레가 공연돼요. 크리스마스 하면 떠오르는 이야기가 된 지 오래랍니다.'
+        '독일의 작가 E. T. A. 호프만이 1816년에 쓴 이야기예요. 뒷날 러시아의 작곡가 차이콥스키가 이 이야기로 발레 음악을 만들면서 온 세계에 알려졌습니다.',
+        '지금도 해마다 크리스마스 무렵이면 여러 나라의 극장에서 이 발레가 공연된답니다.'
     ]
 };
 
@@ -537,8 +537,8 @@ const EN = {
     cover: {
         title: 'The Nutcracker',
         intro: [
-            "The Nutcracker was written by the German author E. T. A. Hoffmann in 1816. Later the Russian composer Tchaikovsky made a ballet out of it, and that is how it became known all over the world.",
-            "Theatres in many countries still put the ballet on every winter. It has been a Christmas story for a very long time now."
+            "Written by the German author E. T. A. Hoffmann in 1816. Later the Russian composer Tchaikovsky made a ballet out of it, and that is how it became known all over the world.",
+            "Theatres in many countries still put the ballet on every Christmas."
         ]
     },
     chapters: [

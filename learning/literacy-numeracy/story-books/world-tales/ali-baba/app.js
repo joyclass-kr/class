@@ -277,7 +277,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '알리바바와 40인의 도적',
     intro: [
-        '알리바바와 40인의 도적 역시 아라비안나이트, 곧 천일야화에 실린 이야기예요.',
+        '아라비안나이트, 곧 천일야화에 실린 이야기예요. 알라딘과 같은 책에서 나왔답니다.',
         '이 이야기에서 가장 크게 활약하는 사람은 알리바바가 아니라 하녀 모르지아나입니다. 힘이나 재산이 아니라 눈썰미와 침착함으로 위기를 넘기는 인물이 주인공 노릇을 하는 것이 이 이야기의 재미랍니다.'
     ]
 };
@@ -501,7 +501,7 @@ const EN = {
     cover: {
         title: 'Ali Baba and the Forty Thieves',
         intro: [
-            "Ali Baba and the Forty Thieves also comes from the Arabian Nights, the thousand and one nights of tales.",
+            "Also from the Arabian Nights, the thousand and one nights of tales.",
             "The one who does most in this story is not Ali Baba but Morgiana, the servant. What makes it such good reading is that the person who carries it is somebody with neither strength nor money — only a sharp eye and a steady head."
         ]
     },

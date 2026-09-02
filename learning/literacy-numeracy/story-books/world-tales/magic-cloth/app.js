@@ -322,8 +322,8 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '요정이 준 식탁보',
     intro: [
-        '요정이 준 식탁보는 독일의 그림 형제가 모아 적은 옛이야기예요. 원래 제목은 식탁보와 당나귀와 몽둥이라는 뜻이랍니다.',
-        '펼치면 음식이 차려지는 식탁보, 금을 내놓는 당나귀, 스스로 움직이는 몽둥이가 차례로 나와요. 셋이 각각 무슨 일을 하는지 지켜보는 재미가 있는 이야기랍니다.'
+        '독일의 그림 형제가 모아 적은 옛이야기예요. 원래 제목은 식탁보와 당나귀와 몽둥이라는 뜻이랍니다.',
+        '펼치면 음식이 차려지는 식탁보, 금을 내놓는 당나귀, 스스로 움직이는 몽둥이가 차례로 나와요. 셋 다 훌륭한 물건인데, 형들은 잃고 막내만 지켜 낸답니다.'
     ]
 };
 
@@ -545,8 +545,8 @@ const EN = {
     cover: {
         title: 'The Wishing Table',
         intro: [
-            "The Wishing Table is an old tale collected and written down by the Brothers Grimm in Germany. Its full title names all three gifts: the table, the donkey and the cudgel.",
-            "A cloth that lays a meal when you spread it, a donkey that gives out gold, and a cudgel that swings by itself come one after another. Half the fun is watching what each of the three does."
+            "An old tale collected and written down by the Brothers Grimm in Germany. Its full title names all three gifts: the table, the donkey and the cudgel.",
+            "A cloth that lays a meal when you spread it, a donkey that gives out gold, and a cudgel that swings by itself come one after another. All three are splendid, and the two older brothers lose theirs."
         ]
     },
     chapters: [

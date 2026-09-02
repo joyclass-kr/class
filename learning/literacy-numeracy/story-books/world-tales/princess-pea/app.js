@@ -319,7 +319,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '완두콩 위의 공주',
     intro: [
-        '완두콩 위의 공주는 덴마크의 작가 한스 크리스티안 안데르센이 1835년에 펴낸 아주 짧은 이야기예요.',
+        '덴마크의 작가 한스 크리스티안 안데르센이 1835년에 펴낸 아주 짧은 이야기예요.',
         '안데르센의 이야기 가운데 손꼽히게 짧지만, 마지막 한 줄 때문에 오래 기억되는 작품이랍니다.'
     ]
 };
@@ -543,7 +543,7 @@ const EN = {
     cover: {
         title: 'The Princess and the Pea',
         intro: [
-            "The Princess and the Pea is a very short story published by the Danish author Hans Christian Andersen in 1835.",
+            "A very short story published by the Danish author Hans Christian Andersen in 1835.",
             "It is one of the shortest things he ever wrote, and it has stayed in people's heads because of its last line. This book takes that short story and spreads it out scene by scene."
         ]
     },

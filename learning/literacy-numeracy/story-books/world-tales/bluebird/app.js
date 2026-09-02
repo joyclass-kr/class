@@ -340,7 +340,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '파랑새',
     intro: [
-        '파랑새는 벨기에의 작가 모리스 마테를링크가 1908년에 쓴 희곡이에요. 무대에서 배우들이 연기하도록 쓴 작품이었는데, 뒤에 이야기책으로도 널리 읽히게 되었답니다.',
+        '벨기에의 작가 모리스 마테를링크가 1908년에 쓴 희곡이에요. 무대에서 배우들이 연기하도록 쓴 작품이었는데, 뒤에 이야기책으로도 널리 읽히게 되었답니다.',
         '마테를링크는 이 작품으로 1911년 노벨 문학상을 받았어요. 오누이가 여러 나라를 돌아다니며 파랑새를 찾는 여정은, 행복이란 무엇이며 어디에 있는가를 묻는 이야기랍니다.'
     ]
 };
@@ -573,7 +573,7 @@ const EN = {
     cover: {
         title: 'The Blue Bird',
         intro: [
-            "The Blue Bird is a play written by the Belgian author Maurice Maeterlinck in 1908. It was made for actors on a stage, and later it came to be widely read as a story book too.",
+            "A play written by the Belgian author Maurice Maeterlinck in 1908. It was made for actors on a stage, and later it came to be widely read as a story book too.",
             "Maeterlinck was given the Nobel Prize for Literature in 1911, largely for this work. A brother and sister travelling from country to country after a blue bird is a way of asking what happiness is and where it is kept."
         ]
     },

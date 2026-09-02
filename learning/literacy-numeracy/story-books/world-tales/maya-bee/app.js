@@ -319,8 +319,8 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '꿀벌 마야',
     intro: [
-        '꿀벌 마야는 독일의 작가 발데마르 본젤스가 1912년에 펴낸 이야기예요. 벌집을 뛰쳐나온 어린 꿀벌이 넓은 들판에서 여러 벌레를 만나며 겪는 일을 담았답니다.',
-        '이야기에 나오는 메뚜기, 잠자리, 쇠똥구리는 실제 곤충의 생김새와 살아가는 모습을 꽤 그대로 옮겨 놓았어요. 이야기를 읽다 보면 들판의 작은 이웃들이 눈에 들어옵니다.'
+        '독일의 작가 발데마르 본젤스가 1912년에 펴낸 이야기예요. 벌집을 뛰쳐나온 어린 꿀벌이 넓은 들판에서 여러 벌레를 만나며 겪는 일을 담았답니다.',
+        '이야기에 나오는 메뚜기, 잠자리, 쇠똥구리는 실제 곤충의 생김새와 살아가는 모습을 꽤 그대로 옮겨 놓았어요. 지어낸 벌레가 아니라 들판에 정말 있는 벌레들이랍니다.'
     ]
 };
 
@@ -542,8 +542,8 @@ const EN = {
     cover: {
         title: 'Maya the Bee',
         intro: [
-            "Maya the Bee was published by the German writer Waldemar Bonsels in 1912. It follows a young bee who leaves the hive and meets one creature after another out in the wide meadow.",
-            "The grasshopper, the dragonfly and the dung beetle in it are drawn fairly closely from the real insects and how they live. Read it, and you start noticing the small neighbours in the grass."
+            "Published by the German writer Waldemar Bonsels in 1912. It follows a young bee who leaves the hive and meets one creature after another out in the wide meadow.",
+            "The grasshopper, the dragonfly and the dung beetle in it are drawn fairly closely from the real insects and how they live. They are not invented insects but ones that really live in the fields."
         ]
     },
     chapters: [

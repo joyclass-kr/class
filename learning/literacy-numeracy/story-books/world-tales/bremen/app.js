@@ -309,7 +309,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '브레멘 음악대',
     intro: [
-        '브레멘 음악대는 독일의 그림 형제가 모아 적은 옛이야기예요. 브레멘은 독일 북쪽에 실제로 있는 도시랍니다.',
+        '독일의 그림 형제가 모아 적은 옛이야기예요. 브레멘은 독일 북쪽에 실제로 있는 도시랍니다.',
         '나이가 들어 쫓겨날 처지가 된 짐승 넷이 길에서 만나 함께 길을 떠나요. 재미있게도 이 넷은 끝내 브레멘에 닿지 못한답니다.'
     ]
 };
@@ -533,7 +533,7 @@ const EN = {
     cover: {
         title: 'The Bremen Town Musicians',
         intro: [
-            "The Bremen Town Musicians is an old tale the Brothers Grimm collected in Germany. Bremen is a real city in the north of the country.",
+            "An old tale the Brothers Grimm collected in Germany. Bremen is a real city in the north of the country.",
             "Four animals, all old enough to be turned out, meet on the road and set off together. The funny thing is that the four of them never reach Bremen at all."
         ]
     },

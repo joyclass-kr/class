@@ -329,8 +329,8 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '요술 소시지',
     intro: [
-        '요술 소시지는 유럽 여러 나라에 전해 오는 옛이야기예요. 프랑스에서는 세 가지 소원이라는 제목으로, 영국에서는 소시지 이야기로 알려져 있답니다.',
-        '소원을 세 번 들어주겠다는 말에 신이 났다가, 결국 아무것도 얻지 못하는 부부의 이야기예요. 웃다 보면 어느새 고개를 끄덕이게 되는 이야기랍니다.'
+        '유럽 여러 나라에 전해 오는 옛이야기예요. 프랑스에서는 세 가지 소원이라는 제목으로, 영국에서는 소시지 이야기로 알려져 있답니다.',
+        '소원을 세 번 들어주겠다는 말에 신이 났다가, 결국 아무것도 얻지 못하는 부부의 이야기예요. 소원 세 번 가운데 둘이 홧김에 사라진답니다.'
     ]
 };
 
@@ -552,8 +552,8 @@ const EN = {
     cover: {
         title: 'The Three Wishes',
         intro: [
-            "The Three Wishes is an old tale told all over Europe. In France it is known by that name, and in England as the story of the sausage.",
-            "It is about a husband and wife who are promised three wishes and end up with nothing at all. You laugh at them, and then you find yourself nodding."
+            "An old tale told all over Europe. In France it is known as The Three Wishes, and in England as the story of the sausage.",
+            "It is about a husband and wife who are promised three wishes and end up with nothing at all. Two of the three wishes go up in a temper."
         ]
     },
     chapters: [

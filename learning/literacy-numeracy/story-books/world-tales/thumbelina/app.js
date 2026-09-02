@@ -317,8 +317,8 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '엄지 공주',
     intro: [
-        '엄지 공주는 덴마크의 작가 한스 크리스티안 안데르센이 1835년에 발표한 이야기예요.',
-        '엄지손가락만 한 아이가 커다란 세상을 홀로 헤쳐 나간다는 이야기 짜임은 여러 나라의 옛이야기에 나옵니다. 작은 존재가 큰 세상에서 어떻게 살아가는지를 지켜보는 재미가 있기 때문이지요.'
+        '덴마크의 작가 한스 크리스티안 안데르센이 1835년에 발표한 이야기예요.',
+        '엄지손가락만 한 아이가 커다란 세상을 홀로 헤쳐 나간다는 이야기 짜임은 여러 나라의 옛이야기에 나옵니다. 작은 몸으로 큰 세상을 홀로 건너간다는 것이 그만큼 마음을 끌었기 때문이지요.'
     ]
 };
 
@@ -541,8 +541,8 @@ const EN = {
     cover: {
         title: 'Thumbelina',
         intro: [
-            "Thumbelina was written by the Danish author Hans Christian Andersen and published in 1835.",
-            "A child no bigger than a thumb making her own way through an enormous world — that shape of story turns up in many countries. There is a particular pleasure in watching something very small get along in something very large."
+            "Written by the Danish author Hans Christian Andersen and published in 1835.",
+            "A child no bigger than a thumb making her own way through an enormous world — that shape of story turns up in many countries. Crossing so large a world in so small a body was what caught people."
         ]
     },
     chapters: [

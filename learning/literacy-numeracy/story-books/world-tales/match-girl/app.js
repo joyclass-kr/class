@@ -266,7 +266,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '성냥팔이 소녀',
     intro: [
-        '성냥팔이 소녀는 덴마크의 작가 한스 크리스티안 안데르센이 1845년에 발표한 이야기예요.',
+        '덴마크의 작가 한스 크리스티안 안데르센이 1845년에 발표한 이야기예요.',
         '안데르센의 어머니는 어린 시절 몹시 가난해 거리에서 구걸을 해야 했다고 합니다. 안데르센은 그 이야기를 떠올리며 이 작품을 썼어요. 추운 거리에 홀로 선 아이를 아무도 돌아보지 않는다면 어떤 일이 벌어지는지 조용히 묻는 이야기랍니다.'
     ]
 };
@@ -491,7 +491,7 @@ const EN = {
     cover: {
         title: 'The Little Match Girl',
         intro: [
-            "The Little Match Girl was written by the Danish author Hans Christian Andersen and published in 1845.",
+            "Written by the Danish author Hans Christian Andersen and published in 1845.",
             "Andersen's mother was so poor as a child that she had to beg in the streets. He was thinking of her when he wrote this. It asks, very quietly, what happens when a child stands alone in the cold and nobody turns round."
         ]
     },

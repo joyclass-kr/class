@@ -316,8 +316,8 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '황금 거위',
     intro: [
-        '황금 거위는 독일의 그림 형제가 모아 적은 옛이야기예요. 막내가 주인공이 되는 옛이야기의 짜임을 잘 보여 준답니다.',
-        '거위에 손을 대면 떨어지지 않아 줄줄이 매달려 걷게 되는데, 그 모습이 이야기의 가장 큰 볼거리예요. 웃지 않던 공주를 웃게 만드는 것도 바로 그 장면이랍니다.'
+        '독일의 그림 형제가 모아 적은 옛이야기예요. 막내가 주인공이 되는 옛이야기의 짜임을 잘 보여 준답니다.',
+        '거위에 손을 대면 떨어지지 않아 줄줄이 매달려 걷게 돼요. 웃지 않던 공주를 웃게 만드는 것이 바로 그 줄이랍니다.'
     ]
 };
 
@@ -540,8 +540,8 @@ const EN = {
     cover: {
         title: 'The Golden Goose',
         intro: [
-            "The Golden Goose is one of the old tales the Brothers Grimm collected in Germany. It shows very clearly the shape of an old story in which the youngest son is the hero.",
-            "Once you touch the goose you cannot let go, and people end up walking along in a string — that is the great sight of the story. And it is exactly that which makes the princess who never laughed laugh at last."
+            "One of the old tales the Brothers Grimm collected in Germany. It shows very clearly the shape of an old story in which the youngest son is the hero.",
+            "Once you touch the goose you cannot let go, and people end up walking along in a string. It is that string which makes the princess who never laughed laugh at last."
         ]
     },
     chapters: [

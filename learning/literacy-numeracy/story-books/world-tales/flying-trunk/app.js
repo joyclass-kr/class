@@ -314,7 +314,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '하늘을 나는 가방',
     intro: [
-        '하늘을 나는 가방은 덴마크의 작가 한스 크리스티안 안데르센이 1839년에 펴낸 이야기예요.',
+        '덴마크의 작가 한스 크리스티안 안데르센이 1839년에 펴낸 이야기예요.',
         '이야기 속 주인공이 다른 사람들에게 이야기를 들려주는 장면이 나와요. 이야기 안에 이야기가 들어 있는 짜임이랍니다.'
     ]
 };
@@ -538,7 +538,7 @@ const EN = {
     cover: {
         title: 'The Flying Trunk',
         intro: [
-            "The Flying Trunk was published by the Danish author Hans Christian Andersen in 1839.",
+            "Published by the Danish author Hans Christian Andersen in 1839.",
             "There is a scene in it where the hero tells a story to other people — a story inside the story."
         ]
     },

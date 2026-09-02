@@ -286,7 +286,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '신데렐라',
     intro: [
-        '신데렐라는 프랑스의 샤를 페로가 1697년에 펴낸 이야기로 널리 알려졌어요. 비슷한 이야기가 중국과 이집트에도 아주 오래전부터 전해 온답니다.',
+        '프랑스의 샤를 페로가 1697년에 펴낸 이야기로 널리 알려졌어요. 비슷한 이야기가 중국과 이집트에도 아주 오래전부터 전해 온답니다.',
         '재를 뒤집어쓴 아이라는 뜻의 이름이 그대로 별명이 된 주인공이에요. 유리로 만든 구두가 나오는 것은 페로가 옮겨 적은 판에서부터랍니다.'
     ]
 };
@@ -512,7 +512,7 @@ const EN = {
     cover: {
         title: 'Cinderella',
         intro: [
-            "Cinderella became widely known through the version Charles Perrault printed in France in 1697. But stories very like it had been told in China and in Egypt long before that.",
+            "Widely known through the version Charles Perrault printed in France in 1697. But stories very like it had been told in China and in Egypt long before that.",
             "Her name comes from the cinders of the fireplace — the ashes she was always covered in. The glass slipper first appears in Perrault's telling; before him, the shoe was sewn with gold thread."
         ]
     },

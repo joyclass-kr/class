@@ -295,7 +295,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '벌거숭이 임금님',
     intro: [
-        '벌거숭이 임금님은 덴마크의 작가 한스 크리스티안 안데르센이 1837년에 발표한 이야기예요. 안데르센은 가난한 구두장이의 아들로 태어나 백오십 편이 넘는 이야기를 남긴 사람이랍니다.',
+        '덴마크의 작가 한스 크리스티안 안데르센이 1837년에 발표한 이야기예요. 안데르센은 가난한 구두장이의 아들로 태어나 백오십 편이 넘는 이야기를 남긴 사람이랍니다.',
         '이 이야기에는 괴물도 마법도 나오지 않아요. 남의 눈치를 보느라 뻔한 사실도 말하지 못하는 사람들의 모습만으로 이야기가 굴러갑니다. 그래서 이백 년 가까이 지난 지금 읽어도 어쩐지 뜨끔하지요.'
     ]
 };
@@ -519,7 +519,7 @@ const EN = {
     cover: {
         title: "The Emperor's New Clothes",
         intro: [
-            "The Emperor's New Clothes was written by the Danish author Hans Christian Andersen and published in 1837. Andersen was born the son of a poor shoemaker and left behind more than a hundred and fifty stories.",
+            "Written by the Danish author Hans Christian Andersen and published in 1837. Andersen was born the son of a poor shoemaker and left behind more than a hundred and fifty stories.",
             "There is no monster in this tale and no magic. The whole thing turns on people who cannot say what is plainly in front of them, because they are watching one another. That is why it still stings to read, nearly two hundred years later."
         ]
     },

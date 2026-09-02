@@ -313,7 +313,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '부싯깃 통',
     intro: [
-        '부싯깃 통은 덴마크의 작가 한스 크리스티안 안데르센이 1835년에 펴낸 첫 이야기책에 실린 작품이에요.',
+        '덴마크의 작가 한스 크리스티안 안데르센이 1835년에 펴낸 첫 이야기책에 실린 작품이에요.',
         '부싯깃 통은 옛날에 불을 붙일 때 쓰던 도구예요. 부싯돌을 쳐서 불꽃을 만들던 물건인데, 이 이야기에서는 그것이 마법 도구가 된답니다.'
     ]
 };
@@ -537,7 +537,7 @@ const EN = {
     cover: {
         title: 'The Tinderbox',
         intro: [
-            "The Tinderbox is from the first book of stories the Danish author Hans Christian Andersen published, in 1835.",
+            "From the first book of stories the Danish author Hans Christian Andersen published, in 1835.",
             "A tinderbox was what people used to make fire with in the old days — you struck the flint to get a spark. In this story it turns into something rather more than that."
         ]
     },

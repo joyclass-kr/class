@@ -310,7 +310,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '집 없는 아이',
     intro: [
-        '집 없는 아이는 프랑스의 작가 엑토르 말로가 1878년에 펴낸 이야기예요. 원래 제목은 가족 없이라는 뜻이랍니다.',
+        '프랑스의 작가 엑토르 말로가 1878년에 펴낸 이야기예요. 원래 제목은 가족 없이라는 뜻이랍니다.',
         '떠돌이 악사와 개 두 마리, 원숭이 한 마리와 함께 프랑스 곳곳을 걸어 다니는 아이의 이야기예요. 그 시절 시골 마을과 광산의 모습이 이야기 속에 그대로 담겨 있습니다.'
     ]
 };
@@ -533,7 +533,7 @@ const EN = {
     cover: {
         title: 'Nobody’s Boy',
         intro: [
-            "Nobody's Boy was published by the French writer Hector Malot in 1878. Its own title means Without a Family.",
+            "Published by the French writer Hector Malot in 1878. Its own title means Without a Family.",
             "It is the story of a boy who walks all over France with a travelling musician, two dogs and a monkey. The villages and the mines of that time are in it just as they were."
         ]
     },

@@ -280,7 +280,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '미운 아기 오리',
     intro: [
-        '미운 아기 오리는 덴마크의 작가 한스 크리스티안 안데르센이 1843년에 발표한 이야기예요.',
+        '덴마크의 작가 한스 크리스티안 안데르센이 1843년에 발표한 이야기예요.',
         '안데르센은 어릴 적 몹시 가난했고, 키가 크고 마른 생김새 때문에 놀림도 많이 받았다고 해요. 그래서 이 이야기에는 남과 달라서 힘들었던 자신의 어린 시절이 담겨 있다고 전해집니다.'
     ]
 };
@@ -504,7 +504,7 @@ const EN = {
     cover: {
         title: 'The Ugly Duckling',
         intro: [
-            "The Ugly Duckling was written by the Danish author Hans Christian Andersen and published in 1843.",
+            "Written by the Danish author Hans Christian Andersen and published in 1843.",
             "Andersen grew up very poor, and he is said to have been teased a great deal for being tall and thin and odd-looking. People have always said that this story holds his own childhood — the hard part of being unlike everybody else."
         ]
     },

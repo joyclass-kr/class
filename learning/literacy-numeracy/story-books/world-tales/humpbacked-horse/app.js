@@ -320,7 +320,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '곱사등이 조랑말',
     intro: [
-        '곱사등이 조랑말은 러시아의 작가 표트르 예르쇼프가 1834년에 지은 이야기예요. 열아홉 살에 쓴 작품인데, 러시아 사람들이 오래 사랑해 온 이야기랍니다.',
+        '러시아의 작가 표트르 예르쇼프가 1834년에 지은 이야기예요. 열아홉 살에 쓴 작품이랍니다.',
         '러시아 옛이야기에 자주 나오는 불새와 마법의 말이 함께 등장해요. 못생기고 작은 말이 사실은 가장 든든한 친구였다는 이야기랍니다.'
     ]
 };
@@ -543,7 +543,7 @@ const EN = {
     cover: {
         title: 'The Little Humpbacked Horse',
         intro: [
-            "The Little Humpbacked Horse was written by the Russian poet Pyotr Yershov in 1834. He was nineteen years old when he wrote it, and Russians have loved it ever since.",
+            "Written by the Russian poet Pyotr Yershov in 1834. He was nineteen years old when he wrote it.",
             "The firebird and the magic horse of Russian folk tales are both in it. It is a story about an ugly little horse who turns out to be the truest friend of all."
         ]
     },

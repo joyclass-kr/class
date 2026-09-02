@@ -322,7 +322,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '황새가 된 임금님',
     intro: [
-        '황새가 된 임금님은 독일의 작가 빌헬름 하우프가 1825년에 펴낸 이야기예요. 아라비아의 옛이야기 분위기를 빌려 새로 지은 작품이랍니다.',
+        '독일의 작가 빌헬름 하우프가 1825년에 펴낸 이야기예요. 아라비아의 옛이야기 분위기를 빌려 새로 지은 작품이랍니다.',
         '가루를 코에 대고 주문을 외우면 어떤 짐승으로든 변할 수 있어요. 다만 그 모습으로 웃으면 주문을 잊어버린다는 조건이 붙어 있답니다.'
     ]
 };
@@ -545,7 +545,7 @@ const EN = {
     cover: {
         title: 'The Caliph Who Became a Stork',
         intro: [
-            "The Caliph Who Became a Stork was published by the German writer Wilhelm Hauff in 1825. He wrote it new, in the manner of the old Arabian tales.",
+            "Published by the German writer Wilhelm Hauff in 1825. He wrote it new, in the manner of the old Arabian tales.",
             "Hold the powder to your nose, say the word, and you may turn into any creature you like. But there is a condition: laugh in that shape, and you forget the word."
         ]
     },

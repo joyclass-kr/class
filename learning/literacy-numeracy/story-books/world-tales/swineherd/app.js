@@ -320,7 +320,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '돼지치기 왕자',
     intro: [
-        '돼지치기 왕자는 덴마크의 작가 한스 크리스티안 안데르센이 1841년에 펴낸 이야기예요. 북유럽에 전해 오던 옛이야기를 바탕으로 새로 쓴 작품이랍니다.',
+        '덴마크의 작가 한스 크리스티안 안데르센이 1841년에 펴낸 이야기예요. 북유럽에 전해 오던 옛이야기를 바탕으로 새로 쓴 작품이랍니다.',
         '진짜 장미와 진짜 밤꾀꼬리는 시큰둥해하면서, 소리 나는 장난감에는 눈이 뒤집히는 공주가 나와요. 무엇이 정말 귀한 것인지 묻는 이야기랍니다.'
     ]
 };
@@ -544,7 +544,7 @@ const EN = {
     cover: {
         title: 'The Swineherd',
         intro: [
-            "The Swineherd was published by the Danish author Hans Christian Andersen in 1841. He built it on an old tale that had been told in the north of Europe.",
+            "Published by the Danish author Hans Christian Andersen in 1841. He built it on an old tale that had been told in the north of Europe.",
             "There is a princess in it who cannot be bothered with a real rose or a real nightingale, and loses her head over a toy that makes a noise. It asks what is actually worth having."
         ]
     },

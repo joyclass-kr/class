@@ -288,8 +288,8 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '피리 부는 사나이',
     intro: [
-        '피리 부는 사나이는 독일 하멜른이라는 마을에 오래도록 전해 온 이야기예요. 그림 형제도 자기들이 모은 전설집에 이 이야기를 실었습니다.',
-        '하멜른에는 지금도 이 전설을 새긴 옛 건물이 남아 있어요. 마을 사람들이 약속을 지키지 않았다는 대목만은 어느 판본에서나 똑같이 전해진답니다. 이 책에서는 아이들이 무사히 돌아오는 쪽으로 이야기를 맺었어요.'
+        '독일 하멜른이라는 마을에 오래도록 전해 온 이야기예요. 그림 형제도 자기들이 모은 전설집에 이 이야기를 실었습니다.',
+        '하멜른에는 지금도 이 전설을 새긴 옛 건물이 남아 있어요. 마을 사람들이 약속을 지키지 않았다는 대목만은 어느 판본에서나 똑같이 전해진답니다.'
     ]
 };
 
@@ -513,8 +513,8 @@ const EN = {
     cover: {
         title: 'The Pied Piper of Hamelin',
         intro: [
-            "The Pied Piper has been told for a very long time in the German town of Hamelin. The Brothers Grimm put it into the book of legends they collected.",
-            "There are still old buildings in Hamelin with the legend carved on them. Whatever else changes between one version and another, the part where the townspeople break their promise is always the same. In this book the story ends with the children coming safely home."
+            "Told for a very long time in the German town of Hamelin. The Brothers Grimm put it into the book of legends they collected.",
+            "There are still old buildings in Hamelin with the legend carved on them. Whatever else changes between one version and another, the part where the townspeople break their promise is always the same."
         ]
     },
     chapters: [

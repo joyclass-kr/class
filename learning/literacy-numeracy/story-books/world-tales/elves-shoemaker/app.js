@@ -273,7 +273,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '난쟁이와 구둣방',
     intro: [
-        '난쟁이와 구둣방은 독일의 그림 형제가 모아 펴낸 이야기집에 실린 짧은 이야기예요.',
+        '독일의 그림 형제가 모아 펴낸 이야기집에 실린 짧은 이야기예요.',
         '유럽에는 밤사이 몰래 집안일을 도와주는 작은 요정 이야기가 여러 나라에 전해집니다. 다만 그 요정들은 고맙다는 인사를 받으면 슬며시 떠나 버린다고 하지요. 이 이야기도 그런 규칙을 따르고 있답니다.'
     ]
 };
@@ -497,7 +497,7 @@ const EN = {
     cover: {
         title: 'The Elves and the Shoemaker',
         intro: [
-            "The Elves and the Shoemaker is a short tale from the collection the Brothers Grimm gathered in Germany.",
+            "A short tale from the collection the Brothers Grimm gathered in Germany.",
             "Many countries in Europe tell of little folk who come in at night and do the housework. But they are said to slip away for good once anybody thanks them. This story follows that rule too."
         ]
     },

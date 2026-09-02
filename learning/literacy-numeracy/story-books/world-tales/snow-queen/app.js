@@ -319,8 +319,8 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '눈의 여왕',
     intro: [
-        '눈의 여왕은 덴마크의 작가 한스 크리스티안 안데르센이 1844년에 발표한 이야기예요. 안데르센이 쓴 이야기 가운데 가장 길고 짜임이 복잡한 작품으로 꼽힙니다.',
-        '원래는 일곱 개의 이야기로 나뉘어 있고, 게르다가 카이를 찾아가는 길에서 만나는 사람들이 저마다 한 대목씩을 차지해요. 이 책에서는 그 여정을 여덟 장으로 간추려 담았습니다.'
+        '덴마크의 작가 한스 크리스티안 안데르센이 1844년에 발표한 이야기예요. 안데르센이 쓴 이야기 가운데 가장 길고 짜임이 복잡한 작품으로 꼽힙니다.',
+        '원래는 일곱 개의 이야기로 나뉘어 있고, 게르다가 카이를 찾아가는 길에서 만나는 사람들이 저마다 한 대목씩을 차지해요.'
     ]
 };
 
@@ -543,8 +543,8 @@ const EN = {
     cover: {
         title: 'The Snow Queen',
         intro: [
-            "The Snow Queen was written by the Danish author Hans Christian Andersen and published in 1844. It is counted as the longest and the most intricately built of all his tales.",
-            "In the original it is divided into seven stories, and each person Gerda meets on the road to find Kai gets a story to themselves. This book gathers that journey into eight chapters."
+            "Written by the Danish author Hans Christian Andersen and published in 1844. It is counted as the longest and the most intricately built of all his tales.",
+            "In the original it is divided into seven stories, and each person Gerda meets on the road to find Kai gets a story to themselves."
         ]
     },
     chapters: [

@@ -307,7 +307,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '밤꾀꼬리',
     intro: [
-        '밤꾀꼬리는 덴마크의 작가 한스 크리스티안 안데르센이 1843년에 펴낸 이야기예요. 중국을 무대로 삼은 작품이랍니다.',
+        '덴마크의 작가 한스 크리스티안 안데르센이 1843년에 펴낸 이야기예요. 중국을 무대로 삼은 작품이랍니다.',
         '보석으로 만든 기계 새와 숲에서 온 진짜 새가 나란히 놓여요. 어느 쪽이 정말 귀한지 이야기가 천천히 알려 준답니다.'
     ]
 };
@@ -531,7 +531,7 @@ const EN = {
     cover: {
         title: 'The Nightingale',
         intro: [
-            "The Nightingale was published by the Danish author Hans Christian Andersen in 1843. He set it in China.",
+            "Published by the Danish author Hans Christian Andersen in 1843. He set it in China.",
             "A mechanical bird covered in jewels is put side by side with a real bird out of the wood. The story takes its time telling you which of them is the precious one."
         ]
     },

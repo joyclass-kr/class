@@ -309,7 +309,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '빨강 구두',
     intro: [
-        '빨강 구두는 덴마크의 작가 한스 크리스티안 안데르센이 1845년에 펴낸 이야기예요. 안데르센이 어릴 적 처음 신어 본 새 구두를 자랑하다 꾸중을 들었던 기억에서 나온 이야기라고 합니다.',
+        '덴마크의 작가 한스 크리스티안 안데르센이 1845년에 펴낸 이야기예요. 안데르센이 어릴 적 처음 신어 본 새 구두를 자랑하다 꾸중을 들었던 기억에서 나온 이야기라고 합니다.',
         '무언가에 마음을 온통 빼앗겼을 때 어떤 일이 벌어지는지 보여 주는 이야기예요. 카렌은 구두에서 눈을 떼지 못하다가, 정작 곁에 있던 사람을 놓치고 맙니다.'
     ]
 };
@@ -534,7 +534,7 @@ const EN = {
     cover: {
         title: 'The Red Shoes',
         intro: [
-            "The Red Shoes was published by the Danish author Hans Christian Andersen in 1845. It is said to have come out of his memory of showing off the first new shoes he ever wore, and being told off for it.",
+            "Published by the Danish author Hans Christian Andersen in 1845. It is said to have come out of his memory of showing off the first new shoes he ever wore, and being told off for it.",
             "It shows what happens when your whole mind is taken up by one thing. Karen cannot take her eyes off the shoes, and misses the person who was beside her all along."
         ]
     },

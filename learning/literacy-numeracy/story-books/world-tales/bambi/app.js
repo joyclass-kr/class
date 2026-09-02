@@ -316,7 +316,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '아기 사슴 이야기',
     intro: [
-        '아기 사슴 이야기는 오스트리아의 작가 펠릭스 잘텐이 1923년에 펴낸 작품이에요. 원래 제목은 밤비, 숲속의 삶이라는 뜻이랍니다.',
+        '오스트리아의 작가 펠릭스 잘텐이 1923년에 펴낸 작품이에요. 원래 제목은 밤비, 숲속의 삶이라는 뜻이랍니다.',
         '숲에서 태어난 새끼 노루가 계절을 여러 번 겪으며 자라는 이야기예요. 사슴의 눈으로 본 숲을 그리다 보니, 사람은 늘 멀리서 다가오는 낯선 존재로 그려진답니다.'
     ]
 };
@@ -540,7 +540,7 @@ const EN = {
     cover: {
         title: 'Bambi',
         intro: [
-            "Bambi was published by the Austrian writer Felix Salten in 1923. Its full title means Bambi, a Life in the Woods.",
+            "Published by the Austrian writer Felix Salten in 1923. Its full title means Bambi, a Life in the Woods.",
             "It is the story of a fawn born in the forest, growing up through one season after another. Because the woods are shown through a deer's eyes, people always appear as something strange coming toward you from far off."
         ]
     },

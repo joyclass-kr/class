@@ -307,7 +307,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '피터 래빗 이야기',
     intro: [
-        '피터 래빗 이야기는 영국의 작가 베아트릭스 포터가 1902년에 펴낸 그림책이에요. 글과 그림을 모두 작가가 직접 만들었답니다.',
+        '영국의 작가 베아트릭스 포터가 1902년에 펴낸 그림책이에요. 글과 그림을 모두 작가가 직접 만들었답니다.',
         '처음에는 아픈 아이에게 보낸 편지에 그려 넣은 그림에서 시작했어요. 그 편지가 나중에 책이 되어 온 세계에 알려졌답니다.'
     ]
 };
@@ -532,7 +532,7 @@ const EN = {
     cover: {
         title: 'The Tale of Peter Rabbit',
         intro: [
-            "The Tale of Peter Rabbit is a picture book published by the English writer Beatrix Potter in 1902. She wrote the words and painted the pictures herself.",
+            "A picture book published by the English writer Beatrix Potter in 1902. She wrote the words and painted the pictures herself.",
             "It began as drawings in a letter she sent to a child who was ill. That letter later became a book, and the book went all over the world."
         ]
     },

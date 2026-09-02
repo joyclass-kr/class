@@ -308,7 +308,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '개구리 왕자',
     intro: [
-        '개구리 왕자는 독일의 그림 형제가 1812년에 펴낸 옛이야기 모음집의 맨 첫 번째 이야기예요. 그만큼 오래되고 널리 알려진 이야기랍니다.',
+        '독일의 그림 형제가 1812년에 펴낸 옛이야기 모음집의 맨 첫 번째 이야기예요.',
         '한 번 한 약속을 지키느냐 마느냐가 이야기의 전부라고 할 만해요. 마법이 풀리는 순간도 그 약속과 이어져 있답니다.'
     ]
 };
@@ -533,7 +533,7 @@ const EN = {
     cover: {
         title: 'The Frog Prince',
         intro: [
-            "The Frog Prince is the very first story in the collection of old tales the Brothers Grimm published in Germany in 1812. That is how old and how well known it is.",
+            "The very first story in the collection of old tales the Brothers Grimm published in Germany in 1812.",
             "You could say the whole story is about whether a promise once given is kept. Even the moment the spell breaks is tied to that promise."
         ]
     },

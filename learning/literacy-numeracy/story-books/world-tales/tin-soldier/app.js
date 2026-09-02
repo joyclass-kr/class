@@ -303,7 +303,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '장난감 병정',
     intro: [
-        '장난감 병정은 덴마크의 작가 한스 크리스티안 안데르센이 1838년에 펴낸 이야기예요. 원래 제목은 굳센 주석 병정이라는 뜻이랍니다.',
+        '덴마크의 작가 한스 크리스티안 안데르센이 1838년에 펴낸 이야기예요. 원래 제목은 굳센 주석 병정이라는 뜻이랍니다.',
         '주석을 녹여 만든 장난감 병정 스물다섯 개 가운데, 주석이 모자라 다리가 하나뿐인 병정이 주인공이에요. 남들과 다른 몸을 가진 주인공이 나오는 아주 드문 옛이야기랍니다.'
     ]
 };
@@ -528,7 +528,7 @@ const EN = {
     cover: {
         title: 'The Steadfast Tin Soldier',
         intro: [
-            "The Tin Soldier was published by the Danish author Hans Christian Andersen in 1838. The title means the tin soldier who stood firm.",
+            "Published by the Danish author Hans Christian Andersen in 1838. The title means the tin soldier who stood firm.",
             "Of twenty-five toy soldiers cast out of melted tin, the hero is the one who came out with only one leg, because the tin ran short. It is a very rare old story with a hero whose body is not like everybody else's."
         ]
     },

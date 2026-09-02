@@ -317,7 +317,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '백조의 호수',
     intro: [
-        '백조의 호수는 러시아의 작곡가 표트르 차이콥스키가 1876년에 만든 발레 음악으로 유명해진 이야기예요. 독일과 러시아에 전해 오던 백조 처녀 이야기를 바탕으로 삼았답니다.',
+        '러시아의 작곡가 표트르 차이콥스키가 1876년에 만든 발레 음악으로 유명해진 이야기예요. 독일과 러시아에 전해 오던 백조 처녀 이야기를 바탕으로 삼았답니다.',
         '무대에서는 말 대신 춤과 음악으로 이야기를 들려줘요. 흰 백조와 검은 백조를 한 사람이 함께 추는 것이 이 작품의 큰 볼거리랍니다.'
     ]
 };
@@ -541,7 +541,7 @@ const EN = {
     cover: {
         title: 'Swan Lake',
         intro: [
-            "Swan Lake became famous as the ballet the Russian composer Pyotr Tchaikovsky wrote the music for in 1876. He built it on the swan-maiden stories told in Germany and Russia.",
+            "Famous as the ballet the Russian composer Pyotr Tchaikovsky wrote the music for in 1876. He built it on the swan-maiden stories told in Germany and Russia.",
             "On stage the story is told in dance and music instead of words. One dancer taking both the white swan and the black swan is the great set piece of the whole thing."
         ]
     },

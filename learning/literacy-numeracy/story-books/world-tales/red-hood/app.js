@@ -286,9 +286,8 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '빨간 모자',
     intro: [
-        '빨간 모자는 유럽에서 아주 오래전부터 입에서 입으로 전해 내려온 이야기예요. 지금 우리가 읽는 형태로 처음 책에 실린 것은 1697년, 프랑스의 샤를 페로가 펴낸 이야기집에서였답니다.',
-        '그로부터 백여 년 뒤, 독일의 그림 형제가 이 이야기를 다시 모아 자신들의 책에 실었어요. 페로가 적은 이야기는 늑대가 이기는 것으로 끝나지만, 그림 형제가 옮긴 이야기에는 지나가던 사냥꾼이 나타나 두 사람을 구해 냅니다. 이 책은 그림 형제가 옮긴 쪽을 따랐어요.',
-        '같은 이야기라도 옮기는 사람과 시대에 따라 결말이 달라지기도 해요.'
+        '유럽에서 아주 오래전부터 입에서 입으로 전해 내려온 이야기예요. 지금 우리가 읽는 형태로 처음 책에 실린 것은 1697년, 프랑스의 샤를 페로가 펴낸 이야기집에서였답니다.',
+        '그로부터 백여 년 뒤, 독일의 그림 형제가 이 이야기를 다시 모아 자신들의 책에 실었어요. 페로가 적은 이야기는 늑대가 이기는 것으로 끝나지만, 그림 형제가 옮긴 이야기에는 지나가던 사냥꾼이 나타나 두 사람을 구해 냅니다.'
     ]
 };
 
@@ -513,8 +512,7 @@ const EN = {
     cover: {
         title: 'Little Red Riding Hood',
         intro: [
-            "Little Red Riding Hood was written down in France by Charles Perrault in 1697, and again in Germany by the Brothers Grimm in 1812. In Perrault's telling the story ends darkly. The Grimms added the huntsman, and that is the ending most people know today.",
-            "This book follows the Grimm ending. The wolf is driven off, and no one is harmed."
+            "Written down in France by Charles Perrault in 1697, and again in Germany by the Brothers Grimm in 1812. In Perrault's telling the story ends darkly. The Grimms added the huntsman, and that is the ending most people know today."
         ]
     },
     chapters: [

@@ -8,6 +8,13 @@
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
+> **⚠️ 다시 그려 주실 것 (2026-09-03)**
+> - `cover` — 지금 파일에 **파란 군복을 입은 늙은 병사**가 그려져 있습니다.
+>   그 인물은 안데르센 원작에는 나오지만 **이 책에는 나오지 않습니다.** 우리 책에
+>   나오는 사람은 카렌, 할머니, 구둣방 주인, 숲속 나무꾼의 아내뿐입니다.
+>   주문서에 적힌 대로 **사람은 한 명도 넣지 말고**, 달빛 어린 마을 광장에 빨강 구두
+>   한 켤레만 놓인 그림으로 다시 그려 주세요.
+
 > **한 파일 = 한 장면입니다. 앞질러 가지 마세요.**
 > 파일마다 뒤에 〔이 쪽에 실린 글〕을 붙여 두었습니다. 그 쪽에 실제로 실리는 글이에요.
 > 그림은 **그 글에 나오는 장면만** 그려 주세요. 다음 쪽 이야기를 미리 그리면
@@ -47,7 +54,7 @@ woman with kind eyes and flour on her hands.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover: a pair of bright red shoes standing alone in the middle of a moonlit village square, faint dancing footprints circling them, a small church and dark trees beyond, striking and slightly mysterious but not frightening. |
+| `images/cover.webp` (세로 2:3 비율) | A tall portrait-format cover with NO PEOPLE IN IT AT ALL - no girl, no soldier, nobody: just a pair of bright red shoes standing alone in the middle of a moonlit village square, faint dancing footprints circling them, a small church and dark trees beyond, striking and slightly mysterious but not frightening. |
 | `images/end.webp` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 맨발의 아이

@@ -277,7 +277,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '잠자는 숲속의 공주',
     intro: [
-        '잠자는 숲속의 공주는 프랑스의 샤를 페로가 1697년에 펴낸 이야기집에 처음 실렸어요. 백여 년 뒤 독일의 그림 형제도 자기들이 모은 옛이야기집에 비슷한 이야기를 담았답니다.',
+        '프랑스의 샤를 페로가 1697년에 펴낸 이야기집에 처음 실렸어요. 백여 년 뒤 독일의 그림 형제도 자기들이 모은 옛이야기집에 비슷한 이야기를 담았답니다.',
         '초대받지 못한 손님이 잔치에 나타나 저주를 내린다는 이야기 짜임은 유럽 여러 나라의 옛이야기에 되풀이해 나와요. 잔치에 누구를 부르고 누구를 빠뜨리는가가 그만큼 중요한 일이었기 때문이지요.'
     ]
 };
@@ -501,7 +501,7 @@ const EN = {
     cover: {
         title: 'The Sleeping Beauty',
         intro: [
-            "The Sleeping Beauty first appeared in a book of tales published in France by Charles Perrault in 1697. About a hundred years later the Brothers Grimm put a very similar story into the collection they gathered in Germany.",
+            "First printed in a book of tales Charles Perrault published in France in 1697. About a hundred years later the Brothers Grimm put a very similar story into the collection they gathered in Germany.",
             "A guest who was not invited turns up at the feast and lays a curse — that shape comes back again and again in old European stories. Who was asked to a feast, and who was left out, mattered a great deal in those days."
         ]
     },

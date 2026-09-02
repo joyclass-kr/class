@@ -283,7 +283,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '행복한 왕자',
     intro: [
-        '행복한 왕자는 아일랜드의 작가 오스카 와일드가 1888년에 발표한 이야기예요.',
+        '아일랜드의 작가 오스카 와일드가 1888년에 발표한 이야기예요.',
         '와일드는 자기 아이들에게 들려주려고 이 이야기를 썼다고 합니다. 도시 한복판에 서 있는 동상이 사람들의 삶을 내려다본다는 설정 하나로, 가진 것을 나눈다는 것이 어떤 일인지를 조용히 보여 주는 이야기랍니다.'
     ]
 };
@@ -507,7 +507,7 @@ const EN = {
     cover: {
         title: 'The Happy Prince',
         intro: [
-            "The Happy Prince was written by the Irish author Oscar Wilde and published in 1888.",
+            "Written by the Irish author Oscar Wilde and published in 1888.",
             "Wilde is said to have made it up for his own children. With one idea — a statue in the middle of a city, looking down on how people live — it shows very quietly what it means to give away what you have."
         ]
     },

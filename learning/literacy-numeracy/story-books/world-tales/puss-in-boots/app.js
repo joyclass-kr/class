@@ -324,7 +324,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '장화 신은 고양이',
     intro: [
-        '장화 신은 고양이는 프랑스의 샤를 페로가 1697년에 펴낸 이야기집에 실린 이야기예요. 그보다 앞서 이탈리아에도 비슷한 이야기가 전해 오고 있었답니다.',
+        '프랑스의 샤를 페로가 1697년에 펴낸 이야기집에 실린 이야기예요. 그보다 앞서 이탈리아에도 비슷한 이야기가 전해 오고 있었답니다.',
         '가진 것 없는 막내가 꾀 많은 동물의 도움으로 신분이 바뀐다는 이야기는 옛사람들이 무척 좋아하던 짜임이었어요. 힘도 재산도 없는 사람이 오직 재치만으로 판을 뒤집는 것이 통쾌했기 때문이지요.'
     ]
 };
@@ -549,7 +549,7 @@ const EN = {
     cover: {
         title: 'Puss in Boots',
         intro: [
-            "Puss in Boots is in the book of tales Charles Perrault published in France in 1697. A very similar story had been told in Italy some time before that.",
+            "In the book of tales Charles Perrault published in France in 1697. A very similar story had been told in Italy some time before that.",
             "A youngest son with nothing of his own is lifted up in the world by a clever animal — people used to love that shape of story. There is real satisfaction in watching somebody with no power and no money turn the whole board over with nothing but his wits."
         ]
     },

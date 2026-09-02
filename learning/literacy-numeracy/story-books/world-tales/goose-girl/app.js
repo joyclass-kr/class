@@ -301,7 +301,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '거위지기 아가씨',
     intro: [
-        '거위지기 아가씨는 독일의 그림 형제가 1815년에 펴낸 옛이야기 모음집에 실린 이야기예요. 독일 곳곳에서 전해 내려오던 이야기를 모아 적은 것이랍니다.',
+        '독일의 그림 형제가 1815년에 펴낸 옛이야기 모음집에 실린 이야기예요. 독일 곳곳에서 전해 내려오던 이야기를 모아 적은 것이랍니다.',
         '자기 자리를 빼앗기고도 한마디 하지 못하던 공주가, 스스로 입을 열면서 이야기가 풀려요. 말할 수 있게 되는 것이 얼마나 큰 힘인지 보여 주는 이야기랍니다.'
     ]
 };
@@ -525,7 +525,7 @@ const EN = {
     cover: {
         title: 'The Goose Girl',
         intro: [
-            "The Goose Girl is in the collection of old tales the Brothers Grimm published in Germany in 1815. They wrote down stories that had been passed along all over the country.",
+            "In the collection of old tales the Brothers Grimm published in Germany in 1815. They wrote down stories that had been passed along all over the country.",
             "A princess who cannot say a word while her place is taken from her — and the story opens up the moment she does speak. It shows how large a thing it is to be able to say what happened."
         ]
     },

@@ -317,7 +317,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '전나무',
     intro: [
-        '전나무는 덴마크의 작가 한스 크리스티안 안데르센이 1844년에 펴낸 이야기예요.',
+        '덴마크의 작가 한스 크리스티안 안데르센이 1844년에 펴낸 이야기예요.',
         '숲에서 자라던 어린 전나무가 늘 다음 일만 기다리며 지내는 이야기랍니다. 지금 이 순간을 지나쳐 버린다는 것이 무엇인지 조용히 보여 주는 작품이에요.'
     ]
 };
@@ -542,7 +542,7 @@ const EN = {
     cover: {
         title: 'The Fir Tree',
         intro: [
-            "The Fir Tree was published by the Danish author Hans Christian Andersen in 1844.",
+            "Published by the Danish author Hans Christian Andersen in 1844.",
             "It is about a young fir tree growing in the wood who spends the whole of his life waiting for the next thing. It shows very quietly what it is to walk past the moment you are actually in."
         ]
     },

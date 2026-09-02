@@ -323,7 +323,7 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '이름을 맞혀 보시오',
     intro: [
-        '이름을 맞혀 보시오는 독일의 그림 형제가 모아 적은 옛이야기예요. 원래 제목은 룸펠슈틸츠헨이라는 난쟁이의 이름이랍니다.',
+        '독일의 그림 형제가 모아 적은 옛이야기예요. 원래 제목은 룸펠슈틸츠헨이라는 난쟁이의 이름이랍니다.',
         '유럽에는 이름을 알아맞히면 상대가 힘을 잃는다는 옛 믿음이 있었어요. 이 이야기의 마지막 장면이 바로 그 믿음에서 나온 것이랍니다.'
     ]
 };
@@ -548,7 +548,7 @@ const EN = {
     cover: {
         title: 'Rumpelstiltskin',
         intro: [
-            "Rumpelstiltskin is one of the old tales the Brothers Grimm collected in Germany. The title is simply the little man's name.",
+            "One of the old tales the Brothers Grimm collected in Germany. The title is simply the little man's name.",
             "There was an old belief in Europe that if you guessed somebody's name, they lost their power over you. The last scene of this story comes straight out of that belief."
         ]
     },

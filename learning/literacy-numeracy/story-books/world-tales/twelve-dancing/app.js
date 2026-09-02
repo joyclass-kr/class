@@ -313,8 +313,8 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '춤추는 열두 공주',
     intro: [
-        '춤추는 열두 공주는 독일의 그림 형제가 모아 적은 옛이야기예요. 원래 제목은 닳아 버린 무도화라는 뜻이랍니다.',
-        '밤마다 문이 잠겨 있는데도 신발이 닳아 있다는 수수께끼로 이야기가 시작돼요. 그 수수께끼를 푸는 사람이 병사라는 점이 재미있답니다.'
+        '독일의 그림 형제가 모아 적은 옛이야기예요. 원래 제목은 닳아 버린 무도화라는 뜻이랍니다.',
+        '밤마다 문이 잠겨 있는데도 신발이 닳아 있다는 수수께끼로 이야기가 시작돼요. 그 수수께끼를 푸는 사람은 왕자가 아니라 늙은 병사랍니다.'
     ]
 };
 
@@ -537,8 +537,8 @@ const EN = {
     cover: {
         title: 'The Twelve Dancing Princesses',
         intro: [
-            "The Twelve Dancing Princesses is one of the old tales the Brothers Grimm collected in Germany. Its original title means The Worn-Out Dancing Shoes.",
-            "It begins with a puzzle: the door is locked every night, and every morning the shoes are worn through. And the person who solves that puzzle is a soldier, which is the fun of it."
+            "One of the old tales the Brothers Grimm collected in Germany. Its original title means The Worn-Out Dancing Shoes.",
+            "It begins with a puzzle: the door is locked every night, and every morning the shoes are worn through. And the one who solves it is not a prince but an old soldier."
         ]
     },
     chapters: [

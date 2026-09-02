@@ -331,8 +331,8 @@ function artFrame(src, emoji) {
 const COVER = {
     title: '여우의 재판',
     intro: [
-        '여우의 재판은 중세 유럽에서 아주 널리 읽히던 이야기예요. 여우 르나르가 주인공이라 프랑스에서는 이 이름이 아예 여우를 가리키는 낱말이 되었답니다.',
-        '짐승들이 사람처럼 재판을 열고 다투는 이야기인데, 그 시절 사람들의 세상을 빗대어 놓은 것이에요. 꾀 많은 여우가 어떻게 빠져나가는지 지켜보는 재미가 있습니다.'
+        '중세 유럽에서 아주 널리 읽히던 이야기예요. 여우 르나르가 주인공이라 프랑스에서는 이 이름이 아예 여우를 가리키는 낱말이 되었답니다.',
+        '짐승들이 사람처럼 재판을 열고 다투는 이야기인데, 그 시절 사람들의 세상을 빗대어 놓은 것이에요. 여우는 힘이 아니라 말로 빠져나갑니다.'
     ]
 };
 
@@ -554,8 +554,8 @@ const EN = {
     cover: {
         title: 'The Trial of the Fox',
         intro: [
-            "The Trial of the Fox was one of the most widely read stories in medieval Europe. The hero is Reynard the fox, and in France his name came to be the ordinary word for a fox.",
-            "The beasts hold a court and quarrel just as people do, and that was the point: it held up a mirror to the world of the time. Half the pleasure is watching a clever fox slip out of trouble."
+            "One of the most widely read stories in medieval Europe. The hero is Reynard the fox, and in France his name came to be the ordinary word for a fox.",
+            "The beasts hold a court and quarrel just as people do, and that was the point: it held up a mirror to the world of the time. The fox gets out of trouble by talking, never by force."
         ]
     },
     chapters: [
