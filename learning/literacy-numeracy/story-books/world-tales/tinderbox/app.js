@@ -309,16 +309,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '부싯깃 통',
+    intro: [
+        '부싯깃 통은 덴마크의 작가 한스 크리스티안 안데르센이 1835년에 펴낸 첫 이야기책에 실린 작품이에요.',
+        '부싯깃 통은 옛날에 불을 붙일 때 쓰던 도구예요. 부싯돌을 쳐서 불꽃을 만들던 물건인데, 이 이야기에서는 그것이 마법 도구가 된답니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🕯️')}
             </div>
             <div class="story-page-right">
-                <h1>부싯깃 통</h1>
-                <p>부싯깃 통은 덴마크의 작가 한스 크리스티안 안데르센이 1835년에 펴낸 첫 이야기책에 실린 작품이에요.</p>
-                <p>부싯깃 통은 옛날에 불을 붙일 때 쓰던 도구예요. 부싯돌을 쳐서 불꽃을 만들던 물건인데, 이 이야기에서는 그것이 마법 도구가 된답니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -333,8 +342,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -344,8 +353,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -355,22 +364,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -420,9 +430,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -433,7 +443,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -505,7 +515,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -514,34 +524,637 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Tinderbox',
+        intro: [
+            "The Tinderbox is from the first book of stories the Danish author Hans Christian Andersen published, in 1835.",
+            "A tinderbox was what people used to make fire with in the old days — you struck the flint to get a spark. In this story it turns into something rather more than that."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Old Woman on the Road',
+            beats: [
+                {
+                    art: '01-witch.webp',
+                    emoji: '🎒',
+                    left: [
+                        "The war was over,",
+                        "and a soldier was walking home.",
+                        "He had a pack on his back and a sword at his side.",
+                        "His clothes were worn, and he walked briskly enough.",
+                        "Only there were just a few coins in his pocket.",
+                        "There was a great tree standing beside the road."
+                    ],
+                    right: [
+                        "And underneath it sat an old woman with a bent back",
+                        "and a chin so long it came down to her chest.",
+                        "The old woman called out to him.",
+                        "\"Would you like to make some money?\"",
+                        "The soldier stopped.",
+                        "\"And how would I do that?\" He shifted his pack on his shoulder."
+                    ]
+                },
+                {
+                    art: '01-witch-2.webp',
+                    emoji: '🎒',
+                    left: [
+                        "The old woman pointed at the tree.",
+                        "\"This tree is hollow inside.\"",
+                        "\"Go down a rope and you will find three rooms.\"",
+                        "\"Every room has chests full of money in it.\"",
+                        "\"You may take as much as you like.\"",
+                        "The soldier's eyes lit up."
+                    ],
+                    right: [
+                        "\"And why would you tell me a thing like that?\"",
+                        "\"Only fetch me up my tinderbox.\"",
+                        "\"My grandmother left it down there.\"",
+                        "That sounded well enough to the soldier.",
+                        "\"That is nothing difficult.\" And he rolled up his sleeves."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The First Room',
+            beats: [
+                {
+                    art: '02-first-dog.webp',
+                    emoji: '🐕',
+                    left: [
+                        "The old woman tied a rope round his waist",
+                        "and handed him an apron as well.",
+                        "\"If a dog comes out, spread this on the floor and set him on it.\"",
+                        "\"Then he will be quiet enough.\"",
+                        "The soldier nodded and went down inside the tree.",
+                        "After a long way down his feet touched the bottom."
+                    ],
+                    right: [
+                        "There was a wide cave with three doors in a row.",
+                        "The soldier opened the first one.",
+                        "Inside sat an enormous dog",
+                        "with eyes the size of teacups.",
+                        "The dog looked steadily at him,",
+                        "and the soldier swallowed hard."
+                    ]
+                },
+                {
+                    art: '02-first-dog-2.webp',
+                    emoji: '🐕',
+                    left: [
+                        "The soldier did as the old woman had told him.",
+                        "He spread the apron out on the floor",
+                        "and lifted the dog up onto it.",
+                        "And the dog went quiet,",
+                        "and even wagged his tail.",
+                        "The eyes that had been blazing a moment before went mild.",
+                        "\"Well I never — she was right.\""
+                    ],
+                    right: [
+                        "The soldier opened the chest in the middle of the room.",
+                        "It was full of copper coins.",
+                        "\"And all of this is mine!\"",
+                        "The soldier filled his pockets to bulging.",
+                        "He put coins in his pack and in his cap as well,",
+                        "and went on to the second room."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Second and Third Rooms',
+            beats: [
+                {
+                    art: '03-more-dogs.webp',
+                    emoji: '🪙',
+                    left: [
+                        "There was a dog in the second room as well,",
+                        "and this one had eyes the size of millwheels.",
+                        "The soldier spread the apron again,",
+                        "and the dog got quietly onto it.",
+                        "He opened the chest and it was full of silver.",
+                        "\"I have no use for copper now.\""
+                    ],
+                    right: [
+                        "The soldier tipped out every copper coin he had",
+                        "and packed himself full of silver instead.",
+                        "His pockets went heavy.",
+                        "Now there was only the third room left.",
+                        "The soldier took hold of the handle.",
+                        "There was a deep breathing behind it."
+                    ]
+                },
+                {
+                    art: '03-more-dogs-2.webp',
+                    emoji: '🪙',
+                    left: [
+                        "The dog in the third room was tremendous.",
+                        "His eyes were the size of towers.",
+                        "Every time he breathed out the room went hot,",
+                        "and his claws scraped on the stone floor.",
+                        "The soldier's legs shook under him.",
+                        "And still he spread the apron and set the dog on it."
+                    ],
+                    right: [
+                        "And this one too went quiet.",
+                        "He opened the chest and it was brimming with gold.",
+                        "The soldier threw the silver away without a second thought",
+                        "and took all the gold he could carry on him.",
+                        "\"That will do. Now for the tinderbox.\"",
+                        "There was an old box lying in a corner.",
+                        "The soldier took that too and pulled on the rope."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · A Quarrel with the Old Woman',
+            beats: [
+                {
+                    art: '04-quarrel.webp',
+                    emoji: '😠',
+                    left: [
+                        "The soldier came up out of the tree,",
+                        "and the daylight dazzled him.",
+                        "The old woman put out her hand at once.",
+                        "\"You have the tinderbox, I take it?\"",
+                        "The soldier held it and asked her,",
+                        "\"And what is this old box for, exactly?\"",
+                        "The old woman's face went hard."
+                    ],
+                    right: [
+                        "\"That is no business of yours.\"",
+                        "\"Hand it over and be quick.\"",
+                        "The soldier put the box behind his back.",
+                        "The old woman's hands began to shake.",
+                        "\"Give it to me, I say!\"",
+                        "\"Not unless you tell me.\"",
+                        "The two of them argued a long while."
+                    ]
+                },
+                {
+                    art: '04-quarrel-2.webp',
+                    emoji: '😠',
+                    left: [
+                        "The old woman would not say in the end,",
+                        "and the soldier would not give way either.",
+                        "\"Then I shall be on my way.\"",
+                        "The soldier took the box and started walking.",
+                        "The old woman stamped her foot behind him.",
+                        "\"You thief!\""
+                    ],
+                    right: [
+                        "The soldier did not look back.",
+                        "His pockets were so heavy that he walked slowly, and he was in good spirits.",
+                        "The gold chinked with every step,",
+                        "and the soldier began to hum without meaning to.",
+                        "By sunset he came to a large town,",
+                        "with people crowding the streets.",
+                        "And the soldier stopped in front of the best inn there was."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · When the Money Ran Out',
+            beats: [
+                {
+                    art: '05-town.webp',
+                    emoji: '🥂',
+                    left: [
+                        "The soldier took the best room in the inn.",
+                        "He had good clothes made and bought new boots,",
+                        "and stood a treat for everybody he met in the street.",
+                        "He gave gold away to anyone poor,",
+                        "and his friends multiplied overnight.",
+                        "\"I never met such a fine man in my life!\""
+                    ],
+                    right: [
+                        "People made a great deal of him,",
+                        "and the soldier went about with his shoulders back.",
+                        "And then one day he looked into his pocket.",
+                        "The gold had gone down faster than he expected.",
+                        "Before long there was not one coin left,",
+                        "and the innkeeper asked him for the rent."
+                    ]
+                },
+                {
+                    art: '05-town-2.webp',
+                    emoji: '🥂',
+                    left: [
+                        "The soldier had to give up his good room",
+                        "and move to a narrow attic under the roof.",
+                        "He sold his clothes, one thing after another.",
+                        "And his friends stopped coming.",
+                        "\"One doesn't see him about these days.\"",
+                        "\"Out of money, I hear.\"",
+                        "\"Now who was that again?\""
+                    ],
+                    right: [
+                        "Nobody came up the stairs any more.",
+                        "One night the soldier went to light a candle,",
+                        "and there was not a match in the place.",
+                        "And then he thought of that old box.",
+                        "The soldier went through his pack and took out the tinderbox",
+                        "and dusted it off.",
+                        "It was the box the old woman had wanted so badly."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Strike It Three Times',
+            beats: [
+                {
+                    art: '06-summon.webp',
+                    emoji: '✨',
+                    left: [
+                        "The soldier struck the flint.",
+                        "And the moment the spark flew,",
+                        "the door burst open",
+                        "and an enormous dog came striding in —",
+                        "the one with eyes the size of teacups.",
+                        "\"You called?\""
+                    ],
+                    right: [
+                        "The soldier very nearly went over backwards.",
+                        "And then he got hold of himself.",
+                        "\"Bring me something to eat.\"",
+                        "And the dog had a whole table laid before he could blink.",
+                        "Only then did the soldier understand what the box was.",
+                        "\"Now I have nothing to worry about!\""
+                    ]
+                },
+                {
+                    art: '06-summon-2.webp',
+                    emoji: '✨',
+                    left: [
+                        "The soldier tried it out this way and that.",
+                        "Strike it once and the first dog came.",
+                        "Strike it twice and the dog with eyes like millwheels came.",
+                        "Strike it three times and the dog with eyes like towers came.",
+                        "The soldier moved back into a good room",
+                        "and had new clothes made,",
+                        "and his friends came back one after another,",
+                        "every one of them as though they had seen him yesterday."
+                    ],
+                    right: [
+                        "\"You have no idea how we looked for you!\"",
+                        "\"I always said you were a fine fellow!\"",
+                        "The soldier heard that and laughed to himself.",
+                        "And then one day he heard a piece of news:",
+                        "that the princess of that country lived shut up in a copper castle."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · A Trail of Flour',
+            beats: [
+                {
+                    art: '07-flour.webp',
+                    emoji: '🌾',
+                    left: [
+                        "The soldier grew very curious about the princess.",
+                        "\"If I could only see her face once.\"",
+                        "That night the soldier struck the box once",
+                        "and the first dog appeared.",
+                        "\"Bring me the princess, just for a little while.\"",
+                        "The dog went straight out of the window,",
+                        "and there was a clattering across the roofs."
+                    ],
+                    right: [
+                        "The dog went over the roofs to the castle",
+                        "and came back with the sleeping princess on his back.",
+                        "The soldier and the princess talked all night.",
+                        "It was the first she had ever heard of the world outside her castle.",
+                        "At dawn the dog carried her back again,",
+                        "and the princess believed she had dreamed it."
+                    ]
+                },
+                {
+                    art: '07-flour-2.webp',
+                    emoji: '🌾',
+                    left: [
+                        "Next day the princess told them about her dream,",
+                        "and the queen tilted her head over it.",
+                        "It did not sound to her like an ordinary dream,",
+                        "so she thought of a trick.",
+                        "She tied a small bag to the hem of the princess's dress,",
+                        "filled it with flour and made a hole in it.",
+                        "\"Now we shall see where she goes.\""
+                    ],
+                    right: [
+                        "The queen did not sleep that night.",
+                        "And that night the dog came for the princess again.",
+                        "All the way, the flour trickled out",
+                        "and left a white line down the road.",
+                        "In the morning the soldiers followed the line,",
+                        "and it stopped outside an attic room at an inn."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · In the Square',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🐶',
+                    left: [
+                        "The soldier was taken then and there",
+                        "and spent a night in prison.",
+                        "And he had left the tinderbox behind at the inn.",
+                        "The soldier looked out through the bars",
+                        "and caught sight of a child playing in the street.",
+                        "\"Boy — would you run an errand for me?\""
+                    ],
+                    right: [
+                        "He asked him to fetch the box he had left at the inn.",
+                        "The child ran off, delighted with the job,",
+                        "and passed the box in through the bars.",
+                        "The soldier tucked it away inside his coat.",
+                        "\"Thank you, my lad.\"",
+                        "The child grinned and ran off.",
+                        "And next morning he was taken out to the square."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🐶',
+                    left: [
+                        "The square was full of people.",
+                        "The king and the queen were sitting there too.",
+                        "And the soldier asked, quietly,",
+                        "\"Grant me one last wish.\"",
+                        "The king nodded,",
+                        "and the soldier took out the tinderbox and struck it three times.",
+                        "Tap, tap, tap!"
+                    ],
+                    right: [
+                        "All three dogs appeared at once.",
+                        "They were so enormous and so loud that people fell over backwards.",
+                        "And then everybody burst out laughing,",
+                        "because the dogs were wagging their tails.",
+                        "The king was the first to get to his feet.",
+                        "And that day the soldier was given a feast instead of a punishment."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did the old woman want from inside the tree?',
+            choices: ['Her tinderbox', 'The gold from the third room', 'The apron back'],
+            answer: 0
+        },
+        {
+            q: 'What was the apron for?',
+            choices: ['To carry the money in', 'To cover the chests', 'To set the dogs on so they would go quiet'],
+            answer: 2
+        },
+        {
+            q: 'What did the soldier do with the copper and silver?',
+            choices: ['He carried all three', 'He threw them away when he found gold', 'He left them for the old woman'],
+            answer: 1
+        },
+        {
+            q: 'Why did the soldier not hand over the tinderbox?',
+            choices: ['The old woman would not say what it was for', 'He had lost it in the cave', 'He had already sold it'],
+            answer: 0
+        },
+        {
+            q: 'What happened when the soldier’s money ran out?',
+            choices: ['The dogs stopped answering', 'The innkeeper gave him a better room', 'His friends stopped coming'],
+            answer: 2
+        },
+        {
+            q: 'How did the queen find out where the princess went?',
+            choices: ['She followed the dog herself', 'She hung a leaking bag of flour on her dress', 'A guard told her'],
+            answer: 1
+        },
+        {
+            q: 'Who fetched the tinderbox to the prison?',
+            choices: ['A child playing in the street', 'The innkeeper', 'One of his friends'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🔥',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story was in the very first collection Andersen published. He was twenty-nine.",
+                    "The soldier brought two things up out of that tree: money, and an old box. The money was the thing you could see. The box looked like nothing at all.",
+                    "And the box was the thing the old woman went on and on asking for. That is the point at which the soldier worked out what it was worth.",
+                    "When the money runs out his friends stop coming. When he is rich again they come back. And the soldier watches all that and says nothing about it."
+                ],
+                right: [
+                    "The person who helps him in prison is a child passing in the street. Not anybody powerful.",
+                    "The soldier could do anything at all with that box. So how did he end up in trouble?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-witch.webp': [
+            { word: 'pack', meaning: '배낭', sentence: 'He had a pack on his back.' },
+            { word: 'worn', meaning: '낡은', sentence: 'His clothes were worn.' },
+            { word: 'briskly', meaning: '씩씩하게', sentence: 'He walked briskly enough.' },
+            { word: 'bent', meaning: '굽은', sentence: 'An old woman with a bent back.' },
+            { word: 'chin', meaning: '턱', sentence: 'A chin so long it came down to her chest.' }
+        ],
+        '01-witch-2.webp': [
+            { word: 'hollow', meaning: '속이 빈', sentence: 'This tree is hollow inside.' },
+            { word: 'chest', meaning: '궤짝', sentence: 'Every room has chests full of money.' },
+            { word: 'light up', meaning: '반짝이다', sentence: "The soldier's eyes lit up." },
+            { word: 'tinderbox', meaning: '부싯깃 통', sentence: 'Only fetch me up my tinderbox.' },
+            { word: 'roll up one’s sleeves', meaning: '소매를 걷어붙이다', sentence: 'And he rolled up his sleeves.' }
+        ],
+        '02-first-dog.webp': [
+            { word: 'apron', meaning: '앞치마', sentence: 'And handed him an apron as well.' },
+            { word: 'spread', meaning: '펴다', sentence: 'Spread this on the floor.' },
+            { word: 'cave', meaning: '굴', sentence: 'There was a wide cave with three doors.' },
+            { word: 'teacup', meaning: '찻잔', sentence: 'Eyes the size of teacups.' },
+            { word: 'swallow hard', meaning: '침을 꿀꺽 삼키다', sentence: 'The soldier swallowed hard.' }
+        ],
+        '02-first-dog-2.webp': [
+            { word: 'wag', meaning: '흔들다', sentence: 'And even wagged his tail.' },
+            { word: 'blaze', meaning: '이글이글하다', sentence: 'The eyes that had been blazing.' },
+            { word: 'mild', meaning: '순한', sentence: 'The eyes went mild.' },
+            { word: 'copper', meaning: '구리, 동전', sentence: 'It was full of copper coins.' },
+            { word: 'bulging', meaning: '두둑한', sentence: 'The soldier filled his pockets to bulging.' }
+        ],
+        '03-more-dogs.webp': [
+            { word: 'millwheel', meaning: '물레방아 바퀴', sentence: 'Eyes the size of millwheels.' },
+            { word: 'silver', meaning: '은화', sentence: 'The chest was full of silver.' },
+            { word: 'have no use for', meaning: '필요 없다', sentence: 'I have no use for copper now.' },
+            { word: 'tip out', meaning: '쏟아 버리다', sentence: 'He tipped out every copper coin.' },
+            { word: 'handle', meaning: '문고리', sentence: 'The soldier took hold of the handle.' }
+        ],
+        '03-more-dogs-2.webp': [
+            { word: 'tremendous', meaning: '어마어마한', sentence: 'The dog in the third room was tremendous.' },
+            { word: 'claw', meaning: '발톱', sentence: 'His claws scraped on the stone floor.' },
+            { word: 'scrape', meaning: '긁다', sentence: 'His claws scraped on the floor.' },
+            { word: 'brimming', meaning: '넘칠 듯한', sentence: 'It was brimming with gold.' },
+            { word: 'a second thought', meaning: '미련', sentence: 'He threw the silver away without a second thought.' }
+        ],
+        '04-quarrel.webp': [
+            { word: 'dazzle', meaning: '눈부시게 하다', sentence: 'The daylight dazzled him.' },
+            { word: 'I take it', meaning: '~이겠지', sentence: 'You have the tinderbox, I take it?' },
+            { word: 'no business of yours', meaning: '알 바 아닌', sentence: 'That is no business of yours.' },
+            { word: 'hand over', meaning: '내놓다', sentence: 'Hand it over and be quick.' },
+            { word: 'argue', meaning: '실랑이하다', sentence: 'The two of them argued a long while.' }
+        ],
+        '04-quarrel-2.webp': [
+            { word: 'give way', meaning: '물러서다', sentence: 'The soldier would not give way either.' },
+            { word: 'stamp one’s foot', meaning: '발을 구르다', sentence: 'The old woman stamped her foot.' },
+            { word: 'chink', meaning: '짤랑거리다', sentence: 'The gold chinked with every step.' },
+            { word: 'hum', meaning: '콧노래를 부르다', sentence: 'The soldier began to hum.' },
+            { word: 'inn', meaning: '여관', sentence: 'The best inn there was.' }
+        ],
+        '05-town.webp': [
+            { word: 'stand a treat', meaning: '한턱내다', sentence: 'He stood a treat for everybody he met.' },
+            { word: 'multiply', meaning: '늘어나다', sentence: 'His friends multiplied overnight.' },
+            { word: 'make a great deal of', meaning: '떠받들다', sentence: 'People made a great deal of him.' },
+            { word: 'rent', meaning: '방값', sentence: 'The innkeeper asked him for the rent.' }
+        ],
+        '05-town-2.webp': [
+            { word: 'give up', meaning: '내주다', sentence: 'The soldier had to give up his good room.' },
+            { word: 'attic', meaning: '다락방', sentence: 'A narrow attic under the roof.' },
+            { word: 'go through', meaning: '뒤지다', sentence: 'The soldier went through his pack.' },
+            { word: 'dust off', meaning: '먼지를 털다', sentence: 'And dusted it off.' },
+            { word: 'badly', meaning: '몹시', sentence: 'The box the old woman had wanted so badly.' }
+        ],
+        '06-summon.webp': [
+            { word: 'flint', meaning: '부싯돌', sentence: 'The soldier struck the flint.' },
+            { word: 'spark', meaning: '불꽃', sentence: 'The moment the spark flew.' },
+            { word: 'burst open', meaning: '벌컥 열리다', sentence: 'The door burst open.' },
+            { word: 'get hold of oneself', meaning: '정신을 차리다', sentence: 'And then he got hold of himself.' },
+            { word: 'before one can blink', meaning: '눈 깜짝할 사이에', sentence: 'Before he could blink.' }
+        ],
+        '06-summon-2.webp': [
+            { word: 'try out', meaning: '시험해 보다', sentence: 'The soldier tried it out this way and that.' },
+            { word: 'strike', meaning: '치다', sentence: 'Strike it once and the first dog came.' },
+            { word: 'as though', meaning: '마치 ~인 듯', sentence: 'As though they had seen him yesterday.' },
+            { word: 'shut up', meaning: '갇힌', sentence: 'The princess lived shut up in a copper castle.' }
+        ],
+        '07-flour.webp': [
+            { word: 'curious', meaning: '궁금해하는', sentence: 'The soldier grew very curious.' },
+            { word: 'clatter', meaning: '우당탕 소리', sentence: 'There was a clattering across the roofs.' },
+            { word: 'sleeping', meaning: '잠든', sentence: 'He came back with the sleeping princess.' },
+            { word: 'dream', meaning: '꿈을 꾸다', sentence: 'The princess believed she had dreamed it.' }
+        ],
+        '07-flour-2.webp': [
+            { word: 'ordinary', meaning: '보통의', sentence: 'It did not sound like an ordinary dream.' },
+            { word: 'trick', meaning: '꾀', sentence: 'So she thought of a trick.' },
+            { word: 'hem', meaning: '옷자락', sentence: "She tied a bag to the hem of the dress." },
+            { word: 'trickle out', meaning: '조금씩 새어 나오다', sentence: 'The flour trickled out.' },
+            { word: 'follow', meaning: '따라가다', sentence: 'The soldiers followed the line.' }
+        ],
+        '08-ending.webp': [
+            { word: 'then and there', meaning: '그길로', sentence: 'The soldier was taken then and there.' },
+            { word: 'prison', meaning: '감옥', sentence: 'And spent a night in prison.' },
+            { word: 'bar', meaning: '창살', sentence: 'The soldier looked out through the bars.' },
+            { word: 'run an errand', meaning: '심부름하다', sentence: 'Would you run an errand for me?' },
+            { word: 'tuck away', meaning: '품에 넣다', sentence: 'The soldier tucked it away inside his coat.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'grant', meaning: '들어주다', sentence: 'Grant me one last wish.' },
+            { word: 'fall over backwards', meaning: '나자빠지다', sentence: 'People fell over backwards.' },
+            { word: 'burst out laughing', meaning: '웃음보를 터뜨리다', sentence: 'Everybody burst out laughing.' },
+            { word: 'punishment', meaning: '벌', sentence: 'A feast instead of a punishment.' }
+        ],
+        'end.webp': [
+            { word: 'collection', meaning: '이야기 묶음', sentence: 'The very first collection Andersen published.' },
+            { word: 'worth', meaning: '값어치', sentence: 'What it was worth.' },
+            { word: 'run out', meaning: '떨어지다', sentence: 'When the money runs out.' },
+            { word: 'powerful', meaning: '힘 있는', sentence: 'Not anybody powerful.' },
+            { word: 'end up', meaning: '~하게 되다', sentence: 'So how did he end up in trouble?' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -606,6 +1219,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -614,7 +1228,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -626,7 +1240,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -660,4 +1274,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
