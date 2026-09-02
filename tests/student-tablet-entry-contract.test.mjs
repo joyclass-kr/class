@@ -38,10 +38,13 @@ test("phonics prioritizes the next lesson at Chromebook and iPad widths", () => 
   const styles = read("learning/literacy-numeracy/phonics/styles.css");
 
   assert.doesNotMatch(html, /PHONICS · SPELLING · WORD STUDY|class="course-heading"/);
+  assert.match(html, /class="progress-strip"/);
   assert.match(html, /id="continueLesson"/);
   assert.match(app, /data\.lessons\.find\(\(lesson\) => !saved\.done\.includes\(lesson\.id\)\)/);
+  assert.doesNotMatch(app, /<div class="stage-summary">[^\n]*courseAreaFor/);
   assert.match(styles, /@media\(max-width:1100px\).*lesson-list\{grid-template-columns:repeat\(2/s);
-  assert.match(styles, /@media\(max-width:820px\).*lesson-list\{grid-template-columns:1fr/s);
+  assert.match(styles, /@media\(max-width:820px\).*lesson-list\{grid-template-columns:repeat\(2/s);
+  assert.match(styles, /@media\(max-width:540px\).*lesson-list\{grid-template-columns:1fr/s);
   assert.match(styles, /continue-lesson.*min-height:48px/s);
 });
 

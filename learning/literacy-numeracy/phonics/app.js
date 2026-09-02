@@ -440,19 +440,18 @@
     $("progressPercent").textContent = `${percent}%`;
     $("progressBar").style.width = `${percent}%`;
     $("masteryCount").textContent = completed;
-    $("streakCount").textContent = `${saved.streak}일`;
+    $("streakCount").textContent = saved.streak;
     $("starsCount").textContent = saved.stars;
-    $("progressTitle").textContent = completed === total ? `전체 ${total}차시 완료` : completed ? `${completed}차시 완료 · ${total - completed}차시 남음` : "완료한 차시가 없습니다.";
     const nextLesson = data.lessons.find((lesson) => !saved.done.includes(lesson.id)) || data.lessons[0];
     $("continueLesson").dataset.lesson = nextLesson.id;
-    $("continueLesson").textContent = completed === total ? "1차시 다시 보기" : `${nextLesson.stageOrder}차시 · ${nextLesson.title} 시작`;
+    $("continueLesson").textContent = completed === total ? "1차시 다시 보기" : `${nextLesson.stageOrder}차시 시작`;
 
     $("stageList").innerHTML = data.stages.map((stage) => {
       const lessons = data.lessons.filter((lesson) => lesson.stageId === stage.id);
       const doneCount = lessons.filter((lesson) => saved.done.includes(lesson.id)).length;
       const stagePercent = Math.round(doneCount / lessons.length * 100);
       return `<article class="stage-card ${stage.color}">
-        <div class="stage-summary"><span class="stage-number">${String(stage.order).padStart(2, "0")}</span><div><p>${courseAreaFor(stage)} · STAGE ${stage.order}</p><h3>${escapeHtml(stage.title)}</h3><span>${escapeHtml(stage.subtitle)}</span></div><div class="stage-score"><b>${doneCount}/${lessons.length}</b><span>완료</span></div></div>
+        <div class="stage-summary"><span class="stage-number">${String(stage.order).padStart(2, "0")}</span><div class="stage-copy"><h3>${escapeHtml(stage.title)}</h3><span>${escapeHtml(stage.subtitle)}</span></div><div class="stage-score"><b>${doneCount}/${lessons.length}</b><span>완료</span></div></div>
         <div class="mini-progress"><i style="width:${stagePercent}%"></i></div>
         <div class="lesson-list">${lessons.map((lesson) => `<button type="button" data-lesson="${lesson.id}" class="${saved.done.includes(lesson.id) ? "done" : ""}"><span>${saved.done.includes(lesson.id) ? "✓" : lesson.stageOrder}</span><div><b>${escapeHtml(lesson.title)}</b></div>${Object.hasOwn(saved.soundScores, lesson.id) ? `<em>${saved.soundScores[lesson.id]}/${lesson.questionCount}</em>` : ""}</button>`).join("")}</div>
       </article>`;

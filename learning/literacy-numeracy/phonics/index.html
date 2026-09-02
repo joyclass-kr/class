@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#5a3fc0">
   <title>영단어 기초</title>
-  <link rel="stylesheet" href="styles.css?v=20260901-reset-settings">
+  <link rel="stylesheet" href="styles.css?v=20260903-entry-redesign">
   <script src="../../../assets/sound/music-control.js?v=20260825-compact-vertical-1" defer></script>
   <script src="curriculum.js" defer></script>
-  <script src="app.js?v=20260902-progress-fix" defer></script>
+  <script src="app.js?v=20260903-entry-redesign" defer></script>
 </head>
 <body>
   <nav class="topbar" aria-label="페이지 기능">
@@ -17,18 +17,17 @@
 
   <main>
     <section id="dashboard">
-      <section class="progress-card" aria-labelledby="progressTitle">
-        <div class="progress-copy"><strong id="progressTitle">완료한 차시가 없습니다.</strong></div>
-        <div class="progress-numbers"><b id="progressPercent">0%</b><span id="progressText">0 / 34 차시</span></div>
-        <div class="progress-track"><i id="progressBar"></i></div>
-        <div class="progress-actions">
-          <button id="continueLesson" class="primary-button continue-lesson" type="button">1차시 시작</button>
-          <div class="stat-row" aria-label="학습 통계">
-            <div><b id="masteryCount">0</b><span>차시 완료</span></div>
-            <div><b id="starsCount">0</b><span>문제 정답</span></div>
-            <div><b id="streakCount">0</b><span>일 연속</span></div>
-            <button id="reset" class="progress-reset" type="button">진도 초기화</button>
-          </div>
+      <section class="progress-strip" aria-label="학습 진도">
+        <div class="progress-meter">
+          <div class="progress-numbers"><b id="progressPercent">0%</b><span id="progressText">0 / 128 차시</span></div>
+          <div class="progress-track"><i id="progressBar"></i></div>
+        </div>
+        <button id="continueLesson" class="primary-button continue-lesson" type="button">1차시 시작</button>
+        <div class="stat-row" aria-label="학습 통계">
+          <div><b id="masteryCount">0</b><span>차시 완료</span></div>
+          <div><b id="starsCount">0</b><span>문제 정답</span></div>
+          <div><b id="streakCount">0</b><span>일 연속</span></div>
+          <button id="reset" class="progress-reset" type="button">초기화</button>
         </div>
       </section>
 

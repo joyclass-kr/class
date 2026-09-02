@@ -46,25 +46,39 @@ dialog{border:0;border-radius:24px;padding:0;box-shadow:0 24px 80px rgba(24,16,4
 @media(min-width:701px){.sound-game{margin:14px auto;padding:17px 20px;border-radius:24px}.sound-game-head span{font-size:11px}.sound-game-head b{font-size:19px}.sound-game-progress{margin:8px 0 11px}.sound-prompt button{min-height:50px;border-radius:16px;font-size:17px}.sound-prompt button span{font-size:21px}.sound-prompt p{margin:7px 0 10px}.sound-choices{gap:10px}.sound-choice{grid-template-columns:116px 1fr;min-height:130px;padding:7px 14px 7px 7px;border-radius:18px}.sound-choice-picture{width:108px;border-radius:13px}.sound-choice-label{padding-left:12px}.sound-choice-label b{font-size:24px}.sound-choice-label small{font-size:12px;margin-top:3px}.sound-feedback{min-height:22px;margin:7px 0 3px}.sound-feedback.result{margin:24px 0}.sound-next{min-height:46px;margin-top:5px}}
 @media(min-width:701px){.sound-game{margin:8px auto;padding:15px 18px}}
 
-/* Chromebook/iPad entry layout: task first, compact progress summary. */
+/* Chromebook/iPad entry layout: compact controls, full lesson overview. */
 .topbar{height:54px}
 .home-link,.text-button{min-height:44px;display:inline-flex;align-items:center}
-.progress-card{margin:14px 0 16px;padding:14px 20px;gap:7px 18px;border-radius:20px}
-.progress-copy strong{margin-top:2px;font-size:19px}
-.progress-numbers b{font-size:24px}
-.progress-track{height:7px}
-.progress-actions{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,2fr) minmax(300px,1fr);align-items:center;gap:14px}
-.continue-lesson{width:100%;min-height:48px;box-shadow:none}
-.stat-row{display:flex;align-items:center;justify-content:center;gap:9px;border:0;padding:0;color:var(--muted);white-space:nowrap}
+.progress-strip{margin:10px 0 12px;padding:9px 12px;display:grid;grid-template-columns:minmax(160px,.72fr) minmax(260px,1.15fr) auto;align-items:center;gap:12px;background:rgba(255,255,255,.97);border:1px solid var(--line);border-radius:15px;box-shadow:0 5px 18px rgba(46,33,83,.07)}
+.progress-meter{min-width:0}
+.progress-numbers{display:flex;align-items:baseline;justify-content:space-between;gap:8px;text-align:left}
+.progress-numbers b{font-size:18px;line-height:1;color:var(--purple)}
+.progress-numbers span{font-size:11px;color:var(--muted)}
+.progress-track{height:5px;margin-top:5px;grid-column:auto}
+.continue-lesson{width:100%;min-height:48px;padding:10px 16px;border-radius:11px;box-shadow:none;font-size:14px}
+.stat-row{grid-column:auto;display:flex;align-items:center;justify-content:flex-end;gap:8px;border:0;padding:0;color:var(--muted);white-space:nowrap}
 .stat-row div{display:flex;align-items:baseline;gap:3px;border:0;text-align:left}
-.stat-row div+div::before{content:"·";margin-right:6px;color:#b5aec2}
-.stat-row b{display:inline;color:var(--ink);font-size:14px}
-.stat-row span{font-size:12px}
+.stat-row div+div::before{content:"·";margin-right:5px;color:#b5aec2}
+.stat-row b{display:inline;color:var(--ink);font-size:13px}
+.stat-row span{font-size:11px}
+.stage-list{gap:12px}
+.stage-card{padding:15px 18px;border-radius:18px}
+.stage-summary{gap:12px}
+.stage-number{width:42px;height:42px;border-radius:12px;font-size:16px}
+.stage-summary h3{margin:0 0 2px;font-size:18px;line-height:1.25;letter-spacing:-.25px}
+.stage-summary>div>span{font-size:12px}
+.stage-score b{font-size:16px}
+.stage-score span{font-size:10px}
+.stage-card .mini-progress{height:4px;margin:10px 0}
 .lesson-list{grid-template-columns:repeat(3,minmax(0,1fr))}
+.lesson-list{gap:6px}
+.lesson-list button{min-height:48px;padding:7px 9px;border-radius:12px;gap:8px}
+.lesson-list button>span{width:30px;height:30px;border-radius:9px;font-size:13px}
+.lesson-list b{font-size:12.5px;line-height:1.2}
 @media(max-width:1100px){.lesson-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:820px){.progress-actions{grid-template-columns:minmax(0,1.5fr) auto;gap:10px}.stat-row{gap:6px}.stat-row div+div::before{margin-right:3px}.lesson-list{grid-template-columns:1fr}.stage-card{padding:18px}.stage-summary{gap:12px}.stage-summary h3{font-size:20px}}
-@media(max-width:620px){.progress-actions{grid-template-columns:1fr}.stat-row{min-height:28px}}
-@media(max-width:540px){.progress-card{margin:12px 0 14px;padding:13px 14px}.progress-copy strong{font-size:17px}.progress-numbers b{font-size:22px}.topbar .text-button{font-size:12px}}
+@media(max-width:820px){.progress-strip{grid-template-columns:minmax(0,1fr) minmax(230px,1fr)}.stat-row{grid-column:1/-1}.lesson-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.progress-strip{grid-template-columns:1fr}.stat-row{grid-column:auto;justify-content:flex-start;flex-wrap:wrap}}
+@media(max-width:540px){.lesson-list{grid-template-columns:1fr}.stage-card{padding:13px 12px}.stage-summary{gap:9px}.stage-summary h3{font-size:17px}.topbar .text-button{font-size:12px}}
 
 /* Keep navigation and reset available without a blank page-wide header. */
 .topbar{position:fixed;z-index:40;top:8px;left:8px;right:8px;height:auto;padding:0;border:0;display:block;background:transparent;backdrop-filter:none;pointer-events:none}
