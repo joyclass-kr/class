@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#071816">
     <title>Piano Scales · Voicings</title>
     <meta name="description" content="Piano Scale Fingering과 Jazz Piano Voicing Skills 1–123 MIDI 단계 연습">
-    <link rel="stylesheet" href="styles.css?v=20260827-3">
+    <link rel="stylesheet" href="styles.css?v=20260902-1">
     <script src="vendor/vexflow-4.2.2.js" defer></script>
     <script src="piano-sampler.js?v=20260827-2" defer></script>
     <script src="curriculum-data.js?v=20260827-3" defer></script>
@@ -16,24 +16,19 @@
     <script src="app.js?v=20260827-4" defer></script>
 </head>
 <body>
-    <header class="app-header">
-        <a class="back-link" href="../../../../" aria-label="학습 메뉴로 돌아가기">‹ <span>학습 메뉴</span></a>
-        <div class="app-title">
-            <strong>Piano Scales · Voicings</strong>
-            <span>Fingering과 Voicing 단계 연습</span>
-        </div>
-        <button id="midiButton" class="midi-button" type="button">
-            <span class="status-dot" aria-hidden="true"></span>
-            <span id="midiButtonLabel">MIDI 연결</span>
-        </button>
-    </header>
-
     <main class="app-shell">
-        <nav class="mode-tabs" aria-label="연습 영역">
-            <button class="mode-tab is-active" type="button" data-mode="scale" aria-pressed="true">Scales · Fingering</button>
-            <button class="mode-tab" type="button" data-mode="voicing" aria-pressed="false">Jazz Voicings 1–123</button>
-            <button class="mode-tab" type="button" data-mode="reference" aria-pressed="false">개념·연습법</button>
-        </nav>
+        <div class="workspace-nav">
+            <a class="back-link" href="../../../../" aria-label="학습 메뉴로 돌아가기">‹ <span>학습 메뉴</span></a>
+            <nav class="mode-tabs" aria-label="연습 영역">
+                <button class="mode-tab is-active" type="button" data-mode="scale" aria-pressed="true">Scales · Fingering</button>
+                <button class="mode-tab" type="button" data-mode="voicing" aria-pressed="false">Jazz Voicings 1–123</button>
+                <button class="mode-tab" type="button" data-mode="reference" aria-pressed="false">개념·연습법</button>
+            </nav>
+            <button id="midiButton" class="midi-button" type="button">
+                <span class="status-dot" aria-hidden="true"></span>
+                <span id="midiButtonLabel">MIDI 연결</span>
+            </button>
+        </div>
 
         <section class="practice-card" aria-labelledby="exerciseTitle">
             <div class="exercise-heading">

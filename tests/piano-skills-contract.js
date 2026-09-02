@@ -20,8 +20,12 @@ vm.runInNewContext(engraving, sandbox);
 const data = sandbox.window.PianoSkillsData;
 const catalog = sandbox.window.PianoSourceCatalog;
 const score = sandbox.window.PianoEngraving;
+const bodyHtml = html.slice(html.indexOf("<body"));
 
 assert.match(html, /<title>Piano Scales · Voicings<\/title>/);
+assert.doesNotMatch(bodyHtml, /Piano Scales · Voicings|Fingering과 Voicing 단계 연습/, "중복 site title과 subtitle을 화면에 표시하면 안 됩니다.");
+assert.doesNotMatch(html, /class="app-header"|class="app-title"/, "상단 전용 title header를 만들면 안 됩니다.");
+assert.match(html, /class="workspace-nav"[\s\S]*class="back-link"[\s\S]*class="mode-tabs"[\s\S]*id="midiButton"/, "Back, mode tabs, MIDI를 한 줄 navigation에 배치해야 합니다.");
 assert.match(html, /id="midiButton"/);
 assert.match(html, /id="scoreSurface"/);
 assert.match(html, /id="whiteKeyChoices"/);
@@ -79,6 +83,8 @@ assert.match(sampler, /Math\.sqrt\(size\)/, "화음의 음 수에 따라 샘플 
 assert.match(sampler, /playTimeline/);
 
 assert.match(css, /min-height:\s*44px/);
+assert.doesNotMatch(css, /\.app-header|\.app-title/, "상단 전용 title header CSS를 남기면 안 됩니다.");
+assert.match(css, /\.workspace-nav[\s\S]*grid-template-columns:\s*auto minmax\(0, 1fr\) auto/);
 assert.match(css, /\.choice-button[\s\S]*min-height:\s*44px/);
 assert.match(css, /\.score-surface svg[\s\S]*width:\s*100%\s*!important/);
 assert.match(css, /\.score-viewport[\s\S]*overflow:\s*hidden/);

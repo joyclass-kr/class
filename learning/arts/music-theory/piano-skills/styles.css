@@ -52,18 +52,11 @@ button:hover, button:focus-visible, select:focus-visible {
 
 button:disabled { opacity: .35; cursor: default; }
 
-.app-header {
-    position: sticky;
-    top: 0;
-    z-index: 20;
+.workspace-nav {
     display: grid;
-    grid-template-columns: minmax(110px, 1fr) auto minmax(110px, 1fr);
+    grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
-    min-height: 60px;
-    padding: 8px max(16px, env(safe-area-inset-right)) 8px max(16px, env(safe-area-inset-left));
-    border-bottom: 1px solid var(--line);
-    background: rgba(6, 21, 19, .94);
-    backdrop-filter: blur(14px);
+    gap: 6px;
 }
 
 .back-link {
@@ -79,17 +72,13 @@ button:disabled { opacity: .35; cursor: default; }
 
 .back-link:first-letter { color: var(--mint); font-size: 1.7rem; }
 
-.app-title { text-align: center; line-height: 1.15; }
-.app-title strong { display: block; font-size: 1rem; }
-.app-title span { display: block; margin-top: 4px; color: var(--muted); font-size: .72rem; }
-
 .midi-button {
-    justify-self: end;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 0 14px;
     font-weight: 800;
+    white-space: nowrap;
 }
 
 .status-dot {
@@ -108,7 +97,7 @@ button:disabled { opacity: .35; cursor: default; }
 .app-shell {
     width: min(1180px, calc(100% - 24px));
     margin: 0 auto;
-    padding: 12px 0 32px;
+    padding: 6px 0 32px;
 }
 
 .mode-tabs {
@@ -626,7 +615,7 @@ input[type="range"] {
 }
 
 @media (max-width: 620px) {
-    .app-header { grid-template-columns: 48px 1fr auto; padding-inline: 8px; }
+    .workspace-nav { grid-template-columns: 44px minmax(0, 1fr) 46px; }
     .back-link span { display: none; }
     .midi-button { width: 46px; padding: 0; justify-content: center; }
     .midi-button #midiButtonLabel { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
