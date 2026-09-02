@@ -320,16 +320,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '장화 신은 고양이',
+    intro: [
+        '장화 신은 고양이는 프랑스의 샤를 페로가 1697년에 펴낸 이야기집에 실린 이야기예요. 그보다 앞서 이탈리아에도 비슷한 이야기가 전해 오고 있었답니다.',
+        '가진 것 없는 막내가 꾀 많은 동물의 도움으로 신분이 바뀐다는 이야기는 옛사람들이 무척 좋아하던 짜임이었어요. 힘도 재산도 없는 사람이 오직 재치만으로 판을 뒤집는 것이 통쾌했기 때문이지요.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🥾')}
             </div>
             <div class="story-page-right">
-                <h1>장화 신은 고양이</h1>
-                <p>장화 신은 고양이는 프랑스의 샤를 페로가 1697년에 펴낸 이야기집에 실린 이야기예요. 그보다 앞서 이탈리아에도 비슷한 이야기가 전해 오고 있었답니다.</p>
-                <p>가진 것 없는 막내가 꾀 많은 동물의 도움으로 신분이 바뀐다는 이야기는 옛사람들이 무척 좋아하던 짜임이었어요. 힘도 재산도 없는 사람이 오직 재치만으로 판을 뒤집는 것이 통쾌했기 때문이지요.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -344,8 +353,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -355,8 +364,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -366,22 +375,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -431,9 +441,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -444,7 +454,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -516,7 +526,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -525,34 +535,554 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   5장은 펼침면이 셋이다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Puss in Boots',
+        intro: [
+            "Puss in Boots is in the book of tales Charles Perrault published in France in 1697. A very similar story had been told in Italy some time before that.",
+            "A youngest son with nothing of his own is lifted up in the world by a clever animal — people used to love that shape of story. There is real satisfaction in watching somebody with no power and no money turn the whole board over with nothing but his wits."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · All That Was Left Was a Cat',
+            beats: [
+                {
+                    art: '01-inherit.webp',
+                    emoji: '🐈',
+                    left: [
+                        "A miller died, and he had three sons. He left three things behind him: the mill, the donkey and the cat.",
+                        "The eldest got the mill. The second got the donkey.",
+                        "For the youngest there was nothing but the cat.",
+                        "He sat down where he stood."
+                    ],
+                    right: [
+                        "\"My brothers can work together, but…\"",
+                        "\"What am I to live on?\"",
+                        "The cat sat down beside him and looked quietly up at him.",
+                        "His tail swung slowly to and fro.",
+                        "\"Don't cry, master.\""
+                    ]
+                },
+                {
+                    art: '01-inherit-2.webp',
+                    emoji: '🐈',
+                    left: [
+                        "The youngest son's head came up with a jerk.",
+                        "\"You — you can talk!\"",
+                        "\"There is nothing to worry about, master.\"",
+                        "The cat stood with his tail straight up.",
+                        "\"Only give me a sack.\"",
+                        "\"And a pair of boots.\""
+                    ],
+                    right: [
+                        "\"And where would you be going in boots?\"",
+                        "\"We shall see, shan't we.\"",
+                        "The youngest son turned out what money he had left and bought a pair of red leather boots.",
+                        "The cat pushed his feet into them and struck a pose in front of the mirror.",
+                        "\"A very good fit.\"",
+                        "And off he went down the road."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · A Present for the King',
+            beats: [
+                {
+                    art: '02-gift.webp',
+                    emoji: '🐇',
+                    left: [
+                        "The cat went out to the fields and set his sack open on the ground with a few carrots inside it.",
+                        "Then he flattened himself down in the grass.",
+                        "By and by a rabbit went in. The cat pulled the string, and the sack drew tight.",
+                        "He swung it up onto his shoulder."
+                    ],
+                    right: [
+                        "The cat went to the palace and bowed low to the gatekeeper.",
+                        "\"I have brought a present for His Majesty.\"",
+                        "\"It comes from the Marquis of Carabas.\"",
+                        "The king tilted his head.",
+                        "\"And who is the Marquis of Carabas?\""
+                    ]
+                },
+                {
+                    art: '02-gift-2.webp',
+                    emoji: '🐇',
+                    left: [
+                        "From that day the presents kept coming — rabbits one time, pheasants the next.",
+                        "And always with the same words:",
+                        "\"It comes from the Marquis of Carabas.\"",
+                        "The king got used to the name.",
+                        "\"What a thoughtful man he must be.\""
+                    ],
+                    right: [
+                        "Some months went by, and the cat came to know everything that happened at the palace.",
+                        "One day he overheard this:",
+                        "\"The king drives down to the river tomorrow.\"",
+                        "\"And the princess is going with him.\"",
+                        "The cat's eyes gleamed."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Marquis in the River',
+            beats: [
+                {
+                    art: '03-river.webp',
+                    emoji: '🌊',
+                    left: [
+                        "The cat woke his master.",
+                        "\"Today you are going swimming in the river.\"",
+                        "\"What? Why, all of a sudden?\"",
+                        "\"Don't ask. Just do it.\"",
+                        "The youngest son could make nothing of it.",
+                        "But down to the river he went."
+                    ],
+                    right: [
+                        "He left his clothes on a rock and waded in to wash.",
+                        "And while he was in the water the cat hid the clothes, pushing them deep into the long grass.",
+                        "Away in the distance came the sound of a carriage.",
+                        "The cat ran out into the road."
+                    ]
+                },
+                {
+                    art: '03-river-2.webp',
+                    emoji: '🌊',
+                    left: [
+                        "\"Help! Help, somebody!\"",
+                        "\"The Marquis has fallen in the river!\"",
+                        "The carriage pulled up short.",
+                        "\"The Marquis of Carabas?\"",
+                        "The king leaned out of the window, and his men went running down to the water."
+                    ],
+                    right: [
+                        "They pulled the youngest son out.",
+                        "\"A thief has taken his clothes!\"",
+                        "the cat announced at the top of his voice.",
+                        "The king had fine clothes brought out for him, and the youngest son put them on.",
+                        "Somehow he really did look like a marquis."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · Whose Field Is This?',
+            beats: [
+                {
+                    art: '04-fields.webp',
+                    emoji: '🌾',
+                    left: [
+                        "The king took him up into the carriage, in the seat beside the princess. The youngest son went red in the face.",
+                        "Meanwhile the cat had run on ahead.",
+                        "There were labourers working in a field by the road, and the cat went up to them.",
+                        "\"A carriage is coming along directly.\"",
+                        "\"They will ask you whose field this is.\""
+                    ],
+                    right: [
+                        "\"You will say it belongs to the Marquis of Carabas.\"",
+                        "The labourers blinked at him.",
+                        "\"And who is Carabas?\"",
+                        "The cat gave the ground a tap with one booted foot.",
+                        "\"There will be trouble if you don't.\"",
+                        "And off he ran to the next field."
+                    ]
+                },
+                {
+                    art: '04-fields-2.webp',
+                    emoji: '🌾',
+                    left: [
+                        "The carriage came past the field.",
+                        "The king looked out of the window.",
+                        "\"Whose field is this?\"",
+                        "\"It belongs to the Marquis of Carabas!\"",
+                        "The king nodded.",
+                        "\"Well, well. Most impressive.\""
+                    ],
+                    right: [
+                        "It was the same at the next field, and the one after that, and the meadows, and the woods.",
+                        "The king grew more astonished the further they went.",
+                        "\"Is the Marquis as rich as all that?\"",
+                        "The youngest son could not say a word. The princess gave him a sideways look, and he kept his eyes on the window."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: "Chapter 5 · The Magician's Castle",
+            beats: [
+                {
+                    art: '05-castle.webp',
+                    emoji: '🏰',
+                    left: [
+                        "The carriage rolled along a wide road, and at the end of it stood an enormous castle.",
+                        "The king asked again.",
+                        "\"And whose castle is that?\"",
+                        "This time too the youngest son had no answer.",
+                        "For that land had a real owner of its own."
+                    ],
+                    right: [
+                        "The master of the castle was a magician who could turn himself into anything at all.",
+                        "The cat had run on ahead of the carriage. His breath was gone, but he did not stop.",
+                        "In front of the castle gate he straightened his coat.",
+                        "Then he took hold of the great iron ring.",
+                        "Boom, boom, boom!"
+                    ]
+                },
+                {
+                    art: '05-castle-2.webp',
+                    emoji: '🏰',
+                    left: [
+                        "The great door swung slowly open. It was dark inside.",
+                        "The magician put his head out, his robe trailing along the floor.",
+                        "\"And what does a cat want here?\"",
+                        "The cat bowed low.",
+                        "\"I have come to pay my respects.\""
+                    ],
+                    right: [
+                        "\"I heard of you, and I came all this way.\"",
+                        "\"They say you can turn into anything at all?\"",
+                        "The magician laughed out loud, and the walls rang with it.",
+                        "\"So the talk has got as far as that.\"",
+                        "\"It is true enough. Would you care to see?\""
+                    ]
+                },
+                {
+                    art: '05-castle-3.webp',
+                    emoji: '🦁',
+                    left: [
+                        "\"A lion, say — could you manage that?\"",
+                        "\"Nothing easier.\"",
+                        "The magician's body swelled up. Fur came out of it and a mane rose along his neck.",
+                        "In a moment he was an enormous lion, and one great paw came down on the floorboards.",
+                        "ROAR!"
+                    ],
+                    right: [
+                        "The cat leapt straight up onto the top of a cupboard, every hair standing on end.",
+                        "His heart was going like a drum.",
+                        "But he made himself look perfectly calm, and even smoothed his whiskers.",
+                        "\"That gave you a fright, I think!\"",
+                        "\"Me? Not in the least.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · A Very Small Mouse',
+            beats: [
+                {
+                    art: '06-mouse.webp',
+                    emoji: '🐁',
+                    left: [
+                        "The lion turned back into a man, and the cat came down off the cupboard.",
+                        "\"A lion is large to begin with, of course.\"",
+                        "\"Can you do small things too?\"",
+                        "\"A mouse, for instance.\"",
+                        "The magician's eyebrow twitched, and his face went red."
+                    ],
+                    right: [
+                        "\"A mouse? You think a mouse is difficult? Watch closely!\"",
+                        "His body shrank and shrank until he was a little mouse.",
+                        "The mouse went scurrying across the floorboards.",
+                        "The cat's eyes flashed. His paw came down like lightning.",
+                        "And the room went very quiet."
+                    ]
+                },
+                {
+                    art: '06-mouse-2.webp',
+                    emoji: '🐁',
+                    left: [
+                        "The cat ran to the castle gate. The carriage was just arriving.",
+                        "He threw the doors wide with both hands.",
+                        "\"Welcome, Your Majesty!\"",
+                        "\"This is the castle of the Marquis of Carabas.\"",
+                        "The king's mouth fell open."
+                    ],
+                    right: [
+                        "Inside, everything shone. A long table stood laid with a feast from end to end —",
+                        "the very feast the magician had ordered for himself.",
+                        "\"Do sit down and eat.\"",
+                        "The king could do nothing but marvel. The youngest son sat quietly.",
+                        "And beside him, the cat gave him a wink."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · A Real Marquis',
+            beats: [
+                {
+                    art: '07-wedding.webp',
+                    emoji: '💐',
+                    left: [
+                        "The feast wore on, and the princess and the youngest son fell into talk.",
+                        "He had no gift for fine words. But he told no lies either.",
+                        "\"I grew up in a mill.\"",
+                        "The princess smiled."
+                    ],
+                    right: [
+                        "\"I know you did.\"",
+                        "\"You can tell by the hands.\"",
+                        "His face went hot.",
+                        "\"Then why did you say nothing?\"",
+                        "\"Your cat was working so very hard.\"",
+                        "The two of them laughed for a long while."
+                    ]
+                },
+                {
+                    art: '07-wedding-2.webp',
+                    emoji: '💐',
+                    left: [
+                        "The king raised his glass.",
+                        "\"Marquis — I give my daughter into your care.\"",
+                        "The youngest son got to his feet.",
+                        "\"Your Majesty, there is something I must say.\"",
+                        "The cat gave a small cough. The youngest son said it anyway, and his voice shook a little."
+                    ],
+                    right: [
+                        "But he kept his eyes straight up.",
+                        "\"I am the miller's youngest son.\"",
+                        "The hall went quiet. After a long moment the king laughed.",
+                        "\"I knew. I knew the whole time.\"",
+                        "\"I only wanted to hear it from you.\"",
+                        "And the cat took off his boots and had a long afternoon nap."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did the cat ask his master for first?',
+            choices: ['A carriage and fine clothes', 'A sack and a pair of boots', 'A rabbit and a pheasant'],
+            answer: 1
+        },
+        {
+            q: 'What did the cat put in the sack to catch the rabbit?',
+            choices: ['Carrots', 'Bread', 'Cheese'],
+            answer: 0
+        },
+        {
+            q: 'Why did the youngest son end up in fine clothes?',
+            choices: ['The king had them made for the feast', 'The princess gave them to him', 'The cat hid his own and cried that a thief had taken them'],
+            answer: 2
+        },
+        {
+            q: 'How did the fields come to belong to the Marquis?',
+            choices: ['The king gave them to him', 'The cat told the labourers what to answer', 'The magician handed them over'],
+            answer: 1
+        },
+        {
+            q: 'What did the cat do when the magician became a lion?',
+            choices: ['He jumped on a cupboard but pretended to be calm', 'He ran out of the castle', 'He asked to be turned into one too'],
+            answer: 0
+        },
+        {
+            q: 'How did the cat get the better of the magician?',
+            choices: ['He challenged him to a race', 'He locked him in the cellar', 'He asked whether he could become something small'],
+            answer: 2
+        },
+        {
+            q: 'What did the youngest son say to the king at the feast?',
+            choices: ['That the castle was not really his', "That he was the miller's youngest son", 'That the cat had done everything'],
+            answer: 1
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🥾',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Puss in Boots was written down by Perrault in France about three hundred years ago. A similar story had already been told in Italy before that.",
+                    "The youngest son inherited one cat. His brothers got the mill and the donkey. Anybody would have said he had the useless share.",
+                    "And the first thing the cat asked for was a sack and a pair of boots. Before any cleverness, he got hold of his tools.",
+                    "Look again at the presents sent to the king. They were not costly things — rabbits and pheasants. What mattered is that they arrived, day after day, without a gap."
+                ],
+                right: [
+                    "At the end the youngest son says out loud that he is a miller's son. The king says he knew all along. Saying it in his own voice was the hardest part of the whole story.",
+                    "Was what the cat did right? He said there was something where there was nothing."
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-inherit.webp': [
+            { word: 'miller', meaning: '방앗간 주인', sentence: 'A miller died, and he had three sons.' },
+            { word: 'mill', meaning: '방앗간', sentence: 'The eldest got the mill.' },
+            { word: 'donkey', meaning: '당나귀', sentence: 'The second got the donkey.' },
+            { word: 'to and fro', meaning: '이리저리', sentence: 'His tail swung slowly to and fro.' }
+        ],
+        '01-inherit-2.webp': [
+            { word: 'with a jerk', meaning: '번쩍', sentence: "The son's head came up with a jerk." },
+            { word: 'sack', meaning: '자루', sentence: 'Only give me a sack.' },
+            { word: 'turn out', meaning: '털어 내다', sentence: 'He turned out what money he had left.' },
+            { word: 'strike a pose', meaning: '자세를 잡다', sentence: 'The cat struck a pose in front of the mirror.' }
+        ],
+        '02-gift.webp': [
+            { word: 'flatten oneself', meaning: '납작 엎드리다', sentence: 'He flattened himself down in the grass.' },
+            { word: 'draw tight', meaning: '팽팽해지다', sentence: 'The cat pulled the string, and the sack drew tight.' },
+            { word: 'bow low', meaning: '허리를 굽히다', sentence: 'The cat bowed low to the gatekeeper.' },
+            { word: 'marquis', meaning: '후작', sentence: 'It comes from the Marquis of Carabas.' }
+        ],
+        '02-gift-2.webp': [
+            { word: 'pheasant', meaning: '꿩', sentence: 'Rabbits one time, pheasants the next.' },
+            { word: 'thoughtful', meaning: '마음 씀씀이가 좋은', sentence: 'What a thoughtful man he must be.' },
+            { word: 'overhear', meaning: '엿듣다', sentence: 'One day he overheard this.' },
+            { word: 'gleam', meaning: '반짝이다', sentence: "The cat's eyes gleamed." }
+        ],
+        '03-river.webp': [
+            { word: 'all of a sudden', meaning: '갑자기', sentence: 'Why, all of a sudden?' },
+            { word: 'wade in', meaning: '물에 걸어 들어가다', sentence: 'He waded in to wash.' },
+            { word: 'in the distance', meaning: '멀리서', sentence: 'Away in the distance came the sound of a carriage.' }
+        ],
+        '03-river-2.webp': [
+            { word: 'pull up short', meaning: '급히 멈추다', sentence: 'The carriage pulled up short.' },
+            { word: 'lean out', meaning: '몸을 내밀다', sentence: 'The king leaned out of the window.' },
+            { word: 'at the top of one’s voice', meaning: '큰 소리로', sentence: 'The cat announced at the top of his voice.' }
+        ],
+        '04-fields.webp': [
+            { word: 'labourer', meaning: '일꾼', sentence: 'There were labourers working in a field.' },
+            { word: 'directly', meaning: '곧', sentence: 'A carriage is coming along directly.' },
+            { word: 'blink', meaning: '눈을 껌뻑이다', sentence: 'The labourers blinked at him.' },
+            { word: 'tap', meaning: '툭 구르다', sentence: 'The cat gave the ground a tap with one booted foot.' }
+        ],
+        '04-fields-2.webp': [
+            { word: 'impressive', meaning: '대단한', sentence: 'Well, well. Most impressive.' },
+            { word: 'meadow', meaning: '풀밭', sentence: 'It was the same at the meadows and the woods.' },
+            { word: 'astonished', meaning: '깜짝 놀란', sentence: 'The king grew more astonished the further they went.' },
+            { word: 'sideways look', meaning: '곁눈질', sentence: 'The princess gave him a sideways look.' }
+        ],
+        '05-castle.webp': [
+            { word: 'magician', meaning: '마법사', sentence: 'The master of the castle was a magician.' },
+            { word: 'owner', meaning: '주인', sentence: 'That land had a real owner of its own.' },
+            { word: 'straighten', meaning: '가다듬다', sentence: 'He straightened his coat.' },
+            { word: 'iron ring', meaning: '문고리', sentence: 'He took hold of the great iron ring.' }
+        ],
+        '05-castle-2.webp': [
+            { word: 'robe', meaning: '긴 옷', sentence: 'His robe trailed along the floor.' },
+            { word: 'trail', meaning: '끌리다', sentence: 'His robe trailed along the floor.' },
+            { word: 'pay one’s respects', meaning: '인사를 드리다', sentence: 'I have come to pay my respects.' },
+            { word: 'ring with', meaning: '~으로 울리다', sentence: 'The walls rang with it.' }
+        ],
+        '05-castle-3.webp': [
+            { word: 'swell up', meaning: '부풀어 오르다', sentence: "The magician's body swelled up." },
+            { word: 'mane', meaning: '갈기', sentence: 'A mane rose along his neck.' },
+            { word: 'on end', meaning: '곤두선', sentence: 'Every hair standing on end.' },
+            { word: 'whiskers', meaning: '수염', sentence: 'He even smoothed his whiskers.' },
+            { word: 'not in the least', meaning: '전혀 아닌', sentence: 'Me? Not in the least.' }
+        ],
+        '06-mouse.webp': [
+            { word: 'to begin with', meaning: '애초에', sentence: 'A lion is large to begin with.' },
+            { word: 'twitch', meaning: '씰룩거리다', sentence: "The magician's eyebrow twitched." },
+            { word: 'shrink', meaning: '줄어들다', sentence: 'His body shrank and shrank.' },
+            { word: 'scurry', meaning: '쪼르르 달리다', sentence: 'The mouse went scurrying across the floorboards.' }
+        ],
+        '06-mouse-2.webp': [
+            { word: 'throw wide', meaning: '활짝 열다', sentence: 'He threw the doors wide with both hands.' },
+            { word: 'laid', meaning: '차려진', sentence: 'A long table stood laid with a feast.' },
+            { word: 'marvel', meaning: '감탄하다', sentence: 'The king could do nothing but marvel.' },
+            { word: 'wink', meaning: '눈을 찡긋하다', sentence: 'The cat gave him a wink.' }
+        ],
+        '07-wedding.webp': [
+            { word: 'wear on', meaning: '무르익다, 이어지다', sentence: 'The feast wore on.' },
+            { word: 'fall into talk', meaning: '이야기를 나누게 되다', sentence: 'They fell into talk.' },
+            { word: 'gift for', meaning: '~에 대한 재주', sentence: 'He had no gift for fine words.' },
+            { word: 'tell by', meaning: '~을 보고 알다', sentence: 'You can tell by the hands.' }
+        ],
+        '07-wedding-2.webp': [
+            { word: 'raise one’s glass', meaning: '잔을 들다', sentence: 'The king raised his glass.' },
+            { word: 'into one’s care', meaning: '~에게 부탁하여', sentence: 'I give my daughter into your care.' },
+            { word: 'cough', meaning: '헛기침', sentence: 'The cat gave a small cough.' },
+            { word: 'anyway', meaning: '그래도', sentence: 'The youngest son said it anyway.' }
+        ],
+        'end.webp': [
+            { word: 'inherit', meaning: '물려받다', sentence: 'The youngest son inherited one cat.' },
+            { word: 'share', meaning: '몫', sentence: 'He had the useless share.' },
+            { word: 'get hold of', meaning: '챙기다', sentence: 'He got hold of his tools.' },
+            { word: 'costly', meaning: '값진', sentence: 'They were not costly things.' },
+            { word: 'without a gap', meaning: '거르지 않고', sentence: 'They arrived day after day, without a gap.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -617,6 +1147,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -625,7 +1156,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -637,7 +1168,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -671,4 +1202,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
