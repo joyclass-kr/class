@@ -9,7 +9,7 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
 > **⚠️ 다시 그려 주실 것 (2026-08-28 점검)**
-> - `06-oven-2` — 그레텔이 **화덕 문을 두 손으로 탁 닫는 그 순간**으로. 지금은 이미 남매가 부둥켜안고 우는 뒤 장면입니다.
+> - `06-oven-2` — **글이 바뀌었습니다.** 할머니가 화덕에 머리를 들이밀었다가 **연기를 뒤집어쓰고 눈을 감싸 쥔 채 뒤로 나자빠지는 순간**으로. 화덕 문을 닫아거는 그림이 아닙니다.
 > - `07-home-2` — 아버지 집이 **한옥(기와 지붕·창살)**입니다. 독일 숲가 통나무 오두막으로.
 > - 남매 옷이 장마다 다릅니다. 헨젤은 초록 조끼 + 파란 바지, 그레텔은 노란 원피스로 통일해 주세요.
 
@@ -97,7 +97,7 @@ the river.
 | 파일명 | 장면 |
 |---|---|
 | `images/06-oven.webp` | A candy cottage kitchen with a great brick oven blazing, an old woman gesturing toward the opening while a girl hangs back with a wary look, firelight on both faces, tense but comic. 〔이 쪽에 실린 글 (11/14) — 그림에 글자는 넣지 마세요. 왼쪽: 그렇게 몇 주가 지났습니다. 할머니는 더 기다리지 못했지요. 오늘은 빵을 굽자꾸나. 커다란 화덕에 장작을 잔뜩 넣고 불을 지폈습니다. 불길이 활활 타올랐지요. 화덕 앞에 서 있기만 해도 얼굴이 뜨거웠습니다. / 오른쪽: 안이 뜨거운지 네가 들어가 보렴. 그레텔은 흠칫 놀랐습니다. 할머니의 눈이 이상하게 반짝였거든요. 무언가 이상했지요. '저기 들어가면 안 돼.'〕 |
-| `images/06-oven-2.webp` | A kitchen where a girl swings an iron oven door shut and drops the latch, then races out to fling open a wooden pen as her brother tumbles free and they embrace, triumphant and warm. 〔이 쪽에 실린 글 (12/14) — 그림에 글자는 넣지 마세요. 왼쪽: 이런 답답한 아이 같으니! 이렇게 하는 거란다. 할머니가 화덕 안으로 몸을 쑥 들이밀었습니다. 바로 그 순간이었지요. 그레텔이 두 손으로 문을 탁 닫았습니다. / 오른쪽: 그레텔은 그길로 마당으로 뛰어나갔습니다. 우리 문을 활짝 열어젖혔지요. 오빠, 나왔어! 헨젤이 데굴데굴 굴러 나왔습니다. 다리가 굳어 잘 서지도 못했지요.〕 |
+| `images/06-oven-2.webp` | A kitchen where an old woman kneeling at the oven mouth reels backwards in a billow of black smoke, both hands clapped over her stinging eyes, while a girl slips away toward the door, and outside a boy tumbles from an opened pen into his sister's arms, comic and warm. 〔이 쪽에 실린 글 (12/14) — 그림에 글자는 넣지 마세요. 왼쪽: 이런 답답한 아이 같으니! 이렇게 하는 거란다. 할머니가 쭈그리고 앉아 화덕에 머리를 들이밀었습니다. 그 순간 시커먼 연기가 확 뿜어져 나왔지요. 아이고, 매워라! 눈이 안 보여! 할머니는 눈을 감싸 쥐고 뒤로 나자빠졌습니다. / 오른쪽: 그레텔은 그 틈에 부엌문을 닫고 빗장을 걸었습니다. 그러고는 마당으로 달려가 우리 문을 열어젖혔지요. 오빠, 나왔어! 헨젤이 데굴데굴 굴러 나왔습니다. 다리가 굳어 잘 서지도 못했지요.〕 |
 
 ## 7장 · 집으로
 

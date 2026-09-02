@@ -219,14 +219,16 @@ const CHAPTERS = [
                 "left": [
                     "\"이런 답답한 아이 같으니!\"",
                     "\"이렇게 하는 거란다.\"",
-                    "할머니가 화덕 안으로 몸을 쑥 들이밀었습니다. 바로 그 순간이었지요. 그레텔이 두 손으로 문을 탁 닫았습니다.",
-                    "그러고는 얼른 빗장을 걸었지요. 안에서 쿵쿵 두드리는 소리가 났습니다."
+                    "할머니가 쭈그리고 앉아 화덕에 머리를 들이밀었습니다. 그 순간 시커먼 연기가 확 뿜어져 나왔지요.",
+                    "\"아이고, 매워라! 눈이 안 보여!\"",
+                    "할머니는 눈을 감싸 쥐고 뒤로 나자빠졌습니다."
                 ],
                 "right": [
-                    "그레텔은 그길로 마당으로 뛰어나갔습니다. 우리 문을 활짝 열어젖혔지요.",
+                    "그레텔은 그 틈에 부엌문을 닫고 빗장을 걸었습니다.",
+                    "그러고는 마당으로 달려가 우리 문을 열어젖혔지요.",
                     "\"오빠, 나왔어!\"",
                     "헨젤이 데굴데굴 굴러 나왔습니다. 다리가 굳어 잘 서지도 못했지요.",
-                    "남매는 서로를 끌어안고 한참을 그러고 있었지요."
+                    "남매는 서로를 끌어안고 한참을 그러고 있었습니다."
                 ]
             }
         ]
@@ -456,7 +458,7 @@ const QUIZ = [
         "answer": 1
     },
     {
-        "q": "화덕 안으로 들어간 것은 누구인가요?",
+        "q": "화덕에 머리를 들이민 것은 누구인가요?",
         "choices": [
             "할머니",
             "헨젤",
@@ -734,11 +736,13 @@ const EN = {
                     left: [
                         "\"What a hopeless child you are!\"",
                         "\"This is how it is done.\"",
-                        "The old woman pushed herself in through the oven door. And that was the moment.",
-                        "Gretel shoved the door shut with both hands and slid the bolt across. There was a thumping from inside."
+                        "The old woman crouched down and pushed her head into the oven. And out billowed a great gust of black smoke.",
+                        "\"Ow, it stings! I cannot see a thing!\"",
+                        "She clapped her hands over her eyes and toppled over backwards."
                     ],
                     right: [
-                        "Gretel ran straight out to the yard and threw the cage door wide open.",
+                        "Gretel took her chance. She shut the kitchen door and slid the bolt across.",
+                        "Then she ran out to the yard and threw the cage door wide open.",
                         "\"You're out, Hansel!\"",
                         "Hansel came tumbling out. His legs had gone so stiff he could hardly stand.",
                         "The two held on to each other for a long, long time."
