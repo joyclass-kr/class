@@ -289,17 +289,26 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '백설공주',
+    intro: [
+        '백설공주는 독일의 그림 형제가 1812년에 펴낸 이야기집에 실린 이야기예요. 그림 형제는 헤센 지방 사람들에게 들은 이야기를 받아 적었는데, 마을마다 조금씩 다른 이야기를 하나로 정리해 지금의 모습으로 다듬었답니다.',
+        '이야기에는 왕비가 세 번 공주를 찾아와요. 허리끈, 빗, 사과로 방법을 바꿔 가며 다가오지요. 이렇게 같은 일이 되풀이되면서 조금씩 위험해지는 구조는 옛이야기에서 자주 볼 수 있는 방식이에요.',
+        '이 책은 어린이가 읽기에 알맞도록 무서운 장면을 부드럽게 다듬었어요.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🍎')}
             </div>
             <div class="story-page-right">
-                <h1>백설공주</h1>
-                <p>백설공주는 독일의 그림 형제가 1812년에 펴낸 이야기집에 실린 이야기예요. 그림 형제는 헤센 지방 사람들에게 들은 이야기를 받아 적었는데, 마을마다 조금씩 다른 이야기를 하나로 정리해 지금의 모습으로 다듬었답니다.</p>
-                <p>이야기에는 왕비가 세 번 공주를 찾아와요. 허리끈, 빗, 사과로 방법을 바꿔 가며 다가오지요. 이렇게 같은 일이 되풀이되면서 조금씩 위험해지는 구조는 옛이야기에서 자주 볼 수 있는 방식이에요.</p>
-                <p>이 책은 어린이가 읽기에 알맞도록 무서운 장면을 부드럽게 다듬었어요.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -314,8 +323,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -325,8 +334,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -336,22 +345,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -401,9 +411,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -414,7 +424,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -486,7 +496,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -495,34 +505,509 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   "Mirror, mirror on the wall" 은 영어권에서 굳어진 형태라 그대로 살렸다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Snow White',
+        intro: [
+            "Snow White appears in the collection of tales the Brothers Grimm published in Germany in 1812. They wrote down what people in Hessen told them, and shaped the many local versions into the one story we know.",
+            "The queen comes to the cottage three times — with a sash, a comb, and an apple. Each visit is a little more dangerous than the last. Old tales often build like that.",
+            "In this book the frightening parts have been softened for younger readers."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · Mirror, Mirror',
+            beats: [
+                {
+                    art: '01-mirror.webp',
+                    emoji: '🪞',
+                    left: [
+                        "It was winter, and snow was falling. A queen sat sewing by the window, and she pricked her finger with the needle.",
+                        "Three drops of blood fell on the snow — three clear red points on all that white.",
+                        "\"A child as white as snow and as red as blood.\"",
+                        "\"How I should love a daughter like that.\""
+                    ],
+                    right: [
+                        "Outside the snow went on piling softly.",
+                        "And before long a daughter really was born, with skin as white as snow. They named her Snow White.",
+                        "But the queen died soon after. The king married again, and his new wife was very beautiful.",
+                        "Only her heart was not."
+                    ]
+                },
+                {
+                    art: '01-mirror-2.webp',
+                    emoji: '🪞',
+                    left: [
+                        "The new queen had a mirror that answered whatever she asked. Every day she asked it the same thing.",
+                        "\"Mirror, mirror, who is fairest of all?\"",
+                        "\"You are the fairest, my queen.\"",
+                        "And the queen smiled to hear it. She felt better every time she looked."
+                    ],
+                    right: [
+                        "The years went by, and Snow White grew tall. People in the palace smiled when they saw her.",
+                        "That day the queen asked as usual, and the mirror gave a different answer.",
+                        "\"Snow White is fairest now.\"",
+                        "The queen's face set hard, and the mirror trembled in her hand."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · Into the Forest',
+            beats: [
+                {
+                    art: '02-forest.webp',
+                    emoji: '🌲',
+                    left: [
+                        "The queen sent for the huntsman. She locked the door and spoke.",
+                        "\"Take the princess into the forest.\"",
+                        "\"See that she never comes back.\"",
+                        "The huntsman could not say a word.",
+                        "The next day he set out with her."
+                    ],
+                    right: [
+                        "\"Look at those flowers, my lady.\"",
+                        "Snow White picked them as she walked.",
+                        "The path led deeper and deeper.",
+                        "At last the huntsman stopped.",
+                        "For a long while he stood there without speaking.",
+                        "Then he went down on his knees."
+                    ]
+                },
+                {
+                    art: '02-forest-2.webp',
+                    emoji: '🌲',
+                    left: [
+                        "\"Run, my lady. Run now.\"",
+                        "\"Go over these woods and far away.\"",
+                        "\"You must never come back to the castle.\"",
+                        "Snow White did not understand. The huntsman left without looking back, and she was alone in the forest.",
+                        "The flowers dropped from her hand."
+                    ],
+                    right: [
+                        "She walked on by herself. Branches caught at her dress, and her feet grew sore and blistered.",
+                        "The sun sank lower. She no longer knew which way was which, and somewhere an animal howled.",
+                        "Then she saw a small light. Snow White walked toward it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The House of the Seven',
+            beats: [
+                {
+                    art: '03-dwarfs.webp',
+                    emoji: '🏠',
+                    left: [
+                        "In the middle of the forest stood a little house. The door was open a crack.",
+                        "\"Hello? Is anybody home?\"",
+                        "Inside, everything was neat and tidy.",
+                        "On the table were seven plates. Seven cups, and seven chairs."
+                    ],
+                    right: [
+                        "Along the wall were seven beds. Snow White was terribly hungry.",
+                        "She took a very little from each plate. She did not want to eat up any one person's share.",
+                        "Then she lay down on a bed and fell fast asleep."
+                    ]
+                },
+                {
+                    art: '03-dwarfs-2.webp',
+                    emoji: '🏠',
+                    left: [
+                        "When night came the door opened and seven dwarfs came home. They had been digging for gold in the mountain.",
+                        "\"Someone has been sitting in my chair.\"",
+                        "\"And someone has used my plate!\"",
+                        "They carried a lamp about the room.",
+                        "\"Someone is asleep in my bed!\"",
+                        "And all seven came crowding round."
+                    ],
+                    right: [
+                        "After a while Snow White opened her eyes.",
+                        "She told them everything that had happened. The dwarfs looked at one another.",
+                        "\"Then stay here with us.\"",
+                        "From that day she cooked and washed, and when the dwarfs came home from the mine she went out to the door to meet them. She was like a mother to all seven."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Sash and the Comb',
+            beats: [
+                {
+                    art: '04-disguise.webp',
+                    emoji: '🧣',
+                    left: [
+                        "The queen asked her mirror again.",
+                        "\"Snow White is in the forest.\"",
+                        "\"She lives with seven dwarfs.\"",
+                        "The queen made ready that very day. She painted her face to look old,",
+                        "and picked up a pedlar's basket."
+                    ],
+                    right: [
+                        "\"Fine sashes for sale!\"",
+                        "Snow White opened the door a little way.",
+                        "\"An old pedlar woman.\"",
+                        "The sash really was very pretty.",
+                        "\"Shall I tie it for you? Come here, child.\""
+                    ]
+                },
+                {
+                    art: '04-disguise-2.webp',
+                    emoji: '🧣',
+                    left: [
+                        "The queen pulled it tight. Snow White could not breathe, and down she fell. The queen went away laughing.",
+                        "In the evening the dwarfs came home and cut the sash away at once.",
+                        "Snow White drew a great breath.",
+                        "\"Never open the door to a stranger.\""
+                    ],
+                    right: [
+                        "A few days later someone came again — this time selling combs.",
+                        "\"Try this comb in your hair.\"",
+                        "And again Snow White was taken in. Luckily the dwarfs came home early that day.",
+                        "\"Now you really must take care.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Red, Red Apple',
+            beats: [
+                {
+                    art: '05-apple.webp',
+                    emoji: '🍎',
+                    left: [
+                        "The queen went down to her cellar and chose an apple. One side was deep red and the other was white.",
+                        "She put the poison on the red side only. From the outside nothing showed at all.",
+                        "\"This time it cannot fail.\"",
+                        "And she dressed herself as a farmer's wife."
+                    ],
+                    right: [
+                        "\"Sweet apples for sale.\"",
+                        "\"I am not allowed to open the door.\"",
+                        "\"I made a promise.\"",
+                        "\"Then I shall pass it through the window.\"",
+                        "Snow White shook her head."
+                    ]
+                },
+                {
+                    art: '05-apple-2.webp',
+                    emoji: '🍎',
+                    left: [
+                        "\"If you are afraid, let us share it, half each.\"",
+                        "The old woman cut the apple in two.",
+                        "Then she bit into the white half and chewed and swallowed it with relish.",
+                        "Only then did Snow White feel easy. She took the red half and bit into it deeply."
+                    ],
+                    right: [
+                        "She sank slowly to the floor. The queen went home laughing, and at the castle she asked her mirror.",
+                        "\"Mirror, mirror, who is fairest now?\"",
+                        "\"You are the fairest, my queen.\"",
+                        "It was the answer she had waited so long to hear.",
+                        "And the queen laughed out loud."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Glass Coffin',
+            beats: [
+                {
+                    art: '06-glass-coffin.webp',
+                    emoji: '💎',
+                    left: [
+                        "The dwarfs came home. This time there was no sash to cut. There was no comb to find.",
+                        "Nothing they tried was any use. For three days the seven of them wept.",
+                        "They did not go to the mine at all.",
+                        "\"We cannot put her in the ground.\""
+                    ],
+                    right: [
+                        "\"Not when she looks like this…\"",
+                        "So they made a coffin of glass and cut letters of gold into it.",
+                        "SNOW WHITE, DAUGHTER OF THE KING.",
+                        "They set it gently on the hilltop.",
+                        "They planted flowers all around it, and one of them always stayed beside her."
+                    ]
+                },
+                {
+                    art: '06-glass-coffin-2.webp',
+                    emoji: '💎',
+                    left: [
+                        "The seasons turned, over and over. Snow fell and flowers came again.",
+                        "Birds flew down and sang there.",
+                        "And Snow White lay as if she were only sleeping.",
+                        "Then one day there were hoofbeats, and a prince from far away came up the hill."
+                    ],
+                    right: [
+                        "He stood there a long while.",
+                        "\"Let me take her to my castle.\"",
+                        "The dwarfs shook their heads.",
+                        "\"She must not leave us.\"",
+                        "But the prince would not give way. In the end the dwarfs lifted the coffin themselves."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Piece of Apple',
+            beats: [
+                {
+                    art: '07-awake.webp',
+                    emoji: '👑',
+                    left: [
+                        "The men carried the coffin down. The hill path was very steep, and the dwarfs followed behind.",
+                        "Then the man in front stumbled on a stone. The coffin swung hard.",
+                        "The lid jolted with a thud.",
+                        "And the piece of apple came free from her throat."
+                    ],
+                    right: [
+                        "For a moment there was no sound at all.",
+                        "Even the birds had stopped.",
+                        "Then Snow White opened her eyes.",
+                        "\"How long… have I been asleep?\"",
+                        "All seven dwarfs came running. The whole hillside rang with laughter, and the seven of them held one another and cried."
+                    ]
+                },
+                {
+                    art: '07-awake-2.webp',
+                    emoji: '👑',
+                    left: [
+                        "Snow White put her arms round them.",
+                        "\"Thank you for everything.\"",
+                        "\"I shall never forget this house.\"",
+                        "The dwarfs waved to her.",
+                        "\"Come and see us whenever you like!\"",
+                        "She looked back again and again."
+                    ],
+                    right: [
+                        "Before long there was a feast at the castle, and all seven dwarfs were invited.",
+                        "Meanwhile the queen asked her mirror, and the mirror named Snow White once more.",
+                        "The queen left that place.",
+                        "And she never came back."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did the queen ask her mirror every day?',
+            choices: ['Where the princess is', 'Who is fairest of all', 'Where the apple is'],
+            answer: 1
+        },
+        {
+            q: 'What did the huntsman tell Snow White?',
+            choices: ['Run far away', 'Go back to the castle', 'Find the dwarfs'],
+            answer: 0
+        },
+        {
+            q: 'How many plates were on the table?',
+            choices: ['One', 'Three', 'Seven'],
+            answer: 2
+        },
+        {
+            q: 'What did the queen bring the first time?',
+            choices: ['A comb', 'A sash', 'An apple'],
+            answer: 1
+        },
+        {
+            q: 'Why did Snow White trust the apple?',
+            choices: ['The old woman ate the white half', 'The old woman ate the red half', 'It looked perfectly plain'],
+            answer: 0
+        },
+        {
+            q: 'Why did the dwarfs not bury her?',
+            choices: ['The prince came', 'They wept for three days', 'She looked asleep'],
+            answer: 2
+        },
+        {
+            q: 'What woke Snow White?',
+            choices: ['The prince kissed her', 'The coffin was jolted', 'A bird sang'],
+            answer: 1
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🍎',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "The Brothers Grimm went from village to village writing down the stories people told them. Snow White was set down that way.",
+                    "The queen came three times. First a sash, then a comb, and last of all an apple. Each time she chose something a little more believable.",
+                    "And all three times Snow White opened the door, though the dwarfs had told her again and again not to. Perhaps it was because she was alone so much of the day.",
+                    "Look at the huntsman once more. He was the only one who did not do as he was told. That is where the story turns."
+                ],
+                right: [
+                    "The mirror only ever told the truth. What the queen could not bear was not the mirror but the answer.",
+                    "The dwarfs did not turn Snow White out when they first found her — a stranger, asleep in their own house. Why do you think that was?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-mirror.webp': [
+            { word: 'prick', meaning: '찌르다', sentence: 'She pricked her finger with the needle.' },
+            { word: 'drop', meaning: '방울', sentence: 'Three drops of blood fell on the snow.' },
+            { word: 'pile', meaning: '쌓이다', sentence: 'Outside the snow went on piling softly.' },
+            { word: 'marry again', meaning: '재혼하다', sentence: 'The king married again.' }
+        ],
+        '01-mirror-2.webp': [
+            { word: 'fair', meaning: '고운, 아름다운', sentence: 'Mirror, mirror, who is fairest of all?' },
+            { word: 'go by', meaning: '(세월이) 지나다', sentence: 'The years went by, and Snow White grew tall.' },
+            { word: 'set hard', meaning: '굳어지다', sentence: "The queen's face set hard." },
+            { word: 'tremble', meaning: '떨리다', sentence: 'The mirror trembled in her hand.' }
+        ],
+        '02-forest.webp': [
+            { word: 'send for', meaning: '불러오게 하다', sentence: 'The queen sent for the huntsman.' },
+            { word: 'see that', meaning: '반드시 ~하게 하다', sentence: 'See that she never comes back.' },
+            { word: 'go down on one\'s knees', meaning: '무릎을 꿇다', sentence: 'Then he went down on his knees.' }
+        ],
+        '02-forest-2.webp': [
+            { word: 'catch at', meaning: '잡아채다', sentence: 'Branches caught at her dress.' },
+            { word: 'blistered', meaning: '부르튼', sentence: 'Her feet grew sore and blistered.' },
+            { word: 'howl', meaning: '(짐승이) 울부짖다', sentence: 'Somewhere an animal howled.' }
+        ],
+        '03-dwarfs.webp': [
+            { word: 'a crack', meaning: '살짝 (열린 틈)', sentence: 'The door was open a crack.' },
+            { word: 'neat and tidy', meaning: '아주 깔끔한', sentence: 'Inside, everything was neat and tidy.' },
+            { word: 'share', meaning: '몫', sentence: "She did not want to eat up any one person's share." },
+            { word: 'fast asleep', meaning: '깊이 잠든', sentence: 'She lay down on a bed and fell fast asleep.' }
+        ],
+        '03-dwarfs-2.webp': [
+            { word: 'dwarf', meaning: '난쟁이', sentence: 'Seven dwarfs came home.' },
+            { word: 'mine', meaning: '광산, 굴', sentence: 'When the dwarfs came home from the mine.' },
+            { word: 'crowd round', meaning: '우르르 몰려들다', sentence: 'And all seven came crowding round.' }
+        ],
+        '04-disguise.webp': [
+            { word: 'make ready', meaning: '채비하다', sentence: 'The queen made ready that very day.' },
+            { word: 'pedlar', meaning: '장사꾼', sentence: "She picked up a pedlar's basket." },
+            { word: 'sash', meaning: '허리끈', sentence: 'Fine sashes for sale!' }
+        ],
+        '04-disguise-2.webp': [
+            { word: 'pull tight', meaning: '꽉 조이다', sentence: 'The queen pulled it tight.' },
+            { word: 'draw a breath', meaning: '숨을 쉬다', sentence: 'Snow White drew a great breath.' },
+            { word: 'be taken in', meaning: '속아 넘어가다', sentence: 'And again Snow White was taken in.' },
+            { word: 'take care', meaning: '조심하다', sentence: 'Now you really must take care.' }
+        ],
+        '05-apple.webp': [
+            { word: 'cellar', meaning: '지하실', sentence: 'The queen went down to her cellar.' },
+            { word: 'poison', meaning: '독, 독약', sentence: 'She put the poison on the red side only.' },
+            { word: 'show', meaning: '드러나다, 표가 나다', sentence: 'From the outside nothing showed at all.' },
+            { word: 'dress oneself as', meaning: '~처럼 차려입다', sentence: "She dressed herself as a farmer's wife." }
+        ],
+        '05-apple-2.webp': [
+            { word: 'half each', meaning: '반씩', sentence: 'Let us share it, half each.' },
+            { word: 'with relish', meaning: '맛있게', sentence: 'She chewed and swallowed it with relish.' },
+            { word: 'feel easy', meaning: '마음을 놓다', sentence: 'Only then did Snow White feel easy.' },
+            { word: 'sink', meaning: '스르르 주저앉다', sentence: 'She sank slowly to the floor.' }
+        ],
+        '06-glass-coffin.webp': [
+            { word: 'be of use', meaning: '소용이 있다', sentence: 'Nothing they tried was any use.' },
+            { word: 'weep', meaning: '울다', sentence: 'For three days the seven of them wept.' },
+            { word: 'coffin', meaning: '관', sentence: 'So they made a coffin of glass.' },
+            { word: 'plant', meaning: '심다', sentence: 'They planted flowers all around it.' }
+        ],
+        '06-glass-coffin-2.webp': [
+            { word: 'turn', meaning: '(계절이) 바뀌다', sentence: 'The seasons turned, over and over.' },
+            { word: 'hoofbeat', meaning: '말발굽 소리', sentence: 'Then one day there were hoofbeats.' },
+            { word: 'give way', meaning: '물러서다', sentence: 'But the prince would not give way.' }
+        ],
+        '07-awake.webp': [
+            { word: 'steep', meaning: '가파른', sentence: 'The hill path was very steep.' },
+            { word: 'stumble', meaning: '휘청하다, 걸려 넘어지다', sentence: 'The man in front stumbled on a stone.' },
+            { word: 'jolt', meaning: '들썩이다', sentence: 'The lid jolted with a thud.' },
+            { word: 'come free', meaning: '빠져나오다', sentence: 'The piece of apple came free from her throat.' }
+        ],
+        '07-awake-2.webp': [
+            { word: 'put one\'s arms round', meaning: '끌어안다', sentence: 'Snow White put her arms round them.' },
+            { word: 'wave', meaning: '손을 흔들다', sentence: 'The dwarfs waved to her.' },
+            { word: 'name', meaning: '이름을 대다', sentence: 'The mirror named Snow White once more.' }
+        ],
+        'end.webp': [
+            { word: 'set down', meaning: '적어 두다', sentence: 'Snow White was set down that way.' },
+            { word: 'believable', meaning: '그럴듯한', sentence: 'She chose something a little more believable.' },
+            { word: 'as one is told', meaning: '시키는 대로', sentence: 'He was the only one who did not do as he was told.' },
+            { word: 'bear', meaning: '견디다', sentence: 'What the queen could not bear was the answer.' },
+            { word: 'turn out', meaning: '내쫓다', sentence: 'The dwarfs did not turn Snow White out.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -587,6 +1072,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -595,7 +1081,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -607,7 +1093,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -641,4 +1127,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
