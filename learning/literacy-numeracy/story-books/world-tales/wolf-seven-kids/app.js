@@ -193,7 +193,7 @@ const CHAPTERS = [
                     "\"늑대가 왔었어요.\"",
                     "\"목소리도 발도 다 속였어요.\"",
                     "\"형들을 몽땅 데려갔어요.\"",
-                    "엄마는 한참 동안 생각에 잠겼습니다. 그러고는 반짇고리를 열어 가위와 실을 챙겼지요."
+                    "엄마는 한참 동안 생각에 잠겼습니다. 그러고는 부엌으로 가 후춧가루 통을 챙겼지요."
                 ]
             }
         ]
@@ -204,7 +204,7 @@ const CHAPTERS = [
         "beats": [
             {
                 "art": "06-rescue.webp",
-                "emoji": "✂️",
+                "emoji": "🌶️",
                 "left": [
                     "두 모자는 살금살금 밖으로 나갔습니다. 늑대는 나무 밑에 그대로 있었지요.",
                     "드르렁드르렁.",
@@ -213,15 +213,15 @@ const CHAPTERS = [
                 ],
                 "right": [
                     "\"아직 살아 있구나!\"",
-                    "엄마가 가위를 꺼내 들었습니다. 손이 조금 떨렸지요.",
+                    "엄마가 후춧가루 통을 꺼내 들었습니다. 손이 조금 떨렸지요.",
                     "\"막내야, 여기 꼭 잡고 있어.\"",
-                    "엄마는 조심조심 배를 갈랐지요. 머리 하나가 쏙 나오고, 또 하나, 또 하나…",
+                    "엄마가 늑대 코앞에 후춧가루를 톡톡 뿌렸습니다. 에, 에, 에취! 머리 하나가 쏙 나오고, 또 하나, 또 하나…",
                     "여섯이 모두 밖으로 나왔습니다."
                 ]
             },
             {
                 "art": "06-rescue-2.webp",
-                "emoji": "✂️",
+                "emoji": "🌶️",
                 "left": [
                     "\"엄마!\"",
                     "\"엄마!\"",
@@ -244,8 +244,8 @@ const CHAPTERS = [
                 "art": "07-well.webp",
                 "emoji": "🪨",
                 "left": [
-                    "여덟은 늑대의 배 속에 돌을 가득 채웠습니다. 엄마가 실을 꿰어 배를 촘촘히 꿰맸지요. 일곱은 그동안 숨소리 하나 내지 못했지요.",
-                    "바느질 솜씨가 어찌나 좋은지 자국도 거의 보이지 않았습니다. 그러고는 여덟이 나무 뒤에 숨어 숨을 죽였지요.",
+                    "늑대는 입을 헤벌린 채 도로 잠들어 있었습니다. 여덟은 그 입으로 돌을 하나씩 굴려 넣었지요. 일곱은 그동안 숨소리 하나 내지 못했습니다.",
+                    "데구르르, 데구르르. 돌이 하나씩 미끄러져 들어갔지요. 그러고는 여덟이 나무 뒤에 숨어 숨을 죽였습니다.",
                     "이윽고 늑대가 부스스 깨어났습니다."
                 ],
                 "right": [
@@ -714,7 +714,7 @@ const EN = {
                         "\"The wolf came.\"",
                         "\"He fooled us with his voice and his feet.\"",
                         "\"He's taken all my brothers.\"",
-                        "His mother thought for a long while. Then she opened her sewing box and took out the scissors and thread."
+                        "His mother thought for a long while. Then she went to the kitchen and fetched the pepper tin."
                     ]
                 }
             ]
@@ -725,7 +725,7 @@ const EN = {
             beats: [
                 {
                     art: '06-rescue.webp',
-                    emoji: '✂️',
+                    emoji: '🌶️',
                     left: [
                         "The two of them crept outside. The wolf was still lying under the tree.",
                         "Snore, snore.",
@@ -734,15 +734,15 @@ const EN = {
                     ],
                     right: [
                         "\"They're still alive!\"",
-                        "Their mother took out the scissors. Her hands shook a little.",
+                        "Their mother took out the pepper tin. Her hands shook a little.",
                         "\"Hold on tight here, my little one.\"",
-                        "Very carefully she cut the belly open. One head popped out, and then another, and another…",
+                        "She shook a little pepper right under the wolf's nose. A—a—atchoo! One head popped out, and then another, and another…",
                         "Until all six were outside."
                     ]
                 },
                 {
                     art: '06-rescue-2.webp',
-                    emoji: '✂️',
+                    emoji: '🌶️',
                     left: [
                         "\"Mother!\"",
                         "\"Mother!\"",
@@ -765,8 +765,8 @@ const EN = {
                     art: '07-well.webp',
                     emoji: '🪨',
                     left: [
-                        "The eight of them filled the wolf's belly with stones. Their mother threaded her needle and stitched it up close, and the seven did not make a sound.",
-                        "She sewed so neatly that you could barely see the seam. Then all eight hid behind a tree and held their breath.",
+                        "The wolf had dozed off again with his mouth hanging open, and the eight of them rolled the stones in one by one. The seven did not make a sound.",
+                        "Rumble, rumble. Down the stones went, one after another. Then all eight hid behind a tree and held their breath.",
                         "At last the wolf stirred and woke."
                     ],
                     right: [
@@ -818,8 +818,8 @@ const EN = {
             answer: 0
         },
         {
-            q: 'What did Mother take from her sewing box?',
-            choices: ['A needle and a bell', 'Chalk and flour', 'Scissors and thread'],
+            q: 'What did Mother fetch from the kitchen?',
+            choices: ['A needle and a bell', 'Chalk and flour', 'The pepper tin'],
             answer: 2
         },
         {
@@ -906,7 +906,7 @@ const EN = {
             { word: 'rattle', meaning: '덜컹거리다', sentence: 'And just then the clock rattled.' },
             { word: 'clamber out', meaning: '기어 나오다', sentence: 'He pushed open the door of the clock and clambered out.' },
             { word: 'burst into tears', meaning: '울음을 터뜨리다', sentence: 'Only then did he burst into tears.' },
-            { word: 'sewing box', meaning: '반짇고리', sentence: 'She opened her sewing box.' }
+            { word: 'fetch', meaning: '가져오다', sentence: 'She went to the kitchen and fetched the pepper tin.' }
         ],
         '06-rescue.webp': [
             { word: 'heap up', meaning: '수북이 쌓이다', sentence: 'His belly heaped up like a hill.' },
@@ -920,8 +920,8 @@ const EN = {
             { word: 'not the faintest idea', meaning: '까맣게 모르는', sentence: 'He had not the faintest idea what was happening.' }
         ],
         '07-well.webp': [
-            { word: 'thread', meaning: '실을 꿰다', sentence: 'Their mother threaded her needle.' },
-            { word: 'stitch up', meaning: '꿰매다', sentence: 'She stitched it up close.' },
+            { word: 'hang open', meaning: '헤벌리다', sentence: 'He had dozed off with his mouth hanging open.' },
+            { word: 'roll in', meaning: '굴려 넣다', sentence: 'They rolled the stones in one by one.' },
             { word: 'seam', meaning: '바느질 자국', sentence: 'You could barely see the seam.' },
             { word: 'stir', meaning: '몸을 뒤척이다', sentence: 'At last the wolf stirred and woke.' },
             { word: 'sway', meaning: '휘청거리다', sentence: 'He set off toward the well, swaying with every step.' }

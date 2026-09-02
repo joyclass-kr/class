@@ -12,6 +12,12 @@
 > - `06-rescue` — 늑대가 나무 밑에서 **배가 산처럼 불룩한 채 코를 골고**, 엄마와 막내가 살금살금 다가가는 장면으로. 지금은 이미 구해 낸 뒤입니다.
 > - 엄마 염소 옷이 `01`(분홍 꽃무늬 앞치마 + 빨간 두건)과 뒤쪽(파란 원피스 + 밀짚모자)이 다릅니다. `01` 쪽으로 통일해 주세요.
 
+> **⚠️ 다시 그려 주실 것 (2026-09-03)**
+> 글이 바뀌었습니다. 늑대 배를 가르는 장면을 없앴어요.
+> - `05-mother-returns-2` — 반짇고리와 가위가 아니라 **부엌 선반에서 후춧가루 통을 집는** 그림으로.
+> - `06-rescue` — **늑대가 크게 재채기를 하고 그 바람에 아기 염소들이 튀어나오는 순간**으로.
+> - `07-well` — 배를 꿰매는 그림이 아닙니다. **벌어진 입으로 돌을 하나씩 굴려 넣는 장면**으로.
+
 > **한 파일 = 한 장면입니다. 앞질러 가지 마세요.**
 > 파일마다 뒤에 〔이 쪽에 실린 글〕을 붙여 두었습니다. 그 쪽에 실제로 실리는 글이에요.
 > 그림은 **그 글에 나오는 장면만** 그려 주세요. 다음 쪽 이야기를 미리 그리면
@@ -88,20 +94,20 @@ comically vain. The miller: a floury man with a scoop.
 | 파일명 | 장면 |
 |---|---|
 | `images/05-mother-returns.webp` | A wrecked cottage room with overturned chairs and a tipped basin where a mother goat stands stricken, her basket fallen from her hoof, late afternoon light, moving. 〔이 쪽에 실린 글 (9/14) — 그림에 글자는 넣지 마세요. 왼쪽: 해질 무렵 엄마 염소가 돌아왔습니다. 그런데 문이 활짝 열려 있었지요. 방 안은 엉망이었습니다. 의자가 넘어지고 대야도 뒤집혀 있었지요. 얘들아, 어디 있니? / 오른쪽: 엄마는 방마다 다니며 이름을 불렀지요. 첫째야, 둘째야, 셋째야… 집 안은 여전히 조용하기만 했습니다. 엄마는 그 자리에 털썩 주저앉았지요. 손에 든 바구니가 툭 떨어졌습니다.〕 |
-| `images/05-mother-returns-2.webp` | A cottage where a tiny kid pushes open a clock case and runs into a mother goat's arms, and the same goat opening a sewing box to take out shears and thread, tender and resolute. 〔이 쪽에 실린 글 (10/14) — 그림에 글자는 넣지 마세요. 왼쪽: 바로 그때 시계가 덜컹거렸습니다. 엄마! 엄마! 막내가 시계 문을 밀고 기어 나왔지요. 엄마가 달려가 막내를 와락 끌어안았습니다. / 오른쪽: 막내는 그제야 울음을 터뜨렸지요. 늑대가 왔었어요. 목소리도 발도 다 속였어요.〕 |
+| `images/05-mother-returns-2.webp` | A cottage where a tiny kid pushes open a clock case and runs into a mother goat's arms, and the same goat taking a small tin of pepper down from a kitchen shelf, tender and resolute. 〔이 쪽에 실린 글 (10/14) — 그림에 글자는 넣지 마세요. 왼쪽: 바로 그때 시계가 덜컹거렸습니다. 엄마! 엄마! 막내가 시계 문을 밀고 기어 나왔지요. 엄마가 달려가 막내를 와락 끌어안았습니다. / 오른쪽: 막내는 그제야 울음을 터뜨렸지요. 늑대가 왔었어요. 목소리도 발도 다 속였어요.〕 |
 
 ## 6장 · 늑대의 배 속에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-rescue.webp` | A meadow under a tree where a wolf sleeps with a lumpy heaving belly, a mother goat kneeling with shears while a tiny kid holds the cloth, six heads popping out one by one, joyful relief. 〔이 쪽에 실린 글 (11/14) — 그림에 글자는 넣지 마세요. 왼쪽: 두 모자는 살금살금 밖으로 나갔습니다. 늑대는 나무 밑에 그대로 있었지요. 드르렁드르렁. 코를 골며 자는데 배가 산처럼 불룩 솟아 있었습니다. 숨을 쉴 때마다 배가 오르락내리락했지요. / 오른쪽: 아직 살아 있구나! 엄마가 가위를 꺼내 들었습니다. 손이 조금 떨렸지요. 막내야, 여기 꼭 잡고 있어.〕 |
+| `images/06-rescue.webp` | A meadow under a tree where a wolf erupts in an enormous sneeze as a mother goat shakes a pepper tin at his nose and a tiny kid clings to her, six heads popping out one by one, joyful relief and very comic. 〔이 쪽에 실린 글 (11/14) — 그림에 글자는 넣지 마세요. 왼쪽: 두 모자는 살금살금 밖으로 나갔습니다. 늑대는 나무 밑에 그대로 있었지요. 드르렁드르렁. 코를 골며 자는데 배가 산처럼 불룩 솟아 있었습니다. 숨을 쉴 때마다 배가 오르락내리락했지요. / 오른쪽: 아직 살아 있구나! 엄마가 후춧가루 통을 꺼내 들었습니다. 손이 조금 떨렸지요. 막내야, 여기 꼭 잡고 있어.〕 |
 | `images/06-rescue-2.webp` | Seven kids clinging to their mother in a meadow, then scattering to a stream to gather round stones in their aprons, the wolf still asleep under the tree behind, lively and warm. 〔이 쪽에 실린 글 (12/14) — 그림에 글자는 넣지 마세요. 왼쪽: 엄마! 엄마! 일곱이 한꺼번에 엄마에게 매달렸습니다. 다행히 모두 멀쩡했지요. / 오른쪽: 얘들아, 개울에 가서 돌을 주워 오너라. 일곱이 우르르 흩어져 개울가로 달려갔습니다. 동글동글한 돌을 골라 치마폭에 담아 왔지요. 늑대는 그때까지도 쿨쿨 자고 있었습니다. 무슨 일이 벌어지는지 까맣게 몰랐지요.〕 |
 
 ## 7장 · 우물가의 늑대
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-well.webp` | A meadow where a mother goat stitches a sleeping wolf's belly closed while seven kids peek from behind a tree, and the wolf waking and staggering toward a stone well, comic. 〔이 쪽에 실린 글 (13/14) — 그림에 글자는 넣지 마세요. 왼쪽: 여덟은 늑대의 배 속에 돌을 가득 채웠습니다. 엄마가 실을 꿰어 배를 촘촘히 꿰맸지요. 일곱은 그동안 숨소리도 내지 않았습니다. 바느질 솜씨가 어찌나 좋은지 자국도 거의 보이지 않았습니다. 그러고는 여덟이 나무 뒤에 숨어 숨을 죽였지요. 이윽고 늑대가 부스스 깨어났습니다. / 오른쪽: 해가 나무 위로 높이 올라간 뒤였지요. 기지개를 켜려다 말고 멈칫했지요. 어이쿠, 배가 왜 이리 무겁지?〕 |
+| `images/07-well.webp` | A meadow where a mother goat and seven kids drop round stones one by one into the open mouth of a wolf snoring flat on his back, then the wolf waking and staggering toward a stone well, comic. 〔이 쪽에 실린 글 (13/14) — 그림에 글자는 넣지 마세요. 왼쪽: 늑대는 입을 헤벌린 채 도로 잠들어 있었습니다. 여덟은 그 입으로 돌을 하나씩 굴려 넣었지요. 일곱은 그동안 숨소리 하나 내지 못했습니다. 데구르르, 데구르르. 돌이 하나씩 미끄러져 들어갔지요. 그러고는 여덟이 나무 뒤에 숨어 숨을 죽였지요. 이윽고 늑대가 부스스 깨어났습니다. / 오른쪽: 해가 나무 위로 높이 올라간 뒤였지요. 기지개를 켜려다 말고 멈칫했지요. 어이쿠, 배가 왜 이리 무겁지?〕 |
 | `images/07-well-2.webp` | A meadow well where a stone-bellied wolf leans over the rim and topples in with a splash, eight goats bursting from behind a tree and dancing in a ring, bright and triumphant. 〔이 쪽에 실린 글 (14/14) — 그림에 글자는 넣지 마세요. 왼쪽: 걸을 때마다 뱃속에서 소리가 났습니다. 덜그럭, 덜그럭. 늑대가 고개를 갸웃했지요. / 오른쪽: 그러거나 말거나 목이 말라 우물가에 이르렀습니다. 늑대가 몸을 굽혀 물을 마시려는 순간이었지요. 무거운 배가 앞으로 쏠리면서 그만 풍덩 빠지고 말았습니다. 나무 뒤에서 웃음이 와르르 터졌지요. 여덟은 손을 잡고 빙글빙글 돌았습니다. 늑대는 그 뒤로 다시 오지 않았답니다.〕 |
 
 ## 사용 팁

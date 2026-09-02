@@ -191,7 +191,7 @@ const CHAPTERS = [
                     "\"할머니는 어디 계시지?\"",
                     "늑대의 배가 유난히 불룩했습니다. 게다가 그 배가 꿈틀꿈틀 움직였지요. 사냥꾼은 창턱을 붙잡고 한참을 들여다봤습니다.",
                     "\"아직 살아 계실지도 몰라.\"",
-                    "사냥꾼은 가방을 열어 가위를 꺼내 들었습니다."
+                    "사냥꾼은 가방을 뒤져 후춧가루 통을 꺼냈습니다."
                 ]
             }
         ]
@@ -202,12 +202,12 @@ const CHAPTERS = [
         "beats": [
             {
                 "art": "06-rescue.webp",
-                "emoji": "✂️",
+                "emoji": "🌶️",
                 "left": [
-                    "사냥꾼은 살금살금 방으로 들어갔습니다. 늑대는 여전히 코를 골고 있었지요. 사냥꾼은 조심조심 배를 갈랐습니다.",
-                    "그러자 빨간 모자가 쏙 나왔지요.",
-                    "\"아이고, 캄캄했어요!\"",
-                    "빨간 모자는 숨을 크게 몰아쉬었습니다."
+                    "사냥꾼은 살금살금 방으로 들어갔습니다. 늑대는 여전히 코를 골고 있었지요. 사냥꾼이 늑대 코앞에 후춧가루를 톡톡 뿌렸습니다.",
+                    "\"에, 에, 에취!\"",
+                    "늑대가 온 방이 울리도록 재채기를 했습니다. 그 바람에 빨간 모자가 쏙 튀어나왔지요.",
+                    "\"아이고, 캄캄했어요!\""
                 ],
                 "right": [
                     "그런데 할머니가 보이지 않았지요. 사냥꾼이 방을 이리저리 둘러보았습니다.",
@@ -218,14 +218,14 @@ const CHAPTERS = [
             },
             {
                 "art": "06-rescue-2.webp",
-                "emoji": "✂️",
+                "emoji": "🌶️",
                 "left": [
                     "세 사람은 머리를 맞대고 꾀를 냈습니다. 마당에서 돌을 주워 왔지요.",
                     "동글동글하고 묵직한 돌이었습니다. 빨간 모자가 앞치마에 담아 날랐지요.",
-                    "그것을 늑대 배 속에 가득 채웠지요. 할머니가 실을 꿰어 촘촘히 꿰맸습니다."
+                    "늑대는 입을 헤벌린 채 도로 잠들어 있었습니다. 셋은 그 입으로 돌을 하나씩 굴려 넣었지요."
                 ],
                 "right": [
-                    "사냥꾼이 옆에서 실을 잡아 주었지요. 할머니 바느질 솜씨가 아주 좋았거든요. 그러는 동안에도 늑대는 코를 골았지요.",
+                    "데구르르, 데구르르. 돌이 하나씩 미끄러져 들어갔습니다. 그러는 동안에도 늑대는 코를 골았지요.",
                     "무슨 일이 벌어지는지 아무것도 몰랐습니다. 셋은 문 뒤에 숨어 숨을 죽였지요.",
                     "이윽고 늑대가 몸을 뒤척였습니다. 그러고는 천천히 눈을 떴지요."
                 ]
@@ -471,7 +471,7 @@ const QUIZ = [
     {
         "q": "사냥꾼이 가방에서 꺼낸 것은 무엇인가요?",
         "choices": [
-            "가위",
+            "후춧가루",
             "총",
             "실"
         ],
@@ -708,7 +708,7 @@ const EN = {
                 },
                 {
                     art: '05-snoring-2.webp',
-                    emoji: '✂️',
+                    emoji: '🌶️',
                     left: [
                         "The huntsman looked in at the window. There in the bed lay the wolf, large as life.",
                         "\"So this is where you've got to!\"",
@@ -720,7 +720,7 @@ const EN = {
                         "The wolf's belly was oddly round. And it was moving, too.",
                         "The huntsman held the sill and looked a long while.",
                         "\"She may be alive in there yet.\"",
-                        "He opened his bag and took out his shears."
+                        "He rummaged in his bag and took out a pot of pepper."
                     ]
                 }
             ]
@@ -734,10 +734,10 @@ const EN = {
                     emoji: '🎉',
                     left: [
                         "The huntsman crept into the room. The wolf was snoring away still.",
-                        "Very carefully, he cut the belly open.",
-                        "And out popped Little Red Riding Hood.",
-                        "\"Oh, it was so dark in there!\"",
-                        "She took a long, deep breath."
+                        "He shook a little pepper right under the wolf's nose.",
+                        "\"A—a—atchoo!\"",
+                        "The wolf sneezed hard enough to shake the room, and out popped Little Red Riding Hood.",
+                        "\"Oh, it was so dark in there!\""
                     ],
                     right: [
                         "But Grandmother was nowhere to be seen.",
@@ -755,11 +755,10 @@ const EN = {
                         "The three of them put their heads together and made a plan.",
                         "They gathered stones from the yard — round, heavy ones.",
                         "Little Red Riding Hood carried them in her apron.",
-                        "They packed them into the wolf's belly until it was full."
+                        "The wolf had dozed off again with his mouth hanging open, and one by one they rolled the stones in."
                     ],
                     right: [
-                        "Grandmother stitched it up tight while the huntsman held the thread.",
-                        "Grandmother was very good with a needle.",
+                        "Rumble, rumble. Down the stones went, one after another.",
                         "And all that while the wolf snored on, with no idea what was happening.",
                         "The three of them hid behind the door and held their breath.",
                         "At last the wolf stirred. Then slowly he opened his eyes."
@@ -920,10 +919,11 @@ const EN = {
             { word: 'large as life', meaning: '떡하니', sentence: 'There in the bed lay the wolf, large as life.' },
             { word: 'carry off', meaning: '물어 가다', sentence: 'The very one that had carried off the village sheep.' },
             { word: 'strike', meaning: '문득 떠오르다', sentence: 'Something had struck him.' },
-            { word: 'shears', meaning: '가위', sentence: 'He opened his bag and took out his shears.' }
+            { word: 'rummage', meaning: '뒤지다', sentence: 'He rummaged in his bag and took out a pot of pepper.' }
         ],
         '06-rescue.webp': [
             { word: 'creep', meaning: '살금살금 가다', sentence: 'The huntsman crept into the room.' },
+            { word: 'sneeze', meaning: '재채기하다', sentence: 'The wolf sneezed hard enough to shake the room.' },
             { word: 'pop out', meaning: '쏙 나오다', sentence: 'And out popped Little Red Riding Hood.' },
             { word: 'rattle', meaning: '덜컹거리다', sentence: 'Then the wardrobe door rattled.' },
             { word: 'fright', meaning: '놀람, 무서움', sentence: 'My goodness, what a fright I had!' }
@@ -931,7 +931,7 @@ const EN = {
         '06-rescue-2.webp': [
             { word: 'put heads together', meaning: '머리를 맞대다', sentence: 'The three of them put their heads together.' },
             { word: 'apron', meaning: '앞치마', sentence: 'She carried them in her apron.' },
-            { word: 'thread', meaning: '실을 꿰다; 실', sentence: 'Grandmother threaded a needle and stitched it up tight.' },
+            { word: 'hang open', meaning: '헤벌리다', sentence: 'He had dozed off with his mouth hanging open.' },
             { word: 'stir', meaning: '몸을 뒤척이다', sentence: 'At last the wolf stirred.' }
         ],
         '07-lesson.webp': [
