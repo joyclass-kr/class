@@ -443,7 +443,6 @@
     $("streakCount").textContent = `${saved.streak}일`;
     $("starsCount").textContent = saved.stars;
     $("progressTitle").textContent = completed === total ? `전체 ${total}차시 완료` : completed ? `${completed}차시 완료 · ${total - completed}차시 남음` : "완료한 차시가 없습니다.";
-    $("progressKicker").textContent = "학습 진도";
     const nextLesson = data.lessons.find((lesson) => !saved.done.includes(lesson.id)) || data.lessons[0];
     $("continueLesson").dataset.lesson = nextLesson.id;
     $("continueLesson").textContent = completed === total ? "1차시 다시 보기" : `${nextLesson.stageOrder}차시 · ${nextLesson.title} 시작`;

@@ -79,6 +79,10 @@ assert.deepEqual(picturedWords.filter((word) => !data.wordBank[word].korean || d
 for (const id of ["dashboard", "stageList", "study", "soundGame", "soundChoices", "soundReplay", "soundNext", "wordCards", "blendArea", "dictationScene", "quizArea", "complete", "resetDialog"]) {
   assert.match(html, new RegExp(`id=["']${id}["']`), `Missing required UI region: ${id}`);
 }
+const htmlIds = new Set([...html.matchAll(/\bid=["']([^"']+)["']/g)].map((match) => match[1]));
+const missingDirectAppIds = [...new Set([...appSource.matchAll(/\$\("([^"]+)"\)/g)].map((match) => match[1]))]
+  .filter((id) => !htmlIds.has(id));
+assert.deepEqual(missingDirectAppIds, [], "Every direct app element lookup must have a matching HTML id.");
 assert.match(appSource, /localStorage\.setItem/, "Progress must be saved on the learner's device.");
 assert.match(appSource, /SpeechSynthesisUtterance/, "Listening activities must use speech synthesis.");
 assert.match(appSource, /playPhoneme\(button\.dataset\.letter\)/, "Letter buttons must play phoneme audio instead of letter-name speech.");
