@@ -303,16 +303,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '피터 래빗 이야기',
+    intro: [
+        '피터 래빗 이야기는 영국의 작가 베아트릭스 포터가 1902년에 펴낸 그림책이에요. 글과 그림을 모두 작가가 직접 만들었답니다.',
+        '처음에는 아픈 아이에게 보낸 편지에 그려 넣은 그림에서 시작했어요. 그 편지가 나중에 책이 되어 온 세계에 알려졌답니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🐰')}
             </div>
             <div class="story-page-right">
-                <h1>피터 래빗 이야기</h1>
-                <p>피터 래빗 이야기는 영국의 작가 베아트릭스 포터가 1902년에 펴낸 그림책이에요. 글과 그림을 모두 작가가 직접 만들었답니다.</p>
-                <p>처음에는 아픈 아이에게 보낸 편지에 그려 넣은 그림에서 시작했어요. 그 편지가 나중에 책이 되어 온 세계에 알려졌답니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -327,8 +336,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -338,8 +347,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -349,22 +358,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -414,9 +424,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -427,7 +437,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -499,7 +509,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -508,34 +518,639 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   원작의 이름(Flopsy, Mopsy, Cottontail, Peter, Mr McGregor)을 그대로 쓴다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Tale of Peter Rabbit',
+        intro: [
+            "The Tale of Peter Rabbit is a picture book published by the English writer Beatrix Potter in 1902. She wrote the words and painted the pictures herself.",
+            "It began as drawings in a letter she sent to a child who was ill. That letter later became a book, and the book went all over the world."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Don't Go in That Garden",
+            beats: [
+                {
+                    art: '01-warning.webp',
+                    emoji: '🐰',
+                    left: [
+                        "There was a very large fir tree,",
+                        "and under its roots, in a sandy burrow, lived a family of rabbits.",
+                        "There were four young rabbits:",
+                        "Flopsy, Mopsy, Cottontail and Peter.",
+                        "The first three did as they were told.",
+                        "Peter was the one who would not."
+                    ],
+                    right: [
+                        "One morning their mother picked up her basket.",
+                        "She was going out to buy bread.",
+                        "\"Play in the fields, my dears.\"",
+                        "\"Or along the lane, if you like.\"",
+                        "\"But you are not to go into Mr McGregor's garden.\"",
+                        "The young rabbits looked up at her."
+                    ]
+                },
+                {
+                    art: '01-warning-2.webp',
+                    emoji: '🐰',
+                    left: [
+                        "\"Why not, Mother?\"",
+                        "Their mother's face went a little dark.",
+                        "\"Your father came to grief in that garden.\"",
+                        "\"He never came home again.\"",
+                        "The young rabbits held their breath.",
+                        "\"Do you understand? You are never to go there.\""
+                    ],
+                    right: [
+                        "The three of them nodded obediently.",
+                        "And Peter was looking somewhere else.",
+                        "When their mother had gone, the three went off to the fields.",
+                        "Only Peter stayed where he was,",
+                        "because his eyes kept going toward that garden.",
+                        "Being told had only made him more curious."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · Under the Gate',
+            beats: [
+                {
+                    art: '02-gate.webp',
+                    emoji: '🥬',
+                    left: [
+                        "The three of them went out into the fields",
+                        "and picked blackberries along the lane",
+                        "until their mouths were black all round.",
+                        "And in that time Peter ran the other way,",
+                        "straight to Mr McGregor's garden.",
+                        "The garden was shut in by a wooden gate."
+                    ],
+                    right: [
+                        "But there was a gap underneath it,",
+                        "just wide enough for one rabbit.",
+                        "Peter flattened himself down",
+                        "and squeezed straight through.",
+                        "Everything in front of him was green.",
+                        "He had never seen so large a garden."
+                    ]
+                },
+                {
+                    art: '02-gate-2.webp',
+                    emoji: '🥬',
+                    left: [
+                        "\"Why, all of this is food!\"",
+                        "Peter's eyes went round.",
+                        "There were rows and rows of lettuces,",
+                        "and French beans, and radishes as well.",
+                        "Peter started on the lettuces,",
+                        "ate one whole plant and then another,",
+                        "and went on to the French beans."
+                    ],
+                    right: [
+                        "He ate those pods and all.",
+                        "And last of all he pulled up radishes and ate them.",
+                        "His stomach came up round.",
+                        "And then he began to feel rather odd.",
+                        "He had eaten a great deal too much.",
+                        "There were rumblings inside him,",
+                        "and Peter sat down and got up again."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · A Bad Stomach',
+            beats: [
+                {
+                    art: '03-parsley.webp',
+                    emoji: '🌿',
+                    left: [
+                        "His stomach began to ache in earnest,",
+                        "and Peter rubbed it.",
+                        "\"A little parsley would put that right.\"",
+                        "His mother had said so once.",
+                        "So Peter went off to look for parsley,",
+                        "round toward the cucumber frame,",
+                        "sniffing at the smell of the leaves as he went."
+                    ],
+                    right: [
+                        "And as he came round the corner,",
+                        "there was an enormous boot in front of him.",
+                        "He looked up, and it was Mr McGregor,",
+                        "down on his knees planting out cabbages",
+                        "with his hands thick with earth.",
+                        "The two of them looked straight at each other.",
+                        "And Peter froze where he stood."
+                    ]
+                },
+                {
+                    art: '03-parsley-2.webp',
+                    emoji: '🌿',
+                    left: [
+                        "Both of them froze.",
+                        "Peter was startled and so was Mr McGregor.",
+                        "Mr McGregor came to himself first",
+                        "and sprang up onto his feet.",
+                        "\"Stop thief! Stop, I say!\"",
+                        "And Peter ran without looking back."
+                    ],
+                    right: [
+                        "Mr McGregor came after him waving a rake.",
+                        "\"Come back here!\"",
+                        "Peter ran for all he was worth.",
+                        "And then he lost the way back to the gate.",
+                        "He could not work out which direction it was in,",
+                        "because that garden was so very large."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Man with the Rake',
+            beats: [
+                {
+                    art: '04-chase.webp',
+                    emoji: '👞',
+                    left: [
+                        "Peter went straight into the cabbages",
+                        "and ran through between the great leaves.",
+                        "And one of his shoes came off,",
+                        "and there was no time to look for it.",
+                        "Then he cut across the potato bed,",
+                        "and lost the other shoe there."
+                    ],
+                    right: [
+                        "Now he was barefoot,",
+                        "and in fact he could run rather better for it.",
+                        "Behind him Mr McGregor's boots came thudding along.",
+                        "\"Where have you got to, you rascal!\"",
+                        "Peter's heart felt fit to burst,",
+                        "and his legs were getting heavier."
+                    ]
+                },
+                {
+                    art: '04-chase-2.webp',
+                    emoji: '👞',
+                    left: [
+                        "Peter looked for somewhere to hide.",
+                        "He caught sight of a gooseberry bush",
+                        "with a net thrown over it,",
+                        "and he dived in underneath.",
+                        "He crouched down and held his breath.",
+                        "And then he found he could not move."
+                    ],
+                    right: [
+                        "The buttons of his jacket had caught in the net.",
+                        "Peter struggled this way and that,",
+                        "and the more he struggled the tighter it held.",
+                        "The tears came into his eyes.",
+                        "The footsteps were coming closer,",
+                        "and Peter squeezed his eyes shut."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · Buttons in the Net',
+            beats: [
+                {
+                    art: '05-net.webp',
+                    emoji: '🐦',
+                    left: [
+                        "And then three sparrows came flying down.",
+                        "They flew round and round Peter, chirping at him.",
+                        "\"Come on! A little more!\"",
+                        "\"You mustn't give up!\"",
+                        "Peter set his teeth",
+                        "and twisted himself with the last of his strength."
+                    ],
+                    right: [
+                        "The buttons went, one after another,",
+                        "and Peter got himself out of the net.",
+                        "His blue jacket stayed hanging there in it.",
+                        "It was a pity, and there was no time to look back.",
+                        "And Peter ran again,",
+                        "with the sparrows cheering him on behind."
+                    ]
+                },
+                {
+                    art: '05-net-2.webp',
+                    emoji: '🐦',
+                    left: [
+                        "There was an old shed ahead of him",
+                        "with the door standing a little open.",
+                        "Peter dived inside.",
+                        "It was dim in there and it smelled of earth.",
+                        "He looked quickly for somewhere to hide",
+                        "and caught sight of a large watering can."
+                    ],
+                    right: [
+                        "Peter got straight into it.",
+                        "And there was water standing in the bottom.",
+                        "The cold water soaked him through.",
+                        "He wanted to get out and he made himself stay,",
+                        "because there were footsteps outside.",
+                        "And the door creaked open."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Inside the Watering Can',
+            beats: [
+                {
+                    art: '06-can.webp',
+                    emoji: '💦',
+                    left: [
+                        "Mr McGregor came into the shed",
+                        "and turned over every flower pot, one by one.",
+                        "Peter did not dare to breathe.",
+                        "And then his nose began to tickle.",
+                        "He tried very hard to hold it in.",
+                        "And he could not possibly hold it in.",
+                        "\"Atishoo!\"",
+                        "Mr McGregor spun round."
+                    ],
+                    right: [
+                        "\"So that's where you are!\"",
+                        "An enormous hand came down toward the can.",
+                        "Peter went straight up out of it,",
+                        "and the watering can went over with a crash.",
+                        "\"Stop, will you!\"",
+                        "Water went everywhere."
+                    ]
+                },
+                {
+                    art: '06-can-2.webp',
+                    emoji: '💦',
+                    left: [
+                        "Peter made for the window.",
+                        "Flower pots came down all round with a clatter,",
+                        "and Mr McGregor caught his foot and went over.",
+                        "\"Oh, my back!\"",
+                        "And in that moment Peter went out of the window.",
+                        "Outside was the wide garden again."
+                    ],
+                    right: [
+                        "Peter ran, soaking wet,",
+                        "with the water dripping off his fur.",
+                        "And this time too he had no idea where the gate was.",
+                        "Peter stopped for a moment.",
+                        "He could hardly get his breath.",
+                        "And there was no resting.",
+                        "The footsteps were thudding away behind him,",
+                        "and Peter began to run again."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · Looking for the Gate',
+            beats: [
+                {
+                    art: '07-escape.webp',
+                    emoji: '🚪',
+                    left: [
+                        "Peter went along by the pond,",
+                        "where a few goldfish were swimming.",
+                        "And there was a white cat sitting on a stone,",
+                        "with only the tip of her tail moving.",
+                        "Peter simply went quietly past.",
+                        "It was better not to get mixed up with a cat.",
+                        "Peter kept his feet very quiet."
+                    ],
+                    right: [
+                        "And he went along beside the wall.",
+                        "And then, away in front, he saw the wooden gate.",
+                        "Peter's eyes went wide.",
+                        "\"There it is!\"",
+                        "And Peter ran for it with everything he had,",
+                        "with the earth flying up under his feet."
+                    ]
+                },
+                {
+                    art: '07-escape-2.webp',
+                    emoji: '🚪',
+                    left: [
+                        "Behind him Mr McGregor came after him again,",
+                        "waving the rake and shouting.",
+                        "Peter did not look back once.",
+                        "The gap under the gate was in front of him.",
+                        "He threw himself under it and out",
+                        "and went rolling over on the grass of the field."
+                    ],
+                    right: [
+                        "Then he got up and ran.",
+                        "He could hardly breathe and he did not stop.",
+                        "He ran until he could see the fir tree.",
+                        "And when he reached the burrow his legs gave under him,",
+                        "and Peter went straight down.",
+                        "He could not get up again for some time."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Tea That Evening',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🍵',
+                    left: [
+                        "His mother came out of the burrow",
+                        "and sighed at the sight of him,",
+                        "wet through and with no shoes on.",
+                        "\"And where have you left your shoes and your jacket?\"",
+                        "Peter hung his head",
+                        "and fiddled with his toes.",
+                        "He could not answer at all.",
+                        "It was the second jacket he had lost that month."
+                    ],
+                    right: [
+                        "His mother picked him up and put him to bed.",
+                        "Peter was not at all well that evening,",
+                        "and his mother made camomile tea.",
+                        "\"One spoonful, and then go to sleep.\"",
+                        "Peter drank it and fell asleep.",
+                        "The bitter smell went right up his nose."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🍵',
+                    left: [
+                        "Meanwhile the other three had their supper —",
+                        "bread and milk and blackberries.",
+                        "The three of them ate their fill.",
+                        "And Peter only got the smell of it,",
+                        "with his nose out over the top of the blanket.",
+                        "The blackberries smelled very sweet.",
+                        "It seemed a little hard, and there was no help for it.",
+                        "That is what not listening had cost him."
+                    ],
+                    right: [
+                        "It was the next morning.",
+                        "Mr McGregor put up a scarecrow",
+                        "to keep the crows off.",
+                        "And that scarecrow was wearing a small jacket,",
+                        "with a small shoe set on top of its head.",
+                        "They were the very ones Peter had left behind."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did their mother tell them not to do?',
+            choices: ["Go into Mr McGregor's garden", 'Eat blackberries in the lane', 'Play near the fir tree'],
+            answer: 0
+        },
+        {
+            q: 'How did Peter get into the garden?',
+            choices: ['Over the wall', 'Through the shed', 'Through a gap under the wooden gate'],
+            answer: 2
+        },
+        {
+            q: 'Why was Peter looking for parsley?',
+            choices: ['His mother had asked for some', 'His stomach ached from eating too much', 'He wanted to take it home'],
+            answer: 1
+        },
+        {
+            q: 'What caught in the net over the gooseberry bush?',
+            choices: ['The buttons of his jacket', 'One of his shoes', 'His ear'],
+            answer: 0
+        },
+        {
+            q: 'What gave Peter away in the shed?',
+            choices: ['He knocked over a flower pot', 'The cat found him', 'He sneezed'],
+            answer: 2
+        },
+        {
+            q: 'What did Peter get for supper?',
+            choices: ['Bread and milk and blackberries', 'Camomile tea and bed', 'Nothing at all'],
+            answer: 1
+        },
+        {
+            q: 'What was the scarecrow wearing next morning?',
+            choices: ['Peter’s jacket and one of his shoes', 'An old sack', 'Mr McGregor’s hat'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐰',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story began in a letter Beatrix Potter sent to a child who was ill, about a hundred and twenty years ago.",
+                    "Potter did not only write it — she painted the pictures herself. She kept rabbits for years and watched them closely, and the way they move in her pictures is exact.",
+                    "Peter eats lettuces, French beans and radishes in that garden. Then his stomach aches and he goes to look for parsley. And it is looking for the parsley that walks him into Mr McGregor.",
+                    "Eating too much slowed him down, and being slow is what got him caught."
+                ],
+                right: [
+                    "Peter comes home with his jacket and both his shoes gone. His mother does not scold him. She puts him to bed.",
+                    "Was going into that garden a wicked thing to do?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-warning.webp': [
+            { word: 'fir tree', meaning: '전나무', sentence: 'There was a very large fir tree.' },
+            { word: 'burrow', meaning: '굴', sentence: 'Under its roots, in a sandy burrow.' },
+            { word: 'do as one is told', meaning: '말을 잘 듣다', sentence: 'The first three did as they were told.' },
+            { word: 'basket', meaning: '바구니', sentence: 'Their mother picked up her basket.' },
+            { word: 'lane', meaning: '길가, 좁은 길', sentence: 'Or along the lane, if you like.' }
+        ],
+        '01-warning-2.webp': [
+            { word: 'come to grief', meaning: '크게 혼나다, 화를 당하다', sentence: 'Your father came to grief in that garden.' },
+            { word: 'hold one’s breath', meaning: '숨을 죽이다', sentence: 'The young rabbits held their breath.' },
+            { word: 'obediently', meaning: '얌전히', sentence: 'The three of them nodded obediently.' },
+            { word: 'curious', meaning: '궁금해하는', sentence: 'Being told had only made him more curious.' }
+        ],
+        '02-gate.webp': [
+            { word: 'blackberry', meaning: '검은딸기', sentence: 'They picked blackberries along the lane.' },
+            { word: 'shut in by', meaning: '~으로 막힌', sentence: 'The garden was shut in by a wooden gate.' },
+            { word: 'gap', meaning: '틈', sentence: 'There was a gap underneath it.' },
+            { word: 'flatten oneself', meaning: '몸을 납작하게 하다', sentence: 'Peter flattened himself down.' },
+            { word: 'squeeze through', meaning: '쏙 빠져나가다', sentence: 'And squeezed straight through.' }
+        ],
+        '02-gate-2.webp': [
+            { word: 'lettuce', meaning: '상추', sentence: 'There were rows and rows of lettuces.' },
+            { word: 'French bean', meaning: '강낭콩', sentence: 'And French beans, and radishes.' },
+            { word: 'radish', meaning: '무', sentence: 'He pulled up radishes and ate them.' },
+            { word: 'pod', meaning: '깍지', sentence: 'He ate those pods and all.' },
+            { word: 'rumbling', meaning: '꾸르륵 소리', sentence: 'There were rumblings inside him.' }
+        ],
+        '03-parsley.webp': [
+            { word: 'in earnest', meaning: '본격적으로', sentence: 'His stomach began to ache in earnest.' },
+            { word: 'parsley', meaning: '파슬리', sentence: 'A little parsley would put that right.' },
+            { word: 'put right', meaning: '낫게 하다', sentence: 'A little parsley would put that right.' },
+            { word: 'sniff at', meaning: '킁킁 맡다', sentence: 'Sniffing at the smell of the leaves.' },
+            { word: 'plant out', meaning: '심다', sentence: 'Down on his knees planting out cabbages.' }
+        ],
+        '03-parsley-2.webp': [
+            { word: 'come to oneself', meaning: '정신을 차리다', sentence: 'Mr McGregor came to himself first.' },
+            { word: 'rake', meaning: '갈퀴', sentence: 'He came after him waving a rake.' },
+            { word: 'for all one is worth', meaning: '죽을힘을 다해', sentence: 'Peter ran for all he was worth.' },
+            { word: 'work out', meaning: '갈피를 잡다', sentence: 'He could not work out which direction it was.' }
+        ],
+        '04-chase.webp': [
+            { word: 'cut across', meaning: '가로지르다', sentence: 'He cut across the potato bed.' },
+            { word: 'come off', meaning: '벗겨지다', sentence: 'One of his shoes came off.' },
+            { word: 'barefoot', meaning: '맨발인', sentence: 'Now he was barefoot.' },
+            { word: 'thud', meaning: '쿵쿵 소리 내다', sentence: "Mr McGregor's boots came thudding along." },
+            { word: 'rascal', meaning: '이놈, 개구쟁이', sentence: 'Where have you got to, you rascal!' }
+        ],
+        '04-chase-2.webp': [
+            { word: 'gooseberry', meaning: '까치밥나무 열매', sentence: 'He caught sight of a gooseberry bush.' },
+            { word: 'net', meaning: '그물', sentence: 'With a net thrown over it.' },
+            { word: 'dive in', meaning: '뛰어들다', sentence: 'And he dived in underneath.' },
+            { word: 'struggle', meaning: '버둥거리다', sentence: 'Peter struggled this way and that.' },
+            { word: 'squeeze shut', meaning: '꼭 감다', sentence: 'Peter squeezed his eyes shut.' }
+        ],
+        '05-net.webp': [
+            { word: 'sparrow', meaning: '참새', sentence: 'Three sparrows came flying down.' },
+            { word: 'chirp', meaning: '짹짹거리다', sentence: 'Chirping at him.' },
+            { word: 'give up', meaning: '포기하다', sentence: "You mustn't give up!" },
+            { word: 'set one’s teeth', meaning: '이를 악물다', sentence: 'Peter set his teeth.' },
+            { word: 'cheer on', meaning: '응원하다', sentence: 'With the sparrows cheering him on.' }
+        ],
+        '05-net-2.webp': [
+            { word: 'shed', meaning: '창고', sentence: 'There was an old shed ahead of him.' },
+            { word: 'dim', meaning: '어둑한', sentence: 'It was dim in there.' },
+            { word: 'watering can', meaning: '물뿌리개', sentence: 'He caught sight of a large watering can.' },
+            { word: 'soak through', meaning: '흠뻑 젖게 하다', sentence: 'The cold water soaked him through.' },
+            { word: 'creak open', meaning: '삐걱 열리다', sentence: 'And the door creaked open.' }
+        ],
+        '06-can.webp': [
+            { word: 'turn over', meaning: '들춰 보다', sentence: 'He turned over every flower pot.' },
+            { word: 'dare', meaning: '감히 ~하다', sentence: 'Peter did not dare to breathe.' },
+            { word: 'tickle', meaning: '간질간질하다', sentence: 'His nose began to tickle.' },
+            { word: 'hold in', meaning: '참다', sentence: 'He tried hard to hold it in.' },
+            { word: 'spin round', meaning: '홱 돌아서다', sentence: 'Mr McGregor spun round.' }
+        ],
+        '06-can-2.webp': [
+            { word: 'make for', meaning: '~쪽으로 향하다', sentence: 'Peter made for the window.' },
+            { word: 'clatter', meaning: '우당탕 소리', sentence: 'Flower pots came down with a clatter.' },
+            { word: 'catch one’s foot', meaning: '발이 걸리다', sentence: 'Mr McGregor caught his foot and went over.' },
+            { word: 'drip off', meaning: '뚝뚝 떨어지다', sentence: 'With the water dripping off his fur.' }
+        ],
+        '07-escape.webp': [
+            { word: 'goldfish', meaning: '금붕어', sentence: 'A few goldfish were swimming.' },
+            { word: 'tip', meaning: '끝', sentence: 'With only the tip of her tail moving.' },
+            { word: 'get mixed up with', meaning: '얽히다', sentence: 'It was better not to get mixed up with a cat.' },
+            { word: 'along beside', meaning: '~을 따라', sentence: 'He went along beside the wall.' }
+        ],
+        '07-escape-2.webp': [
+            { word: 'throw oneself', meaning: '몸을 던지다', sentence: 'He threw himself under it and out.' },
+            { word: 'roll over', meaning: '데굴데굴 구르다', sentence: 'And went rolling over on the grass.' },
+            { word: 'give under', meaning: '풀리다', sentence: 'His legs gave under him.' },
+            { word: 'for some time', meaning: '한동안', sentence: 'He could not get up again for some time.' }
+        ],
+        '08-ending.webp': [
+            { word: 'sigh at', meaning: '한숨을 쉬다', sentence: 'She sighed at the sight of him.' },
+            { word: 'wet through', meaning: '흠뻑 젖은', sentence: 'Wet through and with no shoes on.' },
+            { word: 'hang one’s head', meaning: '고개를 푹 숙이다', sentence: 'Peter hung his head.' },
+            { word: 'fiddle with', meaning: '만지작거리다', sentence: 'And fiddled with his toes.' },
+            { word: 'camomile', meaning: '캐모마일', sentence: 'His mother made camomile tea.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'supper', meaning: '저녁', sentence: 'The other three had their supper.' },
+            { word: 'eat one’s fill', meaning: '배불리 먹다', sentence: 'The three of them ate their fill.' },
+            { word: 'no help for it', meaning: '어쩔 수 없는', sentence: 'And there was no help for it.' },
+            { word: 'scarecrow', meaning: '허수아비', sentence: 'Mr McGregor put up a scarecrow.' },
+            { word: 'crow', meaning: '까마귀', sentence: 'To keep the crows off.' }
+        ],
+        'end.webp': [
+            { word: 'letter', meaning: '편지', sentence: 'This story began in a letter.' },
+            { word: 'closely', meaning: '자세히', sentence: 'She watched them closely.' },
+            { word: 'exact', meaning: '정확한', sentence: 'The way they move in her pictures is exact.' },
+            { word: 'slow down', meaning: '걸음을 늦추다', sentence: 'Eating too much slowed him down.' },
+            { word: 'scold', meaning: '나무라다', sentence: 'His mother does not scold him.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -600,6 +1215,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -608,7 +1224,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -620,7 +1236,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -654,4 +1270,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
