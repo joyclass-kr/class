@@ -1,6 +1,6 @@
 const BOOK_TITLE = "토끼전";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => (LANG === 'en' ? `Chapter ${n} · ` : `${n}장 · `);
 
 const CHAPTERS = [
     {
@@ -273,15 +273,18 @@ function splitSegments(html) {
     return segs.length ? segs : [html];
 }
 
-const CHAPTER_SEGS = CHAPTERS.map(ch => {
+// 말을 바꾸면 글이 통째로 갈리므로 조각도 다시 나눈다.
+function segsOf(paras) {
     const segs = [];
-    ch.paras.forEach((html, paraIdx) => {
+    paras.forEach((html, paraIdx) => {
         splitSegments(html).forEach((piece, k) => {
             segs.push({ paraIdx, html: piece, start: k === 0 });
         });
     });
     return segs;
-});
+}
+
+let CHAPTER_SEGS = [];
 
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
@@ -299,7 +302,7 @@ function runHtml(segs, a, b) {
         // 쪽 끝에 걸린 <br>는 빈 줄만 만드니 떼어 낸다.
         inner = inner.replace(/(<br\s*\/?>)+\s*$/i, '')
             .replace(/<br\s*\/?>/gi, '<br><span class="ln"></span>');
-        out += `<p${contd ? ' class="cont"' : ''}>${inner}</p>`;
+        out += `<p${contd ? ' class="cont"' : ''} data-say="${pi}">${inner}</p>`;
         i = j;
     }
     return out;
@@ -541,6 +544,17 @@ function paginateChapter(ch, chIndex) {
     });
     return spreads;
 }
+const COVER = {
+    emoji: '🐢',
+    title: '토끼전',
+    intro: [
+        "토끼전은 지은이가 알려지지 않은 조선 시대 소설이에요. 별주부전, 토생원전, 수궁가 같은 여러 이름으로 불린답니다.",
+        "이 이야기는 원래 판소리로 불리던 것이 글로 옮겨진 것이에요. 판소리 다섯 마당 가운데 수궁가가 바로 이 이야기지요. 그래서 문장에 노래하듯 늘어놓는 대목이 유난히 많답니다.",
+        "뿌리는 훨씬 오래되었어요. 삼국사기에 실린 구토 설화가 그것인데, 신라의 김춘추가 고구려에 붙잡혔을 때 이 이야기를 듣고 꾀를 내어 풀려났다고 적혀 있답니다.",
+        "조선 후기에는 같은 이야기의 끝이 수십 가지로 갈렸어요. 부르는 소리꾼마다, 듣는 사람마다 바라는 것이 달랐기 때문이지요. 그래서 토끼전은 어느 책을 펴느냐에 따라 마지막 쪽이 다르답니다."
+    ]
+};
+
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
@@ -552,17 +566,15 @@ function artFrame(src, emoji) {
 }
 
 function coverPage() {
+    const c = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '🐢')}
+                ${artFrame('cover.webp', c.emoji)}
             </div>
             <div class="story-page-right">
-                <h1>토끼전</h1>
-                <p>토끼전은 지은이가 알려지지 않은 조선 시대 소설이에요. 별주부전, 토생원전, 수궁가 같은 여러 이름으로 불린답니다.</p>
-                <p>이 이야기는 원래 판소리로 불리던 것이 글로 옮겨진 것이에요. 판소리 다섯 마당 가운데 수궁가가 바로 이 이야기지요. 그래서 문장에 노래하듯 늘어놓는 대목이 유난히 많답니다.</p>
-                <p>뿌리는 훨씬 오래되었어요. 삼국사기에 실린 구토 설화가 그것인데, 신라의 김춘추가 고구려에 붙잡혔을 때 이 이야기를 듣고 꾀를 내어 풀려났다고 적혀 있답니다.</p>
-                <p>조선 후기에는 같은 이야기의 끝이 수십 가지로 갈렸어요. 부르는 소리꾼마다, 듣는 사람마다 바라는 것이 달랐기 때문이지요. 그래서 토끼전은 어느 책을 펴느냐에 따라 마지막 쪽이 다르답니다.</p>
+                <h1 data-say="0">${c.title}</h1>
+                ${c.intro.map((p, i) => `<p data-say="${i + 1}">${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -580,14 +592,14 @@ function tocPage(part) {
                 <span class="toc-num">${mark}</span>
                 <span>
                     <strong>${title}</strong>
-                    <small>${page}쪽</small>
+                    <small>${page}${T().folio}</small>
                 </span>
             </button>
         </li>`;
     const itemHtml = ch => rowHtml(`data-goto="${ch.num}"`, ch.num, ch.title, pageOfChapter(ch.num));
     const extraItems = [
-        rowHtml('data-goto-kind="quiz"', '❓', '이야기 문제', pageOfKind('quiz')),
-        rowHtml('data-goto-kind="after"', '📖', '읽고 나서', pageOfKind('after')),
+        rowHtml('data-goto-kind="quiz"', '❓', T().quiz, pageOfKind('quiz')),
+        rowHtml('data-goto-kind="after"', '📖', T().after, pageOfKind('after')),
     ];
     const group = TOC_GROUPS[part];
     const last = part === TOC_GROUPS.length - 1;
@@ -596,11 +608,11 @@ function tocPage(part) {
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                ${part === 0 ? '<h2>차례</h2>' : ''}
+                ${part === 0 ? `<h2>${T().toc}</h2>` : ''}
                 <ul class="toc-list">${items.slice(0, half).join('')}</ul>
             </div>
             <div class="story-page-right">
-                ${part === 0 ? '<h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>' : ''}
+                ${part === 0 ? `<h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>` : ''}
                 <ul class="toc-list">${items.slice(half).join('')}</ul>
             </div>
         </div>`;
@@ -608,10 +620,7 @@ function tocPage(part) {
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
 const TOC_PER_SPREAD = 16;
-const TOC_GROUPS = [];
-for (let i = 0; i < CHAPTERS.length; i += TOC_PER_SPREAD) {
-    TOC_GROUPS.push(CHAPTERS.slice(i, i + TOC_PER_SPREAD));
-}
+let TOC_GROUPS = [];
 
 function chapterSpreadPage(spread) {
     const ch = spread.ch;
@@ -662,13 +671,13 @@ const QUIZ = [
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
 // 문제는 한 쪽에 다 넣고 스크롤해서 푼다.
 // 쪽을 쪼개 놓으면 쪽마다 절반이 비고, 답을 고르려고 여러 번 넘겨야 한다.
-const QUIZ_GROUPS = [{ from: 0, items: QUIZ }];
+const QUIZ_GROUPS = [{ from: 0 }];
 
 // 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
 const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
 
 function quizPage(part) {
-    const group = QUIZ_GROUPS[part];
+    const group = { from: QUIZ_GROUPS[part].from, items: QZ() };
     const done = QUIZ_PICKED.filter(v => v !== null).length;
     const items = group.items.map((item, k) => {
         const i = group.from + k;
@@ -687,8 +696,8 @@ function quizPage(part) {
     }).join('');
     return `
         <div class="page page-quiz">
-            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
-            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+            ${part === 0 ? `<h2>${T().quiz}</h2>` : ''}
+            <p class="quiz-intro-text" id="quizProgress">${T().done(done, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
@@ -718,30 +727,22 @@ const AFTERWORD = {
     ]
 };
 
-const AFTER_SEGS = (() => {
-    const segs = [];
-    AFTERWORD.paras.forEach((html, paraIdx) => {
-        splitSegments(html).forEach((piece, k) => {
-            segs.push({ paraIdx, html: piece, start: k === 0 });
-        });
-    });
-    return segs;
-})();
+let AFTER_SEGS = [];
 
-const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+const AFTER_FOOT = () => `<p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>`;
 
 function paginateAfterword() {
     const segs = AFTER_SEGS;
-    const arts = AFTERWORD.art || [];
+    const arts = AF().art || [];
     const { usable, headHeight, artHeight } = PROBE;
-    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const headHtml = `<h2>${AF().title}</h2>`;
     const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
 
     const underArt = Math.max(60, usable - artHeight);
 
     // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
     // 마지막 쪽만 넘친다.
-    const footH = PROBE.measure(AFTER_FOOT);
+    const footH = PROBE.measure(AFTER_FOOT());
 
     const capsOf = slots => {
         const caps = [];
@@ -788,9 +789,9 @@ function paginateAfterword() {
 
 function afterSpreadPage(spread) {
     const segs = AFTER_SEGS;
-    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = spread.first ? `<h2>${AF().title}</h2>` : '';
     // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
-    const foot = spread.last ? AFTER_FOOT : '';
+    const foot = spread.last ? AFTER_FOOT() : '';
 
     if (spread.art) {
         return `
@@ -800,7 +801,7 @@ function afterSpreadPage(spread) {
                     ${runHtml(segs, spread.left[0], spread.left[1])}
                 </div>
                 <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    <div class="story-art-top">${artFrame(spread.art, AF().emoji)}</div>
                     ${runHtml(segs, spread.right[0], spread.right[1])}
                     ${foot}
                 </div>
@@ -820,17 +821,511 @@ function afterSpreadPage(spread) {
         </div>`;
 }
 
+
+/* ── 영어판 ────────────────────────────────────────────────────
+   우리말 글과 영어 글을 나란히 두고, 단추 하나로 갈아 끼운다.
+   쪽은 재어서 나누므로 말을 바꾸면 처음부터 다시 나눈다. */
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   artAt 닻은 영어 문장 조각으로 새로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: '🐢',
+        title: 'The Tale of the Rabbit',
+        intro: [
+            "The Tale of the Rabbit is a Joseon novel with no known author. It goes by several names: The Tale of Byeoljubu, The Tale of Master Rabbit, and Sugung-ga.",
+            "It was sung as pansori before it was written down. Of the five pansori pieces, Sugung-ga is this story, which is why the sentences so often run on in lists.",
+            "Its roots are much older. The History of the Three Kingdoms carries a short tale of a turtle and a rabbit, and says that Kim Chunchu of Silla, held prisoner in Goguryeo, heard it and talked his way out.",
+            "By the late Joseon period the same story had dozens of endings, so the last page depends on which book you open."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "The Dragon King's Illness",
+            art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
+            artAt: ["a palace built of crystal", "The whole sea palace was turned upside down", "Who will go?"],
+            paras: [
+                "Deep in the South Sea there stood a palace built of crystal. The pillars were coral and the roof was mother-of-pearl, so that whenever a current went by the whole palace shimmered like a rainbow. The one who ruled there was the Dragon King of the South Sea. When fish passed in front of him they folded their fins and bowed their heads.",
+                "That spring the Dragon King held a great feast. He called the Dragon Kings of the East Sea, the West Sea and the North Sea, and they made merry for three days and nights. The music never stopped and no cup was ever allowed to run dry. More than a hundred kinds of food were set on the tables.",
+                "It was the morning of the fourth day. The Dragon King started to get up from his seat and sat straight back down.<br>\"I... I am dizzy.\" The waiting women beside him ran to him in alarm.",
+                "From that day the Dragon King kept to his bed. He could not get food down and barely wetted his lips with water. His whole body would burn like a coal and then go cold as ice. At night he talked out of his head.",
+                "The whole sea palace was turned upside down. Every physician of any name was sent for. The carp physician felt his pulse, the octopus physician rubbed him all over, and the seahorse physician tried his needles. But none of it was any use. Every one of them shook his head and stepped back.",
+                "They tried medicines too. They boiled down seaweed and kelp, they ground pearls into it, they stewed the flesh of a clam a thousand years old. The Dragon King would swallow one mouthful and then turn his head away again. Only the smell of medicine filled the palace.",
+                "The moon changed twice. In that time the flesh went from the Dragon King's face and the light went out of his scales. The ministers stood about in front of the palace stamping their feet. It was long since anyone had laughed inside those walls.",
+                "\"This will end badly.\"<br>\"We have brought every famous doctor under heaven. What would you have us do?\"<br>\"If it is not in the sea, then we must look for it on land.\"",
+                "But nobody said much about the land out loud. To things that live in the sea, the land was a fearful place where you could not breathe. They had heard it was a place where the breath stops and the body dries out.",
+                "Then one night, half asleep, the Dragon King opened his eyes and saw an old man in white robes standing beside his bed. His beard came down to his chest and he held a staff in his hand. The door was barred and the guards were where they had been.",
+                "\"Who... who are you?\"<br>\"I am one who has watched this sea a long time. I know a medicine that will cure Your Majesty, and I have come.\"",
+                "The Dragon King barely raised himself.<br>\"Tell me. I will get it, whatever it is.\"",
+                "The old man looked down at him for a long while. Then he opened his mouth slowly.<br>\"Your Majesty's illness did not come out of the water. So it will not be cured by anything that came out of the water.\" His voice rolled low, like a wave.",
+                "\"Then what am I to do?\"<br>\"Among the beasts that live on land there is one called the rabbit. Eat the liver of that rabbit and you will be well as if it had been washed away.\"",
+                "\"A rabbit...\" The Dragon King said it over. He had never heard the name. \"What does such a beast look like?\"<br>\"Long ears, red eyes, hind legs longer than its front legs. It runs about the hills eating grass. It is very timid and very cunning.\"",
+                "\"Very cunning?\"<br>The old man smiled for the first time.<br>\"Of all the beasts in the world there is none with such a gift for keeping its own life. So if you mean to bring it here, know at least this much: it is not a thing that will be done by force.\"",
+                "The Dragon King was about to ask something more when the old man's figure blurred and faded. When he came to himself there was nobody beside the bed. Only a strange smell of grass was left in the room. It was a smell that stays at the end of the nose a long time.",
+                "The next morning the Dragon King called in every one of his ministers. For the first time in a long while there was strength in his voice.<br>\"An immortal came here in the night. He says that for my illness the medicine is a rabbit's liver.\" The ministers glanced at one another.",
+                "The great officers of the sea palace looked into each other's faces.<br>\"A rabbit is a land beast, is it not.\"<br>\"It is. So somebody must go up on land.\"",
+                "In that moment the wide court went as quiet as under water. Or rather, it was under water, and it went quieter than that. Not one cough was heard.",
+                "The Dragon King looked over the faces of his ministers one by one.<br>\"Who will go?\"",
+                "Nobody answered. Minister Octopus quietly curled all eight of his legs up under him, and General Shark suddenly found something to look at on the ceiling. Lord Croaker only blinked and blinked. Every one of them studied the ends of their own feet.",
+                "\"Come now. There is no answer.\"<br>The Dragon King's voice rose a little. Only then did the ministers begin to speak, one after another. And every word of it was a word passing the thing on to somebody else. As he listened the Dragon King's hand shook."
+            ]
+        },
+        {
+            num: 2,
+            title: "Who Will Go Up on Land?",
+            art: ["story-02-a.webp", "story-02-b.webp", "story-02-c.webp"],
+            artAt: ["Minister Octopus was the first to come forward", "how have I treated you all this while", "bowed to his old mother"],
+            paras: [
+                "Minister Octopus was the first to come forward.<br>\"Your servant has eight legs and swims well enough, but on land not one of them is any use. I should dry up altogether. General Shark would surely be the fitting choice.\" At the end of it he quietly pulled somebody else in.",
+                "General Shark jumped.<br>\"And what would become of your servant on land? Once this great body is up on the sand it is finished there and then. Besides, your servant is fearsome to look at, and the rabbit would run at the sight of me. What about Lord Croaker?\" Even as he spoke his eyes were on Lord Croaker.",
+                "Lord Croaker waved his fins about.<br>\"Your servant, once on land, is salted at once and becomes dried croaker. That is not the end of one servant only; the standing of the whole country hangs on it.\" It sounded well enough, but in the end it meant he would not go.",
+                "As he listened the Dragon King's face went red and then went blue.<br>\"Then what about Lord Crab?\"<br>\"Your servant walks only sideways. Going sideways along a road that must be gone straight, when should I ever reach the hills?\" Lord Crab raised his claws and put them down.",
+                "\"General Whale?\"<br>\"Your servant is so big that his belly grounds before he ever gets near the shore.\"",
+                "\"Lord Shrimp?\"<br>\"Your servant is so small that he is trodden to death on a hill path.\"",
+                "Big ones could not go for being big, small ones for being small, one for being fearsome to look at, one for walking sideways. The whole court was full of nothing but reasons why not. The excuses were all different and the meaning was one.",
+                "At last the Dragon King raised himself from his seat. His thin hand trembled.<br>\"Tell me, how have I treated you all this while. I gave you good places and I fed you well. And is there not one in this whole country who will go up on land for me?\" The end of the words kept shaking.",
+                "At that the ministers all bowed their heads together. But still nobody stepped forward. They held even the sound of their breathing.",
+                "Then from the very last place in the court a voice was heard. It was neither loud nor shaking.<br>\"Your servant will go.\" A stir went round the court.",
+                "Everybody turned to where the sound came from. Below a pillar a soft-shelled turtle lay flat. His rank was so low that in the ordinary way his turn to speak never came round: it was Byeoljubu. He was an old turtle with moss grown on his shell.",
+                "The great officers muttered.<br>\"What can a small thing like that do?\"<br>\"He is the slowest swimmer in the whole sea palace.\" From the back came the sound of somebody swallowing a laugh.",
+                "The turtle acted as though he had not heard, and walked forward. His step really was slow. Crossing the court alone took him a long while. Even so he never once stopped.",
+                "When he reached the Dragon King the turtle bowed his head low.<br>\"Your servant has never held high rank and has never done anything that could be called a service. But your servant has two things that others have not.\"",
+                "\"And what are they?\"<br>\"One is this shell. On land my body will not dry, and if danger comes I can draw my head and legs inside. The other is feet that can go both in the water and on land.\"",
+                "The Dragon King looked down at him for a long time.<br>\"All this while I never knew you.\"<br>\"There is nothing to know or not know about your servant. Only, the one who can go is the one who ought to go.\" The turtle's voice was the same from the beginning to the end.",
+                "At that the officers who had all just said they could not go suddenly had a great deal to say.<br>\"Byeoljubu indeed!\"<br>\"I always thought there was something out of the common about that fellow.\"<br>The turtle did not turn his head. Not one of them could meet his eye.",
+                "The Dragon King asked,<br>\"Well then, what do you need? Shall I send soldiers with you? Shall I load you with treasure?\"",
+                "\"Soldiers are no use. If we go in numbers the rabbit runs first. Treasure is only heavy.\"<br>\"Then what do you need?\"<br>\"One picture with the rabbit's likeness drawn on it will do.\" The turtle thought a moment and then answered.",
+                "\"A picture?\"<br>\"Your servant has lived his whole life in the sea and has never seen the thing called a rabbit. I can hardly climb the hills and stop the first passer-by to ask. I must be able to know it by my eyes.\"",
+                "The Dragon King struck his knee.<br>\"Deeply thought indeed. Send for a painter.\" That same day the best painter in the sea palace was called in.",
+                "That night the turtle went home and bowed to his old mother.<br>\"I am going a long way.\"<br>The mother turtle stroked her son's shell for a long time.<br>\"Take care of yourself. And whatever happens, tell no lies.\"<br>The turtle could not answer that at once. His mother's eyes were dim, and she felt over her son's face with her hands."
+            ]
+        },
+        {
+            num: 3,
+            title: "Up on Land with One Picture",
+            art: ["story-03-a.webp", "story-03-b.webp", "story-03-c.webp"],
+            artAt: ["the best painter in the sea palace was called in", "the turtle put his head out of the water", "beasts of every kind were gathered"],
+            paras: [
+                "The next morning the best painter in the sea palace was called in. The painter set out his brush and inkstone and sat down. They brought out the finest paper in the palace for him too.",
+                "But his face was soon at a loss.<br>\"Your servant has never seen a rabbit either.\" The hand holding the brush stopped in mid-air.",
+                "The court stirred again. Then an old turtle of the hard-shelled sort came forward. He was a turtle who said he had gone up on the shore several times when he was young. He was so old that shells had grown on his back.<br>\"Draw as I tell you.\"",
+                "The old turtle shut his eyes and felt back through his memory as he spoke.<br>\"First, make the body about the size of two grown men's fists put together. The fur is a brown with grey in it, and the belly is whitish.\" The painter began to work the brush.",
+                "The brush swept across the paper.<br>\"Now the ears. Very long. You must draw them longer than suits that body. The tips go black.\" Two ears went straight up on the paper.",
+                "\"And the eyes?\"<br>\"The eyes are red. They are always round and open, as if it had just been startled. The nose is small and always twitching, and the upper lip is split into three.\"",
+                "\"The legs?\"<br>\"The front legs are short and the hind legs very long. So it does not walk, it jumps. When it sits it folds the hind legs and holds itself up on the front ones. The tail is short and round.\" The ministers craned their necks to look.",
+                "The painter's brush went across one last time, and there on the paper was a beast that had not been there before. A beast with long ears and red eyes and long hind legs.",
+                "The ministers of the sea palace crowded round the picture and looked at it.<br>\"What a funny-looking thing.\"<br>\"And that is what has such a fine liver in it.\" One of them pointed at the picture with a finger and laughed.",
+                "The Dragon King handed the picture to the turtle. The turtle rolled it up carefully and pushed it tight in under his shell. In case it got wet he wrapped it once more in oiled paper.",
+                "\"Byeoljubu.\"<br>\"Yes, Your Majesty.\"<br>\"Come back alive. It does not matter if you cannot bring the rabbit.\"<br>For the first time the turtle raised his head and looked the Dragon King in the face. Then, without a word, he made his bow.",
+                "Every minister of the sea palace came out as far as the palace gate to see the turtle off. The turtle never once looked back, and pushed up through the water, up and up. Behind him he heard the gate close.",
+                "The colour of the water grew brighter and brighter, and then all at once it was bright above his head. For the first time the turtle put his head out of the water. Something white was moving over him. It was the sky.",
+                "His breath caught. He had not known that this thing called air was so light and so dry. The sunlight was so bright that he could not properly open his eyes. Every breath stung his throat.",
+                "The turtle crawled up the sand. In the water his body had floated of itself; on land his shell was heavy as a rock. A hundred steps and a rest, a hundred steps and another rest.",
+                "So he crawled for three days and came at last to the foot of a hill. It was a place of pine trees in rows and a stream running through. The turtle lay flat in the shade of a rock and got his breath. His shell had heated in the sun and was hot to the touch.",
+                "Then a great noise came down from up the hill. The turtle crept up to look, and in a wide meadow beasts of every kind were gathered. There were roe deer and wild pigs and foxes.",
+                "Some sort of feast was going on, and they were arguing over who should sit at the head of it.<br>\"By years I am the eldest,\" said the roe deer.<br>\"What have years to do with it? It should go by strength.\" The wild pig snuffled.",
+                "The fox came in, swinging his tail.<br>\"Neither strength nor years. In this world it is the clever one who sits at the top.\"<br>\"And how do you measure clever?\" asked the badger.<br>\"Well, that is...\" The fox let the end of it trail off.",
+                "Just then a small voice came from behind them.<br>\"Never mind all that. Let us do it this way. Whoever here saw this morning's sun first shall sit at the head.\" The arguing stopped dead.",
+                "The beasts all turned to look. A small beast sitting with its hind legs folded had a front paw in the air. It had long ears and red eyes. It was the smallest body there.",
+                "The turtle's heart gave a thump. He pulled the picture out from under his shell and opened it. The beast in the picture and that beast were exactly the same. Even the black at the tips of the ears was the same.",
+                "\"Found him.\"<br>The turtle held his breath and lowered himself behind the rock.",
+                "In the meadow the argument was still going on. In the end nobody got the head place, and the beasts scattered, each of them grumbling. The rabbit stayed to the last, picking up chestnuts that others had dropped. Nobody paid the small beast any attention."
+            ]
+        },
+        {
+            num: 4,
+            title: "The Promise of an Office",
+            art: ["story-04-a.webp", "story-04-b.webp", "story-04-c.webp"],
+            artAt: ["I am called Byeoljubu", "There are no hunters in the sea palace", "The rabbit climbed up on the turtle's shell"],
+            paras: [
+                "The turtle came slowly out. The rabbit noticed him first and put his weight on his hind legs.<br>\"Who is that?\" His ears pricked round toward the turtle.",
+                "\"Do not be startled. I come from the sea palace of the South Sea, and I am called Byeoljubu.\"<br>The rabbit looked the turtle's shell over, up and down.<br>\"The sea palace? That palace they say is under the water?\"<br>\"The same.\" The rabbit came a step closer.",
+                "The rabbit's nose twitched.<br>\"And what brings you all the way here from a place like that?\"<br>\"I have come looking for a man of parts.\" The turtle was in no hurry.",
+                "\"A man of parts?\"<br>\"Our king has heard there is a clever beast on land. He would like to bring him down and give him an office. And having seen you speak up just now in that quarrel over places, I find the report was no idle one.\"",
+                "Both the rabbit's ears stood up.<br>\"Me... is that so? Well, to be sure, where in these hills is there a head to match mine?\" He was thinking of the quarrel he had just had.",
+                "The turtle laughed to himself and kept a straight face outside.<br>\"And how is life in the hills?\"",
+                "At that the rabbit's face darkened at once.<br>\"Don't speak of it. In spring the hungry beasts go about with their eyes alight, in summer the snakes swarm, in autumn the hunters set their traps, and in winter there is nothing to eat and we gnaw the bark off trees. I have never once slept easy in my life.\" As he spoke the rabbit's voice shook.",
+                "\"I dare say.\" The turtle nodded. \"So let me tell you something about the sea palace.\"",
+                "The turtle lowered his voice.<br>\"There are no hunters in the sea palace. No traps and no eagles. The palace is built of crystal, the pillars are coral and the roof is mother-of-pearl, so that a rainbow rises whenever a current goes by. Pearls roll about on the tables, and there is food to spare in all four seasons.\" Without knowing it the rabbit leaned forward.",
+                "The rabbit's red eyes got bigger and bigger.<br>\"And what is more, His Majesty has said he will give you an office. You would wear a cap and a jade belt and sit in a high place.\"",
+                "\"An... an office...\" The rabbit swallowed hard. In the hills he had never heard the word office spoken.<br>\"Well? Will you not come with me?\"",
+                "The rabbit did not answer at once. But both ears were already leaning right over toward the turtle. His heart was going so that no words came.",
+                "Just then a crow on a pine branch overhead gave a caw.<br>\"Rabbit, don't go.\" It was loud enough to ring round the whole hill.",
+                "The rabbit looked up.<br>\"And what business is it of yours?\"<br>\"I lived a long time down by that shore. Things that live in the water do not come up on land. And they certainly do not crawl up to hand out offices.\"",
+                "Under the turtle's shell a cold sweat broke out. Outside he laughed heartily.<br>\"That bird is jealous of me, I think. Some cannot bear to see another do well.\" He said it so, but his voice had risen a little.",
+                "The crow called again.<br>\"Rabbit, think it over. Ask that beast what he wants to get out of you. There is nobody in this world who gives good things for nothing.\" The crow came down to the very end of the branch.",
+                "The rabbit hesitated a moment. In that instant the turtle took a step back.<br>\"If that is how it is, then let it be. I crawled three days to get here. If you will not, I shall look for somebody else. Surely you are not the only clever beast in these hills.\"",
+                "And he really did turn round and start back down. His step was so slow that even ten paces took him a long while. He was doing it on purpose.",
+                "The rabbit watched him go. And then he saw, before his eyes, some other beast wearing the cap and the jade belt and sitting in the high place. He remembered the face of the fox who had let his words go by in the meadow. At that thought his feet moved of themselves.",
+                "\"Wait! Wait a moment!\"<br>The rabbit sprang and got ahead of the turtle.<br>\"I'll go. I'll go.\"",
+                "The crow called several times more from the branch. The rabbit never once looked up. After a while the sound was only a nuisance to him.",
+                "The turtle asked,<br>\"Can you swim?\"<br>\"That I cannot.\"<br>\"Then get on my back. If you keep your eyes shut the water will not go up your nose.\"",
+                "The rabbit climbed up on the turtle's shell. The shell was broad and hard and exactly right to sit on. The rabbit held tight to the rim of it with his front paws.",
+                "They crossed the sand and came to the water's edge. As the turtle pushed himself under, the rabbit shut both eyes tight. The last thing he heard was the crow calling far off from the hill. When the water came up to his throat the rabbit drew himself in small."
+            ]
+        },
+        {
+            num: 5,
+            title: "What Happened in the Sea Palace",
+            art: ["story-05-a.webp", "story-05-b.webp", "story-05-c.webp"],
+            artAt: ["he thought his breath would stop", "Cut that rabbit open and take out the liver", "my liver is not in my belly"],
+            paras: [
+                "They had gone some way when the turtle said,<br>\"You may open your eyes now.\" The current had grown much softer.",
+                "The moment the rabbit opened his eyes he thought his breath would stop. Everything around him was full of blue light. Shoals of fish went by in crowds, coral grew like a wood, and on the bottom the clams opened and closed their mouths. They were colours he had never seen in the hills.",
+                "And there ahead of him was the palace. It was exactly as the turtle had said. The pillars were coral and the roof was mother-of-pearl, so that whenever a current went by the whole palace shimmered like a rainbow. The rabbit could not shut his mouth.",
+                "\"It is true!\" said the rabbit in wonder. \"Never in my life have I seen the like of this.\"",
+                "The palace gate opened and the ministers stood in a long row. But there was something odd in the way their eyes looked at the rabbit. It was not glad and it was not surprised; it was the look of somebody grudging something. Not one of them spoke first.",
+                "The rabbit stopped for a moment. But he soon told himself it was nothing. Where is the place, he thought, that welcomes a newcomer from the first? All the same his back kept feeling cold.",
+                "Inside the great hall the Dragon King sat in a high place. His face was thin, but his two eyes alone burned frighteningly. His breath came so short that it could be heard across the room.",
+                "\"That is the rabbit, then.\"<br>\"It is, Your Majesty.\" The turtle bowed low as he spoke.<br>\"You have done well. Withdraw and rest.\"",
+                "The turtle withdrew. But as he went he never once looked toward the rabbit. His shell seemed unusually heavy.",
+                "The rabbit stepped forward and bowed.<br>\"A humble thing out of the hills greets Your Majesty. I came on hearing that Your Majesty would grant me an office.\" There was a proud note in his voice.",
+                "At those words the hall went quiet for a moment. And then there was a sound of sniggering here and there. The rabbit did not know what the laughing meant.",
+                "The Dragon King raised his hand for silence. Then he opened his mouth very slowly.<br>\"An office... Yes. I shall give you something greater than an office. Your name will stay in this sea for ever.\" The end of it was oddly cold.",
+                "\"You there.\"<br>The Dragon King's voice rang through the hall.<br>\"Cut that rabbit open and take out the liver.\"",
+                "The rabbit's whole body turned to ice.<br>\"What? What... what did Your Majesty say?\" His ears went flat back of themselves.",
+                "\"I was told that for my illness a live rabbit's liver is the medicine. That is why you were brought here.\"<br>Soldiers came up with their spears. The spear points glittered in the lamplight.",
+                "The rabbit's head went white. Only now did the crow's calling from the pine branch come back to him, clear as anything. There is nobody in this world who gives good things for nothing — that was what it had said.",
+                "But the rabbit was a beast that had kept its own life in the hills. Even with his legs shaking under him his head was working furiously. He drew one long breath.",
+                "Just before the spear point touched his throat the rabbit suddenly struck his knee and laughed out loud.<br>\"Oh, what a mess this is!\" The laugh rang through the hall.",
+                "The Dragon King raised his hand and halted the soldiers.<br>\"And what is the mess?\"",
+                "\"Your Majesty, if only you had said so sooner. If it was my liver you wanted, was it not enough simply to say it? Why go to the trouble of lies about offices and the rest of it to bring a fellow down here?\" His voice did not shake in the least.",
+                "\"What are you talking about?\"<br>\"At this moment my liver is not in my belly.\"",
+                "The hall stirred. The Dragon King's brows twitched.<br>\"No liver? Where is there such a beast?\" The officers looked at one another.",
+                "\"Other beasts are not so, but the rabbit alone is different.\" The rabbit went on quite calmly. \"From of old every kind of beast has coveted our livers. So if we carried them about in us we should never know when our bellies would be cut open. Therefore every fifteen days we take the liver out, wash it in clean water, hide it in a cleft of rock, and put it back only when we need it.\"",
+                "\"Then where is it now?\"<br>\"It happens that yesterday was the washing day. At this moment my liver is up in the hills airing in a cleft of rock. Cut me open and it will be labour wasted. If Your Majesty does not believe me, cut away.\" And he pushed his belly out. Nobody was willing to take up a knife."
+            ]
+        },
+        {
+            num: 6,
+            title: "After They Reached Land",
+            art: ["story-06-a.webp", "story-06-b.webp", "story-06-c.webp"],
+            artAt: ["glared at the rabbit for a long while", "Where is there a beast that lives with its liver taken out", "still lying flat on that sand"],
+            paras: [
+                "The Dragon King glared at the rabbit for a long while. The rabbit did not blink once. In the hall there was not even the sound of breathing.",
+                "Minister Octopus spoke up carefully.<br>\"Your Majesty, if we cut him open and there truly is no liver, we lose the beast and the medicine both.\"<br>The other officers watched the Dragon King's face and nodded too.",
+                "Then the turtle came forward.<br>\"Your Majesty, what he says is a lie. How should a beast live with its liver put away somewhere?\" His voice rose without his meaning it to.",
+                "The rabbit turned to look at the turtle. And he put on a deeply injured face.<br>\"Byeoljubu, was it not you who told me I should be given an office? Was that true?\" He even let his ears droop.",
+                "The turtle had nothing to say. The hall went quiet. The one who had lied was the turtle, and everybody had seen it. The turtle could not lift his head.",
+                "The Dragon King let out a long breath.<br>\"Rabbit, if what you say is true, what would you have me do?\"<br>\"Take me back to the land. In half a day I shall find the liver and return. Why should I refuse a thing that cures Your Majesty and earns me a great reward besides?\"",
+                "It sounded reasonable enough. At last the Dragon King nodded.<br>\"Let it be so. I shall forget the rudeness of today. And when you bring your liver, then I shall truly grant you an office.\" The rabbit made a low bow.",
+                "That evening there was a great feast in the sea palace. The rabbit sat at the head of the table and ate rare food until he was fit to burst. Only of the wine he did not touch one drop. He knew that a drunk man's words go astray.",
+                "Before dawn the next day the turtle took the rabbit on his back and went up the water road again. Neither of them said anything. There was only the sound of the water parting.",
+                "When they reached the sand the rabbit jumped down off the shell. Then he scratched at the earth a few times with his front paws and twitched his nose to smell the grass. It was a long time since he had smelled earth.",
+                "\"Byeoljubu.\"<br>\"Go quickly and fetch the liver.\"<br>The rabbit grinned.<br>\"Where is there a beast that lives with its liver taken out?\"",
+                "The turtle froze where he stood. The rabbit was already ten paces off.<br>\"You deceived me, so I have deceived you. Does that not make us even?\"<br>And then he went bounding off toward the hills and was gone. The turtle could not follow one step.",
+                "For more than half a day the turtle was still lying flat on that sand. The sun went down and the water came up to his feet and he did not move. The waves went over his shell again and again.",
+                "With what face was he to go back to the sea palace? His king was still lying in his bed and he was empty-handed. And on top of that he had been made a liar in the middle of the court. The road back was under the water, and still it seemed far away.",
+                "The tears fell from the turtle's eyes drop by drop and soaked into the sand.<br>\"My mother told me that whatever happened I was to tell no lies.\"",
+                "Then a voice came from behind him.<br>\"Do not cry.\" It was a low, slow voice.",
+                "He turned and there stood an old man in white robes. His beard came down to his chest and he held a staff in his hand. The turtle had never seen the old man before, and somehow he did not seem a stranger.",
+                "\"Who are you, sir?\"<br>\"One who called once at your king's bedside.\"",
+                "The turtle threw himself down at once.<br>\"Sir, I have lost the rabbit. There is no way left to save His Majesty.\" He lay with his forehead down against the sand.",
+                "The old man planted his staff in the sand and said,<br>\"When I spoke of a rabbit's liver I was not telling him a medicine. I wanted to see whether in all this wide country there was even one who would go up on land for his king.\" The turtle's eyes went wide.",
+                "\"What?\"<br>\"Those in high office all said they could not go, and you, who held no office at all, said you would. That was enough.\"",
+                "The old man took a small root out of his coat and set it down in front of the turtle. It was an old wild ginseng, earth-coloured.<br>\"Boil this and have him drink it. In three days he will be up.\" The soil was still on the fine roots.",
+                "When the turtle raised his head the old man was already gone. On the sand there were only a few marks left by a staff.",
+                "The turtle pushed the ginseng in under his shell and went into the water. Three days later the Dragon King of the South Sea got up from his bed. For the first time in a long while the palace was full of the sound of laughing.",
+                "The Dragon King meant to give the turtle a high office. But the turtle declined it.<br>\"Your servant is one who lied to another and brought him here by deceit. I have no face to take a reward.\"<br>\"Was that lie not told for my sake?\"<br>\"A lie is a lie all the same.\"",
+                "It was a long while before the Dragon King nodded. Then he seated the turtle at the very front of the court, but gave him no name of office. A minister sitting at the front with no office was the first such since the sea palace began. They say that place is still called Byeoljubu's place.",
+                "As for the rabbit in the hills, they say he never went near the water again. Only, they say that if anybody so much as brought up the word office, he would lay his ears flat and start backing away first."
+            ]
+        }
+    ],
+    /* 단어장 — 그림책은 펼침면마다 묶지만, 소설은 장마다 묶는다.
+       쪽은 재어서 나누므로 미리 알 수 없기 때문이다.
+       화면에는 그 쪽에 실제로 나온 낱말만 골라 보여 준다(vocabFor). */
+    words: {
+        "cover": [
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "a Joseon novel with no known author" },
+            { w: "It goes by several names", k: "여러 이름으로 불린다", s: "It goes by several names" },
+            { w: "was sung as pansori (sing)", k: "판소리로 불렸다", s: "It was sung as pansori before it was written down" },
+            { w: "run on in lists (run on)", k: "늘어놓는다", s: "the sentences so often run on in lists" },
+            { w: "held prisoner (hold)", k: "붙잡혀 있던", s: "held prisoner in Goguryeo" },
+            { w: "talked his way out (talk)", k: "말로 풀려났다", s: "heard it and talked his way out" },
+            { w: "dozens of endings", k: "수십 가지로 갈린 끝", s: "dozens of endings" }
+        ],
+        "ch1": [
+            { w: "shimmered like a rainbow (shimmer)", k: "무지갯빛으로 일렁였다", s: "the whole palace shimmered like a rainbow" },
+            { w: "folded their fins (fold)", k: "지느러미를 모았다", s: "they folded their fins and bowed their heads" },
+            { w: "made merry (make merry)", k: "놀았다", s: "they made merry for three days and nights" },
+            { w: "run dry (run)", k: "마르다", s: "no cup was ever allowed to run dry" },
+            { w: "sat straight back down (sit)", k: "그대로 주저앉았다", s: "started to get up from his seat and sat straight back down" },
+            { w: "kept to his bed (keep)", k: "자리에 누웠다", s: "the Dragon King kept to his bed" },
+            { w: "wetted his lips (wet)", k: "겨우 축였다", s: "barely wetted his lips with water" },
+            { w: "talked out of his head (talk)", k: "헛소리를 했다", s: "At night he talked out of his head" },
+            { w: "was turned upside down (turn)", k: "발칵 뒤집혔다", s: "The whole sea palace was turned upside down" },
+            { w: "felt his pulse (feel)", k: "맥을 짚었다", s: "The carp physician felt his pulse" },
+            { w: "boiled down (boil down)", k: "달였다", s: "They boiled down seaweed and kelp" },
+            { w: "The moon changed twice (change)", k: "달이 두 번 바뀌었다", s: "The moon changed twice" },
+            { w: "stamping their feet (stamp)", k: "발만 굴렀다", s: "stood about in front of the palace stamping their feet" },
+            { w: "under heaven", k: "천하의", s: "every famous doctor under heaven" },
+            { w: "out loud", k: "크게 소리 내어", s: "nobody said much about the land out loud" },
+            { w: "the breath stops (stop)", k: "숨이 막힌다", s: "a place where the breath stops" },
+            { w: "half asleep", k: "잠결에", s: "half asleep, the Dragon King opened his eyes" },
+            { w: "was barred (bar)", k: "잠겨 있었다", s: "The door was barred" },
+            { w: "as if it had been washed away (wash)", k: "씻은 듯이", s: "you will be well as if it had been washed away" },
+            { w: "said it over (say)", k: "되뇌었다", s: "The Dragon King said it over" },
+            { w: "timid", k: "겁이 많은", s: "It is very timid and very cunning" },
+            { w: "blurred and faded (blur)", k: "스르르 흐려졌다", s: "the old man's figure blurred and faded" },
+            { w: "came to himself (come to)", k: "정신을 차렸다", s: "When he came to himself there was nobody beside the bed" },
+            { w: "glanced at one another (glance)", k: "서로 눈치를 살폈다", s: "The ministers glanced at one another" },
+            { w: "curled up under him (curl)", k: "몸 아래로 말아 넣었다", s: "quietly curled all eight of his legs up under him" },
+            { w: "passing the thing on to somebody else (pass on)", k: "남에게 미루는", s: "a word passing the thing on to somebody else" }
+        ],
+        "ch2": [
+            { w: "come forward (come)", k: "앞으로 나서다", s: "Minister Octopus was the first to come forward" },
+            { w: "dry up (dry)", k: "바싹 말라붙다", s: "I should dry up altogether" },
+            { w: "the fitting choice", k: "마땅한 사람", s: "would surely be the fitting choice" },
+            { w: "General Shark jumped (jump)", k: "상어 장군이 펄쩍 뛰었다", s: "General Shark jumped" },
+            { w: "fearsome to look at", k: "생김새가 험한", s: "your servant is fearsome to look at" },
+            { w: "waved his fins about (wave)", k: "지느러미를 홰홰 저었다", s: "Lord Croaker waved his fins about" },
+            { w: "is salted at once (salt)", k: "곧바로 소금에 절여진다", s: "once on land, is salted at once" },
+            { w: "the standing of the whole country", k: "나라의 체면", s: "the standing of the whole country hangs on it" },
+            { w: "went red and then went blue (go)", k: "붉어졌다 푸르러졌다", s: "the Dragon King's face went red and then went blue" },
+            { w: "walks only sideways (walk)", k: "옆으로만 걷는다", s: "Your servant walks only sideways" },
+            { w: "grounds (ground)", k: "땅에 걸린다", s: "his belly grounds before he ever gets near the shore" },
+            { w: "trodden to death (tread)", k: "밟혀 죽는다", s: "he is trodden to death on a hill path" },
+            { w: "reasons why not", k: "못 간다는 핑계", s: "full of nothing but reasons why not" },
+            { w: "His thin hand trembled (tremble)", k: "야윈 손이 떨렸다", s: "His thin hand trembled" },
+            { w: "bowed their heads together (bow)", k: "일제히 고개를 숙였다", s: "the ministers all bowed their heads together" },
+            { w: "stepped forward (step)", k: "나서다", s: "still nobody stepped forward" },
+            { w: "a stir went round (go)", k: "술렁였다", s: "A stir went round the court" },
+            { w: "lay flat (lie)", k: "엎드려 있었다", s: "a soft-shelled turtle lay flat" },
+            { w: "never came round (come round)", k: "차례가 오지 않았다", s: "his turn to speak never came round" },
+            { w: "moss grown on his shell (grow)", k: "등딱지에 이끼가 앉은", s: "an old turtle with moss grown on his shell" },
+            { w: "swallowing a laugh (swallow)", k: "웃음을 참는", s: "the sound of somebody swallowing a laugh" },
+            { w: "draw my head and legs inside (draw)", k: "머리와 다리를 안으로 넣다", s: "I can draw my head and legs inside" },
+            { w: "the one who ought to go (ought)", k: "가야 마땅한 자", s: "the one who can go is the one who ought to go" },
+            { w: "out of the common", k: "보통이 아닌", s: "there was something out of the common about that fellow" },
+            { w: "meet his eye (meet)", k: "눈을 마주치다", s: "Not one of them could meet his eye" },
+            { w: "load you with treasure (load)", k: "보물을 지워 주다", s: "Shall I load you with treasure?" },
+            { w: "struck his knee (strike)", k: "무릎을 쳤다", s: "The Dragon King struck his knee" },
+            { w: "stroked his shell (stroke)", k: "등딱지를 쓰다듬었다", s: "stroked her son's shell for a long time" },
+            { w: "tell no lies (tell)", k: "거짓말은 하지 마라", s: "whatever happens, tell no lies" },
+            { w: "felt over ~ with her hands (feel over)", k: "손으로 더듬었다", s: "felt over her son's face with her hands" }
+        ],
+        "ch3": [
+            { w: "at a loss", k: "난처한", s: "his face was soon at a loss" },
+            { w: "stopped in mid-air (stop)", k: "허공에서 멈추었다", s: "The hand holding the brush stopped in mid-air" },
+            { w: "felt back through his memory (feel back)", k: "옛 기억을 더듬었다", s: "felt back through his memory as he spoke" },
+            { w: "put together (put)", k: "붙여 놓은", s: "the size of two grown men's fists put together" },
+            { w: "whitish", k: "희끗한", s: "the belly is whitish" },
+            { w: "swept across (sweep)", k: "스윽 지나갔다", s: "The brush swept across the paper" },
+            { w: "as if it had just been startled (startle)", k: "놀란 것처럼", s: "as if it had just been startled" },
+            { w: "twitching (twitch)", k: "실룩거리는", s: "The nose is small and always twitching" },
+            { w: "is split into three (split)", k: "셋으로 갈라져 있다", s: "the upper lip is split into three" },
+            { w: "craned their necks (crane)", k: "목을 뺐다", s: "The ministers craned their necks to look" },
+            { w: "crowded round ~ (crowd)", k: "빙 둘러쌌다", s: "crowded round the picture and looked at it" },
+            { w: "rolled it up carefully (roll up)", k: "곱게 말았다", s: "The turtle rolled it up carefully" },
+            { w: "in case it got wet (get)", k: "행여 젖을까", s: "In case it got wet he wrapped it once more in oiled paper" },
+            { w: "Come back alive (come back)", k: "살아서 돌아오너라", s: "Come back alive" },
+            { w: "see ~ off (see off)", k: "배웅하다", s: "came out as far as the palace gate to see the turtle off" },
+            { w: "put his head out of the water (put out)", k: "물 밖에 머리를 내밀었다", s: "the turtle put his head out of the water" },
+            { w: "His breath caught (catch)", k: "숨이 턱 막혔다", s: "His breath caught" },
+            { w: "stung his throat (sting)", k: "목이 따가웠다", s: "Every breath stung his throat" },
+            { w: "heavy as a rock", k: "바위처럼 무거운", s: "on land his shell was heavy as a rock" },
+            { w: "got his breath (get)", k: "숨을 골랐다", s: "lay flat in the shade of a rock and got his breath" },
+            { w: "hot to the touch", k: "만지면 뜨거운", s: "had heated in the sun and was hot to the touch" },
+            { w: "crept up to look (creep)", k: "조심조심 다가갔다", s: "The turtle crept up to look" },
+            { w: "let the end of it trail off (trail off)", k: "말끝을 흐렸다", s: "The fox let the end of it trail off" },
+            { w: "stopped dead (stop)", k: "뚝 그쳤다", s: "The arguing stopped dead" },
+            { w: "gave a thump (give)", k: "쿵 내려앉았다", s: "The turtle's heart gave a thump" },
+            { w: "held his breath (hold)", k: "숨을 죽였다", s: "The turtle held his breath" },
+            { w: "scattered (scatter)", k: "흩어졌다", s: "the beasts scattered, each of them grumbling" },
+            { w: "paid ~ any attention (pay)", k: "눈여겨보았다", s: "Nobody paid the small beast any attention" }
+        ],
+        "ch4": [
+            { w: "put his weight on ~ (put)", k: "힘을 주었다", s: "put his weight on his hind legs" },
+            { w: "pricked round (prick)", k: "쫑긋 섰다", s: "His ears pricked round toward the turtle" },
+            { w: "looked ~ over, up and down (look over)", k: "위아래로 훑어보았다", s: "looked the turtle's shell over, up and down" },
+            { w: "twitched (twitch)", k: "실룩거렸다", s: "The rabbit's nose twitched" },
+            { w: "a man of parts", k: "인재", s: "I have come looking for a man of parts" },
+            { w: "no idle one", k: "헛말이 아닌", s: "I find the report was no idle one" },
+            { w: "kept a straight face (keep)", k: "정색을 했다", s: "kept a straight face outside" },
+            { w: "darkened at once (darken)", k: "대번에 어두워졌다", s: "the rabbit's face darkened at once" },
+            { w: "with their eyes alight", k: "눈에 불을 켜고", s: "the hungry beasts go about with their eyes alight" },
+            { w: "swarm", k: "들끓다", s: "in summer the snakes swarm" },
+            { w: "set their traps (set)", k: "덫을 놓는다", s: "the hunters set their traps" },
+            { w: "gnaw the bark off trees (gnaw)", k: "나무껍질을 갉아 먹다", s: "we gnaw the bark off trees" },
+            { w: "slept easy (sleep)", k: "마음 놓고 잠들었다", s: "I have never once slept easy in my life" },
+            { w: "leaned forward (lean)", k: "몸을 앞으로 기울였다", s: "the rabbit leaned forward" },
+            { w: "swallowed hard (swallow)", k: "침을 꿀꺽 삼켰다", s: "The rabbit swallowed hard" },
+            { w: "gave a caw (give)", k: "깍 하고 울었다", s: "a crow on a pine branch overhead gave a caw" },
+            { w: "what business is it of yours", k: "너는 또 왜 참견이냐", s: "And what business is it of yours?" },
+            { w: "hand out offices (hand out)", k: "벼슬을 주다", s: "they certainly do not crawl up to hand out offices" },
+            { w: "a cold sweat broke out (break out)", k: "식은땀이 흘렀다", s: "a cold sweat broke out" },
+            { w: "laughed heartily (laugh)", k: "껄껄 웃었다", s: "Outside he laughed heartily" },
+            { w: "is jealous of ~", k: "시기한다", s: "That bird is jealous of me" },
+            { w: "for nothing", k: "까닭 없이", s: "who gives good things for nothing" },
+            { w: "took a step back (take)", k: "한 걸음 물러섰다", s: "the turtle took a step back" },
+            { w: "on purpose", k: "일부러", s: "He was doing it on purpose" },
+            { w: "let his words go by (let go by)", k: "제 말을 흘려들었다", s: "the fox who had let his words go by in the meadow" },
+            { w: "moved of themselves (move)", k: "저절로 움직였다", s: "his feet moved of themselves" },
+            { w: "sprang and got ahead of ~ (spring)", k: "껑충 뛰어 앞질렀다", s: "The rabbit sprang and got ahead of the turtle" },
+            { w: "only a nuisance", k: "성가시기만 한", s: "the sound was only a nuisance to him" },
+            { w: "go up your nose (go)", k: "코로 들어가다", s: "the water will not go up your nose" },
+            { w: "held tight to ~ (hold)", k: "꼭 붙들었다", s: "The rabbit held tight to the rim of it" },
+            { w: "drew himself in small (draw)", k: "몸을 움츠렸다", s: "the rabbit drew himself in small" }
+        ],
+        "ch5": [
+            { w: "had grown much softer (grow)", k: "한결 부드러워졌다", s: "The current had grown much softer" },
+            { w: "Shoals of fish", k: "물고기 떼", s: "Shoals of fish went by in crowds" },
+            { w: "could not shut his mouth (shut)", k: "입을 다물지 못했다", s: "The rabbit could not shut his mouth" },
+            { w: "in wonder", k: "감탄하며", s: "said the rabbit in wonder" },
+            { w: "grudging something (grudge)", k: "아까워하는", s: "it was the look of somebody grudging something" },
+            { w: "told himself it was nothing (tell)", k: "스스로를 다독였다", s: "he soon told himself it was nothing" },
+            { w: "his back kept feeling cold (keep)", k: "자꾸 뒤가 서늘했다", s: "his back kept feeling cold" },
+            { w: "burned frighteningly (burn)", k: "무섭게 빛났다", s: "his two eyes alone burned frighteningly" },
+            { w: "came so short (come)", k: "몹시 가빴다", s: "His breath came so short" },
+            { w: "Withdraw and rest (withdraw)", k: "물러가 쉬어라", s: "Withdraw and rest" },
+            { w: "a proud note", k: "자랑스러운 기색", s: "There was a proud note in his voice" },
+            { w: "sniggering (snigger)", k: "킥킥거리는", s: "a sound of sniggering here and there" },
+            { w: "raised his hand for silence (raise)", k: "손을 들어 조용히 시켰다", s: "The Dragon King raised his hand for silence" },
+            { w: "rang through the hall (ring)", k: "대궐을 울렸다", s: "voice rang through the hall" },
+            { w: "turned to ice (turn)", k: "얼음이 되었다", s: "The rabbit's whole body turned to ice" },
+            { w: "went flat back (go)", k: "뒤로 눕혀졌다", s: "His ears went flat back of themselves" },
+            { w: "glittered in the lamplight (glitter)", k: "등불을 받아 번들거렸다", s: "The spear points glittered in the lamplight" },
+            { w: "went white (go)", k: "새하얘졌다", s: "The rabbit's head went white" },
+            { w: "came back to him (come back)", k: "되살아났다", s: "come back to him, clear as anything" },
+            { w: "was working furiously (work)", k: "무섭게 돌아갔다", s: "his head was working furiously" },
+            { w: "drew one long breath (draw)", k: "숨을 크게 골랐다", s: "He drew one long breath" },
+            { w: "struck his knee (strike)", k: "무릎을 쳤다", s: "the rabbit suddenly struck his knee and laughed out loud" },
+            { w: "halted the soldiers (halt)", k: "군사를 멈춰 세웠다", s: "raised his hand and halted the soldiers" },
+            { w: "go to the trouble of ~ (go)", k: "무엇하러 ~하다", s: "Why go to the trouble of lies about offices" },
+            { w: "brows twitched (twitch)", k: "눈썹이 꿈틀했다", s: "The Dragon King's brows twitched" },
+            { w: "have coveted ~ (covet)", k: "탐을 냈다", s: "every kind of beast has coveted our livers" },
+            { w: "a cleft of rock", k: "바위틈", s: "hide it in a cleft of rock" },
+            { w: "labour wasted (waste)", k: "헛수고", s: "Cut me open and it will be labour wasted" },
+            { w: "pushed his belly out (push out)", k: "배를 쭉 내밀었다", s: "he pushed his belly out" },
+            { w: "was willing to ~ (be willing)", k: "선뜻 ~했다", s: "Nobody was willing to take up a knife" }
+        ],
+        "ch6": [
+            { w: "glared at ~ (glare)", k: "노려보았다", s: "glared at the rabbit for a long while" },
+            { w: "did not blink once (blink)", k: "눈 하나 깜짝하지 않았다", s: "The rabbit did not blink once" },
+            { w: "spoke up carefully (speak up)", k: "조심스레 아뢰었다", s: "Minister Octopus spoke up carefully" },
+            { w: "rose without his meaning it to (rise)", k: "저도 모르게 높아졌다", s: "His voice rose without his meaning it to" },
+            { w: "a deeply injured face", k: "아주 서운한 얼굴", s: "he put on a deeply injured face" },
+            { w: "let his ears droop (let)", k: "귀를 축 늘어뜨렸다", s: "He even let his ears droop" },
+            { w: "had nothing to say", k: "말문이 막혔다", s: "The turtle had nothing to say" },
+            { w: "could not lift his head (lift)", k: "고개를 들지 못했다", s: "The turtle could not lift his head" },
+            { w: "let out a long breath (let out)", k: "길게 숨을 내쉬었다", s: "The Dragon King let out a long breath" },
+            { w: "earns me a great reward (earn)", k: "큰 상을 받는다", s: "earns me a great reward besides" },
+            { w: "sounded reasonable enough (sound)", k: "그럴듯하게 들렸다", s: "It sounded reasonable enough" },
+            { w: "the rudeness of today", k: "오늘 저지른 무례", s: "I shall forget the rudeness of today" },
+            { w: "fit to burst (burst)", k: "배가 터지도록", s: "ate rare food until he was fit to burst" },
+            { w: "go astray (go)", k: "헛나온다", s: "a drunk man's words go astray" },
+            { w: "Before dawn", k: "새벽에", s: "Before dawn the next day" },
+            { w: "jumped down off ~ (jump)", k: "폴짝 뛰어내렸다", s: "the rabbit jumped down off the shell" },
+            { w: "scratched at the earth (scratch)", k: "흙을 긁어 보았다", s: "he scratched at the earth a few times" },
+            { w: "grinned (grin)", k: "씩 웃었다", s: "The rabbit grinned" },
+            { w: "froze where he stood (freeze)", k: "그 자리에 굳었다", s: "The turtle froze where he stood" },
+            { w: "make us even (make)", k: "셈이 맞다", s: "Does that not make us even?" },
+            { w: "went bounding off (go)", k: "껑충껑충 뛰어 사라졌다", s: "he went bounding off toward the hills" },
+            { w: "empty-handed (hand)", k: "빈손인", s: "he was empty-handed" },
+            { w: "was made a liar (make)", k: "거짓말쟁이가 되었다", s: "he had been made a liar in the middle of the court" },
+            { w: "soaked into the sand (soak)", k: "모래에 스몄다", s: "drop by drop and soaked into the sand" },
+            { w: "did not seem a stranger (seem)", k: "낯설지 않았다", s: "somehow he did not seem a stranger" },
+            { w: "threw himself down (throw)", k: "얼른 엎드렸다", s: "The turtle threw himself down at once" },
+            { w: "planted his staff in the sand (plant)", k: "지팡이로 모래를 짚었다", s: "The old man planted his staff in the sand" },
+            { w: "went wide (go)", k: "눈을 크게 떴다", s: "The turtle's eyes went wide" },
+            { w: "held no office at all (hold)", k: "아무 벼슬도 없던", s: "you, who held no office at all" },
+            { w: "declined it (decline)", k: "사양했다", s: "But the turtle declined it" },
+            { w: "by deceit", k: "속여서", s: "brought him here by deceit" },
+            { w: "no face to take a reward", k: "상을 받을 낯이 없다", s: "I have no face to take a reward" },
+            { w: "the first such since ~", k: "~이래 처음", s: "was the first such since the sea palace began" },
+            { w: "lay his ears flat (lay)", k: "귀를 착 눕히다", s: "he would lay his ears flat" }
+        ]
+    },
+    quiz: [
+        { q: "How did the Dragon King fall ill?", choices: ["He was badly hurt in a fight", "After a feast that ran three days and nights", "He stayed too long in a cold current"], answer: 1 },
+        { q: "Who told him what medicine would cure him?", choices: ["Minister Octopus", "The carp minister", "An immortal who was passing"], answer: 2 },
+        { q: "Who offered to go up on land?", choices: ["Byeoljubu the turtle", "Minister Octopus", "The carp minister"], answer: 0 },
+        { q: "What did the turtle take with him to the land?", choices: ["A bead the Dragon King gave him", "One picture", "A sea herb for medicine"], answer: 1 },
+        { q: "What did the turtle hold out to tempt the rabbit?", choices: ["An office in the sea palace", "A sack of gold and silver", "A wide piece of land in the hills"], answer: 0 },
+        { q: "Who tried to stop the rabbit from going?", choices: ["The fox", "The crow", "The roe deer"], answer: 1 },
+        { q: "What did the rabbit tell the Dragon King?", choices: ["That he had never had a liver at all", "That he had left his liver in a cleft of rock", "That he would not give up his liver"], answer: 1 },
+        { q: "What did the Dragon King do when he heard it?", choices: ["He shut him up on the spot", "He did not believe him and grew angry", "He laid on a great feast for him"], answer: 2 },
+        { q: "What did the rabbit do once he was back on land?", choices: ["He bounded off and away", "He fetched the liver and gave it up", "He pushed the turtle into the water"], answer: 0 },
+        { q: "What cured the Dragon King's illness in the end?", choices: ["The liver the rabbit sent", "The needles of the palace physician", "The ginseng the immortal gave"], answer: 2 },
+        { q: "What did the turtle say when he refused the reward?", choices: ["That he had no face for it, having lied", "That he had been given enough already", "That he wanted to go home"], answer: 0 },
+        { q: "What place did the turtle end up with in the sea palace?", choices: ["The highest office of all", "The front seat with no office", "A corner of the sand outside the palace"], answer: 1 }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐢',
+        art: ['end.webp'],
+        paras: [
+            "This story was a song before it was a book, and before it was a song it was a very short old tale. The oldest place it can be traced to is the History of the Three Kingdoms.",
+            "Look at that passage again and the one who tells the tale is a man of Goguryeo. A man of the country that was holding him told the prisoner how to get out. So this story was never only for amusement. It was a story that told a shut-in man how to get out.",
+            "Go further back and it reaches India. An old Indian story collection has a crocodile after a monkey's heart. The monkey saves himself by saying he left his heart hanging in a tree. Only the animals have changed; the bones are the same. The story is thought to have come from India through China and across to our country.",
+            "That short tale came to Joseon and became the pansori Sugung-ga. Singer after singer put flesh on it, and so we got the scene of the palace ministers arguing over which of them will not go, the beasts the rabbit meets on land, and the turtle wandering about with his picture. What had been a few lines became something hours long.",
+            "The book has several names too: The Tale of the Rabbit, The Tale of Byeoljubu, The Rabbit's Liver. Which you put first changes whose story it is. Call it The Tale of the Rabbit and it is about a rabbit who got out by his wits. Call it The Tale of Byeoljubu and it is about a turtle who went up on land at the risk of his life for his king.",
+            "The byeol in Byeoljubu means soft-shelled turtle. But the soft-shelled turtle lives in rivers and marshes and cannot last long in sea water. It has no way of getting the salt back out of its body. What lives in the sea is not the soft-shelled turtle but the sea turtle. So a soft-shelled turtle holding office in the Dragon Palace of the South Sea does not add up.",
+            "In the original story in the History of the Three Kingdoms it is not a soft-shelled turtle but a hard-shelled one. It is not that people long ago had it wrong. While the story was being sung, Byeoljubu, which was the name of an office, became the name of the animal itself, and it set as the soft-shelled turtle. In this book the turtle and the old hard-shelled turtle appear separately. The names were kept apart; where each of them lives was never worked out.",
+            "What this story is aiming at is plain. The Dragon King would cut open somebody else's body to cure his own illness. The ministers do nothing but pass it along to each other. Only the turtle steps forward. And even that turtle can save his king only by deceiving somebody. It is a story that says this is mostly how the business of those at the top is done.",
+            "The way the rabbit wins is worth noticing too. He does not win by strength. He does not win by being quick on his feet. He wins by talking. A claim that will not stand a moment's thought — that rabbits carry their livers about outside them — and the whole sea palace swallows it.",
+            "Why did they believe it? Because they wanted to. The Dragon King wanted to live, and the ministers wanted the business over with. People are taken in not because the one deceiving them is clever but because the ones being deceived want something — and this story points that out with a laugh.",
+            "The place where the rabbit makes up his mind to leave is worth another look as well. What drew the rabbit into the water in the first place was the promise of an office. A rabbit living well enough in the hills followed a stranger under water at one word about a high place. There was something in the one deceived that gave the lie its hold.",
+            "The endings differ from book to book. In some the turtle goes back empty-handed and is punished, in some he throws himself into the sea, and in some, as here, an immortal appears and hands over a medicine. The singer decided by the faces in front of him. There is no settling which was the original ending.",
+            "There is a reason this book called in an immortal. It was awkward to punish the turtle. He told a lie, but he took nothing for himself by it. And it is hard to reward him either. So it ends by seating him at the front with no name of office.",
+            "Was the turtle's lie the kind that can be forgiven? It was a lie told on his way to kill somebody. And it was also told to save his king. The turtle himself said he had no face to take a reward. What do you think?",
+            "And the rabbit's lie? Set it beside the turtle's and see what is different about it, or whether there is nothing different at all. Both were lies told to stay alive.",
+            "The Dragon King was never punished at all — a man who tried to take another's life to cure his own illness. Think about why the story does not punish him, and how the story would be different if it had."
+        ]
+    }
+};
+
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서', folio: '쪽',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading', folio: '',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        wordsDown: 'Words ⌄',
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'korea-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+// 글꼴 규칙이 html[lang] 에 걸려 있다. 쪽을 재기 전에 미리 걸어 두어야
+// 영어 글을 영어 글꼴로 잰다. 늦게 걸면 첫 쪽나눔이 통째로 어긋난다.
+document.documentElement.lang = LANG;
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
+
 const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
 
 function buildPages() {
+    CHAPTER_SEGS = CH().map(ch => segsOf(ch.paras));
+    AFTER_SEGS = segsOf(AF().paras);
+    TOC_GROUPS = [];
+    for (let i = 0; i < CH().length; i += TOC_PER_SPREAD) {
+        TOC_GROUPS.push(CH().slice(i, i + TOC_PER_SPREAD));
+    }
+
     PROBE = makeProbe();
     PAGES = [
         { kind: 'cover' },
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
-        ...CHAPTERS.flatMap(paginateChapter),
+        ...CH().flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
         ...paginateAfterword()
     ];
@@ -900,6 +1395,21 @@ function paint() {
     });
 
     if (PAGES[current].kind === 'quiz') initQuiz();
+
+    paintReadBtn();
+    // 읽는 중일 때만 문단을 눌러 그 자리로 옮긴다.
+    // 그냥 눌렀다고 소리가 나면 곤란하니, 스피커 단추를 누른 뒤에만 먹는다.
+    if (LANG === 'en' && CAN_SPEAK) {
+        spreadEl.querySelectorAll('[data-say]').forEach(el => {
+            el.addEventListener('click', () => {
+                if (!reading) return;
+                readPage(Number(el.dataset.say));
+            });
+        });
+    }
+
+    renderVocab();
+    fitVocabScreen();
 }
 
 function initQuiz() {
@@ -907,7 +1417,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -920,7 +1430,7 @@ function initQuiz() {
                 });
                 QUIZ_PICKED[qi] = chosen;
                 const done = QUIZ_PICKED.filter(v => v !== null).length;
-                progressEl.textContent = `${done} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(done, QZ().length);
             });
         });
     });
@@ -928,6 +1438,7 @@ function initQuiz() {
 
 function goTo(index) {
     if (animating || index === current || index < 0 || index >= PAGES.length) return;
+    stopReading();
     animating = true;
     const dir = index > current ? 'flip-next' : 'flip-prev';
     spreadEl.classList.add(dir);
@@ -954,6 +1465,320 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+
+
+/* ── 읽어 주기 ─────────────────────────────────────────────────
+   소설은 한 문단 안에 서술과 대사가 섞여 있다. 그림책처럼 말하는 이를
+   따로 적어 둘 수가 없으므로, 큰따옴표 안팎으로만 목소리를 가른다.
+   속도는 둘 다 같다. 대사에서 갑자기 빨라지면 귀에 턱턱 걸린다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+
+const SAY_RATE = 0.85;
+const SAY_AS = {
+    narration: { pitch: 1.00, rate: SAY_RATE },
+    speech:    { pitch: 1.24, rate: SAY_RATE },
+    speech2:   { pitch: 0.78, rate: SAY_RATE }
+};
+
+let SAY_VOICE = null;
+
+function pickVoices() {
+    if (typeof speechSynthesis === 'undefined') return;
+    const vs = speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang));
+    if (!vs.length) return;
+    SAY_VOICE = vs.find(v => /^en[-_]US/i.test(v.lang)) || vs[0];
+}
+
+if (typeof speechSynthesis !== 'undefined') {
+    pickVoices();
+    speechSynthesis.onvoiceschanged = pickVoices;
+}
+
+function dressVoice(u, role) {
+    const a = SAY_AS[role] || SAY_AS.narration;
+    u.pitch = a.pitch;
+    u.rate = a.rate;
+    if (SAY_VOICE) u.voice = SAY_VOICE;
+}
+
+/* 낱말 뜻풀이는 소리 내어 읽지 않는다. 나머지 표시는 떼고 글자만 남긴다. */
+const plainText = h => h
+    .replace(/<span class="gloss">[\s\S]*?<\/span>/g, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+/* 큰따옴표 안은 대사다. 서술과 목소리를 가른다.
+   한 문단 안에서 따옴표가 잇달아 나오면 대개 두 사람이 주고받는 자리다.
+   그래서 두 번째 대사부터 목소리를 번갈아 바꾼다. 말하는 이를 일일이
+   적어 둘 수 없는 소설틀에서 낼 수 있는 가장 가까운 흉내다. */
+function sayChunks(text) {
+    const out = [];
+    const re = /"([^"]*)"/g;
+    let last = 0, q = 0, m;
+    while ((m = re.exec(text)) !== null) {
+        if (m.index > last) out.push({ t: text.slice(last, m.index), v: 'narration' });
+        out.push({ t: m[1], v: (q++ % 2) ? 'speech2' : 'speech' });
+        last = re.lastIndex;
+    }
+    if (last < text.length) out.push({ t: text.slice(last), v: 'narration' });
+    return out.filter(c => /\S/.test(c.t));
+}
+
+/* 그 쪽에 있는 문단들. 쪽에 걸쳐 잘린 문단은 한 번만 센다. */
+function pageParts(page) {
+    if (!page) return [];
+    if (page.kind === 'cover') {
+        return [CV().title].concat(CV().intro).map((t, i) => ({ i, raw: t }));
+    }
+    const segs = page.kind === 'chapter' ? CHAPTER_SEGS[page.chIndex]
+        : page.kind === 'after' ? AFTER_SEGS : null;
+    if (!segs) return [];
+    const src = page.kind === 'chapter' ? CH()[page.chIndex].paras : AF().paras;
+    const seen = {};
+    const out = [];
+    [page.left, page.right].forEach(r => {
+        if (!r) return;
+        for (let k = r[0]; k < r[1]; k++) {
+            const pi = segs[k].paraIdx;
+            if (seen[pi]) continue;
+            seen[pi] = 1;
+            out.push({ i: pi, raw: src[pi] });
+        }
+    });
+    return out;
+}
+
+/* 읽기 단추는 책틀에 붙박이로 있다. 영어로 읽을 때만 보인다. */
+const readBtnEl = document.getElementById('readBtn');
+let reading = false;
+let readToken = 0;
+
+function paintReadBtn() {
+    if (!readBtnEl) return;
+    readBtnEl.hidden = !(LANG === 'en' && CAN_SPEAK);
+    readBtnEl.textContent = reading ? '■' : '▶';
+}
+
+function stopReading() {
+    reading = false;
+    if (spreadEl) spreadEl.classList.remove('is-reading');
+    readToken++;
+    if (CAN_SPEAK) { try { speechSynthesis.cancel(); } catch (e) {} }
+    document.querySelectorAll('.saying').forEach(el => el.classList.remove('saying'));
+    paintReadBtn();
+}
+
+function readPage(fromParaIdx) {
+    const page = PAGES[current];
+    if (!CAN_SPEAK || !page) return;
+    const parts = pageParts(page);
+    if (!parts.length) return;
+    // 읽던 것이 있으면 끊는다. 안 그러면 새 글이 뒤에 줄을 선다.
+    try { speechSynthesis.cancel(); } catch (e) {}
+    reading = true;
+    if (spreadEl) spreadEl.classList.add('is-reading');
+    paintReadBtn();
+    const mine = ++readToken;
+
+    let start = parts.findIndex(p => p.i === fromParaIdx);
+    if (start < 0) start = 0;
+
+    const step = (k) => {
+        if (mine !== readToken) return;
+        document.querySelectorAll('.saying').forEach(el => el.classList.remove('saying'));
+        if (k >= parts.length) { stopReading(); return; }
+        const here = spreadEl.querySelector(`[data-say="${parts[k].i}"]`);
+        if (here) {
+            here.classList.add('saying');
+            here.scrollIntoView({ block: 'nearest' });
+        }
+        const chunks = sayChunks(plainText(parts[k].raw));
+        const go = (c) => {
+            if (mine !== readToken) return;
+            if (c >= chunks.length) { step(k + 1); return; }
+            const u = new SpeechSynthesisUtterance(chunks[c].t);
+            u.lang = 'en-US';
+            dressVoice(u, chunks[c].v);
+            u.onend = () => go(c + 1);
+            u.onerror = () => go(c + 1);
+            try { speechSynthesis.speak(u); } catch (e) { stopReading(); }
+        };
+        go(0);
+    };
+    step(start);
+}
+
+if (readBtnEl) {
+    readBtnEl.addEventListener('click', () => (reading ? stopReading() : readPage(-1)));
+}
+
+/* ── 단어장 ────────────────────────────────────────────────────
+   책 아래에 있는 또 한 장의 화면이다. 책은 손대지 않는다.
+   낱말은 장마다 묶어 두었고, 그 쪽에 실제로 나온 것만 골라 보여 준다. */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+let VOCAB_NOW = [];
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    if (!page) return { list: [] };
+    if (page.kind === 'cover') return { list: all.cover || [] };
+    if (page.kind === 'chapter' || page.kind === 'after') {
+        const pool = page.kind === 'chapter' ? (all['ch' + page.ch.num] || []) : (all.after || []);
+        const text = pageParts(page).map(p => p.raw).join(' ');
+        return { list: pool.filter(w => text.indexOf(w.s) >= 0) };
+    }
+    // 문제 쪽에는 글이 없다. 답을 고르기 전에 훑어볼 수 있게 책에 나온 낱말을 다 보여 준다.
+    // 차례에는 볼 글이 없으므로 단어장을 아예 열지 않는다.
+    if (page.kind !== 'quiz') return { list: [] };
+    const list = [];
+    Object.keys(all).forEach(k => all[k].forEach(w => list.push(w)));
+    return { list };
+}
+
+function renderVocab() {
+    const { list } = (HAS_WORDS && LANG === 'en') ? vocabFor() : { list: [] };
+    // 볼 낱말이 없는 쪽에서는 아래 화면을 아예 열지 않는다.
+    const on = list.length > 0;
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) {
+        scrollDownEl.hidden = !on;
+        scrollDownEl.textContent = T().wordsDown || 'Words ⌄';
+    }
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.w}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.k}</p>
+                <p class="vocab-sent">${w.s}</p>
+            </li>`).join('')}
+        </ul>`;
+}
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다. */
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        // 「went without (go without)」처럼 괄호로 적어 둔 기본형은 읽지 않는다.
+        const bare = item.w.replace(/\s*\([^)]*\)/g, '').replace(/~/g, '').trim();
+        const word = new SpeechSynthesisUtterance(bare);
+        word.lang = 'en-US';
+        dressVoice(word, 'narration');
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.s);
+        sent.lang = 'en-US';
+        dressVoice(sent, 'narration');
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 글과 단어장이 함께 보인다.
+   소설은 그림 없는 펼침면이 더 많다. 그때는 책 아랫부분만 남기고 멈춘다. */
+function artLine() {
+    const page = PAGES[current];
+    if (!page) return 0;
+    const book = document.querySelector('.book');
+    const bookBox = book ? book.getBoundingClientRect() : null;
+    const capLine = () => (bookBox
+        ? Math.max(0, Math.round(bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45)))
+        : 0);
+    const el = page.kind === 'cover'
+        ? document.querySelector('.page-cover .story-page-left-full')
+        : spreadEl.querySelector('.story-art-top');
+    if (!el) return capLine();
+    const box = el.getBoundingClientRect();
+    const line = Math.max(0, Math.round(box.bottom + window.scrollY));
+    // 표지처럼 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라
+    // 책이 통째로 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (!bookBox || box.height < bookBox.height * 0.8) return line;
+    return Math.max(0, Math.min(line, capLine()));
+}
+
+/* 쪽을 다시 나눌 때는 단어장을 먼저 접는다.
+   아래 화면이 펼쳐진 채로 재면 문서가 길어져 세로 막대가 생기고,
+   그만큼 칸이 좁아져 쪽이 잘못 나뉜다. 세로 화면에서 두 쪽이 어긋났다. */
+function rebuildPages() {
+    if (vocabScreenEl) vocabScreenEl.hidden = true;
+    window.scrollTo(0, 0);
+    buildPages();
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* ── 말 바꾸기 ─────────────────────────────────────────────────
+   쪽은 재어서 나누므로 글을 갈아 끼우면 처음부터 다시 나눈다.
+   보던 장으로 돌아간다. 쪽 수는 말마다 다르다. */
+const langBtn = document.getElementById('langLink');
+
+function applyLang() {
+    stopReading();
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        // 글꼴 규칙(html[lang])을 먼저 바꾸고 나서 재야 한다. 순서를 바꾸면
+        // 영어 글을 한글 글꼴 규칙으로 재게 되어 쪽 수가 열 쪽 넘게 어긋난다.
+        applyLang();
+        rebuildPages();
+        current = Math.min(current, PAGES.length - 1);
+        if (here && here.kind === 'chapter') {
+            const i = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
+            if (i >= 0) current = i;
+        } else if (here) {
+            const i = PAGES.findIndex(p => p.kind === here.kind);
+            if (i >= 0) current = i;
+        }
+        paint();
+    });
+}
+
+applyLang();
 paint();
 
 // 본문 글꼴은 늦게 내려온다. 글꼴이 바뀌면 한 줄에 들어가는 글자 수가 달라져서
@@ -961,7 +1786,7 @@ paint();
 if (document.fonts && document.fonts.status !== 'loaded') {
     document.fonts.ready.then(() => {
         const here = PAGES[current];
-        buildPages();
+        rebuildPages();
         current = Math.min(current, PAGES.length - 1);
         if (here && here.kind === 'chapter') {
             const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
