@@ -215,7 +215,21 @@ html, body {
 @media (max-width: 900px) {
     .sim-app-container {
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr auto;
+        /* 아래 칸을 auto로 두면 사이드바가 제 내용 높이(700px 남짓)만큼
+           늘어나서 정작 봐야 할 시뮬레이션이 띠처럼 눌린다.
+           위 칸에 화면 절반을 보장하고, 사이드바는 스스로 스크롤하게 한다. */
+        grid-template-rows: minmax(300px, 52vh) minmax(0, 1fr);
+    }
+
+    /* 그리드 칸 안에서 스크롤이 생기려면 min-height를 풀어 줘야 한다 */
+    .sim-app-container > .sim-stage-area,
+    .sim-app-container > .sim-sidebar {
+        min-height: 0;
+    }
+
+    .sim-sidebar {
+        border-left: none;
+        border-top: 1px solid var(--border-subtle);
     }
 }
 
@@ -248,10 +262,14 @@ canvas.sim-canvas {
 /* Floating HUD Controls on Canvas */
 .sim-hud-overlay {
     position: absolute;
-    top: 14px;
+    /* 위쪽 가운데에는 장면 전환 바가 떠 있어서, 여기 두면 안내 문구가
+       그 아래 깔려 잘려 보인다. 아래쪽 왼편으로 내린다. */
+    bottom: 14px;
     left: 14px;
+    right: 14px;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 8px;
     pointer-events: none;
     z-index: 10;
