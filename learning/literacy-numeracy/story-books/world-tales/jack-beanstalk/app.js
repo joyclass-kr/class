@@ -320,16 +320,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '잭과 콩나무',
+    intro: [
+        '잭과 콩나무는 영국에서 오래전부터 입에서 입으로 전해 내려온 이야기예요. 1890년, 영국의 조지프 제이컵스가 여러 지방을 다니며 모은 옛이야기집에 실리면서 지금의 모습으로 널리 알려졌답니다.',
+        '가난한 소년이 하늘 위 낯선 세계로 올라갔다가 보물을 가지고 돌아온다는 이야기 짜임은 세계 여러 나라의 옛이야기에서 비슷하게 발견돼요. 아득히 높은 곳에 우리와 다른 세상이 있다고 믿었던 옛사람들의 상상이 담겨 있는 것이지요.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🌱')}
             </div>
             <div class="story-page-right">
-                <h1>잭과 콩나무</h1>
-                <p>잭과 콩나무는 영국에서 오래전부터 입에서 입으로 전해 내려온 이야기예요. 1890년, 영국의 조지프 제이컵스가 여러 지방을 다니며 모은 옛이야기집에 실리면서 지금의 모습으로 널리 알려졌답니다.</p>
-                <p>가난한 소년이 하늘 위 낯선 세계로 올라갔다가 보물을 가지고 돌아온다는 이야기 짜임은 세계 여러 나라의 옛이야기에서 비슷하게 발견돼요. 아득히 높은 곳에 우리와 다른 세상이 있다고 믿었던 옛사람들의 상상이 담겨 있는 것이지요.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -344,8 +353,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -355,8 +364,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -366,22 +375,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -431,9 +441,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -444,7 +454,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -516,7 +526,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -525,34 +535,567 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Jack and the Beanstalk',
+        intro: [
+            "Jack and the Beanstalk was passed from mouth to mouth in England for a very long time. In 1890 Joseph Jacobs travelled the country collecting old tales, and the version in his book is the one everybody knows today.",
+            "A poor boy climbs into a strange world above the sky and comes home with a treasure — that shape turns up in old stories all over the world. It holds what people once imagined about a place high above us where everything is different."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · Off to Sell the Cow',
+            beats: [
+                {
+                    art: '01-cow.webp',
+                    emoji: '🐄',
+                    left: [
+                        "Jack lived alone with his mother, and all they had in the world was one cow.",
+                        "Her name was Milky-white.",
+                        "But at some point she stopped giving milk, and things grew harder and harder. Everything worth selling had been sold already.",
+                        "One dry crust was all that was left in the cupboard."
+                    ],
+                    right: [
+                        "One morning his mother called him.",
+                        "\"We shall have to sell Milky-white now.\"",
+                        "Jack hung his head.",
+                        "\"Get a good price for her.\"",
+                        "\"Our whole winter depends on it.\"",
+                        "Jack took the rope without a word."
+                    ]
+                },
+                {
+                    art: '01-cow-2.webp',
+                    emoji: '🐄',
+                    left: [
+                        "Jack set off toward the market with Milky-white plodding along behind him.",
+                        "It was a long road. He was about half way when he saw a man standing at the roadside.",
+                        "The man wore a hat with a very wide brim.",
+                        "\"Taking your cow to be sold, I see.\""
+                    ],
+                    right: [
+                        "\"Yes, I'm on my way to market.\"",
+                        "\"Would you not sell her to me instead?\"",
+                        "Jack looked up at him for a moment.",
+                        "\"And what would you give me?\"",
+                        "The man slowly opened his fist. Five beans lay in his palm."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · Five Beans',
+            beats: [
+                {
+                    art: '02-beans.webp',
+                    emoji: '🫘',
+                    left: [
+                        "Jack's eyes went wide.",
+                        "\"Five beans?\"",
+                        "\"These are no ordinary beans.\"",
+                        "\"In a single night they grow as high as the sky.\"",
+                        "The beans caught the sunlight and glittered, and Jack felt his mind waver."
+                    ],
+                    right: [
+                        "In the end he handed Milky-white over and put the beans in his pocket. She looked back at him and gave a long moo.",
+                        "Jack left the sound behind him and ran all the way home.",
+                        "\"Mother, look at these!\"",
+                        "His mother peered into his palm. Her face turned white."
+                    ]
+                },
+                {
+                    art: '02-beans-2.webp',
+                    emoji: '🫘',
+                    left: [
+                        "\"You traded our cow for beans!\"",
+                        "She flung the beans out of the window, and they scattered all over the yard.",
+                        "\"There will be no supper tonight!\"",
+                        "Jack lay down hungry and pulled the blanket over his head."
+                    ],
+                    right: [
+                        "He tossed and turned for a long while.",
+                        "'I really have been a fool.'",
+                        "Then a sound came from outside the window.",
+                        "Rustle, rustle. Rustle, rustle.",
+                        "It sounded for all the world like something growing. Jack drifted off to sleep listening to it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Stalk that Reached the Sky',
+            beats: [
+                {
+                    art: '03-beanstalk.webp',
+                    emoji: '🌱',
+                    left: [
+                        "Next morning the room was oddly dark. Jack opened the window and everything in front of him was green.",
+                        "An enormous stalk stood planted there, thick as a tower. One single leaf was the size of his bedroom door.",
+                        "\"It's the beanstalk!\""
+                    ],
+                    right: [
+                        "Jack ran out into the yard barefoot. His mother was still asleep.",
+                        "He tipped his head right back and still could not see the top — the stalk went straight up into the clouds and vanished.",
+                        "Up close, the stems were twisted round one another like a ladder. It was made for climbing.",
+                        "Jack swallowed hard."
+                    ]
+                },
+                {
+                    art: '03-beanstalk-2.webp',
+                    emoji: '🌱',
+                    left: [
+                        "Jack took hold of the stalk with both hands and climbed, one step and then another. The house got smaller, and soon the whole village was no bigger than his thumbnail.",
+                        "His arms ached and his legs shook. Blisters came up on his palms.",
+                        "Still he did not stop."
+                    ],
+                    right: [
+                        "At last he climbed into the clouds. Everything went white and he could see nothing at all. Damp mist touched his face.",
+                        "He climbed a good while longer, and all at once the cloud broke open.",
+                        "A wide, level road ran away beneath his feet. This was the world above the clouds.",
+                        "Jack stood there a long time, looking all around him."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Castle in the Clouds',
+            beats: [
+                {
+                    art: '04-castle.webp',
+                    emoji: '🏰',
+                    left: [
+                        "At the end of the road stood an enormous castle with a door the size of a hillside.",
+                        "Jack went and stood in front of it. Even on tiptoe he could not reach the handle, and when he knocked, no sound came out at all.",
+                        "Then the door swung slowly open by itself, and an enormous woman put her head out."
+                    ],
+                    right: [
+                        "\"And what brings you here, child?\"",
+                        "\"I'm hungry.\"",
+                        "\"Could you spare me something to eat?\"",
+                        "The woman glanced about her and dropped her voice.",
+                        "\"My husband is a fearful man.\"",
+                        "\"But come in, all the same.\""
+                    ]
+                },
+                {
+                    art: '04-castle-2.webp',
+                    emoji: '🏰',
+                    left: [
+                        "The kitchen was tremendous. The table was like a playing field, and a single plate was as wide as a cartwheel.",
+                        "The woman cut him off a piece of bread. Even that piece came up to Jack's knee.",
+                        "He ate as fast as he could."
+                    ],
+                    right: [
+                        "Then all of a sudden the floor shook.",
+                        "Boom. Boom. Boom.",
+                        "The plates on the table rattled and danced.",
+                        "\"Goodness, he's back already!\"",
+                        "The woman swept Jack up in her arms and hid him quickly inside a great cooking pot."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · Boom, Boom, Boom',
+            beats: [
+                {
+                    art: '05-giant.webp',
+                    emoji: '💰',
+                    left: [
+                        "In strode the giant, so tall his head all but brushed the ceiling.",
+                        "He sniffed at the air.",
+                        "\"I smell a person in here.\"",
+                        "His wife waved the idea away.",
+                        "\"That will be what you ate yesterday.\""
+                    ],
+                    right: [
+                        "The giant sat down looking unconvinced.",
+                        "\"Bring it, bring it, quick!\"",
+                        "He ate a whole ox and got through twenty loaves besides.",
+                        "Jack watched him eat through the crack under the lid of the pot.",
+                        "'My word — he'd swallow me in one.'"
+                    ]
+                },
+                {
+                    art: '05-giant-2.webp',
+                    emoji: '💰',
+                    left: [
+                        "By and by the giant patted his stomach.",
+                        "\"Fetch me my bag of gold.\"",
+                        "His wife brought out a heavy sack, and the giant tipped it out across the table. The coins piled up like a hill.",
+                        "One coin alone was as broad as Jack's face.",
+                        "And the giant began to count them, one by one."
+                    ],
+                    right: [
+                        "One, two, three…",
+                        "Then he broke off in the middle and gave an enormous yawn. His head nodded, and soon he was snoring.",
+                        "Jack crept out of the pot.",
+                        "He got both arms round the sack of gold, and away he ran without once looking back."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Goose that Laid Gold',
+            beats: [
+                {
+                    art: '06-goose.webp',
+                    emoji: '🪿',
+                    left: [
+                        "Jack climbed down the beanstalk, and his mother's mouth fell open at the sight of the gold.",
+                        "From that day the two of them were never hungry. But the gold went down little by little.",
+                        "Some months went by like that, and Jack climbed the beanstalk again."
+                    ],
+                    right: [
+                        "The woman opened the door to him with a sigh.",
+                        "\"You again. Do be careful.\"",
+                        "And before long, there were the footsteps.",
+                        "Boom. Boom. Boom.",
+                        "Jack got straight into the pot, and the giant sat down at the table."
+                    ]
+                },
+                {
+                    art: '06-goose-2.webp',
+                    emoji: '🪿',
+                    left: [
+                        "\"Fetch me the goose.\"",
+                        "His wife came carrying a goose and set her gently on the table.",
+                        "\"Now then. Lay.\"",
+                        "The goose hunched herself up.",
+                        "Plop."
+                    ],
+                    right: [
+                        "Down dropped an egg of solid gold. Inside the pot, Jack's mouth fell open.",
+                        "Before long the giant was snoring again. Jack slipped out and gathered the goose into his arms.",
+                        "But the goose let out a squawk.",
+                        "The giant's eyes flew open.",
+                        "Jack ran for it without looking back."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Harp that Sang',
+            beats: [
+                {
+                    art: '07-harp.webp',
+                    emoji: '🎵',
+                    left: [
+                        "Thanks to the goose, everything was easy now.",
+                        "But Jack began to wonder again.",
+                        "\"What else is there in that castle?\"",
+                        "His mother waved both hands to stop him.",
+                        "\"That's enough now.\"",
+                        "\"Just once more.\""
+                    ],
+                    right: [
+                        "And up the beanstalk he went after all. This time he got into the castle without the woman knowing and hid in the shadow behind the hearth.",
+                        "By and by the giant finished his supper and called out.",
+                        "\"Fetch me the harp.\"",
+                        "Out came a small harp with a face carved into it."
+                    ]
+                },
+                {
+                    art: '07-harp-2.webp',
+                    emoji: '🎵',
+                    left: [
+                        "\"Sing.\"",
+                        "The harp began to play all by itself. It was so lovely that Jack quite forgot himself listening to it.",
+                        "The giant's eyes slid shut, and soon he was snoring loud and deep.",
+                        "Jack crept out from behind the hearth."
+                    ],
+                    right: [
+                        "He got both arms round the harp and lifted it. And at that very moment the harp cried out.",
+                        "\"Master! Master!\"",
+                        "The giant sprang to his feet.",
+                        "\"You thief!\"",
+                        "Jack bolted out of the door."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · One Axe',
+            beats: [
+                {
+                    art: '08-axe.webp',
+                    emoji: '🪓',
+                    left: [
+                        "Jack ran along the cloud road as hard as he could, with the footsteps close behind him.",
+                        "Boom!",
+                        "Boom!",
+                        "Boom!",
+                        "The cloud road shook with every one of them."
+                    ],
+                    right: [
+                        "Jack just reached the top of the beanstalk and slid straight down the stem.",
+                        "But the giant took hold of it too. The whole beanstalk swayed, and leaves came showering down.",
+                        "\"Mother — the axe!\"",
+                        "Jack shouted until his throat hurt, and his mother came running out with it."
+                    ]
+                },
+                {
+                    art: '08-axe-2.webp',
+                    emoji: '🪓',
+                    left: [
+                        "The moment his feet touched the ground he took the axe and swung at the stem with all his strength.",
+                        "Once. Twice. Three times.",
+                        "Crack.",
+                        "The stem split open and the beanstalk began to lean over. The giant scrambled back up into the clouds in a hurry."
+                    ],
+                    right: [
+                        "And he never came down again.",
+                        "The beanstalk came down across the field with a crash you could feel through the whole village.",
+                        "That day Jack put the axe away.",
+                        "\"I think I've climbed enough.\"",
+                        "His mother gave him a pat on the shoulder."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why did Jack have to sell the cow?',
+            choices: ['The man in the hat had asked for her', 'His mother wanted to buy beans', 'She had stopped giving milk and they had nothing left'],
+            answer: 2
+        },
+        {
+            q: 'What did the man at the roadside give Jack for the cow?',
+            choices: ['A bag of gold', 'Five beans', 'A small harp'],
+            answer: 1
+        },
+        {
+            q: 'How did the beanstalk come to grow by the window?',
+            choices: ['His mother flung the beans out into the yard', 'Jack planted them before going to bed', 'The man in the hat came and sowed them'],
+            answer: 0
+        },
+        {
+            q: 'Where did the giant’s wife hide Jack?',
+            choices: ['Behind the hearth', 'Under the table', 'Inside a great cooking pot'],
+            answer: 2
+        },
+        {
+            q: 'What was the giant doing when he fell asleep the first time?',
+            choices: ['Eating twenty loaves', 'Counting his gold coins', 'Listening to the harp'],
+            answer: 1
+        },
+        {
+            q: 'What woke the giant when Jack took the goose?',
+            choices: ['The goose squawked', 'The harp called out', 'Jack knocked over a plate'],
+            answer: 0
+        },
+        {
+            q: 'What did the harp do when Jack lifted it?',
+            choices: ['It went on singing', 'It broke in two', 'It cried out for its master'],
+            answer: 2
+        },
+        {
+            q: 'What did Jack say after he cut down the beanstalk?',
+            choices: ['That he would grow another one', "That he had climbed enough", 'That he wanted the gold back'],
+            answer: 1
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌱',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "The story of a giant living above the clouds has been told in England for a very long time, and it was gathered into a book about two hundred years ago.",
+                    "Jack traded a cow for a few beans. Anybody could see it was a bad bargain — which is exactly why his mother threw them out of the window.",
+                    "And then those beans grew overnight. If she had not thrown them, no beanstalk would have grown by the window. Something done in anger opened the road.",
+                    "Jack climbed above the clouds three times. The first time he hid in fear, the second time he half knew his way, and the third time he went up meaning to take the harp."
+                ],
+                right: [
+                    "Look again at the giant's wife. She is the one who hid Jack. In the most dangerous house in the story, she was the one who kept him safe.",
+                    "Was Jack right to climb up that third time? By then, after all, they had enough to live on."
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-cow.webp': [
+            { word: 'cupboard', meaning: '찬장', sentence: 'One dry crust was all that was left in the cupboard.' },
+            { word: 'crust', meaning: '빵 껍질, 마른 빵조각', sentence: 'One dry crust was all that was left.' },
+            { word: 'hang one’s head', meaning: '고개를 푹 숙이다', sentence: 'Jack hung his head.' },
+            { word: 'depend on', meaning: '~에 달려 있다', sentence: 'Our whole winter depends on it.' }
+        ],
+        '01-cow-2.webp': [
+            { word: 'plod', meaning: '뚜벅뚜벅 걷다', sentence: 'Milky-white plodded along behind him.' },
+            { word: 'brim', meaning: '모자챙', sentence: 'The man wore a hat with a very wide brim.' },
+            { word: 'fist', meaning: '주먹', sentence: 'The man slowly opened his fist.' },
+            { word: 'palm', meaning: '손바닥', sentence: 'Five beans lay in his palm.' }
+        ],
+        '02-beans.webp': [
+            { word: 'ordinary', meaning: '보통의', sentence: 'These are no ordinary beans.' },
+            { word: 'glitter', meaning: '반짝이다', sentence: 'The beans caught the sunlight and glittered.' },
+            { word: 'waver', meaning: '흔들리다', sentence: 'Jack felt his mind waver.' },
+            { word: 'peer into', meaning: '들여다보다', sentence: 'His mother peered into his palm.' }
+        ],
+        '02-beans-2.webp': [
+            { word: 'trade for', meaning: '~과 바꾸다', sentence: 'You traded our cow for beans!' },
+            { word: 'fling', meaning: '확 던지다', sentence: 'She flung the beans out of the window.' },
+            { word: 'scatter', meaning: '흩어지다', sentence: 'They scattered all over the yard.' },
+            { word: 'toss and turn', meaning: '뒤척이다', sentence: 'He tossed and turned for a long while.' },
+            { word: 'rustle', meaning: '사각사각 소리', sentence: 'Rustle, rustle. It sounded like something growing.' }
+        ],
+        '03-beanstalk.webp': [
+            { word: 'stalk', meaning: '줄기', sentence: 'An enormous stalk stood planted there.' },
+            { word: 'vanish', meaning: '사라지다', sentence: 'The stalk went up into the clouds and vanished.' },
+            { word: 'twist', meaning: '얽히다', sentence: 'The stems were twisted round one another like a ladder.' },
+            { word: 'swallow hard', meaning: '침을 꿀꺽 삼키다', sentence: 'Jack swallowed hard.' }
+        ],
+        '03-beanstalk-2.webp': [
+            { word: 'thumbnail', meaning: '엄지손톱', sentence: 'The village was no bigger than his thumbnail.' },
+            { word: 'blister', meaning: '물집', sentence: 'Blisters came up on his palms.' },
+            { word: 'damp', meaning: '축축한', sentence: 'Damp mist touched his face.' },
+            { word: 'level', meaning: '평평한, 반듯한', sentence: 'A wide, level road ran beneath his feet.' }
+        ],
+        '04-castle.webp': [
+            { word: 'tiptoe', meaning: '까치발', sentence: 'Even on tiptoe he could not reach the handle.' },
+            { word: 'swing open', meaning: '스르르 열리다', sentence: 'The door swung slowly open by itself.' },
+            { word: 'glance about', meaning: '주위를 살피다', sentence: 'The woman glanced about her.' },
+            { word: 'drop one’s voice', meaning: '목소리를 낮추다', sentence: 'She dropped her voice.' }
+        ],
+        '04-castle-2.webp': [
+            { word: 'tremendous', meaning: '어마어마한', sentence: 'The kitchen was tremendous.' },
+            { word: 'cartwheel', meaning: '수레바퀴', sentence: 'A single plate was as wide as a cartwheel.' },
+            { word: 'rattle', meaning: '달그락거리다', sentence: 'The plates on the table rattled and danced.' },
+            { word: 'sweep up', meaning: '번쩍 안아 올리다', sentence: 'The woman swept Jack up in her arms.' }
+        ],
+        '05-giant.webp': [
+            { word: 'stride', meaning: '성큼 걷다', sentence: 'In strode the giant.' },
+            { word: 'brush', meaning: '스치다', sentence: 'His head all but brushed the ceiling.' },
+            { word: 'sniff', meaning: '킁킁거리다', sentence: 'He sniffed at the air.' },
+            { word: 'unconvinced', meaning: '못 미더워하는', sentence: 'The giant sat down looking unconvinced.' },
+            { word: 'ox', meaning: '소', sentence: 'He ate a whole ox and twenty loaves besides.' }
+        ],
+        '05-giant-2.webp': [
+            { word: 'pat', meaning: '통통 두드리다', sentence: 'The giant patted his stomach.' },
+            { word: 'tip out', meaning: '좌르르 쏟다', sentence: 'He tipped it out across the table.' },
+            { word: 'yawn', meaning: '하품', sentence: 'He gave an enormous yawn.' },
+            { word: 'snore', meaning: '코를 골다', sentence: 'Soon he was snoring.' }
+        ],
+        '06-goose.webp': [
+            { word: 'sigh', meaning: '한숨을 쉬다', sentence: 'The woman opened the door with a sigh.' },
+            { word: 'footstep', meaning: '발소리', sentence: 'And before long, there were the footsteps.' }
+        ],
+        '06-goose-2.webp': [
+            { word: 'lay', meaning: '알을 낳다', sentence: 'Now then. Lay.' },
+            { word: 'hunch up', meaning: '몸을 웅크리다', sentence: 'The goose hunched herself up.' },
+            { word: 'solid gold', meaning: '순금', sentence: 'Down dropped an egg of solid gold.' },
+            { word: 'squawk', meaning: '꽥 소리', sentence: 'But the goose let out a squawk.' }
+        ],
+        '07-harp.webp': [
+            { word: 'wonder', meaning: '궁금해하다', sentence: 'But Jack began to wonder again.' },
+            { word: 'hearth', meaning: '아궁이', sentence: 'He hid in the shadow behind the hearth.' },
+            { word: 'carve', meaning: '새기다', sentence: 'A small harp with a face carved into it.' }
+        ],
+        '07-harp-2.webp': [
+            { word: 'forget oneself', meaning: '넋을 놓다', sentence: 'Jack quite forgot himself listening to it.' },
+            { word: 'slide shut', meaning: '스르르 감기다', sentence: "The giant's eyes slid shut." },
+            { word: 'spring to one’s feet', meaning: '벌떡 일어나다', sentence: 'The giant sprang to his feet.' },
+            { word: 'bolt', meaning: '내달리다', sentence: 'Jack bolted out of the door.' }
+        ],
+        '08-axe.webp': [
+            { word: 'as hard as one can', meaning: '있는 힘껏', sentence: 'Jack ran along the cloud road as hard as he could.' },
+            { word: 'sway', meaning: '휘청이다', sentence: 'The whole beanstalk swayed.' },
+            { word: 'shower down', meaning: '우수수 떨어지다', sentence: 'Leaves came showering down.' }
+        ],
+        '08-axe-2.webp': [
+            { word: 'swing at', meaning: '내리치다', sentence: 'He swung at the stem with all his strength.' },
+            { word: 'split open', meaning: '쩍 갈라지다', sentence: 'The stem split open.' },
+            { word: 'lean over', meaning: '기울다', sentence: 'The beanstalk began to lean over.' },
+            { word: 'scramble', meaning: '허둥지둥 기어오르다', sentence: 'The giant scrambled back up into the clouds.' }
+        ],
+        'end.webp': [
+            { word: 'gather', meaning: '모으다', sentence: 'It was gathered into a book two hundred years ago.' },
+            { word: 'bargain', meaning: '거래, 장사', sentence: 'Anybody could see it was a bad bargain.' },
+            { word: 'in anger', meaning: '화가 나서', sentence: 'Something done in anger opened the road.' },
+            { word: 'keep safe', meaning: '지켜 주다', sentence: 'She was the one who kept him safe.' },
+            { word: 'enough to live on', meaning: '먹고살 만한', sentence: 'By then they had enough to live on.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -617,6 +1160,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -625,7 +1169,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -637,7 +1181,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -671,4 +1215,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+

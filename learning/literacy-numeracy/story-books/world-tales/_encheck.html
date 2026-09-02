@@ -54,7 +54,13 @@ function measure(W, doc) {
 }
 
 async function run() {
-    const slugs = await (await fetch('_books.json')).json();
+    let slugs = await (await fetch('_books.json')).json();
+    // ?only=책이름 을 붙이면 그 책만 잰다. 권수가 늘면 전체 검사가 길어지기 때문이다.
+    const only = new URLSearchParams(location.search).get('only');
+    if (only) {
+        const want = only.split(',').map(s => s.trim());
+        slugs = slugs.filter(s => want.includes(s));
+    }
     const lines = [];
     for (const slug of slugs) {
         // 영어 원고가 있는 책만 잰다
