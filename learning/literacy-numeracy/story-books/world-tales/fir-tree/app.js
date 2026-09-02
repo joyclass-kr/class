@@ -313,16 +313,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '전나무',
+    intro: [
+        '전나무는 덴마크의 작가 한스 크리스티안 안데르센이 1844년에 펴낸 이야기예요.',
+        '숲에서 자라던 어린 전나무가 늘 다음 일만 기다리며 지내는 이야기랍니다. 지금 이 순간을 지나쳐 버린다는 것이 무엇인지 조용히 보여 주는 작품이에요.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🌲')}
             </div>
             <div class="story-page-right">
-                <h1>전나무</h1>
-                <p>전나무는 덴마크의 작가 한스 크리스티안 안데르센이 1844년에 펴낸 이야기예요.</p>
-                <p>숲에서 자라던 어린 전나무가 늘 다음 일만 기다리며 지내는 이야기랍니다. 지금 이 순간을 지나쳐 버린다는 것이 무엇인지 조용히 보여 주는 작품이에요.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -337,8 +346,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -348,8 +357,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -359,22 +368,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -424,9 +434,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -437,7 +447,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -509,7 +519,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -518,34 +528,619 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   즐거운 이야기가 아니므로 문체를 낮게 유지한다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Fir Tree',
+        intro: [
+            "The Fir Tree was published by the Danish author Hans Christian Andersen in 1844.",
+            "It is about a young fir tree growing in the wood who spends the whole of his life waiting for the next thing. It shows very quietly what it is to walk past the moment you are actually in."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · I Want to Grow Faster',
+            beats: [
+                {
+                    art: '01-small.webp',
+                    emoji: '🌲',
+                    left: [
+                        "In one corner of a wood stood a very small fir tree,",
+                        "with tall trees standing all round him.",
+                        "The sun was warm and the wind was cool.",
+                        "The birds sang there every day,",
+                        "and the rabbits ran about beside him.",
+                        "Anybody would have said it was a good place to be."
+                    ],
+                    right: [
+                        "And the fir tree was always out of sorts.",
+                        "\"Why am I so small?\"",
+                        "The rabbits went hopping straight over the top of him,",
+                        "and every time it made him cross.",
+                        "\"I want to grow quickly and be like those trees.\"",
+                        "The sunlight said to him, kindly,"
+                    ]
+                },
+                {
+                    art: '01-small-2.webp',
+                    emoji: '🌲',
+                    left: [
+                        "\"This is the best time there is.\"",
+                        "And the wind stroked his branches and said,",
+                        "\"There is nothing so pleasant as being a young tree.\"",
+                        "The fir tree did not listen at all.",
+                        "Year by year he grew a little taller,",
+                        "and still the fir tree was not satisfied."
+                    ],
+                    right: [
+                        "\"I am still no higher than their feet.\"",
+                        "When spring came he went past spring; when summer came he went past summer.",
+                        "The fir tree was always waiting for the next thing.",
+                        "Three years went by like that.",
+                        "And in all that time he never once thought that now was good."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Trees That Were Cut',
+            beats: [
+                {
+                    art: '02-felled.webp',
+                    emoji: '🪓',
+                    left: [
+                        "In the autumn people came into the wood —",
+                        "woodcutters with axes and saws.",
+                        "The wood rang with the sound of it,",
+                        "and the biggest and straightest trees were cut down.",
+                        "The branches were taken off and only the trunks were left,",
+                        "and the woodcutters loaded them onto carts."
+                    ],
+                    right: [
+                        "The fir tree looked at the places where they had stood.",
+                        "It felt strange to have the wood so open.",
+                        "\"Where are those trees going?\"",
+                        "And a stork happened to fly down.",
+                        "\"I am on my way from the sea.\" The stork came down on his long legs."
+                    ]
+                },
+                {
+                    art: '02-felled-2.webp',
+                    emoji: '🪓',
+                    left: [
+                        "\"I saw great ships out there.\"",
+                        "\"Masts so high they looked as though they touched the sky.\"",
+                        "\"Those trees become those masts.\"",
+                        "The fir tree's eyes opened wide.",
+                        "\"Masts?\"",
+                        "\"They go across the sea?\""
+                    ],
+                    right: [
+                        "\"Indeed. To the ends of the earth.\"",
+                        "The stork opened his wings and flew off,",
+                        "and the fir tree stood there a long while.",
+                        "\"Oh — I want to be that one day!\"",
+                        "From that day he thought of nothing but the sea.",
+                        "Even the wind sounded like a mast to him."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Shining Trees',
+            beats: [
+                {
+                    art: '03-christmas.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "When winter came the woodcutters came again.",
+                        "This time they did not cut the big trees.",
+                        "They picked out only the small young ones,",
+                        "younger even than the fir tree himself.",
+                        "The fir tree thought that very odd.",
+                        "And some sparrows happened to settle on his branches."
+                    ],
+                    right: [
+                        "\"And where do those trees go?\"",
+                        "The sparrows chattered at one another.",
+                        "\"We saw them in the village!\"",
+                        "\"We looked in through a window.\"",
+                        "The fir tree's ears went up,",
+                        "and the sparrows went on, delighted with themselves."
+                    ]
+                },
+                {
+                    art: '03-christmas-2.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "\"Standing in the middle of a warm room.\"",
+                        "\"Hung all over with gold apples and candles!\"",
+                        "\"And people singing round them.\"",
+                        "The fir tree's heart began to beat faster.",
+                        "It sounded far better than a mast.",
+                        "\"That is it! I want to be that.\""
+                    ],
+                    right: [
+                        "\"Come and take me, quickly, quickly!\"",
+                        "The wind went past and said,",
+                        "\"It is good right here, I tell you.\"",
+                        "And again the fir tree did not listen.",
+                        "So the winter went by,",
+                        "and every day of it felt slow to him."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Day It Came',
+            beats: [
+                {
+                    art: '04-cut.webp',
+                    emoji: '❄️',
+                    left: [
+                        "The next winter came.",
+                        "It was a morning with the snow lying deep,",
+                        "and there was the sound of an axe close by.",
+                        "A woodcutter stopped in front of the fir tree.",
+                        "\"This one will do nicely.\"",
+                        "The fir tree shook all over.",
+                        "It hurt, and it frightened him."
+                    ],
+                    right: [
+                        "And the excitement was larger than the fear.",
+                        "\"At last it is my turn!\"",
+                        "The axe went into the base of him,",
+                        "and the fir tree came down on the snow.",
+                        "The white snow flew up round him,",
+                        "and what had lain on his branches came showering off.",
+                        "And the wood went very quiet."
+                    ]
+                },
+                {
+                    art: '04-cut-2.webp',
+                    emoji: '❄️',
+                    left: [
+                        "The fir tree was loaded onto a cart,",
+                        "and the cart went jolting away.",
+                        "The wood got further and further off,",
+                        "and his friends the trees got smaller.",
+                        "The fir tree never once looked back.",
+                        "He looked ahead and waited for the village.",
+                        "And at last there was smoke from a chimney."
+                    ],
+                    right: [
+                        "The cart stopped in front of a house,",
+                        "and people carried the fir tree inside.",
+                        "The room was warm and bright,",
+                        "and the fir tree's chest swelled with it.",
+                        "This was certainly the room the sparrows had talked about,",
+                        "and the candles would be lit before long."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Brightest Evening',
+            beats: [
+                {
+                    art: '05-decorated.webp',
+                    emoji: '⭐',
+                    left: [
+                        "The fir tree was set up in the middle of the room,",
+                        "in a tub packed with sand to hold him steady.",
+                        "People brought boxes in.",
+                        "Gold apples were hung on every branch,",
+                        "and paper flowers and sweets as well,",
+                        "until the green branches were coloured all over."
+                    ],
+                    right: [
+                        "And a great star went on the very top.",
+                        "The fir tree's branches ached with the weight of it,",
+                        "and he was too happy to care.",
+                        "\"What is going to happen tonight?\"",
+                        "The sun went down and the room grew dim,",
+                        "and the fir tree waited, holding his breath."
+                    ]
+                },
+                {
+                    art: '05-decorated-2.webp',
+                    emoji: '⭐',
+                    left: [
+                        "And then the candles were lit, one after another,",
+                        "and every branch was shining.",
+                        "The doors were thrown open",
+                        "and the children came running in, clapping their hands.",
+                        "\"Oh, how lovely it is!\"",
+                        "The children went round and round the tree."
+                    ],
+                    right: [
+                        "They sang, and the presents were handed out.",
+                        "The fir tree thought there could be no better day than this.",
+                        "\"It will be like this tomorrow too.\"",
+                        "\"And the day after, and the day after that.\"",
+                        "A drop of candle wax fell off the end of a branch.",
+                        "And the fir tree did not understand.",
+                        "He thought that evening would go on for ever."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Winter in the Attic',
+            beats: [
+                {
+                    art: '06-attic.webp',
+                    emoji: '📦',
+                    left: [
+                        "But the feast was over in one night.",
+                        "Next morning people came in",
+                        "and took off the gold apples and the paper flowers.",
+                        "They took the star down off the top.",
+                        "Nothing was left on the branches but candle wax.",
+                        "Servants dragged the fir tree away,",
+                        "and dry needles came off him onto the floor."
+                    ],
+                    right: [
+                        "Nobody picked them up.",
+                        "They carried him up the stairs and put him in a dark attic,",
+                        "among dusty boxes.",
+                        "And the fir tree was easy in his mind, even so.",
+                        "\"They will dress me again soon enough.\"",
+                        "\"And in the spring they will plant me in the garden, I expect.\" And so the fir tree waited."
+                    ]
+                },
+                {
+                    art: '06-attic-2.webp',
+                    emoji: '📦',
+                    left: [
+                        "But nobody came.",
+                        "One day went by, and then seven.",
+                        "The attic was always dark and quiet,",
+                        "and the fir tree grew thirstier and thirstier.",
+                        "The needles came off his branches, one and then another.",
+                        "And one day two mice appeared."
+                    ],
+                    right: [
+                        "\"What is this? It smells of wood.\"",
+                        "The mice sat down at the foot of him.",
+                        "\"Where are you from? Do tell us about it.\"",
+                        "\"About the wood, I mean.\"",
+                        "And only then did the fir tree think of the wood.",
+                        "Things he had forgotten came back to him one by one."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · What Came Back Too Late',
+            beats: [
+                {
+                    art: '07-memory.webp',
+                    emoji: '🐭',
+                    left: [
+                        "The fir tree began his story.",
+                        "\"The place I lived was a very wide wood.\"",
+                        "\"In the morning the sun warmed my branches.\"",
+                        "\"The dew stood shining on the ends of the leaves.\"",
+                        "\"And the birds sang above me.\"",
+                        "The mice listened with their eyes shining."
+                    ],
+                    right: [
+                        "\"There were rabbits as well.\"",
+                        "\"I was so small that they went hopping straight over me.\"",
+                        "\"How that used to make me cross.\"",
+                        "And the fir tree stopped in the middle of it,",
+                        "because something had turned over in him.",
+                        "Saying it out loud had put it in front of his eyes."
+                    ]
+                },
+                {
+                    art: '07-memory-2.webp',
+                    emoji: '🐭',
+                    left: [
+                        "\"That was… a good time.\"",
+                        "the fir tree said, quietly.",
+                        "\"Why did I not know it?\"",
+                        "He remembered how he had always been waiting for the next thing.",
+                        "The springs and the summers had simply gone past him.",
+                        "The mice went away when the story was over."
+                    ],
+                    right: [
+                        "And they did not come again.",
+                        "The attic was quiet once more.",
+                        "Snow was falling outside the little window,",
+                        "and the fir tree watched it for a long while.",
+                        "And so the winter went.",
+                        "The fir tree got drier and drier, and rustled when he moved."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · The Day He Came Out to the Yard',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🌱',
+                    left: [
+                        "In the spring the attic door was opened",
+                        "and the bright light came pouring in.",
+                        "People carried the fir tree down",
+                        "and out into the yard.",
+                        "For the first time in a long while the sunlight came onto his branches,",
+                        "and the wind went over him again."
+                    ],
+                    right: [
+                        "The fir tree narrowed his eyes.",
+                        "In one corner of the yard green shoots were coming up,",
+                        "and a young tree was growing there.",
+                        "It was like looking at himself, long ago.",
+                        "The fir tree looked steadily at that tree",
+                        "and wondered whether it, too, wanted to grow up quickly."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🌱',
+                    left: [
+                        "There were children playing in the yard.",
+                        "One of them picked something up.",
+                        "It was the star that had been on the top of the fir tree.",
+                        "The child pinned it to her chest.",
+                        "\"Isn't this pretty!\""
+                    ],
+                    right: [
+                        "The children laughed and ran about the yard.",
+                        "And the fir tree heard them.",
+                        "The sunlight was very warm.",
+                        "The fir tree closed his eyes and thought quietly,",
+                        "and something in him was strangely at rest.",
+                        "\"If I should ever grow again.\"",
+                        "\"Then I shall know today when I am in it.\""
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did the sunlight and the wind tell the little fir tree?',
+            choices: ['That he would grow tallest of all', 'That he should go to the village', 'That being young now was the best of it'],
+            answer: 2
+        },
+        {
+            q: 'What did the stork say the big trees became?',
+            choices: ['Firewood', 'Masts on great ships', 'Christmas trees'],
+            answer: 1
+        },
+        {
+            q: 'What did the sparrows say they had seen through a window?',
+            choices: ['Small trees hung with gold apples and candles', 'Trees being cut into planks', 'A ship in the harbour'],
+            answer: 0
+        },
+        {
+            q: 'What did the fir tree think while the candles were lit?',
+            choices: ['That he wanted to go back to the wood', 'That the candles were too heavy', 'That it would be the same tomorrow and the day after'],
+            answer: 2
+        },
+        {
+            q: 'Where was the fir tree put after that night?',
+            choices: ['Back in the wood', 'In a dark attic among dusty boxes', 'In the garden'],
+            answer: 1
+        },
+        {
+            q: 'What made the fir tree remember the wood?',
+            choices: ['Two mice asked him to tell them about it', 'He saw it through the attic window', 'The sparrows came back'],
+            answer: 0
+        },
+        {
+            q: 'What did the fir tree see in the yard in spring?',
+            choices: ['The stork again', 'The star still on his top', 'A young tree coming up, like himself long ago'],
+            answer: 2
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌲',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "It looks like a Christmas story, and it is not a cheerful one. Andersen often ended things this way.",
+                    "The fir tree is always waiting for what comes next — to grow tall, to be a mast on a ship, to be stood up in a room. The wood he was actually standing in never came into it.",
+                    "The sparrows tell him the wood is good and he does not listen. The sunlight and the wind go past him too.",
+                    "That one evening with the candles lit was the best day of the fir tree's whole life. And even on that day he was thinking about tomorrow."
+                ],
+                right: [
+                    "It is only once he is up in the attic that the fir tree thinks of the wood. And by then he has no roots.",
+                    "When could the fir tree have been happy?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-small.webp': [
+            { word: 'fir tree', meaning: '전나무', sentence: 'In one corner of a wood stood a very small fir tree.' },
+            { word: 'out of sorts', meaning: '시무룩한', sentence: 'The fir tree was always out of sorts.' },
+            { word: 'hop over', meaning: '훌쩍 뛰어넘다', sentence: 'The rabbits went hopping over the top of him.' },
+            { word: 'cross', meaning: '부아가 난', sentence: 'Every time it made him cross.' }
+        ],
+        '01-small-2.webp': [
+            { word: 'stroke', meaning: '쓰다듬다', sentence: 'The wind stroked his branches.' },
+            { word: 'pleasant', meaning: '즐거운', sentence: 'There is nothing so pleasant as being a young tree.' },
+            { word: 'satisfied', meaning: '만족한', sentence: 'The fir tree was not satisfied.' },
+            { word: 'go past', meaning: '지나치다', sentence: 'When spring came he went past spring.' }
+        ],
+        '02-felled.webp': [
+            { word: 'woodcutter', meaning: '나무꾼', sentence: 'Woodcutters with axes and saws.' },
+            { word: 'saw', meaning: '톱', sentence: 'Woodcutters with axes and saws.' },
+            { word: 'trunk', meaning: '줄기', sentence: 'Only the trunks were left.' },
+            { word: 'cart', meaning: '수레', sentence: 'They loaded them onto carts.' },
+            { word: 'stork', meaning: '황새', sentence: 'And a stork happened to fly down.' }
+        ],
+        '02-felled-2.webp': [
+            { word: 'mast', meaning: '돛대', sentence: 'Masts so high they touched the sky.' },
+            { word: 'the ends of the earth', meaning: '세상 끝', sentence: 'To the ends of the earth.' },
+            { word: 'think of nothing but', meaning: '~ 생각뿐이다', sentence: 'He thought of nothing but the sea.' }
+        ],
+        '03-christmas.webp': [
+            { word: 'pick out', meaning: '골라내다', sentence: 'They picked out only the small young ones.' },
+            { word: 'odd', meaning: '이상한', sentence: 'The fir tree thought that very odd.' },
+            { word: 'sparrow', meaning: '참새', sentence: 'Some sparrows settled on his branches.' },
+            { word: 'chatter', meaning: '재잘거리다', sentence: 'The sparrows chattered at one another.' }
+        ],
+        '03-christmas-2.webp': [
+            { word: 'hung with', meaning: '~을 달고 있는', sentence: 'Hung all over with gold apples and candles.' },
+            { word: 'beat faster', meaning: '두근거리다', sentence: "The fir tree's heart began to beat faster." },
+            { word: 'far better', meaning: '훨씬 좋은', sentence: 'It sounded far better than a mast.' },
+            { word: 'slow', meaning: '더딘', sentence: 'Every day of it felt slow to him.' }
+        ],
+        '04-cut.webp': [
+            { word: 'lie deep', meaning: '소복이 쌓이다', sentence: 'A morning with the snow lying deep.' },
+            { word: 'do nicely', meaning: '딱 좋다', sentence: 'This one will do nicely.' },
+            { word: 'excitement', meaning: '설렘', sentence: 'The excitement was larger than the fear.' },
+            { word: 'base', meaning: '밑동', sentence: 'The axe went into the base of him.' },
+            { word: 'shower off', meaning: '우수수 떨어지다', sentence: 'What had lain on his branches came showering off.' }
+        ],
+        '04-cut-2.webp': [
+            { word: 'jolt', meaning: '덜컹거리다', sentence: 'The cart went jolting away.' },
+            { word: 'look back', meaning: '뒤를 돌아보다', sentence: 'The fir tree never once looked back.' },
+            { word: 'chimney', meaning: '굴뚝', sentence: 'There was smoke from a chimney.' },
+            { word: 'swell', meaning: '부풀다', sentence: "The fir tree's chest swelled with it." }
+        ],
+        '05-decorated.webp': [
+            { word: 'tub', meaning: '통', sentence: 'In a tub packed with sand.' },
+            { word: 'steady', meaning: '단단히', sentence: 'To hold him steady.' },
+            { word: 'ache', meaning: '뻐근하다', sentence: 'His branches ached with the weight of it.' },
+            { word: 'dim', meaning: '어둑한', sentence: 'The room grew dim.' }
+        ],
+        '05-decorated-2.webp': [
+            { word: 'throw open', meaning: '활짝 열다', sentence: 'The doors were thrown open.' },
+            { word: 'clap one’s hands', meaning: '손뼉을 치다', sentence: 'The children came running in, clapping their hands.' },
+            { word: 'hand out', meaning: '나누어 주다', sentence: 'The presents were handed out.' },
+            { word: 'candle wax', meaning: '촛농', sentence: 'A drop of candle wax fell off a branch.' },
+            { word: 'for ever', meaning: '영원히', sentence: 'He thought that evening would go on for ever.' }
+        ],
+        '06-attic.webp': [
+            { word: 'take off', meaning: '떼어 내다', sentence: 'They took off the gold apples.' },
+            { word: 'needle', meaning: '바늘잎', sentence: 'Dry needles came off him onto the floor.' },
+            { word: 'drag', meaning: '끌다', sentence: 'Servants dragged the fir tree away.' },
+            { word: 'attic', meaning: '다락방', sentence: 'They put him in a dark attic.' },
+            { word: 'easy in one’s mind', meaning: '마음을 놓은', sentence: 'The fir tree was easy in his mind.' }
+        ],
+        '06-attic-2.webp': [
+            { word: 'thirsty', meaning: '목마른', sentence: 'The fir tree grew thirstier and thirstier.' },
+            { word: 'come off', meaning: '떨어지다', sentence: 'The needles came off his branches.' },
+            { word: 'smell of', meaning: '~ 냄새가 나다', sentence: 'It smells of wood.' },
+            { word: 'come back to', meaning: '떠오르다', sentence: 'Things he had forgotten came back to him.' }
+        ],
+        '07-memory.webp': [
+            { word: 'dew', meaning: '이슬', sentence: 'The dew stood shining on the leaves.' },
+            { word: 'turn over', meaning: '(마음이) 이상해지다', sentence: 'Something had turned over in him.' },
+            { word: 'out loud', meaning: '소리 내어', sentence: 'Saying it out loud.' },
+            { word: 'in front of one’s eyes', meaning: '눈앞에', sentence: 'It put it in front of his eyes.' }
+        ],
+        '07-memory-2.webp': [
+            { word: 'go past', meaning: '지나가 버리다', sentence: 'The springs and summers had gone past him.' },
+            { word: 'once more', meaning: '다시', sentence: 'The attic was quiet once more.' },
+            { word: 'rustle', meaning: '바스락거리다', sentence: 'He rustled when he moved.' }
+        ],
+        '08-ending.webp': [
+            { word: 'pour in', meaning: '쏟아져 들어오다', sentence: 'The bright light came pouring in.' },
+            { word: 'narrow one’s eyes', meaning: '눈을 가늘게 뜨다', sentence: 'The fir tree narrowed his eyes.' },
+            { word: 'shoot', meaning: '싹', sentence: 'Green shoots were coming up.' },
+            { word: 'long ago', meaning: '옛날에', sentence: 'It was like looking at himself, long ago.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'pick up', meaning: '줍다', sentence: 'One of them picked something up.' },
+            { word: 'pin', meaning: '달다', sentence: 'The child pinned it to her chest.' },
+            { word: 'at rest', meaning: '편안한', sentence: 'Something in him was strangely at rest.' },
+            { word: 'know', meaning: '알아보다', sentence: 'Then I shall know today when I am in it.' }
+        ],
+        'end.webp': [
+            { word: 'cheerful', meaning: '즐거운', sentence: 'And it is not a cheerful one.' },
+            { word: 'come into it', meaning: '눈에 들어오다', sentence: 'The wood never came into it.' },
+            { word: 'root', meaning: '뿌리', sentence: 'And by then he has no roots.' },
+            { word: 'happy', meaning: '즐거운', sentence: 'When could the fir tree have been happy?' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -610,6 +1205,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -618,7 +1214,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -630,7 +1226,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -664,4 +1260,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
