@@ -279,16 +279,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '행복한 왕자',
+    intro: [
+        '행복한 왕자는 아일랜드의 작가 오스카 와일드가 1888년에 발표한 이야기예요.',
+        '와일드는 자기 아이들에게 들려주려고 이 이야기를 썼다고 합니다. 도시 한복판에 서 있는 동상이 사람들의 삶을 내려다본다는 설정 하나로, 가진 것을 나눈다는 것이 어떤 일인지를 조용히 보여 주는 이야기랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🗿')}
             </div>
             <div class="story-page-right">
-                <h1>행복한 왕자</h1>
-                <p>행복한 왕자는 아일랜드의 작가 오스카 와일드가 1888년에 발표한 이야기예요.</p>
-                <p>와일드는 자기 아이들에게 들려주려고 이 이야기를 썼다고 합니다. 도시 한복판에 서 있는 동상이 사람들의 삶을 내려다본다는 설정 하나로, 가진 것을 나눈다는 것이 어떤 일인지를 조용히 보여 주는 이야기랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -303,8 +312,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -314,8 +323,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -325,22 +334,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -390,9 +400,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -403,7 +413,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -475,7 +485,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -484,34 +494,534 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Happy Prince',
+        intro: [
+            "The Happy Prince was written by the Irish author Oscar Wilde and published in 1888.",
+            "Wilde is said to have made it up for his own children. With one idea — a statue in the middle of a city, looking down on how people live — it shows very quietly what it means to give away what you have."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Statue Above the City',
+            beats: [
+                {
+                    art: '01-statue.webp',
+                    emoji: '🗽',
+                    left: [
+                        "In the middle of the city stood a very tall column, and on top of it sat a statue.",
+                        "He was covered all over in gold leaf, so that he dazzled you when the sun came up, and two bright sapphires were set in his eyes.",
+                        "The red ruby in his sword hilt burned like an ember when the evening light caught it.",
+                        "Children going past the column would tip their heads right back."
+                    ],
+                    right: [
+                        "\"However did he get up there?\"",
+                        "People called him the Happy Prince.",
+                        "\"As lovely as that statue.\"",
+                        "\"He hasn't a care in the world, that one.\"",
+                        "The grown-ups looked up and said their piece too.",
+                        "And every time, the statue only went on looking quietly down at the city."
+                    ]
+                },
+                {
+                    art: '01-statue-2.webp',
+                    emoji: '🗽',
+                    left: [
+                        "The prince sometimes remembered when he was alive.",
+                        "In those days he never left the inside of a high wall. There was always music in the garden and flowers in bloom, and he never once saw anything sad.",
+                        "\"That is why they all called me the Happy Prince.\""
+                    ],
+                    right: [
+                        "\"I did not know what was outside the wall.\"",
+                        "But now that he was a statue he could see it all. The column was very high.",
+                        "Who went hungry, who was crying — it showed plainly in every alley.",
+                        "One day something fell from the prince's eye.",
+                        "It ran down his gold cheek. It was a tear."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Swallow Who Stayed One Night',
+            beats: [
+                {
+                    art: '02-swallow.webp',
+                    emoji: '🐦',
+                    left: [
+                        "About that time a swallow came flying into the city. His friends had long since left for the warm countries.",
+                        "He had stayed playing with the reeds and got badly behind.",
+                        "His wings were heavy and he was hungry.",
+                        "\"I shall sleep here just for tonight.\"",
+                        "The swallow settled lightly at the statue's feet, folded up his legs and curled himself round."
+                    ],
+                    right: [
+                        "He had his head under his wing and was just closing his eyes.",
+                        "Plop.",
+                        "A drop of water fell on his back.",
+                        "\"Hullo — is it raining?\"",
+                        "He looked up at a clear night thick with stars.",
+                        "And the statue was crying."
+                    ]
+                },
+                {
+                    art: '02-swallow-2.webp',
+                    emoji: '🐦',
+                    left: [
+                        "\"Why are you crying?\"",
+                        "the swallow asked, quite startled.",
+                        "\"Do you see that alley down there?\"",
+                        "One window of an old house stood open.",
+                        "A woman sat bent over her sewing, and her fingertips were worn raw where the needle went in."
+                    ],
+                    right: [
+                        "On the bed by the window a child tossed about in a fever.",
+                        "\"Mother, I'm thirsty. I want an orange.\"",
+                        "\"Just bear it a little longer.\"",
+                        "There was nothing but water in the house to give him.",
+                        "\"Swallow, take the ruby out of my sword and carry it to that house.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The First Errand',
+            beats: [
+                {
+                    art: '03-ruby.webp',
+                    emoji: '❤️',
+                    left: [
+                        "\"I must leave in the morning. My friends are waiting for me.\"",
+                        "The swallow said it and turned his head away.",
+                        "The night wind was cold and his beak ached with it.",
+                        "And after a long while he asked, a little sheepishly,",
+                        "\"…which alley did you say it was?\""
+                    ],
+                    right: [
+                        "The prince smiled.",
+                        "The swallow pulled the ruby out with his beak and flew up hard. The roofs went by beneath him,",
+                        "and white steam came puffing out of the chimneys.",
+                        "He slipped in through the open window and laid the ruby down beside the thimble.",
+                        "The woman had fallen asleep with her sewing in her arms."
+                    ]
+                },
+                {
+                    art: '03-ruby-2.webp',
+                    emoji: '❤️',
+                    left: [
+                        "The swallow circled over the child and fanned him with his wings.",
+                        "Whoosh, whoosh.",
+                        "The hot forehead cooled, little by little.",
+                        "\"It doesn't feel hot any more.\"",
+                        "The child said it and drifted off to sleep."
+                    ],
+                    right: [
+                        "\"Tomorrow they will be able to buy an orange.\"",
+                        "The swallow looked once more at the sleeping woman and went out through the window.",
+                        "\"How strange. It's so cold out, and I feel warm.\"",
+                        "\"That is because you did a good thing.\"",
+                        "And the swallow slept very soundly that night."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · He Gives Away a Blue Eye',
+            beats: [
+                {
+                    art: '04-sapphire.webp',
+                    emoji: '💙',
+                    left: [
+                        "In the morning the swallow spread his wings wide.",
+                        "\"Today I really must go.\"",
+                        "And the prince called him back again.",
+                        "\"Will you not stay one more night? Do you see the attic under that roof?\"",
+                        "A young man sat at the window, breathing on his hands between one line and the next."
+                    ],
+                    right: [
+                        "His fingers were so stiff the letters came out crooked.",
+                        "There was not one ember in the stove,",
+                        "and nothing to eat on the desk either.",
+                        "\"Take out one of my eyes.\"",
+                        "\"But then you won't be able to see.\"",
+                        "\"Never mind. Go on.\""
+                    ]
+                },
+                {
+                    art: '04-sapphire-2.webp',
+                    emoji: '💙',
+                    left: [
+                        "The swallow carried the sapphire carefully to the attic window,",
+                        "and while the young man had his head down he set it quietly on the desk.",
+                        "\"Where has this come from?\"",
+                        "The young man held it up to the window and turned it about.",
+                        "Blue light moved across his palm."
+                    ],
+                    right: [
+                        "Next day he bought a bundle of firewood. He bought bread as well, and fresh paper.",
+                        "The fire roared up and the room was warm in no time.",
+                        "\"Now the winter doesn't frighten me.\"",
+                        "With his hands thawed the writing came easily.",
+                        "The swallow watched it all and came back and told the prince."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Swallow Becomes His Eyes',
+            beats: [
+                {
+                    art: '05-eyes.webp',
+                    emoji: '💧',
+                    left: [
+                        "A few days later a child stood in the square, out selling matches.",
+                        "And she dropped every one of them into the gutter.",
+                        "The child sat down and burst into tears.",
+                        "People glanced at her as they went past and walked on.",
+                        "\"What shall I tell my mother…\"",
+                        "\"I'll be in trouble if I go back empty-handed.\""
+                    ],
+                    right: [
+                        "The prince said quietly,",
+                        "\"Swallow, take out my other eye.\"",
+                        "\"I can't. Then you won't see anything at all.\"",
+                        "\"Go on.\"",
+                        "The tears ran down the swallow's face.",
+                        "And still he did as he was told."
+                    ]
+                },
+                {
+                    art: '05-eyes-2.webp',
+                    emoji: '💧',
+                    left: [
+                        "The child ran off laughing with it in her hand, and the swallow came back to the statue.",
+                        "\"Now you cannot see.\"",
+                        "\"I shall not go. I shall be your eyes.\"",
+                        "From that day the swallow flew once round the city every day.",
+                        "\"And what did you see today?\""
+                    ],
+                    right: [
+                        "\"A wren has hatched her chicks on a chimney pot.\"",
+                        "Then one day the swallow said this:",
+                        "\"The children in that alley go hungry every day.\"",
+                        "The prince said nothing for a long time. Then he spoke, quietly.",
+                        "\"Take the gold leaf off me, one sheet at a time, and carry it to them.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Night of the First Snow',
+            beats: [
+                {
+                    art: '06-snow.webp',
+                    emoji: '🌨️',
+                    left: [
+                        "The swallow took the gold leaf off sheet by sheet and carried it away. He went to every hungry house and left it on the windowsill.",
+                        "The children's faces brightened from one day to the next.",
+                        "They ate their fill of bread and ran out into the alley.",
+                        "\"I'm not hungry any more!\""
+                    ],
+                    right: [
+                        "The sound of children laughing came back into the streets.",
+                        "\"The child in that house laughed today for the first time.\"",
+                        "When the swallow told him so, the prince smiled quietly.",
+                        "And meanwhile not one sheet of gold was left, and the grey lead showed through.",
+                        "\"What has happened to that statue? It looks a fright.\""
+                    ]
+                },
+                {
+                    art: '06-snow-2.webp',
+                    emoji: '🌨️',
+                    left: [
+                        "The winter deepened.",
+                        "One night the first snow came down softly. The swallow was very cold, and his wings were too heavy to open properly.",
+                        "And still he did not go. He sat quietly at the prince's feet,",
+                        "and the lights of the city blurred one by one in front of him."
+                    ],
+                    right: [
+                        "\"Now I really must go.\"",
+                        "\"To the warm countries?\"",
+                        "\"No. Somewhere much further.\"",
+                        "The swallow gathered his last strength and kissed the prince on the cheek.",
+                        "And then he dropped at his feet.",
+                        "And at that moment something inside the statue cracked."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Two Most Precious Things',
+            beats: [
+                {
+                    art: '07-ending.webp',
+                    emoji: '🔨',
+                    left: [
+                        "The leaden heart had broken in two.",
+                        "It was that cold a night.",
+                        "Next morning the mayor came through the square with his councillors. He looked up at the column and stopped short.",
+                        "\"What a state that thing is in! No ruby, and no eyes either.\"",
+                        "\"The gold has all come off as well, sir.\""
+                    ],
+                    right: [
+                        "\"He is little better than a beggar.\"",
+                        "\"We might melt him down and put up another.\"",
+                        "The councillors glanced at one another and nodded.",
+                        "\"And there's a dead bird as well.\"",
+                        "The mayor ordered the statue taken down there and then."
+                    ]
+                },
+                {
+                    art: '07-ending-2.webp',
+                    emoji: '🔨',
+                    left: [
+                        "The statue was put into the furnace. The molten metal bubbled and the hammers rang.",
+                        "But the leaden heart would not melt, however long they left it in.",
+                        "\"Why won't this melt? What a strange lump of lead.\"",
+                        "In the end the workmen threw it out."
+                    ],
+                    right: [
+                        "It happened to land exactly where the dead swallow lay.",
+                        "And so the two most precious things in that city came to lie side by side.",
+                        "Long years afterwards the story was still told.",
+                        "\"Where did all that gold leaf go?\"",
+                        "\"Into the hands of the children in that alley.\"",
+                        "And only then did people nod."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why had the prince never seen anything sad while he was alive?',
+            choices: ['He lived only inside a high wall', 'He was too young to notice', 'Nobody in the city was poor then'],
+            answer: 0
+        },
+        {
+            q: 'Why was the swallow still in the city?',
+            choices: ['His wing was broken', 'The prince had called him', 'He had stayed playing with the reeds and fallen behind'],
+            answer: 2
+        },
+        {
+            q: 'What was the first thing the prince gave away?',
+            choices: ['One of his sapphire eyes', 'The ruby from his sword hilt', 'The gold leaf on his body'],
+            answer: 1
+        },
+        {
+            q: 'What did the young man in the attic do with the sapphire?',
+            choices: ['He bought firewood, bread and paper', 'He kept it on his desk', 'He gave it to the match girl'],
+            answer: 0
+        },
+        {
+            q: 'Why did the swallow decide not to fly south?',
+            choices: ['His wings were too heavy to fly', 'The mayor had shut the gates', 'The prince was blind, so he stayed to be his eyes'],
+            answer: 2
+        },
+        {
+            q: 'Why did the mayor order the statue taken down?',
+            choices: ['It had fallen over in the snow', 'It had lost its jewels and its gold', 'The children had complained'],
+            answer: 1
+        },
+        {
+            q: 'What would not melt in the furnace?',
+            choices: ['The leaden heart', 'The sword hilt', 'The gold leaf'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🗽',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Oscar Wilde made this story up to tell his own children, about a hundred and thirty years ago.",
+                    "While he was alive, the prince knew nothing about sorrow, because he lived inside a wall. Only once he was a statue standing high up could he see the whole city.",
+                    "And once he could see it, he could not bear it. So he sends himself away piece by piece — the ruby in his sword, the sapphires in his eyes, and finally every sheet of gold on him.",
+                    "After he gives his eyes away the prince can see nothing at all. The swallow goes and looks for him and comes back and tells him."
+                ],
+                right: [
+                    "The swallow puts off going south one day at a time. Just today, just one more day. Those days piled up, and the winter came.",
+                    "The people pull the shabby statue down. What was it they could not see?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-statue.webp': [
+            { word: 'column', meaning: '기둥', sentence: 'In the middle of the city stood a very tall column.' },
+            { word: 'gold leaf', meaning: '금박', sentence: 'He was covered all over in gold leaf.' },
+            { word: 'sapphire', meaning: '사파이어', sentence: 'Two bright sapphires were set in his eyes.' },
+            { word: 'hilt', meaning: '칼자루', sentence: 'The red ruby in his sword hilt.' },
+            { word: 'ember', meaning: '불씨', sentence: 'It burned like an ember in the evening light.' }
+        ],
+        '01-statue-2.webp': [
+            { word: 'in bloom', meaning: '피어 있는', sentence: 'There were always flowers in bloom.' },
+            { word: 'plainly', meaning: '훤히', sentence: 'It showed plainly in every alley.' },
+            { word: 'cheek', meaning: '뺨', sentence: 'It ran down his gold cheek.' },
+            { word: 'tear', meaning: '눈물', sentence: 'It was a tear.' }
+        ],
+        '02-swallow.webp': [
+            { word: 'swallow', meaning: '제비', sentence: 'A swallow came flying into the city.' },
+            { word: 'long since', meaning: '벌써', sentence: 'His friends had long since left.' },
+            { word: 'reed', meaning: '갈대', sentence: 'He had stayed playing with the reeds.' },
+            { word: 'fall behind', meaning: '늦어지다', sentence: 'He got badly behind.' },
+            { word: 'curl up', meaning: '몸을 말다', sentence: 'He curled himself round.' }
+        ],
+        '02-swallow-2.webp': [
+            { word: 'startled', meaning: '깜짝 놀란', sentence: 'The swallow asked, quite startled.' },
+            { word: 'bent over', meaning: '등을 구부린', sentence: 'A woman sat bent over her sewing.' },
+            { word: 'raw', meaning: '헐어 벗겨진', sentence: 'Her fingertips were worn raw.' },
+            { word: 'fever', meaning: '열', sentence: 'A child tossed about in a fever.' },
+            { word: 'bear', meaning: '참다', sentence: 'Just bear it a little longer.' }
+        ],
+        '03-ruby.webp': [
+            { word: 'ache', meaning: '시리다, 아프다', sentence: 'His beak ached with it.' },
+            { word: 'sheepishly', meaning: '슬그머니, 멋쩍게', sentence: 'He asked, a little sheepishly.' },
+            { word: 'chimney', meaning: '굴뚝', sentence: 'Steam came puffing out of the chimneys.' },
+            { word: 'thimble', meaning: '골무', sentence: 'He laid the ruby down beside the thimble.' }
+        ],
+        '03-ruby-2.webp': [
+            { word: 'circle', meaning: '맴돌다', sentence: 'The swallow circled over the child.' },
+            { word: 'fan', meaning: '부채질하다', sentence: 'And fanned him with his wings.' },
+            { word: 'drift off', meaning: '스르르 잠들다', sentence: 'The child drifted off to sleep.' },
+            { word: 'soundly', meaning: '푹', sentence: 'The swallow slept very soundly.' }
+        ],
+        '04-sapphire.webp': [
+            { word: 'attic', meaning: '다락방', sentence: 'Do you see the attic under that roof?' },
+            { word: 'breathe on', meaning: '입김으로 녹이다', sentence: 'Breathing on his hands between one line and the next.' },
+            { word: 'crooked', meaning: '삐뚤빼뚤한', sentence: 'The letters came out crooked.' },
+            { word: 'stove', meaning: '난로', sentence: 'There was not one ember in the stove.' }
+        ],
+        '04-sapphire-2.webp': [
+            { word: 'set down', meaning: '내려놓다', sentence: 'He set it quietly on the desk.' },
+            { word: 'turn about', meaning: '이리저리 돌려 보다', sentence: 'He held it up and turned it about.' },
+            { word: 'bundle', meaning: '다발', sentence: 'He bought a bundle of firewood.' },
+            { word: 'thaw', meaning: '녹다', sentence: 'With his hands thawed the writing came easily.' }
+        ],
+        '05-eyes.webp': [
+            { word: 'gutter', meaning: '도랑', sentence: 'She dropped every one of them into the gutter.' },
+            { word: 'burst into tears', meaning: '울음을 터뜨리다', sentence: 'The child burst into tears.' },
+            { word: 'glance at', meaning: '힐끗 보다', sentence: 'People glanced at her and walked on.' },
+            { word: 'empty-handed', meaning: '빈손으로', sentence: "I'll be in trouble if I go back empty-handed." }
+        ],
+        '05-eyes-2.webp': [
+            { word: 'run off', meaning: '달려가다', sentence: 'The child ran off laughing.' },
+            { word: 'wren', meaning: '굴뚝새', sentence: 'A wren has hatched her chicks on a chimney pot.' },
+            { word: 'hatch', meaning: '새끼를 까다', sentence: 'A wren has hatched her chicks.' },
+            { word: 'sheet', meaning: '(얇은) 장', sentence: 'Take the gold leaf off, one sheet at a time.' }
+        ],
+        '06-snow.webp': [
+            { word: 'windowsill', meaning: '창턱', sentence: 'He left it on the windowsill.' },
+            { word: 'brighten', meaning: '밝아지다', sentence: "The children's faces brightened." },
+            { word: 'eat one’s fill', meaning: '배불리 먹다', sentence: 'They ate their fill of bread.' },
+            { word: 'lead', meaning: '납', sentence: 'The grey lead showed through.' },
+            { word: 'a fright', meaning: '보기 흉한 꼴', sentence: 'It looks a fright.' }
+        ],
+        '06-snow-2.webp': [
+            { word: 'deepen', meaning: '깊어지다', sentence: 'The winter deepened.' },
+            { word: 'blur', meaning: '흐려지다', sentence: 'The lights of the city blurred one by one.' },
+            { word: 'gather one’s strength', meaning: '힘을 내다', sentence: 'The swallow gathered his last strength.' },
+            { word: 'crack', meaning: '쩍 갈라지다', sentence: 'Something inside the statue cracked.' }
+        ],
+        '07-ending.webp': [
+            { word: 'leaden', meaning: '납으로 된', sentence: 'The leaden heart had broken in two.' },
+            { word: 'mayor', meaning: '시장', sentence: 'The mayor came through the square.' },
+            { word: 'councillor', meaning: '신하, 의원', sentence: 'The mayor came with his councillors.' },
+            { word: 'beggar', meaning: '거지', sentence: 'He is little better than a beggar.' },
+            { word: 'melt down', meaning: '녹이다', sentence: 'We might melt him down.' }
+        ],
+        '07-ending-2.webp': [
+            { word: 'furnace', meaning: '용광로', sentence: 'The statue was put into the furnace.' },
+            { word: 'molten', meaning: '녹아 흐르는', sentence: 'The molten metal bubbled.' },
+            { word: 'lump', meaning: '덩이', sentence: 'What a strange lump of lead.' },
+            { word: 'precious', meaning: '귀한', sentence: 'The two most precious things in that city.' }
+        ],
+        'end.webp': [
+            { word: 'sorrow', meaning: '슬픔', sentence: 'The prince knew nothing about sorrow.' },
+            { word: 'bear', meaning: '견디다', sentence: 'He could not bear it.' },
+            { word: 'piece by piece', meaning: '하나씩', sentence: 'He sends himself away piece by piece.' },
+            { word: 'put off', meaning: '미루다', sentence: 'The swallow puts off going south.' },
+            { word: 'shabby', meaning: '낡은', sentence: 'The people pull the shabby statue down.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -576,6 +1086,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -584,7 +1095,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -596,7 +1107,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -630,4 +1141,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
