@@ -295,16 +295,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '라푼젤',
+    intro: [
+        '라푼젤은 독일의 그림 형제가 모아 적은 옛이야기예요. 라푼젤은 원래 유럽에서 나물처럼 먹던 풀의 이름이랍니다.',
+        '아이의 이름이 어머니가 먹고 싶어 했던 그 풀에서 왔다는 것이 이야기의 시작이에요. 문도 계단도 없는 탑이 나오는데, 그래서 머리카락이 중요한 구실을 한답니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🗼')}
             </div>
             <div class="story-page-right">
-                <h1>라푼젤</h1>
-                <p>라푼젤은 독일의 그림 형제가 모아 적은 옛이야기예요. 라푼젤은 원래 유럽에서 나물처럼 먹던 풀의 이름이랍니다.</p>
-                <p>아이의 이름이 어머니가 먹고 싶어 했던 그 풀에서 왔다는 것이 이야기의 시작이에요. 문도 계단도 없는 탑이 나오는데, 그래서 머리카락이 중요한 구실을 한답니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -319,8 +328,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -330,8 +339,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -341,22 +350,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -406,9 +416,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -419,7 +429,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -491,7 +501,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -500,34 +510,616 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   rampion 이 라푼젤 나물의 영어 이름이다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Rapunzel',
+        intro: [
+            "Rapunzel is one of the old tales the Brothers Grimm gathered in Germany. Rapunzel is really the name of a plant that used to be eaten as a green in Europe.",
+            "The story begins with a child being named after the plant her mother longed for. There is a tower in it with no door and no stairs — which is why hair matters so much."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Garden Over the Wall',
+            beats: [
+                {
+                    art: '01-garden.webp',
+                    emoji: '🌿',
+                    left: [
+                        "A cradle stood finished. A young couple who had been a long time without a child were going to have one at last,",
+                        "and the two of them were beside themselves.",
+                        "They sewed baby clothes and tried out names and counted the days. A tiny set of clothes hung by the window.",
+                        "And then the wife began to lose her appetite."
+                    ],
+                    right: [
+                        "Behind the house there was a very high wall.",
+                        "Over the wall was the witch's garden, and nobody dared go near it.",
+                        "Every day the wife looked over that wall from her window.",
+                        "Green rampion was growing in the garden,",
+                        "and with the morning dew on it, it looked particularly good.",
+                        "\"I do so want some of that rampion.\""
+                    ]
+                },
+                {
+                    art: '01-garden-2.webp',
+                    emoji: '🌿',
+                    left: [
+                        "The wife could hardly get her food down,",
+                        "and her face grew thinner every day.",
+                        "Her husband hesitated for days. He knew perfectly well whose garden it was, and he could think of nothing else to do.",
+                        "In the end he went over the wall on a moonless night.",
+                        "The wall was twice a grown man's height."
+                    ],
+                    right: [
+                        "He got over it and picked a handful of the green with shaking hands.",
+                        "There was a cool green smell off the leaves.",
+                        "He was turning to go, quickly,",
+                        "when a voice came from behind him.",
+                        "\"And what are you doing in another person's garden?\"",
+                        "He turned round, and there stood a witch in a purple cloak."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Child in the Tower',
+            beats: [
+                {
+                    art: '02-tower.webp',
+                    emoji: '🗼',
+                    left: [
+                        "The husband sank down where he stood",
+                        "and told her the whole of it.",
+                        "\"My wife has taken to her bed for want of this green.\"",
+                        "The witch looked down at him a long while.",
+                        "And then she said something he had not expected.",
+                        "Her voice was quite quiet."
+                    ],
+                    right: [
+                        "\"Take as much of it as you like. But give me the child when it is born.\"",
+                        "In his fright the husband said he would.",
+                        "There was no time to think about anything.",
+                        "Some while later a daughter was born.",
+                        "And that night the witch came, without a sound."
+                    ]
+                },
+                {
+                    art: '02-tower-2.webp',
+                    emoji: '🗼',
+                    left: [
+                        "The witch named the child Rapunzel — the name of the very green her mother had longed for.",
+                        "Rapunzel grew up in the witch's house.",
+                        "She never went short of food or clothes, and she was never once outside.",
+                        "The door was always locked.",
+                        "The year she turned twelve,",
+                        "the witch took her out into the middle of the wood."
+                    ],
+                    right: [
+                        "There stood a high tower.",
+                        "It had no door and no stairs — only one window at the top.",
+                        "Rapunzel tipped her head right back to look up at it.",
+                        "\"From now on you will live here.\"",
+                        "\"This is the safest place there is.\"",
+                        "And Rapunzel could not say a word."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · Let Down Your Hair',
+            beats: [
+                {
+                    art: '03-hair.webp',
+                    emoji: '💇',
+                    left: [
+                        "Rapunzel's hair had never once been cut,",
+                        "and by now it was as long as the tower was high.",
+                        "It shone gold.",
+                        "Combing it made her wrist ache.",
+                        "She kept it hooked over a peg by the window.",
+                        "It was the only way up and down that tower."
+                    ],
+                    right: [
+                        "The witch came to the foot of the tower once a day,",
+                        "bringing food in a basket.",
+                        "And every time she called out,",
+                        "\"Rapunzel, Rapunzel, let down your hair!\"",
+                        "And Rapunzel let her hair down.",
+                        "And the witch climbed up it."
+                    ]
+                },
+                {
+                    art: '03-hair-2.webp',
+                    emoji: '💇',
+                    left: [
+                        "Rapunzel's days were always the same.",
+                        "In the morning she sat at the window and looked down at the wood, counting the birds going over and watching the clouds.",
+                        "And when she grew bored she sang.",
+                        "Not songs the witch had taught her — songs that came of themselves.",
+                        "The singing went out of the window and off through the wood, over the valley."
+                    ],
+                    right: [
+                        "It went between the trees and a long way off.",
+                        "And Rapunzel did not know it.",
+                        "It never occurred to her that anybody might hear.",
+                        "So a good many years went by.",
+                        "In all that time the only person she saw was the witch.",
+                        "And the only person she could talk to was the witch."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · Somebody Heard the Song',
+            beats: [
+                {
+                    art: '04-prince.webp',
+                    emoji: '🐎',
+                    left: [
+                        "One day a young prince came into the wood to hunt, and rode deep into it.",
+                        "And then he pulled up his horse and stopped.",
+                        "The wood seemed to have gone quiet,",
+                        "because from somewhere came the sound of singing.",
+                        "The prince rode toward the sound. He had never heard anything so lovely."
+                    ],
+                    right: [
+                        "He pushed through the trees and came out into a clearing.",
+                        "And there stood a tower.",
+                        "The prince rode all the way round it.",
+                        "But look as he might, there was no door.",
+                        "He tipped his head back and looked up at the window at the top.",
+                        "\"Who can be up there?\""
+                    ]
+                },
+                {
+                    art: '04-prince-2.webp',
+                    emoji: '🐎',
+                    left: [
+                        "The prince watched from hiding for several days,",
+                        "crouched down behind a bush and waiting.",
+                        "He did not move even when the midges bit him.",
+                        "As the sun went down, somebody always came —",
+                        "a woman in a purple cloak.",
+                        "She stood at the foot of the tower and called out,",
+                        "\"Rapunzel, Rapunzel, let down your hair!\""
+                    ],
+                    right: [
+                        "The prince heard it perfectly clearly.",
+                        "And he waited until the woman had gone —",
+                        "until the sun was quite down.",
+                        "The next evening, after she left, he went to the foot of the tower",
+                        "and called the same words in a low voice.",
+                        "His heart was beating hard."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The First Person She Met',
+            beats: [
+                {
+                    art: '05-meeting.webp',
+                    emoji: '👋',
+                    left: [
+                        "The hair came sliding down. The prince took hold of it and climbed,",
+                        "and came over the sill into the room.",
+                        "And Rapunzel started back in fright.",
+                        "\"Wh-who are you?\" Her voice shook.",
+                        "Rapunzel had never seen a person other than the witch.",
+                        "Her heart was hammering."
+                    ],
+                    right: [
+                        "\"I am sorry to have frightened you. I came because I heard singing.\"",
+                        "\"My singing? Can it be heard outside?\"",
+                        "\"It carries right across the wood.\" At that, Rapunzel's face eased a little,",
+                        "and the step she had taken back came forward again."
+                    ]
+                },
+                {
+                    art: '05-meeting-2.webp',
+                    emoji: '👋',
+                    left: [
+                        "The two of them sat facing each other until the sun went down.",
+                        "The prince told her about the world outside —",
+                        "how wide the sea is, how noisy a market day is.",
+                        "Rapunzel listened with her eyes shining.",
+                        "She could hardly believe such places were out beyond that wood.",
+                        "\"Might I see it one day, do you think?\""
+                    ],
+                    right: [
+                        "\"May I come again tomorrow?\"",
+                        "\"Yes. Do come.\"",
+                        "And from that day the prince came every evening.",
+                        "Every time he brought a skein of silk thread,",
+                        "because Rapunzel had asked him to.",
+                        "And with it she began, in secret, to weave a ladder."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Evening She Was Found Out',
+            beats: [
+                {
+                    art: '06-caught.webp',
+                    emoji: '✂️',
+                    left: [
+                        "The ladder would not grow long. The tower was very high indeed,",
+                        "and Rapunzel joined thread to thread and knotted it, night after night.",
+                        "And then one day,",
+                        "when the knots were about half way,",
+                        "the witch came climbing up the hair as usual."
+                    ],
+                    right: [
+                        "And Rapunzel said, without thinking,",
+                        "\"Why are you so heavy coming up, grandmother?\"",
+                        "\"The prince comes up much more lightly.\"",
+                        "She clapped a hand over her mouth as she said it.",
+                        "It was already too late.",
+                        "The witch's face went hard.",
+                        "\"So somebody has been here!\" Her voice rang round the room."
+                    ]
+                },
+                {
+                    art: '06-caught-2.webp',
+                    emoji: '✂️',
+                    left: [
+                        "The witch took out her scissors on the spot",
+                        "and cut Rapunzel's hair off.",
+                        "The golden hair heaped up on the floor.",
+                        "No sound would come out of Rapunzel.",
+                        "She only stood there with both hands clenched.",
+                        "And the witch took her far away to open country."
+                    ],
+                    right: [
+                        "It was a plain without one tree on it,",
+                        "and nothing but the wind going over it.",
+                        "\"You will live here alone.\"",
+                        "And she went back to the tower by herself.",
+                        "She fastened the cut hair firmly to the peg by the window",
+                        "and waited for evening.",
+                        "\"Let him come, then.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Empty Tower',
+            beats: [
+                {
+                    art: '07-empty.webp',
+                    emoji: '🌑',
+                    left: [
+                        "That evening the prince came to the foot of the tower as he always did,",
+                        "knowing nothing about it.",
+                        "He was sure Rapunzel would be there,",
+                        "and he had a skein of silk inside his coat.",
+                        "\"Rapunzel, Rapunzel, let down your hair!\"",
+                        "And the hair came sliding down."
+                    ],
+                    right: [
+                        "He went up gladly.",
+                        "And it was not Rapunzel who was waiting for him.",
+                        "The witch stood there with her arms folded.",
+                        "\"That child is not here. You will never see her again.\"",
+                        "The prince went rigid.",
+                        "The strength went out of his hands and the ground swam under him."
+                    ]
+                },
+                {
+                    art: '07-empty-2.webp',
+                    emoji: '🌑',
+                    left: [
+                        "The prince missed his footing and fell.",
+                        "Below the tower it was all thorn bushes,",
+                        "and the thorns caught his eyes so that he could hardly see.",
+                        "Everything went white and blurred.",
+                        "From that day he wandered the wood,",
+                        "with no idea at all where to go."
+                    ],
+                    right: [
+                        "He felt his way along from tree to tree.",
+                        "He went over open country and through villages, wandering for years,",
+                        "and everywhere he asked people,",
+                        "\"Have you seen a young woman with golden hair?\" And nobody had.",
+                        "His clothes wore through and his shoes wore out."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Out on the Plain',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🌾',
+                    left: [
+                        "Meanwhile Rapunzel was living out on the plain alone.",
+                        "She built a hut of earth and dug up greens to eat.",
+                        "In summer she wove grass to cover the roof.",
+                        "The very green her mother had longed for grew out there too,",
+                        "and Rapunzel felt strange every time she saw it.",
+                        "It made her think of a mother she had never seen."
+                    ],
+                    right: [
+                        "When she was lonely she sang, as she used to.",
+                        "She sang even with nobody to hear it.",
+                        "And then one day, after several years,",
+                        "somebody came stumbling toward her from far off —",
+                        "somebody with a stick.",
+                        "Coming straight toward the singing.",
+                        "And when he fell he got up and went on."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🌾',
+                    left: [
+                        "Rapunzel stopped singing and looked that way.",
+                        "The person who came up was the prince.",
+                        "His eyes could not see.",
+                        "Rapunzel ran and put her arms round him.",
+                        "And her hot tears fell on his two eyes."
+                    ],
+                    right: [
+                        "And then something remarkable happened.",
+                        "The blur in front of him went clear.",
+                        "And the prince saw Rapunzel's face for the first time in years.",
+                        "The two of them took hands and walked off that plain together.",
+                        "And they lived a long, long time after that."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why did the husband go over the wall?',
+            choices: ['He wanted to see the witch', 'He had lost something in the garden', 'His wife longed for the green in the witch’s garden'],
+            answer: 2
+        },
+        {
+            q: 'What did the witch ask for in return?',
+            choices: ['The wall behind the house', 'The child that would be born', 'All the greens he had picked'],
+            answer: 1
+        },
+        {
+            q: 'Where did Rapunzel’s name come from?',
+            choices: ['The green her mother had longed for', 'The witch’s own name', 'The wood the tower stood in'],
+            answer: 0
+        },
+        {
+            q: 'How did anyone get up the tower?',
+            choices: ['By a hidden stair', 'By a silk ladder', 'By climbing Rapunzel’s hair'],
+            answer: 2
+        },
+        {
+            q: 'How did the prince find the tower?',
+            choices: ['He saw it from the road', 'He followed the sound of her singing', 'The witch led him there'],
+            answer: 1
+        },
+        {
+            q: 'What gave Rapunzel away?',
+            choices: ['She said the prince climbed up more lightly', 'The witch found the silk thread', 'The prince came in daylight'],
+            answer: 0
+        },
+        {
+            q: 'What happened to the prince at the tower?',
+            choices: ['The witch drove him away', 'He climbed down the ladder', 'He fell into thorns and lost his sight'],
+            answer: 2
+        },
+        {
+            q: 'What made the prince see again?',
+            choices: ['The witch lifted the spell', 'Rapunzel’s tears fell on his eyes', 'He found the green from the garden'],
+            answer: 1
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '💇',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Rapunzel is not a person's name. It is the name of a plant — the green that grew in the garden over the wall.",
+                    "Everything starts with that garden. The wife wanted the green badly, and her husband climbed the wall.",
+                    "And the child is named after the green as well. The plant's name ends up on a daughter.",
+                    "The tower had no door and no stairs. The only way in or out was Rapunzel's hair."
+                ],
+                right: [
+                    "What brought Rapunzel and the prince together was the singing. She sang because she was bored, and the sound went out of the tower.",
+                    "Was the witch keeping Rapunzel safe, or keeping her shut in?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-garden.webp': [
+            { word: 'cradle', meaning: '요람', sentence: 'A cradle stood finished.' },
+            { word: 'beside oneself', meaning: '뛸 듯이 기쁜', sentence: 'The two of them were beside themselves.' },
+            { word: 'appetite', meaning: '입맛', sentence: 'The wife began to lose her appetite.' },
+            { word: 'dare', meaning: '감히 ~하다', sentence: 'Nobody dared go near it.' },
+            { word: 'rampion', meaning: '라푼젤 나물', sentence: 'Green rampion was growing in the garden.' }
+        ],
+        '01-garden-2.webp': [
+            { word: 'get down', meaning: '넘기다, 삼키다', sentence: 'She could hardly get her food down.' },
+            { word: 'hesitate', meaning: '망설이다', sentence: 'Her husband hesitated for days.' },
+            { word: 'moonless', meaning: '달 없는', sentence: 'He went over the wall on a moonless night.' },
+            { word: 'handful', meaning: '한 줌', sentence: 'He picked a handful of the green.' },
+            { word: 'cloak', meaning: '망토', sentence: 'There stood a witch in a purple cloak.' }
+        ],
+        '02-tower.webp': [
+            { word: 'sink down', meaning: '주저앉다', sentence: 'The husband sank down where he stood.' },
+            { word: 'take to one’s bed', meaning: '앓아눕다', sentence: 'My wife has taken to her bed.' },
+            { word: 'for want of', meaning: '~이 없어서', sentence: 'For want of this green.' },
+            { word: 'in one’s fright', meaning: '겁에 질려', sentence: 'In his fright the husband said he would.' }
+        ],
+        '02-tower-2.webp': [
+            { word: 'long for', meaning: '몹시 바라다', sentence: 'The very green her mother had longed for.' },
+            { word: 'go short of', meaning: '모자라다', sentence: 'She never went short of food.' },
+            { word: 'tip one’s head back', meaning: '고개를 젖히다', sentence: 'Rapunzel tipped her head right back.' },
+            { word: 'from now on', meaning: '이제부터', sentence: 'From now on you will live here.' }
+        ],
+        '03-hair.webp': [
+            { word: 'comb', meaning: '빗질하다', sentence: 'Combing it made her wrist ache.' },
+            { word: 'peg', meaning: '고리, 못', sentence: 'She kept it hooked over a peg.' },
+            { word: 'basket', meaning: '바구니', sentence: 'Bringing food in a basket.' },
+            { word: 'let down', meaning: '내리다', sentence: 'Rapunzel, let down your hair!' }
+        ],
+        '03-hair-2.webp': [
+            { word: 'count', meaning: '세다', sentence: 'Counting the birds going over.' },
+            { word: 'come of oneself', meaning: '저절로 생겨나다', sentence: 'Songs that came of themselves.' },
+            { word: 'valley', meaning: '골짜기', sentence: 'Off through the wood, over the valley.' },
+            { word: 'occur to', meaning: '떠오르다', sentence: 'It never occurred to her that anybody might hear.' }
+        ],
+        '04-prince.webp': [
+            { word: 'pull up', meaning: '고삐를 당겨 멈추다', sentence: 'He pulled up his horse and stopped.' },
+            { word: 'push through', meaning: '헤치고 나아가다', sentence: 'He pushed through the trees.' },
+            { word: 'clearing', meaning: '빈터', sentence: 'And came out into a clearing.' },
+            { word: 'look as he might', meaning: '아무리 찾아도', sentence: 'Look as he might, there was no door.' }
+        ],
+        '04-prince-2.webp': [
+            { word: 'from hiding', meaning: '숨어서', sentence: 'The prince watched from hiding.' },
+            { word: 'crouch', meaning: '몸을 낮추다', sentence: 'Crouched down behind a bush.' },
+            { word: 'midge', meaning: '모기, 날벌레', sentence: 'Even when the midges bit him.' },
+            { word: 'in a low voice', meaning: '목소리를 낮추어', sentence: 'He called the same words in a low voice.' }
+        ],
+        '05-meeting.webp': [
+            { word: 'sill', meaning: '창턱', sentence: 'He came over the sill into the room.' },
+            { word: 'start back', meaning: '깜짝 놀라 물러서다', sentence: 'Rapunzel started back in fright.' },
+            { word: 'hammer', meaning: '쿵쿵 뛰다', sentence: 'Her heart was hammering.' },
+            { word: 'ease', meaning: '풀리다', sentence: "Rapunzel's face eased a little." }
+        ],
+        '05-meeting-2.webp': [
+            { word: 'market day', meaning: '장날', sentence: 'How noisy a market day is.' },
+            { word: 'skein', meaning: '실타래', sentence: 'Every time he brought a skein of silk thread.' },
+            { word: 'in secret', meaning: '몰래', sentence: 'She began, in secret, to weave a ladder.' },
+            { word: 'ladder', meaning: '사다리', sentence: 'She began to weave a ladder.' }
+        ],
+        '06-caught.webp': [
+            { word: 'join', meaning: '잇다', sentence: 'She joined thread to thread.' },
+            { word: 'knot', meaning: '매듭짓다', sentence: 'And knotted it, night after night.' },
+            { word: 'half way', meaning: '절반쯤', sentence: 'When the knots were about half way.' },
+            { word: 'clap a hand over', meaning: '입을 막다', sentence: 'She clapped a hand over her mouth.' },
+            { word: 'ring', meaning: '울리다', sentence: 'Her voice rang round the room.' }
+        ],
+        '06-caught-2.webp': [
+            { word: 'on the spot', meaning: '그 자리에서', sentence: 'The witch took out her scissors on the spot.' },
+            { word: 'heap up', meaning: '쌓이다', sentence: 'The golden hair heaped up on the floor.' },
+            { word: 'clench', meaning: '꼭 쥐다', sentence: 'She stood with both hands clenched.' },
+            { word: 'plain', meaning: '벌판', sentence: 'It was a plain without one tree on it.' },
+            { word: 'fasten', meaning: '단단히 매다', sentence: 'She fastened the cut hair firmly to the peg.' }
+        ],
+        '07-empty.webp': [
+            { word: 'as he always did', meaning: '여느 때처럼', sentence: 'The prince came as he always did.' },
+            { word: 'arms folded', meaning: '팔짱을 낀', sentence: 'The witch stood with her arms folded.' },
+            { word: 'go rigid', meaning: '몸이 굳다', sentence: 'The prince went rigid.' },
+            { word: 'swim', meaning: '아득해지다', sentence: 'The ground swam under him.' }
+        ],
+        '07-empty-2.webp': [
+            { word: 'miss one’s footing', meaning: '발을 헛디디다', sentence: 'The prince missed his footing and fell.' },
+            { word: 'thorn', meaning: '가시', sentence: 'Below the tower it was all thorn bushes.' },
+            { word: 'blurred', meaning: '뿌옇게 흐린', sentence: 'Everything went white and blurred.' },
+            { word: 'feel one’s way', meaning: '더듬어 가다', sentence: 'He felt his way along from tree to tree.' },
+            { word: 'wear out', meaning: '닳다', sentence: 'His shoes wore out.' }
+        ],
+        '08-ending.webp': [
+            { word: 'hut', meaning: '오두막, 흙집', sentence: 'She built a hut of earth.' },
+            { word: 'dig up', meaning: '캐다', sentence: 'And dug up greens to eat.' },
+            { word: 'as she used to', meaning: '예전처럼', sentence: 'When she was lonely she sang, as she used to.' },
+            { word: 'stumble', meaning: '비틀거리다', sentence: 'Somebody came stumbling toward her.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'come up', meaning: '가까이 오다', sentence: 'The person who came up was the prince.' },
+            { word: 'put one’s arms round', meaning: '끌어안다', sentence: 'Rapunzel put her arms round him.' },
+            { word: 'remarkable', meaning: '놀라운', sentence: 'And then something remarkable happened.' },
+            { word: 'go clear', meaning: '환해지다', sentence: 'The blur in front of him went clear.' }
+        ],
+        'end.webp': [
+            { word: 'plant', meaning: '풀, 식물', sentence: 'It is the name of a plant.' },
+            { word: 'badly', meaning: '몹시', sentence: 'The wife wanted the green badly.' },
+            { word: 'end up on', meaning: '~에 붙게 되다', sentence: "The plant's name ends up on a daughter." },
+            { word: 'shut in', meaning: '가두다', sentence: 'Or keeping her shut in?' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -592,6 +1184,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -600,7 +1193,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -612,7 +1205,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -646,4 +1239,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
