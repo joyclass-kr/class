@@ -14,8 +14,15 @@
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
 ```
-Classic children's literature illustration in the style of 1980s Korean
-illustrated classics: gouache and watercolor, bold clean outlines, warm
+A SINGLE PAINTING ONLY. This is one picture, not a page from a book.
+Every surface in it is blank: no title, no caption, no signature, no page
+number, no speech balloon, no sign, no label, no writing on any book, map,
+paper, banner or wall. There are no letters of any alphabet anywhere in the
+picture, and no borders or panels around it. The picture fills the whole
+canvas edge to edge.
+
+Classic children's literature illustration painted the way the old Korean
+children's classics were painted: gouache and watercolor, bold clean outlines, warm
 saturated colors, realistic child proportions with expressive faces, Victorian
 London around 1900, gaslight, fog and soot outside, firelight and lamplight
 inside, tender rather than grim, no text or letters in the image.
@@ -34,6 +41,9 @@ draw the moment just before or just after it instead.
 The artwork must bleed to all four edges of the image: no white or cream
 margin, no border, no frame line, no painted paper edge, no matting.
 The picture fills the whole canvas corner to corner.
+
+Once more, so it is not missed: this is one painting with NO writing in it.
+No title, no caption, no signature, no page number, no letters anywhere.
 ```
 
 **램 다스를 그릴 때 지켜 주세요.** 인도 사람인 램 다스는 솜씨 있고 사려 깊은 어른으로 그려 주세요.

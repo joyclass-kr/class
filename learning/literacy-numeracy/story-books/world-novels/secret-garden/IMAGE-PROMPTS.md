@@ -13,8 +13,15 @@
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
 ```
-Classic children's literature illustration in the style of 1980s Korean
-illustrated classics: gouache and watercolor, bold clean outlines, realistic
+A SINGLE PAINTING ONLY. This is one picture, not a page from a book.
+Every surface in it is blank: no title, no caption, no signature, no page
+number, no speech balloon, no sign, no label, no writing on any book, map,
+paper, banner or wall. There are no letters of any alphabet anywhere in the
+picture, and no borders or panels around it. The picture fills the whole
+canvas edge to edge.
+
+Classic children's literature illustration painted the way the old Korean
+children's classics were painted: gouache and watercolor, bold clean outlines, realistic
 child proportions with expressive faces; Yorkshire around 1910: a long low
 grey stone manor with a hundred windows, high ivy-covered walls, and open
 moorland; no text or letters in the image.
@@ -33,6 +40,9 @@ draw the moment just before or just after it instead.
 The artwork must bleed to all four edges of the image: no white or cream
 margin, no border, no frame line, no painted paper edge, no matting.
 The picture fills the whole canvas corner to corner.
+
+Once more, so it is not missed: this is one painting with NO writing in it.
+No title, no caption, no signature, no page number, no letters anywhere.
 ```
 
 **색을 이야기의 흐름에 맞춰 주세요.** 1장부터 6장까지는 잿빛과 갈색으로,

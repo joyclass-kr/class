@@ -13,8 +13,15 @@
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
 ```
-Classic children's literature illustration in the style of 1980s Korean
-illustrated classics: gouache and watercolor, bold clean outlines, realistic
+A SINGLE PAINTING ONLY. This is one picture, not a page from a book.
+Every surface in it is blank: no title, no caption, no signature, no page
+number, no speech balloon, no sign, no label, no writing on any book, map,
+paper, banner or wall. There are no letters of any alphabet anywhere in the
+picture, and no borders or panels around it. The picture fills the whole
+canvas edge to edge.
+
+Classic children's literature illustration painted the way the old Korean
+children's classics were painted: gouache and watercolor, bold clean outlines, realistic
 proportions with expressive faces; a Caribbean island in the 1660s — white
 sand, dense green forest, a rock cliff with a palisade of stakes in front of
 it, goats, a wide empty sea on every horizon; strong tropical light and deep
@@ -34,6 +41,9 @@ draw the moment just before or just after it instead.
 The artwork must bleed to all four edges of the image: no white or cream
 margin, no border, no frame line, no painted paper edge, no matting.
 The picture fills the whole canvas corner to corner.
+
+Once more, so it is not missed: this is one painting with NO writing in it.
+No title, no caption, no signature, no page number, no letters anywhere.
 ```
 
 **프라이데이를 반드시 존엄하게 그려 주세요.** 이 지시문을 그 인물이 나오는 모든 프롬프트에 넣으세요.

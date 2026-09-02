@@ -16,8 +16,15 @@
 고학년용 명작 소설이라 동화 쪽보다 그림체가 조금 더 사실적입니다.
 
 ```
-Classic children's adventure novel illustration in the style of 1980s Korean
-illustrated classics: gouache and watercolor, bold clean outlines, saturated
+A SINGLE PAINTING ONLY. This is one picture, not a page from a book.
+Every surface in it is blank: no title, no caption, no signature, no page
+number, no speech balloon, no sign, no label, no writing on any book, map,
+paper, banner or wall. There are no letters of any alphabet anywhere in the
+picture, and no borders or panels around it. The picture fills the whole
+canvas edge to edge.
+
+Classic children's adventure novel illustration painted the way the old Korean
+children's classics were painted: gouache and watercolor, bold clean outlines, saturated
 but slightly muted colors, realistic human proportions with expressive faces,
 18th-century English coastal and seafaring setting, dramatic staging and
 strong light-and-shadow, no text or letters in the image.
@@ -36,6 +43,9 @@ draw the moment just before or just after it instead.
 The artwork must bleed to all four edges of the image: no white or cream
 margin, no border, no frame line, no painted paper edge, no matting.
 The picture fills the whole canvas corner to corner.
+
+Once more, so it is not missed: this is one painting with NO writing in it.
+No title, no caption, no signature, no page number, no letters anywhere.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)

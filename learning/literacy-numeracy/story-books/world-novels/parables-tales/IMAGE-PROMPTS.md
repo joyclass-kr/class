@@ -22,6 +22,13 @@
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 사용하세요)
 
 ```
+A SINGLE PAINTING ONLY. This is one picture, not a page from a book.
+Every surface in it is blank: no title, no caption, no signature, no page
+number, no speech balloon, no sign, no label, no writing on any book, map,
+paper, banner or wall. There are no letters of any alphabet anywhere in the
+picture, and no borders or panels around it. The picture fills the whole
+canvas edge to edge.
+
 Children's picture book illustration, warm watercolor and colored-pencil style,
 soft golden lighting, gentle rounded shapes, storybook atmosphere, no text or
 letters in the image, consistent warm earthy color palette (parchment, gold,
@@ -42,6 +49,9 @@ draw the moment just before or just after it instead.
 The artwork must bleed to all four edges of the image: no white or cream
 margin, no border, no frame line, no painted paper edge, no matting.
 The picture fills the whole canvas corner to corner.
+
+Once more, so it is not missed: this is one painting with NO writing in it.
+No title, no caption, no signature, no page number, no letters anywhere.
 ```
 
 ## 표지 · 마무리

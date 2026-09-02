@@ -13,8 +13,15 @@
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
 ```
-Classic children's literature illustration in the style of 1980s Korean
-illustrated classics: gouache and watercolor, bold clean outlines, rich
+A SINGLE PAINTING ONLY. This is one picture, not a page from a book.
+Every surface in it is blank: no title, no caption, no signature, no page
+number, no speech balloon, no sign, no label, no writing on any book, map,
+paper, banner or wall. There are no letters of any alphabet anywhere in the
+picture, and no borders or panels around it. The picture fills the whole
+canvas edge to edge.
+
+Classic children's literature illustration painted the way the old Korean
+children's classics were painted: gouache and watercolor, bold clean outlines, rich
 river-country colors, realistic proportions with expressive faces, the
 Mississippi valley in the 1840s: the huge brown river, timber rafts, canoes,
 steamboats, cottonwood islands, river bluffs and small landings; much of the
@@ -33,6 +40,9 @@ stage it so a child wants to look at it for a while.
 The artwork must bleed to all four edges of the image: no white or cream
 margin, no border, no frame line, no painted paper edge, no matting.
 The picture fills the whole canvas corner to corner.
+
+Once more, so it is not missed: this is one painting with NO writing in it.
+No title, no caption, no signature, no page number, no letters anywhere.
 ```
 
 **짐을 그릴 때 반드시 지켜 주세요.** 짐은 이 이야기에서 가장 어른스럽고 지혜로운 인물입니다.
