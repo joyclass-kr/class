@@ -136,15 +136,15 @@ The picture fills the whole canvas corner to corner.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-chicken.webp` | A modest wooden family dinner table with a small roasted chicken as the centerpiece, a large family of six and a traveling guest gathered around, warm candlelight, hopeful expectant faces. |
+| `images/story-12-chicken.webp` | A poor family's plain wooden dinner table with a small roasted chicken as the centerpiece, still whole and uncarved. EXACTLY SEVEN people are seated around it, no more and no fewer: the father, the mother, two sons, two daughters, and the guest - a GROWN MAN, a travelling stranger in a worn cloak, NOT a boy. Warm candlelight, hopeful expectant faces. |
 | `images/story-12-chicken-2.webp` | The traveler cheerfully eating a generous portion of chicken meat alone while the puzzled family looks on with small individual portions (a head, a wing, a drumstick) on their own plates, comedic warm dinner scene. |
 
 ## 이야기 13 · 세 가지 쓸모없는 것
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-13-solomon.webp` | A king in royal robes hiding tensely inside a small cave, a spider delicately spinning a web across the cave entrance in the moonlight, enemy soldiers' torches visible passing by outside, suspenseful mood. |
-| `images/story-13-solomon-2.webp` | The same king disguised as a wandering madman with wild hair and tattered robes, acting strangely in front of confused enemy soldiers who wave him away, dusty warm daylight, dramatic irony. |
+| `images/story-13-david.webp` | A king in royal robes hiding tensely inside a small cave, a spider delicately spinning a web across the cave entrance in the moonlight, enemy soldiers' torches visible passing by outside, suspenseful mood. |
+| `images/story-13-david-2.webp` | The same king disguised as a wandering madman with wild hair and tattered robes, acting strangely in front of confused enemy soldiers who wave him away, dusty warm daylight, dramatic irony. |
 
 ## 이야기 14 · 닭이 된 왕자
 

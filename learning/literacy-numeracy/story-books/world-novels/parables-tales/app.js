@@ -1139,7 +1139,7 @@ function tocPage(part) {
         </li>
         <li>
             <button type="button" data-goto-kind="after">
-                <span class="toc-num">📖</span>
+                <span class="toc-num">★</span>
                 <span>
                     <strong>읽고 나서</strong>
                     <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
