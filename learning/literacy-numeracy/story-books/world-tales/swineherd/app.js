@@ -316,16 +316,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '돼지치기 왕자',
+    intro: [
+        '돼지치기 왕자는 덴마크의 작가 한스 크리스티안 안데르센이 1841년에 펴낸 이야기예요. 북유럽에 전해 오던 옛이야기를 바탕으로 새로 쓴 작품이랍니다.',
+        '진짜 장미와 진짜 밤꾀꼬리는 시큰둥해하면서, 소리 나는 장난감에는 눈이 뒤집히는 공주가 나와요. 무엇이 정말 귀한 것인지 묻는 이야기랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🐷')}
             </div>
             <div class="story-page-right">
-                <h1>돼지치기 왕자</h1>
-                <p>돼지치기 왕자는 덴마크의 작가 한스 크리스티안 안데르센이 1841년에 펴낸 이야기예요. 북유럽에 전해 오던 옛이야기를 바탕으로 새로 쓴 작품이랍니다.</p>
-                <p>진짜 장미와 진짜 밤꾀꼬리는 시큰둥해하면서, 소리 나는 장난감에는 눈이 뒤집히는 공주가 나와요. 무엇이 정말 귀한 것인지 묻는 이야기랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -340,8 +349,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -351,8 +360,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -362,22 +371,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -427,9 +437,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -440,7 +450,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -512,7 +522,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -521,34 +531,638 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Swineherd',
+        intro: [
+            "The Swineherd was published by the Danish author Hans Christian Andersen in 1841. He built it on an old tale that had been told in the north of Europe.",
+            "There is a princess in it who cannot be bothered with a real rose or a real nightingale, and loses her head over a toy that makes a noise. It asks what is actually worth having."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Prince of a Small Country',
+            beats: [
+                {
+                    art: '01-prince.webp',
+                    emoji: '🌹',
+                    left: [
+                        "In a very small country there lived a young prince.",
+                        "The country was so small it was hardly a dot on the map.",
+                        "And the prince had a generous heart,",
+                        "and everybody in that country was fond of him.",
+                        "In time the prince came to the age for marrying,",
+                        "and he decided to ask for the hand of the princess next door."
+                    ],
+                    right: [
+                        "The prince had two treasures like nothing else in the world.",
+                        "One was a rose tree that grew on his father's grave.",
+                        "It flowered once in five years,",
+                        "and the scent of it made you forget your sorrows.",
+                        "The other was a small nightingale",
+                        "who could sing every song there was.",
+                        "The prince thought a great deal of those two."
+                    ]
+                },
+                {
+                    art: '01-prince-2.webp',
+                    emoji: '🌹',
+                    left: [
+                        "The prince put the rose into a silver box",
+                        "and the nightingale into a silver box as well.",
+                        "\"Nothing wrong with a present like that.\"",
+                        "He sent them off to the next country by messenger",
+                        "and waited for an answer.",
+                        "Meanwhile the palace in the next country was very large indeed."
+                    ],
+                    right: [
+                        "It was hard to count how many pillars it had.",
+                        "And in it lived a princess",
+                        "who grew tired of whatever she looked at.",
+                        "\"Dull. Dull again.\"",
+                        "That day she was yawning in the courtyard,",
+                        "because everything there was to do had gone stale on her."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Princess Is Not Impressed',
+            beats: [
+                {
+                    art: '02-gifts.webp',
+                    emoji: '🎁',
+                    left: [
+                        "The presents arrived at the palace,",
+                        "and the princess came running out, pleased.",
+                        "\"Presents! I hope they are big ones.\"",
+                        "A maid opened the silver box.",
+                        "Inside was one rose.",
+                        "And the princess clapped her hands."
+                    ],
+                    right: [
+                        "\"Oh, how prettily it is made!\"",
+                        "And the messenger said, quickly,",
+                        "\"It is not made, Your Highness. It is a real flower.\"",
+                        "The princess's face went hard at once.",
+                        "\"What? A real one?\" Her voice went up."
+                    ]
+                },
+                {
+                    art: '02-gifts-2.webp',
+                    emoji: '🎁',
+                    left: [
+                        "The princess pushed the box away.",
+                        "\"Real flowers only wither.\"",
+                        "The maid opened the second box.",
+                        "The nightingale put her head out and sang,",
+                        "and the whole room filled with the loveliest sound.",
+                        "The maids stood listening, quite lost in it.",
+                        "And only the princess was unmoved."
+                    ],
+                    right: [
+                        "\"Is this a real bird as well?\"",
+                        "\"It is, Your Highness.\"",
+                        "\"A live bird. How dull.\"",
+                        "And the princess opened the window and let the bird fly away.",
+                        "The maids made a sound of dismay,",
+                        "and the princess went straight into her room.",
+                        "The messenger went home empty-handed."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · He Becomes a Swineherd',
+            beats: [
+                {
+                    art: '03-disguise.webp',
+                    emoji: '🐖',
+                    left: [
+                        "The news soon reached the prince.",
+                        "And rather than angry, he became curious.",
+                        "\"Whatever does that princess like, then?\"",
+                        "The prince decided to go and see for himself.",
+                        "Only he did not go as a prince,",
+                        "because then he would learn nothing.",
+                        "He changed into old clothes"
+                    ],
+                    right: [
+                        "and rubbed soot over his face.",
+                        "And then he knocked at the palace gate.",
+                        "\"I have come looking for work.\"",
+                        "The gatekeeper looked him up and down.",
+                        "\"Have you done a day's work in your life?\"",
+                        "As it happened they had nobody to mind the pigs.",
+                        "The prince was taken on there and then,",
+                        "and nobody knew he was a prince."
+                    ]
+                },
+                {
+                    art: '03-disguise-2.webp',
+                    emoji: '🐖',
+                    left: [
+                        "The prince was given a place in the back yard of the palace.",
+                        "The room was narrow and the ceiling was low.",
+                        "In the daytime he looked after the pigs,",
+                        "and the pigs took to him very quickly.",
+                        "They came crowding round grunting whenever he brought food.",
+                        "Grunt, grunt!",
+                        "And the prince did not mind the sound of it."
+                    ],
+                    right: [
+                        "When the sun went down he went back to his room",
+                        "and sat down and lit a candle.",
+                        "He worked clay and carved little bells.",
+                        "Every night he made something.",
+                        "And after a few days one thing was finished.",
+                        "The prince held it up and smiled.",
+                        "\"Now let us see what she does.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Singing Pot',
+            beats: [
+                {
+                    art: '04-pot.webp',
+                    emoji: '🍲',
+                    left: [
+                        "What the prince had made was a little pot",
+                        "with bells all round the rim.",
+                        "He put water in it and lit a fire under it,",
+                        "and when the water boiled the bells began to ring.",
+                        "Tinkle, tinkle — a whole tune came out of it.",
+                        "And that was not all."
+                    ],
+                    right: [
+                        "If you held a hand in the steam, something remarkable happened.",
+                        "Every kitchen in the town came up in front of your eyes.",
+                        "You could tell what was being cooked in every single house.",
+                        "\"That house is making pancakes today!\"",
+                        "The steam even carried the smell of it,",
+                        "and the prince sniffed at the air",
+                        "and laughed to himself."
+                    ]
+                },
+                {
+                    art: '04-pot-2.webp',
+                    emoji: '🍲',
+                    left: [
+                        "The sound of the pot carried over the wall.",
+                        "A maid going past heard it.",
+                        "\"Goodness, whatever is that?\"",
+                        "The maid ran and told the princess,",
+                        "and the princess stopped in the middle of a yawn.",
+                        "\"A pot that sings?\""
+                    ],
+                    right: [
+                        "The princess went out on the balcony and listened.",
+                        "The tinkling came up from far off,",
+                        "and the princess stamped her feet where she stood.",
+                        "\"I must have that thing!\"",
+                        "She sent a maid down to the back yard at once.",
+                        "\"Buy it, whatever the price.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · Ten Kisses',
+            beats: [
+                {
+                    art: '05-bargain.webp',
+                    emoji: '💋',
+                    left: [
+                        "The maid went down to the pigsty.",
+                        "\"What will you take for that pot?\"",
+                        "The swineherd pretended to think about it",
+                        "and then answered quite calmly,",
+                        "\"Ten kisses from the princess.\"",
+                        "The maid could not believe her ears."
+                    ],
+                    right: [
+                        "\"I — I beg your pardon?\"",
+                        "\"Ten. And I shall not take one less.\"",
+                        "The maid went back scarlet in the face",
+                        "and repeated it word for word.",
+                        "The princess stamped her foot.",
+                        "\"A swineherd! The impudence!\"",
+                        "And still she kept looking out of the window."
+                    ]
+                },
+                {
+                    art: '05-bargain-2.webp',
+                    emoji: '💋',
+                    left: [
+                        "\"It is beyond anything!\"",
+                        "\"Have him thrown out this minute!\"",
+                        "The princess slammed the door and went in.",
+                        "And that sound kept coming back to her,",
+                        "the tinkle, tinkle of it.",
+                        "The princess walked up and down her room."
+                    ],
+                    right: [
+                        "And in the end she opened the door again.",
+                        "\"…Ten, was it? Exactly ten?\"",
+                        "The maids looked at one another.",
+                        "\"Your Highness, that is hardly—\"",
+                        "\"I have twenty maids. What is there to worry about?\" And the maids sighed."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · A Wall of Maids',
+            beats: [
+                {
+                    art: '06-kisses.webp',
+                    emoji: '👗',
+                    left: [
+                        "The princess went down to the back yard with her maids,",
+                        "and the pigs came crowding round grunting.",
+                        "The princess held her nose.",
+                        "\"Let us get it over with.\"",
+                        "The maids stood round in a ring",
+                        "and spread their skirts out wide.",
+                        "The skirts flapped in the wind."
+                    ],
+                    right: [
+                        "Only the pigs could see inside.",
+                        "They had made a wall so that nobody could look in.",
+                        "The princess squeezed her eyes shut,",
+                        "and the maids counted out loud.",
+                        "\"One, two, three…\"",
+                        "\"…nine, ten!\""
+                    ]
+                },
+                {
+                    art: '06-kisses-2.webp',
+                    emoji: '👗',
+                    left: [
+                        "And so the pot became the princess's.",
+                        "She ran to her room with it in her arms",
+                        "and played with it all day, boiling water.",
+                        "The bells never stopped ringing,",
+                        "and she held her hand in the steam as well.",
+                        "\"What will they be eating at the minister's house today!\""
+                    ],
+                    right: [
+                        "\"Well I never — that house has nothing but porridge.\"",
+                        "The princess laughed until she had to hold her sides,",
+                        "and the maids laughed with her.",
+                        "That day the whole palace talked of nothing but the pot,",
+                        "and for a while it was very good fun.",
+                        "And even that did not last long."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · Now a Rattle',
+            beats: [
+                {
+                    art: '07-rattle.webp',
+                    emoji: '🎵',
+                    left: [
+                        "After a few days the princess was bored again.",
+                        "And about then the swineherd finished something new.",
+                        "This time it was a rattle.",
+                        "Turn it, and out came every dance tune there is —",
+                        "waltzes and polkas and all.",
+                        "The sound carried over the wall,",
+                        "and the princess came running out onto the balcony again.",
+                        "Her toes started tapping by themselves."
+                    ],
+                    right: [
+                        "The princess quickly hid her feet.",
+                        "\"And what is that now!\"",
+                        "She sent a maid straight down.",
+                        "\"What do you want for that rattle?\"",
+                        "The swineherd was calm about it this time as well,",
+                        "and did not let go of the rattle."
+                    ]
+                },
+                {
+                    art: '07-rattle-2.webp',
+                    emoji: '🎵',
+                    left: [
+                        "\"This time it is a hundred.\"",
+                        "The maid took the message back.",
+                        "\"A hundred? That is beyond everything!\"",
+                        "The princess leapt in the air.",
+                        "And she was already gathering up her skirts.",
+                        "And down to the back yard the princess went.",
+                        "And the maids spread their skirts and stood round again."
+                    ],
+                    right: [
+                        "\"One, two, three…\"",
+                        "The counting went on and on,",
+                        "and the pigs tilted their heads at it.",
+                        "\"…eighty-eight, eighty-nine.\"",
+                        "The maids' voices were getting smaller.",
+                        "And at that moment —"
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Outside the Gate',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '⛈️',
+                    left: [
+                        "Of all moments, the king looked out of his window.",
+                        "There was a crowd of people in the back yard,",
+                        "and the king straightened his spectacles.",
+                        "He could see what was going on between the skirts.",
+                        "The king's face went scarlet,",
+                        "and down the stairs he came in his slippers."
+                    ],
+                    right: [
+                        "\"What is the meaning of this!\"",
+                        "The maids scattered in fright,",
+                        "and only the princess and the swineherd were left standing there.",
+                        "The king's hands were shaking.",
+                        "\"Both of you — out of my country!\" And he had the gates shut and barred behind them."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '⛈️',
+                    left: [
+                        "The gate shut behind her with a thud,",
+                        "and it began to rain.",
+                        "The princess sat down outside the gate and cried.",
+                        "\"What am I to do now?\"",
+                        "The rain ran down her face,",
+                        "and there was no sound at all from inside the castle."
+                    ],
+                    right: [
+                        "And then the swineherd went to the well",
+                        "and washed the soot off his face,",
+                        "and changed into fine clothes.",
+                        "And a young prince was standing in front of her.",
+                        "\"You would have nothing to do with a real rose or a real bird.\"",
+                        "\"What a pity for you.\"",
+                        "And with those words he went home to his own country."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What were the prince’s two treasures?',
+            choices: ['A rose from his father’s grave and a nightingale', 'Two silver boxes', 'A singing pot and a rattle'],
+            answer: 0
+        },
+        {
+            q: 'Why did the princess dislike the presents?',
+            choices: ['Because they were too small', 'Because they came in silver boxes', 'Because they were real, not made'],
+            answer: 2
+        },
+        {
+            q: 'How did the prince get into the palace?',
+            choices: ['He came as a visiting prince', 'He blacked his face and took work minding the pigs', 'He climbed the wall at night'],
+            answer: 1
+        },
+        {
+            q: 'What could the pot do besides ring?',
+            choices: ['Its steam showed what every kitchen in town was cooking', 'It cooked by itself', 'It played dance tunes'],
+            answer: 0
+        },
+        {
+            q: 'What did the swineherd ask for the pot?',
+            choices: ['A hundred gold coins', 'A room in the palace', 'Ten kisses from the princess'],
+            answer: 2
+        },
+        {
+            q: 'Why did the maids spread their skirts in a ring?',
+            choices: ['To keep the pigs away', 'So that nobody could see what was happening', 'To keep the rain off'],
+            answer: 1
+        },
+        {
+            q: 'What did the prince say at the gate?',
+            choices: ['That she would have nothing to do with a real rose or a real bird', 'That he forgave her', 'That he would come back'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐖',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This is one of the few stories Andersen wrote in which he takes nobody's side. The princess is in the wrong and so is the prince.",
+                    "What the prince first sent was one rose and a nightingale. A rose off his father's grave, and a bird there was no other like.",
+                    "The princess is disappointed when she hears they are real. Because they were not made. Being real is what made them dull.",
+                    "The pot and the rattle the swineherd makes are another matter. They are made by hand and they do remarkable tricks. And the princess pays a price to get them."
+                ],
+                right: [
+                    "The prince does not leave in a temper. He watched for a long time, and then he gave her up.",
+                    "How should the princess have treated the rose and the bird?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-prince.webp': [
+            { word: 'dot', meaning: '점', sentence: 'It was hardly a dot on the map.' },
+            { word: 'generous', meaning: '넉넉한', sentence: 'The prince had a generous heart.' },
+            { word: 'ask for the hand of', meaning: '청혼하다', sentence: 'He decided to ask for the hand of the princess.' },
+            { word: 'grave', meaning: '무덤', sentence: "A rose tree that grew on his father's grave." },
+            { word: 'sorrow', meaning: '슬픈 일', sentence: 'The scent made you forget your sorrows.' }
+        ],
+        '01-prince-2.webp': [
+            { word: 'messenger', meaning: '심부름꾼', sentence: 'He sent them off by messenger.' },
+            { word: 'pillar', meaning: '기둥', sentence: 'It was hard to count how many pillars it had.' },
+            { word: 'grow tired of', meaning: '싫증 내다', sentence: 'She grew tired of whatever she looked at.' },
+            { word: 'dull', meaning: '시시한', sentence: 'Dull. Dull again.' },
+            { word: 'go stale', meaning: '시들해지다', sentence: 'Everything had gone stale on her.' }
+        ],
+        '02-gifts.webp': [
+            { word: 'clap one’s hands', meaning: '손뼉을 치다', sentence: 'And the princess clapped her hands.' },
+            { word: 'prettily', meaning: '예쁘게', sentence: 'How prettily it is made!' },
+            { word: 'go hard', meaning: '굳어지다', sentence: "The princess's face went hard." },
+            { word: 'go up', meaning: '높아지다', sentence: 'Her voice went up.' }
+        ],
+        '02-gifts-2.webp': [
+            { word: 'wither', meaning: '시들다', sentence: 'Real flowers only wither.' },
+            { word: 'lost in', meaning: '넋을 잃은', sentence: 'The maids stood listening, quite lost in it.' },
+            { word: 'unmoved', meaning: '시큰둥한', sentence: 'And only the princess was unmoved.' },
+            { word: 'dismay', meaning: '놀람, 실망', sentence: 'The maids made a sound of dismay.' },
+            { word: 'empty-handed', meaning: '빈손으로', sentence: 'The messenger went home empty-handed.' }
+        ],
+        '03-disguise.webp': [
+            { word: 'curious', meaning: '궁금해하는', sentence: 'Rather than angry, he became curious.' },
+            { word: 'soot', meaning: '검댕', sentence: 'And rubbed soot over his face.' },
+            { word: 'look up and down', meaning: '위아래로 훑어보다', sentence: 'The gatekeeper looked him up and down.' },
+            { word: 'mind', meaning: '돌보다', sentence: 'They had nobody to mind the pigs.' },
+            { word: 'take on', meaning: '뽑다', sentence: 'The prince was taken on there and then.' }
+        ],
+        '03-disguise-2.webp': [
+            { word: 'back yard', meaning: '뒷마당', sentence: 'A place in the back yard of the palace.' },
+            { word: 'take to', meaning: '따르다', sentence: 'The pigs took to him very quickly.' },
+            { word: 'grunt', meaning: '꿀꿀거리다', sentence: 'They came crowding round grunting.' },
+            { word: 'clay', meaning: '진흙', sentence: 'He worked clay and carved little bells.' },
+            { word: 'carve', meaning: '깎다', sentence: 'He worked clay and carved little bells.' }
+        ],
+        '04-pot.webp': [
+            { word: 'rim', meaning: '가장자리', sentence: 'A little pot with bells all round the rim.' },
+            { word: 'boil', meaning: '끓다', sentence: 'When the water boiled the bells began to ring.' },
+            { word: 'tune', meaning: '가락', sentence: 'A whole tune came out of it.' },
+            { word: 'steam', meaning: '김', sentence: 'If you held a hand in the steam.' },
+            { word: 'pancake', meaning: '팬케이크', sentence: 'That house is making pancakes today!' }
+        ],
+        '04-pot-2.webp': [
+            { word: 'carry', meaning: '(소리가) 퍼지다', sentence: 'The sound of the pot carried over the wall.' },
+            { word: 'yawn', meaning: '하품', sentence: 'The princess stopped in the middle of a yawn.' },
+            { word: 'balcony', meaning: '발코니', sentence: 'The princess went out on the balcony.' },
+            { word: 'stamp one’s feet', meaning: '발을 동동 구르다', sentence: 'The princess stamped her feet.' },
+            { word: 'whatever the price', meaning: '값이 얼마든', sentence: 'Buy it, whatever the price.' }
+        ],
+        '05-bargain.webp': [
+            { word: 'pigsty', meaning: '돼지우리', sentence: 'The maid went down to the pigsty.' },
+            { word: 'take for', meaning: '값으로 받다', sentence: 'What will you take for that pot?' },
+            { word: 'calmly', meaning: '태연하게', sentence: 'And then answered quite calmly.' },
+            { word: 'scarlet', meaning: '새빨간', sentence: 'The maid went back scarlet in the face.' },
+            { word: 'impudence', meaning: '무례함', sentence: 'A swineherd! The impudence!' }
+        ],
+        '05-bargain-2.webp': [
+            { word: 'beyond anything', meaning: '말도 안 되는', sentence: 'It is beyond anything!' },
+            { word: 'this minute', meaning: '당장', sentence: 'Have him thrown out this minute!' },
+            { word: 'slam', meaning: '쾅 닫다', sentence: 'The princess slammed the door.' },
+            { word: 'up and down', meaning: '이리저리', sentence: 'The princess walked up and down her room.' },
+            { word: 'sigh', meaning: '한숨 쉬다', sentence: 'And the maids sighed.' }
+        ],
+        '06-kisses.webp': [
+            { word: 'hold one’s nose', meaning: '코를 막다', sentence: 'The princess held her nose.' },
+            { word: 'get it over with', meaning: '끝내 버리다', sentence: 'Let us get it over with.' },
+            { word: 'in a ring', meaning: '빙 둘러서', sentence: 'The maids stood round in a ring.' },
+            { word: 'flap', meaning: '펄럭이다', sentence: 'The skirts flapped in the wind.' },
+            { word: 'count out loud', meaning: '소리 내어 세다', sentence: 'And the maids counted out loud.' }
+        ],
+        '06-kisses-2.webp': [
+            { word: 'in one’s arms', meaning: '품에 안고', sentence: 'She ran to her room with it in her arms.' },
+            { word: 'minister', meaning: '대신', sentence: "At the minister's house today!" },
+            { word: 'porridge', meaning: '죽', sentence: 'That house has nothing but porridge.' },
+            { word: 'hold one’s sides', meaning: '배를 잡고 웃다', sentence: 'The princess laughed until she had to hold her sides.' },
+            { word: 'last', meaning: '오래가다', sentence: 'And even that did not last long.' }
+        ],
+        '07-rattle.webp': [
+            { word: 'rattle', meaning: '딸랑이', sentence: 'This time it was a rattle.' },
+            { word: 'waltz', meaning: '왈츠', sentence: 'Waltzes and polkas and all.' },
+            { word: 'tap', meaning: '까딱거리다', sentence: 'Her toes started tapping by themselves.' },
+            { word: 'let go of', meaning: '놓다', sentence: 'And did not let go of the rattle.' }
+        ],
+        '07-rattle-2.webp': [
+            { word: 'message', meaning: '전할 말', sentence: 'The maid took the message back.' },
+            { word: 'beyond everything', meaning: '너무한', sentence: 'That is beyond everything!' },
+            { word: 'gather up', meaning: '걷어 올리다', sentence: 'She was already gathering up her skirts.' },
+            { word: 'tilt one’s head', meaning: '고개를 갸웃하다', sentence: 'The pigs tilted their heads at it.' }
+        ],
+        '08-ending.webp': [
+            { word: 'of all moments', meaning: '하필 그때', sentence: 'Of all moments, the king looked out.' },
+            { word: 'straighten', meaning: '고쳐 쓰다', sentence: 'The king straightened his spectacles.' },
+            { word: 'scatter', meaning: '흩어지다', sentence: 'The maids scattered in fright.' },
+            { word: 'bar', meaning: '빗장을 지르다', sentence: 'He had the gates shut and barred.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'thud', meaning: '쿵 소리', sentence: 'The gate shut behind her with a thud.' },
+            { word: 'well', meaning: '우물', sentence: 'The swineherd went to the well.' },
+            { word: 'wash off', meaning: '씻어 내다', sentence: 'And washed the soot off his face.' },
+            { word: 'have nothing to do with', meaning: '마다하다', sentence: 'You would have nothing to do with a real rose.' },
+            { word: 'a pity', meaning: '딱한 일', sentence: 'What a pity for you.' }
+        ],
+        'end.webp': [
+            { word: 'take sides', meaning: '편들다', sentence: 'He takes nobody’s side.' },
+            { word: 'in the wrong', meaning: '잘못한', sentence: 'The princess is in the wrong.' },
+            { word: 'disappointed', meaning: '실망한', sentence: 'The princess is disappointed.' },
+            { word: 'by hand', meaning: '손으로', sentence: 'They are made by hand.' },
+            { word: 'in a temper', meaning: '화가 나서', sentence: 'The prince does not leave in a temper.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -613,6 +1227,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -621,7 +1236,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -633,7 +1248,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -667,4 +1282,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
