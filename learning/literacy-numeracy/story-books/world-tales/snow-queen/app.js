@@ -315,16 +315,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '눈의 여왕',
+    intro: [
+        '눈의 여왕은 덴마크의 작가 한스 크리스티안 안데르센이 1844년에 발표한 이야기예요. 안데르센이 쓴 이야기 가운데 가장 길고 짜임이 복잡한 작품으로 꼽힙니다.',
+        '원래는 일곱 개의 이야기로 나뉘어 있고, 게르다가 카이를 찾아가는 길에서 만나는 사람들이 저마다 한 대목씩을 차지해요. 이 책에서는 그 여정을 여덟 장으로 간추려 담았습니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '❄️')}
             </div>
             <div class="story-page-right">
-                <h1>눈의 여왕</h1>
-                <p>눈의 여왕은 덴마크의 작가 한스 크리스티안 안데르센이 1844년에 발표한 이야기예요. 안데르센이 쓴 이야기 가운데 가장 길고 짜임이 복잡한 작품으로 꼽힙니다.</p>
-                <p>원래는 일곱 개의 이야기로 나뉘어 있고, 게르다가 카이를 찾아가는 길에서 만나는 사람들이 저마다 한 대목씩을 차지해요. 이 책에서는 그 여정을 여덟 장으로 간추려 담았습니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -339,8 +348,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -350,8 +359,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -361,22 +370,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -426,9 +436,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -439,7 +449,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -511,7 +521,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -520,34 +530,575 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Snow Queen',
+        intro: [
+            "The Snow Queen was written by the Danish author Hans Christian Andersen and published in 1844. It is counted as the longest and the most intricately built of all his tales.",
+            "In the original it is divided into seven stories, and each person Gerda meets on the road to find Kai gets a story to themselves. This book gathers that journey into eight chapters."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Roses at the Window',
+            beats: [
+                {
+                    art: '01-roses.webp',
+                    emoji: '🌹',
+                    left: [
+                        "Under the roofs of a certain city lived two children, Gerda and Kai. Their two houses stood side by side, so that the attic windows looked straight at each other.",
+                        "The children set a wooden box between the windows and planted roses in it. The roses came out well every year, and the two of them sat and played underneath.",
+                        "In winter the frost went white all over the window glass."
+                    ],
+                    right: [
+                        "\"Let's put a coin on it.\"",
+                        "A coin warmed at the stove and pressed to the glass melted a neat round hole, and the two of them looked at each other through it and laughed.",
+                        "In the evenings their grandmother told them stories, and they sat side by side against her knee."
+                    ]
+                },
+                {
+                    art: '01-roses-2.webp',
+                    emoji: '🌹',
+                    left: [
+                        "\"Do you know about the Snow Queen?\"",
+                        "Their grandmother pointed out of the window.",
+                        "\"Sometimes the snowflakes come swarming like bees.\"",
+                        "\"And she is right in the middle of them.\"",
+                        "Kai put his face close to the glass, and it was cold against the tip of his nose."
+                    ],
+                    right: [
+                        "\"If she comes I shall melt her on the stove.\"",
+                        "That night the snow drove hard, and the wind rattled the window frame.",
+                        "Something touched the glass — a very large snowflake.",
+                        "And that snowflake grew and grew until it took the shape of a woman dressed all in white.",
+                        "Kai pulled the blanket over his head."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Splinter in His Eye',
+            beats: [
+                {
+                    art: '02-shard.webp',
+                    emoji: '🪞',
+                    left: [
+                        "This had happened long before.",
+                        "A wicked magician made a mirror that showed everything ugly. Whatever was lovely looked hideous in it.",
+                        "And then the mirror shattered. The dust of it went out on the wind all over the world.",
+                        "If a piece gets into your eye, everything looks ugly to you ever after."
+                    ],
+                    right: [
+                        "It was a summer's day.",
+                        "Kai suddenly cried out.",
+                        "\"Ow — something's got in my eye!\"",
+                        "\"And something's pricking my chest!\"",
+                        "Gerda looked into his eye.",
+                        "There was nothing to see at all."
+                    ]
+                },
+                {
+                    art: '02-shard-2.webp',
+                    emoji: '🪞',
+                    left: [
+                        "From that day Kai was different. He scowled at the roses he had always loved.",
+                        "\"They're worm-eaten. They're ugly.\"",
+                        "And he kicked the box over.",
+                        "He laughed at his grandmother's stories, too.",
+                        "\"There's no such thing.\""
+                    ],
+                    right: [
+                        "And he was cold with Gerda.",
+                        "\"Why are you so childish?\"",
+                        "Gerda swallowed her tears. The rose box lay where it had fallen in the yard.",
+                        "Kai stayed out of doors and went about with the bigger boys.",
+                        "That winter there were a great many snowy days."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The White Sleigh',
+            beats: [
+                {
+                    art: '03-sleigh.webp',
+                    emoji: '🛷',
+                    left: [
+                        "It was the town square in winter, and the children were out on their sledges.",
+                        "The game was to hook your rope to a passing carriage and get pulled along.",
+                        "Then a white sleigh came into the square — large, and as white as snow.",
+                        "\"I've never seen that one!\""
+                    ],
+                    right: [
+                        "Kai got his rope hooked to it at once.",
+                        "The sleigh went slowly twice round the square.",
+                        "And then all at once it shot out through the town gate.",
+                        "The snow beat against his face.",
+                        "Kai tried to get the rope loose, but his hands had frozen and would not move."
+                    ]
+                },
+                {
+                    art: '03-sleigh-2.webp',
+                    emoji: '🛷',
+                    left: [
+                        "Only after a long stretch of open country did the sleigh stop.",
+                        "A woman dressed in white stepped slowly down. She was dazzlingly beautiful, and somehow cold with it —",
+                        "there was not even breath on her face.",
+                        "\"Are you cold?\"",
+                        "She kissed Kai on the forehead, and in that instant his whole body turned to ice."
+                    ],
+                    right: [
+                        "She kissed him once more, and Kai forgot Gerda. He forgot his grandmother, and the attic, and the roses.",
+                        "He could not even bring the name Gerda to mind.",
+                        "\"Nothing frightens you now, does it?\"",
+                        "\"No. Nothing at all.\"",
+                        "And the sleigh went away northward."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · Gerda Sets Out',
+            beats: [
+                {
+                    art: '04-journey.webp',
+                    emoji: '👞',
+                    left: [
+                        "Kai did not come back.",
+                        "Not all that winter.",
+                        "People shook their heads and said,",
+                        "\"He must have gone into the river.\"",
+                        "But Gerda did not believe it.",
+                        "\"Kai is alive somewhere.\""
+                    ],
+                    right: [
+                        "When spring came, Gerda set out. She put on her new red shoes and went down to the river.",
+                        "\"River, do you know where our Kai is?\"",
+                        "She took the shoes off and threw them into the water.",
+                        "\"Take these and tell me.\"",
+                        "But the shoes kept drifting back to her."
+                    ]
+                },
+                {
+                    art: '04-journey-2.webp',
+                    emoji: '👞',
+                    left: [
+                        "So Gerda climbed into a boat moored at the bank. The rope slipped loose and the river carried the boat away.",
+                        "After a long drift it came to a garden full of flowers.",
+                        "An old woman came out leaning on a stick.",
+                        "\"Come in, come in, pretty child.\"",
+                        "And she kept Gerda there."
+                    ],
+                    right: [
+                        "Every day she gave her good things to eat. And she hid every rose in that garden,",
+                        "in case Gerda should remember Kai.",
+                        "But one day a single rose came up at the foot of the wall.",
+                        "Gerda saw it and remembered him.",
+                        "\"What have I been doing here!\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Robber Girl',
+            beats: [
+                {
+                    art: '05-robber.webp',
+                    emoji: '🗝️',
+                    left: [
+                        "Gerda left that same hour, and soon the road went into a dark wood.",
+                        "A crow came down out of a tree.",
+                        "\"I saw a boy who went north.\"",
+                        "So Gerda turned north.",
+                        "But she had not gone far before she ran into robbers, who came swarming out and closed round her."
+                    ],
+                    right: [
+                        "\"Let's see what she's got!\"",
+                        "The robbers crowded in.",
+                        "Then a girl pushed to the front — the robber chief's daughter.",
+                        "\"She's mine!\"",
+                        "And the robber girl took Gerda off to her own room."
+                    ]
+                },
+                {
+                    art: '05-robber-2.webp',
+                    emoji: '🗝️',
+                    left: [
+                        "The room was full of animals — pigeons, and a reindeer as well.",
+                        "\"Tell me a story tonight.\"",
+                        "So Gerda told her about Kai.",
+                        "And up above them the pigeons cooed.",
+                        "\"We saw that boy.\""
+                    ],
+                    right: [
+                        "\"He was sitting in the Snow Queen's sleigh.\"",
+                        "\"They went north, to Lapland.\"",
+                        "The reindeer tied up in the corner lifted his head.",
+                        "\"Lapland is my home.\"",
+                        "The robber girl said nothing for a long while.",
+                        "And before dawn the next day she quietly untied the reindeer's rope."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · To the Far North',
+            beats: [
+                {
+                    art: '06-reindeer.webp',
+                    emoji: '🦌',
+                    left: [
+                        "\"Carry this child to Lapland.\"",
+                        "the robber girl told the reindeer. Then she put her own boots on Gerda's feet and packed her a loaf and a piece of meat.",
+                        "\"You're not having my blanket.\"",
+                        "And as she said it she unwound the scarf from her own neck and wrapped it round Gerda's."
+                    ],
+                    right: [
+                        "The reindeer began to run — through the wood and out onto the open country.",
+                        "The trees grew fewer and fewer, until there was nothing but snow going on and on.",
+                        "When night came the sky itself began to dance, green and violet light rolling across it.",
+                        "Gerda held tight round the reindeer's neck."
+                    ]
+                },
+                {
+                    art: '06-reindeer-2.webp',
+                    emoji: '🦌',
+                    left: [
+                        "On the way they stopped at two cottages — the Lapland woman's and the Finnish woman's.",
+                        "The reindeer, out of breath, begged them,",
+                        "\"Give this child some strength.\"",
+                        "\"The strength of ten people, if you can.\"",
+                        "But the woman shook her head.",
+                        "\"There is no strength I can give her.\""
+                    ],
+                    right: [
+                        "\"She has it already.\"",
+                        "\"She came all this way barefoot, did she not?\"",
+                        "\"There is no stronger thing than that.\"",
+                        "So the reindeer ran on over the snow.",
+                        "And at last something white showed far ahead of them.",
+                        "It was the palace of the Snow Queen."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Palace of Ice',
+            beats: [
+                {
+                    art: '07-ice-palace.webp',
+                    emoji: '🧊',
+                    left: [
+                        "The reindeer set Gerda down in front of the palace.",
+                        "\"From here you go alone.\"",
+                        "Gerda walked in by herself. The wind went over her face like a knife, and the snow squeaked under her feet.",
+                        "There was no door and no one on guard.",
+                        "It was quite empty inside."
+                    ],
+                    right: [
+                        "Every room was nothing but ice.",
+                        "There was no sound at all except her own footsteps, and her breath went up white to the ceiling.",
+                        "In the middle of the largest hall lay a frozen lake.",
+                        "And Kai sat on it, all alone,",
+                        "fitting pieces of ice together this way and that."
+                    ]
+                },
+                {
+                    art: '07-ice-palace-2.webp',
+                    emoji: '🧊',
+                    left: [
+                        "\"Kai!\"",
+                        "Gerda called out, and Kai did not turn round.",
+                        "So she ran to him and threw both arms round him.",
+                        "\"It's me. It's Gerda.\"",
+                        "His body was cold as ice, and Gerda began to cry."
+                    ],
+                    right: [
+                        "Her hot tears fell on Kai's chest.",
+                        "And the splinter of ice lodged in it melted clean away.",
+                        "Kai blinked.",
+                        "\"Gerda… why are you here?\"",
+                        "And then he burst into tears himself, and the splinter in his eye was washed out with them."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Summer Again',
+            beats: [
+                {
+                    art: '08-home.webp',
+                    emoji: '🌿',
+                    left: [
+                        "The two of them went out of the palace hand in hand, and the reindeer was still waiting outside the door.",
+                        "The three of them ran south.",
+                        "The further they went, the thinner the snow got.",
+                        "And at last green grass began to show between the patches.",
+                        "\"Look at that!\""
+                    ],
+                    right: [
+                        "After so long with nothing but white, the green made their eyes ache.",
+                        "On the way they met the robber girl again, grown a good deal taller.",
+                        "\"So you found him!\"",
+                        "The three of them looked at one another and laughed for a long while.",
+                        "They met the crow again too, and the road home felt short."
+                    ]
+                },
+                {
+                    art: '08-home-2.webp',
+                    emoji: '🌿',
+                    left: [
+                        "At last they came to the city where they had lived. The bells happened to be ringing.",
+                        "The two of them went up the attic stairs they knew so well, one step at a time,",
+                        "and the stairs creaked the way they always had.",
+                        "They opened the door, and everything was as it had been. Their grandmother sat at the window reading."
+                    ],
+                    right: [
+                        "In the wooden box outside, the roses were in full bloom.",
+                        "The two of them sat down side by side on their chairs, as they always used to.",
+                        "And sitting there, they found they had grown a great deal taller.",
+                        "\"How big we've got.\"",
+                        "But inside they were just the same. The summer light came in at the window, and the roses stirred without a sound."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What happened to the magician’s mirror?',
+            choices: ['The Snow Queen took it north', 'It shattered and the dust blew all over the world', 'It was buried under the roses'],
+            answer: 1
+        },
+        {
+            q: 'Why did Kai turn cold toward Gerda?',
+            choices: ['A splinter of the mirror had got into his eye', 'The bigger boys told him to', 'He was angry about the roses'],
+            answer: 0
+        },
+        {
+            q: 'How did Kai end up in the Snow Queen’s sleigh?',
+            choices: ['She carried him off in the night', 'He walked out to meet her', 'He hooked his sledge rope to it'],
+            answer: 2
+        },
+        {
+            q: 'What made Gerda remember Kai in the flower garden?',
+            choices: ['A crow spoke to her', 'A rose came up at the foot of the wall', 'She found her red shoes again'],
+            answer: 1
+        },
+        {
+            q: 'Who set the reindeer free?',
+            choices: ['The robber girl', 'The old woman in the garden', 'The Finnish woman'],
+            answer: 0
+        },
+        {
+            q: 'What did the Finnish woman say about Gerda?',
+            choices: ['That she needed the strength of ten', 'That she should turn back', 'That she already had her strength'],
+            answer: 2
+        },
+        {
+            q: 'What freed Kai in the end?',
+            choices: ['He finished the puzzle of ice', 'Gerda’s hot tears melted the splinter', 'The Snow Queen let him go'],
+            answer: 1
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '❄️',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This is the longest thing Andersen wrote. It comes in seven parts.",
+                    "Everything starts with the splinter from the broken mirror. Once it is in your eye, good things look hideous. That is the whole reason Kai changed.",
+                    "Kai did not turn into a bad boy. What he saw turned. That is why Gerda became hateful to him.",
+                    "Gerda is not strong and she is not clever. She simply never stopped walking — giving her shoes to the river, riding on the back of a reindeer."
+                ],
+                right: [
+                    "In the Snow Queen's palace, Kai was fitting pieces of ice together to make a word. However he arranged them, it never came out. What solved it was Gerda's tears.",
+                    "A good many people helped Gerda along the way. Which of them do you think helped most?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-roses.webp': [
+            { word: 'attic', meaning: '다락', sentence: 'The attic windows looked straight at each other.' },
+            { word: 'frost', meaning: '성에', sentence: 'The frost went white all over the window glass.' },
+            { word: 'press to', meaning: '갖다 붙이다', sentence: 'A coin pressed to the glass melted a round hole.' },
+            { word: 'side by side', meaning: '나란히', sentence: 'They sat side by side against her knee.' }
+        ],
+        '01-roses-2.webp': [
+            { word: 'swarm', meaning: '떼 지어 몰려오다', sentence: 'The snowflakes come swarming like bees.' },
+            { word: 'rattle', meaning: '덜컹거리다', sentence: 'The wind rattled the window frame.' },
+            { word: 'take the shape of', meaning: '~의 모습이 되다', sentence: 'It took the shape of a woman dressed in white.' }
+        ],
+        '02-shard.webp': [
+            { word: 'wicked', meaning: '못된', sentence: 'A wicked magician made a mirror.' },
+            { word: 'hideous', meaning: '흉한', sentence: 'Whatever was lovely looked hideous in it.' },
+            { word: 'shatter', meaning: '산산이 깨지다', sentence: 'And then the mirror shattered.' },
+            { word: 'prick', meaning: '콕 찌르다', sentence: "Something's pricking my chest!" }
+        ],
+        '02-shard-2.webp': [
+            { word: 'scowl at', meaning: '인상을 쓰다', sentence: 'He scowled at the roses he had always loved.' },
+            { word: 'worm-eaten', meaning: '벌레 먹은', sentence: "They're worm-eaten. They're ugly." },
+            { word: 'childish', meaning: '유치한', sentence: 'Why are you so childish?' },
+            { word: 'swallow one’s tears', meaning: '울음을 참다', sentence: 'Gerda swallowed her tears.' }
+        ],
+        '03-sleigh.webp': [
+            { word: 'square', meaning: '광장', sentence: 'It was the town square in winter.' },
+            { word: 'sledge', meaning: '썰매', sentence: 'The children were out on their sledges.' },
+            { word: 'hook', meaning: '걸다', sentence: 'The game was to hook your rope to a carriage.' },
+            { word: 'shoot out', meaning: '내달리다', sentence: 'It shot out through the town gate.' }
+        ],
+        '03-sleigh-2.webp': [
+            { word: 'stretch', meaning: '구간, 뻗은 곳', sentence: 'After a long stretch of open country.' },
+            { word: 'dazzlingly', meaning: '눈부시게', sentence: 'She was dazzlingly beautiful.' },
+            { word: 'forehead', meaning: '이마', sentence: 'She kissed Kai on the forehead.' },
+            { word: 'bring to mind', meaning: '떠올리다', sentence: 'He could not bring her name to mind.' }
+        ],
+        '04-journey.webp': [
+            { word: 'shake one’s head', meaning: '고개를 젓다', sentence: 'People shook their heads.' },
+            { word: 'set out', meaning: '길을 나서다', sentence: 'When spring came, Gerda set out.' },
+            { word: 'drift back', meaning: '도로 떠내려오다', sentence: 'The shoes kept drifting back to her.' }
+        ],
+        '04-journey-2.webp': [
+            { word: 'moor', meaning: '매어 두다', sentence: 'A boat moored at the bank.' },
+            { word: 'slip loose', meaning: '스르르 풀리다', sentence: 'The rope slipped loose.' },
+            { word: 'lean on', meaning: '짚다, 기대다', sentence: 'An old woman came out leaning on a stick.' },
+            { word: 'in case', meaning: '~할까 봐', sentence: 'In case Gerda should remember Kai.' }
+        ],
+        '05-robber.webp': [
+            { word: 'crow', meaning: '까마귀', sentence: 'A crow came down out of a tree.' },
+            { word: 'run into', meaning: '맞닥뜨리다', sentence: 'She ran into robbers.' },
+            { word: 'close round', meaning: '에워싸다', sentence: 'They came swarming out and closed round her.' },
+            { word: 'push to the front', meaning: '앞으로 나서다', sentence: 'Then a girl pushed to the front.' }
+        ],
+        '05-robber-2.webp': [
+            { word: 'pigeon', meaning: '비둘기', sentence: 'The room was full of pigeons.' },
+            { word: 'reindeer', meaning: '순록', sentence: 'And a reindeer as well.' },
+            { word: 'coo', meaning: '구구 울다', sentence: 'Up above them the pigeons cooed.' },
+            { word: 'untie', meaning: '풀어 주다', sentence: "She quietly untied the reindeer's rope." }
+        ],
+        '06-reindeer.webp': [
+            { word: 'pack', meaning: '챙겨 주다', sentence: 'She packed her a loaf and a piece of meat.' },
+            { word: 'unwind', meaning: '풀다', sentence: 'She unwound the scarf from her own neck.' },
+            { word: 'fewer and fewer', meaning: '점점 줄어드는', sentence: 'The trees grew fewer and fewer.' },
+            { word: 'violet', meaning: '보랏빛', sentence: 'Green and violet light rolling across it.' }
+        ],
+        '06-reindeer-2.webp': [
+            { word: 'out of breath', meaning: '숨을 몰아쉬는', sentence: 'The reindeer, out of breath, begged them.' },
+            { word: 'beg', meaning: '부탁하다', sentence: 'The reindeer begged them.' },
+            { word: 'barefoot', meaning: '맨발로', sentence: 'She came all this way barefoot.' }
+        ],
+        '07-ice-palace.webp': [
+            { word: 'set down', meaning: '내려놓다', sentence: 'The reindeer set Gerda down.' },
+            { word: 'on guard', meaning: '지키고 있는', sentence: 'There was no door and no one on guard.' },
+            { word: 'squeak', meaning: '뽀드득 소리 나다', sentence: 'The snow squeaked under her feet.' },
+            { word: 'fit together', meaning: '맞추다', sentence: 'Fitting pieces of ice together.' }
+        ],
+        '07-ice-palace-2.webp': [
+            { word: 'turn round', meaning: '돌아보다', sentence: 'Kai did not turn round.' },
+            { word: 'splinter', meaning: '조각, 파편', sentence: 'The splinter of ice lodged in it melted away.' },
+            { word: 'lodge', meaning: '박히다', sentence: 'The splinter lodged in his chest.' },
+            { word: 'wash out', meaning: '씻겨 나오다', sentence: 'The splinter in his eye was washed out.' }
+        ],
+        '08-home.webp': [
+            { word: 'hand in hand', meaning: '손을 잡고', sentence: 'They went out of the palace hand in hand.' },
+            { word: 'thin', meaning: '얇아지다', sentence: 'The further they went, the thinner the snow got.' },
+            { word: 'ache', meaning: '시리다, 아프다', sentence: 'The green made their eyes ache.' },
+            { word: 'a good deal', meaning: '훨씬', sentence: 'Grown a good deal taller.' }
+        ],
+        '08-home-2.webp': [
+            { word: 'creak', meaning: '삐걱거리다', sentence: 'The stairs creaked the way they always had.' },
+            { word: 'in full bloom', meaning: '활짝 핀', sentence: 'The roses were in full bloom.' },
+            { word: 'used to', meaning: '늘 ~하곤 했다', sentence: 'As they always used to.' },
+            { word: 'stir', meaning: '흔들리다', sentence: 'The roses stirred without a sound.' }
+        ],
+        'end.webp': [
+            { word: 'come in', meaning: '~으로 나뉘어 있다', sentence: 'It comes in seven parts.' },
+            { word: 'turn', meaning: '달라지다', sentence: 'What he saw turned.' },
+            { word: 'hateful', meaning: '미운', sentence: 'That is why Gerda became hateful to him.' },
+            { word: 'arrange', meaning: '늘어놓다, 맞추다', sentence: 'However he arranged them, it never came out.' },
+            { word: 'solve', meaning: '풀다', sentence: "What solved it was Gerda's tears." }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -612,6 +1163,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -620,7 +1172,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -632,7 +1184,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -666,4 +1218,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
