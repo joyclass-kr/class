@@ -262,16 +262,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '성냥팔이 소녀',
+    intro: [
+        '성냥팔이 소녀는 덴마크의 작가 한스 크리스티안 안데르센이 1845년에 발표한 이야기예요.',
+        '안데르센의 어머니는 어린 시절 몹시 가난해 거리에서 구걸을 해야 했다고 합니다. 안데르센은 그 이야기를 떠올리며 이 작품을 썼어요. 추운 거리에 홀로 선 아이를 아무도 돌아보지 않는다면 어떤 일이 벌어지는지 조용히 묻는 이야기랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🕯️')}
             </div>
             <div class="story-page-right">
-                <h1>성냥팔이 소녀</h1>
-                <p>성냥팔이 소녀는 덴마크의 작가 한스 크리스티안 안데르센이 1845년에 발표한 이야기예요.</p>
-                <p>안데르센의 어머니는 어린 시절 몹시 가난해 거리에서 구걸을 해야 했다고 합니다. 안데르센은 그 이야기를 떠올리며 이 작품을 썼어요. 추운 거리에 홀로 선 아이를 아무도 돌아보지 않는다면 어떤 일이 벌어지는지 조용히 묻는 이야기랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -286,8 +295,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -297,8 +306,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -308,22 +317,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -373,9 +383,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -386,7 +396,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -458,7 +468,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -467,34 +477,514 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   조용한 이야기이므로 문체도 낮게 유지한다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Little Match Girl',
+        intro: [
+            "The Little Match Girl was written by the Danish author Hans Christian Andersen and published in 1845.",
+            "Andersen's mother was so poor as a child that she had to beg in the streets. He was thinking of her when he wrote this. It asks, very quietly, what happens when a child stands alone in the cold and nobody turns round."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Last Night of the Year',
+            beats: [
+                {
+                    art: '01-street.webp',
+                    emoji: '❄️',
+                    left: [
+                        "It was the last day of the year. Snow had come down thick since morning and the streets were white all over.",
+                        "People hurried along with their faces buried in their scarves, every one of them on the way home to a warm house.",
+                        "But one child was still out in the street, with an apronful of matches."
+                    ],
+                    right: [
+                        "She had not sold a single box all day.",
+                        "\"Matches, please.\"",
+                        "she called, in a small voice.",
+                        "\"Won't you buy just one?\"",
+                        "But nobody turned round. They all went past her."
+                    ]
+                },
+                {
+                    art: '01-street-2.webp',
+                    emoji: '❄️',
+                    left: [
+                        "The child had no shoes.",
+                        "She had come out that morning in a pair of great slippers — her mother's, far too big for her feet.",
+                        "Crossing the road, she had lost them both getting out of the way of a carriage. One went into the snow and no amount of looking would find it."
+                    ],
+                    right: [
+                        "The other one a boy going by snatched up.",
+                        "\"This will make a fine boat!\"",
+                        "And off he ran with it.",
+                        "So the match girl walked the snowy street barefoot, and her feet turned bright red with cold.",
+                        "The snow kept getting in between her toes."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Supper Through the Window',
+            beats: [
+                {
+                    art: '02-window.webp',
+                    emoji: '🪟',
+                    left: [
+                        "The street was full of good smells. Every house was cooking its supper.",
+                        "The child stood in front of a bright window and looked in.",
+                        "On a snow-white cloth the dishes stood in a neat row, and in the middle a roast goose was steaming.",
+                        "Children were laughing and talking round the table."
+                    ],
+                    right: [
+                        "The match girl was very hungry. She had eaten nothing since the morning.",
+                        "But she could not go home, because she had not sold one box.",
+                        "\"I shall be in trouble if I go back like this.\"",
+                        "She stepped away from the window and walked on."
+                    ]
+                },
+                {
+                    art: '02-window-2.webp',
+                    emoji: '🪟',
+                    left: [
+                        "Home was only an attic under the roof. There was a gap in the tiles and the wind came straight through it; they had stuffed straw in, and it made no difference.",
+                        "It was as cold in there as it was outside.",
+                        "So she turned into a narrow alley between two houses, where the wind did not reach so badly."
+                    ],
+                    right: [
+                        "Inside the alley it was dark and quiet. Now and then laughter carried over from far off.",
+                        "The child put her back against the wall and huddled down.",
+                        "She pulled her knees up and tucked her feet inside them. Even so, her hands were too stiff to open properly.",
+                        "\"Perhaps I could light just one.\"",
+                        "And she felt inside her apron."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The First Match',
+            beats: [
+                {
+                    art: '03-stove.webp',
+                    emoji: '🔥',
+                    left: [
+                        "Her stiff hands shook so much she nearly dropped the match.",
+                        "She took one out and struck it against the wall.",
+                        "Ssst —",
+                        "A little flame went up, trembling. The child held both hands close to it.",
+                        "How warm it was.",
+                        "\"Oh, that's warm.\""
+                    ],
+                    right: [
+                        "The light put a red glow into her frozen cheeks.",
+                        "And then she saw something in the flame — a great stove, with shining brass feet and the fire roaring behind its door.",
+                        "The child stretched her frozen feet out toward it.",
+                        "Her whole body seemed to melt."
+                    ]
+                },
+                {
+                    art: '03-stove-2.webp',
+                    emoji: '🔥',
+                    left: [
+                        "Then the match burned out. The flame went, and the stove went with it.",
+                        "All she had in her hand was a blackened stick.",
+                        "The wind came pushing back into the alley, and she pulled her shoulders in and shivered.",
+                        "\"Just one more.\""
+                    ],
+                    right: [
+                        "She took out another and drew it down the wall.",
+                        "Ssst —",
+                        "The flame lit the whole wall up.",
+                        "And the wall turned as thin as a sheet of cloth, so that she could see right through it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Second Match',
+            beats: [
+                {
+                    art: '04-feast.webp',
+                    emoji: '🍽️',
+                    left: [
+                        "Inside the room a table was laid, with fine dishes standing on a snow-white cloth.",
+                        "In the middle of it was a goose, roasted golden brown.",
+                        "It was steaming, and she could almost smell it. The child swallowed hard.",
+                        "\"If I could just have one piece of that goose.\""
+                    ],
+                    right: [
+                        "she murmured, before she knew she had said it.",
+                        "And then something extraordinary happened. The goose got up off its dish, with the carving knife still in its back.",
+                        "It came waddling across the floor toward her, the plate rattling at every step.",
+                        "The child put out both hands."
+                    ]
+                },
+                {
+                    art: '04-feast-2.webp',
+                    emoji: '🍽️',
+                    left: [
+                        "And in that instant the match went out. The goose and the table were gone as if they had never been.",
+                        "In front of her was nothing but a cold, damp wall.",
+                        "She looked at it for a long time.",
+                        "The snow went on falling, and it lay white on her shoulders."
+                    ],
+                    right: [
+                        "A carriage passed the mouth of the alley, and the singing inside it faded away at once.",
+                        "Somewhere far off a bell rang out. The year was going.",
+                        "Every window was bright, and laughter came out of them.",
+                        "The child breathed on her stiff hands.",
+                        "Then she took out a third match and struck it on the wall."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Third Match',
+            beats: [
+                {
+                    art: '05-tree.webp',
+                    emoji: '🌟',
+                    left: [
+                        "This time she saw a tree — a tree so tall it touched the ceiling.",
+                        "There were candles on every branch, thousands of them by the look of it.",
+                        "Shining ornaments swung at the ends of the boughs.",
+                        "\"Oh…\""
+                    ],
+                    right: [
+                        "The child reached out both hands without meaning to.",
+                        "And the match went out again.",
+                        "But the candles did not go. Up and up they went, until they hung in the sky.",
+                        "They had turned into stars.",
+                        "The child tipped her head back and looked up at them."
+                    ]
+                },
+                {
+                    art: '05-tree-2.webp',
+                    emoji: '🌟',
+                    left: [
+                        "Then one star fell, drawing a long streak of light behind it.",
+                        "And the child remembered what her grandmother used to say.",
+                        "\"When a star falls,\"",
+                        "\"somebody is going up to heaven.\"",
+                        "Her grandmother was gone. While she lived, she had always taken the child's frozen hands into both her own."
+                    ],
+                    right: [
+                        "\"You're cold, my love, aren't you.\"",
+                        "Her grandmother was the only one who had ever been kind to her. She had sat her on her lap and sung to her.",
+                        "\"Grandmother, I miss you.\"",
+                        "And she struck another match — this time several at once."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Grandmother',
+            beats: [
+                {
+                    art: '06-grandmother.webp',
+                    emoji: '💛',
+                    left: [
+                        "Several matches flared up together, and the narrow alley went as bright as noon.",
+                        "And somebody was standing in that light.",
+                        "It was her grandmother. She could almost smell the smell that always came off her apron.",
+                        "\"Grandmother!\"",
+                        "The child jumped up and ran to her."
+                    ],
+                    right: [
+                        "\"You won't disappear this time, will you?\"",
+                        "Her grandmother was smiling, just as she always had.",
+                        "\"Take me with you.\"",
+                        "\"When the match goes out you go away.\"",
+                        "\"The stove did, and the goose, and the tree.\"",
+                        "And the child felt quickly through her apron."
+                    ]
+                },
+                {
+                    art: '06-grandmother-2.webp',
+                    emoji: '💛',
+                    left: [
+                        "She lit every match she had. The alley blazed, and the whole bundle crackled as it went up.",
+                        "Her grandmother grew clearer and clearer — larger and brighter than she had ever been.",
+                        "She opened both arms and gathered the child in.",
+                        "And the child closed her eyes."
+                    ],
+                    right: [
+                        "\"Say you won't go anywhere now.\"",
+                        "\"No, my love. Nowhere at all.\"",
+                        "And the two of them went up along the light, to a place with no snow and no wind, where nobody is cold or hungry.",
+                        "Her grandmother sang to her, very softly.",
+                        "And the child smiled the way she had not smiled in a long time."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · Morning Came',
+            beats: [
+                {
+                    art: '07-morning.webp',
+                    emoji: '🌅',
+                    left: [
+                        "New Year's morning came, and the snow had stopped. The sun reached right into the alley.",
+                        "People going past stopped walking.",
+                        "In the narrow space between two houses sat a child, her knees pulled up, leaning against the wall."
+                    ],
+                    right: [
+                        "The smile was still on her face.",
+                        "Beside her lay a great scatter of matchsticks — a whole bundle of them, burned right down.",
+                        "\"Why was this child out here…\"",
+                        "\"Trying to warm herself, I suppose.\"",
+                        "That was all they said, and they went on."
+                    ]
+                },
+                {
+                    art: '07-morning-2.webp',
+                    emoji: '🌅',
+                    left: [
+                        "Nobody knew what she had seen — the stove, the goose, the shining tree.",
+                        "And least of all that she had met her grandmother.",
+                        "That evening somebody left a bunch of flowers in the alley. No one knew who.",
+                        "Children going past slowed down to look at them."
+                    ],
+                    right: [
+                        "And so another year went by, and the next winter came.",
+                        "That day too the snow came down thick.",
+                        "A woman walking along the road suddenly stopped.",
+                        "There was a child at the roadside holding out matches.",
+                        "\"Come in here, child, and get warm.\"",
+                        "And the door was opened wide."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What happened to the slippers she came out in?',
+            choices: ['She sold them for a match box', 'One was lost in the snow and a boy took the other', 'She left them at home'],
+            answer: 1
+        },
+        {
+            q: 'Why did she not go home?',
+            choices: ['She had not sold a single box', 'The door was locked', 'It was too far to walk'],
+            answer: 0
+        },
+        {
+            q: 'What did she see in the first match?',
+            choices: ['A roast goose', 'A tree covered in candles', 'A great stove with a fire in it'],
+            answer: 2
+        },
+        {
+            q: 'What did the goose do in the second match?',
+            choices: ['It flew out of the window', 'It got off the dish and walked toward her', 'It turned into a star'],
+            answer: 1
+        },
+        {
+            q: 'What did the candles on the tree become?',
+            choices: ['Stars in the sky', 'A stove', 'Her grandmother'],
+            answer: 0
+        },
+        {
+            q: 'What had her grandmother said about a falling star?',
+            choices: ['That it would bring good luck', 'That the year was ending', 'That somebody was going up to heaven'],
+            answer: 2
+        },
+        {
+            q: 'Why did she light the whole bundle at once?',
+            choices: ['To keep her hands warm', 'So her grandmother would not disappear', 'To be seen from the street'],
+            answer: 1
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🕯️',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Andersen made this story himself. His mother is said to have begged in the streets as a child, and he wrote it after hearing about that.",
+                    "The girl strikes matches four times, and each time she sees something different: a stove, a table laid, a Christmas tree, and then her grandmother.",
+                    "The first three are what the body wants — warmth and food. Only the last one is different, because a grandmother is not a thing.",
+                    "And that is exactly where she stops being careful with the matches and lights them all at once. She would burn everything she had to sell, if it would hold on to her."
+                ],
+                right: [
+                    "There were plenty of people in that street. It is only that not one of them stopped walking. That is the part Andersen wanted to write down.",
+                    "What could the people who passed her have done?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-street.webp': [
+            { word: 'bury', meaning: '파묻다', sentence: 'People hurried along with their faces buried in their scarves.' },
+            { word: 'apronful', meaning: '앞치마 가득', sentence: 'One child was out in the street with an apronful of matches.' },
+            { word: 'turn round', meaning: '돌아보다', sentence: 'But nobody turned round.' }
+        ],
+        '01-street-2.webp': [
+            { word: 'slipper', meaning: '슬리퍼', sentence: 'She had come out in a pair of great slippers.' },
+            { word: 'get out of the way', meaning: '피하다', sentence: 'Getting out of the way of a carriage.' },
+            { word: 'snatch up', meaning: '냉큼 줍다', sentence: 'A boy going by snatched it up.' },
+            { word: 'barefoot', meaning: '맨발로', sentence: 'She walked the snowy street barefoot.' },
+            { word: 'toe', meaning: '발가락', sentence: 'The snow kept getting in between her toes.' }
+        ],
+        '02-window.webp': [
+            { word: 'supper', meaning: '저녁', sentence: 'Every house was cooking its supper.' },
+            { word: 'cloth', meaning: '상보', sentence: 'On a snow-white cloth the dishes stood in a neat row.' },
+            { word: 'roast', meaning: '구운', sentence: 'In the middle a roast goose was steaming.' },
+            { word: 'steam', meaning: '김이 나다', sentence: 'A roast goose was steaming.' }
+        ],
+        '02-window-2.webp': [
+            { word: 'attic', meaning: '다락방', sentence: 'Home was only an attic under the roof.' },
+            { word: 'stuff', meaning: '틀어막다', sentence: 'They had stuffed straw in.' },
+            { word: 'alley', meaning: '골목', sentence: 'She turned into a narrow alley.' },
+            { word: 'huddle down', meaning: '웅크리다', sentence: 'The child put her back against the wall and huddled down.' },
+            { word: 'stiff', meaning: '곱은, 굳은', sentence: 'Her hands were too stiff to open properly.' }
+        ],
+        '03-stove.webp': [
+            { word: 'strike', meaning: '(성냥을) 긋다', sentence: 'She struck it against the wall.' },
+            { word: 'flame', meaning: '불꽃', sentence: 'A little flame went up, trembling.' },
+            { word: 'glow', meaning: '발갛게 비침', sentence: 'The light put a red glow into her cheeks.' },
+            { word: 'brass', meaning: '놋쇠', sentence: 'A great stove with shining brass feet.' },
+            { word: 'roar', meaning: '활활 타다', sentence: 'The fire roaring behind its door.' }
+        ],
+        '03-stove-2.webp': [
+            { word: 'burn out', meaning: '다 타다', sentence: 'Then the match burned out.' },
+            { word: 'blackened', meaning: '새까맣게 탄', sentence: 'All she had was a blackened stick.' },
+            { word: 'shiver', meaning: '떨다', sentence: 'She pulled her shoulders in and shivered.' },
+            { word: 'see through', meaning: '너머가 보이다', sentence: 'She could see right through it.' }
+        ],
+        '04-feast.webp': [
+            { word: 'lay', meaning: '(상을) 차리다', sentence: 'Inside the room a table was laid.' },
+            { word: 'golden brown', meaning: '노릇하게 구운', sentence: 'A goose, roasted golden brown.' },
+            { word: 'murmur', meaning: '중얼거리다', sentence: 'She murmured, before she knew she had said it.' },
+            { word: 'extraordinary', meaning: '놀라운', sentence: 'And then something extraordinary happened.' },
+            { word: 'waddle', meaning: '뒤뚱거리다', sentence: 'It came waddling across the floor toward her.' }
+        ],
+        '04-feast-2.webp': [
+            { word: 'as if', meaning: '마치 ~인 듯', sentence: 'They were gone as if they had never been.' },
+            { word: 'damp', meaning: '축축한', sentence: 'Nothing but a cold, damp wall.' },
+            { word: 'fade away', meaning: '멀어지다', sentence: 'The singing faded away at once.' },
+            { word: 'breathe on', meaning: '입김으로 녹이다', sentence: 'The child breathed on her stiff hands.' }
+        ],
+        '05-tree.webp': [
+            { word: 'branch', meaning: '가지', sentence: 'There were candles on every branch.' },
+            { word: 'ornament', meaning: '장식', sentence: 'Shining ornaments swung at the ends of the boughs.' },
+            { word: 'bough', meaning: '큰 가지', sentence: 'Shining ornaments swung at the ends of the boughs.' }
+        ],
+        '05-tree-2.webp': [
+            { word: 'streak', meaning: '빛줄기', sentence: 'Drawing a long streak of light behind it.' },
+            { word: 'used to', meaning: '늘 ~하곤 했다', sentence: 'What her grandmother used to say.' },
+            { word: 'lap', meaning: '무릎', sentence: 'She had sat her on her lap and sung to her.' },
+            { word: 'miss', meaning: '보고 싶다', sentence: 'Grandmother, I miss you.' }
+        ],
+        '06-grandmother.webp': [
+            { word: 'flare up', meaning: '확 타오르다', sentence: 'Several matches flared up together.' },
+            { word: 'as bright as noon', meaning: '대낮처럼 환한', sentence: 'The alley went as bright as noon.' },
+            { word: 'disappear', meaning: '사라지다', sentence: "You won't disappear this time, will you?" },
+            { word: 'feel through', meaning: '더듬다', sentence: 'The child felt quickly through her apron.' }
+        ],
+        '06-grandmother-2.webp': [
+            { word: 'blaze', meaning: '눈부시게 타오르다', sentence: 'The alley blazed.' },
+            { word: 'crackle', meaning: '탁탁 소리 내다', sentence: 'The whole bundle crackled as it went up.' },
+            { word: 'gather in', meaning: '품에 안다', sentence: 'She opened both arms and gathered the child in.' },
+            { word: 'softly', meaning: '나직하게', sentence: 'Her grandmother sang to her, very softly.' }
+        ],
+        '07-morning.webp': [
+            { word: 'reach into', meaning: '들어오다', sentence: 'The sun reached right into the alley.' },
+            { word: 'lean against', meaning: '기대다', sentence: 'Leaning against the wall.' },
+            { word: 'scatter', meaning: '흩어진 것', sentence: 'Beside her lay a great scatter of matchsticks.' },
+            { word: 'bundle', meaning: '다발', sentence: 'A whole bundle of them, burned right down.' }
+        ],
+        '07-morning-2.webp': [
+            { word: 'least of all', meaning: '무엇보다도 특히', sentence: 'And least of all that she had met her grandmother.' },
+            { word: 'a bunch of', meaning: '한 다발의', sentence: 'Somebody left a bunch of flowers in the alley.' },
+            { word: 'slow down', meaning: '걸음을 늦추다', sentence: 'Children going past slowed down to look.' },
+            { word: 'hold out', meaning: '내밀다', sentence: 'A child at the roadside holding out matches.' }
+        ],
+        'end.webp': [
+            { word: 'beg', meaning: '구걸하다', sentence: 'His mother is said to have begged in the streets.' },
+            { word: 'hold on to', meaning: '붙잡다', sentence: 'If it would hold on to her.' },
+            { word: 'be careful with', meaning: '아끼다', sentence: 'She stops being careful with the matches.' },
+            { word: 'plenty of', meaning: '많은', sentence: 'There were plenty of people in that street.' },
+            { word: 'write down', meaning: '적다', sentence: 'That is the part Andersen wanted to write down.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -559,6 +1049,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -567,7 +1058,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -579,7 +1070,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -613,4 +1104,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
