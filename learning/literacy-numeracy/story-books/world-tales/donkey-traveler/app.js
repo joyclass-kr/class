@@ -314,16 +314,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '당나귀가 된 나그네',
+    intro: [
+        '당나귀가 된 나그네는 유럽 여러 나라에 비슷한 형태로 전해 오는 옛이야기예요.',
+        '먹으면 당나귀가 되는 열매와 다시 사람으로 돌아오게 하는 열매가 나오는데, 이런 짜임은 옛이야기에서 흔히 볼 수 있어요. 욕심을 부린 사람이 스스로 판 함정에 빠지는 이야기랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🫏')}
             </div>
             <div class="story-page-right">
-                <h1>당나귀가 된 나그네</h1>
-                <p>당나귀가 된 나그네는 유럽 여러 나라에 비슷한 형태로 전해 오는 옛이야기예요.</p>
-                <p>먹으면 당나귀가 되는 열매와 다시 사람으로 돌아오게 하는 열매가 나오는데, 이런 짜임은 옛이야기에서 흔히 볼 수 있어요. 욕심을 부린 사람이 스스로 판 함정에 빠지는 이야기랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -338,8 +347,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -349,8 +358,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -360,22 +369,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -425,9 +435,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -438,7 +448,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -510,7 +520,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -519,34 +529,625 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Traveller Who Became a Donkey',
+        intro: [
+            "The Traveller Who Became a Donkey is an old tale told in much the same shape all over Europe.",
+            "There is a fruit that turns you into a donkey and another that turns you back, and that pattern turns up often in old stories. It is a tale about a greedy man falling into the pit he dug himself."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · Two Trees',
+            beats: [
+                {
+                    art: '01-trees.webp',
+                    emoji: '🌳',
+                    left: [
+                        "A young traveller was wandering the roads.",
+                        "A stick and a pack were all he had.",
+                        "He went from village to village helping with the work.",
+                        "That day he had eaten nothing since morning.",
+                        "His stomach kept rumbling at him.",
+                        "And the sun was already high overhead."
+                    ],
+                    right: [
+                        "The traveller came to a hill road he did not know.",
+                        "There was a tree on either side of it.",
+                        "The branches were bowed down with fruit.",
+                        "On one side the fruit was red.",
+                        "On the other side it was yellow.",
+                        "\"Well, here is luck!\"",
+                        "And the traveller swallowed hard."
+                    ]
+                },
+                {
+                    art: '01-trees-2.webp',
+                    emoji: '🌳',
+                    left: [
+                        "The traveller picked one of the red ones.",
+                        "He bit into it and the sweet juice ran.",
+                        "\"Why, this is very good indeed!\"",
+                        "So he picked a second and a third and ate those too.",
+                        "And then his head began to itch.",
+                        "He put a hand up and felt his ears."
+                    ],
+                    right: [
+                        "And the ears were growing longer and longer.",
+                        "\"Here — what is happening to me!\"",
+                        "The traveller took hold of them and pulled.",
+                        "But they only grew longer still.",
+                        "Before long they were as long as his arm.",
+                        "The traveller was suddenly afraid.",
+                        "He was shaking to his fingertips."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · A Donkey',
+            beats: [
+                {
+                    art: '02-donkey.webp',
+                    emoji: '🫏',
+                    left: [
+                        "And it was not only his ears.",
+                        "His hands and feet began to bend under him.",
+                        "Grey hair came up along his back.",
+                        "His spine curved and his face grew long.",
+                        "The traveller was standing there on four legs.",
+                        "He had turned into a donkey."
+                    ],
+                    right: [
+                        "The traveller tried to shout.",
+                        "He opened his mouth wide.",
+                        "And all that came out was a bray.",
+                        "Try as he might, it would not turn into words.",
+                        "He looked at himself in a puddle.",
+                        "A donkey, and no mistake.",
+                        "A tear fell and shook the water."
+                    ]
+                },
+                {
+                    art: '02-donkey-2.webp',
+                    emoji: '🫏',
+                    left: [
+                        "Just then a cart came up the hill.",
+                        "It was a trader driving it.",
+                        "He saw the donkey and his eyes lit up.",
+                        "\"A donkey with no owner!\"",
+                        "\"Here is a piece of luck.\"",
+                        "The traveller tried to run."
+                    ],
+                    right: [
+                        "But the four legs would not do as he told them.",
+                        "The trader got a halter round his neck.",
+                        "\"There. You are mine from now on.\"",
+                        "And he gave the rope a couple of tugs.",
+                        "So the traveller was harnessed to the cart.",
+                        "Cry as he might, it did no good.",
+                        "The load pressed down on his shoulders."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · Heavy Loads',
+            beats: [
+                {
+                    art: '03-labor.webp',
+                    emoji: '🧺',
+                    left: [
+                        "From that day the traveller carried loads.",
+                        "They set off before the sun was up.",
+                        "The cart was piled with sacks of grain.",
+                        "On the uphill roads his feet sank in.",
+                        "His back ached and his hoofs split.",
+                        "And the trader took a switch to him the moment he slowed."
+                    ],
+                    right: [
+                        "\"Get on there, will you!\" The switch came down on his back.",
+                        "The traveller could do nothing but bear it.",
+                        "\"I never knew, when I was a person.\"",
+                        "\"What hard work this was.\"",
+                        "The donkeys he passed on the road looked different to him now.",
+                        "Every one of them was under a heavy load."
+                    ]
+                },
+                {
+                    art: '03-labor-2.webp',
+                    emoji: '🧺',
+                    left: [
+                        "At night he was tied up in the stable.",
+                        "He lay himself down on the dry straw.",
+                        "The traveller looked up at the stars through a crack in the door.",
+                        "He missed home, and he missed human speech.",
+                        "And then all at once he thought of that hill.",
+                        "There had been two trees."
+                    ],
+                    right: [
+                        "He had eaten the red fruit and become this.",
+                        "\"Then what would the yellow fruit do?\"",
+                        "The traveller would not let the thought go.",
+                        "He made up his mind to get back to that hill one day.",
+                        "From then on he pictured the road every night.",
+                        "He even counted how many steps it was."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · Back to the Hill',
+            beats: [
+                {
+                    art: '04-escape.webp',
+                    emoji: '🍋',
+                    left: [
+                        "A few months went by like that.",
+                        "One day the trader turned onto a new road.",
+                        "The cart went rattling up a hill.",
+                        "And the traveller slowed his step.",
+                        "The look of the road either side was familiar.",
+                        "There stood the two trees."
+                    ],
+                    right: [
+                        "The red fruit and the yellow, just as before.",
+                        "The traveller's heart began to thump.",
+                        "\"Now is the moment!\"",
+                        "He gave the halter a great pull.",
+                        "The trader went over backwards.",
+                        "And the rope came loose out of his hand."
+                    ]
+                },
+                {
+                    art: '04-escape-2.webp',
+                    emoji: '🍋',
+                    left: [
+                        "\"Come back here, you!\"",
+                        "The donkey bolted up the hill.",
+                        "He went under the tree with the yellow fruit.",
+                        "He shook the branches until the fruit came down.",
+                        "And then he ate it, crunch and crunch.",
+                        "And in that instant his body changed."
+                    ],
+                    right: [
+                        "The hair melted away.",
+                        "His ears shrank and his back straightened.",
+                        "The traveller was a person again.",
+                        "The trader backed away from him.",
+                        "\"A d-donkey turning into a man!\" And off he ran.",
+                        "He left the halter lying where it fell."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Greedy Innkeeper',
+            beats: [
+                {
+                    art: '05-innkeeper.webp',
+                    emoji: '🏮',
+                    left: [
+                        "The traveller went straight down to the village.",
+                        "For the first time in months he greeted people in words.",
+                        "He stopped at the inn and ordered a meal.",
+                        "People sat round him and asked for the story.",
+                        "So the traveller told them everything.",
+                        "\"Eat the red fruit and you turn into a donkey.\""
+                    ],
+                    right: [
+                        "\"Eat the yellow, and you come back a person.\"",
+                        "The people laughed and thought it a marvel.",
+                        "\"Is there really such a tree?\"",
+                        "But the innkeeper was another matter.",
+                        "His eyes opened wide.",
+                        "\"There is such a fruit, you say?\"",
+                        "And he quietly began to reckon it up."
+                    ]
+                },
+                {
+                    art: '05-innkeeper-2.webp',
+                    emoji: '🏮',
+                    left: [
+                        "The innkeeper could not sleep that night.",
+                        "He kept doing the sums over.",
+                        "\"If I only had that fruit.\"",
+                        "\"I could turn my guests into donkeys and sell them.\"",
+                        "\"And what does a donkey fetch these days?\"",
+                        "So he slipped out of the house."
+                    ],
+                    right: [
+                        "He took a lantern and hurried up to the hill.",
+                        "The two trees stood there in the dark.",
+                        "\"Now which one was it?\"",
+                        "\"The red, was it not?\"",
+                        "The innkeeper ate the red fruit until he was full.",
+                        "It was too dark to see the colour properly."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Hee-Haw',
+            beats: [
+                {
+                    art: '06-transform.webp',
+                    emoji: '😲',
+                    left: [
+                        "It was the next morning.",
+                        "The inn was turned upside down.",
+                        "The innkeeper was not in the room where he slept.",
+                        "There was a great donkey standing there instead.",
+                        "His wife screamed.",
+                        "\"Husband! Husband, where are you?\"",
+                        "The donkey stamped a front hoof."
+                    ],
+                    right: [
+                        "\"Hee-haw!\"",
+                        "His wife jumped back in fright.",
+                        "\"What has been going on here!\"",
+                        "The guests peered in through the gap in the door.",
+                        "Every one of them had round eyes.",
+                        "And the donkey only blinked."
+                    ]
+                },
+                {
+                    art: '06-transform-2.webp',
+                    emoji: '😲',
+                    left: [
+                        "The donkey went up to his wife.",
+                        "\"It is me — your husband!\"",
+                        "But the sound was only hee-haw.",
+                        "His wife picked up the broom.",
+                        "\"Where did this beast come in from!\"",
+                        "And the donkey was chased out into the yard."
+                    ],
+                    right: [
+                        "He could do nothing but go round and round it.",
+                        "Not one of them knew him.",
+                        "And only then did the sorry feeling come.",
+                        "\"Why did I let myself be so greedy?\"",
+                        "Great tears fell from his eyes.",
+                        "He had no idea what to do now."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Traveller Comes Back',
+            beats: [
+                {
+                    art: '07-return.webp',
+                    emoji: '🤝',
+                    left: [
+                        "The talk went round the village at once.",
+                        "\"The innkeeper has disappeared.\"",
+                        "\"And a donkey turned up out of nowhere.\"",
+                        "The traveller heard it too.",
+                        "He guessed what had happened straight away.",
+                        "So he went to the inn."
+                    ],
+                    right: [
+                        "There was a donkey tied up in the yard.",
+                        "The traveller crouched down in front of him.",
+                        "\"Oh dear. You ate the red fruit.\"",
+                        "The donkey nodded his head hard.",
+                        "His eyes looked like they were begging.",
+                        "The traveller knew that feeling well.",
+                        "\"It happened to me too, you know.\""
+                    ]
+                },
+                {
+                    art: '07-return-2.webp',
+                    emoji: '🤝',
+                    left: [
+                        "The traveller took something out of his coat.",
+                        "It was one yellow fruit.",
+                        "He had kept it by, just in case.",
+                        "\"Here. Eat this.\"",
+                        "The donkey took it and gulped it down.",
+                        "And in that instant the hair began to go.",
+                        "His ears shrank and his back straightened."
+                    ],
+                    right: [
+                        "The innkeeper was a person again.",
+                        "And he sat straight down on the ground.",
+                        "His wife ran over and threw her arms round him.",
+                        "\"Husband! Where have you been!\" And he hung his head.",
+                        "\"I was out of my senses for a while.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Under the Two Trees',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🎊',
+                    left: [
+                        "The innkeeper could not lift his head for a long time.",
+                        "\"What… what a greedy thing I was going to do.\"",
+                        "\"To turn my own guests into donkeys.\"",
+                        "The people stood round and heard him say it.",
+                        "Not one of them scolded him.",
+                        "They all looked sorry for him."
+                    ],
+                    right: [
+                        "The innkeeper bowed to the traveller.",
+                        "\"Thank you. Thank you truly.\"",
+                        "And the traveller smiled at him.",
+                        "\"I have had a taste of it myself.\"",
+                        "\"Carrying loads is terribly hard work.\"",
+                        "And the people burst out laughing."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🎊',
+                    left: [
+                        "That day there was a feast at the inn.",
+                        "The innkeeper laid the table with his own hands.",
+                        "The traveller ate his fill.",
+                        "It was the first full supper he had had in a long while.",
+                        "The innkeeper kept bringing out another dish.",
+                        "Next morning the traveller took to the road again.",
+                        "And on his way he passed that hill."
+                    ],
+                    right: [
+                        "The two trees were standing there as before.",
+                        "The traveller put a few yellow fruits in his pocket.",
+                        "\"Somebody else may make the same mistake.\"",
+                        "And then he went on down the hill.",
+                        "The innkeeper was never greedy again."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why did the traveller turn into a donkey?',
+            choices: ['He ate the red fruit', 'He ate the yellow fruit', 'The trader caught him'],
+            answer: 0
+        },
+        {
+            q: 'Who took the traveller away once he was a donkey?',
+            choices: ['The innkeeper', 'The wife', 'A trader'],
+            answer: 2
+        },
+        {
+            q: 'What made the traveller a person again?',
+            choices: ['The red fruit', 'The yellow fruit', 'The dry straw'],
+            answer: 1
+        },
+        {
+            q: 'Why did the innkeeper slip out at night?',
+            choices: ['To pick the fruit', 'To chase the traveller', 'To drive the cart'],
+            answer: 0
+        },
+        {
+            q: 'What did the wife do to the donkey?',
+            choices: ['She tied him in the stable', 'She laid him a meal', 'She chased him out with a broom'],
+            answer: 2
+        },
+        {
+            q: 'What happened at the inn the day he became a person again?',
+            choices: ['The innkeeper was driven out', 'There was a feast', 'The inn was shut up'],
+            answer: 1
+        },
+        {
+            q: 'What did the innkeeper say at the end?',
+            choices: ['That he had been greedy', 'That he missed the guests', 'That he wanted more fruit'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🫏',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Stories of a person turned into a beast and back again are told everywhere. China has one about an innkeeper who feeds his guests dumplings and turns them into donkeys.",
+                    "In this story there are two trees. The red fruit makes a person into a beast, and the yellow makes the beast a person again.",
+                    "Look again at what the traveller learned while he was a donkey. The donkeys he passed on the road, he says, looked different to him.",
+                    "The innkeeper heard that story and did a different sum. He worked out how to turn his guests into donkeys and sell them."
+                ],
+                right: [
+                    "And then it was too dark to see the colour. Trying to make donkeys of others, he made one of himself.",
+                    "The traveller feeds that man the yellow fruit all the same. Would you have given it to him?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-trees.webp': [
+            { word: 'wander', meaning: '떠돌다', sentence: 'A young traveller was wandering the roads.' },
+            { word: 'rumble', meaning: '꼬르륵거리다', sentence: 'His stomach kept rumbling.' },
+            { word: 'overhead', meaning: '중천에', sentence: 'The sun was already high overhead.' },
+            { word: 'bow down', meaning: '휘다', sentence: 'The branches were bowed down with fruit.' },
+            { word: 'swallow hard', meaning: '침을 삼키다', sentence: 'And the traveller swallowed hard.' }
+        ],
+        '01-trees-2.webp': [
+            { word: 'bite into', meaning: '베어 물다', sentence: 'He bit into it and the juice ran.' },
+            { word: 'itch', meaning: '근질거리다', sentence: 'His head began to itch.' },
+            { word: 'take hold of', meaning: '붙잡다', sentence: 'He took hold of them and pulled.' },
+            { word: 'fingertip', meaning: '손끝', sentence: 'He was shaking to his fingertips.' }
+        ],
+        '02-donkey.webp': [
+            { word: 'bend', meaning: '굽다', sentence: 'His hands and feet began to bend.' },
+            { word: 'spine', meaning: '허리', sentence: 'His spine curved.' },
+            { word: 'bray', meaning: '히히힝 소리', sentence: 'All that came out was a bray.' },
+            { word: 'puddle', meaning: '물웅덩이', sentence: 'He looked at himself in a puddle.' }
+        ],
+        '02-donkey-2.webp': [
+            { word: 'trader', meaning: '장사꾼', sentence: 'It was a trader driving it.' },
+            { word: 'halter', meaning: '고삐', sentence: 'The trader got a halter round his neck.' },
+            { word: 'tug', meaning: '툭툭 당김', sentence: 'He gave the rope a couple of tugs.' },
+            { word: 'harness', meaning: '매다', sentence: 'He was harnessed to the cart.' },
+            { word: 'press down', meaning: '짓누르다', sentence: 'The load pressed down on his shoulders.' }
+        ],
+        '03-labor.webp': [
+            { word: 'sack', meaning: '자루', sentence: 'The cart was piled with sacks of grain.' },
+            { word: 'sink in', meaning: '푹푹 빠지다', sentence: 'On the uphill roads his feet sank in.' },
+            { word: 'hoof', meaning: '발굽', sentence: 'His hoofs split.' },
+            { word: 'switch', meaning: '회초리', sentence: 'The trader took a switch to him.' },
+            { word: 'bear', meaning: '참다', sentence: 'He could do nothing but bear it.' }
+        ],
+        '03-labor-2.webp': [
+            { word: 'stable', meaning: '마구간', sentence: 'At night he was tied up in the stable.' },
+            { word: 'straw', meaning: '짚', sentence: 'He lay down on the dry straw.' },
+            { word: 'crack', meaning: '문틈', sentence: 'Through a crack in the door.' },
+            { word: 'make up one’s mind', meaning: '마음먹다', sentence: 'He made up his mind to get back.' },
+            { word: 'picture', meaning: '떠올리다', sentence: 'He pictured the road every night.' }
+        ],
+        '04-escape.webp': [
+            { word: 'rattle', meaning: '덜컹거리다', sentence: 'The cart went rattling up a hill.' },
+            { word: 'familiar', meaning: '눈에 익은', sentence: 'The road was familiar.' },
+            { word: 'thump', meaning: '쿵쿵 뛰다', sentence: "The traveller's heart began to thump." },
+            { word: 'come loose', meaning: '풀려 나가다', sentence: 'The rope came loose out of his hand.' }
+        ],
+        '04-escape-2.webp': [
+            { word: 'bolt', meaning: '내달리다', sentence: 'The donkey bolted up the hill.' },
+            { word: 'shake', meaning: '흔들다', sentence: 'He shook the branches.' },
+            { word: 'straighten', meaning: '펴지다', sentence: 'His back straightened.' },
+            { word: 'back away', meaning: '뒷걸음질하다', sentence: 'The trader backed away from him.' }
+        ],
+        '05-innkeeper.webp': [
+            { word: 'greet', meaning: '인사하다', sentence: 'He greeted people in words.' },
+            { word: 'inn', meaning: '주막', sentence: 'He stopped at the inn.' },
+            { word: 'marvel', meaning: '신기한 일', sentence: 'The people thought it a marvel.' },
+            { word: 'reckon up', meaning: '셈하다', sentence: 'He quietly began to reckon it up.' }
+        ],
+        '05-innkeeper-2.webp': [
+            { word: 'sums', meaning: '셈', sentence: 'He kept doing the sums over.' },
+            { word: 'fetch', meaning: '값이 나가다', sentence: 'What does a donkey fetch these days?' },
+            { word: 'slip out', meaning: '몰래 나가다', sentence: 'So he slipped out of the house.' },
+            { word: 'lantern', meaning: '등불', sentence: 'He took a lantern.' },
+            { word: 'properly', meaning: '제대로', sentence: 'Too dark to see the colour properly.' }
+        ],
+        '06-transform.webp': [
+            { word: 'turned upside down', meaning: '발칵 뒤집힌', sentence: 'The inn was turned upside down.' },
+            { word: 'scream', meaning: '소리를 지르다', sentence: 'His wife screamed.' },
+            { word: 'stamp', meaning: '구르다', sentence: 'The donkey stamped a front hoof.' },
+            { word: 'peer in', meaning: '들여다보다', sentence: 'The guests peered in.' },
+            { word: 'blink', meaning: '눈을 껌뻑이다', sentence: 'The donkey only blinked.' }
+        ],
+        '06-transform-2.webp': [
+            { word: 'broom', meaning: '빗자루', sentence: 'His wife picked up the broom.' },
+            { word: 'chase out', meaning: '쫓아내다', sentence: 'The donkey was chased out into the yard.' },
+            { word: 'sorry feeling', meaning: '후회', sentence: 'Only then did the sorry feeling come.' },
+            { word: 'greedy', meaning: '욕심 많은', sentence: 'Why did I let myself be so greedy?' }
+        ],
+        '07-return.webp': [
+            { word: 'go round', meaning: '퍼지다', sentence: 'The talk went round the village.' },
+            { word: 'out of nowhere', meaning: '난데없이', sentence: 'A donkey turned up out of nowhere.' },
+            { word: 'crouch down', meaning: '쭈그리고 앉다', sentence: 'The traveller crouched down.' },
+            { word: 'beg', meaning: '애원하다', sentence: 'His eyes looked like they were begging.' }
+        ],
+        '07-return-2.webp': [
+            { word: 'just in case', meaning: '혹시 몰라', sentence: 'He had kept it by, just in case.' },
+            { word: 'gulp down', meaning: '허겁지겁 먹다', sentence: 'The donkey gulped it down.' },
+            { word: 'throw one’s arms round', meaning: '끌어안다', sentence: 'His wife threw her arms round him.' },
+            { word: 'out of one’s senses', meaning: '정신이 나간', sentence: 'I was out of my senses for a while.' }
+        ],
+        '08-ending.webp': [
+            { word: 'lift one’s head', meaning: '고개를 들다', sentence: 'He could not lift his head.' },
+            { word: 'scold', meaning: '나무라다', sentence: 'Not one of them scolded him.' },
+            { word: 'bow', meaning: '고개를 숙이다', sentence: 'The innkeeper bowed to the traveller.' },
+            { word: 'have a taste of', meaning: '맛을 보다', sentence: 'I have had a taste of it myself.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'feast', meaning: '잔치', sentence: 'That day there was a feast at the inn.' },
+            { word: 'lay the table', meaning: '상을 차리다', sentence: 'He laid the table with his own hands.' },
+            { word: 'eat one’s fill', meaning: '마음껏 먹다', sentence: 'The traveller ate his fill.' },
+            { word: 'take to the road', meaning: '길을 나서다', sentence: 'The traveller took to the road again.' }
+        ],
+        'end.webp': [
+            { word: 'dumpling', meaning: '만두', sentence: 'An innkeeper who feeds his guests dumplings.' },
+            { word: 'pattern', meaning: '짜임', sentence: 'That pattern turns up often.' },
+            { word: 'work out', meaning: '궁리하다', sentence: 'He worked out how to sell them.' },
+            { word: 'all the same', meaning: '그런데도', sentence: 'The traveller feeds that man the fruit all the same.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -611,6 +1212,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -619,7 +1221,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -631,7 +1233,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -665,4 +1267,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
