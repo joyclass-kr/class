@@ -291,16 +291,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '아기돼지 삼형제',
+    intro: [
+        '아기돼지 삼형제는 영국에서 오래전부터 전해 내려온 이야기예요. 1890년, 영국의 조지프 제이컵스가 여러 지방을 다니며 모은 영국 옛이야기집에 실리면서 지금의 모습으로 널리 알려졌답니다.',
+        '이야기에는 같은 일이 세 번 되풀이돼요. 늑대가 세 집을 차례로 찾아가 똑같은 말을 외치는데, 결과는 점점 달라지지요. 옛이야기에는 이렇게 셋씩 짝을 지어 되풀이되는 구조가 자주 나와요. 듣는 사람이 다음에 무슨 일이 벌어질지 짐작하며 따라올 수 있고, 입으로 전하기도 쉽기 때문이랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🐷')}
             </div>
             <div class="story-page-right">
-                <h1>아기돼지 삼형제</h1>
-                <p>아기돼지 삼형제는 영국에서 오래전부터 전해 내려온 이야기예요. 1890년, 영국의 조지프 제이컵스가 여러 지방을 다니며 모은 영국 옛이야기집에 실리면서 지금의 모습으로 널리 알려졌답니다.</p>
-                <p>이야기에는 같은 일이 세 번 되풀이돼요. 늑대가 세 집을 차례로 찾아가 똑같은 말을 외치는데, 결과는 점점 달라지지요. 옛이야기에는 이렇게 셋씩 짝을 지어 되풀이되는 구조가 자주 나와요. 듣는 사람이 다음에 무슨 일이 벌어질지 짐작하며 따라올 수 있고, 입으로 전하기도 쉽기 때문이랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -315,8 +324,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -326,8 +335,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -337,22 +346,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -402,9 +412,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -415,7 +425,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -487,7 +497,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -496,34 +506,515 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 줄 단위로 옮기지 않고 영어로 다시 썼다. 원래 영국 옛이야기라
+   영어 후렴("Not by the hair...")을 제자리에 돌려놓았다. 좌우 칸 나눔은
+   영어 길이에 맞춰 따로 잡았다. 한국어 원고는 한 글자도 건드리지 않았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Three Little Pigs',
+        intro: [
+            "The Three Little Pigs is an old English tale. In 1890 Joseph Jacobs collected it, along with many other English tales, and printed it in the shape we know today.",
+            "The same thing happens three times in this story. The wolf goes to three houses and shouts the very same words at each door — but what happens after is not the same at all. Old tales love threes. A listener can guess what is coming next, and a teller can hold the whole story in mind."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · Build Yourself a House',
+            beats: [
+                {
+                    art: '01-leaving.webp',
+                    emoji: '🐷',
+                    left: [
+                        "Three little pigs grew up together in one small house.",
+                        "But they grew and grew, and the house seemed to shrink. At night their feet bumped in bed. At the table their elbows knocked.",
+                        "One morning their mother sat all three of them down.",
+                        "\"It's time each of you built a house of your own.\""
+                    ],
+                    right: [
+                        "\"Build it strong.\"",
+                        "\"There is a wolf living near here.\"",
+                        "\"If the wind carries your house away, you'll be in real trouble.\"",
+                        "All three nodded. Their mother packed each of them a lunch. And off the three little pigs went."
+                    ]
+                },
+                {
+                    art: '01-leaving-2.webp',
+                    emoji: '🐷',
+                    left: [
+                        "At the top of the hill the road split three ways. The brothers stopped there.",
+                        "\"I'll have mine up in no time.\"",
+                        "The eldest gave a shrug.",
+                        "\"Something easy for me too.\"",
+                        "The second one yawned a long yawn."
+                    ],
+                    right: [
+                        "But the youngest said nothing at all. He had been looking the hill up and down for a while now.",
+                        "\"Which way does the wind come from?\"",
+                        "His two brothers giggled.",
+                        "\"There he goes again.\"",
+                        "And each of them took a different road."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · Straw, and Quickly',
+            beats: [
+                {
+                    art: '02-straw.webp',
+                    emoji: '🌾',
+                    left: [
+                        "The eldest went out to the wide fields. There he met a man selling straw.",
+                        "\"I'll take some of that straw, please.\"",
+                        "He piled a whole cartful onto the hill.",
+                        "\"Right then. Let's get this up quick.\"",
+                        "He leaned the bundles together, this way and that."
+                    ],
+                    right: [
+                        "Straw walls, straw roof. He wove the door out of straw as well.",
+                        "The house was finished before the sun went down.",
+                        "\"Ha! Half a day and it's done!\"",
+                        "The eldest flopped down in the shade and slept a long, lazy nap.",
+                        "But when the wind blew once, the walls swayed."
+                    ]
+                },
+                {
+                    art: '02-straw-2.webp',
+                    emoji: '🌾',
+                    left: [
+                        "The second pig came by and stared.",
+                        "\"Finished already?\"",
+                        "\"Of course. A house is no great thing.\"",
+                        "\"Then I'd better hurry up too.\"",
+                        "The two of them looked at each other and snickered."
+                    ],
+                    right: [
+                        "Just then they spotted the youngest, far off. He was hauling bricks, pushing a cart and groaning.",
+                        "Sweat dripped from his forehead. His brothers waved and shouted.",
+                        "\"Hey! Winter will come before you're done!\"",
+                        "The youngest only smiled."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · Sticks, and Roughly',
+            beats: [
+                {
+                    art: '03-sticks.webp',
+                    emoji: '🌿',
+                    left: [
+                        "The second pig went to the edge of the woods. He gathered up armfuls of fallen sticks.",
+                        "They looked far sturdier than straw.",
+                        "\"This will do well enough.\"",
+                        "In two days his house was up.",
+                        "\"Strong as anything.\"",
+                        "He gave the wall a little knock."
+                    ],
+                    right: [
+                        "Creak.",
+                        "A post leaned over, just a bit. The second pig looked the other way and pretended not to see.",
+                        "\"Ah, it's fine.\"",
+                        "He laid sticks across the roof too, criss-cross. Through the gaps he could see the sky."
+                    ]
+                },
+                {
+                    art: '03-sticks-2.webp',
+                    emoji: '🧱',
+                    left: [
+                        "All that time the youngest was still building. He set the bricks down one at a time and spread mortar in between.",
+                        "He even stretched a string along to check that his rows were straight.",
+                        "His palms blistered, but he did not stop. The next brick had to go on before the mortar set.",
+                        "Then his two brothers came around."
+                    ],
+                    right: [
+                        "They stood with folded arms and clicked their tongues.",
+                        "\"Not even half done?\"",
+                        "\"Come and help me, then.\"",
+                        "\"No thanks. We're finished already!\"",
+                        "Off they went, laughing, to play. The youngest said nothing and picked up another brick."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · One Brick at a Time',
+            beats: [
+                {
+                    art: '04-bricks.webp',
+                    emoji: '🧱',
+                    left: [
+                        "The youngest worked on for many days more. He built the walls thick and laid tiles on the roof.",
+                        "He set the chimney up straight and lit a fire to check that the smoke drew properly.",
+                        "He hung shutters at the windows and fitted a bar across the door.",
+                        "Last of all he swept the yard clean."
+                    ],
+                    right: [
+                        "By the door he set a flat stone for a step.",
+                        "Wherever he pushed, the house did not budge. He gave the wall a kick.",
+                        "Not a sound.",
+                        "He sat on the step and looked at his house for a long while, as the sun slipped down behind the hill."
+                    ]
+                },
+                {
+                    art: '04-bricks-2.webp',
+                    emoji: '🧱',
+                    left: [
+                        "His brothers came to look again.",
+                        "\"Why go to all that trouble?\"",
+                        "\"What are the shutters for?\"",
+                        "\"And a bar on the door? Really?\"",
+                        "The youngest just smiled. Instead of answering, he ran his hand along the bar."
+                    ],
+                    right: [
+                        "\"I only wanted it there.\"",
+                        "His brothers shook their heads and went home.",
+                        "That night the wind blew hard. The grass on the hill lay flat on one side.",
+                        "The straw house shivered. The stick house creaked. Only the brick house was quiet.",
+                        "And the youngest slept very well indeed."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: "Chapter 5 · Huff! Puff!",
+            beats: [
+                {
+                    art: '05-blown-down.webp',
+                    emoji: '🐺',
+                    left: [
+                        "The next night, at last, the wolf came.",
+                        "He stood at the straw house and sniffed the air.",
+                        "\"Someone's in there.\"",
+                        "Knock, knock.",
+                        "The wolf banged on the door.",
+                        "\"Little pig, little pig, let me come in!\""
+                    ],
+                    right: [
+                        "The eldest sat straight up in bed.",
+                        "\"Not by the hair of my chinny-chin-chin!\"",
+                        "The wolf took a great deep breath.",
+                        "\"Then I'll huff, and I'll puff, and I'll blow your house in!\"",
+                        "\"Huff!\"",
+                        "And away the straw house went, all in one go."
+                    ]
+                },
+                {
+                    art: '05-blown-down-2.webp',
+                    emoji: '🐺',
+                    left: [
+                        "Barefoot, the eldest ran all the way to his brother's house.",
+                        "\"Open up! The wolf!\"",
+                        "The two of them barred the door in a hurry.",
+                        "But it was not long before the wolf was there too.",
+                        "\"Little pig, little pig, let me come in!\"",
+                        "\"Not by the hair of our chinny-chin-chins!\""
+                    ],
+                    right: [
+                        "\"Puuuff!\"",
+                        "A post tipped sideways.",
+                        "\"Puuuuff!\"",
+                        "Down came the stick house in a clatter. The two brothers ran without looking back.",
+                        "And there on the hill ahead they saw a light in the brick house window."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: "Chapter 6 · The House That Wouldn't Move",
+            beats: [
+                {
+                    art: '06-brick-house.webp',
+                    emoji: '🧱',
+                    left: [
+                        "The youngest threw the door wide open. His brothers came tumbling in.",
+                        "He dropped the bar into place at once and shut the shutters, clack, clack.",
+                        "\"There. Now we're all right.\"",
+                        "Soon there was a knocking at the door."
+                    ],
+                    right: [
+                        "\"Little pig, little pig, let me come in!\"",
+                        "\"Not by the hair of our chinny-chin-chins!\"",
+                        "The wolf took a great deep breath.",
+                        "\"Huff!\"",
+                        "But the house stood just as it was. Not one speck of dust stirred."
+                    ]
+                },
+                {
+                    art: '06-brick-house-2.webp',
+                    emoji: '🐺',
+                    left: [
+                        "\"Puuuff!\"",
+                        "The windows were fine.",
+                        "\"Puuuuuff!\"",
+                        "Not a single roof tile moved. The wolf's face turned bright red.",
+                        "He sat down hard in the middle of the yard."
+                    ],
+                    right: [
+                        "He could hardly get his breath.",
+                        "Just then laughter came from inside the house. Three faces were pressed against the window, watching him.",
+                        "That made the wolf angrier than ever.",
+                        "\"You'll see about this.\"",
+                        "And he slipped around to the back of the house."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · Down the Chimney',
+            beats: [
+                {
+                    art: '07-chimney.webp',
+                    emoji: '🔥',
+                    left: [
+                        "The wolf climbed the wall and stood up on the roof.",
+                        "Then his eye fell on the chimney.",
+                        "\"In I go, then!\"",
+                        "And the youngest heard him say it. He ran straight to the fireplace.",
+                        "\"Bring me some firewood, quick!\""
+                    ],
+                    right: [
+                        "They heaped the wood on and got the fire roaring. Over it he hung a great pot and filled it up with water.",
+                        "Before long the water was bubbling away. White steam went curling up the chimney.",
+                        "\"Stand back, both of you.\"",
+                        "The three brothers backed away toward the wall."
+                    ]
+                },
+                {
+                    art: '07-chimney-2.webp',
+                    emoji: '🐺',
+                    left: [
+                        "Down the chimney the wolf came sliding.",
+                        "\"Got you now!\"",
+                        "But up from below came a blast of hot steam.",
+                        "\"Yeow! Hot!\"",
+                        "The wolf grabbed his backside and shot straight up, out of the chimney and into the air."
+                    ],
+                    right: [
+                        "He rolled down the roof and landed in the yard with a thump. Round and round he hopped.",
+                        "Then off he ran to the woods, and never came back to that hill again.",
+                        "For a while the three brothers lived together in the brick house.",
+                        "And the next year the two elder ones built their houses over again."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did the eldest pig build his house from?',
+            choices: ['Sticks', 'Straw', 'Bricks'],
+            answer: 1
+        },
+        {
+            q: 'Why did the youngest pig take so long?',
+            choices: ['He laid bricks', 'He leaned straw up', 'He gathered sticks'],
+            answer: 0
+        },
+        {
+            q: 'What did the youngest pig fit to his door?',
+            choices: ['Shutters', 'Roof tiles', 'A bar'],
+            answer: 2
+        },
+        {
+            q: 'What did the wolf say at the straw house?',
+            choices: ['Puuuff', 'Let me come in', 'Got you now'],
+            answer: 1
+        },
+        {
+            q: 'What happened to the wolf at the brick house first?',
+            choices: ['He sat down in the yard', 'He went down the chimney', 'He blew the tiles off'],
+            answer: 0
+        },
+        {
+            q: 'Who heard the wolf say he would come down the chimney?',
+            choices: ['The eldest', 'The second', 'The youngest'],
+            answer: 2
+        },
+        {
+            q: 'What met the wolf at the bottom of the chimney?',
+            choices: ['A pile of firewood', 'Hot steam', 'A barred door'],
+            answer: 1
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐷',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Straw, sticks, bricks — that three-part shape comes from an old English tale, gathered into a book about a hundred and fifty years ago.",
+                    "All three brothers built houses. Even the lazy ones did the work. They just chose the way that would be over soonest.",
+                    "Straw and sticks are not bad things. If the wind had never blown, nothing would have happened. The youngest only thought ahead to the day it would come.",
+                    "The wolf tried the same trick three times. Only when it failed did he go for the chimney."
+                ],
+                right: [
+                    "The youngest did not turn his brothers away. He opened his door to them. That is the quietest moment in the story.",
+                    "Which house would you have built? The quick one, or the slow one?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-leaving.webp': [
+            { word: 'shrink', meaning: '줄어들다', sentence: 'They grew and grew, and the house seemed to shrink.' },
+            { word: 'bump', meaning: '부딪치다', sentence: 'At night their feet bumped in bed.' },
+            { word: 'elbow', meaning: '팔꿈치', sentence: 'At the table their elbows knocked.' },
+            { word: 'carry away', meaning: '날려 버리다', sentence: "If the wind carries your house away, you'll be in real trouble." }
+        ],
+        '01-leaving-2.webp': [
+            { word: 'split', meaning: '갈라지다', sentence: 'At the top of the hill the road split three ways.' },
+            { word: 'shrug', meaning: '어깨를 으쓱하다', sentence: 'The eldest gave a shrug.' },
+            { word: 'yawn', meaning: '하품하다', sentence: 'The second one yawned a long yawn.' },
+            { word: 'giggle', meaning: '킥킥 웃다', sentence: 'His two brothers giggled.' }
+        ],
+        '02-straw.webp': [
+            { word: 'straw', meaning: '짚', sentence: 'There he met a man selling straw.' },
+            { word: 'cartful', meaning: '수레 하나 가득', sentence: 'He piled a whole cartful onto the hill.' },
+            { word: 'lean', meaning: '기대어 세우다', sentence: 'He leaned the bundles together, this way and that.' },
+            { word: 'sway', meaning: '흔들리다', sentence: 'When the wind blew once, the walls swayed.' }
+        ],
+        '02-straw-2.webp': [
+            { word: 'snicker', meaning: '킬킬거리다', sentence: 'The two of them looked at each other and snickered.' },
+            { word: 'haul', meaning: '나르다', sentence: 'He was hauling bricks, pushing a cart and groaning.' },
+            { word: 'sweat', meaning: '땀', sentence: 'Sweat dripped from his forehead.' }
+        ],
+        '03-sticks.webp': [
+            { word: 'sturdy', meaning: '튼튼한', sentence: 'They looked far sturdier than straw.' },
+            { word: 'creak', meaning: '삐걱 소리가 나다', sentence: 'Creak. A post leaned over, just a bit.' },
+            { word: 'pretend', meaning: '~인 척하다', sentence: 'He looked the other way and pretended not to see.' },
+            { word: 'gap', meaning: '틈', sentence: 'Through the gaps he could see the sky.' }
+        ],
+        '03-sticks-2.webp': [
+            { word: 'mortar', meaning: '반죽, 회반죽', sentence: 'He spread mortar in between the bricks.' },
+            { word: 'blister', meaning: '물집이 잡히다', sentence: 'His palms blistered, but he did not stop.' },
+            { word: 'set', meaning: '굳다', sentence: 'The next brick had to go on before the mortar set.' },
+            { word: 'click one\'s tongue', meaning: '혀를 차다', sentence: 'They stood with folded arms and clicked their tongues.' }
+        ],
+        '04-bricks.webp': [
+            { word: 'tile', meaning: '기와', sentence: 'He laid tiles on the roof.' },
+            { word: 'chimney', meaning: '굴뚝', sentence: 'He set the chimney up straight.' },
+            { word: 'shutter', meaning: '덧문', sentence: 'He hung shutters at the windows.' },
+            { word: 'budge', meaning: '꿈쩍하다', sentence: 'Wherever he pushed, the house did not budge.' }
+        ],
+        '04-bricks-2.webp': [
+            { word: 'bar', meaning: '빗장', sentence: 'He ran his hand along the bar.' },
+            { word: 'shiver', meaning: '떨다', sentence: 'The straw house shivered.' },
+            { word: 'indeed', meaning: '정말로', sentence: 'The youngest slept very well indeed.' }
+        ],
+        '05-blown-down.webp': [
+            { word: 'sniff', meaning: '킁킁거리다', sentence: 'He stood at the straw house and sniffed the air.' },
+            { word: 'chin', meaning: '턱', sentence: 'Not by the hair of my chinny-chin-chin!' },
+            { word: 'huff', meaning: '훅 불다', sentence: "Then I'll huff, and I'll puff, and I'll blow your house in!" },
+            { word: 'puff', meaning: '후 불다', sentence: "I'll huff, and I'll puff." }
+        ],
+        '05-blown-down-2.webp': [
+            { word: 'barefoot', meaning: '맨발로', sentence: "Barefoot, the eldest ran all the way to his brother's house." },
+            { word: 'in a hurry', meaning: '서둘러', sentence: 'The two of them barred the door in a hurry.' },
+            { word: 'clatter', meaning: '와르르 무너지는 소리', sentence: 'Down came the stick house in a clatter.' }
+        ],
+        '06-brick-house.webp': [
+            { word: 'tumble', meaning: '데굴데굴 굴러들다', sentence: 'His brothers came tumbling in.' },
+            { word: 'at once', meaning: '곧바로', sentence: 'He dropped the bar into place at once.' },
+            { word: 'speck', meaning: '티끌', sentence: 'Not one speck of dust stirred.' }
+        ],
+        '06-brick-house-2.webp': [
+            { word: 'press', meaning: '바짝 대다', sentence: 'Three faces were pressed against the window.' },
+            { word: 'slip around', meaning: '슬그머니 돌아가다', sentence: 'He slipped around to the back of the house.' }
+        ],
+        '07-chimney.webp': [
+            { word: 'firewood', meaning: '장작', sentence: 'Bring me some firewood, quick!' },
+            { word: 'roar', meaning: '활활 타오르다', sentence: 'They got the fire roaring.' },
+            { word: 'bubble', meaning: '부글부글 끓다', sentence: 'Before long the water was bubbling away.' },
+            { word: 'steam', meaning: '김, 수증기', sentence: 'White steam went curling up the chimney.' }
+        ],
+        '07-chimney-2.webp': [
+            { word: 'slide', meaning: '스르르 미끄러지다', sentence: 'Down the chimney the wolf came sliding.' },
+            { word: 'blast', meaning: '확 끼치는 것', sentence: 'Up from below came a blast of hot steam.' },
+            { word: 'thump', meaning: '쿵 하는 소리', sentence: 'He landed in the yard with a thump.' }
+        ],
+        'end.webp': [
+            { word: 'gather', meaning: '모으다', sentence: 'It was first gathered into a book.' },
+            { word: 'think ahead', meaning: '미리 생각하다', sentence: 'The youngest only thought ahead to the day the wind would come.' },
+            { word: 'turn away', meaning: '내치다', sentence: 'The youngest did not turn his brothers away.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+        { kind: 'cover' },
+        { kind: 'toc' },
+        ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+            kind: 'spread', chapter, beat,
+            isFirst: i === 0,
+            isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+        }))),
+        { kind: 'quiz' },
+        ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -596,7 +1087,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -608,7 +1099,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -642,4 +1133,35 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
