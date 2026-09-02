@@ -43,7 +43,7 @@ export default function ArithmeticCatalog() {
           <div className="catalog-header-copy">
             <a className="catalog-race-link" href="/arithmetic/race">순위 모드 <span aria-hidden="true">→</span></a>
             <div className="catalog-title-row">
-              <h1>기초 연산</h1>
+
               <nav className="catalog-stage-nav" aria-label="수학 과정">
                 {(Object.keys(stageMeta) as LearningStage[]).map((stage) => {
                   const meta = stageMeta[stage];
