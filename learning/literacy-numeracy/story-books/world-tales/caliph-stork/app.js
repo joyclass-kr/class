@@ -318,16 +318,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '황새가 된 임금님',
+    intro: [
+        '황새가 된 임금님은 독일의 작가 빌헬름 하우프가 1825년에 펴낸 이야기예요. 아라비아의 옛이야기 분위기를 빌려 새로 지은 작품이랍니다.',
+        '가루를 코에 대고 주문을 외우면 어떤 짐승으로든 변할 수 있어요. 다만 그 모습으로 웃으면 주문을 잊어버린다는 조건이 붙어 있답니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🕊️')}
             </div>
             <div class="story-page-right">
-                <h1>황새가 된 임금님</h1>
-                <p>황새가 된 임금님은 독일의 작가 빌헬름 하우프가 1825년에 펴낸 이야기예요. 아라비아의 옛이야기 분위기를 빌려 새로 지은 작품이랍니다.</p>
-                <p>가루를 코에 대고 주문을 외우면 어떤 짐승으로든 변할 수 있어요. 다만 그 모습으로 웃으면 주문을 잊어버린다는 조건이 붙어 있답니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -342,8 +351,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -353,8 +362,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -364,22 +373,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -429,9 +439,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -442,7 +452,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -514,7 +524,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -523,34 +533,629 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Caliph Who Became a Stork',
+        intro: [
+            "The Caliph Who Became a Stork was published by the German writer Wilhelm Hauff in 1825. He wrote it new, in the manner of the old Arabian tales.",
+            "Hold the powder to your nose, say the word, and you may turn into any creature you like. But there is a condition: laugh in that shape, and you forget the word."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Strange Powder',
+            beats: [
+                {
+                    art: '01-powder.webp',
+                    emoji: '📦',
+                    left: [
+                        "In Baghdad there lived a caliph named Chasid.",
+                        "He was kind-hearted and laughed easily.",
+                        "Above all he loved curious things.",
+                        "In the afternoons he rested over his water pipe.",
+                        "That day too he was drinking coffee in his garden.",
+                        "His vizier Mansor sat beside him."
+                    ],
+                    right: [
+                        "Then a pedlar came to the gate with a pack on his back.",
+                        "He was a bent man with an odd sort of smile.",
+                        "\"I have brought something precious.\"",
+                        "The pedlar held out a small wooden box.",
+                        "\"Inside is a very rare powder.\"",
+                        "The caliph paid for it at once.",
+                        "He never turned down anything curious."
+                    ]
+                },
+                {
+                    art: '01-powder-2.webp',
+                    emoji: '📦',
+                    left: [
+                        "When the pedlar had gone, they opened the box.",
+                        "Inside was a black powder.",
+                        "Beside it lay a single sheet of paper.",
+                        "It was covered in unfamiliar letters.",
+                        "Nobody in the palace could read them.",
+                        "So the caliph sent for a learned man."
+                    ],
+                    right: [
+                        "The man studied it a long while, and then he spoke.",
+                        "\"These letters are very ancient.\"",
+                        "\"It says that if you smell the powder and say the word,\"",
+                        "\"you may turn into whatever beast you please.\"",
+                        "The caliph's eyes lit up.",
+                        "Mansor was somehow not easy about it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · On No Account Laugh',
+            beats: [
+                {
+                    art: '02-warning.webp',
+                    emoji: '⚠️',
+                    left: [
+                        "\"And you shall understand the speech of beasts!\"",
+                        "The caliph clapped his hands in delight.",
+                        "But there was small writing at the foot of the page.",
+                        "The learned man read that out too.",
+                        "\"There is one thing to beware of.\"",
+                        "\"If you laugh in the shape of a beast, you forget the word.\""
+                    ],
+                    right: [
+                        "\"And then you can never be a person again.\"",
+                        "The room went quiet.",
+                        "Mansor looked worried.",
+                        "\"My lord, this is dangerous.\"",
+                        "\"You had far better leave it alone.\" And he pushed the box away."
+                    ]
+                },
+                {
+                    art: '02-warning-2.webp',
+                    emoji: '⚠️',
+                    left: [
+                        "The caliph let the words go past him.",
+                        "\"All I have to do is not laugh.\"",
+                        "\"Where is the difficulty in that?\"",
+                        "Mansor could say no more.",
+                        "The two of them set out early the next morning.",
+                        "They went to the pond behind the palace.",
+                        "And hid themselves behind the reeds."
+                    ],
+                    right: [
+                        "Two storks happened to be walking at the water's edge.",
+                        "They strode about on their long legs.",
+                        "\"Let us try those.\"",
+                        "The caliph opened the box.",
+                        "The black powder glittered in the morning sun.",
+                        "It had a sharp smell that stung the nose.",
+                        "Mansor quietly took a step back."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · Storks',
+            beats: [
+                {
+                    art: '03-storks.webp',
+                    emoji: '🕊️',
+                    left: [
+                        "The two of them held the powder to their noses.",
+                        "And then they said the word together.",
+                        "\"Mutabor!\"",
+                        "In an instant their bodies changed.",
+                        "Their legs shot out long.",
+                        "Their necks grew long and they turned white all over.",
+                        "Their mouths became sharp beaks."
+                    ],
+                    right: [
+                        "Before they knew it they were two storks.",
+                        "\"Well, this is a wonderful thing!\"",
+                        "The two storks tried walking by the water.",
+                        "Their steps went long and striding by themselves.",
+                        "They were so pleased they nearly laughed.",
+                        "Just then a frog gave a hop.",
+                        "And Mansor's beak fell open."
+                    ]
+                },
+                {
+                    art: '03-storks-2.webp',
+                    emoji: '🕊️',
+                    left: [
+                        "Then some real storks came over.",
+                        "And to their astonishment they understood every word.",
+                        "\"How were the frogs this morning?\"",
+                        "\"Nothing special.\"",
+                        "The two storks listened closely.",
+                        "And then one of the birds began to dance."
+                    ],
+                    right: [
+                        "It lifted one leg high and wobbled about.",
+                        "\"Well? What do you think of my dancing?\"",
+                        "There was never anything so funny to look at.",
+                        "And the two storks could not hold it in.",
+                        "\"Ha, ha, ha!\" The laughter burst out of them.",
+                        "They laughed until they held their sides."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Forgotten Word',
+            beats: [
+                {
+                    art: '04-forgot.webp',
+                    emoji: '😱',
+                    left: [
+                        "When the laughing stopped, the two storks froze.",
+                        "Mansor's face went white.",
+                        "\"My lord, you were not to laugh!\"",
+                        "And only then did the caliph come to himself.",
+                        "\"Quickly — let us say the word.\"",
+                        "But his beak would not open on it."
+                    ],
+                    right: [
+                        "\"The word… what was the word?\"",
+                        "Try as they might, it would not come.",
+                        "They could not even bring back the first letter.",
+                        "The two storks looked at each other.",
+                        "What the pond showed was storks still.",
+                        "Beaks and legs, exactly as before."
+                    ]
+                },
+                {
+                    art: '04-forgot-2.webp',
+                    emoji: '😱',
+                    left: [
+                        "The two storks flew to the palace.",
+                        "They sat at a window and called to the courtiers.",
+                        "\"It is I! Your caliph!\"",
+                        "But to human ears it was only bird noise.",
+                        "Nothing but a hoarse clattering.",
+                        "The servants came running with brooms instead."
+                    ],
+                    right: [
+                        "\"Where did these birds get in!\"",
+                        "\"Drive them out, quickly!\"",
+                        "The two storks fled up onto the roof.",
+                        "From there they looked down over the market streets.",
+                        "Already there was talk of setting up another caliph.",
+                        "\"Those are my people down there.\"",
+                        "The caliph's voice was thick."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Owl in the Ruin',
+            beats: [
+                {
+                    art: '05-owl.webp',
+                    emoji: '🦉',
+                    left: [
+                        "With nowhere to go, the two storks flew to the desert.",
+                        "After days of wandering they found an old building.",
+                        "The pillars had fallen and the roof was open to the sky.",
+                        "The two storks went inside.",
+                        "There was a sound of weeping in a dark room.",
+                        "A small owl sat huddled in the corner.",
+                        "Her eyes were very large and very sad."
+                    ],
+                    right: [
+                        "\"Who is there?\"",
+                        "The owl hid her face behind a wing.",
+                        "Pale dust rose about their feet.",
+                        "The two storks told her everything that had happened.",
+                        "The owl nodded her head.",
+                        "\"A magician did this to me as well.\""
+                    ]
+                },
+                {
+                    art: '05-owl-2.webp',
+                    emoji: '🦉',
+                    left: [
+                        "\"I am really the daughter of a king of India.\"",
+                        "\"A magician named Kaschnur made me like this.\"",
+                        "\"Because I would not marry him.\"",
+                        "The owl wiped her eyes.",
+                        "\"I have been alone here a long time.\""
+                    ],
+                    right: [
+                        "The two storks were sorry for her.",
+                        "And then the owl dropped her voice.",
+                        "\"But I have good news for you.\"",
+                        "\"That magician comes to this house tonight.\"",
+                        "\"He holds a meeting here with his fellows.\"",
+                        "The two storks turned and looked at each other."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Night They Listened',
+            beats: [
+                {
+                    art: '06-eavesdrop.webp',
+                    emoji: '🌙',
+                    left: [
+                        "The three of them hid behind a fallen wall.",
+                        "They did not make a sound of breathing.",
+                        "At midnight there were footsteps.",
+                        "A company in black clothes came in.",
+                        "The one who sat in the middle was Kaschnur.",
+                        "He had a pointed beard and a hard eye."
+                    ],
+                    right: [
+                        "The company sat round a low table.",
+                        "Each of them told what he had been doing.",
+                        "At last Kaschnur laughed out loud.",
+                        "\"My story will be the best of the lot.\"",
+                        "The two storks put their heads forward.",
+                        "This was not a thing to miss."
+                    ]
+                },
+                {
+                    art: '06-eavesdrop-2.webp',
+                    emoji: '🌙',
+                    left: [
+                        "\"The caliph of Baghdad is wandering about as a stork.\"",
+                        "\"I dressed as a pedlar and sold him the powder.\"",
+                        "\"The word, you ask?\"",
+                        "\"Mutabor, of course.\"",
+                        "The company roared with laughter.",
+                        "Behind the wall the two storks opened their eyes wide."
+                    ],
+                    right: [
+                        "\"Mutabor! That was it!\"",
+                        "They very nearly cried it out.",
+                        "The owl quickly put a wing over their beaks.",
+                        "The three of them waited for the meeting to end.",
+                        "At dawn the company scattered.",
+                        "The footsteps went away one by one.",
+                        "And only then did the three let out their breath."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · Mutabor',
+            beats: [
+                {
+                    art: '07-mutabor.webp',
+                    emoji: '✨',
+                    left: [
+                        "The two storks came outside.",
+                        "The eastern sky was slowly growing light.",
+                        "They stood side by side facing east.",
+                        "And then they cried it out together.",
+                        "\"Mutabor!\"",
+                        "The feathers melted away."
+                    ],
+                    right: [
+                        "Their legs shrank and the beaks were gone.",
+                        "The two of them stood in their own shapes again.",
+                        "The caliph turned his own hands over and looked at them.",
+                        "Mansor sat straight down on the ground.",
+                        "\"We are saved, my lord!\" And the two of them embraced."
+                    ]
+                },
+                {
+                    art: '07-mutabor-2.webp',
+                    emoji: '✨',
+                    left: [
+                        "But the owl was an owl still.",
+                        "The word had no power over that spell.",
+                        "The owl spoke quietly.",
+                        "\"Take me for your wife, and it is broken.\"",
+                        "The caliph thought a moment and then nodded.",
+                        "And in that instant the owl changed.",
+                        "The feathers were gone, and there stood a lovely young woman."
+                    ],
+                    right: [
+                        "She looked at her own hands a long while.",
+                        "\"I do not know how many years it has been.\"",
+                        "The three of them went to the room where the magician slept.",
+                        "Kaschnur was sound asleep.",
+                        "The three of them took hold of him.",
+                        "And Kaschnur was punished then and there.",
+                        "He could never harm anybody again."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Home to the Palace',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🎉',
+                    left: [
+                        "The three of them came back to Baghdad.",
+                        "At the city gate people stopped where they stood.",
+                        "\"The caliph is alive and come home!\"",
+                        "The news went round the whole city at once.",
+                        "The courtiers ran out to meet him.",
+                        "People poured into every street."
+                    ],
+                    right: [
+                        "They beat drums and threw flowers.",
+                        "The caliph told them all that had happened.",
+                        "He left out nothing about being a stork.",
+                        "The people laughed until they held their sides.",
+                        "And the caliph laughed along with them.",
+                        "It was quite safe to laugh now."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🎉',
+                    left: [
+                        "Inside the palace the caliph brought out the box.",
+                        "The box with the black powder in it.",
+                        "He held it up for everyone to see.",
+                        "\"Put this at the back of the storeroom.\"",
+                        "\"And lock it up properly.\"",
+                        "\"One should not meddle with curious things.\""
+                    ],
+                    right: [
+                        "Mansor smiled to himself.",
+                        "The caliph cleared his throat.",
+                        "\"Yes, yes. I know.\"",
+                        "\"Did I not tell you so, my lord?\"",
+                        "The caliph went on loving curious stories ever after.",
+                        "Only, when the storks came into one,",
+                        "his face would turn a little red."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What was in the box the pedlar sold?',
+            choices: ['A black powder', 'A water pipe', 'Coffee'],
+            answer: 0
+        },
+        {
+            q: 'What could you do if you used the powder?',
+            choices: ['Fly through the sky', 'See who people really were', 'Understand the speech of beasts'],
+            answer: 2
+        },
+        {
+            q: 'What did you have to beware of when using it?',
+            choices: ['You must not drink water', 'You must not laugh', 'You must not use it at night'],
+            answer: 1
+        },
+        {
+            q: 'What was the word the two of them said?',
+            choices: ['Mutabor', 'Kaschnur', 'Chasid'],
+            answer: 0
+        },
+        {
+            q: 'What happened when the storks went to the palace?',
+            choices: ['The courtiers knew them', 'The doors were opened', 'They were chased out with brooms'],
+            answer: 2
+        },
+        {
+            q: 'Whom did they meet in the ruin in the desert?',
+            choices: ['A stork', 'An owl', 'A magician'],
+            answer: 1
+        },
+        {
+            q: 'How did they find out the word again?',
+            choices: ['By listening from behind a wall', 'By reading the paper again', 'The owl told them'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🕊️',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "A German writer named Hauff set this story in Arabia. It came out about two hundred years ago.",
+                    "The caliph loved curious things. That is why he bought the black powder in the first place.",
+                    "The word came with one condition: no laughing while he was a stork. The caliph thought nothing of it.",
+                    "And then one frog is enough to open his beak. The hard thing was not holding back from something great, but from something small."
+                ],
+                right: [
+                    "The place where he learned the word again was a meeting of magicians. He heard it from hiding.",
+                    "Should the caliph have refused to buy that powder at all?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-powder.webp': [
+            { word: 'caliph', meaning: '임금님', sentence: 'There lived a caliph named Chasid.' },
+            { word: 'curious', meaning: '신기한', sentence: 'Above all he loved curious things.' },
+            { word: 'vizier', meaning: '대신', sentence: 'His vizier Mansor sat beside him.' },
+            { word: 'pedlar', meaning: '등짐장수', sentence: 'A pedlar came to the gate.' },
+            { word: 'precious', meaning: '귀한', sentence: 'I have brought something precious.' }
+        ],
+        '01-powder-2.webp': [
+            { word: 'unfamiliar', meaning: '낯선', sentence: 'It was covered in unfamiliar letters.' },
+            { word: 'learned', meaning: '글 아는', sentence: 'The caliph sent for a learned man.' },
+            { word: 'ancient', meaning: '아주 오래된', sentence: 'These letters are very ancient.' },
+            { word: 'light up', meaning: '반짝이다', sentence: "The caliph's eyes lit up." },
+            { word: 'not easy about', meaning: '마음이 놓이지 않는', sentence: 'Mansor was not easy about it.' }
+        ],
+        '02-warning.webp': [
+            { word: 'speech', meaning: '말', sentence: 'You shall understand the speech of beasts.' },
+            { word: 'beware of', meaning: '조심하다', sentence: 'There is one thing to beware of.' },
+            { word: 'shape', meaning: '모습', sentence: 'If you laugh in the shape of a beast.' },
+            { word: 'leave alone', meaning: '그만두다', sentence: 'You had better leave it alone.' }
+        ],
+        '02-warning-2.webp': [
+            { word: 'let go past', meaning: '흘려듣다', sentence: 'The caliph let the words go past him.' },
+            { word: 'difficulty', meaning: '어려움', sentence: 'Where is the difficulty in that?' },
+            { word: 'stride', meaning: '성큼성큼 걷다', sentence: 'They strode about on their long legs.' },
+            { word: 'glitter', meaning: '반짝이다', sentence: 'The powder glittered in the sun.' },
+            { word: 'sting', meaning: '알싸하게 하다', sentence: 'A sharp smell that stung the nose.' }
+        ],
+        '03-storks.webp': [
+            { word: 'in an instant', meaning: '순식간에', sentence: 'In an instant their bodies changed.' },
+            { word: 'shoot out', meaning: '쭉 길어지다', sentence: 'Their legs shot out long.' },
+            { word: 'beak', meaning: '부리', sentence: 'Their mouths became sharp beaks.' },
+            { word: 'hop', meaning: '폴짝 뛰다', sentence: 'A frog gave a hop.' }
+        ],
+        '03-storks-2.webp': [
+            { word: 'astonishment', meaning: '놀라움', sentence: 'To their astonishment they understood.' },
+            { word: 'nothing special', meaning: '그저 그런', sentence: 'Nothing special.' },
+            { word: 'wobble', meaning: '뒤뚱거리다', sentence: 'It lifted one leg and wobbled about.' },
+            { word: 'hold in', meaning: '참다', sentence: 'The two storks could not hold it in.' },
+            { word: 'hold one’s sides', meaning: '배를 잡다', sentence: 'They laughed until they held their sides.' }
+        ],
+        '04-forgot.webp': [
+            { word: 'freeze', meaning: '얼어붙다', sentence: 'The two storks froze.' },
+            { word: 'go white', meaning: '하얗게 질리다', sentence: "Mansor's face went white." },
+            { word: 'try as one might', meaning: '아무리 애써도', sentence: 'Try as they might, it would not come.' },
+            { word: 'bring back', meaning: '떠올리다', sentence: 'They could not bring back the first letter.' }
+        ],
+        '04-forgot-2.webp': [
+            { word: 'courtier', meaning: '신하', sentence: 'They called to the courtiers.' },
+            { word: 'hoarse', meaning: '쉰', sentence: 'Nothing but a hoarse clattering.' },
+            { word: 'broom', meaning: '빗자루', sentence: 'The servants came with brooms.' },
+            { word: 'drive out', meaning: '쫓아내다', sentence: 'Drive them out, quickly!' },
+            { word: 'thick', meaning: '목이 잠긴', sentence: "The caliph's voice was thick." }
+        ],
+        '05-owl.webp': [
+            { word: 'wander', meaning: '헤매다', sentence: 'After days of wandering.' },
+            { word: 'pillar', meaning: '기둥', sentence: 'The pillars had fallen.' },
+            { word: 'weep', meaning: '흐느끼다', sentence: 'There was a sound of weeping.' },
+            { word: 'huddle', meaning: '웅크리다', sentence: 'A small owl sat huddled in the corner.' },
+            { word: 'magician', meaning: '마법사', sentence: 'A magician did this to me as well.' }
+        ],
+        '05-owl-2.webp': [
+            { word: 'daughter', meaning: '딸', sentence: 'I am the daughter of a king of India.' },
+            { word: 'marry', meaning: '시집가다', sentence: 'Because I would not marry him.' },
+            { word: 'wipe', meaning: '닦다', sentence: 'The owl wiped her eyes.' },
+            { word: 'drop one’s voice', meaning: '목소리를 낮추다', sentence: 'The owl dropped her voice.' },
+            { word: 'fellow', meaning: '패거리', sentence: 'He holds a meeting with his fellows.' }
+        ],
+        '06-eavesdrop.webp': [
+            { word: 'company', meaning: '무리', sentence: 'A company in black clothes came in.' },
+            { word: 'footsteps', meaning: '발소리', sentence: 'At midnight there were footsteps.' },
+            { word: 'pointed beard', meaning: '뾰족한 수염', sentence: 'He had a pointed beard.' },
+            { word: 'the best of the lot', meaning: '제일 재미있는', sentence: 'My story will be the best of the lot.' }
+        ],
+        '06-eavesdrop-2.webp': [
+            { word: 'dress as', meaning: '~로 꾸미다', sentence: 'I dressed as a pedlar.' },
+            { word: 'roar with laughter', meaning: '크게 웃다', sentence: 'The company roared with laughter.' },
+            { word: 'cry out', meaning: '소리를 지르다', sentence: 'They very nearly cried it out.' },
+            { word: 'scatter', meaning: '흩어지다', sentence: 'At dawn the company scattered.' },
+            { word: 'let out one’s breath', meaning: '숨을 내쉬다', sentence: 'The three let out their breath.' }
+        ],
+        '07-mutabor.webp': [
+            { word: 'side by side', meaning: '나란히', sentence: 'They stood side by side facing east.' },
+            { word: 'melt away', meaning: '사르르 사라지다', sentence: 'The feathers melted away.' },
+            { word: 'shrink', meaning: '줄어들다', sentence: 'Their legs shrank.' },
+            { word: 'embrace', meaning: '얼싸안다', sentence: 'The two of them embraced.' }
+        ],
+        '07-mutabor-2.webp': [
+            { word: 'spell', meaning: '마법', sentence: 'The word had no power over that spell.' },
+            { word: 'break', meaning: '풀다', sentence: 'Take me for your wife, and it is broken.' },
+            { word: 'sound asleep', meaning: '곤히 잠든', sentence: 'Kaschnur was sound asleep.' },
+            { word: 'punish', meaning: '벌하다', sentence: 'Kaschnur was punished then and there.' },
+            { word: 'harm', meaning: '해치다', sentence: 'He could never harm anybody again.' }
+        ],
+        '08-ending.webp': [
+            { word: 'city gate', meaning: '성문', sentence: 'At the city gate people stopped.' },
+            { word: 'go round', meaning: '퍼지다', sentence: 'The news went round the whole city.' },
+            { word: 'pour into', meaning: '몰려나오다', sentence: 'People poured into every street.' },
+            { word: 'leave out', meaning: '빼놓다', sentence: 'He left out nothing about being a stork.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'storeroom', meaning: '창고', sentence: 'Put this at the back of the storeroom.' },
+            { word: 'lock up', meaning: '자물쇠를 채우다', sentence: 'And lock it up properly.' },
+            { word: 'meddle with', meaning: '함부로 손대다', sentence: 'One should not meddle with curious things.' },
+            { word: 'clear one’s throat', meaning: '헛기침하다', sentence: 'The caliph cleared his throat.' }
+        ],
+        'end.webp': [
+            { word: 'set in', meaning: '무대로 삼다', sentence: 'Hauff set this story in Arabia.' },
+            { word: 'condition', meaning: '조건', sentence: 'The word came with one condition.' },
+            { word: 'think nothing of', meaning: '대수롭지 않게 여기다', sentence: 'The caliph thought nothing of it.' },
+            { word: 'hold back from', meaning: '참다', sentence: 'Holding back from something small.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -615,6 +1220,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -623,7 +1229,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -635,7 +1241,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -669,4 +1275,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
