@@ -718,17 +718,26 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '이솝 이야기',
+    intro: [
+        '이솝은 지금으로부터 이천육백 년쯤 전, 고대 그리스에 살았던 사람이에요. 노예였기 때문에 이곳저곳 팔려 다니는 고달픈 처지였지만, 뛰어난 재치와 말솜씨로 동료들과 사람들에게 이야기를 들려주었다고 전해집니다.',
+        '이솝의 이야기는 대부분 동물이 주인공이에요. 사람들 사이에서 일어난 일을 동물 세계의 일처럼 꾸며 짧은 이야기로 만든 것이지요. 그래서 누구를 흉보지 않으면서도 어떻게 살아야 하는지를 일러 줄 수 있었답니다.',
+        '이솝이 세상을 떠나고 삼백 년쯤 지나서야 그 이야기들이 글로 정리되어 책이 되었어요. 이 책에는 그 가운데 열두 편을 담았습니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🦊')}
             </div>
             <div class="story-page-right">
-                <h1>이솝 이야기</h1>
-                <p>이솝은 지금으로부터 이천육백 년쯤 전, 고대 그리스에 살았던 사람이에요. 노예였기 때문에 이곳저곳 팔려 다니는 고달픈 처지였지만, 뛰어난 재치와 말솜씨로 동료들과 사람들에게 이야기를 들려주었다고 전해집니다.</p>
-                <p>이솝의 이야기는 대부분 동물이 주인공이에요. 사람들 사이에서 일어난 일을 동물 세계의 일처럼 꾸며 짧은 이야기로 만든 것이지요. 그래서 누구를 흉보지 않으면서도 어떻게 살아야 하는지를 일러 줄 수 있었답니다.</p>
-                <p>이솝이 세상을 떠나고 삼백 년쯤 지나서야 그 이야기들이 글로 정리되어 책이 되었어요. 이 책에는 그 가운데 열두 편을 담았습니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -744,7 +753,7 @@ function tocPage() {
                 <span class="toc-num">${s.num}</span>
                 <span>
                     <strong>${s.title}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -754,8 +763,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -765,22 +774,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(FABLES.length / 2);
-    const leftItems = FABLES.slice(0, half).map(itemHtml).join('');
-    const rightItems = FABLES.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -829,9 +839,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -842,7 +852,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -865,7 +875,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -874,30 +884,1095 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...FABLES.flatMap(fable => fable.beats.map((beat, i) => ({ kind: 'spread', fable, beat, isFirst: i === 0, isLast: i === fable.beats.length - 1 }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   우화 열넷, 각 세 장면. moral 은 우화 끝에 붙는 한 줄. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: "Aesop's Fables",
+        intro: [
+            "Aesop lived in ancient Greece about two thousand six hundred years ago. He is said to have been a slave, sold from one household to another, and to have told his stories to the people around him with great wit.",
+            "Nearly all of his stories have animals in them. He took what happens between people and dressed it up as something happening among animals, so that he could say how to live without pointing at anyone.",
+            "It was some three hundred years after his death that the stories were written down and made into a book. Fourteen of them are in this one."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'The Hare and the Tortoise',
+            emoji: '🐢',
+            beats: [
+                {
+                    art: 'story-01-race.webp',
+                    left: [
+                        "The hare, who was famous for being the fastest thing in the wood, stopped dead on the road. A tortoise was crawling along in front of him.",
+                        "The hare hopped round and sat down in his way.",
+                        "\"Tortoise, however can you be as slow as that?\"",
+                        "\"At that rate the sun will be down before you get anywhere.\""
+                    ],
+                    right: [
+                        "The hare laughed until he had to hold his sides.",
+                        "But the tortoise did not lose his temper. He lifted his head slowly and looked at the hare.",
+                        "His eyes were perfectly steady.",
+                        "\"Shall we race, then?\"",
+                        "\"To the top of that hill.\""
+                    ]
+                },
+                {
+                    art: 'story-01-race-2.webp',
+                    left: [
+                        "\"What? Ha! Very well — let us see about that.\"",
+                        "Word got round and the animals of the wood came crowding in. The squirrel held up a flag.",
+                        "\"Ready — go!\"",
+                        "The hare was out of sight before you could blink."
+                    ],
+                    right: [
+                        "Only then did the tortoise take one step, and then another. The animals watching muttered among themselves.",
+                        "\"He'll not get there today at that rate.\"",
+                        "\"He should never have started.\"",
+                        "The tortoise pretended not to hear. He simply kept his eyes ahead and plodded on."
+                    ]
+                },
+                {
+                    art: 'story-01-race-3.webp',
+                    left: [
+                        "Half way up the hill the hare looked back. The tortoise was still down at the bottom.",
+                        "\"What a slowcoach.\"",
+                        "\"I could rest here a good long while.\"",
+                        "And the hare stretched himself out in a cool patch of shade."
+                    ],
+                    right: [
+                        "And there he fell fast asleep. Meanwhile the tortoise walked on and on without stopping once.",
+                        "When the hare opened his eyes he looked up at the top of the hill. The tortoise was already standing beside the flag, and the animals were clapping and cheering.",
+                        "\"He's done it! Hurrah!\""
+                    ]
+                }
+            ],
+            moral: 'Going slowly is no matter. Not stopping is the real strength.'
+        },
+        {
+            num: 2,
+            title: 'The Fox and the Grapes',
+            emoji: '🍇',
+            beats: [
+                {
+                    art: 'story-02-grapes.webp',
+                    left: [
+                        "There was a fox who had eaten nothing for days. He went prowling about the wood looking for food.",
+                        "But there was nothing at all to be seen, and his stomach rumbled loudly.",
+                        "And then he saw something and stopped dead."
+                    ],
+                    right: [
+                        "There were grapes hanging in bunches on a high vine over his head. The ripe grapes caught the sun and shone purple.",
+                        "The fox swallowed hard without meaning to, and stood a long while with his neck stretched up.",
+                        "\"Now those are exactly what I want!\""
+                    ]
+                },
+                {
+                    art: 'story-02-grapes-2.webp',
+                    left: [
+                        "The fox gathered himself and sprang up hard. His front paws only just brushed them.",
+                        "\"A little more — just a little more!\"",
+                        "He jumped again, and again.",
+                        "\"Up we go!\""
+                    ],
+                    right: [
+                        "He jumped over and over, and the grapes stayed exactly where they were. He backed off and took a run at it. Still his paws barely grazed them.",
+                        "Before long the sweat was running off his forehead and he could hardly breathe. And the grapes only swayed there, high above him."
+                    ]
+                },
+                {
+                    art: 'story-02-grapes-3.webp',
+                    left: [
+                        "The fox sat down hard, panting. However he tried, he could not reach them.",
+                        "He sat looking up at them for a long time. Then he brushed the dirt off himself and got slowly to his feet.",
+                        "\"Hmph. Those grapes will be sour and no good at all.\""
+                    ],
+                    right: [
+                        "\"I'd only have got a stomach ache from them.\"",
+                        "\"Just as well I didn't.\"",
+                        "The fox walked off with his head very high. And still he kept looking back. The grapes went on shining purple up there.",
+                        "And the fox's stomach rumbled again."
+                    ]
+                }
+            ],
+            moral: 'Calling a thing bad because you cannot have it is only an excuse.'
+        },
+        {
+            num: 3,
+            title: 'The Boy Who Cried Wolf',
+            emoji: '🐺',
+            beats: [
+                {
+                    art: 'story-03-wolf-boy.webp',
+                    left: [
+                        "There was a boy who minded sheep alone on a hillside. The sheep cropped grass all day long, and there was nobody at all to talk to.",
+                        "The boy pulled up blades of grass and threw them, hour after hour.",
+                        "\"I am so bored.\"",
+                        "\"Is nothing interesting ever going to happen?\""
+                    ],
+                    right: [
+                        "He was yawning down at the village when his eyes lit up. A mischievous idea had come to him, and he grinned before he could stop himself.",
+                        "The village lay small below his feet. The boy cupped both hands round his mouth, took a deep breath and cleared his throat."
+                    ]
+                },
+                {
+                    art: 'story-03-wolf-boy-2.webp',
+                    left: [
+                        "\"A wolf! There's a wolf!\"",
+                        "The village people came scrambling up with sickles and sticks. And there was not so much as the shadow of a wolf.",
+                        "\"Ha! I had you all!\"",
+                        "The boy laughed until he had to hold his sides, and the grown-ups went back down grumbling."
+                    ],
+                    right: [
+                        "\"That boy. Honestly.\"",
+                        "And after that, whenever he was bored, the boy shouted that a wolf had come. The village people came up for nothing again and again.",
+                        "Every time, he laughed himself sick. Their faces got harder each time. In the end, when they heard him, they only looked at one another."
+                    ]
+                },
+                {
+                    art: 'story-03-wolf-boy-3.webp',
+                    left: [
+                        "Then one day the bushes moved, and this time a real wolf came out.",
+                        "\"A wolf! It's real this time!\"",
+                        "\"It's really a wolf!\"",
+                        "The boy shouted until his throat hurt. The wolf was moving in on the sheep."
+                    ],
+                    right: [
+                        "The boy's legs shook under him. And not one person came up from the village.",
+                        "\"He's at it again. Take no notice.\"",
+                        "A hunter happened to be passing, and the sheep came through it safely. Only then did the boy go down on his knees and cry. Nobody believed a word he said any more."
+                    ]
+                }
+            ],
+            moral: 'Pile up enough lies and nobody believes you when you tell the truth.'
+        },
+        {
+            num: 4,
+            title: 'The Ant and the Grasshopper',
+            emoji: '🐜',
+            beats: [
+                {
+                    art: 'story-04-ant.webp',
+                    left: [
+                        "It was a summer day with the sun beating straight down. The ants were hard at work and dripping with sweat, carrying grain in a line since first light.",
+                        "Not one of them would stop for a rest.",
+                        "The store had to be filled before winter came."
+                    ],
+                    right: [
+                        "Then a sound came from the cool shade of a tree. A grasshopper was playing his violin.",
+                        "He stopped his bow and called out.",
+                        "\"I say — ants!\"",
+                        "\"Getting ready for winter already, in this heat.\"",
+                        "\"What a foolish way to live.\""
+                    ]
+                },
+                {
+                    art: 'story-04-ant-2.webp',
+                    left: [
+                        "\"You would do far better to enjoy yourselves as I do.\"",
+                        "The grasshopper chuckled and went back to his violin. An ant wiped the sweat off his forehead and answered quietly.",
+                        "\"Winter comes sooner than you think.\""
+                    ],
+                    right: [
+                        "\"Nonsense, winter is ages off yet.\"",
+                        "\"You do like to worry.\"",
+                        "The grasshopper shrugged as though it were nothing at all, and struck up his song again. The ants carried their grain without a word.",
+                        "And so the summer went by."
+                    ]
+                },
+                {
+                    art: 'story-04-ant-3.webp',
+                    left: [
+                        "In time the winter came. There was nothing to eat out in the fields.",
+                        "The ants were snug in their warm rooms.",
+                        "Then there was a knock at the door. It was the grasshopper, starving.",
+                        "\"Ant. Please, ant.\""
+                    ],
+                    right: [
+                        "\"Would you share a little food with me?\"",
+                        "\"We will. But you must think about how you looked down on us.\"",
+                        "The grasshopper hung his head, ashamed. And the ant brought him out a bowl of hot porridge.",
+                        "The next summer the grasshopper worked alongside the ants."
+                    ]
+                }
+            ],
+            moral: "Enjoying today matters. So does getting ready for tomorrow."
+        },
+        {
+            num: 5,
+            title: 'The Wolf and the Lamb',
+            emoji: '🐑',
+            beats: [
+                {
+                    art: 'story-05-lamb.webp',
+                    left: [
+                        "A thirsty lamb was drinking at a stream. The water was so clear you could see the pebbles on the bottom, and the lamb dipped her mouth in carefully.",
+                        "Then a wolf came prowling down from higher up. He glared at the lamb, and set about picking a quarrel with her."
+                    ],
+                    right: [
+                        "\"You there. You have muddied the water I was going to drink.\"",
+                        "The lamb answered, quite startled.",
+                        "\"But I am drinking below you, sir.\"",
+                        "\"How could muddy water go upstream?\"",
+                        "The wolf had nothing to say to that. He worked his nose and rolled his eyes."
+                    ]
+                },
+                {
+                    art: 'story-05-lamb-2.webp',
+                    left: [
+                        "The wolf was stuck for a moment, and then came out with something else.",
+                        "\"Th-then you were saying bad things about me last year.\"",
+                        "The lamb was more startled still.",
+                        "\"But I am only six months old.\"",
+                        "\"Last year I was not in the world at all!\"",
+                        "And the wolf was stuck again."
+                    ],
+                    right: [
+                        "There was not one thing wrong with what the lamb had said. Think as he might, there was nothing left to quarrel about. And he had no intention of backing off.",
+                        "The wolf glared and took a step closer. The lamb stepped back, and the gravel crunched under her feet."
+                    ]
+                },
+                {
+                    art: 'story-05-lamb-3.webp',
+                    left: [
+                        "With no excuse left that would hold, the wolf began to lose his temper.",
+                        "\"Then it was your brother, no doubt!\"",
+                        "\"You are all the same anyway!\"",
+                        "The wolf bared his teeth and came striding forward. The lamb squeezed her eyes shut. She could hear him breathing right in front of her."
+                    ],
+                    right: [
+                        "And at that very moment —",
+                        "Woof! Woof!",
+                        "\"Who's that over there!\"",
+                        "The dog who guarded the flock came racing up. The wolf put his tail down and bolted. And only then did the lamb get her breath back."
+                    ]
+                }
+            ],
+            moral: 'Somebody looking for trouble will find a reason for it, whatever you say.'
+        },
+        {
+            num: 6,
+            title: 'The Goose that Laid the Golden Eggs',
+            emoji: '🥚',
+            beats: [
+                {
+                    art: 'story-06-goose.webp',
+                    left: [
+                        "One day a poor farmer and his wife came by a remarkable goose. Every morning, if you please, this goose laid one egg —",
+                        "and every one of those eggs shone golden all over.",
+                        "\"Come and look at this!\"",
+                        "\"It really is a golden egg!\""
+                    ],
+                    right: [
+                        "\"Are we to be rich, then?\"",
+                        "The two of them were beside themselves and threw their arms round each other.",
+                        "Next morning there was another golden egg in the nest, and the morning after that as well. The golden eggs piled up neatly in the store room.",
+                        "The two of them counted them over every night and laughed."
+                    ]
+                },
+                {
+                    art: 'story-06-goose-2.webp',
+                    left: [
+                        "They sold the golden eggs and set the household right, bit by bit. They mended the old roof and bought a patch of field, and there was nobody in the village who did not envy them.",
+                        "For a while the two of them were very happy.",
+                        "But as time went on the farmer grew restless."
+                    ],
+                    right: [
+                        "\"One a day. It is far too slow.\"",
+                        "\"There must be gold packed inside that goose.\"",
+                        "There was a greedy shine in the farmer's eye.",
+                        "At night he lay awake thinking about it, and in the daytime he kept glancing at the goose. And the goose went on laying, knowing nothing about any of it."
+                    ]
+                },
+                {
+                    art: 'story-06-goose-3.webp',
+                    left: [
+                        "\"Wife, let us open her up and get it all out at once!\"",
+                        "\"You will do something dreadful! We have plenty as it is.\"",
+                        "His wife caught his sleeve to stop him. And in the end the farmer would not listen.",
+                        "He took up the axe, and his wife turned away rather than watch."
+                    ],
+                    right: [
+                        "But there was no gold inside the goose at all. She was simply an ordinary goose. And only then did the farmer beat the ground and wish it undone.",
+                        "\"What have I done…\"",
+                        "Now there were no golden eggs, and no goose either. And the two of them were poor again."
+                    ]
+                }
+            ],
+            moral: 'Greed in a hurry loses even what you had.'
+        },
+        {
+            num: 7,
+            title: 'The Town Mouse and the Country Mouse',
+            emoji: '🐭',
+            beats: [
+                {
+                    art: 'story-07-mice.webp',
+                    left: [
+                        "A country mouse invited his town cousin to visit. He was laying the table from first thing in the morning — wheat and beans and carefully dried sweet potato, all set out with great care.",
+                        "He was quite excited to have his cousin coming.",
+                        "\"Eat as much as you like. I grew all of it myself.\"",
+                        "And the town mouse made a show of eating a mouthful or two, then wrinkled his nose."
+                    ],
+                    right: [
+                        "\"Hm… is this all?\"",
+                        "\"In town we do not eat plain stuff like this.\"",
+                        "\"We eat beef and cheese and cake — the good things.\"",
+                        "The country mouse went awkward and fiddled with his whiskers. He felt ashamed of the table he had worked so hard over."
+                    ]
+                },
+                {
+                    art: 'story-07-mice-2.webp',
+                    left: [
+                        "\"Come to town with me. I shall show you real food!\"",
+                        "The country mouse was curious and went along with him. The two of them walked all night and came to the glittering town. When he got there the country mouse's eyes went round,",
+                        "because a great table stood covered in the most extraordinary food."
+                    ],
+                    right: [
+                        "\"I have never seen anything like this in my life!\"",
+                        "The two mice hopped up onto the table. They were just about to get their teeth into the cheese, and a rich smell went up their noses.",
+                        "The country mouse swallowed hard.",
+                        "And at that very moment —"
+                    ]
+                },
+                {
+                    art: 'story-07-mice-3.webp',
+                    left: [
+                        "Bang!",
+                        "The door flew open and in came people and a cat.",
+                        "\"Run!\"",
+                        "The two mice fled into a crack in the wall. Claws went past right in front of them."
+                    ],
+                    right: [
+                        "Their hearts felt fit to burst, and they hardly dared to breathe. When he had got his breath back the country mouse said, panting,",
+                        "\"Rather than good food eaten in fear,\"",
+                        "\"plain food eaten in peace makes me happier.\"",
+                        "\"I shall go back to the country. Goodbye!\""
+                    ]
+                }
+            ],
+            moral: 'Plenty with worry is worse than plain fare with a quiet mind.'
+        },
+        {
+            num: 8,
+            title: 'The Lion and the Mouse',
+            emoji: '🦁',
+            beats: [
+                {
+                    art: 'story-08-lion.webp',
+                    left: [
+                        "A little mouse went scurrying over the nose of a sleeping lion. The lion woke with a sneeze and pinned the mouse down under one paw.",
+                        "The mouse could not move an inch.",
+                        "\"You dare wake me?\"",
+                        "\"I shall have you in one mouthful!\""
+                    ],
+                    right: [
+                        "The mouse flattened himself to the ground, rubbing his small front paws together and shaking all over. His voice came out very thin.",
+                        "The lion's paw was bigger than the whole of him.",
+                        "\"Lion, please spare me!\"",
+                        "\"One day I shall repay you for it!\"",
+                        "And he rubbed his little paws together again."
+                    ]
+                },
+                {
+                    art: 'story-08-lion-2.webp',
+                    left: [
+                        "\"What was that?\"",
+                        "\"And how would a scrap like you ever help me?\"",
+                        "The lion laughed for a long while at the idea of it. And laughing took the temper out of him. He wiped his eye with a paw.",
+                        "And he lifted his paw a little."
+                    ],
+                    right: [
+                        "\"You are an amusing creature. Off you go.\"",
+                        "The mouse bowed a great many times and disappeared into the grass. The lion thought nothing more of it and settled down to sleep again. He forgot the whole thing at once.",
+                        "What use could a mouse possibly be? And the quiet afternoon went on in the wood."
+                    ]
+                },
+                {
+                    art: 'story-08-lion-3.webp',
+                    left: [
+                        "A few days later the lion was caught in a hunter's net. However he threw himself about, it would not come loose.",
+                        "\"Rrrrraah!\"",
+                        "The lion's desperate roar went right through the wood. And the mouse who heard it came running.",
+                        "\"Lion — I am here!\""
+                    ],
+                    right: [
+                        "With his small sharp teeth the mouse gnawed at the ropes all night long.",
+                        "Nibble, nibble.",
+                        "By dawn the net gave way. And the lion looked a long while at his small friend.",
+                        "After that the two of them were the closest of anyone in that wood."
+                    ]
+                }
+            ],
+            moral: 'A kindness that looks small comes back as a large help.'
+        },
+        {
+            num: 9,
+            title: 'The Fox and the Crow',
+            emoji: '🐦',
+            beats: [
+                {
+                    art: 'story-09-crow.webp',
+                    left: [
+                        "A crow came along with a fine piece of cheese in her beak. She settled on a high branch and was just about to eat it.",
+                        "A hungry fox happened to be passing below. He sniffed at the air, looked up, and came creeping over without a sound.",
+                        "And then he made his voice very sweet indeed."
+                    ],
+                    right: [
+                        "\"Good day to you, madam crow.\"",
+                        "\"How black and glossy your feathers are looking today!\"",
+                        "\"You are the handsomest bird in the wood.\"",
+                        "The crow's ears pricked up at that. The cheese in her beak began to feel heavy."
+                    ]
+                },
+                {
+                    art: 'story-09-crow-2.webp',
+                    left: [
+                        "The crow puffed out her chest, thoroughly pleased with herself. The fox went smoothly on.",
+                        "\"And they say your voice is just as fine. Is that so?\"",
+                        "\"Might I hear just one line of it?\"",
+                        "\"It must be the voice of a queen among birds.\""
+                    ],
+                    right: [
+                        "The crow could hardly contain herself. She shifted about until the branch shook.",
+                        "She cleared her throat. If it had not been for the cheese she would have sung already. The fox kept a perfectly straight face.",
+                        "And still his eyes never left the cheese. He put one paw quietly forward."
+                    ]
+                },
+                {
+                    art: 'story-09-crow-3.webp',
+                    left: [
+                        "The crow opened her beak wide before she knew what she was doing.",
+                        "\"Caw!\"",
+                        "And in that instant — plop!",
+                        "The cheese she had been holding dropped to the ground. The fox snapped it up in a flash.",
+                        "And he grinned."
+                    ],
+                    right: [
+                        "The crow sat there with an empty beak.",
+                        "\"Much obliged.\"",
+                        "\"And one thing I might tell you —\"",
+                        "\"you should never believe everything a flatterer says.\"",
+                        "The fox went off humming to himself. And only then did the crow look down at her own beak."
+                    ]
+                }
+            ],
+            moral: 'The sweeter the praise, the more it is worth thinking about twice.'
+        },
+        {
+            num: 10,
+            title: 'The North Wind and the Sun',
+            emoji: '☀️',
+            beats: [
+                {
+                    art: 'story-10-sun.webp',
+                    left: [
+                        "The North Wind and the Sun met up in the sky, and each of them said he was the stronger. The argument went on and on.",
+                        "\"One puff from me and a full-grown tree comes out of the ground!\"",
+                        "\"Well now. Is that really what strength is?\"",
+                        "And just then a traveller in a thick coat came along the road below."
+                    ],
+                    right: [
+                        "The Sun made a quiet suggestion.",
+                        "\"Whichever of us gets that coat off him first is the winner.\"",
+                        "\"Done. That will be no trouble at all!\"",
+                        "The North Wind rolled up his sleeves, and the Sun slipped away behind a cloud. The traveller walked on, knowing nothing about it."
+                    ]
+                },
+                {
+                    art: 'story-10-sun-2.webp',
+                    left: [
+                        "The North Wind went first, and puffed out his cheeks.",
+                        "Whoooo — whooooo —",
+                        "The branches bent as if they would snap and the dust went whirling up. And the traveller only hunched himself further down.",
+                        "\"My word, what a bitter wind.\""
+                    ],
+                    right: [
+                        "And he pulled his coat tighter round him than before. The North Wind blew until he had no breath left, and none of it did any good. The harder he blew, the tighter the traveller held his collar.",
+                        "He pulled his hat down and quickened his pace. Not one thread of wind got in at his collar.",
+                        "And in the end the North Wind gave up."
+                    ]
+                },
+                {
+                    art: 'story-10-sun-3.webp',
+                    left: [
+                        "When the North Wind had worn himself out and stood back, it was the Sun's turn. The Sun shone down on the traveller, gently and warmly.",
+                        "The frozen road thawed and the birds began to sing again. The traveller took off his hat and fanned himself with it.",
+                        "\"And it was so cold a moment ago.\""
+                    ],
+                    right: [
+                        "Beads of sweat came out on his forehead.",
+                        "\"My word, it is warm.\"",
+                        "And the traveller took his coat off himself, and hung it over his arm. The North Wind could not think of a thing to say.",
+                        "And the Sun only smiled. It was a blue sky without a cloud in it."
+                    ]
+                }
+            ],
+            moral: 'Gentleness sometimes works where force cannot.'
+        },
+        {
+            num: 11,
+            title: 'The Dog and His Reflection',
+            emoji: '🐕',
+            beats: [
+                {
+                    art: 'story-11-dog.webp',
+                    left: [
+                        "There was a dog with a fine piece of meat in his mouth, trotting happily home.",
+                        "\"What a lucky day this is!\"",
+                        "He could not help humming. He was going to eat well tonight, and his tail wagged as he went.",
+                        "His mouth watered. He was crossing a little wooden bridge on the way."
+                    ],
+                    right: [
+                        "The dog looked down over the side without thinking. In the still water below, a dog with meat in his mouth was looking back at him. He stopped dead.",
+                        "He could not take his eyes off it. The dog in the water was staring straight up at him. And the dog on the bridge did not move a muscle."
+                    ]
+                },
+                {
+                    art: 'story-11-dog-2.webp',
+                    left: [
+                        "\"Hullo? There's a fellow down there with meat as well.\"",
+                        "The dog's eyes went round. He stood looking down into the water with his own meat still in his mouth.",
+                        "\"And his looks a great deal bigger than mine!\"",
+                        "It never once occurred to him that it was his own reflection."
+                    ],
+                    right: [
+                        "Greed came creeping up in him. The dog moved close to the rail of the bridge,",
+                        "and the dog in the water came closer in exactly the same way. He bared his teeth.",
+                        "\"I shall have that one too!\"",
+                        "And his tail went stiff behind him."
+                    ]
+                },
+                {
+                    art: 'story-11-dog-3.webp',
+                    left: [
+                        "The dog barked with all his might at the dog in the water.",
+                        "\"Woof!\"",
+                        "And in that instant his mouth came open —",
+                        "splash!",
+                        "The meat he had been holding fell into the stream."
+                    ],
+                    right: [
+                        "He put out a paw for it, and it was already too late. The dog stared blankly down at the water. And only then did he understand:",
+                        "the dog in the water had been himself all along. He went home with an empty mouth, dragging his feet. And he never looked down off that bridge again."
+                    ]
+                }
+            ],
+            moral: 'Wanting something bigger can lose you what you had.'
+        },
+        {
+            num: 12,
+            title: 'The Bat and His Two Faces',
+            emoji: '🦇',
+            beats: [
+                {
+                    art: 'story-12-bat.webp',
+                    left: [
+                        "This was a long time ago. There was a great war between the kingdom of the birds and the kingdom of the beasts, and the bat took neither side but watched to see how it would go.",
+                        "He simply sat in a tree and looked down. At first it seemed the birds would win, and the sky was full of wings."
+                    ],
+                    right: [
+                        "The beasts were being driven back and back. Seeing that, the bat spread his wings out wide and went straight over to the birds.",
+                        "\"Look — I have wings, so I am a bird!\"",
+                        "\"Do take me in on the birds' side.\"",
+                        "And the birds took him in. The bat flapped about among them, delighted with himself."
+                    ]
+                },
+                {
+                    art: 'story-12-bat-2.webp',
+                    left: [
+                        "But before long the fighting turned the other way, and now the beasts had the upper hand. The bat watched it all quietly from his tree.",
+                        "And he changed his story at once. This time he opened his mouth and showed his teeth, and went straight over to the beasts."
+                    ],
+                    right: [
+                        "He did not so much as change colour.",
+                        "\"I have fur and I have teeth, so I am a beast!\"",
+                        "\"Do take me in on the beasts' side.\"",
+                        "And so the bat went from one side to the other, turning whichever way the wind blew. And both sides were watching him do it."
+                    ]
+                },
+                {
+                    art: 'story-12-bat-3.webp',
+                    left: [
+                        "At last the war ended, and there was a feast to celebrate the peace. When the bat tried to slip in among them, both sides turned their backs.",
+                        "\"You went over to the beasts when we were losing.\"",
+                        "\"You went over to the birds when we were losing.\""
+                    ],
+                    right: [
+                        "There was no place for the bat on either side. He stood about in a corner of the feast for a while and then turned away. Nobody called him back.",
+                        "And he went off to hide in a dark cave.",
+                        "From that time he has only flown at night. Nothing is left of him but the sound of his wings in the dark."
+                    ]
+                }
+            ],
+            moral: 'Change your words to suit your profit and you end up on nobody’s side.'
+        },
+        {
+            num: 13,
+            title: 'The Horse and the Donkey',
+            emoji: '🐴',
+            beats: [
+                {
+                    art: 'story-13-horse.webp',
+                    left: [
+                        "It was a hot summer's day. A horse and a donkey were going along the road together, both of them loaded up.",
+                        "But the donkey's load was very much the heavier. The sacks pressed down on his back until it bent."
+                    ],
+                    right: [
+                        "The sun climbed overhead. The donkey could hardly get his breath, and his legs kept giving under him.",
+                        "\"Horse, I have a favour to ask you.\"",
+                        "\"Would you take a little of my load on your back?\"",
+                        "The horse pretended not to hear and kept his eyes on the road."
+                    ]
+                },
+                {
+                    art: 'story-13-horse-2.webp',
+                    left: [
+                        "The donkey asked him once more.",
+                        "\"Even one sack would do.\"",
+                        "\"I cannot go on like this.\"",
+                        "And still the horse turned his head away.",
+                        "\"My own load is not light either.\""
+                    ],
+                    right: [
+                        "The horse shook his mane and walked faster, and the donkey came panting behind him.",
+                        "And then his knees went.",
+                        "Thump!",
+                        "The donkey went down in the middle of the road."
+                    ]
+                },
+                {
+                    art: 'story-13-horse-3.webp',
+                    left: [
+                        "Their master came running and looked the donkey over. But the donkey could not get up.",
+                        "\"There is nothing else for it.\"",
+                        "The master took every sack off the donkey's back",
+                        "and loaded the whole lot onto the horse."
+                    ],
+                    right: [
+                        "And only then did the horse's eyes go round, because his back was twice as heavy as before.",
+                        "\"I should have taken the one sack.\"",
+                        "The horse said it over to himself a good many times. And there was nothing to be done about it now."
+                    ]
+                }
+            ],
+            moral: 'Taking a little of somebody else’s load turns out to be helping yourself.'
+        },
+        {
+            num: 14,
+            title: 'The Crow Who Picked Up Feathers',
+            emoji: '🐦',
+            beats: [
+                {
+                    art: 'story-14-crow.webp',
+                    left: [
+                        "The kingdom of the birds decided to hold a feast — a feast to choose the most beautiful bird of all. Every bird set about preening.",
+                        "The peacock spread his tail wide and the parrot polished his beak. The crow looked at himself in the water."
+                    ],
+                    right: [
+                        "He was black all over.",
+                        "\"There is no chance of being chosen like this.\"",
+                        "The crow turned it over this way and that.",
+                        "And then a good idea came to him."
+                    ]
+                },
+                {
+                    art: 'story-14-crow-2.webp',
+                    left: [
+                        "The other birds had dropped feathers everywhere while they were preening — red and yellow and blue and green, all of them there.",
+                        "The crow picked them up one by one and stuck them all over himself."
+                    ],
+                    right: [
+                        "Before long the crow was as many-coloured as a rainbow. Looking at himself in the water, he hardly knew himself.",
+                        "\"Now then — I am the finest of the lot!\"",
+                        "And the crow went to the feast with his chest well out."
+                    ]
+                },
+                {
+                    art: 'story-14-crow-3.webp',
+                    left: [
+                        "The birds gathered at the feast began to murmur.",
+                        "\"Who is that? I have never seen that bird before.\"",
+                        "And then the peacock tilted his head.",
+                        "\"Hold on — that tail feather looks like mine.\""
+                    ],
+                    right: [
+                        "The parrot's eyes went wide too.",
+                        "\"That blue one is mine!\"",
+                        "One after another the birds came up and pulled their own feathers back out again. And with every feather a colour went out of him.",
+                        "Until all that was left was one black crow."
+                    ]
+                }
+            ],
+            moral: 'A fine look put together out of borrowed things does not last.'
+        }
+    ],
+    quiz: [
+        { q: 'Who won the race in the end?', choices: ['The hare', 'The tortoise', 'The fox'], answer: 1 },
+        { q: 'What did the fox say when he could not reach the grapes?', choices: ['That they were not ripe yet', 'That they would be sour', 'That they would be sweet'], answer: 1 },
+        { q: 'What came of the boy telling the same lie over and over?', choices: ['He was praised for it', 'Nobody believed him', 'He got more sheep'], answer: 1 },
+        { q: 'What did the grasshopper do when winter came?', choices: ['Went on singing', 'Went to the ants', 'Found food on his own'], answer: 1 },
+        { q: 'Who saved the lamb?', choices: ['A hunter', 'The sheepdog', 'Another wolf'], answer: 1 },
+        { q: 'What was inside the goose?', choices: ['It was full of gold', 'Nothing at all', 'One more egg'], answer: 1 },
+        { q: 'Where did the country mouse go in the end?', choices: ['To the town', 'Back to the country', 'Somewhere new'], answer: 1 },
+        { q: 'How did the mouse free the lion?', choices: ['He gnawed through the ropes', 'He fetched people', 'He tore the net by force'], answer: 0 },
+        { q: 'What happened when the crow opened her beak?', choices: ['The cheese fell', 'The fox ran off', 'Other birds came'], answer: 0 },
+        { q: 'Who got the coat off the traveller?', choices: ['The North Wind', 'The Sun', 'Both of them'], answer: 1 },
+        { q: 'What happened when the dog barked?', choices: ['Only the reflection was left', 'He lost his meat', 'His meat doubled'], answer: 1 },
+        { q: 'What happened to the bat after the war?', choices: ['He joined the birds', 'He joined the beasts', 'Both sides turned away from him'], answer: 2 },
+        { q: 'What happened to the load after the donkey went down?', choices: ['The master carried it', 'The horse had to carry all of it', 'It was left in the road'], answer: 1 },
+        { q: 'What became of the feathers the crow stuck on?', choices: ['The birds pulled them back out', 'The wind blew them away', 'They stayed on him'], answer: 0 }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🦊',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Aesop is said to have lived in Greece about two thousand six hundred years ago. Some say he had been a slave and was set free, but nobody is certain.",
+                    "There is no book Aesop wrote himself. People passed the stories along by mouth, and others gathered them up later. That is why they come out a little differently in every version.",
+                    "There are a great many animals in Aesop. Name a person and that person takes offence — a fox or a wolf does not.",
+                    "They are short, and that is the point of them. Nothing is explained at length; one scene is shown and it is over."
+                ],
+                right: [
+                    "The moral tacked on at the end of each one was not put there by Aesop. Later hands added them, one by one.",
+                    "Would these stories be less good without the morals?"
+                ]
+            }
+        ]
+    },
+    words: {
+        'story-01-race.webp': [
+            { word: 'stop dead', meaning: '뚝 멈추다', sentence: 'The hare stopped dead on the road.' },
+            { word: 'crawl', meaning: '엉금엉금 기다', sentence: 'A tortoise was crawling along.' },
+            { word: 'lose one’s temper', meaning: '화를 내다', sentence: 'But the tortoise did not lose his temper.' },
+            { word: 'steady', meaning: '차분한', sentence: 'His eyes were perfectly steady.' }
+        ],
+        'story-01-race-2.webp': [
+            { word: 'word gets round', meaning: '소문이 나다', sentence: 'Word got round and the animals came crowding in.' },
+            { word: 'blink', meaning: '눈을 깜빡이다', sentence: 'The hare was out of sight before you could blink.' },
+            { word: 'mutter', meaning: '수군거리다', sentence: 'The animals muttered among themselves.' },
+            { word: 'plod on', meaning: '뚜벅뚜벅 걷다', sentence: 'He kept his eyes ahead and plodded on.' }
+        ],
+        'story-01-race-3.webp': [
+            { word: 'look back', meaning: '뒤를 돌아보다', sentence: 'Half way up the hill the hare looked back.' },
+            { word: 'slowcoach', meaning: '느림보', sentence: 'What a slowcoach.' },
+            { word: 'shade', meaning: '그늘', sentence: 'He stretched himself out in a cool patch of shade.' },
+            { word: 'cheer', meaning: '환호하다', sentence: 'The animals were clapping and cheering.' }
+        ],
+        'story-02-grapes.webp': [
+            { word: 'prowl', meaning: '어슬렁거리다', sentence: 'He went prowling about the wood.' },
+            { word: 'rumble', meaning: '꼬르륵거리다', sentence: 'His stomach rumbled loudly.' },
+            { word: 'vine', meaning: '덩굴', sentence: 'Grapes hanging on a high vine.' },
+            { word: 'ripe', meaning: '잘 익은', sentence: 'The ripe grapes caught the sun.' }
+        ],
+        'story-02-grapes-2.webp': [
+            { word: 'spring', meaning: '뛰어오르다', sentence: 'The fox gathered himself and sprang up hard.' },
+            { word: 'brush', meaning: '스치다', sentence: 'His front paws only just brushed them.' },
+            { word: 'take a run at', meaning: '달려와 시도하다', sentence: 'He backed off and took a run at it.' },
+            { word: 'graze', meaning: '스치듯 닿다', sentence: 'His paws barely grazed them.' }
+        ],
+        'story-02-grapes-3.webp': [
+            { word: 'pant', meaning: '헉헉대다', sentence: 'The fox sat down hard, panting.' },
+            { word: 'sour', meaning: '신', sentence: 'Those grapes will be sour.' },
+            { word: 'stomach ache', meaning: '배탈', sentence: "I'd only have got a stomach ache." },
+            { word: 'just as well', meaning: '잘한 일인', sentence: "Just as well I didn't." }
+        ],
+        'story-03-wolf-boy.webp': [
+            { word: 'mind', meaning: '돌보다, 치다', sentence: 'A boy who minded sheep alone.' },
+            { word: 'crop', meaning: '뜯어 먹다', sentence: 'The sheep cropped grass all day.' },
+            { word: 'mischievous', meaning: '짓궂은', sentence: 'A mischievous idea had come to him.' },
+            { word: 'cup one’s hands', meaning: '두 손을 모으다', sentence: 'The boy cupped both hands round his mouth.' }
+        ],
+        'story-03-wolf-boy-2.webp': [
+            { word: 'sickle', meaning: '낫', sentence: 'They came up with sickles and sticks.' },
+            { word: 'grumble', meaning: '툴툴대다', sentence: 'The grown-ups went back down grumbling.' },
+            { word: 'for nothing', meaning: '헛되이', sentence: 'The village people came up for nothing.' },
+            { word: 'take no notice', meaning: '신경 쓰지 않다', sentence: "He's at it again. Take no notice." }
+        ],
+        'story-03-wolf-boy-3.webp': [
+            { word: 'move in on', meaning: '슬금슬금 다가가다', sentence: 'The wolf was moving in on the sheep.' },
+            { word: 'give under', meaning: '후들거리다', sentence: "The boy's legs shook under him." },
+            { word: 'come through', meaning: '무사히 지나가다', sentence: 'The sheep came through it safely.' },
+            { word: 'go down on one’s knees', meaning: '무릎을 꿇다', sentence: 'The boy went down on his knees and cried.' }
+        ],
+        'story-04-ant.webp': [
+            { word: 'beat down', meaning: '쨍쨍 내리쬐다', sentence: 'A summer day with the sun beating down.' },
+            { word: 'grain', meaning: '곡식', sentence: 'Carrying grain in a line since first light.' },
+            { word: 'store', meaning: '곳간', sentence: 'The store had to be filled before winter.' },
+            { word: 'bow', meaning: '활', sentence: 'He stopped his bow and called out.' }
+        ],
+        'story-04-ant-2.webp': [
+            { word: 'chuckle', meaning: '낄낄 웃다', sentence: 'The grasshopper chuckled.' },
+            { word: 'sooner than', meaning: '~보다 빨리', sentence: 'Winter comes sooner than you think.' },
+            { word: 'ages off', meaning: '한참 남은', sentence: 'Winter is ages off yet.' },
+            { word: 'shrug', meaning: '어깨를 으쓱하다', sentence: 'The grasshopper shrugged.' }
+        ],
+        'story-04-ant-3.webp': [
+            { word: 'snug', meaning: '아늑한', sentence: 'The ants were snug in their warm rooms.' },
+            { word: 'starving', meaning: '굶주린', sentence: 'It was the grasshopper, starving.' },
+            { word: 'look down on', meaning: '깔보다', sentence: 'How you looked down on us.' },
+            { word: 'porridge', meaning: '죽', sentence: 'The ant brought him a bowl of hot porridge.' }
+        ],
+        'story-05-lamb.webp': [
+            { word: 'pebble', meaning: '조약돌', sentence: 'You could see the pebbles on the bottom.' },
+            { word: 'glare', meaning: '노려보다', sentence: 'He glared at the lamb.' },
+            { word: 'pick a quarrel', meaning: '트집을 잡다', sentence: 'He set about picking a quarrel with her.' },
+            { word: 'muddy', meaning: '흐리다', sentence: 'You have muddied the water.' },
+            { word: 'upstream', meaning: '위쪽으로', sentence: 'How could muddy water go upstream?' }
+        ],
+        'story-05-lamb-2.webp': [
+            { word: 'stuck', meaning: '말문이 막힌', sentence: 'The wolf was stuck for a moment.' },
+            { word: 'startled', meaning: '놀란', sentence: 'The lamb was more startled still.' },
+            { word: 'back off', meaning: '물러서다', sentence: 'He had no intention of backing off.' },
+            { word: 'gravel', meaning: '자갈', sentence: 'The gravel crunched under her feet.' }
+        ],
+        'story-05-lamb-3.webp': [
+            { word: 'hold', meaning: '통하다', sentence: 'With no excuse left that would hold.' },
+            { word: 'bare one’s teeth', meaning: '이빨을 드러내다', sentence: 'The wolf bared his teeth.' },
+            { word: 'flock', meaning: '양 떼', sentence: 'The dog who guarded the flock came racing up.' },
+            { word: 'bolt', meaning: '부리나케 달아나다', sentence: 'The wolf put his tail down and bolted.' }
+        ],
+        'story-06-goose.webp': [
+            { word: 'come by', meaning: '얻게 되다', sentence: 'They came by a remarkable goose.' },
+            { word: 'lay', meaning: '알을 낳다', sentence: 'This goose laid one egg every morning.' },
+            { word: 'beside oneself', meaning: '뛸 듯이 기쁜', sentence: 'The two of them were beside themselves.' },
+            { word: 'count over', meaning: '세어 보다', sentence: 'They counted them over every night.' }
+        ],
+        'story-06-goose-2.webp': [
+            { word: 'set right', meaning: '살림을 펴다', sentence: 'They set the household right, bit by bit.' },
+            { word: 'envy', meaning: '부러워하다', sentence: 'There was nobody who did not envy them.' },
+            { word: 'restless', meaning: '조바심 나는', sentence: 'The farmer grew restless.' },
+            { word: 'glance at', meaning: '흘끔거리다', sentence: 'He kept glancing at the goose.' }
+        ],
+        'story-06-goose-3.webp': [
+            { word: 'open up', meaning: '배를 가르다', sentence: 'Let us open her up.' },
+            { word: 'catch one’s sleeve', meaning: '소매를 붙잡다', sentence: 'His wife caught his sleeve to stop him.' },
+            { word: 'ordinary', meaning: '평범한', sentence: 'She was simply an ordinary goose.' },
+            { word: 'wish undone', meaning: '후회하다', sentence: 'The farmer beat the ground and wished it undone.' }
+        ],
+        'story-07-mice.webp': [
+            { word: 'cousin', meaning: '사촌', sentence: 'A country mouse invited his town cousin.' },
+            { word: 'lay the table', meaning: '상을 차리다', sentence: 'He was laying the table from first thing.' },
+            { word: 'make a show of', meaning: '~하는 척하다', sentence: 'The town mouse made a show of eating.' },
+            { word: 'wrinkle one’s nose', meaning: '코를 찡긋하다', sentence: 'Then he wrinkled his nose.' },
+            { word: 'awkward', meaning: '머쓱한', sentence: 'The country mouse went awkward.' }
+        ],
+        'story-07-mice-2.webp': [
+            { word: 'curious', meaning: '호기심이 생긴', sentence: 'The country mouse was curious.' },
+            { word: 'glitter', meaning: '반짝이다', sentence: 'They came to the glittering town.' },
+            { word: 'extraordinary', meaning: '진귀한', sentence: 'A table covered in extraordinary food.' },
+            { word: 'get one’s teeth into', meaning: '갉아먹기 시작하다', sentence: 'They were about to get their teeth into the cheese.' }
+        ],
+        'story-07-mice-3.webp': [
+            { word: 'fly open', meaning: '벌컥 열리다', sentence: 'The door flew open.' },
+            { word: 'flee', meaning: '달아나다', sentence: 'The two mice fled into a crack in the wall.' },
+            { word: 'claw', meaning: '발톱', sentence: 'Claws went past right in front of them.' },
+            { word: 'in peace', meaning: '마음 놓고', sentence: 'Plain food eaten in peace.' }
+        ],
+        'story-08-lion.webp': [
+            { word: 'scurry', meaning: '쪼르르 달리다', sentence: 'A little mouse went scurrying over his nose.' },
+            { word: 'sneeze', meaning: '재채기', sentence: 'The lion woke with a sneeze.' },
+            { word: 'pin down', meaning: '콱 붙잡다', sentence: 'He pinned the mouse down under one paw.' },
+            { word: 'spare', meaning: '살려 주다', sentence: 'Lion, please spare me!' },
+            { word: 'repay', meaning: '갚다', sentence: 'One day I shall repay you.' }
+        ],
+        'story-08-lion-2.webp': [
+            { word: 'scrap', meaning: '조그만 것', sentence: 'How would a scrap like you help me?' },
+            { word: 'take the temper out of', meaning: '화가 풀리게 하다', sentence: 'Laughing took the temper out of him.' },
+            { word: 'amusing', meaning: '재미있는', sentence: 'You are an amusing creature.' },
+            { word: 'settle down', meaning: '자리를 잡고 눕다', sentence: 'He settled down to sleep again.' }
+        ],
+        'story-08-lion-3.webp': [
+            { word: 'net', meaning: '그물', sentence: "The lion was caught in a hunter's net." },
+            { word: 'come loose', meaning: '풀리다', sentence: 'It would not come loose.' },
+            { word: 'desperate', meaning: '절망스러운', sentence: "The lion's desperate roar." },
+            { word: 'gnaw', meaning: '갉다', sentence: 'The mouse gnawed at the ropes all night.' },
+            { word: 'give way', meaning: '툭 끊어지다', sentence: 'By dawn the net gave way.' }
+        ],
+        'story-09-crow.webp': [
+            { word: 'settle', meaning: '앉다', sentence: 'She settled on a high branch.' },
+            { word: 'sniff', meaning: '킁킁거리다', sentence: 'He sniffed at the air.' },
+            { word: 'creep', meaning: '살금살금 다가가다', sentence: 'He came creeping over without a sound.' },
+            { word: 'glossy', meaning: '윤이 나는', sentence: 'How black and glossy your feathers are!' },
+            { word: 'prick up', meaning: '솔깃해지다', sentence: "The crow's ears pricked up." }
+        ],
+        'story-09-crow-2.webp': [
+            { word: 'puff out', meaning: '쭉 펴다', sentence: 'The crow puffed out her chest.' },
+            { word: 'contain oneself', meaning: '참다', sentence: 'The crow could hardly contain herself.' },
+            { word: 'clear one’s throat', meaning: '목을 가다듬다', sentence: 'She cleared her throat.' },
+            { word: 'a straight face', meaning: '시치미 뗀 얼굴', sentence: 'The fox kept a perfectly straight face.' }
+        ],
+        'story-09-crow-3.webp': [
+            { word: 'snap up', meaning: '잽싸게 낚아채다', sentence: 'The fox snapped it up in a flash.' },
+            { word: 'grin', meaning: '씩 웃다', sentence: 'And he grinned.' },
+            { word: 'much obliged', meaning: '잘 먹겠습니다', sentence: 'Much obliged.' },
+            { word: 'flatterer', meaning: '아부하는 사람', sentence: 'Never believe everything a flatterer says.' }
+        ],
+        'story-10-sun.webp': [
+            { word: 'argument', meaning: '다툼', sentence: 'The argument went on and on.' },
+            { word: 'full-grown', meaning: '아름드리의', sentence: 'A full-grown tree comes out of the ground.' },
+            { word: 'traveller', meaning: '나그네', sentence: 'A traveller in a thick coat came along.' },
+            { word: 'roll up one’s sleeves', meaning: '팔을 걷어붙이다', sentence: 'The North Wind rolled up his sleeves.' }
+        ],
+        'story-10-sun-2.webp': [
+            { word: 'puff out one’s cheeks', meaning: '볼을 부풀리다', sentence: 'He puffed out his cheeks.' },
+            { word: 'whirl', meaning: '휘몰아치다', sentence: 'The dust went whirling up.' },
+            { word: 'hunch', meaning: '웅크리다', sentence: 'The traveller hunched himself further down.' },
+            { word: 'bitter', meaning: '매서운', sentence: 'What a bitter wind.' },
+            { word: 'collar', meaning: '옷깃', sentence: 'He held his collar tighter.' }
+        ],
+        'story-10-sun-3.webp': [
+            { word: 'wear oneself out', meaning: '지치다', sentence: 'When the North Wind had worn himself out.' },
+            { word: 'thaw', meaning: '녹다', sentence: 'The frozen road thawed.' },
+            { word: 'fan', meaning: '부채질하다', sentence: 'He fanned himself with it.' },
+            { word: 'bead of sweat', meaning: '땀방울', sentence: 'Beads of sweat came out on his forehead.' }
+        ],
+        'story-11-dog.webp': [
+            { word: 'trot', meaning: '총총 걷다', sentence: 'Trotting happily home.' },
+            { word: 'hum', meaning: '콧노래를 부르다', sentence: 'He could not help humming.' },
+            { word: 'wag', meaning: '흔들다', sentence: 'His tail wagged as he went.' },
+            { word: 'still', meaning: '잔잔한', sentence: 'In the still water below.' }
+        ],
+        'story-11-dog-2.webp': [
+            { word: 'occur to', meaning: '떠오르다', sentence: 'It never occurred to him that it was his own reflection.' },
+            { word: 'reflection', meaning: '그림자, 비친 모습', sentence: 'It was his own reflection.' },
+            { word: 'creep up', meaning: '스멀스멀 올라오다', sentence: 'Greed came creeping up in him.' },
+            { word: 'rail', meaning: '난간', sentence: 'The dog moved close to the rail.' }
+        ],
+        'story-11-dog-3.webp': [
+            { word: 'with all one’s might', meaning: '힘껏', sentence: 'The dog barked with all his might.' },
+            { word: 'blankly', meaning: '멍하니', sentence: 'The dog stared blankly down at the water.' },
+            { word: 'all along', meaning: '내내', sentence: 'The dog in the water had been himself all along.' },
+            { word: 'drag one’s feet', meaning: '터덜터덜 걷다', sentence: 'He went home dragging his feet.' }
+        ],
+        'story-12-bat.webp': [
+            { word: 'take a side', meaning: '편을 들다', sentence: 'The bat took neither side.' },
+            { word: 'drive back', meaning: '뒤로 밀다', sentence: 'The beasts were being driven back.' },
+            { word: 'take in', meaning: '받아 주다', sentence: 'Do take me in on the birds’ side.' },
+            { word: 'flap', meaning: '퍼덕이다', sentence: 'The bat flapped about among them.' }
+        ],
+        'story-12-bat-2.webp': [
+            { word: 'turn the other way', meaning: '뒤집히다', sentence: 'The fighting turned the other way.' },
+            { word: 'have the upper hand', meaning: '우세하다', sentence: 'Now the beasts had the upper hand.' },
+            { word: 'change colour', meaning: '낯빛이 바뀌다', sentence: 'He did not so much as change colour.' },
+            { word: 'whichever way the wind blows', meaning: '바람 부는 대로', sentence: 'Turning whichever way the wind blew.' }
+        ],
+        'story-12-bat-3.webp': [
+            { word: 'celebrate', meaning: '축하하다', sentence: 'A feast to celebrate the peace.' },
+            { word: 'turn one’s back', meaning: '등을 돌리다', sentence: 'Both sides turned their backs.' },
+            { word: 'call back', meaning: '붙잡다', sentence: 'Nobody called him back.' },
+            { word: 'cave', meaning: '동굴', sentence: 'He went off to hide in a dark cave.' }
+        ],
+        'story-13-horse.webp': [
+            { word: 'loaded up', meaning: '짐을 잔뜩 진', sentence: 'Both of them loaded up.' },
+            { word: 'press down', meaning: '내리누르다', sentence: 'The sacks pressed down on his back.' },
+            { word: 'favour', meaning: '부탁', sentence: 'I have a favour to ask you.' },
+            { word: 'pretend not to hear', meaning: '못 들은 체하다', sentence: 'The horse pretended not to hear.' }
+        ],
+        'story-13-horse-2.webp': [
+            { word: 'would do', meaning: '~라도 좋다', sentence: 'Even one sack would do.' },
+            { word: 'turn away', meaning: '고개를 돌리다', sentence: 'The horse turned his head away.' },
+            { word: 'mane', meaning: '갈기', sentence: 'The horse shook his mane.' },
+            { word: 'go', meaning: '꺾이다', sentence: 'And then his knees went.' }
+        ],
+        'story-13-horse-3.webp': [
+            { word: 'look over', meaning: '살피다', sentence: 'Their master looked the donkey over.' },
+            { word: 'nothing else for it', meaning: '할 수 없는 노릇', sentence: 'There is nothing else for it.' },
+            { word: 'the whole lot', meaning: '몽땅', sentence: 'He loaded the whole lot onto the horse.' },
+            { word: 'say over', meaning: '되뇌다', sentence: 'The horse said it over to himself.' }
+        ],
+        'story-14-crow.webp': [
+            { word: 'preen', meaning: '깃을 다듬다', sentence: 'Every bird set about preening.' },
+            { word: 'peacock', meaning: '공작', sentence: 'The peacock spread his tail wide.' },
+            { word: 'parrot', meaning: '앵무새', sentence: 'The parrot polished his beak.' },
+            { word: 'turn over', meaning: '궁리하다', sentence: 'The crow turned it over this way and that.' }
+        ],
+        'story-14-crow-2.webp': [
+            { word: 'drop', meaning: '떨어뜨리다', sentence: 'The other birds had dropped feathers everywhere.' },
+            { word: 'stick', meaning: '붙이다', sentence: 'He stuck them all over himself.' },
+            { word: 'many-coloured', meaning: '알록달록한', sentence: 'The crow was as many-coloured as a rainbow.' },
+            { word: 'chest well out', meaning: '가슴을 쭉 펴고', sentence: 'The crow went to the feast with his chest well out.' }
+        ],
+        'story-14-crow-3.webp': [
+            { word: 'murmur', meaning: '웅성거리다', sentence: 'The birds began to murmur.' },
+            { word: 'tilt one’s head', meaning: '고개를 갸웃하다', sentence: 'The peacock tilted his head.' },
+            { word: 'pull out', meaning: '뽑아 가다', sentence: 'The birds pulled their own feathers back out.' },
+            { word: 'go out', meaning: '사라지다', sentence: 'With every feather a colour went out of him.' }
+        ],
+        'end.webp': [
+            { word: 'set free', meaning: '풀려나다', sentence: 'Some say he had been a slave and was set free.' },
+            { word: 'by mouth', meaning: '입으로', sentence: 'People passed the stories along by mouth.' },
+            { word: 'version', meaning: '판', sentence: 'They come out differently in every version.' },
+            { word: 'take offence', meaning: '화를 내다', sentence: 'Name a person and that person takes offence.' },
+            { word: 'tack on', meaning: '갖다 붙이다', sentence: 'The moral tacked on at the end.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : FABLES);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap(fable => fable.beats.map((beat, i) => ({ kind: 'spread', fable, beat, isFirst: i === 0, isLast: i === fable.beats.length - 1 }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -962,6 +2037,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -970,7 +2046,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -982,7 +2058,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -1016,4 +2092,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
