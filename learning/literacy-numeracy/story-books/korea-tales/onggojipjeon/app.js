@@ -1,6 +1,6 @@
 const BOOK_TITLE = "옹고집전";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => (LANG === 'en' ? `Chapter ${n} · ` : `${n}장 · `);
 
 const CHAPTERS = [
     {
@@ -276,15 +276,18 @@ function splitSegments(html) {
     return segs.length ? segs : [html];
 }
 
-const CHAPTER_SEGS = CHAPTERS.map(ch => {
+// 말을 바꾸면 글이 통째로 갈리므로 조각도 다시 나눈다.
+function segsOf(paras) {
     const segs = [];
-    ch.paras.forEach((html, paraIdx) => {
+    paras.forEach((html, paraIdx) => {
         splitSegments(html).forEach((piece, k) => {
             segs.push({ paraIdx, html: piece, start: k === 0 });
         });
     });
     return segs;
-});
+}
+
+let CHAPTER_SEGS = [];
 
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
@@ -302,7 +305,7 @@ function runHtml(segs, a, b) {
         // 쪽 끝에 걸린 <br>는 빈 줄만 만드니 떼어 낸다.
         inner = inner.replace(/(<br\s*\/?>)+\s*$/i, '')
             .replace(/<br\s*\/?>/gi, '<br><span class="ln"></span>');
-        out += `<p${contd ? ' class="cont"' : ''}>${inner}</p>`;
+        out += `<p${contd ? ' class="cont"' : ''} data-say="${pi}">${inner}</p>`;
         i = j;
     }
     return out;
@@ -544,6 +547,17 @@ function paginateChapter(ch, chIndex) {
     });
     return spreads;
 }
+const COVER = {
+    emoji: '🌾',
+    title: '옹고집전',
+    intro: [
+        "옹고집전은 지은이가 알려지지 않은 조선 후기 소설이에요. 원래는 판소리로 불리던 것이 글로 옮겨진 것이랍니다.",
+        "판소리 열두 마당 가운데 하나였지만 노래로 부르는 법은 끊기고 글만 남았어요. 이렇게 사설만 남은 판소리를 실전 판소리라고 부른답니다.",
+        "고집이 세고 남의 말을 듣지 않는 사람을 옹고집이라 부르는 말이 여기서 나왔어요. 사람 이름이 그대로 낱말이 된 드문 경우지요.",
+        "짚으로 사람 모양을 만들어 부적을 붙이면 진짜 사람처럼 움직인다는 생각은 우리 옛이야기에 자주 나와요. 짚으로 만든 것이 사람 노릇을 한다는 이야기는 홍길동전에도 비슷하게 나온답니다."
+    ]
+};
+
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
@@ -555,17 +569,15 @@ function artFrame(src, emoji) {
 }
 
 function coverPage() {
+    const c = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '🌾')}
+                ${artFrame('cover.webp', c.emoji)}
             </div>
             <div class="story-page-right">
-                <h1>옹고집전</h1>
-                <p>옹고집전은 지은이가 알려지지 않은 조선 후기 소설이에요. 원래는 판소리로 불리던 것이 글로 옮겨진 것이랍니다.</p>
-                <p>판소리 열두 마당 가운데 하나였지만 노래로 부르는 법은 끊기고 글만 남았어요. 이렇게 사설만 남은 판소리를 실전 판소리라고 부른답니다.</p>
-                <p>고집이 세고 남의 말을 듣지 않는 사람을 옹고집이라 부르는 말이 여기서 나왔어요. 사람 이름이 그대로 낱말이 된 드문 경우지요.</p>
-                <p>짚으로 사람 모양을 만들어 부적을 붙이면 진짜 사람처럼 움직인다는 생각은 우리 옛이야기에 자주 나와요. 짚으로 만든 것이 사람 노릇을 한다는 이야기는 홍길동전에도 비슷하게 나온답니다.</p>
+                <h1 data-say="0">${c.title}</h1>
+                ${c.intro.map((p, i) => `<p data-say="${i + 1}">${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -583,14 +595,14 @@ function tocPage(part) {
                 <span class="toc-num">${mark}</span>
                 <span>
                     <strong>${title}</strong>
-                    <small>${page}쪽</small>
+                    <small>${page}${T().folio}</small>
                 </span>
             </button>
         </li>`;
     const itemHtml = ch => rowHtml(`data-goto="${ch.num}"`, ch.num, ch.title, pageOfChapter(ch.num));
     const extraItems = [
-        rowHtml('data-goto-kind="quiz"', '❓', '이야기 문제', pageOfKind('quiz')),
-        rowHtml('data-goto-kind="after"', '📖', '읽고 나서', pageOfKind('after')),
+        rowHtml('data-goto-kind="quiz"', '❓', T().quiz, pageOfKind('quiz')),
+        rowHtml('data-goto-kind="after"', '📖', T().after, pageOfKind('after')),
     ];
     const group = TOC_GROUPS[part];
     const last = part === TOC_GROUPS.length - 1;
@@ -599,11 +611,11 @@ function tocPage(part) {
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                ${part === 0 ? '<h2>차례</h2>' : ''}
+                ${part === 0 ? `<h2>${T().toc}</h2>` : ''}
                 <ul class="toc-list">${items.slice(0, half).join('')}</ul>
             </div>
             <div class="story-page-right">
-                ${part === 0 ? '<h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>' : ''}
+                ${part === 0 ? `<h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>` : ''}
                 <ul class="toc-list">${items.slice(half).join('')}</ul>
             </div>
         </div>`;
@@ -611,10 +623,7 @@ function tocPage(part) {
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
 const TOC_PER_SPREAD = 16;
-const TOC_GROUPS = [];
-for (let i = 0; i < CHAPTERS.length; i += TOC_PER_SPREAD) {
-    TOC_GROUPS.push(CHAPTERS.slice(i, i + TOC_PER_SPREAD));
-}
+let TOC_GROUPS = [];
 
 function chapterSpreadPage(spread) {
     const ch = spread.ch;
@@ -665,13 +674,13 @@ const QUIZ = [
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
 // 문제는 한 쪽에 다 넣고 스크롤해서 푼다.
 // 쪽을 쪼개 놓으면 쪽마다 절반이 비고, 답을 고르려고 여러 번 넘겨야 한다.
-const QUIZ_GROUPS = [{ from: 0, items: QUIZ }];
+const QUIZ_GROUPS = [{ from: 0 }];
 
 // 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
 const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
 
 function quizPage(part) {
-    const group = QUIZ_GROUPS[part];
+    const group = { from: QUIZ_GROUPS[part].from, items: QZ() };
     const done = QUIZ_PICKED.filter(v => v !== null).length;
     const items = group.items.map((item, k) => {
         const i = group.from + k;
@@ -690,8 +699,8 @@ function quizPage(part) {
     }).join('');
     return `
         <div class="page page-quiz">
-            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
-            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+            ${part === 0 ? `<h2>${T().quiz}</h2>` : ''}
+            <p class="quiz-intro-text" id="quizProgress">${T().done(done, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
@@ -720,30 +729,22 @@ const AFTERWORD = {
     ]
 };
 
-const AFTER_SEGS = (() => {
-    const segs = [];
-    AFTERWORD.paras.forEach((html, paraIdx) => {
-        splitSegments(html).forEach((piece, k) => {
-            segs.push({ paraIdx, html: piece, start: k === 0 });
-        });
-    });
-    return segs;
-})();
+let AFTER_SEGS = [];
 
-const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+const AFTER_FOOT = () => `<p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>`;
 
 function paginateAfterword() {
     const segs = AFTER_SEGS;
-    const arts = AFTERWORD.art || [];
+    const arts = AF().art || [];
     const { usable, headHeight, artHeight } = PROBE;
-    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const headHtml = `<h2>${AF().title}</h2>`;
     const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
 
     const underArt = Math.max(60, usable - artHeight);
 
     // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
     // 마지막 쪽만 넘친다.
-    const footH = PROBE.measure(AFTER_FOOT);
+    const footH = PROBE.measure(AFTER_FOOT());
 
     const capsOf = slots => {
         const caps = [];
@@ -790,9 +791,9 @@ function paginateAfterword() {
 
 function afterSpreadPage(spread) {
     const segs = AFTER_SEGS;
-    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = spread.first ? `<h2>${AF().title}</h2>` : '';
     // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
-    const foot = spread.last ? AFTER_FOOT : '';
+    const foot = spread.last ? AFTER_FOOT() : '';
 
     if (spread.art) {
         return `
@@ -802,7 +803,7 @@ function afterSpreadPage(spread) {
                     ${runHtml(segs, spread.left[0], spread.left[1])}
                 </div>
                 <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    <div class="story-art-top">${artFrame(spread.art, AF().emoji)}</div>
                     ${runHtml(segs, spread.right[0], spread.right[1])}
                     ${foot}
                 </div>
@@ -822,17 +823,565 @@ function afterSpreadPage(spread) {
         </div>`;
 }
 
+
+/* ── 영어판 ────────────────────────────────────────────────────
+   우리말 글과 영어 글을 나란히 두고, 단추 하나로 갈아 끼운다.
+   쪽은 재어서 나누므로 말을 바꾸면 처음부터 다시 나눈다. */
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   artAt 닻은 영어 문장 조각으로 새로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: '🌾',
+        title: 'The Tale of Onggojip',
+        intro: [
+            "The Tale of Onggojip is an old Korean story with no known author. It was once sung as pansori, but that song has been lost.",
+            "Of the twelve pansori pieces, only five are still sung today. This is one of the seven whose music is gone, so we can only read it.",
+            "It belongs to a family of stories in which a false person appears and argues that he is the real one. Here the false one is made out of straw.",
+            "Onggojip means a stubborn man of the Ong family. The name says what he is before the story starts."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Onggojip of Ongdang Village",
+            art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
+            artAt: ["six storehouses", "How many measures", "no fire was lit in that room"],
+            paras: [
+                "Long ago, in a village called Ongdang in the district of Ongjin, there lived a man called Onggojip. There was no richer man in that district. It took a good while just to walk from his gate to his storehouses. He had a hundred plots of paddy and twice as much dry field, and six storehouses.",
+                "But the man was worth less than his money. Or rather, the more the money grew the less the man was. His hands got quicker at counting coins and his eyes got dimmer at seeing people.",
+                "Onggojip never gave anybody anything. Rice could rot in his storehouse and he would not lend one measure to a starving neighbour. If it spoiled, he threw it into the stream instead. He watched the white grains float away down the stream without blinking.<br>\"Better thrown away than given. Give once and they keep coming back.\"",
+                "He worked his servants from before dawn until night. And he grudged them even a bowl at their midday break and had water brought instead. The backs of their hands were cracked in every season. If one of them fell ill, far from getting medicine, his food was stopped first.<br>\"Why should food go into a mouth that isn't working?\" At mealtimes the servants glanced at one another and picked up nothing but their water bowls.",
+                "If a traveller asked for one night's lodging, he came out with a club. If a beggar stood at the gate, he set the dogs on him. The dogs of Ongdang were raised to bite people. Among travellers, Ongdang was known as a village to walk straight past.",
+                "When people from the village had to pass Onggojip's house they went the long way round on purpose.<br>\"They say it's bad luck to walk under that wall.\"<br>\"What use is a rich house that not one grain of rice comes out of?\" They told the children not to play in front of it either.",
+                "It was not that Onggojip was ashamed. The more people spoke ill of him, the more he took it as proof he was doing well. In fact he was quietly proud of the talk.<br>\"If I were soft like that lot, would I have put this much by?\"",
+                "Onggojip had a wife and a son and a daughter. But there was no laughter inside the house either. The children stopped in the middle of a sentence at the sound of their father coming into the yard. It was because a second helping at the table got them a hard look.",
+                "If his wife ever tried to send rice to her own family, he fetched the scales first.<br>\"How many measures are you sending? Count them before you send them.\"",
+                "When his son said he wanted to go to the village school, he snorted.<br>\"Does reading books put rice on the table, or cake? Go and water the paddies in that time.\" After that his son never mentioned school again.",
+                "So Onggojip's storehouses swelled year by year. And the wall round that house grew higher year by year. The higher the wall grew, the quieter it was inside.",
+                "But inside that high wall, in the furthest corner room of the inner house, Onggojip's old mother lay. It was a room that did not get a hand's breadth of sunlight all day.",
+                "Onggojip's mother was over eighty. For some years now her legs had failed and she only lay there. When she was young she had raised Onggojip by taking in sewing.",
+                "And no fire was lit in that room even in the depth of winter.<br>\"What does someone who only lies there want with firewood? Let her pull up a quilt.\" Even the servants walked faster when they passed that door.",
+                "Her meals went in twice a day. Cold rice and one small dish of soy sauce, and that was all. A servant set it down and came out and that was the end of it. There was no soup. In summer the rice sometimes went in already sour.",
+                "One night his mother coughed badly. His wife spoke carefully to Onggojip.<br>\"Mother has been coughing all night. Shall I call the doctor?\"",
+                "Onggojip did not lift his eyes from his ledger.<br>\"Do you know what a doctor costs? That is what old age is.\" Every coin spent that day was written in that ledger.",
+                "\"Then at least a fire in her room...\"<br>\"You are talkative today.\"",
+                "The next morning his mother called her son. Onggojip went into the room unwillingly. His breath showed white. The air in the room was colder than the air outside.",
+                "\"My son.\"<br>\"What is it?\"<br>\"I am sorry I have lived so long.\" Her voice was as thin as wind.",
+                "For a moment Onggojip had nothing to say. But then he answered shortly,<br>\"What a thing to say.\" And he quickly changed the subject.",
+                "\"I ask only one thing of you. Do not send away a person who comes to your gate. Give them a bowl of water at least. Your father lived so.\" When she had said it she lay getting her breath for a long time.",
+                "Onggojip left the room without answering. His hand was a little slow closing the door, and he did not notice it. Then out in the yard he called a servant and scolded him.<br>\"Who lit a warming fire in my mother's room! It's more than I can bear.\"",
+                "The servant hesitated.<br>\"Nobody lit one, sir.\"<br>\"Then why was the chimney warm this morning?\"<br>\"That would be the kitchen fire coming through the wall, sir.\"<br>Onggojip told them to halve the kitchen fire as well. That night his mother's room was colder than the night before."
+            ]
+        },
+        {
+            num: 2,
+            title: "Turned from the Gate, and the Night at Chwiamsa",
+            art: ["story-02-a.webp", "story-02-b.webp", "story-02-c.webp"],
+            artAt: ["The club came down on the monk's shoulder", "began to weave the straw", "went down the mountain"],
+            paras: [
+                "It was the autumn of that year. A monk came down from Chwiamsa temple on Wolchulbong to Ongdang village to ask for alms<span class=\"gloss\">(rice or money given to a temple)</span>. There was already frost on the mountain.",
+                "The monk went round the village striking his wooden gong. People gave him a handful of rice, as much as they could. In poor houses they gave a handful of barley and said they were sorry. Whether he was given much or little the monk bowed just the same.",
+                "Last of all the monk stood in front of Onggojip's house. The wall was so high that you could hardly see the roof. The monk struck his gong. There was no sound at all from inside.",
+                "After a long while the gate opened and Onggojip came out. He looked the monk up and down and asked straight out,<br>\"What do you want?\" There was not a trace of welcome in his voice.<br>\"This poor monk comes from Chwiamsa on Wolchulbong. The temple is old and we mean to mend the roof, so I ask for a little alms.\"",
+                "Onggojip snorted.<br>\"If the temple is old, let the monks mend it. Why go round begging other men's rice?\" Inside the gate a dog began to bark.",
+                "\"We are carrying the timber ourselves. Only we have no money for tiles...\"<br>\"Then don't put tiles on it. Cover it with straw.\" Onggojip was already closing the gate.",
+                "The monk did not lose his temper.<br>\"I hear you have six storehouses. One measure of rice and this poor monk will go away.\" The monk's voice was still low and calm.",
+                "At that Onggojip's face went red.<br>\"So you have been counting my storehouses! This fellow has come to rob me, that's plain!\" He spat as he spoke.",
+                "Onggojip picked up a club from the yard. The servants had no time to stop him. Nor did they dare to stand in his way.",
+                "\"You dog of a monk!\"<br>The club came down on the monk's shoulder. The monk staggered back. The dull sound went over the wall and into the lane. The wooden gong fell and rolled away on the ground.",
+                "Onggojip crushed that gong under his foot, took the monk's pack<span class=\"gloss\">(the bag a monk carries on his back)</span> and threw it over the wall.<br>\"Come again and I'll set the dogs on you!\" The alms rice spilled out of the pack and mixed with the dirt.",
+                "The monk stood a long while, covered in dirt. Then he picked up the broken pieces of the gong one by one, and quietly put his palms together toward Onggojip.<br>\"A guest will come to your house before long.\"<br>He said only that and went up the mountain. The hands picking up the pieces shook a little.",
+                "That night the monks of Chwiamsa sat together. There was a livid mark on the shoulder of the monk who had been beaten. He winced with every breath, as if the shoulder caught.",
+                "\"Let us report it to the town office.\"<br>\"Reporting it will do no good. They say that man drinks with the magistrate.\" A heaviness settled over the temple.",
+                "The young monks raised their voices.<br>\"A man like that needs a fright.\"<br>\"We should put a fire in his storehouse...\" For once the temple was loud.",
+                "Then the oldest monk in the temple opened his eyes. He had been sitting a long time without a word.<br>\"Set a fire and the servants of that house burn first.\"",
+                "The monks fell silent. The old monk went on.<br>\"And burning his goods only makes him grieve for his goods. He will never once see his own wrong.\" The young monks looked at one another.",
+                "\"Then what shall we do?\"<br>\"Let him go through, himself, exactly what he has done to others.\" The old monk's voice never rose at all.",
+                "The old monk went down to the yard and brought back an armful of straw. And then he began to weave the straw, all through the night. Nobody dared ask what he meant by it; they only watched.",
+                "Arms appeared, and legs, and a body. Last of all he rolled straw into a ball and set it on for a head, and there was a straw figure the size of a man. His hands moved so fast that the straw seemed to weave itself.",
+                "The old monk took a brush and wrote on a sheet of yellow paper. Then he stuck that charm on the figure's forehead. The ink was not even dry.",
+                "The old monk murmured something low, and the straw of the figure turned softly into skin and its eyes opened. The charm on its forehead sank in and disappeared. The lamp in the room swayed once, hard.",
+                "The thing made of straw sat up. Its face was not a hair's breadth different from Onggojip's. One young monk stepped backward without knowing he did. Even its breathing was the same as Onggojip's.",
+                "\"Go down,\" said the old monk. His voice was low but it rang clearly through the room. \"Only, do not harm anyone. Keep the house, open the storehouses, and look after the old woman in it. That is your work.\"<br>The false Onggojip bowed his head and went down the mountain."
+            ]
+        },
+        {
+            num: 3,
+            title: "Another Onggojip",
+            art: ["story-03-a.webp", "story-03-b.webp", "story-03-c.webp"],
+            artAt: ["wearing his clothes and walking his walk", "His wife came running out", "The magistrate looked at the two of them"],
+            paras: [
+                "It was the middle of the next day. Onggojip was in his study looking over his ledger. Then there was a commotion in the yard. He heard servants running across it.",
+                "\"The master is coming in!\"<br>Onggojip lifted his head. He wondered what they meant. He had been sitting in this room since morning. The brush stopped on the page.",
+                "The moment he opened the door and looked out into the yard, Onggojip froze where he stood. The brush fell out of his hand onto the floor.",
+                "There was a man wearing his clothes and walking his walk, coming in at the gate. The face and the height and the voice were all his own. Even the mole at the end of the left eyebrow was the same. Even the way he walked was Onggojip's.",
+                "\"You, you dog! Who are you!\"<br>Onggojip ran out in his stocking feet. He could not even get his shoes on properly.",
+                "The false Onggojip turned round slowly. And then he asked back, perfectly calm,<br>\"That is a question I should be asking. Who are you, who have come into another man's house and put on another man's clothes?\" There was not a trace of surprise or alarm in him.",
+                "\"What! This house is mine!\"<br>\"This house is mine.\" The two voices came together so that you could not tell which was which.",
+                "The servants gathered, one by one. They looked from one to the other and did not know what to do.<br>\"Which one is our master...\"<br>\"It might be this one, or it might be that one.\" Not one of them would go to either side.",
+                "His wife came running out. Onggojip was delighted.<br>\"Wife! Which one is me! Say it!\" His wife's hand had a tight hold of her apron.",
+                "His wife stood between the two of them and studied them a long while. She looked at their faces, at their hands, and listened to their voices. Then she went white and stepped backward.<br>\"...I don't know.\" She very nearly sat down where she stood.",
+                "His son came. His daughter came. Not one of them could tell. They were a family that had lived thirty years in one house.",
+                "Onggojip stamped his foot.<br>\"Look at my face! Can you not know the face of a man you have lived with for thirty years!\"<br>The false Onggojip said quietly,<br>\"It is not that they cannot know your face. It is that there is nothing about you they know except your face.\" At that the real Onggojip had nothing to say.",
+                "Since it could not be settled in the house, the two Onggojips went to the town office. The whole village came along to watch. The yard of the office filled until there was no room to put a foot down.",
+                "The magistrate looked at the two of them and rubbed his eyes several times.<br>\"Well. I have never seen the like of this in my life.\" He looked from one to the other and put his fan to his forehead.",
+                "The magistrate asked,<br>\"Are you Onggojip?\"<br>\"I am.\" The two of them answered at the same moment. Even the voices were the same. The magistrate cleared his throat.",
+                "The magistrate thought for a long time and then struck his knee.<br>\"Good. If we cannot tell by the face, let us tell by the household. The man who knows his own house is the master of it.\" The crowd held its breath.",
+                "The magistrate asked first,<br>\"How many storehouses have you, and how much of what is in them?\" The clerk took up his brush to write it down.",
+                "The real Onggojip answered at once.<br>\"Six storehouses, sir, and in them three hundred sacks of rice and a hundred of barley.\"<br>The false Onggojip shook his head.<br>\"Six storehouses is right, but the fifth one leaked last summer and half of it spoiled. There are two hundred and forty sacks of rice now, and after sorting out the spoiled grain I gave twenty sacks to the village.\"",
+                "The people watching began to murmur. One of the villagers called out,<br>\"That's true, sir! We had rice from him last month!\" Heads nodded here and there.",
+                "The real Onggojip's face went white. He had never ordered any such thing. That the storehouse had leaked, and that rice had been given away, were both news to him.",
+                "The magistrate asked again,<br>\"How many servants are in your house? Name them.\"<br>The real Onggojip mumbled.<br>\"Twelve, no, about fourteen, sir, and the names... Dolsoe, and Samwol, and...\"<br>There he stuck. Sweat stood on his forehead.",
+                "The false Onggojip named all fourteen without missing one. He added their ages and their home villages and their ailments.<br>\"Makdong hurt his left shoulder and cannot carry heavy loads, so I have moved him to kitchen work.\" Nobody could have known it in such detail.",
+                "Last of all the magistrate asked,<br>\"And what is your mother eating?\" The yard went as quiet as if water had been thrown over it.",
+                "The real Onggojip could not open his mouth. He had never once seen what went onto his mother's tray.<br>The false Onggojip answered,<br>\"Her teeth are bad, so we send in a soft porridge. And a warming fire has been lit in her room these three days.\" The magistrate nodded slowly."
+            ]
+        },
+        {
+            num: 4,
+            title: "Driven Out and Begging",
+            art: ["story-04-a.webp", "story-04-b.webp", "story-04-c.webp"],
+            artAt: ["threw him down in the road", "curled up under the eaves", "looked down at his own house"],
+            paras: [
+                "The magistrate gave his judgement.<br>\"This one is the true Onggojip. The other has tried to take another man's house. Beat him and drive him out of this district.\" There was not the least hesitation in the magistrate's voice.",
+                "\"No! I am Onggojip! I am!\"<br>The real Onggojip struggled. But the runners had him by both arms. The more he shouted the more the people pitied him.",
+                "Onggojip was beaten in the yard of the town office. All his life he had raised a stick at others and had never been struck himself. He could not even count the strokes.",
+                "When the beating was over the runners dragged him to the edge of the district and threw him down in the road.<br>\"Set foot in this district again and next time you go to prison.\" The runners went back without looking round.",
+                "For a long time Onggojip could not get up. People passing by glanced at him and walked on. They were the faces that used to bow and scrape in front of his storehouses. Among them were villagers he knew by sight, and not one of them helped him up.",
+                "When the sun went down it turned cold. Onggojip walked with a limp. He had nowhere to go. The wind came straight through his clothes.",
+                "He knocked at the first house.<br>\"Let me sleep here one night.\"<br>An answer came from inside.<br>\"We have no room either.\" And there was lamplight coming through the crack of the door.",
+                "At the second house they did not even open the door. At the third they set the dogs on him. Onggojip was chased by the dogs and rolled down a paddy bank. His clothes were thick with dirt.",
+                "That night Onggojip slept curled up under the eaves of somebody's barn. His teeth chattered all night. It was the first time he had known that one wisp of straw could be so warm.",
+                "When he opened his eyes at dawn his whole body was frozen. He had no feeling in his fingers. He tried to stand and his legs would not obey him.",
+                "In that moment his mother's room came into his mind. That room with no fire in it in the depth of winter. An old woman past eighty who had got through year after year with one quilt.",
+                "Onggojip stayed curled under the eaves and could not move for a long time. Only then did he begin to see what kind of nights his mother had passed in that room.",
+                "From then on Onggojip wandered from village to village. His clothes wore out and his shoes fell apart until his feet showed through. When he gave his name nobody believed him.",
+                "When he was too hungry to bear it he stood at somebody's gate and held out his hand. At first he would rather have died than do it. It took three days without food before the hand went out by itself. Whenever he held it out he bowed his head.",
+                "At some houses they wrapped up a lump of rice for him. At some they slammed the door. At some they threw water over him. He went through all three.",
+                "Turning away with the water running off him, Onggojip thought it for the first time.<br>'I did that.' The water dripped from his clothes.",
+                "He had never given one bowl of water to a person at his gate. He had set the dogs on them and picked up a club. Those people must have gone three days without food, just as he had now. And those people must have had mothers too.",
+                "Winter came. Onggojip limped along the snowy roads. His toes froze and went numb. He wrapped rags round his feet instead of straw shoes.",
+                "Once he stood outside the wall of a house where there was a feast, smelling the food, and a servant of that house drove him off. The servant pushed him and said,<br>\"Get away. It's bad luck on a feast day.\" Inside the wall the laughing did not stop.",
+                "Onggojip stepped back without a word in reply. Once he would have picked up a club. Now he had no club and no strength. That night he stood outside the wall and listened to the laughter all night.",
+                "Then one day Onggojip's feet turned toward his own district. He went even knowing that if he entered it he would be put in prison. He only wanted to know whether his mother was still alive.",
+                "In the night he climbed the hill behind the village and looked down at his own house. It was bright inside the wall. Seen from far off, his house was very large.",
+                "And astonishingly, there was light coming from the corner room of the inner house. Smoke went straight up from the chimney. It was his mother's room. He had never seen a fire in that room.",
+                "Onggojip sat down where he was. The one who had lit that fire was a thing made of straw, and the one who had stopped it was her son. Onggojip covered his face with his sleeve. And he sat there the whole night."
+            ]
+        },
+        {
+            num: 5,
+            title: "The Old Monk in the Snow",
+            art: ["story-05-a.webp", "story-05-b.webp", "story-05-c.webp"],
+            artAt: ["crossing a snow-covered mountain path", "took a rice ball out of his robe", "stood in front of his own gate"],
+            paras: [
+                "That winter was unusually long. Onggojip was crossing a snow-covered mountain path when he went down. The snow was up to his knees and it was hard to take one step.",
+                "He had gone days without food, and his feet were frozen, and he could go no further. The snow settled on his face. His body seemed to be growing warmer. He did not know that this was the more dangerous thing.",
+                "'So it ends here.'<br>Onggojip closed his eyes. Strangely, he did not feel wronged. He did not miss the money or the house at all. Only one thing weighed on him.",
+                "It was that he had never once said sorry to his mother. That one thing kept coming up before his eyes.",
+                "How long it was he did not know. Someone shook his shoulder.<br>\"Get up.\"",
+                "Onggojip barely opened his eyes. On the white snow stood an old monk in a grey robe. There was a staff in his hand. Through the falling snow only the sound of the staff came clearly.",
+                "The old monk took a rice ball out of his robe and put it into Onggojip's hand. Onggojip ate it in a rush. When something warm went down his throat the tears came. Only when he had finished did his throat close up.",
+                "\"Reverend... why would you do this for such a one as me...\"<br>\"Does giving food to a man fallen in the road need a reason?\" The old monk sat down beside him.",
+                "Onggojip could not lift his head at that. All his life he had asked for reasons. Before he gave anyone anything he had reckoned first whether it would come back. If nothing would come back, he did not give.",
+                "\"Reverend, I am a man who deserves punishment. I once beat a monk from a temple with a club and drove him away.\" Having said it, he felt lighter.<br>\"I know.\"",
+                "Onggojip looked up in surprise. There was not the least anger in the old monk's face. It was rather the face of someone who had waited a long time.",
+                "\"It has taken one whole winter for you to say that yourself.\"<br>The old monk took a sheet of yellow paper out of his robe. It was a charm.<br>\"Go home. And throw this at him.\" He cupped it in his hand so the snow would not wet it.",
+                "\"Reverend, who on earth is that man?\"<br>The old monk said it plainly.<br>\"He is woven out of straw. He is only playing at being a person on the strength of one charm.\"",
+                "Onggojip's eyes went wide.<br>\"Straw? And that thing rules my house and looks after my family...\"<br>\"Yes. What a thing of straw does, you did not do for thirty years.\" Onggojip could not lift his head.",
+                "Those words hurt worse than the club. Onggojip took the charm in both hands. One sheet of paper had never been so heavy.",
+                "\"Reverend, one thing more. I am afraid that when I go home I shall go back to what I was. Does a person change so easily?\"",
+                "The old monk smiled for the first time.<br>\"That you have learned to be afraid of it is the change.\" And then he took his staff and stood up.",
+                "When Onggojip raised his head the old monk was already gone. There were only a few marks of a staff on the snow. Even those were covered over and gone in a moment.",
+                "Onggojip went down the mountain. His feet were blistered but he walked faster than before. It was because now he had somewhere to go.",
+                "When he reached the edge of the district he stopped for a moment. If the runners caught him he would go to prison. Still he did not turn back.",
+                "Onggojip walked in by the main road. He did not want to creep in. He walked with his head up.",
+                "The villagers knew him and whispered. But strangely, nobody called the runners. It was Onggojip who was surprised. An old man came up and asked,<br>\"Had a hard time of it, begging?\"<br>Onggojip nodded.<br>\"Yes. A hard time.\"",
+                "The old man clicked his tongue.<br>\"All the same, that house has become a house people live in. He opened the storehouses and got us through the winter. My grandchild lived on that house's rice.\" The old man's eyes were wet.",
+                "Onggojip could make no answer to that. And then he stood in front of his own gate. The wall was as high as ever. But the gate was open."
+            ]
+        },
+        {
+            num: 6,
+            title: "Back to Straw",
+            art: ["story-06-a.webp", "story-06-b.webp", "story-06-c.webp"],
+            artAt: ["The servants were at work in the yard", "And then he threw the charm", "knelt in front of his mother"],
+            paras: [
+                "The gate was open. It was a gate that had always been barred before. The bar had been taken right out and stood against the wall.",
+                "The servants were at work in the yard. But there were bowls set out for their midday break, and there was laughter. In the old days it could never have happened.",
+                "Somebody knew Onggojip and shouted,<br>\"Oh, the master has come again!\" The servants left their work and came crowding out.",
+                "The false Onggojip walked out of the inner house. The two of them stood face to face in the middle of the yard. Only their clothes were different; the face was still one face.",
+                "The family came crowding out. His wife came, and his son, and his daughter. This time too, nobody could tell which was the real one. Only, one was in silk and one was in rags.",
+                "But this time Onggojip did not argue it either. He took the charm out of his coat. He had no wish at all to argue.",
+                "\"I have not come to insist that I am the master of this house.\"<br>The false Onggojip looked at him quietly.<br>\"Then what have you come for?\" There was neither anger nor welcome in his voice.",
+                "\"I have come to say thank you.\"<br>The yard went silent. Something moved for a moment in the false Onggojip's eyes.",
+                "\"What I did not do in thirty years, you have done in half a year. You lit the fire in my mother's room and you opened the storehouses. There is no way for me to repay it.\" His throat kept closing as he spoke.",
+                "Onggojip held the charm up in both hands. His hands were shaking.<br>\"Only, from now on I will do it.\" His wife started to say something and shut her mouth.",
+                "And then he threw the charm. The moment it touched the false Onggojip's chest, the man's body sank softly down. The false Onggojip did not move aside.",
+                "The clothes collapsed empty, and dry straw came pouring out of them. One gust of wind went through and a few wisps of straw lifted over the yard. What had been a man a moment before was a handful of straw.",
+                "The family cried out and stepped back. Only Onggojip knelt down in front of that heap of straw. And he took up a handful and held it to his chest. There seemed still to be a person's warmth left in it.",
+                "Onggojip got to his feet. His family stood round him not knowing what to do. Nobody would speak first.",
+                "But Onggojip did not go to the storehouses or to his study. He went round to the back and came out with an armful of firewood. It was heavy and he had to shift it in his arms several times.",
+                "\"Master, let a servant do that.\"<br>\"I will do it.\"",
+                "Onggojip crouched at the stove mouth of his mother's room and lit the fire. It was the first time in his life he had done it, and it only made bitter smoke. His eyes stung and watered. Onggojip wiped his eyes with his sleeve and kept pushing the fire in. The servants watched him from a distance.",
+                "At last the fire caught and the smoke went straight up from the chimney. The floor of the room began, little by little, to grow warm.",
+                "Onggojip opened the door, went in and knelt in front of his mother. Her eyes were too dim to know her son's face. For the first time in a long while the room was warm.",
+                "\"Is it my son?\"<br>\"Yes, mother.\"<br>\"Your voice is different today.\" His mother felt for his face with her hand.",
+                "Onggojip took his mother's dry hand. And for a long time he could not say anything. The hand was dry as a twig.",
+                "\"Mother, I have done wrong.\"<br>His mother was not even surprised. She only stroked the back of his hand slowly.<br>\"It has taken you a long time to say it.\"",
+                "After that Onggojip was a changed man. He hung a measuring cup on the storehouse door instead of a bar, and anyone who came to his gate was given at least a bowl of water. He had the wall lowered to shoulder height as well.",
+                "He gave the servants their midday break, and if one of them was ill he let him rest three days. His son went to the village school. The storehouse door stood open in every season.",
+                "But Onggojip did get one habit that people thought strange. He stood a bundle of straw at one side of the yard and let nobody touch it. When it rained he covered it with a mat himself.",
+                "If anyone asked why, Onggojip only answered,<br>\"He is my teacher.\" And then he changed the subject so they could not ask again.",
+                "And that autumn new tiles went onto the roof of Chwiamsa on Wolchulbong. Who gave for them, they say, the temple never told. Only, from that year on there was never a time when sacks of rice were not standing in the temple yard."
+            ]
+        }
+    ],
+    /* 단어장 — 그림책은 펼침면마다 묶지만, 소설은 장마다 묶는다.
+       쪽은 재어서 나누므로 미리 알 수 없기 때문이다.
+       화면에는 그 쪽에 실제로 나온 낱말만 골라 보여 준다(vocabFor). */
+    words: {
+        "cover": [
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean story with no known author" },
+            { w: "has been lost (lose)", k: "전하지 않는다", s: "but that song has been lost" },
+            { w: "are still sung (sing)", k: "아직 불린다", s: "only five are still sung today" },
+            { w: "belongs to ~ (belong)", k: "~에 속한다", s: "It belongs to a family of stories" },
+            { w: "argues that ~ (argue)", k: "~라고 우긴다", s: "a false person appears and argues that he is the real one" },
+            { w: "stubborn", k: "고집 센", s: "Onggojip means a stubborn man of the Ong family" }
+        ],
+        "ch1": [
+            { w: "was worth less than ~ (be worth)", k: "~만 못했다", s: "But the man was worth less than his money" },
+            { w: "the more ~ the less ...", k: "~할수록 …해졌다", s: "the more the money grew the less the man was" },
+            { w: "dimmer (dim)", k: "흐려진", s: "his eyes got dimmer at seeing people" },
+            { w: "lend one measure (lend)", k: "한 되를 꾸어 주다", s: "would not lend one measure to a starving neighbour" },
+            { w: "without blinking (blink)", k: "눈 하나 깜짝 않고", s: "He watched the white grains float away down the stream without blinking" },
+            { w: "grudged (grudge)", k: "아까워했다", s: "he grudged them even a bowl at their midday break" },
+            { w: "cracked (crack)", k: "갈라졌다", s: "The backs of their hands were cracked in every season" },
+            { w: "far from ~ing", k: "~하기는커녕", s: "far from getting medicine, his food was stopped first" },
+            { w: "lodging", k: "잠자리", s: "If a traveller asked for one night's lodging" },
+            { w: "set the dogs on ~ (set)", k: "개를 풀었다", s: "he set the dogs on him" },
+            { w: "walk straight past", k: "그냥 지나치다", s: "Ongdang was known as a village to walk straight past" },
+            { w: "the long way round", k: "먼 길로 돌아서", s: "they went the long way round on purpose" },
+            { w: "spoke ill of ~ (speak ill)", k: "흉을 보았다", s: "The more people spoke ill of him" },
+            { w: "took it as proof (take)", k: "증거로 여겼다", s: "the more he took it as proof he was doing well" },
+            { w: "put by (put by)", k: "모아 두다", s: "would I have put this much by" },
+            { w: "a hard look", k: "눈총", s: "a second helping at the table got them a hard look" },
+            { w: "scales", k: "저울", s: "he fetched the scales first" },
+            { w: "snorted (snort)", k: "코웃음을 쳤다", s: "he snorted" },
+            { w: "swelled (swell)", k: "불어났다", s: "Onggojip's storehouses swelled year by year" },
+            { w: "her legs had failed (fail)", k: "다리를 못 쓰게 되었다", s: "For some years now her legs had failed" },
+            { w: "taking in sewing (take in)", k: "삯바느질을 하며", s: "she had raised Onggojip by taking in sewing" },
+            { w: "in the depth of winter", k: "한겨울에도", s: "no fire was lit in that room even in the depth of winter" },
+            { w: "pull up a quilt (pull up)", k: "이불을 덮다", s: "Let her pull up a quilt" },
+            { w: "went in already sour (go in)", k: "쉰 채로 들어갔다", s: "In summer the rice sometimes went in already sour" },
+            { w: "did not lift his eyes (lift)", k: "눈도 떼지 않았다", s: "Onggojip did not lift his eyes from his ledger" },
+            { w: "That is what old age is", k: "늙으면 다 그런 것이다", s: "That is what old age is" },
+            { w: "talkative", k: "말이 많은", s: "You are talkative today" },
+            { w: "unwillingly", k: "마지못해", s: "Onggojip went into the room unwillingly" },
+            { w: "as thin as wind", k: "바람처럼 가는", s: "Her voice was as thin as wind" },
+            { w: "changed the subject (change)", k: "화제를 돌렸다", s: "And he quickly changed the subject" },
+            { w: "Do not send away ~ (send away)", k: "그냥 돌려보내지 마라", s: "Do not send away a person who comes to your gate" },
+            { w: "getting her breath (get)", k: "숨을 고르며", s: "she lay getting her breath for a long time" },
+            { w: "scolded (scold)", k: "야단을 쳤다", s: "he called a servant and scolded him" },
+            { w: "hesitated (hesitate)", k: "우물쭈물했다", s: "The servant hesitated" },
+            { w: "halve (halve)", k: "반으로 줄이다", s: "Onggojip told them to halve the kitchen fire as well" }
+        ],
+        "ch2": [
+            { w: "alms", k: "시주", s: "to ask for alms" },
+            { w: "frost", k: "서리", s: "There was already frost on the mountain" },
+            { w: "wooden gong", k: "목탁", s: "The monk went round the village striking his wooden gong" },
+            { w: "as much as they could", k: "형편대로", s: "People gave him a handful of rice, as much as they could" },
+            { w: "just the same", k: "똑같이", s: "the monk bowed just the same" },
+            { w: "you could hardly see ~", k: "보이지 않을 지경이었다", s: "The wall was so high that you could hardly see the roof" },
+            { w: "looked ~ up and down (look up and down)", k: "위아래로 훑어보았다", s: "He looked the monk up and down" },
+            { w: "not a trace of welcome", k: "반가운 기색 하나 없이", s: "There was not a trace of welcome in his voice" },
+            { w: "mend (mend)", k: "고치다", s: "The temple is old and we mean to mend the roof" },
+            { w: "go round begging (go round)", k: "얻으러 다니다", s: "Why go round begging other men's rice" },
+            { w: "did not lose his temper (lose one's temper)", k: "화를 내지 않았다", s: "The monk did not lose his temper" },
+            { w: "go away (go away)", k: "물러가다", s: "One measure of rice and this poor monk will go away" },
+            { w: "spat (spit)", k: "침이 튀었다", s: "He spat as he spoke" },
+            { w: "had no time to ~ (have time)", k: "~할 새도 없었다", s: "The servants had no time to stop him" },
+            { w: "did not dare (dare)", k: "감히 ~하지 못했다", s: "Nor did they dare to stand in his way" },
+            { w: "came down on ~ (come down)", k: "후려쳤다", s: "The club came down on the monk's shoulder" },
+            { w: "staggered back (stagger)", k: "비틀거리며 물러섰다", s: "The monk staggered back" },
+            { w: "dull sound", k: "둔탁한 소리", s: "The dull sound went over the wall" },
+            { w: "crushed ~ under his foot (crush)", k: "발로 밟아 부수었다", s: "Onggojip crushed that gong under his foot" },
+            { w: "spilled out (spill out)", k: "쏟아졌다", s: "The alms rice spilled out of the pack" },
+            { w: "put his palms together (put together)", k: "합장했다", s: "quietly put his palms together toward Onggojip" },
+            { w: "before long", k: "곧", s: "A guest will come to your house before long" },
+            { w: "livid", k: "시퍼런", s: "There was a livid mark on the shoulder" },
+            { w: "winced (wince)", k: "얼굴을 찡그렸다", s: "He winced with every breath" },
+            { w: "will do no good", k: "소용없다", s: "Reporting it will do no good" },
+            { w: "settled over ~ (settle)", k: "무겁게 가라앉았다", s: "A heaviness settled over the temple" },
+            { w: "needs a fright", k: "혼쭐이 나야 한다", s: "A man like that needs a fright" },
+            { w: "burn first (burn)", k: "먼저 탄다", s: "Set a fire and the servants of that house burn first" },
+            { w: "grieve for ~ (grieve)", k: "아까워하다", s: "burning his goods only makes him grieve for his goods" },
+            { w: "go through ~ (go through)", k: "겪다", s: "Let him go through, himself, exactly what he has done to others" },
+            { w: "an armful of ~", k: "한 아름의", s: "brought back an armful of straw" },
+            { w: "weave (weave)", k: "엮다", s: "he began to weave the straw" },
+            { w: "seemed to weave itself", k: "저절로 엮이는 것 같았다", s: "the straw seemed to weave itself" },
+            { w: "charm", k: "부적", s: "Then he stuck that charm on the figure's forehead" },
+            { w: "murmured (murmur)", k: "낮게 읊조렸다", s: "The old monk murmured something low" },
+            { w: "sank in (sink in)", k: "스며들었다", s: "The charm on its forehead sank in and disappeared" },
+            { w: "not a hair's breadth", k: "털끝 하나도", s: "Its face was not a hair's breadth different from Onggojip's" },
+            { w: "look after ~ (look after)", k: "잘 모시다", s: "and look after the old woman in it" }
+        ],
+        "ch3": [
+            { w: "commotion", k: "소란", s: "Then there was a commotion in the yard" },
+            { w: "froze (freeze)", k: "얼어붙었다", s: "Onggojip froze where he stood" },
+            { w: "mole", k: "점", s: "Even the mole at the end of the left eyebrow was the same" },
+            { w: "in his stocking feet", k: "버선발로", s: "Onggojip ran out in his stocking feet" },
+            { w: "perfectly calm", k: "아주 태연하게", s: "he asked back, perfectly calm" },
+            { w: "came together (come together)", k: "겹쳤다", s: "The two voices came together" },
+            { w: "which was which", k: "어느 쪽인지", s: "so that you could not tell which was which" },
+            { w: "would go to either side", k: "어느 한쪽으로도 가지 못했다", s: "Not one of them would go to either side" },
+            { w: "was delighted (delight)", k: "반색을 했다", s: "Onggojip was delighted" },
+            { w: "studied (study)", k: "살폈다", s: "studied them a long while" },
+            { w: "went white (go white)", k: "새파랗게 질렸다", s: "Then she went white and stepped backward" },
+            { w: "very nearly ~", k: "~할 뻔했다", s: "She very nearly sat down where she stood" },
+            { w: "stamped his foot (stamp)", k: "발을 굴렀다", s: "Onggojip stamped his foot" },
+            { w: "except your face", k: "얼굴 말고는", s: "there is nothing about you they know except your face" },
+            { w: "could not be settled (settle)", k: "결판이 나지 않았다", s: "Since it could not be settled in the house" },
+            { w: "no room to put a foot down (put)", k: "발 디딜 틈 없이", s: "until there was no room to put a foot down" },
+            { w: "rubbed his eyes (rub)", k: "눈을 비볐다", s: "rubbed his eyes several times" },
+            { w: "the like of this", k: "이런 일", s: "I have never seen the like of this in my life" },
+            { w: "cleared his throat (clear)", k: "헛기침을 했다", s: "The magistrate cleared his throat" },
+            { w: "struck his knee (strike)", k: "무릎을 쳤다", s: "thought for a long time and then struck his knee" },
+            { w: "held its breath (hold one's breath)", k: "숨을 죽였다", s: "The crowd held its breath" },
+            { w: "spoiled (spoil)", k: "상했다", s: "the fifth one leaked last summer and half of it spoiled" },
+            { w: "sorting out ~ (sort out)", k: "골라내며", s: "after sorting out the spoiled grain" },
+            { w: "murmur (murmur)", k: "웅성거리다", s: "The people watching began to murmur" },
+            { w: "were both news to him", k: "처음 듣는 이야기였다", s: "were both news to him" },
+            { w: "mumbled (mumble)", k: "우물거렸다", s: "The real Onggojip mumbled" },
+            { w: "he stuck (stick)", k: "말이 막혔다", s: "There he stuck" },
+            { w: "without missing one (miss)", k: "하나도 빠짐없이", s: "named all fourteen without missing one" },
+            { w: "ailment", k: "병", s: "He added their ages and their home villages and their ailments" },
+            { w: "in such detail", k: "그렇게 소상히", s: "Nobody could have known it in such detail" },
+            { w: "went onto ~'s tray (go)", k: "밥상에 올랐다", s: "He had never once seen what went onto his mother's tray" },
+            { w: "a warming fire", k: "군불", s: "a warming fire has been lit in her room these three days" }
+        ],
+        "ch4": [
+            { w: "gave his judgement (give)", k: "판결을 내렸다", s: "The magistrate gave his judgement" },
+            { w: "not the least hesitation", k: "조금도 망설임 없이", s: "There was not the least hesitation in the magistrate's voice" },
+            { w: "struggled (struggle)", k: "발버둥을 쳤다", s: "The real Onggojip struggled" },
+            { w: "the more ~ the more ...", k: "~할수록 …했다", s: "The more he shouted the more the people pitied him" },
+            { w: "count the strokes (count)", k: "매를 세다", s: "He could not even count the strokes" },
+            { w: "threw him down (throw down)", k: "길바닥에 던졌다", s: "threw him down in the road" },
+            { w: "bow and scrape", k: "굽신거리다", s: "the faces that used to bow and scrape in front of his storehouses" },
+            { w: "helped him up (help up)", k: "부축했다", s: "not one of them helped him up" },
+            { w: "with a limp", k: "다리를 절며", s: "Onggojip walked with a limp" },
+            { w: "came straight through ~ (come through)", k: "그대로 파고들었다", s: "The wind came straight through his clothes" },
+            { w: "knocked at ~ (knock)", k: "문을 두드렸다", s: "He knocked at the first house" },
+            { w: "rolled down ~ (roll down)", k: "굴러떨어졌다", s: "Onggojip was chased by the dogs and rolled down a paddy bank" },
+            { w: "curled up (curl up)", k: "웅크렸다", s: "Onggojip slept curled up under the eaves of somebody's barn" },
+            { w: "chattered (chatter)", k: "딱딱 부딪쳤다", s: "His teeth chattered all night" },
+            { w: "a wisp of straw", k: "짚 한 오라기", s: "one wisp of straw could be so warm" },
+            { w: "would not obey him (obey)", k: "말을 듣지 않았다", s: "his legs would not obey him" },
+            { w: "came into his mind (come)", k: "떠올랐다", s: "his mother's room came into his mind" },
+            { w: "get through ~ (get through)", k: "나다, 견디다", s: "who had got through year after year with one quilt" },
+            { w: "wandered (wander)", k: "떠돌았다", s: "Onggojip wandered from village to village" },
+            { w: "wore out (wear out)", k: "해졌다", s: "His clothes wore out" },
+            { w: "would rather have died", k: "죽기보다 싫었다", s: "At first he would rather have died than do it" },
+            { w: "by itself", k: "저절로", s: "before the hand went out by itself" },
+            { w: "slammed the door (slam)", k: "문을 쾅 닫았다", s: "At some they slammed the door" },
+            { w: "threw water over ~ (throw)", k: "물을 끼얹었다", s: "At some they threw water over him" },
+            { w: "went numb (go numb)", k: "감각이 없어졌다", s: "His toes froze and went numb" },
+            { w: "wrapped rags round ~ (wrap)", k: "천을 감았다", s: "He wrapped rags round his feet" },
+            { w: "drove him off (drive off)", k: "쫓아냈다", s: "a servant of that house drove him off" },
+            { w: "It's bad luck", k: "재수 없다", s: "It's bad luck on a feast day" },
+            { w: "without a word in reply", k: "대꾸도 못 하고", s: "Onggojip stepped back without a word in reply" },
+            { w: "even knowing that ~", k: "~인 줄 알면서도", s: "He went even knowing that if he entered it he would be put in prison" },
+            { w: "looked down at ~ (look down)", k: "내려다보았다", s: "looked down at his own house" },
+            { w: "astonishingly", k: "놀랍게도", s: "And astonishingly, there was light coming from the corner room" },
+            { w: "covered his face (cover)", k: "얼굴을 감쌌다", s: "Onggojip covered his face with his sleeve" }
+        ],
+        "ch5": [
+            { w: "unusually long", k: "유난히 긴", s: "That winter was unusually long" },
+            { w: "went down (go down)", k: "쓰러졌다", s: "crossing a snow-covered mountain path when he went down" },
+            { w: "settled on ~ (settle)", k: "내려앉았다", s: "The snow settled on his face" },
+            { w: "the more dangerous thing", k: "더 위험한 것", s: "He did not know that this was the more dangerous thing" },
+            { w: "did not feel wronged (feel)", k: "억울하지 않았다", s: "he did not feel wronged" },
+            { w: "weighed on ~ (weigh)", k: "마음에 걸렸다", s: "Only one thing weighed on him" },
+            { w: "kept coming up (come up)", k: "자꾸 어른거렸다", s: "That one thing kept coming up before his eyes" },
+            { w: "shook his shoulder (shake)", k: "어깨를 흔들었다", s: "Someone shook his shoulder" },
+            { w: "barely opened (open)", k: "겨우 떴다", s: "Onggojip barely opened his eyes" },
+            { w: "staff", k: "지팡이", s: "There was a staff in his hand" },
+            { w: "rice ball", k: "주먹밥", s: "took a rice ball out of his robe" },
+            { w: "in a rush", k: "허겁지겁", s: "Onggojip ate it in a rush" },
+            { w: "his throat close up (close up)", k: "목이 메다", s: "Only when he had finished did his throat close up" },
+            { w: "need a reason", k: "까닭이 필요하다", s: "Does giving food to a man fallen in the road need a reason" },
+            { w: "reckoned (reckon)", k: "셈했다", s: "he had reckoned first whether it would come back" },
+            { w: "deserves punishment (deserve)", k: "벌을 받아 마땅하다", s: "I am a man who deserves punishment" },
+            { w: "felt lighter (feel)", k: "속이 후련했다", s: "Having said it, he felt lighter" },
+            { w: "not the least anger", k: "성난 기색이 조금도 없는", s: "There was not the least anger in the old monk's face" },
+            { w: "one whole winter", k: "겨울 하나", s: "It has taken one whole winter for you to say that yourself" },
+            { w: "cupped ~ in his hand (cup)", k: "손으로 감쌌다", s: "He cupped it in his hand so the snow would not wet it" },
+            { w: "playing at being ~ (play)", k: "~ 노릇을 하는", s: "He is only playing at being a person" },
+            { w: "on the strength of ~", k: "~ 하나로", s: "on the strength of one charm" },
+            { w: "hurt worse than ~ (hurt)", k: "~보다 아팠다", s: "Those words hurt worse than the club" },
+            { w: "had never been so heavy", k: "그렇게 무거울 수 없었다", s: "One sheet of paper had never been so heavy" },
+            { w: "go back to what I was", k: "예전으로 돌아가다", s: "I shall go back to what I was" },
+            { w: "so easily", k: "그렇게 쉽게", s: "Does a person change so easily" },
+            { w: "smiled for the first time (smile)", k: "처음으로 웃었다", s: "The old monk smiled for the first time" },
+            { w: "be afraid of it (be afraid)", k: "그것을 두려워하다", s: "That you have learned to be afraid of it is the change" },
+            { w: "were covered over (cover over)", k: "눈에 덮였다", s: "Even those were covered over and gone in a moment" },
+            { w: "blistered (blister)", k: "부르텄다", s: "His feet were blistered" },
+            { w: "somewhere to go", k: "가야 할 데", s: "It was because now he had somewhere to go" },
+            { w: "did not turn back (turn back)", k: "발길을 돌리지 않았다", s: "Still he did not turn back" },
+            { w: "creep in (creep)", k: "숨어 들어가다", s: "He did not want to creep in" },
+            { w: "whispered (whisper)", k: "수군거렸다", s: "The villagers knew him and whispered" },
+            { w: "clicked his tongue (click)", k: "혀를 찼다", s: "The old man clicked his tongue" },
+            { w: "got us through ~ (get through)", k: "겨울을 나게 해 주었다", s: "He opened the storehouses and got us through the winter" }
+        ],
+        "ch6": [
+            { w: "was always barred (bar)", k: "늘 빗장이 걸려 있었다", s: "It was a gate that had always been barred before" },
+            { w: "at work (be at work)", k: "일하고 있는", s: "The servants were at work in the yard" },
+            { w: "midday break", k: "새참", s: "there were bowls set out for their midday break" },
+            { w: "could never have happened (happen)", k: "있을 수 없는 일이었다", s: "In the old days it could never have happened" },
+            { w: "came crowding out (crowd)", k: "몰려나왔다", s: "The servants left their work and came crowding out" },
+            { w: "face to face", k: "마주 서서", s: "The two of them stood face to face" },
+            { w: "in rags", k: "누더기 차림으로", s: "one was in silk and one was in rags" },
+            { w: "insist that ~ (insist)", k: "우기다", s: "I have not come to insist that I am the master of this house" },
+            { w: "neither ~ nor ...", k: "~도 …도 아닌", s: "There was neither anger nor welcome in his voice" },
+            { w: "say thank you", k: "고맙다는 말을 하다", s: "I have come to say thank you" },
+            { w: "in half a year", k: "반년 만에", s: "you have done in half a year" },
+            { w: "no way to repay it (repay)", k: "갚을 길이 없다", s: "There is no way for me to repay it" },
+            { w: "from now on", k: "이제부터는", s: "Only, from now on I will do it" },
+            { w: "sank softly down (sink)", k: "스르르 무너져 내렸다", s: "the man's body sank softly down" },
+            { w: "did not move aside (move aside)", k: "피하지 않았다", s: "The false Onggojip did not move aside" },
+            { w: "collapsed empty (collapse)", k: "힘없이 주저앉았다", s: "The clothes collapsed empty" },
+            { w: "a gust of wind", k: "한 줄기 바람", s: "One gust of wind went through" },
+            { w: "a handful of straw", k: "한 줌 짚", s: "was a handful of straw" },
+            { w: "held it to his chest (hold)", k: "가슴에 안았다", s: "took up a handful and held it to his chest" },
+            { w: "would speak first (speak)", k: "먼저 입을 열었다", s: "Nobody would speak first" },
+            { w: "shift ~ in his arms (shift)", k: "고쳐 안다", s: "he had to shift it in his arms several times" },
+            { w: "crouched (crouch)", k: "쪼그리고 앉았다", s: "Onggojip crouched at the stove mouth" },
+            { w: "bitter smoke", k: "매캐한 연기", s: "it only made bitter smoke" },
+            { w: "stung and watered (sting)", k: "시리고 눈물이 났다", s: "His eyes stung and watered" },
+            { w: "the fire caught (catch)", k: "불길이 잡혔다", s: "At last the fire caught" },
+            { w: "too dim to ~ (dim)", k: "눈이 어두워 ~하지 못하다", s: "Her eyes were too dim to know her son's face" },
+            { w: "felt for ~ (feel for)", k: "손으로 더듬었다", s: "His mother felt for his face with her hand" },
+            { w: "stroked (stroke)", k: "쓰다듬었다", s: "She only stroked the back of his hand slowly" },
+            { w: "a changed man", k: "달라진 사람", s: "After that Onggojip was a changed man" },
+            { w: "measuring cup", k: "됫박", s: "He hung a measuring cup on the storehouse door" },
+            { w: "shoulder height", k: "어깨높이", s: "He had the wall lowered to shoulder height as well" },
+            { w: "let nobody touch ~ (let)", k: "아무도 손대지 못하게 했다", s: "and let nobody touch it" },
+            { w: "so they could not ask again", k: "더 묻지 못하게", s: "so they could not ask again" },
+            { w: "never told (tell)", k: "끝내 말하지 않았다", s: "the temple never told" }
+        ],
+        "after": [
+            { w: "stands in ~ (stand)", k: "~에 놓여 있다", s: "This story stands in a rather unusual place" },
+            { w: "died out (die out)", k: "끊겼다", s: "the singers died out and the music was lost" },
+            { w: "no longer know (know)", k: "이제 알 수 없다", s: "we can no longer know" },
+            { w: "nail clippings", k: "손톱 조각", s: "a man throws his nail clippings away" },
+            { w: "takes his place (take)", k: "주인 자리를 차지하다", s: "turns into him and takes his place" },
+            { w: "sets ~ on top of ... (set)", k: "~을 …에 얹다", s: "sets a temple and a monk on top of that frame" },
+            { w: "carried ~ away (carry away)", k: "대신 지고 갔다", s: "something that carried a person's bad luck away for them" },
+            { w: "runs the house (run)", k: "살림을 다스리다", s: "the false one runs the house better than the real one" },
+            { w: "the heart of ~", k: "~의 핵심", s: "That is the heart of this story" },
+            { w: "better to live with", k: "함께 살기에 나은", s: "because he was better to live with" },
+            { w: "could do without (do without)", k: "없어도 되는", s: "he was a man they could do without" },
+            { w: "family line", k: "족보", s: "They ask him to recite his family line" },
+            { w: "settled it (settle)", k: "가려냈다", s: "Neither knowledge nor appearance settled it" },
+            { w: "hoarded (hoard)", k: "아껴 쌓아 두었다", s: "is not that he hoarded his money" },
+            { w: "count ~ as people (count)", k: "사람으로 여기다", s: "refusing to count other people as people" },
+            { w: "wears ~ clothes (wear)", k: "~의 옷을 입고 있다", s: "That is also why the story wears Buddhist clothes" },
+            { w: "barely holding on (hold on)", k: "겨우 버티는", s: "temples were barely holding on" },
+            { w: "looked down on ~ (look down on)", k: "낮추어 보았다", s: "a world that looked down on monks" },
+            { w: "on his own feet", k: "제 발로", s: "to walk out of his own house on his own feet" },
+            { w: "the thing that replaced him (replace)", k: "제 자리를 대신한 것", s: "call the thing that replaced him his teacher" },
+            { w: "failed to know ~ (fail)", k: "알아보지 못했다", s: "It means they failed to know the real one" },
+            { w: "may be bigger than ~", k: "~보다 커도 되는가", s: "whether a punishment may be bigger than the wrong" }
+        ]
+    },
+    quiz: [
+        { q: "What kind of man was Onggojip?", choices: ["Poor but generous", "Rich but very mean", "Well read but timid"], answer: 1 },
+        { q: "How did Onggojip treat his mother?", choices: ["He built her a fine house of her own", "He greeted her every day", "He left her in a room with no fire"], answer: 2 },
+        { q: "What did Onggojip do to the monk who came for alms?", choices: ["He beat him and drove him off", "He gave him a measure of rice", "He pretended not to see him"], answer: 0 },
+        { q: "What did the old monk of Chwiamsa make the false Onggojip out of?", choices: ["A doll carved from wood", "A figure moulded from clay", "A straw figure"], answer: 2 },
+        { q: "Why could the family not tell the two Onggojips apart?", choices: ["They were alike to the last hair", "Both of them had their faces covered", "It was too dark to see"], answer: 0 },
+        { q: "How did the magistrate try to find the real one?", choices: ["By making them write the same characters", "By asking about the household", "By making them try their strength"], answer: 1 },
+        { q: "Why did the real Onggojip lose at the hearing?", choices: ["He knew nothing about his own household", "He was frightened and stammered", "He had no witness to speak for him"], answer: 0 },
+        { q: "What happened to Onggojip after he was driven out?", choices: ["He was caught and shut in the town prison", "He went into a mountain temple", "He wandered about begging"], answer: 2 },
+        { q: "What did Onggojip understand at other people's gates?", choices: ["That he had driven the monk off just so", "That his own house was the best in the world", "That wealth is all empty"], answer: 0 },
+        { q: "What did the old monk give Onggojip?", choices: ["A sack of rice", "A staff", "A paper charm"], answer: 2 },
+        { q: "What happened to the false Onggojip when the charm was thrown?", choices: ["He turned to straw and scattered", "He barred the gate and ran", "He hid himself in the storehouse"], answer: 0 },
+        { q: "What was the first thing Onggojip did when he came home?", choices: ["He opened the storehouses to check them", "He fetched firewood from the back", "He called the servants into the yard"], answer: 1 }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌾',
+        art: ['end.webp'],
+        paras: [
+            "This story stands in a rather unusual place. It was sung as pansori, and the song no longer survives.",
+            "Pansori is said to have had twelve pieces originally. Of those, five are still sung today: Chunhyang-ga, Simcheong-ga, Heungbo-ga, Sugung-ga and Jeokbyeok-ga. For the other seven the singers died out and the music was lost. The Song of Onggojip is one of those seven.",
+            "So we cannot hear this story as a song; we can only read it. Where the singer raised his voice, and where the listeners laughed, we can no longer know.",
+            "There are several Korean stories in which a false person appears and argues that he is the real one. The best known is the one where a man throws his nail clippings away, a mouse eats them and turns into him and takes his place. The Onggojip story sets a temple and a monk on top of that frame.",
+            "The straw figure was originally something that carried a person's bad luck away for them. People made one in the first month of the year and threw it out on the road. So a person made of straw was nothing strange to the people listening. What was strange was what this one does.",
+            "This story uses that straw figure quite differently. It does not carry the bad luck away; it takes the master's place. And what is more surprising, the false one runs the house better than the real one and treats people better.",
+            "That is the heart of this story. The false one was better. The family chose the false one not because their eyes were dim, but because he was better to live with. The real reason Onggojip was driven out is not that a man with his face appeared, but that he was a man they could do without.",
+            "The hearing at the town office is worth looking at again. They ask him to recite his family line and his household affairs. And the one made of straw recites it better. It is a scene that asks what it is that makes me me. Neither knowledge nor appearance settled it.",
+            "Of all Onggojip's doings, the one this story treats most heavily is not that he hoarded his money. It is that he turned people away from his gate. That he left his old mother in a cold room, and gave his servants no food at their break. It is a story that punishes not meanness but refusing to count other people as people.",
+            "That is also why the story wears Buddhist clothes. It begins with a monk turned away from a gate and ends with a monk lifting the punishment. In the Joseon period temples were barely holding on in a world that looked down on monks. Stories like this come out of a place like that.",
+            "Look at the way the punishment is given, too. He was not beaten. He was not shut up. He was made to walk out of his own house on his own feet and to stand at other people's gates outside. He was made to go through exactly what he had done to others.",
+            "The end of the story is the part where Onggojip stands a bundle of straw in his yard and calls it his teacher. If a man can come to call the thing that replaced him his teacher, then he really has changed.",
+            "Was the family wrong to choose the false one? It means they failed to know the real one. And yet the false one treated them better. Say what matters more when you are choosing the person you live with.",
+            "Did Onggojip change because he was sorry, or because he was frightened? If he changed because of what he went through while he was begging, can that be called being sorry?",
+            "Did the monk have the right to punish Onggojip? It is true he was turned from the gate, but it is also true that a man's whole house was taken from him and he was put out on the road. Think about whether a punishment may be bigger than the wrong."
+        ]
+    }
+};
+
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서', folio: '쪽',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading', folio: '',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        wordsDown: 'Words ⌄',
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'korea-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+// 글꼴 규칙이 html[lang] 에 걸려 있다. 쪽을 재기 전에 미리 걸어 두어야
+// 영어 글을 영어 글꼴로 잰다. 늦게 걸면 첫 쪽나눔이 통째로 어긋난다.
+document.documentElement.lang = LANG;
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
+
 const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
 
 function buildPages() {
+    CHAPTER_SEGS = CH().map(ch => segsOf(ch.paras));
+    AFTER_SEGS = segsOf(AF().paras);
+    TOC_GROUPS = [];
+    for (let i = 0; i < CH().length; i += TOC_PER_SPREAD) {
+        TOC_GROUPS.push(CH().slice(i, i + TOC_PER_SPREAD));
+    }
+
     PROBE = makeProbe();
     PAGES = [
         { kind: 'cover' },
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
-        ...CHAPTERS.flatMap(paginateChapter),
+        ...CH().flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
         ...paginateAfterword()
     ];
@@ -902,6 +1451,21 @@ function paint() {
     });
 
     if (PAGES[current].kind === 'quiz') initQuiz();
+
+    paintReadBtn();
+    // 읽는 중일 때만 문단을 눌러 그 자리로 옮긴다.
+    // 그냥 눌렀다고 소리가 나면 곤란하니, 스피커 단추를 누른 뒤에만 먹는다.
+    if (LANG === 'en' && CAN_SPEAK) {
+        spreadEl.querySelectorAll('[data-say]').forEach(el => {
+            el.addEventListener('click', () => {
+                if (!reading) return;
+                readPage(Number(el.dataset.say));
+            });
+        });
+    }
+
+    renderVocab();
+    fitVocabScreen();
 }
 
 function initQuiz() {
@@ -909,7 +1473,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -922,7 +1486,7 @@ function initQuiz() {
                 });
                 QUIZ_PICKED[qi] = chosen;
                 const done = QUIZ_PICKED.filter(v => v !== null).length;
-                progressEl.textContent = `${done} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(done, QZ().length);
             });
         });
     });
@@ -930,6 +1494,7 @@ function initQuiz() {
 
 function goTo(index) {
     if (animating || index === current || index < 0 || index >= PAGES.length) return;
+    stopReading();
     animating = true;
     const dir = index > current ? 'flip-next' : 'flip-prev';
     spreadEl.classList.add(dir);
@@ -956,6 +1521,320 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+
+
+/* ── 읽어 주기 ─────────────────────────────────────────────────
+   소설은 한 문단 안에 서술과 대사가 섞여 있다. 그림책처럼 말하는 이를
+   따로 적어 둘 수가 없으므로, 큰따옴표 안팎으로만 목소리를 가른다.
+   속도는 둘 다 같다. 대사에서 갑자기 빨라지면 귀에 턱턱 걸린다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+
+const SAY_RATE = 0.85;
+const SAY_AS = {
+    narration: { pitch: 1.00, rate: SAY_RATE },
+    speech:    { pitch: 1.24, rate: SAY_RATE },
+    speech2:   { pitch: 0.78, rate: SAY_RATE }
+};
+
+let SAY_VOICE = null;
+
+function pickVoices() {
+    if (typeof speechSynthesis === 'undefined') return;
+    const vs = speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang));
+    if (!vs.length) return;
+    SAY_VOICE = vs.find(v => /^en[-_]US/i.test(v.lang)) || vs[0];
+}
+
+if (typeof speechSynthesis !== 'undefined') {
+    pickVoices();
+    speechSynthesis.onvoiceschanged = pickVoices;
+}
+
+function dressVoice(u, role) {
+    const a = SAY_AS[role] || SAY_AS.narration;
+    u.pitch = a.pitch;
+    u.rate = a.rate;
+    if (SAY_VOICE) u.voice = SAY_VOICE;
+}
+
+/* 낱말 뜻풀이는 소리 내어 읽지 않는다. 나머지 표시는 떼고 글자만 남긴다. */
+const plainText = h => h
+    .replace(/<span class="gloss">[\s\S]*?<\/span>/g, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+/* 큰따옴표 안은 대사다. 서술과 목소리를 가른다.
+   한 문단 안에서 따옴표가 잇달아 나오면 대개 두 사람이 주고받는 자리다.
+   그래서 두 번째 대사부터 목소리를 번갈아 바꾼다. 말하는 이를 일일이
+   적어 둘 수 없는 소설틀에서 낼 수 있는 가장 가까운 흉내다. */
+function sayChunks(text) {
+    const out = [];
+    const re = /"([^"]*)"/g;
+    let last = 0, q = 0, m;
+    while ((m = re.exec(text)) !== null) {
+        if (m.index > last) out.push({ t: text.slice(last, m.index), v: 'narration' });
+        out.push({ t: m[1], v: (q++ % 2) ? 'speech2' : 'speech' });
+        last = re.lastIndex;
+    }
+    if (last < text.length) out.push({ t: text.slice(last), v: 'narration' });
+    return out.filter(c => /\S/.test(c.t));
+}
+
+/* 그 쪽에 있는 문단들. 쪽에 걸쳐 잘린 문단은 한 번만 센다. */
+function pageParts(page) {
+    if (!page) return [];
+    if (page.kind === 'cover') {
+        return [CV().title].concat(CV().intro).map((t, i) => ({ i, raw: t }));
+    }
+    const segs = page.kind === 'chapter' ? CHAPTER_SEGS[page.chIndex]
+        : page.kind === 'after' ? AFTER_SEGS : null;
+    if (!segs) return [];
+    const src = page.kind === 'chapter' ? CH()[page.chIndex].paras : AF().paras;
+    const seen = {};
+    const out = [];
+    [page.left, page.right].forEach(r => {
+        if (!r) return;
+        for (let k = r[0]; k < r[1]; k++) {
+            const pi = segs[k].paraIdx;
+            if (seen[pi]) continue;
+            seen[pi] = 1;
+            out.push({ i: pi, raw: src[pi] });
+        }
+    });
+    return out;
+}
+
+/* 읽기 단추는 책틀에 붙박이로 있다. 영어로 읽을 때만 보인다. */
+const readBtnEl = document.getElementById('readBtn');
+let reading = false;
+let readToken = 0;
+
+function paintReadBtn() {
+    if (!readBtnEl) return;
+    readBtnEl.hidden = !(LANG === 'en' && CAN_SPEAK);
+    readBtnEl.textContent = reading ? '■' : '▶';
+}
+
+function stopReading() {
+    reading = false;
+    if (spreadEl) spreadEl.classList.remove('is-reading');
+    readToken++;
+    if (CAN_SPEAK) { try { speechSynthesis.cancel(); } catch (e) {} }
+    document.querySelectorAll('.saying').forEach(el => el.classList.remove('saying'));
+    paintReadBtn();
+}
+
+function readPage(fromParaIdx) {
+    const page = PAGES[current];
+    if (!CAN_SPEAK || !page) return;
+    const parts = pageParts(page);
+    if (!parts.length) return;
+    // 읽던 것이 있으면 끊는다. 안 그러면 새 글이 뒤에 줄을 선다.
+    try { speechSynthesis.cancel(); } catch (e) {}
+    reading = true;
+    if (spreadEl) spreadEl.classList.add('is-reading');
+    paintReadBtn();
+    const mine = ++readToken;
+
+    let start = parts.findIndex(p => p.i === fromParaIdx);
+    if (start < 0) start = 0;
+
+    const step = (k) => {
+        if (mine !== readToken) return;
+        document.querySelectorAll('.saying').forEach(el => el.classList.remove('saying'));
+        if (k >= parts.length) { stopReading(); return; }
+        const here = spreadEl.querySelector(`[data-say="${parts[k].i}"]`);
+        if (here) {
+            here.classList.add('saying');
+            here.scrollIntoView({ block: 'nearest' });
+        }
+        const chunks = sayChunks(plainText(parts[k].raw));
+        const go = (c) => {
+            if (mine !== readToken) return;
+            if (c >= chunks.length) { step(k + 1); return; }
+            const u = new SpeechSynthesisUtterance(chunks[c].t);
+            u.lang = 'en-US';
+            dressVoice(u, chunks[c].v);
+            u.onend = () => go(c + 1);
+            u.onerror = () => go(c + 1);
+            try { speechSynthesis.speak(u); } catch (e) { stopReading(); }
+        };
+        go(0);
+    };
+    step(start);
+}
+
+if (readBtnEl) {
+    readBtnEl.addEventListener('click', () => (reading ? stopReading() : readPage(-1)));
+}
+
+/* ── 단어장 ────────────────────────────────────────────────────
+   책 아래에 있는 또 한 장의 화면이다. 책은 손대지 않는다.
+   낱말은 장마다 묶어 두었고, 그 쪽에 실제로 나온 것만 골라 보여 준다. */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+let VOCAB_NOW = [];
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    if (!page) return { list: [] };
+    if (page.kind === 'cover') return { list: all.cover || [] };
+    if (page.kind === 'chapter' || page.kind === 'after') {
+        const pool = page.kind === 'chapter' ? (all['ch' + page.ch.num] || []) : (all.after || []);
+        const text = pageParts(page).map(p => p.raw).join(' ');
+        return { list: pool.filter(w => text.indexOf(w.s) >= 0) };
+    }
+    // 문제 쪽에는 글이 없다. 답을 고르기 전에 훑어볼 수 있게 책에 나온 낱말을 다 보여 준다.
+    // 차례에는 볼 글이 없으므로 단어장을 아예 열지 않는다.
+    if (page.kind !== 'quiz') return { list: [] };
+    const list = [];
+    Object.keys(all).forEach(k => all[k].forEach(w => list.push(w)));
+    return { list };
+}
+
+function renderVocab() {
+    const { list } = (HAS_WORDS && LANG === 'en') ? vocabFor() : { list: [] };
+    // 볼 낱말이 없는 쪽에서는 아래 화면을 아예 열지 않는다.
+    const on = list.length > 0;
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) {
+        scrollDownEl.hidden = !on;
+        scrollDownEl.textContent = T().wordsDown || 'Words ⌄';
+    }
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.w}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.k}</p>
+                <p class="vocab-sent">${w.s}</p>
+            </li>`).join('')}
+        </ul>`;
+}
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다. */
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        // 「went without (go without)」처럼 괄호로 적어 둔 기본형은 읽지 않는다.
+        const bare = item.w.replace(/\s*\([^)]*\)/g, '').replace(/~/g, '').trim();
+        const word = new SpeechSynthesisUtterance(bare);
+        word.lang = 'en-US';
+        dressVoice(word, 'narration');
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.s);
+        sent.lang = 'en-US';
+        dressVoice(sent, 'narration');
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 글과 단어장이 함께 보인다.
+   소설은 그림 없는 펼침면이 더 많다. 그때는 책 아랫부분만 남기고 멈춘다. */
+function artLine() {
+    const page = PAGES[current];
+    if (!page) return 0;
+    const book = document.querySelector('.book');
+    const bookBox = book ? book.getBoundingClientRect() : null;
+    const capLine = () => (bookBox
+        ? Math.max(0, Math.round(bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45)))
+        : 0);
+    const el = page.kind === 'cover'
+        ? document.querySelector('.page-cover .story-page-left-full')
+        : spreadEl.querySelector('.story-art-top');
+    if (!el) return capLine();
+    const box = el.getBoundingClientRect();
+    const line = Math.max(0, Math.round(box.bottom + window.scrollY));
+    // 표지처럼 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라
+    // 책이 통째로 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (!bookBox || box.height < bookBox.height * 0.8) return line;
+    return Math.max(0, Math.min(line, capLine()));
+}
+
+/* 쪽을 다시 나눌 때는 단어장을 먼저 접는다.
+   아래 화면이 펼쳐진 채로 재면 문서가 길어져 세로 막대가 생기고,
+   그만큼 칸이 좁아져 쪽이 잘못 나뉜다. 세로 화면에서 두 쪽이 어긋났다. */
+function rebuildPages() {
+    if (vocabScreenEl) vocabScreenEl.hidden = true;
+    window.scrollTo(0, 0);
+    buildPages();
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* ── 말 바꾸기 ─────────────────────────────────────────────────
+   쪽은 재어서 나누므로 글을 갈아 끼우면 처음부터 다시 나눈다.
+   보던 장으로 돌아간다. 쪽 수는 말마다 다르다. */
+const langBtn = document.getElementById('langLink');
+
+function applyLang() {
+    stopReading();
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        // 글꼴 규칙(html[lang])을 먼저 바꾸고 나서 재야 한다. 순서를 바꾸면
+        // 영어 글을 한글 글꼴 규칙으로 재게 되어 쪽 수가 열 쪽 넘게 어긋난다.
+        applyLang();
+        rebuildPages();
+        current = Math.min(current, PAGES.length - 1);
+        if (here && here.kind === 'chapter') {
+            const i = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
+            if (i >= 0) current = i;
+        } else if (here) {
+            const i = PAGES.findIndex(p => p.kind === here.kind);
+            if (i >= 0) current = i;
+        }
+        paint();
+    });
+}
+
+applyLang();
 paint();
 
 // 본문 글꼴은 늦게 내려온다. 글꼴이 바뀌면 한 줄에 들어가는 글자 수가 달라져서
@@ -963,7 +1842,7 @@ paint();
 if (document.fonts && document.fonts.status !== 'loaded') {
     document.fonts.ready.then(() => {
         const here = PAGES[current];
-        buildPages();
+        rebuildPages();
         current = Math.min(current, PAGES.length - 1);
         if (here && here.kind === 'chapter') {
             const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
