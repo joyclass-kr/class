@@ -291,16 +291,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '벌거숭이 임금님',
+    intro: [
+        '벌거숭이 임금님은 덴마크의 작가 한스 크리스티안 안데르센이 1837년에 발표한 이야기예요. 안데르센은 가난한 구두장이의 아들로 태어나 백오십 편이 넘는 이야기를 남긴 사람이랍니다.',
+        '이 이야기에는 괴물도 마법도 나오지 않아요. 남의 눈치를 보느라 뻔한 사실도 말하지 못하는 사람들의 모습만으로 이야기가 굴러갑니다. 그래서 이백 년 가까이 지난 지금 읽어도 어쩐지 뜨끔하지요.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '👑')}
             </div>
             <div class="story-page-right">
-                <h1>벌거숭이 임금님</h1>
-                <p>벌거숭이 임금님은 덴마크의 작가 한스 크리스티안 안데르센이 1837년에 발표한 이야기예요. 안데르센은 가난한 구두장이의 아들로 태어나 백오십 편이 넘는 이야기를 남긴 사람이랍니다.</p>
-                <p>이 이야기에는 괴물도 마법도 나오지 않아요. 남의 눈치를 보느라 뻔한 사실도 말하지 못하는 사람들의 모습만으로 이야기가 굴러갑니다. 그래서 이백 년 가까이 지난 지금 읽어도 어쩐지 뜨끔하지요.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -315,8 +324,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -326,8 +335,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -337,22 +346,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -402,9 +412,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -415,7 +425,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -487,7 +497,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -496,34 +506,523 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: "The Emperor's New Clothes",
+        intro: [
+            "The Emperor's New Clothes was written by the Danish author Hans Christian Andersen and published in 1837. Andersen was born the son of a poor shoemaker and left behind more than a hundred and fifty stories.",
+            "There is no monster in this tale and no magic. The whole thing turns on people who cannot say what is plainly in front of them, because they are watching one another. That is why it still stings to read, nearly two hundred years later."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · An Emperor Who Loved Clothes',
+            beats: [
+                {
+                    art: '01-emperor.webp',
+                    emoji: '👑',
+                    left: [
+                        "The emperor changed his clothes once an hour. Clothes came before the business of the country, and if anyone mentioned a new outfit he forgot his dinner.",
+                        "His officials all knew it. His wardrobe took up a whole room — no, ten rooms.",
+                        "\"And how is this morning's coat?\""
+                    ],
+                    right: [
+                        "The officials always gave the same answer.",
+                        "\"Quite magnificent, Your Majesty!\"",
+                        "\"Today's is finer than yesterday's.\"",
+                        "The emperor liked hearing it, and the running of the country came second.",
+                        "People talked about him behind his back.",
+                        "\"Where will the country end up at this rate?\""
+                    ]
+                },
+                {
+                    art: '01-emperor-2.webp',
+                    emoji: '👑',
+                    left: [
+                        "One day two strangers arrived, one tall and one short.",
+                        "They said they were weavers.",
+                        "\"Our cloth is very special indeed.\"",
+                        "\"There is nothing like it in the world.\"",
+                        "The emperor leaned forward."
+                    ],
+                    right: [
+                        "\"And what is so special about it?\"",
+                        "The two of them dropped their voices.",
+                        "\"To anyone who is a fool…\"",
+                        "\"this cloth is invisible.\"",
+                        "\"And to anyone unfit for his post, as well.\"",
+                        "The emperor's eyes went wide."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Strange Cloth',
+            beats: [
+                {
+                    art: '02-swindlers.webp',
+                    emoji: '🧵',
+                    left: [
+                        "The emperor slapped his knee.",
+                        "'If I only wear that coat…'",
+                        "'I shall know exactly which of them are fools.'",
+                        "\"Begin the weaving at once!\"",
+                        "\"It will take a great deal of gold thread.\"",
+                        "\"You shall have as much as you like.\""
+                    ],
+                    right: [
+                        "The two were given a room and two looms set up in it. They were given sacks of gold thread and armfuls of silk, and the emperor never grudged a bit of it.",
+                        "And where did all of it go? Straight into their own pockets.",
+                        "The two of them worked the empty looms busily, with nothing strung on them at all."
+                    ]
+                },
+                {
+                    art: '02-swindlers-2.webp',
+                    emoji: '🧵',
+                    left: [
+                        "The two worked late into the night, and the looms went clack, clack, clack.",
+                        "The sound came out through the crack in the door, and people going past whispered about it.",
+                        "\"How fine that cloth must be!\"",
+                        "The talk spread through the whole country."
+                    ],
+                    right: [
+                        "But there was nothing on the looms. The empty frames turned and turned.",
+                        "The two men worked their hands in the air, pretending to draw out thread.",
+                        "They snipped at nothing with a pair of scissors.",
+                        "And their faces were perfectly serious."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Empty Loom',
+            beats: [
+                {
+                    art: '03-loom.webp',
+                    emoji: '👓',
+                    left: [
+                        "The emperor could not bear the suspense.",
+                        "And yet he did not go himself.",
+                        "'What if I cannot see it either?'",
+                        "\"I had better send a minister first.\"",
+                        "He sent for his old minister, who was said to be the cleverest man in the country."
+                    ],
+                    right: [
+                        "\"Go and look, and come back and tell me.\"",
+                        "The minister went into the room and straightened his spectacles. He went right up close to the loom.",
+                        "He opened his eyes as wide as they would go.",
+                        "He could see nothing at all, and the blood went out of his face.",
+                        "There was not one thread on that loom."
+                    ]
+                },
+                {
+                    art: '03-loom-2.webp',
+                    emoji: '👓',
+                    left: [
+                        "'I cannot see it.'",
+                        "'Does that mean I am a fool?'",
+                        "'Or that I am unfit for my post?'",
+                        "\"Well, minister? What do you think?\"",
+                        "the two men asked. The minister swallowed hard, and a cold sweat ran down his back."
+                    ],
+                    right: [
+                        "\"It is… quite magnificent.\"",
+                        "\"Such lovely colours.\"",
+                        "\"And the pattern — not a fault in it.\"",
+                        "The two men looked at each other and grinned. The minister walked out, and reported it all to the emperor exactly so.",
+                        "\"It is as wonderful as they say, Your Majesty.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · Nobody Could Say It',
+            beats: [
+                {
+                    art: '04-nobody.webp',
+                    emoji: '🤐',
+                    left: [
+                        "Next a young official went, and he could see nothing either. The sweat ran down his back.",
+                        "\"The pattern is quite new.\"",
+                        "\"And the colours dazzle the eye.\"",
+                        "And out he came, quickly.",
+                        "The two men were given more thread, and more gold went into their chest."
+                    ],
+                    right: [
+                        "At last the emperor went himself, with his officials trailing after him. The door was opened.",
+                        "The emperor looked at the loom.",
+                        "Everything went dark in front of him.",
+                        "With all his court watching, he could not let it show.",
+                        "'I cannot see it either!'"
+                    ]
+                },
+                {
+                    art: '04-nobody-2.webp',
+                    emoji: '🤐',
+                    left: [
+                        "'Does that make me a fool? Am I unfit to be emperor?'",
+                        "'It cannot be. It simply cannot be!'",
+                        "The emperor nodded, hugely.",
+                        "\"Oh, it is beautiful!\"",
+                        "\"Everything they say of it is true.\""
+                    ],
+                    right: [
+                        "And every official nodded along with him.",
+                        "\"Indeed!\"",
+                        "\"Magnificent!\"",
+                        "Not one of them could see a thing.",
+                        "And not one of them could say so, because the man beside him said he could.",
+                        "The room filled up with praise."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Emperor Gets Dressed',
+            beats: [
+                {
+                    art: '05-dressing.webp',
+                    emoji: '🪡',
+                    left: [
+                        "The day of the procession was fixed. The two men stayed up all night with sixteen candles burning.",
+                        "They sewed at the air and snipped at the air with their scissors.",
+                        "When morning came they threw up both hands.",
+                        "\"It is finished!\"",
+                        "The emperor stood in front of the mirror."
+                    ],
+                    right: [
+                        "The two of them dressed him.",
+                        "\"Here is the coat.\"",
+                        "\"And here are the trousers.\"",
+                        "\"You can hardly feel the weight of it, can you?\"",
+                        "\"No indeed. Light as a feather.\"",
+                        "And the emperor turned himself this way and that in front of the glass."
+                    ]
+                },
+                {
+                    art: '05-dressing-2.webp',
+                    emoji: '🪡',
+                    left: [
+                        "The emperor squared his shoulders and had a look down at his own feet.",
+                        "There was nothing in the mirror at all.",
+                        "And still the emperor smiled.",
+                        "\"It suits me very well.\"",
+                        "His officials applauded."
+                    ],
+                    right: [
+                        "\"We shall carry the train, Your Majesty.\"",
+                        "Four of them bent down and lifted the empty air with both hands.",
+                        "There was no train to lift.",
+                        "\"Now then. Out we go.\"",
+                        "And the doors were thrown open."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Emperor Has Nothing On',
+            beats: [
+                {
+                    art: '06-parade.webp',
+                    emoji: '📢',
+                    left: [
+                        "The streets were packed with people. The trumpets sounded, and out walked the emperor.",
+                        "The crowd caught its breath.",
+                        "And then they all called out together.",
+                        "\"Oh, how beautiful!\"",
+                        "\"Just look at that pattern!\""
+                    ],
+                    right: [
+                        "\"I've never seen clothes like it!\"",
+                        "\"There's an emperor for you!\"",
+                        "Not one person said they could see nothing. That would have made them a fool.",
+                        "People hung out of every window, and the procession went on.",
+                        "Behind it, four officials held up a train that was not there."
+                    ]
+                },
+                {
+                    art: '06-parade-2.webp',
+                    emoji: '📢',
+                    left: [
+                        "Then a small voice spoke. It was a child up on his father's shoulders.",
+                        "\"But the emperor hasn't got anything on!\"",
+                        "His father put a hand over his mouth at once.",
+                        "\"Hush. Don't say a word.\"",
+                        "But it was already too late."
+                    ],
+                    right: [
+                        "The man next to them had heard it.",
+                        "\"What did that child say?\"",
+                        "\"That he hasn't got anything on.\"",
+                        "The words went out through the crowd like a wave.",
+                        "\"The emperor hasn't got anything on!\"",
+                        "And the whole street was full of it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Emperor Walked to the End',
+            beats: [
+                {
+                    art: '07-ending.webp',
+                    emoji: '🚶',
+                    left: [
+                        "The emperor heard it too, and his face went hot.",
+                        "'That child is right.'",
+                        "'They knew. They all knew.'",
+                        "He wanted to stop walking, and his legs stiffened under him."
+                    ],
+                    right: [
+                        "He wanted to turn round and run.",
+                        "But he did not. He drew himself up straighter instead.",
+                        "One step, and then another.",
+                        "Only the trumpets went on sounding.",
+                        "The procession went all the way to the end, with four officials behind him — still carrying a train that was not there."
+                    ]
+                },
+                {
+                    art: '07-ending-2.webp',
+                    emoji: '🚶',
+                    left: [
+                        "That night the palace was quiet. The two men were long gone, and the sacks of gold thread had gone with them.",
+                        "The emperor stood in front of his wardrobe and closed the doors one by one. The room grew dark.",
+                        "With all those clothes, there was not one he wanted to put on.",
+                        "In the morning he called his officials together."
+                    ],
+                    right: [
+                        "\"From now on we shall do it this way.\"",
+                        "\"If you can see a thing, say you can see it.\"",
+                        "\"If you cannot, say you cannot.\"",
+                        "The officials looked at one another, and somebody laughed quietly.",
+                        "And after that there was a great deal less false praise in that palace."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did the two weavers say about their cloth?',
+            choices: ['A fool, or anyone unfit for his post, could not see it', 'It was woven from real gold', 'It would never wear out'],
+            answer: 0
+        },
+        {
+            q: 'Why did the emperor send the old minister first?',
+            choices: ['The minister had asked to go', 'He was too busy to go', 'He was afraid he might not see the cloth himself'],
+            answer: 2
+        },
+        {
+            q: 'What did the minister actually see on the loom?',
+            choices: ['A pattern of gold and silk', 'Nothing — not one thread', 'Two men asleep'],
+            answer: 1
+        },
+        {
+            q: 'Why did nobody in the room say the truth?',
+            choices: ['Each thought only he could not see it', 'They had all been paid to lie', 'The emperor had forbidden it'],
+            answer: 0
+        },
+        {
+            q: 'What were the four officials doing behind the emperor?',
+            choices: ['Handing out gold thread', 'Sounding the trumpets', 'Carrying a train that was not there'],
+            answer: 2
+        },
+        {
+            q: 'Who said the emperor had nothing on?',
+            choices: ['The old minister', "A child on his father's shoulders", 'One of the weavers'],
+            answer: 1
+        },
+        {
+            q: 'What did the emperor do after he heard the child?',
+            choices: ['He walked the procession to the end', 'He ran back to the palace', 'He had the weavers arrested'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '👑',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Andersen did not collect this story — he made it. He is said to have reworked an old Spanish tale into it.",
+                    "The swindlers added one very clever rule: a fool cannot see the cloth. That single sentence made it impossible for anyone to say they saw nothing.",
+                    "The officials were not setting out to lie. Each of them thought he alone could not see it, and it frightened him. None of them knew the others were in the same position.",
+                    "The emperor was in exactly the same trap. The moment he said he could not see the cloth, he would have become the fool."
+                ],
+                right: [
+                    "The child did not speak up out of bravery. He simply did not know the rule. He could not see it, so he said he could not.",
+                    "The emperor heard the child and did not stop the procession. Why do you think he kept walking?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-emperor.webp': [
+            { word: 'wardrobe', meaning: '옷장', sentence: 'His wardrobe took up a whole room.' },
+            { word: 'take up', meaning: '차지하다', sentence: 'His wardrobe took up a whole room.' },
+            { word: 'magnificent', meaning: '훌륭한', sentence: 'Quite magnificent, Your Majesty!' },
+            { word: 'behind one’s back', meaning: '없는 데서', sentence: 'People talked about him behind his back.' }
+        ],
+        '01-emperor-2.webp': [
+            { word: 'weaver', meaning: '옷감 짜는 사람', sentence: 'They said they were weavers.' },
+            { word: 'lean forward', meaning: '몸을 앞으로 기울이다', sentence: 'The emperor leaned forward.' },
+            { word: 'invisible', meaning: '보이지 않는', sentence: 'To anyone who is a fool, this cloth is invisible.' },
+            { word: 'unfit for', meaning: '~에 맞지 않는', sentence: 'And to anyone unfit for his post, as well.' }
+        ],
+        '02-swindlers.webp': [
+            { word: 'slap one’s knee', meaning: '무릎을 치다', sentence: 'The emperor slapped his knee.' },
+            { word: 'loom', meaning: '베틀', sentence: 'They were given a room and two looms.' },
+            { word: 'grudge', meaning: '아까워하다', sentence: 'The emperor never grudged a bit of it.' },
+            { word: 'string', meaning: '실을 걸다', sentence: 'With nothing strung on them at all.' }
+        ],
+        '02-swindlers-2.webp': [
+            { word: 'clack', meaning: '달그락 소리', sentence: 'The looms went clack, clack, clack.' },
+            { word: 'whisper', meaning: '수군거리다', sentence: 'People going past whispered about it.' },
+            { word: 'pretend', meaning: '~하는 시늉을 하다', sentence: 'Pretending to draw out thread.' },
+            { word: 'snip', meaning: '싹둑 자르다', sentence: 'They snipped at nothing with a pair of scissors.' }
+        ],
+        '03-loom.webp': [
+            { word: 'suspense', meaning: '궁금해 견디기 어려움', sentence: 'The emperor could not bear the suspense.' },
+            { word: 'minister', meaning: '대신', sentence: 'I had better send a minister first.' },
+            { word: 'spectacles', meaning: '안경', sentence: 'The minister straightened his spectacles.' },
+            { word: 'go out of one’s face', meaning: '얼굴이 하얗게 질리다', sentence: 'The blood went out of his face.' }
+        ],
+        '03-loom-2.webp': [
+            { word: 'swallow hard', meaning: '침을 꿀꺽 삼키다', sentence: 'The minister swallowed hard.' },
+            { word: 'cold sweat', meaning: '식은땀', sentence: 'A cold sweat ran down his back.' },
+            { word: 'fault', meaning: '흠, 나무랄 데', sentence: 'The pattern — not a fault in it.' },
+            { word: 'grin', meaning: '씩 웃다', sentence: 'The two men looked at each other and grinned.' }
+        ],
+        '04-nobody.webp': [
+            { word: 'dazzle', meaning: '눈부시게 하다', sentence: 'The colours dazzle the eye.' },
+            { word: 'trail after', meaning: '줄줄이 따르다', sentence: 'His officials trailed after him.' },
+            { word: 'court', meaning: '조정, 신하들', sentence: 'With all his court watching.' },
+            { word: 'let it show', meaning: '내색하다', sentence: 'He could not let it show.' }
+        ],
+        '04-nobody-2.webp': [
+            { word: 'hugely', meaning: '크게', sentence: 'The emperor nodded, hugely.' },
+            { word: 'nod along', meaning: '따라 고개를 끄덕이다', sentence: 'Every official nodded along with him.' },
+            { word: 'praise', meaning: '칭찬', sentence: 'The room filled up with praise.' }
+        ],
+        '05-dressing.webp': [
+            { word: 'procession', meaning: '행진', sentence: 'The day of the procession was fixed.' },
+            { word: 'stay up', meaning: '밤을 새우다', sentence: 'The two men stayed up all night.' },
+            { word: 'sew', meaning: '바느질하다', sentence: 'They sewed at the air.' },
+            { word: 'light as a feather', meaning: '깃털처럼 가벼운', sentence: 'No indeed. Light as a feather.' }
+        ],
+        '05-dressing-2.webp': [
+            { word: 'square one’s shoulders', meaning: '어깨를 으쓱 세우다', sentence: 'The emperor squared his shoulders.' },
+            { word: 'suit', meaning: '어울리다', sentence: 'It suits me very well.' },
+            { word: 'applaud', meaning: '손뼉을 치다', sentence: 'His officials applauded.' },
+            { word: 'train', meaning: '옷자락', sentence: 'We shall carry the train, Your Majesty.' }
+        ],
+        '06-parade.webp': [
+            { word: 'packed', meaning: '가득 찬', sentence: 'The streets were packed with people.' },
+            { word: 'trumpet', meaning: '나팔', sentence: 'The trumpets sounded.' },
+            { word: 'catch one’s breath', meaning: '숨을 삼키다', sentence: 'The crowd caught its breath.' },
+            { word: 'hang out of', meaning: '매달리다', sentence: 'People hung out of every window.' }
+        ],
+        '06-parade-2.webp': [
+            { word: 'hush', meaning: '쉿', sentence: "Hush. Don't say a word." },
+            { word: 'too late', meaning: '이미 늦은', sentence: 'But it was already too late.' },
+            { word: 'like a wave', meaning: '물결처럼', sentence: 'The words went out through the crowd like a wave.' }
+        ],
+        '07-ending.webp': [
+            { word: 'go hot', meaning: '화끈 달아오르다', sentence: 'His face went hot.' },
+            { word: 'stiffen', meaning: '굳다', sentence: 'His legs stiffened under him.' },
+            { word: 'draw oneself up', meaning: '허리를 곧게 펴다', sentence: 'He drew himself up straighter instead.' }
+        ],
+        '07-ending-2.webp': [
+            { word: 'long gone', meaning: '이미 떠난', sentence: 'The two men were long gone.' },
+            { word: 'one by one', meaning: '하나씩', sentence: 'He closed the doors one by one.' },
+            { word: 'from now on', meaning: '앞으로는', sentence: 'From now on we shall do it this way.' },
+            { word: 'false praise', meaning: '거짓 칭찬', sentence: 'There was a great deal less false praise.' }
+        ],
+        'end.webp': [
+            { word: 'rework', meaning: '고쳐 쓰다', sentence: 'He reworked an old Spanish tale into it.' },
+            { word: 'swindler', meaning: '사기꾼', sentence: 'The swindlers added one very clever rule.' },
+            { word: 'set out to', meaning: '~하려고 작정하다', sentence: 'The officials were not setting out to lie.' },
+            { word: 'in the same position', meaning: '같은 처지인', sentence: 'None of them knew the others were in the same position.' },
+            { word: 'bravery', meaning: '용감함', sentence: 'The child did not speak up out of bravery.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -588,6 +1087,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -596,7 +1096,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -608,7 +1108,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -642,4 +1142,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
