@@ -65,10 +65,19 @@ test("body copy and controls remain readable and touchable", () => {
 });
 
 test("the page loads the readability revision", () => {
-  assert.ok(html.includes("harmony-course.css?v=20260902-14"));
-  assert.ok(html.includes("harmony-curriculum.js?v=20260902-12"));
-  assert.ok(html.includes("harmony-course.js?v=20260902-18"));
+  assert.ok(html.includes("course-v2.css?v=20260903-1"));
+  assert.ok(html.includes("harmony-foundation.css?v=20260903-1"));
+  assert.ok(html.includes("harmony-course.css?v=20260903-1"));
+  assert.ok(html.includes("harmony-curriculum.js?v=20260903-1"));
+  assert.ok(html.includes("harmony-course.js?v=20260903-1"));
   assert.ok(html.includes("harmony-traditional-extension.js?v=20260901-7"));
+});
+
+test("lesson view omits repetitive promotional labels", () => {
+  assert.match(courseSource, /<strong>학습 목표<\/strong>/);
+  assert.doesNotMatch(courseSource, /section-label|visual-kicker|직접 해보기|악보에서 음의 위치 확인|common-mistake|renderFreePiano/);
+  assert.doesNotMatch(html, /piano-panel|자유 건반/);
+  assert.doesNotMatch(curriculumSource, /조표의 개수만 외우지 말고/);
 });
 
 test("every progress card exposes its lesson order", () => {

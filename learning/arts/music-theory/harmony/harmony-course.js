@@ -283,7 +283,8 @@
       return notes +
         '<text class="chord-label" x="'+x+'" y="26" text-anchor="middle">'+escapeHtml(item[0])+'</text>';
     }).join("");
-    return '<div class="score-frame"><p class="score-title">'+escapeHtml(title || "악보로 확인")+'</p><svg class="score-svg" viewBox="0 0 '+width+' '+height+'" role="img" aria-label="'+escapeHtml(title || "화음 악보")+'"><rect width="'+width+'" height="'+height+'" rx="8" fill="#fffdf7"/><g transform="translate(0 '+yShift+')"><g class="staff-lines">'+staff+'</g>'+clefs+events+'</g></svg></div>';
+    const heading = title ? '<p class="score-title">'+escapeHtml(title)+'</p>' : "";
+    return '<div class="score-frame">'+heading+'<svg class="score-svg" viewBox="0 0 '+width+' '+height+'" role="img" aria-label="'+escapeHtml(title || "화음 악보")+'"><rect width="'+width+'" height="'+height+'" rx="8" fill="#fffdf7"/><g transform="translate(0 '+yShift+')"><g class="staff-lines">'+staff+'</g>'+clefs+events+'</g></svg></div>';
   }
   function sequenceNote(part, x, clef) {
     const y = noteY(part, clef, false);
@@ -321,7 +322,8 @@
         : "";
       return '<div class="score-line-card"><strong>'+escapeHtml(item[0])+'</strong><svg class="score-svg sequence-score" viewBox="0 0 '+width+' '+height+'" role="img" aria-label="'+escapeHtml(item[0])+'"><rect width="'+width+'" height="'+height+'" rx="8" fill="#fffdf7"/><g transform="translate(0 '+yShift+')"><g class="staff-lines">'+staffLines([74,84,94,104,114],width)+'</g><text class="music-glyph clef '+(clef === "bass" ? "bass-clef" : "")+'" x="28" y="'+(clef === "bass" ? 103 : 112)+'">'+(clef === "bass" ? "𝄢" : "𝄞")+'</text>'+barlines+notes+'</g></svg></div>';
     }).join("");
-    return '<div class="score-frame"><p class="score-title">'+escapeHtml(title || "악보로 확인")+'</p><div class="score-compare">'+rows+'</div></div>';
+    const heading = title ? '<p class="score-title">'+escapeHtml(title)+'</p>' : "";
+    return '<div class="score-frame">'+heading+'<div class="score-compare">'+rows+'</div></div>';
   }
   function staffSvg(items, title, key) {
     return SEQUENCE_KEYS.has(key) ? sequenceStaffSvg(items, title, key) : chordStaffSvg(items, title, key);
@@ -670,7 +672,7 @@
     const title = key === "lead-sheet" ? "리드시트의 코드와 멜로디"
       : key === "staff-basics" ? "다섯 줄과 네 칸"
       : key === "staff-clefs" ? "두 음자리표의 기준 음"
-      : "악보에서 음의 위치 확인";
+      : "";
     return conceptVisual(key) + (formula ? formula : "") + staffSvg(score, title, key);
   }
 
@@ -797,14 +799,13 @@
     els.lessonUnit.textContent = strand.title;
     els.lessonTitle.textContent = skill.title;
     els.lessonEnglish.textContent = skill.english;
-    els.lessonOutcome.innerHTML = '<strong>이번에 할 일</strong> '+escapeHtml(skill.outcome);
+    els.lessonOutcome.innerHTML = '<strong>학습 목표</strong> '+escapeHtml(skill.outcome);
     els.lessonSections.innerHTML = skill.sections.map(function (section) {
       const audio = section.audioOptions && section.audioOptions.length ? '<div class="section-audio" aria-label="비교 청음">'+section.audioOptions.map(function (option, index) { return '<button type="button" data-section-audio="'+index+'">♪ '+escapeHtml(option.label)+'</button>'; }).join("")+'</div>' : "";
       const worked = section.worked ? '<div class="worked-example"><strong>'+escapeHtml(section.worked.title || "같이 풀기")+'</strong><ol>'+section.worked.steps.map(function (step) { return '<li>'+escapeHtml(step)+'</li>'; }).join("")+'</ol>'+(section.worked.answer ? '<p><b>답</b> '+escapeHtml(section.worked.answer)+'</p>' : "")+'</div>' : "";
-      const mistake = section.mistake ? '<p class="common-mistake"><strong>자주 하는 실수</strong> '+escapeHtml(section.mistake)+'</p>' : "";
       const intro = section.body.length ? '<p>'+escapeHtml(section.body[0])+'</p>' : "";
       const detail = section.body.slice(1).map(function (paragraph) { return '<p>'+escapeHtml(paragraph)+'</p>'; }).join("");
-      return '<section class="lesson-section"><div class="section-copy section-lead"><span class="section-label">'+escapeHtml(section.label)+'</span><h2>'+escapeHtml(section.title)+'</h2>'+intro+'</div><div class="visual-board lesson-visual"><span class="visual-kicker">그림으로 먼저 확인</span>'+renderVisual(section.visual)+'</div><div class="section-copy section-detail">'+detail+worked+mistake+'<p class="section-takeaway"><strong>핵심 정리</strong> '+escapeHtml(section.takeaway)+'</p>'+audio+'</div></section>';
+      return '<section class="lesson-section"><div class="section-copy section-lead"><h2>'+escapeHtml(section.title)+'</h2>'+intro+'</div><div class="visual-board lesson-visual">'+renderVisual(section.visual)+'</div><div class="section-copy section-detail">'+detail+worked+'<p class="section-takeaway"><strong>핵심 정리</strong> '+escapeHtml(section.takeaway)+'</p>'+audio+'</div></section>';
     }).join("");
     Array.from(els.lessonSections.querySelectorAll(".lesson-section")).forEach(function (sectionEl, sectionIndex) {
       sectionEl.querySelectorAll("[data-section-audio]").forEach(function (button) {
@@ -824,7 +825,7 @@
   }
 
   function labHeader(lab) {
-    return '<div class="lab-heading"><div><span class="lab-kicker">직접 해보기</span><h2 id="constructionTitle">'+escapeHtml(lab.title)+'</h2><p>'+escapeHtml(lab.instruction)+'</p></div>'+(lab.reference ? '<button class="lab-reference" type="button" data-lab-reference>♪ 기준 소리</button>' : "")+'</div>';
+    return '<div class="lab-heading"><div><h2 id="constructionTitle">'+escapeHtml(lab.title)+'</h2><p>'+escapeHtml(lab.instruction)+'</p></div>'+(lab.reference ? '<button class="lab-reference" type="button" data-lab-reference>♪ 기준 소리</button>' : "")+'</div>';
   }
   function renderLab(skill) {
     const lab = skill.lab;
@@ -835,7 +836,7 @@
     else renderProgressionLab(lab);
   }
   function renderKeyboardLab(lab) {
-    els.constructionLab.innerHTML = labHeader(Object.assign({}, lab, { reference:true })) + '<div id="labPiano" class="piano lab-piano" aria-label="구성 실습 건반"></div><div class="lab-readout"><strong>선택한 음</strong><span id="labSelection">아직 선택한 음이 없습니다.</span></div><div class="lab-actions"><button class="lab-check" type="button" id="labCheck">구성 확인</button><button class="lab-reset" type="button" id="labReset">선택 지우기</button></div><p id="labFeedback" class="lab-feedback" aria-live="polite">악보와 소리를 참고한 뒤 직접 건반을 선택하세요.</p>';
+    els.constructionLab.innerHTML = labHeader(Object.assign({}, lab, { reference:true })) + '<div id="labPiano" class="piano lab-piano" aria-label="구성 실습 건반"></div><div class="lab-readout"><strong>선택한 음</strong><span id="labSelection">아직 선택한 음이 없습니다.</span></div><div class="lab-actions"><button class="lab-check" type="button" id="labCheck">구성 확인</button><button class="lab-reset" type="button" id="labReset">선택 지우기</button></div><p id="labFeedback" class="lab-feedback" aria-live="polite"></p>';
     const range = keyboardLabRange(lab);
     const piano = byId("labPiano");
     piano.setAttribute("aria-label", "구성 실습 건반 "+midiName(range.from)+"부터 "+midiName(range.to)+"까지");
@@ -1054,13 +1055,6 @@
       container.appendChild(button);
     });
   }
-  function renderFreePiano() {
-    buildPiano(els.piano, 48, 72, function (midi, button) {
-      button.classList.add("active");
-      window.setTimeout(function () { button.classList.remove("active"); }, 180);
-      if (window.HarmonyPiano) window.HarmonyPiano.playMidi(midi, { duration:.7 });
-    });
-  }
   function showDashboard() {
     els.study.hidden = true;
     els.dashboard.hidden = false;
@@ -1095,11 +1089,10 @@
     els.nextButton.addEventListener("click", nextQuestion);
   }
   function init() {
-    ["dashboard","study","progressText","resetProgress","unitList","backToCourse","nextSkillNav","currentLesson","lessonUnit","lessonTitle","lessonEnglish","lessonOutcome","lessonSections","constructionLab","termList","practicePanel","roundCounter","scoreText","questionKind","questionPrompt","listenButton","questionVisual","answerChoices","feedback","nextButton","piano","toast"].forEach(function (id) { els[id] = byId(id); });
+    ["dashboard","study","progressText","resetProgress","unitList","backToCourse","nextSkillNav","currentLesson","lessonUnit","lessonTitle","lessonEnglish","lessonOutcome","lessonSections","constructionLab","termList","practicePanel","roundCounter","scoreText","questionKind","questionPrompt","listenButton","questionVisual","answerChoices","feedback","nextButton","toast"].forEach(function (id) { els[id] = byId(id); });
     const requestedSkill = new URLSearchParams(window.location.hash.slice(1)).get("skill");
     window.history.replaceState({ harmonyView:"dashboard" }, "", dashboardUrl());
     renderDashboard();
-    renderFreePiano();
     bindEvents();
     showDashboard();
     if (requestedSkill && curriculum.skills[requestedSkill]) openSkill(requestedSkill);

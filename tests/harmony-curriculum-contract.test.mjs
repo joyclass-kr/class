@@ -108,7 +108,7 @@ for (const [id, [sectionMinimum, questionMinimum]] of Object.entries(partOneDept
 assert.match(courseSource, /HarmonyPiano/);
 assert.doesNotMatch(index, /dashboardTitle|class="dashboard-heading"|>진도표<\/h1>/, "the dashboard must start with the learning list");
 assert.ok(index.indexOf('id="unitList"') < index.indexOf('class="dashboard-tools"'), "progress controls must follow the learning list");
-assert.ok(index.indexOf('class="piano-panel"') < index.indexOf('class="study-nav study-nav-bottom"'), "lesson navigation must not occupy the top line");
+assert.doesNotMatch(index, /piano-panel|자유 건반/, "the lesson must not end with a redundant free-piano promotion");
 assert.match(courseSource, /renderKeyboardLab/);
 assert.match(courseSource, /renderAuralLab/);
 assert.match(courseSource, /renderProgressionLab/);

@@ -176,7 +176,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .guide-caution { margin-top: 22px; padding-top: 18px; border-top: 1px solid #d5cec1; }
 .self-check { display: grid; grid-template-columns: 100px 1fr; align-items: start; gap: 16px; margin-top: 20px; padding: 14px 16px; border-left: 4px solid var(--gold); background: #e9e4d9; }
 .self-check strong { color: #6f5018; font-size: 13px; }
-.practice-panel, .piano-panel { margin-top: 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+.practice-panel { margin-top: 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
 .practice-panel { overflow: hidden; }
 .practice-panel > summary { min-height: 58px; display: flex; align-items: center; justify-content: space-between; padding: 8px 20px; cursor: pointer; list-style: none; font-weight: 900; }
 .practice-panel > summary::-webkit-details-marker { display: none; }
@@ -198,7 +198,6 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .feedback.wrong { color: var(--danger); }
 .next-button { width: 100%; margin-top: 10px; color: #fff; background: #315b94; }
 .next-button[hidden] { display: none; }
-.piano-panel { padding: 14px; }
 .piano { position: relative; display: flex; height: 154px; padding: 8px 10px 10px; gap: 2px; border: 6px solid #10151d; border-top-color: #586778; border-radius: 7px; background: #070a0e; overflow: hidden; touch-action: none; }
 .piano-key { position: relative; border: 1px solid #aab2bc; border-radius: 0 0 5px 5px; cursor: pointer; transition: transform 70ms ease,background 90ms ease,box-shadow 70ms ease; }
 .piano-key.white { flex: 1; min-width: 36px; z-index: 1; height: 100%; color: #263142; background: linear-gradient(105deg,#fffefa,#dce1e6); box-shadow: inset 2px 0 rgba(255,255,255,.55),inset -2px 0 rgba(0,0,0,.12),0 3px 2px rgba(0,0,0,.5); }

@@ -208,19 +208,6 @@ button, select, summary {
     padding-top: 9px;
 }
 
-.section-label {
-    display: inline-flex;
-    min-height: 28px;
-    align-items: center;
-    margin-bottom: 8px;
-    padding: 3px 9px;
-    border-radius: 999px;
-    color: #67480e;
-    background: #eadcbf;
-    font-size: 11px;
-    font-weight: 950;
-}
-
 .section-audio {
     display: flex;
     flex-wrap: wrap;
@@ -601,16 +588,6 @@ button, select, summary {
     line-height: 1.55 !important;
 }
 
-.common-mistake {
-    margin-top: 12px !important;
-    padding: 10px 12px;
-    border-left: 3px solid #a94f45;
-    color: #63322c !important;
-    background: #f3dfd9;
-    font-size: 14px !important;
-    line-height: 1.55 !important;
-}
-
 .skill-strand > summary {
     grid-template-columns: 46px minmax(0, 1fr) auto;
 }
@@ -892,19 +869,6 @@ button, select, summary {
 
 .score-line-card .score-svg {
     margin-top: -5px;
-}
-
-.visual-kicker {
-    display: inline-flex;
-    min-height: 26px;
-    align-items: center;
-    margin-bottom: 10px;
-    padding: 3px 9px;
-    border-radius: 999px;
-    color: #614714;
-    background: #efe2c2;
-    font-size: 11px;
-    font-weight: 950;
 }
 
 .concept-diagram {
@@ -1583,8 +1547,6 @@ button, select, summary {
     font-size: 16px;
 }
 
-.section-label,
-.visual-kicker,
 .lesson-order,
 .prereq-note {
     font-size: 12px;
