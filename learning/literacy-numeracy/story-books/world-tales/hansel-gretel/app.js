@@ -278,17 +278,26 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '헨젤과 그레텔',
+    intro: [
+        '헨젤과 그레텔은 독일의 그림 형제가 1812년에 펴낸 이야기집에 실린 이야기예요. 그림 형제는 고향 헤센 지방을 다니며 사람들이 들려주는 옛이야기를 받아 적었는데, 이 이야기도 그렇게 모은 것 가운데 하나랍니다.',
+        '이 이야기가 만들어질 무렵 유럽에는 큰 흉년이 자주 들었어요. 먹을 것이 없어 온 마을이 굶던 시절의 두려움이 이야기 속에 그대로 담겨 있지요.',
+        '이 책은 어린이가 읽기에 알맞도록 무서운 장면을 부드럽게 다듬었어요.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🍬')}
             </div>
             <div class="story-page-right">
-                <h1>헨젤과 그레텔</h1>
-                <p>헨젤과 그레텔은 독일의 그림 형제가 1812년에 펴낸 이야기집에 실린 이야기예요. 그림 형제는 고향 헤센 지방을 다니며 사람들이 들려주는 옛이야기를 받아 적었는데, 이 이야기도 그렇게 모은 것 가운데 하나랍니다.</p>
-                <p>이 이야기가 만들어질 무렵 유럽에는 큰 흉년이 자주 들었어요. 먹을 것이 없어 온 마을이 굶던 시절의 두려움이 이야기 속에 그대로 담겨 있지요.</p>
-                <p>이 책은 어린이가 읽기에 알맞도록 무서운 장면을 부드럽게 다듬었어요.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -303,8 +312,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -314,8 +323,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -325,22 +334,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -390,9 +400,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -403,7 +413,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -475,7 +485,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -484,34 +494,509 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   무서운 장면은 한국어판과 같은 세기로 눌러 두었다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Hansel and Gretel',
+        intro: [
+            "This tale is in the collection the Brothers Grimm published in Germany in 1812. They travelled about their home region of Hesse writing down the old stories people told them, and this was one of them.",
+            "When the story took shape, Europe went through one bad harvest after another. The fear of a whole village with nothing to eat is right there in it.",
+            "In this book the frightening parts have been softened for younger readers."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The White Pebbles',
+            beats: [
+                {
+                    art: '01-pebbles.webp',
+                    emoji: '🍬',
+                    left: [
+                        "A woodcutter lived in a cottage at the edge of the forest, and he had two children, Hansel and Gretel.",
+                        "That year the harvest failed badly. A whole load of firewood was hardly worth a coin, and the bread came down to one slice a day. Before long even that was gone.",
+                        "Nothing but ashes were left in the hearth.",
+                        "One night the two of them could not sleep at all."
+                    ],
+                    right: [
+                        "They were far too hungry.",
+                        "Then voices came murmuring from the next room.",
+                        "\"We shall have to leave the children in the forest.\"",
+                        "It was their stepmother's voice.",
+                        "\"All four of us cannot starve together.\"",
+                        "The two held their breath and put their ears to the wall."
+                    ]
+                },
+                {
+                    art: '01-pebbles-2.webp',
+                    emoji: '🍬',
+                    left: [
+                        "Their father shook his head.",
+                        "\"I could never do it.\"",
+                        "But there was no strength at all in his voice. Under the blanket Gretel began to cry.",
+                        "\"Hansel, what will become of us?\"",
+                        "Hansel took his sister's hand and held it tight."
+                    ],
+                    right: [
+                        "\"Don't worry. I have a plan.\"",
+                        "Late that night Hansel slipped outside. The moon lit the whole yard, and the white pebbles glittered there like silver coins.",
+                        "He filled his pockets until they bulged.",
+                        "Then he crept back in without a sound."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Road Home',
+            beats: [
+                {
+                    art: '02-back-home.webp',
+                    emoji: '🌲',
+                    left: [
+                        "Next morning all four set off into the forest.",
+                        "But Hansel kept falling behind.",
+                        "\"What are you dawdling for?\"",
+                        "\"I was looking at the cat on the roof.\"",
+                        "In truth he was dropping pebbles — one every few steps."
+                    ],
+                    right: [
+                        "Tock. Tock.",
+                        "At last they came deep into the forest. The grown-ups gathered dry branches and built the children a fire.",
+                        "\"Wait here a little while.\"",
+                        "\"We shall come back for you soon.\"",
+                        "Far off they could hear an axe at work. The two fell asleep listening to it."
+                    ]
+                },
+                {
+                    art: '02-back-home-2.webp',
+                    emoji: '🌲',
+                    left: [
+                        "When they opened their eyes it was pitch dark. The fire had gone out, and only ashes were left.",
+                        "They waited and waited, and nobody came. Gretel burst into tears.",
+                        "\"Hansel, what do we do now?\"",
+                        "\"Wait just a little longer.\""
+                    ],
+                    right: [
+                        "By and by the moon rose through the branches.",
+                        "And one by one the pebbles began to shine white. A whole road of them led away into the dark.",
+                        "\"Look — that's the way we came!\"",
+                        "The two followed it and walked all night long. It was near dawn when they knocked at their own door."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Birds Eat the Bread',
+            beats: [
+                {
+                    art: '03-breadcrumbs.webp',
+                    emoji: '🍞',
+                    left: [
+                        "Their father was overjoyed and hugged them again and again. But the bad harvest had not changed, and it was not long before they were starving once more.",
+                        "One night the same talk came again from the next room. Hansel meant to go out that night too.",
+                        "But the door was locked fast."
+                    ],
+                    right: [
+                        "There was no getting out to the pebbles. Hansel lay awake thinking for a long while.",
+                        "In the morning he was given his slice of bread. He did not eat it — he put it in his pocket.",
+                        "Gretel saw him do it. She broke her own slice clean in two and pressed half of it into his hand.",
+                        "\"There's nothing else to try.\""
+                    ]
+                },
+                {
+                    art: '03-breadcrumbs-2.webp',
+                    emoji: '🍞',
+                    left: [
+                        "This time the four went much deeper than before. Hansel tore the bread into little crumbs and scattered them every few steps.",
+                        "The forest grew darker and darker. Branches kept brushing their faces.",
+                        "It was somewhere they had never been. And once again the grown-ups lit a fire and went away."
+                    ],
+                    right: [
+                        "When night came and the moon rose, the two set out to find the road. Hansel led the way, sure of himself.",
+                        "But there was not a single crumb to be seen.",
+                        "\"Where have they gone? I scattered them right here.\"",
+                        "Every bird in the forest had pecked them up. And so the two were lost."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The House Made of Sweets',
+            beats: [
+                {
+                    art: '04-candy-house.webp',
+                    emoji: '🏠',
+                    left: [
+                        "They wandered for three days, living on the berries they could pick. Their feet blistered, and every step hurt.",
+                        "On the third morning a bird as white as snow came flying to them. It settled on a branch and sang in a lovely voice."
+                    ],
+                    right: [
+                        "\"Hansel, look at that bird.\"",
+                        "The bird went fluttering off ahead, and the two followed after it.",
+                        "After a long walk they came to a clearing in the middle of the forest. And there stood the strangest house.",
+                        "The two rubbed their eyes without meaning to."
+                    ]
+                },
+                {
+                    art: '04-candy-house-2.webp',
+                    emoji: '🏠',
+                    left: [
+                        "The walls were made of gingerbread, the roof of snow-white sugar, and the windows of shining barley candy.",
+                        "\"This isn't a dream, is it?\"",
+                        "Hansel snapped off a piece of the wall, and Gretel gave the window frame a little lick.",
+                        "It was so sweet and so good. Sugar crumbs stuck all round their mouths."
+                    ],
+                    right: [
+                        "After three days without food the two could hardly stop.",
+                        "\"Try this window!\"",
+                        "Just then the door creaked open. Out came a little woman with a bent back.",
+                        "She wore an enormous pair of spectacles.",
+                        "\"Come in, come in, you hungry children.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · Hansel in the Cage',
+            beats: [
+                {
+                    art: '05-cage.webp',
+                    emoji: '🦴',
+                    left: [
+                        "The old woman laid out a whole table for them — milk and cakes and apples. The two ate until they could eat no more.",
+                        "She gave them soft beds to sleep in, and for the first time in a long while they slept easy.",
+                        "But something happened before dawn."
+                    ],
+                    right: [
+                        "The old woman dragged Hansel roughly out of his bed and shut him in the cage in the yard.",
+                        "\"When you are plump I shall let you out.\"",
+                        "Gretel she set to work.",
+                        "\"Fetch the water and cook the meals.\"",
+                        "\"Your brother has to be fed.\""
+                    ]
+                },
+                {
+                    art: '05-cage-2.webp',
+                    emoji: '🦴',
+                    left: [
+                        "From that day the same thing happened every morning.",
+                        "The old woman would come out to the cage.",
+                        "\"Hold out your finger for me.\"",
+                        "She wanted to feel whether he had fattened.",
+                        "But her eyes were very weak indeed, and Hansel noticed it at once."
+                    ],
+                    right: [
+                        "As it happened, an old chicken bone was lying about on the floor of the cage. Hansel picked it up and kept it hidden.",
+                        "\"Here you are.\"",
+                        "And he held out the bone instead.",
+                        "\"Still as thin as ever!\"",
+                        "The old woman clicked her tongue."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: "Chapter 6 · Gretel's Trick",
+            beats: [
+                {
+                    art: '06-oven.webp',
+                    emoji: '🔥',
+                    left: [
+                        "Some weeks went by like that, and the old woman would wait no longer.",
+                        "\"Today we shall bake bread.\"",
+                        "She heaped the great oven with logs and lit it. The flames roared up, and standing in front of it was enough to burn your face."
+                    ],
+                    right: [
+                        "\"Climb in and see whether it is hot inside.\"",
+                        "Gretel gave a start. There was a strange glitter in the old woman's eyes, and a shiver ran right down her back.",
+                        "'I must not get in there.'",
+                        "So Gretel put on an innocent face.",
+                        "\"I don't know how to get in.\""
+                    ]
+                },
+                {
+                    art: '06-oven-2.webp',
+                    emoji: '🔥',
+                    left: [
+                        "\"What a hopeless child you are!\"",
+                        "\"This is how it is done.\"",
+                        "The old woman pushed herself in through the oven door. And that was the moment.",
+                        "Gretel shoved the door shut with both hands and slid the bolt across. There was a thumping from inside."
+                    ],
+                    right: [
+                        "Gretel ran straight out to the yard and threw the cage door wide open.",
+                        "\"You're out, Hansel!\"",
+                        "Hansel came tumbling out. His legs had gone so stiff he could hardly stand.",
+                        "The two held on to each other for a long, long time."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · Homeward',
+            beats: [
+                {
+                    art: '07-home.webp',
+                    emoji: '🦢',
+                    left: [
+                        "The two went slowly through the house. In a corner stood several chests.",
+                        "They lifted one of the lids. Inside were pearls and precious stones, right to the top.",
+                        "\"This would buy Father a whole winter.\"",
+                        "They filled their pockets with as much as they could carry."
+                    ],
+                    right: [
+                        "Then they walked out of the house of sweets, and they never once looked back.",
+                        "On and on through the forest they went. About half a day later a wide river appeared in front of them.",
+                        "There was no bridge anywhere."
+                    ]
+                },
+                {
+                    art: '07-home-2.webp',
+                    emoji: '🦢',
+                    left: [
+                        "Just then a white duck came swimming up. Gretel sat down at the water's edge and asked her gently,",
+                        "\"Duck, could you carry us across?\"",
+                        "The duck nodded. The two of them together were too heavy, so she took them over on her back one at a time.",
+                        "On the far bank they saw a road they knew."
+                    ],
+                    right: [
+                        "\"That's our village!\"",
+                        "The two went racing down it, and far ahead the cottage came into sight.",
+                        "Their father was standing at the door. He had stood there every single day.",
+                        "The three of them held one another for a long while."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why could Hansel see the road on the first night?',
+            choices: ['He had marked the trees', 'The moon made the pebbles shine', 'The white bird led them'],
+            answer: 1
+        },
+        {
+            q: 'What did Hansel say he was looking at while he dropped the pebbles?',
+            choices: ['The cat on the roof', 'A bird in a tree', 'The axe his father carried'],
+            answer: 0
+        },
+        {
+            q: 'Why did Hansel use bread the second time?',
+            choices: ['The pebbles had all been used up', 'Gretel told him bread was better', 'The door was locked and he could not fetch pebbles'],
+            answer: 2
+        },
+        {
+            q: 'What did Gretel do when she saw Hansel pocket his bread?',
+            choices: ['She told their father about it', 'She broke her own slice and gave him half', 'She filled her pockets with pebbles'],
+            answer: 1
+        },
+        {
+            q: 'How did Hansel fool the old woman every morning?',
+            choices: ['He held out a chicken bone instead of his finger', 'He hid at the back of the cage', 'He ate none of the food she brought'],
+            answer: 0
+        },
+        {
+            q: 'What did Gretel say so that she would not have to climb into the oven?',
+            choices: ['That the fire was not hot enough yet', 'That her brother should do it instead', 'That she did not know how to get in'],
+            answer: 2
+        },
+        {
+            q: 'How did the two cross the river?',
+            choices: ['They found a bridge further on', 'A duck carried them one at a time', 'They floated across on an empty chest'],
+            answer: 1
+        }
+    ],
+
+    afterword: {
+        title: 'After Reading',
+        emoji: '🍬',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "In old Europe, a failed harvest really did mean there was nothing to eat. The hunger in this story was not invented.",
+                    "Hansel made a plan both times. The first time it was white pebbles, the second time breadcrumbs. The first plan worked and the second did not.",
+                    "The stones stayed where they fell; the bread was eaten by birds. The same clever idea can go either way, depending on what you make it out of.",
+                    "In the forest Hansel led. In the house of sweets it is Gretel who leads. Halfway through, the two of them change places."
+                ],
+                right: [
+                    "Look at that house again. It was built out of the one thing a starving child could never walk past. A trap is always shaped like the thing you want most.",
+                    "The two children go home. Would you have gone back?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-pebbles.webp': [
+            { word: 'woodcutter', meaning: '나무꾼', sentence: 'A woodcutter lived in a cottage at the edge of the forest.' },
+            { word: 'harvest', meaning: '수확, 농사', sentence: 'That year the harvest failed badly.' },
+            { word: 'hearth', meaning: '아궁이, 벽난로 바닥', sentence: 'Nothing but ashes were left in the hearth.' },
+            { word: 'murmur', meaning: '두런거리다', sentence: 'Voices came murmuring from the next room.' },
+            { word: 'starve', meaning: '굶주리다', sentence: 'All four of us cannot starve together.' }
+        ],
+        '01-pebbles-2.webp': [
+            { word: 'pebble', meaning: '조약돌', sentence: 'The white pebbles glittered like silver coins.' },
+            { word: 'glitter', meaning: '반짝이다', sentence: 'The white pebbles glittered there like silver coins.' },
+            { word: 'bulge', meaning: '불룩해지다', sentence: 'He filled his pockets until they bulged.' },
+            { word: 'creep', meaning: '살금살금 가다', sentence: 'He crept back in without a sound.' }
+        ],
+        '02-back-home.webp': [
+            { word: 'fall behind', meaning: '뒤처지다', sentence: 'But Hansel kept falling behind.' },
+            { word: 'dawdle', meaning: '꾸물거리다', sentence: 'What are you dawdling for?' },
+            { word: 'axe', meaning: '도끼', sentence: 'Far off they could hear an axe at work.' }
+        ],
+        '02-back-home-2.webp': [
+            { word: 'pitch dark', meaning: '캄캄한', sentence: 'When they opened their eyes it was pitch dark.' },
+            { word: 'ash', meaning: '재', sentence: 'The fire had gone out, and only ashes were left.' },
+            { word: 'burst into tears', meaning: '울음을 터뜨리다', sentence: 'Gretel burst into tears.' },
+            { word: 'by and by', meaning: '이윽고', sentence: 'By and by the moon rose through the branches.' }
+        ],
+        '03-breadcrumbs.webp': [
+            { word: 'overjoyed', meaning: '뛸 듯이 기쁜', sentence: 'Their father was overjoyed.' },
+            { word: 'lock fast', meaning: '단단히 잠그다', sentence: 'But the door was locked fast.' },
+            { word: 'lie awake', meaning: '뜬눈으로 있다', sentence: 'Hansel lay awake thinking for a long while.' },
+            { word: 'press into', meaning: '쥐여 주다', sentence: 'She pressed half of it into his hand.' }
+        ],
+        '03-breadcrumbs-2.webp': [
+            { word: 'crumb', meaning: '부스러기', sentence: 'Hansel tore the bread into little crumbs.' },
+            { word: 'scatter', meaning: '뿌리다', sentence: 'He scattered them every few steps.' },
+            { word: 'brush', meaning: '스치다', sentence: 'Branches kept brushing their faces.' },
+            { word: 'peck up', meaning: '쪼아 먹다', sentence: 'Every bird in the forest had pecked them up.' }
+        ],
+        '04-candy-house.webp': [
+            { word: 'wander', meaning: '헤매다', sentence: 'They wandered for three days.' },
+            { word: 'berry', meaning: '나무 열매', sentence: 'They lived on the berries they could pick.' },
+            { word: 'blister', meaning: '물집이 잡히다', sentence: 'Their feet blistered, and every step hurt.' },
+            { word: 'clearing', meaning: '숲속 빈터', sentence: 'They came to a clearing in the middle of the forest.' }
+        ],
+        '04-candy-house-2.webp': [
+            { word: 'gingerbread', meaning: '생강 과자', sentence: 'The walls were made of gingerbread.' },
+            { word: 'barley candy', meaning: '엿', sentence: 'The windows were of shining barley candy.' },
+            { word: 'snap off', meaning: '뚝 떼다', sentence: 'Hansel snapped off a piece of the wall.' },
+            { word: 'creak', meaning: '삐걱거리다', sentence: 'Just then the door creaked open.' },
+            { word: 'spectacles', meaning: '안경', sentence: 'She wore an enormous pair of spectacles.' }
+        ],
+        '05-cage.webp': [
+            { word: 'lay out', meaning: '상을 차리다', sentence: 'The old woman laid out a whole table for them.' },
+            { word: 'drag', meaning: '끌어내다', sentence: 'She dragged Hansel roughly out of his bed.' },
+            { word: 'cage', meaning: '우리', sentence: 'She shut him in the cage in the yard.' },
+            { word: 'plump', meaning: '살이 오른', sentence: 'When you are plump I shall let you out.' },
+            { word: 'fetch', meaning: '길어 오다, 가져오다', sentence: 'Fetch the water and cook the meals.' }
+        ],
+        '05-cage-2.webp': [
+            { word: 'hold out', meaning: '내밀다', sentence: 'Hold out your finger for me.' },
+            { word: 'fatten', meaning: '살이 찌다', sentence: 'She wanted to feel whether he had fattened.' },
+            { word: 'notice', meaning: '눈치채다', sentence: 'Hansel noticed it at once.' },
+            { word: 'click one’s tongue', meaning: '혀를 차다', sentence: 'The old woman clicked her tongue.' }
+        ],
+        '06-oven.webp': [
+            { word: 'oven', meaning: '화덕', sentence: 'She heaped the great oven with logs and lit it.' },
+            { word: 'roar up', meaning: '활활 타오르다', sentence: 'The flames roared up.' },
+            { word: 'give a start', meaning: '흠칫 놀라다', sentence: 'Gretel gave a start.' },
+            { word: 'shiver', meaning: '소름, 오싹함', sentence: 'A shiver ran right down her back.' }
+        ],
+        '06-oven-2.webp': [
+            { word: 'hopeless', meaning: '답답한, 어쩔 수 없는', sentence: 'What a hopeless child you are!' },
+            { word: 'shove', meaning: '탁 밀다', sentence: 'Gretel shoved the door shut with both hands.' },
+            { word: 'bolt', meaning: '빗장', sentence: 'She slid the bolt across.' },
+            { word: 'tumble out', meaning: '데굴데굴 굴러 나오다', sentence: 'Hansel came tumbling out.' },
+            { word: 'stiff', meaning: '뻣뻣하게 굳은', sentence: 'His legs had gone so stiff he could hardly stand.' }
+        ],
+        '07-home.webp': [
+            { word: 'chest', meaning: '궤짝', sentence: 'In a corner stood several chests.' },
+            { word: 'lid', meaning: '뚜껑', sentence: 'They lifted one of the lids.' },
+            { word: 'pearl', meaning: '진주', sentence: 'Inside were pearls and precious stones.' },
+            { word: 'look back', meaning: '뒤를 돌아보다', sentence: 'They never once looked back.' }
+        ],
+        '07-home-2.webp': [
+            { word: 'duck', meaning: '오리', sentence: 'Just then a white duck came swimming up.' },
+            { word: 'gently', meaning: '살며시', sentence: 'Gretel asked her gently.' },
+            { word: 'far bank', meaning: '건너편 기슭', sentence: 'On the far bank they saw a road they knew.' },
+            { word: 'come into sight', meaning: '눈에 들어오다', sentence: 'Far ahead the cottage came into sight.' }
+        ],
+        'end.webp': [
+            { word: 'invent', meaning: '지어내다', sentence: 'The hunger in this story was not invented.' },
+            { word: 'depend on', meaning: '~에 달려 있다', sentence: 'It can go either way, depending on what you make it out of.' },
+            { word: 'change places', meaning: '자리를 바꾸다', sentence: 'Halfway through, the two of them change places.' },
+            { word: 'trap', meaning: '덫', sentence: 'A trap is always shaped like the thing you want most.' },
+            { word: 'walk past', meaning: '그냥 지나치다', sentence: 'The one thing a starving child could never walk past.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -576,6 +1061,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -584,7 +1070,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -596,7 +1082,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -630,4 +1116,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
