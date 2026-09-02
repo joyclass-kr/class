@@ -1,6 +1,6 @@
 const BOOK_TITLE = "춘향전";
 
-const CHAPTER_LABEL = n => `${n}장 · `;
+const CHAPTER_LABEL = n => (LANG === 'en' ? `Chapter ${n} · ` : `${n}장 · `);
 
 const CHAPTERS = [
     {
@@ -295,15 +295,18 @@ function splitSegments(html) {
     return segs.length ? segs : [html];
 }
 
-const CHAPTER_SEGS = CHAPTERS.map(ch => {
+// 말을 바꾸면 글이 통째로 갈리므로 조각도 다시 나눈다.
+function segsOf(paras) {
     const segs = [];
-    ch.paras.forEach((html, paraIdx) => {
+    paras.forEach((html, paraIdx) => {
         splitSegments(html).forEach((piece, k) => {
             segs.push({ paraIdx, html: piece, start: k === 0 });
         });
     });
     return segs;
-});
+}
+
+let CHAPTER_SEGS = [];
 
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
@@ -321,7 +324,7 @@ function runHtml(segs, a, b) {
         // 쪽 끝에 걸린 <br>는 빈 줄만 만드니 떼어 낸다.
         inner = inner.replace(/(<br\s*\/?>)+\s*$/i, '')
             .replace(/<br\s*\/?>/gi, '<br><span class="ln"></span>');
-        out += `<p${contd ? ' class="cont"' : ''}>${inner}</p>`;
+        out += `<p${contd ? ' class="cont"' : ''} data-say="${pi}">${inner}</p>`;
         i = j;
     }
     return out;
@@ -563,6 +566,17 @@ function paginateChapter(ch, chIndex) {
     });
     return spreads;
 }
+const COVER = {
+    emoji: '🌸',
+    title: '춘향전',
+    intro: [
+        "춘향전은 지은이가 알려지지 않은 조선 후기 소설이에요. 판소리 춘향가로 불리던 것이 글로 옮겨진 것이지요.",
+        "판소리 다섯 마당 가운데 가장 널리 불리고 가장 많이 읽힌 것이 춘향가예요. 조금씩 다른 이본이 백 가지가 넘어서, 하나의 작품이라기보다 춘향전 무리라고 부르기도 한답니다.",
+        "이야기의 무대는 전라도 남원이에요. 두 사람이 처음 만나는 광한루는 지금도 남원에 남아 있고, 해마다 봄이면 그곳에서 춘향제가 열린답니다.",
+        "암행어사는 임금이 몰래 보내던 벼슬아치예요. 거지 차림으로 다니다가 마패를 꺼내 보이며 나쁜 수령을 그 자리에서 잡아들였지요. 조선에만 있던 제도랍니다."
+    ]
+};
+
 /* ── 그리기 ───────────────────────────────────────── */
 
 function artFrame(src, emoji) {
@@ -574,17 +588,15 @@ function artFrame(src, emoji) {
 }
 
 function coverPage() {
+    const c = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '🌸')}
+                ${artFrame('cover.webp', c.emoji)}
             </div>
             <div class="story-page-right">
-                <h1>춘향전</h1>
-                <p>춘향전은 지은이가 알려지지 않은 조선 후기 소설이에요. 판소리 춘향가로 불리던 것이 글로 옮겨진 것이지요.</p>
-                <p>판소리 다섯 마당 가운데 가장 널리 불리고 가장 많이 읽힌 것이 춘향가예요. 조금씩 다른 이본이 백 가지가 넘어서, 하나의 작품이라기보다 춘향전 무리라고 부르기도 한답니다.</p>
-                <p>이야기의 무대는 전라도 남원이에요. 두 사람이 처음 만나는 광한루는 지금도 남원에 남아 있고, 해마다 봄이면 그곳에서 춘향제가 열린답니다.</p>
-                <p>암행어사는 임금이 몰래 보내던 벼슬아치예요. 거지 차림으로 다니다가 마패를 꺼내 보이며 나쁜 수령을 그 자리에서 잡아들였지요. 조선에만 있던 제도랍니다.</p>
+                <h1 data-say="0">${c.title}</h1>
+                ${c.intro.map((p, i) => `<p data-say="${i + 1}">${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -602,14 +614,14 @@ function tocPage(part) {
                 <span class="toc-num">${mark}</span>
                 <span>
                     <strong>${title}</strong>
-                    <small>${page}쪽</small>
+                    <small>${page}${T().folio}</small>
                 </span>
             </button>
         </li>`;
     const itemHtml = ch => rowHtml(`data-goto="${ch.num}"`, ch.num, ch.title, pageOfChapter(ch.num));
     const extraItems = [
-        rowHtml('data-goto-kind="quiz"', '❓', '이야기 문제', pageOfKind('quiz')),
-        rowHtml('data-goto-kind="after"', '📖', '읽고 나서', pageOfKind('after')),
+        rowHtml('data-goto-kind="quiz"', '❓', T().quiz, pageOfKind('quiz')),
+        rowHtml('data-goto-kind="after"', '📖', T().after, pageOfKind('after')),
     ];
     const group = TOC_GROUPS[part];
     const last = part === TOC_GROUPS.length - 1;
@@ -618,11 +630,11 @@ function tocPage(part) {
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                ${part === 0 ? '<h2>차례</h2>' : ''}
+                ${part === 0 ? `<h2>${T().toc}</h2>` : ''}
                 <ul class="toc-list">${items.slice(0, half).join('')}</ul>
             </div>
             <div class="story-page-right">
-                ${part === 0 ? '<h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>' : ''}
+                ${part === 0 ? `<h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>` : ''}
                 <ul class="toc-list">${items.slice(half).join('')}</ul>
             </div>
         </div>`;
@@ -630,10 +642,7 @@ function tocPage(part) {
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
 const TOC_PER_SPREAD = 16;
-const TOC_GROUPS = [];
-for (let i = 0; i < CHAPTERS.length; i += TOC_PER_SPREAD) {
-    TOC_GROUPS.push(CHAPTERS.slice(i, i + TOC_PER_SPREAD));
-}
+let TOC_GROUPS = [];
 
 function chapterSpreadPage(spread) {
     const ch = spread.ch;
@@ -686,13 +695,13 @@ const QUIZ = [
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
 // 문제는 한 쪽에 다 넣고 스크롤해서 푼다.
 // 쪽을 쪼개 놓으면 쪽마다 절반이 비고, 답을 고르려고 여러 번 넘겨야 한다.
-const QUIZ_GROUPS = [{ from: 0, items: QUIZ }];
+const QUIZ_GROUPS = [{ from: 0 }];
 
 // 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
 const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
 
 function quizPage(part) {
-    const group = QUIZ_GROUPS[part];
+    const group = { from: QUIZ_GROUPS[part].from, items: QZ() };
     const done = QUIZ_PICKED.filter(v => v !== null).length;
     const items = group.items.map((item, k) => {
         const i = group.from + k;
@@ -711,8 +720,8 @@ function quizPage(part) {
     }).join('');
     return `
         <div class="page page-quiz">
-            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
-            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+            ${part === 0 ? `<h2>${T().quiz}</h2>` : ''}
+            <p class="quiz-intro-text" id="quizProgress">${T().done(done, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
@@ -743,30 +752,22 @@ const AFTERWORD = {
     ]
 };
 
-const AFTER_SEGS = (() => {
-    const segs = [];
-    AFTERWORD.paras.forEach((html, paraIdx) => {
-        splitSegments(html).forEach((piece, k) => {
-            segs.push({ paraIdx, html: piece, start: k === 0 });
-        });
-    });
-    return segs;
-})();
+let AFTER_SEGS = [];
 
-const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+const AFTER_FOOT = () => `<p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>`;
 
 function paginateAfterword() {
     const segs = AFTER_SEGS;
-    const arts = AFTERWORD.art || [];
+    const arts = AF().art || [];
     const { usable, headHeight, artHeight } = PROBE;
-    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const headHtml = `<h2>${AF().title}</h2>`;
     const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
 
     const underArt = Math.max(60, usable - artHeight);
 
     // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
     // 마지막 쪽만 넘친다.
-    const footH = PROBE.measure(AFTER_FOOT);
+    const footH = PROBE.measure(AFTER_FOOT());
 
     const capsOf = slots => {
         const caps = [];
@@ -813,9 +814,9 @@ function paginateAfterword() {
 
 function afterSpreadPage(spread) {
     const segs = AFTER_SEGS;
-    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = spread.first ? `<h2>${AF().title}</h2>` : '';
     // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
-    const foot = spread.last ? AFTER_FOOT : '';
+    const foot = spread.last ? AFTER_FOOT() : '';
 
     if (spread.art) {
         return `
@@ -825,7 +826,7 @@ function afterSpreadPage(spread) {
                     ${runHtml(segs, spread.left[0], spread.left[1])}
                 </div>
                 <div class="story-page-right story-page-right-image">
-                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    <div class="story-art-top">${artFrame(spread.art, AF().emoji)}</div>
                     ${runHtml(segs, spread.right[0], spread.right[1])}
                     ${foot}
                 </div>
@@ -845,17 +846,639 @@ function afterSpreadPage(spread) {
         </div>`;
 }
 
+
+/* ── 영어판 ────────────────────────────────────────────────────
+   우리말 글과 영어 글을 나란히 두고, 단추 하나로 갈아 끼운다.
+   쪽은 재어서 나누므로 말을 바꾸면 처음부터 다시 나눈다. */
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   artAt 닻은 영어 문장 조각으로 새로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: '🌸',
+        title: 'The Tale of Chunhyang',
+        intro: [
+            "The Tale of Chunhyang is an old Korean story with no known author. It began as a song.",
+            "Singers performed it as pansori, a kind of story-singing, under the name Chunhyang-ga. Of all the old Korean stories, this is the one people have loved best.",
+            "It is set in Namwon, a real town in the south. The pavilion where the two young people first see each other, Gwanghallu, is still standing there today.",
+            "In those days people were born into ranks, and a girl born to a courtesan was written into the register as one herself. That single line in a book is what the whole story turns on."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "At Gwanghallu",
+            art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
+            artAt: ["It was a swing", "I am a courtesan's daughter", "My family name is Seong"],
+            paras: [
+                "In the town of Namwon, in Jeolla province, there stood a pavilion called Gwanghallu. Clear water ran in front of it and willows trailed down all around, and there was no finer view in Namwon. In spring the railing was crowded with people who had come to look at the blossom. Lean on that railing and you could see the whole town inside the walls.",
+                "That year it was Dano<span class=\"gloss\">(the fifth day of the fifth month by the old calendar)</span>. On Dano the women washed their hair in sweet-flag water and rode the swings, and the men wrestled. It was one of the great holidays. From early morning the riverside was full of people.",
+                "The son of the magistrate of Namwon, Yi Mongnyong, went up to Gwanghallu that day with Bangja<span class=\"gloss\">(a manservant who ran errands for the town office)</span>. He was sixteen. He read his books well but had seen nothing of the world. His father had told him to do nothing but read, so he hardly ever went out. That day was the first time he had ever climbed up to Gwanghallu.",
+                "\"Bangja, you can see everything from here.\"<br>\"Of course, sir. There's nowhere higher in all Namwon.\"",
+                "Yi Mongnyong leaned on the railing and looked around, and then his eye caught the willow grove across the water. The willow branches hung right down to the water. Something was going up and down between them.",
+                "The hem of a deep red skirt caught the wind and rose into the sky, and came down, and rose again. It was a swing. The ends of the ribbon looked as if they would touch the sky.",
+                "\"Bangja. What is that over there?\"<br>\"That's a swing, sir.\"<br>\"Not the swing. The person on it.\" Yi Mongnyong leaned further out over the railing.",
+                "Bangja narrowed his eyes and answered as if it were nothing much.<br>\"Oh, that's Chunhyang. Daughter of a woman called Wolmae. Known all over Namwon for her learning and her looks.\" At the end of it he stole a look at his young master's face.",
+                "For a long moment Yi Mongnyong could not say anything. Then at last he got it out.<br>\"...Go and bring her here.\" Bangja's eyes went round.",
+                "Bangja jumped.<br>\"Sir, that is not a girl who comes because she is sent for.\"<br>\"Go anyway.\" Bangja stamped his feet.",
+                "Bangja went across to the willow grove. A long while later he came back alone, scratching his head.<br>\"What did she say?\"<br>\"...She says, I am a courtesan's daughter, yes, but I am not someone who comes when called. If he has something to say to me, he may come himself.\" Bangja's voice got smaller and smaller.",
+                "Yi Mongnyong's face went red. But he was not angry.<br>\"...She is right.\"",
+                "Yi Mongnyong walked to the willow grove himself. Chunhyang had come down from the swing and was straightening her clothes. It was cool and quiet inside the grove. Only the cicadas sounded, far off.",
+                "\"It was rude of me to send a man just now. Forgive me.\"<br>Chunhyang lifted her head then. Their eyes met. It was Yi Mongnyong who looked down first.",
+                "\"What is your name?\"<br>\"My family name is Seong, and my given name is Chunhyang.\"<br>\"That means the scent of spring, doesn't it?\"<br>\"Yes.\"",
+                "Yi Mongnyong laughed before he could stop himself.<br>\"I was wondering why the spring was so thick at Gwanghallu today. Now I know the reason.\"",
+                "Chunhyang did not answer. Only the tips of her ears turned pink. Away behind her the swing ropes creaked as they swung.",
+                "\"May I call at your house this evening?\"<br>\"Ask my mother. That is not for me to decide alone.\"",
+                "Then she gathered up the swing ropes over her shoulder and turned away. Yi Mongnyong stood where he was until her back disappeared among the willows. The ropes swung against her shoulder. The willow leaves closed over the place where she had been.",
+                "On the way back Bangja asked carefully,<br>\"Sir, what did you talk about for so long?\"<br>\"...I learned one thing that isn't in any book.\"",
+                "That night Yi Mongnyong could not take in a word he read. He turned the pages and saw a swing going up and down; he picked up his brush and saw a deep red skirt. He sat like that until the lamp wick had burned all the way down.",
+                "At last Yi Mongnyong shut the book and stood up.<br>\"Bangja. Bring a lantern.\" Bangja rubbed his eyes and went for the lantern."
+            ]
+        },
+        {
+            num: 2,
+            title: "A Promise for a Hundred Years",
+            art: ["story-02-a.webp", "story-02-b.webp", "story-02-c.webp"],
+            artAt: ["The one who opened the gate", "pressed his thumbprint", "side by side on the wooden floor"],
+            paras: [
+                "Chunhyang's house stood in a quiet lane outside the walls of Namwon. Bamboo grew inside the wall and rows of chrysanthemum pots stood in the yard. The bamboo leaves rustled in the wind.",
+                "The one who opened the gate was Chunhyang's mother, Wolmae. Wolmae had been a courtesan when she was young, and now she lived quietly and raised her one daughter. There were hard calluses on her fingertips.",
+                "\"What brings the magistrate's son here at this hour of the night?\"<br>\"I have come because I want to make a promise for a hundred years<span class=\"gloss\">(the old way of saying a promise to be husband and wife for life)</span> with Chunhyang.\"",
+                "Wolmae's face went stiff. For a long moment there was no sound at all in the room. When at last she spoke, her voice was low.",
+                "\"Sir, I was a courtesan. So in the eyes of the world my daughter is a courtesan's daughter too.\"<br>\"I know that.\"",
+                "\"And what happens when your father hears of it? You will go up to Hanyang one day. What becomes of my child then?\" Wolmae's eyes were wet.",
+                "For a while Yi Mongnyong could say nothing. There was not one thing in what Wolmae had said that was wrong.",
+                "\"...Everything you say is true, madam. That is why I mean to put it on paper.\"",
+                "Yi Mongnyong asked for a brush and wrote on a sheet of paper. He wrote that he would take Chunhyang as his wife and would never abandon her as long as he lived. And he signed his own name at the end and pressed his thumbprint on it. The hand that held the brush did not shake at all.",
+                "\"Sir, what strength is there in a piece of paper like this?\"<br>\"If it has no strength, then let it have none. It is a promise I have made to myself.\"",
+                "Wolmae looked at the paper for a long time, then folded it and put it inside her jacket. Then she turned toward the door of the room.<br>\"Chunhyang. Come out.\" The paper rustled in her hand.",
+                "That summer the two of them were married. It was not a great feast. It was a small gathering with Wolmae and Bangja and a few neighbours. Chrysanthemums were in flower all over the yard.",
+                "After that Yi Mongnyong read his books by day and went to Chunhyang's house in the evening.",
+                "The two of them sat side by side on the wooden floor and talked. When Yi Mongnyong told her what he had read, Chunhyang asked him about it. The moon came in as far as the edge of the floor.",
+                "\"Sir, do the common people come into that book of yours?\"<br>\"...No. They don't.\"<br>\"Then it's only half a book.\"",
+                "Yi Mongnyong laughed at that for a long while. Then he grew serious.<br>\"Where did you learn to think like that?\"<br>\"In the market street. Sit there and you hear everything.\" Chunhyang said it quite calmly.",
+                "When autumn came Chunhyang asked Yi Mongnyong to teach her to write. Yi Mongnyong put the brush into her hand. She had already ground the ink on the stone and was waiting.",
+                "\"Which character shall we write first?\"<br>\"The one that means person.\"<br>\"Why that one?\"<br>\"I heard it is the hardest of them all.\"",
+                "So a year went by. The two of them thought that time would simply go on. Spring went, and summer went, and autumn went.",
+                "But the next spring a man came down from Hanyang. Word had come that the magistrate of Namwon had been raised to a higher post and was to go up to the capital. The town office was in an uproar overnight.",
+                "Yi Mongnyong heard the news in his father's room.<br>\"Pack your things. We leave in three days.\"<br>\"Father, I...\"<br>\"You come too. You have an examination to sit.\"",
+                "Yi Mongnyong stood there a long while, then went outside. The spring sun was bright in the yard. It was exactly the same light as on the day he first saw the swing at Gwanghallu. Outside the wall the cicadas were loud."
+            ]
+        },
+        {
+            num: 3,
+            title: "Parting",
+            art: ["story-03-a.webp", "story-03-b.webp", "story-03-c.webp"],
+            artAt: ["a mirror the size of a palm", "took the jade ring off his own finger", "as far as Origeong"],
+            paras: [
+                "That evening Yi Mongnyong went to Chunhyang's house. He turned away from the gate several times and then stood there again. He had nothing at all in his hands.",
+                "The moment he stepped into the room Chunhyang knew.<br>\"...Something has happened.\" She had read it in his face alone.",
+                "Yi Mongnyong sat down and told her all of it. His father's new post, the departure in three days, the examination in Hanyang. He could not lift his head the whole time he was speaking.",
+                "Even after he had finished the room stayed quiet for a long while. Only the lamp flame moved. Outside the window the grass insects were singing.",
+                "\"When will you come back?\"<br>\"...I don't know.\"",
+                "Chunhyang nodded. She did not cry. Only her fingertips shook. Her hands were lying in her lap.",
+                "\"Sir. Let me ask you one thing.\"<br>\"Ask.\"<br>\"When you are in Hanyang, will you forget me?\"",
+                "Yi Mongnyong sprang to his feet.<br>\"What are you saying!\" His voice rose before he could help it.<br>\"Don't be angry. I am not asking for an answer.\"",
+                "Chunhyang went on quietly.<br>\"A person cannot do as they like with their own heart. All I know is my own. That is the only thing I meant to tell you.\"",
+                "Then she took something out of her sewing basket. It was a mirror the size of a palm. It had been polished so long that the rim was smooth and shining.",
+                "\"Take this with you. A mirror shows a thing just as it is. Whatever kind of man you become, this mirror will show it just as it is.\"",
+                "Yi Mongnyong took the mirror in both hands. Then he took the jade ring off his own finger and gave it to Chunhyang. The ring caught the lamplight and gleamed.",
+                "\"My mother gave me this. As long as this ring is not on my hand, I am still in Namwon.\"",
+                "At dawn the next day the magistrate's party left Namwon. The town officers lined up and the baggage carts stood in a row. The morning mist was thick.",
+                "Chunhyang went with him as far as Origeong<span class=\"gloss\">(a pavilion built about two miles outside a town, where people saw travellers off and welcomed them home)</span> outside the wall. Wolmae stood behind her. There were several people at Origeong, some leaving and some seeing others off.",
+                "\"Take care of yourself.\"<br>\"And you.\"<br>They both had more to say and neither of them said it. The hand on the bridle tightened.",
+                "The horse began to move. Yi Mongnyong looked back again and again. Chunhyang was standing exactly where she had been.",
+                "At the top of the pass Yi Mongnyong stopped his horse. Chunhyang grew smaller and smaller in his eyes. At last she was a dot, and then she was gone.",
+                "Chunhyang stood at Origeong until the sun had gone right down. Wolmae pulled at her sleeve several times. The hem of her skirt was soaked with dew.",
+                "\"Come inside. People are watching.\"<br>\"A little longer.\"",
+                "That night Chunhyang threaded the jade ring on a string and hung it round her neck. Then she sat under the lamp and wrote the character for person, and wrote it again. The ring lay cool against her breast.",
+                "In Hanyang Yi Mongnyong read all night. He stood the mirror up on his desk. Every time he raised his head he saw his own face. There were nights when not one word would go in."
+            ]
+        },
+        {
+            num: 4,
+            title: "The New Magistrate",
+            art: ["story-04-a.webp", "story-04-b.webp", "story-04-c.webp"],
+            artAt: ["His arrival was loud from the start", "The runners went to Chunhyang's house", "enter your name in the courtesan register"],
+            paras: [
+                "Two years went by, and the following spring a new magistrate came to Namwon. His name was Byeon Hakdo. The people of Namwon came out to the roadside to watch.",
+                "His arrival was loud from the start. Ten baggage carts followed behind the palanquin, packed with silk and dishes and household goods. The people watching looked at one another.",
+                "Byeon Hakdo called the town officers together the moment he sat down. They lined up with their ledgers in their arms. But the questions he asked were strange.",
+                "\"How much grain is there in this town's storehouse?\"<br>\"Yes, well, that is...\"<br>\"Never mind. That can wait. How many well-known courtesans are there in this town?\"",
+                "The officers glanced at one another. Not one of them was willing to open his mouth.",
+                "\"What, are you all deaf? Bring me the courtesan register.\"",
+                "From that day there was a feast every day at the Namwon town office. The sound of the music went over the wall and out into the market street. The lamps did not go out however late it got.",
+                "Everything the feasts used came out of the town storehouse. The taxes gathered that spring were gone in three months. The storehouse door stood wide open.",
+                "So Byeon Hakdo ordered next year's taxes to be collected in advance, before they were due. From the houses that could not pay, they carried off the cooking pots. They took the children's rice bowls too.",
+                "Then one day Byeon Hakdo was turning the pages of the courtesan register and his hand stopped.<br>\"They tell me there is a girl called Chunhyang in this town.\"",
+                "The clerk<span class=\"gloss\">(a junior official who did the day-to-day work of a town office)</span> beside him spoke carefully.<br>\"There is, sir. But that girl is not a courtesan.\" Sweat stood on the clerk's forehead.",
+                "\"How is a courtesan's daughter not a courtesan?\"<br>\"They say she already has a husband. The son of the last magistrate...\"",
+                "Byeon Hakdo laughed out loud.<br>\"And where is that young gentleman now? In Hanyang, is he not? How far is Hanyang from here?\" His laughter carried across the yard.",
+                "\"...About seven hundred li, sir.\"<br>\"What sort of husband is a man seven hundred li away? Bring her.\"",
+                "The runners went to Chunhyang's house. Wolmae stood blocking the gate.<br>\"My child is not a courtesan!\"<br>\"Magistrate's order. Stand aside.\" The runners' footsteps rang in the lane.",
+                "Chunhyang came out of the room. Her clothes were straight and her hair was neatly combed.<br>\"Mother, it is all right. I will go and come back.\" There was not a trace of trembling in her.",
+                "\"Chunhyang!\"<br>\"You cannot refuse to go when you are called. I shall simply go, and come home again.\"",
+                "The yard of the town office was already full of people. They were lined up even outside the wall, as though it were a show. Children had climbed onto the top of the wall and were craning their necks.",
+                "Byeon Hakdo sat on the raised floor and looked down at Chunhyang. He looked for a long while, and then his face turned pleased.",
+                "\"Just as they say, then. From today I will enter your name in the courtesan register. Come into the office and wait upon me.\" At the end of it he snapped his fan shut.",
+                "The yard went silent. People held their breath and watched Chunhyang's mouth. Even the wind seemed to have stopped.",
+                "Chunhyang lifted her head. Her voice was not loud, but it carried clearly to the far end of the yard.<br>\"Sir, I am a woman who already has a husband.\""
+            ]
+        },
+        {
+            num: 5,
+            title: "Thrown into the Prison",
+            art: ["story-05-a.webp", "story-05-b.webp", "story-05-c.webp"],
+            artAt: ["she did not cry out", "shut in the Namwon prison", "send me as a secret inspector"],
+            paras: [
+                "The smile went off Byeon Hakdo's face.<br>\"A husband, is it. Have you a marriage paper<span class=\"gloss\">(the document exchanged when a marriage was agreed)</span>? Have you anything filed with the state?\" His hand tightened on the fan.",
+                "\"I have a paper.\"<br>\"And what sort of document is a scrap of paper passed between a courtesan's daughter and a young gentleman!\"",
+                "\"If you say it is not a document, sir, then it is not a document.\"<br>Chunhyang said it quite calmly.<br>\"Even so, my own heart is mine. That much is not for you to decide.\" The people in the yard looked at one another.",
+                "Byeon Hakdo struck the table.<br>\"The creature is making a fool of the magistrate! Fetch the rod!\" A cup went over on the table.",
+                "The runners hesitated. There was nobody in Namwon who did not know Chunhyang.<br>\"What are you waiting for!\" The hands holding the rod kept dropping.",
+                "Even while she was being beaten she did not cry out. Instead she said one thing for every stroke. Her voice cracked, but it was clear.",
+                "\"One. What crime is it to keep faith with one husband?\"<br>\"Two. What crime is it to hold no second heart?\"",
+                "\"Three. If the world turns upside down I will not change these words.\"<br>The hand of the runner striking her shook. In the end one of them put down the rod and stepped back.",
+                "Outside the wall people began to weep. Some of them turned away and some of them clenched their fists. The children up on the wall burst into tears.",
+                "\"Shut her in the prison! Do not let her out until she says it with her own mouth!\"",
+                "That same day Chunhyang was shut in the Namwon prison. The prison was dark and damp. Rats ran about and water seeped from the walls. Not a hand's breadth of sunlight came in all day.",
+                "Wolmae came to the prison every day. She pushed food through the bars and wept.<br>\"I should never have taken that paper.\" Her hands went white where they gripped the bars.",
+                "\"Mother, don't say such things.\"<br>\"What crime have you ever done...\"<br>\"It is because I have done none that I am here.\"",
+                "A month passed, and another. The flesh went from Chunhyang's face and her wrists grew thin. Even the gaolers could not bear to look.",
+                "Still, every day Chunhyang wrote on the floor of the prison with her finger. It was the character for person. She wrote it until the earth floor was worn smooth.",
+                "In the third year since he had left Namwon, an examination was held in Hanyang. Yi Mongnyong sat it.",
+                "The question was on how a country's people should be governed. Yi Mongnyong picked up his brush and thought for a long time. For a long while the tip of it did not touch the paper.",
+                "Then all at once he remembered something he had heard long before. Do the common people come into that book of yours? Then it's only half a book. It was as though he could hear Chunhyang's voice.",
+                "That day Yi Mongnyong came first of them all. The king called him and asked,<br>\"What post do you want?\"",
+                "\"Your Majesty, send me as a secret inspector.\"<br>\"To which town would you go?\"<br>\"...To Namwon, in Jeolla.\" The king's eyes widened.",
+                "The king gave him the mapae<span class=\"gloss\">(a round iron badge with horses engraved on it, which proved a man was a secret inspector)</span>.",
+                "Yi Mongnyong put the badge inside his coat, and took the mirror from his desk as well. Then he set out south. He did not look back."
+            ]
+        },
+        {
+            num: 6,
+            title: "The Man Who Came as a Beggar",
+            art: ["story-06-a.webp", "story-06-b.webp", "story-06-c.webp"],
+            artAt: ["rubbed dirt into his face", "the people at the next table", "pressed his face to the bars"],
+            paras: [
+                "As he came near Namwon, Yi Mongnyong changed his clothes. He put on rags and straw sandals, and a hat with a broken brim. He rubbed dirt into his face on purpose.",
+                "That was how secret inspectors travelled. Only if nobody knew him could he see what a town was really like.",
+                "The moment he crossed into Namwon land Yi Mongnyong stopped walking. The water had dried out of the paddies. Grass had grown over the road because nobody used it. There were not ten people in the market.",
+                "He went into an inn and ordered a bowl of soup and rice. He could hear every word the people at the next table were saying. There was almost nothing in the soup.",
+                "\"They say he's collecting the tax twice again this year.\"<br>\"We haven't even paid last year's.\"<br>\"And that gentleman feasts every night, they say.\"",
+                "Yi Mongnyong's spoon stopped. He sat like that until the soup was stone cold.",
+                "\"That aside. Is Chunhyang still in the prison?\"<br>\"Three months now. They say she hardly looks like a person any more.\" Under the table Yi Mongnyong's hands shook.",
+                "Yi Mongnyong stood up where he was. He had not eaten half the bowl.",
+                "After the sun went down Yi Mongnyong went to Chunhyang's house. The wall had fallen in and the chrysanthemum pots in the yard had all dried up. Only the bamboo stood as it always had.",
+                "Wolmae came out with a lamp. Then she looked at Yi Mongnyong and for a long moment did not know him. The hand holding the lamp shook.",
+                "\"...Sir?\"<br>\"Yes. It's me.\"<br>Wolmae's eyes went over him. The worn-out clothes, the broken hat, the sandals thick with dirt.",
+                "Wolmae sat straight down on the ground.<br>\"Oh no... oh no, my Chunhyang...\" Her crying carried out into the lane.",
+                "\"Madam.\"<br>\"My child has come to that, waiting, and the man she waited for comes back... comes back looking like this?\"",
+                "Yi Mongnyong made no excuse at all. He only said,<br>\"Take me to the prison.\" His voice was very low.",
+                "When they reached the prison Yi Mongnyong pressed his face to the bars. Inside it was pitch dark.<br>\"Chunhyang.\"",
+                "Something moved in the darkness. Then a very low voice came.<br>\"...Is it you, sir?\" There was a sound of chains dragging.",
+                "\"How did you know? You can't even see my face.\"<br>\"Your voice has not changed.\"",
+                "The moonlight came in and lit Chunhyang's face. Yi Mongnyong saw it and his breath stopped. Her cheeks were hollow and there was nothing but bone at her wrists.",
+                "Chunhyang looked at the state of him too. She looked for a long while, and then asked quietly,<br>\"...You did not get what you went for in Hanyang.\"",
+                "Yi Mongnyong did not answer. If he told her the truth she would show it in the prison, and then the whole thing would come apart. The words kept catching in his throat.",
+                "Then Chunhyang put her hand out between the bars. The jade ring was in it.<br>\"Take this back. I am afraid I shall lose it if I keep it.\" The ring had grown loose on her finger.",
+                "\"Chunhyang.\"<br>\"And sir. Please look after my mother. If that one is left on her own she will not bear it.\"<br>Yi Mongnyong held on to those bars and could not lift his head for a long time."
+            ]
+        },
+        {
+            num: 7,
+            title: "The Secret Inspector Is Here",
+            art: ["story-07-a.webp", "story-07-b.webp", "story-07-c.webp"],
+            artAt: ["magistrates of the neighbouring towns", "the blood of a thousand people", "The gate burst open"],
+            paras: [
+                "The next day was Byeon Hakdo's birthday. A great feast began at the town office from the morning. The music started before dawn.",
+                "Even the magistrates of the neighbouring towns had been called in, and they sat in rows on the raised floor. Every table was piled with meat and wine. Sacks of grain were carried out of the storehouse. More than twenty courtesans and musicians had been sent for.",
+                "Just then a man in worn-out clothes slipped quietly into the yard.<br>\"Here now, what beggar is pushing in at a feast!\"",
+                "The runners moved to throw him out, but one of the visiting magistrates waved a hand.<br>\"Leave him. It's an ill thing to drive a man off on a feast day. Give him a table down at the end.\" The runners stepped back, not liking it.",
+                "Yi Mongnyong sat down in the corner at the end of the yard. On his table were one bowl of cold soup and one dish of greens. The greens had gone quite cold. Yi Mongnyong did not pick up his spoon.",
+                "After the wine had gone round a few times Byeon Hakdo grew merry.<br>\"On a fine day like this, are we to have no poem? Somebody make one.\" He beat the table with his fan and hummed.",
+                "Then the beggar at the end of the yard stood up.<br>\"Might this humble man make one and offer it?\" The whole company turned to look.",
+                "The company burst out laughing.<br>\"The beggar is going to write a poem!\"<br>\"Let's hear it, then!\" Not one of them took him seriously.",
+                "Yi Mongnyong asked for a brush and wrote on a sheet of paper. Then he read it out. The hand that held the brush did not shake at all.",
+                "\"The good wine in the golden cup is the blood of a thousand people,\"<br>\"and the fine food on the jade dish is the fat of ten thousand.\" His voice was low as he read, and yet it carried to the far end of the hall.",
+                "The hall went quiet. Even the chopsticks stopped.",
+                "\"Where the candle wax falls, the people's tears are falling,\"<br>\"and where the singing is loudest, the bitter voices are loudest too.\"",
+                "One of the magistrates who was holding a cup quietly put it down. Another got up and began backing away. Somebody picked up his hat and slipped down into the yard.",
+                "Byeon Hakdo's face went red and then went pale.<br>\"You, you dog, what insolence is this! Drag him out at once!\"",
+                "The runners rushed at him. At that moment Yi Mongnyong took something out of his coat and held it up high. Every person in the yard looked at it at once.",
+                "It was a round piece of iron with horses engraved on it. It was the mapae. The metal flashed in the sunlight.",
+                "At the same moment a great shout broke out beyond the wall.<br>\"The secret inspector is here!\"",
+                "The gate burst open and the inspector's men came pouring in. Tables went over and wine bottles rolled. The visiting magistrates went over the wall without even picking up their hats. The wall came down and the footprints were all in a muddle.",
+                "Byeon Hakdo tumbled off his seat.<br>\"In... Inspector, sir, this humble man only...\"<br>\"The magistrate of Namwon will hand over his seal. You leave that seat today.\" The hand that held out the seal shook like a leaf.",
+                "Yi Mongnyong had the prison door opened at once. The door creaked as it swung. Chunhyang came walking out with people holding her up. The sunlight was so bright that for a long while she could not open her eyes.",
+                "When at last she opened them, Yi Mongnyong was standing in front of her in an inspector's robes. Chunhyang was not surprised. She only said,<br>\"...You might have told me last night.\"<br>\"If I had, you would have shown it.\"<br>\"That is true.\"",
+                "Then Chunhyang walked past him. Wolmae was standing beyond the wall. Wolmae came running, calling her daughter's name, and took her daughter's face in both hands. Chunhyang held her mother, and only then did she cry out loud.",
+                "That autumn the two of them went up to Hanyang. Wolmae went with them.",
+                "On the day before they left, Chunhyang climbed up to Gwanghallu. Yi Mongnyong came up after her.<br>\"This is where we first saw each other.\"<br>\"And I sent Bangja to call you. It was a truly rude thing to do.\" The willows had grown much thicker than they were then.",
+                "\"Do you remember what I said that day?\"<br>\"That if I had something to say I should come myself.\"<br>\"Yes. It is because you listened to that that I am here.\" Below Gwanghallu the water ran as it had run then.",
+                "Yi Mongnyong took the mirror out of his coat. Both their faces showed in it together. He had carried it three years and the rim was quite worn away.<br>\"I give it back to you. From now on it is for you to look and see what kind of man I have become.\""
+            ]
+        }
+    ],
+    /* 단어장 — 그림책은 펼침면마다 묶지만, 소설은 장마다 묶는다.
+       쪽은 재어서 나누므로 미리 알 수 없기 때문이다.
+       화면에는 그 쪽에 실제로 나온 낱말만 골라 보여 준다(vocabFor). */
+    words: {
+        "cover": [
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean story with no known author" },
+            { w: "performed (perform)", k: "공연했다, 불렀다", s: "Singers performed it as pansori" },
+            { w: "pansori", k: "판소리", s: "a kind of story-singing" },
+            { w: "pavilion", k: "누각", s: "The pavilion where the two young people first see each other" },
+            { w: "is still standing (stand)", k: "아직 서 있다", s: "is still standing there today" },
+            { w: "rank", k: "신분", s: "people were born into ranks" },
+            { w: "courtesan", k: "기생", s: "a girl born to a courtesan" },
+            { w: "register", k: "명부", s: "was written into the register as one herself" },
+            { w: "turns on ~ (turn on)", k: "~에 달려 있다", s: "is what the whole story turns on" }
+        ],
+        "ch1": [
+            { w: "trailed down (trail)", k: "늘어져 있었다", s: "willows trailed down all around" },
+            { w: "there was no finer view", k: "경치가 으뜸이었다", s: "there was no finer view in Namwon" },
+            { w: "railing", k: "난간", s: "the railing was crowded with people" },
+            { w: "blossom", k: "꽃", s: "come to look at the blossom" },
+            { w: "lean on ~", k: "~에 기대다", s: "Lean on that railing" },
+            { w: "sweet-flag water", k: "창포물", s: "washed their hair in sweet-flag water" },
+            { w: "wrestled (wrestle)", k: "씨름했다", s: "and the men wrestled" },
+            { w: "ran errands (run errands)", k: "심부름을 했다", s: "a manservant who ran errands for the town office" },
+            { w: "hardly ever", k: "거의 ~하지 않다", s: "so he hardly ever went out" },
+            { w: "his eye caught ~ (catch)", k: "눈에 들어왔다", s: "then his eye caught the willow grove" },
+            { w: "hem", k: "옷자락", s: "The hem of a deep red skirt caught the wind" },
+            { w: "leaned further out (lean out)", k: "몸을 더 내밀었다", s: "leaned further out over the railing" },
+            { w: "narrowed his eyes (narrow)", k: "눈을 가늘게 떴다", s: "Bangja narrowed his eyes" },
+            { w: "as if it were nothing much", k: "대수롭지 않게", s: "answered as if it were nothing much" },
+            { w: "stole a look (steal a look)", k: "슬쩍 살폈다", s: "he stole a look at his young master's face" },
+            { w: "got it out (get out)", k: "겨우 말을 꺼냈다", s: "Then at last he got it out" },
+            { w: "went round (go round)", k: "휘둥그레졌다", s: "Bangja's eyes went round" },
+            { w: "jumped (jump)", k: "펄쩍 뛰었다", s: "Bangja jumped" },
+            { w: "is sent for (send for)", k: "부름을 받다", s: "that is not a girl who comes because she is sent for" },
+            { w: "stamped his feet (stamp)", k: "발을 동동 굴렀다", s: "Bangja stamped his feet" },
+            { w: "scratching his head (scratch)", k: "머리를 긁적이며", s: "came back alone, scratching his head" },
+            { w: "when called (call)", k: "부르면", s: "but I am not someone who comes when called" },
+            { w: "straightening her clothes (straighten)", k: "옷매무새를 고치고 있었다", s: "was straightening her clothes" },
+            { w: "far off", k: "멀리서", s: "Only the cicadas sounded, far off" },
+            { w: "It was rude of me to ~", k: "~한 것은 무례였다", s: "It was rude of me to send a man just now" },
+            { w: "Forgive me", k: "용서하십시오", s: "Forgive me" },
+            { w: "their eyes met (meet)", k: "눈이 마주쳤다", s: "Their eyes met" },
+            { w: "before he could stop himself", k: "저도 모르게", s: "Yi Mongnyong laughed before he could stop himself" },
+            { w: "the tips of her ears", k: "귀 끝", s: "Only the tips of her ears turned pink" },
+            { w: "creaked (creak)", k: "삐걱거렸다", s: "the swing ropes creaked as they swung" },
+            { w: "That is not for me to decide alone", k: "저 혼자 정할 일이 아닙니다", s: "That is not for me to decide alone" },
+            { w: "gathered up (gather up)", k: "걷어 올렸다", s: "she gathered up the swing ropes over her shoulder" },
+            { w: "closed over ~ (close over)", k: "덮었다", s: "The willow leaves closed over the place where she had been" },
+            { w: "take in a word (take in)", k: "한 글자도 눈에 안 들어오다", s: "could not take in a word he read" },
+            { w: "burned all the way down (burn down)", k: "다 타 내려갔다", s: "until the lamp wick had burned all the way down" },
+            { w: "rubbed his eyes (rub)", k: "눈을 비볐다", s: "Bangja rubbed his eyes" }
+        ],
+        "ch2": [
+            { w: "lane", k: "골목", s: "in a quiet lane outside the walls of Namwon" },
+            { w: "rustled (rustle)", k: "서걱거렸다", s: "The bamboo leaves rustled in the wind" },
+            { w: "callus", k: "굳은살", s: "There were hard calluses on her fingertips" },
+            { w: "at this hour of the night", k: "이 밤중에", s: "at this hour of the night" },
+            { w: "a promise for a hundred years", k: "백년가약", s: "a promise for a hundred years" },
+            { w: "went stiff (go stiff)", k: "굳었다", s: "Wolmae's face went stiff" },
+            { w: "in the eyes of the world", k: "세상 눈에는", s: "in the eyes of the world my daughter is a courtesan's daughter too" },
+            { w: "What becomes of ~?", k: "~은 어찌 됩니까?", s: "What becomes of my child then?" },
+            { w: "wet", k: "젖은", s: "Wolmae's eyes were wet" },
+            { w: "There was not one thing wrong", k: "하나도 틀리지 않았다", s: "There was not one thing in what Wolmae had said that was wrong" },
+            { w: "put it on paper (put)", k: "종이에 적다", s: "That is why I mean to put it on paper" },
+            { w: "abandon", k: "저버리다", s: "would never abandon her as long as he lived" },
+            { w: "pressed his thumbprint (press)", k: "손도장을 찍었다", s: "pressed his thumbprint on it" },
+            { w: "did not shake at all (shake)", k: "조금도 떨리지 않았다", s: "The hand that held the brush did not shake at all" },
+            { w: "What strength is there in ~?", k: "~에 무슨 힘이 있습니까?", s: "what strength is there in a piece of paper like this" },
+            { w: "let it have none (let)", k: "없는 대로 두다", s: "then let it have none" },
+            { w: "folded (fold)", k: "접었다", s: "then folded it and put it inside her jacket" },
+            { w: "rustled in her hand (rustle)", k: "손안에서 바스락거렸다", s: "The paper rustled in her hand" },
+            { w: "feast", k: "잔치", s: "It was not a great feast" },
+            { w: "gathering", k: "모임, 자리", s: "It was a small gathering with Wolmae and Bangja" },
+            { w: "side by side", k: "나란히", s: "sat side by side on the wooden floor and talked" },
+            { w: "as far as ~", k: "~까지", s: "The moon came in as far as the edge of the floor" },
+            { w: "the common people", k: "백성", s: "do the common people come into that book of yours" },
+            { w: "half a book", k: "반쪽짜리 책", s: "Then it's only half a book" },
+            { w: "grew serious (grow serious)", k: "진지해졌다", s: "Then he grew serious" },
+            { w: "market street", k: "저잣거리", s: "In the market street" },
+            { w: "quite calmly", k: "담담하게", s: "Chunhyang said it quite calmly" },
+            { w: "ground the ink (grind)", k: "먹을 갈았다", s: "She had already ground the ink on the stone" },
+            { w: "character", k: "글자", s: "Which character shall we write first" },
+            { w: "the hardest of them all", k: "제일 어려운 것", s: "I heard it is the hardest of them all" },
+            { w: "simply go on (go on)", k: "그냥 이어지다", s: "thought that time would simply go on" },
+            { w: "was raised to ~ (raise)", k: "벼슬이 올랐다", s: "had been raised to a higher post" },
+            { w: "in an uproar", k: "발칵 뒤집힌", s: "The town office was in an uproar overnight" },
+            { w: "Pack your things (pack)", k: "짐을 꾸려라", s: "Pack your things" },
+            { w: "sit an examination (sit)", k: "과거를 보다", s: "You have an examination to sit" }
+        ],
+        "ch3": [
+            { w: "turned away from ~ (turn away)", k: "발길을 돌렸다", s: "He turned away from the gate several times" },
+            { w: "the moment ~", k: "~하자마자", s: "The moment he stepped into the room Chunhyang knew" },
+            { w: "read it in his face (read)", k: "얼굴빛으로 알아챘다", s: "She had read it in his face alone" },
+            { w: "departure", k: "떠남, 출발", s: "the departure in three days" },
+            { w: "could not lift his head (lift)", k: "고개를 들지 못했다", s: "He could not lift his head the whole time he was speaking" },
+            { w: "nodded (nod)", k: "고개를 끄덕였다", s: "Chunhyang nodded" },
+            { w: "fingertips", k: "손끝", s: "Only her fingertips shook" },
+            { w: "in her lap", k: "무릎 위에", s: "Her hands were lying in her lap" },
+            { w: "sprang to his feet (spring)", k: "벌떡 일어났다", s: "Yi Mongnyong sprang to his feet" },
+            { w: "before he could help it", k: "저도 모르게", s: "His voice rose before he could help it" },
+            { w: "cannot do as they like with ~", k: "어찌하지 못하다", s: "A person cannot do as they like with their own heart" },
+            { w: "sewing basket", k: "반짇고리", s: "she took something out of her sewing basket" },
+            { w: "the size of a palm", k: "손바닥만 한", s: "It was a mirror the size of a palm" },
+            { w: "rim", k: "테두리", s: "the rim was smooth and shining" },
+            { w: "just as it is", k: "있는 그대로", s: "A mirror shows a thing just as it is" },
+            { w: "whatever kind of ~", k: "어떤 ~이든", s: "Whatever kind of man you become" },
+            { w: "took ~ off his finger (take off)", k: "손가락에서 빼었다", s: "took the jade ring off his own finger" },
+            { w: "gleamed (gleam)", k: "반짝였다", s: "The ring caught the lamplight and gleamed" },
+            { w: "as long as ~", k: "~하는 동안은", s: "As long as this ring is not on my hand" },
+            { w: "at dawn", k: "새벽에", s: "At dawn the next day the magistrate's party left Namwon" },
+            { w: "baggage cart", k: "짐수레", s: "the baggage carts stood in a row" },
+            { w: "mist", k: "안개", s: "The morning mist was thick" },
+            { w: "see ~ off (see off)", k: "배웅하다", s: "where people saw travellers off and welcomed them home" },
+            { w: "bridle", k: "말고삐", s: "The hand on the bridle tightened" },
+            { w: "again and again", k: "몇 번이나", s: "Yi Mongnyong looked back again and again" },
+            { w: "exactly where she had been", k: "그 자리 그대로", s: "Chunhyang was standing exactly where she had been" },
+            { w: "the top of the pass", k: "고갯마루", s: "At the top of the pass Yi Mongnyong stopped his horse" },
+            { w: "a dot", k: "점 하나", s: "At last she was a dot, and then she was gone" },
+            { w: "gone right down (go down)", k: "다 기울었다", s: "until the sun had gone right down" },
+            { w: "pulled at her sleeve (pull)", k: "소매를 잡아끌었다", s: "Wolmae pulled at her sleeve several times" },
+            { w: "soaked with dew (soak)", k: "이슬에 젖었다", s: "The hem of her skirt was soaked with dew" },
+            { w: "threaded ~ on a string (thread)", k: "실에 꿰었다", s: "Chunhyang threaded the jade ring on a string" },
+            { w: "lay cool (lie)", k: "서늘하게 놓여 있었다", s: "The ring lay cool against her breast" },
+            { w: "not one word would go in", k: "한 글자도 안 들어왔다", s: "There were nights when not one word would go in" }
+        ],
+        "ch4": [
+            { w: "the following spring", k: "이듬해 봄", s: "the following spring a new magistrate came to Namwon" },
+            { w: "loud from the start", k: "처음부터 요란한", s: "His arrival was loud from the start" },
+            { w: "palanquin", k: "가마", s: "Ten baggage carts followed behind the palanquin" },
+            { w: "household goods", k: "세간", s: "packed with silk and dishes and household goods" },
+            { w: "looked at one another (look)", k: "서로 얼굴을 쳐다보았다", s: "The people watching looked at one another" },
+            { w: "ledger", k: "문서, 장부", s: "They lined up with their ledgers in their arms" },
+            { w: "storehouse", k: "창고, 곳간", s: "How much grain is there in this town's storehouse" },
+            { w: "That can wait", k: "그건 나중에", s: "That can wait" },
+            { w: "glanced at one another (glance)", k: "서로 눈치를 보았다", s: "The officers glanced at one another" },
+            { w: "not one of them was willing", k: "아무도 선뜻 나서지 않았다", s: "Not one of them was willing to open his mouth" },
+            { w: "went over the wall (go over)", k: "담을 넘어갔다", s: "The sound of the music went over the wall" },
+            { w: "however late it got", k: "밤이 깊어도", s: "The lamps did not go out however late it got" },
+            { w: "in advance", k: "미리", s: "collected in advance, before they were due" },
+            { w: "carried off (carry off)", k: "떼어 갔다", s: "they carried off the cooking pots" },
+            { w: "his hand stopped (stop)", k: "손을 멈췄다", s: "was turning the pages of the courtesan register and his hand stopped" },
+            { w: "clerk", k: "아전", s: "a junior official who did the day-to-day work of a town office" },
+            { w: "carefully", k: "조심스레", s: "beside him spoke carefully" },
+            { w: "Sweat stood on ~ (stand)", k: "땀이 맺혔다", s: "Sweat stood on the clerk's forehead" },
+            { w: "laughed out loud (laugh out loud)", k: "껄껄 웃었다", s: "Byeon Hakdo laughed out loud" },
+            { w: "carried across ~ (carry)", k: "울려 퍼졌다", s: "His laughter carried across the yard" },
+            { w: "What sort of ~ is ...?", k: "무슨 ~란 말이냐?", s: "What sort of husband is a man seven hundred li away" },
+            { w: "runner", k: "사령", s: "The runners went to Chunhyang's house" },
+            { w: "blocking the gate (block)", k: "대문을 막고", s: "Wolmae stood blocking the gate" },
+            { w: "Stand aside", k: "비키시오", s: "Stand aside" },
+            { w: "rang in the lane (ring)", k: "골목을 울렸다", s: "The runners' footsteps rang in the lane" },
+            { w: "neatly combed (comb)", k: "곱게 빗은", s: "her hair was neatly combed" },
+            { w: "not a trace of ~", k: "~한 기색이 조금도 없는", s: "There was not a trace of trembling in her" },
+            { w: "You cannot refuse to go", k: "안 갈 수는 없다", s: "You cannot refuse to go when you are called" },
+            { w: "as though it were a show", k: "무슨 구경이라도 난 듯", s: "as though it were a show" },
+            { w: "craning their necks (crane)", k: "목을 빼고", s: "were craning their necks" },
+            { w: "looked down at ~ (look down)", k: "내려다보았다", s: "sat on the raised floor and looked down at Chunhyang" },
+            { w: "pleased", k: "흡족한", s: "and then his face turned pleased" },
+            { w: "wait upon ~ (wait upon)", k: "시중을 들다", s: "Come into the office and wait upon me" },
+            { w: "snapped ~ shut (snap shut)", k: "탁 접었다", s: "he snapped his fan shut" },
+            { w: "held their breath (hold one's breath)", k: "숨을 죽였다", s: "People held their breath and watched Chunhyang's mouth" },
+            { w: "carried clearly (carry)", k: "또렷하게 들렸다", s: "it carried clearly to the far end of the yard" }
+        ],
+        "ch5": [
+            { w: "went off ~ (go off)", k: "사라졌다", s: "The smile went off Byeon Hakdo's face" },
+            { w: "marriage paper", k: "혼서", s: "Have you a marriage paper" },
+            { w: "tightened (tighten)", k: "힘이 들어갔다", s: "His hand tightened on the fan" },
+            { w: "a scrap of paper", k: "종이 쪼가리", s: "a scrap of paper passed between a courtesan's daughter" },
+            { w: "That much is not for you to decide", k: "그것까지 정하실 수는 없다", s: "That much is not for you to decide" },
+            { w: "struck the table (strike)", k: "상을 내리쳤다", s: "Byeon Hakdo struck the table" },
+            { w: "making a fool of ~ (make a fool of)", k: "능멸하다", s: "The creature is making a fool of the magistrate" },
+            { w: "went over (go over)", k: "넘어졌다", s: "A cup went over on the table" },
+            { w: "hesitated (hesitate)", k: "머뭇거렸다", s: "The runners hesitated" },
+            { w: "did not cry out (cry out)", k: "소리를 지르지 않았다", s: "she did not cry out" },
+            { w: "for every stroke", k: "한 대에 한 번씩", s: "she said one thing for every stroke" },
+            { w: "cracked (crack)", k: "갈라졌다", s: "Her voice cracked, but it was clear" },
+            { w: "keep faith with ~", k: "~를 섬기다", s: "What crime is it to keep faith with one husband" },
+            { w: "hold no second heart", k: "두 마음을 품지 않다", s: "What crime is it to hold no second heart" },
+            { w: "turns upside down (turn upside down)", k: "뒤집히다", s: "If the world turns upside down I will not change these words" },
+            { w: "stepped back (step back)", k: "물러섰다", s: "one of them put down the rod and stepped back" },
+            { w: "clenched their fists (clench)", k: "주먹을 쥐었다", s: "some of them clenched their fists" },
+            { w: "burst into tears (burst)", k: "울음을 터뜨렸다", s: "The children up on the wall burst into tears" },
+            { w: "with her own mouth", k: "제 입으로", s: "until she says it with her own mouth" },
+            { w: "damp", k: "축축한", s: "The prison was dark and damp" },
+            { w: "seeped (seep)", k: "배어 나왔다", s: "water seeped from the walls" },
+            { w: "a hand's breadth", k: "한 뼘", s: "Not a hand's breadth of sunlight came in all day" },
+            { w: "pushed ~ through the bars (push)", k: "창살 사이로 넣었다", s: "She pushed food through the bars and wept" },
+            { w: "went white (go white)", k: "하얗게 질렸다", s: "Her hands went white where they gripped the bars" },
+            { w: "It is because I have done none", k: "죄가 없으니까", s: "It is because I have done none that I am here" },
+            { w: "The flesh went from ~ (go)", k: "살이 빠졌다", s: "The flesh went from Chunhyang's face" },
+            { w: "could not bear to look (bear)", k: "차마 보지 못했다", s: "Even the gaolers could not bear to look" },
+            { w: "worn smooth (wear)", k: "반들반들해졌다", s: "She wrote it until the earth floor was worn smooth" },
+            { w: "be governed (govern)", k: "다스려지다", s: "how a country's people should be governed" },
+            { w: "did not touch the paper (touch)", k: "종이에 닿지 않았다", s: "the tip of it did not touch the paper" },
+            { w: "all at once", k: "문득", s: "Then all at once he remembered something he had heard long before" },
+            { w: "came first of them all (come first)", k: "장원으로 뽑혔다", s: "That day Yi Mongnyong came first of them all" },
+            { w: "secret inspector", k: "암행어사", s: "send me as a secret inspector" },
+            { w: "widened (widen)", k: "커졌다", s: "The king's eyes widened" },
+            { w: "engraved (engrave)", k: "새겨진", s: "a round iron badge with horses engraved on it" },
+            { w: "set out (set out)", k: "길을 나섰다", s: "Then he set out south" }
+        ],
+        "ch6": [
+            { w: "rags", k: "다 해진 옷", s: "He put on rags and straw sandals" },
+            { w: "brim", k: "갓의 챙", s: "a hat with a broken brim" },
+            { w: "on purpose", k: "일부러", s: "He rubbed dirt into his face on purpose" },
+            { w: "Only if ~", k: "~해야만", s: "Only if nobody knew him could he see what a town was really like" },
+            { w: "crossed into ~ (cross)", k: "~에 들어섰다", s: "The moment he crossed into Namwon land" },
+            { w: "paddy", k: "논", s: "The water had dried out of the paddies" },
+            { w: "grown over ~ (grow over)", k: "덮여 자랐다", s: "Grass had grown over the road" },
+            { w: "inn", k: "주막", s: "He went into an inn and ordered a bowl of soup and rice" },
+            { w: "at the next table", k: "옆자리에서", s: "the people at the next table were saying" },
+            { w: "stone cold", k: "다 식은", s: "He sat like that until the soup was stone cold" },
+            { w: "hardly looks like ~", k: "~의 꼴이 아니다", s: "she hardly looks like a person any more" },
+            { w: "had fallen in (fall in)", k: "무너졌다", s: "The wall had fallen in" },
+            { w: "dried up (dry up)", k: "말라 버렸다", s: "the chrysanthemum pots in the yard had all dried up" },
+            { w: "as it always had", k: "예전 그대로", s: "Only the bamboo stood as it always had" },
+            { w: "did not know him (know)", k: "알아보지 못했다", s: "for a long moment did not know him" },
+            { w: "went over him (go over)", k: "행색을 훑었다", s: "Wolmae's eyes went over him" },
+            { w: "sat straight down on the ground (sit down)", k: "그 자리에 주저앉았다", s: "Wolmae sat straight down on the ground" },
+            { w: "carried out into ~ (carry)", k: "새어 나갔다", s: "Her crying carried out into the lane" },
+            { w: "has come to that (come to)", k: "그 지경이 되었다", s: "My child has come to that, waiting" },
+            { w: "made no excuse (make an excuse)", k: "변명하지 않았다", s: "Yi Mongnyong made no excuse at all" },
+            { w: "pressed his face to ~ (press)", k: "얼굴을 붙였다", s: "Yi Mongnyong pressed his face to the bars" },
+            { w: "pitch dark", k: "캄캄한", s: "Inside it was pitch dark" },
+            { w: "chains dragging (drag)", k: "쇠사슬 끄는", s: "There was a sound of chains dragging" },
+            { w: "has not changed (change)", k: "변하지 않았다", s: "Your voice has not changed" },
+            { w: "his breath stopped (stop)", k: "숨이 막혔다", s: "Yi Mongnyong saw it and his breath stopped" },
+            { w: "hollow", k: "홀쭉한", s: "Her cheeks were hollow" },
+            { w: "nothing but bone", k: "뼈만 남은", s: "there was nothing but bone at her wrists" },
+            { w: "the state of him", k: "그 행색", s: "Chunhyang looked at the state of him too" },
+            { w: "show it (show)", k: "티를 내다", s: "she would show it in the prison" },
+            { w: "come apart (come apart)", k: "어그러지다", s: "then the whole thing would come apart" },
+            { w: "kept catching (catch)", k: "자꾸 걸렸다", s: "The words kept catching in his throat" },
+            { w: "grown loose (grow loose)", k: "헐거워졌다", s: "The ring had grown loose on her finger" },
+            { w: "look after ~ (look after)", k: "돌보다", s: "Please look after my mother" },
+            { w: "will not bear it (bear)", k: "못 견딜 것이다", s: "If that one is left on her own she will not bear it" }
+        ],
+        "ch7": [
+            { w: "before dawn", k: "새벽부터", s: "The music started before dawn" },
+            { w: "in rows", k: "줄지어", s: "they sat in rows on the raised floor" },
+            { w: "piled with ~ (pile)", k: "그득했다", s: "Every table was piled with meat and wine" },
+            { w: "sent for (send for)", k: "불려 왔다", s: "More than twenty courtesans and musicians had been sent for" },
+            { w: "slipped quietly into ~ (slip)", k: "슬그머니 들어섰다", s: "a man in worn-out clothes slipped quietly into the yard" },
+            { w: "pushing in (push in)", k: "끼어드는", s: "what beggar is pushing in at a feast" },
+            { w: "waved a hand (wave)", k: "손을 저었다", s: "one of the visiting magistrates waved a hand" },
+            { w: "an ill thing to ~", k: "흉한 일", s: "It's an ill thing to drive a man off on a feast day" },
+            { w: "not liking it (like)", k: "못마땅해하며", s: "The runners stepped back, not liking it" },
+            { w: "grew merry (grow merry)", k: "흥이 올랐다", s: "Byeon Hakdo grew merry" },
+            { w: "beat the table (beat)", k: "상을 두드렸다", s: "He beat the table with his fan and hummed" },
+            { w: "the whole company", k: "좌중", s: "The whole company turned to look" },
+            { w: "burst out laughing (burst out)", k: "웃음바다가 되었다", s: "The company burst out laughing" },
+            { w: "took him seriously (take seriously)", k: "곧이들었다", s: "Not one of them took him seriously" },
+            { w: "read it out (read out)", k: "소리 내어 읽었다", s: "Then he read it out" },
+            { w: "carried to ~ (carry)", k: "~까지 들렸다", s: "it carried to the far end of the hall" },
+            { w: "candle wax", k: "촛농", s: "Where the candle wax falls" },
+            { w: "bitter voices", k: "원망 소리", s: "the bitter voices are loudest too" },
+            { w: "backing away (back away)", k: "뒷걸음질 쳤다", s: "Another got up and began backing away" },
+            { w: "insolence", k: "무엄함", s: "what insolence is this" },
+            { w: "Drag him out (drag)", k: "끌어내라", s: "Drag him out at once" },
+            { w: "rushed at ~ (rush)", k: "달려들었다", s: "The runners rushed at him" },
+            { w: "held it up high (hold up)", k: "높이 들었다", s: "took something out of his coat and held it up high" },
+            { w: "flashed (flash)", k: "번쩍였다", s: "The metal flashed in the sunlight" },
+            { w: "broke out (break out)", k: "터졌다", s: "a great shout broke out beyond the wall" },
+            { w: "burst open (burst)", k: "부서지듯 열렸다", s: "The gate burst open" },
+            { w: "came pouring in (pour in)", k: "쏟아져 들어왔다", s: "the inspector's men came pouring in" },
+            { w: "went over (go over)", k: "뒤집혔다", s: "Tables went over and wine bottles rolled" },
+            { w: "all in a muddle", k: "어지러운", s: "the footprints were all in a muddle" },
+            { w: "tumbled off ~ (tumble)", k: "굴러떨어졌다", s: "Byeon Hakdo tumbled off his seat" },
+            { w: "hand over ~ (hand over)", k: "내놓다", s: "The magistrate of Namwon will hand over his seal" },
+            { w: "shook like a leaf (shake)", k: "사시나무처럼 떨렸다", s: "The hand that held out the seal shook like a leaf" },
+            { w: "holding her up (hold up)", k: "부축하며", s: "Chunhyang came walking out with people holding her up" },
+            { w: "was not surprised (surprise)", k: "놀라지 않았다", s: "Chunhyang was not surprised" },
+            { w: "might have told me (might have)", k: "말씀하시지 그러셨어요", s: "You might have told me last night" },
+            { w: "walked past ~ (walk past)", k: "지나쳐 걸었다", s: "Then Chunhyang walked past him" },
+            { w: "cried out loud (cry)", k: "소리 내어 울었다", s: "and only then did she cry out loud" },
+            { w: "much thicker (thick)", k: "훨씬 굵어진", s: "The willows had grown much thicker than they were then" },
+            { w: "quite worn away (wear away)", k: "다 닳았다", s: "the rim was quite worn away" }
+        ],
+        "after": [
+            { w: "written down (write down)", k: "글로 옮겨진", s: "the pansori song Chunhyang-ga written down" },
+            { w: "drummer", k: "북 치는 사람", s: "one singer with only a drummer beside him" },
+            { w: "survive (survive)", k: "남아 전하다", s: "more than a hundred old copies survive" },
+            { w: "to the end", k: "끝까지", s: "she is a courtesan's daughter to the end" },
+            { w: "hardly anyone", k: "거의 아무도 ~않다", s: "there was hardly anyone who did not know it" },
+            { w: "at the root of ~", k: "~의 뿌리에", s: "At the root of this story is rank" },
+            { w: "however well ~", k: "아무리 ~해도", s: "So however well she and Yi Mongnyong suited each other" },
+            { w: "nowhere to take her to", k: "데려갈 자리가 없는", s: "It was because there was nowhere to take her to" },
+            { w: "under the rules of that time", k: "그 시절 법도 안에서는", s: "was simply not possible under the rules of that time" },
+            { w: "stood up to ~ (stand up to)", k: "맞섰다", s: "So Chunhyang standing up to Byeon Hakdo is not only about love" },
+            { w: "refused (refuse)", k: "부정했다", s: "Chunhyang refused that register" },
+            { w: "It would be a pity to ~", k: "~하면 아깝다", s: "It would be a pity to read Byeon Hakdo as nothing but a bad magistrate" },
+            { w: "by the book", k: "법대로", s: "He did it by the book, and a person was broken" },
+            { w: "is aiming at ~ (aim at)", k: "겨누고 있다", s: "What the story is really aiming at is not one man but that law" },
+            { w: "slipping away (slip away)", k: "슬금슬금 빠져나가는", s: "That is why the people at that feast began slipping away" },
+            { w: "an invented office", k: "지어낸 벼슬", s: "The secret inspector is not an invented office" },
+            { w: "cheated on ~ (cheat)", k: "속여 걷었다", s: "a way of catching towns that cheated on the tax" },
+            { w: "receives offerings (receive)", k: "제사를 받는다", s: "and she receives offerings" },
+            { w: "no way to check it", k: "확인할 길이 없다", s: "There is no way to check it" },
+            { w: "the turning over", k: "뒤집기", s: "One reason this story has been loved so long is the turning over" },
+            { w: "by holding out (hold out)", k: "버티기로", s: "And not by force, but by holding out" },
+            { w: "kept ~ fed (keep fed)", k: "옥바라지를 했다", s: "the one who kept her daughter fed in prison" },
+            { w: "in rags", k: "거지꼴로", s: "at the sight of a son-in-law come home in rags" },
+            { w: "may well be ~", k: "어쩌면 ~일 것이다", s: "The person who suffered most in this story may well be her" },
+            { w: "even then", k: "그때도", s: "Would what she did have been right even then" },
+            { w: "what it means that ~", k: "~라는 것이 무슨 뜻인지", s: "what it means that somebody had to be standing in that place" }
+        ]
+    },
+    quiz: [
+        { q: "Where did the two of them first meet?", choices: ["In front of the palace in Hanyang", "At Gwanghallu in Namwon", "At the Namwon town office"], answer: 1 },
+        { q: "What was Chunhyang doing when Yi Mongnyong first saw her?", choices: ["Reading a book", "Sitting in the prison", "Riding a swing"], answer: 2 },
+        { q: "Why did the two of them have to part?", choices: ["His father was moved to Hanyang", "Chunhyang was moving far away", "The new magistrate separated them"], answer: 0 },
+        { q: "What did Chunhyang give him when they parted?", choices: ["A silk handkerchief", "A brush made of jade", "A mirror"], answer: 2 },
+        { q: "What did the new magistrate Byeon Hakdo order Chunhyang to do?", choices: ["To have her name entered in the courtesan register", "To come and cook at the town office", "To leave Namwon and go far away"], answer: 0 },
+        { q: "What did Chunhyang answer?", choices: ["That she already had a husband", "That she needed a little more time", "Nothing at all"], answer: 0 },
+        { q: "What happened to Chunhyang?", choices: ["She was driven out of Namwon", "She was beaten and shut in the prison", "She was made a servant at the town office"], answer: 1 },
+        { q: "What did Yi Mongnyong do in Hanyang?", choices: ["Sat the examination and became an inspector", "Worked under Byeon Hakdo", "Went straight back to Namwon"], answer: 0 },
+        { q: "How was Yi Mongnyong dressed when he came back to Namwon?", choices: ["In silk clothes", "Like a beggar", "Holding up the mapae"], answer: 1 },
+        { q: "What did Chunhyang say to him at the prison?", choices: ["That he should have come sooner", "That he should never come again", "That he should look after her mother"], answer: 2 },
+        { q: "What was the poem Yi Mongnyong made at the feast about?", choices: ["That the good wine is the people's blood", "The spring view from Gwanghallu", "A traveller missing his home"], answer: 0 },
+        { q: "What did Yi Mongnyong hold up at the feast?", choices: ["A letter from the king", "The mapae", "A seal made of jade"], answer: 1 },
+        { q: "What happened to Byeon Hakdo?", choices: ["He was dragged to Hanyang and shut up", "He lost his post on the spot", "He gave up his post himself"], answer: 1 },
+        { q: "What was the first thing Chunhyang did when she came out of the prison?", choices: ["She scolded Byeon Hakdo", "She ran to Gwanghallu", "She held her mother"], answer: 2 }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌸',
+        art: ['end.webp'],
+        paras: [
+            "First, where this story came from. The Tale of Chunhyang is the pansori song Chunhyang-ga written down. It was a long song; one singer with only a drummer beside him would sometimes sing it for eight hours.",
+            "There is no author. It was not made by one person sitting down to write it, but by many people singing it and changing it. So more than a hundred old copies survive, and every one of them is a little different. In some of them Chunhyang is a nobleman's daughter; in others she is a courtesan's daughter to the end.",
+            "Of all our old stories this is the one that has been read most and sung most. In the late Joseon period there was hardly anyone who did not know it.",
+            "At the root of this story is rank. Chunhyang is the daughter of Wolmae, a retired courtesan. In those days if the mother was a courtesan the daughter's name went into the courtesan register too. So however well she and Yi Mongnyong suited each other, they could not be properly married.",
+            "You have to see that clearly to understand the parting in chapter three. Yi Mongnyong did not fail to take her with him because his feeling had cooled. It was because there was nowhere to take her to. For a nobleman's son to bring a courtesan's daughter up to the capital was simply not possible under the rules of that time.",
+            "So Chunhyang standing up to Byeon Hakdo is not only about love. If your name was in the courtesan register you had to go when the magistrate called. Chunhyang refused that register. She was saying, I am not that. That is why she was beaten.",
+            "It would be a pity to read Byeon Hakdo as nothing but a bad magistrate. He broke no law. Under the law of that time a magistrate could send for a registered courtesan. He did it by the book, and a person was broken. What the story is really aiming at is not one man but that law.",
+            "The poem Yi Mongnyong reads at the feast in chapter seven is a real poem, and a famous one. The good wine in the golden cup is the blood of a thousand people; the fine food on the jade dish is the fat of ten thousand. And then: where the candle wax falls, the people's tears are falling, and where the singing is loudest, the bitter voices are loudest too.",
+            "That is why the people at that feast began slipping away. They had understood it.",
+            "The secret inspector is not an invented office. He was an official the king sent out in secret, and it really existed in the Joseon period. The mapae was a warrant for hiring post horses, and inspectors also carried a measuring rod called a yucheok, to check whether a town's measures and rulers were honest. It was a way of catching towns that cheated on the tax.",
+            "Gwanghallu really stands in Namwon. It was built early in the Joseon period, and this story made it famous. Beside it there is a shrine to Chunhyang, and a Chunhyang festival is held every year. She is a person out of a story, and she receives offerings.",
+            "Whether there ever was a real Chunhyang, nobody knows. There is a tradition that such a girl lived in Namwon, but that is a story too. There is no way to check it. What is certain is only that people wanted so much to believe it had happened.",
+            "One reason this story has been loved so long is the turning over. The person in the lowest place beats the person in the highest place. And not by force, but by holding out. Most of the people listening were in low places themselves, so that part must have felt very good.",
+            "If you read it again, try following only Wolmae. She is the one who tried to keep her daughter from becoming a courtesan. She is the one who was angriest when Yi Mongnyong left, the one who kept her daughter fed in prison, and the one who sat down in the dirt at the sight of a son-in-law come home in rags. The person who suffered most in this story may well be her.",
+            "If Yi Mongnyong had never come back, what would Chunhyang's holding out have been? The story brings him back, but he might not have come. Would what she did have been right even then?",
+            "And what about Yi Mongnyong turning up as a beggar to test her? He was testing a woman who had one day left to live. Think about what would have been different if he had told her, and about why he tested her at all.",
+            "Would this story have survived if Chunhyang had been a nobleman's daughter instead of a courtesan's? There would have been no beating and no prison. It is worth thinking about what it means that somebody had to be standing in that place for there to be a story at all."
+        ]
+    }
+};
+
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서', folio: '쪽',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading', folio: '',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        wordsDown: 'Words ⌄',
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'korea-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+// 글꼴 규칙이 html[lang] 에 걸려 있다. 쪽을 재기 전에 미리 걸어 두어야
+// 영어 글을 영어 글꼴로 잰다. 늦게 걸면 첫 쪽나눔이 통째로 어긋난다.
+document.documentElement.lang = LANG;
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
+
 const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
 
 function buildPages() {
+    CHAPTER_SEGS = CH().map(ch => segsOf(ch.paras));
+    AFTER_SEGS = segsOf(AF().paras);
+    TOC_GROUPS = [];
+    for (let i = 0; i < CH().length; i += TOC_PER_SPREAD) {
+        TOC_GROUPS.push(CH().slice(i, i + TOC_PER_SPREAD));
+    }
+
     PROBE = makeProbe();
     PAGES = [
         { kind: 'cover' },
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
-        ...CHAPTERS.flatMap(paginateChapter),
+        ...CH().flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
         ...paginateAfterword()
     ];
@@ -925,6 +1548,21 @@ function paint() {
     });
 
     if (PAGES[current].kind === 'quiz') initQuiz();
+
+    paintReadBtn();
+    // 읽는 중일 때만 문단을 눌러 그 자리로 옮긴다.
+    // 그냥 눌렀다고 소리가 나면 곤란하니, 스피커 단추를 누른 뒤에만 먹는다.
+    if (LANG === 'en' && CAN_SPEAK) {
+        spreadEl.querySelectorAll('[data-say]').forEach(el => {
+            el.addEventListener('click', () => {
+                if (!reading) return;
+                readPage(Number(el.dataset.say));
+            });
+        });
+    }
+
+    renderVocab();
+    fitVocabScreen();
 }
 
 function initQuiz() {
@@ -932,7 +1570,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -945,7 +1583,7 @@ function initQuiz() {
                 });
                 QUIZ_PICKED[qi] = chosen;
                 const done = QUIZ_PICKED.filter(v => v !== null).length;
-                progressEl.textContent = `${done} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(done, QZ().length);
             });
         });
     });
@@ -953,6 +1591,7 @@ function initQuiz() {
 
 function goTo(index) {
     if (animating || index === current || index < 0 || index >= PAGES.length) return;
+    stopReading();
     animating = true;
     const dir = index > current ? 'flip-next' : 'flip-prev';
     spreadEl.classList.add(dir);
@@ -979,6 +1618,320 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+
+
+/* ── 읽어 주기 ─────────────────────────────────────────────────
+   소설은 한 문단 안에 서술과 대사가 섞여 있다. 그림책처럼 말하는 이를
+   따로 적어 둘 수가 없으므로, 큰따옴표 안팎으로만 목소리를 가른다.
+   속도는 둘 다 같다. 대사에서 갑자기 빨라지면 귀에 턱턱 걸린다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+
+const SAY_RATE = 0.85;
+const SAY_AS = {
+    narration: { pitch: 1.00, rate: SAY_RATE },
+    speech:    { pitch: 1.24, rate: SAY_RATE },
+    speech2:   { pitch: 0.78, rate: SAY_RATE }
+};
+
+let SAY_VOICE = null;
+
+function pickVoices() {
+    if (typeof speechSynthesis === 'undefined') return;
+    const vs = speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang));
+    if (!vs.length) return;
+    SAY_VOICE = vs.find(v => /^en[-_]US/i.test(v.lang)) || vs[0];
+}
+
+if (typeof speechSynthesis !== 'undefined') {
+    pickVoices();
+    speechSynthesis.onvoiceschanged = pickVoices;
+}
+
+function dressVoice(u, role) {
+    const a = SAY_AS[role] || SAY_AS.narration;
+    u.pitch = a.pitch;
+    u.rate = a.rate;
+    if (SAY_VOICE) u.voice = SAY_VOICE;
+}
+
+/* 낱말 뜻풀이는 소리 내어 읽지 않는다. 나머지 표시는 떼고 글자만 남긴다. */
+const plainText = h => h
+    .replace(/<span class="gloss">[\s\S]*?<\/span>/g, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+/* 큰따옴표 안은 대사다. 서술과 목소리를 가른다.
+   한 문단 안에서 따옴표가 잇달아 나오면 대개 두 사람이 주고받는 자리다.
+   그래서 두 번째 대사부터 목소리를 번갈아 바꾼다. 말하는 이를 일일이
+   적어 둘 수 없는 소설틀에서 낼 수 있는 가장 가까운 흉내다. */
+function sayChunks(text) {
+    const out = [];
+    const re = /"([^"]*)"/g;
+    let last = 0, q = 0, m;
+    while ((m = re.exec(text)) !== null) {
+        if (m.index > last) out.push({ t: text.slice(last, m.index), v: 'narration' });
+        out.push({ t: m[1], v: (q++ % 2) ? 'speech2' : 'speech' });
+        last = re.lastIndex;
+    }
+    if (last < text.length) out.push({ t: text.slice(last), v: 'narration' });
+    return out.filter(c => /\S/.test(c.t));
+}
+
+/* 그 쪽에 있는 문단들. 쪽에 걸쳐 잘린 문단은 한 번만 센다. */
+function pageParts(page) {
+    if (!page) return [];
+    if (page.kind === 'cover') {
+        return [CV().title].concat(CV().intro).map((t, i) => ({ i, raw: t }));
+    }
+    const segs = page.kind === 'chapter' ? CHAPTER_SEGS[page.chIndex]
+        : page.kind === 'after' ? AFTER_SEGS : null;
+    if (!segs) return [];
+    const src = page.kind === 'chapter' ? CH()[page.chIndex].paras : AF().paras;
+    const seen = {};
+    const out = [];
+    [page.left, page.right].forEach(r => {
+        if (!r) return;
+        for (let k = r[0]; k < r[1]; k++) {
+            const pi = segs[k].paraIdx;
+            if (seen[pi]) continue;
+            seen[pi] = 1;
+            out.push({ i: pi, raw: src[pi] });
+        }
+    });
+    return out;
+}
+
+/* 읽기 단추는 책틀에 붙박이로 있다. 영어로 읽을 때만 보인다. */
+const readBtnEl = document.getElementById('readBtn');
+let reading = false;
+let readToken = 0;
+
+function paintReadBtn() {
+    if (!readBtnEl) return;
+    readBtnEl.hidden = !(LANG === 'en' && CAN_SPEAK);
+    readBtnEl.textContent = reading ? '■' : '▶';
+}
+
+function stopReading() {
+    reading = false;
+    if (spreadEl) spreadEl.classList.remove('is-reading');
+    readToken++;
+    if (CAN_SPEAK) { try { speechSynthesis.cancel(); } catch (e) {} }
+    document.querySelectorAll('.saying').forEach(el => el.classList.remove('saying'));
+    paintReadBtn();
+}
+
+function readPage(fromParaIdx) {
+    const page = PAGES[current];
+    if (!CAN_SPEAK || !page) return;
+    const parts = pageParts(page);
+    if (!parts.length) return;
+    // 읽던 것이 있으면 끊는다. 안 그러면 새 글이 뒤에 줄을 선다.
+    try { speechSynthesis.cancel(); } catch (e) {}
+    reading = true;
+    if (spreadEl) spreadEl.classList.add('is-reading');
+    paintReadBtn();
+    const mine = ++readToken;
+
+    let start = parts.findIndex(p => p.i === fromParaIdx);
+    if (start < 0) start = 0;
+
+    const step = (k) => {
+        if (mine !== readToken) return;
+        document.querySelectorAll('.saying').forEach(el => el.classList.remove('saying'));
+        if (k >= parts.length) { stopReading(); return; }
+        const here = spreadEl.querySelector(`[data-say="${parts[k].i}"]`);
+        if (here) {
+            here.classList.add('saying');
+            here.scrollIntoView({ block: 'nearest' });
+        }
+        const chunks = sayChunks(plainText(parts[k].raw));
+        const go = (c) => {
+            if (mine !== readToken) return;
+            if (c >= chunks.length) { step(k + 1); return; }
+            const u = new SpeechSynthesisUtterance(chunks[c].t);
+            u.lang = 'en-US';
+            dressVoice(u, chunks[c].v);
+            u.onend = () => go(c + 1);
+            u.onerror = () => go(c + 1);
+            try { speechSynthesis.speak(u); } catch (e) { stopReading(); }
+        };
+        go(0);
+    };
+    step(start);
+}
+
+if (readBtnEl) {
+    readBtnEl.addEventListener('click', () => (reading ? stopReading() : readPage(-1)));
+}
+
+/* ── 단어장 ────────────────────────────────────────────────────
+   책 아래에 있는 또 한 장의 화면이다. 책은 손대지 않는다.
+   낱말은 장마다 묶어 두었고, 그 쪽에 실제로 나온 것만 골라 보여 준다. */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+let VOCAB_NOW = [];
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    if (!page) return { list: [] };
+    if (page.kind === 'cover') return { list: all.cover || [] };
+    if (page.kind === 'chapter' || page.kind === 'after') {
+        const pool = page.kind === 'chapter' ? (all['ch' + page.ch.num] || []) : (all.after || []);
+        const text = pageParts(page).map(p => p.raw).join(' ');
+        return { list: pool.filter(w => text.indexOf(w.s) >= 0) };
+    }
+    // 문제 쪽에는 글이 없다. 답을 고르기 전에 훑어볼 수 있게 책에 나온 낱말을 다 보여 준다.
+    // 차례에는 볼 글이 없으므로 단어장을 아예 열지 않는다.
+    if (page.kind !== 'quiz') return { list: [] };
+    const list = [];
+    Object.keys(all).forEach(k => all[k].forEach(w => list.push(w)));
+    return { list };
+}
+
+function renderVocab() {
+    const { list } = (HAS_WORDS && LANG === 'en') ? vocabFor() : { list: [] };
+    // 볼 낱말이 없는 쪽에서는 아래 화면을 아예 열지 않는다.
+    const on = list.length > 0;
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) {
+        scrollDownEl.hidden = !on;
+        scrollDownEl.textContent = T().wordsDown || 'Words ⌄';
+    }
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.w}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.k}</p>
+                <p class="vocab-sent">${w.s}</p>
+            </li>`).join('')}
+        </ul>`;
+}
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다. */
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        // 「went without (go without)」처럼 괄호로 적어 둔 기본형은 읽지 않는다.
+        const bare = item.w.replace(/\s*\([^)]*\)/g, '').replace(/~/g, '').trim();
+        const word = new SpeechSynthesisUtterance(bare);
+        word.lang = 'en-US';
+        dressVoice(word, 'narration');
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.s);
+        sent.lang = 'en-US';
+        dressVoice(sent, 'narration');
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 글과 단어장이 함께 보인다.
+   소설은 그림 없는 펼침면이 더 많다. 그때는 책 아랫부분만 남기고 멈춘다. */
+function artLine() {
+    const page = PAGES[current];
+    if (!page) return 0;
+    const book = document.querySelector('.book');
+    const bookBox = book ? book.getBoundingClientRect() : null;
+    const capLine = () => (bookBox
+        ? Math.max(0, Math.round(bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45)))
+        : 0);
+    const el = page.kind === 'cover'
+        ? document.querySelector('.page-cover .story-page-left-full')
+        : spreadEl.querySelector('.story-art-top');
+    if (!el) return capLine();
+    const box = el.getBoundingClientRect();
+    const line = Math.max(0, Math.round(box.bottom + window.scrollY));
+    // 표지처럼 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라
+    // 책이 통째로 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (!bookBox || box.height < bookBox.height * 0.8) return line;
+    return Math.max(0, Math.min(line, capLine()));
+}
+
+/* 쪽을 다시 나눌 때는 단어장을 먼저 접는다.
+   아래 화면이 펼쳐진 채로 재면 문서가 길어져 세로 막대가 생기고,
+   그만큼 칸이 좁아져 쪽이 잘못 나뉜다. 세로 화면에서 두 쪽이 어긋났다. */
+function rebuildPages() {
+    if (vocabScreenEl) vocabScreenEl.hidden = true;
+    window.scrollTo(0, 0);
+    buildPages();
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* ── 말 바꾸기 ─────────────────────────────────────────────────
+   쪽은 재어서 나누므로 글을 갈아 끼우면 처음부터 다시 나눈다.
+   보던 장으로 돌아간다. 쪽 수는 말마다 다르다. */
+const langBtn = document.getElementById('langLink');
+
+function applyLang() {
+    stopReading();
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        // 글꼴 규칙(html[lang])을 먼저 바꾸고 나서 재야 한다. 순서를 바꾸면
+        // 영어 글을 한글 글꼴 규칙으로 재게 되어 쪽 수가 열 쪽 넘게 어긋난다.
+        applyLang();
+        rebuildPages();
+        current = Math.min(current, PAGES.length - 1);
+        if (here && here.kind === 'chapter') {
+            const i = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
+            if (i >= 0) current = i;
+        } else if (here) {
+            const i = PAGES.findIndex(p => p.kind === here.kind);
+            if (i >= 0) current = i;
+        }
+        paint();
+    });
+}
+
+applyLang();
 paint();
 
 // 본문 글꼴은 늦게 내려온다. 글꼴이 바뀌면 한 줄에 들어가는 글자 수가 달라져서
@@ -986,7 +1939,7 @@ paint();
 if (document.fonts && document.fonts.status !== 'loaded') {
     document.fonts.ready.then(() => {
         const here = PAGES[current];
-        buildPages();
+        rebuildPages();
         current = Math.min(current, PAGES.length - 1);
         if (here && here.kind === 'chapter') {
             const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
