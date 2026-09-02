@@ -336,16 +336,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '파랑새',
+    intro: [
+        '파랑새는 벨기에의 작가 모리스 마테를링크가 1908년에 쓴 희곡이에요. 무대에서 배우들이 연기하도록 쓴 작품이었는데, 뒤에 이야기책으로도 널리 읽히게 되었답니다.',
+        '마테를링크는 이 작품으로 1911년 노벨 문학상을 받았어요. 오누이가 여러 나라를 돌아다니며 파랑새를 찾는 여정은, 행복이란 무엇이며 어디에 있는가를 묻는 이야기랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🐦')}
             </div>
             <div class="story-page-right">
-                <h1>파랑새</h1>
-                <p>파랑새는 벨기에의 작가 모리스 마테를링크가 1908년에 쓴 희곡이에요. 무대에서 배우들이 연기하도록 쓴 작품이었는데, 뒤에 이야기책으로도 널리 읽히게 되었답니다.</p>
-                <p>마테를링크는 이 작품으로 1911년 노벨 문학상을 받았어요. 오누이가 여러 나라를 돌아다니며 파랑새를 찾는 여정은, 행복이란 무엇이며 어디에 있는가를 묻는 이야기랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -360,8 +369,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -371,8 +380,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -382,22 +391,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -446,9 +456,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -459,7 +469,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -540,7 +550,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -549,34 +559,659 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   원작의 이름 Tyltyl, Mytyl 을 그대로 쓴다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Blue Bird',
+        intro: [
+            "The Blue Bird is a play written by the Belgian author Maurice Maeterlinck in 1908. It was made for actors on a stage, and later it came to be widely read as a story book too.",
+            "Maeterlinck was given the Nobel Prize for Literature in 1911, largely for this work. A brother and sister travelling from country to country after a blue bird is a way of asking what happiness is and where it is kept."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · Christmas Eve',
+            beats: [
+                {
+                    art: '01-eve.webp',
+                    emoji: '🎄',
+                    left: [
+                        "It was Christmas Eve, a night with the snow coming softly down.",
+                        "Tyltyl and Mytyl, a poor woodcutter's children, had already gone to bed.",
+                        "The room was small, so the two of them lay side by side, and there was only one blanket.",
+                        "And then in the middle of the night it went bright outside the window."
+                    ],
+                    right: [
+                        "Music came over the wall as well.",
+                        "\"What a noise. Nobody could sleep through that.\"",
+                        "Tyltyl sat up, rubbing his eyes.",
+                        "There was a grand party going on at the rich house next door.",
+                        "Every window was lit up,",
+                        "and you could hear people laughing all the way over here."
+                    ]
+                },
+                {
+                    art: '01-eve-2.webp',
+                    emoji: '🎄',
+                    left: [
+                        "\"Look at that. What a party.\"",
+                        "The bright light came in through their window,",
+                        "and good smells came in with it.",
+                        "Mytyl swallowed hard.",
+                        "The two of them stood pressed to the glass and could not look away."
+                    ],
+                    right: [
+                        "\"How lovely it would be to have a party like that.\"",
+                        "Mytyl said it in a very small voice.",
+                        "Tyltyl nodded without saying anything.",
+                        "The two of them stood there a long time,",
+                        "not even noticing how cold their feet were.",
+                        "By and by the sound of the party died away."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Fairy of Light',
+            beats: [
+                {
+                    art: '02-fairy.webp',
+                    emoji: '✨',
+                    left: [
+                        "Then there was a knock at the door.",
+                        "Tap, tap, tap.",
+                        "\"Who is it?\"",
+                        "\"An old woman from next door.\" They opened the door and there stood a woman with a bent back,",
+                        "leaning on a stick."
+                    ],
+                    right: [
+                        "\"My daughter is ill and she wants to see the blue bird. Would you find it for her?\"",
+                        "The two of them hung back.",
+                        "\"We are only little. We aren't strong enough.\" Tyltyl scratched his head.",
+                        "The old woman shook her head.",
+                        "\"That is not so. You two could do it.\""
+                    ]
+                },
+                {
+                    art: '02-fairy-2.webp',
+                    emoji: '✨',
+                    left: [
+                        "And in that moment the old woman changed.",
+                        "Light poured out of her hair — she was the Fairy of Light.",
+                        "The fairy held out a small green hat",
+                        "with one diamond set into it.",
+                        "The children's eyes went wide.",
+                        "\"Put this hat on and turn the diamond.\""
+                    ],
+                    right: [
+                        "\"Then you will see what things really are.\"",
+                        "Tyltyl turned the diamond, carefully.",
+                        "And in that instant the room went bright.",
+                        "Everything in it began to stir.",
+                        "The two of them hardly dared to breathe."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · All the Spirits',
+            beats: [
+                {
+                    art: '03-elements.webp',
+                    emoji: '🔥',
+                    left: [
+                        "Tylo the dog and Tylette the cat put on clothes like people and stood up on their hind legs.",
+                        "Water came rippling out of the water jar as the Spirit of Water.",
+                        "The clock and the saucepans came alive too.",
+                        "The Spirit of Fire came bouncing out of the stove,",
+                        "and the Spirit of Bread came out of the bread bin."
+                    ],
+                    right: [
+                        "Out of the sugar jar came the Spirit of Sugar, one after another,",
+                        "all of them different sizes.",
+                        "\"Look, the room is full of them!\" Mytyl clapped her hands.",
+                        "The little room was crowded in no time.",
+                        "They all talked at once and there was no hearing anything.",
+                        "Only Tylette narrowed her eyes in the corner."
+                    ]
+                },
+                {
+                    art: '03-elements-2.webp',
+                    emoji: '🔥',
+                    left: [
+                        "The Fairy of Light came forward and said,",
+                        "\"Let us go and find the blue bird. I shall show you the way.\"",
+                        "\"We shall come too!\"",
+                        "cried all the spirits together.",
+                        "So Tyltyl and Mytyl set out with the dog and the cat and all of them."
+                    ],
+                    right: [
+                        "And that was how the long journey began.",
+                        "When they went out of the door the sky was thick with stars.",
+                        "Nobody knew what lay ahead.",
+                        "Tylo the dog went in front, wagging his tail.",
+                        "Only Tylette the cat walked behind with other ideas."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Land of Memory',
+            beats: [
+                {
+                    art: '04-memory.webp',
+                    emoji: '🕰️',
+                    left: [
+                        "After a long walk a great tree came up out of a thin mist.",
+                        "There was a board on the tree that said the Land of Memory.",
+                        "The mist was so thick they could hardly see ahead.",
+                        "The two of them took hands and walked in.",
+                        "And there their grandfather and grandmother, who had died, welcomed them gladly."
+                    ],
+                    right: [
+                        "\"Oh, come in, come in. How glad we are that you came.\"",
+                        "The children went straight into their arms,",
+                        "and their grandmother stroked their cheeks.",
+                        "\"How you have grown.\"",
+                        "\"Whenever you think of us, we can meet.\""
+                    ]
+                },
+                {
+                    art: '04-memory-2.webp',
+                    emoji: '🕰️',
+                    left: [
+                        "Their grandparents gave them a blue bird as a present.",
+                        "\"Perhaps this is the bird you are looking for.\"",
+                        "The children were overjoyed and took the cage in their arms.",
+                        "Their grandparents waved them off.",
+                        "\"Come and see us again.\""
+                    ],
+                    right: [
+                        "But on the way back Tyltyl looked into the cage and stopped walking.",
+                        "The blue bird had turned quite black.",
+                        "\"This isn't the real blue bird.\" Their shoulders went down.",
+                        "And still they set off again.",
+                        "The Fairy of Light lit the road in front of them."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Land of Night',
+            beats: [
+                {
+                    art: '05-night.webp',
+                    emoji: '🌑',
+                    left: [
+                        "The children gathered themselves up and went on to the Land of Night.",
+                        "It was pitch dark on every side.",
+                        "They could not see their own feet and walked with their hands out.",
+                        "There was a long row of great doors,",
+                        "and every time they opened one, something frightful came out.",
+                        "\"A monster! Run!\""
+                    ],
+                    right: [
+                        "Red eyes flashed through the cracks of the doors.",
+                        "The two of them fled without looking where they went",
+                        "and ran into a wood.",
+                        "The trees were so tall they shut out the sky.",
+                        "But something worse was waiting in the wood.",
+                        "The trees had begun to move by themselves,",
+                        "and their roots came pulling up out of the ground."
+                    ]
+                },
+                {
+                    art: '05-night-2.webp',
+                    emoji: '🌑',
+                    left: [
+                        "The angry trees and the animals closed round the children.",
+                        "\"Your father has cut down far too many trees in this wood!\"",
+                        "\"Let us give them what for today!\" The trees creaked and groaned.",
+                        "The wolf and the bear bared their teeth,",
+                        "and branches shut off the way out."
+                    ],
+                    right: [
+                        "Tyltyl and Mytyl were too frightened to move an inch.",
+                        "\"What do we do!\" Mytyl clung to her brother's arm.",
+                        "And the circle closed in tighter and tighter."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · At the Grave',
+            beats: [
+                {
+                    art: '06-escape.webp',
+                    emoji: '🌹',
+                    left: [
+                        "\"Tyltyl — turn the diamond, quickly!\"",
+                        "The Fairy of Light's voice came from somewhere.",
+                        "Tyltyl turned the diamond with shaking hands, his eyes squeezed shut.",
+                        "His fingers slipped and it went round without catching, several times.",
+                        "And then the frightful wood was gone, as though it had never been."
+                    ],
+                    right: [
+                        "When they came to themselves the two of them were standing in front of a quiet grave.",
+                        "Only the moonlight lay over it.",
+                        "There was not even a cricket to be heard.",
+                        "They got their breath back at last.",
+                        "And somewhere a cricket started up again.",
+                        "The letters on the stone showed white in the moonlight."
+                    ]
+                },
+                {
+                    art: '06-escape-2.webp',
+                    emoji: '🌹',
+                    left: [
+                        "\"The dead might know about the blue bird.\"",
+                        "Tyltyl held his fear down",
+                        "and turned the diamond again.",
+                        "The grave slid open.",
+                        "And all that was there was one red rose in bloom."
+                    ],
+                    right: [
+                        "There was no blue bird anywhere.",
+                        "Only the scent of the rose came drifting out.",
+                        "There was nothing frightening in it at all.",
+                        "Their shoulders went down again.",
+                        "And still they could not give it up.",
+                        "The two of them set off for the next country.",
+                        "\"It will be in the next one.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Land of Happiness',
+            beats: [
+                {
+                    art: '07-happiness.webp',
+                    emoji: '🍰',
+                    left: [
+                        "The next place they came to was the Land of Happiness.",
+                        "Everywhere there were good smells of food and the sound of laughing.",
+                        "\"This time we shall find it for certain!\"",
+                        "Fat people were dancing about,",
+                        "and every table was loaded until it overflowed.",
+                        "The two of them held hands tightly."
+                    ],
+                    right: [
+                        "The smell of roasting meat was everywhere.",
+                        "But that food turned anyone who ate it into an idler.",
+                        "The children knew nothing of that and sat down at the table.",
+                        "There were fine things in front of them wherever they looked.",
+                        "They were just reaching for the food",
+                        "when Mytyl's mouth was already watering."
+                    ]
+                },
+                {
+                    art: '07-happiness-2.webp',
+                    emoji: '🍰',
+                    left: [
+                        "\"Don't! Turn the diamond, quickly!\"",
+                        "The Fairy of Light came flying to them,",
+                        "and Tyltyl turned the diamond in a hurry.",
+                        "And the food went off like smoke.",
+                        "The fat people went with it,",
+                        "and the glittering tables were nowhere to be seen."
+                    ],
+                    right: [
+                        "\"Now I shall show you what happiness really is.\"",
+                        "Behind the Fairy of Light came a crowd of small merry children — and the children's own mother.",
+                        "Something turned over in their chests.",
+                        "It was a face that had always been there.",
+                        "\"Mother — were you here too?\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · The Land of the Future',
+            beats: [
+                {
+                    art: '08-future.webp',
+                    emoji: '💙',
+                    left: [
+                        "\"Take heart. Let us try the Land of the Future.\"",
+                        "The Fairy of Light led the way.",
+                        "That place was blue all over,",
+                        "and any number of babies were busy at something,",
+                        "each of them holding one thing in their hands.",
+                        "\"These babies will be born into the world very soon.\""
+                    ],
+                    right: [
+                        "\"They are learning beforehand what they will do when they get there.\"",
+                        "The Fairy of Light explained it slowly.",
+                        "One baby was making medicine.",
+                        "Another was holding an enormous book.",
+                        "Mytyl walked carefully between them,",
+                        "and the babies waved at her as she went."
+                    ]
+                },
+                {
+                    art: '08-future-2.webp',
+                    emoji: '💙',
+                    left: [
+                        "\"Now then — time to leave for the Earth! On board with you!\"",
+                        "Old Father Time called out.",
+                        "The babies got into line and went aboard the ship one by one.",
+                        "The white sail filled with wind,",
+                        "and the ship slid away across the sky.",
+                        "The children watched it go for a long while."
+                    ],
+                    right: [
+                        "And then they caught sight of a blue bird and reached out very carefully.",
+                        "But that bird too turned red almost at once.",
+                        "\"Not this one either…\" Tyltyl let it go without any strength in his hands.",
+                        "And the Fairy of Light patted his shoulder."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 9,
+            title: 'Chapter 9 · The Blue Bird Was at Home',
+            beats: [
+                {
+                    art: '09-home.webp',
+                    emoji: '🐦',
+                    left: [
+                        "\"Tyltyl, Mytyl, wake up.\"",
+                        "At their mother's voice the two of them opened their eyes.",
+                        "Outside the window the snow lay white.",
+                        "Had that whole long journey been a dream?",
+                        "The old woman from next door happened to be there,",
+                        "with a small bundle in her hand."
+                    ],
+                    right: [
+                        "\"We're sorry. We could not find the blue bird.\"",
+                        "Tyltyl said it in a flat little voice,",
+                        "and Mytyl hung her head.",
+                        "And the old woman smiled.",
+                        "\"The blue bird? But there it is.\"",
+                        "And she pointed a finger at the cage."
+                    ]
+                },
+                {
+                    art: '09-home-2.webp',
+                    emoji: '🐦',
+                    left: [
+                        "The two of them looked round at it.",
+                        "\"But that's the bird we've always had!\"",
+                        "The bird in the cage was sitting in the sunlight coming through the window.",
+                        "Until yesterday it had looked nothing but grey.",
+                        "Now its feathers shone blue."
+                    ],
+                    right: [
+                        "The children gave the bird to the old woman,",
+                        "and her sick daughter saw it and got up out of her bed.",
+                        "And just then the bird flew up and away.",
+                        "\"Oh — the blue bird has flown!\"",
+                        "The two of them laughed and waved after it.",
+                        "Happiness had been beside them all along."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did the old woman ask the children to do?',
+            choices: ['Bring food from the party next door', 'Look after her cat and dog', 'Find the blue bird for her sick daughter'],
+            answer: 2
+        },
+        {
+            q: 'What did the green hat do?',
+            choices: ['It made the children invisible', 'Turning its diamond showed what things really are', 'It carried them from country to country'],
+            answer: 1
+        },
+        {
+            q: 'What happened to the bird from the Land of Memory?',
+            choices: ['It turned black on the way back', 'It flew out of the cage', 'It stayed with the grandparents'],
+            answer: 0
+        },
+        {
+            q: 'Why were the trees angry in the Land of Night?',
+            choices: ['The children had opened the great doors', 'The cat had told them lies', 'The children’s father had cut down too many of them'],
+            answer: 2
+        },
+        {
+            q: 'What was inside the grave?',
+            choices: ['A blue bird', 'One red rose in bloom', 'Nothing at all'],
+            answer: 1
+        },
+        {
+            q: 'What was wrong with the food in the Land of Happiness?',
+            choices: ['Anyone who ate it became an idler', 'It was made of smoke', 'It belonged to the fat people'],
+            answer: 0
+        },
+        {
+            q: 'Where was the blue bird in the end?',
+            choices: ['In the Land of the Future', 'With the grandparents', 'In the cage in their own house'],
+            answer: 2
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐦',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This was a play before it was a story book. Maeterlinck wrote it in Belgium about a hundred and twenty years ago.",
+                    "Tyltyl and Mytyl go through country after country looking for the blue bird — the Land of Memory, the Land of Night, even the Land of the Future.",
+                    "And every bird they catch loses its colour. Once it is out of the place it was found in, it is not blue any more.",
+                    "When the two of them get home, the bird in their own cage is blue. It was there before they ever left."
+                ],
+                right: [
+                    "What changed is not the bird. It is the children's eyes. Only after a very long journey could they see their own room.",
+                    "So was that long journey wasted, then?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-eve.webp': [
+            { word: 'woodcutter', meaning: '나무꾼', sentence: "A poor woodcutter's children." },
+            { word: 'blanket', meaning: '이불', sentence: 'There was only one blanket.' },
+            { word: 'sit up', meaning: '일어나 앉다', sentence: 'Tyltyl sat up, rubbing his eyes.' },
+            { word: 'lit up', meaning: '불이 켜진', sentence: 'Every window was lit up.' }
+        ],
+        '01-eve-2.webp': [
+            { word: 'swallow hard', meaning: '침을 꿀꺽 삼키다', sentence: 'Mytyl swallowed hard.' },
+            { word: 'press to', meaning: '딱 붙다', sentence: 'They stood pressed to the glass.' },
+            { word: 'look away', meaning: '눈을 떼다', sentence: 'They could not look away.' },
+            { word: 'die away', meaning: '잦아들다', sentence: 'The sound of the party died away.' }
+        ],
+        '02-fairy.webp': [
+            { word: 'knock', meaning: '문 두드리는 소리', sentence: 'There was a knock at the door.' },
+            { word: 'bent', meaning: '굽은', sentence: 'A woman with a bent back.' },
+            { word: 'lean on', meaning: '짚다', sentence: 'Leaning on a stick.' },
+            { word: 'hang back', meaning: '머뭇거리다', sentence: 'The two of them hung back.' },
+            { word: 'scratch one’s head', meaning: '머리를 긁적이다', sentence: 'Tyltyl scratched his head.' }
+        ],
+        '02-fairy-2.webp': [
+            { word: 'pour out', meaning: '쏟아지다', sentence: 'Light poured out of her hair.' },
+            { word: 'diamond', meaning: '다이아몬드', sentence: 'A small green hat with one diamond set into it.' },
+            { word: 'set into', meaning: '박아 넣은', sentence: 'With one diamond set into it.' },
+            { word: 'stir', meaning: '꿈틀거리다', sentence: 'Everything in it began to stir.' },
+            { word: 'dare', meaning: '감히 ~하다', sentence: 'They hardly dared to breathe.' }
+        ],
+        '03-elements.webp': [
+            { word: 'hind legs', meaning: '뒷발', sentence: 'They stood up on their hind legs.' },
+            { word: 'ripple', meaning: '찰랑거리다', sentence: 'Water came rippling out of the water jar.' },
+            { word: 'saucepan', meaning: '냄비', sentence: 'The clock and the saucepans came alive.' },
+            { word: 'bounce', meaning: '통통 뛰다', sentence: 'The Spirit of Fire came bouncing out.' },
+            { word: 'narrow one’s eyes', meaning: '눈을 가늘게 뜨다', sentence: 'Only Tylette narrowed her eyes.' }
+        ],
+        '03-elements-2.webp': [
+            { word: 'come forward', meaning: '앞으로 나서다', sentence: 'The Fairy of Light came forward.' },
+            { word: 'show the way', meaning: '길을 안내하다', sentence: 'I shall show you the way.' },
+            { word: 'set out', meaning: '길을 나서다', sentence: 'They set out with the dog and the cat.' },
+            { word: 'wag', meaning: '흔들다', sentence: 'Tylo went in front, wagging his tail.' }
+        ],
+        '04-memory.webp': [
+            { word: 'mist', meaning: '안개', sentence: 'A great tree came up out of a thin mist.' },
+            { word: 'board', meaning: '팻말', sentence: 'There was a board on the tree.' },
+            { word: 'welcome', meaning: '맞아 주다', sentence: 'Their grandparents welcomed them gladly.' },
+            { word: 'stroke', meaning: '쓰다듬다', sentence: 'Their grandmother stroked their cheeks.' }
+        ],
+        '04-memory-2.webp': [
+            { word: 'cage', meaning: '새장', sentence: 'They took the cage in their arms.' },
+            { word: 'wave off', meaning: '손을 흔들어 배웅하다', sentence: 'Their grandparents waved them off.' },
+            { word: 'turn', meaning: '변하다', sentence: 'The blue bird had turned quite black.' },
+            { word: 'light', meaning: '밝히다', sentence: 'The Fairy of Light lit the road in front of them.' }
+        ],
+        '05-night.webp': [
+            { word: 'gather oneself up', meaning: '마음을 다잡다', sentence: 'The children gathered themselves up.' },
+            { word: 'pitch dark', meaning: '캄캄한', sentence: 'It was pitch dark on every side.' },
+            { word: 'frightful', meaning: '무서운', sentence: 'Something frightful came out.' },
+            { word: 'shut out', meaning: '가리다', sentence: 'The trees were so tall they shut out the sky.' },
+            { word: 'root', meaning: '뿌리', sentence: 'Their roots came pulling up out of the ground.' }
+        ],
+        '05-night-2.webp': [
+            { word: 'close round', meaning: '둘러싸다', sentence: 'The angry trees closed round the children.' },
+            { word: 'cut down', meaning: '베어 내다', sentence: 'Your father has cut down too many trees.' },
+            { word: 'bare one’s teeth', meaning: '이를 드러내다', sentence: 'The wolf and the bear bared their teeth.' },
+            { word: 'cling to', meaning: '매달리다', sentence: "Mytyl clung to her brother's arm." }
+        ],
+        '06-escape.webp': [
+            { word: 'squeeze shut', meaning: '꼭 감다', sentence: 'His eyes squeezed shut.' },
+            { word: 'slip', meaning: '미끄러지다', sentence: 'His fingers slipped.' },
+            { word: 'as though', meaning: '마치 ~인 듯', sentence: 'As though it had never been.' },
+            { word: 'come to oneself', meaning: '정신을 차리다', sentence: 'When they came to themselves.' },
+            { word: 'cricket', meaning: '풀벌레', sentence: 'There was not even a cricket to be heard.' }
+        ],
+        '06-escape-2.webp': [
+            { word: 'hold down', meaning: '꾹 참다', sentence: 'Tyltyl held his fear down.' },
+            { word: 'slide open', meaning: '스르르 열리다', sentence: 'The grave slid open.' },
+            { word: 'in bloom', meaning: '피어 있는', sentence: 'One red rose in bloom.' },
+            { word: 'scent', meaning: '향기', sentence: 'Only the scent of the rose came drifting out.' },
+            { word: 'give up', meaning: '포기하다', sentence: 'They could not give it up.' }
+        ],
+        '07-happiness.webp': [
+            { word: 'for certain', meaning: '틀림없이', sentence: 'This time we shall find it for certain!' },
+            { word: 'overflow', meaning: '넘치다', sentence: 'Every table was loaded until it overflowed.' },
+            { word: 'roast', meaning: '굽다', sentence: 'The smell of roasting meat.' },
+            { word: 'idler', meaning: '게으름뱅이', sentence: 'That food turned anyone who ate it into an idler.' },
+            { word: 'one’s mouth waters', meaning: '침이 고이다', sentence: "Mytyl's mouth was already watering." }
+        ],
+        '07-happiness-2.webp': [
+            { word: 'in a hurry', meaning: '서둘러', sentence: 'Tyltyl turned the diamond in a hurry.' },
+            { word: 'go off like smoke', meaning: '연기처럼 사라지다', sentence: 'The food went off like smoke.' },
+            { word: 'nowhere to be seen', meaning: '온데간데없는', sentence: 'The tables were nowhere to be seen.' },
+            { word: 'turn over', meaning: '뭉클해지다', sentence: 'Something turned over in their chests.' }
+        ],
+        '08-future.webp': [
+            { word: 'take heart', meaning: '기운을 내다', sentence: 'Take heart. Let us try the Land of the Future.' },
+            { word: 'lead the way', meaning: '앞장서다', sentence: 'The Fairy of Light led the way.' },
+            { word: 'any number of', meaning: '수많은', sentence: 'Any number of babies were busy at something.' },
+            { word: 'beforehand', meaning: '미리', sentence: 'They are learning beforehand what they will do.' }
+        ],
+        '08-future-2.webp': [
+            { word: 'on board', meaning: '배에 타는', sentence: 'On board with you!' },
+            { word: 'get into line', meaning: '줄을 서다', sentence: 'The babies got into line.' },
+            { word: 'sail', meaning: '돛', sentence: 'The white sail filled with wind.' },
+            { word: 'catch sight of', meaning: '발견하다', sentence: 'They caught sight of a blue bird.' },
+            { word: 'let go', meaning: '놓아주다', sentence: 'Tyltyl let it go.' }
+        ],
+        '09-home.webp': [
+            { word: 'happen to', meaning: '마침 ~하다', sentence: 'The old woman happened to be there.' },
+            { word: 'bundle', meaning: '보따리', sentence: 'With a small bundle in her hand.' },
+            { word: 'flat', meaning: '풀 죽은', sentence: 'Tyltyl said it in a flat little voice.' },
+            { word: 'hang one’s head', meaning: '고개를 숙이다', sentence: 'Mytyl hung her head.' }
+        ],
+        '09-home-2.webp': [
+            { word: 'look round at', meaning: '돌아보다', sentence: 'The two of them looked round at it.' },
+            { word: 'nothing but', meaning: '~일 뿐인', sentence: 'It had looked nothing but grey.' },
+            { word: 'get up out of bed', meaning: '자리에서 일어나다', sentence: 'Her daughter got up out of her bed.' },
+            { word: 'all along', meaning: '내내, 줄곧', sentence: 'Happiness had been beside them all along.' }
+        ],
+        'end.webp': [
+            { word: 'play', meaning: '희곡, 연극', sentence: 'This was a play before it was a story book.' },
+            { word: 'lose its colour', meaning: '색이 바래다', sentence: 'Every bird they catch loses its colour.' },
+            { word: 'catch', meaning: '잡다', sentence: 'Every bird they catch loses its colour.' },
+            { word: 'wasted', meaning: '헛된', sentence: 'So was that long journey wasted?' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -641,6 +1276,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -649,7 +1285,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -661,7 +1297,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -695,4 +1331,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
