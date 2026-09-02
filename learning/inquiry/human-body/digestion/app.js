@@ -53,7 +53,7 @@
 
     // DOM Elements
     var sceneBtns, playPauseBtn, swallowBtn, tempSlider, tempValEl, phSlider, phValEl;
-    var enzymeBtns, nutrientBtns, reagentBtns, heatBtn;
+    var enzymeBtns, nutrientBtns, reagentBtns, heatBtn, reagentResultEl;
     var organFocusCard, organTitleEl, organEnzymeEl, organPHEl, organProductEl, organDescEl;
     var statEnzymeActivityEl, quizContainerEl;
 
@@ -341,6 +341,7 @@
         organProductEl = document.getElementById('organProduct');
         organDescEl = document.getElementById('organDesc');
         statEnzymeActivityEl = document.getElementById('statEnzymeActivity');
+        reagentResultEl = document.getElementById('reagentResult');
         quizContainerEl = document.getElementById('quizContainer');
 
         sceneBtns.forEach(function (btn) {
@@ -488,10 +489,66 @@
         if (organFocusCard) organFocusCard.style.display = 'block';
     }
 
+    // 시약이 잡아내는 영양소와, 반응했을 때 나오는 색
+    var REAGENTS = {
+        iodine:   { name: '아이오딘-아이오딘화 칼륨', target: 'starch',  color: '#3b2a6b', colorName: '청람색', needHeat: false },
+        benedict: { name: '베네딕트',                 target: 'glucose', color: '#b91c1c', colorName: '황적색', needHeat: true  },
+        biuret:   { name: '뷰렛',                     target: 'protein', color: '#7e22ce', colorName: '보라색', needHeat: false },
+        sudan:    { name: '수단 Ⅲ',                   target: 'fat',     color: '#dc2626', colorName: '선홍색', needHeat: false }
+    };
+
+    var NUTRIENT_NAMES = { starch: '녹말', protein: '단백질', fat: '지방', glucose: '포도당' };
+
+    /**
+     * 시험관 색 판정. 전에는 시약 단추와 가열 단추가 값만 저장하고
+     * 아무 데서도 읽히지 않아서 눌러도 아무 일이 없었다.
+     */
+    function updateReagentResult() {
+        if (!reagentResultEl) return;
+
+        var r = REAGENTS[activeReagent];
+        if (!r) {
+            reagentResultEl.textContent = '시약을 고르면 시험관 색이 나옵니다.';
+            reagentResultEl.style.background = 'rgba(0, 0, 0, 0.35)';
+            reagentResultEl.style.color = '#94a3b8';
+            reagentResultEl.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+            return;
+        }
+
+        var nutrientName = NUTRIENT_NAMES[selectedNutrient] || '?';
+        var hit = (selectedNutrient === r.target);
+
+        if (hit && r.needHeat && !isHeating) {
+            reagentResultEl.textContent = nutrientName + ' + ' + r.name + ' ➔ 변화 없음. 베네딕트 반응은 가열해야 색이 납니다.';
+            reagentResultEl.style.background = 'rgba(245, 158, 11, 0.15)';
+            reagentResultEl.style.color = '#fcd34d';
+            reagentResultEl.style.borderColor = '#f59e0b';
+            return;
+        }
+
+        if (hit) {
+            reagentResultEl.textContent = nutrientName + ' + ' + r.name + ' ➔ ' + r.colorName + '! ' + nutrientName + ' 있음 ✅';
+            reagentResultEl.style.background = r.color;
+            reagentResultEl.style.color = '#ffffff';
+            reagentResultEl.style.borderColor = '#ffffff';
+            return;
+        }
+
+        reagentResultEl.textContent = nutrientName + ' + ' + r.name + ' ➔ 색 변화 없음. ' +
+            r.name + ' ➔ ' + NUTRIENT_NAMES[r.target] + '에만 반응합니다.';
+        reagentResultEl.style.background = 'rgba(0, 0, 0, 0.35)';
+        reagentResultEl.style.color = '#cbd5e1';
+        reagentResultEl.style.borderColor = 'rgba(255, 255, 255, 0.18)';
+    }
+
     function updateLabMetrics() {
+        updateReagentResult();
+
+        // 체온에서 일하는 효소라 최고점은 37℃다. 전에는 40℃가 꼭짓점이라
+        // 정상 체온(37℃)에서도 86%밖에 안 나왔다.
         var tempFactor = 0;
-        if (tempC < 40) tempFactor = Math.pow(tempC / 40, 2);
-        else if (tempC <= 60) tempFactor = Math.max(0, 1.0 - Math.pow((tempC - 40) / 20, 2));
+        if (tempC <= 37) tempFactor = Math.pow(tempC / 37, 2);
+        else if (tempC <= 60) tempFactor = Math.max(0, 1.0 - Math.pow((tempC - 37) / 23, 2));
         else tempFactor = 0;
 
         var optPH = 7.0;
@@ -511,7 +568,13 @@
         var isDenatured = tempC > 60;
 
         if (statEnzymeActivityEl) {
-            statEnzymeActivityEl.textContent = act + ' %' + (isDenatured ? ' (고온 변성 파괴 ⚠️)' : '');
+            // 0%일 때 왜 0인지 밝혀 준다. 전에는 이유 없이 0 %만 떠서
+            // 짝이 안 맞는 것인지 효소가 망가진 것인지 알 수 없었다.
+            var why = '';
+            if (isDenatured) why = ' (고온 변성 파괴 ⚠️)';
+            else if (!match) why = ' (이 효소는 ' + (NUTRIENT_NAMES[selectedNutrient] || '?') + '을 분해하지 못합니다)';
+
+            statEnzymeActivityEl.textContent = act + ' %' + why;
             statEnzymeActivityEl.style.color = act > 70 ? '#10b981' : (act > 25 ? '#f59e0b' : '#f87171');
         }
     }

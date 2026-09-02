@@ -368,6 +368,54 @@ canvas.sim-canvas {
     background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
 }
 
+/* 골라 누르는 알약 단추 — 규칙이 아예 없어서 브라우저 기본 회색으로 나왔고,
+   고른 것과 안 고른 것이 똑같아 보였다. (소화계·항상성·시냅스·3d-atlas) */
+.sim-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-height: 40px;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.25;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.sim-pill-btn:hover {
+    background: rgba(56, 189, 248, 0.12);
+    border-color: rgba(56, 189, 248, 0.5);
+    color: var(--text-primary);
+}
+
+.sim-pill-btn.active {
+    background: rgba(56, 189, 248, 0.22);
+    border-color: var(--color-accent);
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+}
+
+/* 시험관 색 판정 칸 */
+.reagent-result {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.35);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.45;
+    transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+
 .sim-btn.danger {
     background: rgba(244, 63, 94, 0.15);
     border-color: rgba(244, 63, 94, 0.35);
