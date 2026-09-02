@@ -88,13 +88,8 @@ chapters he is visibly ill - thin, grey, hollow-eyed, wrapped in furs.
 The court: an octopus prime minister in a scholar's robe with eight sleeves; a
 shark general in armour; a flounder, a crab, a sea bream, all in official hats,
 all edging backwards whenever volunteers are called for.
-Jara, the terrapin: a modest middle-sized soft-shelled turtle who walks upright,
-plain dark shell, a small official's hat perched on his head and a cloth bundle
-on his back. Earnest, dogged, faintly sad. The most decent character in the book.
-The rabbit: a lean sharp-eyed brown hare with very long ears and quick nervous
-limbs. Vain, greedy, and extremely fast-thinking. His ears lie flat when he is
-calculating.
-The old terrapin mother: a small wrinkled turtle.
+Jara, the softshell turtle (자라 별주부): An authentic Korean softshell turtle (NOT a turtle/tortoise - 거북이가 아님!). Features: 1) A completely smooth, flat, leathery oval shell with NO hexagonal plates/scutes whatsoever and a soft flexible rim; 2) A distinctive pointed tubular pig-like snout (앞으로 뾰족하게 튀어나온 대롱형 돼지코 주둥이); 3) Long flexible neck, webbed feet with claws; 4) Walks upright or swims, wearing a small black official hat (탕건) and a cloth bundle on his back. Earnest, dogged, faintly sad. The most decent character in the book.
+The old mother softshell turtle (자라 어머니): A small wrinkled elderly softshell turtle with smooth leathery shell and a headscarf.
 The painted portrait: a scroll with a comically wrong-looking rabbit painted on
 it.
 ```
