@@ -724,14 +724,20 @@ test("renders the student-hosted ranking mode entry screen", async () => {
   assert.match(studentHtml, /방 만들기/);
   assert.match(studentHtml, /방 참가/);
   assert.match(studentHtml, /방 코드/);
+  assert.match(studentHtml, /초1(?:<!-- -->)? · (?:<!-- -->)?1부터 9까지 수 세기/);
+  assert.doesNotMatch(studentHtml, />1수세기①</);
   assert.doesNotMatch(studentHtml, /교사용 페이지|교사 PIN|친구들과 하는 연산 대결/);
 
   const catalogSource = await readFile(new URL("../app/arithmetic/catalog.tsx", import.meta.url), "utf8");
   const raceSource = await readFile(new URL("../app/arithmetic/race/page.tsx", import.meta.url), "utf8");
+  const raceApiSource = await readFile(new URL("../app/api/arithmetic-race/route.ts", import.meta.url), "utf8");
   const globalCss = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(catalogSource, /href="\/arithmetic\/race"/);
   assert.match(raceSource, /classPlayerName/);
   assert.match(raceSource, /hostToken/);
+  assert.match(raceSource, /worksheet\.grade} · {worksheet\.title/);
+  assert.doesNotMatch(raceSource, />{worksheet\.name}<\/option>/);
+  assert.match(raceApiSource, /worksheetName = .*worksheet\.grade.*worksheet\.title/);
   assert.doesNotMatch(raceSource, /race\/teacher|교사 PIN|친구들과 하는 연산 대결/);
   assert.doesNotMatch(globalCss, /grid-template-columns: 64px minmax\(0, 1fr\)|grid-template-columns: 56px minmax\(0, 1fr\)/);
 });

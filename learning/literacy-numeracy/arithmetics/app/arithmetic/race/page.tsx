@@ -163,7 +163,7 @@ export default function ArithmeticRaceJoinPage() {
             <div className="race-entry-grid race-boardgame-grid">
               <form className="race-join-card race-create-card" onSubmit={createRoom}>
                 <span className="race-card-kicker">내가 방장</span><h2>방 만들기</h2>
-                <label>함께 풀 학습지<select value={worksheetRoute} onChange={(event) => setWorksheetRoute(event.target.value)}>{raceReadyWorksheets.map((worksheet) => <option value={worksheet.route} key={worksheet.route}>{worksheet.name}</option>)}</select></label>
+                <label>함께 풀 학습지<select value={worksheetRoute} onChange={(event) => setWorksheetRoute(event.target.value)}>{raceReadyWorksheets.map((worksheet) => <option value={worksheet.route} key={worksheet.route}>{worksheet.grade} · {worksheet.title}</option>)}</select></label>
                 <button type="submit" disabled={loading}>{loading ? "만드는 중" : "방 만들고 입장"}</button>
               </form>
               <form className="race-join-card" onSubmit={join}>

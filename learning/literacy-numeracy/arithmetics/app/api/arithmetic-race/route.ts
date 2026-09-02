@@ -35,9 +35,10 @@ function roomCode() {
 }
 
 function publicRace(race: RaceRow) {
+  const worksheet = raceWorksheetByRoute(race.worksheet_route);
   return {
     roomCode: race.room_code,
-    worksheetName: race.worksheet_name,
+    worksheetName: worksheet ? `${worksheet.grade} · ${worksheet.title}` : race.worksheet_name,
     worksheetRoute: race.worksheet_route,
     seed: race.seed,
     status: race.status,
@@ -147,6 +148,7 @@ export async function POST(request: Request) {
       const name = String(payload.name ?? "").trim().slice(0, 20);
       if (!worksheet) return error("순위 모드에서 사용할 수 없는 학습지입니다.");
       if (!name) return error("이름 정보를 확인하세요.");
+      const worksheetName = `${worksheet.grade} · ${worksheet.title}`;
       const hostToken = crypto.randomUUID();
       const participantId = crypto.randomUUID();
       const participantToken = crypto.randomUUID();
@@ -156,11 +158,11 @@ export async function POST(request: Request) {
         try {
           await db.batch([
             db.prepare("INSERT INTO arithmetic_races (room_code, teacher_token, worksheet_name, worksheet_route, seed, status, created_at) VALUES (?, ?, ?, ?, ?, 'waiting', ?)")
-              .bind(code, hostToken, worksheet.name, worksheet.route, 20260720, now),
+              .bind(code, hostToken, worksheetName, worksheet.route, 20260720, now),
             db.prepare("INSERT INTO arithmetic_race_participants (id, room_code, name, participant_token, joined_at) VALUES (?, ?, ?, ?, ?)")
               .bind(participantId, code, name, participantToken, now),
           ]);
-          const race = { roomCode: code, worksheetName: worksheet.name, worksheetRoute: worksheet.route, seed: 20260720, status: "waiting", createdAt: now, startedAt: null };
+          const race = { roomCode: code, worksheetName, worksheetRoute: worksheet.route, seed: 20260720, status: "waiting", createdAt: now, startedAt: null };
           return Response.json({ roomCode: code, hostToken, participantId, participantToken, race }, { status: 201 });
         } catch (cause) {
           if (attempt === 7) throw cause;
