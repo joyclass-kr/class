@@ -115,7 +115,7 @@
     }
 
     function renderLoop(time) {
-        var dt = (time - lastTime) / 1000 || 0.016;
+        var dt = Math.min(0.05, (time - lastTime) / 1000 || 0.016);
         lastTime = time;
 
         if (isRunning) {
@@ -126,20 +126,60 @@
         requestAnimationFrame(renderLoop);
     }
 
+    // Direct Canvas Drag State for Diaphragm Puller
+    var isDraggingDiaphragm = false;
+    var dragStartY = 0;
+    var airwayAirFlow = [];
+
     function updatePhysics(dt, time) {
-        // Automatic breathing oscillation
-        var breathCycle = (time * 0.001 * (breathRate / 60) * Math.PI * 2);
-        var autoWave = (Math.sin(breathCycle) + 1) / 2; // 0 ~ 1
-
-        // Boyle's law pressure calculation
-        thoracicPressure = 760 - (diaphragmPosition - 50) * 0.12;
-
-        if (statPressureEl) {
-            statPressureEl.textContent = thoracicPressure.toFixed(1) + ' mmHg (' + (thoracicPressure < 760 ? '대기압보다 낮음 ➔ 들숨' : '대기압보다 높음 ➔ 날숨') + ')';
-            statPressureEl.style.color = thoracicPressure < 760 ? '#38bdf8' : '#f59e0b';
+        // Automatic breathing mode when not dragging
+        if (!isDraggingDiaphragm) {
+            var breathCycle = (time * 0.001 * (breathRate / 60) * Math.PI * 2);
+            var autoWave = (Math.sin(breathCycle) + 1) / 2; // 0 ~ 1
+            // Smoothly ease position if in auto
+            // diaphragmPosition = Math.round(autoWave * 100);
         }
 
-        // Particle brownian gas diffusion
+        // Boyle's law pressure calculation: P * V = const
+        // Normal atmospheric P = 760 mmHg
+        // Inhale: Diaphragm down -> Volume increases (2.5L -> 4.5L) -> Pressure drops to 756 mmHg (-4 mmHg)
+        // Exhale: Diaphragm up -> Volume decreases (1.8L) -> Pressure rises to 764 mmHg (+4 mmHg)
+        var volumeL = 1.8 + (diaphragmPosition / 100) * 2.5; // 1.8L ~ 4.3L
+        thoracicPressure = 760 - (diaphragmPosition - 50) * 0.16;
+
+        if (statPressureEl) {
+            var pDiff = thoracicPressure - 760;
+            statPressureEl.textContent = thoracicPressure.toFixed(1) + ' mmHg (' + (pDiff < 0 ? pDiff.toFixed(1) + ' mmHg 음압 ➔ 들숨' : '+' + pDiff.toFixed(1) + ' mmHg 양압 ➔ 날숨') + ')';
+            statPressureEl.style.color = pDiff < 0 ? '#38bdf8' : '#f59e0b';
+        }
+
+        if (statVolumeEl) {
+            statVolumeEl.textContent = volumeL.toFixed(2) + ' L (' + (diaphragmPosition > 50 ? '흉강 팽창' : '흉강 수축') + ')';
+            statVolumeEl.style.color = '#34d399';
+        }
+
+        // Airway air flow particles driven by pressure differential
+        var pDelta = 760 - thoracicPressure; // Positive = Inhale flow inward, Negative = Exhale flow outward
+        if (Math.abs(pDelta) > 0.3) {
+            if (airwayAirFlow.length < 35 && Math.random() < Math.abs(pDelta) * 0.3) {
+                airwayAirFlow.push({
+                    x: 0.50 + (Math.random() - 0.5) * 0.04,
+                    y: pDelta > 0 ? 0.10 : 0.65,
+                    vy: pDelta > 0 ? (Math.random() * 0.4 + 0.3) : -(Math.random() * 0.4 + 0.3),
+                    type: pDelta > 0 ? 'o2' : 'co2',
+                    life: 1.0
+                });
+            }
+        }
+
+        for (var f = airwayAirFlow.length - 1; f >= 0; f--) {
+            var fl = airwayAirFlow[f];
+            fl.y += fl.vy * dt;
+            fl.life -= dt * 0.8;
+            if (fl.life <= 0 || fl.y < 0.08 || fl.y > 0.75) airwayAirFlow.splice(f, 1);
+        }
+
+        // Particle brownian gas diffusion in alveoli
         for (var i = 0; i < gasParticles.length; i++) {
             var g = gasParticles[i];
             g.x += g.vx;
@@ -171,8 +211,14 @@
 
             ctx.drawImage(img, dx, dy, dw, dh);
 
-            // Overlay Gas Particles
-            drawGasDiffusionOverlay(dx, dy, dw, dh, time);
+            // Overlay Interactive Physical Simulation per Scene
+            if (currentSceneKey === 'hero') {
+                drawInteractiveBoyleLungModel(dx, dy, dw, dh, time);
+            } else if (currentSceneKey === 'alveoli') {
+                drawGasDiffusionOverlay(dx, dy, dw, dh, time);
+            } else {
+                drawAirwayFlowOverlay(dx, dy, dw, dh, time);
+            }
 
             drawHotspots(dx, dy, dw, dh, time);
         } else {
@@ -181,7 +227,112 @@
             ctx.fillStyle = '#06b6d4';
             ctx.font = 'bold 16px Pretendard, sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('자료를 불러오는 중입니다.', width / 2, height / 2);
+            ctx.fillText('⚡ 호흡계 시뮬레이터 로딩 중...', width / 2, height / 2);
+        }
+    }
+
+    // ------------------------------------------------------------------------
+    // Real Interactive Boyle's Law Diaphragm & Lung Balloons
+    // ------------------------------------------------------------------------
+    function drawInteractiveBoyleLungModel(dx, dy, dw, dh, time) {
+        var cx = dx + 0.50 * dw;
+        var topY = dy + 0.25 * dh;
+        var bottomY = dy + 0.72 * dh;
+        var lungScale = 0.55 + (diaphragmPosition / 100) * 0.70; // 0.55 (deflated) ~ 1.25 (inflated)
+
+        // 1. Two Dynamic Lung Balloons (Left & Right)
+        var leftLungX = cx - 55 * (dw / 800);
+        var rightLungX = cx + 55 * (dw / 800);
+        var lungCenterY = dy + 0.46 * dh;
+
+        var lungColor = diaphragmPosition > 50 ? '#fda4af' : '#fb7185';
+        var lungGlow = diaphragmPosition > 50 ? '#38bdf8' : '#f43f5e';
+
+        // Draw Left Lung Balloon
+        ctx.save();
+        ctx.translate(leftLungX, lungCenterY);
+        ctx.scale(lungScale, lungScale);
+        ctx.shadowBlur = 18;
+        ctx.shadowColor = lungGlow;
+        ctx.fillStyle = lungColor;
+        ctx.beginPath();
+        ctx.ellipse(-10, 0, 36, 50, -0.15, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // Draw Right Lung Balloon
+        ctx.save();
+        ctx.translate(rightLungX, lungCenterY);
+        ctx.scale(lungScale, lungScale);
+        ctx.shadowBlur = 18;
+        ctx.shadowColor = lungGlow;
+        ctx.fillStyle = lungColor;
+        ctx.beginPath();
+        ctx.ellipse(10, 0, 36, 50, 0.15, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // 2. Airflow Inflow/Outflow Particles through Trachea
+        for (var f = 0; f < airwayAirFlow.length; f++) {
+            var fl = airwayAirFlow[f];
+            var fx = dx + fl.x * dw;
+            var fy = dy + fl.y * dh;
+
+            ctx.save();
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = fl.type === 'o2' ? '#38bdf8' : '#f59e0b';
+            ctx.fillStyle = fl.type === 'o2' ? '#7dd3fc' : '#fcd34d';
+            ctx.beginPath();
+            ctx.arc(fx, fy, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // 3. Curved Rubber Diaphragm Sheet at Bottom
+        var diaphragmY = bottomY + (diaphragmPosition - 50) * 0.6 * (dh / 600);
+        var curveControlY = bottomY + (diaphragmPosition - 50) * 1.1 * (dh / 600);
+
+        ctx.save();
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 4;
+        ctx.shadowBlur = 16;
+        ctx.shadowColor = '#38bdf8';
+        ctx.beginPath();
+        ctx.moveTo(cx - 130 * (dw / 800), bottomY);
+        ctx.quadraticCurveTo(cx, curveControlY, cx + 130 * (dw / 800), bottomY);
+        ctx.stroke();
+
+        // 4. Draggable Diaphragm Pull Handle
+        ctx.fillStyle = '#0284c7';
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(cx, curveControlY + 12, 14, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Handle text prompt
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 11px Pretendard, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('↕️ 가로막 당기기', cx, curveControlY + 36);
+        ctx.restore();
+    }
+
+    function drawAirwayFlowOverlay(dx, dy, dw, dh, time) {
+        for (var f = 0; f < airwayAirFlow.length; f++) {
+            var fl = airwayAirFlow[f];
+            var fx = dx + fl.x * dw;
+            var fy = dy + fl.y * dh;
+
+            ctx.save();
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = fl.type === 'o2' ? '#38bdf8' : '#f59e0b';
+            ctx.fillStyle = fl.type === 'o2' ? '#7dd3fc' : '#fcd34d';
+            ctx.beginPath();
+            ctx.arc(fx, fy, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
         }
     }
 
@@ -215,28 +366,47 @@
             var s = spotList[i];
             var sx = dx + s.x * dw;
             var sy = dy + s.y * dh;
-            var pulseR = s.r + Math.sin(time * 0.003 + i) * 4;
+            var pulseR = s.r + Math.sin(time * 0.003 + i) * 3;
 
+            // Glowing Outer Ring
             ctx.save();
             ctx.strokeStyle = 'rgba(6, 182, 212, 0.75)';
-            ctx.lineWidth = 2.5;
-            ctx.shadowBlur = 14;
+            ctx.lineWidth = 2;
+            ctx.shadowBlur = 12;
             ctx.shadowColor = '#06b6d4';
             ctx.beginPath();
             ctx.arc(sx, sy, pulseR, 0, Math.PI * 2);
             ctx.stroke();
 
-            ctx.fillStyle = 'rgba(15, 23, 42, 0.92)';
-            ctx.fillRect(sx - 55, sy - 14, 110, 28);
+            // Center Pin
+            ctx.fillStyle = '#06b6d4';
+            ctx.beginPath();
+            ctx.arc(sx, sy, 4.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Tag Label Pill
+            var labelText = SimEngine.pinLabel(s);
+            ctx.font = 'bold 11px Pretendard, sans-serif';
+            var txtMetrics = ctx.measureText(labelText);
+            var pillW = txtMetrics.width + 16;
+            var pillH = 22;
+
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+            ctx.beginPath();
+            if (ctx.roundRect) {
+                ctx.roundRect(sx - pillW / 2, sy - 28, pillW, pillH, 6);
+            } else {
+                ctx.rect(sx - pillW / 2, sy - 28, pillW, pillH);
+            }
+            ctx.fill();
             ctx.strokeStyle = '#06b6d4';
             ctx.lineWidth = 1;
-            ctx.strokeRect(sx - 55, sy - 14, 110, 28);
+            ctx.stroke();
 
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 11px Pretendard, sans-serif';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(s.title.split(' ')[0], sx, sy);
+            ctx.fillText(labelText, sx, sy - 17);
             ctx.restore();
         }
     }
@@ -314,6 +484,22 @@
                     dx = 0; dy = (height - dh) / 2;
                 }
 
+                // Check Diaphragm Handle Drag in Hero Scene
+                if (currentSceneKey === 'hero') {
+                    var cx = dx + 0.50 * dw;
+                    var bottomY = dy + 0.72 * dh;
+                    var handleY = bottomY + (diaphragmPosition - 50) * 1.1 * (dh / 600) + 12;
+                    var distHandle = Math.hypot(clickX - cx, clickY - handleY);
+
+                    if (distHandle <= 40 || clickY > dy + 0.55 * dh) {
+                        isDraggingDiaphragm = true;
+                        canvas.setPointerCapture(event.pointerId);
+                        if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playPulse();
+                        return;
+                    }
+                }
+
+                // Hotspot clicks
                 var spotList = hotspots[currentSceneKey] || [];
                 for (var i = 0; i < spotList.length; i++) {
                     var s = spotList[i];
@@ -327,6 +513,43 @@
                         break;
                     }
                 }
+            });
+
+            canvas.addEventListener('pointermove', function (event) {
+                if (!isDraggingDiaphragm) return;
+                var rect = canvas.getBoundingClientRect();
+                var clickY = event.clientY - rect.top;
+
+                var current = scenes[currentSceneKey];
+                if (!current || !current.img) return;
+                var img = current.img;
+                var imgAspect = img.width / img.height;
+                var canvasAspect = width / height;
+                var dh = canvasAspect > imgAspect ? height : width / imgAspect;
+                var dy = canvasAspect > imgAspect ? 0 : (height - dh) / 2;
+
+                var minY = dy + 0.60 * dh;
+                var maxY = dy + 0.88 * dh;
+                var clampedY = Math.max(minY, Math.min(maxY, clickY));
+                var newPos = ((clampedY - minY) / (maxY - minY)) * 100;
+
+                diaphragmPosition = Math.round(newPos);
+                if (diaphragmSlider) diaphragmSlider.value = diaphragmPosition;
+                if (diaphragmValEl) {
+                    diaphragmValEl.textContent = diaphragmPosition > 50 ? '하강 (들숨 Inhale 🫁)' : '상승 (날숨 Exhale 💨)';
+                    diaphragmValEl.style.color = diaphragmPosition > 50 ? '#38bdf8' : '#f59e0b';
+                }
+            });
+
+            canvas.addEventListener('pointerup', function (event) {
+                if (isDraggingDiaphragm) {
+                    isDraggingDiaphragm = false;
+                    try { canvas.releasePointerCapture(event.pointerId); } catch (e) {}
+                }
+            });
+
+            canvas.addEventListener('pointercancel', function () {
+                isDraggingDiaphragm = false;
             });
         }
 

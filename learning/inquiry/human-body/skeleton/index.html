@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>3D 시네마틱 골격계 &amp; 관절 바이오메카닉스 시뮬레이터 | 2022 개정 교육과정</title>
+    <title>골격계 &amp; 관절 바이오메카닉스 시뮬레이터 | 2022 개정 교육과정</title>
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -42,11 +42,17 @@
             <div class="skeleton-viewport">
                 <canvas id="skeletonCanvas"></canvas>
 
+                <!-- Floating Top Scene Switcher -->
+                <div class="scene-switcher">
+                    <button class="scene-btn active" data-scene="joint">🦾 1. 관절 &amp; 길항근 (거시)</button>
+                    <button class="scene-btn" data-scene="sarcomere">🔬 2. 근절 활주설 (미시)</button>
+                </div>
+
                 <!-- Floating HUD Badges -->
                 <div class="sim-hud-overlay">
                     <div class="sim-hud-badge">
                         <span class="indicator"></span>
-                        <span>우측 상단 <strong>[🦾 팔 굽히기]</strong> 버튼을 누르거나 슬라이더를 당겨 이두근과 삼두근의 길항 작용(Antagonism)을 확인하세요.</span>
+                        <span id="skeletonHudText">화면의 <strong>[✋ 잡고 당기기]</strong> 핸들을 마우스로 잡고 당겨 이두근과 삼두근의 실시간 수축을 확인하세요.</span>
                     </div>
                 </div>
             </div>

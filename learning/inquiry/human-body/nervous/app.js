@@ -23,8 +23,13 @@
             img: null,
             loaded: false
         },
+        synapse: {
+            src: '../assets/images/synapse-hero.jpg',
+            img: null,
+            loaded: false
+        },
         sensory: {
-            src: '../assets/images/nervous-sensory.webp',
+            src: '../assets/images/nervous-eye.jpg',
             img: null,
             loaded: false
         }
@@ -38,6 +43,13 @@
     var reflexProgress = 0.0;
     var consciousTimeMs = 0;
     var reflexTimeMs = 0;
+
+    // Synapse Molecular State
+    var isSynapseFiring = false;
+    var synapseProgress = 0.0;
+    var calciumIons = [];
+    var transmitterMolecules = [];
+    var postSparks = [];
 
     // Eye Optics State
     var targetDist = 50;  // 10 ~ 100cm (원근)
@@ -57,9 +69,19 @@
             { x: 0.35, y: 0.35, r: 45, title: '의식적 반응 경로 (~250ms)', desc: '자극 ➔ 감각기 ➔ 감각신경 ➔ 척수 ➔ 대뇌(판단) ➔ 척수 ➔ 운동신경 ➔ 반응기(근육)' },
             { x: 0.65, y: 0.65, r: 45, title: '무조건 반사 경로 (~30ms)', desc: '자극 ➔ 감각기 ➔ 감각신경 ➔ 척수(즉시 명령) ➔ 운동신경 ➔ 반응기 (대뇌를 거치지 않아 극도로 빠름)' }
         ],
+        synapse: [
+            { x: 0.50, y: 0.22, r: 45, title: '축삭 말단 (Presynaptic Terminal)', desc: '활동전위 도달 시 전압 개폐성 Ca2+ 통로가 열려 칼슘 이온이 유입되고, 시냅스 소포가 세포막과 융합합니다.' },
+            { x: 0.44, y: 0.35, r: 40, title: '시냅스 소포 (Synaptic Vesicles)', desc: '도파민, 아세틸콜린 등 신경전달물질을 담고 있으며 탈과립(엑소사이토시스)으로 분비됩니다.' },
+            { x: 0.50, y: 0.60, r: 40, title: '시냅스 틈 (Synaptic Cleft)', desc: '약 20nm 두께의 미세 간극으로, 신경전달물질이 확산하여 수용체로 이동합니다.' },
+            { x: 0.50, y: 0.78, r: 45, title: '시냅스 후 수용체 (Receptors)', desc: '신경전달물질이 결합하면 Na+ 이온 통로가 열려 탈분극(+30mV 활동전위)이 전파됩니다.' }
+        ],
         sensory: [
-            { x: 0.50, y: 0.30, r: 40, title: '눈의 원근 조절 (섬모체-수정체)', desc: '가까운 곳: 섬모체 수축 ➔ 수정체 두꺼워짐 / 먼 곳: 섬모체 이완 ➔ 수정체 얇아짐' },
-            { x: 0.50, y: 0.60, r: 40, title: '눈의 명암 조절 (홍채-동공)', desc: '어두운 곳: 동공 확대 / 밝은 곳: 동공 축소' }
+            { x: 0.74, y: 0.50, r: 35, title: '각막 & 동공 (Cornea & Pupil)', desc: '빛이 눈으로 들어오는 첫 관문이자 창문. 빛의 양에 따라 동공 크기가 조절됩니다.' },
+            { x: 0.70, y: 0.38, r: 35, title: '홍채 (Iris) - 명암 조절', desc: '밝은 곳: 홍채 확장 ➔ 동공 축소 / 어두운 곳: 홍채 수축 ➔ 동공 확대.' },
+            { x: 0.64, y: 0.50, r: 40, title: '수정체 (Crystalline Lens) - 원근 굴절', desc: '볼록렌즈 형태로 빛을 굴절시켜 망막에 상을 맺히게 합니다. 가까운 곳은 두꺼워지고 먼 곳은 얇아집니다.' },
+            { x: 0.66, y: 0.28, r: 35, title: '섬모체 & 진대 (Ciliary Body)', desc: '섬모체의 수축과 이완으로 진대(걸이인대)의 장력을 조절하여 수정체의 두께를 변화시킵니다.' },
+            { x: 0.32, y: 0.50, r: 45, title: '망막 & 황반 (Retina & Fovea)', desc: '시각 세포(원뿔세포, 막대세포)가 밀집하여 빛 자극을 감지하고 신경 신호로 변환하는 스크린.' },
+            { x: 0.15, y: 0.68, r: 40, title: '시각 신경 (Optic Nerve)', desc: '망막에서 생성된 시각 전기 신호를 대뇌 시각 피질로 전달하는 뇌신경 경로.' }
         ]
     };
 
@@ -121,7 +143,7 @@
     }
 
     function renderLoop(time) {
-        var dt = (time - lastTime) / 1000 || 0.016;
+        var dt = Math.min(0.05, (time - lastTime) / 1000 || 0.016);
         lastTime = time;
 
         if (isRunning) {
@@ -147,6 +169,55 @@
             if (consciousProgress >= 1.0 && reflexProgress >= 1.0) {
                 isRacing = false;
             }
+        }
+
+        // Synapse Action Potential Exocytosis Physics
+        if (isSynapseFiring) {
+            synapseProgress += dt * 1.8;
+            if (synapseProgress >= 1.0) isSynapseFiring = false;
+        }
+
+        // Calcium Ions flow
+        for (var ci = calciumIons.length - 1; ci >= 0; ci--) {
+            var ca = calciumIons[ci];
+            ca.progress += dt * ca.speed;
+            ca.y = 0.15 + (ca.targetY - 0.15) * Math.min(1.0, ca.progress);
+            if (ca.progress >= 1.0) calciumIons.splice(ci, 1);
+        }
+
+        // Transmitter diffusion
+        for (var mi = transmitterMolecules.length - 1; mi >= 0; mi--) {
+            var mol = transmitterMolecules[mi];
+            mol.x += mol.vx * dt;
+            mol.y += mol.vy * dt;
+
+            if (mol.y >= 0.70 && !mol.isBound) {
+                mol.isBound = true;
+                mol.vy = 0;
+                for (var s = 0; s < 3; s++) {
+                    postSparks.push({
+                        x: mol.x,
+                        y: mol.y + 0.05,
+                        vx: (Math.random() - 0.5) * 0.1,
+                        vy: Math.random() * 0.15 + 0.1,
+                        life: 1.0
+                    });
+                }
+            }
+
+            if (mol.isBound) {
+                mol.alpha -= dt * 0.8;
+                if (mol.alpha <= 0) transmitterMolecules.splice(mi, 1);
+            }
+        }
+
+        // Postsynaptic sparks
+        for (var si = postSparks.length - 1; si >= 0; si--) {
+            var sp = postSparks[si];
+            sp.x += sp.vx * dt;
+            sp.y += sp.vy * dt;
+            sp.life -= dt * 2.5;
+            if (sp.life <= 0) postSparks.splice(si, 1);
         }
 
         for (var i = 0; i < neuralPulses.length; i++) {
@@ -175,8 +246,14 @@
 
             ctx.drawImage(img, dx, dy, dw, dh);
 
-            // Overlay Glowing Neural Pulses
-            drawNeuralPulses(dx, dy, dw, dh, time);
+            // Overlay Molecular / Neural / Eye Simulation per Scene
+            if (currentSceneKey === 'synapse') {
+                drawSynapseMolecularOverlay(dx, dy, dw, dh, time);
+            } else if (currentSceneKey === 'sensory') {
+                drawEyeOpticsOverlay(dx, dy, dw, dh, time);
+            } else {
+                drawNeuralPulses(dx, dy, dw, dh, time);
+            }
 
             drawHotspots(dx, dy, dw, dh, time);
         } else {
@@ -185,7 +262,119 @@
             ctx.fillStyle = '#a855f7';
             ctx.font = 'bold 16px Pretendard, sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('자료를 불러오는 중입니다.', width / 2, height / 2);
+            ctx.fillText('⚡ 신경계 시뮬레이터 로딩 중...', width / 2, height / 2);
+        }
+    }
+
+    function drawEyeOpticsOverlay(dx, dy, dw, dh, time) {
+        var corneaX = dx + 0.74 * dw;
+        var pupilY = dy + 0.50 * dh;
+        var lensX = dx + 0.64 * dw;
+        var retinaX = dx + 0.32 * dw;
+        var retinaY = dy + 0.50 * dh;
+
+        var isNear = targetDist < 35;
+        var pupilSpread = 12 + (1 - lightLevel / 100) * 16; // 12px (bright) ~ 28px (dark)
+        var lensThickness = isNear ? 18 : 10;
+
+        // 1. Dynamic Lens Bulge (수정체 두께 조절)
+        ctx.save();
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.4)';
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 2;
+        ctx.shadowBlur = 14;
+        ctx.shadowColor = '#38bdf8';
+        ctx.beginPath();
+        ctx.ellipse(lensX, pupilY, lensThickness, 34, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+
+        // 2. Bioluminescent Refracting Light Rays (광선 추적)
+        var rayCount = 5;
+        for (var r = 0; r < rayCount; r++) {
+            var rayOffset = (r - (rayCount - 1) / 2) * (pupilSpread / 2);
+            var entryY = isNear ? (pupilY + rayOffset * 1.8) : (pupilY + rayOffset);
+
+            ctx.save();
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 2;
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = '#38bdf8';
+            ctx.beginPath();
+            // Ray 1: From target outside to Cornea/Pupil
+            ctx.moveTo(dx + 0.95 * dw, entryY);
+            ctx.lineTo(lensX, pupilY + rayOffset);
+            // Ray 2: Refracted through lens converging onto retina fovea
+            ctx.lineTo(retinaX, retinaY);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        // 3. Focal Point Spark on Retina
+        ctx.save();
+        ctx.fillStyle = '#ffffff';
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = '#facc15';
+        ctx.beginPath();
+        ctx.arc(retinaX, retinaY, 5 + Math.sin(time * 0.005) * 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+
+    function drawSynapseMolecularOverlay(dx, dy, dw, dh, time) {
+        // 1. Calcium Ions
+        for (var ci = 0; ci < calciumIons.length; ci++) {
+            var ca = calciumIons[ci];
+            var cax = dx + ca.x * dw;
+            var cay = dy + ca.y * dh;
+
+            ctx.save();
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = '#38bdf8';
+            ctx.fillStyle = '#bae6fd';
+            ctx.beginPath();
+            ctx.arc(cax, cay, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // 2. Neurotransmitter Molecules
+        for (var mi = 0; mi < transmitterMolecules.length; mi++) {
+            var mol = transmitterMolecules[mi];
+            var mx = dx + mol.x * dw;
+            var my = dy + mol.y * dh;
+
+            ctx.save();
+            ctx.globalAlpha = mol.alpha;
+            ctx.shadowBlur = 14;
+            ctx.shadowColor = mol.color;
+            ctx.fillStyle = mol.color;
+            ctx.beginPath();
+            ctx.arc(mx, my, mol.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // 3. Postsynaptic Sparks
+        for (var si = 0; si < postSparks.length; si++) {
+            var sp = postSparks[si];
+            var sx = dx + sp.x * dw;
+            var sy = dy + sp.y * dh;
+
+            ctx.save();
+            ctx.globalAlpha = sp.life;
+            ctx.shadowBlur = 16;
+            ctx.shadowColor = '#38bdf8';
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(sx - 4, sy - 4);
+            ctx.lineTo(sx + 4, sy + 4);
+            ctx.moveTo(sx + 4, sy - 4);
+            ctx.lineTo(sx - 4, sy + 4);
+            ctx.stroke();
+            ctx.restore();
         }
     }
 
@@ -212,36 +401,88 @@
             var s = spotList[i];
             var sx = dx + s.x * dw;
             var sy = dy + s.y * dh;
-            var pulseR = s.r + Math.sin(time * 0.003 + i) * 4;
+            var pulseR = s.r + Math.sin(time * 0.003 + i) * 3;
 
+            // Glowing Outer Ring
             ctx.save();
             ctx.strokeStyle = 'rgba(168, 85, 247, 0.75)';
-            ctx.lineWidth = 2.5;
-            ctx.shadowBlur = 14;
+            ctx.lineWidth = 2;
+            ctx.shadowBlur = 12;
             ctx.shadowColor = '#a855f7';
             ctx.beginPath();
             ctx.arc(sx, sy, pulseR, 0, Math.PI * 2);
             ctx.stroke();
 
-            ctx.fillStyle = 'rgba(15, 23, 42, 0.92)';
-            ctx.fillRect(sx - 55, sy - 14, 110, 28);
+            // Center Pin
+            ctx.fillStyle = '#a855f7';
+            ctx.beginPath();
+            ctx.arc(sx, sy, 4.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Tag Label Pill
+            var labelText = SimEngine.pinLabel(s);
+            ctx.font = 'bold 11px Pretendard, sans-serif';
+            var txtMetrics = ctx.measureText(labelText);
+            var pillW = txtMetrics.width + 16;
+            var pillH = 22;
+
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+            ctx.beginPath();
+            if (ctx.roundRect) {
+                ctx.roundRect(sx - pillW / 2, sy - 28, pillW, pillH, 6);
+            } else {
+                ctx.rect(sx - pillW / 2, sy - 28, pillW, pillH);
+            }
+            ctx.fill();
             ctx.strokeStyle = '#a855f7';
             ctx.lineWidth = 1;
-            ctx.strokeRect(sx - 55, sy - 14, 110, 28);
+            ctx.stroke();
 
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 11px Pretendard, sans-serif';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(s.title.split(' ')[0], sx, sy);
+            ctx.fillText(labelText, sx, sy - 17);
             ctx.restore();
         }
+    }
+
+    function triggerSynapseAction() {
+        isSynapseFiring = true;
+        synapseProgress = 0.0;
+
+        // Spawn Calcium ions
+        for (var c = 0; c < 15; c++) {
+            calciumIons.push({
+                x: 0.35 + Math.random() * 0.3,
+                y: 0.15,
+                targetY: 0.35 + Math.random() * 0.15,
+                progress: 0,
+                speed: Math.random() * 2 + 3
+            });
+        }
+
+        // Spawn Neurotransmitter Molecules
+        for (var m = 0; m < 50; m++) {
+            transmitterMolecules.push({
+                x: 0.42 + (Math.random() - 0.5) * 0.18,
+                y: 0.48,
+                vx: (Math.random() - 0.5) * 0.08,
+                vy: Math.random() * 0.25 + 0.15,
+                color: '#f59e0b',
+                size: Math.random() * 3 + 2.5,
+                alpha: 1.0,
+                isBound: false
+            });
+        }
+
+        if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playPulse();
     }
 
     function bindDOM() {
         sceneBtns = document.querySelectorAll('[data-scene]');
         playPauseBtn = document.getElementById('playPauseBtn');
-        startRaceBtn = document.getElementById('startRaceBtn');
+        var actionTriggerBtn = document.getElementById('actionTriggerBtn');
+        var actionBtnText = document.getElementById('actionBtnText');
 
         distSlider = document.getElementById('distSlider');
         distValEl = document.getElementById('distVal');
@@ -261,6 +502,11 @@
                 sceneBtns.forEach(function (b) { b.classList.remove('active'); });
                 btn.classList.add('active');
                 currentSceneKey = btn.dataset.scene;
+
+                if (actionBtnText) {
+                    actionBtnText.textContent = currentSceneKey === 'synapse' ? '활동전위 발사 (+30mV 탈분극)' : '신호 전도 레이스 시작';
+                }
+
                 if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
             });
         });
@@ -273,12 +519,16 @@
             });
         }
 
-        if (startRaceBtn) {
-            startRaceBtn.addEventListener('click', function () {
-                isRacing = true;
-                consciousProgress = 0.0;
-                reflexProgress = 0.0;
-                if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
+        if (actionTriggerBtn) {
+            actionTriggerBtn.addEventListener('click', function () {
+                if (currentSceneKey === 'synapse') {
+                    triggerSynapseAction();
+                } else {
+                    isRacing = true;
+                    consciousProgress = 0.0;
+                    reflexProgress = 0.0;
+                    if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
+                }
             });
         }
 

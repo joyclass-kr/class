@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>3D 시네마틱 신경계 &amp; 자극-반사 시뮬레이터 | 2022 개정 교육과정</title>
+    <title>신경계 &amp; 자극·반응·시냅스 시뮬레이터 | 2022 개정 교육과정</title>
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -16,14 +16,14 @@
                 <span>◀</span> 목록
             </a>
             <div class="sim-title-group">
-                <h1 class="sim-title">3D 신경계 &amp; 자극-반사</h1>
-                <span class="sim-subtitle">Reflex Arc vs Conscious Response &amp; Eye Optics</span>
-                <span class="curriculum-badge">2022 개정 [6과04-06]</span>
+                <h1 class="sim-title">신경계 &amp; 자극·반응·시냅스</h1>
+                <span class="sim-subtitle">Reflex Arc, Synaptic Transmission &amp; Eye Optics</span>
+                <span class="curriculum-badge">초등 [6과04-06] · 중등 [9과20-01~03] · 고등 [12생과Ⅰ03]</span>
             </div>
         </div>
         <div class="sim-header-right">
-            <button id="startRaceBtn" class="sim-btn primary" type="button">
-                <span>⚡</span> 신호 전도 레이스 시작
+            <button id="actionTriggerBtn" class="sim-btn primary" type="button" style="background:linear-gradient(135deg, #a855f7, #7e22ce);">
+                <span>⚡</span> <span id="actionBtnText">신호 전도 레이스 시작</span>
             </button>
             <button id="playPauseBtn" class="tool-toggle-btn" type="button">
                 <span>⏸️</span> 일시정지
@@ -43,7 +43,8 @@
                 <div class="scene-switcher">
                     <button class="scene-btn active" data-scene="hero">🧠 1. 전신 발광 신경계</button>
                     <button class="scene-btn" data-scene="response">⚡ 2. 자극과 반응 경로</button>
-                    <button class="scene-btn" data-scene="sensory">👁️ 3. 감각 기관 (눈 광학)</button>
+                    <button class="scene-btn" data-scene="synapse">🔬 3. 뉴런 시냅스 &amp; 분자</button>
+                    <button class="scene-btn" data-scene="sensory">👁️ 4. 감각 기관 (눈 광학)</button>
                 </div>
 
                 <!-- Floating HUD Badges -->

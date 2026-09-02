@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>인체 생명과학 2022 개정 실전 진단평가 &amp; 100점 챌린지</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="sim-header">
+        <div class="sim-header-left">
+            <a href="../" class="nav-back-btn" aria-label="인체 시뮬레이터 메인으로">
+                <span>◀</span> 목록
+            </a>
+            <div class="sim-title-group">
+                <h1 class="sim-title">인체 생명과학 실전 진단평가</h1>
+                <span class="sim-subtitle">2022 Curriculum 100-Point Diagnostic Challenge</span>
+                <span class="curriculum-badge">초·중·고 킬러 문항 12제</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="exam-challenge-container">
+        
+        <!-- Progress Bar -->
+        <div class="exam-progress-bar">
+            <div id="examProgress" class="exam-progress-fill"></div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div id="quizSection" class="exam-quiz-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <span id="qNum" style="font-size:12px; font-weight:800; color:#38bdf8;">문항 1 / 12</span>
+                <span id="qTopic" class="curriculum-badge">소화계</span>
+            </div>
+
+            <div id="qText" class="exam-question-text">문항 로딩 중...</div>
+
+            <div id="optContainer" class="exam-options-grid"></div>
+
+            <div id="expBox" class="exam-explanation-box"></div>
+
+            <button id="nextBtn" class="sim-btn primary" type="button" style="width:100%; margin-top:20px; display:none;">
+                <span>다음 문항 풀기 ➔</span>
+            </button>
+        </div>
+
+        <!-- Report Section -->
+        <div id="reportSection" class="report-card">
+            <div style="font-size:16px; color:#94a3b8; font-weight:700; margin-bottom:4px;">진단평가 최종 성적표</div>
+            <div id="scoreVal" class="report-score">0점</div>
+            <div id="weakList"></div>
+            <a href="../" class="sim-btn primary" style="display:inline-flex; margin-top:24px; text-decoration:none;">
+                <span>인체 시뮬레이터 메인으로 돌아가기 ➔</span>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="../shared/engine-core.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
