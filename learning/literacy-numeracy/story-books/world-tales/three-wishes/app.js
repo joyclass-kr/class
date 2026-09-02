@@ -325,16 +325,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '요술 소시지',
+    intro: [
+        '요술 소시지는 유럽 여러 나라에 전해 오는 옛이야기예요. 프랑스에서는 세 가지 소원이라는 제목으로, 영국에서는 소시지 이야기로 알려져 있답니다.',
+        '소원을 세 번 들어주겠다는 말에 신이 났다가, 결국 아무것도 얻지 못하는 부부의 이야기예요. 웃다 보면 어느새 고개를 끄덕이게 되는 이야기랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🌭')}
             </div>
             <div class="story-page-right">
-                <h1>요술 소시지</h1>
-                <p>요술 소시지는 유럽 여러 나라에 전해 오는 옛이야기예요. 프랑스에서는 세 가지 소원이라는 제목으로, 영국에서는 소시지 이야기로 알려져 있답니다.</p>
-                <p>소원을 세 번 들어주겠다는 말에 신이 났다가, 결국 아무것도 얻지 못하는 부부의 이야기예요. 웃다 보면 어느새 고개를 끄덕이게 되는 이야기랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -349,8 +358,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -360,8 +369,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -371,22 +380,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -436,9 +446,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -449,7 +459,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -521,7 +531,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -530,34 +540,635 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Three Wishes',
+        intro: [
+            "The Three Wishes is an old tale told all over Europe. In France it is known by that name, and in England as the story of the sausage.",
+            "It is about a husband and wife who are promised three wishes and end up with nothing at all. You laugh at them, and then you find yourself nodding."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Visitor in the Wood',
+            beats: [
+                {
+                    art: '01-spirit.webp',
+                    emoji: '✨',
+                    left: [
+                        "The woodcutter and his wife lived in a one-room cottage.",
+                        "It was a roof at the edge of the wood, and hardly more than that.",
+                        "They had almost nothing.",
+                        "And still the two of them got on well.",
+                        "Every morning the woodcutter took his axe into the wood,",
+                        "and his wife stayed home and cooked the porridge."
+                    ],
+                    right: [
+                        "That day too he went deep into the wood.",
+                        "A very large oak caught his eye.",
+                        "\"That one would keep us in firewood all winter.\"",
+                        "The woodcutter swung the axe up high.",
+                        "And just as he was about to bring it down,",
+                        "a small light flashed out from behind the tree.",
+                        "The woodcutter froze with the axe in the air."
+                    ]
+                },
+                {
+                    art: '01-spirit-2.webp',
+                    emoji: '✨',
+                    left: [
+                        "Inside the light stood a very small person.",
+                        "Its hair was like leaves.",
+                        "It was the spirit of the wood.",
+                        "The spirit held out a hand and spoke.",
+                        "\"That tree is my house.\"",
+                        "\"Spare it, I beg you.\"",
+                        "The woodcutter was so startled that he put down the axe."
+                    ],
+                    right: [
+                        "\"I — I shall, then.\"",
+                        "\"There are other trees to cut.\"",
+                        "The woodcutter took a step back.",
+                        "His heart was thumping.",
+                        "He had never seen such a thing in his life.",
+                        "A green light shimmered about the spirit.",
+                        "\"I rub my eyes and it is still there.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · Three Wishes',
+            beats: [
+                {
+                    art: '02-wishes.webp',
+                    emoji: '🌟',
+                    left: [
+                        "The spirit smiled brightly.",
+                        "\"Thank you.\"",
+                        "\"In return I shall grant you three wishes.\"",
+                        "\"You have only to say what you want.\"",
+                        "The woodcutter could only blink.",
+                        "\"W-wishes, did you say?\""
+                    ],
+                    right: [
+                        "\"I did. But three, and no more.\"",
+                        "\"Think well before you spend them.\"",
+                        "The woodcutter opened his mouth to ask again.",
+                        "But the light was gone already.",
+                        "Only the sound of the wind was left in the wood.",
+                        "The leaves stirred softly."
+                    ]
+                },
+                {
+                    art: '02-wishes-2.webp',
+                    emoji: '🌟',
+                    left: [
+                        "The woodcutter stood there a long while, staring.",
+                        "And then all at once he came to himself.",
+                        "\"Three wishes! Now here is a thing!\"",
+                        "\"I must tell my wife at once.\"",
+                        "He flung the axe down.",
+                        "And then he ran for home."
+                    ],
+                    right: [
+                        "He did not feel the branches scratching his face.",
+                        "He was gasping for breath.",
+                        "He threw the cottage door open.",
+                        "\"Wife! Wife!\"",
+                        "His wife dropped her spoon in fright.",
+                        "\"Whatever is the matter?\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · At the Supper Table',
+            beats: [
+                {
+                    art: '03-table.webp',
+                    emoji: '🍲',
+                    left: [
+                        "The woodcutter told her, still panting.",
+                        "His wife heard him out and clapped her hands.",
+                        "\"Well I never! Such a thing to happen to us!\"",
+                        "\"Shall we ask for a big house?\"",
+                        "\"No — a lump of gold would be better!\"",
+                        "\"What good is a big house with no wood to heat it?\"",
+                        "\"Gold, then!\""
+                    ],
+                    right: [
+                        "\"And where would we carry gold? We should only be robbed.\"",
+                        "His wife walked up and down the room.",
+                        "The woodcutter waved a hand at her.",
+                        "\"Let us decide slowly.\"",
+                        "\"We shall think it over properly in the morning.\"",
+                        "So the two of them settled on supper first.",
+                        "Fill the stomach, and then think."
+                    ]
+                },
+                {
+                    art: '03-table-2.webp',
+                    emoji: '🍲',
+                    left: [
+                        "Two bowls of thin porridge went on the table.",
+                        "The same as every other day.",
+                        "The two of them sat down facing each other.",
+                        "The woodcutter picked up his spoon.",
+                        "The porridge was thin again today.",
+                        "And the woodcutter muttered without thinking."
+                    ],
+                    right: [
+                        "\"Ah, one string of sausage and I should want nothing more.\"",
+                        "And in that instant,",
+                        "there was a pop.",
+                        "A great sausage dropped onto the plate.",
+                        "The two of them froze with their spoons in the air.",
+                        "Steam curled up off it.",
+                        "The good smell filled the whole room."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: "Chapter 4 · The Wife's Fury",
+            beats: [
+                {
+                    art: '04-scold.webp',
+                    emoji: '😤',
+                    left: [
+                        "It was the wife who came to her senses first.",
+                        "Her face went red in a moment.",
+                        "\"Well I never!\"",
+                        "\"You spent a wish on a sausage?\"",
+                        "She sprang to her feet.",
+                        "\"With castles and gold to be had?\""
+                    ],
+                    right: [
+                        "\"A sausage? A sausage!\"",
+                        "The woodcutter went red too.",
+                        "\"It — it was a slip of the tongue.\"",
+                        "\"A slip? Whoever heard of such a slip!\"",
+                        "Her voice went higher and higher.",
+                        "The whole village might have heard it."
+                    ]
+                },
+                {
+                    art: '04-scold-2.webp',
+                    emoji: '😤',
+                    left: [
+                        "The woodcutter would not be beaten either.",
+                        "\"And what were you doing all the while!\"",
+                        "\"Sitting right there and saying nothing!\"",
+                        "His wife pointed a finger and gave it back to him.",
+                        "\"How was I to know!\"",
+                        "Their voices rang round the cottage."
+                    ],
+                    right: [
+                        "The pots rattled.",
+                        "The cat took fright and ran outside.",
+                        "And still his wife went on about the sausage.",
+                        "The woodcutter's ears were sore with it.",
+                        "His face grew harder and harder.",
+                        "There is an end to what a person can bear.",
+                        "His hands began to shake."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · Stuck to Her Nose',
+            beats: [
+                {
+                    art: '05-nose.webp',
+                    emoji: '🌭',
+                    left: [
+                        "Still she would not stop.",
+                        "\"Sausage, sausage, sausage!\"",
+                        "\"I shall talk about that sausage all my life!\"",
+                        "The woodcutter's temper went straight to the top of his head.",
+                        "And he shouted out this:",
+                        "\"That wretched sausage!\""
+                    ],
+                    right: [
+                        "\"I wish it would stick to your nose!\"",
+                        "The words were hardly out before it happened.",
+                        "The sausage sprang up into the air.",
+                        "And it stuck fast to the end of her nose.",
+                        "The room went suddenly quiet.",
+                        "Neither of them was breathing."
+                    ]
+                },
+                {
+                    art: '05-nose-2.webp',
+                    emoji: '🌭',
+                    left: [
+                        "His wife looked down her own face.",
+                        "The sausage was dangling off the end of her nose.",
+                        "\"Oh, look at the state of me!\"",
+                        "She took hold of it with both hands and pulled.",
+                        "It did not budge.",
+                        "The woodcutter came to help at once.",
+                        "The two of them strained together."
+                    ],
+                    right: [
+                        "She pulled backwards and he pulled forwards.",
+                        "A chair went over and a bowl rolled away.",
+                        "And the sausage stayed where it was.",
+                        "All it did was leave her nose red and swollen.",
+                        "And then his wife burst into tears.",
+                        "\"My nose! My nose!\"",
+                        "And the woodcutter did not know what to do."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Nothing Would Do It',
+            beats: [
+                {
+                    art: '06-try.webp',
+                    emoji: '🧈',
+                    left: [
+                        "They tried every trick they could think of.",
+                        "First they rubbed butter on it.",
+                        "They thought it might slide off if it were slippery.",
+                        "It was no use at all.",
+                        "Next they poured cold water over it.",
+                        "That was no use either."
+                    ],
+                    right: [
+                        "The woodcutter went to fetch a knife.",
+                        "\"You shall not! What if you cut my nose off!\"",
+                        "His wife shrieked at him.",
+                        "So he put the knife back.",
+                        "The two of them stared blankly at each other.",
+                        "There was nothing left to try."
+                    ]
+                },
+                {
+                    art: '06-try-2.webp',
+                    emoji: '🧈',
+                    left: [
+                        "Worn out, they sank down onto the floor.",
+                        "They were too out of breath to speak.",
+                        "His wife held her nose and sniffed.",
+                        "\"How am I ever to go out like this?\"",
+                        "\"No market, and no seeing the neighbours.\"",
+                        "The woodcutter only cleared his throat."
+                    ],
+                    right: [
+                        "It had all come out of his own mouth, after all.",
+                        "The room went quiet.",
+                        "Only the fire crackled in the grate.",
+                        "Outside, the wind swept past the window.",
+                        "Neither of them could look at the other.",
+                        "After a long while the woodcutter spoke.",
+                        "\"We have one wish left.\" His voice was very low."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Last One',
+            beats: [
+                {
+                    art: '07-last.webp',
+                    emoji: '💛',
+                    left: [
+                        "His wife raised her head, still holding her nose.",
+                        "\"So we do. One left.\"",
+                        "\"Then ask for the big house.\"",
+                        "\"Or the gold, that would do.\"",
+                        "\"My nose… I shall just live with it, I suppose.\"",
+                        "She made herself smile."
+                    ],
+                    right: [
+                        "The woodcutter looked at her face a long time.",
+                        "A face with a sausage hanging off the nose.",
+                        "She was smiling, and her eyes kept filling.",
+                        "Something rose in his throat.",
+                        "It hurt him to think of her living so all her life.",
+                        "What good was a big house then?",
+                        "\"No. That will not do.\""
+                    ]
+                },
+                {
+                    art: '07-last-2.webp',
+                    emoji: '💛',
+                    left: [
+                        "\"What use would gold be to me,\"",
+                        "\"with you living like that?\"",
+                        "His wife clapped her hands.",
+                        "One hand caught the sausage and stopped short.",
+                        "She quickly put her hands down.",
+                        "\"Are you really sure?\"",
+                        "\"And the big house?\""
+                    ],
+                    right: [
+                        "The woodcutter shook his head.",
+                        "\"We have a house already.\"",
+                        "\"And you have only the one nose.\"",
+                        "His wife's eyes brimmed over.",
+                        "The woodcutter got to his feet.",
+                        "He looked up at the sky and quietly spoke the last wish."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Thin Porridge Again',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🍽️',
+                    left: [
+                        "\"Give my wife her own nose back.\"",
+                        "And at that the sausage dropped off.",
+                        "It rolled away across the plate.",
+                        "His wife felt at her nose in a hurry.",
+                        "It was her own nose, perfectly sound.",
+                        "\"Oh! It has come back!\"",
+                        "She jumped up and down."
+                    ],
+                    right: [
+                        "She fetched a mirror and turned it this way and that.",
+                        "\"My nose is the prettiest of all!\"",
+                        "And then she stopped short.",
+                        "The wishes were all gone.",
+                        "No big house, and no gold.",
+                        "The two of them had nothing left at all.",
+                        "All three wishes had gone by."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🍽️',
+                    left: [
+                        "The house was the same and their goods were the same.",
+                        "On the table stood two bowls of thin porridge.",
+                        "The two of them sat down to it.",
+                        "And a strange thing happened.",
+                        "The table somehow looked like a feast.",
+                        "Because the sausage was still there on the plate."
+                    ],
+                    right: [
+                        "His wife cut it in half.",
+                        "\"There. Half each.\"",
+                        "And the two of them shared the sausage between them.",
+                        "Halfway through they looked up and burst out laughing.",
+                        "\"This is better than the wishes.\"",
+                        "And that evening the laughing in the cottage did not stop."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why did the woodcutter put down his axe?',
+            choices: ['The spirit lived in that tree', 'The tree was too big', 'The sun was going down'],
+            answer: 0
+        },
+        {
+            q: 'What did the spirit give the woodcutter?',
+            choices: ['A lump of gold', 'A big house', 'Three wishes'],
+            answer: 2
+        },
+        {
+            q: 'When did the woodcutter mutter without thinking?',
+            choices: ['While cutting the tree', 'While eating the thin porridge', 'While running home'],
+            answer: 1
+        },
+        {
+            q: 'What did they try in order to get the sausage off?',
+            choices: ['They rubbed butter on it', 'They cut it with a knife', 'They struck it with the axe'],
+            answer: 0
+        },
+        {
+            q: 'What did they ask for with the last wish?',
+            choices: ['Gold', 'A big house', "The wife's nose"],
+            answer: 2
+        },
+        {
+            q: 'Why did the woodcutter turn down the big house?',
+            choices: ['Robbers might come', 'They had a house already', 'There was no firewood'],
+            answer: 1
+        },
+        {
+            q: 'What did the two of them do with the sausage at the end?',
+            choices: ['They ate half each', 'They left it alone', 'They gave it to the cat'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌭',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story is told across Europe, and France and England have especially close versions of it.",
+                    "What the woodcutter and his wife were given was three wishes. They could have been anything at all.",
+                    "The first one was a string of sausage. It was not meant to be spent carefully; it simply fell out of his mouth.",
+                    "The second came out in a temper, and it stuck the sausage on her nose. Two wishes gone in anger."
+                ],
+                right: [
+                    "With the last one the woodcutter chooses neither the house nor the gold. He chooses his wife's nose.",
+                    "All three are spent and nothing is left. So why were the two of them laughing?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-spirit.webp': [
+            { word: 'woodcutter', meaning: '나무꾼', sentence: 'The woodcutter and his wife lived in a cottage.' },
+            { word: 'cottage', meaning: '오두막', sentence: 'It was a one-room cottage.' },
+            { word: 'oak', meaning: '참나무', sentence: 'A very large oak caught his eye.' },
+            { word: 'firewood', meaning: '땔감', sentence: 'That would keep us in firewood all winter.' },
+            { word: 'freeze', meaning: '굳어 버리다', sentence: 'The woodcutter froze with the axe in the air.' }
+        ],
+        '01-spirit-2.webp': [
+            { word: 'spirit', meaning: '정령', sentence: 'It was the spirit of the wood.' },
+            { word: 'spare', meaning: '살려 주다', sentence: 'Spare it, I beg you.' },
+            { word: 'startled', meaning: '깜짝 놀란', sentence: 'The woodcutter was so startled.' },
+            { word: 'thump', meaning: '쿵쿵 뛰다', sentence: 'His heart was thumping.' },
+            { word: 'shimmer', meaning: '어른거리다', sentence: 'A green light shimmered about the spirit.' }
+        ],
+        '02-wishes.webp': [
+            { word: 'grant', meaning: '들어주다', sentence: 'I shall grant you three wishes.' },
+            { word: 'in return', meaning: '보답으로', sentence: 'In return I shall grant you three wishes.' },
+            { word: 'blink', meaning: '눈을 껌뻑이다', sentence: 'The woodcutter could only blink.' },
+            { word: 'spend', meaning: '쓰다', sentence: 'Think well before you spend them.' },
+            { word: 'stir', meaning: '흔들리다', sentence: 'The leaves stirred softly.' }
+        ],
+        '02-wishes-2.webp': [
+            { word: 'come to oneself', meaning: '정신이 들다', sentence: 'All at once he came to himself.' },
+            { word: 'fling', meaning: '팽개치다', sentence: 'He flung the axe down.' },
+            { word: 'scratch', meaning: '긁다', sentence: 'The branches scratching his face.' },
+            { word: 'gasp for breath', meaning: '숨이 차다', sentence: 'He was gasping for breath.' },
+            { word: 'in fright', meaning: '놀라서', sentence: 'His wife dropped her spoon in fright.' }
+        ],
+        '03-table.webp': [
+            { word: 'pant', meaning: '헐떡이다', sentence: 'He told her, still panting.' },
+            { word: 'hear out', meaning: '끝까지 듣다', sentence: 'His wife heard him out.' },
+            { word: 'lump', meaning: '덩이', sentence: 'A lump of gold would be better.' },
+            { word: 'rob', meaning: '털다', sentence: 'We should only be robbed.' },
+            { word: 'settle on', meaning: '~하기로 정하다', sentence: 'They settled on supper first.' }
+        ],
+        '03-table-2.webp': [
+            { word: 'porridge', meaning: '죽', sentence: 'Two bowls of thin porridge.' },
+            { word: 'mutter', meaning: '중얼거리다', sentence: 'The woodcutter muttered without thinking.' },
+            { word: 'pop', meaning: '펑 하는 소리', sentence: 'There was a pop.' },
+            { word: 'curl up', meaning: '모락모락 오르다', sentence: 'Steam curled up off it.' }
+        ],
+        '04-scold.webp': [
+            { word: 'come to one’s senses', meaning: '정신을 차리다', sentence: 'The wife came to her senses first.' },
+            { word: 'spring to one’s feet', meaning: '벌떡 일어서다', sentence: 'She sprang to her feet.' },
+            { word: 'slip of the tongue', meaning: '말실수', sentence: 'It was a slip of the tongue.' },
+            { word: 'whoever heard of', meaning: '어디 그런 게 있나', sentence: 'Whoever heard of such a slip!' }
+        ],
+        '04-scold-2.webp': [
+            { word: 'be beaten', meaning: '지다', sentence: 'The woodcutter would not be beaten either.' },
+            { word: 'give it back', meaning: '되받다', sentence: 'His wife gave it back to him.' },
+            { word: 'rattle', meaning: '달그락거리다', sentence: 'The pots rattled.' },
+            { word: 'take fright', meaning: '놀라다', sentence: 'The cat took fright and ran outside.' },
+            { word: 'bear', meaning: '참다', sentence: 'There is an end to what a person can bear.' }
+        ],
+        '05-nose.webp': [
+            { word: 'temper', meaning: '화', sentence: "The woodcutter's temper went to the top of his head." },
+            { word: 'wretched', meaning: '이놈의', sentence: 'That wretched sausage!' },
+            { word: 'stick to', meaning: '들러붙다', sentence: 'I wish it would stick to your nose!' },
+            { word: 'hardly out', meaning: '끝나기가 무섭게', sentence: 'The words were hardly out before it happened.' },
+            { word: 'spring up', meaning: '폴짝 날아오르다', sentence: 'The sausage sprang up into the air.' }
+        ],
+        '05-nose-2.webp': [
+            { word: 'dangle', meaning: '대롱대롱 달리다', sentence: 'The sausage was dangling off her nose.' },
+            { word: 'budge', meaning: '꿈쩍하다', sentence: 'It did not budge.' },
+            { word: 'strain', meaning: '끙끙거리다', sentence: 'The two of them strained together.' },
+            { word: 'burst into tears', meaning: '울음을 터뜨리다', sentence: 'His wife burst into tears.' }
+        ],
+        '06-try.webp': [
+            { word: 'trick', meaning: '수', sentence: 'They tried every trick they could think of.' },
+            { word: 'slippery', meaning: '미끄러운', sentence: 'It might slide off if it were slippery.' },
+            { word: 'pour over', meaning: '끼얹다', sentence: 'They poured cold water over it.' },
+            { word: 'shriek', meaning: '소리를 지르다', sentence: 'His wife shrieked at him.' },
+            { word: 'blankly', meaning: '멀뚱히', sentence: 'They stared blankly at each other.' }
+        ],
+        '06-try-2.webp': [
+            { word: 'worn out', meaning: '기진맥진한', sentence: 'Worn out, they sank down onto the floor.' },
+            { word: 'sniff', meaning: '훌쩍이다', sentence: 'His wife held her nose and sniffed.' },
+            { word: 'clear one’s throat', meaning: '헛기침하다', sentence: 'The woodcutter only cleared his throat.' },
+            { word: 'crackle', meaning: '타닥타닥 소리 내다', sentence: 'Only the fire crackled in the grate.' },
+            { word: 'sweep past', meaning: '훑고 지나가다', sentence: 'The wind swept past the window.' }
+        ],
+        '07-last.webp': [
+            { word: 'live with', meaning: '그대로 살다', sentence: 'I shall just live with it.' },
+            { word: 'make oneself smile', meaning: '애써 웃다', sentence: 'She made herself smile.' },
+            { word: 'fill', meaning: '눈가가 젖다', sentence: 'Her eyes kept filling.' },
+            { word: 'what good is', meaning: '무슨 소용인가', sentence: 'What good was a big house then?' }
+        ],
+        '07-last-2.webp': [
+            { word: 'what use', meaning: '무슨 소용', sentence: 'What use would gold be to me.' },
+            { word: 'stop short', meaning: '멈칫하다', sentence: 'One hand caught the sausage and stopped short.' },
+            { word: 'brim over', meaning: '눈물이 핑 돌다', sentence: "His wife's eyes brimmed over." },
+            { word: 'get to one’s feet', meaning: '자리에서 일어서다', sentence: 'The woodcutter got to his feet.' }
+        ],
+        '08-ending.webp': [
+            { word: 'drop off', meaning: '툭 떨어지다', sentence: 'The sausage dropped off.' },
+            { word: 'sound', meaning: '멀쩡한', sentence: 'It was her own nose, perfectly sound.' },
+            { word: 'this way and that', meaning: '이리저리', sentence: 'She turned the mirror this way and that.' },
+            { word: 'go by', meaning: '지나가다', sentence: 'All three wishes had gone by.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'goods', meaning: '살림', sentence: 'Their goods were the same.' },
+            { word: 'feast', meaning: '푸짐한 상', sentence: 'The table somehow looked like a feast.' },
+            { word: 'in half', meaning: '반으로', sentence: 'His wife cut it in half.' },
+            { word: 'burst out laughing', meaning: '웃음이 터지다', sentence: 'They burst out laughing.' }
+        ],
+        'end.webp': [
+            { word: 'version', meaning: '판', sentence: 'France and England have close versions of it.' },
+            { word: 'fall out of one’s mouth', meaning: '무심코 나오다', sentence: 'It simply fell out of his mouth.' },
+            { word: 'in a temper', meaning: '홧김에', sentence: 'The second came out in a temper.' },
+            { word: 'choose', meaning: '고르다', sentence: "He chooses his wife's nose." }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -622,6 +1233,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -630,7 +1242,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -642,7 +1254,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -676,4 +1288,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
