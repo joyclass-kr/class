@@ -322,16 +322,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '알라딘과 요술 램프',
+    intro: [
+        '알라딘과 요술 램프는 아라비안나이트, 곧 천일야화에 실린 이야기예요. 천일야화는 아라비아와 페르시아, 인도 지방에서 오래도록 전해 오던 이야기들을 한데 모은 책이랍니다.',
+        '왕비가 천 하루 동안 밤마다 이야기를 이어 간다는 액자 구성 안에, 뱃사람 신드바드와 알리바바 같은 인물들의 모험담이 줄줄이 담겨 있어요. 알라딘 이야기는 그 가운데 가장 널리 알려진 편이지요.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🪔')}
             </div>
             <div class="story-page-right">
-                <h1>알라딘과 요술 램프</h1>
-                <p>알라딘과 요술 램프는 아라비안나이트, 곧 천일야화에 실린 이야기예요. 천일야화는 아라비아와 페르시아, 인도 지방에서 오래도록 전해 오던 이야기들을 한데 모은 책이랍니다.</p>
-                <p>왕비가 천 하루 동안 밤마다 이야기를 이어 간다는 액자 구성 안에, 뱃사람 신드바드와 알리바바 같은 인물들의 모험담이 줄줄이 담겨 있어요. 알라딘 이야기는 그 가운데 가장 널리 알려진 편이지요.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -346,8 +355,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -357,8 +366,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -368,22 +377,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -433,9 +443,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -446,7 +456,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -518,7 +528,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -527,34 +537,583 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'Aladdin and the Wonderful Lamp',
+        intro: [
+            "Aladdin and the Wonderful Lamp comes from the Arabian Nights, the great collection of tales long told across Arabia, Persia and India.",
+            "Inside the frame of a queen who keeps a story going every night for a thousand and one nights sit the adventures of Sindbad the Sailor, Ali Baba and many others. Aladdin is among the best known of them all."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Stranger',
+            beats: [
+                {
+                    art: '01-stranger.webp',
+                    emoji: '🧿',
+                    left: [
+                        "Long ago, in a certain city, there lived a boy called Aladdin. His father had died when he was small, and he lived alone with his mother.",
+                        "They were very poor.",
+                        "And still Aladdin did nothing all day but play, and his mother sighed over him every time."
+                    ],
+                    right: [
+                        "Then one day a stranger came to the house, dressed in the clothes of a far country.",
+                        "\"I am your uncle.\"",
+                        "\"I have come home after many years.\"",
+                        "Aladdin's mother tilted her head at that.",
+                        "Her husband had had no brothers."
+                    ]
+                },
+                {
+                    art: '01-stranger-2.webp',
+                    emoji: '🧿',
+                    left: [
+                        "But the man paid for everything without blinking. He brought meat and fruit by the armful, and he bought Aladdin new clothes.",
+                        "\"Tomorrow we go somewhere good.\"",
+                        "\"You could be a rich man.\"",
+                        "Aladdin was so excited he hardly slept."
+                    ],
+                    right: [
+                        "Next day the two of them went out beyond the city walls.",
+                        "They walked and walked. There were no houses and no people.",
+                        "At last they came to a bare rocky hillside, and the man stopped short.",
+                        "\"Here.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Lamp in the Cave',
+            beats: [
+                {
+                    art: '02-cave.webp',
+                    emoji: '🕳️',
+                    left: [
+                        "The man took a strange powder out of his robe and scattered it, muttering something like a spell.",
+                        "And the ground split open, and a white cloud of dust went up.",
+                        "There were steps leading down.",
+                        "\"There is an old lamp down there.\"",
+                        "\"Bring me that, and nothing else.\""
+                    ],
+                    right: [
+                        "\"Whatever else you see, do not touch it.\"",
+                        "And he put a ring on Aladdin's finger.",
+                        "\"This ring will keep you safe.\"",
+                        "Aladdin went carefully down the steps. Below it was bright enough to dazzle him.",
+                        "Jewels lay heaped up like hills, and green and yellow lights moved on the walls."
+                    ]
+                },
+                {
+                    art: '02-cave-2.webp',
+                    emoji: '🕳️',
+                    left: [
+                        "Aladdin looked about for the lamp. There it was in a corner, an old one.",
+                        "He put it inside his coat and turned back.",
+                        "On the way he dropped a few jewels into his pockets as well.",
+                        "At last he came to the bottom of the steps.",
+                        "\"Uncle, give me your hand!\""
+                    ],
+                    right: [
+                        "\"Hand up the lamp first!\"",
+                        "\"Let me up first and then I'll give it to you.\"",
+                        "And in that instant the man's face twisted.",
+                        "\"You wretched boy!\"",
+                        "He threw down his powder and the ground slammed shut.",
+                        "And Aladdin was sealed in."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Genie of the Lamp',
+            beats: [
+                {
+                    art: '03-genie.webp',
+                    emoji: '💍',
+                    left: [
+                        "It was pitch dark in the cave, and Aladdin was shut up there for two days.",
+                        "He was hungry, and he was frightened.",
+                        "Without thinking, he rubbed his hands together hard.",
+                        "And the ring on his finger began to shine, and smoke came billowing up."
+                    ],
+                    right: [
+                        "\"You called, master?\"",
+                        "It was the genie of the ring.",
+                        "\"Get me out of here!\"",
+                        "He shut his eyes, and when he opened them he was at home.",
+                        "His mother came running out barefoot.",
+                        "\"Where on earth have you been!\""
+                    ]
+                },
+                {
+                    art: '03-genie-2.webp',
+                    emoji: '🪔',
+                    left: [
+                        "But there was nothing in the house to eat.",
+                        "His mother fetched out the lamp Aladdin had brought back.",
+                        "\"We can clean this up and sell it, at least.\"",
+                        "And the moment she rubbed it with a cloth —",
+                        "Bang!",
+                        "A great cloud of smoke went up and filled the room."
+                    ],
+                    right: [
+                        "Out of the smoke came an enormous genie.",
+                        "\"Only say the word, master.\"",
+                        "His mother fell over backwards in fright, and Aladdin stepped forward.",
+                        "\"Give us something to eat.\"",
+                        "And a whole table was laid in front of them."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · He Sees the Princess',
+            beats: [
+                {
+                    art: '04-princess.webp',
+                    emoji: '👸',
+                    left: [
+                        "From that day there was plenty in Aladdin's house.",
+                        "Then one day there was a great noise in the street.",
+                        "\"The princess is passing!\"",
+                        "\"Shut your doors and go inside!\"",
+                        "Aladdin was far too curious for that, and he hid behind a wall."
+                    ],
+                    right: [
+                        "The litter came by.",
+                        "And the curtain lifted, just for a moment.",
+                        "Aladdin stood frozen to the spot.",
+                        "That night he could not sleep at all.",
+                        "\"Mother, I want to ask you something.\"",
+                        "\"Would you tell them how I feel?\""
+                    ]
+                },
+                {
+                    art: '04-princess-2.webp',
+                    emoji: '👸',
+                    left: [
+                        "Next day his mother went to the palace carrying a tray of jewels —",
+                        "the ones Aladdin had brought out of the cave.",
+                        "The sultan's eyes went round at the sight of that tray.",
+                        "\"I have never seen jewels like these.\"",
+                        "\"Bring me this young man.\""
+                    ],
+                    right: [
+                        "When Aladdin heard, he called the genie at once.",
+                        "\"I need good clothes and a horse.\"",
+                        "\"And a great many gifts.\"",
+                        "Next morning the front of the palace was crowded. A line of camels stretched away out of sight,",
+                        "and the whole city came out to watch."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · A Palace Overnight',
+            beats: [
+                {
+                    art: '05-palace.webp',
+                    emoji: '🏯',
+                    left: [
+                        "The sultan agreed to the marriage. He asked for only one thing.",
+                        "\"My daughter must have a palace to live in.\"",
+                        "\"Facing my own.\"",
+                        "Aladdin bowed his head.",
+                        "\"It shall be done.\""
+                    ],
+                    right: [
+                        "That night Aladdin rubbed the lamp.",
+                        "And in the morning the sultan opened his window to a blaze of light.",
+                        "The day before, that ground had been empty.",
+                        "Now an enormous palace stood there, with jewels set into every pillar.",
+                        "The sultan stayed at his window a long, long time."
+                    ]
+                },
+                {
+                    art: '05-palace-2.webp',
+                    emoji: '🏯',
+                    left: [
+                        "The wedding was held with great ceremony, and the whole city kept the feast.",
+                        "Aladdin and the princess lived happily together, and Aladdin worked hard for anyone in need.",
+                        "So the people were very fond of him.",
+                        "And some years went by like that."
+                    ],
+                    right: [
+                        "But the magician in his far country heard the news as well — the very man who had shut Aladdin in the cave.",
+                        "\"So the boy is alive!\"",
+                        "\"And he will have the lamp.\"",
+                        "The magician packed that same day and set out for the city."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · New Lamps for Old',
+            beats: [
+                {
+                    art: '06-swap.webp',
+                    emoji: '🛒',
+                    left: [
+                        "The magician dressed himself as a pedlar and loaded a cart with new lamps, every one of them polished bright.",
+                        "Then he walked up and down in front of the palace calling out.",
+                        "\"New lamps for old!\"",
+                        "\"Free of charge!\""
+                    ],
+                    right: [
+                        "People going past laughed out loud, and children trailed along behind him.",
+                        "\"Did you ever hear such a fool?\"",
+                        "The noise carried right into the palace. As it happened, Aladdin had gone out hunting.",
+                        "The princess looked out of the window.",
+                        "\"There was that old lamp, wasn't there.\"",
+                        "And she sent a maid to fetch it."
+                    ]
+                },
+                {
+                    art: '06-swap-2.webp',
+                    emoji: '🛒',
+                    left: [
+                        "The maid held out the old lamp. The magician took it quickly and tucked it away, handed over a new one, and turned to go.",
+                        "He went into a side street and rubbed the lamp hard.",
+                        "And the genie appeared.",
+                        "\"Move this palace. All of it.\""
+                    ],
+                    right: [
+                        "That evening Aladdin came back from hunting.",
+                        "And there was nothing in front of him. The palace had vanished without a trace, and the princess had gone with it.",
+                        "When the sultan heard, he was beside himself.",
+                        "\"Find her within three days!\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Palace Beyond the Desert',
+            beats: [
+                {
+                    art: '07-desert.webp',
+                    emoji: '🐪',
+                    left: [
+                        "Aladdin did not know which way to turn. He wandered outside the city walls all night.",
+                        "And then he remembered the ring.",
+                        "He rubbed his finger,",
+                        "and the genie of the ring appeared.",
+                        "\"Where is the palace?\""
+                    ],
+                    right: [
+                        "\"Far beyond the desert, master.\"",
+                        "\"Then send me there.\"",
+                        "He opened his eyes to sand on every side, and far off he could see the palace he knew.",
+                        "Aladdin waited until night fell.",
+                        "Then he went over the wall and found the princess's room."
+                    ]
+                },
+                {
+                    art: '07-desert-2.webp',
+                    emoji: '🐪',
+                    left: [
+                        "The princess burst into tears at the sight of him.",
+                        "\"However did you get here!\"",
+                        "\"That man has the lamp.\"",
+                        "\"He carries it inside his coat, always.\"",
+                        "Aladdin thought for a moment. Then he whispered something in her ear."
+                    ],
+                    right: [
+                        "\"Have him invited to supper with you.\"",
+                        "And the next evening the princess offered the magician a cup.",
+                        "\"I have changed my mind about you.\"",
+                        "The magician was so pleased that he drank it straight down.",
+                        "There was a sleeping draught in that cup, and over he went."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Everything Back in Its Place',
+            beats: [
+                {
+                    art: '08-return.webp',
+                    emoji: '✨',
+                    left: [
+                        "Aladdin took the lamp out of the magician's coat and rubbed it hard with a cloth.",
+                        "And the genie appeared again.",
+                        "\"It has been a long time, master.\"",
+                        "\"Put the palace back where it belongs.\"",
+                        "\"With the princess in it.\""
+                    ],
+                    right: [
+                        "Morning came, and the sultan opened his window as he always did.",
+                        "And there across from him stood the palace,",
+                        "on ground that had been bare for days.",
+                        "The sultan ran out barefoot.",
+                        "And there was his daughter at the door, smiling."
+                    ]
+                },
+                {
+                    art: '08-return-2.webp',
+                    emoji: '✨',
+                    left: [
+                        "The magician was left out in the far desert.",
+                        "And Aladdin put the lamp away at the bottom of a chest.",
+                        "\"I don't suppose I shall need it now.\"",
+                        "The princess asked him,",
+                        "\"Will you really never use it?\""
+                    ],
+                    right: [
+                        "\"Only if I truly have to.\"",
+                        "Aladdin kept the palace doors open from then on. He shared out grain and had broken houses mended.",
+                        "And people remembered his name for a long time afterwards.",
+                        "Not because of the lamp."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'How did Aladdin’s mother know the stranger was not really his uncle?',
+            choices: ['He spoke a different language', 'Her husband had had no brothers', 'He would not give his name'],
+            answer: 1
+        },
+        {
+            q: 'What did the magician tell Aladdin to bring out of the cave?',
+            choices: ['An old lamp, and nothing else', 'As many jewels as he could carry', 'A ring from the wall'],
+            answer: 0
+        },
+        {
+            q: 'Why did the magician shut Aladdin in?',
+            choices: ['Aladdin had taken jewels', 'Aladdin had broken the lamp', 'Aladdin would not hand up the lamp first'],
+            answer: 2
+        },
+        {
+            q: 'What got Aladdin out of the cave?',
+            choices: ['The lamp in his coat', 'The ring the magician had given him', 'His mother calling for him'],
+            answer: 1
+        },
+        {
+            q: 'What did the sultan ask for before the wedding?',
+            choices: ['A palace facing his own', 'A tray of jewels every day', 'A line of camels'],
+            answer: 0
+        },
+        {
+            q: 'How did the magician get the lamp back?',
+            choices: ['He stole it while Aladdin slept', 'He bought it from a maid', 'He offered new lamps for old outside the palace'],
+            answer: 2
+        },
+        {
+            q: 'How did Aladdin get the lamp back from the magician?',
+            choices: ['He took it while the magician hunted', 'The princess gave him a sleeping draught at supper', 'The genie of the ring fetched it'],
+            answer: 1
+        },
+        {
+            q: 'Why did people remember Aladdin’s name?',
+            choices: ['He shared grain and mended broken houses', 'He owned the wonderful lamp', 'He had married the princess'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🪔',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story sits in the Arabian Nights, the collection Queen Scheherazade is said to have told over a thousand and one nights.",
+                    "But Aladdin was not in that collection to begin with. A Frenchman added it about three hundred years ago while translating the book, noting that he had heard it from a man from Syria.",
+                    "The first thing Aladdin was given was not the lamp but the ring — put on his finger by the magician, to keep him safe. And it is that ring that gets him out of the cave.",
+                    "The thing the magician handed over himself is the thing that undoes his whole plan."
+                ],
+                right: [
+                    "After Aladdin first sees the princess, he asks his mother to speak for him. He cannot go himself. At that point he was still nobody.",
+                    "At the end, Aladdin puts the lamp away at the bottom of a chest. Why do you think he did that?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-stranger.webp': [
+            { word: 'sigh over', meaning: '한숨 쉬다', sentence: 'His mother sighed over him every time.' },
+            { word: 'stranger', meaning: '낯선 사람', sentence: 'One day a stranger came to the house.' },
+            { word: 'tilt one’s head', meaning: '고개를 갸웃하다', sentence: "Aladdin's mother tilted her head at that." }
+        ],
+        '01-stranger-2.webp': [
+            { word: 'without blinking', meaning: '척척, 망설임 없이', sentence: 'The man paid for everything without blinking.' },
+            { word: 'by the armful', meaning: '한 아름씩', sentence: 'He brought meat and fruit by the armful.' },
+            { word: 'bare', meaning: '메마른, 헐벗은', sentence: 'They came to a bare rocky hillside.' },
+            { word: 'stop short', meaning: '뚝 멈추다', sentence: 'The man stopped short.' }
+        ],
+        '02-cave.webp': [
+            { word: 'powder', meaning: '가루', sentence: 'He took a strange powder out of his robe.' },
+            { word: 'mutter', meaning: '중얼거리다', sentence: 'Muttering something like a spell.' },
+            { word: 'spell', meaning: '주문', sentence: 'Muttering something like a spell.' },
+            { word: 'dazzle', meaning: '눈부시게 하다', sentence: 'Below it was bright enough to dazzle him.' },
+            { word: 'heap up', meaning: '산처럼 쌓이다', sentence: 'Jewels lay heaped up like hills.' }
+        ],
+        '02-cave-2.webp': [
+            { word: 'look about', meaning: '두리번거리다', sentence: 'Aladdin looked about for the lamp.' },
+            { word: 'hand up', meaning: '위로 올려 주다', sentence: 'Hand up the lamp first!' },
+            { word: 'twist', meaning: '일그러지다', sentence: "The man's face twisted." },
+            { word: 'slam shut', meaning: '쿵 닫히다', sentence: 'The ground slammed shut.' },
+            { word: 'seal in', meaning: '가두다', sentence: 'And Aladdin was sealed in.' }
+        ],
+        '03-genie.webp': [
+            { word: 'pitch dark', meaning: '캄캄한', sentence: 'It was pitch dark in the cave.' },
+            { word: 'shut up', meaning: '갇힌', sentence: 'He was shut up there for two days.' },
+            { word: 'rub', meaning: '비비다, 문지르다', sentence: 'He rubbed his hands together hard.' },
+            { word: 'billow up', meaning: '뭉게뭉게 피어오르다', sentence: 'Smoke came billowing up.' },
+            { word: 'genie', meaning: '지니, 요정', sentence: 'It was the genie of the ring.' }
+        ],
+        '03-genie-2.webp': [
+            { word: 'fetch out', meaning: '꺼내다', sentence: 'His mother fetched out the lamp.' },
+            { word: 'fill', meaning: '가득 채우다', sentence: 'A great cloud of smoke filled the room.' },
+            { word: 'in fright', meaning: '놀라서', sentence: 'His mother fell over backwards in fright.' },
+            { word: 'lay', meaning: '차려지다', sentence: 'A whole table was laid in front of them.' }
+        ],
+        '04-princess.webp': [
+            { word: 'plenty', meaning: '넉넉함', sentence: 'From that day there was plenty in the house.' },
+            { word: 'curious', meaning: '궁금해하는', sentence: 'Aladdin was far too curious for that.' },
+            { word: 'litter', meaning: '가마', sentence: 'The litter came by.' },
+            { word: 'frozen to the spot', meaning: '그 자리에 얼어붙은', sentence: 'Aladdin stood frozen to the spot.' }
+        ],
+        '04-princess-2.webp': [
+            { word: 'tray', meaning: '쟁반', sentence: 'His mother went carrying a tray of jewels.' },
+            { word: 'sultan', meaning: '임금님', sentence: "The sultan's eyes went round." },
+            { word: 'stretch away', meaning: '끝없이 줄을 잇다', sentence: 'A line of camels stretched away out of sight.' },
+            { word: 'out of sight', meaning: '보이지 않을 만큼 멀리', sentence: 'A line of camels stretched away out of sight.' }
+        ],
+        '05-palace.webp': [
+            { word: 'agree to', meaning: '허락하다', sentence: 'The sultan agreed to the marriage.' },
+            { word: 'facing', meaning: '~ 맞은편의', sentence: 'Facing my own.' },
+            { word: 'blaze', meaning: '눈부신 빛', sentence: 'The sultan opened his window to a blaze of light.' },
+            { word: 'pillar', meaning: '기둥', sentence: 'Jewels set into every pillar.' }
+        ],
+        '05-palace-2.webp': [
+            { word: 'ceremony', meaning: '의식, 예식', sentence: 'The wedding was held with great ceremony.' },
+            { word: 'in need', meaning: '어려움에 처한', sentence: 'Aladdin worked hard for anyone in need.' },
+            { word: 'be fond of', meaning: '좋아하다', sentence: 'The people were very fond of him.' },
+            { word: 'set out for', meaning: '~으로 떠나다', sentence: 'He set out for the city.' }
+        ],
+        '06-swap.webp': [
+            { word: 'pedlar', meaning: '떠돌이 장사꾼', sentence: 'The magician dressed himself as a pedlar.' },
+            { word: 'polish', meaning: '윤을 내다', sentence: 'Every one of them polished bright.' },
+            { word: 'free of charge', meaning: '공짜로', sentence: 'New lamps for old! Free of charge!' },
+            { word: 'trail along', meaning: '졸졸 따라다니다', sentence: 'Children trailed along behind him.' },
+            { word: 'fetch', meaning: '가져오다', sentence: 'She sent a maid to fetch it.' }
+        ],
+        '06-swap-2.webp': [
+            { word: 'tuck away', meaning: '챙겨 넣다', sentence: 'He took it quickly and tucked it away.' },
+            { word: 'hand over', meaning: '건네다', sentence: 'He handed over a new one.' },
+            { word: 'without a trace', meaning: '감쪽같이', sentence: 'The palace had vanished without a trace.' },
+            { word: 'beside oneself', meaning: '노발대발하는', sentence: 'The sultan was beside himself.' }
+        ],
+        '07-desert.webp': [
+            { word: 'which way to turn', meaning: '어찌할 바', sentence: 'Aladdin did not know which way to turn.' },
+            { word: 'wander', meaning: '헤매다', sentence: 'He wandered outside the city walls all night.' },
+            { word: 'beyond', meaning: '~ 너머에', sentence: 'Far beyond the desert, master.' },
+            { word: 'go over the wall', meaning: '담을 넘다', sentence: 'He went over the wall.' }
+        ],
+        '07-desert-2.webp': [
+            { word: 'burst into tears', meaning: '울음을 터뜨리다', sentence: 'The princess burst into tears.' },
+            { word: 'whisper', meaning: '귓속말하다', sentence: 'He whispered something in her ear.' },
+            { word: 'offer', meaning: '권하다', sentence: 'The princess offered the magician a cup.' },
+            { word: 'sleeping draught', meaning: '잠이 오는 약', sentence: 'There was a sleeping draught in that cup.' }
+        ],
+        '08-return.webp': [
+            { word: 'belong', meaning: '제자리에 있다', sentence: 'Put the palace back where it belongs.' },
+            { word: 'across from', meaning: '맞은편에', sentence: 'There across from him stood the palace.' },
+            { word: 'barefoot', meaning: '맨발로', sentence: 'The sultan ran out barefoot.' }
+        ],
+        '08-return-2.webp': [
+            { word: 'chest', meaning: '궤짝', sentence: 'Aladdin put the lamp away at the bottom of a chest.' },
+            { word: 'share out', meaning: '나누어 주다', sentence: 'He shared out grain.' },
+            { word: 'mend', meaning: '고치다', sentence: 'He had broken houses mended.' },
+            { word: 'afterwards', meaning: '그 뒤로', sentence: 'People remembered his name for a long time afterwards.' }
+        ],
+        'end.webp': [
+            { word: 'collection', meaning: '이야기 묶음', sentence: 'This story sits in the Arabian Nights, the collection.' },
+            { word: 'to begin with', meaning: '원래, 처음에는', sentence: 'Aladdin was not in that collection to begin with.' },
+            { word: 'translate', meaning: '옮기다', sentence: 'A Frenchman added it while translating the book.' },
+            { word: 'undo', meaning: '무너뜨리다', sentence: 'The thing that undoes his whole plan.' },
+            { word: 'speak for', meaning: '대신 말해 주다', sentence: 'He asks his mother to speak for him.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -619,6 +1178,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -627,7 +1187,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -639,7 +1199,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -673,4 +1233,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
