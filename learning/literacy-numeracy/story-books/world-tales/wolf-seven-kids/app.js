@@ -285,17 +285,26 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '늑대와 일곱 마리 아기 염소',
+    intro: [
+        '늑대와 일곱 마리 아기 염소는 독일의 그림 형제가 1812년에 펴낸 어린이와 가정을 위한 이야기집에 실린 이야기예요.',
+        '그림 형제는 이야기를 지어낸 사람들이 아니에요. 형 야코프와 동생 빌헬름은 독일어를 연구하던 학자였는데, 1806년 무렵부터 고향 주변을 다니며 사람들이 들려주는 옛이야기를 받아 적었답니다.',
+        '이 이야기는 빨간 모자처럼 늑대가 다른 사람인 척 꾸며 다가가는 이야기예요. 속이는 방법이 하나씩 늘어나는 짜임이 이런 옛이야기의 특징이랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🐐')}
             </div>
             <div class="story-page-right">
-                <h1>늑대와 일곱 마리 아기 염소</h1>
-                <p>늑대와 일곱 마리 아기 염소는 독일의 그림 형제가 1812년에 펴낸 어린이와 가정을 위한 이야기집에 실린 이야기예요.</p>
-                <p>그림 형제는 이야기를 지어낸 사람들이 아니에요. 형 야코프와 동생 빌헬름은 독일어를 연구하던 학자였는데, 1806년 무렵부터 고향 주변을 다니며 사람들이 들려주는 옛이야기를 받아 적었답니다.</p>
-                <p>이 이야기는 빨간 모자처럼 늑대가 다른 사람인 척 꾸며 다가가는 이야기예요. 속이는 방법이 하나씩 늘어나는 짜임이 이런 옛이야기의 특징이랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -310,8 +319,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -321,8 +330,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -332,22 +341,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -396,9 +406,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위에 얹는다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -409,7 +419,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -481,7 +491,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -490,34 +500,506 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   영어권에서는 The Wolf and the Seven Young Kids 로 알려져 있다.
+   kid 가 '아기 염소'라는 뜻인 것을 단어장에서 짚어 준다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Wolf and the Seven Little Kids',
+        intro: [
+            "This tale is in the collection the Brothers Grimm published in Germany in 1812. They did not invent it — they wrote down what village people told them.",
+            "The wolf comes three times, and each time he mends the very thing that gave him away. His voice was too rough, so he swallowed chalk; his paws were too dark, so he floured them. The trickster gets better at tricking every time he fails."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Mother Goat's Warning",
+            beats: [
+                {
+                    art: '01-warning.webp',
+                    emoji: '🐐',
+                    left: [
+                        "In a cottage at the edge of the woods lived a mother goat, and she had seven little kids. The eldest was the tallest, and the youngest wore a bell round his neck.",
+                        "All seven played in the yard the whole day long.",
+                        "Then one morning the cupboard was quite empty, and their mother had to go to market."
+                    ],
+                    right: [
+                        "She called all seven of them together.",
+                        "\"Today you must stay here on your own.\"",
+                        "\"You must watch out for the wolf.\"",
+                        "\"Never open the door to anyone.\"",
+                        "Seven pairs of eyes went round.",
+                        "\"But how will we know the wolf?\""
+                    ]
+                },
+                {
+                    art: '01-warning-2.webp',
+                    emoji: '🐐',
+                    left: [
+                        "\"His voice is rough. Not soft like ours.\"",
+                        "\"And his feet are black. Ours are white.\"",
+                        "\"Watch for those two things, and you will know.\"",
+                        "\"Yes — we'll remember!\"",
+                        "All seven answered together, and the youngest gave his bell a ring as he nodded."
+                    ],
+                    right: [
+                        "Their mother hung the basket on her arm and went out. The seven hung at the window and waved and waved. When she was over the hill the house went quiet.",
+                        "The bar was fastened firmly across the door.",
+                        "And before long the seven were at their games again, the little bell ringing as they played."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The First Trick',
+            beats: [
+                {
+                    art: '02-first-try.webp',
+                    emoji: '🐺',
+                    left: [
+                        "It was not long before there was a sound at the door.",
+                        "Thump, thump.",
+                        "Someone was knocking hard.",
+                        "\"Children, Mother's home!\"",
+                        "\"Open the door for me now.\"",
+                        "The seven stopped their game and looked at one another."
+                    ],
+                    right: [
+                        "There was something rough about that voice. It was not their mother's voice at all.",
+                        "The eldest crept up close to the door.",
+                        "\"That isn't our mother's voice!\"",
+                        "\"Our mother's voice is never rough like that!\"",
+                        "\"You're not our mother!\""
+                    ]
+                },
+                {
+                    art: '02-first-try-2.webp',
+                    emoji: '🐺',
+                    left: [
+                        "Outside, the wolf stamped his feet.",
+                        "\"Clever little things.\"",
+                        "He paced about the yard for a good while. Think as he might, it was the voice that had betrayed him.",
+                        "Then he struck his knee.",
+                        "\"I shall simply mend my voice!\""
+                    ],
+                    right: [
+                        "Off he went to the village, bought a piece of chalk at the shop, and swallowed it whole.",
+                        "His throat tickled. The chalk dust caught in it and set him coughing.",
+                        "\"Ahem. A-hem.\"",
+                        "His voice came out a good deal softer. And back to the woods he went."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · White Feet, Soft Voice',
+            beats: [
+                {
+                    art: '03-disguise.webp',
+                    emoji: '🥛',
+                    left: [
+                        "\"Children, Mother's home.\"",
+                        "This time the voice was quite soft — nothing like before.",
+                        "The seven put their ears to the door.",
+                        "\"Oh — that does sound like Mother.\"",
+                        "But then the youngest put up his hand."
+                    ],
+                    right: [
+                        "\"Then show us your feet.\"",
+                        "The wolf laid his front paws on the windowsill. The fur on them was as black as coal, and all seven jumped back at once.",
+                        "\"It's the wolf! Go away!\"",
+                        "\"Our mother's feet are white as snow!\"",
+                        "They shouted so loudly that the wolf backed off once more."
+                    ]
+                },
+                {
+                    art: '03-disguise-2.webp',
+                    emoji: '🥛',
+                    left: [
+                        "This time the wolf went to the mill.",
+                        "\"Put flour on my paws.\"",
+                        "The miller hesitated.",
+                        "\"And what would that be for?\"",
+                        "\"Never mind that. Do it, and be quick.\""
+                    ],
+                    right: [
+                        "The miller was afraid, and in the end he floured the paws white. The wolf came to the cottage a third time. He called in his soft voice and laid his paws on the sill.",
+                        "This time they were as white as snow.",
+                        "\"It really is Mother!\"",
+                        "And the seven threw the door wide open."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Kid in the Clock',
+            beats: [
+                {
+                    art: '04-hiding.webp',
+                    emoji: '🕰️',
+                    left: [
+                        "In strode the wolf.",
+                        "\"The wolf! Hide!\"",
+                        "Crash! Clatter!",
+                        "In all the chasing the table went over and the plates broke.",
+                        "The eldest crawled under the desk. The second slipped into the bedclothes. The third went to the hearth, and the fourth to the kitchen cupboard."
+                    ],
+                    right: [
+                        "The fifth got behind the wardrobe, and the sixth lay flat under the washtub.",
+                        "Only the youngest was left looking about him.",
+                        "\"Where do I go, where do I go…\"",
+                        "There was nowhere left to hide.",
+                        "Then he caught sight of the tall clock on the wall."
+                    ]
+                },
+                {
+                    art: '04-hiding-2.webp',
+                    emoji: '🕰️',
+                    left: [
+                        "The youngest opened the clock case and slipped inside. The pendulum swung tick-tock right in front of his nose.",
+                        "The wolf hunted through the room and found them one by one.",
+                        "\"Hide as you like — you can't fool my eyes!\"",
+                        "And he swallowed six of them whole. Only the youngest he never found."
+                    ],
+                    right: [
+                        "He searched the whole house, but he never looked inside the clock. With a full belly he began to feel sleepy, and a great yawn came over him.",
+                        "\"That will do nicely.\"",
+                        "Out he went and flopped down under a tree, and he was snoring in no time."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · Mother Comes Home',
+            beats: [
+                {
+                    art: '05-mother-returns.webp',
+                    emoji: '😢',
+                    left: [
+                        "At dusk the mother goat came home.",
+                        "The door was standing wide open. Inside, everything was upside down — chairs knocked over, the washtub turned out.",
+                        "\"Children, where are you?\"",
+                        "No one answered. Not even the little bell."
+                    ],
+                    right: [
+                        "She went from room to room calling their names.",
+                        "The eldest, the second, the third…",
+                        "The house stayed as quiet as ever. She sank down where she stood, and the basket fell from her hand."
+                    ]
+                },
+                {
+                    art: '05-mother-returns-2.webp',
+                    emoji: '😢',
+                    left: [
+                        "And just then the clock rattled.",
+                        "\"Mother! Mother!\"",
+                        "The youngest pushed open the door of the clock and clambered out. His mother ran and caught him up in her arms.",
+                        "\"You're alive!\""
+                    ],
+                    right: [
+                        "Only then did he burst into tears.",
+                        "\"The wolf came.\"",
+                        "\"He fooled us with his voice and his feet.\"",
+                        "\"He's taken all my brothers.\"",
+                        "His mother thought for a long while. Then she opened her sewing box and took out the scissors and thread."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: "Chapter 6 · Inside the Wolf",
+            beats: [
+                {
+                    art: '06-rescue.webp',
+                    emoji: '✂️',
+                    left: [
+                        "The two of them crept outside. The wolf was still lying under the tree.",
+                        "Snore, snore.",
+                        "He slept on with his belly heaped up like a hill, rising and falling as he breathed.",
+                        "And then that belly gave a wriggle."
+                    ],
+                    right: [
+                        "\"They're still alive!\"",
+                        "Their mother took out the scissors. Her hands shook a little.",
+                        "\"Hold on tight here, my little one.\"",
+                        "Very carefully she cut the belly open. One head popped out, and then another, and another…",
+                        "Until all six were outside."
+                    ]
+                },
+                {
+                    art: '06-rescue-2.webp',
+                    emoji: '✂️',
+                    left: [
+                        "\"Mother!\"",
+                        "\"Mother!\"",
+                        "All seven clung to her at once. Not one of them was hurt.",
+                        "She held each of them close. Then she said quietly,"
+                    ],
+                    right: [
+                        "\"Children, go to the brook and bring me some stones.\"",
+                        "Off the seven of them scattered to the water's edge. They picked out good round stones and carried them back in their skirts. And all that while the wolf slept on.",
+                        "He had not the faintest idea what was happening."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Wolf at the Well',
+            beats: [
+                {
+                    art: '07-well.webp',
+                    emoji: '🪨',
+                    left: [
+                        "The eight of them filled the wolf's belly with stones. Their mother threaded her needle and stitched it up close, and the seven did not make a sound.",
+                        "She sewed so neatly that you could barely see the seam. Then all eight hid behind a tree and held their breath.",
+                        "At last the wolf stirred and woke."
+                    ],
+                    right: [
+                        "The night had gone and the sun was high.",
+                        "He began to stretch, and stopped short.",
+                        "\"Oof — why is my belly so heavy?\"",
+                        "\"And what a thirst I have.\"",
+                        "He set off toward the well, swaying with every step."
+                    ]
+                },
+                {
+                    art: '07-well-2.webp',
+                    emoji: '🪨',
+                    left: [
+                        "As he walked, something sounded inside him.",
+                        "Rattle, rattle.",
+                        "The wolf tilted his head.",
+                        "\"What are stones doing rattling in my belly?\"",
+                        "\"Whatever did I eat?\"",
+                        "He gave his belly a thump or two."
+                    ],
+                    right: [
+                        "But his thirst drove him on to the well. Just as he bent down for a drink, that heavy belly swung forward and in he went — splash.",
+                        "Behind the tree the laughter burst out. The eight of them joined hands and danced round and round. And the wolf never came back again."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What two things did Mother tell them to watch for?',
+            choices: ['The voice and the feet', 'The eyes and the ears', 'The height and the bell'],
+            answer: 0
+        },
+        {
+            q: 'What did the wolf swallow to soften his voice?',
+            choices: ['Flour', 'Milk', 'Chalk'],
+            answer: 2
+        },
+        {
+            q: 'How did the wolf make his paws white?',
+            choices: ['Chalk from the shop', 'Flour from the mill', 'Snow from the hill'],
+            answer: 1
+        },
+        {
+            q: 'Where did the youngest hide?',
+            choices: ['In the clock', 'Under the washtub', 'Behind the wardrobe'],
+            answer: 0
+        },
+        {
+            q: 'What did Mother take from her sewing box?',
+            choices: ['A needle and a bell', 'Chalk and flour', 'Scissors and thread'],
+            answer: 2
+        },
+        {
+            q: 'What did they put in the wolf’s belly?',
+            choices: ['Flour', 'Stones', 'Plates'],
+            answer: 1
+        },
+        {
+            q: 'How did the wolf fall into the well?',
+            choices: ['His heavy belly swung forward', 'The kids pushed him', 'He slipped on the stones'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐐',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "The Brothers Grimm did not make these stories up. They went from village to village and wrote down what the old people told them.",
+                    "The wolf came three times, and each time he mended whatever had given him away. His voice was rough, so he swallowed chalk. His feet were black, so he floured them.",
+                    "Every time the trickster is caught, he becomes harder to catch. The kids checked everything they had been told to check — and were fooled all the same.",
+                    "Yet in the end the wolf fell into the well. Nobody pushed him. His own heavy belly carried him over."
+                ],
+                right: [
+                    "The one who came through it was the youngest. He was small enough to fit inside the clock. In old tales the weakest one is often the one who survives.",
+                    "So what else should the seven little kids have checked?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-warning.webp': [
+            { word: 'kid', meaning: '아기 염소', sentence: 'She had seven little kids.' },
+            { word: 'cottage', meaning: '오두막', sentence: 'In a cottage at the edge of the woods lived a mother goat.' },
+            { word: 'cupboard', meaning: '찬장', sentence: 'One morning the cupboard was quite empty.' },
+            { word: 'watch out for', meaning: '조심하다', sentence: 'You must watch out for the wolf.' }
+        ],
+        '01-warning-2.webp': [
+            { word: 'rough', meaning: '걸걸한, 거친', sentence: 'His voice is rough. Not soft like ours.' },
+            { word: 'bar', meaning: '빗장', sentence: 'The bar was fastened firmly across the door.' },
+            { word: 'wave', meaning: '손을 흔들다', sentence: 'The seven hung at the window and waved.' }
+        ],
+        '02-first-try.webp': [
+            { word: 'thump', meaning: '쿵쿵 두드리다', sentence: 'Thump, thump. Someone was knocking hard.' },
+            { word: 'creep', meaning: '살금살금 가다', sentence: 'The eldest crept up close to the door.' }
+        ],
+        '02-first-try-2.webp': [
+            { word: 'stamp', meaning: '발을 구르다', sentence: 'Outside, the wolf stamped his feet.' },
+            { word: 'pace about', meaning: '서성거리다', sentence: 'He paced about the yard for a good while.' },
+            { word: 'betray', meaning: '들키게 하다', sentence: 'It was the voice that had betrayed him.' },
+            { word: 'chalk', meaning: '분필', sentence: 'He bought a piece of chalk and swallowed it whole.' },
+            { word: 'tickle', meaning: '간질간질하다', sentence: 'His throat tickled.' }
+        ],
+        '03-disguise.webp': [
+            { word: 'windowsill', meaning: '창턱', sentence: 'The wolf laid his front paws on the windowsill.' },
+            { word: 'coal', meaning: '숯, 석탄', sentence: 'The fur on them was as black as coal.' },
+            { word: 'back off', meaning: '물러나다', sentence: 'The wolf backed off once more.' }
+        ],
+        '03-disguise-2.webp': [
+            { word: 'mill', meaning: '방앗간', sentence: 'This time the wolf went to the mill.' },
+            { word: 'flour', meaning: '밀가루; 밀가루를 묻히다', sentence: 'Put flour on my paws.' },
+            { word: 'hesitate', meaning: '망설이다', sentence: 'The miller hesitated.' }
+        ],
+        '04-hiding.webp': [
+            { word: 'stride', meaning: '성큼 걸어 들어가다', sentence: 'In strode the wolf.' },
+            { word: 'clatter', meaning: '와장창 하는 소리', sentence: 'Crash! Clatter!' },
+            { word: 'hearth', meaning: '아궁이, 벽난로 바닥', sentence: 'The third went to the hearth.' },
+            { word: 'washtub', meaning: '대야', sentence: 'The sixth lay flat under the washtub.' }
+        ],
+        '04-hiding-2.webp': [
+            { word: 'pendulum', meaning: '시계추', sentence: 'The pendulum swung tick-tock in front of his nose.' },
+            { word: 'fool', meaning: '속이다', sentence: "Hide as you like — you can't fool my eyes!" },
+            { word: 'yawn', meaning: '하품', sentence: 'A great yawn came over him.' },
+            { word: 'flop down', meaning: '벌렁 눕다', sentence: 'He flopped down under a tree.' }
+        ],
+        '05-mother-returns.webp': [
+            { word: 'dusk', meaning: '해질 무렵', sentence: 'At dusk the mother goat came home.' },
+            { word: 'upside down', meaning: '엉망인', sentence: 'Inside, everything was upside down.' },
+            { word: 'sink down', meaning: '주저앉다', sentence: 'She sank down where she stood.' }
+        ],
+        '05-mother-returns-2.webp': [
+            { word: 'rattle', meaning: '덜컹거리다', sentence: 'And just then the clock rattled.' },
+            { word: 'clamber out', meaning: '기어 나오다', sentence: 'He pushed open the door of the clock and clambered out.' },
+            { word: 'burst into tears', meaning: '울음을 터뜨리다', sentence: 'Only then did he burst into tears.' },
+            { word: 'sewing box', meaning: '반짇고리', sentence: 'She opened her sewing box.' }
+        ],
+        '06-rescue.webp': [
+            { word: 'heap up', meaning: '수북이 쌓이다', sentence: 'His belly heaped up like a hill.' },
+            { word: 'wriggle', meaning: '꿈틀거리다', sentence: 'And then that belly gave a wriggle.' },
+            { word: 'pop out', meaning: '쏙 나오다', sentence: 'One head popped out, and then another.' }
+        ],
+        '06-rescue-2.webp': [
+            { word: 'cling', meaning: '매달리다', sentence: 'All seven clung to her at once.' },
+            { word: 'brook', meaning: '개울', sentence: 'Go to the brook and bring me some stones.' },
+            { word: 'scatter', meaning: '우르르 흩어지다', sentence: 'Off the seven of them scattered to the water\'s edge.' },
+            { word: 'not the faintest idea', meaning: '까맣게 모르는', sentence: 'He had not the faintest idea what was happening.' }
+        ],
+        '07-well.webp': [
+            { word: 'thread', meaning: '실을 꿰다', sentence: 'Their mother threaded her needle.' },
+            { word: 'stitch up', meaning: '꿰매다', sentence: 'She stitched it up close.' },
+            { word: 'seam', meaning: '바느질 자국', sentence: 'You could barely see the seam.' },
+            { word: 'stir', meaning: '몸을 뒤척이다', sentence: 'At last the wolf stirred and woke.' },
+            { word: 'sway', meaning: '휘청거리다', sentence: 'He set off toward the well, swaying with every step.' }
+        ],
+        '07-well-2.webp': [
+            { word: 'tilt', meaning: '갸웃하다', sentence: 'The wolf tilted his head.' },
+            { word: 'thump', meaning: '툭툭 두드리다', sentence: 'He gave his belly a thump or two.' },
+            { word: 'drive on', meaning: '몰아가다', sentence: 'But his thirst drove him on to the well.' },
+            { word: 'splash', meaning: '풍덩', sentence: 'In he went — splash.' }
+        ],
+        'end.webp': [
+            { word: 'make up', meaning: '지어내다', sentence: 'The Brothers Grimm did not make these stories up.' },
+            { word: 'give away', meaning: '들키게 하다', sentence: 'He mended whatever had given him away.' },
+            { word: 'trickster', meaning: '속이는 자', sentence: 'Every time the trickster is caught, he becomes harder to catch.' },
+            { word: 'all the same', meaning: '그런데도', sentence: 'And were fooled all the same.' },
+            { word: 'survive', meaning: '살아남다', sentence: 'The weakest one is often the one who survives.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -582,6 +1064,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -590,7 +1073,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -602,7 +1085,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -636,4 +1119,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+

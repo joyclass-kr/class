@@ -767,3 +767,151 @@ body {
     display: inline-flex;
     align-items: center;
 }
+/* 책 한 장만 있을 때는 body 가운데 정렬이 맞았다. 화면이 두 장 쌓이면
+   가운데 정렬이 둘을 겹쳐 버려 아래 화면이 문서 높이를 못 늘린다. */
+body {
+    display: block;
+    padding: 0;
+}
+
+/* ── 영어로 읽을 때만 나오는 단어장 ────────────────────────────────
+   책은 손대지 않는다. 크기도 자리도 글씨도 그대로다.
+   책 아래에 화면을 한 장 더 두고, 볼 때만 밀어 내린다. */
+.screen {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* display:flex 가 [hidden] 을 이겨 버린다. 우리말로 읽을 때는 아예 없애야 한다. */
+.screen[hidden] { display: none; }
+
+/* 아래 화면은 한 화면을 다 차지하지 않는다. 높이는 JS가 그림선에 맞춰 준다.
+   그래야 더 내려갈 데가 없어 딱 그 자리에 걸린다. */
+.screen-vocab {
+    min-height: 0;
+    align-items: flex-start;
+    padding-top: 14px;
+}
+
+.vocab-panel {
+    width: min(1300px, 96vw, calc((100dvh - 46px) * 4 / 3));
+    box-sizing: border-box;
+    padding: 20px 24px 26px;
+    background: var(--parchment);
+    border: 10px solid var(--wood);
+    border-radius: 10px;
+    box-shadow: var(--shadow), inset 0 0 0 2px rgba(255, 255, 255, 0.4);
+    color: var(--ink);
+}
+
+.vocab-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 8px 12px;
+}
+
+.vocab-list li {
+    padding: 8px 12px;
+    background: #fffaf0;
+    border: 1px solid var(--parchment-shade);
+    border-radius: 9px;
+}
+
+.vocab-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+/* 듣기 단추 — 손가락 규칙대로 44x44 아래로 내려가지 않는다 (AGENTS.md). */
+.vocab-say {
+    flex: none;
+    min-width: 44px;
+    min-height: 44px;
+    margin: -4px -4px 0 0;
+    padding: 0;
+    border: 1px solid var(--parchment-shade);
+    border-radius: 10px;
+    background: #fff;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.vocab-say:hover,
+.vocab-say:focus-visible {
+    border-color: var(--wood);
+    background: #fff4e0;
+}
+
+.vocab-say:active { transform: scale(0.94); }
+
+.vocab-word {
+    margin: 0;
+    font-weight: 700;
+    font-size: clamp(14px, 2vh, 21px);
+}
+
+.vocab-mean {
+    margin: 1px 0 0;
+    font-size: clamp(13px, 1.8vh, 19px);
+}
+
+.vocab-sent {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: clamp(12px, 1.6vh, 17px);
+    font-style: italic;
+}
+
+/* 아래에 무엇이 더 있는지 알려 주는 단추. 책이 화면에 딱 맞아
+   아래가 있는 줄 모르기 쉽다. */
+.scroll-down {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
+    z-index: 40;
+    min-width: 96px;
+    min-height: 44px;
+    padding: 6px 18px;
+    border: 1px solid rgba(215, 171, 95, 0.5);
+    border-radius: 999px;
+    background: rgba(27, 15, 16, 0.78);
+    color: var(--gold-bright);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+}
+
+.scroll-down:hover,
+.scroll-down:focus-visible {
+    border-color: var(--gold-bright);
+    background: rgba(92, 58, 34, 0.85);
+}
+
+/* 영어로 읽을 때만 글꼴을 바꾼다. 한글 명조의 알파벳은 영어 읽기용이 아니다.
+   Roboto Slab 은 슬래브 명조라 지금 결을 크게 흔들지 않는다. */
+html[lang="en"] body {
+    font-family: "Roboto Slab", "Noto Serif KR", "Apple SD Gothic Neo", Georgia, serif;
+}
+
+/* 한글 명조는 500이 보통으로 보이지만 슬래브 명조는 500이면 확 두꺼워진다.
+   글 요소마다 500이 따로 걸려 있어 body 만 내려서는 안 먹는다. */
+html[lang="en"] .spread-text p,
+html[lang="en"] .page-cover .story-page-right p,
+html[lang="en"] .page-after p,
+html[lang="en"] .vocab-sent {
+    font-weight: 400;
+}
