@@ -9,11 +9,13 @@
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
 
 > **⚠️ 다시 그려 주실 것 (2026-09-03)**
-> - `06-oven-2` — **두 번 다 옛 장면으로 나왔습니다.** 지금 파일은 그레텔이 할머니를
->   화덕에 밀어 넣고 쇠문을 닫는 그림입니다. 그 장면은 글에서 없앴습니다.
->   **할머니가 제 손으로 화덕에 머리를 들이밀었다가 연기를 뒤집어쓰고, 눈을 감싸 쥔 채
->   뒤로 나자빠지는 순간**을 그려 주세요. 그레텔은 할머니를 건드리지 않습니다.
->   화덕 문은 닫지 않습니다. 그레텔이 닫아거는 것은 **부엌문**입니다.
+> - `06-oven-2` — 지금 파일은 할머니가 화덕 **안에** 들어가 있고 그레텔이 쇠문을 닫는
+>   그림인데, 그 장면은 글에 없습니다. 고칠 곳은 두 가지뿐입니다.
+>   **①** 할머니는 화덕에 들어가지 않습니다. 아궁이 앞에 코를 박은 채 **상반신만 숙이고**
+>   있고, 얼굴에 시커먼 연기를 뒤집어쓴 참입니다.
+>   **②** 그레텔은 쇠문을 닫지 않습니다. **두 손으로 할머니 등을 콱 미는 자세**입니다.
+>   화덕 문은 열린 채 옆으로 젖혀져 있어야 합니다.
+>   미는 그레텔, 연기에 눈이 매워 어쩔 줄 모르는 할머니 — 이 둘이 한 그림에 들어가면 됩니다.
 > - `07-home` — **흰 오리를 그리지 마세요.** 오리는 다음 장(`07-home-2`)에 나옵니다.
 >   이 쪽은 "건널 다리가 어디에도 없었습니다"로 끝납니다. 폭이 넓고 다리가 없는 강가에
 >   남매만 서 있는, 막막한 그림이라야 합니다.
@@ -110,7 +112,7 @@ the river.
 | 파일명 | 장면 |
 |---|---|
 | `images/06-oven.webp` | A candy cottage kitchen with a great brick oven blazing, an old woman gesturing toward the opening while a girl hangs back with a wary look, firelight on both faces, tense but comic. 〔이 쪽에 실린 글 (11/14) — 그림에 글자는 넣지 마세요. 왼쪽: 그렇게 몇 주가 지났습니다. 할머니는 더 기다리지 못했지요. 오늘은 빵을 굽자꾸나. 커다란 화덕에 장작을 잔뜩 넣고 불을 지폈습니다. 불길이 활활 타올랐지요. 화덕 앞에 서 있기만 해도 얼굴이 뜨거웠습니다. / 오른쪽: 안이 뜨거운지 네가 들어가 보렴. 그레텔은 흠칫 놀랐습니다. 할머니의 눈이 이상하게 반짝였거든요. 무언가 이상했지요. '저기 들어가면 안 돼.'〕 |
-| `images/06-oven-2.webp` | A kitchen where an old woman kneeling at the oven mouth reels backwards in a billow of black smoke, both hands clapped over her stinging eyes, while a girl slips away toward the door, and outside a boy tumbles from an opened pen into his sister's arms, comic and warm. 〔이 쪽에 실린 글 (12/14) — 그림에 글자는 넣지 마세요. 왼쪽: 이런 답답한 아이 같으니! 이렇게 하는 거란다. 할머니가 쭈그리고 앉아 화덕에 머리를 들이밀었습니다. 그 순간 시커먼 연기가 확 뿜어져 나왔지요. 아이고, 매워라! 눈이 안 보여! 할머니는 눈을 감싸 쥐고 뒤로 나자빠졌습니다. / 오른쪽: 그레텔은 그 틈에 부엌문을 닫고 빗장을 걸었습니다. 그러고는 마당으로 달려가 우리 문을 열어젖혔지요. 오빠, 나왔어! 헨젤이 데굴데굴 굴러 나왔습니다. 다리가 굳어 잘 서지도 못했지요.〕 |
+| `images/06-oven-2.webp` | A kitchen where a girl SHOVES a stooping old woman from behind with both hands so that the old woman's face goes into the mouth of a smoking oven and a great billow of black smoke bursts over her, the old woman flailing with her eyes screwed shut. She is NOT inside the oven - only bent over in front of it, still on her feet. The iron oven door stands WIDE OPEN and swung aside; nobody is closing it. Outside, a boy tumbles from an opened pen into his sister's arms. Comic and warm, never cruel. 〔이 쪽에 실린 글 (12/14) — 그림에 글자는 넣지 마세요. 왼쪽: 이런 답답한 아이 같으니! 이렇게 하는 거란다. 할머니가 쭈그리고 앉아 화덕 쪽으로 몸을 숙였습니다. 바로 그때 그레텔이 할머니 등을 콱 밀었지요. 할머니는 아궁이에 코를 박았습니다. 그 순간 시커먼 연기가 확 뿜어져 나왔지요. 아이고, 매워라! 눈이 안 보여! / 오른쪽: 할머니가 눈을 비비는 사이 그레텔은 부엌문을 닫고 빗장을 걸었습니다. 그러고는 마당으로 달려가 우리 문을 열어젖혔지요. 오빠, 나왔어! 헨젤이 데굴데굴 굴러 나왔습니다. 다리가 굳어 잘 서지도 못했지요.〕 |
 
 ## 7장 · 집으로
 

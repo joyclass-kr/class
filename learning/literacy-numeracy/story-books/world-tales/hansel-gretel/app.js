@@ -219,12 +219,12 @@ const CHAPTERS = [
                 "left": [
                     "\"이런 답답한 아이 같으니!\"",
                     "\"이렇게 하는 거란다.\"",
-                    "할머니가 쭈그리고 앉아 화덕에 머리를 들이밀었습니다. 그 순간 시커먼 연기가 확 뿜어져 나왔지요.",
-                    "\"아이고, 매워라! 눈이 안 보여!\"",
-                    "할머니는 눈을 감싸 쥐고 뒤로 나자빠졌습니다."
+                    "할머니가 쭈그리고 앉아 화덕 쪽으로 몸을 숙였습니다. 바로 그때 그레텔이 할머니 등을 콱 밀었지요.",
+                    "할머니는 아궁이에 코를 박았습니다. 그 순간 시커먼 연기가 확 뿜어져 나왔지요.",
+                    "\"아이고, 매워라! 눈이 안 보여!\""
                 ],
                 "right": [
-                    "그레텔은 그 틈에 부엌문을 닫고 빗장을 걸었습니다.",
+                    "할머니가 눈을 비비는 사이 그레텔은 부엌문을 닫고 빗장을 걸었습니다.",
                     "그러고는 마당으로 달려가 우리 문을 열어젖혔지요.",
                     "\"오빠, 나왔어!\"",
                     "헨젤이 데굴데굴 굴러 나왔습니다. 다리가 굳어 잘 서지도 못했지요.",
@@ -285,8 +285,7 @@ const COVER = {
     title: '헨젤과 그레텔',
     intro: [
         '헨젤과 그레텔은 독일의 그림 형제가 1812년에 펴낸 이야기집에 실린 이야기예요. 그림 형제는 고향 헤센 지방을 다니며 사람들이 들려주는 옛이야기를 받아 적었는데, 이 이야기도 그렇게 모은 것 가운데 하나랍니다.',
-        '이 이야기가 만들어질 무렵 유럽에는 큰 흉년이 자주 들었어요. 먹을 것이 없어 온 마을이 굶던 시절의 두려움이 이야기 속에 그대로 담겨 있지요.',
-        '이 책은 어린이가 읽기에 알맞도록 무서운 장면을 부드럽게 다듬었어요.'
+        '이 이야기가 만들어질 무렵 유럽에는 큰 흉년이 자주 들었어요. 먹을 것이 없어 온 마을이 굶던 시절의 두려움이 이야기 속에 그대로 담겨 있지요.'
     ]
 };
 
@@ -458,7 +457,7 @@ const QUIZ = [
         "answer": 1
     },
     {
-        "q": "화덕에 머리를 들이민 것은 누구인가요?",
+        "q": "화덕 아궁이에 코를 박은 것은 누구인가요?",
         "choices": [
             "할머니",
             "헨젤",
@@ -511,8 +510,7 @@ const EN = {
         title: 'Hansel and Gretel',
         intro: [
             "This tale is in the collection the Brothers Grimm published in Germany in 1812. They travelled about their home region of Hesse writing down the old stories people told them, and this was one of them.",
-            "When the story took shape, Europe went through one bad harvest after another. The fear of a whole village with nothing to eat is right there in it.",
-            "In this book the frightening parts have been softened for younger readers."
+            "When the story took shape, Europe went through one bad harvest after another. The fear of a whole village with nothing to eat is right there in it."
         ]
     },
     chapters: [
@@ -736,12 +734,12 @@ const EN = {
                     left: [
                         "\"What a hopeless child you are!\"",
                         "\"This is how it is done.\"",
-                        "The old woman crouched down and pushed her head into the oven. And out billowed a great gust of black smoke.",
-                        "\"Ow, it stings! I cannot see a thing!\"",
-                        "She clapped her hands over her eyes and toppled over backwards."
+                        "The old woman crouched down and leaned in towards the oven. And that was the moment - Gretel gave her a hard shove in the back.",
+                        "The old woman went nose first into the oven mouth, and out billowed a great gust of black smoke.",
+                        "\"Ow, it stings! I cannot see a thing!\""
                     ],
                     right: [
-                        "Gretel took her chance. She shut the kitchen door and slid the bolt across.",
+                        "While the old woman was rubbing her eyes, Gretel shut the kitchen door and slid the bolt across.",
                         "Then she ran out to the yard and threw the cage door wide open.",
                         "\"You're out, Hansel!\"",
                         "Hansel came tumbling out. His legs had gone so stiff he could hardly stand.",

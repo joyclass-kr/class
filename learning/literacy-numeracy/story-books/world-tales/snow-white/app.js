@@ -294,8 +294,7 @@ const COVER = {
     title: '백설공주',
     intro: [
         '백설공주는 독일의 그림 형제가 1812년에 펴낸 이야기집에 실린 이야기예요. 그림 형제는 헤센 지방 사람들에게 들은 이야기를 받아 적었는데, 마을마다 조금씩 다른 이야기를 하나로 정리해 지금의 모습으로 다듬었답니다.',
-        '이야기에는 왕비가 세 번 공주를 찾아와요. 허리끈, 빗, 사과로 방법을 바꿔 가며 다가오지요. 이렇게 같은 일이 되풀이되면서 조금씩 위험해지는 구조는 옛이야기에서 자주 볼 수 있는 방식이에요.',
-        '이 책은 어린이가 읽기에 알맞도록 무서운 장면을 부드럽게 다듬었어요.'
+        '이야기에는 왕비가 세 번 공주를 찾아와요. 허리끈, 빗, 사과로 방법을 바꿔 가며 다가오지요. 이렇게 같은 일이 되풀이되면서 조금씩 위험해지는 구조는 옛이야기에서 자주 볼 수 있는 방식이에요.'
     ]
 };
 
@@ -520,8 +519,7 @@ const EN = {
         title: 'Snow White',
         intro: [
             "Snow White appears in the collection of tales the Brothers Grimm published in Germany in 1812. They wrote down what people in Hessen told them, and shaped the many local versions into the one story we know.",
-            "The queen comes to the cottage three times — with a sash, a comb, and an apple. Each visit is a little more dangerous than the last. Old tales often build like that.",
-            "In this book the frightening parts have been softened for younger readers."
+            "The queen comes to the cottage three times — with a sash, a comb, and an apple. Each visit is a little more dangerous than the last. Old tales often build like that."
         ]
     },
     chapters: [
