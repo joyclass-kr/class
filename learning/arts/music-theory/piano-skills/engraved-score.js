@@ -78,10 +78,16 @@
         let diff = mod(mod(midi, 12) - NATURAL_PC[letter], 12);
         if (diff > 6) diff -= 12;
         const accidental = accidentalForDiff(diff);
+        let octave = Math.floor(midi / 12) - 1;
+        const writtenMidi = function (candidateOctave) {
+            return 12 * (candidateOctave + 1) + NATURAL_PC[letter] + (accidental === "bb" ? -2 : accidental === "b" ? -1 : accidental === "##" ? 2 : accidental === "#" ? 1 : 0);
+        };
+        while (writtenMidi(octave) < midi) octave += 1;
+        while (writtenMidi(octave) > midi) octave -= 1;
         return {
             midi:midi,
             degree:degree,
-            key:letter.toLowerCase() + accidental + "/" + (Math.floor(midi / 12) - 1),
+            key:letter.toLowerCase() + accidental + "/" + octave,
             accidental:accidental
         };
     }

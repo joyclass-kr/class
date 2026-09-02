@@ -154,6 +154,10 @@ Object.entries(sourceScaleRootMidis).forEach(([keyId, rightRoot]) => {
     });
 });
 
+const skill6 = score.build({ mode:"voicing", skillId:6 });
+const dbSus4 = skill6.pages.flatMap((p) => p.groups || []).find((group) => group.label === "D♭7sus4");
+assert.equal(dbSus4.right.at(-1).key, "cb/5", "D♭7sus4의 flat seventh는 C♭5로 표기해야 합니다.");
+
 const cSharpMinor = score.build({ mode:"scale", keyId:"Db", scaleType:"naturalMinor", hand:"both", tempo:60 });
 assert.equal(cSharpMinor.pages[0].keyLabel, "C♯", "D♭ 장조와 짝을 이루는 단음계는 C♯로 표기해야 합니다.");
 assert.equal(cSharpMinor.pages[0].keySignature, "E");
