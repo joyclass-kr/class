@@ -139,11 +139,6 @@
   function allSkillIds() { return curriculum.strands.flatMap(function (strand) { return strand.skills; }); }
   function getStrand(id) { return curriculum.strands.find(function (strand) { return strand.skills.includes(id); }); }
   function prereqsMet(id) { return curriculum.skills[id].prereqs.every(function (prereq) { return state.completed.has(prereq); }); }
-  function recommendedId() {
-    const ids = allSkillIds();
-    return ids.find(function (id) { return !state.completed.has(id) && prereqsMet(id); }) ||
-      ids.find(function (id) { return !state.completed.has(id); }) || ids[ids.length-1];
-  }
   function playGroups(groups, options) {
     if (!window.HarmonyPiano || !groups || !groups.length) return;
     const settings = options || {};
@@ -723,14 +718,8 @@
   }
 
   function renderDashboard() {
-    const nextId = recommendedId();
-    const next = curriculum.skills[nextId];
-    const allComplete = state.completed.size >= allSkillIds().length;
-    els.progressText.textContent = allComplete ? "전체 학습 완료" :
-      (state.completed.size ? "완료한 학습 " + state.completed.size + "개 · 다음: " + next.title : "첫 학습: " + next.title);
     els.unitList.innerHTML = curriculum.strands.map(function (group) {
-      const active = group.skills.includes(state.currentId || nextId);
-      return '<details class="unit-block skill-strand" '+(active ? "open" : "")+'><summary><span class="strand-mark" aria-hidden="true">'+strandIcon(group.id)+'</span><span class="unit-summary-copy"><strong>'+escapeHtml(group.title)+'</strong><small>'+escapeHtml(group.description)+'</small></span></summary><div class="lesson-list">'+group.skills.map(skillButtonMarkup).join("")+'</div></details>';
+      return '<details class="unit-block skill-strand"><summary><span class="strand-mark" aria-hidden="true">'+strandIcon(group.id)+'</span><span class="unit-summary-copy"><strong>'+escapeHtml(group.title)+'</strong><small>'+escapeHtml(group.description)+'</small></span></summary><div class="lesson-list">'+group.skills.map(skillButtonMarkup).join("")+'</div></details>';
     }).join("");
   }
   function strandIcon(id) {
@@ -1089,7 +1078,7 @@
     els.nextButton.addEventListener("click", nextQuestion);
   }
   function init() {
-    ["dashboard","study","progressText","resetProgress","unitList","backToCourse","nextSkillNav","currentLesson","lessonUnit","lessonTitle","lessonEnglish","lessonOutcome","lessonSections","constructionLab","termList","practicePanel","roundCounter","scoreText","questionKind","questionPrompt","listenButton","questionVisual","answerChoices","feedback","nextButton","toast"].forEach(function (id) { els[id] = byId(id); });
+    ["dashboard","study","resetProgress","unitList","backToCourse","nextSkillNav","currentLesson","lessonUnit","lessonTitle","lessonEnglish","lessonOutcome","lessonSections","constructionLab","termList","practicePanel","roundCounter","scoreText","questionKind","questionPrompt","listenButton","questionVisual","answerChoices","feedback","nextButton","toast"].forEach(function (id) { els[id] = byId(id); });
     const requestedSkill = new URLSearchParams(window.location.hash.slice(1)).get("skill");
     window.history.replaceState({ harmonyView:"dashboard" }, "", dashboardUrl());
     renderDashboard();

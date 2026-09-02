@@ -69,7 +69,7 @@ test("the page loads the readability revision", () => {
   assert.ok(html.includes("harmony-foundation.css?v=20260903-1"));
   assert.ok(html.includes("harmony-course.css?v=20260903-1"));
   assert.ok(html.includes("harmony-curriculum.js?v=20260903-1"));
-  assert.ok(html.includes("harmony-course.js?v=20260903-1"));
+  assert.ok(html.includes("harmony-course.js?v=20260903-2"));
   assert.ok(html.includes("harmony-traditional-extension.js?v=20260901-7"));
 });
 
@@ -84,6 +84,12 @@ test("every progress card exposes its lesson order", () => {
   assert.ok(courseSource.includes('class="lesson-order"'));
   assert.ok(courseSource.includes("lessonNumber+'차시"));
   assert.ok(css.includes(".lesson-order"));
+});
+
+test("dashboard starts with every unit collapsed and no first-lesson promotion", () => {
+  assert.doesNotMatch(courseSource, /recommendedId|\(active \? "open"/);
+  assert.doesNotMatch(html, /progressText|진도를 불러오는 중입니다/);
+  assert.doesNotMatch(courseSource, /첫 학습:|완료한 학습 .*다음:/);
 });
 
 test("unit headers keep one icon while lesson cards avoid repeated decorative previews", () => {
