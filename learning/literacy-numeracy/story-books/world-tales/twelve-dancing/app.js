@@ -309,16 +309,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '춤추는 열두 공주',
+    intro: [
+        '춤추는 열두 공주는 독일의 그림 형제가 모아 적은 옛이야기예요. 원래 제목은 닳아 버린 무도화라는 뜻이랍니다.',
+        '밤마다 문이 잠겨 있는데도 신발이 닳아 있다는 수수께끼로 이야기가 시작돼요. 그 수수께끼를 푸는 사람이 병사라는 점이 재미있답니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '👠')}
             </div>
             <div class="story-page-right">
-                <h1>춤추는 열두 공주</h1>
-                <p>춤추는 열두 공주는 독일의 그림 형제가 모아 적은 옛이야기예요. 원래 제목은 닳아 버린 무도화라는 뜻이랍니다.</p>
-                <p>밤마다 문이 잠겨 있는데도 신발이 닳아 있다는 수수께끼로 이야기가 시작돼요. 그 수수께끼를 푸는 사람이 병사라는 점이 재미있답니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -333,8 +342,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -344,8 +353,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -355,22 +364,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -420,9 +430,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -433,7 +443,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -505,7 +515,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -514,34 +524,638 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Twelve Dancing Princesses',
+        intro: [
+            "The Twelve Dancing Princesses is one of the old tales the Brothers Grimm collected in Germany. Its original title means The Worn-Out Dancing Shoes.",
+            "It begins with a puzzle: the door is locked every night, and every morning the shoes are worn through. And the person who solves that puzzle is a soldier, which is the fun of it."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · Shoes Worn Through',
+            beats: [
+                {
+                    art: '01-shoes.webp',
+                    emoji: '👞',
+                    left: [
+                        "There were twelve beds side by side in one room.",
+                        "It was the room where the king's twelve daughters slept together.",
+                        "They were all lovely and all fond of one another.",
+                        "There were twelve vases along the window.",
+                        "At night you could hear twelve people breathing evenly.",
+                        "Anybody would have said it was a quiet night's sleep."
+                    ],
+                    right: [
+                        "At night the door was locked firmly from outside,",
+                        "and the king kept the key himself.",
+                        "And every morning something odd had happened.",
+                        "The door was still locked,",
+                        "and the windows were still shut.",
+                        "And the shoes were worn right through.",
+                        "All twelve pairs full of holes,",
+                        "with the soles as thin as paper."
+                    ]
+                },
+                {
+                    art: '01-shoes-2.webp',
+                    emoji: '👞',
+                    left: [
+                        "The king could not make any sense of it.",
+                        "He had new shoes made for them, and it was the same.",
+                        "One night, and there were holes in them again.",
+                        "\"Where do you go all night?\"",
+                        "The princesses opened their eyes wide.",
+                        "\"But we slept in our room.\""
+                    ],
+                    right: [
+                        "\"And the door was locked.\"",
+                        "the eldest answered, meekly.",
+                        "And the king could ask no further.",
+                        "And still it did not sit easily with him.",
+                        "Night by night the shoe bill went up,",
+                        "and the shoemaker was sent for every day.",
+                        "\"Twelve more pairs, is it?\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The King's Proclamation",
+            beats: [
+                {
+                    art: '02-decree.webp',
+                    emoji: '📜',
+                    left: [
+                        "At last the king put out word through the whole country.",
+                        "A herald read it out loud in the square.",
+                        "\"A reward to whoever finds out the princesses' secret.\"",
+                        "\"He shall marry one of them.\"",
+                        "There was a murmur through the crowd.",
+                        "\"But he must find it out within three days.\""
+                    ],
+                    right: [
+                        "\"And if he fails he must leave the country.\"",
+                        "It was not an easy bargain.",
+                        "And still there were plenty who came forward.",
+                        "Princes from neighbouring countries came one after another.",
+                        "\"One night should do it.\"",
+                        "They all said it with their shoulders back.",
+                        "And not one of them got through that night."
+                    ]
+                },
+                {
+                    art: '02-decree-2.webp',
+                    emoji: '📜',
+                    left: [
+                        "The first prince sat down outside the princesses' room.",
+                        "He would keep watch with the door open.",
+                        "The eldest princess brought him out a cup of wine.",
+                        "\"It is a long night. Do have this.\"",
+                        "The prince took it gratefully and drank.",
+                        "It smelled sweet.",
+                        "He did not leave a drop of it."
+                    ],
+                    right: [
+                        "And before long his eyes were closing.",
+                        "The prince slumped against his chair and slept like a log.",
+                        "When he woke the sun was high,",
+                        "and the shoes were worn through again.",
+                        "It was the same with the second prince and the third.",
+                        "Every one of them was sent away after three days."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Old Woman on the Road',
+            beats: [
+                {
+                    art: '03-cloak.webp',
+                    emoji: '🧥',
+                    left: [
+                        "About that time an old soldier came through that country.",
+                        "He had been hurt in the war and could not fight any more.",
+                        "He had nowhere to go and no money.",
+                        "Walking along the road he met an old woman with a load on her head.",
+                        "She was having a hard time of it,",
+                        "and the soldier went straight over."
+                    ],
+                    right: [
+                        "\"I shall carry that for you.\"",
+                        "And the soldier carried the old woman's load.",
+                        "The two of them walked a long way together.",
+                        "At the edge of a village the old woman stopped.",
+                        "\"Thank you. I shall tell you something for that.\" Her eyes were bright."
+                    ]
+                },
+                {
+                    art: '03-cloak-2.webp',
+                    emoji: '🧥',
+                    left: [
+                        "\"Go to the castle and find out the princesses' secret.\"",
+                        "The soldier waved a hand.",
+                        "\"How should I do what princes could not?\"",
+                        "The old woman smiled.",
+                        "\"It is not difficult.\"",
+                        "\"Do not drink the wine the princesses bring you.\""
+                    ],
+                    right: [
+                        "\"Only pretend to drink it, and pour it away.\"",
+                        "And she took something out of her bundle —",
+                        "an old grey cloak.",
+                        "\"Put this on and nobody can see you.\"",
+                        "The soldier's eyes went round.",
+                        "And when he looked up, the old woman was already gone."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Wine He Did Not Drink',
+            beats: [
+                {
+                    art: '04-wine.webp',
+                    emoji: '🍷',
+                    left: [
+                        "The soldier went to the castle.",
+                        "\"I should like to try.\"",
+                        "The court laughed at him.",
+                        "\"An old soldier, where princes have failed?\"",
+                        "And the king allowed it all the same.",
+                        "\"Try, then. Three days only.\""
+                    ],
+                    right: [
+                        "In the evening the soldier was given good clothes",
+                        "and took up his place outside the princesses' room.",
+                        "It was late in the night",
+                        "when the eldest princess came out with a cup.",
+                        "\"To help you sleep comfortably.\"",
+                        "The soldier took the cup."
+                    ]
+                },
+                {
+                    art: '04-wine-2.webp',
+                    emoji: '🍷',
+                    left: [
+                        "The soldier remembered what the old woman had said.",
+                        "He put the cup to his mouth and only pretended to drink,",
+                        "and let the wine run away quietly down inside his collar.",
+                        "\"Very good. I am beginning to feel sleepy.\"",
+                        "And the soldier lay down",
+                        "and set to snoring loudly."
+                    ],
+                    right: [
+                        "He did it very well.",
+                        "There was whispering in the room.",
+                        "\"That one is asleep too.\"",
+                        "\"You see? What could an old soldier do.\"",
+                        "The soldier watched through half-shut eyes.",
+                        "Light came out through the crack of the door."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Stair Under the Bed',
+            beats: [
+                {
+                    art: '05-trapdoor.webp',
+                    emoji: '🚪',
+                    left: [
+                        "The princesses got out of their beds",
+                        "and took fine dresses out of the wardrobe.",
+                        "Each of them put on new dancing shoes.",
+                        "Only the youngest hung back.",
+                        "\"Sister, could we not leave it tonight?\"",
+                        "\"That soldier keeps worrying me.\""
+                    ],
+                    right: [
+                        "The eldest laughed and waved a hand.",
+                        "\"Listen to him snoring. What is there to worry about?\"",
+                        "The eldest gave her own bed a tap,",
+                        "and the floor slid open.",
+                        "There was a long stair going down.",
+                        "And the princesses went down it one by one."
+                    ]
+                },
+                {
+                    art: '05-trapdoor-2.webp',
+                    emoji: '🚪',
+                    left: [
+                        "The soldier got up at once",
+                        "and put on the cloak the old woman had given him.",
+                        "And he could not see his own hands.",
+                        "The soldier crept to the stair",
+                        "and followed just behind the youngest princess.",
+                        "And he trod on the hem of her dress.",
+                        "The youngest jumped in fright.",
+                        "\"Sister, somebody pulled at my dress!\""
+                    ],
+                    right: [
+                        "The eldest looked back.",
+                        "\"There is nobody there. It caught on a nail.\"",
+                        "The youngest kept looking behind her,",
+                        "and the stair went on down.",
+                        "The soldier followed with his breath held,",
+                        "taking care not to tread on her skirt again."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Woods of Silver, Gold and Diamond',
+            beats: [
+                {
+                    art: '06-forests.webp',
+                    emoji: '🌳',
+                    left: [
+                        "At the bottom of the stair a remarkable place opened out.",
+                        "It was underground, and it was bright on every side.",
+                        "The first wood came into view,",
+                        "and every leaf on the trees was silver.",
+                        "They chimed whenever the wind moved.",
+                        "The soldier quietly broke off a branch.",
+                        "The silver leaves were cool in his hand,",
+                        "and he put it inside his coat."
+                    ],
+                    right: [
+                        "There was a crack as it broke,",
+                        "and the youngest princess stopped.",
+                        "\"Sister — did you not hear a noise just then?\"",
+                        "\"Do not talk nonsense. Come along.\"",
+                        "The eldest did not even look back.",
+                        "The silver leaves crunched under their feet."
+                    ]
+                },
+                {
+                    art: '06-forests-2.webp',
+                    emoji: '🌳',
+                    left: [
+                        "In the second wood the leaves were gold,",
+                        "and the light off them dazzled you.",
+                        "The soldier broke off a branch here too,",
+                        "and again there was a crack.",
+                        "And again the youngest princess looked behind her.",
+                        "In the third wood the leaves were diamond."
+                    ],
+                    right: [
+                        "They shone like stars.",
+                        "The soldier broke off his last branch and put it away,",
+                        "and once again there was a sound.",
+                        "\"Sister, I am certain somebody is following us!\"",
+                        "Her sisters only laughed.",
+                        "The diamond leaves glittered under their feet.",
+                        "And the youngest walked slower and slower.",
+                        "\"Whatever has made you so frightened tonight.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Ballroom Across the Lake',
+            beats: [
+                {
+                    art: '07-ball.webp',
+                    emoji: '🚣',
+                    left: [
+                        "Beyond the woods there was a great lake,",
+                        "with the water as still as a mirror.",
+                        "Twelve small boats were waiting at the water's edge,",
+                        "with a young man sitting in each of them.",
+                        "The princesses got in, one to a boat,",
+                        "and the soldier climbed quietly into the youngest one's boat.",
+                        "The young man rowing it tilted his head."
+                    ],
+                    right: [
+                        "\"Why is the boat so heavy tonight?\"",
+                        "\"Row as I may, it will not go.\"",
+                        "The youngest princess's face darkened.",
+                        "\"You see? I said something was wrong.\"",
+                        "The oars dragged heavily through the water,",
+                        "and the waves slapped against the side of the boat."
+                    ]
+                },
+                {
+                    art: '07-ball-2.webp',
+                    emoji: '🚣',
+                    left: [
+                        "On the far side of the lake was a ballroom,",
+                        "with every window blazing with light",
+                        "and music coming out of it.",
+                        "The princesses ran in, delighted,",
+                        "and danced the whole night through,",
+                        "turning and turning and turning.",
+                        "The shoes wore down and wore down.",
+                        "The soldier watched it all from a corner."
+                    ],
+                    right: [
+                        "He was thirsty, so he quietly took a cup as well.",
+                        "There were bits of shoe leather scattered on the floor.",
+                        "And still the princesses did not stop.",
+                        "It was near cockcrow before the ball ended.",
+                        "The princesses came back across in the boats,",
+                        "and their shoes already had holes in them."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Three Branches',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '💎',
+                    left: [
+                        "The soldier came up ahead of the princesses,",
+                        "took off the cloak and lay down again",
+                        "and started snoring.",
+                        "The princesses came back and saw it and were easy.",
+                        "\"You see? He knows nothing at all.\"",
+                        "And the soldier followed them the second night and the third."
+                    ],
+                    right: [
+                        "He took in every place they went.",
+                        "And on the morning of the third day",
+                        "the soldier stood in front of the king.",
+                        "\"The princesses dance underground every night.\"",
+                        "The king frowned.",
+                        "\"Out of a locked room, every night?\""
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '💎',
+                    left: [
+                        "\"Do not think of lying to me. Where is your proof?\"",
+                        "The soldier put a hand inside his coat",
+                        "and brought out three branches.",
+                        "The silver and the gold and the diamond flashed,",
+                        "and the room went into an uproar.",
+                        "\"There is a stair under the bed.\""
+                    ],
+                    right: [
+                        "And only then did the princesses hang their heads.",
+                        "There was no hiding it any more.",
+                        "The king gave the soldier the reward he had promised,",
+                        "and the soldier married the eldest princess.",
+                        "The stair underground was closed up that same day.",
+                        "And the princesses' shoes did not wear out any more."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What puzzled the king?',
+            choices: ['The princesses would not eat', 'The key kept going missing', 'The door was locked and the shoes were worn through anyway'],
+            answer: 2
+        },
+        {
+            q: 'Why did the princes all fail?',
+            choices: ['They ran away in the night', 'They drank the wine and fell asleep', 'They were sent home by the king'],
+            answer: 1
+        },
+        {
+            q: 'What did the old woman give the soldier?',
+            choices: ['A grey cloak that made him invisible', 'A key to the room', 'A cup of wine'],
+            answer: 0
+        },
+        {
+            q: 'What did the soldier do with the wine?',
+            choices: ['He drank only half of it', 'He gave it back', 'He pretended to drink and poured it away'],
+            answer: 2
+        },
+        {
+            q: 'What was under the eldest princess’s bed?',
+            choices: ['A box of shoes', 'A long stair going down', 'A hidden door to the garden'],
+            answer: 1
+        },
+        {
+            q: 'Which princess kept noticing something was wrong?',
+            choices: ['The youngest', 'The eldest', 'None of them'],
+            answer: 0
+        },
+        {
+            q: 'What proof did the soldier bring the king?',
+            choices: ['A worn-out shoe', 'One of the boats', 'Branches of silver, gold and diamond'],
+            answer: 2
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '👞',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "The door is locked, and only the shoes are worn out. That riddle is where the story starts. The Brothers Grimm collected it.",
+                    "What troubled the king was not the cost of the shoes. It was that the door was locked and the shoes were worn out anyway. What was in front of him did not add up.",
+                    "The princes who came before all fall asleep, because of the wine the eldest princess brings them. The soldier does not drink it, because the old woman told him first.",
+                    "What the soldier did was follow. And break off one branch of silver and one of gold on the way."
+                ],
+                right: [
+                    "Nobody would have believed the story if he had only told it. That is what the branches were for.",
+                    "Why did the princesses never tell anybody?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-shoes.webp': [
+            { word: 'side by side', meaning: '나란히', sentence: 'Twelve beds side by side in one room.' },
+            { word: 'fond of', meaning: '사이좋은', sentence: 'All fond of one another.' },
+            { word: 'evenly', meaning: '고르게', sentence: 'Twelve people breathing evenly.' },
+            { word: 'sole', meaning: '밑창', sentence: 'With the soles as thin as paper.' },
+            { word: 'worn through', meaning: '닳아 구멍 난', sentence: 'The shoes were worn right through.' }
+        ],
+        '01-shoes-2.webp': [
+            { word: 'make sense of', meaning: '이해하다', sentence: 'The king could not make any sense of it.' },
+            { word: 'meekly', meaning: '얌전히', sentence: 'the eldest answered, meekly.' },
+            { word: 'sit easily', meaning: '마음이 놓이다', sentence: 'It did not sit easily with him.' },
+            { word: 'shoe bill', meaning: '신발값', sentence: 'Night by night the shoe bill went up.' },
+            { word: 'send for', meaning: '불러오다', sentence: 'The shoemaker was sent for every day.' }
+        ],
+        '02-decree.webp': [
+            { word: 'put out word', meaning: '알리다', sentence: 'The king put out word through the country.' },
+            { word: 'herald', meaning: '전령', sentence: 'A herald read it out loud in the square.' },
+            { word: 'reward', meaning: '상', sentence: 'A reward to whoever finds out the secret.' },
+            { word: 'murmur', meaning: '웅성거림', sentence: 'There was a murmur through the crowd.' },
+            { word: 'bargain', meaning: '조건, 거래', sentence: 'It was not an easy bargain.' }
+        ],
+        '02-decree-2.webp': [
+            { word: 'keep watch', meaning: '밤을 지키다', sentence: 'He would keep watch with the door open.' },
+            { word: 'gratefully', meaning: '고맙게', sentence: 'The prince took it gratefully.' },
+            { word: 'slump', meaning: '기대어 늘어지다', sentence: 'The prince slumped against his chair.' },
+            { word: 'sleep like a log', meaning: '곯아떨어지다', sentence: 'And slept like a log.' },
+            { word: 'send away', meaning: '쫓아내다', sentence: 'Every one of them was sent away.' }
+        ],
+        '03-cloak.webp': [
+            { word: 'load', meaning: '짐', sentence: 'An old woman with a load on her head.' },
+            { word: 'have a hard time of it', meaning: '몹시 힘들어하다', sentence: 'She was having a hard time of it.' },
+            { word: 'carry', meaning: '들어 주다', sentence: 'The soldier carried the load.' },
+            { word: 'bright', meaning: '반짝이는', sentence: 'Her eyes were bright.' }
+        ],
+        '03-cloak-2.webp': [
+            { word: 'find out', meaning: '알아내다', sentence: 'Find out the princesses’ secret.' },
+            { word: 'pretend', meaning: '~하는 척하다', sentence: 'Only pretend to drink it.' },
+            { word: 'pour away', meaning: '몰래 버리다', sentence: 'And pour it away.' },
+            { word: 'cloak', meaning: '망토', sentence: 'An old grey cloak.' },
+            { word: 'invisible', meaning: '보이지 않는', sentence: 'Put this on and nobody can see you.' }
+        ],
+        '04-wine.webp': [
+            { word: 'court', meaning: '신하들', sentence: 'The court laughed at him.' },
+            { word: 'fail', meaning: '못 해내다', sentence: 'Where princes have failed?' },
+            { word: 'allow', meaning: '허락하다', sentence: 'And the king allowed it all the same.' },
+            { word: 'take up one’s place', meaning: '자리를 잡다', sentence: 'And took up his place outside the room.' }
+        ],
+        '04-wine-2.webp': [
+            { word: 'collar', meaning: '옷깃', sentence: 'Down inside his collar.' },
+            { word: 'set to', meaning: '~하기 시작하다', sentence: 'And set to snoring loudly.' },
+            { word: 'snore', meaning: '코를 골다', sentence: 'And set to snoring loudly.' },
+            { word: 'whispering', meaning: '소곤거림', sentence: 'There was whispering in the room.' },
+            { word: 'half-shut', meaning: '가늘게 뜬', sentence: 'The soldier watched through half-shut eyes.' }
+        ],
+        '05-trapdoor.webp': [
+            { word: 'wardrobe', meaning: '장롱', sentence: 'They took dresses out of the wardrobe.' },
+            { word: 'dancing shoes', meaning: '무도화', sentence: 'Each of them put on new dancing shoes.' },
+            { word: 'hang back', meaning: '머뭇거리다', sentence: 'Only the youngest hung back.' },
+            { word: 'tap', meaning: '툭 치다', sentence: 'The eldest gave her own bed a tap.' },
+            { word: 'slide open', meaning: '스르르 열리다', sentence: 'And the floor slid open.' }
+        ],
+        '05-trapdoor-2.webp': [
+            { word: 'creep', meaning: '살금살금 가다', sentence: 'The soldier crept to the stair.' },
+            { word: 'tread on', meaning: '밟다', sentence: 'And he trod on the hem of her dress.' },
+            { word: 'hem', meaning: '치맛자락', sentence: 'The hem of her dress.' },
+            { word: 'nail', meaning: '못', sentence: 'It caught on a nail.' },
+            { word: 'take care', meaning: '조심하다', sentence: 'Taking care not to tread on her skirt.' }
+        ],
+        '06-forests.webp': [
+            { word: 'open out', meaning: '펼쳐지다', sentence: 'A remarkable place opened out.' },
+            { word: 'underground', meaning: '땅 밑의', sentence: 'It was underground.' },
+            { word: 'chime', meaning: '짤랑거리다', sentence: 'They chimed whenever the wind moved.' },
+            { word: 'break off', meaning: '꺾다', sentence: 'The soldier broke off a branch.' },
+            { word: 'crunch', meaning: '사각거리다', sentence: 'The silver leaves crunched under their feet.' }
+        ],
+        '06-forests-2.webp': [
+            { word: 'dazzle', meaning: '눈부시게 하다', sentence: 'The light off them dazzled you.' },
+            { word: 'diamond', meaning: '다이아몬드', sentence: 'In the third wood the leaves were diamond.' },
+            { word: 'certain', meaning: '틀림없는', sentence: 'I am certain somebody is following us!' },
+            { word: 'glitter', meaning: '반짝이다', sentence: 'The diamond leaves glittered.' }
+        ],
+        '07-ball.webp': [
+            { word: 'still', meaning: '잔잔한', sentence: 'The water as still as a mirror.' },
+            { word: 'water’s edge', meaning: '물가', sentence: "Twelve boats waiting at the water's edge." },
+            { word: 'row', meaning: '노를 젓다', sentence: 'Row as I may, it will not go.' },
+            { word: 'oar', meaning: '노', sentence: 'The oars dragged heavily through the water.' },
+            { word: 'slap', meaning: '찰싹 때리다', sentence: 'The waves slapped against the boat.' }
+        ],
+        '07-ball-2.webp': [
+            { word: 'ballroom', meaning: '무도회장', sentence: 'On the far side of the lake was a ballroom.' },
+            { word: 'blazing', meaning: '환한', sentence: 'Every window blazing with light.' },
+            { word: 'the whole night through', meaning: '밤새', sentence: 'And danced the whole night through.' },
+            { word: 'wear down', meaning: '닳다', sentence: 'The shoes wore down and wore down.' },
+            { word: 'cockcrow', meaning: '닭 울 무렵', sentence: 'It was near cockcrow.' }
+        ],
+        '08-ending.webp': [
+            { word: 'ahead of', meaning: '~보다 먼저', sentence: 'The soldier came up ahead of the princesses.' },
+            { word: 'easy', meaning: '안심한', sentence: 'The princesses saw it and were easy.' },
+            { word: 'take in', meaning: '눈에 담다', sentence: 'He took in every place they went.' },
+            { word: 'frown', meaning: '눈살을 찌푸리다', sentence: 'The king frowned.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'proof', meaning: '증거', sentence: 'Where is your proof?' },
+            { word: 'flash', meaning: '반짝이다', sentence: 'The silver and the gold flashed.' },
+            { word: 'uproar', meaning: '술렁임', sentence: 'The room went into an uproar.' },
+            { word: 'hang one’s head', meaning: '고개를 숙이다', sentence: 'The princesses hung their heads.' },
+            { word: 'close up', meaning: '막아 버리다', sentence: 'The stair was closed up that same day.' }
+        ],
+        'end.webp': [
+            { word: 'riddle', meaning: '수수께끼', sentence: 'That riddle is where the story starts.' },
+            { word: 'add up', meaning: '말이 되다', sentence: 'What was in front of him did not add up.' },
+            { word: 'follow', meaning: '따라가다', sentence: 'What the soldier did was follow.' },
+            { word: 'believe', meaning: '믿다', sentence: 'Nobody would have believed the story.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -606,6 +1220,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -614,7 +1229,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -626,7 +1241,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -660,4 +1275,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
