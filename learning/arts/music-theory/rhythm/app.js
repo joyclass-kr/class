@@ -251,11 +251,16 @@
         state.question = { hits: hits, tempo: tempo, steps: stage.steps, beats: stage.beats, division: stage.division, compound: !!stage.compound };
         elements.activityTitle.textContent = stage.id === 9 ? "한 마디 리듬 받아쓰기" : "들은 리듬의 칸을 찾아요";
 
+        const instruction = document.createElement("p");
+        instruction.className = "activity-instruction";
+        instruction.textContent = "리듬을 듣고 소리가 시작된 칸을 모두 선택하세요.";
+
         const tempoRow = document.createElement("label");
         tempoRow.className = "tempo-row";
         tempoRow.innerHTML = '<span>빠르기</span><input type="range" min="60" max="112" value="' + tempo + '" step="4"><output>' + tempo + ' BPM</output>';
         const slider = tempoRow.querySelector("input");
         const output = tempoRow.querySelector("output");
+        slider.setAttribute("aria-label", "리듬 빠르기");
         slider.addEventListener("input", function () { state.question.tempo = Number(slider.value); output.textContent = slider.value + " BPM"; });
 
         const actions = document.createElement("div");
@@ -271,24 +276,43 @@
         actions.append(listen, clear);
 
         const grid = document.createElement("div");
-        grid.className = "rhythm-grid";
-        grid.style.gridTemplateColumns = "repeat(" + stage.steps + ", minmax(44px, 1fr))";
-        grid.style.overflowX = "auto";
-        grid.style.padding = "4px 3px 9px";
-        for (let index = 0; index < stage.steps; index += 1) {
-            const button = document.createElement("button");
-            button.type = "button";
-            button.className = "rhythm-step";
-            button.textContent = index + 1;
-            button.setAttribute("aria-label", (index + 1) + "번째 칸");
-            if (index % stage.division === 0) button.style.borderLeft = "3px solid var(--accent)";
-            button.addEventListener("click", function () {
-                if (state.answered) return;
-                if (state.selectedSteps.has(index)) state.selectedSteps.delete(index); else state.selectedSteps.add(index);
-                button.classList.toggle("selected", state.selectedSteps.has(index));
-                audio.hit(undefined, index % stage.division === 0);
-            });
-            grid.appendChild(button);
+        grid.className = "rhythm-grid division-" + stage.division;
+        grid.style.setProperty("--beat-columns", stage.division === 4 ? "2" : String(Math.min(stage.beats, 4)));
+        for (let beat = 0; beat < stage.beats; beat += 1) {
+            const group = document.createElement("div");
+            group.className = "beat-group";
+            group.setAttribute("role", "group");
+            group.setAttribute("aria-label", (beat + 1) + "박");
+
+            const label = document.createElement("span");
+            label.className = "beat-label";
+            label.textContent = (beat + 1) + "박";
+
+            const steps = document.createElement("div");
+            steps.className = "beat-steps";
+            steps.style.gridTemplateColumns = "repeat(" + stage.division + ", minmax(44px, 1fr))";
+
+            for (let subdivision = 0; subdivision < stage.division; subdivision += 1) {
+                const index = beat * stage.division + subdivision;
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "rhythm-step";
+                button.textContent = index + 1;
+                button.setAttribute("aria-label", (beat + 1) + "박의 " + (subdivision + 1) + "번째 칸");
+                button.setAttribute("aria-pressed", "false");
+                button.addEventListener("click", function () {
+                    if (state.answered) return;
+                    if (state.selectedSteps.has(index)) state.selectedSteps.delete(index); else state.selectedSteps.add(index);
+                    const selected = state.selectedSteps.has(index);
+                    button.classList.toggle("selected", selected);
+                    button.setAttribute("aria-pressed", String(selected));
+                    audio.hit(undefined, subdivision === 0);
+                });
+                steps.appendChild(button);
+            }
+
+            group.append(label, steps);
+            grid.appendChild(group);
         }
 
         const check = document.createElement("button");
@@ -300,10 +324,13 @@
         clear.addEventListener("click", function () {
             if (state.answered) return;
             state.selectedSteps.clear();
-            grid.querySelectorAll("button").forEach(function (button) { button.classList.remove("selected"); });
+            grid.querySelectorAll("button").forEach(function (button) {
+                button.classList.remove("selected");
+                button.setAttribute("aria-pressed", "false");
+            });
         });
         check.addEventListener("click", function () { checkDictation(grid, check); });
-        elements.activityArea.append(tempoRow, actions, grid, check);
+        elements.activityArea.append(instruction, tempoRow, actions, grid, check);
     }
 
     function playDictation(grid) {

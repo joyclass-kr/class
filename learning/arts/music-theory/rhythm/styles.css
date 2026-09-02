@@ -59,6 +59,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset:
 .concept-card h3, .practice-card h3 { margin: 0; font-size: 20px; }
 .concept-card > p:not(.card-label) { color: #eadbd7; line-height: 1.65; }
 .lesson-points { margin: 18px 0 0; padding-left: 20px; color: var(--muted); line-height: 1.7; }
+.concept-card h3, .concept-card > p, .lesson-points, .activity-instruction { word-break: keep-all; overflow-wrap: break-word; }
 .lesson-points li::marker { color: var(--accent-2); }
 .practice-topline { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .practice-topline > strong { color: var(--accent); font-variant-numeric: tabular-nums; }
@@ -79,15 +80,19 @@ button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset:
 .pulse-dots i { display: grid; place-items: center; height: 38px; border: 1px solid var(--line); border-radius: 11px; color: var(--muted); font-style: normal; }
 .pulse-dots i.active { color: #32191b; background: var(--accent-2); }
 .rhythm-count { display: grid; gap: 5px; margin-bottom: 7px; color: var(--muted); font-size: 11px; font-weight: 900; text-align: center; }
-.rhythm-grid { display: grid; gap: 7px; }
-.rhythm-step { min-width: 0; min-height: 52px; border: 1px solid var(--line); border-radius: 11px; color: var(--muted); background: #1c1416; font-weight: 900; cursor: pointer; }
-.rhythm-step:nth-child(4n + 1) { border-left: 3px solid var(--accent); }
+.activity-instruction { margin: 0 0 10px; color: #f2e5e1; font-size: 15px; line-height: 1.5; }
+.rhythm-grid { display: grid; grid-template-columns: repeat(var(--beat-columns,2),minmax(0,1fr)); gap: 9px; margin-bottom: 12px; }
+.beat-group { min-width: 0; padding: 8px; border: 1px solid var(--line); border-radius: 14px; background: #1c1416; }
+.beat-label { display: block; margin-bottom: 7px; color: var(--accent); font-size: 12px; font-weight: 900; }
+.beat-steps { display: grid; gap: 6px; }
+.rhythm-step { min-width: 44px; min-height: 48px; border: 1px solid #755a62; border-radius: 10px; color: var(--ink); background: #2e2024; font-size: 15px; font-weight: 900; cursor: pointer; }
 .rhythm-step.selected { border-color: var(--accent-2); color: #32191b; background: var(--accent-2); }
 .rhythm-step.current { outline: 3px solid #fff; outline-offset: 2px; }
 .rhythm-step.correct { border-color: var(--success); background: rgba(124,221,163,.18); color: var(--success); }
 .rhythm-step.missed { border-color: var(--danger); background: rgba(255,135,135,.15); color: var(--danger); }
-.tempo-row { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; color: var(--muted); font-size: 12px; }
+.tempo-row { display: flex; align-items: center; gap: 12px; margin: 0 0 12px; color: var(--muted); font-size: 13px; }
 .tempo-row input { flex: 1; min-height: 44px; accent-color: var(--accent); }
+.tempo-row output { min-width: 58px; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
 .feedback { min-height: 22px; margin: 12px 0 0; color: var(--muted); font-size: 13px; }
 .feedback.correct { color: var(--success); }
 .feedback.wrong { color: var(--danger); }
@@ -122,24 +127,12 @@ button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset:
     .concept-card, .practice-card { padding: 18px; }
     .answer-choices { grid-template-columns: 1fr; }
     .reference-grid { grid-template-columns: repeat(2,1fr); }
-    .rhythm-grid { gap: 4px; }
-    .rhythm-step { min-height: 48px; font-size: 11px; }
+    .rhythm-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 7px; }
+    .rhythm-grid.division-4 { grid-template-columns: 1fr; }
+    .beat-steps { gap: 5px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; } }
 
-
-.drum-console { margin-top: 18px; padding: 12px; border: 1px solid #596067; border-radius: 4px; background: linear-gradient(145deg,#2d3132,#17191a 62%,#0d0f10); box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 8px 18px rgba(0,0,0,.38); font-family: "Courier New", monospace; }
-.drum-console-topline, .drum-screen, .drum-transport { display: flex; align-items: center; justify-content: space-between; }
-.drum-console-topline { padding: 2px 2px 9px; color: #a9b0ae; font-size: 9px; letter-spacing: .15em; }
-.drum-console-topline strong { color: #f0a16f; font-size: 15px; font-weight: 500; letter-spacing: .08em; }
-.drum-screen { min-height: 28px; padding: 6px 9px; border: 1px solid #8d624f; color: #db8d65; background: #1b100c; font-size: 9px; letter-spacing: .08em; box-shadow: inset 0 0 12px rgba(255,111,55,.08); }
-.drum-screen b { color: #c9a391; font-weight: 500; }
-.drum-pads { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin: 10px 0; }
-.drum-pads span { min-height: 42px; display: grid; place-items: center; border: 1px solid #858783; border-radius: 5px; color: #f3f0e9; background: linear-gradient(150deg,#8b8b85 0%,#62635f 48%,#3f403e 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.45), inset 0 -3px 0 rgba(0,0,0,.28), 0 2px 2px rgba(0,0,0,.45); font-size: 9px; font-weight: 700; letter-spacing: .04em; }
-.drum-pads span:nth-child(3n) { background: linear-gradient(150deg,#9a958a,#625d56 55%,#3e3b38); }
-.drum-transport { gap: 7px; }
-.drum-transport span { flex: 1; min-height: 28px; display: grid; place-items: center; border: 1px solid #687075; color: #d7dad6; background: #202426; font-size: 9px; font-weight: 700; box-shadow: inset 0 1px 0 rgba(255,255,255,.08); }
-@media (max-width: 600px) { .drum-pads span { min-height: 38px; font-size: 8px; } .drum-screen b { display: none; } }
 
 .course-heading > p, .course-heading > span, .card-label, .brand small, .lesson-heading p:not(.eyebrow), .practice-topline > div, .piano-heading p:last-child { display: none !important; }
 .course-heading { padding: 20px; }
@@ -167,4 +160,12 @@ button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset:
 .back-link { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: rgba(23,16,17,.94); color: var(--ink); font-size: 22px; box-shadow: 0 4px 14px rgba(0,0,0,.3); pointer-events: auto; }
 .quiet-button { position: fixed; right: 16px; bottom: 16px; min-height: 44px; padding: 0 14px; border: 1px solid var(--line); border-radius: 12px; background: rgba(23,16,17,.94); color: var(--muted); box-shadow: 0 4px 14px rgba(0,0,0,.3); pointer-events: auto; }
 .course-shell { width: min(980px,calc(100% - 112px)); margin-top: 10px; }
-@media (max-width: 420px) { .topbar { top: auto; bottom: 16px; right: auto; } .course-shell { width: min(100% - 24px,760px); } }
+@media (max-width: 900px) { .course-shell { width: min(100% - 24px,760px); } }
+@media (max-width: 420px) { .topbar { top: auto; bottom: 16px; right: auto; } .course-shell { width: min(100% - 24px,760px); } .rhythm-grid.division-3 { grid-template-columns: 1fr; } }
+
+/* Keep the exercise name visible and make the learning action the visual focus. */
+.practice-topline { align-items: flex-start; justify-content: space-between; }
+.practice-topline > div { display: block !important; }
+.practice-topline .card-label, .rhythm-reference .card-label { display: block !important; }
+.practice-topline > strong { padding: 5px 9px; border-radius: 999px; background: rgba(255,140,104,.1); }
+.activity-area { margin-top: 18px; }
