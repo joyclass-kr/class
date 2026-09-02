@@ -573,7 +573,7 @@
   function startPractice() {
     const pool = getPracticePool();
     const count = getPracticeCount(pool.length);
-    sessionQuestions = shuffle(pool).slice(0, count);
+    sessionQuestions = shuffle(pool).slice(0, count).map(shuffleQuestionOptions);
     sessionAnswers = [];
     questionIndex = 0;
     openPracticeDialog();
@@ -734,6 +734,17 @@
     return array;
   }
 
+  function shuffleQuestionOptions(question) {
+    const shuffledOptions = shuffle(question.options.map((text, index) => ({
+      text,
+      correct: index === question.answer
+    })));
+    return {
+      ...question,
+      options: shuffledOptions.map((option) => option.text),
+      answer: shuffledOptions.findIndex((option) => option.correct)
+    };
+  }
   function readProgress() {
     try {
       const parsed = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "{}");

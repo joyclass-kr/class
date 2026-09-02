@@ -65,6 +65,8 @@ assert.match(app, /localStorage\.setItem\(PROGRESS_KEY/);
 assert.match(app, /function getPracticeCount/);
 assert.match(app, /selected === "all" \? poolLength/);
 assert.match(app, /shuffle\(pool\)\.slice\(0, count\)/);
+assert.match(app, /\.map\(shuffleQuestionOptions\)/, "Answer options must be shuffled for every new practice set.");
+assert.match(app, /answer: shuffledOptions\.findIndex/, "Shuffling options must preserve the correct answer index.");
 assert.match(app, /lastTotal = total/);
 
 const sandbox = { window: {} };
@@ -98,13 +100,13 @@ for (const [themeKey, theme] of Object.entries(dataset.themes)) {
 for (const requiredTitle of ["수계와 양수리 두물머리", "대관령: 고개·기후·교통의 연결", "간척지는 어떻게 만들어지는가", "관동·관서·관북·해서", "금강·섬진강과 도 경계"]) {
   assert.ok(Object.values(dataset.themes).flatMap((theme) => theme.principles).some((principle) => principle.title === requiredTitle), `${requiredTitle} must be taught.`);
 }
-assert.ok(dataset.questions.length >= 30, "At least 30 reviewed questions are required for varied selectable practice sets.");
+assert.equal(dataset.questions.length, 50, "The reviewed practice bank must contain exactly 50 questions.");
 
 for (const topic of Object.keys(dataset.themes)) {
   const topicQuestions = dataset.questions.filter((question) => question.topic === topic);
-  assert.ok(topicQuestions.length >= 5, `${topic} needs at least five questions.`);
-  assert.ok(topicQuestions.some((question) => question.difficulty === "basic"), `${topic} needs a basic question.`);
-  assert.ok(topicQuestions.some((question) => question.difficulty === "advanced"), `${topic} needs an advanced question.`);
+  assert.equal(topicQuestions.length, 10, `${topic} needs exactly ten questions.`);
+  assert.equal(topicQuestions.filter((question) => question.difficulty === "basic").length, 5, `${topic} needs five basic questions.`);
+  assert.equal(topicQuestions.filter((question) => question.difficulty === "advanced").length, 5, `${topic} needs five advanced questions.`);
 }
 
 for (const question of dataset.questions) {
