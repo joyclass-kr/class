@@ -61,7 +61,8 @@ his one right leg and a wooden crutch under his left arm. This missing leg is
 not a mark of evil, it is a plain fact of the story - the boy has been warned
 all his life about "the one-legged sailor", so it must be plainly visible in
 every picture he appears in. Broad sun-browned intelligent face, almost always
-smiling, a green parrot on his shoulder.
+smiling, a GREEN parrot with a little orange on the face on his shoulder -
+green, never red, never a scarlet macaw.
 Squire Trelawney: a large loud red-faced gentleman in a fine coat.
 Captain Smollett: a compact stern officer in a plain blue naval coat, sharp
 eyes, never smiling.
