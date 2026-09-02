@@ -5,7 +5,7 @@ const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const groups = [...html.matchAll(/<details class="worksheet-group" data-access-group="([^"]+)">[\s\S]*?<\/details>/g)];
 const groupByName = new Map(groups.map((match) => [match[1], match[0]]));
 
-for (const groupName of ['idiomatic-language', 'story-books', 'information-computing', 'korea-maps', 'space-observation', 'music-theory']) {
+for (const groupName of ['idiomatic-language', 'story-books', 'information-computing', 'korea-maps', 'world-maps', 'space-observation', 'music-theory']) {
   assert.ok(groupByName.has(groupName), `Missing disclosure menu: ${groupName}`);
 }
 
@@ -28,6 +28,13 @@ for (const [href, label, englishLabel] of [
 ]) {
   assert.match(koreaMaps, new RegExp(`href="${href}"[^>]*data-access-parent="korea-maps"[\\s\\S]*?<strong>${label}<\\/strong><small>\\(${englishLabel}\\)<\\/small>`));
 }
+
+const worldMaps = groupByName.get('world-maps') || '';
+assert.ok(worldMaps, 'The world-map tools must be grouped in one disclosure menu.');
+assert.match(worldMaps, /<strong>세계 지도<\/strong><small>\(World Maps\)<\/small>/);
+assert.match(worldMaps, /data-content-paths="learning\/inquiry\/world-geography\/\|\/learn\/world-voyage\/"/);
+assert.match(worldMaps, /href="learning\/inquiry\/world-geography\/"[^>]*data-access-parent="world-maps"[\s\S]*?<strong>지리<\/strong><small>\(Geography\)<\/small>/);
+assert.match(worldMaps, /id="cds95GameLink"[\s\S]*?href="\/learn\/world-voyage\/"[\s\S]*?data-player-handoff="query"[\s\S]*?data-access-parent="world-maps"[\s\S]*?<strong>대항해시대<\/strong>/);
 
 const idiomaticLanguage = groupByName.get('idiomatic-language') || '';
 assert.ok(idiomaticLanguage, 'Idiomatic language tools must be grouped in one disclosure menu.');
