@@ -305,16 +305,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '브레멘 음악대',
+    intro: [
+        '브레멘 음악대는 독일의 그림 형제가 모아 적은 옛이야기예요. 브레멘은 독일 북쪽에 실제로 있는 도시랍니다.',
+        '나이가 들어 쫓겨날 처지가 된 짐승 넷이 길에서 만나 함께 길을 떠나요. 재미있게도 이 넷은 끝내 브레멘에 닿지 못한답니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🎺')}
             </div>
             <div class="story-page-right">
-                <h1>브레멘 음악대</h1>
-                <p>브레멘 음악대는 독일의 그림 형제가 모아 적은 옛이야기예요. 브레멘은 독일 북쪽에 실제로 있는 도시랍니다.</p>
-                <p>나이가 들어 쫓겨날 처지가 된 짐승 넷이 길에서 만나 함께 길을 떠나요. 재미있게도 이 넷은 끝내 브레멘에 닿지 못한답니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -329,8 +338,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -340,8 +349,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -351,22 +360,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -416,9 +426,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -429,7 +439,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -501,7 +511,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -510,34 +520,599 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Bremen Town Musicians',
+        intro: [
+            "The Bremen Town Musicians is an old tale the Brothers Grimm collected in Germany. Bremen is a real city in the north of the country.",
+            "Four animals, all old enough to be turned out, meet on the road and set off together. The funny thing is that the four of them never reach Bremen at all."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Old Donkey',
+            beats: [
+                {
+                    art: '01-donkey.webp',
+                    emoji: '🫏',
+                    left: [
+                        "The donkey went out at dawn and did not come back until evening. He had carried loads for the mill for a very long time, and never missed a day.",
+                        "With sacks of grain on his back he went between the mill and the market,",
+                        "in snow and in rain alike.",
+                        "And his master had thought a great deal of him for it."
+                    ],
+                    right: [
+                        "But the years went by and the donkey grew old. His legs shook and his back ached,",
+                        "and he could not carry what he used to.",
+                        "One sack now meant stopping to rest several times over,",
+                        "and his master's face grew harder and harder.",
+                        "One day, resting in the barn, he heard a voice outside the door."
+                    ]
+                },
+                {
+                    art: '01-donkey-2.webp',
+                    emoji: '🫏',
+                    left: [
+                        "\"He's no use to us now. Eating and nothing else.\"",
+                        "The donkey's ears went up, and something went cold in his chest.",
+                        "He could not sleep that night. If he stayed, something bad was going to happen.",
+                        "He turned it over all night and made up his mind.",
+                        "And before dawn he slipped quietly away."
+                    ],
+                    right: [
+                        "It was a bright moonlit night.",
+                        "He went out onto the high road without looking back.",
+                        "\"I shall go to Bremen. I can be a musician there.\"",
+                        "It was a big city, three days' walk away.",
+                        "The donkey cleared his throat and tried it out.",
+                        "\"Hee-haw!\" It was a fine loud sound, and it rang all through the wood."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Dog on the Road',
+            beats: [
+                {
+                    art: '02-dog.webp',
+                    emoji: '🐕',
+                    left: [
+                        "He had walked a long way when he saw something lying at the roadside.",
+                        "Close up, it was an old hunting dog.",
+                        "He was panting, and could barely lift his head. His coat had come out in patches and his sides were hollow.",
+                        "\"And what are you doing there?\""
+                    ],
+                    right: [
+                        "\"Don't ask. My master turned me out because I can't hunt any more.\"",
+                        "\"I haven't eaten since yesterday. So here I am, lying in the road.\"",
+                        "The donkey looked down at him for a long while.",
+                        "It did not feel like somebody else's trouble.",
+                        "It had been his own, only yesterday."
+                    ]
+                },
+                {
+                    art: '02-dog-2.webp',
+                    emoji: '🐕',
+                    left: [
+                        "The donkey tapped the ground with a front hoof.",
+                        "\"Well then, this is lucky. Come to Bremen with me and be a musician.\"",
+                        "\"Me? All I can do is bark.\"",
+                        "\"And what is that but singing? What a voice you have on you.\"",
+                        "The dog looked up at him, quite puzzled."
+                    ],
+                    right: [
+                        "And then he grinned.",
+                        "He pushed himself up slowly on his front legs.",
+                        "His legs shook, but he stood.",
+                        "\"Woof, woof! Like that?\"",
+                        "\"Very good indeed. You shall have the drum.\"",
+                        "And the dog's tail went to and fro."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Cat and the Cockerel',
+            beats: [
+                {
+                    art: '03-four.webp',
+                    emoji: '🐈',
+                    left: [
+                        "The two of them walked along together, and before long it was midday.",
+                        "There was a cat sitting on a stone wall by the road, with a face like thunder.",
+                        "He looked as though he had not eaten in three days,",
+                        "and his whiskers had come out in patches.",
+                        "\"And what is the matter with you?\""
+                    ],
+                    right: [
+                        "\"My teeth have gone, so I can't catch mice, and I get nothing but scolding. I have nowhere to go now.\"",
+                        "\"Then come along with us. Nobody sings at night like you do.\"",
+                        "The cat blinked.",
+                        "He looked from one to the other of them for a while, then quietly put his tail up",
+                        "and stepped lightly down off the wall."
+                    ]
+                },
+                {
+                    art: '03-four-2.webp',
+                    emoji: '🐓',
+                    left: [
+                        "The three of them were going through a village when they heard a cockerel on a wall, crowing fit to burst.",
+                        "The sun was high overhead, and they wondered what it was about.",
+                        "\"What are you crowing about at this hour?\"",
+                        "\"They are putting me on the table tomorrow! So I mean to crow my fill while I can.\""
+                    ],
+                    right: [
+                        "\"A voice like that, and they want you for the table? Ridiculous.\"",
+                        "\"Come with us. With a voice like yours you will eat anywhere.\"",
+                        "The cockerel hesitated a moment.",
+                        "Then he beat his wings hard and came down off the wall.",
+                        "And now there were four of them walking side by side."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Light in the Wood',
+            beats: [
+                {
+                    art: '04-light.webp',
+                    emoji: '🌲',
+                    left: [
+                        "The sun went down and night found the four of them in a wood. Bremen was still a long way off —",
+                        "far more than a day's walk.",
+                        "The donkey and the dog settled themselves under a big tree.",
+                        "The cat went up into the branches, and the cockerel flew higher still."
+                    ],
+                    right: [
+                        "From the top the cockerel looked all round him, out of habit. He had always done it where he slept.",
+                        "And then he called out suddenly.",
+                        "\"There, over there! I can see a light!\"",
+                        "\"Is it far?\"",
+                        "\"No — we could walk it!\""
+                    ]
+                },
+                {
+                    art: '04-light-2.webp',
+                    emoji: '🌲',
+                    left: [
+                        "The four of them walked toward the light. Branches kept brushing their faces,",
+                        "and dry leaves crackled underfoot.",
+                        "After a long push through the trees the wood opened out.",
+                        "In the middle of a clearing stood a small cottage, with one window very bright.",
+                        "The four of them crouched down and crept up to it."
+                    ],
+                    right: [
+                        "There was laughter coming from inside.",
+                        "But the windowsill was rather high.",
+                        "The cat and the cockerel had no chance at all.",
+                        "\"I shall look. The rest of you wait.\"",
+                        "The three of them waited up on their toes,",
+                        "and the donkey put his forefeet on the sill and looked in."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: "Chapter 5 · The Robbers' Table",
+            beats: [
+                {
+                    art: '05-robbers.webp',
+                    emoji: '🍖',
+                    left: [
+                        "There were three men in the room, eating at a table loaded till it groaned —",
+                        "meat and bread and drink all over it.",
+                        "In the corner stood several heavy sacks.",
+                        "Anybody could see they were robbers.",
+                        "\"What can you see?\""
+                    ],
+                    right: [
+                        "\"A mountain of food.\"",
+                        "The donkey swallowed hard.",
+                        "\"There's enough there to fill all four of us.\"",
+                        "Down below, the three of them shifted from foot to foot,",
+                        "and their stomachs rumbled.",
+                        "\"Let us have a look too!\""
+                    ]
+                },
+                {
+                    art: '05-robbers-2.webp',
+                    emoji: '🍖',
+                    left: [
+                        "The four of them gathered under the window with their heads together, working out how to get the men out.",
+                        "Should they knock at the door? Should they go round the back? They went back and forth.",
+                        "Nobody could think of anything good.",
+                        "And after a long while the donkey had an idea.",
+                        "\"What if we all used our voices at once?\""
+                    ],
+                    right: [
+                        "The four of them got into place straight away.",
+                        "The donkey put his forefeet on the sill,",
+                        "and the dog climbed onto his back.",
+                        "The cat climbed onto the dog and the cockerel onto the cat.",
+                        "Stacked up like that, they came out exactly level with the window.",
+                        "\"One, two, three!\"",
+                        "And the four of them took a great breath."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · All at Once',
+            beats: [
+                {
+                    art: '06-noise.webp',
+                    emoji: '📣',
+                    left: [
+                        "The four of them let go all together.",
+                        "\"HEE-HAW! WOOF! MIAOW! COCK-A-DOODLE-DOO!\"",
+                        "It was such a racket that the whole wood rang with it, and birds went up in fright.",
+                        "And then the four of them came straight through the window.",
+                        "The glass went in with a crash."
+                    ],
+                    right: [
+                        "The robbers threw down their spoons and shot to their feet. Chairs went over and plates rolled off the table.",
+                        "\"M-monsters!\"",
+                        "\"Save yourselves!\"",
+                        "The three of them fell over one another getting out of the door —",
+                        "and never stopped for their shoes."
+                    ]
+                },
+                {
+                    art: '06-noise-2.webp',
+                    emoji: '📣',
+                    left: [
+                        "The robbers ran off through the wood. Their footsteps went on for a while and then it was quiet.",
+                        "The four of them looked at each other.",
+                        "And without anybody suggesting it, they sat themselves down round the table.",
+                        "They were so hungry.",
+                        "And the four of them cleared everything on it."
+                    ],
+                    right: [
+                        "For the first time in months they were full.",
+                        "The donkey patted his stomach and laughed.",
+                        "\"Now I feel more like myself.\"",
+                        "The four of them put out the light and each found a comfortable spot:",
+                        "the donkey on the dung heap in the yard, the dog behind the door, the cat by the hearth, and the cockerel up on the roof."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · A Robber Comes Back',
+            beats: [
+                {
+                    art: '07-return.webp',
+                    emoji: '🔥',
+                    left: [
+                        "It was the middle of the night, and the robbers were muttering in the wood. The cottage had been dark for a good while.",
+                        "\"The light's out. Are we simply going to leave?\"",
+                        "\"Our sacks are still in there.\"",
+                        "\"You go and look.\"",
+                        "So in the end one of them crept back to the cottage."
+                    ],
+                    right: [
+                        "The kitchen was pitch dark. The robber felt his way to the hearth,",
+                        "because he needed an ember to light his lamp.",
+                        "And two embers glowed at him out of the dark.",
+                        "Delighted, he held his match up to them.",
+                        "But they were not embers. They were the cat's eyes,",
+                        "and the cat opened them wide in the dark."
+                    ]
+                },
+                {
+                    art: '07-return-2.webp',
+                    emoji: '🔥',
+                    left: [
+                        "\"MIAOW!\"",
+                        "The cat went for his face with both front paws, and the robber ran screaming for the back door.",
+                        "But that was where the dog was lying.",
+                        "The dog took him hard by the leg.",
+                        "The robber leapt and went rolling out into the yard.",
+                        "And in the yard the donkey was waiting."
+                    ],
+                    right: [
+                        "The donkey let fly with both back hooves,",
+                        "and the robber went sailing over the wall.",
+                        "The noise woke the cockerel on the roof, and he called out.",
+                        "The robber landed hard and ran for it.",
+                        "\"COCK-A-DOODLE-DOO!\"",
+                        "And the whole wood was full of the sound."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · They Never Got to Bremen',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🏡',
+                    left: [
+                        "The robber ran to his captain, shaking all over.",
+                        "\"That house is full of terrible things! A witch raked my face with her nails.\"",
+                        "\"There was a man with a knife at the door who stabbed me in the leg.\"",
+                        "\"And one with a club was waiting in the yard and knocked me flat.\""
+                    ],
+                    right: [
+                        "\"And there was a judge on the roof shouting for them to take me away!\"",
+                        "The captain shook his head slowly.",
+                        "\"Best leave that house alone.\"",
+                        "And the robbers never went near it again."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🏡',
+                    left: [
+                        "Morning came, and the four of them went slowly round the cottage.",
+                        "The roof was sound and the kitchen was big.",
+                        "There was a well in the yard and a vegetable patch beside it,",
+                        "and dry straw stacked up in the shed.",
+                        "It was exactly the house for the four of them.",
+                        "\"Bremen can wait, I suppose.\""
+                    ],
+                    right: [
+                        "\"I like it better here.\"",
+                        "When the donkey said so, the other three all nodded.",
+                        "And the four of them lived in that house together for a long, long time.",
+                        "Every evening four voices went out over the wood,",
+                        "and people passing stopped to listen."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why did the donkey leave home?',
+            choices: ['He heard his master say he was no use any more', 'He wanted to see Bremen', 'The robbers had frightened him'],
+            answer: 0
+        },
+        {
+            q: 'Why had the dog been turned out?',
+            choices: ['He had bitten his master', 'He barked all night', 'He could not hunt any more'],
+            answer: 2
+        },
+        {
+            q: 'Why could the cat not catch mice?',
+            choices: ['He had grown too fat', 'His teeth had gone', 'He had hurt his paw'],
+            answer: 1
+        },
+        {
+            q: 'Why was the cockerel crowing in the middle of the day?',
+            choices: ['They were going to put him on the table the next day', 'He had seen the light in the wood', 'He was calling the other three'],
+            answer: 0
+        },
+        {
+            q: 'How did they reach the height of the window?',
+            choices: ['They found a barrel to stand on', 'The donkey lifted them', 'They stood on one another’s backs'],
+            answer: 2
+        },
+        {
+            q: 'What did the robber think the cat’s eyes were?',
+            choices: ['Two candles', 'Embers for lighting his lamp', 'A pair of coins'],
+            answer: 1
+        },
+        {
+            q: 'What did the robber tell his captain?',
+            choices: ['That the house was full of a witch, a knife-man, a club-man and a judge', 'That the sacks had gone', 'That four animals had taken the house'],
+            answer: 0
+        },
+        {
+            q: 'Why did the four of them not go on to Bremen?',
+            choices: ['The road was blocked', 'The robbers were waiting for them', 'The cottage suited them better'],
+            answer: 2
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐓',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "There is a statue in Bremen of the four of them standing one on top of another. It comes from this story.",
+                    "All four are animals turned out for being old — the donkey, the dog, the cat and the cockerel. Every one of them was useful once.",
+                    "And the four of them never do get to Bremen. They found a house on the way. What they met on the road turned out to be better than where they were going.",
+                    "Look again at how they got rid of the robbers. They did not fight. They stood on one another and made a noise all at once."
+                ],
+                right: [
+                    "Not one of them could have done it alone. A donkey braying by itself would not have done it, nor a cockerel crowing by itself.",
+                    "Why do you think they never went on to Bremen?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-donkey.webp': [
+            { word: 'load', meaning: '짐', sentence: 'He had carried loads for the mill.' },
+            { word: 'mill', meaning: '방앗간', sentence: 'He went between the mill and the market.' },
+            { word: 'grain', meaning: '곡식', sentence: 'With sacks of grain on his back.' },
+            { word: 'ache', meaning: '시큰거리다', sentence: 'His legs shook and his back ached.' },
+            { word: 'barn', meaning: '헛간', sentence: 'One day, resting in the barn, he heard a voice.' }
+        ],
+        '01-donkey-2.webp': [
+            { word: 'no use', meaning: '쓸모없는', sentence: "He's no use to us now." },
+            { word: 'make up one’s mind', meaning: '마음을 정하다', sentence: 'He turned it over and made up his mind.' },
+            { word: 'slip away', meaning: '슬그머니 빠져나가다', sentence: 'Before dawn he slipped quietly away.' },
+            { word: 'clear one’s throat', meaning: '목청을 가다듬다', sentence: 'The donkey cleared his throat.' },
+            { word: 'ring', meaning: '울려 퍼지다', sentence: 'It rang all through the wood.' }
+        ],
+        '02-dog.webp': [
+            { word: 'pant', meaning: '헐떡이다', sentence: 'He was panting.' },
+            { word: 'coat', meaning: '털', sentence: 'His coat had come out in patches.' },
+            { word: 'hollow', meaning: '홀쭉한', sentence: 'His sides were hollow.' },
+            { word: 'turn out', meaning: '내쫓다', sentence: 'My master turned me out.' }
+        ],
+        '02-dog-2.webp': [
+            { word: 'hoof', meaning: '발굽', sentence: 'The donkey tapped the ground with a front hoof.' },
+            { word: 'bark', meaning: '짖다', sentence: 'All I can do is bark.' },
+            { word: 'puzzled', meaning: '어리둥절한', sentence: 'The dog looked up at him, quite puzzled.' },
+            { word: 'grin', meaning: '슬며시 웃다', sentence: 'And then he grinned.' },
+            { word: 'to and fro', meaning: '살랑살랑', sentence: "The dog's tail went to and fro." }
+        ],
+        '03-four.webp': [
+            { word: 'a face like thunder', meaning: '잔뜩 찌푸린 얼굴', sentence: 'A cat with a face like thunder.' },
+            { word: 'whisker', meaning: '수염', sentence: 'His whiskers had come out in patches.' },
+            { word: 'scolding', meaning: '구박, 꾸중', sentence: 'I get nothing but scolding.' },
+            { word: 'blink', meaning: '눈을 껌뻑이다', sentence: 'The cat blinked.' }
+        ],
+        '03-four-2.webp': [
+            { word: 'cockerel', meaning: '수탉', sentence: 'They heard a cockerel on a wall.' },
+            { word: 'crow', meaning: '(닭이) 울다', sentence: 'Crowing fit to burst.' },
+            { word: 'fit to burst', meaning: '목이 터져라', sentence: 'Crowing fit to burst.' },
+            { word: 'one’s fill', meaning: '실컷', sentence: 'I mean to crow my fill while I can.' },
+            { word: 'ridiculous', meaning: '말도 안 되는', sentence: 'They want you for the table? Ridiculous.' }
+        ],
+        '04-light.webp': [
+            { word: 'settle oneself', meaning: '자리를 잡다', sentence: 'They settled themselves under a big tree.' },
+            { word: 'out of habit', meaning: '습관처럼', sentence: 'The cockerel looked all round him, out of habit.' },
+            { word: 'walk it', meaning: '걸어갈 만하다', sentence: 'No — we could walk it!' }
+        ],
+        '04-light-2.webp': [
+            { word: 'crackle', meaning: '바스락거리다', sentence: 'Dry leaves crackled underfoot.' },
+            { word: 'open out', meaning: '트이다', sentence: 'The wood opened out.' },
+            { word: 'clearing', meaning: '빈터', sentence: 'In the middle of a clearing stood a small cottage.' },
+            { word: 'crouch', meaning: '몸을 낮추다', sentence: 'The four of them crouched down.' },
+            { word: 'windowsill', meaning: '창턱', sentence: 'But the windowsill was rather high.' }
+        ],
+        '05-robbers.webp': [
+            { word: 'groan', meaning: '휘다, 삐걱대다', sentence: 'A table loaded till it groaned.' },
+            { word: 'sack', meaning: '자루', sentence: 'In the corner stood several heavy sacks.' },
+            { word: 'swallow hard', meaning: '침을 꼴깍 삼키다', sentence: 'The donkey swallowed hard.' },
+            { word: 'rumble', meaning: '꼬르륵거리다', sentence: 'Their stomachs rumbled.' }
+        ],
+        '05-robbers-2.webp': [
+            { word: 'work out', meaning: '궁리하다', sentence: 'Working out how to get the men out.' },
+            { word: 'go back and forth', meaning: '말이 오가다', sentence: 'They went back and forth.' },
+            { word: 'stack up', meaning: '겹겹이 쌓다', sentence: 'Stacked up like that.' },
+            { word: 'level with', meaning: '~과 높이가 같은', sentence: 'They came out exactly level with the window.' }
+        ],
+        '06-noise.webp': [
+            { word: 'let go', meaning: '내지르다', sentence: 'The four of them let go all together.' },
+            { word: 'racket', meaning: '요란한 소리', sentence: 'It was such a racket.' },
+            { word: 'in fright', meaning: '놀라서', sentence: 'Birds went up in fright.' },
+            { word: 'shoot to one’s feet', meaning: '벌떡 일어서다', sentence: 'The robbers shot to their feet.' }
+        ],
+        '06-noise-2.webp': [
+            { word: 'suggest', meaning: '먼저 말을 꺼내다', sentence: 'Without anybody suggesting it.' },
+            { word: 'clear', meaning: '남김없이 먹다', sentence: 'The four of them cleared everything on it.' },
+            { word: 'full', meaning: '배부른', sentence: 'For the first time in months they were full.' },
+            { word: 'dung heap', meaning: '두엄더미', sentence: 'The donkey on the dung heap in the yard.' },
+            { word: 'hearth', meaning: '아궁이', sentence: 'The cat by the hearth.' }
+        ],
+        '07-return.webp': [
+            { word: 'mutter', meaning: '수군거리다', sentence: 'The robbers were muttering in the wood.' },
+            { word: 'feel one’s way', meaning: '더듬어 가다', sentence: 'The robber felt his way to the hearth.' },
+            { word: 'ember', meaning: '불씨', sentence: 'He needed an ember to light his lamp.' },
+            { word: 'glow', meaning: '반짝이다', sentence: 'Two embers glowed at him out of the dark.' }
+        ],
+        '07-return-2.webp': [
+            { word: 'go for', meaning: '덤벼들다', sentence: 'The cat went for his face.' },
+            { word: 'take by', meaning: '~를 물다', sentence: 'The dog took him hard by the leg.' },
+            { word: 'let fly', meaning: '힘껏 차다', sentence: 'The donkey let fly with both back hooves.' },
+            { word: 'sail over', meaning: '붕 날아가다', sentence: 'The robber went sailing over the wall.' },
+            { word: 'run for it', meaning: '냅다 달아나다', sentence: 'The robber landed hard and ran for it.' }
+        ],
+        '08-ending.webp': [
+            { word: 'captain', meaning: '두목', sentence: 'The robber ran to his captain.' },
+            { word: 'rake', meaning: '할퀴다', sentence: 'A witch raked my face with her nails.' },
+            { word: 'club', meaning: '몽둥이', sentence: 'One with a club was waiting in the yard.' },
+            { word: 'knock flat', meaning: '때려눕히다', sentence: 'And knocked me flat.' },
+            { word: 'leave alone', meaning: '그냥 두다', sentence: 'Best leave that house alone.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'sound', meaning: '튼튼한', sentence: 'The roof was sound.' },
+            { word: 'well', meaning: '우물', sentence: 'There was a well in the yard.' },
+            { word: 'vegetable patch', meaning: '텃밭', sentence: 'A vegetable patch beside it.' },
+            { word: 'straw', meaning: '짚', sentence: 'Dry straw stacked up in the shed.' },
+            { word: 'stop to listen', meaning: '걸음을 멈추고 듣다', sentence: 'People passing stopped to listen.' }
+        ],
+        'end.webp': [
+            { word: 'statue', meaning: '동상', sentence: 'There is a statue in Bremen of the four of them.' },
+            { word: 'one on top of another', meaning: '겹쳐 올라선', sentence: 'Standing one on top of another.' },
+            { word: 'useful', meaning: '쓸모 있는', sentence: 'Every one of them was useful once.' },
+            { word: 'get rid of', meaning: '쫓아내다', sentence: 'How they got rid of the robbers.' },
+            { word: 'bray', meaning: '(당나귀가) 울다', sentence: 'A donkey braying by itself would not have done it.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -602,6 +1177,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -610,7 +1186,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -622,7 +1198,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -656,4 +1232,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
