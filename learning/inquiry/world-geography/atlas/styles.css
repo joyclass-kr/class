@@ -1,0 +1,29 @@
+.atlas-page .app-shell { grid-template-rows: 54px minmax(0, 1fr); }
+.atlas-geography-link { display: grid; place-items: center; min-height: 44px; padding: 0 14px; border: 1px solid rgba(255,255,255,.22); border-radius: 12px; color: #fff; background: rgba(255,255,255,.08); text-decoration: none; font-size: .82rem; font-weight: 900; }
+.atlas-layout { min-height: 0; display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(300px, .72fr); gap: 14px; padding: 14px; }
+.atlas-map-stage, .atlas-panel { min-height: 0; }
+.atlas-map-status { position: absolute; z-index: 500; top: 12px; right: 12px; padding: 8px 11px; border: 1px solid rgba(33,75,80,.16); border-radius: 999px; color: var(--teal-dark); background: rgba(255,253,247,.94); box-shadow: 0 4px 12px rgba(14,57,63,.1); font-size: .75rem; }
+.atlas-panel { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
+.atlas-layer-card, .atlas-empty { padding: 18px; border: 1px solid var(--line); border-radius: 20px; background: var(--paper); box-shadow: var(--shadow); }
+.atlas-layer-card h1 { margin: 5px 0 7px; font-family: Georgia, "Nanum Myeongjo", serif; font-size: 1.35rem; letter-spacing: -.04em; }
+.atlas-layer-card > p { margin: 0 0 14px; color: var(--muted); font-size: .8rem; line-height: 1.5; }
+.atlas-layer-card .theme-layer-control { min-height: 48px; }
+.atlas-empty { display: grid; place-items: center; min-height: 150px; text-align: center; }
+.atlas-empty > span { font-size: 1.8rem; }
+.atlas-empty strong { margin-top: 7px; font-size: .92rem; }
+.atlas-empty p { margin: 5px 0 0; color: var(--muted); font-size: .78rem; }
+.atlas-panel .atlas-item-card { position: relative; right: auto; bottom: auto; flex: 1 0 auto; width: 100%; min-height: 170px; }
+.atlas-item-card .theme-item-copy h2 { margin: 2px 0 1px; font-size: 1.08rem; line-height: 1.25; }
+
+@media (max-width: 860px) and (orientation: portrait) {
+  .atlas-page .app-shell { grid-template-rows: 54px 1fr; }
+  .atlas-layout { grid-template-columns: 1fr; grid-template-rows: minmax(440px, 54dvh) auto; }
+  .atlas-panel { overflow: visible; }
+}
+
+@media (max-width: 620px) {
+  .atlas-geography-link { padding-inline: 10px; font-size: .75rem; }
+  .atlas-layout { grid-template-rows: minmax(350px, 52dvh) auto; padding: 8px; gap: 8px; }
+  .atlas-layer-card, .atlas-empty { padding: 15px; border-radius: 16px; }
+  .atlas-map-status { top: 8px; right: 8px; }
+}

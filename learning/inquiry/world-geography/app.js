@@ -32,15 +32,10 @@
 
   function init() {
     map = createMap("map", true);
-    map.createPane("themeAtlasPane");
-    map.getPane("themeAtlasPane").style.zIndex = "660";
     featureLayer = L.layerGroup().addTo(map);
     lineLayer = L.layerGroup().addTo(map);
-    themeAtlasLayer = L.layerGroup().addTo(map);
     fitWorld(map);
     bindControls();
-    renderThemeLayerControls();
-    renderThemeAtlas();
     renderTheme(currentTheme);
     renderProgress();
   }
@@ -82,16 +77,10 @@
     $("#nextQuestion").addEventListener("click", nextQuestion);
     $("#reviewWrong").addEventListener("click", reviewWrongQuestions);
     $("#finishPractice").addEventListener("click", () => $("#resultDialog").close());
-    $("#themeLayerToggle").addEventListener("click", toggleThemeLayerDock);
-    $("#recommendedLayers").addEventListener("click", showRecommendedLayers);
-    $("#closeThemeItem").addEventListener("click", closeThemeItem);
-    $("#speakThemeItem").addEventListener("click", speakCurrentThemeItem);
     $("#practiceDialog").addEventListener("close", () => {
       questionAnswered = false;
       if (questionFocusLayer) questionFocusLayer.clearLayers();
     });
-    if (!("speechSynthesis" in window)) $("#speakThemeItem").hidden = true;
-    if (window.matchMedia("(max-width: 620px)").matches) setThemeLayerDockCollapsed(true);
   }
 
   function renderThemeLayerControls() {

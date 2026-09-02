@@ -30,34 +30,8 @@
     <main class="study-layout">
       <section class="map-stage" aria-label="세계지리 주제 지도">
         <div id="map" role="application" aria-label="세계지리 학습 지도"></div>
-        <section class="theme-layer-dock" id="themeLayerDock" aria-labelledby="themeLayerTitle">
-          <div class="theme-layer-heading">
-            <div>
-              <span>골라 보는 세계</span>
-              <h2 id="themeLayerTitle">테마 지도</h2>
-            </div>
-            <button id="themeLayerToggle" type="button" aria-expanded="true" aria-controls="themeLayerControls">접기</button>
-          </div>
-          <p id="themeLayerHelp">관심 있는 주제를 겹쳐 켜고 아이콘을 눌러 보세요.</p>
-          <div class="theme-layer-controls" id="themeLayerControls"></div>
-          <div class="theme-layer-footer">
-            <strong id="themeItemCount">0개 표시</strong>
-            <button id="recommendedLayers" type="button">추천 조합</button>
-          </div>
-        </section>
         <div class="map-key" id="mapKey" aria-live="polite"></div>
-        <article class="theme-item-card" id="themeItemCard" aria-live="polite" hidden>
-          <button class="theme-item-close" id="closeThemeItem" type="button" aria-label="테마 설명 닫기">×</button>
-          <div class="theme-item-icon" id="themeItemIcon" aria-hidden="true">🌍</div>
-          <div class="theme-item-copy">
-            <span id="themeItemCategory">테마</span>
-            <h3 id="themeItemName">세계 탐험</h3>
-            <strong id="themeItemPlace"></strong>
-            <p id="themeItemDescription"></p>
-            <button id="speakThemeItem" type="button">🔊 설명 듣기</button>
-          </div>
-        </article>
-        <p class="map-help" id="mapHelp">색 표식은 지리 개념, 그림 표식은 테마 정보예요.</p>
+        <p class="map-help" id="mapHelp">지도 표식을 눌러 지리 개념을 살펴보세요.</p>
       </section>
 
       <aside class="study-panel">
@@ -114,7 +88,6 @@
 
   <script src="../korean-museum/vendor/leaflet/leaflet.js"></script>
   <script src="data.js?v=20260903-2"></script>
-  <script src="theme-items.js?v=20260903-3"></script>
-  <script src="app.js?v=20260903-3"></script>
+  <script src="app.js?v=20260903-4"></script>
 </body>
 </html>
