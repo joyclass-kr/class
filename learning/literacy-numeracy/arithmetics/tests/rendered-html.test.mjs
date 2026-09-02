@@ -726,7 +726,7 @@ test("renders the student-hosted ranking mode entry screen", async () => {
   assert.match(studentHtml, /방 코드/);
   assert.match(studentHtml, /초1(?:<!-- -->)? · (?:<!-- -->)?1부터 9까지 수 세기/);
   assert.doesNotMatch(studentHtml, />1수세기①</);
-  assert.doesNotMatch(studentHtml, /교사용 페이지|교사 PIN|친구들과 하는 연산 대결/);
+  assert.doesNotMatch(studentHtml, /순위 모드|내 이름|방을 만들거나 방 코드로 참가하세요|교사용 페이지|교사 PIN|친구들과 하는 연산 대결/);
 
   const catalogSource = await readFile(new URL("../app/arithmetic/catalog.tsx", import.meta.url), "utf8");
   const raceSource = await readFile(new URL("../app/arithmetic/race/page.tsx", import.meta.url), "utf8");
@@ -738,7 +738,7 @@ test("renders the student-hosted ranking mode entry screen", async () => {
   assert.match(raceSource, /worksheet\.grade} · {worksheet\.title/);
   assert.doesNotMatch(raceSource, />{worksheet\.name}<\/option>/);
   assert.match(raceApiSource, /worksheetName = .*worksheet\.grade.*worksheet\.title/);
-  assert.doesNotMatch(raceSource, /race\/teacher|교사 PIN|친구들과 하는 연산 대결/);
+  assert.doesNotMatch(raceSource, /race-entry-header|race-entry-copy|race\/teacher|교사 PIN|친구들과 하는 연산 대결/);
   assert.doesNotMatch(globalCss, /grid-template-columns: 64px minmax\(0, 1fr\)|grid-template-columns: 56px minmax\(0, 1fr\)/);
 });
 test("keeps every race-ready worksheet connected to grading and score reading", async () => {

@@ -150,7 +150,7 @@ export default function ArithmeticRaceJoinPage() {
   return (
     <main className="portal-page race-entry-page">
       <div className="race-entry-shell">
-        <header className="catalog-header race-entry-header"><a className="catalog-back" href="/arithmetic" aria-label="기초 연산 목록으로 돌아가기">←</a><h1>순위 모드</h1></header>
+        <a className="catalog-back" href="/arithmetic" aria-label="기초 연산 목록으로 돌아가기">←</a>
         {joined ? (
           <section className="race-waiting-card" aria-live="polite">
             <span>방 코드</span><strong className="race-room-code">{joined.roomCode}</strong>
@@ -159,7 +159,6 @@ export default function ArithmeticRaceJoinPage() {
           </section>
         ) : (
           <>
-            <p className="race-entry-copy">내 이름 <strong>{name || "확인 중"}</strong> · 방을 만들거나 방 코드로 참가하세요.</p>
             <div className="race-entry-grid race-boardgame-grid">
               <form className="race-join-card race-create-card" onSubmit={createRoom}>
                 <span className="race-card-kicker">내가 방장</span><h2>방 만들기</h2>

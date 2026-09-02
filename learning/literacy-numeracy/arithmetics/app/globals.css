@@ -5890,15 +5890,6 @@ button.division-option {
     backdrop-filter: none;
   }
 
-  .race-entry-header {
-    padding-block: 8px 16px;
-  }
-
-  .race-entry-header h1 {
-    color: var(--ink);
-    font-size: 26px;
-    text-shadow: none;
-  }
   .catalog-back {
     position: fixed;
     z-index: 40;
@@ -10233,14 +10224,6 @@ main {
   margin-inline: auto;
 }
 
-.race-entry-copy {
-  width: min(760px, 100%);
-  margin: 22px auto -14px;
-  color: var(--muted);
-  font-weight: 700;
-}
-
-.race-entry-copy strong { color: var(--ink); }
 .race-card-kicker { color: var(--coral); font-size: 13px; font-weight: 900; }
 .race-create-card { background: linear-gradient(145deg, #fff, var(--coral-soft)); }
 .race-join-card select { min-height: 48px; border: 1px solid var(--line); border-radius: 9px; padding: 10px 12px; background: var(--paper); color: var(--ink); font: inherit; font-size: 16px; }
