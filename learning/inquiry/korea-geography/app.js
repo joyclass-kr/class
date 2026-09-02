@@ -63,7 +63,6 @@
   function init() {
     initMaps();
     bindControls();
-    updatePracticeAvailability();
     renderTheme(currentTheme);
     renderProgress();
     loadProvinceBoundaries();
@@ -147,11 +146,7 @@
     $$(".theme-tab").forEach((button) => {
       button.addEventListener("click", () => renderTheme(button.dataset.theme));
     });
-    $("#resetMap").addEventListener("click", () => fitKorea(mainMap));
     $("#startPractice").addEventListener("click", startPractice);
-    ["#practiceTopic", "#practiceDifficulty", "#practiceCount"].forEach((selector) => {
-      $(selector).addEventListener("change", updatePracticeAvailability);
-    });
     $("#showHint").addEventListener("click", showQuestionHint);
     $("#nextQuestion").addEventListener("click", nextQuestion);
     $("#finishPractice").addEventListener("click", finishPractice);
@@ -160,7 +155,7 @@
       const progress = readProgress();
       const message = progress.total
         ? `누적 ${progress.total}문제 중 ${progress.correct}문제를 맞혔어요. (${Math.round(progress.correct / progress.total * 100)}%)`
-        : "아직 푼 문제가 없어요. 원하는 범위와 문항 수를 골라 시작해 보세요.";
+        : "아직 푼 문제가 없어요. 원하는 주제 탭에서 문제 풀기를 시작해 보세요.";
       $("#conceptSummary").textContent = message;
       $("#conceptTitle").textContent = "나의 학습 기록";
       $("#conceptKicker").textContent = "누적 진도";
@@ -308,6 +303,7 @@
     renderPrinciples(theme.principles || []);
     renderLegend(theme.legend || []);
     drawThemeOnMap(mainMap, mainThemeLayer, theme, true);
+    updatePracticeButton();
   }
 
   function renderFeatureButtons(features) {
@@ -548,32 +544,19 @@
   }
 
   function getPracticePool() {
-    const topic = $("#practiceTopic").value;
-    const difficulty = $("#practiceDifficulty").value;
-    let pool = questions.filter((question) => topic === "all" || question.topic === topic);
-    if (difficulty !== "mixed") pool = pool.filter((question) => question.difficulty === difficulty);
-    return pool;
+    return questions.filter((question) => question.topic === currentTheme);
   }
 
-  function getPracticeCount(poolLength) {
-    const selected = $("#practiceCount").value;
-    return selected === "all" ? poolLength : Math.min(Number(selected) || 5, poolLength);
-  }
-
-  function updatePracticeAvailability() {
+  function updatePracticeButton() {
     const pool = getPracticePool();
-    const count = getPracticeCount(pool.length);
-    const allSelected = $("#practiceCount").value === "all";
-    $("#questionBankSummary").textContent = "문제은행 " + questions.length + "문항";
-    $("#practiceAvailability").textContent = "현재 조건에서 " + pool.length + "문항 출제 가능 · 매번 순서를 섞어 새로 구성합니다.";
-    $("#startPractice").textContent = allSelected ? count + "문제 모두 풀기" : count + "문제 시작";
-    $("#startPractice").disabled = count === 0;
+    const label = themes[currentTheme]?.label || "현재 주제";
+    $("#startPractice").textContent = label + " 문제 " + pool.length + "개 풀기";
+    $("#startPractice").disabled = pool.length === 0;
   }
 
   function startPractice() {
     const pool = getPracticePool();
-    const count = getPracticeCount(pool.length);
-    sessionQuestions = shuffle(pool).slice(0, count).map(shuffleQuestionOptions);
+    sessionQuestions = shuffle(pool).map(shuffleQuestionOptions);
     sessionAnswers = [];
     questionIndex = 0;
     openPracticeDialog();

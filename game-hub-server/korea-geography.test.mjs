@@ -16,12 +16,11 @@ const regionalRelief = fs.readFileSync(new URL("learning/inquiry/korea-geography
 
 assert.match(html, /id="map"/);
 assert.match(html, /id="startPractice"/);
-assert.match(html, /id="practiceTopic"/);
-assert.match(html, /id="practiceDifficulty"/);
-assert.match(html, /id="practiceCount"/);
+assert.doesNotMatch(html, /id="practiceTopic"|id="practiceDifficulty"|id="practiceCount"/);
+assert.doesNotMatch(html, /전국 보기|학습 자료 기준|연습 세트 구성/);
+assert.match(html, /id="startPractice"[^>]*>지형 문제 10개 풀기/);
 assert.match(html, /id="principleGuide"/);
 assert.match(html, /principles\.js\?v=20260901-7/);
-assert.match(html, /연습 세트 구성/);
 assert.doesNotMatch(html, /오늘의 5문제/);
 assert.doesNotMatch(html, /<h1>한국지리 수능<\/h1>/);
 
@@ -62,9 +61,11 @@ assert.match(dataSource, /name: "북한강", kind: "river"[^\n]*minZoom: 7/);
 assert.doesNotMatch(dataSource, /name: "태백산맥", kind: "mountain", coords/);
 assert.doesNotMatch(dataSource, /name: "한강", kind: "river", coords/);
 assert.match(app, /localStorage\.setItem\(PROGRESS_KEY/);
-assert.match(app, /function getPracticeCount/);
-assert.match(app, /selected === "all" \? poolLength/);
-assert.match(app, /shuffle\(pool\)\.slice\(0, count\)/);
+assert.match(app, /question\.topic === currentTheme/);
+assert.match(app, /shuffle\(pool\)\.map\(shuffleQuestionOptions\)/);
+assert.doesNotMatch(app, /practiceTopic|practiceDifficulty|practiceCount|resetMap/);
+assert.match(styles, /\.practice-launch > \.primary-button \{[^}]*min-height:\s*48px/);
+assert.doesNotMatch(styles, /\.reset-map|\.practice-controls|\.source-note/);
 assert.match(app, /\.map\(shuffleQuestionOptions\)/, "Answer options must be shuffled for every new practice set.");
 assert.match(app, /answer: shuffledOptions\.findIndex/, "Shuffling options must preserve the correct answer index.");
 assert.match(app, /function renderQuestionStimulus/, "CSAT-style visual stimuli need a reusable renderer.");

@@ -51,7 +51,6 @@ button { cursor: pointer; }
 .back-link,
 .topbar button,
 .theme-tab,
-.reset-map,
 .primary-button,
 .secondary-button,
 .feature-button,
@@ -163,20 +162,6 @@ button { cursor: pointer; }
 .key-item { display: inline-flex; align-items: center; gap: 5px; min-height: 28px; padding: 3px 7px; border-radius: 7px; color: #314e54; font-size: 11px; font-weight: 750; }
 .key-swatch { width: 16px; height: 7px; border: 2px solid var(--swatch); border-radius: 999px; background: color-mix(in srgb, var(--swatch) 25%, transparent); }
 
-.reset-map {
-  position: absolute;
-  z-index: 650;
-  right: 12px;
-  bottom: 14px;
-  padding: 8px 13px;
-  border: 1px solid rgba(18, 60, 70, 0.22);
-  border-radius: 10px;
-  color: var(--deep);
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: var(--shadow);
-  font-weight: 800;
-}
-
 .study-panel {
   min-width: 0;
   min-height: 0;
@@ -189,9 +174,7 @@ button { cursor: pointer; }
   background: var(--paper);
 }
 
-.concept-card,
-.practice-launch,
-.source-note {
+.concept-card {
   border: 1px solid var(--line);
   border-radius: 16px;
   background: var(--panel);
@@ -220,27 +203,14 @@ button { cursor: pointer; }
 .principle-button::after { content: "→"; flex: 0 0 auto; color: #a65d00; }
 .principle-button:hover, .principle-button:focus-visible, .principle-button.is-active { border-color: var(--deep-2); color: var(--deep); background: #eef5f2; outline: 3px solid rgba(24, 86, 97, 0.12); }
 
-.practice-launch { padding: 15px; }
-.practice-launch h2 { margin: 3px 0 2px; font-size: 20px; letter-spacing: -0.035em; }
-.practice-launch p { margin: 0 0 10px; color: var(--muted); font-size: 12px; }
-.practice-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 9px; }
-.practice-controls label { display: grid; gap: 4px; color: #4b6469; font-size: 11px; font-weight: 800; }
-.practice-controls select { width: 100%; min-height: 44px; padding: 0 32px 0 10px; border: 1px solid #cad6d2; border-radius: 10px; color: var(--ink); background: #fff; font-weight: 750; }
-.practice-count-control { grid-column: 1 / -1; }
-
+.practice-launch { padding-bottom: 2px; }
 .primary-button,
 .secondary-button { padding: 9px 15px; border-radius: 11px; font-weight: 900; }
 .primary-button { border: 1px solid var(--deep); color: #fff; background: var(--deep); }
 .primary-button:hover, .primary-button:focus-visible { background: var(--deep-2); outline: 3px solid rgba(24, 86, 97, 0.17); }
 .primary-button:disabled { cursor: not-allowed; opacity: 0.45; }
 .secondary-button { border: 1px solid #b8cbc7; color: var(--deep); background: #fff; }
-.practice-launch > .primary-button { width: 100%; }
-
-.source-note { padding: 0 13px; color: var(--muted); font-size: 11px; }
-.source-note summary { min-height: 44px; display: flex; align-items: center; color: #455f65; font-weight: 850; cursor: pointer; }
-.source-note p { margin: 0 0 8px; line-height: 1.5; }
-.source-links { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 12px; }
-.source-links a { color: var(--deep-2); font-weight: 800; }
+.practice-launch > .primary-button { width: 100%; min-height: 48px; }
 
 .study-marker-wrapper, .admin-label-wrapper, .geo-annotation-wrapper { background: transparent; border: 0; }
 .geo-annotation {
@@ -394,8 +364,7 @@ button:focus-visible, a:focus-visible, select:focus-visible, summary:focus-visib
   .theme-tab { padding-inline: 12px; }
   .map-stage { min-height: 360px; }
   .map-key { max-width: calc(100% - 24px); bottom: 66px; }
-  .reset-map { bottom: 12px; }
-  .feature-list, .practice-controls { grid-template-columns: 1fr; }
+  .feature-list { grid-template-columns: 1fr; }
   .result-actions { flex-direction: column-reverse; }
 }
 
