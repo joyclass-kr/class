@@ -27,6 +27,21 @@ soft golden lighting, gentle rounded shapes, storybook atmosphere, no text or
 letters in the image, consistent warm earthy color palette (parchment, gold,
 terracotta, deep brown), Middle Eastern village and countryside setting,
 expressive character faces, dynamic staging.
+Villains and unkind characters are drawn as ordinary, good-looking people -
+never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
+teeth, no rotten teeth, no leering. What is wrong with them shows only in what
+they are doing and in their posture, never in a deformed or repulsive face.
+A cruel character may be handsome; a kind one may be plain. Never use a scar,
+a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Draw the moment in motion, not a posed portrait: catch people mid-stride,
+mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
+are big and expressive. Pick the most interesting instant in the scene and
+stage it so a child wants to look at it for a while.
+No blood, no wounds and no cruelty shown: when something violent happens,
+draw the moment just before or just after it instead.
+The artwork must bleed to all four edges of the image: no white or cream
+margin, no border, no frame line, no painted paper edge, no matting.
+The picture fills the whole canvas corner to corner.
 ```
 
 ## 표지 · 마무리
