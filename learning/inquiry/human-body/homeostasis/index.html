@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>3D 시네마틱 통합 항상성 &amp; 음성 피드백 시뮬레이터 | 2022 개정 교육과정</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="sim-header">
+        <div class="sim-header-left">
+            <a href="../" class="nav-back-btn" aria-label="인체 시뮬레이터 메인으로">
+                <span>◀</span> 목록
+            </a>
+            <div class="sim-title-group">
+                <h1 class="sim-title">3D 통합 항상성 &amp; 음성 피드백</h1>
+                <span class="sim-subtitle">Thermoregulation &amp; Glucose Negative Feedback</span>
+                <span class="curriculum-badge">2022 개정 [6과04-07]</span>
+            </div>
+        </div>
+        <div class="sim-header-right">
+            <button id="playPauseBtn" class="tool-toggle-btn" type="button">
+                <span>⏸️</span> 일시정지
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="sim-app-container">
+        
+        <!-- Left/Center Stage Area -->
+        <main class="sim-stage-area">
+            <div class="homeostasis-viewport">
+                <canvas id="homeostasisCanvas"></canvas>
+
+                <!-- Floating Top Scene Switcher -->
+                <div class="scene-switcher">
+                    <button class="scene-btn active" data-scene="hero">🌡️ 1. 전신 체온 조절</button>
+                    <button class="scene-btn" data-scene="hot">🔥 2. 고온 반응 (혈관 확장·땀)</button>
+                    <button class="scene-btn" data-scene="cold">❄️ 3. 저온 반응 (혈관 수축·떨림)</button>
+                </div>
+
+                <!-- Floating HUD Badges -->
+                <div class="sim-hud-overlay">
+                    <div class="sim-hud-badge">
+                        <span class="indicator"></span>
+                        <span>기온 슬라이더 및 [식사]/[운동] 버튼을 조작하여 체온과 혈당량의 음성 피드백 유지를 관찰하세요.</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar: Details & Exam Traps -->
+        <aside class="sim-sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-title">🌡️ 항상성 검사기 &amp; 시험 족보</span>
+            </div>
+
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab-btn active" data-tab="focus">생체 조작 &amp; 피드백</button>
+                <button class="sidebar-tab-btn" data-tab="glucose">혈당 조절 원리</button>
+                <button class="sidebar-tab-btn" data-tab="traps">시험 킬러 함정</button>
+                <button class="sidebar-tab-btn" data-tab="quiz">개념 퀴즈</button>
+            </div>
+
+            <div class="sidebar-body">
+                
+                <!-- Tab 1: Live Controls & Feedback Graph -->
+                <div id="tabPanel_focus" class="sidebar-tab-panel">
+                    
+                    <!-- Real-Time Blood Glucose Curve -->
+                    <div class="feedback-card">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; font-size:12px; font-weight:700; color:#34d399;">
+                            <span>혈당량 실시간 곡선 (기준 100 mg/dL)</span>
+                            <span id="glucoseVal" style="color:#10b981; font-weight:800;">100 mg/dL</span>
+                        </div>
+                        <canvas id="feedbackCanvas" style="width:100%; height:60px; background:#020617; border-radius:6px; border:1px solid rgba(255,255,255,0.08);"></canvas>
+                        
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px; font-size:11px;">
+                            <div style="padding:4px 8px; background:rgba(16,185,129,0.1); border-radius:4px;">
+                                <span style="color:#94a3b8;">인슐린:</span> <strong id="insulinVal" style="color:#34d399;">36 μU/mL</strong>
+                            </div>
+                            <div style="padding:4px 8px; background:rgba(245,158,11,0.1); border-radius:4px;">
+                                <span style="color:#94a3b8;">글루카곤:</span> <strong id="glucagonVal" style="color:#fbbf24;">60 pg/mL</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="organDetailCard" class="meter-card" style="border-color: #10b981; background: rgba(16, 185, 129, 0.08);">
+                        <div class="meter-card-title">
+                            <span id="organTitle" style="color:#34d399; font-size:15px;">간뇌 시상하부 (Hypothalamus)</span>
+                            <span class="curriculum-badge">HOMEOSTASIS FOCUS</span>
+                        </div>
+                        <p id="organDesc" style="font-size:13px; color:#f1f5f9; line-height:1.5;">체온, 혈당량, 삼투압 등 우리 몸의 항상성을 유지하는 최고 조절 중추입니다.</p>
+                    </div>
+
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>1. 환경 기온 조절 (체온 변화)</span>
+                        </div>
+                        <div class="sim-slider-wrapper" style="margin-top:6px;">
+                            <span class="sim-slider-label">외부 기온</span>
+                            <input id="envSlider" class="sim-slider" type="range" min="-10" max="40" value="25" step="1">
+                            <span id="envVal" class="sim-slider-value">25 ℃</span>
+                        </div>
+                        <div style="margin-top:8px; display:flex; justify-content:space-between; font-size:12px;">
+                            <span style="color:#cbd5e1;">현재 심부 체온:</span>
+                            <strong id="bodyTempVal" style="color:#34d399;">36.5 ℃</strong>
+                        </div>
+                    </div>
+
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>2. 혈당 자극 이벤트 발생</span>
+                        </div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-top:6px;">
+                            <button id="mealBtn" class="sim-pill-btn" type="button">🍚 식사 (혈당↑)</button>
+                            <button id="exerciseBtn" class="sim-pill-btn" type="button">🏃 운동 (혈당↓)</button>
+                            <button id="resetEventBtn" class="sim-pill-btn active" type="button">🔄 평형 복귀</button>
+                        </div>
+                    </div>
+
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>2022 개정 핵심 체크리스트</span>
+                        </div>
+                        <ul id="conceptList" class="concept-list"></ul>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Blood Glucose Regulation -->
+                <div id="tabPanel_glucose" class="sidebar-tab-panel" style="display:none;">
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>혈당량 음성 피드백 메커니즘 (2022 시험 완벽 정리)</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;">
+                            <div style="padding:8px 12px; background:rgba(16, 185, 129, 0.15); border:1px solid #10b981; border-radius:6px;">
+                                <strong style="color:#34d399;">1. 식사 후 고혈당일 때</strong>
+                                <p style="font-size:11px; color:#cbd5e1; margin-top:4px;">이자 베타(β) 세포에서 <strong>인슐린</strong> 분비 ➔ 간에서 <strong>포도당을 글리코젠으로 합성·저장</strong> + 세포의 포도당 흡수 촉진 ➔ <strong>혈당량 감소(100 mg/dL 회복)</strong></p>
+                            </div>
+                            <div style="padding:8px 12px; background:rgba(245, 158, 11, 0.15); border:1px solid #f59e0b; border-radius:6px;">
+                                <strong style="color:#fbbf24;">2. 운동/공복 시 저혈당일 때</strong>
+                                <p style="font-size:11px; color:#cbd5e1; margin-top:4px;">이자 알파(α) 세포에서 <strong>글루카곤</strong> 분비 ➔ 간에서 <strong>글리코젠을 포도당으로 분해·방출</strong> ➔ <strong>혈당량 증가(100 mg/dL 회복)</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Exam Traps -->
+                <div id="tabPanel_traps" class="sidebar-tab-panel" style="display:none;">
+                    <div id="examTrapList"></div>
+                </div>
+
+                <!-- Tab 4: Quick Quiz -->
+                <div id="tabPanel_quiz" class="sidebar-tab-panel" style="display:none;">
+                    <div id="quizContainer"></div>
+                </div>
+
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="../shared/engine-core.js"></script>
+    <script src="../shared/exam-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

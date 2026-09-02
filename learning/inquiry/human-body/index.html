@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>인체의 구조</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .hub-container {
+            width: 100%;
+            height: calc(100% - var(--header-height));
+            overflow-y: auto;
+            padding: 24px 20px 60px;
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .hub-hero {
+            margin-bottom: 24px;
+        }
+
+        .hub-heading {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 30%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .hub-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .hub-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 18px;
+        }
+
+        .hub-card {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(14px);
+            border: 1.5px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.2s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hub-card:hover, .hub-card:focus-visible {
+            border-color: var(--card-accent, #38bdf8);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.25);
+        }
+
+        .hub-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3.5px;
+            background: var(--card-accent, #38bdf8);
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .card-icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-sm);
+            background: rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .card-title-group {
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 3px;
+        }
+
+        .card-sub {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--card-accent, #38bdf8);
+            letter-spacing: 0.3px;
+        }
+
+        .card-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+
+        .card-feature-item {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-feature-item .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--card-accent, #38bdf8);
+            flex-shrink: 0;
+        }
+
+        .card-btn {
+            min-height: 44px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+            transition: all 0.15s;
+        }
+
+        .hub-card:hover .card-btn {
+            background: var(--card-accent, #0284c7);
+            border-color: transparent;
+            color: #ffffff;
+        }
+
+        .hub-page .hub-container { height: 100%; }
+        .hub-page .hub-hero,
+        .hub-page .card-sub,
+        .hub-page .card-features,
+        .hub-page .card-btn { display: none; }
+    </style>
+</head>
+<body class="hub-page">
+
+    <!-- Content Hub -->
+    <main class="hub-container">
+        <div class="hub-grid">
+            
+            <!-- 1. 뉴런 시냅스 & 분자 시뮬레이터 (Bespoke AI High-Res) -->
+            <a href="synapse/" class="hub-card" style="--card-accent: #38bdf8; grid-column: 1 / -1; background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(14, 116, 144, 0.35) 100%); border-color: rgba(56, 189, 248, 0.5); box-shadow: 0 10px 30px rgba(56, 189, 248, 0.25);">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon-box" style="background:rgba(56, 189, 248, 0.2); border:1.5px solid #38bdf8;">🧠</div>
+                        <div class="card-title-group">
+                            <div class="card-title" style="font-size:19px; color:#38bdf8;">뉴런 시냅스 &amp; 신경전달물질</div>
+                            <div class="card-sub" style="color:#34d399;">초등 [6과04-06] · 중등 [9과20-02] · 고등 [12생과Ⅰ03] 활동전위 &amp; 시냅스 소포 분비</div>
+                        </div>
+                    </div>
+                    <ul class="card-features" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:8px;">
+                        <li class="card-feature-item"><span class="dot"></span> <strong>활동전위 탈분극 발사:</strong> 전압 개폐성 Ca2+ 유입 ➔ 시냅스 소포 엑소사이토시스 방출</li>
+                        <li class="card-feature-item"><span class="dot"></span> <strong>신경전달물질 분자 역학:</strong> 도파민·아세틸콜린 ➔ Na+ 통로 개폐 ➔ 실시간 막전위 오실로스코프</li>
+                        <li class="card-feature-item"><span class="dot"></span> <strong>약물·신경독소 실험:</strong> 보톡스(소포 분비 차단) vs 신경가스(분해효소 억제) 실시간 약리 시뮬레이션</li>
+                    </ul>
+                </div>
+            </a>
+
+            <!-- 2. 근육 수축 & 액틴-마이오신 활주설 (Bespoke AI High-Res) -->
+            <a href="muscle/" class="hub-card" style="--card-accent: #f43f5e;">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon-box" style="background:rgba(244, 63, 94, 0.18); border:1px solid #f43f5e;">💪</div>
+                        <div class="card-title-group">
+                            <div class="card-title">근육 수축 &amp; 액틴-마이오신 활주설</div>
+                            <div class="card-sub">중등 [9과14-05] · 고등 [12생과Ⅰ03] 근절 수치 계산 1순위</div>
+                        </div>
+                    </div>
+                    <ul class="card-features">
+                        <li class="card-feature-item"><span class="dot"></span> ATP 가수분해 &amp; 마이오신 머리 파워 스트로크</li>
+                        <li class="card-feature-item"><span class="dot"></span> <strong>수능/내신 킬러:</strong> A대(불변), I대·H대(감소) 실시간 계산표</li>
+                        <li class="card-feature-item"><span class="dot"></span> Ca2+ 이온 트로포닌 결합 분자 애니메이션</li>
+                    </ul>
+                </div>
+            </a>
+
+            <!-- 3. 골격계 & 관절 바이오메카닉스 (Bespoke AI High-Res) -->
+            <a href="skeleton/" class="hub-card" style="--card-accent: #38bdf8;">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon-box" style="background:rgba(56, 189, 248, 0.18); border:1px solid #38bdf8;">🦾</div>
+                        <div class="card-title-group">
+                            <div class="card-title">골격계 &amp; 관절</div>
+                            <div class="card-sub">초등 [6과04-01] · 중등 [9과14-05] 관절 ROM &amp; 길항 작용</div>
+                        </div>
+                    </div>
+                    <ul class="card-features">
+                        <li class="card-feature-item"><span class="dot"></span> 팔 굽힘/폄에 따른 이두근-삼두근 길항 수축·이완</li>
+                        <li class="card-feature-item"><span class="dot"></span> 팔꿈치 관절 가동범위(ROM) 각도 실시간 HUD</li>
+                        <li class="card-feature-item"><span class="dot"></span> 힘줄, 관절 연골 및 윤활액 마찰 방지 구조</li>
+                    </ul>
+                </div>
+            </a>
+
+            <!-- 4. 순환계 -->
+            <a href="circulation/" class="hub-card" style="--card-accent: #ef4444;">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon-box">❤️</div>
+                        <div class="card-title-group">
+                            <div class="card-title">1. 순환계 &amp; 심장 펌프</div>
+                            <div class="card-sub">초등 [6과04-03] · 중등 [9과14-02] 심장과 순환</div>
+                        </div>
+                    </div>
+                    <ul class="card-features">
+                        <li class="card-feature-item"><span class="dot"></span> 4개 방실 판막 개폐 및 좌우 반전 시점 렌더링</li>
+                        <li class="card-feature-item"><span class="dot"></span> 모세혈관 백혈구 식균 작용 &amp; Y자 항체 결합</li>
+                        <li class="card-feature-item"><span class="dot"></span> 실시간 심전도(ECG) 모니터 &amp; 혈액 원심분리</li>
+                    </ul>
+                </div>
+            </a>
+
+            <!-- 5. 호흡계 -->
+            <a href="respiration/" class="hub-card" style="--card-accent: #0284c7;">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon-box">🫁</div>
+                        <div class="card-title-group">
+                            <div class="card-title">2. 호흡계 &amp; 기체 교환</div>
+                            <div class="card-sub">초등 [6과04-04] · 중등 [9과14-03] 호흡과 확산</div>
+                        </div>
+                    </div>
+                    <ul class="card-features">
+                        <li class="card-feature-item"><span class="dot"></span> 직접 당기는 가로막-유리종 보일 법칙 압력계</li>
+                        <li class="card-feature-item"><span class="dot"></span> 흉강 부피 ↔ 흉강 압력 ↔ 공기 유입 실시간 연동</li>
+                        <li class="card-feature-item"><span class="dot"></span> 폐포-모세혈관 산소·이산화탄소 분압 확산 모델</li>
+                    </ul>
+                </div>
+            </a>
+
+            <!-- 6. 소화계 -->
+            <a href="digestion/" class="hub-card" style="--card-accent: #f59e0b;">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon-box">🥪</div>
+                        <div class="card-title-group">
+                            <div class="card-title">3. 소화계 &amp; 영양소 검출</div>
+                            <div class="card-sub">초등 [6과04-02] · 중등 [9과14-01] 소화와 효소</div>
+                        </div>
+                    </div>
+                    <ul class="card-features">
+                        <li class="card-feature-item"><span class="dot"></span> 음식물 삼키기 연동 운동(꿈틀운동) 물리 이동</li>
+                        <li class="card-feature-item"><span class="dot"></span> 가상 시험관: 온도·pH에 따른 효소 활성도 곡선</li>
+                        <li class="card-feature-item"><span class="dot"></span> 4대 영양소 검출 시약(아이오딘·베네딕트·뷰렛·수단Ⅲ)</li>
+                    </ul>
+                </div>
+            </a>
+
+            <!-- 7. 배설계 -->
+            <a href="excretion/" class="hub-card" style="--card-accent: #10b981;">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon-box">🫘</div>
+                        <div class="card-title-group">
+                            <div class="card-title">4. 배설계 &amp; 네프론 여과</div>
+                            <div class="card-sub">초등 [6과04-05] · 중등 [9과14-04] 배설과 여과</div>
+                        </div>
+                    </div>
+                    <ul class="card-features">
+                        <li class="card-feature-item"><span class="dot"></span> 사구체 분자 크기별 여과 (단백질/혈구 여과 불가)</li>
+                        <li class="card-feature-item"><span class="dot"></span> 세뇨관 100% 포도당 재흡수 펌프 및 요소 67배 농축</li>
+                        <li class="card-feature-item"><span class="dot"></span> 수뇨관 오줌 방울 &amp; 방광 실시간 차오름 및 배뇨</li>
+                    </ul>
+                </div>
+            </a>
+
+            <!-- 8. 신경계 -->
+            <a href="nervous/" class="hub-card" style="--card-accent: #a855f7;">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon-box">⚡</div>
+                        <div class="card-title-group">
+                            <div class="card-title">5. 신경계 &amp; 자극과 반응</div>
+                            <div class="card-sub">초등 [6과04-06] · 중등 [9과20-01~03] 자극과 반응</div>
+                        </div>
+                    </div>
+                    <ul class="card-features">
+                        <li class="card-feature-item"><span class="dot"></span> 의식적 반응(대뇌) vs 무조건 반사(척수) 속도 레이스</li>
+                        <li class="card-feature-item"><span class="dot"></span> 뉴런 활동전위 전도 실시간 레이스 타이머</li>
+                        <li class="card-feature-item"><span class="dot"></span> 눈 원근(수정체 두께) 및 명암(동공) 렌즈 광학</li>
+                    </ul>
+                </div>
+            </a>
+
+            <!-- 9. 항상성 -->
+            <a href="homeostasis/" class="hub-card" style="--card-accent: #38bdf8;">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon-box">🌡️</div>
+                        <div class="card-title-group">
+                            <div class="card-title">6. 통합 항상성 피드백</div>
+                            <div class="card-sub">초등 [6과04-07] · 중등 [9과20-04] · 고등 항상성</div>
+                        </div>
+                    </div>
+                    <ul class="card-features">
+                        <li class="card-feature-item"><span class="dot"></span> 기온 변화 시 혈관 단면 수축/확장 &amp; 땀/떨림 반응</li>
+                        <li class="card-feature-item"><span class="dot"></span> 식사/운동에 따른 인슐린·글루카곤 혈당 피드백</li>
+                        <li class="card-feature-item"><span class="dot"></span> 실시간 생체 변동 시계열 그래프 계측</li>
+                    </ul>
+                </div>
+            </a>
+
+        </div>
+    </main>
+
+</body>
+</html>

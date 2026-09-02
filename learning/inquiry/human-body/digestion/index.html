@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>소화계 &amp; 효소 가상 실험실 | 2022 개정 교육과정</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="sim-header">
+        <div class="sim-header-left">
+            <a href="../" class="nav-back-btn" aria-label="인체 시뮬레이터 메인으로">
+                <span>◀</span> 목록
+            </a>
+            <div class="sim-title-group">
+                <h1 class="sim-title">소화계 &amp; 효소 실험실</h1>
+                <span class="sim-subtitle">Cinematic Digestive Journey &amp; Enzymes</span>
+                <span class="curriculum-badge">2022 개정 [6과04-02]</span>
+            </div>
+        </div>
+        <div class="sim-header-right">
+            <button id="swallowBtn" class="sim-btn primary" type="button">
+                <span>🥪</span> 음식물 삼키기 (꿈틀운동)
+            </button>
+            <button id="playPauseBtn" class="tool-toggle-btn" type="button">
+                <span>⏸️</span> 일시정지
+            </button>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <div class="sim-app-container">
+        
+        <!-- Left/Center Cinematic Stage Area -->
+        <main class="sim-stage-area">
+            <div class="cinematic-viewport">
+                <canvas id="simulationCanvas"></canvas>
+
+                <!-- Floating Top Scene Switcher -->
+                <div class="scene-switcher">
+                    <button class="scene-btn active" data-scene="journey">🌟 1. 소화관 탐험 여행</button>
+                    <button class="scene-btn" data-scene="torso">👤 2. 전신 소화관 해부도</button>
+                    <button class="scene-btn" data-scene="stomach">🫀 3. 위 내부 소화 챔버</button>
+                    <button class="scene-btn" data-scene="villi">🌱 4. 소장 융털 흡수 터널</button>
+                </div>
+
+                <!-- Floating HUD Badges -->
+                <div class="sim-hud-overlay">
+                    <div class="sim-hud-badge">
+                        <span class="indicator"></span>
+                        <span>화면 속 황금빛 핀(위, 소장, 융털)을 클릭하여 세부 소화 메커니즘을 확인하세요.</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar: 3D Organ Focus Details & 2022 Exam Traps -->
+        <aside class="sim-sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-title">🔬 소화 기관 검사기 &amp; 시험 족보</span>
+            </div>
+
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab-btn active" data-tab="focus">장기 정보</button>
+                <button class="sidebar-tab-btn" data-tab="lab">가상 실험실</button>
+                <button class="sidebar-tab-btn" data-tab="traps">시험 킬러 함정</button>
+                <button class="sidebar-tab-btn" data-tab="quiz">개념 퀴즈</button>
+            </div>
+
+            <div class="sidebar-body">
+                
+                <!-- Tab 1: Picked Organ Focus Card -->
+                <div id="tabPanel_focus" class="sidebar-tab-panel">
+                    <div id="organFocusCard" class="meter-card" style="border-color: #f59e0b; background: rgba(245, 158, 11, 0.08);">
+                        <div class="meter-card-title">
+                            <span id="organTitle" style="color:#fbbf24; font-size:15px;">위 (Stomach)</span>
+                            <span class="kinetics-badge">DIGESTIVE FOCUS</span>
+                        </div>
+                        <div class="meter-stat-item">
+                            <span class="meter-stat-label">분비 소화 효소</span>
+                            <span id="organEnzyme" class="meter-stat-value">펩신 + 염산 (pH 2.0)</span>
+                        </div>
+                        <div class="meter-stat-item">
+                            <span class="meter-stat-label">소화 환경 산도</span>
+                            <span id="organPH" class="meter-stat-value" style="color:#f43f5e;">pH 2.0 (강산성)</span>
+                        </div>
+                        <div class="meter-stat-item">
+                            <span class="meter-stat-label">주요 분해 산물</span>
+                            <span id="organProduct" class="meter-stat-value">단백질 ➔ 펩톤 (중간 분해물)</span>
+                        </div>
+                        <p id="organDesc" style="font-size:12px; color:#f1f5f9; margin-top:10px; line-height:1.5;">강력한 위산(HCl)과 펩신이 단백질을 1차 분해하며 음식물을 죽(암죽) 상태로 만듭니다.</p>
+                    </div>
+
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>2022 개정 핵심 체크리스트</span>
+                        </div>
+                        <ul id="conceptList" class="concept-list"></ul>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Virtual Test Tube Lab Tools -->
+                <div id="tabPanel_lab" class="sidebar-tab-panel" style="display:none;">
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>1. 환경 조절 (온도 &amp; pH)</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:10px; margin-top:6px;">
+                            <div class="sim-slider-wrapper">
+                                <span class="sim-slider-label">온도</span>
+                                <input id="tempSlider" class="sim-slider" type="range" min="0" max="100" value="37" step="1">
+                                <span id="tempVal" class="sim-slider-value">37 ℃</span>
+                            </div>
+                            <div class="sim-slider-wrapper">
+                                <span class="sim-slider-label">pH 산도</span>
+                                <input id="phSlider" class="sim-slider" type="range" min="1" max="14" value="7" step="0.5">
+                                <span id="phVal" class="sim-slider-value">pH 7.0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>2. 소화 효소 선택</span>
+                        </div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+                            <button class="sim-pill-btn active" data-enzyme="amylase">🍞 아밀레이스</button>
+                            <button class="sim-pill-btn" data-enzyme="pepsin">🥩 펩신 (위액)</button>
+                            <button class="sim-pill-btn" data-enzyme="trypsin">🍗 트립신 (이자)</button>
+                            <button class="sim-pill-btn" data-enzyme="lipase">🥑 라이페이스</button>
+                        </div>
+                    </div>
+
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>3. 4대 영양소 검출 시약</span>
+                        </div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+                            <button class="sim-pill-btn" data-reagent="iodine">💧 아이오딘 (녹말)</button>
+                            <button class="sim-pill-btn" data-reagent="benedict">🔥 베네딕트 (당류)</button>
+                            <button class="sim-pill-btn" data-reagent="biuret">🧪 뷰렛 (단백질)</button>
+                            <button class="sim-pill-btn" data-reagent="sudan">🔴 수단 Ⅲ (지방)</button>
+                        </div>
+                        <button id="heatBtn" class="sim-btn danger" type="button" style="width:100%; margin-top:8px;">
+                            <span>♨️</span> 베네딕트 가열
+                        </button>
+                    </div>
+
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>실시간 효소 활성도 계측</span>
+                        </div>
+                        <div class="meter-stat-item">
+                            <span class="meter-stat-label">효소 반응 활성도</span>
+                            <span id="statEnzymeActivity" class="meter-stat-value highlight">100 %</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Exam Traps -->
+                <div id="tabPanel_traps" class="sidebar-tab-panel" style="display:none;">
+                    <div id="examTrapList"></div>
+                </div>
+
+                <!-- Tab 4: Quick Quiz -->
+                <div id="tabPanel_quiz" class="sidebar-tab-panel" style="display:none;">
+                    <div id="quizContainer"></div>
+                </div>
+
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="../shared/engine-core.js"></script>
+    <script src="../shared/exam-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

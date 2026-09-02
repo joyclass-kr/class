@@ -1,0 +1,69 @@
+/* ==========================================================================
+   뉴런 시냅스 & 신경전달물질 분자 시뮬레이터 스타일시트
+   AI 최고화질 비주얼 + 60fps 활동전위·시냅스 소포 분비 & 막전위 그래프
+   ========================================================================== */
+
+.synapse-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    background: #030712;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#synapseCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Oscilloscope Membrane Potential Card */
+.potential-card {
+    padding: 12px;
+    background: rgba(15, 23, 42, 0.88);
+    border: 1.5px solid rgba(56, 189, 248, 0.45);
+    border-radius: var(--radius-md);
+    margin-bottom: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.potential-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: 800;
+    color: #38bdf8;
+}
+
+#potentialCanvas {
+    width: 100%;
+    height: 65px;
+    background: #020617;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Neurotransmitter Pill Switcher */
+.transmitter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.toxin-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    margin-top: 8px;
+}

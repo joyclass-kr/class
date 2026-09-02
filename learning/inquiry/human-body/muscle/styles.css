@@ -1,0 +1,62 @@
+/* ==========================================================================
+   근육 수축 & 액틴-마이오신 활주설 실시간 시뮬레이터 스타일시트
+   AI 최고화질 비주얼 + 60fps 근절(Sarcomere) 수축·이완 & 대역(I대·A대·H대) 수치 연동
+   ========================================================================== */
+
+.muscle-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    background: #030712;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#muscleCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Sarcomere Dimension Telemetry Table */
+.sarcomere-telemetry-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 12px;
+}
+
+.sarcomere-telemetry-table th, .sarcomere-telemetry-table td {
+    padding: 7px 6px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sarcomere-telemetry-table th {
+    background: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    font-weight: 700;
+}
+
+.sarcomere-telemetry-table td {
+    color: #f1f5f9;
+}
+
+.sarcomere-telemetry-table .shorten-highlight {
+    color: #f43f5e;
+    font-weight: 800;
+    background: rgba(244, 63, 94, 0.15);
+}
+
+.sarcomere-telemetry-table .constant-highlight {
+    color: #38bdf8;
+    font-weight: 800;
+    background: rgba(56, 189, 248, 0.15);
+}

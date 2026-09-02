@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>3D 시네마틱 근육 수축 &amp; 액틴-마이오신 활주설 시뮬레이터 | 2022 개정 교육과정</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="sim-header">
+        <div class="sim-header-left">
+            <a href="../" class="nav-back-btn" aria-label="인체 시뮬레이터 메인으로">
+                <span>◀</span> 목록
+            </a>
+            <div class="sim-title-group">
+                <h1 class="sim-title">근육 수축 &amp; 액틴-마이오신 활주설</h1>
+                <span class="sim-subtitle">Sarcomere Sliding Filament &amp; Cross-Bridge Mechanics</span>
+                <span class="curriculum-badge">중등 [9과14-05] · 고등 [12생과Ⅰ03]</span>
+            </div>
+        </div>
+        <div class="sim-header-right">
+            <button id="contractBtn" class="sim-btn primary" type="button" style="background:linear-gradient(135deg, #f43f5e, #be123c); border-color:#fda4af; box-shadow:0 0 16px rgba(244, 63, 94, 0.5);">
+                <span>💪</span> 근육 수축 (ATP 파워 스트로크)
+            </button>
+            <button id="relaxBtn" class="sim-btn" type="button">
+                <span>🔄</span> 이완 (리셋)
+            </button>
+            <button id="playPauseBtn" class="tool-toggle-btn" type="button">
+                <span>⏸️</span> 일시정지
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="sim-app-container">
+        
+        <!-- Left/Center Stage Area -->
+        <main class="sim-stage-area">
+            <div class="muscle-viewport">
+                <canvas id="muscleCanvas"></canvas>
+
+                <!-- Floating HUD Badges -->
+                <div class="sim-hud-overlay">
+                    <div class="sim-hud-badge">
+                        <span class="indicator"></span>
+                        <span>우측 상단 <strong>[💪 근육 수축]</strong> 버튼을 누르거나 슬라이더를 당겨 I대, A대, H대의 길이 변화를 실시간으로 비교하세요.</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar: Controls & Sarcomere Telemetry -->
+        <aside class="sim-sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-title">💪 근절(Sarcomere) 수치 검사기</span>
+            </div>
+
+            <div class="sidebar-body" style="padding-top:16px;">
+                
+                <!-- Sarcomere Real-Time Telemetry Table (2022 Exam #1 Killer) -->
+                <div class="meter-card" style="border-color:#f43f5e; background:rgba(244, 63, 94, 0.08);">
+                    <div class="meter-card-title">
+                        <span style="color:#f43f5e; font-size:14px; font-weight:800;">근절 구간별 실시간 길이 계산표</span>
+                        <span class="curriculum-badge">시험 킬러 1순위</span>
+                    </div>
+                    <table class="sarcomere-telemetry-table">
+                        <thead>
+                            <tr>
+                                <th>구간</th>
+                                <th>현재 길이</th>
+                                <th>수축 시 변화</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>근절(X)</strong></td>
+                                <td id="statX" class="shorten-highlight">2.40 μm</td>
+                                <td>Δd 만큼 감소</td>
+                            </tr>
+                            <tr>
+                                <td><strong>A대 (암대)</strong></td>
+                                <td id="statA" class="constant-highlight">1.60 μm</td>
+                                <td><strong>절대 불변!</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>I대 (명대)</strong></td>
+                                <td id="statI" class="shorten-highlight">0.80 μm</td>
+                                <td>Δd 만큼 감소</td>
+                            </tr>
+                            <tr>
+                                <td><strong>H대</strong></td>
+                                <td id="statH" class="shorten-highlight">0.40 μm</td>
+                                <td>Δd 만큼 감소</td>
+                            </tr>
+                            <tr>
+                                <td><strong>겹치는 구간</strong></td>
+                                <td id="statOverlap" style="color:#34d399; font-weight:800;">1.20 μm</td>
+                                <td>Δd 만큼 증가</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Picked Hotspot Detail Card -->
+                <div id="organDetailCard" class="meter-card" style="border-color:#38bdf8; background:rgba(56, 189, 248, 0.08);">
+                    <div class="meter-card-title">
+                        <span id="organTitle" style="color:#38bdf8; font-size:15px;">A대 (암대, A-band)</span>
+                        <span class="curriculum-badge">STRUCTURE</span>
+                    </div>
+                    <p id="organDesc" style="font-size:13px; color:#f1f5f9; line-height:1.5;">마이오신 필라멘트가 존재하는 구간으로, 근육이 수축하거나 이완해도 A대의 길이는 절대 변하지 않습니다.</p>
+                </div>
+
+                <!-- Sarcomere Length Slider -->
+                <div class="meter-card">
+                    <div class="meter-card-title">
+                        <span>근절 길이 수동 슬라이더</span>
+                    </div>
+                    <div class="sim-slider-wrapper" style="margin-top:6px;">
+                        <span class="sim-slider-label">근절(X) 길이</span>
+                        <input id="lengthSlider" class="sim-slider" type="range" min="180" max="300" value="240" step="2">
+                        <span id="lengthVal" class="sim-slider-value">2.40 μm</span>
+                    </div>
+                </div>
+
+                <!-- 2022 Exam Traps -->
+                <div class="meter-card">
+                    <div class="meter-card-title">
+                        <span>2022 수능/내신 킬러 공식 족보</span>
+                    </div>
+                    <ul class="concept-list">
+                        <li class="concept-item"><span class="icon">⚡</span><span><strong>불변 법칙:</strong> 액틴 필라멘트 자체 길이와 마이오신(A대) 길이는 <strong>수축/이완 시 절대 변하지 않음</strong></span></li>
+                        <li class="concept-item"><span class="icon">⚡</span><span><strong>감소 법칙:</strong> 근절(X)이 $\Delta d$ 감소하면, <strong>I대와 H대도 정확히 $\Delta d$만큼 감소</strong></span></li>
+                        <li class="concept-item"><span class="icon">⚡</span><span><strong>에너지:</strong> $Ca^{2+}$이 트로포닌에 결합해야 마이오신 결합 부위가 노출되며, <strong>ATP 가수분해 에너지로 파워 스트로크</strong> 발생</span></li>
+                    </ul>
+                </div>
+
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="../shared/engine-core.js"></script>
+    <script src="../shared/exam-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

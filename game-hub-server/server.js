@@ -374,14 +374,14 @@ const MULTIPLAYER_CONTENT_PATHS = Object.freeze({
   codenames: "/learning/games/codenames/codenames",
   dobble: "/learning/games/dobble/dobble",
   spelling: "/learning/literacy-numeracy/spelling",
-  circulation: "/learning/inquiry/body-explorer",
-  digestion: "/learning/inquiry/body-explorer",
-  respiration: "/learning/inquiry/body-explorer",
-  nervous: "/learning/inquiry/body-explorer",
-  immune: "/learning/inquiry/body-explorer",
-  movement: "/learning/inquiry/body-explorer",
-  excretion: "/learning/inquiry/body-explorer",
-  temperature: "/learning/inquiry/body-explorer"
+  circulation: "/learning/inquiry/human-body/circulation",
+  digestion: "/learning/inquiry/human-body/digestion",
+  respiration: "/learning/inquiry/human-body/respiration",
+  nervous: "/learning/inquiry/human-body/nervous",
+  immune: "/learning/inquiry/human-body",
+  movement: "/learning/inquiry/human-body/muscle",
+  excretion: "/learning/inquiry/human-body/excretion",
+  temperature: "/learning/inquiry/human-body/homeostasis"
 });
 
 const FINISHER_GAMES = new Set(["coinweighing", "hanoitower", "sphinx", "slidingpuzzle", "nonogram"]);
@@ -414,7 +414,9 @@ const LEGACY_LEARNING_PATHS = new Map([
   ["/learning/academics/classical-chinese-idioms", "/learning/literacy-numeracy/classical-chinese-idioms"],
   ["/learning/academics/proverbs", "/learning/literacy-numeracy/proverbs"],
   ["/learning/academics/story-books", "/learning/literacy-numeracy/story-books"],
-  ["/learning/simulations/body-explorer", "/learning/inquiry/body-explorer"],
+  ["/learning/simulations/body-explorer", "/learning/inquiry/human-body"],
+  ["/learning/academics/body-explorer", "/learning/inquiry/human-body"],
+  ["/learning/inquiry/body-explorer", "/learning/inquiry/human-body"],
   ["/learning/training/music-studio", "/learning/arts/music-studio"],
   ["/learning/art", "/learning/arts/art-appreciation/museum/"],
   ["/learning/music/classics", "/learning/arts/music-listening/genres/classical"],

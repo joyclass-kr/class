@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>인터랙티브 순환계 &amp; 심장·면역 시뮬레이터 | 2022 개정 교육과정</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="sim-header">
+        <div class="sim-header-left">
+            <a href="../" class="nav-back-btn" aria-label="인체 시뮬레이터 메인으로">
+                <span>◀</span> 목록
+            </a>
+            <div class="sim-title-group">
+                <h1 class="sim-title">순환계 &amp; 심장·면역 시뮬레이터</h1>
+                <span class="sim-subtitle">Cardiac Mechanics &amp; Capillary Immunity</span>
+                <span class="curriculum-badge">2022 개정 [6과04-03]</span>
+            </div>
+        </div>
+        <div class="sim-header-right">
+            <button id="playPauseBtn" class="tool-toggle-btn" type="button">
+                <span>⏸️</span> 일시정지
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="sim-app-container">
+        
+        <!-- Left/Center Stage Area -->
+        <main class="sim-stage-area">
+            <div class="circulation-viewport">
+                <canvas id="circulationCanvas"></canvas>
+
+                <!-- Floating Top Scene Switcher -->
+                <div class="scene-switcher">
+                    <button class="scene-btn active" data-scene="immune">🛡️ 1. 혈관 면역 전투 (백혈구·항체)</button>
+                    <button class="scene-btn" data-scene="torso">👤 2. 전신 순환계 (온몸 vs 폐)</button>
+                    <button class="scene-btn" data-scene="heart">🫀 3. 심장 내부 4개 방실</button>
+                </div>
+
+                <!-- Floating HUD Badges -->
+                <div class="sim-hud-overlay">
+                    <div class="sim-hud-badge">
+                        <span class="indicator"></span>
+                        <span>화면 속 적혈구, 백혈구, 항체, 심장 부위를 클릭하여 세부 메커니즘을 확인하세요.</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar: Details & Exam Traps -->
+        <aside class="sim-sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-title">🫀 순환계 검사기 &amp; 시험 족보</span>
+            </div>
+
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab-btn active" data-tab="focus">생체 조작 &amp; 심전도</button>
+                <button class="sidebar-tab-btn" data-tab="blood">혈액 성분 분석</button>
+                <button class="sidebar-tab-btn" data-tab="traps">시험 킬러 함정</button>
+                <button class="sidebar-tab-btn" data-tab="quiz">개념 퀴즈</button>
+            </div>
+
+            <div class="sidebar-body">
+                
+                <!-- Tab 1: Live Controls & ECG Graph -->
+                <div id="tabPanel_focus" class="sidebar-tab-panel">
+                    
+                    <!-- Live ECG Monitor -->
+                    <div class="ecg-card">
+                        <div class="ecg-header">
+                            <span>실시간 심전도 (ECG Monitor)</span>
+                            <span id="bpmVal" style="color:#ef4444; font-weight:800;">75 BPM</span>
+                        </div>
+                        <canvas id="ecgCanvas"></canvas>
+                    </div>
+
+                    <div id="organDetailCard" class="meter-card" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.08);">
+                        <div class="meter-card-title">
+                            <span id="organTitle" style="color:#f87171; font-size:15px;">백혈구 (Leukocyte) - 식균 작용</span>
+                            <span class="curriculum-badge">IMMUNE FOCUS</span>
+                        </div>
+                        <p id="organDesc" style="font-size:13px; color:#f1f5f9; line-height:1.5;">상처 부위로 침투한 세균을 세포 안으로 끌어들여 소화 분해(식균 작용)하여 체내를 방어합니다.</p>
+                    </div>
+
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>생체 변수 실시간 조절</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:10px; margin-top:6px;">
+                            <div class="sim-slider-wrapper">
+                                <span class="sim-slider-label">심박수 (BPM)</span>
+                                <input id="bpmSlider" class="sim-slider" type="range" min="40" max="180" value="75" step="5">
+                            </div>
+                            <div class="sim-slider-wrapper">
+                                <span class="sim-slider-label">산소 포화도 (SpO2)</span>
+                                <input id="o2Slider" class="sim-slider" type="range" min="70" max="100" value="98" step="1">
+                                <span id="o2Val" class="sim-slider-value">98 %</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>2022 개정 핵심 체크리스트</span>
+                        </div>
+                        <ul id="conceptList" class="concept-list"></ul>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Blood Centrifuge Analysis -->
+                <div id="tabPanel_blood" class="sidebar-tab-panel" style="display:none;">
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>혈액 원심분리 성분 (Blood Centrifuge)</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;">
+                            <div style="padding:8px 12px; background:rgba(234, 179, 8, 0.15); border:1px solid #eab308; border-radius:6px;">
+                                <strong style="color:#facc15;">1. 혈장 (Plasma) - 55%</strong>
+                                <p style="font-size:11px; color:#cbd5e1; margin-top:4px;">물(90%), 단백질(항체, 피브리노겐), 포도당, 무기염류, 노폐물(요소), 호르몬 운반</p>
+                            </div>
+                            <div style="padding:8px 12px; background:rgba(239, 68, 68, 0.15); border:1px solid #ef4444; border-radius:6px;">
+                                <strong style="color:#f87171;">2. 혈구 (Blood Cells) - 45%</strong>
+                                <ul style="font-size:11px; color:#cbd5e1; margin-top:4px; list-style:none; display:flex; flex-direction:column; gap:3px;">
+                                    <li>• <strong>적혈구:</strong> 핵 없음, 헤모글로빈 산소 운반</li>
+                                    <li>• <strong>백혈구:</strong> 핵 있음, 식균 작용 (가장 큼)</li>
+                                    <li>• <strong>혈소판:</strong> 핵 없음, 혈액 응고 및 지혈 (가장 작음)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Exam Traps -->
+                <div id="tabPanel_traps" class="sidebar-tab-panel" style="display:none;">
+                    <div id="examTrapList"></div>
+                </div>
+
+                <!-- Tab 4: Quick Quiz -->
+                <div id="tabPanel_quiz" class="sidebar-tab-panel" style="display:none;">
+                    <div id="quizContainer"></div>
+                </div>
+
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="../shared/engine-core.js"></script>
+    <script src="../shared/exam-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

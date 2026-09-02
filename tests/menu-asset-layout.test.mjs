@@ -24,7 +24,7 @@ test("learning menus use the four top-level domains", () => {
     "learning/literacy-numeracy/reading/",
     "learning/literacy-numeracy/classical-chinese-idioms/",
     "learning/literacy-numeracy/story-books/korea-tales/",
-    "learning/inquiry/body-explorer/",
+    "learning/inquiry/human-body/",
     "learning/arts/music-listening/",
     "learning/arts/art-appreciation/museum/",
     "learning/arts/instrument-room/",
@@ -47,7 +47,7 @@ test("menu-specific asset groups live with their menu", () => {
   const expected = [
     "learning/literacy-numeracy/vocabulary/assets/data/english-vocabulary-3000-v2.json",
     "learning/literacy-numeracy/vocabulary/assets/images/apple-v2.webp",
-    "learning/inquiry/body-explorer/assets/images/circulation-hero-v2.webp",
+    "learning/inquiry/human-body/assets/images/circulation-hero-v2.webp",
     "learning/arts/art-appreciation/assets/sound/museum/gallery-01-portrait.ogg",
     "learning/arts/art-appreciation/assets/sound/museum/gallery-02-nature.ogg",
     "learning/arts/art-appreciation/assets/sound/museum/gallery-03-story.ogg",
@@ -102,15 +102,14 @@ test("moved menu assets have no references to their former root locations", () =
     read("learning/arts/art-appreciation/museum/index.html"),
     read("learning/games/omok/omok.html"),
     read("learning/games/connect6/connect6.html"),
-    ...fs
-      .readdirSync(path.join(root, "learning/inquiry/body-explorer"))
-      .filter((name) => /\.(?:css|html|js)$/.test(name))
-      .map((name) => read(`learning/inquiry/body-explorer/${name}`)),
+    ...["circulation", "digestion", "excretion", "homeostasis", "nervous", "respiration"]
+      .map((name) => read(`learning/inquiry/human-body/${name}/app.js`)),
   ].join("\n");
 
   assert.doesNotMatch(sources, /(?:\.\.\/){3}assets\/data\//);
   assert.doesNotMatch(sources, /(?:\.\.\/){3}assets\/images\/vocabulary\//);
   assert.doesNotMatch(sources, /(?:\.\.\/){3}assets\/images\/body-explorer\//);
+  assert.doesNotMatch(sources, /body-explorer\/assets\/images\//);
   assert.doesNotMatch(sources, /(?:\.\.\/){2}assets\/images\/art\//);
   assert.doesNotMatch(sources, /(?:\.\.\/){2,3}assets\/sound\/art-(?:appreciation|museum)\.ogg/);
   assert.doesNotMatch(sources, /\/assets\/(?:images|sound)\/stone-board/);

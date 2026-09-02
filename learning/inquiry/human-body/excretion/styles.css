@@ -1,0 +1,135 @@
+/* ==========================================================================
+   배설계 & 콩팥·네프론 실시간 시네마틱 시뮬레이터 스타일시트
+   초고화질 3D 비주얼 + 60fps 실시간 물리 입자 & 네프론 줌 샌드박스
+   ========================================================================== */
+
+.excretion-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    background: #030712;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#excretionCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Scene Switcher */
+.scene-switcher {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    background: rgba(10, 15, 30, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    z-index: 40;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.scene-btn {
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 999px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.scene-btn.active, .scene-btn:hover {
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    color: #ffffff;
+    border-color: #38bdf8;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.5);
+}
+
+/* Live Bladder Status Indicator */
+.bladder-gauge-box {
+    padding: 12px;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(234, 179, 8, 0.4);
+    border-radius: var(--radius-md);
+    margin-bottom: 12px;
+}
+
+.bladder-gauge-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #facc15;
+}
+
+.bladder-progress-bar {
+    width: 100%;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.bladder-progress-fill {
+    height: 100%;
+    width: 25%;
+    background: linear-gradient(90deg, #facc15, #f59e0b);
+    border-radius: 999px;
+    transition: width 0.2s;
+}
+
+/* Real-time Concentration Table */
+.concentration-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 12px;
+}
+
+.concentration-table th, .concentration-table td {
+    padding: 8px 6px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.concentration-table th {
+    background: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    font-weight: 700;
+}
+
+.concentration-table .trap-highlight {
+    color: #f43f5e;
+    font-weight: 800;
+    background: rgba(244, 63, 94, 0.15);
+}
+
+.concentration-table .safe-highlight {
+    color: #34d399;
+    font-weight: 800;
+    background: rgba(52, 211, 153, 0.15);
+}

@@ -12,7 +12,6 @@ const checks = [
   ['어휘', 'learning/literacy-numeracy/vocabulary/vocabulary-core.js', /choices: shuffleWords\(\[target, \.\.\.distractors\]/],
   ['속담', 'learning/literacy-numeracy/proverbs/app.js', /shuffle\(\[correctIndex, \.\.\.distractors\]\)/],
   ['한자성어', 'learning/literacy-numeracy/classical-chinese-idioms/idioms-core.js', /const options = shuffle\(\[idiom, \.\.\.wrong\]/],
-  ['인체', 'learning/inquiry/body-explorer/app.js', /shuffledChoices\(stage\.choices\)/],
   ['대항해시대', 'learning/inquiry/age-of-exploration/lib/final-quiz.js', /function shuffledQuestion\(source\)/],
   ['한국 문화유산', 'learning/inquiry/korean-museum/treasure-map.js', /const randomizedOptions = shuffledCopy\(/],
   ['주기율표', 'learning/inquiry/periodic-table/app.js', /const options = \[correctEl, \.\.\.wrongOpts\]\.sort/],

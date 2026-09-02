@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>3D 시네마틱 신경계 &amp; 자극-반사 시뮬레이터 | 2022 개정 교육과정</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="sim-header">
+        <div class="sim-header-left">
+            <a href="../" class="nav-back-btn" aria-label="인체 시뮬레이터 메인으로">
+                <span>◀</span> 목록
+            </a>
+            <div class="sim-title-group">
+                <h1 class="sim-title">3D 신경계 &amp; 자극-반사</h1>
+                <span class="sim-subtitle">Reflex Arc vs Conscious Response &amp; Eye Optics</span>
+                <span class="curriculum-badge">2022 개정 [6과04-06]</span>
+            </div>
+        </div>
+        <div class="sim-header-right">
+            <button id="startRaceBtn" class="sim-btn primary" type="button">
+                <span>⚡</span> 신호 전도 레이스 시작
+            </button>
+            <button id="playPauseBtn" class="tool-toggle-btn" type="button">
+                <span>⏸️</span> 일시정지
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="sim-app-container">
+        
+        <!-- Left/Center Stage Area -->
+        <main class="sim-stage-area">
+            <div class="nervous-viewport">
+                <canvas id="nervousCanvas"></canvas>
+
+                <!-- Floating Top Scene Switcher -->
+                <div class="scene-switcher">
+                    <button class="scene-btn active" data-scene="hero">🧠 1. 전신 발광 신경계</button>
+                    <button class="scene-btn" data-scene="response">⚡ 2. 자극과 반응 경로</button>
+                    <button class="scene-btn" data-scene="sensory">👁️ 3. 감각 기관 (눈 광학)</button>
+                </div>
+
+                <!-- Floating HUD Badges -->
+                <div class="sim-hud-overlay">
+                    <div class="sim-hud-badge">
+                        <span class="indicator"></span>
+                        <span>우측 상단 [신호 전도 레이스]를 눌러 대뇌 반응과 척수 반사의 속도 차이를 비교하세요.</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar: Details & Exam Traps -->
+        <aside class="sim-sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-title">⚡ 신경계 검사기 &amp; 시험 족보</span>
+            </div>
+
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab-btn active" data-tab="focus">반사 레이스 &amp; 조작</button>
+                <button class="sidebar-tab-btn" data-tab="eye">눈 조절 메커니즘</button>
+                <button class="sidebar-tab-btn" data-tab="traps">시험 킬러 함정</button>
+                <button class="sidebar-tab-btn" data-tab="quiz">개념 퀴즈</button>
+            </div>
+
+            <div class="sidebar-body">
+                
+                <!-- Tab 1: Live Controls & Race Timer -->
+                <div id="tabPanel_focus" class="sidebar-tab-panel">
+                    
+                    <!-- Race Timer Result Card -->
+                    <div class="race-timer-card">
+                        <div style="font-size:12px; font-weight:800; color:#c084fc; margin-bottom:8px;">
+                            <span>전기 신호 전달 시간 비교</span>
+                        </div>
+                        <div class="race-timer-row">
+                            <span style="color:#cbd5e1;">의식적 반응 (대뇌 경유):</span>
+                            <strong id="consciousTimer" style="color:#38bdf8;">0 ms</strong>
+                        </div>
+                        <div class="race-timer-row">
+                            <span style="color:#cbd5e1;">무조건 반사 (척수 반사):</span>
+                            <strong id="reflexTimer" style="color:#34d399;">0 ms</strong>
+                        </div>
+                    </div>
+
+                    <div id="organDetailCard" class="meter-card" style="border-color: #a855f7; background: rgba(168, 85, 247, 0.08);">
+                        <div class="meter-card-title">
+                            <span id="organTitle" style="color:#c084fc; font-size:15px;">대뇌 (Cerebrum) - 의식 중추</span>
+                            <span class="curriculum-badge">NERVOUS FOCUS</span>
+                        </div>
+                        <p id="organDesc" style="font-size:13px; color:#f1f5f9; line-height:1.5;">감각 정보를 종합하여 판단하고 의식적인 반응 명령을 내립니다. (기억, 추론, 감정)</p>
+                    </div>
+
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>눈의 실시간 조절 실험</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:10px; margin-top:6px;">
+                            <div class="sim-slider-wrapper">
+                                <span class="sim-slider-label">물체 거리 (원근)</span>
+                                <input id="distSlider" class="sim-slider" type="range" min="10" max="100" value="50" step="5">
+                                <span id="distVal" class="sim-slider-value">50 cm</span>
+                            </div>
+                            <div class="sim-slider-wrapper">
+                                <span class="sim-slider-label">빛의 밝기 (명암)</span>
+                                <input id="lightSlider" class="sim-slider" type="range" min="10" max="100" value="50" step="5">
+                                <span id="lightVal" class="sim-slider-value">50 %</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>2022 개정 핵심 체크리스트</span>
+                        </div>
+                        <ul id="conceptList" class="concept-list"></ul>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Eye Accommodation Summary -->
+                <div id="tabPanel_eye" class="sidebar-tab-panel" style="display:none;">
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>눈의 원근 &amp; 명암 조절 (2022 시험 완벽 정리)</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;">
+                            <div style="padding:8px 12px; background:rgba(168, 85, 247, 0.15); border:1px solid #a855f7; border-radius:6px;">
+                                <strong style="color:#c084fc;">1. 원근 조절 (거리)</strong>
+                                <ul style="font-size:11px; color:#cbd5e1; margin-top:4px; list-style:none;">
+                                    <li>• <strong>가까운 곳:</strong> 섬모체 수축 ➔ 진정대 이완 ➔ 수정체 두꺼워짐</li>
+                                    <li>• <strong>먼 곳:</strong> 섬모체 이완 ➔ 진정대 팽팽 ➔ 수정체 얇아짐</li>
+                                </ul>
+                            </div>
+                            <div style="padding:8px 12px; background:rgba(234, 179, 8, 0.15); border:1px solid #eab308; border-radius:6px;">
+                                <strong style="color:#facc15;">2. 명암 조절 (밝기)</strong>
+                                <ul style="font-size:11px; color:#cbd5e1; margin-top:4px; list-style:none;">
+                                    <li>• <strong>어두운 곳:</strong> 홍채 수축(동공 확대근 작용) ➔ <strong>동공 확대</strong> (빛 많이 유입)</li>
+                                    <li>• <strong>밝은 곳:</strong> 홍채 이완(동공 괄약근 작용) ➔ <strong>동공 축소</strong> (빛 차단)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Exam Traps -->
+                <div id="tabPanel_traps" class="sidebar-tab-panel" style="display:none;">
+                    <div id="examTrapList"></div>
+                </div>
+
+                <!-- Tab 4: Quick Quiz -->
+                <div id="tabPanel_quiz" class="sidebar-tab-panel" style="display:none;">
+                    <div id="quizContainer"></div>
+                </div>
+
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="../shared/engine-core.js"></script>
+    <script src="../shared/exam-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

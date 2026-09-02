@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>3D 시네마틱 호흡계 &amp; 가로막·폐포 시뮬레이터 | 2022 개정 교육과정</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="sim-header">
+        <div class="sim-header-left">
+            <a href="../" class="nav-back-btn" aria-label="인체 시뮬레이터 메인으로">
+                <span>◀</span> 목록
+            </a>
+            <div class="sim-title-group">
+                <h1 class="sim-title">3D 호흡계 &amp; 가로막·폐포</h1>
+                <span class="sim-subtitle">Boyle's Law Mechanics &amp; Alveoli Gas Diffusion</span>
+                <span class="curriculum-badge">2022 개정 [6과04-04]</span>
+            </div>
+        </div>
+        <div class="sim-header-right">
+            <button id="playPauseBtn" class="tool-toggle-btn" type="button">
+                <span>⏸️</span> 일시정지
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="sim-app-container">
+        
+        <!-- Left/Center Stage Area -->
+        <main class="sim-stage-area">
+            <div class="respiration-viewport">
+                <canvas id="respirationCanvas"></canvas>
+
+                <!-- Floating Top Scene Switcher -->
+                <div class="scene-switcher">
+                    <button class="scene-btn active" data-scene="alveoli">🫁 1. 폐포 기체 교환 (확산)</button>
+                    <button class="scene-btn" data-scene="airway">🎋 2. 기관 &amp; 기관지 트리</button>
+                    <button class="scene-btn" data-scene="hero">👤 3. 전신 가로막 호흡 운동</button>
+                </div>
+
+                <!-- Floating HUD Badges -->
+                <div class="sim-hud-overlay">
+                    <div class="sim-hud-badge">
+                        <span class="indicator"></span>
+                        <span>화면 속 폐포와 모세혈관을 클릭하여 산소/이산화탄소 분압차 확산 원리를 확인하세요.</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar: Details & Exam Traps -->
+        <aside class="sim-sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-title">🫁 호흡계 검사기 &amp; 시험 족보</span>
+            </div>
+
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab-btn active" data-tab="focus">가로막 조작 &amp; 압력</button>
+                <button class="sidebar-tab-btn" data-tab="gas">기체 성분 비교표</button>
+                <button class="sidebar-tab-btn" data-tab="traps">시험 킬러 함정</button>
+                <button class="sidebar-tab-btn" data-tab="quiz">개념 퀴즈</button>
+            </div>
+
+            <div class="sidebar-body">
+                
+                <!-- Tab 1: Live Controls & Boyle's Law Gauge -->
+                <div id="tabPanel_focus" class="sidebar-tab-panel">
+                    
+                    <div class="meter-card" style="border-color: #06b6d4; background: rgba(6, 182, 212, 0.08);">
+                        <div class="meter-card-title">
+                            <span id="organTitle" style="color:#22d3ee; font-size:15px;">폐포 (Alveoli) - 기체 교환 표면</span>
+                            <span class="curriculum-badge">RESPIRATION FOCUS</span>
+                        </div>
+                        <p id="organDesc" style="font-size:13px; color:#f1f5f9; line-height:1.5;">약 3~5억 개로 총 표면적이 약 100㎡(테니스 코트 크기)에 달해 모세혈관과의 기체 교환 효율을 극대화합니다.</p>
+                    </div>
+
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>가로막(고무막) 물리 조작 &amp; 보일 법칙</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:10px; margin-top:6px;">
+                            <div class="sim-slider-wrapper">
+                                <span class="sim-slider-label">가로막 위치</span>
+                                <input id="diaphragmSlider" class="sim-slider" type="range" min="0" max="100" value="50" step="5">
+                                <span id="diaphragmVal" class="sim-slider-value">평형 상태</span>
+                            </div>
+                            <div class="sim-slider-wrapper">
+                                <span class="sim-slider-label">호흡수 (분당)</span>
+                                <input id="rateSlider" class="sim-slider" type="range" min="10" max="40" value="16" step="1">
+                                <span id="rateVal" class="sim-slider-value">16 회/분</span>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:12px; padding:8px 12px; background:rgba(0,0,0,0.3); border-radius:6px; font-size:12px;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <span style="color:#94a3b8;">흉강 내압 (보일 법칙):</span>
+                                <strong id="statPressure" style="color:#38bdf8;">760.0 mmHg</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>2022 개정 핵심 체크리스트</span>
+                        </div>
+                        <ul id="conceptList" class="concept-list"></ul>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Gas Component Table -->
+                <div id="tabPanel_gas" class="sidebar-tab-panel" style="display:none;">
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>들숨 vs 날숨 기체 성분 비교 (2022 시험 빈출)</span>
+                        </div>
+                        <table class="concentration-table">
+                            <thead>
+                                <tr>
+                                    <th>기체</th>
+                                    <th>들숨(Inhale)</th>
+                                    <th>날숨(Exhale)</th>
+                                    <th>변화 원인</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>질소 (N2)</strong></td>
+                                    <td>78%</td>
+                                    <td>78%</td>
+                                    <td>변화 없음 (이용 안 함)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>산소 (O2)</strong></td>
+                                    <td class="safe-highlight">21%</td>
+                                    <td>16%</td>
+                                    <td><strong>감소</strong> (체내로 흡수)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>이산화탄소</strong></td>
+                                    <td>0.04%</td>
+                                    <td class="trap-highlight">4%</td>
+                                    <td><strong>약 100배 증가</strong> (배출)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Exam Traps -->
+                <div id="tabPanel_traps" class="sidebar-tab-panel" style="display:none;">
+                    <div id="examTrapList"></div>
+                </div>
+
+                <!-- Tab 4: Quick Quiz -->
+                <div id="tabPanel_quiz" class="sidebar-tab-panel" style="display:none;">
+                    <div id="quizContainer"></div>
+                </div>
+
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="../shared/engine-core.js"></script>
+    <script src="../shared/exam-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

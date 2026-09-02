@@ -61,7 +61,7 @@ async function run() {
     assert.equal(legacyBasics.status, 308);
     assert.equal(legacyBasics.headers.get("location"), "/learning/literacy-numeracy/reading/");
     assert.equal(legacyAcademics.status, 308);
-    assert.equal(legacyAcademics.headers.get("location"), "/learning/inquiry/body-explorer/");
+    assert.equal(legacyAcademics.headers.get("location"), "/learning/inquiry/human-body/");
     assert.equal(legacyStoryBooks.status, 308);
     assert.equal(legacyStoryBooks.headers.get("location"), "/learning/literacy-numeracy/story-books/korea-tales/");
     assert.equal(page.status, 200);

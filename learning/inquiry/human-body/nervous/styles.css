@@ -1,0 +1,86 @@
+/* ==========================================================================
+   신경계 & 자극-반사 실시간 시뮬레이터 스타일시트
+   초고화질 3D 비주얼 + 60fps 대뇌 vs 척수반사 레이스 타이머 & 눈 광학
+   ========================================================================== */
+
+.nervous-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    background: #030712;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#nervousCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Scene Switcher */
+.scene-switcher {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    background: rgba(10, 15, 30, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    z-index: 40;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.scene-btn {
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 999px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.scene-btn.active, .scene-btn:hover {
+    background: linear-gradient(135deg, #a855f7, #7e22ce);
+    color: #ffffff;
+    border-color: #c084fc;
+    box-shadow: 0 0 14px rgba(168, 85, 247, 0.5);
+}
+
+/* Race Timer Card */
+.race-timer-card {
+    padding: 12px;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(168, 85, 247, 0.4);
+    border-radius: var(--radius-md);
+    margin-bottom: 12px;
+}
+
+.race-timer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 12px;
+}

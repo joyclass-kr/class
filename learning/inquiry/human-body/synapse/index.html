@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>3D 시네마틱 뉴런 시냅스 &amp; 신경전달물질 분자 시뮬레이터 | 2022 개정 교육과정</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="sim-header">
+        <div class="sim-header-left">
+            <a href="../" class="nav-back-btn" aria-label="인체 시뮬레이터 메인으로">
+                <span>◀</span> 목록
+            </a>
+            <div class="sim-title-group">
+                <h1 class="sim-title">뉴런 시냅스 &amp; 신경전달물질 분자 시뮬레이터</h1>
+                <span class="sim-subtitle">Synaptic Transmission &amp; Action Potential Dynamics</span>
+                <span class="curriculum-badge">초등 [6과04-06] · 중등 [9과20-02] · 고등 [12생과Ⅰ03]</span>
+            </div>
+        </div>
+        <div class="sim-header-right">
+            <button id="fireStimulusBtn" class="sim-btn primary" type="button" style="background:linear-gradient(135deg, #38bdf8, #0284c7); border-color:#7dd3fc; box-shadow:0 0 16px rgba(56, 189, 248, 0.5);">
+                <span>⚡</span> 활동전위 발사 (탈분극 +30mV)
+            </button>
+            <button id="playPauseBtn" class="tool-toggle-btn" type="button">
+                <span>⏸️</span> 일시정지
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="sim-app-container">
+        
+        <!-- Left/Center Stage Area -->
+        <main class="sim-stage-area">
+            <div class="synapse-viewport">
+                <canvas id="synapseCanvas"></canvas>
+
+                <!-- Floating HUD Badges -->
+                <div class="sim-hud-overlay">
+                    <div class="sim-hud-badge">
+                        <span class="indicator"></span>
+                        <span>우측 상단 <strong>[⚡ 활동전위 발사]</strong> 버튼을 눌러 Ca2+ 유입, 시냅스 소포 방출, Na+ 통로 개폐를 관찰하세요.</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar: Controls & Real-Time Oscilloscope -->
+        <aside class="sim-sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-title">🔬 시냅스 전위 검사기 &amp; 약물 제어</span>
+            </div>
+
+            <div class="sidebar-body" style="padding-top:16px;">
+                
+                <!-- Real-Time Membrane Potential Oscilloscope -->
+                <div class="potential-card">
+                    <div class="potential-header">
+                        <span>실시간 막전위 오실로스코프 (Oscilloscope)</span>
+                        <span id="potentialVal" style="color:#34d399; font-weight:800;">-70 mV (휴지전위)</span>
+                    </div>
+                    <canvas id="potentialCanvas"></canvas>
+                    <div style="display:flex; justify-content:space-between; margin-top:6px; font-size:10px; color:#94a3b8;">
+                        <span>-70mV (휴지)</span>
+                        <span style="color:#38bdf8;">+30mV (탈분극 피크)</span>
+                        <span style="color:#a855f7;">-80mV (과분극)</span>
+                    </div>
+                </div>
+
+                <!-- Picked Hotspot Detail Card -->
+                <div id="organDetailCard" class="meter-card" style="border-color:#38bdf8; background:rgba(56, 189, 248, 0.08);">
+                    <div class="meter-card-title">
+                        <span id="organTitle" style="color:#38bdf8; font-size:15px;">축삭 말단 (Presynaptic Terminal)</span>
+                        <span class="curriculum-badge">MOLECULAR FOCUS</span>
+                    </div>
+                    <p id="organDesc" style="font-size:13px; color:#f1f5f9; line-height:1.5;">활동전위가 도달하면 전압 개폐성 Ca2+ 통로가 열려 칼슘 이온이 유입되고, 시냅스 소포가 세포막과 융합하여 신경전달물질을 방출합니다.</p>
+                </div>
+
+                <!-- Neurotransmitter Selector -->
+                <div class="meter-card">
+                    <div class="meter-card-title">
+                        <span>1. 신경전달물질 선택</span>
+                    </div>
+                    <div class="transmitter-grid">
+                        <button class="sim-pill-btn active" data-transmitter="dopamine">✨ 도파민 (Dopamine)</button>
+                        <button class="sim-pill-btn" data-transmitter="ach">⚡ 아세틸콜린 (ACh)</button>
+                        <button class="sim-pill-btn" data-transmitter="serotonin">💜 세로토닌 (Serotonin)</button>
+                        <button class="sim-pill-btn" data-transmitter="gaba">🛑 GABA (억제성)</button>
+                    </div>
+                </div>
+
+                <!-- Toxin / Drug Selector -->
+                <div class="meter-card">
+                    <div class="meter-card-title">
+                        <span>2. 약물 &amp; 신경독소 처리 (2022 탐구 확장)</span>
+                    </div>
+                    <div class="toxin-grid">
+                        <button class="sim-pill-btn active" data-toxin="none">정상 상태</button>
+                        <button class="sim-pill-btn" data-toxin="botox">⚠️ 보톡스 (분비 차단)</button>
+                        <button class="sim-pill-btn" data-toxin="nerve_gas">☣️ 신경가스 (분해 억제)</button>
+                    </div>
+                </div>
+
+                <!-- 2022 Exam Checklist -->
+                <div class="meter-card">
+                    <div class="meter-card-title">
+                        <span>2022 개정 시험 핵심 체크</span>
+                    </div>
+                    <ul class="concept-list">
+                        <li class="concept-item"><span class="icon">📌</span><span><strong>흥분의 전달:</strong> 시냅스에서는 전기 신호가 '화학 물질(신경전달물질)'로 바뀌어 <strong>축삭 말단 ➔ 시냅스 후 뉴런 가지돌기 단방향으로만 전달</strong></span></li>
+                        <li class="concept-item"><span class="icon">📌</span><span><strong>탈분극 원리:</strong> 수용체에 전달물질 결합 ➔ Na+ 통로 열림 ➔ Na+ 유입으로 막전위 상승($-70 \rightarrow +30\text{ mV}$)</span></li>
+                    </ul>
+                </div>
+
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="../shared/engine-core.js"></script>
+    <script src="../shared/exam-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

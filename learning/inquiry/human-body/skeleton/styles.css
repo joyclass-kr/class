@@ -1,0 +1,49 @@
+/* ==========================================================================
+   골격계 & 관절 바이오메카닉스 실시간 시뮬레이터 스타일시트
+   AI 최고화질 비주얼 + 60fps 팔꿈치/무릎 관절 각도(ROM) & 이두근·삼두근 길항 작용
+   ========================================================================== */
+
+.skeleton-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    background: #030712;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#skeletonCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Joint Angle HUD Meter */
+.joint-angle-meter {
+    padding: 12px;
+    background: rgba(15, 23, 42, 0.88);
+    border: 1.5px solid rgba(56, 189, 248, 0.45);
+    border-radius: var(--radius-md);
+    margin-bottom: 12px;
+}
+
+.antagonist-status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.muscle-state-box {
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    text-align: center;
+}

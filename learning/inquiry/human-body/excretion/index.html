@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>3D 시네마틱 배설계 &amp; 콩팥·네프론 여과 시뮬레이터 | 2022 개정 교육과정</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="sim-header">
+        <div class="sim-header-left">
+            <a href="../" class="nav-back-btn" aria-label="인체 시뮬레이터 메인으로">
+                <span>◀</span> 목록
+            </a>
+            <div class="sim-title-group">
+                <h1 class="sim-title">3D 배설계 &amp; 콩팥·네프론 여과</h1>
+                <span class="sim-subtitle">Kidney Filtration &amp; Urine Concentration</span>
+                <span class="curriculum-badge">2022 개정 [6과04-05]</span>
+            </div>
+        </div>
+        <div class="sim-header-right">
+            <button id="urinateBtn" class="sim-btn warning" type="button">
+                <span>🚽</span> 배뇨하기 (방광 비우기)
+            </button>
+            <button id="playPauseBtn" class="tool-toggle-btn" type="button">
+                <span>⏸️</span> 일시정지
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="sim-app-container">
+        
+        <!-- Left/Center Stage Area -->
+        <main class="sim-stage-area">
+            <div class="excretion-viewport">
+                <canvas id="excretionCanvas"></canvas>
+
+                <!-- Floating Top Scene Switcher -->
+                <div class="scene-switcher">
+                    <button class="scene-btn active" data-scene="main">🌟 1. 콩팥 &amp; 네프론 돋보기</button>
+                    <button class="scene-btn" data-scene="path">🔬 2. 여과·재흡수·분비 경로</button>
+                    <button class="scene-btn" data-scene="torso">👤 3. 전신 배설계 순환</button>
+                </div>
+
+                <!-- Floating HUD Badges -->
+                <div class="sim-hud-overlay">
+                    <div class="sim-hud-badge">
+                        <span class="indicator"></span>
+                        <span>화면 속 콩팥, 네프론(돋보기), 수뇨관, 방광을 클릭하여 세부 메커니즘을 확인하세요.</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar: 3D Picked Organ Details & 2022 Exam Traps -->
+        <aside class="sim-sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-title">🫘 콩팥 검사기 &amp; 시험 족보</span>
+            </div>
+
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab-btn active" data-tab="focus">장기 정보 &amp; 조작</button>
+                <button class="sidebar-tab-btn" data-tab="table">성분 농도 비교표</button>
+                <button class="sidebar-tab-btn" data-tab="traps">시험 킬러 함정</button>
+                <button class="sidebar-tab-btn" data-tab="quiz">개념 퀴즈</button>
+            </div>
+
+            <div class="sidebar-body">
+                
+                <!-- Tab 1: Picked Organ Focus Card & Live Sliders -->
+                <div id="tabPanel_focus" class="sidebar-tab-panel">
+                    
+                    <!-- Live Bladder Capacity Gauge -->
+                    <div class="bladder-gauge-box">
+                        <div class="bladder-gauge-header">
+                            <span>방광 오줌 저장량</span>
+                            <span id="bladderText">35 % (140 mL)</span>
+                        </div>
+                        <div class="bladder-progress-bar">
+                            <div id="bladderProgress" class="bladder-progress-fill"></div>
+                        </div>
+                    </div>
+
+                    <div id="organDetailCard" class="meter-card" style="border-color: #38bdf8; background: rgba(56, 189, 248, 0.08);">
+                        <div class="meter-card-title">
+                            <span id="organTitle" style="color:#38bdf8; font-size:15px;">네프론 (Nephron) - 사구체 &amp; 보먼주머니</span>
+                            <span class="curriculum-badge">EXCRETION FOCUS</span>
+                        </div>
+                        <p id="organDesc" style="font-size:13px; color:#f1f5f9; line-height:1.5;">콩팥 1개당 약 100만 개 존재. 사구체의 높은 혈압으로 크기가 큰 단백질/혈구를 제외한 포도당, 물, 요소가 보먼주머니로 여과(원뇨 생성)됩니다.</p>
+                    </div>
+
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>생체 변수 실시간 조절</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:10px; margin-top:6px;">
+                            <div class="sim-slider-wrapper">
+                                <span class="sim-slider-label">혈압 (사구체 여과압)</span>
+                                <input id="bpSlider" class="sim-slider" type="range" min="80" max="160" value="120" step="5">
+                                <span id="bpVal" class="sim-slider-value">120 mmHg</span>
+                            </div>
+                            <div class="sim-slider-wrapper">
+                                <span class="sim-slider-label">수분 섭취량 (오줌 농도)</span>
+                                <input id="hydrationSlider" class="sim-slider" type="range" min="10" max="100" value="50" step="5">
+                                <span id="hydrationVal" class="sim-slider-value">50 %</span>
+                            </div>
+                            <div class="sim-slider-wrapper">
+                                <span class="sim-slider-label">항이뇨 호르몬 (ADH)</span>
+                                <input id="adhSlider" class="sim-slider" type="range" min="0" max="100" value="50" step="5">
+                                <span id="adhVal" class="sim-slider-value">50 %</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>2022 개정 핵심 체크리스트</span>
+                        </div>
+                        <ul id="conceptList" class="concept-list"></ul>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Concentration Comparison Table (2022 Exam Critical) -->
+                <div id="tabPanel_table" class="sidebar-tab-panel" style="display:none;">
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>혈장 vs 원뇨 vs 오줌 성분 비교표</span>
+                        </div>
+                        <table class="concentration-table">
+                            <thead>
+                                <tr>
+                                    <th>성분</th>
+                                    <th>혈장(%)</th>
+                                    <th>원뇨(%)</th>
+                                    <th>오줌(%)</th>
+                                    <th>판정</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>단백질</strong></td>
+                                    <td>7.5</td>
+                                    <td class="trap-highlight">0</td>
+                                    <td class="safe-highlight">0</td>
+                                    <td>여과 안 됨 (크기 큼)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>포도당</strong></td>
+                                    <td>0.1</td>
+                                    <td>0.1</td>
+                                    <td class="safe-highlight">0</td>
+                                    <td>100% 능동수송 재흡수</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>요소</strong></td>
+                                    <td>0.03</td>
+                                    <td>0.03</td>
+                                    <td class="trap-highlight">2.00</td>
+                                    <td>물 흡수로 <strong>67배 농축</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>무기염류</strong></td>
+                                    <td>0.9</td>
+                                    <td>0.9</td>
+                                    <td>1.2</td>
+                                    <td>필요량만 재흡수</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="font-size:11px; color:#94a3b8; margin-top:8px; line-height:1.4;">⚠️ <strong>시험 빈출 함정:</strong> 건강한 사람의 오줌에서 포도당이나 단백질이 검출되면 신장 이상(당뇨병, 사구체신염)을 의심할 수 있습니다.</p>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Exam Traps -->
+                <div id="tabPanel_traps" class="sidebar-tab-panel" style="display:none;">
+                    <div id="examTrapList"></div>
+                </div>
+
+                <!-- Tab 4: Quick Quiz -->
+                <div id="tabPanel_quiz" class="sidebar-tab-panel" style="display:none;">
+                    <div id="quizContainer"></div>
+                </div>
+
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="../shared/engine-core.js"></script>
+    <script src="../shared/exam-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
