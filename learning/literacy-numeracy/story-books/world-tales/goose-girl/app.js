@@ -297,16 +297,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '거위지기 아가씨',
+    intro: [
+        '거위지기 아가씨는 독일의 그림 형제가 1815년에 펴낸 옛이야기 모음집에 실린 이야기예요. 독일 곳곳에서 전해 내려오던 이야기를 모아 적은 것이랍니다.',
+        '자기 자리를 빼앗기고도 한마디 하지 못하던 공주가, 스스로 입을 열면서 이야기가 풀려요. 말할 수 있게 되는 것이 얼마나 큰 힘인지 보여 주는 이야기랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🪿')}
             </div>
             <div class="story-page-right">
-                <h1>거위지기 아가씨</h1>
-                <p>거위지기 아가씨는 독일의 그림 형제가 1815년에 펴낸 옛이야기 모음집에 실린 이야기예요. 독일 곳곳에서 전해 내려오던 이야기를 모아 적은 것이랍니다.</p>
-                <p>자기 자리를 빼앗기고도 한마디 하지 못하던 공주가, 스스로 입을 열면서 이야기가 풀려요. 말할 수 있게 되는 것이 얼마나 큰 힘인지 보여 주는 이야기랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -321,8 +330,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -332,8 +341,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -343,22 +352,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -408,9 +418,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -421,7 +431,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -493,7 +503,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -502,34 +512,585 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Goose Girl',
+        intro: [
+            "The Goose Girl is in the collection of old tales the Brothers Grimm published in Germany in 1815. They wrote down stories that had been passed along all over the country.",
+            "A princess who cannot say a word while her place is taken from her — and the story opens up the moment she does speak. It shows how large a thing it is to be able to say what happened."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · Setting Out on a Long Road',
+            beats: [
+                {
+                    art: '01-departure.webp',
+                    emoji: '🐴',
+                    left: [
+                        "The princess had lost her father early and lived alone with her mother. The castle was large and quiet, and the two of them were always together.",
+                        "Wherever they went, they went together.",
+                        "The year the princess turned seventeen, an offer of marriage came from a country very far away — three mountains away, they said."
+                    ],
+                    right: [
+                        "Her mother lay awake for nights on end,",
+                        "putting good clothes and silver dishes into the chest and taking them out again.",
+                        "The day before they left she went down to the stable",
+                        "and led out the white horse Falada herself.",
+                        "\"This horse understands what you say. If things are hard, tell him anything at all.\" The princess stroked his mane."
+                    ]
+                },
+                {
+                    art: '01-departure-2.webp',
+                    emoji: '🐴',
+                    left: [
+                        "It was the morning of the journey.",
+                        "Her mother took a white handkerchief out of her dress. She had embroidered it herself, in the night.",
+                        "\"Keep this next to you. If trouble comes, take it out and look at it, and think of it as your mother beside you.\" The princess put it deep inside her clothes."
+                    ],
+                    right: [
+                        "The gates opened and the two of them set off. There was nobody with them but one maid,",
+                        "and for so long a road the baggage was slight.",
+                        "Her mother stood on at the gate.",
+                        "The princess slackened the reins and looked back, several times.",
+                        "Over the hill the castle was out of sight.",
+                        "From there on the road was strange to her."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · At the Stream',
+            beats: [
+                {
+                    art: '02-stream.webp',
+                    emoji: '💧',
+                    left: [
+                        "By midday the sun was very hot. It was open country without a scrap of shade,",
+                        "and the princess could not bear her thirst.",
+                        "As it happened a stream ran below the road,",
+                        "and the sound of the water came up cool.",
+                        "\"Would you fetch me some water? I am sorry to ask.\""
+                    ],
+                    right: [
+                        "The maid did not answer. She sat with her arms folded, playing with the reins.",
+                        "\"If you are thirsty you may go yourself. I shall not wait on you any longer.\"",
+                        "The princess stood blankly for a moment.",
+                        "She had not taken in what it meant.",
+                        "And still she went down to the stream alone, without a word."
+                    ]
+                },
+                {
+                    art: '02-stream-2.webp',
+                    emoji: '💧',
+                    left: [
+                        "The princess cupped both hands and lifted the water.",
+                        "And as she bent down,",
+                        "something slipped out from inside her dress.",
+                        "It was the white handkerchief her mother had given her.",
+                        "The moment it touched the water it was carried away.",
+                        "\"Oh — no!\""
+                    ],
+                    right: [
+                        "The princess reached out, and it was already too late. The handkerchief went round the bend of the stream and was gone.",
+                        "She stood there with her wet hands up in the air.",
+                        "Somehow all the strength went out of her legs.",
+                        "It felt as though the thing that had been holding her together had gone downstream with it.",
+                        "Up on the bank the maid watched her.",
+                        "Something had changed in her eyes."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · Places Changed',
+            beats: [
+                {
+                    art: '03-swap.webp',
+                    emoji: '👗',
+                    left: [
+                        "The maid got down from the horse and came striding over. Even the way she walked was different.",
+                        "\"Take off your clothes. We shall swap with mine.\"",
+                        "\"What did you say?\"",
+                        "\"From now on I am the princess. And you are my maid.\"",
+                        "The princess could not get a word out."
+                    ],
+                    right: [
+                        "It was a long while before she could speak at all.",
+                        "\"I cannot do that.\"",
+                        "\"Then what will you do out here? You may shout as much as you like — there is nobody to hear.\"",
+                        "And the road really was empty in both directions.",
+                        "The princess bowed her head and handed over her clothes."
+                    ]
+                },
+                {
+                    art: '03-swap-2.webp',
+                    emoji: '👗',
+                    left: [
+                        "The maid dressed herself in the fine clothes and got up on Falada. The princess had to walk behind in the old ones.",
+                        "\"One more thing. If you say a word of this to anybody, you had better be ready for it.\"",
+                        "The princess nodded.",
+                        "There was nothing else she could do."
+                    ],
+                    right: [
+                        "The dust came up white under the horse's hooves,",
+                        "and the princess's shoes were soon thick with it.",
+                        "As the sun went down a castle came into sight, with flags flying and the gates thrown wide.",
+                        "People had come out along the road and were waving.",
+                        "And every one of them looked only at the woman on the horse."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Girl Who Minds the Geese',
+            beats: [
+                {
+                    art: '04-geese.webp',
+                    emoji: '🪿',
+                    left: [
+                        "The young prince came out to meet them and held out his hand to the maid. The princess stood behind them,",
+                        "and nobody looked at her at all.",
+                        "\"And who is that?\"",
+                        "\"A servant I picked up on the road. Set her to whatever wants doing.\""
+                    ],
+                    right: [
+                        "The old king was crossing the courtyard and stopped. He looked at the princess a long while and tilted his head.",
+                        "\"I have never seen a servant with eyes like that. Let her mind the geese, then. She can help Conrad.\"",
+                        "So the princess was given a small room beside the barn,",
+                        "and the work began before dawn the next day."
+                    ]
+                },
+                {
+                    art: '04-geese-2.webp',
+                    emoji: '🪿',
+                    left: [
+                        "There was a boy called Conrad,",
+                        "with a face full of freckles and a straw hat pulled down over it.",
+                        "\"What's your name? Where are you from?\"",
+                        "The princess did not answer anything.",
+                        "\"What an odd one. Can't you talk either?\""
+                    ],
+                    right: [
+                        "Conrad lifted the brim of his hat to look into her face, and the princess turned away.",
+                        "Every morning they drove the geese out to the fields and came back at sundown.",
+                        "Her hands cracked and her feet blistered.",
+                        "At night in the little room she thought about her mother.",
+                        "And still she bit down on her lip.",
+                        "She had given her word."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · Falada Over the Gate',
+            beats: [
+                {
+                    art: '05-falada.webp',
+                    emoji: '🏰',
+                    left: [
+                        "The maid, now the prince's bride, could not rest easy. There was no telling when that white horse might open his mouth,",
+                        "and the thought of it kept her awake at night.",
+                        "One day she asked the prince,",
+                        "\"Send that horse away. He was hurt carrying me here, and it grieves me to look at him.\""
+                    ],
+                    right: [
+                        "The news went through the princess like cold water. Falada was the only one in that castle who knew her.",
+                        "So she went to the gatekeeper and held out every coin she had.",
+                        "\"Please put that horse's head up over the gate, so that I can see it as I pass every morning.\"",
+                        "The gatekeeper hesitated, and then he nodded."
+                    ]
+                },
+                {
+                    art: '05-falada-2.webp',
+                    emoji: '🏰',
+                    left: [
+                        "After that the princess stopped under the gate every morning. The geese went honking past her feet,",
+                        "and she looked up and called quietly.",
+                        "\"Falada. How are you?\"",
+                        "The geese went quiet for a moment.",
+                        "It was cool in the shadow of the gate."
+                    ],
+                    right: [
+                        "And a low voice came down from above the gate.",
+                        "\"Keep your heart up, my lady. If your mother knew, how she would weep.\"",
+                        "The princess bowed her head and walked on.",
+                        "A tear fell onto the dirt of the road.",
+                        "And Conrad, coming behind her, saw the whole thing."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · Blow, Wind',
+            beats: [
+                {
+                    art: '06-wind.webp',
+                    emoji: '💨',
+                    left: [
+                        "Out in the fields the princess would sit down in the grass and let her hair loose to comb it.",
+                        "It came pouring down golden in the sunlight, and every time he saw it Conrad wanted to touch it.",
+                        "\"Let me have one! Just one hair!\"",
+                        "He put out his hand,",
+                        "and the princess moved quickly out of the way."
+                    ],
+                    right: [
+                        "She shook her head hard. She would not give away so much as a hair of it.",
+                        "And then she shut her eyes and said quietly,",
+                        "\"Blow, wind, and carry that boy's hat away.\" And the wind really did get up.",
+                        "The grass went flat one way and the geese beat their wings."
+                    ]
+                },
+                {
+                    art: '06-wind-2.webp',
+                    emoji: '💨',
+                    left: [
+                        "The straw hat went rolling over the hill, and Conrad went scrambling after it.",
+                        "By the time he got back with it the princess had her hair plaited again.",
+                        "And there was grass stain all over the hat.",
+                        "\"Not again!\"",
+                        "It happened so many times that in the end Conrad had had enough."
+                    ],
+                    right: [
+                        "He went straight to the king.",
+                        "\"I can't work with her any more. She calls up the wind, she does.\"",
+                        "\"And she talks to that horse over the gate. It answers her back!\"",
+                        "And the king did not let that pass."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · What She Told the Stove',
+            beats: [
+                {
+                    art: '07-stove.webp',
+                    emoji: '🔥',
+                    left: [
+                        "Next day the king called the princess into a quiet room, shut the door and sat down facing her.",
+                        "\"There is something behind all this. Tell me.\"",
+                        "\"I cannot. I gave my word.\"",
+                        "Her hands kept closing in her lap.",
+                        "And the king waited a long while."
+                    ],
+                    right: [
+                        "The princess only said the same thing again, and the king saw it was not a thing to be forced out of her.",
+                        "Then it came to him, and he pointed toward the kitchen.",
+                        "There stood a great iron stove.",
+                        "\"There is a stove. It is not a person, so telling it would break no promise. Tell the stove, then.\""
+                    ]
+                },
+                {
+                    art: '07-stove-2.webp',
+                    emoji: '🔥',
+                    left: [
+                        "The princess went into the kitchen and opened the stove door.",
+                        "She knelt down and looked into the fire for a long time without saying anything.",
+                        "And then she managed to begin. The firelight moved across her face,",
+                        "and a log cracked and spat.",
+                        "\"I am the princess who was to be married into this country.\""
+                    ],
+                    right: [
+                        "Once it had started it did not stop.",
+                        "The handkerchief lost at the stream, the clothes changed out on the open road, Falada over the gate — she told all of it.",
+                        "The tears ran down her face the whole time she spoke.",
+                        "And when she had finished, her shoulders felt lighter.",
+                        "The king had been outside the door, hearing every word."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Back Where She Belonged',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '👑',
+                    left: [
+                        "The next day there was a great feast at the castle. The princess was given fine clothes and told to sit in a high place,",
+                        "and the maid, who could make no sense of it, kept glancing sideways.",
+                        "\"Why is the goose girl sitting up there?\"",
+                        "Her hand shook round her cup.",
+                        "And still she made herself lift her chin."
+                    ],
+                    right: [
+                        "When the feast was well under way the king set down his glass and asked, as though in passing,",
+                        "\"Here is an interesting question. If a servant took her mistress's place, what punishment should she have?\"",
+                        "\"Such a person should be put out of the castle! And never let back in.\"",
+                        "the maid answered, loudly."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '👑',
+                    left: [
+                        "The great hall went quiet.",
+                        "\"Quite right. It shall be as you have said.\"",
+                        "The blood went out of the maid's face.",
+                        "Only then did she understand what had happened.",
+                        "And she left the castle that same day.",
+                        "The prince got up and came over to the princess."
+                    ],
+                    right: [
+                        "He had thought all along there was something familiar about her face.",
+                        "\"We passed each other under the gate any number of times.\"",
+                        "\"And you did not know me then.\"",
+                        "\"Why did you say nothing all this while?\"",
+                        "\"I gave my word. I may speak now, I think?\"",
+                        "And that day the princess laughed out loud for the first time."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What did her mother give the princess before she left?',
+            choices: ['A silver dish', 'A white handkerchief she had embroidered herself', 'A gold ring'],
+            answer: 1
+        },
+        {
+            q: 'What happened at the stream?',
+            choices: ['The handkerchief slipped out and was carried away', 'The maid fell into the water', 'Falada ran off'],
+            answer: 0
+        },
+        {
+            q: 'What did the maid make the princess do?',
+            choices: ['Walk home alone', 'Give her the horse', 'Change clothes and say nothing about it'],
+            answer: 2
+        },
+        {
+            q: 'Why did the maid want Falada sent away?',
+            choices: ['The horse had thrown her', 'She was afraid the horse would speak', 'The prince did not like him'],
+            answer: 1
+        },
+        {
+            q: 'What did the princess ask the gatekeeper to do?',
+            choices: ['Put Falada’s head above the gate', 'Let her out of the castle', 'Keep her secret'],
+            answer: 0
+        },
+        {
+            q: 'What did the princess do when Conrad grabbed at her hair?',
+            choices: ['She hit him with her comb', 'She ran back to the castle', 'She called up the wind to blow his hat away'],
+            answer: 2
+        },
+        {
+            q: 'How did the king get the story out of her?',
+            choices: ['He ordered her to speak', 'He told her to tell it to the stove', 'He asked Conrad instead'],
+            answer: 1
+        },
+        {
+            q: 'Who decided the maid’s punishment?',
+            choices: ['The maid herself, without knowing it', 'The prince', 'The princess'],
+            answer: 0
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🪿',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "A talking horse is a rare thing in the tales the Brothers Grimm collected. Falada goes on talking even after his death.",
+                    "The princess loses the handkerchief at the stream. Her mother had given it to her. And from that point the maid begins to get the better of her.",
+                    "The reason she says nothing while her place is taken is that she gave her word. Keeping that word is how she comes to be minding geese.",
+                    "Falada speaks to her even from above the gate. It was for that one sentence every morning that she stopped under it."
+                ],
+                right: [
+                    "The king does not press her. He tells her to say it to the stove instead. What cannot be said to a person has to be sayable somewhere.",
+                    "Was the princess right to keep that promise all the way to the end?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-departure.webp': [
+            { word: 'lose', meaning: '여의다', sentence: 'She had lost her father early.' },
+            { word: 'offer of marriage', meaning: '혼담', sentence: 'An offer of marriage came from far away.' },
+            { word: 'lie awake', meaning: '뜬눈으로 새우다', sentence: 'Her mother lay awake for nights on end.' },
+            { word: 'stable', meaning: '마구간', sentence: 'She went down to the stable.' },
+            { word: 'mane', meaning: '갈기', sentence: 'The princess stroked his mane.' }
+        ],
+        '01-departure-2.webp': [
+            { word: 'handkerchief', meaning: '손수건', sentence: 'A white handkerchief.' },
+            { word: 'embroider', meaning: '수를 놓다', sentence: 'She had embroidered it herself.' },
+            { word: 'baggage', meaning: '짐', sentence: 'The baggage was slight.' },
+            { word: 'slacken', meaning: '늦추다', sentence: 'The princess slackened the reins.' },
+            { word: 'out of sight', meaning: '보이지 않는', sentence: 'Over the hill the castle was out of sight.' }
+        ],
+        '02-stream.webp': [
+            { word: 'a scrap of', meaning: '한 점의', sentence: 'Open country without a scrap of shade.' },
+            { word: 'bear', meaning: '견디다', sentence: 'She could not bear her thirst.' },
+            { word: 'fetch', meaning: '떠 오다', sentence: 'Would you fetch me some water?' },
+            { word: 'wait on', meaning: '시중들다', sentence: 'I shall not wait on you any longer.' },
+            { word: 'take in', meaning: '알아듣다', sentence: 'She had not taken in what it meant.' }
+        ],
+        '02-stream-2.webp': [
+            { word: 'cup', meaning: '두 손을 모으다', sentence: 'The princess cupped both hands.' },
+            { word: 'slip out', meaning: '스르르 미끄러지다', sentence: 'Something slipped out from inside her dress.' },
+            { word: 'bend', meaning: '물굽이', sentence: 'It went round the bend of the stream.' },
+            { word: 'hold together', meaning: '붙들어 주다', sentence: 'The thing that had been holding her together.' }
+        ],
+        '03-swap.webp': [
+            { word: 'stride', meaning: '성큼성큼 걷다', sentence: 'The maid came striding over.' },
+            { word: 'swap', meaning: '바꾸다', sentence: 'We shall swap with mine.' },
+            { word: 'from now on', meaning: '이제부터', sentence: 'From now on I am the princess.' },
+            { word: 'hand over', meaning: '건네주다', sentence: 'She handed over her clothes.' }
+        ],
+        '03-swap-2.webp': [
+            { word: 'hoof', meaning: '말발굽', sentence: "The dust came up under the horse's hooves." },
+            { word: 'thick with', meaning: '~투성이인', sentence: 'Her shoes were soon thick with it.' },
+            { word: 'come into sight', meaning: '보이기 시작하다', sentence: 'A castle came into sight.' },
+            { word: 'throw wide', meaning: '활짝 열다', sentence: 'The gates thrown wide.' }
+        ],
+        '04-geese.webp': [
+            { word: 'meet', meaning: '마중하다', sentence: 'The prince came out to meet them.' },
+            { word: 'servant', meaning: '하인', sentence: 'A servant I picked up on the road.' },
+            { word: 'want doing', meaning: '할 일이 있다', sentence: 'Set her to whatever wants doing.' },
+            { word: 'mind', meaning: '돌보다, 치다', sentence: 'Let her mind the geese, then.' }
+        ],
+        '04-geese-2.webp': [
+            { word: 'freckle', meaning: '주근깨', sentence: 'A face full of freckles.' },
+            { word: 'brim', meaning: '모자챙', sentence: 'Conrad lifted the brim of his hat.' },
+            { word: 'drive', meaning: '몰다', sentence: 'They drove the geese out to the fields.' },
+            { word: 'blister', meaning: '부르트다', sentence: 'Her feet blistered.' },
+            { word: 'give one’s word', meaning: '약속하다', sentence: 'She had given her word.' }
+        ],
+        '05-falada.webp': [
+            { word: 'rest easy', meaning: '마음이 놓이다', sentence: 'The maid could not rest easy.' },
+            { word: 'there is no telling', meaning: '알 수 없다', sentence: 'There was no telling when he might speak.' },
+            { word: 'grieve', meaning: '마음 아프게 하다', sentence: 'It grieves me to look at him.' },
+            { word: 'gatekeeper', meaning: '문지기', sentence: 'She went to the gatekeeper.' },
+            { word: 'hesitate', meaning: '망설이다', sentence: 'The gatekeeper hesitated.' }
+        ],
+        '05-falada-2.webp': [
+            { word: 'honk', meaning: '꽥꽥거리다', sentence: 'The geese went honking past her feet.' },
+            { word: 'keep one’s heart up', meaning: '힘내다', sentence: 'Keep your heart up, my lady.' },
+            { word: 'weep', meaning: '울다', sentence: 'How she would weep.' }
+        ],
+        '06-wind.webp': [
+            { word: 'let loose', meaning: '풀어 내리다', sentence: 'She would let her hair loose to comb it.' },
+            { word: 'pour down', meaning: '쏟아져 내리다', sentence: 'It came pouring down golden in the sunlight.' },
+            { word: 'give away', meaning: '내주다', sentence: 'She would not give away so much as a hair.' },
+            { word: 'get up', meaning: '(바람이) 일다', sentence: 'And the wind really did get up.' }
+        ],
+        '06-wind-2.webp': [
+            { word: 'scramble after', meaning: '헐레벌떡 쫓다', sentence: 'Conrad went scrambling after it.' },
+            { word: 'plait', meaning: '땋다', sentence: 'The princess had her hair plaited again.' },
+            { word: 'grass stain', meaning: '풀물', sentence: 'There was grass stain all over the hat.' },
+            { word: 'have had enough', meaning: '참다못하다', sentence: 'In the end Conrad had had enough.' },
+            { word: 'let pass', meaning: '흘려듣다', sentence: 'And the king did not let that pass.' }
+        ],
+        '07-stove.webp': [
+            { word: 'behind', meaning: '~ 뒤에 숨은', sentence: 'There is something behind all this.' },
+            { word: 'force out of', meaning: '억지로 캐묻다', sentence: 'It was not a thing to be forced out of her.' },
+            { word: 'iron', meaning: '무쇠의', sentence: 'There stood a great iron stove.' },
+            { word: 'break a promise', meaning: '약속을 어기다', sentence: 'Telling it would break no promise.' }
+        ],
+        '07-stove-2.webp': [
+            { word: 'kneel', meaning: '무릎을 꿇다', sentence: 'She knelt down and looked into the fire.' },
+            { word: 'crack and spit', meaning: '탁 하고 튀다', sentence: 'A log cracked and spat.' },
+            { word: 'once it has started', meaning: '한번 터지자', sentence: 'Once it had started it did not stop.' },
+            { word: 'every word', meaning: '하나도 빠짐없이', sentence: 'The king had been outside the door, hearing every word.' }
+        ],
+        '08-ending.webp': [
+            { word: 'make sense of', meaning: '영문을 알다', sentence: 'The maid could make no sense of it.' },
+            { word: 'glance sideways', meaning: '곁눈질하다', sentence: 'She kept glancing sideways.' },
+            { word: 'lift one’s chin', meaning: '턱을 치켜들다', sentence: 'She made herself lift her chin.' },
+            { word: 'mistress', meaning: '주인 (여자)', sentence: "A servant took her mistress's place." },
+            { word: 'punishment', meaning: '벌', sentence: 'What punishment should she have?' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'go quiet', meaning: '조용해지다', sentence: 'The great hall went quiet.' },
+            { word: 'familiar', meaning: '낯익은', sentence: 'There was something familiar about her face.' },
+            { word: 'any number of times', meaning: '몇 번이나', sentence: 'We passed each other any number of times.' },
+            { word: 'out loud', meaning: '소리 내어', sentence: 'The princess laughed out loud.' }
+        ],
+        'end.webp': [
+            { word: 'rare', meaning: '드문', sentence: 'A talking horse is a rare thing.' },
+            { word: 'get the better of', meaning: '누르다, 이기다', sentence: 'The maid begins to get the better of her.' },
+            { word: 'press', meaning: '캐묻다', sentence: 'The king does not press her.' },
+            { word: 'sayable', meaning: '말할 수 있는', sentence: 'It has to be sayable somewhere.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -594,6 +1155,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -602,7 +1164,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -614,7 +1176,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -648,4 +1210,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+

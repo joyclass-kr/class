@@ -62,6 +62,8 @@ async function run() {
         slugs = slugs.filter(s => want.includes(s));
     }
     const lines = [];
+    let done = 0, fails = 0;
+    const sizes = new Set();
     for (const slug of slugs) {
         // 영어 원고가 있는 책만 잰다
         const src = await (await fetch(slug + '/app.js?t=' + STAMP)).text();
@@ -86,17 +88,22 @@ async function run() {
                 const m = measure(w2, d2);
                 const tag = `${slug.padEnd(18)} ${String(W).padStart(4)}x${H} ${lang}`;
                 const bad = m.over.length || m.touch.length;
-                lines.push(
-                    (bad ? '<span class="bad">' : '') +
-                    `${tag}  책 ${m.book}  넘침 ${m.over.length ? m.over.join(' ') : '0'}  터치 ${m.touch.length ? m.touch.join(' ') : '0'}` +
-                    (bad ? '</span>' : '')
-                );
-                out.innerHTML = lines.join('\n');
+                // 잰 것을 다 늘어놓으면 너무 길다. 어긋난 줄만 남기고 나머지는 세기만 한다.
+                if (bad) {
+                    lines.push(`<span class="bad">${tag}  책 ${m.book}  넘침 ${m.over.join(' ') || '0'}  터치 ${m.touch.join(' ') || '0'}</span>`);
+                    fails++;
+                } else {
+                    sizes.add(`${W}x${H}=${m.book}`);
+                }
+                done++;
+                out.innerHTML = lines.join('\n') + `\n\n잰 곳 ${done} / 어긋남 ${fails}`;
             }
         }
     }
     lines.push('');
-    lines.push('끝. 붉은 줄이 없으면 통과입니다.');
+    lines.push(`끝. 책 ${slugs.length}권, 잰 곳 ${done}, 어긋남 ${fails}.`);
+    lines.push('책 높이: ' + [...sizes].sort().join(' '));
+    lines.push('붉은 줄이 없으면 통과입니다.');
     out.innerHTML = lines.join('\n');
 }
 run();
