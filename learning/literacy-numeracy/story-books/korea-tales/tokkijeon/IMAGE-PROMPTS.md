@@ -90,6 +90,7 @@ shark general in armour; a flounder, a crab, a sea bream, all in official hats,
 all edging backwards whenever volunteers are called for.
 Jara, the softshell turtle (자라 별주부): An authentic Korean softshell turtle (NOT a turtle/tortoise - 거북이가 아님!). Features: 1) A completely smooth, flat, leathery oval shell with NO hexagonal plates/scutes whatsoever and a soft flexible rim; 2) A distinctive pointed tubular pig-like snout (앞으로 뾰족하게 튀어나온 대롱형 돼지코 주둥이); 3) Long flexible neck, webbed feet with claws; 4) Walks upright or swims, wearing a small black official hat (탕건) and a cloth bundle on his back. Earnest, dogged, faintly sad. The most decent character in the book.
 The old mother softshell turtle (자라 어머니): A small wrinkled elderly softshell turtle with smooth leathery shell and a headscarf.
+The old sea turtle (늙은 거북): the ONLY hard-shelled turtle in this book. He appears once, in chapter 3, dictating the rabbit's likeness to the painter. Domed shell with clear hexagonal plates, old shells growing on his back, very aged. He must never be mistaken for Jara: Jara has no plates at all.
 The painted portrait: a scroll with a comically wrong-looking rabbit painted on
 it.
 ```
@@ -177,8 +178,10 @@ tender.
 
 ```
 Wide 4:3 undersea scene. A court painter with brush and ink stone works on a
-hanging scroll while courtiers crowd around calling out corrections - one
-gesturing enormous ears, another miming buck teeth. The painted rabbit on the
+hanging scroll while an ancient HARD-SHELLED sea turtle (domed plated shell,
+shells grown on his back) dictates with his eyes shut and courtiers crowd around
+calling out corrections - one gesturing enormous ears, another miming buck teeth.
+Jara the softshell turtle waits at the edge, plain leathery shell, no plates. The painted rabbit on the
 scroll is comically wrong: too long, too round-eyed, absurd. Everyone very
 serious. Green palace light.
 ```
@@ -268,8 +271,10 @@ court is exchanging baffled looks. The comic peak of the book.
 ```
 Wide 4:3 undersea scene, close and tense. The gaunt king leans far forward off
 his throne, staring straight down at the rabbit with narrowed eyes. The rabbit
-looks back up at him without blinking, ears calmly at rest. Everyone else in the
-hall is a blurred green shape behind them. A pure contest of nerve.
+looks back up at him without blinking, ears calmly at rest. Jara stands to one
+side, head down - a SOFTSHELL turtle: smooth flat leathery shell with no plates,
+pointed tubular snout. Everyone else in the hall is a blurred green shape behind
+them. A pure contest of nerve.
 ```
 
 ### `story-06-b.webp` — 6장 — 모래밭에 닿자마자 뛰어내린다
