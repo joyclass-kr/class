@@ -312,16 +312,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '미다스 임금님의 귀',
+    intro: [
+        '이 이야기는 아주 오래전 그리스에서 전해 오던 이야기예요. 미다스라는 임금님에 얽힌 이야기로, 로마의 시인 오비디우스가 이천 년 전에 글로 남겨 두었답니다.',
+        '비슷한 이야기가 우리나라를 비롯해 여러 나라에 전해져요. 아무리 감추어도 끝내 드러나고 마는 비밀에 대한 이야기랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '👑')}
             </div>
             <div class="story-page-right">
-                <h1>미다스 임금님의 귀</h1>
-                <p>이 이야기는 아주 오래전 그리스에서 전해 오던 이야기예요. 미다스라는 임금님에 얽힌 이야기로, 로마의 시인 오비디우스가 이천 년 전에 글로 남겨 두었답니다.</p>
-                <p>비슷한 이야기가 우리나라를 비롯해 여러 나라에 전해져요. 아무리 감추어도 끝내 드러나고 마는 비밀에 대한 이야기랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -336,8 +345,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -347,8 +356,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -358,22 +367,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -423,9 +433,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -436,7 +446,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -508,7 +518,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -517,34 +527,631 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+const EN = {
+    lang: 'en',
+    cover: {
+        title: "King Midas's Ears",
+        intro: [
+            "This story comes down to us from ancient Greece. It is told of a king called Midas, and the Roman poet Ovid wrote it down two thousand years ago.",
+            "Much the same story is told in Korea and in many other countries. It is a story about a secret that comes out in the end, however well it is hidden."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · A Contest on the Mountain',
+            beats: [
+                {
+                    art: '01-contest.webp',
+                    emoji: '🎵',
+                    left: [
+                        "This happened long, long ago in Greece.",
+                        "There was a music contest held on a mountain.",
+                        "On the one side was Pan, the god of the woods.",
+                        "He was a god with the legs of a goat.",
+                        "Pan played on a pipe made of reeds.",
+                        "On the other side was Apollo."
+                    ],
+                    right: [
+                        "He was a god with hair that shone like gold.",
+                        "He carried a harp in his hands.",
+                        "People came crowding when they heard of it.",
+                        "Even the beasts of the wood pricked up their ears.",
+                        "Among the onlookers was King Midas.",
+                        "\"Which of them will win?\""
+                    ]
+                },
+                {
+                    art: '01-contest-2.webp',
+                    emoji: '🎵',
+                    left: [
+                        "Pan played his pipe first.",
+                        "It was so merry that people's feet moved by themselves.",
+                        "Their shoulders went up and down with it.",
+                        "Pan grew excited and leapt about.",
+                        "When he finished, the clapping poured down.",
+                        "Then Apollo drew his hand across the harp.",
+                        "This time nobody moved at all."
+                    ],
+                    right: [
+                        "It was so beautiful that they could not breathe.",
+                        "Some of them were in tears.",
+                        "When it ended there was a long silence.",
+                        "\"Both of them play so well.\"",
+                        "The people could not make up their minds.",
+                        "There was murmuring here and there."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · One Answer Out of Step',
+            beats: [
+                {
+                    art: '02-judgment.webp',
+                    emoji: '⚖️',
+                    left: [
+                        "Now it was for the judge to decide.",
+                        "The judge was the god of that mountain.",
+                        "He thought a moment, and then he raised a hand.",
+                        "It was Apollo's hand.",
+                        "\"The harp was the finer.\"",
+                        "And all the onlookers nodded too."
+                    ],
+                    right: [
+                        "Even Pan smiled and offered his congratulations.",
+                        "And then it happened.",
+                        "King Midas sprang to his feet.",
+                        "\"No, no!\"",
+                        "\"The pipe was far more fun!\" said the king in a loud voice."
+                    ]
+                },
+                {
+                    art: '02-judgment-2.webp',
+                    emoji: '⚖️',
+                    left: [
+                        "The mountain went quiet in an instant.",
+                        "Everyone stared at the king.",
+                        "\"What is that man saying?\"",
+                        "And still the king would not back down.",
+                        "\"That is how it sounded to my ears.\"",
+                        "Apollo looked at the king steadily."
+                    ],
+                    right: [
+                        "There was no expression at all on his face.",
+                        "\"If those are your ears,\"",
+                        "\"then a donkey's would suit you better.\"",
+                        "The king did not know what he meant.",
+                        "He only shrugged and went home.",
+                        "That night nothing at all happened."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · What Happened in the Morning',
+            beats: [
+                {
+                    art: '03-ears.webp',
+                    emoji: '🫏',
+                    left: [
+                        "It was the next morning.",
+                        "The king sat down before his mirror as he always did.",
+                        "And something was wrong.",
+                        "Two long things stood up above his head.",
+                        "The king reached up and felt them.",
+                        "They were covered in soft fur."
+                    ],
+                    right: [
+                        "They were donkey's ears, and no mistake.",
+                        "\"Wh-what has happened to me!\"",
+                        "The king very nearly shouted.",
+                        "He clapped both hands over his mouth.",
+                        "Nobody could be allowed to see him like this.",
+                        "The king did not know what to do."
+                    ]
+                },
+                {
+                    art: '03-ears-2.webp',
+                    emoji: '🫏',
+                    left: [
+                        "The king went through his wardrobe.",
+                        "He found a large pointed hat.",
+                        "He pulled it down hard over his head.",
+                        "It just about hid the ears.",
+                        "Only then did he open his door.",
+                        "He looked in the mirror again and again.",
+                        "And kept tugging the brim further down."
+                    ],
+                    right: [
+                        "From that day he never once took the hat off.",
+                        "He wore it while he ate.",
+                        "He wore it while he slept.",
+                        "His courtiers tilted their heads at it.",
+                        "\"The king is very fond of that hat these days.\"",
+                        "\"Does he like it as much as all that?\" And nobody guessed the truth."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · Only the Barber Knew',
+            beats: [
+                {
+                    art: '04-barber.webp',
+                    emoji: '✂️',
+                    left: [
+                        "A few months went by like that.",
+                        "But hair must be cut, hat or no hat.",
+                        "The king sent for his barber.",
+                        "He locked the door, and the two of them were alone.",
+                        "\"Now. Take off the hat.\"",
+                        "The barber lifted it very carefully."
+                    ],
+                    right: [
+                        "And then he stood there frozen.",
+                        "His eyes went as round as plates.",
+                        "The hand holding the scissors began to shake.",
+                        "\"Th-these are…\"",
+                        "The king glared at him.",
+                        "\"Do not breathe a word of it.\""
+                    ]
+                },
+                {
+                    art: '04-barber-2.webp',
+                    emoji: '✂️',
+                    left: [
+                        "\"You are to tell nobody of this.\"",
+                        "\"If you tell, you shall be sorry for it.\"",
+                        "\"Yes, yes! I shall never tell a soul!\"",
+                        "The barber bowed his head over and over.",
+                        "His hands shook so that he could hardly cut.",
+                        "He finished somehow and came outside."
+                    ],
+                    right: [
+                        "There was cold sweat down his back.",
+                        "The road home had never seemed so long.",
+                        "And from that night it was strange.",
+                        "His mouth kept itching.",
+                        "The words came up as far as his throat.",
+                        "The barber did nothing but clear it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · Words He Could Not Hold',
+            beats: [
+                {
+                    art: '05-itch.webp',
+                    emoji: '🤐',
+                    left: [
+                        "The thought came to him even while he ate.",
+                        "He would lift his spoon and see those ears.",
+                        "Lying down to sleep, they were clearer still.",
+                        "\"I want to say it.\"",
+                        "\"Just once, I want to say it.\"",
+                        "The barber pulled the blanket over his head."
+                    ],
+                    right: [
+                        "He held his mouth shut with both hands.",
+                        "His wife asked him anxiously,",
+                        "\"My dear, is something the matter?\"",
+                        "The barber only shook his head.",
+                        "The words were up in his throat.",
+                        "He pulled the blanket tighter.",
+                        "\"It — it is nothing at all.\" And he turned over."
+                    ]
+                },
+                {
+                    art: '05-itch-2.webp',
+                    emoji: '🤐',
+                    left: [
+                        "It was the same when a friend offered him a drink.",
+                        "The barber kept his mouth firmly shut.",
+                        "One cup, he thought, and it would all come out.",
+                        "\"What is the matter with you lately?\"",
+                        "\"Oh — nothing, nothing at all.\"",
+                        "And so a few months went by.",
+                        "The barber's face grew thin and drawn."
+                    ],
+                    right: [
+                        "And yet his belly kept swelling.",
+                        "It was as though the words were piling up inside it.",
+                        "\"I shall fall ill at this rate.\"",
+                        "\"What am I to do if I can tell nobody?\"",
+                        "He tossed and turned all night.",
+                        "The cock crowed and his eyes were still wide open."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · A Hole in the Reeds',
+            beats: [
+                {
+                    art: '06-hole.webp',
+                    emoji: '🕳️',
+                    left: [
+                        "One day the barber sat straight up.",
+                        "A good idea had come to him.",
+                        "\"He said tell no person.\"",
+                        "\"Then why not tell the ground?\"",
+                        "The barber took a spade and left the house.",
+                        "He went down to the reeds by the river."
+                    ],
+                    right: [
+                        "He looked all around him.",
+                        "There was not a soul passing.",
+                        "So the barber dug.",
+                        "He made a good deep hole.",
+                        "And then he put his face right down into it.",
+                        "The smell of earth went up his nose.",
+                        "His heart was thumping.",
+                        "The barber took a great breath in."
+                    ]
+                },
+                {
+                    art: '06-hole-2.webp',
+                    emoji: '🕳️',
+                    left: [
+                        "And he shouted with all his voice.",
+                        "\"The king has donkey's ears!\"",
+                        "\"The king has donkey's ears, I tell you!\"",
+                        "He shouted it over and over.",
+                        "And his swollen belly went quietly down.",
+                        "His chest felt as though it had opened.",
+                        "The barber filled the hole in with earth."
+                    ],
+                    right: [
+                        "He even stamped it down flat with his foot.",
+                        "His palms were thick with soil.",
+                        "He did not notice, and grinned to himself.",
+                        "\"Now nobody will ever know.\"",
+                        "His step was light all the way home.",
+                        "That night the barber slept soundly.",
+                        "The flesh came back to his face.",
+                        "And his wife stopped worrying."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · When the Wind Went Through',
+            beats: [
+                {
+                    art: '07-reeds.webp',
+                    emoji: '🌾',
+                    left: [
+                        "Before long, reeds grew on that spot.",
+                        "They shot up as tall as a person.",
+                        "Yellow ripe heads hung on them.",
+                        "One day the wind came along the river.",
+                        "The reeds rustled and swayed.",
+                        "The heads lay over one way and rose again.",
+                        "And the water came in small quiet waves."
+                    ],
+                    right: [
+                        "But there was something odd in the sound.",
+                        "If you listened, this is what you heard:",
+                        "\"The king has donkey's ears…\"",
+                        "\"The king has donkey's ears…\"",
+                        "People passing by stopped where they stood.",
+                        "\"What did it just say?\" And they looked at one another."
+                    ]
+                },
+                {
+                    art: '07-reeds-2.webp',
+                    emoji: '🌾',
+                    left: [
+                        "People came crowding down to the reeds.",
+                        "Every time the wind blew, the same words came.",
+                        "By now anybody could make them out.",
+                        "\"The king has donkey's ears?\"",
+                        "\"So that is why he wears that hat!\"",
+                        "In less than a day it was all over the country."
+                    ],
+                    right: [
+                        "In the market they talked of nothing else.",
+                        "The children made a song of it and sang it.",
+                        "The barber heard it and went white.",
+                        "\"Oh, what am I to do.\"",
+                        "He locked his door and stayed inside.",
+                        "Outside, the children's singing came in at the window.",
+                        "The barber covered both his ears."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · The Day He Took It Off',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '👑',
+                    left: [
+                        "In the end the king heard of it too.",
+                        "A courtier told him, very carefully.",
+                        "The king pulled his hat down harder.",
+                        "Then he went into his room and shut the door.",
+                        "He did not come out for a long time.",
+                        "His courtiers waited outside it."
+                    ],
+                    right: [
+                        "The king sat down before the mirror.",
+                        "He took off the hat and looked at his own ears.",
+                        "\"What use is hiding them now?\"",
+                        "\"The whole country knows already.\"",
+                        "The king took the hat in his hand.",
+                        "And then he slowly opened the door."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '👑',
+                    left: [
+                        "The king walked out into the yard bare-headed.",
+                        "His donkey's ears were there for all to see.",
+                        "People started back in surprise.",
+                        "For a while nobody could say a word.",
+                        "It was the king who touched his ears first.",
+                        "\"They hear better than they look, you know.\""
+                    ],
+                    right: [
+                        "And then somebody burst out laughing.",
+                        "The laughter spread across the whole yard.",
+                        "And the king laughed with them.",
+                        "\"They all knew anyway. Why did I hide?\"",
+                        "That day the king's heart was very easy.",
+                        "And the barber opened his door at last.",
+                        "From that day on the king wore no hat."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Whose hand did the judge raise in the music contest?',
+            choices: ["Pan's", "Apollo's", "The king's"],
+            answer: 1
+        },
+        {
+            q: "Why did the king get donkey's ears?",
+            choices: ['He said the pipe was better', 'He could not hear the harp', 'He would not wear a hat'],
+            answer: 0
+        },
+        {
+            q: 'What did the king do to hide his ears?',
+            choices: ['He grew his hair long', 'He locked his door', 'He wore a pointed hat'],
+            answer: 2
+        },
+        {
+            q: 'Where did the barber tell the secret?',
+            choices: ['To a friend', 'Into a hole in the reeds', "In the king's room"],
+            answer: 1
+        },
+        {
+            q: 'What did the people do when they heard the sound?',
+            choices: ['They came crowding', 'They pretended not to hear', 'They told the king'],
+            answer: 0
+        },
+        {
+            q: 'What did the king do first when he heard the rumour?',
+            choices: ['He took off his hat', 'He sent for the barber', 'He shut his door'],
+            answer: 2
+        },
+        {
+            q: 'What did the king do at the end?',
+            choices: ['He cut down the reeds', 'He went out without his hat', 'He sent for the barber'],
+            answer: 1
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '👂',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story comes from Greece, and was written down more than two thousand years ago. Almost the same story is told in Korea.",
+                    "The king got donkey's ears because he raised the wrong hand in a contest. It was the price of not listening well.",
+                    "The barber promises to say nothing. And then he can think of nothing else, eating or sleeping.",
+                    "What made it so hard was not that the words were so grand. It was that he alone had to hold them."
+                ],
+                right: [
+                    "He thought shouting it into the ground would be the end of it. And then reeds grew on that spot.",
+                    "What should the barber have done from the start?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-contest.webp': [
+            { word: 'contest', meaning: '겨루기', sentence: 'There was a music contest on a mountain.' },
+            { word: 'reed', meaning: '갈대', sentence: 'A pipe made of reeds.' },
+            { word: 'harp', meaning: '하프', sentence: 'He carried a harp in his hands.' },
+            { word: 'prick up one’s ears', meaning: '귀를 기울이다', sentence: 'The beasts pricked up their ears.' },
+            { word: 'onlooker', meaning: '구경꾼', sentence: 'Among the onlookers was King Midas.' }
+        ],
+        '01-contest-2.webp': [
+            { word: 'merry', meaning: '흥겨운', sentence: 'It was so merry that their feet moved.' },
+            { word: 'leap about', meaning: '껑충껑충 뛰다', sentence: 'Pan grew excited and leapt about.' },
+            { word: 'pour down', meaning: '쏟아지다', sentence: 'The clapping poured down.' },
+            { word: 'make up one’s mind', meaning: '마음을 정하다', sentence: 'They could not make up their minds.' },
+            { word: 'murmur', meaning: '수군거림', sentence: 'There was murmuring here and there.' }
+        ],
+        '02-judgment.webp': [
+            { word: 'judge', meaning: '심판', sentence: 'Now it was for the judge to decide.' },
+            { word: 'raise', meaning: '들어 올리다', sentence: 'He raised a hand.' },
+            { word: 'congratulations', meaning: '축하', sentence: 'Pan offered his congratulations.' },
+            { word: 'spring to one’s feet', meaning: '벌떡 일어서다', sentence: 'King Midas sprang to his feet.' }
+        ],
+        '02-judgment-2.webp': [
+            { word: 'in an instant', meaning: '순간', sentence: 'The mountain went quiet in an instant.' },
+            { word: 'back down', meaning: '물러서다', sentence: 'The king would not back down.' },
+            { word: 'steadily', meaning: '지그시', sentence: 'Apollo looked at the king steadily.' },
+            { word: 'suit', meaning: '어울리다', sentence: "A donkey's would suit you better." },
+            { word: 'shrug', meaning: '어깨를 으쓱하다', sentence: 'He only shrugged and went home.' }
+        ],
+        '03-ears.webp': [
+            { word: 'reach up', meaning: '손을 뻗다', sentence: 'The king reached up and felt them.' },
+            { word: 'fur', meaning: '털', sentence: 'They were covered in soft fur.' },
+            { word: 'no mistake', meaning: '틀림없이', sentence: "They were donkey's ears, and no mistake." },
+            { word: 'clap over', meaning: '틀어막다', sentence: 'He clapped both hands over his mouth.' }
+        ],
+        '03-ears-2.webp': [
+            { word: 'wardrobe', meaning: '옷장', sentence: 'The king went through his wardrobe.' },
+            { word: 'pointed', meaning: '뾰족한', sentence: 'He found a large pointed hat.' },
+            { word: 'brim', meaning: '모자챙', sentence: 'He kept tugging the brim further down.' },
+            { word: 'courtier', meaning: '신하', sentence: 'His courtiers tilted their heads.' },
+            { word: 'guess', meaning: '알아채다', sentence: 'Nobody guessed the truth.' }
+        ],
+        '04-barber.webp': [
+            { word: 'barber', meaning: '이발사', sentence: 'The king sent for his barber.' },
+            { word: 'send for', meaning: '부르다', sentence: 'The king sent for his barber.' },
+            { word: 'scissors', meaning: '가위', sentence: 'The hand holding the scissors shook.' },
+            { word: 'glare', meaning: '눈을 부라리다', sentence: 'The king glared at him.' },
+            { word: 'breathe a word', meaning: '입도 뻥긋하다', sentence: 'Do not breathe a word of it.' }
+        ],
+        '04-barber-2.webp': [
+            { word: 'a soul', meaning: '한 사람도', sentence: 'I shall never tell a soul!' },
+            { word: 'bow', meaning: '고개를 조아리다', sentence: 'The barber bowed his head over and over.' },
+            { word: 'cold sweat', meaning: '식은땀', sentence: 'There was cold sweat down his back.' },
+            { word: 'itch', meaning: '근질근질하다', sentence: 'His mouth kept itching.' }
+        ],
+        '05-itch.webp': [
+            { word: 'anxiously', meaning: '걱정스레', sentence: 'His wife asked him anxiously.' },
+            { word: 'blanket', meaning: '이불', sentence: 'He pulled the blanket over his head.' },
+            { word: 'throat', meaning: '목구멍', sentence: 'The words were up in his throat.' },
+            { word: 'turn over', meaning: '돌아눕다', sentence: 'And he turned over.' }
+        ],
+        '05-itch-2.webp': [
+            { word: 'offer', meaning: '권하다', sentence: 'A friend offered him a drink.' },
+            { word: 'thin and drawn', meaning: '얼굴이 반쪽인', sentence: "The barber's face grew thin and drawn." },
+            { word: 'swell', meaning: '불룩해지다', sentence: 'His belly kept swelling.' },
+            { word: 'pile up', meaning: '쌓이다', sentence: 'The words were piling up inside it.' },
+            { word: 'toss and turn', meaning: '뒤척이다', sentence: 'He tossed and turned all night.' }
+        ],
+        '06-hole.webp': [
+            { word: 'spade', meaning: '삽', sentence: 'The barber took a spade.' },
+            { word: 'not a soul', meaning: '아무도 없는', sentence: 'There was not a soul passing.' },
+            { word: 'dig', meaning: '파다', sentence: 'So the barber dug.' },
+            { word: 'go up one’s nose', meaning: '코를 찌르다', sentence: 'The smell of earth went up his nose.' }
+        ],
+        '06-hole-2.webp': [
+            { word: 'with all one’s voice', meaning: '목청껏', sentence: 'He shouted with all his voice.' },
+            { word: 'over and over', meaning: '몇 번이나', sentence: 'He shouted it over and over.' },
+            { word: 'stamp down', meaning: '꼭꼭 밟다', sentence: 'He stamped it down flat.' },
+            { word: 'grin', meaning: '씩 웃다', sentence: 'He grinned to himself.' },
+            { word: 'soundly', meaning: '푹', sentence: 'The barber slept soundly.' }
+        ],
+        '07-reeds.webp': [
+            { word: 'shoot up', meaning: '쑥쑥 자라다', sentence: 'They shot up as tall as a person.' },
+            { word: 'ripe', meaning: '여문', sentence: 'Yellow ripe heads hung on them.' },
+            { word: 'rustle', meaning: '서걱거리다', sentence: 'The reeds rustled and swayed.' },
+            { word: 'sway', meaning: '흔들리다', sentence: 'The reeds rustled and swayed.' },
+            { word: 'odd', meaning: '이상한', sentence: 'There was something odd in the sound.' }
+        ],
+        '07-reeds-2.webp': [
+            { word: 'crowd', meaning: '몰려들다', sentence: 'People came crowding down to the reeds.' },
+            { word: 'make out', meaning: '알아듣다', sentence: 'Anybody could make them out.' },
+            { word: 'all over', meaning: '온 나라에', sentence: 'It was all over the country.' },
+            { word: 'go white', meaning: '얼굴이 하얘지다', sentence: 'The barber heard it and went white.' }
+        ],
+        '08-ending.webp': [
+            { word: 'in the end', meaning: '결국', sentence: 'In the end the king heard of it too.' },
+            { word: 'pull down', meaning: '눌러쓰다', sentence: 'The king pulled his hat down harder.' },
+            { word: 'what use', meaning: '무슨 소용', sentence: 'What use is hiding them now?' },
+            { word: 'already', meaning: '이미', sentence: 'The whole country knows already.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'bare-headed', meaning: '모자를 쓰지 않고', sentence: 'The king walked out bare-headed.' },
+            { word: 'start back', meaning: '뒷걸음질하다', sentence: 'People started back in surprise.' },
+            { word: 'burst out laughing', meaning: '웃음을 터뜨리다', sentence: 'Somebody burst out laughing.' },
+            { word: 'easy', meaning: '마음이 편한', sentence: "The king's heart was very easy." }
+        ],
+        'end.webp': [
+            { word: 'write down', meaning: '글로 남기다', sentence: 'It was written down two thousand years ago.' },
+            { word: 'price', meaning: '값', sentence: 'It was the price of not listening well.' },
+            { word: 'hold', meaning: '참다', sentence: 'He alone had to hold them.' },
+            { word: 'grand', meaning: '대단한', sentence: 'Not that the words were so grand.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -609,6 +1216,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -617,7 +1225,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -629,7 +1237,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -663,4 +1271,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
