@@ -335,16 +335,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '오즈의 마법사',
+    intro: [
+        '오즈의 마법사는 미국의 작가 라이먼 프랭크 바움이 1900년에 펴낸 이야기예요. 미국에서 나온 첫 창작 동화로 손꼽히는 작품이랍니다.',
+        '회오리바람에 실려 낯선 나라에 떨어진 도로시가 허수아비, 양철 나무꾼, 겁쟁이 사자와 함께 집으로 돌아가는 길을 찾는 이야기예요.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🌪️')}
             </div>
             <div class="story-page-right">
-                <h1>오즈의 마법사</h1>
-                <p>오즈의 마법사는 미국의 작가 라이먼 프랭크 바움이 1900년에 펴낸 이야기예요. 미국에서 나온 첫 창작 동화로 손꼽히는 작품이랍니다.</p>
-                <p>회오리바람에 실려 낯선 나라에 떨어진 도로시가 허수아비, 양철 나무꾼, 겁쟁이 사자와 함께 집으로 돌아가는 길을 찾는 이야기예요.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -359,8 +368,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -370,8 +379,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -381,22 +390,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -446,9 +456,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -459,7 +469,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -531,7 +541,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -540,34 +550,573 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다.
+   바움의 원작 낱말(Munchkin, Emerald City, Winged Monkeys)은 그대로 쓴다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Wonderful Wizard of Oz',
+        intro: [
+            "The Wonderful Wizard of Oz was written by the American author L. Frank Baum and published in 1900. It is counted as the first fairy tale America made for itself.",
+            "A cyclone carries Dorothy off to a country she has never seen, and with a Scarecrow, a Tin Woodman and a Cowardly Lion she goes looking for the road home."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Cyclone',
+            beats: [
+                {
+                    art: '01-twister.webp',
+                    emoji: '🌪️',
+                    left: [
+                        "There was a little house in the middle of the Kansas prairie, and everything round it was grey.",
+                        "Dorothy lived there with Aunt Em and Uncle Henry.",
+                        "The only one who laughed and ran about was a little dog called Toto.",
+                        "That day, as always, Toto was circling round Dorothy's feet."
+                    ],
+                    right: [
+                        "Then Uncle Henry looked at the sky and shouted.",
+                        "\"A cyclone!\"",
+                        "Aunt Em threw open the cellar door and climbed down.",
+                        "Dorothy was about to follow when Toto shot under the bed.",
+                        "The moment she caught hold of him, the whole house lifted into the air."
+                    ]
+                },
+                {
+                    art: '01-twister-2.webp',
+                    emoji: '🌪️',
+                    left: [
+                        "The house went round and round in the middle of the cyclone.",
+                        "Past the window floated a roof, a tree, a cow.",
+                        "\"Toto, where do you suppose we're going?\"",
+                        "Toto gave no answer. He buried his face in Dorothy's lap."
+                    ],
+                    right: [
+                        "How long it lasted, nobody could say. Dorothy fell asleep in the end.",
+                        "Bump!",
+                        "She woke at the noise. The house had come down on solid ground.",
+                        "She opened the door and the light dazzled her. There was no grey anywhere — everything was green and yellow."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Munchkin Country',
+            beats: [
+                {
+                    art: '02-munchkin.webp',
+                    emoji: '👞',
+                    left: [
+                        "People no taller than Dorothy came up to her, all in blue coats and blue hats.",
+                        "The little bells round their hats went tinkle, tinkle.",
+                        "Behind them stood an old woman dressed in white.",
+                        "\"Thank you for putting an end to the Witch of the East.\""
+                    ],
+                    right: [
+                        "\"Me? But I haven't done anything.\"",
+                        "\"Your house fell out of the sky, my dear.\"",
+                        "The old woman was the Witch of the North, and the people in blue were called Munchkins.",
+                        "All that showed from under the house was a pair of silver shoes.",
+                        "\"They are yours now. Try them on.\""
+                    ]
+                },
+                {
+                    art: '02-munchkin-2.webp',
+                    emoji: '👞',
+                    left: [
+                        "Dorothy put the silver shoes on, and they fitted her exactly.",
+                        "\"I want to go back to Kansas.\"",
+                        "\"That is beyond even me.\"",
+                        "The Witch of the North took off her pointed hat and balanced it on her nose.",
+                        "The hat turned into a slate, and writing came up on it."
+                    ],
+                    right: [
+                        "\"Go to the Emerald City.\"",
+                        "\"A wizard called Oz lives there. He grants whatever is asked of him.\"",
+                        "\"There is only one road. Follow the yellow brick road and it will take you.\"",
+                        "Dorothy packed some bread and picked up Toto.",
+                        "The yellow bricks shone and shone in the sunlight."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · The Scarecrow and the Tin Woodman',
+            beats: [
+                {
+                    art: '03-scarecrow.webp',
+                    emoji: '🌾',
+                    left: [
+                        "She was passing a cornfield when the scarecrow up on his pole gave her a wink.",
+                        "Dorothy rubbed her eyes.",
+                        "\"Hullo. Would you get me down?\"",
+                        "\"Goodness — it talks!\"",
+                        "She pulled out the pole, and the Scarecrow flopped over in a heap."
+                    ],
+                    right: [
+                        "He got up and fell over again. His legs were straw and would not hold him.",
+                        "\"Never mind. It hurts, but I never know that it hurts.\"",
+                        "\"There is nothing but straw in my head. What I want is some brains.\"",
+                        "\"Then come to Oz with me!\"",
+                        "The Scarecrow wobbled as he walked, but he waved both arms about for joy."
+                    ]
+                },
+                {
+                    art: '03-tinman.webp',
+                    emoji: '🪓',
+                    left: [
+                        "A strange sound came from deep in the wood.",
+                        "Creak… creak…",
+                        "A man made all of tin stood there frozen with an axe in his hands. The rain had rusted him and he could not move an inch.",
+                        "\"Oil… the oil can, over there…\"",
+                        "Dorothy oiled his neck and his arms and his legs."
+                    ],
+                    right: [
+                        "The Tin Woodman threw both arms up and turned his head this way and that.",
+                        "\"Oh, that's the first time in a year!\"",
+                        "\"An enchantment turned every bit of me to tin.\"",
+                        "\"And there is nothing at all inside my chest.\"",
+                        "\"What I want is a heart.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Cowardly Lion',
+            beats: [
+                {
+                    art: '04-lion.webp',
+                    emoji: '🦁',
+                    left: [
+                        "\"ROAR!\"",
+                        "The wood rang with it, and out bounded an enormous lion.",
+                        "He knocked the Scarecrow head over heels.",
+                        "Then he opened his jaws wide at Toto.",
+                        "Dorothy sprang in front and slapped the Lion right on the nose."
+                    ],
+                    right: [
+                        "\"You ought to be ashamed! Picking on someone smaller than you!\"",
+                        "The Lion rubbed his nose, and then great tears rolled down.",
+                        "\"You're right… the truth is I'm a coward.\"",
+                        "\"When I'm alone at night I'm too frightened to sleep.\"",
+                        "The great Lion sniffled, and everyone had a hard time keeping a straight face."
+                    ]
+                },
+                {
+                    art: '04-poppy.webp',
+                    emoji: '🌺',
+                    left: [
+                        "The four of them set off together.",
+                        "On the way they came to a ditch far too wide to jump.",
+                        "So the Lion took them over one at a time on his back, in great bounds.",
+                        "\"Some coward — look at him jump!\"",
+                        "The Lion went quite red in the face."
+                    ],
+                    right: [
+                        "By and by they came to a field full of scarlet flowers.",
+                        "The scent was so heavy that Dorothy began to yawn.",
+                        "\"Just a little… sleep…\"",
+                        "Down went Dorothy, and down went the Lion.",
+                        "The Scarecrow and the Woodman, who never sleep, hoisted the two of them up and ran the whole field."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · The Emerald City',
+            beats: [
+                {
+                    art: '05-emerald.webp',
+                    emoji: '💚',
+                    left: [
+                        "Far off a green palace glittered.",
+                        "The gatekeeper took green spectacles out of a box and fastened a pair on each of them.",
+                        "\"Without these the glare would blind you.\"",
+                        "With the spectacles on, the whole world was green — the roads, the houses, even the clothes people wore."
+                    ],
+                    right: [
+                        "Oz would see only one person a day.",
+                        "In front of Dorothy floated an enormous head and nothing else.",
+                        "In front of the Scarecrow appeared a beautiful lady.",
+                        "The Woodman saw a dreadful beast, and the Lion saw a ball of fire.",
+                        "Afterwards the four of them compared what they had seen and could make no sense of it."
+                    ]
+                },
+                {
+                    art: '05-order.webp',
+                    emoji: '💚',
+                    left: [
+                        "Oz said the same thing to all four of them.",
+                        "\"Go and put an end to the Witch of the West.\"",
+                        "\"Do that, and I shall grant what you ask.\"",
+                        "So the four turned west. There was no yellow brick road that way.",
+                        "There was nothing for it but to walk straight into the sun."
+                    ],
+                    right: [
+                        "The Witch of the West had only one eye, and with it she could see for miles.",
+                        "First she sent a pack of wolves. The Woodman swung his axe round and round, and off they slunk.",
+                        "Then came a flock of crows. The Scarecrow waved his arms about and they scattered, cawing."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Witch of the West',
+            beats: [
+                {
+                    art: '06-monkeys.webp',
+                    emoji: '🐒',
+                    left: [
+                        "The Witch fetched out her Golden Cap and put it on.",
+                        "\"Ep-pe, pep-pe, kak-ke!\"",
+                        "The sky went dark, and a band of Winged Monkeys came sweeping down.",
+                        "They pulled the straw out of the Scarecrow and scattered it, and they dropped the Woodman down among the rocks."
+                    ],
+                    right: [
+                        "Dorothy and the Lion were carried off to the Witch's castle, and Dorothy was set to work in the kitchen.",
+                        "\"If only I could get those silver shoes.\"",
+                        "The Witch laid an iron bar across the floor where Dorothy could not see it, and tripped her.",
+                        "Then she snatched up the shoe that had come off."
+                    ]
+                },
+                {
+                    art: '06-water.webp',
+                    emoji: '💧',
+                    left: [
+                        "\"Give it back! That's mine!\"",
+                        "\"Certainly not. And I shall have the other one soon enough.\"",
+                        "Dorothy was so angry that she caught up the bucket of water standing beside her.",
+                        "And she flung the whole of it over the Witch.",
+                        "As the water came down the Witch screamed."
+                    ],
+                    right: [
+                        "\"Water! Not water!\"",
+                        "The Witch melted away like a lump of sugar. In a moment there was nothing left on the floor but her brown hat.",
+                        "Everyone who had been shut up in that castle came running out, cheering.",
+                        "Dorothy stuffed the Scarecrow full of straw again, and hammered the dents out of the Woodman."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Man Behind the Curtain',
+            beats: [
+                {
+                    art: '07-curtain.webp',
+                    emoji: '🎭',
+                    left: [
+                        "The four went back to the Emerald City.",
+                        "\"You must keep your promise!\"",
+                        "But no great head appeared, and no beautiful lady either.",
+                        "Then Toto took hold of a curtain in the corner and pulled.",
+                        "Behind it, crouching down, was a bald old man."
+                    ],
+                    right: [
+                        "\"Who are you?\"",
+                        "\"I… am Oz.\"",
+                        "He showed them the great paper head and the speaking trumpet.",
+                        "\"I am no wizard. I came down here in a balloon.\"",
+                        "\"And people thought me such a great man that I let them believe it.\""
+                    ]
+                },
+                {
+                    art: '07-gifts.webp',
+                    emoji: '🎁',
+                    left: [
+                        "\"Then what about our wishes?\"",
+                        "The old man packed the Scarecrow's head with bran, and needles and pins mixed into it.",
+                        "\"Now your thoughts will be as sharp as those pins.\"",
+                        "Into the Woodman's chest he fitted a heart sewn out of silk."
+                    ],
+                    right: [
+                        "For the Lion he poured out a bowl of green liquid.",
+                        "\"Drink it down. That is courage.\"",
+                        "The Lion drank it off in great gulps and squared his chest.",
+                        "\"I'm not frightened of anything now!\"",
+                        "The truth is that the three of them had been clever and kind and brave from the very start. They were the only ones who did not know it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Homeward',
+            beats: [
+                {
+                    art: '08-balloon.webp',
+                    emoji: '🎈',
+                    left: [
+                        "\"But what about me? I have to get to Kansas.\"",
+                        "\"Let us mend my balloon. I should like to go home myself.\"",
+                        "The two of them sewed lengths of silk together into an enormous balloon.",
+                        "On the day of the launch the whole city came out to watch."
+                    ],
+                    right: [
+                        "\"Make the Scarecrow your king!\"",
+                        "The old man climbed into the basket, and Dorothy was about to climb in after him —",
+                        "when Toto took fright at all the noise and jumped out of her arms.",
+                        "By the time she had caught him and turned round, the rope had snapped.",
+                        "The balloon rose into the sky with nobody in it but the old man."
+                    ]
+                },
+                {
+                    art: '08-home.webp',
+                    emoji: '🏡',
+                    left: [
+                        "Dorothy sat down where she was and cried.",
+                        "Then she heard that away in the South there lived a good witch named Glinda.",
+                        "So the four of them walked that long road too, and came at last to Glinda.",
+                        "Glinda looked down at Dorothy's silver shoes and smiled."
+                    ],
+                    right: [
+                        "\"Those shoes will carry you anywhere you wish.\"",
+                        "\"All this time? Then I need never have gone through any of it!\"",
+                        "\"And you would never have found three such friends.\"",
+                        "Dorothy hugged each of them in turn.",
+                        "Then she knocked her heels together three times. When she opened her eyes she was on the Kansas prairie."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why was Dorothy still in the house when the cyclone lifted it?',
+            choices: ['She had gone back for Toto, who hid under the bed', 'She had fallen asleep', 'Aunt Em had told her to stay inside'],
+            answer: 0
+        },
+        {
+            q: 'Why did the Munchkins thank Dorothy?',
+            choices: ['She had brought them the silver shoes', 'She had walked the yellow brick road', 'Her house had come down on the Witch of the East'],
+            answer: 2
+        },
+        {
+            q: 'What did the Scarecrow want from Oz?',
+            choices: ['A heart', 'Brains', 'Courage'],
+            answer: 1
+        },
+        {
+            q: 'Why could the Tin Woodman not move?',
+            choices: ['The rain had rusted him', 'The Witch had frozen him', 'His axe was stuck in a tree'],
+            answer: 0
+        },
+        {
+            q: 'Who carried the others over the wide ditch?',
+            choices: ['The Scarecrow, with his pole', 'The Winged Monkeys', 'The Lion, on his back'],
+            answer: 2
+        },
+        {
+            q: 'What happened when the Witch of the West was splashed with water?',
+            choices: ['She flew off on the Golden Cap', 'She melted away and left only her hat', 'She gave back the silver shoe'],
+            answer: 1
+        },
+        {
+            q: 'What did Oz turn out to be?',
+            choices: ['An old man who had come down in a balloon', 'A great floating head', 'A witch in disguise'],
+            answer: 0
+        },
+        {
+            q: 'What did Glinda tell Dorothy about the silver shoes?',
+            choices: ['They belonged to the Witch of the North', 'They only worked in the Emerald City', 'They would carry her anywhere she wished'],
+            answer: 2
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌪️',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "The Wonderful Wizard of Oz is counted as the first story an American wrote for American children. It came out about a hundred and twenty years ago.",
+                    "Until then, nearly everything children read had crossed over from Europe. Baum built his story out of what American children already knew — a cyclone, a cornfield.",
+                    "The Scarecrow goes for brains, the Woodman for a heart, the Lion for courage. And all the way there, each of them shows exactly what he says he lacks.",
+                    "The Scarecrow thinks of the plan, the Woodman weeps, the Lion clears the ditch."
+                ],
+                right: [
+                    "All Oz ever gave them was bran, silk and a green drink. Nothing new was added — they simply began, at last, to believe in what was already there. Dorothy's silver shoes had held that power from the very first day.",
+                    "What is it that you already have and do not know about yet?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-twister.webp': [
+            { word: 'prairie', meaning: '넓은 벌판', sentence: 'There was a little house in the middle of the Kansas prairie.' },
+            { word: 'cyclone', meaning: '회오리바람', sentence: 'Uncle Henry looked at the sky and shouted, "A cyclone!"' },
+            { word: 'cellar', meaning: '지하실', sentence: 'Aunt Em threw open the cellar door.' },
+            { word: 'shoot under', meaning: '쏙 숨어 들어가다', sentence: 'Toto shot under the bed.' }
+        ],
+        '01-twister-2.webp': [
+            { word: 'float', meaning: '둥둥 떠다니다', sentence: 'Past the window floated a roof, a tree, a cow.' },
+            { word: 'bury one’s face', meaning: '얼굴을 파묻다', sentence: "He buried his face in Dorothy's lap." },
+            { word: 'dazzle', meaning: '눈부시게 하다', sentence: 'She opened the door and the light dazzled her.' }
+        ],
+        '02-munchkin.webp': [
+            { word: 'tinkle', meaning: '딸랑거리다', sentence: 'The little bells round their hats went tinkle, tinkle.' },
+            { word: 'put an end to', meaning: '물리치다', sentence: 'Thank you for putting an end to the Witch of the East.' },
+            { word: 'try on', meaning: '신어 보다, 입어 보다', sentence: 'They are yours now. Try them on.' }
+        ],
+        '02-munchkin-2.webp': [
+            { word: 'fit', meaning: '꼭 맞다', sentence: 'They fitted her exactly.' },
+            { word: 'beyond', meaning: '~의 힘 밖인', sentence: 'That is beyond even me.' },
+            { word: 'slate', meaning: '석판', sentence: 'The hat turned into a slate.' },
+            { word: 'grant', meaning: '들어주다', sentence: 'He grants whatever is asked of him.' }
+        ],
+        '03-scarecrow.webp': [
+            { word: 'scarecrow', meaning: '허수아비', sentence: 'The scarecrow up on his pole gave her a wink.' },
+            { word: 'wink', meaning: '눈을 찡긋하다', sentence: 'He gave her a wink.' },
+            { word: 'straw', meaning: '짚', sentence: 'His legs were straw and would not hold him.' },
+            { word: 'brains', meaning: '지혜, 머리', sentence: 'What I want is some brains.' },
+            { word: 'wobble', meaning: '휘청거리다', sentence: 'The Scarecrow wobbled as he walked.' }
+        ],
+        '03-tinman.webp': [
+            { word: 'creak', meaning: '끼익 소리가 나다', sentence: 'Creak… creak…' },
+            { word: 'rust', meaning: '녹슬다', sentence: 'The rain had rusted him.' },
+            { word: 'oil can', meaning: '기름통', sentence: 'The oil can, over there…' },
+            { word: 'enchantment', meaning: '요술, 마법', sentence: 'An enchantment turned every bit of me to tin.' }
+        ],
+        '04-lion.webp': [
+            { word: 'bound', meaning: '껑충 뛰어나오다', sentence: 'Out bounded an enormous lion.' },
+            { word: 'head over heels', meaning: '데굴데굴', sentence: 'He knocked the Scarecrow head over heels.' },
+            { word: 'jaws', meaning: '아가리', sentence: 'He opened his jaws wide at Toto.' },
+            { word: 'coward', meaning: '겁쟁이', sentence: 'The truth is I am a coward.' },
+            { word: 'sniffle', meaning: '훌쩍이다', sentence: 'The great Lion sniffled.' }
+        ],
+        '04-poppy.webp': [
+            { word: 'ditch', meaning: '구덩이, 도랑', sentence: 'They came to a ditch far too wide to jump.' },
+            { word: 'scarlet', meaning: '새빨간', sentence: 'They came to a field full of scarlet flowers.' },
+            { word: 'scent', meaning: '향기', sentence: 'The scent was so heavy that Dorothy began to yawn.' },
+            { word: 'hoist', meaning: '들쳐 업다', sentence: 'They hoisted the two of them up.' }
+        ],
+        '05-emerald.webp': [
+            { word: 'gatekeeper', meaning: '문지기', sentence: 'The gatekeeper took green spectacles out of a box.' },
+            { word: 'spectacles', meaning: '안경', sentence: 'He fastened a pair of spectacles on each of them.' },
+            { word: 'glare', meaning: '눈부신 빛', sentence: 'Without these the glare would blind you.' },
+            { word: 'make sense of', meaning: '알아듣다', sentence: 'They could make no sense of it.' }
+        ],
+        '05-order.webp': [
+            { word: 'slink off', meaning: '꽁무니를 빼다', sentence: 'The Woodman swung his axe, and off they slunk.' },
+            { word: 'flock', meaning: '떼', sentence: 'Then came a flock of crows.' },
+            { word: 'caw', meaning: '까악까악 울다', sentence: 'They scattered, cawing.' }
+        ],
+        '06-monkeys.webp': [
+            { word: 'fetch out', meaning: '꺼내다', sentence: 'The Witch fetched out her Golden Cap.' },
+            { word: 'sweep down', meaning: '몰려 내려오다', sentence: 'A band of Winged Monkeys came sweeping down.' },
+            { word: 'trip', meaning: '넘어뜨리다', sentence: 'She laid an iron bar across the floor and tripped her.' },
+            { word: 'snatch up', meaning: '얼른 집어 들다', sentence: 'She snatched up the shoe that had come off.' }
+        ],
+        '06-water.webp': [
+            { word: 'bucket', meaning: '물통', sentence: 'She caught up the bucket of water beside her.' },
+            { word: 'fling', meaning: '확 끼얹다', sentence: 'She flung the whole of it over the Witch.' },
+            { word: 'melt away', meaning: '녹아내리다', sentence: 'The Witch melted away like a lump of sugar.' },
+            { word: 'dent', meaning: '찌그러진 곳', sentence: 'She hammered the dents out of the Woodman.' }
+        ],
+        '07-curtain.webp': [
+            { word: 'curtain', meaning: '커튼', sentence: 'Toto took hold of a curtain in the corner and pulled.' },
+            { word: 'crouch', meaning: '쪼그리고 앉다', sentence: 'Behind it, crouching down, was a bald old man.' },
+            { word: 'speaking trumpet', meaning: '나팔', sentence: 'He showed them the great paper head and the speaking trumpet.' },
+            { word: 'let someone believe', meaning: '그렇게 믿게 두다', sentence: 'I let them believe it.' }
+        ],
+        '07-gifts.webp': [
+            { word: 'bran', meaning: '겨', sentence: "He packed the Scarecrow's head with bran." },
+            { word: 'sharp', meaning: '날카로운', sentence: 'Now your thoughts will be as sharp as those pins.' },
+            { word: 'sew', meaning: '바느질하다', sentence: 'A heart sewn out of silk.' },
+            { word: 'square one’s chest', meaning: '가슴을 쭉 펴다', sentence: 'The Lion squared his chest.' }
+        ],
+        '08-balloon.webp': [
+            { word: 'mend', meaning: '고치다', sentence: 'Let us mend my balloon.' },
+            { word: 'launch', meaning: '띄우기, 출발', sentence: 'On the day of the launch the whole city came out.' },
+            { word: 'take fright', meaning: '놀라다', sentence: 'Toto took fright at all the noise.' },
+            { word: 'snap', meaning: '툭 끊어지다', sentence: 'The rope had snapped.' }
+        ],
+        '08-home.webp': [
+            { word: 'away in the South', meaning: '남쪽 멀리에', sentence: 'Away in the South there lived a good witch named Glinda.' },
+            { word: 'in turn', meaning: '차례차례', sentence: 'Dorothy hugged each of them in turn.' },
+            { word: 'heel', meaning: '뒤꿈치', sentence: 'She knocked her heels together three times.' }
+        ],
+        'end.webp': [
+            { word: 'count as', meaning: '~으로 손꼽히다', sentence: 'It is counted as the first story an American wrote for American children.' },
+            { word: 'cross over', meaning: '건너오다', sentence: 'Nearly everything children read had crossed over from Europe.' },
+            { word: 'lack', meaning: '없다, 모자라다', sentence: 'Each of them shows exactly what he says he lacks.' },
+            { word: 'clear', meaning: '뛰어넘다', sentence: 'The Lion clears the ditch.' },
+            { word: 'from the very first day', meaning: '처음부터', sentence: 'The shoes had held that power from the very first day.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -632,6 +1181,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -640,7 +1190,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -652,7 +1202,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -686,4 +1236,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
