@@ -314,16 +314,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '인어공주',
+    intro: [
+        '인어공주는 덴마크의 작가 한스 크리스티안 안데르센이 1837년에 발표한 이야기예요.',
+        '덴마크의 수도 코펜하겐 항구에는 이 이야기를 기념해 만든 인어공주 동상이 백 년 넘게 바다를 바라보고 앉아 있답니다. 안데르센의 이야기 가운데 가장 널리 알려진 작품이지요.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🧜‍♀️')}
             </div>
             <div class="story-page-right">
-                <h1>인어공주</h1>
-                <p>인어공주는 덴마크의 작가 한스 크리스티안 안데르센이 1837년에 발표한 이야기예요.</p>
-                <p>덴마크의 수도 코펜하겐 항구에는 이 이야기를 기념해 만든 인어공주 동상이 백 년 넘게 바다를 바라보고 앉아 있답니다. 안데르센의 이야기 가운데 가장 널리 알려진 작품이지요.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -338,8 +347,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -349,8 +358,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -360,22 +369,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -425,9 +435,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -438,7 +448,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -510,7 +520,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -519,34 +529,561 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Little Mermaid',
+        intro: [
+            "The Little Mermaid was written by the Danish author Hans Christian Andersen and published in 1837.",
+            "In the harbour at Copenhagen, the capital of Denmark, a statue made in honour of this story has sat looking out to sea for more than a hundred years. It is the best known of all Andersen's tales."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · The Palace Under the Sea',
+            beats: [
+                {
+                    art: '01-palace.webp',
+                    emoji: '🐚',
+                    left: [
+                        "Deep down in the sea there stood a palace built of coral.",
+                        "The sea king ruled there, and he had six daughters.",
+                        "The youngest of them was the smallest.",
+                        "And of all six, she sang the best."
+                    ],
+                    right: [
+                        "In the evenings their grandmother told them stories about the world above the water.",
+                        "\"Great ships go about up there.\"",
+                        "\"Trees grow on the land.\"",
+                        "\"And people walk about on legs.\"",
+                        "The youngest one's eyes shone every time."
+                    ]
+                },
+                {
+                    art: '01-palace-2.webp',
+                    emoji: '🐚',
+                    left: [
+                        "\"When you are fifteen you may go up and look.\"",
+                        "Year by year her sisters went up in turn, and came back down to tell her about it.",
+                        "\"There was a lighthouse, flashing.\"",
+                        "\"You could hear the bells right down in the water.\"",
+                        "The youngest could hardly bear the waiting."
+                    ],
+                    right: [
+                        "So some years went by, and at last it was her turn.",
+                        "Her grandmother did her hair beautifully and set pearls in it.",
+                        "\"Take care up there.\"",
+                        "Up and up the little mermaid went.",
+                        "And she put her face gently out of the water."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Night of the Storm',
+            beats: [
+                {
+                    art: '02-storm.webp',
+                    emoji: '⛵',
+                    left: [
+                        "A great ship lay in front of her, with lanterns burning bright along the rail.",
+                        "There was a party going on up on deck, and the music came out over the water.",
+                        "Among all the people stood one young man.",
+                        "It was his birthday, they said."
+                    ],
+                    right: [
+                        "The little mermaid could not take her eyes off him, and so the night wore on.",
+                        "Then the wind changed all at once. Black clouds came rolling up, and a wave lifted the ship right off the water.",
+                        "Crack.",
+                        "The mast snapped clean through."
+                    ]
+                },
+                {
+                    art: '02-storm-2.webp',
+                    emoji: '⛵',
+                    left: [
+                        "The ship went over hard, and one after another the people fell into the sea.",
+                        "The little mermaid searched for the young man, and caught sight of him between the waves.",
+                        "He had already lost consciousness, and his body was sinking slowly down."
+                    ],
+                    right: [
+                        "She swam to him with all her strength and got both arms under him.",
+                        "Then she lifted his head clear of the water.",
+                        "The waves beat wildly all night long.",
+                        "And still she did not let go.",
+                        "It was near dawn before the sea grew quiet."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · Laid Down on the Sand',
+            beats: [
+                {
+                    art: '03-rescue.webp',
+                    emoji: '🏖️',
+                    left: [
+                        "Far off she could see white sand. She swam slowly toward it and laid the young man carefully down.",
+                        "Only when she saw his chest rise and fall did she breathe again.",
+                        "For a long while she stayed there beside him.",
+                        "Then voices came from further up the beach."
+                    ],
+                    right: [
+                        "The little mermaid hid quickly behind a rock.",
+                        "A young woman came running down onto the sand, and at the sound of her the young man opened his eyes.",
+                        "He looked up at her.",
+                        "\"You saved me.\"",
+                        "And the little mermaid, behind her rock, heard every word of it."
+                    ]
+                },
+                {
+                    art: '03-rescue-2.webp',
+                    emoji: '🏖️',
+                    left: [
+                        "She could not say a thing. She only went back down into the water.",
+                        "From that day her heart was strange to her. Even the singing she had loved would not come.",
+                        "Her sisters asked her anxiously,",
+                        "\"What is the matter, little sister?\""
+                    ],
+                    right: [
+                        "Instead of answering she went to her grandmother.",
+                        "\"How long do people live?\"",
+                        "\"Far less time than we do.\"",
+                        "\"Then why do I keep envying them?\"",
+                        "\"Because you want to walk on the land, I expect.\"",
+                        "That night the little mermaid made up her mind."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · Down to the Sea Witch',
+            beats: [
+                {
+                    art: '04-witch.webp',
+                    emoji: '🌀',
+                    left: [
+                        "A witch lived at the far end of the sea, where nobody ever went.",
+                        "The little mermaid swam down to her. The black water turned in whirlpools,",
+                        "and coral like bones stood up along the way.",
+                        "Still she did not stop."
+                    ],
+                    right: [
+                        "The witch was in a cave, her long hair drifting about her in the water.",
+                        "\"I knew you would come.\"",
+                        "\"It's legs you want, is it?\"",
+                        "The little mermaid nodded without speaking.",
+                        "\"Then there is a price to pay.\""
+                    ]
+                },
+                {
+                    art: '04-witch-2.webp',
+                    emoji: '🌀',
+                    left: [
+                        "\"What shall I give you?\"",
+                        "\"Give me your voice.\"",
+                        "\"The loveliest voice in the sea.\"",
+                        "The little mermaid caught her breath.",
+                        "\"Then I shall not be able to speak?\"",
+                        "\"Never again.\""
+                    ],
+                    right: [
+                        "And the witch told her one thing more.",
+                        "\"Every step will hurt you.\"",
+                        "\"As though you walked on knives.\"",
+                        "The little mermaid stood thinking for a long time.",
+                        "Then she slowly spoke.",
+                        "\"Do it, then.\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · Without a Voice',
+            beats: [
+                {
+                    art: '05-legs.webp',
+                    emoji: '👣',
+                    left: [
+                        "The little mermaid came up to the surface and drank the potion. In that instant her whole body felt as though it had touched fire, and she fainted where she was.",
+                        "When she opened her eyes she was on the sand.",
+                        "Her tail was gone, clean gone, and in its place were two legs.",
+                        "She looked down at herself over and over."
+                    ],
+                    right: [
+                        "When she tried to stand, her feet hurt terribly. It really was like standing on knives.",
+                        "And still she set her teeth and got up.",
+                        "Then footsteps came from further along the beach.",
+                        "She raised her head, and there stood the young man.",
+                        "\"Where have you come from?\""
+                    ]
+                },
+                {
+                    art: '05-legs-2.webp',
+                    emoji: '👣',
+                    left: [
+                        "She could not answer. She opened her mouth and no sound came.",
+                        "The young man took her back to his palace and had fine clothes put on her.",
+                        "\"You cannot speak, it seems.\"",
+                        "\"But what clear eyes you have.\""
+                    ],
+                    right: [
+                        "Every day the little mermaid danced. Her feet hurt, and she smiled and danced anyway.",
+                        "The prince kept her beside him always.",
+                        "\"She is my dearest friend.\"",
+                        "But that was all it was.",
+                        "For there was somebody the prince could not forget."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Princess from the Other Country',
+            beats: [
+                {
+                    art: '06-wedding.webp',
+                    emoji: '💍',
+                    left: [
+                        "One day the prince said,",
+                        "\"I must go to the neighbouring country.\"",
+                        "\"There is talk of a marriage.\"",
+                        "\"But don't be troubled.\"",
+                        "\"There is somebody else in my heart.\"",
+                        "\"The one who saved me on the shore.\""
+                    ],
+                    right: [
+                        "The little mermaid's heart gave a great thump.",
+                        "'That was me.'",
+                        "But she could not say it. Not with her hands either — there was no way to get it across.",
+                        "In time the ship reached the other country, and the harbour was full of people waiting."
+                    ]
+                },
+                {
+                    art: '06-wedding-2.webp',
+                    emoji: '💍',
+                    left: [
+                        "The princess of that country came forward, and at the sight of her face the prince stopped dead.",
+                        "\"It was you!\"",
+                        "It was the very young woman from the shore.",
+                        "The prince was overjoyed.",
+                        "\"I have found you at last.\""
+                    ],
+                    right: [
+                        "The wedding was fixed that same day, and the whole country made a feast of it.",
+                        "The little mermaid was there too, standing quietly with a smile on her face.",
+                        "Nobody knew what was behind it.",
+                        "And so the night wore on."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Knife in the Sea',
+            beats: [
+                {
+                    art: '07-dagger.webp',
+                    emoji: '🗡️',
+                    left: [
+                        "It was the middle of the night when her sisters put their faces up through the waves.",
+                        "Their hair had all been cut short.",
+                        "\"We gave the witch our hair for this.\"",
+                        "One of them held out a knife that caught the light.",
+                        "\"Use this and you can come back to us.\""
+                    ],
+                    right: [
+                        "\"It must be done before sunrise.\"",
+                        "\"Then you will be a mermaid again.\"",
+                        "The little mermaid took the knife without a word and went into the tent.",
+                        "The prince lay fast asleep, with his new bride beside him."
+                    ]
+                },
+                {
+                    art: '07-dagger-2.webp',
+                    emoji: '🗡️',
+                    left: [
+                        "She stood there a long, long time, looking down at the prince's face.",
+                        "He looked entirely at peace.",
+                        "The hand holding the knife came slowly down.",
+                        "'It is enough that he is happy.'",
+                        "And the little mermaid went quietly out."
+                    ],
+                    right: [
+                        "She stood at the ship's rail and threw the knife as hard as she could into the sea.",
+                        "Splash.",
+                        "The water swallowed it.",
+                        "The eastern sky was turning red. The sun was coming up.",
+                        "And the little mermaid closed her eyes."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · A Child of the Wind',
+            beats: [
+                {
+                    art: '08-air.webp',
+                    emoji: '💨',
+                    left: [
+                        "The little mermaid threw herself into the sea.",
+                        "But she did not sink. She went light instead — light as a feather.",
+                        "Her body rose up and up, and the sunlight passed straight through her.",
+                        "\"Where is this?\""
+                    ],
+                    right: [
+                        "The words came out of her before she knew it. Her voice had come back.",
+                        "All round her shining things were drifting — beings as light as the wind itself.",
+                        "\"We are the children of the air.\"",
+                        "\"We go about the world helping people.\"",
+                        "\"Come along with us.\""
+                    ]
+                },
+                {
+                    art: '08-air-2.webp',
+                    emoji: '💨',
+                    left: [
+                        "The little mermaid looked down. Far below her lay the ship,",
+                        "and the prince had come out on deck and was looking all about him.",
+                        "\"Where can she have gone?\"",
+                        "The little mermaid became the wind and brushed past him.",
+                        "The prince's hair stirred a little."
+                    ],
+                    right: [
+                        "He looked out at the sea for a long while. He half seemed to understand.",
+                        "And the little mermaid rose into the sky, side by side with the children of the air.",
+                        "Ever after, when the sea wind blew, people thought of her."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What was the rule about going up to the surface?',
+            choices: ['They could go once a year', 'Only the eldest could go', 'They could go when they turned fifteen'],
+            answer: 2
+        },
+        {
+            q: 'What did the little mermaid do during the storm?',
+            choices: ['She called her sisters for help', 'She held the young man’s head above the water all night', 'She swam back down to the palace'],
+            answer: 1
+        },
+        {
+            q: 'Why did the prince think the other young woman had saved him?',
+            choices: ['She was the one there when he opened his eyes', 'The little mermaid told him so', 'She was wearing his ring'],
+            answer: 0
+        },
+        {
+            q: 'What price did the sea witch ask?',
+            choices: ['Her hair', 'Her pearls', 'Her voice'],
+            answer: 2
+        },
+        {
+            q: 'What else did the witch warn her about?',
+            choices: ['She would never see her sisters again', 'Every step would hurt as though she walked on knives', 'She would forget the sea'],
+            answer: 1
+        },
+        {
+            q: 'What had the sisters given the witch for the knife?',
+            choices: ['Their hair', 'Their voices', 'Their pearls'],
+            answer: 0
+        },
+        {
+            q: 'What did the little mermaid do with the knife?',
+            choices: ['She gave it back to her sisters', 'She left it in the tent', 'She threw it into the sea'],
+            answer: 2
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🧜',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "The Little Mermaid people know today ends differently from this one. What is in this book is closer to what Andersen wrote.",
+                    "What the little mermaid handed over to the sea witch was her voice. Of all things, her voice. Which is exactly why she can never say that she was the one who saved him.",
+                    "The prince takes the person who was beside him when he opened his eyes for his rescuer. The little mermaid was not there — she had to go back into the water.",
+                    "And it was not only the prince she wanted. She wanted to see the world above the water. That began on her fifteenth birthday, before she ever saw him."
+                ],
+                right: [
+                    "Every step hurt her, and she danced anyway. Nobody knew about that pain. It is the quietest hurt in the whole story.",
+                    "What could the little mermaid have given up instead of her voice?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-palace.webp': [
+            { word: 'coral', meaning: '산호', sentence: 'A palace built of coral.' },
+            { word: 'rule', meaning: '다스리다', sentence: 'The sea king ruled there.' },
+            { word: 'above', meaning: '위쪽의', sentence: 'Stories about the world above the water.' }
+        ],
+        '01-palace-2.webp': [
+            { word: 'in turn', meaning: '차례로', sentence: 'Her sisters went up in turn.' },
+            { word: 'lighthouse', meaning: '등대', sentence: 'There was a lighthouse, flashing.' },
+            { word: 'bear', meaning: '견디다', sentence: 'She could hardly bear the waiting.' },
+            { word: 'pearl', meaning: '진주', sentence: 'Her grandmother set pearls in her hair.' }
+        ],
+        '02-storm.webp': [
+            { word: 'lantern', meaning: '등불', sentence: 'Lanterns burned bright along the rail.' },
+            { word: 'deck', meaning: '갑판', sentence: 'There was a party going on up on deck.' },
+            { word: 'wear on', meaning: '깊어 가다', sentence: 'And so the night wore on.' },
+            { word: 'mast', meaning: '돛대', sentence: 'The mast snapped clean through.' }
+        ],
+        '02-storm-2.webp': [
+            { word: 'go over', meaning: '기울어지다', sentence: 'The ship went over hard.' },
+            { word: 'catch sight of', meaning: '눈에 띄다', sentence: 'She caught sight of him between the waves.' },
+            { word: 'lose consciousness', meaning: '정신을 잃다', sentence: 'He had already lost consciousness.' },
+            { word: 'let go', meaning: '손을 놓다', sentence: 'And still she did not let go.' }
+        ],
+        '03-rescue.webp': [
+            { word: 'lay down', meaning: '눕히다', sentence: 'She laid the young man carefully down.' },
+            { word: 'rise and fall', meaning: '오르내리다', sentence: 'She saw his chest rise and fall.' },
+            { word: 'behind', meaning: '~ 뒤에', sentence: 'She hid quickly behind a rock.' }
+        ],
+        '03-rescue-2.webp': [
+            { word: 'anxiously', meaning: '걱정스레', sentence: 'Her sisters asked her anxiously.' },
+            { word: 'envy', meaning: '부러워하다', sentence: 'Why do I keep envying them?' },
+            { word: 'make up one’s mind', meaning: '마음을 정하다', sentence: 'The little mermaid made up her mind.' }
+        ],
+        '04-witch.webp': [
+            { word: 'whirlpool', meaning: '소용돌이', sentence: 'The black water turned in whirlpools.' },
+            { word: 'drift', meaning: '흐느적거리다', sentence: 'Her long hair drifted about her in the water.' },
+            { word: 'price', meaning: '값', sentence: 'Then there is a price to pay.' }
+        ],
+        '04-witch-2.webp': [
+            { word: 'catch one’s breath', meaning: '숨을 삼키다', sentence: 'The little mermaid caught her breath.' },
+            { word: 'never again', meaning: '영영 못 하는', sentence: 'Never again.' },
+            { word: 'as though', meaning: '~인 것처럼', sentence: 'As though you walked on knives.' }
+        ],
+        '05-legs.webp': [
+            { word: 'potion', meaning: '약', sentence: 'She came up to the surface and drank the potion.' },
+            { word: 'faint', meaning: '정신을 잃다', sentence: 'She fainted where she was.' },
+            { word: 'in its place', meaning: '그 대신에', sentence: 'In its place were two legs.' },
+            { word: 'set one’s teeth', meaning: '이를 악물다', sentence: 'She set her teeth and got up.' }
+        ],
+        '05-legs-2.webp': [
+            { word: 'clear', meaning: '맑은', sentence: 'But what clear eyes you have.' },
+            { word: 'anyway', meaning: '그래도', sentence: 'She smiled and danced anyway.' },
+            { word: 'dearest', meaning: '가장 소중한', sentence: 'She is my dearest friend.' }
+        ],
+        '06-wedding.webp': [
+            { word: 'neighbouring', meaning: '이웃의', sentence: 'I must go to the neighbouring country.' },
+            { word: 'troubled', meaning: '걱정하는', sentence: "But don't be troubled." },
+            { word: 'get across', meaning: '전하다', sentence: 'There was no way to get it across.' },
+            { word: 'harbour', meaning: '항구', sentence: 'The harbour was full of people waiting.' }
+        ],
+        '06-wedding-2.webp': [
+            { word: 'stop dead', meaning: '걸음을 뚝 멈추다', sentence: 'The prince stopped dead.' },
+            { word: 'overjoyed', meaning: '무척 기뻐하는', sentence: 'The prince was overjoyed.' },
+            { word: 'fix', meaning: '정하다', sentence: 'The wedding was fixed that same day.' }
+        ],
+        '07-dagger.webp': [
+            { word: 'cut short', meaning: '짧게 자르다', sentence: 'Their hair had all been cut short.' },
+            { word: 'hold out', meaning: '내밀다', sentence: 'One of them held out a knife.' },
+            { word: 'sunrise', meaning: '해 뜨는 때', sentence: 'It must be done before sunrise.' },
+            { word: 'bride', meaning: '신부', sentence: 'The prince lay asleep with his new bride beside him.' }
+        ],
+        '07-dagger-2.webp': [
+            { word: 'at peace', meaning: '편안한', sentence: 'He looked entirely at peace.' },
+            { word: 'rail', meaning: '뱃전', sentence: "She stood at the ship's rail." },
+            { word: 'swallow', meaning: '삼키다', sentence: 'The water swallowed it.' }
+        ],
+        '08-air.webp': [
+            { word: 'sink', meaning: '가라앉다', sentence: 'But she did not sink.' },
+            { word: 'pass through', meaning: '통과하다', sentence: 'The sunlight passed straight through her.' },
+            { word: 'being', meaning: '존재', sentence: 'Beings as light as the wind itself.' },
+            { word: 'children of the air', meaning: '바람의 아이들', sentence: 'We are the children of the air.' }
+        ],
+        '08-air-2.webp': [
+            { word: 'brush past', meaning: '스치고 지나가다', sentence: 'She became the wind and brushed past him.' },
+            { word: 'stir', meaning: '살랑 흔들리다', sentence: "The prince's hair stirred a little." },
+            { word: 'side by side', meaning: '나란히', sentence: 'Side by side with the children of the air.' },
+            { word: 'ever after', meaning: '그 뒤로 줄곧', sentence: 'Ever after, when the sea wind blew, people thought of her.' }
+        ],
+        'end.webp': [
+            { word: 'hand over', meaning: '내주다', sentence: 'What she handed over was her voice.' },
+            { word: 'of all things', meaning: '하필', sentence: 'Of all things, her voice.' },
+            { word: 'rescuer', meaning: '구해 준 사람', sentence: 'He takes her for his rescuer.' },
+            { word: 'give up', meaning: '내주다, 포기하다', sentence: 'What could she have given up instead?' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -611,6 +1148,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -619,7 +1157,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -631,7 +1169,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -665,4 +1203,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
