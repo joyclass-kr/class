@@ -318,16 +318,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '요정이 준 식탁보',
+    intro: [
+        '요정이 준 식탁보는 독일의 그림 형제가 모아 적은 옛이야기예요. 원래 제목은 식탁보와 당나귀와 몽둥이라는 뜻이랍니다.',
+        '펼치면 음식이 차려지는 식탁보, 금을 내놓는 당나귀, 스스로 움직이는 몽둥이가 차례로 나와요. 셋이 각각 무슨 일을 하는지 지켜보는 재미가 있는 이야기랍니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🍽️')}
             </div>
             <div class="story-page-right">
-                <h1>요정이 준 식탁보</h1>
-                <p>요정이 준 식탁보는 독일의 그림 형제가 모아 적은 옛이야기예요. 원래 제목은 식탁보와 당나귀와 몽둥이라는 뜻이랍니다.</p>
-                <p>펼치면 음식이 차려지는 식탁보, 금을 내놓는 당나귀, 스스로 움직이는 몽둥이가 차례로 나와요. 셋이 각각 무슨 일을 하는지 지켜보는 재미가 있는 이야기랍니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -342,8 +351,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -353,8 +362,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -364,22 +373,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -429,9 +439,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -442,7 +452,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -514,7 +524,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -523,34 +533,631 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Wishing Table',
+        intro: [
+            "The Wishing Table is an old tale collected and written down by the Brothers Grimm in Germany. Its full title names all three gifts: the table, the donkey and the cudgel.",
+            "A cloth that lays a meal when you spread it, a donkey that gives out gold, and a cudgel that swings by itself come one after another. Half the fun is watching what each of the three does."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · Three Sons Leave Home',
+            beats: [
+                {
+                    art: '01-leaving.webp',
+                    emoji: '✂️',
+                    left: [
+                        "An old tailor pushed his spectacles up his nose.",
+                        "The thread kept missing the eye of the needle.",
+                        "A tape measure hung round his neck.",
+                        "He had three sons.",
+                        "And one goat was all they had at home.",
+                        "The whole family lived off her milk.",
+                        "But things were getting harder and harder."
+                    ],
+                    right: [
+                        "One day the father called his sons in.",
+                        "\"We shall all go hungry at this rate.\"",
+                        "\"Each of you must go and learn a trade.\"",
+                        "\"A craft in your hands keeps hunger away.\"",
+                        "The three sons nodded.",
+                        "And the next morning they packed their bundles."
+                    ]
+                },
+                {
+                    art: '01-leaving-2.webp',
+                    emoji: '✂️',
+                    left: [
+                        "At the edge of the village the road forked three ways.",
+                        "The eldest was to go to a carpenter.",
+                        "The second was to go to a miller.",
+                        "The youngest was to learn woodturning.",
+                        "Their father waved from the doorway.",
+                        "\"We shall meet again in a few years.\""
+                    ],
+                    right: [
+                        "\"Take care of yourselves.\"",
+                        "The three brothers embraced one another in turn.",
+                        "And then each walked off down his own road.",
+                        "When they looked back their father was standing there still.",
+                        "And so a few years went by.",
+                        "Each of the three learned his trade."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Eldest Son's Cloth",
+            beats: [
+                {
+                    art: '02-cloth.webp',
+                    emoji: '🍽️',
+                    left: [
+                        "The eldest learned the carpenter's trade well.",
+                        "His shoulders broadened and his hands grew thick.",
+                        "There was always sawdust settled in his hair.",
+                        "One day his master called him over.",
+                        "\"You may go home now.\"",
+                        "And the master gave him a white cloth."
+                    ],
+                    right: [
+                        "To look at, it was a very ordinary piece of linen.",
+                        "\"What am I to use this for?\"",
+                        "\"Spread it out and say this to it.\"",
+                        "\"Spread yourself and set the table.\"",
+                        "The eldest set off, tilting his head over it.",
+                        "He could not quite believe it."
+                    ]
+                },
+                {
+                    art: '02-cloth-2.webp',
+                    emoji: '🍽️',
+                    left: [
+                        "Walking a forest road, he grew hungry.",
+                        "And then the words came back to him.",
+                        "He spread the cloth on the grass.",
+                        "\"Spread yourself and set the table!\"",
+                        "And in that instant a marvellous thing happened.",
+                        "The cloth was covered in steaming food."
+                    ],
+                    right: [
+                        "There was meat and there was bread.",
+                        "There was even a bottle of wine set out.",
+                        "The eldest son's eyes went round.",
+                        "The steam curled up off the meat.",
+                        "And he fell on it without even washing his hands.",
+                        "\"How glad my father will be to see this!\"",
+                        "And he hurried on, delighted with himself."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · What Happened at the Inn',
+            beats: [
+                {
+                    art: '03-inn.webp',
+                    emoji: '🏮',
+                    left: [
+                        "At sundown the eldest stopped at an inn.",
+                        "The landlord was a round-bellied man with an easy laugh.",
+                        "The guests ordered their suppers.",
+                        "Only the eldest ordered nothing at all.",
+                        "\"I have my own, thank you.\"",
+                        "And he spread out his cloth with a flourish."
+                    ],
+                    right: [
+                        "\"Spread yourself and set the table!\"",
+                        "And the board was loaded with food.",
+                        "The inn was turned upside down.",
+                        "The landlord's eyes were glittering.",
+                        "\"That is a wonderful thing, that is.\"",
+                        "And he would not leave the table.",
+                        "He kept fingering the linen."
+                    ]
+                },
+                {
+                    art: '03-inn-2.webp',
+                    emoji: '🏮',
+                    left: [
+                        "The landlord did not sleep that night.",
+                        "He went through his storeroom and found a cloth like it.",
+                        "The same colour and the same size.",
+                        "Then he crept into the room.",
+                        "The eldest was fast asleep.",
+                        "And the landlord quietly swapped the cloths over.",
+                        "Next day the eldest left, knowing nothing about it."
+                    ],
+                    right: [
+                        "When he got home the whole family came out to the yard.",
+                        "The eldest proudly spread out the cloth.",
+                        "\"Spread yourself and set the table!\"",
+                        "And nothing whatever happened.",
+                        "He folded and unfolded it again and again.",
+                        "\"Spread yourself and set the table! Set it, I say!\""
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: "Chapter 4 · The Second Son's Donkey",
+            beats: [
+                {
+                    art: '04-donkey.webp',
+                    emoji: '🪙',
+                    left: [
+                        "The next year the second son set out for home.",
+                        "He was white with flour from head to foot.",
+                        "The miller spoke to him as they parted.",
+                        "\"I have something to give you.\"",
+                        "And he led out a donkey.",
+                        "To look at, it was an ordinary donkey.",
+                        "\"And what can this fellow do?\""
+                    ],
+                    right: [
+                        "\"Lay a sheet under him and say the word.\"",
+                        "\"Bricklebrit, that is the word.\" The second son tilted his head at it.",
+                        "But he did as he was told.",
+                        "And gold pieces came showering out of the donkey's mouth.",
+                        "The second son's eyes went round."
+                    ]
+                },
+                {
+                    art: '04-donkey-2.webp',
+                    emoji: '🪙',
+                    left: [
+                        "Delighted, the second son drove the donkey along.",
+                        "At sundown he stopped at that same inn.",
+                        "The landlord welcomed him warmly.",
+                        "\"You must be worn out from the road.\"",
+                        "And the second son's tongue began to itch.",
+                        "\"This is no ordinary donkey, you know.\""
+                    ],
+                    right: [
+                        "And he poured out the gold in the yard to show them.",
+                        "The landlord could hardly see straight.",
+                        "That night the donkey in the stable was changed for another.",
+                        "And the second son too came home empty-handed.",
+                        "Their father only sighed.",
+                        "Neither son could lift his head."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: "Chapter 5 · The Youngest Son's Sack",
+            beats: [
+                {
+                    art: '05-sack.webp',
+                    emoji: '🎒',
+                    left: [
+                        "Meanwhile the youngest was learning to turn wood.",
+                        "He had his brothers' news by letter.",
+                        "And the youngest thought it over.",
+                        "\"That same inn, both times.\"",
+                        "Something about it struck him.",
+                        "He turned it over in his mind as he worked the wood.",
+                        "The shavings piled up round his feet."
+                    ],
+                    right: [
+                        "At last the day came for him to go home.",
+                        "His master gave him an old sack.",
+                        "\"There is a cudgel inside this.\"",
+                        "\"If ever anybody tries to take what is yours,\"",
+                        "\"call out: cudgel, out of the sack.\"",
+                        "\"And it will not stop until you say so.\""
+                    ]
+                },
+                {
+                    art: '05-sack-2.webp',
+                    emoji: '🎒',
+                    left: [
+                        "The youngest slung the sack over his shoulder.",
+                        "And then he smiled to himself.",
+                        "\"That comes at a very good time.\"",
+                        "He set off for the inn where his brothers had stayed.",
+                        "He chose that road on purpose.",
+                        "And he reached the inn about sundown."
+                    ],
+                    right: [
+                        "The landlord welcomed him as warmly as ever.",
+                        "\"Come in, come in. There is room and plenty.\"",
+                        "The landlord's eyes went to the sack first.",
+                        "The youngest pretended not to notice.",
+                        "He took a room as calmly as anything.",
+                        "And kept the sack always within reach.",
+                        "Then supper was laid."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · The Cudgel in the Sack',
+            beats: [
+                {
+                    art: '06-cudgel.webp',
+                    emoji: '🪵',
+                    left: [
+                        "Over supper the youngest boasted on purpose.",
+                        "\"This sack, you mean?\"",
+                        "\"The most precious thing in the world is in it.\"",
+                        "\"Table cloths and donkeys are nothing to it.\"",
+                        "The landlord's ears went up.",
+                        "\"And whatever might that be?\""
+                    ],
+                    right: [
+                        "\"That I cannot tell you.\"",
+                        "The youngest patted the sack and went off to his room.",
+                        "The landlord lay awake waiting all night.",
+                        "After midnight he crept into the room.",
+                        "The youngest was snoring.",
+                        "Snore, snore.",
+                        "The landlord came up on tiptoe."
+                    ]
+                },
+                {
+                    art: '06-cudgel-2.webp',
+                    emoji: '🪵',
+                    left: [
+                        "The landlord reached out for the sack.",
+                        "And that was the moment.",
+                        "The youngest sat straight up and called out.",
+                        "\"Cudgel, out of the sack!\"",
+                        "The sack flew open.",
+                        "Out sprang the cudgel.",
+                        "And it went tap, tap on the landlord's back.",
+                        "\"Ow! Ow!\""
+                    ],
+                    right: [
+                        "The landlord ran round and round the room.",
+                        "Chairs went over and dishes rolled away.",
+                        "And the cudgel followed him doggedly.",
+                        "The landlord shouted for mercy.",
+                        "\"It was all my fault!\"",
+                        "And still the cudgel did not stop."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · Everything Given Back',
+            beats: [
+                {
+                    art: '07-return.webp',
+                    emoji: '📦',
+                    left: [
+                        "The landlord was driven out into the yard.",
+                        "The guests looked out of their windows at it.",
+                        "\"I am sorry! I shall give it all back!\"",
+                        "\"It is all in the storeroom!\"",
+                        "And only then did the youngest raise a hand.",
+                        "\"Cudgel, into the sack.\""
+                    ],
+                    right: [
+                        "And in it went.",
+                        "The landlord sat down, gasping for breath.",
+                        "Then he opened the storeroom door.",
+                        "The cloth was inside, folded neatly.",
+                        "And the donkey was tied up at one side.",
+                        "His brothers' things, exactly as they had been."
+                    ]
+                },
+                {
+                    art: '07-return-2.webp',
+                    emoji: '📦',
+                    left: [
+                        "The youngest gathered up both of them.",
+                        "The cloth went inside his coat.",
+                        "He took the donkey by the halter.",
+                        "And the sack stayed on his shoulder.",
+                        "\"Here is a present to show my brothers.\"",
+                        "The donkey gave a bray.",
+                        "The hoofs went clip-clop along the morning road."
+                    ],
+                    right: [
+                        "Next morning the youngest set out.",
+                        "The landlord came out to the gate and bowed.",
+                        "\"I shall never do such a thing again.\"",
+                        "\"That would be as well.\"",
+                        "And the youngest smiled and patted the sack.",
+                        "The landlord went white.",
+                        "The sound alone made his back ache."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · A Table Loaded Full',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🎉',
+                    left: [
+                        "The youngest came into the village.",
+                        "They could see him leading the donkey from a long way off.",
+                        "The whole family ran out to the yard.",
+                        "Both his brothers came running too.",
+                        "\"That is our donkey!\"",
+                        "And the youngest took the cloth out of his coat."
+                    ],
+                    right: [
+                        "\"I fetched this back as well.\"",
+                        "His brothers only cleared their throats.",
+                        "The youngest spread the cloth in the middle of the yard.",
+                        "Their father came out on his stick.",
+                        "And the whole family stood round in a ring.",
+                        "\"Spread yourself and set the table!\"",
+                        "And the food came until the table legs bowed."
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🎉',
+                    left: [
+                        "And the donkey poured out gold beside it.",
+                        "The whole yard was glittering.",
+                        "The old tailor wiped his eyes.",
+                        "He took each of his sons by the hand.",
+                        "\"You have all learned well.\"",
+                        "That day the whole village came."
+                    ],
+                    right: [
+                        "Everyone ate their fill.",
+                        "The children played about the yard.",
+                        "And the laughing went on late into the night.",
+                        "The sack was hung quietly under the eaves.",
+                        "There was never any need of it again.",
+                        "And the three brothers lived well for a long, long time."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'What trade did the eldest son learn?',
+            choices: ["The miller's trade", 'Woodturning', "The carpenter's trade"],
+            answer: 2
+        },
+        {
+            q: 'What must you say to the cloth to make it lay a meal?',
+            choices: ['Out of the sack', 'Spread yourself and set the table', 'Give out gold'],
+            answer: 1
+        },
+        {
+            q: 'What did the landlord do at night?',
+            choices: ['He swapped the cloth', 'He opened the sack', 'He searched the storeroom'],
+            answer: 0
+        },
+        {
+            q: 'What did the second son get from the miller?',
+            choices: ['A cloth', 'A cudgel', 'A donkey'],
+            answer: 2
+        },
+        {
+            q: 'What did the youngest son get from his master?',
+            choices: ['A cloth', 'A sack', 'A donkey'],
+            answer: 1
+        },
+        {
+            q: 'What did the youngest call out at the inn?',
+            choices: ['Cudgel, out of the sack', 'Spread yourself and set the table', 'Open the storeroom'],
+            answer: 0
+        },
+        {
+            q: 'What did the donkey pour out?',
+            choices: ['Food', 'A cudgel', 'Gold'],
+            answer: 2
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🍽️',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Stories about magic things stolen by an innkeeper are told all over Europe. The Brothers Grimm wrote down one of them.",
+                    "All three gifts the brothers were given were splendid: the cloth, the donkey and the sack.",
+                    "But the two older brothers show off at the inn. They spread the cloth in front of the guests and put the donkey to work. That is how the landlord came to know.",
+                    "The youngest is different. He never says what is inside the sack. Only that something precious is in it."
+                ],
+                right: [
+                    "He wins not because his gift was better, but because he knew where his brothers had lost theirs.",
+                    "What should the two older brothers not have done at the inn?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-leaving.webp': [
+            { word: 'tailor', meaning: '재봉사', sentence: 'An old tailor pushed his spectacles up.' },
+            { word: 'tape measure', meaning: '줄자', sentence: 'A tape measure hung round his neck.' },
+            { word: 'live off', meaning: '먹고살다', sentence: 'The family lived off her milk.' },
+            { word: 'trade', meaning: '기술', sentence: 'Each of you must go and learn a trade.' },
+            { word: 'craft', meaning: '재주', sentence: 'A craft in your hands keeps hunger away.' }
+        ],
+        '01-leaving-2.webp': [
+            { word: 'fork', meaning: '갈라지다', sentence: 'The road forked three ways.' },
+            { word: 'carpenter', meaning: '목수', sentence: 'The eldest was to go to a carpenter.' },
+            { word: 'miller', meaning: '방앗간 주인', sentence: 'The second was to go to a miller.' },
+            { word: 'embrace', meaning: '안다', sentence: 'The brothers embraced one another.' }
+        ],
+        '02-cloth.webp': [
+            { word: 'broaden', meaning: '넓어지다', sentence: 'His shoulders broadened.' },
+            { word: 'sawdust', meaning: '톱밥', sentence: 'Sawdust settled in his hair.' },
+            { word: 'ordinary', meaning: '평범한', sentence: 'It was a very ordinary piece of linen.' },
+            { word: 'spread out', meaning: '펼치다', sentence: 'Spread it out and say this to it.' }
+        ],
+        '02-cloth-2.webp': [
+            { word: 'come back to', meaning: '떠오르다', sentence: 'The words came back to him.' },
+            { word: 'marvellous', meaning: '놀라운', sentence: 'A marvellous thing happened.' },
+            { word: 'steaming', meaning: '김이 나는', sentence: 'The cloth was covered in steaming food.' },
+            { word: 'fall on', meaning: '달려들다', sentence: 'He fell on it without washing his hands.' },
+            { word: 'hurry on', meaning: '걸음을 재촉하다', sentence: 'And he hurried on.' }
+        ],
+        '03-inn.webp': [
+            { word: 'landlord', meaning: '주막 주인', sentence: 'The landlord had an easy laugh.' },
+            { word: 'flourish', meaning: '척 하는 몸짓', sentence: 'He spread out his cloth with a flourish.' },
+            { word: 'board', meaning: '상', sentence: 'The board was loaded with food.' },
+            { word: 'finger', meaning: '만지작거리다', sentence: 'He kept fingering the linen.' }
+        ],
+        '03-inn-2.webp': [
+            { word: 'storeroom', meaning: '창고', sentence: 'He went through his storeroom.' },
+            { word: 'creep', meaning: '살금살금 들어가다', sentence: 'He crept into the room.' },
+            { word: 'fast asleep', meaning: '곤히 잠든', sentence: 'The eldest was fast asleep.' },
+            { word: 'swap over', meaning: '바꿔치기하다', sentence: 'He swapped the cloths over.' },
+            { word: 'unfold', meaning: '펴다', sentence: 'He folded and unfolded it again.' }
+        ],
+        '04-donkey.webp': [
+            { word: 'part', meaning: '헤어지다', sentence: 'The miller spoke as they parted.' },
+            { word: 'lead out', meaning: '끌고 나오다', sentence: 'And he led out a donkey.' },
+            { word: 'sheet', meaning: '보자기', sentence: 'Lay a sheet under him.' },
+            { word: 'shower out', meaning: '우수수 쏟아지다', sentence: 'Gold pieces came showering out.' }
+        ],
+        '04-donkey-2.webp': [
+            { word: 'worn out', meaning: '고생한', sentence: 'You must be worn out from the road.' },
+            { word: 'tongue itch', meaning: '입이 근질거리다', sentence: "His tongue began to itch." },
+            { word: 'pour out', meaning: '쏟아 놓다', sentence: 'He poured out the gold in the yard.' },
+            { word: 'empty-handed', meaning: '빈손으로', sentence: 'He came home empty-handed.' },
+            { word: 'sigh', meaning: '한숨 쉬다', sentence: 'Their father only sighed.' }
+        ],
+        '05-sack.webp': [
+            { word: 'turn wood', meaning: '나무를 깎다', sentence: 'The youngest was learning to turn wood.' },
+            { word: 'strike', meaning: '짚이다', sentence: 'Something about it struck him.' },
+            { word: 'shaving', meaning: '대팻밥', sentence: 'The shavings piled up round his feet.' },
+            { word: 'cudgel', meaning: '몽둥이', sentence: 'There is a cudgel inside this.' },
+            { word: 'call out', meaning: '외치다', sentence: 'Call out: cudgel, out of the sack.' }
+        ],
+        '05-sack-2.webp': [
+            { word: 'sling', meaning: '메다', sentence: 'He slung the sack over his shoulder.' },
+            { word: 'on purpose', meaning: '일부러', sentence: 'He chose that road on purpose.' },
+            { word: 'pretend', meaning: '~인 척하다', sentence: 'He pretended not to notice.' },
+            { word: 'within reach', meaning: '손이 닿는 곳에', sentence: 'He kept the sack within reach.' }
+        ],
+        '06-cudgel.webp': [
+            { word: 'boast', meaning: '큰소리치다', sentence: 'The youngest boasted on purpose.' },
+            { word: 'precious', meaning: '귀한', sentence: 'The most precious thing in the world.' },
+            { word: 'nothing to', meaning: '댈 것도 아닌', sentence: 'Donkeys are nothing to it.' },
+            { word: 'pat', meaning: '툭툭 두드리다', sentence: 'The youngest patted the sack.' },
+            { word: 'on tiptoe', meaning: '발끝으로', sentence: 'The landlord came up on tiptoe.' }
+        ],
+        '06-cudgel-2.webp': [
+            { word: 'reach out', meaning: '손을 뻗다', sentence: 'The landlord reached out for the sack.' },
+            { word: 'spring out', meaning: '튀어나오다', sentence: 'Out sprang the cudgel.' },
+            { word: 'doggedly', meaning: '끈질기게', sentence: 'The cudgel followed him doggedly.' },
+            { word: 'mercy', meaning: '살려 달라는 말', sentence: 'The landlord shouted for mercy.' }
+        ],
+        '07-return.webp': [
+            { word: 'drive out', meaning: '쫓아내다', sentence: 'The landlord was driven out into the yard.' },
+            { word: 'give back', meaning: '돌려주다', sentence: 'I shall give it all back!' },
+            { word: 'gasp', meaning: '헐떡이다', sentence: 'He sat down, gasping for breath.' },
+            { word: 'neatly', meaning: '얌전히', sentence: 'The cloth was inside, folded neatly.' }
+        ],
+        '07-return-2.webp': [
+            { word: 'gather up', meaning: '챙기다', sentence: 'He gathered up both of them.' },
+            { word: 'halter', meaning: '고삐', sentence: 'He took the donkey by the halter.' },
+            { word: 'bray', meaning: '히힝 울음', sentence: 'The donkey gave a bray.' },
+            { word: 'as well', meaning: '~하는 게 좋다', sentence: 'That would be as well.' },
+            { word: 'ache', meaning: '아프다', sentence: 'The sound made his back ache.' }
+        ],
+        '08-ending.webp': [
+            { word: 'from a long way off', meaning: '멀리서도', sentence: 'They could see him from a long way off.' },
+            { word: 'fetch back', meaning: '찾아오다', sentence: 'I fetched this back as well.' },
+            { word: 'in a ring', meaning: '빙 둘러', sentence: 'The family stood round in a ring.' },
+            { word: 'bow', meaning: '휘다', sentence: 'The food came until the table legs bowed.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'glitter', meaning: '반짝이다', sentence: 'The whole yard was glittering.' },
+            { word: 'wipe', meaning: '훔치다', sentence: 'The old tailor wiped his eyes.' },
+            { word: 'eat one’s fill', meaning: '배불리 먹다', sentence: 'Everyone ate their fill.' },
+            { word: 'eaves', meaning: '처마', sentence: 'The sack was hung under the eaves.' }
+        ],
+        'end.webp': [
+            { word: 'splendid', meaning: '훌륭한', sentence: 'All three gifts were splendid.' },
+            { word: 'show off', meaning: '자랑하다', sentence: 'The two older brothers show off.' },
+            { word: 'put to work', meaning: '부리다', sentence: 'They put the donkey to work.' },
+            { word: 'come to know', meaning: '알게 되다', sentence: 'That is how the landlord came to know.' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -615,6 +1222,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -623,7 +1231,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -635,7 +1243,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -669,4 +1277,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
