@@ -307,16 +307,25 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+/* 표지 글도 말에 따라 갈아 끼우므로 상수로 뺐다. */
+const COVER = {
+    title: '백조 왕자',
+    intro: [
+        '백조 왕자는 덴마크의 작가 한스 크리스티안 안데르센이 1838년에 펴낸 이야기예요. 북유럽에 오래전부터 전해 오던 옛이야기를 다시 쓴 작품이랍니다.',
+        '말을 한마디도 하지 못한 채 오빠들을 구해 내는 동생 엘리사의 이야기예요. 억울한 일을 겪으면서도 끝까지 자기가 해야 할 일을 놓지 않는 마음이 담겨 있습니다.'
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
                 ${artFrame('cover.webp', '🦢')}
             </div>
             <div class="story-page-right">
-                <h1>백조 왕자</h1>
-                <p>백조 왕자는 덴마크의 작가 한스 크리스티안 안데르센이 1838년에 펴낸 이야기예요. 북유럽에 오래전부터 전해 오던 옛이야기를 다시 쓴 작품이랍니다.</p>
-                <p>말을 한마디도 하지 못한 채 오빠들을 구해 내는 동생 엘리사의 이야기예요. 억울한 일을 겪으면서도 끝까지 자기가 해야 할 일을 놓지 않는 마음이 담겨 있습니다.</p>
+                <h1>${cv.title}</h1>
+                ${cv.intro.map(p => `<p>${p}</p>`).join('')}
             </div>
         </div>`;
 }
@@ -331,8 +340,8 @@ function tocPage() {
             <button type="button" data-goto="${s.num}">
                 <span class="toc-num">${s.num}</span>
                 <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                    <small>${pageOf(s.num)}쪽</small>
+                    <strong>${s.title.replace(/^(\d+장|Chapter \d+) · /, '')}</strong>
+                    <small>${T().page(pageOf(s.num))}</small>
                 </span>
             </button>
         </li>`;
@@ -342,8 +351,8 @@ function tocPage() {
             <button type="button" data-goto-kind="quiz">
                 <span class="toc-num">❓</span>
                 <span>
-                    <strong>이야기 문제</strong>
-                    <small>${quizIdx >= 0 ? FOLIOS[quizIdx].start : ''}쪽</small>
+                    <strong>${T().quiz}</strong>
+                    <small>${quizIdx >= 0 ? T().page(FOLIOS[quizIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
@@ -353,22 +362,23 @@ function tocPage() {
             <button type="button" data-goto-kind="after">
                 <span class="toc-num">📖</span>
                 <span>
-                    <strong>읽고 나서</strong>
-                    <small>${afterIdx >= 0 ? FOLIOS[afterIdx].start : ''}쪽</small>
+                    <strong>${T().after}</strong>
+                    <small>${afterIdx >= 0 ? T().page(FOLIOS[afterIdx].start) : ''}</small>
                 </span>
             </button>
         </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
+    const chs = CH();
+    const half = Math.ceil(chs.length / 2);
+    const leftItems = chs.slice(0, half).map(itemHtml).join('');
+    const rightItems = chs.slice(half).map(itemHtml).join('') + quizItemHtml + afterItemHtml;
     return `
         <div class="page page-toc">
             <div class="story-page-left">
-                <h2>차례</h2>
+                <h2>${T().toc}</h2>
                 <ul class="toc-list">${leftItems}</ul>
             </div>
             <div class="story-page-right">
-                <h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>
+                <h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>
                 <ul class="toc-list">${rightItems}</ul>
             </div>
         </div>`;
@@ -418,9 +428,9 @@ const AFTERWORD = {
 };
 
 function afterPage(spread, isFirst) {
-    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 위 모서리에 붙고, 글을 뺀 나머지 자리를 다 차지한다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AF().emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -431,7 +441,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
-                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
+                <p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>
             </div>
         </div>`;
 }
@@ -503,7 +513,7 @@ const QUIZ = [
 ];
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
+    const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
@@ -512,34 +522,600 @@ function quizPage() {
         </div>`).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <h2>${T().quiz}</h2>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
 
 
-const PAGES = [
-    { kind: 'cover' },
-    { kind: 'toc' },
-    ...CHAPTERS.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
-        kind: 'spread', chapter, beat,
-        isFirst: i === 0,
-        isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
-    }))),
-    { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
-];
+/* 영어판 — 한국어 원고를 줄 단위로 옮기지 않고 영어로 다시 썼다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        title: 'The Wild Swans',
+        intro: [
+            "The Wild Swans was published by the Danish author Hans Christian Andersen in 1838. He rewrote it from an old tale that had long been told in the north of Europe.",
+            "It is the story of Elisa, who saves her brothers without speaking a single word. It holds what it takes to keep hold of your own work while everybody is wrong about you."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: 'Chapter 1 · Eleven Brothers',
+            beats: [
+                {
+                    art: '01-family.webp',
+                    emoji: '👑',
+                    left: [
+                        "Eleven gold crowns shone in a row in the palace garden — one for each of eleven princes.",
+                        "The youngest of the family was a princess called Elisa.",
+                        "Their mother had died early. And still the twelve of them were very close.",
+                        "The brothers played with their sister the whole day long."
+                    ],
+                    right: [
+                        "They carried her round the palace on their backs, turn and turn about.",
+                        "They taught her her letters and sang to her.",
+                        "Elisa loved her brothers better than anything in the world.",
+                        "There was always laughter in that garden.",
+                        "They thought it would go on for a long time. But it did not.",
+                        "One day the air in the palace changed."
+                    ]
+                },
+                {
+                    art: '01-family-2.webp',
+                    emoji: '👑',
+                    left: [
+                        "For the king took a new queen. She was tall and her eyes were cold.",
+                        "To the children's faces she smiled,",
+                        "and behind that she thought something quite different.",
+                        "\"If only those children were gone, this country would be mine.\"",
+                        "So she began telling the king things against them."
+                    ],
+                    right: [
+                        "\"Those children have no manners.\"",
+                        "\"The very sight of them gives me a headache.\"",
+                        "Bit by bit the king kept his distance from them.",
+                        "Elisa was sent away to a house in the country, and the brothers stayed at the palace.",
+                        "And from then on the queen had something dreadful in mind.",
+                        "Every night she muttered to herself, alone."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: 'Chapter 2 · The Brothers Become Swans',
+            beats: [
+                {
+                    art: '02-swans.webp',
+                    emoji: '🦢',
+                    left: [
+                        "It was one morning. The palace was oddly quiet.",
+                        "The princes' rooms were empty, and their beds had not been slept in.",
+                        "People searched the whole palace.",
+                        "Eleven gold crowns lay in a row where they always had.",
+                        "But the princes were nowhere at all."
+                    ],
+                    right: [
+                        "Then a great bird call came from outside the window.",
+                        "Eleven white birds were flying overhead — long-necked, wide-winged swans.",
+                        "The swans went three times round the palace",
+                        "and then went away toward the sea.",
+                        "Their calling hung in the sky for a long time after."
+                    ]
+                },
+                {
+                    art: '02-swans-2.webp',
+                    emoji: '🦢',
+                    left: [
+                        "Elisa heard the news at the house in the country.",
+                        "\"My brothers have been turned into swans?\"",
+                        "From that day she could not sleep.",
+                        "The year she turned fifteen she decided to go back to the palace.",
+                        "But the queen knew her and would not let her in."
+                    ],
+                    right: [
+                        "\"That child is no daughter of mine.\"",
+                        "Elisa was put out of the palace gates. She had nowhere to go.",
+                        "So she made up her mind to find her brothers,",
+                        "and walked toward the sea, the way the swans had flown.",
+                        "However far it was did not matter.",
+                        "One pair of straw shoes and some dry bread was all she had."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: 'Chapter 3 · Together Again by the Sea',
+            beats: [
+                {
+                    art: '03-reunion.webp',
+                    emoji: '🌊',
+                    left: [
+                        "Elisa walked for days and days, through woods and over open country, living on the berries she could pick.",
+                        "Her feet blistered and her clothes wore through.",
+                        "At last she came to the sea, and the salt wind struck her face.",
+                        "There was a rocky island close in to the shore.",
+                        "Elisa sat down on it and waited for the sun."
+                    ],
+                    right: [
+                        "It was just as the sun was going down.",
+                        "Something white came down out of the sky.",
+                        "Eleven swans.",
+                        "The sound of their wings was louder than the waves.",
+                        "Elisa jumped to her feet. Her chest felt fit to burst.",
+                        "And the sun went into the water."
+                    ]
+                },
+                {
+                    art: '03-reunion-2.webp',
+                    emoji: '🌊',
+                    left: [
+                        "The moment the sun went down, the feathers fell away.",
+                        "And there were her brothers.",
+                        "Elisa ran straight to them.",
+                        "\"Brother!\"",
+                        "\"Elisa! However did you get here?\""
+                    ],
+                    right: [
+                        "Her brothers gathered her in.",
+                        "\"When the sun comes up we turn back into swans.\"",
+                        "\"We can only be ourselves at night.\"",
+                        "\"Our stepmother put this on us.\"",
+                        "Elisa held on to her brothers and cried for a long while.",
+                        "It had been years."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: 'Chapter 4 · The Nettle Shirts',
+            beats: [
+                {
+                    art: '04-nettles.webp',
+                    emoji: '🌿',
+                    left: [
+                        "The brothers laid Elisa in a great net and carried her over the sea as swans.",
+                        "They settled in a cave in a wood.",
+                        "That night Elisa dreamed.",
+                        "An old man in white came to her in the dream.",
+                        "\"Do you want to save your brothers?\""
+                    ],
+                    right: [
+                        "\"Then make eleven shirts out of nettles and put them on.\"",
+                        "\"That will break the spell.\"",
+                        "\"But until the last one is done you must not say one word.\"",
+                        "\"If you speak, your brothers will die.\"",
+                        "Elisa woke and sat straight up."
+                    ]
+                },
+                {
+                    art: '04-nettles-2.webp',
+                    emoji: '🌿',
+                    left: [
+                        "There really were nettles growing in front of the cave. Elisa began pulling them at once.",
+                        "Her hands burned as though they had been in a fire, and the blisters came up straight away.",
+                        "The backs of her hands went red and swollen.",
+                        "And still she did not stop. She trod the stalks to draw out the fibre",
+                        "and began weaving the shirts with it.",
+                        "Green sap ran down over her feet."
+                    ],
+                    right: [
+                        "At nightfall her brothers came back —",
+                        "swans turned men as the sun went down.",
+                        "\"Elisa, what have you done to your hands?\"",
+                        "Elisa did not answer. She only shook her head and worked on.",
+                        "And her brothers understood what it meant.",
+                        "\"This is for us.\"",
+                        "The eldest took her hands gently in his own."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 5,
+            title: 'Chapter 5 · A King She Did Not Know',
+            beats: [
+                {
+                    art: '05-king.webp',
+                    emoji: '🐎',
+                    left: [
+                        "One day the king of the neighbouring country came out hunting.",
+                        "His hounds ran toward the cave, and the king came after them.",
+                        "There was a girl sitting inside, weaving grass without a word.",
+                        "The king stopped where he was.",
+                        "And even the hounds stopped barking."
+                    ],
+                    right: [
+                        "\"Who are you?\"",
+                        "\"And what are you doing in a place like this?\"",
+                        "Elisa could not answer anything at all.",
+                        "She could only say it with her eyes.",
+                        "There were tears standing in them,",
+                        "and the nettles were still in her hands."
+                    ]
+                },
+                {
+                    art: '05-king-2.webp',
+                    emoji: '🐎',
+                    left: [
+                        "The king looked into those eyes a long while.",
+                        "They were not the eyes of a bad person.",
+                        "\"I cannot leave you here.\"",
+                        "He set the girl on his horse and took her to his own castle.",
+                        "Elisa held her bundle of nettles tight against her."
+                    ],
+                    right: [
+                        "It was the one thing she could not let go of.",
+                        "At the castle they gave her fine clothes",
+                        "and set warm food in front of her.",
+                        "And still Elisa did not smile.",
+                        "At night she shut herself in her room and wove.",
+                        "She never once opened her mouth."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 6,
+            title: 'Chapter 6 · What They Thought of Her',
+            beats: [
+                {
+                    art: '06-accused.webp',
+                    emoji: '🗣️',
+                    left: [
+                        "At the castle too, Elisa wove nettles every night, sitting alone behind a shut door.",
+                        "Then the nettles she had brought ran out.",
+                        "So she slipped out of the castle in the middle of the night",
+                        "and gathered more in the fields outside.",
+                        "And somebody saw her do it."
+                    ],
+                    right: [
+                        "\"Where does that girl go every night?\"",
+                        "The talk swelled quickly.",
+                        "\"She must be a witch.\"",
+                        "\"That is why she never speaks.\"",
+                        "The muttering got louder and louder.",
+                        "Elisa heard every word of it and could not open her mouth."
+                    ]
+                },
+                {
+                    art: '06-accused-2.webp',
+                    emoji: '🗣️',
+                    left: [
+                        "At last it reached the king's ears, and his men brought Elisa in.",
+                        "\"What have you been doing at night?\"",
+                        "Elisa could not speak. One word and her brothers would die.",
+                        "She only shook her head.",
+                        "\"You see. She cannot even answer.\""
+                    ],
+                    right: [
+                        "There was nothing the king could do.",
+                        "Elisa was shut up in a tower that same hour,",
+                        "and they threw her bundle of nettles in after her.",
+                        "\"Let her handle those all she likes.\" That is how they laughed at her.",
+                        "Only the king lay awake all that night."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 7,
+            title: 'Chapter 7 · The Last Shirt',
+            beats: [
+                {
+                    art: '07-finish.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "Elisa thought it was just as well. The nettles were with her.",
+                        "Even shut in that room she did not stop her hands.",
+                        "She drew the fibre and wove all night.",
+                        "Ten shirts were finished,",
+                        "and only the last one was left.",
+                        "Her fingertips split and the blood came through."
+                    ],
+                    right: [
+                        "But the window was already going grey.",
+                        "She had not managed to finish one sleeve.",
+                        "The door opened and people came in.",
+                        "Elisa gathered the eleven shirts into her arms",
+                        "and was taken out to the square.",
+                        "Her hands never let go of the thread. She wove that sleeve as she walked."
+                    ]
+                },
+                {
+                    art: '07-finish-2.webp',
+                    emoji: '🕯️',
+                    left: [
+                        "The square was full of people, and Elisa would not put the shirts down.",
+                        "They pointed at her from every side.",
+                        "And then there was a sound in the sky.",
+                        "People looked up.",
+                        "Eleven white swans were coming down."
+                    ],
+                    right: [
+                        "Elisa threw the shirts over them one by one.",
+                        "The moment a shirt touched, the feathers fell away,",
+                        "and one after another the swans became men.",
+                        "The princes came down into the square, and the crowd surged.",
+                        "\"What in the world is happening!\" The square was in an uproar.",
+                        "And only then did Elisa let out the breath she had been holding."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 8,
+            title: 'Chapter 8 · Her Voice Again',
+            beats: [
+                {
+                    art: '08-ending.webp',
+                    emoji: '🤍',
+                    left: [
+                        "But the youngest brother was a little different.",
+                        "One arm was still a swan's wing,",
+                        "because the sleeve had not been finished.",
+                        "Elisa did not know where to put herself for shame.",
+                        "Her youngest brother laughed and shrugged,",
+                        "and the white wing caught the sunlight."
+                    ],
+                    right: [
+                        "\"Never mind. This is quite good enough.\"",
+                        "\"Rather fine, don't you think?\"",
+                        "Only then did Elisa's mind rest.",
+                        "Now she was allowed to speak.",
+                        "And she said the words she had held in for so long.",
+                        "\"I have done nothing wrong.\""
+                    ]
+                },
+                {
+                    art: '08-ending-2.webp',
+                    emoji: '🤍',
+                    left: [
+                        "The square went quiet.",
+                        "Her brothers told everything that had happened —",
+                        "the stepmother's spell, and why their sister could not speak.",
+                        "People hung their heads. They were ashamed of having called her a witch.",
+                        "And the king came over to Elisa."
+                    ],
+                    right: [
+                        "He took both her hands and bowed his head.",
+                        "\"I did not see who you were.\"",
+                        "There was a great feast at the castle that day.",
+                        "Twelve brothers and sisters sat down together,",
+                        "and Elisa laughed out loud for the first time in a long while.",
+                        "And she said everything she had not been able to say."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        {
+            q: 'Why did the queen want the children out of the way?',
+            choices: ['They were rude to her', 'She wanted the country for herself', 'The king had asked her to'],
+            answer: 1
+        },
+        {
+            q: 'What was left in the princes’ rooms?',
+            choices: ['Their eleven gold crowns', 'Eleven white feathers', 'Nothing at all'],
+            answer: 0
+        },
+        {
+            q: 'When could the brothers be men again?',
+            choices: ['Only when Elisa called them', 'Only on the rocky island', 'Only at night, after the sun went down'],
+            answer: 2
+        },
+        {
+            q: 'What did the old man in the dream tell Elisa to do?',
+            choices: ['Go back to the palace and speak to the king', 'Weave eleven nettle shirts and say nothing until they were done', 'Wait on the island for a year'],
+            answer: 1
+        },
+        {
+            q: 'Why did people begin calling Elisa a witch?',
+            choices: ['She went out at night for nettles and never spoke', 'She had eleven swans following her', 'She refused the fine clothes'],
+            answer: 0
+        },
+        {
+            q: 'Where did Elisa finish most of the shirts?',
+            choices: ['In the cave in the wood', 'On the rocky island', 'In the tower she was shut up in'],
+            answer: 2
+        },
+        {
+            q: 'Why did the youngest brother keep one wing?',
+            choices: ['His shirt fell in the square', 'One sleeve was not finished', 'He asked to keep it'],
+            answer: 1
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        emoji: '🦢',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Stories about brothers turned into birds are told in many parts of Europe. Andersen took one and wrote it again.",
+                    "Elisa had two things to do: weave eleven shirts out of nettles, and say nothing at all until they were finished.",
+                    "The hard half was not the shirts. It was holding her tongue — because when people were wrong about her, she could not say so.",
+                    "Nettles really do burn like fire when you touch them. That is a real plant. The pain was not invented."
+                ],
+                right: [
+                    "The last shirt was short one sleeve, so the youngest brother keeps a wing. The story leaves it that way and does not fix it.",
+                    "How much longer could Elisa have held out?"
+                ]
+            }
+        ]
+    },
+    words: {
+        '01-family.webp': [
+            { word: 'crown', meaning: '금관, 왕관', sentence: 'Eleven gold crowns shone in a row.' },
+            { word: 'turn and turn about', meaning: '번갈아 가며', sentence: 'They carried her on their backs, turn and turn about.' },
+            { word: 'letters', meaning: '글자', sentence: 'They taught her her letters.' },
+            { word: 'go on', meaning: '계속되다', sentence: 'They thought it would go on for a long time.' }
+        ],
+        '01-family-2.webp': [
+            { word: 'take', meaning: '맞이하다', sentence: 'The king took a new queen.' },
+            { word: 'manners', meaning: '버릇, 예의', sentence: 'Those children have no manners.' },
+            { word: 'keep one’s distance', meaning: '멀리하다', sentence: 'The king kept his distance from them.' },
+            { word: 'have in mind', meaning: '마음에 품다', sentence: 'The queen had something dreadful in mind.' },
+            { word: 'mutter', meaning: '중얼거리다', sentence: 'Every night she muttered to herself.' }
+        ],
+        '02-swans.webp': [
+            { word: 'oddly', meaning: '이상하게', sentence: 'The palace was oddly quiet.' },
+            { word: 'nowhere', meaning: '아무 데도 없는', sentence: 'The princes were nowhere at all.' },
+            { word: 'overhead', meaning: '머리 위로', sentence: 'Eleven white birds were flying overhead.' },
+            { word: 'hang', meaning: '남아 있다', sentence: 'Their calling hung in the sky.' }
+        ],
+        '02-swans-2.webp': [
+            { word: 'turn into', meaning: '~이 되다', sentence: 'My brothers have been turned into swans?' },
+            { word: 'put out', meaning: '내쫓다', sentence: 'Elisa was put out of the palace gates.' },
+            { word: 'make up one’s mind', meaning: '마음을 정하다', sentence: 'She made up her mind to find her brothers.' },
+            { word: 'straw shoes', meaning: '짚신', sentence: 'One pair of straw shoes was all she had.' }
+        ],
+        '03-reunion.webp': [
+            { word: 'blister', meaning: '물집이 잡히다', sentence: 'Her feet blistered.' },
+            { word: 'wear through', meaning: '해지다', sentence: 'Her clothes wore through.' },
+            { word: 'salt wind', meaning: '짠 바람', sentence: 'The salt wind struck her face.' },
+            { word: 'fit to burst', meaning: '터질 것 같은', sentence: 'Her chest felt fit to burst.' }
+        ],
+        '03-reunion-2.webp': [
+            { word: 'fall away', meaning: '벗겨지다', sentence: 'The feathers fell away.' },
+            { word: 'gather in', meaning: '끌어안다', sentence: 'Her brothers gathered her in.' },
+            { word: 'stepmother', meaning: '새어머니', sentence: 'Our stepmother put this on us.' },
+            { word: 'hold on to', meaning: '붙들다', sentence: 'Elisa held on to her brothers.' }
+        ],
+        '04-nettles.webp': [
+            { word: 'net', meaning: '그물', sentence: 'They laid Elisa in a great net.' },
+            { word: 'settle', meaning: '자리를 잡다', sentence: 'They settled in a cave in a wood.' },
+            { word: 'nettle', meaning: '쐐기풀', sentence: 'Make eleven shirts out of nettles.' },
+            { word: 'break a spell', meaning: '마법을 풀다', sentence: 'That will break the spell.' }
+        ],
+        '04-nettles-2.webp': [
+            { word: 'burn', meaning: '따갑다', sentence: 'Her hands burned as though they had been in a fire.' },
+            { word: 'swollen', meaning: '부어오른', sentence: 'The backs of her hands went red and swollen.' },
+            { word: 'tread', meaning: '밟다', sentence: 'She trod the stalks to draw out the fibre.' },
+            { word: 'fibre', meaning: '실, 섬유', sentence: 'She trod the stalks to draw out the fibre.' },
+            { word: 'sap', meaning: '풀물, 즙', sentence: 'Green sap ran down over her feet.' }
+        ],
+        '05-king.webp': [
+            { word: 'neighbouring', meaning: '이웃의', sentence: 'The king of the neighbouring country came out hunting.' },
+            { word: 'hound', meaning: '사냥개', sentence: 'His hounds ran toward the cave.' },
+            { word: 'weave', meaning: '엮다', sentence: 'Weaving grass without a word.' },
+            { word: 'stand in', meaning: '(눈물이) 그렁그렁하다', sentence: 'There were tears standing in them.' }
+        ],
+        '05-king-2.webp': [
+            { word: 'leave', meaning: '두다', sentence: 'I cannot leave you here.' },
+            { word: 'bundle', meaning: '뭉치', sentence: 'Elisa held her bundle of nettles tight.' },
+            { word: 'let go of', meaning: '놓다', sentence: 'It was the one thing she could not let go of.' },
+            { word: 'shut oneself in', meaning: '틀어박히다', sentence: 'At night she shut herself in her room.' }
+        ],
+        '06-accused.webp': [
+            { word: 'run out', meaning: '떨어지다', sentence: 'The nettles she had brought ran out.' },
+            { word: 'slip out', meaning: '몰래 나가다', sentence: 'She slipped out of the castle at night.' },
+            { word: 'swell', meaning: '부풀다', sentence: 'The talk swelled quickly.' },
+            { word: 'witch', meaning: '마녀', sentence: 'She must be a witch.' }
+        ],
+        '06-accused-2.webp': [
+            { word: 'reach one’s ears', meaning: '귀에 들어가다', sentence: "It reached the king's ears." },
+            { word: 'shut up', meaning: '가두다', sentence: 'Elisa was shut up in a tower.' },
+            { word: 'laugh at', meaning: '비웃다', sentence: 'That is how they laughed at her.' },
+            { word: 'lie awake', meaning: '잠을 못 이루다', sentence: 'Only the king lay awake all that night.' }
+        ],
+        '07-finish.webp': [
+            { word: 'just as well', meaning: '오히려 잘된', sentence: 'Elisa thought it was just as well.' },
+            { word: 'split', meaning: '갈라지다', sentence: 'Her fingertips split.' },
+            { word: 'go grey', meaning: '뿌옇게 밝아 오다', sentence: 'The window was already going grey.' },
+            { word: 'sleeve', meaning: '소매', sentence: 'She had not managed to finish one sleeve.' }
+        ],
+        '07-finish-2.webp': [
+            { word: 'point at', meaning: '손가락질하다', sentence: 'They pointed at her from every side.' },
+            { word: 'one by one', meaning: '하나씩', sentence: 'Elisa threw the shirts over them one by one.' },
+            { word: 'surge', meaning: '술렁이다', sentence: 'The crowd surged.' },
+            { word: 'let out a breath', meaning: '숨을 내쉬다', sentence: 'Elisa let out the breath she had been holding.' }
+        ],
+        '08-ending.webp': [
+            { word: 'shrug', meaning: '어깨를 으쓱하다', sentence: 'Her youngest brother laughed and shrugged.' },
+            { word: 'not know where to put oneself', meaning: '어쩔 줄 모르다', sentence: 'Elisa did not know where to put herself.' },
+            { word: 'good enough', meaning: '이 정도면 훌륭한', sentence: 'This is quite good enough.' },
+            { word: 'hold in', meaning: '참다', sentence: 'The words she had held in for so long.' }
+        ],
+        '08-ending-2.webp': [
+            { word: 'hang one’s head', meaning: '고개를 숙이다', sentence: 'People hung their heads.' },
+            { word: 'ashamed', meaning: '부끄러운', sentence: 'They were ashamed of having called her a witch.' },
+            { word: 'bow one’s head', meaning: '고개를 숙이다', sentence: 'He took both her hands and bowed his head.' },
+            { word: 'out loud', meaning: '소리 내어', sentence: 'Elisa laughed out loud.' }
+        ],
+        'end.webp': [
+            { word: 'rewrite', meaning: '다시 쓰다', sentence: 'Andersen took one and wrote it again.' },
+            { word: 'hold one’s tongue', meaning: '말을 참다', sentence: 'It was holding her tongue.' },
+            { word: 'be wrong about', meaning: '오해하다', sentence: 'When people were wrong about her.' },
+            { word: 'invent', meaning: '지어내다', sentence: 'The pain was not invented.' },
+            { word: 'hold out', meaning: '버티다', sentence: 'How much longer could Elisa have held out?' }
+        ]
+    }
+};
+
+/* 글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
+        home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        page: n => `${n}쪽`,
+        done: (n, all) => `${n} / 총 ${all}문항 완료`
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading',
+        home: 'Back to the learning hub', other: '한국어', otherAria: '한국어로 읽기',
+        page: n => `p. ${n}`,
+        done: (n, all) => `${n} of ${all} answered`
+    }
+};
+
+const LANG_KEY = 'world-tales-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장이 막힌 곳도 있다 */ } };
+
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+
+const T  = () => UI[LANG];
+const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
+const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
+const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover     : COVER);
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+/* 말을 바꾸면 쪽을 다시 짠다. 쪽 수는 두 말이 같으므로 보던 자리가 흔들리지 않는다. */
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    const chs = CH();
+    PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...chs.flatMap((chapter, ci) => chapter.beats.map((beat, i) => ({
+        kind: 'spread', chapter, beat,
+        isFirst: i === 0,
+        isLast: ci === chs.length - 1 && i === chapter.beats.length - 1
+    }))),
+    { kind: 'quiz' },
+    ...AF().spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
+    ];
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
 
 function renderPage(page) {
     switch (page.kind) {
@@ -604,6 +1180,7 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    if (typeof renderVocab === 'function') renderVocab();
 }
 
 function initQuiz() {
@@ -612,7 +1189,7 @@ function initQuiz() {
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = QZ()[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -624,7 +1201,7 @@ function initQuiz() {
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
                 answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                progressEl.textContent = T().done(answeredCount, QZ().length);
             });
         });
     });
@@ -658,4 +1235,148 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
 });
 
+/* ── 단어장 — 영어로 읽을 때만 책 아래에 깔린다 ──────────────────── */
+const vocabScreenEl = document.getElementById('vocabScreen');
+const vocabPanelEl = document.getElementById('vocabPanel');
+const scrollDownEl = document.getElementById('scrollDown');
+const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+
+/* 듣기 — 낱말을 먼저 읽고, 이어서 그 낱말이 나온 구절을 읽는다.
+   목소리가 없는 기기에서는 단추 자체가 뜨지 않는다. */
+const CAN_SPEAK = typeof speechSynthesis !== 'undefined';
+let VOCAB_NOW = [];
+
+function sayWord(item) {
+    if (!CAN_SPEAK || !item) return;
+    try {
+        speechSynthesis.cancel();
+        const word = new SpeechSynthesisUtterance(item.word);
+        word.lang = 'en-US';
+        word.rate = 0.75;
+        const sent = new SpeechSynthesisUtterance(item.sentence);
+        sent.lang = 'en-US';
+        speechSynthesis.speak(word);
+        speechSynthesis.speak(sent);
+    } catch (e) { /* 소리를 못 내는 기기도 있다 */ }
+}
+
+function vocabFor() {
+    const all = (HAS_WORDS && EN.words) || {};
+    const page = PAGES[current];
+    // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
+    const key = !page ? null
+        : page.kind === 'spread' ? page.beat.art
+        : page.kind === 'after' ? page.spread.art
+        : null;
+    if (key && all[key]) return all[key];
+    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
+    const list = [];
+    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
+    return list;
+}
+
+function renderVocab() {
+    const on = HAS_WORDS && LANG === 'en';
+    if (vocabScreenEl) vocabScreenEl.hidden = !on;
+    if (scrollDownEl) scrollDownEl.hidden = !on;
+    if (!on) {
+        if (window.scrollY) window.scrollTo({ top: 0 });
+        return;
+    }
+    const list = vocabFor();
+    VOCAB_NOW = list;
+    vocabPanelEl.innerHTML = `
+        <ul class="vocab-list">
+            ${list.map((w, i) => `
+            <li>
+                <div class="vocab-top">
+                    <p class="vocab-word">${w.word}</p>
+                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                </div>
+                <p class="vocab-mean">${w.meaning}</p>
+                <p class="vocab-sent">${w.sentence}</p>
+            </li>`).join('')}
+        </ul>`;
+    fitVocabScreen();
+}
+
+if (vocabPanelEl) {
+    vocabPanelEl.addEventListener('click', e => {
+        const btn = e.target.closest('.vocab-say');
+        if (btn) sayWord(VOCAB_NOW[Number(btn.dataset.i)]);
+    });
+}
+
+/* 그림선 — 그림 칸이 끝나는 자리다. 여기까지만 내려가면 그림만 위로 빠지고
+   읽던 글은 화면에 남는다. 아래 화면 높이를 딱 그만큼 주면 더 내려갈 데가
+   없어져 저절로 그 자리에 걸린다. */
+function artLine() {
+    const page = PAGES[current];
+    const el = !page ? null
+        : page.kind === 'spread' ? document.querySelector('.spread-art')
+        : page.kind === 'cover' ? document.querySelector('.page-cover .story-page-left-full')
+        : page.kind === 'after' ? document.querySelector('.after-art')
+        : null;
+    if (!el) return 0;
+    const box = el.getBoundingClientRect();
+    const line = box.bottom + window.scrollY;
+    const book = document.querySelector('.book');
+    if (!book) return Math.max(0, Math.round(line));
+    const bookBox = book.getBoundingClientRect();
+    // 그림이 책 높이를 거의 다 차지하면 경계선이 곧 책 밑이라 책이 통째로
+    // 사라진다. 그때만 책이 절반쯤 남도록 붙든다.
+    if (box.height < bookBox.height * 0.8) return Math.max(0, Math.round(line));
+    const cap = bookBox.bottom + window.scrollY - Math.round(window.innerHeight * 0.45);
+    return Math.max(0, Math.round(Math.min(line, Math.max(cap, 0))));
+}
+
+function fitVocabScreen() {
+    if (!vocabScreenEl || vocabScreenEl.hidden) return;
+    const line = artLine();
+    // 펼침면이 아닌 쪽(차례·문제)에는 그림 칸이 없다. 그때는 내용만큼만 둔다.
+    vocabScreenEl.style.minHeight = line ? line + 'px' : '';
+}
+
+if (scrollDownEl) {
+    scrollDownEl.addEventListener('click', () => {
+        fitVocabScreen();
+        const line = artLine();
+        window.scrollTo({ top: line || document.documentElement.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+window.addEventListener('resize', () => { window.scrollTo(0, 0); fitVocabScreen(); });
+
+/* 말 바꾸기 — 보던 자리를 그대로 두고 글만 갈아 끼운다. */
+const langBtn = document.getElementById('langLink');
+function applyLang() {
+    document.documentElement.lang = LANG;
+    document.title = CV().title;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 보던 그림 그대로 선다. 쪽 수가 같으므로 그림 파일 이름으로 찾는다.
+        if (here && here.kind === 'spread') {
+            const i = PAGES.findIndex(p => p.kind === 'spread' && p.beat.art === here.beat.art);
+            if (i >= 0) current = i;
+        }
+        applyLang();
+        paint();
+    });
+}
+
+buildPages();
+applyLang();
 paint();
+
