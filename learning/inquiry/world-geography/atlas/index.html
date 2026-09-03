@@ -6,55 +6,36 @@
   <meta name="theme-color" content="#123c46">
   <title>세계 테마도감 | Joyclass</title>
   <link rel="stylesheet" href="../../korean-museum/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="../styles.css?v=20260903-2">
-  <link rel="stylesheet" href="styles.css?v=20260903-1">
+  <link rel="stylesheet" href="../styles.css?v=20260903-3">
+  <link rel="stylesheet" href="styles.css?v=20260903-2">
 </head>
 <body class="atlas-page">
   <div class="app-shell">
-    <nav class="topbar" aria-label="페이지 기능">
-      <a class="back-link" href="../../../../" aria-label="학습 메뉴로 돌아가기">←</a>
-      <div class="page-name"><span aria-hidden="true">🗺️</span><strong>테마도감</strong></div>
-      <a class="atlas-geography-link" href="../">지리 지도</a>
+    <nav class="atlas-theme-strip" aria-label="테마도감 주제">
+      <div class="theme-layer-controls" id="themeLayerControls" role="group" aria-label="테마 선택"></div>
     </nav>
 
     <main class="atlas-layout">
       <section class="map-stage atlas-map-stage" aria-label="세계 테마도감 지도">
         <div id="map" role="application" aria-label="선택한 테마의 세계지도"></div>
+        <a class="map-back" href="../../../../" aria-label="학습 메뉴로 돌아가기">←</a>
         <strong class="atlas-map-status" id="themeItemCount" aria-live="polite">동물 18개</strong>
-        <p class="map-help" id="mapHelp">아이콘을 누르면 지도 밖 도감 카드에서 설명을 볼 수 있어요.</p>
-      </section>
-
-      <aside class="atlas-panel" aria-label="테마도감 탐색 도구">
-        <section class="atlas-layer-card" aria-labelledby="themeLayerTitle">
-          <div class="section-kicker">골라 보는 세계</div>
-          <h1 id="themeLayerTitle">테마 하나를 골라요</h1>
-          <p>한 번에 한 종류만 표시해서 지도와 아이콘이 서로 가리지 않게 했어요.</p>
-          <div class="theme-layer-controls" id="themeLayerControls" role="group" aria-label="테마 선택"></div>
-        </section>
-
-        <section class="atlas-empty" id="atlasPrompt" aria-live="polite">
-          <span aria-hidden="true">👆</span>
-          <strong>지도에서 아이콘을 골라 보세요</strong>
-          <p>선택한 장소의 이름과 이야기가 여기에 나타나요.</p>
-        </section>
-
         <article class="theme-item-card atlas-item-card" id="themeItemCard" aria-live="polite" hidden>
           <button class="theme-item-close" id="closeThemeItem" type="button" aria-label="테마 설명 닫기">×</button>
           <div class="theme-item-icon" id="themeItemIcon" aria-hidden="true">🌍</div>
           <div class="theme-item-copy">
             <span id="themeItemCategory">테마</span>
-            <h2 id="themeItemName">세계 탐험</h2>
+            <h2 id="themeItemName"></h2>
             <strong id="themeItemPlace"></strong>
             <p id="themeItemDescription"></p>
-            <button id="speakThemeItem" type="button">🔊 설명 듣기</button>
           </div>
         </article>
-      </aside>
+      </section>
     </main>
   </div>
 
   <script src="../../korean-museum/vendor/leaflet/leaflet.js"></script>
   <script src="../theme-items.js?v=20260903-3"></script>
-  <script src="app.js?v=20260903-1"></script>
+  <script src="app.js?v=20260903-3"></script>
 </body>
 </html>

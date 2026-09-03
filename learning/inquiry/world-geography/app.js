@@ -11,6 +11,8 @@
   const PROGRESS_KEY = "joyclass-world-geography-progress-v1";
   let currentTheme = "world";
   let map;
+  let baseMapLayer;
+  let worldCopyIndex = 0;
   let featureLayer;
   let lineLayer;
   let themeAtlasLayer;
@@ -32,9 +34,14 @@
 
   function init() {
     map = createMap("map", true);
+    baseMapLayer = L.layerGroup().addTo(map);
+    renderBaseMapCopies();
     featureLayer = L.layerGroup().addTo(map);
     lineLayer = L.layerGroup().addTo(map);
     fitWorld(map);
+    updateMinimumZoom(map);
+    map.on("moveend", refreshWorldCopy);
+    map.on("resize", () => updateMinimumZoom(map));
     bindControls();
     renderTheme(currentTheme);
     renderProgress();
@@ -48,18 +55,53 @@
       minZoom: 0,
       maxZoom: 5,
       zoomSnap: 0.25,
-      maxBounds: [[-105, -195], [105, 195]],
-      maxBoundsViscosity: 0.85,
+      maxBounds: interactive ? [[-90, -1000000], [90, 1000000]] : [[-105, -195], [105, 195]],
+      maxBoundsViscosity: 1,
       attributionControl: interactive,
-      zoomControl: interactive,
+      zoomControl: false,
       dragging: true,
       preferCanvas: true
     });
-    L.imageOverlay(MAP_IMAGE, WORLD_BOUNDS, {
-      attribution: "Natural Earth",
-      interactive: false
-    }).addTo(instance);
+    if (!interactive) {
+      L.imageOverlay(MAP_IMAGE, WORLD_BOUNDS, {
+        attribution: "Natural Earth",
+        interactive: false
+      }).addTo(instance);
+    }
+    if (interactive) L.control.zoom({ position: "bottomright" }).addTo(instance);
     return instance;
+  }
+
+  function renderBaseMapCopies() {
+    baseMapLayer.clearLayers();
+    [-1, 0, 1].forEach((step) => {
+      const offset = (worldCopyIndex + step) * 360;
+      L.imageOverlay(MAP_IMAGE, [[-90, -180 + offset], [90, 180 + offset]], {
+        attribution: "Natural Earth",
+        interactive: false
+      }).addTo(baseMapLayer);
+    });
+  }
+
+  function refreshWorldCopy() {
+    const nextIndex = Math.round(map.getCenter().lng / 360);
+    if (nextIndex === worldCopyIndex) return;
+    worldCopyIndex = nextIndex;
+    renderBaseMapCopies();
+    renderMapContent(themes[currentTheme]);
+  }
+
+  function updateMinimumZoom(targetMap) {
+    const size = targetMap.getSize();
+    if (!size.x || !size.y) return;
+    const requiredScale = Math.max(size.x / 360, size.y / 180);
+    const minimumZoom = Math.ceil(Math.log2(requiredScale) * 4) / 4;
+    targetMap.setMinZoom(minimumZoom);
+    if (targetMap.getZoom() < minimumZoom) targetMap.setZoom(minimumZoom, { animate: false });
+  }
+
+  function visibleWorldOffsets() {
+    return [-1, 0, 1].map((step) => (worldCopyIndex + step) * 360);
   }
 
   function fitWorld(targetMap) {
@@ -143,9 +185,6 @@
       marker.on("click", () => showThemeItem(item));
     });
     $("#themeItemCount").textContent = `${atlas.items.length}개 중 ${visibleItems.length}개 표시`;
-    $("#mapHelp").textContent = visibleItems.length
-      ? "색 표식은 지리 개념, 그림 표식은 테마 정보예요."
-      : "테마 지도에서 보고 싶은 주제를 하나 이상 켜 보세요.";
   }
 
   function showThemeItem(item) {
@@ -203,7 +242,6 @@
       button.setAttribute("aria-pressed", String(active));
     });
 
-    $("#conceptKicker").textContent = theme.kicker;
     $("#conceptTitle").textContent = theme.title;
     $("#conceptSummary").textContent = theme.summary;
     $("#conceptPoints").replaceChildren(...(theme.points || []).map((copy) => makeElement("div", "concept-point", copy)));
@@ -211,7 +249,7 @@
     renderMapContent(theme);
     renderFeatureButtons(theme);
     const questionCount = questions.filter((question) => question.topic === themeId).length;
-    $("#startPractice").textContent = `${theme.label} 문제 ${questionCount}개 풀기`;
+    $("#startPractice").textContent = "문제 풀기";
     $("#startPractice").disabled = questionCount === 0;
   }
 
@@ -228,22 +266,24 @@
   function renderMapContent(theme) {
     featureLayer.clearLayers();
     lineLayer.clearLayers();
-    (theme.lines || []).forEach((line) => {
-      const path = L.polyline(line.coords, {
-        color: line.color,
-        weight: line.name.includes("날짜변경선") ? 3 : 2,
-        opacity: .9,
-        dashArray: line.dash ? "7 7" : null,
-        interactive: true
-      }).addTo(lineLayer);
-      path.bindTooltip(line.name, { sticky: true, className: "feature-tooltip" });
+    visibleWorldOffsets().forEach((lngOffset) => {
+      (theme.lines || []).forEach((line) => {
+        const repeatedCoords = line.coords.map(([lat, lng]) => [lat, lng + lngOffset]);
+        const path = L.polyline(repeatedCoords, {
+          color: line.color,
+          weight: line.name.includes("날짜변경선") ? 3 : 2,
+          opacity: .9,
+          dashArray: line.dash ? "7 7" : null,
+          interactive: true
+        }).addTo(lineLayer);
+        path.bindTooltip(line.name, { sticky: true, className: "feature-tooltip" });
+      });
+      (theme.features || []).forEach((feature) => {
+        const marker = makeMarker(feature, lngOffset).addTo(featureLayer);
+        marker.bindTooltip(feature.name, { direction: "top", offset: [0, -28], className: "feature-tooltip" });
+        marker.on("click", () => focusFeature(feature, feature.lng + lngOffset));
+      });
     });
-    (theme.features || []).forEach((feature) => {
-      const marker = makeMarker(feature).addTo(featureLayer);
-      marker.bindTooltip(feature.name, { direction: "top", offset: [0, -28], className: "feature-tooltip" });
-      marker.on("click", () => focusFeature(feature));
-    });
-    fitWorld(map);
   }
 
   function renderFeatureButtons(theme) {
@@ -259,8 +299,8 @@
     $("#featureList").replaceChildren(...buttons);
   }
 
-  function makeMarker(feature) {
-    return L.marker([feature.lat, feature.lng], {
+  function makeMarker(feature, lngOffset = 0) {
+    return L.marker([feature.lat, feature.lng + lngOffset], {
       icon: L.divIcon({
         className: "",
         html: `<div class="map-marker" style="--marker:${feature.color}"><span>${feature.icon}</span></div>`,
@@ -270,16 +310,17 @@
     });
   }
 
-  function focusFeature(feature) {
-    map.setView([feature.lat, feature.lng], feature.zoom || 3, { animate: true });
-    $("#conceptKicker").textContent = themes[currentTheme].label + " 핵심 지점";
+  function focusFeature(feature, displayLng) {
+    const targetLng = Number.isFinite(displayLng)
+      ? displayLng
+      : feature.lng + Math.round((map.getCenter().lng - feature.lng) / 360) * 360;
+    map.setView([feature.lat, targetLng], feature.zoom || 3, { animate: true });
     $("#conceptTitle").textContent = feature.name;
     $("#conceptSummary").textContent = feature.note;
   }
 
   function showProgressSummary() {
     const progress = readProgress();
-    $("#conceptKicker").textContent = "나의 학습 기록";
     $("#conceptTitle").textContent = progress.total ? "세계지리 연습 기록" : "첫 지도를 살펴볼 시간";
     $("#conceptSummary").textContent = progress.total
       ? `누적 ${progress.total}문제 중 ${progress.correct}문제를 맞혔어요. 정답률은 ${Math.round(progress.correct / progress.total * 100)}%예요.`

@@ -9,7 +9,9 @@
   let selectedItemId = "";
   let currentItem = null;
   let map;
+  let baseMapLayer;
   let atlasLayer;
+  let worldCopyIndex = 0;
 
   const $ = (selector) => document.querySelector(selector);
 
@@ -23,24 +25,60 @@
       minZoom: 0,
       maxZoom: 5,
       zoomSnap: .25,
-      maxBounds: [[-105, -195], [105, 195]],
-      maxBoundsViscosity: .85,
+      maxBounds: [[-90, -1000000], [90, 1000000]],
+      maxBoundsViscosity: 1,
+      zoomControl: false,
       preferCanvas: true
     });
-    L.imageOverlay(MAP_IMAGE, WORLD_BOUNDS, { attribution: "Natural Earth", interactive: false }).addTo(map);
+    L.control.zoom({ position: "bottomright" }).addTo(map);
+    baseMapLayer = L.layerGroup().addTo(map);
+    renderBaseMapCopies();
     map.createPane("themeAtlasPane");
     map.getPane("themeAtlasPane").style.zIndex = "660";
     atlasLayer = L.layerGroup().addTo(map);
     map.fitBounds(VISIBLE_WORLD_BOUNDS, { padding: [8, 8], animate: false });
+    updateMinimumZoom();
+    map.on("moveend", refreshWorldCopy);
+    map.on("resize", updateMinimumZoom);
     bindControls();
     renderCategoryControls();
     renderAtlas();
   }
 
+  function renderBaseMapCopies() {
+    baseMapLayer.clearLayers();
+    [-1, 0, 1].forEach((step) => {
+      const offset = (worldCopyIndex + step) * 360;
+      L.imageOverlay(MAP_IMAGE, [[-90, -180 + offset], [90, 180 + offset]], {
+        attribution: "Natural Earth",
+        interactive: false
+      }).addTo(baseMapLayer);
+    });
+  }
+
+  function refreshWorldCopy() {
+    const nextIndex = Math.round(map.getCenter().lng / 360);
+    if (nextIndex === worldCopyIndex) return;
+    worldCopyIndex = nextIndex;
+    renderBaseMapCopies();
+    renderAtlas();
+  }
+
+  function updateMinimumZoom() {
+    const size = map.getSize();
+    if (!size.x || !size.y) return;
+    const requiredScale = Math.max(size.x / 360, size.y / 180);
+    const minimumZoom = Math.ceil(Math.log2(requiredScale) * 4) / 4;
+    map.setMinZoom(minimumZoom);
+    if (map.getZoom() < minimumZoom) map.setZoom(minimumZoom, { animate: false });
+  }
+
+  function visibleWorldOffsets() {
+    return [-1, 0, 1].map((step) => (worldCopyIndex + step) * 360);
+  }
+
   function bindControls() {
     $("#closeThemeItem").addEventListener("click", closeItem);
-    $("#speakThemeItem").addEventListener("click", speakCurrentItem);
-    if (!("speechSynthesis" in window)) $("#speakThemeItem").hidden = true;
   }
 
   function renderCategoryControls() {
@@ -66,37 +104,40 @@
     selectedItemId = "";
     currentItem = null;
     $("#themeItemCard").hidden = true;
-    $("#atlasPrompt").hidden = false;
     renderCategoryControls();
     renderAtlas();
-    map.fitBounds(VISIBLE_WORLD_BOUNDS, { padding: [8, 8], animate: true });
+    const offset = worldCopyIndex * 360;
+    map.fitBounds([[-77, -180 + offset], [84, 180 + offset]], { padding: [8, 8], animate: true });
+    updateMinimumZoom();
   }
 
   function renderAtlas() {
     atlasLayer.clearLayers();
     const category = atlas.categories.find((entry) => entry.id === activeCategory);
     const visibleItems = atlas.items.filter((item) => item.category === activeCategory);
-    visibleItems.forEach((item) => {
-      const selected = item.id === selectedItemId;
-      const marker = L.marker([item.lat, item.lng], {
-        pane: "themeAtlasPane",
-        title: `${item.name}, ${item.place}`,
-        alt: item.name,
-        keyboard: true,
-        icon: L.divIcon({
-          className: "",
-          html: `<div class="theme-pin${selected ? " is-selected" : ""}" style="--pin-color:${item.color}"><span>${item.icon}</span></div>`,
-          iconSize: selected ? [38, 38] : [30, 30],
-          iconAnchor: selected ? [19, 34] : [15, 27]
-        })
-      }).addTo(atlasLayer);
-      marker.bindTooltip(`${item.name} · ${item.place}`, { direction: "top", offset: [0, -24], className: "theme-tooltip" });
-      marker.on("click", () => showItem(item));
+    visibleWorldOffsets().forEach((lngOffset) => {
+      visibleItems.forEach((item) => {
+        const selected = item.id === selectedItemId;
+        const marker = L.marker([item.lat, item.lng + lngOffset], {
+          pane: "themeAtlasPane",
+          title: `${item.name}, ${item.place}`,
+          alt: item.name,
+          keyboard: true,
+          icon: L.divIcon({
+            className: "",
+            html: `<div class="theme-pin${selected ? " is-selected" : ""}" style="--pin-color:${item.color}"><span>${item.icon}</span></div>`,
+            iconSize: selected ? [38, 38] : [30, 30],
+            iconAnchor: selected ? [19, 34] : [15, 27]
+          })
+        }).addTo(atlasLayer);
+        marker.bindTooltip(`${item.name} · ${item.place}`, { direction: "top", offset: [0, -24], className: "theme-tooltip" });
+        marker.on("click", () => showItem(item, item.lng + lngOffset));
+      });
     });
     $("#themeItemCount").textContent = `${category ? category.label : "테마"} ${visibleItems.length}개`;
   }
 
-  function showItem(item) {
+  function showItem(item, displayLng) {
     selectedItemId = item.id;
     currentItem = item;
     const category = atlas.categories.find((entry) => entry.id === item.category);
@@ -105,33 +146,18 @@
     $("#themeItemName").textContent = item.name;
     $("#themeItemPlace").textContent = item.place;
     $("#themeItemDescription").textContent = item.description;
-    $("#atlasPrompt").hidden = true;
     $("#themeItemCard").hidden = false;
     renderAtlas();
-    map.setView([item.lat, item.lng], Math.max(3, map.getZoom()), { animate: true });
+    map.setView([item.lat, displayLng], Math.max(3, map.getZoom()), { animate: true });
   }
 
   function closeItem() {
-    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
     selectedItemId = "";
     currentItem = null;
     $("#themeItemCard").hidden = true;
-    $("#atlasPrompt").hidden = false;
     renderAtlas();
   }
 
-  function speakCurrentItem() {
-    if (!currentItem || !("speechSynthesis" in window)) return;
-    window.speechSynthesis.cancel();
-    const speech = new SpeechSynthesisUtterance(`${currentItem.name}. ${currentItem.place}. ${currentItem.description}`);
-    speech.lang = "ko-KR";
-    speech.rate = .9;
-    const button = $("#speakThemeItem");
-    button.textContent = "🔊 읽는 중";
-    speech.addEventListener("end", () => { button.textContent = "🔊 설명 듣기"; });
-    speech.addEventListener("error", () => { button.textContent = "🔊 설명 듣기"; });
-    window.speechSynthesis.speak(speech);
-  }
 
   function makeElement(tag, className, text) {
     const element = document.createElement(tag);
