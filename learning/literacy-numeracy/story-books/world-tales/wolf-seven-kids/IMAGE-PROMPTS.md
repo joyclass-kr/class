@@ -105,7 +105,7 @@ comically vain. The miller: a floury man with a scoop.
 | 파일명 | 장면 |
 |---|---|
 | `images/05-mother-returns.webp` | A wrecked cottage room with overturned chairs and a tipped basin where a mother goat stands stricken, her basket fallen from her hoof, late afternoon light, moving. 〔이 쪽에 실린 글 (9/14) — 그림에 글자는 넣지 마세요. 왼쪽: 해질 무렵 엄마 염소가 돌아왔습니다. 그런데 문이 활짝 열려 있었지요. 방 안은 엉망이었습니다. 의자가 넘어지고 대야도 뒤집혀 있었지요. 얘들아, 어디 있니? / 오른쪽: 엄마는 방마다 다니며 이름을 불렀지요. 첫째야, 둘째야, 셋째야… 집 안은 여전히 조용하기만 했습니다. 엄마는 그 자리에 털썩 주저앉았지요. 손에 든 바구니가 툭 떨어졌습니다.〕 |
-| `images/05-mother-returns-2.webp` | A cottage where a tiny kid pushes open a clock case and runs into a mother goat's arms, and the same goat taking a small tin of pepper down from a kitchen shelf, tender and resolute. 〔이 쪽에 실린 글 (10/14) — 그림에 글자는 넣지 마세요. 왼쪽: 바로 그때 시계가 덜컹거렸습니다. 엄마! 엄마! 막내가 시계 문을 밀고 기어 나왔지요. 엄마가 달려가 막내를 와락 끌어안았습니다. / 오른쪽: 막내는 그제야 울음을 터뜨렸지요. 늑대가 왔었어요. 목소리도 발도 다 속였어요.〕 |
+| `images/05-mother-returns-2.webp` | A cottage where a tiny kid pushes open a grandfather clock case and runs into a mother goat's arms, and the same goat taking a small TIN OF PEPPER down from a kitchen shelf, tender and resolute. NO sewing box, NO scissors, NO needle and thread anywhere in the picture - she is fetching pepper, not sewing things. 〔이 쪽에 실린 글 (10/14) — 그림에 글자는 넣지 마세요. 왼쪽: 바로 그때 시계가 덜컹거렸습니다. 엄마! 엄마! 막내가 시계 문을 밀고 기어 나왔지요. 엄마가 달려가 막내를 와락 끌어안았습니다. / 오른쪽: 막내는 그제야 울음을 터뜨렸지요. 늑대가 왔었어요. 목소리도 발도 다 속였어요.〕 |
 
 ## 6장 · 늑대의 배 속에서
 
@@ -118,7 +118,7 @@ comically vain. The miller: a floury man with a scoop.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-well.webp` | A meadow where a mother goat and seven kids drop round stones one by one into the open mouth of a wolf snoring flat on his back, then the wolf waking and staggering toward a stone well, comic. 〔이 쪽에 실린 글 (13/14) — 그림에 글자는 넣지 마세요. 왼쪽: 늑대는 입을 헤벌린 채 도로 잠들어 있었습니다. 여덟은 그 입으로 돌을 하나씩 굴려 넣었지요. 일곱은 그동안 숨소리 하나 내지 못했습니다. 데구르르, 데구르르. 돌이 하나씩 미끄러져 들어갔지요. 그러고는 여덟이 나무 뒤에 숨어 숨을 죽였지요. 이윽고 늑대가 부스스 깨어났습니다. / 오른쪽: 해가 나무 위로 높이 올라간 뒤였지요. 기지개를 켜려다 말고 멈칫했지요. 어이쿠, 배가 왜 이리 무겁지?〕 |
+| `images/07-well.webp` | Two moments in one meadow picture. LEFT: a wolf lies flat on his back FAST ASLEEP under a tree with his mouth hanging wide open, and a mother goat and seven kids lean over him dropping round stones ONE BY ONE straight down INTO that open mouth. RIGHT: the same wolf now awake, walking toward a stone well with a huge heavy sagging BELLY, swaying and puzzled, while the goats watch from behind the tree. The wolf must NOT be carrying or holding a stone in his arms or paws - the stones are INSIDE his belly and he does not know it. Comic, never frightening. 〔이 쪽에 실린 글 (13/14) — 그림에 글자는 넣지 마세요. 왼쪽: 늑대는 입을 헤벌린 채 도로 잠들어 있었습니다. 여덟은 그 입으로 돌을 하나씩 굴려 넣었지요. 일곱은 그동안 숨소리 하나 내지 못했습니다. 데구르르, 데구르르. 돌이 하나씩 미끄러져 들어갔지요. 그러고는 여덟이 나무 뒤에 숨어 숨을 죽였지요. 이윽고 늑대가 부스스 깨어났습니다. / 오른쪽: 해가 나무 위로 높이 올라간 뒤였지요. 기지개를 켜려다 말고 멈칫했지요. 어이쿠, 배가 왜 이리 무겁지?〕 |
 | `images/07-well-2.webp` | A meadow well where a stone-bellied wolf leans over the rim and topples in with a splash, eight goats bursting from behind a tree and dancing in a ring, bright and triumphant. 〔이 쪽에 실린 글 (14/14) — 그림에 글자는 넣지 마세요. 왼쪽: 걸을 때마다 뱃속에서 소리가 났습니다. 덜그럭, 덜그럭. 늑대가 고개를 갸웃했지요. / 오른쪽: 그러거나 말거나 목이 말라 우물가에 이르렀습니다. 늑대가 몸을 굽혀 물을 마시려는 순간이었지요. 무거운 배가 앞으로 쏠리면서 그만 풍덩 빠지고 말았습니다. 나무 뒤에서 웃음이 와르르 터졌지요. 여덟은 손을 잡고 빙글빙글 돌았습니다. 늑대는 그 뒤로 다시 오지 않았답니다.〕 |
 
 ## 사용 팁
