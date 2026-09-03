@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, soft English countryside light,
-no text or letters in the image, a sandy rabbit burrow under a fir tree, a walled
+ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a sandy rabbit burrow under a fir tree, a walled
 vegetable garden with frames and tool shed, a lane and a farmhouse, expressive
 comic animal faces, wide panoramic composition, funny and never frightening.
 ```

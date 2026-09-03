@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, silvery moonlight and warm
-candle golds, no text or letters in the image, a castle bedchamber, a staircase
+candle golds, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a castle bedchamber, a staircase
 beneath a bed, forests of silver, gold and diamond leaves, an underground lake
 and a lantern-lit ballroom, expressive faces, wide panoramic composition,
 magical and never frightening.

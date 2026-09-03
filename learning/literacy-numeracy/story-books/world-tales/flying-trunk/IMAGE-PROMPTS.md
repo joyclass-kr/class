@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm night blues and lamp golds,
-no text or letters in the image, a merchant's town, a night sky, a domed eastern
+ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a merchant's town, a night sky, a domed eastern
 city, a tall tower and a marketplace, very expressive comic faces, wide panoramic
 composition, funny and warm.
 ```

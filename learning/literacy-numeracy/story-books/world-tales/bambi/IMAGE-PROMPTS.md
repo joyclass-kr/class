@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, green forest light shifting
-through four seasons, no text or letters in the image, a central European forest,
+through four seasons, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a central European forest,
 a wide meadow, a winter thicket and a stream, expressive gentle animal faces,
 wide panoramic composition, warm and never gory.
 ```

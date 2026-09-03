@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm candlelight against cold
-window blue, no text or letters in the image, a grand nineteenth-century parlour
+window blue, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a grand nineteenth-century parlour
 with a huge Christmas tree, a toy battlefield on a rug, a snowy forest of
 glittering trees, and a kingdom made of sweets, expressive comic faces, wide
 panoramic composition, magical and never frightening; the mice are drawn as comic

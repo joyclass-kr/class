@@ -32,7 +32,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm desert gold and lamp-lit
-ambers, no text or letters in the image, a bustling Middle Eastern market city,
+ambers, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a bustling Middle Eastern market city,
 a jewelled underground cave, a palace of domes and fountains, and open desert,
 expressive comic faces, wide panoramic composition, adventurous and never
 frightening.

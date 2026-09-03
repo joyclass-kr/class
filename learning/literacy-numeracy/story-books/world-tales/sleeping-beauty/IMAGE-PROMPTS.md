@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm candlelight and rose-gold
-dusk, no text or letters in the image, a castle great hall, a spiral tower stair,
+dusk, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a castle great hall, a spiral tower stair,
 a small attic room with a spinning wheel, and a castle overgrown with briar
 roses, expressive faces, wide panoramic composition, gentle and never
 frightening.

@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm lamplight and cool night
-blues, no text or letters in the image, a 19th-century nursery, city gutters,
+blues, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a 19th-century nursery, city gutters,
 canals and rooftops seen from a toy's low viewpoint, expressive faces, wide
 panoramic composition, tender and never grim.
 ```

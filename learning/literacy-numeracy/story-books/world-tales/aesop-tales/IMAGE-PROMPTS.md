@@ -34,8 +34,7 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, soft golden lighting, no text or
-letters in the image, animals dressed in simple little clothes and standing
+bold clean outlines, saturated storybook colors, soft golden lighting, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), animals dressed in simple little clothes and standing
 upright like people, expressive exaggerated faces, wide panoramic composition,
 dynamic staging.
 ```

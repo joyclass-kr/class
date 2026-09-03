@@ -33,7 +33,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, cold blue snow against warm
-cottage golds, no text or letters in the image, a castle chamber with a great
+cottage golds, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a castle chamber with a great
 mirror, a winter forest, a tiny seven-bed cottage and a clearing with a glass
 casket, expressive faces, wide panoramic composition, gentle and never
 frightening.

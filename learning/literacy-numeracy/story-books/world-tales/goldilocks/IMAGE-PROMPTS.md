@@ -27,8 +27,7 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, warm woodland morning light, no
-text or letters in the image, a log cottage in a birch forest with three of
+bold clean outlines, saturated storybook colors, warm woodland morning light, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a log cottage in a birch forest with three of
 everything in three sizes, very expressive comic faces, wide panoramic
 composition, funny and never frightening.
 ```

@@ -31,7 +31,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, luminous underwater blues and
-warm harbour golds, no text or letters in the image, a coral palace deep under
+warm harbour golds, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a coral palace deep under
 the sea, a storm-tossed ship, a moonlit shore, a witch's dark grotto and a bright
 seaside kingdom, expressive faces, wide panoramic composition, beautiful and
 never frightening.

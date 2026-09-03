@@ -27,8 +27,7 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, warm amber desert light, no text
-or letters in the image, a Middle Eastern palace with domes and tiled courtyards,
+bold clean outlines, saturated storybook colors, warm amber desert light, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a Middle Eastern palace with domes and tiled courtyards,
 a bazaar, palm groves and ruined desert halls, expressive comic faces, wide
 panoramic composition, funny and adventurous, never frightening.
 ```

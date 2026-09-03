@@ -35,8 +35,7 @@
 
 ```
 Children's picture book illustration, warm watercolor and colored-pencil style,
-soft golden lighting, gentle rounded shapes, storybook atmosphere, no text or
-letters in the image, consistent warm fairytale color palette (parchment, gold,
+soft golden lighting, gentle rounded shapes, storybook atmosphere, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), consistent warm fairytale color palette (parchment, gold,
 soft blue, forest green), expressive character faces, dynamic staging.
 ```
 

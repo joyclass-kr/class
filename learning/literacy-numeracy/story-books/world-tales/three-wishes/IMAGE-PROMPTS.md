@@ -27,8 +27,7 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, warm firelight, no text or
-letters in the image, a small European woodcutter's cottage and surrounding
+bold clean outlines, saturated storybook colors, warm firelight, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a small European woodcutter's cottage and surrounding
 forest, very expressive comic faces, wide panoramic composition, funny and
 good-natured.
 ```

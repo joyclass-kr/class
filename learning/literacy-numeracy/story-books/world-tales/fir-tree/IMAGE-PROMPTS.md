@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, cool forest greens and warm
-indoor golds, no text or letters in the image, a northern pine forest through
+indoor golds, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a northern pine forest through
 four seasons, a ship's harbour, a decorated parlour and a farmyard, expressive
 faces, wide panoramic composition, gentle and warm, never bleak.
 ```

@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, cold blue northern light with
-warm golden accents, no text or letters in the image, Russian wheat fields,
+warm golden accents, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), Russian wheat fields,
 birch woods, snowy steppe and an onion-domed palace, expressive comic faces,
 wide panoramic composition, magical and never frightening.
 ```

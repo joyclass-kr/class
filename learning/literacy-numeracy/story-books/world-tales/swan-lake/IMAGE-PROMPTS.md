@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, silvery moonlight and warm
-ballroom candlelight, no text or letters in the image, a forest lake, pine woods
+ballroom candlelight, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a forest lake, pine woods
 and a grand palace ballroom, expressive faces, wide panoramic composition,
 beautiful and never frightening.
 ```

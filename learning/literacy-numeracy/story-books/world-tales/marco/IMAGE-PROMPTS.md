@@ -27,8 +27,7 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, warm southern light, no text or
-letters in the image, Genoa harbour, ocean crossing, and Argentine city and
+bold clean outlines, saturated storybook colors, warm southern light, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), Genoa harbour, ocean crossing, and Argentine city and
 countryside settings, expressive faces, wide panoramic composition, warm and
 hopeful.
 ```

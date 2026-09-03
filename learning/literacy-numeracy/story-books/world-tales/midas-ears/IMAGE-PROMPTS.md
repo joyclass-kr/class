@@ -27,8 +27,7 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, warm Mediterranean sunlight, no
-text or letters in the image, ancient Greek palace, olive groves, mountain
+bold clean outlines, saturated storybook colors, warm Mediterranean sunlight, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), ancient Greek palace, olive groves, mountain
 hillsides and a reed marsh, expressive comic faces, wide panoramic composition,
 funny and never cruel.
 ```

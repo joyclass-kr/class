@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, soft lantern light and misty
-garden greens, no text or letters in the image, an imperial Chinese porcelain
+garden greens, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), an imperial Chinese porcelain
 palace, blossom gardens, a forest by the sea and a fisherman's boat, expressive
 faces, wide panoramic composition, beautiful and gentle.
 ```

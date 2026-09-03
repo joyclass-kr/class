@@ -17,6 +17,16 @@
 > - `05-mother-returns-2` — 반짇고리와 가위가 아니라 **부엌 선반에서 후춧가루 통을 집는** 그림으로.
 > - `06-rescue` — **늑대가 크게 재채기를 하고 그 바람에 아기 염소들이 튀어나오는 순간**으로.
 > - `07-well` — 배를 꿰매는 그림이 아닙니다. **벌어진 입으로 돌을 하나씩 굴려 넣는 장면**으로.
+>
+> **아기 염소들과 늑대가 서로 얼굴을 보면 안 됩니다.**
+> 이 이야기는 아이들이 밖에 누가 왔는지 **모른다**는 것이 전부입니다. 목소리와 발만 보고
+> 판단하지요. 그런데 창으로 늑대 얼굴이 보이면 그 자리에서 이야기가 끝납니다.
+> `02-first-try`, `03-disguise`, `03-disguise-2` 석 장은 **늑대가 창턱 아래나 닫힌 문
+> 뒤에 웅크리고 앉아 발만 올리는** 그림이라야 합니다. 보는 사람은 늑대가 보이고,
+> 아이들은 못 보는 구도입니다.
+>
+> **그림 안에 글자가 찍혀 나왔습니다.** `03-disguise` 아래쪽에 영어 자막이 들어갔어요.
+> 프롬프트에 붙인 본문은 장면을 알려 주려는 것이지 그리라는 것이 아닙니다.
 
 > **한 파일 = 한 장면입니다. 앞질러 가지 마세요.**
 > 파일마다 뒤에 〔이 쪽에 실린 글〕을 붙여 두었습니다. 그 쪽에 실제로 실리는 글이에요.
@@ -38,7 +48,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm cottage lamplight and green
-meadow daylight, no text or letters in the image, a goat family cottage with a
+meadow daylight, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a goat family cottage with a
 grandfather clock, a village lane, a miller's shop and a well in a meadow, very
 expressive comic faces, wide panoramic composition, funny and never frightening;
 the wolf is drawn as goofy and vain.
@@ -72,15 +82,15 @@ comically vain. The miller: a floury man with a scoop.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-first-try.webp` | A cottage door with seven kids pressed against it listening warily, one standing forward with a hoof raised, and a grey shape looming outside the window, tense but comic. 〔이 쪽에 실린 글 (3/14) — 그림에 글자는 넣지 마세요. 왼쪽: 얼마 지나지 않아 문에서 소리가 났습니다. 쿵쿵. 누군가 문을 세게 두드리는 소리였지요. / 오른쪽: 목소리가 어쩐지 걸걸했거든요. 엄마 목소리가 아니었지요. 첫째가 문 앞으로 조심조심 다가섰습니다. 우리 엄마 목소리가 아니에요!〕 |
+| `images/02-first-try.webp` | Seen from inside a cottage: seven kids pressed against a SHUT, BARRED door listening warily, one standing forward with a hoof raised. CRITICAL: the kids must NOT be able to see the wolf. The whole story is that they cannot tell who is outside. Draw the wolf CROUCHED DOWN BELOW the window sill / behind the shut door, so that the reader sees him but the kids inside cannot - only his paw comes up over the sill. Never show the wolf's face or body where a kid inside could see it. Here he is hunched against the outside of the closed door, muzzle to the crack. Tense but comic. 〔이 쪽에 실린 글 (3/14) — 그림에 글자는 넣지 마세요. 왼쪽: 얼마 지나지 않아 문에서 소리가 났습니다. 쿵쿵. 누군가 문을 세게 두드리는 소리였지요. / 오른쪽: 목소리가 어쩐지 걸걸했거든요. 엄마 목소리가 아니었지요. 첫째가 문 앞으로 조심조심 다가섰습니다. 우리 엄마 목소리가 아니에요!〕 |
 | `images/02-first-try-2.webp` | A wolf stamping in frustration outside a cottage, then at a village shop counter swallowing a lump of chalk and clearing its throat, comic determination. 〔이 쪽에 실린 글 (4/14) — 그림에 글자는 넣지 마세요. 왼쪽: 문밖에서 늑대가 발을 쿵쿵 굴렀습니다. 이런 영리한 것들 같으니. 늑대는 한참을 마당에서 서성거렸지요. 아무리 생각해도 목소리가 걸렸습니다. / 오른쪽: 늑대는 그길로 마을로 달려갔습니다. 가게에서 분필을 사서 통째로 꿀꺽 삼켰지요. 목이 간질간질했습니다. 분필 가루가 목구멍에 달라붙어 캑캑거렸지요. 아, 아. 어험.〕 |
 
 ## 3장 · 하얀 발과 고운 목소리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-disguise.webp` | A cottage window where a black paw rests on the sill and seven kids recoil shouting, one small kid pointing at it, sunlight showing the dark fur clearly, comic. 〔이 쪽에 실린 글 (5/14) — 그림에 글자는 넣지 마세요. 왼쪽: 얘들아, 엄마 왔단다. 이번에는 목소리가 제법 고왔습니다. 아까와는 딴판이었지요. 일곱이 문 쪽으로 귀를 기울였지요. / 오른쪽: 그럼 발을 보여 주세요. 늑대가 앞발을 창턱에 척 올렸지요. 털이 숯처럼 새까맸습니다. 일곱은 한꺼번에 뒷걸음질을 쳤지요. 늑대다! 저리 가!〕 |
-| `images/03-disguise-2.webp` | A mill interior where a floury man dusts a wolf's paws white, and a cottage window where the same paw now snowy rests on the sill as kids reach to unbar the door, comic and ominous. 〔이 쪽에 실린 글 (6/14) — 그림에 글자는 넣지 마세요. 왼쪽: 늑대는 이번에 방앗간으로 갔습니다. 내 발에 밀가루를 발라 다오. 방앗간 주인이 망설였지요. / 오른쪽: 주인은 겁이 나서 결국 발을 하얗게 발라 주었습니다. 늑대는 세 번째로 오두막을 찾아왔지요. 고운 목소리로 부르고는 앞발을 창턱에 올렸습니다. 이번에는 발이 눈처럼 하얬지요. 우리 엄마 맞나 봐!〕 |
+| `images/03-disguise.webp` | A cutaway view of a cottage wall. Inside, all seven kids are BACKING AWAY from the window in alarm - bodies leaning back, hooves up, mouths open shouting, one small kid pointing from a safe distance. Outside, the wolf is CROUCHED DOWN under the sill with only his BLACK paw reaching up over it. CRITICAL: the kids must NOT be able to see the wolf. The whole story is that they cannot tell who is outside. Draw the wolf CROUCHED DOWN BELOW the window sill / behind the shut door, so that the reader sees him but the kids inside cannot - only his paw comes up over the sill. Never show the wolf's face or body where a kid inside could see it. Not one kid is leaning out of the window or reaching toward the paw. Sunlight shows the dark fur clearly. Comic, never frightening. 〔이 쪽에 실린 글 (5/14) — 그림에 글자는 넣지 마세요. 왼쪽: 얘들아, 엄마 왔단다. 이번에는 목소리가 제법 고왔습니다. 아까와는 딴판이었지요. 일곱이 문 쪽으로 귀를 기울였지요. / 오른쪽: 그럼 발을 보여 주세요. 늑대가 앞발을 창턱에 척 올렸지요. 털이 숯처럼 새까맸습니다. 일곱은 한꺼번에 뒷걸음질을 쳤지요. 늑대다! 저리 가!〕 |
+| `images/03-disguise-2.webp` | A mill interior where a floury man dusts a wolf's paws white; and beside it a cutaway of the cottage where that same paw, now snowy white, reaches up over the window sill while the kids hurry to unbar the door, pleased and trusting. CRITICAL: the kids must NOT be able to see the wolf. The whole story is that they cannot tell who is outside. Draw the wolf CROUCHED DOWN BELOW the window sill / behind the shut door, so that the reader sees him but the kids inside cannot - only his paw comes up over the sill. Never show the wolf's face or body where a kid inside could see it. Comic and ominous. 〔이 쪽에 실린 글 (6/14) — 그림에 글자는 넣지 마세요. 왼쪽: 늑대는 이번에 방앗간으로 갔습니다. 내 발에 밀가루를 발라 다오. 방앗간 주인이 망설였지요. / 오른쪽: 주인은 겁이 나서 결국 발을 하얗게 발라 주었습니다. 늑대는 세 번째로 오두막을 찾아왔지요. 고운 목소리로 부르고는 앞발을 창턱에 올렸습니다. 이번에는 발이 눈처럼 하얬지요. 우리 엄마 맞나 봐!〕 |
 
 ## 4장 · 시계 속에 숨은 막내
 

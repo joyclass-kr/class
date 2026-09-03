@@ -27,8 +27,7 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, warm countryside light, no text
-or letters in the image, European country roads, orchards and market towns,
+bold clean outlines, saturated storybook colors, warm countryside light, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), European country roads, orchards and market towns,
 expressive comic faces, wide panoramic composition, funny and never cruel.
 ```
 

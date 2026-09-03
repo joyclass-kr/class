@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm firelight against cool
-stone, no text or letters in the image, a miller's cottage, castle store rooms
+stone, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a miller's cottage, castle store rooms
 full of straw, a forest hut and a throne room, expressive comic faces, wide
 panoramic composition, funny and never frightening.
 ```

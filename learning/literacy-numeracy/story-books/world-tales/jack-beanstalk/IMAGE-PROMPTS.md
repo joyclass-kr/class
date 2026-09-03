@@ -36,7 +36,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, green meadow light below and
-cool cloud whites above, no text or letters in the image, a poor cottage and
+cool cloud whites above, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a poor cottage and
 garden, a market road, a colossal beanstalk, and a giant's cloud castle with
 oversized furniture, expressive comic faces, wide panoramic composition,
 adventurous and never frightening; the giant is drawn as huge and slow-witted

@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm meadow light and soft
-snowfall, no text or letters in the image, a German farmyard with a stone well,
+snowfall, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a German farmyard with a stone well,
 a sunlit otherworld meadow with a bread oven and an apple tree, and a cosy
 cottage, expressive faces, wide panoramic composition, gentle and never
 frightening.

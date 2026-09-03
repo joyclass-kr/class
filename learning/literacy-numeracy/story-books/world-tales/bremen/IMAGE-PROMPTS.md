@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm lantern light against cool
-night blue, no text or letters in the image, German farmyards, a country road and
+night blue, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), German farmyards, a country road and
 a robbers' cottage in the woods, very expressive comic animal faces, wide
 panoramic composition, funny and never frightening.
 ```

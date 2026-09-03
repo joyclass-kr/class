@@ -33,7 +33,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm hearth light against cool
-moonlit blues, no text or letters in the image, a shabby kitchen with a great
+moonlit blues, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a shabby kitchen with a great
 fireplace, a walled garden, a palace ballroom and staircase, and a village lane,
 expressive faces, wide panoramic composition, warm and never frightening.
 ```

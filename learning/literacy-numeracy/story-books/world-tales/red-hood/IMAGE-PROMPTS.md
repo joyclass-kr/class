@@ -34,7 +34,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, dappled forest greens and warm
-cottage light, no text or letters in the image, a village lane, a deep forest
+cottage light, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a village lane, a deep forest
 path with wildflowers, a grandmother's cottage inside and out, expressive comic
 faces, wide panoramic composition, the wolf drawn as comically sly rather than
 menacing.

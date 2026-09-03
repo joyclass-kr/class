@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm rooftop-garden golds
-against icy blues and green auroras, no text or letters in the image, two attic
+against icy blues and green auroras, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), two attic
 windows joined by a rose box, a snowy town square, a summer garden, a robbers'
 hall, and a vast palace of ice, expressive faces, wide panoramic composition,
 beautiful and never frightening.

@@ -32,7 +32,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, cold blue snowfall against warm
-golden window light, no text or letters in the image, a nineteenth-century town
+golden window light, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a nineteenth-century town
 street on New Year's Eve, lit windows, a corner between two houses, and warm
 imagined interiors, expressive faces, wide panoramic composition, tender and
 never grim; the visions in the matchlight are bright and beautiful.

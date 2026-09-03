@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm desert gold and lamp-lit
-courtyards, no text or letters in the image, a rocky desert cliff, a treasure
+courtyards, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a rocky desert cliff, a treasure
 cave, a Middle Eastern town of flat roofs and courtyards, and rows of great oil
 jars, expressive comic faces, wide panoramic composition, adventurous and never
 gruesome.

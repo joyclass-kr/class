@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, soft French countryside light,
-no text or letters in the image, 19th-century French villages, country roads,
+ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), 19th-century French villages, country roads,
 market squares, a coal mine and a river barge, expressive faces, wide panoramic
 composition, warm and hopeful, never bleak.
 ```

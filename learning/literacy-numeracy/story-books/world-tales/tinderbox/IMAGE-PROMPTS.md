@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm firelight against deep
-underground blues, no text or letters in the image, a country road, a hollow
+underground blues, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a country road, a hollow
 tree, three underground treasure chambers, a town street and a copper castle,
 expressive comic faces, wide panoramic composition, funny and never frightening;
 the three dogs are drawn as huge but goofy and friendly-looking.

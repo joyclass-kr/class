@@ -38,7 +38,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors with one vivid red accent, warm
-Danish village light, no text or letters in the image, a shoemaker's shop, a
+Danish village light, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a shoemaker's shop, a
 village church, a country lane and a woodcutter's cottage, expressive faces, wide
 panoramic composition, gentle and never frightening.
 ```

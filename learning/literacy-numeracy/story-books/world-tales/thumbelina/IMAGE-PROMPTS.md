@@ -32,7 +32,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, luminous garden light seen from
-a tiny viewpoint, no text or letters in the image, a cottage windowsill, a lily
+a tiny viewpoint, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a cottage windowsill, a lily
 pad and stream, a summer meadow with giant flowers, a field mouse's burrow and a
 sunlit land of flower people, expressive faces, wide panoramic composition,
 delicate and never frightening.

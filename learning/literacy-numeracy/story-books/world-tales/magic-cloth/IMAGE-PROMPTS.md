@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm woodland and workshop
-light, no text or letters in the image, a German village, a carpenter's shop, a
+light, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a German village, a carpenter's shop, a
 mill, a forest inn and a family cottage, expressive comic faces, wide panoramic
 composition, funny and good-natured.
 ```

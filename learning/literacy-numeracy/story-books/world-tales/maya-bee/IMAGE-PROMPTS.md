@@ -27,8 +27,7 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, sparkling summer light, no text
-or letters in the image, a summer meadow, pond edge, tree hollow and beehive seen
+bold clean outlines, saturated storybook colors, sparkling summer light, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a summer meadow, pond edge, tree hollow and beehive seen
 from an insect's viewpoint, giant flowers and grass blades, expressive friendly
 insect faces, wide panoramic composition, delightful and never scary.
 ```

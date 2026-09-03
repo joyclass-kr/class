@@ -48,7 +48,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm lamplight against cold blue
-city dusk, no text or letters in the image, a European city of rooftops and
+city dusk, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a European city of rooftops and
 squares, a tall column with a gilded statue, poor attic rooms and grand houses,
 and a snowy street, expressive faces, wide panoramic composition, tender and
 never grim.

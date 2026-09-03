@@ -37,7 +37,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, moonlit forest blues and warm
-candy golds, no text or letters in the image, a poor woodcutter's cottage, a deep
+candy golds, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a poor woodcutter's cottage, a deep
 forest by night and day, a gingerbread house and a wide river, expressive faces,
 wide panoramic composition, gentle and never frightening; the witch is drawn as
 comically odd rather than menacing.

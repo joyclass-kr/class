@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm German town light and misty
-mountain blues, no text or letters in the image, a medieval town of half-timbered
+mountain blues, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a medieval town of half-timbered
 houses, a market square, a river, and a green mountainside, expressive comic
 faces, wide panoramic composition, never frightening; the rats are drawn as comic
 and the mountain scene as gentle.

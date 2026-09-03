@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm candlelight and snowy blue
-exteriors, no text or letters in the image, a merchant's cottage, a snowy forest,
+exteriors, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a merchant's cottage, a snowy forest,
 an enchanted castle with a rose garden and a grand library, expressive faces,
 wide panoramic composition, warm and gentle; the Beast is drawn as large, shaggy
 and sad-eyed, never frightening or monstrous.

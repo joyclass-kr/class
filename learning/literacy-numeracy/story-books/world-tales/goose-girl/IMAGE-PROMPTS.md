@@ -27,8 +27,7 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, soft northern European light, no
-text or letters in the image, castle halls, country roads, a stream, a goose
+bold clean outlines, saturated storybook colors, soft northern European light, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), castle halls, country roads, a stream, a goose
 meadow and a stone town gate, expressive faces, wide panoramic composition,
 gentle and never frightening.
 ```

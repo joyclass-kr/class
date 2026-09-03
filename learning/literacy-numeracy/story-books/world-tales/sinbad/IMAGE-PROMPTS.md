@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, brilliant sea light and warm
-desert gold, no text or letters in the image, Arabian ports, wooden dhows, open
+desert gold, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), Arabian ports, wooden dhows, open
 ocean, strange islands and a valley of gems, expressive faces, wide panoramic
 composition, adventurous and never gruesome.
 ```

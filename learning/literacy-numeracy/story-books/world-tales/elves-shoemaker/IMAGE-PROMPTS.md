@@ -28,7 +28,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, warm candlelight and cosy
-workshop browns, no text or letters in the image, a small European cobbler's
+workshop browns, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a small European cobbler's
 shop with a bench, lasts and hanging boots, a snug back room, and a snowy street
 outside, expressive comic faces, wide panoramic composition, warm and never
 frightening.

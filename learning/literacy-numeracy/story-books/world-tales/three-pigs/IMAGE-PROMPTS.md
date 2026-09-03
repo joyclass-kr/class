@@ -32,7 +32,7 @@
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, bright meadow greens and warm
-brick reds, no text or letters in the image, a green hillside with three little
+brick reds, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a green hillside with three little
 houses of straw, sticks and brick, and a cosy brick kitchen with a fireplace,
 very expressive comic faces, wide panoramic composition, funny and never
 frightening; the wolf is drawn as scrawny and theatrical.
