@@ -171,7 +171,7 @@ const CHAPTERS = [
                     "왕비는 지하실로 내려갔습니다. 사과 하나를 골랐지요. 한쪽은 새빨갛고 한쪽은 하얬습니다.",
                     "빨간 쪽에만 독을 발랐지요. 겉으로는 표가 나지 않았습니다.",
                     "\"이번에는 틀림없겠지.\"",
-                    "이번엔 농사꾼처럼 꾸몄습니다."
+                    "이번에는 머릿수건을 쓰고 낡은 치마를 둘렀습니다. 얼굴에는 흙을 조금 묻혔지요."
                 ],
                 "right": [
                     "\"맛있는 사과 사세요.\"",
@@ -698,7 +698,7 @@ const EN = {
                         "The queen went down to her cellar and chose an apple. One side was deep red and the other was white.",
                         "She put the poison on the red side only. From the outside nothing showed at all.",
                         "\"This time it cannot fail.\"",
-                        "And she dressed herself as a farmer's wife."
+                        "This time she tied a kerchief over her head, put on a worn old skirt and rubbed a little earth into her face."
                     ],
                     right: [
                         "\"Sweet apples for sale.\"",
