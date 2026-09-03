@@ -126,8 +126,8 @@ the trouser legs rolled up, a towel round his head, honest lonely face that
 gradually brightens. The bride: a young woman in a soft pale green and white
 hanbok with her hair in a long plait, calm gentle face with something faintly
 otherworldly about her - she should look slightly luminous, especially when she
-first appears. The shell: a large smooth freshwater snail shell the size of a
-fist, glossy dark green with pale spiral bands. Keep it identical every time.
+first appears.
+The river snail (우렁이 / 논우렁이 - Cipangopaludina): An authentic Korean freshwater river snail (NOT a terrestrial garden snail - 달팽이가 아님!). Features: 1) A tall, pointed conical spiral shell (원뿔형 소라/고둥 모양의 나선형 껍데기) in dark olive-brown/blackish color with distinct stepped whorls and a round operculum (뚜껑); 2) An aquatic snail head with a tapered snout and small dark eyes at the base of two slender soft tentacles (NO long land-snail eyestalks! 달팽이 눈자루 더듬이가 아님); 3) A broad crawling muscular foot. Keep it identical every time.
 ```
 
 ---
