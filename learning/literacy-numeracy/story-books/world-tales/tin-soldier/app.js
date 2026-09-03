@@ -68,7 +68,7 @@ const CHAPTERS = [
                 "right": [
                     "하지만 무희는 성에 살았습니다. 병정은 상자에 스물넷과 함께 사는 처지였지요.",
                     "\"그래도 인사는 해 보고 싶구나.\" 병정은 한참을 망설였지요.",
-                    "병정은 코담뱃갑 뒤에 몸을 숨겼습니다. 그러고는 밤새 무희를 지켜보았지요."
+                    "병정은 깜짝 상자 뒤에 몸을 숨겼습니다. 그러고는 밤새 무희를 지켜보았지요."
                 ]
             }
         ]
@@ -82,7 +82,7 @@ const CHAPTERS = [
                 "emoji": "🪟",
                 "left": [
                     "밤이 깊어 열두 시가 되었습니다.",
-                    "그때 코담뱃갑 뚜껑이 탁 열렸지요. 까만 모자를 쓴 도깨비 인형이 튀어나왔습니다. 용수철이 달린 장난감이었지요.",
+                    "그때 깜짝 상자 뚜껑이 탁 열렸지요. 까만 모자를 쓴 도깨비 인형이 용수철에 매달려 튀어나왔습니다.",
                     "\"이봐, 병정!\"",
                     "도깨비 인형이 목을 길게 뺐지요."
                 ],
@@ -468,7 +468,7 @@ const QUIZ = [
         "answer": 0
     },
     {
-        "q": "코담뱃갑에서 튀어나온 것은 무엇인가요?",
+        "q": "깜짝 상자에서 튀어나온 것은 무엇인가요?",
         "choices": [
             "종이 무희",
             "커다란 쥐",
@@ -624,7 +624,7 @@ const EN = {
                         "But the dancer lived in a castle,",
                         "and the soldier lived in a box with twenty-four others.",
                         "\"Still, I should like to say good evening to her.\" And he hesitated a long while.",
-                        "The soldier hid himself behind a snuffbox",
+                        "The soldier hid himself behind a jack-in-the-box",
                         "and watched the dancer all night."
                     ]
                 }
@@ -639,7 +639,7 @@ const EN = {
                     emoji: '🃏',
                     left: [
                         "It got late, and midnight struck.",
-                        "And then the lid of the snuffbox flew open,",
+                        "And then the lid of the jack-in-the-box flew open,",
                         "and out came a goblin in a black hat —",
                         "a toy on a spring.",
                         "\"You there, soldier!\"",
@@ -926,7 +926,7 @@ const EN = {
             answer: 1
         },
         {
-            q: 'What came out of the snuffbox at midnight?',
+            q: 'What came out of the jack-in-the-box at midnight?',
             choices: ['A goblin on a spring', 'A paper dancer', 'A rat'],
             answer: 0
         },
@@ -995,7 +995,7 @@ const EN = {
         '02-ballerina-2.webp': [
             { word: 'a match for', meaning: '~의 짝', sentence: 'Somebody like that might be a match for me.' },
             { word: 'hesitate', meaning: '망설이다', sentence: 'And he hesitated a long while.' },
-            { word: 'snuffbox', meaning: '코담뱃갑', sentence: 'The soldier hid behind a snuffbox.' },
+            { word: 'jack-in-the-box', meaning: '깜짝 상자', sentence: 'The soldier hid behind a jack-in-the-box.' },
             { word: 'all night', meaning: '밤새', sentence: 'And watched the dancer all night.' }
         ],
         '03-fall.webp': [
