@@ -394,7 +394,22 @@ function paint() {
     if (PAGES[current].kind === 'quiz') {
         initQuiz();
     }
+    fitAfterword();
 }
+
+/* 「읽고 나서」는 글씨를 줄이지 않는다. 세로 화면에서 글이 칸을 넘으면
+   끝그림을 접어 그 자리를 글에 내준다. 접을 필요가 없으면 그대로 둔다. */
+function fitAfterword() {
+    const page = spreadEl.querySelector('.page-after');
+    if (!page) return;
+    page.classList.remove('after-tight');
+    const spills = () => [...page.querySelectorAll('.after-col')]
+        .some(col => col.scrollHeight - col.clientHeight > 1);
+    if (spills()) page.classList.add('after-tight');
+}
+
+window.addEventListener('resize', fitAfterword);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAfterword);
 
 function initQuiz() {
     let answeredCount = 0;
