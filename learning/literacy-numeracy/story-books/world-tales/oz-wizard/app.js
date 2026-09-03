@@ -15,19 +15,17 @@ const CHAPTERS = [
                 "right": [
                     "그때 헨리 아저씨가 하늘을 보고 소리쳤습니다.",
                     "\"회오리바람이다!\"",
-                    "엠 아주머니는 지하실 뚜껑을 열고 뛰어내려 갔지요.",
-                    "도로시도 따라가려는데 토토가 침대 밑으로 쏙 숨었습니다.",
-                    "도로시가 토토를 붙잡은 순간, 집이 붕 떠올랐지요."
+                    "엠 아주머니는 지하실 뚜껑을 열고 뛰어내려 갔지요. 도로시도 따라가려는데 토토가 침대 밑으로 쏙 숨었습니다.",
+                    "도로시가 토토를 붙잡은 순간, 집이 붕 떠올랐습니다. 마룻바닥이 그네처럼 출렁 흔들렸지요."
                 ]
             },
             {
                 "art": "01-twister-2.webp",
                 "emoji": "🏠",
                 "left": [
-                    "집은 회오리 한가운데에서 빙글빙글 돌았습니다.",
-                    "창밖으로 지붕이며 나무며 소가 둥둥 떠다녔지요.",
+                    "집은 회오리 한가운데에서 빙글빙글 돌았습니다. 창밖으로 지붕이며 나무며 소가 둥둥 떠다녔지요.",
                     "\"토토야, 우리 어디로 가는 걸까?\"",
-                    "토토는 대답 대신 도로시 무릎에 얼굴을 파묻었습니다."
+                    "토토는 대답 대신 도로시 무릎에 얼굴을 파묻었습니다. 도로시도 토토를 꼭 끌어안았지요."
                 ],
                 "right": [
                     "얼마나 지났을까요. 도로시는 그만 잠이 들었지요.",
@@ -154,11 +152,10 @@ const CHAPTERS = [
                     "사자는 얼굴이 발개졌지요."
                 ],
                 "right": [
-                    "이윽고 빨간 꽃이 가득한 들판이 나왔습니다.",
-                    "향기가 어찌나 진한지 도로시가 하품을 했지요.",
+                    "이윽고 빨간 꽃이 가득한 들판이 나왔습니다. 향기가 어찌나 진한지 도로시가 하품을 했지요.",
                     "\"조금만… 자고…\"",
-                    "도로시와 사자가 그대로 쓰러졌습니다.",
-                    "잠들지 않는 허수아비와 나무꾼이 둘을 들쳐 업고 들판을 내달렸지요."
+                    "도로시와 사자가 그대로 쓰러졌습니다. 한번 잠들면 영영 깨지 못하는 꽃밭이었지요.",
+                    "짚과 양철은 잠이 오지 않았습니다. 허수아비와 나무꾼은 둘을 들쳐 업고 들판을 내달렸지요."
                 ]
             }
         ]
@@ -171,18 +168,15 @@ const CHAPTERS = [
                 "art": "05-emerald.webp",
                 "emoji": "💚",
                 "left": [
-                    "멀리 초록빛 성이 반짝였습니다.",
-                    "문지기가 상자에서 초록 안경을 꺼내 하나씩 씌워 주었지요.",
+                    "멀리 초록빛 성이 반짝였습니다. 문지기가 상자에서 초록 안경을 꺼내 하나씩 씌워 주었지요.",
                     "\"안 쓰면 눈이 부셔서 못 다녀요.\"",
-                    "안경을 쓰자 온 세상이 초록이었습니다.",
-                    "길도 집도 사람들 옷도 전부 초록이었지요."
+                    "안경을 쓰자 온 세상이 초록이었습니다. 길도 집도 사람들 옷도, 하다못해 하늘까지 초록이었지요."
                 ],
                 "right": [
-                    "오즈는 하루에 한 사람씩만 만나 주었습니다.",
-                    "도로시 앞에는 커다란 얼굴만 둥실 떠 있었지요.",
-                    "허수아비 앞에는 아름다운 여인이 나타났습니다.",
-                    "나무꾼 앞에는 무시무시한 짐승이, 사자 앞에는 불덩이가 나타났지요.",
-                    "넷은 서로 본 것을 말하다 어리둥절해졌지요."
+                    "오즈는 하루에 한 사람씩만 만나 주었습니다. 도로시 앞에 나타난 것은 커다란 얼굴 하나였지요.",
+                    "몸도 팔도 없이 둥실 떠 있었습니다. 그런데 밖에서 서로 본 것을 말하자 이야기가 딴판이었지요.",
+                    "\"나는 날개 달린 고운 아가씨를 봤는데?\"",
+                    "\"난 코뿔소만 한 짐승이었어. 사자는 불덩이를 봤대!\""
                 ]
             },
             {
@@ -211,17 +205,16 @@ const CHAPTERS = [
                 "art": "06-monkeys.webp",
                 "emoji": "🐒",
                 "left": [
-                    "마녀는 황금 모자를 꺼내 썼습니다.",
+                    "마녀는 벽장에서 황금 모자를 꺼내 썼습니다.",
                     "\"에페, 페페, 카케!\"",
-                    "하늘이 캄캄해지더니 날개 달린 원숭이 떼가 몰려왔지요.",
-                    "원숭이들은 허수아비의 짚을 뽑아 흩뿌리고, 나무꾼을 바위 아래로 떨어뜨렸습니다."
+                    "하늘이 캄캄해지더니 날개 달린 원숭이 떼가 몰려왔지요. 원숭이들은 허수아비의 짚을 뽑아 구름처럼 흩뿌렸습니다.",
+                    "나무꾼은 두 팔을 붙들려 하늘로 끌려갔지요. 도로시는 토토를 끌어안고 웅크릴 수밖에 없었습니다."
                 ],
                 "right": [
-                    "도로시와 사자는 마녀의 성으로 끌려갔습니다.",
-                    "마녀는 도로시에게 부엌일을 시켰지요.",
+                    "도로시와 사자는 마녀의 성으로 끌려갔습니다. 마녀는 도로시에게 부엌일을 시켰지요.",
                     "\"저 은구두만 뺏으면 되는데.\"",
-                    "마녀는 바닥에 몰래 쇠막대를 놓아 도로시를 넘어뜨렸습니다.",
-                    "그러고는 벗겨진 구두 한 짝을 얼른 집어 들었지요."
+                    "마녀는 물이 무서워 도로시를 건드리지 못했습니다. 그래서 바닥에 몰래 쇠막대를 놓아 넘어뜨렸지요.",
+                    "그러고는 벗겨진 구두 한 짝을 얼른 집어 들었습니다."
                 ]
             },
             {
@@ -230,16 +223,14 @@ const CHAPTERS = [
                 "left": [
                     "\"돌려줘요! 그건 제 거예요!\"",
                     "\"어림없다. 나머지 한 짝도 곧 내 것이 될걸.\"",
-                    "도로시는 너무 분해서 옆에 있던 물통을 번쩍 들었습니다.",
-                    "그러고는 마녀에게 확 끼얹었지요.",
+                    "도로시는 너무 분해서 옆에 있던 물통을 번쩍 들었습니다. 그러고는 마녀에게 확 끼얹었지요.",
                     "물이 쏟아지자 마녀가 비명을 질렀습니다."
                 ],
                 "right": [
                     "\"물이라니! 물은 안 돼!\"",
-                    "마녀의 몸이 설탕처럼 스르르 녹아내렸습니다.",
-                    "이윽고 갈색 모자만 바닥에 남았지요.",
-                    "성에 갇혀 있던 이들이 모두 뛰어나와 만세를 불렀습니다.",
-                    "도로시는 허수아비에게 짚을 다시 채우고, 나무꾼의 찌그러진 곳을 펴 주었지요."
+                    "마녀의 몸이 설탕처럼 스르르 녹아내렸습니다. 이윽고 갈색 모자만 바닥에 남았지요.",
+                    "성에 갇혀 있던 이들이 뛰어나와 만세를 불렀습니다. 원숭이들이 나무꾼을 들어다 주었지요.",
+                    "도로시는 허수아비에게 짚을 채우고, 나무꾼의 찌그러진 곳을 펴 주었습니다."
                 ]
             }
         ]
@@ -254,9 +245,8 @@ const CHAPTERS = [
                 "left": [
                     "넷은 에메랄드 시로 돌아왔습니다.",
                     "\"약속을 지켜 주세요!\"",
-                    "그런데 커다란 얼굴도 여인도 나타나지 않았지요.",
-                    "그때 토토가 구석의 커튼을 물고 잡아당겼습니다.",
-                    "커튼 뒤에는 대머리 할아버지가 쪼그리고 앉아 있었지요."
+                    "그런데 이번에는 커다란 얼굴도 고운 아가씨도 나타나지 않았습니다. 넓은 방이 텅 비어 있을 뿐이었지요.",
+                    "그때 토토가 구석의 커튼을 물고 잡아당겼습니다. 커튼 뒤에는 대머리 할아버지가 쪼그리고 앉아 있었지요."
                 ],
                 "right": [
                     "\"당신 누구예요?\"",
@@ -300,20 +290,19 @@ const CHAPTERS = [
                 ],
                 "right": [
                     "\"허수아비를 임금으로 삼으시오!\"",
-                    "할아버지가 바구니에 올라탔습니다. 도로시도 타려는데—",
-                    "토토가 왁자한 소리에 놀라 품에서 뛰쳐나갔지요.",
-                    "도로시가 토토를 안고 돌아섰을 때, 줄이 툭 끊어졌습니다.",
-                    "기구는 할아버지만 태운 채 하늘로 올라가 버렸지요."
+                    "할아버지가 바구니에 올라탔습니다. 도로시도 타려는데 토토가 놀라 품에서 뛰쳐나갔지요.",
+                    "도로시가 토토를 안고 돌아섰을 때, 줄이 툭 끊어졌습니다. 기구는 할아버지만 태운 채 하늘로 올라가 버렸지요.",
+                    "\"도로시! 나는 멈추는 법을 모른다오—\""
                 ]
             },
             {
                 "art": "08-home.webp",
                 "emoji": "🏡",
                 "left": [
-                    "도로시는 그만 주저앉아 울었습니다.",
-                    "그때 남쪽에 글린다라는 착한 마녀가 있다는 말을 들었지요.",
-                    "넷은 다시 먼 길을 걸어 글린다를 찾아갔습니다.",
-                    "글린다는 도로시의 은구두를 내려다보며 빙그레 웃었지요."
+                    "도로시는 그만 주저앉아 울었습니다. 허수아비가 옆에 쪼그려 앉았지요.",
+                    "\"울지 마. 남쪽에 글린다라는 착한 마녀가 산대.\"",
+                    "\"그 마녀라면 너를 보내 줄 수 있을 거야.\"",
+                    "넷은 다시 먼 길을 걸었습니다. 글린다는 도로시의 은구두를 내려다보며 빙그레 웃었지요."
                 ],
                 "right": [
                     "\"그 구두가 너를 어디든 데려다준단다.\"",
@@ -585,19 +574,17 @@ const EN = {
                     right: [
                         "Then Uncle Henry looked at the sky and shouted.",
                         "\"A cyclone!\"",
-                        "Aunt Em threw open the cellar door and climbed down.",
-                        "Dorothy was about to follow when Toto shot under the bed.",
-                        "The moment she caught hold of him, the whole house lifted into the air."
+                        "Aunt Em threw open the cellar door and climbed down. Dorothy was about to follow when Toto shot under the bed.",
+                        "The moment she caught hold of him, the whole house lifted into the air. The floor swayed under her like a swing."
                     ]
                 },
                 {
                     art: '01-twister-2.webp',
                     emoji: '🌪️',
                     left: [
-                        "The house went round and round in the middle of the cyclone.",
-                        "Past the window floated a roof, a tree, a cow.",
+                        "The house went round and round in the middle of the cyclone. Past the window floated a roof, a tree, a cow.",
                         "\"Toto, where do you suppose we're going?\"",
-                        "Toto gave no answer. He buried his face in Dorothy's lap."
+                        "Toto gave no answer. He buried his face in Dorothy's lap, and she held him tight."
                     ],
                     right: [
                         "How long it lasted, nobody could say. Dorothy fell asleep in the end.",
@@ -724,11 +711,10 @@ const EN = {
                         "The Lion went quite red in the face."
                     ],
                     right: [
-                        "By and by they came to a field full of scarlet flowers.",
-                        "The scent was so heavy that Dorothy began to yawn.",
+                        "By and by they came to a field full of scarlet flowers. The scent was so heavy that Dorothy began to yawn.",
                         "\"Just a little… sleep…\"",
-                        "Down went Dorothy, and down went the Lion.",
-                        "The Scarecrow and the Woodman, who never sleep, hoisted the two of them up and ran the whole field."
+                        "Down went Dorothy, and down went the Lion. It was a field where anyone who fell asleep never woke again.",
+                        "Straw and tin do not sleep. The Scarecrow and the Woodman hoisted the two of them up and ran the whole field."
                     ]
                 }
             ]
@@ -741,17 +727,15 @@ const EN = {
                     art: '05-emerald.webp',
                     emoji: '💚',
                     left: [
-                        "Far off a green palace glittered.",
-                        "The gatekeeper took green spectacles out of a box and fastened a pair on each of them.",
+                        "Far off a green palace glittered. The gatekeeper took green spectacles out of a box and fastened a pair on each of them.",
                         "\"Without these the glare would blind you.\"",
-                        "With the spectacles on, the whole world was green — the roads, the houses, even the clothes people wore."
+                        "With the spectacles on, the whole world was green. The roads, the houses, the clothes people wore, even the sky."
                     ],
                     right: [
-                        "Oz would see only one person a day.",
-                        "In front of Dorothy floated an enormous head and nothing else.",
-                        "In front of the Scarecrow appeared a beautiful lady.",
-                        "The Woodman saw a dreadful beast, and the Lion saw a ball of fire.",
-                        "Afterwards the four of them compared what they had seen and could make no sense of it."
+                        "Oz would see only one person a day. In front of Dorothy floated an enormous head and nothing else.",
+                        "It had no body and no arms at all. Yet outside, when they compared what they had seen, no two accounts agreed.",
+                        "\"I saw a beautiful lady with wings!\"",
+                        "\"Mine was a beast the size of a rhinoceros. The Lion says he saw a ball of fire!"
                     ]
                 },
                 {
@@ -780,15 +764,15 @@ const EN = {
                     art: '06-monkeys.webp',
                     emoji: '🐒',
                     left: [
-                        "The Witch fetched out her Golden Cap and put it on.",
+                        "The Witch fetched her Golden Cap out of the cupboard and put it on.",
                         "\"Ep-pe, pep-pe, kak-ke!\"",
-                        "The sky went dark, and a band of Winged Monkeys came sweeping down.",
-                        "They pulled the straw out of the Scarecrow and scattered it, and they dropped the Woodman down among the rocks."
+                        "The sky went dark, and a band of Winged Monkeys came sweeping down. They pulled the straw out of the Scarecrow and scattered it like a cloud.",
+                        "The Woodman was carried off by both arms. Dorothy could only crouch down with Toto in her arms."
                     ],
                     right: [
                         "Dorothy and the Lion were carried off to the Witch's castle, and Dorothy was set to work in the kitchen.",
                         "\"If only I could get those silver shoes.\"",
-                        "The Witch laid an iron bar across the floor where Dorothy could not see it, and tripped her.",
+                        "The Witch was afraid of water and dared not touch her. So she laid an iron bar across the floor where Dorothy could not see it, and tripped her.",
                         "Then she snatched up the shoe that had come off."
                     ]
                 },
@@ -798,14 +782,13 @@ const EN = {
                     left: [
                         "\"Give it back! That's mine!\"",
                         "\"Certainly not. And I shall have the other one soon enough.\"",
-                        "Dorothy was so angry that she caught up the bucket of water standing beside her.",
-                        "And she flung the whole of it over the Witch.",
+                        "Dorothy was so angry that she caught up the bucket of water standing beside her, and flung the whole of it over the Witch.",
                         "As the water came down the Witch screamed."
                     ],
                     right: [
                         "\"Water! Not water!\"",
                         "The Witch melted away like a lump of sugar. In a moment there was nothing left on the floor but her brown hat.",
-                        "Everyone who had been shut up in that castle came running out, cheering.",
+                        "Everyone who had been shut up in that castle came running out, cheering. The Monkeys lifted the Woodman up out of the rocks.",
                         "Dorothy stuffed the Scarecrow full of straw again, and hammered the dents out of the Woodman."
                     ]
                 }
@@ -821,9 +804,8 @@ const EN = {
                     left: [
                         "The four went back to the Emerald City.",
                         "\"You must keep your promise!\"",
-                        "But no great head appeared, and no beautiful lady either.",
-                        "Then Toto took hold of a curtain in the corner and pulled.",
-                        "Behind it, crouching down, was a bald old man."
+                        "But this time no great head appeared, and no beautiful lady either. The wide room was simply empty.",
+                        "Then Toto took hold of a curtain in the corner and pulled. Behind it, crouching down, was a bald old man."
                     ],
                     right: [
                         "\"Who are you?\"",
@@ -867,20 +849,19 @@ const EN = {
                     ],
                     right: [
                         "\"Make the Scarecrow your king!\"",
-                        "The old man climbed into the basket, and Dorothy was about to climb in after him —",
-                        "when Toto took fright at all the noise and jumped out of her arms.",
-                        "By the time she had caught him and turned round, the rope had snapped.",
-                        "The balloon rose into the sky with nobody in it but the old man."
+                        "The old man climbed into the basket, and Dorothy was about to climb in after him when Toto took fright at the noise and jumped out of her arms.",
+                        "By the time she had caught him and turned round, the rope had snapped. The balloon rose into the sky with nobody in it but the old man.",
+                        "\"Dorothy! I don't know how to make it stop —"
                     ]
                 },
                 {
                     art: '08-home.webp',
                     emoji: '🏡',
                     left: [
-                        "Dorothy sat down where she was and cried.",
-                        "Then she heard that away in the South there lived a good witch named Glinda.",
-                        "So the four of them walked that long road too, and came at last to Glinda.",
-                        "Glinda looked down at Dorothy's silver shoes and smiled."
+                        "Dorothy sat down where she was and cried. The Scarecrow crouched down beside her.",
+                        "\"Don't cry. They say a good witch named Glinda lives away in the South.\"",
+                        "\"A witch like that could send you home.\"",
+                        "So the four of them walked that long road too. Glinda looked down at Dorothy's silver shoes and smiled."
                     ],
                     right: [
                         "\"Those shoes will carry you anywhere you wish.\"",
@@ -1002,7 +983,7 @@ const EN = {
             { word: 'gatekeeper', meaning: '문지기', sentence: 'The gatekeeper took green spectacles out of a box.' },
             { word: 'spectacles', meaning: '안경', sentence: 'He fastened a pair of spectacles on each of them.' },
             { word: 'glare', meaning: '눈부신 빛', sentence: 'Without these the glare would blind you.' },
-            { word: 'make sense of', meaning: '알아듣다', sentence: 'They could make no sense of it.' }
+            { word: 'compare', meaning: '서로 견주어 보다', sentence: 'They compared what they had seen.' }
         ],
         '05-order.webp': [
             { word: 'slink off', meaning: '꽁무니를 빼다', sentence: 'The Woodman swung his axe, and off they slunk.' },
@@ -1010,7 +991,7 @@ const EN = {
             { word: 'caw', meaning: '까악까악 울다', sentence: 'They scattered, cawing.' }
         ],
         '06-monkeys.webp': [
-            { word: 'fetch out', meaning: '꺼내다', sentence: 'The Witch fetched out her Golden Cap.' },
+            { word: 'fetch out', meaning: '꺼내다', sentence: 'The Witch fetched her Golden Cap out of the cupboard.' },
             { word: 'sweep down', meaning: '몰려 내려오다', sentence: 'A band of Winged Monkeys came sweeping down.' },
             { word: 'trip', meaning: '넘어뜨리다', sentence: 'She laid an iron bar across the floor and tripped her.' },
             { word: 'snatch up', meaning: '얼른 집어 들다', sentence: 'She snatched up the shoe that had come off.' }
