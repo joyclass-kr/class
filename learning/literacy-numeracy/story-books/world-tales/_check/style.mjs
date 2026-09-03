@@ -3,8 +3,9 @@
 //   node _check/style.mjs <책들이 있는 폴더> [책이름]
 //   예) node _check/style.mjs .
 //       node _check/style.mjs ../korea-tales
-//       node _check/style.mjs ../world-novels heungbu
+//       node _check/style.mjs ../world-novels tom-sawyer
 //
+// 동화틀("left"/"right" 배열)과 소설틀(paras 안의 백틱 문자열)을 둘 다 읽는다.
 // 세계명작 58권을 다듬으면서 실제로 걸렸던 것들을 그대로 찾는다.
 // 기계는 후보만 내놓는다. 판단은 사람이 한다.
 import fs from 'node:fs';
@@ -26,13 +27,30 @@ const HARD = ['파리한', '파리했', '연방 ', '반신반의', '기진맥진
     '눈시울', '이맛살', '남루한', '아연실색', '망연자실', '전전긍긍', '고군분투'];
 
 // 3) 책이 제 편집을 해명하는 문장
-const SELF = /이 책은 |이 책에서는|이 책이 담|여기서는 .{0,10}(줄였|다듬었|바꿨)/;
+const SELF = /이 책은 [가-힣]|이 책에서는|이 책이 담|여기서는 .{0,10}(줄였|다듬었|바꿨)/;
 
 // 4) 낡은 물건 이름 — 그 자리에서 뜻을 알려 주는지 사람이 봐야 한다
 const OLD_THING = ['코담뱃갑', '골무', '됫박', '밀랍', '물레가락', '부싯깃', '나막신',
     '도롱이', '삿갓', '쟁기', '여물통', '길쌈', '무두질', '풀무'];
 
 const strRe = () => new RegExp('"((?:[^"\\\\]|\\\\.)*)"', 'g');
+
+// 본문만 골라낸다. 코드가 딸려 오지 않게 한글이 있는 것만 남긴다.
+function storyText(body) {
+    const out = [];
+    let m;
+    const r = strRe();
+    while ((m = r.exec(body))) out.push(m[1]);
+    // 소설틀: paras: [ `...`, `...` ]
+    const pr = /paras:\s*\[([\s\S]*?)\n\s*\]/g;
+    let p;
+    while ((p = pr.exec(body))) {
+        const br = /`([^`]*)`/g;
+        let b;
+        while ((b = br.exec(p[1]))) out.push(b[1]);
+    }
+    return out.filter(t => t.length >= 12 && /[가-힣]/.test(t) && !/[{}<>=]{2}|function |const |=>/.test(t));
+}
 
 const books = fs.readdirSync(root)
     .filter(d => fs.existsSync(path.join(root, d, 'app.js')))
@@ -42,19 +60,24 @@ const books = fs.readdirSync(root)
 let total = 0;
 for (const b of books) {
     const s = fs.readFileSync(path.join(root, b, 'app.js'), 'utf8');
-    const cut = s.indexOf('const EN');
-    const body = s.slice(0, cut > 0 ? cut : s.length);
+    // 본문만. 「읽고 나서」와 영어판은 뺀다 — 해설에서 "이 책은…"은 정상이다.
+    const start = Math.max(0, s.indexOf('const CHAPTERS'));
+    let end = s.length;
+    for (const k of ['const AFTERWORD', 'const CHAPTER_SEGS', 'const EN']) {
+        const i = s.indexOf(k, start);
+        if (i > 0 && i < end) end = i;
+    }
+    const body = s.slice(start, end);
     const lines = [];
-    let m; const r = strRe();
-    while ((m = r.exec(body))) {
-        const t = m[1];
-        if (t.length < 12 || !/[가-힣]/.test(t)) continue;
+
+    for (const t of storyText(body)) {
         for (const [label, rx] of SUMMARY) if (rx.test(t)) lines.push(['압축 · ' + label, t]);
         for (const w of HARD) if (t.includes(w)) lines.push(['어른 말 · ' + w.trim(), t]);
         if (SELF.test(t)) lines.push(['제 얘기', t]);
         for (const w of OLD_THING) if (t.includes(w)) lines.push(['낡은 물건 · ' + w, t]);
     }
-    // 해설이 이야기의 끝을 짚는가
+
+    // 해설이 이야기의 끝을 짚는가 (동화틀만)
     const aw = s.match(/const AFTERWORD = \{[\s\S]*?\n\};/);
     if (aw) {
         const beats = [];
@@ -69,13 +92,16 @@ for (const b of books) {
             const early = new Set(words(beats.slice(0, -2).join(' ')));
             const endOnly = [...new Set(words(beats.slice(-2).join(' ')))].filter(w => !early.has(w));
             const awText = [...aw[0].matchAll(/"([^"]{10,})"/g)].map(v => v[1]).join(' ');
-            if (!endOnly.some(w => awText.includes(w))) lines.push(['해설이 끝을 안 짚음', '(「읽고 나서」가 마지막 두 펼침면을 언급하지 않는다)']);
+            if (endOnly.length && !endOnly.some(w => awText.includes(w))) {
+                lines.push(['해설이 끝을 안 짚음', '(「읽고 나서」가 마지막 두 펼침면을 언급하지 않는다)']);
+            }
         }
     }
+
     if (!lines.length) continue;
     total += lines.length;
     console.log('## ' + b);
-    for (const [tag, t] of lines) console.log('   [' + tag + '] ' + t.slice(0, 74));
+    for (const [tag, t] of lines) console.log('   [' + tag + '] ' + t.replace(/<br>/g, ' ').slice(0, 74));
     console.log();
 }
 console.log(books.length + '권 가운데 후보 ' + total + '곳.');
