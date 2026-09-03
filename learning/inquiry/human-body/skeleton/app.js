@@ -73,6 +73,7 @@
         });
 
         bindDOM();
+        renderQuizSkeleton();
         handleResize();
         window.addEventListener('resize', handleResize);
 
@@ -89,6 +90,15 @@
         canvas.width = width * dpr;
         canvas.height = height * dpr;
         ctx.scale(dpr, dpr);
+    }
+
+    /** 사이드바 아래 개념 퀴즈를 그린다 */
+    function renderQuizSkeleton() {
+        if (typeof ExamData === 'undefined' || typeof SimEngine === 'undefined') return;
+        var box = document.getElementById('quizContainer');
+        var data = ExamData.skeleton;
+        if (!box || !data || !data.quizzes) return;
+        SimEngine.renderQuizSet(box, data.quizzes);
     }
 
     function renderLoop(time) {

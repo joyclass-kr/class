@@ -66,7 +66,7 @@
     // DOM Elements
     var sceneBtns, playPauseBtn, urinateBtn;
     var bpSlider, bpValEl, hydrationSlider, hydrationValEl, adhSlider, adhValEl;
-    var bladderProgressEl, bladderTextEl;
+    var bladderProgressEl, bladderTextEl, urineSwatchEl, urineTextEl;
     var organDetailCard, organTitleEl, organStandardEl, organDescEl;
     var quizContainerEl;
 
@@ -296,12 +296,37 @@
             ctx.save();
             ctx.shadowBlur = 12;
             ctx.shadowColor = '#facc15';
-            ctx.fillStyle = adhRatio > 0.6 ? '#d97706' : '#fef08a';
+            ctx.fillStyle = urineTone().color;
             ctx.beginPath();
             ctx.arc(ux, uy, 4, 0, Math.PI * 2);
             ctx.fill();
             ctx.restore();
         }
+    }
+
+    /**
+     * 오줌 농도와 색. 물을 적게 마시고 항이뇨호르몬이 많을수록
+     * 물이 되흡수되어 진한 호박색이 된다.
+     * 전에는 슬라이더 주석에만 "오줌 농도/색상"이라 적혀 있고
+     * 실제로는 색이 변하지 않았다.
+     */
+    function urineTone() {
+        // 0 (아주 연함) ~ 1 (아주 진함)
+        var fromWater = 1 - (hydration - 10) / 90;       // 물 적게 = 진함
+        var fromAdh = adhLevel / 100;                     // ADH 많음 = 진함
+        var c = Math.max(0, Math.min(1, fromWater * 0.6 + fromAdh * 0.4));
+
+        // 연한 노랑(60, 95%, 80%) -> 진한 호박(38, 90%, 38%)
+        var h = 60 - c * 22;
+        var l = 80 - c * 42;
+        return {
+            level: c,
+            color: 'hsl(' + h.toFixed(0) + ', 92%, ' + l.toFixed(0) + '%)',
+            name: c < 0.25 ? '아주 연함 (물 많음)'
+                : c < 0.45 ? '연함'
+                : c < 0.65 ? '보통'
+                : c < 0.85 ? '진함' : '아주 진함 (물 적음)'
+        };
     }
 
     function drawHotspots(dx, dy, dw, dh, time) {
@@ -352,6 +377,8 @@
 
         bladderProgressEl = document.getElementById('bladderProgress');
         bladderTextEl = document.getElementById('bladderText');
+        urineSwatchEl = document.getElementById('urineSwatch');
+        urineTextEl = document.getElementById('urineText');
 
         organDetailCard = document.getElementById('organDetailCard');
         organTitleEl = document.getElementById('organTitle');
@@ -395,6 +422,7 @@
             hydrationSlider.addEventListener('input', function () {
                 hydration = parseInt(hydrationSlider.value, 10);
                 if (hydrationValEl) hydrationValEl.textContent = hydration + ' %';
+                updateBladderUI();
             });
         }
 
@@ -402,6 +430,7 @@
             adhSlider.addEventListener('input', function () {
                 adhLevel = parseInt(adhSlider.value, 10);
                 if (adhValEl) adhValEl.textContent = adhLevel + ' %';
+                updateBladderUI();
             });
         }
 
@@ -469,6 +498,13 @@
     function updateBladderUI() {
         if (bladderProgressEl) bladderProgressEl.style.width = bladderVolume + '%';
         if (bladderTextEl) bladderTextEl.textContent = Math.round(bladderVolume) + ' % (' + Math.round(bladderVolume * 4) + ' mL)';
+
+        var tone = urineTone();
+        if (urineSwatchEl) urineSwatchEl.style.background = tone.color;
+        if (urineTextEl) {
+            urineTextEl.textContent = tone.name;
+            urineTextEl.style.color = tone.color;
+        }
     }
 
     function renderSidebar() {

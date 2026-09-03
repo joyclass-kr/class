@@ -55,6 +55,7 @@
 
         bindDOM();
         handleResize();
+        renderQuizSynapse();
         window.addEventListener('resize', handleResize);
 
         // Pre-fill graph with resting potential
@@ -79,6 +80,15 @@
             potentialCanvas.height = potentialCanvas.clientHeight * dpr;
             if (potentialCtx) potentialCtx.scale(dpr, dpr);
         }
+    }
+
+    /** 사이드바 아래 개념 퀴즈를 그린다 */
+    function renderQuizSynapse() {
+        if (typeof ExamData === 'undefined' || typeof SimEngine === 'undefined') return;
+        var box = document.getElementById('quizContainer');
+        var data = ExamData.synapse;
+        if (!box || !data || !data.quizzes) return;
+        SimEngine.renderQuizSet(box, data.quizzes);
     }
 
     function renderLoop(time) {

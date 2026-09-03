@@ -31,7 +31,7 @@
     // Hotspots
     var hotspots = [
         { x: 0.10, y: 0.50, r: 45, title: 'Z선 (Z-disc)', desc: '근육 원섬유 마디(근절, Sarcomere)의 양쪽 경계선으로, 수축 시 Z선 사이의 거리가 짧아집니다.' },
-        { x: 0.32, y: 0.50, r: 50, title: 'A대 (암대, A-band)', desc: '마이오신 필라멘트가 존재하는 구간으로, <strong>근육이 수축하거나 이완해도 A대의 길이는 절대 변하지 않습니다 (시험 1순위)!</strong>' },
+        { x: 0.32, y: 0.50, r: 50, title: 'A대 (암대, A-band)', desc: '마이오신 필라멘트가 존재하는 구간으로, <strong>근육이 수축하거나 이완해도 A대의 길이는 절대 변하지 않습니다!</strong>' },
         { x: 0.50, y: 0.50, r: 40, title: 'H대 (H-zone)', desc: 'A대 중 마이오신만 있고 액틴과 겹치지 않는 중심부. 수축 시 액틴이 미끄러져 들어오므로 H대의 길이는 줄어듭니다.' },
         { x: 0.88, y: 0.50, r: 45, title: 'I대 (명대, I-band)', desc: '액틴 필라멘트만 있는 밝은 구간으로, 수축 시 Z선이 당겨지며 I대의 길이가 줄어듭니다.' },
         { x: 0.65, y: 0.40, r: 35, title: '마이오신 머리 (교차 가교)', desc: 'Ca2+이 트로포닌에 결합하고 ATP가 분해(ADP+Pi)될 때 마이오신 머리가 액틴을 끌어당겨 활주(Power Stroke)합니다.' }
@@ -49,6 +49,7 @@
         ctx = canvas.getContext('2d');
 
         bindDOM();
+        renderQuizMuscle();
         initParticles();
         handleResize();
         window.addEventListener('resize', handleResize);
@@ -79,6 +80,15 @@
         canvas.width = width * dpr;
         canvas.height = height * dpr;
         ctx.scale(dpr, dpr);
+    }
+
+    /** 사이드바 아래 개념 퀴즈를 그린다 */
+    function renderQuizMuscle() {
+        if (typeof ExamData === 'undefined' || typeof SimEngine === 'undefined') return;
+        var box = document.getElementById('quizContainer');
+        var data = ExamData.muscle;
+        if (!box || !data || !data.quizzes) return;
+        SimEngine.renderQuizSet(box, data.quizzes);
     }
 
     function renderLoop(time) {
