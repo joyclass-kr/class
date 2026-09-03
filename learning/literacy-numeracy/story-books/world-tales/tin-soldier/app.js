@@ -45,8 +45,8 @@ const CHAPTERS = [
                 "emoji": "💃",
                 "left": [
                     "탁자 저편에 종이로 만든 성이 있었습니다. 창문마다 얇은 종이가 발려 있었지요. 성 앞에는 작은 호수도 만들어 두었습니다.",
-                    "거울 조각으로 만든 호수였지요. 그 앞에 종이 무희가 서 있었습니다. 하얀 치마가 나풀나풀했지요.",
-                    "어깨에는 파란 띠를 둘렀습니다. 허리에는 반짝이가 하나 달려 있었지요."
+                    "거울 조각으로 만든 호수였지요. 그 앞에 종이 무희가 서 있었습니다. 분홍 치마가 나풀나풀했지요.",
+                    "소매는 하얗게 봉긋했습니다. 허리에는 반짝이가 하나 달려 있었지요."
                 ],
                 "right": [
                     "무희는 한 발로 사뿐히 서 있었습니다. 병정은 그 모습에서 눈을 뗄 수 없었지요. 가슴이 이상하게 두근거렸습니다.",
@@ -498,7 +498,7 @@ const QUIZ = [
         "q": "이튿날 난로의 재 속에서 나온 것은 무엇인가요?",
         "choices": [
             "총",
-            "파란 띠",
+            "깜짝 상자",
             "작은 하트"
         ],
         "answer": 2
@@ -595,9 +595,9 @@ const EN = {
                         "In front of the castle they had made a little lake",
                         "out of a piece of looking-glass.",
                         "And in front of that stood the paper dancer,",
-                        "with her white skirt standing out round her.",
-                        "There was a blue ribbon over her shoulder",
-                        "and a spangle at her waist."
+                        "with her pink skirt standing out round her.",
+                        "Her sleeves were white and puffed,",
+                        "and there was a spangle at her waist."
                     ],
                     right: [
                         "The dancer stood lightly on one foot,",
@@ -988,7 +988,7 @@ const EN = {
         '02-ballerina.webp': [
             { word: 'paste', meaning: '바르다, 붙이다', sentence: 'Thin paper pasted over every window.' },
             { word: 'looking-glass', meaning: '거울', sentence: 'Out of a piece of looking-glass.' },
-            { word: 'ribbon', meaning: '띠', sentence: 'A blue ribbon over her shoulder.' },
+            { word: 'puffed', meaning: '봉긋한', sentence: 'Her sleeves were white and puffed.' },
             { word: 'spangle', meaning: '반짝이', sentence: 'And a spangle at her waist.' },
             { word: 'take one’s eyes off', meaning: '눈을 떼다', sentence: 'He could not take his eyes off her.' }
         ],
