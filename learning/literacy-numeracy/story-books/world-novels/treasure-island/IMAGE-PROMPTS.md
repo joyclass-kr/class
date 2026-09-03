@@ -30,6 +30,12 @@ of a painted plate in an old hardbound children's classic. This is paint on
 paper, not a drawing made on a screen: no flat cel shading, no even digital
 fills, no glossy highlights, no animation-still look.
 
+Every picture in this book must look as if one person painted them all on the
+same day with the same brushes and the same paints: the same line weight, the
+same palette, the same way of drawing a face. A character keeps the same face,
+the same build, the same age and the same clothes from one picture to the
+next, so a child turning the page knows at once that it is the same person.
+
 Classic children's adventure novel illustration painted the way the old Korean
 children's classics were painted: gouache and watercolor, bold clean outlines, saturated
 but slightly muted colors, realistic human proportions with expressive faces,
@@ -182,7 +188,7 @@ sailcloth pinned together with brass buttons and twigs, wild hair and beard.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.webp` | **앵무새만 초록으로 다시.** The one-legged man on his crutch standing at a log stockade fence holding a white flag of truce, calling up to the blockhouse; a stern captain answering through a loophole with a pipe in his hand. |
+| `images/story-12-a.webp` | The one-legged man on his crutch standing at a log stockade fence holding a white flag of truce, calling up to the blockhouse; a stern captain answering through a loophole with a pipe in his hand. |
 | `images/story-12-b.webp` | The attack on the blockhouse: pirates swarming over the stockade fence with cutlasses through gunsmoke, defenders firing from the loopholes, a boy in the thick of it. |
 
 ## 13장 · 밤바다의 작은 배

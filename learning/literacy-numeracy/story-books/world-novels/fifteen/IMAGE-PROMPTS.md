@@ -28,6 +28,12 @@ of a painted plate in an old hardbound children's classic. This is paint on
 paper, not a drawing made on a screen: no flat cel shading, no even digital
 fills, no glossy highlights, no animation-still look.
 
+Every picture in this book must look as if one person painted them all on the
+same day with the same brushes and the same paints: the same line weight, the
+same palette, the same way of drawing a face. A character keeps the same face,
+the same build, the same age and the same clothes from one picture to the
+next, so a child turning the page knows at once that it is the same person.
+
 Classic children's literature illustration painted the way the old Korean
 children's classics were painted: gouache and watercolor, bold clean outlines, realistic
 child proportions with expressive faces; a small uninhabited island in the

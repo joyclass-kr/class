@@ -37,6 +37,12 @@ of a painted plate in an old hardbound children's classic. This is paint on
 paper, not a drawing made on a screen: no flat cel shading, no even digital
 fills, no glossy highlights, no animation-still look.
 
+Every picture in this book must look as if one person painted them all on the
+same day with the same brushes and the same paints: the same line weight, the
+same palette, the same way of drawing a face. A character keeps the same face,
+the same build, the same age and the same clothes from one picture to the
+next, so a child turning the page knows at once that it is the same person.
+
 Children's picture book illustration, warm watercolor and colored-pencil style,
 soft golden lighting, gentle rounded shapes, storybook atmosphere, no text or
 letters in the image, consistent warm earthy color palette (parchment, gold,
