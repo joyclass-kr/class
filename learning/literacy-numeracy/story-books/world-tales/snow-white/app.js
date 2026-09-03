@@ -128,14 +128,16 @@ const CHAPTERS = [
                     "왕비가 다시 거울에 물었습니다.",
                     "\"백설공주가 숲에 있습니다.\"",
                     "\"일곱 난쟁이와 지냅니다.\"",
-                    "왕비는 그날로 채비를 했지요. 얼굴을 늙은이처럼 꾸몄습니다.",
-                    "장사꾼 바구니를 들었습니다."
+                    "왕비는 거울 앞에서 얼굴에 잿가루를 문질렀습니다. 머리에도 흰 가루를 뿌렸지요.",
+                    "그러고는 허리를 구부정하게 굽혀 보았습니다.",
+                    "\"고운 허리끈 사세요오—\"",
+                    "목소리까지 갈라지게 냈습니다."
                 ],
                 "right": [
                     "\"고운 허리끈 사세요!\"",
                     "공주가 문을 빼꼼 열었습니다.",
                     "\"장사꾼 할머니로군요.\"",
-                    "허리끈이 참 고왔습니다.",
+                    "바구니에 든 허리끈이 참 고왔습니다. 비단실로 짠 것이 색깔마다 하나씩 있었지요.",
                     "\"매어 줄까? 이리 와 보렴.\""
                 ]
             },
@@ -149,10 +151,11 @@ const CHAPTERS = [
                     "\"낯선 사람에게 문을 열지 마요.\""
                 ],
                 "right": [
-                    "며칠 뒤 또 누가 왔습니다. 이번에는 빗을 팔러 왔지요.",
-                    "\"이 빗으로 머리를 빗어 보렴.\"",
-                    "공주는 또 깜빡 넘어갔습니다. 다행히 난쟁이들이 일찍 왔지요.",
-                    "\"이제 정말 조심해야 해요.\""
+                    "며칠 뒤 또 장사꾼이 왔습니다. 이번에는 빗을 팔러 왔지요.",
+                    "빗에 박힌 구슬이 반짝였습니다. 공주는 저도 모르게 창가로 다가갔지요.",
+                    "할머니가 그 빗을 머리에 쓱 꽂았습니다.",
+                    "공주는 그 자리에서 쓰러졌지요.",
+                    "다행히 난쟁이들이 일찍 돌아왔습니다."
                 ]
             }
         ]
@@ -166,7 +169,7 @@ const CHAPTERS = [
                 "emoji": "🍎",
                 "left": [
                     "왕비는 지하실로 내려갔습니다. 사과 하나를 골랐지요. 한쪽은 새빨갛고 한쪽은 하얬습니다.",
-                    "빨간 쪽에만 약을 발랐지요. 겉으로는 표가 나지 않았습니다.",
+                    "빨간 쪽에만 독을 발랐지요. 겉으로는 표가 나지 않았습니다.",
                     "\"이번에는 틀림없겠지.\"",
                     "이번엔 농사꾼처럼 꾸몄습니다."
                 ],
@@ -652,14 +655,16 @@ const EN = {
                         "The queen asked her mirror again.",
                         "\"Snow White is in the forest.\"",
                         "\"She lives with seven dwarfs.\"",
-                        "The queen made ready that very day. She painted her face to look old,",
-                        "and picked up a pedlar's basket."
+                        "At her mirror the queen rubbed ashes into her face and dusted her hair white.",
+                        "Then she tried bending her back into a stoop.",
+                        "\"Fi-ine sashes for sa-ale!\"",
+                        "She cracked her voice until it sounded old."
                     ],
                     right: [
                         "\"Fine sashes for sale!\"",
                         "Snow White opened the door a little way.",
                         "\"An old pedlar woman.\"",
-                        "The sash really was very pretty.",
+                        "The sashes in the basket really were very pretty - woven silk, one in every colour.",
                         "\"Shall I tie it for you? Come here, child.\""
                     ]
                 },
@@ -673,10 +678,11 @@ const EN = {
                         "\"Never open the door to a stranger.\""
                     ],
                     right: [
-                        "A few days later someone came again — this time selling combs.",
-                        "\"Try this comb in your hair.\"",
-                        "And again Snow White was taken in. Luckily the dwarfs came home early that day.",
-                        "\"Now you really must take care.\""
+                        "A few days later a pedlar came again - this time selling combs.",
+                        "The beads set in the comb caught the light, and Snow White found herself at the window before she knew it.",
+                        "The old woman slipped the comb straight into her hair.",
+                        "Snow White dropped where she stood.",
+                        "Luckily the dwarfs came home early."
                     ]
                 }
             ]

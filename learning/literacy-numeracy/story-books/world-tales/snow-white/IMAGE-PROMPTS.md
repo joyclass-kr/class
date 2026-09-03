@@ -13,6 +13,20 @@
 > - `05-apple-2` — 공주 머리색이 갈색입니다. 다른 장처럼 **검은 머리**로. (이름이 눈처럼 흰 살결과 검은 머리에서 왔습니다.)
 > - 공주 옷이 디즈니 백설공주와 똑같습니다(파랑 상의+노랑 치마+빨간 머리띠). 저작권이 살아 있는 디자인이라, 앞으로는 **다른 빛깔의 소박한 옷**으로 그려 주세요.
 
+> **⚠️ 사람이 장마다 달라 보입니다 (2026-09-03)**
+> 백설공주의 머리·리본·옷은 사실 일관됩니다. 달라지는 것은 **그림체**입니다.
+> `03-dwarfs`·`05-apple` 은 물감 느낌의 차분한 그림이고, `07-awake` 는 납작하고
+> 쨍한 만화 그림입니다. `01-mirror` 는 또 다른 톤에 위아래 회색 띠까지 있습니다.
+> 같은 아이인데 화풍이 바뀌니 다른 사람으로 보입니다.
+>
+> **공통 스타일 지시문을 매번 그대로 붙여 넣어 주세요.** 한 장이라도 빼먹으면
+> 그 장만 화풍이 달라집니다. 인물 설명도 함께 붙여야 합니다.
+> 다시 그리신다면 지금 `03-dwarfs`·`05-apple` 쪽 그림체에 맞추는 편이 낫겠습니다.
+>
+> **백설공주 모습은 사용자가 정했습니다.** 검은 단발에 빨간 리본 머리띠, 흰 깃 블라우스,
+> 남색 니트 조끼, 노란 주름치마, 흰 무릎양말, 빨간 장화, 갈색 가죽 가방입니다.
+> 인물 설명에 그대로 적어 두었으니 장마다 똑같이 그려 주세요.
+
 > **한 파일 = 한 장면입니다. 앞질러 가지 마세요.**
 > 파일마다 뒤에 〔이 쪽에 실린 글〕을 붙여 두었습니다. 그 쪽에 실제로 실리는 글이에요.
 > 그림은 **그 글에 나오는 장면만** 그려 주세요. 다음 쪽 이야기를 미리 그리면
@@ -31,8 +45,12 @@
 ## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 사용하세요)
 
 ```
-Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, cold blue snow against warm
+Children's picture book illustration. THE RENDERING STYLE MUST BE IDENTICAL IN
+EVERY PICTURE OF THIS BOOK - as if one artist drew them all on the same day with
+the same brushes: bright cheerful cartoon-animation style, even medium-weight
+black outlines of the same thickness throughout, flat saturated storybook colour
+with soft simple shading, no painterly watercolour texture in some pictures and
+flat cel colour in others. Same faces, same proportions, same palette every time. cold blue snow against warm
 cottage golds, ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a castle chamber with a great
 mirror, a winter forest, a tiny seven-bed cottage and a clearing with a glass
 casket, expressive faces, wide panoramic composition, gentle and never
@@ -42,8 +60,14 @@ frightening.
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-Snow White: a girl about 12 with black hair, pale skin and a red ribbon, in a
-simple blue and yellow dress. The queen: a tall woman in a dark plum gown with a
+Snow White: a girl about 12. She looks EXACTLY THE SAME in every picture -
+short jet-black bob just below the ears with a blunt fringe, a red headband with
+a small red bow on top, pale skin, round cheeks, bright dark eyes. She wears the
+SAME outfit throughout: a white blouse with a pointed collar, a navy-blue knitted
+sleeveless V-neck vest over it, a yellow pleated skirt to the knee, white
+knee-high socks, red rubber boots, and a small brown leather satchel on a strap
+across her body. Never change the hair length, the bow, the vest, the skirt, the
+socks or the boots from one picture to the next. The queen: a tall woman in a dark plum gown with a
 high collar, drawn as cold and vain rather than monstrous. The huntsman: a broad
 bearded man with kind troubled eyes. The seven dwarfs: small bearded miners in
 seven different colours of cap, each with a distinct face. The prince: a young
