@@ -32,6 +32,14 @@ paper, banner or wall. There are no letters of any alphabet anywhere in the
 picture, and no borders or panels around it. The picture fills the whole
 canvas edge to edge.
 
+MEDIUM - this matters as much as the scene: a hand-painted illustration in
+gouache and watercolour on textured paper. Visible brush strokes, washes that
+pool and dry unevenly, soft painterly edges where one colour meets another,
+ink line work over the paint, the grain of the paper showing through. The look
+of a painted plate in an old hardbound children's classic. This is paint on
+paper, not a drawing made on a screen: no flat cel shading, no even digital
+fills, no glossy highlights, no animation-still look.
+
 Children's picture book illustration in 1980s Japanese-Korean TV animation cel
 style: flat clean cel shading, crisp uniform outlines, painted background art,
 soft golden lighting, gentle rounded shapes, storybook atmosphere, no text or

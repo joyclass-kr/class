@@ -20,6 +20,14 @@ paper, banner or wall. There are no letters of any alphabet anywhere in the
 picture, and no borders or panels around it. The picture fills the whole
 canvas edge to edge.
 
+MEDIUM - this matters as much as the scene: a hand-painted illustration in
+gouache and watercolour on textured paper. Visible brush strokes, washes that
+pool and dry unevenly, soft painterly edges where one colour meets another,
+ink line work over the paint, the grain of the paper showing through. The look
+of a painted plate in an old hardbound children's classic. This is paint on
+paper, not a drawing made on a screen: no flat cel shading, no even digital
+fills, no glossy highlights, no animation-still look.
+
 Classic children's literature illustration painted the way the old Korean
 children's classics were painted: gouache and watercolor, bold clean outlines, realistic
 proportions with expressive faces; England around 1190 — Sherwood Forest with
