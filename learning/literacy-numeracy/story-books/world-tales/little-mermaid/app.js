@@ -238,12 +238,12 @@ const CHAPTERS = [
                     "한밤중이었습니다. 물결 사이로 언니들이 얼굴을 내밀었지요.",
                     "그런데 머리가 모두 짧게 잘려 있었습니다.",
                     "\"마녀에게 머리를 주고 얻었어.\"",
-                    "언니가 반짝이는 단검을 내밀었지요.",
-                    "\"이걸 쓰면 돌아올 수 있어.\""
+                    "\"왕자가 살아 있는 한 너는 바다로 돌아올 수 없대.\"",
+                    "언니가 반짝이는 단검을 내밀었지요."
                 ],
                 "right": [
-                    "\"해가 뜨기 전에 해야 해.\"",
-                    "\"그러면 다시 인어가 된단다.\"",
+                    "\"해가 뜨기 전에 이걸 쓰면 돼.\"",
+                    "\"그러면 다리가 도로 꼬리가 되고, 너는 우리에게 돌아온단다.\"",
                     "인어공주는 말없이 단검을 받았습니다. 그러고는 천막 안으로 들어갔지요.",
                     "왕자가 곤히 잠들어 있었습니다. 옆에는 새 신부가 나란히 누워 있었지요."
                 ]
@@ -802,12 +802,12 @@ const EN = {
                         "It was the middle of the night when her sisters put their faces up through the waves.",
                         "Their hair had all been cut short.",
                         "\"We gave the witch our hair for this.\"",
-                        "One of them held out a knife that caught the light.",
-                        "\"Use this and you can come back to us.\""
+                        "\"While the prince is alive you can never come back to the sea.\"",
+                        "One of them held out a knife that caught the light."
                     ],
                     right: [
-                        "\"It must be done before sunrise.\"",
-                        "\"Then you will be a mermaid again.\"",
+                        "\"Use it before the sun comes up.\"",
+                        "\"Then your legs will be a tail again, and you will come home to us.\"",
                         "The little mermaid took the knife without a word and went into the tent.",
                         "The prince lay fast asleep, with his new bride beside him."
                     ]
