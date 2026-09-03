@@ -290,8 +290,10 @@ const CHAPTERS = [
                 "art": "08-ending-2.webp",
                 "emoji": "🌳",
                 "left": [
-                    "늙은 사슴은 말없이 숲 읽는 법을 보여 주었습니다. 바람이 어디서 오는지 알려 주었지요. 어디로 몸을 숨길지도 일러 주었습니다.",
-                    "사람이 다니는 길도 짚어 주었지요. 밤비는 하나하나 마음에 새겼습니다."
+                    "늙은 사슴은 말로 가르치지 않았습니다. 걸음을 멈추고 코를 들 뿐이었지요.",
+                    "밤비도 따라서 코를 들었습니다. 바람에 낯선 냄새가 섞여 있었지요.",
+                    "늙은 사슴이 조용히 방향을 틀었습니다. 밤비도 따라 틀었지요.",
+                    "그렇게 여러 날을 나란히 걸었습니다."
                 ],
                 "right": [
                     "어느덧 사방이 어두워졌지요. 늙은 사슴이 밤비를 돌아보았습니다.",
@@ -890,11 +892,12 @@ const EN = {
                     art: '08-ending-2.webp',
                     emoji: '🌲',
                     left: [
-                        "Without saying much, the old stag showed him how to read the wood.",
-                        "He showed him where the wind came from",
-                        "and where to put himself out of sight,",
-                        "and pointed out the tracks people use.",
-                        "Bambi took in every one of them."
+                        "The old stag never taught him in words.",
+                        "He would only stop and lift his nose,",
+                        "and Bambi would lift his too.",
+                        "There was a strange smell mixed into the wind.",
+                        "The old stag turned quietly aside, and Bambi turned after him.",
+                        "They walked side by side like that for days."
                     ],
                     right: [
                         "By and by it went dark all round them,",
