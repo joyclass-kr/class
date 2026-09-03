@@ -1,5 +1,12 @@
 # 제미나이 그림 프롬프트 — 보물섬
 
+> **2026-09-03 다시 그릴 그림 다섯 장** — `story-02-a` `story-12-a` `story-15-b`
+> `story-16-a` `story-16-b`
+> 내용은 이제 다 맞습니다(피 없어짐, 실버 왼다리 없어짐, 앵무새 초록).
+> **그림체만** 다시 그리면 됩니다. 다섯 장이 색을 고르게 칠한 납작한 애니메이션 셀
+> 그림으로 나왔는데, 이 책의 나머지 서른 장은 물감이 번지고 종이 결이 비치는
+> 수채와 과슈입니다. 위 「MEDIUM」 문단을 꼭 함께 넣어 주세요.
+
 명작 소설 트랙의 첫 책입니다. 하나의 이야기를 열여섯 장으로 나눠 담았고, 장마다 그림이 두 장씩(마지막 16장만 세 장) 들어갑니다.
 그림이 있는 펼침면은 오른쪽 쪽에 그림 한 장이 들어가고, 그림이 없는 펼침면은 양쪽 쪽에 글만 들어갑니다.
 아래 프롬프트를 제미나이에 넣어 생성한 뒤 파일명을 정확히 맞춰 `images/` 폴더에 넣으면 자동으로 책에 나타납니다.
@@ -109,7 +116,7 @@ sailcloth pinned together with brass buttons and twigs, wild hair and beard.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-a.webp` | A cutlass fight bursting out inside a small inn: a pale quiet man with two fingers missing on his left hand bolting for the door clutching his shoulder, the huge old sailor swinging after him, a chair toppling, a boy pressed against the wall. |
+| `images/story-02-a.webp` | **그림체만 다시 그릴 것** (내용은 지금 그림이 맞다). A fight bursting out inside a small inn: Black Dog - a quiet man in a shabby BROWN coat, no hat, two fingers missing on his left hand - bolting for the door with a hand on his shoulder; NO blood, NO wound, NO red anywhere on him or on the floor. Billy Bones, the big old sailor in the BLUE sea coat, swings after him with a cutlass; a chair topples, a boy is pressed against the wall. |
 | `images/story-02-b.webp` | The old sailor collapsed on the inn floor, the boy kneeling beside him, the doctor in the powdered wig crouching to examine him, the boy's mother standing behind with her hands to her mouth, cold winter light through the window. |
 
 ## 3장 · 검은 딱지
@@ -179,7 +186,7 @@ sailcloth pinned together with brass buttons and twigs, wild hair and beard.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-12-a.webp` | The one-legged man on his crutch standing at a log stockade fence holding a white flag of truce, calling up to the blockhouse; a stern captain answering through a loophole with a pipe in his hand. |
+| `images/story-12-a.webp` | **그림체만 다시 그릴 것** (내용은 지금 그림이 맞다). The one-legged man on his crutch standing at a log stockade fence holding a white flag of truce, calling up to the blockhouse; a stern captain answering through a loophole with a pipe in his hand. |
 | `images/story-12-b.webp` | The attack on the blockhouse: pirates swarming over the stockade fence with cutlasses through gunsmoke, defenders firing from the loopholes, a boy in the thick of it. |
 
 ## 13장 · 밤바다의 작은 배
@@ -201,12 +208,12 @@ sailcloth pinned together with brass buttons and twigs, wild hair and beard.
 | 파일명 | 장면 |
 |---|---|
 | `images/story-15-a.webp` | The inside of a dark blockhouse the instant a lamp is lit: a boy frozen just inside the door, pirates lurching awake all around him, the one-legged man seated calmly against the wall with a green parrot screeching on his shoulder. |
-| `images/story-15-b.webp` | The one-legged man on his feet roaring down a pirate who has drawn a cutlass, one arm thrown out to shield the boy behind him, the other pirates shrinking back. |
+| `images/story-15-b.webp` | **그림체만 다시 그릴 것** (내용은 지금 그림이 맞다). The one-legged man on his feet roaring down a pirate who has drawn a cutlass, one arm thrown out to shield the boy behind him, the other pirates shrinking back. His GREEN parrot is on his shoulder - it was missing last time. |
 
 ## 16장 · 보물 구덩이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-16-a.webp` | The one-legged man holding up a small blackened paper disc and laughing at the sullen pirates around him, a torn Bible page on the floor at his feet. |
-| `images/story-16-b.webp` | A skeleton lying stretched at the foot of a tall tree, arms flung straight above its head and feet pointed together like an arrow, pirates recoiling in horror while the one-legged man calmly holds out a compass. |
+| `images/story-16-a.webp` | **그림체만 다시 그릴 것** (내용은 지금 그림이 맞다). The one-legged man holding up a small blackened paper disc and laughing at the sullen pirates around him, a torn page on the floor at his feet with no writing visible on it. |
+| `images/story-16-b.webp` | **그림체만 다시 그릴 것** (내용은 지금 그림이 맞다). A skeleton lying stretched at the foot of a tall tree, arms flung straight above its head and feet pointed together like an arrow, pirates recoiling in horror while the one-legged man calmly holds out a compass. |
 | `images/story-16-c.webp` | A wide empty pit in the hillside, grass already grown over its edges, a broken board and a rusted pick lying inside; the pirates staring down into it with dawning fury, the boy and the one-legged man standing apart. |

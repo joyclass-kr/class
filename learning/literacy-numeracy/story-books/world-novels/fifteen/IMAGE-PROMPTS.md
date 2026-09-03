@@ -1,5 +1,10 @@
 # 제미나이 그림 프롬프트 — 십오 소년 표류기
 
+> **2026-09-03 다시 그릴 그림 한 장** — `images/story-09-b.webp`
+> 무인도 이야기인데 사람이 사는 유럽식 농가가 그려졌고, 아이가 열 명뿐이었으며
+> 옷이 새 교복에 가죽 가방까지 있었습니다. 아래 표의 그 줄에 고칠 내용을 적어 두었습니다.
+> 나머지 서른한 장은 그대로 둡니다.
+
 하나의 이야기를 열다섯 장으로 나눠 담았고, 장마다 그림이 두 장씩 들어갑니다.
 그림이 있는 펼침면은 오른쪽 쪽에 그림 한 장이 들어가고, 그림이 없는 펼침면은 양쪽 쪽에 글만 들어갑니다.
 아래 프롬프트를 제미나이에 넣어 생성한 뒤 파일명을 정확히 맞춰 `images/` 폴더에 넣으면 자동으로 책에 나타납니다.
@@ -147,7 +152,7 @@ Evans: a weather-beaten sailor of thirty.
 | 파일명 | 장면 |
 |---|---|
 | `images/story-09-a.webp` | Night in the cave: a small boy standing in front of his older brother, hands at his sides, having just said something; the brother frozen. |
-| `images/story-09-b.webp` | The whole group in a half circle in daylight, the small boy in the middle of it, and one boy stepping forward to speak for him. |
+| `images/story-09-b.webp` | **다시 그릴 것.** 무인도인데 사람 사는 집이 그려졌고 아이가 열 명뿐이었다. → EXACTLY FIFTEEN boys standing in a wide half circle in daylight - count them, fifteen. The smallest boy stands alone in the middle with his head down; one older boy has stepped forward beside him with a hand on his shoulder, speaking up for him. They are on an UNINHABITED island: no house, no cottage, no farm building, no stone wall, no fence, no road, no sign of any other people anywhere in the picture. Background is a clearing in southern beech forest with the sea and sandstone cliffs beyond. The boys have lived here a long time - clothes faded and patched at knee and elbow with mismatched cloth, sleeves rolled, some barefoot, hair long and untidy, carrying nothing. |
 
 ## 10장 · 갈라서다
 
