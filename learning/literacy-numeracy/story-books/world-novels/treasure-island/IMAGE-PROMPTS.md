@@ -1,9 +1,10 @@
 # 제미나이 그림 프롬프트 — 보물섬
 
 > **2026-09-03 다시 그릴 그림 한 장** — `images/story-12-a.webp`
-> 실버 어깨의 앵무새가 빨간 마코앵무로 나왔습니다. 본문은 「초록빛 앵무새」이고
-> 16장 첫째·둘째에서는 초록으로 잘 그려져 있습니다. 그 한 장만 초록으로 바꿔 주세요.
-> 나머지는 다 맞습니다.
+> 실버 어깨의 앵무새가 마코앵무로 나왔습니다. 몸은 초록인데 얼굴과 가슴이 빨갛습니다.
+> 본문은 「초록빛 앵무새」입니다. 마코앵무 말고 **온몸이 초록인 작은 앵무새**로
+> 그려 주세요. 눈 아래로 빨간 데가 있으면 틀린 것입니다.
+> 다리도 그림체도 다 맞으니 새만 바꾸면 됩니다.
 
 명작 소설 트랙의 첫 책입니다. 하나의 이야기를 열여섯 장으로 나눠 담았고, 장마다 그림이 두 장씩(마지막 16장만 세 장) 들어갑니다.
 그림이 있는 펼침면은 오른쪽 쪽에 그림 한 장이 들어가고, 그림이 없는 펼침면은 양쪽 쪽에 글만 들어갑니다.
@@ -86,8 +87,12 @@ his one right leg and a wooden crutch under his left arm. This missing leg is
 not a mark of evil, it is a plain fact of the story - the boy has been warned
 all his life about "the one-legged sailor", so it must be plainly visible in
 every picture he appears in. Broad sun-browned intelligent face, almost always
-smiling, a GREEN parrot with a little orange on the face on his shoulder -
-green, never red, never a scarlet macaw.
+smiling. On his shoulder sits a small ALL-GREEN parrot the size of a pigeon:
+green head, green face, green breast, green back, green wings, green tail.
+The only colour that is not green is a narrow band of dusky red on the very
+forehead just above the beak. It is a small amazon parrot, NOT a macaw: no
+long tail streamers, no red face, no red breast, no blue, no yellow. If any
+part of the bird below the eyes is red, it is wrong.
 Squire Trelawney: a large loud red-faced gentleman in a fine coat.
 Captain Smollett: a compact stern officer in a plain blue naval coat, sharp
 eyes, never smiling.

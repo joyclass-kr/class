@@ -11,9 +11,13 @@
 
 ## 보물섬 — `treasure-island/images/story-12-a.webp`
 
-**왜 다시 그리나:** 실버 어깨의 앵무새가 **빨간 마코앵무**로 나왔습니다.
-본문에 「어깨에는 초록빛 앵무새를 앉히고 다녔는데」라고 되어 있고,
-16장 첫째와 둘째에서는 초록으로 잘 그려져 있습니다. 이 한 장만 어긋납니다.
+**왜 다시 그리나:** 실버 어깨의 앵무새가 **마코앵무**로 나왔습니다. 몸은 초록인데
+얼굴과 가슴이 빨갛습니다. 본문에 「어깨에는 초록빛 앵무새를 앉히고 다녔는데」라고
+되어 있고, 16장 첫째와 둘째에서는 온통 초록인 새로 잘 그려져 있습니다.
+
+한 번 고쳐 달라고 했는데 「초록 앵무새」라고만 적었더니 **초록 마코앵무**가 나왔습니다.
+마코앵무는 얼굴과 가슴이 빨간 종이 많아 몸만 초록으로는 안 됩니다.
+이번에는 마코앵무가 아닌 작은 앵무새로 못 박았습니다.
 
 **나머지는 다 맞습니다.** 다리도 그림체도 그대로 두고 앵무새만 초록으로 바꾸면 됩니다.
 
@@ -39,14 +43,20 @@ Long John Silver: a weather-beaten sailor of about fifty, greying curly hair,
 a green coat. LEFT LEG COMPLETELY GONE ABOVE THE KNEE - the empty left trouser
 leg is folded and tied off, no foot and no boot on that side. He stands on his
 one right leg and a wooden crutch under his left armpit.
-THE PARROT on his shoulder is GREEN - an all-green parrot with a little orange
-on the face. It is NOT red, NOT a scarlet macaw, NOT blue. Green.
+THE PARROT on his shoulder is a small ALL-GREEN parrot, the size of a pigeon:
+green head, green face, green breast, green back, green wings, green tail. The
+only colour that is not green is a narrow band of dusky red on the very
+forehead just above the beak, and even that is small. It is an African-grey-
+sized amazon parrot, NOT a macaw: no long tail streamers, no red face, no red
+breast, no blue or yellow anywhere. If any part of the bird below the eyes is
+red, it is wrong.
 
 Scene: The one-legged man on his crutch standing at a log stockade fence
 holding a white flag of truce, calling up to the blockhouse; a stern captain
 answering through a loophole with a pipe in his hand.
 
-Once more: the parrot is GREEN, and this is one painting with no writing in it.
+Once more: the bird is a small all-green parrot, not a macaw, and nothing on
+it below the eyes is red. This is one painting with no writing in it.
 
 4:3 landscape.
 ```
