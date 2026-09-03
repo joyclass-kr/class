@@ -238,12 +238,13 @@ const CHAPTERS = [
                     "한밤중이었습니다. 물결 사이로 언니들이 얼굴을 내밀었지요.",
                     "그런데 머리가 모두 짧게 잘려 있었습니다.",
                     "\"마녀에게 머리를 주고 얻었어.\"",
-                    "\"왕자가 살아 있는 한 너는 바다로 돌아올 수 없대.\"",
-                    "언니가 반짝이는 단검을 내밀었지요."
+                    "언니가 반짝이는 단검을 내밀었지요.",
+                    "\"이 단검으로 왕자를 찌르면 돼.\""
                 ],
                 "right": [
-                    "\"해가 뜨기 전에 이걸 쓰면 돼.\"",
-                    "\"그러면 다리가 도로 꼬리가 되고, 너는 우리에게 돌아온단다.\"",
+                    "\"해가 뜨기 전에 해야 해.\"",
+                    "\"그 피가 네 발에 떨어지면 다리가 도로 꼬리가 된단다.\"",
+                    "\"그러면 너는 우리에게 돌아올 수 있어.\"",
                     "인어공주는 말없이 단검을 받았습니다. 그러고는 천막 안으로 들어갔지요.",
                     "왕자가 곤히 잠들어 있었습니다. 옆에는 새 신부가 나란히 누워 있었지요."
                 ]
@@ -802,12 +803,13 @@ const EN = {
                         "It was the middle of the night when her sisters put their faces up through the waves.",
                         "Their hair had all been cut short.",
                         "\"We gave the witch our hair for this.\"",
-                        "\"While the prince is alive you can never come back to the sea.\"",
-                        "One of them held out a knife that caught the light."
+                        "One of them held out a knife that caught the light.",
+                        "\"Stab the prince with this.\""
                     ],
                     right: [
-                        "\"Use it before the sun comes up.\"",
-                        "\"Then your legs will be a tail again, and you will come home to us.\"",
+                        "\"It must be done before the sun comes up.\"",
+                        "\"When his blood falls on your feet, your legs will grow together into a tail again.\"",
+                        "\"Then you can come home to us.\"",
                         "The little mermaid took the knife without a word and went into the tent.",
                         "The prince lay fast asleep, with his new bride beside him."
                     ]
