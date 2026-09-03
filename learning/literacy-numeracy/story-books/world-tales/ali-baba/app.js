@@ -83,7 +83,7 @@ const CHAPTERS = [
                 "left": [
                     "카심의 아내는 어쩐지 이상했습니다.",
                     "\"가난한 집이 대체 뭘 잰다는 거지?\"",
-                    "그래서 됫박 바닥에 말랑한 밀랍을 몰래 발라 두었지요.",
+                    "그래서 됫박 바닥에 밀랍을 몰래 발라 두었지요. 벌집에서 나온 것인데, 주무르면 물렁해져 뭐든 척척 들러붙습니다.",
                     "이튿날 돌려받은 됫박을 뒤집어 봤습니다. 밀랍에 금화 한 닢이 딱 붙어 있었지요. 형수가 그길로 카심에게 달려가 그것을 내보였습니다."
                 ],
                 "right": [
@@ -597,7 +597,7 @@ const EN = {
                     left: [
                         "Cassim's wife thought it very odd.",
                         "\"What can a poor house have to measure?\"",
-                        "So she smeared a little soft wax on the bottom of the measure.",
+                        "So she smeared a little wax on the bottom of the measure. Wax comes from a beehive, and worked soft in the fingers it will hold on to anything.",
                         "Next day she turned it over when it came back.",
                         "A gold coin was stuck fast in the wax.",
                         "She ran straight to Cassim with it."
@@ -886,7 +886,7 @@ const EN = {
         ],
         '03-brother.webp': [
             { word: 'odd', meaning: '이상한', sentence: "Cassim's wife thought it very odd." },
-            { word: 'smear', meaning: '바르다', sentence: 'She smeared a little soft wax on the bottom.' },
+            { word: 'smear', meaning: '바르다', sentence: 'She smeared a little wax on the bottom.' },
             { word: 'wax', meaning: '밀랍', sentence: 'A gold coin was stuck fast in the wax.' },
             { word: 'leave nothing out', meaning: '빠짐없이 말하다', sentence: 'He told the whole thing, leaving nothing out.' },
             { word: 'greedy', meaning: '욕심내는', sentence: 'You must not be greedy about this.' }

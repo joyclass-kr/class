@@ -429,6 +429,7 @@ const AFTERWORD = {
             ],
             right: [
                 "말벌 이야기를 듣고 마야는 돌아갑니다. 나온 것을 나무랄 무리에게로요. 그것이 이 이야기에서 가장 어려운 걸음입니다.",
+                "맨 끝에서 카산드라가 하는 말을 보십시오. 바깥세상을 궁금해한 것이 헛일은 아니었다고 하지요. 규칙을 어긴 벌이 그 규칙을 지킨 셈입니다.",
                 "마야가 벌집을 나온 것은 잘한 일이었을까요?"
             ]
         }
@@ -972,6 +973,7 @@ const EN = {
                 ],
                 right: [
                     "When she hears about the hornets she goes back — back to the swarm that will scold her for leaving. That is the hardest step in the story.",
+                    "Look at what Cassandra says on the very last page — that Maya's curiosity about the outside world was not wasted after all. The bee who broke the rule is the one who kept it.",
                     "Was Maya right to leave the hive?"
                 ]
             }
