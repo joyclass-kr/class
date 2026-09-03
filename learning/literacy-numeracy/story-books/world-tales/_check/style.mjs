@@ -70,11 +70,42 @@ for (const b of books) {
     const body = s.slice(start, end);
     const lines = [];
 
-    for (const t of storyText(body)) {
-        for (const [label, rx] of SUMMARY) if (rx.test(t)) lines.push(['압축 · ' + label, t]);
+    const texts = storyText(body);
+    texts.forEach((t, i) => {
+        for (const [label, rx] of SUMMARY) {
+            if (!rx.test(t)) continue;
+            // "일러 주었다" 뒤에 곧바로 그 내용이 나오면 요약이 아니라 안내다.
+            if (/일러 주었|설명해 주었|알려 주었/.test(t) &&
+                texts.slice(i, i + 3).some(x => x.includes('"'))) continue;
+            lines.push(['압축 · ' + label, t]);
+        }
         for (const w of HARD) if (t.includes(w)) lines.push(['어른 말 · ' + w.trim(), t]);
         if (SELF.test(t)) lines.push(['제 얘기', t]);
         for (const w of OLD_THING) if (t.includes(w)) lines.push(['낡은 물건 · ' + w, t]);
+    });
+
+    // 서술을 한 문장씩 끊어 놓았는가 (동화틀만)
+    // 압축서술을 풀다 보면 문장마다 문단을 나누는 버릇이 든다. 분량은 차는데 문단이 무너진다.
+    {
+        let sides = 0; const choppy = [];
+        const br2 = /"art":\s*"([^"]+)"[\s\S]*?"left":\s*\[([\s\S]*?)\],\s*"right":\s*\[([\s\S]*?)\]\s*\}/g;
+        let z;
+        while ((z = br2.exec(body))) {
+            for (const [side, raw] of [['왼', z[2]], ['오른', z[3]]]) {
+                const out = []; let y; const rr = strRe();
+                while ((y = rr.exec(raw))) out.push(y[1]);
+                // 대사는 빼고 서술만 센다
+                const tell = out.filter(t => !t.trim().startsWith('\\"') && !t.trim().startsWith("'"));
+                if (tell.length < 3) continue;
+                const oneSentence = t => (t.replace(/<br>/g, ' ').match(/[.!?]|다\.|요\./g) || []).length <= 1;
+                sides++;
+                if (tell.every(oneSentence)) choppy.push(z[1] + ' ' + side);
+            }
+        }
+        // 한 쪽만 그러면 흔한 일이다. 책 전체가 그러면 문단 규칙이 무너진 것이다.
+        if (sides >= 10 && choppy.length / sides >= 0.4) {
+            lines.push(['한 문장씩 끊는 버릇', sides + '쪽 가운데 ' + choppy.length + '쪽이 서술을 문장마다 끊었다 (' + choppy.slice(0, 4).join(', ') + ' …)']);
+        }
     }
 
     // 해설이 이야기의 끝을 짚는가 (동화틀만)
