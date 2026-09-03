@@ -427,6 +427,7 @@ const AFTERWORD = {
             ],
             right: [
                 "다락방에 놓인 뒤에야 전나무는 숲을 떠올립니다. 그때는 이미 뿌리가 없었지요.",
+                "마지막에 전나무는 눈을 감고 이렇게 생각합니다. 다음에 다시 자란다면 그때는 오늘을 알아보겠다고요. 알아보는 데 평생이 걸린 것이지요.",
                 "전나무는 언제 즐거워할 수 있었을까요?"
             ]
         }
@@ -970,6 +971,7 @@ const EN = {
                 ],
                 right: [
                     "It is only once he is up in the attic that the fir tree thinks of the wood. And by then he has no roots.",
+                    "At the very end he shuts his eyes and thinks that if he ever grows again he will know today when he sees it. It took him a whole life to learn to look.",
                     "When could the fir tree have been happy?"
                 ]
             }

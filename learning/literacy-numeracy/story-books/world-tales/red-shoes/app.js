@@ -419,6 +419,7 @@ const AFTERWORD = {
             ],
             right: [
                 "카렌을 멈춰 세운 것은 숲속 오두막의 아주머니입니다. 붙잡아 앉히고 물 한 그릇을 떠 주었지요.",
+                "구두는 숲속 풀밭에 그대로 남습니다. 카렌은 다시 찾으러 가지 않지요. 벗은 것이 아니라 두고 온 것입니다.",
                 "카렌이 구둣방에서 무엇을 말했어야 했을까요?"
             ]
         }
@@ -969,6 +970,7 @@ const EN = {
                 ],
                 right: [
                     "The person who stops her is a woman in a cottage in the wood. She takes hold of her, sits her down and fetches her a bowl of water.",
+                    "The shoes stay where they fell in the grass, and Karen never goes back for them. She did not just take them off - she left them behind.",
                     "What should Karen have said in that shop?"
                 ]
             }

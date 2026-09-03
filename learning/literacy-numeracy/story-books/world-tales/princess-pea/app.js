@@ -429,6 +429,7 @@ const AFTERWORD = {
             ],
             right: [
                 "아가씨는 잠을 못 잤다고 그대로 말합니다. 잘 잤다고 하면 넘어갈 수도 있었는데요.",
+                "그 완두콩은 지금도 박물관에 있다고 합니다. 그러고는 정말 있었던 이야기라고 하지요. 안데르센이 능청을 떤 것입니다.",
                 "이 시험은 옳은 시험이었을까요?"
             ]
         }
@@ -980,6 +981,7 @@ const EN = {
                 ],
                 right: [
                     "And the young woman says straight out that she did not sleep. She could have got through the morning by saying she slept beautifully.",
+                    "The pea is still in the museum, they say - and then the story tells you it really happened. That is Andersen keeping a straight face.",
                     "Was that a fair test?"
                 ]
             }

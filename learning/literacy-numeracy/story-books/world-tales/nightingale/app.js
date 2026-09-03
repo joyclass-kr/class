@@ -417,6 +417,7 @@ const AFTERWORD = {
             ],
             right: [
                 "기계가 멈추자 아무도 고치지 못합니다. 그때 돌아온 것은 창밖의 밤꾀꼬리였지요.",
+                "밤꾀꼬리는 궁궐에 살지 않겠다면서, 온다는 것은 비밀로 해 달라고 합니다. 임금님의 새가 되지 않겠다는 말이지요.",
                 "밤꾀꼬리는 왜 궁궐에 머물지 않겠다고 했을까요?"
             ]
         }
@@ -954,6 +955,7 @@ const EN = {
                 ],
                 right: [
                     "When the machine stopped, nobody could mend it. What came back then was the nightingale at the window.",
+                    "She will not live at the palace, and she asks him to keep her visits secret. She is saying she will not be the emperor's bird.",
                     "Why do you think the nightingale would not stay at the palace?"
                 ]
             }

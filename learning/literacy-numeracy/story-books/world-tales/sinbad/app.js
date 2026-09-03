@@ -405,6 +405,7 @@ const AFTERWORD = {
             ],
             right: [
                 "이야기 속 바닷길은 지어낸 것만은 아닙니다. 그 시절 아라비아 상인들이 실제로 인도와 중국까지 배를 몰았습니다.",
+                "마지막에 신드바드는 바다를 그만둡니다. 대신 찾아오는 사람마다 바다 이야기를 들려주지요. 나가는 대신 말하게 된 것입니다.",
                 "신드바드는 왜 자꾸 바다로 나갔을까요?"
             ]
         }
@@ -951,6 +952,7 @@ const EN = {
                 ],
                 right: [
                     "The sea roads in the story are not all made up. Arab merchants of that time really did sail their ships as far as India and China.",
+                    "At the end Sindbad gives up the sea, and tells the story of it to everyone who calls on him instead. He stopped going and started telling.",
                     "Why do you think Sindbad kept going back to sea?"
                 ]
             }

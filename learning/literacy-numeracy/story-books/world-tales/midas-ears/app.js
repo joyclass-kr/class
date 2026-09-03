@@ -426,6 +426,7 @@ const AFTERWORD = {
             ],
             right: [
                 "땅에 대고 소리치면 끝날 줄 알았습니다. 그런데 그 자리에 갈대가 자랐지요.",
+                "온 나라가 알게 되자 임금님은 모자를 벗고 마당으로 나갑니다. 숨길 것이 없어지자 오히려 마음이 편해진 것이지요.",
                 "이발사는 처음부터 어떻게 했으면 좋았을까요?"
             ]
         }
@@ -975,6 +976,7 @@ const EN = {
                 ],
                 right: [
                     "He thought shouting it into the ground would be the end of it. And then reeds grew on that spot.",
+                    "Once the whole country knows, the king takes off his hat and walks out into the yard. With nothing left to hide, he is easier than he has been all along.",
                     "What should the barber have done from the start?"
                 ]
             }

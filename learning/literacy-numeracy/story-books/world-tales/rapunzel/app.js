@@ -409,6 +409,7 @@ const AFTERWORD = {
             ],
             right: [
                 "라푼첼이 왕자와 말을 트게 된 것은 노래 때문입니다. 심심해서 부른 노래가 탑 밖으로 나간 것이지요.",
+                "몇 해를 눈먼 채 헤매던 왕자를 다시 찾아낸 것도 그 노래입니다. 탑에 갇혀 있던 것이 들판에서는 길이 된 셈이지요.",
                 "마녀는 라푼첼을 지키려던 것일까요, 가두려던 것일까요?"
             ]
         }
@@ -941,6 +942,7 @@ const EN = {
                 ],
                 right: [
                     "What brought Rapunzel and the prince together was the singing. She sang because she was bored, and the sound went out of the tower.",
+                    "And it is that same singing that leads him back to her after years of wandering blind. What she did to pass the time in the tower became the road out in the end.",
                     "Was the witch keeping Rapunzel safe, or keeping her shut in?"
                 ]
             }

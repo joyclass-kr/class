@@ -427,6 +427,7 @@ const AFTERWORD = {
             ],
             right: [
                 "마지막에 엄지 공주를 데려가는 것은 그 제비입니다. 살려 준 일이 돌아온 것이지요. 그때는 그럴 줄 몰랐고요.",
+                "제비가 준 날개를 달고 엄지 공주는 처음으로 스스로 날아오릅니다. 그동안은 늘 남이 옮겨 주기만 했지요.",
                 "두더지와 사는 것도 나쁘지만은 않았을 텐데, 엄지 공주는 왜 그것을 마다했을까요?"
             ]
         }
@@ -916,6 +917,7 @@ const EN = {
                 ],
                 right: [
                     "And the one who carries her away at the end is that same swallow. What she did came back to her — though she had no way of knowing it would.",
+                    "With the wings the swallow gives her, she flies for the first time under her own power. Until then somebody had always carried her.",
                     "Life with the mole would not have been all bad. Why do you think Thumbelina refused it?"
                 ]
             }

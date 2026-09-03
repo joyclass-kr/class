@@ -439,6 +439,7 @@ const AFTERWORD = {
             ],
             right: [
                 "황금 사슴이 제 발로 나선 것은 착해서가 아닙니다. 제가 우두머리이기 때문이라고 했지요.",
+                "임금님이 사슴을 살려 주겠다고 했을 때, 황금 사슴은 새와 물고기까지 묻습니다. 제 무리만 건지고 끝내지 않은 것이지요.",
                 "임금님은 그 말을 듣고 무엇이 부끄러웠을까요?"
             ]
         }
@@ -978,6 +979,7 @@ const EN = {
                 ],
                 right: [
                     "The Golden Deer goes himself, and not because he is kind. Because he is the leader, he says.",
+                    "And when the king spares the deer, the Golden Deer asks about the birds and the fish as well. He does not stop at saving his own herd.",
                     "What do you think the king was ashamed of, hearing that?"
                 ]
             }
