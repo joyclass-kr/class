@@ -26,12 +26,14 @@ colors, realistic proportions with expressive faces, London in 1547: narrow
 timbered lanes and crowded alleys on one side, palace halls with tapestries
 and torchlight on the other; ruffs, doublets and hose; dramatic light and deep
 shadow; no blood or wounds shown, no text or letters in the image.
-Villains and unkind characters are drawn as ordinary, good-looking people -
-never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
-teeth, no rotten teeth, no leering. What is wrong with them shows only in what
-they are doing and in their posture, never in a deformed or repulsive face.
-A cruel character may be handsome; a kind one may be plain. Never use a scar,
-a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Every person in this book has a clear, even, good-looking face: smooth skin,
+straight teeth, calm bright eyes, a mouth at rest - the ordinary face of a
+neighbour. This holds for the cruel ones too. Draw the cruel ones as handsome,
+well-kept people you would trust on sight; what is frightening about them is
+only what their hands are doing and how they stand. When one of them is angry,
+the mouth is open in a shout and the brows are down, and that is all.
+A person's body is drawn only as the story describes it and never as a sign of
+character: beauty is not goodness here, and plainness is not badness.
 Draw the moment in motion, not a posed portrait: catch people mid-stride,
 mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
 are big and expressive. Pick the most interesting instant in the scene and
@@ -59,8 +61,8 @@ doublet, easy-going, always with a hand near his hilt.
 John Canty: a big man in a labourer's coat, an unremarkable face, a cudgel
 in his hand; frightening because of what he is about to do, not how he looks.
 Henry VIII: a large, heavy old king propped among cushions, richly dressed,
-an ill man rather than a repulsive one.
-The Yorkshire man: a gaunt farmer with a branded ear and haunted eyes.
+a tired, swollen, dignified face - a sick man who is still a king.
+The Yorkshire man: a thin farmer with a quiet, steady, sorrowful face.
 ```
 
 ## 표지 · 마무리

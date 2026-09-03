@@ -32,21 +32,22 @@ children's classics were painted: gouache and watercolor, bold clean outlines,
 saturated but slightly muted colors, realistic human proportions with
 expressive faces, 18th-century English coastal and seafaring setting,
 dramatic staging and strong light-and-shadow.
-Villains and unkind characters are drawn as ordinary, good-looking people -
-never grotesque, never ugly, no mean squinting eyes, no snarling teeth, no
-sunken skull-like faces, no leering. What is wrong with them shows only in
-what they are doing and in their posture.
+Every person in this picture has a clear, even, good-looking face: smooth
+skin, straight teeth, calm bright eyes - the ordinary face of a neighbour.
+This holds for the cruel ones too. Draw them as handsome, well-kept people you
+would trust on sight; what is frightening is only what their hands are doing.
+When one is angry, the mouth is open in a shout and the brows are down.
 No blood, no wounds and no cruelty shown: draw the moment just before or just
 after it instead.
 The artwork must bleed to all four edges of the image: no white or cream
 margin, no border, no frame line, no matting.
 
-Billy Bones (the captain): a huge weather-beaten old sailor in his sixties,
-tarry pigtail, blue sea coat. Angry and shouting, but an ordinary human face -
-mouth open in a shout, NOT baring his teeth like an animal.
-Black Dog: a pale quiet man missing two fingers on his left hand, shabby blue
-coat. An ordinary, even pleasant face - NOT gaunt, NOT skull-like, NOT green
-or sickly. He is dangerous because he is calm, not because he looks it.
+Billy Bones (the captain): a big weather-beaten sailor in his sixties, tarry
+pigtail, blue sea coat, a broad healthy face with straight teeth. He is
+shouting - mouth open in a shout, brows down.
+Black Dog: a quiet man in a shabby blue coat, two fingers missing on his left
+hand. A pleasant, healthy, even-featured face with clear skin and calm eyes,
+the face of a friendly shopkeeper. He is dangerous because he is calm.
 
 Scene: A cutlass fight bursting out inside a small inn. The pale man is
 bolting for the open door with one hand clutching his shoulder - there is

@@ -27,12 +27,14 @@ South Pacific in the 1860s — beech forest, a freshwater lake, sandstone
 cliffs, a wrecked hundred-ton schooner on a sandbar; the boys' clothes start
 as school uniforms and become patched and homemade over three years;
 no text or letters in the image.
-Villains and unkind characters are drawn as ordinary, good-looking people -
-never grotesque, never ugly, no mean squinting eyes, no warts, no snarling
-teeth, no rotten teeth, no leering. What is wrong with them shows only in what
-they are doing and in their posture, never in a deformed or repulsive face.
-A cruel character may be handsome; a kind one may be plain. Never use a scar,
-a missing limb, a burn, fatness, thinness, age or skin as a mark of evil.
+Every person in this book has a clear, even, good-looking face: smooth skin,
+straight teeth, calm bright eyes, a mouth at rest - the ordinary face of a
+neighbour. This holds for the cruel ones too. Draw the cruel ones as handsome,
+well-kept people you would trust on sight; what is frightening about them is
+only what their hands are doing and how they stand. When one of them is angry,
+the mouth is open in a shout and the brows are down, and that is all.
+A person's body is drawn only as the story describes it and never as a sign of
+character: beauty is not goodness here, and plainness is not badness.
 Draw the moment in motion, not a posed portrait: catch people mid-stride,
 mid-swing, mid-turn, mid-shout, cloth and hair and dust still moving. Faces
 are big and expressive. Pick the most interesting instant in the scene and
