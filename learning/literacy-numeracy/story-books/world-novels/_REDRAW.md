@@ -1,6 +1,6 @@
 # 다시 그려야 할 그림 (제미나이에 그대로 넣으세요)
 
-2026-09-03 점검에서 걸린 다섯 장입니다. 아래 덩어리를 통째로 복사해서 넣으면 됩니다.
+2026-09-03 점검에서 걸린 여섯 장입니다. 아래 덩어리를 통째로 복사해서 넣으면 됩니다.
 파일명을 그대로 맞춰 원래 자리에 덮어쓰면 책에 바로 나타납니다.
 
 앞서 다시 그려 달라고 했던 것들은 모두 들어왔고 확인했습니다.
@@ -20,11 +20,18 @@
 비쩍 마른 얼굴인데, 둘 다 「악당도 평범한 얼굴로」 규칙에 어긋납니다.
 
 ```
-Classic children's adventure novel illustration in the style of 1980s Korean
-illustrated classics: gouache and watercolor, bold clean outlines, saturated
-but slightly muted colors, realistic human proportions with expressive faces,
-18th-century English coastal and seafaring setting, dramatic staging and
-strong light-and-shadow, no text or letters in the image.
+A SINGLE PAINTING ONLY. This is one picture, not a page from a book.
+Every surface in it is blank: no title, no caption, no signature, no page
+number, no speech balloon, no sign, no label, no writing on any book, map,
+paper, banner or wall. There are no letters of any alphabet anywhere in the
+picture, and no borders or panels around it. The picture fills the whole
+canvas edge to edge.
+
+Classic children's adventure novel illustration painted the way the old Korean
+children's classics were painted: gouache and watercolor, bold clean outlines,
+saturated but slightly muted colors, realistic human proportions with
+expressive faces, 18th-century English coastal and seafaring setting,
+dramatic staging and strong light-and-shadow.
 Villains and unkind characters are drawn as ordinary, good-looking people -
 never grotesque, never ugly, no mean squinting eyes, no snarling teeth, no
 sunken skull-like faces, no leering. What is wrong with them shows only in
@@ -47,6 +54,9 @@ absolutely NO blood on him, NO blood on his coat, NO blood on the floor and NO
 visible wound anywhere in the picture. The huge old sailor swings after him
 with a cutlass, a chair topples, a boy is pressed against the wall, other
 guests shrink back.
+
+Once more, so it is not missed: this is one painting with NO writing in it.
+No title, no caption, no signature, no letters anywhere.
 
 4:3 landscape.
 ```
@@ -72,11 +82,18 @@ guests shrink back.
 넉 장 모두 아래 인물 설명을 붙이고, 장면 줄만 바꿔 넣으세요.
 
 ```
-Classic children's adventure novel illustration in the style of 1980s Korean
-illustrated classics: gouache and watercolor, bold clean outlines, saturated
-but slightly muted colors, realistic human proportions with expressive faces,
-18th-century English coastal and seafaring setting, dramatic staging and
-strong light-and-shadow, no text or letters in the image.
+A SINGLE PAINTING ONLY. This is one picture, not a page from a book.
+Every surface in it is blank: no title, no caption, no signature, no page
+number, no speech balloon, no sign, no label, no writing on any book, map,
+paper, banner or wall. There are no letters of any alphabet anywhere in the
+picture, and no borders or panels around it. The picture fills the whole
+canvas edge to edge.
+
+Classic children's adventure novel illustration painted the way the old Korean
+children's classics were painted: gouache and watercolor, bold clean outlines,
+saturated but slightly muted colors, realistic human proportions with
+expressive faces, 18th-century English coastal and seafaring setting,
+dramatic staging and strong light-and-shadow.
 No blood, no wounds and no cruelty shown.
 The artwork must bleed to all four edges: no white margin, no border, no frame.
 
@@ -95,6 +112,9 @@ waistcoat over a loose linen shirt, breeches and worn buckled shoes.
 
 Scene: <아래에서 골라 넣으세요>
 
+Once more, so it is not missed: this is one painting with NO writing in it.
+No title, no caption, no signature, no letters anywhere.
+
 4:3 landscape.
 ```
 
@@ -112,10 +132,57 @@ Scene: <아래에서 골라 넣으세요>
 
 ---
 
+## 열다섯 소년 — `fifteen/images/story-09-b.webp`
+
+**왜 다시 그리나:** 무인도 이야기인데 **사람이 사는 집**이 서 있습니다. 돌벽에 나무 골조를
+드러낸 유럽식 농가에 유리창과 나무 문까지 있습니다. 아이들이 표류한 섬은 아무도 살지
+않는 곳이라 집이 있을 수 없습니다. 배경도 유럽 시골 풀밭에 가문비나무입니다.
+
+또 아이들이 깔끔한 교복 차림에 가죽 가방까지 메고 있습니다. 9장이면 섬에 온 지
+한참이라 옷이 기워지고 낡아 있어야 합니다.
+
+무리도 열 명뿐입니다. 「무리 전체」가 모인 자리이니 열다섯이어야 합니다.
+
+```
+A SINGLE PAINTING ONLY. This is one picture, not a page from a book.
+Every surface in it is blank: no title, no caption, no signature, no page
+number, no speech balloon, no sign, no label, no writing anywhere. There are
+no letters of any alphabet in the picture, and no borders or panels around it.
+The picture fills the whole canvas edge to edge.
+
+Classic children's literature illustration painted the way the old Korean
+children's classics were painted: gouache and watercolor, bold clean outlines,
+realistic child proportions with expressive faces.
+
+THE PLACE: a small UNINHABITED island in the South Pacific in the 1860s.
+Nobody has ever lived here. There is NO house, NO cottage, NO farm building,
+NO stone wall, NO fence, NO road and NO sign of any other people anywhere in
+the picture. The background is a clearing in southern beech forest with the
+sea and sandstone cliffs beyond - never a European village, never a
+half-timbered house, never a spruce forest.
+
+THE BOYS: fifteen boys, aged eight to fourteen, standing in a wide half
+circle. Count them - there must be FIFTEEN. They have lived on this island a
+long time: their school clothes are faded, patched at the knee and elbow with
+mismatched cloth, sleeves rolled, some barefoot, hair grown long and untidy.
+NO satchels, NO schoolbags, NO caps, NO neat pressed clothes.
+
+Scene: The whole group standing in a half circle in daylight. The smallest
+boy stands alone in the middle with his head down, and one older boy has
+stepped forward beside him with a hand on his shoulder, speaking up for him.
+The others listen.
+
+Once more, so it is not missed: this is one painting with NO writing in it,
+and there is no building of any kind on this island.
+
+4:3 landscape.
+```
+
+---
+
 ## 아직 안 그려진 것
 
-2026-09-03 현재 44권 1281장 가운데 240장이 그려졌습니다.
+2026-09-03 현재 44권 1281장 가운데 305장이 그려졌습니다.
 
-다 찬 책 여덟 권 — 앤, 아라비안나이트, 벤허, 파데트, 장발장, 셜록 홈스, 보물섬, 탈무드.
-열다섯 소년은 표지 한 장만 들어왔습니다(1/32).
-예수님의 비유는 아직 한 장도 없습니다(0/34).
+다 찬 책 10권 — anne-green-gables, arabian, benhur, fadette, fifteen, jean-valjean, parables-tales, sherlock-holmes, talmud-tales, treasure-island.
+
