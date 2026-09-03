@@ -18,7 +18,15 @@
 > 5장에 들어갈 장면이 셋(문 두드림 / 문 열고 웃음 / 사자)인데 펼침면이 둘뿐이라
 > 그림이 글보다 한 칸씩 밀려 있었어요. 5장을 세 펼침면으로 늘려 바로잡았습니다.
 > 이미 그리신 그림은 파일 이름만 옮겨서 다 제자리를 찾았고,
-> **새로 그릴 것은 `06-mouse-2.webp` 한 장뿐입니다.**
+> `06-mouse-2.webp`는 새로 받아 제자리에 들어갔습니다.
+
+> **지금 남은 것은 두 장입니다.**
+> - `06-mouse-2.webp` — 장면은 맞는데 **마차 안 임금님 수염이 갈색**입니다.
+>   다른 그림에서는 모두 흰 수염이에요. 수염만 흰색으로 다시 부탁드립니다.
+> - `07-wedding.webp` — 결혼식 장면이 들어와 있는데, 이 쪽 글은 잔칫상 한구석에서
+>   공주와 막내가 조용히 이야기하는 대목입니다. 이 책에는 결혼식 장면이 없어요.
+>   면사포 쓴 신부와 축배 대신, 촛불 켜진 상 한쪽에서 두 사람이 마주 앉아 이야기하고
+>   공주가 막내의 거친 손을 슬쩍 보며 웃는 그림이면 됩니다.
 
 권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, WebP. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.webp`)는 세로 2 : 3 비율**, 마무리(`end.webp`)는 가로 3 : 세로 2 정도면 됩니다.
 
@@ -42,10 +50,18 @@ comic faces, wide panoramic composition, funny and never frightening.
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-The cat: a lean tabby in tall red boots, a plumed hat and a small cloak, always
-one step ahead. The youngest son: a plain honest young man in a patched shirt,
-easily flustered. The king: a round jovial man in a gold-trimmed coat. The
-princess: a curious young woman with a lace collar. The sorcerer: a plump theatrical man in a tall pointed hat and long crimson-and-purple robes that sweep the floor, big moustache, comic rather than frightening. He can turn into a roaring lion or a tiny mouse. Field workers in straw hats.
+The cat: an ORANGE TABBY with brown stripes and BRIGHT GREEN EYES, wearing a
+BLUE SLEEVELESS VEST and TALL RED BOOTS — bare head, NO hat, NO cloak — walking
+upright, always one step ahead. The youngest son: a plain honest young man with
+brown hair, a cream shirt under an olive patched waistcoat, easily flustered
+(at the banquet he is lent a red-and-blue court coat). The king: a round jovial
+man with WHITE HAIR and a FULL WHITE BEARD, a gold crown and a red robe with
+white ermine trim — his beard is white in every picture, never brown. The
+princess: a young woman with long wavy brown hair, a small gold crown, a pink
+dress and a pearl necklace. The sorcerer: a plump theatrical man in a tall
+pointed hat and long crimson-and-purple robes that sweep the floor, big brown
+moustache and beard, comic rather than frightening. He can turn into a roaring
+lion or a tiny mouse. Field workers in straw hats.
 ```
 
 ## 표지 · 마무리
