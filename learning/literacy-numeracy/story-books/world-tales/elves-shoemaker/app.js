@@ -479,7 +479,7 @@ const QUIZ = [
             "구두장이가 값을 헐하게 받다 살림이 기운 것을 보면, 딱한 사람에게 제값을 못 받은 것이구나.",
             "가죽이 한 장 남았을 때도 재고 오려 작업대에 올려 둔 것을 보면, 마지막까지 제 일을 놓지 않은 것이구나.",
             "부부가 가죽 대신 옷과 구두를 올려놓은 것을 보면, 한겨울에 맨발인 것을 보고 그냥 있을 수 없었던 것이구나.",
-            "아내가 해마다 작은 옷을 지어 창가에 올려 둔 것을 보면, 난쟁이들이 그것을 받아 가는 것을 보고 기뻐한 것이구나."
+            "난쟁이들이 떠나며 작업대에 쪽지를 한 장 남긴 것을 보면, 말없이 가지는 않은 것이구나."
         ],
         "answer": 3
     }
@@ -871,7 +871,7 @@ const EN = {
                 "He charged so little that the shop went under — he could not bring himself to take full price from people in need.",
                 "With one piece of leather left he still measured it, cut it and laid it out — he did not let go of his work even at the end.",
                 "Instead of leather the couple laid out clothes and little shoes — they could not watch them go barefoot through a winter.",
-                "Every year the wife made a tiny set of clothes and set it on the windowsill — it gladdened her to see the elves take them."
+                "The elves left a note on the workbench as they went — they did not simply vanish without a word."
             ],
             answer: 3
         }

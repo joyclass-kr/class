@@ -492,7 +492,7 @@ const QUIZ = [
             "새어머니가 콩 자루를 쏟아 놓고 저녁까지 다 고르라 한 것을 보면, 애초에 데려갈 마음이 없었던 것이구나.",
             "언니들이 바로 옆에 서서 수군거리기까지 한 것을 보면, 옷차림이 바뀌자 아예 알아보지 못한 것이구나.",
             "왕자가 이름을 물을 때마다 웃기만 한 것을 보면, 말하고 싶지 않아서가 아니라 말할 수 없어서였구나.",
-            "언니들이 잔치 문가에서 고개를 숙이고 서 있는 것을 보면, 신데렐라가 부르지 않아 들어가지 못한 것이구나."
+            "신데렐라가 잔치 뒤 언니들에게 새 옷을 손수 지어 준 것을 보면, 지난 일을 정말로 덮은 것이구나."
         ],
         "answer": 3
     }
@@ -855,7 +855,7 @@ const EN = {
                 "The stepmother tipped out a sack of beans and said sort them by evening — she had never meant to take her at all.",
                 "The sisters stood right beside her and whispered about her — once the clothes changed they did not know her.",
                 "She only smiled when the prince asked her name — it was not that she would not say, but that she could not.",
-                "The sisters stood at the gate of the feast with their heads down — Cinderella had not invited them, so they could not go in."
+                "After the feast Cinderella sewed her sisters new gowns herself — she had truly put the past behind her."
             ],
             answer: 3
         }

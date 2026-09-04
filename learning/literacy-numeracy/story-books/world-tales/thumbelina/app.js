@@ -524,7 +524,7 @@ const QUIZ = [
             "물고기들이 잎 줄기를 갉아 끊어 준 것을 보면, 울음소리를 물속에서 다 듣고 있었던 것이구나.",
             "엄지 공주가 한밤에 건초를 안고 굴로 간 것을 보면, 아무도 시키지 않았는데 제 발로 간 것이구나.",
             "마지막에 날개를 달고 처음으로 스스로 날아오른 것을 보면, 그때까지는 늘 남이 옮겨 주었던 것이구나.",
-            "두더지가 쓰러진 제비를 발로 툭 밀친 것을 보면, 엄지 공주가 놀랄까 봐 얼른 치워 준 것이구나."
+            "엄지 공주가 떠나며 들쥐 아주머니께 겨울을 나게 해 줘 고맙다고 인사한 것을 보면, 신세 진 일을 잊지 않은 것이구나."
         ],
         "answer": 3
     }
@@ -931,7 +931,7 @@ const EN = {
                 "The fish gnawed through the stem of the leaf — they had heard her crying from under the water.",
                 "She went to the tunnel at night with an armful of hay — nobody had asked her to; she went on her own.",
                 "At the end, with her new wings, she flew for the first time by herself — until then she had always been carried.",
-                "The mole nudged the fallen swallow aside with his foot — he was clearing it away so she would not be upset."
+                "Before she left she thanked the field mouse for the winter's shelter — she did not forget what she owed."
             ],
             answer: 3
         }

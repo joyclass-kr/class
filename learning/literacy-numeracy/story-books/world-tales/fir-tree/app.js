@@ -524,7 +524,7 @@ const QUIZ = [
             "햇빛과 바람이 지금이 제일 좋은 때라고 일러 준 것을 보면, 전나무만 그 말을 흘려들은 것이구나.",
             "다락방에서 생쥐에게 숲 이야기를 하다 문득 말을 멈춘 것을 보면, 말로 하고 나서야 그때가 눈앞에 그려진 것이구나.",
             "마당 한구석의 어린 나무를 물끄러미 본 것을 보면, 옛날의 저를 보는 것 같았던 것이구나.",
-            "전나무가 다락방에서 곧 다시 꾸며 주겠지 하고 기다린 것을 보면, 봄에 마당에 심어 주겠다는 약속을 받아 둔 것이구나."
+            "생쥐들이 이듬해 봄에 다시 찾아온 것을 보면, 전나무가 들려준 숲 이야기를 잊지 않은 것이구나."
         ],
         "answer": 3
     }
@@ -985,7 +985,7 @@ const EN = {
                 "The sunlight and the wind told it that now was the best of times — the fir was the only one not listening.",
                 "Up in the attic it stopped in the middle of telling the mice about the forest — saying it aloud was what brought it back.",
                 "It looked a long while at the little sapling in the corner of the yard — it was like looking at its own younger self.",
-                "It waited in the attic to be decorated again — it had been promised a place in the garden come spring."
+                "The mice came back the next spring — they had not forgotten the fir's stories of the forest."
             ],
             answer: 3
         }

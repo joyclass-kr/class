@@ -494,7 +494,7 @@ const QUIZ = [
             "시장이 이만 닢인들 주겠다더니 쥐가 사라지자 오십 닢을 민 것을 보면, 곤란이 끝나자 셈이 달라진 것이구나.",
             "사나이가 값을 두 번 청하지 않는다고 한 것을 보면, 그 자리에서 이미 다른 것을 받기로 마음먹은 것이구나.",
             "목발 짚은 아이 앞에서 무릎을 굽히고 피리를 내린 것을 보면, 제가 무엇을 하려던 것인지 그제야 돌아본 것이구나.",
-            "아이들이 피리 소리를 따라나선 것을 보면, 어른들이 약속을 어긴 것을 알고 나선 것이구나."
+            "사나이가 아이들을 돌려보낸 뒤 목발 짚은 아이를 업고 마을까지 데려다준 것을 보면, 끝까지 마음을 쓴 것이구나."
         ],
         "answer": 3
     }
@@ -889,7 +889,7 @@ const EN = {
                 "He would have paid twenty thousand, and once the rats were gone he pushed over fifty — the sum changed the moment the trouble ended.",
                 "The piper said he never asks for his fee twice — right there he had decided to take something else instead.",
                 "He knelt in front of the child on crutches and lowered his pipe — only then did he look at what he had set out to do.",
-                "The children followed the pipe out of town — they knew the grown-ups had broken their word and went with him."
+                "After sending the children back he carried the boy on crutches all the way home — he saw it through to the end."
             ],
             answer: 3
         }

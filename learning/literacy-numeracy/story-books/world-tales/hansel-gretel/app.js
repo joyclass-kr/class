@@ -490,7 +490,7 @@ const QUIZ = [
             "헨젤이 지붕 위 고양이를 보고 있었다고 둘러댄 것을 보면, 조약돌 떨어뜨리는 것을 들키지 않으려 한 것이구나.",
             "그레텔이 제 빵을 반으로 떼어 오빠 손에 쥐여 준 것을 보면, 오빠가 무엇을 하려는지 알아챈 것이구나.",
             "그레텔이 어떻게 들어가는지 모르겠다고 한 것을 보면, 시치미를 떼고 때를 기다린 것이구나.",
-            "헨젤이 우리 안에서 닭 뼈다귀를 내민 것을 보면, 눈이 어두운 할머니를 딱하게 여겨 도와준 것이구나."
+            "두 아이가 과자 집을 나서며 남은 과자를 조금 챙긴 것을 보면, 돌아가는 길이 멀 줄 알았던 것이구나."
         ],
         "answer": 3
     }
@@ -851,7 +851,7 @@ const EN = {
                 "Hansel said he was looking at the cat on the roof — he was covering up the pebbles he kept dropping.",
                 "Gretel broke her own bread in half and put it in his hand — she had understood what he meant to do.",
                 "Gretel said she did not know how to get in — she was playing dumb and waiting for her moment.",
-                "Hansel held out a chicken bone from the cage — he felt sorry for the half-blind old woman and was helping her."
+                "They took a little of the gingerbread with them as they left — they knew it was a long way home."
             ],
             answer: 3
         }

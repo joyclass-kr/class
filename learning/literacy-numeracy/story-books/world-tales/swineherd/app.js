@@ -526,7 +526,7 @@ const QUIZ = [
             "왕자가 왕자 차림으로 가지 않고 얼굴에 검댕을 바른 것을 보면, 그대로 가서는 아무것도 알 수 없다고 여긴 것이구나.",
             "공주가 진짜라는 말을 듣자마자 상자를 밀어낸 것을 보면, 만든 것이 아니라서 시들해진 것이구나.",
             "왕자가 마지막에 참 딱하다는 말만 남기고 돌아간 것을 보면, 화가 나서가 아니라 마음을 접은 것이구나.",
-            "임금님이 둘 다 성 밖으로 내쫓은 것을 보면, 돼지치기가 왕자인 줄 알고도 딸을 지키려 한 것이구나."
+            "왕자가 떠나기 전 공주에게 장미와 밤꾀꼬리를 다시 보낸 것을 보면, 마지막까지 마음을 접지 못한 것이구나."
         ],
         "answer": 3
     }
@@ -995,7 +995,7 @@ const EN = {
                 "He went not as a prince but with soot rubbed on his face — he saw that arriving as himself would tell him nothing.",
                 "The moment she heard it was real she pushed the box away — a thing nobody had made was dull to her.",
                 "At the end he only said what a pity and went home — he left not in temper but because he had let go.",
-                "The king drove them both out of the castle — he knew the swineherd was a prince and was protecting his daughter."
+                "Before leaving he sent the rose and the nightingale to her once more — he could not quite let go."
             ],
             answer: 3
         }
