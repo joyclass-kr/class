@@ -476,10 +476,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "가죽이 한 장 남았을 때도 구두장이가 재어 마름질해 두고 잔 것을 보면, 도움은 준비해 둔 자리에 얹히는구나.",
-            "부자가 된 뒤 두 사람이 도운 이를 찾아 나서 옷을 지어 준 것을 보면, 갚을 길을 찾는 것도 마음이구나.",
-            "난쟁이들이 옷을 받고는 다시 오지 않은 것을 보면, 도움에는 끝나는 때가 있는 법이구나.",
-            "난쟁이들이 밤마다 신을 지어 준 덕에 구두장이가 부자가 된 것을 보면, 운이 좋으면 가만히 있어도 일이 되는구나."
+            "구두장이가 값을 헐하게 받다 살림이 기운 것을 보면, 딱한 사람에게 제값을 못 받은 것이구나.",
+            "가죽이 한 장 남았을 때도 재고 오려 작업대에 올려 둔 것을 보면, 마지막까지 제 일을 놓지 않은 것이구나.",
+            "부부가 가죽 대신 옷과 구두를 올려놓은 것을 보면, 한겨울에 맨발인 것을 보고 그냥 있을 수 없었던 것이구나.",
+            "아내가 해마다 작은 옷을 지어 창가에 올려 둔 것을 보면, 난쟁이들이 그것을 받아 가는 것을 보고 기뻐한 것이구나."
         ],
         "answer": 3
     }
@@ -868,10 +868,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "With one piece of leather left he still cut it out before going to bed — help lands on the work you have already laid out.",
-                "Once rich, the two went looking for their helpers and sewed them clothes — finding a way to repay is its own kind of care.",
-                "The elves took the clothes and never came again — help has a time when it is finished.",
-                "The elves sewed the shoes each night and the cobbler grew rich — with luck on your side things get done without you."
+                "He charged so little that the shop went under — he could not bring himself to take full price from people in need.",
+                "With one piece of leather left he still measured it, cut it and laid it out — he did not let go of his work even at the end.",
+                "Instead of leather the couple laid out clothes and little shoes — they could not watch them go barefoot through a winter.",
+                "Every year the wife made a tiny set of clothes and set it on the windowsill — it gladdened her to see the elves take them."
             ],
             answer: 3
         }
