@@ -2,6 +2,7 @@
   "use strict";
 
   const dataset = window.WORLD_GEOGRAPHY || {};
+  const layerData = window.WORLD_LAYER_DATA || {};
   const themes = dataset.themes || {};
   const questions = Array.isArray(dataset.questions) ? dataset.questions : [];
   const MAP_IMAGE = "../age-of-exploration/public/assets/maps/natural-earth-v58/overview.jpg?v=58";
@@ -11,12 +12,15 @@
   const SESSION_SIZE = 6;
   const themeOrder = Object.keys(themes);
 
-  let currentTheme = themeOrder[0] || "world";
+  // 주소 뒤에 #climate처럼 붙이면 그 주제로 연다.
+  const requestedTheme = decodeURIComponent(location.hash.replace("#", ""));
+  let currentTheme = themes[requestedTheme] ? requestedTheme : (themeOrder[0] || "world");
   let map;
   let baseMapLayer;
   let worldCopyIndex = 0;
   let featureLayer;
   let lineLayer;
+  let layers; // map-layers.js가 관리하는 지도 층
   let activeFeatureName = "";
   let questionMap;
   let questionFocusLayer;
@@ -35,9 +39,12 @@
     map = createMap("map", true);
     baseMapLayer = L.layerGroup().addTo(map);
     renderBaseMapCopies(map, baseMapLayer);
+    layers = window.WorldLayers.create(map, { onCountryClick: showCountry, onChange: renderLayerDock });
+    layers.setOffsets(visibleWorldOffsets());
     featureLayer = L.layerGroup().addTo(map);
     lineLayer = L.layerGroup().addTo(map);
     fitWholeWorld(map);
+    setLayerDockCollapsed(window.innerWidth < 700);
     map.on("moveend", refreshWorldCopy);
     map.on("resize", () => fitWholeWorld(map));
     bindControls();
@@ -61,6 +68,8 @@
       scrollWheelZoom: interactive,
       preferCanvas: true
     });
+    // 바탕 지도는 색칠 층(기후 구분)보다 아래에 깔리도록 따로 판을 만든다.
+    instance.createPane("basePane").style.zIndex = "250";
     if (interactive) L.control.zoom({ position: "bottomright" }).addTo(instance);
     return instance;
   }
@@ -70,6 +79,7 @@
     [-1, 0, 1].forEach((step) => {
       const offset = (copyIndex + step) * 360;
       L.imageOverlay(MAP_IMAGE, [[-90, -180 - COPY_OVERLAP + offset], [90, 180 + COPY_OVERLAP + offset]], {
+        pane: "basePane",
         attribution: "Natural Earth",
         interactive: false
       }).addTo(layer);
@@ -81,6 +91,8 @@
     if (nextIndex === worldCopyIndex) return;
     worldCopyIndex = nextIndex;
     renderBaseMapCopies(map, baseMapLayer);
+    layers.setOffsets(visibleWorldOffsets());
+    layers.refresh();
     renderMapContent(themes[currentTheme]);
   }
 
@@ -107,6 +119,7 @@
       button.addEventListener("click", () => renderTheme(button.dataset.theme));
     });
     $("#progressButton").addEventListener("click", showProgressSummary);
+    $("#layerDockToggle").addEventListener("click", () => setLayerDockCollapsed(!$("#layerDock").classList.contains("is-collapsed")));
     $("#focusClose").addEventListener("click", clearFeatureFocus);
     $("#startPractice").addEventListener("click", startPractice);
     $("#closePractice").addEventListener("click", () => $("#practiceDialog").close());
@@ -125,6 +138,7 @@
     if (!theme) return;
     currentTheme = themeId;
     activeFeatureName = "";
+    if (location.hash !== `#${themeId}`) history.replaceState(null, "", `#${themeId}`);
     $$(".theme-tab").forEach((button) => {
       const active = button.dataset.theme === themeId;
       button.classList.toggle("is-active", active);
@@ -136,12 +150,66 @@
     $("#conceptPoints").replaceChildren(...(theme.points || []).map((copy) => makeElement("div", "concept-point", copy)));
     $("#featureFocus").hidden = true;
     renderLegend(theme.legend || []);
+    layers.setActive(theme.layers || ["borders"]);
     renderMapContent(theme);
     renderFeatureButtons(theme);
     const pool = questions.filter((question) => question.topic === themeId);
     $("#startPractice").textContent = `문제 풀기 (${Math.min(SESSION_SIZE, pool.length)}문제 / ${pool.length}문제 중)`;
     $("#startPractice").disabled = pool.length === 0;
     fitWholeWorld(map);
+  }
+
+  function setLayerDockCollapsed(collapsed) {
+    $("#layerDock").classList.toggle("is-collapsed", collapsed);
+    $("#layerDockToggle").setAttribute("aria-expanded", String(!collapsed));
+    $("#layerDockToggle").textContent = collapsed ? "펼치기" : "접기";
+  }
+
+  function renderLayerDock() {
+    const chips = layers.list().map((entry) => {
+      const chip = makeElement("button", `layer-chip${entry.group === "fill" ? " is-fill" : ""}`, entry.label);
+      chip.type = "button";
+      chip.setAttribute("aria-pressed", String(entry.active));
+      chip.addEventListener("click", () => layers.toggle(entry.id));
+      return chip;
+    });
+    $("#layerChips").replaceChildren(...chips);
+    const legends = layers.legends().map((legend) => {
+      const box = makeElement("div", "layer-legend");
+      box.append(makeElement("strong", "", legend.title));
+      const items = makeElement("div", "layer-legend-items");
+      legend.items.forEach((item) => {
+        const row = makeElement("span", "layer-legend-item");
+        const swatch = makeElement("i");
+        swatch.style.background = item.color;
+        row.append(swatch, document.createTextNode(item.label));
+        items.append(row);
+      });
+      box.append(items);
+      return box;
+    });
+    $("#layerLegends").replaceChildren(...legends);
+  }
+
+  function showCountry(info) {
+    const list = document.createElement("dl");
+    const rows = [
+      ["대륙", `${koreanContinent(info.continent)} · ${info.sub}`],
+      ["인구", info.popText],
+      ["면적", info.areaText],
+      ["인구 밀도", info.densityText],
+      ["주된 종교", info.religion || "-"],
+      ["수능 단원", info.region || "-"]
+    ];
+    rows.forEach(([term, value]) => {
+      list.append(makeElement("dt", "", term), makeElement("dd", "", value));
+    });
+    showFocusBox("나라", `${info.name} (${info.en})`, list);
+    if (info.label) map.setView([info.label[0], info.label[1] + worldCopyIndex * 360], Math.max(map.getMinZoom(), Math.min(map.getZoom(), 3)), { animate: true });
+  }
+
+  function koreanContinent(name) {
+    return { Asia: "아시아", Europe: "유럽", Africa: "아프리카", "North America": "북아메리카", "South America": "남아메리카", Oceania: "오세아니아", Antarctica: "남극", "Seven seas (open ocean)": "바다" }[name] || name;
   }
 
   function renderLegend(items) {
@@ -315,9 +383,17 @@
     $("#nextQuestion").textContent = questionIndex === sessionQuestions.length - 1 ? "결과 보기" : "다음 문제";
     $("#showHint").disabled = !question.hint;
     $("#showHint").textContent = "단서 보기";
-    $("#questionMapCaption").textContent = "답을 고르면 지도에 관련 위치가 표시돼요.";
     $("#questionMapCaption").classList.remove("is-hint");
-    resetQuestionMap();
+    const station = question.graph && layerData.stations ? layerData.stations[question.graph] : null;
+    $("#questionGraph").hidden = !station;
+    $("#questionMap").hidden = !!station;
+    if (station) {
+      window.ClimateGraph.render($("#questionGraph"), station, { showName: false });
+      $("#questionMapCaption").textContent = "기온은 꺾은선(왼쪽 눈금 °C), 강수량은 막대(오른쪽 눈금 mm)예요.";
+    } else {
+      $("#questionMapCaption").textContent = "답을 고르면 지도에 관련 위치가 표시돼요.";
+      resetQuestionMap();
+    }
 
     // 정답이 늘 같은 자리에 오지 않도록 보기 순서를 섞는다.
     optionOrder = shuffle(question.options.map((_, index) => index));
@@ -364,6 +440,13 @@
   }
 
   function showAnswerLocation(question) {
+    const station = question.graph && layerData.stations ? layerData.stations[question.graph] : null;
+    if (station) {
+      window.ClimateGraph.render($("#questionGraph"), station, { showName: true });
+      $("#questionMapCaption").textContent = `정답 위치: ${question.focus ? question.focus.label : station.name}`;
+      $("#questionMapCaption").classList.remove("is-hint");
+      return;
+    }
     if (!questionMap || !question.focus) return;
     questionFocusLayer.clearLayers();
     L.marker([question.focus.lat, question.focus.lng], {

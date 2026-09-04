@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#123c46">
   <title>세계지리 지도 학습 | Joyclass</title>
   <link rel="stylesheet" href="../korean-museum/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="styles.css?v=20260904-1">
+  <link rel="stylesheet" href="styles.css?v=20260904-2">
 </head>
 <body class="geography-page">
   <div class="app-shell">
@@ -27,6 +27,14 @@
         <a class="map-back" href="../../../" aria-label="학습 메뉴로 돌아가기">←</a>
         <button class="map-progress" id="progressButton" type="button" aria-label="학습 기록 보기"><strong id="progressScore">0 / 0</strong></button>
         <div class="map-key" id="mapKey" aria-live="polite"></div>
+        <div class="layer-dock" id="layerDock">
+          <div class="layer-dock-head">
+            <strong>지도 층</strong>
+            <button id="layerDockToggle" type="button" aria-expanded="true">접기</button>
+          </div>
+          <div class="layer-chips" id="layerChips" role="group" aria-label="지도 층 켜고 끄기"></div>
+          <div class="layer-legends" id="layerLegends"></div>
+        </div>
       </section>
 
       <aside class="study-panel">
@@ -61,6 +69,7 @@
       </div>
       <div class="question-map-wrap">
         <div id="questionMap" aria-label="문제 관련 위치 지도"></div>
+        <div id="questionGraph" class="question-graph" hidden></div>
         <p id="questionMapCaption">답을 고르면 지도에 관련 위치가 표시돼요.</p>
       </div>
     </section>
@@ -85,7 +94,14 @@
   </dialog>
 
   <script src="../korean-museum/vendor/leaflet/leaflet.js"></script>
-  <script src="data.js?v=20260904-1"></script>
-  <script src="app.js?v=20260904-1"></script>
+  <script src="data/world-countries.js?v=20260904-2"></script>
+  <script src="data/world-rivers.js?v=20260904-2"></script>
+  <script src="data/plate-boundaries.js?v=20260904-2"></script>
+  <script src="data/koppen-grid.js?v=20260904-2"></script>
+  <script src="data/layers.js?v=20260904-2"></script>
+  <script src="map-layers.js?v=20260904-2"></script>
+  <script src="climate-graph.js?v=20260904-2"></script>
+  <script src="data.js?v=20260904-2"></script>
+  <script src="app.js?v=20260904-2"></script>
 </body>
 </html>

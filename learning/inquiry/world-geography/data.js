@@ -6,6 +6,7 @@
 
   const themes = {
     world: {
+      layers: ["borders", "names"],
       label: "대륙·대양",
       kicker: "세계의 큰 틀",
       title: "대륙과 대양으로 읽는 세계",
@@ -32,6 +33,7 @@
       ]
     },
     coordinates: {
+      layers: ["borders"],
       label: "위도·경도",
       kicker: "지구의 주소",
       title: "위선과 경선으로 위치 읽기",
@@ -67,6 +69,7 @@
       ]
     },
     terrain: {
+      layers: ["borders", "rivers", "plates"],
       label: "지형",
       kicker: "세계의 뼈대",
       title: "산맥·평원·강의 연결",
@@ -95,6 +98,7 @@
       ]
     },
     climate: {
+      layers: ["borders", "koppen", "currents", "winds"],
       label: "기후",
       kicker: "위도와 대기",
       title: "위도·바람·해류가 만든 기후",
@@ -121,6 +125,7 @@
       ]
     },
     population: {
+      layers: ["borders", "density", "names"],
       label: "인구·도시",
       kicker: "사람과 공간",
       title: "사람은 어디에 모여 사는가",
@@ -146,6 +151,7 @@
       ]
     },
     region: {
+      layers: ["borders", "region", "names"],
       label: "지역",
       kicker: "지역 비교",
       title: "자연·문화·산업을 함께 보기",
@@ -172,6 +178,7 @@
       ]
     },
     religion: {
+      layers: ["borders", "religion"],
       label: "종교·문화",
       kicker: "문화권",
       title: "종교와 언어로 나뉘는 문화권",
@@ -198,6 +205,7 @@
       ]
     },
     resources: {
+      layers: ["borders", "names"],
       label: "자원·산업",
       kicker: "먹거리와 에너지",
       title: "자원과 식량은 어디에서 나는가",
@@ -275,6 +283,20 @@
     { id: "climate-08", topic: "climate", difficulty: "advanced", prompt: "남아메리카 서해안의 아타카마 사막이 매우 건조한 까닭과 가장 관련 깊은 것은?", options: ["페루 한류의 영향", "계절풍의 영향", "편서풍과 난류", "적도 저압대의 상승 기류"], answer: 0, hint: "차가운 바닷물 위의 공기는 안정되어 비구름이 잘 안 생겨요.", explanation: "한류 위의 공기는 냉각되어 상승하지 못하므로 안개만 끼고 비가 오지 않아 해안 사막이 됩니다. 나미브 사막도 같은 원리입니다.", focus: { lat: -23, lng: -69.5, zoom: 4, label: "페루 한류가 흐르는 칠레 북부 해안" } },
     { id: "climate-09", topic: "climate", difficulty: "advanced", prompt: "우기와 건기가 뚜렷하며 키 큰 풀과 드문 나무가 자라 초식동물의 대이동이 나타나는 기후는?", options: ["사바나 기후", "툰드라 기후", "열대 우림 기후", "스텝 기후"], answer: 0, hint: "세렝게티의 누 떼가 사는 곳이에요.", explanation: "사바나 기후는 열대 우림 주변에 나타나며 적도 저압대와 아열대 고압대가 번갈아 영향을 주어 우기와 건기가 뚜렷합니다.", focus: { lat: -2, lng: 35, zoom: 4, label: "동아프리카의 사바나" } },
     { id: "climate-10", topic: "climate", difficulty: "advanced", prompt: "적도 부근인데도 연중 서늘한 봄 같은 날씨가 나타나는 에콰도르 키토의 기후에 가장 큰 영향을 준 요인은?", options: ["해발 고도", "위도", "해류", "계절풍"], answer: 0, hint: "안데스산지 위 2,850m에 있어요.", explanation: "높이가 100m 올라갈 때마다 기온이 약 0.6°C 내려가므로 고산 지대는 저위도라도 서늘합니다. 라파스, 보고타도 같은 고산 기후입니다.", focus: { lat: -0.2, lng: -78.5, zoom: 4, label: "안데스 고원의 키토" } },
+
+    // 기후 그래프 해석
+    { id: "climate-g01", topic: "climate", difficulty: "advanced", graph: "singapore", prompt: "다음 기후 그래프가 나타내는 기후는?", options: ["열대 우림 기후", "사바나 기후", "열대 몬순 기후", "온난 습윤 기후"], answer: 0, hint: "매달 비가 많고 기온이 거의 변하지 않아요.", explanation: "연중 기온 26~28°C에 매달 130mm 넘는 비가 내려 건기가 없습니다. 적도 부근의 열대 우림 기후(Af)입니다.", focus: { lat: 1.35, lng: 103.8, zoom: 4, label: "적도 바로 위의 싱가포르" } },
+    { id: "climate-g02", topic: "climate", difficulty: "advanced", graph: "darwin", prompt: "다음 기후 그래프가 나타내는 기후는?", options: ["사바나 기후", "열대 우림 기후", "지중해성 기후", "스텝 기후"], answer: 0, hint: "연중 덥지만 비가 오는 달과 거의 안 오는 달이 뚜렷해요. 남반구라 1월이 여름이에요.", explanation: "연중 25°C가 넘는데 6~8월에는 비가 거의 없고 12~3월에 집중됩니다. 우기와 건기가 뚜렷한 사바나 기후(Aw)입니다.", focus: { lat: -12.5, lng: 130.8, zoom: 4, label: "오스트레일리아 북부의 다윈" } },
+    { id: "climate-g03", topic: "climate", difficulty: "advanced", graph: "mumbai", prompt: "다음 기후 그래프가 나타내는 기후는?", options: ["열대 몬순 기후", "사막 기후", "서안 해양성 기후", "냉대 습윤 기후"], answer: 0, hint: "여름 몇 달에 비가 몰려 있고 겨울은 거의 안 와요.", explanation: "6~9월 여름 계절풍 때 한 달에 400~700mm가 내리고 겨울은 건조합니다. 인도 서해안의 열대 몬순 기후(Am)입니다.", focus: { lat: 19.1, lng: 72.9, zoom: 4, label: "인도 서해안의 뭄바이" } },
+    { id: "climate-g04", topic: "climate", difficulty: "advanced", graph: "cairo", prompt: "다음 기후 그래프가 나타내는 기후는?", options: ["사막 기후", "스텝 기후", "지중해성 기후", "사바나 기후"], answer: 0, hint: "비가 거의 없고 여름이 매우 더워요.", explanation: "연 강수량이 30mm도 안 되고 여름은 29°C까지 오릅니다. 아열대 고압대 아래의 사막 기후(BW)입니다.", focus: { lat: 30, lng: 31.2, zoom: 4, label: "사하라 동쪽 끝의 카이로" } },
+    { id: "climate-g05", topic: "climate", difficulty: "advanced", graph: "rome", prompt: "다음 기후 그래프가 나타내는 기후는?", options: ["지중해성 기후", "서안 해양성 기후", "온난 습윤 기후", "사바나 기후"], answer: 0, hint: "여름에 비가 적고 겨울에 많아요.", explanation: "7~8월에 비가 가장 적고 10~12월에 많습니다. 여름 건조, 겨울 습윤의 지중해성 기후(Cs)입니다.", focus: { lat: 41.9, lng: 12.5, zoom: 4, label: "지중해 연안의 로마" } },
+    { id: "climate-g06", topic: "climate", difficulty: "advanced", graph: "london", prompt: "다음 기후 그래프가 나타내는 기후는?", options: ["서안 해양성 기후", "지중해성 기후", "냉대 습윤 기후", "툰드라 기후"], answer: 0, hint: "연교차가 작고 비가 사철 고르게 와요.", explanation: "가장 추운 달 5°C, 가장 따뜻한 달 18°C로 연교차가 작고 매달 40~60mm의 비가 고르게 옵니다. 편서풍과 난류의 서안 해양성 기후(Cfb)입니다.", focus: { lat: 51.5, lng: -0.1, zoom: 4, label: "대서양 편서풍을 받는 런던" } },
+    { id: "climate-g07", topic: "climate", difficulty: "advanced", graph: "seoul", prompt: "다음 기후 그래프의 지역(북반구)에 대한 설명으로 옳은 것은?", options: ["여름 계절풍으로 여름에 비가 집중된다", "겨울에 비가 집중되는 지중해성 기후다", "연중 기온이 거의 같다", "건기가 없는 열대 기후다"], answer: 0, hint: "7~8월 막대가 유난히 길어요.", explanation: "7~8월에 한 달 360mm가 넘는 비가 오고 겨울은 20mm 안팎으로 건조합니다. 여름 계절풍의 영향을 받는 서울의 그래프입니다.", focus: { lat: 37.6, lng: 127, zoom: 4, label: "여름 계절풍의 서울" } },
+    { id: "climate-g08", topic: "climate", difficulty: "advanced", graph: "yakutsk", prompt: "다음 기후 그래프가 나타내는 기후는?", options: ["냉대 기후(겨울이 몹시 추움)", "툰드라 기후", "사막 기후", "서안 해양성 기후"], answer: 0, hint: "연교차가 50°C를 넘고 여름 한때는 꽤 따뜻해요.", explanation: "1월 -39°C, 7월 19°C로 연교차가 58°C나 되지만 여름은 10°C를 넘어 나무가 자랍니다. 시베리아 내륙의 냉대 기후(Df)입니다.", focus: { lat: 62, lng: 129.7, zoom: 3, label: "시베리아 내륙의 야쿠츠크" } },
+    { id: "climate-g09", topic: "climate", difficulty: "advanced", graph: "utqiagvik", prompt: "다음 기후 그래프가 나타내는 기후는?", options: ["툰드라 기후", "냉대 습윤 기후", "빙설 기후", "스텝 기후"], answer: 0, hint: "가장 따뜻한 달도 10°C를 못 넘지만 0°C는 넘어요.", explanation: "가장 따뜻한 7월이 5°C로 0~10°C 사이입니다. 나무는 못 자라고 이끼가 자라는 툰드라 기후(ET)입니다. 빙설 기후는 모든 달이 0°C 미만입니다.", focus: { lat: 71.3, lng: -156.8, zoom: 3, label: "알래스카 북단의 우트키아그비크" } },
+    { id: "climate-g10", topic: "climate", difficulty: "advanced", graph: "quito", prompt: "이 도시는 적도 부근(남위 0.2°)인데 연중 14°C 안팎이다. 그 까닭은?", options: ["해발 고도가 높아서", "한류가 흘러서", "극지방과 가까워서", "계절풍 때문에"], answer: 0, hint: "안데스산지 위 2,850m에 있어요.", explanation: "해발 2,850m의 키토는 높이 때문에 기온이 낮아 연중 봄 같은 고산 기후가 나타납니다.", focus: { lat: -0.2, lng: -78.5, zoom: 4, label: "안데스 고원의 키토" } },
+    { id: "climate-g11", topic: "climate", difficulty: "advanced", graph: "lima", prompt: "이 도시는 남위 12°의 해안인데 비가 거의 내리지 않는다. 그 까닭은?", options: ["페루 한류 위의 안정된 공기 때문에", "아열대 고압대의 중심이어서", "대륙 내부라 수증기가 못 미쳐서", "극동풍이 불어서"], answer: 0, hint: "차가운 바닷물 위에서는 공기가 상승하지 못해요.", explanation: "리마 앞바다의 페루 한류가 공기를 식혀 상승을 막으므로 안개만 끼고 비는 오지 않는 한류 사막이 됩니다.", focus: { lat: -12, lng: -77, zoom: 4, label: "페루 한류 연안의 리마" } },
+    { id: "climate-g12", topic: "climate", difficulty: "advanced", graph: "moscow", prompt: "다음 기후 그래프가 나타내는 기후는?", options: ["냉대 습윤 기후", "서안 해양성 기후", "툰드라 기후", "지중해성 기후"], answer: 0, hint: "겨울은 0°C 아래로 내려가고 비는 사철 고르게 와요.", explanation: "가장 추운 달이 -7°C로 영하이고 여름은 19°C까지 오르며 강수는 고릅니다. 냉대 습윤 기후(Df)입니다.", focus: { lat: 55.8, lng: 37.6, zoom: 3, label: "동유럽 평원의 모스크바" } },
 
     // 인구·도시
     { id: "population-01", topic: "population", difficulty: "basic", prompt: "세계의 대표적인 인구 밀집 지역을 바르게 묶은 것은?", options: ["동아시아·남아시아·유럽", "사하라·그린란드·남극", "시베리아·아마존·티베트", "오스트레일리아 내륙·고비·파타고니아"], answer: 0, hint: "농사가 잘되는 평야와 온화한 기후, 오래된 도시가 있는 곳이에요.", explanation: "동아시아, 남아시아, 유럽은 오랜 농업·산업·도시 발달과 함께 인구가 밀집한 대표 지역입니다.", focus: { lat: 35, lng: 93, zoom: 2, label: "유라시아의 남쪽과 서쪽" } },
