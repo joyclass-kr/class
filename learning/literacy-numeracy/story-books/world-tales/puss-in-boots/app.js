@@ -522,6 +522,17 @@ const QUIZ = [
             "성의 주인이다"
         ],
         "answer": 1
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "가진 것이 적어도, 내가 잘하는 것 하나를 잘 쓰면 길이 열리는구나.",
+            "작은 것이라도 여러 날 거르지 않고 보내면 믿음이 쌓이는구나.",
+            "맞서 싸우는 대신 다른 길을 찾으면 큰 문제도 풀 수 있구나.",
+            "속인 것이 들통나지 않았으니, 막내도 끝까지 숨기는 편이 나았겠구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -529,7 +540,7 @@ function quizPage() {
     const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
                 ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
             </div>
         </div>`).join('');
@@ -904,6 +915,17 @@ const EN = {
             q: 'What did the youngest son say to the king at the feast?',
             choices: ['That the castle was not really his', "That he was the miller's youngest son", 'That the cat had done everything'],
             answer: 1
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                'Even with little to start from, one thing I am good at can open a road.',
+                'Small things sent day after day are what build trust.',
+                'When I cannot win head-on, there may be another way round.',
+                'The trick was never found out, so he would have done better to keep it to himself.'
+            ],
+            answer: 3
         }
     ],
     afterword: {
