@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderCategoryBar() {
         const visibleCategories = new Set(getVisibleElements().map(el => el.category));
-        const allLabel = state.tableMode === 'exam' ? '시험 범위 전체' : '118개 전체';
+        const allLabel = state.tableMode === 'exam' ? '1~20번 전체' : '118개 전체';
         let html = `<div class="cat-chip ${state.selectedCategory === 'all' ? 'active' : ''}" data-cat="all" style="background: rgba(255,255,255,0.1); color: #fff;">${allLabel}</div>`;
         for (const [key, cat] of Object.entries(window.PERIODIC_CATEGORIES).filter(([key]) => visibleCategories.has(key))) {
             html += `<div class="cat-chip" data-cat="${key}" style="background: ${cat.bg}; border-color: ${cat.border}; color: ${cat.color};">${cat.name}</div>`;
@@ -306,19 +306,27 @@ document.addEventListener('DOMContentLoaded', () => {
             ? '단주기 주기율표'
             : '실제 주기율표';
 
-        document.getElementById('appTitleText').textContent = isExam ? '단주기 주기율표' : '실제 주기율표';
-        document.getElementById('appTitleBadge').textContent = isExam ? '시험 대비 · 1~20' : '전체 원소 · 1~118';
-        document.getElementById('tabExploreLabel').textContent = isExam ? '단주기표' : '실제 주기율표';
-        document.getElementById('guidePeriod').innerHTML = isExam ? '<b>가로</b>는 주기' : '<b>7개</b> 주기';
-        document.getElementById('guideGroup').innerHTML = isExam ? '<b>세로</b>는 족' : '<b>18개</b> 족';
-        document.getElementById('guideDetail').innerHTML = isExam
+        const titleText = document.getElementById('appTitleText');
+        if (titleText) titleText.textContent = isExam ? '단주기 주기율표' : '실제 주기율표';
+        const titleBadge = document.getElementById('appTitleBadge');
+        if (titleBadge) titleBadge.textContent = isExam ? '1~20번 원소' : '1~118번 원소';
+        const exploreLabel = document.getElementById('tabExploreLabel');
+        if (exploreLabel) exploreLabel.textContent = isExam ? '단주기표' : '실제 주기율표';
+        const guidePeriod = document.getElementById('guidePeriod');
+        if (guidePeriod) guidePeriod.innerHTML = isExam ? '<b>가로</b>는 주기' : '<b>7개</b> 주기';
+        const guideGroup = document.getElementById('guideGroup');
+        if (guideGroup) guideGroup.innerHTML = isExam ? '<b>세로</b>는 족' : '<b>18개</b> 족';
+        const guideDetail = document.getElementById('guideDetail');
+        if (guideDetail) guideDetail.innerHTML = isExam
             ? '<b>전자 배치</b>는 아래 숫자로 확인'
             : '<b>아래 두 줄</b>은 란타넘족·악티늄족';
 
-        searchInput.placeholder = isExam
-            ? '이름, 기호(H, Na), 원자번호(1~20) 검색'
-            : '이름, 기호(Fe, Au), 원자번호(1~118) 검색';
-        searchInput.setAttribute('aria-label', isExam ? '시험 범위 원소 검색' : '전체 원소 검색');
+        if (searchInput) {
+            searchInput.placeholder = isExam
+                ? '이름, 기호(H, Na), 원자번호(1~20) 검색'
+                : '이름, 기호(Fe, Au), 원자번호(1~118) 검색';
+            searchInput.setAttribute('aria-label', isExam ? '원소 검색' : '전체 원소 검색');
+        }
     }
 
     function applyFilters() {
@@ -557,7 +565,7 @@ document.addEventListener('DOMContentLoaded', () => {
             qSub.textContent = '기호의 첫 글자는 대문자, 두 번째 글자는 소문자입니다.';
         } else if (chosenType === 'name_symbol') {
             qText.textContent = `『 ${correctEl.name} 』의 올바른 원소 기호는?`;
-            qSub.textContent = '시험 필수 원소 1~20번에서 고르세요.';
+            qSub.textContent = '원소 1~20번에서 고르세요.';
             optionLabel = opt => opt.symbol;
         } else if (chosenType === 'atomic_number') {
             qText.textContent = `『 ${correctEl.name} (${correctEl.symbol}) 』의 원자번호는?`;
@@ -919,10 +927,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         list.innerHTML = '';
         const groups = [
-            { id: 'core', title: '⭐ 시험 필수 5형', note: '구조·결합각·극성 필수' },
-            { id: 'frequent', title: '📝 시험 빈출 응용', note: '다중 결합과 평면성 비교' },
-            { id: 'ionic', title: '🧂 이온 결정', note: '분자가 아닌 이온 격자 물질' },
-            { id: 'explore', title: '🔬 추가 탐구 분자', note: '비평면·복합 구조 살펴보기' }
+            { id: 'core', title: '기본 5개 구조', note: '구조 · 결합각 · 극성' },
+            { id: 'frequent', title: '대표 화합물', note: '다중 결합 및 평면성' },
+            { id: 'ionic', title: '이온 결정', note: '이온 격자 구조' },
+            { id: 'explore', title: '추가 탐구 분자', note: '입체 및 복합 구조' }
         ];
         const compounds = getLabCompounds();
         const selectedFormula = findLabCompound()?.formula;
@@ -952,7 +960,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="compound-formula">${compound.formula}</span>
                     </div>
                     <div class="compound-geometry">${model.kind} · ${model.geometry}</div>
-                    <span class="compound-action">3D 모형 보기 →</span>
                 `;
                 card.addEventListener('click', () => setLabComposition(compound));
                 section.appendChild(card);
