@@ -551,10 +551,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "잡은 새가 그 자리를 벗어나면 번번이 색이 바랜 것을 보면, 어떤 것은 있던 자리에서만 그것인 채로 있는구나.",
-            "떠나기 전에도 새장에 있던 새가 돌아와 보니 파랬던 것을 보면, 달라진 것은 새가 아니라 보는 눈이구나.",
-            "추억의 나라와 밤의 나라까지 다 다녀온 뒤에야 제 방이 보인 것을 보면, 멀리 가 본 사람이 가까운 것을 알아보기도 하는구나.",
-            "두 아이가 여러 나라를 헤매고 다닌 끝에 파랑새를 찾은 것을 보면, 무엇이든 멀리 나가 찾아야 얻을 수 있구나."
+            "오누이가 발이 시린 줄도 모르고 창가에 붙어 있던 것을 보면, 이웃집 잔치가 그만큼 부러웠던 것이구나.",
+            "잡은 새가 번번이 색이 바랜 것을 보면, 그 자리를 벗어나면 그 새가 아니게 되는 것이구나.",
+            "어제까지 잿빛으로만 보이던 새가 파랗게 반짝인 것을 보면, 달라진 것은 새가 아니라 아이들 눈이었구나.",
+            "빛의 요정이 다이아몬드 돌리는 법을 알려 준 것을 보면, 파랑새가 어디 있는지 처음부터 알고 있었던 것이구나."
         ],
         "answer": 3
     }
@@ -1039,10 +1039,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "Every bird they caught lost its colour once carried off — some things are only themselves where they already are.",
-                "The bird in their own cage was blue when they came home — what changed was not the bird but their eyes.",
-                "Only after the Land of Memory and the Land of Night could they see their own room — it can take a long journey to see what is near.",
-                "The children found the bluebird after wandering through country after country — you have to go far afield to find anything."
+                "They stood at the window without noticing their cold feet — that is how much they envied the party next door.",
+                "Every bird they caught lost its colour — carried away from its place it was no longer that bird.",
+                "The bird that had looked grey the day before was shining blue — what changed was the children's eyes, not the bird.",
+                "The fairy showed them how to turn the diamond — she had known where the bluebird was all along."
             ],
             answer: 3
         }

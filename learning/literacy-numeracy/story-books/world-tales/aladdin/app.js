@@ -529,10 +529,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "마법사가 끼워 준 반지가 동굴에 갇힌 알라딘을 꺼내 준 것을 보면, 해치려고 쥐여 준 것이 도리어 살리기도 하는구나.",
-            "공주를 처음 본 알라딘이 제 입으로 나서지 못하고 어머니께 부탁한 것을 보면, 아직 아무것도 아닐 때는 말 한마디도 어렵구나.",
-            "마지막에 램프를 궤짝 깊이 넣어 둔 것을 보면, 센 힘일수록 함부로 꺼내 쓰지 않는 편이 낫구나.",
-            "알라딘이 요정 덕분에 하루아침에 부자가 된 것을 보면, 큰 행운 하나만 잡으면 나머지는 저절로 풀리는구나."
+            "알라딘이 램프를 먼저 올리라는 말에 먼저 올라가고 드리겠다고 한 것을 보면, 그 순간 마음이 놓이지 않았던 것이구나.",
+            "마법사가 제 손으로 끼워 준 반지가 알라딘을 동굴에서 꺼내 준 것을 보면, 제 물건이 제 계략을 무너뜨린 것이구나.",
+            "공주를 처음 보고도 제 입으로 나서지 못한 것을 보면, 어머니께 대신 부탁할 수밖에 없었던 것이구나.",
+            "알라딘이 램프를 궤짝 깊이 넣어 둔 것을 보면, 지니를 오래 쉬게 해 주려는 것이구나."
         ],
         "answer": 3
     }
@@ -948,10 +948,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The ring the sorcerer gave him was what got him out of the cave — a thing meant to trap you can be the thing that saves you.",
-                "Seeing the princess, he could not speak for himself and sent his mother — when you are still nobody, even a word is hard.",
-                "At the end he puts the lamp away at the bottom of a chest — the stronger the power, the less you take it out.",
-                "The genie made Aladdin rich overnight — get one great piece of luck and the rest sorts itself out."
+                "Told to hand up the lamp first, he said he would give it once he was out — at that moment something did not feel right.",
+                "The ring the sorcerer put on his finger was what got him out of the cave — his own gift undid his own plan.",
+                "He could not speak for himself when he saw the princess — that is why he had to send his mother.",
+                "Aladdin put the lamp away at the bottom of a chest — he wanted to give the genie a long rest."
             ],
             answer: 3
         }

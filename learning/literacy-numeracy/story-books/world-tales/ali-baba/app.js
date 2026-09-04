@@ -480,10 +480,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "알리바바가 '열려라 참깨'를 여러 번 되뇐 것을 보면, 짧은 말일수록 입에 붙여 두어야 잊지 않는구나.",
-            "형수가 됫박 바닥에 밀랍을 발라 알아낸 것을 보면, 말하지 않아도 자국은 남는 법이구나.",
-            "항아리 속 소리를 알아듣고 목소리를 낮춰 대답한 모르지아나를 보면, 놀란 티를 내지 않는 것이 사람을 살리기도 하는구나.",
-            "알리바바가 모르지아나에게 이제 종이 아니라고 한 것을 보면, 좋은 주인을 만나는 것이 무엇보다 중요하구나."
+            "알리바바가 세지 말고 그냥 묻어 두자고 한 것을 보면, 표가 날까 봐 걱정한 것이구나.",
+            "모르지아나가 온 동네 대문에 똑같은 표시를 그린 것을 보면, 지우는 대신 쓸모없게 만든 것이구나.",
+            "모르지아나가 춤을 추기 전에 이웃들을 미리 불러 둔 것을 보면, 혼자 맞설 생각이 아니었던 것이구나.",
+            "형수가 됫박을 선뜻 빌려준 것을 보면, 가난한 동생네를 도우려 한 것이구나."
         ],
         "answer": 3
     }
@@ -864,10 +864,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "Ali Baba said 'Open, sesame' over and over to himself — the shorter the words, the more you must keep them on your tongue.",
-                "His sister-in-law smeared wax on the measure and found them out — you leave a trace even when you say nothing.",
-                "Morgiana heard the voice in the jar and answered low — not showing your fright can save lives.",
-                "Ali Baba told Morgiana she was a slave no longer — finding a good master is what matters most of all."
+                "Ali Baba said not to count it, just to bury it — he was afraid it would show.",
+                "Morgiana chalked the same mark on every door in the street — instead of rubbing it out she made it useless.",
+                "She called the neighbours in before she began to dance — she never meant to face him alone.",
+                "The sister-in-law lent them the measure readily — she wanted to help her poor relations."
             ],
             answer: 3
         }

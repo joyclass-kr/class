@@ -509,10 +509,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "언니들은 옷과 보석을 부탁했는데 벨만 꽃 한 송이를 부탁한 것을 보면, 가장 값싼 부탁이 가장 큰 값을 부르기도 하는구나.",
-            "없는 것이 없는 성에 말을 나눌 사람만 없었던 것을 보면, 사람에게 모자란 것이 물건이 아닐 때가 있구나.",
-            "벨이 마음을 바꾼 것이 저녁을 여러 번 함께한 뒤였음을 보면, 사람이 달리 보이는 데는 시간이 드는구나.",
-            "벨이 없는 것 없는 성에서 지낸 것을 보면, 먹고 입을 것만 넉넉하면 어디서든 지낼 만하구나."
+            "벨만 장미 한 송이를 부탁한 것을 보면, 언니들과 바라는 것이 처음부터 달랐던 것이구나.",
+            "방문에 벨의 방이라 붙어 있고 벽이 온통 책이었던 것을 보면, 야수가 벨이 무엇을 좋아하는지 알고 있었던 것이구나.",
+            "야수가 포크를 자꾸 놓치고 헛기침만 한 것을 보면, 무슨 말을 꺼내야 할지 몰라 어색했던 것이구나.",
+            "언니들이 조금만 더 있다 가라며 소매를 붙잡은 것을 보면, 벨이 야수에게 돌아가는 것이 걱정스러웠던 것이구나."
         ],
         "answer": 3
     }
@@ -964,10 +964,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The sisters asked for gowns and jewels; Belle asked for one rose — the cheapest wish can cost the most.",
-                "The castle lacked nothing except someone to talk to — what a person is short of is not always a thing.",
-                "Belle changed her mind only after many evenings together — it takes time to see a person differently.",
-                "Belle had everything she could want in the castle — with enough to eat and wear, anywhere will do."
+                "Only Belle asked for a rose — what she wanted was different from her sisters' from the start.",
+                "Her door said 'Belle's room' and the walls were all books — the Beast knew what she loved.",
+                "The Beast kept dropping his fork and clearing his throat — he did not know how to begin.",
+                "Her sisters held her sleeve and asked her to stay a few days more — they were worried about her going back to the Beast."
             ],
             answer: 3
         }
