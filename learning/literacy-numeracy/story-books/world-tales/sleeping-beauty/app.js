@@ -483,7 +483,7 @@ const QUIZ = [
             "임금님이 나라 안의 물레를 남김없이 태운 것을 보면, 그것 말고는 막을 길이 없다고 여긴 것이구나.",
             "열두 번째 요정이 죽음을 백 년 잠으로 바꾼 것을 보면, 저주를 지우지는 못해도 덜어 낼 수는 있었던 것이구나.",
             "공주가 할머니에게 그게 뭐냐고 물은 것을 보면, 물레라는 것을 그때 처음 본 것이구나.",
-            "공주가 물레에 손을 뻗은 것을 보면, 하지 말라고 이른 것을 일부러 어긴 것이구나."
+            "공주가 좁은 계단을 한 칸씩 조심조심 올라간 것을 보면, 위험한 곳인 줄 알고도 용기를 낸 것이구나."
         ],
         "answer": 3
     }
@@ -842,7 +842,7 @@ const EN = {
                 "The king had every spindle in the country burned — he could think of no other way to stop it.",
                 "The twelfth fairy turned death into a hundred years' sleep — the curse could not be undone, only made lighter.",
                 "The princess asked the old woman what it was — she had never seen a spinning wheel before that moment.",
-                "The princess reached out to the spindle — she was deliberately doing the one thing she had been told not to."
+                "She went up the narrow stair one careful step at a time — she knew the place was dangerous and went up anyway."
             ],
             answer: 3
         }
