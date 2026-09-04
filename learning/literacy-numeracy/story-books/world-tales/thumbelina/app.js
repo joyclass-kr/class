@@ -1177,13 +1177,14 @@ function initQuiz() {
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
+                // 맞힐 때까지 다시 고를 수 있다. 틀린 것만 빨갛게 남는다.
+                // 답을 미리 보여 주면 아이가 생각할 자리가 사라진다.
+                if (Number(btn.dataset.choice) !== q.answer) {
+                    btn.classList.add('incorrect');
+                    return;
+                }
+                btn.classList.add('correct');
                 item.classList.add('graded');
-                const chosen = Number(btn.dataset.choice);
-                item.querySelectorAll('.quiz-choice').forEach(b => {
-                    const ci = Number(b.dataset.choice);
-                    if (ci === q.answer) b.classList.add('correct');
-                    else if (ci === chosen) b.classList.add('incorrect');
-                });
                 answeredCount++;
                 progressEl.textContent = T().done(answeredCount, QZ().length);
             });
