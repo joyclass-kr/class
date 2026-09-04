@@ -775,7 +775,7 @@ const AFTERWORD = {
         `이 이야기가 그토록 오래 사랑받은 까닭 가운데 하나는 뒤집기입니다. 제일 낮은 자리에 있던 사람이 제일 높은 자리에 있던 사람을 이깁니다. 그것도 힘으로가 아니라 버티기로 이깁니다. 듣는 사람들이 대개 낮은 자리에 있었으니 그 대목에서 속이 시원했을 것입니다.`,
         `다시 읽게 되거든 이번에는 월매만 따라가며 읽어 보십시오. 딸을 기생으로 만들지 않으려고 애쓴 사람입니다. 이몽룡이 떠날 때 가장 크게 화를 낸 사람도, 옥바라지를 한 사람도, 거지꼴로 돌아온 사위를 보고 주저앉은 사람도 월매입니다. 이 이야기에서 제일 고생한 사람은 어쩌면 이 사람입니다.`,
         `이몽룡이 끝내 돌아오지 않았다면 춘향이 한 일은 무엇이 되었을까요? 이야기는 돌아오게 만들어 주었지만, 돌아오지 않았을 수도 있습니다. 그때도 춘향의 버팀은 옳은 일이었을까요.`,
-        `이몽룡이 거지 차림으로 나타나 춘향을 떠본 대목은 어떻습니까? 죽기 하루 전인 사람을 시험한 것입니다. 어사인 것을 미리 밝혔다면 무엇이 달라졌을지, 그리고 그가 왜 굳이 떠보았을지 생각해 보십시오.`,
+        `이몽룡이 거지 차림 그대로 옥을 찾아간 대목은 어떻습니까? 밝히지 않은 까닭을 본문은 춘향이 티를 낼까 봐라고 적어 두었습니다. 그래도 옥에 갇힌 사람을 하룻밤 더 그대로 두었습니다. 미리 밝혔다면 무엇이 달라졌을지 생각해 보십시오.`,
         `춘향이 기생의 딸이 아니라 양반의 딸이었다면 이 이야기가 남았을까요? 매를 맞을 일도, 옥에 갇힐 일도 없었을 것입니다. 이야기가 되려면 누군가 그 자리에 있어야 했다는 것이 무슨 뜻인지 생각해 볼 만합니다.`
     ]
 };
@@ -1464,7 +1464,7 @@ const EN = {
             "One reason this story has been loved so long is the turning over. The person in the lowest place beats the person in the highest place. And not by force, but by holding out. Most of the people listening were in low places themselves, so that part must have felt very good.",
             "If you read it again, try following only Wolmae. She is the one who tried to keep her daughter from becoming a courtesan. She is the one who was angriest when Yi Mongnyong left, the one who kept her daughter fed in prison, and the one who sat down in the dirt at the sight of a son-in-law come home in rags. The person who suffered most in this story may well be her.",
             "If Yi Mongnyong had never come back, what would Chunhyang's holding out have been? The story brings him back, but he might not have come. Would what she did have been right even then?",
-            "And what about Yi Mongnyong turning up as a beggar to test her? He was testing a woman who had one day left to live. Think about what would have been different if he had told her, and about why he tested her at all.",
+            "And what about his going to the prison still dressed as a beggar? The book says why he kept it back: she would have shown it on her face. Still, he left her one more night in there. Think about what would have been different if he had told her.",
             "Would this story have survived if Chunhyang had been a nobleman's daughter instead of a courtesan's? There would have been no beating and no prison. It is worth thinking about what it means that somebody had to be standing in that place for there to be a story at all."
         ]
     }
