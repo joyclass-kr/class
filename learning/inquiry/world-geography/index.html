@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#123c46">
   <title>세계지리 지도 학습 | Joyclass</title>
   <link rel="stylesheet" href="../korean-museum/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="styles.css?v=20260904-2">
+  <link rel="stylesheet" href="styles.css?v=20260904-5">
 </head>
 <body class="geography-page">
   <div class="app-shell">
@@ -22,11 +22,13 @@
     </nav>
 
     <main class="study-layout">
-      <section class="map-stage" aria-label="세계지리 주제 지도">
-        <div id="map" role="application" aria-label="세계지리 학습 지도"></div>
-        <a class="map-back" href="../../../" aria-label="학습 메뉴로 돌아가기">←</a>
-        <button class="map-progress" id="progressButton" type="button" aria-label="학습 기록 보기"><strong id="progressScore">0 / 0</strong></button>
-        <div class="map-key" id="mapKey" aria-live="polite"></div>
+      <div class="map-column">
+        <section class="map-stage" aria-label="세계지리 주제 지도">
+          <div id="map" role="application" aria-label="세계지리 학습 지도"></div>
+          <a class="map-back" href="../../../" aria-label="학습 메뉴로 돌아가기">←</a>
+          <button class="map-progress" id="progressButton" type="button" aria-label="학습 기록 보기"><strong id="progressScore">0 / 0</strong></button>
+          <div class="map-key" id="mapKey" aria-live="polite"></div>
+        </section>
         <div class="layer-dock" id="layerDock">
           <div class="layer-dock-head">
             <strong>지도 층</strong>
@@ -35,7 +37,7 @@
           <div class="layer-chips" id="layerChips" role="group" aria-label="지도 층 켜고 끄기"></div>
           <div class="layer-legends" id="layerLegends"></div>
         </div>
-      </section>
+      </div>
 
       <aside class="study-panel">
         <section class="concept-card" aria-labelledby="conceptTitle">
@@ -102,6 +104,6 @@
   <script src="map-layers.js?v=20260904-2"></script>
   <script src="climate-graph.js?v=20260904-2"></script>
   <script src="data.js?v=20260904-2"></script>
-  <script src="app.js?v=20260904-2"></script>
+  <script src="app.js?v=20260904-5"></script>
 </body>
 </html>

@@ -59,7 +59,8 @@
       zoom: 1,
       minZoom: 0,
       maxZoom: 5,
-      zoomSnap: 0.25,
+      zoomSnap: 0, // 폭에 딱 맞는 배율까지 내려가도록 단을 두지 않는다
+      zoomDelta: 0.5,
       maxBounds: [[-90, -1000000], [90, 1000000]],
       maxBoundsViscosity: 1,
       attributionControl: interactive,
@@ -96,18 +97,18 @@
     renderMapContent(themes[currentTheme]);
   }
 
-  // 세계 전체가 한 화면에 들어오는 배율을 최소 배율로 삼는다.
-  // 화면이 지도보다 세로로 길면 위아래에 바다색 여백이 남는다.
+  // 최소 배율 = 칸을 꽉 채우는 배율. 지도 밖(위아래 여백)이 절대 보이지 않는다.
+  // 칸의 가로세로 비율을 CSS에서 지도(360:161)와 같게 잡아 두었으므로 세계 전체가 그대로 들어온다.
   function fitWholeWorld(targetMap) {
     const size = targetMap.getSize();
     if (!size.x || !size.y) return;
-    targetMap.setMinZoom(0);
-    targetMap.fitBounds(VISIBLE_WORLD_BOUNDS, { padding: [6, 6], animate: false });
-    const fitZoom = targetMap.getZoom();
-    targetMap.setMinZoom(fitZoom);
-    const halfVisibleLat = size.y / Math.pow(2, fitZoom) / 2;
-    const latLimit = Math.max(90, halfVisibleLat + 1);
-    targetMap.setMaxBounds([[-latLimit, -1000000], [latLimit, 1000000]]);
+    const latSpan = VISIBLE_WORLD_BOUNDS.getNorth() - VISIBLE_WORLD_BOUNDS.getSouth();
+    const coverZoom = Math.max(Math.log2(size.x / 360), Math.log2(size.y / latSpan));
+    // 최소 배율을 먼저 올려 두면 그 아래로 내려가는 순간이 없다.
+    targetMap.setMinZoom(coverZoom);
+    targetMap.setMaxBounds([[VISIBLE_WORLD_BOUNDS.getSouth(), -1000000], [VISIBLE_WORLD_BOUNDS.getNorth(), 1000000]]);
+    const centerLng = Math.round(targetMap.getCenter().lng / 360) * 360;
+    targetMap.setView([(VISIBLE_WORLD_BOUNDS.getNorth() + VISIBLE_WORLD_BOUNDS.getSouth()) / 2, centerLng], coverZoom, { animate: false });
   }
 
   function visibleWorldOffsets() {

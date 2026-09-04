@@ -23,7 +23,8 @@
       zoom: 1,
       minZoom: 0,
       maxZoom: 5,
-      zoomSnap: .25,
+      zoomSnap: 0,
+      zoomDelta: 0.5,
       maxBounds: [[-90, -1000000], [90, 1000000]],
       maxBoundsViscosity: 1,
       zoomControl: false,
@@ -62,20 +63,16 @@
     renderAtlas();
   }
 
-  // 세계 전체가 한 화면에 들어오는 배율을 최소 배율로 삼는다.
+  // 최소 배율 = 칸을 꽉 채우는 배율. 지도 밖이 보이지 않는다. 칸 비율은 CSS에서 360:161로 맞춘다.
   function fitWholeWorld(animate) {
     const size = map.getSize();
     if (!size.x || !size.y) return;
+    const latSpan = 84 - (-77);
+    const coverZoom = Math.max(Math.log2(size.x / 360), Math.log2(size.y / latSpan));
     const offset = worldCopyIndex * 360;
-    const bounds = [[-77, -180 + offset], [84, 180 + offset]];
-    map.setMinZoom(0);
-    map.fitBounds(bounds, { padding: [6, 6], animate: false });
-    const fitZoom = map.getZoom();
-    map.setMinZoom(fitZoom);
-    const halfVisibleLat = size.y / Math.pow(2, fitZoom) / 2;
-    const latLimit = Math.max(90, halfVisibleLat + 1);
-    map.setMaxBounds([[-latLimit, -1000000], [latLimit, 1000000]]);
-    if (animate) map.fitBounds(bounds, { padding: [6, 6], animate: true });
+    map.setMinZoom(coverZoom);
+    map.setMaxBounds([[-77, -1000000], [84, 1000000]]);
+    map.setView([3.5, offset], coverZoom, { animate: !!animate });
   }
 
   function visibleWorldOffsets() {
