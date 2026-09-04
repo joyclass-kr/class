@@ -521,10 +521,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "어미가 먼저 가르친 것이 달리는 법이 아니라 멈춰 서서 귀 기울이는 것이었음을 보면, 서두르기 전에 살피는 것이 먼저구나.",
-            "풀밭에 나가기 전 어미가 한참을 서서 듣고 냄새를 맡은 것을 보면, 늘 다니던 자리에서도 마음을 놓으면 안 되는구나.",
-            "늙은 사슴을 보고 어미가 말없이 고개만 숙인 것을 보면, 굳이 설명하지 않아도 아이는 보고 배우는구나.",
-            "밤비가 어미에게서 멈춰 서서 듣는 법을 배운 것을 보면, 어른이 가르쳐 준 대로만 하면 위험을 피할 수 있구나."
+            "어미가 풀밭에 나가기 전 목을 길게 빼고 귀를 기울인 것을 보면, 몸을 숨길 데가 없는 곳이라 먼저 살핀 것이구나.",
+            "밤비가 팔리네 앞에서 걸음을 멈추고 바람 냄새를 맡은 것을 보면, 어미가 가르쳐 준 것을 잊지 않은 것이구나.",
+            "늙은 사슴이 말로 가르치지 않고 걸음을 멈추고 코만 든 것을 보면, 따라 하게 두는 것이 그의 방식이었구나.",
+            "어미가 제 몫을 자꾸 밤비 쪽으로 밀어 준 것을 보면, 겨울에는 어른 사슴이 덜 먹어도 되는 것이구나."
         ],
         "answer": 3
     }
@@ -973,10 +973,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The first thing his mother taught was not how to run but how to stop and listen — looking comes before hurrying.",
-                "Before the meadow she stood a long while listening and smelling — even a familiar place is not a safe place.",
-                "When the old stag passed she only bowed her head and said nothing — a child learns by watching, not by being told.",
-                "His mother taught him to stop and listen — do exactly as the grown-ups taught you and danger passes you by."
+                "Before the meadow his mother stretched her neck and listened — out there was nowhere to hide.",
+                "Bambi stopped in front of Faline and smelled the wind — he had not forgotten what his mother taught him.",
+                "The old stag taught nothing in words; he only halted and lifted his nose — letting Bambi copy him was his way.",
+                "His mother kept pushing her share over to him — a grown deer needs less food through the winter."
             ],
             answer: 3
         }

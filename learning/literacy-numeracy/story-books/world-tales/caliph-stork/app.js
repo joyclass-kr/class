@@ -525,10 +525,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "임금님이 웃으면 안 된다는 조건을 대수롭지 않게 여긴 것을 보면, 쉬워 보이는 약속이 제일 어렵기도 하구나.",
-            "개구리 한 마리에 그만 부리를 벌린 것을 보면, 참기 어려운 것은 큰일이 아니라 작은 것이구나.",
-            "돌아갈 말을 마법사들이 모인 자리에 숨어들어 알아낸 것을 보면, 답이 가장 가고 싶지 않은 자리에 있기도 하는구나.",
-            "올빼미가 알려 준 덕에 임금님이 사람으로 돌아온 것을 보면, 어려울 때는 도와줄 사람을 기다리는 것이 상책이구나."
+            "임금님이 웃지만 않으면 되지 않느냐고 한 것을 보면, 그 조건을 대수롭지 않게 여긴 것이구나.",
+            "궁궐 창가에서 나다, 임금이다 외쳤는데 새소리로만 들린 것을 보면, 말을 잃은 것이 가장 큰 일이었구나.",
+            "뒷날 황새 이야기가 나오면 얼굴이 붉어진 것을 보면, 그 일이 두고두고 부끄러웠던 것이구나.",
+            "등짐장수의 웃음이 어쩐지 이상했던 것을 보면, 임금님이 속는 것을 알고 안타까워한 것이구나."
         ],
         "answer": 3
     }
@@ -989,10 +989,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The caliph thought the rule about not laughing was a small thing — the easy-sounding promise is often the hard one.",
-                "One frog was all it took to open his beak — what is hard to bear is not the big thing but the small one.",
-                "He learned the word by creeping into the very place he feared — the answer can be where you least want to go.",
-                "It was the owl's help that turned the caliph back into a man — in trouble, the best thing is to wait for someone to help you."
+                "The caliph said surely it was easy enough not to laugh — he thought nothing of the condition.",
+                "He cried from the window that he was the caliph and it came out as a bird's call — losing speech was the worst of it.",
+                "Years later he still coloured whenever storks came up — the whole business stayed embarrassing.",
+                "There was something odd about the pedlar's smile — he knew the caliph was being taken in and felt sorry for him."
             ],
             answer: 3
         }
