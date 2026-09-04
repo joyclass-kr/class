@@ -505,10 +505,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-                "언니가 무서웠을 텐데도 우물로 뛰어든 것을 보면, 찾아오지 않으면 들어올 생각도 말라는 말을 들었구나.",
-                "언니가 손이 발갛게 익도록 빵을 다 꺼낸 것을 보면, 제 갈 길이 급한 중에도 부탁을 지나치지 못했어.",
-                "동생이 가시로 손끝을 찔러 피를 낸 것을 보면, 실 잣기는 귀찮고 금은 받고 싶었던 거지.",
-                "동생이 송진을 뒤집어쓰고 돌아온 뒤 언니에게 사과한 것을 보면, 그제야 제 잘못을 알았구나."
+                "부지런한 아이가 무서웠을 텐데도 우물로 뛰어든 것을 보면, 찾아오지 않으면 들어올 생각도 말라는 말을 들었구나.",
+                "손이 발갛게 익도록 빵을 다 꺼낸 것을 보면, 제 갈 길이 급한 중에도 부탁을 지나치지 못했어.",
+                "게으른 딸이 가시로 손끝을 찔러 피를 낸 것을 보면, 실 잣기는 귀찮고 금은 받고 싶었던 거지.",
+                "우물가에서 수탉이 큰 소리로 운 것을 보면, 돌아온 딸을 반겨 준 것이었구나."
             ],
         "answer": 3
     }
@@ -985,7 +985,7 @@ const EN = {
                 "Frightened as she was, she jumped into the well — she had been told not to come home without it.",
                 "She pulled out every loaf until her hands were scarlet — even in a hurry she could not walk past someone asking.",
                 "The other girl pricked her finger on a thorn for the blood — she wanted the gold without the spinning.",
-                "Covered in pitch, the younger girl apologised to her sister — she saw at last what she had done."
+                "The cock by the well crowed at the top of its voice — it was welcoming the daughter home."
             ],
             answer: 3
         }
