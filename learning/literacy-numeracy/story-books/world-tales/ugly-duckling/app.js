@@ -485,7 +485,7 @@ function quizPage() {
     const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
                 ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
             </div>
         </div>`).join('');
