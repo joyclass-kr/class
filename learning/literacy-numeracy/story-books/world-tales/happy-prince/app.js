@@ -486,10 +486,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "담장 안에서만 살 때는 슬픔을 몰랐다가 높이 선 뒤에야 도시가 다 보인 것을 보면, 보이는 자리에 서야 알게 되는 것이 있구나.",
-            "두 눈의 사파이어를 내준 뒤로 제비가 대신 보고 와서 말해 준 것을 보면, 볼 수 없게 된 뒤에도 할 수 있는 일이 남아 있구나.",
-            "제비가 오늘만, 하루만 하며 미룬 하루들이 쌓여 겨울이 온 것을 보면, 큰 결심보다 작은 미룸이 사람을 붙잡는구나.",
-            "제비가 남쪽으로 가지 않고 왕자 곁에 남은 것을 보면, 착한 일을 하면 마음이 따뜻해져 추위쯤은 견딜 수 있구나."
+            "왕자가 살아 있을 때 담 안에서만 지낸 것을 보면, 슬픈 것을 본 적이 없어 행복했던 것이구나.",
+            "제비가 한참 뒤에 어느 골목이냐고 슬그머니 물은 것을 보면, 떠나려던 마음을 스스로 돌린 것이구나.",
+            "납으로 된 심장만은 아무리 넣어도 녹지 않은 것을 보면, 용광로도 어쩌지 못한 것이 있었구나.",
+            "시장이 동상을 내리라고 한 것을 보면, 금박이 다 어디로 갔는지 알아보려 한 것이구나."
         ],
         "answer": 3
     }
@@ -870,10 +870,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "Inside the palace wall he had never known sorrow; only up on his pedestal could he see the whole city — some things you learn only from where you stand.",
-                "Once he had given away the sapphires the swallow went and looked for him — there is still work left after you can no longer see.",
-                "Just today, just one more day — and those days piled up into winter; small delays hold you longer than big decisions.",
-                "The swallow stayed with the prince instead of flying south — do a good thing and the warmth of it carries you through the cold."
+                "In life the prince lived inside the palace wall — he was happy because he had never seen anything sad.",
+                "After a while the swallow quietly asked which alley it was — he turned himself back from leaving.",
+                "The leaden heart would not melt however they fed the furnace — there was one thing the fire could not touch.",
+                "The mayor had the statue taken down — he wanted to find out where all the gold leaf had gone."
             ],
             answer: 3
         }

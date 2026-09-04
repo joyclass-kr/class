@@ -498,10 +498,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "어리석은 사람에게는 안 보인다는 한마디가 아무도 말을 못 하게 만든 것을 보면, 말을 막는 데는 힘이 아니라 조건 하나면 되는구나.",
-            "신하들이 거짓말을 하려던 것이 아니라 저만 못 보는 줄 알고 겁이 난 것을 보면, 다들 같은 처지인 줄 모르는 것이 무서운 일이구나.",
-            "아이가 용감해서가 아니라 그 규칙을 몰랐기에 말한 것을 보면, 모르는 사람이 오히려 바로 보기도 하는구나.",
-            "아이가 벌거벗었다고 소리치자 사람들이 수군거린 것을 보면, 용기 있는 한 사람만 있으면 세상이 곧 바뀌는구나."
+            "두 사람이 어리석은 사람에게는 안 보인다고 붙여 둔 것을 보면, 아무도 안 보인다는 말을 못 하게 막아 둔 것이구나.",
+            "늙은 대신이 등에 식은땀을 흘리면서도 훌륭하다고 한 것을 보면, 거짓말을 하려던 것이 아니라 저만 못 보는 줄 알고 겁이 난 것이구나.",
+            "임금님이 아이의 말을 듣고도 허리를 더 곧게 편 것을 보면, 멈추면 다 인정하는 셈이 되니 끝까지 걸은 것이구나.",
+            "이튿날 임금님이 보이면 보인다고 하라 이른 것을 보면, 두 사람을 잡아들여 벌을 준 뒤였구나."
         ],
         "answer": 3
     }
@@ -879,10 +879,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "One line — that fools cannot see it — was enough to stop everyone speaking; it takes a condition, not force, to silence people.",
-                "The courtiers were not lying but afraid they alone could not see — the danger was that none of them knew the others were the same.",
-                "The child spoke not out of courage but because nobody had told him the rule — the one who does not know can see straight.",
-                "The child called out and the crowd began to murmur — one brave voice and the whole thing changes at once."
+                "The weavers added that fools cannot see it — that one line stopped anybody from saying they could not.",
+                "The old minister broke into a cold sweat and still called it splendid — he was not lying but afraid he alone could not see.",
+                "The emperor heard the child and drew himself up straighter — to stop now would be to admit the whole thing.",
+                "Next day he told them to say what they saw — the two weavers had been caught and punished by then."
             ],
             answer: 3
         }
