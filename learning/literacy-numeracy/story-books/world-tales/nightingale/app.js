@@ -511,10 +511,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "황제가 제 나라 안의 밤꾀꼬리를 먼 나라 사람의 책을 읽고서야 안 것을 보면, 가까이 있는 것을 제일 늦게 아는구나.",
-            "궁궐 사람 가운데 그 소리를 아는 사람이 부엌데기 아이뿐이었던 것을 보면, 아는 사람이 늘 높은 자리에 있는 것은 아니구나.",
-            "기계 새가 같은 곡만 되풀이해서 오히려 좋아하는 사람이 많았던 것을 보면, 사람은 미리 아는 것을 편해하는구나.",
-            "황제가 살아 있는 새보다 기계 새를 더 아낀 것을 보면, 새것이 나오면 옛것은 물러나는 것이 세상 이치구나."
+            "그 노래를 아는 사람이 부엌일 하는 아이뿐이었던 것을 보면, 궁궐 밖을 오간 사람이 그 아이뿐이었구나.",
+            "밤꾀꼬리가 금목걸이를 사양한 것을 보면, 임금님의 눈물로 값을 이미 받았다고 여긴 것이구나.",
+            "기계 새가 몇 번을 시켜도 한 음도 틀리지 않은 것을 보면, 사람들이 그것을 더 훌륭하다고 여긴 까닭이구나.",
+            "밤꾀꼬리가 창밖으로 날아가 버린 것을 보면, 임금님이 나라 밖으로 내쫓으라고 한 뒤였구나."
         ],
         "answer": 3
     }
@@ -966,10 +966,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The emperor learned of the nightingale in his own country from a book written far away — what is nearest is known last.",
-                "In the whole palace only the kitchen girl knew the song — the one who knows is not always the one in the high place.",
-                "The clockwork bird played the same tune every time, and many liked it the better for that — people are comfortable with what they can predict.",
-                "The emperor set the clockwork bird above the living one — when the new thing comes, the old one steps aside; that is how it goes."
+                "Only the kitchen girl knew the song — she was the one person who went in and out of the palace.",
+                "The nightingale would not take the gold chain — it counted the emperor's tears as payment enough.",
+                "The clockwork bird never missed a note however often they wound it — that was why people thought it the better bird.",
+                "The nightingale flew out of the window — this was after the emperor had ordered it banished."
             ],
             answer: 3
         }

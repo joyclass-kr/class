@@ -522,10 +522,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "하필 목소리를 내주었기에 왕자를 구한 사람이 저라는 말을 끝내 못 한 것을 보면, 무엇을 내주느냐가 그다음을 다 정하는구나.",
-            "걸을 때마다 아팠는데도 춤을 추고 아무도 그 아픔을 몰랐던 것을 보면, 가장 조용한 아픔이 가장 오래가는구나.",
-            "바란 것이 왕자만이 아니라 물 밖 세상이었고 그 마음이 열다섯 살 생일에 이미 시작된 것을 보면, 사람을 움직이는 것은 하나만이 아니구나.",
-            "인어공주가 목소리를 내주고 다리를 얻은 것을 보면, 무엇을 얻으려면 그만한 것을 내주어야 하는구나."
+            "인어공주가 왕자를 모래밭에 눕히고 바위 뒤로 숨은 것을 보면, 사람 앞에 나설 수 없는 몸이었구나.",
+            "하필 목소리를 값으로 낸 것을 보면, 제가 구했다는 말을 할 길이 아주 막혀 버린 것이구나.",
+            "단검을 쥔 손이 천천히 내려간 것을 보면, 돌아갈 길보다 왕자가 편한 쪽을 고른 것이구나.",
+            "언니들이 머리를 잘라 단검을 얻어 온 것을 보면, 막내가 보낸 기별을 받고 달려온 것이구나."
         ],
         "answer": 3
     }
@@ -936,10 +936,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "Of all things she gave up her voice, so she could never say it was she who saved him — what you give up decides everything after.",
-                "Every step hurt and she danced anyway, and no one knew — the quietest pain is the one that lasts.",
-                "It was not only the prince she wanted but the world above, and that began on her fifteenth birthday — more than one thing moves a person.",
-                "She gave up her voice and got her legs — to gain something you must give up something of equal worth."
+                "She laid him on the sand and hid behind a rock — she was not something that could be seen by people.",
+                "Of all things she paid with her voice — the one way of saying it was she who saved him was shut off.",
+                "The hand holding the knife came slowly down — she chose his peace over her own way home.",
+                "Her sisters cut off their hair to buy the knife — they had come because she sent them word."
             ],
             answer: 3
         }

@@ -521,10 +521,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "전나무가 늘 다음을 기다리느라 서 있는 숲이 눈에 들어오지 않은 것을 보면, 지금을 보지 못하면 어디에 서 있어도 마찬가지구나.",
-            "촛불을 켠 그 하루가 평생 가장 좋은 날이었는데 그날조차 내일을 생각한 것을 보면, 좋은 날은 지나고 나서야 알아지는구나.",
-            "다락방에 놓인 뒤에야 숲을 떠올렸지만 그때는 이미 뿌리가 없었던 것을 보면, 알아보는 데도 때가 있는 법이구나.",
-            "전나무가 방 한가운데에서 촛불을 달고 아이들에게 둘러싸인 것을 보면, 기다리면 좋은 날은 반드시 오는구나."
+            "햇빛과 바람이 지금이 제일 좋은 때라고 일러 준 것을 보면, 전나무만 그 말을 흘려들은 것이구나.",
+            "다락방에서 생쥐에게 숲 이야기를 하다 문득 말을 멈춘 것을 보면, 말로 하고 나서야 그때가 눈앞에 그려진 것이구나.",
+            "마당 한구석의 어린 나무를 물끄러미 본 것을 보면, 옛날의 저를 보는 것 같았던 것이구나.",
+            "전나무가 다락방에서 곧 다시 꾸며 주겠지 하고 기다린 것을 보면, 봄에 마당에 심어 주겠다는 약속을 받아 둔 것이구나."
         ],
         "answer": 3
     }
@@ -982,10 +982,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "Always waiting for the next thing, the fir never saw the wood it stood in — if you cannot see now, no place will do.",
-                "The one candlelit evening was the best of its life, and even then it thought of tomorrow — a good day is known only afterwards.",
-                "Only up in the attic did it remember the wood, and by then it had no roots — there is a right time even for noticing.",
-                "The fir stood in the middle of the room with candles and children all round it — wait long enough and the good day always comes."
+                "The sunlight and the wind told it that now was the best of times — the fir was the only one not listening.",
+                "Up in the attic it stopped in the middle of telling the mice about the forest — saying it aloud was what brought it back.",
+                "It looked a long while at the little sapling in the corner of the yard — it was like looking at its own younger self.",
+                "It waited in the attic to be decorated again — it had been promised a place in the garden come spring."
             ],
             answer: 3
         }
