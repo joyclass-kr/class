@@ -527,10 +527,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "가진 것이 적어도, 내가 잘하는 것 하나를 잘 쓰면 길이 열리는구나.",
-            "작은 것이라도 여러 날 거르지 않고 보내면 믿음이 쌓이는구나.",
-            "맞서 싸우는 대신 다른 길을 찾으면 큰 문제도 풀 수 있구나.",
-            "속인 것이 들통나지 않았으니, 막내도 끝까지 숨기는 편이 나았겠구나."
+            "고양이가 맨 처음 자루와 장화부터 달라고 한 것을 보면, 일을 벌이기 전에 연장을 챙겨야 하는구나.",
+            "토끼와 꿩을 여러 달 거르지 않고 보낸 것을 보면, 작은 것이라도 꾸준하면 이름이 남는구나.",
+            "마법사를 쥐로 변하게 한 것을 보면, 맞서 싸우기보다 다른 길을 찾는 편이 나을 때가 있구나.",
+            "서두르지 않고 오래 걸려도 튼튼하게 지어 둔 것을 보면, 급하게 한 일은 오래가지 못하는구나."
         ],
         "answer": 3
     }
@@ -920,10 +920,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                'Even with little to start from, one thing I am good at can open a road.',
-                'Small things sent day after day are what build trust.',
-                'When I cannot win head-on, there may be another way round.',
-                'The trick was never found out, so he would have done better to keep it to himself.'
+                'He asked for a sack and boots before anything else — so you get your tools together before you start.',
+                'Rabbits and pheasants went to the king for months without a gap — so small things done steadily make a name.',
+                'The sorcerer was beaten by being turned into a mouse — so there are times when going round beats going at it.',
+                'It was built slowly and solidly instead of in a hurry — so work done in haste does not last.'
             ],
             answer: 3
         }

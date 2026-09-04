@@ -582,6 +582,19 @@ body {
     gap: 8px;
 }
 
+/* 보기가 문장인 문제는 알약 대신 세로로 쌓는다. */
+.quiz-choices-stack {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.quiz-choices-stack .quiz-choice {
+    width: 100%;
+    text-align: left;
+    border-radius: 12px;
+    line-height: 1.5;
+}
+
 .quiz-choice {
     padding: 8px 14px;
     border: 1px solid var(--parchment-shade);
