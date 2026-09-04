@@ -31,7 +31,7 @@ const CHAPTERS = [
                 ],
                 right: [
                     "소년은 품에서 종이를 꺼내 조심조심 폈어요. 그 안에 좁쌀 한 톨이 들어 있었지요.",
-                    "\"제 전 재산입니다. 잘 간수해 주세요.\"",
+                    "\"제가 가진 것 전부입니다. 잘 맡아 주세요.\"",
                     "\"이 아이가 참 별나구먼.\"",
                     "주인은 터져 나오는 웃음을 겨우 참으며 그것을 선반에 올려 두었답니다."
                 ]
@@ -48,7 +48,7 @@ const CHAPTERS = [
                 right: [
                     "\"미안하네. 대신 그 쥐라도 잡아 줌세.\"",
                     "주인은 온 집을 뒤져 기어이 쥐 한 마리를 잡아 왔습니다. 땀을 뻘뻘 흘리면서요.",
-                    "\"고맙습니다. 잘 간수하겠습니다.\"",
+                    "\"고맙습니다. 잘 데려가겠습니다.\"",
                     "소년은 쥐를 받아 들고 꾸벅 인사한 뒤 다시 길을 나섰답니다."
                 ]
             }
@@ -63,7 +63,7 @@ const CHAPTERS = [
                 emoji: "🐱",
                 left: [
                     "소년은 다음 집에서도 똑같이 말했어요. 쥐를 두 손으로 공손히 내밀면서요.",
-                    "\"제 전 재산입니다. 잘 부탁드립니다.\"",
+                    "\"제가 가진 것 전부입니다. 잘 부탁드립니다.\"",
                     "주인이 두 손으로 그것을 받아 들었어요.",
                     "\"…쥐가 말인가?\"",
                     "주인은 어이가 없어 눈만 껌뻑였지요."
@@ -81,7 +81,7 @@ const CHAPTERS = [
                 left: [
                     "소년은 고양이를 품에 안고 다시 길을 나섰어요.",
                     "그다음 집에서는 고양이를 맡겼습니다. 소년은 이번에도 똑같은 말을 했지요.",
-                    "\"제 전 재산이에요. 잘 부탁드립니다.\"",
+                    "\"제가 가진 것 전부예요. 잘 부탁드립니다.\"",
                     "\"허, 그 말 참 자주 하는구먼.\"",
                     "주인이 껄껄 웃었어요."
                 ],
@@ -145,7 +145,7 @@ const CHAPTERS = [
                     "\"저 어린 것이 웬 황소를 다 끌고 가누?\"",
                     "\"어디 부잣집 아들인가 보네.\"",
                     "사람들이 뒤를 돌아보았지요.",
-                    "\"제 전 재산입니다.\"",
+                    "\"제가 가진 것 전부입니다.\"",
                     "소년이 빙그레 웃으며 대답했지요. 이번에는 아무도 웃지 않았답니다."
                 ]
             },
@@ -515,7 +515,7 @@ const EN = {
             { w: "unfolded (unfold)", k: "펴다, 펼치다", s: "and unfolded it very carefully" },
             { w: "Inside was ~", k: "그 안에는 ~이 있었다", s: "Inside was a single grain of millet." },
             { w: "everything I own", k: "내가 가진 전부", s: "This is everything I own." },
-            { w: "keep ~ safe", k: "~을 잘 간수하다", s: "Please keep it safe." },
+            { w: "keep ~ safe", k: "~을 잘 맡아 두다", s: "Please keep it safe." },
             { w: "What a funny ~!", k: "참 별난 ~로구나!", s: "What a funny little fellow." },
             { w: "fellow", k: "녀석, 사람", s: "What a funny little fellow." },
             { w: "held back a laugh (hold back)", k: "웃음을 참았다", s: "The owner held back a laugh" },
@@ -548,7 +548,7 @@ const EN = {
             { w: "exactly the same", k: "똑같은", s: "said exactly the same thing" },
             { w: "held ~ out (hold out)", k: "~을 내밀었다", s: "He held the mouse out in both hands." },
             { w: "in both hands", k: "두 손으로", s: "He held the mouse out in both hands." },
-            { w: "take good care of ~", k: "~을 잘 돌보다, 간수하다", s: "Please take good care of it." },
+            { w: "take good care of ~", k: "~을 잘 돌보다, 맡아 두다", s: "Please take good care of it." },
             { w: "puzzled", k: "어리둥절한", s: "He was so puzzled" },
             { w: "so ~ that ...", k: "너무 ~해서 ...하다", s: "so puzzled that he could only blink" },
             { w: "could only blink", k: "눈만 껌뻑일 뿐이었다", s: "he could only blink" },
@@ -797,7 +797,7 @@ const QUIZ = [
         choices: [
             "좁쌀 한 톨을 종이에 싸서 맡긴 것을 보면, 작다고 함부로 하지 않는 마음이 시작이었구나.",
             "집집마다 미안해하며 더 큰 것을 내준 것을 보면, 그때 사람들은 남의 것을 무겁게 여겼구나.",
-            "소년이 끝까지 제 전 재산이라고 말한 것을 보면, 값이 아니라 태도가 사람을 만드는구나.",
+            "소년이 끝까지 제가 가진 것 전부라고 말한 것을 보면, 값이 아니라 태도가 사람을 만드는구나.",
             "소년이 맡길 때마다 더 큰 것으로 바꿔 달라고 한 것을 보면, 셈이 밝은 아이였구나."
         ],
         answer: 3
