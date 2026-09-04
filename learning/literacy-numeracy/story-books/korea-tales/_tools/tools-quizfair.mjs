@@ -35,6 +35,18 @@ function shared(a, b) {
   return [...out].filter(p => !COMMON.some(c => p.includes(c) || c.includes(p)));
 }
 
+/* 두 글줄에 똑같이 이어져 나오는 가장 긴 토막. 띄어쓰기도 이어진 것으로 친다. */
+function longestRun(a, b) {
+  let best = '';
+  for (let i = 0; i < a.length; i++) {
+    for (let len = a.length - i; len > best.length; len--) {
+      const piece = a.slice(i, i + len);
+      if (/^[가-힣 ]+$/.test(piece) && b.includes(piece)) { best = piece; break; }
+    }
+  }
+  return best.trim();
+}
+
 const BAD = ['침을 뱉', '달아났', '찡그', '비웃', '놀렸', '때렸', '쫓아냈', '내쫓', '빼앗', '훔쳤',
   '모른 척', '거짓말', '골탕', '짓밟', '버리고', '외면', '고개를 돌렸', '못 본 척', '욕심'];
 const GOOD = ['도와', '나누어', '나눠', '감싸', '돌보', '구해', '안아', '덮어', '지켜',
@@ -71,6 +83,23 @@ for (const b of books) {
     const maxOther = Math.max(...others.map(o => o.length));
     const tooLong = q.wide ? ans.length > maxOther * 1.25 : ans.length >= maxOther + 5;
     if (tooLong) why.push('긴 답 · ' + ans.length + '자 vs ' + maxOther + '자');
+
+    /* 「읽고 난 반응」의 틀린 보기가, 이 책이 다른 문항에서 "맞다"고 해 둔 것을
+       그대로 되풀이하고 있지 않은지 본다. 겹치면 그 보기는 통째로 참일 수 있다.
+       콩쥐팥쥐에서 "감사에게 검은 소를 찾아 달라고 한 것"을 틀린 보기로 썼는데
+       그것이 다른 문항의 정답이었다. 겹침 자체가 잘못은 아니고, 다시 볼 자리다.
+
+       낱말 하나가 같은 것은 아무 뜻이 없다(나물, 하루, 부자…). 말토막이
+       통째로 이어져 겹칠 때만 본다. 그래서 띄어쓰기까지 넣어 이어 세고,
+       여섯 자를 넘을 때만 잡는다. */
+    if (q.wide) {
+      const 앞절 = ans.split('것을 보면')[0];
+      QUIZ.forEach((o, oi) => {
+        if (oi === idx || o.wide) return;
+        const 토막 = longestRun(앞절, o.choices[o.answer]);
+        if (토막.length >= 6) why.push('다른 문항 정답과 겹침 · ' + (oi + 1) + '번 「' + 토막 + '」');
+      });
+    }
 
     if (why.length) hits.push('  ' + (idx + 1) + '. ' + q.q + '\n     정답: ' + ans + '\n     [' + why.join(' / ') + ']');
   });
