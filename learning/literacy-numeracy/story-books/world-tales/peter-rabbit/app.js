@@ -510,10 +510,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "상추와 강낭콩과 무를 실컷 먹고 배가 아파 파슬리를 찾다 아저씨와 마주친 것을 보면, 많이 먹은 것이 걸음을 늦추었구나.",
-            "웃옷과 신발을 다 잃고 돌아온 피터를 어머니가 나무라지 않고 자리에 눕힌 것을 보면, 이미 겪은 아이에게는 꾸중이 필요 없구나.",
-            "포터가 토끼를 오래 기르며 살펴본 사람이라 몸짓이 정확한 것을 보면, 잘 그리려면 오래 보아야 하는구나.",
-            "피터가 밭에서 상추와 강낭콩과 무를 실컷 먹은 것을 보면, 배를 든든히 채워 두면 어떤 고비도 넘길 수 있구나."
+            "어머니가 아버지 이야기를 꺼낸 것을 보면, 그 밭이 얼마나 위험한지 알려 주려 한 것이구나.",
+            "피터가 파슬리를 찾아 나선 것을 보면, 너무 많이 먹어 배가 아팠던 것이구나.",
+            "허수아비가 작은 웃옷과 신발을 걸치고 있던 것을 보면, 피터가 두고 온 것이 거기 쓰인 것이구나.",
+            "피터가 연못가 고양이를 그냥 지나친 것을 보면, 고양이와 사이가 좋아 걱정하지 않은 것이구나."
         ],
         "answer": 3
     }
@@ -981,10 +981,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "He ate his fill of lettuce, beans and radishes, then went looking for parsley and ran into Mr McGregor — the eating is what slowed his legs.",
-                "He came home with no jacket and no shoes, and his mother put him to bed without a word — a child who has already been through it needs no telling off.",
-                "Potter kept rabbits for years and watched them, and it shows in every movement — to draw a thing well you must look at it long.",
-                "Peter ate his fill of lettuce, beans and radishes — with a full stomach you can get through anything."
+                "Their mother brought up their father — she was telling them how dangerous that garden was.",
+                "Peter went looking for parsley — he had eaten far too much and his stomach hurt.",
+                "The scarecrow was wearing a little jacket and shoes — what Peter left behind had been put to use.",
+                "Peter walked past the cat by the pond — they were on good terms and he was not worried."
             ],
             answer: 3
         }

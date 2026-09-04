@@ -520,10 +520,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "귀가 당나귀 귀가 된 까닭이 겨루기에서 엉뚱한 쪽 손을 들어 준 값이었음을 보면, 잘 듣지 못한 것에도 값이 따르는구나.",
-            "이발사가 참기 힘들었던 까닭이 그 말이 대단해서가 아니라 혼자만 알고 있어야 했기 때문인 것을 보면, 짐은 크기보다 혼자 지는 데서 무거워지는구나.",
-            "온 나라가 알게 되자 임금님이 오히려 모자를 벗고 마당으로 나온 것을 보면, 숨길 것이 없어지면 마음이 편해지는구나.",
-            "이발사가 아무도 없는 데서 땅에 대고 소리친 것을 보면, 답답한 일은 혼자 털어놓고 나면 그것으로 끝나는구나."
+            "이발사가 얼굴은 반쪽이 되고 배만 불룩해진 것을 보면, 못 한 말이 그 안에 쌓이는 것 같았던 것이구나.",
+            "땅에다 소리치고 나자 불룩하던 배가 스르르 꺼진 것을 보면, 말하고 나서야 몸이 풀린 것이구나.",
+            "임금님이 모자를 벗고 마당으로 나간 것을 보면, 온 나라가 다 아는 마당에 숨길 것이 없어진 것이구나.",
+            "아폴론이 당나귀 귀가 어울리겠다고 한 것을 보면, 임금님이 알아듣도록 미리 일러 준 것이구나."
         ],
         "answer": 3
     }
@@ -987,10 +987,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "His ears changed because he had raised the wrong hand in the contest — there is a price for not listening properly.",
-                "What the barber could not bear was not that the secret was great but that he alone had to hold it — a load gets heavy from being carried alone.",
-                "Once the whole country knew, the king took off his cap and walked out into the yard — with nothing left to hide, the mind rests.",
-                "The barber shouted it into a hole where nobody could hear — say the thing out loud alone and it is over."
+                "The barber's face grew thin while his belly swelled — the unsaid thing felt as if it were piling up inside him.",
+                "Once he had shouted it into the ground his belly went down again — it was the saying of it that eased him.",
+                "The king walked out into the yard without his cap — with the whole country knowing, there was nothing left to hide.",
+                "Apollo said donkey's ears would suit him — he was giving the king fair warning in words he could understand."
             ],
             answer: 3
         }
