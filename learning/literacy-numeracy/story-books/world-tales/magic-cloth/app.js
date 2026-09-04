@@ -525,10 +525,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "두 형이 주막에서 손님들 앞에 펼쳐 보인 탓에 주인이 알게 된 것을 보면, 자랑이 곧 알려 주는 일이구나.",
-            "막내가 자루 안에 무엇이 들었는지 끝까지 말하지 않은 것을 보면, 말하지 않는 것도 하나의 수구나.",
-            "막내가 이긴 것이 물건이 더 좋아서가 아니라 형들이 어디서 잃었는지 알고 갔기 때문인 것을 보면, 남의 실패를 보고 가는 사람이 덜 잃는구나.",
-            "세 형제가 저마다 훌륭한 요술 물건을 하나씩 얻은 것을 보면, 누구에게나 제 몫의 복이 돌아오는구나."
+            "막내가 형들이 묵었던 그 주막을 일부러 골라 간 것을 보면, 두 번 다 그 집이라는 것을 짚어 낸 것이구나.",
+            "막내가 자루에 세상에서 제일 귀한 것이 들었다고 큰소리친 것을 보면, 주인이 손을 대게 만들려던 것이구나.",
+            "주인이 나중에는 몽둥이 소리만 들어도 얼굴이 하얘진 것을 보면, 그 밤 일이 몸에 남은 것이구나.",
+            "스승들이 형들에게 식탁보와 당나귀를 내준 것을 보면, 주막에서 빼앗길 줄 알고 미리 시험해 본 것이구나."
         ],
         "answer": 3
     }
@@ -993,10 +993,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The two elder brothers spread it out in front of the whole inn, and that is how the landlord knew — showing off is the same as telling.",
-                "The youngest never said what was in the sack — saying nothing is a move of its own.",
-                "He won not because his gift was better but because he knew where his brothers had lost theirs — the one who watches others fail loses less.",
-                "Each of the three brothers came home with a fine magic gift — everyone gets the share of luck that is due to them."
+                "The youngest chose the very inn his brothers had stayed at — he had worked out that both times it was that house.",
+                "He boasted that the sack held the most precious thing in the world — he was making sure the landlord would reach for it.",
+                "Later the landlord went pale at the mere sound of the cudgel — that night had stayed in his body.",
+                "The masters handed the elder brothers a cloth and a donkey — they knew the inn would rob them and were testing them."
             ],
             answer: 3
         }

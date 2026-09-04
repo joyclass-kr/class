@@ -521,10 +521,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "나그네가 당나귀로 지낸 뒤로 길에서 마주치는 당나귀가 달리 보였다는 것을 보면, 겪어 봐야 보이는 것이 있구나.",
-            "주막 주인이 어두워서 빛깔을 못 보고 제가 당나귀가 된 것을 보면, 남을 속이려던 꾀가 저를 치기도 하는구나.",
-            "나그네가 그런 주인에게 노란 열매를 먹인 것을 보면, 갚아 줄 수 있을 때 갚지 않는 쪽을 고르기도 하는구나.",
-            "나그네가 주막 주인에게 노란 열매를 먹여 사람으로 되돌린 것을 보면, 잘못한 사람도 뉘우치면 용서받는 것이구나."
+            "나그네가 길에서 마주치는 당나귀들이 달리 보였다고 한 것을 보면, 겪어 보고서야 눈에 들어온 것이구나.",
+            "주막 주인이 어두워서 빛깔이 잘 보이지도 않는데 붉은 열매를 따 먹은 것을 보면, 마음이 급했던 것이구나.",
+            "나그네가 언덕까지 몇 걸음인지 세어 둔 것을 보면, 돌아갈 날을 밤마다 헤아린 것이구나.",
+            "나그네가 노란 열매를 몇 알 챙겨 둔 것을 보면, 주막 주인에게 주려고 미리 마련해 둔 것이구나."
         ],
         "answer": 3
     }
@@ -984,10 +984,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "After his time as a donkey he looked at every donkey on the road differently — some things you only see once you have been there.",
-                "In the dark the innkeeper could not tell the berries apart and became a donkey himself — a trick meant for others can turn on you.",
-                "The traveller fed him the yellow berry all the same — you can be able to get even and choose not to.",
-                "The traveller gave the innkeeper the yellow berry and made him a man again — even a wrongdoer is forgiven once he is sorry."
+                "He said every donkey he passed on the road looked different to him now — he only saw them after being one.",
+                "The innkeeper ate the red fruit in the dark where he could hardly tell the colour — he was in too much of a hurry.",
+                "The traveller counted how many steps it was to the hill — every night he was measuring the way back.",
+                "He had a few yellow berries put by — he had got them ready for the innkeeper."
             ],
             answer: 3
         }

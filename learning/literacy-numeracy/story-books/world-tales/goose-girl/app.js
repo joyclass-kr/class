@@ -504,10 +504,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "자리를 빼앗기고도 아무 말을 못 한 것이 약속 때문이었음을 보면, 지킨 약속이 사람을 묶어 놓기도 하는구나.",
-            "임금님이 캐묻지 않고 난로에게라도 말해 보라고 한 것을 보면, 사람에게 못 할 말도 어딘가에는 할 수 있어야 하는구나.",
-            "아침마다 팔라다의 한마디를 들으려고 성문 밑에서 걸음을 멈춘 것을 보면, 한마디로 버티는 날도 있구나.",
-            "공주가 자리를 빼앗기고도 오래 참은 것을 보면, 억울한 일은 가만히 참고 있으면 저절로 풀리는구나."
+            "냇가에서 손수건을 잃고 다리에 힘이 쭉 빠진 것을 보면, 마음을 붙들어 주던 것이 함께 떠내려간 것이구나.",
+            "공주가 문지기에게 지닌 돈을 모두 내민 것을 보면, 그 성에서 저를 아는 것이 팔라다뿐이었기 때문이구나.",
+            "임금님이 난로에게라도 털어놓아 보라고 한 것을 보면, 억지로 캐물을 일이 아님을 알아본 것이구나.",
+            "콘라트가 임금님을 찾아간 것을 보면, 거위지기가 딱해 보여 사정을 알려 주려 한 것이구나."
         ],
         "answer": 3
     }
@@ -922,10 +922,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "She could say nothing while her place was taken, because of a promise — a promise kept can also be a rope.",
-                "The king did not press her; he told her to say it to the stove if she must — what cannot be said to a person must still be sayable somewhere.",
-                "Every morning she stopped under the gate for Falada's one sentence — some days you get through on a single line.",
-                "The princess bore it a long time after her place was taken — a wrong will sort itself out if you keep quiet."
+                "She lost the handkerchief in the stream and the strength went out of her legs — what had been holding her up floated off with it.",
+                "She gave the gatekeeper every coin she had — Falada was the only one in that castle who knew her.",
+                "The king told her to say it to the stove instead — he saw this was not something to be forced out of her.",
+                "Conrad went to the king — he felt sorry for the goose girl and wanted her story told."
             ],
             answer: 3
         }
