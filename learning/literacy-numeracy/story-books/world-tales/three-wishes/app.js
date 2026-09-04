@@ -535,7 +535,7 @@ const QUIZ = [
                 "나무꾼이 정령의 말을 듣고 도끼를 내려놓은 것을 보면, 그 나무가 남의 집인 줄 알고 물러선 거야.",
                 "첫 소원이 소시지가 된 것을 보면, 아껴 쓰려던 것이 아니라 무심코 나온 말이었구나.",
                 "마지막 하나로 큰 집도 금덩이도 아니라 아내의 코를 고른 것을 보면, 살림보다 아내 얼굴이 먼저였던 거지.",
-                "나무꾼이 칼을 가지러 간 것을 보면, 소시지를 얇게 저며 둘이 나누어 먹을 셈이었던 거야."
+                "아내가 큰 집이냐 금덩이냐 하며 방 안을 이리저리 돈 것을 보면, 남편이 고를 때까지 잠자코 기다려 준 거야."
             ],
         "answer": 3
     }
@@ -1020,7 +1020,7 @@ const EN = {
                 "He put down his axe when the spirit spoke — he understood the tree was somebody's home and stepped back.",
                 "The first wish went on a sausage — it was not thrift but a word said without thinking.",
                 "For the last one he chose neither a house nor gold but his wife's nose — her face came before the household.",
-                "The woodcutter went for a knife — he meant to slice the sausage thin so the two of them could share it."
+                "The wife paced the room weighing a big house against a lump of gold — she was waiting quietly for her husband to choose."
             ],
             answer: 3
         }
