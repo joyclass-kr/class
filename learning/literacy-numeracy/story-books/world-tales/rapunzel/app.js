@@ -503,10 +503,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "탑에 문도 계단도 없어 드나드는 길이 라푼첼의 머리카락뿐이었던 것을 보면, 갇힌 사람의 몸이 문이 되기도 하는구나.",
-            "심심해서 부른 노래가 탑 밖으로 나가 왕자와 말을 트게 한 것을 보면, 아무 뜻 없이 한 일이 길이 되기도 하는구나.",
-            "몇 해를 눈먼 채 헤매던 왕자를 다시 찾아낸 것도 그 노래인 것을 보면, 탑에서는 심심풀이였던 것이 들판에서는 길이 되는구나.",
-            "마녀가 라푼첼을 문도 계단도 없는 탑에 둔 것을 보면, 아끼는 사람은 그렇게라도 지켜야 하는구나."
+            "남편이 겁에 질려 태어날 아이를 주겠다고 한 것을 보면, 다른 생각을 할 겨를이 없었던 것이구나.",
+            "라푼젤이 무심코 할머니는 왜 그렇게 무겁냐고 물은 것을 보면, 숨겨야 하는 일인 줄을 몰랐던 것이구나.",
+            "들판에서도 들어 줄 사람 없이 노래를 부른 것을 보면, 탑에서 하던 버릇이 그대로 남은 것이구나.",
+            "마녀가 잘린 머리카락을 창가 고리에 매어 둔 것을 보면, 라푼젤이 돌아오면 다시 올라오라고 남겨 둔 것이구나."
         ],
         "answer": 3
     }
@@ -953,10 +953,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The tower had no door and no stair; the only way in or out was her hair — the body of the shut-in becomes the door.",
-                "She sang because she was bored, and the song carried out of the tower — a thing done for no reason can open a road.",
-                "It was that same song that found the blind prince after years of wandering — what was a way to pass time in the tower was a road out in the fields.",
-                "The witch kept Rapunzel in a tower with no door and no stair — that is what it takes to keep someone you care about safe."
+                "Frightened, the husband promised the child that was coming — he had no room left to think.",
+                "Rapunzel asked without thinking why the old woman was so heavy — she had no idea it was something to hide.",
+                "Out on the moor she sang with nobody to hear her — it was the habit she had kept from the tower.",
+                "The witch tied the cut hair to the hook by the window — she left it there so Rapunzel could climb up again if she came back."
             ],
             answer: 3
         }

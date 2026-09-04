@@ -491,10 +491,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "쥐가 사라진 뒤에야 값이 아까워진 것을 보면, 곤란할 때와 끝난 뒤의 셈이 달라지는구나.",
-            "뒤처진 아이가 따라왔을 때 사나이가 무릎을 굽힌 것을 보면, 값을 받으러 온 사람도 사람이었구나.",
-            "칠백 년 전 아이들이 사라졌다는 기록의 빈자리를 이야기가 채운 것을 보면, 모르는 일 앞에서 사람은 이야기를 지어 두는구나.",
-            "사나이가 약속대로 쥐를 한 마리도 남기지 않고 몰아낸 것을 보면, 맡은 일을 끝까지 해내면 값은 저절로 따라오는구나."
+            "시장이 이만 닢인들 주겠다더니 쥐가 사라지자 오십 닢을 민 것을 보면, 곤란이 끝나자 셈이 달라진 것이구나.",
+            "사나이가 값을 두 번 청하지 않는다고 한 것을 보면, 그 자리에서 이미 다른 것을 받기로 마음먹은 것이구나.",
+            "목발 짚은 아이 앞에서 무릎을 굽히고 피리를 내린 것을 보면, 제가 무엇을 하려던 것인지 그제야 돌아본 것이구나.",
+            "아이들이 피리 소리를 따라나선 것을 보면, 어른들이 약속을 어긴 것을 알고 나선 것이구나."
         ],
         "answer": 3
     }
@@ -886,10 +886,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "It was only after the rats were gone that the price began to look too high — what you will pay in trouble is not what you will pay after.",
-                "When the child who could not keep up came limping along, the piper knelt down — the man who came for his money was a person too.",
-                "A record says children vanished from Hameln seven hundred years ago, and the story grew into that gap — people fill what they do not know with a tale.",
-                "The piper cleared out every last rat as he had promised — do the job through to the end and the payment follows."
+                "He would have paid twenty thousand, and once the rats were gone he pushed over fifty — the sum changed the moment the trouble ended.",
+                "The piper said he never asks for his fee twice — right there he had decided to take something else instead.",
+                "He knelt in front of the child on crutches and lowered his pipe — only then did he look at what he had set out to do.",
+                "The children followed the pipe out of town — they knew the grown-ups had broken their word and went with him."
             ],
             answer: 3
         }

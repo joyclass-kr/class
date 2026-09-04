@@ -527,10 +527,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "어머니가 화가 나서 창밖으로 던진 콩이 그 자리에서 자란 것을 보면, 홧김에 한 일이 길을 열기도 하는구나.",
-            "가장 위험한 집에서 잭을 숨겨 준 사람이 거인의 아내였던 것을 보면, 도움은 뜻밖의 자리에서 오는구나.",
-            "이미 먹고살 만해진 뒤에 세 번째로 올라간 것을 보면, 그만둘 때를 아는 것이 시작하는 것보다 어렵구나.",
-            "잭이 소를 콩 몇 알과 바꿔 왔는데 결국 부자가 된 것을 보면, 밑진 것처럼 보여도 참고 있으면 다 잘되는구나."
+            "어머니가 콩을 창밖으로 확 던진 것을 보면, 그 콩이 하필 마당에서 자란 까닭이구나.",
+            "거인의 아내가 목소리를 낮추면서도 잭을 들인 것을 보면, 남편이 무서운 줄 알면서 그냥 두지 못한 것이구나.",
+            "잭이 세 번째로 올라간 것을 보면, 살림이 이미 폈는데도 궁금해서 간 것이구나.",
+            "거인이 그 뒤로 내려오지 않은 것을 보면, 잭이 도끼를 내려놓는 것을 보고 마음을 푼 것이구나."
         ],
         "answer": 3
     }
@@ -934,10 +934,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "His mother threw the beans out of the window in temper, and that is where they grew — a thing done in anger can open the road.",
-                "In the most dangerous house in the story it was the giant's wife who hid him — help comes from where you would not look.",
-                "He climbed a third time when they already had enough — knowing when to stop is harder than starting.",
-                "Jack traded the cow for a few beans and ended up rich — a bad bargain comes good if you just sit tight."
+                "His mother flung the beans out of the window — that is why they came up in the yard of all places.",
+                "The giant's wife lowered her voice and let him in anyway — she knew what her husband was and still could not turn him away.",
+                "Jack climbed a third time — they were doing well by then and he went because he wanted to know.",
+                "The giant never came down again — he had seen Jack put the axe down and let the matter go."
             ],
             answer: 3
         }

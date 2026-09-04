@@ -523,10 +523,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "왕비가 말로 묻지 않고 요와 이불 밑에 완두콩을 넣은 것을 보면, 말로 물으면 꾸며 낼 수 있는 것이 있구나.",
-            "아가씨가 잘 잤다고 하면 넘어갈 수 있었는데 못 잤다고 그대로 말한 것을 보면, 손해 볼 자리에서 하는 말이 그 사람을 보여 주는구나.",
-            "완두콩이 지금도 박물관에 있다며 정말 있었던 이야기라고 한 것을 보면, 안데르센이 끝에서 능청을 떨었구나.",
-            "왕자가 여러 나라를 돌아다니며 공주를 찾아다닌 것을 보면, 발품을 팔면 결국 찾는 것을 만나게 되는구나."
+            "왕비가 요를 스무 장 가져오라 했을 때 하인들이 서로 얼굴을 쳐다본 것을 보면, 잘못 들은 줄 알았던 것이구나.",
+            "아가씨가 잠시 망설이다 한숨도 못 잤다고 말한 것을 보면, 거짓말을 하기가 싫었던 것이구나.",
+            "마지막에 이것은 정말로 있었던 이야기라고 한 것을 보면, 안데르센이 시치미를 뚝 뗀 것이구나.",
+            "왕비가 밥상 앞에서 완두콩을 꺼내 보인 것을 보면, 처음부터 그 아가씨를 며느리로 삼고 싶었던 것이구나."
         ],
         "answer": 3
     }
@@ -992,10 +992,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The queen did not ask her anything; she put a pea under the bedding — some things can be made up if you ask them out loud.",
-                "She could have said she slept well and got away with it, and she said she had not — what you say when it costs you shows who you are.",
-                "The pea is in a museum to this day, and it is all quite true, he says — Andersen is keeping a straight face at the end.",
-                "The prince travelled through country after country looking for a princess — wear out your shoes and you find what you are after."
+                "When the queen called for twenty mattresses the servants looked at one another — they thought they had misheard.",
+                "The girl hesitated and then said she had not slept a wink — she did not want to tell a lie.",
+                "At the end he says the whole thing really happened — Andersen is keeping a perfectly straight face.",
+                "The queen produced the pea at the breakfast table — she had wanted the girl for a daughter-in-law from the first."
             ],
             answer: 3
         }
