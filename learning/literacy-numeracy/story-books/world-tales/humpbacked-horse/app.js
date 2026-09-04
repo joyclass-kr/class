@@ -518,6 +518,17 @@ const QUIZ = [
             "데어서 뛰쳐나왔다"
         ],
         "answer": 1
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "밀밭을 지키라 하니 이반이 정말로 밤을 새운 것을 보면, 시키는 대로 한 사람이 남들이 못 본 것을 보기도 하는구나.",
+            "말 셋 가운데 가장 볼품없는 조랑말이 늘 먼저 말려 준 것을 보면, 볼품과 쓸모는 다른 것이구나.",
+            "깃털을 주운 것이 걱정거리를 불렀는데 그 걱정거리가 궁궐로 데려가기도 한 것을 보면, 무엇이 화가 되고 복이 될지는 나중에야 갈리는구나.",
+            "밤새 뛰어와 문을 두드린 쪽이 잊지 않은 쪽이었던 것을 보면, 가볍게 한 말도 누군가는 무겁게 듣는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -970,6 +981,17 @@ const EN = {
             q: 'What happened to Ivan in the cauldron?',
             choices: ['Nothing changed', 'He became a young man', 'He was scalded and jumped out'],
             answer: 1
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "Told to guard the wheat, Ivan actually stayed awake all night — the one who simply does as told may see what the others missed.",
+                "Of the three horses the plainest little one was the one that kept warning him — looks and use are two different things.",
+                "Picking up the feather brought him trouble, and the trouble carried him to the palace — which is the curse and which the blessing is sorted out later.",
+                "The one who hopped all night to knock at the door was the one who had not forgotten — a light promise can be heard heavily."
+            ],
+            answer: 3
         }
     ],
     afterword: {

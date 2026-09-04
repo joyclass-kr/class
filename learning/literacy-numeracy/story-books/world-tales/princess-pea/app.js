@@ -518,6 +518,17 @@ const QUIZ = [
             "왕비의 주머니"
         ],
         "answer": 0
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "왕비가 말로 묻지 않고 요와 이불 밑에 완두콩을 넣은 것을 보면, 말로 물으면 꾸며 낼 수 있는 것이 있구나.",
+            "아가씨가 잘 잤다고 하면 넘어갈 수 있었는데 못 잤다고 그대로 말한 것을 보면, 손해 볼 자리에서 하는 말이 그 사람을 보여 주는구나.",
+            "완두콩이 지금도 박물관에 있다며 정말 있었던 이야기라고 한 것을 보면, 안데르센이 끝에서 능청을 떨었구나.",
+            "이가 빠진 인형을 아무도 거들떠보지 않을 때 혼자 안고 다닌 것을 보면, 남이 지나치는 것을 아끼는 눈이 따로 있구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -976,6 +987,17 @@ const EN = {
             q: 'What became of the pea?',
             choices: ['It was put in a glass case in a museum', 'It was planted in the garden', 'It was thrown away'],
             answer: 0
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "The queen did not ask her anything; she put a pea under the bedding — some things can be made up if you ask them out loud.",
+                "She could have said she slept well and got away with it, and she said she had not — what you say when it costs you shows who you are.",
+                "The pea is in a museum to this day, and it is all quite true, he says — Andersen is keeping a straight face at the end.",
+                "Only one child carried about the doll with the broken teeth — there is an eye that values what others pass over."
+            ],
+            answer: 3
         }
     ],
     afterword: {

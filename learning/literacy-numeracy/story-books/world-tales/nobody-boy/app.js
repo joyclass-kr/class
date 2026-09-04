@@ -508,6 +508,17 @@ const QUIZ = [
             "하프를 팔았다"
         ],
         "answer": 1
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "비탈리스 할아버지가 흙바닥에 나뭇가지로 글자를 써 가르친 것을 보면, 그날 당장 쓸 데가 없는 것도 배워 둘 만하구나.",
+            "할아버지가 카피와 제르비노를 레미의 형제라고 부른 것을 보면, 식구는 핏줄로만 되는 것이 아니구나.",
+            "새 식구를 찾은 뒤 레미가 가장 먼저 바르브랭 아주머니를 모셔 온 것을 보면, 길러 준 사람을 잊지 않는 것이 사람의 도리구나.",
+            "물에 비친 제 모습을 알아본 뒤에야 달라진 것을 보면, 남이 뭐라 하든 나는 처음부터 나였구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -967,6 +978,17 @@ const EN = {
             q: 'What did Rémi do first after finding his new family?',
             choices: ['He went back to the mine', 'He brought Mother Barberin', 'He sold the harp'],
             answer: 1
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "Vitalis taught him letters with a stick in the dirt — something with no use today is still worth learning.",
+                "He called Capi and Zerbino the boy's brothers — a family is not made of blood alone.",
+                "The first thing Remi did once he had found his own family was to fetch Mother Barberin — you do not forget the one who raised you.",
+                "Nothing changed until he saw himself in the water — whatever they called you, you were always what you are."
+            ],
+            answer: 3
         }
     ],
     afterword: {

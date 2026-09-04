@@ -502,6 +502,17 @@ const QUIZ = [
             "작은 하트"
         ],
         "answer": 2
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "주석이 모자라 마지막에 부은 병정이 다리가 하나였던 것을 보면, 못 만든 것이 아니라 남은 것으로 만든 것이구나.",
+            "무희가 한 다리를 높이 들고 있었을 뿐인데 병정이 다리가 하나인 줄 안 것을 보면, 사람은 제게 없는 것을 먼저 보는구나.",
+            "하수구를 지나고 물고기 배 속까지 가면서도 총을 메고 앞만 본 것을 보면, 할 수 있는 것이 그것뿐일 때도 그것을 하는구나.",
+            "아무도 시키지 않고 누가 보지도 않는데 다친 제비를 살린 것을 보면, 제가 정한 일 하나가 뒤를 바꾸는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -960,6 +971,17 @@ const EN = {
             q: 'What was left in the ashes?',
             choices: ['The musket', 'Nothing at all', 'A small tin heart and a blackened spangle'],
             answer: 2
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "There was not enough tin for the last one, so he had one leg — he was not badly made; he was made from what was left.",
+                "The dancer was only holding one leg high, and he took her for one-legged like himself — you see first what you lack.",
+                "Through the drain and inside the fish he kept his musket up and faced forward — when that is all you can do, you do it.",
+                "Nobody told her to and nobody was watching when she nursed the swallow — one thing you choose yourself can turn the rest."
+            ],
+            answer: 3
         }
     ],
     afterword: {

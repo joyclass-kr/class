@@ -40,7 +40,9 @@ for (const slug of slugs) {
     }
     if (EN.quiz.length !== KOQ.length) say.push(`문제 ${EN.quiz.length}≠${KOQ.length}`);
     EN.quiz.forEach((q, i) => {
-        if (q.choices.length !== 3) say.push(`${i + 1}번 선지 ${q.choices.length}개`);
+        // 「읽고 난 반응」 문제만 선지가 넷이다. 나머지는 셋으로 맞춘다.
+        const want = q.wide ? 4 : 3;
+        if (q.choices.length !== want) say.push(`${i + 1}번 선지 ${q.choices.length}개`);
         if (q.answer < 0 || q.answer >= q.choices.length) say.push(`${i + 1}번 정답 자리 벗어남`);
     });
     // 정답이 죄다 한자리에 몰리면 읽지 않고도 맞힐 수 있다

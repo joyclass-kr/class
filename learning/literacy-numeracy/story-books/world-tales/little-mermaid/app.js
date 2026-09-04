@@ -517,6 +517,17 @@ const QUIZ = [
             "손을 내렸다"
         ],
         "answer": 2
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "하필 목소리를 내주었기에 왕자를 구한 사람이 저라는 말을 끝내 못 한 것을 보면, 무엇을 내주느냐가 그다음을 다 정하는구나.",
+            "걸을 때마다 아팠는데도 춤을 추고 아무도 그 아픔을 몰랐던 것을 보면, 가장 조용한 아픔이 가장 오래가는구나.",
+            "바란 것이 왕자만이 아니라 물 밖 세상이었고 그 마음이 열다섯 살 생일에 이미 시작된 것을 보면, 사람을 움직이는 것은 하나만이 아니구나.",
+            "기계 새가 같은 곡만 되풀이해서 오히려 좋아하는 사람이 많았던 것을 보면, 사람은 미리 아는 것을 편해하는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -920,6 +931,17 @@ const EN = {
             q: 'What did the little mermaid do with the knife?',
             choices: ['She gave it back to her sisters', 'She left it in the tent', 'She threw it into the sea'],
             answer: 2
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "Of all things she gave up her voice, so she could never say it was she who saved him — what you give up decides everything after.",
+                "Every step hurt and she danced anyway, and no one knew — the quietest pain is the one that lasts.",
+                "It was not only the prince she wanted but the world above, and that began on her fifteenth birthday — more than one thing moves a person.",
+                "The clockwork bird played the same tune every time, and many liked it the better for that — people are comfortable with what they can predict."
+            ],
+            answer: 3
         }
     ],
     afterword: {

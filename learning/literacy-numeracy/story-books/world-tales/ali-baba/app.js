@@ -475,6 +475,17 @@ const QUIZ = [
             "이제 종이 아니다"
         ],
         "answer": 2
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "알리바바가 '열려라 참깨'를 여러 번 되뇐 것을 보면, 짧은 말일수록 입에 붙여 두어야 잊지 않는구나.",
+            "형수가 됫박 바닥에 밀랍을 발라 알아낸 것을 보면, 말하지 않아도 자국은 남는 법이구나.",
+            "항아리 속 소리를 알아듣고 목소리를 낮춰 대답한 모르지아나를 보면, 놀란 티를 내지 않는 것이 사람을 살리기도 하는구나.",
+            "맨 처음 자루와 장화부터 달라고 한 것을 보면, 일을 벌이기 전에 연장을 챙겨야 하는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -848,6 +859,17 @@ const EN = {
             q: 'Why could the captain not escape through the door?',
             choices: ['The son held him back', 'The door was locked', 'Morgiana had called the neighbours in beforehand'],
             answer: 2
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "Ali Baba said 'Open, sesame' over and over to himself — the shorter the words, the more you must keep them on your tongue.",
+                "His sister-in-law smeared wax on the measure and found them out — you leave a trace even when you say nothing.",
+                "Morgiana heard the voice in the jar and answered low — not showing your fright can save lives.",
+                "The first thing asked for was a sack and a pair of boots — get your tools together before you start."
+            ],
+            answer: 3
         }
     ],
     afterword: {

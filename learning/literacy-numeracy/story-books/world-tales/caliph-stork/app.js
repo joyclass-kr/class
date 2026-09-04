@@ -520,6 +520,17 @@ const QUIZ = [
             "올빼미가 알려 줘서"
         ],
         "answer": 0
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "임금님이 웃으면 안 된다는 조건을 대수롭지 않게 여긴 것을 보면, 쉬워 보이는 약속이 제일 어렵기도 하구나.",
+            "개구리 한 마리에 그만 부리를 벌린 것을 보면, 참기 어려운 것은 큰일이 아니라 작은 것이구나.",
+            "돌아갈 말을 마법사들이 모인 자리에 숨어들어 알아낸 것을 보면, 답이 가장 가고 싶지 않은 자리에 있기도 하는구나.",
+            "싫은 마음을 누르고 한 약속을 끝까지 지킨 것을 보면, 하기 싫은 것과 해야 하는 것은 다른 일이구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -973,6 +984,17 @@ const EN = {
             q: 'How did they find out the word again?',
             choices: ['By listening from behind a wall', 'By reading the paper again', 'The owl told them'],
             answer: 0
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "The caliph thought the rule about not laughing was a small thing — the easy-sounding promise is often the hard one.",
+                "One frog was all it took to open his beak — what is hard to bear is not the big thing but the small one.",
+                "He learned the word by creeping into the very place he feared — the answer can be where you least want to go.",
+                "She kept the promise even though she could not stand it — what you hate doing and what you must do are two different things."
+            ],
+            answer: 3
         }
     ],
     afterword: {

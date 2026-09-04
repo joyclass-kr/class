@@ -486,6 +486,17 @@ const QUIZ = [
             "쥐가 다시 나와서"
         ],
         "answer": 1
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "쥐가 사라진 뒤에야 값이 아까워진 것을 보면, 곤란할 때와 끝난 뒤의 셈이 달라지는구나.",
+            "뒤처진 아이가 따라왔을 때 사나이가 무릎을 굽힌 것을 보면, 값을 받으러 온 사람도 사람이었구나.",
+            "칠백 년 전 아이들이 사라졌다는 기록의 빈자리를 이야기가 채운 것을 보면, 모르는 일 앞에서 사람은 이야기를 지어 두는구나.",
+            "밭에서 실컷 먹은 것이 걸음을 늦추어 들키게 한 것을 보면, 욕심이 발을 무겁게 하는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -870,6 +881,17 @@ const EN = {
             q: 'What made the piper change his mind?',
             choices: ['The mayor’s shouting', 'The child who came all that way on his own', 'The church bell'],
             answer: 1
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "It was only after the rats were gone that the price began to look too high — what you will pay in trouble is not what you will pay after.",
+                "When the child who could not keep up came limping along, the piper knelt down — the man who came for his money was a person too.",
+                "A record says children vanished from Hameln seven hundred years ago, and the story grew into that gap — people fill what they do not know with a tale.",
+                "He ate his fill in the garden and that is what slowed his legs — greed makes the feet heavy."
+            ],
+            answer: 3
         }
     ],
     afterword: {

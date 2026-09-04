@@ -518,6 +518,17 @@ const QUIZ = [
             "안경을 고쳐 썼다"
         ],
         "answer": 0
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "공주가 장미와 밤꾀꼬리를 진짜라는 말을 듣고 실망한 것을 보면, 만든 것이 아니라서 시시해지기도 하는구나.",
+            "손으로 지은 냄비와 딸랑이에는 값을 치른 것을 보면, 사람 눈은 신기한 쪽으로 먼저 가는구나.",
+            "왕자가 화가 나서가 아니라 오래 지켜본 뒤에 마음을 접은 것을 보면, 마음이 도는 데도 시간이 걸리는구나.",
+            "게르다가 힘이 세지도 꾀가 많지도 않은데 다만 걸음을 멈추지 않은 것을 보면, 끝까지 가는 것도 하나의 힘이구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -976,6 +987,17 @@ const EN = {
             q: 'What did the prince say at the gate?',
             choices: ['That she would have nothing to do with a real rose or a real bird', 'That he forgave her', 'That he would come back'],
             answer: 0
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "She was disappointed to hear the rose and the bird were real — a thing can seem dull just because nobody made it.",
+                "For a hand-made pot and rattle she paid a high price — the eye goes to the clever thing first.",
+                "The prince did not leave in a temper; he watched a long time and then let go — turning away also takes time.",
+                "Gerda was neither strong nor clever; she simply did not stop walking — going all the way is a strength of its own."
+            ],
+            answer: 3
         }
     ],
     afterword: {

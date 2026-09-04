@@ -524,6 +524,17 @@ const QUIZ = [
             "마법사에게 줬다"
         ],
         "answer": 1
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "마법사가 끼워 준 반지가 동굴에 갇힌 알라딘을 꺼내 준 것을 보면, 해치려고 쥐여 준 것이 도리어 살리기도 하는구나.",
+            "공주를 처음 본 알라딘이 제 입으로 나서지 못하고 어머니께 부탁한 것을 보면, 아직 아무것도 아닐 때는 말 한마디도 어렵구나.",
+            "마지막에 램프를 궤짝 깊이 넣어 둔 것을 보면, 센 힘일수록 함부로 꺼내 쓰지 않는 편이 낫구나.",
+            "늙어 쫓겨난 넷이 겹쳐 서서 한꺼번에 소리를 낸 것을 보면, 혼자서는 못 할 일도 여럿이면 되는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -932,6 +943,17 @@ const EN = {
             q: 'How did Aladdin get the lamp back from the magician?',
             choices: ['He took it while the magician hunted', 'The princess gave him a sleeping draught at supper', 'The genie of the ring fetched it'],
             answer: 1
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "The ring the sorcerer gave him was what got him out of the cave — a thing meant to trap you can be the thing that saves you.",
+                "Seeing the princess, he could not speak for himself and sent his mother — when you are still nobody, even a word is hard.",
+                "At the end he puts the lamp away at the bottom of a chest — the stronger the power, the less you take it out.",
+                "Four cast-out animals stood on each other's backs and cried out together — what one cannot do, several can."
+            ],
+            answer: 3
         }
     ],
     afterword: {

@@ -511,6 +511,17 @@ const QUIZ = [
             "나뭇가지 세 개"
         ],
         "answer": 2
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "임금님을 답답하게 한 것이 신발값이 아니라 문이 잠겼는데 신발만 닳아 있다는 것이었음을 보면, 사람은 말이 안 되는 것을 못 견디는구나.",
+            "앞서 온 왕자들은 다 잠들었는데 병사만 그 술을 마시지 않은 것을 보면, 미리 일러 주는 한마디가 판을 가르는구나.",
+            "병사가 한 일이 따라간 것뿐이고 은잎과 금잎을 하나씩 꺾어 온 것을 보면, 말로 안 될 일에는 가져올 것이 있어야 하는구나.",
+            "게으름을 부린 형제도 집은 지었고 다만 빨리 끝나는 쪽을 고른 것을 보면, 안 한 것과 대충 한 것은 다르구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -970,6 +981,17 @@ const EN = {
             q: 'What proof did the soldier bring the king?',
             choices: ['A worn-out shoe', 'One of the boats', 'Branches of silver, gold and diamond'],
             answer: 2
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "What troubled the king was not the cost of shoes but that the door was locked and the shoes were worn through — people cannot bear what does not add up.",
+                "The princes before him all fell asleep; the soldier alone did not drink — one word of warning decides the whole thing.",
+                "All the soldier did was follow, and break off a silver leaf and a gold one — where words will not do, you must bring something back.",
+                "Even the lazy brothers built something; they simply chose the quick way — doing nothing and doing it roughly are not the same."
+            ],
+            answer: 3
         }
     ],
     afterword: {

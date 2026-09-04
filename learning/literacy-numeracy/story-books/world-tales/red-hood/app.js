@@ -484,6 +484,17 @@ const QUIZ = [
             "그냥 지나쳤다"
         ],
         "answer": 2
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "늑대가 힘으로 덤비지 않고 어디 가는지 누구를 찾아가는지 먼저 물은 것을 보면, 위험한 것은 사나운 얼굴이 아니라 다정한 물음이구나.",
+            "늑대가 뛰어서 이긴 것이 아니라 물어서 이긴 것을 보면, 알려 준 것이 곧 진 것이구나.",
+            "꽃을 꺾느라 길을 벗어난 것이 나쁜 마음이 아니라 할머니께 드리려던 것이었음을 보면, 좋은 마음으로도 길은 벗어나는구나.",
+            "부서진 의자를 보고 멈칫하고는 그냥 지나간 것을 보면, 아무도 안 볼 때 무엇을 하느냐가 사람을 갈라 놓는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -851,6 +862,17 @@ const EN = {
             q: 'What did she do at the meadow on the way home?',
             choices: ['She picked flowers', 'She went in again', 'She walked right past'],
             answer: 2
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "The wolf did not pounce; he asked first where she was going and who she was visiting — the danger is not the fierce face but the friendly question.",
+                "He did not beat her by running; he beat her by asking — telling him was the losing move.",
+                "She left the path to pick flowers, not out of mischief but to bring them to her grandmother — you can wander off with the best of intentions.",
+                "She paused at the broken chair and then walked on — what you do when nobody is looking is what tells people apart."
+            ],
+            answer: 3
         }
     ],
     afterword: {

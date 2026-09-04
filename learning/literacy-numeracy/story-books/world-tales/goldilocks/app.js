@@ -511,6 +511,17 @@ const QUIZ = [
             "이불 속에 숨었다"
         ],
         "answer": 1
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "아이가 세 번 다 작은 것을 고른 까닭이 제일 작았기 때문인 것을 보면, 좋은 것이 아니라 맞는 것을 고른 셈이구나.",
+            "부서진 의자를 보고 멈칫하고는 그냥 지나간 것을 보면, 아무도 안 볼 때 무엇을 하느냐가 사람을 갈라 놓는구나.",
+            "곰들이 산책을 다녀와 제 밥상을 본 것뿐인데 놀란 쪽이 오히려 곰들이었던 것을 보면, 누가 손님이고 누가 주인인지는 자리가 정하는구나.",
+            "먼 나라를 다 다녀온 뒤에야 제 방이 보인 것을 보면, 멀리 가 본 사람이 가까운 것을 알아보기도 하는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -966,6 +977,17 @@ const EN = {
             q: 'What did Baby Bear say after she ran away?',
             choices: ['That she should be caught', 'That he thought she had been hungry', 'That he wanted a new chair'],
             answer: 1
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "She chose the small one all three times because she was the smallest — she was not picking the best but the one that fitted.",
+                "She paused at the broken chair and then walked on — what you do when nobody is looking is what tells people apart.",
+                "The bears had only come back from a walk to their own table, and it was the bears who got the fright — who is guest and who is host is decided by whose house it is.",
+                "Only after all those far countries could they see their own room — it can take a long journey to see what is near."
+            ],
+            answer: 3
         }
     ],
     afterword: {

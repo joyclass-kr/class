@@ -482,6 +482,17 @@ const QUIZ = [
             "아버지"
         ],
         "answer": 1
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "조약돌은 그대로 있었지만 빵 부스러기는 새들이 먹어 버린 것을 보면, 같은 꾀라도 무엇으로 하느냐에 따라 갈리는구나.",
+            "숲에서는 헨젤이 앞장섰는데 과자집에서는 그레텔이 앞장선 것을 보면, 앞에 설 사람은 자리에 따라 바뀌는구나.",
+            "과자집이 배고픈 아이가 가장 못 참을 것으로 지어져 있던 것을 보면, 덫은 그 사람이 제일 바라는 모양을 하고 있구나.",
+            "촛불을 켠 그 하루가 가장 좋은 날이었는데 그날조차 내일을 생각한 것을 보면, 좋은 날은 지나고 나서야 알아지는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -832,6 +843,17 @@ const EN = {
             q: 'How did the two cross the river?',
             choices: ['They found a bridge further on', 'A duck carried them one at a time', 'They floated across on an empty chest'],
             answer: 1
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "The pebbles stayed put but the birds ate the breadcrumbs — the same plan turns on what you make it of.",
+                "Hansel led the way in the wood, and Gretel led at the gingerbread house — who goes first changes with the place.",
+                "The house was built of the one thing a starving child could not walk past — a trap is shaped like whatever you want most.",
+                "The one candlelit evening was the best of its life, and even then it thought of tomorrow — a good day is known only afterwards."
+            ],
+            answer: 3
         }
     ],
 

@@ -493,6 +493,17 @@ const QUIZ = [
             "다시 행진을 했다"
         ],
         "answer": 0
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "어리석은 사람에게는 안 보인다는 한마디가 아무도 말을 못 하게 만든 것을 보면, 말을 막는 데는 힘이 아니라 조건 하나면 되는구나.",
+            "신하들이 거짓말을 하려던 것이 아니라 저만 못 보는 줄 알고 겁이 난 것을 보면, 다들 같은 처지인 줄 모르는 것이 무서운 일이구나.",
+            "아이가 용감해서가 아니라 그 규칙을 몰랐기에 말한 것을 보면, 모르는 사람이 오히려 바로 보기도 하는구나.",
+            "저녁을 여러 번 함께한 뒤에야 무서운 얼굴이 달리 보인 것을 보면, 사람을 알아보는 데는 시간이 드는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -863,6 +874,17 @@ const EN = {
             q: 'What did the emperor do after he heard the child?',
             choices: ['He walked the procession to the end', 'He ran back to the palace', 'He had the weavers arrested'],
             answer: 0
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "One line — that fools cannot see it — was enough to stop everyone speaking; it takes a condition, not force, to silence people.",
+                "The courtiers were not lying but afraid they alone could not see — the danger was that none of them knew the others were the same.",
+                "The child spoke not out of courage but because nobody had told him the rule — the one who does not know can see straight.",
+                "Only after many evenings together did the frightening face look different — it takes time to see a person differently."
+            ],
+            answer: 3
         }
     ],
     afterword: {

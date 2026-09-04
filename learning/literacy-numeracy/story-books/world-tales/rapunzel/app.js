@@ -498,6 +498,17 @@ const QUIZ = [
             "뜨거운 눈물"
         ],
         "answer": 2
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "탑에 문도 계단도 없어 드나드는 길이 라푼첼의 머리카락뿐이었던 것을 보면, 갇힌 사람의 몸이 문이 되기도 하는구나.",
+            "심심해서 부른 노래가 탑 밖으로 나가 왕자와 말을 트게 한 것을 보면, 아무 뜻 없이 한 일이 길이 되기도 하는구나.",
+            "몇 해를 눈먼 채 헤매던 왕자를 다시 찾아낸 것도 그 노래인 것을 보면, 탑에서는 심심풀이였던 것이 들판에서는 길이 되는구나.",
+            "가진 것이 없어 이야기를 들려주러 간 것을 보면, 빈손으로도 건넬 것이 있구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -937,6 +948,17 @@ const EN = {
             q: 'What happened to the prince at the tower?',
             choices: ['The witch drove him away', 'He climbed down the ladder', 'He fell into thorns and lost his sight'],
             answer: 2
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "The tower had no door and no stair; the only way in or out was her hair — the body of the shut-in becomes the door.",
+                "She sang because she was bored, and the song carried out of the tower — a thing done for no reason can open a road.",
+                "It was that same song that found the blind prince after years of wandering — what was a way to pass time in the tower was a road out in the fields.",
+                "Having nothing to bring, he brought a story — you can hold something out with empty hands."
+            ],
+            answer: 3
         }
     ],
     afterword: {

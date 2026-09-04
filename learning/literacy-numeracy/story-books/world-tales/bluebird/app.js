@@ -546,6 +546,17 @@ const QUIZ = [
             "미래의 나라"
         ],
         "answer": 1
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "잡은 새가 그 자리를 벗어나면 번번이 색이 바랜 것을 보면, 어떤 것은 있던 자리에서만 그것인 채로 있는구나.",
+            "떠나기 전에도 새장에 있던 새가 돌아와 보니 파랬던 것을 보면, 달라진 것은 새가 아니라 보는 눈이구나.",
+            "추억의 나라와 밤의 나라까지 다 다녀온 뒤에야 제 방이 보인 것을 보면, 멀리 가 본 사람이 가까운 것을 알아보기도 하는구나.",
+            "저녁을 여러 번 함께한 뒤에야 무서운 얼굴이 달리 보인 것을 보면, 사람을 알아보는 데는 시간이 드는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -1023,6 +1034,17 @@ const EN = {
             q: 'What were the babies in the Land of the Future doing?',
             choices: ['Learning beforehand what they would do on Earth', 'Waiting for the blue bird', 'Playing with the Fairy of Light'],
             answer: 0
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "Every bird they caught lost its colour once carried off — some things are only themselves where they already are.",
+                "The bird in their own cage was blue when they came home — what changed was not the bird but their eyes.",
+                "Only after the Land of Memory and the Land of Night could they see their own room — it can take a long journey to see what is near.",
+                "Only after many evenings together did the frightening face look different — it takes time to see a person differently."
+            ],
+            answer: 3
         }
     ],
     afterword: {
