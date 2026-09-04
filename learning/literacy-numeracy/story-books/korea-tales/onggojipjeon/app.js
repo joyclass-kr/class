@@ -689,6 +689,8 @@ const QUIZ_GROUPS = [{ from: 0 }];
 
 // 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
 const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
+/* 여태 골라 본 틀린 보기. 쪽을 오가도 빨갛게 남는다. */
+const QUIZ_WRONG = QUIZ.map(() => new Set());
 
 /* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
    섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
@@ -702,7 +704,9 @@ function shuffledOrder(n) {
     return a;
 }
 
-const QUIZ_ORDER = QZ().map(q => shuffledOrder(q.choices.length));
+/* 보기 차례는 한글 문항 수로 정한다. 영어판도 보기 개수가 같고,
+   QZ 는 이 줄보다 아래에서 만들어져 여기서 부르면 책이 열리지 않는다. */
+const QUIZ_ORDER = QUIZ.map(q => shuffledOrder(q.choices.length));
 
 function quizPage(part) {
     const group = { from: QUIZ_GROUPS[part].from, items: QZ() };
@@ -711,9 +715,8 @@ function quizPage(part) {
         const i = group.from + k;
         const picked = QUIZ_PICKED[i];
         const graded = picked !== null;
-        const cls = ci => graded
-            ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
-            : '';
+        const cls = ci => (graded && ci === item.answer) ? ' correct'
+            : (QUIZ_WRONG[i].has(ci) ? ' incorrect' : '');
         return `
         <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
@@ -1513,13 +1516,16 @@ function initQuiz() {
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
-                item.classList.add('graded');
                 const chosen = Number(btn.dataset.choice);
-                item.querySelectorAll('.quiz-choice').forEach(b => {
-                    const ci = Number(b.dataset.choice);
-                    if (ci === q.answer) b.classList.add('correct');
-                    else if (ci === chosen) b.classList.add('incorrect');
-                });
+                /* 틀리면 그 보기만 빨갛게 남기고, 맞는 것을 고를 때까지 다시 고르게 한다.
+                   답을 미리 보여 주면 아이가 생각할 자리가 사라진다. */
+                if (chosen !== q.answer) {
+                    btn.classList.add('incorrect');
+                    QUIZ_WRONG[qi].add(chosen);
+                    return;
+                }
+                btn.classList.add('correct');
+                item.classList.add('graded');
                 QUIZ_PICKED[qi] = chosen;
                 const done = QUIZ_PICKED.filter(v => v !== null).length;
                 progressEl.textContent = T().done(done, QZ().length);

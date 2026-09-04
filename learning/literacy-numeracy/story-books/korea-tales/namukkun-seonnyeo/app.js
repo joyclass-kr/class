@@ -378,19 +378,28 @@ function shuffledOrder(n) {
 }
 
 const QUIZ_ORDER = QUIZ.map(q => shuffledOrder(q.choices.length));
+/* 고른 것을 기억해 둔다. 쪽을 옮기면 문제 쪽이 통째로 다시 그려지는데,
+   그때 표시가 사라지면 아이가 처음부터 다시 풀어야 한다. */
+const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
+const QUIZ_WRONG = QUIZ.map(() => new Set());
 
 function quizPage() {
-    const items = QUIZ.map((item, i) => `
-        <div class="quiz-item" data-qindex="${i}">
+    const items = QUIZ.map((item, i) => {
+        const graded = QUIZ_PICKED[i] !== null;
+        const cls = ci => (graded && ci === item.answer) ? ' correct'
+            : (QUIZ_WRONG[i].has(ci) ? ' incorrect' : '');
+        return `
+        <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
-                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
-        </div>`).join('');
+        </div>`;
+    }).join('');
     return `
         <div class="page page-quiz">
             <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <p class="quiz-intro-text" id="quizProgress">${QUIZ_PICKED.filter(v => v !== null).length} / 총 ${QUIZ.length}문항 완료</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
@@ -549,7 +558,6 @@ if (window.ResizeObserver) {
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAfterword);
 
 function initQuiz() {
-    let answeredCount = 0;
     const progressEl = document.getElementById('quizProgress');
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
@@ -558,15 +566,18 @@ function initQuiz() {
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
-                item.classList.add('graded');
                 const chosen = Number(btn.dataset.choice);
-                item.querySelectorAll('.quiz-choice').forEach(b => {
-                    const ci = Number(b.dataset.choice);
-                    if (ci === q.answer) b.classList.add('correct');
-                    else if (ci === chosen) b.classList.add('incorrect');
-                });
-                answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                /* 틀리면 그 보기만 빨갛게 남기고, 맞는 것을 고를 때까지 다시 고르게 한다.
+                   답을 미리 보여 주면 아이가 생각할 자리가 사라진다. */
+                if (chosen !== q.answer) {
+                    btn.classList.add('incorrect');
+                    QUIZ_WRONG[qi].add(chosen);
+                    return;
+                }
+                btn.classList.add('correct');
+                item.classList.add('graded');
+                QUIZ_PICKED[qi] = chosen;
+                progressEl.textContent = `${QUIZ_PICKED.filter(v => v !== null).length} / 총 ${QUIZ.length}문항 완료`;
             });
         });
     });
