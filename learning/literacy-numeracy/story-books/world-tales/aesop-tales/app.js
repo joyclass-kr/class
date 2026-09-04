@@ -879,7 +879,7 @@ const QUIZ = [
             "사자가 놓아준 쥐가 나중에 그물을 갉아 준 것을 보면, 작은 것이 큰 것을 돕기도 하는구나.",
             "북풍이 세게 불수록 나그네가 옷깃을 더 여민 것을 보면, 밀어붙일수록 오히려 닫히는 것이구나.",
             "개가 물속 그림자에 짖다가 물고 있던 고기를 놓친 것을 보면, 더 바라다가 가진 것을 잃은 것이구나.",
-            "양치기 소년이 늑대가 왔다고 소리쳤는데 아무도 오지 않은 것을 보면, 그날따라 마을 사람들이 바빴던 것이구나."
+            "베짱이가 개미의 문을 두드린 것을 보면, 여름내 들려준 노래의 값을 받으러 간 것이구나."
         ],
         "answer": 3
     }
@@ -1674,7 +1674,7 @@ const EN = {
                 "The mouse the lion let go came back and gnawed through his net — the small can help the great.",
                 "The harder the north wind blew, the tighter the traveller held his coat — pushing makes people close up.",
                 "The dog barked at his own reflection and dropped the meat he had — wanting more cost him what he held.",
-                "The shepherd boy cried wolf and nobody came — the villagers happened to be busy that day."
+                "When winter came the grasshopper knocked at the ant's door — he had come to collect his fee for a summer of songs."
             ],
             answer: 3
         }
