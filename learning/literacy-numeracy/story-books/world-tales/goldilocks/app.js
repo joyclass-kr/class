@@ -516,10 +516,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "아이가 세 번 다 작은 것을 고른 까닭이 제일 작았기 때문인 것을 보면, 좋은 것이 아니라 맞는 것을 고른 셈이구나.",
-            "부서진 의자를 보고 멈칫하고는 그냥 지나간 것을 보면, 아무도 안 볼 때 무엇을 하느냐가 사람을 갈라 놓는구나.",
-            "곰들이 산책을 다녀와 제 밥상을 본 것뿐인데 놀란 쪽이 오히려 곰들이었던 것을 보면, 누가 손님이고 누가 주인인지는 자리가 정하는구나.",
-            "아이가 세 번 다 작은 것을 골랐는데 그것이 딱 맞은 것을 보면, 무엇이든 작고 소박한 쪽을 고르는 것이 좋구나."
+            "곰들이 나가면서 문 잠그는 것을 깜박한 것을 보면, 그날 일이 거기서 시작된 것이구나.",
+            "아이가 세 번 다 작은 것이 맞았던 것을 보면, 좋은 것이 아니라 제 몸에 맞는 것을 고른 셈이구나.",
+            "아기 곰이 창밖을 보며 저 아이 배가 고팠나 보다고 한 것을 보면, 화를 내기보다 딱하게 여긴 것이구나.",
+            "아이가 부서진 의자를 보고 멈칫한 것을 보면, 미안한 마음에 고쳐 놓으려 한 것이구나."
         ],
         "answer": 3
     }
@@ -982,10 +982,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "She chose the small one all three times because she was the smallest — she was not picking the best but the one that fitted.",
-                "She paused at the broken chair and then walked on — what you do when nobody is looking is what tells people apart.",
-                "The bears had only come back from a walk to their own table, and it was the bears who got the fright — who is guest and who is host is decided by whose house it is.",
-                "All three times she chose the small one and it fitted — the modest choice is always the right one."
+                "The bears forgot to lock the door on their way out — that is where the whole day's trouble began.",
+                "All three times the small one fitted her — she was not choosing the best but the one her size.",
+                "Baby Bear looked out of the window and said the child must have been hungry — he felt sorry rather than angry.",
+                "She stopped at the sight of the broken chair — she was sorry and meant to put it back together."
             ],
             answer: 3
         }

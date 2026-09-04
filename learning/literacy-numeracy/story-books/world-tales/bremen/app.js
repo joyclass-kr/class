@@ -512,10 +512,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "늙어 쫓겨난 넷이 겹쳐 서서 한꺼번에 소리를 낸 것을 보면, 혼자서는 못 할 일도 여럿이면 되는구나.",
-            "도둑을 쫓아낸 것이 싸움이 아니라 소리였던 것을 보면, 맞붙지 않고도 이길 수 있구나.",
-            "넷이 브레멘에 끝내 닿지 않은 것을 보면, 가려던 곳보다 가는 길에 만난 것이 나을 때도 있구나.",
-            "넷이 브레멘으로 가겠다고 길을 나선 것을 보면, 한번 뜻을 세웠으면 끝까지 가 보아야 하는구나."
+            "당나귀가 헛간에서 주인의 말을 듣고 그날 밤 잠을 못 이룬 것을 보면, 이대로 있다가는 큰일 나겠다 싶었던 것이구나.",
+            "당나귀가 개에게 짖는 것이 바로 노래라고 한 것을 보면, 남은 재주에 새로 이름을 붙여 준 것이구나.",
+            "도둑이 마귀할멈이며 칼 든 자며 재판관이 있었다고 한 것을 보면, 어둠 속에서 당한 일을 제 나름대로 짐작한 것이구나.",
+            "넷이 브레멘까지 가지 않고 오두막에 눌러앉은 것을 보면, 도둑들이 다시 올까 봐 그 집을 지키기로 한 것이구나."
         ],
         "answer": 3
     }
@@ -941,10 +941,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "Four cast-out animals stood on each other's backs and cried out at once — what one cannot do, several can.",
-                "The robbers were driven off by a noise, not a fight — you can win without coming to blows.",
-                "They never reached Bremen at all — what you meet on the way can beat where you were going.",
-                "The four set out for Bremen — once you have set your mind on a place you should see it through to the end."
+                "The donkey heard his master through the barn wall and lay awake all night — he saw that staying would be the end of him.",
+                "He told the hound that barking was singing — he gave the one skill left to him a new name.",
+                "The robber spoke of a witch, a man with a knife, a judge on the roof — in the dark he had guessed at what happened to him.",
+                "The four never went on to Bremen but settled in the cottage — they stayed to guard it in case the robbers came back."
             ],
             answer: 3
         }
