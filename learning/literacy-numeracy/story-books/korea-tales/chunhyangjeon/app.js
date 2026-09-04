@@ -694,10 +694,10 @@ const QUIZ = [
         q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         wide: true,
         choices: [
-            "변 사또가 수청을 들라 한 것을 보면, 그때 벼슬아치가 백성을 어떻게 다루었는지 보인다.",
+            "변 사또가 기생 명부에 이름을 올리라 한 것을 보면, 그때 벼슬아치가 백성을 어떻게 다루었는지 보인다.",
             "춘향이 이미 지아비가 있다고만 하고 물러서지 않은 것을 보면, 지킨 것이 사랑만은 아니었구나.",
             "이몽룡이 거지꼴로 나타나 사람들 속을 먼저 본 것을 보면, 벼슬이란 이렇게 쓰는 것이구나.",
-            "옹고집이 제 살림을 몰라 재판에서 진 것을 보면, 제 것을 남에게만 맡겨 두면 이렇게 되는구나."
+            "춘향이 옥에서 왜 이제 왔느냐고 물은 것을 보면, 기다린 마음이 그만큼 애가 탔구나."
         ],
         answer: 3
     }
@@ -1433,10 +1433,10 @@ const EN = {
             q: "Which reaction to this book does NOT fit?",
             wide: true,
             choices: [
-                "The new governor ordered her onto the register, so we can see how an official treated ordinary people then.",
+                "The new governor ordered her name onto the register, so we can see how an official treated ordinary people then.",
                 "She only said she already had a husband and would not step back, so what she kept was more than love.",
                 "Mongryong came back in rags and looked around before showing the tablet, so that is what an office is for.",
-                "He lost the case because he did not know his own household, so leaving your affairs to others costs you."
+                "In the prison she asked him why he had taken so long, so we can feel how hard the waiting had been."
             ],
             answer: 3
         }

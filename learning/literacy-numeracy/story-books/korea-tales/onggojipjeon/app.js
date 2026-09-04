@@ -676,7 +676,7 @@ const QUIZ = [
             "제 살림을 몰라 재판에서 진 것을 보면, 가진 것이 많아도 아는 것이 없으면 제 것이 아니구나.",
             "쫓겨나 빌어먹으며 떠돌고서야 스님 생각이 난 것을 보면, 겪어 봐야 아는 일이 있구나.",
             "짚으로 엮은 허수아비가 사람 노릇을 그대로 한 것을 보면, 남이 보는 나는 껍데기로도 되는구나.",
-            "임금 귀 이야기가 대숲에서 새어 나온 것을 보면, 감춘 것은 언젠가 소리를 내는구나."
+            "돌아온 옹고집이 곳간부터 열어 살펴본 것을 보면, 그래도 살림 걱정이 먼저였구나."
         ],
         answer: 3
     }
@@ -1341,7 +1341,7 @@ const EN = {
                 "He lost because he did not know his own household, so having a great deal is not owning it.",
                 "Only after begging on the road did he think of the monk, so some things are learned by going through them.",
                 "A straw figure did his part exactly, so the self other people see can be made of husks.",
-                "The words came back out of the bamboo grove, so what is hidden makes a sound in the end."
+                "Back home he went to the storehouse first, so the state of his property was still what mattered most."
             ],
             answer: 3
         }

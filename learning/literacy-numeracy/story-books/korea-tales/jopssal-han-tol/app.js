@@ -410,7 +410,7 @@ const EN = {
                 "He wrapped one grain of millet in paper and asked them to keep it, so it started with not treating a small thing lightly.",
                 "Every house felt sorry and handed him something bigger, so people then took another's property seriously.",
                 "He said the same words each time, my whole fortune, so it is the way you carry a thing that makes it worth something.",
-                "He handed each water seller a single coin first, so even a trick needs money to start it off."
+                "He asked for something bigger every time he handed a thing over, so he had a sharp head for a bargain."
             ],
             answer: 3
         }
@@ -798,7 +798,7 @@ const QUIZ = [
             "좁쌀 한 톨을 종이에 싸서 맡긴 것을 보면, 작다고 함부로 하지 않는 마음이 시작이었구나.",
             "집집마다 미안해하며 더 큰 것을 내준 것을 보면, 그때 사람들은 남의 것을 무겁게 여겼구나.",
             "소년이 끝까지 제 전 재산이라고 말한 것을 보면, 값이 아니라 태도가 사람을 만드는구나.",
-            "엽전 한 닢을 물장수들에게 나눠 준 것을 보면, 판을 짜는 데에도 밑천이 드는구나."
+            "소년이 맡길 때마다 더 큰 것으로 바꿔 달라고 한 것을 보면, 셈이 밝은 아이였구나."
         ],
         answer: 3
     }

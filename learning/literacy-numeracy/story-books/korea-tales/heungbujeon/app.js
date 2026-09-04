@@ -676,8 +676,8 @@ const QUIZ = [
         choices: [
             "놀부가 제비를 기다리다 남의 집 제비집까지 헌 것을 보면, 욕심은 남의 것부터 부수는구나.",
             "흥부가 형수의 주걱 이야기만은 끝내 하지 않은 것을 보면, 말하지 않는 것도 지키는 방법이구나.",
-            "놀부가 새끼 제비의 다리를 부러뜨리고 도로 싸매 준 것을 보면, 시늉만으로는 안 되는 일이 있구나.",
-            "토끼가 간을 바위틈에 두고 왔다고 한 것을 보면, 힘 앞에서는 말이 무기가 되는구나."
+            "박이 갈라질 때마다 놀부가 곳간 문을 열어야 했던 것을 보면, 쌓아 둔 것에는 갚을 몫이 따라오는구나.",
+            "놀부가 새끼 제비의 다리를 실로 싸매 준 것을 보면, 놀부에게도 짐승을 아끼는 마음은 있었구나."
         ],
         answer: 3
     }
@@ -1085,8 +1085,8 @@ const EN = {
             choices: [
                 "Nolbu waited for swallows and then pulled down other people's nests, so greed breaks what belongs to others first.",
                 "Heungbu never once mentioned the rice paddle, so keeping quiet can be a way of keeping something safe.",
-                "Nolbu broke the chick's leg and then bound it up again, so going through the motions is not the same thing.",
-                "The rabbit said his liver was left in a crack of rock, so words are a weapon when strength is not."
+                "Each time a gourd split Nolbu had to open his storehouse, so what you pile up brings its own bill.",
+                "Nolbu bound the chick's leg with thread, so there was something in him that cared for a creature."
             ],
             answer: 3
         }

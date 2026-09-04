@@ -712,9 +712,9 @@ const QUIZ = [
         wide: true,
         choices: [
             "아버지를 아버지라 부르지 못한 것을 보면, 사람을 나누어 놓은 법이 집 안에서부터 아팠구나.",
-            "백성의 재물에는 손대지 않기로 한 것을 보면, 도적이라 불려도 스스로 그은 선이 있었구나.",
             "벼슬을 받자마자 하루 만에 내놓고 떠난 것을 보면, 바란 것이 자리가 아니었구나.",
-            "놀부의 박에서 장부를 든 사람들이 나온 것을 보면, 쌓아 둔 것에는 갚을 몫이 따라오는구나."
+            "율도국에서 신분을 가르는 법부터 없앤 것을 보면, 끝까지 마음에 걸린 것이 그것이었구나.",
+            "길동이 백성의 재물에는 손대지 않아 임금에게 용서를 받은 것을 보면, 도적에게도 지킬 것은 있었구나."
         ],
         answer: 3
     }
@@ -1464,9 +1464,9 @@ const EN = {
             wide: true,
             choices: [
                 "He could not call his father father, so the law that sorted people hurt inside the house first.",
-                "His band would not touch what belonged to common people, so even called a bandit he drew his own line.",
                 "He gave the post back the day after he got it, so a seat was never what he was after.",
-                "Men with ledgers came out of the gourd, so what you pile up brings its own bill."
+                "In Yuldo the first thing he did away with was the law that sorted people, so that was what stayed with him.",
+                "The king forgave him because his band never touched what belonged to common people, so a line drawn counts for something."
             ],
             answer: 3
         }

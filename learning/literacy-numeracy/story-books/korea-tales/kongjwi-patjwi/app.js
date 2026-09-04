@@ -675,7 +675,7 @@ const QUIZ = [
             "나무 호미로 자갈밭을 갈라고 한 것을 보면, 못 할 일을 시켜 놓고 흠을 잡으려는 것이었구나.",
             "검은 소와 두꺼비와 참새가 차례로 도운 것을 보면, 혼자 감당 못 할 일에는 손이 모이는구나.",
             "짝이 안 맞는 젓가락을 내놓아 가려낸 것을 보면, 큰 것보다 사소한 것이 사람을 밝히는구나.",
-            "허물을 태우자 남편이 사라진 것을 보면, 하지 말라는 것을 한 값이 이렇게 크구나."
+            "밑 빠진 독을 두꺼비가 들어가 막아 준 것을 보면, 콩쥐가 미리 길러 둔 두꺼비였구나."
         ],
         answer: 3
     }
@@ -1332,7 +1332,7 @@ const EN = {
                 "She was given a wooden hoe for a stony field, so it was set up so she could not do it.",
                 "A black ox, a toad and sparrows helped in turn, so hands gather for what one person cannot carry.",
                 "A pair of odd chopsticks settled it, so small things tell people apart better than large ones.",
-                "When the skin was burned he was gone, so breaking the one rule cost that much."
+                "A toad climbed in and plugged the broken jar, so it must have been a toad Kongjwi had kept."
             ],
             answer: 3
         }

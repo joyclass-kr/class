@@ -729,8 +729,8 @@ const QUIZ = [
         choices: [
             "장 승상 댁 부인이 대신 쌀을 내주겠다는데도 마다한 것을 보면, 값보다 제 손으로 드리는 것을 앞세웠구나.",
             "뱃사람들이 사람을 사서 바다에 바친 것을 보면, 그때는 목숨보다 뱃길이 앞서기도 했구나.",
-            "쌀로 뜨는 눈이 아니라 네가 가야 뜨는 눈이라고 한 것을 보면, 삼백 석이 답이 아니었구나.",
-            "박에서 나온 사람들이 곳간 문을 열게 한 것을 보면, 쌓아 둔 것에는 갚을 몫이 따라오는구나."
+            "어머니가 쌀로 뜨는 눈이 아니라고 한 것을 보면, 삼백 석이 답은 아니었구나.",
+            "심 봉사가 딸을 보내고 삼백 석을 절에 바쳐 눈을 뜬 것을 보면, 스님의 말이 그대로 맞았구나."
         ],
         answer: 3
     }
@@ -1419,7 +1419,7 @@ const EN = {
                 "She refused the lady's three hundred sacks, so she put giving it with her own hands above the price.",
                 "The sailors bought a person for the sea, so at that time a passage could come before a life.",
                 "Her mother said rice would not open those eyes, only her going, so three hundred sacks was never the answer.",
-                "People with ledgers made him open his storehouse, so what you pile up brings its own bill."
+                "Sim Bongsa's eyes opened once the three hundred sacks reached the temple, so the monk had been right all along."
             ],
             answer: 3
         }

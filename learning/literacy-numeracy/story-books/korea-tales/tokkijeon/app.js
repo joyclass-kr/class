@@ -673,7 +673,7 @@ const QUIZ = [
             "용왕이 잔치 끝에 병을 얻고 남의 간을 찾은 것을 보면, 윗자리의 병을 아랫것이 갚는 셈이구나.",
             "자라가 벼슬자리를 내세워 토끼를 꾄 것을 보면, 누구나 솔깃한 자리가 하나쯤 있구나.",
             "자라가 상을 사양하며 거짓말한 낯이 없다고 한 것을 보면, 시킨 일을 했어도 마음은 남는구나.",
-            "까치 두 마리가 종에 몸을 던진 것을 보면, 갚는 데에는 목숨도 아끼지 않았구나."
+            "용왕이 토끼를 큰 상으로 대접한 것을 보면, 간을 받기 전에 먼저 예를 갖춘 것이구나."
         ],
         answer: 3
     }
@@ -1284,7 +1284,7 @@ const EN = {
                 "The Dragon King fell ill after a feast and went looking for another's liver, so those below pay for what those above do.",
                 "The turtle tempted the rabbit with a post at court, so everyone has one offer that turns their head.",
                 "The turtle refused his reward, saying he had no face after lying, so doing as you are told still leaves something behind.",
-                "Two magpies threw themselves at the bell, so paying a debt can cost a life."
+                "The Dragon King laid on a great table for the rabbit, so he meant to treat his guest properly before asking."
             ],
             answer: 3
         }
