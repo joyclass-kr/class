@@ -517,10 +517,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "가진 것이 없어 이야기를 들려주러 간 것을 보면, 빈손으로도 건넬 것이 있구나.",
-            "온 도시가 올려다보게 벌인 불꽃 하나가 가방에 옮겨붙은 것을 보면, 자랑하려던 일이 길을 끊기도 하는구나.",
-            "물려받은 돈을 다 쓰고 남은 것이 낡은 가방 하나였는데 그것이 날았던 것을 보면, 남은 하나가 어떤 것인지는 써 봐야 아는구나.",
-            "장사꾼의 아들이 이야기 하나로 공주의 마음을 얻은 것을 보면, 말솜씨만 좋으면 못 얻을 것이 없구나."
+            "친구가 낡은 가방을 주며 짐 쌀 때 필요할 거라고 한 것을 보면, 이제 떠나라는 뜻이었구나.",
+            "아들이 가방 안에 앉아 심심풀이로 자물쇠를 눌러 본 것을 보면, 아무 뜻 없이 한 일이 길을 연 것이구나.",
+            "불꽃을 사느라 남은 돈을 다 털어 넣은 것을 보면, 사람들을 놀래 주고 싶은 마음이 앞섰던 것이구나.",
+            "가방을 숲 빈터에 세워 두고 마을로 내려간 것을 보면, 이제 하늘로 갈 일이 없다고 여긴 것이구나."
         ],
         "answer": 3
     }
@@ -981,10 +981,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "Having nothing to bring, he brought a story — you can hold something out with empty hands.",
-                "The fireworks he set off so the whole city would look up caught the trunk itself — showing off can cut the road you came by.",
-                "He spent his inheritance and all that was left was an old trunk, and the trunk flew — what your last thing is worth you learn by using it.",
-                "One story won him the princess — with a good enough tongue there is nothing you cannot get."
+                "His friend gave him an old trunk and said he would need it for packing — it meant it was time to go.",
+                "Sitting inside it he pressed the lock out of idleness — a thing done for no reason opened the road.",
+                "He spent every coin he had left on fireworks — wanting to astonish people came first.",
+                "He left the trunk standing in the clearing and went down to the town — he thought he had no more use for the sky."
             ],
             answer: 3
         }

@@ -533,10 +533,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "쫓기다 여럿이 다치느니 하루에 한 마리씩 가자고 한 것을 보면, 좋은 수가 없을 때는 덜 나쁜 수를 고르는 것도 일이구나.",
-            "제 발로 나선 것이 착해서가 아니라 제가 우두머리이기 때문이라고 한 것을 보면, 앞에 선 사람이 지는 몫이 따로 있구나.",
-            "살려 주겠다는 말에 새와 물고기까지 물은 것을 보면, 제 무리만 건지고 끝내지 않는 자리가 있구나.",
-            "황금 사슴이 새끼 밴 사슴 대신 제 발로 나선 것을 보면, 남을 위해 목숨을 내놓는 것이 참된 착함이구나."
+            "황금 사슴이 하루 한 마리씩 스스로 가겠다고 한 것을 보면, 쫓기다 여럿 다치는 것을 막으려 한 것이구나.",
+            "대신 갈 사슴을 물었을 때 아무도 눈을 마주치지 않은 것을 보면, 선뜻 나설 수 있는 일이 아니었구나.",
+            "제가 우두머리이기 때문이라고 한 것을 보면, 착해서가 아니라 제 몫이라 여긴 것이구나.",
+            "임금님이 사냥을 그만두기로 한 것을 보면, 처음부터 사슴을 해칠 마음이 없었던 것이구나."
         ],
         "answer": 3
     }
@@ -990,10 +990,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "Better one a day than many hurt in the chase — when there is no good choice, picking the less bad one is still work.",
-                "He went himself not because he was kind but because he was the leader — the one in front carries a share of his own.",
-                "Offered his own life, he asked about the birds and the fish too — there is a place where saving your own is not enough.",
-                "The golden deer went in place of the doe carrying young — laying down your life for another is what real goodness is."
+                "The golden deer offered one a day, going of their own accord — he was stopping the many who got hurt in the chase.",
+                "When he asked who would go in her place, nobody would meet his eye — it was not a thing you could volunteer for lightly.",
+                "He said it was because he was the leader — not out of goodness but because the load was his.",
+                "The king gave up hunting — he had never had any wish to harm the deer in the first place."
             ],
             answer: 3
         }
