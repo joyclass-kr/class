@@ -874,12 +874,23 @@ const QUIZ = [
     { q: "까마귀가 붙인 깃털은 어떻게 됐나요?", choices: ["새들이 도로 뽑아 갔다", "바람에 날아갔다", "그대로 붙어 있었다"], answer: 0 }
 ];
 
+/* 보기는 쪽을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice에 담긴 원래 번호로 한다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
 function quizPage() {
     const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+                ${shuffledOrder(item.choices.length).map(ci => `<button type="button" class="quiz-choice" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`).join('');
     return `
