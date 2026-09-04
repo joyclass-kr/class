@@ -526,7 +526,7 @@ const QUIZ = [
                 "왕자가 왕자 차림으로 가지 않고 얼굴에 검댕을 바른 것을 보면, 그대로 가서는 아무것도 알 수 없다고 여긴 거야.",
                 "공주가 진짜라는 말을 듣자마자 상자를 밀어낸 것을 보면, 만든 것이 아니라서 시들해진 거지.",
                 "왕자가 마지막에 참 딱하다는 말만 남기고 돌아간 것을 보면, 화가 나서가 아니라 마음을 접은 거구나.",
-                "왕자가 떠나기 전 공주에게 장미와 밤꾀꼬리를 다시 보낸 것을 보면, 마지막까지 마음을 접지 못한 거야."
+                "공주가 성문 밖에 주저앉아 운 것을 보면, 왕자를 그렇게 대한 것이 그제야 미안했던 거야."
             ],
         "answer": 3
     }
@@ -1010,7 +1010,7 @@ const EN = {
                 "He went not as a prince but with soot rubbed on his face — he saw that arriving as himself would tell him nothing.",
                 "The moment she heard it was real she pushed the box away — a thing nobody had made was dull to her.",
                 "At the end he only said what a pity and went home — he left not in temper but because he had let go.",
-                "Before leaving he sent the rose and the nightingale to her once more — he could not quite let go."
+                "The princess sat down outside the shut gate and wept — she was sorry at last for the way she had treated the prince."
             ],
             answer: 3
         }

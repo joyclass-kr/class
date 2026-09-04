@@ -506,7 +506,7 @@ const QUIZ = [
                 "남편이 겁에 질려 태어날 아이를 주겠다고 한 것을 보면, 다른 생각을 할 겨를이 없었던 거야.",
                 "라푼젤이 무심코 할머니는 왜 그렇게 무겁냐고 물은 것을 보면, 숨겨야 하는 일인 줄을 몰랐던 거지.",
                 "들판에서도 들어 줄 사람 없이 노래를 부른 것을 보면, 탑에서 하던 버릇이 그대로 남은 거구나.",
-                "왕자가 눈이 먼 뒤에도 비단실을 품에 지니고 다닌 것을 보면, 사다리 이야기를 잊지 않은 거야."
+                "마녀가 잘린 머리카락을 창가 고리에 단단히 매어 둔 것을 보면, 라푼젤이 돌아오면 다시 쓰라고 남겨 둔 거야."
             ],
         "answer": 3
     }
@@ -971,7 +971,7 @@ const EN = {
                 "Frightened, the husband promised the child that was coming — he had no room left to think.",
                 "Rapunzel asked without thinking why the old woman was so heavy — she had no idea it was something to hide.",
                 "Out on the moor she sang with nobody to hear her — it was the habit she had kept from the tower.",
-                "Even blind, the prince kept the silk thread in his coat — he had not forgotten the ladder."
+                "The witch tied the cut hair firmly to the hook at the window — she had left it there for Rapunzel to use again when she came back."
             ],
             answer: 3
         }

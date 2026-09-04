@@ -529,7 +529,7 @@ const QUIZ = [
                 "방앗간 주인이 큰 인물 앞에 서니 입이 근질거렸다고 한 것을 보면, 자랑하고 싶은 마음이 앞섰던 거야.",
                 "임금님이 금실을 보고도 고마워하지 않고 더 넓은 방으로 데려간 것을 보면, 욕심이 먼저 난 거지.",
                 "작은 남자가 금붙이는 아무 소용이 없다고 한 것을 보면, 처음부터 아이를 노린 거구나.",
-                "작은 남자가 사흘 말미를 준 것을 보면, 우는 왕비가 딱해 기회를 주려 한 거야."
+                "왕비가 마지막 밤에 콘라트냐 하인츠냐부터 물어본 것을 보면, 그때까지도 진짜 이름을 알아내지 못한 거야."
             ],
         "answer": 3
     }
@@ -1008,7 +1008,7 @@ const EN = {
                 "The miller said his mouth itched in front of so great a man — the wish to boast came first.",
                 "The king saw the gold and, instead of thanking her, took her to a larger room — greed came first.",
                 "The little man said gold was no use to him — the child was what he had been after all along.",
-                "The little man gave her three days — he felt sorry for the weeping queen and wanted to give her a chance."
+                "On the last night the queen began by guessing Konrad and Heinz — she still had not found out his real name."
             ],
             answer: 3
         }

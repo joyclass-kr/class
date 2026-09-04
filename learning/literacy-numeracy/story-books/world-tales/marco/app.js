@@ -513,7 +513,7 @@ const QUIZ = [
                 "로사리오에서 주저앉아 그만 돌아갈까 생각한 것을 보면, 마르코에게도 그만두고 싶은 때가 있었던 거야.",
                 "가는 곳마다 사람들이 무엇이든 나눠 준 것을 보면, 저마다 두고 온 가족이 있었기 때문이지.",
                 "어머니가 마르코를 보고서야 마음을 고쳐먹은 것을 보면, 앓던 몸보다 놓아 버린 마음이 먼저였구나.",
-                "어머니가 편지가 끊긴 뒤에도 다달이 돈만은 부쳐 온 것을 보면, 앓으면서도 식구 걱정뿐이었던 거야."
+                "아버지가 아는 사람에게 부탁해 뱃삯을 마련해 준 것을 보면, 마르코를 보내는 데 처음부터 찬성한 거야."
             ],
         "answer": 3
     }
@@ -998,7 +998,7 @@ const EN = {
                 "At Rosario he sat down and thought of turning back — even Marco had a moment when he wanted to stop.",
                 "Everywhere he went people shared what they had — each of them had left family behind too.",
                 "His mother took heart only once she saw him — what was killing her was not the illness but having given up.",
-                "Even after the letters stopped, the money still came every month — ill as she was, she thought only of her family."
+                "The father borrowed the passage money from an acquaintance — he had been in favour of sending Marco from the start."
             ],
             answer: 3
         }

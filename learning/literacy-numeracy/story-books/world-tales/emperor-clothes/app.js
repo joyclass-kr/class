@@ -501,7 +501,7 @@ const QUIZ = [
                 "두 사람이 어리석은 사람에게는 안 보인다고 붙여 둔 것을 보면, 아무도 안 보인다는 말을 못 하게 막아 둔 거야.",
                 "늙은 대신이 등에 식은땀을 흘리면서도 훌륭하다고 한 것을 보면, 거짓말을 하려던 것이 아니라 저만 못 보는 줄 알고 겁이 난 거지.",
                 "임금님이 아이의 말을 듣고도 허리를 더 곧게 편 것을 보면, 멈추면 다 인정하는 셈이 되니 끝까지 걸은 거구나.",
-                "아이의 아버지가 얼른 아이 입을 막은 것을 보면, 아이가 거짓말을 한 줄 알고 나무란 거야."
+                "신하 넷이 행진이 끝날 때까지 없는 자락을 들고 뒤를 따른 것을 보면, 그제야 임금님이 딱해 끝까지 곁을 지킨 거야."
             ],
         "answer": 3
     }
@@ -897,7 +897,7 @@ const EN = {
                 "The weavers added that fools cannot see it — that one line stopped anybody from saying they could not.",
                 "The old minister broke into a cold sweat and still called it splendid — he was not lying but afraid he alone could not see.",
                 "The emperor heard the child and drew himself up straighter — to stop now would be to admit the whole thing.",
-                "The boy's father clapped a hand over his mouth — he thought the child had told a lie and was scolding him."
+                "The four courtiers carried the invisible train right to the end of the procession — by then they pitied the emperor and stayed at his side."
             ],
             answer: 3
         }

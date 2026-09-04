@@ -447,7 +447,7 @@ function afterPage(spread, isFirst) {
 
 const QUIZ = [
     {
-        "q": "어머니가 카렌에게 지어 준 신발은 어떤 것이었나요?",
+        "q": "마을 아주머니가 카렌에게 만들어 준 신발은 어떤 것이었나요?",
         "choices": [
             "빨간 헝겊 신",
             "나막신",
@@ -516,7 +516,7 @@ const QUIZ = [
                 "부인이 검은 구두인 줄 알고 값을 치른 것을 보면, 눈이 어두워 빛깔을 보지 못한 거야.",
                 "예배당에서 앞에서 하는 말이 하나도 들리지 않은 것을 보면, 머릿속이 온통 구두 생각이었던 거지.",
                 "아주머니가 붙잡아 앉히자 발이 잠시 멈춘 것을 보면, 곁에 누가 있어야 멈출 수 있었구나.",
-                "구둣방 아저씨가 빙그레 웃은 것을 보면, 카렌이 좋은 것을 골랐다며 흐뭇해한 거야."
+                "카렌이 어머니를 묻는 날에도 빨간 헝겊 신을 신고 간 것을 보면, 그 신을 신고 가면 어머니가 기뻐하실 것 같았던 거야."
             ],
         "answer": 3
     }
@@ -999,7 +999,7 @@ const EN = {
                 "The old lady paid, thinking they were black — her eyes were too weak to make out the colour.",
                 "In church she did not hear a word of what was said — her head was entirely full of the shoes.",
                 "Her feet stopped for a moment when the woman took hold of her — she needed someone beside her to stop.",
-                "The shoemaker smiled — he was pleased that Karen had made a good choice."
+                "Karen wore the red cloth shoes even to her mother's burial — she felt her mother would be glad to see her in them."
             ],
             answer: 3
         }

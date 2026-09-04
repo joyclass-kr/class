@@ -492,7 +492,7 @@ const QUIZ = [
                 "늑대가 할머니 댁이 어디쯤이냐고 물은 것을 보면, 먼저 가 있으려고 길을 알아낸 거야.",
                 "늑대가 저기 꽃이 곱다고 손짓한 것을 보면, 빨간 모자를 큰길에서 떼어 놓으려 한 거지.",
                 "사냥꾼이 총을 들었다가 도로 내린 것을 보면, 배 속에 아직 살아 있는 사람이 있을지 모른다고 짚은 거구나.",
-                "빨간 모자가 집에 돌아와 어머니께 늑대를 만난 일을 곧바로 말한 것을 보면, 겁이 나도 숨기지 않은 거야."
+                "우리 손녀가 다 살렸다는 할머니 말에 빨간 모자가 얼굴이 빨개진 것을 보면, 칭찬을 듣는 것이 기뻐서였던 거야."
             ],
         "answer": 3
     }
@@ -885,7 +885,7 @@ const EN = {
                 "The wolf asked whereabouts the grandmother lived — he was finding out the way so as to get there first.",
                 "The wolf pointed out how pretty the flowers were — he was drawing her off the main road.",
                 "The huntsman raised his gun and then lowered it again — he had worked out that someone might still be alive inside.",
-                "Back home she told her mother straight away about meeting the wolf — frightened as she was, she hid nothing."
+                "Red Riding Hood turned red when her grandmother said she had saved them all — she was flushed with pleasure at the praise."
             ],
             answer: 3
         }

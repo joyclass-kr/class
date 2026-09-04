@@ -483,7 +483,7 @@ const QUIZ = [
                 "임금님이 나라 안의 물레를 남김없이 태운 것을 보면, 그것 말고는 막을 길이 없다고 여긴 거야.",
                 "열두 번째 요정이 죽음을 백 년 잠으로 바꾼 것을 보면, 저주를 지우지는 못해도 덜어 낼 수는 있었던 거지.",
                 "공주가 할머니에게 그게 뭐냐고 물은 것을 보면, 물레라는 것을 그때 처음 본 거구나.",
-                "열세 번째 요정이 뒤늦게 찾아와 왜 저만 부르지 않았느냐고 물은 것을 보면, 서운함을 먼저 말한 거야."
+                "가시덤불이 왕자가 칼을 뽑기도 전에 스스로 갈라진 것을 보면, 왕자가 남달리 용감해서 길을 내준 거야."
             ],
         "answer": 3
     }
@@ -857,7 +857,7 @@ const EN = {
                 "The king had every spindle in the country burned — he could think of no other way to stop it.",
                 "The twelfth fairy turned death into a hundred years' sleep — the curse could not be undone, only made lighter.",
                 "The princess asked the old woman what it was — she had never seen a spinning wheel before that moment.",
-                "The thirteenth fairy came late and asked why she alone had not been invited — she spoke of the slight before anything else."
+                "The briars parted before the prince had even drawn his sword — they opened a path for him because he was braver than the rest."
             ],
             answer: 3
         }
