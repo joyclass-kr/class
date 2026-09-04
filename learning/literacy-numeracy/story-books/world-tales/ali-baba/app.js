@@ -483,7 +483,7 @@ const QUIZ = [
             "알리바바가 '열려라 참깨'를 여러 번 되뇐 것을 보면, 짧은 말일수록 입에 붙여 두어야 잊지 않는구나.",
             "형수가 됫박 바닥에 밀랍을 발라 알아낸 것을 보면, 말하지 않아도 자국은 남는 법이구나.",
             "항아리 속 소리를 알아듣고 목소리를 낮춰 대답한 모르지아나를 보면, 놀란 티를 내지 않는 것이 사람을 살리기도 하는구나.",
-            "모르지아나가 마지막에 큰 상을 받은 것을 보면, 어떤 주인을 만나느냐가 무엇보다 중요하구나."
+            "알리바바가 모르지아나에게 이제 종이 아니라고 한 것을 보면, 좋은 주인을 만나는 것이 무엇보다 중요하구나."
         ],
         "answer": 3
     }
@@ -867,7 +867,7 @@ const EN = {
                 "Ali Baba said 'Open, sesame' over and over to himself — the shorter the words, the more you must keep them on your tongue.",
                 "His sister-in-law smeared wax on the measure and found them out — you leave a trace even when you say nothing.",
                 "Morgiana heard the voice in the jar and answered low — not showing your fright can save lives.",
-                "Morgiana was richly rewarded in the end — what matters most is whose household you happen to serve in."
+                "Ali Baba told Morgiana she was a slave no longer — finding a good master is what matters most of all."
             ],
             answer: 3
         }

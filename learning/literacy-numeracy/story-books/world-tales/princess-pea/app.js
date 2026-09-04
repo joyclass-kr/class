@@ -526,7 +526,7 @@ const QUIZ = [
             "왕비가 말로 묻지 않고 요와 이불 밑에 완두콩을 넣은 것을 보면, 말로 물으면 꾸며 낼 수 있는 것이 있구나.",
             "아가씨가 잘 잤다고 하면 넘어갈 수 있었는데 못 잤다고 그대로 말한 것을 보면, 손해 볼 자리에서 하는 말이 그 사람을 보여 주는구나.",
             "완두콩이 지금도 박물관에 있다며 정말 있었던 이야기라고 한 것을 보면, 안데르센이 끝에서 능청을 떨었구나.",
-            "아가씨가 요 스무 장 밑의 완두콩 하나에 잠을 못 잔 것을 보면, 예민할수록 귀하게 자란 사람이구나."
+            "왕자가 여러 나라를 돌아다니며 공주를 찾아다닌 것을 보면, 발품을 팔면 결국 찾는 것을 만나게 되는구나."
         ],
         "answer": 3
     }
@@ -995,7 +995,7 @@ const EN = {
                 "The queen did not ask her anything; she put a pea under the bedding — some things can be made up if you ask them out loud.",
                 "She could have said she slept well and got away with it, and she said she had not — what you say when it costs you shows who you are.",
                 "The pea is in a museum to this day, and it is all quite true, he says — Andersen is keeping a straight face at the end.",
-                "One pea under twenty mattresses kept her awake all night — the more delicate you are, the better born you must be."
+                "The prince travelled through country after country looking for a princess — wear out your shoes and you find what you are after."
             ],
             answer: 3
         }

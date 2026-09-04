@@ -499,10 +499,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "왕비가 끈에서 빗으로, 빗에서 사과로 갈수록 그럴듯한 물건을 고른 것을 보면, 속이는 쪽도 배워 가며 하는구나.",
-            "난쟁이들이 그렇게 일렀는데도 공주가 세 번 다 문을 연 것을 보면, 혼자 있는 시간이 길면 문이 쉽게 열리는구나.",
-            "시키는 대로 하지 않은 사람이 사냥꾼뿐이었고 거기서 이야기가 갈린 것을 보면, 한 사람이 멈추면 일이 달라지는구나.",
-            "공주가 난쟁이 집에서 밥을 짓고 빨래를 한 것을 보면, 남의 집에 얹혀살려면 제 몫을 해내야 하는구나."
+            "왕비가 끈에서 빗으로, 빗에서 사과로 바꿔 온 것을 보면, 들킬 때마다 더 그럴듯한 것을 고른 것이구나.",
+            "사냥꾼이 공주를 숲에 두고 온 것을 보면, 시킨 대로 하지 않기로 마음먹은 것이구나.",
+            "난쟁이들이 이야기를 다 듣고 함께 지내자고 한 것을 보면, 공주가 갈 곳이 없다는 것을 알아챈 것이구나.",
+            "공주가 난쟁이 집에서 밥을 짓고 빨래를 한 것을 보면, 재워 준 값을 치르라는 말을 들은 것이구나."
         ],
         "answer": 3
     }
@@ -871,10 +871,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "First a lace, then a comb, then an apple — each time the queen chose something more believable; the deceiver learns as she goes.",
-                "The dwarfs warned her and she opened the door all three times — a door opens easily when you have been alone a long while.",
-                "The huntsman was the only one who did not do as he was told, and the story turns there — one person stopping changes everything.",
-                "Snow White cooked and washed for the dwarfs — if you are living in someone else's house you had better earn your keep."
+                "The queen came with a lace, then a comb, then an apple — each time she was caught out she picked something more convincing.",
+                "The huntsman left her alive in the wood — he had made up his mind not to do as he was told.",
+                "The dwarfs heard her out and asked her to stay with them — they saw she had nowhere else to go.",
+                "Snow White cooked and washed for them — she had been told to earn her keep in return for the bed."
             ],
             answer: 3
         }
