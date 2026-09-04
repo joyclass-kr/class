@@ -505,10 +505,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "언니가 무서웠을 텐데도 물레가락을 주우러 우물에 뛰어든 것을 보면, 잃은 것을 제 손으로 찾으려는 마음이 먼저구나.",
-            "언니는 빵과 사과나무의 부탁에 하던 길을 멈추고 그것을 해 준 것을 보면, 급한 길에도 멈출 자리는 있구나.",
-            "홀레 할머니가 본 것이 이불을 턴 솜씨가 아니라 오는 길에 무엇을 했는지였음을 보면, 보는 사람은 결과보다 길을 보는구나.",
-            "언니가 이불을 잘 털어 준 덕에 금을 뒤집어쓴 것을 보면, 시키는 일만 잘하면 상은 따라오는구나."
+            "언니가 무서웠을 텐데도 우물로 뛰어든 것을 보면, 찾아오지 않으면 들어올 생각도 말라는 말을 들은 것이구나.",
+            "언니가 손이 발갛게 익도록 빵을 다 꺼낸 것을 보면, 제 갈 길이 급한 중에도 부탁을 지나치지 못한 것이구나.",
+            "동생이 가시로 손끝을 찔러 피를 낸 것을 보면, 실 잣기는 귀찮고 금은 받고 싶었던 것이구나.",
+            "홀레 할머니가 동생을 며칠 조용히 지켜본 것을 보면, 처음부터 잘 가르쳐 보려고 마음먹은 것이구나."
         ],
         "answer": 3
     }
@@ -967,10 +967,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "Frightened as she must have been, she jumped in after the spindle — the first thing is wanting to get back what you lost yourself.",
-                "The bread and the apple tree called out, and she stopped what she was doing for them — even on an urgent road there is room to stop.",
-                "Mother Holle was not judging how she shook the bedding but what she had done on the way — the one watching looks at the road, not the result.",
-                "The girl shook the bedding well and came out covered in gold — do the job you are set and the reward follows."
+                "Frightened as she was, she jumped into the well — she had been told not to come home without it.",
+                "She pulled out every loaf until her hands were scarlet — even in a hurry she could not walk past someone asking.",
+                "The other girl pricked her finger on a thorn for the blood — she wanted the gold without the spinning.",
+                "Mother Holle watched the lazy girl quietly for days — she had meant from the start to teach her better."
             ],
             answer: 3
         }

@@ -516,10 +516,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "돈은 눈에 보였고 통은 볼품없었는데 노파가 끝까지 달라고 한 것이 통이었음을 보면, 값어치는 남이 탐내는 데서 드러나는구나.",
-            "돈이 떨어지자 친구들이 발길을 끊고 넉넉해지자 돌아온 것을 보면, 무엇을 보고 온 사람인지는 없어져 봐야 알겠구나.",
-            "감옥에서 병사를 도운 것이 힘 있는 사람이 아니라 지나가던 아이였음을 보면, 도움은 크기로 오는 것이 아니구나.",
-            "병사가 통을 세 번 쳐서 곤란을 벗어난 것을 보면, 좋은 물건 하나만 있으면 걱정할 것이 없구나."
+            "병사가 방마다 앞의 것을 쏟아 버리고 새로 담은 것을 보면, 더 나은 것이 나오자 앞의 것이 시들해진 것이구나.",
+            "노파가 돈은 얼마든지 가져가라면서 통만은 꼭 달라고 한 것을 보면, 값어치가 그 통에 있었던 것이구나.",
+            "돈이 떨어지자 발길을 끊었던 친구들이 다시 넉넉해지자 돌아온 것을 보면, 무엇을 보고 온 사람들이었는지 드러난 것이구나.",
+            "감옥에서 아이가 통을 가져다준 것을 보면, 병사가 전에 금화를 나눠 준 그 아이였구나."
         ],
         "answer": 3
     }
@@ -984,10 +984,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The money was in plain sight and the box looked worthless, and the box was the one thing the old woman kept demanding — worth shows in what others want.",
-                "His friends dropped away when the money ran out and came back when it returned — you find out what brought them by losing it.",
-                "The one who helped him in prison was not a powerful man but a boy going past — help does not come in proportion to size.",
-                "Three strikes of the box got him out of trouble — one good thing in your pocket and you need never worry."
+                "In each room he tipped out what he had and filled up again — once something better appeared the old lot lost its shine.",
+                "She said take all the money you like but insisted on the box — the worth of the thing was in the box.",
+                "The friends who dropped away when the money ran out came back when it returned — it showed what had brought them.",
+                "A boy fetched the box to the prison — it was the same child the soldier had given gold to before."
             ],
             answer: 3
         }
