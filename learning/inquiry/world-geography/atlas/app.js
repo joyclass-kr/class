@@ -2,12 +2,11 @@
   "use strict";
 
   const atlas = window.WORLD_THEME_ATLAS || { categories: [], items: [] };
-  const WORLD_BOUNDS = L.latLngBounds([[-90, -180], [90, 180]]);
   const VISIBLE_WORLD_BOUNDS = L.latLngBounds([[-77, -180], [84, 180]]);
   const MAP_IMAGE = "../../age-of-exploration/public/assets/maps/natural-earth-v58/overview.jpg?v=58";
+  const COPY_OVERLAP = 0.05; // 사본 이음새가 실금으로 보이지 않도록 살짝 겹친다.
   let activeCategory = "animal";
   let selectedItemId = "";
-  let currentItem = null;
   let map;
   let baseMapLayer;
   let atlasLayer;
@@ -36,10 +35,9 @@
     map.createPane("themeAtlasPane");
     map.getPane("themeAtlasPane").style.zIndex = "660";
     atlasLayer = L.layerGroup().addTo(map);
-    map.fitBounds(VISIBLE_WORLD_BOUNDS, { padding: [8, 8], animate: false });
-    updateMinimumZoom();
+    fitWholeWorld(false);
     map.on("moveend", refreshWorldCopy);
-    map.on("resize", updateMinimumZoom);
+    map.on("resize", () => fitWholeWorld(false));
     bindControls();
     renderCategoryControls();
     renderAtlas();
@@ -49,7 +47,7 @@
     baseMapLayer.clearLayers();
     [-1, 0, 1].forEach((step) => {
       const offset = (worldCopyIndex + step) * 360;
-      L.imageOverlay(MAP_IMAGE, [[-90, -180 + offset], [90, 180 + offset]], {
+      L.imageOverlay(MAP_IMAGE, [[-90, -180 - COPY_OVERLAP + offset], [90, 180 + COPY_OVERLAP + offset]], {
         attribution: "Natural Earth",
         interactive: false
       }).addTo(baseMapLayer);
@@ -64,13 +62,20 @@
     renderAtlas();
   }
 
-  function updateMinimumZoom() {
+  // 세계 전체가 한 화면에 들어오는 배율을 최소 배율로 삼는다.
+  function fitWholeWorld(animate) {
     const size = map.getSize();
     if (!size.x || !size.y) return;
-    const requiredScale = Math.max(size.x / 360, size.y / 180);
-    const minimumZoom = Math.ceil(Math.log2(requiredScale) * 4) / 4;
-    map.setMinZoom(minimumZoom);
-    if (map.getZoom() < minimumZoom) map.setZoom(minimumZoom, { animate: false });
+    const offset = worldCopyIndex * 360;
+    const bounds = [[-77, -180 + offset], [84, 180 + offset]];
+    map.setMinZoom(0);
+    map.fitBounds(bounds, { padding: [6, 6], animate: false });
+    const fitZoom = map.getZoom();
+    map.setMinZoom(fitZoom);
+    const halfVisibleLat = size.y / Math.pow(2, fitZoom) / 2;
+    const latLimit = Math.max(90, halfVisibleLat + 1);
+    map.setMaxBounds([[-latLimit, -1000000], [latLimit, 1000000]]);
+    if (animate) map.fitBounds(bounds, { padding: [6, 6], animate: true });
   }
 
   function visibleWorldOffsets() {
@@ -102,13 +107,11 @@
   function selectCategory(categoryId) {
     activeCategory = categoryId;
     selectedItemId = "";
-    currentItem = null;
     $("#themeItemCard").hidden = true;
     renderCategoryControls();
     renderAtlas();
-    const offset = worldCopyIndex * 360;
-    map.fitBounds([[-77, -180 + offset], [84, 180 + offset]], { padding: [8, 8], animate: true });
-    updateMinimumZoom();
+    map.stop();
+    fitWholeWorld(false);
   }
 
   function renderAtlas() {
@@ -139,7 +142,6 @@
 
   function showItem(item, displayLng) {
     selectedItemId = item.id;
-    currentItem = item;
     const category = atlas.categories.find((entry) => entry.id === item.category);
     $("#themeItemIcon").textContent = item.icon;
     $("#themeItemCategory").textContent = category ? category.label : "세계 테마";
@@ -153,11 +155,9 @@
 
   function closeItem() {
     selectedItemId = "";
-    currentItem = null;
     $("#themeItemCard").hidden = true;
     renderAtlas();
   }
-
 
   function makeElement(tag, className, text) {
     const element = document.createElement(tag);

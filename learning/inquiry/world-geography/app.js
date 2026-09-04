@@ -2,30 +2,29 @@
   "use strict";
 
   const dataset = window.WORLD_GEOGRAPHY || {};
-  const atlas = window.WORLD_THEME_ATLAS || { categories: [], items: [] };
   const themes = dataset.themes || {};
   const questions = Array.isArray(dataset.questions) ? dataset.questions : [];
-  const WORLD_BOUNDS = L.latLngBounds([[-90, -180], [90, 180]]);
-  const VISIBLE_WORLD_BOUNDS = L.latLngBounds([[-77, -180], [84, 180]]);
   const MAP_IMAGE = "../age-of-exploration/public/assets/maps/natural-earth-v58/overview.jpg?v=58";
-  const PROGRESS_KEY = "joyclass-world-geography-progress-v1";
-  let currentTheme = "world";
+  const VISIBLE_WORLD_BOUNDS = L.latLngBounds([[-77, -180], [84, 180]]);
+  const COPY_OVERLAP = 0.05; // 사본 이음새가 실금으로 보이지 않도록 살짝 겹친다.
+  const PROGRESS_KEY = "joyclass-world-geography-progress-v2";
+  const SESSION_SIZE = 6;
+  const themeOrder = Object.keys(themes);
+
+  let currentTheme = themeOrder[0] || "world";
   let map;
   let baseMapLayer;
   let worldCopyIndex = 0;
   let featureLayer;
   let lineLayer;
-  let themeAtlasLayer;
-  let selectedThemeItemId = "";
-  let currentThemeItem = null;
-  const activeThemeCategories = new Set(["animal", "landmark"]);
+  let activeFeatureName = "";
   let questionMap;
   let questionFocusLayer;
   let sessionQuestions = [];
   let sessionAnswers = [];
   let questionIndex = 0;
   let questionAnswered = false;
-  let hintShown = false;
+  let optionOrder = []; // 화면에 보인 순서 → 원래 보기 번호
 
   const $ = (selector) => document.querySelector(selector);
   const $$ = (selector) => [...document.querySelectorAll(selector)];
@@ -35,13 +34,12 @@
   function init() {
     map = createMap("map", true);
     baseMapLayer = L.layerGroup().addTo(map);
-    renderBaseMapCopies();
+    renderBaseMapCopies(map, baseMapLayer);
     featureLayer = L.layerGroup().addTo(map);
     lineLayer = L.layerGroup().addTo(map);
-    fitWorld(map);
-    updateMinimumZoom(map);
+    fitWholeWorld(map);
     map.on("moveend", refreshWorldCopy);
-    map.on("resize", () => updateMinimumZoom(map));
+    map.on("resize", () => fitWholeWorld(map));
     bindControls();
     renderTheme(currentTheme);
     renderProgress();
@@ -55,31 +53,26 @@
       minZoom: 0,
       maxZoom: 5,
       zoomSnap: 0.25,
-      maxBounds: interactive ? [[-90, -1000000], [90, 1000000]] : [[-105, -195], [105, 195]],
+      maxBounds: [[-90, -1000000], [90, 1000000]],
       maxBoundsViscosity: 1,
       attributionControl: interactive,
       zoomControl: false,
       dragging: true,
+      scrollWheelZoom: interactive,
       preferCanvas: true
     });
-    if (!interactive) {
-      L.imageOverlay(MAP_IMAGE, WORLD_BOUNDS, {
-        attribution: "Natural Earth",
-        interactive: false
-      }).addTo(instance);
-    }
     if (interactive) L.control.zoom({ position: "bottomright" }).addTo(instance);
     return instance;
   }
 
-  function renderBaseMapCopies() {
-    baseMapLayer.clearLayers();
+  function renderBaseMapCopies(targetMap, layer, copyIndex = worldCopyIndex) {
+    layer.clearLayers();
     [-1, 0, 1].forEach((step) => {
-      const offset = (worldCopyIndex + step) * 360;
-      L.imageOverlay(MAP_IMAGE, [[-90, -180 + offset], [90, 180 + offset]], {
+      const offset = (copyIndex + step) * 360;
+      L.imageOverlay(MAP_IMAGE, [[-90, -180 - COPY_OVERLAP + offset], [90, 180 + COPY_OVERLAP + offset]], {
         attribution: "Natural Earth",
         interactive: false
-      }).addTo(baseMapLayer);
+      }).addTo(layer);
     });
   }
 
@@ -87,25 +80,26 @@
     const nextIndex = Math.round(map.getCenter().lng / 360);
     if (nextIndex === worldCopyIndex) return;
     worldCopyIndex = nextIndex;
-    renderBaseMapCopies();
+    renderBaseMapCopies(map, baseMapLayer);
     renderMapContent(themes[currentTheme]);
   }
 
-  function updateMinimumZoom(targetMap) {
+  // 세계 전체가 한 화면에 들어오는 배율을 최소 배율로 삼는다.
+  // 화면이 지도보다 세로로 길면 위아래에 바다색 여백이 남는다.
+  function fitWholeWorld(targetMap) {
     const size = targetMap.getSize();
     if (!size.x || !size.y) return;
-    const requiredScale = Math.max(size.x / 360, size.y / 180);
-    const minimumZoom = Math.ceil(Math.log2(requiredScale) * 4) / 4;
-    targetMap.setMinZoom(minimumZoom);
-    if (targetMap.getZoom() < minimumZoom) targetMap.setZoom(minimumZoom, { animate: false });
+    targetMap.setMinZoom(0);
+    targetMap.fitBounds(VISIBLE_WORLD_BOUNDS, { padding: [6, 6], animate: false });
+    const fitZoom = targetMap.getZoom();
+    targetMap.setMinZoom(fitZoom);
+    const halfVisibleLat = size.y / Math.pow(2, fitZoom) / 2;
+    const latLimit = Math.max(90, halfVisibleLat + 1);
+    targetMap.setMaxBounds([[-latLimit, -1000000], [latLimit, 1000000]]);
   }
 
   function visibleWorldOffsets() {
     return [-1, 0, 1].map((step) => (worldCopyIndex + step) * 360);
-  }
-
-  function fitWorld(targetMap) {
-    targetMap.fitBounds(VISIBLE_WORLD_BOUNDS, { padding: [8, 8], animate: false });
   }
 
   function bindControls() {
@@ -113,6 +107,7 @@
       button.addEventListener("click", () => renderTheme(button.dataset.theme));
     });
     $("#progressButton").addEventListener("click", showProgressSummary);
+    $("#focusClose").addEventListener("click", clearFeatureFocus);
     $("#startPractice").addEventListener("click", startPractice);
     $("#closePractice").addEventListener("click", () => $("#practiceDialog").close());
     $("#showHint").addEventListener("click", showQuestionHint);
@@ -125,117 +120,11 @@
     });
   }
 
-  function renderThemeLayerControls() {
-    const controls = atlas.categories.map((category) => {
-      const count = atlas.items.filter((item) => item.category === category.id).length;
-      const button = makeElement("button", "theme-layer-control");
-      button.type = "button";
-      button.dataset.category = category.id;
-      button.style.setProperty("--layer-color", category.color);
-      button.setAttribute("aria-pressed", String(activeThemeCategories.has(category.id)));
-      button.setAttribute("aria-label", `${category.label} 테마 ${count}개 ${activeThemeCategories.has(category.id) ? "숨기기" : "보기"}`);
-      const icon = makeElement("span", "layer-icon", category.icon);
-      icon.setAttribute("aria-hidden", "true");
-      const label = makeElement("span", "", category.label);
-      const tally = makeElement("small", "", String(count));
-      button.append(icon, label, tally);
-      button.addEventListener("click", () => toggleThemeCategory(category.id));
-      return button;
-    });
-    $("#themeLayerControls").replaceChildren(...controls);
-  }
-
-  function toggleThemeCategory(categoryId) {
-    if (activeThemeCategories.has(categoryId)) activeThemeCategories.delete(categoryId);
-    else activeThemeCategories.add(categoryId);
-    selectedThemeItemId = "";
-    currentThemeItem = null;
-    $("#themeItemCard").hidden = true;
-    renderThemeLayerControls();
-    renderThemeAtlas();
-  }
-
-  function showRecommendedLayers() {
-    activeThemeCategories.clear();
-    activeThemeCategories.add("animal");
-    activeThemeCategories.add("landmark");
-    activeThemeCategories.add("nature");
-    renderThemeLayerControls();
-    renderThemeAtlas();
-  }
-
-  function renderThemeAtlas() {
-    themeAtlasLayer.clearLayers();
-    const visibleItems = atlas.items.filter((item) => activeThemeCategories.has(item.category));
-    visibleItems.forEach((item) => {
-      const selected = item.id === selectedThemeItemId;
-      const marker = L.marker([item.lat, item.lng], {
-        pane: "themeAtlasPane",
-        title: `${item.name}, ${item.place}`,
-        alt: item.name,
-        keyboard: true,
-        icon: L.divIcon({
-          className: "",
-          html: `<div class="theme-pin${selected ? " is-selected" : ""}" style="--pin-color:${item.color}"><span>${item.icon}</span></div>`,
-          iconSize: selected ? [38, 38] : [30, 30],
-          iconAnchor: selected ? [19, 34] : [15, 27]
-        })
-      }).addTo(themeAtlasLayer);
-      marker.bindTooltip(`${item.name} · ${item.place}`, { direction: "top", offset: [0, -24], className: "theme-tooltip" });
-      marker.on("click", () => showThemeItem(item));
-    });
-    $("#themeItemCount").textContent = `${atlas.items.length}개 중 ${visibleItems.length}개 표시`;
-  }
-
-  function showThemeItem(item) {
-    selectedThemeItemId = item.id;
-    currentThemeItem = item;
-    const category = atlas.categories.find((entry) => entry.id === item.category);
-    $("#themeItemIcon").textContent = item.icon;
-    $("#themeItemCategory").textContent = category ? category.label : "세계 테마";
-    $("#themeItemName").textContent = item.name;
-    $("#themeItemPlace").textContent = item.place;
-    $("#themeItemDescription").textContent = item.description;
-    $("#themeItemCard").hidden = false;
-    renderThemeAtlas();
-    map.setView([item.lat, item.lng], Math.max(3, map.getZoom()), { animate: true });
-  }
-
-  function closeThemeItem() {
-    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
-    selectedThemeItemId = "";
-    currentThemeItem = null;
-    $("#themeItemCard").hidden = true;
-    renderThemeAtlas();
-  }
-
-  function speakCurrentThemeItem() {
-    if (!currentThemeItem || !("speechSynthesis" in window)) return;
-    window.speechSynthesis.cancel();
-    const speech = new SpeechSynthesisUtterance(`${currentThemeItem.name}. ${currentThemeItem.place}. ${currentThemeItem.description}`);
-    speech.lang = "ko-KR";
-    speech.rate = .9;
-    const button = $("#speakThemeItem");
-    button.textContent = "🔊 읽는 중";
-    speech.addEventListener("end", () => { button.textContent = "🔊 설명 듣기"; });
-    speech.addEventListener("error", () => { button.textContent = "🔊 설명 듣기"; });
-    window.speechSynthesis.speak(speech);
-  }
-
-  function toggleThemeLayerDock() {
-    setThemeLayerDockCollapsed(!$("#themeLayerDock").classList.contains("is-collapsed"));
-  }
-
-  function setThemeLayerDockCollapsed(collapsed) {
-    $("#themeLayerDock").classList.toggle("is-collapsed", collapsed);
-    $("#themeLayerToggle").setAttribute("aria-expanded", String(!collapsed));
-    $("#themeLayerToggle").textContent = collapsed ? "펼치기" : "접기";
-  }
-
   function renderTheme(themeId) {
     const theme = themes[themeId];
     if (!theme) return;
     currentTheme = themeId;
+    activeFeatureName = "";
     $$(".theme-tab").forEach((button) => {
       const active = button.dataset.theme === themeId;
       button.classList.toggle("is-active", active);
@@ -245,12 +134,14 @@
     $("#conceptTitle").textContent = theme.title;
     $("#conceptSummary").textContent = theme.summary;
     $("#conceptPoints").replaceChildren(...(theme.points || []).map((copy) => makeElement("div", "concept-point", copy)));
+    $("#featureFocus").hidden = true;
     renderLegend(theme.legend || []);
     renderMapContent(theme);
     renderFeatureButtons(theme);
-    const questionCount = questions.filter((question) => question.topic === themeId).length;
-    $("#startPractice").textContent = "문제 풀기";
-    $("#startPractice").disabled = questionCount === 0;
+    const pool = questions.filter((question) => question.topic === themeId);
+    $("#startPractice").textContent = `문제 풀기 (${Math.min(SESSION_SIZE, pool.length)}문제 / ${pool.length}문제 중)`;
+    $("#startPractice").disabled = pool.length === 0;
+    fitWholeWorld(map);
   }
 
   function renderLegend(items) {
@@ -290,6 +181,8 @@
     const buttons = (theme.features || []).map((feature) => {
       const button = makeElement("button", "feature-button");
       button.type = "button";
+      button.dataset.feature = feature.name;
+      button.setAttribute("aria-pressed", String(feature.name === activeFeatureName));
       const title = makeElement("strong", "", feature.name);
       const note = makeElement("small", "", feature.note);
       button.append(title, note);
@@ -300,12 +193,16 @@
   }
 
   function makeMarker(feature, lngOffset = 0) {
+    const active = feature.name === activeFeatureName;
+    const label = feature.short || feature.icon || feature.name.slice(0, 2);
     return L.marker([feature.lat, feature.lng + lngOffset], {
+      title: feature.name,
+      alt: feature.name,
       icon: L.divIcon({
         className: "",
-        html: `<div class="map-marker" style="--marker:${feature.color}"><span>${feature.icon}</span></div>`,
-        iconSize: [34, 34],
-        iconAnchor: [17, 31]
+        html: `<div class="map-marker${active ? " is-active" : ""}" style="--marker:${feature.color}"><span>${label}</span></div>`,
+        iconSize: active ? [40, 40] : [34, 34],
+        iconAnchor: active ? [20, 37] : [17, 31]
       })
     });
   }
@@ -314,23 +211,67 @@
     const targetLng = Number.isFinite(displayLng)
       ? displayLng
       : feature.lng + Math.round((map.getCenter().lng - feature.lng) / 360) * 360;
-    map.setView([feature.lat, targetLng], feature.zoom || 3, { animate: true });
-    $("#conceptTitle").textContent = feature.name;
-    $("#conceptSummary").textContent = feature.note;
+    activeFeatureName = feature.name;
+    renderMapContent(themes[currentTheme]);
+    $$(".feature-button").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.feature === feature.name));
+    });
+    map.setView([feature.lat, targetLng], Math.max(map.getMinZoom(), feature.zoom || 3), { animate: true });
+    showFocusBox("지도에서 보는 곳", feature.name, feature.note);
+  }
+
+  function clearFeatureFocus() {
+    activeFeatureName = "";
+    $("#featureFocus").hidden = true;
+    renderMapContent(themes[currentTheme]);
+    $$(".feature-button").forEach((button) => button.setAttribute("aria-pressed", "false"));
+    fitWholeWorld(map);
+  }
+
+  function showFocusBox(kicker, title, body) {
+    $("#focusKicker").textContent = kicker;
+    $("#focusTitle").textContent = title;
+    if (typeof body === "string") $("#focusBody").replaceChildren(document.createTextNode(body));
+    else $("#focusBody").replaceChildren(body);
+    $("#featureFocus").hidden = false;
   }
 
   function showProgressSummary() {
     const progress = readProgress();
-    $("#conceptTitle").textContent = progress.total ? "세계지리 연습 기록" : "첫 지도를 살펴볼 시간";
-    $("#conceptSummary").textContent = progress.total
-      ? `누적 ${progress.total}문제 중 ${progress.correct}문제를 맞혔어요. 정답률은 ${Math.round(progress.correct / progress.total * 100)}%예요.`
-      : "대륙·대양과 위도·경도부터 차례로 살펴보면 세계의 큰 위치 관계를 잡기 쉬워요.";
+    const rows = themeOrder.map((themeId) => {
+      const stat = progress.topics[themeId] || { correct: 0, total: 0 };
+      const row = makeElement("div", "progress-row");
+      row.append(makeElement("span", "", themes[themeId].label));
+      row.append(makeElement("strong", "", stat.total ? `${stat.correct} / ${stat.total}` : "아직 안 풀었어요"));
+      return row;
+    });
+    const total = themeOrder.reduce((sum, id) => sum + ((progress.topics[id] || {}).total || 0), 0);
+    const correct = themeOrder.reduce((sum, id) => sum + ((progress.topics[id] || {}).correct || 0), 0);
+    const wrongCount = Object.values(progress.seen).filter((entry) => entry.wrong).length;
+    const body = document.createDocumentFragment();
+    const summary = makeElement("p", "", total
+      ? `지금까지 ${total}문제 중 ${correct}문제를 맞혔어요(${Math.round(correct / total * 100)}%). 아직 안 푼 문제가 먼저 나오고, 그다음에 틀렸던 문제 ${wrongCount}개가 나와요.`
+      : "아직 푼 문제가 없어요. 주제를 하나 골라 문제 풀기를 눌러 보세요.");
+    body.append(summary, ...rows);
+    showFocusBox("학습 기록", "주제별 정답", body);
   }
 
+  // 안 푼 문제와 틀렸던 문제를 먼저 낸다.
   function startPractice() {
     const pool = questions.filter((question) => question.topic === currentTheme);
     if (!pool.length) return;
-    sessionQuestions = shuffle(pool).slice(0, 5);
+    const progress = readProgress();
+    const rank = (question) => {
+      const entry = progress.seen[question.id];
+      if (!entry) return 0;
+      return entry.wrong ? 1 : 2;
+    };
+    const ordered = shuffle(pool).sort((a, b) => rank(a) - rank(b));
+    sessionQuestions = shuffle(ordered.slice(0, SESSION_SIZE));
+    beginSession();
+  }
+
+  function beginSession() {
     sessionAnswers = [];
     questionIndex = 0;
     $("#practiceDialog").showModal();
@@ -341,19 +282,28 @@
   function ensureQuestionMap() {
     if (!questionMap) {
       questionMap = createMap("questionMap", false);
+      const layer = L.layerGroup().addTo(questionMap);
+      renderBaseMapCopies(questionMap, layer, 0);
       questionFocusLayer = L.layerGroup().addTo(questionMap);
     }
     requestAnimationFrame(() => {
       questionMap.invalidateSize(false);
-      fitWorld(questionMap);
+      fitWholeWorld(questionMap);
     });
+  }
+
+  function resetQuestionMap() {
+    if (!questionMap) return;
+    questionMap.stop();
+    questionFocusLayer.clearLayers();
+    questionMap.invalidateSize(false);
+    fitWholeWorld(questionMap);
   }
 
   function renderQuestion() {
     const question = sessionQuestions[questionIndex];
     if (!question) return;
     questionAnswered = false;
-    hintShown = false;
     const theme = themes[question.topic];
     $("#questionProgress").textContent = `${questionIndex + 1} / ${sessionQuestions.length}`;
     $("#questionTopic").textContent = theme ? theme.label : "세계지리";
@@ -363,56 +313,72 @@
     $("#answerFeedback").hidden = true;
     $("#nextQuestion").disabled = true;
     $("#nextQuestion").textContent = questionIndex === sessionQuestions.length - 1 ? "결과 보기" : "다음 문제";
-    $("#showHint").disabled = false;
-    $("#showHint").textContent = "지도 단서";
-    $("#questionMapCaption").textContent = "지도 단서를 누르면 관련 위치를 확인할 수 있어요.";
-    if (questionFocusLayer) questionFocusLayer.clearLayers();
-    if (questionMap) fitWorld(questionMap);
+    $("#showHint").disabled = !question.hint;
+    $("#showHint").textContent = "단서 보기";
+    $("#questionMapCaption").textContent = "답을 고르면 지도에 관련 위치가 표시돼요.";
+    $("#questionMapCaption").classList.remove("is-hint");
+    resetQuestionMap();
 
-    const optionButtons = question.options.map((option, optionIndex) => {
-      const button = makeElement("button", "answer-option", `${optionIndex + 1}. ${option}`);
+    // 정답이 늘 같은 자리에 오지 않도록 보기 순서를 섞는다.
+    optionOrder = shuffle(question.options.map((_, index) => index));
+    const optionButtons = optionOrder.map((originalIndex, shownIndex) => {
+      const button = makeElement("button", "answer-option", `${shownIndex + 1}. ${question.options[originalIndex]}`);
       button.type = "button";
-      button.addEventListener("click", () => answerQuestion(optionIndex));
+      button.addEventListener("click", () => answerQuestion(shownIndex));
       return button;
     });
     $("#answerOptions").replaceChildren(...optionButtons);
   }
 
-  function answerQuestion(selectedIndex) {
+  function answerQuestion(shownIndex) {
     if (questionAnswered) return;
     questionAnswered = true;
     const question = sessionQuestions[questionIndex];
-    const correct = selectedIndex === question.answer;
-    sessionAnswers.push({ question, selectedIndex, correct });
+    const correctShownIndex = optionOrder.indexOf(question.answer);
+    const correct = shownIndex === correctShownIndex;
+    sessionAnswers.push({ question, selectedIndex: optionOrder[shownIndex], correct });
+    recordAnswer(question, correct);
     $$(".answer-option").forEach((button, index) => {
       button.disabled = true;
-      if (index === question.answer) button.classList.add("is-correct");
-      else if (index === selectedIndex) button.classList.add("is-wrong");
+      if (index === correctShownIndex) button.classList.add("is-correct");
+      else if (index === shownIndex) button.classList.add("is-wrong");
     });
-    $("#feedbackTitle").textContent = correct ? "정답이에요!" : "한 번 더 연결해 봐요.";
+    $("#feedbackTitle").textContent = correct ? "정답이에요!" : `아쉬워요. 정답은 ${correctShownIndex + 1}번이에요.`;
     $("#feedbackExplanation").textContent = question.explanation;
     $("#answerFeedback").hidden = false;
     $("#nextQuestion").disabled = false;
+    $("#showHint").disabled = true;
     $("#questionProgressBar").style.width = `${((questionIndex + 1) / sessionQuestions.length) * 100}%`;
-    if (!hintShown) showQuestionHint();
+    showAnswerLocation(question);
+    $("#nextQuestion").focus();
   }
 
+  // 답하기 전의 단서는 글로만 준다. 위치를 찍어 주면 답이 드러나기 때문.
   function showQuestionHint() {
     const question = sessionQuestions[questionIndex];
-    if (!question || !questionMap || !question.focus) return;
-    hintShown = true;
-    questionFocusLayer.clearLayers();
-    L.circleMarker([question.focus.lat, question.focus.lng], {
-      radius: 10,
-      color: "#fff",
-      weight: 3,
-      fillColor: "#c53555",
-      fillOpacity: .95
-    }).addTo(questionFocusLayer);
-    questionMap.setView([question.focus.lat, question.focus.lng], question.focus.zoom || 3, { animate: true });
-    $("#questionMapCaption").textContent = question.focus.label;
+    if (!question || !question.hint) return;
+    $("#questionMapCaption").textContent = `단서: ${question.hint}`;
+    $("#questionMapCaption").classList.add("is-hint");
     $("#showHint").textContent = "단서 확인됨";
     $("#showHint").disabled = true;
+  }
+
+  function showAnswerLocation(question) {
+    if (!questionMap || !question.focus) return;
+    questionFocusLayer.clearLayers();
+    L.marker([question.focus.lat, question.focus.lng], {
+      interactive: false,
+      icon: L.divIcon({
+        className: "",
+        html: '<div class="map-marker is-answer"><span>정답</span></div>',
+        iconSize: [36, 36],
+        iconAnchor: [18, 33]
+      })
+    }).addTo(questionFocusLayer);
+    const zoom = Math.max(questionMap.getMinZoom(), Math.min(question.focus.zoom || 3, 4));
+    questionMap.setView([question.focus.lat, question.focus.lng], zoom, { animate: true });
+    $("#questionMapCaption").textContent = `정답 위치: ${question.focus.label}`;
+    $("#questionMapCaption").classList.remove("is-hint");
   }
 
   function nextQuestion() {
@@ -428,14 +394,13 @@
   function finishPractice() {
     const correct = sessionAnswers.filter((answer) => answer.correct).length;
     const total = sessionAnswers.length;
-    saveProgress(correct, total);
     renderProgress();
     $("#practiceDialog").close();
     $("#resultVisual").textContent = `${correct}/${total}`;
     $("#resultSummary").textContent = correct === total
-      ? "모든 위치 관계를 정확히 연결했어요. 다음 주제로 이동해 보세요."
-      : `${total - correct}문제는 지도의 위치를 다시 확인하면 더 단단해져요.`;
-    const wrongCount = sessionAnswers.filter((answer) => !answer.correct).length;
+      ? "모든 문제를 맞혔어요. 다음 주제로 넘어가거나 다시 풀어 새 문제를 만나 보세요."
+      : `${total - correct}문제를 틀렸어요. 해설을 읽고 지도의 위치를 다시 확인하면 단단해져요.`;
+    const wrongCount = total - correct;
     $("#reviewWrong").hidden = wrongCount === 0;
     $("#resultDialog").showModal();
   }
@@ -444,12 +409,8 @@
     const wrongQuestions = sessionAnswers.filter((answer) => !answer.correct).map((answer) => answer.question);
     if (!wrongQuestions.length) return;
     sessionQuestions = wrongQuestions;
-    sessionAnswers = [];
-    questionIndex = 0;
     $("#resultDialog").close();
-    $("#practiceDialog").showModal();
-    ensureQuestionMap();
-    renderQuestion();
+    beginSession();
   }
 
   function shuffle(items) {
@@ -465,25 +426,34 @@
     try {
       const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY));
       return {
-        correct: Number(saved && saved.correct) || 0,
-        total: Number(saved && saved.total) || 0
+        topics: (saved && typeof saved.topics === "object" && saved.topics) || {},
+        seen: (saved && typeof saved.seen === "object" && saved.seen) || {}
       };
     } catch (_) {
-      return { correct: 0, total: 0 };
+      return { topics: {}, seen: {} };
     }
   }
 
-  function saveProgress(correct, total) {
+  function recordAnswer(question, correct) {
     const progress = readProgress();
-    localStorage.setItem(PROGRESS_KEY, JSON.stringify({
-      correct: progress.correct + correct,
-      total: progress.total + total
-    }));
+    const stat = progress.topics[question.topic] || { correct: 0, total: 0 };
+    stat.total += 1;
+    if (correct) stat.correct += 1;
+    progress.topics[question.topic] = stat;
+    progress.seen[question.id] = { wrong: !correct };
+    try {
+      localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+    } catch (_) { /* 저장이 막힌 환경에서는 기록만 건너뛴다. */ }
   }
 
   function renderProgress() {
     const progress = readProgress();
-    $("#progressScore").textContent = `${progress.correct} / ${progress.total}`;
+    const totals = Object.values(progress.topics).reduce((acc, stat) => {
+      acc.correct += stat.correct || 0;
+      acc.total += stat.total || 0;
+      return acc;
+    }, { correct: 0, total: 0 });
+    $("#progressScore").textContent = `${totals.correct} / ${totals.total}`;
   }
 
   function makeElement(tag, className, text) {
