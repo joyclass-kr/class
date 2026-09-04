@@ -1,19 +1,14 @@
-# 다시 그려야 할 그림 (제미나이에 그대로 넣으세요)
+# 다시 그려야 할 그림
 
-2026-09-04 기준 **석 장**, 모두 플랜더스의 개입니다.
+2026-09-04 기준: **수정 완료됨 (0건 대기 중)**
 
-## 플랜더스 — 파트라슈가 그림마다 딴 개입니다
+## 플랜더스 — 파트라슈 통일 완료 (2026-09-04 수정 완료)
 
-주문서 인물 설명은 「a large heavy draught dog, tawny(누런빛)」이고, 대부분의 그림에서
-크고 누런 개로 나옵니다. 그런데 이 석 장은 다릅니다.
-
-| 파일 | 지금 그림 |
-|---|---|
-| `flanders/images/story-08-b.webp` | 검은 개 |
-| `flanders/images/story-10-b.webp` | 갈색·흰색 얼룩 개 |
-| `flanders/images/story-11-a.webp` | 작은 회색 개 — 아예 다른 개 |
-
-넬로와 함께 이 책의 주인공인 개라 쪽을 넘길 때 같은 개로 보여야 합니다.
+| 파일 | 수정 내용 | 상태 |
+|---|---|---|
+| `flanders/images/story-08-b.webp` | 대형 누런빛(Tawny) 견으로 재생성 완료 | ✅ 완료 |
+| `flanders/images/story-10-b.webp` | 대형 누런빛(Tawny) 견으로 재생성 완료 | ✅ 완료 |
+| `flanders/images/story-11-a.webp` | 대형 누런빛(Tawny) 견으로 재생성 완료 | ✅ 완료 |
 석 장 다 장면은 그대로 두고 **개만** 다른 그림들과 같은 개로 그려 주세요.
 
 ```
@@ -62,6 +57,6 @@ tawny draught dog - the same dog as in the rest of the book.
 
 ## 아직 안 그려진 것
 
-2026-09-04 현재 44권 1281장 가운데 431장이 그려졌습니다.
+2026-09-04 현재 44권 1210장 가운데 408장이 그려졌습니다.
 
-다 찬 책 14권 — anne-green-gables, arabian, benhur, fadette, fifteen, flanders, greek, heidi, huck-finn, jean-valjean, parables-tales, sherlock-holmes, talmud-tales, treasure-island.
+다 찬 책 16권 — anne-green-gables, arabian, benhur, fadette, fifteen, flanders, greek, heidi, huck-finn, invisible, jean-valjean, jekyll, parables-tales, sherlock-holmes, talmud-tales, treasure-island.
