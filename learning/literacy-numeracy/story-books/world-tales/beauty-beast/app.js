@@ -518,6 +518,11 @@ const QUIZ = [
     }
 ];
 
+/* 푼 자취는 책을 덮을 때까지 남긴다. 쪽을 옮겼다 돌아와도 표시가 그대로다.
+   자취는 보기의 원래 번호로 적어 두므로, 다시 그릴 때 자리가 바뀌어도 따라간다. */
+const QUIZ_WRONG = {};   // 문제 번호 → 잘못 고른 보기의 원래 번호들
+const QUIZ_DONE = {};    // 문제 번호 → 맞혔는가
+
 /* 보기는 쪽을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
    섞는 것은 그리는 차례뿐이고, 채점은 data-choice에 담긴 원래 번호로 한다. */
 function shuffledOrder(n) {
@@ -530,17 +535,23 @@ function shuffledOrder(n) {
 }
 
 function quizPage() {
-    const items = QZ().map((item, i) => `
-        <div class="quiz-item" data-qindex="${i}">
+    const items = QZ().map((item, i) => {
+        const wrong = QUIZ_WRONG[i] || [];
+        const solved = !!QUIZ_DONE[i];
+        const btns = shuffledOrder(item.choices.length).map(ci => {
+            const mark = solved && ci === item.answer ? ' correct' : (wrong.includes(ci) ? ' incorrect' : '');
+            return `<button type="button" class="quiz-choice${mark}" data-choice="${ci}">${item.choices[ci]}</button>`;
+        }).join('');
+        return `
+        <div class="quiz-item${solved ? ' graded' : ''}" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
-                ${shuffledOrder(item.choices.length).map(ci => `<button type="button" class="quiz-choice" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
-            </div>
-        </div>`).join('');
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">${btns}</div>
+        </div>`;
+    }).join('');
     return `
         <div class="page page-quiz">
             <h2>${T().quiz}</h2>
-            <p class="quiz-intro-text" id="quizProgress">${T().done(0, QZ().length)}</p>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(Object.keys(QUIZ_DONE).length, QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
@@ -1228,7 +1239,6 @@ function paint() {
 }
 
 function initQuiz() {
-    let answeredCount = 0;
     const progressEl = document.getElementById('quizProgress');
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
@@ -1237,16 +1247,18 @@ function initQuiz() {
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
+                const ci = Number(btn.dataset.choice);
                 // 맞힐 때까지 다시 고를 수 있다. 틀린 것만 빨갛게 남는다.
                 // 답을 미리 보여 주면 아이가 생각할 자리가 사라진다.
-                if (Number(btn.dataset.choice) !== q.answer) {
+                if (ci !== q.answer) {
                     btn.classList.add('incorrect');
+                    (QUIZ_WRONG[qi] = QUIZ_WRONG[qi] || []).push(ci);
                     return;
                 }
                 btn.classList.add('correct');
                 item.classList.add('graded');
-                answeredCount++;
-                progressEl.textContent = T().done(answeredCount, QZ().length);
+                QUIZ_DONE[qi] = true;
+                progressEl.textContent = T().done(Object.keys(QUIZ_DONE).length, QZ().length);
             });
         });
     });
