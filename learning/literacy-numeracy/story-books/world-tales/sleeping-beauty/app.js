@@ -480,10 +480,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "금접시가 열두 개뿐이어서 열세 번째 요정을 부르지 않은 것을 보면, 아주 작은 일이 큰일을 부르기도 하는구나.",
-            "나라 안의 물레를 다 태웠는데도 탑 꼭대기에 하나가 남아 있던 것을 보면, 다 없앤 줄 아는 것이 가장 위험하구나.",
-            "열두 번째 요정이 저주를 지우지는 못하고 다만 바꾼 것을 보면, 못 막을 일 앞에서도 할 수 있는 것이 남아 있구나.",
-            "임금님이 나라 안의 물레를 남김없이 태운 것을 보면, 위험한 것은 미리 없애 버리는 것이 가장 확실하구나."
+            "임금님이 나라 안의 물레를 남김없이 태운 것을 보면, 그것 말고는 막을 길이 없다고 여긴 것이구나.",
+            "열두 번째 요정이 죽음을 백 년 잠으로 바꾼 것을 보면, 저주를 지우지는 못해도 덜어 낼 수는 있었던 것이구나.",
+            "공주가 할머니에게 그게 뭐냐고 물은 것을 보면, 물레라는 것을 그때 처음 본 것이구나.",
+            "공주가 물레에 손을 뻗은 것을 보면, 하지 말라고 이른 것을 일부러 어긴 것이구나."
         ],
         "answer": 3
     }
@@ -839,10 +839,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "There were only twelve gold plates, so the thirteenth fairy was not invited — a very small thing can bring on a very large one.",
-                "Every spindle in the kingdom was burned and one was still up in the tower — believing you have got rid of it all is the dangerous part.",
-                "The twelfth fairy could not undo the curse, only change it — even before what cannot be stopped, something is still left to do.",
-                "The king had every spindle in the land burned — getting rid of the dangerous thing beforehand is the surest way."
+                "The king had every spindle in the country burned — he could think of no other way to stop it.",
+                "The twelfth fairy turned death into a hundred years' sleep — the curse could not be undone, only made lighter.",
+                "The princess asked the old woman what it was — she had never seen a spinning wheel before that moment.",
+                "The princess reached out to the spindle — she was deliberately doing the one thing she had been told not to."
             ],
             answer: 3
         }

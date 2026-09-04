@@ -554,7 +554,7 @@ const QUIZ = [
             "잡은 새가 그 자리를 벗어나면 번번이 색이 바랜 것을 보면, 어떤 것은 있던 자리에서만 그것인 채로 있는구나.",
             "떠나기 전에도 새장에 있던 새가 돌아와 보니 파랬던 것을 보면, 달라진 것은 새가 아니라 보는 눈이구나.",
             "추억의 나라와 밤의 나라까지 다 다녀온 뒤에야 제 방이 보인 것을 보면, 멀리 가 본 사람이 가까운 것을 알아보기도 하는구나.",
-            "두 아이가 애써 잡은 파랑새를 번번이 놓친 것을 보면, 애써 잡아도 놓치면 아무 소용이 없구나."
+            "두 아이가 여러 나라를 헤매고 다닌 끝에 파랑새를 찾은 것을 보면, 무엇이든 멀리 나가 찾아야 얻을 수 있구나."
         ],
         "answer": 3
     }
@@ -1042,7 +1042,7 @@ const EN = {
                 "Every bird they caught lost its colour once carried off — some things are only themselves where they already are.",
                 "The bird in their own cage was blue when they came home — what changed was not the bird but their eyes.",
                 "Only after the Land of Memory and the Land of Night could they see their own room — it can take a long journey to see what is near.",
-                "Every bluebird the children caught slipped away from them — catching a thing counts for nothing if you lose it."
+                "The children found the bluebird after wandering through country after country — you have to go far afield to find anything."
             ],
             answer: 3
         }

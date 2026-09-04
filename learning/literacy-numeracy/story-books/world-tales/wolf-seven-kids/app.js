@@ -492,10 +492,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "늑대가 걸걸한 목소리로 들키자 분필을 삼키고 까만 발로 들키자 밀가루를 묻힌 것을 보면, 속이는 쪽도 들킬 때마다 더 그럴듯해지는구나.",
-            "아기 염소들이 확인할 것을 다 확인하고도 속은 것을 보면, 확인한 것만으로는 모자랄 때가 있구나.",
-            "늑대가 누가 민 것도 아닌데 제 배가 무거워 우물에 넘어간 것을 보면, 욕심이 스스로를 넘어뜨리는구나.",
-            "아기 염소들이 목소리도 듣고 발도 확인한 것을 보면, 확인할 것만 잘 확인하면 속지 않는구나."
+            "늑대가 분필을 삼키고 발에 밀가루를 묻힌 것을 보면, 들킨 데를 하나씩 고쳐 온 것이구나.",
+            "아기 염소들이 목소리를 듣고 발도 살펴본 것을 보면, 어머니가 이른 것을 그대로 지킨 것이구나.",
+            "막내가 시계 속에 숨어 살아남은 것을 보면, 제일 작은 것이 그때는 도움이 된 것이구나.",
+            "늑대가 우물에 빠진 것을 보면, 아기 염소들이 뒤에서 밀어 넘어뜨린 것이구나."
         ],
         "answer": 3
     }
@@ -858,10 +858,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "Caught out by his rough voice he ate chalk, caught out by his black paws he dusted them with flour — a deceiver improves every time he is caught.",
-                "The kids checked everything they had been told to check and were fooled anyway — checking is sometimes not enough.",
-                "Nobody pushed the wolf into the well; his own full belly tipped him in — greed knocks itself over.",
-                "The kids listened to the voice and looked at the paws — check what you are told to check and you will not be fooled."
+                "The wolf ate chalk and floured his paws — each time he was found out he mended that one thing.",
+                "The kids listened to the voice and looked at the paws — they did exactly as their mother had told them.",
+                "The youngest survived inside the clock case — being the smallest was the thing that helped him that day.",
+                "The wolf fell into the well — the little goats came up behind him and pushed him in."
             ],
             answer: 3
         }

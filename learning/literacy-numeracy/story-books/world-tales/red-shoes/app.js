@@ -516,7 +516,7 @@ const QUIZ = [
             "눈이 어두운 부인이 못 본 줄 알면서도 카렌이 말하지 않은 것을 보면, 말하지 않는 것도 고르는 일이구나.",
             "그만두고 싶어도 발이 저절로 움직인 것을 보면, 한번 시작한 것이 나를 끌고 가기도 하는구나.",
             "구두가 벗겨진 것이 붙잡아 앉히고 물 한 그릇을 떠 준 아주머니 덕분인 것을 보면, 멈추는 데도 곁이 필요하구나.",
-            "카렌이 맨발로 집에 돌아온 것을 보면, 가진 것을 다 잃고 나서야 사람이 정신을 차리는구나."
+            "숲속 아주머니가 붙잡아 앉혀 준 덕에 카렌이 멈춘 것을 보면, 곤란할 때는 가만히 있으면 누군가 도와주는구나."
         ],
         "answer": 3
     }
@@ -984,7 +984,7 @@ const EN = {
                 "She knew the old lady's eyes were failing and said nothing — saying nothing is also something you choose.",
                 "She wanted to stop and her feet went on by themselves — a thing once begun can start carrying you.",
                 "The shoes came off after a woman sat her down and brought her a bowl of water — stopping takes someone beside you.",
-                "Karen came home barefoot — a person only comes to their senses after losing everything they had."
+                "Karen stopped because a woman in the wood took hold of her and sat her down — in trouble, stay still and someone will help you."
             ],
             answer: 3
         }
