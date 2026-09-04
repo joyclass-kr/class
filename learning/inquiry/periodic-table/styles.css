@@ -377,11 +377,11 @@ body {
 
 .periodic-table-grid.short-table {
     width: 100%;
-    grid-template-columns: minmax(44px, 62px) repeat(8, minmax(0, 1fr));
-    grid-template-rows: 34px repeat(4, minmax(96px, 1fr));
+    grid-template-columns: minmax(46px, 64px) repeat(8, minmax(0, 1fr));
+    grid-template-rows: 36px repeat(4, minmax(104px, 1fr));
     gap: 8px;
     min-width: 0;
-    max-width: 1040px;
+    max-width: 1060px;
 }
 
 .periodic-table-grid.full-table {
@@ -417,10 +417,10 @@ body[data-table-mode="full"] .periodic-table-wrapper {
 /* Element Cell Component */
 .element-cell {
     appearance: none;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
+    background: linear-gradient(180deg, rgba(24, 34, 52, 0.95) 0%, rgba(13, 19, 32, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: var(--radius-sm);
-    padding: 6px 4px;
+    padding: 6px 5px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -453,45 +453,56 @@ body[data-table-mode="full"] .periodic-table-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 10px;
+    font-size: 11px;
     color: var(--text-muted);
     font-weight: 700;
 }
 
 .element-number {
-    color: #94a3b8;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 800;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .element-mass {
-    font-size: 9px;
-    opacity: 0.8;
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: 600;
 }
 
 .element-symbol {
-    font-size: 20px;
-    font-weight: 800;
+    font-size: 24px;
+    font-weight: 900;
     text-align: center;
-    margin: 2px 0;
+    margin: 2px 0 1px;
     letter-spacing: -0.5px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
 }
 
 .element-name {
-    font-size: 11px;
+    font-size: 13px;
     text-align: center;
-    font-weight: 700;
+    font-weight: 800;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: #e2e8f0;
+    color: #ffffff;
+    letter-spacing: -0.2px;
 }
 
 .element-shells {
-    min-height: 16px;
-    color: var(--gold);
-    font-size: 10px;
+    min-height: 18px;
+    color: #ffd18a;
+    font-size: 11px;
     font-weight: 800;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     text-align: center;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 209, 138, 0.25);
+    border-radius: 4px;
+    padding: 1px 4px;
+    margin-top: 2px;
     transition: opacity 0.18s ease;
 }
 
@@ -505,19 +516,21 @@ body[data-table-mode="full"] .periodic-table-wrapper {
     align-items: center;
     justify-content: center;
     border-radius: var(--radius-sm);
-    color: var(--text-muted);
-    font-size: 12px;
     font-weight: 900;
 }
 
 .group-label {
-    border-bottom: 2px solid rgba(56, 239, 125, 0.35);
-    color: #9ff8bd;
+    border-bottom: 2px solid rgba(56, 239, 125, 0.45);
+    color: #86efac;
+    font-size: 13px;
+    background: rgba(56, 239, 125, 0.05);
 }
 
 .period-label {
-    border-right: 2px solid rgba(255, 209, 138, 0.35);
-    color: var(--gold);
+    border-right: 2px solid rgba(255, 209, 138, 0.45);
+    color: #fde047;
+    font-size: 13px;
+    background: rgba(255, 209, 138, 0.05);
 }
 
 .series-placeholder {
@@ -538,21 +551,21 @@ body[data-table-mode="full"] .periodic-table-wrapper {
     position: absolute;
     bottom: 4px;
     right: 4px;
-    font-size: 9px;
-    opacity: 0.7;
+    font-size: 10px;
+    opacity: 0.8;
 }
 
 /* Category Specific Cell Styling */
-.element-cell[data-category="alkali"] { border-left: 3px solid var(--cat-alkali); }
-.element-cell[data-category="alkaline-earth"] { border-left: 3px solid var(--cat-alkaline-earth); }
-.element-cell[data-category="transition"] { border-left: 3px solid var(--cat-transition); }
-.element-cell[data-category="post-transition"] { border-left: 3px solid var(--cat-post-transition); }
-.element-cell[data-category="metalloid"] { border-left: 3px solid var(--cat-metalloid); }
-.element-cell[data-category="reactive-nonmetal"] { border-left: 3px solid var(--cat-reactive-nonmetal); }
-.element-cell[data-category="halogen"] { border-left: 3px solid var(--cat-halogen); }
-.element-cell[data-category="noble-gas"] { border-left: 3px solid var(--cat-noble-gas); }
-.element-cell[data-category="lanthanide"] { border-left: 3px solid var(--cat-lanthanide); }
-.element-cell[data-category="actinide"] { border-left: 3px solid var(--cat-actinide); }
+.element-cell[data-category="alkali"] { border-left: 3.5px solid var(--cat-alkali); }
+.element-cell[data-category="alkaline-earth"] { border-left: 3.5px solid var(--cat-alkaline-earth); }
+.element-cell[data-category="transition"] { border-left: 3.5px solid var(--cat-transition); }
+.element-cell[data-category="post-transition"] { border-left: 3.5px solid var(--cat-post-transition); }
+.element-cell[data-category="metalloid"] { border-left: 3.5px solid var(--cat-metalloid); }
+.element-cell[data-category="reactive-nonmetal"] { border-left: 3.5px solid var(--cat-reactive-nonmetal); }
+.element-cell[data-category="halogen"] { border-left: 3.5px solid var(--cat-halogen); }
+.element-cell[data-category="noble-gas"] { border-left: 3.5px solid var(--cat-noble-gas); }
+.element-cell[data-category="lanthanide"] { border-left: 3.5px solid var(--cat-lanthanide); }
+.element-cell[data-category="actinide"] { border-left: 3.5px solid var(--cat-actinide); }
 
 /* Lanthanide & Actinide Separator Labels */
 .lanthanide-placeholder, .actinide-placeholder {
@@ -1347,14 +1360,6 @@ canvas#bohrAtomCanvas {
     line-height: 1.45;
 }
 
-.compound-action {
-    display: inline-block;
-    margin-top: 7px;
-    color: #38ef7d;
-    font-size: 11px;
-    font-weight: 900;
-}
-
 /* Presentation / Teacher Mode */
 body.presentation-mode {
     background: #000;
@@ -1364,16 +1369,34 @@ body.presentation-mode .top-header {
     background: #111;
 }
 
+body.presentation-mode .periodic-table-grid.short-table {
+    grid-template-rows: 40px repeat(4, minmax(116px, 1fr));
+}
+
 body.presentation-mode .element-cell {
-    min-height: 80px;
+    min-height: 110px;
+    padding: 8px 6px;
+}
+
+body.presentation-mode .element-number {
+    font-size: 14px;
 }
 
 body.presentation-mode .element-symbol {
-    font-size: 24px;
+    font-size: 30px;
 }
 
 body.presentation-mode .element-name {
+    font-size: 15px;
+}
+
+body.presentation-mode .element-shells {
     font-size: 13px;
+    padding: 2px 6px;
+}
+
+body.presentation-mode .axis-label {
+    font-size: 15px;
 }
 
 /* Responsive design adjustments */
