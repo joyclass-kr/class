@@ -502,7 +502,7 @@ const QUIZ = [
             "왕비가 끈에서 빗으로, 빗에서 사과로 바꿔 온 것을 보면, 들킬 때마다 더 그럴듯한 것을 고른 것이구나.",
             "사냥꾼이 공주를 숲에 두고 온 것을 보면, 시킨 대로 하지 않기로 마음먹은 것이구나.",
             "난쟁이들이 이야기를 다 듣고 함께 지내자고 한 것을 보면, 공주가 갈 곳이 없다는 것을 알아챈 것이구나.",
-            "공주가 난쟁이 집에서 밥을 짓고 빨래를 한 것을 보면, 재워 준 값을 치르라는 말을 들은 것이구나."
+            "공주가 장사꾼에게 두 번째로 문을 열어 준 것을 보면, 혼자인 할머니가 딱해 보여 그냥 둘 수 없었던 것이구나."
         ],
         "answer": 3
     }
@@ -874,7 +874,7 @@ const EN = {
                 "The queen came with a lace, then a comb, then an apple — each time she was caught out she picked something more convincing.",
                 "The huntsman left her alive in the wood — he had made up his mind not to do as he was told.",
                 "The dwarfs heard her out and asked her to stay with them — they saw she had nowhere else to go.",
-                "Snow White cooked and washed for them — she had been told to earn her keep in return for the bed."
+                "She opened the door to the pedlar a second time — she could not bear to leave an old woman standing there alone."
             ],
             answer: 3
         }
