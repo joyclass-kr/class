@@ -762,7 +762,7 @@ const QUIZ = [
     { q: "지킬이 하이드에게 붙인 이름의 뜻은 무엇입니까?", choices: ["쫓는다", "가른다", "숨는다"], answer: 2 },
     { q: "두 달을 잘 지내던 지킬이 다시 하이드가 된 계기는 무엇입니까?", choices: ["커루 경 사건이 신문에 난 순간", "약을 다시 한 모금 마셔 본 순간", "자기가 남들보다 낫다고 생각한 순간"], answer: 2 },
     { q: "지킬이 끝내 약을 다시 만들지 못한 까닭은 무엇입니까?", choices: ["처음 쓴 가루에 섞였던 것을 못 구해서", "약방들이 그 가루를 팔지 않게 되어서", "만드는 법을 적은 공책을 잃어버려서"], answer: 0 },
-    { q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?", wide: true, choices: ["지킬이 재산을 모두 하이드에게 물려준다는 유언장을 봉해서 맡긴 것을 보면, 어터슨이 처음부터 마음에 안 들어 한 것도 무리가 아니구나.", "하이드가 지킬을 협박해 약을 만들게 시킨 것을 보면, 지킬은 끝까지 하이드에게 끌려다닌 사람이었구나.", "래니언이 보름 사이에 죽어 가는 사람처럼 된 것을 보면, 제 눈으로 본 것이 사람을 그렇게까지 무너뜨리는구나.", "마지막에야 지킬 자신의 글이 나오는 것을 보면, 문 앞에서 보고 남의 눈으로 보고 나서야 당사자 말을 듣게 짜 놓았구나."], answer: 1 }
+    { q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?", wide: true, choices: ["지킬이 재산을 모두 하이드에게 물려준다는 유언장을 봉해서 맡긴 것을 보면, 어터슨이 처음부터 마음에 안 들어 한 것도 무리가 아니구나.", "지킬이 두 달 동안 약을 끊고 사람들과 잘 지낸 것을 보면, 하이드는 그것으로 끝난 거구나.", "래니언이 보름 사이에 죽어 가는 사람처럼 된 것을 보면, 제 눈으로 본 것이 사람을 그렇게까지 무너뜨리는구나.", "마지막에야 지킬 자신의 글이 나오는 것을 보면, 문 앞에서 보고 남의 눈으로 보고 나서야 당사자 말을 듣게 짜 놓았구나."], answer: 1 }
 ];
 
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
@@ -772,6 +772,19 @@ const QUIZ_GROUPS = [{ from: 0, items: QUIZ }];
 
 // 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
 const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
+// 틀리게 고른 보기도 기억해 두어, 돌아와도 빨간 채로 남는다.
+const QUIZ_WRONG = QUIZ.map(() => new Set());
+
+// 보기 차례는 책을 열 때마다 섞는다. 몇 번째가 답인지 외우지 못하게 하려는 것이다.
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+const QUIZ_ORDER = QUIZ.map(q => shuffledOrder(q.choices.length));
 
 function quizPage(part) {
     const group = QUIZ_GROUPS[part];
@@ -780,13 +793,12 @@ function quizPage(part) {
         const i = group.from + k;
         const picked = QUIZ_PICKED[i];
         const graded = picked !== null;
-        const cls = ci => graded
-            ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
-            : '';
+        const cls = ci => (graded && ci === item.answer) ? ' correct'
+            : (QUIZ_WRONG[i].has(ci) ? ' incorrect' : '');
         return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
- ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+ ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
@@ -979,13 +991,15 @@ function initQuiz() {
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
-                item.classList.add('graded');
                 const chosen = Number(btn.dataset.choice);
-                item.querySelectorAll('.quiz-choice').forEach(b => {
-                    const ci = Number(b.dataset.choice);
-                    if (ci === q.answer) b.classList.add('correct');
-                    else if (ci === chosen) b.classList.add('incorrect');
-                });
+                // 틀리면 그 보기만 빨갛게 남기고, 맞는 것을 고를 때까지 다시 고르게 한다.
+                if (chosen !== q.answer) {
+                    btn.classList.add('incorrect');
+                    QUIZ_WRONG[qi].add(chosen);
+                    return;
+                }
+                btn.classList.add('correct');
+                item.classList.add('graded');
                 QUIZ_PICKED[qi] = chosen;
                 const done = QUIZ_PICKED.filter(v => v !== null).length;
                 progressEl.textContent = `${done} / 총 ${QUIZ.length}문항 완료`;
