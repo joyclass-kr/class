@@ -38,6 +38,7 @@
     ];
 
     const state = {
+        view: "overview",
         stageId: 1,
         round: 1,
         correct: 0,
@@ -89,17 +90,20 @@
     }
 
     function cacheElements() {
-        ["courseNav","courseCurrent","stageList","stageKicker","stageTitle","stageSummary","stageStatus","conceptTitle","conceptBody","lessonPoints","activityTitle","roundCounter","activityArea","feedback","nextButton","resetProgress","toast"].forEach(function (id) { elements[id] = $(id); });
+        ["courseOverview","courseProgress","lessonView","backToCourse","courseCurrent","stageList","stageKicker","stageTitle","stageSummary","stageStatus","conceptTitle","conceptBody","lessonPoints","activityTitle","roundCounter","activityArea","feedback","nextButton","resetProgress","toast"].forEach(function (id) { elements[id] = $(id); });
     }
 
     function renderStages() {
         elements.stageList.innerHTML = "";
+        elements.courseProgress.textContent = state.progress.completed.length + " / " + stages.length + " 완료";
         stages.forEach(function (stage) {
             const complete = state.progress.completed.includes(stage.id);
+            const active = state.view === "lesson" && stage.id === state.stageId;
             const button = document.createElement("button");
             button.type = "button";
-            button.className = "stage-button" + (stage.id === state.stageId ? " active" : "");
-            button.setAttribute("aria-current", stage.id === state.stageId ? "step" : "false");
+            button.className = "stage-button" + (active ? " active" : "");
+            button.dataset.stageId = stage.id;
+            button.setAttribute("aria-current", active ? "step" : "false");
             button.innerHTML = '<span class="stage-number">' + stage.id + '</span><span class="stage-copy"><strong>' + stage.title + '</strong><small>' + stage.short + '</small></span><span class="stage-check" aria-label="' + (complete ? "완료" : "학습 전") + '">' + (complete ? "✓" : "") + '</span>';
             button.addEventListener("click", function () { selectStage(stage.id); });
             elements.stageList.appendChild(button);
@@ -121,13 +125,55 @@
         renderActivity();
     }
 
-    function selectStage(id) {
+    function courseUrl() {
+        return window.location.pathname + window.location.search;
+    }
+
+    function stageUrl(id) {
+        return courseUrl() + "#stage=" + encodeURIComponent(id);
+    }
+
+    function rememberStageView(id) {
+        const currentView = window.history.state && window.history.state.rhythmView;
+        const historyState = { rhythmView: "lesson", stageId: id };
+        if (currentView === "lesson") window.history.replaceState(historyState, "", stageUrl(id));
+        else window.history.pushState(historyState, "", stageUrl(id));
+    }
+
+    function selectStage(id, options) {
+        if (!stages.some(function (stage) { return stage.id === id; })) return;
+        if (!options || !options.fromHistory) rememberStageView(id);
+        state.view = "lesson";
         state.stageId = id;
         resetPractice();
         renderStages();
         renderStage();
-        elements.courseNav.open = false;
-        if (window.innerWidth <= 900) document.querySelector(".lesson").scrollIntoView({ behavior: "smooth", block: "start" });
+        elements.courseOverview.hidden = true;
+        elements.lessonView.hidden = false;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        elements.backToCourse.focus({ preventScroll: true });
+    }
+
+    function showCourseOverview(options) {
+        state.view = "overview";
+        state.playbackToken += 1;
+        elements.lessonView.hidden = true;
+        elements.courseOverview.hidden = false;
+        renderStages();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (options && options.focusStage) {
+            const button = elements.stageList.querySelector('[data-stage-id="' + state.stageId + '"]');
+            if (button) button.focus({ preventScroll: true });
+        }
+    }
+
+    function returnToCourse() {
+        if (window.history.state && window.history.state.rhythmView === "lesson") {
+            window.history.back();
+            return;
+        }
+        window.history.replaceState({ rhythmView: "overview" }, "", courseUrl());
+        showCourseOverview({ focusStage: true });
     }
 
     function resetPractice() {
@@ -416,13 +462,14 @@
 
     function bindEvents() {
         elements.nextButton.addEventListener("click", nextActivity);
+        elements.backToCourse.addEventListener("click", returnToCourse);
         elements.resetProgress.addEventListener("click", function () {
             if (!window.confirm("리듬 단계 완료 기록을 모두 지울까요?")) return;
             state.progress = { completed: [], scores: {} };
             saveProgress();
             resetPractice();
             renderStages();
-            renderStage();
+            if (state.view === "lesson") renderStage();
             showToast("리듬 기록을 초기화했습니다.");
         });
     }
@@ -466,16 +513,28 @@
             const context = ensure();
             if (!context) return;
             const start = Math.max(context.currentTime, when || context.currentTime);
+            // A short bright transient makes the rhythm's attack audible over the metronome.
+            const transient = context.createOscillator();
+            const transientGain = context.createGain();
+            transient.type = "square";
+            transient.frequency.setValueAtTime(accent ? 1180 : 900, start);
+            transient.frequency.exponentialRampToValueAtTime(accent ? 620 : 480, start + .025);
+            transientGain.gain.setValueAtTime(accent ? .2 : .14, start);
+            transientGain.gain.exponentialRampToValueAtTime(.0001, start + .038);
+            transient.connect(transientGain).connect(audioState.master);
+            transient.start(start);
+            transient.stop(start + .045);
+
             const oscillator = context.createOscillator();
             const gain = context.createGain();
             oscillator.type = "triangle";
             oscillator.frequency.setValueAtTime(accent ? 210 : 280, start);
             oscillator.frequency.exponentialRampToValueAtTime(accent ? 70 : 110, start + .1);
-            gain.gain.setValueAtTime(accent ? .24 : .16, start);
-            gain.gain.exponentialRampToValueAtTime(.0001, start + .14);
+            gain.gain.setValueAtTime(accent ? .34 : .24, start);
+            gain.gain.exponentialRampToValueAtTime(.0001, start + .16);
             oscillator.connect(gain).connect(audioState.master);
             oscillator.start(start);
-            oscillator.stop(start + .15);
+            oscillator.stop(start + .17);
         }
         function playPattern(question) {
             const context = ensure();
@@ -491,10 +550,18 @@
     }
 
     function init() {
+        const requestedStage = Number(new URLSearchParams(window.location.hash.slice(1)).get("stage"));
         cacheElements();
+        window.history.replaceState({ rhythmView: "overview" }, "", courseUrl());
         renderStages();
-        renderStage();
         bindEvents();
+        showCourseOverview();
+        if (requestedStage) selectStage(requestedStage);
+        window.addEventListener("popstate", function (event) {
+            const historyState = event.state || {};
+            if (historyState.rhythmView === "lesson") selectStage(Number(historyState.stageId), { fromHistory: true });
+            else showCourseOverview({ focusStage: true });
+        });
     }
 
     document.addEventListener("DOMContentLoaded", init);

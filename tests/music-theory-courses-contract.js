@@ -30,9 +30,12 @@ assert.equal(fs.readdirSync(path.join(root, "harmony", "assets", "piano")).filte
 
 assert.match(rhythmHtml, /<title>리듬<\/title>/);
 assert.match(rhythmHtml, /id="stageList"/);
+assert.match(rhythmHtml, /id="courseOverview"[\s\S]*id="stageList"/, "리듬 첫 화면에는 목차가 있어야 합니다.");
+assert.match(rhythmHtml, /id="lessonView"[^>]*hidden/, "리듬 학습 본문은 첫 진입 때 숨겨져야 합니다.");
 assert.equal((rhythmApp.match(/\{ id: \d+, title:/g) || []).length, 9, "리듬은 9단계여야 합니다.");
 assert.match(rhythmApp, /musicTheoryRhythmProgressV1/);
 assert.match(rhythmApp, /createRhythmAudio/);
+assert.match(rhythmApp, /showCourseOverview\(\);[\s\S]*if \(requestedStage\) selectStage/, "리듬은 목차를 먼저 연 뒤 명시된 단계만 열어야 합니다.");
 assert.doesNotMatch(rhythmHtml + rhythmApp, /piano|\.ogg/i, "리듬은 피아노 음원에 의존하면 안 됩니다.");
 
 assert.match(harmonyCss, /min-height:\s*44px/);

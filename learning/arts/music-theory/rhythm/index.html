@@ -6,8 +6,8 @@
     <meta name="theme-color" content="#261717">
     <title>리듬</title>
     <meta name="description" content="박과 음표부터 당김음과 리듬 받아쓰기까지 순서대로 배우는 리듬 과정">
-    <link rel="stylesheet" href="styles.css?v=20260903-readable1">
-    <script src="app.js?v=20260903-readable1" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260903-audio1">
+    <script src="app.js?v=20260903-audio1" defer></script>
 </head>
 <body>
     <nav class="topbar" aria-label="페이지 기능">
@@ -16,12 +16,25 @@
     </nav>
 
     <main class="course-shell">
-        <details id="courseNav" class="course-nav">
-            <summary><span>목차</span><strong id="courseCurrent">1. 박과 빠르기</strong></summary>
-            <nav id="stageList" class="stage-list" aria-label="리듬 단계"></nav>
-        </details>
+        <section id="courseOverview" class="course-overview" aria-labelledby="courseTitle">
+            <header class="overview-heading">
+                <div>
+                    <p class="eyebrow">리듬 과정</p>
+                    <h1 id="courseTitle">목차</h1>
+                </div>
+                <strong id="courseProgress" class="overview-progress">0 / 9 완료</strong>
+            </header>
+            <p class="overview-guide">배울 단계를 선택하세요.</p>
+            <nav id="stageList" class="stage-list" aria-label="리듬 목차"></nav>
+        </section>
 
-        <section class="lesson" aria-live="polite">
+        <section id="lessonView" class="lesson-view" hidden>
+            <nav class="lesson-nav" aria-label="리듬 학습 이동">
+                <button id="backToCourse" class="course-list-button" type="button"><span aria-hidden="true">←</span> 목차</button>
+                <strong id="courseCurrent">1. 박과 빠르기</strong>
+            </nav>
+
+            <section class="lesson" aria-live="polite">
             <header class="lesson-heading">
                 <div>
                     <p id="stageKicker" class="eyebrow">1단계</p>
@@ -50,15 +63,16 @@
                 </article>
             </div>
 
-            <article class="rhythm-reference">
-                <p class="card-label">리듬 읽기 기준</p>
-                <div class="reference-grid">
-                    <span><b>♩</b><small>4분음표 · 1박</small></span>
-                    <span><b>♫</b><small>8분음표 둘 · 1박</small></span>
-                    <span><b>𝅗𝅥</b><small>2분음표 · 2박</small></span>
-                    <span><b>𝅝</b><small>온음표 · 4박</small></span>
-                </div>
-            </article>
+                <article class="rhythm-reference">
+                    <p class="card-label">리듬 읽기 기준</p>
+                    <div class="reference-grid">
+                        <span><b>♩</b><small>4분음표 · 1박</small></span>
+                        <span><b>♫</b><small>8분음표 둘 · 1박</small></span>
+                        <span><b>𝅗𝅥</b><small>2분음표 · 2박</small></span>
+                        <span><b>𝅝</b><small>온음표 · 4박</small></span>
+                    </div>
+                </article>
+            </section>
         </section>
     </main>
 
