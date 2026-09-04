@@ -516,6 +516,17 @@ const QUIZ = [
             "열매를 더 달라"
         ],
         "answer": 0
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "나그네가 당나귀로 지낸 뒤로 길에서 마주치는 당나귀가 달리 보였다는 것을 보면, 겪어 봐야 보이는 것이 있구나.",
+            "주막 주인이 어두워서 빛깔을 못 보고 제가 당나귀가 된 것을 보면, 남을 속이려던 꾀가 저를 치기도 하는구나.",
+            "나그네가 그런 주인에게 노란 열매를 먹인 것을 보면, 갚아 줄 수 있을 때 갚지 않는 쪽을 고르기도 하는구나.",
+            "짧은 말을 여러 번 되뇐 덕분에 잊지 않은 것을 보면, 중요한 말일수록 입에 붙여 두어야 하는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -968,6 +979,17 @@ const EN = {
             q: 'What did the innkeeper say at the end?',
             choices: ['That he had been greedy', 'That he missed the guests', 'That he wanted more fruit'],
             answer: 0
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "After his time as a donkey he looked at every donkey on the road differently — some things you only see once you have been there.",
+                "In the dark the innkeeper could not tell the berries apart and became a donkey himself — a trick meant for others can turn on you.",
+                "The traveller fed him the yellow berry all the same — you can be able to get even and choose not to.",
+                "He said the short words over and over and so did not forget them — the words that matter must be kept on your tongue."
+            ],
+            answer: 3
         }
     ],
     afterword: {

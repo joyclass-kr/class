@@ -506,6 +506,17 @@ const QUIZ = [
             "하인리히의 쇠테"
         ],
         "answer": 2
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "지킬 생각이 없었기에 공주가 그 약속을 쉽게 한 것을 보면, 가볍게 한 말일수록 가볍게 나오는구나.",
+            "밤새 뛰어와 문을 두드린 쪽이 개구리였던 것을 보면, 잊지 않는 쪽은 부탁한 쪽이 아니라 들어준 쪽이구나.",
+            "임금님이 딸을 나무라지 않고 한번 한 말은 지켜야 한다고만 한 것을 보면, 길게 꾸짖는 것보다 한마디가 남는구나.",
+            "가죽을 미리 재어 마름질해 두고 잔 덕분에 도움이 얹힌 것을 보면, 준비해 둔 자리에 도움이 오는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -945,6 +956,17 @@ const EN = {
             q: 'What broke the spell?',
             choices: ['A kiss', 'The golden ball', 'The princess keeping her promise'],
             answer: 2
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "She promised easily because she never meant to keep it — a word costs nothing at the moment you do not mean it.",
+                "It was the frog who hopped all night and knocked — the one who remembers is the one who kept his side.",
+                "Her father did not scold her; he only said a promise once made must be kept — one sentence outlasts a long telling-off.",
+                "He had cut the leather out before going to bed, and that is where the help landed — help comes to work already laid out."
+            ],
+            answer: 3
         }
     ],
     afterword: {

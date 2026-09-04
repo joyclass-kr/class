@@ -871,7 +871,18 @@ const QUIZ = [
     { q: "개가 짖자 어떤 일이 벌어졌나요?", choices: ["그림자만 남았다", "고기를 놓쳤다", "고기가 두 배 됐다"], answer: 1 },
     { q: "전쟁이 끝난 뒤 박쥐는 어떻게 됐나요?", choices: ["새들과 어울렸다", "짐승들과 어울렸다", "양쪽에 외면당했다"], answer: 2 },
     { q: "당나귀가 쓰러진 뒤 짐은 어떻게 됐나요?", choices: ["주인이 지고 갔다", "말이 다 지게 됐다", "길에 두고 갔다"], answer: 1 },
-    { q: "까마귀가 붙인 깃털은 어떻게 됐나요?", choices: ["새들이 도로 뽑아 갔다", "바람에 날아갔다", "그대로 붙어 있었다"], answer: 0 }
+    { q: "까마귀가 붙인 깃털은 어떻게 됐나요?", choices: ["새들이 도로 뽑아 갔다", "바람에 날아갔다", "그대로 붙어 있었다"], answer: 0 },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "사자가 놓아준 쥐가 나중에 그물을 갉아 준 것을 보면, 작은 도움도 언젠가 돌아오는구나.",
+            "북풍이 세게 불수록 나그네가 옷깃을 여민 것을 보면, 억지로 밀어붙이면 오히려 닫히는구나.",
+            "개가 물속 그림자에 짖다가 물고 있던 고기를 놓친 것을 보면, 더 바랄 때 가진 것을 놓치는구나.",
+            "두루미가 목 긴 병에 국을 담아 낸 것을 보면, 남을 대접할 때는 상대에 맞춰야 하는구나."
+        ],
+        "answer": 3
+    }
 ];
 
 /* 보기는 쪽을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
@@ -1640,7 +1651,18 @@ const EN = {
         { q: 'What happened when the dog barked?', choices: ['Only the reflection was left', 'He lost his meat', 'His meat doubled'], answer: 1 },
         { q: 'What happened to the bat after the war?', choices: ['He joined the birds', 'He joined the beasts', 'Both sides turned away from him'], answer: 2 },
         { q: 'What happened to the load after the donkey went down?', choices: ['The master carried it', 'The horse had to carry all of it', 'It was left in the road'], answer: 1 },
-        { q: 'What became of the feathers the crow stuck on?', choices: ['The birds pulled them back out', 'The wind blew them away', 'They stayed on him'], answer: 0 }
+        { q: 'What became of the feathers the crow stuck on?', choices: ['The birds pulled them back out', 'The wind blew them away', 'They stayed on him'], answer: 0 },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "The mouse the lion let go came back and gnawed through his net — a small kindness finds its way back.",
+                "The harder the north wind blew, the tighter the traveller held his coat — force makes people shut.",
+                "The dog barked at his own reflection and dropped the meat he had — you lose what you hold by wanting more.",
+                "The stork served soup in a long-necked jar — you must set the table to suit your guest."
+            ],
+            answer: 3
+        }
     ],
     afterword: {
         title: 'After Reading',

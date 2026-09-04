@@ -527,6 +527,17 @@ const QUIZ = [
             "고양이에게 줬다"
         ],
         "answer": 0
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "첫 번째 소원이 아끼려던 것이 아니라 무심코 나온 말이었던 것을 보면, 가장 큰 것을 무심코 써 버리기도 하는구나.",
+            "두 번째가 화가 나서 나온 말이었던 것을 보면, 홧김에 한 말이 되돌릴 수 없는 자리를 만드는구나.",
+            "마지막 하나로 큰 집도 금덩이도 아니라 아내의 코를 고른 것을 보면, 남은 하나는 곁에 쓰게 되는구나.",
+            "그만두고 싶어도 발이 저절로 움직인 것을 보면, 한번 시작한 것이 나를 끌고 가기도 하는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -986,6 +997,17 @@ const EN = {
             q: 'What did the two of them do with the sausage at the end?',
             choices: ['They ate half each', 'They left it alone', 'They gave it to the cat'],
             answer: 0
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "The first wish was not thrift but a word said without thinking — the biggest thing can go on something you never meant.",
+                "The second came out in temper — a word said in anger can make a place you cannot get back from.",
+                "With the last one he chose neither a house nor gold but his wife's nose — the one you have left goes to whoever is beside you.",
+                "She wanted to stop and her feet went on by themselves — a thing once begun can start carrying you."
+            ],
+            answer: 3
         }
     ],
     afterword: {

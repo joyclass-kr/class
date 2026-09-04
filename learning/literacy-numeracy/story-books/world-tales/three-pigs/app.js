@@ -493,6 +493,17 @@ const QUIZ = [
             "빗장 걸린 문"
         ],
         "answer": 1
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "게으름을 부린 형제도 집은 지었고 다만 빨리 끝나는 쪽을 고른 것을 보면, 안 한 것과 대충 한 것은 다르구나.",
+            "바람이 불지 않았다면 짚과 나무도 아무 일이 없었을 텐데 셋째만 그날을 미리 생각한 것을 보면, 멀리 보는 것이 힘이구나.",
+            "셋째가 형들을 내치지 않고 벽돌집 문을 열어 준 것을 보면, 옳았다고 우쭐대지 않는 것이 더 어렵구나.",
+            "왕자가 화가 나서가 아니라 오래 지켜본 뒤에 마음을 접은 것을 보면, 마음이 도는 데도 시간이 걸리는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -861,6 +872,17 @@ const EN = {
             q: 'What met the wolf at the bottom of the chimney?',
             choices: ['A pile of firewood', 'Hot steam', 'A barred door'],
             answer: 1
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "Even the lazy brothers built something; they simply chose the quick way — doing nothing and doing it roughly are not the same.",
+                "Straw and sticks would have been fine if no wind had come, and only the third brother thought of that day — seeing ahead is a strength.",
+                "The third let his brothers in instead of turning them away — not crowing about being right is the harder part.",
+                "The prince did not leave in a temper; he watched a long time and then let go — turning away also takes time."
+            ],
+            answer: 3
         }
     ],
     afterword: {

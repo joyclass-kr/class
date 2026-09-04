@@ -526,6 +526,17 @@ const QUIZ = [
             "날개 달린 원숭이"
         ],
         "answer": 0
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "허수아비가 꾀를 내고 나무꾼이 눈물을 흘리고 사자가 구덩이를 뛰어넘은 것을 보면, 없다고 여긴 것을 이미 쓰고 있었구나.",
+            "오즈가 준 것이 겨와 비단과 물약뿐이었던 것을 보면, 없던 것이 생긴 것이 아니라 있던 것을 믿게 된 것이구나.",
+            "도로시의 은구두가 처음부터 그 힘을 지니고 있었던 것을 보면, 먼 길을 걷고 나서야 알아지는 것도 있구나.",
+            "잡은 새가 그 자리를 벗어나자 색이 바랜 것을 보면, 어떤 것은 있던 자리에서만 그것인 채로 있는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -920,6 +931,17 @@ const EN = {
             q: 'What did Oz turn out to be?',
             choices: ['An old man who had come down in a balloon', 'A great floating head', 'A witch in disguise'],
             answer: 0
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "The Scarecrow thought of the plan, the Woodman wept, the Lion cleared the ditch — they were already using what they thought they lacked.",
+                "All Oz gave out was bran, silk and a green drink — nothing new appeared; they only came to believe what was there.",
+                "The silver shoes had held that power from the first day — some things are only learned after the long walk.",
+                "The bird lost its colour the moment it was carried away — some things are only themselves where they already are."
+            ],
+            answer: 3
         }
     ],
     afterword: {

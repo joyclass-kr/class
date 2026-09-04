@@ -464,6 +464,17 @@ const QUIZ = [
             "슬리퍼 한 짝"
         ],
         "answer": 1
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "앞의 세 번은 난로와 밥상과 나무였는데 마지막 하나만 할머니였던 것을 보면, 끝에 남는 바람은 물건이 아니구나.",
+            "팔 것을 다 태워서라도 붙잡으려고 성냥을 한꺼번에 그은 것을 보면, 놓치기 싫은 것 앞에서는 셈이 서지 않는구나.",
+            "거리에 사람이 많았는데 아무도 걸음을 멈추지 않은 것을 보면, 곁에 있는 것과 보는 것은 다른 일이구나.",
+            "가진 것이 없어 이야기를 들려주러 간 것을 보면, 빈손으로도 건넬 것이 있구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -820,6 +831,17 @@ const EN = {
             q: 'Why did she light the whole bundle at once?',
             choices: ['To keep her hands warm', 'So her grandmother would not disappear', 'To be seen from the street'],
             answer: 1
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "The first three were a stove, a table, a tree — and only the last was her grandmother; what is left at the end is not a thing.",
+                "She struck the whole bundle, burning what she had to sell, to keep hold of her — you cannot do arithmetic about what you cannot bear to lose.",
+                "The street was full of people and not one of them stopped — being nearby and actually seeing are two different things.",
+                "Having nothing to bring, he brought a story — you can hold something out with empty hands."
+            ],
+            answer: 3
         }
     ],
     afterword: {

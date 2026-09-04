@@ -505,6 +505,17 @@ const QUIZ = [
             "앓아누워 있었다"
         ],
         "answer": 2
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "부에노스아이레스에서도 로사리오에서도 한발씩 늦었지만 그때마다 다시 길을 물어 걸은 것을 보면, 늦었다고 끝나는 것은 아니구나.",
+            "어머니를 살린 것이 약이 아니라 아들이 왔다는 것이었음을 보면, 마음을 놓아 버린 사람에게 필요한 것은 따로 있구나.",
+            "그 시절 편지가 배로 가서 몇 달이 걸렸기에 소식이 끊긴 것을 보면, 소식이 없는 것과 일이 잘못된 것은 다른 것이구나.",
+            "제비가 오늘만, 하루만 하며 미룬 하루들이 쌓여 겨울이 온 것을 보면, 큰 결심보다 작은 미룸이 사람을 붙잡는구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -964,6 +975,17 @@ const EN = {
             q: 'How did Marco find his mother at the end?',
             choices: ['She was hanging out washing', 'She was at work', 'She was lying ill in bed'],
             answer: 2
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "At Buenos Aires and again at Rosario he arrived just too late, and each time he asked the road again — being late is not the same as being finished.",
+                "What saved his mother was not medicine but that her son had come — someone who has given up needs a different thing.",
+                "Letters went by ship in those days and took months, which is why word stopped — no news is not the same as bad news.",
+                "Just today, just one more day — and those days piled up into winter; small delays hold you longer than big decisions."
+            ],
+            answer: 3
         }
     ],
     afterword: {

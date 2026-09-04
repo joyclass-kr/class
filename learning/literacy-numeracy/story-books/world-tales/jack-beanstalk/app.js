@@ -522,6 +522,17 @@ const QUIZ = [
             "줄기를 내리쳤다"
         ],
         "answer": 2
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "어머니가 화가 나서 창밖으로 던진 콩이 그 자리에서 자란 것을 보면, 홧김에 한 일이 길을 열기도 하는구나.",
+            "가장 위험한 집에서 잭을 숨겨 준 사람이 거인의 아내였던 것을 보면, 도움은 뜻밖의 자리에서 오는구나.",
+            "이미 먹고살 만해진 뒤에 세 번째로 올라간 것을 보면, 그만둘 때를 아는 것이 시작하는 것보다 어렵구나.",
+            "형들은 나누지 않고 막내만 빵을 나눈 것을 보면, 나누는 것은 넉넉해서 하는 일이 아니구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -918,6 +929,17 @@ const EN = {
             q: 'What did the harp do when Jack lifted it?',
             choices: ['It went on singing', 'It broke in two', 'It cried out for its master'],
             answer: 2
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "His mother threw the beans out of the window in temper, and that is where they grew — a thing done in anger can open the road.",
+                "In the most dangerous house in the story it was the giant's wife who hid him — help comes from where you would not look.",
+                "He climbed a third time when they already had enough — knowing when to stop is harder than starting.",
+                "The elder brothers would not share and only the youngest gave his bread away — sharing is not something you do because you have plenty."
+            ],
+            answer: 3
         }
     ],
     afterword: {

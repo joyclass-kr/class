@@ -505,6 +505,17 @@ const QUIZ = [
             "검은딸기"
         ],
         "answer": 0
+    },
+    {
+        "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        "wide": true,
+        "choices": [
+            "상추와 강낭콩과 무를 실컷 먹고 배가 아파 파슬리를 찾다 아저씨와 마주친 것을 보면, 많이 먹은 것이 걸음을 늦추었구나.",
+            "웃옷과 신발을 다 잃고 돌아온 피터를 어머니가 나무라지 않고 자리에 눕힌 것을 보면, 이미 겪은 아이에게는 꾸중이 필요 없구나.",
+            "포터가 토끼를 오래 기르며 살펴본 사람이라 몸짓이 정확한 것을 보면, 잘 그리려면 오래 보아야 하는구나.",
+            "이가 빠진 인형을 아무도 거들떠보지 않을 때 혼자 안고 다닌 것을 보면, 남이 지나치는 것을 아끼는 눈이 따로 있구나."
+        ],
+        "answer": 3
     }
 ];
 
@@ -965,6 +976,17 @@ const EN = {
             q: 'What was the scarecrow wearing next morning?',
             choices: ['Peter’s jacket and one of his shoes', 'An old sack', 'Mr McGregor’s hat'],
             answer: 0
+        },
+        {
+            q: 'Which reaction to this book does NOT fit?',
+            wide: true,
+            choices: [
+                "He ate his fill of lettuce, beans and radishes, then went looking for parsley and ran into Mr McGregor — the eating is what slowed his legs.",
+                "He came home with no jacket and no shoes, and his mother put him to bed without a word — a child who has already been through it needs no telling off.",
+                "Potter kept rabbits for years and watched them, and it shows in every movement — to draw a thing well you must look at it long.",
+                "Only one child carried about the doll with the broken teeth — there is an eye that values what others pass over."
+            ],
+            answer: 3
         }
     ],
     afterword: {
