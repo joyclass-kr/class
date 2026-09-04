@@ -469,10 +469,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "앞의 세 번은 난로와 밥상과 나무였는데 마지막 하나만 할머니였던 것을 보면, 끝에 남는 바람은 물건이 아니구나.",
-            "팔 것을 다 태워서라도 붙잡으려고 성냥을 한꺼번에 그은 것을 보면, 놓치기 싫은 것 앞에서는 셈이 서지 않는구나.",
-            "거리에 사람이 많았는데 아무도 걸음을 멈추지 않은 것을 보면, 곁에 있는 것과 보는 것은 다른 일이구나.",
-            "소녀가 성냥을 한꺼번에 다 그어 버린 것을 보면, 물건을 아껴 쓰지 않으면 나중에 곤란해지는구나."
+            "아이가 밝은 창가에서 물러나 다시 걸은 것을 보면, 성냥을 한 갑도 못 팔아 집에 갈 수 없었던 것이구나.",
+            "앞의 세 번은 난로와 거위와 나무였는데 마지막에 할머니가 온 것을 보면, 끝에 부른 것은 물건이 아니었구나.",
+            "사람들이 몸을 녹이려 했나 보다고만 말하고 지나간 것을 보면, 아이가 무엇을 보았는지는 아무도 몰랐던 것이구나.",
+            "이듬해 겨울 아주머니가 문을 열어 준 것을 보면, 그 골목에 꽃을 두고 간 사람이 바로 그 아주머니였구나."
         ],
         "answer": 3
     }
@@ -836,10 +836,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The first three were a stove, a table, a tree — and only the last was her grandmother; what is left at the end is not a thing.",
-                "She struck the whole bundle, burning what she had to sell, to keep hold of her — you cannot do arithmetic about what you cannot bear to lose.",
-                "The street was full of people and not one of them stopped — being nearby and actually seeing are two different things.",
-                "She struck the whole bundle at once — waste what you have and you will be sorry for it later."
+                "She stepped back from the bright window and walked on — she had not sold a single box and could not go home.",
+                "First a stove, then a goose, then a tree — and last of all her grandmother; what she called for at the end was not a thing.",
+                "People only said she must have been trying to warm herself, and walked on — nobody knew what she had seen.",
+                "The next winter a woman opened her door to a match girl — so she was the one who had left the flowers in that alley."
             ],
             answer: 3
         }

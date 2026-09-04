@@ -498,10 +498,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "게으름을 부린 형제도 집은 지었고 다만 빨리 끝나는 쪽을 고른 것을 보면, 안 한 것과 대충 한 것은 다르구나.",
-            "바람이 불지 않았다면 짚과 나무도 아무 일이 없었을 텐데 셋째만 그날을 미리 생각한 것을 보면, 멀리 보는 것이 힘이구나.",
-            "셋째가 형들을 내치지 않고 벽돌집 문을 열어 준 것을 보면, 옳았다고 우쭐대지 않는 것이 더 어렵구나.",
-            "셋째가 혼자 힘으로 벽돌집을 지어 무사했던 것을 보면, 오래 걸리더라도 제 힘으로 해내야 하는구나."
+            "막내가 언덕에서 바람이 어느 쪽에서 오는지 살핀 것을 보면, 짓기 전에 자리부터 본 것이구나.",
+            "막내가 불을 피워 연기가 잘 빠지는지 보아 둔 것을 보면, 눈에 안 보이는 데까지 챙긴 것이구나.",
+            "두 형이 덧문과 빗장을 왜 다느냐고 물은 것을 보면, 그것이 무엇을 막는 것인지 아직 몰랐던 것이구나.",
+            "두 형이 곧장 막내네로 달아난 것을 보면, 처음부터 막내 집이 제일 튼튼한 줄 알고 있었던 것이구나."
         ],
         "answer": 3
     }
@@ -877,10 +877,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "Even the lazy brothers built something; they simply chose the quick way — doing nothing and doing it roughly are not the same.",
-                "Straw and sticks would have been fine if no wind had come, and only the third brother thought of that day — seeing ahead is a strength.",
-                "The third let his brothers in instead of turning them away — not crowing about being right is the harder part.",
-                "The third built his brick house by himself and came through safe — however long it takes, do it on your own."
+                "The youngest studied which way the wind came across the hill — he looked at the ground before he built on it.",
+                "He lit a fire to see whether the chimney drew — he saw to the parts nobody would ever look at.",
+                "His brothers asked why he was fitting shutters and a bar — they still did not know what those were for.",
+                "Both brothers ran straight to the youngest's house — they had known all along that his was the strongest."
             ],
             answer: 3
         }

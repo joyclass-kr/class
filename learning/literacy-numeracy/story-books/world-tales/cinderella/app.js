@@ -489,10 +489,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "요정이 준 것은 무도회에 갈 기회뿐이고 춤과 말씨는 제 것이었음을 보면, 도움이 대신 살아 주지는 않는구나.",
-            "옷이나 반지가 아니라 신 한 짝으로 임자를 찾은 것을 보면, 말로 우기지 않아도 맞는 사람은 드러나는구나.",
-            "열두 시면 다 사라진다는 것을 알면서도 간 것을 보면, 끝이 정해져 있어도 갈 만한 자리가 있구나.",
-            "요정이 옷과 마차와 유리 구두를 다 마련해 준 것을 보면, 좋은 분을 만나기만 하면 나머지는 저절로 되는구나."
+            "새어머니가 콩 자루를 쏟아 놓고 저녁까지 다 고르라 한 것을 보면, 애초에 데려갈 마음이 없었던 것이구나.",
+            "언니들이 바로 옆에 서서 수군거리기까지 한 것을 보면, 옷차림이 바뀌자 아예 알아보지 못한 것이구나.",
+            "왕자가 이름을 물을 때마다 웃기만 한 것을 보면, 말하고 싶지 않아서가 아니라 말할 수 없어서였구나.",
+            "언니들이 잔치 문가에서 고개를 숙이고 서 있는 것을 보면, 신데렐라가 부르지 않아 들어가지 못한 것이구나."
         ],
         "answer": 3
     }
@@ -852,10 +852,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The fairy gave only the chance to go; the dancing and the manners were her own — help does not live your life for you.",
-                "It was a shoe, not a gown or a ring, that found her — you do not have to argue when the thing itself fits.",
-                "She went knowing midnight would take it all back — some places are worth going to even when the end is fixed.",
-                "The fairy provided the gown, the coach and the glass slippers — meet the right helper and the rest takes care of itself."
+                "The stepmother tipped out a sack of beans and said sort them by evening — she had never meant to take her at all.",
+                "The sisters stood right beside her and whispered about her — once the clothes changed they did not know her.",
+                "She only smiled when the prince asked her name — it was not that she would not say, but that she could not.",
+                "The sisters stood at the gate of the feast with their heads down — Cinderella had not invited them, so they could not go in."
             ],
             answer: 3
         }

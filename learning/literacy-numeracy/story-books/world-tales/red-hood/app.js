@@ -489,10 +489,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "늑대가 힘으로 덤비지 않고 어디 가는지 누구를 찾아가는지 먼저 물은 것을 보면, 위험한 것은 사나운 얼굴이 아니라 다정한 물음이구나.",
-            "늑대가 뛰어서 이긴 것이 아니라 물어서 이긴 것을 보면, 알려 준 것이 곧 진 것이구나.",
-            "꽃을 꺾느라 길을 벗어난 것이 나쁜 마음이 아니라 할머니께 드리려던 것이었음을 보면, 좋은 마음으로도 길은 벗어나는구나.",
-            "사냥꾼이 때맞춰 나타나 둘을 꺼내 준 것을 보면, 위험할 때는 누군가 도와주러 오니 크게 걱정할 것 없구나."
+            "늑대가 할머니 댁이 어디쯤이냐고 물은 것을 보면, 먼저 가 있으려고 길을 알아낸 것이구나.",
+            "늑대가 저기 꽃이 곱다고 손짓한 것을 보면, 빨간 모자를 큰길에서 떼어 놓으려 한 것이구나.",
+            "사냥꾼이 총을 들었다가 도로 내린 것을 보면, 배 속에 아직 살아 있는 사람이 있을지 모른다고 짚은 것이구나.",
+            "할머니가 벽장 속에 숨은 것을 보면, 손녀를 지키려고 일부러 늑대를 방에 들인 것이구나."
         ],
         "answer": 3
     }
@@ -867,10 +867,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The wolf did not pounce; he asked first where she was going and who she was visiting — the danger is not the fierce face but the friendly question.",
-                "He did not beat her by running; he beat her by asking — telling him was the losing move.",
-                "She left the path to pick flowers, not out of mischief but to bring them to her grandmother — you can wander off with the best of intentions.",
-                "The huntsman turned up just in time and cut them out — someone always comes when you are in danger, so there is no need to worry."
+                "The wolf asked whereabouts the grandmother lived — he was finding out the way so as to get there first.",
+                "The wolf pointed out how pretty the flowers were — he was drawing her off the main road.",
+                "The huntsman raised his gun and then lowered it again — he had worked out that someone might still be alive inside.",
+                "The grandmother hid in the cupboard — she let the wolf into the house on purpose to protect her granddaughter."
             ],
             answer: 3
         }
