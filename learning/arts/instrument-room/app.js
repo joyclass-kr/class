@@ -10,7 +10,8 @@
         { midi: 84, file: "C6.ogg" }
     ];
     const GRAND_SAMPLE_STEP = 1;
-    const KEYBOARD_SAMPLE_CACHE_LIMIT = 24;
+    const KEYBOARD_SAMPLE_CACHE_LIMIT = 112;
+    const RANGE_PRELOAD_CONCURRENCY = 3;
     // Each decoded file gets its own onset measurement.
     // Playback keeps a 3 ms lead-in so the natural attack remains intact.
     const SAMPLED_NOTE_ATTACK_LEAD = .003;
@@ -373,6 +374,8 @@
         samplePeaks: new WeakMap(),
         sampleStartOffsets: new WeakMap(),
         keyboardSampleLoads: new Map(),
+        sampleCacheOpening: null,
+        rangePreloadToken: 0,
         drumSamples: new Map(),
         drumSampleLoads: new Map(),
         openHatVoices: new Set(),
@@ -549,8 +552,7 @@
         if (state.pianoSamples.size === PIANO_SAMPLES.length) return Promise.resolve(state.pianoSamples);
         if (state.pianoLoading) return state.pianoLoading;
         state.pianoLoading = Promise.all(PIANO_SAMPLES.map(function (sample) {
-            return fetch("../music-studio/assets/piano/" + sample.file)
-                .then(function (response) { if (!response.ok) throw new Error(sample.file); return response.arrayBuffer(); })
+            return fetchSampleData("../music-studio/assets/piano/" + sample.file)
                 .then(function (data) { return context.decodeAudioData(data); })
                 .then(function (buffer) { state.pianoSamples.set(sample.midi, buffer); });
         })).then(function () { return state.pianoSamples; }).catch(function (error) {
@@ -781,8 +783,7 @@
         const revision = "?v=" + encodeURIComponent(
             [AUDIO_SAMPLE_REVISION, config.revision].filter(Boolean).join("-")
         );
-        const task = fetch(config.root + concertGrandSampleFile(anchor, config) + revision)
-            .then(function (response) { if (!response.ok) throw new Error(response.url); return response.arrayBuffer(); })
+        const task = fetchSampleData(config.root + concertGrandSampleFile(anchor, config) + revision)
             .then(function (data) { return context.decodeAudioData(data); })
             .then(function (buffer) {
                 rememberConcertGrandSample(config, anchor, buffer);
@@ -797,6 +798,7 @@
         return task;
     }
 
+    // 자판 18개 음을 먼저 받고, 그다음 그 악기 음역 전체를 가운데부터 뒤에서 차례로 받아 둔다.
     function preloadConcertGrandRange() {
         const config = sampledPianoConfig();
         if (!config) return Promise.resolve([]);
@@ -804,7 +806,61 @@
         const last = first + COMPUTER_KEYS[COMPUTER_KEYS.length - 1][1];
         const anchors = new Set();
         for (let midi = first; midi <= last; midi += 1) anchors.add(concertGrandAnchor(midi, config));
-        return Promise.allSettled(Array.from(anchors).map(loadConcertGrandSample));
+        const ready = Promise.allSettled(Array.from(anchors).map(loadConcertGrandSample));
+        ready.then(function () { preloadRemainingRange(config, (first + last) / 2); });
+        return ready;
+    }
+
+    function preloadRemainingRange(config, center) {
+        const token = state.rangePreloadToken += 1;
+        const range = currentPitchRange();
+        const start = Math.max(range.start, config.min);
+        const end = Math.min(range.end, config.max);
+        const anchors = new Set();
+        for (let midi = start; midi <= end; midi += 1) anchors.add(concertGrandAnchor(midi, config));
+        const queue = Array.from(anchors).filter(function (anchor) {
+            return !state.keyboardSamples.has(sampledPianoKey(config, anchor));
+        }).sort(function (a, b) { return Math.abs(a - center) - Math.abs(b - center); });
+        function next() {
+            if (state.rangePreloadToken !== token) return;
+            const current = sampledPianoConfig();
+            if (!current || current.id !== config.id) return;
+            if (!queue.length) return;
+            loadConcertGrandSample(queue.shift()).catch(function () {}).then(next);
+        }
+        for (let lane = 0; lane < RANGE_PRELOAD_CONCURRENCY; lane += 1) next();
+    }
+
+    // 소리 파일은 앱 전용 저장소에 넣어 두고, 거기 있으면 서버에 묻지 않고 바로 꺼내 쓴다.
+    // 판 번호가 바뀌면 저장소 이름이 달라지므로 옛 판 저장소는 지운다.
+    function openSampleCache() {
+        if (!("caches" in window)) return Promise.resolve(null);
+        if (!state.sampleCacheOpening) {
+            const prefix = "instrument-room-samples-";
+            const name = prefix + AUDIO_SAMPLE_REVISION + "-" + AD2_DRUM_SAMPLE_REVISION;
+            state.sampleCacheOpening = window.caches.keys().then(function (names) {
+                return Promise.all(names.filter(function (candidate) {
+                    return candidate.indexOf(prefix) === 0 && candidate !== name;
+                }).map(function (stale) { return window.caches.delete(stale); }));
+            }).then(function () { return window.caches.open(name); }).catch(function () { return null; });
+        }
+        return state.sampleCacheOpening;
+    }
+
+    function fetchSampleData(url) {
+        function download(cache) {
+            return fetch(url).then(function (response) {
+                if (!response.ok) throw new Error(response.url);
+                if (cache) cache.put(url, response.clone()).catch(function () {});
+                return response.arrayBuffer();
+            });
+        }
+        return openSampleCache().then(function (cache) {
+            if (!cache) return download(null);
+            return cache.match(url).then(function (hit) {
+                return hit ? hit.arrayBuffer() : download(cache);
+            });
+        });
     }
 
     function pluckedKeyboardDecay(sampleSet) {
@@ -1098,8 +1154,7 @@
         const sampleRevision = "?v=" + encodeURIComponent(
             [AUDIO_SAMPLE_REVISION, config.id.startsWith("drums-") ? AD2_DRUM_SAMPLE_REVISION : ""].filter(Boolean).join("-")
         );
-        const task = fetch(config.root + id + ".ogg" + sampleRevision)
-            .then(function (response) { if (!response.ok) throw new Error(response.url); return response.arrayBuffer(); })
+        const task = fetchSampleData(config.root + id + ".ogg" + sampleRevision)
             .then(function (data) { return context.decodeAudioData(data); })
             .then(function (buffer) {
                 state.drumSamples.set(key, buffer);
@@ -1665,6 +1720,7 @@
         renderDrumControlCopy(model);
         renderDrumPads();
         if (drumSampleConfig()) preloadDrumSamples();
+        if (isSampledPiano()) preloadConcertGrandRange();
         renderModelBrowser();
     }
 
@@ -2088,9 +2144,11 @@
         if (instrument !== "drums" || isPitchedPercussion()) renderKeyboard();
         updatePlaySurface();
         updateStringChain();
-        if (isSampledPiano()) preloadConcertGrandRange();
-        else if (instrument === "bass" || instrument === "guitar") ensureStringEngine();
-        else if (instrument === "drums" && !isPitchedPercussion()) ensureDrumEngine();
+        // 음원 악기의 미리 받기는 selectModel에서 주법이 정해진 뒤에 한다.
+        if (!isSampledPiano()) {
+            if (instrument === "bass" || instrument === "guitar") ensureStringEngine();
+            else if (instrument === "drums" && !isPitchedPercussion()) ensureDrumEngine();
+        }
         else if (isPitchedPercussion()) ensureStringEngine();
         elements.noteReadout.textContent = "준비됨";
     }
