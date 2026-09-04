@@ -44,7 +44,7 @@
     featureLayer = L.layerGroup().addTo(map);
     lineLayer = L.layerGroup().addTo(map);
     fitWholeWorld(map);
-    setLayerDockCollapsed(window.innerWidth < 700);
+    setLayerDockCollapsed(window.innerWidth < 900); // 세로 화면·좁은 창에서는 접어 둔다
     map.on("moveend", refreshWorldCopy);
     map.on("resize", () => fitWholeWorld(map));
     bindControls();
