@@ -472,7 +472,7 @@ const QUIZ = [
             "아이가 밝은 창가에서 물러나 다시 걸은 것을 보면, 성냥을 한 갑도 못 팔아 집에 갈 수 없었던 것이구나.",
             "앞의 세 번은 난로와 거위와 나무였는데 마지막에 할머니가 온 것을 보면, 끝에 부른 것은 물건이 아니었구나.",
             "사람들이 몸을 녹이려 했나 보다고만 말하고 지나간 것을 보면, 아이가 무엇을 보았는지는 아무도 몰랐던 것이구나.",
-            "이듬해 겨울 아주머니가 문을 열어 준 것을 보면, 그 골목에 꽃을 두고 간 사람이 바로 그 아주머니였구나."
+            "지나가던 아주머니가 소녀에게 슬리퍼 한 켤레를 새로 사 준 것을 보면, 그날도 도와준 사람이 있었던 것이구나."
         ],
         "answer": 3
     }
@@ -839,7 +839,7 @@ const EN = {
                 "She stepped back from the bright window and walked on — she had not sold a single box and could not go home.",
                 "First a stove, then a goose, then a tree — and last of all her grandmother; what she called for at the end was not a thing.",
                 "People only said she must have been trying to warm herself, and walked on — nobody knew what she had seen.",
-                "The next winter a woman opened her door to a match girl — so she was the one who had left the flowers in that alley."
+                "A woman passing by bought her a new pair of slippers — somebody did help her that day after all."
             ],
             answer: 3
         }

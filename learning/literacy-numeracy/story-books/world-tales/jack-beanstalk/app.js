@@ -530,7 +530,7 @@ const QUIZ = [
             "어머니가 콩을 창밖으로 확 던진 것을 보면, 그 콩이 하필 마당에서 자란 까닭이구나.",
             "거인의 아내가 목소리를 낮추면서도 잭을 들인 것을 보면, 남편이 무서운 줄 알면서 그냥 두지 못한 것이구나.",
             "잭이 세 번째로 올라간 것을 보면, 살림이 이미 폈는데도 궁금해서 간 것이구나.",
-            "거인이 그 뒤로 내려오지 않은 것을 보면, 잭이 도끼를 내려놓는 것을 보고 마음을 푼 것이구나."
+            "잭이 거인의 아내에게 금화 한 자루를 남겨 두고 온 것을 보면, 숨겨 준 은혜를 갚은 것이구나."
         ],
         "answer": 3
     }
@@ -937,7 +937,7 @@ const EN = {
                 "His mother flung the beans out of the window — that is why they came up in the yard of all places.",
                 "The giant's wife lowered her voice and let him in anyway — she knew what her husband was and still could not turn him away.",
                 "Jack climbed a third time — they were doing well by then and he went because he wanted to know.",
-                "The giant never came down again — he had seen Jack put the axe down and let the matter go."
+                "Jack left a bag of gold behind for the giant's wife — he was repaying her for hiding him."
             ],
             answer: 3
         }

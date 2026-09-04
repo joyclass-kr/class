@@ -515,7 +515,7 @@ const QUIZ = [
             "당나귀가 헛간에서 주인의 말을 듣고 그날 밤 잠을 못 이룬 것을 보면, 이대로 있다가는 큰일 나겠다 싶었던 것이구나.",
             "당나귀가 개에게 짖는 것이 바로 노래라고 한 것을 보면, 남은 재주에 새로 이름을 붙여 준 것이구나.",
             "도둑이 마귀할멈이며 칼 든 자며 재판관이 있었다고 한 것을 보면, 어둠 속에서 당한 일을 제 나름대로 짐작한 것이구나.",
-            "넷이 브레멘까지 가지 않고 오두막에 눌러앉은 것을 보면, 도둑들이 다시 올까 봐 그 집을 지키기로 한 것이구나."
+            "넷이 오두막에 자리를 잡고 방을 하나씩 나누어 쓴 것을 보면, 이제 한집 식구가 된 것이구나."
         ],
         "answer": 3
     }
@@ -944,7 +944,7 @@ const EN = {
                 "The donkey heard his master through the barn wall and lay awake all night — he saw that staying would be the end of him.",
                 "He told the hound that barking was singing — he gave the one skill left to him a new name.",
                 "The robber spoke of a witch, a man with a knife, a judge on the roof — in the dark he had guessed at what happened to him.",
-                "The four never went on to Bremen but settled in the cottage — they stayed to guard it in case the robbers came back."
+                "The four settled into the cottage and took a room each — by then they were one household."
             ],
             answer: 3
         }

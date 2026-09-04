@@ -489,7 +489,7 @@ const QUIZ = [
             "왕자가 살아 있을 때 담 안에서만 지낸 것을 보면, 슬픈 것을 본 적이 없어 행복했던 것이구나.",
             "제비가 한참 뒤에 어느 골목이냐고 슬그머니 물은 것을 보면, 떠나려던 마음을 스스로 돌린 것이구나.",
             "납으로 된 심장만은 아무리 넣어도 녹지 않은 것을 보면, 용광로도 어쩌지 못한 것이 있었구나.",
-            "시장이 동상을 내리라고 한 것을 보면, 금박이 다 어디로 갔는지 알아보려 한 것이구나."
+            "제비가 남쪽 동무들에게 늦는다고 미리 기별을 보낸 것을 보면, 약속을 저버린 것은 아니었구나."
         ],
         "answer": 3
     }
@@ -873,7 +873,7 @@ const EN = {
                 "In life the prince lived inside the palace wall — he was happy because he had never seen anything sad.",
                 "After a while the swallow quietly asked which alley it was — he turned himself back from leaving.",
                 "The leaden heart would not melt however they fed the furnace — there was one thing the fire could not touch.",
-                "The mayor had the statue taken down — he wanted to find out where all the gold leaf had gone."
+                "The swallow sent word ahead to his friends in the south that he would be late — he had not simply broken his promise."
             ],
             answer: 3
         }

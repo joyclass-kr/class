@@ -495,7 +495,7 @@ const QUIZ = [
             "늑대가 분필을 삼키고 발에 밀가루를 묻힌 것을 보면, 들킨 데를 하나씩 고쳐 온 것이구나.",
             "아기 염소들이 목소리를 듣고 발도 살펴본 것을 보면, 어머니가 이른 것을 그대로 지킨 것이구나.",
             "막내가 시계 속에 숨어 살아남은 것을 보면, 제일 작은 것이 그때는 도움이 된 것이구나.",
-            "늑대가 우물에 빠진 것을 보면, 아기 염소들이 힘을 합쳐 밀어 넘어뜨린 것이구나."
+            "어머니 염소가 나가기 전에 문에 빗장을 하나 더 달아 준 것을 보면, 아무래도 마음이 놓이지 않았던 것이구나."
         ],
         "answer": 3
     }
@@ -861,7 +861,7 @@ const EN = {
                 "The wolf ate chalk and floured his paws — each time he was found out he mended that one thing.",
                 "The kids listened to the voice and looked at the paws — they did exactly as their mother had told them.",
                 "The youngest survived inside the clock case — being the smallest was the thing that helped him that day.",
-                "The wolf fell into the well — the little goats put their strength together and pushed him over."
+                "Before she left, the mother goat fitted a second bar to the door — she could not quite set her mind at rest."
             ],
             answer: 3
         }

@@ -508,7 +508,7 @@ const QUIZ = [
             "언니가 무서웠을 텐데도 우물로 뛰어든 것을 보면, 찾아오지 않으면 들어올 생각도 말라는 말을 들은 것이구나.",
             "언니가 손이 발갛게 익도록 빵을 다 꺼낸 것을 보면, 제 갈 길이 급한 중에도 부탁을 지나치지 못한 것이구나.",
             "동생이 가시로 손끝을 찔러 피를 낸 것을 보면, 실 잣기는 귀찮고 금은 받고 싶었던 것이구나.",
-            "홀레 할머니가 동생을 며칠 조용히 지켜본 것을 보면, 처음부터 잘 가르쳐 보려고 마음먹은 것이구나."
+            "동생이 송진을 뒤집어쓰고 돌아온 뒤 언니에게 사과한 것을 보면, 그제야 제 잘못을 안 것이구나."
         ],
         "answer": 3
     }
@@ -970,7 +970,7 @@ const EN = {
                 "Frightened as she was, she jumped into the well — she had been told not to come home without it.",
                 "She pulled out every loaf until her hands were scarlet — even in a hurry she could not walk past someone asking.",
                 "The other girl pricked her finger on a thorn for the blood — she wanted the gold without the spinning.",
-                "Mother Holle watched the lazy girl quietly for days — she had meant from the start to teach her better."
+                "Covered in pitch, the younger girl apologised to her sister — she saw at last what she had done."
             ],
             answer: 3
         }

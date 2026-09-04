@@ -528,7 +528,7 @@ const QUIZ = [
             "막내가 형들이 묵었던 그 주막을 일부러 골라 간 것을 보면, 두 번 다 그 집이라는 것을 짚어 낸 것이구나.",
             "막내가 자루에 세상에서 제일 귀한 것이 들었다고 큰소리친 것을 보면, 주인이 손을 대게 만들려던 것이구나.",
             "주인이 나중에는 몽둥이 소리만 들어도 얼굴이 하얘진 것을 보면, 그 밤 일이 몸에 남은 것이구나.",
-            "스승들이 형들에게 식탁보와 당나귀를 내준 것을 보면, 주막에서 빼앗길 줄 알고 미리 시험해 본 것이구나."
+            "막내가 주막 주인에게 식탁보를 한 번 펼쳐 대접해 준 것을 보면, 앙갚음으로 끝내지 않은 것이구나."
         ],
         "answer": 3
     }
@@ -996,7 +996,7 @@ const EN = {
                 "The youngest chose the very inn his brothers had stayed at — he had worked out that both times it was that house.",
                 "He boasted that the sack held the most precious thing in the world — he was making sure the landlord would reach for it.",
                 "Later the landlord went pale at the mere sound of the cudgel — that night had stayed in his body.",
-                "The masters handed the elder brothers a cloth and a donkey — they knew the inn would rob them and were testing them."
+                "The youngest spread the cloth once for the landlord and fed him — he did not leave it at getting even."
             ],
             answer: 3
         }

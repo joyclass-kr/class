@@ -524,7 +524,7 @@ const QUIZ = [
             "나그네가 길에서 마주치는 당나귀들이 달리 보였다고 한 것을 보면, 겪어 보고서야 눈에 들어온 것이구나.",
             "주막 주인이 어두워서 빛깔이 잘 보이지도 않는데 붉은 열매를 따 먹은 것을 보면, 마음이 급했던 것이구나.",
             "나그네가 언덕까지 몇 걸음인지 세어 둔 것을 보면, 돌아갈 날을 밤마다 헤아린 것이구나.",
-            "나그네가 노란 열매를 몇 알 챙겨 둔 것을 보면, 주막 주인에게 주려고 미리 마련해 둔 것이구나."
+            "나그네가 주막 주인에게 붉은 나무를 베어 없애자고 한 것을 보면, 뒷사람 걱정까지 한 것이구나."
         ],
         "answer": 3
     }
@@ -987,7 +987,7 @@ const EN = {
                 "He said every donkey he passed on the road looked different to him now — he only saw them after being one.",
                 "The innkeeper ate the red fruit in the dark where he could hardly tell the colour — he was in too much of a hurry.",
                 "The traveller counted how many steps it was to the hill — every night he was measuring the way back.",
-                "He had a few yellow berries put by — he had got them ready for the innkeeper."
+                "The traveller suggested they cut down the red tree — he was thinking of whoever came next."
             ],
             answer: 3
         }

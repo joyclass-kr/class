@@ -525,7 +525,7 @@ const QUIZ = [
             "인어공주가 왕자를 모래밭에 눕히고 바위 뒤로 숨은 것을 보면, 사람 앞에 나설 수 없는 몸이었구나.",
             "하필 목소리를 값으로 낸 것을 보면, 제가 구했다는 말을 할 길이 아주 막혀 버린 것이구나.",
             "단검을 쥔 손이 천천히 내려간 것을 보면, 돌아갈 길보다 왕자가 편한 쪽을 고른 것이구나.",
-            "언니들이 머리를 잘라 단검을 얻어 온 것을 보면, 막내가 보낸 기별을 받고 달려온 것이구나."
+            "인어공주가 혼례 날 밤 언니들에게 잘 지내라는 말을 남긴 것을 보면, 헤어짐을 미리 준비한 것이구나."
         ],
         "answer": 3
     }
@@ -939,7 +939,7 @@ const EN = {
                 "She laid him on the sand and hid behind a rock — she was not something that could be seen by people.",
                 "Of all things she paid with her voice — the one way of saying it was she who saved him was shut off.",
                 "The hand holding the knife came slowly down — she chose his peace over her own way home.",
-                "Her sisters cut off their hair to buy the knife — they had come because she sent them word."
+                "On the wedding night she told her sisters to take care of themselves — she had prepared for the parting."
             ],
             answer: 3
         }

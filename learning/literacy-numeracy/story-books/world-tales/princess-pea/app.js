@@ -526,7 +526,7 @@ const QUIZ = [
             "왕비가 요를 스무 장 가져오라 했을 때 하인들이 서로 얼굴을 쳐다본 것을 보면, 잘못 들은 줄 알았던 것이구나.",
             "아가씨가 잠시 망설이다 한숨도 못 잤다고 말한 것을 보면, 거짓말을 하기가 싫었던 것이구나.",
             "마지막에 이것은 정말로 있었던 이야기라고 한 것을 보면, 안데르센이 시치미를 뚝 뗀 것이구나.",
-            "왕비가 밥상 앞에서 완두콩을 꺼내 보인 것을 보면, 처음부터 그 아가씨를 며느리로 삼고 싶었던 것이구나."
+            "왕비가 이튿날 아가씨에게 완두콩 이야기를 먼저 털어놓고 사과한 것을 보면, 시험한 것이 마음에 걸린 것이구나."
         ],
         "answer": 3
     }
@@ -995,7 +995,7 @@ const EN = {
                 "When the queen called for twenty mattresses the servants looked at one another — they thought they had misheard.",
                 "The girl hesitated and then said she had not slept a wink — she did not want to tell a lie.",
                 "At the end he says the whole thing really happened — Andersen is keeping a perfectly straight face.",
-                "The queen produced the pea at the breakfast table — she had wanted the girl for a daughter-in-law from the first."
+                "Next day the queen told the girl about the pea herself and apologised — the test had weighed on her."
             ],
             answer: 3
         }
