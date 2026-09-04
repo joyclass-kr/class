@@ -460,18 +460,34 @@ function paint() {
     fitAfterword();
 }
 
-/* 「읽고 나서」는 글씨를 줄이지 않는다. 세로 화면에서 글이 칸을 넘으면
-   끝그림을 접어 그 자리를 글에 내준다. 접을 필요가 없으면 그대로 둔다. */
+/* 「읽고 나서」는 글씨를 줄이지 않는다. 세로 화면에서는 끝그림을 접어 두는 것이
+   기본이고(styles.css), 여기서 그림을 켜 보아 자리가 남을 때만 그대로 둔다.
+   그래서 이 함수가 한 번도 못 돌아도 글이 잘리지는 않는다. */
 function fitAfterword() {
     const page = spreadEl.querySelector('.page-after');
     if (!page) return;
-    page.classList.remove('after-tight');
-    const spills = () => [...page.querySelectorAll('.after-col')]
-        .some(col => col.scrollHeight - col.clientHeight > 1);
-    if (spills()) page.classList.add('after-tight');
+    page.classList.add('after-roomy');
+    const spills = [...page.querySelectorAll('.after-col')]
+        .some(col => col.scrollHeight > col.clientHeight);
+    if (spills) page.classList.remove('after-roomy');
 }
 
-window.addEventListener('resize', fitAfterword);
+/* 화면 크기가 바뀌면 다시 잰다. 크기가 한 박자 늦게 잡히는 곳이 있어
+   그 자리에서 한 번, 잠시 뒤에 한 번 더 잰다. */
+let refitTimer = 0;
+function refitAfterword() {
+    fitAfterword();
+    clearTimeout(refitTimer);
+    refitTimer = setTimeout(fitAfterword, 250);
+}
+
+window.addEventListener('resize', refitAfterword);
+window.addEventListener('orientationchange', refitAfterword);
+/* 화면을 돌렸을 때 resize 가 안 잡히는 곳이 있다. 책 상자 크기를 직접 지켜본다. */
+if (window.ResizeObserver) {
+    const bookEl = document.getElementById('book');
+    if (bookEl) new ResizeObserver(refitAfterword).observe(bookEl);
+}
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAfterword);
 
 function initQuiz() {

@@ -78,13 +78,14 @@ ${cards.join('\n')}
 <script>
 /* 세로 배치 규칙은 (max-width: 820px) 미디어쿼리 안에 있다.
    그러니 이 판은 반드시 810px 폭 창에서 열어야 한다. */
-/* app.js 의 fitAfterword 와 같은 판단. 넘치는 쪽만 끝그림을 접는다. */
+/* app.js 의 fitAfterword 와 같은 판단.
+   세로에서는 끝그림이 접혀 있는 것이 기본이고, 켜 보아 자리가 남을 때만 둔다. */
 window.fitAll = function () {
   document.querySelectorAll('.page-after').forEach(p => {
-    p.classList.remove('after-tight');
+    p.classList.add('after-roomy');
     const spills = [...p.querySelectorAll('.after-col')]
-      .some(c => c.scrollHeight - c.clientHeight > 1);
-    if (spills) p.classList.add('after-tight');
+      .some(c => c.scrollHeight > c.clientHeight);
+    if (spills) p.classList.remove('after-roomy');
   });
 };
 
@@ -95,8 +96,9 @@ window.report = function () {
     const over = [...c.querySelectorAll('.after-col')].map(x => x.scrollHeight - x.clientHeight);
     if (over.some(v => v > 0)) rows.push(c.dataset.book + ' #' + c.dataset.spread + ' ' + over.join('/'));
   });
-  const tight = [...document.querySelectorAll('.page-after.after-tight')].length;
-  return { total: document.querySelectorAll('.case').length, tight, bad: rows.length, rows };
+  const roomy = document.querySelectorAll('.page-after.after-roomy').length;
+  const cases = document.querySelectorAll('.case').length;
+  return { total: cases, 그림살림: roomy, 그림접힘: cases - roomy, bad: rows.length, rows };
 };
 </script>
 </body>
