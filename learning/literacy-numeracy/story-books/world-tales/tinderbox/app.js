@@ -519,7 +519,7 @@ const QUIZ = [
                 "병사가 방마다 앞의 것을 쏟아 버리고 새로 담은 것을 보면, 더 나은 것이 나오자 앞의 것이 시들해졌구나.",
                 "노파가 돈은 얼마든지 가져가라면서 통만은 꼭 달라고 한 것을 보면, 값어치가 그 통에 있었던 거지.",
                 "돈이 떨어지자 발길을 끊었던 친구들이 다시 넉넉해지자 돌아온 것을 보면, 무엇을 보고 온 사람들이었는지 드러났어.",
-                "병사가 감옥에서 나온 뒤 그 아이를 찾아 금화를 쥐여 준 것을 보면, 받은 은혜를 잊지 않았구나."
+                "노파가 병사의 허리에 밧줄을 매어 주고 앞치마까지 건넨 것을 보면, 병사가 다치지 않게 챙겨 준 것이었구나."
             ],
         "answer": 3
     }
@@ -1002,7 +1002,7 @@ const EN = {
                 "In each room he tipped out what he had and filled up again — once something better appeared the old lot lost its shine.",
                 "She said take all the money you like but insisted on the box — the worth of the thing was in the box.",
                 "The friends who dropped away when the money ran out came back when it returned — it showed what had brought them.",
-                "Once out of prison the soldier sought the boy out and put gold in his hand — he did not forget a kindness."
+                "The old woman tied the rope round the soldier's waist and handed him an apron as well — she was looking after him so that he would not be hurt."
             ],
             answer: 3
         }

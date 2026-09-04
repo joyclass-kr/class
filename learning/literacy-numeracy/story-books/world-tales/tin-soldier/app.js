@@ -510,7 +510,7 @@ const QUIZ = [
                 "병정이 무희도 다리가 하나인 줄 안 것을 보면, 제게 없는 것을 먼저 봤네.",
                 "물고기 뱃속처럼 비좁은 데서도 어깨를 편 것을 보면, 할 수 있는 것이 그것뿐이었구나.",
                 "재 속에 주석 하트와 그을린 반짝이가 나란히 남은 것을 보면, 둘이 잠깐이나마 함께 있었던 거지.",
-                "한 아이가 병정을 난롯불에 던진 것을 보면, 물에 젖은 병정을 말려 주려 했네."
+                "병정이 깜짝 상자 뒤에 몸을 숨긴 것을 보면, 도깨비 인형이 무슨 짓을 할지 지켜보려던 거지."
             ],
         "answer": 3
     }
@@ -994,7 +994,7 @@ const EN = {
                 "He took the dancer for one-legged like himself — what he saw first was the thing he lacked.",
                 "Even squeezed inside the fish he kept his shoulders back — that was the only thing left he could do.",
                 "A little tin heart and a blackened spangle lay together in the ashes — the two of them had been together, if only for a moment.",
-                "One of the children threw him into the stove — they were drying him out after all that water."
+                "The soldier hid himself behind the jack-in-the-box — he was watching to see what the goblin would do next."
             ],
             answer: 3
         }
