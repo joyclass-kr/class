@@ -483,7 +483,7 @@ const QUIZ = [
             "금접시가 열두 개뿐이어서 열세 번째 요정을 부르지 않은 것을 보면, 아주 작은 일이 큰일을 부르기도 하는구나.",
             "나라 안의 물레를 다 태웠는데도 탑 꼭대기에 하나가 남아 있던 것을 보면, 다 없앤 줄 아는 것이 가장 위험하구나.",
             "열두 번째 요정이 저주를 지우지는 못하고 다만 바꾼 것을 보면, 못 막을 일 앞에서도 할 수 있는 것이 남아 있구나.",
-            "밭에서 실컷 먹은 것이 걸음을 늦추어 들키게 한 것을 보면, 욕심이 발을 무겁게 하는구나."
+            "임금님이 나라 안의 물레를 남김없이 태운 것을 보면, 위험한 것은 미리 없애 버리는 것이 가장 확실하구나."
         ],
         "answer": 3
     }
@@ -842,7 +842,7 @@ const EN = {
                 "There were only twelve gold plates, so the thirteenth fairy was not invited — a very small thing can bring on a very large one.",
                 "Every spindle in the kingdom was burned and one was still up in the tower — believing you have got rid of it all is the dangerous part.",
                 "The twelfth fairy could not undo the curse, only change it — even before what cannot be stopped, something is still left to do.",
-                "He ate his fill in the garden and that is what slowed his legs — greed makes the feet heavy."
+                "The king had every spindle in the land burned — getting rid of the dangerous thing beforehand is the surest way."
             ],
             answer: 3
         }

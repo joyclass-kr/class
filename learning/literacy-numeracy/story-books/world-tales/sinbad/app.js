@@ -502,7 +502,7 @@ const QUIZ = [
             "처음 바다에 나간 까닭은 돈을 다 써 버렸기 때문인데 부자가 된 뒤에도 또 나간 것을 보면, 시작한 까닭과 이어 가는 까닭은 다르구나.",
             "골짜기에서 새로운 것을 지어낸 것이 아니라 상인들이 하던 방법을 거꾸로 쓴 것을 보면, 있는 수를 뒤집어 보는 것도 꾀구나.",
             "마지막에 바다를 그만두고 찾아오는 사람마다 이야기를 들려준 것을 보면, 나가는 대신 말하게 되는 때도 오는구나.",
-            "이가 빠진 인형을 아무도 거들떠보지 않을 때 혼자 안고 다닌 것을 보면, 남이 지나치는 것을 아끼는 눈이 따로 있구나."
+            "신드바드가 그 무서운 바닷길에서 번번이 살아 돌아온 것을 보면, 용기만 있으면 어떤 위험도 이겨 낼 수 있구나."
         ],
         "answer": 3
     }
@@ -966,7 +966,7 @@ const EN = {
                 "He first went to sea because he had spent everything, and went again after he was rich — why you start and why you keep going are not the same.",
                 "In the valley he invented nothing; he turned the merchants' own method back to front — reversing what is already there is a kind of cleverness.",
                 "In the end he stopped sailing and told the story to everyone who came — there comes a time for telling instead of going.",
-                "Only one child carried about the doll with the broken teeth — there is an eye that values what others pass over."
+                "Sinbad came home alive from every one of those voyages — with courage you can come through any danger."
             ],
             answer: 3
         }

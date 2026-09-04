@@ -879,7 +879,7 @@ const QUIZ = [
             "사자가 놓아준 쥐가 나중에 그물을 갉아 준 것을 보면, 작은 도움도 언젠가 돌아오는구나.",
             "북풍이 세게 불수록 나그네가 옷깃을 여민 것을 보면, 억지로 밀어붙이면 오히려 닫히는구나.",
             "개가 물속 그림자에 짖다가 물고 있던 고기를 놓친 것을 보면, 더 바랄 때 가진 것을 놓치는구나.",
-            "두루미가 목 긴 병에 국을 담아 낸 것을 보면, 남을 대접할 때는 상대에 맞춰야 하는구나."
+            "여우가 끝내 못 딴 포도를 신 포도라고 한 것을 보면, 안 되는 일은 얼른 마음을 접는 것이 지혜구나."
         ],
         "answer": 3
     }
@@ -1659,7 +1659,7 @@ const EN = {
                 "The mouse the lion let go came back and gnawed through his net — a small kindness finds its way back.",
                 "The harder the north wind blew, the tighter the traveller held his coat — force makes people shut.",
                 "The dog barked at his own reflection and dropped the meat he had — you lose what you hold by wanting more.",
-                "The stork served soup in a long-necked jar — you must set the table to suit your guest."
+                "The fox called the grapes sour once he could not reach them — the wise thing is to give up on what you cannot have."
             ],
             answer: 3
         }

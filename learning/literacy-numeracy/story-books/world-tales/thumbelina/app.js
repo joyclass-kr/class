@@ -524,7 +524,7 @@ const QUIZ = [
             "두꺼비가 업어 가고 풍뎅이가 채 가고 들쥐가 데려간 것을 보면, 늘 남이 정한 곳으로 옮겨졌구나.",
             "아무도 시키지 않고 누가 보지도 않는데 다친 제비를 살린 것을 보면, 제가 정한 일은 그것 하나였구나.",
             "제비가 준 날개를 달고 처음으로 스스로 날아오른 것을 보면, 살려 준 일이 돌아와 제 발로 서게 했구나.",
-            "심심해서 부른 노래가 탑 밖으로 나가 길이 된 것을 보면, 아무 뜻 없이 한 일이 길이 되기도 하는구나."
+            "엄지 공주가 두꺼비에게 업히고 들쥐에게 이끌려 다닌 것을 보면, 작고 힘없는 사람은 남이 이끌어 주어야 하는구나."
         ],
         "answer": 3
     }
@@ -931,7 +931,7 @@ const EN = {
                 "A toad carried her off, a beetle snatched her, a field mouse took her in — she was always being moved where someone else decided.",
                 "Nobody told her to and nobody was watching when she nursed the swallow — that was the one thing she chose herself.",
                 "With the wings the swallow gave her she flew for the first time on her own — the kindness came back and set her on her own feet.",
-                "She sang because she was bored, and the song carried out of the tower — a thing done for no reason can open a road."
+                "Thumbelina was carried by a toad and led about by a field mouse — the small and weak must be taken in hand by others."
             ],
             answer: 3
         }

@@ -512,7 +512,7 @@ const QUIZ = [
             "언니들은 옷과 보석을 부탁했는데 벨만 꽃 한 송이를 부탁한 것을 보면, 가장 값싼 부탁이 가장 큰 값을 부르기도 하는구나.",
             "없는 것이 없는 성에 말을 나눌 사람만 없었던 것을 보면, 사람에게 모자란 것이 물건이 아닐 때가 있구나.",
             "벨이 마음을 바꾼 것이 저녁을 여러 번 함께한 뒤였음을 보면, 사람이 달리 보이는 데는 시간이 드는구나.",
-            "잡은 새가 그 자리를 벗어나자 색이 바랜 것을 보면, 어떤 것은 있던 자리에서만 그것인 채로 있는구나."
+            "벨이 없는 것 없는 성에서 지낸 것을 보면, 먹고 입을 것만 넉넉하면 어디서든 지낼 만하구나."
         ],
         "answer": 3
     }
@@ -967,7 +967,7 @@ const EN = {
                 "The sisters asked for gowns and jewels; Belle asked for one rose — the cheapest wish can cost the most.",
                 "The castle lacked nothing except someone to talk to — what a person is short of is not always a thing.",
                 "Belle changed her mind only after many evenings together — it takes time to see a person differently.",
-                "The bird lost its colour the moment it was carried away — some things are only themselves where they already are."
+                "Belle had everything she could want in the castle — with enough to eat and wear, anywhere will do."
             ],
             answer: 3
         }

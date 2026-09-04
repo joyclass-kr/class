@@ -525,7 +525,7 @@ const QUIZ = [
             "카이가 나쁜 아이가 된 것이 아니라 거울 조각 때문에 보이는 것이 달라졌을 뿐인 것을 보면, 사람이 변하는 것은 눈부터구나.",
             "게르다가 힘이 세지도 꾀가 많지도 않은데 다만 걸음을 멈추지 않은 것을 보면, 끝까지 가는 것도 하나의 힘이구나.",
             "얼음 조각으로 아무리 맞춰도 안 되던 글자를 게르다의 눈물이 푼 것을 보면, 차가운 자리를 녹이는 것은 셈이 아니구나.",
-            "쥐가 사라진 뒤에야 값이 아까워진 것을 보면, 곤란할 때와 끝난 뒤의 셈이 달라지는구나."
+            "게르다가 끝내 카이를 찾아 데려온 것을 보면, 진심으로 바라면 무엇이든 이루어지는구나."
         ],
         "answer": 3
     }
@@ -946,7 +946,7 @@ const EN = {
                 "Kai did not turn wicked; a splinter of mirror changed what he saw — a person changes at the eyes first.",
                 "Gerda was neither strong nor clever; she simply did not stop walking — going all the way is a strength of its own.",
                 "The letters he could never fit together with ice were undone by Gerda's tears — what thaws a cold place is not arithmetic.",
-                "It was only after the rats were gone that the price began to look too high — what you will pay in trouble is not what you will pay after."
+                "Gerda found Kai in the end and brought him home — wish for it hard enough and it comes true."
             ],
             answer: 3
         }

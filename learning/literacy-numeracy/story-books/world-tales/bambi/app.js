@@ -524,7 +524,7 @@ const QUIZ = [
             "어미가 먼저 가르친 것이 달리는 법이 아니라 멈춰 서서 귀 기울이는 것이었음을 보면, 서두르기 전에 살피는 것이 먼저구나.",
             "풀밭에 나가기 전 어미가 한참을 서서 듣고 냄새를 맡은 것을 보면, 늘 다니던 자리에서도 마음을 놓으면 안 되는구나.",
             "늙은 사슴을 보고 어미가 말없이 고개만 숙인 것을 보면, 굳이 설명하지 않아도 아이는 보고 배우는구나.",
-            "잃어버린 신 한 짝이 임자를 찾아 준 것을 보면, 말로 우기지 않아도 맞는 사람은 드러나는구나."
+            "밤비가 어미에게서 멈춰 서서 듣는 법을 배운 것을 보면, 어른이 가르쳐 준 대로만 하면 위험을 피할 수 있구나."
         ],
         "answer": 3
     }
@@ -976,7 +976,7 @@ const EN = {
                 "The first thing his mother taught was not how to run but how to stop and listen — looking comes before hurrying.",
                 "Before the meadow she stood a long while listening and smelling — even a familiar place is not a safe place.",
                 "When the old stag passed she only bowed her head and said nothing — a child learns by watching, not by being told.",
-                "One lost shoe found its owner — you do not have to argue when the thing itself fits."
+                "His mother taught him to stop and listen — do exactly as the grown-ups taught you and danger passes you by."
             ],
             answer: 3
         }

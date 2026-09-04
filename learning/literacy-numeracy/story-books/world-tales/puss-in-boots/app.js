@@ -530,7 +530,7 @@ const QUIZ = [
             "고양이가 맨 처음 자루와 장화부터 달라고 한 것을 보면, 일을 벌이기 전에 연장을 챙겨야 하는구나.",
             "토끼와 꿩을 여러 달 거르지 않고 보낸 것을 보면, 작은 것이라도 꾸준하면 이름이 남는구나.",
             "마법사를 쥐로 변하게 한 것을 보면, 맞서 싸우기보다 다른 길을 찾는 편이 나을 때가 있구나.",
-            "서두르지 않고 오래 걸려도 튼튼하게 지어 둔 것을 보면, 급하게 한 일은 오래가지 못하는구나."
+            "막내가 고운 옷으로 갈아입자 정말 후작처럼 보인 것을 보면, 사람은 차림새를 갖추면 그만한 대접을 받는구나."
         ],
         "answer": 3
     }
@@ -934,7 +934,7 @@ const EN = {
                 'He asked for a sack and boots before anything else — so you get your tools together before you start.',
                 'Rabbits and pheasants went to the king for months without a gap — so small things done steadily make a name.',
                 'The sorcerer was beaten by being turned into a mouse — so there are times when going round beats going at it.',
-                'It was built slowly and solidly instead of in a hurry — so work done in haste does not last.'
+                "Once he was in fine clothes he really did look like a marquis — dress the part and you are treated as the part."
             ],
             answer: 3
         }

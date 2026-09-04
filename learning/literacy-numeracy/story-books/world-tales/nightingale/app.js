@@ -514,7 +514,7 @@ const QUIZ = [
             "황제가 제 나라 안의 밤꾀꼬리를 먼 나라 사람의 책을 읽고서야 안 것을 보면, 가까이 있는 것을 제일 늦게 아는구나.",
             "궁궐 사람 가운데 그 소리를 아는 사람이 부엌데기 아이뿐이었던 것을 보면, 아는 사람이 늘 높은 자리에 있는 것은 아니구나.",
             "기계 새가 같은 곡만 되풀이해서 오히려 좋아하는 사람이 많았던 것을 보면, 사람은 미리 아는 것을 편해하는구나.",
-            "언니는 빵과 사과나무의 부탁에 하던 길을 멈추고 그것을 해 준 것을 보면, 급한 길에도 멈출 자리는 있구나."
+            "황제가 살아 있는 새보다 기계 새를 더 아낀 것을 보면, 새것이 나오면 옛것은 물러나는 것이 세상 이치구나."
         ],
         "answer": 3
     }
@@ -969,7 +969,7 @@ const EN = {
                 "The emperor learned of the nightingale in his own country from a book written far away — what is nearest is known last.",
                 "In the whole palace only the kitchen girl knew the song — the one who knows is not always the one in the high place.",
                 "The clockwork bird played the same tune every time, and many liked it the better for that — people are comfortable with what they can predict.",
-                "The bread and the apple tree called out, and she stopped what she was doing for them — even on an urgent road there is room to stop."
+                "The emperor set the clockwork bird above the living one — when the new thing comes, the old one steps aside; that is how it goes."
             ],
             answer: 3
         }

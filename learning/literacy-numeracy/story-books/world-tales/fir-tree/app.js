@@ -524,7 +524,7 @@ const QUIZ = [
             "전나무가 늘 다음을 기다리느라 서 있는 숲이 눈에 들어오지 않은 것을 보면, 지금을 보지 못하면 어디에 서 있어도 마찬가지구나.",
             "촛불을 켠 그 하루가 평생 가장 좋은 날이었는데 그날조차 내일을 생각한 것을 보면, 좋은 날은 지나고 나서야 알아지는구나.",
             "다락방에 놓인 뒤에야 숲을 떠올렸지만 그때는 이미 뿌리가 없었던 것을 보면, 알아보는 데도 때가 있는 법이구나.",
-            "빵 부스러기는 새들이 먹어 버리고 조약돌은 그대로 있었던 것을 보면, 같은 꾀라도 무엇으로 하느냐에 따라 갈리는구나."
+            "전나무가 방 한가운데에서 촛불을 달고 아이들에게 둘러싸인 것을 보면, 기다리면 좋은 날은 반드시 오는구나."
         ],
         "answer": 3
     }
@@ -985,7 +985,7 @@ const EN = {
                 "Always waiting for the next thing, the fir never saw the wood it stood in — if you cannot see now, no place will do.",
                 "The one candlelit evening was the best of its life, and even then it thought of tomorrow — a good day is known only afterwards.",
                 "Only up in the attic did it remember the wood, and by then it had no roots — there is a right time even for noticing.",
-                "The birds ate the breadcrumbs but the white pebbles stayed — the same plan turns on what you make it of."
+                "The fir stood in the middle of the room with candles and children all round it — wait long enough and the good day always comes."
             ],
             answer: 3
         }

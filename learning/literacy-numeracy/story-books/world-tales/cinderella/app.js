@@ -492,7 +492,7 @@ const QUIZ = [
             "요정이 준 것은 무도회에 갈 기회뿐이고 춤과 말씨는 제 것이었음을 보면, 도움이 대신 살아 주지는 않는구나.",
             "옷이나 반지가 아니라 신 한 짝으로 임자를 찾은 것을 보면, 말로 우기지 않아도 맞는 사람은 드러나는구나.",
             "열두 시면 다 사라진다는 것을 알면서도 간 것을 보면, 끝이 정해져 있어도 갈 만한 자리가 있구나.",
-            "물에 비친 제 모습을 알아본 뒤에야 달라진 것을 보면, 남이 뭐라 하든 나는 처음부터 나였구나."
+            "신데렐라가 요정의 도움으로 무도회에 간 것을 보면, 착하게 참고 기다리면 누군가 도와주러 오는구나."
         ],
         "answer": 3
     }
@@ -855,7 +855,7 @@ const EN = {
                 "The fairy gave only the chance to go; the dancing and the manners were her own — help does not live your life for you.",
                 "It was a shoe, not a gown or a ring, that found her — you do not have to argue when the thing itself fits.",
                 "She went knowing midnight would take it all back — some places are worth going to even when the end is fixed.",
-                "Nothing changed until he saw himself in the water — whatever they called you, you were always what you are."
+                "A fairy came and sent Cinderella to the ball — be good and wait quietly and someone will come to help you."
             ],
             answer: 3
         }

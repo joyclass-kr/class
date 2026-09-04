@@ -535,7 +535,7 @@ const QUIZ = [
             "첫 번째 소원이 아끼려던 것이 아니라 무심코 나온 말이었던 것을 보면, 가장 큰 것을 무심코 써 버리기도 하는구나.",
             "두 번째가 화가 나서 나온 말이었던 것을 보면, 홧김에 한 말이 되돌릴 수 없는 자리를 만드는구나.",
             "마지막 하나로 큰 집도 금덩이도 아니라 아내의 코를 고른 것을 보면, 남은 하나는 곁에 쓰게 되는구나.",
-            "그만두고 싶어도 발이 저절로 움직인 것을 보면, 한번 시작한 것이 나를 끌고 가기도 하는구나."
+            "나무꾼 부부가 소원 세 번을 다 쓰고 아무것도 남기지 못한 것을 보면, 기회가 세 번이나 있어도 어리석은 사람은 못 잡는구나."
         ],
         "answer": 3
     }
@@ -1005,7 +1005,7 @@ const EN = {
                 "The first wish was not thrift but a word said without thinking — the biggest thing can go on something you never meant.",
                 "The second came out in temper — a word said in anger can make a place you cannot get back from.",
                 "With the last one he chose neither a house nor gold but his wife's nose — the one you have left goes to whoever is beside you.",
-                "She wanted to stop and her feet went on by themselves — a thing once begun can start carrying you."
+                "They used all three wishes and had nothing to show for it — a fool will miss the chance even given three of them."
             ],
             answer: 3
         }

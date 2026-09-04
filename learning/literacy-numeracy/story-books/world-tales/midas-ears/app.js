@@ -523,7 +523,7 @@ const QUIZ = [
             "귀가 당나귀 귀가 된 까닭이 겨루기에서 엉뚱한 쪽 손을 들어 준 값이었음을 보면, 잘 듣지 못한 것에도 값이 따르는구나.",
             "이발사가 참기 힘들었던 까닭이 그 말이 대단해서가 아니라 혼자만 알고 있어야 했기 때문인 것을 보면, 짐은 크기보다 혼자 지는 데서 무거워지는구나.",
             "온 나라가 알게 되자 임금님이 오히려 모자를 벗고 마당으로 나온 것을 보면, 숨길 것이 없어지면 마음이 편해지는구나.",
-            "밤새 뛰어와 문을 두드린 쪽이 잊지 않은 쪽이었던 것을 보면, 가볍게 한 말도 누군가는 무겁게 듣는구나."
+            "이발사가 아무도 없는 데서 땅에 대고 소리친 것을 보면, 답답한 일은 혼자 털어놓고 나면 그것으로 끝나는구나."
         ],
         "answer": 3
     }
@@ -990,7 +990,7 @@ const EN = {
                 "His ears changed because he had raised the wrong hand in the contest — there is a price for not listening properly.",
                 "What the barber could not bear was not that the secret was great but that he alone had to hold it — a load gets heavy from being carried alone.",
                 "Once the whole country knew, the king took off his cap and walked out into the yard — with nothing left to hide, the mind rests.",
-                "The one who hopped all night to knock at the door was the one who had not forgotten — a light promise can be heard heavily."
+                "The barber shouted it into a hole where nobody could hear — say the thing out loud alone and it is over."
             ],
             answer: 3
         }

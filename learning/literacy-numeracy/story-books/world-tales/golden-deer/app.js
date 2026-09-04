@@ -536,7 +536,7 @@ const QUIZ = [
             "쫓기다 여럿이 다치느니 하루에 한 마리씩 가자고 한 것을 보면, 좋은 수가 없을 때는 덜 나쁜 수를 고르는 것도 일이구나.",
             "제 발로 나선 것이 착해서가 아니라 제가 우두머리이기 때문이라고 한 것을 보면, 앞에 선 사람이 지는 몫이 따로 있구나.",
             "살려 주겠다는 말에 새와 물고기까지 물은 것을 보면, 제 무리만 건지고 끝내지 않는 자리가 있구나.",
-            "요정이 준 것은 갈 기회뿐이고 춤과 말씨는 제 것이었음을 보면, 도움이 대신 살아 주지는 않는구나."
+            "황금 사슴이 새끼 밴 사슴 대신 제 발로 나선 것을 보면, 남을 위해 목숨을 내놓는 것이 참된 착함이구나."
         ],
         "answer": 3
     }
@@ -993,7 +993,7 @@ const EN = {
                 "Better one a day than many hurt in the chase — when there is no good choice, picking the less bad one is still work.",
                 "He went himself not because he was kind but because he was the leader — the one in front carries a share of his own.",
                 "Offered his own life, he asked about the birds and the fish too — there is a place where saving your own is not enough.",
-                "The fairy gave only the chance to go; the dancing and the manners were her own — help does not live your life for you."
+                "The golden deer went in place of the doe carrying young — laying down your life for another is what real goodness is."
             ],
             answer: 3
         }

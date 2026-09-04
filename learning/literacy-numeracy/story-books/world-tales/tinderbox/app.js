@@ -519,7 +519,7 @@ const QUIZ = [
             "돈은 눈에 보였고 통은 볼품없었는데 노파가 끝까지 달라고 한 것이 통이었음을 보면, 값어치는 남이 탐내는 데서 드러나는구나.",
             "돈이 떨어지자 친구들이 발길을 끊고 넉넉해지자 돌아온 것을 보면, 무엇을 보고 온 사람인지는 없어져 봐야 알겠구나.",
             "감옥에서 병사를 도운 것이 힘 있는 사람이 아니라 지나가던 아이였음을 보면, 도움은 크기로 오는 것이 아니구나.",
-            "얼음 조각으로 아무리 맞춰도 안 되던 글자를 눈물이 푼 것을 보면, 차가운 자리를 녹이는 것은 셈이 아니구나."
+            "병사가 통을 세 번 쳐서 곤란을 벗어난 것을 보면, 좋은 물건 하나만 있으면 걱정할 것이 없구나."
         ],
         "answer": 3
     }
@@ -987,7 +987,7 @@ const EN = {
                 "The money was in plain sight and the box looked worthless, and the box was the one thing the old woman kept demanding — worth shows in what others want.",
                 "His friends dropped away when the money ran out and came back when it returned — you find out what brought them by losing it.",
                 "The one who helped him in prison was not a powerful man but a boy going past — help does not come in proportion to size.",
-                "The letters he could never fit together with ice were undone by tears — what thaws a cold place is not arithmetic."
+                "Three strikes of the box got him out of trouble — one good thing in your pocket and you need never worry."
             ],
             answer: 3
         }

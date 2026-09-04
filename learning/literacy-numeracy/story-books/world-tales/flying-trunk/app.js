@@ -520,7 +520,7 @@ const QUIZ = [
             "가진 것이 없어 이야기를 들려주러 간 것을 보면, 빈손으로도 건넬 것이 있구나.",
             "온 도시가 올려다보게 벌인 불꽃 하나가 가방에 옮겨붙은 것을 보면, 자랑하려던 일이 길을 끊기도 하는구나.",
             "물려받은 돈을 다 쓰고 남은 것이 낡은 가방 하나였는데 그것이 날았던 것을 보면, 남은 하나가 어떤 것인지는 써 봐야 아는구나.",
-            "밤새 뛰어와 문을 두드린 쪽이 잊지 않은 쪽이었던 것을 보면, 가볍게 한 말도 누군가는 무겁게 듣는구나."
+            "장사꾼의 아들이 이야기 하나로 공주의 마음을 얻은 것을 보면, 말솜씨만 좋으면 못 얻을 것이 없구나."
         ],
         "answer": 3
     }
@@ -984,7 +984,7 @@ const EN = {
                 "Having nothing to bring, he brought a story — you can hold something out with empty hands.",
                 "The fireworks he set off so the whole city would look up caught the trunk itself — showing off can cut the road you came by.",
                 "He spent his inheritance and all that was left was an old trunk, and the trunk flew — what your last thing is worth you learn by using it.",
-                "The one who hopped all night to knock at the door was the one who had not forgotten — a light promise can be heard heavily."
+                "One story won him the princess — with a good enough tongue there is nothing you cannot get."
             ],
             answer: 3
         }

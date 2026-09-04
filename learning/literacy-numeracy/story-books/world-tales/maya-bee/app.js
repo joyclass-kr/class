@@ -526,7 +526,7 @@ const QUIZ = [
             "규칙을 어기고 나온 마야가 벌집을 구한 것을 보면, 어긴 것과 지킨 것이 한 사람 안에 같이 있기도 하는구나.",
             "나온 것을 나무랄 무리에게로 돌아간 것이 가장 어려운 걸음이었던 것을 보면, 돌아가는 일이 떠나는 일보다 무섭구나.",
             "쿠르트가 제 일을 남에게 미루지 않는다고 한 말을 마야가 오래 기억한 것을 보면, 지나가듯 들은 한마디가 사람 안에 남는구나.",
-            "겨울 동안 혼자였던 그 시간에 몸이 자란 것을 보면, 아무도 보지 않는 데서 일어나는 일도 있구나."
+            "마야가 벌집을 나갔다가 거미줄에 걸린 것을 보면, 정해진 자리를 벗어나면 위험한 일을 겪는구나."
         ],
         "answer": 3
     }
@@ -987,7 +987,7 @@ const EN = {
                 "The bee who broke the rule is the one who saved the hive — breaking and keeping can live in the same person.",
                 "The hardest step was going back to the swarm that would scold her — returning frightens more than leaving.",
                 "Maya kept Kurt's remark about not passing your work to others — a line heard in passing stays inside a person.",
-                "It was through that winter alone that he grew — some things happen where nobody is watching."
+                "Maya left the hive and got caught in a web — step outside where you belong and trouble finds you."
             ],
             answer: 3
         }

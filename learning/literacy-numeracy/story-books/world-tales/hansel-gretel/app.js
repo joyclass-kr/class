@@ -490,7 +490,7 @@ const QUIZ = [
             "조약돌은 그대로 있었지만 빵 부스러기는 새들이 먹어 버린 것을 보면, 같은 꾀라도 무엇으로 하느냐에 따라 갈리는구나.",
             "숲에서는 헨젤이 앞장섰는데 과자집에서는 그레텔이 앞장선 것을 보면, 앞에 설 사람은 자리에 따라 바뀌는구나.",
             "과자집이 배고픈 아이가 가장 못 참을 것으로 지어져 있던 것을 보면, 덫은 그 사람이 제일 바라는 모양을 하고 있구나.",
-            "촛불을 켠 그 하루가 가장 좋은 날이었는데 그날조차 내일을 생각한 것을 보면, 좋은 날은 지나고 나서야 알아지는구나."
+            "헨젤이 두 번째 밤에도 빵 부스러기를 뿌려 둔 것을 보면, 미리 준비를 해 두면 어떤 일이든 막을 수 있구나."
         ],
         "answer": 3
     }
@@ -851,7 +851,7 @@ const EN = {
                 "The pebbles stayed put but the birds ate the breadcrumbs — the same plan turns on what you make it of.",
                 "Hansel led the way in the wood, and Gretel led at the gingerbread house — who goes first changes with the place.",
                 "The house was built of the one thing a starving child could not walk past — a trap is shaped like whatever you want most.",
-                "The one candlelit evening was the best of its life, and even then it thought of tomorrow — a good day is known only afterwards."
+                "Hansel scattered crumbs the second night as well — prepare in advance and nothing can go wrong."
             ],
             answer: 3
         }
