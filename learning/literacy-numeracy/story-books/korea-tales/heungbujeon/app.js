@@ -1076,7 +1076,7 @@ const EN = {
         { q: "What did the swallow bring back the next spring?", choices: ["A lump of gold", "A gourd seed", "A grain of rice"], answer: 1 },
         { q: "What came out of the first gourd?", choices: ["Silk pouring out", "Carpenters to build a house", "A table of white rice"], answer: 2 },
         { q: "Why did Nolbu come to Heungbu's house?", choices: ["To say sorry for what he had done", "To find out how he got rich", "To share some rice with him"], answer: 1 },
-        { q: "What did Nolbu do to the swallow?", choices: ["He fed it well", "He broke its leg on purpose", "He built it a new nest"], answer: 1 },
+        { q: "What did Nolbu do after he broke the swallow's leg?", choices: ["He wound it with thread and a splinter", "He only put it back in the nest", "He set it down in the yard and watched"], answer: 0 },
         { q: "Who came out of Nolbu's first gourd?", choices: ["People with ledgers", "A shaman holding a rite", "Insects eating the grain"], answer: 0 },
         { q: "What came out of Nolbu's last gourd?", choices: ["Soldiers in armour", "A huge snake", "Muddy water"], answer: 0 },
         { q: "What did Nolbu have to do each time a gourd split?", choices: ["Put down the saw", "Call the onlookers together", "Open the storehouse door"], answer: 2 },

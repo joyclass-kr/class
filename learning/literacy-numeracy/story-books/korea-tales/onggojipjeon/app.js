@@ -1326,7 +1326,7 @@ const EN = {
     },
     quiz: [
         { q: "What kind of man was Onggojip?", choices: ["Poor but generous", "Rich but very mean", "Well read but timid"], answer: 1 },
-        { q: "How did Onggojip treat his mother?", choices: ["He built her a fine house of her own", "He greeted her every day", "He left her in a room with no fire"], answer: 2 },
+        { q: "How did Onggojip treat his mother?", choices: ["He left her in a room with no fire", "He built her a fine house of her own", "He greeted her every day"], answer: 0 },
         { q: "What did Onggojip do to the monk who came for alms?", choices: ["He beat him and drove him off", "He gave him a measure of rice", "He pretended not to see him"], answer: 0 },
         { q: "What did the old monk of Chwiamsa make the false Onggojip out of?", choices: ["A doll carved from wood", "A figure moulded from clay", "A straw figure"], answer: 2 },
         { q: "Why could the family not tell the two Onggojips apart?", choices: ["They were alike to the last hair", "Both of them had their faces covered", "It was too dark to see"], answer: 0 },
