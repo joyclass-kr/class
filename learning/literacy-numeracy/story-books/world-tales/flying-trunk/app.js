@@ -517,11 +517,11 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "친구가 낡은 가방을 주며 짐 쌀 때 필요할 거라고 한 것을 보면, 이제 떠나라는 뜻이었구나.",
-            "아들이 가방 안에 앉아 심심풀이로 자물쇠를 눌러 본 것을 보면, 아무 뜻 없이 한 일이 길을 연 것이구나.",
-            "불꽃을 사느라 남은 돈을 다 털어 넣은 것을 보면, 사람들을 놀래 주고 싶은 마음이 앞섰던 것이구나.",
-            "가방을 숲 빈터에 세워 두고 마을로 내려간 것을 보면, 이제 하늘로 갈 일이 없다고 여긴 것이구나."
-        ],
+                "친구가 낡은 가방을 주며 짐 쌀 때 필요할 거라고 한 것을 보면, 이제 떠나라는 뜻이었구나.",
+                "아들이 가방 안에 앉아 심심풀이로 자물쇠를 눌러 본 것을 보면, 아무 뜻 없이 한 일이 길을 연 거지.",
+                "불꽃을 사느라 남은 돈을 다 털어 넣은 것을 보면, 사람들을 놀래 주고 싶은 마음이 앞섰던 거야.",
+                "공주가 지금도 탑 창가에서 하늘을 보는 것을 보면, 그 사람이 하늘에서 온 것이 아님을 진작 알아챈 거야."
+            ],
         "answer": 3
     }
 ];
@@ -999,7 +999,7 @@ const EN = {
                 "His friend gave him an old trunk and said he would need it for packing — it meant it was time to go.",
                 "Sitting inside it he pressed the lock out of idleness — a thing done for no reason opened the road.",
                 "He spent every coin he had left on fireworks — wanting to astonish people came first.",
-                "He left the trunk standing in the clearing and went down to the town — he thought he had no more use for the sky."
+                "The princess still watches the sky from her tower window — she had worked out long ago that he never came from the sky at all."
             ],
             answer: 3
         }

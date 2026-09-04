@@ -551,11 +551,11 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "오누이가 발이 시린 줄도 모르고 창가에 붙어 있던 것을 보면, 이웃집 잔치가 그만큼 부러웠던 것이구나.",
-            "잡은 새가 번번이 색이 바랜 것을 보면, 그 자리를 벗어나면 그 새가 아니게 되는 것이구나.",
-            "어제까지 잿빛으로만 보이던 새가 파랗게 반짝인 것을 보면, 달라진 것은 새가 아니라 아이들 눈이었구나.",
-            "빛의 요정이 다이아몬드 돌리는 법을 알려 준 것을 보면, 파랑새가 어디 있는지 처음부터 알고 있었던 것이구나."
-        ],
+                "오누이가 발이 시린 줄도 모르고 창가에 붙어 있던 것을 보면, 이웃집 잔치가 그만큼 부러웠던 거야.",
+                "잡은 새가 번번이 색이 바랜 것을 보면, 그 자리를 벗어나면 그 새가 아니게 되는 거지.",
+                "어제까지 잿빛으로만 보이던 새가 파랗게 반짝인 것을 보면, 달라진 것은 새가 아니라 아이들 눈이었구나.",
+                "고양이 치레트가 줄곧 뒤에서 따라간 것을 보면, 오누이가 지칠까 봐 걸음을 맞춰 준 거야."
+            ],
         "answer": 3
     }
 ];
@@ -1057,7 +1057,7 @@ const EN = {
                 "They stood at the window without noticing their cold feet — that is how much they envied the party next door.",
                 "Every bird they caught lost its colour — carried away from its place it was no longer that bird.",
                 "The bird that had looked grey the day before was shining blue — what changed was the children's eyes, not the bird.",
-                "The fairy showed them how to turn the diamond — she had known where the bluebird was all along."
+                "Tylette the cat kept to the back the whole way — she was matching her pace to the children so they would not tire."
             ],
             answer: 3
         }

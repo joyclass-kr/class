@@ -499,11 +499,11 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "곳간을 열어 보고 그제야 정신이 번쩍 들었다 한 것을 보면, 다 떨어지고 나서야 움직인 것이구나.",
-            "고기에 보석이 척척 달라붙는 것을 보고 무릎을 친 것을 보면, 상인들이 하던 방법을 거꾸로 쓴 것이구나.",
-            "부자가 되고 몇 달 만에 또 짐을 꾸린 것을 보면, 처음 나간 까닭과 다시 나간 까닭이 달랐구나.",
-            "상인들에게 보석을 나누어 준 것을 보면, 혼자 다 가지기에는 너무 많아서였구나."
-        ],
+                "곳간을 열어 보고 그제야 정신이 번쩍 들었다 한 것을 보면, 다 떨어지고 나서야 움직인 거야.",
+                "고기에 보석이 척척 달라붙는 것을 보고 무릎을 친 것을 보면, 상인들이 하던 방법을 거꾸로 쓴 거지.",
+                "부자가 되고 몇 달 만에 또 짐을 꾸린 것을 보면, 처음 나간 까닭과 다시 나간 까닭이 달랐구나.",
+                "신드바드가 보석을 줍다 말고 문득 손을 멈춘 것을 보면, 남의 골짜기 것을 함부로 가져가는 게 마음에 걸린 거야."
+            ],
         "answer": 3
     }
 ];
@@ -981,7 +981,7 @@ const EN = {
                 "He looked into the storeroom and only then came to his senses — he moved when there was nothing left.",
                 "Seeing the jewels stick to the meat he slapped his knee — he turned the merchants' own method back to front.",
                 "Rich again, he was packing within months — why he first went to sea and why he went back were not the same.",
-                "He shared out the jewels among the merchants — there was simply too much for one man to carry."
+                "Sinbad stopped in the middle of gathering jewels — taking what belonged to someone else's valley weighed on him."
             ],
             answer: 3
         }

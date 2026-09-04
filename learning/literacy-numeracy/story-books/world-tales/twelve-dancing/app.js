@@ -516,11 +516,11 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "병사가 잔을 입에 대고 옷깃 뒤로 흘려보낸 것을 보면, 노파가 미리 일러 준 대로 한 것이구나.",
-            "막내 공주만 자꾸 뒤를 돌아본 것을 보면, 뒤에 누가 있다는 것을 혼자만 느낀 것이구나.",
-            "병사가 은잎과 금잎을 꺾어 품에 넣은 것을 보면, 말로만 해서는 아무도 믿지 않을 줄 안 것이구나.",
-            "큰공주가 술잔을 들고 나온 것을 보면, 밤새 지켜야 하는 병사가 딱해 챙겨 준 것이구나."
-        ],
+                "병사가 잔을 입에 대고 옷깃 뒤로 흘려보낸 것을 보면, 노파가 미리 일러 준 대로 한 거야.",
+                "막내 공주만 자꾸 뒤를 돌아본 것을 보면, 뒤에 누가 있다는 것을 혼자만 느낀 거지.",
+                "병사가 은잎과 금잎을 꺾어 품에 넣은 것을 보면, 말로만 해서는 아무도 믿지 않을 줄 안 거구나.",
+                "임금님이 사흘 안에 알아내야 한다고 못 박은 것을 보면, 나선 사람이 오래 고생하지 않도록 기한을 짧게 잡아 준 거야."
+            ],
         "answer": 3
     }
 ];
@@ -1004,7 +1004,7 @@ const EN = {
                 "He put the cup to his lips and let it run away behind his collar — he did exactly what the old woman had told him.",
                 "Only the youngest kept looking back — she was the one who felt someone was there.",
                 "He broke off a silver leaf and a gold one and pocketed them — he knew nobody would take his word for it.",
-                "The eldest princess brought out a cup of wine — she felt sorry for the old soldier who had to sit up all night."
+                "The king insisted it be solved within three days — he had kept the deadline short so that no one would suffer over it for long."
             ],
             answer: 3
         }

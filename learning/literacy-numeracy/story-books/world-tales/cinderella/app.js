@@ -489,11 +489,11 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "새어머니가 콩 자루를 쏟아 놓고 저녁까지 다 고르라 한 것을 보면, 애초에 데려갈 마음이 없었던 것이구나.",
-            "언니들이 바로 옆에 서서 수군거리기까지 한 것을 보면, 옷차림이 바뀌자 아예 알아보지 못한 것이구나.",
-            "왕자가 이름을 물을 때마다 웃기만 한 것을 보면, 말하고 싶지 않아서가 아니라 말할 수 없어서였구나.",
-            "신데렐라가 잔치 뒤 언니들에게 새 옷을 손수 지어 준 것을 보면, 지난 일을 정말로 덮은 것이구나."
-        ],
+                "새어머니가 콩 자루를 쏟아 놓고 저녁까지 다 고르라 한 것을 보면, 애초에 데려갈 마음이 없었던 거야.",
+                "언니들이 바로 옆에 서서 수군거리기까지 한 것을 보면, 옷차림이 바뀌자 아예 알아보지 못한 거야.",
+                "왕자가 이름을 물을 때마다 웃기만 한 것을 보면, 말하고 싶지 않아서가 아니라 말할 수 없어서야.",
+                "신데렐라가 언니들의 머리를 빗기고 등 뒤 단추까지 채워 준 것을 보면, 부탁하기도 전에 먼저 나서서 도와준 거야."
+            ],
         "answer": 3
     }
 ];
@@ -870,7 +870,7 @@ const EN = {
                 "The stepmother tipped out a sack of beans and said sort them by evening — she had never meant to take her at all.",
                 "The sisters stood right beside her and whispered about her — once the clothes changed they did not know her.",
                 "She only smiled when the prince asked her name — it was not that she would not say, but that she could not.",
-                "After the feast Cinderella sewed her sisters new gowns herself — she had truly put the past behind her."
+                "Cinderella combed her sisters' hair and did up the buttons at their backs — she stepped in to help before they even asked."
             ],
             answer: 3
         }

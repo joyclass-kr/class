@@ -519,11 +519,11 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "막내가 딱딱한 빵과 신 맥주뿐인데도 노인에게 자리를 내어 준 것을 보면, 나누는 데에 넉넉함이 필요한 것은 아니었구나.",
-            "세 자매가 저마다 하나씩만 손을 댔는데 줄줄이 붙어 버린 것을 보면, 남이 붙든 것을 잡아당기다 저도 붙은 것이구나.",
-            "막내가 뒤에 무엇이 딸려 오는지도 모르고 걸어간 것을 보면, 공주를 웃기려고 한 일이 아니었구나.",
-            "막내가 거위를 숲으로 돌려보낸 것을 보면, 상으로 받은 것을 형들에게 나눠 주려 한 것이구나."
-        ],
+                "막내가 딱딱한 빵과 신 맥주뿐인데도 노인에게 자리를 내어 준 것을 보면, 나누는 데에 넉넉함이 필요한 것은 아니었구나.",
+                "세 자매가 저마다 하나씩만 손을 댔는데 줄줄이 붙어 버린 것을 보면, 남이 붙든 것을 잡아당기다 저도 붙은 거지.",
+                "막내가 뒤에 무엇이 딸려 오는지도 모르고 걸어간 것을 보면, 공주를 웃기려고 한 일이 아니었던 거야.",
+                "어머니가 막내에게 굳은 빵과 신 맥주를 싸 준 것을 보면, 숲에서 오래 버티라고 든든한 것으로 골라 준 거야."
+            ],
         "answer": 3
     }
 ];
@@ -1000,7 +1000,7 @@ const EN = {
                 "With only hard bread and sour beer he still made room for the old man — sharing does not wait until you have plenty.",
                 "Each sister touched the goose just once and all three were stuck fast — they were caught pulling at what someone else was caught on.",
                 "He walked on without knowing what was trailing behind him — he was not trying to make anybody laugh.",
-                "He set the goose free in the wood — he meant to share what he had been given with his brothers."
+                "The mother packed the youngest stale bread and sour beer — she had chosen hearty things to keep him going in the forest."
             ],
             answer: 3
         }

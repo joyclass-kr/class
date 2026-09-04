@@ -499,11 +499,11 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "왕비가 끈에서 빗으로, 빗에서 사과로 바꿔 온 것을 보면, 들킬 때마다 더 그럴듯한 것을 고른 것이구나.",
-            "사냥꾼이 공주를 숲에 두고 온 것을 보면, 시킨 대로 하지 않기로 마음먹은 것이구나.",
-            "난쟁이들이 이야기를 다 듣고 함께 지내자고 한 것을 보면, 공주가 갈 곳이 없다는 것을 알아챈 것이구나.",
-            "난쟁이들이 아침마다 문단속을 다시 일러 주고 굴로 간 것을 보면, 걱정을 놓지 못한 것이구나."
-        ],
+                "왕비가 끈에서 빗으로, 빗에서 사과로 바꿔 온 것을 보면, 들킬 때마다 더 그럴듯한 것을 고른 거야.",
+                "사냥꾼이 공주를 숲에 두고 온 것을 보면, 시킨 대로 하지 않기로 마음먹은 거지.",
+                "난쟁이들이 이야기를 다 듣고 함께 지내자고 한 것을 보면, 공주가 갈 곳이 없다는 것을 알아챈 거구나.",
+                "난쟁이들이 유리 관 곁을 늘 한 사람씩 지킨 것을 보면, 공주가 깨어날 것을 알고 기다린 거야."
+            ],
         "answer": 3
     }
 ];
@@ -889,7 +889,7 @@ const EN = {
                 "The queen came with a lace, then a comb, then an apple — each time she was caught out she picked something more convincing.",
                 "The huntsman left her alive in the wood — he had made up his mind not to do as he was told.",
                 "The dwarfs heard her out and asked her to stay with them — they saw she had nowhere else to go.",
-                "Every morning the dwarfs reminded her again about the door before going to the mine — they could not stop worrying."
+                "One of the dwarfs always kept watch beside the glass coffin — they knew she would wake and were waiting for her."
             ],
             answer: 3
         }

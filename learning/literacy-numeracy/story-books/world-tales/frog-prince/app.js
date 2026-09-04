@@ -511,11 +511,11 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "공주가 보석도 왕관도 주겠다고 한 것을 보면, 개구리가 그런 것을 바랄 줄로 여긴 것이구나.",
-            "공주가 개구리 부탁을 선뜻 받아들인 것을 보면, 개구리 걸음으로는 궁궐까지 못 올 줄 알았던 것이구나.",
-            "마차 뒤에서 툭툭 소리가 난 것을 보면, 하인리히가 두른 쇠테가 그제야 부러진 것이구나.",
-            "공주가 이튿날 연못으로 가 개구리에게 고맙다고 인사한 것을 보면, 늦게라도 마음이 돌아선 것이구나."
-        ],
+                "공주가 보석도 왕관도 주겠다고 한 것을 보면, 개구리가 그런 것을 바랄 줄로 여긴 거야.",
+                "공주가 개구리 부탁을 선뜻 받아들인 것을 보면, 개구리 걸음으로는 궁궐까지 못 올 줄 알았던 거지.",
+                "마차 뒤에서 툭툭 소리가 난 것을 보면, 하인리히가 두른 쇠테가 그제야 부러진 거구나.",
+                "임금님이 개구리가 밥상에 오르는데도 아무렇지 않게 밥을 드신 것을 보면, 개구리가 왕자인 줄 진작 알고 계셨던 거야."
+            ],
         "answer": 3
     }
 ];
@@ -979,7 +979,7 @@ const EN = {
                 "She offered him jewels and a crown — she assumed that was the sort of thing he would want.",
                 "She agreed to his terms readily enough — she was sure a frog could never make it as far as the palace.",
                 "Something snapped behind the carriage — the iron bands round Heinrich's chest were giving way at last.",
-                "Next day the princess went to the pond and thanked the frog — her heart had turned, if late."
+                "The king went on eating calmly while the frog climbed onto the table — he had known all along that it was a prince."
             ],
             answer: 3
         }

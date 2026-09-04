@@ -516,11 +516,11 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "곰들이 나가면서 문 잠그는 것을 깜박한 것을 보면, 그날 일이 거기서 시작된 것이구나.",
-            "아이가 세 번 다 작은 것이 맞았던 것을 보면, 좋은 것이 아니라 제 몸에 맞는 것을 고른 셈이구나.",
-            "아기 곰이 창밖을 보며 저 아이 배가 고팠나 보다고 한 것을 보면, 화를 내기보다 딱하게 여긴 것이구나.",
-            "아이가 집을 나서기 전에 제가 먹은 그릇을 개수대에 옮겨 둔 것을 보면, 그래도 마음에 걸렸던 것이구나."
-        ],
+                "곰들이 나가면서 문 잠그는 것을 깜박한 것을 보면, 그날 일이 거기서 시작된 거야.",
+                "아이가 세 번 다 작은 것이 맞았던 것을 보면, 좋은 것이 아니라 제 몸에 맞는 것을 고른 셈이지.",
+                "아기 곰이 창밖을 보며 저 아이 배가 고팠나 보다고 한 것을 보면, 화를 내기보다 딱하게 여긴 거구나.",
+                "아이가 부서진 의자를 보고 멈칫한 것을 보면, 남의 물건을 부순 것이 미안했던 거야."
+            ],
         "answer": 3
     }
 ];
@@ -1000,7 +1000,7 @@ const EN = {
                 "The bears forgot to lock the door on their way out — that is where the whole day's trouble began.",
                 "All three times the small one fitted her — she was not choosing the best but the one her size.",
                 "Baby Bear looked out of the window and said the child must have been hungry — he felt sorry rather than angry.",
-                "She carried the bowl she had emptied over to the sink before leaving — it had bothered her after all."
+                "The girl paused at the broken chair — she felt sorry for breaking something that wasn't hers."
             ],
             answer: 3
         }

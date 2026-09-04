@@ -511,11 +511,11 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "그 노래를 아는 사람이 부엌일 하는 아이뿐이었던 것을 보면, 궁궐 밖을 오간 사람이 그 아이뿐이었구나.",
-            "밤꾀꼬리가 금목걸이를 사양한 것을 보면, 임금님의 눈물로 값을 이미 받았다고 여긴 것이구나.",
-            "기계 새가 몇 번을 시켜도 한 음도 틀리지 않은 것을 보면, 사람들이 그것을 더 훌륭하다고 여긴 까닭이구나.",
-            "황제가 기계 새를 유리 상자에서 꺼내 밤꾀꼬리 곁에 나란히 놓은 것을 보면, 둘 다 아낀 것이구나."
-        ],
+                "그 노래를 아는 사람이 부엌일 하는 아이뿐이었던 것을 보면, 궁궐 밖을 오간 사람이 그 아이뿐이었구나.",
+                "밤꾀꼬리가 금목걸이를 사양한 것을 보면, 임금님의 눈물로 값을 이미 받았다고 여긴 거야.",
+                "기계 새가 몇 번을 시켜도 한 음도 틀리지 않은 것을 보면, 사람들이 그것을 더 훌륭하다고 여긴 까닭이지.",
+                "밤꾀꼬리가 발에 실을 매어도 가만히 있은 것을 보면, 궁궐에 매여 지내는 것이 싫지만은 않았던 거야."
+            ],
         "answer": 3
     }
 ];
@@ -984,7 +984,7 @@ const EN = {
                 "Only the kitchen girl knew the song — she was the one person who went in and out of the palace.",
                 "The nightingale would not take the gold chain — it counted the emperor's tears as payment enough.",
                 "The clockwork bird never missed a note however often they wound it — that was why people thought it the better bird.",
-                "The emperor took the clockwork bird out of its glass case and set it beside the nightingale — he valued them both."
+                "The nightingale let them tie a thread to its foot without a fuss — being kept at the palace did not really trouble it."
             ],
             answer: 3
         }

@@ -512,11 +512,11 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "당나귀가 헛간에서 주인의 말을 듣고 그날 밤 잠을 못 이룬 것을 보면, 이대로 있다가는 큰일 나겠다 싶었던 것이구나.",
-            "당나귀가 개에게 짖는 것이 바로 노래라고 한 것을 보면, 남은 재주에 새로 이름을 붙여 준 것이구나.",
-            "도둑이 마귀할멈이며 칼 든 자며 재판관이 있었다고 한 것을 보면, 어둠 속에서 당한 일을 제 나름대로 짐작한 것이구나.",
-            "넷이 오두막에 자리를 잡고 방을 하나씩 나누어 쓴 것을 보면, 이제 한집 식구가 된 것이구나."
-        ],
+                "당나귀가 헛간에서 주인의 말을 듣고 그날 밤 잠을 못 이룬 것을 보면, 이대로 있다가는 큰일 나겠다 싶었던 거야.",
+                "당나귀가 개에게 짖는 것이 바로 노래라고 한 것을 보면, 남은 재주에 새로 이름을 붙여 준 거지.",
+                "도둑이 마귀할멈이며 칼 든 자며 재판관이 있었다고 한 것을 보면, 어둠 속에서 당한 일을 제 나름대로 짐작한 거구나.",
+                "수탉이 나무 꼭대기에 올라 사방을 둘러본 것을 보면, 넷이 쉴 곳을 찾아 주려고 망을 봐 준 거야."
+            ],
         "answer": 3
     }
 ];
@@ -959,7 +959,7 @@ const EN = {
                 "The donkey heard his master through the barn wall and lay awake all night — he saw that staying would be the end of him.",
                 "He told the hound that barking was singing — he gave the one skill left to him a new name.",
                 "The robber spoke of a witch, a man with a knife, a judge on the roof — in the dark he had guessed at what happened to him.",
-                "The four settled into the cottage and took a room each — by then they were one household."
+                "The cock climbed to the treetop and looked all around — he was keeping watch to find the four a place to rest."
             ],
             answer: 3
         }

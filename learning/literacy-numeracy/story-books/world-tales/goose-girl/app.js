@@ -504,11 +504,11 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "냇가에서 손수건을 잃고 다리에 힘이 쭉 빠진 것을 보면, 마음을 붙들어 주던 것이 함께 떠내려간 것이구나.",
-            "공주가 문지기에게 지닌 돈을 모두 내민 것을 보면, 그 성에서 저를 아는 것이 팔라다뿐이었기 때문이구나.",
-            "임금님이 난로에게라도 털어놓아 보라고 한 것을 보면, 억지로 캐물을 일이 아님을 알아본 것이구나.",
-            "공주가 콘라트에게 그동안의 사정을 조금씩 들려준 것을 보면, 곁에 있어 준 아이에게는 마음을 연 것이구나."
-        ],
+                "냇가에서 손수건을 잃고 다리에 힘이 쭉 빠진 것을 보면, 마음을 붙들어 주던 것이 함께 떠내려간 거야.",
+                "공주가 문지기에게 지닌 돈을 모두 내민 것을 보면, 그 성에서 저를 아는 것이 팔라다뿐이었기 때문이지.",
+                "임금님이 난로에게라도 털어놓아 보라고 한 것을 보면, 억지로 캐물을 일이 아님을 알아본 거구나.",
+                "콘라트가 임금님을 찾아가 저 아이와는 더 못 다니겠다고 한 것을 보면, 거위지기의 딱한 사정을 대신 알려 주려 한 거야."
+            ],
         "answer": 3
     }
 ];
@@ -940,7 +940,7 @@ const EN = {
                 "She lost the handkerchief in the stream and the strength went out of her legs — what had been holding her up floated off with it.",
                 "She gave the gatekeeper every coin she had — Falada was the only one in that castle who knew her.",
                 "The king told her to say it to the stove instead — he saw this was not something to be forced out of her.",
-                "The princess told Conrad a little of her story bit by bit — she opened up to the boy who was there beside her."
+                "Conrad went to the king to say he could not work with her any longer — he was speaking up about the goose girl's plight on her behalf."
             ],
             answer: 3
         }

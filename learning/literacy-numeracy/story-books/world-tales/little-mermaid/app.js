@@ -522,11 +522,11 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "인어공주가 왕자를 모래밭에 눕히고 바위 뒤로 숨은 것을 보면, 사람 앞에 나설 수 없는 몸이었구나.",
-            "하필 목소리를 값으로 낸 것을 보면, 제가 구했다는 말을 할 길이 아주 막혀 버린 것이구나.",
-            "단검을 쥔 손이 천천히 내려간 것을 보면, 돌아갈 길보다 왕자가 편한 쪽을 고른 것이구나.",
-            "인어공주가 혼례 날 밤 언니들에게 잘 지내라는 말을 남긴 것을 보면, 헤어짐을 미리 준비한 것이구나."
-        ],
+                "인어공주가 왕자를 모래밭에 눕히고 바위 뒤로 숨은 것을 보면, 사람 앞에 나설 수 없는 몸이었구나.",
+                "하필 목소리를 값으로 낸 것을 보면, 제가 구했다는 말을 할 길이 아주 막혀 버린 거야.",
+                "단검을 쥔 손이 천천히 내려간 것을 보면, 돌아갈 길보다 왕자가 편한 쪽을 고른 거지.",
+                "할머니가 머리에 진주를 꽂아 주며 사람 세상에는 가지 말라고 이른 것을 보면, 손녀에게 닥칠 일을 미리 걱정한 거야."
+            ],
         "answer": 3
     }
 ];
@@ -954,7 +954,7 @@ const EN = {
                 "She laid him on the sand and hid behind a rock — she was not something that could be seen by people.",
                 "Of all things she paid with her voice — the one way of saying it was she who saved him was shut off.",
                 "The hand holding the knife came slowly down — she chose his peace over her own way home.",
-                "On the wedding night she told her sisters to take care of themselves — she had prepared for the parting."
+                "Grandmother pinned a pearl in her hair and warned her never to go up to the human world — she feared what lay ahead for her granddaughter."
             ],
             answer: 3
         }

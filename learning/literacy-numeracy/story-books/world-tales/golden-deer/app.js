@@ -533,11 +533,11 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "황금 사슴이 하루 한 마리씩 스스로 가겠다고 한 것을 보면, 쫓기다 여럿 다치는 것을 막으려 한 것이구나.",
-            "대신 갈 사슴을 물었을 때 아무도 눈을 마주치지 않은 것을 보면, 선뜻 나설 수 있는 일이 아니었구나.",
-            "제가 우두머리이기 때문이라고 한 것을 보면, 착해서가 아니라 제 몫이라 여긴 것이구나.",
-            "임금님이 사냥을 그만두기로 한 것을 보면, 처음부터 사슴을 해칠 마음이 없었던 것이구나."
-        ],
+                "황금 사슴이 하루 한 마리씩 스스로 가겠다고 한 것을 보면, 쫓기다 여럿 다치는 것을 막으려 한 거야.",
+                "대신 갈 사슴을 물었을 때 아무도 눈을 마주치지 않은 것을 보면, 선뜻 나설 수 있는 일이 아니었구나.",
+                "제가 우두머리이기 때문이라고 한 것을 보면, 착해서가 아니라 제 몫이라 여긴 거지.",
+                "임금님이 맨발로 달려 나온 것을 보면, 약속을 어긴 쪽이 저라고 여겨 미안했던 거야."
+            ],
         "answer": 3
     }
 ];
@@ -1008,7 +1008,7 @@ const EN = {
                 "The golden deer offered one a day, going of their own accord — he was stopping the many who got hurt in the chase.",
                 "When he asked who would go in her place, nobody would meet his eye — it was not a thing you could volunteer for lightly.",
                 "He said it was because he was the leader — not out of goodness but because the load was his.",
-                "The king gave up hunting — he had never had any wish to harm the deer in the first place."
+                "The king came running out barefoot — he felt he was the one who had broken the bargain, and was sorry for it."
             ],
             answer: 3
         }

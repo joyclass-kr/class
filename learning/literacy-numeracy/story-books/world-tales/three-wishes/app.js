@@ -532,11 +532,11 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "나무꾼이 정령의 말을 듣고 도끼를 내려놓은 것을 보면, 그 나무가 남의 집인 줄 알고 물러선 것이구나.",
-            "첫 소원이 소시지가 된 것을 보면, 아껴 쓰려던 것이 아니라 무심코 나온 말이었구나.",
-            "마지막 하나로 큰 집도 금덩이도 아니라 아내의 코를 고른 것을 보면, 살림보다 아내 얼굴이 먼저였던 것이구나.",
-            "아내가 코는 그냥 이대로 살겠다고 한 것을 보면, 남편을 위해 제 얼굴을 기꺼이 내놓은 것이구나."
-        ],
+                "나무꾼이 정령의 말을 듣고 도끼를 내려놓은 것을 보면, 그 나무가 남의 집인 줄 알고 물러선 거야.",
+                "첫 소원이 소시지가 된 것을 보면, 아껴 쓰려던 것이 아니라 무심코 나온 말이었구나.",
+                "마지막 하나로 큰 집도 금덩이도 아니라 아내의 코를 고른 것을 보면, 살림보다 아내 얼굴이 먼저였던 거지.",
+                "나무꾼이 칼을 가지러 간 것을 보면, 소시지를 얇게 저며 둘이 나누어 먹을 셈이었던 거야."
+            ],
         "answer": 3
     }
 ];
@@ -1020,7 +1020,7 @@ const EN = {
                 "He put down his axe when the spirit spoke — he understood the tree was somebody's home and stepped back.",
                 "The first wish went on a sausage — it was not thrift but a word said without thinking.",
                 "For the last one he chose neither a house nor gold but his wife's nose — her face came before the household.",
-                "She said she would live with the nose as it was — she was giving up her own face gladly, for her husband's sake."
+                "The woodcutter went for a knife — he meant to slice the sausage thin so the two of them could share it."
             ],
             answer: 3
         }
