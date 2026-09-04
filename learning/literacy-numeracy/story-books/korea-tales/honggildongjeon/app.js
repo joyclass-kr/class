@@ -714,7 +714,7 @@ const QUIZ = [
             "아버지를 아버지라 부르지 못한 것을 보면, 사람을 나누어 놓은 법이 집 안에서부터 아팠구나.",
             "벼슬을 받자마자 하루 만에 내놓고 떠난 것을 보면, 바란 것이 자리가 아니었구나.",
             "율도국에서 신분을 가르는 법부터 없앤 것을 보면, 끝까지 마음에 걸린 것이 그것이었구나.",
-            "길동이 백성의 재물에는 손대지 않아 임금에게 용서를 받은 것을 보면, 도적에게도 지킬 것은 있었구나."
+            "길동이 나이 들어 맏아들에게 율도국을 물려준 것을 보면, 제 핏줄만은 어쩌지 못했구나."
         ],
         answer: 3
     }
@@ -1469,7 +1469,7 @@ const EN = {
                 "He could not call his father father, so the law that sorted people hurt inside the house first.",
                 "He gave the post back the day after he got it, so a seat was never what he was after.",
                 "In Yuldo the first thing he did away with was the law that sorted people, so that was what stayed with him.",
-                "The king forgave him because his band never touched what belonged to common people, so a line drawn counts for something."
+                "In old age he handed Yuldo to his eldest son, so blood was the one thing he could not set aside."
             ],
             answer: 3
         }
