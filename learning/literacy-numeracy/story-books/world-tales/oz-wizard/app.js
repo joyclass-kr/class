@@ -531,10 +531,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "허수아비가 꾀를 내고 나무꾼이 눈물을 흘리고 사자가 구덩이를 뛰어넘은 것을 보면, 없다고 여긴 것을 이미 쓰고 있었구나.",
-            "오즈가 준 것이 겨와 비단과 물약뿐이었던 것을 보면, 없던 것이 생긴 것이 아니라 있던 것을 믿게 된 것이구나.",
-            "도로시의 은구두가 처음부터 그 힘을 지니고 있었던 것을 보면, 먼 길을 걷고 나서야 알아지는 것도 있구나.",
-            "도로시가 은구두 뒤꿈치를 세 번 마주쳐 집으로 돌아온 것을 보면, 어려운 일도 방법만 알면 한순간에 풀리는구나."
+            "허수아비와 나무꾼이 둘을 들쳐 업고 들판을 내달린 것을 보면, 짚과 양철이라 잠이 오지 않았던 것이구나.",
+            "넷이 밖에서 서로 본 것을 말하자 이야기가 딴판이었던 것을 보면, 오즈가 저마다 다르게 나타난 것이구나.",
+            "글린다가 그랬다면 좋은 친구 셋을 못 만났겠지 한 것을 보면, 먼 길이 헛걸음은 아니었다는 뜻이구나.",
+            "할아버지가 겨와 비단과 물약을 나눠 준 것을 보면, 셋에게 없던 것을 마침내 채워 준 것이구나."
         ],
         "answer": 3
     }
@@ -936,10 +936,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The Scarecrow thought of the plan, the Woodman wept, the Lion cleared the ditch — they were already using what they thought they lacked.",
-                "All Oz gave out was bran, silk and a green drink — nothing new appeared; they only came to believe what was there.",
-                "The silver shoes had held that power from the first day — some things are only learned after the long walk.",
-                "Dorothy knocked her heels together three times and was home — any hard thing comes undone in a moment once you know the trick."
+                "The Scarecrow and the Woodman hoisted the other two up and ran the field — straw and tin do not fall asleep.",
+                "Outside, no two of their accounts matched — Oz had appeared to each of them differently.",
+                "Glinda said they would never have found three such friends — the long way round was not wasted.",
+                "The old man handed out bran, silk and a green drink — he finally supplied what the three had been missing."
             ],
             answer: 3
         }

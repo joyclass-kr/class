@@ -516,10 +516,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "임금님을 답답하게 한 것이 신발값이 아니라 문이 잠겼는데 신발만 닳아 있다는 것이었음을 보면, 사람은 말이 안 되는 것을 못 견디는구나.",
-            "앞서 온 왕자들은 다 잠들었는데 병사만 그 술을 마시지 않은 것을 보면, 미리 일러 주는 한마디가 판을 가르는구나.",
-            "병사가 한 일이 따라간 것뿐이고 은잎과 금잎을 하나씩 꺾어 온 것을 보면, 말로 안 될 일에는 가져올 것이 있어야 하는구나.",
-            "열두 공주가 밤마다 함께 빠져나가 춤을 춘 것을 보면, 여럿이 뜻을 모으면 어떤 규칙도 넘을 수 있구나."
+            "병사가 잔을 입에 대고 옷깃 뒤로 흘려보낸 것을 보면, 노파가 미리 일러 준 대로 한 것이구나.",
+            "막내 공주만 자꾸 뒤를 돌아본 것을 보면, 뒤에 누가 있다는 것을 혼자만 느낀 것이구나.",
+            "병사가 은잎과 금잎을 꺾어 품에 넣은 것을 보면, 말로만 해서는 아무도 믿지 않을 줄 안 것이구나.",
+            "큰공주가 술잔을 들고 나온 것을 보면, 밤새 지켜야 하는 병사가 딱해 챙겨 준 것이구나."
         ],
         "answer": 3
     }
@@ -986,10 +986,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "What troubled the king was not the cost of shoes but that the door was locked and the shoes were worn through — people cannot bear what does not add up.",
-                "The princes before him all fell asleep; the soldier alone did not drink — one word of warning decides the whole thing.",
-                "All the soldier did was follow, and break off a silver leaf and a gold one — where words will not do, you must bring something back.",
-                "All twelve slipped out together every night to dance — with enough of you agreed, no rule can hold."
+                "He put the cup to his lips and let it run away behind his collar — he did exactly what the old woman had told him.",
+                "Only the youngest kept looking back — she was the one who felt someone was there.",
+                "He broke off a silver leaf and a gold one and pocketed them — he knew nobody would take his word for it.",
+                "The eldest princess brought out a cup of wine — she felt sorry for the old soldier who had to sit up all night."
             ],
             answer: 3
         }

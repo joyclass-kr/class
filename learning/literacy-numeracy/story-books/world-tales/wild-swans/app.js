@@ -514,10 +514,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "엘리사에게 어려운 쪽이 옷이 아니라 말을 참는 쪽이었던 것을 보면, 오해를 받고도 아니라고 못 하는 것이 가장 힘든 일이구나.",
-            "쐐기풀이 손에 닿으면 불에 덴 듯 따가운 것을 보면, 지어낸 아픔이 아니라 진짜 아픔으로 지은 옷이었구나.",
-            "마지막 한 벌 소매가 덜 되어 막내 오빠에게 한쪽 날개가 남은 것을 이야기가 고치지 않고 그대로 둔 것을 보면, 다 되지 않은 채로 끝나는 이야기도 있구나.",
-            "엘리사가 끝내 오빠 열한 명을 되돌린 것을 보면, 참고 견디면 반드시 온전한 끝이 오는구나."
+            "엘리사가 손에 물집이 잡히고 벌겋게 부었는데도 멈추지 않은 것을 보면, 쐐기풀이 정말로 불에 덴 듯 따가운 풀이구나.",
+            "오빠들이 손이 왜 그러냐 물었을 때 고개만 젓고 다시 손을 놀린 것을 보면, 오빠들도 그 뜻을 알아차린 것이구나.",
+            "막내 오빠의 한쪽 팔이 백조 날개로 남은 것을 보면, 소매 한쪽을 미처 다 엮지 못한 것이구나.",
+            "탑에 가둘 때 쐐기풀 뭉치도 함께 넣어 준 것을 보면, 하던 일을 마저 하라고 배려해 준 것이구나."
         ],
         "answer": 3
     }
@@ -955,10 +955,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The hard part for Elisa was not the shirts but the silence — being misunderstood and unable to say otherwise is the hardest thing of all.",
-                "Nettles really do burn the hands — the shirts were made out of a real pain, not an invented one.",
-                "The last sleeve was unfinished, so the youngest brother kept one wing, and the story leaves it that way — some stories end without being finished.",
-                "Elisa brought all eleven brothers back in the end — endure long enough and everything comes out whole."
+                "Her hands blistered and swelled and she did not stop — nettles really do burn like fire.",
+                "When her brothers asked about her hands she only shook her head and went back to work — they understood what it meant.",
+                "The youngest brother was left with one swan's wing — she had not finished that last sleeve.",
+                "They threw the bundle of nettles into the tower with her — it was so she could finish what she had started."
             ],
             answer: 3
         }

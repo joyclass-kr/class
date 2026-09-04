@@ -522,10 +522,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "카이가 나쁜 아이가 된 것이 아니라 거울 조각 때문에 보이는 것이 달라졌을 뿐인 것을 보면, 사람이 변하는 것은 눈부터구나.",
-            "게르다가 힘이 세지도 꾀가 많지도 않은데 다만 걸음을 멈추지 않은 것을 보면, 끝까지 가는 것도 하나의 힘이구나.",
-            "얼음 조각으로 아무리 맞춰도 안 되던 글자를 게르다의 눈물이 푼 것을 보면, 차가운 자리를 녹이는 것은 셈이 아니구나.",
-            "게르다가 끝내 카이를 찾아 데려온 것을 보면, 진심으로 바라면 무엇이든 이루어지는구나."
+            "카이가 장미를 보고 벌레 먹었다며 상자를 걷어찬 것을 보면, 거울 조각이 눈에 들어간 뒤로 세상이 밉게 보인 것이구나.",
+            "핀란드 아주머니가 줄 힘이 없다고 한 것을 보면, 게르다가 이미 그 힘을 지니고 있다고 본 것이구나.",
+            "게르다의 뜨거운 눈물이 가슴의 얼음 조각을 녹인 것을 보면, 그 자리를 푼 것이 셈이 아니었구나.",
+            "도둑 소녀가 순록의 밧줄을 풀어 준 것을 보면, 처음부터 게르다를 보내 줄 생각이었던 것이구나."
         ],
         "answer": 3
     }
@@ -943,10 +943,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "Kai did not turn wicked; a splinter of mirror changed what he saw — a person changes at the eyes first.",
-                "Gerda was neither strong nor clever; she simply did not stop walking — going all the way is a strength of its own.",
-                "The letters he could never fit together with ice were undone by Gerda's tears — what thaws a cold place is not arithmetic.",
-                "Gerda found Kai in the end and brought him home — wish for it hard enough and it comes true."
+                "Kai called the roses worm-eaten and kicked the box over — after the splinter, everything looked ugly to him.",
+                "The Finn woman said she had no strength to give her — she could see Gerda already had it.",
+                "Gerda's hot tears melted the splinter in his chest — what undid that place was not any kind of reckoning.",
+                "The robber girl untied the reindeer — she had meant to let Gerda go from the start."
             ],
             answer: 3
         }
