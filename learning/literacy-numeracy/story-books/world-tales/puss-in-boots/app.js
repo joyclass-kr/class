@@ -527,10 +527,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "고양이가 맨 처음 자루와 장화부터 달라고 한 것을 보면, 일을 벌이기 전에 연장을 챙겨야 하는구나.",
-            "토끼와 꿩을 여러 달 거르지 않고 보낸 것을 보면, 작은 것이라도 꾸준하면 이름이 남는구나.",
-            "마법사를 쥐로 변하게 한 것을 보면, 맞서 싸우기보다 다른 길을 찾는 편이 나을 때가 있구나.",
-            "막내가 고운 옷으로 갈아입자 정말 후작처럼 보인 것을 보면, 사람은 차림새를 갖추면 그만한 대접을 받는구나."
+            "고양이가 자루에 당근을 넣고 풀숲에 납작 엎드린 것을 보면, 토끼가 제 발로 들어오게 한 것이구나.",
+            "고양이가 주인의 옷을 풀숲 깊이 밀어 넣은 것을 보면, 도둑이 가져갔다고 할 셈이었구나.",
+            "일꾼들이 카라바가 누구냐고 물은 것을 보면, 그 이름을 그때 처음 들은 것이구나.",
+            "마법사가 쥐로까지 변해 보인 것을 보면, 고양이를 믿고 제 재주를 다 보여 준 것이구나."
         ],
         "answer": 3
     }
@@ -931,10 +931,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                'He asked for a sack and boots before anything else — so you get your tools together before you start.',
-                'Rabbits and pheasants went to the king for months without a gap — so small things done steadily make a name.',
-                'The sorcerer was beaten by being turned into a mouse — so there are times when going round beats going at it.',
-                "Once he was in fine clothes he really did look like a marquis — dress the part and you are treated as the part."
+                "The cat put carrots in the sack and lay flat in the grass — he let the rabbit walk in on its own.",
+                "He pushed his master's clothes deep into the bushes — he meant to say thieves had taken them.",
+                "The field workers asked who Carabas was — that was the first they had heard of the name.",
+                "The sorcerer even turned himself into a mouse — he trusted the cat and showed him everything he could do."
             ],
             answer: 3
         }

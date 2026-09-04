@@ -534,10 +534,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "여우가 쓰는 것이 힘이 아니라 말이었던 것을 보면, 힘보다 말이 무서울 때가 있구나.",
-            "임금님이 넘어간 까닭이 여우가 잘 속여서가 아니라 임금님이 보물을 바랐기 때문인 것을 보면, 속는 자리는 바라는 자리구나.",
-            "짐승들이 꿀이든 쥐든 제가 바란 것을 따라갔다가 다친 것을 보면, 미끼는 늘 내가 좋아하는 모양을 하고 있구나.",
-            "짐승들이 재판정에 모여 저마다 여우를 일러바친 것을 보면, 여럿이 한목소리를 내면 잘못은 바로잡히는구나."
+            "곰이 재판이고 뭐고 다 잊고 나무 틈에 머리부터 들이민 것을 보면, 꿀에 마음이 먼저 간 것이구나.",
+            "사흘 굶은 고양이가 헛간으로 뛰어든 것을 보면, 저마다 바라던 것을 따라갔다가 그리된 것이구나.",
+            "임금님이 보물이라는 말에 늑대의 말을 잊은 것을 보면, 속는 자리가 곧 바라는 자리였구나.",
+            "오소리가 여우를 데리고 온 것을 보면, 친척이라 여우를 감싸 주려 한 것이구나."
         ],
         "answer": 3
     }
@@ -995,10 +995,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The fox never used force, only words — there are times when talk is more dangerous than strength.",
-                "The king was taken in not because the fox lied well but because the king wanted treasure — you are fooled where you are wishing.",
-                "Each animal followed the honey or the mice it wanted and got hurt for it — the bait is always shaped like what you like.",
-                "The animals gathered at court and each laid a charge against the fox — when enough of them speak up together, a wrong gets put right."
+                "The bear forgot all about the trial and put his head into the split tree — the honey came first.",
+                "The cat, three days hungry, dived into the barn — each of them followed what he wanted and got caught by it.",
+                "At the word 'treasure' the king forgot the wolf's charge — you are fooled exactly where you are wishing.",
+                "The badger brought the fox in — being a relative, he was shielding him."
             ],
             answer: 3
         }

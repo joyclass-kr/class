@@ -523,10 +523,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "밀밭을 지키라 하니 이반이 정말로 밤을 새운 것을 보면, 시키는 대로 한 사람이 남들이 못 본 것을 보기도 하는구나.",
-            "말 셋 가운데 가장 볼품없는 조랑말이 늘 먼저 말려 준 것을 보면, 볼품과 쓸모는 다른 것이구나.",
-            "깃털을 주운 것이 걱정거리를 불렀는데 그 걱정거리가 궁궐로 데려가기도 한 것을 보면, 무엇이 화가 되고 복이 될지는 나중에야 갈리는구나.",
-            "이반이 형들처럼 꾀부리지 않고 밀밭에서 밤을 새운 것을 보면, 성실하기만 하면 어려운 일도 저절로 풀리는구나."
+            "이반이 밀밭 한가운데 앉아 밤을 새운 것을 보면, 형들과 달리 시킨 대로 한 것이구나.",
+            "조랑말이 깃털을 주우면 걱정거리가 생긴다고 한 것을 보면, 이반이 그 말을 듣지 않은 것이구나.",
+            "조랑말이 가마솥 물을 식혀 준 것을 보면, 이반이 젊어진 것은 물 때문이 아니었구나.",
+            "임금님이 이반더러 먼저 들어가 보라고 한 것을 보면, 어린 사람을 앞세워 지켜 주려 한 것이구나."
         ],
         "answer": 3
     }
@@ -986,10 +986,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "Told to guard the wheat, Ivan actually stayed awake all night — the one who simply does as told may see what the others missed.",
-                "Of the three horses the plainest little one was the one that kept warning him — looks and use are two different things.",
-                "Picking up the feather brought him trouble, and the trouble carried him to the palace — which is the curse and which the blessing is sorted out later.",
-                "Ivan did not shirk like his brothers but sat up all night in the wheat — be diligent and the hard things sort themselves out."
+                "Ivan sat out in the middle of the wheat all night — unlike his brothers he actually did as he was told.",
+                "The pony warned him that picking up the feather would bring trouble — Ivan did not listen.",
+                "The pony cooled the water in the cauldron — it was not the water that made Ivan young.",
+                "The king told Ivan to go in first — he was putting the young man ahead to keep him safe."
             ],
             answer: 3
         }
