@@ -519,10 +519,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "가진 것이 더 적었는데도 막내가 노인과 빵을 나눈 것을 보면, 나누는 것은 넉넉해서 하는 일이 아니구나.",
-            "거위에 붙은 사람들이 저마다 하나씩만 손을 댔는데 줄줄이 붙어 버린 것을 보면, 남이 붙든 것을 잡아당기면 나도 붙는구나.",
-            "웃기려 한 사람이 아무도 없었는데 공주가 웃은 것을 보면, 애써 만든 것보다 저절로 된 것이 사람을 움직이는구나.",
-            "공주가 웃어서 막내가 혼인하게 된 것을 보면, 사람을 웃기는 재주가 있어야 일이 풀리는구나."
+            "막내가 딱딱한 빵과 신 맥주뿐인데도 노인에게 자리를 내어 준 것을 보면, 나누는 데에 넉넉함이 필요한 것은 아니었구나.",
+            "세 자매가 저마다 하나씩만 손을 댔는데 줄줄이 붙어 버린 것을 보면, 남이 붙든 것을 잡아당기다 저도 붙은 것이구나.",
+            "막내가 뒤에 무엇이 딸려 오는지도 모르고 걸어간 것을 보면, 공주를 웃기려고 한 일이 아니었구나.",
+            "막내가 거위를 숲으로 돌려보낸 것을 보면, 상으로 받은 것을 형들에게 나눠 주려 한 것이구나."
         ],
         "answer": 3
     }
@@ -982,10 +982,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The youngest, who had least, shared his bread with the old man — sharing is not something you do because you have plenty.",
-                "Each of them touched the goose only once, yet all of them stuck fast — pull at what someone else is stuck to and you are stuck too.",
-                "Nobody was trying to be funny, and that is when the princess laughed — what happens by itself moves people more than what is worked at.",
-                "The princess laughed and so the youngest son was married — you need a gift for making people laugh to get on."
+                "With only hard bread and sour beer he still made room for the old man — sharing does not wait until you have plenty.",
+                "Each sister touched the goose just once and all three were stuck fast — they were caught pulling at what someone else was caught on.",
+                "He walked on without knowing what was trailing behind him — he was not trying to make anybody laugh.",
+                "He set the goose free in the wood — he meant to share what he had been given with his brothers."
             ],
             answer: 3
         }

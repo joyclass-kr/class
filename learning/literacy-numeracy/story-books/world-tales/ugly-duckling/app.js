@@ -483,10 +483,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "오리 무리에서 재는 자로 쟀으니 늘 모자랄 수밖에 없었던 것을 보면, 자가 틀리면 아무리 재도 모자라구나.",
-            "엄마 오리도 처음에는 감싸 주다가 견디지 못하고 등을 돌린 것을 보면, 편들어 주던 사람도 지치는 때가 있구나.",
-            "겨울 동안 혼자였던 그 시간에 몸이 자란 것을 보면, 아무도 보지 않는 데서 일어나는 일도 있구나.",
-            "아기 오리가 온갖 설움을 견뎌 낸 끝에 백조가 된 것을 보면, 참고 애쓰면 누구든 훌륭해질 수 있구나."
+            "엄마 오리가 남은 큰 알을 하루 더 품은 것을 보면, 늦게 나오는 아이도 제 새끼로 여긴 것이구나.",
+            "하얀 새 떼를 보고 처음 들어 보는 제 목소리가 나온 것을 보면, 이름도 모르면서 마음이 먼저 끌린 것이구나.",
+            "겨울 내내 갈대밭에서 마른 풀뿌리를 씹으며 버틴 것을 보면, 아무도 안 보는 그 시간에 날개가 자란 것이구나.",
+            "아기 오리가 온갖 설움을 견뎌 낸 끝에 백조가 된 것을 보면, 참고 애쓴 보람이 있었던 것이구나."
         ],
         "answer": 3
     }
@@ -851,10 +851,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "He was measured by a duck's ruler, so of course he always came up short — when the ruler is wrong, no amount of measuring helps.",
-                "Even his mother stood up for him at first and then turned away — the one who defends you can wear out.",
-                "It was through that winter alone that he grew — some things happen where nobody is watching.",
-                "He bore all that unkindness and became a swan at the end of it — bear it and work at it and anyone can turn out fine."
+                "The mother duck sat on the last big egg one more day — the late one was still hers.",
+                "At the sight of the white birds a sound came out of him he had never heard before — he was drawn to them before he knew their name.",
+                "All winter he chewed dry roots in the reeds and held on — his wings grew in that time, where nobody was watching.",
+                "He bore all that unkindness and became a swan at the end — the enduring and the trying had paid off."
             ],
             answer: 3
         }
