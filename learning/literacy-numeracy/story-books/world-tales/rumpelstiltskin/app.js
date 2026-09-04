@@ -526,10 +526,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "모든 일이 딸이 짚으로 금실을 잣는다는 아버지의 자랑에서 비롯된 것을 보면, 남을 높이려던 한마디가 그 사람을 몰아넣기도 하는구나.",
-            "임금님 앞에서 아버지 말이 거짓이라고 할 수 없어 딸이 그 말을 되돌리지 못한 것을 보면, 남이 한 말에 갇히는 일도 있구나.",
-            "왕비를 살린 것이 꾀가 아니라 심부름꾼이 숲에서 우연히 들은 노래였음을 보면, 풀리는 자리는 뜻밖의 곳이구나.",
-            "왕비가 사흘 만에 이름을 알아맞혀 아이를 지킨 것을 보면, 끝까지 포기하지 않으면 답은 나오는구나."
+            "방앗간 주인이 큰 인물 앞에 서니 입이 근질거렸다고 한 것을 보면, 자랑하고 싶은 마음이 앞섰던 것이구나.",
+            "임금님이 금실을 보고도 고마워하지 않고 더 넓은 방으로 데려간 것을 보면, 욕심이 먼저 난 것이구나.",
+            "작은 남자가 금붙이는 아무 소용이 없다고 한 것을 보면, 처음부터 아이를 노린 것이구나.",
+            "작은 남자가 사흘 말미를 준 것을 보면, 우는 왕비가 딱해 기회를 주려 한 것이구나."
         ],
         "answer": 3
     }
@@ -990,10 +990,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "It all began with a father boasting that his daughter could spin straw into gold — a word meant to raise someone can corner them.",
-                "She could not stand before the king and call her father a liar — you can be shut inside a sentence somebody else said.",
-                "What saved the queen was not cleverness but a servant who happened to hear a song in the wood — the way out turns up where you were not looking.",
-                "The queen guessed the name inside three days and kept her child — never give up and the answer comes."
+                "The miller said his mouth itched in front of so great a man — the wish to boast came first.",
+                "The king saw the gold and, instead of thanking her, took her to a larger room — greed came first.",
+                "The little man said gold was no use to him — the child was what he had been after all along.",
+                "The little man gave her three days — he felt sorry for the weeping queen and wanted to give her a chance."
             ],
             answer: 3
         }

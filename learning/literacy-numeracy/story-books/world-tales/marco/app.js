@@ -510,10 +510,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "부에노스아이레스에서도 로사리오에서도 한발씩 늦었지만 그때마다 다시 길을 물어 걸은 것을 보면, 늦었다고 끝나는 것은 아니구나.",
-            "어머니를 살린 것이 약이 아니라 아들이 왔다는 것이었음을 보면, 마음을 놓아 버린 사람에게 필요한 것은 따로 있구나.",
-            "그 시절 편지가 배로 가서 몇 달이 걸렸기에 소식이 끊긴 것을 보면, 소식이 없는 것과 일이 잘못된 것은 다른 것이구나.",
-            "마르코가 가는 곳마다 한발씩 늦은 것을 보면, 아무리 서둘러도 안 될 일은 안 되는구나."
+            "로사리오에서 주저앉아 그만 돌아갈까 생각한 것을 보면, 마르코에게도 그만두고 싶은 때가 있었던 것이구나.",
+            "가는 곳마다 사람들이 무엇이든 나눠 준 것을 보면, 저마다 두고 온 가족이 있었기 때문이구나.",
+            "어머니가 마르코를 보고서야 마음을 고쳐먹은 것을 보면, 앓던 몸보다 놓아 버린 마음이 먼저였구나.",
+            "마르코가 부에노스아이레스의 그 집으로 곧장 찾아간 것을 보면, 어머니가 거기 계시다는 소식을 듣고 간 것이구나."
         ],
         "answer": 3
     }
@@ -980,10 +980,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "At Buenos Aires and again at Rosario he arrived just too late, and each time he asked the road again — being late is not the same as being finished.",
-                "What saved his mother was not medicine but that her son had come — someone who has given up needs a different thing.",
-                "Letters went by ship in those days and took months, which is why word stopped — no news is not the same as bad news.",
-                "Marco arrived just too late at every place — hurry as you like, what will not work will not work."
+                "At Rosario he sat down and thought of turning back — even Marco had a moment when he wanted to stop.",
+                "Everywhere he went people shared what they had — each of them had left family behind too.",
+                "His mother took heart only once she saw him — what was killing her was not the illness but having given up.",
+                "He went straight to that address in Buenos Aires — he had word that his mother was there."
             ],
             answer: 3
         }
