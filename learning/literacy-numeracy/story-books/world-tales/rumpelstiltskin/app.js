@@ -539,8 +539,11 @@ const QUIZ = [
    자취는 보기의 원래 번호로 적어 두므로, 다시 그릴 때 자리가 바뀌어도 따라간다. */
 const QUIZ_WRONG = {};   // 문제 번호 → 잘못 고른 보기의 원래 번호들
 const QUIZ_DONE = {};    // 문제 번호 → 맞혔는가
+const QUIZ_ORDER = {};   // 문제 번호 → 보기를 늘어놓을 차례
 
-/* 보기는 쪽을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+/* 보기 차례는 책을 여는 순간 한 번만 정한다. 답의 자리를 외워 버리면 문제가 아니게 되니 섞되,
+   쪽을 옮길 때마다 다시 섞으면 방금 고른 자리가 눈앞에서 움직여 어지럽다.
+   책을 나갔다 들어오면 처음부터 다시 정해진다.
    섞는 것은 그리는 차례뿐이고, 채점은 data-choice에 담긴 원래 번호로 한다. */
 function shuffledOrder(n) {
     const a = [...Array(n).keys()];
@@ -555,7 +558,8 @@ function quizPage() {
     const items = QZ().map((item, i) => {
         const wrong = QUIZ_WRONG[i] || [];
         const solved = !!QUIZ_DONE[i];
-        const btns = shuffledOrder(item.choices.length).map(ci => {
+        const order = QUIZ_ORDER[i] || (QUIZ_ORDER[i] = shuffledOrder(item.choices.length));
+        const btns = order.map(ci => {
             const mark = solved && ci === item.answer ? ' correct' : (wrong.includes(ci) ? ' incorrect' : '');
             return `<button type="button" class="quiz-choice${mark}" data-choice="${ci}">${item.choices[ci]}</button>`;
         }).join('');
