@@ -285,15 +285,40 @@ const QUIZ = [
     { q: "호랑이는 그 뒤로 무엇을 했나요?", choices: ["밤마다 먹을 것을 놓고 갔다", "새 집을 지어다 주었다", "날마다 나무를 해다 주었다"], answer: 0 },
     { q: "어머니는 그것을 무엇이라고 여겼나요?", choices: ["산신령이 준 것이라고", "큰아들이 보낸 것이라고", "이웃이 두고 간 것이라고"], answer: 1 },
     { q: "나무꾼이 끝내 호랑이에게 한 말은 무엇인가요?", choices: ["사실은 거짓말이었다고", "이제는 오지 말아 달라고", "함께 내려가 살자고"], answer: 0 },
-    { q: "호랑이의 대답은 무엇이었나요?", choices: ["어머니께 말하지 말라고", "제 꼴이 부끄럽다고", "진작 알고 있었다고"], answer: 2 }
+    { q: "호랑이의 대답은 무엇이었나요?", choices: ["어머니께 말하지 말라고", "제 꼴이 부끄럽다고", "진작 알고 있었다고"], answer: 2 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "살자고 뱉은 거짓말을 십 년이나 지고 간 것을 보면, 한 마디가 이렇게 무거워지는구나.",
+            "어머니가 밤마다 밥 한 그릇을 내놓은 것을 보면, 알면서 모른 척해 준 것이었구나.",
+            "호랑이가 진작 알고 있었다고 한 것을 보면, 속은 것이 아니라 그 이름이 좋았던 것이구나.",
+            "형들이 저를 묶어 두고 왔는데도 윗자리에 앉힌 것을 보면, 갚기보다 덮어 주기가 더 어렵구나."
+        ],
+        answer: 3
+    }
 ];
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QUIZ.map(q => shuffledOrder(q.choices.length));
 
 function quizPage() {
     const items = QUIZ.map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`).join('');
     return `

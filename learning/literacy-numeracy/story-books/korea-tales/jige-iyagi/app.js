@@ -286,15 +286,40 @@ const QUIZ = [
     { q: "아버지가 가자고 하자 아이는 어떻게 했나요?", choices: ["손을 빼고 되돌아 뛰어갔다", "말없이 손을 잡았다", "대문 기둥을 붙들었다"], answer: 0 },
     { q: "아이의 말을 들은 아들은 어떻게 했나요?", choices: ["지게를 빼앗아 던졌다", "아이의 손을 잡고 내려갔다", "두 손으로 얼굴을 감쌌다"], answer: 2 },
     { q: "산으로 되돌아 뛰어간 아들은 무엇을 했나요?", choices: ["밥을 내려놓고 왔다", "지게를 두고 왔다", "무릎을 꿇고 빌었다"], answer: 2 },
-    { q: "이야기를 들은 사람들은 산에서 무엇을 하고 내려왔나요?", choices: ["부모를 다시 모시고", "지게만 지고", "밥과 물만 두고"], answer: 0 }
+    { q: "이야기를 들은 사람들은 산에서 무엇을 하고 내려왔나요?", choices: ["부모를 다시 모시고", "지게만 지고", "밥과 물만 두고"], answer: 0 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "일곱 살 아이가 지게를 도로 가져온 것을 보면, 아이는 들은 대로가 아니라 본 대로 자라는구나.",
+            "온 고장에 그런 말이 떠돌았다는 것을 보면, 한 집의 일이 아니라 그 시절의 일이었구나.",
+            "이야기를 들은 사람들이 저마다 산으로 올라간 것을 보면, 한 사람이 돌아서면 여럿이 따라 돌아서는구나.",
+            "형과 아우가 밤마다 볏단을 옮기다 달빛 아래에서 마주친 것을 보면, 말없이 오간 마음이 있었구나."
+        ],
+        answer: 3
+    }
 ];
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QUIZ.map(q => shuffledOrder(q.choices.length));
 
 function quizPage() {
     const items = QUIZ.map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`).join('');
     return `

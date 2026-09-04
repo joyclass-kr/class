@@ -669,7 +669,18 @@ const QUIZ = [
     { q: "놀부의 박에서 마지막에 나온 것은 무엇입니까?", choices: ["갑옷을 입은 장수들", "커다란 구렁이 한 마리", "끝없이 쏟아진 흙탕물"], answer: 0 },
     { q: "박이 하나씩 갈라질 때마다 놀부는 무엇을 했습니까?", choices: ["톱을 손에서 놓았다", "구경꾼들을 불러 모았다", "곳간 문을 열어야 했다"], answer: 2 },
     { q: "흥부는 찾아온 형을 어떻게 대했습니까?", choices: ["버선발로 뛰어나와 맞았다", "곳간 열쇠를 내주었다", "새 집을 지어 주었다"], answer: 0 },
-    { q: "놀부는 마지막에 박을 타서 무엇을 만들었습니까?", choices: ["멍석", "비 가리개", "바가지"], answer: 2 }
+    { q: "놀부는 마지막에 박을 타서 무엇을 만들었습니까?", choices: ["멍석", "비 가리개", "바가지"], answer: 2 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "놀부가 제비를 기다리다 남의 집 제비집까지 헌 것을 보면, 욕심은 남의 것부터 부수는구나.",
+            "흥부가 형수의 주걱 이야기만은 끝내 하지 않은 것을 보면, 말하지 않는 것도 지키는 방법이구나.",
+            "놀부가 새끼 제비의 다리를 부러뜨리고 도로 싸매 준 것을 보면, 시늉만으로는 안 되는 일이 있구나.",
+            "토끼가 간을 바위틈에 두고 왔다고 한 것을 보면, 힘 앞에서는 말이 무기가 되는구나."
+        ],
+        answer: 3
+    }
 ];
 
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
@@ -679,6 +690,20 @@ const QUIZ_GROUPS = [{ from: 0 }];
 
 // 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
 const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QZ().map(q => shuffledOrder(q.choices.length));
 
 function quizPage(part) {
     const group = { from: QUIZ_GROUPS[part].from, items: QZ() };
@@ -693,8 +718,8 @@ function quizPage(part) {
         return `
         <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`;
     }).join('');
@@ -1053,7 +1078,18 @@ const EN = {
         { q: "What came out of Nolbu's last gourd?", choices: ["Soldiers in armour", "A huge snake", "Muddy water"], answer: 0 },
         { q: "What did Nolbu have to do each time a gourd split?", choices: ["Put down the saw", "Call the onlookers together", "Open the storehouse door"], answer: 2 },
         { q: "How did Heungbu treat the brother who came to him?", choices: ["He took him in and laid a meal", "He shut the gate and sent him away", "He gave him half of everything"], answer: 0 },
-        { q: "What did Nolbu make out of the gourds at the end?", choices: ["A mat", "A straw cape", "Water dippers"], answer: 2 }
+        { q: "What did Nolbu make out of the gourds at the end?", choices: ["A mat", "A straw cape", "Water dippers"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "Nolbu waited for swallows and then pulled down other people's nests, so greed breaks what belongs to others first.",
+                "Heungbu never once mentioned the rice paddle, so keeping quiet can be a way of keeping something safe.",
+                "Nolbu broke the chick's leg and then bound it up again, so going through the motions is not the same thing.",
+                "The rabbit said his liver was left in a crack of rock, so words are a weapon when strength is not."
+            ],
+            answer: 3
+        }
     ],
     /* 단어장 — 그림책은 펼침면마다 묶지만, 소설은 장마다 묶는다.
        쪽은 재어서 나누므로 미리 알 수 없기 때문이다.

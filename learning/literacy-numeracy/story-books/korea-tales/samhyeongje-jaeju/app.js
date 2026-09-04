@@ -288,15 +288,40 @@ const QUIZ = [
     { q: "셋째가 익혀 온 재주는 무엇인가요?", choices: ["떨어지는 것 받기", "무거운 것 들기", "오래 숨 참기"], answer: 0 },
     { q: "삼형제가 구하러 나선 사람은 누구인가요?", choices: ["길을 잃은 나그네", "물에 빠진 어부", "이무기가 데려간 아이"], answer: 2 },
     { q: "원님은 삼형제에게 상을 어떻게 내렸나요?", choices: ["셋째에게만 주었다", "셋에게 똑같이 주었다", "첫째에게만 주었다"], answer: 1 },
-    { q: "누구의 공이 크냐는 물음에 삼형제는 뭐라고 했나요?", choices: ["첫째가 가장 훌륭하다고", "둘째가 가장 훌륭하다고", "셋 다 없으면 안 된다고"], answer: 2 }
+    { q: "누구의 공이 크냐는 물음에 삼형제는 뭐라고 했나요?", choices: ["첫째가 가장 훌륭하다고", "둘째가 가장 훌륭하다고", "셋 다 없으면 안 된다고"], answer: 2 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "받는 재주라며 웃음을 산 셋째가 정작 아이를 받은 것을 보면, 쓸데없어 보이는 재주가 따로 없구나.",
+            "활을 쏘려는 형을 첫째가 붙잡은 것을 보면, 맞히는 것보다 그다음을 보는 것이 어렵구나.",
+            "셋이 상을 똑같이 받겠다고 한 것을 보면, 누구 하나 빠져도 안 되는 일이었구나.",
+            "쥐 부부가 해와 구름과 바람을 다 거쳐 제자리로 돌아온 것을 보면, 먼 데서 찾을 것이 아니었구나."
+        ],
+        answer: 3
+    }
 ];
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QUIZ.map(q => shuffledOrder(q.choices.length));
 
 function quizPage() {
     const items = QUIZ.map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`).join('');
     return `

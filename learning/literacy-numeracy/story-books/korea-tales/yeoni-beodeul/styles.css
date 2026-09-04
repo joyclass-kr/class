@@ -490,6 +490,18 @@ body {
     gap: 8px;
 }
 
+.quiz-choices-stack {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.quiz-choices-stack .quiz-choice {
+    width: 100%;
+    text-align: left;
+    border-radius: 12px;
+    line-height: 1.5;
+}
+
 .quiz-choice {
     padding: 8px 14px;
     border: 1px solid var(--parchment-shade);

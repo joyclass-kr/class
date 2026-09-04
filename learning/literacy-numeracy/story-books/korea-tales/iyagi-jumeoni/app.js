@@ -286,15 +286,40 @@ const QUIZ = [
     { q: "이야기들의 말을 엿들은 사람은 누구인가요?", choices: ["늙은 하인", "도련님 어머니", "이웃집 아이"], answer: 0 },
     { q: "하인은 첫 번째로 무엇을 막았나요?", choices: ["우물물을 마시는 것", "딸기를 따 오는 것", "신방에 들어가는 것"], answer: 0 },
     { q: "하인이 신방에서 몽둥이로 건드린 것은 무엇인가요?", choices: ["벽에 걸린 주머니", "차려 둔 잔칫상", "부풀어 있던 이불"], answer: 2 },
-    { q: "그 뒤로 도련님은 어떻게 했나요?", choices: ["주머니를 새로 샀다", "이야기를 들려주었다", "이야기를 안 들었다"], answer: 1 }
+    { q: "그 뒤로 도련님은 어떻게 했나요?", choices: ["주머니를 새로 샀다", "이야기를 들려주었다", "이야기를 안 들었다"], answer: 1 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "들은 이야기를 하나도 안 내주고 주머니에 가둔 것을 보면, 나누지 않은 것은 결국 상하는구나.",
+            "이야기들이 화가 나서 앙갚음을 꾸민 것을 보면, 옛사람들은 이야기를 살아 있는 것으로 여겼구나.",
+            "늙은 하인이 아무 설명도 못 하고 매를 각오한 것을 보면, 옳은 일을 하고도 오해를 사는 때가 있구나.",
+            "엄마 말을 늘 거꾸로만 하던 아이가 마지막에 그대로 따른 것을 보면, 뉘우침은 늘 늦게 오는구나."
+        ],
+        answer: 3
+    }
 ];
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QUIZ.map(q => shuffledOrder(q.choices.length));
 
 function quizPage() {
     const items = QUIZ.map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`).join('');
     return `

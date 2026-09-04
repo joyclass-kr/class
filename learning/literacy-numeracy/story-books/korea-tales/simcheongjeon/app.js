@@ -722,7 +722,18 @@ const QUIZ = [
     { q: "왕후가 된 심청이 연 것은 무엇입니까?", choices: ["맹인 잔치", "글재주 겨루는 자리", "나라의 큰 제사"], answer: 0 },
     { q: "심 봉사가 잔치에 늦은 까닭은 무엇입니까?", choices: ["가는 길을 잃어버려서", "몸이 아파 앓아누워서", "노잣돈을 몽땅 잃어서"], answer: 2 },
     { q: "심 봉사는 언제 눈을 떴습니까?", choices: ["잔치 음식을 먹은 뒤", "딸을 알아본 순간", "왕후가 약을 준 뒤"], answer: 1 },
-    { q: "심 봉사가 앞을 보게 되자 무슨 일이 벌어졌습니까?", choices: ["하늘에서 꽃비가 쏟아져 내렸다", "인당수 물살이 잔잔해졌다", "잔치에 온 이들이 다 눈을 떴다"], answer: 2 }
+    { q: "심 봉사가 앞을 보게 되자 무슨 일이 벌어졌습니까?", choices: ["하늘에서 꽃비가 쏟아져 내렸다", "인당수 물살이 잔잔해졌다", "잔치에 온 이들이 다 눈을 떴다"], answer: 2 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "장 승상 댁 부인이 대신 쌀을 내주겠다는데도 마다한 것을 보면, 값보다 제 손으로 드리는 것을 앞세웠구나.",
+            "뱃사람들이 사람을 사서 바다에 바친 것을 보면, 그때는 목숨보다 뱃길이 앞서기도 했구나.",
+            "쌀로 뜨는 눈이 아니라 네가 가야 뜨는 눈이라고 한 것을 보면, 삼백 석이 답이 아니었구나.",
+            "박에서 나온 사람들이 곳간 문을 열게 한 것을 보면, 쌓아 둔 것에는 갚을 몫이 따라오는구나."
+        ],
+        answer: 3
+    }
 ];
 
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
@@ -732,6 +743,20 @@ const QUIZ_GROUPS = [{ from: 0 }];
 
 // 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
 const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QZ().map(q => shuffledOrder(q.choices.length));
 
 function quizPage(part) {
     const group = { from: QUIZ_GROUPS[part].from, items: QZ() };
@@ -746,8 +771,8 @@ function quizPage(part) {
         return `
         <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`;
     }).join('');
@@ -1386,7 +1411,18 @@ const EN = {
         { q: "What did Simcheong hold once she was queen?", choices: ["A feast for the blind", "A contest of writing", "A great state sacrifice"], answer: 0 },
         { q: "Why was Sim Bongsa late for the feast?", choices: ["He lost his way", "He fell ill and had to lie up", "He lost every coin he had for the road"], answer: 2 },
         { q: "When did Sim Bongsa's eyes open?", choices: ["After he ate the feast food", "The moment he knew his daughter", "After the queen gave him medicine"], answer: 1 },
-        { q: "What happened when Sim Bongsa's eyes opened?", choices: ["Flowers rained down out of the sky", "The water of Indangsu went smooth", "Everyone who had come to the feast opened their eyes too"], answer: 2 }
+        { q: "What happened when Sim Bongsa's eyes opened?", choices: ["Flowers rained down out of the sky", "The water of Indangsu went smooth", "Everyone who had come to the feast opened their eyes too"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "She refused the lady's three hundred sacks, so she put giving it with her own hands above the price.",
+                "The sailors bought a person for the sea, so at that time a passage could come before a life.",
+                "Her mother said rice would not open those eyes, only her going, so three hundred sacks was never the answer.",
+                "People with ledgers made him open his storehouse, so what you pile up brings its own bill."
+            ],
+            answer: 3
+        }
     ],
     afterword: {
         title: 'After Reading',

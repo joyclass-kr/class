@@ -19,7 +19,8 @@ const only = process.argv.slice(2);
 
 /* 흔한 토씨·맺음말. 이것만 겹치는 것은 흘림이 아니다. */
 const COMMON = ['하나', '무엇', '누구', '어디', '어떻', '무슨', '까닭', '이야기', '사람', '하는', '했나', '되었', '가요', '나요',
-  '라고', '이라', '으로', '하고', '에서', '에게', '였다', '했다', '이다', '리는', '이가', '지요', '어요', '인가', '리고', '으며'];
+  '라고', '이라', '으로', '하고', '에서', '에게', '였다', '했다', '이다', '리는', '이가', '지요', '어요', '인가', '리고', '으며',
+  '것은', '것이', '것을', '보면', '으면', '구나', '지만', '아서', '어서'];
 
 /* 두 글줄이 함께 가진 두 글자 이상의 토막을 모은다. */
 function shared(a, b) {
@@ -66,8 +67,10 @@ for (const b of books) {
     if (others.every(o => has(o, BAD)) && !has(ans, BAD)) why.push('나머지가 다 나쁜 짓');
     if (others.every(o => has(o, GOOD)) && !has(ans, GOOD)) why.push('나머지가 다 착한 짓');
 
+    /* 「읽고 난 반응」은 보기가 다 한 문장이라 몇 자 차이는 표가 안 난다. */
     const maxOther = Math.max(...others.map(o => o.length));
-    if (ans.length >= maxOther + 5) why.push('긴 답 · ' + ans.length + '자 vs ' + maxOther + '자');
+    const tooLong = q.wide ? ans.length > maxOther * 1.25 : ans.length >= maxOther + 5;
+    if (tooLong) why.push('긴 답 · ' + ans.length + '자 vs ' + maxOther + '자');
 
     if (why.length) hits.push('  ' + (idx + 1) + '. ' + q.q + '\n     정답: ' + ans + '\n     [' + why.join(' / ') + ']');
   });

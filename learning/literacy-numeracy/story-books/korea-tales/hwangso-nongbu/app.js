@@ -253,15 +253,40 @@ const QUIZ = [
     { q: "탈을 쓰자 농부의 손은 어떻게 되었나요?", choices: ["발굽이 되었다", "털이 돋았다", "뿔이 돋았다"], answer: 0 },
     { q: "노인이 소를 산 사람에게 당부한 것은 무엇인가요?", choices: ["매를 들지 말라", "밤에 재우지 말라", "무를 먹이지 말라"], answer: 2 },
     { q: "무를 먹은 황소의 몸은 어떻게 되었나요?", choices: ["발굽이 쩍쩍 갈라졌다", "누런 털이 돋아났다", "누런 털이 다 떨어졌다"], answer: 2 },
-    { q: "그는 게으름 피우는 사람에게 뭐라고 했나요?", choices: ["그러다 소 된다고", "내일 하라고", "장에 가 보라고"], answer: 0 }
+    { q: "그는 게으름 피우는 사람에게 뭐라고 했나요?", choices: ["그러다 소 된다고", "내일 하라고", "장에 가 보라고"], answer: 0 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "일 안 하고 사는 법을 찾다가 소가 된 것을 보면, 편하려던 것이 제일 힘든 길이 되었구나.",
+            "억울하다고 아무리 외쳐도 음메 소리만 난 것을 보면, 말이 안 통하는 것이 이렇게 답답한 일이구나.",
+            "소를 부리는 대목이 이렇게 자세한 것을 보면, 그때 소가 사람 몫만큼 일하던 짐승이었구나.",
+            "코가 구름을 뚫고 올라가는데도 더 부치라고 조른 것을 보면, 재미에 빠지면 앞뒤를 못 보는구나."
+        ],
+        answer: 3
+    }
 ];
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QUIZ.map(q => shuffledOrder(q.choices.length));
 
 function quizPage() {
     const items = QUIZ.map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`).join('');
     return `

@@ -667,7 +667,18 @@ const QUIZ = [
     { q: "연못가에서 피어난 것은 무엇입니까?", choices: ["붉은 연꽃 한 송이", "하얀 매화 한 그루", "노란 국화 한 무더기"], answer: 0 },
     { q: "할멈이 감사 앞에 내놓은 것은 무엇입니까?", choices: ["콩쥐가 쓰던 나무 빗", "연못에서 건진 꽃신", "짝이 안 맞는 젓가락"], answer: 2 },
     { q: "달아나려던 팥쥐는 어떻게 되었습니까?", choices: ["담을 넘다 굴러떨어졌다", "마당에서 무릎을 꿇었다", "곧장 달아나 버렸다"], answer: 0 },
-    { q: "콩쥐가 감사에게 부탁한 것은 무엇입니까?", choices: ["꽃신을 돌려 달라고", "검은 소를 찾아 달라고", "연못을 메워 달라고"], answer: 1 }
+    { q: "콩쥐가 감사에게 부탁한 것은 무엇입니까?", choices: ["꽃신을 돌려 달라고", "검은 소를 찾아 달라고", "연못을 메워 달라고"], answer: 1 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "나무 호미로 자갈밭을 갈라고 한 것을 보면, 못 할 일을 시켜 놓고 흠을 잡으려는 것이었구나.",
+            "검은 소와 두꺼비와 참새가 차례로 도운 것을 보면, 혼자 감당 못 할 일에는 손이 모이는구나.",
+            "짝이 안 맞는 젓가락을 내놓아 가려낸 것을 보면, 큰 것보다 사소한 것이 사람을 밝히는구나.",
+            "허물을 태우자 남편이 사라진 것을 보면, 하지 말라는 것을 한 값이 이렇게 크구나."
+        ],
+        answer: 3
+    }
 ];
 
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
@@ -677,6 +688,20 @@ const QUIZ_GROUPS = [{ from: 0 }];
 
 // 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
 const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QZ().map(q => shuffledOrder(q.choices.length));
 
 function quizPage(part) {
     const group = { from: QUIZ_GROUPS[part].from, items: QZ() };
@@ -691,8 +716,8 @@ function quizPage(part) {
         return `
         <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`;
     }).join('');
@@ -1299,7 +1324,18 @@ const EN = {
         { q: "What opened at the edge of the pond?", choices: ["One red lotus", "A white plum tree", "A bunch of yellow chrysanthemums"], answer: 0 },
         { q: "What did the old woman put in front of the governor?", choices: ["Kongjwi's wooden comb", "The flower shoe from the pond", "A pair of chopsticks that did not match"], answer: 2 },
         { q: "What happened to Patjwi when she tried to run?", choices: ["She fell climbing the wall", "She knelt down in the yard", "She got away at once"], answer: 0 },
-        { q: "What did Kongjwi ask the governor for?", choices: ["To give her back the flower shoe", "To find her the black ox", "To fill in the pond"], answer: 1 }
+        { q: "What did Kongjwi ask the governor for?", choices: ["To give her back the flower shoe", "To find her the black ox", "To fill in the pond"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "She was given a wooden hoe for a stony field, so it was set up so she could not do it.",
+                "A black ox, a toad and sparrows helped in turn, so hands gather for what one person cannot carry.",
+                "A pair of odd chopsticks settled it, so small things tell people apart better than large ones.",
+                "When the skin was burned he was gone, so breaking the one rule cost that much."
+            ],
+            answer: 3
+        }
     ],
     afterword: {
         title: 'After Reading',

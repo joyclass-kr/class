@@ -351,15 +351,40 @@ const QUIZ = [
     { q: "나무꾼은 주운 날개옷을 어디에 두었나요?", choices: ["바위 위에 곱게 개어 두었다", "나뭇더미 속에 밀어 넣었다", "지게에 얹어 두었다"], answer: 0 },
     { q: "선녀는 왜 그날 못 올라갔나요?", choices: ["날개옷이 찢어져서", "길을 잊어버려서", "하늘 문이 닫혀서"], answer: 2 },
     { q: "나무꾼이 하늘로 올라갈 때 탄 것은 무엇인가요?", choices: ["커다란 두레박", "구름으로 만든 배", "사슴의 등"], answer: 0 },
-    { q: "나무꾼이 말에서 떨어진 까닭은 무엇인가요?", choices: ["땅에 발을 딛어서", "뜨거운 죽을 쏟아서", "두레박이 내려와서"], answer: 1 }
+    { q: "나무꾼이 말에서 떨어진 까닭은 무엇인가요?", choices: ["땅에 발을 딛어서", "뜨거운 죽을 쏟아서", "두레박이 내려와서"], answer: 1 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "날개옷을 감추지 않고 돌려준 것을 보면, 붙잡지 않았기에 남는 쪽을 고를 수 있었구나.",
+            "사슴이 감추지 말라고 두 번이나 되풀이한 것을 보면, 하늘 것을 함부로 하면 안 된다고 여겼구나.",
+            "뜨거운 죽 한 그릇에 다 어긋난 것을 보면, 큰일이 늘 큰 데서 나는 것은 아니구나.",
+            "허물을 궤에 넣고 자물쇠를 채운 것을 보면, 지켜야 할 것은 늘 남의 손에 맡겨지는구나."
+        ],
+        answer: 3
+    }
 ];
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QUIZ.map(q => shuffledOrder(q.choices.length));
 
 function quizPage() {
     const items = QUIZ.map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`).join('');
     return `

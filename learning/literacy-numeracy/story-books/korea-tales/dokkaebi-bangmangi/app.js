@@ -288,15 +288,40 @@ const QUIZ = [
     { q: "도깨비들이 방망이로 무엇을 했나요?", choices: ["두드려 금은을 냈다", "서로 때리며 놀았다", "땅을 파고 있었다"], answer: 0 },
     { q: "도깨비들은 무슨 일이 났다고 여겨 달아났나요?", choices: ["누가 방망이를 훔쳤다고", "날이 밝았다고", "집이 무너진다고"], answer: 2 },
     { q: "욕심쟁이 형은 어떻게 되었나요?", choices: ["코가 길게 늘어났다", "혹이 하나 더 붙었다", "금을 잔뜩 얻었다"], answer: 0 },
-    { q: "코가 늘어난 형은 어디로 갔나요?", choices: ["다시 다락에 올라갔다", "아우를 찾아갔다", "골짜기 빈 집에 남았다"], answer: 1 }
+    { q: "코가 늘어난 형은 어디로 갔나요?", choices: ["다시 다락에 올라갔다", "아우를 찾아갔다", "골짜기 빈 집에 남았다"], answer: 1 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "아우가 개암 네 알을 식구 수대로 챙긴 것을 보면, 무엇이 생기면 나눌 사람부터 떠올리는 사람이구나.",
+            "형이 개암을 한 움큼이나 씹은 것을 보면, 남을 따라 할 때는 늘 도가 지나치는구나.",
+            "도깨비들이 방망이 하나로 뭐든 내면서도 집이 무너진다니까 다 두고 달아난 것을 보면, 힘센 것도 겁은 나는구나.",
+            "고양이가 짐승 코로 가짜를 가려낸 것을 보면, 사람 눈이 늘 제일 밝은 것은 아니구나."
+        ],
+        answer: 3
+    }
 ];
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QUIZ.map(q => shuffledOrder(q.choices.length));
 
 function quizPage() {
     const items = QUIZ.map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`).join('');
     return `

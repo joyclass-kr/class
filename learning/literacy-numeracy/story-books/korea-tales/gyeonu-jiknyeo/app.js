@@ -283,15 +283,40 @@ const QUIZ = [
     { q: "둘이 부부가 된 뒤 하늘은 어떻게 되었나요?", choices: ["온통 환하게 빛났다", "노을이 더 고와졌다", "며칠째 잿빛이었다"], answer: 2 },
     { q: "두 사람이 갈라선 뒤 은하수에서 없어진 것은 무엇인가요?", choices: ["물", "다리", "구름"], answer: 1 },
     { q: "다리를 놓아 준 것은 누구인가요?", choices: ["까치와 까마귀", "구름과 바람", "해와 달"], answer: 0 },
-    { q: "칠석 무렵에 비가 오는 까닭은 무엇이라고 했나요?", choices: ["구름이 몰려와서라고", "두 사람의 눈물이라고", "용이 노해서라고"], answer: 1 }
+    { q: "칠석 무렵에 비가 오는 까닭은 무엇이라고 했나요?", choices: ["구름이 몰려와서라고", "두 사람의 눈물이라고", "용이 노해서라고"], answer: 1 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "둘이 좋아하느라 일을 놓자 하늘빛이 흐려진 것을 보면, 한 사람의 일이 온 세상과 이어져 있구나.",
+            "일 년에 하루라도 만나게 한 것을 보면, 벌을 주면서도 아주 끊지는 못했구나.",
+            "까치와 까마귀가 해마다 저희끼리 모여 올라간다는 것을 보면, 시키지 않아도 하는 일이 따로 있구나.",
+            "거위가 삼킨 진주가 아침에 굴러 나온 것을 보면, 하룻밤만 참으면 밝혀질 일이었구나."
+        ],
+        answer: 3
+    }
 ];
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QUIZ.map(q => shuffledOrder(q.choices.length));
 
 function quizPage() {
     const items = QUIZ.map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`).join('');
     return `

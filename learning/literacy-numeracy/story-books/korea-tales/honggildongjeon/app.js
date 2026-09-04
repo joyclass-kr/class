@@ -706,7 +706,18 @@ const QUIZ = [
     { q: "길동이 임금에게 청한 것은 무엇입니까?", choices: ["병조 판서 벼슬", "많은 재물", "죄를 용서받는 일"], answer: 0 },
     { q: "길동은 벼슬을 받은 뒤 무엇을 했습니까?", choices: ["오래도록 나랏일을 했다", "하루 만에 내놓고 떠났다", "다시 도적이 되었다"], answer: 1 },
     { q: "길동이 무리를 이끌고 간 곳은 어디입니까?", choices: ["북쪽의 깊은 산", "바다 건너 율도국", "남쪽의 큰 고을"], answer: 1 },
-    { q: "율도국에서 길동이 가장 먼저 없앤 것은 무엇입니까?", choices: ["백성의 무거운 세금", "나라를 지키던 군사", "신분을 가르는 법"], answer: 2 }
+    { q: "율도국에서 길동이 가장 먼저 없앤 것은 무엇입니까?", choices: ["백성의 무거운 세금", "나라를 지키던 군사", "신분을 가르는 법"], answer: 2 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "아버지를 아버지라 부르지 못한 것을 보면, 사람을 나누어 놓은 법이 집 안에서부터 아팠구나.",
+            "백성의 재물에는 손대지 않기로 한 것을 보면, 도적이라 불려도 스스로 그은 선이 있었구나.",
+            "벼슬을 받자마자 하루 만에 내놓고 떠난 것을 보면, 바란 것이 자리가 아니었구나.",
+            "놀부의 박에서 장부를 든 사람들이 나온 것을 보면, 쌓아 둔 것에는 갚을 몫이 따라오는구나."
+        ],
+        answer: 3
+    }
 ];
 
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
@@ -716,6 +727,20 @@ const QUIZ_GROUPS = [{ from: 0 }];
 
 // 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
 const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QZ().map(q => shuffledOrder(q.choices.length));
 
 function quizPage(part) {
     const group = { from: QUIZ_GROUPS[part].from, items: QZ() };
@@ -730,8 +755,8 @@ function quizPage(part) {
         return `
         <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`;
     }).join('');
@@ -1433,7 +1458,18 @@ const EN = {
         { q: "What did Gildong ask the king for?", choices: ["The post of Minister of War", "A great deal of money", "To be forgiven his crimes"], answer: 0 },
         { q: "What did Gildong do after he was given the post?", choices: ["He served in it for many years", "He gave it up after one day and left", "He went back to being a bandit"], answer: 1 },
         { q: "Where did Gildong lead his people?", choices: ["Deep into the northern mountains", "Across the sea to Yuldoguk", "To a large town in the south"], answer: 1 },
-        { q: "What was the first thing Gildong did away with in Yuldoguk?", choices: ["The people's heavy taxes", "The soldiers who guarded the country", "The law that divided people by rank"], answer: 2 }
+        { q: "What was the first thing Gildong did away with in Yuldoguk?", choices: ["The people's heavy taxes", "The soldiers who guarded the country", "The law that divided people by rank"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He could not call his father father, so the law that sorted people hurt inside the house first.",
+                "His band would not touch what belonged to common people, so even called a bandit he drew his own line.",
+                "He gave the post back the day after he got it, so a seat was never what he was after.",
+                "Men with ledgers came out of the gourd, so what you pile up brings its own bill."
+            ],
+            answer: 3
+        }
     ],
     afterword: {
         title: 'After Reading',

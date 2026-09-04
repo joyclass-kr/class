@@ -689,7 +689,18 @@ const QUIZ = [
     { q: "이몽룡이 잔치에서 지은 시는 무엇에 대한 것입니까?", choices: ["좋은 술이 백성의 피라는 것", "봄날 광한루의 아름다운 경치", "고향을 그리워하는 나그네 마음"], answer: 0 },
     { q: "이몽룡이 잔치에서 높이 들어 보인 것은 무엇입니까?", choices: ["임금의 편지", "마패", "옥으로 만든 도장"], answer: 1 },
     { q: "변학도는 어떻게 되었습니까?", choices: ["한양으로 끌려가 갇혔다", "그 자리에서 벼슬을 잃었다", "스스로 벼슬을 내놓았다"], answer: 1 },
-    { q: "춘향이 옥에서 나와 가장 먼저 한 일은 무엇입니까?", choices: ["변학도를 꾸짖었다", "광한루로 달려갔다", "어머니를 끌어안았다"], answer: 2 }
+    { q: "춘향이 옥에서 나와 가장 먼저 한 일은 무엇입니까?", choices: ["변학도를 꾸짖었다", "광한루로 달려갔다", "어머니를 끌어안았다"], answer: 2 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "변 사또가 수청을 들라 한 것을 보면, 그때 벼슬아치가 백성을 어떻게 다루었는지 보인다.",
+            "춘향이 이미 지아비가 있다고만 하고 물러서지 않은 것을 보면, 지킨 것이 사랑만은 아니었구나.",
+            "이몽룡이 거지꼴로 나타나 사람들 속을 먼저 본 것을 보면, 벼슬이란 이렇게 쓰는 것이구나.",
+            "옹고집이 제 살림을 몰라 재판에서 진 것을 보면, 제 것을 남에게만 맡겨 두면 이렇게 되는구나."
+        ],
+        answer: 3
+    }
 ];
 
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
@@ -699,6 +710,20 @@ const QUIZ_GROUPS = [{ from: 0 }];
 
 // 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
 const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QZ().map(q => shuffledOrder(q.choices.length));
 
 function quizPage(part) {
     const group = { from: QUIZ_GROUPS[part].from, items: QZ() };
@@ -713,8 +738,8 @@ function quizPage(part) {
         return `
         <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`;
     }).join('');
@@ -1403,7 +1428,18 @@ const EN = {
         { q: "What was the poem Yi Mongnyong made at the feast about?", choices: ["That the good wine is the people's blood", "The spring view from Gwanghallu", "A traveller missing his home"], answer: 0 },
         { q: "What did Yi Mongnyong hold up at the feast?", choices: ["A letter from the king", "The mapae", "A seal made of jade"], answer: 1 },
         { q: "What happened to Byeon Hakdo?", choices: ["He was dragged to Hanyang and shut up", "He lost his post on the spot", "He gave up his post himself"], answer: 1 },
-        { q: "What was the first thing Chunhyang did when she came out of the prison?", choices: ["She scolded Byeon Hakdo", "She ran to Gwanghallu", "She held her mother"], answer: 2 }
+        { q: "What was the first thing Chunhyang did when she came out of the prison?", choices: ["She scolded Byeon Hakdo", "She ran to Gwanghallu", "She held her mother"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The new governor ordered her onto the register, so we can see how an official treated ordinary people then.",
+                "She only said she already had a husband and would not step back, so what she kept was more than love.",
+                "Mongryong came back in rags and looked around before showing the tablet, so that is what an office is for.",
+                "He lost the case because he did not know his own household, so leaving your affairs to others costs you."
+            ],
+            answer: 3
+        }
     ],
     afterword: {
         title: 'After Reading',

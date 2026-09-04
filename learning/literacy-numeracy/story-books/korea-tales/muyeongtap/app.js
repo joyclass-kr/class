@@ -318,15 +318,40 @@ const QUIZ = [
     { q: "아사녀는 왜 절 안에 들어가지 못했나요?", choices: ["탑이 완성되기 전이라서", "오는 길을 잃어버려서", "가진 돈이 하나도 없어서"], answer: 0 },
     { q: "스님이 아사녀에게 알려 준 것은 무엇인가요?", choices: ["절 뒷문으로 들어오라고", "다음 봄에 오라고", "못에 탑 그림자가 비친다고"], answer: 2 },
     { q: "못에 탑 그림자가 비쳤나요?", choices: ["끝내 비치지 않았다", "첫날에 바로 비쳤다", "겨울에만 비쳤다"], answer: 0 },
-    { q: "그래서 이 탑을 무엇이라 부르게 되었나요?", choices: ["물에 비친 탑", "그림자 없는 탑", "백제의 탑"], answer: 1 }
+    { q: "그래서 이 탑을 무엇이라 부르게 되었나요?", choices: ["물에 비친 탑", "그림자 없는 탑", "백제의 탑"], answer: 1 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "돌 하나를 몇 달씩 다듬고도 마음에 안 들면 버린 것을 보면, 그 탑이 왜 그리 오래 걸렸는지 알겠다.",
+            "아사녀가 못가에서 몇 해를 기다린 것을 보면, 기다림이 사람을 이렇게 여위게 하는구나.",
+            "끝내 탑 그림자 대신 두 얼굴이 물에 비친 것을 보면, 기다림이 향한 곳은 탑이 아니었구나.",
+            "까치가 알려 주어 성을 석이라 지은 것을 보면, 이름 하나에도 그날의 일이 남는구나."
+        ],
+        answer: 3
+    }
 ];
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QUIZ.map(q => shuffledOrder(q.choices.length));
 
 function quizPage() {
     const items = QUIZ.map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`).join('');
     return `

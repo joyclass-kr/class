@@ -285,15 +285,40 @@ const QUIZ = [
     { q: "돌아온 덕구가 문을 열었을 때 가짜는 무엇을 하고 있었나요?", choices: ["마당을 돌아다니고 있었다", "손을 이리저리 뒤집어 보고 있었다", "밥을 먹고 있었다"], answer: 2 },
     { q: "아버지가 어릴 적 이야기를 묻자 진짜는 어땠나요?", choices: ["자꾸 더듬거렸다", "날짜까지 또박또박 짚었다", "숟가락을 놓고 일어섰다"], answer: 0 },
     { q: "고양이는 가짜를 보고 어떻게 했나요?", choices: ["얌전히 안겨 있었다", "털을 곤두세우고 달려들었다", "코를 킁킁거리기만 했다"], answer: 1 },
-    { q: "덕구는 그날부터 어떤 사람이 되었나요?", choices: ["무슨 일이든 끝까지 하는 사람", "무엇이든 대충대충 하는 사람", "일을 반만 하고 나가 노는 사람"], answer: 0 }
+    { q: "덕구는 그날부터 어떤 사람이 되었나요?", choices: ["무슨 일이든 끝까지 하는 사람", "무엇이든 대충대충 하는 사람", "일을 반만 하고 나가 노는 사람"], answer: 0 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "가짜가 집안일을 더 잘 대답한 것을 보면, 제 삶을 대충 산 사람은 제가 저인 것도 못 밝히는구나.",
+            "식구들이 끝내 진짜를 못 알아본 것을 보면, 오래 같이 산다고 저절로 아는 것은 아닌가 보다.",
+            "손톱을 함부로 버리지 말라던 말이 이야기가 된 것을 보면, 몸에서 나온 것을 예사로 여기지 않았구나.",
+            "허물을 태우자 남편이 사라진 것을 보면, 하늘 것을 함부로 하면 탈이 난다고 여겼구나."
+        ],
+        answer: 3
+    }
 ];
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QUIZ.map(q => shuffledOrder(q.choices.length));
 
 function quizPage() {
     const items = QUIZ.map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`).join('');
     return `

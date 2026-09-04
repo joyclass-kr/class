@@ -402,7 +402,18 @@ const EN = {
         { q: "What carried the mouse off?", choices: ["A cat", "A dog", "An ox"], answer: 0 },
         { q: "How did the dog leave that house?", choices: ["It was chased over the wall", "It snapped its rope and ran", "It bit through the reins"], answer: 1 },
         { q: "What did the boy get last of all?", choices: ["A horse", "A cat", "An ox"], answer: 2 },
-        { q: "What did the boy take out of his coat and open up?", choices: ["The ox's rope", "An old bundle", "A folded sheet of paper"], answer: 2 }
+        { q: "What did the boy take out of his coat and open up?", choices: ["The ox's rope", "An old bundle", "A folded sheet of paper"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He wrapped one grain of millet in paper and asked them to keep it, so it started with not treating a small thing lightly.",
+                "Every house felt sorry and handed him something bigger, so people then took another's property seriously.",
+                "He said the same words each time, my whole fortune, so it is the way you carry a thing that makes it worth something.",
+                "He handed each water seller a single coin first, so even a trick needs money to start it off."
+            ],
+            answer: 3
+        }
     ],
     /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
        초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
@@ -779,15 +790,40 @@ const QUIZ = [
     { q: "쥐를 물어 간 것은 무엇인가요?", choices: ["고양이", "개", "황소"], answer: 0 },
     { q: "개는 어떻게 그 집을 떠났나요?", choices: ["담 밖으로 쫓겨 갔다", "줄을 끊고 달아났다", "고삐를 물어뜯었다"], answer: 1 },
     { q: "소년이 마지막으로 얻은 것은 무엇인가요?", choices: ["말", "고양이", "황소"], answer: 2 },
-    { q: "소년이 품에서 꺼내 편 것은 무엇인가요?", choices: ["황소의 고삐", "낡은 봇짐 하나", "접힌 종이 한 장"], answer: 2 }
+    { q: "소년이 품에서 꺼내 편 것은 무엇인가요?", choices: ["황소의 고삐", "낡은 봇짐 하나", "접힌 종이 한 장"], answer: 2 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "좁쌀 한 톨을 종이에 싸서 맡긴 것을 보면, 작다고 함부로 하지 않는 마음이 시작이었구나.",
+            "집집마다 미안해하며 더 큰 것을 내준 것을 보면, 그때 사람들은 남의 것을 무겁게 여겼구나.",
+            "소년이 끝까지 제 전 재산이라고 말한 것을 보면, 값이 아니라 태도가 사람을 만드는구나.",
+            "엽전 한 닢을 물장수들에게 나눠 준 것을 보면, 판을 짜는 데에도 밑천이 드는구나."
+        ],
+        answer: 3
+    }
 ];
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QZ().map(q => shuffledOrder(q.choices.length));
 
 function quizPage() {
     const items = QZ().map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`).join('');
     return `

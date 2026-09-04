@@ -32,15 +32,21 @@ for (const slug of slugs) {
     for (const it of QZ) {
       if (!it.q || !it.choices) { bad(slug, '문항', '모양이 다름'); continue; }
       pos.push(it.answer);
-      if (it.choices.length !== 3) bad(slug, '문항', `보기 ${it.choices.length}개: ${it.q}`);
+      /* 「읽고 난 반응」만 보기가 넷이다. 나머지는 셋이어야 한다. */
+      const want = it.wide ? 4 : 3;
+      if (it.choices.length !== want) bad(slug, '문항', `보기 ${it.choices.length}개: ${it.q}`);
       if (!(it.answer >= 0 && it.answer < it.choices.length)) bad(slug, '문항', `정답 번호 벗어남: ${it.q}`);
       if (new Set(it.choices).size !== it.choices.length) bad(slug, '문항', `보기 중복: ${it.q}`);
       if (seen.has(it.q)) bad(slug, '문항', `같은 물음 두 번: ${it.q}`);
       seen.add(it.q);
       const a = it.choices[it.answer] || '';
       const other = it.choices.filter((_, i) => i !== it.answer).map(c => c.length);
-      if (other.length && a.length - Math.max(...other) >= 4)
-        bad(slug, '문항', `정답이 ${a.length - Math.max(...other)}자 김: ${it.q}`);
+      /* 「읽고 난 반응」은 보기가 다 한 문장이라 몇 자 차이는 표가 안 난다.
+         그 대신 눈에 띄게 길면(다른 보기의 1.25배) 잡는다. */
+      const gap = other.length ? a.length - Math.max(...other) : 0;
+      const tooLong = it.wide ? a.length > Math.max(...other) * 1.25 : gap >= 4;
+      if (other.length && tooLong)
+        bad(slug, '문항', `정답이 ${gap}자 김: ${it.q}`);
     }
     if (pos.length > 3 && new Set(pos).size === 1) bad(slug, '문항', `정답이 전부 ${pos[0]}번 자리`);
   }

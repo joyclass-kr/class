@@ -665,7 +665,18 @@ const QUIZ = [
     { q: "육지에 닿은 토끼는 무엇을 했습니까?", choices: ["껑충 뛰어 달아났다", "간을 찾아다 주었다", "자라를 물에 밀었다"], answer: 0 },
     { q: "용왕의 병은 끝내 무엇으로 나았습니까?", choices: ["토끼가 보낸 간", "수궁 의원의 침", "신선이 준 산삼"], answer: 2 },
     { q: "자라는 상을 사양하며 무어라 했습니까?", choices: ["거짓말을 한 낯이 없다고", "이미 충분히 받았다고", "고향으로 가겠다고"], answer: 0 },
-    { q: "자라는 수궁에서 어떤 자리에 앉게 되었습니까?", choices: ["가장 높은 벼슬자리", "벼슬 없는 맨 앞자리", "궁 밖 모래밭 한쪽"], answer: 1 }
+    { q: "자라는 수궁에서 어떤 자리에 앉게 되었습니까?", choices: ["가장 높은 벼슬자리", "벼슬 없는 맨 앞자리", "궁 밖 모래밭 한쪽"], answer: 1 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "용왕이 잔치 끝에 병을 얻고 남의 간을 찾은 것을 보면, 윗자리의 병을 아랫것이 갚는 셈이구나.",
+            "자라가 벼슬자리를 내세워 토끼를 꾄 것을 보면, 누구나 솔깃한 자리가 하나쯤 있구나.",
+            "자라가 상을 사양하며 거짓말한 낯이 없다고 한 것을 보면, 시킨 일을 했어도 마음은 남는구나.",
+            "까치 두 마리가 종에 몸을 던진 것을 보면, 갚는 데에는 목숨도 아끼지 않았구나."
+        ],
+        answer: 3
+    }
 ];
 
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
@@ -675,6 +686,20 @@ const QUIZ_GROUPS = [{ from: 0 }];
 
 // 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
 const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QZ().map(q => shuffledOrder(q.choices.length));
 
 function quizPage(part) {
     const group = { from: QUIZ_GROUPS[part].from, items: QZ() };
@@ -689,8 +714,8 @@ function quizPage(part) {
         return `
         <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`;
     }).join('');
@@ -1251,7 +1276,18 @@ const EN = {
         { q: "What did the rabbit do once he was back on land?", choices: ["He bounded off and away", "He fetched the liver and gave it up", "He pushed the turtle into the water"], answer: 0 },
         { q: "What cured the Dragon King's illness in the end?", choices: ["The liver the rabbit sent", "The needles of the palace physician", "The ginseng the immortal gave"], answer: 2 },
         { q: "What did the turtle say when he refused the reward?", choices: ["That he had no face for it, having lied", "That he had been given enough already", "That he wanted to go home"], answer: 0 },
-        { q: "What place did the turtle end up with in the sea palace?", choices: ["The highest office of all", "The front seat with no office", "A corner of the sand outside the palace"], answer: 1 }
+        { q: "What place did the turtle end up with in the sea palace?", choices: ["The highest office of all", "The front seat with no office", "A corner of the sand outside the palace"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The Dragon King fell ill after a feast and went looking for another's liver, so those below pay for what those above do.",
+                "The turtle tempted the rabbit with a post at court, so everyone has one offer that turns their head.",
+                "The turtle refused his reward, saying he had no face after lying, so doing as you are told still leaves something behind.",
+                "Two magpies threw themselves at the bell, so paying a debt can cost a life."
+            ],
+            answer: 3
+        }
     ],
     afterword: {
         title: 'After Reading',

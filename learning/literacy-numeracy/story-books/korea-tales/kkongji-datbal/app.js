@@ -317,15 +317,40 @@ const QUIZ = [
     { q: "노인은 몽둥이를 어디에 넣으라고 했나요?", choices: ["그놈 날개에", "둥지 속에", "그놈 목구멍에"], answer: 2 },
     { q: "괴물 새의 둥지는 어디에 있었나요?", choices: ["아주 깊은 동굴 안쪽", "깎아지른 바위 절벽 위", "커다란 고목 나무 속"], answer: 1 },
     { q: "괴물 새는 무엇을 덥석 물었나요?", choices: ["벌겋게 달군 몽둥이", "마른 나뭇가지", "아들의 짚신"], answer: 0 },
-    { q: "어머니를 업은 아들은 뭐라고 했나요?", choices: ["이제 곧 돌아온다고 했다", "제가 데려오겠다고 했다", "나물 바구니보다 가볍다고"], answer: 2 }
+    { q: "어머니를 업은 아들은 뭐라고 했나요?", choices: ["이제 곧 돌아온다고 했다", "제가 데려오겠다고 했다", "나물 바구니보다 가볍다고"], answer: 2 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "급한 길에도 빨래를 밟아 주고 밭을 매 준 것을 보면, 멈춘 자리에서 길과 무기를 얻었구나.",
+            "부리가 다섯 발이어도 목구멍은 하나뿐이라고 한 것을 보면, 큰 것에도 약한 데가 있구나.",
+            "어머니를 업고 나물 바구니보다 가볍다고 한 것을 보면, 그동안 얼마나 여위셨는지 알겠다.",
+            "세 아들이 삼 년씩 재주를 배워 와 셋이 한꺼번에 나선 것을 보면, 혼자로는 안 되는 일이 있구나."
+        ],
+        answer: 3
+    }
 ];
+
+/* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
+   섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
+   한 번 정한 차례는 책을 닫을 때까지 그대로다. 쪽을 오갈 때마다 바뀌면 헷갈린다. */
+function shuffledOrder(n) {
+    const a = [...Array(n).keys()];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+const QUIZ_ORDER = QUIZ.map(q => shuffledOrder(q.choices.length));
 
 function quizPage() {
     const items = QUIZ.map((item, i) => `
         <div class="quiz-item" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
+                ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
             </div>
         </div>`).join('');
     return `
