@@ -499,10 +499,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "처음 바다에 나간 까닭은 돈을 다 써 버렸기 때문인데 부자가 된 뒤에도 또 나간 것을 보면, 시작한 까닭과 이어 가는 까닭은 다르구나.",
-            "골짜기에서 새로운 것을 지어낸 것이 아니라 상인들이 하던 방법을 거꾸로 쓴 것을 보면, 있는 수를 뒤집어 보는 것도 꾀구나.",
-            "마지막에 바다를 그만두고 찾아오는 사람마다 이야기를 들려준 것을 보면, 나가는 대신 말하게 되는 때도 오는구나.",
-            "신드바드가 그 무서운 바닷길에서 번번이 살아 돌아온 것을 보면, 용기만 있으면 어떤 위험도 이겨 낼 수 있구나."
+            "곳간을 열어 보고 그제야 정신이 번쩍 들었다 한 것을 보면, 다 떨어지고 나서야 움직인 것이구나.",
+            "고기에 보석이 척척 달라붙는 것을 보고 무릎을 친 것을 보면, 상인들이 하던 방법을 거꾸로 쓴 것이구나.",
+            "부자가 되고 몇 달 만에 또 짐을 꾸린 것을 보면, 처음 나간 까닭과 다시 나간 까닭이 달랐구나.",
+            "상인들에게 보석을 나누어 준 것을 보면, 혼자 다 가지기에는 너무 많아서였구나."
         ],
         "answer": 3
     }
@@ -963,10 +963,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "He first went to sea because he had spent everything, and went again after he was rich — why you start and why you keep going are not the same.",
-                "In the valley he invented nothing; he turned the merchants' own method back to front — reversing what is already there is a kind of cleverness.",
-                "In the end he stopped sailing and told the story to everyone who came — there comes a time for telling instead of going.",
-                "Sinbad came home alive from every one of those voyages — with courage you can come through any danger."
+                "He looked into the storeroom and only then came to his senses — he moved when there was nothing left.",
+                "Seeing the jewels stick to the meat he slapped his knee — he turned the merchants' own method back to front.",
+                "Rich again, he was packing within months — why he first went to sea and why he went back were not the same.",
+                "He shared out the jewels among the merchants — there was simply too much for one man to carry."
             ],
             answer: 3
         }

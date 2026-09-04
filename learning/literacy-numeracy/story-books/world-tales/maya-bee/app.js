@@ -523,10 +523,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "규칙을 어기고 나온 마야가 벌집을 구한 것을 보면, 어긴 것과 지킨 것이 한 사람 안에 같이 있기도 하는구나.",
-            "나온 것을 나무랄 무리에게로 돌아간 것이 가장 어려운 걸음이었던 것을 보면, 돌아가는 일이 떠나는 일보다 무섭구나.",
-            "쿠르트가 제 일을 남에게 미루지 않는다고 한 말을 마야가 오래 기억한 것을 보면, 지나가듯 들은 한마디가 사람 안에 남는구나.",
-            "마야가 벌집을 나갔다가 거미줄에 걸린 것을 보면, 정해진 자리를 벗어나면 위험한 일을 겪는구나."
+            "카산드라가 꿀벌은 그런 걸 묻지 않는다고 한 것을 보면, 마야의 궁금증이 오히려 더 커진 것이구나.",
+            "쿠르트가 도와줄까 하는 말에 됐다고 한 것을 보면, 제 일을 남에게 미루지 않으려 한 것이구나.",
+            "마야가 혼자 사는 벌레는 하나도 없구나 한 것을 보면, 그때 벌집 생각이 난 것이구나.",
+            "말벌들이 한참 맴돌다 그냥 물러간 것을 보면, 꿀벌 수가 훨씬 많은 것을 보고 겁을 먹은 것이구나."
         ],
         "answer": 3
     }
@@ -984,10 +984,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The bee who broke the rule is the one who saved the hive — breaking and keeping can live in the same person.",
-                "The hardest step was going back to the swarm that would scold her — returning frightens more than leaving.",
-                "Maya kept Kurt's remark about not passing your work to others — a line heard in passing stays inside a person.",
-                "Maya left the hive and got caught in a web — step outside where you belong and trouble finds you."
+                "Cassandra told her bees do not ask such things — it only made Maya more curious.",
+                "Kurt refused her offer of help — he would not pass his own work to anyone else.",
+                "Maya said not one insect lives alone — that was when the hive came back to her mind.",
+                "The hornets circled a while and went away — they saw how many more bees there were and lost their nerve."
             ],
             answer: 3
         }

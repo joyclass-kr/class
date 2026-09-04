@@ -513,10 +513,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "비탈리스 할아버지가 흙바닥에 나뭇가지로 글자를 써 가르친 것을 보면, 그날 당장 쓸 데가 없는 것도 배워 둘 만하구나.",
-            "할아버지가 카피와 제르비노를 레미의 형제라고 부른 것을 보면, 식구는 핏줄로만 되는 것이 아니구나.",
-            "새 식구를 찾은 뒤 레미가 가장 먼저 바르브랭 아주머니를 모셔 온 것을 보면, 길러 준 사람을 잊지 않는 것이 사람의 도리구나.",
-            "비탈리스 할아버지가 레미에게 흙바닥에 글자를 가르친 것을 보면, 어릴 때 배워 둔 것은 나중에 반드시 돈이 되는구나."
+            "눈보라 속에서 할아버지가 제 외투를 벗어 덮어 준 것을 보면, 저보다 레미를 먼저 챙긴 것이구나.",
+            "갱도에 갇혔을 때 레미가 조용히 노래를 부른 것을 보면, 그때 할 수 있는 것이 그것뿐이었구나.",
+            "새 식구를 찾은 뒤 가장 먼저 바르브랭 아주머니를 모셔 온 것을 보면, 길러 준 이를 잊지 않은 것이구나.",
+            "아주머니가 저분을 따라가라고 한 것을 보면, 레미가 하프를 배우기를 바란 것이구나."
         ],
         "answer": 3
     }
@@ -983,10 +983,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "Vitalis taught him letters with a stick in the dirt — something with no use today is still worth learning.",
-                "He called Capi and Zerbino the boy's brothers — a family is not made of blood alone.",
-                "The first thing Remi did once he had found his own family was to fetch Mother Barberin — you do not forget the one who raised you.",
-                "Vitalis taught the boy his letters in the dirt — what you learn as a child always turns into money later on."
+                "In the blizzard the old man took off his own coat and put it over him — he saw to Remi before himself.",
+                "Trapped in the mine shaft Remi began to sing quietly — it was the only thing left he could do.",
+                "The first thing he did after finding his family was to fetch Mother Barberin — he had not forgotten who raised him.",
+                "She told him to go with the old musician — she wanted him to learn the harp."
             ],
             answer: 3
         }
