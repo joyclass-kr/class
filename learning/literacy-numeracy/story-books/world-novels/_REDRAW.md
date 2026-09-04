@@ -57,6 +57,6 @@ tawny draught dog - the same dog as in the rest of the book.
 
 ## 아직 안 그려진 것
 
-2026-09-04 현재 44권 1210장 가운데 408장이 그려졌습니다.
+2026-09-04 현재 44권 1210장 가운데 429장이 그려졌습니다.
 
 다 찬 책 16권 — anne-green-gables, arabian, benhur, fadette, fifteen, flanders, greek, heidi, huck-finn, invisible, jean-valjean, jekyll, parables-tales, sherlock-holmes, talmud-tales, treasure-island.
