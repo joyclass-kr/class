@@ -528,7 +528,7 @@ const QUIZ = [
             "임금님이 웃으면 안 된다는 조건을 대수롭지 않게 여긴 것을 보면, 쉬워 보이는 약속이 제일 어렵기도 하구나.",
             "개구리 한 마리에 그만 부리를 벌린 것을 보면, 참기 어려운 것은 큰일이 아니라 작은 것이구나.",
             "돌아갈 말을 마법사들이 모인 자리에 숨어들어 알아낸 것을 보면, 답이 가장 가고 싶지 않은 자리에 있기도 하는구나.",
-            "싫은 마음을 누르고 한 약속을 끝까지 지킨 것을 보면, 하기 싫은 것과 해야 하는 것은 다른 일이구나."
+            "임금님이 황새가 되어 세상을 위에서 내려다본 것을 보면, 힘든 일을 겪고 나면 그만큼 넓게 보게 되는구나."
         ],
         "answer": 3
     }
@@ -992,7 +992,7 @@ const EN = {
                 "The caliph thought the rule about not laughing was a small thing — the easy-sounding promise is often the hard one.",
                 "One frog was all it took to open his beak — what is hard to bear is not the big thing but the small one.",
                 "He learned the word by creeping into the very place he feared — the answer can be where you least want to go.",
-                "She kept the promise even though she could not stand it — what you hate doing and what you must do are two different things."
+                "As a stork the caliph looked down on the world from above — you come out of a hard time seeing more widely than before."
             ],
             answer: 3
         }

@@ -522,7 +522,7 @@ const QUIZ = [
             "가진 것이 더 적었는데도 막내가 노인과 빵을 나눈 것을 보면, 나누는 것은 넉넉해서 하는 일이 아니구나.",
             "거위에 붙은 사람들이 저마다 하나씩만 손을 댔는데 줄줄이 붙어 버린 것을 보면, 남이 붙든 것을 잡아당기면 나도 붙는구나.",
             "웃기려 한 사람이 아무도 없었는데 공주가 웃은 것을 보면, 애써 만든 것보다 저절로 된 것이 사람을 움직이는구나.",
-            "아이가 세 번 다 제 몸에 맞는 작은 것을 고른 것을 보면, 좋은 것이 아니라 맞는 것을 골라야 하는구나."
+            "공주가 웃어서 막내가 혼인하게 된 것을 보면, 사람을 웃기는 재주가 있어야 일이 풀리는구나."
         ],
         "answer": 3
     }
@@ -985,7 +985,7 @@ const EN = {
                 "The youngest, who had least, shared his bread with the old man — sharing is not something you do because you have plenty.",
                 "Each of them touched the goose only once, yet all of them stuck fast — pull at what someone else is stuck to and you are stuck too.",
                 "Nobody was trying to be funny, and that is when the princess laughed — what happens by itself moves people more than what is worked at.",
-                "All three times the child chose the small one that fitted — the thing to look for is not the best but the one that fits."
+                "The princess laughed and so the youngest son was married — you need a gift for making people laugh to get on."
             ],
             answer: 3
         }

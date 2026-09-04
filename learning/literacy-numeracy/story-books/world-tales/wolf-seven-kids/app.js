@@ -495,7 +495,7 @@ const QUIZ = [
             "늑대가 걸걸한 목소리로 들키자 분필을 삼키고 까만 발로 들키자 밀가루를 묻힌 것을 보면, 속이는 쪽도 들킬 때마다 더 그럴듯해지는구나.",
             "아기 염소들이 확인할 것을 다 확인하고도 속은 것을 보면, 확인한 것만으로는 모자랄 때가 있구나.",
             "늑대가 누가 민 것도 아닌데 제 배가 무거워 우물에 넘어간 것을 보면, 욕심이 스스로를 넘어뜨리는구나.",
-            "쐐기풀이 손에 닿으면 불에 덴 듯 따가운 것을 보면, 지어낸 아픔이 아니라 진짜 아픔으로 지은 옷이었구나."
+            "아기 염소들이 목소리도 듣고 발도 확인한 것을 보면, 확인할 것만 잘 확인하면 속지 않는구나."
         ],
         "answer": 3
     }
@@ -861,7 +861,7 @@ const EN = {
                 "Caught out by his rough voice he ate chalk, caught out by his black paws he dusted them with flour — a deceiver improves every time he is caught.",
                 "The kids checked everything they had been told to check and were fooled anyway — checking is sometimes not enough.",
                 "Nobody pushed the wolf into the well; his own full belly tipped him in — greed knocks itself over.",
-                "Nettles really do burn the hands — the shirts were made out of a real pain, not an invented one."
+                "The kids listened to the voice and looked at the paws — check what you are told to check and you will not be fooled."
             ],
             answer: 3
         }

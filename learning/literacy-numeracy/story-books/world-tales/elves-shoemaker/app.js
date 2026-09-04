@@ -479,7 +479,7 @@ const QUIZ = [
             "가죽이 한 장 남았을 때도 구두장이가 재어 마름질해 두고 잔 것을 보면, 도움은 준비해 둔 자리에 얹히는구나.",
             "부자가 된 뒤 두 사람이 도운 이를 찾아 나서 옷을 지어 준 것을 보면, 갚을 길을 찾는 것도 마음이구나.",
             "난쟁이들이 옷을 받고는 다시 오지 않은 것을 보면, 도움에는 끝나는 때가 있는 법이구나.",
-            "물에 비친 제 모습을 알아본 뒤에야 달라진 것을 보면, 남이 뭐라 하든 나는 처음부터 나였구나."
+            "난쟁이들이 밤마다 신을 지어 준 덕에 구두장이가 부자가 된 것을 보면, 운이 좋으면 가만히 있어도 일이 되는구나."
         ],
         "answer": 3
     }
@@ -871,7 +871,7 @@ const EN = {
                 "With one piece of leather left he still cut it out before going to bed — help lands on the work you have already laid out.",
                 "Once rich, the two went looking for their helpers and sewed them clothes — finding a way to repay is its own kind of care.",
                 "The elves took the clothes and never came again — help has a time when it is finished.",
-                "Nothing changed until he saw himself in the water — whatever they called you, you were always what you are."
+                "The elves sewed the shoes each night and the cobbler grew rich — with luck on your side things get done without you."
             ],
             answer: 3
         }

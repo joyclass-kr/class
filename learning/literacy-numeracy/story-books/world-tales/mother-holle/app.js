@@ -508,7 +508,7 @@ const QUIZ = [
             "언니가 무서웠을 텐데도 물레가락을 주우러 우물에 뛰어든 것을 보면, 잃은 것을 제 손으로 찾으려는 마음이 먼저구나.",
             "언니는 빵과 사과나무의 부탁에 하던 길을 멈추고 그것을 해 준 것을 보면, 급한 길에도 멈출 자리는 있구나.",
             "홀레 할머니가 본 것이 이불을 턴 솜씨가 아니라 오는 길에 무엇을 했는지였음을 보면, 보는 사람은 결과보다 길을 보는구나.",
-            "부서진 의자를 보고 멈칫하고는 그냥 지나간 것을 보면, 아무도 안 볼 때 무엇을 하느냐가 사람을 갈라 놓는구나."
+            "언니가 이불을 잘 털어 준 덕에 금을 뒤집어쓴 것을 보면, 시키는 일만 잘하면 상은 따라오는구나."
         ],
         "answer": 3
     }
@@ -970,7 +970,7 @@ const EN = {
                 "Frightened as she must have been, she jumped in after the spindle — the first thing is wanting to get back what you lost yourself.",
                 "The bread and the apple tree called out, and she stopped what she was doing for them — even on an urgent road there is room to stop.",
                 "Mother Holle was not judging how she shook the bedding but what she had done on the way — the one watching looks at the road, not the result.",
-                "She paused at the broken chair and then walked on — what you do when nobody is looking is what tells people apart."
+                "The girl shook the bedding well and came out covered in gold — do the job you are set and the reward follows."
             ],
             answer: 3
         }

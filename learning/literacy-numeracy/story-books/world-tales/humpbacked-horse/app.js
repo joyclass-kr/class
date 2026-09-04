@@ -526,7 +526,7 @@ const QUIZ = [
             "밀밭을 지키라 하니 이반이 정말로 밤을 새운 것을 보면, 시키는 대로 한 사람이 남들이 못 본 것을 보기도 하는구나.",
             "말 셋 가운데 가장 볼품없는 조랑말이 늘 먼저 말려 준 것을 보면, 볼품과 쓸모는 다른 것이구나.",
             "깃털을 주운 것이 걱정거리를 불렀는데 그 걱정거리가 궁궐로 데려가기도 한 것을 보면, 무엇이 화가 되고 복이 될지는 나중에야 갈리는구나.",
-            "밤새 뛰어와 문을 두드린 쪽이 잊지 않은 쪽이었던 것을 보면, 가볍게 한 말도 누군가는 무겁게 듣는구나."
+            "이반이 형들처럼 꾀부리지 않고 밀밭에서 밤을 새운 것을 보면, 성실하기만 하면 어려운 일도 저절로 풀리는구나."
         ],
         "answer": 3
     }
@@ -989,7 +989,7 @@ const EN = {
                 "Told to guard the wheat, Ivan actually stayed awake all night — the one who simply does as told may see what the others missed.",
                 "Of the three horses the plainest little one was the one that kept warning him — looks and use are two different things.",
                 "Picking up the feather brought him trouble, and the trouble carried him to the palace — which is the curse and which the blessing is sorted out later.",
-                "The one who hopped all night to knock at the door was the one who had not forgotten — a light promise can be heard heavily."
+                "Ivan did not shirk like his brothers but sat up all night in the wheat — be diligent and the hard things sort themselves out."
             ],
             answer: 3
         }

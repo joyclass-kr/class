@@ -489,7 +489,7 @@ const QUIZ = [
             "담장 안에서만 살 때는 슬픔을 몰랐다가 높이 선 뒤에야 도시가 다 보인 것을 보면, 보이는 자리에 서야 알게 되는 것이 있구나.",
             "두 눈의 사파이어를 내준 뒤로 제비가 대신 보고 와서 말해 준 것을 보면, 볼 수 없게 된 뒤에도 할 수 있는 일이 남아 있구나.",
             "제비가 오늘만, 하루만 하며 미룬 하루들이 쌓여 겨울이 온 것을 보면, 큰 결심보다 작은 미룸이 사람을 붙잡는구나.",
-            "잃어버린 신 한 짝이 임자를 찾아 준 것을 보면, 말로 우기지 않아도 맞는 사람은 드러나는구나."
+            "제비가 남쪽으로 가지 않고 왕자 곁에 남은 것을 보면, 착한 일을 하면 마음이 따뜻해져 추위쯤은 견딜 수 있구나."
         ],
         "answer": 3
     }
@@ -873,7 +873,7 @@ const EN = {
                 "Inside the palace wall he had never known sorrow; only up on his pedestal could he see the whole city — some things you learn only from where you stand.",
                 "Once he had given away the sapphires the swallow went and looked for him — there is still work left after you can no longer see.",
                 "Just today, just one more day — and those days piled up into winter; small delays hold you longer than big decisions.",
-                "One lost shoe found its owner — you do not have to argue when the thing itself fits."
+                "The swallow stayed with the prince instead of flying south — do a good thing and the warmth of it carries you through the cold."
             ],
             answer: 3
         }

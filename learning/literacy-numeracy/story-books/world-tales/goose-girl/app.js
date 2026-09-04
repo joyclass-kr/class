@@ -507,7 +507,7 @@ const QUIZ = [
             "자리를 빼앗기고도 아무 말을 못 한 것이 약속 때문이었음을 보면, 지킨 약속이 사람을 묶어 놓기도 하는구나.",
             "임금님이 캐묻지 않고 난로에게라도 말해 보라고 한 것을 보면, 사람에게 못 할 말도 어딘가에는 할 수 있어야 하는구나.",
             "아침마다 팔라다의 한마디를 들으려고 성문 밑에서 걸음을 멈춘 것을 보면, 한마디로 버티는 날도 있구나.",
-            "거위에 붙은 사람들이 저마다 하나씩만 손을 댔는데 줄줄이 붙어 버린 것을 보면, 남이 붙든 것을 잡아당기면 나도 붙는구나."
+            "공주가 자리를 빼앗기고도 오래 참은 것을 보면, 억울한 일은 가만히 참고 있으면 저절로 풀리는구나."
         ],
         "answer": 3
     }
@@ -925,7 +925,7 @@ const EN = {
                 "She could say nothing while her place was taken, because of a promise — a promise kept can also be a rope.",
                 "The king did not press her; he told her to say it to the stove if she must — what cannot be said to a person must still be sayable somewhere.",
                 "Every morning she stopped under the gate for Falada's one sentence — some days you get through on a single line.",
-                "Each of them touched the goose only once, yet all of them stuck fast — pull at what someone else is stuck to and you are stuck too."
+                "The princess bore it a long time after her place was taken — a wrong will sort itself out if you keep quiet."
             ],
             answer: 3
         }

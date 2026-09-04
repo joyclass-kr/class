@@ -514,7 +514,7 @@ const QUIZ = [
             "지킬 생각이 없었기에 공주가 그 약속을 쉽게 한 것을 보면, 가볍게 한 말일수록 가볍게 나오는구나.",
             "밤새 뛰어와 문을 두드린 쪽이 개구리였던 것을 보면, 잊지 않는 쪽은 부탁한 쪽이 아니라 들어준 쪽이구나.",
             "임금님이 딸을 나무라지 않고 한번 한 말은 지켜야 한다고만 한 것을 보면, 길게 꾸짖는 것보다 한마디가 남는구나.",
-            "가죽을 미리 재어 마름질해 두고 잔 덕분에 도움이 얹힌 것을 보면, 준비해 둔 자리에 도움이 오는구나."
+            "임금님이 딸에게 한번 한 말은 지켜야 한다고 이른 것을 보면, 아이는 어른이 단단히 일러 주어야 바로 자라는구나."
         ],
         "answer": 3
     }
@@ -964,7 +964,7 @@ const EN = {
                 "She promised easily because she never meant to keep it — a word costs nothing at the moment you do not mean it.",
                 "It was the frog who hopped all night and knocked — the one who remembers is the one who kept his side.",
                 "Her father did not scold her; he only said a promise once made must be kept — one sentence outlasts a long telling-off.",
-                "He had cut the leather out before going to bed, and that is where the help landed — help comes to work already laid out."
+                "Her father told her that a promise once made must be kept — a child grows straight because a grown-up says so firmly."
             ],
             answer: 3
         }

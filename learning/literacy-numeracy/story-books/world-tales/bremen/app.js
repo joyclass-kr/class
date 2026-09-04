@@ -515,7 +515,7 @@ const QUIZ = [
             "늙어 쫓겨난 넷이 겹쳐 서서 한꺼번에 소리를 낸 것을 보면, 혼자서는 못 할 일도 여럿이면 되는구나.",
             "도둑을 쫓아낸 것이 싸움이 아니라 소리였던 것을 보면, 맞붙지 않고도 이길 수 있구나.",
             "넷이 브레멘에 끝내 닿지 않은 것을 보면, 가려던 곳보다 가는 길에 만난 것이 나을 때도 있구나.",
-            "열두 시 종이 울리면 다 사라진다는 것을 알면서도 간 것을 보면, 끝이 정해져 있어도 갈 만한 자리가 있구나."
+            "넷이 브레멘으로 가겠다고 길을 나선 것을 보면, 한번 뜻을 세웠으면 끝까지 가 보아야 하는구나."
         ],
         "answer": 3
     }
@@ -944,7 +944,7 @@ const EN = {
                 "Four cast-out animals stood on each other's backs and cried out at once — what one cannot do, several can.",
                 "The robbers were driven off by a noise, not a fight — you can win without coming to blows.",
                 "They never reached Bremen at all — what you meet on the way can beat where you were going.",
-                "She went to the ball knowing midnight would take it all back — some places are worth going to even when the end is fixed."
+                "The four set out for Bremen — once you have set your mind on a place you should see it through to the end."
             ],
             answer: 3
         }

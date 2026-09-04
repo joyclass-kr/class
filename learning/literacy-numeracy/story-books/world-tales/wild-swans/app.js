@@ -517,7 +517,7 @@ const QUIZ = [
             "엘리사에게 어려운 쪽이 옷이 아니라 말을 참는 쪽이었던 것을 보면, 오해를 받고도 아니라고 못 하는 것이 가장 힘든 일이구나.",
             "쐐기풀이 손에 닿으면 불에 덴 듯 따가운 것을 보면, 지어낸 아픔이 아니라 진짜 아픔으로 지은 옷이었구나.",
             "마지막 한 벌 소매가 덜 되어 막내 오빠에게 한쪽 날개가 남은 것을 이야기가 고치지 않고 그대로 둔 것을 보면, 다 되지 않은 채로 끝나는 이야기도 있구나.",
-            "겨울 동안 혼자였던 그 시간에 몸이 자란 것을 보면, 아무도 보지 않는 데서 일어나는 일도 있구나."
+            "엘리사가 끝내 오빠 열한 명을 되돌린 것을 보면, 참고 견디면 반드시 온전한 끝이 오는구나."
         ],
         "answer": 3
     }
@@ -958,7 +958,7 @@ const EN = {
                 "The hard part for Elisa was not the shirts but the silence — being misunderstood and unable to say otherwise is the hardest thing of all.",
                 "Nettles really do burn the hands — the shirts were made out of a real pain, not an invented one.",
                 "The last sleeve was unfinished, so the youngest brother kept one wing, and the story leaves it that way — some stories end without being finished.",
-                "It was through that winter alone that he grew — some things happen where nobody is watching."
+                "Elisa brought all eleven brothers back in the end — endure long enough and everything comes out whole."
             ],
             answer: 3
         }

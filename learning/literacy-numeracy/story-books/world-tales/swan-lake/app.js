@@ -523,7 +523,7 @@ const QUIZ = [
             "왕자가 숲으로 간 것이 정해 놓고 고르는 잔치가 답답해서였음을 보면, 골라야 하는 자리가 도리어 사람을 몰아내는구나.",
             "무도회에서 왕자가 속은 까닭이 얼굴로만 보고 있었기 때문인 것을 보면, 같은 얼굴이라고 같은 사람은 아니구나.",
             "오데트가 창밖에 매달렸을 때 왕자가 곧바로 뛰쳐나간 것을 보면, 잘못을 안 뒤의 걸음은 빠르구나.",
-            "왕비가 말로 묻지 않고 요와 이불 밑에 완두콩을 넣은 것을 보면, 말로 물으면 꾸며 낼 수 있는 것이 있구나."
+            "오데트가 창밖에 나타나자 왕자가 곧바로 뛰쳐나간 것을 보면, 진심이 있으면 언제든 다시 시작할 수 있구나."
         ],
         "answer": 3
     }
@@ -969,7 +969,7 @@ const EN = {
                 "He went out to the lake because the ball, where he had to choose from a list, stifled him — being made to choose can drive a person off.",
                 "He was taken in at the ball because he was going by the face alone — the same face is not the same person.",
                 "The moment Odette appeared at the window he ran straight out — once you know you were wrong, you move fast.",
-                "The queen did not ask her anything; she put a pea under the bedding — some things can be made up if you ask them out loud."
+                "The moment Odette appeared at the window he ran straight out — where the heart is true you can always begin again."
             ],
             answer: 3
         }

@@ -524,7 +524,7 @@ const QUIZ = [
             "나그네가 당나귀로 지낸 뒤로 길에서 마주치는 당나귀가 달리 보였다는 것을 보면, 겪어 봐야 보이는 것이 있구나.",
             "주막 주인이 어두워서 빛깔을 못 보고 제가 당나귀가 된 것을 보면, 남을 속이려던 꾀가 저를 치기도 하는구나.",
             "나그네가 그런 주인에게 노란 열매를 먹인 것을 보면, 갚아 줄 수 있을 때 갚지 않는 쪽을 고르기도 하는구나.",
-            "짧은 말을 여러 번 되뇐 덕분에 잊지 않은 것을 보면, 중요한 말일수록 입에 붙여 두어야 하는구나."
+            "나그네가 붉은 열매를 먹고 당나귀가 되어 고생한 것을 보면, 낯선 곳에서는 아무것도 먹지 않는 것이 상책이구나."
         ],
         "answer": 3
     }
@@ -987,7 +987,7 @@ const EN = {
                 "After his time as a donkey he looked at every donkey on the road differently — some things you only see once you have been there.",
                 "In the dark the innkeeper could not tell the berries apart and became a donkey himself — a trick meant for others can turn on you.",
                 "The traveller fed him the yellow berry all the same — you can be able to get even and choose not to.",
-                "He said the short words over and over and so did not forget them — the words that matter must be kept on your tongue."
+                "The traveller ate the red berry and suffered as a donkey — in a strange place the safest thing is to eat nothing at all."
             ],
             answer: 3
         }

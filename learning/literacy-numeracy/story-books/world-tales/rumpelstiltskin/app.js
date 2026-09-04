@@ -529,7 +529,7 @@ const QUIZ = [
             "모든 일이 딸이 짚으로 금실을 잣는다는 아버지의 자랑에서 비롯된 것을 보면, 남을 높이려던 한마디가 그 사람을 몰아넣기도 하는구나.",
             "임금님 앞에서 아버지 말이 거짓이라고 할 수 없어 딸이 그 말을 되돌리지 못한 것을 보면, 남이 한 말에 갇히는 일도 있구나.",
             "왕비를 살린 것이 꾀가 아니라 심부름꾼이 숲에서 우연히 들은 노래였음을 보면, 풀리는 자리는 뜻밖의 곳이구나.",
-            "손으로 지은 냄비와 딸랑이에는 값을 치르고 진짜 장미와 새는 시시해한 것을 보면, 신기한 것에만 눈이 가기도 하는구나."
+            "왕비가 사흘 만에 이름을 알아맞혀 아이를 지킨 것을 보면, 끝까지 포기하지 않으면 답은 나오는구나."
         ],
         "answer": 3
     }
@@ -993,7 +993,7 @@ const EN = {
                 "It all began with a father boasting that his daughter could spin straw into gold — a word meant to raise someone can corner them.",
                 "She could not stand before the king and call her father a liar — you can be shut inside a sentence somebody else said.",
                 "What saved the queen was not cleverness but a servant who happened to hear a song in the wood — the way out turns up where you were not looking.",
-                "She paid dearly for a hand-made pot and rattle but found a real rose and a real bird dull — the eye goes to the clever thing."
+                "The queen guessed the name inside three days and kept her child — never give up and the answer comes."
             ],
             answer: 3
         }

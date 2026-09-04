@@ -526,7 +526,7 @@ const QUIZ = [
             "공주가 장미와 밤꾀꼬리를 진짜라는 말을 듣고 실망한 것을 보면, 만든 것이 아니라서 시시해지기도 하는구나.",
             "손으로 지은 냄비와 딸랑이에는 값을 치른 것을 보면, 사람 눈은 신기한 쪽으로 먼저 가는구나.",
             "왕자가 화가 나서가 아니라 오래 지켜본 뒤에 마음을 접은 것을 보면, 마음이 도는 데도 시간이 걸리는구나.",
-            "게르다가 힘이 세지도 꾀가 많지도 않은데 다만 걸음을 멈추지 않은 것을 보면, 끝까지 가는 것도 하나의 힘이구나."
+            "공주가 냄비와 딸랑이를 얻으려고 값을 치른 것을 보면, 갖고 싶은 것이 있으면 치를 값은 치러야 하는구나."
         ],
         "answer": 3
     }
@@ -995,7 +995,7 @@ const EN = {
                 "She was disappointed to hear the rose and the bird were real — a thing can seem dull just because nobody made it.",
                 "For a hand-made pot and rattle she paid a high price — the eye goes to the clever thing first.",
                 "The prince did not leave in a temper; he watched a long time and then let go — turning away also takes time.",
-                "Gerda was neither strong nor clever; she simply did not stop walking — going all the way is a strength of its own."
+                "The princess paid what was asked for the pot and the rattle — if you want a thing you must pay the price of it."
             ],
             answer: 3
         }

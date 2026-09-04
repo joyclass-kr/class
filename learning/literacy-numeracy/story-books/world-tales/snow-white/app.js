@@ -502,7 +502,7 @@ const QUIZ = [
             "왕비가 끈에서 빗으로, 빗에서 사과로 갈수록 그럴듯한 물건을 고른 것을 보면, 속이는 쪽도 배워 가며 하는구나.",
             "난쟁이들이 그렇게 일렀는데도 공주가 세 번 다 문을 연 것을 보면, 혼자 있는 시간이 길면 문이 쉽게 열리는구나.",
             "시키는 대로 하지 않은 사람이 사냥꾼뿐이었고 거기서 이야기가 갈린 것을 보면, 한 사람이 멈추면 일이 달라지는구나.",
-            "그만두고 싶어도 발이 저절로 움직인 것을 보면, 한번 시작한 것이 나를 끌고 가기도 하는구나."
+            "공주가 난쟁이 집에서 밥을 짓고 빨래를 한 것을 보면, 남의 집에 얹혀살려면 제 몫을 해내야 하는구나."
         ],
         "answer": 3
     }
@@ -874,7 +874,7 @@ const EN = {
                 "First a lace, then a comb, then an apple — each time the queen chose something more believable; the deceiver learns as she goes.",
                 "The dwarfs warned her and she opened the door all three times — a door opens easily when you have been alone a long while.",
                 "The huntsman was the only one who did not do as he was told, and the story turns there — one person stopping changes everything.",
-                "She wanted to stop and her feet went on by themselves — a thing once begun can start carrying you."
+                "Snow White cooked and washed for the dwarfs — if you are living in someone else's house you had better earn your keep."
             ],
             answer: 3
         }

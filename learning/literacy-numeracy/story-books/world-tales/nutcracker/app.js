@@ -519,7 +519,7 @@ const QUIZ = [
             "이가 빠지고 턱이 굳은 인형을 마리만 안고 다닌 것을 보면, 남이 거들떠보지 않는 것을 아끼는 눈이 따로 있구나.",
             "싸움이 벌어졌을 때 마리가 숨지 않고 신발을 벗어 던진 것을 보면, 한 번의 몸짓이 판을 가르기도 하는구나.",
             "어른들이 꿈을 꾼 것이라 하고 이야기는 끝까지 딱 잘라 말하지 않는 것을 보면, 누가 옳은지 정하지 않고 두는 이야기도 있구나.",
-            "제비가 오늘만, 하루만 하며 미룬 하루들이 쌓여 겨울이 온 것을 보면, 큰 결심보다 작은 미룸이 사람을 붙잡는구나."
+            "마리가 호두까기 인형을 아껴 준 덕에 인형이 제 모습을 되찾은 것을 보면, 아껴 주면 무엇이든 본디 모습을 찾는구나."
         ],
         "answer": 3
     }
@@ -951,7 +951,7 @@ const EN = {
                 "Only Marie carried about the doll with the broken teeth and the stiff jaw — there is an eye that values what others pass over.",
                 "When the fighting began she did not hide; she threw her shoe — one movement can turn the whole thing.",
                 "The grown-ups called it a dream, and the story never says outright who was right — some stories leave that undecided on purpose.",
-                "Just today, just one more day — and those days piled up into winter; small delays hold you longer than big decisions."
+                "Marie cared for the nutcracker and he was himself again — care for a thing and it comes back to what it truly is."
             ],
             answer: 3
         }

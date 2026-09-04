@@ -537,7 +537,7 @@ const QUIZ = [
             "여우가 쓰는 것이 힘이 아니라 말이었던 것을 보면, 힘보다 말이 무서울 때가 있구나.",
             "임금님이 넘어간 까닭이 여우가 잘 속여서가 아니라 임금님이 보물을 바랐기 때문인 것을 보면, 속는 자리는 바라는 자리구나.",
             "짐승들이 꿀이든 쥐든 제가 바란 것을 따라갔다가 다친 것을 보면, 미끼는 늘 내가 좋아하는 모양을 하고 있구나.",
-            "물에 비친 제 모습을 알아본 뒤에야 달라진 것을 보면, 남이 뭐라 하든 나는 처음부터 나였구나."
+            "짐승들이 재판정에 모여 저마다 여우를 일러바친 것을 보면, 여럿이 한목소리를 내면 잘못은 바로잡히는구나."
         ],
         "answer": 3
     }
@@ -998,7 +998,7 @@ const EN = {
                 "The fox never used force, only words — there are times when talk is more dangerous than strength.",
                 "The king was taken in not because the fox lied well but because the king wanted treasure — you are fooled where you are wishing.",
                 "Each animal followed the honey or the mice it wanted and got hurt for it — the bait is always shaped like what you like.",
-                "Nothing changed until he saw himself in the water — whatever they called you, you were always what you are."
+                "The animals gathered at court and each laid a charge against the fox — when enough of them speak up together, a wrong gets put right."
             ],
             answer: 3
         }

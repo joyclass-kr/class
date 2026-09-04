@@ -486,7 +486,7 @@ const QUIZ = [
             "오리 무리에서 재는 자로 쟀으니 늘 모자랄 수밖에 없었던 것을 보면, 자가 틀리면 아무리 재도 모자라구나.",
             "엄마 오리도 처음에는 감싸 주다가 견디지 못하고 등을 돌린 것을 보면, 편들어 주던 사람도 지치는 때가 있구나.",
             "겨울 동안 혼자였던 그 시간에 몸이 자란 것을 보면, 아무도 보지 않는 데서 일어나는 일도 있구나.",
-            "돈이 떨어지자 친구들이 발길을 끊고 넉넉해지자 돌아온 것을 보면, 무엇을 보고 온 사람인지는 없어져 봐야 알겠구나."
+            "아기 오리가 마지막에 백조가 된 것을 보면, 참고 기다리면 언젠가 남들보다 나아지는구나."
         ],
         "answer": 3
     }
@@ -854,7 +854,7 @@ const EN = {
                 "He was measured by a duck's ruler, so of course he always came up short — when the ruler is wrong, no amount of measuring helps.",
                 "Even his mother stood up for him at first and then turned away — the one who defends you can wear out.",
                 "It was through that winter alone that he grew — some things happen where nobody is watching.",
-                "His friends dropped away when the money ran out and came back when it returned — you find out what brought them by losing it."
+                "The ugly duckling turned into a swan in the end — bear it long enough and one day you will outshine them all."
             ],
             answer: 3
         }

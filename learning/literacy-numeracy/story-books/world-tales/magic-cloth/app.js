@@ -528,7 +528,7 @@ const QUIZ = [
             "두 형이 주막에서 손님들 앞에 펼쳐 보인 탓에 주인이 알게 된 것을 보면, 자랑이 곧 알려 주는 일이구나.",
             "막내가 자루 안에 무엇이 들었는지 끝까지 말하지 않은 것을 보면, 말하지 않는 것도 하나의 수구나.",
             "막내가 이긴 것이 물건이 더 좋아서가 아니라 형들이 어디서 잃었는지 알고 갔기 때문인 것을 보면, 남의 실패를 보고 가는 사람이 덜 잃는구나.",
-            "곰들이 산책을 다녀와 제 밥상을 본 것뿐인데 놀란 쪽이 오히려 곰들이었던 것을 보면, 누가 손님이고 누가 주인인지는 자리가 정하는구나."
+            "세 형제가 저마다 훌륭한 요술 물건을 하나씩 얻은 것을 보면, 누구에게나 제 몫의 복이 돌아오는구나."
         ],
         "answer": 3
     }
@@ -996,7 +996,7 @@ const EN = {
                 "The two elder brothers spread it out in front of the whole inn, and that is how the landlord knew — showing off is the same as telling.",
                 "The youngest never said what was in the sack — saying nothing is a move of its own.",
                 "He won not because his gift was better but because he knew where his brothers had lost theirs — the one who watches others fail loses less.",
-                "The bears had only come back from a walk to their own table, and it was the bears who got the fright — who is guest and who is host is decided by whose house it is."
+                "Each of the three brothers came home with a fine magic gift — everyone gets the share of luck that is due to them."
             ],
             answer: 3
         }

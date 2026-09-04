@@ -501,7 +501,7 @@ const QUIZ = [
             "어리석은 사람에게는 안 보인다는 한마디가 아무도 말을 못 하게 만든 것을 보면, 말을 막는 데는 힘이 아니라 조건 하나면 되는구나.",
             "신하들이 거짓말을 하려던 것이 아니라 저만 못 보는 줄 알고 겁이 난 것을 보면, 다들 같은 처지인 줄 모르는 것이 무서운 일이구나.",
             "아이가 용감해서가 아니라 그 규칙을 몰랐기에 말한 것을 보면, 모르는 사람이 오히려 바로 보기도 하는구나.",
-            "저녁을 여러 번 함께한 뒤에야 무서운 얼굴이 달리 보인 것을 보면, 사람을 알아보는 데는 시간이 드는구나."
+            "아이가 벌거벗었다고 소리치자 사람들이 수군거린 것을 보면, 용기 있는 한 사람만 있으면 세상이 곧 바뀌는구나."
         ],
         "answer": 3
     }
@@ -882,7 +882,7 @@ const EN = {
                 "One line — that fools cannot see it — was enough to stop everyone speaking; it takes a condition, not force, to silence people.",
                 "The courtiers were not lying but afraid they alone could not see — the danger was that none of them knew the others were the same.",
                 "The child spoke not out of courage but because nobody had told him the rule — the one who does not know can see straight.",
-                "Only after many evenings together did the frightening face look different — it takes time to see a person differently."
+                "The child called out and the crowd began to murmur — one brave voice and the whole thing changes at once."
             ],
             answer: 3
         }
