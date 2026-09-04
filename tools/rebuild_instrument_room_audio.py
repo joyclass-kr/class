@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MIXDOWN = Path(r"E:\Cubase Projects\가상악기만들기\Mixdown")
 AUDIO = ROOT / "learning" / "arts" / "instrument-room" / "assets" / "audio"
 APP = ROOT / "learning" / "arts" / "instrument-room" / "app.js"
-BITRATE = "128k"
+BITRATE = "192k"
 
 
 SOURCES = {
@@ -55,6 +55,10 @@ SOURCES = {
     "pyeonjong": "pyeonjong.mp3",
     "pyeongyeong": "pyeongyeong.mp3",
     "ocarina": "ocarina.mp3",
+    "recorder-piccolo": "recorder piccolo.mp3",
+    "recorder-soprano": "recorder soprano.mp3",
+    "recorder-alto": "recorder alto.mp3",
+    "recorder-tenor": "recorder tenor.mp3",
     "flute": "flute.mp3",
     "oboe": "oboe.mp3",
     "trumpet": "trumpet.mp3",
@@ -124,6 +128,10 @@ FIRST_INDEX = {
     "sogeum": 2,
     "pyeongyeong": 25,
     "ocarina": 13,
+    "recorder-piccolo": 6,
+    "recorder-soprano": 1,
+    "recorder-alto": 30,
+    "recorder-tenor": 1,
 }
 
 

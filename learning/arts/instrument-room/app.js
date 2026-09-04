@@ -13,8 +13,8 @@
     const KEYBOARD_SAMPLE_CACHE_LIMIT = 112;
     const RANGE_PRELOAD_CONCURRENCY = 3;
     // Each decoded file gets its own onset measurement.
-    // Playback keeps a 3 ms lead-in so the natural attack remains intact.
-    const SAMPLED_NOTE_ATTACK_LEAD = .003;
+    // Keep a generous lead-in so breath, bow and pick transients are not shaved.
+    const SAMPLED_NOTE_ATTACK_LEAD = .012;
 
     const KEYBOARD_SAMPLE_SETS = Object.freeze({
         "concert-grand": Object.freeze({ id: "concert-grand", root: "assets/audio/concert-grand/", min: 21, max: 108, fileMin: 21, step: 1, gainDb: 6.03 }),
@@ -57,6 +57,10 @@
         "pyeonjong": Object.freeze({ id: "pyeonjong", root: "assets/audio/pyeonjong/", min: 60, max: 75, fileMin: 21, step: 1, gainDb: 9, startOffset: 0 }),
         "pyeongyeong": Object.freeze({ id: "pyeongyeong", root: "assets/audio/pyeongyeong/", min: 72, max: 87, fileMin: 21, step: 1, gainDb: 9, startOffset: 0 }),
         "ocarina": Object.freeze({ id: "ocarina", root: "assets/audio/ocarina/", min: 60, max: 86, fileMin: 21, step: 1, gainDb: -8.89, startOffset: 0, loopStart: 1.1, loopEnd: 3.8 }),
+        "recorder-piccolo": Object.freeze({ id: "recorder-piccolo", root: "assets/audio/recorder-piccolo/", min: 77, max: 104, fileMin: 21, step: 1, gainDb: 0.7 }),
+        "recorder-soprano": Object.freeze({ id: "recorder-soprano", root: "assets/audio/recorder-soprano/", min: 72, max: 101, fileMin: 21, step: 1, gainDb: 2.0 }),
+        "recorder-alto": Object.freeze({ id: "recorder-alto", root: "assets/audio/recorder-alto/", min: 65, max: 89, fileMin: 21, step: 1, gainDb: 7.1 }),
+        "recorder-tenor": Object.freeze({ id: "recorder-tenor", root: "assets/audio/recorder-tenor/", min: 60, max: 84, fileMin: 21, step: 1, gainDb: 6.2 }),
         "flute": Object.freeze({ id: "flute", root: "assets/audio/flute/", min: 60, max: 96, fileMin: 21, step: 1, gainDb: 6.83 }),
         "oboe": Object.freeze({ id: "oboe", root: "assets/audio/oboe/", min: 58, max: 91, fileMin: 21, step: 1, gainDb: 4.35 }),
         "trumpet": Object.freeze({ id: "trumpet", root: "assets/audio/trumpet/", min: 52, max: 97, fileMin: 21, step: 1, gainDb: -2.92 }),
@@ -159,7 +163,7 @@
 
     // The official XLN Audio AD2 keymap assigns note 49 to HiHat Closed 1 Tip.
     // Keep this revision in the URL so a previously cached, mis-mapped hat cannot survive a remap.
-    const AUDIO_SAMPLE_REVISION = "20260902-hq192-v2";
+    const AUDIO_SAMPLE_REVISION = "20260905-original-timbre-v3";
     const AD2_DRUM_SAMPLE_REVISION = "20260902-ad2-original-balance-v2";
 
     // One uniform scalar per kit preserves the relative balance printed in the source mix.
@@ -264,6 +268,10 @@
             { id: "piccolo-flute", name: "피콜로", tag: "AIR JET · HIGH", engine: "guitar", stage: "wind", art: "assets/instruments/piccolo-flute-expressive-v2.webp", badge: "37-NOTE OGG", model: "PICCOLO FLUTE", range: [72, 108], size: "전체 길이 약 33 cm", visualScale: .28, scalePercent: 18, expression: "호흡 압력", description: "새 피콜로 원음 C5–C8을 반음마다 연주해요." },
             { id: "flute", name: "플루트", tag: "AIR JET", engine: "guitar", stage: "wind", art: "assets/instruments/flute-expressive.png", badge: "37-NOTE OGG", model: "CONCERT FLUTE", range: [60, 96], size: "전체 길이 약 67 cm", visualScale: .46, scalePercent: 37, expression: "호흡 압력", description: "플루트 원음 C4–C7을 반음마다 연주해요." },
             { id: "ocarina", name: "오카리나", tag: "VESSEL FLUTE", engine: "guitar", stage: "wind", art: "assets/instruments/ocarina-concert-v1.webp", badge: "27-NOTE OGG", model: "OCARINA", range: [60, 86], size: "본체 길이 약 17 cm", visualScale: .38, scalePercent: 9, expression: "호흡 압력", description: "오카리나 원음 C4–D6을 반음마다 연주하고 누르는 동안 소리를 이어 가요." },
+            { id: "recorder-piccolo", name: "피콜로 리코더", tag: "DUCT FLUTE · PICCOLO", engine: "guitar", stage: "wind", art: "assets/instruments/recorder-piccolo-v1.webp", badge: "28-NOTE OGG", model: "PICCOLO RECORDER", range: [77, 104], size: "전체 길이 약 24 cm", visualScale: .3, scalePercent: 13, expression: "호흡 압력", description: "피콜로 리코더 원음 F5–G♯7을 반음마다 연주해요." },
+            { id: "recorder-soprano", name: "소프라노 리코더", tag: "DUCT FLUTE · SOPRANO", engine: "guitar", stage: "wind", art: "assets/instruments/recorder-soprano-v1.webp", badge: "30-NOTE OGG", model: "SOPRANO RECORDER", range: [72, 101], size: "전체 길이 약 32 cm", visualScale: .36, scalePercent: 18, expression: "호흡 압력", description: "소프라노 리코더 원음 C5–F7을 반음마다 연주해요." },
+            { id: "recorder-alto", name: "알토 리코더", tag: "DUCT FLUTE · ALTO", engine: "guitar", stage: "wind", art: "assets/instruments/recorder-alto-v1.webp", badge: "25-NOTE OGG", model: "ALTO RECORDER", range: [65, 89], size: "전체 길이 약 48 cm", visualScale: .43, scalePercent: 27, expression: "호흡 압력", description: "알토 리코더 원음 F4–F6을 반음마다 연주해요." },
+            { id: "recorder-tenor", name: "테너 리코더", tag: "DUCT FLUTE · TENOR", engine: "guitar", stage: "wind", art: "assets/instruments/recorder-tenor-v1.webp", badge: "25-NOTE OGG", model: "TENOR RECORDER", range: [60, 84], size: "전체 길이 약 65 cm", visualScale: .52, scalePercent: 36, expression: "호흡 압력", description: "테너 리코더 원음 C4–C6을 반음마다 연주해요." },
             { id: "oboe", name: "오보에", tag: "DOUBLE REED", engine: "guitar", stage: "wind", art: "assets/instruments/oboe-expressive.png", badge: "34-NOTE OGG", model: "OBOE", range: [58, 91], size: "전체 길이 약 65 cm", visualScale: .45, scalePercent: 36, expression: "호흡 압력", description: "새 오보에 원음 A♯3–G6을 반음마다 연주해요." },
             { id: "english-horn", name: "잉글리시 호른", tag: "DOUBLE REED · ALTO", engine: "guitar", stage: "wind", art: "assets/instruments/english-horn-expressive-v2.webp", badge: "42-NOTE OGG", model: "ENGLISH HORN", range: [49, 90], size: "전체 길이 약 81 cm", visualScale: .54, scalePercent: 45, expression: "호흡 압력", description: "오보에보다 낮고 어두운 잉글리시 호른 원음을 연주해요." },
             { id: "clarinet", name: "클라리넷", tag: "SINGLE REED", engine: "guitar", stage: "wind", art: "assets/instruments/clarinet-expressive.png", badge: "48-NOTE OGG", model: "CLARINET", range: [48, 95], size: "전체 길이 약 66 cm", visualScale: .46, scalePercent: 37, expression: "호흡 압력", description: "클라리넷 원음 C3–B6을 반음마다 연주해요." },
@@ -530,7 +538,7 @@
         if (!buffer) return 0;
         const cached = state.sampleStartOffsets.get(buffer);
         if (Number.isFinite(cached)) return cached;
-        const threshold = Math.max(.0005, decodedBufferPeak(buffer) * .0015);
+        const threshold = Math.max(.00004, decodedBufferPeak(buffer) * .00008);
         const scanLength = Math.min(buffer.length, Math.ceil(buffer.sampleRate * .12));
         let onset = 0;
         scan: for (let index = 0; index < scanLength; index += 1) {
@@ -884,7 +892,7 @@
         const velocityGain = Math.max(.08, Math.min(1.7, Math.pow(velocity, .9) * 1.22 * highNoteCompensation));
         const peak = volumeOnlyGain(buffer, velocityGain * calibratedGain);
         const decay = pluckedKeyboardDecay(sampleSet);
-        const heldTone = sampleSet === "hammond-organ" || sampleSet === "pipe-organ" || ["flute", "oboe", "trumpet", "piccolo-trumpet", "clarinet", "bass-clarinet", "piccolo-flute", "french-horn", "english-horn", "soprano-sax", "saxophone", "tenor-sax", "baritone-sax", "bassoon", "contrabassoon", "flugelhorn", "alto-trombone", "trombone", "bass-trombone", "euphonium", "tuba", "violin", "viola", "cello", "upright-bass", "haegeum", "haegeum-vibrato", "daegeum", "daegeum-vibrato", "hyangpiri", "hyangpiri-vibrato", "taepyeongso", "yanggeum-tremolo", "ajaeng", "ajaeng-vibrato", "sogeum", "danso", "danso-vibrato", "hun", "ocarina"].includes(sampleSet);
+        const heldTone = sampleSet === "hammond-organ" || sampleSet === "pipe-organ" || ["flute", "oboe", "trumpet", "piccolo-trumpet", "clarinet", "bass-clarinet", "piccolo-flute", "french-horn", "english-horn", "soprano-sax", "saxophone", "tenor-sax", "baritone-sax", "bassoon", "contrabassoon", "flugelhorn", "alto-trombone", "trombone", "bass-trombone", "euphonium", "tuba", "violin", "viola", "cello", "upright-bass", "haegeum", "haegeum-vibrato", "daegeum", "daegeum-vibrato", "hyangpiri", "hyangpiri-vibrato", "taepyeongso", "yanggeum-tremolo", "ajaeng", "ajaeng-vibrato", "sogeum", "danso", "danso-vibrato", "hun", "ocarina", "recorder-piccolo", "recorder-soprano", "recorder-alto", "recorder-tenor"].includes(sampleSet);
         source.buffer = buffer;
         source.playbackRate.value = Math.pow(2, (midi - anchor) / 12);
         if (heldTone && buffer.duration > 1.25) {
@@ -904,7 +912,7 @@
         const voice = { source, gain, anchor, sampleSet, sampleKey: sampleSet + ":" + anchor, sampledPiano: true, released: false, held: false, percussiveDecay: decay };
         state.pianoVoices.set(midi, voice);
         source.onended = function () { if (state.pianoVoices.get(midi) === voice) state.pianoVoices.delete(midi); };
-        const configuredOffset = sampleConfig && Number.isFinite(sampleConfig.startOffset) && sampleConfig.startOffset > 0 ? sampleConfig.startOffset : null;
+        const configuredOffset = sampleConfig && Number.isFinite(sampleConfig.startOffset) ? Math.max(0, sampleConfig.startOffset) : null;
         const startOffset = configuredOffset === null ? decodedBufferStartOffset(buffer) : configuredOffset;
         source.start(now, Math.min(startOffset, Math.max(0, buffer.duration - .01)));
         if (decay) source.stop(now + decay + .08);
@@ -2133,7 +2141,9 @@
             state.stringPreset = "clean";
             elements.toneSlider.value = 69; elements.muteSlider.value = 5; elements.pickSlider.value = 24; elements.driveSlider.value = 12;
         } else if (instrument === "piano") state.keyboardOctave = 4;
-        if (state.currentModel && Array.isArray(state.currentModel.range)) {
+        if (state.family === "keyboard") {
+            state.keyboardOctave = 4;
+        } else if (state.currentModel && Array.isArray(state.currentModel.range)) {
             const start = state.currentModel.range[0];
             const end = state.currentModel.range[1];
             const target = start + Math.round((end - start) * 0.2);

@@ -50,7 +50,7 @@ test('keeps the instrument header compact and hides normal audio status', () => 
   assert.doesNotMatch(html, /LOCAL PHYSICAL INSTRUMENTS|level-bars/);
   assert.doesNotMatch(app, /소리 준비됨/);
   assert.match(html, /id="audioButton"[^>]*>소리 켜기<\/button>/);
-  assert.match(css, /\.topbar \{ height: 50px;/);
+  assert.match(css, /\.topbar \{ position: fixed;/);
   assert.match(app, /audioButton\.classList\.add\("hidden"\)/);
   assert.match(app, /audioButton\.classList\.remove\("hidden"\)/);
 });
@@ -94,7 +94,7 @@ test('keyboard models use compact per-note Ogg multisamples with recorded range 
   }
   assert.match(app, /fileMin: 21/);
   assert.match(app, /GRAND_SAMPLE_STEP = 1/);
-  assert.match(app, /KEYBOARD_SAMPLE_CACHE_LIMIT = 24/);
+  assert.match(app, /KEYBOARD_SAMPLE_CACHE_LIMIT = 112/);
   assert.match(app, /range: \[21, 108\]/);
   assert.match(app, /state\.family === "keyboard"/);
   assert.match(app, /\(state\.keyboardOctave \+ 1\) \* 12/);
@@ -216,6 +216,10 @@ test('new Korean, ocarina, court chime, and tam-tam sources use their recorded r
 
 test('completed orchestral renders use compact note-grid Ogg samples', () => {
   for (const [folder, count, first, last] of [
+    ['recorder-piccolo', 28, '057_f5.ogg', '084_gs7.ogg'],
+    ['recorder-soprano', 30, '052_c5.ogg', '081_f7.ogg'],
+    ['recorder-alto', 25, '045_f4.ogg', '069_f6.ogg'],
+    ['recorder-tenor', 25, '040_c4.ogg', '064_c6.ogg'],
     ['flute', 37, '040_c4.ogg', '076_c7.ogg'],
     ['oboe', 34, '038_as3.ogg', '071_g6.ogg'],
     ['trumpet', 46, '032_e3.ogg', '077_cs7.ogg'],
@@ -382,7 +386,7 @@ test('percussion library includes dedicated kits and essential orchestral instru
   assert.doesNotMatch(app, /DRUM_PERCEPTUAL_TRIM_DB|perceptualTrimDb/);
   assert.match(app, /sampledVelocity \* Math\.pow\(10, gainDb \/ 20\)/);
   assert.match(drumSplitSource, /parser\.add_argument\("--bitrate", default="192k"\)/);
-  assert.match(app, /const AUDIO_SAMPLE_REVISION = "20260902-hq192-v2"/);
+  assert.match(app, /const AUDIO_SAMPLE_REVISION = "20260905-original-timbre-v3"/);
   assert.match(app, /const AD2_DRUM_SAMPLE_REVISION = "20260902-ad2-original-balance-v2"/);
   assert.match(app, /config\.root \+ id \+ "\.ogg" \+ sampleRevision/);
   assert.match(app, /function playSampledDrum/);
@@ -468,7 +472,7 @@ test('string and expressive families expose virtual-instrument presentation', ()
 });
 
 test('project-bound instrument artwork exists', () => {
-  for (const asset of ['bass-p-style.png', 'bass-j-style.png', 'bass-active-five.png', 'bass-fretless.png', 'guitar-s-style.png', 'guitar-metal-seven.png', 'guitar-hollowbody-jazz.png', 'guitar-dreadnought.png', 'guitar-classical-nylon.png', 'drum-rock-kit.webp', 'drum-metal-kit.webp', 'drum-pop-kit.webp', 'drum-jazz-kit.webp', 'drum-funk-kit.webp', 'violin-expressive-v2.webp', 'viola-expressive-v2.webp', 'cello-expressive.png', 'double-bass-expressive.png', 'flute-expressive.png', 'oboe-expressive.png', 'clarinet-expressive.png', 'bassoon-expressive.png', 'contrabassoon-expressive.webp', 'alto-sax-expressive.png', 'soprano-sax-expressive-v2.webp', 'tenor-sax-expressive-v2.webp', 'baritone-sax-expressive-v2.webp', 'bass-clarinet-expressive-v2.webp', 'piccolo-flute-expressive-v2.webp', 'english-horn-expressive-v2.webp', 'trumpet-expressive.png', 'flugelhorn-expressive.webp', 'euphonium-expressive.webp', 'trombone-expressive.png', 'alto-trombone-expressive-v2.webp', 'bass-trombone-expressive-v2.webp', 'french-horn-expressive.png', 'tuba-expressive-v2.webp', 'harp-concert-v2.webp', 'piccolo-trumpet-expressive.webp', 'timpani-bank.png', 'glockenspiel-concert.png', 'marimba-concert.png', 'vibraphone-concert.png', 'xylophone-compact-concert.webp', 'orchestral-percussion-station.png', 'korean-gayageum.png', 'korean-geomungo.png', 'korean-haegeum-v2.webp', 'korean-ajaeng.png', 'korean-daegeum.png', 'korean-hyangpiri.png', 'korean-taepyeongso.png', 'korean-samulnori-station.png', 'korean-janggu-samul.webp', 'korean-janggu-sanjo.webp', 'korean-buk-samul.webp', 'korean-buk-sori.webp']) {
+  for (const asset of ['bass-p-style.png', 'bass-j-style.png', 'bass-active-five.png', 'bass-fretless.png', 'guitar-s-style.png', 'guitar-metal-seven.png', 'guitar-hollowbody-jazz.png', 'guitar-dreadnought.png', 'guitar-classical-nylon.png', 'drum-rock-kit.webp', 'drum-metal-kit.webp', 'drum-pop-kit.webp', 'drum-jazz-kit.webp', 'drum-funk-kit.webp', 'violin-expressive-v2.webp', 'viola-expressive-v2.webp', 'cello-expressive.png', 'double-bass-expressive.png', 'flute-expressive.png', 'oboe-expressive.png', 'clarinet-expressive.png', 'bassoon-expressive.png', 'contrabassoon-expressive.webp', 'alto-sax-expressive.png', 'soprano-sax-expressive-v2.webp', 'tenor-sax-expressive-v2.webp', 'baritone-sax-expressive-v2.webp', 'bass-clarinet-expressive-v2.webp', 'piccolo-flute-expressive-v2.webp', 'english-horn-expressive-v2.webp', 'trumpet-expressive.png', 'flugelhorn-expressive.webp', 'euphonium-expressive.webp', 'trombone-expressive.png', 'alto-trombone-expressive-v2.webp', 'bass-trombone-expressive-v2.webp', 'french-horn-expressive.png', 'tuba-expressive-v2.webp', 'harp-concert-v2.webp', 'piccolo-trumpet-expressive.webp', 'timpani-bank.png', 'glockenspiel-concert.png', 'marimba-concert.png', 'vibraphone-concert.png', 'xylophone-compact-concert.webp', 'orchestral-percussion-station.png', 'korean-gayageum.png', 'korean-geomungo.png', 'korean-haegeum-v2.webp', 'korean-ajaeng.png', 'korean-daegeum.png', 'korean-hyangpiri.png', 'korean-taepyeongso.png', 'korean-samulnori-station.png', 'korean-janggu-samul.webp', 'korean-janggu-sanjo.webp', 'korean-buk-samul.webp', 'korean-buk-sori.webp', 'recorder-piccolo-v1.webp', 'recorder-soprano-v1.webp', 'recorder-alto-v1.webp', 'recorder-tenor-v1.webp']) {
     assert.equal(fs.existsSync(path.join(root, 'assets', 'instruments', asset)), true, asset);
   }
 });
@@ -524,7 +528,7 @@ test('provides complete long-form guides for every model and grouped instrument'
     'fm-dx7', 'jd800', 'hybrid-la-rhodes', 'hybrid-la-mks', 'hammond-organ', 'pipe-organ',
     'p-bass', 'j-bass', 'active-bass',
     'fretless-bass', 'upright-bass', 's-style', 'metal-seven', 'hollow-jazz', 'dreadnought',
-    'classical-guitar', 'violin', 'viola', 'cello', 'harp', 'piccolo-flute', 'flute', 'oboe',
+    'classical-guitar', 'violin', 'viola', 'cello', 'harp', 'recorder-piccolo', 'recorder-soprano', 'recorder-alto', 'recorder-tenor', 'piccolo-flute', 'flute', 'oboe',
     'english-horn', 'clarinet', 'bass-clarinet', 'bassoon', 'contrabassoon', 'soprano-sax', 'saxophone', 'tenor-sax', 'baritone-sax',
     'trumpet', 'piccolo-trumpet', 'flugelhorn', 'alto-trombone', 'trombone', 'bass-trombone', 'french-horn', 'euphonium', 'tuba',
     'rock-kit', 'metal-kit',
@@ -551,13 +555,15 @@ test('provides complete long-form guides for every model and grouped instrument'
 
 test('sample playback preserves attacks with per-file onset detection', () => {
   assert.match(app, /function decodedBufferStartOffset/);
-  assert.match(app, /SAMPLED_NOTE_ATTACK_LEAD = \.003/);
+  assert.match(app, /SAMPLED_NOTE_ATTACK_LEAD = \.012/);
+  assert.match(app, /Number\.isFinite\(sampleConfig\.startOffset\) \? Math\.max\(0, sampleConfig\.startOffset\) : null/);
   assert.match(app, /configuredOffset === null \? decodedBufferStartOffset\(buffer\)/);
   assert.doesNotMatch(app, /SAMPLED_NOTE_START_OFFSET|source\.start\(now, Math\.min\(\.012/);
 });
 
 test('pitched ranges align computer keys and hide shortcuts outside the range', () => {
-  assert.match(app, /Math\.floor\(state\.currentModel\.range\[0\] \/ 12\) - 1/);
+  assert.match(app, /state\.family === "keyboard"[\s\S]*?state\.keyboardOctave = 4/);
+  assert.match(app, /start \+ Math\.round\(\(end - start\) \* 0\.2\)/);
   assert.match(app, /key\.dataset\.shortcut = unavailable \? ""/);
 });
 
