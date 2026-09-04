@@ -22,6 +22,8 @@ for (const s of slugs) {
     const hits = [];
     Q.forEach((q, i) => {
         tot++;
+        // 「읽고 난 반응으로 알맞지 않은 것」은 답이 본문에 없는 것이 정상이다.
+        if (q.wide) return;
         const ans = String(q.choices[q.answer]).replace(/["'…·,.!?]/g, '');
         // 답의 뼈대 낱말이 본문에 있는지 본다
         const words = (ans.match(/[가-힣]{2,}/g) || []);
