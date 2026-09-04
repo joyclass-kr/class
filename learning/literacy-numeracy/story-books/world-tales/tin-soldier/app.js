@@ -507,10 +507,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "주석이 모자라 마지막에 부은 병정이 다리가 하나였던 것을 보면, 못 만든 것이 아니라 남은 것으로 만든 것이구나.",
-            "무희가 한 다리를 높이 들고 있었을 뿐인데 병정이 다리가 하나인 줄 안 것을 보면, 사람은 제게 없는 것을 먼저 보는구나.",
-            "하수구를 지나고 물고기 배 속까지 가면서도 총을 메고 앞만 본 것을 보면, 할 수 있는 것이 그것뿐일 때도 그것을 하는구나.",
-            "병정이 그 먼 길을 가면서 한 번도 소리를 내지 않은 것을 보면, 힘든 일은 말하지 않고 견디는 것이 옳은 일이구나."
+            "병정이 무희도 다리가 하나인 줄 안 것을 보면, 제게 없는 것을 먼저 본 것이구나.",
+            "물고기 뱃속처럼 비좁은 데서도 어깨를 편 것을 보면, 할 수 있는 것이 그것뿐이었던 것이구나.",
+            "재 속에 주석 하트와 그을린 반짝이가 나란히 남은 것을 보면, 둘이 잠깐이나마 함께 있었던 것이구나.",
+            "한 아이가 병정을 난롯불에 던진 것을 보면, 물에 젖은 병정을 말려 주려 한 것이구나."
         ],
         "answer": 3
     }
@@ -976,10 +976,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "There was not enough tin for the last one, so he had one leg — he was not badly made; he was made from what was left.",
-                "The dancer was only holding one leg high, and he took her for one-legged like himself — you see first what you lack.",
-                "Through the drain and inside the fish he kept his musket up and faced forward — when that is all you can do, you do it.",
-                "The soldier never made a sound the whole way — the right thing to do with hardship is to bear it and say nothing."
+                "He took the dancer for one-legged like himself — what he saw first was the thing he lacked.",
+                "Even squeezed inside the fish he kept his shoulders back — that was the only thing left he could do.",
+                "A little tin heart and a blackened spangle lay together in the ashes — the two of them had been together, if only for a moment.",
+                "One of the children threw him into the stove — they were drying him out after all that water."
             ],
             answer: 3
         }

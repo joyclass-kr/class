@@ -516,10 +516,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "이가 빠지고 턱이 굳은 인형을 마리만 안고 다닌 것을 보면, 남이 거들떠보지 않는 것을 아끼는 눈이 따로 있구나.",
-            "싸움이 벌어졌을 때 마리가 숨지 않고 신발을 벗어 던진 것을 보면, 한 번의 몸짓이 판을 가르기도 하는구나.",
-            "어른들이 꿈을 꾼 것이라 하고 이야기는 끝까지 딱 잘라 말하지 않는 것을 보면, 누가 옳은지 정하지 않고 두는 이야기도 있구나.",
-            "마리가 호두까기 인형을 아껴 준 덕에 인형이 제 모습을 되찾은 것을 보면, 아껴 주면 무엇이든 본디 모습을 찾는구나."
+            "마리가 손수건을 풀어 인형의 턱을 감아 준 것을 보면, 부러진 것을 그냥 두지 못한 것이구나.",
+            "마리가 신고 있던 신발을 벗어 던진 것을 보면, 인형이 밀리는 것을 보고 몸이 먼저 움직인 것이구나.",
+            "아침에 부러졌던 턱이 멀쩡했던 것을 보면, 이야기가 그날 밤 일을 딱 잘라 말하지 않은 것이구나.",
+            "프리츠가 인형을 툭 놓고 가 버린 것을 보면, 제가 부러뜨린 것이 미안해 자리를 피한 것이구나."
         ],
         "answer": 3
     }
@@ -948,10 +948,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "Only Marie carried about the doll with the broken teeth and the stiff jaw — there is an eye that values what others pass over.",
-                "When the fighting began she did not hide; she threw her shoe — one movement can turn the whole thing.",
-                "The grown-ups called it a dream, and the story never says outright who was right — some stories leave that undecided on purpose.",
-                "Marie cared for the nutcracker and he was himself again — care for a thing and it comes back to what it truly is."
+                "Marie untied her handkerchief and bound up the broken jaw — she could not leave it as it was.",
+                "She pulled off the shoe she was wearing and threw it — she moved before she had thought about it.",
+                "In the morning the broken jaw was whole again — the story never says outright what happened that night.",
+                "Fritz put the doll down and walked off — he was ashamed of breaking it and made himself scarce."
             ],
             answer: 3
         }

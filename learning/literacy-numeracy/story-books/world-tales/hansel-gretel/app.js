@@ -487,10 +487,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "조약돌은 그대로 있었지만 빵 부스러기는 새들이 먹어 버린 것을 보면, 같은 꾀라도 무엇으로 하느냐에 따라 갈리는구나.",
-            "숲에서는 헨젤이 앞장섰는데 과자집에서는 그레텔이 앞장선 것을 보면, 앞에 설 사람은 자리에 따라 바뀌는구나.",
-            "과자집이 배고픈 아이가 가장 못 참을 것으로 지어져 있던 것을 보면, 덫은 그 사람이 제일 바라는 모양을 하고 있구나.",
-            "헨젤이 두 번째 밤에도 빵 부스러기를 뿌려 둔 것을 보면, 미리 준비를 해 두면 어떤 일이든 막을 수 있구나."
+            "헨젤이 지붕 위 고양이를 보고 있었다고 둘러댄 것을 보면, 조약돌 떨어뜨리는 것을 들키지 않으려 한 것이구나.",
+            "그레텔이 제 빵을 반으로 떼어 오빠 손에 쥐여 준 것을 보면, 오빠가 무엇을 하려는지 알아챈 것이구나.",
+            "그레텔이 어떻게 들어가는지 모르겠다고 한 것을 보면, 시치미를 떼고 때를 기다린 것이구나.",
+            "헨젤이 우리 안에서 닭 뼈다귀를 내민 것을 보면, 눈이 어두운 할머니를 딱하게 여겨 도와준 것이구나."
         ],
         "answer": 3
     }
@@ -848,10 +848,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "The pebbles stayed put but the birds ate the breadcrumbs — the same plan turns on what you make it of.",
-                "Hansel led the way in the wood, and Gretel led at the gingerbread house — who goes first changes with the place.",
-                "The house was built of the one thing a starving child could not walk past — a trap is shaped like whatever you want most.",
-                "Hansel scattered crumbs the second night as well — prepare in advance and nothing can go wrong."
+                "Hansel said he was looking at the cat on the roof — he was covering up the pebbles he kept dropping.",
+                "Gretel broke her own bread in half and put it in his hand — she had understood what he meant to do.",
+                "Gretel said she did not know how to get in — she was playing dumb and waiting for her moment.",
+                "Hansel held out a chicken bone from the cage — he felt sorry for the half-blind old woman and was helping her."
             ],
             answer: 3
         }

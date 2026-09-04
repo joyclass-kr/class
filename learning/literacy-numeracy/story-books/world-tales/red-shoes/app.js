@@ -513,10 +513,10 @@ const QUIZ = [
         "q": "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         "wide": true,
         "choices": [
-            "눈이 어두운 부인이 못 본 줄 알면서도 카렌이 말하지 않은 것을 보면, 말하지 않는 것도 고르는 일이구나.",
-            "그만두고 싶어도 발이 저절로 움직인 것을 보면, 한번 시작한 것이 나를 끌고 가기도 하는구나.",
-            "구두가 벗겨진 것이 붙잡아 앉히고 물 한 그릇을 떠 준 아주머니 덕분인 것을 보면, 멈추는 데도 곁이 필요하구나.",
-            "숲속 아주머니가 붙잡아 앉혀 준 덕에 카렌이 멈춘 것을 보면, 곤란할 때는 가만히 있으면 누군가 도와주는구나."
+            "부인이 검은 구두인 줄 알고 값을 치른 것을 보면, 눈이 어두워 빛깔을 보지 못한 것이구나.",
+            "예배당에서 앞에서 하는 말이 하나도 들리지 않은 것을 보면, 머릿속이 온통 구두 생각이었던 것이구나.",
+            "아주머니가 붙잡아 앉히자 발이 잠시 멈춘 것을 보면, 곁에 누가 있어야 멈출 수 있었던 것이구나.",
+            "구둣방 아저씨가 빙그레 웃은 것을 보면, 카렌이 좋은 것을 골랐다며 흐뭇해한 것이구나."
         ],
         "answer": 3
     }
@@ -981,10 +981,10 @@ const EN = {
             q: 'Which reaction to this book does NOT fit?',
             wide: true,
             choices: [
-                "She knew the old lady's eyes were failing and said nothing — saying nothing is also something you choose.",
-                "She wanted to stop and her feet went on by themselves — a thing once begun can start carrying you.",
-                "The shoes came off after a woman sat her down and brought her a bowl of water — stopping takes someone beside you.",
-                "Karen stopped because a woman in the wood took hold of her and sat her down — in trouble, stay still and someone will help you."
+                "The old lady paid, thinking they were black — her eyes were too weak to make out the colour.",
+                "In church she did not hear a word of what was said — her head was entirely full of the shoes.",
+                "Her feet stopped for a moment when the woman took hold of her — she needed someone beside her to stop.",
+                "The shoemaker smiled — he was pleased that Karen had made a good choice."
             ],
             answer: 3
         }
