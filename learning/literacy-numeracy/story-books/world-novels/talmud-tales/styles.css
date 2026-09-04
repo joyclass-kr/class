@@ -658,21 +658,3 @@ body {
     padding-top: 9px;
     padding-bottom: 9px;
 }
-
-/* 문제를 처음부터 다시 풀기 — 진행 글 옆의 작은 단추. 손가락 목표 44px. */
-.quiz-reset {
-    display: inline-block;
-    min-height: 44px;
-    margin-left: 8px;
-    padding: 0 14px;
-    font: inherit;
-    font-size: 0.9em;
-    color: inherit;
-    background: none;
-    border: 1px solid currentColor;
-    border-radius: 10px;
-    cursor: pointer;
-    vertical-align: middle;
-}
-.quiz-reset:hover { background: rgba(0, 0, 0, 0.06); }
-.quiz-reset[hidden] { display: none; }

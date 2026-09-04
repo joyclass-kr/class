@@ -736,27 +736,10 @@ const QUIZ = [
 // 쪽을 쪼개 놓으면 쪽마다 절반이 비고, 답을 고르려고 여러 번 넘겨야 한다.
 const QUIZ_GROUPS = [{ from: 0, items: QUIZ }];
 
-// 푼 문항은 쪽을 넘겼다 와도, 책을 나갔다 다시 들어와도 그대로 남아야 한다.
-// 그래서 고른 답과 틀린 보기를 이 브라우저에 저장해 둔다.
-const QUIZ_STORE_KEY = 'novel-quiz:' + location.pathname;
-function loadQuizState() {
-    try {
-        const d = JSON.parse(localStorage.getItem(QUIZ_STORE_KEY));
-        if (d && Array.isArray(d.picked) && d.picked.length === QUIZ.length && Array.isArray(d.wrong)) return d;
-    } catch (e) { /* 저장이 막힌 곳도 있다 */ }
-    return null;
-}
-const QUIZ_SAVED = loadQuizState();
-const QUIZ_PICKED = QUIZ_SAVED
-    ? QUIZ_SAVED.picked.map(v => (v === null ? null : Number(v)))
-    : new Array(QUIZ.length).fill(null);
+// 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
+const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
 // 틀리게 고른 보기도 기억해 두어, 돌아와도 빨간 채로 남는다.
-const QUIZ_WRONG = QUIZ.map((q, i) => new Set(QUIZ_SAVED && Array.isArray(QUIZ_SAVED.wrong[i]) ? QUIZ_SAVED.wrong[i].map(Number) : []));
-function saveQuizState() {
-    try {
-        localStorage.setItem(QUIZ_STORE_KEY, JSON.stringify({ picked: QUIZ_PICKED, wrong: QUIZ_WRONG.map(s => [...s]) }));
-    } catch (e) { /* 저장이 막힌 곳도 있다 */ }
-}
+const QUIZ_WRONG = QUIZ.map(() => new Set());
 
 // 보기 차례는 책을 열 때마다 섞는다. 몇 번째가 답인지 외우지 못하게 하려는 것이다.
 function shuffledOrder(n) {
@@ -787,7 +770,7 @@ function quizPage(part) {
     }).join('');
     return `<div class="page page-quiz">
  ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
- <p class="quiz-intro-text"><span id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</span> <button type="button" class="quiz-reset" id="quizReset"${done ? '' : ' hidden'}>처음부터 다시 풀기</button></p>
+ <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
  <div class="quiz-list">${items}</div>
  </div>`;
 }
@@ -967,13 +950,6 @@ function paint() {
 
 function initQuiz() {
     const progressEl = document.getElementById('quizProgress');
-    const resetEl = document.getElementById('quizReset');
-    if (resetEl) resetEl.addEventListener('click', () => {
-        QUIZ_PICKED.fill(null);
-        QUIZ_WRONG.forEach(s => s.clear());
-        saveQuizState();
-        paint();
-    });
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
@@ -986,16 +962,13 @@ function initQuiz() {
                 if (chosen !== q.answer) {
                     btn.classList.add('incorrect');
                     QUIZ_WRONG[qi].add(chosen);
-                    saveQuizState();
                     return;
                 }
                 btn.classList.add('correct');
                 item.classList.add('graded');
                 QUIZ_PICKED[qi] = chosen;
-                saveQuizState();
                 const done = QUIZ_PICKED.filter(v => v !== null).length;
                 progressEl.textContent = `${done} / 총 ${QUIZ.length}문항 완료`;
-                if (resetEl) resetEl.hidden = false;
             });
         });
     });
