@@ -859,7 +859,8 @@ const QUIZ = [
     { q: "산적 굴에 갇힌 당글라르가 잃은 것은 무엇입니까?", choices: ["한쪽 눈의 시력", "은행의 자리", "가져온 돈 전부"], answer: 2 },
     { q: "빌포르의 지난 잘못이 드러난 곳은 어디입니까?", choices: ["귀족들이 모인 자리", "자기가 서 있던 법정", "신문에 실린 기사"], answer: 1 },
     { q: "백작이 발랑틴에게 한 일은 무엇입니까?", choices: ["죽은 것처럼 꾸며 섬에 숨겼다", "약을 구해 병을 고쳐 주었다", "집을 나오게 해 멀리 보냈다"], answer: 0 },
-    { q: "백작이 마지막 편지에 남긴 두 마디는 무엇입니까?", choices: ["기다리고 바라라", "믿고 나아가라", "잊고 용서하라"], answer: 0 }
+    { q: "백작이 마지막 편지에 남긴 두 마디는 무엇입니까?", choices: ["기다리고 바라라", "믿고 나아가라", "잊고 용서하라"], answer: 0 },
+    { q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?", wide: true, choices: ["당테스가 약혼식 자리에서 끌려간 것을 보면, 가진 것을 다 보여 준 다음 하루 만에 빼앗는 순서로 짜 놓았구나.", "당테스가 감옥에서 나와 아버지와 메르세데스부터 찾은 것을 보면, 갚을 사람보다 잃은 사람이 먼저였구나.", "열네 해 뒤에 스스로 지은 이름을 쓴 것을 보면, 이 책은 사람 하나가 제 이름을 버리는 이야기이기도 하구나.", "당테스가 감옥을 나오자마자 세 사람을 찾아가 그날로 갚은 것을 보면, 열네 해를 기다린 사람답게 서둘렀구나."], answer: 3 }
 ];
 
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
@@ -882,7 +883,7 @@ function quizPage(part) {
             : '';
         return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
- <div class="quiz-choices">
+ <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
  ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;

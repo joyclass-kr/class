@@ -1242,7 +1242,8 @@ const QUIZ = [
     { q: "소작농들은 결국 왜 쫓겨났나요?", choices: ["농사를 못 지어서", "보낸 이를 다 해쳐서", "종들을 두들겨 패서"], answer: 1 },
     { q: "기름을 못 챙긴 처녀들은 어떻게 됐나요?", choices: ["문이 닫혔다", "기름을 빌렸다", "등불을 켰다"], answer: 0 },
     { q: "예복 없이 온 손님은 임금의 물음에 어떻게 했나요?", choices: ["초대받았다고 했다", "아무 대답도 못 했다", "예복을 입고 왔다"], answer: 1 },
-    { q: "곳간을 새로 지은 부자는 어떻게 됐나요?", choices: ["오래오래 누렸다", "그날 밤 세상을 떠났다", "곳간이 무너졌다"], answer: 1 }
+    { q: "곳간을 새로 지은 부자는 어떻게 됐나요?", choices: ["오래오래 누렸다", "그날 밤 세상을 떠났다", "곳간이 무너졌다"], answer: 1 },
+    { q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?", wide: true, choices: ["다친 사람 앞에 멈춰 선 것이 유대 사람들이 제일 낮춰 보던 사마리아 사람이었던 것을 보면, 누가 이웃이냐보다 누가 이웃이 되어 주느냐가 물음이었구나.", "아버지가 둘째 아들의 사과를 다 듣기도 전에 달려 나간 것을 보면, 이 이야기에서 제일 마음이 복잡한 사람은 집을 지킨 첫째였겠구나.", "한 달란트를 땅에 묻은 종이 벌을 받은 것이 돈을 잃어버렸기 때문인 것을 보면, 맡은 것은 무엇보다 잃지 않는 게 먼저구나.", "비가 오기 전에는 반석 위의 집과 모래 위의 집이 똑같아 보였던 것을 보면, 차이는 눈에 안 보이는 아래쪽에 있었구나."], answer: 2 }
 ];
 
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
@@ -1266,7 +1267,7 @@ function quizPage(part) {
         return `
         <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
                 ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
             </div>
         </div>`;

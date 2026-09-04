@@ -1368,7 +1368,8 @@ const QUIZ = [
     { q: "현자는 왕자를 어떻게 도왔나요?", choices: ["약을 지어줬다", "같이 닭 흉내 냈다", "엄하게 혼냈다"], answer: 1 },
     { q: "배 위의 노인은 왜 다 같이 위험하다고 말했나요?", choices: ["배가 낡아서", "모두 가라앉아서", "물이 새어서"], answer: 1 },
     { q: "아키바는 무엇을 보고 배움을 결심했나요?", choices: ["오래된 책", "돌에 파인 구멍", "선생님 말씀"], answer: 1 },
-    { q: "아이가 알려준 '가깝지만 먼' 길은 실제로 어떤 길이었나요?", choices: ["가깝고 편한 길", "가깝지만 막힌 길", "전혀 다른 먼 길"], answer: 1 }
+    { q: "아이가 알려준 '가깝지만 먼' 길은 실제로 어떤 길이었나요?", choices: ["가깝고 편한 길", "가깝지만 막힌 길", "전혀 다른 먼 길"], answer: 1 },
+    { q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?", wide: true, choices: ["소금을 진 당나귀가 물에 빠져 짐이 가벼워진 걸 배웠다가 솜을 지고 그렇게 한 것을 보면, 배운 게 틀린 게 아니라 통하는 자리가 따로 있었구나.", "제일 가까이 지낸 친구가 제일 먼저 등을 돌린 것을 보면, 누가 정말 친구인지는 아쉬울 때 드러나는구나.", "한 다리로 서서 배우겠다는 손님을 두 스승이 다 내쫓은 것을 보면, 그 물음은 누가 들어도 무례한 물음이었구나.", "나그네가 닭 머리를 아버지에게, 다리를 두 아들에게, 몸통을 제 몫으로 나눈 것을 보면, 공평하게 나누겠다는 말이 꼭 똑같이 나누겠다는 말은 아니었구나."], answer: 2 }
 ];
 
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
@@ -1392,7 +1393,7 @@ function quizPage(part) {
         return `
         <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
-            <div class="quiz-choices">
+            <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
                 ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
             </div>
         </div>`;

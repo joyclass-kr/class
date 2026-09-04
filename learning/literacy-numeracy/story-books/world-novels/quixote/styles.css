@@ -620,3 +620,11 @@ body {
     align-items: center;
     box-sizing: border-box;
 }
+
+/* 감상 문제처럼 보기가 긴 것은 왼쪽 맞춤에 줄간을 넉넉히 둔다. */
+.quiz-choices-stack .quiz-choice {
+    text-align: left;
+    line-height: 1.5;
+    padding-top: 9px;
+    padding-bottom: 9px;
+}

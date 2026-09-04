@@ -840,7 +840,8 @@ const QUIZ = [
     { q: "어머니가 조에게 다시 쓰라며 권한 것은 무엇입니까?", choices: ["아버지의 전쟁 이야기", "베스에 대한 이야기", "네 자매의 어린 시절"], answer: 1 },
     { q: "유럽에서 로리와 결혼한 사람은 누구입니까?", choices: ["에이미", "조", "메그"], answer: 0 },
     { q: "조가 마치 대고모에게 물려받은 집을 어떻게 했습니까?", choices: ["식구들과 옮겨 가 살았다", "팔아서 살림에 보탰다", "아이들 학교로 만들었다"], answer: 2 },
-    { q: "그 학교에서 조가 지킨 원칙은 무엇입니까?", choices: ["아이들끼리 규칙을 정하게 했다", "돈을 못 내는 아이도 똑같이 대했다", "공부는 하루 두 시간만 시켰다"], answer: 1 }
+    { q: "그 학교에서 조가 지킨 원칙은 무엇입니까?", choices: ["아이들끼리 규칙을 정하게 했다", "돈을 못 내는 아이도 똑같이 대했다", "공부는 하루 두 시간만 시켰다"], answer: 1 },
+    { q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?", wide: true, choices: ["네 자매가 선물 없는 성탄절 아침밥을 이웃에게 갖다 준 것을 보면, 없는 집이 더 없는 집을 먼저 보았구나.", "에이미가 조의 원고를 불에 넣은 다음 날 조가 얼음 깨진 강에 빠진 에이미를 본 것을 보면, 미운 마음과 무서운 마음이 한꺼번에 왔겠구나.", "조가 로리의 마음을 받아들여 옆집으로 시집간 것을 보면, 어릴 적 단짝이 그대로 짝이 되었구나.", "조가 글을 팔아 집에 돈을 보낸 것을 보면, 조에게 글쓰기는 꿈이기 전에 살림이었구나."], answer: 2 }
 ];
 
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
@@ -863,7 +864,7 @@ function quizPage(part) {
             : '';
         return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
- <div class="quiz-choices">
+ <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
  ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;

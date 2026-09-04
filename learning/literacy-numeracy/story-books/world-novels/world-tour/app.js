@@ -891,7 +891,8 @@ const QUIZ = [
     { q: "오마하까지 그들을 데려다준 것은 무엇입니까?", choices: ["얻어 탄 짐마차", "개가 끄는 썰매", "돛을 단 눈썰매"], answer: 2 },
     { q: "헨리에타 호는 무엇을 태워 바다를 건넜습니까?", choices: ["선원들이 쓰던 가구", "실려 있던 목화 더미", "배에 붙은 나무 부분"], answer: 2 },
     { q: "포그가 오 분을 늦었다고 여긴 까닭은 무엇입니까?", choices: ["런던 시계가 늦게 가고 있어서", "동쪽으로 돌아 하루를 벌어서", "배가 하루 먼저 닿았기 때문에"], answer: 1 },
-    { q: "포그가 이 여행에서 끝내 얻은 것은 무엇입니까?", choices: ["클럽에서 얻은 이름", "함께 살 사람 하나", "이만 파운드의 돈"], answer: 1 }
+    { q: "포그가 이 여행에서 끝내 얻은 것은 무엇입니까?", choices: ["클럽에서 얻은 이름", "함께 살 사람 하나", "이만 파운드의 돈"], answer: 1 },
+    { q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?", wide: true, choices: ["포그가 인도에서 코끼리를 산 것을 보면, 포그에게 하루는 이천 파운드보다 비쌌구나.", "픽스 형사가 포그를 세계 끝까지 따라다닌 것을 보면, 은행 강도라고 믿으면 사람이 그렇게까지 하는구나.", "포그가 리버풀에서 쇠고랑을 차고 하루를 잃은 것을 보면, 팔십 일을 지킨 사람을 넘어뜨린 건 바다가 아니라 사람이었구나.", "포그가 팔십일 일 만에 돌아와 내기에 진 것을 보면, 시계처럼 산 사람도 하루는 못 이기는구나."], answer: 3 }
 ];
 
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
@@ -914,7 +915,7 @@ function quizPage(part) {
             : '';
         return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
- <div class="quiz-choices">
+ <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
  ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;

@@ -749,7 +749,8 @@ const QUIZ = [
     { q: "짐이 밤에 몰래 배로 가서 한 일은 무엇입니까?", choices: ["매어 둔 닻줄을 끊었다", "화약통을 물에 던졌다", "돛을 내리고 숨었다"], answer: 0 },
     { q: "이즈리얼 핸즈가 밧줄 더미에서 꺼내 감춘 것은 무엇입니까?", choices: ["총알이 든 작은 통", "날이 긴 단검 하나", "접어 둔 보물 지도"], answer: 1 },
     { q: "어둠 속 통나무집에서 짐이 온 것을 알린 것은 무엇입니까?", choices: ["문 앞에 매둔 방울", "잠들지 않은 보초 하나", "실버가 기르던 앵무새"], answer: 2 },
-    { q: "보물을 미리 파내어 옮겨 놓은 사람은 누구입니까?", choices: ["먼저 온 리브지 선생님", "섬에 남겨졌던 벤 건", "죽기 전의 플린트 선장"], answer: 1 }
+    { q: "보물을 미리 파내어 옮겨 놓은 사람은 누구입니까?", choices: ["먼저 온 리브지 선생님", "섬에 남겨졌던 벤 건", "죽기 전의 플린트 선장"], answer: 1 },
+    { q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?", wide: true, choices: ["짐이 사과 통 속에서 실버의 말을 들은 것을 보면, 이 이야기에서 제일 중요한 일은 섬이 아니라 배 안에서 벌어졌구나.", "선장이 그렇게 무서워한 외다리 사내가 웃는 얼굴로 짐을 맞은 것을 보면, 무서운 사람은 무섭게 생기지 않았구나.", "벤 건이 보물을 그 자리에 그대로 두고 지킨 것을 보면, 혼자 남은 사람은 남의 것에 손을 안 대는구나.", "구덩이가 비어 있는 걸 본 해적들이 실버에게 등을 돌린 것을 보면, 실버 곁에 선 사람들은 보물 곁에 선 사람들이었구나."], answer: 2 }
 ];
 
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
@@ -772,7 +773,7 @@ function quizPage(part) {
             : '';
         return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
- <div class="quiz-choices">
+ <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
  ${item.choices.map((c, ci) =>`<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
  </div>
  </div>`;
