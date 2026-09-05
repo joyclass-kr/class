@@ -967,3 +967,235 @@ footer a {
         transition: none !important;
     }
 }
+
+/* 차시 학습 */
+.mode-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.mode-card {
+    min-height: 150px;
+}
+
+.lesson-panel,
+.study-panel {
+    text-align: left;
+}
+
+.lesson-panel h2,
+.study-panel h2 {
+    text-align: center;
+}
+
+.lesson-panel .lead,
+.study-panel .lead,
+.study-panel .mode-kicker {
+    text-align: center;
+}
+
+.lesson-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lesson-card {
+    display: grid;
+    width: 100%;
+    min-height: 74px;
+    grid-template-columns: 58px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 2px solid #c1a176;
+    border-radius: 8px;
+    background: #fffdf7;
+    color: var(--ink);
+    text-align: left;
+    cursor: pointer;
+}
+
+.lesson-card:hover,
+.lesson-card:focus-visible {
+    border-color: #855021;
+    background: #fff0d2;
+    transform: translateY(-2px);
+}
+
+.lesson-card.is-done {
+    border-color: #8fb79c;
+    background: #f1f8f3;
+}
+
+.lesson-card.is-perfect {
+    border-color: var(--green);
+    background: var(--green-light);
+}
+
+.lesson-number {
+    color: #8d5524;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+}
+
+.lesson-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.lesson-copy strong {
+    font-size: 17px;
+    line-height: 1.3;
+    word-break: keep-all;
+}
+
+.lesson-copy small {
+    overflow: hidden;
+    color: var(--muted-ink);
+    font-size: 13px;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.lesson-meta {
+    color: #70411f;
+    font-size: 13px;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.lesson-card.is-done .lesson-meta {
+    color: #155734;
+}
+
+.study-card {
+    margin: 0 auto;
+    padding: 26px clamp(18px, 4vw, 34px) 24px;
+    border: 2px solid #c1a176;
+    border-radius: 8px;
+    background: #fffdf7;
+    text-align: center;
+}
+
+.study-count {
+    margin: 0 0 14px;
+    color: var(--muted-ink);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.study-pair {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: center;
+    gap: 10px 22px;
+    margin-bottom: 18px;
+}
+
+.study-right {
+    color: #155734;
+    font-size: clamp(30px, 6vw, 42px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+}
+
+.study-right::before {
+    margin-right: 6px;
+    color: var(--green);
+    font-size: 0.7em;
+    content: "○";
+}
+
+.study-wrong {
+    color: #822a25;
+    font-size: clamp(20px, 4vw, 26px);
+    font-weight: 800;
+    text-decoration: line-through;
+    text-decoration-thickness: 3px;
+}
+
+.study-wrong::before {
+    margin-right: 6px;
+    font-size: 0.8em;
+    text-decoration: none;
+    content: "×";
+}
+
+.study-sentence {
+    margin: 0 auto 12px;
+    font-size: clamp(19px, 3.6vw, 24px);
+    line-height: 1.55;
+    word-break: keep-all;
+}
+
+.study-explanation {
+    margin: 0 auto;
+    max-width: 560px;
+    color: var(--muted-ink);
+    font-size: 16px;
+    line-height: 1.7;
+    word-break: keep-all;
+}
+
+.study-nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.study-nav .primary-button,
+.study-nav .secondary-button {
+    min-width: 150px;
+}
+
+.study-panel .text-button {
+    margin-top: 10px;
+}
+
+@media (max-width: 720px) {
+    .mode-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .lesson-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 620px) {
+    .lesson-card {
+        grid-template-columns: 52px minmax(0, 1fr);
+    }
+
+    .lesson-meta {
+        grid-column: 2;
+    }
+
+    .study-nav {
+        flex-direction: column;
+    }
+
+    .study-nav > * {
+        width: 100%;
+    }
+}
+
+a.mode-card {
+    color: var(--ink);
+    text-decoration: none;
+}
+
+a.mode-card strong,
+a.mode-card span,
+a.mode-card small {
+    text-decoration: none;
+}

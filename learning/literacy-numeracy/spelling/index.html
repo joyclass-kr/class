@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#24150c">
     <title>한글 맞춤법</title>
-    <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
-    <link rel="stylesheet" href="styles.css">
-    <script src="../../../assets/network/game-network.js?v=20260821" defer></script>
-    <script src="../../../assets/network/multiplayer-lobby.js" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260905-1">
     <script src="questions.js" defer></script>
     <script src="questions-extra.js" defer></script>
+    <script src="lessons.js" defer></script>
     <script src="question-deck.js" defer></script>
     <script src="../../../assets/sound/music-control.js?v=20260825-compact-vertical-1" defer></script>
     <script src="app.js" defer></script>
@@ -21,8 +19,8 @@
         <nav class="topbar" aria-label="페이지 기능">
             <a class="back-link" href="../../../" aria-label="메인 화면으로 돌아가기">←</a>
             <div class="topbar-actions">
-                <div class="record" aria-label="개인 모드 최고 기록">
-                    <span>개인 최고 기록</span>
+                <div class="record" aria-label="무작위 10문제 최고 기록">
+                    <span>무작위 최고 기록</span>
                     <strong id="headerBestScore">0/10</strong>
                 </div>
             </div>
@@ -32,25 +30,57 @@
             <section id="modeScreen" class="panel start-panel mode-panel" aria-labelledby="modeTitle">
                 <h2 id="modeTitle" class="sr-only">학습 방식 선택</h2>
                 <div class="mode-grid">
+                    <button id="lessonModeButton" class="mode-card" type="button">
+                        <strong>차시 학습</strong>
+                        <span><span data-lesson-count>33</span>차시로 나누어 규칙을 익히고 바로 확인해요. 끝낸 차시에는 표시가 남아요.</span>
+                        <small>LESSONS</small>
+                    </button>
                     <button id="personalModeButton" class="mode-card" type="button">
-                        <strong>개인 모드</strong>
-                        <span>230문제를 차례로 풀며, 한 바퀴 전에는 같은 문제가 다시 나오지 않아요.</span>
-                        <small>PERSONAL MODE</small>
+                        <strong>전체 무작위 10문제</strong>
+                        <span><span data-question-count>230</span>문제에서 10문제씩 나와요. 한 바퀴 전에는 같은 문제가 다시 나오지 않아요.</span>
+                        <small>RANDOM 10</small>
                     </button>
-                    <button id="classModeButton" class="mode-card" type="button">
-                        <strong>학급 단체전 · 순위 모드</strong>
-                        <span>학급 코드로 참가해 정답 수와 완료 시간으로 순위를 겨뤄요.</span>
-                        <small>CLASS RANKING MODE</small>
-                    </button>
+                    <a id="classRaceLink" class="mode-card" href="../../class-race/">
+                        <strong>학급 순위전</strong>
+                        <span>선생님이 연 학급 순위전 방으로 갑니다. 맞춤법을 비롯한 여러 앱의 문제를 학급이 함께 풀어요.</span>
+                        <small>CLASS RACE</small>
+                    </a>
                 </div>
-                <a class="teacher-link" href="teacher">교사용 학급 만들기·순위판 →</a>
+            </section>
+
+            <section id="lessonScreen" class="panel start-panel lesson-panel hidden" aria-labelledby="lessonTitle">
+                <h2 id="lessonTitle">차시 학습</h2>
+                <p id="lessonProgressSummary" class="lead"></p>
+                <ol id="lessonList" class="lesson-list" aria-label="차시 목록"></ol>
+                <button class="text-button mode-back-button" type="button">← 방식 다시 선택</button>
+            </section>
+
+            <section id="studyScreen" class="panel start-panel study-panel hidden" aria-labelledby="studyLessonTitle">
+                <p id="studyKicker" class="mode-kicker"></p>
+                <h2 id="studyLessonTitle"></h2>
+                <p id="studyNote" class="lead"></p>
+                <div class="study-card">
+                    <p class="study-count"><span id="studyIndex">1</span> / <span id="studyTotal">1</span></p>
+                    <div class="study-pair">
+                        <span id="studyRight" class="study-right"></span>
+                        <span id="studyWrong" class="study-wrong"></span>
+                    </div>
+                    <p id="studySentence" class="study-sentence"></p>
+                    <p id="studyExplanation" class="study-explanation"></p>
+                </div>
+                <div class="study-nav">
+                    <button id="studyPrevButton" class="secondary-button" type="button">이전</button>
+                    <button id="studyNextButton" class="primary-button" type="button">다음</button>
+                </div>
+                <button id="studySkipButton" class="text-button" type="button">바로 확인 문제 풀기</button>
+                <button id="studyBackButton" class="text-button" type="button">← 차시 목록</button>
             </section>
 
             <section id="personalScreen" class="panel start-panel hidden" aria-labelledby="personalTitle">
                 <span class="seal" aria-hidden="true">나</span>
-                <p class="mode-kicker">개인 모드</p>
+                <p class="mode-kicker">전체 무작위 10문제</p>
                 <h2 id="personalTitle">둘 중 맞는 표현을 골라요</h2>
-                <p class="lead">230문제 중 10문제씩 나와요. 전체 문제를 한 번씩 풀기 전에는 같은 문제가 다시 나오지 않아요.</p>
+                <p class="lead"><span data-question-count>230</span>문제 중 10문제씩 나와요. 전체 문제를 한 번씩 풀기 전에는 같은 문제가 다시 나오지 않아요.</p>
                 <div class="category-list" aria-label="출제 영역">
                     <span>표준어</span>
                     <span>준말</span>
@@ -58,39 +88,11 @@
                     <span>띄어쓰기</span>
                     <span>사이시옷</span>
                     <span>외래어 표기</span>
+                    <span>소리와 표기</span>
                 </div>
-                <button id="personalStartButton" class="primary-button" type="button">개인 학습 시작</button>
+                <button id="personalStartButton" class="primary-button" type="button">무작위 10문제 시작</button>
                 <button class="text-button mode-back-button" type="button">← 방식 다시 선택</button>
                 <p class="keyboard-tip">컴퓨터에서는 숫자 1·2로도 답을 고를 수 있어요.</p>
-            </section>
-
-            <section id="missingScreen" class="panel start-panel hidden" aria-labelledby="missingTitle">
-                <span class="seal" aria-hidden="true">명</span>
-                <h2 id="missingTitle">이름을 먼저 저장해 주세요</h2>
-                <p class="lead">학급 순위에는 메인 화면에서 저장한 한글 이름이 표시됩니다.</p>
-                <a class="primary-button" href="../../../">메인에서 이름 저장</a>
-                <button class="text-button mode-back-button" type="button">← 방식 다시 선택</button>
-            </section>
-
-            <section id="lobbyScreen" class="panel start-panel class-lobby hidden" aria-labelledby="classLobbyTitle">
-                <h2 id="classLobbyTitle" class="sr-only">학급 참가</h2>
-                <div id="joinPane" class="join-pane">
-                    <label for="joinCode"><strong id="savedName"></strong> 님 · 학급 코드 4자리</label>
-                    <div class="join-row">
-                        <input id="joinCode" class="room-code-input" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="0000">
-                        <button id="joinBtn" class="primary-button" type="button">학급 참가</button>
-                    </div>
-                    <p id="joinStatus" class="lobby-status" role="status">교사가 만든 학급 코드를 입력하세요.</p>
-                </div>
-
-                <div id="classWaitingPanel" class="waiting-panel hidden">
-                    <div class="room-badge">학급 코드 <strong id="studentRoomCode">----</strong></div>
-                    <h3>교사의 시작을 기다리고 있어요</h3>
-                    <div id="lobbyPlayers" class="mp-lobby-players" aria-label="참가 학생"></div>
-                    <p id="lobbyGuide" class="lobby-status">학급에 연결하는 중입니다.</p>
-                </div>
-
-                <button id="leaveClassButton" class="text-button" type="button">← 학급에서 나가기</button>
             </section>
 
             <section id="quizScreen" class="quiz-screen hidden" aria-labelledby="questionText">
@@ -98,7 +100,7 @@
                     <div>
                         <span id="quizModeLabel" class="mode-status">개인 모드</span>
                         <span class="status-label">문제</span>
-                        <strong><span id="questionNumber">1</span>/10</strong>
+                        <strong><span id="questionNumber">1</span>/<span id="questionTotal">10</span></strong>
                     </div>
                     <div class="score-box">
                         <span class="status-label">점수</span>
@@ -125,21 +127,14 @@
             </section>
 
             <section id="resultScreen" class="panel result-panel hidden" aria-labelledby="resultTitle">
-                <p class="eyebrow">LEARNING COMPLETE</p>
+                <p id="resultEyebrow" class="eyebrow">LEARNING COMPLETE</p>
                 <h2 id="resultTitle">학습 결과</h2>
                 <div class="score-medallion" aria-label="최종 점수">
                     <strong id="finalScore">0</strong>
-                    <span>/ 10</span>
+                    <span>/ <span id="finalTotal">10</span></span>
                 </div>
                 <p id="resultMessage" class="result-message"></p>
                 <p id="bestMessage" class="best-message"></p>
-
-                <div id="classRankArea" class="class-rank-area hidden">
-                    <div id="myRankCard" class="my-rank-card">순위를 집계하고 있어요.</div>
-                    <h3>학급 순위</h3>
-                    <ol id="classRankingList" class="ranking-list"></ol>
-                    <p id="rankingWaiting" class="ranking-waiting"></p>
-                </div>
 
                 <div id="reviewArea" class="review-area">
                     <h3>나의 오답노트</h3>
@@ -149,6 +144,8 @@
 
                 <div class="result-actions">
                     <button id="restartButton" class="primary-button" type="button">새 문제 풀기</button>
+                    <button id="nextLessonButton" class="primary-button hidden" type="button">다음 차시</button>
+                    <button id="lessonListButton" class="secondary-button hidden" type="button">차시 목록</button>
                     <button id="resultModeButton" class="secondary-button" type="button">방식 다시 선택</button>
                     <a class="secondary-button" href="../../../">메인으로</a>
                 </div>
