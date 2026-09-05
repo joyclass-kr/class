@@ -75,6 +75,10 @@
     {
       id: "2023-06", year: 2023, round: "6월", label: "2023학년도 6월",
       source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500236&m=0403&s=suneung"
+    },
+    {
+      id: "2022-suneung", year: 2022, round: "수능", label: "2022학년도 수능",
+      source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500234&m=0403&s=suneung"
     }
   ];
 
@@ -1979,6 +1983,157 @@
       short: true,
       answer: 19,
       help: R`\(x\to-3\)일 때 \(g(x)\to g(-3)=0\)이므로 분자는 \(\sqrt{\bigl|g(x)\bigr|+\{g(t)\}^{2}}-\bigl|g(t)\bigr|\)로, \(g(t)\ne 0\)이면 \(0\)으로 간다. 이때 분자를 유리화하면 \(\bigl|g(x)\bigr|\)가 통째로 남으므로, 극한이 있는지 없는지는 \(\bigl|g(x)\bigr|\)가 \((x+3)^{2}\)만큼 빠르게 \(0\)으로 가느냐로 갈린다.`
+    },
+    {
+      id: "2022-suneung-9", exam: "2022-suneung", no: 9, score: 4,
+      units: ["m1-explog"], memo: "평행이동한 두 지수 곡선과 한 직선",
+      body: R`직선 \(y=2x+k\)가 두 함수
+        \[y=\left(\frac{2}{3}\right)^{x+3}+1,\qquad y=\left(\frac{2}{3}\right)^{x+1}+\frac{8}{3}\]
+        의 그래프와 만나는 점을 각각 \(\mathrm{P}\), \(\mathrm{Q}\)라 하자. \(\overline{\mathrm{PQ}}=\sqrt{5}\)일 때,
+        상수 \(k\)의 값은?`,
+      figure: "2022-suneung-9.webp",
+      choices: [R`\(\dfrac{31}{6}\)`, R`\(\dfrac{16}{3}\)`, R`\(\dfrac{11}{2}\)`, R`\(\dfrac{17}{3}\)`, R`\(\dfrac{35}{6}\)`],
+      answer: 4,
+      help: R`두 점이 기울기 \(2\)인 같은 직선 위에 있으므로 \(x\)좌표 차를 \(d\)라 하면 \(y\)좌표 차는 \(2d\)이고 \(\overline{\mathrm{PQ}}=|d|\sqrt{5}\)다. 곧 \(\overline{\mathrm{PQ}}=\sqrt{5}\)에서 두 점의 \(x\)좌표 차가 \(1\)로 못박힌다.`
+    },
+    {
+      id: "2022-suneung-10", exam: "2022-suneung", no: 10, score: 4,
+      units: ["m2-diff"], memo: "두 접선이 일치할 조건",
+      body: R`삼차함수 \(f(x)\)에 대하여 곡선 \(y=f(x)\) 위의 점 \((0,\,0)\)에서의
+        접선과 곡선 \(y=xf(x)\) 위의 점 \((1,\,2)\)에서의 접선이 일치할 때,
+        \(f'(2)\)의 값은?`,
+      choices: [R`\(-18\)`, R`\(-17\)`, R`\(-16\)`, R`\(-15\)`, R`\(-14\)`],
+      answer: 5,
+      help: R`\((0,\,0)\)이 \(y=f(x)\) 위의 점이니 \(f(0)=0\)이고, \((1,\,2)\)가 \(y=xf(x)\) 위의 점이니 \(f(1)=2\)다. 그리고 첫 접선은 원점을 지나므로, 두 접선이 일치하려면 둘째 접선도 원점을 지나야 한다.`
+    },
+    {
+      id: "2022-suneung-11", exam: "2022-suneung", no: 11, score: 4,
+      units: ["m1-trig"], memo: "원점 대칭인 탄젠트 곡선과 정삼각형",
+      body: R`양수 \(a\)에 대하여 집합 \(\left\{x\ \middle|\ -\dfrac{a}{2}<x\le a,\ x\ne\dfrac{a}{2}\right\}\)에서
+        정의된 함수
+        \[f(x)=\tan\frac{\pi x}{a}\]
+        가 있다. 그림과 같이 함수 \(y=f(x)\)의 그래프 위의
+        세 점 \(\mathrm{O}\), \(\mathrm{A}\), \(\mathrm{B}\)를 지나는 직선이 있다. 점 \(\mathrm{A}\)를 지나고 \(x\)축에
+        평행한 직선이 함수 \(y=f(x)\)의 그래프와 만나는 점 중 \(\mathrm{A}\)가
+        아닌 점을 \(\mathrm{C}\)라 하자. 삼각형 \(\mathrm{ABC}\)가 정삼각형일 때,
+        삼각형 \(\mathrm{ABC}\)의 넓이는? (단, \(\mathrm{O}\)는 원점이다.)`,
+      figure: "2022-suneung-11.webp",
+      choices: [R`\(\dfrac{3\sqrt{3}}{2}\)`, R`\(\dfrac{17\sqrt{3}}{12}\)`, R`\(\dfrac{4\sqrt{3}}{3}\)`, R`\(\dfrac{5\sqrt{3}}{4}\)`, R`\(\dfrac{7\sqrt{3}}{6}\)`],
+      answer: 3,
+      help: R`\(f(x)=\tan\frac{\pi x}{a}\)는 원점에 대하여 대칭이므로, 원점을 지나는 직선이 그래프와 만나는 두 점 \(\mathrm{A}\), \(\mathrm{B}\)도 원점에 대하여 대칭이다. 곧 \(\mathrm{O}\)가 선분 \(\mathrm{AB}\)의 중점이고, 정삼각형이라는 조건에서 \(\overline{\mathrm{CO}}\)가 \(\overline{\mathrm{AB}}\)에 수직임이 따라온다.`
+    },
+    {
+      id: "2022-suneung-12", exam: "2022-suneung", no: 12, score: 4,
+      units: ["m2-limit"], memo: "인수분해로 세 갈래가 되는 함수",
+      body: R`실수 전체의 집합에서 연속인 함수 \(f(x)\)가 모든 실수 \(x\)에
+        대하여
+        \[\bigl\{f(x)\bigr\}^{3}-\bigl\{f(x)\bigr\}^{2}-x^{2}f(x)+x^{2}=0\]
+        을 만족시킨다. 함수 \(f(x)\)의 최댓값이 \(1\)이고 최솟값이 \(0\)일 때,
+        \(f\left(-\dfrac{4}{3}\right)+f(0)+f\left(\dfrac{1}{2}\right)\)의 값은?`,
+      choices: [R`\(\dfrac{1}{2}\)`, R`\(1\)`, R`\(\dfrac{3}{2}\)`, R`\(2\)`, R`\(\dfrac{5}{2}\)`],
+      answer: 3,
+      help: R`좌변을 묶으면 \(\bigl(f(x)-1\bigr)\bigl(f(x)-x\bigr)\bigl(f(x)+x\bigr)=0\)이 된다. 곧 각 \(x\)마다 \(f(x)\)는 \(1\), \(x\), \(-x\) 셋 중 하나이고, \(f\)가 연속이며 최댓값 \(1\)·최솟값 \(0\)이라는 조건이 어느 조각을 어디서 쓸지 정해 준다.`
+    },
+    {
+      id: "2022-suneung-13", exam: "2022-suneung", no: 13, score: 4,
+      units: ["m1-explog"], memo: "밑만 다른 두 로그 점을 지나는 직선",
+      body: R`두 상수 \(a\), \(b\,(1<a<b)\)에 대하여 좌표평면 위의
+        두 점 \(\bigl(a,\,\log_{2}a\bigr)\), \(\bigl(b,\,\log_{2}b\bigr)\)를 지나는 직선의 \(y\)절편과
+        두 점 \(\bigl(a,\,\log_{4}a\bigr)\), \(\bigl(b,\,\log_{4}b\bigr)\)를 지나는 직선의 \(y\)절편이 같다.
+        함수 \(f(x)=a^{bx}+b^{ax}\)에 대하여 \(f(1)=40\)일 때, \(f(2)\)의 값은?`,
+      choices: [R`\(760\)`, R`\(800\)`, R`\(840\)`, R`\(880\)`, R`\(920\)`],
+      answer: 2,
+      help: R`\(\log_{4}x=\frac{1}{2}\log_{2}x\)이므로 두 번째 직선은 첫 번째 직선 위의 두 점의 \(y\)좌표를 절반으로 줄인 것이다. 두 직선의 \(y\)절편을 각각 \(a\), \(b\)로 써서 같게 놓으면 \(a^{b}=b^{a}\) 꼴의 관계가 나온다.`
+    },
+    {
+      id: "2022-suneung-14", exam: "2022-suneung", no: 14, score: 4,
+      units: ["m2-integ"], memo: "위치가 양 끝에서 0인 운동",
+      body: R`수직선 위를 움직이는 점 \(\mathrm{P}\)의 시각 \(t\)에서의 위치 \(x(t)\)가
+        두 상수 \(a\), \(b\)에 대하여
+        \[x(t)=t(t-1)(at+b)\quad(a\ne 0)\]
+        이다. 점 \(\mathrm{P}\)의 시각 \(t\)에서의 속도 \(v(t)\)가 \(\displaystyle\int_{0}^{1}\bigl|v(t)\bigr|\,dt=2\)를
+        만족시킬 때, &lt;보기&gt;에서 옳은 것만을 있는 대로 고른 것은?`,
+      noteTitle: "보 기",
+      note: [
+        R`ㄱ. \(\displaystyle\int_{0}^{1}v(t)\,dt=0\)`,
+        R`ㄴ. \(\bigl|x(t_{1})\bigr|>1\)인 \(t_{1}\)이 열린구간 \((0,\,1)\)에 존재한다.`,
+        R`ㄷ. \(0\le t\le 1\)인 모든 \(t\)에 대하여 \(\bigl|x(t)\bigr|<1\)이면 \(x(t_{2})=0\)인 \(t_{2}\)가 열린구간 \((0,\,1)\)에 존재한다.`
+      ],
+      choices: [R`ㄱ`, R`ㄱ, ㄴ`, R`ㄱ, ㄷ`, R`ㄴ, ㄷ`, R`ㄱ, ㄴ, ㄷ`],
+      answer: 3,
+      help: R`\(x(t)=t(t-1)(at+b)\)는 \(t=0\)과 \(t=1\)에서 모두 \(0\)이다. 그러니 \(\int_{0}^{1}v\,dt=x(1)-x(0)=0\)이고, 그런데도 \(\int_{0}^{1}|v|\,dt=2\)라는 것은 그 사이에 갔다가 되돌아왔다는 뜻이다.`
+    },
+    {
+      id: "2022-suneung-15", exam: "2022-suneung", no: 15, score: 4,
+      units: ["m1-trig"], memo: "반지름이 중심거리와 같은 두 원",
+      body: R`두 점 \(\mathrm{O_{1}}\), \(\mathrm{O_{2}}\)를 각각 중심으로 하고 반지름의 길이가 \(\overline{\mathrm{O_{1}O_{2}}}\)인
+        두 원 \(C_{1}\), \(C_{2}\)가 있다. 그림과 같이 원 \(C_{1}\) 위의 서로 다른 세 점
+        \(\mathrm{A}\), \(\mathrm{B}\), \(\mathrm{C}\)와 원 \(C_{2}\) 위의 점 \(\mathrm{D}\)가 주어져 있고, 세 점 \(\mathrm{A}\), \(\mathrm{O_{1}}\), \(\mathrm{O_{2}}\)와
+        세 점 \(\mathrm{C}\), \(\mathrm{O_{2}}\), \(\mathrm{D}\)가 각각 한 직선 위에 있다.
+        이때 \(\angle\mathrm{BO_{1}A}=\theta_{1}\), \(\angle\mathrm{O_{2}O_{1}C}=\theta_{2}\), \(\angle\mathrm{O_{1}O_{2}D}=\theta_{3}\)이라 하자.`,
+      figure: "2022-suneung-15.webp",
+      bodyAfter: R`다음은 \(\overline{\mathrm{AB}}:\overline{\mathrm{O_{1}D}}=1:2\sqrt{2}\)이고 \(\theta_{3}=\theta_{1}+\theta_{2}\)일 때, 선분 \(\mathrm{AB}\)와
+        선분 \(\mathrm{CD}\)의 길이의 비를 구하는 과정이다.
+        <div class="proof-box">
+        <p>\(\angle\mathrm{CO_{2}O_{1}}+\angle\mathrm{O_{1}O_{2}D}=\pi\)이므로 \(\theta_{3}=\dfrac{\pi}{2}+\dfrac{\theta_{2}}{2}\)이고</p>
+        <p>\(\theta_{3}=\theta_{1}+\theta_{2}\)에서 \(2\theta_{1}+\theta_{2}=\pi\)이므로 \(\angle\mathrm{CO_{1}B}=\theta_{1}\)이다.</p>
+        <p>이때 \(\angle\mathrm{O_{2}O_{1}B}=\theta_{1}+\theta_{2}=\theta_{3}\)이므로 삼각형 \(\mathrm{O_{1}O_{2}B}\)와 삼각형 \(\mathrm{O_{2}O_{1}D}\)는 합동이다.</p>
+        <p>\(\overline{\mathrm{AB}}=k\)라 할 때</p>
+        <p>\(\overline{\mathrm{BO_{2}}}=\overline{\mathrm{O_{1}D}}=2\sqrt{2}\,k\)이므로 \(\overline{\mathrm{AO_{2}}}=\fbox{(가)}\)이고,</p>
+        <p>\(\angle\mathrm{BO_{2}A}=\dfrac{\theta_{1}}{2}\)이므로 \(\cos\dfrac{\theta_{1}}{2}=\fbox{(나)}\)이다.</p>
+        <p>삼각형 \(\mathrm{O_{2}BC}\)에서 \(\overline{\mathrm{BC}}=k\), \(\overline{\mathrm{BO_{2}}}=2\sqrt{2}\,k\), \(\angle\mathrm{CO_{2}B}=\dfrac{\theta_{1}}{2}\)이므로 코사인법칙에 의하여 \(\overline{\mathrm{O_{2}C}}=\fbox{(다)}\)이다.</p>
+        <p>\(\overline{\mathrm{CD}}=\overline{\mathrm{O_{2}D}}+\overline{\mathrm{O_{2}C}}=\overline{\mathrm{O_{1}O_{2}}}+\overline{\mathrm{O_{2}C}}\)이므로</p>
+        \[\overline{\mathrm{AB}}:\overline{\mathrm{CD}}=k:\left(\frac{\fbox{(가)}}{2}+\fbox{(다)}\right)\]
+        <p>이다.</p>
+        </div>
+        위의 (가), (다)에 알맞은 식을 각각 \(f(k)\), \(g(k)\)라 하고,
+        (나)에 알맞은 수를 \(p\)라 할 때, \(f(p)\times g(p)\)의 값은?`,
+      choices: [R`\(\dfrac{169}{27}\)`, R`\(\dfrac{56}{9}\)`, R`\(\dfrac{167}{27}\)`, R`\(\dfrac{166}{27}\)`, R`\(\dfrac{55}{9}\)`],
+      answer: 2,
+      help: R`두 원의 반지름이 모두 \(\overline{\mathrm{O_{1}O_{2}}}\)로 같다는 것이 이 문제의 뼈대다. 그래서 \(\overline{\mathrm{O_{1}O_{2}}}=\overline{\mathrm{O_{1}B}}=\overline{\mathrm{O_{2}D}}\)가 되고, 과정 상자가 말하는 두 삼각형의 합동도 여기서 나온다.`
+    },
+    {
+      id: "2022-suneung-20", exam: "2022-suneung", no: 20, score: 4,
+      units: ["m2-integ", "m2-diff"], memo: "한 구간의 값이 다음 구간을 낳는 함수",
+      body: R`실수 전체의 집합에서 미분가능한 함수 \(f(x)\)가 다음 조건을
+        만족시킨다.`,
+      note: [
+        R`(가) 닫힌구간 \([0,\,1]\)에서 \(f(x)=x\)이다.`,
+        R`(나) 어떤 상수 \(a\), \(b\)에 대하여 구간 \([0,\,\infty)\)에서 \(f(x+1)-xf(x)=ax+b\)이다.`
+      ],
+      bodyAfter: R`\(60\times\displaystyle\int_{1}^{2}f(x)\,dx\)의 값을 구하시오.`,
+      short: true,
+      answer: 110,
+      help: R`(가)에서 \([0,\,1]\)의 값이 이미 정해져 있으므로, (나)에 \(x\)를 그 구간에서 잡으면 \(f(x+1)=xf(x)+ax+b=x^{2}+ax+b\)가 되어 \([1,\,2]\)에서의 \(f\)가 곧바로 나온다. 남은 것은 \(x=1\)에서 매끄럽게 이어져야 한다는 조건이다.`
+    },
+    {
+      id: "2022-suneung-21", exam: "2022-suneung", no: 21, score: 4,
+      units: ["m1-seq"], memo: "크기는 정해지고 부호만 고르는 수열",
+      body: R`수열 \(\{a_{n}\}\)이 다음 조건을 만족시킨다.`,
+      note: [
+        R`(가) \(\bigl|a_{1}\bigr|=2\)`,
+        R`(나) 모든 자연수 \(n\)에 대하여 \(\bigl|a_{n+1}\bigr|=2\bigl|a_{n}\bigr|\)이다.`,
+        R`(다) \(\displaystyle\sum_{n=1}^{10}a_{n}=-14\)`
+      ],
+      bodyAfter: R`\(a_{1}+a_{3}+a_{5}+a_{7}+a_{9}\)의 값을 구하시오.`,
+      short: true,
+      answer: 678,
+      help: R`(가)와 (나)에서 \(\bigl|a_{n}\bigr|=2^{n}\)이므로 각 항은 \(\pm 2^{n}\)이고 고를 것은 부호뿐이다. \(2^{10}=1024\)가 나머지 항들을 다 합친 것보다 크므로, 합이 \(-14\)가 되려면 큰 항의 부호부터 저절로 정해진다.`
+    },
+    {
+      id: "2022-suneung-22", exam: "2022-suneung", no: 22, score: 4,
+      units: ["m2-diff"], memo: "길이 2인 창에 든 도함수의 근 세기",
+      body: R`최고차항의 계수가 \(\dfrac{1}{2}\)인 삼차함수 \(f(x)\)와 실수 \(t\)에 대하여
+        방정식 \(f'(x)=0\)이 닫힌구간 \([t,\,t+2]\)에서 갖는 실근의 개수를
+        \(g(t)\)라 할 때, 함수 \(g(t)\)는 다음 조건을 만족시킨다.`,
+      note: [
+        R`(가) 모든 실수 \(a\)에 대하여 \(\displaystyle\lim_{t\to a+}g(t)+\lim_{t\to a-}g(t)\le 2\)이다.`,
+        R`(나) \(g\bigl(f(1)\bigr)=g\bigl(f(4)\bigr)=2\), \(g\bigl(f(0)\bigr)=1\)`
+      ],
+      bodyAfter: R`\(f(5)\)의 값을 구하시오.`,
+      short: true,
+      answer: 9,
+      help: R`\(g(t)\)는 길이 \(2\)인 창 \([t,\,t+2]\) 안에 \(f'(x)=0\)의 근이 몇 개 들어 있는지를 센 것이다. \(f\)가 삼차함수라 \(f'\)의 근은 많아야 둘이고, 그 두 근 사이의 거리가 \(2\)보다 큰지 작은지에 따라 \(g\)가 \(2\)까지 오를 수 있는지가 갈린다.`
     }
   ];
 
