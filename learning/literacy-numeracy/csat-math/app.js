@@ -60,7 +60,6 @@
   function buildUnitChips() {
     const box = els.unitChips;
     box.textContent = "";
-    box.appendChild(makeChip("전체", "all", state.unit === "all", DATA.problems.length));
 
     let subject = null;
     DATA.units.forEach((u) => {
@@ -84,7 +83,6 @@
       return;
     }
     box.textContent = "";
-    box.appendChild(makeChip("전체", "all", state.exam === "all", DATA.exams.length + "회차"));
     DATA.exams.forEach((e) => {
       const n = countBy((p) => p.exam === e.id);
       box.appendChild(makeChip(e.label, e.id, state.exam === e.id, n));
@@ -298,9 +296,10 @@
     box.addEventListener("click", function (ev) {
       const btn = ev.target.closest(".chip");
       if (!btn) return;
-      state[key] = btn.dataset.value;
+      const nextValue = state[key] === btn.dataset.value ? "all" : btn.dataset.value;
+      state[key] = nextValue;
       box.querySelectorAll(".chip").forEach((b) => {
-        b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+        b.setAttribute("aria-pressed", b.dataset.value === nextValue ? "true" : "false");
       });
       render();
     });
