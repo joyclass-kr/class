@@ -242,15 +242,6 @@
     body.innerHTML = "<p>" + problem.body + "</p>";
     li.appendChild(body);
 
-    if (problem.note) li.appendChild(noteBox(problem));
-
-    if (problem.bodyAfter) {
-      const after = document.createElement("div");
-      after.className = "body";
-      after.innerHTML = problem.bodyAfter;
-      li.appendChild(after);
-    }
-
     if (problem.figure) {
       const fig = document.createElement("div");
       fig.className = "figure";
@@ -260,6 +251,15 @@
       img.loading = "lazy";
       fig.appendChild(img);
       li.appendChild(fig);
+    }
+
+    if (problem.note) li.appendChild(noteBox(problem));
+
+    if (problem.bodyAfter) {
+      const after = document.createElement("div");
+      after.className = "body";
+      after.innerHTML = problem.bodyAfter;
+      li.appendChild(after);
     }
 
     li.appendChild(problem.short ? buildShort(problem, li) : buildChoices(problem, li));
