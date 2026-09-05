@@ -24,10 +24,6 @@ export default function ArithmeticCatalog() {
   const availableStages = new Set(learningWorksheetCatalog.map(({ grade }) => worksheetStage(grade)));
 
   function goBack() {
-    if (window.history.length > 1) {
-      window.history.back();
-      return;
-    }
     window.location.assign("/");
   }
 
@@ -39,7 +35,7 @@ export default function ArithmeticCatalog() {
     <main className="portal-page catalog-page">
       <div className="catalog-shell">
         <header className="catalog-header">
-          <button className="catalog-back" type="button" onClick={goBack} aria-label="이전 화면으로 돌아가기">←</button>
+          <button className="catalog-back" type="button" onClick={goBack} aria-label="메인 화면으로 돌아가기">←</button>
           <div className="catalog-header-copy">
             <a className="catalog-race-link" href="/arithmetic/race">순위 모드 <span aria-hidden="true">→</span></a>
             <nav className="catalog-stage-nav" aria-label="수학 과정">
