@@ -23,9 +23,11 @@
       <span class="picker-label" id="unit-label">단원</span>
       <div class="chips" role="group" aria-labelledby="unit-label" id="unit-chips"></div>
     </div>
-    <div class="picker-row">
-      <span class="picker-label" id="exam-label">회차</span>
-      <div class="chips" role="group" aria-labelledby="exam-label" id="exam-chips"></div>
+    <div class="picker-row picker-row--select">
+      <label class="picker-label" for="exam-select">회차</label>
+      <div class="picker-select-wrap">
+        <select class="picker-select" id="exam-select" aria-label="회차 선택"></select>
+      </div>
     </div>
     <div class="picker-row picker-row--tail">
       <p class="count" id="count" role="status"></p>

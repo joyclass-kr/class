@@ -16,7 +16,7 @@
 
   const els = {
     unitChips: document.getElementById("unit-chips"),
-    examChips: document.getElementById("exam-chips"),
+    examSelect: document.getElementById("exam-select"),
     list: document.getElementById("list"),
     empty: document.getElementById("empty"),
     count: document.getElementById("count"),
@@ -75,18 +75,28 @@
     });
   }
 
-  function buildExamChips() {
-    const box = els.examChips;
-    // 회차가 하나뿐이면 고를 것이 없으니 줄 자체를 감춘다.
+  function buildExamSelect() {
+    const sel = els.examSelect;
+    if (!sel) return;
     if (DATA.exams.length < 2) {
-      box.closest(".picker-row").hidden = true;
+      sel.closest(".picker-row").hidden = true;
       return;
     }
-    box.textContent = "";
-    box.appendChild(makeChip("전체", "all", state.exam === "all", DATA.exams.length + "회차"));
+    sel.textContent = "";
+
+    const optAll = document.createElement("option");
+    optAll.value = "all";
+    optAll.textContent = `전체 (${DATA.exams.length}회차 · ${DATA.problems.length}문항)`;
+    optAll.selected = state.exam === "all";
+    sel.appendChild(optAll);
+
     DATA.exams.forEach((e) => {
       const n = countBy((p) => p.exam === e.id);
-      box.appendChild(makeChip(e.label, e.id, state.exam === e.id, n));
+      const opt = document.createElement("option");
+      opt.value = e.id;
+      opt.textContent = `${e.label} (${n}문항)`;
+      if (state.exam === e.id) opt.selected = true;
+      sel.appendChild(opt);
     });
   }
 
@@ -309,9 +319,15 @@
 
   function start() {
     buildUnitChips();
-    buildExamChips();
+    buildExamSelect();
     chipHandler(els.unitChips, "unit");
-    chipHandler(els.examChips, "exam");
+
+    if (els.examSelect) {
+      els.examSelect.addEventListener("change", function () {
+        state.exam = els.examSelect.value;
+        render();
+      });
+    }
 
     els.hideDone.addEventListener("change", function () {
       state.hideDone = els.hideDone.checked;
