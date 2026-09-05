@@ -68,13 +68,9 @@ for (const question of questions) {
 
 const html = fs.readFileSync(htmlPath, "utf8");
 for (const requiredId of [
-    "modeScreen",
-    "lessonModeButton",
-    "personalModeButton",
     "classRaceLink",
     "lessonScreen",
-    "studyScreen",
-    "personalScreen",
+    "lessonList",
     "quizScreen",
     "resultScreen",
     "personalStartButton",
@@ -87,9 +83,13 @@ for (const requiredId of [
 ]) {
     assert.ok(html.includes(`id="${requiredId}"`), `Missing required element #${requiredId}`);
 }
-for (const removedId of ["classModeButton", "lobbyScreen", "joinCode", "classRankArea", "classRankingList"]) {
-    assert.ok(!html.includes(`id="${removedId}"`), `#${removedId} belongs to the shared class race page, not the spelling app.`);
+for (const removedId of [
+    "classModeButton", "lobbyScreen", "joinCode", "classRankArea", "classRankingList",
+    "modeScreen", "lessonModeButton", "personalModeButton", "personalScreen", "studyScreen"
+]) {
+    assert.ok(!html.includes(`id="${removedId}"`), `#${removedId} belongs to the shared class race page, or to a removed screen, not the spelling app.`);
 }
+assert.ok(!html.includes('class="mode-panel"') && !html.includes(' mode-panel"'), "The mode-choice screen should be gone; the lesson list is the home screen now.");
 
 assert.ok(/href="styles\.css(\?[^"]*)?"/.test(html), "Quiz stylesheet is not linked.");
 assert.ok(html.includes('src="questions.js"'), "Question bank is not linked.");
@@ -102,9 +102,9 @@ assert.ok(html.includes('src="/learning/literacy-numeracy/spelling/assets/sound/
 assert.ok(html.includes("loop preload=\"auto\""), "Spelling background music should loop.");
 assert.ok(!html.includes("game-network.js"), "The spelling app no longer talks to the classroom network; the class race page does.");
 assert.ok(!html.includes("multiplayer-lobby.js"), "The spelling app no longer hosts a lobby; the class race page does.");
-assert.ok(html.includes('href="../../class-race/"'), "The third mode card must send students to the shared class race.");
+assert.ok(html.includes('href="../../class-race/"'), "The class race link must send students to the shared class race.");
 assert.ok(html.includes("나의 오답노트"), "Personal wrong-answer notebook is missing.");
-assert.ok(html.includes('class="panel start-panel mode-panel"'), "Mode choices should be the primary first-screen content.");
+assert.ok(html.includes('id="lessonScreen"'), "The lesson list should be the primary first-screen content.");
 assert.ok(!html.includes('class="title-block"'), "The advertising-style title hero should be removed.");
 assert.ok(!html.includes('id="playerGreeting"'), "The promotional greeting should be removed.");
 assert.ok(!/\b230문제/.test(html), "Question counts must come from data-question-count, not a hard-coded number.");
@@ -121,6 +121,7 @@ assert.ok(appSource.includes("LESSON_PROGRESS_KEY"), "Lesson completion should b
 assert.ok(!appSource.includes("SPELLING_ACTION"), "Class ranking traffic must not live in the spelling app any more.");
 assert.ok(!appSource.includes("ClassroomMultiplayerLobby"), "The spelling app must not create a lobby any more.");
 assert.ok(!appSource.includes("bgmToggle"), "Spelling must not keep a separate legacy music toggle.");
+assert.ok(appSource.includes('addEventListener("sitebackrequest"'), "The shared back button must return to the lesson list instead of leaving the site from a quiz or result screen.");
 
 const hub = fs.readFileSync(hubPath, "utf8");
 assert.ok(/href="learning\/literacy-numeracy\/spelling\/(?:index\.html)?"/.test(hub), "Hub is missing the spelling quiz link.");

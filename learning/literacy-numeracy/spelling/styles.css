@@ -977,19 +977,15 @@ footer a {
     min-height: 150px;
 }
 
-.lesson-panel,
-.study-panel {
+.lesson-panel {
     text-align: left;
 }
 
-.lesson-panel h2,
-.study-panel h2 {
+.lesson-panel h2 {
     text-align: center;
 }
 
-.lesson-panel .lead,
-.study-panel .lead,
-.study-panel .mode-kicker {
+.lesson-panel .lead {
     text-align: center;
 }
 
@@ -1075,92 +1071,6 @@ footer a {
     color: #155734;
 }
 
-.study-card {
-    margin: 0 auto;
-    padding: 26px clamp(18px, 4vw, 34px) 24px;
-    border: 2px solid #c1a176;
-    border-radius: 8px;
-    background: #fffdf7;
-    text-align: center;
-}
-
-.study-count {
-    margin: 0 0 14px;
-    color: var(--muted-ink);
-    font-size: 14px;
-    font-weight: 800;
-}
-
-.study-pair {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: center;
-    gap: 10px 22px;
-    margin-bottom: 18px;
-}
-
-.study-right {
-    color: #155734;
-    font-size: clamp(30px, 6vw, 42px);
-    font-weight: 900;
-    letter-spacing: -0.03em;
-}
-
-.study-right::before {
-    margin-right: 6px;
-    color: var(--green);
-    font-size: 0.7em;
-    content: "○";
-}
-
-.study-wrong {
-    color: #822a25;
-    font-size: clamp(20px, 4vw, 26px);
-    font-weight: 800;
-    text-decoration: line-through;
-    text-decoration-thickness: 3px;
-}
-
-.study-wrong::before {
-    margin-right: 6px;
-    font-size: 0.8em;
-    text-decoration: none;
-    content: "×";
-}
-
-.study-sentence {
-    margin: 0 auto 12px;
-    font-size: clamp(19px, 3.6vw, 24px);
-    line-height: 1.55;
-    word-break: keep-all;
-}
-
-.study-explanation {
-    margin: 0 auto;
-    max-width: 560px;
-    color: var(--muted-ink);
-    font-size: 16px;
-    line-height: 1.7;
-    word-break: keep-all;
-}
-
-.study-nav {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 22px;
-}
-
-.study-nav .primary-button,
-.study-nav .secondary-button {
-    min-width: 150px;
-}
-
-.study-panel .text-button {
-    margin-top: 10px;
-}
-
 @media (max-width: 720px) {
     .mode-grid {
         grid-template-columns: 1fr;
@@ -1180,13 +1090,6 @@ footer a {
         grid-column: 2;
     }
 
-    .study-nav {
-        flex-direction: column;
-    }
-
-    .study-nav > * {
-        width: 100%;
-    }
 }
 
 a.mode-card {

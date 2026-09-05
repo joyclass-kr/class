@@ -16,34 +16,15 @@
     document.querySelectorAll("[data-lesson-count]").forEach((node) => { node.textContent = String(lessons.length); });
 
     const elements = {
-        modeScreen: document.getElementById("modeScreen"),
         lessonScreen: document.getElementById("lessonScreen"),
-        studyScreen: document.getElementById("studyScreen"),
-        personalScreen: document.getElementById("personalScreen"),
         quizScreen: document.getElementById("quizScreen"),
         resultScreen: document.getElementById("resultScreen"),
-        lessonModeButton: document.getElementById("lessonModeButton"),
-        personalModeButton: document.getElementById("personalModeButton"),
         personalStartButton: document.getElementById("personalStartButton"),
         lessonProgressSummary: document.getElementById("lessonProgressSummary"),
         lessonList: document.getElementById("lessonList"),
-        studyKicker: document.getElementById("studyKicker"),
-        studyLessonTitle: document.getElementById("studyLessonTitle"),
-        studyNote: document.getElementById("studyNote"),
-        studyIndex: document.getElementById("studyIndex"),
-        studyTotal: document.getElementById("studyTotal"),
-        studyRight: document.getElementById("studyRight"),
-        studyWrong: document.getElementById("studyWrong"),
-        studySentence: document.getElementById("studySentence"),
-        studyExplanation: document.getElementById("studyExplanation"),
-        studyPrevButton: document.getElementById("studyPrevButton"),
-        studyNextButton: document.getElementById("studyNextButton"),
-        studySkipButton: document.getElementById("studySkipButton"),
-        studyBackButton: document.getElementById("studyBackButton"),
         restartButton: document.getElementById("restartButton"),
         nextLessonButton: document.getElementById("nextLessonButton"),
         lessonListButton: document.getElementById("lessonListButton"),
-        resultModeButton: document.getElementById("resultModeButton"),
         nextButton: document.getElementById("nextButton"),
         headerBestScore: document.getElementById("headerBestScore"),
         quizModeLabel: document.getElementById("quizModeLabel"),
@@ -72,10 +53,7 @@
     };
 
     const screens = [
-        elements.modeScreen,
         elements.lessonScreen,
-        elements.studyScreen,
-        elements.personalScreen,
         elements.quizScreen,
         elements.resultScreen
     ];
@@ -83,7 +61,6 @@
     const state = {
         mode: "",
         lessonIndex: -1,
-        studyIndex: 0,
         questions: [],
         currentIndex: 0,
         score: 0,
@@ -179,17 +156,10 @@
         elements.headerBestScore.textContent = `${getBestScore()}/${SESSION_SIZE}`;
     }
 
-    function showModeScreen() {
-        state.mode = "";
-        state.lessonIndex = -1;
-        setScreen(elements.modeScreen);
-        elements.lessonModeButton.focus({ preventScroll: true });
-    }
-
     function renderLessonList() {
         const progress = readLessonProgress();
         const completedCount = lessons.filter((lesson) => progress[lesson.id]).length;
-        elements.lessonProgressSummary.textContent = `${lessons.length}차시 중 ${completedCount}차시를 끝냈어요. 차시를 골라 규칙을 익힌 뒤 확인 문제를 풀어요.`;
+        elements.lessonProgressSummary.textContent = `${lessons.length}차시 중 ${completedCount}차시를 끝냈어요. 차시를 골라 문제를 풀어요.`;
         elements.lessonList.replaceChildren(...lessons.map((lesson, index) => {
             const item = document.createElement("li");
             const button = document.createElement("button");
@@ -215,7 +185,7 @@
                 ? `${record.best === record.total ? "✓ 완벽" : "✓ 완료"} · ${record.best}/${record.total}`
                 : `${lesson.ids.length}문제`;
             button.append(number, copy, meta);
-            button.addEventListener("click", () => openStudy(index));
+            button.addEventListener("click", () => startLesson(index));
             item.append(button);
             return item;
         }));
@@ -229,48 +199,10 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function openStudy(lessonIndex) {
+    function startLesson(lessonIndex) {
         state.mode = "lesson";
         state.lessonIndex = lessonIndex;
-        state.studyIndex = 0;
-        const lesson = currentLesson();
-        elements.studyKicker.textContent = `${lessonIndex + 1}차시 · 익히기`;
-        elements.studyLessonTitle.textContent = lesson.title;
-        elements.studyNote.textContent = lesson.note;
-        elements.studyTotal.textContent = String(lesson.ids.length);
-        setScreen(elements.studyScreen);
-        renderStudy();
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function renderStudy() {
-        const lesson = currentLesson();
-        const question = questionById.get(lesson.ids[state.studyIndex]);
-        const wrong = question.choices.find((choice) => choice !== question.answer) || "";
-        const isLast = state.studyIndex === lesson.ids.length - 1;
-
-        elements.studyIndex.textContent = String(state.studyIndex + 1);
-        elements.studyRight.textContent = question.answer;
-        elements.studyWrong.textContent = wrong;
-        elements.studySentence.textContent = question.sentence.replace("___", question.answer);
-        elements.studyExplanation.textContent = question.explanation;
-        elements.studyPrevButton.disabled = state.studyIndex === 0;
-        elements.studyNextButton.textContent = isLast ? "확인 문제 풀기" : "다음";
-        elements.studySkipButton.classList.toggle("hidden", isLast);
-        elements.announcer.textContent = `${question.answer}. ${question.explanation}`;
-    }
-
-    function moveStudy(step) {
-        const lesson = currentLesson();
-        const next = state.studyIndex + step;
-        if (next < 0) return;
-        if (next >= lesson.ids.length) {
-            startLessonQuiz();
-            return;
-        }
-        state.studyIndex = next;
-        renderStudy();
-        elements.studyNextButton.focus({ preventScroll: true });
+        startLessonQuiz();
     }
 
     function startLessonQuiz() {
@@ -279,10 +211,10 @@
         startQuiz(shuffle(lesson.ids));
     }
 
-    function selectPersonalMode() {
+    function startRandomQuiz() {
         state.mode = "personal";
-        setScreen(elements.personalScreen);
-        elements.personalStartButton.focus({ preventScroll: true });
+        state.lessonIndex = -1;
+        startQuiz();
     }
 
     function startQuiz(questionIds) {
@@ -445,7 +377,6 @@
         elements.missedList.classList.toggle("hidden", missed.length === 0);
 
         elements.nextLessonButton.classList.add("hidden");
-        elements.lessonListButton.classList.add("hidden");
         elements.resultEyebrow.textContent = "LEARNING COMPLETE";
         elements.resultTitle.textContent = "학습 결과";
         elements.restartButton.textContent = "새 문제 풀기";
@@ -461,7 +392,6 @@
                 : `이 차시 최고 기록 ${best}/${total}`;
             elements.restartButton.textContent = "이 차시 다시 풀기";
             elements.nextLessonButton.classList.toggle("hidden", !hasNext);
-            elements.lessonListButton.classList.remove("hidden");
         } else {
             const previousBest = getBestScore();
             const isNewBest = state.score > previousBest;
@@ -474,7 +404,7 @@
         }
 
         setScreen(elements.resultScreen);
-        elements.resultModeButton.focus({ preventScroll: true });
+        elements.lessonListButton.focus({ preventScroll: true });
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -491,7 +421,7 @@
             selectLessonMode();
             return;
         }
-        openStudy(state.lessonIndex + 1);
+        startLesson(state.lessonIndex + 1);
     }
 
     function handleKeyboard(event) {
@@ -510,21 +440,22 @@
         }
     }
 
-    elements.lessonModeButton.addEventListener("click", selectLessonMode);
-    elements.personalModeButton.addEventListener("click", selectPersonalMode);
-    elements.personalStartButton.addEventListener("click", () => startQuiz());
-    elements.studyPrevButton.addEventListener("click", () => moveStudy(-1));
-    elements.studyNextButton.addEventListener("click", () => moveStudy(1));
-    elements.studySkipButton.addEventListener("click", startLessonQuiz);
-    elements.studyBackButton.addEventListener("click", selectLessonMode);
+    // 공용 뒤로가기 단추(assets/site-back-navigation.js)가 눌리면 먼저 물어본다.
+    // 차시 목록(집)이 아니면 사이트 밖으로 나가지 않고 차시 목록으로만 돌아간다.
+    window.addEventListener("sitebackrequest", (event) => {
+        if (elements.lessonScreen.classList.contains("hidden")) {
+            event.preventDefault();
+            selectLessonMode();
+        }
+    });
+
+    elements.personalStartButton.addEventListener("click", startRandomQuiz);
     elements.restartButton.addEventListener("click", restartCurrent);
     elements.nextLessonButton.addEventListener("click", goToNextLesson);
     elements.lessonListButton.addEventListener("click", selectLessonMode);
-    elements.resultModeButton.addEventListener("click", showModeScreen);
     elements.nextButton.addEventListener("click", goToNextQuestion);
-    document.querySelectorAll(".mode-back-button").forEach((button) => button.addEventListener("click", showModeScreen));
     document.addEventListener("keydown", handleKeyboard);
 
     updateHeaderBest();
-    setScreen(elements.modeScreen);
+    selectLessonMode();
 })();

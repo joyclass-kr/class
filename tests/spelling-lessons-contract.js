@@ -44,13 +44,13 @@ assert.deepStrictEqual(missing, [], `차시에 들어가지 않은 문제가 있
 
 const html = read("index.html");
 for (const requiredId of [
-    "lessonModeButton", "lessonScreen", "lessonList", "studyScreen", "studyRight", "studyWrong",
-    "studySentence", "studyExplanation", "studyNextButton", "questionTotal", "finalTotal",
+    "lessonScreen", "lessonList", "questionTotal", "finalTotal",
     "nextLessonButton", "lessonListButton"
 ]) {
     assert.ok(html.includes(`id="${requiredId}"`), `차시 학습 화면 요소가 없습니다: #${requiredId}`);
 }
 assert.ok(html.includes('src="lessons.js"'), "lessons.js가 연결되어 있지 않습니다.");
+assert.ok(!html.includes('id="studyScreen"'), "답을 미리 보여 주는 익히기 화면은 없어야 합니다. 차시를 누르면 바로 문제를 푼다.");
 assert.ok(!/\b230문제/.test(html), "문제 수는 data-question-count로 자동 표시해야 합니다.");
 
 const appSource = read("app.js");
