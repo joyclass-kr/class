@@ -196,6 +196,395 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐸",
+        art: "cover.webp",
+        title: "Who Is the Oldest?",
+        intro: [
+            "Who Is the Oldest? is an old Korean tale with no known author. It is also told as The Contest of Ages or The Quarrel over the Top Seat.",
+            "Age once decided rank. Who took the top seat at a feast mattered, so several tales grew up about arguing over age.",
+            "The toad turns up often in our tales. It is not big or fast or handsome, and yet the old people never drew it as slow-witted."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Who Takes the Top Seat?",
+            beats: [
+                {
+                    art: "01-feast.webp",
+                    emoji: "🍚",
+                    left: [
+                        "One day a fox, a deer and a toad came together. They had all been asked to the village feast.",
+                        "All three had dressed up since morning.",
+                        "A feast table stood ready, loaded with rice cake and dressed herbs.",
+                        "The steam rising off it was enough to make your mouth water."
+                    ],
+                    right: [
+                        "But the three of them only shuffled about in front of the table. Nobody would sit down.",
+                        { t: "\"Who sits at the top?\"", v: "man" },
+                        { t: "\"After you, sir. Do sit.\"", v: "beast" },
+                        "The top seat was for the eldest. Sit in it wrongly and you would never hear the end of it."
+                    ]
+                },
+                {
+                    art: "02-rule.webp",
+                    emoji: "📜",
+                    left: [
+                        "After standing there a while the fox cleared his throat and stepped forward. He had the face of somebody with a good idea.",
+                        { t: "\"We do it the way it has always been done.\"", v: "beast" },
+                        "The fox looked round at the other two.",
+                        { t: "\"The oldest takes the top seat. That is the old rule, is it not.\"", v: "beast" }
+                    ],
+                    right: [
+                        { t: "\"Quite right. Let's do that.\"", v: "beast" },
+                        { t: "\"Then let each of us say his age.\"", v: "beast" },
+                        "The deer stretched out his neck and agreed at once, with the face of one who fancies his chances.",
+                        "The toad said nothing at all and only blinked."
+                    ]
+                },
+                {
+                    art: "03-fox.webp",
+                    emoji: "🦊",
+                    left: [
+                        "The fox went first. He coughed twice and began very gravely.",
+                        "They all looked at him.",
+                        { t: "\"Now, as for me,\"", v: "beast" },
+                        { t: "\"I was born back when people still counted the stars in the sky.\"", v: "beast" },
+                        "It went quiet in front of the table."
+                    ],
+                    right: [
+                        { t: "\"There were only ten stars then. Now there are more than anyone can count.\"", v: "beast" },
+                        "The fox stroked his whiskers, very pleased with himself.",
+                        { t: "\"So the top seat is mine, I think.\"", v: "beast" },
+                        "He looked as if he were sitting in it already. The deer narrowed his eyes at that."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Contest of Ages",
+            beats: [
+                {
+                    art: "04-deer.webp",
+                    emoji: "🦌",
+                    left: [
+                        "The deer snorted at once, loud enough to rattle the table.",
+                        { t: "\"Ha. That is a child's story.\"", v: "beast" },
+                        "The deer shook his antlers.",
+                        { t: "\"Hear mine and you may be surprised.\"", v: "beast" }
+                    ],
+                    right: [
+                        { t: "\"I ran about when that mountain over there was still a little hill.\"", v: "beast" },
+                        { t: "\"The place I scraped with my antlers is that valley you see now.\"", v: "beast" },
+                        { t: "\"Well? I am the elder, am I not?\"", v: "beast" },
+                        "He lifted his antlers, and the fox's face set hard. He was not going to lose."
+                    ]
+                },
+                {
+                    art: "05-quarrel.webp",
+                    emoji: "😤",
+                    left: [
+                        { t: "\"What nonsense!\"", v: "beast" },
+                        { t: "\"You are the one making things up!\"", v: "beast" },
+                        "The plate of rice cake sat untouched in the middle of the table.",
+                        { t: "\"What? Are you calling me a liar?\"", v: "beast" },
+                        "The two of them went red in the face and argued, pointing at each other."
+                    ],
+                    right: [
+                        "The feast went cold with nobody touching it.",
+                        "The steam off the rice cake was gone.",
+                        "All that while the toad sat quietly under the table, breathing in and out.",
+                        { t: "\"How long will those two keep it up.\"", v: "man" }
+                    ]
+                },
+                {
+                    art: "06-tears.webp",
+                    emoji: "😢",
+                    left: [
+                        "And then it happened.",
+                        "Waaaaaah—!",
+                        "The toad had burst into tears.",
+                        "The fox and the deer shut their mouths at the sound. They forgot their quarrel and turned round."
+                    ],
+                    right: [
+                        "Tears were pouring out of the toad's two eyes like water from a spring. The herb dish on the table was getting damp.",
+                        { t: "\"Toad, whatever are you crying for?\"", v: "beast" },
+                        "The fox was quite bewildered.",
+                        "The deer blinked in surprise too."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Toad's Tears",
+            beats: [
+                {
+                    art: "07-why.webp",
+                    emoji: "🌱",
+                    left: [
+                        "The toad wiped his eyes with a front foot and managed to speak. His voice was thick with weeping.",
+                        { t: "\"Listening to you both brought back old times.\"", v: "man" },
+                        "He sniffed and went on.",
+                        { t: "\"I try to stop and the tears keep coming.\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"When I was very small I planted three trees.\"", v: "man" },
+                        { t: "\"Do you know what became of those trees?\"", v: "man" },
+                        "The two listening swallowed.",
+                        "The fox and the deer glanced at each other. They had an uneasy feeling."
+                    ]
+                },
+                {
+                    art: "08-trees.webp",
+                    emoji: "🌳",
+                    left: [
+                        "The toad looked up at the sky once and went slowly on. His voice was so calm it was worse.",
+                        "The fox and the deer hardly dared breathe.",
+                        { t: "\"The first tree became the pillar that holds up the sky,\"", v: "man" },
+                        { t: "\"and the second became the pole the sun and moon hang from.\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"The third became the handle of the hammer that nails the stars up.\"", v: "man" },
+                        { t: "\"And thinking of those trees, I just...\"", v: "man" },
+                        "The fox and the deer could not say a word.",
+                        "The toad let the sentence trail off and sniffed again. His shoulders shook, and it looked very sad indeed."
+                    ]
+                },
+                {
+                    art: "09-shock.webp",
+                    emoji: "😲",
+                    left: [
+                        "The fox and the deer stood with their mouths open and said nothing.",
+                        "Both of their faces went white.",
+                        "Sky, sun, moon and stars — all of them came after the toad planted his trees.",
+                        "So there was nothing left to compare."
+                    ],
+                    right: [
+                        { t: "\"Then — in that case—\"", v: "beast" },
+                        { t: "\"You are the eldest here, sir.\"", v: "beast" },
+                        "The fox got up first.",
+                        "The two of them shuffled down to the lower seats.",
+                        "They were so ashamed of their boasting that they could not look up."
+                    ]
+                },
+                {
+                    art: "10-seat.webp",
+                    emoji: "🐸",
+                    left: [
+                        "The toad crawled up to the top seat. Once he sat down he looked extremely pleased.",
+                        { t: "\"Well now. I shall enjoy this.\"", v: "man" },
+                        { t: "\"Come along, you two. Do eat.\"", v: "man" },
+                        "And only then did he take a bite of rice cake."
+                    ],
+                    right: [
+                        "But here is the thing. Nobody knows whether the toad really planted those trees.",
+                        "There is nobody to ask but the sky.",
+                        "The fox and the deer did not get one piece of cake.",
+                        "And the one who ate best at that feast, they say, was the toad."
+                    ]
+                }
+            ],
+            moral: "Boasting is easily blown up. Nobody could check whether the fox or the deer or the toad was telling the truth. That is how it usually is with words meant to put you ahead of somebody.",
+            question: "Have you ever made something bigger than it was to look bigger yourself?"
+        }
+    ],
+    quiz: [
+        { q: "Why did the three hesitate in front of the feast table?", choices: ["They did not know who would share the cake", "They did not know who should take the top seat", "They did not know when the feast began"], answer: 1 },
+        { q: "Who said they should settle it by age?", choices: ["The fox", "The deer", "The toad"], answer: 0 },
+        { q: "When did the fox say he was born?", choices: ["When the mountain was a hill", "When people counted the stars", "When three trees were planted"], answer: 1 },
+        { q: "How did the deer say the valley was made?", choices: ["A sky pillar fell over", "The star hammer struck it", "He scraped it with his antlers"], answer: 2 },
+        { q: "Why did the toad say he was crying?", choices: ["Old times came back to him", "He was hungry", "There was no seat for him"], answer: 0 },
+        { q: "What did the toad's third tree become?", choices: ["The handle of the star hammer", "The great pillar of the sky", "The pole the sun hangs from"], answer: 0 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "They settled the top seat by age, so back then even where you sat had an order to it.",
+                "The toad wept instead of arguing, so the loudest one does not always win.",
+                "The story says nobody knows if he really planted them, so it does not simply take the toad's side.",
+                "The toad planted three trees, so he must certainly be the oldest of the three."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "the oldest", k: "가장 나이 많은", s: "Who Is the Oldest?" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "contest", k: "겨루기", s: "It is also told as The Contest of Ages" },
+            { w: "the top seat", k: "윗자리, 상좌", s: "The Quarrel over the Top Seat" },
+            { w: "rank", k: "서열", s: "Age once decided rank." },
+            { w: "mattered (matter)", k: "중요했다", s: "Who took the top seat at a feast mattered" },
+            { w: "grew up (grow up)", k: "생겼다", s: "several tales grew up about arguing over age" },
+            { w: "turns up (turn up)", k: "자주 나온다", s: "The toad turns up often in our tales." },
+            { w: "handsome", k: "잘생긴", s: "It is not big or fast or handsome" },
+            { w: "slow-witted", k: "미련한", s: "the old people never drew it as slow-witted" }
+        ],
+        "01-feast.webp": [
+            { w: "came together", k: "한자리에 모였다", s: "a fox, a deer and a toad came together" },
+            { w: "had been asked to ~", k: "초대를 받았다", s: "They had all been asked to the village feast." },
+            { w: "dressed up", k: "잔뜩 차려입었다", s: "All three had dressed up since morning." },
+            { w: "loaded with ~", k: "푸짐하게 놓인", s: "A feast table stood ready, loaded with rice cake" },
+            { w: "dressed herbs", k: "나물", s: "loaded with rice cake and dressed herbs" },
+            { w: "make your mouth water", k: "군침이 돌게 하다", s: "enough to make your mouth water" },
+            { w: "shuffled about (shuffle)", k: "우물쭈물했다", s: "the three of them only shuffled about" },
+            { w: "would sit down", k: "선뜻 앉았다", s: "Nobody would sit down." },
+            { w: "the eldest", k: "가장 어른", s: "The top seat was for the eldest." },
+            { w: "never hear the end of it", k: "두고두고 흉을 잡히다", s: "Sit in it wrongly and you would never hear the end of it." }
+        ],
+        "02-rule.webp": [
+            { w: "cleared his throat", k: "헛기침을 했다", s: "the fox cleared his throat and stepped forward" },
+            { w: "stepped forward", k: "앞으로 나섰다", s: "cleared his throat and stepped forward" },
+            { w: "the way it has always been done", k: "정해진 대로", s: "We do it the way it has always been done." },
+            { w: "looked round at ~", k: "둘러보았다", s: "The fox looked round at the other two." },
+            { w: "the old rule", k: "예로부터 내려오는 법", s: "That is the old rule, is it not." },
+            { w: "Quite right.", k: "옳거니.", s: "Quite right. Let's do that." },
+            { w: "let each of us ~", k: "각자 ~해 보자", s: "Then let each of us say his age." },
+            { w: "stretched out (stretch)", k: "길게 뺐다", s: "The deer stretched out his neck" },
+            { w: "fancies his chances", k: "자신이 있다", s: "with the face of one who fancies his chances" },
+            { w: "blinked (blink)", k: "눈만 껌뻑였다", s: "The toad said nothing at all and only blinked." }
+        ],
+        "03-fox.webp": [
+            { w: "went first (go)", k: "먼저 나섰다", s: "The fox went first." },
+            { w: "gravely", k: "아주 점잖게", s: "He coughed twice and began very gravely." },
+            { w: "as for me", k: "나로 말하자면", s: "Now, as for me," },
+            { w: "back when ~", k: "~하던 시절에", s: "I was born back when people still counted the stars" },
+            { w: "counted (count)", k: "세었다", s: "when people still counted the stars in the sky" },
+            { w: "more than anyone can count", k: "셀 수도 없이 많은", s: "Now there are more than anyone can count." },
+            { w: "stroked (stroke)", k: "쓸어내렸다", s: "The fox stroked his whiskers" },
+            { w: "pleased with himself", k: "으스대는", s: "very pleased with himself" },
+            { w: "as if he were ~ing", k: "~하기라도 한 듯이", s: "He looked as if he were sitting in it already." },
+            { w: "narrowed his eyes", k: "눈을 가늘게 떴다", s: "The deer narrowed his eyes at that." }
+        ],
+        "04-deer.webp": [
+            { w: "snorted (snort)", k: "코웃음을 쳤다", s: "The deer snorted at once" },
+            { w: "loud enough to rattle ~", k: "울릴 만큼 크게", s: "loud enough to rattle the table" },
+            { w: "a child's story", k: "어린애 이야기", s: "Ha. That is a child's story." },
+            { w: "antlers", k: "뿔", s: "The deer shook his antlers." },
+            { w: "Hear mine", k: "내 이야기를 들어 보시오", s: "Hear mine and you may be surprised." },
+            { w: "ran about (run)", k: "뛰어놀았다", s: "I ran about when that mountain over there was still a little hill." },
+            { w: "scraped (scrape)", k: "긁었다", s: "The place I scraped with my antlers" },
+            { w: "valley", k: "골짜기", s: "is that valley you see now" },
+            { w: "the elder", k: "윗사람", s: "Well? I am the elder, am I not?" },
+            { w: "set hard (set)", k: "굳어졌다", s: "the fox's face set hard" }
+        ],
+        "05-quarrel.webp": [
+            { w: "What nonsense!", k: "말도 안 되는 소리!", s: "What nonsense!" },
+            { w: "making things up", k: "지어내는", s: "You are the one making things up!" },
+            { w: "untouched", k: "손도 안 댄", s: "The plate of rice cake sat untouched" },
+            { w: "calling me a liar", k: "나를 거짓말쟁이라 하다", s: "Are you calling me a liar?" },
+            { w: "went red in the face", k: "얼굴이 벌게졌다", s: "The two of them went red in the face and argued" },
+            { w: "pointing at each other", k: "서로 손가락질하며", s: "argued, pointing at each other" },
+            { w: "went cold (go)", k: "식어 갔다", s: "The feast went cold with nobody touching it." },
+            { w: "All that while", k: "그동안", s: "All that while the toad sat quietly under the table" },
+            { w: "keep it up", k: "저러고 있다", s: "How long will those two keep it up." }
+        ],
+        "06-tears.webp": [
+            { w: "Waaaaaah—", k: "우와아앙—", s: "Waaaaaah—!" },
+            { w: "burst into tears (burst)", k: "울음을 터뜨렸다", s: "The toad had burst into tears." },
+            { w: "shut their mouths", k: "입을 딱 다물었다", s: "The fox and the deer shut their mouths at the sound." },
+            { w: "forgot their quarrel", k: "다투던 것을 잊었다", s: "They forgot their quarrel and turned round." },
+            { w: "pouring out (pour)", k: "콸콸 솟구치는", s: "Tears were pouring out of the toad's two eyes" },
+            { w: "like water from a spring", k: "물줄기처럼", s: "like water from a spring" },
+            { w: "damp", k: "축축한", s: "The herb dish on the table was getting damp." },
+            { w: "whatever are you ~ing", k: "갑자기 왜 ~하시오", s: "Toad, whatever are you crying for?" },
+            { w: "bewildered", k: "어리둥절한", s: "The fox was quite bewildered." }
+        ],
+        "07-why.webp": [
+            { w: "wiped (wipe)", k: "닦았다", s: "The toad wiped his eyes with a front foot" },
+            { w: "managed to ~", k: "겨우 ~했다", s: "and managed to speak" },
+            { w: "thick with weeping", k: "울음에 잠긴", s: "His voice was thick with weeping." },
+            { w: "brought back ~ (bring back)", k: "생각나게 했다", s: "Listening to you both brought back old times." },
+            { w: "old times", k: "옛날", s: "brought back old times" },
+            { w: "sniffed (sniff)", k: "훌쩍였다", s: "He sniffed and went on." },
+            { w: "keep coming", k: "자꾸 난다", s: "I try to stop and the tears keep coming." },
+            { w: "planted (plant)", k: "심었다", s: "When I was very small I planted three trees." },
+            { w: "what became of ~", k: "어찌 되었는지", s: "Do you know what became of those trees?" },
+            { w: "swallowed (swallow)", k: "침을 삼켰다", s: "The two listening swallowed." },
+            { w: "uneasy", k: "불길한", s: "They had an uneasy feeling." }
+        ],
+        "08-trees.webp": [
+            { w: "went slowly on", k: "천천히 말을 이었다", s: "The toad looked up at the sky once and went slowly on." },
+            { w: "so calm it was worse", k: "담담해서 더 무서운", s: "His voice was so calm it was worse." },
+            { w: "hardly dared breathe", k: "숨도 크게 못 쉬었다", s: "The fox and the deer hardly dared breathe." },
+            { w: "pillar", k: "기둥", s: "The first tree became the pillar that holds up the sky" },
+            { w: "holds up ~ (hold up)", k: "떠받치다", s: "the pillar that holds up the sky" },
+            { w: "pole", k: "장대", s: "the pole the sun and moon hang from" },
+            { w: "hang from ~", k: "~에 매달리다", s: "the pole the sun and moon hang from" },
+            { w: "handle", k: "자루", s: "the handle of the hammer that nails the stars up" },
+            { w: "nails ~ up (nail)", k: "박는다", s: "the hammer that nails the stars up" },
+            { w: "let ~ trail off", k: "말끝을 흐렸다", s: "The toad let the sentence trail off and sniffed again." }
+        ],
+        "09-shock.webp": [
+            { w: "with their mouths open", k: "입을 딱 벌린 채", s: "The fox and the deer stood with their mouths open" },
+            { w: "went white", k: "하얗게 질렸다", s: "Both of their faces went white." },
+            { w: "came after ~", k: "~ 뒤에 생겼다", s: "all of them came after the toad planted his trees" },
+            { w: "nothing left to compare", k: "견줄 것이 없는", s: "So there was nothing left to compare." },
+            { w: "in that case", k: "그렇다면", s: "Then — in that case—" },
+            { w: "got up first", k: "먼저 일어났다", s: "The fox got up first." },
+            { w: "shuffled down to ~", k: "슬그머니 물러났다", s: "The two of them shuffled down to the lower seats." },
+            { w: "ashamed of ~", k: "~이 부끄러운", s: "They were so ashamed of their boasting" },
+            { w: "boasting", k: "으스대던 것", s: "so ashamed of their boasting that they could not look up" }
+        ],
+        "10-seat.webp": [
+            { w: "crawled (crawl)", k: "엉금엉금 기었다", s: "The toad crawled up to the top seat." },
+            { w: "extremely pleased", k: "아주 흐뭇한", s: "Once he sat down he looked extremely pleased." },
+            { w: "I shall enjoy this.", k: "잘 먹겠습니다.", s: "Well now. I shall enjoy this." },
+            { w: "Come along", k: "어서요", s: "Come along, you two. Do eat." },
+            { w: "took a bite of ~", k: "한 입 베어 물었다", s: "And only then did he take a bite of rice cake." },
+            { w: "here is the thing", k: "그런데 말이에요", s: "But here is the thing." },
+            { w: "whether ~", k: "~인지 아닌지", s: "Nobody knows whether the toad really planted those trees." },
+            { w: "nobody to ask but ~", k: "물어볼 사람이 ~밖에 없는", s: "There is nobody to ask but the sky." },
+            { w: "did not get one ~", k: "한 ~도 못 먹었다", s: "The fox and the deer did not get one piece of cake." },
+            { w: "the one who ate best", k: "제일 배불리 먹은 쪽", s: "the one who ate best at that feast" }
+        ],
+        "after": [
+            { w: "arguing over ~", k: "~을 두고 다투기", s: "Stories about arguing over who is oldest" },
+            { w: "neighbouring countries", k: "이웃 나라", s: "are told here and in neighbouring countries" },
+            { w: "distant", k: "아득한", s: "each animal boasting of some distant old day" },
+            { w: "the reason ~ is funny", k: "웃긴 까닭", s: "The reason such a story is funny is that nobody can check it." },
+            { w: "check (check)", k: "확인하다", s: "nobody can check it" },
+            { w: "to say otherwise", k: "아니라고 할", s: "there is nobody left to say otherwise" },
+            { w: "did not name ~", k: "대지 않았다", s: "the toad did not name an old day like the others" },
+            { w: "Instead", k: "대신", s: "Instead he shed tears." },
+            { w: "shed tears (shed)", k: "눈물을 흘렸다", s: "Instead he shed tears." },
+            { w: "sorrow", k: "슬픔", s: "he brought out a sorrow nobody could check" },
+            { w: "press their case", k: "우기다", s: "In front of that nobody could press their case." },
+            { w: "is easily blown up", k: "부풀리기 쉽다", s: "Boasting is easily blown up." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🎂',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Stories about arguing over who is oldest are told here and in neighbouring countries. The shape is the same: each animal boasting of some distant old day.",
+                    "The reason such a story is funny is that nobody can check it. Say you were there when the sky was made and there is nobody left to say otherwise.",
+                    "Look again: the toad did not name an old day like the others. Instead he shed tears.",
+                    "Among boasts nobody could check, he brought out a sorrow nobody could check. In front of that nobody could press their case."
+                ],
+                right: [
+                    "Boasting is easily blown up. Nobody could check whether the fox or the deer or the toad was telling the truth. That is how it usually is with words meant to put you ahead of somebody.",
+                    "Have you ever made something bigger than it was to look bigger yourself?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "셋이 잔칫상 앞에서 우물쭈물한 까닭은 무엇인가요?", choices: ["떡을 누가 나눌지 몰라서", "윗자리에 누가 앉을지 몰라서", "잔치를 언제 열지 몰라서"], answer: 1 },
     { q: "나이를 견주어 정하자고 한 것은 누구인가요?", choices: ["여우", "사슴", "두꺼비"], answer: 0 },

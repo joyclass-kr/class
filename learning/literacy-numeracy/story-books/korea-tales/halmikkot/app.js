@@ -194,6 +194,398 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🌸",
+        art: "cover.webp",
+        title: "The Grandmother Flower",
+        intro: [
+            "The Grandmother Flower is an old Korean tale with no known author. It is an origin tale — it explains how one flower came by its name and its shape.",
+            "The halmikkot is a real wild flower. It opens in early spring on sunny banks, its stem bent like a bow so the flower always looks at the ground.",
+            "Old tales often explain the shape of a flower or a bird or a rock. People answered why does it look like that with a story about a person."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Grandmother and Her Three Daughters",
+            beats: [
+                {
+                    art: "01-daughters.webp",
+                    emoji: "👵",
+                    left: [
+                        "Long ago in the hills an old woman lived with her three daughters. Left alone early, she worked day and night.",
+                        { t: "\"Off I go again, and I'll be quick.\"", v: "granny" },
+                        "She rose before dawn to gather herbs on the mountain, and at night she mended other people's clothes by the lamp.",
+                        "Work never left her hands."
+                    ],
+                    right: [
+                        { t: "\"My girls will not go hungry.\"", v: "granny" },
+                        "That was what she always said. Meanwhile her knuckles thickened and her back bent.",
+                        { t: "\"Mother, do rest.\"", v: "girl" },
+                        "But watching her daughters eat filled her up. It was the finest sight she knew."
+                    ]
+                },
+                {
+                    art: "02-married.webp",
+                    emoji: "🎎",
+                    left: [
+                        "The years passed and one by one the daughters married.",
+                        "The eldest went over the hill to a big tiled house. The second went across the river to a rich house.",
+                        "The youngest went to a small thatched cottage below the mountain — the poorest of the three.",
+                        "The old woman saw each of them off in turn."
+                    ],
+                    right: [
+                        { t: "\"Take care of yourself, Mother.\"", v: "girl" },
+                        { t: "\"We'll live well, Mother.\"", v: "girl" },
+                        { t: "\"Yes, yes. Don't worry. You needn't come often.\"", v: "granny" },
+                        "That is what she said, waving her hand.",
+                        "But when they had gone over the hill she stood there a long while. The yard looked very wide."
+                    ]
+                },
+                {
+                    art: "03-alone.webp",
+                    emoji: "🏚️",
+                    left: [
+                        "Alone now, the old woman grew weaker year by year. Even a light herb basket felt heavy.",
+                        { t: "\"So I am old after all.\"", v: "granny" },
+                        { t: "\"And I've no appetite left.\"", v: "granny" },
+                        "The room was only wide and there was always rice left over. She would pour water on it and eat it alone."
+                    ],
+                    right: [
+                        "It was a day in spring. Azaleas were out all along the yard.",
+                        "The old woman took her stick and set off slowly.",
+                        { t: "\"I'll just go and see my girls' faces.\"", v: "granny" },
+                        { t: "\"Then I'll want for nothing more.\"", v: "granny" }
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Doors That Did Not Open",
+            beats: [
+                {
+                    art: "04-first.webp",
+                    emoji: "🚪",
+                    left: [
+                        "First she went over the hill and knocked at the eldest daughter's gate. Her hand shook so much she could hardly knock.",
+                        { t: "\"Child, it's your mother. Your mother is here.\"", v: "granny" },
+                        "Inside there was a rustle of somebody moving.",
+                        { t: "\"Child, it's your mother...\"", v: "granny" }
+                    ],
+                    right: [
+                        "Then it went quiet. The footsteps went away inside.",
+                        "The gate never opened.",
+                        "The old woman stood in front of it a long time and then quietly turned round.",
+                        "She did not say anything."
+                    ]
+                },
+                {
+                    art: "05-second.webp",
+                    emoji: "🌊",
+                    left: [
+                        "She got a ride on a ferry across the river to the second daughter. Having no fare, she gave the ferryman herbs instead.",
+                        "The second daughter was hanging washing in the yard and saw her.",
+                        { t: "\"It's me, child.\"", v: "granny" },
+                        "But there was no gladness in the daughter's face."
+                    ],
+                    right: [
+                        { t: "\"Mother, the house is busy just now.\"", v: "woman" },
+                        { t: "\"Come another time. All right?\"", v: "woman" },
+                        "The gate slid shut.",
+                        "The old woman looked at the closed gate a while, then took a firmer hold of her stick."
+                    ]
+                },
+                {
+                    art: "06-hill.webp",
+                    emoji: "⛰️",
+                    left: [
+                        "The sun began to go down. The mountain shadow came down long.",
+                        { t: "\"There's my youngest. My youngest is there.\"", v: "granny" },
+                        "She wiped her eyes and looked down the mountain.",
+                        "Then she walked on. Her legs weighed a thousand pounds."
+                    ],
+                    right: [
+                        "Leaning on her stick, she started up the hill. Far off she could see the roof of the youngest's cottage.",
+                        "It was right there in front of her and still the hill seemed to grow. She had to rest after every ten steps.",
+                        "Her breath came up in her throat.",
+                        { t: "\"A little further and I'm there.\"", v: "granny" }
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Flower on the Hill",
+            beats: [
+                {
+                    art: "07-rest.webp",
+                    emoji: "🌾",
+                    left: [
+                        "Halfway up the hill the old woman sat down. She was too short of breath to take another step.",
+                        "Her legs would not obey her.",
+                        { t: "\"Just... just a little rest first.\"", v: "granny" },
+                        "The stick fell out of her hand."
+                    ],
+                    right: [
+                        "She turned her face towards the youngest's roof and closed her eyes. Smoke was rising straight up from it, supper being cooked.",
+                        { t: "\"My youngest's face... just once...\"", v: "granny" },
+                        "Her voice grew smaller and smaller.",
+                        "The spring wind went softly over her white hair."
+                    ]
+                },
+                {
+                    art: "08-search.webp",
+                    emoji: "🏃",
+                    left: [
+                        "About then the youngest was pacing in front of her house. Her mind had been strangely unsettled since morning.",
+                        { t: "\"Why do I keep thinking of Mother today?\"", v: "woman" },
+                        "She could not put her hand to anything.",
+                        "She kept forgetting the rice on the fire and burned it twice."
+                    ],
+                    right: [
+                        "In the end she threw off her apron and ran for the hill.",
+                        { t: "\"Mother! Mother!\"", v: "woman" },
+                        "The path was so steep she slipped several times.",
+                        "The sun had gone and everything was growing dark. She went up calling for her mother till her throat tore."
+                    ]
+                },
+                {
+                    art: "09-found.webp",
+                    emoji: "🤲",
+                    left: [
+                        "Halfway up the hill she found her at last. The stick lay fallen beside her.",
+                        { t: "\"Mother! Mother, it's me!\"", v: "woman" },
+                        { t: "\"Mother, open your eyes!\"", v: "woman" },
+                        "She shook her shoulder, and very slowly her mother opened her eyes."
+                    ],
+                    right: [
+                        { t: "\"...So it's my youngest.\"", v: "granny" },
+                        "Her voice was very small. But there was a smile on her face.",
+                        { t: "\"Hold on, Mother. Just hold on.\"", v: "woman" },
+                        "She took her mother on her back and went down the hill in one run. Her mother was so light on her back that she wept."
+                    ]
+                },
+                {
+                    art: "10-flower.webp",
+                    emoji: "🌸",
+                    left: [
+                        "After that the old woman lived several more years in the warm corner of the youngest's room. Her daughter dressed the herbs she liked, season by season.",
+                        { t: "\"I'm not sending you anywhere again.\"", v: "woman" },
+                        "In that warm room the old woman closed her eyes in peace.",
+                        "The youngest went up that hill often afterwards."
+                    ],
+                    right: [
+                        "The next spring, on the very hill where her mother had sat, a flower nobody had seen before came up.",
+                        "Its stem was bent like a bow so that it hung its head, and it was covered all over in white down.",
+                        "The spring wind shook it.",
+                        "People called it the grandmother flower."
+                    ]
+                }
+            ],
+            moral: "The old woman raised her three daughters the same way, and only one came over the hill for her. A heart that remembers what it was given does not grow by itself.",
+            question: "What could you do today for the person who raised you?"
+        }
+    ],
+    quiz: [
+        { q: "What did the old woman do at night by the lamp?", choices: ["Gathered herbs", "Mended other people's clothes", "Hung out the washing"], answer: 1 },
+        { q: "What happened at the eldest daughter's house?", choices: ["The gate never opened", "She stayed one night", "She ate and turned back"], answer: 0 },
+        { q: "What did the second daughter say to her?", choices: ["To finish hanging the washing", "To pay the ferryman", "That the house was busy, come another time"], answer: 2 },
+        { q: "What happened to the old woman on the hill?", choices: ["She took the wrong path", "She hurt her leg", "Her strength gave out and she sat down"], answer: 2 },
+        { q: "Who found the old woman?", choices: ["The youngest daughter", "The second daughter", "A passer-by"], answer: 0 },
+        { q: "What does the grandmother flower look like?", choices: ["It faces the sky", "It hangs its head", "It lies on its side"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "Only the poorest daughter went looking for her, so looking after a parent has nothing to do with money.",
+                "The eldest daughter's gate never opened, so one door can put that much distance between people.",
+                "The youngest wept because her mother was so light, so you can tell how thin she had grown.",
+                "She told them they needn't come often, so she did not much want to see her daughters."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "an origin tale", k: "유래담", s: "It is an origin tale" },
+            { w: "came by ~ (come by)", k: "갖게 되었다", s: "how one flower came by its name and its shape" },
+            { w: "wild flower", k: "들꽃", s: "The halmikkot is a real wild flower." },
+            { w: "in early spring", k: "이른 봄에", s: "It opens in early spring on sunny banks" },
+            { w: "banks", k: "언덕", s: "on sunny banks" },
+            { w: "stem", k: "줄기", s: "its stem bent like a bow" },
+            { w: "bent like a bow", k: "활처럼 굽은", s: "its stem bent like a bow" },
+            { w: "down", k: "솜털", s: "it is covered in fine white down" },
+            { w: "explain (explain)", k: "설명하다", s: "Old tales often explain the shape of a flower" }
+        ],
+        "01-daughters.webp": [
+            { w: "Left alone early", k: "일찍 혼자가 되어", s: "Left alone early, she worked day and night." },
+            { w: "day and night", k: "밤낮없이", s: "she worked day and night" },
+            { w: "Off I go", k: "다녀오마", s: "Off I go again, and I'll be quick." },
+            { w: "rose (rise)", k: "일어났다", s: "She rose before dawn to gather herbs" },
+            { w: "gather herbs", k: "나물을 캐다", s: "to gather herbs on the mountain" },
+            { w: "mended (mend)", k: "기웠다", s: "she mended other people's clothes by the lamp" },
+            { w: "never left her hands", k: "손에서 떠나지 않았다", s: "Work never left her hands." },
+            { w: "go hungry", k: "배곯다", s: "My girls will not go hungry." },
+            { w: "knuckles", k: "손마디", s: "her knuckles thickened and her back bent" },
+            { w: "thickened (thicken)", k: "굵어졌다", s: "her knuckles thickened" },
+            { w: "filled her up", k: "배가 불렀다", s: "But watching her daughters eat filled her up." },
+            { w: "the finest sight", k: "제일 좋은 구경", s: "It was the finest sight she knew." }
+        ],
+        "02-married.webp": [
+            { w: "one by one", k: "하나둘", s: "one by one the daughters married" },
+            { w: "the eldest", k: "첫째", s: "The eldest went over the hill to a big tiled house." },
+            { w: "tiled house", k: "기와집", s: "a big tiled house" },
+            { w: "thatched cottage", k: "초가집", s: "a small thatched cottage below the mountain" },
+            { w: "the poorest", k: "제일 가난한", s: "the poorest of the three" },
+            { w: "saw ~ off (see off)", k: "배웅했다", s: "The old woman saw each of them off in turn." },
+            { w: "in turn", k: "차례로", s: "saw each of them off in turn" },
+            { w: "Take care of yourself", k: "몸조심하세요", s: "Take care of yourself, Mother." },
+            { w: "You needn't ~", k: "~하지 않아도 된다", s: "Don't worry. You needn't come often." },
+            { w: "waving her hand", k: "손을 흔들며", s: "That is what she said, waving her hand." },
+            { w: "a long while", k: "한참을", s: "she stood there a long while" }
+        ],
+        "03-alone.webp": [
+            { w: "grew weaker (grow)", k: "기운이 빠졌다", s: "the old woman grew weaker year by year" },
+            { w: "year by year", k: "해가 갈수록", s: "grew weaker year by year" },
+            { w: "basket", k: "바구니", s: "Even a light herb basket felt heavy." },
+            { w: "after all", k: "이제, 결국", s: "So I am old after all." },
+            { w: "appetite", k: "밥맛", s: "And I've no appetite left." },
+            { w: "left over", k: "남는", s: "there was always rice left over" },
+            { w: "pour water on ~", k: "물에 말다", s: "She would pour water on it and eat it alone." },
+            { w: "azaleas", k: "진달래", s: "Azaleas were out all along the yard." },
+            { w: "were out (be out)", k: "피어 있었다", s: "Azaleas were out all along the yard." },
+            { w: "set off (set)", k: "길을 나섰다", s: "The old woman took her stick and set off slowly." },
+            { w: "want for nothing", k: "더 바랄 것이 없다", s: "Then I'll want for nothing more." }
+        ],
+        "04-first.webp": [
+            { w: "knocked at ~ (knock)", k: "두드렸다", s: "knocked at the eldest daughter's gate" },
+            { w: "so much that ~", k: "너무 ~해서", s: "Her hand shook so much she could hardly knock." },
+            { w: "hardly", k: "잘 ~ 못하다", s: "she could hardly knock" },
+            { w: "rustle", k: "부스럭거리는 소리", s: "Inside there was a rustle of somebody moving." },
+            { w: "went quiet", k: "조용해졌다", s: "Then it went quiet." },
+            { w: "footsteps", k: "발소리", s: "The footsteps went away inside." },
+            { w: "went away inside", k: "안쪽으로 멀어졌다", s: "The footsteps went away inside." },
+            { w: "never opened", k: "끝내 열리지 않았다", s: "The gate never opened." },
+            { w: "turned round", k: "돌아섰다", s: "then quietly turned round" }
+        ],
+        "05-second.webp": [
+            { w: "got a ride (get)", k: "얻어 탔다", s: "She got a ride on a ferry across the river" },
+            { w: "ferry", k: "나룻배", s: "She got a ride on a ferry" },
+            { w: "fare", k: "타는 값", s: "Having no fare, she gave the ferryman herbs instead" },
+            { w: "ferryman", k: "사공", s: "she gave the ferryman herbs instead" },
+            { w: "hanging washing", k: "빨래를 너는", s: "The second daughter was hanging washing in the yard" },
+            { w: "gladness", k: "반가운 기색", s: "But there was no gladness in the daughter's face." },
+            { w: "just now", k: "지금은", s: "Mother, the house is busy just now." },
+            { w: "another time", k: "다음에", s: "Come another time." },
+            { w: "slid shut (slide)", k: "스르르 닫혔다", s: "The gate slid shut." },
+            { w: "took a firmer hold of ~", k: "고쳐 잡았다", s: "then took a firmer hold of her stick" }
+        ],
+        "06-hill.webp": [
+            { w: "came down long", k: "길게 내려앉았다", s: "The mountain shadow came down long." },
+            { w: "wiped her eyes", k: "눈물을 닦았다", s: "She wiped her eyes and looked down the mountain." },
+            { w: "walked on", k: "다시 걸음을 옮겼다", s: "Then she walked on." },
+            { w: "weighed a thousand pounds", k: "천근만근이었다", s: "Her legs weighed a thousand pounds." },
+            { w: "Leaning on ~ (lean)", k: "~에 기대어", s: "Leaning on her stick, she started up the hill." },
+            { w: "Far off", k: "저 멀리", s: "Far off she could see the roof of the youngest's cottage." },
+            { w: "right there in front of ~", k: "눈앞에 뻔히", s: "It was right there in front of her" },
+            { w: "seemed to grow", k: "자꾸 높아 보였다", s: "still the hill seemed to grow" },
+            { w: "after every ten steps", k: "열 걸음마다", s: "She had to rest after every ten steps." },
+            { w: "came up in her throat", k: "턱까지 차올랐다", s: "Her breath came up in her throat." }
+        ],
+        "07-rest.webp": [
+            { w: "Halfway up ~", k: "중턱에서", s: "Halfway up the hill the old woman sat down." },
+            { w: "short of breath", k: "숨이 가쁜", s: "She was too short of breath to take another step." },
+            { w: "would not obey her", k: "말을 듣지 않았다", s: "Her legs would not obey her." },
+            { w: "fell out of ~ (fall)", k: "툭 떨어졌다", s: "The stick fell out of her hand." },
+            { w: "turned her face towards ~", k: "고개를 돌렸다", s: "She turned her face towards the youngest's roof" },
+            { w: "rising straight up", k: "곧게 피어오르는", s: "Smoke was rising straight up from it" },
+            { w: "being cooked", k: "짓고 있는", s: "supper being cooked" },
+            { w: "grew smaller (grow)", k: "점점 작아졌다", s: "Her voice grew smaller and smaller." },
+            { w: "went softly over ~", k: "가만가만 쓸고 지나갔다", s: "The spring wind went softly over her white hair." }
+        ],
+        "08-search.webp": [
+            { w: "About then", k: "그 무렵", s: "About then the youngest was pacing in front of her house." },
+            { w: "pacing (pace)", k: "서성이는", s: "the youngest was pacing in front of her house" },
+            { w: "unsettled", k: "어지러운", s: "Her mind had been strangely unsettled since morning." },
+            { w: "keep thinking of ~", k: "자꾸 생각나다", s: "Why do I keep thinking of Mother today?" },
+            { w: "put her hand to ~", k: "일이 손에 잡히다", s: "She could not put her hand to anything." },
+            { w: "kept forgetting", k: "자꾸 잊어버렸다", s: "She kept forgetting the rice on the fire and burned it twice." },
+            { w: "threw off (throw)", k: "벗어 던졌다", s: "she threw off her apron and ran for the hill" },
+            { w: "apron", k: "앞치마", s: "she threw off her apron" },
+            { w: "steep", k: "가파른", s: "The path was so steep she slipped several times." },
+            { w: "growing dark", k: "어둑해지는", s: "The sun had gone and everything was growing dark." },
+            { w: "till her throat tore", k: "목이 터져라", s: "She went up calling for her mother till her throat tore." }
+        ],
+        "09-found.webp": [
+            { w: "at last", k: "마침내", s: "Halfway up the hill she found her at last." },
+            { w: "lay fallen (lie)", k: "툭 떨어져 있었다", s: "The stick lay fallen beside her." },
+            { w: "open your eyes", k: "눈 좀 떠 보세요", s: "Mother, open your eyes!" },
+            { w: "shook her shoulder", k: "어깨를 흔들었다", s: "She shook her shoulder" },
+            { w: "very slowly", k: "아주 천천히", s: "very slowly her mother opened her eyes" },
+            { w: "So it's ~", k: "우리 ~구나", s: "...So it's my youngest." },
+            { w: "Hold on", k: "조금만 참으세요", s: "Hold on, Mother. Just hold on." },
+            { w: "took ~ on her back", k: "등에 업었다", s: "She took her mother on her back" },
+            { w: "in one run", k: "한달음에", s: "went down the hill in one run" },
+            { w: "so light that ~", k: "너무 가벼워서", s: "Her mother was so light on her back that she wept." }
+        ],
+        "10-flower.webp": [
+            { w: "the warm corner", k: "아랫목", s: "in the warm corner of the youngest's room" },
+            { w: "dressed (dress)", k: "무쳤다", s: "Her daughter dressed the herbs she liked" },
+            { w: "season by season", k: "철마다", s: "dressed the herbs she liked, season by season" },
+            { w: "I'm not sending you anywhere", k: "아무 데도 안 보내요", s: "I'm not sending you anywhere again." },
+            { w: "in peace", k: "편안히", s: "the old woman closed her eyes in peace" },
+            { w: "afterwards", k: "그 뒤로", s: "The youngest went up that hill often afterwards." },
+            { w: "the very hill", k: "바로 그 언덕", s: "on the very hill where her mother had sat" },
+            { w: "nobody had seen before", k: "처음 보는", s: "a flower nobody had seen before came up" },
+            { w: "hung its head (hang)", k: "고개를 숙였다", s: "so that it hung its head" },
+            { w: "covered all over in ~", k: "온몸에 ~이 난", s: "it was covered all over in white down" },
+            { w: "shook it (shake)", k: "흔들었다", s: "The spring wind shook it." }
+        ],
+        "after": [
+            { w: "a real flower", k: "실제로 있는 꽃", s: "The grandmother flower is a real flower." },
+            { w: "does not lift ~", k: "들지 않는다", s: "the flower hangs down and does not lift its head" },
+            { w: "when it is over", k: "지고 나면", s: "When it is over, white hairs are left behind in a tuft." },
+            { w: "in a tuft", k: "부수수하게", s: "white hairs are left behind in a tuft" },
+            { w: "bent back", k: "굽은 허리", s: "It looked like an old woman's white hair over a bent back" },
+            { w: "at the same time", k: "함께", s: "This story explains the name and the shape at the same time." },
+            { w: "does not scold ~ (scold)", k: "나무라지 않는다", s: "The story does not scold the two daughters." },
+            { w: "simply sets down ~", k: "조용히 적어 둔다", s: "It simply sets down whose gate she reached and turned back from." },
+            { w: "turned back from", k: "돌아섰다", s: "whose gate she reached and turned back from" },
+            { w: "comes with it", k: "따라온다", s: "So the story comes with it whenever you see the flower." },
+            { w: "does not grow by itself", k: "저절로 생기지 않는다", s: "A heart that remembers what it was given does not grow by itself." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌸',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "The grandmother flower is a real flower. It opens in early spring, and the flower hangs down and does not lift its head. When it is over, white hairs are left behind in a tuft.",
+                    "It looked like an old woman's white hair over a bent back, and that is where the name came from. This story explains the name and the shape at the same time.",
+                    "The story does not scold the two daughters. It simply sets down whose gate she reached and turned back from.",
+                    "They also say it is a flower that grows by graves. So the story comes with it whenever you see the flower."
+                ],
+                right: [
+                    "The old woman raised her three daughters the same way, and only one came over the hill for her. A heart that remembers what it was given does not grow by itself.",
+                    "What could you do today for the person who raised you?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "할머니가 밤에 등잔 밑에서 한 일은 무엇인가요?", choices: ["나물 캐기", "남의 옷 기우기", "빨래 널기"], answer: 1 },
     { q: "첫째 딸네에서 할머니는 어떻게 되었나요?", choices: ["문이 끝내 열리지 않았다", "하룻밤 자고 돌아왔다", "밥만 먹고 돌아섰다"], answer: 0 },

@@ -11,7 +11,8 @@
  *
  *   본문 한쪽 : 칸 242px · 한 줄 25.7px · 문단 아래 여백 4px · 한 줄에 52자
  *                (첫 줄은 들여쓰기가 있어 56자로 잡았다가 넘치는 쪽을 놓쳤다)
- *   표지      : 세 문단·520자 안쪽 (제목이 접히는 줄 수가 책마다 달라 px 로는 못 셈한다)
+ *   표지      : 세 문단 · 450자 안쪽(3장 책 기준, 장이 하나 늘 때마다 75자씩 줄임)
+ *                제목이 접히는 줄 수가 책마다 달라 px 로는 셈이 안 맞았다
  *
  * 이 도구를 통과해도 마지막에는 _sweep-all.html 로 여섯 화면을 다 봐야 한다.
  * 여기서 재는 것은 글 길이뿐이고, 그림이나 화면 비율까지는 못 본다.
@@ -22,7 +23,9 @@
 import fs from 'fs';
 
 const SPREAD = { pane: 242, line: 25.7, gap: 4, chars: 52 };
-const COVER = { maxParas: 3, maxChars: 520 };
+// 표지 머리글은 제목과 차례가 자리를 먹고 남는 만큼만 쓸 수 있다.
+// 장이 하나 늘면 차례 줄이 하나 늘어 대략 75자만큼 자리가 준다.
+const COVER = { maxParas: 3, base: 450, perChapter: 75 };
 
 const showAll = process.argv.includes('--all');
 const listed = process.argv.slice(2).filter(a => !a.startsWith('--'));
@@ -61,7 +64,8 @@ for (const b of books) {
   // 대신 시범본(좁쌀 한 톨)에서 확인된 선을 그대로 쓴다: 세 문단·520자 안쪽.
   const coverChars = EN.cover.intro.reduce((a, t) => a + textOf(t).length, 0);
   if (EN.cover.intro.length > COVER.maxParas) hits.push(`표지 ${EN.cover.intro.length}문단 (${COVER.maxParas}문단까지)`);
-  if (coverChars > COVER.maxChars) hits.push(`표지 ${coverChars}자 (${COVER.maxChars}자까지)`);
+  const coverCap = COVER.base - COVER.perChapter * (EN.chapters.length - 3);
+  if (coverChars > coverCap) hits.push(`표지 ${coverChars}자 (${EN.chapters.length}장이라 ${coverCap}자까지)`);
 
   for (const c of EN.chapters) {
     for (const bt of c.beats) {

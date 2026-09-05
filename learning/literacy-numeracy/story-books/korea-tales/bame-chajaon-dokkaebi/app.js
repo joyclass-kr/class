@@ -211,7 +211,7 @@ const EN = {
         title: "The Goblin Who Came at Night",
         intro: [
             "The Goblin Who Came at Night is an old Korean tale with no known author. It is also told as The Goblin Wrestling Match.",
-            "A Korean goblin is not like a Western monster. It has a horn and it is strong, but it is more foolish than frightening. It loves wrestling, and it plays tricks without doing real harm.",
+            "A Korean goblin is not like a Western monster. It has a horn and it is strong, but it is more foolish than frightening. It loves wrestling.",
             "Goblins were said to grow out of old worn things — a broom, a pestle, a poker. So at dawn one shabby household object is often left where the goblin stood."
         ]
     },

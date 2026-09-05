@@ -203,6 +203,405 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "⚖️",
+        art: "cover.webp",
+        title: "The Trial of the Stone Post",
+        intro: [
+            "The Trial of the Stone Post is an old Korean tale with no known author. It is also told as The Stone on Trial.",
+            "A mangduseok is a stone post set up in pairs in front of a grave. They guarded the grave and marked it from far off, and once you saw them beside every road.",
+            "Tales about a magistrate untangling a hard case are called songsa tales. This magistrate has no name — how he solved it mattered more than who he was."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Silk That Vanished",
+            beats: [
+                {
+                    art: "01-merchant.webp",
+                    emoji: "🧵",
+                    left: [
+                        "It was the middle of summer and the sun beat down. A silk pedlar was walking a long road with his bundle of silk.",
+                        "Sweat ran down his back. The load felt heavier with every step.",
+                        { t: "\"Oh, this heat. It will be the death of me.\"", v: "man" },
+                        { t: "\"Let me rest in that shade a while.\"", v: "man" }
+                    ],
+                    right: [
+                        "By the road stood a tall stone post — a grave post, of the kind set in front of a tomb.",
+                        "The pedlar put his bundle down in its shade and dropped to the ground.",
+                        "The cicadas were loud.",
+                        { t: "\"Just a short nap. Only a short one.\"", v: "man" },
+                        "And he fell asleep there and snored."
+                    ]
+                },
+                {
+                    art: "02-gone.webp",
+                    emoji: "😱",
+                    left: [
+                        "How long did he sleep? He woke and jumped to his feet.",
+                        "The sun had gone a long way over to the west.",
+                        "And the bundle of silk that should have been beside him was clean gone.",
+                        "He rubbed his eyes again and again, and it made no difference."
+                    ],
+                    right: [
+                        { t: "\"My silk! Where has my silk gone!\"", v: "man" },
+                        "He ran wildly about, looking everywhere.",
+                        "There was not the shadow of a person to be seen.",
+                        "His whole family had woven that silk over the winter. He sat down where he was and wept."
+                    ]
+                },
+                {
+                    art: "03-court.webp",
+                    emoji: "🏛️",
+                    left: [
+                        "He stopped crying and ran to the magistrate's court. He threw himself down in the yard.",
+                        { t: "\"Sir, all my silk is gone! It is a terrible wrong!\"", v: "man" },
+                        "A brush was set down with a click.",
+                        "The magistrate looked down at him and asked,",
+                        { t: "\"Was anybody beside you?\"", v: "old" }
+                    ],
+                    right: [
+                        { t: "\"Nobody at all.\"", v: "man" },
+                        { t: "\"Truly nobody? Think again carefully.\"", v: "old" },
+                        "The magistrate narrowed his eyes.",
+                        "The pedlar hesitated a long moment and answered in a very small voice.",
+                        { t: "\"...Only a stone post.\"", v: "man" },
+                        "What use was a stone post, he thought."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Bring Me That Stone",
+            beats: [
+                {
+                    art: "04-arrest.webp",
+                    emoji: "😳",
+                    left: [
+                        "The magistrate stroked his beard and thought. The yard went as quiet as still water.",
+                        "The tip of his beard trembled.",
+                        "Then all at once he gave the order aloud.",
+                        { t: "\"Arrest that stone post and bring it here!\"", v: "old" }
+                    ],
+                    right: [
+                        { t: "\"What? A — a stone, sir?\"", v: "man" },
+                        "The constables only looked at one another. They wondered if the heat had got to him.",
+                        { t: "\"Well? Do my words amuse you?\"", v: "old" },
+                        { t: "\"Fetch a rope this instant!\"", v: "old" },
+                        "The constables grabbed a rope and ran."
+                    ]
+                },
+                {
+                    art: "05-drag.webp",
+                    emoji: "🪢",
+                    left: [
+                        "Several of them wound the rope round and round the post. Then they dragged it all the way to the court.",
+                        "Heave, heave.",
+                        { t: "\"Come on! A little more!\"", v: "man" },
+                        "It left a long mark down the road. Everyone who passed stopped to stare."
+                    ],
+                    right: [
+                        { t: "\"They're putting a stone on trial at the court!\"", v: "granny" },
+                        { t: "\"Whoever heard of such a thing!\"", v: "man" },
+                        { t: "\"Let's go and see it!\"", v: "girl" },
+                        "The news went round the whole district in a flash. People came in crowds.",
+                        "There was soon no room to put a foot in the court yard."
+                    ]
+                },
+                {
+                    art: "06-question.webp",
+                    emoji: "🗿",
+                    left: [
+                        "The magistrate glared at the stone post and thundered at it, loud enough to ring round the yard.",
+                        { t: "\"You there! Were you not standing in that very place!\"", v: "old" },
+                        "His eyes flashed.",
+                        { t: "\"Tell me at once who the thief was!\"", v: "old" }
+                    ],
+                    right: [
+                        "But the stone said nothing. Of course it did not. How would a stone speak?",
+                        { t: "\"So you will not open your mouth!\"", v: "old" },
+                        "The stone only stood there.",
+                        "The magistrate thundered louder still. The crowd stood with their mouths open."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Price of a Laugh",
+            beats: [
+                {
+                    art: "07-laugh.webp",
+                    emoji: "😂",
+                    left: [
+                        "And then it happened.",
+                        { t: "\"Pfft!\"", v: "man" },
+                        "Somebody at the very front could not hold it in.",
+                        "He clapped both hands over his mouth, but it was too late.",
+                        "A magistrate shouting at a stone was too funny for anyone to bear."
+                    ],
+                    right: [
+                        "One laughed, then the person beside him, then the one beside that.",
+                        { t: "\"Ha ha ha ha!\"", v: "man" },
+                        { t: "\"Oh, my sides!\"", v: "granny" },
+                        "In no time the whole yard was a sea of laughter. Some were rolling about holding their stomachs.",
+                        "Only the magistrate was not laughing."
+                    ]
+                },
+                {
+                    art: "08-fine.webp",
+                    emoji: "😠",
+                    left: [
+                        "Then he struck the table. The laughter stopped dead.",
+                        { t: "\"Laughing in a court of law! Where is your respect!\"", v: "old" },
+                        { t: "\"Do you know where you are standing!\"", v: "old" },
+                        "Only then did people catch themselves and bow their heads. The yard went quiet again."
+                    ],
+                    right: [
+                        { t: "\"Everyone who laughed will bring one roll of silk before the day is out!\"", v: "old" },
+                        { t: "\"What? Silk?\"", v: "man" },
+                        { t: "\"Silk isn't easy to come by!\"", v: "granny" },
+                        "The people who had laughed went white and scattered.",
+                        "They ran all over the district looking for silk."
+                    ]
+                },
+                {
+                    art: "09-silk.webp",
+                    emoji: "🧶",
+                    left: [
+                        "By evening the silk was piled high in the court yard.",
+                        "It looked like all the silk in the district.",
+                        "The magistrate called the pedlar closer.",
+                        { t: "\"Look well and see if any of this is yours.\"", v: "old" }
+                    ],
+                    right: [
+                        "The pedlar felt his way through the rolls one at a time. Then he suddenly cried out.",
+                        { t: "\"This one! I wove this myself, I'm certain of it!\"", v: "man" },
+                        "The magistrate nodded.",
+                        { t: "\"How can you be so sure?\"", v: "old" },
+                        { t: "\"I wove one character of my name into the end.\"", v: "man" }
+                    ]
+                },
+                {
+                    art: "10-caught.webp",
+                    emoji: "⚖️",
+                    left: [
+                        "The one who had brought that roll was the thief. The constables took hold of him.",
+                        "He hung his head and could not say a word.",
+                        "Only now did the magistrate smile.",
+                        { t: "\"Did you think a stone would answer me?\"", v: "old" }
+                    ],
+                    right: [
+                        { t: "\"From the start I only wanted people to gather.\"", v: "old" },
+                        { t: "\"A thief would come to watch, and laugh with the rest.\"", v: "old" },
+                        { t: "\"He is a fine magistrate indeed!\"", v: "man" },
+                        "Only then did the crowd slap their knees. Nobody had guessed what he was doing."
+                    ]
+                }
+            ],
+            moral: "The stone never said a word. But the magistrate had not been asking the stone at all. Even a thing with no way through the front has a way round.",
+            question: "Have you ever solved something by another route when the straight way would not work?"
+        }
+    ],
+    quiz: [
+        { q: "Why did the pedlar stop on the road?", choices: ["The load was too heavy", "To rest in the shade from the heat", "The sun had gone down"], answer: 1 },
+        { q: "What did the magistrate order the constables to arrest?", choices: ["The silk pedlar", "The stone post", "The onlookers"], answer: 1 },
+        { q: "How did the stone answer the magistrate?", choices: ["It said nothing", "It shouted loudly", "It shook its head"], answer: 0 },
+        { q: "What did the magistrate do when the crowd laughed?", choices: ["Glared at the stone", "Stroked his beard and thought", "Struck the table"], answer: 2 },
+        { q: "What was piled in the court yard by evening?", choices: ["A heap of rope", "All the silk in the district", "Several stone posts"], answer: 1 },
+        { q: "Why did the magistrate really put the stone on trial?", choices: ["To bring people together", "In case the stone spoke", "To hand out a punishment"], answer: 0 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The whole district came for a stone's trial, so what he was after was not the stone but the people.",
+                "He took silk as the price of a laugh, so he set a net while pretending to punish.",
+                "The pedlar had woven one character of his name in, so you know a thing your own hands made.",
+                "The constables understood the magistrate's plan as they dragged the post in, so his men trusted him."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "trial", k: "재판", s: "The Trial of the Stone Post" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "on trial", k: "재판을 받는", s: "It is also told as The Stone on Trial." },
+            { w: "in pairs", k: "양쪽에 짝으로", s: "a stone post set up in pairs in front of a grave" },
+            { w: "grave", k: "무덤", s: "in front of a grave" },
+            { w: "guarded (guard)", k: "지켰다", s: "They guarded the grave and marked it from far off" },
+            { w: "marked ~ from far off", k: "멀리서도 눈에 띄게 했다", s: "marked it from far off" },
+            { w: "magistrate", k: "원님, 사또", s: "Tales about a magistrate untangling a hard case" },
+            { w: "untangling (untangle)", k: "슬기롭게 푸는", s: "a magistrate untangling a hard case" },
+            { w: "mattered more (matter)", k: "더 중요했다", s: "how he solved it mattered more than who he was" }
+        ],
+        "01-merchant.webp": [
+            { w: "beat down (beat)", k: "쨍쨍 내리쬐었다", s: "It was the middle of summer and the sun beat down." },
+            { w: "pedlar", k: "장수", s: "A silk pedlar was walking a long road" },
+            { w: "bundle", k: "짐, 꾸러미", s: "walking a long road with his bundle of silk" },
+            { w: "ran down (run)", k: "줄줄 흘러내렸다", s: "Sweat ran down his back." },
+            { w: "the death of me", k: "사람 잡는 것", s: "Oh, this heat. It will be the death of me." },
+            { w: "shade", k: "그늘", s: "Let me rest in that shade a while." },
+            { w: "post", k: "돌기둥", s: "By the road stood a tall stone post" },
+            { w: "tomb", k: "무덤", s: "of the kind set in front of a tomb" },
+            { w: "cicadas", k: "매미", s: "The cicadas were loud." },
+            { w: "nap", k: "잠깐 눈 붙이기", s: "Just a short nap." },
+            { w: "snored (snore)", k: "코를 골았다", s: "And he fell asleep there and snored." }
+        ],
+        "02-gone.webp": [
+            { w: "jumped to his feet", k: "벌떡 일어났다", s: "He woke and jumped to his feet." },
+            { w: "a long way over", k: "많이 기울어", s: "The sun had gone a long way over to the west." },
+            { w: "should have been ~", k: "있어야 할", s: "the bundle of silk that should have been beside him" },
+            { w: "clean gone", k: "감쪽같이 사라진", s: "was clean gone" },
+            { w: "made no difference", k: "마찬가지였다", s: "he rubbed his eyes again and again, and it made no difference" },
+            { w: "ran wildly about", k: "정신없이 뛰어다녔다", s: "He ran wildly about, looking everywhere." },
+            { w: "not the shadow of ~", k: "~의 그림자 하나 없는", s: "There was not the shadow of a person to be seen." },
+            { w: "had woven (weave)", k: "짰다", s: "His whole family had woven that silk over the winter." },
+            { w: "over the winter", k: "겨우내", s: "had woven that silk over the winter" },
+            { w: "wept (weep)", k: "엉엉 울었다", s: "He sat down where he was and wept." }
+        ],
+        "03-court.webp": [
+            { w: "court", k: "관아", s: "He stopped crying and ran to the magistrate's court." },
+            { w: "threw himself down (throw)", k: "엎드렸다", s: "He threw himself down in the yard." },
+            { w: "a terrible wrong", k: "억울한 일", s: "It is a terrible wrong!" },
+            { w: "was set down with a click", k: "딱 하고 놓였다", s: "A brush was set down with a click." },
+            { w: "Was anybody beside you?", k: "곁에 누가 있었느냐?", s: "Was anybody beside you?" },
+            { w: "Truly nobody?", k: "정말 아무도 없었느냐?", s: "Truly nobody? Think again carefully." },
+            { w: "narrowed his eyes", k: "눈을 가늘게 떴다", s: "The magistrate narrowed his eyes." },
+            { w: "hesitated (hesitate)", k: "머뭇거렸다", s: "The pedlar hesitated a long moment" },
+            { w: "in a very small voice", k: "기어드는 목소리로", s: "answered in a very small voice" },
+            { w: "What use was ~", k: "~이 무슨 소용인가", s: "What use was a stone post, he thought." }
+        ],
+        "04-arrest.webp": [
+            { w: "stroked (stroke)", k: "쓸었다", s: "The magistrate stroked his beard and thought." },
+            { w: "as quiet as still water", k: "물을 끼얹은 듯 조용한", s: "The yard went as quiet as still water." },
+            { w: "trembled (tremble)", k: "파르르 떨렸다", s: "The tip of his beard trembled." },
+            { w: "all at once", k: "갑자기", s: "Then all at once he gave the order aloud." },
+            { w: "gave the order", k: "명했다", s: "he gave the order aloud" },
+            { w: "Arrest ~", k: "~을 잡아 오너라", s: "Arrest that stone post and bring it here!" },
+            { w: "constables", k: "포졸", s: "The constables only looked at one another." },
+            { w: "one another", k: "서로", s: "The constables only looked at one another." },
+            { w: "the heat had got to him", k: "더위를 먹었다", s: "They wondered if the heat had got to him." },
+            { w: "Do my words amuse you?", k: "말이 우습게 들리느냐?", s: "Well? Do my words amuse you?" },
+            { w: "this instant", k: "어서, 당장", s: "Fetch a rope this instant!" }
+        ],
+        "05-drag.webp": [
+            { w: "wound ~ round (wind)", k: "칭칭 감았다", s: "Several of them wound the rope round and round the post." },
+            { w: "dragged (drag)", k: "질질 끌었다", s: "Then they dragged it all the way to the court." },
+            { w: "all the way to ~", k: "~까지 죽", s: "dragged it all the way to the court" },
+            { w: "Heave, heave.", k: "영차, 영차.", s: "Heave, heave." },
+            { w: "left a long mark", k: "기다란 자국을 남겼다", s: "It left a long mark down the road." },
+            { w: "stopped to stare", k: "걸음을 멈추고 쳐다보았다", s: "Everyone who passed stopped to stare." },
+            { w: "put ~ on trial", k: "~을 재판하다", s: "They're putting a stone on trial at the court!" },
+            { w: "Whoever heard of ~", k: "어디 그런 것이 있어", s: "Whoever heard of such a thing!" },
+            { w: "in a flash", k: "삽시간에", s: "The news went round the whole district in a flash." },
+            { w: "in crowds", k: "구름처럼", s: "People came in crowds." },
+            { w: "no room to put a foot in", k: "발 디딜 틈도 없는", s: "There was soon no room to put a foot in the court yard." }
+        ],
+        "06-question.webp": [
+            { w: "glared at ~ (glare)", k: "무섭게 노려보았다", s: "The magistrate glared at the stone post" },
+            { w: "thundered (thunder)", k: "호통쳤다", s: "and thundered at it" },
+            { w: "loud enough to ring round ~", k: "쩌렁쩌렁 울리도록", s: "loud enough to ring round the yard" },
+            { w: "that very place", k: "바로 그 자리", s: "Were you not standing in that very place!" },
+            { w: "flashed (flash)", k: "번뜩였다", s: "His eyes flashed." },
+            { w: "at once", k: "어서", s: "Tell me at once who the thief was!" },
+            { w: "Of course it did not.", k: "당연한 일이었다.", s: "Of course it did not." },
+            { w: "How would ~ speak?", k: "어떻게 말을 하겠어요?", s: "How would a stone speak?" },
+            { w: "open your mouth", k: "입을 열다", s: "So you will not open your mouth!" },
+            { w: "louder still", k: "더 크게", s: "The magistrate thundered louder still." }
+        ],
+        "07-laugh.webp": [
+            { w: "Pfft!", k: "푸흡!", s: "Pfft!" },
+            { w: "at the very front", k: "맨 앞에", s: "Somebody at the very front could not hold it in." },
+            { w: "hold it in", k: "참다", s: "could not hold it in" },
+            { w: "clapped ~ over (clap)", k: "얼른 막았다", s: "He clapped both hands over his mouth" },
+            { w: "too late", k: "이미 늦은", s: "but it was too late" },
+            { w: "too funny to bear", k: "참을 수 없이 우스운", s: "A magistrate shouting at a stone was too funny for anyone to bear." },
+            { w: "the one beside that", k: "그 옆 사람", s: "then the person beside him, then the one beside that" },
+            { w: "a sea of laughter", k: "웃음바다", s: "In no time the whole yard was a sea of laughter." },
+            { w: "rolling about", k: "구르는", s: "Some were rolling about holding their stomachs." },
+            { w: "Only ~ was not laughing", k: "~만은 웃지 않았다", s: "Only the magistrate was not laughing." }
+        ],
+        "08-fine.webp": [
+            { w: "struck the table (strike)", k: "상을 내리쳤다", s: "Then he struck the table." },
+            { w: "stopped dead", k: "뚝 그쳤다", s: "The laughter stopped dead." },
+            { w: "a court of law", k: "관아", s: "Laughing in a court of law!" },
+            { w: "respect", k: "예의, 무엄하지 않음", s: "Where is your respect!" },
+            { w: "catch themselves", k: "아차 싶어 하다", s: "Only then did people catch themselves and bow their heads." },
+            { w: "a roll of silk", k: "비단 한 필", s: "Everyone who laughed will bring one roll of silk" },
+            { w: "before the day is out", k: "오늘 안에", s: "bring one roll of silk before the day is out" },
+            { w: "easy to come by", k: "흔한", s: "Silk isn't easy to come by!" },
+            { w: "went white", k: "얼굴이 새파래졌다", s: "The people who had laughed went white and scattered." },
+            { w: "scattered (scatter)", k: "뿔뿔이 흩어졌다", s: "went white and scattered" }
+        ],
+        "09-silk.webp": [
+            { w: "piled high", k: "수북이 쌓인", s: "By evening the silk was piled high in the court yard." },
+            { w: "It looked like ~", k: "~ 같았다", s: "It looked like all the silk in the district." },
+            { w: "called ~ closer", k: "가까이 불렀다", s: "The magistrate called the pedlar closer." },
+            { w: "Look well", k: "잘 보아라", s: "Look well and see if any of this is yours." },
+            { w: "felt his way through ~", k: "손으로 만져 보며 살폈다", s: "The pedlar felt his way through the rolls" },
+            { w: "one at a time", k: "한 필씩", s: "felt his way through the rolls one at a time" },
+            { w: "cried out", k: "소리쳤다", s: "Then he suddenly cried out." },
+            { w: "I wove ~ (weave)", k: "내가 짰다", s: "This one! I wove this myself" },
+            { w: "I'm certain of it", k: "틀림없다", s: "I wove this myself, I'm certain of it!" },
+            { w: "character", k: "글자", s: "I wove one character of my name into the end." }
+        ],
+        "10-caught.webp": [
+            { w: "took hold of ~ (take)", k: "붙잡았다", s: "The constables took hold of him." },
+            { w: "hung his head (hang)", k: "고개를 푹 숙였다", s: "He hung his head and could not say a word." },
+            { w: "Only now did ~", k: "그제야 ~했다", s: "Only now did the magistrate smile." },
+            { w: "Did you think ~?", k: "~할 리가 있겠느냐?", s: "Did you think a stone would answer me?" },
+            { w: "From the start", k: "처음부터", s: "From the start I only wanted people to gather." },
+            { w: "gather", k: "모이다", s: "I only wanted people to gather" },
+            { w: "with the rest", k: "함께, 다른 사람들과", s: "A thief would come to watch, and laugh with the rest." },
+            { w: "indeed", k: "과연", s: "He is a fine magistrate indeed!" },
+            { w: "slap their knees", k: "무릎을 치다", s: "Only then did the crowd slap their knees." },
+            { w: "had guessed (guess)", k: "속을 알아챘다", s: "Nobody had guessed what he was doing." }
+        ],
+        "after": [
+            { w: "putting something that cannot speak on trial", k: "말 못 하는 것을 재판에 세우기", s: "Putting something that cannot speak on trial happens in several Korean tales." },
+            { w: "threatens to ~ (threaten)", k: "~하겠다고 한다", s: "A magistrate hauls in a stone or a tree and threatens to beat it." },
+            { w: "hauls in (haul)", k: "잡아 온다", s: "A magistrate hauls in a stone or a tree" },
+            { w: "is not really asking ~", k: "정말로 묻는 것이 아니다", s: "But in such stories the magistrate is not really asking the stone." },
+            { w: "who have crowded in", k: "몰려든", s: "He is asking the people who have crowded in to watch." },
+            { w: "lies in ~ (lie)", k: "~에 있다", s: "the answer lies not in the stone but in the laughter" },
+            { w: "on the excuse of ~", k: "~을 빌미로", s: "On the excuse of that laughter he hands out a punishment" },
+            { w: "hands out (hand out)", k: "내린다", s: "he hands out a punishment" },
+            { w: "get back ~", k: "되찾다", s: "and by that punishment the pedlar gets back what he lost" },
+            { w: "no way through the front", k: "정면으로는 답이 없는", s: "Even a thing with no way through the front has a way round." },
+            { w: "a way round", k: "돌아가는 길", s: "has a way round" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🪨',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Putting something that cannot speak on trial happens in several Korean tales. A magistrate hauls in a stone or a tree and threatens to beat it.",
+                    "But in such stories the magistrate is not really asking the stone. He is asking the people who have crowded in to watch.",
+                    "Look again and the answer lies not in the stone but in the laughter. On the excuse of that laughter he hands out a punishment, and by that punishment the pedlar gets back what he lost."
+                ],
+                right: [
+                    "The stone never said a word. But the magistrate had not been asking the stone at all. Even a thing with no way through the front has a way round.",
+                    "Have you ever solved something by another route when the straight way would not work?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "장수는 왜 길에서 걸음을 멈췄나요?", choices: ["짐이 무거워 못 들어서", "더워서 그늘에 쉬려고", "해가 저물어서"], answer: 1 },
     { q: "원님이 포졸들에게 잡아 오라고 한 것은 무엇인가요?", choices: ["비단 장수", "돌기둥", "구경꾼들"], answer: 1 },
