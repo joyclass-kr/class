@@ -3,7 +3,7 @@
   --ink-soft: #5a6673;
   --line: #dfe4ea;
   --line-soft: #eef1f5;
-  --bg: #f5f7fa;
+  --bg: #0b1120;
   --card: #ffffff;
   --accent: #2f6bd8;
   --accent-soft: #eaf1fd;
@@ -11,7 +11,7 @@
   --right-soft: #e6f4ec;
   --wrong: #c0392b;
   --wrong-soft: #fbecea;
-  --radius: 12px;
+  --radius: 14px;
   color-scheme: light;
 }
 
@@ -21,7 +21,13 @@ html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  background: var(--bg);
+  min-height: 100vh;
+  background-color: var(--bg);
+  background-image: linear-gradient(rgba(11, 17, 32, 0.42), rgba(11, 17, 32, 0.65)), url("assets/csat-math-bg.webp");
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: var(--ink);
   font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
   font-size: 16px;
@@ -32,9 +38,20 @@ body {
 .topbar {
   display: flex;
   align-items: center;
-  padding: 10px 18px;
-  background: var(--card);
-  border-bottom: 1px solid var(--line);
+  gap: 12px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+.topbar-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
 }
 .back {
   color: var(--ink-soft);
@@ -42,8 +59,8 @@ body {
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1;
-  padding: 4px 8px;
-  border-radius: 6px;
+  padding: 6px 10px;
+  border-radius: 8px;
   transition: color 0.15s ease, background 0.15s ease;
 }
 .back:hover {
@@ -51,32 +68,73 @@ body {
   background: var(--line-soft);
 }
 
-main { max-width: 940px; margin: 0 auto; padding: 16px 16px 48px; }
+main { max-width: 940px; margin: 0 auto; padding: 18px 16px 48px; }
 
 /* ── 고르기 ── */
 .picker {
-  background: var(--card);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
   border-radius: var(--radius);
-  padding: 12px 14px;
-  margin-bottom: 18px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 18px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.05);
 }
 .picker-row {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 6px 0;
+  gap: 12px;
+  padding: 8px 0;
 }
 .picker-row + .picker-row { border-top: 1px solid var(--line-soft); }
 .picker-row[hidden] { display: none; }
-.picker-row--tail { align-items: center; flex-wrap: wrap; gap: 8px 16px; }
+.picker-row--tail { align-items: center; flex-wrap: wrap; gap: 8px 16px; padding-top: 10px; }
 .picker-label {
   flex: 0 0 42px;
-  padding-top: 5px;
+  padding-top: 6px;
   font-size: 0.84rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--ink-soft);
 }
+
+/* 과목 탭 */
+.subject-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.subject-tab {
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.subject-tab:hover {
+  border-color: #b9c3cf;
+}
+.subject-tab[aria-selected="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(47, 107, 216, 0.28);
+}
+.subject-tab .subject-n {
+  color: var(--ink-soft);
+  font-size: 0.82em;
+  margin-left: 4px;
+}
+.subject-tab[aria-selected="true"] .subject-n {
+  color: rgba(255, 255, 255, 0.88);
+}
+
 .picker-row--select {
   align-items: center;
 }
@@ -92,7 +150,7 @@ main { max-width: 940px; margin: 0 auto; padding: 16px 16px 48px; }
   background-size: 14px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 6px 36px 6px 12px;
+  padding: 7px 36px 7px 12px;
   font: inherit;
   font-size: 0.88rem;
   color: var(--ink);
@@ -109,18 +167,21 @@ main { max-width: 940px; margin: 0 auto; padding: 16px 16px 48px; }
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
+
+/* 단원 칩 */
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip {
   border: 1px solid var(--line);
-  background: #fff;
+  background: #f8fafc;
   color: var(--ink);
   border-radius: 999px;
-  padding: 5px 12px;
+  padding: 5px 13px;
   font: inherit;
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   cursor: pointer;
+  transition: all 0.15s ease;
 }
-.chip:hover { border-color: #b9c3cf; }
+.chip:hover { border-color: #b9c3cf; background: #fff; }
 .chip[aria-pressed="true"] {
   background: var(--accent-soft);
   border-color: var(--accent);
@@ -129,14 +190,6 @@ main { max-width: 940px; margin: 0 auto; padding: 16px 16px 48px; }
 }
 .chip .chip-n { color: var(--ink-soft); font-weight: 400; font-size: 0.82em; margin-left: 4px; }
 .chip[aria-pressed="true"] .chip-n { color: var(--accent); }
-.chip-group-label {
-  align-self: center;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--ink);
-  padding: 0 4px 0 10px;
-}
-.chip-group-label:first-child { padding-left: 0; }
 
 .count { margin: 0; font-size: 0.88rem; color: var(--ink-soft); }
 .hide-done { font-size: 0.88rem; color: var(--ink-soft); cursor: pointer; }
@@ -146,7 +199,7 @@ main { max-width: 940px; margin: 0 auto; padding: 16px 16px 48px; }
   border: 1px solid var(--line);
   background: #fff;
   border-radius: 8px;
-  padding: 4px 10px;
+  padding: 5px 12px;
   font: inherit;
   font-size: 0.82rem;
   color: var(--ink-soft);
@@ -155,13 +208,16 @@ main { max-width: 940px; margin: 0 auto; padding: 16px 16px 48px; }
 .reset:hover { border-color: #b9c3cf; color: var(--ink); }
 
 /* ── 문항 ── */
-.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
 
 .item {
-  background: var(--card);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
   border-radius: var(--radius);
-  padding: 16px 18px 14px;
+  padding: 18px 20px 16px;
+  box-shadow: 0 4px 18px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.05);
 }
 .item.is-done { border-color: #c8dcc8; }
 
@@ -317,14 +373,25 @@ main { max-width: 940px; margin: 0 auto; padding: 16px 16px 48px; }
   background: var(--accent-soft);
 }
 
-.empty { text-align: center; color: var(--ink-soft); padding: 40px 0; }
+.empty {
+  text-align: center;
+  color: #f1f5f9;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  padding: 40px 20px;
+  font-size: 0.95rem;
+}
 
 .foot {
   max-width: 940px;
   margin: 0 auto;
-  padding: 0 16px 32px;
-  color: var(--ink-soft);
+  padding: 16px 16px 36px;
+  color: rgba(255, 255, 255, 0.72);
   font-size: 0.8rem;
+  text-align: center;
 }
 .foot p { margin: 0; }
 

@@ -2515,7 +2515,11 @@
       help: R`(나)의 \(f\bigl(x-f(x)\bigr)=0\)은 \(x-f(x)\)가 \(f\)의 근이라는 뜻이다. (가)에서 \(f\)의 근은 둘뿐이니 그 값을 \(\alpha\), \(\beta\)라 하면, \(x-f(x)=\alpha\)와 \(x-f(x)=\beta\) 두 방정식의 근을 합쳐 셋이어야 한다.`
     },
 
-    // ── 확률과 통계 ──
+    // ── 확률과 통계 ──,
+
+    // ==========================================
+    // 확률과 통계 (51문항)
+    // ==========================================,
     {
       id: "2027-09-prob-28", exam: "2027-09", no: 28, score: 4,
       units: ["prob-prob"], memo: "카드의 위치 교환과 조건부확률",
@@ -3090,8 +3094,9 @@
       answer: 47,
       help: R`곱이 6의 배수가 되려면 5개의 수 중에 2와 3이 적어도 한 번씩 나와야 한다. 여사건은 '2가 한 번도 나오지 않음(1, 3만 나옴: \(2^5\))' 또는 '3이 한 번도 나오지 않음(1, 2만 나옴: \(2^5\))'이다. 두 사건의 교집합(1만 나옴: \(1^5\))을 빼면 여사건의 경우의 수는 \(32+32-1=63\)이고 전체 \(3^5=243\)에서 \(1-\dfrac{63}{243} = \dfrac{180}{243} = \dfrac{20}{27}\)이 되어 \(p+q=47\)이다.`
     },
-
-    // ── 미적분 ──
+    // ==========================================
+    // 미적분 (51문항)
+    // ==========================================,
     {
       id: "2027-09-calc-28", exam: "2027-09", no: 28, score: 4,
       units: ["calc-diff"], memo: "매개변수 미분법과 도형의 넓이 변화율",
@@ -3112,7 +3117,6 @@
         R`(가) \((b_2)^2 = 36b_3\)`,
         R`(나) 급수 \(\sum_{n=1}^\infty b_n\)은 수렴하고 그 합은 \(12\)이다.`
       ],
-      bodyAfter: R`\(a_1 > 0\)이고 \(a_2 &lt; 0\)일 때, \(36 \times a_4 \times a_6\)의 값을 구하시오.`,
       short: true,
       answer: 81,
       help: R`급수가 수렴하므로 공비의 절댓값은 \(|r|&lt;1\)이고 항의 절댓값은 단조 감소한다. \(|a_n|\ge 10\)인 항의 개수를 분류하여 \(b_n\)의 규칙을 정하고 조건 (가)로부터 공비 \(r=-\dfrac{1}{2}\)을 결정한다. 급수의 합 조건을 통해 첫째항 \(a_1=24\)를 구한 뒤 구하는 값을 계산한다.`
@@ -3146,7 +3150,6 @@
         R`(가) \(a_1 = b_1\), \(a_4 = b_2\)`,
         R`(나) 어떤 자연수 \(k\)에 대하여 \(a_k = b_3\)이다.`
       ],
-      bodyAfter: R`급수 \(\sum_{n=1}^\infty b_n\)이 수렴할 때, \(\left|\sum_{n=1}^\infty \left(b_n\cos(a_n\pi)\right)\right|\)의 최솟값을 \(m\)이라 하자. \(10\times m\)의 값을 구하시오.`,
       short: true,
       answer: 54,
       help: R`등비수열의 공비 \(r=1+\dfrac{3d}{a_1}\)가 \(0&lt;r&lt;1\)임을 이용해 \(d&lt;0\)임을 파악하고 조건 (나)에서 \(k-7=\dfrac{9d}{a_1}\)를 유도한다. \(k=5, 6\) 중 공비 조건과 정수 조건을 만족하는 관계식을 찾고, \(\cos(a_n\pi)=(-1)^{a_n}\)의 부호 규칙에 따른 등비급수를 계산한다. 공차 \(d=-1\)일 때 최솟값 \(m=\dfrac{27}{5}\)을 얻는다.`
@@ -3180,9 +3183,6 @@
 \[b_{k+i}=\dfrac{1}{a_i}-1 \quad (i=1, 2, 3)\]
 이다.`
       ],
-      bodyAfter: R`부등식
-\[0 &lt; \sum_{n=1}^\infty \left(b_n - \dfrac{1}{a_n a_{n+1}}\right) &lt; 30\]
-이 성립할 때, \(a_2 \times \sum_{n=1}^\infty b_{2n} = \dfrac{q}{p}\)이다. \(p+q\)의 값을 구하시오. (단, \(a_1 \ne 0\)이고, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       short: true,
       answer: 97,
       help: R`등비중항 성질 \((b_{k+2})^2=b_{k+1}b_{k+3}\)에 \(a_i=i d\)를 대입하면 공차 \(d=\dfrac{1}{4}\)과 공비 \(r=\dfrac{1}{3}\)이 바로 결정된다. 부분분수 급수 \(\sum\dfrac{1}{a_n a_{n+1}}=16\)을 구한 뒤 부등식을 만족하는 자연수 \(k=2\)를 특정한다. 짝수 번째 항들의 등비급수 합 공식 \(\dfrac{b_2}{1-r^2}\)을 적용하여 답을 계산한다.`
@@ -3195,9 +3195,6 @@
         R`(가) \(|x| \le 1\)일 때, \(4\times(f^{-1}(x))^2 = x^2(x^2-5)^2\)이다.`,
         R`(나) \(|x| > 1\)일 때, \(|f^{-1}(x)| = e^{|x|-1}+1\)이다.`
       ],
-      bodyAfter: R`실수 \(m\)에 대하여 기울기가 \(m\)이고 점 \((1, 0)\)을 지나는 직선이 곡선 \(y=f(x)\)와 만나는 점의 개수를 \(g(m)\)이라 하자. 함수 \(g(m)\)이 \(m=a\), \(m=b\,(a&lt;b)\)에서 불연속일 때,
-\[g(a)\times\left(\lim_{m\to a+} g(m)\right) + g(b)\times\left(\dfrac{\ln b}{b}\right)^2\]
-의 값을 구하시오. (단, \(\lim_{x\to\infty}\dfrac{\ln x}{x} = 0\))`,
       short: true,
       answer: 11,
       help: R`\(f^{-1}(x)\)의 연속성과 증가성을 통해 구간별 식을 결정하고, 원함수 \(y=f(x)\)와 점 \((1, 0)\)을 지나는 직선의 위치관계를 파악한다. \(g(m)\)의 불연속점은 직선이 곡선에 접할 때 발생하므로, 접점 방정식을 풀어 불연속이 되는 기울기 \(a\)와 \(b=1\)을 구한다. 각 경계에서의 교점 개수 \(g(a)=3\), \(\lim_{m\to a+} g(m)=4\), \(g(1)=1\)을 대입하여 답을 계산한다.`
@@ -3224,7 +3221,6 @@
         R`(가) \(a_1 + a_2 &lt; 10\)`,
         R`(나) 수열 \(\{a_n\}\)의 정수인 항의 개수는 \(3\)이고, 이 세 항의 곱은 \(216\)이다.`
       ],
-      bodyAfter: R`\(\sum_{n=1}^\infty a_n = \dfrac{q}{p}\)일 때, \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       short: true,
       answer: 91,
       help: R`등비수열의 항이 정수가 되는 구간은 공비의 분모·분자 거듭제곱 약분 조건에 의해 연속된 세 항으로 한정된다. 세 정수 항의 곱이 양수 \(216\)이고 \(a_1+a_2&lt;10\)을 만족하려면 공비가 음수 \(r=-\dfrac{2}{3}\)이고 정수 항이 \(a_2=-9, a_3=6, a_4=-4\)여야 한다. 첫째항 \(a_1=\dfrac{27}{2}\)을 구하여 등비급수의 합 \(\sum_{n=1}^\infty a_n=\dfrac{81}{10}\)을 도출한다.`
@@ -3279,7 +3275,6 @@
         R`(가) 함수 \(g(x)\)는 \(x=0\)에서 극소이고, \(g(0)&gt;0\)이다.`,
         R`(나) \(g'(\ln 3)&lt;0\), \(\left|g'(-\ln 3)\right|=\dfrac{3}{8}g(-\ln 3)\)`
       ],
-      bodyAfter: R`\(g(0)\)의 최솟값을 \(\dfrac{q}{p}\)라 할 때, \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       short: true,
       answer: 25,
       help: R`\(u(x)=\frac{2}{1+e^{-x}}\)는 \((0, 2)\)로 치역을 갖는 단조증가함수이고 \(u(0)=1\)입니다. \(g(0)&gt;0\)과 미분가능성으로부터 절댓값 안의 \(f(u)\)의 부호가 일정해야 하며, 극소 조건과 도함수 부호 조건으로부터 삼차함수 \(f(u)\)의 개형을 확정합니다. \(u(-\ln 3)=\frac{1}{2}, u(\ln 3)=\frac{3}{2}\)에서의 관계식을 연립하여 \(g(0)\)의 최솟값을 계산합니다.`
@@ -3316,9 +3311,6 @@
         R`(가) \(f(0)=0\), \(f(2\pi)=2\pi a+b\)`,
         R`(나) \(f'(0)=f'(t)\)인 양수 \(t\)의 최솟값은 \(4\pi\)이다.`
       ],
-      bodyAfter: R`함수 \(f(x)\)가 \(x=\alpha\)에서 극대인 \(\alpha\)의 값 중 열린구간 \((0,\,4\pi)\)에 속하는 모든 값의 집합을 \(A\)라 하자. 집합 \(A\)의 원소의 개수를 \(n\), 집합 \(A\)의 원소 중 가장 작은 값을 \(\alpha_{1}\)이라 하면,
-\[n\alpha_{1}-ab=\frac{q}{p}\pi\]
-이다. \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       short: true,
       answer: 17,
       help: R`\(-1\le \sin\theta\le 1\)과 \(\sin\theta=\theta\)의 유일해 성질로부터 \(2\pi a+b=0\)이어야 하므로 \(b=-2\pi a\)이고 \(\sin(-2\pi a)=0\)에서 \(a=\frac{3}{2}, b=-3\pi\)가 결정됩니다. \(f'(x)\\)의 곱 형태에서 최솟값 \(4\pi\) 조건을 만족함을 검산하고, \(f(x)=-\sin(\frac{3}{2}x+\sin x)\)의 극대점들을 \(\frac{3}{2}x+\sin x\)의 값의 범위에서 찾아내면 \(n=3\)과 \(\alpha_{1}\)을 얻어 \(p+q=17\)이 나옵니다.`
@@ -3354,7 +3346,6 @@
       note: [
         R`모든 실수 \(x\)에 대하여 \(F'(x)=f(x)\)이고 \(F(x)\ge f(x)\)이다.`
       ],
-      bodyAfter: R`\(g\left(\dfrac{1}{4}\right)+g\left(\dfrac{3}{2}\) = pe+q\)일 때, \(100(p+q)\)의 값을 구하시오. (단, \(\displaystyle\lim_{x\to\infty}xe^{-x}=0\)이고, \(p\)와 \(q\)는 유리수이다.)`,
       short: true,
       answer: 25,
       help: R`\(F'(x)=f(x)\)이므로 \(F(x)\)는 \(f(x)\)의 부정적분이며, \(F(x)\ge f(x)\)는 차함수 \(H(x)=F(x)-f(x)\)의 최솟값이 0 이상이라는 조건입니다. \(H'(x)=f(x)-f'(x)=0\)이 되는 극소 후보점과 \(x=0\)에서의 연속성을 이용해 \(F(0)\)의 최솟값 \(g(k)\)를 구합니다. \(k=\frac{1}{4}\)과 \(k=\frac{3}{2}\)일 때 극값의 위치를 나누어 계산하면 \(100(p+q)=25\)를 얻습니다.`
@@ -3488,7 +3479,6 @@
         R`(가) 급수 \(\displaystyle\sum_{n=1}^{\infty} b_{2n-1}\)은 수렴하고 그 합은 \(-3\)이다.`,
         R`(나) 급수 \(\displaystyle\sum_{n=1}^{\infty} b_{2n}\)은 수렴하고 그 합은 \(8\)이다.`
       ],
-      bodyAfter: R`\(b_3 = -1\)일 때, \(\displaystyle\sum_{n=1}^{\infty} |a_n|\)의 값을 구하시오.`,
       short: true,
       answer: 24,
       help: R`\(\sum b_{2n}=8>0\)과 \(b_3=-1\)로부터 \(a&lt;0, -1&lt;r&lt;0\)임을 파악하여 모든 짝수항은 \(b_{2n}=a_{2n}\)임을 확인합니다. 홀수항에서는 \(b_1=b_3=-1\)이고 \(n\ge 3\)부터 \(b_{2n-1}=a_{2n-1}\)이 됨을 이용해 \(r=-\dfrac{1}{2}, a=-12\)를 구하여 급수의 합 \(24\)를 도출합니다.`
@@ -3512,9 +3502,6 @@
         R`(가) \(\displaystyle\lim_{x \to -\infty} \frac{f(x)+6}{e^x} = 1\)`,
         R`(나) \(f(\ln 2) = 0\)`
       ],
-      bodyAfter: R`함수 \(f(x)\)의 역함수를 \(g(x)\)라 할 때,
-\[\int_{0}^{14} g(x)\,dx = p + q\ln 2\]
-이다. \(p+q\)의 값을 구하시오. (단, \(p\), \(q\)는 유리수이고, \(\ln 2\)는 무리수이다.)`,
       short: true,
       answer: 26,
       help: R`조건 (가)의 극한 수렴 조건에서 \(c=-6, b=1\)을 얻고 조건 (나)에서 \(a=1\)을 찾아 \(f(x)=e^{2x}+e^x-6\)을 완성합니다. 역함수의 정적분은 직사각형 넓이와 원래 함수의 적분을 이용한 \(\int_0^{14} g(x)dx = 14(2\ln 2) - \int_{\ln 2}^{2\ln 2} f(x)dx\) 공식으로 신속히 계산합니다.`
@@ -3527,719 +3514,697 @@
         R`(가) 함수 \(h(x)\)는 \(x=0\)에서 극댓값 \(0\)을 갖는다.`,
         R`(나) 열린구간 \((0, 3)\)에서 방정식 \(h(x)=1\)의 서로 다른 실근의 개수는 \(7\)이다.`
       ],
-      bodyAfter: R`\(f(3) = \dfrac{1}{2}\), \(f'(3) = 0\)일 때, \(f(2) = \dfrac{q}{p}\)이다. \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       short: true,
       answer: 31,
       help: R`\(h(0)=0\)이 극대가 되기 위해 \(f(0)=k\)가 짝수이어야 하고, \(f'(0)=0, f'(3)=0\)에서 \(f(x)\)가 구간 \((0,3)\)에서 \(k\)부터 \(1/2\)까지 단조감소함을 파악합니다. \((1/2, k)\)에서 \(\sin(\pi u)=\ln 2\)의 근이 7개 생기도록 \(k=8\)을 결정한 뒤 삼차함수 식을 완성하여 \(f(2)=\dfrac{22}{9}\)를 구합니다.`
     },
     {
       id: "2023-09-calc-28", exam: "2023-09", no: 28, score: 4,
-      units: ["calc-diff"], memo: "???? ??????? ???? ??",
-      body: R`??? ?? ???? ??? \(1\)?? ???? ??? \(\dfrac{\pi}{2}\)? ??? \(\mathrm{OAB}\)? ??. ? \(\mathrm{AB}\) ?? ? \(\mathrm{P}\)? ??? \(\overline{\mathrm{PA}}=\overline{\mathrm{PC}}=\overline{\mathrm{PD}}\)? ??? ? \(\mathrm{PB}\) ?? ? \(\mathrm{C}\)? ?? \(\mathrm{OA}\) ?? ? \(\mathrm{D}\)? ???. ? \(\mathrm{D}\)? ??? ?? \(\mathrm{OP}\)? ??? ??? ?? \(\mathrm{PA}\)? ??? ?? \(\mathrm{E}\)? ??. \(\angle\mathrm{POA}=\theta\)? ?, ??? \(\mathrm{CDP}\)? ??? \(f(\theta)\), ??? \(\mathrm{EDA}\)? ??? \(g(\theta)\)? ??. \[\lim_{\theta\to 0+}\dfrac{\theta^2\times f(\theta)}{g(\theta)}\]? ??? (?, \(0&lt;\theta&lt;\dfrac{\pi}{4}\))`,
+      units: ["calc-seq", "calc-diff"], memo: "삼각함수의 극한과 도형의 넓이",
+      body: R`그림과 같이 반지름의 길이가 \(1\)이고 중심각의 크기가 \(\dfrac{\pi}{2}\)인 부채꼴 \(\mathrm{OAB}\)가 있다. 호 \(\mathrm{AB}\) 위의 점 \(\mathrm{P}\)에 대하여 \(\overline{\mathrm{PA}}=\overline{\mathrm{PC}}=\overline{\mathrm{PD}}\)가 되도록 호 \(\mathrm{PB}\) 위에 점 \(\mathrm{C}\)와 선분 \(\mathrm{OA}\) 위에 점 \(\mathrm{D}\)를 잡는다. 점 \(\mathrm{D}\)를 지나고 선분 \(\mathrm{OP}\)와 평행한 직선이 선분 \(\mathrm{PA}\)와 만나는 점을 \(\mathrm{E}\)라 하자. \(\angle\mathrm{POA}=\theta\)일 때, 삼각형 \(\mathrm{CDP}\)의 넓이를 \(f(\theta)\), 삼각형 \(\mathrm{EDA}\)의 넓이를 \(g(\theta)\)라 하자. \[\lim_{\theta\to 0+}\dfrac{g(\theta)}{\theta^{2}\times f(\theta)}\]의 값은? (단, \(0<\theta<\dfrac{\pi}{4}\))`,
       figure: "2023-09-calc-28.webp",
       choices: [R`\(\dfrac{1}{8}\)`, R`\(\dfrac{1}{4}\)`, R`\(\dfrac{3}{8}\)`, R`\(\dfrac{1}{2}\)`, R`\(\dfrac{5}{8}\)`],
-      answer: 4,
-      help: R`????? \(\angle\mathrm{POA}=\theta\)??? ?????? \(\mathrm{OPA}\)?? \(\overline{\mathrm{PA}}=2\sin\frac{\theta}{2}\)??. \(\overline{\mathrm{PD}}\parallel\overline{\mathrm{OP}}\) ?? ?? ??? \(\overline{\mathrm{PA}}=\overline{\mathrm{PC}}=\overline{\mathrm{PD}}\) ??? ???? \(f(\theta)\)? \(g(\theta)\)? ?? ?? ? ???? \(\theta\)? ????? ??? ? ??? ????.`
+      answer: 3,
+      help: R`\(\overline{\mathrm{PA}}=2\sin\frac{\theta}{2}\)이므로 점 \(\mathrm{P}\)를 중심으로 하는 호 위에 \(\mathrm{A}, \mathrm{C}, \mathrm{D}\)가 놓입니다. 평행선 조건에서 동위각과 엇각을 찾아 \(\triangle\mathrm{EDA}\)와 \(\triangle\mathrm{CDP}\)의 각 변과 끼인각을 \(\theta\)로 나타냅니다.`
     },
     {
       id: "2023-09-calc-29", exam: "2023-09", no: 29, score: 4,
-      units: ["calc-diff"], memo: "?? ?? ?? ????? ???? ???",
-      body: R`?? \(f(x)=e^x+x\)? ??. ?? \(t\)? ??? ? \((t,\,0)\)? ? \((x,\,f(x))\) ??? ??? \(x=s\)?? ??? ?, ?? \(f(s)\)? ?? \(g(t)\)? ??. ?? \(g(t)\)? ???? \(h(t)\)? ? ?, \(h'(1)\)? ?? ????.`,
+      units: ["calc-diff"], memo: "역함수의 미분법과 최단 거리",
+      body: R`함수 \(f(x)=e^{x}+x\)가 있다. 양수 \(t\)에 대하여 점 \((t,\,0)\)과 점 \((x,\,f(x))\) 사이의 거리가 \(x=s\)에서 최소일 때, 실수 \(f(s)\)의 값을 \(g(t)\)라 하자. 함수 \(g(t)\)의 역함수를 \(h(t)\)라 할 때, \(h'(1)\)의 값을 구하시오.`,
+      figure: "2023-09-calc-29.webp",
       short: true,
       answer: 3,
-      help: R`? \((t, 0)\)?? ?? \(y=f(x)\) ?? ? \((s, f(s))\)??? ??? ????, ? ?? ?? ??? ??? ????? \((s-t)+f(s)f'(s)=0\)??. \(g(t)=f(s)=1\)? ?? \(s\)? ??? \(e^s+s=1\)?? \(s=0\)??, ????? \(t=1\)? ?? ??? ??? \(h'(1)=\dfrac{1}{g'(1)}\)? ????.`
+      help: R`점 \((t, 0)\)에서 곡선 위의 점까지 거리가 최소가 되는 조건은 접선과 법선의 수직 관계입니다. \((s-t)+f(s)f'(s)=0\)에서 \(t=s+f(s)f'(s)\)를 얻고, \(g(t)=f(s)=1\)이 되는 \(s\)와 \(t\)를 구해 역함수 미분법을 적용합니다.`
     },
     {
       id: "2023-09-calc-30", exam: "2023-09", no: 30, score: 4,
-      units: ["calc-integ", "calc-diff"], memo: "????? ???? ?? ??",
-      body: R`????? ??? \(1\)? ???? \(f(x)\)? ?? \((0,\,\infty)\)?? \(g(x)\ge 0\)? ?? \(g(x)\)? ?? ??? ?????.`,
+      units: ["calc-integ", "calc-diff"], memo: "치환적분법과 사차함수의 성질",
+      body: R`최고차항의 계수가 \(1\)인 사차함수 \(f(x)\)와 구간 \((0,\,\infty)\)에서 \(g(x)\ge 0\)인 함수 \(g(x)\)가 다음 조건을 만족시킨다.`,
       note: [
-        R`(?) \(x\le -3\)? ?? ?? \(x\)? ??? \(f(x)\ge f(-3)\)??.`,
-        R`(?) \(x&gt;-3\)? ?? ?? \(x\)? ??? \(g(x+3)\{f(x)-f(0)\}^2=f'(x)\)??.`
+        R`\(x\le -3\)인 모든 실수 \(x\)에 대하여 \(f(x)\ge f(-3)\)이다.`,
+        R`\(x>-3\)인 모든 실수 \(x\)에 대하여 \(g(x+3)\{f(x)-f(0)\}^{2}=f'(x)\)이다.`
       ],
-      bodyAfter: R`\(\displaystyle\int_{4}^{5}g(x)\,dx=\dfrac{q}{p}\)? ?, \(p+q\)? ?? ????. (?, \(p\)? \(q\)? ???? ?????.)`,
       short: true,
       answer: 283,
-      help: R`?? (?)?? \(f'(-3)=0\)??, (?)?? \(x&gt;-3\)? ? \(g(x+3)\ge 0\)??? \(f'(x)\ge 0\)??. ?? \(g(x+3)=\dfrac{f'(x)}{\{f(x)-f(0)\}^2}\) ?? ???? \(t=x+3\)?? ?????? \(\int_4^5 g(t)\,dt = \int_1^2 \frac{f'(x)}{\{f(x)-f(0)\}^2}\,dx = \left[ -\frac{1}{f(x)-f(0)} \right]_1^2\)?? ?? ??? ? ??.`
+      help: R`조건 (가)에서 \(f'(-3)=0\)이고, 조건 (나)에서 \(x>-3\)일 때 \(g(x+3)\ge 0\)이므로 \(f'(x)\ge 0\)입니다. 치환적분 \(\int_4^5 g(t)\,dt = \int_1^2 \frac{f'(x)}{\{f(x)-f(0)\}^2}\,dx\)를 세워 \(\left[-\frac{1}{f(x)-f(0)}\right]_1^2\)로 계산합니다.`
     },
     {
       id: "2023-06-calc-28", exam: "2023-06", no: 28, score: 4,
-      units: ["calc-diff"], memo: "??????? ???? ?????",
-      body: R`????? ??? \(\dfrac{1}{2}\)? ???? \(f(x)\)? ??? ?? \(g(x)\)?
-\[g(x)=\begin{cases}\ln|f(x)| &amp; (f(x)\ne 0)\\ 1 &amp; (f(x)=0)\end{cases}\]
-?? ?? ??? ???? ?, ?? \(g(x)\)? ?????`,
+      units: ["calc-diff"], memo: "합성함수의 연속과 극값",
+      body: R`최고차항의 계수가 \(\dfrac{1}{2}\)인 삼차함수 \(f(x)\)에 대하여 함수 \(g(x)\)가 \[g(x)=\begin{cases}\ln|f(x)| & (f(x)\ne 0)\\ 1 & (f(x)=0)\end{cases}\]이고 다음 조건을 만족시킬 때, 함수 \(g(x)\)의 극솟값은?`,
       note: [
-        R`(?) ?? \(g(x)\)? \(x\ne 1\)? ?? ?? \(x\)?? ????.`,
-        R`(?) ?? \(g(x)\)? \(x=2\)?? ????, ?? \(|g(x)|\)? \(x=2\)?? ????.`,
-        R`(?) ??? \(g(x)=0\)? ?? ?? ??? ??? \(3\)??.`
+        R`함수 \(g(x)\)는 \(x\ne 1\)인 모든 실수 \(x\)에서 연속이다.`,
+        R`함수 \(g(x)\)는 \(x=2\)에서 극대이고, 함수 \(|g(x)|\)는 \(x=2\)에서 극소이다.`,
+        R`방정식 \(g(x)=0\)의 서로 다른 실근의 개수는 \(3\)이다.`
       ],
       choices: [R`\(\ln\dfrac{13}{27}\)`, R`\(\ln\dfrac{16}{27}\)`, R`\(\ln\dfrac{19}{27}\)`, R`\(\ln\dfrac{22}{27}\)`, R`\(\ln\dfrac{25}{27}\)`],
       answer: 5,
-      help: R`\(g(x)\)? \(x\ne 1\)?? ????? \(f(x)=0\)? ??? \(x=1\)???. \(g(x)\)? \(x=2\)?? ???? \(|g(x)|\)? ????? \(g(2)=0\) ? \(|f(2)|=1\)??? ??, ?? ??? ???? ??? ???? \(f(x)\)? ??? ? ?? ?????? ???? ???.`
+      help: R`\(g(x)\)가 \(x=1\)에서만 불연속이므로 \(f(x)=0\)의 실근은 \(x=1\)뿐입니다. \(g(x)\)가 극대이면서 \(|g(x)|\)가 극소가 되려면 \(g(2)=0\)이어야 하므로 \(|f(2)|=1\)임을 이용하여 삼차함수 \(f(x)\)의 식을 확정합니다.`
     },
     {
       id: "2023-06-calc-29", exam: "2023-06", no: 29, score: 4,
-      units: ["calc-diff"], memo: "???? ?? ???? ???? ??",
-      body: R`??? ?? ???? ??? \(1\)?? ???? ??? \(\dfrac{\pi}{2}\)? ??? \(\mathrm{OAB}\)? ??. ? \(\mathrm{AB}\) ?? ? \(\mathrm{P}\)?? ?? \(\mathrm{OA}\)? ?? ??? ?? \(\mathrm{H}\)? ??, \(\angle\mathrm{OAP}\)? ????? ??? ? ?? \(\mathrm{HP}\), \(\mathrm{OP}\), \(\mathrm{OB}\)? ??? ?? \(\mathrm{Q}\), \(\mathrm{R}\), \(\mathrm{S}\)? ??. \(\angle\mathrm{APH}=\theta\)? ?, ??? \(\mathrm{AQH}\)? ??? \(f(\theta)\), ??? \(\mathrm{PSR}\)? ??? \(g(\theta)\)? ??. \[\lim_{\theta\to 0+}\dfrac{\theta^3\times g(\theta)}{f(\theta)}=k\]? ?, \(100k\)? ?? ????. (?, \(0&lt;\theta&lt;\dfrac{\pi}{4}\))`,
+      units: ["calc-diff"], memo: "삼각함수의 극한과 각의 이등분선",
+      body: R`그림과 같이 반지름의 길이가 \(1\)이고 중심각의 크기가 \(\dfrac{\pi}{2}\)인 부채꼴 \(\mathrm{OAB}\)가 있다. 호 \(\mathrm{AB}\) 위의 점 \(\mathrm{P}\)에서 선분 \(\mathrm{OA}\)에 내린 수선의 발을 \(\mathrm{H}\)라 하고, \(\angle\mathrm{OAP}\)를 이등분하는 직선과 세 선분 \(\mathrm{HP}\), \(\mathrm{OP}\), \(\mathrm{OB}\)의 교점을 각각 \(\mathrm{Q}\), \(\mathrm{R}\), \(\mathrm{S}\)라 하자. \(\angle\mathrm{APH}=\theta\)일 때, 삼각형 \(\mathrm{AQH}\)의 넓이를 \(f(\theta)\), 삼각형 \(\mathrm{PSR}\)의 넓이를 \(g(\theta)\)라 하자. \[\lim_{\theta\to 0+}\dfrac{\theta^{3}\times g(\theta)}{f(\theta)}=k\]일 때, \(100k\)의 값을 구하시오. (단, \(0<\theta<\dfrac{\pi}{4}\))`,
       figure: "2023-06-calc-29.webp",
       short: true,
       answer: 50,
-      help: R`\(\triangle\mathrm{OAP}\)? \(\overline{\mathrm{OA}}=\overline{\mathrm{OP}}=1\)? ????????? ?? ??? \(\theta\)? ??? ? ??. ?? \(\mathrm{AS}\)? ?? ?????? ???? ????? \(\mathrm{AQH}\)? ??? ??, \(\triangle\mathrm{PSR}\)? ?? ?? \(\theta\)? ??? ?? ???? ????.`
+      help: R`\(\triangle\mathrm{OAP}\)가 이등변삼각형임을 이용하여 각의 크기들을 \(\theta\)로 표현합니다. 각의 이등분선 성질과 직각삼각형 삼각비를 적용하여 두 삼각형 \(\mathrm{AQH}\)와 \(\mathrm{PSR}\)의 밑변과 높이를 \(\theta\)에 대한 삼각함수로 나타냅니다.`
     },
     {
       id: "2023-06-calc-30", exam: "2023-06", no: 30, score: 4,
-      units: ["calc-diff"], memo: "??? ??? ?????? ?? ?? ???",
-      body: R`?? \(a\)? ??? ?? \(f(x)\)?\[f(x)=\dfrac{x^2-ax}{e^x}\]??. ?? \(t\)? ??? \(x\)? ?? ???\[f(x)=f'(t)(x-t)+f(t)\]? ?? ?? ??? ??? \(g(t)\)? ??. \(g(5)+\lim_{t\to 5}g(t)=5\)? ?, \(\lim_{t\to k-}g(t)\ne\lim_{t\to k+}g(t)\)? ????? ?? ?? \(k\)? ?? ?? \(\dfrac{q}{p}\)??. \(p+q\)? ?? ????. (?, \(p\)? \(q\)? ???? ?????.)`,
+      units: ["calc-diff"], memo: "접선의 개수와 변곡점",
+      body: R`양수 \(a\)에 대하여 함수 \(f(x)\)는 \[f(x)=\dfrac{x^{2}-ax}{e^{x}}\]이다. 실수 \(t\)에 대하여 \(x\에 대한 방정식 \[f(x)=f'(t)(x-t)+f(t)\]의 서로 다른 실근의 개수를 \(g(t)\)라 하자. \(g(5)+\displaystyle\lim_{t\to 5}g(t)=5\)일 때, \(\displaystyle\lim_{t\to k-}g(t)\ne\lim_{t\to k+}g(t)\)를 만족시키는 모든 실수 \(k\)의 값의 합은 \(\dfrac{q}{p}\)이다. \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       short: true,
       answer: 16,
-      help: R`??? \(f(x)=f'(t)(x-t)+f(t)\)? ?? ??? ?? \(y=f(x)\)? ? \((t, f(t))\)??? ??? ?? ???. ?? ?? \(g(t)\)? ????? ?? ?? ??? ?????? ??? ??????, \(f''(x)=0\)? ??? ???? \(a\)? ???? ???? \(x\)???? ?? ???.`
+      help: R`방정식의 실근 개수 \(g(t)\)는 곡선 위의 점 \((t, f(t))\)에서의 접선과 곡선 \(y=f(x)\)의 교점 개수입니다. 교점 개수가 바뀌는 경계는 접선이 변곡접선이 되는 점(\(f''(t)=0\))이므로, 변곡점 조건에서 \(a\)의 값을 구합니다.`
     },
     {
       id: "2022-suneung-calc-28", exam: "2022-suneung", no: 28, score: 4,
-      units: ["calc-diff"], memo: "???? ????? ???? ??? ??",
-      body: R`?? \(f(x)=6\pi(x-1)^2\)? ??? ?? \(g(x)\)?\[g(x)=3f(x)+4\cos f(x)\]? ??. \(0&lt;x&lt;2\)?? ?? \(g(x)\)? ??? ?? \(x\)? ????`,
+      units: ["calc-diff"], memo: "합성함수의 미분과 극소의 개수",
+      body: R`함수 \(f(x)=6\pi(x-1)^{2}\)에 대하여 함수 \(g(x)\)를 \[g(x)=3f(x)+4\cos f(x)\]라 하자. \(0<x<2\)에서 함수 \(g(x)\)가 극소가 되는 \(x\)의 개수는?`,
       choices: [R`\(6\)`, R`\(7\)`, R`\(8\)`, R`\(9\)`, R`\(10\)`],
       answer: 2,
-      help: R`\(g'(x)=f'(x)\{3-4\sin f(x)\}\)??. \(f(x)=t\)? ???? \(0&lt;x&lt;2\)?? \(x=1\)? ???? \(t\)? \(6\pi\)?? \(0\)?? ????? \(6\pi\)? ?????, \(\sin t=\frac{3}{4}\)? ?? ??? \(f'(x)=0\)? \(x=1\)??? ?? ??? ???? ??? ??? ?? ??.`
+      help: R`\(g'(x)=f'(x)\{3-4\sin f(x)\}\)에서 도함수의 부호가 음에서 양으로 바뀌는 지점을 찾습니다. \(f(x)=t\)로 치환하여 \(t\)의 범위 \(0\le t<6\pi\)에서 \(\sin t=\frac{3}{4}\)의 근과 \(f'(x)=0\)인 \(x=1\) 주변의 부호 변화를 조사합니다.`
     },
     {
       id: "2022-suneung-calc-29", exam: "2022-suneung", no: 29, score: 4,
-      units: ["calc-diff"], memo: "?? ?? ??? ????? ???? ??",
-      body: R`??? ?? ??? \(2\)? ?? \(\mathrm{AB}\)? ???? ?? ??? ??. ? \(\mathrm{AB}\) ?? ? ? \(\mathrm{P}\), \(\mathrm{Q}\)? \(\angle\mathrm{PAB}=\theta\), \(\angle\mathrm{QBA}=2\theta\)? ??? ??, ? ?? \(\mathrm{AP}\), \(\mathrm{BQ}\)? ??? \(\mathrm{R}\)? ??. ?? \(\mathrm{AB}\) ?? ? \(\mathrm{S}\), ?? \(\mathrm{BR}\) ?? ? \(\mathrm{T}\), ?? \(\mathrm{AR}\) ?? ? \(\mathrm{U}\)? ?? \(\mathrm{UT}\)? ?? \(\mathrm{AB}\)? ???? ??? \(\mathrm{STU}\)? ????? ??? ???. ? ?? \(\mathrm{AR}\), \(\mathrm{QR}\)? ? \(\mathrm{AQ}\)? ???? ??? ??? \(f(\theta)\), ??? \(\mathrm{STU}\)? ??? \(g(\theta)\)? ? ?, \[\lim_{\theta\to 0+}\dfrac{g(\theta)}{\theta\times f(\theta)}=\dfrac{q\sqrt{3}}{p}\]??. \(p+q\)? ?? ????. (?, \(0&lt;\theta&lt;\dfrac{\pi}{6}\)??, \(p\)? \(q\)? ???? ?????.)`,
+      units: ["calc-diff"], memo: "삼각함수의 극한과 정삼각형의 넓이",
+      body: R`그림과 같이 길이가 \(2\)인 선분 \(\mathrm{AB}\)를 지름으로 하는 반원이 있다. 호 \(\mathrm{AB}\) 위에 두 점 \(\mathrm{P}\), \(\mathrm{Q}\)를 \(\angle\mathrm{PAB}=\theta\), \(\angle\mathrm{QBA}=2\theta\)가 되도록 잡고, 두 선분 \(\mathrm{AP}\), \(\mathrm{BQ}\)의 교점을 \(\mathrm{R}\)라 하자. 선분 \(\mathrm{AB}\) 위의 점 \(\mathrm{S}\), 선분 \(\mathrm{BR}\) 위의 점 \(\mathrm{T}\), 선분 \(\mathrm{AR}\) 위의 점 \(\mathrm{U}\)를 선분 \(\mathrm{UT}\)가 선분 \(\mathrm{AB}\)에 평행하고 삼각형 \(\mathrm{STU}\)가 정삼각형이 되도록 잡는다. 두 선분 \(\mathrm{AR}\), \(\mathrm{QR}\)와 호 \(\mathrm{AQ}\)로 둘러싸인 부분의 넓이를 \(f(\theta)\), 삼각형 \(\mathrm{STU}\)의 넓이를 \(g(\theta)\)라 할 때, \[\lim_{\theta\to 0+}\dfrac{g(\theta)}{\theta\times f(\theta)}=\dfrac{q}{p}\sqrt{3}\]이다. \(p+q\)의 값을 구하시오. (단, \(0<\theta<\dfrac{\pi}{6}\)이고, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       figure: "2022-suneung-calc-29.webp",
       short: true,
       answer: 11,
-      help: R`\(\triangle\mathrm{ABR}\)?? ?????? \(\overline{\mathrm{AR}}\), \(\overline{\mathrm{BR}}\)? ??? ???, ? \(\mathrm{AQ}\)? ??? ?? \(f(\theta)\)? ???? ???? ??? ????. ???? \(\mathrm{STU}\)? ? ?? ??? \(x\)? ?? ??? ?? ??? ??? ??? \(x\)? \(\theta\)? ???? ?? \(g(\theta)\)? ????.`
+      help: R`\(\triangle\mathrm{ABR}\)에서 사인법칙으로 \(\overline{\mathrm{AR}}\), \(\overline{\mathrm{BR}}\)의 길이를 구하고 부채꼴과 삼각형의 차로 \(f(\theta)\)를 구합니다. 정삼각형 \(\mathrm{STU}\)의 한 변의 길이를 미지수로 두고 수선의 발과 각도를 이용하여 \(\theta\)에 대한 식으로 표현합니다.`
     },
     {
       id: "2022-suneung-calc-30", exam: "2022-suneung", no: 30, score: 4,
-      units: ["calc-integ"], memo: "?????? ???? ???? ??? ???",
-      body: R`?? ??? ???? ???? ????? ?? \(f(x)\)? ?? ??? ?????.`,
+      units: ["calc-integ"], memo: "역함수와 부분적분법",
+      body: R`실수 전체의 집합에서 증가하고 미분가능한 함수 \(f(x)\)가 다음 조건을 만족시킨다.`,
       note: [
-        R`(?) \(f(1)=1\), \(\displaystyle\int_{1}^{2}f(x)\,dx=\dfrac{5}{4}\)`,
-        R`(?) ?? \(f(x)\)? ???? \(g(x)\)? ? ?, \(x\ge 1\)? ?? ?? \(x\)? ??? \(g(2x)=2f(x)\)??.`
+        R`\(f(1)=1\), \(\displaystyle\int_{1}^{2}f(x)\,dx=\dfrac{5}{4}\)`,
+        R`함수 \(f(x)\)의 역함수를 \(g(x)\)라 할 때, \(x\ge 1\)인 모든 실수 \(x\)에 대하여 \(g(2x)=2f(x)\)이다.`
       ],
-      bodyAfter: R`\(\displaystyle\int_{1}^{8}xf'(x)\,dx=\dfrac{q}{p}\)? ?, \(p+q\)? ?? ????. (?, \(p\)? \(q\)? ???? ?????.)`,
       short: true,
       answer: 143,
-      help: R`???? \(\int_1^8 xf'(x)\,dx = [xf(x)]_1^8 - \int_1^8 f(x)\,dx\)? ????. ?? (?)? ??? ?? \(g(2x)=2f(x)\)? \(f(2f(x))=2x\)? ???? ?? \([1, 2], [2, 4], [4, 8]\)??? ???? ???? ???.`
+      help: R`부분적분법 \(\int_1^8 xf'(x)\,dx = [xf(x)]_1^8 - \int_1^8 f(x)\,dx\)를 세웁니다. 조건 (나)의 관계식을 치환하여 구간 \([1, 2], [2, 4], [4, 8]\)에서의 정적분 값을 순차적으로 유도합니다.`
     },
     {
       id: "2022-09-calc-28", exam: "2022-09", no: 28, score: 4,
-      units: ["calc-integ", "calc-diff"], memo: "? ?? ?? ??? ?? ??? ? ???",
-      body: R`?????? ??? ???? ?? ???? ??? \(2\)? ? \(C\)? ? ? \(\mathrm{A}(2,\,0)\), \(\mathrm{B}(0,\,-2)\)? ??. ? \(C\) ?? ?? \(x\)??? ??? ? \(\mathrm{P}\)? ??? \(\angle\mathrm{PAB}=\theta\)? ??. ? \(\mathrm{Q}(0,\,2\cos\theta)\)?? ?? \(\mathrm{BP}\)? ?? ??? ?? \(\mathrm{R}\)? ??, ? ? \(\mathrm{P}\)? \(\mathrm{R}\) ??? ??? \(f(\theta)\)? ? ?, \[\int_{\frac{\pi}{6}}^{\frac{\pi}{3}}f(\theta)\,d\theta\]? ???`,
+      units: ["calc-integ", "calc-diff"], memo: "삼각함수의 정적분과 두 점 사이의 거리",
+      body: R`좌표평면에서 원점을 중심으로 하고 반지름의 길이가 \(2\)인 원 \(C\)와 두 점 \(\mathrm{A}(2,\,0)\), \(\mathrm{B}(0,\,-2)\)가 있다. 원 \(C\) 위에 있고 \(x\)좌표가 음수인 점 \(\mathrm{P}\)에 대하여 \(\angle\mathrm{PAB}=\theta\)라 하자. 점 \(\mathrm{Q}(0,\,2\cos\theta)\)에서 직선 \(\mathrm{BP}\)에 내린 수선의 발을 \(\mathrm{R}\)라 하고, 두 점 \(\mathrm{P}\)와 \(\mathrm{R}\) 사이의 거리를 \(f(\theta)\)라 할 때, \[\int_{\frac{\pi}{6}}^{\frac{\pi}{3}}f(\theta)\,d\theta\]의 값은?`,
+      figure: "2022-09-calc-28.webp",
       choices: [R`\(\dfrac{2\sqrt{3}-3}{2}\)`, R`\(\sqrt{3}-1\)`, R`\(\dfrac{3\sqrt{3}-3}{2}\)`, R`\(\dfrac{2\sqrt{3}-1}{2}\)`, R`\(\dfrac{4\sqrt{3}-3}{2}\)`],
       answer: 1,
-      help: R`??? ??? ?? \(\angle\mathrm{APB}=\frac{\pi}{2}\)??? ?? \(\mathrm{AP}\)? \(\mathrm{BP}\)? ????. ? \(\mathrm{Q}\)?? ?? \(\mathrm{BP}\)? ?? ??? ? \(\mathrm{R}\)??? ??? ?? ?? ??? ?? ???? ????? ??? ?? \(f(\theta)=2\sin\theta-2\cos\theta\) ?? ??? ?? ? ?????.`
+      help: R`선분 \(\mathrm{AB}\)에 대한 원주각을 활용하여 직선 \(\mathrm{BP}\)의 방정식을 세웁니다. 점 \(\mathrm{Q}\)에서 직선 \(\mathrm{BP}\)에 내린 수선의 발 \(\mathrm{R}\)의 위치를 파악하여 \(f(\theta)\)를 삼각함수 식으로 나타낸 후 정적분합니다.`
     },
     {
       id: "2022-09-calc-29", exam: "2022-09", no: 29, score: 4,
-      units: ["calc-diff"], memo: "??????? ?????? ???? ??",
-      body: R`???? \(f(x)\)? ??? ?? \(g(x)=\{f(x)+2\}e^{f(x)}\)? ?? ??? ?????.`,
+      units: ["calc-diff"], memo: "합성함수의 최대와 최소",
+      body: R`이차함수 \(f(x)\)에 대하여 함수 \(g(x)=\{f(x)+2\}e^{f(x)}\)이 다음 조건을 만족시킨다.`,
       note: [
-        R`(?) \(f(a)=6\)? \(a\)? ??? \(g(x)\)? \(x=a\)?? ???? ???.`,
-        R`(?) \(g(x)\)? \(x=b\), \(x=b+6\)?? ???? ???.`
+        R`\(f(a)=6\)인 \(a\)에 대하여 \(g(x)\)는 \(x=a\)에서 최댓값을 갖는다.`,
+        R`\(g(x)\)는 \(x=b\), \(x=b+6\)에서 최솟값을 갖는다.`
       ],
-      bodyAfter: R`??? \(f(x)=0\)? ?? ?? ? ??? \(\alpha,\,\beta\)? ? ?, \((\alpha-\beta)^2\)? ?? ????. (?, \(a,\,b\)? ????.)`,
       short: true,
       answer: 24,
-      help: R`\(h(t)=(t+2)e^t\)? ?? \(h'(t)=(t+3)e^t\)??? \(h(t)\)? \(t=-3\)?? ???? ???? ???. \(g(x)=h(f(x))\)? ???? ?? ? ? \(x=b, b+6\)?? \(f(b)=f(b+6)=-3\)?? ??? ???? ???? \(y\)??? \(6\)?? ??? ???? \(f(x)\)? ?? ?? ???.`
+      help: R`함수 \(h(t)=(t+2)e^t\)의 도함수 \(h'(t)=(t+3)e^t\)를 분석하여 \(t=-3\)에서 극소이자 최소임을 파악합니다. \(g(x)=h(f(x))\)의 최솟값이 두 점 \(x=b, b+6\)에서 나타나므로 이차함수 \(f(x)\)의 대칭성과 꼭짓점 좌표를 결정합니다.`
     },
     {
       id: "2022-09-calc-30", exam: "2022-09", no: 30, score: 4,
-      units: ["calc-integ", "calc-diff"], memo: "???? ?? ??? ????? ???",
-      body: R`????? ??? \(9\)? ???? \(f(x)\)? ?? ??? ?????.`,
+      units: ["calc-integ", "calc-diff"], memo: "삼각함수의 극한과 연속함수의 정적분",
+      body: R`최고차항의 계수가 \(9\)인 삼차함수 \(f(x)\)가 다음 조건을 만족시킨다.`,
       note: [
-        R`(?) \(\displaystyle\lim_{x\to 0}\frac{\sin(\pi\times f(x))}{x}=0\)`,
-        R`(?) \(f(x)\)? ???? ???? ?? \(5\)??.`
+        R`\(\displaystyle\lim_{x\to 0}\dfrac{\sin(\pi\times f(x))}{x}=0\)`,
+        R`\(f(x)\)의 극댓값과 극솟값의 곱은 \(5\)이다.`
       ],
-      bodyAfter: R`?? \(g(x)\)? \(0\le x&lt;1\)? ? \(g(x)=f(x)\)?? ?? ?? \(x\)? ??? \(g(x+1)=g(x)\)??. \(g(x)\)? ?? ??? ???? ??? ?, \(\displaystyle\int_{0}^{5}xg(x)\,dx=\dfrac{q}{p}\)??. \(p+q\)? ?? ????. (?, \(p\)? \(q\)? ???? ?????.)`,
       short: true,
-      answer: 115,
-      help: R`?? (?)?? \(\sin(\pi f(0))=0\)??? \(f(0)\)? ?? \(n\)??, ???? \(0\)??? \(\pi f'(0)\cos(\pi n)=0\)?? \(f'(0)=0\)??. ?? \(1\)? ????? \(f(0)=f(1), f'(1)=0\)? ???? ??, ?? (?)? ????? ??? ? \(\int_0^5 xg(x)\,dx = \sum_{k=0}^4 \int_0^1 (t+k)f(t)\,dt\)? ????.`
+      answer: 107,
+      help: R`조건 (가)의 극한에서 \(f(0)\)이 정수이고 \(f'(0)=0\)임을 유도합니다. 연속 조건 \(f(0)=f(1)\) 및 극값의 곱 조건을 조합하여 삼차함수 \(f(x)\)를 구하고, 주기성을 활용하여 \(\int_0^5 xg(x)\,dx\)를 계산합니다.`
     },
     {
       id: "2022-06-calc-28", exam: "2022-06", no: 28, score: 4,
-      units: ["calc-diff"], memo: "??? ??, ?? ????? ???? ??",
-      body: R`??? ?? ??? \(2\)? ?? \(\mathrm{AB}\)? ???? ?? ??? ? \(\mathrm{AB}\) ?? ? \(\mathrm{P}\)? ??. ?? \(\mathrm{AB}\)? ??? \(\mathrm{O}\)? ? ?, ? \(\mathrm{B}\)? ??? ?? \(\mathrm{AB}\)? ??? ??? ?? \(\mathrm{OP}\)? ??? ?? \(\mathrm{Q}\)? ??, \(\angle\mathrm{OQB}\)? ????? ?? \(\mathrm{AP}\)? ??? ?? \(\mathrm{R}\)? ??. \(\angle\mathrm{OAP}=\theta\)? ?, ??? \(\mathrm{OAP}\)? ??? \(f(\theta)\), ??? \(\mathrm{PQR}\)? ??? \(g(\theta)\)? ??. \[\lim_{\theta\to 0+}\dfrac{g(\theta)}{\theta^4\times f(\theta)}\]? ??? (?, \(0&lt;\theta&lt;\dfrac{\pi}{4}\))`,
+      units: ["calc-diff"], memo: "삼각함수의 극한과 부채꼴",
+      body: R`그림과 같이 길이가 \(2\)인 선분 \(\mathrm{AB}\)를 지름으로 하는 반원의 호 \(\mathrm{AB}\) 위에 점 \(\mathrm{P}\)가 있다. 선분 \(\mathrm{AB}\)의 중점을 \(\mathrm{O}\)라 할 때, 점 \(\mathrm{B}\)를 지나고 선분 \(\mathrm{AB}\)에 수직인 직선이 직선 \(\mathrm{OP}\)와 만나는 점을 \(\mathrm{Q}\)라 하고, \(\angle\mathrm{OQB}\)의 이등분선이 직선 \(\mathrm{AP}\)와 만나는 점을 \(\mathrm{R}\)라 하자. \(\angle\mathrm{OAP}=\theta\)일 때, 삼각형 \(\mathrm{OAP}\)의 넓이를 \(f(\theta)\), 삼각형 \(\mathrm{PQR}\)의 넓이를 \(g(\theta)\)라 하자. \[\lim_{\theta\to 0+}\dfrac{g(\theta)}{\theta^{4}\times f(\theta)}\]의 값은? (단, \(0<\theta<\dfrac{\pi}{4}\))`,
       figure: "2022-06-calc-28.webp",
       choices: [R`\(2\)`, R`\(\dfrac{5}{2}\)`, R`\(3\)`, R`\(\dfrac{7}{2}\)`, R`\(4\)`],
       answer: 1,
-      help: R`\(\angle\mathrm{OAP}=\theta\)??? ??? \(\angle\mathrm{POB}=2\theta\)??, ????? \(\mathrm{OBQ}\)?? \(\overline{\mathrm{BQ}}=\tan 2\theta\)??. \(\angle\mathrm{OQB}\)? ???? ??? ??? \(\mathrm{PQR}\)? ?????? \(\theta\)? ?? ????? ???? ??? ????.`
+      help: R`이등변삼각형 \(\mathrm{OAP}\)에서 중심각은 \(2\theta\)이므로 \(f(\theta)=\frac{1}{2}\sin 2\theta\)입니다. 직각삼각형 \(\mathrm{OBQ}\)에서 \(\overline{\mathrm{OQ}}=\sec 2\theta\)이고 각의 이등분선 정리로 \(\overline{\mathrm{PR}}\)의 길이를 구하여 \(g(\theta)\)의 극한을 계산합니다.`
     },
     {
       id: "2022-06-calc-29", exam: "2022-06", no: 29, score: 4,
-      units: ["calc-diff"], memo: "?? ??? ??? ???",
-      body: R`\(t&gt;2e\)? ?? \(t\)? ??? ?? \(f(x)=t(\ln x)^2-x^2\)? \(x=k\)?? ??? ?, ?? \(k\)? ?? \(g(t)\)? ?? \(g(t)\)? ????? ????. \(g(\alpha)=e^2\)? ?? \(\alpha\)? ??? \(\alpha\times\{g'(\alpha)\}^2=\dfrac{q}{p}\)? ?, \(p+q\)? ?? ????. (?, \(p\)? \(q\)? ???? ?????.)`,
+      units: ["calc-diff"], memo: "음함수 미분법과 극대 조건",
+      body: R`\(t>2e\)인 실수 \(t\)에 대하여 함수 \(f(x)=t(\ln x)^{2}-x^{2}\)이 \(x=k\)에서 극대일 때, 실수 \(k\)의 값을 \(g(t)\)라 하면 \(g(t)\)는 미분가능한 함수이다. \(g(\alpha)=e^{2}\)인 실수 \(\alpha\)에 대하여 \(\alpha\times\{g'(\alpha)\}^{2}=\dfrac{q}{p}\)일 때, \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       short: true,
       answer: 17,
-      help: R`\(f'(x)=\frac{2t\ln x}{x}-2x=0\)?? ??? \(k=g(t)\)? \(t\ln g(t)=\{g(t)\}^2\)? ????. \(g(\alpha)=e^2\)? ???? \(\alpha\)? ???, ??? \(t\)? ?? ???? \(g'(\alpha)\)? ?? ? ????.`
+      help: R`\(f'(x)=\frac{2t\ln x}{x}-2x=0\)에서 \(t\ln k=k^2\) 관계식을 얻고, 이를 \(t\ln g(t)=\{g(t)\}^2\)으로 둡니다. 양변을 \(t\)에 대해 미분하여 \(g'(\alpha)\)의 값을 구합니다.`
     },
     {
       id: "2022-06-calc-30", exam: "2022-06", no: 30, score: 4,
-      units: ["calc-diff"], memo: "????? ??? ?? ?? ?? ??",
-      body: R`\(t&gt;\dfrac{1}{2}\ln 2\)? ?? \(t\)? ??? ?? \(y=\ln(1+e^{2x}-e^{-2t})\)? ?? \(y=x+t\)? ??? ?? ?? ? ? ??? ??? \(f(t)\)? ? ?, \(f'(\ln 2)=\dfrac{q}{p}\sqrt{2}\)??. \(p+q\)? ?? ????. (?, \(p\)? \(q\)? ???? ?????.)`,
+      units: ["calc-diff"], memo: "두 점 사이의 거리와 합성함수 미분",
+      body: R`\(t>\dfrac{1}{2}\ln 2\)인 실수 \(t\)에 대하여 곡선 \(y=\ln(1+e^{2x}-e^{-2t})\)과 직선 \(y=x+t\)가 만나는 서로 다른 두 점 사이의 거리를 \(f(t)\)라 할 때, \(f'(\ln 2)=\dfrac{q}{p}\sqrt{2}\)이다. \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       short: true,
       answer: 11,
-      help: R`??? ??? ??? \(x\)?? \(\alpha, \beta\)? \(1+e^{2x}-e^{-2t}=e^{x+t}\)? ???. ???? \(1\)? ?? ?? ? ? ?? ??? \(f(t)=\sqrt{2}|\beta-\alpha|\)??, \(e^x=X\)? ?? ?????? ?? ??? ??? ??? \(f(t)\)? \(t\)? ??? ??? ? ????? ???.`
+      help: R`곡선과 직선을 연립하여 \(e^{2x}-e^t e^x+(1-e^{-2t})=0\)에서 근과 계수의 관계를 세웁니다. 기울기가 \(1\)인 직선 위의 두 점 사이 거리는 \(f(t)=\sqrt{2}(\beta-\alpha)\)이므로 \(e^\beta-e^\alpha\)를 \(t\)의 식으로 나타내어 미분합니다.`
     },
-
-    // ── 기하 ──
+    // ==========================================
+    // 기하 (51문항)
+    // ==========================================,
     {
       id: "2027-09-geom-28", exam: "2027-09", no: 28, score: 4,
-      units: ["geom-space"], memo: "구 위의 점과 정사영의 넓이",
-      body: R`좌표공간에 점 \(\mathrm{O}\)를 중심으로 하고 반지름의 길이가 \(3\)인 구 \(S\) 위의 서로 다른 네 점 \(\mathrm{A, B, C, D}\)가 다음 조건을 만족시킨다.
-
-삼각형 \(\mathrm{OAB}\)의 평면 \(\mathrm{OAC}\) 위로의 정사영의 넓이는? [4점]`,
+      units: ["geom-space"], memo: "구 위의 점들과 정사영의 넓이",
+      body: R`좌표공간에 점 \(\mathrm{O}\)를 중심으로 하고 반지름의 길이가 \(3\)인 구 \(S\) 위의 서로 다른 네 점 \(\mathrm{A}\), \(\mathrm{B}\), \(\mathrm{C}\), \(\mathrm{D}\)가 다음 조건을 만족시킨다.`,
       figure: "2027-09-geom-28.webp",
       note: [
         R`(가) 직선 \(\mathrm{OD}\)와 평면 \(\mathrm{ABC}\)는 서로 평행하다.`,
-        R`(나) \(\overline{\mathrm{AB}} = \overline{\mathrm{AC}} = \overline{\mathrm{BC}} = \overline{\mathrm{BD}} = \overline{\mathrm{CD}}\)`
+        R`(나) \(\overline{\mathrm{AB}}=\overline{\mathrm{AC}}=\overline{\mathrm{BC}}=\overline{\mathrm{BD}}=\overline{\mathrm{CD}}\)`
       ],
       choices: [R`\(\dfrac{\sqrt{2}}{2}\)`, R`\(\dfrac{3\sqrt{2}}{4}\)`, R`\(\sqrt{2}\)`, R`\(\dfrac{5\sqrt{2}}{4}\)`, R`\(\dfrac{3\sqrt{2}}{2}\)`],
       answer: 2,
-      help: R`조건 (나)에서 정삼각형 ABC와 BCD가 변 BC를 공유합니다. 직선 OD와 평면 ABC의 평행 조건을 통해 구의 중심 O와 점들의 입체적 위치 관계를 파악하고, 삼각형 OAB와 평면 OAC 사이의 이면각 코사인값을 구해 정사영 넓이를 계산합니다.`
+      help: R`정삼각형 \(\mathrm{ABC}\)와 이등변삼각형 \(\mathrm{BCD}\)의 대칭 구조 및 직선 \(\mathrm{OD}\)와 평면 \(\mathrm{ABC}\)의 평행 조건을 이용하여 구의 중심 \(\mathrm{O}\)와 평면 \(\mathrm{ABC}\) 사이의 거리를 구한다. \(\triangle\mathrm{OAB}\)와 \(\triangle\mathrm{OAC}\)가 이루는 이면각의 코사인값을 삼수선의 정리와 벡터 내적으로 계산하여 정사영의 넓이를 구한다.`
     },
     {
       id: "2027-09-geom-29", exam: "2027-09", no: 29, score: 4,
-      units: ["geom-curve"], memo: "쌍곡선과 타원의 정의, 각의 이등분선 성질",
-      body: R`두 초점이 \(\mathrm{F}(c, 0)\), \(\mathrm{F}'(-c, 0)\,(c &gt; 0)\)인 쌍곡선 \(\dfrac{x^{2}}{16}-\dfrac{y^{2}}{b^{2}}=1\,(b &gt; 0)\)이 있다. 점 \(\mathrm{P}(0, p)\,(p &gt; 0)\)에 대하여 이 쌍곡선과 두 선분 \(\mathrm{PF}\), \(\mathrm{PF}'\)이 만나는 점을 각각 \(\mathrm{A, B}\)라 할 때, 두 초점이 \(\mathrm{A, B}\)인 타원이 두 점 \(\mathrm{F, P}\)를 지난다. 점 \(\mathrm{P}\)를 지나고 \(x\)축에 평행한 직선이 직선 \(\mathrm{AF}'\)과 만나는 점을 \(\mathrm{C}\)라 하자. \(\angle\mathrm{APF}' = \angle\mathrm{APC}\)일 때, 삼각형 \(\mathrm{ACP}\)의 둘레의 길이를 구하시오. [4점]`,
+      units: ["geom-curve"], memo: "쌍곡선과 타원의 정의 및 닮음/도형 성질",
+      body: R`두 초점이 \(\mathrm{F}(c, 0)\), \(\mathrm{F}'(-c, 0)\) (\(c > 0\))인 쌍곡선 \(\dfrac{x^2}{16}-\dfrac{y^2}{b^2}=1\) (\(b > 0\))이 있다. 점 \(\mathrm{P}(0, p)\) (\(p > 0\))에 대하여 이 쌍곡선과 두 선분 \(\mathrm{PF}\), \(\mathrm{PF}'\)이 만나는 점을 각각 \(\mathrm{A}\), \(\mathrm{B}\)라 할 때, 두 초점이 \(\mathrm{A}\), \(\mathrm{B}\)인 타원이 두 점 \(\mathrm{F}\), \(\mathrm{P}\)를 지난다. 점 \(\mathrm{P}\)를 지나고 \(x\)축에 평행한 직선이 직선 \(\mathrm{AF}'\)과 만나는 점을 \(\mathrm{C}\)라 하자. \(\angle\mathrm{APF}' = \angle\mathrm{APC}\)일 때, 삼각형 \(\mathrm{ACP}\)의 둘레의 길이를 구하시오.`,
       figure: "2027-09-geom-29.webp",
       short: true,
       answer: 60,
-      help: R`타원의 정의(초점 A, B로부터 점 F, P까지 거리의 합 일정)와 쌍곡선의 정의를 연립하여 선분 길이들의 관계를 이끌어냅니다. 직선 PC가 x축과 평행하므로 동위각·엇각과 각의 이등분선 조건으로부터 이등변삼각형을 찾아 삼각형 ACP의 둘레를 구합니다.`
+      help: R`쌍곡선의 주축의 길이 \(2a=8\)과 타원의 정의(초점 \(\mathrm{A}, \mathrm{B}\)로부터 두 점 \(\mathrm{F}, \mathrm{P}\)까지의 거리의 합이 일정)를 이용해 \(\overline{\mathrm{AF}}, \overline{\mathrm{AP}}, \overline{\mathrm{PF}}\) 등의 길이를 구한다. \(\angle\mathrm{APF}'=\angle\mathrm{APC}\)와 평행선 조건에서 생기는 이등변삼각형 및 닮음비를 활용하여 \(\triangle\mathrm{ACP}\)의 둘레를 완성한다.`
     },
     {
       id: "2027-09-geom-30", exam: "2027-09", no: 30, score: 4,
-      units: ["geom-vector"], memo: "사다리꼴에서 벡터 내적 조건과 점의 자취",
-      body: R`평면 \(\alpha\) 위에 있는 사다리꼴 \(\mathrm{ABCD}\)가 다음 조건을 만족시킨다.
-
-\(\overrightarrow{\mathrm{XA}} \cdot \overrightarrow{\mathrm{XD}} = \overrightarrow{\mathrm{XB}} \cdot \overrightarrow{\mathrm{XC}} = 0\)을 만족시키는 평면 \(\alpha\) 위의 모든 점 \(\mathrm{X}\)에 대하여 \(\overrightarrow{\mathrm{AD}} \cdot \overrightarrow{\mathrm{AX}}\)의 값의 합을 구하시오. [4점]`,
+      units: ["geom-vector"], memo: "등변사다리꼴과 벡터 내적 조건을 만족하는 점의 위치",
+      body: R`평면 \(\alpha\) 위에 있는 사다리꼴 \(\mathrm{ABCD}\)가 다음 조건을 만족시킨다.`,
       note: [
-        R`(가) \(\overline{\mathrm{AB}} = 24\), \(\overline{\mathrm{AD}} = \overline{\mathrm{BC}} = 13\sqrt{2}\), \(\angle\mathrm{ABC} = \angle\mathrm{BAD} &lt; \dfrac{\pi}{2}\)`,
-        R`(나) \(\overrightarrow{\mathrm{AB}} \cdot \overrightarrow{\mathrm{DC}} = \overrightarrow{\mathrm{AD}} \cdot \overrightarrow{\.BC}\)`
+        R`(가) \(\overline{\mathrm{AB}}=24\), \(\overline{\mathrm{AD}}=\overline{\mathrm{BC}}=13\sqrt{2}\), \(\angle\mathrm{ABC}=\angle\mathrm{BAD} &lt; \dfrac{\pi}{2}\)`,
+        R`(나) \(\vec{\mathrm{AB}}\cdot\vec{\mathrm{DC}} = \vec{\mathrm{AD}}\cdot\vec{\mathrm{BC}}\)`
       ],
       short: true,
       answer: 457,
-      help: R`조건 (나)의 내적 등식을 통해 등변사다리꼴의 윗변 DC 길이를 확정합니다. XA·XD = 0 및 XB·XC = 0은 선분 AD와 BC를 지름으로 하는 두 원의 교점을 뜻하므로 점 X의 좌표를 구하고 AD·AX의 합을 계산합니다.`
+      help: R`조건 (나)를 통해 등변사다리꼴의 높이와 윗변 \(\overline{\mathrm{CD}}\)의 길이를 확정한다. \(\vec{\mathrm{XA}}\cdot\vec{\mathrm{XD}}=0\)은 점 \(\mathrm{X}\)가 선분 \(\mathrm{AD}\)를 지름으로 하는 원 위에 있음을 의미하고, 마찬가지로 선분 \(\mathrm{BC}\)를 지름으로 하는 원 위의 점이기도 하므로 두 원의 교점으로 점 \(\mathrm{X}\)의 좌표들을 구하여 내적의 합을 계산한다.`
     },
     {
       id: "2027-06-geom-28", exam: "2027-06", no: 28, score: 4,
-      units: ["geom-curve"], memo: "타원의 정의와 삼각형 넓이",
-      body: R`두 초점이 \(\mathrm{F}(c, 0)\), \(\mathrm{F}'(-c, 0)\,(c &gt; 0)\)인 타원 \(\dfrac{x^{2}}{a^{2}}+\dfrac{y^{2}}{b^{2}}=1\)이 있다. 이 타원 위에 있는 제1사분면 위의 점 \(\mathrm{P}\)와 이 타원 위에 있는 제4사분면 위의 점 \(\mathrm{Q}\)에 대하여 점 \(\mathrm{F}\)가 선분 \(\mathrm{PQ}\) 위에 있고
-\[\dfrac{\overline{\mathrm{PF}}}{\overline{\mathrm{QF}}}=\dfrac{1}{2},\quad \dfrac{\overline{\mathrm{PF}}}{\overline{\mathrm{FF}'}}=\dfrac{\sqrt{6}}{16}\]
-이다. 삼각형 \(\mathrm{FF}'\mathrm{Q}\)의 넓이가 \(4\sqrt{5}\)일 때, \(b^{2}\)의 값은? (단, \(a\)와 \(b\)는 양수이다.) [4점]`,
+      units: ["geom-curve"], memo: "타원의 정의와 초점을 지나는 현의 길이 비",
+      body: R`두 초점이 \(\mathrm{F}(c, 0)\), \(\mathrm{F}'(-c, 0)\) (\(c > 0\))인 타원 \(\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1\)이 있다. 이 타원 위에 있는 제\(1\)사분면 위의 점 \(\mathrm{P}\)와 이 타원 위에 있는 제\(4\)사분면 위의 점 \(\mathrm{Q}\)에 대하여 점 \(\mathrm{F}\)가 선분 \(\mathrm{PQ}\) 위에 있고
+\[\dfrac{\overline{\mathrm{PF}}}{\overline{\mathrm{QF}}}=\dfrac{1}{2}, \quad \dfrac{\overline{\mathrm{PF}}}{\overline{\mathrm{FF}'}}=\dfrac{\sqrt{6}}{16}\]
+이다. 삼각형 \(\mathrm{FF}'\mathrm{Q}\)의 넓이가 \(4\sqrt{5}\)일 때, \(b^2\)의 값은? (단, \(a\)와 \(b\)는 양수이다.)`,
       figure: "2027-06-geom-28.webp",
       choices: [R`\(\dfrac{13}{2}\)`, R`\(7\)`, R`\(\dfrac{15}{2}\)`, R`\(8\)`, R`\(\dfrac{17}{2}\)`],
       answer: 4,
-      help: R`초점 거리 FF'=2c를 매개로 PF, QF의 길이를 표현하고 타원의 정의(PF+PF'=2a, QF+QF'=2a)로 삼각형 FF'Q의 세 변을 설정합니다. 삼각형 넓이 공식과 코사인법칙을 결합하여 c와 a의 값을 구한 뒤 b²=a²-c²을 얻습니다.`
+      help: R`\(\overline{\mathrm{PF}}=k\)로 두면 \(\overline{\mathrm{QF}}=2k\), \(\overline{\mathrm{FF}'}=\dfrac{16}{\sqrt{6}}k\)이다. 타원의 정의에 의해 \(\overline{\mathrm{PF}}+\overline{\mathrm{PF}'}=\overline{\mathrm{QF}}+\overline{\mathrm{QF}'}=2a\)이므로 코사인법칙을 \(\triangle \mathrm{PFF}'\)과 \(\triangle \mathrm{QFF}'\)에 적용하여 \(k\)와 \(c\)를 구하고, 삼각형 넓이 조건에서 \(b^2=a^2-c^2\)을 구한다.`
     },
     {
       id: "2027-06-geom-29", exam: "2027-06", no: 29, score: 4,
-      units: ["geom-curve"], memo: "쌍곡선과 포물선의 교점 및 준선 조건",
-      body: R`두 초점이 \(\mathrm{F}(3, 0)\), \(\mathrm{F}'(-3, 0)\)인 쌍곡선 \(C_{1}\)이 있다. 쌍곡선 \(C_{1}\)의 두 꼭짓점 중 \(x\)좌표가 음수인 점을 \(\mathrm{A}(-a, 0)\,(a &gt; 0)\)이라 하고, 초점이 \(\mathrm{F}\)이고 꼭짓점이 \(\mathrm{A}\)인 포물선을 \(C_{2}\), 이 포물선의 준선을 \(l\)이라 하자. 쌍곡선 \(C_{1}\)과 포물선 \(C_{2}\)가 만나는 점 중 제1사분면 위의 점의 \(y\)좌표와 쌍곡선 \(C_{1}\)과 직선 \(l\)이 만나는 점 중 제2사분면 위의 점의 \(y\)좌표가 같을 때, \(a^{2}\)의 값이 \(\dfrac{q}{p}\)이다. \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.) [4점]`,
+      units: ["geom-curve"], memo: "쌍곡선과 포물선의 교점의 좌표 및 방정식 연립",
+      body: R`두 초점이 \(\mathrm{F}(3, 0)\), \(\mathrm{F}'(-3, 0)\)인 쌍곡선 \(C_1\)이 있다. 쌍곡선 \(C_1\)의 두 꼭짓점 중 \(x\)좌표가 음수인 점을 \(\mathrm{A}(-a, 0)\) (\(a > 0\))이라 하고, 초점이 \(\mathrm{F}\)이고 꼭짓점이 \(\mathrm{A}\)인 포물선을 \(C_2\), 이 포물선의 준선을 \(l\)이라 하자. 쌍곡선 \(C_1\)과 포물선 \(C_2\)가 만나는 점 중 제\(1\)사분면 위의 점의 \(y\)좌표와 쌍곡선 \(C_1\)과 직선 \(l\)이 만나는 점 중 제\(2\)사분면 위의 점의 \(y\)좌표가 같을 때, \(a^2\)의 값이 \(\dfrac{q}{p}\)이다. \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       figure: "2027-06-geom-29.webp",
       short: true,
       answer: 14,
-      help: R`포물선 C₂의 초점이 (3,0), 꼭짓점이 (-a,0)이므로 초점거리 p₀=3+a이고 준선은 x=-2a-3입니다. 준선과 쌍곡선 C₁의 교점의 y²값과 곡선 C₁, C₂의 교점의 y²값을 연립하여 a에 관한 방정식을 풉니다.`
+      help: R`쌍곡선의 방정식은 \(\dfrac{x^2}{a^2}-\dfrac{y^2}{9-a^2}=1\)이고, 포물선 \(C_2\)의 초점이 \((3, 0)\), 꼭짓점이 \((-a, 0)\)이므로 평행이동한 포물선 방정식과 준선 \(x=-2a-3\)을 구한다. 준선에서의 쌍곡선 점의 \(y\)좌표와 포물선과의 교점의 \(y\)좌표가 같다는 조건을 대수적으로 연립하여 \(a^2\)을 구한다.`
     },
     {
       id: "2027-06-geom-30", exam: "2027-06", no: 30, score: 4,
-      units: ["geom-vector"], memo: "이등변삼각형의 수직이등분선과 벡터 내적의 최대·최소",
-      body: R`좌표평면에서 \(\overline{\mathrm{AB}} = \overline{\mathrm{AC}} = 2\), \(\angle\mathrm{CAB} &gt; \dfrac{\pi}{2}\)인 이등변삼각형의 세 꼭짓점 \(\mathrm{A, B, C}\)와 선분 \(\mathrm{AB}\)의 수직이등분선 위의 점 \(\mathrm{D}\)가
-\[\overrightarrow{\mathrm{BA}} \cdot \overrightarrow{\mathrm{BC}} = \overrightarrow{\mathrm{CB}} \cdot \overrightarrow{\mathrm{CD}},\quad 2\overrightarrow{\mathrm{AC}} \cdot \overrightarrow{\mathrm{AD}} = \overrightarrow{\mathrm{DA}} \cdot \overrightarrow{\mathrm{DB}}\]
-를 만족시킨다. 선분 \(\mathrm{AB}\)를 지름으로 하는 원 위를 움직이는 점 \(\mathrm{X}\)에 대하여 \(\overrightarrow{\mathrm{DX}} \cdot \overrightarrow{\mathrm{BC}}\)의 최댓값을 \(M\), 최솟값을 \(m\)이라 하자. \(|M \times m| = \dfrac{q}{p}\)일 때, \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.) [4점]`,
+      units: ["geom-vector"], memo: "평면벡터 내적 조건과 원 위의 동점에서의 내적 최대·최소",
+      body: R`좌표평면에서 \(\overline{\mathrm{AB}}=\overline{\mathrm{AC}}=2\), \(\angle\mathrm{CAB} &gt; \dfrac{\pi}{2}\)인 이등변삼각형의 세 꼭짓점 \(\mathrm{A}\), \(\mathrm{B}\), \(\mathrm{C}\)와 선분 \(\mathrm{AB}\)의 수직이등분선 위의 점 \(\mathrm{D}\)가
+\[\vec{\mathrm{BA}}\cdot\vec{\mathrm{BC}} = \vec{\mathrm{CB}}\cdot\vec{\mathrm{CD}}, \quad 2\vec{\mathrm{AC}}\cdot\vec{\mathrm{AD}} = \vec{\mathrm{DA}}\cdot\vec{\mathrm{DB}}\]
+를 만족시킨다. 선분 \(\mathrm{AB}\)를 지름으로 하는 원 위를 움직이는 점 \(\mathrm{X}\)에 대하여 \(\vec{\mathrm{DX}}\cdot\vec{\mathrm{BC}}\)의 최댓값을 \(M\), 최솟값을 \(m\)이라 하자. \(|M\times m|=\dfrac{q}{p}\)일 때, \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       figure: "2027-06-geom-30.webp",
       short: true,
       answer: 29,
-      help: R`조건식을 AB의 중점을 기준으로 위치벡터 분해하여 점 D의 위치와 삼각형 ABC의 각을 결정합니다. DX·BC는 선분 AB의 중점 M₀에 대해 (DM₀ + M₀X)·BC로 분해하여 중심 벡터 내적과 반지름 벡터 내적의 합/차로 최대·최소를 구합니다.`
+      help: R`선분 \(\mathrm{AB}\)의 중점을 원점으로 두거나 기하학적 대칭성을 활용하여 점 \(\mathrm{D}\)의 위치와 삼각형 \(\mathrm{ABC}\)의 각도를 확정한다. 원의 중심을 \(\mathrm{M}\)이라 할 때 \(\vec{\mathrm{DX}}\cdot\vec{\mathrm{BC}}=(\vec{\mathrm{DM}}+\vec{\mathrm{MX}})\cdot\vec{\mathrm{BC}}=\vec{\mathrm{DM}}\cdot\vec{\mathrm{BC}}+\vec{\mathrm{MX}}\cdot\vec{\mathrm{BC}}\)로 분해하여 최대·최소를 구한다.`
     },
     {
       id: "2026-suneung-geom-28", exam: "2026-suneung", no: 28, score: 4,
-      units: ["geom-space"], memo: "사면체와 구, 원의 정사영 넓이",
-      body: R`그림과 같이 \(\overline{\mathrm{AB}} = \overline{\mathrm{CD}} = 4\), \(\overline{\mathrm{BC}} = \overline{\mathrm{BD}} = 2\sqrt{5}\)인 사면체 \(\mathrm{ABCD}\)가 있고, 점 \(\mathrm{A}\)에서 직선 \(\mathrm{CD}\)에 내린 수선의 발 \(\mathrm{H}\)에 대하여 두 평면 \(\mathrm{ABH}\)와 \(\mathrm{BCD}\)는 서로 수직이고 \(\overline{\mathrm{AH}} = 4\)이다. 삼각형 \(\mathrm{ABH}\)의 무게중심을 \(\mathrm{G}\)라 하고, 점 \(\mathrm{G}\)를 중심으로 하고 평면 \(\mathrm{ACD}\)에 접하는 구를 \(S\)라 하자. \(\angle\mathrm{APG} = \dfrac{\pi}{2}\)인 구 \(S\) 위의 모든 점 \(\mathrm{P}\)가 나타내는 도형을 \(T\)라 할 때, 도형 \(T\)의 평면 \(\mathrm{ABC}\) 위로의 정사영의 넓이는? [4점]`,
+      units: ["geom-space"], memo: "사면체 내부의 구와 원의 정사영 넓이",
+      body: R`그림과 같이 \(\overline{\mathrm{AB}}=\overline{\mathrm{CD}}=4\), \(\overline{\mathrm{BC}}=\overline{\mathrm{BD}}=2\sqrt{5}\)인 사면체 \(\mathrm{ABCD}\)가 있고, 점 \(\mathrm{A}\)에서 직선 \(\mathrm{CD}\)에 내린 수선의 발 \(\mathrm{H}\)에 대하여 두 평면 \(\mathrm{ABH}\)와 \(\mathrm{BCD}\)는 서로 수직이고 \(\overline{\mathrm{AH}}=4\)이다. 삼각형 \(\mathrm{ABH}\)의 무게중심을 \(\mathrm{G}\)라 하고, 점 \(\mathrm{G}\)를 중심으로 하고 평면 \(\mathrm{ACD}\)에 접하는 구를 \(S\)라 하자. \(\angle\mathrm{APG}=\dfrac{\pi}{2}\)인 구 \(S\) 위의 모든 점 \(\mathrm{P}\)가 나타내는 도형을 \(T\)라 할 때, 도형 \(T\)의 평면 \(\mathrm{ABC}\) 위로의 정사영의 넓이는?`,
       figure: "2026-suneung-geom-28.webp",
       choices: [R`\(\dfrac{\pi}{7}\)`, R`\(\dfrac{\pi}{6}\)`, R`\(\dfrac{\pi}{5}\)`, R`\(\dfrac{\pi}{4}\)`, R`\(\dfrac{\pi}{3}\)`],
       answer: 4,
-      help: R`도형 T는 지름이 AG인 원입니다. 점 H를 원점으로 삼아 평면 BCD(xy평면)와 수직인 평면 ABH(yz평면)를 기준으로 공간좌표를 설정하면, 구의 중심 G와 반지름, 도형 T가 포함된 평면의 법선벡터 및 평면 ABC의 법선벡터 사이의 이면각 코사인을 정확히 계산할 수 있습니다.`
+      help: R`두 평면이 수직이므로 좌표축을 설정하거나 삼수선의 정리를 이용해 사면체의 각 꼭짓점 좌표와 평면 \(\mathrm{ACD}\)의 방정식을 구한다. 구의 반지름 \(R\)은 점 \(\mathrm{G}\)에서 평면 \(\mathrm{ACD}\)까지의 거리이며, \(\angle\mathrm{APG}=\dfrac{\pi}{2}\)인 점 \(\mathrm{P}\)는 구와 평면의 교선인 원을 형성한다. 이 원의 평면과 평면 \(\mathrm{ABC}\)가 이루는 각의 코사인을 곱해 정사영 넓이를 구한다.`
     },
     {
       id: "2026-suneung-geom-29", exam: "2026-suneung", no: 29, score: 4,
-      units: ["geom-curve"], memo: "포물선과 타원의 정의, 삼각형 둘레와 넓이",
-      body: R`그림과 같이 초점이 \(\mathrm{F}(p, 0)\,(p &gt; 0)\)이고 준선이 \(x=-p\)인 포물선 위의 점 중 제1사분면에 있는 점 \(\mathrm{A}\)에서 포물선의 준선에 내린 수선의 발을 \(\mathrm{H}\)라 하고, 두 초점이 \(x\)축 위에 있고 세 점 \(\mathrm{F, A, H}\)를 지나는 타원의 \(x\)좌표가 양수인 초점을 \(\mathrm{B}\)라 하자. 삼각형 \(\mathrm{AHB}\)의 둘레의 길이가 \(p+27\), 넓이가 \(2p+12\)일 때, 선분 \(\mathrm{HF}\)의 길이를 \(k\)라 하자. \(k^{2}\)의 값을 구하시오. [4점]`,
+      units: ["geom-curve"], memo: "포물선과 타원의 정의 연계 및 삼각형의 둘레와 넓이",
+      body: R`그림과 같이 초점이 \(\mathrm{F}(p, 0)\) (\(p > 0\))이고 준선이 \(x=-p\)인 포물선 위의 점 중 제\(1\)사분면에 있는 점 \(\mathrm{A}\)에서 포물선의 준선에 내린 수선의 발을 \(\mathrm{H}\)라 하고, 두 초점이 \(x\)축 위에 있고 세 점 \(\mathrm{F}\), \(\mathrm{A}\), \(\mathrm{H}\)를 지나는 타원의 \(x\)좌표가 양수인 초점을 \(\mathrm{B}\)라 하자. 삼각형 \(\mathrm{AHB}\)의 둘레의 길이가 \(p+27\), 넓이가 \(2p+12\)일 때, 선분 \(\mathrm{HF}\)의 길이를 \(k\)라 하자. \(k^2\)의 값을 구하시오.`,
       figure: "2026-suneung-geom-29.webp",
       short: true,
       answer: 360,
-      help: R`포물선 정의로 AF=AH이고, 타원의 정의를 적용하면 AH+BH = FH+FB = 2a입니다. 대칭성과 둘레·넓이 조건을 이용해 점 A의 좌표와 p의 값을 구하고 피타고라스 정리로 HF²=k²을 계산합니다.`
+      help: R`포물선의 정의에 의해 \(\overline{\mathrm{AH}}=\overline{\mathrm{AF}}\)이다. 타원의 초점이 \(\mathrm{B}, \mathrm{B}'\)이고 점 \(\mathrm{H}, \mathrm{A}, \mathrm{F}\)를 지나므로 타원의 정의를 적용하여 둘레와 넓이 관계식으로부터 \(p\)와 점 \(\mathrm{A}\)의 좌표를 구한다. 직각삼각형에서 피타고라스 정리로 \(\overline{\mathrm{HF}}^2=k^2\)을 산출한다.`
     },
     {
       id: "2026-suneung-geom-30", exam: "2026-suneung", no: 30, score: 4,
-      units: ["geom-vector"], memo: "원 위의 점과 평면벡터 내적",
-      body: R`좌표평면에서 길이가 \(10\sqrt{2}\)인 선분 \(\mathrm{AB}\)를 지름으로 하는 원 위의 두 점 \(\mathrm{P, Q}\)가
-\[(\overrightarrow{\mathrm{PA}}+\overrightarrow{\mathrm{PB}}) \cdot (\overrightarrow{\mathrm{PQ}}+\overrightarrow{\mathrm{PB}}) = 2|\overrightarrow{\mathrm{PQ}}|^{2}\]
-을 만족시킨다. \(|\overrightarrow{\mathrm{PB}}| = 14\)일 때, \(|\overrightarrow{\mathrm{PA}} \cdot \overrightarrow{\mathrm{QB}}| = \dfrac{q}{p}\)이다. \(p+q\)의 값을 구하시오. (단, \(|\overrightarrow{\mathrm{QB}}| &gt; 0\)이고, \(p\)와 \(q\)는 서로소인 자연수이다.) [4점]`,
+      units: ["geom-vector"], memo: "원에 내접하는 삼각형과 벡터 내적 관계식",
+      body: R`좌표평면에서 길이가 \(10\sqrt{2}\)인 선분 \(\mathrm{AB}\)를 지름으로 하는 원 위의 두 점 \(\mathrm{P}\), \(\mathrm{Q}\)가
+\[(\vec{\mathrm{PA}}+\vec{\mathrm{PB}})\cdot(\vec{\mathrm{PQ}}+\vec{\mathrm{PB}}) = 2|\vec{\mathrm{PQ}}|^2\]
+을 만족시킨다. \(|\vec{\mathrm{PB}}|=14\)일 때, \(|\vec{\mathrm{PA}}\cdot\vec{\mathrm{QB}}|=\dfrac{q}{p}\)이다. \(p+q\)의 값을 구하시오. (단, \(|\vec{\mathrm{QB}}| &gt; 0\)이고, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       short: true,
       answer: 221,
-      help: R`지름 AB에 의해 PA ⊥ PB이므로 직각삼각형 PAB에서 PA=√(200-196)=2입니다. 조건식을 원의 중심 O를 기점으로 정리하거나 성분화하여 각도 관계를 도출하고 |PA·QB|의 값을 구합니다.`
+      help: R`지름의 양 끝점이 \(\mathrm{A}, \mathrm{B}\)이므로 \(\angle\mathrm{APB}=90^\circ\)이고 \(|\vec{\mathrm{PA}}|^2+|\vec{\mathrm{PB}}|^2=(10\sqrt{2})^2=200\)에서 \(|\vec{\mathrm{PA}}|=2\)이다. 원의 중심 \(\mathrm{O}\)를 기준으로 벡터들을 분해하거나 삼각비를 적용하여 점 \(\mathrm{Q}\)의 위치를 결정한 뒤 \(|\vec{\mathrm{PA}}\cdot\vec{\mathrm{QB}}|\)를 계산한다.`
     },
     {
       id: "2026-09-geom-28", exam: "2026-09", no: 28, score: 4,
-      units: ["geom-space"], memo: "구와 직선이 이루는 각, 정사영과 이면각",
-      body: R`좌표공간의 구 \(S : x^{2}+y^{2}+z^{2}=36\) 위의 점 \(\mathrm{A}\)에 대하여 구 \(S\) 위의 점 \(\mathrm{B}\)가 다음 조건을 만족시킨다.
-
-삼각형 \(\mathrm{OAB}\)의 \(xy\)평면 위로의 정사영이 직각삼각형일 때, 평면 \(\mathrm{OAB}\)와 \(xy\)평면이 이루는 예각의 크기를 \(\theta\)라 하자. \(\cos\theta\)의 값은? (단, \(\mathrm{O}\)는 원점이고, 점 \(\mathrm{A}\)의 \(z\)좌표는 \(6\)이 아닌 양수이다.) [4점]`,
+      units: ["geom-space"], memo: "공간좌표와 구 위의 점, 평면과 직선의 각도 및 정사영",
+      body: R`좌표공간의 구 \(S: x^2+y^2+z^2=36\) 위의 점 \(\mathrm{A}\)에 대하여 구 \(S\) 위의 점 \(\mathrm{B}\)가 다음 조건을 만족시킨다.`,
       figure: "2026-09-geom-28.webp",
       note: [
-        R`(가) 선분 \(\mathrm{OA}\) 위의 \(\overline{\mathrm{OC}} = 4\)인 점 \(\mathrm{C}\)에 대하여 직선 \(\mathrm{BC}\)와 \(xy\)평면이 서로 평행하다.`,
-        R`(나) 두 직선 \(\mathrm{OA, AB}\)와 \(xy\)평면이 이루는 예각의 크기를 각각 \(\alpha, \beta\)라 하면 \(\sin\alpha = 3\sin\beta\)이다.`
+        R`(가) 선분 \(\mathrm{OA}\) 위의 \(\overline{\mathrm{OC}}=4\)인 점 \(\mathrm{C}\)에 대하여 직선 \(\mathrm{BC}\)와 \(xy\)평면이 서로 평행하다.`,
+        R`(나) 두 직선 \(\mathrm{OA}\), \(\mathrm{AB}\)와 \(xy\)평면이 이루는 예각의 크기를 각각 \(\alpha\), \(\beta\)라 하면 \(\sin\alpha=3\sin\beta\)이다.`
       ],
       choices: [R`\(\dfrac{\sqrt{2}}{6}\)`, R`\(\dfrac{\sqrt{2}}{5}\)`, R`\(\dfrac{\sqrt{2}}{4}\)`, R`\(\dfrac{\sqrt{2}}{3}\)`, R`\(\dfrac{\sqrt{2}}{2}\)`],
       answer: 4,
-      help: R`직선 BC와 xy평면이 평행하므로 점 B의 z좌표는 점 C의 z좌표와 같습니다. 조건 (나)의 sin 비율로부터 z좌표 간 관계를 세우고, 정사영 삼각형이 직각삼각형이 되는 조건을 통해 평면 OAB의 법선벡터와 cosθ를 구합니다.`
+      help: R`구의 반지름은 \(6\)이고 점 \(\mathrm{C}\)의 \(z\)좌표와 점 \(\mathrm{B}\)의 \(z\)좌표가 같다 (\(z_C=z_B=\dfrac{2}{3}z_A\)). 정사영 삼각형이 직각삼각형이 되는 기하학적 배치에서 법선벡터를 구하거나 면적비 공식 \(\cos\theta = \dfrac{S'}{S}\)를 적용하여 \(\cos\theta\)를 구한다.`
     },
     {
       id: "2026-09-geom-29", exam: "2026-09", no: 29, score: 4,
-      units: ["geom-curve"], memo: "두 타원의 초점과 장축의 길이",
-      body: R`두 점 \(\mathrm{F}(0, 6)\), \(\mathrm{F}'(0, -6)\)을 초점으로 하는 타원 \(C_{1}\)에 대하여 점 \(\mathrm{F}\)를 지나고 \(x\)축과 평행한 직선이 타원 \(C_{1}\)과 만나는 점 중 제1사분면 위에 있는 점을 \(\mathrm{P}\), 선분 \(\mathrm{PF}'\)과 \(x\)축이 만나는 점을 \(\mathrm{Q}\)라 하자. 두 점 \(\mathrm{P, F}\)를 초점으로 하고 점 \(\mathrm{Q}\)가 꼭짓점인 타원 \(C_{2}\)에 대하여 두 타원 \(C_{1}, C_{2}\)가 만나는 점 중 \(x\)축에 가까운 점을 \(\mathrm{R}\)이라 하자. \(\overline{\mathrm{F}'\mathrm{R}}-\overline{\mathrm{PR}} = 7\sqrt{2}\)일 때, 두 타원 \(C_{1}, C_{2}\)의 장축의 길이의 곱을 구하시오. [4점]`,
+      units: ["geom-curve"], memo: "두 타원의 정의와 초점·꼭짓점 관계를 이용한 장축 길이 계산",
+      body: R`두 점 \(\mathrm{F}(0, 6)\), \(\mathrm{F}'(0, -6)\)을 초점으로 하는 타원 \(C_1\)에 대하여 점 \(\mathrm{F}\)를 지나고 \(x\)축과 평행한 직선이 타원 \(C_1\)과 만나는 점 중 제\(1\)사분면 위에 있는 점을 \(\mathrm{P}\), 선분 \(\mathrm{PF}'\)과 \(x\)축이 만나는 점을 \(\mathrm{Q}\)라 하자. 두 점 \(\mathrm{P}\), \(\mathrm{F}\)를 초점으로 하고 점 \(\mathrm{Q}\)가 꼭짓점인 타원 \(C_2\)에 대하여 두 타원 \(C_1\), \(C_2\)가 만나는 점 중 \(x\)축에 가까운 점을 \(\mathrm{R}\)이라 하자. \(\overline{\mathrm{F}'\mathrm{R}}-\overline{\mathrm{PR}}=7\sqrt{2}\)일 때, 두 타원 \(C_1\), \(C_2\)의 장축의 길이의 곱을 구하시오.`,
       figure: "2026-09-geom-29.webp",
       short: true,
       answer: 396,
-      help: R`점 P의 좌표를 (k, 6)으로 두고 타원 C₁의 정의와 닮음비를 활용하여 초점 및 점 Q의 좌표를 구합니다. 교점 R에서 두 타원의 정의 F'R+FR=2a₁, PR+FR=2a₂를 빼면 F'R-PR = 2a₁-2a₂가 되므로 장축의 길이들을 구하여 곱합니다.`
+      help: R`점 \(\mathrm{P}\)의 좌표를 \((x_1, 6)\)으로 두고 닮음을 이용하여 \(\mathrm{Q}\)의 위치와 타원 \(C_2\)의 장축 길이를 표현한다. 두 타원 위의 점 \(\mathrm{R}\)에 대해 타원의 정의식 \(\overline{\mathrm{RF}}+\overline{\mathrm{RF}'}=2a_1\), \(\overline{\mathrm{RF}}+\overline{\mathrm{RP}}=2a_2\)를 변변 빼서 주어진 \(\overline{\mathrm{F}'\mathrm{R}}-\overline{\mathrm{PR}}=7\sqrt{2}\)와 연결하여 두 장축의 곱을 산출한다.`
     },
     {
       id: "2026-09-geom-30", exam: "2026-09", no: 30, score: 4,
-      units: ["geom-vector"], memo: "이등변삼각형 위의 점과 평면벡터 내적의 최대·최소",
-      body: R`좌표평면에 \(\overline{\mathrm{AB}} = \overline{\mathrm{AC}} = 8\sqrt{5}\), \(\overline{\mathrm{BC}} = 16\)인 삼각형 \(\mathrm{ABC}\)가 있다. 선분 \(\mathrm{AB}\) 위의 점 \(\mathrm{P}\), 선분 \(\mathrm{BC}\) 위의 점 \(\mathrm{Q}\), 선분 \(\mathrm{CA}\) 위의 점 \(\mathrm{R}\)이 다음 조건을 만족시킨다.
-
-\(|3\overrightarrow{\mathrm{XP}}+\overrightarrow{\mathrm{XR}}| = |\overrightarrow{\mathrm{PR}}|\)을 만족시키는 점 \(\mathrm{X}\)에 대하여 \(|\overrightarrow{\mathrm{BX}}|\)의 최댓값과 최솟값을 각각 \(M, m\)이라 할 때, \(M \times m\)의 값을 구하시오. (단, \(|\overrightarrow{\mathrm{PQ}}| &gt; 0\)) [4점]`,
+      units: ["geom-vector"], memo: "삼각형 위의 점들과 벡터 내적 조건, 원 위의 동점까지의 거리 최대·최소",
+      body: R`좌표평면에 \(\overline{\mathrm{AB}}=\overline{\mathrm{AC}}=8\sqrt{5}\), \(\overline{\mathrm{BC}}=16\)인 삼각형 \(\mathrm{ABC}\)가 있다. 선분 \(\mathrm{AB}\) 위의 점 \(\mathrm{P}\), 선분 \(\mathrm{BC}\) 위의 점 \(\mathrm{Q}\), 선분 \(\mathrm{CA}\) 위의 점 \(\mathrm{R}\)이 다음 조건을 만족시킨다.`,
       note: [
-        R`(가) \((\overrightarrow{\mathrm{PB}}+\overrightarrow{\mathrm{PQ}}) \cdot \overrightarrow{\mathrm{BC}} = (\overrightarrow{\mathrm{RC}}+\overrightarrow{\mathrm{RQ}}) \cdot \overrightarrow{\mathrm{BC}} = 0\)`,
-        R`(나) \(\overrightarrow{\mathrm{QP}} \cdot \overrightarrow{\mathrm{QR}} = |\overrightarrow{\mathrm{QP}}|^{2}\)`
+        R`(가) \((\vec{\mathrm{PB}}+\vec{\mathrm{PQ}})\cdot\vec{\mathrm{BC}} = (\vec{\mathrm{RC}}+\vec{\mathrm{RQ}})\cdot\vec{\mathrm{BC}} = 0\)`,
+        R`(나) \(\vec{\mathrm{QP}}\cdot\vec{\mathrm{QR}} = |\vec{\mathrm{QP}}|^2\)`
       ],
       short: true,
       answer: 69,
-      help: R`조건 (가), (나)로부터 점 P, Q, R의 위치를 좌표계에 투영하여 결정합니다. |3XP+XR| = |PR|은 점 X가 선분 PR을 1:3으로 내분하는 점을 중심으로 하는 원 위에 있음을 뜻하므로 중심과 B 사이의 거리에서 반지름을 더하고 빼서 M과 m을 구합니다.`
+      help: R`조건 (가)에서 점 \(\mathrm{P}, \mathrm{R}\)의 정사영과 \(\mathrm{Q}\)의 위치 관계를 찾고, 조건 (나)에서 직각삼각형 관계를 도출한다. \(|3\vec{\mathrm{XP}}+\vec{\mathrm{XR}}|=|\vec{\mathrm{PR}}|\)은 점 \(\mathrm{X}\)가 선분 \(\mathrm{PR}\)을 \(1:3\)으로 내분하는 점을 중심으로 하는 원 위에 있음을 나타내므로, 점 \(\mathrm{B}\)에서 이 원의 중심까지의 거리와 반지름을 이용하여 \(M\)과 \(m\)을 구한다.`
     },
     {
       id: "2026-06-geom-28", exam: "2026-06", no: 28, score: 4,
-      units: ["geom-curve"], memo: "초점이 서로 직교하는 두 타원의 성질",
-      body: R`그림과 같이 두 점 \(\mathrm{F}(c, 0)\), \(\mathrm{F}'(-c, 0)\,(c &gt; 0)\)을 초점으로 하는 타원 \(C_{1} : \dfrac{x^{2}}{a^{2}}+y^{2}=1\)과 두 점 \(\mathrm{G}(0, d)\), \(\mathrm{G}'(0, -d)\,(d &gt; 1)\)을 초점으로 하고 타원 \(C_{1}\)의 두 꼭짓점을 지나는 타원 \(C_{2}\)가 있다. 직선 \(\mathrm{FG}\)가 타원 \(C_{1}\)과 제1사분면에서 만나는 점을 \(\mathrm{P}\)라 하고, 직선 \(\mathrm{F}'\mathrm{P}\)가 타원 \(C_{2}\)와 제1사분면에서 만나는 점을 \(\mathrm{Q}\)라 하자. \(\overline{\mathrm{GP}} = \overline{\mathrm{PF}}\)이고 \(\overline{\mathrm{GP}}+\overline{\mathrm{PF}'} = 2\sqrt{2}\)일 때, \(\overline{\mathrm{QG}}+\overline{\mathrm{QG}'}\)의 값은? (단, \(a\)는 양수이다.) [4점]`,
+      units: ["geom-curve"], memo: "두 타원의 정의와 중점 조건 연계",
+      body: R`그림과 같이 두 점 \(\mathrm{F}(c, 0)\), \(\mathrm{F}'(-c, 0)\) (\(c > 0\))을 초점으로 하는 타원 \(C_1: \dfrac{x^2}{a^2}+y^2=1\)과 두 점 \(\mathrm{G}(0, d)\), \(\mathrm{G}'(0, -d)\) (\(d > 1\))을 초점으로 하고 타원 \(C_1\)의 두 꼭짓점을 지나는 타원 \(C_2\)가 있다. 직선 \(\mathrm{FG}\)가 타원 \(C_1\)과 제\(1\)사분면에서 만나는 점을 \(\mathrm{P}\)라 하고, 직선 \(\mathrm{F}'\mathrm{P}\)가 타원 \(C_2\)와 제\(1\)사분면에서 만나는 점을 \(\mathrm{Q}\)라 하자. \(\overline{\mathrm{GP}}=\overline{\mathrm{PF}}\)이고 \(\overline{\mathrm{GP}}+\overline{\mathrm{PF}'}=2\sqrt{2}\)일 때, \(\overline{\mathrm{QG}}+\overline{\mathrm{QG}'}\)의 값은? (단, \(a\)는 양수이다.)`,
       figure: "2026-06-geom-28.webp",
       choices: [R`\(\sqrt{19}\)`, R`\(2\sqrt{5}\)`, R`\(\sqrt{21}\)`, R`\(\sqrt{22}\)`, R`\(\sqrt{23}\)`],
       answer: 4,
-      help: R`GP = PF이므로 GP+PF' = PF+PF' = 2a = 2√2가 되어 a=√2입니다. 타원 C₂는 C₁의 꼭짓점 (±√2, 0)을 지나므로 장축의 길이는 2√(d²+2)이며, 직각삼각형 및 거리 공식을 통해 d의 값을 구하여 QG+QG'의 값을 도출합니다.`
+      help: R`\(\overline{\mathrm{GP}}=\overline{\mathrm{PF}}\)이므로 \(\overline{\mathrm{PF}}+\overline{\mathrm{PF}'}=\overline{\mathrm{GP}}+\overline{\mathrm{PF}'}=2\sqrt{2}\)가 되어 타원 \(C_1\)의 장축의 길이는 \(2a=2\sqrt{2}\)이다. 타원 \(C_2\)의 두 꼭짓점이 \(C_1\)의 꼭짓점과 공유되는 기하학적 성질과 타원 \(C_2\)의 장축 길이를 구하여 \(\overline{\mathrm{QG}}+\overline{\mathrm{QG}'}\)를 구한다.`
     },
     {
       id: "2026-06-geom-29", exam: "2026-06", no: 29, score: 4,
-      units: ["geom-curve"], memo: "쌍곡선의 초점과 평행선의 성질, 삼각형 넓이",
-      body: R`그림과 같이 두 점 \(\mathrm{F}(c, 0)\), \(\mathrm{F}'(-c, 0)\,(c &gt; 0)\)을 초점으로 하는 쌍곡선이 있다. 이 쌍곡선 위의 점 중 제1사분면에 있는 점 \(\mathrm{P}\)에 대하여 선분 \(\mathrm{F}'\mathrm{P}\)가 \(y\)축과 만나는 점을 \(\mathrm{Q}\)라 하고, 원점 \(\mathrm{O}\)를 지나고 선분 \(\mathrm{F}'\mathrm{P}\)와 평행한 직선이 이 쌍곡선과 만나는 점 중 제1사분면에 있는 점을 \(\mathrm{R}\)이라 하자. \(\overline{\mathrm{F}'\mathrm{Q}} = \overline{\mathrm{QP}}\), \(\overline{\mathrm{OQ}} = 2\)이고 삼각형 \(\mathrm{PQR}\)의 넓이가 \(3\)일 때, 이 쌍곡선의 주축의 길이는 \(p+q\sqrt{13}\)이다. \(p^{2}+q^{2}\)의 값을 구하시오. (단, \(p\)와 \(q\)는 유리수이다.) [4점]`,
+      units: ["geom-curve"], memo: "쌍곡선의 정의와 중점 연결 정리, 평행선 사이 삼각형 넓이",
+      body: R`그림과 같이 두 점 \(\mathrm{F}(c, 0)\), \(\mathrm{F}'(-c, 0)\) (\(c > 0\))을 초점으로 하는 쌍곡선이 있다. 이 쌍곡선 위의 점 중 제\(1\)사분면에 있는 점 \(\mathrm{P}\)에 대하여 선분 \(\mathrm{F}'\mathrm{P}\)가 \(y\)축과 만나는 점을 \(\mathrm{Q}\)라 하고, 원점 \(\mathrm{O}\)를 지나고 선분 \(\mathrm{F}'\mathrm{P}\)와 평행한 직선이 이 쌍곡선과 만나는 점 중 제\(1\)사분면에 있는 점을 \(\mathrm{R}\)이라 하자. \(\overline{\mathrm{F}'\mathrm{Q}}=\overline{\mathrm{QP}}\), \(\overline{\mathrm{OQ}}=2\)이고 삼각형 \(\mathrm{PQR}\)의 넓이가 \(3\)일 때, 이 쌍곡선의 주축의 길이는 \(p+q\sqrt{13}\)이다. \(p^2+q^2\)의 값을 구하시오. (단, \(p\)와 \(q\)는 유리수이다.)`,
       figure: "2026-06-geom-29.webp",
       short: true,
       answer: 20,
-      help: R`F'Q = QP이므로 점 Q는 F'P의 중점이며 Q=(0, 2)에서 P=(c, 4)임을 알 수 있습니다. 직선 OR과 삼각형 PQR의 넓이 조건을 연립하여 쌍곡선 방정식의 계수 a와 b를 구하고 주축의 길이 2a를 도출합니다.`
+      help: R`\(\overline{\mathrm{F}'\mathrm{Q}}=\overline{\mathrm{QP}}\)에서 \(\triangle \mathrm{F}'\mathrm{FP}\)의 중점 연결 정리에 의해 \(\overline{\mathrm{PF}}=2\overline{\mathrm{OQ}}=4\)이다. 직선 \(\mathrm{OR}\)과 \(\mathrm{F}'\mathrm{P}\)의 평행 조건 및 높이를 통해 삼각형의 넓이로부터 각 선분의 길이를 계산하고, 쌍곡선 정의 \(\overline{\mathrm{PF}'}-\overline{\mathrm{PF}}=2a\)를 적용한다.`
     },
     {
       id: "2026-06-geom-30", exam: "2026-06", no: 30, score: 4,
-      units: ["geom-vector"], memo: "직사각형과 벡터 내적의 최솟값",
-      body: R`좌표평면에 \(\overline{\mathrm{AB}} = 6\), \(\overline{\mathrm{AD}} = 8\)인 직사각형 \(\mathrm{ABCD}\)와 \(2\overrightarrow{\mathrm{BE}} = 3\overrightarrow{\mathrm{BC}}-\overrightarrow{\mathrm{BA}}\)를 만족시키는 점 \(\mathrm{E}\)가 있다. 선분 \(\mathrm{BC}\) 위를 움직이는 점 \(\mathrm{P}\)에 대하여 점 \(\mathrm{Q}\)가
-\[\overrightarrow{\mathrm{PQ}} \cdot (\overrightarrow{\mathrm{PQ}}-\overrightarrow{\mathrm{AB}}) = 0\]
-을 만족시킬 때, \(\overrightarrow{\mathrm{AE}} \cdot \overrightarrow{\mathrm{AQ}}\)의 최솟값을 구하시오. [4점]`,
+      units: ["geom-vector"], memo: "평면벡터 내적과 영역 위의 동점",
+      body: R`좌표평면에 \(\overline{\mathrm{AB}}=6\), \(\overline{\mathrm{AD}}=8\)인 직사각형 \(\mathrm{ABCD}\)와
+\[2\vec{\mathrm{BE}}=3\vec{\mathrm{BC}}-\vec{\mathrm{BA}}\]
+를 만족시키는 점 \(\mathrm{E}\)가 있다. 선분 \(\mathrm{BC}\) 위를 움직이는 점 \(\mathrm{P}\)에 대하여 점 \(\mathrm{Q}\)가
+\[\vec{\mathrm{PQ}}\cdot(\vec{\mathrm{PQ}}-\vec{\mathrm{AB}})=0\]
+을 만족시킬 때, \(\vec{\mathrm{AE}}\cdot\vec{\mathrm{AQ}}\)의 최솟값을 구하시오.`,
       figure: "2026-06-geom-30.webp",
       short: true,
       answer: 36,
-      help: R`PQ·(PQ-AB) = 0은 점 Q가 선분 AP를 지름으로 하는 원(또는 P에서 AB 벡터 방향으로 정의된 원) 위에 있음을 의미합니다. 점 B를 원점으로 두고 좌표화하여 AE 벡터와 AQ 벡터의 내적을 매개변수로 나타내어 최솟값을 구합니다.`
+      help: R`\(\vec{\mathrm{PQ}}\cdot(\vec{\mathrm{PQ}}-\vec{\mathrm{AB}})=0\)은 점 \(\mathrm{Q}\)가 선분 \(\mathrm{P}\)와 \(\mathrm{P}+\vec{\mathrm{AB}}\)를 지름의 양 끝점으로 하는 원 위에 있음을 의미한다. 점 \(\mathrm{P}\)가 선분 \(\mathrm{BC}\)를 움직일 때 점 \(\mathrm{Q}\)가 그리는 영역(원들의 합집합)을 파악하고, 고정된 벡터 \(\vec{\mathrm{AE}}\)와의 내적이 최소가 되는 점 \(\mathrm{Q}\)의 위치를 찾는다.`
     },
     {
       id: "2025-suneung-geom-28", exam: "2025-suneung", no: 28, score: 4,
-      units: ["geom-space"], memo: "직각삼각형을 지름으로 하는 구와 평면의 교선",
-      body: R`좌표공간에 \(\overline{\mathrm{AB}} = 8\), \(\overline{\mathrm{BC}} = 6\), \(\angle\mathrm{ABC} = \dfrac{\pi}{2}\)인 직각삼각형 \(\mathrm{ABC}\)와 선분 \(\mathrm{AC}\)를 지름으로 하는 구 \(S\)가 있다. 직선 \(\mathrm{AB}\)를 포함하고 평면 \(\mathrm{ABC}\)에 수직인 평면이 구 \(S\)와 만나서 생기는 원을 \(O\)라 하자. 원 \(O\) 위의 점 중에서 직선 \(\mathrm{AC}\)까지의 거리가 \(4\)인 서로 다른 두 점을 \(\mathrm{P, Q}\)라 할 때, 선분 \(\mathrm{PQ}\)의 길이는? [4점]`,
+      units: ["geom-space"], memo: "직각삼각형과 구의 단면원, 직선까지의 거리",
+      body: R`좌표공간에 \(\overline{\mathrm{AB}}=8\), \(\overline{\mathrm{BC}}=6\), \(\angle\mathrm{ABC}=\dfrac{\pi}{2}\)인 직각삼각형 \(\mathrm{ABC}\)와 선분 \(\mathrm{AC}\)를 지름으로 하는 구 \(S\)가 있다. 직선 \(\mathrm{AB}\)를 포함하고 평면 \(\mathrm{ABC}\)에 수직인 평면이 구 \(S\)와 만나서 생기는 원을 \(O\)라 하자. 원 \(O\) 위의 점 중에서 직선 \(\mathrm{AC}\)까지의 거리가 \(4\)인 서로 다른 두 점을 \(\mathrm{P}\), \(\mathrm{Q}\)라 할 때, 선분 \(\mathrm{PQ}\)의 길이는?`,
       figure: "2025-suneung-geom-28.webp",
       choices: [R`\(\sqrt{43}\)`, R`\(\sqrt{47}\)`, R`\(\sqrt{51}\)`, R`\(\sqrt{55}\)`, R`\(\sqrt{59}\)`],
       answer: 4,
-      help: R`직각삼각형 ABC에서 AC=10이므로 구 S의 반지름은 5입니다. 원 O는 평면 ABC에 수직인 평면과의 교선이므로 원 O의 중심과 반지름을 구하고, 직선 AC까지의 거리 조건을 공간좌표나 삼수선의 정리로 적용하여 두 점 P, Q의 좌표를 구해 선분 PQ의 길이를 계산합니다.`
+      help: R`직각삼각형 \(\mathrm{ABC}\)의 빗변 \(\overline{\mathrm{AC}}=10\)이 구 \(S\)의 지름이므로 구의 반지름은 \(5\)이다. 좌표계를 설정하여 구의 방정식과 원 \(O\)가 놓인 평면의 방정식을 세우고, 원 위의 점 \((x, y, z)\)에서 직선 \(\mathrm{AC}\)까지의 거리 공식을 적용하여 두 점 \(\mathrm{P}, \mathrm{Q}\)의 좌표를 구해 \(\overline{\mathrm{PQ}}\)를 계산한다.`
     },
     {
       id: "2025-suneung-geom-29", exam: "2025-suneung", no: 29, score: 4,
-      units: ["geom-curve"], memo: "쌍곡선과 닮음 삼각형의 넓이",
-      body: R`두 초점이 \(\mathrm{F}(c, 0)\), \(\mathrm{F}'(-c, 0)\,(c &gt; 0)\)인 쌍곡선 \(x^{2}-\dfrac{y^{2}}{35}=1\)이 있다. 이 쌍곡선 위에 있는 제1사분면 위의 점 \(\mathrm{P}\)에 대하여 직선 \(\mathrm{PF}'\) 위에 \(\overline{\mathrm{PQ}} = \overline{\mathrm{PF}}\)인 점 \(\mathrm{Q}\)를 잡자. 삼각형 \(\mathrm{QF}'\mathrm{F}\)와 삼각형 \(\mathrm{FF}'\mathrm{P}\)가 서로 닮음일 때, 삼각형 \(\mathrm{PFQ}\)의 넓이는 \(\dfrac{q}{p}\sqrt{5}\)이다. \(p+q\)의 값을 구하시오. (단, \(\overline{\mathrm{PF}'} &lt; \overline{\mathrm{QF}'}\)이고, \(p\)와 \(q\)는 서로소인 자연수이다.) [4점]`,
+      units: ["geom-curve"], memo: "쌍곡선의 정의와 닮음인 삼각형의 성질",
+      body: R`두 초점이 \(\mathrm{F}(c, 0)\), \(\mathrm{F}'(-c, 0)\) (\(c > 0\))인 쌍곡선 \(x^2-\dfrac{y^2}{35}=1\)이 있다. 이 쌍곡선 위에 있는 제\(1\)사분면 위의 점 \(\mathrm{P}\)에 대하여 직선 \(\mathrm{PF}'\) 위에 \(\overline{\mathrm{PQ}}=\overline{\mathrm{PF}}\)인 점 \(\mathrm{Q}\)를 잡자. 삼각형 \(\mathrm{QF}'\mathrm{F}\)와 삼각형 \(\mathrm{FF}'\mathrm{P}\)가 서로 닮음일 때, 삼각형 \(\mathrm{PFQ}\)의 넓이는 \(\dfrac{q}{p}\sqrt{5}\)이다. \(p+q\)의 값을 구하시오. (단, \(\overline{\mathrm{PF}'} &lt; \overline{\mathrm{QF}'}\)이고, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       figure: "2025-suneung-geom-29.webp",
       short: true,
       answer: 107,
-      help: R`쌍곡선의 정의에서 PF'-PF = 2이므로 PF=k라 두면 PF'=k+2, QF'=k+(k+2)=2k+2입니다. 두 삼각형의 공통각 ∠F'과 닮음비로부터 k의 값을 결정하고, 코사인법칙으로 이등변삼각형 PFQ의 넓이를 구합니다.`
+      help: R`쌍곡선의 주축의 길이는 \(2a=2\), 초점 거리는 \(2c=2\sqrt{1+35}=12\)이다. \(\overline{\mathrm{PF}'}-\overline{\mathrm{PF}}=2\)이고 \(\triangle \mathrm{QF}'\mathrm{F} \sim \triangle \mathrm{FF}'\mathrm{P}\)에서 각 \(\angle\mathrm{F}'\)을 공유하므로 대응변의 길이 비를 세워 이등변삼각형 \(\triangle \mathrm{PFQ}\)의 변의 길이와 꼭지각을 구하고 넓이를 산출한다.`
     },
     {
       id: "2025-suneung-geom-30", exam: "2025-suneung", no: 30, score: 4,
-      units: ["geom-vector"], memo: "정사각형 위의 벡터 자취와 내적의 최대·최소",
+      units: ["geom-vector"], memo: "벡터 방정식이 나타내는 도형과 내적의 최대·최소",
       body: R`좌표평면에 한 변의 길이가 \(4\)인 정사각형 \(\mathrm{ABCD}\)가 있다.
-\[|\overrightarrow{\mathrm{XB}}+\overrightarrow{\mathrm{XC}}| = |\overrightarrow{\mathrm{XB}}-\overrightarrow{\mathrm{XC}}|\]
+\[|\vec{\mathrm{XB}}+\vec{\mathrm{XC}}|=|\vec{\mathrm{XB}}-\vec{\mathrm{XC}}|\]
 를 만족시키는 점 \(\mathrm{X}\)가 나타내는 도형을 \(S\)라 하자. 도형 \(S\) 위의 점 \(\mathrm{P}\)에 대하여
-\[4\overrightarrow{\mathrm{PQ}} = \overrightarrow{\mathrm{PB}}+2\overrightarrow{\mathrm{PD}}\]
-를 만족시키는 점을 \(\mathrm{Q}\)라 할 때, \(\overrightarrow{\mathrm{AC}} \cdot \overrightarrow{\mathrm{AQ}}\)의 최댓값과 최솟값을 각각 \(M, m\)이라 하자. \(M \times m\)의 값을 구하시오. [4점]`,
+\[4\vec{\mathrm{PQ}}=\vec{\mathrm{PB}}+2\vec{\mathrm{PD}}\]
+를 만족시키는 점을 \(\mathrm{Q}\)라 할 때, \(\vec{\mathrm{AC}}\cdot\vec{\mathrm{AQ}}\)의 최댓값과 최솟값을 각각 \(M\), \(m\)이라 하자. \(M\times m\)의 값을 구하시오.`,
       figure: "2025-suneung-geom-30.webp",
       short: true,
       answer: 316,
-      help: R`|XB+XC| = |XB-XC|는 XB ⊥ XC를 의미하므로 도형 S는 선분 BC를 지름으로 하는 원입니다. 점 Q의 위치벡터를 AQ = (3/4)AP + (1/4)AB + (1/2)AD로 분해한 뒤 AC·AQ를 AP의 내적으로 표현하여 최대·최소를 구합니다.`
+      help: R`\(|\vec{\mathrm{XB}}+\vec{\mathrm{XC}}|=|\vec{\mathrm{XB}}-\vec{\mathrm{XC}}|\)는 선분 \(\mathrm{BC}\)를 지름으로 하는 원 \(S\)를 나타낸다. 점 \(\mathrm{Q}\)를 원점 기준으로 표현하면 \(\vec{\mathrm{OQ}}=\dfrac{1}{4}\vec{\mathrm{OP}}+\dfrac{1}{4}\vec{\mathrm{OB}}+\dfrac{1}{2}\vec{\mathrm{OD}}\) 형태의 원형 궤적을 그리므로, \(\vec{\mathrm{AC}}\cdot\vec{\mathrm{AQ}}\)를 중심 성분과 반지름 성분으로 분해하여 최대·최소를 구한다.`
     },
     {
       id: "2025-09-geom-28", exam: "2025-09", no: 28, score: 4,
-      units: ["geom-space"], memo: "구와 원 위의 점의 이면각과 좌표",
-      body: R`좌표공간에 두 점 \(\mathrm{A}(a, 0, 0)\), \(\mathrm{B}(0, 10\sqrt{2}, 0)\)과 구 \(S : x^{2}+y^{2}+z^{2}=100\)이 있다. \(\angle\mathrm{APO} = \dfrac{\pi}{2}\)인 구 \(S\) 위의 모든 점 \(\mathrm{P}\)가 나타내는 도형을 \(C_{1}\), \(\angle\mathrm{BQO} = \dfrac{\pi}{2}\)인 구 \(S\) 위의 모든 점 \(\mathrm{Q}\)가 나타내는 도형을 \(C_{2}\)라 하자. \(C_{1}\)과 \(C_{2}\)가 서로 다른 두 점 \(\mathrm{N}_{1}, \mathrm{N}_{2}\)에서 만나고 \(\cos(\angle\mathrm{N}_{1}\mathrm{ON}_{2}) = \dfrac{3}{5}\)일 때, \(a\)의 값은? (단, \(a &gt; 10\sqrt{2}\)이고, \(\mathrm{O}\)는 원점이다.) [4점]`,
+      units: ["geom-space"], memo: "공간좌표와 구 위의 원의 교점과 사잇각",
+      body: R`좌표공간에 두 점 \(\mathrm{A}(a, 0, 0)\), \(\mathrm{B}(0, 10\sqrt{2}, 0)\)과 구 \(S: x^2+y^2+z^2=100\)이 있다. \(\angle\mathrm{APO}=\dfrac{\pi}{2}\)인 구 \(S\) 위의 모든 점 \(\mathrm{P}\)가 나타내는 도형을 \(C_1\), \(\angle\mathrm{BQO}=\dfrac{\pi}{2}\)인 구 \(S\) 위의 모든 점 \(\mathrm{Q}\)가 나타내는 도형을 \(C_2\)라 하자. \(C_1\)과 \(C_2\)가 서로 다른 두 점 \(\mathrm{N}_1\), \(\mathrm{N}_2\)에서 만나고 \(\cos(\angle\mathrm{N}_1\mathrm{O}\mathrm{N}_2)=\dfrac{3}{5}\)일 때, \(a\)의 값은? (단, \(a > 10\sqrt{2}\)이고, \(\mathrm{O}\)는 원점이다.)`,
       figure: "2025-09-geom-28.webp",
-      choices: [R`\(\dfrac{10}{3}\sqrt{30}\)`, R`\(\dfrac{15}{4}\sqrt{30}\)`, R`\(\dfrac{25}{6}\sqrt{30}\)`, R`\(\dfrac{55}{12}\sqrt{30}\)`, R`\(5\sqrt{30}\)`],
+      choices: [R`\(\dfrac{10\sqrt{30}}{3}\)`, R`\(\dfrac{15\sqrt{30}}{4}\)`, R`\(\dfrac{25\sqrt{30}}{6}\)`, R`\(\dfrac{55\sqrt{30}}{12}\)`, R`\(5\sqrt{30}\)`],
       answer: 1,
-      help: R`도형 C₁은 구 S와 OA를 지름으로 하는 구의 교선인 원이고, 평면 방정식은 x = 100/a입니다. 마찬가지로 C₂의 평면 방정식은 y = 100/(10√2) = 5√2이며, 두 평면의 교선과 구 S의 교점 N₁, N₂ 사이의 각 코사인값을 이용해 a를 구합니다.`
+      help: R`\(\angle\mathrm{APO}=90^\circ\)이므로 \(\mathrm{P}\)는 \(\mathrm{OA}\)를 지름으로 하는 구와 구 \(S\)의 교선인 원 \(C_1\) (평면 \(x=x_1\) 상의 원)이다. 마찬가지로 \(C_2\)는 평면 \(y=y_1\) 상의 원이다. 두 원의 교점 \(\mathrm{N}_1, \mathrm{N}_2\)의 위치를 좌표로 표현하고 \(\cos(\angle\mathrm{N}_1\mathrm{ON}_2)=\dfrac{\vec{\mathrm{ON}}_1\cdot\vec{\mathrm{ON}}_2}{|\vec{\mathrm{ON}}_1||\vec{\mathrm{ON}}_2|}=\dfrac{3}{5}\)에서 \(a\)를 산출한다.`
     },
     {
       id: "2025-09-geom-29", exam: "2025-09", no: 29, score: 4,
-      units: ["geom-curve"], memo: "쌍곡선과 포물선의 교점 및 수선의 발",
-      body: R`그림과 같이 두 점 \(\mathrm{F}(4, 0)\), \(\mathrm{F}'(-4, 0)\)을 초점으로 하는 쌍곡선 \(C : \dfrac{x^{2}}{a^{2}}-\dfrac{y^{2}}{b^{2}}=1\)이 있다. 점 \(\mathrm{F}\)를 초점으로 하고 \(y\)축을 준선으로 하는 포물선이 쌍곡선 \(C\)와 만나는 점 중 제1사분면 위의 점을 \(\mathrm{P}\)라 하자. 점 \(\mathrm{P}\)에서 \(y\)축에 내린 수선의 발을 \(\mathrm{H}\)라 할 때, \(\overline{\mathrm{PH}} : \overline{\mathrm{HF}} = 3 : 2\sqrt{2}\)이다. \(a^{2} \times b^{2}\)의 값을 구하시오. (단, \(a &gt; b &gt; 0\)) [4점]`,
+      units: ["geom-curve"], memo: "쌍곡선과 포물선의 정의 및 길이 비",
+      body: R`그림과 같이 두 점 \(\mathrm{F}(4, 0)\), \(\mathrm{F}'(-4, 0)\)을 초점으로 하는 쌍곡선 \(C: \dfrac{x^2}{a^2}-\dfrac{y^2}{b^2}=1\)이 있다. 점 \(\mathrm{F}\)를 초점으로 하고 \(y\)축을 준선으로 하는 포물선이 쌍곡선 \(C\)와 만나는 점 중 제\(1\)사분면 위의 점을 \(\mathrm{P}\)라 하자. 점 \(\mathrm{P}\)에서 \(y\)축에 내린 수선의 발을 \(\mathrm{H}\)라 할 때, \(\overline{\mathrm{PH}}:\overline{\mathrm{HF}}=3:2\sqrt{2}\)이다. \(a^2\times b^2\)의 값을 구하시오. (단, \(a > b > 0\))`,
       figure: "2025-09-geom-29.webp",
       short: true,
       answer: 63,
-      help: R`포물선의 정의에 의해 PF = PH입니다. 직각삼각형에서 PH와 HF의 비를 활용해 점 P의 좌표를 구하고, 쌍곡선의 정의 F'P - FP = 2a 및 a²+b²=16을 연립하여 a²×b²을 구합니다.`
+      help: R`포물선의 정의에 의해 \(\overline{\mathrm{PF}}=\overline{\mathrm{PH}}\)이다. 직각삼각형 \(\triangle \mathrm{PFH}\) 또는 피타고라스 정리에서 점 \(\mathrm{P}\)의 좌표를 구하고, 쌍곡선 초점 \(c=4\) (\(a^2+b^2=16\))와 쌍곡선 위의 점 \(\mathrm{P}\)를 대입하여 \(a^2, b^2\)을 각각 구한 후 곱한다.`
     },
     {
       id: "2025-09-geom-30", exam: "2025-09", no: 30, score: 4,
-      units: ["geom-vector"], memo: "삼각형의 변 위를 움직이는 점과 벡터 합의 크기",
+      units: ["geom-vector"], memo: "삼각형 경계 위의 동점 사이 거리의 최대·최소",
       body: R`좌표평면 위에 다섯 점
-\[\mathrm{A}(0, 8),\ \mathrm{B}(8, 0),\ \mathrm{C}(7, 1),\ \mathrm{D}(7, 0),\ \mathrm{E}(-4, 2)\]
-가 있다. 삼각형 \(\mathrm{AOB}\)의 변 위를 움직이는 점 \(\mathrm{P}\)와 삼각형 \(\mathrm{CDB}\)의 변 위를 움직이는 점 \(\mathrm{Q}\)에 대하여 \(|\overrightarrow{\mathrm{PQ}}+\overrightarrow{\mathrm{OE}}|^{2}\)의 최댓값을 \(M\), 최솟값을 \(m\)이라 할 때, \(M+m\)의 값을 구하시오. (단, \(\mathrm{O}\)는 원점이다.) [4점]`,
+\[\mathrm{A}(0, 8), \quad \mathrm{B}(8, 0), \quad \mathrm{C}(7, 1), \quad \mathrm{D}(7, 0), \quad \mathrm{E}(-4, 2)\]
+가 있다. 삼각형 \(\mathrm{AOB}\)의 변 위를 움직이는 점 \(\mathrm{P}\)와 삼각형 \(\mathrm{CDB}\)의 변 위를 움직이는 점 \(\mathrm{Q}\)에 대하여
+\[|\vec{\mathrm{PQ}}+\vec{\mathrm{OE}}|^2\]
+의 최댓값을 \(M\), 최솟값을 \(m\)이라 할 때, \(M+m\)의 값을 구하시오. (단, \(\mathrm{O}\)는 원점이다.)`,
       figure: "2025-09-geom-30.webp",
       short: true,
       answer: 54,
-      help: R`PQ + OE = OQ - OP + OE = (OQ + OE) - OP로 변환하여 점 Q'=Q+E의 영역과 점 P의 영역 사이의 거리의 최대·최소를 구합니다. 두 다각형의 꼭짓점과 변 사이의 최단/최장 거리를 기하학적으로 비교합니다.`
+      help: R`\(\vec{\mathrm{PQ}}+\vec{\mathrm{OE}}=\vec{\mathrm{OQ}}-(\vec{\mathrm{OP}}-\vec{\mathrm{OE}})\)로 해석하면 점 \(\mathrm{P}'=\mathrm{P}-\vec{\mathrm{OE}}\)가 그리는 평행이동된 삼각형과 삼각형 \(\mathrm{CDB}\) 사이의 거리의 제곱의 최대·최소 문제가 된다. 두 다각형 경계 사이의 최단거리와 최장거리를 기하학적으로 판정하여 \(M\)과 \(m\)을 구한다.`
     },
     {
       id: "2025-06-geom-28", exam: "2025-06", no: 28, score: 4,
-      units: ["geom-vector"], memo: "평면벡터의 수직 조건과 최소 거리",
-      body: R`좌표평면에서 두 점 \(\mathrm{A}(1, 0)\), \(\mathrm{B}(1, 1)\)에 대하여 두 점 \(\mathrm{P, Q}\)가
-\[|\overrightarrow{\mathrm{OP}}| = 1,\quad |\overrightarrow{\mathrm{BQ}}| = 3,\quad \overrightarrow{\mathrm{AP}} \cdot (\overrightarrow{\mathrm{QA}}+\overrightarrow{\mathrm{QP}}) = 0\]
-을 만족시킨다. \(|\overrightarrow{\mathrm{PQ}}|\)의 값이 최소가 되도록 하는 두 점 \(\mathrm{P, Q}\)에 대하여 \(\overrightarrow{\mathrm{AP}} \cdot \overrightarrow{\mathrm{BQ}}\)의 값은? (단, \(\mathrm{O}\)는 원점이고, \(|\overrightarrow{\mathrm{AP}}| &gt; 0\)이다.) [4점]`,
+      units: ["geom-vector"], memo: "원 위의 점과 벡터 내적 수직 조건, 최소 거리",
+      body: R`좌표평면에서 두 점 \(\mathrm{A}(1, 0)\), \(\mathrm{B}(1, 1)\)에 대하여 두 점 \(\mathrm{P}\), \(\mathrm{Q}\)가
+\[|\vec{\mathrm{OP}}|=1, \quad |\vec{\mathrm{BQ}}|=3, \quad \vec{\mathrm{AP}}\cdot(\vec{\mathrm{QA}}+\vec{\mathrm{QP}})=0\]
+을 만족시킨다. \(|\vec{\mathrm{PQ}}|\)의 값이 최소가 되도록 하는 두 점 \(\mathrm{P}\), \(\mathrm{Q}\)에 대하여 \(\vec{\mathrm{AP}}\cdot\vec{\mathrm{BQ}}\)의 값은? (단, \(\mathrm{O}\)는 원점이고, \(|\vec{\mathrm{AP}}| &gt; 0\)이다.)`,
       choices: [R`\(\dfrac{6}{5}\)`, R`\(\dfrac{9}{5}\)`, R`\(\dfrac{12}{5}\)`, R`\(3\)`, R`\(\dfrac{18}{5}\)`],
       answer: 3,
-      help: R`조건식 AP·(QA+QP) = 0을 선분 AP의 중점 M에 대해 정리하면 AP와 QM이 수직이 됩니다. 점 P(단위원 위)와 점 Q(중심 B, 반지름 3인 원 위)의 거리 PQ가 최소가 되는 기하학적 배치에서 AP·BQ의 내적을 계산합니다.`
+      help: R`\(\vec{\mathrm{AP}}\cdot(\vec{\mathrm{QA}}+\vec{\mathrm{QP}})=0\)을 정리하면 선분 \(\mathrm{AP}\)의 중점 \(\mathrm{M}\)에 대해 \(\vec{\mathrm{AP}}\cdot\vec{\mathrm{QM}}=0\)이므로 점 \(\mathrm{Q}\)는 선분 \(\mathrm{AP}\)의 수직이등분선 위에 있다. 원점 중심의 단위원 위의 점 \(\mathrm{P}\)와 \(\mathrm{B}\) 중심 반지름 \(3\)인 원 위의 점 \(\mathrm{Q}\)의 기하학적 배치에서 \(|\vec{\mathrm{PQ}}|\)가 최소가 되는 배치를 찾아 내적을 구한다.`
     },
     {
       id: "2025-06-geom-29", exam: "2025-06", no: 29, score: 4,
-      units: ["geom-curve"], memo: "절댓값 곡선과 타원의 정의, 둘레의 길이",
-      body: R`좌표평면에 곡선 \(|y^{2}-1|=\dfrac{x^{2}}{a^{2}}\)과 네 점 \(\mathrm{A}(0, c+1)\), \(\mathrm{B}(0, -c-1)\), \(\mathrm{C}(c, 0)\), \(\mathrm{D}(-c, 0)\)이 있다. 곡선 위의 점 중 \(y\)좌표의 절댓값이 \(1\)보다 작거나 같은 모든 점 \(\mathrm{P}\)에 대하여 \(\overline{\mathrm{PC}}+\overline{\mathrm{PD}} = \sqrt{5}\)이다. 곡선 위의 점 \(\mathrm{Q}\)가 제1사분면에 있고 \(\overline{\mathrm{AQ}} = 10\)일 때, 삼각형 \(\mathrm{ABQ}\)의 둘레의 길이를 구하시오. (단, \(a\)와 \(c\)는 양수이다.) [4점]`,
+      units: ["geom-curve"], memo: "타원과 쌍곡선의 정의를 이용한 둘레의 길이",
+      body: R`좌표평면에 곡선 \(|y^2-1|=\dfrac{x^2}{a^2}\)과 네 점 \(\mathrm{A}(0, c+1)\), \(\mathrm{B}(0, -c-1)\), \(\mathrm{C}(c, 0)\), \(\mathrm{D}(-c, 0)\)이 있다. 곡선 위의 점 중 \(y\)좌표의 절댓값이 \(1\)보다 작거나 같은 모든 점 \(\mathrm{P}\)에 대하여 \(\overline{\mathrm{PC}}+\overline{\mathrm{PD}}=\sqrt{5}\)이다. 곡선 위의 점 \(\mathrm{Q}\)가 제\(1\)사분면에 있고 \(\overline{\mathrm{AQ}}=10\)일 때, 삼각형 \(\mathrm{ABQ}\)의 둘레의 길이를 구하시오. (단, \(a\)와 \(c\)는 양수이다.)`,
       short: true,
       answer: 25,
-      help: R`|y|≤1일 때 곡선은 1-y² = x²/a² 즉 x²/a² + y² = 1로 타원입니다. 초점 C, D로부터의 거리합이 √5이므로 a와 c의 관계를 찾고, |y|>1일 때의 곡선 부분(y² - x²/a² = 1인 쌍곡선)에 점 Q가 위치함을 이용해 ABQ의 둘레를 구합니다.`
+      help: R`\(|y|\le 1\)일 때 식은 \(\dfrac{x^2}{a^2}+y^2=1\)인 타원이며 초점이 \(\mathrm{C}, \mathrm{D}\)이고 장축이 \(\sqrt{5}\)이므로 \(a^2=\dfrac{5}{4}, c=\dfrac{1}{2}\)이다. \(|y| &gt; 1\)일 때 식은 \(y^2-\dfrac{x^2}{a^2}=1\)인 쌍곡선이며 초점이 \(\mathrm{A}, \mathrm{B}\)이다. 쌍곡선 정의 \(|\overline{\mathrm{BQ}}-\overline{\mathrm{AQ}}|=2b=2\)를 이용하여 \(\overline{\mathrm{BQ}}\)와 둘레를 구한다.`
     },
     {
       id: "2025-06-geom-30", exam: "2025-06", no: 30, score: 4,
-      units: ["geom-curve"], memo: "쌍곡선 위의 점과 내분점의 자취, 최대 거리",
+      units: ["geom-curve"], memo: "쌍곡선 위의 점의 내분점 궤적과 점 사이 거리의 최댓값",
       body: R`두 초점이 \(\mathrm{F}(5, 0)\), \(\mathrm{F}'(-5, 0)\)이고, 주축의 길이가 \(6\)인 쌍곡선이 있다. 쌍곡선 위의 \(\overline{\mathrm{PF}} &lt; \overline{\mathrm{PF}'}\)인 점 \(\mathrm{P}\)에 대하여 점 \(\mathrm{Q}\)가
-\[(|\overrightarrow{\mathrm{FP}}|+1)\overrightarrow{\mathrm{F}'\mathrm{Q}} = 5\overrightarrow{\mathrm{QP}}\]
-를 만족시킨다. 점 \(\mathrm{A}(-9, -3)\)에 대하여 \(|\overrightarrow{\mathrm{AQ}}|\)의 최댓값을 구하시오. [4점]`,
+\[(|\vec{\mathrm{FP}}|+1)\vec{\mathrm{F}'\mathrm{Q}}=5\vec{\mathrm{QP}}\]
+를 만족시킨다. 점 \(\mathrm{A}(-9, -3)\)에 대하여 \(|\vec{\mathrm{AQ}}|\)의 최댓값을 구하시오.`,
       short: true,
       answer: 10,
-      help: R`벡터 관계식은 점 Q가 선분 F'P를 5 : (|FP|+1)로 내분하는 점임을 나타냅니다. 쌍곡선의 정의 PF'-PF = 6을 활용하여 F'Q의 길이를 구하면 점 Q가 중심 F'(-5,0) 주위의 원을 그림을 파악할 수 있으며, 중심 F'과 점 A 사이의 거리에 반지름을 더해 최댓값을 구합니다.`
+      help: R`벡터 조건식은 점 \(\mathrm{Q}\)가 선분 \(\mathrm{F}'\mathrm{P}\)를 \(5:(|\vec{\mathrm{FP}}|+1)\)로 내분하는 점임을 나타낸다. 쌍곡선의 정의 \(\overline{\mathrm{PF}'}=\overline{\mathrm{PF}}+6\)을 대입하면 \(\overline{\mathrm{F}'\mathrm{Q}}=5\)로 일정해져 점 \(\mathrm{Q}\)는 중심이 \(\mathrm{F}'(-5, 0)\)이고 반지름이 \(5\)인 원의 일부 호를 그린다. 점 \(\mathrm{A}\)에서 이 원 위의 점까지의 최대 거리를 구한다.`
     },
     {
       id: "2024-suneung-geom-28", exam: "2024-suneung", no: 28, score: 4,
-      units: ["geom-space"], memo: "두 평면의 교선 위의 원과 타원, 이면각",
-      body: R`그림과 같이 서로 다른 두 평면 \(\alpha, \beta\)의 교선 위에 \(\overline{\mathrm{AB}} = 18\)인 두 점 \(\mathrm{A, B}\)가 있다. 선분 \(\mathrm{AB}\)를 지름으로 하는 원 \(C_{1}\)이 평면 \(\alpha\) 위에 있고, 선분 \(\mathrm{AB}\)를 장축으로 하고 두 점 \(\mathrm{F, F}'\)을 초점으로 하는 타원 \(C_{2}\)가 평면 \(\beta\) 위에 있다. 원 \(C_{1}\) 위의 한 점 \(\mathrm{P}\)에서 평면 \(\beta\)에 내린 수선의 발을 \(\mathrm{H}\)라 할 때, \(\overline{\mathrm{HF}'} &lt; \overline{\mathrm{HF}}\)이고 \(\angle\mathrm{HFF}' = \dfrac{\pi}{6}\)이다. 직선 \(\mathrm{HF}\)와 타원 \(C_{2}\)가 만나는 점 중 점 \(\mathrm{H}\)와 가까운 점을 \(\mathrm{Q}\)라 하면, \(\overline{\mathrm{FH}} &lt; \overline{\mathrm{FQ}}\)이다. 점 \(\mathrm{H}\)를 중심으로 하고 점 \(\mathrm{Q}\)를 지나는 평면 \(\beta\) 위의 원은 반지름의 길이가 \(4\)이고 직선 \(\mathrm{AB}\)에 접한다. 두 평면 \(\alpha, \beta\)가 이루는 각의 크기를 \(\theta\)라 할 때, \(\cos\theta\)의 값은? (단, 점 \(\mathrm{P}\)는 평면 \(\beta\) 위에 있지 않다.) [4점]`,
+      units: ["geom-space"], memo: "평면의 교선과 원·타원, 삼수선의 정리와 이면각",
+      body: R`그림과 같이 서로 다른 두 평면 \(\alpha, \beta\)의 교선 위에 \(\overline{\mathrm{AB}}=18\)인 두 점 \(\mathrm{A}, \mathrm{B}\)가 있다. 선분 \(\mathrm{AB}\)를 지름으로 하는 원 \(C_1\)이 평면 \(\alpha\) 위에 있고, 선분 \(\mathrm{AB}\)를 장축으로 하고 두 점 \(\mathrm{F}, \mathrm{F}'\)을 초점으로 하는 타원 \(C_2\)가 평면 \(\beta\) 위에 있다.
+원 \(C_1\) 위의 한 점 \(\mathrm{P}\)에서 평면 \(\beta\)에 내린 수선의 발을 \(\mathrm{H}\)라 할 때, \(\overline{\mathrm{HF}'} &lt; \overline{\mathrm{HF}}\)이고 \(\angle\mathrm{HFF}'=\dfrac{\pi}{6}\)이다. 직선 \(\mathrm{HF}\)와 타원 \(C_2\)가 만나는 점 중 점 \(\mathrm{H}\)와 가까운 점을 \(\mathrm{Q}\)라 하면, \(\overline{\mathrm{FH}} &lt; \overline{\mathrm{FQ}}\)이다.
+점 \(\mathrm{H}\)를 중심으로 하고 점 \(\mathrm{Q}\)를 지나는 평면 \(\beta\) 위의 원은 반지름의 길이가 \(4\)이고 직선 \(\mathrm{AB}\)에 접한다. 두 평면 \(\alpha, \beta\)가 이루는 각의 크기를 \(\theta\)라 할 때, \(\cos\theta\)의 값은? (단, 점 \(\mathrm{P}\)는 평면 \(\beta\) 위에 있지 않다.)`,
       figure: "2024-suneung-geom-28.webp",
       choices: [R`\(\dfrac{2\sqrt{66}}{33}\)`, R`\(\dfrac{4\sqrt{69}}{69}\)`, R`\(\dfrac{\sqrt{2}}{3}\)`, R`\(\dfrac{4\sqrt{3}}{15}\)`, R`\(\dfrac{2\sqrt{78}}{39}\)`],
       answer: 5,
-      help: R`평면 β 위에서 점 H의 위치와 각 π/6 조건, 타원의 방정식 및 원 접선 조건을 통해 점 H와 타원의 초점 위치를 결정합니다. 점 P는 평면 α의 원 위에 있으므로 삼수선의 정리로 점 P의 높이를 구하고 cosθ를 계산합니다.`
+      help: R`원 \(C_1\)의 지름 \(18\), 타원 \(C_2\)의 장축 \(2a=18\)이다. 점 \(\mathrm{H}\)에서 직선 \(\mathrm{AB}\)에 접하므로 \(\mathrm{H}\)에서 \(\mathrm{AB}\)까지 거리가 \(4\)이다. 삼수선의 정리를 적용하여 점 \(\mathrm{P}\)의 위치와 높이 \(\overline{\mathrm{PH}}\)를 구하고, 이면각 공식 \(\cos\theta = \dfrac{\overline{\mathrm{HK}}}{\overline{\mathrm{PK}}}\)를 통해 코사인값을 산출한다.`
     },
     {
       id: "2024-suneung-geom-29", exam: "2024-suneung", no: 29, score: 4,
-      units: ["geom-curve"], memo: "쌍곡선 위의 점과 이등변삼각형 조건, 초점 거리 합",
-      body: R`양수 \(c\)에 대하여 두 점 \(\mathrm{F}(c, 0)\), \(\mathrm{F}'(-c, 0)\)을 초점으로 하고, 주축의 길이가 \(6\)인 쌍곡선이 있다. 이 쌍곡선 위에 다음 조건을 만족시키는 서로 다른 두 점 \(\mathrm{P, Q}\)가 존재하도록 하는 모든 \(c\)의 값의 합을 구하시오. [4점]`,
+      units: ["geom-curve"], memo: "쌍곡선의 정의와 이등변삼각형 조건, 둘레의 길이",
+      body: R`양수 \(c\)에 대하여 두 점 \(\mathrm{F}(c, 0), \mathrm{F}'(-c, 0)\)을 초점으로 하고, 주축의 길이가 \(6\)인 쌍곡선이 있다. 이 쌍곡선 위에 다음 조건을 만족시키는 서로 다른 두 점 \(\mathrm{P}, \mathrm{Q}\)가 존재하도록 하는 모든 \(c\)의 값의 합을 구하시오.`,
       note: [
-        R`(가) 점 \(\mathrm{P}\)는 제1사분면 위에 있고, 점 \(\mathrm{Q}\)는 직선 \(\mathrm{PF}'\) 위에 있다.`,
+        R`(가) 점 \(\mathrm{P}\)는 제\(1\)사분면 위에 있고, 점 \(\mathrm{Q}\)는 직선 \(\mathrm{PF}'\) 위에 있다.`,
         R`(나) 삼각형 \(\mathrm{PF}'\mathrm{F}\)는 이등변삼각형이다.`,
         R`(다) 삼각형 \(\mathrm{PQF}\)의 둘레의 길이는 \(28\)이다.`
       ],
       short: true,
       answer: 11,
-      help: R`삼각형 PF'F가 이등변삼각형인 경우는 PF'=FF'=2c인 경우와 PF=FF'=2c인 경우, PF'=PF인 경우로 분류됩니다. 쌍곡선의 정의와 둘레 조건(28)을 결합하여 각 경우마다 가능한 c의 값을 찾아 합합니다.`
+      help: R`쌍곡선 정의 \(\overline{\mathrm{PF}'}-\overline{\mathrm{PF}}=6\)이다. \(\triangle \mathrm{PF}'\mathrm{F}\)가 이등변삼각형인 경우는 \(\overline{\mathrm{PF}}=\overline{\mathrm{FF}'}=2c\)인 경우와 \(\overline{\mathrm{PF}'}=\overline{\mathrm{FF}'}=2c\)인 경우로 나뉜다. 점 \(\mathrm{Q}\)가 쌍곡선 위에 있으므로 쌍곡선 정의를 \(\mathrm{Q}\)에도 적용하여 둘레의 길이 조건 \(28\)을 만족시키는 \(c\) 값들을 각각 구하여 합산한다.`
     },
     {
       id: "2024-suneung-geom-30", exam: "2024-suneung", no: 30, score: 4,
-      units: ["geom-vector"], memo: "정삼각형 변 위의 내분점과 벡터 합의 최댓값",
-      body: R`좌표평면에 한 변의 길이가 \(4\)인 정삼각형 \(\mathrm{ABC}\)가 있다. 선분 \(\mathrm{AB}\)를 \(1:3\)으로 내분하는 점을 \(\mathrm{D}\), 선분 \(\mathrm{BC}\)를 \(1:3\)으로 내분하는 점을 \(\mathrm{E}\), 선분 \(\mathrm{CA}\)를 \(1:3\)으로 내분하는 점을 \(\mathrm{F}\)라 하자. 네 점 \(\mathrm{P, Q, R, X}\)가 다음 조건을 만족시킨다.
-
-\(|\overrightarrow{\mathrm{AX}}|\)의 값이 최대일 때, 삼각형 \(\mathrm{PQR}\)의 넓이를 \(S\)라 하자. \(16S^{2}\)의 값을 구하시오. [4점]`,
+      units: ["geom-vector"], memo: "정삼각형 내분점 중심의 단위원 위의 점과 벡터 합 최대",
+      body: R`좌표평면에 한 변의 길이가 \(4\)인 정삼각형 \(\mathrm{ABC}\)가 있다. 선분 \(\mathrm{AB}\)를 \(1:3\)으로 내분하는 점을 \(\mathrm{D}\), 선분 \(\mathrm{BC}\)를 \(1:3\)으로 내분하는 점을 \(\mathrm{E}\), 선분 \(\mathrm{CA}\)를 \(1:3\)으로 내분하는 점을 \(\mathrm{F}\)라 하자. 네 점 \(\mathrm{P}, \mathrm{Q}, \mathrm{R}, \mathrm{X}\)가 다음 조건을 만족시킨다.`,
       note: [
-        R`(가) \(|\overrightarrow{\mathrm{DP}}| = |\overrightarrow{\mathrm{EQ}}| = |\overrightarrow{\mathrm{FR}}| = 1\)`,
-        R`(나) \(\overrightarrow{\mathrm{AX}} = \overrightarrow{\mathrm{PB}}+\overrightarrow{\mathrm{QC}}+\overrightarrow{\mathrm{RA}}\)`
+        R`(가) \(|\vec{\mathrm{DP}}|=|\vec{\mathrm{EQ}}|=|\vec{\mathrm{FR}}|=1\)`,
+        R`(나) \(\vec{\mathrm{AX}}=\vec{\mathrm{PB}}+\vec{\mathrm{QC}}+\vec{\mathrm{RA}}\)`
       ],
       short: true,
       answer: 147,
-      help: R`벡터 AX = (DB - DP) + (EC - EQ) + (FA - FR) = (DB+EC+FA) - (DP+EQ+FR)로 분해합니다. |AX|가 최대가 되려면 DP, EQ, FR이 모두 DB+EC+FA의 반대 방향으로 정렬되어야 하므로, 이때 정해진 세 점 P, Q, R의 좌표를 통해 삼각형 PQR의 넓이 S를 구합니다.`
+      help: R`\(\vec{\mathrm{PB}}=\vec{\mathrm{DB}}-\vec{\mathrm{DP}}\) 등으로 분해하면 \(\vec{\mathrm{AX}}=(\vec{\mathrm{DB}}+\vec{\mathrm{EC}}+\vec{\mathrm{FA}})-(\vec{\mathrm{DP}}+\vec{\mathrm{EQ}}+\vec{\mathrm{FR}})\)이다. 상수 벡터와 크기 \(1\)인 세 벡터의 합이 최대가 되는 방향(반대 방향 정렬)을 결정한 뒤, 점 \(\mathrm{P}, \mathrm{Q}, \mathrm{R}\)의 좌표를 확정하여 삼각형 \(\mathrm{PQR}\)의 넓이 \(S\)를 구한다.`
     },
     {
       id: "2024-09-geom-28", exam: "2024-09", no: 28, score: 4,
-      units: ["geom-space"], memo: "두 구의 교선 위의 점과 정사영의 최댓값",
-      body: R`좌표공간에 중심이 \(\mathrm{A}(0, 0, 1)\)이고 반지름의 길이가 \(4\)인 구 \(S\)가 있다. 구 \(S\)가 \(xy\)평면과 만나서 생기는 원을 \(C\)라 하고, 점 \(\mathrm{A}\)에서 선분 \(\mathrm{PQ}\)까지의 거리가 \(2\)가 되도록 원 \(C\) 위에 두 점 \(\mathrm{P, Q}\)를 잡는다. 구 \(S\)가 선분 \(\mathrm{PQ}\)를 지름으로 하는 구 \(T\)와 만나서 생기는 원 위에서 점 \(\mathrm{B}\)가 움직일 때, 삼각형 \(\mathrm{BPQ}\)의 \(xy\)평면 위로의 정사영의 넓이의 최댓값은? (단, 점 \(\mathrm{B}\)의 \(z\)좌표는 양수이다.) [4점]`,
+      units: ["geom-space"], memo: "구와 평면의 교선원, 두 구의 교선 위의 점의 정사영 최대",
+      body: R`좌표공간에 중심이 \(\mathrm{A}(0, 0, 1)\)이고 반지름의 길이가 \(4\)인 구 \(S\)가 있다. 구 \(S\)가 \(xy\)평면과 만나서 생기는 원을 \(C\)라 하고, 점 \(\mathrm{A}\)에서 선분 \(\mathrm{PQ}\)까지의 거리가 \(2\)가 되도록 원 \(C\) 위에 두 점 \(\mathrm{P}, \mathrm{Q}\)를 잡는다. 구 \(S\)가 선분 \(\mathrm{PQ}\)를 지름으로 하는 구 \(T\)와 만나서 생기는 원 위에서 점 \(\mathrm{B}\)가 움직일 때, 삼각형 \(\mathrm{BPQ}\)의 \(xy\)평면 위로의 정사영의 넓이의 최댓값은? (단, 점 \(\mathrm{B}\)의 \(z\)좌표는 양수이다.)`,
       figure: "2024-09-geom-28.webp",
       choices: [R`\(6\)`, R`\(3\sqrt{6}\)`, R`\(6\sqrt{2}\)`, R`\(3\sqrt{10}\)`, R`\(6\sqrt{3}\)`],
       answer: 1,
-      help: R`원 C의 반지름은 √(16-1)=√15이고, 점 A에서 PQ까지 거리가 2이므로 선분 PQ의 길이는 2√(16-4)=4√3입니다. 교선 원의 중심과 반지름을 구하고, 삼각형 BPQ의 xy평면 정사영 높이가 최대가 되는 점 B의 위치를 찾아 넓이를 구합니다.`
+      help: R`원 \(C\)는 \(xy\)평면 상 중심 \((0,0,0)\), 반지름 \(\sqrt{4^2-1^2}=\sqrt{15}\)이다. 선분 \(\mathrm{PQ}\)의 길이와 중점의 위치를 구하고, 두 구의 교선원 평면의 방정식을 세운다. 점 \(\mathrm{B}\)의 정사영이 밑변 \(\mathrm{PQ}\)로부터 가장 멀어질 때의 정사영 삼각형 높이를 계산하여 최대 넓이를 구한다.`
     },
     {
       id: "2024-09-geom-29", exam: "2024-09", no: 29, score: 4,
-      units: ["geom-curve"], memo: "타원 위의 점과 원 위의 점의 거리 차의 최솟값",
-      body: R`한 초점이 \(\mathrm{F}(c, 0)\,(c &gt; 0)\)인 타원 \(\dfrac{x^{2}}{9}+\dfrac{y^{2}}{5}=1\)과 중심의 좌표가 \((2, 3)\)이고 반지름의 길이가 \(r\)인 원이 있다. 타원 위의 점 \(\mathrm{P}\)와 원 위의 점 \(\mathrm{Q}\)에 대하여 \(\overline{\mathrm{PQ}}-\overline{\mathrm{PF}}\)의 최솟값이 \(6\)일 때, \(r\)의 값을 구하시오. [4점]`,
+      units: ["geom-curve"], memo: "타원의 정의를 이용한 점 간 거리 차의 최소와 원의 반지름",
+      body: R`한 초점이 \(\mathrm{F}(c, 0)\) (\(c > 0\))인 타원 \(\dfrac{x^2}{9}+\dfrac{y^2}{5}=1\)과 중심의 좌표가 \((2, 3)\)이고 반지름의 길이가 \(r\)인 원이 있다. 타원 위의 점 \(\mathrm{P}\)와 원 위의 점 \(\mathrm{Q}\)에 대하여 \(\overline{\mathrm{PQ}}-\overline{\mathrm{PF}}\)의 최솟값이 \(6\)일 때, \(r\)의 값을 구하시오.`,
       short: true,
       answer: 17,
-      help: R`타원의 정의에 의해 PF = 2a - PF' = 6 - PF'이므로 PQ - PF = PQ + PF' - 6입니다. 원의 중심을 C(2,3)이라 할 때 PQ + PF'의 최솟값은 CF' - r이므로 (CF' - r) - 6 = 6에서 r의 값을 구합니다.`
+      help: R`타원의 장축 길이는 \(2a=6\), 초점은 \(\mathrm{F}(2, 0), \mathrm{F}'(-2, 0)\)이다. 타원의 정의에 의해 \(\overline{\mathrm{PF}}=6-\overline{\mathrm{PF}'}\)이므로 \(\overline{\mathrm{PQ}}-\overline{\mathrm{PF}}=\overline{\mathrm{PQ}}+\overline{\mathrm{PF}'}-6\)이다. \(\overline{\mathrm{PF}'}+\overline{\mathrm{PQ}}\)의 최솟값은 초점 \(\mathrm{F}'(-2, 0)\)에서 원 중심 \((2, 3)\)까지의 거리에서 반지름 \(r\)을 뺀 것이므로, 이를 통해 \(r\)을 구한다.`
     },
     {
       id: "2024-09-geom-30", exam: "2024-09", no: 30, score: 4,
-      units: ["geom-vector"], memo: "직각이등변삼각형과 벡터 조건, 선분 위의 점의 크기 최솟값",
-      body: R`좌표평면에서 \(\overline{\mathrm{AB}} = \overline{\mathrm{AC}}\)이고 \(\angle\mathrm{BAC} = \dfrac{\pi}{2}\)인 직각삼각형 \(\mathrm{ABC}\)에 대하여 두 점 \(\mathrm{P, Q}\)가 다음 조건을 만족시킨다.
-
-선분 \(\mathrm{AQ}\) 위의 점 \(\mathrm{X}\)에 대하여 \(|\overrightarrow{\mathrm{XA}}+\overrightarrow{\mathrm{XB}}|\)의 최솟값을 \(m\)이라 할 때, \(m^{2}\)의 값을 구하시오. [4점]`,
+      units: ["geom-vector"], memo: "직각이등변삼각형과 정삼각형의 벡터 방향 및 내적 조건, 선분 위의 점까지의 거리 합의 최소",
+      body: R`좌표평면에서 \(\overline{\mathrm{AB}}=\overline{\mathrm{AC}}\)이고 \(\angle\mathrm{BAC}=\dfrac{\pi}{2}\)인 직각삼각형 \(\mathrm{ABC}\)에 대하여 두 점 \(\mathrm{P}, \mathrm{Q}\)가 다음 조건을 만족시킨다.`,
       note: [
-        R`(가) 삼각형 \(\mathrm{APQ}\)는 정삼각형이고, \(9|\overrightarrow{\mathrm{PQ}}|\overrightarrow{\mathrm{PQ}} = 4|\overrightarrow{\mathrm{AB}}|\overrightarrow{\mathrm{AB}}\)이다.`,
-        R`(나) \(\overrightarrow{\mathrm{AC}} \cdot \overrightarrow{\mathrm{AQ}} &lt; 0\)`,
-        R`(다) \(\overrightarrow{\mathrm{PQ}} \cdot \overrightarrow{\mathrm{CB}} = 24\)`
+        R`(가) 삼각형 \(\mathrm{APQ}\)는 정삼각형이고, \(9|\vec{\mathrm{PQ}}|\vec{\mathrm{PQ}} = 4|\vec{\mathrm{AB}}|\vec{\mathrm{AB}}\)이다.`,
+        R`(나) \(\vec{\mathrm{AC}}\cdot\vec{\mathrm{AQ}} &lt; 0\)`,
+        R`(다) \(\vec{\mathrm{PQ}}\cdot\vec{\mathrm{CB}} = 24\)`
       ],
       short: true,
       answer: 27,
-      help: R`조건 (가)에서 PQ와 AB가 평행하며 길이 비가 9|PQ|² = 4|AB|²이므로 3|PQ| = 2|AB|입니다. 조건 (다)의 내적으로 변의 길이를 확정한 후, |XA+XB| = 2|XM| (M은 AB의 중점)의 최솟값을 점 X가 선분 AQ 위를 움직일 때의 거리로 계산합니다.`
+      help: R`조건 (가)에서 벡터 \(\vec{\mathrm{PQ}}\)와 \(\vec{\mathrm{AB}}\)가 같은 방향이고 크기 관계는 \(|\vec{\mathrm{PQ}}|=\dfrac{2}{3}|\vec{\mathrm{AB}}|\)이다. 조건 (다)에서 내적값으로 삼각형의 실제 크기를 구하고, 선분 \(\mathrm{AQ}\) 위의 점 \(\mathrm{X}\)에 대해 \(|\vec{\mathrm{XA}}+\vec{\mathrm{XB}}|=2|\vec{\mathrm{XM}}|\) (\(\mathrm{M}\)은 \(\mathrm{AB}\)의 중점)의 최솟값을 점과 직선 사이 거리로 계산한다.`
     },
     {
       id: "2024-06-geom-28", exam: "2024-06", no: 28, score: 4,
-      units: ["geom-vector"], memo: "벡터 집합의 조건과 최대/최소 좌표의 내적",
-      body: R`좌표평면의 네 점 \(\mathrm{A}(2, 6)\), \(\mathrm{B}(6, 2)\), \(\mathrm{C}(4, 4)\), \(\mathrm{D}(8, 6)\)에 대하여 다음 조건을 만족시키는 모든 점 \(\mathrm{X}\)의 집합을 \(S\)라 하자.
-
-집합 \(S\)에 속하는 점 중에서 \(y\)좌표가 최대인 점을 \(\mathrm{Q}\), \(y\)좌표가 최소인 점을 \(\mathrm{R}\)이라 할 때, \(\overrightarrow{\mathrm{OQ}} \cdot \overrightarrow{\mathrm{OR}}\)의 값은? (단, \(\mathrm{O}\)는 원점이다.) [4점]`,
+      units: ["geom-vector"], memo: "벡터 내적 및 거리 조건이 정의하는 도형과 영역의 교집합, 내적 계산",
+      body: R`좌표평면의 네 점 \(\mathrm{A}(2, 6), \mathrm{B}(6, 2), \mathrm{C}(4, 4), \mathrm{D}(8, 6)\)에 대하여 다음 조건을 만족시키는 모든 점 \(\mathrm{X}\)의 집합을 \(S\)라 하자.`,
       note: [
-        R`(가) \(\{(\overrightarrow{\mathrm{OX}}-\overrightarrow{\mathrm{OD}}) \cdot \overrightarrow{\mathrm{OC}}\} \times \{|\overrightarrow{\mathrm{OX}}-\overrightarrow{\mathrm{OC}}|-3\} = 0\)`,
-        R`(나) 두 벡터 \(\overrightarrow{\mathrm{OX}}-\overrightarrow{\mathrm{OP}}\)와 \(\overrightarrow{\mathrm{OC}}\)가 서로 평행하도록 하는 선분 \(\mathrm{AB}\) 위의 점 \(\mathrm{P}\)가 존재한다.`
+        R`(가) \(\{(\vec{\mathrm{OX}}-\vec{\mathrm{OD}})\cdot\vec{\mathrm{OC}}\}\times\{|\vec{\mathrm{OX}}-\vec{\mathrm{OC}}|-3\}=0\)`,
+        R`(나) 두 벡터 \(\vec{\mathrm{OX}}-\vec{\mathrm{OP}}\)와 \(\vec{\mathrm{OC}}\)가 서로 평행하도록 하는 선분 \(\mathrm{AB}\) 위의 점 \(\mathrm{P}\)가 존재한다.`
       ],
       choices: [R`\(25\)`, R`\(26\)`, R`\(27\)`, R`\(28\)`, R`\(29\)`],
       answer: 5,
-      help: R`조건 (가)는 점 X가 직선 DX ⊥ OC 또는 중심 C, 반지름 3인 원 위에 있음을 뜻하고, 조건 (나)는 점 X가 선분 AB를 OC 방향(기울기 1)으로 평행이동한 영역 띠 안에 있음을 뜻합니다. 영역 교집합에서 y좌표 최대점 Q와 최소점 R을 찾아 내적을 계산합니다.`
+      help: R`조건 (가)는 점 \(\mathrm{X}\)가 직선(점 \(\mathrm{D}\)를 지나고 \(\vec{\mathrm{OC}}\)에 수직) 또는 원(중심 \(\mathrm{C}\), 반지름 \(3\)) 위에 있음을 뜻한다. 조건 (나)는 점 \(\mathrm{X}\)가 선분 \(\mathrm{AB}\)를 방향벡터 \(\vec{\mathrm{OC}}=(4,4)\)로 이동시킨 띠 영역 내에 있음을 의미한다. 교집합에서 최고점 \(\mathrm{Q}\)와 최저점 \(\mathrm{R}\)의 좌표를 찾아 내적을 구한다.`
     },
     {
       id: "2024-06-geom-29", exam: "2024-06", no: 29, score: 4,
-      units: ["geom-curve"], memo: "공유 초점을 갖는 두 쌍곡선과 등차수열",
-      body: R`두 점 \(\mathrm{F}(c, 0)\), \(\mathrm{F}'(-c, 0)\,(c &gt; 0)\)을 초점으로 하는 두 쌍곡선
-\[C_{1} : x^{2}-\dfrac{y^{2}}{24}=1,\quad C_{2} : \dfrac{x^{2}}{4}-\dfrac{y^{2}}{21}=1\]
-이 있다. 쌍곡선 \(C_{1}\) 위에 있는 제2사분면 위의 점 \(\mathrm{P}\)에 대하여 선분 \(\mathrm{PF}'\)이 쌍곡선 \(C_{2}\)와 만나는 점을 \(\mathrm{Q}\)라 하자. \(\overline{\mathrm{PQ}}+\overline{\mathrm{QF}}\), \(2\overline{\mathrm{PF}'}\), \(\overline{\mathrm{PF}}+\overline{\mathrm{PF}'}\)이 이 순서대로 등차수열을 이룰 때, 직선 \(\mathrm{PQ}\)의 기울기는 \(m\)이다. \(60m\)의 값을 구하시오. [4점]`,
+      units: ["geom-curve"], memo: "두 쌍곡선의 정의와 초점 거리, 등차중항 관계를 통한 기울기 계산",
+      body: R`두 점 \(\mathrm{F}(c, 0), \mathrm{F}'(-c, 0)\) (\(c > 0\))을 초점으로 하는 두 쌍곡선
+\[C_1: x^2-\dfrac{y^2}{24}=1, \quad C_2: \dfrac{x^2}{4}-\dfrac{y^2}{21}=1\]
+이 있다. 쌍곡선 \(C_1\) 위에 있는 제\(2\)사분면 위의 점 \(\mathrm{P}\)에 대하여 선분 \(\mathrm{PF}'\)이 쌍곡선 \(C_2\)와 만나는 점을 \(\mathrm{Q}\)라 하자. \(\overline{\mathrm{PQ}}+\overline{\mathrm{QF}}, 2\overline{\mathrm{PF}'}, \overline{\mathrm{PF}}+\overline{\mathrm{PF}'}\)이 이 순서대로 등차수열을 이룰 때, 직선 \(\mathrm{PQ}\)의 기울기는 \(m\)이다. \(60m\)의 값을 구하시오.`,
       figure: "2024-06-geom-29.webp",
       short: true,
       answer: 80,
-      help: R`쌍곡선 C₁과 C₂의 정의(초점거리 차가 각각 2와 4)를 이용하여 PQ+QF, PF, PF' 사이의 관계식을 세웁니다. 등차중항 조건을 연립하여 선분 PF, PF'의 길이를 구하고 직선 PF'(직선 PQ)의 기울기 m을 구합니다.`
+      help: R`두 쌍곡선 모두 \(c=5\)로 초점을 공유한다. 쌍곡선의 정의식 \(\overline{\mathrm{PF}}-\overline{\mathrm{PF}'}=2a_1=2\), \(\overline{\mathrm{QF}}-\overline{\mathrm{QF}'}=2a_2=4\)와 \(\overline{\mathrm{PF}'}=\overline{\mathrm{PQ}}+\overline{\mathrm{QF}'}\)을 대입하여 등차중항 관계식을 정리하면 선분들의 길이가 모두 구해지고, 코사인법칙 또는 좌표로 직선 \(\mathrm{PQ}\)의 기울기를 산출한다.`
     },
     {
       id: "2024-06-geom-30", exam: "2024-06", no: 30, score: 4,
-      units: ["geom-vector"], memo: "직선과 타원 위의 점의 벡터 합이 나타내는 영역의 넓이",
-      body: R`직선 \(2x+y=0\) 위를 움직이는 점 \(\mathrm{P}\)와 타원 \(2x^{2}+y^{2}=3\) 위를 움직이는 점 \(\mathrm{Q}\)에 대하여
-\[\overrightarrow{\mathrm{OX}} = \overrightarrow{\mathrm{OP}}+\overrightarrow{\mathrm{OQ}}\]
-를 만족시키고, \(x\)좌표와 \(y\)좌표가 모두 \(0\) 이상인 모든 점 \(\mathrm{X}\)가 나타내는 영역의 넓이는 \(\dfrac{q}{p}\)이다. \(p+q\)의 값을 구하시오. (단, \(\mathrm{O}\)는 원점이고, \(p\)와 \(q\)는 서로소인 자연수이다.) [4점]`,
+      units: ["geom-vector"], memo: "타원과 직선 위의 점의 벡터합 영역의 넓이",
+      body: R`직선 \(2x+y=0\) 위를 움직이는 점 \(\mathrm{P}\)와 타원 \(2x^2+y^2=3\) 위를 움직이는 점 \(\mathrm{Q}\)에 대하여
+\[\vec{\mathrm{OX}}=\vec{\mathrm{OP}}+\vec{\mathrm{OQ}}\]
+를 만족시키고, \(x\)좌표와 \(y\)좌표가 모두 \(0\) 이상인 모든 점 \(\mathrm{X}\)가 나타내는 영역의 넓이는 \(\dfrac{q}{p}\)이다. \(p+q\)의 값을 구하시오. (단, \(\mathrm{O}\)는 원점이고, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       figure: "2024-06-geom-30.webp",
       short: true,
       answer: 13,
-      help: R`점 X의 자취는 타원을 직선 2x+y=0 방향(기울기 -2)으로 평행이동하여 훑고 지나간 무한 띠 영역 중 제1사분면(x≥0, y≥0)에 해당하는 부분입니다. 타원에 기울기 -2인 접선을 구하여 영역의 경계를 확정하고 사다리꼴 넓이를 구합니다.`
+      help: R`타원 위의 점 \(\mathrm{Q}\)를 직선 \(y=-2x\) 방향으로 스윕(sweep)한 영역이 제\(1\)사분면과 만나는 부분의 넓이를 구하는 문제이다. 타원의 접선 중 기울기가 \(-2\)인 접선을 구하여 제\(1\)사분면에서 둘러싸인 사다리꼴 또는 평행사변형 영역의 넓이를 적분 또는 기하학적 도형 분할로 계산한다.`
     },
     {
       id: "2023-suneung-geom-28", exam: "2023-suneung", no: 28, score: 4,
-      units: ["geom-curve"], memo: "점근선과 평행한 직선과 쌍곡선, 주축의 길이",
-      body: R`두 초점이 \(\mathrm{F}(c, 0)\), \(\mathrm{F}'(-c, 0)\,(c &gt; 0)\)인 쌍곡선 \(C\)와 \(y\)축 위의 점 \(\mathrm{A}\)가 있다. 쌍곡선 \(C\)가 선분 \(\mathrm{AF}\)와 만나는 점을 \(\mathrm{P}\), 선분 \(\mathrm{AF}'\)과 만나는 점을 \(\mathrm{P}'\)이라 하자. 직선 \(\mathrm{AF}\)는 쌍곡선 \(C\)의 한 점근선과 평행하고
-\[\overline{\mathrm{AP}} : \overline{\mathrm{PP}'} = 5 : 6,\quad \overline{\mathrm{PF}} = 1\]
-일 때, 쌍곡선 \(C\)의 주축의 길이는? [4점]`,
+      units: ["geom-curve"], memo: "쌍곡선의 점근선 평행선과 초점 연결 선분의 길이 비, 주축 길이",
+      body: R`두 초점이 \(\mathrm{F}(c, 0), \mathrm{F}'(-c, 0)\) (\(c > 0\))인 쌍곡선 \(C\)와 \(y\)축 위의 점 \(\mathrm{A}\)가 있다. 쌍곡선 \(C\)가 선분 \(\mathrm{AF}\)와 만나는 점을 \(\mathrm{P}\), 선분 \(\mathrm{AF}'\)과 만나는 점을 \(\mathrm{P}'\)이라 하자. 직선 \(\mathrm{AF}\)는 쌍곡선 \(C\)의 한 점근선과 평행하고 \(\overline{\mathrm{AP}}:\overline{\mathrm{PP}'}=5:6, \overline{\mathrm{PF}}=1\)일 때, 쌍곡선 \(C\)의 주축의 길이는?`,
       figure: "2023-suneung-geom-28.webp",
       choices: [R`\(\dfrac{13}{6}\)`, R`\(\dfrac{9}{4}\)`, R`\(\dfrac{7}{3}\)`, R`\(\dfrac{29}{12}\)`, R`\(\dfrac{5}{2}\)`],
       answer: 2,
-      help: R`직선 AF가 점근선과 평행하므로 기울기가 -b/a입니다. 대칭성에 의해 삼각형 AP'P와 AFF'의 닮음비가 5:8임을 파악하여 선분 길이들을 표현하고, 쌍곡선의 정의 PF'-PF = 2a를 적용하여 2a의 값을 구합니다.`
+      help: R`점근선의 기울기를 \(m=\dfrac{b}{a}\)라 할 때, \(\mathrm{A}\)의 좌표와 직선 방정식을 세우고 좌우 대칭성을 이용한다. \(\overline{\mathrm{AP}}:\overline{\mathrm{PP}'}=5:6\)과 쌍곡선의 정의 \(\overline{\mathrm{P}'\mathrm{F}}-\overline{\mathrm{P}'\mathrm{F}'}=2a\)를 닮음 및 코사인법칙과 연립하여 주축의 길이 \(2a\)를 구한다.`
     },
     {
       id: "2023-suneung-geom-29", exam: "2023-suneung", no: 29, score: 4,
-      units: ["geom-vector"], memo: "등변사다리꼴과 벡터 내적",
-      body: R`평면 \(\alpha\) 위에 \(\overline{\mathrm{AB}} = \overline{\mathrm{CD}} = \overline{\mathrm{AD}} = 2\), \(\angle\mathrm{ABC} = \angle\mathrm{BCD} = \dfrac{\pi}{3}\)인 사다리꼴 \(\mathrm{ABCD}\)가 있다. 다음 조건을 만족시키는 평면 \(\alpha\) 위의 두 점 \(\mathrm{P, Q}\)에 대하여 \(\overrightarrow{\mathrm{CP}} \cdot \overrightarrow{\mathrm{DQ}}\)의 값을 구하시오. [4점]`,
+      units: ["geom-vector"], memo: "등변사다리꼴과 벡터 방정식, 원주각 관계를 통한 내적 계산",
+      body: R`평면 \(\alpha\) 위에 \(\overline{\mathrm{AB}}=\overline{\mathrm{CD}}=\overline{\mathrm{AD}}=2\), \(\angle\mathrm{ABC}=\angle\mathrm{BCD}=\dfrac{\pi}{3}\)인 사다리꼴 \(\mathrm{ABCD}\)가 있다. 다음 조건을 만족시키는 평면 \(\alpha\) 위의 두 점 \(\mathrm{P}, \mathrm{Q}\)에 대하여 \(\vec{\mathrm{CP}}\cdot\vec{\mathrm{DQ}}\)의 값을 구하시오.`,
       figure: "2023-suneung-geom-29.webp",
       note: [
-        R`(가) \(\overrightarrow{\mathrm{AC}} = 2(\overrightarrow{\mathrm{AD}}+\overrightarrow{\mathrm{BP}})\)`,
-        R`(나) \(\overrightarrow{\mathrm{AC}} \cdot \overrightarrow{\mathrm{PQ}} = 6\)`,
-        R`(다) \(2 \times \angle\mathrm{BQA} = \angle\mathrm{PBQ} &lt; \dfrac{\pi}{2}\)`
+        R`(가) \(\vec{\mathrm{AC}}=2(\vec{\mathrm{AD}}+\vec{\mathrm{BP}})\)`,
+        R`(나) \(\vec{\mathrm{AC}}\cdot\vec{\mathrm{PQ}}=6\)`,
+        R`(다) \(2\times\angle\mathrm{BQA}=\angle\mathrm{PBQ} &lt; \dfrac{\pi}{2}\)`
       ],
       short: true,
       answer: 12,
-      help: R`조건 (가)로부터 BP 벡터를 결정하여 점 P의 위치를 확정합니다. AC·PQ = 6과 각도 조건 (다)를 통해 원주각 성질과 직각을 활용하여 점 Q의 위치를 결정한 뒤 CP·DQ 내적을 계산합니다.`
+      help: R`사다리꼴 \(\mathrm{ABCD}\)의 좌표를 설정하고 조건 (가)를 정리하여 점 \(\mathrm{P}\)의 위치를 확정한다. 조건 (나)와 (다)에서 점 \(\mathrm{Q}\)는 원주각 성질에 의해 특정 원 위의 점이 되며, 내적 방정식으로 점 \(\mathrm{Q}\)의 좌표를 구해 \(\vec{\mathrm{CP}}\cdot\vec{\mathrm{DQ}}\)를 계산한다.`
     },
     {
       id: "2023-suneung-geom-30", exam: "2023-suneung", no: 30, score: 4,
-      units: ["geom-space"], memo: "정사면체와 구의 교점, 접평면으로의 정사영",
-      body: R`좌표공간에 정사면체 \(\mathrm{ABCD}\)가 있다. 정삼각형 \(\mathrm{BCD}\)의 외심을 중심으로 하고 점 \(\mathrm{B}\)를 지나는 구를 \(S\)라 하자. 구 \(S\)와 선분 \(\mathrm{AB}\)가 만나는 점 중 \(\mathrm{B}\)가 아닌 점을 \(\mathrm{P}\), 구 \(S\)와 선분 \(\mathrm{AC}\)가 만나는 점 중 \(\mathrm{C}\)가 아닌 점을 \(\mathrm{Q}\), 구 \(S\)와 선분 \(\mathrm{AD}\)가 만나는 점 중 \(\mathrm{D}\)가 아닌 점을 \(\mathrm{R}\)이라 하고, 점 \(\mathrm{P}\)에서 구 \(S\)에 접하는 평면을 \(\alpha\)라 하자. 구 \(S\)의 반지름의 길이가 \(6\)일 때, 삼각형 \(\mathrm{PQR}\)의 평면 \(\alpha\) 위로의 정사영의 넓이는 \(k\)이다. \(k^{2}\)의 값을 구하시오. [4점]`,
+      units: ["geom-space"], memo: "정사면체와 구의 교점, 접평면 위로의 정사영 넓이",
+      body: R`좌표공간에 정사면체 \(\mathrm{ABCD}\)가 있다. 정삼각형 \(\mathrm{BCD}\)의 외심을 중심으로 하고 점 \(\mathrm{B}\)를 지나는 구를 \(S\)라 하자. 구 \(S\)와 선분 \(\mathrm{AB}\)가 만나는 점 중 \(\mathrm{B}\)가 아닌 점을 \(\mathrm{P}\), 구 \(S\)와 선분 \(\mathrm{AC}\)가 만나는 점 중 \(\mathrm{C}\)가 아닌 점을 \(\mathrm{Q}\), 구 \(S\)와 선분 \(\mathrm{AD}\)가 만나는 점 중 \(\mathrm{D}\)가 아닌 점을 \(\mathrm{R}\)라 하고, 점 \(\mathrm{P}\)에서 구 \(S\)에 접하는 평면을 \(\alpha\)라 하자. 구 \(S\)의 반지름의 길이가 \(6\)일 때, 삼각형 \(\mathrm{PQR}\)의 평면 \(\alpha\) 위로의 정사영의 넓이는 \(k\)이다. \(k^2\)의 값을 구하시오.`,
       figure: "2023-suneung-geom-30.webp",
       short: true,
       answer: 24,
-      help: R`정사면체의 한 변 길이를 설정하고 단면을 분석하여 구와 모서리의 교점 P, Q, R의 위치를 구합니다. 정삼각형 PQR의 넓이와 접평면 α의 법선벡터(OP 방향) 사이의 이면각 코사인을 계산하여 정사영 넓이 k와 k²을 구합니다.`
+      help: R`정사면체의 대칭성에 의해 \(\triangle \mathrm{PQR}\)은 \(\triangle \mathrm{BCD}\)와 평행한 정삼각형이다. 구의 반지름 \(R=6\)과 정사면체 높이·모서리 길이를 구하고, 구의 중심 \(\mathrm{O}\)와 \(\mathrm{P}\)를 잇는 법선벡터 \(\vec{\mathrm{OP}}\)를 구하여 접평면 \(\alpha\)와 \(\triangle \mathrm{PQR}\)이 이루는 각의 코사인을 곱해 정사영 넓이 \(k\)를 구한다.`
     },
     {
       id: "2023-09-geom-28", exam: "2023-09", no: 28, score: 4,
-      units: ["geom-curve"], memo: "두 포물선의 초점 거리 조건과 계수 결정",
-      body: R`실수 \(p\,(p \ge 1)\)과 함수 \(f(x)=(x+a)^{2}\)에 대하여 두 포물선
-\[C_{1} : y^{2}=4x,\quad C_{2} : (y-3)^{2}=4p\{x-f(p)\}\]
-가 제1사분면에서 만나는 점을 \(\mathrm{A}\)라 하자. 두 포물선 \(C_{1}, C_{2}\)의 초점을 각각 \(\mathrm{F}_{1}, \mathrm{F}_{2}\)라 할 때, \(\overline{\mathrm{AF}_{1}} = \overline{\mathrm{AF}_{2}}\)를 만족시키는 \(p\)가 오직 하나가 되도록 하는 상수 \(a\)의 값은? [4점]`,
+      units: ["geom-curve"], memo: "두 포물선의 정의와 초점 거리 일치 조건, 유일해 조건",
+      body: R`실수 \(p\) (\(p\ge 1\))과 함수 \(f(x)=(x+a)^2\)에 대하여 두 포물선
+\[C_1: y^2=4x, \quad C_2: (y-3)^2=4p\{x-f(p)\}\]
+가 제\(1\)사분면에서 만나는 점을 \(\mathrm{A}\)라 하자. 두 포물선 \(C_1, C_2\)의 초점을 각각 \(\mathrm{F}_1, \mathrm{F}_2\)라 할 때, \(\overline{\mathrm{AF}_1}=\overline{\mathrm{AF}_2}\)를 만족시키는 \(p\)가 오직 하나가 되도록 하는 상수 \(a\)의 값은?`,
       figure: "2023-09-geom-28.webp",
       choices: [R`\(-\dfrac{3}{4}\)`, R`\(-\dfrac{5}{8}\)`, R`\(-\dfrac{1}{2}\)`, R`\(-\dfrac{3}{8}\)`, R`\(-\dfrac{1}{4}\)`],
       answer: 1,
-      help: R`포물선의 정의에 의해 AF₁은 점 A에서 x=-1까지의 거리, AF₂는 점 A에서 준선 x = f(p)-p까지의 거리입니다. AF₁ = AF₂ 조건으로부터 p에 대한 방정식을 유도하고, p≥1에서 오직 하나의 실근을 갖도록 하는 a의 값을 판별식/그래프로 구합니다.`
+      help: R`포물선의 정의에 의해 \(\overline{\mathrm{AF}_1}=x_A+1\), \(\overline{\mathrm{AF}_2}=x_A-f(p)+p\)이다. 두 거리가 같으므로 \(x_A+1 = x_A-(p+a)^2+p\)에서 \((p+a)^2 = p-1\)이라는 \(p\)에 대한 이차방정식을 얻고, \(p\ge 1\)에서 오직 하나의 실근을 가질 조건을 판별식 및 근의 위치 판정으로 구한다.`
     },
     {
       id: "2023-09-geom-29", exam: "2023-09", no: 29, score: 4,
-      units: ["geom-space"], memo: "접평면과 두 구의 교선 원, 정사영의 넓이",
+      units: ["geom-space"], memo: "두 구의 접평면과 단면원, 정사영의 넓이",
       body: R`좌표공간에 두 개의 구
-\[S_{1} : x^{2}+y^{2}+(z-2)^{2}=4,\quad S_{2} : x^{2}+y^{2}+(z+7)^{2}=49\]
-가 있다. 점 \(\mathrm{A}(\sqrt{5}, 0, 0)\)을 지나고 \(zx\)평면에 수직이며, 구 \(S_{1}\)과 \(z\)좌표가 양수인 한 점에서 접하는 평면을 \(\alpha\)라 하자. 구 \(S_{2}\)가 평면 \(\alpha\)와 만나서 생기는 원을 \(C\)라 할 때, 원 \(C\) 위의 점 중 \(z\)좌표가 최소인 점을 \(\mathrm{B}\)라 하고 구 \(S_{2}\)와 점 \(\mathrm{B}\)에서 접하는 평면을 \(\beta\)라 하자. 원 \(C\)의 평면 \(\beta\) 위로의 정사영의 넓이가 \(\dfrac{q}{p}\pi\)일 때, \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.) [4점]`,
+\[S_1: x^2+y^2+(z-2)^2=4, \quad S_2: x^2+y^2+(z+7)^2=49\]
+가 있다. 점 \(\mathrm{A}(\sqrt{5}, 0, 0)\)을 지나고 \(zx\)평면에 수직이며, 구 \(S_1\)과 \(z\)좌표가 양수인 한 점에서 접하는 평면을 \(\alpha\)라 하자. 구 \(S_2\)가 평면 \(\alpha\)와 만나서 생기는 원을 \(C\)라 할 때, 원 \(C\) 위의 점 중 \(z\)좌표가 최소인 점을 \(\mathrm{B}\)라 하고 구 \(S_2\)와 점 \(\mathrm{B}\)에서 접하는 평면을 \(\beta\)라 하자. 원 \(C\)의 평면 \(\beta\) 위로의 정사영의 넓이가 \(\dfrac{q}{p}\pi\)일 때, \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       figure: "2023-09-geom-29.webp",
       short: true,
       answer: 127,
-      help: R`yz단면에서 접선의 기울기를 구해 평면 α의 방정식을 구합니다. 구 S₂와의 교선 원 C의 반지름을 계산하고, 최소 z좌표점 B에서 구 S₂의 접평면 β의 법선벡터를 구해 평면 α와 β 사이의 이면각 코사인과 정사영 넓이를 계산합니다.`
+      help: R`\(zx\)평면(단면 \(y=0\))에서 두 구와 평면 \(\alpha\)의 접선 방정식을 구하여 평면 \(\alpha\)의 법선벡터와 원 \(C\)의 반지름을 구한다. 최저점 \(\mathrm{B}\)에서의 접평면 \(\beta\)의 법선벡터와 평면 \(\alpha\)의 법선벡터가 이루는 각 \(\theta\)의 \(\cos\theta\)를 계산하여 정사영 넓이를 구한다.`
     },
     {
       id: "2023-09-geom-30", exam: "2023-09", no: 30, score: 4,
-      units: ["geom-vector"], memo: "평면도형 위의 점과 벡터 합이 나타내는 영역의 길이",
-      body: R`좌표평면 위에 두 점 \(\mathrm{A}(-2, 2)\), \(\mathrm{B}(2, 2)\)가 있다.
-\[(|\overrightarrow{\mathrm{AX}}|-2)(|\overrightarrow{\mathrm{BX}}|-2)=0,\quad |\overrightarrow{\mathrm{OX}}| \ge 2\]
-를 만족시키는 점 \(\mathrm{X}\)가 나타내는 도형 위를 움직이는 두 점 \(\mathrm{P, Q}\)가 다음 조건을 만족시킨다.
-
-\(\overrightarrow{\mathrm{OY}} = \overrightarrow{\mathrm{OP}}+\overrightarrow{\mathrm{OQ}}\)를 만족시키는 점 \(\mathrm{Y}\)의 집합이 나타내는 도형의 길이가 \(\dfrac{q}{p}\sqrt{3}\pi\)일 때, \(p+q\)의 값을 구하시오. (단, \(\mathrm{O}\)는 원점이고, \(p\)와 \(q\)는 서로소인 자연수이다.) [4점]`,
+      units: ["geom-vector"], memo: "원호 위의 두 동점의 벡터합이 그리는 곡선의 길이",
+      body: R`좌표평면 위에 두 점 \(\mathrm{A}(-2, 2), \mathrm{B}(2, 2)\)가 있다.
+\[(|\vec{\mathrm{AX}}|-2)(|\vec{\mathrm{BX}}|-2)=0, \quad |\vec{\mathrm{OX}}|\ge 2\]
+를 만족시키는 점 \(\mathrm{X}\)가 나타내는 도형 위를 움직이는 두 점 \(\mathrm{P}, \mathrm{Q}\)가 다음 조건을 만족시킨다.`,
       note: [
-        R`(가) \(\vec{u} = (1, 0)\)에 대하여 \((\overrightarrow{\mathrm{OP}} \cdot \vec{u})(\overrightarrow{\mathrm{OQ}} \cdot \vec{u}) \ge 0\)이다.`,
-        R`(나) \(|\overrightarrow{\mathrm{PQ}}| = 2\)`
+        R`(가) \(\vec{u}=(1, 0)\)에 대하여 \((\vec{\mathrm{OP}}\cdot\vec{u})(\vec{\mathrm{OQ}}\cdot\vec{u})\ge 0\)이다.`,
+        R`(나) \(|\vec{\mathrm{PQ}}|=2\)`
       ],
       short: true,
       answer: 17,
-      help: R`점 X의 자취는 중심이 A, B이고 반지름 2인 두 원에서 원점 원 내부를 제외한 호들입니다. 조건 (가)는 P, Q가 같은 반평면(x≥0 또는 x≤0)에 있음을 뜻하고, |PQ|=2인 조건에서 OY = OP+OQ = 2 OM(M은 현 PQ의 중점)의 자취 호의 길이를 계산합니다.`
+      help: R`도형 \(S\)는 두 원의 일부분(외부 영역) 호이다. 조건 (가)는 두 점 \(\mathrm{P}, \mathrm{Q}\)가 같은 사분면(좌반평면 또는 우반평면)의 원호 위에 있음을 뜻하고, \(|\vec{\mathrm{PQ}}|=2\)는 현의 길이가 반지름과 같아 중심각이 \(\dfrac{\pi}{3}\)임을 나타낸다. 두 벡터의 합 \(\vec{\mathrm{OY}}=2\vec{\mathrm{OM}}\)이 그리는 호의 중심각과 곡선 길이를 계산한다.`
     },
     {
       id: "2023-06-geom-28", exam: "2023-06", no: 28, score: 4,
-      units: ["geom-curve"], memo: "직선 위의 점과 두 초점 거리 차의 최댓값",
-      body: R`좌표평면에서 직선 \(y=2x-3\) 위를 움직이는 점 \(\mathrm{P}\)가 있다. 두 점 \(\mathrm{A}(c, 0)\), \(\mathrm{B}(-c, 0)\,(c &gt; 0)\)에 대하여 \(\overline{\mathrm{PB}}-\overline{\mathrm{PA}}\)의 값이 최대가 되도록 하는 점 \(\mathrm{P}\)의 좌표가 \((3, 3)\)일 때, 상수 \(c\)의 값은? [4점]`,
+      units: ["geom-curve"], memo: "쌍곡선의 정의와 접선 조건, 거리 차의 최대",
+      body: R`좌표평면에서 직선 \(y=2x-3\) 위를 움직이는 점 \(\mathrm{P}\)가 있다. 두 점 \(\mathrm{A}(c, 0), \mathrm{B}(-c, 0)\) (\(c > 0\))에 대하여 \(\overline{\mathrm{PB}}-\overline{\mathrm{PA}}\)의 값이 최대가 되도록 하는 점 \(\mathrm{P}\)의 좌표가 \((3, 3)\)일 때, 상수 \(c\)의 값은?`,
       choices: [R`\(\dfrac{3\sqrt{6}}{2}\)`, R`\(\dfrac{3\sqrt{7}}{2}\)`, R`\(3\sqrt{2}\)`, R`\(\dfrac{9}{2}\)`, R`\(\dfrac{3\sqrt{10}}{2}\)`],
       answer: 1,
-      help: R`PB - PA의 최댓값은 두 초점 A, B를 갖는 쌍곡선이 직선 y=2x-3과 점 (3,3)에서 접할 때 발생합니다. 접점 (3,3)에서의 접선의 기울기가 2임을 이용하여 쌍곡선 방정식 x²/a² - y²/b² = 1의 계수를 구하고 c=√(a²+b²)을 계산합니다.`
+      help: R`초점이 \(\mathrm{A}(c, 0), \mathrm{B}(-c, 0)\)인 쌍곡선에 대해 직선 \(y=2x-3\)이 점 \(\mathrm{P}(3, 3)\)에서 접할 때 거리 차 \(\overline{\mathrm{PB}}-\overline{\mathrm{PA}}=2a\)가 최대가 된다. 점 \((3, 3)\)에서의 접선의 기울기가 \(2\)임을 이용하여 쌍곡선의 방정식 \(\dfrac{x^2}{a^2}-\dfrac{y^2}{b^2}=1\)의 계수들을 구하고 초점 거리 \(c=\sqrt{a^2+b^2}\)을 산출한다.`
     },
     {
       id: "2023-06-geom-29", exam: "2023-06", no: 29, score: 4,
-      units: ["geom-curve"], memo: "공유 축을 갖는 두 포물선의 교점과 사각형 둘레, 삼각형 넓이",
-      body: R`초점이 \(\mathrm{F}\)인 포물선 \(y^{2}=8x\) 위의 점 중 제1사분면에 있는 점 \(\mathrm{P}\)를 지나고 \(x\)축과 평행한 직선이 포물선 \(y^{2}=8x\)의 준선과 만나는 점을 \(\mathrm{F}'\)이라 하자. 점 \(\mathrm{F}'\)을 초점, 점 \(\mathrm{P}\)를 꼭짓점으로 하는 포물선이 포물선 \(y^{2}=8x\)와 만나는 점 중 \(\mathrm{P}\)가 아닌 점을 \(\mathrm{Q}\)라 하자. 사각형 \(\mathrm{PF}'\mathrm{QF}\)의 둘레의 길이가 \(12\)일 때, 삼각형 \(\mathrm{PF}'\mathrm{Q}\)의 넓이는 \(\dfrac{q}{p}\sqrt{2}\)이다. \(p+q\)의 값을 구하시오. (단, 점 \(\mathrm{P}\)의 \(x\)좌표는 \(2\)보다 작고, \(p\)와 \(q\)는 서로소인 자연수이다.) [4점]`,
+      units: ["geom-curve"], memo: "두 포물선의 정의와 둘레 조건, 삼각형의 넓이",
+      body: R`초점이 \(\mathrm{F}\)인 포물선 \(y^2=8x\) 위의 점 중 제\(1\)사분면에 있는 점 \(\mathrm{P}\)를 지나고 \(x\)축과 평행한 직선이 포물선 \(y^2=8x\)의 준선과 만나는 점을 \(\mathrm{F}'\)이라 하자. 점 \(\mathrm{F}'\)을 초점, 점 \(\mathrm{P}\)를 꼭짓점으로 하는 포물선이 포물선 \(y^2=8x\)와 만나는 점 중 \(\mathrm{P}\)가 아닌 점을 \(\mathrm{Q}\)라 하자. 사각형 \(\mathrm{PF}'\mathrm{QF}\)의 둘레의 길이가 \(12\)일 때, 삼각형 \(\mathrm{PF}'\mathrm{Q}\)의 넓이는 \(\dfrac{q}{p}\sqrt{2}\)이다. \(p+q\)의 값을 구하시오. (단, 점 \(\mathrm{P}\)의 \(x\)좌표는 \(2\)보다 작고, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       figure: "2023-06-geom-29.webp",
       short: true,
       answer: 23,
-      help: R`포물선 정의에 의해 PF = PF' = x₁+2이고 QF = QF'입니다. 둘레 2(x₁+2) + 2 QF = 12에서 점 P와 Q의 좌표를 구하고 삼각형 PF'Q의 밑변과 높이를 구해 넓이를 계산합니다.`
+      help: R`포물선 \(y^2=8x\)의 준선은 \(x=-2\)이다. 포물선의 정의에 의해 \(\overline{\mathrm{PF}}=\overline{\mathrm{PF}'}=x_P+2\)이다. 두 번째 포물선의 초점과 준선 성질을 이용해 점 \(\mathrm{Q}\)의 위치와 사각형의 네 변의 길이를 \(x_P\)로 나타내고 둘레가 \(12\)임을 연립하여 \(\triangle \mathrm{PF}'\mathrm{Q}\)의 넓이를 구한다.`
     },
     {
       id: "2023-06-geom-30", exam: "2023-06", no: 30, score: 4,
-      units: ["geom-vector"], memo: "정육각형과 원 위의 점, 벡터 크기의 최대·최소 계수",
-      body: R`좌표평면에서 한 변의 길이가 \(4\)인 정육각형 \(\mathrm{ABCDEF}\)의 변 위를 움직이는 점 \(\mathrm{P}\)가 있고, 점 \(\mathrm{C}\)를 중심으로 하고 반지름의 길이가 \(1\)인 원 위를 움직이는 점 \(\mathrm{Q}\)가 있다. 두 점 \(\mathrm{P, Q}\)와 실수 \(k\)에 대하여 점 \(\mathrm{X}\)가 다음 조건을 만족시킬 때, \(|\overrightarrow{\mathrm{CX}}|\)의 값이 최소가 되도록 하는 \(k\)의 값을 \(\alpha\), \(|\overrightarrow{\mathrm{CX}}|\)의 값이 최대가 되도록 하는 \(k\)의 값을 \(\beta\)라 하자.
-
-\(\alpha^{2}+\beta^{2}\)의 값을 구하시오. [4점]`,
+      units: ["geom-vector"], memo: "정육각형 변 위의 점과 원 위의 점의 합성 궤적 및 벡터 내분 조건",
+      body: R`좌표평면에서 한 변의 길이가 \(4\)인 정육각형 \(\mathrm{ABCDEF}\)의 변 위를 움직이는 점 \(\mathrm{P}\)가 있고, 점 \(\mathrm{C}\)를 중심으로 하고 반지름의 길이가 \(1\)인 원 위를 움직이는 점 \(\mathrm{Q}\)가 있다. 두 점 \(\mathrm{P}, \mathrm{Q}\)와 실수 \(k\)에 대하여 점 \(\mathrm{X}\)가 다음 조건을 만족시킬 때, \(|\vec{\mathrm{CX}}|\)의 값이 최소가 되도록 하는 \(k\)의 값을 \(\alpha\), \(|\vec{\mathrm{CX}}|\)의 값이 최대가 되도록 하는 \(k\)의 값을 \(\beta\)라 하자.`,
       figure: "2023-06-geom-30.webp",
       note: [
-        R`(가) \(\overrightarrow{\mathrm{CX}} = \dfrac{1}{2}\overrightarrow{\mathrm{CP}}+\overrightarrow{\mathrm{CQ}}\)`,
-        R`(나) \(\overrightarrow{\mathrm{XA}}+\overrightarrow{\mathrm{XC}}+2\overrightarrow{\mathrm{XD}} = k\overrightarrow{\mathrm{CD}}\)`
+        R`(가) \(\vec{\mathrm{CX}} = \dfrac{1}{2}\vec{\mathrm{CP}} + \vec{\mathrm{CQ}}\)`,
+        R`(나) \(\vec{\mathrm{XA}} + \vec{\mathrm{XC}} + 2\vec{\mathrm{XD}} = k\vec{\mathrm{CD}}\)`
       ],
       short: true,
       answer: 8,
-      help: R`조건 (나)를 점 C를 시점으로 정리하면 4 CX = CA + 2 CD - k CD = CA + (2-k) CD가 됩니다. 조건 (가)에서 CX가 나타내는 영역(정육각형을 1/2 축소 후 반지름 1인 원과 민코프스키 합)과 점 C에서 직선 CA + t CD 방향 벡터의 교점 범위를 찾아 α와 β를 구합니다.`
+      help: R`조건 (나)를 점 \(\mathrm{C}\) 기준으로 정리하면 \(4\vec{\mathrm{XC}}+\vec{\mathrm{CA}}+2\vec{\mathrm{CD}}=k\vec{\mathrm{CD}}\)에서 \(\vec{\mathrm{CX}}=\dfrac{1}{4}\vec{\mathrm{CA}}+\dfrac{2-k}{4}\vec{\mathrm{CD}}\)가 되어 점 \(\mathrm{X}\)는 직선 위에 놓인다. 조건 (가)가 나타내는 영역(정육각형의 \(1/2\) 축소 도형에 반지름 \(1\) 원을 더한 띠 영역)과 직선의 교선 범위를 분석하여 \(k\)의 최소 \(\alpha\)와 최대 \(\beta\)를 구한다.`
     },
     {
       id: "2022-suneung-geom-28", exam: "2022-suneung", no: 28, score: 4,
-      units: ["geom-curve"], memo: "두 포물선과 교점 선분의 길이",
-      body: R`두 양수 \(a, p\)에 대하여 포물선 \((y-a)^{2}=4px\)의 초점을 \(\mathrm{F}_{1}\)이라 하고, 포물선 \(y^{2}=-4x\)의 초점을 \(\mathrm{F}_{2}\)라 하자. 선분 \(\mathrm{F}_{1}\mathrm{F}_{2}\)가 두 포물선과 만나는 점을 각각 \(\mathrm{P, Q}\)라 할 때, \(\overline{\mathrm{F}_{1}\mathrm{F}_{2}} = 3\), \(\overline{\mathrm{PQ}} = 1\)이다. \(a^{2}+p^{2}\)의 값은? [4점]`,
+      units: ["geom-curve"], memo: "두 포물선의 초점을 잇는 선분과 포물선의 정의",
+      body: R`두 양수 \(a, p\)에 대하여 포물선 \((y-a)^2=4px\)의 초점을 \(\mathrm{F}_1\)이라 하고, 포물선 \(y^2=-4x\)의 초점을 \(\mathrm{F}_2\)라 하자. 선분 \(\mathrm{F}_1\mathrm{F}_2\)가 두 포물선과 만나는 점을 각각 \(\mathrm{P}, \mathrm{Q}\)라 할 때, \(\overline{\mathrm{F}_1\mathrm{F}_2}=3, \overline{\mathrm{PQ}}=1\)이다. \(a^2+p^2\)의 값은?`,
       figure: "2022-suneung-geom-28.webp",
       choices: [R`\(6\)`, R`\(\dfrac{25}{4}\)`, R`\(\dfrac{13}{2}\)`, R`\(\dfrac{27}{4}\)`, R`\(7\)`],
       answer: 5,
-      help: R`F₁=(p, a), F₂=(-1, 0)이고 F₁F₂ = 3이므로 (p+1)²+a² = 9입니다. 직선 F₁F₂의 기울기 각 θ에 대해 포물선 정의로 F₁P와 F₂Q의 길이를 cosθ로 표현하여 F₁P+PQ+QF₂ = 3 식에 대입해 p와 a를 구합니다.`
+      help: R`두 포물선의 초점은 \(\mathrm{F}_1(p, a), \mathrm{F}_2(-1, 0)\)이고 \(\overline{\mathrm{F}_1\mathrm{F}_2}=\sqrt{(p+1)^2+a^2}=3\)이다. 두 점 \(\mathrm{P}, \mathrm{Q}\)에서의 준선까지 거리를 포물선의 정의로 표현하고, 선분 \(\mathrm{F}_1\mathrm{F}_2\) 위의 내분 관계와 \(\overline{\mathrm{PQ}}=1\) 조건을 결합하여 \(p\)와 \(a\)를 구한다.`
     },
     {
       id: "2022-suneung-geom-29", exam: "2022-suneung", no: 29, score: 4,
-      units: ["geom-vector"], memo: "평행사변형 위의 점과 내적 조건, 원 위의 점과의 거리 최대·최소",
-      body: R`좌표평면에서 \(\overline{\mathrm{OA}} = \sqrt{2}\), \(\overline{\mathrm{OB}} = 2\sqrt{2}\)이고 \(\cos(\angle\mathrm{AOB}) = \dfrac{1}{4}\)인 평행사변형 \(\mathrm{OACB}\)에 대하여 점 \(\mathrm{P}\)가 다음 조건을 만족시킨다.
-
-점 \(\mathrm{O}\)를 중심으로 하고 점 \(\mathrm{A}\)를 지나는 원 위를 움직이는 점 \(\mathrm{X}\)에 대하여 \(|3\overrightarrow{\mathrm{OP}}-\overrightarrow{\mathrm{OX}}|\)의 최댓값과 최솟값을 각각 \(M, m\)이라 하자. \(M \times m = a\sqrt{6}+b\)일 때, \(a^{2}+b^{2}\)의 값을 구하시오. (단, \(a\)와 \(b\)는 유리수이다.) [4점]`,
+      units: ["geom-vector"], memo: "평행사변형 내부 점의 내적 조건과 선분 궤적, 원 위의 동점까지 거리 최대·최소",
+      body: R`좌표평면에서 \(\overline{\mathrm{OA}}=\sqrt{2}, \overline{\mathrm{OB}}=2\sqrt{2}\)이고 \(\cos(\angle\mathrm{AOB})=\dfrac{1}{4}\)인 평행사변형 \(\mathrm{OACB}\)에 대하여 점 \(\mathrm{P}\)가 다음 조건을 만족시킨다.`,
       figure: "2022-suneung-geom-29.webp",
       note: [
-        R`(가) \(\overrightarrow{\mathrm{OP}} = s\overrightarrow{\mathrm{OA}}+t\overrightarrow{\mathrm{OB}}\,(0 \le s \le 1, 0 \le t \le 1)\)`,
-        R`(나) \(\overrightarrow{\mathrm{OP}} \cdot \overrightarrow{\mathrm{OB}}+\overrightarrow{\mathrm{BP}} \cdot \overrightarrow{\mathrm{BC}} = 2\)`
+        R`(가) \(\vec{\mathrm{OP}}=s\vec{\mathrm{OA}}+t\vec{\mathrm{OB}}\) (\(0\le s\le 1, 0\le t\le 1\))`,
+        R`(나) \(\vec{\mathrm{OP}}\cdot\vec{\mathrm{OB}}+\vec{\mathrm{BP}}\cdot\vec{\mathrm{BC}}=2\)`
       ],
       short: true,
       answer: 100,
-      help: R`조건 (나)를 s와 t에 관한 일차식으로 변환하여 선분 P의 자취(선분)를 구합니다. 원 위의 점 X에 대해 |3OP - OX|는 중심 O로부터 3OP까지의 거리 ± 원의 반지름(√2)으로 최대·최소가 결정되므로 M과 m을 구하여 계산합니다.`
+      help: R`조건 (나)에 \(\vec{\mathrm{OP}}=s\vec{\mathrm{OA}}+t\vec{\mathrm{OB}}\)와 \(\vec{\mathrm{BC}}=\vec{\mathrm{OA}}\)를 대입하여 내적을 계산하면 \(2s+8t=2\), 즉 \(s+4t=1\)인 선분을 얻는다. 점 \(3\mathrm{P}\)가 그리는 선분 위의 점에서 원점까지의 최단·최장거리를 구한 뒤 반지름 \(r=\sqrt{2}\)를 더하고 빼서 \(M\)과 \(m\)을 구한다.`
     },
     {
       id: "2022-suneung-geom-30", exam: "2022-suneung", no: 30, score: 4,
-      units: ["geom-space"], memo: "구와 평면의 교선 원, 정사영 삼각형의 넓이 최대",
+      units: ["geom-space"], memo: "구의 대원과 구 위의 점의 정사영 넓이 최대 및 이면각",
       body: R`좌표공간에 중심이 \(\mathrm{C}(2, \sqrt{5}, 5)\)이고 점 \(\mathrm{P}(0, 0, 1)\)을 지나는 구
-\[S : (x-2)^{2}+(y-\sqrt{5})^{2}+(z-5)^{2}=25\]
-가 있다. 구 \(S\)가 평면 \(\mathrm{OPC}\)와 만나서 생기는 원 위를 움직이는 점 \(\mathrm{Q}\), 구 \(S\) 위를 움직이는 점 \(\mathrm{R}\)에 대하여 두 점 \(\mathrm{Q, R}\)의 \(xy\)평면 위로의 정사영을 각각 \(\mathrm{Q}_{1}, \mathrm{R}_{1}\)이라 하자. 삼각형 \(\mathrm{OQ}_{1}\mathrm{R}_{1}\)의 넓이가 최대가 되도록 하는 두 점 \(\mathrm{Q, R}\)에 대하여 삼각형 \(\mathrm{OQ}_{1}\mathrm{R}_{1}\)의 평면 \(\mathrm{PQR}\) 위로의 정사영의 넓이는 \(\dfrac{q}{p}\sqrt{6}\)이다. \(p+q\)의 값을 구하시오. (단, \(\mathrm{O}\)는 원점이고 세 점 \(\mathrm{O, Q}_{1}, \mathrm{R}_{1}\)은 한 직선 위에 있지 않으며, \(p\)와 \(q\)는 서로소인 자연수이다.) [4점]`,
+\[S: (x-2)^2+(y-\sqrt{5})^2+(z-5)^2=25\]
+가 있다. 구 \(S\)가 평면 \(\mathrm{OPC}\)와 만나서 생기는 원 위를 움직이는 점 \(\mathrm{Q}\), 구 \(S\) 위를 움직이는 점 \(\mathrm{R}\)에 대하여 두 점 \(\mathrm{Q}, \mathrm{R}\)의 \(xy\)평면 위로의 정사영을 각각 \(\mathrm{Q}_1, \mathrm{R}_1\)이라 하자. 삼각형 \(\mathrm{O}\mathrm{Q}_1\mathrm{R}_1\)의 넓이가 최대가 되도록 하는 두 점 \(\mathrm{Q}, \mathrm{R}\)에 대하여 삼각형 \(\mathrm{O}\mathrm{Q}_1\mathrm{R}_1\)의 평면 \(\mathrm{PQR}\) 위로의 정사영의 넓이는 \(\dfrac{q}{p}\sqrt{6}\)이다. \(p+q\)의 값을 구하시오. (단, \(\mathrm{O}\)는 원점이고 세 점 \(\mathrm{O}, \mathrm{Q}_1, \mathrm{R}_1\)은 한 직선 위에 있지 않으며, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       figure: "2022-suneung-geom-30.webp",
       short: true,
       answer: 23,
-      help: R`평면 OPC의 법선벡터를 구하고 구 S와의 대원 위의 점 Q의 xy평면 정사영 Q₁의 자취(타원)를 분석합니다. 삼각형 OQ₁R₁의 넓이가 최대가 되는 Q₁, R₁의 기하학적 배치에서 평면 PQR의 법선벡터와 xy평면 법선벡터 사이의 이면각 코사인을 구해 정사영 넓이를 계산합니다.`
+      help: R`평면 \(\mathrm{OPC}\)는 원점을 지나므로 \(xy\)평면 위의 정사영 선분 \(\mathrm{OQ}_1\)의 위치를 삼각함수로 표현한다. \(\triangle \mathrm{OQ}_1\mathrm{R}_1\)의 넓이가 최대가 되는 기하학적 배치에서 점 \(\mathrm{Q}\)와 \(\mathrm{R}\)의 3차원 좌표를 결정하고, 평면 \(\mathrm{PQR}\)의 법선벡터를 구해 \(xy\)평면과의 이면각 코사인을 곱하여 정사영 넓이를 구한다.`
     },
     {
       id: "2022-09-geom-28", exam: "2022-09", no: 28, score: 4,
-      units: ["geom-curve"], memo: "타원의 접선과 평행선, 삼각형 둘레의 길이",
-      body: R`그림과 같이 두 점 \(\mathrm{F}(c, 0)\), \(\mathrm{F}'(-c, 0)\,(c &gt; 0)\)을 초점으로 하는 타원 \(\dfrac{x^{2}}{16}+\dfrac{y^{2}}{12}=1\) 위의 점 \(\mathrm{P}(2, 3)\)에서 타원에 접하는 직선을 \(l\)이라 하자. 점 \(\mathrm{F}\)를 지나고 \(l\)과 평행한 직선이 타원과 만나는 점 중 제2사분면 위에 있는 점을 \(\mathrm{Q}\)라 하자. 두 직선 \(\mathrm{F}'\mathrm{Q}\)와 \(l\)이 만나는 점을 \(\mathrm{R}\), \(l\)과 \(x\)축이 만나는 점을 \(\mathrm{S}\)라 할 때, 삼각형 \(\mathrm{SRF}'\)의 둘레의 길이는? [4점]`,
+      units: ["geom-curve"], memo: "타원의 접선과 초점을 지나는 평행선, 삼각형의 둘레의 길이",
+      body: R`그림과 같이 두 점 \(\mathrm{F}(c, 0), \mathrm{F}'(-c, 0)\) (\(c > 0\))을 초점으로 하는 타원 \(\dfrac{x^2}{16}+\dfrac{y^2}{12}=1\) 위의 점 \(\mathrm{P}(2, 3)\)에서 타원에 접하는 직선을 \(l\)이라 하자. 점 \(\mathrm{F}\)를 지나고 \(l\)과 평행한 직선이 타원과 만나는 점 중 제\(2\)사분면 위에 있는 점을 \(\mathrm{Q}\)라 하자. 두 직선 \(\mathrm{F}'\mathrm{Q}\)와 \(l\)이 만나는 점을 \(\mathrm{R}\), \(l\)과 \(x\)축이 만나는 점을 \(\mathrm{S}\)라 할 때, 삼각형 \(\mathrm{SRF}'\)의 둘레의 길이는?`,
       figure: "2022-09-geom-28.webp",
       choices: [R`\(30\)`, R`\(31\)`, R`\(32\)`, R`\(33\)`, R`\(34\)`],
       answer: 1,
-      help: R`접선 공식으로 직선 l의 방정식(x/8 + y/4 = 1 ⇒ x+2y=8)을 세우고, 점 F(2,0)을 지나고 l과 평행한 직선 x+2y=2와 타원의 교점 Q(-2, 2)를 구합니다. 점 S(8,0)과 직선 F'Q의 교점 R의 좌표를 구하여 삼각형 SRF'의 각 변의 길이를 합산합니다.`
+      help: R`타원의 장축 길이는 \(2a=8\), 초점은 \(c=\sqrt{16-12}=2\)이므로 \(\mathrm{F}(2, 0), \mathrm{F}'(-2, 0)\)이다. 점 \(\mathrm{P}(2, 3)\)에서의 접선 방정식은 \(\dfrac{2x}{16}+\dfrac{3y}{12}=1\implies x+2y=8\)이며 \(\mathrm{S}(8, 0)\)이다. 타원의 광학적 성질 및 평행선과 닮음을 활용하여 삼각형 \(\mathrm{SRF}'\)의 각 변의 길이를 구하여 둘레를 완성한다.`
     },
     {
       id: "2022-09-geom-29", exam: "2022-09", no: 29, score: 4,
-      units: ["geom-space"], memo: "반원이 붙은 정사각형의 종이접기와 이면각",
-      body: R`그림과 같이 한 변의 길이가 \(8\)인 정사각형 \(\mathrm{ABCD}\)에 두 선분 \(\mathrm{AB, CD}\)를 각각 지름으로 하는 두 반원이 붙어 있는 모양의 종이가 있다. 반원의 호 \(\mathrm{AB}\)의 삼등분점 중 점 \(\mathrm{B}\)에 가까운 점을 \(\mathrm{P}\)라 하고, 반원의 호 \(\mathrm{CD}\)를 이등분하는 점을 \(\mathrm{Q}\)라 하자. 이 종이에서 두 선분 \(\mathrm{AB}\)와 \(\mathrm{CD}\)를 접는 선으로 하여 두 반원을 접어 올렸을 때 두 점 \(\mathrm{P, Q}\)에서 평면 \(\mathrm{ABCD}\)에 내린 수선의 발을 각각 \(\mathrm{G, H}\)라 하면 두 점 \(\mathrm{G, H}\)는 정사각형 \(\mathrm{ABCD}\)의 내부에 놓여 있고, \(\overline{\mathrm{PG}} = \sqrt{3}\), \(\overline{\mathrm{QH}} = 2\sqrt{3}\)이다. 두 평면 \(\mathrm{PCQ}\)와 \(\mathrm{ABCD}\)가 이루는 각의 크기가 \(\theta\)일 때, \(70 \times \cos^{2}\theta\)의 값을 구하시오. (단, 종이의 두께는 고려하지 않는다.) [4점]`,
+      units: ["geom-space"], memo: "종이접기 입체도형과 삼수선의 정리, 두 평면이 이루는 각",
+      body: R`그림과 같이 한 변의 길이가 \(8\)인 정사각형 \(\mathrm{ABCD}\)에 두 선분 \(\mathrm{AB}, \mathrm{CD}\)를 각각 지름으로 하는 두 반원이 붙어 있는 모양의 종이가 있다. 반원의 호 \(\mathrm{AB}\)의 삼등분점 중 점 \(\mathrm{B}\)에 가까운 점을 \(\mathrm{P}\)라 하고, 반원의 호 \(\mathrm{CD}\)를 이등분하는 점을 \(\mathrm{Q}\)라 하자. 이 종이에서 두 선분 \(\mathrm{AB}\)와 \(\mathrm{CD}\)를 접는 선으로 하여 두 반원을 접어 올렸을 때 두 점 \(\mathrm{P}, \mathrm{Q}\)에서 평면 \(\mathrm{ABCD}\)에 내린 수선의 발을 각각 \(\mathrm{G}, \mathrm{H}\)라 하면 두 점 \(\mathrm{G}, \mathrm{H}\)는 정사각형 \(\mathrm{ABCD}\)의 내부에 놓여 있고, \(\overline{\mathrm{PG}}=\sqrt{3}, \overline{\mathrm{QH}}=2\sqrt{3}\)이다. 두 평면 \(\mathrm{PCQ}\)와 \(\mathrm{ABCD}\)가 이루는 각의 크기가 \(\theta\)일 때, \(70\times\cos^2\theta\)의 값을 구하시오. (단, 종이의 두께는 고려하지 않는다.)`,
       figure: "2022-09-geom-29.webp",
       short: true,
       answer: 40,
-      help: R`접어 올린 점 P와 Q의 3차원 공간좌표를 높이(PG, QH)와 원주 위의 위치를 이용해 설정합니다. 평면 PCQ의 세 점 P, C, Q를 지나는 평면의 법선벡터를 외적으로 구하고, 바닥 평면(xy평면)과의 이면각 코사인 cosθ를 계산합니다.`
+      help: R`반원의 반지름은 \(4\)이다. 접어 올린 각도를 \(\overline{\mathrm{PG}}=\sqrt{3}, \overline{\mathrm{QH}}=2\sqrt{3}\)으로부터 구하여 세 점 \(\mathrm{P}, \mathrm{C}, \mathrm{Q}\)의 3차원 공간좌표를 설정한다. 평면 \(\mathrm{PCQ}\)의 법선벡터를 구하고 바닥 평면(법선벡터 \((0,0,1)\))과의 사잇각 \(\theta\)의 코사인값을 계산한다.`
     },
     {
       id: "2022-09-geom-30", exam: "2022-09", no: 30, score: 4,
-      units: ["geom-vector"], memo: "원 위의 점의 내적 조건과 선분 위의 점 거리 최댓값",
-      body: R`좌표평면에서 세 점 \(\mathrm{A}(-3, 1)\), \(\mathrm{B}(0, 2)\), \(\mathrm{C}(1, 0)\)에 대하여 두 점 \(\mathrm{P, Q}\)가
-\[|\overrightarrow{\mathrm{AP}}| = 1,\quad |\overrightarrow{\mathrm{BQ}}| = 2,\quad \overrightarrow{\mathrm{AP}} \cdot \overrightarrow{\mathrm{OC}} \ge \dfrac{\sqrt{2}}{2}\]
-를 만족시킬 때, \(\overrightarrow{\mathrm{AP}} \cdot \overrightarrow{\mathrm{AQ}}\)의 값이 최소가 되도록 하는 두 점 \(\mathrm{P, Q}\)를 각각 \(\mathrm{P}_{0}, \mathrm{Q}_{0}\)이라 하자. 선분 \(\mathrm{AP}_{0}\) 위의 점 \(\mathrm{X}\)에 대하여 \(\overrightarrow{\mathrm{BX}} \cdot \overrightarrow{\mathrm{BQ}_{0}} \ge 1\)일 때, \(|\overrightarrow{\mathrm{Q}_{0}\mathrm{X}}|^{2}\)의 최댓값은 \(\dfrac{q}{p}\)이다. \(p+q\)의 값을 구하시오. (단, \(\mathrm{O}\)는 원점이고, \(p\)와 \(q\)는 서로소인 자연수이다.) [4점]`,
+      units: ["geom-vector"], memo: "원 위의 점의 내적 최소 조건과 선분 위의 점의 거리 제곱 최댓값",
+      body: R`좌표평면에서 세 점 \(\mathrm{A}(-3, 1), \mathrm{B}(0, 2), \mathrm{C}(1, 0)\)에 대하여 두 점 \(\mathrm{P}, \mathrm{Q}\)가
+\[|\vec{\mathrm{AP}}|=1, \quad |\vec{\mathrm{BQ}}|=2, \quad \vec{\mathrm{AP}}\cdot\vec{\mathrm{OC}}\ge \dfrac{\sqrt{2}}{2}\]
+를 만족시킬 때, \(\vec{\mathrm{AP}}\cdot\vec{\mathrm{AQ}}\)의 값이 최소가 되도록 하는 두 점 \(\mathrm{P}, \mathrm{Q}\)를 각각 \(\mathrm{P}_0, \mathrm{Q}_0\)이라 하자. 선분 \(\mathrm{AP}_0\) 위의 점 \(\mathrm{X}\)에 대하여 \(\vec{\mathrm{BX}}\cdot\vec{\mathrm{BQ}}_0\ge 1\)일 때, \(|\vec{\mathrm{Q}_0\mathrm{X}}|^2\)의 최댓값은 \(\dfrac{q}{p}\)이다. \(p+q\)의 값을 구하시오. (단, \(\mathrm{O}\)는 원점이고, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
       short: true,
       answer: 45,
-      help: R`AP·AQ = AP·(AB+BQ) = AP·AB + AP·BQ의 최솟값을 구하기 위해 AP와 BQ의 방향을 결정하여 P₀, Q₀을 찾습니다. 선분 AP₀ 위의 점 X의 범위를 BX·BQ₀ ≥ 1로 제한한 후 |Q₀X|²의 최댓값을 구합니다.`
+      help: R`\(\vec{\mathrm{AP}}\cdot\vec{\mathrm{AQ}}=\vec{\mathrm{AP}}\cdot(\vec{\mathrm{AB}}+\vec{\mathrm{BQ}})=\vec{\mathrm{AP}}\cdot\vec{\mathrm{AB}}+\vec{\mathrm{AP}}\cdot\vec{\mathrm{BQ}}\)이다. \(\vec{\mathrm{BQ}}\)를 \(\vec{\mathrm{AP}}\)의 반대 방향으로 잡고 코사인 조건 내에서 최소가 되는 방향을 결정하여 \(\mathrm{P}_0, \mathrm{Q}_0\)의 위치를 확정한다. 선분 \(\mathrm{AP}_0\) 상의 점 \(\mathrm{X}\)의 조건부 범위에서 \(|\vec{\mathrm{Q}_0\mathrm{X}}|^2\)의 최댓값을 계산한다.`
     },
     {
       id: "2022-06-geom-28", exam: "2022-06", no: 28, score: 4,
-      units: ["geom-curve"], memo: "타원의 꼭짓점을 중심으로 하는 원과 초점",
-      body: R`두 초점이 \(\mathrm{F, F}'\)이고 장축의 길이가 \(2a\)인 타원이 있다. 이 타원의 한 꼭짓점을 중심으로 하고 반지름의 길이가 \(1\)인 원이 이 타원의 서로 다른 두 꼭짓점과 한 초점을 지날 때, 상수 \(a\)의 값은? [4점]`,
+      units: ["geom-curve"], memo: "타원의 꼭짓점을 중심으로 하는 원과 초점 및 꼭짓점의 교점 관계",
+      body: R`두 초점이 \(\mathrm{F}, \mathrm{F}'\)이고 장축의 길이가 \(2a\)인 타원이 있다. 이 타원의 한 꼭짓점을 중심으로 하고 반지름의 길이가 \(1\)인 원이 이 타원의 서로 다른 두 꼭짓점과 한 초점을 지날 때, 상수 \(a\)의 값은?`,
       figure: "2022-06-geom-28.webp",
       choices: [R`\(\dfrac{\sqrt{2}}{2}\)`, R`\(\dfrac{\sqrt{6}-1}{2}\)`, R`\(\sqrt{3}-1\)`, R`\(2\sqrt{2}-2\)`, R`\(\dfrac{\sqrt{3}}{2}\)`],
       answer: 3,
-      help: R`원의 중심이 단축의 꼭짓점 (0, b)일 때 반지름 1인 원이 장축의 꼭짓점 (a, 0)과 초점 (c, 0)을 지나므로 a²+b²=1, c²+b²=1이 성립하지 않습니다. 따라서 원의 중심이 장축의 꼭짓점 (-a, 0)이고 단축의 두 꼭짓점 (0, ±b) 및 초점 F(c, 0)을 지남을 파악하여 a²+b²=1, (a+c)=1, a²-b²=c²을 연립해 a=√3-1을 도출합니다.`
+      help: R`원의 중심이 타원의 단축 꼭짓점 \((0, b)\)일 때, 원이 장축 꼭짓점 \((a, 0), (-a, 0)\)과 초점 \((c, 0)\)을 지나므로 피타고라스 정리로 \(a^2+b^2=1\) 및 초점 조건 \(b^2+c^2=1\)과 타원 정의 \(a^2-b^2=c^2\)을 연립하여 \(a\)를 구한다.`
     },
     {
       id: "2022-06-geom-29", exam: "2022-06", no: 29, score: 4,
-      units: ["geom-curve"], memo: "평행이동한 두 포물선과 직선, 수선의 발의 길이",
-      body: R`포물선 \(y^{2}=8x\)와 직선 \(y=2x-4\)가 만나는 점 중 제1사분면 위에 있는 점을 \(\mathrm{A}\)라 하자. 양수 \(a\)에 대하여 포물선 \((y-2a)^{2}=8(x-a)\)가 점 \(\mathrm{A}\)를 지날 때, 직선 \(y=2x-4\)와 포물선 \((y-2a)^{2}=8(x-a)\)가 만나는 점 중 \(\mathrm{A}\)가 아닌 점을 \(\mathrm{B}\)라 하자. 두 점 \(\mathrm{A, B}\)에서 직선 \(x=-2\)에 내린 수선의 발을 각각 \(\mathrm{C, D}\)라 할 때, \(\overline{\mathrm{AC}}+\overline{\mathrm{BD}}-\overline{\mathrm{AB}} = k\)이다. \(k^{2}\)의 값을 구하시오. [4점]`,
+      units: ["geom-curve"], memo: "두 포물선의 정의와 공통 직선 위의 두 점 사이 거리",
+      body: R`포물선 \(y^2=8x\)와 직선 \(y=2x-4\)가 만나는 점 중 제\(1\)사분면 위에 있는 점을 \(\mathrm{A}\)라 하자. 양수 \(a\)에 대하여 포물선 \((y-2a)^2=8(x-a)\)가 점 \(\mathrm{A}\)를 지날 때, 직선 \(y=2x-4\)와 포물선 \((y-2a)^2=8(x-a)\)가 만나는 점 중 \(\mathrm{A}\)가 아닌 점을 \(\mathrm{B}\)라 하자. 두 점 \(\mathrm{A}, \mathrm{B}\)에서 직선 \(x=-2\)에 내린 수선의 발을 각각 \(\mathrm{C}, \mathrm{D}\)라 할 때, \(\overline{\mathrm{AC}}+\overline{\mathrm{BD}}-\overline{\mathrm{AB}}=k\)이다. \(k^2\)의 값을 구하시오.`,
       figure: "2022-06-geom-29.webp",
       short: true,
       answer: 80,
-      help: R`y²=8x와 y=2x-4의 교점 A(8, 8)을 구하고, A를 대입해 a=2를 얻습니다. 이동된 포물선 (y-4)²=8(x-2)와 직선의 교점 B를 구한 후 x=-2까지의 수선 길이 AC, BD와 두 점 사이 거리 AB를 계산해 k와 k²을 구합니다.`
+      help: R`\(y^2=8x\)와 \(y=2x-4\)를 연립하여 \(\mathrm{A}(8, 12)\)를 구한다. 점 \(\mathrm{A}\)를 대입하여 \(a=6\)을 얻고 두 번째 포물선의 방정식을 확정하여 점 \(\mathrm{B}\)의 좌표를 구한다. 준선 \(x=-2\) 및 평행이동된 준선과의 거리 관계를 포물선의 정의로 연결하여 \(k\)를 계산하고 \(k^2\)을 구한다.`
     },
     {
       id: "2022-06-geom-30", exam: "2022-06", no: 30, score: 4,
-      units: ["geom-vector"], memo: "정사각형 변 위의 점과 벡터 내적의 최대·최소",
-      body: R`좌표평면 위의 네 점 \(\mathrm{A}(2, 0)\), \(\mathrm{B}(0, 2)\), \(\mathrm{C}(-2, 0)\), \(\mathrm{D}(0, -2)\)를 꼭짓점으로 하는 정사각형 \(\mathrm{ABCD}\)의 네 변 위의 두 점 \(\mathrm{P, Q}\)가 다음 조건을 만족시킨다.
-
-점 \(\mathrm{R}(4, 4)\)에 대하여 \(\overrightarrow{\mathrm{RP}} \cdot \overrightarrow{\mathrm{RQ}}\)의 최댓값을 \(M\), 최솟값을 \(m\)이라 할 때, \(M+m\)의 값을 구하시오. (단, \(\mathrm{O}\)는 원점이다.) [4점]`,
+      units: ["geom-vector"], memo: "정사각형 변 위의 두 점의 수직/평행 조건과 고정점과의 내적 최대·최소",
+      body: R`좌표평면 위의 네 점 \(\mathrm{A}(2, 0), \mathrm{B}(0, 2), \mathrm{C}(-2, 0), \mathrm{D}(0, -2)\)를 꼭짓점으로 하는 정사각형 \(\mathrm{ABCD}\)의 네 변 위의 두 점 \(\mathrm{P}, \mathrm{Q}\)가 다음 조건을 만족시킨다.`,
       note: [
-        R`(가) \((\overrightarrow{\mathrm{PQ}} \cdot \overrightarrow{\mathrm{AB}})(\overrightarrow{\mathrm{PQ}} \cdot \overrightarrow{\mathrm{AD}}) = 0\)`,
-        R`(나) \(\overrightarrow{\mathrm{OA}} \cdot \overrightarrow{\mathrm{OP}} \ge -2\)이고 \(\overrightarrow{\mathrm{OB}} \cdot \overrightarrow{\mathrm{OP}} \ge 0\)이다.`,
-        R`(다) \(\overrightarrow{\mathrm{OA}} \cdot \overrightarrow{\mathrm{OQ}} \ge -2\)이고 \(\overrightarrow{\mathrm{OB}} \cdot \overrightarrow{\mathrm{OQ}} \le 0\)이다.`
+        R`(가) \((\vec{\mathrm{PQ}}\cdot\vec{\mathrm{AB}})(\vec{\mathrm{PQ}}\cdot\vec{\mathrm{AD}})=0\)`,
+        R`(나) \(\vec{\mathrm{OA}}\cdot\vec{\mathrm{OP}}\ge -2\)이고 \(\vec{\mathrm{OB}}\cdot\vec{\mathrm{OP}}\ge 0\)이다.`,
+        R`(다) \(\vec{\mathrm{OA}}\cdot\vec{\mathrm{OQ}}\ge -2\)이고 \(\vec{\mathrm{OB}}\cdot\vec{\mathrm{OQ}}\le 0\)이다.`
       ],
       short: true,
       answer: 48,
-      help: R`조건 (나), (다)로 점 P는 y≥0인 변들(AB, BC) 위에, 점 Q는 y≤0인 변들(CD, DA) 위에 위치함을 확인합니다. 조건 (가)는 PQ가 AB에 수직이거나 평행함을 뜻하므로 P와 Q가 연동하여 움직이는 관계를 파악하고 RP·RQ 내적의 최대·최소를 구합니다.`
+      help: R`조건 (나), (다)에 의해 점 \(\mathrm{P}\)는 정사각형의 위쪽 반, 점 \(\mathrm{Q}\)는 아래쪽 반 경계에 놓인다. 조건 (가)는 선분 \(\mathrm{PQ}\)가 변 \(\mathrm{AB}\) 또는 \(\mathrm{AD}\)에 수직(즉 변에 평행)함을 뜻한다. 점 \(\mathrm{R}(4, 4)\)로부터의 벡터 내적 \(\vec{\mathrm{RP}}\cdot\vec{\mathrm{RQ}}\)의 최대점과 최소점 배치를 기하학적으로 찾아 \(M+m\)을 계산한다.`
     }
   ];
 

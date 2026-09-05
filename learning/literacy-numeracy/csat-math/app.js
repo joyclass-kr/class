@@ -6,10 +6,20 @@
   const CIRCLED = ["①", "②", "③", "④", "⑤"];
   const CHUNK_SIZE = 15;
 
+  const SUBJECTS = [
+    { id: "all", name: "전체 과목" },
+    { id: "수학Ⅰ", name: "수학Ⅰ" },
+    { id: "수학Ⅱ", name: "수학Ⅱ" },
+    { id: "확률과 통계", name: "확률과 통계" },
+    { id: "미적분", name: "미적분" },
+    { id: "기하", name: "기하" }
+  ];
+
   const examById = new Map(DATA.exams.map((e) => [e.id, e]));
   const unitById = new Map(DATA.units.map((u) => [u.id, u]));
 
   const state = {
+    subject: null,
     unit: null,
     exam: null,
     hideDone: false,
@@ -18,6 +28,8 @@
   };
 
   const els = {
+    subjectTabs: document.getElementById("subject-tabs"),
+    unitRow: document.getElementById("unit-row"),
     unitChips: document.getElementById("unit-chips"),
     examSelect: document.getElementById("exam-select"),
     list: document.getElementById("list"),
@@ -52,6 +64,37 @@
     return DATA.problems.filter(pick).length;
   }
 
+  function countBySubject(subjectName) {
+    if (!subjectName || subjectName === "all") return DATA.problems.length;
+    return DATA.problems.filter((p) => {
+      const u = p.units && p.units.length ? unitById.get(p.units[0]) : null;
+      return u && u.subject === subjectName;
+    }).length;
+  }
+
+  function makeSubjectTab(label, value, active, n) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "subject-tab";
+    btn.dataset.value = value;
+    btn.setAttribute("role", "tab");
+    btn.setAttribute("aria-selected", active ? "true" : "false");
+    btn.innerHTML = label + (n == null ? "" : ' <span class="subject-n">' + n + "</span>");
+    return btn;
+  }
+
+  function buildSubjectTabs() {
+    if (!els.subjectTabs) return;
+    els.subjectTabs.textContent = "";
+
+    SUBJECTS.forEach((sub) => {
+      const n = countBySubject(sub.id);
+      const isSelected = state.subject === sub.id;
+      const tab = makeSubjectTab(sub.name, sub.id, isSelected, n);
+      els.subjectTabs.appendChild(tab);
+    });
+  }
+
   function makeChip(label, value, active, n) {
     const btn = document.createElement("button");
     btn.type = "button";
@@ -63,20 +106,24 @@
   }
 
   function buildUnitChips() {
-    const box = els.unitChips;
-    box.textContent = "";
+    if (!els.unitChips || !els.unitRow) return;
+    els.unitChips.textContent = "";
 
-    let subject = null;
-    DATA.units.forEach((u) => {
-      if (u.subject !== subject) {
-        subject = u.subject;
-        const tag = document.createElement("span");
-        tag.className = "chip-group-label";
-        tag.textContent = subject;
-        box.appendChild(tag);
-      }
+    if (!state.subject || state.subject === "all") {
+      els.unitRow.hidden = true;
+      return;
+    }
+
+    const filteredUnits = DATA.units.filter((u) => u.subject === state.subject);
+    if (filteredUnits.length === 0) {
+      els.unitRow.hidden = true;
+      return;
+    }
+
+    els.unitRow.hidden = false;
+    filteredUnits.forEach((u) => {
       const n = countBy((p) => p.units.indexOf(u.id) >= 0);
-      box.appendChild(makeChip(u.name, u.id, state.unit === u.id, n));
+      els.unitChips.appendChild(makeChip(u.name, u.id, state.unit === u.id, n));
     });
   }
 
@@ -113,12 +160,17 @@
 
   /* ── 문항 필터링 ── */
   function visibleProblems() {
-    if (!state.unit && !state.exam) {
+    if (!state.subject && !state.unit && !state.exam) {
       return [];
     }
 
     return DATA.problems.filter((p) => {
-      if (state.unit && p.units.indexOf(state.unit) < 0) return false;
+      if (state.unit) {
+        if (p.units.indexOf(state.unit) < 0) return false;
+      } else if (state.subject && state.subject !== "all") {
+        const u = p.units && p.units.length ? unitById.get(p.units[0]) : null;
+        if (!u || u.subject !== state.subject) return false;
+      }
       if (state.exam && state.exam !== "all" && p.exam !== state.exam) return false;
       if (state.hideDone && state.done[p.id]) return false;
       return true;
@@ -260,7 +312,7 @@
     const u = problem.units && problem.units.length ? unitById.get(problem.units[0]) : null;
     const subjPrefix = u && (u.subject === "확률과 통계" || u.subject === "미적분" || u.subject === "기하") ? u.subject + " " : "";
     head.innerHTML =
-      '<span class="item-src">' + exam.label + " " + subjPrefix + problem.no + "번</span>" +
+      '<span class="item-src">' + (exam ? exam.label : problem.exam) + " " + subjPrefix + problem.no + "번</span>" +
       '<span class="item-mark">' + (mark === "right" ? "맞음" : mark === "wrong" ? "틀림" : "") + "</span>";
     li.appendChild(head);
 
@@ -274,7 +326,7 @@
       fig.className = "figure";
       const img = document.createElement("img");
       img.src = "assets/figures/" + problem.figure;
-      img.alt = exam.label + " " + problem.no + "번 그림";
+      img.alt = (exam ? exam.label : problem.exam) + " " + problem.no + "번 그림";
       img.loading = "lazy";
       fig.appendChild(img);
       li.appendChild(fig);
@@ -306,7 +358,7 @@
   }
 
   function updateCount(items, renderedCount) {
-    if (!state.unit && !state.exam) {
+    if (!state.subject && !state.unit && !state.exam) {
       els.count.textContent = `총 ${DATA.exams.length}회차 · ${DATA.problems.length}문항`;
       return;
     }
@@ -319,7 +371,7 @@
   }
 
   function render() {
-    const isFilterSelected = Boolean(state.unit || state.exam);
+    const isFilterSelected = Boolean(state.subject || state.unit || state.exam);
     const items = visibleProblems();
 
     if (!isFilterSelected) {
@@ -360,26 +412,45 @@
     updateCount(items, toShow.length);
   }
 
-  /* ── 이어 붙이기 ── */
-  function chipHandler(box, key) {
-    box.addEventListener("click", function (ev) {
-      const btn = ev.target.closest(".chip");
-      if (!btn) return;
-      const val = btn.dataset.value;
-      const nextValue = state[key] === val ? null : val;
-      state[key] = nextValue;
-      state.displayLimit = CHUNK_SIZE;
-      box.querySelectorAll(".chip").forEach((b) => {
-        b.setAttribute("aria-pressed", b.dataset.value === nextValue ? "true" : "false");
-      });
-      render();
-    });
-  }
-
   function start() {
-    buildUnitChips();
+    buildSubjectTabs();
     buildExamSelect();
-    chipHandler(els.unitChips, "unit");
+
+    if (els.subjectTabs) {
+      els.subjectTabs.addEventListener("click", function (ev) {
+        const btn = ev.target.closest(".subject-tab");
+        if (!btn) return;
+        const val = btn.dataset.value;
+        const nextValue = state.subject === val ? null : val;
+        state.subject = nextValue;
+        state.unit = null; // 과목 변경 시 단원 선택 초기화
+        state.displayLimit = CHUNK_SIZE;
+
+        els.subjectTabs.querySelectorAll(".subject-tab").forEach((b) => {
+          b.setAttribute("aria-selected", b.dataset.value === nextValue ? "true" : "false");
+        });
+
+        buildUnitChips();
+        render();
+      });
+    }
+
+    if (els.unitChips) {
+      els.unitChips.addEventListener("click", function (ev) {
+        const btn = ev.target.closest(".chip");
+        if (!btn) return;
+        const val = btn.dataset.value;
+        const nextValue = state.unit === val ? null : val;
+        state.unit = nextValue;
+        state.displayLimit = CHUNK_SIZE;
+
+        els.unitChips.querySelectorAll(".chip").forEach((b) => {
+          b.setAttribute("aria-pressed", b.dataset.value === nextValue ? "true" : "false");
+        });
+
+        render();
+      });
+    }
 
     if (els.examSelect) {
       els.examSelect.addEventListener("change", function () {
