@@ -51,6 +51,10 @@
     {
       id: "2025-06", year: 2025, round: "6월", label: "2025학년도 6월",
       source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500236&m=0403&s=suneung"
+    },
+    {
+      id: "2024-suneung", year: 2024, round: "수능", label: "2024학년도 수능",
+      source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500234&m=0403&s=suneung"
     }
   ];
 
@@ -1158,6 +1162,130 @@
       short: true,
       answer: 231,
       help: R`규칙이 갈리는 자리는 \(\sqrt{n}\)이 자연수일 때, 곧 \(n=4\)와 \(n=9\)뿐이다. 나머지 자리에서는 \(a_{n+1}=a_{n}+1\)로 한 칸씩 오른다. 그 두 자리에서 \(a_{n}>0\)인지 아닌지에 따라 갈래가 생긴다.`
+    },
+    {
+      id: "2024-suneung-9", exam: "2024-suneung", no: 9, score: 4,
+      units: ["m1-explog"], memo: "로그값 두 개 사이의 내분점",
+      body: R`수직선 위의 두 점 \(\mathrm{P}\bigl(\log_{5}3\bigr)\), \(\mathrm{Q}\bigl(\log_{5}12\bigr)\)에 대하여
+        선분 \(\mathrm{PQ}\)를 \(m:(1-m)\)으로 내분하는 점의 좌표가 \(1\)일 때,
+        \(4^{m}\)의 값은? (단, \(m\)은 \(0<m<1\)인 상수이다.)`,
+      choices: [R`\(\dfrac{7}{6}\)`, R`\(\dfrac{4}{3}\)`, R`\(\dfrac{3}{2}\)`, R`\(\dfrac{5}{3}\)`, R`\(\dfrac{11}{6}\)`],
+      answer: 4,
+      help: R`내분점의 좌표는 \(\log_{5}3+m\left(\log_{5}12-\log_{5}3\right)=\log_{5}3+m\log_{5}4\)다. 이것이 \(1\)이라는 조건에서 \(m\log_{5}4=\log_{5}\frac{5}{3}\)가 나오고, 구하는 것이 \(4^{m}\)이라 \(m=\log_{4}\frac{5}{3}\)만 있으면 끝난다.`
+    },
+    {
+      id: "2024-suneung-10", exam: "2024-suneung", no: 10, score: 4,
+      units: ["m2-integ", "m2-diff"], memo: "두 점 사이 거리가 늘고 주는 자리",
+      body: R`시각 \(t=0\)일 때 동시에 원점을 출발하여 수직선 위를
+        움직이는 두 점 \(\mathrm{P}\), \(\mathrm{Q}\)의 시각 \(t\,(t\ge 0)\)에서의 속도가 각각
+        \[v_{1}(t)=t^{2}-6t+5,\qquad v_{2}(t)=2t-7\]
+        이다. 시각 \(t\)에서의 두 점 \(\mathrm{P}\), \(\mathrm{Q}\) 사이의 거리를 \(f(t)\)라 할 때,
+        함수 \(f(t)\)는 구간 \([0,\,a]\)에서 증가하고, 구간 \([a,\,b]\)에서
+        감소하고, 구간 \([b,\,\infty)\)에서 증가한다. 시각 \(t=a\)에서
+        \(t=b\)까지 점 \(\mathrm{Q}\)가 움직인 거리는? (단, \(0<a<b\))`,
+      choices: [R`\(\dfrac{15}{2}\)`, R`\(\dfrac{17}{2}\)`, R`\(\dfrac{19}{2}\)`, R`\(\dfrac{21}{2}\)`, R`\(\dfrac{23}{2}\)`],
+      answer: 2,
+      help: R`두 점 사이의 거리는 위치의 차의 절댓값이고, 그 차를 \(h(t)\)라 하면 \(h'(t)=v_{1}-v_{2}=(t-2)(t-6)\)이다. 곧 \(a=2\), \(b=6\)이 곧바로 나온다. 움직인 거리는 \(\int_{2}^{6}\bigl|v_{2}\bigr|dt\)이므로 \(v_{2}=0\)이 되는 \(t=\frac{7}{2}\)에서 구간을 끊어야 한다.`
+    },
+    {
+      id: "2024-suneung-11", exam: "2024-suneung", no: 11, score: 4,
+      units: ["m1-seq"], memo: "가운데 항이 0인 등차수열",
+      body: R`공차가 \(0\)이 아닌 등차수열 \(\{a_{n}\}\)에 대하여
+        \[\bigl|a_{6}\bigr|=a_{8},\qquad \sum_{k=1}^{5}\frac{1}{a_{k}a_{k+1}}=\frac{5}{96}\]
+        일 때, \(\displaystyle\sum_{k=1}^{15}a_{k}\)의 값은?`,
+      choices: [R`\(60\)`, R`\(65\)`, R`\(70\)`, R`\(75\)`, R`\(80\)`],
+      answer: 1,
+      help: R`공차가 \(0\)이 아니므로 \(|a_{6}|=a_{8}\)은 \(a_{6}=-a_{8}\), 곧 \(a_{7}=0\)이라는 뜻이다. 그러면 \(a_{n}=(n-7)d\)로 쓸 수 있고, \(\frac{1}{a_{k}a_{k+1}}\)이 \(\frac{1}{d^{2}}\left(\frac{1}{k-7}-\frac{1}{k-6}\right)\)로 갈라져 합이 접힌다.`
+    },
+    {
+      id: "2024-suneung-12", exam: "2024-suneung", no: 12, score: 4,
+      units: ["m2-integ", "m2-diff"], memo: "곡선을 직선으로 갈아 끼운 넓이의 최댓값",
+      body: R`함수 \(f(x)=\dfrac{1}{9}x(x-6)(x-9)\)와 실수 \(t\,(0<t<6)\)에 대하여
+        함수 \(g(x)\)는
+        \[g(x)=\begin{cases}f(x) &amp; (x<t)\\ -(x-t)+f(t) &amp; (x\ge t)\end{cases}\]
+        이다. 함수 \(y=g(x)\)의 그래프와 \(x\)축으로 둘러싸인 영역의
+        넓이의 최댓값은?`,
+      choices: [R`\(\dfrac{125}{4}\)`, R`\(\dfrac{127}{4}\)`, R`\(\dfrac{129}{4}\)`, R`\(\dfrac{131}{4}\)`, R`\(\dfrac{133}{4}\)`],
+      answer: 3,
+      help: R`\(x\ge t\)에서 \(g\)는 점 \(\bigl(t,\,f(t)\bigr)\)를 지나고 기울기가 \(-1\)인 직선이다. 그러니 넓이는 \(t\)까지의 곡선 부분과 그 뒤 직선이 만드는 삼각형의 합이고, \(t\)에 대한 식으로 쓴 뒤 미분하면 최댓값이 나온다.`
+    },
+    {
+      id: "2024-suneung-13", exam: "2024-suneung", no: 13, score: 4,
+      units: ["m1-trig"], memo: "대각선을 함께 쓰는 두 삼각형",
+      body: R`그림과 같이
+        \[\overline{\mathrm{AB}}=3,\quad \overline{\mathrm{BC}}=\sqrt{13},\quad \overline{\mathrm{AD}}\times\overline{\mathrm{CD}}=9,\quad \angle\mathrm{BAC}=\frac{\pi}{3}\]
+        인 사각형 \(\mathrm{ABCD}\)가 있다. 삼각형 \(\mathrm{ABC}\)의 넓이를 \(S_{1}\),
+        삼각형 \(\mathrm{ACD}\)의 넓이를 \(S_{2}\)라 하고, 삼각형 \(\mathrm{ACD}\)의 외접원의
+        반지름의 길이를 \(R\)이라 하자. \(S_{2}=\dfrac{5}{6}S_{1}\)일 때,
+        \(\dfrac{R}{\sin(\angle\mathrm{ADC})}\)의 값은?`,
+      figure: "2024-suneung-13.webp",
+      choices: [R`\(\dfrac{54}{25}\)`, R`\(\dfrac{117}{50}\)`, R`\(\dfrac{63}{25}\)`, R`\(\dfrac{27}{10}\)`, R`\(\dfrac{72}{25}\)`],
+      answer: 1,
+      help: R`두 삼각형은 대각선 \(\mathrm{AC}\)를 함께 쓴다. 코사인법칙으로 \(\overline{\mathrm{AC}}=4\)가 먼저 나오고, \(S_{2}=\frac{1}{2}\overline{\mathrm{AD}}\times\overline{\mathrm{CD}}\times\sin(\angle\mathrm{ADC})\)에 \(\overline{\mathrm{AD}}\times\overline{\mathrm{CD}}=9\)를 그대로 넣을 수 있다. 그리고 사인법칙에서 \(R=\frac{\overline{\mathrm{AC}}}{2\sin(\angle\mathrm{ADC})}\)다.`
+    },
+    {
+      id: "2024-suneung-14", exam: "2024-suneung", no: 14, score: 4,
+      units: ["m2-diff"], memo: "가로선과 만나는 점의 개수가 뛰는 자리",
+      body: R`두 자연수 \(a\), \(b\)에 대하여 함수 \(f(x)\)는
+        \[f(x)=\begin{cases}2x^{3}-6x+1 &amp; (x\le 2)\\ a(x-2)(x-b)+9 &amp; (x>2)\end{cases}\]
+        이다. 실수 \(t\)에 대하여 함수 \(y=f(x)\)의 그래프와 직선 \(y=t\)가
+        만나는 점의 개수를 \(g(t)\)라 하자.
+        \[g(k)+\lim_{t\to k-}g(t)+\lim_{t\to k+}g(t)=9\]
+        를 만족시키는 실수 \(k\)의 개수가 \(1\)이 되도록 하는 두 자연수
+        \(a\), \(b\)의 순서쌍 \((a,\,b)\)에 대하여 \(a+b\)의 최댓값은?`,
+      choices: [R`\(51\)`, R`\(52\)`, R`\(53\)`, R`\(54\)`, R`\(55\)`],
+      answer: 1,
+      help: R`\(g(t)\)는 가로선 \(y=t\)가 그래프와 만나는 점의 개수라 \(t\)가 극값이나 끊어진 자리의 높이를 지날 때만 값이 뛴다. 그런 자리가 아니면 세 값이 모두 같아 합이 \(3\)의 배수가 되므로, 합이 \(9\)가 되는 \(k\)는 \(g(k)=3\)이면서 좌우 극한도 \(3\)인 자리이거나 값이 뛰는 자리다.`
+    },
+    {
+      id: "2024-suneung-15", exam: "2024-suneung", no: 15, score: 4,
+      units: ["m1-seq"], memo: "홀짝에 따라 뛰거나 줄어드는 수열",
+      body: R`첫째항이 자연수인 수열 \(\{a_{n}\}\)이 모든 자연수 \(n\)에 대하여
+        \[a_{n+1}=\begin{cases}2^{a_{n}} &amp; \left(a_{n}\text{이 홀수인 경우}\right)\\[2pt] \dfrac{1}{2}a_{n} &amp; \left(a_{n}\text{이 짝수인 경우}\right)\end{cases}\]
+        를 만족시킬 때, \(a_{6}+a_{7}=3\)이 되도록 하는 모든 \(a_{1}\)의 값의
+        합은?`,
+      choices: [R`\(139\)`, R`\(146\)`, R`\(153\)`, R`\(160\)`, R`\(167\)`],
+      answer: 3,
+      help: R`홀수를 만나면 \(2^{a_{n}}\)으로 껑충 뛰고 짝수를 만나면 반으로 준다. \(a_{6}+a_{7}=3\)은 두 항이 \(1\)과 \(2\)라는 뜻이므로 뒷부분이 매우 작다. 그러니 앞으로 밀지 말고 \(a_{6}\), \(a_{7}\)에서 거꾸로 거슬러 올라가며 각 자리에서 어느 규칙을 썼는지 갈라 보면 된다.`
+    },
+    {
+      id: "2024-suneung-20", exam: "2024-suneung", no: 20, score: 4,
+      units: ["m2-diff"], memo: "두 접선이 수직이 되는 조건",
+      body: R`\(a>\sqrt{2}\)인 실수 \(a\)에 대하여 함수 \(f(x)\)를
+        \[f(x)=-x^{3}+ax^{2}+2x\]
+        라 하자. 곡선 \(y=f(x)\) 위의 점 \(\mathrm{O}(0,\,0)\)에서의 접선이
+        곡선 \(y=f(x)\)와 만나는 점 중 \(\mathrm{O}\)가 아닌 점을 \(\mathrm{A}\)라 하고,
+        곡선 \(y=f(x)\) 위의 점 \(\mathrm{A}\)에서의 접선이 \(x\)축과 만나는 점을
+        \(\mathrm{B}\)라 하자. 점 \(\mathrm{A}\)가 선분 \(\mathrm{OB}\)를 지름으로 하는 원 위의 점일 때,
+        \(\overline{\mathrm{OA}}\times\overline{\mathrm{AB}}\)의 값을 구하시오.`,
+      short: true,
+      answer: 25,
+      help: R`\(\mathrm{A}\)가 지름 \(\mathrm{OB}\) 위의 원에 있다는 것은 \(\angle\mathrm{OAB}=\frac{\pi}{2}\)라는 뜻이다. \(\mathrm{OA}\)는 원점에서 그은 접선이고 \(\mathrm{AB}\)는 \(\mathrm{A}\)에서의 접선이므로, 두 직선의 기울기의 곱이 \(-1\)이라는 식 하나가 \(a\)를 정해 준다.`
+    },
+    {
+      id: "2024-suneung-21", exam: "2024-suneung", no: 21, score: 4,
+      units: ["m1-explog"], memo: "움직이는 창 안에서의 최댓값",
+      body: R`양수 \(a\)에 대하여 \(x\ge -1\)에서 정의된 함수 \(f(x)\)는
+        \[f(x)=\begin{cases}-x^{2}+6x &amp; (-1\le x<6)\\ a\log_{4}(x-5) &amp; (x\ge 6)\end{cases}\]
+        이다. \(t\ge 0\)인 실수 \(t\)에 대하여 닫힌구간 \([t-1,\,t+1]\)에서의
+        \(f(x)\)의 최댓값을 \(g(t)\)라 하자. 구간 \([0,\,\infty)\)에서 함수 \(g(t)\)의
+        최솟값이 \(5\)가 되도록 하는 양수 \(a\)의 최솟값을 구하시오.`,
+      short: true,
+      answer: 10,
+      help: R`\(-x^{2}+6x\)는 \(x=3\)에서 최댓값 \(9\)이고, \(a\log_{4}(x-5)\)는 \(x=6\)에서 \(0\)으로 시작해 계속 커진다. 길이 \(2\)인 창을 오른쪽으로 밀면 최댓값은 처음엔 포물선 쪽에 붙어 있다가 어느 순간 로그 쪽으로 넘어간다. \(g\)가 가장 작아지는 곳은 그 넘어가기 직전, 창이 두 봉우리 사이 골짜기에 놓일 때다.`
+    },
+    {
+      id: "2024-suneung-22", exam: "2024-suneung", no: 22, score: 4,
+      units: ["m2-diff"], memo: "부호가 바뀌는 정수 자리가 없을 조건",
+      body: R`최고차항의 계수가 \(1\)인 삼차함수 \(f(x)\)가 다음 조건을
+        만족시킨다.`,
+      note: [
+        R`함수 \(f(x)\)에 대하여 \(f(k-1)f(k+1)<0\)을 만족시키는 정수 \(k\)는 존재하지 않는다.`
+      ],
+      bodyAfter: R`\(f'\left(-\dfrac{1}{4}\right)=-\dfrac{1}{4}\), \(f'\left(\dfrac{1}{4}\right)<0\)일 때, \(f(8)\)의 값을 구하시오.`,
+      short: true,
+      answer: 483,
+      help: R`\(f(k-1)f(k+1)<0\)인 정수 \(k\)가 없다는 것은, 어떤 정수 \(k\)를 잡아도 \(k-1\)과 \(k+1\)에서 \(f\)의 부호가 서로 다르지 않다는 뜻이다. 곧 \(f\)의 실근들이 길이 \(2\)인 구간 \([k-1,\,k+1]\)마다 부호를 뒤집지 못하도록 촘촘히 몰려 있어야 한다.`
     }
   ];
 
