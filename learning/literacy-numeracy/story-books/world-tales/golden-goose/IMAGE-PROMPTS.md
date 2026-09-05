@@ -34,12 +34,24 @@ never mean.
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
+> **머리 빛깔과 옷을 못 박아 두었습니다.** 옷차림만 적어 두면 그릴 때마다
+> 딴사람이 됩니다. 다른 책에서 실제로 그런 일이 있었어요 — 공주가 한 장에서는
+> 밤빛 곱슬머리, 다음 장에서는 노란 양갈래였지요.
+> 아래 설명을 **한 글자도 빼지 말고** 매번 붙여 넣어 주세요.
+
 ```
-Dummling: a cheerful ordinary-looking youngest brother in a patched brown coat,
-kind and unbothered by teasing. The two elder brothers: a tall proud one and a
-stout smug one. The little grey man: a small old man with a long beard sitting on
-a stump. The princess: a girl in a fine gown who never smiles. Villagers who get
-stuck: three sisters, a priest and a baker, all comically flailing.
+Dummling: a cheerful youngest brother about 14 with tousled reddish-brown hair,
+in a patched brown jerkin over a cream shirt and brown knee breeches, kind and
+unbothered by teasing.
+The two elder brothers: a tall proud one and a stout smug one, both in plainer
+country clothes.
+The little grey man: a small old man with a long white beard sitting on a stump.
+The princess: a girl in a fine gown who never smiles.
+Villagers who get stuck, in this order: the three innkeeper's daughters (blue,
+yellow and red dresses), then the priest in black, then the baker in a white
+apron and chef's hat, then two farmers. All comically flailing.
+Everyone must look like the same person from picture to picture — same hair,
+same clothes, same face.
 ```
 
 ## 표지 · 마무리

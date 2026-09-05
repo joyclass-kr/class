@@ -34,12 +34,24 @@ warm, never frightening.
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
+> **머리 모양까지 적어 두었습니다.** 앞서 옷차림만 적어 두었더니 공주가 장마다
+> 딴사람이 되었어요. 첫 장에서는 밤빛 곱슬머리, 밥상 장면에서는 노란 양갈래에
+> 커다란 리본, 마지막 장에서는 짧은 검은 머리였습니다. 셋 다 다른 아이였지요.
+> 아래 설명을 **한 글자도 빼지 말고** 매번 붙여 넣어 주세요.
+
 ```
-The princess: a girl about 11 in a bright yellow gown with a small crown, lively
-and easily annoyed. The frog: a plump green frog with big earnest eyes, drawn as
-appealing rather than slimy. The king: a broad older man with a grey beard and a
-calm steady face. Heinrich: a stout loyal servant with three iron bands around
-his chest.
+The princess: a girl about 11 with wavy chestnut-brown hair falling past her
+shoulders and a small gold crown, in a bright yellow gown with white lace
+trim. Lively and easily annoyed. Her hair colour, her hair length and her
+crown must be exactly the same in every picture — never blonde, never in
+pigtails, never with a big ribbon.
+The frog: a plump green frog with big earnest eyes, drawn as appealing rather
+than slimy. He wears NO crown — he only looks like an ordinary frog until the
+spell breaks.
+The king: a broad older man with a grey beard and a calm steady face, in a
+purple robe with a gold crown.
+Heinrich: a stout loyal servant with three iron bands around his chest.
+Everyone must look like the same person from picture to picture.
 ```
 
 ## 표지 · 마무리

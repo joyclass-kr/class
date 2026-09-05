@@ -34,11 +34,24 @@ composition, funny and never frightening.
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
+> **차림이 장마다 바뀌지 않게 못을 박아 두었습니다.** 첫 장에서는 엄마 곰이
+> 안경을 썼고 아빠 곰은 초록 조끼였고 아기 곰은 턱받이를 하고 아기 의자에
+> 앉아 있는데, 의자가 부서진 장면에서는 안경이 없어지고 조끼가 갈색 체크로
+> 바뀌고 아기 곰이 줄무늬 잠옷을 입고 있었습니다. 같은 식구로 안 보입니다.
+> 아래 설명을 **한 글자도 빼지 말고** 매번 붙여 넣어 주세요.
+
 ```
 Goldilocks: a small girl about 6 with bouncy golden curls, a red pinafore and
-grass-stained knees. Father Bear: a huge brown bear in a waistcoat with a
-booming voice. Mother Bear: a middling bear in an apron and spectacles. Baby
-Bear: a small round bear cub with a bib, easily upset and very expressive.
+grass-stained knees.
+Father Bear: a huge brown bear in a GREEN buttoned waistcoat over a checked
+shirt, with a booming voice.
+Mother Bear: a middling bear in a blue dress with a floral apron, and round
+SPECTACLES that she wears in every picture.
+Baby Bear: a small round bear cub in a BIB, easily upset and very expressive.
+He is never in pyjamas — the family are up and dressed the whole day.
+The three bears must wear exactly these clothes in every picture, indoors and
+out. Do not change the waistcoat colour, do not take off the spectacles, do
+not swap the bib for anything else.
 ```
 
 ## 표지 · 마무리
