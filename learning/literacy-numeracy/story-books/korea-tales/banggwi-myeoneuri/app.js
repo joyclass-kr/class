@@ -230,6 +230,446 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "💨",
+        art: "cover.webp",
+        title: "The Farting Bride",
+        intro: [
+            "This is an oral tale with no known author. The bride in it is so strong that one fart of hers shakes the pillars of a house.",
+            "Old tales have a whole kind that blows up the sounds and smells of the body for a laugh. Fart stories lead that list.",
+            "A bride in her husband's house could do very little as she liked. Even laughing, or speaking up, had to be done carefully."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · A Yellow Face",
+            beats: [
+                {
+                    art: "01-bride.webp",
+                    emoji: "👰",
+                    left: [
+                        "Long ago a new bride came into a certain house.",
+                        "She had a lovely face, she worked hard, and her hands were quick.",
+                        "She was up at dawn to draw water and cook.",
+                        { t: "\"Where would you find another like our bride?\"", v: "old" },
+                        "The family were pleased, and the village talked of it."
+                    ],
+                    right: [
+                        "But after some months the bride's colour went strange.",
+                        "Yellow, and then greener than yellow.",
+                        "She could not get her food down and kept holding her stomach.",
+                        "Even her walk was not what it had been.",
+                        { t: "\"Child, are you ill somewhere?\"", v: "old" }
+                    ]
+                },
+                {
+                    art: "02-ask.webp",
+                    emoji: "😰",
+                    left: [
+                        "For a long time the bride only hesitated.",
+                        "She could not seem to get the words out.",
+                        "She looked at the floor and fidgeted with her fingers.",
+                        "The whole family sat watching her mouth.",
+                        { t: "\"You must speak if we are to know.\"", v: "granny" }
+                    ],
+                    right: [
+                        "At last the bride managed to speak. Her voice was as small as a mosquito.",
+                        { t: "\"The truth is... I have not been able to fart.\"", v: "woman" },
+                        "Her father-in-law leaned forward.",
+                        { t: "\"You... you what?\"", v: "old" },
+                        "The family stared round-eyed. They thought they had misheard."
+                    ]
+                },
+                {
+                    art: "03-permit.webp",
+                    emoji: "😅",
+                    left: [
+                        { t: "\"Well now, is that all it is?\"", v: "old" },
+                        "Her father-in-law laughed and waved a hand.",
+                        "To think she had held it in all this while over nothing.",
+                        { t: "\"Hold that in and you will make yourself ill.\"", v: "old" },
+                        { t: "\"Let it go and be easy! Who here would think the worse of you?\"", v: "old" }
+                    ],
+                    right: [
+                        "At that the bride spoke carefully. Her face was full of worry.",
+                        { t: "\"Then... every one of you must hold on to something.\"", v: "woman" },
+                        "Her mother-in-law tilted her head.",
+                        { t: "\"Hold on to what?\"", v: "granny" },
+                        { t: "\"Anything. But very tightly.\"", v: "woman" }
+                    ]
+                },
+                {
+                    art: "04-brace.webp",
+                    emoji: "😬",
+                    left: [
+                        "Doubting it, the family each took hold of something.",
+                        "She said it so seriously they could not refuse.",
+                        "Her father-in-law put both arms round the pillar of the hall.",
+                        "Privately he thought the whole thing funny.",
+                        { t: "\"Do hold on, all of you.\"", v: "woman" }
+                    ],
+                    right: [
+                        "Her mother-in-law took the door handle, her husband the knob of the pot lid.",
+                        { t: "\"Right. Let it go, then.\"", v: "old" },
+                        { t: "\"Here I go!\"", v: "woman" },
+                        "The bride drew a great breath. The room went dead quiet.",
+                        "Somewhere a dry swallow was heard."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Braaap",
+            beats: [
+                {
+                    art: "05-boom.webp",
+                    emoji: "💨",
+                    left: [
+                        "Braaaaaaap —!",
+                        "The whole house heaved. Doors came off and roof tiles poured down.",
+                        "It was a sound the whole village must have heard.",
+                        "Dust from the yard went up to the sky.",
+                        "Every dog in the neighbourhood barked at once."
+                    ],
+                    right: [
+                        { t: "\"Aaaaargh!\"", v: "old" },
+                        "Her father-in-law went round and round with his arms about the pillar.",
+                        "Both his feet were clear off the ground.",
+                        "The pillar made a cracking noise.",
+                        "And that was not the end of it. The wind was not half out yet."
+                    ]
+                },
+                {
+                    art: "06-fly.webp",
+                    emoji: "🌪️",
+                    left: [
+                        "Her mother-in-law flew into the yard, door and all, still holding the handle.",
+                        "Her husband went up onto the roof with the pot lid in his hands.",
+                        "The hens pecking in the yard vanished and left only feathers.",
+                        { t: "\"Wife — get me dow — n!\"", v: "man" }
+                    ],
+                    right: [
+                        "It was a long while before the house was quiet again.",
+                        "There was groaning from here and there.",
+                        { t: "\"...I feel as though I might live now.\"", v: "woman" },
+                        { t: "\"Oh, my back.\"", v: "granny" },
+                        "And the bride's colour had come back rosy."
+                    ]
+                },
+                {
+                    art: "07-send.webp",
+                    emoji: "😔",
+                    left: [
+                        "Her father-in-law got up, covered in dirt.",
+                        "His topknot had come undone and his hair stood out.",
+                        "He looked a long time round the broken house, then spoke heavily.",
+                        { t: "\"I think... you had better visit your own family a while.\"", v: "old" }
+                    ],
+                    right: [
+                        "Her mother-in-law nodded without a word.",
+                        "The bride could say nothing and hung her head.",
+                        "Next morning her husband set out with her. One bundle was all they had.",
+                        { t: "\"I am sorry, my dear.\"", v: "man" },
+                        "That was all. The two walked on, looking at their own toes."
+                    ]
+                },
+                {
+                    art: "08-road.webp",
+                    emoji: "🛤️",
+                    left: [
+                        "They had walked a long way when the roadside grew very noisy.",
+                        "They lifted their heads to see what it was.",
+                        "Under a great pear tree a crowd of merchants stood muttering.",
+                        "Yellow pears hung thick on the branches.",
+                        { t: "\"Something is going on over there.\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"Get those pears down and it is a fortune!\"", v: "man" },
+                        { t: "\"Not if no pole will reach them.\"", v: "man" },
+                        { t: "\"How is anybody to pick them!\"", v: "man" },
+                        "The branches went so high that nobody could climb up.",
+                        "The merchants stamped and stared up at the tree."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Under the Pear Tree",
+            beats: [
+                {
+                    art: "09-offer.webp",
+                    emoji: "🍐",
+                    left: [
+                        "The bride watched them for a while, then went carefully over.",
+                        "Her husband caught her sleeve, but she walked on out.",
+                        "She had the face of somebody who has thought of something.",
+                        { t: "\"Shall I get them down for you?\"", v: "woman" }
+                    ],
+                    right: [
+                        "The merchants looked her up and down.",
+                        "Then they snickered among themselves.",
+                        { t: "\"You? With no ladder?\"", v: "man" },
+                        { t: "\"Try, then. Get them down and half of them are yours!\"", v: "man" },
+                        "Not one of them believed it."
+                    ]
+                },
+                {
+                    art: "10-aim.webp",
+                    emoji: "😤",
+                    left: [
+                        "The bride stood with her back to the pear tree.",
+                        "She tucked her skirt in tight as she did it.",
+                        { t: "\"Everybody get back, please.\"", v: "woman" },
+                        { t: "\"A long way back.\"", v: "woman" },
+                        { t: "\"You really must get back!\"", v: "woman" },
+                        "Her voice was firm now, nothing like before."
+                    ],
+                    right: [
+                        "The merchants backed away, none the wiser.",
+                        "Only her husband grinned and got behind the tree quickly.",
+                        "He was the one person there who knew what was coming.",
+                        "The bride drew a great breath. You could see her middle swell out."
+                    ]
+                },
+                {
+                    art: "11-pears.webp",
+                    emoji: "💥",
+                    left: [
+                        "Braaaaaaap —!",
+                        "The whole pear tree swayed.",
+                        "It shook so hard you thought it might come up by the roots.",
+                        "Birds went up into the sky in fright.",
+                        "The ground rang and the dust rose white."
+                    ],
+                    right: [
+                        "Down came the yellow pears, showering and showering.",
+                        "In no time at all the ground was covered with them.",
+                        "The merchants stood frozen with their mouths open.",
+                        "They could do nothing but blink.",
+                        { t: "\"Well, of all the tricks!\"", v: "man" }
+                    ]
+                },
+                {
+                    art: "12-home.webp",
+                    emoji: "🏡",
+                    left: [
+                        "The merchants kept their word and loaded her with pears and coins.",
+                        "It was more than she could carry by herself.",
+                        "Her husband took her hand and held it tight.",
+                        { t: "\"Let us just go home. What visit, and to whom?\"", v: "man" },
+                        "The bride said nothing and only smiled."
+                    ],
+                    right: [
+                        "Her father-in-law came out past the gate to meet them.",
+                        "At the sight of the strings of coins his mouth went wide.",
+                        "Only, after that, the house had one rule.",
+                        { t: "\"Just tell us first. We need time to hold on.\"", v: "old" },
+                        "And the whole house laughed."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What did the father-in-law do when her colour changed?", choices: ["Asked if she was ill", "Pretended not to notice", "Went off to his own room"], answer: 0 },
+        { q: "What did her husband hold on to?", choices: ["The pillar", "The door handle", "The pot lid"], answer: 2 },
+        { q: "What happened to the mother-in-law in the blast?", choices: ["Flew into the yard with the door", "Spun round and round on the pillar", "Went up on top of the roof"], answer: 0 },
+        { q: "Who did the two of them meet on the road?", choices: ["Rice cake sellers", "Salt sellers", "Pear sellers"], answer: 2 },
+        { q: "What did the bride tell the people at the tree?", choices: ["To get back, all of them", "To lend her a long pole", "That she would climb up"], answer: 0 },
+        { q: "What became of the bride after that?", choices: ["Stayed at her old home", "Came back home again", "Went off with the sellers"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "She held it in till her face turned yellow, so holding a thing in is not always the better way.",
+                "They meant to send her away over one fault, so you can see how little room a bride had in those days.",
+                "The rule became to say so first, so they looked for a way to live with it instead of getting rid of it.",
+                "The father-in-law was planning to send her off from the start, so he never thought well of her at all."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "oral tale", k: "구전 설화", s: "This is an oral tale with no known author." },
+            { w: "pillars", k: "기둥", s: "one fart of hers shakes the pillars of a house" },
+            { w: "a whole kind", k: "따로 있는 갈래", s: "Old tales have a whole kind that blows up the sounds of the body." },
+            { w: "blows up (blow up)", k: "크게 부풀린다", s: "a whole kind that blows up the sounds and smells of the body" },
+            { w: "for a laugh", k: "웃음을 만들려고", s: "blows up the sounds and smells of the body for a laugh" },
+            { w: "lead that list", k: "그 대표다", s: "Fart stories lead that list." },
+            { w: "as she liked", k: "마음대로", s: "A bride in her husband's house could do very little as she liked." },
+            { w: "speaking up", k: "큰 소리로 말하기", s: "Even laughing, or speaking up, had to be done carefully." }
+        ],
+        "01-bride.webp": [
+            { w: "bride", k: "며느리", s: "Long ago a new bride came into a certain house." },
+            { w: "hands were quick", k: "손끝이 야무졌다", s: "she worked hard, and her hands were quick" },
+            { w: "up at dawn", k: "새벽같이 일어나", s: "She was up at dawn to draw water and cook." },
+            { w: "another like ~", k: "~ 같은 사람", s: "Where would you find another like our bride?" },
+            { w: "colour", k: "얼굴빛", s: "But after some months the bride's colour went strange." },
+            { w: "greener than yellow", k: "노랗다 못해 푸르뎅뎅한", s: "Yellow, and then greener than yellow." },
+            { w: "get ~ down", k: "넘기다", s: "She could not get her food down" },
+            { w: "what it had been", k: "예전 같은", s: "Even her walk was not what it had been." }
+        ],
+        "02-ask.webp": [
+            { w: "hesitated (hesitate)", k: "우물쭈물했다", s: "For a long time the bride only hesitated." },
+            { w: "get the words out", k: "입이 떨어지다", s: "She could not seem to get the words out." },
+            { w: "fidgeted (fidget)", k: "꼼지락거렸다", s: "She looked at the floor and fidgeted with her fingers." },
+            { w: "as small as a mosquito", k: "모기 소리만 한", s: "Her voice was as small as a mosquito." },
+            { w: "The truth is", k: "실은", s: "The truth is... I have not been able to fart." },
+            { w: "leaned forward (lean)", k: "몸을 앞으로 기울였다", s: "Her father-in-law leaned forward." },
+            { w: "round-eyed", k: "눈을 동그랗게 뜨고", s: "The family stared round-eyed." },
+            { w: "misheard (mishear)", k: "잘못 들었다", s: "They thought they had misheard." }
+        ],
+        "03-permit.webp": [
+            { w: "is that all it is", k: "그게 무슨 대수라고", s: "Well now, is that all it is?" },
+            { w: "waved a hand", k: "손을 내저었다", s: "Her father-in-law laughed and waved a hand." },
+            { w: "held it in (hold)", k: "참았다", s: "To think she had held it in all this while over nothing." },
+            { w: "make yourself ill", k: "병이 나다", s: "Hold that in and you will make yourself ill." },
+            { w: "be easy", k: "시원하게 하다", s: "Let it go and be easy!" },
+            { w: "think the worse of ~", k: "흉보다", s: "Who here would think the worse of you?" },
+            { w: "full of worry", k: "걱정이 가득한", s: "Her face was full of worry." },
+            { w: "hold on to ~", k: "붙잡다", s: "every one of you must hold on to something" },
+            { w: "tilted her head", k: "고개를 갸웃했다", s: "Her mother-in-law tilted her head." }
+        ],
+        "04-brace.webp": [
+            { w: "Doubting it", k: "설마 하면서", s: "Doubting it, the family each took hold of something." },
+            { w: "took hold of ~", k: "붙들었다", s: "the family each took hold of something" },
+            { w: "so seriously", k: "하도 진지하게", s: "She said it so seriously they could not refuse." },
+            { w: "hall", k: "대청", s: "Her father-in-law put both arms round the pillar of the hall." },
+            { w: "Privately", k: "속으로는", s: "Privately he thought the whole thing funny." },
+            { w: "knob", k: "손잡이", s: "her husband the knob of the pot lid" },
+            { w: "pot lid", k: "솥뚜껑", s: "the knob of the pot lid" },
+            { w: "drew a breath (draw)", k: "숨을 들이마셨다", s: "The bride drew a great breath." },
+            { w: "a dry swallow", k: "마른침 삼키는 소리", s: "Somewhere a dry swallow was heard." }
+        ],
+        "05-boom.webp": [
+            { w: "Braaap", k: "뿌우웅", s: "Braaaaaaap —!" },
+            { w: "heaved (heave)", k: "들썩였다", s: "The whole house heaved." },
+            { w: "came off (come off)", k: "떨어져 나갔다", s: "Doors came off and roof tiles poured down." },
+            { w: "roof tiles", k: "기왓장", s: "Doors came off and roof tiles poured down." },
+            { w: "must have heard", k: "들었을 것이다", s: "It was a sound the whole village must have heard." },
+            { w: "neighbourhood", k: "온 동네", s: "Every dog in the neighbourhood barked at once." },
+            { w: "clear off the ground", k: "땅에서 완전히 떠서", s: "Both his feet were clear off the ground." },
+            { w: "cracking noise", k: "우지끈 소리", s: "The pillar made a cracking noise." },
+            { w: "not half out", k: "반도 나오지 않은", s: "The wind was not half out yet." }
+        ],
+        "06-fly.webp": [
+            { w: "door and all", k: "문짝과 함께", s: "Her mother-in-law flew into the yard, door and all." },
+            { w: "pecking (peck)", k: "모이를 쪼는", s: "The hens pecking in the yard vanished" },
+            { w: "vanished (vanish)", k: "사라졌다", s: "The hens pecking in the yard vanished and left only feathers." },
+            { w: "feathers", k: "깃털", s: "vanished and left only feathers" },
+            { w: "groaning (groan)", k: "끙끙거리는 소리", s: "There was groaning from here and there." },
+            { w: "as though ~", k: "~인 것처럼", s: "I feel as though I might live now." },
+            { w: "rosy", k: "발그레한", s: "And the bride's colour had come back rosy." }
+        ],
+        "07-send.webp": [
+            { w: "covered in dirt", k: "흙투성이가 되어", s: "Her father-in-law got up, covered in dirt." },
+            { w: "topknot", k: "상투", s: "His topknot had come undone and his hair stood out." },
+            { w: "come undone", k: "풀어지다", s: "His topknot had come undone" },
+            { w: "heavily", k: "무겁게", s: "He looked a long time round the broken house, then spoke heavily." },
+            { w: "your own family", k: "친정", s: "you had better visit your own family a while" },
+            { w: "hung her head (hang)", k: "고개를 푹 숙였다", s: "The bride could say nothing and hung her head." },
+            { w: "bundle", k: "보따리", s: "One bundle was all they had." },
+            { w: "their own toes", k: "제 발끝", s: "The two walked on, looking at their own toes." }
+        ],
+        "08-road.webp": [
+            { w: "roadside", k: "길가", s: "the roadside grew very noisy" },
+            { w: "muttering (mutter)", k: "웅성거리는", s: "a crowd of merchants stood muttering" },
+            { w: "hung thick (hang)", k: "주렁주렁 달렸다", s: "Yellow pears hung thick on the branches." },
+            { w: "going on", k: "일이 나는", s: "Something is going on over there." },
+            { w: "a fortune", k: "큰돈", s: "Get those pears down and it is a fortune!" },
+            { w: "pole", k: "장대", s: "Not if no pole will reach them." },
+            { w: "reach", k: "닿다", s: "Not if no pole will reach them." },
+            { w: "How is anybody to ~", k: "어떻게 ~한담", s: "How is anybody to pick them!" },
+            { w: "stamped (stamp)", k: "발을 동동 굴렀다", s: "The merchants stamped and stared up at the tree." }
+        ],
+        "09-offer.webp": [
+            { w: "went over", k: "다가갔다", s: "The bride watched them for a while, then went carefully over." },
+            { w: "caught her sleeve", k: "소매를 붙잡았다", s: "Her husband caught her sleeve, but she walked on out." },
+            { w: "the face of somebody who ~", k: "~한 얼굴", s: "She had the face of somebody who has thought of something." },
+            { w: "get ~ down", k: "따 주다", s: "Shall I get them down for you?" },
+            { w: "looked her up and down", k: "위아래로 훑어보았다", s: "The merchants looked her up and down." },
+            { w: "snickered (snicker)", k: "킥킥 웃었다", s: "Then they snickered among themselves." },
+            { w: "ladder", k: "사다리", s: "You? With no ladder?" },
+            { w: "half of them", k: "절반", s: "Get them down and half of them are yours!" }
+        ],
+        "10-aim.webp": [
+            { w: "with her back to ~", k: "~에 등을 돌리고", s: "The bride stood with her back to the pear tree." },
+            { w: "tucked ~ in (tuck)", k: "여몄다", s: "She tucked her skirt in tight as she did it." },
+            { w: "get back", k: "뒤로 물러서다", s: "Everybody get back, please." },
+            { w: "firm", k: "야무진", s: "Her voice was firm now, nothing like before." },
+            { w: "nothing like before", k: "아까와는 딴판인", s: "Her voice was firm now, nothing like before." },
+            { w: "none the wiser", k: "어리둥절해하며", s: "The merchants backed away, none the wiser." },
+            { w: "grinned (grin)", k: "씩 웃었다", s: "Only her husband grinned and got behind the tree quickly." },
+            { w: "what was coming", k: "무슨 일이 날지", s: "He was the one person there who knew what was coming." },
+            { w: "swell out", k: "볼록하게 부풀다", s: "You could see her middle swell out." }
+        ],
+        "11-pears.webp": [
+            { w: "swayed (sway)", k: "휘청였다", s: "The whole pear tree swayed." },
+            { w: "come up by the roots", k: "뿌리째 뽑히다", s: "you thought it might come up by the roots" },
+            { w: "in fright", k: "놀라서", s: "Birds went up into the sky in fright." },
+            { w: "rang (ring)", k: "울렸다", s: "The ground rang and the dust rose white." },
+            { w: "showering (shower)", k: "우수수 쏟아지는", s: "Down came the yellow pears, showering and showering." },
+            { w: "In no time at all", k: "눈 깜짝할 사이에", s: "In no time at all the ground was covered with them." },
+            { w: "frozen (freeze)", k: "굳어서", s: "The merchants stood frozen with their mouths open." },
+            { w: "nothing but blink", k: "눈만 껌뻑거렸다", s: "They could do nothing but blink." },
+            { w: "of all the tricks", k: "이런 재주가 다 있나", s: "Well, of all the tricks!" }
+        ],
+        "12-home.webp": [
+            { w: "kept their word", k: "약속대로 했다", s: "The merchants kept their word and loaded her with pears and coins." },
+            { w: "loaded (load)", k: "한 아름 안겨 주었다", s: "loaded her with pears and coins" },
+            { w: "by herself", k: "혼자서", s: "It was more than she could carry by herself." },
+            { w: "What visit", k: "친정은 무슨 친정", s: "Let us just go home. What visit, and to whom?" },
+            { w: "past the gate", k: "대문 밖까지", s: "Her father-in-law came out past the gate to meet them." },
+            { w: "At the sight of ~", k: "~을 보고", s: "At the sight of the strings of coins his mouth went wide." },
+            { w: "one rule", k: "규칙 하나", s: "Only, after that, the house had one rule." },
+            { w: "tell us first", k: "미리 말해 달라", s: "Just tell us first. We need time to hold on." }
+        ],
+        "after": [
+            { w: "a funny tale", k: "소화", s: "A story like this is called a funny tale." },
+            { w: "for a laugh alone", k: "그저 웃자고", s: "Many were made for a laugh alone." },
+            { w: "shows ~ best", k: "가장 잘 보여 준다", s: "a story made for a laugh shows the times best" },
+            { w: "did nothing wrong", k: "아무 잘못도 하지 않았다", s: "Look again and the bride did nothing wrong." },
+            { w: "the fault", k: "흠", s: "The fault was not the fart" },
+            { w: "found a use", k: "쓸모가 생겼다", s: "And that fart found a use the moment she left the house." },
+            { w: "put up with ~", k: "시달리다", s: "In old tales the bride is usually the one who puts up with things." },
+            { w: "turns it round", k: "판을 뒤집는다", s: "In this one the bride turns it round." },
+            { w: "is up to ~", k: "~에게 달렸다", s: "whether being different is a fault or a gift is up to the one looking" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🍐',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "A story like this is called a funny tale, meaning one made to make you laugh. Our old stories hold as many made for a laugh alone as made to teach.",
+                    "And sometimes a story made for a laugh shows the times best. This one does. That a bride could not even fart as she pleased is already a fact about those days.",
+                    "Look again and the bride did nothing wrong. She held it in until her face went yellow. The fault was not the fart but the side that told her to hold it.",
+                    "And that fart found a use the moment she left the house. The same gift was a reason to send her away inside, and worth money outside."
+                ],
+                right: [
+                    "In old tales the bride is usually the one who puts up with things. In this one the bride turns it round. Most likely because so many of the listeners were brides themselves.",
+                    "What the family called a fault and meant to send away turned out, outside, to be something nobody else could do. Whether being different is a fault or a gift is up to the one looking.",
+                    "Is there something about you, different from other people, that you have wanted to hide? Where might it be useful?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "며느리의 얼굴빛이 이상해지자 시아버지는 무엇을 했나요?", choices: ["걱정스레 까닭을 물었다", "못 본 척 지나쳤다", "그길로 방에 들어가 버렸다"], answer: 0 },
     { q: "남편은 무엇을 붙잡았나요?", choices: ["기둥", "문고리", "솥뚜껑"], answer: 2 },

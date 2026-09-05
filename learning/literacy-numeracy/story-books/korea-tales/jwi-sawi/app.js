@@ -232,6 +232,436 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐭",
+        art: "cover.webp",
+        title: "The Mouse's Son-in-Law",
+        intro: [
+            "This is an oral tale with no known author. Asking one after another for the strongest thing in the world makes it a chain story.",
+            "It came from a very old Indian story book and spread to China, Japan and Korea. Who is asked differs, but the laugh at the end is the same.",
+            "The fun is in the chain. Each one you visit names something stronger, until you arrive somewhere unexpected."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Strongest Son-in-Law",
+            beats: [
+                {
+                    art: "01-family.webp",
+                    emoji: "🐭",
+                    left: [
+                        "Long ago a mouse and his wife lived under a rich man's storehouse.",
+                        "They had one daughter with bright, shining eyes.",
+                        { t: "\"Is there another mouse in the world as pretty as ours?\"", v: "mother" },
+                        "The mother mouse stroked her daughter's head.",
+                        "The daughter looked down, shy."
+                    ],
+                    right: [
+                        { t: "\"There is not, and that is certain.\"", v: "boy" },
+                        { t: "\"She could marry the king and still be too good for him.\"", v: "boy" },
+                        "Night after night they talked her up till the day broke on them.",
+                        "Only when the first cock crowed did they go to bed.",
+                        "The daughter listened, and her face went red."
+                    ]
+                },
+                {
+                    art: "02-decide.webp",
+                    emoji: "💭",
+                    left: [
+                        "When she came of age the two of them fell into worrying.",
+                        "Offers came, and none of them would do.",
+                        { t: "\"We cannot send her off to just anybody.\"", v: "mother" },
+                        { t: "\"The matchmaker has been ten times now.\"", v: "boy" },
+                        "The two of them puzzled over it for days."
+                    ],
+                    right: [
+                        "One day the father mouse slapped his knee.",
+                        { t: "\"That's it! Let us take the strongest one in the world.\"", v: "boy" },
+                        { t: "\"Now that is a fine idea!\"", v: "mother" },
+                        "The daughter heard it and sighed.",
+                        "The two packed up and set off that very moment."
+                    ]
+                },
+                {
+                    art: "03-sun.webp",
+                    emoji: "☀️",
+                    left: [
+                        "The first one they went to was the sun.",
+                        "Nothing could be stronger than what lights the whole world.",
+                        "They scrambled panting to the top of a mountain and bowed low.",
+                        { t: "\"Sun, you are the strongest in all the world, are you not?\"", v: "boy" }
+                    ],
+                    right: [
+                        "The sun laughed out loud, and the ridges of the hills went warm.",
+                        { t: "\"Me? There is one stronger than I am.\"", v: "old" },
+                        { t: "\"Oh, surely that cannot be!\"", v: "mother" },
+                        { t: "\"Stronger than the sun? Who could that be?\"", v: "boy" },
+                        "The two pricked up their ears and craned their necks."
+                    ]
+                },
+                {
+                    art: "04-sunanswer.webp",
+                    emoji: "☁️",
+                    left: [
+                        { t: "\"The cloud.\"", v: "old" },
+                        { t: "\"Let a cloud slip over me and I can do nothing at all.\"", v: "old" },
+                        { t: "\"The world goes dark at noon and I cannot help it.\"", v: "old" },
+                        "The sun sounded a little ashamed. There was no strength in the voice."
+                    ],
+                    right: [
+                        "The two mice stared. That there was anything stronger than the sun was news to them.",
+                        { t: "\"Then we must go to the cloud!\"", v: "boy" },
+                        { t: "\"Where is the cloud to be found?\"", v: "mother" },
+                        "They bowed and hurried down the mountain, faster and faster."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Asking and Asking Again",
+            beats: [
+                {
+                    art: "05-cloud.webp",
+                    emoji: "☁️",
+                    left: [
+                        "They climbed a higher mountain still and met the cloud.",
+                        "Their breath was in their throats and their soles were blistered.",
+                        "But thinking of their daughter gave them strength.",
+                        { t: "\"Cloud, they say you are the strongest in the world!\"", v: "boy" }
+                    ],
+                    right: [
+                        "The cloud shifted itself a little, and shade fell on the village below.",
+                        { t: "\"Not at all. One puff of wind and I scatter.\"", v: "granny" },
+                        { t: "\"The... the wind?\"", v: "mother" },
+                        { t: "\"Down the mountain again.\"", v: "boy" },
+                        "Their shoulders drooped at that."
+                    ]
+                },
+                {
+                    art: "06-wind.webp",
+                    emoji: "🌬️",
+                    left: [
+                        "They went down to a wide field and called the wind.",
+                        "It came at once, hard enough to lay the silver grass flat.",
+                        "The two held tight to the roots of the grass so as not to blow away.",
+                        { t: "\"Wind! So you are the strongest after all!\"", v: "boy" }
+                    ],
+                    right: [
+                        "The wind laughed with a whoosh, and the grass ran in waves.",
+                        { t: "\"There is one thing I can never beat.\"", v: "man" },
+                        { t: "\"Somebody stronger than the wind? Truly?\"", v: "mother" },
+                        { t: "\"My legs will break at this rate.\"", v: "boy" },
+                        "The mother mouse nearly sat down where she stood."
+                    ]
+                },
+                {
+                    art: "07-windanswer.webp",
+                    emoji: "🗿",
+                    left: [
+                        { t: "\"The stone Buddha up on that pass.\"", v: "man" },
+                        { t: "\"Blow as hard as I like, he does not blink.\"", v: "man" },
+                        { t: "\"He has stood there a thousand years.\"", v: "man" },
+                        "The wind said so and was gone somewhere in a moment.",
+                        { t: "\"A stone Buddha? And who is that?\"", v: "mother" }
+                    ],
+                    right: [
+                        "The two mice looked at each other in silence.",
+                        "Both of them had their fur every way, and a sorry sight they were.",
+                        { t: "\"This really is the last one, isn't it?\"", v: "mother" },
+                        { t: "\"It had better be. My legs are swollen.\"", v: "boy" },
+                        "The two limped up the road to the pass."
+                    ]
+                },
+                {
+                    art: "08-buddha.webp",
+                    emoji: "🙏",
+                    left: [
+                        "On the pass a great stone Buddha stood tall.",
+                        "It was high enough to make your neck ache.",
+                        "The two straightened their clothes and asked very politely.",
+                        { t: "\"Please tell us the honest truth.\"", v: "boy" },
+                        { t: "\"Stone Buddha, you are the strongest in the world?\"", v: "mother" }
+                    ],
+                    right: [
+                        "The stone Buddha opened its mouth very slowly.",
+                        "It might have been the first time in a thousand years.",
+                        { t: "\"Well now. There is one thing that frightens me too.\"", v: "beast" },
+                        "All the strength went out of the two of them.",
+                        "Not again, they thought. Where now?"
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Answer Comes Home",
+            beats: [
+                {
+                    art: "09-answer.webp",
+                    emoji: "😲",
+                    left: [
+                        { t: "\"What in the world is it?\"", v: "boy" },
+                        "The father mouse asked it, out of patience.",
+                        "At this rate, he thought, his daughter would be a grandmother.",
+                        "The stone Buddha said nothing and looked down at its own feet."
+                    ],
+                    right: [
+                        { t: "\"A mouse.\"", v: "beast" },
+                        { t: "\"What?!\"", v: "boy" },
+                        { t: "\"What did you just say?\"", v: "mother" },
+                        "The mice stood with their mouths open.",
+                        "They dug at their ears, sure they had misheard. But the Buddha had said a mouse."
+                    ]
+                },
+                {
+                    art: "10-explain.webp",
+                    emoji: "🕳️",
+                    left: [
+                        { t: "\"Let a mouse dig away under my feet and down I come.\"", v: "beast" },
+                        { t: "\"Sun and cloud and wind cannot knock me over.\"", v: "beast" },
+                        { t: "\"But a mouse can. So a mouse is what I fear most.\"", v: "beast" },
+                        { t: "\"When the ground goes, nothing can be done.\"", v: "beast" }
+                    ],
+                    right: [
+                        "For a long while no sound came from the pass. Only the wind went by.",
+                        "The two mice looked down at their own feet without a word.",
+                        "Very small front paws, worn down with digging earth.",
+                        { t: "\"We... we are the strongest?\"", v: "mother" }
+                    ]
+                },
+                {
+                    art: "11-realize.webp",
+                    emoji: "💡",
+                    left: [
+                        "They were on the road home.",
+                        "The sun was going down and the hill shadows lay long.",
+                        "The two walked a good while without saying anything.",
+                        { t: "\"My dear.\"", v: "boy" },
+                        { t: "\"My dear, is it not funny?\"", v: "boy" }
+                    ],
+                    right: [
+                        { t: "\"What have we been looking for, all this hard way?\"", v: "boy" },
+                        { t: "\"...The strongest thing in the world was us.\"", v: "mother" },
+                        { t: "\"We went looking for ourselves.\"", v: "boy" },
+                        "The two looked at each other and laughed a long while.",
+                        "They laughed till tears came."
+                    ]
+                },
+                {
+                    art: "12-wedding.webp",
+                    emoji: "🎊",
+                    left: [
+                        "A few days later there was a small wedding under the storehouse.",
+                        "The bridegroom was the young mouse from next door.",
+                        "He was known for hard work and a straight heart.",
+                        "He had worn the storehouse doorsill out coming and going.",
+                        "The daughter went pink and bowed her head."
+                    ],
+                    right: [
+                        { t: "\"We might have done this first and saved four mountains.\"", v: "boy" },
+                        "The father mouse scratched his head, and the whole storehouse laughed.",
+                        { t: "\"Now at last my mind is easy.\"", v: "mother" },
+                        "That night the sound of the feast under the storehouse went on till dawn."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "Who did the two mice mean their daughter to marry?", choices: ["The young mouse next door", "One the matchmaker brought", "The strongest in the world"], answer: 2 },
+        { q: "Which is the order they went in?", choices: ["Wind - sun - Buddha - cloud", "Sun - cloud - wind - Buddha", "Cloud - wind - sun - Buddha"], answer: 1 },
+        { q: "What happened in the field when they called?", choices: ["It came and laid the grass flat", "Shade fell on the village below", "The hill ridges all went warm"], answer: 0 },
+        { q: "What did the stone Buddha fear?", choices: ["A hard blowing wind", "Being covered by cloud", "Digging under its feet"], answer: 2 },
+        { q: "What did the Buddha say happens when a mouse digs?", choices: ["It stands a thousand more years", "It does not even blink", "It comes straight down"], answer: 2 },
+        { q: "Who did the daughter marry in the end?", choices: ["The sun far away", "The young mouse next door", "The stone Buddha on the pass"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "After going to the sun and the cloud and the wind the answer was themselves, so it was not a thing to look for far away.",
+                "The daughter sighed from the very start, so nobody asked the one who was actually getting married.",
+                "The stone Buddha feared what was under its own feet, so big hard things are helpless once the ground goes.",
+                "The two went round all four without one word of complaint, so for their daughter they did not feel the hardship."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "one after another", k: "차례로", s: "Asking one after another for the strongest thing in the world" },
+            { w: "chain story", k: "연쇄담", s: "makes it a chain story" },
+            { w: "spread to ~ (spread)", k: "~까지 퍼졌다", s: "It came from an old Indian story book and spread to China, Japan and Korea." },
+            { w: "differs (differ)", k: "다르다", s: "Who is asked differs, but the laugh at the end is the same." },
+            { w: "names (name)", k: "일러 준다", s: "Each one you visit names something stronger" },
+            { w: "unexpected", k: "뜻밖의", s: "until you arrive somewhere unexpected" }
+        ],
+        "01-family.webp": [
+            { w: "storehouse", k: "곳간", s: "a mouse and his wife lived under a rich man's storehouse" },
+            { w: "shining", k: "초롱초롱한", s: "They had one daughter with bright, shining eyes." },
+            { w: "as pretty as ours", k: "우리 딸만큼 고운", s: "Is there another mouse in the world as pretty as ours?" },
+            { w: "stroked (stroke)", k: "쓰다듬었다", s: "The mother mouse stroked her daughter's head." },
+            { w: "shy", k: "부끄러워하는", s: "The daughter looked down, shy." },
+            { w: "too good for ~", k: "~에게 아까운", s: "She could marry the king and still be too good for him." },
+            { w: "talked her up", k: "자랑을 했다", s: "Night after night they talked her up till the day broke." },
+            { w: "the first cock crowed", k: "첫닭이 울었다", s: "Only when the first cock crowed did they go to bed." }
+        ],
+        "02-decide.webp": [
+            { w: "came of age", k: "시집갈 나이가 되었다", s: "When she came of age the two of them fell into worrying." },
+            { w: "fell into ~ (fall)", k: "~에 빠졌다", s: "the two of them fell into worrying" },
+            { w: "Offers", k: "혼인 이야기", s: "Offers came, and none of them would do." },
+            { w: "would do", k: "마음에 찼다", s: "Offers came, and none of them would do." },
+            { w: "just anybody", k: "아무나", s: "We cannot send her off to just anybody." },
+            { w: "matchmaker", k: "중매쟁이", s: "The matchmaker has been ten times now." },
+            { w: "puzzled over ~", k: "궁리했다", s: "The two of them puzzled over it for days." },
+            { w: "slapped his knee", k: "무릎을 탁 쳤다", s: "One day the father mouse slapped his knee." },
+            { w: "sighed (sigh)", k: "한숨을 쉬었다", s: "The daughter heard it and sighed." }
+        ],
+        "03-sun.webp": [
+            { w: "lights (light)", k: "비춘다", s: "Nothing could be stronger than what lights the whole world." },
+            { w: "scrambled (scramble)", k: "낑낑대며 기어올랐다", s: "They scrambled panting to the top of a mountain" },
+            { w: "panting (pant)", k: "숨을 헐떡이며", s: "They scrambled panting to the top of a mountain and bowed low." },
+            { w: "bowed low", k: "넙죽 절했다", s: "They scrambled to the top and bowed low." },
+            { w: "ridges", k: "산등성이", s: "the ridges of the hills went warm" },
+            { w: "surely ~ cannot be", k: "그럴 리가 있습니까", s: "Oh, surely that cannot be!" },
+            { w: "pricked up their ears", k: "귀를 쫑긋 세웠다", s: "The two pricked up their ears and craned their necks." },
+            { w: "craned their necks", k: "목을 길게 뺐다", s: "The two pricked up their ears and craned their necks." }
+        ],
+        "04-sunanswer.webp": [
+            { w: "slip over ~", k: "슬쩍 가리다", s: "Let a cloud slip over me and I can do nothing at all." },
+            { w: "goes dark", k: "캄캄해진다", s: "The world goes dark at noon and I cannot help it." },
+            { w: "at noon", k: "대낮에", s: "The world goes dark at noon" },
+            { w: "cannot help it", k: "손쓸 도리가 없다", s: "The world goes dark at noon and I cannot help it." },
+            { w: "ashamed", k: "겸연쩍은", s: "The sun sounded a little ashamed." },
+            { w: "stared (stare)", k: "눈이 휘둥그레졌다", s: "The two mice stared." },
+            { w: "was news to ~", k: "처음 듣는 이야기였다", s: "That there was anything stronger than the sun was news to them." },
+            { w: "to be found", k: "찾을 수 있는", s: "Where is the cloud to be found?" }
+        ],
+        "05-cloud.webp": [
+            { w: "higher ~ still", k: "더 높은", s: "They climbed a higher mountain still and met the cloud." },
+            { w: "soles", k: "발바닥", s: "Their breath was in their throats and their soles were blistered." },
+            { w: "blistered", k: "부르튼", s: "their soles were blistered" },
+            { w: "gave them strength", k: "힘이 났다", s: "But thinking of their daughter gave them strength." },
+            { w: "shifted (shift)", k: "몸을 뒤척였다", s: "The cloud shifted itself a little" },
+            { w: "shade", k: "그늘", s: "shade fell on the village below" },
+            { w: "Not at all", k: "천만에", s: "Not at all. One puff of wind and I scatter." },
+            { w: "scatter", k: "흩어지다", s: "One puff of wind and I scatter." },
+            { w: "drooped (droop)", k: "축 처졌다", s: "Their shoulders drooped at that." }
+        ],
+        "06-wind.webp": [
+            { w: "wide field", k: "너른 들판", s: "They went down to a wide field and called the wind." },
+            { w: "hard enough to ~", k: "~할 만큼 세게", s: "It came at once, hard enough to lay the silver grass flat." },
+            { w: "silver grass", k: "억새", s: "hard enough to lay the silver grass flat" },
+            { w: "held tight to ~", k: "꽉 붙잡았다", s: "The two held tight to the roots of the grass" },
+            { w: "so as not to ~", k: "~하지 않으려고", s: "held tight to the roots so as not to blow away" },
+            { w: "with a whoosh", k: "휘잉 하고", s: "The wind laughed with a whoosh" },
+            { w: "ran in waves", k: "물결처럼 일렁였다", s: "the grass ran in waves" },
+            { w: "beat", k: "이기다", s: "There is one thing I can never beat." },
+            { w: "at this rate", k: "이러다가는", s: "My legs will break at this rate." }
+        ],
+        "07-windanswer.webp": [
+            { w: "pass", k: "고갯마루", s: "The stone Buddha up on that pass." },
+            { w: "Blow as hard as I like", k: "아무리 세게 불어도", s: "Blow as hard as I like, he does not blink." },
+            { w: "blink", k: "눈을 깜짝하다", s: "Blow as hard as I like, he does not blink." },
+            { w: "in a moment", k: "훌쩍", s: "The wind said so and was gone somewhere in a moment." },
+            { w: "in silence", k: "말없이", s: "The two mice looked at each other in silence." },
+            { w: "every way", k: "헝클어진", s: "Both of them had their fur every way." },
+            { w: "a sorry sight", k: "꼴이 말이 아닌", s: "a sorry sight they were" },
+            { w: "It had better be", k: "그래야지요", s: "It had better be. My legs are swollen." },
+            { w: "limped (limp)", k: "절뚝였다", s: "The two limped up the road to the pass." }
+        ],
+        "08-buddha.webp": [
+            { w: "stood tall", k: "우뚝 서 있었다", s: "On the pass a great stone Buddha stood tall." },
+            { w: "make your neck ache", k: "목이 아프게 하다", s: "It was high enough to make your neck ache." },
+            { w: "straightened their clothes", k: "옷매무새를 고쳤다", s: "The two straightened their clothes and asked very politely." },
+            { w: "politely", k: "공손히", s: "The two straightened their clothes and asked very politely." },
+            { w: "the honest truth", k: "바른대로", s: "Please tell us the honest truth." },
+            { w: "It might have been ~", k: "~인 듯했다", s: "It might have been the first time in a thousand years." },
+            { w: "frightens (frighten)", k: "무섭게 한다", s: "There is one thing that frightens me too." },
+            { w: "went out of ~ (go)", k: "탁 풀렸다", s: "All the strength went out of the two of them." }
+        ],
+        "09-answer.webp": [
+            { w: "What in the world", k: "대체 무엇", s: "What in the world is it?" },
+            { w: "out of patience", k: "답답해서", s: "The father mouse asked it, out of patience." },
+            { w: "At this rate", k: "이러다가는", s: "At this rate, he thought, his daughter would be a grandmother." },
+            { w: "its own feet", k: "제 발밑", s: "The stone Buddha said nothing and looked down at its own feet." },
+            { w: "with their mouths open", k: "입이 딱 벌어져", s: "The mice stood with their mouths open." },
+            { w: "dug at their ears (dig)", k: "귀를 후볐다", s: "They dug at their ears, sure they had misheard." },
+            { w: "misheard (mishear)", k: "잘못 들었다", s: "sure they had misheard" }
+        ],
+        "10-explain.webp": [
+            { w: "dig away", k: "파고들다", s: "Let a mouse dig away under my feet and down I come." },
+            { w: "down I come", k: "그대로 쓰러진다", s: "Let a mouse dig away under my feet and down I come." },
+            { w: "knock ~ over", k: "넘어뜨리다", s: "Sun and cloud and wind cannot knock me over." },
+            { w: "fear most", k: "제일 무서워하다", s: "But a mouse can. So a mouse is what I fear most." },
+            { w: "the ground goes", k: "발밑이 무너진다", s: "When the ground goes, nothing can be done." },
+            { w: "went by (go by)", k: "지나갔다", s: "Only the wind went by." },
+            { w: "front paws", k: "앞발", s: "Very small front paws, worn down with digging earth." },
+            { w: "worn down (wear)", k: "닳고 닳은", s: "Very small front paws, worn down with digging earth." }
+        ],
+        "11-realize.webp": [
+            { w: "on the road home", k: "집으로 돌아오는 길에", s: "They were on the road home." },
+            { w: "lay long (lie)", k: "길게 늘어졌다", s: "The sun was going down and the hill shadows lay long." },
+            { w: "a good while", k: "한참을", s: "The two walked a good while without saying anything." },
+            { w: "My dear", k: "여보", s: "My dear, is it not funny?" },
+            { w: "all this hard way", k: "이 고생을 하며", s: "What have we been looking for, all this hard way?" },
+            { w: "ourselves", k: "우리 자신을", s: "We went looking for ourselves." },
+            { w: "till tears came", k: "눈물이 날 때까지", s: "They laughed till tears came." }
+        ],
+        "12-wedding.webp": [
+            { w: "bridegroom", k: "신랑", s: "The bridegroom was the young mouse from next door." },
+            { w: "known for ~", k: "~로 소문난", s: "He was known for hard work and a straight heart." },
+            { w: "a straight heart", k: "곧은 마음씨", s: "He was known for hard work and a straight heart." },
+            { w: "doorsill", k: "문턱", s: "He had worn the storehouse doorsill out coming and going." },
+            { w: "coming and going", k: "드나들며", s: "He had worn the doorsill out coming and going." },
+            { w: "went pink", k: "볼이 발그레해졌다", s: "The daughter went pink and bowed her head." },
+            { w: "might have ~", k: "~할 것을", s: "We might have done this first and saved four mountains." },
+            { w: "scratched his head", k: "머리를 긁적였다", s: "The father mouse scratched his head" },
+            { w: "my mind is easy", k: "마음이 놓인다", s: "Now at last my mind is easy." }
+        ],
+        "after": [
+            { w: "is thought to ~", k: "~로 본다", s: "This story is thought to have come from India." },
+            { w: "by way of ~", k: "~를 거쳐", s: "It reached our land by way of China." },
+            { w: "travelled far (travel)", k: "멀리 퍼졌다", s: "It is a story shape that has travelled very far." },
+            { w: "Look again", k: "다시 보면", s: "Look again and everything the two mice met says the same thing." },
+            { w: "is not the strongest", k: "제일이 아니다", s: "each one says it is not the strongest" },
+            { w: "gnaws at ~ (gnaw)", k: "갉아 댄다", s: "when something gnaws at the base of it" },
+            { w: "the base", k: "밑동", s: "when something gnaws at the base of it" },
+            { w: "depends on ~ (depend)", k: "~에 따라 달라진다", s: "what counts as strong always depends on who it is up against" },
+            { w: "under their feet", k: "발밑에", s: "The answer had been under their feet from the start." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '☀️',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story is thought to have come from India. An old Indian collection has a mouse looking for a husband for his daughter, going to the sun, the cloud, the wind and the mountain in turn.",
+                    "It reached our land by way of China, and Japan has the same one. It is a story shape that has travelled very far.",
+                    "Look again and everything the two mice met says the same thing: it is not the strongest. The sun says the cloud is, the cloud says the wind is, the wind says the stone Buddha is.",
+                    "And what the stone Buddha named was a mouse. Nothing can be done, it said, when something gnaws at the base of it."
+                ],
+                right: [
+                    "So this is not a story asking who is strongest. It is a story saying that what counts as strong always depends on who it is up against.",
+                    "The two went looking for the strongest thing in the world and got as far as the stone Buddha. The answer had been under their feet from the start.",
+                    "Have you ever looked far away for something that was near you all along?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "쥐 부부는 딸을 누구에게 보내려 했나요?", choices: ["이웃집 총각 쥐", "중매쟁이가 데려온 이", "세상에서 가장 센 이"], answer: 2 },
     { q: "쥐 부부가 찾아간 차례로 맞는 것은 무엇인가요?", choices: ["바람 - 해 - 돌부처 - 구름", "해 - 구름 - 바람 - 돌부처", "구름 - 바람 - 해 - 돌부처"], answer: 1 },
