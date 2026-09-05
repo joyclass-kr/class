@@ -1,10 +1,7 @@
 (() => {
     "use strict";
 
-    const SESSION_SIZE = 10;
     const PLAYER_NAME_KEY = "classPlayerName";
-    const BEST_SCORE_KEY = "poetryQuizBestScore";
-    const PERSONAL_DECK_KEY = "poetryPersonalQuestionDeckV1";
     const LESSON_PROGRESS_KEY = "poetryLessonProgressV1";
     const GRADE_KEY = "poetryLastGradeV1";
 
@@ -15,20 +12,11 @@
     const lessons = Array.isArray(window.POETRY_LESSONS) ? window.POETRY_LESSONS : [];
     const grades = Array.isArray(window.POETRY_GRADES) ? window.POETRY_GRADES : [];
 
-    document.querySelectorAll("[data-question-count]").forEach((node) => {
-        node.textContent = String(questionBank.length);
-    });
-
     const elements = {
-        modeScreen: document.getElementById("modeScreen"),
         lessonScreen: document.getElementById("lessonScreen"),
         readScreen: document.getElementById("readScreen"),
-        personalScreen: document.getElementById("personalScreen"),
         quizScreen: document.getElementById("quizScreen"),
         resultScreen: document.getElementById("resultScreen"),
-        lessonModeButton: document.getElementById("lessonModeButton"),
-        personalModeButton: document.getElementById("personalModeButton"),
-        personalStartButton: document.getElementById("personalStartButton"),
         gradeTabs: document.getElementById("gradeTabs"),
         lessonProgressSummary: document.getElementById("lessonProgressSummary"),
         lessonList: document.getElementById("lessonList"),
@@ -53,9 +41,7 @@
         restartButton: document.getElementById("restartButton"),
         nextLessonButton: document.getElementById("nextLessonButton"),
         lessonListButton: document.getElementById("lessonListButton"),
-        resultModeButton: document.getElementById("resultModeButton"),
         nextButton: document.getElementById("nextButton"),
-        headerBestScore: document.getElementById("headerBestScore"),
         quizModeLabel: document.getElementById("quizModeLabel"),
         questionNumber: document.getElementById("questionNumber"),
         questionTotal: document.getElementById("questionTotal"),
@@ -80,16 +66,13 @@
     };
 
     const screens = [
-        elements.modeScreen,
         elements.lessonScreen,
         elements.readScreen,
-        elements.personalScreen,
         elements.quizScreen,
         elements.resultScreen
     ];
 
     const state = {
-        mode: "",
         grade: grades[0] ? grades[0].grade : 3,
         lessonIndex: -1,
         readIndex: 0,
@@ -120,11 +103,6 @@
 
     function getPlayerName() {
         return readStoredValue(PLAYER_NAME_KEY).trim();
-    }
-
-    function getBestScore() {
-        const stored = Number.parseInt(readStoredValue(BEST_SCORE_KEY), 10);
-        return Number.isInteger(stored) && stored >= 0 ? Math.min(stored, SESSION_SIZE) : 0;
     }
 
     function readLessonProgress() {
@@ -170,6 +148,10 @@
         return lessons[state.lessonIndex] || null;
     }
 
+    function orderInGradeOf(lesson) {
+        return lessonsOfGrade(lesson.grade).indexOf(lesson) + 1;
+    }
+
     function currentLessonPoems() {
         const lesson = currentLesson();
         if (!lesson) return [];
@@ -178,17 +160,6 @@
 
     function setScreen(activeScreen) {
         screens.forEach((screen) => screen?.classList.toggle("hidden", screen !== activeScreen));
-    }
-
-    function updateHeaderBest() {
-        elements.headerBestScore.textContent = `${getBestScore()}/${SESSION_SIZE}`;
-    }
-
-    function showModeScreen() {
-        state.mode = "";
-        state.lessonIndex = -1;
-        setScreen(elements.modeScreen);
-        elements.lessonModeButton.focus({ preventScroll: true });
     }
 
     // ── 시 그리기 ────────────────────────────────────────────────
@@ -244,29 +215,26 @@
         const ready = list.filter(isReady);
         const done = ready.filter((lesson) => progress[lesson.id]).length;
         elements.lessonProgressSummary.textContent = ready.length === 0
-            ? "이 학년은 아직 준비 중이에요. 다른 학년을 골라 보세요."
-            : `${ready.length}차시 가운데 ${done}차시를 끝냈어요. 차시를 골라 시를 읽은 뒤 확인 문제를 풀어요.`;
+            ? "아직 준비 중이에요."
+            : `${ready.length}차시 가운데 ${done}차시를 끝냈어요.`;
 
         elements.lessonList.replaceChildren(...list.map((lesson) => {
             const globalIndex = lessons.indexOf(lesson);
-            const orderInGrade = list.indexOf(lesson) + 1;
             const item = document.createElement("li");
             const button = document.createElement("button");
             const number = document.createElement("span");
             const copy = document.createElement("span");
             const title = document.createElement("strong");
-            const note = document.createElement("small");
             const meta = document.createElement("span");
             const record = progress[lesson.id];
 
             button.type = "button";
             button.className = "lesson-card";
             number.className = "lesson-number";
-            number.textContent = `${orderInGrade}차시`;
+            number.textContent = `${orderInGradeOf(lesson)}차시`;
             copy.className = "lesson-copy";
             title.textContent = lesson.title;
-            note.textContent = lesson.note;
-            copy.append(title, note);
+            copy.append(title);
             meta.className = "lesson-meta";
 
             if (!isReady(lesson)) {
@@ -288,25 +256,22 @@
         }));
     }
 
-    function selectLessonMode() {
-        state.mode = "lesson";
+    function showLessonList() {
+        state.lessonIndex = -1;
         const stored = Number.parseInt(readStoredValue(GRADE_KEY), 10);
         if (grades.some((item) => item.grade === stored)) state.grade = stored;
         renderGradeTabs();
         renderLessonList();
         setScreen(elements.lessonScreen);
-        elements.lessonList.querySelector("button:not([disabled])")?.focus({ preventScroll: true });
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     // ── 시 읽기 ──────────────────────────────────────────────────
     function openReading(lessonIndex) {
-        state.mode = "lesson";
         state.lessonIndex = lessonIndex;
         state.readIndex = 0;
         const lesson = currentLesson();
-        const orderInGrade = lessonsOfGrade(lesson.grade).indexOf(lesson) + 1;
-        elements.readKicker.textContent = `${orderInGrade}차시`;
+        elements.readKicker.textContent = `${orderInGradeOf(lesson)}차시`;
         elements.readTitle.textContent = lesson.title;
         elements.readTotal.textContent = String(currentLessonPoems().length);
         setScreen(elements.readScreen);
@@ -363,46 +328,18 @@
     }
 
     // ── 문제 ─────────────────────────────────────────────────────
-    function takePersonalQuestionIds() {
-        return window.PoetryQuestionDeck.take({
-            questions: questionBank,
-            size: SESSION_SIZE,
-            storageKey: PERSONAL_DECK_KEY,
-            storage: window.localStorage
-        });
-    }
-
-    function buildSession(questionIds, limit) {
-        const selected = questionIds.map((id) => questionById.get(id)).filter(Boolean);
-        const trimmed = limit ? selected.slice(0, limit) : selected;
-        return trimmed.map((question) => ({
-            ...question,
-            choices: shuffle(question.choices)
-        }));
+    function buildSession(questionIds) {
+        return questionIds
+            .map((id) => questionById.get(id))
+            .filter(Boolean)
+            .map((question) => ({ ...question, choices: shuffle(question.choices) }));
     }
 
     function startLessonQuiz() {
         const lesson = currentLesson();
         if (!lesson) return;
-        startQuiz(shuffle(lesson.ids));
-    }
-
-    function selectPersonalMode() {
-        state.mode = "personal";
-        setScreen(elements.personalScreen);
-        elements.personalStartButton.focus({ preventScroll: true });
-    }
-
-    function startQuiz(questionIds) {
-        const isLesson = state.mode === "lesson";
-        const ids = Array.isArray(questionIds) ? questionIds : takePersonalQuestionIds();
-        const session = buildSession(ids, isLesson ? 0 : SESSION_SIZE);
-        const expected = isLesson ? ids.length : SESSION_SIZE;
-        if (session.length === 0 || session.length !== expected) {
-            elements.personalStartButton.textContent = "문항을 불러오지 못했어요";
-            elements.personalStartButton.disabled = true;
-            return;
-        }
+        const session = buildSession(shuffle(lesson.ids));
+        if (session.length === 0) return;
 
         state.questions = session;
         state.currentIndex = 0;
@@ -411,13 +348,7 @@
         state.answers = [];
         elements.currentScore.textContent = "0";
         elements.questionTotal.textContent = String(sessionSize());
-        if (isLesson) {
-            const lesson = currentLesson();
-            const orderInGrade = lessonsOfGrade(lesson.grade).indexOf(lesson) + 1;
-            elements.quizModeLabel.textContent = `${orderInGrade}차시 확인`;
-        } else {
-            elements.quizModeLabel.textContent = "무작위 10문제";
-        }
+        elements.quizModeLabel.textContent = `${orderInGradeOf(lesson)}차시 확인`;
         setScreen(elements.quizScreen);
         renderQuestion();
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -562,6 +493,7 @@
     }
 
     function showResults() {
+        const lesson = currentLesson();
         const total = sessionSize();
         const missed = state.answers.filter((answer) => !answer.isCorrect);
         elements.finalScore.textContent = String(state.score);
@@ -572,58 +504,30 @@
         elements.perfectReview.classList.toggle("hidden", missed.length !== 0);
         elements.missedList.classList.toggle("hidden", missed.length === 0);
 
-        elements.nextLessonButton.classList.add("hidden");
-        elements.lessonListButton.classList.add("hidden");
-        elements.resultTitle.textContent = "학습 결과";
-        elements.restartButton.textContent = "새 문제 풀기";
-
-        if (state.mode === "lesson") {
-            const lesson = currentLesson();
-            const gradeList = lessonsOfGrade(lesson.grade);
-            const orderInGrade = gradeList.indexOf(lesson) + 1;
-            const { best, isNewBest } = saveLessonResult(lesson.id, state.score, total);
-            const nextLesson = gradeList[orderInGrade];
-            elements.resultTitle.textContent = `${orderInGrade}차시 · ${lesson.title}`;
-            elements.bestMessage.textContent = isNewBest
-                ? `이 차시 최고 기록이에요! ${best}/${total}`
-                : `이 차시 최고 기록 ${best}/${total}`;
-            elements.restartButton.textContent = "이 차시 다시 풀기";
-            elements.nextLessonButton.classList.toggle("hidden", !nextLesson || !isReady(nextLesson));
-            elements.lessonListButton.classList.remove("hidden");
-        } else {
-            const previousBest = getBestScore();
-            const isNewBest = state.score > previousBest;
-            const best = Math.max(previousBest, state.score);
-            if (isNewBest) writeStoredValue(BEST_SCORE_KEY, state.score);
-            elements.bestMessage.textContent = isNewBest
-                ? `새 개인 최고 기록이에요! ${best}/${SESSION_SIZE}`
-                : `개인 최고 기록 ${best}/${SESSION_SIZE}`;
-            updateHeaderBest();
-        }
+        const gradeList = lessonsOfGrade(lesson.grade);
+        const nextLesson = gradeList[gradeList.indexOf(lesson) + 1];
+        const { best, isNewBest } = saveLessonResult(lesson.id, state.score, total);
+        elements.resultTitle.textContent = `${orderInGradeOf(lesson)}차시 · ${lesson.title}`;
+        elements.bestMessage.textContent = isNewBest
+            ? `이 차시 최고 기록이에요! ${best}/${total}`
+            : `이 차시 최고 기록 ${best}/${total}`;
+        elements.nextLessonButton.classList.toggle("hidden", !nextLesson || !isReady(nextLesson));
 
         setScreen(elements.resultScreen);
-        elements.resultModeButton.focus({ preventScroll: true });
+        elements.lessonListButton.focus({ preventScroll: true });
         window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function restartCurrent() {
-        if (state.mode === "lesson") {
-            startLessonQuiz();
-            return;
-        }
-        startQuiz();
     }
 
     function goToNextLesson() {
         const lesson = currentLesson();
         if (!lesson) {
-            selectLessonMode();
+            showLessonList();
             return;
         }
         const gradeList = lessonsOfGrade(lesson.grade);
         const nextLesson = gradeList[gradeList.indexOf(lesson) + 1];
         if (!nextLesson || !isReady(nextLesson)) {
-            selectLessonMode();
+            showLessonList();
             return;
         }
         openReading(lessons.indexOf(nextLesson));
@@ -645,21 +549,15 @@
         }
     }
 
-    elements.lessonModeButton.addEventListener("click", selectLessonMode);
-    elements.personalModeButton.addEventListener("click", selectPersonalMode);
-    elements.personalStartButton.addEventListener("click", () => startQuiz());
     elements.readPrevButton.addEventListener("click", () => moveReading(-1));
     elements.readNextButton.addEventListener("click", () => moveReading(1));
     elements.readSkipButton.addEventListener("click", startLessonQuiz);
-    elements.readBackButton.addEventListener("click", selectLessonMode);
-    elements.restartButton.addEventListener("click", restartCurrent);
+    elements.readBackButton.addEventListener("click", showLessonList);
+    elements.restartButton.addEventListener("click", startLessonQuiz);
     elements.nextLessonButton.addEventListener("click", goToNextLesson);
-    elements.lessonListButton.addEventListener("click", selectLessonMode);
-    elements.resultModeButton.addEventListener("click", showModeScreen);
+    elements.lessonListButton.addEventListener("click", showLessonList);
     elements.nextButton.addEventListener("click", goToNextQuestion);
-    document.querySelectorAll(".mode-back-button").forEach((button) => button.addEventListener("click", showModeScreen));
     document.addEventListener("keydown", handleKeyboard);
 
-    updateHeaderBest();
-    setScreen(elements.modeScreen);
+    showLessonList();
 })();
