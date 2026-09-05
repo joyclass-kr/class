@@ -68,8 +68,8 @@ test("the page loads the readability revision", () => {
   assert.ok(html.includes("course-v2.css?v=20260903-1"));
   assert.ok(html.includes("harmony-foundation.css?v=20260903-1"));
   assert.ok(html.includes("harmony-course.css?v=20260903-1"));
-  assert.ok(html.includes("harmony-curriculum.js?v=20260903-1"));
-  assert.ok(html.includes("harmony-course.js?v=20260903-2"));
+  assert.ok(html.includes("harmony-curriculum.js?v=20260905-1"));
+  assert.ok(html.includes("harmony-course.js?v=20260905-1"));
   assert.ok(html.includes("harmony-traditional-extension.js?v=20260901-7"));
 });
 

@@ -25,6 +25,7 @@
     "pitch-alphabet": [["음이름은 C에서 B까지 반복됩니다",["C4","D4","E4","F4","G4","A4","B4","C5"],["C(다)","D(라)","E(마)","F(바)","G(사)","A(가)","B(나)","C(다)"]]],
     "treble-clef-map": [["높은음자리표 줄: E–G–B–D–F",["E4","G4","B4","D5","F5"],["1줄 E","2줄 G","3줄 B","4줄 D","5줄 F"]],["높은음자리표 칸: F–A–C–E",["F4","A4","C5","E5"],["1칸 F","2칸 A","3칸 C","4칸 E"]]],
     "bass-clef-map": [["낮은음자리표 줄: G–B–D–F–A",["G2","B2","D3","F3","A3"],["1줄 G","2줄 B","3줄 D","4줄 F","5줄 A"]],["낮은음자리표 칸: A–C–E–G",["A2","C3","E3","G3"],["1칸 A","2칸 C","3칸 E","4칸 G"]]],
+    "ledger-lines": [["Below treble · 아래 둘째/첫째 덧줄",["A3","C4"],["A3 · 2nd","C4 · 1st"],null,"treble"],["Above treble · 위 첫째/둘째 덧줄",["A5","C6"],["A5 · 1st","C6 · 2nd"],null,"treble"],["Below bass · 아래 첫째/둘째 덧줄",["E2","C2"],["E2 · 1st","C2 · 2nd"],null,"bass"],["Above bass · 위 첫째/둘째 덧줄",["C4","E4"],["C4 · 1st","E4 · 2nd"],null,"bass"]],
     "staff-clefs": [["낮은음자리표: C3–G3",["C3","D3","E3","F3","G3"],["C3","D3","E3","F3","G3"]],["높은음자리표: C4–G4",["C4","D4","E4","F4","G4"],["C4","D4","E4","F4","G4"]]],
     "grand-staff-bridge": [["C3–C4–C5",["C3","C4","C5"]]],
     "enharmonic-spelling": [["C♯로 읽기",["C4","C#4","D4"],["C","C♯","D"]],["D♭로 읽기",["C4","Db4","D4"],["C","D♭","D"]]],
@@ -154,7 +155,7 @@
   }
 
   const SEQUENCE_KEYS = new Set([
-    "staff-basics", "pitch-alphabet", "treble-clef-map", "bass-clef-map", "staff-clefs", "enharmonic-spelling", "part-motion", "nonchord-motion", "suspension-resolution", "minor-scales", "sequence-voices",
+    "staff-basics", "pitch-alphabet", "treble-clef-map", "bass-clef-map", "ledger-lines", "staff-clefs", "enharmonic-spelling", "part-motion", "nonchord-motion", "suspension-resolution", "minor-scales", "sequence-voices",
     "key-scale", "leading-tone", "roman-transfer", "practice-layers",
     "transpose-map", "transpose-melody", "harmonic-rhythm", "rhythm-density",
     "harmonize-options", "melody-register", "secondary-chain",
@@ -296,11 +297,12 @@
     const width = 520;
     const rows = items.map(function (item) {
       const hasAnnotations = Boolean(item[2] && item[2].some(Boolean));
-      const height = hasAnnotations ? 116 : 100;
-      const yShift = hasAnnotations ? -29 : -44;
+      const isLedgerLesson = key === "ledger-lines";
+      const height = isLedgerLesson ? 132 : (hasAnnotations ? 116 : 100);
+      const yShift = isLedgerLesson ? -12 : (hasAnnotations ? -29 : -44);
       const parts = item[1].map(noteParts);
       const averageStep = parts.reduce(function (total, part) { return total+part.step; }, 0) / Math.max(1, parts.length);
-      const clef = averageStep < 26 ? "bass" : "treble";
+      const clef = item[4] || (averageStep < 26 ? "bass" : "treble");
       const gap = (width - 126) / Math.max(1, parts.length);
       const notes = item[3] === "chord"
         ? placeChordParts(item[1], width / 2, false, clef)
@@ -445,6 +447,12 @@
       return flowDiagram("음이름 C부터 B까지 순환", [
         { head:"C", detail:"다" }, { head:"D", detail:"라" }, { head:"E", detail:"마" }, { head:"F", detail:"바" },
         { head:"G", detail:"사" }, { head:"A", detail:"가" }, { head:"B", detail:"나" }, { head:"C", detail:"다시 시작", tone:"accent" }
+      ]);
+    }
+    if (key === "ledger-lines") {
+      return flowDiagram("덧줄 음을 읽는 네 단계", [
+        { head:"1. Clef", detail:"음자리표 확인" }, { head:"2. Nearest line", detail:"가까운 끝 줄 찾기" },
+        { head:"3. Ledger line", detail:"첫째·둘째 덧줄 세기" }, { head:"4. Note name", detail:"줄·칸으로 음이름 확인", tone:"accent" }
       ]);
     }
     if (key === "whole-half-map") {
@@ -672,7 +680,7 @@
   }
 
   const PREVIEW_LABELS = {
-    "staff-basics":"5선", "pitch-alphabet":"C–B", "staff-clefs":"𝄞·𝄢", "enharmonic-spelling":"♯=♭", "voice-ranges":"SATB", "whole-half-map":"½·1", "sharp-order":"♯순서", "flat-order":"♭순서", "fifths-wheel":"5도권", "relative-keys":"장↔단", "scale-degree-map":"1–7", "mode-map":"Mode", "pentatonic-map":"5음",
+    "staff-basics":"5선", "pitch-alphabet":"C–B", "ledger-lines":"덧줄", "staff-clefs":"𝄞·𝄢", "enharmonic-spelling":"♯=♭", "voice-ranges":"SATB", "whole-half-map":"½·1", "sharp-order":"♯순서", "flat-order":"♭순서", "fifths-wheel":"5도권", "relative-keys":"장↔단", "scale-degree-map":"1–7", "mode-map":"Mode", "pentatonic-map":"5음",
     "note-values":"♩·𝅗𝅥", "rest-values":"쉼=박", "meter-basics":"4/4", "interval-spelling":"M3", "interval-number":"1·2·3", "interval-direction":"↑↓", "interval-form":"→ / +", "interval-simple":"1–8", "interval-family":"P·M·m", "interval-quality-ladder":"°·m·M·+", "interval-inversion":"3↔6", "interval-compound":"2→9", "interval-consonance":"협화", "interval-ear-process":"듣기",
     "part-spacing":"SATB", "part-motion":"7→1", "motion-directions":"↑↓―", "voice-crossing":"교차", "nonchord-motion":"C–D–E", "suspension-resolution":"4–3",
     "minor-scales":"m scale", "minor-dominant":"V7–i", "sequence-cycle":"vi–ii–V–I", "sequence-voices":"성부선",
@@ -709,7 +717,7 @@
   function previewKind(key) {
     if (key.startsWith("interval") || key === "enharmonic-spelling") return "interval";
     if (["note-values","rest-values","meter-basics","harmonic-rhythm","rhythm-density"].includes(key)) return "rhythm";
-    if (key.startsWith("staff-") || key === "pitch-alphabet") return "staff";
+    if (key.startsWith("staff-") || key === "pitch-alphabet" || key === "ledger-lines") return "staff";
     if (key.includes("scale") || key.startsWith("key-") || key === "leading-tone" || key.startsWith("transpose")) return "scale";
     if (key.includes("voice") || key.startsWith("part-") || key.includes("motion") || key.startsWith("nonchord") || key.startsWith("suspension") || key.includes("guide")) return "voice";
     if (key.includes("melody") || key.includes("harmonize") || key === "lead-sheet" || key.includes("arrangement") || key.includes("revision")) return "melody";

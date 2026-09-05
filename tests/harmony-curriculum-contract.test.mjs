@@ -73,7 +73,14 @@ assert.doesNotMatch(index + courseSource, /위에서부터 차례로|앞에서�
 assert.doesNotMatch(courseSource, /currentLesson\.textContent\s*=\s*"학습 "/, "the study footer must not present the item count as a fixed session count");
 assert.doesNotMatch(courseSource, /progressText\.textContent\s*=\s*state\.completed\.size\s*\+\s*" \/ "/, "progress must not foreground a fixed total as class periods");
 assert.equal(curriculum.strands[0].title, "기초악전");
-assert.deepEqual(Array.from(curriculum.strands[0].skills), ["NOTATION_BASICS","TREBLE_CLEF","BASS_CLEF","STAFF_PITCH","ACCIDENTAL_READING","RHYTHM_NOTATION","REST_NOTATION","METER_READING"], "fundamentals must teach clefs and duration as independent ordered lessons");
+const fundamentalsIds = ["NOTATION_BASICS","TREBLE_CLEF","BASS_CLEF","LEDGER_LINES","STAFF_PITCH","ACCIDENTAL_READING","RHYTHM_NOTATION","REST_NOTATION","METER_READING"];
+assert.deepEqual(Array.from(curriculum.strands[0].skills), fundamentalsIds, "fundamentals must teach clefs, ledger lines, and duration as independent ordered lessons");
+assert.deepEqual(Array.from(curriculum.skills.STAFF_PITCH.prereqs), ["LEDGER_LINES"], "grand-staff reading must follow dedicated ledger-line study");
+for (const id of fundamentalsIds) {
+  for (const term of curriculum.skills[id].terms) {
+    assert.match(term[0], / · [A-Za-z]/, id + " must pair each core Korean term with English");
+  }
+}
 assert.equal(curriculum.strands[1].title, "음정");
 const intervalLessonIds = ["INTERVAL_NUMBER","INTERVAL_FORM","INTERVAL_SPELLING","INTERVAL_ALTERED","INTERVAL_INVERSION","INTERVAL_COMPOUND","INTERVAL_CONSONANCE","INTERVAL_EAR"];
 assert.deepEqual(Array.from(curriculum.strands[1].skills), intervalLessonIds);
@@ -105,6 +112,9 @@ for (const [id, [sectionMinimum, questionMinimum]] of Object.entries(partOneDept
   assert.ok(skill.sections.some((section) => section.worked && section.worked.steps.length >= 3), id + " needs a worked example");
   assert.ok(skill.sections.some((section) => section.mistake), id + " needs misconception feedback");
 }
+assert.ok(curriculum.skills.LEDGER_LINES.sections.length >= 3, "ledger-line study needs a full reading sequence");
+assert.ok(curriculum.skills.LEDGER_LINES.evidence.length >= 6, "ledger-line study needs enough definite reading questions");
+assert.ok(curriculum.skills.LEDGER_LINES.sections.some((section) => section.worked && section.worked.steps.length >= 3), "ledger-line study needs a worked reading example");
 assert.match(courseSource, /HarmonyPiano/);
 assert.doesNotMatch(index, /dashboardTitle|class="dashboard-heading"|>진도표<\/h1>/, "the dashboard must start with the learning list");
 assert.ok(index.indexOf('id="unitList"') < index.indexOf('class="dashboard-tools"'), "progress controls must follow the learning list");

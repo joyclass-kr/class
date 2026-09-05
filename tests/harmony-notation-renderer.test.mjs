@@ -144,9 +144,15 @@ assert.match(meterBasics, /2 \+ 2 \+ 2/);
 assert.match(meterBasics, /3 \+ 3/);
 assert.doesNotMatch(meterBasics, /meter-pulses/, "meter visuals must not be dot-counting cards");
 
-for (const key of ["treble-clef-map","bass-clef-map","grand-staff-bridge"]) {
+for (const key of ["treble-clef-map","bass-clef-map","ledger-lines","grand-staff-bridge"]) {
   assert.match(notation.render(key), /class="score-svg/, key + " needs a real staff example");
 }
+const ledgerScore = notation.render("ledger-lines");
+assert.equal((ledgerScore.match(/class="score-line-card"/g) || []).length, 4, "ledger lines need separate treble and bass examples above and below the staff");
+assert.equal((ledgerScore.match(/class="note-head"/g) || []).length, 8, "the four ledger-line examples need two reference notes each");
+assert.ok((ledgerScore.match(/class="ledger"/g) || []).length >= 12, "first and second ledger positions must draw their actual short ledger lines");
+assert.match(ledgerScore, /Below treble/);
+assert.match(ledgerScore, /Above bass/);
 assert.match(notation.render("key-scale"), /class="concept-diagram fifths-wheel-diagram"/, "key signatures need a circle-of-fifths relationship diagram");
 assert.match(notation.render("roman-transfer"), /class="concept-diagram analysis-symbol-diagram"/, "Roman-numeral harmony analysis needs an explicit symbol key");
 const meters = notation.render("meter-basics");
