@@ -265,6 +265,506 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🗿",
+        art: "cover.webp",
+        title: "The Shadowless Pagoda",
+        intro: [
+            "This story belongs to the Seokgatap pagoda at Bulguksa in Gyeongju. Shadowless Pagoda means a pagoda with no shadow.",
+            "The mason Asadal in it is a man of Baekje. Silla really did call in workmen from Baekje and Tang to build its great temples.",
+            "Below Bulguksa there is a real pond called Yeongji. A very old stone Buddha still sits at the edge of it."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Mason Who Went to Seorabeol",
+            beats: [
+                {
+                    art: "01-asadal.webp",
+                    emoji: "🔨",
+                    left: [
+                        "Long ago in the land of Baekje there lived a mason called Asadal.",
+                        "At working stone he was the best in the country.",
+                        "Stone he had cut had a grain as soft as water.",
+                        "People came from far districts to leave stone with him.",
+                        "There was a queue at his door."
+                    ],
+                    right: [
+                        { t: "\"Put stone in that man's hands and it breathes.\"", v: "man" },
+                        "Asadal had a wife called Asanyeo.",
+                        "Every time she heard that, her shoulders went up a little.",
+                        "The two lived quietly in a small house at the end of the village.",
+                        "There was nothing they wanted for."
+                    ]
+                },
+                {
+                    art: "02-farewell.webp",
+                    emoji: "🌾",
+                    left: [
+                        "One day somebody came from Silla.",
+                        "He bowed politely and then said this.",
+                        { t: "\"A great temple is going up in Seorabeol. Build us a pagoda.\"", v: "man" },
+                        { t: "\"There is no mason in Baekje to match Asadal, we hear.\"", v: "man" },
+                        "Asadal was silent a long while, then he nodded."
+                    ],
+                    right: [
+                        "Asadal put his tool bag together and shouldered it.",
+                        { t: "\"I shall come straight home when the pagoda stands.\"", v: "man" },
+                        { t: "\"It will not take long.\"", v: "man" },
+                        "Asanyeo came out to the village edge and waved.",
+                        "She waved till his back went over the hill."
+                    ]
+                },
+                {
+                    art: "03-bulguksa.webp",
+                    emoji: "⛰️",
+                    left: [
+                        "The building site at Bulguksa was loud from morning till night.",
+                        "The temple was so big you could not see the end of it.",
+                        "Breaking stone and carrying earth made one noise.",
+                        "Asadal took his place in front of his own stone.",
+                        "And he cut stone without a word to anybody."
+                    ],
+                    right: [
+                        "Clang, clang. Clang, clang.",
+                        "The sound of cutting did not stop after everybody else was asleep.",
+                        "Clang, clang.",
+                        "That sound went on till the cock crowed at dawn.",
+                        "People fell asleep to it like a lullaby, and nobody complained."
+                    ]
+                },
+                {
+                    art: "04-years.webp",
+                    emoji: "🍂",
+                    left: [
+                        "One year went by, and then another.",
+                        "But the pagoda hardly rose at all.",
+                        "One stone took whole months to shape.",
+                        "If it did not please him he threw it away, finished as it was.",
+                        "And he began that stone again from the start."
+                    ],
+                    right: [
+                        { t: "\"A little more. Let me shape it a little more.\"", v: "man" },
+                        "He said that same thing to himself every day.",
+                        "White was coming into Asadal's hair by now.",
+                        "He pushed the thought of the wife he had left in Baekje away.",
+                        "If he thought of her his hands shook on the stone."
+                    ]
+                },
+                {
+                    art: "05-asanyeo.webp",
+                    emoji: "👣",
+                    left: [
+                        "Three years went by and her husband still did not come.",
+                        "Asanyeo could wait no longer, and set out.",
+                        "From Baekje to Seorabeol was a very long road.",
+                        "She walked and walked till pair after pair of straw shoes wore through.",
+                        "The soles of her feet blistered."
+                    ],
+                    right: [
+                        "At last she saw the roofs of Bulguksa far ahead.",
+                        "The tiled roofs shone in the morning sun.",
+                        "Asanyeo caught up her skirt and ran.",
+                        { t: "\"He is in there!\"", v: "woman" },
+                        "Her heart thumped at the thought of seeing him after years."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Shadow Pond",
+            beats: [
+                {
+                    art: "06-refused.webp",
+                    emoji: "🚧",
+                    left: [
+                        "But at the temple gate she was stopped.",
+                        "The gatekeeper lifted a long spear across her way.",
+                        { t: "\"Nobody goes in before the pagoda is finished.\"", v: "man" },
+                        "Everything went black in front of Asanyeo.",
+                        "She thought of the whole road she had walked to get here."
+                    ],
+                    right: [
+                        { t: "\"I have walked here from Baekje!\"", v: "woman" },
+                        "Asanyeo caught hold of the doorsill and hung on.",
+                        { t: "\"I know it is hard on you... but it cannot be done.\"", v: "man" },
+                        "The gatekeeper shook his head to the end.",
+                        "Over the wall, inside, only the clang of cutting stone came."
+                    ]
+                },
+                {
+                    art: "07-monk.webp",
+                    emoji: "🧎",
+                    left: [
+                        "Then an old monk came over to her.",
+                        "He had seen her sitting outside the gate, crying.",
+                        "The old monk pointed a hand down the hill.",
+                        "There was a pond at the foot of the mountain.",
+                        "The water was still as a mirror. The whole hill was in it."
+                    ],
+                    right: [
+                        { t: "\"That pond is called Yeongji.\"", v: "old" },
+                        { t: "\"When the pagoda stands, its shadow will show in that water.\"", v: "old" },
+                        "Asanyeo dried her eyes and looked up at him.",
+                        { t: "\"When you see the shadow, come then.\"", v: "old" },
+                        "Asanyeo believed it firmly, and went straight down to the pond."
+                    ]
+                },
+                {
+                    art: "08-wait.webp",
+                    emoji: "💧",
+                    left: [
+                        "From that day Asanyeo sat by the pond.",
+                        "One rock at the water's edge became her place.",
+                        "From morning till evening she looked at the water.",
+                        "If a cloud went over she jumped to her feet.",
+                        "The smallest thing moving on the water made her heart lurch."
+                    ],
+                    right: [
+                        { t: "\"Is that it? Is that the pagoda?\"", v: "woman" },
+                        "It was a cloud going by.",
+                        "Every time it was a cloud.",
+                        "Asanyeo let her shoulders drop and sat down on the rock again.",
+                        "But she could not take her eyes off the water. Today might be different."
+                    ]
+                },
+                {
+                    art: "09-seasons.webp",
+                    emoji: "🌸",
+                    left: [
+                        "Azaleas came out by the pond and went over.",
+                        "Dragonflies flew and vanished somewhere.",
+                        "Spring went, and summer, and autumn.",
+                        "The reeds went yellow, the pond froze hard and thawed again.",
+                        "That happened over and over, for several years."
+                    ],
+                    right: [
+                        "Asanyeo stayed where she was.",
+                        "Her hair was tangled and her clothes were worn through, and still she did not leave.",
+                        "The village people carried food down to her.",
+                        { t: "\"There she is at it still.\"", v: "man" },
+                        "They clicked their tongues, sorry for her."
+                    ]
+                },
+                {
+                    art: "10-nothing.webp",
+                    emoji: "🌫️",
+                    left: [
+                        "Meanwhile the pagoda took shape little by little.",
+                        "The base was laid, the body stones went up, the roof stones were set.",
+                        "People craned their necks to look up at it.",
+                        "But there was something very strange about it.",
+                        "Everybody tilted their heads over it."
+                    ],
+                    right: [
+                        "However high the pagoda went, nothing showed in the pond.",
+                        "Asanyeo looked at the water every day.",
+                        "The hill showed in it, and the sky, and the birds.",
+                        "Only the pagoda never showed at all.",
+                        "And Asanyeo's eyes only grew redder."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Pagoda with No Shadow",
+            beats: [
+                {
+                    art: "11-done.webp",
+                    emoji: "🗿",
+                    left: [
+                        "Then one night Asadal set the last stone in place.",
+                        "It was a stone he had shaped and shaped for years.",
+                        "Clang — the last cut rang out over the hill.",
+                        "Asadal sat down heavily where he stood.",
+                        "The tool dropped out of his hand."
+                    ],
+                    right: [
+                        "Under the moon the pagoda stood tall.",
+                        "It was a three-storey stone pagoda, straight and without a thing to spare.",
+                        "Every stone sat exactly in its place. No join could be seen.",
+                        { t: "\"...It is done now.\"", v: "man" },
+                        "Asadal said it to himself, looking up at it."
+                    ]
+                },
+                {
+                    art: "12-run.webp",
+                    emoji: "🏃",
+                    left: [
+                        "But a workman beside him said something in passing.",
+                        { t: "\"A woman from Baekje has sat by the pond for years.\"", v: "man" },
+                        "Asadal's face went white.",
+                        { t: "\"...What did you say?\"", v: "man" },
+                        "He threw down his tools and ran down the mountain."
+                    ],
+                    right: [
+                        { t: "\"Asanyeo! Asanyeo!\"", v: "man" },
+                        { t: "\"Wait a little longer, just a little longer!\"", v: "man" },
+                        "He caught his foot on a stone and fell, and got up and ran again.",
+                        "Morning mist lay thick on the mountain path.",
+                        "Asadal pushed through the mist with both arms and ran for the pond."
+                    ]
+                },
+                {
+                    art: "13-meet.webp",
+                    emoji: "🌅",
+                    left: [
+                        "Asanyeo was asleep, curled up on the rock by the pond.",
+                        "In those years she had grown thin past knowing.",
+                        "Her cheeks were hollow.",
+                        "On her knees was a handful of azaleas, not yet dried.",
+                        "She had picked them to lay by the water."
+                    ],
+                    right: [
+                        "Asadal shook her shoulder very gently.",
+                        "Asanyeo opened her eyes slowly and looked at her husband.",
+                        { t: "\"...Is it really you?\"", v: "woman" },
+                        "For a long while neither of them could say anything.",
+                        "The tears only came and came."
+                    ]
+                },
+                {
+                    art: "14-tower.webp",
+                    emoji: "🪞",
+                    left: [
+                        { t: "\"The shadow never came in the end.\"", v: "woman" },
+                        "Asanyeo said it, pointing at the still pond.",
+                        { t: "\"...I am sorry.\"", v: "man" },
+                        "Asadal could not bring himself to look at her face.",
+                        "Asanyeo laughed a little at him, and took his hand."
+                    ],
+                    right: [
+                        { t: "\"This shows in it instead.\"", v: "woman" },
+                        "Asanyeo pointed a hand at the water.",
+                        "In the pond the two faces showed side by side.",
+                        "The mist lifted and the morning sun broke over the water.",
+                        "After that people called that pagoda the Shadowless Pagoda."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What kind of work did Asadal do?", choices: ["A carpenter who cut wood", "A mason who worked stone", "A painter who made pictures"], answer: 1 },
+        { q: "Where was Asadal called to?", choices: ["A great temple in Baekje", "Bulguksa in Seorabeol", "The palace of Silla"], answer: 1 },
+        { q: "Why could Asanyeo not go inside?", choices: ["The pagoda was not finished", "She had lost her way there", "She had no money at all"], answer: 0 },
+        { q: "What did the monk tell Asanyeo?", choices: ["To come in by the back gate", "To come again next spring", "The shadow would show in the pond"], answer: 2 },
+        { q: "Did the pagoda's shadow show in the pond?", choices: ["It never showed at all", "It showed the first day", "It showed only in winter"], answer: 0 },
+        { q: "So what did people call this pagoda?", choices: ["The pagoda in the water", "The pagoda with no shadow", "The pagoda of Baekje"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He shaped a stone for months and threw it away if it did not please him, so you can see why the pagoda took so long.",
+                "Asanyeo sat on that rock by the pond for years, so waiting can wear a person as thin as that.",
+                "Two faces showed in the water instead of a pagoda's shadow, so what the waiting was for was never the pagoda.",
+                "The old monk told Asadal at once that his wife had come, so the temple felt for the two of them as well."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "belongs to ~", k: "~에 얽혀 있다", s: "This story belongs to the Seokgatap pagoda at Bulguksa." },
+            { w: "pagoda", k: "탑", s: "Shadowless Pagoda means a pagoda with no shadow." },
+            { w: "shadow", k: "그림자", s: "a pagoda with no shadow" },
+            { w: "mason", k: "석수", s: "The mason Asadal in it is a man of Baekje." },
+            { w: "call in ~", k: "불러다 쓰다", s: "Silla really did call in workmen from Baekje and Tang." },
+            { w: "workmen", k: "기술자", s: "call in workmen from Baekje and Tang" },
+            { w: "at the edge of ~", k: "~가에", s: "A very old stone Buddha still sits at the edge of it." }
+        ],
+        "01-asadal.webp": [
+            { w: "working stone", k: "돌 다루기", s: "At working stone he was the best in the country." },
+            { w: "grain", k: "결", s: "Stone he had cut had a grain as soft as water." },
+            { w: "districts", k: "고을", s: "People came from far districts to leave stone with him." },
+            { w: "leave ~ with (leave)", k: "맡기다", s: "People came from far districts to leave stone with him." },
+            { w: "queue", k: "줄", s: "There was a queue at his door." },
+            { w: "breathes (breathe)", k: "숨을 쉰다", s: "Put stone in that man's hands and it breathes." },
+            { w: "shoulders went up", k: "어깨가 으쓱했다", s: "her shoulders went up a little" },
+            { w: "wanted for (want for)", k: "아쉬워했다", s: "There was nothing they wanted for." }
+        ],
+        "02-farewell.webp": [
+            { w: "politely", k: "깍듯이", s: "He bowed politely and then said this." },
+            { w: "going up (go up)", k: "지어지는 중인", s: "A great temple is going up in Seorabeol." },
+            { w: "to match ~", k: "~만 한", s: "There is no mason in Baekje to match Asadal." },
+            { w: "was silent", k: "말이 없었다", s: "Asadal was silent a long while, then he nodded." },
+            { w: "tool bag", k: "연장 자루", s: "Asadal put his tool bag together and shouldered it." },
+            { w: "shouldered (shoulder)", k: "등에 졌다", s: "Asadal put his tool bag together and shouldered it." },
+            { w: "straight home", k: "곧바로 집으로", s: "I shall come straight home when the pagoda stands." },
+            { w: "the village edge", k: "마을 어귀", s: "Asanyeo came out to the village edge and waved." },
+            { w: "over the hill", k: "고개 너머로", s: "She waved till his back went over the hill." }
+        ],
+        "03-bulguksa.webp": [
+            { w: "building site", k: "공사판", s: "The building site at Bulguksa was loud from morning till night." },
+            { w: "so big that ~", k: "어찌나 큰지", s: "The temple was so big you could not see the end of it." },
+            { w: "made one noise", k: "뒤섞였다", s: "Breaking stone and carrying earth made one noise." },
+            { w: "took his place", k: "자리를 잡았다", s: "Asadal took his place in front of his own stone." },
+            { w: "without a word", k: "말을 섞지 않고", s: "he cut stone without a word to anybody" },
+            { w: "Clang", k: "땅땅", s: "Clang, clang. Clang, clang." },
+            { w: "the cock crowed", k: "새벽닭이 울었다", s: "That sound went on till the cock crowed at dawn." },
+            { w: "lullaby", k: "자장가", s: "People fell asleep to it like a lullaby." },
+            { w: "complained (complain)", k: "뭐라고 했다", s: "nobody complained" }
+        ],
+        "04-years.webp": [
+            { w: "hardly rose (rise)", k: "좀처럼 올라가지 않았다", s: "But the pagoda hardly rose at all." },
+            { w: "whole months", k: "몇 달이 꼬박", s: "One stone took whole months to shape." },
+            { w: "shape", k: "다듬다", s: "One stone took whole months to shape." },
+            { w: "did not please him", k: "마음에 안 들었다", s: "If it did not please him he threw it away." },
+            { w: "finished as it was", k: "다 깎아 놓고도", s: "he threw it away, finished as it was" },
+            { w: "from the start", k: "처음부터", s: "And he began that stone again from the start." },
+            { w: "to himself", k: "혼자", s: "He said that same thing to himself every day." },
+            { w: "White was coming into ~", k: "흰 것이 섞이기 시작했다", s: "White was coming into Asadal's hair by now." },
+            { w: "pushed ~ away", k: "밀어 두었다", s: "He pushed the thought of the wife he had left away." }
+        ],
+        "05-asanyeo.webp": [
+            { w: "could wait no longer", k: "기다리다 못했다", s: "Asanyeo could wait no longer, and set out." },
+            { w: "pair after pair", k: "몇 켤레나", s: "till pair after pair of straw shoes wore through" },
+            { w: "wore through (wear)", k: "다 닳았다", s: "pair after pair of straw shoes wore through" },
+            { w: "soles", k: "발바닥", s: "The soles of her feet blistered." },
+            { w: "blistered (blister)", k: "부르텄다", s: "The soles of her feet blistered." },
+            { w: "far ahead", k: "저 멀리", s: "At last she saw the roofs of Bulguksa far ahead." },
+            { w: "tiled roofs", k: "기와지붕", s: "The tiled roofs shone in the morning sun." },
+            { w: "caught up her skirt", k: "치마를 걷어붙였다", s: "Asanyeo caught up her skirt and ran." },
+            { w: "at the thought of ~", k: "~할 생각에", s: "Her heart thumped at the thought of seeing him." }
+        ],
+        "06-refused.webp": [
+            { w: "gatekeeper", k: "문지기", s: "The gatekeeper lifted a long spear across her way." },
+            { w: "spear", k: "창", s: "The gatekeeper lifted a long spear across her way." },
+            { w: "across her way", k: "앞을 가로막고", s: "lifted a long spear across her way" },
+            { w: "went black", k: "눈앞이 캄캄해졌다", s: "Everything went black in front of Asanyeo." },
+            { w: "doorsill", k: "문지방", s: "Asanyeo caught hold of the doorsill and hung on." },
+            { w: "hung on (hang)", k: "매달렸다", s: "Asanyeo caught hold of the doorsill and hung on." },
+            { w: "hard on you", k: "딱한", s: "I know it is hard on you... but it cannot be done." },
+            { w: "to the end", k: "끝내", s: "The gatekeeper shook his head to the end." }
+        ],
+        "07-monk.webp": [
+            { w: "monk", k: "스님", s: "Then an old monk came over to her." },
+            { w: "came over to ~", k: "다가왔다", s: "Then an old monk came over to her." },
+            { w: "pointed a hand", k: "손으로 가리켰다", s: "The old monk pointed a hand down the hill." },
+            { w: "the foot of ~", k: "~ 밑", s: "There was a pond at the foot of the mountain." },
+            { w: "still as a mirror", k: "거울처럼 잔잔한", s: "The water was still as a mirror." },
+            { w: "will show (show)", k: "비칠 것이다", s: "its shadow will show in that water" },
+            { w: "dried her eyes", k: "눈물을 닦았다", s: "Asanyeo dried her eyes and looked up at him." },
+            { w: "believed ~ firmly", k: "굳게 믿었다", s: "Asanyeo believed it firmly, and went straight down to the pond." }
+        ],
+        "08-wait.webp": [
+            { w: "the water's edge", k: "못가", s: "One rock at the water's edge became her place." },
+            { w: "became her place", k: "그 자리가 되었다", s: "One rock at the water's edge became her place." },
+            { w: "went over (go over)", k: "지나갔다", s: "If a cloud went over she jumped to her feet." },
+            { w: "jumped to her feet", k: "벌떡 일어섰다", s: "If a cloud went over she jumped to her feet." },
+            { w: "lurch", k: "철렁하다", s: "The smallest thing moving on the water made her heart lurch." },
+            { w: "Every time", k: "번번이", s: "Every time it was a cloud." },
+            { w: "let her shoulders drop", k: "어깨를 늘어뜨렸다", s: "Asanyeo let her shoulders drop" },
+            { w: "take her eyes off ~", k: "눈을 떼다", s: "But she could not take her eyes off the water." }
+        ],
+        "09-seasons.webp": [
+            { w: "went over (go over)", k: "졌다", s: "Azaleas came out by the pond and went over." },
+            { w: "Dragonflies", k: "물잠자리", s: "Dragonflies flew and vanished somewhere." },
+            { w: "vanished (vanish)", k: "사라졌다", s: "Dragonflies flew and vanished somewhere." },
+            { w: "reeds", k: "갈대", s: "The reeds went yellow, the pond froze hard and thawed again." },
+            { w: "thawed (thaw)", k: "풀렸다", s: "the pond froze hard and thawed again" },
+            { w: "over and over", k: "되풀이해서", s: "That happened over and over, for several years." },
+            { w: "tangled", k: "헝클어진", s: "Her hair was tangled and her clothes were worn through." },
+            { w: "at it still", k: "아직도 저러고 있는", s: "There she is at it still." },
+            { w: "clicked their tongues", k: "혀를 찼다", s: "They clicked their tongues, sorry for her." }
+        ],
+        "10-nothing.webp": [
+            { w: "Meanwhile", k: "그사이", s: "Meanwhile the pagoda took shape little by little." },
+            { w: "took shape", k: "모습을 갖추었다", s: "the pagoda took shape little by little" },
+            { w: "base", k: "받침돌", s: "The base was laid, the body stones went up." },
+            { w: "roof stones", k: "지붕돌", s: "the roof stones were set" },
+            { w: "craned their necks", k: "목을 뺐다", s: "People craned their necks to look up at it." },
+            { w: "tilted their heads", k: "고개를 갸웃했다", s: "Everybody tilted their heads over it." },
+            { w: "However high ~", k: "아무리 높아져도", s: "However high the pagoda went, nothing showed in the pond." },
+            { w: "grew redder (grow)", k: "붉어져 갔다", s: "And Asanyeo's eyes only grew redder." }
+        ],
+        "11-done.webp": [
+            { w: "set ~ in place", k: "얹었다", s: "Then one night Asadal set the last stone in place." },
+            { w: "shaped and shaped", k: "다듬고 또 다듬은", s: "It was a stone he had shaped and shaped for years." },
+            { w: "rang out (ring)", k: "울렸다", s: "the last cut rang out over the hill" },
+            { w: "dropped out of ~", k: "툭 떨어졌다", s: "The tool dropped out of his hand." },
+            { w: "three-storey", k: "삼층", s: "It was a three-storey stone pagoda." },
+            { w: "without a thing to spare", k: "군더더기 하나 없이", s: "straight and without a thing to spare" },
+            { w: "join", k: "틈", s: "Every stone sat exactly in its place. No join could be seen." },
+            { w: "It is done", k: "이제 다 됐다", s: "...It is done now." }
+        ],
+        "12-run.webp": [
+            { w: "workman", k: "일꾼", s: "But a workman beside him said something in passing." },
+            { w: "in passing", k: "지나가는 말로", s: "said something in passing" },
+            { w: "went white", k: "하얗게 질렸다", s: "Asadal's face went white." },
+            { w: "threw down ~ (throw)", k: "팽개쳤다", s: "He threw down his tools and ran down the mountain." },
+            { w: "a little longer", k: "조금만 더", s: "Wait a little longer, just a little longer!" },
+            { w: "caught his foot", k: "돌부리에 채였다", s: "He caught his foot on a stone and fell." },
+            { w: "mist", k: "물안개", s: "Morning mist lay thick on the mountain path." },
+            { w: "lay thick (lie)", k: "자욱했다", s: "Morning mist lay thick on the mountain path." },
+            { w: "pushed through ~", k: "헤쳤다", s: "Asadal pushed through the mist with both arms." }
+        ],
+        "13-meet.webp": [
+            { w: "curled up (curl)", k: "웅크린", s: "Asanyeo was asleep, curled up on the rock by the pond." },
+            { w: "grown thin", k: "야위었다", s: "In those years she had grown thin past knowing." },
+            { w: "past knowing", k: "몰라보게", s: "she had grown thin past knowing" },
+            { w: "hollow", k: "홀쭉한", s: "Her cheeks were hollow." },
+            { w: "a handful of ~", k: "한 줌의", s: "On her knees was a handful of azaleas, not yet dried." },
+            { w: "not yet dried", k: "아직 마르지 않은", s: "a handful of azaleas, not yet dried" },
+            { w: "lay by ~", k: "놓아 두다", s: "She had picked them to lay by the water." },
+            { w: "gently", k: "조심조심", s: "Asadal shook her shoulder very gently." },
+            { w: "neither of them", k: "둘 다 ~ 못했다", s: "For a long while neither of them could say anything." }
+        ],
+        "14-tower.webp": [
+            { w: "in the end", k: "끝내", s: "The shadow never came in the end." },
+            { w: "still", k: "잔잔한", s: "Asanyeo said it, pointing at the still pond." },
+            { w: "bring himself to ~", k: "차마 ~하다", s: "Asadal could not bring himself to look at her face." },
+            { w: "laughed a little at ~", k: "픽 웃었다", s: "Asanyeo laughed a little at him, and took his hand." },
+            { w: "instead", k: "대신", s: "This shows in it instead." },
+            { w: "side by side", k: "나란히", s: "In the pond the two faces showed side by side." },
+            { w: "lifted (lift)", k: "걷혔다", s: "The mist lifted and the morning sun broke over the water." },
+            { w: "broke over ~ (break)", k: "부서졌다", s: "the morning sun broke over the water" }
+        ],
+        "after": [
+            { w: "is not true", k: "사실이 아니다", s: "That the pagoda has no shadow is not true." },
+            { w: "casts a shadow (cast)", k: "그림자가 진다", s: "Every pagoda casts a shadow." },
+            { w: "never saw it", k: "끝내 보지 못했다", s: "the one who waited for it in the pond never saw it" },
+            { w: "has come down", k: "전해 온다", s: "The story has come down that the man who raised it was Asadal" },
+            { w: "as it stands", k: "그대로", s: "the story is not in the old records as it stands" },
+            { w: "tied ~ to the ground", k: "땅에 붙여 두었다", s: "Old people tied their stories to the ground like this." },
+            { w: "so long as ~", k: "~이 있는 한", s: "So long as one pond or one stone Buddha is left" },
+            { w: "was not a thing", k: "물건이 아니었다", s: "What she saw in the pond was not a thing." },
+            { w: "is aimed at (aim)", k: "향한다", s: "What waiting is aimed at is always a person." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🗼',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "That the pagoda has no shadow is not true. Every pagoda casts a shadow. It is called shadowless because the one who waited for it in the pond never saw it.",
+                    "The story has come down that the man who raised it was Asadal, who came from the land of Baekje, and that his wife was Asanyeo. Only, the story is not in the old records as it stands.",
+                    "Old people tied their stories to the ground like this. So long as one pond or one stone Buddha is left, the story stays with it.",
+                    "That is why this one is still told at Gyeongju."
+                ],
+                right: [
+                    "What Asanyeo saw in that pond was not the pagoda. After years of waiting, what showed in the water was a person.",
+                    "What waiting is aimed at is always a person and not a thing.",
+                    "What is the longest you have ever waited for something?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "아사달은 무엇을 하는 사람인가요?", choices: ["나무를 깎는 목수", "돌을 다듬는 석수", "그림을 그리는 화가"], answer: 1 },
     { q: "아사달은 어디로 불려 갔나요?", choices: ["백제의 큰 절", "서라벌 불국사", "신라의 궁궐"], answer: 1 },

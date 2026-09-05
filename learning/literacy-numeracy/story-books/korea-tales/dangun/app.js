@@ -274,6 +274,509 @@ const HISTORY = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐻",
+        art: "cover.webp",
+        title: "Dangun",
+        intro: [
+            "The Dangun story comes down in the Samguk Yusa, written by the monk Iryeon in the Goryeo period. It is in the Jewang Ungi too.",
+            "A bear and a tiger wishing to be human is like the old stories of the north. Bear ancestors are told of in Siberia and Manchuria.",
+            "Hwanung brought down the lords of wind, rain and cloud. Those are the three things farming needs most."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Hwanung Comes Down",
+            beats: [
+                {
+                    art: "01-heaven.webp",
+                    emoji: "☁️",
+                    left: [
+                        "Very long ago there was a king in the sky called Hwanin.",
+                        "It was a great bright country above the clouds.",
+                        "Hwanin had a son called Hwanung.",
+                        "But Hwanung's mind was on the earth, not on the sky."
+                    ],
+                    right: [
+                        "Every day Hwanung looked down through the clouds.",
+                        "He could see people ploughing fields and carrying children on their backs.",
+                        { t: "\"Father, I want to go down there.\"", v: "man" },
+                        { t: "\"Does the place where people live please you so much?\"", v: "old" },
+                        "Hwanin asked it, looking steadily at his son."
+                    ]
+                },
+                {
+                    art: "02-descend.webp",
+                    emoji: "⛰️",
+                    left: [
+                        "Hwanin looked at the world below for a long, long time.",
+                        "He could not send his son just anywhere.",
+                        "Then he reached out a hand and touched the top of Mount Taebaek.",
+                        { t: "\"That place would do to make people better off.\"", v: "old" },
+                        { t: "\"Go down to that mountain top.\"", v: "old" }
+                    ],
+                    right: [
+                        "Hwanung came down to the mountain top with three thousand people.",
+                        "The clouds split and opened a road.",
+                        "The lords of wind and rain and cloud came down with him.",
+                        "Wind called the rain, and rain grew the grain.",
+                        "The people below looked up at the sky."
+                    ]
+                },
+                {
+                    art: "03-sinsi.webp",
+                    emoji: "🌳",
+                    left: [
+                        "On the mountain top stood one great tree.",
+                        "Its branches spread wide and its shade was very big.",
+                        "People called it the Sindansu.",
+                        "It was the tree that joined the sky and the earth, they said.",
+                        "It took several grown people to reach round it."
+                    ],
+                    right: [
+                        "Hwanung made a place under that tree.",
+                        { t: "\"This shall be called Sinsi.\"", v: "man" },
+                        "The news went down the valleys and far off in no time.",
+                        { t: "\"They say one who came from the sky is up that mountain.\"", v: "man" },
+                        "From that day people began to gather there."
+                    ]
+                },
+                {
+                    art: "04-rule.webp",
+                    emoji: "🌾",
+                    left: [
+                        "Hwanung taught the people how to grow grain.",
+                        { t: "\"When that star comes there, sow your seed.\"", v: "man" },
+                        "Hwanung pointed at the night sky with his finger.",
+                        "For the sick he boiled herbs himself and gave them to drink.",
+                        "When people came quarrelling he told them right from wrong."
+                    ],
+                    right: [
+                        { t: "\"Do good to people, as widely as you can.\"", v: "man" },
+                        "That was what Hwanung always said.",
+                        "In Sinsi nobody went hungry and nobody quarrelled.",
+                        "In the evening smoke rose from every house where rice was cooking.",
+                        "The laughing in the valley did not stop."
+                    ]
+                },
+                {
+                    art: "05-two.webp",
+                    emoji: "🐻",
+                    left: [
+                        "One day a bear and a tiger came to him.",
+                        "The two of them had lived side by side in one cave.",
+                        "They lay flat under the Sindansu, next to each other.",
+                        { t: "\"We want to become people.\"", v: "woman" },
+                        "They had long watched how people lived."
+                    ],
+                    right: [
+                        { t: "\"We want to live as they do.\"", v: "woman" },
+                        { t: "\"We want to plough fields and to speak.\"", v: "beast" },
+                        "The bear waited quietly; the tiger fidgeted.",
+                        "Hwanung looked down at the two for a long while.",
+                        "Their eyes were so full of wanting. Hwanung slowly nodded."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · A Hundred Days in the Cave",
+            beats: [
+                {
+                    art: "06-give.webp",
+                    emoji: "🌿",
+                    left: [
+                        "Hwanung gave them a bundle of mugwort and twenty garlic.",
+                        "The mugwort was deep green and the garlic cloves were fat.",
+                        { t: "\"Eat only this and hold out a hundred days.\"", v: "man" },
+                        { t: "\"And you must not see the sunlight in that time.\"", v: "man" },
+                        "Hwanung's voice was very low and very heavy."
+                    ],
+                    right: [
+                        "The tiger gave a snort.",
+                        { t: "\"Is that all? That is nothing!\"", v: "beast" },
+                        "The tiger grabbed a garlic and put it in his mouth.",
+                        "The bear said nothing and gathered an armful of mugwort.",
+                        "The two went down the mountain with it at once."
+                    ]
+                },
+                {
+                    art: "07-cave.webp",
+                    emoji: "🕳️",
+                    left: [
+                        "The two went into a deep cave below the mountain.",
+                        "Inside it was damp and cold.",
+                        "The only light was one line of it at the mouth.",
+                        "The two sat down side by side under that light.",
+                        "But mugwort is bitter, and garlic is fierce and hot."
+                    ],
+                    right: [
+                        "One bite and the tears came into their eyes.",
+                        { t: "\"Oh, it is bitter. How is anybody to eat this?\"", v: "beast" },
+                        { t: "\"...Bear it. Bear it and we become people, they say.\"", v: "woman" },
+                        "The tiger kept glancing at the mouth of the cave.",
+                        "A deer was calling outside it."
+                    ]
+                },
+                {
+                    art: "08-tiger.webp",
+                    emoji: "🐯",
+                    left: [
+                        "After three days the tiger could not keep still.",
+                        "He went round and round the cave, growling.",
+                        "He scratched at the wall with his claws.",
+                        "Then, on the seventh day, he got to his feet for good.",
+                        { t: "\"This is no thing for anybody to do!\"", v: "beast" }
+                    ],
+                    right: [
+                        { t: "\"I cannot! I cannot live like this!\"", v: "beast" },
+                        { t: "\"One bite of meat and I should be well again!\"", v: "beast" },
+                        "The tiger ran out of the cave.",
+                        "It was over in a moment, with no time to stop him.",
+                        "The bear only looked steadily after him."
+                    ]
+                },
+                {
+                    art: "09-bear.webp",
+                    emoji: "🌑",
+                    left: [
+                        "The bear was left alone in the cave.",
+                        "With nobody there it was far quieter.",
+                        "The bear chewed mugwort, and garlic, and chewed again.",
+                        "Her claws went blunt and her fur went dry.",
+                        "By now the bitterness did not bring tears any more."
+                    ],
+                    right: [
+                        "A little more. A little more.",
+                        "That was all the bear said inside herself.",
+                        "The line of light at the mouth moved a little every day.",
+                        "The bear counted the days by that light.",
+                        "So one day went, and then twenty of them."
+                    ]
+                },
+                {
+                    art: "10-woman.webp",
+                    emoji: "✨",
+                    left: [
+                        "It was the morning of the twenty-first day.",
+                        "The bear was chewing mugwort as usual.",
+                        "All at once the cave went dazzling bright.",
+                        "The bear could not open her eyes.",
+                        "Before the hundred days were up, Hwanung had seen her whole heart."
+                    ],
+                    right: [
+                        "Her body went light and her forepaws grew long.",
+                        "Black fur blew off her like snow.",
+                        "When the light lifted, a woman stood in that place.",
+                        "The woman looked at her own hands a long while.",
+                        { t: "\"Is this... is this my hand?\"", v: "woman" },
+                        "People called her Ungnyeo."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Morning at Asadal",
+            beats: [
+                {
+                    art: "11-pray.webp",
+                    emoji: "🙏",
+                    left: [
+                        "Ungnyeo was a person now, but there was nobody beside her.",
+                        "Everybody in Sinsi had somebody of their own.",
+                        "That made Ungnyeo very lonely.",
+                        "Every day she sat under the Sindansu and put her hands together.",
+                        { t: "\"Let me have just one child.\"", v: "woman" }
+                    ],
+                    right: [
+                        "Ungnyeo was there in the morning and in the evening.",
+                        "Even when it rained she did not leave the place.",
+                        "The sound of it was so full of asking.",
+                        "She prayed and prayed till every leaf had fallen.",
+                        "And at last that sound reached the sky."
+                    ]
+                },
+                {
+                    art: "12-birth.webp",
+                    emoji: "👶",
+                    left: [
+                        "Then one day Hwanung came lightly down in front of her.",
+                        "Ungnyeo started, opened her shut eyes and lifted her head.",
+                        { t: "\"I have watched your heart a long time.\"", v: "man" },
+                        "Hwanung quietly held a hand out to her.",
+                        "That year the two of them were married."
+                    ],
+                    right: [
+                        "The next year a baby cried out under the Sindansu.",
+                        { t: "\"Waah — waah —\"", v: "boy" },
+                        "Everybody in Sinsi came running.",
+                        "That child's name was Dangun Wanggeom.",
+                        "Dangun meant the one who rules, and Wanggeom meant king."
+                    ]
+                },
+                {
+                    art: "13-asadal.webp",
+                    emoji: "🌄",
+                    left: [
+                        "When Dangun was grown he set out to find a new place.",
+                        "There were now more people than Sinsi alone could hold.",
+                        "Dangun walked many days and found a river.",
+                        "The river was wide and the plain beside it was rich.",
+                        "Dangun stood tall in that place."
+                    ],
+                    right: [
+                        { t: "\"This place shall be called Asadal.\"", v: "man" },
+                        "Dangun said it, spreading both arms towards the river.",
+                        "Asadal meant morning land.",
+                        "It was where the morning sun touched this land first.",
+                        "The people packed up and moved there."
+                    ]
+                },
+                {
+                    art: "14-joseon.webp",
+                    emoji: "🏞️",
+                    left: [
+                        "Dangun built walls there and opened a country.",
+                        "People carried stones and packed the earth down hard.",
+                        "Many hands together raised the wall up.",
+                        { t: "\"The name of the country is Joseon.\"", v: "man" },
+                        "Joseon meant morning too, and the people cheered."
+                    ],
+                    right: [
+                        "It meant a country opening new, like the morning sun.",
+                        "What the bear won by holding out in the dark was morning.",
+                        "The first sun came up over the wall.",
+                        "The people looked at that sun and clapped.",
+                        "It was the first country to stand on our land."
+                    ]
+                }
+            ]
+        }
+    ],
+    history: {
+        title: 'From Here On It Is Real History',
+        note: 'Everything up to here was the story. From here on it is what the records show.',
+        paras: [
+            "Gojoseon really existed. Old Chinese books name a country called Joseon, and record that it fell to an attack by the Han in 108 BC.",
+            "The oldest book the Dangun story appears in is the Samguk Yusa. The monk Iryeon put that together in the Goryeo period, a very long time after the country is said to have been founded.",
+            "Were the bear and the tiger really animals? Scholars read them as a people who honoured the bear and a people who honoured the tiger. The bear people joining hands with the people who came from the sky is what the story tells as a bear turning into a person.",
+            "The name Dangun Wanggeom means something too. Dangun points to the one who makes the offerings to heaven, and Wanggeom to the one who leads the people. In those days whoever was in charge of the offerings was the chief."
+        ]
+    },
+    quiz: [
+        { q: "Who did Hwanung bring down from the sky?", choices: ["The lords of bear, tiger and deer", "The lords of wind, rain and cloud", "The lords of sun, moon and stars"], answer: 1 },
+        { q: "What was the place Hwanung opened called?", choices: ["Joseon", "Sinsi", "Asadal"], answer: 1 },
+        { q: "What were the bear and the tiger given?", choices: ["Mugwort and garlic", "Grain and herbs", "Meat and water"], answer: 0 },
+        { q: "What became of the tiger?", choices: ["Became a person before the bear", "Fell asleep in the cave", "Could not bear it and ran out"], answer: 2 },
+        { q: "What was the bear that became a person called?", choices: ["Ungnyeo", "Hwanin", "Wanggeom"], answer: 0 },
+        { q: "Where did Dangun set his capital?", choices: ["Sinsi", "Asadal", "Mount Taebaek"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The bear and the tiger came of themselves to ask to be people, so living as a person must have looked worth envying.",
+                "What Hwanung taught was grain and medicine and right from wrong, so ruling meant showing people how to live.",
+                "Ungnyeo prayed under the Sindansu every day, so being alone was hard to bear even after she became a person.",
+                "The bear became a person after filling out the whole hundred days, so it was the price of keeping the rule to the end."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "comes down in ~", k: "~에 실려 전해진다", s: "The Dangun story comes down in the Samguk Yusa." },
+            { w: "monk", k: "승려", s: "written by the monk Iryeon in the Goryeo period" },
+            { w: "wishing to ~", k: "~이 되기를 바라는", s: "A bear and a tiger wishing to be human" },
+            { w: "the north", k: "북방", s: "is like the old stories of the north" },
+            { w: "ancestors", k: "조상", s: "Bear ancestors are told of in Siberia and Manchuria." },
+            { w: "the lords of ~", k: "~을 맡은 이", s: "Hwanung brought down the lords of wind, rain and cloud." },
+            { w: "needs most", k: "가장 중요한", s: "Those are the three things farming needs most." }
+        ],
+        "01-heaven.webp": [
+            { w: "above the clouds", k: "구름 위에", s: "It was a great bright country above the clouds." },
+            { w: "mind was on ~", k: "마음이 ~에 가 있었다", s: "But Hwanung's mind was on the earth, not on the sky." },
+            { w: "looked down through ~", k: "사이로 내려다보았다", s: "Every day Hwanung looked down through the clouds." },
+            { w: "ploughing (plough)", k: "밭을 가는", s: "He could see people ploughing fields" },
+            { w: "on their backs", k: "등에 업고", s: "carrying children on their backs" },
+            { w: "please you", k: "네 마음에 들다", s: "Does the place where people live please you so much?" },
+            { w: "steadily", k: "물끄러미", s: "Hwanin asked it, looking steadily at his son." }
+        ],
+        "02-descend.webp": [
+            { w: "the world below", k: "아래 세상", s: "Hwanin looked at the world below for a long, long time." },
+            { w: "just anywhere", k: "아무 데나", s: "He could not send his son just anywhere." },
+            { w: "reached out (reach)", k: "손을 뻗었다", s: "Then he reached out a hand and touched the top of Mount Taebaek." },
+            { w: "would do to ~", k: "~할 만하다", s: "That place would do to make people better off." },
+            { w: "better off", k: "이롭게", s: "to make people better off" },
+            { w: "split (split)", k: "갈라졌다", s: "The clouds split and opened a road." },
+            { w: "grew (grow)", k: "키웠다", s: "Wind called the rain, and rain grew the grain." },
+            { w: "grain", k: "곡식", s: "rain grew the grain" }
+        ],
+        "03-sinsi.webp": [
+            { w: "branches", k: "가지", s: "Its branches spread wide and its shade was very big." },
+            { w: "shade", k: "그늘", s: "Its branches spread wide and its shade was very big." },
+            { w: "joined (join)", k: "이었다", s: "It was the tree that joined the sky and the earth." },
+            { w: "reach round ~", k: "팔을 벌려 안다", s: "It took several grown people to reach round it." },
+            { w: "made a place", k: "터를 열었다", s: "Hwanung made a place under that tree." },
+            { w: "shall be called ~", k: "~라 하겠다", s: "This shall be called Sinsi." },
+            { w: "in no time", k: "금세", s: "The news went down the valleys and far off in no time." },
+            { w: "gather", k: "모이다", s: "From that day people began to gather there." }
+        ],
+        "04-rule.webp": [
+            { w: "how to ~", k: "~하는 법", s: "Hwanung taught the people how to grow grain." },
+            { w: "sow your seed", k: "씨를 뿌려라", s: "When that star comes there, sow your seed." },
+            { w: "the sick", k: "아픈 사람", s: "For the sick he boiled herbs himself." },
+            { w: "herbs", k: "약초", s: "he boiled herbs himself and gave them to drink" },
+            { w: "quarrelling (quarrel)", k: "다투는", s: "When people came quarrelling he told them right from wrong." },
+            { w: "right from wrong", k: "옳고 그름", s: "he told them right from wrong" },
+            { w: "Do good to ~", k: "이롭게 하라", s: "Do good to people, as widely as you can." },
+            { w: "went hungry", k: "굶었다", s: "In Sinsi nobody went hungry and nobody quarrelled." }
+        ],
+        "05-two.webp": [
+            { w: "side by side", k: "나란히", s: "The two of them had lived side by side in one cave." },
+            { w: "lay flat (lie)", k: "넙죽 엎드렸다", s: "They lay flat under the Sindansu, next to each other." },
+            { w: "become people", k: "사람이 되다", s: "We want to become people." },
+            { w: "had long watched", k: "오래 지켜보았다", s: "They had long watched how people lived." },
+            { w: "as they do", k: "저들처럼", s: "We want to live as they do." },
+            { w: "fidgeted (fidget)", k: "안달했다", s: "The bear waited quietly; the tiger fidgeted." },
+            { w: "full of wanting", k: "간절한", s: "Their eyes were so full of wanting." }
+        ],
+        "06-give.webp": [
+            { w: "a bundle of ~", k: "한 다발의", s: "Hwanung gave them a bundle of mugwort and twenty garlic." },
+            { w: "mugwort", k: "쑥", s: "a bundle of mugwort and twenty garlic" },
+            { w: "garlic", k: "마늘", s: "a bundle of mugwort and twenty garlic" },
+            { w: "cloves", k: "마늘 알", s: "the garlic cloves were fat" },
+            { w: "hold out", k: "견디다", s: "Eat only this and hold out a hundred days." },
+            { w: "sunlight", k: "햇빛", s: "you must not see the sunlight in that time" },
+            { w: "gave a snort", k: "코웃음을 쳤다", s: "The tiger gave a snort." },
+            { w: "grabbed (grab)", k: "덥석 집었다", s: "The tiger grabbed a garlic and put it in his mouth." },
+            { w: "an armful of ~", k: "한 아름의", s: "The bear gathered an armful of mugwort." }
+        ],
+        "07-cave.webp": [
+            { w: "damp", k: "축축한", s: "Inside it was damp and cold." },
+            { w: "the mouth", k: "입구", s: "The only light was one line of it at the mouth." },
+            { w: "bitter", k: "쓴", s: "But mugwort is bitter, and garlic is fierce and hot." },
+            { w: "fierce and hot", k: "몹시 매운", s: "garlic is fierce and hot" },
+            { w: "One bite", k: "한 입 씹으면", s: "One bite and the tears came into their eyes." },
+            { w: "Bear it", k: "참자", s: "Bear it and we become people, they say." },
+            { w: "kept glancing", k: "자꾸 흘끔거렸다", s: "The tiger kept glancing at the mouth of the cave." },
+            { w: "deer", k: "노루", s: "A deer was calling outside it." }
+        ],
+        "08-tiger.webp": [
+            { w: "keep still", k: "가만있다", s: "After three days the tiger could not keep still." },
+            { w: "growling (growl)", k: "으르렁거리며", s: "He went round and round the cave, growling." },
+            { w: "scratched (scratch)", k: "긁었다", s: "He scratched at the wall with his claws." },
+            { w: "for good", k: "끝내", s: "Then, on the seventh day, he got to his feet for good." },
+            { w: "no thing for ~ to do", k: "사람이 할 짓이 아닌", s: "This is no thing for anybody to do!" },
+            { w: "One bite of ~", k: "한 점만", s: "One bite of meat and I should be well again!" },
+            { w: "in a moment", k: "순식간에", s: "It was over in a moment, with no time to stop him." },
+            { w: "looked after ~", k: "뒷모습을 바라보았다", s: "The bear only looked steadily after him." }
+        ],
+        "09-bear.webp": [
+            { w: "was left alone", k: "혼자 남았다", s: "The bear was left alone in the cave." },
+            { w: "far quieter", k: "훨씬 조용한", s: "With nobody there it was far quieter." },
+            { w: "chewed (chew)", k: "씹었다", s: "The bear chewed mugwort, and garlic, and chewed again." },
+            { w: "went blunt", k: "무디어졌다", s: "Her claws went blunt and her fur went dry." },
+            { w: "bitterness", k: "쓴맛", s: "By now the bitterness did not bring tears any more." },
+            { w: "inside herself", k: "속으로", s: "That was all the bear said inside herself." },
+            { w: "the line of light", k: "빛줄기", s: "The line of light at the mouth moved a little every day." },
+            { w: "counted the days", k: "날을 세었다", s: "The bear counted the days by that light." }
+        ],
+        "10-woman.webp": [
+            { w: "the twenty-first day", k: "스무하루째", s: "It was the morning of the twenty-first day." },
+            { w: "as usual", k: "여느 때처럼", s: "The bear was chewing mugwort as usual." },
+            { w: "All at once", k: "갑자기", s: "All at once the cave went dazzling bright." },
+            { w: "were up", k: "다 찼다", s: "Before the hundred days were up" },
+            { w: "her whole heart", k: "그 마음을 다", s: "Hwanung had seen her whole heart" },
+            { w: "forepaws", k: "앞발", s: "Her body went light and her forepaws grew long." },
+            { w: "blew off (blow)", k: "흩날렸다", s: "Black fur blew off her like snow." },
+            { w: "lifted (lift)", k: "걷혔다", s: "When the light lifted, a woman stood in that place." }
+        ],
+        "11-pray.webp": [
+            { w: "beside her", k: "곁에", s: "Ungnyeo was a person now, but there was nobody beside her." },
+            { w: "of their own", k: "저마다의", s: "Everybody in Sinsi had somebody of their own." },
+            { w: "lonely", k: "외로운", s: "That made Ungnyeo very lonely." },
+            { w: "put her hands together", k: "두 손을 모았다", s: "she sat under the Sindansu and put her hands together" },
+            { w: "just one child", k: "아이 하나만", s: "Let me have just one child." },
+            { w: "full of asking", k: "간절한", s: "The sound of it was so full of asking." },
+            { w: "till every leaf had fallen", k: "나뭇잎이 다 지도록", s: "She prayed and prayed till every leaf had fallen." },
+            { w: "reached the sky", k: "하늘에 닿았다", s: "And at last that sound reached the sky." }
+        ],
+        "12-birth.webp": [
+            { w: "came lightly down", k: "사뿐 내려섰다", s: "Then one day Hwanung came lightly down in front of her." },
+            { w: "started (start)", k: "깜짝 놀랐다", s: "Ungnyeo started, opened her shut eyes and lifted her head." },
+            { w: "watched your heart", k: "네 마음을 보았다", s: "I have watched your heart a long time." },
+            { w: "held ~ out (hold)", k: "내밀었다", s: "Hwanung quietly held a hand out to her." },
+            { w: "were married", k: "부부가 되었다", s: "That year the two of them were married." },
+            { w: "cried out", k: "울음소리가 터졌다", s: "The next year a baby cried out under the Sindansu." },
+            { w: "came running", k: "달려 나왔다", s: "Everybody in Sinsi came running." },
+            { w: "meant (mean)", k: "~라는 뜻이었다", s: "Dangun meant the one who rules, and Wanggeom meant king." }
+        ],
+        "13-asadal.webp": [
+            { w: "was grown", k: "자라났다", s: "When Dangun was grown he set out to find a new place." },
+            { w: "could hold", k: "다 살 수 있었다", s: "There were now more people than Sinsi alone could hold." },
+            { w: "plain", k: "들", s: "The river was wide and the plain beside it was rich." },
+            { w: "stood tall", k: "우뚝 섰다", s: "Dangun stood tall in that place." },
+            { w: "spreading (spread)", k: "활짝 벌리며", s: "Dangun said it, spreading both arms towards the river." },
+            { w: "morning land", k: "아침 땅", s: "Asadal meant morning land." },
+            { w: "touched ~ first", k: "제일 먼저 닿았다", s: "It was where the morning sun touched this land first." },
+            { w: "packed up", k: "짐을 쌌다", s: "The people packed up and moved there." }
+        ],
+        "14-joseon.webp": [
+            { w: "walls", k: "성", s: "Dangun built walls there and opened a country." },
+            { w: "opened a country", k: "나라를 열었다", s: "Dangun built walls there and opened a country." },
+            { w: "packed ~ down (pack)", k: "꾹꾹 다졌다", s: "People carried stones and packed the earth down hard." },
+            { w: "Many hands together", k: "여럿이 달라붙어", s: "Many hands together raised the wall up." },
+            { w: "cheered (cheer)", k: "함성을 질렀다", s: "Joseon meant morning too, and the people cheered." },
+            { w: "opening new", k: "새로 여는", s: "It meant a country opening new, like the morning sun." },
+            { w: "won (win)", k: "얻었다", s: "What the bear won by holding out in the dark was morning." },
+            { w: "came up over ~", k: "위로 떠올랐다", s: "The first sun came up over the wall." },
+            { w: "to stand on ~", k: "~에 선", s: "It was the first country to stand on our land." }
+        ],
+        "after": [
+            { w: "was first written down", k: "처음 글로 적혔다", s: "The Dangun story was first written down about eight hundred years ago." },
+            { w: "by mouth", k: "입에서 입으로", s: "Before that it came down by mouth alone." },
+            { w: "opinions differ", k: "말이 갈린다", s: "opinions differ over whether garlic was in this land then" },
+            { w: "wild chives", k: "달래", s: "Some scholars read the word as wild chives" },
+            { w: "no trick at all", k: "아무 재주도 부리지 않은", s: "Look again and the bear did no trick at all." },
+            { w: "stayed in ~", k: "남아 있었다", s: "She only stayed in the cave." },
+            { w: "rewarded (reward)", k: "상을 주었다", s: "What this story rewarded was not strength or skill." },
+            { w: "showing ~ how to live", k: "살아가는 법을 일러 주기", s: "It was showing people how to live." },
+            { w: "the one who stays", k: "끝까지 남는 쪽", s: "the one who stays to the end is often the quiet one" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐻',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "The Dangun story was first written down about eight hundred years ago. The monk Iryeon put it in the Samguk Yusa, and Yi Seunghyu wrote it about the same time. Before that it came down by mouth alone.",
+                    "This book says the bear and the tiger were given mugwort and garlic. But opinions differ over whether garlic was even in this land then. Some scholars read the word as wild chives, or some other hot plant.",
+                    "Look again and the bear did no trick at all. She only stayed in the cave. What this story rewarded was not strength or skill but holding out.",
+                    "Count what Hwanung taught the people: grain, medicine, right from wrong. He did not rule by force. He showed people how to live. That is what doing good to people, as widely as you can, means."
+                ],
+                right: [
+                    "Why did the tiger run out of the cave? There must have been days when one more day would have done it.",
+                    "On the first day the tiger was the surer of the two, and the bear sat saying nothing. The one who stays to the end is often not the one who talked big, but the one who quietly held out.",
+                    "Is there something you could keep at for a long time, even if it is dull just now?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "환웅이 하늘에서 데리고 내려온 이들은 누구인가요?", choices: ["곰과 호랑이와 사슴을 맡은 이", "바람과 비와 구름을 맡은 이", "해와 달과 별을 맡은 이"], answer: 1 },
     { q: "환웅이 내려와 연 곳의 이름은 무엇인가요?", choices: ["조선", "신시", "아사달"], answer: 1 },
