@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>한능검 기본 기출</title>
+<meta name="description" content="한국사능력검정시험 기본 기출문제를 시대 단원과 회차로 골라 한 화면에서 이어 풉니다.">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="styles.css?v=20260905-1">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="back-link" href="../../../" aria-label="메인 화면으로 돌아가기">←</a>
+  <h1>한능검 기본 기출</h1>
+</header>
+
+<main>
+  <section class="picker" aria-label="고르기">
+    <div class="picker-row">
+      <span class="picker-label" id="unit-label">단원</span>
+      <div class="chips" role="group" aria-labelledby="unit-label" id="unit-chips"></div>
+    </div>
+    <div class="picker-row">
+      <span class="picker-label" id="exam-label">회차</span>
+      <div class="chips" role="group" aria-labelledby="exam-label" id="exam-chips"></div>
+    </div>
+    <div class="picker-row picker-row--tail">
+      <p class="count" id="count" role="status"></p>
+      <label class="toggle"><input type="checkbox" id="hide-done"> 푼 문제 감추기</label>
+      <label class="toggle"><input type="checkbox" id="only-wrong"> 틀린 문제만</label>
+      <button type="button" class="reset" id="reset">기록 지우기</button>
+    </div>
+  </section>
+
+  <ol class="list" id="list"></ol>
+  <p class="empty" id="empty" hidden>고른 조건에 맞는 문항이 없습니다.</p>
+</main>
+
+<footer class="foot">
+  <p>문제지의 저작권은 국사편찬위원회에 있습니다. 이곳은 학습용으로 문항을 옮겨 싣고 회차와 번호를 밝힙니다.</p>
+</footer>
+
+<script src="data/questions.js?v=20260905-1"></script>
+<script src="data/explanations.js?v=20260905-1"></script>
+<script src="app.js?v=20260905-1"></script>
+</body>
+</html>

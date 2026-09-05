@@ -20,13 +20,15 @@ except ImportError:  # The slower PIL fallback still supports a plain Python set
 
 ROOT = Path(__file__).resolve().parents[1]
 PDF_DIR = ROOT / "tmp" / "pdfs"
-QUESTION_DIR = ROOT / "public" / "questions"
-DATA_FILE = ROOT / "app" / "data" / "questions.json"
+QUESTION_DIR = ROOT / "questions"
+DATA_FILE = ROOT / "data" / "questions.json"
 OFFICIAL_ORIGIN = "https://www.historyexam.go.kr"
-RENDER_RESOLUTION = 220
+# 화면이 그림을 900px 남짓으로 보여 주고 2배 화면(크롬북·아이패드)이 흔하니
+# 2,000px쯤은 있어야 글씨가 번지지 않는다. PDF는 글자가 선이라 해상도를 올려도 공짜다.
+RENDER_RESOLUTION = 400
 DETECTION_RESOLUTION = 140
-MAX_QUESTION_WIDTH = 1_040
-WEBP_QUALITY = 92
+MAX_QUESTION_WIDTH = 2_080
+WEBP_QUALITY = 85
 
 
 @dataclass(frozen=True)
@@ -570,7 +572,7 @@ def split_questions(question_path: Path, source: ExamSource, answers: dict[int, 
                         "unitId": unit_id,
                         "unit": unit_name,
                         "topic": topic_for(text),
-                        "image": f"/questions/{source.exam}/{image_name}",
+                        "image": f"questions/{source.exam}/{image_name}",
                         "source": f"국사편찬위원회 제{source.exam}회 기본 {number}번",
                         "text": re.sub(r"\s+", " ", text).strip(),
                     })
@@ -586,6 +588,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="공식 한능검 기본 기출 전체 자동 가져오기")
     parser.add_argument("--exam", type=int, help="한 회차만 가져올 때 지정")
     parser.add_argument("--offline", action="store_true", help="이미 받은 PDF만 다시 처리")
+    parser.add_argument("--images-only", action="store_true", help="그림만 다시 뽑고 questions.json은 건드리지 않는다")
     args = parser.parse_args()
 
     sources = resolve_sources(args.exam, args.offline)
@@ -597,6 +600,9 @@ def main() -> None:
         records.extend(split_questions(question_path, source, answers))
 
     records.sort(key=lambda record: (-record["exam"], record["number"]))
+    if args.images_only:
+        print(f"그림만 다시 뽑았습니다: {sorted({r['exam'] for r in records}, reverse=True)}")
+        return
     DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
     DATA_FILE.write_text(json.dumps(records, ensure_ascii=False, indent=2), encoding="utf-8")
     exam_numbers = sorted({record["exam"] for record in records}, reverse=True)

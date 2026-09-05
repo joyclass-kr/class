@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "postinstall": "NODE_OPTIONS=--max-old-space-size=384 npm --prefix ../learning/literacy-numeracy/arithmetics ci --include=dev && NODE_OPTIONS=--max-old-space-size=384 npm --prefix ../learning/literacy-numeracy/arithmetics run build && NODE_OPTIONS=--max-old-space-size=384 npm --prefix ../learning/inquiry/korean-history ci --include=dev && NODE_OPTIONS=--max-old-space-size=384 npm --prefix ../learning/inquiry/korean-history run build && npm --prefix ../learning/inquiry/age-of-exploration ci --omit=dev",
+    "postinstall": "NODE_OPTIONS=--max-old-space-size=384 npm --prefix ../learning/literacy-numeracy/arithmetics ci --include=dev && NODE_OPTIONS=--max-old-space-size=384 npm --prefix ../learning/literacy-numeracy/arithmetics run build && npm --prefix ../learning/inquiry/age-of-exploration ci --omit=dev",
     "build:reading-seed": "node ../scripts/build-reading-seed.js"
   },
   "dependencies": {

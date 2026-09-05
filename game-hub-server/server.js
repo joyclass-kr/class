@@ -41,7 +41,6 @@ const classroomPlatform = createClassroomPlatform({
 
 const PORT = Number(process.env.PORT) || 10000;
 const ARITHMETIC_PORT = Number(process.env.ARITHMETIC_PORT) || 10001;
-const HANGUKSA_PORT = Number(process.env.HANGUKSA_PORT) || 10002;
 const WORLD_VOYAGE_PORT = Number(process.env.WORLD_VOYAGE_PORT) || 10003;
 const ROOM_RECONNECT_GRACE_MS = Math.max(30000, Number(process.env.ROOM_RECONNECT_GRACE_MS) || 120000);
 const ROOM_SNAPSHOT_TTL_SECONDS = Math.max(900, Number(process.env.ROOM_SNAPSHOT_TTL_SECONDS) || 10800);
@@ -167,11 +166,6 @@ const arithmeticApp = startLearningApp(
   ARITHMETIC_PORT,
   "Arithmetic app",
 );
-const hanguksaApp = startLearningApp(
-  "learning/inquiry/korean-history",
-  HANGUKSA_PORT,
-  "Hanguksa app",
-);
 const worldVoyageApp = startNodeLearningApp(
   "learning/inquiry/age-of-exploration",
   WORLD_VOYAGE_PORT,
@@ -180,7 +174,6 @@ const worldVoyageApp = startNodeLearningApp(
 
 const stopLearningApps = () => {
   arithmeticApp.kill();
-  hanguksaApp.kill();
   worldVoyageApp.kill();
 };
 let shutdownStarted = false;
@@ -303,14 +296,6 @@ app.get("/math-learning-banner.webp", (_req, res) => {
     ),
   );
 });
-app.use(
-  "/hanguksa/assets",
-  express.static(path.join(SITE_ROOT, "learning", "inquiry", "korean-history", "dist", "client", "assets"), staticAssetOptions),
-);
-app.use(
-  "/questions",
-  express.static(path.join(SITE_ROOT, "learning", "inquiry", "korean-history", "dist", "client", "questions"), staticAssetOptions),
-);
 // Travel-map photos are requested by an <img> after the gated page opens.
 // Serve this immutable asset directory before requireSiteAccess so a session
 // check cannot turn an image response into login HTML.
@@ -388,11 +373,12 @@ const MULTIPLAYER_CONTENT_PATHS = Object.freeze({
 
 const FINISHER_GAMES = new Set(["coinweighing", "hanoitower", "sphinx", "slidingpuzzle", "nonogram"]);
 
-app.use(["/admin", "/schooladmin", "/arithmetic", "/fraction", "/api/arithmetic-race", "/hanguksa", "/classtools", "/learning", "/learn", "/notice", "/teacher"], classroomPlatform.requireSiteAccess);
+app.use(["/admin", "/schooladmin", "/arithmetic", "/fraction", "/api/arithmetic-race", "/classtools", "/learning", "/learn", "/notice", "/teacher"], classroomPlatform.requireSiteAccess);
 app.use("/arithmetic", proxyToLearningApp(ARITHMETIC_PORT));
 app.use("/fraction", proxyToLearningApp(ARITHMETIC_PORT));
 app.use("/api/arithmetic-race", proxyToLearningApp(ARITHMETIC_PORT));
-app.use("/hanguksa", proxyToLearningApp(HANGUKSA_PORT));
+// 한능검 기출은 정적 페이지가 되었다. 예전 주소로 온 사람은 새 자리로 보낸다.
+app.use("/hanguksa", (req, res) => res.redirect(301, "/learning/inquiry/korean-history/"));
 app.get(WORLD_VOYAGE_PREFIX, (req, res, next) => {
   if (req.originalUrl.split("?")[0].endsWith("/")) return next();
   const query = req.originalUrl.includes("?") ? req.originalUrl.slice(req.originalUrl.indexOf("?")) : "";
