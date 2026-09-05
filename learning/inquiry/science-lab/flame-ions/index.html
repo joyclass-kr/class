@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="금속 화합물을 불꽃에 넣어 원소마다 다른 불꽃 색과 선 스펙트럼을 보고, 색을 띤 이온이 전극 쪽으로 움직이는 것을 관찰하는 중학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="flame-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>불꽃 반응과 이온의 이동</h1>
+            </div>
+            <div class="grade-tags"><span>중학교 2학년</span><span>화학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>실험 종류를 고릅니다.</li>
+            <li>불꽃 반응은 금속 원소와 음이온 부분을 골라 시료를 만들고, 이온의 이동은 시료·전압·전극 배치를 정합니다.</li>
+            <li>결과를 먼저 예상해 봅니다.</li>
+            <li>실험을 시작해 끝까지 지켜본 뒤, 왜 그렇게 되는지 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">불꽃 색은 화합물이 아니라 그 속의 금속 원소가 정합니다</p>
+                <fieldset class="mode-field">
+                    <legend>실험 종류</legend>
+                    <div class="mode-buttons">
+                        <button type="button" data-mode="flame">불꽃 반응<small>어떤 원소가 들어 있을까</small></button>
+                        <button type="button" data-mode="ion">이온의 이동<small>색은 어느 극으로 갈까</small></button>
+                    </div>
+                </fieldset>
+                <div id="controlArea"></div>
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons three" id="predictionArea"></div>
+                </fieldset>
+                <button class="run-button" id="checkBtn" type="button">실험 시작</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 실험을 시작해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">결과</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">까닭</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel burn-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">같은 금속이 든 화합물은 음이온 부분이 달라도 불꽃 색이 같습니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>불꽃 반응</strong> 금속 원소는 불꽃 속에서 저마다 정해진 색의 빛을 냅니다. 리튬·스트론튬은 빨강, 나트륨은 노랑, 칼륨은 보라, 칼슘은 주황, 구리는 청록입니다. 염화 나트륨이든 질산 나트륨이든 색이 같은 것은 색을 내는 것이 나트륨 원소이기 때문입니다.</p>
+                <p><strong>선 스펙트럼</strong> 불꽃 빛을 분광기로 나누면 몇 개의 가느다란 선이 나타납니다. 원소마다 선의 위치가 달라, 불꽃 색이 비슷한 리튬과 스트론튬도 선 스펙트럼으로는 구별할 수 있습니다.</p>
+                <p><strong>이온은 전하를 띤 입자</strong> 전압을 걸면 (−)전하를 띤 이온은 (+)극 쪽으로, (+)전하를 띤 이온은 (−)극 쪽으로 끌려갑니다. 보라색 과망간산 이온이 (+)극으로, 파란색 구리 이온이 (−)극으로 가는 것이 그 증거입니다. 전극을 바꿔 꽂으면 반대로 움직입니다.</p>
+                <p><strong>보이지 않는 이온</strong> 화합물이 물에 녹으면 짝이 되는 이온도 함께 생기지만, 칼륨 이온이나 황산 이온처럼 색이 없는 이온은 움직여도 눈에 띄지 않습니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>염화 나트륨, 질산 나트륨, 황산 나트륨의 불꽃 색이 모두 노란색인 까닭은 무엇일까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 모두 흰색 가루이기 때문에</label>
+                        <label><input type="radio" name="q1" value="b"> 모두 물에 잘 녹기 때문에</label>
+                        <label><input type="radio" name="q1" value="c"> 불꽃 색을 내는 것이 공통으로 든 나트륨 원소이기 때문에</label>
+                        <label><input type="radio" name="q1" value="d"> 염소·질산·황산 부분이 모두 노란빛을 내기 때문에</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>불꽃 색은 금속 원소가 정합니다. 세 화합물에 공통으로 든 나트륨이 노란빛을 내므로, 음이온 부분이 달라도 색은 같습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>리튬과 스트론튬은 불꽃 색이 둘 다 빨간색입니다. 둘을 가려내려면 무엇을 보아야 할까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 불꽃의 높이</label>
+                        <label><input type="radio" name="q2" value="b"> 분광기로 나눈 선 스펙트럼</label>
+                        <label><input type="radio" name="q2" value="c"> 가루의 색깔</label>
+                        <label><input type="radio" name="q2" value="d"> 불꽃이 타는 시간</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>원소마다 선 스펙트럼의 선 위치가 다릅니다. 리튬은 671 nm에 굵은 빨간 선이 하나이고, 스트론튬은 461 nm 파란 선과 688 nm 빨간 선이 있어 구별됩니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>과망간산 칼륨의 보라색이 (+)극 쪽으로 움직였습니다. 보라색을 띤 것은 무엇일까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> (+)전하를 띤 칼륨 이온</label>
+                        <label><input type="radio" name="q3" value="b"> 전하가 없는 물 분자</label>
+                        <label><input type="radio" name="q3" value="c"> (+)전하를 띤 과망간산 이온</label>
+                        <label><input type="radio" name="q3" value="d"> (−)전하를 띤 과망간산 이온</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>(+)극 쪽으로 끌려간 것은 (−)전하를 띤 입자입니다. 보라색은 과망간산 이온(MnO₄⁻)의 색이고, 함께 생긴 칼륨 이온(K⁺)은 색이 없어 (−)극으로 가도 보이지 않습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>같은 실험에서 전극의 (+)와 (−)를 서로 바꿔 꽂으면 보라색은 어떻게 될까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 반대쪽으로 움직인다</label>
+                        <label><input type="radio" name="q4" value="b"> 전과 같은 쪽으로 움직인다</label>
+                        <label><input type="radio" name="q4" value="c"> 움직이지 않는다</label>
+                        <label><input type="radio" name="q4" value="d"> 색이 사라진다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>이온은 반대 전하의 전극으로 끌려갑니다. (+)극이 반대쪽에 놓이면 (−)전하를 띤 과망간산 이온도 그쪽으로 방향을 바꿉니다. 색이 전극을 따라가는 것이 이온이 전하를 띤 입자라는 증거입니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=2"></script>
+</body>
+</html>
