@@ -326,6 +326,575 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🕊️",
+        art: "cover.webp",
+        title: "Barideggi",
+        intro: [
+            "This is an old tale with no known author. It came down not in a book but as a song a shaman sang all night at a rite.",
+            "A seventh princess is thrown away at birth for being a girl, and goes to Seocheon, where the living cannot go, to save her parents.",
+            "Watch what Barideggi chooses after she has saved them. The meaning of the story is there."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Seventh Daughter",
+            beats: [
+                {
+                    art: "01-palace.webp",
+                    emoji: "🏯",
+                    left: [
+                        "Long ago in a country there lived a king and a queen.",
+                        "The two of them wanted a son very much.",
+                        "But every child that was born was a girl.",
+                        "First a girl, then a girl. All six of them were girls.",
+                        { t: "\"This time it must be a son.\"", v: "old" }
+                    ],
+                    right: [
+                        "On the day the seventh child was born the whole palace held its breath.",
+                        { t: "\"It is a princess.\"", v: "woman" },
+                        "Another girl.",
+                        "The king's face set hard. The queen held the baby and wept.",
+                        { t: "\"Throw this child away.\"", v: "old" }
+                    ]
+                },
+                {
+                    art: "02-box.webp",
+                    emoji: "📦",
+                    left: [
+                        "The queen went down on her knees before the king.",
+                        { t: "\"Sire, the child is newborn. What has she done?\"", v: "woman" },
+                        { t: "\"Seven daughters. What is to become of the country?\"", v: "old" },
+                        "The king would not listen.",
+                        "The queen laid the baby in a box made of jade.",
+                        "She put in clothes and a paper with a name on it."
+                    ],
+                    right: [
+                        { t: "\"A thrown-away child, so I name you Barideggi. Only live, wherever you are.\"", v: "woman" },
+                        "The queen kissed the lid of the box.",
+                        "An officer carried the box to the riverside.",
+                        "The jade box went slowly away on the current.",
+                        "The queen stood on the bank till she could not see it."
+                    ]
+                },
+                {
+                    art: "03-oldcouple.webp",
+                    emoji: "🛶",
+                    left: [
+                        "Down the river an old couple lived.",
+                        "They had no children and worked a ferry boat between them.",
+                        "One morning the old man fished something out.",
+                        { t: "\"Wife, come and look at this.\"", v: "old" },
+                        "It was a jade box, and inside it a baby had its eyes open."
+                    ],
+                    right: [
+                        "On the paper inside was the name Barideggi.",
+                        { t: "\"A thrown-away child. Let us raise her.\"", v: "granny" },
+                        "The old woman lifted the baby up.",
+                        "The two brought her up as their own daughter.",
+                        "They made gruel out of the ferry money and mended old clothes.",
+                        "Barideggi grew up beside the river."
+                    ]
+                },
+                {
+                    art: "04-grow.webp",
+                    emoji: "🌾",
+                    left: [
+                        "Barideggi grew up a hard-working child.",
+                        "She drew water at dawn, rowed by day, and rubbed the old woman's back at night.",
+                        { t: "\"Grandmother, who bore me?\"", v: "girl" },
+                        "Barideggi asked it one day.",
+                        "The old woman brought out the jade box and the paper."
+                    ],
+                    right: [
+                        { t: "\"The river brought you. Where from, we do not know either.\"", v: "granny" },
+                        "Barideggi looked at her own name a long while.",
+                        "A thrown-away child.",
+                        { t: "\"But you two fished me out of the water.\"", v: "girl" },
+                        "She folded the paper and put it inside her dress.",
+                        "So fifteen years went by."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Parents Fall Ill",
+            beats: [
+                {
+                    art: "05-illness.webp",
+                    emoji: "🛏️",
+                    left: [
+                        "About that time the king and the queen both fell ill.",
+                        "Every doctor in the country came, to no use.",
+                        { t: "\"This sickness will not be cured with medicine.\"", v: "old" },
+                        "An old man who read fortunes said it.",
+                        { t: "\"Only the water at Seocheon in the far west will cure it.\"", v: "old" }
+                    ],
+                    right: [
+                        { t: "\"It is not a place the living can easily go.\"", v: "old" },
+                        { t: "\"Who will go there for me?\"", v: "old" },
+                        "The king called his six daughters together.",
+                        { t: "\"I am married now and cannot go.\"", v: "woman" },
+                        { t: "\"My child is small yet.\"", v: "woman" },
+                        "The third, fourth, fifth and sixth all had a reason too."
+                    ]
+                },
+                {
+                    art: "06-remember.webp",
+                    emoji: "💧",
+                    left: [
+                        "The king sent his daughters away and lay a long while.",
+                        "Then something from fifteen years ago came back to him.",
+                        { t: "\"...There was a seventh.\"", v: "old" },
+                        "The queen lifted her head. Neither had ever said that name aloud.",
+                        { t: "\"Could she be alive?\"", v: "woman" }
+                    ],
+                    right: [
+                        "The king called an officer.",
+                        { t: "\"Go down the river and find a house that fished out a jade box.\"", v: "old" },
+                        "The officer went round the river villages for days.",
+                        "And he came to an old couple who worked a ferry.",
+                        "In the yard a young woman was mending an oar."
+                    ]
+                },
+                {
+                    art: "07-reunion.webp",
+                    emoji: "👑",
+                    left: [
+                        "Barideggi went to the palace.",
+                        "The king and queen looked at her from their beds.",
+                        { t: "\"Are you... the seventh?\"", v: "old" },
+                        "The queen touched Barideggi's face with a shaking hand.",
+                        { t: "\"I am the mother who threw you away. How can I look at you?\"", v: "woman" }
+                    ],
+                    right: [
+                        "Barideggi took the paper with her name out of her dress.",
+                        { t: "\"It was you who put this in, then.\"", v: "girl" },
+                        "The queen cried out loud.",
+                        "The king turned his face away and could say nothing.",
+                        "Barideggi said quietly that she would go."
+                    ]
+                },
+                {
+                    art: "08-depart.webp",
+                    emoji: "🎒",
+                    left: [
+                        { t: "\"You have had nothing from us. Why should you go?\"", v: "old" },
+                        "The king got the words out at last.",
+                        { t: "\"I had my life from you. That is enough.\"", v: "girl" },
+                        "Barideggi's voice was level.",
+                        "She put on the cotton clothes the old woman had made her.",
+                        "And she took a few pairs of straw shoes."
+                    ],
+                    right: [
+                        "The queen put a small silver knife into her hand.",
+                        { t: "\"If the road is hard, keep yourself safe with this.\"", v: "woman" },
+                        "Barideggi went out of the palace gate and walked west.",
+                        "The six sisters watched from behind the wall.",
+                        "Not one of them came after her."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Road to Seocheon",
+            beats: [
+                {
+                    art: "09-helpers.webp",
+                    emoji: "🌄",
+                    left: [
+                        "Barideggi walked west and went on walking.",
+                        "When she met an old man weeding a field alone, she weeded with him.",
+                        { t: "\"Do you know the road to Seocheon?\"", v: "girl" },
+                        { t: "\"Finish this field with me and I shall tell you.\"", v: "old" },
+                        "Barideggi worked the hoe till the sun went down."
+                    ],
+                    right: [
+                        "When she met an old woman washing, she trod the washing for her.",
+                        { t: "\"Over that hill is a black river. From there it is not a road for the living.\"", v: "granny" },
+                        "The old woman clicked her tongue.",
+                        { t: "\"Go back. It is much to have come even this far.\"", v: "granny" },
+                        "Barideggi bowed to her and went over the hill."
+                    ]
+                },
+                {
+                    art: "10-river.webp",
+                    emoji: "🌫️",
+                    left: [
+                        "Beyond the hill was a black river with mist on it.",
+                        "People stood in a line along the bank.",
+                        "Their faces were all white and none of them spoke.",
+                        { t: "\"Where do you go if you cross this river?\"", v: "girl" },
+                        { t: "\"Where the dead go. You are living. Why are you here?\"", v: "granny" }
+                    ],
+                    right: [
+                        { t: "\"I am going for medicine for my parents.\"", v: "girl" },
+                        "The old woman pointed at a ferry boat.",
+                        { t: "\"That boat takes no living person. But with a heart like yours, perhaps.\"", v: "granny" },
+                        "Barideggi got into the boat and it began to move.",
+                        "Somewhere in the mist somebody was crying."
+                    ]
+                },
+                {
+                    art: "11-keeper.webp",
+                    emoji: "🪵",
+                    left: [
+                        "Days more beyond the river brought her to a great well.",
+                        "In front of the well stood a man nine feet tall.",
+                        "He was the keeper of the healing water.",
+                        { t: "\"I have come for the water.\"", v: "girl" },
+                        { t: "\"Nothing is free. Pay for your water.\"", v: "beast" },
+                        "Barideggi had no money."
+                    ],
+                    right: [
+                        { t: "\"Then pay in work. Three years of wood, three of fire, three of water.\"", v: "beast" },
+                        "Nine years.",
+                        "Barideggi nodded.",
+                        "Three years she cut wood, three she fed the stove, three she drew water.",
+                        "Her hands split all over, and she never rested."
+                    ]
+                },
+                {
+                    art: "12-flowers.webp",
+                    emoji: "🌸",
+                    left: [
+                        "On the day the nine years were up the keeper took her to the well.",
+                        { t: "\"The water you have been drawing is the healing water.\"", v: "beast" },
+                        "Barideggi sat down where she was.",
+                        "It had been in her hands every day of those years.",
+                        { t: "\"And take these as well.\"", v: "beast" }
+                    ],
+                    right: [
+                        "The keeper held out three flowers.",
+                        { t: "\"One raises bone, one raises flesh, one raises breath.\"", v: "beast" },
+                        { t: "\"If your parents are gone already, use them.\"", v: "beast" },
+                        { t: "\"Gone? What do you mean?\"", v: "girl" },
+                        { t: "\"Nine years. Make haste.\"", v: "beast" },
+                        "Barideggi took the bottle and the flowers and ran."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 4,
+            title: "Chapter 4 · The Daughter Comes Back",
+            beats: [
+                {
+                    art: "13-funeral.webp",
+                    emoji: "🏮",
+                    left: [
+                        "When Barideggi reached the palace two biers were coming out of the gate.",
+                        "A bier is what the dead are carried on.",
+                        { t: "\"Whose biers are these?\"", v: "girl" },
+                        { t: "\"The king's and the queen's. They died together yesterday.\"", v: "man" },
+                        "Barideggi stood in the way of the biers."
+                    ],
+                    right: [
+                        { t: "\"Stop! I am the seventh daughter!\"", v: "girl" },
+                        "The six sisters, following in mourning, opened their eyes wide.",
+                        { t: "\"She has come back alive.\"", v: "woman" },
+                        "The bearers stopped where they stood.",
+                        "Barideggi had the biers opened and took out the three flowers."
+                    ]
+                },
+                {
+                    art: "14-revive.webp",
+                    emoji: "✨",
+                    left: [
+                        "At the bone flower the stiff bodies loosened.",
+                        "At the flesh flower the colour came back into their cheeks.",
+                        "At the breath flower —",
+                        "The king drew a great breath. The queen woke.",
+                        "Barideggi let a mouthful of the water into each of them."
+                    ],
+                    right: [
+                        "The king sat up. The sickness was gone as if washed away.",
+                        { t: "\"So you... you really went.\"", v: "old" },
+                        { t: "\"It took nine years. I am sorry to be late.\"", v: "girl" },
+                        "The king went down on his knees in front of his daughter.",
+                        "It was the first time the king had ever knelt."
+                    ]
+                },
+                {
+                    art: "15-wish.webp",
+                    emoji: "🕊️",
+                    left: [
+                        { t: "\"The child I threw away has saved me.\"", v: "old" },
+                        { t: "\"Ask for anything. Half this country, if you like.\"", v: "old" },
+                        "Barideggi shook her head.",
+                        { t: "\"At the black river I saw people crying, not knowing the way.\"", v: "girl" },
+                        { t: "\"I shall be the one who shows them the way.\"", v: "girl" }
+                    ],
+                    right: [
+                        { t: "\"You mean to look after the dead?\"", v: "old" },
+                        { t: "\"Yes. Because nobody else will do it.\"", v: "girl" },
+                        { t: "\"That is where I am going.\"", v: "girl" },
+                        "Neither the king nor the queen could hold her back.",
+                        "Barideggi went west again, and this time she did not look back."
+                    ]
+                },
+                {
+                    art: "16-guide.webp",
+                    emoji: "🌌",
+                    left: [
+                        "From that day Barideggi was the guide of the dead.",
+                        "She took the hand of anybody crying at the black river and put them in the boat.",
+                        "She led back anybody lost in the mist.",
+                        "People honoured Barideggi as a god.",
+                        "When somebody died they called her name."
+                    ],
+                    right: [
+                        { t: "\"Barideggi, light the road for our mother.\"", v: "man" },
+                        "Even now, at a rite, a shaman sings the story of Barideggi.",
+                        "It is a long song, sung all night through.",
+                        "The seventh daughter who was thrown away became the one who takes everybody home.",
+                        "The first child to be cast out is the last one left."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "Why did the king say to throw the seventh child away?", choices: ["The child was ill", "It was a girl again", "A fortune teller told him to"], answer: 1 },
+        { q: "What does the name Barideggi mean?", choices: ["The child from the river", "The thrown-away child", "The seventh child"], answer: 1 },
+        { q: "Who fished out the jade box and raised her?", choices: ["A couple who worked a ferry", "An old monk at a mountain temple", "A young king of the next country"], answer: 0 },
+        { q: "What did the six sisters do when asked to go?", choices: ["Drew lots and one went", "Each gave a reason and did not go", "All six set out together"], answer: 1 },
+        { q: "What did the old woman call the black river?", choices: ["The river the dead cross", "The river the healing water runs in", "The river only kings cross"], answer: 0 },
+        { q: "What did Barideggi do to pay for the water?", choices: ["Gave up the silver knife", "Worked for nine years", "Offered the three flowers"], answer: 1 },
+        { q: "What was coming out when she reached the palace?", choices: ["The king's hunting party", "The sisters' wedding chairs", "The king's and queen's biers"], answer: 2 },
+        { q: "What work did she choose after saving them?", choices: ["Ruling half the country", "Guiding the road of the dead", "Bringing the old couple to the palace"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The six sisters each gave a reason, so having been given a lot does not mean you pay it back.",
+                "The water she carried for nine years was the healing water, so what is precious can be in your hands already.",
+                "She chose to guide the dead instead of half a country, so somebody thrown away knows the thrown-away.",
+                "The king never knelt to his daughter in the end, so he could not own what he had done to the last."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "came down (come down)", k: "전해 왔다", s: "It came down not in a book but as a song" },
+            { w: "shaman", k: "무당", s: "as a song a shaman sang all night at a rite" },
+            { w: "rite", k: "굿", s: "a song a shaman sang all night at a rite" },
+            { w: "thrown away", k: "버려진", s: "A seventh princess is thrown away at birth" },
+            { w: "at birth", k: "태어나자마자", s: "A seventh princess is thrown away at birth for being a girl" },
+            { w: "the living", k: "산 사람", s: "goes to Seocheon, where the living cannot go" },
+            { w: "The meaning", k: "참뜻", s: "The meaning of the story is there." }
+        ],
+        "01-palace.webp": [
+            { w: "wanted ~ very much", k: "몹시 바랐다", s: "The two of them wanted a son very much." },
+            { w: "every child", k: "아이마다", s: "But every child that was born was a girl." },
+            { w: "held its breath", k: "숨을 죽였다", s: "the whole palace held its breath" },
+            { w: "Another girl", k: "또 딸", s: "Another girl." },
+            { w: "set hard (set)", k: "굳었다", s: "The king's face set hard." },
+            { w: "wept (weep)", k: "눈물을 흘렸다", s: "The queen held the baby and wept." },
+            { w: "Throw ~ away", k: "내다 버려라", s: "Throw this child away." }
+        ],
+        "02-box.webp": [
+            { w: "went down on her knees", k: "무릎을 꿇었다", s: "The queen went down on her knees before the king." },
+            { w: "newborn", k: "갓 태어난", s: "Sire, the child is newborn. What has she done?" },
+            { w: "become of ~", k: "꼴이 되다", s: "Seven daughters. What is to become of the country?" },
+            { w: "jade", k: "옥", s: "The queen laid the baby in a box made of jade." },
+            { w: "Only live", k: "살아만 있어라", s: "Only live, wherever you are." },
+            { w: "kissed the lid", k: "뚜껑에 입을 맞췄다", s: "The queen kissed the lid of the box." },
+            { w: "the current", k: "물결", s: "The jade box went slowly away on the current." },
+            { w: "bank", k: "강둑", s: "The queen stood on the bank till she could not see it." }
+        ],
+        "03-oldcouple.webp": [
+            { w: "Down the river", k: "강 아래쪽에", s: "Down the river an old couple lived." },
+            { w: "ferry boat", k: "나룻배", s: "They had no children and worked a ferry boat between them." },
+            { w: "between them", k: "둘이서", s: "worked a ferry boat between them" },
+            { w: "fished ~ out (fish)", k: "건졌다", s: "One morning the old man fished something out." },
+            { w: "raise", k: "기르다", s: "A thrown-away child. Let us raise her." },
+            { w: "brought ~ up (bring)", k: "키웠다", s: "The two brought her up as their own daughter." },
+            { w: "gruel", k: "죽", s: "They made gruel out of the ferry money" },
+            { w: "mended (mend)", k: "고쳐 입혔다", s: "They made gruel out of the ferry money and mended old clothes." }
+        ],
+        "04-grow.webp": [
+            { w: "hard-working", k: "부지런한", s: "Barideggi grew up a hard-working child." },
+            { w: "rowed (row)", k: "노를 저었다", s: "She drew water at dawn, rowed by day" },
+            { w: "rubbed ~ back", k: "등을 두드려 주었다", s: "and rubbed the old woman's back at night" },
+            { w: "bore me (bear)", k: "나를 낳았다", s: "Grandmother, who bore me?" },
+            { w: "brought out (bring)", k: "꺼내 보여 주었다", s: "The old woman brought out the jade box and the paper." },
+            { w: "Where from", k: "어디서 왔는지", s: "Where from, we do not know either." },
+            { w: "folded (fold)", k: "접었다", s: "She folded the paper and put it inside her dress." },
+            { w: "went by (go by)", k: "흘렀다", s: "So fifteen years went by." }
+        ],
+        "05-illness.webp": [
+            { w: "fell ill (fall)", k: "병이 들었다", s: "the king and the queen both fell ill" },
+            { w: "to no use", k: "소용없이", s: "Every doctor in the country came, to no use." },
+            { w: "be cured", k: "낫다", s: "This sickness will not be cured with medicine." },
+            { w: "read fortunes", k: "점을 쳤다", s: "An old man who read fortunes said it." },
+            { w: "the far west", k: "서쪽 끝", s: "Only the water at Seocheon in the far west will cure it." },
+            { w: "the living", k: "산 사람", s: "It is not a place the living can easily go." },
+            { w: "called ~ together", k: "불러 모았다", s: "The king called his six daughters together." },
+            { w: "small yet", k: "아직 어린", s: "My child is small yet." },
+            { w: "a reason", k: "까닭", s: "The third, fourth, fifth and sixth all had a reason too." }
+        ],
+        "06-remember.webp": [
+            { w: "sent ~ away (send)", k: "물렸다", s: "The king sent his daughters away and lay a long while." },
+            { w: "came back to him", k: "떠올랐다", s: "Then something from fifteen years ago came back to him." },
+            { w: "said ~ aloud", k: "입에 올렸다", s: "Neither had ever said that name aloud." },
+            { w: "Could she be ~", k: "~일까요", s: "Could she be alive?" },
+            { w: "Go down ~", k: "따라 내려가라", s: "Go down the river and find a house" },
+            { w: "went round ~", k: "돌았다", s: "The officer went round the river villages for days." },
+            { w: "came to ~", k: "이르렀다", s: "And he came to an old couple who worked a ferry." },
+            { w: "mending (mend)", k: "손질하는", s: "In the yard a young woman was mending an oar." },
+            { w: "oar", k: "노", s: "a young woman was mending an oar" }
+        ],
+        "07-reunion.webp": [
+            { w: "from their beds", k: "병상에서", s: "The king and queen looked at her from their beds." },
+            { w: "with a shaking hand", k: "떨리는 손으로", s: "The queen touched Barideggi's face with a shaking hand." },
+            { w: "threw ~ away (throw)", k: "버렸다", s: "I am the mother who threw you away." },
+            { w: "How can I ~", k: "무슨 낯으로 ~하겠니", s: "How can I look at you?" },
+            { w: "took ~ out of (take)", k: "품에서 꺼냈다", s: "Barideggi took the paper out of her dress." },
+            { w: "put ~ in", k: "넣어 주었다", s: "It was you who put this in, then." },
+            { w: "cried out loud", k: "소리 내어 울었다", s: "The queen cried out loud." },
+            { w: "turned his face away", k: "얼굴을 돌렸다", s: "The king turned his face away and could say nothing." }
+        ],
+        "08-depart.webp": [
+            { w: "had nothing from ~", k: "받은 것이 없다", s: "You have had nothing from us. Why should you go?" },
+            { w: "got the words out", k: "겨우 입을 열었다", s: "The king got the words out at last." },
+            { w: "had my life from ~", k: "낳아 준 것을 받았다", s: "I had my life from you. That is enough." },
+            { w: "level", k: "차분한", s: "Barideggi's voice was level." },
+            { w: "cotton clothes", k: "무명옷", s: "She put on the cotton clothes the old woman had made her." },
+            { w: "silver knife", k: "은장도", s: "The queen put a small silver knife into her hand." },
+            { w: "keep yourself safe", k: "몸을 지키다", s: "If the road is hard, keep yourself safe with this." },
+            { w: "came after ~", k: "따라나섰다", s: "Not one of them came after her." }
+        ],
+        "09-helpers.webp": [
+            { w: "went on walking", k: "걷고 또 걸었다", s: "Barideggi walked west and went on walking." },
+            { w: "weeding (weed)", k: "김을 매는", s: "an old man weeding a field alone" },
+            { w: "Finish ~ with me", k: "함께 다 하고 나서", s: "Finish this field with me and I shall tell you." },
+            { w: "worked the hoe", k: "호미질을 했다", s: "Barideggi worked the hoe till the sun went down." },
+            { w: "trod (tread)", k: "밟았다", s: "she trod the washing for her" },
+            { w: "not a road for ~", k: "~의 길이 아닌", s: "From there it is not a road for the living." },
+            { w: "clicked her tongue", k: "혀를 찼다", s: "The old woman clicked her tongue." },
+            { w: "It is much to ~", k: "~한 것만도 장하다", s: "It is much to have come even this far." }
+        ],
+        "10-river.webp": [
+            { w: "mist", k: "안개", s: "Beyond the hill was a black river with mist on it." },
+            { w: "in a line", k: "줄지어", s: "People stood in a line along the bank." },
+            { w: "none of them spoke", k: "아무도 말이 없었다", s: "Their faces were all white and none of them spoke." },
+            { w: "the dead", k: "죽은 이들", s: "Where the dead go. You are living." },
+            { w: "for my parents", k: "부모님을 위해", s: "I am going for medicine for my parents." },
+            { w: "takes no ~", k: "태우지 않는다", s: "That boat takes no living person." },
+            { w: "a heart like yours", k: "네 마음이면", s: "But with a heart like yours, perhaps." },
+            { w: "began to move", k: "스르르 움직였다", s: "Barideggi got into the boat and it began to move." }
+        ],
+        "11-keeper.webp": [
+            { w: "Days more", k: "여러 날을 더", s: "Days more beyond the river brought her to a great well." },
+            { w: "nine feet tall", k: "키가 아홉 자인", s: "In front of the well stood a man nine feet tall." },
+            { w: "keeper", k: "지키는 이", s: "He was the keeper of the healing water." },
+            { w: "healing water", k: "약수", s: "He was the keeper of the healing water." },
+            { w: "Nothing is free", k: "공짜는 없다", s: "Nothing is free. Pay for your water." },
+            { w: "pay in work", k: "일로 갚다", s: "Then pay in work." },
+            { w: "fed the stove (feed)", k: "불을 땠다", s: "three she fed the stove, three she drew water" },
+            { w: "split all over", k: "다 갈라졌다", s: "Her hands split all over, and she never rested." }
+        ],
+        "12-flowers.webp": [
+            { w: "were up", k: "다 찼다", s: "On the day the nine years were up" },
+            { w: "have been drawing", k: "길어 나르던", s: "The water you have been drawing is the healing water." },
+            { w: "in her hands", k: "손에 쥐고 있던", s: "It had been in her hands every day of those years." },
+            { w: "held out (hold)", k: "내밀었다", s: "The keeper held out three flowers." },
+            { w: "raises (raise)", k: "살린다", s: "One raises bone, one raises flesh, one raises breath." },
+            { w: "flesh", k: "살", s: "One raises bone, one raises flesh" },
+            { w: "are gone", k: "떠났다", s: "If your parents are gone already, use them." },
+            { w: "Make haste", k: "서두르거라", s: "Nine years. Make haste." },
+            { w: "bottle", k: "병", s: "Barideggi took the bottle and the flowers and ran." }
+        ],
+        "13-funeral.webp": [
+            { w: "reached (reach)", k: "닿았다", s: "When Barideggi reached the palace" },
+            { w: "biers", k: "상여", s: "two biers were coming out of the gate" },
+            { w: "are carried on", k: "모시고 간다", s: "A bier is what the dead are carried on." },
+            { w: "died together", k: "함께 눈을 감았다", s: "The king's and the queen's. They died together yesterday." },
+            { w: "stood in the way of ~", k: "앞을 막아섰다", s: "Barideggi stood in the way of the biers." },
+            { w: "in mourning", k: "상복을 입고", s: "The six sisters, following in mourning, opened their eyes wide." },
+            { w: "come back alive", k: "살아서 왔다", s: "She has come back alive." },
+            { w: "bearers", k: "상여꾼", s: "The bearers stopped where they stood." },
+            { w: "had ~ opened", k: "열게 했다", s: "Barideggi had the biers opened" }
+        ],
+        "14-revive.webp": [
+            { w: "stiff", k: "굳은", s: "At the bone flower the stiff bodies loosened." },
+            { w: "loosened (loosen)", k: "풀렸다", s: "the stiff bodies loosened" },
+            { w: "the colour came back", k: "핏기가 돌았다", s: "At the flesh flower the colour came back into their cheeks." },
+            { w: "drew a breath (draw)", k: "숨을 들이켰다", s: "The king drew a great breath." },
+            { w: "a mouthful", k: "한 모금", s: "Barideggi let a mouthful of the water into each of them." },
+            { w: "as if washed away", k: "씻은 듯이", s: "The sickness was gone as if washed away." },
+            { w: "really went", k: "정말 다녀왔다", s: "So you... you really went." },
+            { w: "to be late", k: "늦어서", s: "It took nine years. I am sorry to be late." },
+            { w: "knelt (kneel)", k: "무릎을 꿇었다", s: "It was the first time the king had ever knelt." }
+        ],
+        "15-wish.webp": [
+            { w: "The child I threw away", k: "내가 버린 아이", s: "The child I threw away has saved me." },
+            { w: "Half this country", k: "이 나라의 반", s: "Ask for anything. Half this country, if you like." },
+            { w: "shook her head (shake)", k: "고개를 저었다", s: "Barideggi shook her head." },
+            { w: "not knowing the way", k: "길을 몰라", s: "I saw people crying, not knowing the way." },
+            { w: "shows them the way", k: "길을 알려 준다", s: "I shall be the one who shows them the way." },
+            { w: "look after ~", k: "돌보다", s: "You mean to look after the dead?" },
+            { w: "nobody else will", k: "아무도 하지 않는다", s: "Yes. Because nobody else will do it." },
+            { w: "hold her back", k: "말리다", s: "Neither the king nor the queen could hold her back." }
+        ],
+        "16-guide.webp": [
+            { w: "guide", k: "길잡이", s: "From that day Barideggi was the guide of the dead." },
+            { w: "took the hand of ~", k: "손을 잡아 주었다", s: "She took the hand of anybody crying at the black river" },
+            { w: "led back (lead)", k: "데려다주었다", s: "She led back anybody lost in the mist." },
+            { w: "honoured ~ as (honour)", k: "~으로 모셨다", s: "People honoured Barideggi as a god." },
+            { w: "called her name", k: "이름을 불렀다", s: "When somebody died they called her name." },
+            { w: "light the road", k: "길을 밝히다", s: "Barideggi, light the road for our mother." },
+            { w: "all night through", k: "밤새", s: "It is a long song, sung all night through." },
+            { w: "takes everybody home", k: "모두를 데려다준다", s: "became the one who takes everybody home" },
+            { w: "cast out (cast)", k: "버려진", s: "The first child to be cast out is the last one left." }
+        ],
+        "after": [
+            { w: "not in a book", k: "책이 아니라", s: "This story came down not in a book but as a song." },
+            { w: "hold ~ as (hold)", k: "~로 여긴다", s: "the people who sing it hold Barideggi as their own ancestor" },
+            { w: "differs by region", k: "지역마다 다르다", s: "It differs by region." },
+            { w: "left out (leave)", k: "뺐다", s: "This book left that part out" },
+            { w: "had nothing from ~", k: "받은 것이 없다", s: "Look again and Barideggi had nothing from her parents." },
+            { w: "And still she goes", k: "그런데도 간다", s: "And still she goes." },
+            { w: "side by side", k: "나란히", s: "That is why the story puts the six sisters side by side with her." },
+            { w: "pass ~ by", k: "그냥 지나치다", s: "she could not pass by the ones crying in the mist" },
+            { w: "the ones cast out", k: "버려지는 쪽", s: "the ones cast out are the ones who save everybody in the end" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌌',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story came down not in a book but as a song. It is what a shaman sings all night at the rite held when somebody has died. So the people who sing it hold Barideggi as their own ancestor.",
+                    "It differs by region. She is called Princess Bari in some, and in some her parents are ordinary people and not a king. In many tellings she marries the keeper of the water and bears seven sons. This book left that part out and kept only the nine years of work.",
+                    "Look again and Barideggi had nothing from her parents. And still she goes. The six sisters, who had a great deal, do not. That is why the story puts them side by side with her.",
+                    "The last part is the meaning of it. Offered half a country, Barideggi chooses to guide the dead."
+                ],
+                right: [
+                    "Because she had been thrown away herself, she could not pass by the ones crying in the mist.",
+                    "It is worth thinking about how a story of a girl thrown away for being a girl became a story of a woman honoured as a god. With this song, people of that time told of a world where the ones cast out are the ones who save everybody in the end.",
+                    "Have you ever taken on something nobody else wanted to do?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "임금이 일곱째 아이를 버리라고 한 까닭은 무엇인가요?", choices: ["아이가 병을 앓아서", "또 딸이어서", "점쟁이가 그리 말해서"], answer: 1 },
     { q: "바리데기라는 이름은 무슨 뜻인가요?", choices: ["강에서 온 아이", "버려진 아이", "일곱째 아이"], answer: 1 },

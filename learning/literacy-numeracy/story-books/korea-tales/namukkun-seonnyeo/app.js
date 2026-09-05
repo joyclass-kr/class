@@ -298,6 +298,562 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🪶",
+        art: "cover.webp",
+        title: "The Woodcutter and the Fairy",
+        intro: [
+            "This is an oral tale with no known author. It was collected all over Korea, and every village ends it a little differently.",
+            "Somebody from the sky who loses a feather robe and stays on earth is told of everywhere. Japan has Hagoromo, Europe the swan maiden.",
+            "In the old telling the woodcutter hides the robe. In this book he gives back at once what he has picked up."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · What the Deer Told Him",
+            beats: [
+                {
+                    art: "01-woodcutter.webp",
+                    emoji: "🪓",
+                    left: [
+                        "Long ago a woodcutter lived with his widowed mother below a deep mountain.",
+                        "His father had died when the woodcutter was very small.",
+                        "All they had was one carrying frame and one axe.",
+                        "He had to sell a load of wood to get that day's food."
+                    ],
+                    right: [
+                        "The woodcutter went up the mountain in the black dark every morning.",
+                        { t: "\"Mother, I am off again today.\"", v: "man" },
+                        "He shouldered his frame and went out of the yard.",
+                        { t: "\"Take care. There are many hunters on the hill lately.\"", v: "granny" },
+                        "The path was still dim and the dew was wet."
+                    ]
+                },
+                {
+                    art: "02-deer.webp",
+                    emoji: "🦌",
+                    left: [
+                        "That day too he was cutting wood when something knocked at his leg.",
+                        "In the bushes a deer stood shaking all over.",
+                        "The woodcutter started and stepped back.",
+                        "The deer was wet through with sweat and its eyes were full of tears."
+                    ],
+                    right: [
+                        { t: "\"Save me! The hunter is right behind me!\"", v: "beast" },
+                        "The deer's voice was desperate.",
+                        "The woodcutter quickly opened his woodpile and hid the deer.",
+                        "A moment later a hunter went panting past with his bow.",
+                        "The deer did not make a sound of breathing."
+                    ]
+                },
+                {
+                    art: "03-tell.webp",
+                    emoji: "🌕",
+                    left: [
+                        "Only when the hunter's steps had gone did the deer crawl out.",
+                        "Its legs were still shaking under it.",
+                        { t: "\"I should like to pay you back.\"", v: "beast" },
+                        "The deer looked quietly up at him with its black eyes.",
+                        "Its voice was very low."
+                    ],
+                    right: [
+                        { t: "\"On the night of the full moon, go to the pond on the mountain top.\"", v: "beast" },
+                        "The deer lifted its head towards the top of the mountain.",
+                        { t: "\"Fairies come down from the sky to bathe there.\"", v: "beast" },
+                        { t: "\"But I have one thing to ask of you.\"", v: "beast" },
+                        "The deer's voice went suddenly very serious."
+                    ]
+                },
+                {
+                    art: "04-pond.webp",
+                    emoji: "💧",
+                    left: [
+                        { t: "\"Whatever happens, hide nothing.\"", v: "beast" },
+                        { t: "\"Hide a thing of the sky and trouble will come of it.\"", v: "beast" },
+                        "The deer said it twice over and ran off into the wood.",
+                        "The woodcutter nodded again and again.",
+                        "He meant not to forget those words."
+                    ],
+                    right: [
+                        "On the night of the full moon he hid behind a rock by the pond.",
+                        "And a shaft of light really did come sliding down out of the sky.",
+                        "Seven fairies left their clothes and went into the water.",
+                        "Water and laughing spread down the valley."
+                    ]
+                },
+                {
+                    art: "05-robe.webp",
+                    emoji: "🪶",
+                    left: [
+                        "Then a strong wind came down the valley.",
+                        "One feather robe laid out on a rock blew away.",
+                        "It caught in a thorn bush a good way off and flapped there.",
+                        "The woodcutter ran into the bush after it.",
+                        "The thorns tore at his arms without mercy."
+                    ],
+                    right: [
+                        "He got the robe out without noticing his hand was bleeding.",
+                        "It was light as a feather and slid in his hands.",
+                        { t: "\"This must go back to whoever owns it.\"", v: "man" },
+                        "The woodcutter folded it neatly and laid it on the rock.",
+                        "Then he drew back behind the rock."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The One Who Chose to Stay",
+            beats: [
+                {
+                    art: "06-left.webp",
+                    emoji: "😢",
+                    left: [
+                        "At daybreak the fairies went up into the sky, one by one.",
+                        "The shafts of light were drawn up one by one.",
+                        "But one of them was still there by the pond.",
+                        "She sat with her knees in her arms, her shoulders shaking.",
+                        "Look for her robe as she might, it was not there."
+                    ],
+                    right: [
+                        { t: "\"My robe is gone... what am I to do?\"", v: "woman" },
+                        "The fairy put her face on her knees and cried.",
+                        "The woodcutter came carefully over.",
+                        "She did not know anybody had come, and only cried.",
+                        "The woodcutter stood there not knowing what to say."
+                    ]
+                },
+                {
+                    art: "07-give.webp",
+                    emoji: "🤲",
+                    left: [
+                        { t: "\"Er — is this the thing you are looking for?\"", v: "man" },
+                        "The woodcutter's voice was very careful.",
+                        "He held the feather robe out on both hands.",
+                        "The fairy lifted her head slowly, her face all tears.",
+                        "The hem of it shone in the morning sun."
+                    ],
+                    right: [
+                        { t: "\"...You did not hide it?\"", v: "woman" },
+                        "The fairy opened her eyes wide and asked it again.",
+                        { t: "\"Why should I hide what is somebody else's?\"", v: "man" },
+                        "The woodcutter only scratched his head, awkward.",
+                        "The fairy looked at that face a long while without a word.",
+                        "She had never met anybody like that."
+                    ]
+                },
+                {
+                    art: "08-closed.webp",
+                    emoji: "🚪",
+                    left: [
+                        "The fairy put the robe on and looked up at the sky.",
+                        "She spread both arms and pushed up on her toes.",
+                        "But her feet would not come off the ground at all.",
+                        "Try as she might, her soles seemed stuck to the earth."
+                    ],
+                    right: [
+                        { t: "\"The gate of the sky has closed already.\"", v: "woman" },
+                        "The fairy said it, near to tears.",
+                        { t: "\"The gate opens again at the next full moon.\"", v: "woman" },
+                        "So she had a whole month to spend on the earth.",
+                        "In one morning she had nowhere to go and nowhere to sleep."
+                    ]
+                },
+                {
+                    art: "09-home.webp",
+                    emoji: "🏠",
+                    left: [
+                        "The woodcutter took the fairy home with him.",
+                        "His mother gave up the warm spot without a word.",
+                        { t: "\"Stay at our house till then.\"", v: "man" },
+                        "His mother did not even ask where she had come from.",
+                        "She only put one more spoon on the table."
+                    ],
+                    right: [
+                        "The fairy did not know how to cook rice or how to wash clothes.",
+                        "But she tried to learn them all.",
+                        "What she did know was the name of every mountain herb,",
+                        "and the names of the medicine plants down to their roots.",
+                        "The three of them talked every night."
+                    ]
+                },
+                {
+                    art: "10-stay.webp",
+                    emoji: "🌙",
+                    left: [
+                        "A month went by and the round full moon came again.",
+                        "The woodcutter folded the feather robe neatly and held it out.",
+                        "He had kept it carefully in a chest.",
+                        { t: "\"You should go now.\"", v: "man" },
+                        "His voice had gone a little thick, without his meaning it."
+                    ],
+                    right: [
+                        "The fairy took the robe and stood in the yard a long while.",
+                        "Then she put it back in the chest and shut the lid.",
+                        "The fairy looked steadily at the woodcutter.",
+                        { t: "\"...I shall stay a little longer.\"", v: "woman" },
+                        "That little longer turned into several years."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Well Bucket",
+            beats: [
+                {
+                    art: "11-children.webp",
+                    emoji: "👦",
+                    left: [
+                        "So several years went by.",
+                        "There were two children running about the yard now.",
+                        "One son and one daughter.",
+                        "The two of them ran round the yard playing chase all day.",
+                        "The laughing went over the wall next door."
+                    ],
+                    right: [
+                        "The woodcutter cut wood and his wife dug medicine plants.",
+                        "The grandmother sat the children on her knee and told them old stories.",
+                        { t: "\"Granny, what happened next?\"", v: "boy" },
+                        "The house was poor and the laughing never stopped.",
+                        "There was nothing left to want."
+                    ]
+                },
+                {
+                    art: "12-homesick.webp",
+                    emoji: "☁️",
+                    left: [
+                        "But at some point his wife began looking up at the sky.",
+                        "She looked a long time at the way the clouds were going.",
+                        "Hanging out the washing, eating a meal, her hands would stop.",
+                        "The woodcutter saw it and said nothing."
+                    ],
+                    right: [
+                        { t: "\"...I want to see my mother.\"", v: "woman" },
+                        "One night her voice came very small.",
+                        "After a long moment the woodcutter got up.",
+                        "And he opened the lid of the chest.",
+                        { t: "\"Go and see her. Take the children too.\"", v: "man" },
+                        "The feather robe was there in the chest, just as it was."
+                    ]
+                },
+                {
+                    art: "13-up.webp",
+                    emoji: "✨",
+                    left: [
+                        "His wife put the robe on and took a child on each arm.",
+                        "And her body lifted slowly off the ground.",
+                        "The children hung on her neck, delighted.",
+                        "A white light came off the hem of the robe.",
+                        "The leaves in the yard went round and round."
+                    ],
+                    right: [
+                        { t: "\"I shall come for you soon. I promise!\"", v: "woman" },
+                        "His wife called it out, waving through the clouds.",
+                        "The three of them slid away into the cloud.",
+                        "The woodcutter stood a long while in the middle of the yard.",
+                        "He only looked up at the empty sky."
+                    ]
+                },
+                {
+                    art: "14-bucket.webp",
+                    emoji: "🪣",
+                    left: [
+                        "A few days later a well bucket came sliding down into the yard.",
+                        "The woodcutter went out to see what it was.",
+                        "It was a great bucket for drawing water, on a thick rope.",
+                        "The rope ran right up to the end of the sky.",
+                        "The woodcutter gave the rope a pull."
+                    ],
+                    right: [
+                        "He got in, and the bucket went straight up.",
+                        "The clouds went past below his feet.",
+                        "Through the cloud, and that was the country of the sky.",
+                        { t: "\"Father!\"", v: "boy" },
+                        "The children came running to him, and his wife met him smiling."
+                    ]
+                },
+                {
+                    art: "15-mother.webp",
+                    emoji: "🐴",
+                    left: [
+                        "The country of the sky was nothing but good.",
+                        "There was no want of food or of clothes.",
+                        "The children were delighted with it too.",
+                        "But the woodcutter kept thinking of the earth.",
+                        { t: "\"My mother is down there on her own...\"", v: "man" },
+                        "That thought did not leave him for one day."
+                    ],
+                    right: [
+                        "His wife gave him a horse of the sky.",
+                        "And she asked him something, with a worried face.",
+                        { t: "\"Set a foot on the earth and you can never come back up.\"", v: "woman" },
+                        { t: "\"See her from the horse and come away. Promise me.\"", v: "woman" },
+                        "The woodcutter nodded several times."
+                    ]
+                },
+                {
+                    art: "16-rooster.webp",
+                    emoji: "🐓",
+                    left: [
+                        "The moment his mother saw her son she ran to the kitchen.",
+                        "It was years since she had seen him.",
+                        "She made a bowl of bean porridge, steaming hot.",
+                        "He took the bowl on the horse's back.",
+                        "And at that moment the bowl tipped over.",
+                        "The hot porridge went over the horse's back."
+                    ],
+                    right: [
+                        "The horse started at the hot porridge and sprang up into the sky.",
+                        "The woodcutter fell straight down to the earth.",
+                        { t: "\"Wife! Children!\"", v: "man" },
+                        "His mother cried there beside him.",
+                        "But then the bucket came sliding down again.",
+                        "His wife and the children were in it."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "Where did the woodcutter hide the deer?", choices: ["In the thorn bush", "In the chest", "In the woodpile"], answer: 2 },
+        { q: "What did he pick out of the thorn bush?", choices: ["A golden bucket", "A feather robe", "A horse of the sky"], answer: 1 },
+        { q: "Where did he put the robe he found?", choices: ["Folded neatly on the rock", "Pushed into the woodpile", "Laid on his carrying frame"], answer: 0 },
+        { q: "Why could the fairy not go up that day?", choices: ["Her robe was torn", "She had forgotten the way", "The gate of the sky was shut"], answer: 2 },
+        { q: "What did the woodcutter ride up to the sky?", choices: ["A great well bucket", "A boat made of cloud", "The back of the deer"], answer: 0 },
+        { q: "Why did the woodcutter fall off the horse?", choices: ["He set a foot on the earth", "He spilled the hot porridge", "The bucket came down"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He gave the robe back instead of hiding it, so because he did not hold on to her she could choose to stay.",
+                "One bowl of hot porridge undid the whole thing, so a big trouble does not always come from a big cause.",
+                "She took the robe and put it back in the chest, so it was the fairy who made up her mind that day.",
+                "The fairy went up to the sky alone and left the children, so she must have missed the sky that much."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "was collected (collect)", k: "채집되었다", s: "It was collected all over Korea" },
+            { w: "a little differently", k: "조금씩 다르게", s: "every village ends it a little differently" },
+            { w: "feather robe", k: "날개옷", s: "Somebody from the sky who loses a feather robe" },
+            { w: "stays on earth", k: "땅에 머문다", s: "loses a feather robe and stays on earth" },
+            { w: "swan maiden", k: "백조 처녀", s: "Japan has Hagoromo, Europe the swan maiden." },
+            { w: "the old telling", k: "옛 이야기", s: "In the old telling the woodcutter hides the robe." },
+            { w: "at once", k: "곧바로", s: "he gives back at once what he has picked up" }
+        ],
+        "01-woodcutter.webp": [
+            { w: "woodcutter", k: "나무꾼", s: "Long ago a woodcutter lived with his widowed mother" },
+            { w: "widowed", k: "홀로 된", s: "lived with his widowed mother below a deep mountain" },
+            { w: "carrying frame", k: "지게", s: "All they had was one carrying frame and one axe." },
+            { w: "axe", k: "도끼", s: "All they had was one carrying frame and one axe." },
+            { w: "a load of wood", k: "나무 한 짐", s: "He had to sell a load of wood to get that day's food." },
+            { w: "in the black dark", k: "캄캄한 때에", s: "The woodcutter went up the mountain in the black dark" },
+            { w: "I am off", k: "다녀오겠습니다", s: "Mother, I am off again today." },
+            { w: "dim", k: "어둑어둑한", s: "The path was still dim and the dew was wet." },
+            { w: "dew", k: "이슬", s: "The path was still dim and the dew was wet." }
+        ],
+        "02-deer.webp": [
+            { w: "knocked at ~", k: "툭 부딪혔다", s: "something knocked at his leg" },
+            { w: "shaking all over", k: "부들부들 떠는", s: "In the bushes a deer stood shaking all over." },
+            { w: "started (start)", k: "깜짝 놀랐다", s: "The woodcutter started and stepped back." },
+            { w: "wet through", k: "흠뻑 젖은", s: "The deer was wet through with sweat" },
+            { w: "full of tears", k: "눈물이 그렁그렁한", s: "its eyes were full of tears" },
+            { w: "right behind ~", k: "바로 뒤에", s: "Save me! The hunter is right behind me!" },
+            { w: "desperate", k: "다급한", s: "The deer's voice was desperate." },
+            { w: "woodpile", k: "나뭇더미", s: "The woodcutter quickly opened his woodpile and hid the deer." },
+            { w: "panting (pant)", k: "헐레벌떡", s: "a hunter went panting past with his bow" }
+        ],
+        "03-tell.webp": [
+            { w: "crawl out", k: "기어 나오다", s: "Only when the hunter's steps had gone did the deer crawl out." },
+            { w: "under it", k: "다리에", s: "Its legs were still shaking under it." },
+            { w: "pay you back", k: "은혜를 갚다", s: "I should like to pay you back." },
+            { w: "the full moon", k: "보름달", s: "On the night of the full moon, go to the pond" },
+            { w: "bathe", k: "목욕하다", s: "Fairies come down from the sky to bathe there." },
+            { w: "ask of ~", k: "부탁하다", s: "But I have one thing to ask of you." },
+            { w: "went serious", k: "진지해졌다", s: "The deer's voice went suddenly very serious." }
+        ],
+        "04-pond.webp": [
+            { w: "Whatever happens", k: "무엇이든", s: "Whatever happens, hide nothing." },
+            { w: "come of it", k: "탈이 나다", s: "Hide a thing of the sky and trouble will come of it." },
+            { w: "twice over", k: "두 번이나", s: "The deer said it twice over and ran off into the wood." },
+            { w: "meant not to ~", k: "~하지 않으려 했다", s: "He meant not to forget those words." },
+            { w: "hid behind ~ (hide)", k: "숨었다", s: "he hid behind a rock by the pond" },
+            { w: "a shaft of light", k: "빛줄기", s: "a shaft of light really did come sliding down" },
+            { w: "fairies", k: "선녀", s: "Seven fairies left their clothes and went into the water." },
+            { w: "spread down ~ (spread)", k: "퍼졌다", s: "Water and laughing spread down the valley." }
+        ],
+        "05-robe.webp": [
+            { w: "laid out (lay)", k: "널어 둔", s: "One feather robe laid out on a rock blew away." },
+            { w: "blew away (blow)", k: "훌렁 날아갔다", s: "One feather robe laid out on a rock blew away." },
+            { w: "thorn bush", k: "가시덤불", s: "It caught in a thorn bush a good way off" },
+            { w: "flapped (flap)", k: "파닥거렸다", s: "It caught in a thorn bush and flapped there." },
+            { w: "tore at ~ (tear)", k: "사정없이 긁었다", s: "The thorns tore at his arms without mercy." },
+            { w: "without noticing", k: "~인 줄도 모르고", s: "He got the robe out without noticing his hand was bleeding." },
+            { w: "light as a feather", k: "깃털처럼 가벼운", s: "It was light as a feather and slid in his hands." },
+            { w: "whoever owns it", k: "임자", s: "This must go back to whoever owns it." },
+            { w: "folded ~ neatly", k: "곱게 개었다", s: "The woodcutter folded it neatly and laid it on the rock." }
+        ],
+        "06-left.webp": [
+            { w: "At daybreak", k: "동이 트자", s: "At daybreak the fairies went up into the sky, one by one." },
+            { w: "were drawn up (draw)", k: "빨려 올라갔다", s: "The shafts of light were drawn up one by one." },
+            { w: "with her knees in her arms", k: "무릎을 끌어안고", s: "She sat with her knees in her arms" },
+            { w: "shoulders shaking", k: "어깨를 들썩이며", s: "her shoulders shaking" },
+            { w: "Look as she might", k: "아무리 찾아도", s: "Look for her robe as she might, it was not there." },
+            { w: "put her face on ~", k: "얼굴을 묻었다", s: "The fairy put her face on her knees and cried." },
+            { w: "came carefully over", k: "조심조심 다가갔다", s: "The woodcutter came carefully over." },
+            { w: "not knowing what to say", k: "뭐라 할지 몰라", s: "The woodcutter stood there not knowing what to say." }
+        ],
+        "07-give.webp": [
+            { w: "Er", k: "저", s: "Er — is this the thing you are looking for?" },
+            { w: "held ~ out on both hands", k: "두 손으로 받쳐 내밀었다", s: "He held the feather robe out on both hands." },
+            { w: "all tears", k: "눈물 범벅인", s: "The fairy lifted her head slowly, her face all tears." },
+            { w: "hem", k: "옷자락", s: "The hem of it shone in the morning sun." },
+            { w: "hide (hide)", k: "감추다", s: "...You did not hide it?" },
+            { w: "somebody else's", k: "남의 것", s: "Why should I hide what is somebody else's?" },
+            { w: "scratched his head", k: "머리를 긁적였다", s: "The woodcutter only scratched his head, awkward." },
+            { w: "awkward", k: "멋쩍은", s: "The woodcutter only scratched his head, awkward." },
+            { w: "anybody like that", k: "그런 사람", s: "She had never met anybody like that." }
+        ],
+        "08-closed.webp": [
+            { w: "spread both arms", k: "두 팔을 폈다", s: "She spread both arms and pushed up on her toes." },
+            { w: "on her toes", k: "발끝에", s: "She spread both arms and pushed up on her toes." },
+            { w: "come off the ground", k: "땅에서 떨어지다", s: "But her feet would not come off the ground at all." },
+            { w: "Try as she might", k: "아무리 애써도", s: "Try as she might, her soles seemed stuck to the earth." },
+            { w: "soles", k: "발바닥", s: "her soles seemed stuck to the earth" },
+            { w: "the gate of the sky", k: "하늘 문", s: "The gate of the sky has closed already." },
+            { w: "near to tears", k: "울상이 되어", s: "The fairy said it, near to tears." },
+            { w: "a whole month", k: "꼬박 한 달", s: "So she had a whole month to spend on the earth." },
+            { w: "nowhere to go", k: "갈 곳이 없는", s: "she had nowhere to go and nowhere to sleep" }
+        ],
+        "09-home.webp": [
+            { w: "gave up ~ (give)", k: "내주었다", s: "His mother gave up the warm spot without a word." },
+            { w: "the warm spot", k: "아랫목", s: "His mother gave up the warm spot without a word." },
+            { w: "till then", k: "그동안", s: "Stay at our house till then." },
+            { w: "did not even ask", k: "묻지도 않았다", s: "His mother did not even ask where she had come from." },
+            { w: "one more spoon", k: "숟가락 하나 더", s: "She only put one more spoon on the table." },
+            { w: "how to ~", k: "~하는 법", s: "The fairy did not know how to cook rice" },
+            { w: "herb", k: "산나물", s: "the name of every mountain herb" },
+            { w: "medicine plants", k: "약초", s: "the names of the medicine plants down to their roots" },
+            { w: "down to ~", k: "~까지 줄줄", s: "the names of the medicine plants down to their roots" }
+        ],
+        "10-stay.webp": [
+            { w: "went by (go by)", k: "지났다", s: "A month went by and the round full moon came again." },
+            { w: "held ~ out (hold)", k: "내밀었다", s: "The woodcutter folded the feather robe and held it out." },
+            { w: "chest", k: "궤", s: "He had kept it carefully in a chest." },
+            { w: "gone a little thick", k: "조금 잠겼다", s: "His voice had gone a little thick" },
+            { w: "without his meaning it", k: "저도 모르게", s: "His voice had gone a little thick, without his meaning it." },
+            { w: "shut the lid", k: "뚜껑을 덮었다", s: "Then she put it back in the chest and shut the lid." },
+            { w: "steadily", k: "물끄러미", s: "The fairy looked steadily at the woodcutter." },
+            { w: "a little longer", k: "조금만 더", s: "...I shall stay a little longer." },
+            { w: "turned into ~", k: "~이 되었다", s: "That little longer turned into several years." }
+        ],
+        "11-children.webp": [
+            { w: "running about", k: "뛰어다니는", s: "There were two children running about the yard now." },
+            { w: "playing chase", k: "술래잡기를 하며", s: "The two of them ran round the yard playing chase all day." },
+            { w: "went over the wall", k: "담을 넘었다", s: "The laughing went over the wall next door." },
+            { w: "dug (dig)", k: "캤다", s: "his wife dug medicine plants" },
+            { w: "on her knee", k: "무릎에 앉히고", s: "The grandmother sat the children on her knee" },
+            { w: "old stories", k: "옛이야기", s: "told them old stories" },
+            { w: "never stopped", k: "끊이지 않았다", s: "The house was poor and the laughing never stopped." },
+            { w: "nothing left to want", k: "부러울 것이 없는", s: "There was nothing left to want." }
+        ],
+        "12-homesick.webp": [
+            { w: "at some point", k: "언제부터인가", s: "But at some point his wife began looking up at the sky." },
+            { w: "the way ~ were going", k: "흘러가는 쪽", s: "She looked a long time at the way the clouds were going." },
+            { w: "Hanging out the washing", k: "빨래를 널다가", s: "Hanging out the washing, eating a meal, her hands would stop." },
+            { w: "said nothing", k: "모른 척했다", s: "The woodcutter saw it and said nothing." },
+            { w: "came very small", k: "아주 작게 들렸다", s: "One night her voice came very small." },
+            { w: "After a long moment", k: "한참 만에", s: "After a long moment the woodcutter got up." },
+            { w: "lid", k: "뚜껑", s: "And he opened the lid of the chest." },
+            { w: "just as it was", k: "그대로", s: "The feather robe was there in the chest, just as it was." }
+        ],
+        "13-up.webp": [
+            { w: "on each arm", k: "양팔에", s: "His wife put the robe on and took a child on each arm." },
+            { w: "lifted off ~", k: "떠올랐다", s: "And her body lifted slowly off the ground." },
+            { w: "hung on ~ (hang)", k: "매달렸다", s: "The children hung on her neck, delighted." },
+            { w: "came off ~", k: "~에서 났다", s: "A white light came off the hem of the robe." },
+            { w: "went round and round", k: "빙그르르 돌았다", s: "The leaves in the yard went round and round." },
+            { w: "come for ~", k: "부르러 오다", s: "I shall come for you soon. I promise!" },
+            { w: "waving (wave)", k: "손을 흔들며", s: "His wife called it out, waving through the clouds." },
+            { w: "slid away (slide)", k: "스르르 사라졌다", s: "The three of them slid away into the cloud." }
+        ],
+        "14-bucket.webp": [
+            { w: "well bucket", k: "두레박", s: "a well bucket came sliding down into the yard" },
+            { w: "drawing water", k: "물을 긷는", s: "It was a great bucket for drawing water, on a thick rope." },
+            { w: "ran right up to ~", k: "~까지 이어졌다", s: "The rope ran right up to the end of the sky." },
+            { w: "gave ~ a pull", k: "잡아당겨 보았다", s: "The woodcutter gave the rope a pull." },
+            { w: "got in (get)", k: "올라탔다", s: "He got in, and the bucket went straight up." },
+            { w: "went past below ~", k: "발밑으로 스쳤다", s: "The clouds went past below his feet." },
+            { w: "the country of the sky", k: "하늘나라", s: "Through the cloud, and that was the country of the sky." },
+            { w: "met him smiling", k: "웃으며 맞았다", s: "his wife met him smiling" }
+        ],
+        "15-mother.webp": [
+            { w: "nothing but good", k: "좋기만 한", s: "The country of the sky was nothing but good." },
+            { w: "no want of ~", k: "모자람이 없는", s: "There was no want of food or of clothes." },
+            { w: "delighted with ~", k: "신이 난", s: "The children were delighted with it too." },
+            { w: "kept thinking of ~", k: "자꾸 그리웠다", s: "But the woodcutter kept thinking of the earth." },
+            { w: "on her own", k: "혼자", s: "My mother is down there on her own..." },
+            { w: "did not leave him", k: "떠나지 않았다", s: "That thought did not leave him for one day." },
+            { w: "worried", k: "걱정스러운", s: "And she asked him something, with a worried face." },
+            { w: "Set a foot on ~", k: "발을 딛다", s: "Set a foot on the earth and you can never come back up." },
+            { w: "Promise me", k: "꼭이요", s: "See her from the horse and come away. Promise me." }
+        ],
+        "16-rooster.webp": [
+            { w: "The moment ~", k: "~하자마자", s: "The moment his mother saw her son she ran to the kitchen." },
+            { w: "It was years since ~", k: "몇 해 만이었다", s: "It was years since she had seen him." },
+            { w: "steaming hot", k: "김이 펄펄 나는", s: "She made a bowl of bean porridge, steaming hot." },
+            { w: "on the horse's back", k: "말 위에서", s: "He took the bowl on the horse's back." },
+            { w: "tipped over (tip)", k: "기우뚱 기울었다", s: "And at that moment the bowl tipped over." },
+            { w: "went over ~", k: "쏟아졌다", s: "The hot porridge went over the horse's back." },
+            { w: "started at ~ (start)", k: "놀랐다", s: "The horse started at the hot porridge" },
+            { w: "sprang up (spring)", k: "펄쩍 뛰어올랐다", s: "The horse sprang up into the sky." },
+            { w: "came sliding down", k: "스르르 내려왔다", s: "But then the bucket came sliding down again." }
+        ],
+        "after": [
+            { w: "clothes come into ~", k: "옷이 나온다", s: "Clothes always come into stories like this." },
+            { w: "cannot go back", k: "돌아가지 못한다", s: "Lose the clothes and you cannot go back" },
+            { w: "what divides ~", k: "가르는 것", s: "what divides a sky person from an earth person" },
+            { w: "the one thing worn", k: "걸친 것 하나", s: "is not a body but the one thing worn" },
+            { w: "ends differently", k: "끝이 다르다", s: "Our tellings end differently from one another." },
+            { w: "held her (hold)", k: "붙잡아 두었다", s: "That was not helping her; it held her." },
+            { w: "would have thought of ~", k: "궁리했을 것이다", s: "she would always have been thinking of leaving" },
+            { w: "chose for herself", k: "스스로 골랐다", s: "his wife chose staying for herself" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🪶',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Clothes always come into stories like this. Lose the clothes and you cannot go back; get them again and you can. What divides a sky person from an earth person is not a body but the one thing worn.",
+                    "Our tellings end differently from one another. In some the fairy goes back and the woodcutter rides a well bucket up after her. In some the two never meet again.",
+                    "In other tellings the first thing the woodcutter does is hide the robe. That was not helping her; it held her.",
+                    "This book took the other road, and had him give it back."
+                ],
+                right: [
+                    "The woodcutter could have hidden the feather robe. If he had, his wife would have been beside him and always thinking of leaving.",
+                    "Because he gave it back, his wife chose staying for herself.",
+                    "Have you ever wanted to hold on to somebody? What would have been the better thing to do?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "나무꾼은 사슴을 어디에 숨겼나요?", choices: ["가시덤불 속", "궤 속", "나뭇더미 속"], answer: 2 },
     { q: "나무꾼이 가시덤불에서 주운 것은 무엇인가요?", choices: ["금빛 두레박", "날개옷 한 벌", "하늘 말 한 필"], answer: 1 },
