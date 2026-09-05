@@ -167,12 +167,19 @@ main { max-width: 940px; margin: 0 auto; padding: 16px 16px 48px; }
 
 .item-head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 4px 10px;
+  gap: 6px 10px;
   margin-bottom: 10px;
 }
-.item-src { font-weight: 700; font-size: 0.95rem; }
+.item-src {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
 .item-mark { margin-left: auto; font-size: 0.8rem; color: var(--ink-soft); }
 .item.is-done .item-mark { color: var(--right); font-weight: 600; }
 
