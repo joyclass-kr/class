@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="밥이나 단 음료를 먹은 뒤 인슐린과 글루카곤이 혈당을 되돌리는 과정을 인슐린이 안 나오거나 잘 안 듣는 몸과 견주고, 추운 날과 더운 날 땀·떨림·혈관이 체온을 지키는지 열 수지로 계산하고, 물을 마시거나 짠 것을 먹은 뒤 오줌의 양과 농도가 어떻게 바뀌는지 확인하는 고등학교 생명과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="homeo-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>항상성 — 혈당·체온·물의 조절</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교 2~3학년</span><span>생명과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>혈당 조절, 체온 조절, 물(삼투압) 조절 가운데 하나를 고릅니다.</li>
+            <li>먹은 것과 몸 상태, 날씨와 몸 상태, 마신 것을 정합니다.</li>
+            <li>2시간 뒤 혈당, 1시간 뒤 체온, 1시간 뒤 오줌이 어떻게 될지 예상합니다.</li>
+            <li>시작해서 호르몬과 몸의 반응이 값을 어떻게 되돌리는지 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">값이 벗어나면 반대 방향으로 되돌리는 되먹임이 항상성을 지킵니다</p>
+                <fieldset class="mode-field">
+                    <legend>실험 종류</legend>
+                    <div class="mode-buttons three">
+                        <button type="button" data-mode="glucose">혈당<small>먹은 뒤 2시간</small></button>
+                        <button type="button" data-mode="temp">체온<small>추울 때·더울 때</small></button>
+                        <button type="button" data-mode="water">물의 양<small>마신 뒤 오줌</small></button>
+                    </div>
+                </fieldset>
+                <div id="controlArea"></div>
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons" id="predictionArea"></div>
+                </fieldset>
+                <button class="run-button" id="checkBtn" type="button">3시간 흘려 보기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">결과</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">까닭</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel burn-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">혈관 속 노란 점이 포도당입니다. 이자가 인슐린과 글루카곤을 내어 간·근육이 포도당을 넣고 꺼냅니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>되먹임 조절</strong> 몸속 값이 정해진 범위를 벗어나면 그것을 감지한 곳이 반대 방향으로 되돌리는 반응을 일으킵니다(음성 되먹임). 혈당이 오르면 인슐린이, 내리면 글루카곤이 나오고, 체온이 오르면 땀과 넓어진 혈관이, 내리면 떨림과 좁아진 혈관이 맞섭니다. 값이 돌아오면 반응도 멎습니다. 이렇게 안팎이 바뀌어도 속을 일정하게 지키는 것이 항상성입니다.</p>
+                <p><strong>혈당 조절</strong> 식사 뒤 혈당이 오르면 이자의 β세포가 인슐린을 내어 근육·간·지방 세포가 포도당을 들이고 간이 글리코젠으로 저장하게 하고, 굶어 혈당이 내리면 α세포가 글루카곤을 내어 간이 글리코젠을 포도당으로 꺼내게 합니다. 포도당 75 g을 마시고 2시간 뒤 혈당이 140 mg/dL 아래면 정상, 140~199면 당뇨 전 단계, 200 이상이면 당뇨로 봅니다. 인슐린이 나오지 않는 1형과 인슐린이 잘 듣지 않는 2형 당뇨는 이 시험에서 갈립니다.</p>
+                <p><strong>체온 조절</strong> 몸은 쉴 때 80 W쯤의 열을 내고, 이 열을 피부로 내보내 37 ℃를 지킵니다. 더우면 피부 혈관이 넓어져 열을 내보내고 땀 1 g이 증발하며 2.4 kJ을 빼앗아 갑니다(땀 600 W까지). 추우면 혈관이 좁아져 열을 아끼고 떨림으로 300 W 넘게 더 냅니다. 사람 몸 70 kg을 1 ℃ 바꾸는 데 245 kJ이 들므로, 200 W가 어긋나면 한 시간에 3 ℃쯤 바뀝니다. 땀을 못 내면 더운 날 운동에 열사병이, 술이나 마취로 떨지 못하면 추운 날 저체온증이 옵니다.</p>
+                <p><strong>물의 양 조절</strong> 몸속 물 40 L의 진하기(삼투압, 약 285 mOsm/kg)가 오르면 뇌하수체가 항이뇨 호르몬을 내어 콩팥이 물을 다시 빨아들여 오줌이 적고 진해지고 목이 마릅니다. 물을 많이 마셔 진하기가 내리면 호르몬이 줄어 오줌이 많고 옅어집니다. 오줌의 양은 1분에 0.5 mL에서 10 mL 넘게, 진하기는 60에서 1,200 mOsm/kg까지 스무 배 넘게 바뀌어 몸속 물의 진하기를 1~2 % 안에서 지킵니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>식사 뒤 혈당이 오르자 이자에서 어떤 호르몬이 나와 무엇을 할까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 글루카곤이 나와 간이 포도당을 꺼낸다</label>
+                        <label><input type="radio" name="q1" value="b"> 인슐린이 나와 세포가 포도당을 들이고 간이 저장한다</label>
+                        <label><input type="radio" name="q1" value="c"> 아드레날린이 나와 심장을 빨리 뛰게 한다</label>
+                        <label><input type="radio" name="q1" value="d"> 항이뇨 호르몬이 나와 오줌을 줄인다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>혈당이 오르면 β세포의 인슐린이 근육·지방 세포에 포도당을 들이고 간이 글리코젠으로 저장하게 해 혈당을 내립니다. 글루카곤은 혈당이 내렸을 때 나옵니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>포도당 75 g을 마시고 2시간 뒤 혈당이 230 mg/dL이었습니다. 어떻게 봐야 할까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 정상이다</label>
+                        <label><input type="radio" name="q2" value="b"> 인슐린이 너무 많이 나왔다</label>
+                        <label><input type="radio" name="q2" value="c"> 물을 적게 마셨다</label>
+                        <label><input type="radio" name="q2" value="d"> 인슐린이 부족하거나 잘 듣지 않아 혈당이 내려오지 못한 당뇨 상태다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>정상이면 2시간 뒤 140 아래로 내려옵니다. 200 이상이면 인슐린이 나오지 않거나(1형) 잘 듣지 않아(2형) 포도당이 세포로 들어가지 못하는 당뇨로 봅니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>더운 날 운동하는데 땀을 낼 수 없다면 체온은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 운동으로 낸 열을 내보낼 길이 없어 한 시간에 몇 ℃씩 올라 열사병이 온다</label>
+                        <label><input type="radio" name="q3" value="b"> 땀이 없으니 몸이 시원해진다</label>
+                        <label><input type="radio" name="q3" value="c"> 혈관이 좁아져 체온이 유지된다</label>
+                        <label><input type="radio" name="q3" value="d"> 떨림이 시작되어 체온이 내려간다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>공기가 35 ℃면 피부로 내보낼 수 있는 열이 거의 없어 땀의 증발이 유일한 길입니다. 운동으로 300 W 넘게 내는 열이 그대로 쌓여 한 시간에 3~4 ℃씩 오릅니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>짠 음식을 많이 먹은 뒤 몸에서 일어나는 일은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 오줌이 많고 옅어진다</label>
+                        <label><input type="radio" name="q4" value="b"> 인슐린이 나와 소금을 저장한다</label>
+                        <label><input type="radio" name="q4" value="c"> 항이뇨 호르몬이 나와 오줌이 적고 진해지며 목이 마른다</label>
+                        <label><input type="radio" name="q4" value="d"> 체온이 오른다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>몸속 물이 진해지면 뇌하수체가 항이뇨 호르몬을 내어 콩팥이 물을 다시 빨아들이고, 갈증 중추가 물을 마시게 합니다. 오줌은 적고 진해집니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>
