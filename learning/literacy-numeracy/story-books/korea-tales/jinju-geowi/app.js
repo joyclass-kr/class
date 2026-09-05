@@ -213,9 +213,9 @@ const EN = {
         art: "cover.webp",
         title: "The Goose That Swallowed the Pearl",
         intro: [
-            "The Goose That Swallowed the Pearl is an old Korean tale with no known author. Many scholars think it came here with Buddhism, and it is also told as a story about a monk.",
-            "India and China have tales very much like it. When a story crosses into a new country, the people and the places turn into that country's own. The bones are the same; the clothes are Korean.",
-            "Geese were kept in farmyards long ago. They honk loudly at strangers, so they guarded the house the way a dog does. The goose swallowed the pearl because it was always wandering about the yard."
+            "The Goose That Swallowed the Pearl is an old Korean tale with no known author. Many think it came here with Buddhism.",
+            "India and China have tales very much like it. When a story crosses into a new country, the people and places turn into that country's own.",
+            "Geese were kept in farmyards long ago. They honk at strangers, so they guarded the house the way a dog does."
         ]
     },
     chapters: [
@@ -235,8 +235,7 @@ const EN = {
                     right: [
                         "Creeeak—",
                         "The gate opened and out came the owner, a man with a white beard.",
-                        { t: "\"Come in, come in. You've come at a good time. I've been waiting for a guest so I could show something off.\"", v: "old" },
-                        { t: "\"Supper is nearly ready too.\"", v: "old" },
+                        { t: "\"Come in. You've come at a good time — I've been waiting for a guest so I could show something off.\"", v: "old" },
                         "The owner smiled happily and led the traveller into the room."
                     ]
                 },

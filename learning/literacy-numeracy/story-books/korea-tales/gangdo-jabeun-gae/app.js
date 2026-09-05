@@ -193,6 +193,402 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐕",
+        art: "cover.webp",
+        title: "The Dog Who Caught the Robber",
+        intro: [
+            "The Dog Who Caught the Robber is an old Korean tale with no known author. Stories with a loyal dog at the centre have their own name — tales of the righteous dog.",
+            "Korea really does have monuments and graves for dogs. At Osu in Imsil there is the grave of a dog that saved its sleeping master from a fire.",
+            "In old country life a dog was not a pet but a member of the household who worked. That is why so many old tales have a dog for a hero."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Road Home from Market",
+            beats: [
+                {
+                    art: "01-dog.webp",
+                    emoji: "🐕",
+                    left: [
+                        "Long ago there was a pedlar who carried his pack from market to market.",
+                        "The pedlar had a dog. It had a black spot on its back, so its name was Baduk, which means a spot.",
+                        "Some years before, on a snowy day, he had picked it up shivering at the roadside and carried it home.",
+                        "From that day on the two of them were never apart."
+                    ],
+                    right: [
+                        { t: "\"Baduk! Let's go!\"", v: "man" },
+                        "When the pedlar called, Baduk came running with his tail going. He was at his master's feet before the call was finished.",
+                        "Baduk followed at the pedlar's heels wherever he went.",
+                        "When the pedlar ate soup and rice, Baduk ate soup and rice. When the pedlar slept, he slept at his feet."
+                    ]
+                },
+                {
+                    art: "02-market.webp",
+                    emoji: "💰",
+                    left: [
+                        "That day the market went very well. Everything sold and his pack was empty before the sun went down.",
+                        { t: "\"Ha! My luck is in today.\"", v: "man" },
+                        { t: "\"Baduk, let's buy some meat tonight.\"", v: "man" },
+                        "Baduk gave a bark as if he understood every word."
+                    ],
+                    right: [
+                        "The pedlar tied his fat money pouch tightly at his waist. A whole year's earnings were in it.",
+                        "With this money he could get through the winter without worrying.",
+                        "Baduk went in front with his tail going.",
+                        "The pedlar's feet had never felt so light."
+                    ]
+                },
+                {
+                    art: "03-inn.webp",
+                    emoji: "🍲",
+                    left: [
+                        "At dusk the pedlar stopped at a roadside inn. When he sat down on the wooden floor his legs prickled all over.",
+                        { t: "\"Two bowls of soup and rice here, please.\"", v: "man" },
+                        "He set one bowl down in front of Baduk.",
+                        "Baduk ate it up with a great slurping sound."
+                    ],
+                    right: [
+                        "But the man at the next place kept glancing over. At the pedlar's waist — at the money pouch, to be exact.",
+                        "There was something in his eyes.",
+                        "Baduk stopped eating and quietly raised his head.",
+                        "Then he stared at the man and growled, low."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Pass in the Fog",
+            beats: [
+                {
+                    art: "04-dawn.webp",
+                    emoji: "🌫️",
+                    left: [
+                        "Before dawn the next day the pedlar set out earlier than anyone. Thick fog lay over the mountain pass.",
+                        "He could hardly see a step ahead.",
+                        { t: "\"I ought to reach home today.\"", v: "man" },
+                        "The pedlar walked faster."
+                    ],
+                    right: [
+                        "But Baduk kept looking behind him and slowing down. His ears stood up and his nose worked.",
+                        "Something was bothering him.",
+                        { t: "\"What is it? Come on now.\"", v: "man" },
+                        "However much the pedlar hurried him, Baduk kept dropping behind."
+                    ]
+                },
+                {
+                    art: "05-robbed.webp",
+                    emoji: "😱",
+                    left: [
+                        "They had just reached the top of the pass.",
+                        "Somebody sprang out of the fog. The pedlar stopped dead where he stood.",
+                        "It was the very man who had been glancing over at the inn.",
+                        "There was a club in his hand."
+                    ],
+                    right: [
+                        "The man shoved the pedlar hard and snatched the money pouch. The pedlar went sprawling.",
+                        "It was over in a blink; Baduk had no time to spring at him.",
+                        "The man shot away into the trees.",
+                        { t: "\"Thief! Thief! Somebody help!\"", v: "man" }
+                    ]
+                },
+                {
+                    art: "06-lost.webp",
+                    emoji: "😞",
+                    left: [
+                        "The pedlar jumped up and ran into the wood.",
+                        "But the fog was so thick that he soon lost all sense of direction.",
+                        "He wandered this way and that and never saw so much as the man's shadow.",
+                        "All he got was a face full of scratches from the branches."
+                    ],
+                    right: [
+                        { t: "\"A whole year's earnings...\"", v: "man" },
+                        { t: "\"How am I to go home and tell them?\"", v: "man" },
+                        "The pedlar dropped down on the road where he was. Everything looked black.",
+                        "Beside him Baduk put his nose to the ground and sniffed."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Baduk Runs",
+            beats: [
+                {
+                    art: "07-scent.webp",
+                    emoji: "👃",
+                    left: [
+                        "Then Baduk's ears went up all at once. He seemed to have found something.",
+                        "He barked once, loudly, towards one direction.",
+                        "Then he looked back at the pedlar.",
+                        "It was just as if he were saying, this way."
+                    ],
+                    right: [
+                        { t: "\"Baduk! Where are you going!\"", v: "man" },
+                        "Instead of answering, Baduk leapt into the fog.",
+                        "He ran so fast you could not see his legs. However much the pedlar called, he did not come back.",
+                        "Only his barking went further and further away."
+                    ]
+                },
+                {
+                    art: "08-chase.webp",
+                    emoji: "🌲",
+                    left: [
+                        "Baduk ran straight through between the trees.",
+                        "Nose to the ground, head up again, running again.",
+                        "Thorn bushes caught at him and pulled out his fur, and he did not stop.",
+                        "The smell was getting stronger all the time."
+                    ],
+                    right: [
+                        "He had crossed one valley when he saw him.",
+                        "Behind a big rock a man sat crouched, holding the money pouch tight against his chest and getting his breath.",
+                        "He had the face of somebody who thought he had got clean away.",
+                        "Baduk stopped and lowered himself to the ground."
+                    ]
+                },
+                {
+                    art: "09-bark.webp",
+                    emoji: "🗣️",
+                    left: [
+                        { t: "\"Woof! Woof! Woof-woof-woof!\"", v: "beast" },
+                        "Baduk barked till the whole mountain rang. He barked and barked till his throat went hoarse.",
+                        "The man leapt up in fright.",
+                        { t: "\"Get away! Get away, I said!\"", v: "man" }
+                    ],
+                    right: [
+                        "The man stamped and swung his club, and Baduk did not back off.",
+                        "He went for him instead and got a good hold of his trouser leg.",
+                        "The man was so busy shaking the dog off that he could not run.",
+                        "Woodcutters heard the noise and came rushing up the hill."
+                    ]
+                },
+                {
+                    art: "10-return.webp",
+                    emoji: "🍖",
+                    left: [
+                        "The man was caught on the spot.",
+                        "The money pouch came back whole, without one coin missing.",
+                        "The pedlar held Baduk in his arms and could not let go for a long time.",
+                        { t: "\"What would have become of me without you?\"", v: "man" }
+                    ],
+                    right: [
+                        "Baduk only wagged his tail. There were cuts in several places on his legs.",
+                        "The pedlar cleaned every one of them.",
+                        "From that day on there was always a piece of meat in Baduk's bowl.",
+                        { t: "\"Our Baduk isn't a dog. He's family.\"", v: "man" }
+                    ]
+                }
+            ],
+            moral: "Baduk was a dog picked up at the roadside on a snowy day. If the pedlar had walked past him then, none of this would ever have happened. A kindness stays somewhere even when you have forgotten it.",
+            question: "Has a small kindness of yours ever meant a great deal to somebody?"
+        }
+    ],
+    quiz: [
+        { q: "Where did the name Baduk come from?", choices: ["He was found on a snowy day", "He had a black spot on his back", "He liked soup and rice"], answer: 1 },
+        { q: "What was the man at the inn glancing at?", choices: ["The pedlar's empty pack", "The pedlar's bowl", "The pedlar's money pouch"], answer: 2 },
+        { q: "What did Baduk do on the mountain pass?", choices: ["Ran on ahead", "Kept looking back and slowing down", "Slept at the pedlar's feet"], answer: 1 },
+        { q: "Where did Baduk find the man?", choices: ["On the inn floor", "In the fog on the pass", "Behind a big rock"], answer: 2 },
+        { q: "What did Baduk do when the man swung his club?", choices: ["Lowered himself and watched", "Ran off into the wood", "Held on to his trouser leg"], answer: 2 },
+        { q: "Why did people come running?", choices: ["The pedlar shouted for them", "Because of the barking", "Because of a lot of smoke"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "Baduk stared at the man from the inn onwards, so an animal can know a thing before a person does.",
+                "The pedlar carried a year's earnings at his waist, so there was nowhere safe to leave money then.",
+                "Meat began to appear in Baduk's bowl, so the word family wasn't said lightly.",
+                "The pedlar bought Baduk at the market and paid for him, so he had his eye on that dog from the start."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "robber", k: "강도", s: "The Dog Who Caught the Robber" },
+            { w: "loyal", k: "의로운, 충직한", s: "Stories with a loyal dog at the centre" },
+            { w: "at the centre", k: "주인공인", s: "Stories with a loyal dog at the centre" },
+            { w: "righteous", k: "의로운", s: "tales of the righteous dog" },
+            { w: "monuments", k: "비석", s: "Korea really does have monuments and graves for dogs" },
+            { w: "graves", k: "무덤", s: "monuments and graves for dogs in several places" },
+            { w: "master", k: "주인", s: "a dog that saved its sleeping master from a fire" },
+            { w: "is written down", k: "책에 실려 있다", s: "that story is written down in a book from the Goryeo period" },
+            { w: "a pet", k: "귀여워하는 짐승", s: "a dog was not a pet but a member of the household" },
+            { w: "household", k: "집안, 식구", s: "a member of the household who worked" },
+            { w: "guarded (guard)", k: "지켰다", s: "It guarded the house, drove the animals" },
+            { w: "drove (drive)", k: "몰았다", s: "drove the animals" },
+            { w: "for a hero", k: "주인공으로", s: "so many old tales have a dog for a hero" }
+        ],
+        "01-dog.webp": [
+            { w: "pedlar", k: "장수, 봇짐장수", s: "there was a pedlar who carried his pack from market to market" },
+            { w: "pack", k: "봇짐", s: "who carried his pack from market to market" },
+            { w: "spot", k: "점", s: "It had a black spot on its back" },
+            { w: "which means ~", k: "~이라는 뜻이다", s: "its name was Baduk, which means a spot" },
+            { w: "had picked it up (pick up)", k: "안아 왔다", s: "he had picked it up shivering at the roadside" },
+            { w: "shivering (shiver)", k: "떨고 있는", s: "picked it up shivering at the roadside" },
+            { w: "were never apart", k: "떨어진 적이 없었다", s: "the two of them were never apart" },
+            { w: "came running", k: "달려왔다", s: "Baduk came running with his tail going" },
+            { w: "with his tail going", k: "꼬리를 흔들며", s: "Baduk came running with his tail going" },
+            { w: "at his master's feet", k: "주인 발밑에", s: "He was at his master's feet before the call was finished." },
+            { w: "at ~'s heels", k: "~ 뒤를 졸졸", s: "Baduk followed at the pedlar's heels wherever he went." },
+            { w: "wherever he went", k: "가는 곳마다", s: "followed at the pedlar's heels wherever he went" }
+        ],
+        "02-market.webp": [
+            { w: "went very well (go)", k: "아주 잘됐다", s: "That day the market went very well." },
+            { w: "sold (sell)", k: "팔렸다", s: "Everything sold and his pack was empty" },
+            { w: "My luck is in.", k: "운수가 좋구먼.", s: "Ha! My luck is in today." },
+            { w: "as if he understood", k: "알아듣는다는 듯이", s: "Baduk gave a bark as if he understood every word." },
+            { w: "tied ~ tightly (tie)", k: "단단히 매었다", s: "The pedlar tied his fat money pouch tightly at his waist." },
+            { w: "money pouch", k: "돈주머니", s: "tied his fat money pouch tightly at his waist" },
+            { w: "waist", k: "허리", s: "tied his fat money pouch tightly at his waist" },
+            { w: "a year's earnings", k: "한 해 번 돈", s: "A whole year's earnings were in it." },
+            { w: "get through the winter", k: "겨울을 나다", s: "he could get through the winter without worrying" },
+            { w: "went in front", k: "앞장섰다", s: "Baduk went in front with his tail going." },
+            { w: "had never felt so light", k: "그렇게 가벼울 수가 없었다", s: "The pedlar's feet had never felt so light." }
+        ],
+        "03-inn.webp": [
+            { w: "at dusk", k: "해가 저물어", s: "At dusk the pedlar stopped at a roadside inn." },
+            { w: "inn", k: "주막", s: "the pedlar stopped at a roadside inn" },
+            { w: "prickled (prickle)", k: "저릿저릿했다", s: "his legs prickled all over" },
+            { w: "soup and rice", k: "국밥", s: "Two bowls of soup and rice here, please." },
+            { w: "set ~ down (set)", k: "놓아 주었다", s: "He set one bowl down in front of Baduk." },
+            { w: "slurping", k: "후룩후룩 소리 내며 먹는", s: "Baduk ate it up with a great slurping sound." },
+            { w: "kept glancing over", k: "자꾸 흘끔거렸다", s: "the man at the next place kept glancing over" },
+            { w: "to be exact", k: "정확히는", s: "At the pedlar's waist — at the money pouch, to be exact." },
+            { w: "something in his eyes", k: "예사롭지 않은 눈빛", s: "There was something in his eyes." },
+            { w: "raised his head", k: "고개를 들었다", s: "Baduk stopped eating and quietly raised his head." },
+            { w: "stared at ~ (stare)", k: "노려보았다", s: "Then he stared at the man and growled, low." },
+            { w: "growled (growl)", k: "으르렁거렸다", s: "he stared at the man and growled, low" }
+        ],
+        "04-dawn.webp": [
+            { w: "set out (set)", k: "길을 나섰다", s: "the pedlar set out earlier than anyone" },
+            { w: "fog", k: "안개", s: "Thick fog lay over the mountain pass." },
+            { w: "lay over ~ (lie)", k: "자욱하게 깔렸다", s: "Thick fog lay over the mountain pass." },
+            { w: "hardly see a step ahead", k: "한 치 앞도 잘 안 보이다", s: "He could hardly see a step ahead." },
+            { w: "kept looking behind him", k: "자꾸 뒤를 돌아보았다", s: "But Baduk kept looking behind him and slowing down." },
+            { w: "slowing down", k: "걸음을 늦추는", s: "kept looking behind him and slowing down" },
+            { w: "his nose worked", k: "코를 킁킁거렸다", s: "His ears stood up and his nose worked." },
+            { w: "was bothering him (bother)", k: "마음에 걸렸다", s: "Something was bothering him." },
+            { w: "however much ~", k: "아무리 ~해도", s: "However much the pedlar hurried him" },
+            { w: "dropping behind", k: "뒤처지는", s: "Baduk kept dropping behind" }
+        ],
+        "05-robbed.webp": [
+            { w: "the top of the pass", k: "고갯마루", s: "They had just reached the top of the pass." },
+            { w: "sprang out of ~ (spring)", k: "불쑥 튀어나왔다", s: "Somebody sprang out of the fog." },
+            { w: "stopped dead", k: "우뚝 멈춰 섰다", s: "The pedlar stopped dead where he stood." },
+            { w: "the very man", k: "바로 그 사내", s: "It was the very man who had been glancing over at the inn." },
+            { w: "club", k: "몽둥이", s: "There was a club in his hand." },
+            { w: "shoved (shove)", k: "밀쳤다", s: "The man shoved the pedlar hard" },
+            { w: "snatched (snatch)", k: "낚아챘다", s: "and snatched the money pouch" },
+            { w: "went sprawling", k: "나동그라졌다", s: "The pedlar went sprawling." },
+            { w: "in a blink", k: "눈 깜짝할 사이에", s: "It was over in a blink" },
+            { w: "spring at ~", k: "~에게 달려들다", s: "Baduk had no time to spring at him" },
+            { w: "shot away (shoot)", k: "쏜살같이 사라졌다", s: "The man shot away into the trees." }
+        ],
+        "06-lost.webp": [
+            { w: "jumped up", k: "벌떡 일어났다", s: "The pedlar jumped up and ran into the wood." },
+            { w: "lost all sense of direction", k: "방향을 잃었다", s: "he soon lost all sense of direction" },
+            { w: "wandered (wander)", k: "헤맸다", s: "He wandered this way and that" },
+            { w: "so much as ~", k: "~조차", s: "never saw so much as the man's shadow" },
+            { w: "scratches", k: "긁힌 자국", s: "All he got was a face full of scratches" },
+            { w: "How am I to ~?", k: "어떻게 ~한담?", s: "How am I to go home and tell them?" },
+            { w: "dropped down (drop)", k: "털썩 주저앉았다", s: "The pedlar dropped down on the road where he was." },
+            { w: "everything looked black", k: "눈앞이 캄캄했다", s: "Everything looked black." },
+            { w: "sniffed (sniff)", k: "킁킁거렸다", s: "Baduk put his nose to the ground and sniffed." }
+        ],
+        "07-scent.webp": [
+            { w: "went up all at once", k: "갑자기 쫑긋 섰다", s: "Then Baduk's ears went up all at once." },
+            { w: "seemed to have found ~", k: "찾아낸 모양이었다", s: "He seemed to have found something." },
+            { w: "barked (bark)", k: "짖었다", s: "He barked once, loudly, towards one direction." },
+            { w: "direction", k: "방향", s: "He barked once, loudly, towards one direction." },
+            { w: "looked back at ~", k: "~을 돌아보았다", s: "Then he looked back at the pedlar." },
+            { w: "this way", k: "여기예요", s: "It was just as if he were saying, this way." },
+            { w: "instead of ~ing", k: "~하는 대신에", s: "Instead of answering, Baduk leapt into the fog." },
+            { w: "leapt (leap)", k: "뛰어들었다", s: "Baduk leapt into the fog" },
+            { w: "further and further away", k: "점점 멀어지는", s: "Only his barking went further and further away." }
+        ],
+        "08-chase.webp": [
+            { w: "straight through between ~", k: "~ 사이를 가로질러", s: "Baduk ran straight through between the trees." },
+            { w: "nose to the ground", k: "코를 땅에 대고", s: "Nose to the ground, head up again, running again." },
+            { w: "thorn bushes", k: "가시덤불", s: "Thorn bushes caught at him and pulled out his fur" },
+            { w: "caught at ~ (catch)", k: "~을 걸었다", s: "Thorn bushes caught at him" },
+            { w: "all the time", k: "갈수록", s: "The smell was getting stronger all the time." },
+            { w: "valley", k: "골짜기", s: "He had crossed one valley when he saw him." },
+            { w: "crouched (crouch)", k: "웅크린", s: "a man sat crouched" },
+            { w: "getting his breath", k: "숨을 고르는", s: "holding the money pouch tight against his chest and getting his breath" },
+            { w: "got clean away", k: "완전히 따돌렸다", s: "somebody who thought he had got clean away" },
+            { w: "lowered himself (lower)", k: "몸을 낮췄다", s: "Baduk stopped and lowered himself to the ground." }
+        ],
+        "09-bark.webp": [
+            { w: "till the whole mountain rang", k: "온 산이 울리도록", s: "Baduk barked till the whole mountain rang." },
+            { w: "hoarse", k: "쉰", s: "He barked and barked till his throat went hoarse." },
+            { w: "in fright", k: "화들짝 놀라", s: "The man leapt up in fright." },
+            { w: "Get away!", k: "저리 가!", s: "Get away! Get away, I said!" },
+            { w: "stamped (stamp)", k: "발을 굴렀다", s: "The man stamped and swung his club" },
+            { w: "back off", k: "물러서다", s: "Baduk did not back off" },
+            { w: "went for him (go for)", k: "달려들었다", s: "He went for him instead" },
+            { w: "got a good hold of ~", k: "꽉 물고 늘어졌다", s: "got a good hold of his trouser leg" },
+            { w: "trouser leg", k: "바짓자락", s: "got a good hold of his trouser leg" },
+            { w: "shaking ~ off (shake off)", k: "떼어 내는", s: "The man was so busy shaking the dog off" },
+            { w: "woodcutters", k: "나무하는 사람들", s: "Woodcutters heard the noise and came rushing up the hill." }
+        ],
+        "10-return.webp": [
+            { w: "on the spot", k: "그 자리에서", s: "The man was caught on the spot." },
+            { w: "came back whole", k: "고스란히 돌아왔다", s: "The money pouch came back whole" },
+            { w: "without one coin missing", k: "한 푼도 없어지지 않고", s: "came back whole, without one coin missing" },
+            { w: "could not let go", k: "놓지 못했다", s: "The pedlar held Baduk in his arms and could not let go" },
+            { w: "What would have become of ~?", k: "~은 어쩔 뻔했을까?", s: "What would have become of me without you?" },
+            { w: "wagged his tail (wag)", k: "꼬리를 흔들었다", s: "Baduk only wagged his tail." },
+            { w: "cuts", k: "상처", s: "There were cuts in several places on his legs." },
+            { w: "cleaned every one of them", k: "하나하나 닦아 주었다", s: "The pedlar cleaned every one of them." },
+            { w: "from that day on", k: "그날부터", s: "From that day on there was always a piece of meat in Baduk's bowl." },
+            { w: "He's family.", k: "식구야.", s: "Our Baduk isn't a dog. He's family." }
+        ],
+        "after": [
+            { w: "a great many", k: "아주 많은", s: "Korea has a great many stories of a dog saving its master." },
+            { w: "were called ~ (call)", k: "~라고 불렸다", s: "Such dogs were called righteous dogs" },
+            { w: "were even given ~", k: "~까지 받았다", s: "some were even given graves and stone monuments" },
+            { w: "is said to come from ~", k: "~에서 왔다고 전한다", s: "the name of the village itself is said to come from honouring a dog" },
+            { w: "honouring (honour)", k: "기리는", s: "from honouring a dog" },
+            { w: "to this day", k: "지금도", s: "A monument to the dog still stands there to this day." },
+            { w: "expecting nothing", k: "아무것도 바라지 않고", s: "The pedlar took the puppy in expecting nothing." },
+            { w: "how far ~ went", k: "~이 어디까지 갔는지", s: "it is a story about how far one day's kindness went" },
+            { w: "that cannot speak", k: "말을 못 하는", s: "So many stories of an animal that cannot speak saving a person" },
+            { w: "watched ~ closely", k: "곁을 오래 지켜보았다", s: "means people watched those animals closely for a long time" },
+            { w: "had walked past ~", k: "그냥 지나쳤다면", s: "If the pedlar had walked past him then" },
+            { w: "even when ~", k: "~해도", s: "A kindness stays somewhere even when you have forgotten it." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐕',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Korea has a great many stories of a dog saving its master. Such dogs were called righteous dogs, and some were even given graves and stone monuments.",
+                    "At a place called Osu in Imsil, Jeollabuk-do, the name of the village itself is said to come from honouring a dog. A monument to the dog still stands there to this day.",
+                    "The pedlar took the puppy in expecting nothing. So this is not a story about being paid back — it is a story about how far one day's kindness went.",
+                    "So many stories of an animal that cannot speak saving a person means people watched those animals closely for a long time."
+                ],
+                right: [
+                    "Baduk was a dog picked up at the roadside on a snowy day. If the pedlar had walked past him then, none of this would ever have happened. A kindness stays somewhere even when you have forgotten it.",
+                    "Has a small kindness of yours ever meant a great deal to somebody?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "바둑이라는 이름은 어디서 왔나요?", choices: ["눈 오는 날 주워 와서", "등에 까만 점이 박혀서", "국밥을 잘 먹어서"], answer: 1 },
     { q: "주막에서 사내가 흘끔거린 것은 무엇인가요?", choices: ["장수의 빈 봇짐", "장수의 국밥그릇", "장수의 돈주머니"], answer: 2 },

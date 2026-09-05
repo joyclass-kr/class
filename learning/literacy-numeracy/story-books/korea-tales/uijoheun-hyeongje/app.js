@@ -210,6 +210,421 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "👬",
+        art: "cover.webp",
+        title: "The Two Good Brothers",
+        intro: [
+            "The Two Good Brothers is another old Korean tale with no known author. It is told everywhere, so every village keeps its own version.",
+            "In Yesan there really is a stone monument to two brothers, Yi Seongman and Yi Sun, said to be the pair in this story.",
+            "Korean tales carry both kinds of brothers: brothers who fight, like Heungbu and Nolbu, and brothers who look after each other, like these two."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Two Fields Side by Side",
+            beats: [
+                {
+                    art: "01-brothers.webp",
+                    emoji: "👬",
+                    left: [
+                        "Long ago in a village there lived two brothers.",
+                        "They farmed the rice fields their parents had left them, half each.",
+                        "The fields side by side, the houses side by side.",
+                        "They had never once quarrelled, not since they were small. They weeded side by side and watered side by side.",
+                        { t: "\"Let's live like this till the day we die.\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"Brother, take the water into your field first today.\"", v: "man" },
+                        "Each of them always thought of the other first.",
+                        { t: "\"No, no. Your field is the drier one.\"", v: "old" },
+                        "Sometimes they stood at the ditch for ages, giving way to each other. The village called them the two good brothers.",
+                        { t: "\"You could learn a thing or two from those two.\"", v: "granny" }
+                    ]
+                },
+                {
+                    art: "02-harvest.webp",
+                    emoji: "🌾",
+                    left: [
+                        "Autumn came. The whole plain turned yellow and bowed its head, and the rice had ripened better than ever before.",
+                        "The brothers stood side by side cutting the rice and stacking the sheaves. Sickles rang across the field all day.",
+                        { t: "\"Right. Let's split it evenly.\"", v: "old" },
+                        { t: "\"Yes, brother.\"", v: "man" }
+                    ],
+                    right: [
+                        "The two of them counted the sheaves one by one and made the shares the same. In case even one sheaf was out, they counted twice.",
+                        "One pile on the elder brother's field, one pile on the younger's.",
+                        "Even the heights matched exactly. They smiled at the sight and went home."
+                    ]
+                },
+                {
+                    art: "03-elder-thinks.webp",
+                    emoji: "🌙",
+                    left: [
+                        "That night the elder brother could not sleep at all. He turned this way and that, and it made no difference.",
+                        "He kept thinking about his younger brother.",
+                        { t: "'He only set up his own household this spring.'", v: "old" },
+                        { t: "'He'll need a pot. He'll need bedding.'", v: "old" },
+                        "The elder brother kicked off his quilt and sat up."
+                    ],
+                    right: [
+                        { t: "'An even split isn't right after all.'", v: "old" },
+                        "He took up his carrying frame and went out into the yard.",
+                        "He pushed the door softly so the family would not wake, and went out to the fields.",
+                        "It was a night with an unusually bright moon."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Sheaves That Cross in the Night",
+            beats: [
+                {
+                    art: "04-elder-carries.webp",
+                    emoji: "🌾",
+                    left: [
+                        "The elder brother loaded his own sheaves onto the frame.",
+                        "They pressed down heavily on his shoulders.",
+                        "Heave, heave.",
+                        "He walked over the moonlight to his brother's field. His shadow stretched long on the path between the paddies.",
+                        "He shifted one foot at a time, breathing hard."
+                    ],
+                    right: [
+                        "He looked all around him.",
+                        { t: "'If he knows, he won't take them. He mustn't know.'", v: "old" },
+                        "He slipped the sheaves onto his brother's pile and hurried back.",
+                        "Nobody had seen him, and that put his mind at rest.",
+                        "Only once he was under his quilt again did he finally fall asleep."
+                    ]
+                },
+                {
+                    art: "05-younger-thinks.webp",
+                    emoji: "🤔",
+                    left: [
+                        "But that very same night the younger brother could not sleep either.",
+                        "His brother's children kept coming into his mind.",
+                        { t: "'There are so many mouths in my brother's house.'", v: "man" },
+                        { t: "'Five nephews and nieces. What if they run short in the winter?'", v: "man" },
+                        "The younger brother pushed off his quilt and got up."
+                    ],
+                    right: [
+                        { t: "'An even split isn't right after all.'", v: "man" },
+                        "He fetched his carrying frame from the shed.",
+                        "He went out to the fields on tiptoe so as not to wake his wife.",
+                        "He too walked over the moonlight."
+                    ]
+                },
+                {
+                    art: "06-younger-carries.webp",
+                    emoji: "🌾",
+                    left: [
+                        "The younger brother loaded his own sheaves onto the frame.",
+                        "Sweat stood on his forehead too.",
+                        "Heave, heave.",
+                        "He walked the very path his brother had walked, only the other way. Neither knew they had crossed.",
+                        "He had never noticed how slippery the paddy path was."
+                    ],
+                    right: [
+                        "He set the sheaves on his brother's pile and came straight back.",
+                        "He was out of breath.",
+                        { t: "'If my brother knows he'll tell me to take them back. Keep your mouth shut.'", v: "man" },
+                        "He hurried home too."
+                    ]
+                },
+                {
+                    art: "07-morning.webp",
+                    emoji: "😮",
+                    left: [
+                        "The next morning.",
+                        "The elder brother went out to the field and blinked.",
+                        "The pile of sheaves was exactly as it had been. He counted again and again, and it made no difference.",
+                        { t: "\"Eh? It's the same as yesterday.\"", v: "old" },
+                        "And yet he had certainly carried a whole frameful away."
+                    ],
+                    right: [
+                        "The younger brother stood in front of his own field with his head on one side.",
+                        "He rubbed his eyes and rubbed them again.",
+                        { t: "\"That's odd. I definitely took a frameful off.\"", v: "man" },
+                        "Neither of them had the least idea, and both scratched the back of their heads."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Under the Moon",
+            beats: [
+                {
+                    art: "08-again.webp",
+                    emoji: "😵",
+                    left: [
+                        "That night the elder brother moved sheaves again. So did the younger.",
+                        "Both of them carried more than the night before.",
+                        "The next morning the sheaves were the same once more.",
+                        "Not one sheaf more, not one sheaf less."
+                    ],
+                    right: [
+                        { t: "\"Well. This is enough to make a ghost weep.\"", v: "old" },
+                        "The elder brother said it to himself.",
+                        { t: "\"It's not as if somebody puts them back in the night...\"", v: "old" },
+                        "The younger brother said exactly the same thing.",
+                        "Both of them were completely baffled."
+                    ]
+                },
+                {
+                    art: "09-meet.webp",
+                    emoji: "🌕",
+                    left: [
+                        "The third night.",
+                        "There was not a cloud in the sky.",
+                        "The elder brother came along the paddy path with his frame. And from the other end somebody else was coming with a frame too.",
+                        "In the dark the frames creaked.",
+                        "Under the moon the two of them came face to face."
+                    ],
+                    right: [
+                        { t: "\"Brother?\"", v: "man" },
+                        { t: "\"You — it was you—\"", v: "old" },
+                        "For a long while neither could say a word.",
+                        "Both frames were loaded with just the same sheaves. Three nights of mystery came clear in that moment.",
+                        "Tears sprang into the elder brother's eyes."
+                    ]
+                },
+                {
+                    art: "10-laugh.webp",
+                    emoji: "😄",
+                    left: [
+                        "The elder brother laughed first.",
+                        "He laughed so hard his shoulders shook.",
+                        { t: "\"You rascal — so it was you!\"", v: "old" },
+                        { t: "\"And you, brother!\"", v: "man" },
+                        "The younger one laughed too."
+                    ],
+                    right: [
+                        "The two brothers put down their frames and sat on the bank and laughed.",
+                        "Their laughter went out over the moonlit fields.",
+                        "They talked all night and never ran out.",
+                        "They did not get up until the moon went down.",
+                        "After that the sheaves were always equal, and neither of them ever wondered why."
+                    ]
+                }
+            ],
+            moral: "A grateful heart shows in what you do before it shows in what you say. The two brothers said nothing to each other for three days, but the sheaves crossed the fields every night.",
+            question: "Have you ever done something for someone without letting them know it was you?"
+        }
+    ],
+    quiz: [
+        { q: "Where were the two brothers' fields?", choices: ["Far apart", "Right next to each other", "Over the mountain"], answer: 1 },
+        { q: "After the harvest, how did the two piles of sheaves compare?", choices: ["The elder had more", "The younger had more", "They were the same"], answer: 2 },
+        { q: "Why did the elder brother carry sheaves to the younger?", choices: ["He could not farm", "He had just set up a household", "He had a big family"], answer: 1 },
+        { q: "Why did the younger brother carry sheaves to the elder?", choices: ["His field was small", "He had just set up a household", "He had a big family"], answer: 2 },
+        { q: "What were the piles like each morning?", choices: ["Just as before", "Smaller", "Gone"], answer: 0 },
+        { q: "Where did the two brothers meet?", choices: ["At the village market", "On the paddy path at night", "At each other's houses"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "Both of them thought an even split wasn't right, so the same amount isn't always the fair amount.",
+                "They went out in the middle of the night so as not to be found out, so even giving needs care.",
+                "After that they never counted the sheaves again, so once you know, there is nothing left to reckon up.",
+                "The two brothers met on the path and walked past pretending not to see, so being caught made them ashamed."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "another old Korean tale with no known author" },
+            { w: "everywhere", k: "어디에서나", s: "It is told everywhere in the country" },
+            { w: "version", k: "전해지는 이야기, 판본", s: "every village keeps its own slightly different version" },
+            { w: "slightly", k: "조금", s: "its own slightly different version" },
+            { w: "monument", k: "비석", s: "there really is a stone monument to two brothers" },
+            { w: "are said to be ~", k: "~으로 전해진다", s: "who are said to be the pair in this story" },
+            { w: "the pair", k: "그 두 사람", s: "the pair in this story" },
+            { w: "put it up (put up)", k: "세웠다", s: "The government of the Joseon period put it up" },
+            { w: "side by side", k: "나란히", s: "Korean tales carry both kinds of brothers side by side" },
+            { w: "look after each other", k: "서로 아끼다", s: "brothers who fight and brothers who look after each other" },
+            { w: "admired (admire)", k: "좋게 여겼다", s: "you can see what the old people admired" },
+            { w: "were ashamed of ~", k: "~을 부끄러워했다", s: "what they were ashamed of" }
+        ],
+        "01-brothers.webp": [
+            { w: "farmed (farm)", k: "농사지었다", s: "They farmed the rice fields their parents had left them" },
+            { w: "had left them (leave)", k: "물려주었다", s: "the rice fields their parents had left them" },
+            { w: "half each", k: "반씩", s: "the rice fields their parents had left them, half each" },
+            { w: "had never once quarrelled", k: "한 번도 다툰 적이 없었다", s: "They had never once quarrelled" },
+            { w: "weeded (weed)", k: "밭을 맸다", s: "They weeded side by side and watered side by side." },
+            { w: "till the day we die", k: "죽을 때까지", s: "Let's live like this till the day we die." },
+            { w: "take the water into ~", k: "~에 물을 대다", s: "take the water into your field first today" },
+            { w: "thought of ~ first", k: "~을 먼저 챙겼다", s: "Each of them always thought of the other first." },
+            { w: "the drier one", k: "더 마른 쪽", s: "Your field is the drier one." },
+            { w: "ditch", k: "도랑", s: "they stood at the ditch for ages" },
+            { w: "for ages", k: "한참 동안", s: "they stood at the ditch for ages" },
+            { w: "giving way to ~", k: "~에게 양보하는", s: "each giving way to the other" },
+            { w: "learn a thing or two", k: "좀 배우다", s: "You could learn a thing or two from those two." }
+        ],
+        "02-harvest.webp": [
+            { w: "plain", k: "들판", s: "The whole plain turned yellow and bowed its head." },
+            { w: "bowed its head (bow)", k: "고개를 숙였다", s: "The whole plain turned yellow and bowed its head." },
+            { w: "had ripened (ripen)", k: "여물었다", s: "That year the rice had ripened better than in any year before." },
+            { w: "cutting the rice", k: "벼를 베는", s: "The brothers stood side by side cutting the rice" },
+            { w: "stacking (stack)", k: "쌓는", s: "stacking the sheaves" },
+            { w: "sheaves (sheaf)", k: "볏단", s: "cutting the rice and stacking the sheaves" },
+            { w: "sickles", k: "낫", s: "The sound of sickles rang across the field all day." },
+            { w: "rang (ring)", k: "울렸다", s: "The sound of sickles rang across the field" },
+            { w: "split it evenly", k: "똑같이 나누다", s: "Right. Let's split it evenly." },
+            { w: "one by one", k: "하나하나", s: "counted the sheaves one by one" },
+            { w: "in case ~", k: "~할까 봐", s: "In case even one sheaf was out, they counted everything twice." },
+            { w: "was out", k: "어긋났다", s: "In case even one sheaf was out" },
+            { w: "matched exactly", k: "꼭 같았다", s: "Even the heights matched exactly." }
+        ],
+        "03-elder-thinks.webp": [
+            { w: "could not sleep at all", k: "도무지 잠이 오지 않았다", s: "the elder brother could not sleep at all" },
+            { w: "turned this way and that", k: "이리 뒤척이고 저리 뒤척였다", s: "He turned this way and that" },
+            { w: "made no difference", k: "마찬가지였다", s: "and it made no difference" },
+            { w: "kept thinking about ~", k: "자꾸 생각났다", s: "He kept thinking about his younger brother." },
+            { w: "set up his own household", k: "살림을 새로 차렸다", s: "He only set up his own household this spring." },
+            { w: "bedding", k: "이불", s: "He'll need a pot. He'll need bedding." },
+            { w: "kicked off (kick off)", k: "걷어찼다", s: "The elder brother kicked off his quilt and sat up." },
+            { w: "quilt", k: "이불", s: "kicked off his quilt and sat up" },
+            { w: "isn't right after all", k: "아무래도 아니다", s: "An even split isn't right after all." },
+            { w: "carrying frame", k: "지게", s: "He took up his carrying frame" },
+            { w: "so ~ would not wake", k: "~이 깨지 않게", s: "He pushed the door softly so the family would not wake" },
+            { w: "unusually", k: "유난히", s: "It was a night with an unusually bright moon." }
+        ],
+        "04-elder-carries.webp": [
+            { w: "loaded (load)", k: "얹었다", s: "The elder brother loaded his own sheaves onto the frame." },
+            { w: "pressed down (press)", k: "눌렀다", s: "They pressed down heavily on his shoulders." },
+            { w: "Heave, heave.", k: "영차, 영차.", s: "Heave, heave." },
+            { w: "stretched long (stretch)", k: "길게 늘어졌다", s: "His shadow stretched long on the path" },
+            { w: "the path between the paddies", k: "논둑길", s: "on the path between the paddies" },
+            { w: "shifted one foot at a time", k: "한 발 한 발 옮겼다", s: "He shifted one foot at a time" },
+            { w: "breathing hard", k: "숨을 몰아쉬며", s: "breathing hard" },
+            { w: "looked all around him", k: "사방을 두리번거렸다", s: "He looked all around him." },
+            { w: "he mustn't know", k: "모르게 해야 한다", s: "If he knows, he won't take them. He mustn't know." },
+            { w: "slipped ~ onto (slip)", k: "슬쩍 올려놓았다", s: "He slipped the sheaves onto his brother's pile" },
+            { w: "put his mind at rest", k: "마음이 놓였다", s: "Nobody had seen him, and that put his mind at rest." },
+            { w: "only once ~ did he ...", k: "~하고 나서야 비로소", s: "Only once he was under his quilt again did he finally fall asleep." }
+        ],
+        "05-younger-thinks.webp": [
+            { w: "that very same night", k: "바로 그 밤", s: "But that very same night the younger brother could not sleep either." },
+            { w: "either", k: "~도 또한", s: "the younger brother could not sleep either" },
+            { w: "kept coming into his mind", k: "자꾸 떠올랐다", s: "His brother's children kept coming into his mind." },
+            { w: "so many mouths", k: "식구가 많은", s: "There are so many mouths in my brother's house." },
+            { w: "nephews and nieces", k: "조카들", s: "Five nephews and nieces." },
+            { w: "What if ~?", k: "~하면 어쩌지?", s: "What if they run short in the winter?" },
+            { w: "run short", k: "모자라다", s: "What if they run short in the winter?" },
+            { w: "pushed off (push off)", k: "밀어냈다", s: "The younger brother pushed off his quilt and got up." },
+            { w: "fetched (fetch)", k: "꺼내 왔다", s: "He fetched his carrying frame from the shed." },
+            { w: "shed", k: "헛간", s: "He fetched his carrying frame from the shed." },
+            { w: "on tiptoe", k: "발끝으로 살금살금", s: "He went out to the fields on tiptoe" },
+            { w: "so as not to ~", k: "~하지 않으려고", s: "on tiptoe so as not to wake his wife" }
+        ],
+        "06-younger-carries.webp": [
+            { w: "Sweat stood on ~", k: "땀이 맺혔다", s: "Sweat stood on his forehead too." },
+            { w: "forehead", k: "이마", s: "Sweat stood on his forehead too." },
+            { w: "the very path", k: "바로 그 길", s: "He walked the very path his brother had walked" },
+            { w: "the other way", k: "반대로", s: "only the other way" },
+            { w: "had crossed (cross)", k: "엇갈렸다", s: "Neither knew they had crossed." },
+            { w: "slippery", k: "미끄러운", s: "He had never noticed how slippery the paddy path was." },
+            { w: "came straight back", k: "얼른 돌아왔다", s: "He set the sheaves on his brother's pile and came straight back." },
+            { w: "out of breath", k: "숨이 턱까지 찬", s: "He was out of breath." },
+            { w: "take them back", k: "도로 가져가다", s: "he'll tell me to take them back" },
+            { w: "keep your mouth shut", k: "입을 꼭 다물다", s: "Keep your mouth shut." }
+        ],
+        "07-morning.webp": [
+            { w: "blinked (blink)", k: "눈을 끔뻑였다", s: "The elder brother went out to the field and blinked." },
+            { w: "exactly as it had been", k: "어제 그대로", s: "The pile of sheaves was exactly as it had been." },
+            { w: "again and again", k: "몇 번을", s: "He counted again and again" },
+            { w: "the same as yesterday", k: "어제랑 똑같은", s: "Eh? It's the same as yesterday." },
+            { w: "and yet", k: "그런데도", s: "And yet he had certainly carried a whole frameful away." },
+            { w: "certainly", k: "분명히", s: "he had certainly carried a whole frameful away" },
+            { w: "a frameful", k: "한 지게", s: "carried a whole frameful away" },
+            { w: "with his head on one side", k: "고개를 갸웃하고", s: "stood in front of his own field with his head on one side" },
+            { w: "rubbed (rub)", k: "비볐다", s: "He rubbed his eyes and rubbed them again." },
+            { w: "definitely", k: "분명히", s: "I definitely took a frameful off." },
+            { w: "had the least idea", k: "영문을 알았다", s: "Neither of them had the least idea" },
+            { w: "scratched the back of their heads", k: "뒤통수를 긁적였다", s: "both scratched the back of their heads" }
+        ],
+        "08-again.webp": [
+            { w: "So did the younger.", k: "동생도 그랬다.", s: "That night the elder brother moved sheaves again. So did the younger." },
+            { w: "more than the night before", k: "어제보다 더 많이", s: "Both of them carried more than the night before." },
+            { w: "once more", k: "또", s: "the sheaves were the same once more" },
+            { w: "not one ~ more", k: "한 ~도 늘지 않은", s: "Not one sheaf more, not one sheaf less." },
+            { w: "enough to make a ghost weep", k: "귀신이 곡할 노릇", s: "This is enough to make a ghost weep." },
+            { w: "said it to himself", k: "혼잣말을 했다", s: "The elder brother said it to himself." },
+            { w: "It's not as if ~", k: "~인 것도 아니고", s: "It's not as if somebody puts them back in the night..." },
+            { w: "exactly the same thing", k: "똑같은 말", s: "The younger brother said exactly the same thing." },
+            { w: "baffled", k: "어리둥절한", s: "Both of them were completely baffled." }
+        ],
+        "09-meet.webp": [
+            { w: "not a cloud", k: "구름 한 점 없는", s: "There was not a cloud in the sky." },
+            { w: "came along ~", k: "~을 걸어왔다", s: "The elder brother came along the paddy path with his frame." },
+            { w: "from the other end", k: "저쪽에서", s: "And from the other end somebody else was coming" },
+            { w: "creaked (creak)", k: "삐걱거렸다", s: "In the dark the frames creaked." },
+            { w: "came face to face", k: "딱 마주쳤다", s: "Under the moon the two of them came face to face." },
+            { w: "for a long while", k: "한참 동안", s: "For a long while neither could say a word." },
+            { w: "were loaded with ~", k: "~이 실려 있었다", s: "Both frames were loaded with just the same sheaves." },
+            { w: "came clear (come clear)", k: "풀렸다", s: "Three nights of mystery came clear in that moment." },
+            { w: "mystery", k: "수수께끼", s: "Three nights of mystery came clear" },
+            { w: "sprang into ~ (spring)", k: "핑 돌았다", s: "Tears sprang into the elder brother's eyes." }
+        ],
+        "10-laugh.webp": [
+            { w: "laughed first", k: "먼저 웃음을 터뜨렸다", s: "The elder brother laughed first." },
+            { w: "so hard that ~", k: "~할 만큼 크게", s: "He laughed so hard his shoulders shook." },
+            { w: "rascal", k: "이 녀석", s: "You rascal — so it was you!" },
+            { w: "And you, brother!", k: "형님이야말로요!", s: "And you, brother!" },
+            { w: "put down (put)", k: "내려놓았다", s: "The two brothers put down their frames" },
+            { w: "bank", k: "논둑", s: "sat on the bank and laughed" },
+            { w: "moonlit", k: "달빛이 비치는", s: "Their laughter went out over the moonlit fields." },
+            { w: "never ran out (run out)", k: "그치지 않았다", s: "They talked all night and never ran out." },
+            { w: "did not get up until ~", k: "~까지 자리를 뜨지 않았다", s: "They did not get up until the moon went down." },
+            { w: "ever wondered why", k: "궁금해했다", s: "neither of them ever wondered why" }
+        ],
+        "after": [
+            { w: "school readers", k: "국어 교과서", s: "This story has been in Korean school readers for a long time." },
+            { w: "not a word wasted", k: "군더더기 없는", s: "It is short with not a word wasted" },
+            { w: "one of the best-built ~", k: "손꼽히는 짜임의 ~", s: "one of the best-built old tales we have" },
+            { w: "famous for ~", k: "~으로 이름난", s: "brothers famous for how close they were" },
+            { w: "how close they were", k: "우애가 얼마나 깊었는지", s: "brothers famous for how close they were" },
+            { w: "you can tell ~", k: "~을 알 수 있다", s: "You can tell how much people then valued brothers like these." },
+            { w: "valued (value)", k: "귀하게 여겼다", s: "how much people then valued brothers like these" },
+            { w: "that is why ~", k: "그래서 ~이다", s: "That is why neither could speak when they met in the moonlight." },
+            { w: "had nothing to say", k: "할 말이 없었다", s: "It was not that they had nothing to say." },
+            { w: "already knew everything", k: "이미 다 알아 버렸다", s: "It was that they already knew everything." },
+            { w: "a grateful heart", k: "고마운 마음", s: "A grateful heart shows in what you do" },
+            { w: "shows in ~ (show)", k: "~에 나타난다", s: "A grateful heart shows in what you do before it shows in what you say." },
+            { w: "crossed the fields", k: "논을 오갔다", s: "the sheaves crossed the fields every night" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌾',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story has been in Korean school readers for a long time. It is short with not a word wasted — one of the best-built old tales we have.",
+                    "In Yesan in Chungcheong-do an old monument still stands to brothers famous for how close they were. You can tell how much people then valued brothers like these.",
+                    "That is why neither could speak when they met in the moonlight. It was not that they had nothing to say. It was that they already knew everything."
+                ],
+                right: [
+                    "A grateful heart shows in what you do before it shows in what you say. The two brothers said nothing to each other for three days, but the sheaves crossed the fields every night.",
+                    "Have you ever done something for someone without letting them know it was you?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "두 형제의 논은 어떻게 있었나요?", choices: ["멀리 떨어져 있었다", "나란히 붙어 있었다", "산 너머에 있었다"], answer: 1 },
     { q: "가을걷이가 끝난 뒤 두 형제의 볏단은 어땠나요?", choices: ["형 것이 더 많았다", "동생 것이 더 많았다", "똑같았다"], answer: 2 },

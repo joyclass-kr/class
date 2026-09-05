@@ -215,9 +215,9 @@ const EN = {
         art: "cover.webp",
         title: "The Magpies Who Paid It Back",
         intro: [
-            "The Magpies Who Paid It Back is an old Korean tale with no known author. It is also told as The Pheasant Who Paid It Back, and in some places pheasants take the magpies' part.",
-            "The temple in the story is said to be Sangwonsa on Chiaksan in Wonju. The mountain's older name meant red mountain, and people say it was changed to Chiaksan — with the character for pheasant in it — because of this story.",
-            "Korean tales are full of animals paying back the person who saved them. There is a toad who paid it back and a tiger who paid it back. Even beasts know what they owe, the old people were saying, so how much more should a person?"
+            "The Magpies Who Paid It Back is an old Korean tale with no known author. It is also told as The Pheasant Who Paid It Back.",
+            "The temple is said to be Sangwonsa on Chiaksan. People say the mountain's name was changed — the character for pheasant put into it — because of this story.",
+            "Korean tales are full of animals paying back the person who saved them. Even beasts know what they owe, the old people were saying."
         ]
     },
     chapters: [
@@ -229,8 +229,7 @@ const EN = {
                     art: "01-road.webp",
                     emoji: "🏞️",
                     left: [
-                        "Long ago there was a scholar who was a fine shot with a bow. He was on his way to Hanyang to sit the state examination.",
-                        "The examination was the test that chose the country's officials. His bow hung across his shoulder.",
+                        "Long ago there was a scholar who was a fine shot with a bow. He was walking to Hanyang to sit the state examination, the test that chose the country's officials.",
                         { t: "\"I have to pass. Then I can look my mother in the eye.\"", v: "man" },
                         "The mountain road ran deep, and the sun was already going down."
                     ],

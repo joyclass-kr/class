@@ -206,10 +206,9 @@ const EN = {
         art: "cover.webp",
         title: "The Dried Persimmon and the Tiger",
         intro: [
-            "The Dried Persimmon and the Tiger is another old Korean tale with no known author. It is the best known of all our tiger stories, and in some districts the persimmon is a fresh persimmon or a piece of toffee instead.",
-            "Tigers wear two faces in old stories. Sometimes a tiger is the fearsome spirit that guards the mountain; sometimes, as here, it is a slow-witted creature that gets fooled. Stories of the second kind are called silly tiger tales.",
-            "In the Joseon period tigers really did come down into villages, and the country kept a special army of tiger hunters. Making fun of the most frightening animal alive was a great pleasure for people back then.",
-            "A dried persimmon is a persimmon that has been peeled and dried. In a time with no sweets and no fridges, it was a precious sweet thing."
+            "The Dried Persimmon and the Tiger is another old Korean tale with no known author. It is the best known of all our tiger stories.",
+            "Tigers wear two faces in old stories: the fearsome mountain spirit, and the slow-witted creature that gets fooled. This is the second kind.",
+            "Tigers really did come down into villages then, so making fun of them was a great pleasure."
         ]
     },
     chapters: [
