@@ -228,6 +228,435 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "💧",
+        art: "cover.webp",
+        title: "Bongi Kim Seondal",
+        intro: [
+            "Bongi Kim Seondal is a trickster out of old stories told around Pyongyang. Many scholars think the tricks of many people were gathered under one name.",
+            "The best known of them is the one where he sells the Daedong River. Even today a deal that makes no sense is called selling Daedong River water.",
+            "The Daedong River runs through Pyongyang. People drank from it, and carrying water was a trade of its own."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Nothing Money Cannot Buy",
+            beats: [
+                {
+                    art: "01-seondal.webp",
+                    emoji: "🧑",
+                    left: [
+                        "Long ago in Pyongyang there lived a man called Kim Seondal.",
+                        "He owned little, but his head was quick and his tongue was quicker.",
+                        "He read and counted well, yet he wanted no official post.",
+                        "What he did best was taking proud men down a peg."
+                    ],
+                    right: [
+                        { t: "\"One word from that man and a crying child laughs.\"", v: "man" },
+                        "When he came to the market people greeted him first.",
+                        "In Pyongyang there was nobody who did not know Kim Seondal.",
+                        { t: "\"What is he up to today?\" they said, and laughed.", v: "man" }
+                    ]
+                },
+                {
+                    art: "02-merchants.webp",
+                    emoji: "💰",
+                    left: [
+                        "One day three great merchants came to Pyongyang from Hanyang.",
+                        "They traded on a large scale and had a great deal of money.",
+                        "They wore silk and hung strings of coins all round their waists.",
+                        "Even the way they walked was a swagger."
+                    ],
+                    right: [
+                        { t: "\"They call Pyongyang big. I see nothing much here.\"", v: "man" },
+                        "The three sat down in an inn and talked loudly.",
+                        { t: "\"With money there is nothing you cannot buy.\"", v: "man" },
+                        { t: "\"Just so. What cannot money buy in this world?\"", v: "man" },
+                        "Kim Seondal sat in the corner and heard every word."
+                    ]
+                },
+                {
+                    art: "03-water.webp",
+                    emoji: "🪣",
+                    left: [
+                        "Down by the Daedong River the water carriers were drawing water.",
+                        "Men with water frames went up and down the bank in a line.",
+                        "All the water the people of Pyongyang drank came from that river.",
+                        "Its water was famous all over the country."
+                    ],
+                    right: [
+                        "Kim Seondal stood watching, and his eyes lit up. A good plan had come to him.",
+                        { t: "\"Nothing money cannot buy, was it?\"", v: "old" },
+                        "He stroked his beard and smiled quietly to himself.",
+                        { t: "\"Let us see whether money can buy a river too.\"", v: "old" }
+                    ]
+                },
+                {
+                    art: "04-plan.webp",
+                    emoji: "🪙",
+                    left: [
+                        "That evening Kim Seondal called every water carrier together.",
+                        "They came one by one, wondering what it was about.",
+                        "He handed each of them a single copper coin.",
+                        "Every hand that took a coin closed on it in puzzlement."
+                    ],
+                    right: [
+                        { t: "\"When you come for water tomorrow, greet me.\"", v: "old" },
+                        { t: "\"Then lay this coin down in front of me.\"", v: "old" },
+                        { t: "\"Only for tomorrow. That is all I ask.\"", v: "old" },
+                        "The water carriers had no idea why, but they nodded.",
+                        "It was Kim Seondal, so they thought it would be fun."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Selling the River",
+            beats: [
+                {
+                    art: "05-collect.webp",
+                    emoji: "🌅",
+                    left: [
+                        "Next morning Kim Seondal sat down on a rock by the river, in the spot best seen from the bank.",
+                        "The three merchants came strolling past just then.",
+                        "They stopped beside the rock to look at the water.",
+                        "Then a water carrier came up to him and bent at the waist."
+                    ],
+                    right: [
+                        { t: "\"Sir, here is today's water money.\"", v: "man" },
+                        "Clink — a coin was laid before him. Kim Seondal pocketed it without turning a hair.",
+                        "The three merchants blinked and looked at one another.",
+                        { t: "\"Who on earth is that man?\"", v: "man" }
+                    ]
+                },
+                {
+                    art: "06-line.webp",
+                    emoji: "😲",
+                    left: [
+                        "The water carriers came up one after another and laid down money.",
+                        "One passed, then another, and the line did not break.",
+                        "Coins piled up in front of Kim Seondal like a little hill.",
+                        "The merchants' eyes grew wider and wider."
+                    ],
+                    right: [
+                        "At last one merchant could bear it no longer and strode over.",
+                        { t: "\"Look here. Why are those people paying you money?\"", v: "man" },
+                        "Kim Seondal pretended not to hear and went on counting. One, two, three, four.",
+                        "He counted more slowly than he needed to."
+                    ]
+                },
+                {
+                    art: "07-claim.webp",
+                    emoji: "🌊",
+                    left: [
+                        { t: "\"Surely that river is not yours?\"", v: "man" },
+                        "The merchant's voice had grown urgent, and his face with it.",
+                        { t: "\"How can one man own a river as wide as that?\"", v: "man" },
+                        "He could not believe it. Only then did Kim Seondal slowly raise his head."
+                    ],
+                    right: [
+                        { t: "\"This river came down to me from my forefathers.\"", v: "old" },
+                        { t: "\"So I take so much for every load of water.\"", v: "old" },
+                        "Kim Seondal swept his hand across the river.",
+                        { t: "\"Well now! He earns money sitting still!\"", v: "man" },
+                        "The eyes of all three merchants began to glitter."
+                    ]
+                },
+                {
+                    art: "08-sell.webp",
+                    emoji: "📜",
+                    left: [
+                        "That night the three could not sleep. They whispered with their heads together.",
+                        "From first light they came looking for Kim Seondal.",
+                        { t: "\"Sell it to us! Name your price and we will pay it!\"", v: "man" },
+                        "All three clung to him and begged."
+                    ],
+                    right: [
+                        "Kim Seondal held out for a long while, then nodded as if giving in.",
+                        "The merchants pushed a whole chest of coins across to him.",
+                        "They lifted the lid, and it was full to the brim.",
+                        { t: "\"This river is ours now!\"", v: "man" },
+                        "The three clapped their hands and cheered."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · What Nobody Can Buy",
+            beats: [
+                {
+                    art: "09-morning.webp",
+                    emoji: "🪣",
+                    left: [
+                        "Next morning the three merchants sat in a row on the rock by the river.",
+                        "All three had their shoulders squared.",
+                        "The water carriers came out one by one to draw water.",
+                        "The merchants cleared their throats and sprang up. They had bought the river."
+                    ],
+                    right: [
+                        { t: "\"Come now, pay for your water!\"", v: "man" },
+                        "A merchant blocked a water carrier's way and held out his hand.",
+                        "The carriers stopped and stared blankly at each other.",
+                        { t: "\"...Pay for what water?\"", v: "man" },
+                        "One of them opened his eyes wide and asked again."
+                    ]
+                },
+                {
+                    art: "10-refuse.webp",
+                    emoji: "😠",
+                    left: [
+                        { t: "\"This river belongs to us now!\"", v: "man" },
+                        "The merchant stamped his feet and shouted at the top of his voice.",
+                        { t: "\"Well! I have lived long, but that is the funniest thing yet.\"", v: "man" },
+                        "The water carriers held their sides laughing, and the sound spread along the bank."
+                    ],
+                    right: [
+                        { t: "\"How can river water belong to anybody?\"", v: "man" },
+                        { t: "\"Then go and buy the sky, and buy the wind too!\"", v: "man" },
+                        "Still laughing, they shouldered their frames and went off.",
+                        "The merchants' faces turned pale.",
+                        "Only then did they see how neatly they had been fooled."
+                    ]
+                },
+                {
+                    art: "11-return.webp",
+                    emoji: "🪙",
+                    left: [
+                        "The merchants stormed off to Kim Seondal's house, puffing with rage.",
+                        "But Kim Seondal had not run away or hidden.",
+                        "He was sitting square in the middle of the room.",
+                        { t: "\"I have been waiting for you.\"", v: "old" },
+                        "The merchants, rushing in, stopped short instead."
+                    ],
+                    right: [
+                        "Kim Seondal pushed the chest of coins straight back to them.",
+                        "It looked exactly as it had the day before.",
+                        { t: "\"I have not spent one coin. Take it back.\"", v: "old" },
+                        "The merchants were more bewildered than ever.",
+                        "They meant to shout, and only looked at one another instead."
+                    ]
+                },
+                {
+                    art: "12-lesson.webp",
+                    emoji: "🌊",
+                    left: [
+                        { t: "\"Then why in the world did you do this?\"", v: "man" },
+                        "One merchant raised his voice, as if it were more than he could bear.",
+                        "Kim Seondal pointed out of the window at the river.",
+                        { t: "\"You said there was nothing money could not buy.\"", v: "old" },
+                        "His voice had gone very quiet."
+                    ],
+                    right: [
+                        { t: "\"But nobody can buy that water. Not me, and not you.\"", v: "old" },
+                        { t: "\"Not the river, not the wind, and not a person's heart.\"", v: "old" },
+                        "The three merchants went away without a word.",
+                        "After that they never boasted so anywhere again, and a river made them blush."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What did the merchants from Hanyang boast?", choices: ["That money could buy anything", "That Pyongyang had good water", "That they had come a long way"], answer: 0 },
+        { q: "What did Kim Seondal ask the water carriers to do?", choices: ["Not to come out for water", "To bow low to the merchants", "To lay the coin back down"], answer: 2 },
+        { q: "How did the merchants offer to buy the river?", choices: ["They pushed over a whole chest", "They gave up their silk coats", "They handed over water frames"], answer: 0 },
+        { q: "What did the water carriers do when told to pay?", choices: ["They turned pale and went away", "They held their sides laughing", "They stamped their feet and shouted"], answer: 1 },
+        { q: "What did Kim Seondal do with the money?", choices: ["Slipped away with it", "Shared it with the carriers", "Gave it all back"], answer: 2 },
+        { q: "What did Kim Seondal say at the end?", choices: ["That the river came from his forefathers", "That the river belongs to nobody", "That he charged for every load"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He handed every coin back without spending one, so it was the boast he was after and not the money.",
+                "The carriers laughed out loud at being asked to pay, so everybody already knew the river was nobody's.",
+                "The merchants boasted the moment they reached Pyongyang, so money made a person look big in those days.",
+                "Kim Seondal grew famous for this and was given an official post, so a talent finds someone who values it."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "trickster", k: "꾀 많은 사람", s: "Bongi Kim Seondal is a trickster out of old stories" },
+            { w: "scholars", k: "학자들", s: "Many scholars think the tricks of many people" },
+            { w: "gathered (gather)", k: "모였다", s: "the tricks of many people were gathered under one name" },
+            { w: "under one name", k: "한 사람 이름으로", s: "gathered under one name" },
+            { w: "The best known", k: "가장 널리 알려진 것", s: "The best known of them is the one where he sells the river" },
+            { w: "makes no sense", k: "말이 안 되는", s: "a deal that makes no sense" },
+            { w: "runs through (run)", k: "가로질러 흐른다", s: "The Daedong River runs through Pyongyang." },
+            { w: "a trade of its own", k: "따로 있는 직업", s: "carrying water was a trade of its own" }
+        ],
+        "01-seondal.webp": [
+            { w: "owned little (own)", k: "가진 것이 없었다", s: "He owned little, but his head was quick" },
+            { w: "his tongue was quicker", k: "말재간이 더 좋았다", s: "his head was quick and his tongue was quicker" },
+            { w: "official post", k: "벼슬자리", s: "he wanted no official post" },
+            { w: "taking ~ down a peg", k: "콧대를 꺾기", s: "What he did best was taking proud men down a peg." },
+            { w: "greeted (greet)", k: "인사했다", s: "people greeted him first" },
+            { w: "nobody who did not ~", k: "~하지 않는 이가 없는", s: "there was nobody who did not know Kim Seondal" },
+            { w: "up to ~", k: "무슨 일을 벌이는", s: "What is he up to today?" }
+        ],
+        "02-merchants.webp": [
+            { w: "merchants", k: "상인들", s: "three great merchants came to Pyongyang" },
+            { w: "on a large scale", k: "크게", s: "They traded on a large scale" },
+            { w: "a great deal of ~", k: "아주 많은", s: "had a great deal of money" },
+            { w: "strings of coins", k: "엽전 꾸러미", s: "hung strings of coins all round their waists" },
+            { w: "swagger", k: "거들먹거리는 걸음", s: "Even the way they walked was a swagger." },
+            { w: "nothing much", k: "별것 아닌 것", s: "They call Pyongyang big. I see nothing much here." },
+            { w: "inn", k: "주막", s: "The three sat down in an inn and talked loudly." },
+            { w: "every word", k: "말을 하나도 빠짐없이", s: "Kim Seondal sat in the corner and heard every word." }
+        ],
+        "03-water.webp": [
+            { w: "drawing water (draw)", k: "물을 긷는", s: "the water carriers were drawing water" },
+            { w: "water frames", k: "물지게", s: "Men with water frames went up and down the bank" },
+            { w: "bank", k: "강둑", s: "went up and down the bank in a line" },
+            { w: "in a line", k: "줄지어", s: "up and down the bank in a line" },
+            { w: "all over the country", k: "나라 안에 두루", s: "Its water was famous all over the country." },
+            { w: "his eyes lit up (light up)", k: "눈이 반짝였다", s: "Kim Seondal stood watching, and his eyes lit up." },
+            { w: "stroked (stroke)", k: "쓸어내렸다", s: "He stroked his beard and smiled quietly to himself." },
+            { w: "Let us see", k: "어디 두고 봅시다", s: "Let us see whether money can buy a river too." }
+        ],
+        "04-plan.webp": [
+            { w: "called ~ together", k: "불러 모았다", s: "Kim Seondal called every water carrier together" },
+            { w: "one by one", k: "하나둘씩", s: "They came one by one, wondering what it was about." },
+            { w: "copper coin", k: "엽전", s: "He handed each of them a single copper coin." },
+            { w: "in puzzlement", k: "어리둥절해서", s: "Every hand that took a coin closed on it in puzzlement." },
+            { w: "lay ~ down", k: "내려놓다", s: "Then lay this coin down in front of me." },
+            { w: "That is all I ask", k: "그것만 해 주시오", s: "Only for tomorrow. That is all I ask." },
+            { w: "had no idea", k: "영문을 몰랐다", s: "The water carriers had no idea why, but they nodded." }
+        ],
+        "05-collect.webp": [
+            { w: "in the spot best seen", k: "제일 잘 보이는 자리에", s: "on a rock by the river, in the spot best seen from the bank" },
+            { w: "strolling (stroll)", k: "어슬렁어슬렁 걷는", s: "The three merchants came strolling past just then." },
+            { w: "bent at the waist (bend)", k: "허리를 굽혔다", s: "a water carrier came up to him and bent at the waist" },
+            { w: "Clink", k: "짤랑", s: "Clink — a coin was laid before him." },
+            { w: "pocketed (pocket)", k: "챙겨 넣었다", s: "Kim Seondal pocketed it without turning a hair." },
+            { w: "without turning a hair", k: "아무렇지도 않게", s: "pocketed it without turning a hair" },
+            { w: "blinked (blink)", k: "눈을 끔뻑였다", s: "The three merchants blinked and looked at one another." },
+            { w: "on earth", k: "대체", s: "Who on earth is that man?" }
+        ],
+        "06-line.webp": [
+            { w: "one after another", k: "줄줄이", s: "The water carriers came up one after another" },
+            { w: "did not break", k: "끊이지 않았다", s: "One passed, then another, and the line did not break." },
+            { w: "piled up (pile up)", k: "수북이 쌓였다", s: "Coins piled up in front of Kim Seondal like a little hill." },
+            { w: "wider and wider", k: "점점 더 크게", s: "The merchants' eyes grew wider and wider." },
+            { w: "bear it no longer (bear)", k: "더는 못 참다", s: "one merchant could bear it no longer and strode over" },
+            { w: "strode over (stride)", k: "성큼 다가갔다", s: "could bear it no longer and strode over" },
+            { w: "pretended (pretend)", k: "~인 척했다", s: "Kim Seondal pretended not to hear and went on counting." },
+            { w: "than he needed to", k: "그럴 것도 없는데", s: "He counted more slowly than he needed to." }
+        ],
+        "07-claim.webp": [
+            { w: "Surely ~ not", k: "설마 ~는 아니겠지", s: "Surely that river is not yours?" },
+            { w: "urgent", k: "다급한", s: "The merchant's voice had grown urgent" },
+            { w: "own", k: "가지다", s: "How can one man own a river as wide as that?" },
+            { w: "raise his head", k: "고개를 들다", s: "Only then did Kim Seondal slowly raise his head." },
+            { w: "came down to me (come down)", k: "물려받았다", s: "This river came down to me from my forefathers." },
+            { w: "forefathers", k: "조상", s: "came down to me from my forefathers" },
+            { w: "load", k: "한 지게", s: "So I take so much for every load of water." },
+            { w: "swept his hand (sweep)", k: "손으로 쓸어 보였다", s: "Kim Seondal swept his hand across the river." },
+            { w: "sitting still", k: "가만히 앉아서", s: "Well now! He earns money sitting still!" },
+            { w: "glitter", k: "번들거리다", s: "The eyes of all three merchants began to glitter." }
+        ],
+        "08-sell.webp": [
+            { w: "whispered (whisper)", k: "수군거렸다", s: "They whispered with their heads together." },
+            { w: "heads together", k: "머리를 맞대고", s: "They whispered with their heads together." },
+            { w: "From first light", k: "새벽부터", s: "From first light they came looking for Kim Seondal." },
+            { w: "Name your price", k: "값을 부르시오", s: "Sell it to us! Name your price and we will pay it!" },
+            { w: "clung to ~ (cling)", k: "달라붙었다", s: "All three clung to him and begged." },
+            { w: "held out (hold out)", k: "버텼다", s: "Kim Seondal held out for a long while" },
+            { w: "as if giving in", k: "못 이기는 척하며", s: "then nodded as if giving in" },
+            { w: "chest", k: "궤짝", s: "The merchants pushed a whole chest of coins across to him." },
+            { w: "full to the brim", k: "그득 찬", s: "They lifted the lid, and it was full to the brim." }
+        ],
+        "09-morning.webp": [
+            { w: "in a row", k: "나란히", s: "the three merchants sat in a row on the rock" },
+            { w: "shoulders squared", k: "어깨에 힘이 들어간", s: "All three had their shoulders squared." },
+            { w: "draw water", k: "물을 긷다", s: "The water carriers came out one by one to draw water." },
+            { w: "cleared their throats", k: "헛기침을 했다", s: "The merchants cleared their throats and sprang up." },
+            { w: "sprang up (spring)", k: "벌떡 일어섰다", s: "The merchants cleared their throats and sprang up." },
+            { w: "blocked ~ way", k: "앞을 막아섰다", s: "A merchant blocked a water carrier's way" },
+            { w: "stared blankly", k: "멀뚱멀뚱 쳐다보았다", s: "The carriers stopped and stared blankly at each other." }
+        ],
+        "10-refuse.webp": [
+            { w: "belongs to ~ (belong)", k: "~의 것이다", s: "This river belongs to us now!" },
+            { w: "stamped his feet", k: "발을 쿵쿵 굴렀다", s: "The merchant stamped his feet and shouted" },
+            { w: "at the top of his voice", k: "목청껏", s: "shouted at the top of his voice" },
+            { w: "the funniest thing yet", k: "가장 우스운 소리", s: "I have lived long, but that is the funniest thing yet." },
+            { w: "held their sides laughing", k: "배를 잡고 웃었다", s: "The water carriers held their sides laughing" },
+            { w: "shouldered (shoulder)", k: "어깨에 졌다", s: "Still laughing, they shouldered their frames and went off." },
+            { w: "turned pale", k: "파랗게 질렸다", s: "The merchants' faces turned pale." },
+            { w: "how neatly", k: "얼마나 감쪽같이", s: "Only then did they see how neatly they had been fooled." },
+            { w: "fooled (fool)", k: "속았다", s: "how neatly they had been fooled" }
+        ],
+        "11-return.webp": [
+            { w: "stormed off (storm)", k: "몰려갔다", s: "The merchants stormed off to Kim Seondal's house" },
+            { w: "puffing with rage", k: "씩씩거리며", s: "stormed off to Kim Seondal's house, puffing with rage" },
+            { w: "square in the middle", k: "떡 하니 한가운데", s: "He was sitting square in the middle of the room." },
+            { w: "stopped short", k: "멈칫했다", s: "The merchants, rushing in, stopped short instead." },
+            { w: "straight back", k: "그대로 도로", s: "Kim Seondal pushed the chest of coins straight back to them." },
+            { w: "exactly as it had", k: "어제 그 모습 그대로", s: "It looked exactly as it had the day before." },
+            { w: "not ~ one coin", k: "한 푼도 안", s: "I have not spent one coin. Take it back." },
+            { w: "bewildered", k: "어리둥절한", s: "The merchants were more bewildered than ever." }
+        ],
+        "12-lesson.webp": [
+            { w: "why in the world", k: "대체 왜", s: "Then why in the world did you do this?" },
+            { w: "more than he could bear", k: "답답해 못 견딜 만큼", s: "raised his voice, as if it were more than he could bear" },
+            { w: "pointed out of ~", k: "~ 밖을 가리켰다", s: "Kim Seondal pointed out of the window at the river." },
+            { w: "had gone very quiet", k: "아주 조용해졌다", s: "His voice had gone very quiet." },
+            { w: "Not me, and not you", k: "나도 당신들도 아니다", s: "But nobody can buy that water. Not me, and not you." },
+            { w: "a person's heart", k: "사람 마음", s: "Not the river, not the wind, and not a person's heart." },
+            { w: "without a word", k: "아무 말도 못 하고", s: "The three merchants went away without a word." },
+            { w: "boasted (boast)", k: "큰소리쳤다", s: "After that they never boasted so anywhere again" },
+            { w: "made them blush", k: "얼굴을 붉히게 했다", s: "a river made them blush" }
+        ],
+        "after": [
+            { w: "jokers", k: "재담꾼", s: "stories about jokers like this went round" },
+            { w: "went round", k: "돌아다녔다", s: "stories about jokers like this went round" },
+            { w: "get the better of ~", k: "골탕 먹이다", s: "somebody weak gets the better of somebody strong" },
+            { w: "nickname", k: "별명", s: "The nickname Bongi comes from another story." },
+            { w: "insisting (insist)", k: "우기면서", s: "he sold a hen, insisting it was a phoenix" },
+            { w: "phoenix", k: "봉황", s: "insisting it was a phoenix" },
+            { w: "a record of ~", k: "~의 기록", s: "the name itself is a record of a trick" },
+            { w: "belief", k: "믿음", s: "He sold the belief that water could be sold." },
+            { w: "an owner", k: "임자", s: "they bought the idea that a river has an owner" },
+            { w: "traders", k: "장사꾼", s: "traders going to and from China gathered there" },
+            { w: "were after (be after)", k: "노렸다", s: "What he was after was not their money but their words." },
+            { w: "never once", k: "한 번도", s: "somebody who has never once thought about" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌊',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Nobody knows whether Kim Seondal really lived. What is certain is that late in the Joseon days stories about jokers like this went round and round.",
+                    "They are all the same shape. Somebody weak, with nothing but a quick tongue, gets the better of somebody strong.",
+                    "The nickname Bongi comes from another story, where he sold a hen, insisting it was a phoenix. People called him Bongi ever after, so the name itself is a record of a trick.",
+                    "Look again and Kim Seondal did not sell water. He sold the belief that water could be sold. The merchants did not buy a river; they bought the idea that a river has an owner."
+                ],
+                right: [
+                    "So this is not a story about how clever Kim Seondal was. It is a story about what the merchants believed. You cannot sell what nobody believes in.",
+                    "There is a reason the story picks Pyongyang. In those days traders going to and from China gathered there, so that was where people most believed money could buy anything.",
+                    "What he was after was not their money but their words. Saying there is nothing money cannot buy is what somebody says who has never once thought about what money cannot buy.",
+                    "What is there that money cannot buy?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "한양 상인들이 큰소리친 것은 무엇인가요?", choices: ["돈으로 못 살 게 없다고", "우는 아이도 웃긴다고", "글도 잘 읽고 셈도 밝다고"], answer: 0 },
     { q: "김선달이 물장수들에게 부탁한 것은 무엇인가요?", choices: ["물을 길으러 나오지 말라고", "상인들에게 인사를 올리라고", "엽전을 도로 내놓으라고"], answer: 2 },

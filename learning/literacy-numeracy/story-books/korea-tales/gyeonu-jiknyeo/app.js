@@ -230,6 +230,436 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🌌",
+        art: "cover.webp",
+        title: "Gyeonu and Jiknyeo",
+        intro: [
+            "Gyeonu and Jiknyeo is a tale with no known author. It was made out of the stars, so China and Japan tell it too.",
+            "Two bright stars really do face each other across the Milky Way. You can see them on summer nights, and the story starts there.",
+            "The seventh day of the seventh moon is called Chilseok. On that night people watched the stars and made a wish."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Two People in the Sky",
+            beats: [
+                {
+                    art: "01-gyeonu.webp",
+                    emoji: "🐂",
+                    left: [
+                        "Long, long ago a young man called Gyeonu lived in the sky.",
+                        "He looked after cattle in the fields across the Milky Way.",
+                        { t: "\"Come on, now. Just as far as that hill.\"", v: "man" },
+                        "Gyeonu's voice was always gentle."
+                    ],
+                    right: [
+                        { t: "\"Have you eaten well today too?\"", v: "man" },
+                        "He stroked the back of every one of them. The cattle followed him anywhere, quiet as could be.",
+                        "There was nobody in the sky as hard-working as Gyeonu.",
+                        "He stayed out in the fields long after the sun went down."
+                    ]
+                },
+                {
+                    art: "02-jiknyeo.webp",
+                    emoji: "🧵",
+                    left: [
+                        "On this side of the Milky Way lived Jiknyeo. The Milky Way was a great river across the sky.",
+                        "Jiknyeo was the only granddaughter of the Jade Emperor, the king of the sky.",
+                        "At the loom there was nobody in the sky to match her.",
+                        "She sat in front of her loom all day long."
+                    ],
+                    right: [
+                        "Clack, clack, clack, clack.",
+                        "The thread flew to and fro without a rest.",
+                        "There was not a day when the sound of the loom stopped in that house.",
+                        "They say the clouds and the sunsets were made from her cloth.",
+                        "A lovely sky, people said, was Jiknyeo's doing."
+                    ]
+                },
+                {
+                    art: "03-meet.webp",
+                    emoji: "💫",
+                    left: [
+                        "The Jade Emperor had been watching the two of them for a long while.",
+                        "Look where he might, he could find nobody who worked harder.",
+                        { t: "\"Both so diligent. I must make a match of them.\"", v: "old" },
+                        "He laughed, well pleased, and so the two were married."
+                    ],
+                    right: [
+                        "Everybody in the sky came out to wish them well.",
+                        "A bridge was laid across the Milky Way, and they crossed it to each other.",
+                        "The day they took hands, the whole sky shone bright.",
+                        "There was nothing in the world left for them to envy."
+                    ]
+                },
+                {
+                    art: "04-idle.webp",
+                    emoji: "🕸️",
+                    left: [
+                        "But from then on things went strange. Waking up, they looked at each other first.",
+                        "They liked being together so much that nothing else got done.",
+                        "Jiknyeo did not sit down at her loom.",
+                        "Dust settled thick and white on it."
+                    ],
+                    right: [
+                        "Gyeonu left his cattle out in the fields. They wandered off into other people's crops.",
+                        "Meanwhile no new clouds were hung in the sky.",
+                        "The sunsets and the clouds grew fainter and fainter.",
+                        "The sky grew duller by the day."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Across the Milky Way",
+            beats: [
+                {
+                    art: "05-anger.webp",
+                    emoji: "⚡",
+                    left: [
+                        "At last the Jade Emperor was angry. He called the two of them before him.",
+                        { t: "\"I matched you two so you would work well, not so you would idle!\"", v: "old" },
+                        { t: "\"Look at the sky. It has been grey for days!\"", v: "old" },
+                        "The Jade Emperor's beard trembled."
+                    ],
+                    right: [
+                        { t: "\"Forgive us! We were wrong!\"", v: "man" },
+                        "Gyeonu and Jiknyeo knelt down where they stood.",
+                        { t: "\"We will not do it again. Give us one more chance.\"", v: "woman" },
+                        "But the Jade Emperor slowly shook his head. He had already made up his mind."
+                    ]
+                },
+                {
+                    art: "06-parted.webp",
+                    emoji: "🌌",
+                    left: [
+                        { t: "\"From today you live apart, on either side of the river.\"", v: "old" },
+                        "The Jade Emperor's voice was very heavy.",
+                        { t: "\"You may meet one day a year, on Chilseok, and no more.\"", v: "old" },
+                        { t: "\"Letting you meet at all is the last of my kindness.\"", v: "old" }
+                    ],
+                    right: [
+                        "The two were parted, one on this side of the Milky Way and one on that.",
+                        "Reach out as they might, they could not touch each other.",
+                        "Shout till their throats tore, the water swallowed the sound.",
+                        "There was no way at all across that wide river."
+                    ]
+                },
+                {
+                    art: "07-year.webp",
+                    emoji: "🌙",
+                    left: [
+                        "From that day Gyeonu drove his cattle again, and Jiknyeo wove again.",
+                        "The cattle put on flesh and the loom sounded once more.",
+                        "Lovely sunsets came back to the sky.",
+                        "Only, in the middle of work, they kept looking towards the river."
+                    ],
+                    right: [
+                        "Spring went by and the summer deepened.",
+                        "Gyeonu counted the days left on his fingers, every day.",
+                        "In front of her loom Jiknyeo counted the same days.",
+                        "Then at last the seventh day of the seventh moon came, the one day in a year."
+                    ]
+                },
+                {
+                    art: "08-river.webp",
+                    emoji: "😢",
+                    left: [
+                        "The two ran for the bank of the Milky Way at one go.",
+                        "They ran till their breath caught. One even lost a shoe.",
+                        "Across the water each saw the other, very small.",
+                        { t: "\"My dear, I am here!\"", v: "man" },
+                        "They both waved and waved."
+                    ],
+                    right: [
+                        "But the Milky Way was far too wide. The bridge had already been taken away.",
+                        "Shout as loud as they could, their voices did not carry.",
+                        "They sank down on the bank and did nothing but cry.",
+                        "They sat like that till the sun went down."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Bridge of Birds",
+            beats: [
+                {
+                    art: "09-birds.webp",
+                    emoji: "🐦",
+                    left: [
+                        "The sound of that crying passed the sky and reached the earth.",
+                        "It was a long, sad sound, and it did not stop all night.",
+                        "Magpies and crows tilted their heads.",
+                        { t: "\"What is that noise?\"", v: "boy" },
+                        "All together the birds looked up at the sky."
+                    ],
+                    right: [
+                        "When the birds heard the reason they looked at one another.",
+                        "Not to meet even one day in a year seemed too sad to bear.",
+                        { t: "\"What if we made them a bridge?\"", v: "boy" },
+                        { t: "\"Yes! Up we go, quickly!\"", v: "boy" },
+                        "All at once the birds spread their wings."
+                    ]
+                },
+                {
+                    art: "10-bridge.webp",
+                    emoji: "🌉",
+                    left: [
+                        "Every magpie and crow in the land flew up into the sky at once.",
+                        "There were enough of them to turn the sky black.",
+                        "The beating of their wings was loud as thunder.",
+                        "Over the Milky Way they gathered, heads together, and stood in a long line.",
+                        "The line reached from this bank to the far one."
+                    ],
+                    right: [
+                        "They gripped one another's beaks and laid wing against wing.",
+                        "It was a bridge built from the bodies of thousands of birds.",
+                        "People called it Ojakgyo.",
+                        "O for crow, jak for magpie, gyo for bridge.",
+                        "The name says just what it is."
+                    ]
+                },
+                {
+                    art: "11-reunion.webp",
+                    emoji: "🤝",
+                    left: [
+                        "Gyeonu and Jiknyeo stepped on the birds' backs and walked out to the middle.",
+                        "The backs under their feet swayed a little.",
+                        "Still the birds set their beaks and did not budge.",
+                        "The two of them ran the last of the way to each other.",
+                        { t: "\"Have you been well?\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"I have missed you.\"", v: "woman" },
+                        "They talked about the cattle and about the loom. But the meeting was one night only.",
+                        "As the sky lightened the birds began to settle, one by one.",
+                        "Their strength was running out.",
+                        "The two had to go back, each to their own side."
+                    ]
+                },
+                {
+                    art: "12-rain.webp",
+                    emoji: "🌧️",
+                    left: [
+                        "Turning away, both Gyeonu and Jiknyeo cried aloud. The tears passed the clouds and fell to earth.",
+                        "The raindrops that fell that Chilseok were fat and warm.",
+                        "That, they say, is why it often rains around Chilseok.",
+                        "Tears at meeting, and tears at parting."
+                    ],
+                    right: [
+                        "And around that time the heads of magpies and crows go thin.",
+                        "Well they might, after standing all night with feet on their heads.",
+                        "Even so, the birds fly up again on that day every year.",
+                        "Nobody tells them to. They gather and go."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What was Gyeonu's work?", choices: ["Weaving cloth at a loom", "Looking after cattle", "Counting the stars"], answer: 1 },
+        { q: "What was Jiknyeo's work?", choices: ["Herding the cattle", "Ploughing the fields", "Weaving cloth"], answer: 2 },
+        { q: "What happened to the sky when the two left their work?", choices: ["New clouds kept appearing", "The sunsets grew lovelier", "It was grey for days"], answer: 2 },
+        { q: "What was gone from the Milky Way after they were parted?", choices: ["The water", "The bridge", "The clouds"], answer: 1 },
+        { q: "Who laid the bridge?", choices: ["Magpies and crows", "The clouds and wind", "The sun and moon"], answer: 0 },
+        { q: "Why does it rain around Chilseok, the story says?", choices: ["Clouds gather then", "The two are crying", "A dragon is angry"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The sky went dull once they dropped their work for love, so one person's work is tied to the whole world.",
+                "He still let them meet one day a year, so even while punishing them he could not cut them off completely.",
+                "The magpies and crows gather by themselves every year, so some things get done with nobody ordering them.",
+                "The Jade Emperor pulled the two apart, so he must have disliked the marriage from the very start."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "a tale with no known author" },
+            { w: "was made out of ~", k: "~을 보고 만들어졌다", s: "It was made out of the stars" },
+            { w: "face each other", k: "마주 보다", s: "Two bright stars really do face each other" },
+            { w: "the Milky Way", k: "은하수", s: "face each other across the Milky Way" },
+            { w: "the seventh moon", k: "음력 칠월", s: "The seventh day of the seventh moon is called Chilseok." },
+            { w: "made a wish", k: "소원을 빌었다", s: "people watched the stars and made a wish" }
+        ],
+        "01-gyeonu.webp": [
+            { w: "Long, long ago", k: "아주 먼 옛날", s: "Long, long ago a young man called Gyeonu lived in the sky." },
+            { w: "looked after ~", k: "돌보았다", s: "He looked after cattle in the fields" },
+            { w: "cattle", k: "소 떼", s: "He looked after cattle in the fields across the Milky Way." },
+            { w: "Come on, now", k: "이랴, 이랴", s: "Come on, now. Just as far as that hill." },
+            { w: "gentle", k: "다정한", s: "Gyeonu's voice was always gentle." },
+            { w: "stroked (stroke)", k: "쓸어 주었다", s: "He stroked the back of every one of them." },
+            { w: "quiet as could be", k: "아주 순하게", s: "The cattle followed him anywhere, quiet as could be." },
+            { w: "hard-working", k: "부지런한", s: "There was nobody in the sky as hard-working as Gyeonu." }
+        ],
+        "02-jiknyeo.webp": [
+            { w: "granddaughter", k: "손녀", s: "Jiknyeo was the only granddaughter of the Jade Emperor" },
+            { w: "the Jade Emperor", k: "옥황상제", s: "the only granddaughter of the Jade Emperor" },
+            { w: "loom", k: "베틀", s: "At the loom there was nobody in the sky to match her." },
+            { w: "to match her", k: "그만한 사람", s: "there was nobody in the sky to match her" },
+            { w: "Clack", k: "찰칵", s: "Clack, clack, clack, clack." },
+            { w: "to and fro", k: "오락가락", s: "The thread flew to and fro without a rest." },
+            { w: "without a rest", k: "쉴 새 없이", s: "The thread flew to and fro without a rest." },
+            { w: "sunsets", k: "노을", s: "the clouds and the sunsets were made from her cloth" },
+            { w: "~'s doing", k: "~ 덕분", s: "A lovely sky, people said, was Jiknyeo's doing." }
+        ],
+        "03-meet.webp": [
+            { w: "for a long while", k: "오랫동안", s: "The Jade Emperor had been watching the two of them for a long while." },
+            { w: "Look where he might", k: "아무리 보아도", s: "Look where he might, he could find nobody who worked harder." },
+            { w: "diligent", k: "성실한", s: "Both so diligent. I must make a match of them." },
+            { w: "make a match", k: "짝을 지어 주다", s: "I must make a match of them." },
+            { w: "well pleased", k: "흐뭇해서", s: "He laughed, well pleased, and so the two were married." },
+            { w: "wish them well", k: "축하해 주다", s: "Everybody in the sky came out to wish them well." },
+            { w: "took hands (take)", k: "손을 맞잡았다", s: "The day they took hands, the whole sky shone bright." },
+            { w: "envy", k: "부러워하다", s: "There was nothing in the world left for them to envy." }
+        ],
+        "04-idle.webp": [
+            { w: "from then on", k: "그때부터", s: "But from then on things went strange." },
+            { w: "nothing else got done", k: "다른 일이 손에 안 잡혔다", s: "They liked being together so much that nothing else got done." },
+            { w: "Dust settled (settle)", k: "먼지가 앉았다", s: "Dust settled thick and white on it." },
+            { w: "wandered off (wander)", k: "아무 데나 흩어졌다", s: "They wandered off into other people's crops." },
+            { w: "crops", k: "밭에 심은 것", s: "They wandered off into other people's crops." },
+            { w: "Meanwhile", k: "그러는 사이", s: "Meanwhile no new clouds were hung in the sky." },
+            { w: "fainter (faint)", k: "더 흐릿한", s: "The sunsets and the clouds grew fainter and fainter." },
+            { w: "by the day", k: "날마다", s: "The sky grew duller by the day." }
+        ],
+        "05-anger.webp": [
+            { w: "At last", k: "마침내", s: "At last the Jade Emperor was angry." },
+            { w: "called ~ before him", k: "불러 세웠다", s: "He called the two of them before him." },
+            { w: "idle", k: "게으름 피우다", s: "I matched you two so you would work well, not so you would idle!" },
+            { w: "grey", k: "잿빛인", s: "Look at the sky. It has been grey for days!" },
+            { w: "trembled (tremble)", k: "부르르 떨렸다", s: "The Jade Emperor's beard trembled." },
+            { w: "Forgive us", k: "용서해 주십시오", s: "Forgive us! We were wrong!" },
+            { w: "knelt down (kneel)", k: "무릎을 꿇었다", s: "Gyeonu and Jiknyeo knelt down where they stood." },
+            { w: "one more chance", k: "한 번만 더", s: "We will not do it again. Give us one more chance." },
+            { w: "made up his mind", k: "마음을 정했다", s: "He had already made up his mind." }
+        ],
+        "06-parted.webp": [
+            { w: "live apart", k: "따로 살다", s: "From today you live apart, on either side of the river." },
+            { w: "on either side", k: "양쪽에", s: "on either side of the river" },
+            { w: "and no more", k: "그뿐이다", s: "You may meet one day a year, on Chilseok, and no more." },
+            { w: "the last of my kindness", k: "나의 마지막 정", s: "Letting you meet at all is the last of my kindness." },
+            { w: "were parted (part)", k: "갈라졌다", s: "The two were parted, one on this side and one on that." },
+            { w: "Reach out as they might", k: "손을 뻗어도", s: "Reach out as they might, they could not touch each other." },
+            { w: "swallowed (swallow)", k: "묻어 버렸다", s: "the water swallowed the sound" },
+            { w: "no way at all", k: "아무 방법도 없는", s: "There was no way at all across that wide river." }
+        ],
+        "07-year.webp": [
+            { w: "drove (drive)", k: "몰았다", s: "From that day Gyeonu drove his cattle again" },
+            { w: "wove (weave)", k: "베를 짰다", s: "Jiknyeo wove again" },
+            { w: "put on flesh", k: "살이 올랐다", s: "The cattle put on flesh and the loom sounded once more." },
+            { w: "once more", k: "다시", s: "the loom sounded once more" },
+            { w: "kept looking (keep)", k: "자꾸 바라보았다", s: "in the middle of work, they kept looking towards the river" },
+            { w: "deepened (deepen)", k: "깊어졌다", s: "Spring went by and the summer deepened." },
+            { w: "the days left", k: "남은 날", s: "Gyeonu counted the days left on his fingers" },
+            { w: "the one day in a year", k: "일 년에 딱 하루", s: "the seventh day of the seventh moon came, the one day in a year" }
+        ],
+        "08-river.webp": [
+            { w: "at one go", k: "한달음에", s: "The two ran for the bank of the Milky Way at one go." },
+            { w: "bank", k: "강가", s: "ran for the bank of the Milky Way" },
+            { w: "their breath caught", k: "숨이 턱에 찼다", s: "They ran till their breath caught." },
+            { w: "My dear", k: "여보", s: "My dear, I am here!" },
+            { w: "far too wide", k: "너무나 넓은", s: "But the Milky Way was far too wide." },
+            { w: "taken away (take)", k: "치워졌다", s: "The bridge had already been taken away." },
+            { w: "did not carry", k: "닿지 않았다", s: "Shout as loud as they could, their voices did not carry." },
+            { w: "sank down (sink)", k: "주저앉았다", s: "They sank down on the bank and did nothing but cry." },
+            { w: "did nothing but ~", k: "~하기만 했다", s: "did nothing but cry" }
+        ],
+        "09-birds.webp": [
+            { w: "reached (reach)", k: "닿았다", s: "The sound of that crying passed the sky and reached the earth." },
+            { w: "all night", k: "밤새", s: "it did not stop all night" },
+            { w: "Magpies", k: "까치", s: "Magpies and crows tilted their heads." },
+            { w: "crows", k: "까마귀", s: "Magpies and crows tilted their heads." },
+            { w: "tilted their heads", k: "고개를 갸웃했다", s: "Magpies and crows tilted their heads." },
+            { w: "the reason", k: "사정", s: "When the birds heard the reason they looked at one another." },
+            { w: "too sad to bear", k: "딱하기 그지없는", s: "Not to meet even one day in a year seemed too sad to bear." },
+            { w: "What if ~?", k: "~하면 어떨까?", s: "What if we made them a bridge?" },
+            { w: "All at once", k: "한꺼번에", s: "All at once the birds spread their wings." }
+        ],
+        "10-bridge.webp": [
+            { w: "in the land", k: "온 나라의", s: "Every magpie and crow in the land flew up into the sky at once." },
+            { w: "enough to ~", k: "~할 만큼 많은", s: "There were enough of them to turn the sky black." },
+            { w: "beating of their wings", k: "날갯짓 소리", s: "The beating of their wings was loud as thunder." },
+            { w: "loud as thunder", k: "천둥 치듯 요란한", s: "The beating of their wings was loud as thunder." },
+            { w: "heads together", k: "머리를 맞대고", s: "Over the Milky Way they gathered, heads together" },
+            { w: "in a long line", k: "긴 줄로", s: "they gathered, heads together, and stood in a long line" },
+            { w: "gripped (grip)", k: "물었다", s: "They gripped one another's beaks and laid wing against wing." },
+            { w: "beaks", k: "부리", s: "They gripped one another's beaks" },
+            { w: "wing against wing", k: "날개를 맞대고", s: "laid wing against wing" },
+            { w: "says just what it is", k: "이름 그대로다", s: "The name says just what it is." }
+        ],
+        "11-reunion.webp": [
+            { w: "stepped on ~", k: "밟고 갔다", s: "Gyeonu and Jiknyeo stepped on the birds' backs" },
+            { w: "swayed (sway)", k: "흔들렸다", s: "The backs under their feet swayed a little." },
+            { w: "set their beaks", k: "이를 악물었다", s: "Still the birds set their beaks and did not budge." },
+            { w: "did not budge", k: "꿈쩍하지 않았다", s: "the birds set their beaks and did not budge" },
+            { w: "the last of the way", k: "남은 길을", s: "The two of them ran the last of the way to each other." },
+            { w: "have missed you (miss)", k: "보고 싶었다", s: "I have missed you." },
+            { w: "one night only", k: "하룻밤뿐인", s: "But the meeting was one night only." },
+            { w: "lightened (lighten)", k: "동이 텄다", s: "As the sky lightened the birds began to settle." },
+            { w: "settle", k: "내려앉다", s: "the birds began to settle, one by one" },
+            { w: "running out", k: "다해 가는", s: "Their strength was running out." }
+        ],
+        "12-rain.webp": [
+            { w: "Turning away", k: "돌아서면서", s: "Turning away, both Gyeonu and Jiknyeo cried aloud." },
+            { w: "cried aloud", k: "소리 내어 울었다", s: "both Gyeonu and Jiknyeo cried aloud" },
+            { w: "raindrops", k: "빗방울", s: "The raindrops that fell that Chilseok were fat and warm." },
+            { w: "fat", k: "굵은", s: "The raindrops were fat and warm." },
+            { w: "That is why ~", k: "그래서 ~인 것이다", s: "That, they say, is why it often rains around Chilseok." },
+            { w: "go thin", k: "듬성듬성해진다", s: "the heads of magpies and crows go thin" },
+            { w: "Well they might", k: "그럴 만도 하다", s: "Well they might, after standing all night" },
+            { w: "Even so", k: "그래도", s: "Even so, the birds fly up again on that day every year." },
+            { w: "Nobody tells them to", k: "누가 시키지 않아도", s: "Nobody tells them to. They gather and go." }
+        ],
+        "after": [
+            { w: "at the speed of light", k: "빛의 빠르기로", s: "Even at the speed of light the trip takes sixteen years." },
+            { w: "the distance", k: "그 거리", s: "Old people did not know the distance" },
+            { w: "lying between", k: "사이에 놓인", s: "they could see the Milky Way lying between them" },
+            { w: "look their closest", k: "가장 가까워 보인다", s: "those stars look their closest" },
+            { w: "was hung on ~ (hang)", k: "~에 붙여 두었다", s: "this story was hung on it" },
+            { w: "punishment", k: "벌", s: "That is why the punishment is tied to work." },
+            { w: "is tied to ~", k: "~과 이어져 있다", s: "the punishment is tied to work" },
+            { w: "rainy season", k: "장마", s: "That time of year really is the end of our rainy season." },
+            { w: "theirs to do", k: "제 몫의", s: "the work that was theirs to do" },
+            { w: "lost in ~", k: "~에 빠져서", s: "because you were lost in something you loved" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌌',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "The two stars really are far apart. Even at the speed of light the trip takes sixteen years. Old people did not know the distance, but they could see the Milky Way lying between them.",
+                    "Once a year, around the seventh day of the seventh moon, those stars look their closest. So that day was named Chilseok, and this story was hung on it.",
+                    "That is why the punishment is tied to work. The one who drove cattle and the one who wove were each sent back to their own place.",
+                    "Rain around Chilseok was said to be the tears of two people meeting. That time of year really is the end of our rainy season."
+                ],
+                right: [
+                    "The Jade Emperor did not part the two for loving each other. He parted them because loving each other made them drop the work that was theirs to do.",
+                    "A caring heart and a day's work are both to be kept. Neither one excuses letting go of the other.",
+                    "Have you ever missed something you had to do because you were lost in something you loved?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "견우가 하던 일은 무엇인가요?", choices: ["베를 짜는 일", "소를 돌보는 일", "별을 세는 일"], answer: 1 },
     { q: "직녀가 하던 일은 무엇인가요?", choices: ["소를 치는 일", "밭을 가는 일", "베를 짜는 일"], answer: 2 },

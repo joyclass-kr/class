@@ -232,6 +232,435 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🧠",
+        art: "cover.webp",
+        title: "The Clever Boy",
+        intro: [
+            "The Clever Boy is an oral tale with no known author. It belongs to the kind where a child solves what the grown-ups cannot.",
+            "Its three riddles turn up again and again in old Korean tales. A rope of ash, a thread through a bent bead, the two ends of a log.",
+            "The ant-and-honey trick is in the old records too. Tie a thread to an ant and put honey at the far hole."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · A Rope of Ash",
+            beats: [
+                {
+                    art: "01-boy.webp",
+                    emoji: "🧒",
+                    left: [
+                        "In a certain town long ago lived a boy famous for his wits. He was just twelve years old.",
+                        "He had lost his parents early and lived with his uncle. The house was very poor.",
+                        "He had never been taught to read.",
+                        "Even so he solved what ten grown-ups could not."
+                    ],
+                    right: [
+                        "When he went to the market the grown-ups caught hold of him.",
+                        { t: "\"Boy, work this sum out for me.\"", v: "man" },
+                        { t: "\"Could you tell where our cow has gone too?\"", v: "man" },
+                        "Each time the boy grinned and gave them an answer.",
+                        { t: "\"That head of his is really something,\" they said.", v: "man" }
+                    ]
+                },
+                {
+                    art: "02-envoy.webp",
+                    emoji: "📜",
+                    left: [
+                        "One day an envoy came from the king of the next country.",
+                        "The officials stood in rows in the magistrate's yard.",
+                        "The envoy unrolled a scroll as long as he was tall.",
+                        { t: "\"Here are three problems.\"", v: "man" },
+                        "The yard went quiet."
+                    ],
+                    right: [
+                        { t: "\"Solve them all in three days, or your country has no wise man in it.\"", v: "man" },
+                        "There was a sneer in the envoy's voice.",
+                        "The magistrate's face set hard. His officers only glanced at one another.",
+                        "Not one of them stepped forward."
+                    ]
+                },
+                {
+                    art: "03-first.webp",
+                    emoji: "🪢",
+                    left: [
+                        "One officer cleared his throat and read the first problem.",
+                        { t: "\"Bring me a rope twisted out of ash.\"", v: "man" },
+                        "The officer who read it did not understand either, and looked again.",
+                        "Ash. The stuff that crumbles the moment you hold it."
+                    ],
+                    right: [
+                        "The yard buzzed like a poked beehive.",
+                        { t: "\"Twist a rope out of ash?\"", v: "man" },
+                        { t: "\"You cannot even pick ash up!\"", v: "man" },
+                        { t: "\"That is not something to ask of a person.\"", v: "man" },
+                        "The officers only looked at one another. Not one hand went up."
+                    ]
+                },
+                {
+                    art: "04-solve1.webp",
+                    emoji: "🔥",
+                    left: [
+                        "Two days went by and nobody had an answer. The magistrate did not sleep.",
+                        "Then the twelve-year-old came into the yard with a bundle of straw.",
+                        { t: "\"What is that little one going to do?\"", v: "man" },
+                        "The boy set the bundle down in the middle of the yard."
+                    ],
+                    right: [
+                        "He twisted the straw into a rope, thick and very tight.",
+                        "He laid it on a tray and set light to it.",
+                        "Sssss — the fire crept slowly along the rope.",
+                        "When the fire went out, the ash lay there in the shape of a rope.",
+                        "People came crowding in from every side."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Bead with Nine Bends",
+            beats: [
+                {
+                    art: "05-second.webp",
+                    emoji: "🔵",
+                    left: [
+                        "The envoy's eyes went round. He cleared his throat once or twice.",
+                        { t: "\"Very well. The second problem, then.\"", v: "man" },
+                        "His voice was lower than before, and the sneer was gone.",
+                        "He laid a small smooth bead on his palm."
+                    ],
+                    right: [
+                        "The bead was the size of a chestnut, so shiny the light slid off it.",
+                        { t: "\"The hole inside this bead bends nine times.\"", v: "man" },
+                        { t: "\"Put a thread through it.\"", v: "man" },
+                        "The envoy held out a single thread.",
+                        "It was as fine as a hair."
+                    ]
+                },
+                {
+                    art: "06-stuck.webp",
+                    emoji: "😖",
+                    left: [
+                        "The grown-ups rushed at it by turns. Not one of them would give way.",
+                        "They pushed the thread in, poked a thin cane in, blew at it.",
+                        "One man wet the thread and tried that.",
+                        "But the thread never got past the first bend."
+                    ],
+                    right: [
+                        "Push it in and it came back out; push again and out it came again.",
+                        "They did nothing else till the sun went low.",
+                        { t: "\"This is not a thing a person can do.\"", v: "man" },
+                        "Sweat stood on the magistrate's forehead.",
+                        "The envoy folded his arms and watched them at it."
+                    ]
+                },
+                {
+                    art: "07-ant.webp",
+                    emoji: "🐜",
+                    left: [
+                        "The boy squatted down in a corner of the yard.",
+                        "Everyone thought he had given up.",
+                        "But the boy was looking hard at the ground.",
+                        "Then he gently picked up an ant that was crawling by.",
+                        "The ant kicked its legs about."
+                    ],
+                    right: [
+                        "The boy tied the fine thread round the ant's waist, very carefully.",
+                        "The thread was thinner even than the ant's waist.",
+                        { t: "\"Hush. Stand still, all of you, and do not even breathe.\"", v: "boy" },
+                        "People craned their necks to look. Not a breath was heard."
+                    ]
+                },
+                {
+                    art: "08-honey.webp",
+                    emoji: "🍯",
+                    left: [
+                        "The boy dabbed a little honey at one hole of the bead.",
+                        "Then he set the ant softly at the hole on the other side. In it went.",
+                        "The smell of honey spread through the hole.",
+                        "One, two, three... the boy counted on his fingers."
+                    ],
+                    right: [
+                        "The yard went dead quiet. Everyone watched the bead.",
+                        "The ant passed one bend, and two, and three.",
+                        "Then a black feeler poked out of the hole on the other side.",
+                        { t: "\"It's out! It's out!\"", v: "man" },
+                        "The thread was through the bead."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Which End of the Log",
+            beats: [
+                {
+                    art: "09-third.webp",
+                    emoji: "🪵",
+                    left: [
+                        "The envoy's face reddened. He looked at the boy differently now.",
+                        { t: "\"The last problem!\"", v: "man" },
+                        "His voice was far louder than before. He did not mean to lose.",
+                        "He brought out a log with the bark stripped clean off."
+                    ],
+                    right: [
+                        "It was thick enough that a man had to get both arms round it.",
+                        { t: "\"Tell me which end of this tree was the top.\"", v: "man" },
+                        "It was the same thickness everywhere, so there was no telling.",
+                        "The officers rolled it this way and that, and it came to the same thing."
+                    ]
+                },
+                {
+                    art: "10-water.webp",
+                    emoji: "💧",
+                    left: [
+                        "The boy asked for a tub filled to the top with water.",
+                        "Four strong men brought it in, groaning. The water slopped over.",
+                        "The boy laid the log quietly down into the water.",
+                        "Everybody held their breath and watched it."
+                    ],
+                    right: [
+                        "After a long while one end of it began to tip.",
+                        "Slowly, very slowly, it went down.",
+                        { t: "\"The root end is closer grained and heavier.\"", v: "boy" },
+                        { t: "\"The end that sinks is the bottom.\"", v: "boy" },
+                        "The boy pointed at it. The envoy's mouth fell open."
+                    ]
+                },
+                {
+                    art: "11-bow.webp",
+                    emoji: "🙇",
+                    left: [
+                        "For a long time the envoy could not say anything at all.",
+                        "His face went red, then white. His fingertips shook.",
+                        "Then he bowed low before the twelve-year-old.",
+                        "The yard went as quiet as if water had been poured over it."
+                    ],
+                    right: [
+                        { t: "\"There is a wise man in this country.\"", v: "man" },
+                        "The envoy's voice was very respectful now.",
+                        { t: "\"I shall go back and say so.\"", v: "man" },
+                        "A cheer went up all across the yard.",
+                        "The magistrate ran over and caught the boy by both hands."
+                    ]
+                },
+                {
+                    art: "12-school.webp",
+                    emoji: "📖",
+                    left: [
+                        "The magistrate called the boy over, ready to give him gold or silk.",
+                        { t: "\"Ask for anything. You shall have your reward.\"", v: "old" },
+                        "Everyone looked at the boy's mouth, wondering what he would ask for.",
+                        "The boy thought for a long while, then spoke."
+                    ],
+                    right: [
+                        { t: "\"Please build our village a school where we can learn to read.\"", v: "boy" },
+                        "The magistrate opened his eyes wide.",
+                        { t: "\"Other children want to learn as well as me.\"", v: "boy" },
+                        "The boy had never been taught to read. And he asked for a school.",
+                        "The next spring a school stood in that village."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What was the envoy's first problem?", choices: ["Threading a bent bead", "Twisting a rope of ash", "Telling a log's ends apart"], answer: 1 },
+        { q: "How did the boy make the rope of ash?", choices: ["Rolled a rope in ash", "Painted a rope with lye", "Burned a twisted rope"], answer: 2 },
+        { q: "What did he use to thread the bent bead?", choices: ["An ant and honey", "A thin cane", "A bundle of straw"], answer: 0 },
+        { q: "How did he tell the two ends of the log apart?", choices: ["By weighing it", "By stripping the bark", "By putting it in water"], answer: 2 },
+        { q: "What did the envoy do at the end?", choices: ["Bowed low", "Unrolled a scroll", "Cleared his throat"], answer: 0 },
+        { q: "What did the boy ask for as his reward?", choices: ["Gold and silk for himself", "A school for the village", "A cow for his uncle"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "A twelve-year-old solved what many grown-ups could not, so seeing it differently can beat knowing more.",
+                "He used an ant and some honey, so using what is already there beats making something out of nothing.",
+                "He asked for a school as his reward, so he was thinking of the next child before his own share.",
+                "The boy ran to the office the day the envoy named the time limit, so he knew when to step forward."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "oral tale", k: "구전 설화", s: "The Clever Boy is an oral tale with no known author." },
+            { w: "belongs to (belong)", k: "~ 갈래에 든다", s: "It belongs to the kind where a child solves what the grown-ups cannot." },
+            { w: "riddles", k: "어려운 문제", s: "Its three riddles turn up again and again in old Korean tales." },
+            { w: "turn up", k: "나온다", s: "Its three riddles turn up again and again" },
+            { w: "bent", k: "굽은", s: "a thread through a bent bead" },
+            { w: "the old records", k: "옛 기록", s: "The ant-and-honey trick is in the old records too." },
+            { w: "the far hole", k: "반대쪽 구멍", s: "put honey at the far hole" }
+        ],
+        "01-boy.webp": [
+            { w: "famous for ~", k: "~로 이름난", s: "a boy famous for his wits" },
+            { w: "wits", k: "꾀", s: "a boy famous for his wits" },
+            { w: "early", k: "일찍", s: "He had lost his parents early and lived with his uncle." },
+            { w: "had never been taught", k: "배운 적이 없었다", s: "He had never been taught to read." },
+            { w: "Even so", k: "그런데도", s: "Even so he solved what ten grown-ups could not." },
+            { w: "caught hold of ~", k: "붙들었다", s: "the grown-ups caught hold of him" },
+            { w: "sum", k: "셈", s: "Boy, work this sum out for me." },
+            { w: "grinned (grin)", k: "씩 웃었다", s: "Each time the boy grinned and gave them an answer." },
+            { w: "really something", k: "정말 대단한", s: "That head of his is really something." }
+        ],
+        "02-envoy.webp": [
+            { w: "envoy", k: "사신", s: "One day an envoy came from the king of the next country." },
+            { w: "officials", k: "관리들", s: "The officials stood in rows in the magistrate's yard." },
+            { w: "in rows", k: "죽 늘어서서", s: "The officials stood in rows" },
+            { w: "magistrate", k: "원님", s: "in the magistrate's yard" },
+            { w: "unrolled (unroll)", k: "척 펼쳤다", s: "The envoy unrolled a scroll as long as he was tall." },
+            { w: "scroll", k: "두루마리", s: "The envoy unrolled a scroll" },
+            { w: "sneer", k: "비웃음", s: "There was a sneer in the envoy's voice." },
+            { w: "set hard (set)", k: "굳어졌다", s: "The magistrate's face set hard." },
+            { w: "stepped forward", k: "나섰다", s: "Not one of them stepped forward." }
+        ],
+        "03-first.webp": [
+            { w: "cleared his throat", k: "목청을 가다듬었다", s: "One officer cleared his throat and read the first problem." },
+            { w: "twisted out of ~", k: "~로 꼰", s: "Bring me a rope twisted out of ash." },
+            { w: "ash", k: "재", s: "a rope twisted out of ash" },
+            { w: "either", k: "~도 역시 아니다", s: "The officer who read it did not understand either." },
+            { w: "crumbles (crumble)", k: "바스러진다", s: "The stuff that crumbles the moment you hold it." },
+            { w: "buzzed (buzz)", k: "술렁였다", s: "The yard buzzed like a poked beehive." },
+            { w: "a poked beehive", k: "쑤신 벌집", s: "The yard buzzed like a poked beehive." },
+            { w: "to ask of a person", k: "사람더러 하라고 할", s: "That is not something to ask of a person." }
+        ],
+        "04-solve1.webp": [
+            { w: "went by (go by)", k: "지났다", s: "Two days went by and nobody had an answer." },
+            { w: "bundle of straw", k: "짚 한 단", s: "the twelve-year-old came into the yard with a bundle of straw" },
+            { w: "set ~ down", k: "내려놓았다", s: "The boy set the bundle down in the middle of the yard." },
+            { w: "twisted (twist)", k: "꼬았다", s: "He twisted the straw into a rope, thick and very tight." },
+            { w: "tray", k: "쟁반", s: "He laid it on a tray and set light to it." },
+            { w: "set light to ~", k: "불을 붙였다", s: "He laid it on a tray and set light to it." },
+            { w: "crept (creep)", k: "기어갔다", s: "the fire crept slowly along the rope" },
+            { w: "in the shape of ~", k: "~ 모양 그대로", s: "the ash lay there in the shape of a rope" },
+            { w: "came crowding in", k: "우르르 모여들었다", s: "People came crowding in from every side." }
+        ],
+        "05-second.webp": [
+            { w: "went round", k: "휘둥그레졌다", s: "The envoy's eyes went round." },
+            { w: "once or twice", k: "두어 번", s: "He cleared his throat once or twice." },
+            { w: "Very well", k: "좋소", s: "Very well. The second problem, then." },
+            { w: "palm", k: "손바닥", s: "He laid a small smooth bead on his palm." },
+            { w: "bead", k: "구슬", s: "He laid a small smooth bead on his palm." },
+            { w: "the size of ~", k: "~만 한 크기의", s: "The bead was the size of a chestnut" },
+            { w: "chestnut", k: "밤톨", s: "The bead was the size of a chestnut" },
+            { w: "slid off (slide)", k: "미끄러졌다", s: "so shiny the light slid off it" },
+            { w: "as fine as a hair", k: "머리카락처럼 가는", s: "It was as fine as a hair." }
+        ],
+        "06-stuck.webp": [
+            { w: "by turns", k: "번갈아", s: "The grown-ups rushed at it by turns." },
+            { w: "give way", k: "물러서다", s: "Not one of them would give way." },
+            { w: "poked (poke)", k: "쑤셔 넣었다", s: "They pushed the thread in, poked a thin cane in" },
+            { w: "cane", k: "가는 대", s: "poked a thin cane in" },
+            { w: "wet (wet)", k: "적셨다", s: "One man wet the thread and tried that." },
+            { w: "got past ~", k: "넘어갔다", s: "But the thread never got past the first bend." },
+            { w: "went low (go)", k: "기울었다", s: "They did nothing else till the sun went low." },
+            { w: "Sweat stood", k: "땀이 맺혔다", s: "Sweat stood on the magistrate's forehead." },
+            { w: "folded his arms", k: "팔짱을 꼈다", s: "The envoy folded his arms and watched them at it." }
+        ],
+        "07-ant.webp": [
+            { w: "squatted down (squat)", k: "쪼그리고 앉았다", s: "The boy squatted down in a corner of the yard." },
+            { w: "given up (give up)", k: "포기했다", s: "Everyone thought he had given up." },
+            { w: "crawling (crawl)", k: "기어가는", s: "he gently picked up an ant that was crawling by" },
+            { w: "kicked its legs about", k: "다리를 버둥거렸다", s: "The ant kicked its legs about." },
+            { w: "round the ant's waist", k: "개미 허리에", s: "The boy tied the fine thread round the ant's waist." },
+            { w: "thinner even than ~", k: "~보다도 더 가는", s: "The thread was thinner even than the ant's waist." },
+            { w: "Hush", k: "쉿", s: "Hush. Stand still, all of you, and do not even breathe." },
+            { w: "craned their necks", k: "목을 길게 뺐다", s: "People craned their necks to look." }
+        ],
+        "08-honey.webp": [
+            { w: "dabbed (dab)", k: "살짝 발랐다", s: "The boy dabbed a little honey at one hole of the bead." },
+            { w: "softly", k: "살그머니", s: "he set the ant softly at the hole on the other side" },
+            { w: "In it went", k: "쏙 들어갔다", s: "Then he set the ant softly at the hole. In it went." },
+            { w: "spread (spread)", k: "퍼졌다", s: "The smell of honey spread through the hole." },
+            { w: "counted on his fingers", k: "손가락으로 헤아렸다", s: "the boy counted on his fingers" },
+            { w: "dead quiet", k: "쥐 죽은 듯 조용한", s: "The yard went dead quiet." },
+            { w: "bend", k: "굽이", s: "The ant passed one bend, and two, and three." },
+            { w: "feeler", k: "더듬이", s: "Then a black feeler poked out of the hole" },
+            { w: "was through ~", k: "꿰여 있었다", s: "The thread was through the bead." }
+        ],
+        "09-third.webp": [
+            { w: "reddened (redden)", k: "붉어졌다", s: "The envoy's face reddened." },
+            { w: "differently", k: "달리", s: "He looked at the boy differently now." },
+            { w: "did not mean to ~", k: "~할 생각이 없었다", s: "He did not mean to lose." },
+            { w: "bark", k: "나무껍질", s: "He brought out a log with the bark stripped clean off." },
+            { w: "stripped clean off", k: "말끔히 벗겨진", s: "a log with the bark stripped clean off" },
+            { w: "thick enough that ~", k: "~할 만큼 굵은", s: "It was thick enough that a man had to get both arms round it." },
+            { w: "no telling", k: "알 수가 없는", s: "It was the same thickness everywhere, so there was no telling." },
+            { w: "came to the same thing", k: "그게 그것이었다", s: "The officers rolled it this way and that, and it came to the same thing." }
+        ],
+        "10-water.webp": [
+            { w: "tub", k: "통", s: "The boy asked for a tub filled to the top with water." },
+            { w: "filled to the top", k: "가득 채운", s: "a tub filled to the top with water" },
+            { w: "groaning (groan)", k: "낑낑거리며", s: "Four strong men brought it in, groaning." },
+            { w: "slopped over (slop)", k: "찰랑찰랑 넘쳤다", s: "The water slopped over." },
+            { w: "held their breath", k: "숨을 죽였다", s: "Everybody held their breath and watched it." },
+            { w: "tip", k: "기울다", s: "After a long while one end of it began to tip." },
+            { w: "closer grained", k: "더 촘촘한", s: "The root end is closer grained and heavier." },
+            { w: "sinks (sink)", k: "가라앉는다", s: "The end that sinks is the bottom." },
+            { w: "mouth fell open", k: "입이 딱 벌어졌다", s: "The envoy's mouth fell open." }
+        ],
+        "11-bow.webp": [
+            { w: "For a long time", k: "한참 동안", s: "For a long time the envoy could not say anything at all." },
+            { w: "fingertips", k: "손끝", s: "His fingertips shook." },
+            { w: "bowed low", k: "정중히 고개를 숙였다", s: "Then he bowed low before the twelve-year-old." },
+            { w: "as if ~ had been poured", k: "~을 끼얹은 듯", s: "The yard went as quiet as if water had been poured over it." },
+            { w: "respectful", k: "공손한", s: "The envoy's voice was very respectful now." },
+            { w: "say so", k: "그대로 아뢰다", s: "I shall go back and say so." },
+            { w: "A cheer went up", k: "함성이 터졌다", s: "A cheer went up all across the yard." },
+            { w: "caught ~ by both hands", k: "두 손을 덥석 잡았다", s: "The magistrate ran over and caught the boy by both hands." }
+        ],
+        "12-school.webp": [
+            { w: "ready to ~", k: "~할 참으로", s: "The magistrate called the boy over, ready to give him gold or silk." },
+            { w: "silk", k: "비단", s: "ready to give him gold or silk" },
+            { w: "reward", k: "상", s: "Ask for anything. You shall have your reward." },
+            { w: "wondering (wonder)", k: "궁금해하며", s: "Everyone looked at the boy's mouth, wondering what he would ask for." },
+            { w: "school", k: "서당", s: "Please build our village a school where we can learn to read." },
+            { w: "as well as me", k: "저 말고도", s: "Other children want to learn as well as me." },
+            { w: "The next spring", k: "이듬해 봄", s: "The next spring a school stood in that village." }
+        ],
+        "after": [
+            { w: "all over the world", k: "세계 곳곳에", s: "Tales of a child solving a hard problem are found all over the world." },
+            { w: "are stuck (stick)", k: "막혀 있다", s: "Where the grown-ups are all stuck, one child gives the answer." },
+            { w: "learning", k: "학식", s: "What the child uses is not strength and not learning." },
+            { w: "outside the frame", k: "틀 밖에서", s: "It is looking from outside the frame the asker set up." },
+            { w: "cannot be solved", k: "풀 수 없다", s: "the problem of twisting ash into rope cannot be solved" },
+            { w: "turned ~ round", k: "순서를 뒤집었다", s: "The boy turned the order round." },
+            { w: "the order of doing", k: "하는 차례", s: "The problem stayed the same; the order of doing it changed." },
+            { w: "the moment ~", k: "~하는 순간", s: "the moment you decide it cannot be done, the road closes" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🧠',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Tales of a child solving a hard problem are found all over the world. The shape is always the same. Where the grown-ups are all stuck, one child gives the answer.",
+                    "What the child uses in those tales is not strength and not learning. It is looking from outside the frame the asker set up.",
+                    "Look again and the problem of twisting ash into rope cannot be solved. Ash will not stay in your hand. So the boy turned the order round.",
+                    "He twisted the rope first and burned it afterwards. The problem stayed exactly the same; the order of doing it changed."
+                ],
+                right: [
+                    "None of the three problems could be done by strength or by skill. The boy only thought about them differently.",
+                    "The moment you decide a thing cannot be done, the road closes. The moment you look at it from another side, the road opens.",
+                    "Have you ever solved another way something you thought could not be done?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "사신이 낸 첫 번째 문제는 무엇인가요?", choices: ["굽은 구슬에 실 꿰기", "재로 새끼줄 꼬기", "통나무 위아래 가리기"], answer: 1 },
     { q: "소년은 재 새끼줄을 어떻게 만들었나요?", choices: ["새끼를 재에 굴려서", "새끼에 잿물을 발라서", "꼰 새끼를 태워서"], answer: 2 },
