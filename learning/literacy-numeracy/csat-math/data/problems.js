@@ -67,6 +67,10 @@
     {
       id: "2023-suneung", year: 2023, round: "수능", label: "2023학년도 수능",
       source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500234&m=0403&s=suneung"
+    },
+    {
+      id: "2023-09", year: 2023, round: "9월", label: "2023학년도 9월",
+      source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500236&m=0403&s=suneung"
     }
   ];
 
@@ -1703,6 +1707,141 @@
       short: true,
       answer: 13,
       help: R`(가)를 옮기면 \(x\ne 1\)일 때 \(\dfrac{f(x)-f(1)}{x-1}=f'\bigl(g(x)\bigr)\)다. 곧 왼쪽은 \(x\)와 \(1\) 사이의 평균변화율이고, 오른쪽은 어느 한 점에서의 순간변화율이다. 평균값 정리가 말하는 그 점이 바로 \(g(x)\)라는 뜻이다.`
+    },
+    {
+      id: "2023-09-9", exam: "2023-09", no: 9, score: 4,
+      units: ["m1-trig"], memo: "같은 주기를 가진 두 코사인 곡선",
+      body: R`닫힌구간 \([0,\,12]\)에서 정의된 두 함수
+        \[f(x)=\cos\frac{\pi x}{6},\qquad g(x)=-3\cos\frac{\pi x}{6}-1\]
+        이 있다. 곡선 \(y=f(x)\)와 직선 \(y=k\)가 만나는 두 점의
+        \(x\)좌표를 \(\alpha_{1}\), \(\alpha_{2}\)라 할 때, \(\bigl|\alpha_{1}-\alpha_{2}\bigr|=8\)이다. 곡선 \(y=g(x)\)와
+        직선 \(y=k\)가 만나는 두 점의 \(x\)좌표를 \(\beta_{1}\), \(\beta_{2}\)라 할 때,
+        \(\bigl|\beta_{1}-\beta_{2}\bigr|\)의 값은? (단, \(k\)는 \(-1<k<1\)인 상수이다.)`,
+      choices: [R`\(3\)`, R`\(\dfrac{7}{2}\)`, R`\(4\)`, R`\(\dfrac{9}{2}\)`, R`\(5\)`],
+      answer: 3,
+      help: R`두 함수는 주기가 \(12\)로 같고 \([0,\,12]\)에서 \(x=6\)에 대하여 대칭이다. 그래서 가로선이 만나는 두 점은 \(6\)을 가운데 두고 같은 거리만큼 떨어져 있고, \(\bigl|\alpha_{1}-\alpha_{2}\bigr|=8\)에서 \(k\)가 곧바로 정해진다.`
+    },
+    {
+      id: "2023-09-10", exam: "2023-09", no: 10, score: 4,
+      units: ["m2-integ"], memo: "고정된 점과의 거리",
+      body: R`수직선 위의 점 \(\mathrm{A}(6)\)과 시각 \(t=0\)일 때 원점을 출발하여
+        이 수직선 위를 움직이는 점 \(\mathrm{P}\)가 있다. 시각 \(t\,(t\ge 0)\)에서의
+        점 \(\mathrm{P}\)의 속도 \(v(t)\)를
+        \[v(t)=3t^{2}+at\quad(a>0)\]
+        이라 하자. 시각 \(t=2\)에서 점 \(\mathrm{P}\)와 점 \(\mathrm{A}\) 사이의 거리가 \(10\)일 때,
+        상수 \(a\)의 값은?`,
+      choices: [R`\(1\)`, R`\(2\)`, R`\(3\)`, R`\(4\)`, R`\(5\)`],
+      answer: 4,
+      help: R`\(\mathrm{P}\)는 원점에서 출발했으므로 시각 \(2\)에서의 위치가 \(\int_{0}^{2}v\,dt=8+2a\)이고, \(\mathrm{A}\)는 고정된 \(6\)이다. 거리는 그 차의 절댓값이라 \(|2+2a|=10\)이 된다.`
+    },
+    {
+      id: "2023-09-11", exam: "2023-09", no: 11, score: 4,
+      units: ["m1-explog"], memo: "실수인 네제곱근 두 개의 곱",
+      body: R`함수 \(f(x)=-(x-2)^{2}+k\)에 대하여 다음 조건을 만족시키는
+        자연수 \(n\)의 개수가 \(2\)일 때, 상수 \(k\)의 값은?`,
+      note: [
+        R`\(\sqrt{3}^{\,f(n)}\)의 네제곱근 중 실수인 것을 모두 곱한 값이 \(-9\)이다.`
+      ],
+      choices: [R`\(8\)`, R`\(9\)`, R`\(10\)`, R`\(11\)`, R`\(12\)`],
+      answer: 2,
+      help: R`\(A=\sqrt{3}^{\,f(n)}\)은 언제나 양수이므로 네제곱근 중 실수인 것은 \(\pm A^{\frac{1}{4}}\) 둘뿐이고, 그 곱은 \(-\sqrt{A}\)다. 곧 \(-3^{\frac{f(n)}{4}}=-9\)에서 \(f(n)\)의 값이 하나로 정해진다.`
+    },
+    {
+      id: "2023-09-12", exam: "2023-09", no: 12, score: 4,
+      units: ["m2-limit"], memo: "포물선과 직선의 두 교점",
+      body: R`실수 \(t\,(t>0)\)에 대하여 직선 \(y=x+t\)와 곡선 \(y=x^{2}\)이
+        만나는 두 점을 \(\mathrm{A}\), \(\mathrm{B}\)라 하자. 점 \(\mathrm{A}\)를 지나고 \(x\)축에 평행한
+        직선이 곡선 \(y=x^{2}\)과 만나는 점 중 \(\mathrm{A}\)가 아닌 점을 \(\mathrm{C}\),
+        점 \(\mathrm{B}\)에서 선분 \(\mathrm{AC}\)에 내린 수선의 발을 \(\mathrm{H}\)라 하자.
+        \(\displaystyle\lim_{t\to 0+}\frac{\overline{\mathrm{AH}}-\overline{\mathrm{CH}}}{t}\)의 값은? (단, 점 \(\mathrm{A}\)의 \(x\)좌표는 양수이다.)`,
+      figure: "2023-09-12.webp",
+      choices: [R`\(1\)`, R`\(2\)`, R`\(3\)`, R`\(4\)`, R`\(5\)`],
+      answer: 2,
+      help: R`\(\mathrm{A}\), \(\mathrm{B}\)의 \(x\)좌표는 \(x^{2}=x+t\)의 두 근이므로 근과 계수의 관계로 합과 곱을 바로 쓸 수 있다. 그리고 \(\mathrm{C}\)는 \(\mathrm{A}\)와 \(y\)좌표가 같은 포물선 위의 다른 점이라 \(x\)좌표가 \(\mathrm{A}\)의 것의 부호를 바꾼 값이다. \(\mathrm{H}\)는 \(\mathrm{B}\)와 \(x\)좌표가 같다.`
+    },
+    {
+      id: "2023-09-13", exam: "2023-09", no: 13, score: 4,
+      units: ["m1-trig"], memo: "지름이 만드는 직각과 이웃한 각",
+      body: R`그림과 같이 선분 \(\mathrm{AB}\)를 지름으로 하는 반원의 호 \(\mathrm{AB}\)
+        위에 두 점 \(\mathrm{C}\), \(\mathrm{D}\)가 있다. 선분 \(\mathrm{AB}\)의 중점 \(\mathrm{O}\)에 대하여
+        두 선분 \(\mathrm{AD}\), \(\mathrm{CO}\)가 점 \(\mathrm{E}\)에서 만나고,
+        \[\overline{\mathrm{CE}}=4,\quad \overline{\mathrm{ED}}=3\sqrt{2},\quad \angle\mathrm{CEA}=\frac{3}{4}\pi\]
+        이다. \(\overline{\mathrm{AC}}\times\overline{\mathrm{CD}}\)의 값은?`,
+      figure: "2023-09-13.webp",
+      choices: [R`\(6\sqrt{10}\)`, R`\(10\sqrt{5}\)`, R`\(16\sqrt{2}\)`, R`\(12\sqrt{5}\)`, R`\(20\sqrt{2}\)`],
+      answer: 5,
+      help: R`\(\overline{\mathrm{AB}}\)가 지름이므로 \(\angle\mathrm{ACB}=\angle\mathrm{ADB}=\frac{\pi}{2}\)다. 그리고 \(\angle\mathrm{CEA}=\frac{3}{4}\pi\)이니 그와 이웃한 \(\angle\mathrm{CED}=\frac{\pi}{4}\)이고, 두 변 \(\overline{\mathrm{CE}}\), \(\overline{\mathrm{ED}}\)와 그 사잇각이 다 있으니 삼각형 \(\mathrm{CED}\)에서 코사인법칙을 바로 쓸 수 있다.`
+    },
+    {
+      id: "2023-09-14", exam: "2023-09", no: 14, score: 4,
+      units: ["m2-integ"], memo: "구간을 옮겨 가며 적분한 함수",
+      body: R`최고차항의 계수가 \(1\)이고 \(f(0)=0\), \(f(1)=0\)인
+        삼차함수 \(f(x)\)에 대하여 함수 \(g(t)\)를
+        \[g(t)=\int_{t}^{t+1}f(x)\,dx-\int_{0}^{1}\bigl|f(x)\bigr|\,dx\]
+        라 할 때, &lt;보기&gt;에서 옳은 것만을 있는 대로 고른 것은?`,
+      noteTitle: "보 기",
+      note: [
+        R`ㄱ. \(g(0)=0\)이면 \(g(-1)<0\)이다.`,
+        R`ㄴ. \(g(-1)>0\)이면 \(f(k)=0\)을 만족시키는 \(k<-1\)인 실수 \(k\)가 존재한다.`,
+        R`ㄷ. \(g(-1)>1\)이면 \(g(0)<-1\)이다.`
+      ],
+      choices: [R`ㄱ`, R`ㄱ, ㄴ`, R`ㄱ, ㄷ`, R`ㄴ, ㄷ`, R`ㄱ, ㄴ, ㄷ`],
+      answer: 5,
+      help: R`뒤쪽 \(\int_{0}^{1}|f|\)는 \(t\)와 무관한 상수라, \(g'(t)=f(t+1)-f(t)\)다. 그리고 \(f(0)=f(1)=0\)이고 최고차항 계수가 \(1\)이므로 \(f(x)=x(x-1)(x-c)\) 꼴이고, 남은 미지수는 \(c\) 하나뿐이다.`
+    },
+    {
+      id: "2023-09-15", exam: "2023-09", no: 15, score: 4,
+      units: ["m1-seq"], memo: "네 걸음마다 제자리로 오는 수열",
+      body: R`수열 \(\{a_{n}\}\)이 다음 조건을 만족시킨다.`,
+      note: [
+        R`(가) 모든 자연수 \(k\)에 대하여 \(a_{4k}=r^{k}\)이다. (단, \(r\)는 \(0<|r|<1\)인 상수이다.)`,
+        R`(나) \(a_{1}<0\)이고, 모든 자연수 \(n\)에 대하여 \(a_{n+1}=\begin{cases}a_{n}+3 &amp; \left(|a_{n}|<5\right)\\[4pt] -\dfrac{1}{2}a_{n} &amp; \left(|a_{n}|\ge 5\right)\end{cases}\)이다.`
+      ],
+      bodyAfter: R`\(|a_{m}|\ge 5\)를 만족시키는 \(100\) 이하의 자연수 \(m\)의 개수를 \(p\)라
+        할 때, \(p+a_{1}\)의 값은?`,
+      choices: [R`\(8\)`, R`\(10\)`, R`\(12\)`, R`\(14\)`, R`\(16\)`],
+      answer: 3,
+      help: R`(가)는 \(a_{4}=r\), \(a_{8}=r^{2}\), \(a_{12}=r^{3}\)이라는 뜻이고 \(0<|r|<1\)이라 이 값들의 크기가 \(1\)보다 작다. 그런데 (나)의 규칙은 \(|a_{n}|<5\)일 때 \(+3\)씩 키우기만 하므로, 네 걸음 만에 다시 작은 값으로 돌아오려면 그 사이에 \(|a_{n}|\ge 5\)를 만나 반으로 줄어드는 일이 있어야 한다.`
+    },
+    {
+      id: "2023-09-20", exam: "2023-09", no: 20, score: 4,
+      units: ["m2-integ", "m2-diff"], memo: "V자 그래프와 삼차곡선이 두 점에서 만남",
+      body: R`상수 \(k\,(k<0)\)에 대하여 두 함수
+        \[f(x)=x^{3}+x^{2}-x,\qquad g(x)=4|x|+k\]
+        의 그래프가 만나는 점의 개수가 \(2\)일 때,
+        두 함수의 그래프로 둘러싸인 부분의 넓이를 \(S\)라 하자.
+        \(30\times S\)의 값을 구하시오.`,
+      short: true,
+      answer: 80,
+      help: R`\(g\)는 \(x=0\)에서 꺾이는 \(V\) 모양이다. 오른쪽에서는 \(f(x)=4x+k\), 왼쪽에서는 \(f(x)=-4x+k\)를 푸는 셈인데, 삼차곡선과 직선이라 각각 최대 세 번 만날 수 있다. 만나는 점이 둘뿐이려면 한쪽에서 접해야 한다.`
+    },
+    {
+      id: "2023-09-21", exam: "2023-09", no: 21, score: 4,
+      units: ["m1-explog"], memo: "기울기가 같은 두 직선 위의 길이 비",
+      body: R`그림과 같이 곡선 \(y=2^{x}\) 위에 두 점 \(\mathrm{P}\bigl(a,\,2^{a}\bigr)\), \(\mathrm{Q}\bigl(b,\,2^{b}\bigr)\)이
+        있다. 직선 \(\mathrm{PQ}\)의 기울기를 \(m\)이라 할 때, 점 \(\mathrm{P}\)를 지나며
+        기울기가 \(-m\)인 직선이 \(x\)축, \(y\)축과 만나는 점을 각각
+        \(\mathrm{A}\), \(\mathrm{B}\)라 하고, 점 \(\mathrm{Q}\)를 지나며 기울기가 \(-m\)인 직선이
+        \(x\)축과 만나는 점을 \(\mathrm{C}\)라 하자.
+        \[\overline{\mathrm{AB}}=4\overline{\mathrm{PB}},\qquad \overline{\mathrm{CQ}}=3\overline{\mathrm{AB}}\]
+        일 때, \(90\times(a+b)\)의 값을 구하시오. (단, \(0<a<b\))`,
+      figure: "2023-09-21.webp",
+      short: true,
+      answer: 220,
+      help: R`기울기가 \(-m\)인 두 직선은 서로 평행하다. 평행한 직선 위에서는 선분의 길이 비가 \(x\)좌표 차의 비와 같으므로, \(\overline{\mathrm{AB}}=4\overline{\mathrm{PB}}\)와 \(\overline{\mathrm{CQ}}=3\overline{\mathrm{AB}}\)를 길이가 아니라 \(x\)좌표 차의 관계로 바꿔 쓸 수 있다.`
+    },
+    {
+      id: "2023-09-22", exam: "2023-09", no: 22, score: 4,
+      units: ["m2-diff"], memo: "한쪽을 점대칭으로 뒤집은 함수",
+      body: R`최고차항의 계수가 \(1\)이고 \(x=3\)에서 극댓값 \(8\)을 갖는
+        삼차함수 \(f(x)\)가 있다. 실수 \(t\)에 대하여 함수 \(g(x)\)를
+        \[g(x)=\begin{cases}f(x) &amp; (x\ge t)\\ -f(x)+2f(t) &amp; (x<t)\end{cases}\]
+        라 할 때, 방정식 \(g(x)=0\)의 서로 다른 실근의 개수를 \(h(t)\)라
+        하자. 함수 \(h(t)\)가 \(t=a\)에서 불연속인 \(a\)의 값이 두 개일 때,
+        \(f(8)\)의 값을 구하시오.`,
+      short: true,
+      answer: 58,
+      help: R`\(x<t\)에서의 \(-f(x)+2f(t)\)는 \(f\)를 점 \(\bigl(t,\,f(t)\bigr)\)에 대하여 점대칭으로 뒤집은 것이다. 곧 \(g\)의 그래프는 \(x=t\)를 경계로 오른쪽은 \(f\) 그대로, 왼쪽은 그 점을 중심으로 돌린 모양이라 \(x=t\)에서 매끄럽게 이어진다.`
     }
   ];
 
