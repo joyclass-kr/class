@@ -83,6 +83,7 @@
       return;
     }
     box.textContent = "";
+    box.appendChild(makeChip("전체", "all", state.exam === "all", DATA.exams.length + "회차"));
     DATA.exams.forEach((e) => {
       const n = countBy((p) => p.exam === e.id);
       box.appendChild(makeChip(e.label, e.id, state.exam === e.id, n));
@@ -296,7 +297,8 @@
     box.addEventListener("click", function (ev) {
       const btn = ev.target.closest(".chip");
       if (!btn) return;
-      const nextValue = state[key] === btn.dataset.value ? "all" : btn.dataset.value;
+      const val = btn.dataset.value;
+      const nextValue = state[key] === val && val !== "all" ? "all" : val;
       state[key] = nextValue;
       box.querySelectorAll(".chip").forEach((b) => {
         b.setAttribute("aria-pressed", b.dataset.value === nextValue ? "true" : "false");
