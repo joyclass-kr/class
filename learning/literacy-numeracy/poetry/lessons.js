@@ -279,6 +279,53 @@
                 "dongdong-refrain", "dongdong-month", "dongdong-alone",
                 "jeongseokga-nut", "jeongseokga-why",
                 "old-refrain-again"
+            ]),
+
+        // ── 중3 ───────────────────────────────────────────────────────
+        lesson("m3-yuksa", 9, "이육사 마지막 시들", "시간을 펼쳐 놓은 뜻",
+            ["yuksa-gwangya", "yuksa-gyomok", "yuksa-jeoljeong"],
+            [
+                "gwangya-first", "gwangya-mountain", "gwangya-now", "gwangya-seed", "gwangya-superman", "gwangya-time",
+                "gyomok-spring", "gyomok-lake",
+                "yuksa-final"
+            ]),
+        lesson("m3-dongju", 9, "윤동주의 부끄러움", "거울을 닦는 시",
+            ["dongju-chamhoerok", "dongju-sipjaga", "dongju-swipge", "dongju-seosi"],
+            [
+                "chamhoe-mirror", "chamhoe-line", "chamhoe-future", "chamhoe-polish",
+                "sipjaga-light", "sipjaga-allow",
+                "swipge-room", "swipge-shame", "swipge-hands",
+                "dongju-shame"
+            ]),
+        lesson("m3-sowol", 9, "김소월의 절규와 그리움", "눌러 참기와 목놓아 부르기",
+            ["sowol-chohon", "sowol-sakju", "sowol-jindallae"],
+            [
+                "chohon-name", "chohon-unsaid", "chohon-where", "chohon-stone", "chohon-repeat",
+                "sakju-distance", "sakju-dream", "sakju-bird",
+                "sowol-two"
+            ]),
+        lesson("m3-modern", 9, "낯선 눈으로 본 나와 고향", "가까운 것이 낯설어질 때",
+            ["leesang-geoul", "jiyong-gohyang", "inhwan-sewol"],
+            [
+                "geoul-space", "geoul-left", "geoul-meet", "geoul-worry",
+                "gohyang-not", "gohyang-cloud", "gohyang-sky",
+                "sewol-remember", "sewol-leaf",
+                "modern-strange"
+            ]),
+        lesson("m3-river", 9, "강물에 실은 마음", "흐르는 물에 얹은 뜻과 눈물",
+            ["yeongro-nongae", "jisang-songin", "wangbangyeon-cheonmalli"],
+            [
+                "nongae-colors", "nongae-refrain", "nongae-deed",
+                "songin-grass", "songin-river",
+                "river-common"
+            ]),
+        lesson("m3-gasa", 9, "가사와 어부의 노래", "길게 이어지는 옛 노래글",
+            ["geugin-sangchun", "seondo-eobu", "jeongcheol-gwandong"],
+            [
+                "sangchun-who", "sangchun-spring", "sangchun-question", "sangchun-unity",
+                "eobu-refrain", "eobu-scene", "eobu-gull",
+                "gwandong-why", "gwandong-feel", "gwandong-road",
+                "gasa-shape"
             ])
     ]);
 
@@ -288,6 +335,7 @@
         { grade: 5, label: "초등 5학년", short: "초5" },
         { grade: 6, label: "초등 6학년", short: "초6" },
         { grade: 7, label: "중학 1학년", short: "중1" },
-        { grade: 8, label: "중학 2학년", short: "중2" }
+        { grade: 8, label: "중학 2학년", short: "중2" },
+        { grade: 9, label: "중학 3학년", short: "중3" }
     ]);
 })();
