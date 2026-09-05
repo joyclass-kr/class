@@ -30,16 +30,25 @@ function assertPlaceholderArity(sql, params) {
 // user 1: homeroom teacher of class 100 (3학년 2반)
 // user 2: subject teacher (전담, 음악) at the same school
 // user 3: student in class 100
+// user 4: homeroom teacher whose class is recorded ONLY as a '담임 학급' group
+//         (no grade/class on classroom_teachers) -- the dashboard opens by groupId
 const TEACHERS = {
-  1: { school_id: 5, teacher_type: "homeroom", subject_name: null },
-  2: { school_id: 5, teacher_type: "전담", subject_name: "음악" }
+  1: { school_id: 5, teacher_type: "homeroom", subject_name: null, teacher_name: "담임" },
+  2: { school_id: 5, teacher_type: "전담", subject_name: "음악", teacher_name: "음악쌤" },
+  4: { school_id: 5, teacher_type: "homeroom", subject_name: null, teacher_name: "새담임" }
 };
 const SCHOOL_CLASSES = [
   { id: "100", grade: 3, class_number: 2, teaching: true },
   { id: "101", grade: 4, class_number: 1, teaching: false }
 ];
+const CLASS_ROWS = {
+  "100": { id: 100, grade: 3, class_number: 2 },
+  "200": { id: 200, grade: 5, class_number: 1 }
+};
 
 let sessionRows = [];
+let homeroomGroupRows = [];
+let existingClassRows = [];
 let teacherGroups = [];
 let studentGroups = [];
 let postDeleteRows = [];
@@ -57,10 +66,19 @@ function answer(sql, params) {
   if (text.includes("classroom_teachers t") && text.includes("sc.enabled = TRUE")) {
     return { rows: TEACHERS[Number(params?.[0])] ? [{ ok: 1 }] : [] };
   }
-  // classboardScope's teacher lookup
-  if (text.includes("SELECT school_id, teacher_type FROM classroom_teachers")) {
+  // classboardScope's teacher lookup (by user id or registered google email)
+  if (text.includes("FROM classroom_teachers t") && text.includes("LOWER(t.google_email)")) {
     const t = TEACHERS[Number(params?.[0])];
     return { rows: t ? [t] : [] };
+  }
+  // classIdFromHomeroomGroup: a homeroom assignment that lives only in teacher_groups
+  // (the student membership predicate also mentions group_type = 'homeroom', so key
+  //  on the teacher_user_id clause that only this lookup has)
+  if (text.includes("teacher_user_id = $1 AND group_type = 'homeroom'")) {
+    return { rows: Number(params?.[0]) === 4 ? homeroomGroupRows : [] };
+  }
+  if (text.includes("SELECT id FROM classroom_classes") && text.includes("academic_year = $2 AND grade = $3")) {
+    return { rows: existingClassRows };
   }
   // classboardScope's school-wide class list (subject teacher / admin)
   if (text.includes("EXISTS") && text.includes("school_master_timetable m")) {
@@ -80,7 +98,8 @@ function answer(sql, params) {
   }
   // single-class lookup used to label the scope
   if (text.includes("SELECT id, grade, class_number FROM classroom_classes WHERE id")) {
-    return { rows: [{ id: 100, grade: 3, class_number: 2 }] };
+    const row = CLASS_ROWS[String(params?.[0])];
+    return { rows: row ? [row] : [] };
   }
   if (text.includes("FROM classroom_classes WHERE id") && text.includes("teacher_user_id")) {
     return { rows: Number(params?.[1]) === 1 ? [{ ok: 1 }] : [] };
@@ -151,6 +170,7 @@ app.use((error, _req, res, _next) => {
 const asHomeroom = () => { sessionRows = [{ id: 1, email: "hr@x.kr", role: "teacher", display_name: "담임" }]; };
 const asSubject = () => { sessionRows = [{ id: 2, email: "sub@x.kr", role: "teacher", display_name: "음악쌤" }]; };
 const asStudent = () => { sessionRows = [{ id: 3, email: "kid@x.kr", role: "student", display_name: "학생" }]; };
+const asGroupOnlyHomeroom = () => { sessionRows = [{ id: 4, email: "new@x.kr", role: "teacher", display_name: "새담임" }]; };
 
 (async () => {
   await platform.initialize();
@@ -191,6 +211,24 @@ const asStudent = () => { sessionRows = [{ id: 3, email: "kid@x.kr", role: "stud
     const hrPost = await post("/api/classboard/posts", { content: "알림장" });
     assert.equal(hrPost.status, 200, `Expected 200, got ${hrPost.status}: ${await hrPost.clone().text()}`);
     assert.equal(String(insertedPosts[0][0]), "100", "It must default to their own class.");
+
+    // 3a. 담임 배정이 '내 학급·그룹'의 담임 학급 그룹에만 있는 교사. 대시보드는
+    //     그 그룹(groupId)으로 열리는데 게시판은 빈 채였고 글쓰기 칸도 없었다.
+    asGroupOnlyHomeroom();
+    homeroomGroupRows = [{ school_id: 5, academic_year: 2026, grade: 5, class_number: 1 }];
+    existingClassRows = [{ id: 200 }];
+    const gb = await get("/api/classboard/boards");
+    const gbBody = await gb.json();
+    assert.equal(gbBody.boards.length, 1, "그룹으로만 배정된 담임도 자기 반 게시판을 받아야 한다.");
+    assert.equal(gbBody.boards[0].label, "5학년 1반", "그룹의 학년·반이 게시판이 된다.");
+    assert.equal(gbBody.boards[0].canPost, true, "그 담임은 글을 쓸 수 있어야 한다.");
+    insertedPosts.length = 0;
+    const gp = await post("/api/classboard/posts", { content: "알림장" });
+    assert.equal(gp.status, 200, `Expected 200, got ${gp.status}: ${await gp.clone().text()}`);
+    assert.equal(String(insertedPosts[0][0]), "200", "글은 학생이 보는 같은 학급 행에 달려야 한다.");
+    homeroomGroupRows = [];
+    existingClassRows = [];
+    asHomeroom();
 
     // 3b. 동아리·방과후 게시판. 그룹을 연 교사는 그 게시판에 글을 쓸 수 있고,
     //     글은 학급이 아니라 그룹에 달린다.
