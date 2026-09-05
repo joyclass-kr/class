@@ -90,13 +90,15 @@ for (const removedId of [
 }
 assert.ok(!html.includes('class="mode-panel"') && !html.includes(' mode-panel"'), "The mode-choice screen should be gone; the lesson list is the home screen now.");
 
-assert.ok(/href="styles\.css(\?[^"]*)?"/.test(html), "Quiz stylesheet is not linked.");
-assert.ok(html.includes('src="questions.js"'), "Question bank is not linked.");
-assert.ok(html.includes('src="questions-extra.js"'), "Expanded question bank is not linked.");
-assert.ok(html.includes('src="lessons.js"'), "Lesson table is not linked.");
-assert.ok(html.includes('src="question-deck.js"'), "No-repeat question deck is not linked.");
+// 로컬 .js/.css는 서버가 24시간 캐시한다(no-cache는 html뿐). 버전 물음표가 없으면
+// 오늘 이 파일을 고쳐도 어제 접속한 브라우저는 옛 파일을 계속 쓴다 — 그래서 물음표를 필수로 검사한다.
+assert.ok(/href="styles\.css\?v=[^"]+"/.test(html), "Quiz stylesheet must carry a cache-busting version.");
+assert.ok(/src="questions\.js\?v=[^"]+"/.test(html), "Question bank must carry a cache-busting version.");
+assert.ok(/src="questions-extra\.js\?v=[^"]+"/.test(html), "Expanded question bank must carry a cache-busting version.");
+assert.ok(/src="lessons\.js\?v=[^"]+"/.test(html), "Lesson table must carry a cache-busting version.");
+assert.ok(/src="question-deck\.js\?v=[^"]+"/.test(html), "No-repeat question deck must carry a cache-busting version.");
 assert.ok(/src="\.\.\/\.\.\/\.\.\/assets\/sound\/music-control\.js(\?[^"]*)?"/.test(html), "Shared MUSIC/SFX control is not linked.");
-assert.ok(html.includes('src="app.js"'), "Quiz app is not linked.");
+assert.ok(/src="app\.js\?v=[^"]+"/.test(html), "Quiz app must carry a cache-busting version.");
 assert.ok(html.includes('src="/learning/literacy-numeracy/spelling/assets/sound/bgm.ogg"'), "Personal mode background music is not linked.");
 assert.ok(html.includes("loop preload=\"auto\""), "Spelling background music should loop.");
 assert.ok(!html.includes("game-network.js"), "The spelling app no longer talks to the classroom network; the class race page does.");
