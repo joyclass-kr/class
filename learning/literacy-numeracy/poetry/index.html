@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#24150c">
+    <title>시 읽기</title>
+    <link rel="stylesheet" href="styles.css?v=20260905-3">
+    <script src="poems.js" defer></script>
+    <script src="questions.js" defer></script>
+    <script src="lessons.js" defer></script>
+    <script src="question-deck.js" defer></script>
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <div class="page-shell">
+        <nav class="topbar" aria-label="페이지 기능">
+            <a class="back-link" href="../../../" aria-label="메인 화면으로 돌아가기">←</a>
+            <div class="topbar-actions">
+                <div class="record" aria-label="무작위 10문제 최고 기록">
+                    <span>무작위 최고 기록</span>
+                    <strong id="headerBestScore">0/10</strong>
+                </div>
+            </div>
+        </nav>
+
+        <main>
+            <section id="modeScreen" class="panel start-panel mode-panel" aria-labelledby="modeTitle">
+                <h2 id="modeTitle" class="sr-only">학습 방식 선택</h2>
+                <div class="mode-grid">
+                    <button id="lessonModeButton" class="mode-card" type="button">
+                        <strong>차시 학습</strong>
+                        <span>학년을 고르고 차시대로 시를 읽어요. 시를 다 읽으면 바로 확인 문제를 풀어요.</span>
+                        <small>LESSONS</small>
+                    </button>
+                    <button id="personalModeButton" class="mode-card" type="button">
+                        <strong>전체 무작위 10문제</strong>
+                        <span><span data-question-count>0</span>문제에서 10문제씩 나와요. 한 바퀴 전에는 같은 문제가 다시 나오지 않아요.</span>
+                        <small>RANDOM 10</small>
+                    </button>
+                    <a id="classRaceLink" class="mode-card" href="../../class-race/">
+                        <strong>학급 순위전</strong>
+                        <span>선생님이 연 학급 순위전 방으로 갑니다. 여러 앱의 문제를 학급이 함께 풀어요.</span>
+                        <small>CLASS RACE</small>
+                    </a>
+                </div>
+            </section>
+
+            <section id="lessonScreen" class="panel start-panel lesson-panel hidden" aria-labelledby="lessonTitle">
+                <h2 id="lessonTitle">차시 학습</h2>
+                <div id="gradeTabs" class="grade-tabs" role="tablist" aria-label="학년 선택"></div>
+                <p id="lessonProgressSummary" class="lead"></p>
+                <ol id="lessonList" class="lesson-list" aria-label="차시 목록"></ol>
+                <button class="text-button mode-back-button" type="button">← 방식 다시 선택</button>
+            </section>
+
+            <section id="readScreen" class="panel start-panel study-panel hidden" aria-labelledby="readTitle">
+                <p id="readKicker" class="mode-kicker"></p>
+                <h2 id="readTitle"></h2>
+                <p id="readNote" class="lead"></p>
+                <div class="poem-card">
+                    <p class="study-count"><span id="readIndex">1</span> / <span id="readTotal">1</span></p>
+                    <h3 id="poemTitle" class="poem-title"></h3>
+                    <p id="poemByline" class="poem-byline"></p>
+                    <div id="poemBody" class="poem-body"></div>
+                    <div id="poemNotice" class="poem-notice hidden"></div>
+                    <dl id="poemWords" class="poem-words"></dl>
+                    <p id="poemPoint" class="poem-point"></p>
+                </div>
+                <div class="study-nav">
+                    <button id="readPrevButton" class="secondary-button" type="button">이전 시</button>
+                    <button id="readNextButton" class="primary-button" type="button">다음 시</button>
+                </div>
+                <button id="readSkipButton" class="text-button" type="button">바로 확인 문제 풀기</button>
+                <button id="readBackButton" class="text-button" type="button">← 차시 목록</button>
+            </section>
+
+            <section id="personalScreen" class="panel start-panel hidden" aria-labelledby="personalTitle">
+                <span class="seal" aria-hidden="true">시</span>
+                <p class="mode-kicker">전체 무작위 10문제</p>
+                <h2 id="personalTitle">시를 읽고 답을 골라요</h2>
+                <p class="lead"><span data-question-count>0</span>문제 중 10문제씩 나와요. 전체 문제를 한 번씩 풀기 전에는 같은 문제가 다시 나오지 않아요.</p>
+                <div class="category-list" aria-label="출제 영역">
+                    <span>장면 확인</span>
+                    <span>표현 찾기</span>
+                    <span>마음 읽기</span>
+                    <span>견주어 읽기</span>
+                </div>
+                <button id="personalStartButton" class="primary-button" type="button">무작위 10문제 시작</button>
+                <button class="text-button mode-back-button" type="button">← 방식 다시 선택</button>
+                <p class="keyboard-tip">컴퓨터에서는 숫자 1·2·3으로도 답을 고를 수 있어요.</p>
+            </section>
+
+            <section id="quizScreen" class="quiz-screen hidden" aria-labelledby="questionText">
+                <div class="quiz-status">
+                    <div>
+                        <span id="quizModeLabel" class="mode-status">개인 모드</span>
+                        <span class="status-label">문제</span>
+                        <strong><span id="questionNumber">1</span>/<span id="questionTotal">10</span></strong>
+                    </div>
+                    <div class="score-box">
+                        <span class="status-label">점수</span>
+                        <strong><span id="currentScore">0</span>점</strong>
+                    </div>
+                </div>
+                <div class="progress-track" aria-hidden="true">
+                    <span id="progressFill"></span>
+                </div>
+
+                <article id="quizPoemCard" class="panel poem-card quiz-poem-card">
+                    <h3 id="quizPoemTitle" class="poem-title"></h3>
+                    <p id="quizPoemByline" class="poem-byline"></p>
+                    <div id="quizPoemBody" class="poem-body"></div>
+                </article>
+
+                <article class="panel question-panel">
+                    <span id="questionCategory" class="question-category">장면 확인</span>
+                    <p id="questionPrompt" class="question-prompt">시를 읽고 답해 보세요.</p>
+                    <h2 id="questionText" class="question-text"></h2>
+                    <div id="choiceList" class="choice-list" aria-label="답 선택"></div>
+
+                    <div id="feedback" class="feedback hidden" aria-live="polite">
+                        <h3 id="feedbackTitle"></h3>
+                        <p id="correctAnswer" class="correct-answer"></p>
+                        <p id="explanation" class="explanation"></p>
+                        <button id="nextButton" class="primary-button next-button" type="button">다음 문제</button>
+                    </div>
+                </article>
+            </section>
+
+            <section id="resultScreen" class="panel result-panel hidden" aria-labelledby="resultTitle">
+                <p id="resultEyebrow" class="eyebrow">LEARNING COMPLETE</p>
+                <h2 id="resultTitle">학습 결과</h2>
+                <div class="score-medallion" aria-label="최종 점수">
+                    <strong id="finalScore">0</strong>
+                    <span>/ <span id="finalTotal">10</span></span>
+                </div>
+                <p id="resultMessage" class="result-message"></p>
+                <p id="bestMessage" class="best-message"></p>
+
+                <div id="reviewArea" class="review-area">
+                    <h3>나의 오답노트</h3>
+                    <p id="perfectReview" class="perfect-review hidden">틀린 문제가 없어요. 완벽합니다!</p>
+                    <ol id="missedList" class="missed-list"></ol>
+                </div>
+
+                <div class="result-actions">
+                    <button id="restartButton" class="primary-button" type="button">새 문제 풀기</button>
+                    <button id="nextLessonButton" class="primary-button hidden" type="button">다음 차시</button>
+                    <button id="lessonListButton" class="secondary-button hidden" type="button">차시 목록</button>
+                    <button id="resultModeButton" class="secondary-button" type="button">방식 다시 선택</button>
+                    <a class="secondary-button" href="../../../">메인으로</a>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            저작권 보호 기간이 끝난 작품과 구전 노래, 그리고 직접 옮긴 번역만 본문을 싣습니다.
+            보호 기간 안에 있는 작품은 제목과 지은이만 안내하고 본문은 교과서에서 읽습니다.
+        </footer>
+    </div>
+
+    <p id="announcer" class="visually-hidden" aria-live="assertive"></p>
+</body>
+</html>
