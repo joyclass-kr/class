@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>평가원 수학 기출 4점</title>
+<meta name="description" content="한국교육과정평가원 6월·9월 모의평가와 수능의 공통 과목 4점 문항을 단원별로 모았습니다.">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="back" href="../../../index.html">← 목록</a>
+  <h1>평가원 수학 기출 4점</h1>
+  <p class="topbar-note">공통 과목(수학Ⅰ·수학Ⅱ)</p>
+</header>
+
+<main>
+  <section class="picker" aria-label="고르기">
+    <div class="picker-row">
+      <span class="picker-label" id="unit-label">단원</span>
+      <div class="chips" role="group" aria-labelledby="unit-label" id="unit-chips"></div>
+    </div>
+    <div class="picker-row">
+      <span class="picker-label" id="exam-label">회차</span>
+      <div class="chips" role="group" aria-labelledby="exam-label" id="exam-chips"></div>
+    </div>
+    <div class="picker-row picker-row--tail">
+      <p class="count" id="count" role="status"></p>
+      <label class="hide-done"><input type="checkbox" id="hide-done"> 푼 문제 감추기</label>
+      <button type="button" class="reset" id="reset">기록 지우기</button>
+    </div>
+  </section>
+
+  <ol class="list" id="list"></ol>
+  <p class="empty" id="empty" hidden>고른 조건에 맞는 문항이 없습니다.</p>
+</main>
+
+<footer class="foot">
+  <p>문제지의 저작권은 한국교육과정평가원에 있습니다. 이곳은 학습용으로 문항을 옮겨 싣고 출처를 밝힙니다.</p>
+</footer>
+
+<script src="data/problems.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
