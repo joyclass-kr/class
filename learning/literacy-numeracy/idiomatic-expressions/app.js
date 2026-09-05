@@ -101,7 +101,7 @@ function renderQuiz() {
   const item = bank[itemIndex];
   currentChoices = buildChoices(itemIndex);
   byId("quizProgress").textContent = "확인 문제 " + (quizPosition + 1) + " / " + BATCH_SIZE;
-  byId("quizTitle").textContent = "이 상황에 알맞은 관용어는?";
+  byId("quizTitle").hidden = true;
   byId("question").textContent = item.question;
   byId("feedback").textContent = "";
   byId("nextQuestion").hidden = false;
@@ -144,6 +144,7 @@ function answer(choiceIndex, selectedButton) {
 
 function renderQuizComplete() {
   byId("quizProgress").textContent = LESSONS[lessonIndex].title + " 완료";
+  byId("quizTitle").hidden = false;
   byId("quizTitle").textContent = "이번 차시를 끝냈어요!";
   byId("question").textContent = BATCH_SIZE + "문제 중 " + correct + "문제를 한 번에 맞혔습니다.";
   byId("choices").replaceChildren();

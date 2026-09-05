@@ -753,19 +753,20 @@ kbd {
     border-radius: 13px;
     background: #fffefa;
     text-align: left;
+    font-size: clamp(15px, 2vw, 17px);
     cursor: pointer;
 }
 
 .answer-option span {
     display: inline-grid;
     place-items: center;
-    width: 25px;
-    height: 25px;
+    width: 28px;
+    height: 28px;
     margin-right: 8px;
     border-radius: 50%;
     background: var(--paper-deep);
     color: var(--muted);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 900;
 }
 
