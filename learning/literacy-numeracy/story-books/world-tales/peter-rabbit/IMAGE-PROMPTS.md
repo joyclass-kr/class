@@ -36,25 +36,37 @@ full-bleed artwork with NO white border, NO paper edge, NO sketchbook margin.
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
-> **먼저 그린 그림에 맞춰 못 박아 둔 것입니다.** 앞서 이 설명이 "a small brown
-> rabbit in a blue jacket" 정도로만 적혀 있어서, 그릴 때마다 피터가 다른 토끼가
-> 되었습니다. 한 장에서는 머리 큰 만화 토끼, 한 장에서는 몸이 긴 산토끼였지요.
-> 맥그리거 아저씨도 어떤 장에서는 납작모자에 안경, 어떤 장에서는 맨머리에
-> 더벅머리였습니다. 아래 설명을 **한 글자도 빼지 말고** 매번 붙여 넣어 주세요.
+> **이미 그려진 그림 열여덟 장을 보고 그대로 옮겨 적은 것입니다.** 상상해서 쓴
+> 것이 아니라 화면에 있는 차림을 받아 적었어요. 그러니 이 설명대로 그리면
+> 지금 책에 들어가 있는 그림과 어긋나지 않습니다.
+>
+> 처음에는 "a small brown rabbit in a blue jacket" 정도로만 적혀 있었습니다.
+> 그러니 그릴 때마다 피터가 다른 토끼가 되더군요. 한 장에서는 머리 큰 만화
+> 토끼, 한 장에서는 몸이 긴 산토끼였습니다. 아저씨는 더 심해서 한 장에서는
+> 납작모자에 안경, 한 장에서는 맨머리에 더벅머리였지요.
+> 아래 설명을 **한 글자도 빼지 말고** 매번 붙여 넣어 주세요.
 
 ```
-Peter: a young rabbit with warm sandy-tan fur and a cream chest and muzzle,
-a ROUND head with big dark eyes and pink inner ears, drawn as a cartoon child.
-NOT a lean long-bodied wild hare. He wears a cornflower-blue jacket with three
-round yellow buttons, and no trousers. His face and body must look the same in
-every picture.
-His mother: a taller rabbit in a pink polka-dot dress with a white apron.
-Flopsy, Mopsy and Cotton-tail: three smaller rabbits in red cloaks tied at
-the neck.
-Mr McGregor: a stout old gardener with a flat brown cap, round spectacles,
-a grey beard, a blue waistcoat over a checked shirt, and brown corduroy
-trousers. Comically grumpy, never menacing. Keep the cap and the spectacles
-in EVERY picture — never draw him bare-headed or without glasses.
+Peter: a young rabbit with warm golden-brown fur and a cream chest and muzzle,
+a ROUND head with big dark eyes and soft pink inner ears, drawn as a cheeky
+cartoon child — NOT a lean long-bodied wild hare. He wears a bright blue
+jacket with three round yellow buttons, and no trousers. He often lets his
+pink tongue stick out. His face and body must look the same in every picture.
+
+His mother: a taller rabbit in a pink polka-dot dress with a white frilled
+apron and a matching pink polka-dot bonnet, carrying a wicker basket of
+carrots and greens.
+
+Flopsy, Mopsy and Cotton-tail: three smaller rabbits in red hooded cloaks
+with the hoods up, cream fronts, neat and quiet.
+
+Mr McGregor: a stout gardener with a flat brown cap, a thick brown moustache
+and NO beard, NO spectacles, a round ruddy nose, a mustard-yellow checked
+shirt, a brown waistcoat, olive-tan trousers and heavy brown boots (tan work
+gloves when he is digging). Comically grumpy, never menacing. Keep the flat
+cap and the moustache in EVERY picture — never draw him bare-headed, never
+give him a beard or glasses.
+
 A friendly sparrow trio.
 ```
 
