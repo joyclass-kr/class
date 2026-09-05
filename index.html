@@ -830,6 +830,14 @@
         }
 
 
+        body.content-access-editing .worksheet-group-options {
+            display: none;
+        }
+
+        body.global-content-access-editing .worksheet-group-options {
+            display: none;
+        }
+
         /* 공개 설정 모드에서도 이 목록은 보여야 항목별로 잠글 수 있다. */
         body.content-access-editing .worksheet-group[open] > .is-lockable-list {
             display: grid;
@@ -2169,7 +2177,7 @@
                     return;
                 }
                 if (restrictedPreview && signedInArea.hidden && !currentPlayerName) {
-                    const link = event.target.closest('a, summary');
+                    const link = event.target.closest('a');
                     if (link && hubContent.contains(link)) {
                         event.preventDefault();
                         setStatus('접근이 제한되어 있습니다. 이 메뉴를 열려면 학교 Google Workspace 계정으로 로그인하세요.', true);
@@ -2178,7 +2186,7 @@
                     return;
                 }
                 if (!openAccess || isValidPlayerName(currentPlayerName)) return;
-                const link = event.target.closest('a, summary');
+                const link = event.target.closest('a');
                 if (link && hubContent.contains(link)) {
                     event.preventDefault();
                     setStatus('Enter a Korean player name before opening a game.', true);
