@@ -39,6 +39,10 @@
     {
       id: "2026-06", year: 2026, round: "6월", label: "2026학년도 6월",
       source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500236&m=0403&s=suneung"
+    },
+    {
+      id: "2025-suneung", year: 2025, round: "수능", label: "2025학년도 수능",
+      source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500234&m=0403&s=suneung"
     }
   ];
 
@@ -760,6 +764,134 @@
       short: true,
       answer: 38,
       help: R`두 곡선을 같게 놓고 \(2^{x}=u\)로 바꾸면 \(u^{2}+\left(2-\frac{k}{2}\right)u-k=0\)이 되고, 이것은 \((u+2)\left(u-\frac{k}{2}\right)=0\)으로 인수분해된다. \(u>0\)이므로 \(2^{x}=\frac{k}{2}\), 곧 \(\mathrm{A}\)의 \(x\)좌표가 \(\log_{2}k-1\)이다.`
+    },
+    {
+      id: "2025-suneung-9", exam: "2025-suneung", no: 9, score: 4,
+      units: ["m2-integ"], memo: "적분 구간이 같은 두 정적분",
+      body: R`함수 \(f(x)=3x^{2}-16x-20\)에 대하여
+        \[\int_{-2}^{a} f(x)\,dx = \int_{-2}^{0} f(x)\,dx\]
+        일 때, 양수 \(a\)의 값은?`,
+      choices: [R`\(16\)`, R`\(14\)`, R`\(12\)`, R`\(10\)`, R`\(8\)`],
+      answer: 4,
+      help: R`양변에서 \(\int_{-2}^{0}\)을 빼면 \(\int_{0}^{a}f(x)\,dx=0\) 한 줄로 줄어든다. 아래끝 \(-2\)는 아무 일도 하지 않는다.`
+    },
+    {
+      id: "2025-suneung-10", exam: "2025-suneung", no: 10, score: 4,
+      units: ["m1-trig"], memo: "코사인 함수가 최대가 되는 자리",
+      body: R`닫힌구간 \([0,\,2\pi]\)에서 정의된 함수 \(f(x)=a\cos bx+3\)이
+        \(x=\dfrac{\pi}{3}\)에서 최댓값 \(13\)을 갖도록 하는 두 자연수 \(a\), \(b\)의
+        순서쌍 \((a,\,b)\)에 대하여 \(a+b\)의 최솟값은?`,
+      choices: [R`\(12\)`, R`\(14\)`, R`\(16\)`, R`\(18\)`, R`\(20\)`],
+      answer: 3,
+      help: R`최댓값이 \(13\)이니 \(a+3=13\), 곧 \(a=10\)으로 먼저 정해진다. 그리고 \(x=\frac{\pi}{3}\)에서 최대가 되려면 \(\cos\frac{b\pi}{3}=1\), 곧 \(\frac{b\pi}{3}\)가 \(2\pi\)의 배수여야 한다.`
+    },
+    {
+      id: "2025-suneung-11", exam: "2025-suneung", no: 11, score: 4,
+      units: ["m2-diff"], memo: "운동 방향이 바뀌는 시각의 가속도",
+      body: R`시각 \(t=0\)일 때 출발하여 수직선 위를 움직이는 점 \(\mathrm{P}\)의
+        시각 \(t\,(t\ge 0)\)에서의 위치 \(x\)가
+        \[x=t^{3}-\frac{3}{2}t^{2}-6t\]
+        이다. 출발한 후 점 \(\mathrm{P}\)의 운동 방향이 바뀌는 시각에서의
+        점 \(\mathrm{P}\)의 가속도는?`,
+      choices: [R`\(6\)`, R`\(9\)`, R`\(12\)`, R`\(15\)`, R`\(18\)`],
+      answer: 2,
+      help: R`속도는 \(x'=3t^{2}-3t-6=3(t-2)(t+1)\)이다. \(t\ge 0\)에서 부호가 바뀌는 시각은 \(t=2\) 하나뿐이라 그 자리만 보면 된다.`
+    },
+    {
+      id: "2025-suneung-12", exam: "2025-suneung", no: 12, score: 4,
+      units: ["m1-seq"], memo: "부분합이 주어진 수열의 항 구하기",
+      body: R`\(a_{1}=2\)인 수열 \(\{a_{n}\}\)과 \(b_{1}=2\)인 등차수열 \(\{b_{n}\}\)이
+        모든 자연수 \(n\)에 대하여
+        \[\sum_{k=1}^{n}\frac{a_{k}}{b_{k+1}}=\frac{1}{2}n^{2}\]
+        을 만족시킬 때, \(\displaystyle\sum_{k=1}^{5}a_{k}\)의 값은?`,
+      choices: [R`\(120\)`, R`\(125\)`, R`\(130\)`, R`\(135\)`, R`\(140\)`],
+      answer: 1,
+      help: R`\(n=1\)을 넣으면 \(\frac{a_{1}}{b_{2}}=\frac{1}{2}\)에서 \(b_{2}=4\)가 나와 공차가 \(2\)로 정해진다. 그리고 \(\frac{a_{n}}{b_{n+1}}\)은 부분합의 차 \(\frac{n^{2}}{2}-\frac{(n-1)^{2}}{2}=\frac{2n-1}{2}\)이므로 \(a_{n}\)이 곧바로 구해진다.`
+    },
+    {
+      id: "2025-suneung-13", exam: "2025-suneung", no: 13, score: 4,
+      units: ["m2-integ", "m2-diff"], memo: "위아래가 바뀐 두 넓이의 차",
+      body: R`최고차항의 계수가 \(1\)인 삼차함수 \(f(x)\)가
+        \[f(1)=f(2)=0,\qquad f'(0)=-7\]
+        을 만족시킨다. 원점 \(\mathrm{O}\)와 점 \(\mathrm{P}\bigl(3,\,f(3)\bigr)\)에 대하여 선분 \(\mathrm{OP}\)가
+        곡선 \(y=f(x)\)와 만나는 점 중 \(\mathrm{P}\)가 아닌 점을 \(\mathrm{Q}\)라 하자.
+        곡선 \(y=f(x)\)와 \(y\)축 및 선분 \(\mathrm{OQ}\)로 둘러싸인 부분의 넓이를 \(A\),
+        곡선 \(y=f(x)\)와 선분 \(\mathrm{PQ}\)로 둘러싸인 부분의 넓이를 \(B\)라 할 때,
+        \(B-A\)의 값은?`,
+      figure: "2025-suneung-13.webp",
+      choices: [R`\(\dfrac{37}{4}\)`, R`\(\dfrac{39}{4}\)`, R`\(\dfrac{41}{4}\)`, R`\(\dfrac{43}{4}\)`, R`\(\dfrac{45}{4}\)`],
+      answer: 5,
+      help: R`\(f'(0)=-7\)에서 \(f(x)=(x-1)(x-2)(x+3)\)이 정해지고, 그러면 \(\mathrm{P}(3,\,12)\)라 직선 \(\mathrm{OP}\)는 \(y=4x\)다. \(A\)와 \(B\)는 곡선과 직선의 위아래가 서로 바뀐 두 조각이므로, \(B-A\)는 부호를 붙여 묶으면 교점 \(\mathrm{Q}\)를 구하지 않고 \(\int_{0}^{3}\bigl(4x-f(x)\bigr)dx\) 한 줄이 된다.`
+    },
+    {
+      id: "2025-suneung-14", exam: "2025-suneung", no: 14, score: 4,
+      units: ["m1-trig"], memo: "각을 함께 쓰는 두 삼각형의 넓이비",
+      body: R`그림과 같이 삼각형 \(\mathrm{ABC}\)에서 선분 \(\mathrm{AB}\) 위에 \(\overline{\mathrm{AD}}:\overline{\mathrm{DB}}=3:2\)인
+        점 \(\mathrm{D}\)를 잡고, 점 \(\mathrm{A}\)를 중심으로 하고 점 \(\mathrm{D}\)를 지나는 원을 \(O\),
+        원 \(O\)와 선분 \(\mathrm{AC}\)가 만나는 점을 \(\mathrm{E}\)라 하자.
+        \(\sin A:\sin C=8:5\)이고, 삼각형 \(\mathrm{ADE}\)와 삼각형 \(\mathrm{ABC}\)의 넓이의
+        비가 \(9:35\)이다. 삼각형 \(\mathrm{ABC}\)의 외접원의 반지름의 길이가 \(7\)일 때,
+        원 \(O\) 위의 점 \(\mathrm{P}\)에 대하여 삼각형 \(\mathrm{PBC}\)의 넓이의 최댓값은?
+        (단, \(\overline{\mathrm{AB}}<\overline{\mathrm{AC}}\))`,
+      figure: "2025-suneung-14.webp",
+      choices: [R`\(18+15\sqrt{3}\)`, R`\(24+20\sqrt{3}\)`, R`\(30+25\sqrt{3}\)`, R`\(36+30\sqrt{3}\)`, R`\(42+35\sqrt{3}\)`],
+      answer: 4,
+      help: R`\(\sin A:\sin C=8:5\)는 사인법칙으로 \(\overline{\mathrm{BC}}:\overline{\mathrm{AB}}=8:5\)라는 뜻이다. 그리고 삼각형 \(\mathrm{ADE}\)와 \(\mathrm{ABC}\)는 각 \(\mathrm{A}\)를 함께 쓰므로 넓이의 비가 \(\overline{\mathrm{AD}}\times\overline{\mathrm{AE}}\)와 \(\overline{\mathrm{AB}}\times\overline{\mathrm{AC}}\)의 비다. \(\overline{\mathrm{AD}}=\overline{\mathrm{AE}}\)가 원의 반지름이므로 이 두 비가 세 변을 한꺼번에 묶어 준다.`
+    },
+    {
+      id: "2025-suneung-15", exam: "2025-suneung", no: 15, score: 4,
+      units: ["m2-diff"], memo: "이어 붙인 두 함수가 미분가능할 조건",
+      body: R`상수 \(a\,(a\ne 3\sqrt{5}\,)\)와 최고차항의 계수가 음수인 이차함수
+        \(f(x)\)에 대하여 함수
+        \[g(x)=\begin{cases}x^{3}+ax^{2}+15x+7 &amp; (x\le 0)\\ f(x) &amp; (x>0)\end{cases}\]
+        이 다음 조건을 만족시킨다.`,
+      note: [
+        R`(가) 함수 \(g(x)\)는 실수 전체의 집합에서 미분가능하다.`,
+        R`(나) \(x\)에 대한 방정식 \(g'(x)\times g'(x-4)=0\)의 서로 다른 실근의 개수는 \(4\)이다.`
+      ],
+      bodyAfter: R`\(g(-2)+g(2)\)의 값은?`,
+      choices: [R`\(30\)`, R`\(32\)`, R`\(34\)`, R`\(36\)`, R`\(38\)`],
+      answer: 2,
+      help: R`(가)에서 \(x=0\)이 이어지고 기울기도 같아야 하므로 \(f(0)=7\), \(f'(0)=15\)다. \(f\)가 이차함수라 이 둘이 잡히면 남는 것은 최고차항의 계수 하나뿐이고, 그것을 (나)가 정해 준다.`
+    },
+    {
+      id: "2025-suneung-20", exam: "2025-suneung", no: 20, score: 4,
+      units: ["m1-explog"], memo: "합성함수 조건으로 정의역 밖의 값 찾기",
+      body: R`곡선 \(y=\left(\dfrac{1}{5}\right)^{x-3}\)과 직선 \(y=x\)가 만나는 점의 \(x\)좌표를
+        \(k\)라 하자. 실수 전체의 집합에서 정의된 함수 \(f(x)\)가 다음
+        조건을 만족시킨다.`,
+      note: [
+        R`\(x>k\)인 모든 실수 \(x\)에 대하여 \(f(x)=\left(\dfrac{1}{5}\right)^{x-3}\)이고 \(f\bigl(f(x)\bigr)=3x\)이다.`
+      ],
+      bodyAfter: R`\(f\left(\dfrac{1}{k^{3}\times 5^{3k}}\right)\)의 값을 구하시오.`,
+      short: true,
+      answer: 36,
+      help: R`\(k\)는 \(k=5^{\,3-k}\)를 만족시키므로 \(k^{3}\times 5^{3k}=5^{\,9-3k}\times 5^{3k}=5^{9}\)이다. 곧 구하는 것은 \(f\left(5^{-9}\right)\)다. 그리고 \(x>k\)이면 \(f(x)<k\)이므로 \(k\)보다 작은 자리에서의 \(f\)는 주어진 식이 아니라 \(f\bigl(f(x)\bigr)=3x\)가 알려 준다.`
+    },
+    {
+      id: "2025-suneung-21", exam: "2025-suneung", no: 21, score: 4,
+      units: ["m2-limit"], memo: "근이 근을 낳는 극한 조건",
+      body: R`함수 \(f(x)=x^{3}+ax^{2}+bx+4\)가 다음 조건을 만족시키도록
+        하는 두 정수 \(a\), \(b\)에 대하여 \(f(1)\)의 최댓값을 구하시오.`,
+      note: [
+        R`모든 실수 \(\alpha\)에 대하여 \(\displaystyle\lim_{x\to\alpha}\frac{f(2x+1)}{f(x)}\)의 값이 존재한다.`
+      ],
+      short: true,
+      answer: 16,
+      help: R`분모가 \(0\)이 되는 자리, 곧 \(f\)의 실근 \(r\)마다 분자 \(f(2r+1)\)도 \(0\)이어야 한다. 그러니 \(r\)가 근이면 \(2r+1\)도 근이다. 삼차함수의 근은 많아야 셋뿐이라, 이 \(r\mapsto 2r+1\)이 근들 안에서 맴돌아야 하고 그럴 수 있는 경우는 몇 가지뿐이다.`
+    },
+    {
+      id: "2025-suneung-22", exam: "2025-suneung", no: 22, score: 4,
+      units: ["m1-seq"], memo: "홀짝에 따라 갈리는 점화식 거꾸로 오르기",
+      body: R`모든 항이 정수이고 다음 조건을 만족시키는 모든 수열
+        \(\{a_{n}\}\)에 대하여 \(|a_{1}|\)의 값의 합을 구하시오.`,
+      note: [
+        R`(가) 모든 자연수 \(n\)에 대하여 \(a_{n+1}=\begin{cases}a_{n}-3 &amp; \left(|a_{n}|\text{이 홀수인 경우}\right)\\[2pt] \dfrac{1}{2}a_{n} &amp; \left(a_{n}=0 \text{ 또는 } |a_{n}|\text{이 짝수인 경우}\right)\end{cases}\)이다.`,
+        R`(나) \(|a_{m}|=|a_{m+2}|\)인 자연수 \(m\)의 최솟값은 \(3\)이다.`
+      ],
+      short: true,
+      answer: 64,
+      help: R`(나)의 "최솟값이 \(3\)"은 두 가지를 함께 말한다. \(|a_{3}|=|a_{5}|\)이면서, \(m=1\)과 \(m=2\)에서는 그렇지 않다는 것. 규칙이 값을 줄이는 쪽이라 \(a_{1}\)부터 앞으로 밀기보다 \(|a_{3}|=|a_{5}|\)가 되는 자리를 먼저 찾고 거꾸로 거슬러 올라가는 편이 빠르다.`
     }
   ];
 
