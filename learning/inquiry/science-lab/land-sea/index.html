@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="지구 표면을 100칸으로 나눈 모형에 붙임딱지를 무작위로 떨어뜨려 육지와 바다의 넓이를 견주고, 바닷물과 강물을 증발 접시에서 말려 남는 소금의 양을 비교하는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="land-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>육지와 바다, 바닷물과 민물</h1>
+            </div>
+            <div class="grade-tags"><span>초등 3학년</span><span>지구과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>육지와 바다의 넓이를 견줄지, 물을 말려 소금을 볼지 고릅니다.</li>
+            <li>넓이 견주기는 붙임딱지 수를, 물 말리기는 어떤 물을 얼마나 넣을지 정합니다.</li>
+            <li>결과를 먼저 예상해 봅니다.</li>
+            <li>시작해서 붙임딱지가 어디에 떨어지는지, 접시에 무엇이 남는지 세어 봅니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">지구 표면은 바다가 약 71칸, 육지가 약 29칸입니다</p>
+                <fieldset class="mode-field">
+                    <legend>실험 종류</legend>
+                    <div class="mode-buttons">
+                        <button type="button" data-mode="area">육지와 바다 넓이<small>붙임딱지는 어디에 더 많이 떨어질까</small></button>
+                        <button type="button" data-mode="salt">물 말려 보기<small>무엇이 남을까</small></button>
+                    </div>
+                </fieldset>
+                <div id="controlArea"></div>
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons three" id="predictionArea"></div>
+                </fieldset>
+                <button class="run-button" id="checkBtn" type="button">시작</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">결과</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">까닭</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel burn-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">지구 표면을 100칸으로 나눈 모형입니다. 눈을 감고 붙임딱지를 떨어뜨리는 것과 같습니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>바다가 훨씬 넓다</strong> 지구 표면을 100칸으로 나누면 바다가 약 71칸, 육지가 약 29칸입니다. 붙임딱지를 아무 데나 떨어뜨려도 바다에 떨어지는 것이 훨씬 많습니다. 몇 장만 붙이면 우연히 어긋날 수 있지만, 많이 붙일수록 71 : 29에 가까워집니다.</p>
+                <p><strong>바닷물은 짜다</strong> 바닷물 100 g을 말리면 소금이 약 3.5 g 남습니다. 강물이나 수돗물을 말리면 거의 아무것도 남지 않습니다. 바닷물은 짜서 마실 수 없고 농사에도 쓸 수 없지만, 지구에 있는 물의 97 %가 바닷물입니다.</p>
+                <p><strong>육지의 여러 모습</strong> 육지에는 산·들·강·호수·사막이 있고, 바다에는 얕은 곳과 깊은 곳, 섬이 있습니다. 육지의 물(강·호수·지하수)은 대부분 민물이어서 우리가 마시고 씁니다.</p>
+                <p><strong>지구를 감싼 공기</strong> 지구 둘레에는 눈에 보이지 않는 공기가 있어 우리가 숨을 쉬고, 바람이 불고, 구름이 생깁니다. 달에는 공기와 바다가 없어 지구와 모습이 다릅니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>지구 표면을 100칸으로 나누면 바다는 약 몇 칸일까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 약 30칸</label>
+                        <label><input type="radio" name="q1" value="b"> 약 70칸</label>
+                        <label><input type="radio" name="q1" value="c"> 약 50칸</label>
+                        <label><input type="radio" name="q1" value="d"> 100칸 모두</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>바다가 약 71칸, 육지가 약 29칸입니다. 지구는 육지보다 바다가 두 배가 넘게 넓습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>붙임딱지 10장을 떨어뜨렸는데 육지 5장, 바다 5장이 나왔습니다. 어떻게 생각해야 할까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 육지와 바다의 넓이가 같다</label>
+                        <label><input type="radio" name="q2" value="b"> 이 지구 모형이 잘못되었다</label>
+                        <label><input type="radio" name="q2" value="c"> 육지가 바다보다 넓다</label>
+                        <label><input type="radio" name="q2" value="d"> 10장은 적으니 더 많이 떨어뜨려 본다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>몇 장만으로는 우연이 크게 작용합니다. 100장, 300장으로 늘려 보면 바다 쪽이 약 71 %로 모입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>바닷물 100 g을 접시에 담아 말리면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 아무것도 남지 않는다</label>
+                        <label><input type="radio" name="q3" value="b"> 소금이 30 g 넘게 남는다</label>
+                        <label><input type="radio" name="q3" value="c"> 소금이 약 3~4 g 남는다</label>
+                        <label><input type="radio" name="q3" value="d"> 물이 얼음이 된다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>바닷물 100 g에는 소금이 약 3.5 g 녹아 있습니다. 물은 수증기가 되어 날아가고 소금만 하얗게 남습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>바닷물이 이렇게 많은데도 물이 모자라다고 하는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 바닷물은 짜서 그대로 마시거나 농사에 쓸 수 없기 때문에</label>
+                        <label><input type="radio" name="q4" value="b"> 바닷물은 너무 차갑기 때문에</label>
+                        <label><input type="radio" name="q4" value="c"> 바닷물은 금방 말라 버리기 때문에</label>
+                        <label><input type="radio" name="q4" value="d"> 바다가 육지보다 좁기 때문에</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>지구의 물 97 %는 짠 바닷물입니다. 우리가 쓸 수 있는 민물은 강·호수·지하수의 아주 적은 부분이어서 아껴 써야 합니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=2"></script>
+</body>
+</html>
