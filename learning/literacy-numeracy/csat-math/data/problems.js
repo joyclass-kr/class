@@ -71,6 +71,10 @@
     {
       id: "2023-09", year: 2023, round: "9월", label: "2023학년도 9월",
       source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500236&m=0403&s=suneung"
+    },
+    {
+      id: "2023-06", year: 2023, round: "6월", label: "2023학년도 6월",
+      source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500236&m=0403&s=suneung"
     }
   ];
 
@@ -1842,6 +1846,139 @@
       short: true,
       answer: 58,
       help: R`\(x<t\)에서의 \(-f(x)+2f(t)\)는 \(f\)를 점 \(\bigl(t,\,f(t)\bigr)\)에 대하여 점대칭으로 뒤집은 것이다. 곧 \(g\)의 그래프는 \(x=t\)를 경계로 오른쪽은 \(f\) 그대로, 왼쪽은 그 점을 중심으로 돌린 모양이라 \(x=t\)에서 매끄럽게 이어진다.`
+    },
+    {
+      id: "2023-06-9", exam: "2023-06", no: 9, score: 4,
+      units: ["m2-diff"], memo: "부등식을 최솟값 문제로 바꾸기",
+      body: R`두 함수
+        \[f(x)=x^{3}-x+6,\qquad g(x)=x^{2}+a\]
+        가 있다. \(x\ge 0\)인 모든 실수 \(x\)에 대하여 부등식
+        \[f(x)\ge g(x)\]
+        가 성립할 때, 실수 \(a\)의 최댓값은?`,
+      choices: [R`\(1\)`, R`\(2\)`, R`\(3\)`, R`\(4\)`, R`\(5\)`],
+      answer: 5,
+      help: R`부등식을 \(a\)에 대하여 옮기면 \(a\le x^{3}-x^{2}-x+6\)이다. 이것이 \(x\ge 0\)인 모든 \(x\)에서 성립해야 하므로, 오른쪽 함수의 그 구간에서의 최솟값이 곧 \(a\)의 최댓값이다.`
+    },
+    {
+      id: "2023-06-10", exam: "2023-06", no: 10, score: 4,
+      units: ["m1-trig"], memo: "중점에서 만나는 두 현",
+      body: R`그림과 같이 \(\overline{\mathrm{AB}}=3\), \(\overline{\mathrm{BC}}=2\), \(\overline{\mathrm{AC}}>3\)이고
+        \(\cos(\angle\mathrm{BAC})=\dfrac{7}{8}\)인 삼각형 \(\mathrm{ABC}\)가 있다. 선분 \(\mathrm{AC}\)의 중점을 \(\mathrm{M}\),
+        삼각형 \(\mathrm{ABC}\)의 외접원이 직선 \(\mathrm{BM}\)과 만나는 점 중 \(\mathrm{B}\)가 아닌
+        점을 \(\mathrm{D}\)라 할 때, 선분 \(\mathrm{MD}\)의 길이는?`,
+      figure: "2023-06-10.webp",
+      choices: [R`\(\dfrac{3\sqrt{10}}{5}\)`, R`\(\dfrac{7\sqrt{10}}{10}\)`, R`\(\dfrac{4\sqrt{10}}{5}\)`, R`\(\dfrac{9\sqrt{10}}{10}\)`, R`\(\sqrt{10}\)`],
+      answer: 3,
+      help: R`두 현 \(\mathrm{AC}\)와 \(\mathrm{BD}\)가 점 \(\mathrm{M}\)에서 만나므로 \(\overline{\mathrm{AM}}\times\overline{\mathrm{MC}}=\overline{\mathrm{BM}}\times\overline{\mathrm{MD}}\)다. \(\mathrm{M}\)이 중점이라 왼쪽은 \(\left(\frac{\overline{\mathrm{AC}}}{2}\right)^{2}\)이고, \(\overline{\mathrm{AC}}\)는 코사인법칙으로, \(\overline{\mathrm{BM}}\)은 중선의 길이로 구할 수 있다.`
+    },
+    {
+      id: "2023-06-11", exam: "2023-06", no: 11, score: 4,
+      units: ["m2-integ"], memo: "한 점이 원점으로 돌아오는 시각",
+      body: R`시각 \(t=0\)일 때 동시에 원점을 출발하여 수직선 위를
+        움직이는 두 점 \(\mathrm{P}\), \(\mathrm{Q}\)의 시각 \(t\,(t\ge 0)\)에서의 속도가 각각
+        \[v_{1}(t)=2-t,\qquad v_{2}(t)=3t\]
+        이다. 출발한 시각부터 점 \(\mathrm{P}\)가 원점으로 돌아올 때까지
+        점 \(\mathrm{Q}\)가 움직인 거리는?`,
+      choices: [R`\(16\)`, R`\(18\)`, R`\(20\)`, R`\(22\)`, R`\(24\)`],
+      answer: 5,
+      help: R`\(\mathrm{P}\)가 원점으로 돌아오는 시각은 위치가 다시 \(0\)이 되는 때이므로 \(\int_{0}^{T}(2-t)\,dt=0\)에서 나온다. \(\mathrm{Q}\)의 속도는 \(t\ge 0\)에서 늘 \(0\) 이상이라 움직인 거리가 절댓값 없이 그냥 적분값이다.`
+    },
+    {
+      id: "2023-06-12", exam: "2023-06", no: 12, score: 4,
+      units: ["m1-seq"], memo: "부호가 바뀌는 자리와 절댓값의 합",
+      body: R`공차가 \(3\)인 등차수열 \(\{a_{n}\}\)이 다음 조건을 만족시킬 때,
+        \(a_{10}\)의 값은?`,
+      note: [
+        R`(가) \(a_{5}\times a_{7}<0\)`,
+        R`(나) \(\displaystyle\sum_{k=1}^{6}\bigl|a_{k+6}\bigr|=6+\sum_{k=1}^{6}\bigl|a_{2k}\bigr|\)`
+      ],
+      choices: [R`\(\dfrac{21}{2}\)`, R`\(11\)`, R`\(\dfrac{23}{2}\)`, R`\(12\)`, R`\(\dfrac{25}{2}\)`],
+      answer: 3,
+      help: R`공차가 \(3\)으로 양수이고 \(a_{5}a_{7}<0\)이니 수열이 음수에서 양수로 바뀌는 자리가 \(a_{5}\)와 \(a_{7}\) 사이다. 절댓값이 붙어 있으므로 어느 항까지 음수인지를 먼저 못박아야 (나)의 두 합을 식으로 쓸 수 있다.`
+    },
+    {
+      id: "2023-06-13", exam: "2023-06", no: 13, score: 4,
+      units: ["m1-explog"], memo: "두 지수 곡선을 오가며 줄어드는 좌표",
+      body: R`두 곡선 \(y=16^{x}\), \(y=2^{x}\)과 한 점 \(\mathrm{A}\bigl(64,\,2^{64}\bigr)\)이 있다.
+        점 \(\mathrm{A}\)를 지나며 \(x\)축과 평행한 직선이 곡선 \(y=16^{x}\)과 만나는
+        점을 \(\mathrm{P}_{1}\)이라 하고, 점 \(\mathrm{P}_{1}\)을 지나며 \(y\)축과 평행한 직선이
+        곡선 \(y=2^{x}\)과 만나는 점을 \(\mathrm{Q}_{1}\)이라 하자.
+        점 \(\mathrm{Q}_{1}\)을 지나며 \(x\)축과 평행한 직선이 곡선 \(y=16^{x}\)과 만나는
+        점을 \(\mathrm{P}_{2}\)라 하고, 점 \(\mathrm{P}_{2}\)를 지나며 \(y\)축과 평행한 직선이
+        곡선 \(y=2^{x}\)과 만나는 점을 \(\mathrm{Q}_{2}\)라 하자.
+        이와 같은 과정을 계속하여 \(n\)번째 얻은 두 점을 각각
+        \(\mathrm{P}_{n}\), \(\mathrm{Q}_{n}\)이라 하고 점 \(\mathrm{Q}_{n}\)의 \(x\)좌표를 \(x_{n}\)이라 할 때,
+        \(x_{n}<\dfrac{1}{k}\)을 만족시키는 \(n\)의 최솟값이 \(6\)이 되도록 하는
+        자연수 \(k\)의 개수는?`,
+      figure: "2023-06-13.webp",
+      choices: [R`\(48\)`, R`\(51\)`, R`\(54\)`, R`\(57\)`, R`\(60\)`],
+      answer: 1,
+      help: R`\(16^{x}=2^{4x}\)이므로 \(y\)좌표가 같은 두 점을 견주면 \(y=16^{x}\) 위의 점의 \(x\)좌표가 \(y=2^{x}\) 위의 점의 \(\frac{1}{4}\)배다. 그리고 \(\mathrm{Q}_{n}\)은 \(\mathrm{P}_{n}\)과 \(x\)좌표가 같으니, \(x_{n}\)은 공비가 \(\frac{1}{4}\)인 등비수열이 된다.`
+    },
+    {
+      id: "2023-06-14", exam: "2023-06", no: 14, score: 4,
+      units: ["m2-integ"], memo: "부호를 뒤집어 이어 붙인 적분함수",
+      body: R`실수 전체의 집합에서 연속인 함수 \(f(x)\)와 최고차항의
+        계수가 \(1\)인 삼차함수 \(g(x)\)가
+        \[g(x)=\begin{cases}-\displaystyle\int_{0}^{x}f(t)\,dt &amp; (x<0)\\[8pt] \displaystyle\int_{0}^{x}f(t)\,dt &amp; (x\ge 0)\end{cases}\]
+        을 만족시킬 때, &lt;보기&gt;에서 옳은 것만을 있는 대로 고른
+        것은?`,
+      noteTitle: "보 기",
+      note: [
+        R`ㄱ. \(f(0)=0\)`,
+        R`ㄴ. 함수 \(f(x)\)는 극댓값을 갖는다.`,
+        R`ㄷ. \(2<f(1)<4\)일 때, 방정식 \(f(x)=x\)의 서로 다른 실근의 개수는 \(3\)이다.`
+      ],
+      choices: [R`ㄱ`, R`ㄷ`, R`ㄱ, ㄴ`, R`ㄱ, ㄷ`, R`ㄱ, ㄴ, ㄷ`],
+      answer: 4,
+      help: R`\(F(x)=\int_{0}^{x}f\)라 하면 \(g\)는 \(x\ge 0\)에서 \(F\), \(x<0\)에서 \(-F\)다. 그런데 \(g\)가 하나의 삼차함수이므로 \(x<0\)에서도 \(g=F\)여야 하고, 곧 \(x<0\)에서 \(F(x)=-F(x)\), 즉 \(F\)가 그 구간에서 \(0\)이 아니면 모순이 생긴다. 이 어긋남이 \(f\)의 모양을 크게 좁힌다.`
+    },
+    {
+      id: "2023-06-15", exam: "2023-06", no: 15, score: 4,
+      units: ["m1-seq"], memo: "오르내림이 다른 두 걸음으로 제자리 오기",
+      body: R`자연수 \(k\)에 대하여 다음 조건을 만족시키는 수열 \(\{a_{n}\}\)이
+        있다.`,
+      note: [
+        R`\(a_{1}=0\)이고, 모든 자연수 \(n\)에 대하여 \(a_{n+1}=\begin{cases}a_{n}+\dfrac{1}{k+1} &amp; \left(a_{n}\le 0\right)\\[8pt] a_{n}-\dfrac{1}{k} &amp; \left(a_{n}>0\right)\end{cases}\)이다.`
+      ],
+      bodyAfter: R`\(a_{22}=0\)이 되도록 하는 모든 \(k\)의 값의 합은?`,
+      choices: [R`\(12\)`, R`\(14\)`, R`\(16\)`, R`\(18\)`, R`\(20\)`],
+      answer: 2,
+      help: R`\(0\) 이하이면 \(\frac{1}{k+1}\)만큼 오르고, 양수이면 \(\frac{1}{k}\)만큼 내린다. 오르는 걸음과 내리는 걸음의 크기가 달라서, \(21\)걸음 뒤 다시 \(0\)이 되려면 오른 횟수와 내린 횟수가 \(\frac{p}{k+1}=\frac{q}{k}\)를 만족시키도록 맞아떨어져야 한다.`
+    },
+    {
+      id: "2023-06-20", exam: "2023-06", no: 20, score: 4,
+      units: ["m2-integ", "m2-diff"], memo: "폭이 1인 창으로 훑은 절댓값 적분",
+      body: R`최고차항의 계수가 \(2\)인 이차함수 \(f(x)\)에 대하여
+        함수 \(g(x)=\displaystyle\int_{x}^{x+1}\bigl|f(t)\bigr|\,dt\)는 \(x=1\)과 \(x=4\)에서 극소이다.
+        \(f(0)\)의 값을 구하시오.`,
+      short: true,
+      answer: 13,
+      help: R`\(g'(x)=\bigl|f(x+1)\bigr|-\bigl|f(x)\bigr|\)다. 곧 \(x=1\)과 \(x=4\)에서 \(\bigl|f(x+1)\bigr|=\bigl|f(x)\bigr|\)이고 그 자리에서 부호가 음에서 양으로 바뀐다. 절댓값 안의 부호까지 따져야 어느 쪽이 같아지는지가 갈린다.`
+    },
+    {
+      id: "2023-06-21", exam: "2023-06", no: 21, score: 4,
+      units: ["m1-explog"], memo: "로그값이 정수가 될 조건",
+      body: R`자연수 \(n\)에 대하여 \(4\log_{64}\left(\dfrac{3}{4n+16}\right)\)의 값이 정수가 되도록
+        하는 \(1000\) 이하의 모든 \(n\)의 값의 합을 구하시오.`,
+      short: true,
+      answer: 426,
+      help: R`\(\log_{64}=\frac{1}{6}\log_{2}\)이므로 주어진 식은 \(\frac{2}{3}\log_{2}\dfrac{3}{4n+16}\)이다. 이것이 정수이려면 \(\log_{2}\dfrac{3}{4n+16}\)이 \(3\)의 배수인 정수여야 하고, 그러려면 로그 안의 값이 \(2\)의 거듭제곱이어야 한다.`
+    },
+    {
+      id: "2023-06-22", exam: "2023-06", no: 22, score: 4,
+      units: ["m2-limit"], memo: "분자가 0으로 가야만 살아남는 극한",
+      body: R`두 양수 \(a\), \(b\,(b>3)\)과 최고차항의 계수가 \(1\)인 이차함수
+        \(f(x)\)에 대하여 함수
+        \[g(x)=\begin{cases}(x+3)f(x) &amp; (x<0)\\ (x+a)f(x-b) &amp; (x\ge 0)\end{cases}\]
+        이 실수 전체의 집합에서 연속이고 다음 조건을 만족시킬 때,
+        \(g(4)\)의 값을 구하시오.`,
+      note: [
+        R`\(\displaystyle\lim_{x\to-3}\frac{\sqrt{\bigl|g(x)\bigr|+\bigl\{g(t)\bigr\}^{2}}-\bigl|g(t)\bigr|}{(x+3)^{2}}\)의 값이 존재하지 않는 실수 \(t\)의 값은 \(-3\)과 \(6\)뿐이다.`
+      ],
+      short: true,
+      answer: 19,
+      help: R`\(x\to-3\)일 때 \(g(x)\to g(-3)=0\)이므로 분자는 \(\sqrt{\bigl|g(x)\bigr|+\{g(t)\}^{2}}-\bigl|g(t)\bigr|\)로, \(g(t)\ne 0\)이면 \(0\)으로 간다. 이때 분자를 유리화하면 \(\bigl|g(x)\bigr|\)가 통째로 남으므로, 극한이 있는지 없는지는 \(\bigl|g(x)\bigr|\)가 \((x+3)^{2}\)만큼 빠르게 \(0\)으로 가느냐로 갈린다.`
     }
   ];
 
