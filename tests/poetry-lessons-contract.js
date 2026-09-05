@@ -70,6 +70,7 @@ for (const poem of poems) {
 
 // ── 2. 문제 ──────────────────────────────────────────────────────
 const questionIds = new Set();
+const seenSentences = new Map();
 for (const question of questions) {
     const where = `문제 ${question.id || "(id 없음)"}`;
     assert.ok(question.id && /^[a-z0-9-]+$/.test(question.id), `${where}: id가 올바르지 않습니다.`);
@@ -83,6 +84,10 @@ for (const question of questions) {
         `${where}: 보기는 2~4개여야 합니다 (지금 ${question.choices?.length}).`);
     assert.strictEqual(new Set(question.choices).size, question.choices.length, `${where}: 보기가 겹칩니다.`);
     assert.ok(question.choices.includes(question.answer), `${where}: 정답이 보기 안에 없습니다.`);
+    // 물음 글이 겹치면 아이가 같은 물음을 두 번 보게 되고, 해설도 어느 쪽 것인지 헷갈린다.
+    assert.ok(!seenSentences.has(question.sentence),
+        `${where}: 물음 글이 ${seenSentences.get(question.sentence)}와 똑같습니다. 다르게 고쳐 주세요: "${question.sentence}"`);
+    seenSentences.set(question.sentence, question.id);
     assert.ok(typeof question.poemId === "string", `${where}: poemId 칸이 없습니다. 정리 문제는 빈 문자열로 둡니다.`);
     if (question.poemId) {
         assert.ok(poemIds.has(question.poemId), `${where}: 없는 시를 가리킵니다: ${question.poemId}`);

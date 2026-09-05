@@ -53,11 +53,51 @@
             ]),
 
         // ── 초4 · 빗대기와 감각 ───────────────────────────────────────
-        lesson("g4-simile", 4, "~같이, ~처럼", "무엇에 빗대었는지 찾아요", [], []),
-        lesson("g4-persona", 4, "사람처럼 말하기", "사물이 사람이 되어 움직여요", [], []),
-        lesson("g4-senses", 4, "오감으로 그리기", "눈·귀·코·혀·살갗으로 그린 시", [], []),
-        lesson("g4-speaker", 4, "말하는 이는 지금 어디에 있나", "시 속 사람의 자리를 찾아요", [], []),
-        lesson("g4-bittersweet", 4, "웃긴데 왜 슬플까", "웃음 뒤에 숨은 마음", [], []),
+        lesson("g4-simile", 4, "~같이, ~처럼", "무엇에 빗대었는지 찾아요",
+            ["stevenson-geurimja", "leejanghee-bomeun", "dongju-haetbi", "stevenson-bi"],
+            [
+                "geurimja-follow", "geurimja-ball", "geurimja-alike",
+                "bomeun-fur", "bomeun-eye", "bomeun-four",
+                "haetbi-simile",
+                "bi-places", "bi-far",
+                "simile-mark"
+            ]),
+        lesson("g4-persona", 4, "사람처럼 말하기", "사물이 사람이 되어 움직여요",
+            ["dongju-bom", "dongju-jogaekkeopjil", "rossetti-baram", "deokchul-bompyeonji"],
+            [
+                "bom-baby", "bom-wind", "bom-sun", "bom-family",
+                "jogae-who", "jogae-miss", "jogae-me",
+                "baram-tree",
+                "bompyeonji-jebi",
+                "persona-what"
+            ]),
+        lesson("g4-senses", 4, "오감으로 그리기", "눈·귀·코·혀·살갗으로 그린 시",
+            ["rossetti-bunhong", "leebaek-jeongyasa", "dubo-chunyahuiu", "stevenson-geune"],
+            [
+                "bunhong-rose", "bunhong-white", "bunhong-sense",
+                "jeongyasa-frost", "jeongyasa-head",
+                "chunya-when", "chunya-quiet",
+                "geune-see", "geune-body",
+                "senses-why"
+            ]),
+        lesson("g4-speaker", 4, "말하는 이는 지금 어디에 있나", "시 속 사람의 자리를 찾아요",
+            ["dongju-gulttuk", "kimyeongrang-omae", "jiyong-byeoltong", "dongju-jogaekkeopjil"],
+            [
+                "gulttuk-where", "gulttuk-potato", "gulttuk-lips", "gulttuk-outside",
+                "omae-speaker", "omae-leaf", "omae-watcher",
+                "byeoltong-when",
+                "jogae-place",
+                "speaker-why"
+            ]),
+        lesson("g4-bittersweet", 4, "웃긴데 왜 슬플까", "웃음 뒤에 숨은 마음",
+            ["dongju-ojumssagae", "dongju-geojitburi", "dongju-chamsae", "jiyong-hongsi"],
+            [
+                "ojum-map", "ojum-mom", "ojum-dad", "ojum-sad",
+                "geojit-dog", "geojit-hen", "geojit-twice",
+                "chamsae-pity",
+                "hongsi-wait",
+                "bittersweet-how"
+            ]),
 
         // ── 초5 · 감춰진 뜻과 짜임 ────────────────────────────────────
         lesson("g5-metaphor", 5, "빗댄 말을 감추기", "'~은 ~이다'로 곧장 말해요", [], []),

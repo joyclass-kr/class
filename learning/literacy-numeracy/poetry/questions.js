@@ -497,5 +497,539 @@ window.POETRY_QUESTIONS = Object.freeze([
         choices: ["멀었다가 점점 가까워져요", "가까웠다가 점점 멀어져요", "처음부터 끝까지 똑같아요"],
         answer: "멀었다가 점점 가까워져요",
         explanation: "'당당 멀었다'에서 '문 앞에 다 왔다'까지, 같은 물음에 답만 바뀌면서 거리가 줄어들어요."
+    },
+
+    // ── 6차시 · ~같이, ~처럼 ──────────────────────────────────────
+    {
+        id: "geurimja-follow",
+        poemId: "stevenson-geurimja",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "그림자는 말하는 이에게 무엇을 하나요?",
+        choices: ["가는 곳마다 따라다녀요", "가끔씩만 나타나요", "앞장서서 길을 알려 줘요"],
+        answer: "가는 곳마다 따라다녀요",
+        explanation: "'내가 가는 곳이면 어디든 따라와요'라고 했어요."
+    },
+    {
+        id: "geurimja-ball",
+        poemId: "stevenson-geurimja",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "그림자가 훌쩍 커지는 모습을 무엇에 견주었나요?",
+        choices: ["고무공", "나무", "구름"],
+        answer: "고무공",
+        explanation: "'고무공처럼 훌쩍 커졌다가'라고 했어요. '~처럼'이 두 가지를 이어 주는 말이에요."
+    },
+    {
+        id: "geurimja-alike",
+        poemId: "stevenson-geurimja",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "그림자가 나와 얼마나 닮았다고 했나요?",
+        choices: ["발끝에서 머리끝까지 닮았어요", "얼굴만 닮았어요", "하나도 닮지 않았어요"],
+        answer: "발끝에서 머리끝까지 닮았어요",
+        explanation: "닮았다는 말도 두 가지를 견주는 말이에요."
+    },
+    {
+        id: "bomeun-fur",
+        poemId: "leejanghee-bomeun",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "고양이의 부드러운 털을 무엇에 견주었나요?",
+        choices: ["꽃가루", "금방울", "봄바람"],
+        answer: "꽃가루",
+        explanation: "'꽃가루와 같이 부드러운'이라고 했어요."
+    },
+    {
+        id: "bomeun-eye",
+        poemId: "leejanghee-bomeun",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "동그란 고양이의 눈을 무엇에 견주었나요?",
+        choices: ["금방울", "꽃가루", "불길"],
+        answer: "금방울",
+        explanation: "'금방울과 같이 호동그란'이라고 했어요. 방울처럼 동그랗고 반짝인다는 뜻이에요."
+    },
+    {
+        id: "bomeun-four",
+        poemId: "leejanghee-bomeun",
+        category: "견주어 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "이 시는 고양이의 어느 부분들을 차례로 살펴보나요?",
+        choices: ["털·눈·입술·수염", "털·발·꼬리·귀", "눈·코·입·귀"],
+        answer: "털·눈·입술·수염",
+        explanation: "네 부분을 하나씩 짚으며 봄의 다른 모습에 견주어요."
+    },
+    {
+        id: "haetbi-simile",
+        poemId: "dongju-haetbi",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "비가 내리는 모습을 누구에 견주었나요?",
+        choices: ["아씨", "무지개", "옥수숫대"],
+        answer: "아씨",
+        explanation: "'아씨처럼 나린다'고 했어요. 곱고 얌전하게 내린다는 뜻이에요."
+    },
+    {
+        id: "bi-places",
+        poemId: "stevenson-bi",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "비가 내리는 곳으로 나오지 않은 것은 어디인가요?",
+        choices: ["산꼭대기", "우산 위", "바다의 배 위"],
+        answer: "산꼭대기",
+        explanation: "들, 나무, 우산, 배 위 넷을 늘어놓았어요."
+    },
+    {
+        id: "bi-far",
+        poemId: "stevenson-bi",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "비가 내리는 곳을 어떤 차례로 말하나요?",
+        choices: ["가까운 곳에서 먼 곳으로", "먼 곳에서 가까운 곳으로", "아무 차례 없이"],
+        answer: "가까운 곳에서 먼 곳으로",
+        explanation: "들과 나무에서 시작해 우산을 거쳐 바다의 배까지 눈길이 멀어져요."
+    },
+    {
+        id: "simile-mark",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "이 차시에서 읽은 시들을 떠올려 보세요.",
+        sentence: "두 가지를 견줄 때 쓰는 말은 어느 것인가요?",
+        choices: ["~처럼, ~같이", "~인가 봐", "~하자"],
+        answer: "~처럼, ~같이",
+        explanation: "'고무공처럼', '꽃가루와 같이'처럼 두 가지를 이어 주는 말이에요."
+    },
+
+    // ── 7차시 · 사람처럼 말하기 ───────────────────────────────────
+    {
+        id: "bom-baby",
+        poemId: "dongju-bom",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "우리 애기는 어디에서 자고 있나요?",
+        choices: ["아래 발치", "부뚜막", "나뭇가지"],
+        answer: "아래 발치",
+        explanation: "부뚜막에서 자는 것은 고양이예요."
+    },
+    {
+        id: "bom-wind",
+        poemId: "dongju-bom",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "바람을 무엇이라고 불렀나요?",
+        choices: ["애기 바람", "아저씨 바람", "누나 바람"],
+        answer: "애기 바람",
+        explanation: "바람에게 '애기'라는 사람 이름을 붙여 주었어요."
+    },
+    {
+        id: "bom-sun",
+        poemId: "dongju-bom",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "해님을 무엇이라고 불렀나요?",
+        choices: ["아저씨 해님", "애기 해님", "할머니 해님"],
+        answer: "아저씨 해님",
+        explanation: "하늘 한가운데서 째앵째앵 내리쬐는 모습이 어른스러워 보였나 봐요."
+    },
+    {
+        id: "bom-family",
+        poemId: "dongju-bom",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "바람과 해님을 사람처럼 부르면 어떤 느낌이 드나요?",
+        choices: ["온 봄이 한 식구처럼 느껴져요", "봄이 무섭게 느껴져요", "봄이 아주 멀게 느껴져요"],
+        answer: "온 봄이 한 식구처럼 느껴져요",
+        explanation: "애기와 고양이 곁에 바람과 해님이 나란히 놓여요."
+    },
+    {
+        id: "jogae-who",
+        poemId: "dongju-jogaekkeopjil",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "조개껍데기를 주워 온 사람은 누구인가요?",
+        choices: ["언니", "동생", "말하는 이"],
+        answer: "언니",
+        explanation: "'울 언니 바닷가에서 주워 온'이라고 했어요."
+    },
+    {
+        id: "jogae-miss",
+        poemId: "dongju-jogaekkeopjil",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "조개껍데기가 그리워하는 것은 무엇인가요?",
+        choices: ["잃어버린 한 짝", "바다에 사는 물고기", "주워 온 언니"],
+        answer: "잃어버린 한 짝",
+        explanation: "굴리며 놀다가 짝을 잃었어요. 조개껍데기가 사람처럼 그리워해요."
+    },
+    {
+        id: "jogae-me",
+        poemId: "dongju-jogaekkeopjil",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'나처럼 그리워하네'는 무슨 뜻인가요?",
+        choices: ["조개도 나도 그리운 것이 있다는 뜻", "조개가 나를 그리워한다는 뜻", "내가 조개를 그리워한다는 뜻"],
+        answer: "조개도 나도 그리운 것이 있다는 뜻",
+        explanation: "조개는 짝을, 말하는 이는 바다를 그리워해요. 둘을 나란히 놓았어요."
+    },
+    {
+        id: "baram-tree",
+        poemId: "rossetti-baram",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "나무들이 하는 행동으로 나오는 것은 무엇인가요?",
+        choices: ["고개를 숙여요", "손뼉을 쳐요", "노래를 불러요"],
+        answer: "고개를 숙여요",
+        explanation: "나무에게 고개라는 사람의 몸을 붙여 주었어요."
+    },
+    {
+        id: "bompyeonji-jebi",
+        poemId: "deokchul-bompyeonji",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "제비가 하는 일로 나오는 것은 무엇인가요?",
+        choices: ["편지를 보고 그리워해요", "편지를 물고 날아가요", "편지에 답장을 써요"],
+        answer: "편지를 보고 그리워해요",
+        explanation: "제비가 글을 읽고 마음이 움직이는 사람처럼 그려졌어요."
+    },
+    {
+        id: "persona-what",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "이 차시에서 읽은 시들을 떠올려 보세요.",
+        sentence: "사물을 사람처럼 그리면 무엇이 좋은가요?",
+        choices: [
+            "사물이 살아 움직이는 것처럼 느껴져요",
+            "시가 짧아져요",
+            "사물의 크기를 정확히 알 수 있어요"
+        ],
+        answer: "사물이 살아 움직이는 것처럼 느껴져요",
+        explanation: "바람이 애기가 되고 조개가 그리워하면, 읽는 사람도 그 마음을 함께 느끼게 돼요."
+    },
+
+    // ── 8차시 · 오감으로 그리기 ───────────────────────────────────
+    {
+        id: "bunhong-rose",
+        poemId: "rossetti-bunhong",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "분홍은 무엇이라고 했나요?",
+        choices: ["장미", "양귀비꽃", "저녁 구름"],
+        answer: "장미",
+        explanation: "샘가에 피어 있는 장미가 분홍이라고 했어요."
+    },
+    {
+        id: "bunhong-white",
+        poemId: "rossetti-bunhong",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "하양은 무엇이라고 했나요?",
+        choices: ["백조", "밀밭", "풀밭"],
+        answer: "백조",
+        explanation: "햇빛 아래 떠 가는 백조가 하양이라고 했어요."
+    },
+    {
+        id: "bunhong-sense",
+        poemId: "rossetti-bunhong",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "이 시는 주로 어떤 감각으로 그렸나요?",
+        choices: ["눈으로 보는 감각", "귀로 듣는 감각", "코로 맡는 감각"],
+        answer: "눈으로 보는 감각",
+        explanation: "처음부터 끝까지 빛깔만으로 시 한 편을 채웠어요."
+    },
+    {
+        id: "jeongyasa-frost",
+        poemId: "leebaek-jeongyasa",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "달빛을 무엇으로 잘못 보았나요?",
+        choices: ["땅에 내린 서리", "쏟아진 물", "하얀 종이"],
+        answer: "땅에 내린 서리",
+        explanation: "달빛이 하도 하얘서 서리인가 했다는 말이에요."
+    },
+    {
+        id: "jeongyasa-head",
+        poemId: "leebaek-jeongyasa",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "고개를 숙이고 무엇을 생각했나요?",
+        choices: ["고향", "서리", "잠자리"],
+        answer: "고향",
+        explanation: "고개를 드니 달, 고개를 숙이니 고향. 두 몸짓만으로 그리움을 말해요."
+    },
+    {
+        id: "chunya-when",
+        poemId: "dubo-chunyahuiu",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "좋은 비는 언제 내린다고 했나요?",
+        choices: ["봄이 되자 곧", "여름이 다 가고", "겨울이 오기 전에"],
+        answer: "봄이 되자 곧",
+        explanation: "비가 때를 알아서 봄이 되자마자 내린다고 했어요."
+    },
+    {
+        id: "chunya-quiet",
+        poemId: "dubo-chunyahuiu",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "비가 만물을 적시는 소리는 어떻다고 했나요?",
+        choices: ["소리가 없다고 했어요", "요란하다고 했어요", "노래 같다고 했어요"],
+        answer: "소리가 없다고 했어요",
+        explanation: "'소리 없이 만물을 적시네'예요. 귀로 듣는 감각을 지워서 밤을 더 조용하게 만들어요."
+    },
+    {
+        id: "geune-see",
+        poemId: "stevenson-geune",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "담장 너머로 보이는 것으로 나오지 않은 것은 무엇인가요?",
+        choices: ["바다", "강물", "소들"],
+        answer: "바다",
+        explanation: "들판, 강물, 소들이 보인다고 했어요."
+    },
+    {
+        id: "geune-body",
+        poemId: "stevenson-geune",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "이 시가 그린 감각은 무엇인가요?",
+        choices: ["몸이 오르내리는 느낌", "손끝이 따가운 느낌", "입안이 단 느낌"],
+        answer: "몸이 오르내리는 느낌",
+        explanation: "그네를 타고 하늘로 올라갈 때 몸이 붕 뜨는 느낌이 시 전체를 이끌어요."
+    },
+    {
+        id: "senses-why",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "이 차시에서 읽은 시들을 떠올려 보세요.",
+        sentence: "시가 오감을 쓰면 무엇이 좋은가요?",
+        choices: [
+            "읽는 사람이 그 자리에 있는 것처럼 느껴져요",
+            "시를 외우기 쉬워져요",
+            "글자 수를 줄일 수 있어요"
+        ],
+        answer: "읽는 사람이 그 자리에 있는 것처럼 느껴져요",
+        explanation: "빛깔을 보고 소리를 듣고 몸으로 느끼면, 읽는 사람도 시 속에 들어가게 돼요."
+    },
+
+    // ── 9차시 · 말하는 이는 지금 어디에 있나 ──────────────────────
+    {
+        id: "gulttuk-where",
+        poemId: "dongju-gulttuk",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "연기가 솟는 곳은 어디인가요?",
+        choices: ["산골짜기 오막살이", "마을 한가운데 큰 집", "학교 옆 부엌"],
+        answer: "산골짜기 오막살이",
+        explanation: "산골짜기의 낮은 굴뚝에서 대낮에 연기가 솟아요."
+    },
+    {
+        id: "gulttuk-potato",
+        poemId: "dongju-gulttuk",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "아이들이 굽고 있는 것은 무엇인가요?",
+        choices: ["감자", "고구마", "밤"],
+        answer: "감자",
+        explanation: "'감자를 굽는 게지'라고 짐작해요."
+    },
+    {
+        id: "gulttuk-lips",
+        poemId: "dongju-gulttuk",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "아이들 입술이 꺼먼 까닭은 무엇인가요?",
+        choices: ["감자를 구우며 숯을 발라서", "어두워서 그렇게 보여서", "먹물을 묻혀서"],
+        answer: "감자를 구우며 숯을 발라서",
+        explanation: "굽고 먹느라 숯이 입술에 묻었어요."
+    },
+    {
+        id: "gulttuk-outside",
+        poemId: "dongju-gulttuk",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "말하는 이는 어디에서 이 장면을 보고 있나요?",
+        choices: ["굴뚝이 보이는 집 바깥에서", "아이들 곁에 앉아서", "감자를 굽는 아궁이 앞에서"],
+        answer: "굴뚝이 보이는 집 바깥에서",
+        explanation: "연기만 보고 '감자를 굽는 게지' 하고 짐작하니, 안이 아니라 밖에 있는 거예요."
+    },
+    {
+        id: "omae-speaker",
+        poemId: "kimyeongrang-omae",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "따옴표 안의 말을 하는 사람은 누구인가요?",
+        choices: ["누이", "말하는 이", "지나가던 이웃"],
+        answer: "누이",
+        explanation: "누이가 놀란 듯이 치어다보며 한 말을 그대로 옮겨 놓았어요."
+    },
+    {
+        id: "omae-leaf",
+        poemId: "kimyeongrang-omae",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "무엇이 날아와서 누이가 놀랐나요?",
+        choices: ["붉게 물든 감잎", "떨어진 밤송이", "지나가는 새"],
+        answer: "붉게 물든 감잎",
+        explanation: "장독대에 골 붉은 감잎이 날아왔어요."
+    },
+    {
+        id: "omae-watcher",
+        poemId: "kimyeongrang-omae",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "말하는 이는 누이에게서 얼마나 떨어져 있나요?",
+        choices: ["곁에서 누이를 바라볼 만큼 가까이", "말소리만 겨우 들릴 만큼 멀리", "다른 마을에 있어 소식으로만"],
+        answer: "곁에서 누이를 바라볼 만큼 가까이",
+        explanation: "'누이의 마음아 나를 보아라'라고 말을 걸 만큼 가까이 있어요."
+    },
+    {
+        id: "byeoltong-when",
+        poemId: "jiyong-byeoltong",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "말하는 이는 지금 어느 때에 서서 이야기하나요?",
+        choices: ["다 자란 뒤", "별똥이 떨어진 그날 밤", "가 보기로 마음먹은 다음 날"],
+        answer: "다 자란 뒤",
+        explanation: "'인젠 다 자랐소'라고 했어요. 지난 일을 돌아보며 말하고 있어요."
+    },
+    {
+        id: "jogae-place",
+        poemId: "dongju-jogaekkeopjil",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "말하는 이가 조개껍데기를 굴리며 노는 곳은 어디인가요?",
+        choices: ["바다에서 먼 북쪽 나라", "조개를 주운 바닷가", "언니가 사는 남쪽 마을"],
+        answer: "바다에서 먼 북쪽 나라",
+        explanation: "'여긴 여긴 북쪽 나라요'라고 했어요. 바다가 멀어서 물소리가 더 그리운 거예요."
+    },
+    {
+        id: "speaker-why",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "이 차시에서 읽은 시들을 떠올려 보세요.",
+        sentence: "말하는 이가 어디에 있는지 알면 무엇이 좋은가요?",
+        choices: [
+            "시의 장면과 마음이 또렷해져요",
+            "시를 더 빨리 읽을 수 있어요",
+            "시의 글자 수를 셀 수 있어요"
+        ],
+        answer: "시의 장면과 마음이 또렷해져요",
+        explanation: "집 밖에 있으니 짐작하고, 바다에서 머니 그리워해요. 자리가 마음을 만들어요."
+    },
+
+    // ── 10차시 · 웃긴데 왜 슬플까 ─────────────────────────────────
+    {
+        id: "ojum-map",
+        poemId: "dongju-ojumssagae",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "요에 그려진 지도는 무엇으로 그린 것인가요?",
+        choices: ["동생이 싼 오줌", "먹물", "물감"],
+        answer: "동생이 싼 오줌",
+        explanation: "지난밤에 동생이 오줌을 싸서 생긴 얼룩을 지도라고 불렀어요."
+    },
+    {
+        id: "ojum-mom",
+        poemId: "dongju-ojumssagae",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "엄마는 어디에 계신다고 했나요?",
+        choices: ["별나라", "만주 땅", "바닷가 마을"],
+        answer: "별나라",
+        explanation: "'꿈에 가 본 엄마 계신 별나라'라고 했어요."
+    },
+    {
+        id: "ojum-dad",
+        poemId: "dongju-ojumssagae",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "아빠는 무엇을 하러 어디에 가 계신가요?",
+        choices: ["돈을 벌러 만주 땅에", "고기를 잡으러 바다에", "공부를 하러 서울에"],
+        answer: "돈을 벌러 만주 땅에",
+        explanation: "먼 곳에 일하러 가 계셔서 곁에 없어요."
+    },
+    {
+        id: "ojum-sad",
+        poemId: "dongju-ojumssagae",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "이 시가 웃기면서도 마음이 짠한 까닭은 무엇인가요?",
+        choices: [
+            "우스운 지도 이야기 속에 엄마 아빠가 곁에 없다는 사정이 들어 있어서",
+            "동생이 자꾸 오줌을 싸서",
+            "지도를 잘 그리지 못해서"
+        ],
+        answer: "우스운 지도 이야기 속에 엄마 아빠가 곁에 없다는 사정이 들어 있어서",
+        explanation: "웃음으로 시작해서 그리움으로 끝나요. 웃음이 슬픔을 감싸고 있어요."
+    },
+    {
+        id: "geojit-dog",
+        poemId: "dongju-geojitburi",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "문을 두드린 것은 무엇이었나요?",
+        choices: ["검둥이의 꼬리", "밤길 나그네", "바람"],
+        answer: "검둥이의 꼬리",
+        explanation: "문을 열어 보니 사람이 아니라 개 꼬리였어요."
+    },
+    {
+        id: "geojit-hen",
+        poemId: "dongju-geojitburi",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "달걀을 낳았다고 거짓말한 것은 누구인가요?",
+        choices: ["암탉", "간난이", "검둥이"],
+        answer: "암탉",
+        explanation: "간난이가 뛰어가 보니 달걀은 없었어요."
+    },
+    {
+        id: "geojit-twice",
+        poemId: "dongju-geojitburi",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "두 묶음이 똑같이 되풀이하는 짜임은 무엇인가요?",
+        choices: ["소리가 들리고, 가 보고, 속는 것", "묻고, 답하고, 웃는 것", "부르고, 대답하고, 헤어지는 것"],
+        answer: "소리가 들리고, 가 보고, 속는 것",
+        explanation: "같은 짜임을 두 번 겹쳐 놓아서 웃음이 두 배가 돼요."
+    },
+    {
+        id: "chamsae-pity",
+        poemId: "dongju-chamsae",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "참새가 웃기면서도 짠한 까닭은 무엇인가요?",
+        choices: [
+            "하루 종일 애쓰는데 늘 같은 글자밖에 못 써서",
+            "글씨를 배우기 싫어해서",
+            "마당이 너무 좁아서"
+        ],
+        answer: "하루 종일 애쓰는데 늘 같은 글자밖에 못 써서",
+        explanation: "열심인 모습이 우습기도 하고 안쓰럽기도 해요."
+    },
+    {
+        id: "hongsi-wait",
+        poemId: "jiyong-hongsi",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "오빠를 기다리는 마음은 어떤 행동으로 나타나나요?",
+        choices: ["홍시를 남겨 두고 까마귀를 쫓는 행동", "감나무에 올라가는 행동", "홍시를 나눠 먹는 행동"],
+        answer: "홍시를 남겨 두고 까마귀를 쫓는 행동",
+        explanation: "새를 쫓느라 소리치는 모습은 우습지만, 그 밑에는 오빠를 기다리는 마음이 있어요."
+    },
+    {
+        id: "bittersweet-how",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "이 차시에서 읽은 시들을 떠올려 보세요.",
+        sentence: "웃음 뒤에 슬픔이 숨은 시는 무엇을 살펴 읽어야 하나요?",
+        choices: [
+            "우스운 장면 뒤에 어떤 사정이 있는지",
+            "글자가 몇 개나 되는지",
+            "누가 더 크게 웃는지"
+        ],
+        answer: "우스운 장면 뒤에 어떤 사정이 있는지",
+        explanation: "웃고 넘기면 시의 절반만 읽은 것이 돼요."
     }
 ]);
