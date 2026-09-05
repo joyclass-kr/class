@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="계절마다 하루 동안 태양이 지나는 길과 남중 고도·낮의 길이를 따라가고, 자전축이 기울어진 지구가 공전하며 햇빛이 비치는 각도가 달라져 계절이 생기는 까닭을 알아보는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="seasons-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>계절이 생기는 까닭</h1>
+            </div>
+            <div class="grade-tags"><span>초등 6학년</span><span>지구과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>하루 동안 태양의 길을 볼지, 공전하는 지구를 볼지 고릅니다.</li>
+            <li>태양의 길은 계절을, 공전하는 지구는 자전축의 기울기와 지구의 자리를 정합니다.</li>
+            <li>결과를 먼저 예상해 봅니다.</li>
+            <li>실험을 시작해 태양의 높이와 낮의 길이, 햇빛이 비치는 각도가 어떻게 달라지는지 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">여름에는 태양이 높이 떠 낮이 길고, 겨울에는 낮게 떠 낮이 짧습니다</p>
+                <fieldset class="mode-field">
+                    <legend>실험 종류</legend>
+                    <div class="mode-buttons">
+                        <button type="button" data-mode="path">하루 동안 태양의 길<small>계절마다 얼마나 높이 뜰까</small></button>
+                        <button type="button" data-mode="orbit">공전하는 지구<small>왜 계절이 생길까</small></button>
+                    </div>
+                </fieldset>
+                <div id="controlArea"></div>
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons three" id="predictionArea"></div>
+                </fieldset>
+                <button class="run-button" id="checkBtn" type="button">실험 시작</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 실험을 시작해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">결과</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">까닭</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel burn-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">서울에서 남쪽을 바라본 하늘입니다. 점선은 다른 계절의 태양의 길입니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>태양의 남중 고도와 낮의 길이</strong> 태양이 정남쪽에 왔을 때의 높이를 남중 고도라 합니다. 서울에서 여름에는 약 76°로 머리 위 가까이 뜨고 낮이 14시간 반이나 되지만, 겨울에는 약 29°로 낮게 떠 낮이 9시간 반밖에 안 됩니다. 봄·가을은 그 중간입니다.</p>
+                <p><strong>비스듬한 빛은 덜 따뜻하다</strong> 같은 햇빛이 곧게 비치면 좁은 땅을 데우고, 비스듬히 비치면 넓은 땅에 퍼져 한 곳이 받는 양이 줄어듭니다. 태양이 높이 뜨는 여름이 더운 것은 빛이 곧게 비치는 데다 낮까지 길기 때문입니다.</p>
+                <p><strong>계절이 생기는 까닭</strong> 지구는 자전축이 약 23.5° 기울어진 채로 태양 둘레를 돕니다. 북반구가 태양 쪽으로 기울어진 자리에서는 태양이 높이 떠 여름이 되고, 반대쪽으로 기울어진 자리에서는 낮게 떠 겨울이 됩니다. 자전축이 기울지 않았다면 계절의 변화는 없었을 것입니다.</p>
+                <p><strong>거리 때문이 아니다</strong> 지구가 태양에 가까워져서 여름이 되는 것이 아닙니다. 지구는 오히려 1월에 태양에 조금 더 가깝습니다. 우리나라가 여름일 때 남반구 오스트레일리아는 겨울인 것도 거리로는 설명할 수 없습니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="a">
+                    <h3>서울에서 태양의 남중 고도가 가장 높고 낮이 가장 긴 계절은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 여름</label>
+                        <label><input type="radio" name="q1" value="b"> 겨울</label>
+                        <label><input type="radio" name="q1" value="c"> 봄</label>
+                        <label><input type="radio" name="q1" value="d"> 어느 계절이나 같다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>여름에는 태양이 약 76°까지 높이 떠 낮이 14시간 반쯤 되고, 겨울에는 약 29°로 낮게 떠 낮이 9시간 반쯤입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>지구에 계절이 생기는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 여름에 지구가 태양에 더 가까워지기 때문에</label>
+                        <label><input type="radio" name="q2" value="b"> 태양이 여름에 더 뜨거워지기 때문에</label>
+                        <label><input type="radio" name="q2" value="c"> 자전축이 기울어진 채로 태양 둘레를 돌기 때문에</label>
+                        <label><input type="radio" name="q2" value="d"> 지구가 하루에 한 바퀴 돌기 때문에</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>자전축이 기울어진 채 공전하므로 자리에 따라 북반구가 태양 쪽으로, 또는 반대쪽으로 기울어져 태양의 높이와 낮의 길이가 달라집니다. 지구는 오히려 1월에 태양에 더 가깝습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>같은 손전등 빛을 땅에 곧게 비출 때와 비스듬히 비출 때를 견주면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 비스듬히 비추면 더 좁고 밝다</label>
+                        <label><input type="radio" name="q3" value="b"> 둘 다 똑같다</label>
+                        <label><input type="radio" name="q3" value="c"> 곧게 비추면 더 넓게 퍼진다</label>
+                        <label><input type="radio" name="q3" value="d"> 비스듬히 비추면 더 넓게 퍼져 한 곳이 덜 밝다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>같은 양의 빛이 비스듬히 비치면 넓은 땅에 나뉘어 한 곳이 받는 빛이 줄어듭니다. 겨울에 태양이 낮게 떠 덜 따뜻한 까닭입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>지구의 자전축이 기울어져 있지 않다면 어떻게 될까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 여름이 더 더워진다</label>
+                        <label><input type="radio" name="q4" value="b"> 한 해 내내 계절이 바뀌지 않는다</label>
+                        <label><input type="radio" name="q4" value="c"> 낮과 밤이 없어진다</label>
+                        <label><input type="radio" name="q4" value="d"> 태양이 뜨지 않는다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>기울기가 없으면 어느 자리에서나 태양의 높이와 낮의 길이가 같아 계절의 변화가 없습니다. 낮과 밤은 자전 때문에 생기므로 그대로 있습니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=2"></script>
+</body>
+</html>
