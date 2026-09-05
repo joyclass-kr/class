@@ -383,30 +383,26 @@
             font-family: "Malgun Gothic", sans-serif;
         }
 
-        .hub-quick-links {
-            display: flex;
-            justify-content: center;
-            margin: 0 0 18px;
+        .hub-title-link {
+            width: min(1180px, 100%);
+            margin: -8px auto 14px;
+            text-align: center;
+            font-size: 0.86rem;
+            letter-spacing: 0.03em;
         }
 
-        .hub-quick-links a {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            align-items: center;
-            width: min(100%, 460px);
-            min-height: 72px;
-            padding: 11px 15px;
-            border: 2px solid var(--gold);
-            background: linear-gradient(135deg, var(--gold-dark), var(--panel));
-            color: #ffffff;
-            text-align: left;
+        .hub-title-link a {
+            color: rgba(255, 226, 155, 0.88);
             text-decoration: none;
-            font-family: "Malgun Gothic", sans-serif;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.68);
+            border-bottom: 1px solid rgba(255, 226, 155, 0.45);
+            padding-bottom: 2px;
         }
 
-        .hub-quick-links a:hover,
-        .hub-quick-links a:focus-visible {
-            filter: brightness(1.12);
+        .hub-title-link a:hover,
+        .hub-title-link a:focus-visible {
+            color: #fff8e8;
+            border-bottom-color: #fff8e8;
         }
 
         .worksheet-group {
@@ -991,12 +987,7 @@
 
     <div id="hubContent" hidden data-nosnippet>
         <h1 class="learning-hub-title">기초학력</h1>
-        <div class="hub-quick-links" aria-label="학급 함께 하기">
-            <a href="learning/class-race/" data-requires-player="true">
-                <span class="worksheet-copy"><strong>학급 순위전</strong><small>(Class Race) · 선생님이 연 방에 학급 코드로 참가</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="3" fill="#fff8e1" stroke="#ffb300" stroke-width="1.2"/><rect x="4.5" y="13" width="4" height="7" fill="#ffb300"/><rect x="10" y="7" width="4" height="13" fill="#e53935"/><rect x="15.5" y="10" width="4" height="10" fill="#43a047"/><text x="12" y="6.2" font-size="4.5" font-weight="bold" fill="#212121" text-anchor="middle" font-family="'Malgun Gothic', sans-serif">1위</text></svg></span>
-            </a>
-        </div>
+        <p class="hub-title-link"><a href="learning/class-race/" data-requires-player="true">학급 순위전 <span aria-hidden="true">→</span></a></p>
         <section class="hub-section worksheet-section category-section" data-category-section aria-labelledby="worksheet-title">
         <h2 id="worksheet-title" class="category-heading"><button id="category-literacy-toggle" class="category-toggle" type="button" aria-expanded="false" aria-controls="category-literacy-panel"><span class="category-number" aria-hidden="true">01</span><span class="category-label">문해·수리</span><span class="category-chevron" aria-hidden="true"></span></button></h2>
         <div id="category-literacy-panel" class="worksheet-container category-panel" role="region" aria-labelledby="category-literacy-toggle" hidden>
