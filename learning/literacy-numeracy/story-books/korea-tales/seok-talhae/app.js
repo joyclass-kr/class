@@ -278,6 +278,521 @@ const HISTORY = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🌊",
+        art: "cover.webp",
+        title: "Seok Talhae",
+        intro: [
+            "The story of Seok Talhae is in both the Samguk Yusa and the Samguk Sagi. He became the fourth king of Silla.",
+            "Talhae is said to mean the one who came out of the chest. The name Seok comes from the word for magpie, because magpies found it.",
+            "In Silla the Bak, the Seok and the Kim families took turns giving kings. Seok Talhae was the first Seok king."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Chest That Crossed the Sea",
+            beats: [
+                {
+                    art: "01-sea.webp",
+                    emoji: "🌊",
+                    left: [
+                        "Very long ago this happened in a country over the sea.",
+                        "Some say it was Yongseong, and some say Dapana.",
+                        "The queen of that country bore a great egg instead of a child.",
+                        { t: "\"Was there ever such a thing in the world?\"", v: "old" },
+                        "The whole palace was turned upside down."
+                    ],
+                    right: [
+                        "The officials put their heads together and muttered.",
+                        { t: "\"A person laying an egg will bring harm on the country.\"", v: "man" },
+                        { t: "\"It must be put out at once.\"", v: "man" },
+                        "The king said nothing for a long time.",
+                        "He could not throw it out, nor keep it by him."
+                    ]
+                },
+                {
+                    art: "02-chest.webp",
+                    emoji: "📦",
+                    left: [
+                        "The king wrapped the egg in silk and put it in a wooden chest.",
+                        "It was his own child, whatever else it was.",
+                        "He put treasure and servants into the chest as well.",
+                        "So that it would not go hungry in a strange land.",
+                        "The queen laid a hand on the chest and cried."
+                    ],
+                    right: [
+                        { t: "\"Anywhere at all. Only reach a land you can live in.\"", v: "old" },
+                        "The king pushed the chest into the sea with his own hands.",
+                        "The waves pushed it, and pushed it again.",
+                        "The chest went with the current, night and day.",
+                        "The sun rose and set many times over it."
+                    ]
+                },
+                {
+                    art: "03-magpie.webp",
+                    emoji: "🐦",
+                    left: [
+                        "Then a few days later, at a shore called Ajinpo,",
+                        "which is a seaside village near Gyeongju today,",
+                        "a flock of magpies gathered black in one place and called and called.",
+                        "It was loud enough to shake the branches.",
+                        { t: "\"Kak, kak! Kak, kak!\"", v: "boy" }
+                    ],
+                    right: [
+                        "Every one of them was looking down at one spot in the water.",
+                        "An old fisherwoman went to see what it was.",
+                        "A great chest was floating there at the water's edge.",
+                        "It rocked this way and that on the waves.",
+                        "The old woman rubbed her eyes and looked again."
+                    ]
+                },
+                {
+                    art: "04-open.webp",
+                    emoji: "👦",
+                    left: [
+                        "The old woman put a rope on the chest and hauled it up.",
+                        "It was too heavy for her to do alone.",
+                        "Two people from the village ran over and pulled with her.",
+                        "The lid came up with a groan and sunlight poured into the chest.",
+                        "Everybody held their breath."
+                    ],
+                    right: [
+                        "Inside, a boy sat up, rubbing his eyes.",
+                        { t: "\"...Where is this?\"", v: "boy" },
+                        "Beside him were shining treasures and servants.",
+                        "The old woman sat down heavily where she stood.",
+                        { t: "\"Good heavens, a child out of a chest.\"", v: "granny" }
+                    ]
+                },
+                {
+                    art: "05-name.webp",
+                    emoji: "🏠",
+                    left: [
+                        "The old woman took the boy home with her.",
+                        "He must have been very hungry: he ate two bowls of rice.",
+                        { t: "\"With no name I cannot call you.\"", v: "granny" },
+                        "She lay awake all night wondering what to name him.",
+                        "Then she slapped her knee."
+                    ],
+                    right: [
+                        "A magpie had shown the way, so the family name was Seok.",
+                        "It was the magpie word with a part taken off.",
+                        "He had undone the chest and come out, so his name was Talhae.",
+                        { t: "\"Seok Talhae. That is good.\"", v: "granny" },
+                        "From that day the two of them lived together."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Place Seen from Toham",
+            beats: [
+                {
+                    art: "06-grow.webp",
+                    emoji: "🎣",
+                    left: [
+                        "As Talhae grew he caught fish, mended nets and cut wood.",
+                        "He went out in the boat before dawn and came back after sundown.",
+                        "And still he read books whenever he had a moment.",
+                        "Lamp oil was dear, so he read in the yard by moonlight."
+                    ],
+                    right: [
+                        { t: "\"That boy is handy, and he has a head on him too.\"", v: "man" },
+                        { t: "\"He is no ordinary child.\"", v: "man" },
+                        "The villagers all clicked their tongues over him.",
+                        "Talhae came to know the stars and the lie of the land.",
+                        "He could tell beforehand whether rain or wind was coming."
+                    ]
+                },
+                {
+                    art: "07-mountain.webp",
+                    emoji: "⛰️",
+                    left: [
+                        "When he was grown Talhae climbed Mount Toham.",
+                        "He meant to choose the place where he would live.",
+                        "Below the mountain the land of Seorabeol lay open like a palm.",
+                        "For seven days Talhae sat on the top and looked down at it.",
+                        "He forgot his meals and looked."
+                    ],
+                    right: [
+                        { t: "\"Where is the place worth living in?\"", v: "man" },
+                        "Talhae narrowed his eyes and read the shape of the land.",
+                        "At last his eyes stopped in one place.",
+                        "It was a hill curved like a new moon.",
+                        "A mountain closed it behind and water ran in front of it."
+                    ]
+                },
+                {
+                    art: "08-house.webp",
+                    emoji: "🏡",
+                    left: [
+                        "But there was already a large house on that spot.",
+                        "The tiles were fine and the wall was high.",
+                        "It was the house of a man called Hogong.",
+                        "Talhae stood outside the wall a long while.",
+                        "Children were laughing inside it."
+                    ],
+                    right: [
+                        "It has to be that spot, he thought.",
+                        "For days Talhae walked up and down in front of that house.",
+                        "And then a trick came into his head.",
+                        "He knew it was not right, and still he did not give it up.",
+                        "That night he turned over and could not sleep."
+                    ]
+                },
+                {
+                    art: "09-trick.webp",
+                    emoji: "⚒️",
+                    left: [
+                        "In the middle of the night Talhae began digging under that wall.",
+                        "It was pitch dark, with no moon.",
+                        "In the hole he buried charcoal and a whetstone for sharpening knives.",
+                        "They were the things a smithy uses.",
+                        "He put the earth back and trod it down hard."
+                    ],
+                    right: [
+                        "Next morning Talhae knocked hard at the gate.",
+                        { t: "\"This house was my forefathers' house.\"", v: "man" },
+                        "Hogong came out into the yard, astonished.",
+                        { t: "\"What are you saying! I never heard the like in my life!\"", v: "old" },
+                        "In the end the two of them went to the town office."
+                    ]
+                },
+                {
+                    art: "10-court.webp",
+                    emoji: "⚖️",
+                    left: [
+                        { t: "\"What proof have you?\"", v: "man" },
+                        "The officer looked from one of them to the other.",
+                        { t: "\"My forefathers were smiths.\"", v: "man" },
+                        { t: "\"Dig under the wall and you will see.\"", v: "man" },
+                        "Talhae's voice did not waver at all. The officer tilted his head."
+                    ],
+                    right: [
+                        "The constables took spades and dug under the wall.",
+                        "Charcoal and a whetstone really did come out of the earth.",
+                        "Hogong's face went white.",
+                        "The officer nodded and gave his word.",
+                        { t: "\"The house belongs to this man.\"", v: "man" },
+                        "Hogong could do nothing, unjust as it was."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The House Given Back",
+            beats: [
+                {
+                    art: "11-return.webp",
+                    emoji: "🔑",
+                    left: [
+                        "That evening Talhae went to see Hogong.",
+                        "Hogong was packing, and he stopped to receive him.",
+                        "Bundles lay about all over the yard.",
+                        "Talhae held out the gate key with both hands.",
+                        { t: "\"This house was yours from the beginning, sir.\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"...What is this you are doing?\"", v: "old" },
+                        "Hogong looked from the key to Talhae's face and back.",
+                        { t: "\"I buried the charcoal there myself last night.\"", v: "man" },
+                        { t: "\"What I truly wanted was not the house.\"", v: "man" },
+                        "Talhae said it with his head down."
+                    ]
+                },
+                {
+                    art: "12-friend.webp",
+                    emoji: "🤝",
+                    left: [
+                        { t: "\"Then what in the world was it?\"", v: "old" },
+                        "Hogong asked it, out of patience.",
+                        "Only then did Talhae smile at him.",
+                        { t: "\"I spent seven days on that mountain choosing this spot.\"", v: "man" },
+                        { t: "\"Looking down from up there, this was the best of them.\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"I wanted to see whether anybody else had seen it too.\"", v: "man" },
+                        { t: "\"And you saw this spot before I did, sir.\"", v: "man" },
+                        { t: "\"I never met a man like you!\"", v: "old" },
+                        "Hogong held his sides and laughed a long while.",
+                        "From that day the two were the closest of friends."
+                    ]
+                },
+                {
+                    art: "13-king.webp",
+                    emoji: "📜",
+                    left: [
+                        "In the end that story reached the ears of the king.",
+                        "The king called Talhae to the palace and sat him down.",
+                        "Talhae told him all of it, the buried charcoal too.",
+                        "The king folded his arms and thought a long while.",
+                        "The officials held their breath."
+                    ],
+                    right: [
+                        { t: "\"A good head, and he knows how to step back.\"", v: "old" },
+                        { t: "\"The trick was wrong, but giving it back was right.\"", v: "old" },
+                        "The king took Talhae for his son-in-law.",
+                        "In time Talhae became king of Silla.",
+                        "He was Talhae, the fourth king of Silla."
+                    ]
+                },
+                {
+                    art: "14-shore.webp",
+                    emoji: "🌅",
+                    left: [
+                        "When he was king Talhae went back to Ajinpo.",
+                        "Even as king he had never forgotten that shore.",
+                        "The old woman's shabby house was still standing.",
+                        "Only, the old woman herself had died.",
+                        "Talhae took off his shoes and went down to the water."
+                    ],
+                    right: [
+                        "It was the sea she had gone out to every day.",
+                        "The colour of the water was not a shade different.",
+                        "A few magpies circled over it, calling.",
+                        { t: "\"I began here.\"", v: "man" },
+                        "Talhae stood in that place and looked at the sea a long while."
+                    ]
+                }
+            ]
+        }
+    ],
+    history: {
+        title: 'From Here On It Is Real History',
+        note: 'Everything up to here was the story. From here on it is what the records show.',
+        paras: [
+            "In early Silla the kings came in turn from three families, the Bak, the Seok and the Kim. The Samguk Sagi records that Seok Talhae was on the throne from the year 57 to the year 80.",
+            "Hogong in the story is a man who really appears several times in the Samguk Sagi. It records that he rose to Daebo, a great office of the country, in Talhae's reign.",
+            "The charcoal and the whetstone he buried are read as meaning that he came of a family of smiths. Many scholars think the story records people who crossed the sea with the skill of working iron and grew powerful here.",
+            "On Mount Toham at Gyeongju there is still a shrine that honours Seok Talhae. A tomb called the tomb of King Talhae is left at Gyeongju as well."
+        ]
+    },
+    quiz: [
+        { q: "What did Talhae cross the sea in?", choices: ["A small fishing boat", "A great wooden chest", "A bundle of silk"], answer: 1 },
+        { q: "What showed that the chest had come in?", choices: ["The dogs barked in every house", "A bell rang at the temple", "A flock of magpies called"], answer: 2 },
+        { q: "Why did the old woman make the family name Seok?", choices: ["Magpies had shown the way", "He came out of a chest", "He crossed over the sea"], answer: 0 },
+        { q: "What was the spot Talhae chose from the mountain?", choices: ["The water's edge at Ajinpo", "The top of Mount Toham", "A hill curved like a new moon"], answer: 2 },
+        { q: "What did Talhae do about Hogong's house?", choices: ["Gave it back and made a friend", "Dug the charcoal up again", "Told the town office again"], answer: 0 },
+        { q: "What did Talhae become later?", choices: ["King of Gaya", "King of Silla", "A boat-building carpenter"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He spent seven days on a mountain top looking only at the land, so he took that much trouble even over choosing a spot.",
+                "He gave back that same evening the house he had won with buried charcoal, so the house was not what he wanted.",
+                "The old fisherwoman simply took home a child out of a chest, so such a thing cannot have been unheard of then.",
+                "Hogong won the case and still made Talhae his friend, so he had a big enough heart to take in the loser."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "in both ~ and ~", k: "~와 ~에 함께", s: "in both the Samguk Yusa and the Samguk Sagi" },
+            { w: "the fourth king", k: "네 번째 임금", s: "He became the fourth king of Silla." },
+            { w: "is said to mean ~", k: "~라는 뜻이라 한다", s: "Talhae is said to mean the one who came out of the chest." },
+            { w: "chest", k: "궤", s: "the one who came out of the chest" },
+            { w: "magpie", k: "까치", s: "The name Seok comes from the word for magpie." },
+            { w: "took turns", k: "번갈아 했다", s: "the Bak, the Seok and the Kim families took turns giving kings" }
+        ],
+        "01-sea.webp": [
+            { w: "over the sea", k: "바다 건너", s: "this happened in a country over the sea" },
+            { w: "Some say ~", k: "~라고도 한다", s: "Some say it was Yongseong, and some say Dapana." },
+            { w: "bore (bear)", k: "낳았다", s: "The queen of that country bore a great egg." },
+            { w: "instead of ~", k: "~ 대신", s: "bore a great egg instead of a child" },
+            { w: "turned upside down", k: "발칵 뒤집혔다", s: "The whole palace was turned upside down." },
+            { w: "put their heads together", k: "머리를 맞댔다", s: "The officials put their heads together and muttered." },
+            { w: "bring harm on ~", k: "화가 미치다", s: "A person laying an egg will bring harm on the country." },
+            { w: "be put out", k: "내다 버려지다", s: "It must be put out at once." },
+            { w: "keep ~ by him", k: "곁에 두다", s: "He could not throw it out, nor keep it by him." }
+        ],
+        "02-chest.webp": [
+            { w: "wrapped (wrap)", k: "쌌다", s: "The king wrapped the egg in silk" },
+            { w: "silk", k: "비단", s: "The king wrapped the egg in silk and put it in a wooden chest." },
+            { w: "whatever else", k: "아무리 그래도", s: "It was his own child, whatever else it was." },
+            { w: "servants", k: "종", s: "He put treasure and servants into the chest as well." },
+            { w: "go hungry", k: "굶다", s: "So that it would not go hungry in a strange land." },
+            { w: "a strange land", k: "낯선 땅", s: "So that it would not go hungry in a strange land." },
+            { w: "laid a hand on ~", k: "손을 얹었다", s: "The queen laid a hand on the chest and cried." },
+            { w: "Only reach ~", k: "~에 닿기만 해라", s: "Anywhere at all. Only reach a land you can live in." },
+            { w: "the current", k: "물살", s: "The chest went with the current, night and day." }
+        ],
+        "03-magpie.webp": [
+            { w: "shore", k: "바닷가", s: "at a shore called Ajinpo" },
+            { w: "seaside village", k: "바닷가 마을", s: "which is a seaside village near Gyeongju today" },
+            { w: "a flock of ~", k: "~ 떼", s: "a flock of magpies gathered black in one place" },
+            { w: "gathered black", k: "새까맣게 모였다", s: "a flock of magpies gathered black in one place" },
+            { w: "loud enough to ~", k: "~할 만큼 시끄러운", s: "It was loud enough to shake the branches." },
+            { w: "one spot", k: "한곳", s: "Every one of them was looking down at one spot in the water." },
+            { w: "fisherwoman", k: "고기잡이 할머니", s: "An old fisherwoman went to see what it was." },
+            { w: "floating (float)", k: "떠 있는", s: "A great chest was floating there at the water's edge." },
+            { w: "rocked (rock)", k: "흔들렸다", s: "It rocked this way and that on the waves." }
+        ],
+        "04-open.webp": [
+            { w: "hauled ~ up (haul)", k: "끌어올렸다", s: "The old woman put a rope on the chest and hauled it up." },
+            { w: "too heavy to ~", k: "너무 무거워 ~할 수 없는", s: "It was too heavy for her to do alone." },
+            { w: "with a groan", k: "끙 하고", s: "The lid came up with a groan" },
+            { w: "poured into ~ (pour)", k: "쏟아져 들어갔다", s: "sunlight poured into the chest" },
+            { w: "held their breath", k: "숨을 죽였다", s: "Everybody held their breath." },
+            { w: "sat up", k: "일어나 앉았다", s: "Inside, a boy sat up, rubbing his eyes." },
+            { w: "rubbing his eyes", k: "눈을 비비며", s: "a boy sat up, rubbing his eyes" },
+            { w: "shining", k: "번쩍이는", s: "Beside him were shining treasures and servants." },
+            { w: "sat down heavily", k: "털썩 주저앉았다", s: "The old woman sat down heavily where she stood." }
+        ],
+        "05-name.webp": [
+            { w: "took ~ home", k: "집으로 데려갔다", s: "The old woman took the boy home with her." },
+            { w: "must have been ~", k: "~였던 모양이다", s: "He must have been very hungry" },
+            { w: "With no name", k: "이름이 없으면", s: "With no name I cannot call you." },
+            { w: "lay awake (lie)", k: "잠 못 이루었다", s: "She lay awake all night wondering what to name him." },
+            { w: "slapped her knee", k: "무릎을 탁 쳤다", s: "Then she slapped her knee." },
+            { w: "had shown the way", k: "알려 주었다", s: "A magpie had shown the way, so the family name was Seok." },
+            { w: "a part taken off", k: "한 쪽을 떼어 낸", s: "It was the magpie word with a part taken off." },
+            { w: "undone (undo)", k: "풀었다", s: "He had undone the chest and come out" }
+        ],
+        "06-grow.webp": [
+            { w: "mended (mend)", k: "기웠다", s: "he caught fish, mended nets and cut wood" },
+            { w: "nets", k: "그물", s: "he caught fish, mended nets and cut wood" },
+            { w: "before dawn", k: "새벽에", s: "He went out in the boat before dawn" },
+            { w: "whenever he had a moment", k: "틈만 나면", s: "he read books whenever he had a moment" },
+            { w: "dear", k: "비싼, 아까운", s: "Lamp oil was dear, so he read in the yard by moonlight." },
+            { w: "handy", k: "손이 야무진", s: "That boy is handy, and he has a head on him too." },
+            { w: "no ordinary ~", k: "그냥 ~가 아닌", s: "He is no ordinary child." },
+            { w: "the lie of the land", k: "땅 생김새", s: "Talhae came to know the stars and the lie of the land." },
+            { w: "beforehand", k: "미리", s: "He could tell beforehand whether rain or wind was coming." }
+        ],
+        "07-mountain.webp": [
+            { w: "meant to ~ (mean)", k: "~하려는 것이었다", s: "He meant to choose the place where he would live." },
+            { w: "lay open (lie)", k: "훤히 펼쳐졌다", s: "the land of Seorabeol lay open like a palm" },
+            { w: "like a palm", k: "손바닥처럼", s: "the land of Seorabeol lay open like a palm" },
+            { w: "forgot his meals", k: "밥도 잊었다", s: "He forgot his meals and looked." },
+            { w: "worth living in", k: "살 만한", s: "Where is the place worth living in?" },
+            { w: "narrowed his eyes", k: "눈을 가늘게 떴다", s: "Talhae narrowed his eyes and read the shape of the land." },
+            { w: "the shape of the land", k: "땅 생김새", s: "read the shape of the land" },
+            { w: "a new moon", k: "초승달", s: "It was a hill curved like a new moon." },
+            { w: "closed it behind", k: "뒤를 막아 주었다", s: "A mountain closed it behind and water ran in front of it." }
+        ],
+        "08-house.webp": [
+            { w: "already", k: "이미", s: "But there was already a large house on that spot." },
+            { w: "tiles", k: "기와", s: "The tiles were fine and the wall was high." },
+            { w: "outside the wall", k: "담 밖에", s: "Talhae stood outside the wall a long while." },
+            { w: "It has to be ~", k: "~가 아니면 안 된다", s: "It has to be that spot, he thought." },
+            { w: "walked up and down", k: "서성였다", s: "For days Talhae walked up and down in front of that house." },
+            { w: "came into his head", k: "떠올랐다", s: "And then a trick came into his head." },
+            { w: "give it up", k: "그만두다", s: "He knew it was not right, and still he did not give it up." },
+            { w: "turned over", k: "뒤척였다", s: "That night he turned over and could not sleep." }
+        ],
+        "09-trick.webp": [
+            { w: "digging (dig)", k: "파는", s: "Talhae began digging under that wall" },
+            { w: "pitch dark", k: "캄캄한", s: "It was pitch dark, with no moon." },
+            { w: "charcoal", k: "숯", s: "he buried charcoal and a whetstone" },
+            { w: "whetstone", k: "숫돌", s: "he buried charcoal and a whetstone for sharpening knives" },
+            { w: "sharpening (sharpen)", k: "가는", s: "a whetstone for sharpening knives" },
+            { w: "smithy", k: "대장간", s: "They were the things a smithy uses." },
+            { w: "trod ~ down (tread)", k: "꾹꾹 밟았다", s: "He put the earth back and trod it down hard." },
+            { w: "forefathers", k: "조상", s: "This house was my forefathers' house." },
+            { w: "astonished", k: "어이없어하는", s: "Hogong came out into the yard, astonished." },
+            { w: "the town office", k: "관아", s: "In the end the two of them went to the town office." }
+        ],
+        "10-court.webp": [
+            { w: "proof", k: "증거", s: "What proof have you?" },
+            { w: "from one to the other", k: "번갈아", s: "The officer looked from one of them to the other." },
+            { w: "smiths", k: "대장장이", s: "My forefathers were smiths." },
+            { w: "waver", k: "흔들리다", s: "Talhae's voice did not waver at all." },
+            { w: "tilted his head", k: "고개를 갸웃했다", s: "The officer tilted his head." },
+            { w: "constables", k: "포졸", s: "The constables took spades and dug under the wall." },
+            { w: "spades", k: "삽", s: "The constables took spades and dug under the wall." },
+            { w: "went white", k: "하얗게 질렸다", s: "Hogong's face went white." },
+            { w: "gave his word", k: "판을 내렸다", s: "The officer nodded and gave his word." },
+            { w: "unjust as it was", k: "억울해도", s: "Hogong could do nothing, unjust as it was." }
+        ],
+        "11-return.webp": [
+            { w: "was packing (pack)", k: "짐을 싸고 있었다", s: "Hogong was packing, and he stopped to receive him." },
+            { w: "receive", k: "맞다", s: "he stopped to receive him" },
+            { w: "Bundles", k: "보따리", s: "Bundles lay about all over the yard." },
+            { w: "lay about (lie)", k: "널브러져 있었다", s: "Bundles lay about all over the yard." },
+            { w: "held out (hold)", k: "내밀었다", s: "Talhae held out the gate key with both hands." },
+            { w: "from the beginning", k: "본디", s: "This house was yours from the beginning, sir." },
+            { w: "and back", k: "번갈아", s: "Hogong looked from the key to Talhae's face and back." },
+            { w: "myself", k: "제가 직접", s: "I buried the charcoal there myself last night." },
+            { w: "with his head down", k: "고개를 푹 숙이고", s: "Talhae said it with his head down." }
+        ],
+        "12-friend.webp": [
+            { w: "what in the world", k: "대체 무엇", s: "Then what in the world was it?" },
+            { w: "out of patience", k: "답답해서", s: "Hogong asked it, out of patience." },
+            { w: "Only then", k: "그제야", s: "Only then did Talhae smile at him." },
+            { w: "spent ~ choosing (spend)", k: "고르는 데 썼다", s: "I spent seven days on that mountain choosing this spot." },
+            { w: "the best of them", k: "제일인 곳", s: "Looking down from up there, this was the best of them." },
+            { w: "whether ~", k: "~인지 아닌지", s: "I wanted to see whether anybody else had seen it too." },
+            { w: "before I did", k: "저보다 먼저", s: "And you saw this spot before I did, sir." },
+            { w: "held his sides", k: "배를 잡았다", s: "Hogong held his sides and laughed a long while." },
+            { w: "the closest of friends", k: "둘도 없는 벗", s: "From that day the two were the closest of friends." }
+        ],
+        "13-king.webp": [
+            { w: "reached the ears of ~", k: "귀에 들어갔다", s: "In the end that story reached the ears of the king." },
+            { w: "sat him down", k: "앉혔다", s: "The king called Talhae to the palace and sat him down." },
+            { w: "all of it", k: "하나도 숨기지 않고", s: "Talhae told him all of it, the buried charcoal too." },
+            { w: "folded his arms", k: "팔짱을 꼈다", s: "The king folded his arms and thought a long while." },
+            { w: "step back", k: "물러서다", s: "A good head, and he knows how to step back." },
+            { w: "giving it back", k: "돌려준 것", s: "The trick was wrong, but giving it back was right." },
+            { w: "son-in-law", k: "사위", s: "The king took Talhae for his son-in-law." },
+            { w: "In time", k: "훗날", s: "In time Talhae became king of Silla." }
+        ],
+        "14-shore.webp": [
+            { w: "went back to ~", k: "다시 찾았다", s: "When he was king Talhae went back to Ajinpo." },
+            { w: "Even as king", k: "임금이 되어서도", s: "Even as king he had never forgotten that shore." },
+            { w: "shabby", k: "낡은", s: "The old woman's shabby house was still standing." },
+            { w: "had died", k: "세상을 떠났다", s: "Only, the old woman herself had died." },
+            { w: "took off (take)", k: "벗었다", s: "Talhae took off his shoes and went down to the water." },
+            { w: "had gone out to", k: "날마다 나가던", s: "It was the sea she had gone out to every day." },
+            { w: "not a shade different", k: "조금도 다르지 않은", s: "The colour of the water was not a shade different." },
+            { w: "circled (circle)", k: "빙빙 맴돌았다", s: "A few magpies circled over it, calling." },
+            { w: "I began here", k: "내가 여기서 시작했다", s: "I began here." }
+        ],
+        "after": [
+            { w: "is set beside ~", k: "나란히 놓인다", s: "Seok Talhae is set beside the first kings of the other countries." },
+            { w: "neither ~ nor ~", k: "~도 ~도 아닌", s: "he was neither a Bak nor a Kim" },
+            { w: "drifted (drift)", k: "떠왔다", s: "and drifted over the sea in a chest" },
+            { w: "from outside", k: "밖에서 온", s: "a story of somebody from outside becoming king" },
+            { w: "hardly call it ~", k: "~라 하기 어렵다", s: "You could hardly call it a good way." },
+            { w: "insisted (insist)", k: "우겼다", s: "and insisted his family were smiths" },
+            { w: "of his own accord", k: "스스로", s: "That is why he went to the king of his own accord." },
+            { w: "having won", k: "이겨 놓고", s: "Only somebody who gave it back, having won, could do that." },
+            { w: "stays longer", k: "더 오래 남는다", s: "what you do after winning stays longer than the winning" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '⛵',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Seok Talhae is another of the people written down in the Samguk Yusa. He became the fourth king of Silla, and the first of the Seok family, so he was neither a Bak nor a Kim.",
+                    "This one is said to have come out of an egg and drifted over the sea in a chest. It is a story of somebody from outside becoming king, kept in our old records.",
+                    "Look again and the way Talhae got Hogong's house was a trick. He buried a whetstone and charcoal in secret and insisted his family were smiths. You could hardly call it a good way.",
+                    "That is why he went to the king of his own accord and told him about the charcoal too. Only somebody who gave the house back, having won it, could do that."
+                ],
+                right: [
+                    "Talhae took the house by a trick and did not keep it. Because he gave it back after winning, he got one person instead of one house.",
+                    "What you do after winning stays longer than the winning itself.",
+                    "Have you ever won an argument? What did you do next?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "탈해는 무엇에 담겨 바다를 건너왔나요?", choices: ["작은 고깃배", "커다란 나무 궤", "비단 보따리"], answer: 1 },
     { q: "궤가 닿은 것을 알려 준 것은 무엇인가요?", choices: ["집집마다 개가 짖어서", "절에서 종이 울려서", "까치 떼가 울어서"], answer: 2 },
