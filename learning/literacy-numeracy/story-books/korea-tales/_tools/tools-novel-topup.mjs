@@ -96,7 +96,7 @@ function bail(why) {
 }
 try { execFileSync('node', ['--check', appPath]); } catch { bail('문법이 깨졌다'); }
 const s2 = fs.readFileSync(appPath, 'utf8');
-const CH2 = eval('(' + s2.slice(s2.indexOf('[', s2.indexOf('const CHAPTERS = [')), s2.indexOf('\n];') + 2) + ')');
+const CH2 = eval('(' + s2.slice(s2.indexOf('[', s2.indexOf('const CHAPTERS = [')), s2.indexOf('\n];', s2.indexOf('const CHAPTERS = [')) + 2) + ')');
 if (CH2.map(c => (c.paras || []).length).join('|') !== beforeShape) bail('문단 수가 달라졌다');
 
 const chars = CH2.reduce((n, c) => n + c.paras.join('').replace(/<[^>]*>/g, '').replace(/\s/g, '').length, 0);
