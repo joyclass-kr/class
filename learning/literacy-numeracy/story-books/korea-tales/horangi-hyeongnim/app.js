@@ -230,6 +230,440 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐯",
+        art: "cover.webp",
+        title: "The Tiger Brother",
+        intro: [
+            "The Tiger Brother is not an old folk tale. Bang Jeong-hwan wrote it for the New Year number of the magazine Eorini in 1926.",
+            "Bang Jeong-hwan is the man who made Children's Day in Korea, and who asked people to call children by a word of respect.",
+            "Tigers in our stories are frightening and also soft-hearted and easily fooled. This one is the softest of them all."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Brother!",
+            beats: [
+                {
+                    art: "01-woodcutter.webp",
+                    emoji: "🪓",
+                    left: [
+                        "Long ago, below a mountain, a woodcutter lived with his old mother.",
+                        "His father had died when he was small.",
+                        "He cut a load of wood each day and sold it, and they just about ate.",
+                        "That day too he shouldered his frame before dawn and went deep into the mountain."
+                    ],
+                    right: [
+                        { t: "\"One more load and I'll go down.\"", v: "man" },
+                        "He cut branches and went further and further in. Before he knew it he was deep inside the valley.",
+                        "The mountain was unusually quiet.",
+                        "No birds, no water sound."
+                    ]
+                },
+                {
+                    art: "02-tiger.webp",
+                    emoji: "🐯",
+                    left: [
+                        "Rustle, rustle.",
+                        "Leaves moved behind him. The woodcutter turned only his head.",
+                        "The bushes parted and out came a tiger as big as a house.",
+                        { t: "\"Rrraah! So you're my supper tonight.\"", v: "beast" }
+                    ],
+                    right: [
+                        "The woodcutter dropped his axe and froze. His legs would not move.",
+                        "There was nowhere to run and nowhere to hide.",
+                        "The tiger came on, one slow step at a time.",
+                        "Close enough for its breath to reach his face."
+                    ]
+                },
+                {
+                    art: "03-brother.webp",
+                    emoji: "😲",
+                    left: [
+                        "And then something quite mad came out of the woodcutter's mouth.",
+                        "He felt he had to say something, anything.",
+                        { t: "\"B— b— brother!\"", v: "man" },
+                        "He did not know himself what he had said. His mouth had moved on its own."
+                    ],
+                    right: [
+                        "The tiger stopped dead with one paw in the air. Its yellow eyes went as round as plates.",
+                        { t: "\"...What did you just call me?\"", v: "beast" },
+                        { t: "\"I said brother!\"", v: "man" },
+                        "The woodcutter shut his eyes tight and shouted it again."
+                    ]
+                },
+                {
+                    art: "04-story.webp",
+                    emoji: "🥲",
+                    left: [
+                        "He squeezed out tears and made up a story. Having said it, he had to go on.",
+                        { t: "\"My mother always told me,\"", v: "man" },
+                        { t: "\"my brother went up the mountain as a boy and never came back.\"", v: "man" },
+                        "He rubbed his eyes with the back of his hand."
+                    ],
+                    right: [
+                        { t: "\"She said the mountain spirit took him and made him a tiger.\"", v: "man" },
+                        "The tiger listened with its tail hanging down.",
+                        { t: "\"There has not been one day since that she has not wept.\"", v: "man" },
+                        { t: "\"She only wants to know that he is alive.\"", v: "man" },
+                        "The woodcutter's shoulders shook as he sobbed."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · What Came Every Night",
+            beats: [
+                {
+                    art: "05-tears.webp",
+                    emoji: "💧",
+                    left: [
+                        "The tiger put its raised paw quietly down. Its great shoulders sank.",
+                        "And big tears rolled out of its eyes.",
+                        { t: "\"So that was it... I always felt strange at the sight of people.\"", v: "beast" },
+                        "The woodcutter hardly dared to breathe."
+                    ],
+                    right: [
+                        { t: "\"And Mother... is Mother well?\"", v: "beast" },
+                        "Its voice was thick with weeping. The woodcutter nodded before he knew it.",
+                        "He could not bring himself to say no.",
+                        "The tiger rubbed its eyes with one great paw."
+                    ]
+                },
+                {
+                    art: "06-farewell.webp",
+                    emoji: "🌄",
+                    left: [
+                        { t: "\"Do not tell Mother about me.\"", v: "beast" },
+                        "The tiger shook its head slowly.",
+                        { t: "\"How could she see me like this?\"", v: "beast" },
+                        { t: "\"How can I stand before her as a beast?\"", v: "beast" },
+                        "Its voice sank very low. The woodcutter could not say a word."
+                    ],
+                    right: [
+                        "The tiger took the woodcutter's frame on its own back and carried it down to the foot of the mountain.",
+                        "It set the frame down and went back into the mountain without looking round.",
+                        "The woodcutter's legs shook for a long while.",
+                        "His heart was still hammering when he got home."
+                    ]
+                },
+                {
+                    art: "07-gift.webp",
+                    emoji: "🐗",
+                    left: [
+                        "But the next morning, opening the door, he stopped where he stood.",
+                        "A great wild boar lay in the yard.",
+                        "Somebody had brought it in the night, that was clear.",
+                        "Large footprints led away towards the mountain."
+                    ],
+                    right: [
+                        "The next day it was a deer. The day after, mountain herbs and medicine roots in a heap.",
+                        "Every night something was left in the yard.",
+                        "The woodcutter knew perfectly well who it was.",
+                        "And his household grew visibly better off."
+                    ]
+                },
+                {
+                    art: "08-mother.webp",
+                    emoji: "👵",
+                    left: [
+                        "His mother tilted her head and asked. She stopped preparing the boar and looked at her son.",
+                        { t: "\"Who on earth is doing this, night after night?\"", v: "granny" },
+                        "The woodcutter hesitated and could not answer.",
+                        "He could not bring himself to tell her the truth."
+                    ],
+                    right: [
+                        "And then he told her all of it. His mother said nothing for a long time and went out into the yard.",
+                        "She did not scold him at all.",
+                        { t: "\"Do you think a mother cannot know her own child?\"", v: "granny" },
+                        "And she stood a long time facing the dark mountain."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · I Knew All Along",
+            beats: [
+                {
+                    art: "09-years.webp",
+                    emoji: "🍂",
+                    left: [
+                        "Several more years went by. Now there was never a hungry day in that house.",
+                        "Every night his mother set a bowl of rice out in the yard.",
+                        "She never missed one night.",
+                        "Rain or snow, it made no difference."
+                    ],
+                    right: [
+                        "In the morning the bowl was always clean and empty. She would pick it up and smile.",
+                        { t: "\"My elder boy has been.\"", v: "granny" },
+                        "And she would hold the bowl against her.",
+                        "Every time he heard it, something twisted in the woodcutter's chest."
+                    ]
+                },
+                {
+                    art: "10-guilt.webp",
+                    emoji: "😔",
+                    left: [
+                        "The woodcutter's heart grew heavier and heavier.",
+                        "The longer it went on, the heavier it grew.",
+                        { t: "\"I made it up to save my life...\"", v: "man" },
+                        { t: "\"And now even Mother calls that beast her son.\"", v: "man" },
+                        { t: "\"And he has believed it for ten years.\"", v: "man" }
+                    ],
+                    right: [
+                        "He lay ill for days. More and more often food would not go down.",
+                        "At last he got up one day and went up the mountain.",
+                        "He left his axe and his frame and went with nothing.",
+                        "He went over what he would say again and again."
+                    ]
+                },
+                {
+                    art: "11-confess.webp",
+                    emoji: "🙇",
+                    left: [
+                        "The tiger came padding out of the valley. Its coat had gone white now.",
+                        "It did not walk as it once had.",
+                        "The woodcutter dropped to his knees before it.",
+                        { t: "\"Brother, the truth is... what I said that day was a lie.\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"I made it up because I wanted to live.\"", v: "man" },
+                        { t: "\"I have no brother. Forgive me.\"", v: "man" },
+                        "His voice shook and broke. The mountain went dead quiet.",
+                        "Not even a leaf moved."
+                    ]
+                },
+                {
+                    art: "12-know.webp",
+                    emoji: "🌙",
+                    left: [
+                        "After a long while the tiger spoke, very low.",
+                        { t: "\"...I knew all along.\"", v: "beast" },
+                        "The woodcutter's head came up.",
+                        { t: "\"Do you think I don't know I was born a tiger?\"", v: "beast" },
+                        "He could not believe his ears."
+                    ],
+                    right: [
+                        "The tiger looked down at him.",
+                        { t: "\"Only, you were the first who ever called me brother.\"", v: "beast" },
+                        "It said that and turned away. And it walked slowly back into the mountain.",
+                        "The woodcutter bowed to that back for a long time."
+                    ]
+                }
+            ],
+            moral: "The woodcutter lied to save his life, and the tiger knew it was a lie and let it stand because it liked being called brother. Sometimes what a creature is starving for is not food but a name somebody calls it by.",
+            question: "Is there a name somebody called you that made you glad?"
+        }
+    ],
+    quiz: [
+        { q: "What did the woodcutter do when the bushes parted?", choices: ["Ran off with his frame", "Dropped his axe and froze", "Shouted at the top of his voice"], answer: 1 },
+        { q: "What did the tiger do when the woodcutter shouted?", choices: ["Came on step by step", "Backed into the bushes", "Stopped with a paw in the air"], answer: 2 },
+        { q: "What story did the woodcutter make up?", choices: ["That his brother had become a tiger", "That he was the tiger's son", "That the mountain spirit had sent him"], answer: 0 },
+        { q: "What did the tiger do when it heard that?", choices: ["Refused to believe it and raged", "Laughed out loud", "Wept great tears"], answer: 2 },
+        { q: "What did the tiger do after that?", choices: ["Left food in the yard every night", "Built them a new house", "Cut wood for them every day"], answer: 0 },
+        { q: "What did the mother take it for?", choices: ["A gift from the mountain spirit", "Something sent by her elder son", "Something a neighbour left"], answer: 1 },
+        { q: "What did the woodcutter finally tell the tiger?", choices: ["That it had all been a lie", "That it should not come again", "That it should come and live with them"], answer: 0 },
+        { q: "What did the tiger say to the confession?", choices: ["Not to tell his mother", "That it was ashamed of its shape", "That it had known all along"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He carried a lie told to save himself for ten years, so one word can grow that heavy.",
+                "His mother put a bowl out every night, so she knew and let it be.",
+                "The tiger said it had known all along, so it was not fooled — it simply liked the name.",
+                "The tiger carried the frame down and bowed to the mother, so it wanted a turn at being a son."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "is not ~", k: "~이 아니다", s: "The Tiger Brother is not an old folk tale." },
+            { w: "folk tale", k: "옛이야기", s: "is not an old folk tale" },
+            { w: "the New Year number", k: "신년호", s: "for the New Year number of the magazine Eorini in 1926" },
+            { w: "magazine", k: "잡지", s: "the magazine Eorini" },
+            { w: "made Children's Day", k: "어린이날을 만들었다", s: "the man who made Children's Day in Korea" },
+            { w: "a word of respect", k: "높여 부르는 말", s: "call children by a word of respect" },
+            { w: "soft-hearted", k: "정이 많은", s: "Tigers in our stories are frightening and also soft-hearted" },
+            { w: "easily fooled", k: "어수룩한", s: "soft-hearted and easily fooled" },
+            { w: "the softest of them all", k: "가장 마음이 여린", s: "This one is the softest of them all." }
+        ],
+        "01-woodcutter.webp": [
+            { w: "below a mountain", k: "산 밑에", s: "Long ago, below a mountain, a woodcutter lived with his old mother." },
+            { w: "had died (die)", k: "돌아가셨다", s: "His father had died when he was small." },
+            { w: "a load of wood", k: "나무 한 짐", s: "He cut a load of wood each day and sold it" },
+            { w: "just about ate", k: "겨우 끼니를 이었다", s: "and they just about ate" },
+            { w: "shouldered (shoulder)", k: "지게를 졌다", s: "he shouldered his frame before dawn" },
+            { w: "cut branches", k: "가지를 쳤다", s: "He cut branches and went further and further in." },
+            { w: "Before he knew it", k: "어느새", s: "Before he knew it he was deep inside the valley." },
+            { w: "unusually quiet", k: "유난히 조용한", s: "The mountain was unusually quiet." }
+        ],
+        "02-tiger.webp": [
+            { w: "Rustle", k: "부스럭", s: "Rustle, rustle." },
+            { w: "turned only his head", k: "목만 돌렸다", s: "The woodcutter turned only his head." },
+            { w: "parted (part)", k: "쫙 갈라졌다", s: "The bushes parted and out came a tiger" },
+            { w: "as big as a house", k: "집채만 한", s: "a tiger as big as a house" },
+            { w: "supper", k: "저녁거리", s: "So you're my supper tonight." },
+            { w: "dropped ~ and froze", k: "놓치고 얼어붙었다", s: "The woodcutter dropped his axe and froze." },
+            { w: "would not move", k: "움직여지지 않았다", s: "His legs would not move." },
+            { w: "nowhere to run", k: "달아날 곳이 없는", s: "There was nowhere to run and nowhere to hide." },
+            { w: "came on (come on)", k: "다가왔다", s: "The tiger came on, one slow step at a time." },
+            { w: "Close enough for ~", k: "~할 만큼 가까운", s: "Close enough for its breath to reach his face." }
+        ],
+        "03-brother.webp": [
+            { w: "quite mad", k: "엉뚱한", s: "something quite mad came out of the woodcutter's mouth" },
+            { w: "anything", k: "무슨 말이라도", s: "He felt he had to say something, anything." },
+            { w: "did not know himself", k: "제가 무슨 말을 했는지 몰랐다", s: "He did not know himself what he had said." },
+            { w: "on its own", k: "저 혼자", s: "His mouth had moved on its own." },
+            { w: "stopped dead", k: "우뚝 멈췄다", s: "The tiger stopped dead with one paw in the air." },
+            { w: "as round as plates", k: "접시처럼 커다래진", s: "Its yellow eyes went as round as plates." },
+            { w: "What did you call me?", k: "뭐라고 했느냐?", s: "...What did you just call me?" },
+            { w: "shut his eyes tight", k: "눈을 질끈 감았다", s: "The woodcutter shut his eyes tight and shouted it again." }
+        ],
+        "04-story.webp": [
+            { w: "squeezed out ~ (squeeze)", k: "짜냈다", s: "He squeezed out tears and made up a story." },
+            { w: "made up ~ (make up)", k: "지어냈다", s: "He squeezed out tears and made up a story." },
+            { w: "Having said it", k: "이왕 뱉은 말이니", s: "Having said it, he had to go on." },
+            { w: "never came back", k: "돌아오지 않았다", s: "my brother went up the mountain as a boy and never came back" },
+            { w: "the back of his hand", k: "손등", s: "He rubbed his eyes with the back of his hand." },
+            { w: "the mountain spirit", k: "산신령", s: "the mountain spirit took him and made him a tiger" },
+            { w: "hanging down", k: "축 늘어뜨린", s: "The tiger listened with its tail hanging down." },
+            { w: "not one day since", k: "하루도 안 빠지고", s: "There has not been one day since that she has not wept." },
+            { w: "sobbed (sob)", k: "흐느꼈다", s: "The woodcutter's shoulders shook as he sobbed." }
+        ],
+        "05-tears.webp": [
+            { w: "raised paw", k: "들었던 앞발", s: "The tiger put its raised paw quietly down." },
+            { w: "sank (sink)", k: "축 처졌다", s: "Its great shoulders sank." },
+            { w: "rolled out of ~ (roll)", k: "뚝뚝 흘렀다", s: "And big tears rolled out of its eyes." },
+            { w: "So that was it", k: "그랬구나", s: "So that was it..." },
+            { w: "at the sight of ~", k: "~만 보면", s: "I always felt strange at the sight of people." },
+            { w: "hardly dared to ~", k: "감히 ~하지 못했다", s: "The woodcutter hardly dared to breathe." },
+            { w: "thick with weeping", k: "축축하게 잠긴", s: "Its voice was thick with weeping." },
+            { w: "before he knew it", k: "얼떨결에", s: "The woodcutter nodded before he knew it." },
+            { w: "could not bring himself to ~", k: "차마 ~할 수 없었다", s: "He could not bring himself to say no." }
+        ],
+        "06-farewell.webp": [
+            { w: "Do not tell ~", k: "말하지 마라", s: "Do not tell Mother about me." },
+            { w: "shook its head (shake)", k: "고개를 저었다", s: "The tiger shook its head slowly." },
+            { w: "like this", k: "이런 꼴로", s: "How could she see me like this?" },
+            { w: "stand before ~", k: "앞에 서다", s: "How can I stand before her as a beast?" },
+            { w: "sank very low", k: "아주 낮게 가라앉았다", s: "Its voice sank very low." },
+            { w: "on its own back", k: "제 등에", s: "The tiger took the woodcutter's frame on its own back" },
+            { w: "the foot of the mountain", k: "산 밑", s: "carried it down to the foot of the mountain" },
+            { w: "without looking round", k: "뒤도 안 보고", s: "went back into the mountain without looking round" },
+            { w: "was still hammering", k: "두근두근했다", s: "His heart was still hammering when he got home." }
+        ],
+        "07-gift.webp": [
+            { w: "stopped where he stood", k: "우뚝 멈춰 섰다", s: "opening the door, he stopped where he stood" },
+            { w: "wild boar", k: "멧돼지", s: "A great wild boar lay in the yard." },
+            { w: "that was clear", k: "분명했다", s: "Somebody had brought it in the night, that was clear." },
+            { w: "footprints", k: "발자국", s: "Large footprints led away towards the mountain." },
+            { w: "deer", k: "노루", s: "The next day it was a deer." },
+            { w: "herbs", k: "산나물", s: "mountain herbs and medicine roots in a heap" },
+            { w: "in a heap", k: "소복이", s: "medicine roots in a heap" },
+            { w: "knew perfectly well", k: "잘 알고 있었다", s: "The woodcutter knew perfectly well who it was." },
+            { w: "visibly better off", k: "눈에 띄게 펴진", s: "his household grew visibly better off" }
+        ],
+        "08-mother.webp": [
+            { w: "tilted her head", k: "고개를 갸웃했다", s: "His mother tilted her head and asked." },
+            { w: "preparing (prepare)", k: "손질하는", s: "She stopped preparing the boar" },
+            { w: "Who on earth ~", k: "대체 누가", s: "Who on earth is doing this, night after night?" },
+            { w: "hesitated (hesitate)", k: "우물쭈물했다", s: "The woodcutter hesitated and could not answer." },
+            { w: "tell her the truth", k: "사실대로 말하다", s: "He could not bring himself to tell her the truth." },
+            { w: "told her all of it", k: "죄다 털어놓았다", s: "And then he told her all of it." },
+            { w: "did not scold ~", k: "나무라지 않았다", s: "She did not scold him at all." },
+            { w: "her own child", k: "제 자식", s: "Do you think a mother cannot know her own child?" },
+            { w: "facing (face)", k: "향하여", s: "she stood a long time facing the dark mountain" }
+        ],
+        "09-years.webp": [
+            { w: "went by (go by)", k: "흘렀다", s: "Several more years went by." },
+            { w: "never a hungry day", k: "굶는 날이 없는", s: "Now there was never a hungry day in that house." },
+            { w: "set ~ out (set)", k: "내놓았다", s: "his mother set a bowl of rice out in the yard" },
+            { w: "never missed ~", k: "한 번도 거르지 않았다", s: "She never missed one night." },
+            { w: "Rain or snow", k: "비가 오나 눈이 오나", s: "Rain or snow, it made no difference." },
+            { w: "clean and empty", k: "깨끗이 빈", s: "In the morning the bowl was always clean and empty." },
+            { w: "has been", k: "다녀갔다", s: "My elder boy has been." },
+            { w: "held ~ against her", k: "가슴에 안았다", s: "she would hold the bowl against her" },
+            { w: "something twisted", k: "가슴이 저릿했다", s: "something twisted in the woodcutter's chest" }
+        ],
+        "10-guilt.webp": [
+            { w: "grew heavier (grow)", k: "무거워졌다", s: "The woodcutter's heart grew heavier and heavier." },
+            { w: "The longer ~ the heavier", k: "갈수록 더", s: "The longer it went on, the heavier it grew." },
+            { w: "to save my life", k: "살자고", s: "I made it up to save my life..." },
+            { w: "calls ~ her son", k: "아들로 여긴다", s: "even Mother calls that beast her son" },
+            { w: "has believed ~", k: "믿고 있다", s: "And he has believed it for ten years." },
+            { w: "lay ill (lie)", k: "앓아누웠다", s: "He lay ill for days." },
+            { w: "would not go down", k: "목에 넘어가지 않았다", s: "More and more often food would not go down." },
+            { w: "with nothing", k: "맨몸으로", s: "He left his axe and his frame and went with nothing." },
+            { w: "went over ~", k: "되뇌었다", s: "He went over what he would say again and again." }
+        ],
+        "11-confess.webp": [
+            { w: "came padding out (pad)", k: "어슬렁어슬렁 나왔다", s: "The tiger came padding out of the valley." },
+            { w: "coat", k: "털", s: "Its coat had gone white now." },
+            { w: "as it once had", k: "예전 같지 않게", s: "It did not walk as it once had." },
+            { w: "dropped to his knees", k: "털썩 무릎을 꿇었다", s: "The woodcutter dropped to his knees before it." },
+            { w: "the truth is ~", k: "사실은", s: "Brother, the truth is... what I said that day was a lie." },
+            { w: "wanted to live", k: "살고 싶었다", s: "I made it up because I wanted to live." },
+            { w: "Forgive me", k: "용서하십시오", s: "I have no brother. Forgive me." },
+            { w: "shook and broke", k: "떨리고 갈라졌다", s: "His voice shook and broke." },
+            { w: "Not even a leaf", k: "나뭇잎조차", s: "Not even a leaf moved." }
+        ],
+        "12-know.webp": [
+            { w: "After a long while", k: "한참 만에", s: "After a long while the tiger spoke, very low." },
+            { w: "all along", k: "진작", s: "...I knew all along." },
+            { w: "head came up", k: "고개를 번쩍 들었다", s: "The woodcutter's head came up." },
+            { w: "was born ~ (bear)", k: "~으로 났다", s: "Do you think I don't know I was born a tiger?" },
+            { w: "could not believe his ears", k: "제 귀를 의심했다", s: "He could not believe his ears." },
+            { w: "looked down at ~", k: "물끄러미 내려다보았다", s: "The tiger looked down at him." },
+            { w: "Only, ~", k: "다만", s: "Only, you were the first who ever called me brother." },
+            { w: "the first who ever ~", k: "~한 첫 사람", s: "you were the first who ever called me brother" },
+            { w: "turned away", k: "돌아섰다", s: "It said that and turned away." },
+            { w: "bowed to ~", k: "절을 했다", s: "The woodcutter bowed to that back for a long time." }
+        ],
+        "after": [
+            { w: "talking with people", k: "사람과 말을 주고받는", s: "Stories of tigers talking with people are unusually common here." },
+            { w: "unusually common", k: "유난히 많은", s: "are unusually common here" },
+            { w: "the nearest and the most frightening", k: "가장 가깝고도 무서운", s: "the tiger was the nearest and the most frightening neighbour" },
+            { w: "not always the bad one", k: "늘 나쁜 쪽은 아닌", s: "So a tiger in our stories is not always the bad one." },
+            { w: "gets fooled", k: "속는다", s: "It gets fooled, it pays back kindness" },
+            { w: "gives way", k: "마음이 풀린다", s: "and here it gives way at the sound of one word" },
+            { w: "what won it over", k: "넘어가게 한 것", s: "What won the tiger over was not cleverness but the word brother." },
+            { w: "living alone", k: "혼자 살던", s: "Think how that word sounded to something living alone on a mountain." },
+            { w: "made ~ true", k: "진짜로 만들었다", s: "the one who made the borrowed name true was the tiger" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐯',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Stories of tigers talking with people are unusually common here. In a land of mountains the tiger was the nearest and the most frightening neighbour.",
+                    "So a tiger in our stories is not always the bad one. It gets fooled, it pays back kindness, and here it gives way at the sound of one word.",
+                    "What won the tiger over was not cleverness but the word brother. Think how that word sounded to something living alone on a mountain.",
+                    "Look again at the game it left in the yard afterwards. The one who made the borrowed name true was the tiger."
+                ],
+                right: [
+                    "The woodcutter lied to save his life, and the tiger knew it was a lie and let it stand because it liked being called brother. Sometimes what a creature is starving for is not food but a name somebody calls it by.",
+                    "Is there a name somebody called you that made you glad?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "덤불이 갈라지자 나무꾼은 어떻게 했나요?", choices: ["지게를 지고 달아났다", "도끼를 놓치고 얼어붙었다", "큰 소리로 외쳤다"], answer: 1 },
     { q: "나무꾼이 소리치자 호랑이는 어떻게 했나요?", choices: ["한 발짝씩 다가왔다", "덤불 속으로 물러섰다", "앞발을 든 채로 멈췄다"], answer: 2 },

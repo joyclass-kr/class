@@ -235,6 +235,454 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🔨",
+        art: "cover.webp",
+        title: "The Goblin's Club",
+        intro: [
+            "The Goblin's Club is an old Korean tale with no known author. Knock the club and say gold come out, and out it comes.",
+            "Korean goblins carry a club, and knocking it brings whatever they name. But they are easily frightened, and run off leaving their things behind.",
+            "A gaeam is a small hard hazelnut. Bite one and it cracks with a loud snap. That snap is why it is in the story."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Four Hazelnuts",
+            beats: [
+                {
+                    art: "01-brothers.webp",
+                    emoji: "🌰",
+                    left: [
+                        "Long ago in a village lived two brothers. The elder was greedy; the younger was kind and hard-working.",
+                        "If there was anything good, the elder took his own share first.",
+                        "It was the younger who looked after their parents.",
+                        "And he never once complained about it."
+                    ],
+                    right: [
+                        "One day the younger brother went up the mountain for firewood. It was autumn and the leaves were ankle deep.",
+                        "As he pushed the leaves aside something rolled under his foot.",
+                        "A smooth hazelnut. A nut like an acorn, and good to eat.",
+                        "He bent down and picked it up."
+                    ]
+                },
+                {
+                    art: "02-pick.webp",
+                    emoji: "🤲",
+                    left: [
+                        { t: "\"Oh, this one is for Father.\"", v: "man" },
+                        "He polished it on his sleeve and put it deep in his pocket. A little further on he found a second.",
+                        { t: "\"This one is for Mother.\"", v: "man" },
+                        "And soon a third came rolling to his feet."
+                    ],
+                    right: [
+                        "He did not forget his brother either.",
+                        { t: "\"This one is for my brother.\"", v: "man" },
+                        "Then he picked up a fourth and grinned.",
+                        { t: "\"And this one I shall eat myself.\"", v: "man" },
+                        "Four nuts, one for each of them. He patted his pocket."
+                    ]
+                },
+                {
+                    art: "03-house.webp",
+                    emoji: "🏚️",
+                    left: [
+                        "By the time his bundle of wood was heavy,",
+                        "the sun had gone and the mountain was black. There was not a star out.",
+                        "He could not see where the path went.",
+                        "Luckily there was an empty old house in the valley."
+                    ],
+                    right: [
+                        "He set his frame down on its wooden floor.",
+                        "The floor was thick with dust. Nobody had lived there for a long time.",
+                        { t: "\"There's no owner. I'll borrow it for one night.\"", v: "man" },
+                        "He lay down with his arm for a pillow and closed his eyes."
+                    ]
+                },
+                {
+                    art: "04-dokkaebi.webp",
+                    emoji: "👹",
+                    left: [
+                        "It was the middle of the night, just as he was falling deep asleep.",
+                        "Thump! Thump!",
+                        "Thump!",
+                        "The floor jumped and dust came down from the ceiling.",
+                        "He sat straight up with his eyes wide open."
+                    ],
+                    right: [
+                        "Through a crack in the door he saw the yard full of goblins.",
+                        "Horned goblins, every one with a club in his hand.",
+                        "In the corner of the floor was a ladder up to the loft.",
+                        "He held his breath and climbed it, very carefully."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Gold, Come Out!",
+            beats: [
+                {
+                    art: "05-feast.webp",
+                    emoji: "✨",
+                    left: [
+                        "The goblins sat down in a ring in the middle of the yard.",
+                        { t: "\"Gold, come out! Knock-knock!\"", v: "beast" },
+                        "They knocked their clubs and gold came showering down.",
+                        { t: "\"Silver, come out! Knock-knock!\"", v: "beast" },
+                        "Silver piled up beside it like a hill, shining in the moonlight."
+                    ],
+                    right: [
+                        { t: "\"Rice cake, come out! Knock-knock!\"", v: "beast" },
+                        "Steaming rice cake poured out. The smell came right up into the loft.",
+                        "The goblins sang and danced and feasted all night.",
+                        "Up in the loft the younger brother's eyes were round."
+                    ]
+                },
+                {
+                    art: "06-hungry.webp",
+                    emoji: "😖",
+                    left: [
+                        "Up in the loft he was too hungry to bear it.",
+                        "The smell of the cake kept tickling his nose. He had eaten nothing since morning.",
+                        "His stomach rumbled loudly.",
+                        { t: "'I'll have one of those hazelnuts at least.'", v: "man" }
+                    ],
+                    right: [
+                        "He took a nut from his pocket and put it in his mouth, very slowly so as not to make a noise.",
+                        "Then he bit down hard with his back teeth.",
+                        "But the nut was so hard it would not crack.",
+                        "He bit down harder."
+                    ]
+                },
+                {
+                    art: "07-crack.webp",
+                    emoji: "💥",
+                    left: [
+                        "He set his teeth and put all his strength into it.",
+                        "CRACK!",
+                        "In that empty old house the sound rang out like nothing else. The ceiling rumbled and the walls shivered.",
+                        "It sounded exactly like a great pillar snapping."
+                    ],
+                    right: [
+                        { t: "\"Aargh! The house is coming down!\"", v: "beast" },
+                        "The goblins leapt to their feet in fright.",
+                        { t: "\"The pillar's broken! Run!\"", v: "beast" },
+                        "They poured out of the door treading on each other. Gold, silver, rice cake — they left the lot behind."
+                    ]
+                },
+                {
+                    art: "08-left.webp",
+                    emoji: "🔨",
+                    left: [
+                        "Day broke. The younger brother climbed carefully down from the loft.",
+                        "There was nobody in the yard, goblin or human.",
+                        "The gold and the silver and the cake had all gone without a trace.",
+                        "He rubbed his eyes, wondering if he had dreamed it."
+                    ],
+                    right: [
+                        "Only, on the wooden floor, lay one club. A goblin had dropped it in the rush.",
+                        "He hesitated a long while and then picked it up.",
+                        "He put it on his carrying frame and went home.",
+                        { t: "\"Gold, come out! Knock-knock!\"", v: "man" },
+                        "And gold came showering into his yard."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Brother Who Copied Him",
+            beats: [
+                {
+                    art: "09-brother.webp",
+                    emoji: "😏",
+                    left: [
+                        "When the younger brother's house became a tiled house overnight, the elder came running.",
+                        "The news had gone round the whole village in a day.",
+                        { t: "\"What on earth happened? Tell me all of it, every word.\"", v: "man" },
+                        "He took hold of his brother's sleeve and would not let go."
+                    ],
+                    right: [
+                        "His brother told him just what had happened, hiding nothing.",
+                        "The elder's eyes grew wider and wider.",
+                        { t: "\"An empty house in the valley... hazelnuts...\"", v: "man" },
+                        "He was on his feet before the story was finished.",
+                        "In his mind he was already on the mountain."
+                    ]
+                },
+                {
+                    art: "10-copy.webp",
+                    emoji: "🌰",
+                    left: [
+                        "Next day the elder ran up the mountain and gathered hazelnuts. He filled a whole sack.",
+                        "Then he found the empty house his brother had described.",
+                        "He climbed the ladder to the loft.",
+                        "And there he sat hugging his sack, waiting for the goblins."
+                    ],
+                    right: [
+                        "Late at night the goblins really did come.",
+                        { t: "\"Gold, come out! Knock-knock!\"", v: "beast" },
+                        "They knocked and gold came showering down. The elder stared at the clubs and swallowed.",
+                        { t: "\"With one of those I'd be rich too.\"", v: "man" },
+                        "His hand crept into the sack."
+                    ]
+                },
+                {
+                    art: "11-caught.webp",
+                    emoji: "😱",
+                    left: [
+                        "He put a whole handful of nuts in his mouth and bit down hard.",
+                        "One would never do for him. The louder the better, he thought.",
+                        "Crack!",
+                        "Crackety-crack!",
+                        "One noise after another, loud enough to shake the house."
+                    ],
+                    right: [
+                        "But the goblins did not run. Every one of them looked up at the loft instead.",
+                        { t: "\"That's him! The one who took our club last time!\"", v: "beast" },
+                        "Up the ladder they came, all together.",
+                        "And only then did the elder see what he had done."
+                    ]
+                },
+                {
+                    art: "12-nose.webp",
+                    emoji: "👃",
+                    left: [
+                        { t: "\"Nose, grow long! Knock-knock!\"", v: "beast" },
+                        "The goblin chief knocked his club in front of the elder's face. His nose stretched and stretched until it dragged on the floor.",
+                        "The goblins went off shrieking with laughter.",
+                        "The elder held his long nose and wept."
+                    ],
+                    right: [
+                        "He walked all night holding his nose up, and came to his brother's house.",
+                        "His brother said nothing and picked up the club.",
+                        { t: "\"Nose, shrink! Knock-knock!\"", v: "man" },
+                        "The nose slid back to its size. The elder felt it over and over.",
+                        "And then he bowed his head before his brother."
+                    ]
+                }
+            ],
+            moral: "Picking up four hazelnuts, the younger brother thought first of giving three of them away. The elder filled a sack and thought only of himself. They picked the same thing on the same mountain, and what stayed in their hands was not the same.",
+            question: "When something good comes your way, who do you think of first?"
+        }
+    ],
+    quiz: [
+        { q: "What did the younger brother pick up on the mountain?", choices: ["A lump of gold", "Some hazelnuts", "An old club"], answer: 1 },
+        { q: "Who was the first hazelnut for?", choices: ["His mother", "His father", "His brother"], answer: 1 },
+        { q: "What did the goblins do with their clubs?", choices: ["Knocked out gold and silver", "Hit each other in play", "Dug up the ground"], answer: 0 },
+        { q: "What did the goblins think had happened when they ran?", choices: ["That somebody stole a club", "That day had broken", "That the house was coming down"], answer: 2 },
+        { q: "What happened to the greedy elder brother?", choices: ["His nose grew long", "He got a second lump", "He got a great deal of gold"], answer: 0 },
+        { q: "Where did the elder brother go with his long nose?", choices: ["Back up to the loft", "To his younger brother", "He stayed in the empty house"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He set aside one nut for each of the family, so he is somebody who thinks first of who to share with.",
+                "The goblins left gold and silver and everything behind, so even strong things get frightened.",
+                "The elder chewed a whole handful, so copying somebody always goes too far.",
+                "The elder gathered a whole sack of nuts, so he must have searched the mountain harder than his brother."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "club", k: "방망이", s: "The Goblin's Club" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "Knock ~ (knock)", k: "두드리다", s: "Knock the club and say gold come out" },
+            { w: "out it comes", k: "나온다", s: "and out it comes" },
+            { w: "carry (carry)", k: "지니고 다니다", s: "Korean goblins carry a club" },
+            { w: "whatever they name", k: "원하는 것", s: "knocking it brings whatever they name" },
+            { w: "easily frightened", k: "겁이 아주 많은", s: "But they are easily frightened" },
+            { w: "leaving ~ behind", k: "두고 가며", s: "run off leaving their things behind" },
+            { w: "hazelnut", k: "개암", s: "A gaeam is a small hard hazelnut." },
+            { w: "cracks with a snap", k: "딱 하고 깨진다", s: "Bite one and it cracks with a loud snap." }
+        ],
+        "01-brothers.webp": [
+            { w: "greedy", k: "욕심 많은", s: "The elder was greedy" },
+            { w: "hard-working", k: "부지런한", s: "the younger was kind and hard-working" },
+            { w: "his own share first", k: "저부터", s: "the elder took his own share first" },
+            { w: "looked after ~", k: "모셨다", s: "It was the younger who looked after their parents." },
+            { w: "never once complained", k: "싫은 소리 한 번 안 했다", s: "And he never once complained about it." },
+            { w: "firewood", k: "나무, 땔감", s: "went up the mountain for firewood" },
+            { w: "ankle deep", k: "발목까지 쌓인", s: "It was autumn and the leaves were ankle deep." },
+            { w: "pushed ~ aside", k: "헤쳤다", s: "As he pushed the leaves aside" },
+            { w: "rolled (roll)", k: "데구루루 굴렀다", s: "something rolled under his foot" },
+            { w: "acorn", k: "도토리", s: "A nut like an acorn, and good to eat." },
+            { w: "bent down (bend)", k: "허리를 굽혔다", s: "He bent down and picked it up." }
+        ],
+        "02-pick.webp": [
+            { w: "is for ~", k: "~ 드릴 것", s: "Oh, this one is for Father." },
+            { w: "polished (polish)", k: "곱게 닦았다", s: "He polished it on his sleeve" },
+            { w: "deep in his pocket", k: "주머니 깊숙이", s: "put it deep in his pocket" },
+            { w: "a little further on", k: "조금 더 가서", s: "A little further on he found a second." },
+            { w: "came rolling to ~", k: "굴러왔다", s: "And soon a third came rolling to his feet." },
+            { w: "either", k: "~도", s: "He did not forget his brother either." },
+            { w: "grinned (grin)", k: "씩 웃었다", s: "Then he picked up a fourth and grinned." },
+            { w: "one for each", k: "하나씩", s: "Four nuts, one for each of them." },
+            { w: "patted (pat)", k: "툭툭 두드렸다", s: "He patted his pocket." }
+        ],
+        "03-house.webp": [
+            { w: "By the time ~", k: "~할 무렵", s: "By the time his bundle of wood was heavy" },
+            { w: "not a star out", k: "별빛 하나 없는", s: "There was not a star out." },
+            { w: "where the path went", k: "길이 어디로 났는지", s: "He could not see where the path went." },
+            { w: "Luckily", k: "다행히", s: "Luckily there was an empty old house in the valley." },
+            { w: "valley", k: "골짜기", s: "an empty old house in the valley" },
+            { w: "set ~ down (set)", k: "내려놓았다", s: "He set his frame down on its wooden floor." },
+            { w: "thick with dust", k: "먼지가 뽀얗게 앉은", s: "The floor was thick with dust." },
+            { w: "borrow (borrow)", k: "신세 지다", s: "I'll borrow it for one night." },
+            { w: "with his arm for a pillow", k: "팔베개를 하고", s: "He lay down with his arm for a pillow" }
+        ],
+        "04-dokkaebi.webp": [
+            { w: "just as ~", k: "막 ~하려던 참에", s: "just as he was falling deep asleep" },
+            { w: "Thump!", k: "쿵!", s: "Thump!" },
+            { w: "shook with it (shake)", k: "울렸다", s: "The ground shook with it." },
+            { w: "jumped (jump)", k: "들썩였다", s: "The floor jumped and dust came down from the ceiling." },
+            { w: "sat straight up", k: "벌떡 일어났다", s: "He sat straight up with his eyes wide open." },
+            { w: "Through a crack", k: "문틈으로", s: "Through a crack in the door he saw the yard full of goblins." },
+            { w: "Horned", k: "뿔 난", s: "Horned goblins, every one with a club in his hand." },
+            { w: "ladder", k: "사다리", s: "In the corner of the floor was a ladder up to the loft." },
+            { w: "loft", k: "다락", s: "a ladder up to the loft" },
+            { w: "held his breath (hold)", k: "숨을 죽였다", s: "He held his breath and climbed it" }
+        ],
+        "05-feast.webp": [
+            { w: "in a ring", k: "둘러앉아", s: "The goblins sat down in a ring" },
+            { w: "came showering down", k: "우수수 쏟아졌다", s: "gold came showering down" },
+            { w: "piled up (pile)", k: "산처럼 쌓였다", s: "Silver piled up beside it like a hill" },
+            { w: "shining (shine)", k: "번쩍이는", s: "shining in the moonlight" },
+            { w: "Steaming", k: "김이 모락모락 나는", s: "Steaming rice cake poured out." },
+            { w: "right up into ~", k: "~까지 올라왔다", s: "The smell came right up into the loft." },
+            { w: "feasted (feast)", k: "잔치를 벌였다", s: "The goblins sang and danced and feasted all night." },
+            { w: "eyes were round", k: "눈이 휘둥그레졌다", s: "the younger brother's eyes were round" }
+        ],
+        "06-hungry.webp": [
+            { w: "too hungry to bear it", k: "배가 고파 견딜 수 없는", s: "he was too hungry to bear it" },
+            { w: "tickling (tickle)", k: "간질이는", s: "The smell of the cake kept tickling his nose." },
+            { w: "since morning", k: "아침부터", s: "He had eaten nothing since morning." },
+            { w: "rumbled (rumble)", k: "꼬르륵거렸다", s: "His stomach rumbled loudly." },
+            { w: "at least", k: "~라도", s: "I'll have one of those hazelnuts at least." },
+            { w: "so as not to ~", k: "~하지 않도록", s: "very slowly so as not to make a noise" },
+            { w: "bit down (bite)", k: "깨물었다", s: "Then he bit down hard with his back teeth." },
+            { w: "back teeth", k: "어금니", s: "with his back teeth" },
+            { w: "would not crack", k: "깨지지 않았다", s: "the nut was so hard it would not crack" }
+        ],
+        "07-crack.webp": [
+            { w: "set his teeth", k: "이를 악물었다", s: "He set his teeth and put all his strength into it." },
+            { w: "CRACK!", k: "따악!", s: "CRACK!" },
+            { w: "rang out (ring)", k: "크게 울렸다", s: "the sound rang out like nothing else" },
+            { w: "rumbled (rumble)", k: "우르르 울렸다", s: "The ceiling rumbled and the walls shivered." },
+            { w: "shivered (shiver)", k: "부르르 떨렸다", s: "the walls shivered" },
+            { w: "exactly like ~", k: "꼭 ~ 같은", s: "It sounded exactly like a great pillar snapping." },
+            { w: "pillar", k: "기둥", s: "a great pillar snapping" },
+            { w: "snapping (snap)", k: "우지끈 부러지는", s: "a great pillar snapping" },
+            { w: "coming down", k: "무너지는", s: "Aargh! The house is coming down!" },
+            { w: "leapt to their feet (leap)", k: "벌떡 일어섰다", s: "The goblins leapt to their feet in fright." },
+            { w: "treading on ~ (tread)", k: "밟으며", s: "They poured out of the door treading on each other." },
+            { w: "left the lot behind", k: "다 팽개치고 갔다", s: "they left the lot behind" }
+        ],
+        "08-left.webp": [
+            { w: "Day broke (break)", k: "날이 밝았다", s: "Day broke." },
+            { w: "goblin or human", k: "도깨비도 사람도", s: "There was nobody in the yard, goblin or human." },
+            { w: "without a trace", k: "흔적 없이", s: "had all gone without a trace" },
+            { w: "wondering if ~", k: "~인가 싶어", s: "He rubbed his eyes, wondering if he had dreamed it." },
+            { w: "Only, ~", k: "다만", s: "Only, on the wooden floor, lay one club." },
+            { w: "had dropped (drop)", k: "떨어뜨렸다", s: "A goblin had dropped it in the rush." },
+            { w: "in the rush", k: "허둥대다가", s: "A goblin had dropped it in the rush." },
+            { w: "hesitated (hesitate)", k: "망설였다", s: "He hesitated a long while and then picked it up." },
+            { w: "came showering into ~", k: "쏟아졌다", s: "And gold came showering into his yard." }
+        ],
+        "09-brother.webp": [
+            { w: "tiled house", k: "기와집", s: "the younger brother's house became a tiled house overnight" },
+            { w: "overnight", k: "하루아침에", s: "became a tiled house overnight" },
+            { w: "had gone round ~", k: "쫙 퍼졌다", s: "The news had gone round the whole village in a day." },
+            { w: "What on earth ~", k: "대체 어찌", s: "What on earth happened?" },
+            { w: "every word", k: "하나도 빠짐없이", s: "Tell me all of it, every word." },
+            { w: "would not let go", k: "늘어졌다", s: "He took hold of his brother's sleeve and would not let go." },
+            { w: "hiding nothing", k: "아무것도 숨기지 않고", s: "His brother told him just what had happened, hiding nothing." },
+            { w: "grew wider (grow)", k: "점점 커졌다", s: "The elder's eyes grew wider and wider." },
+            { w: "was on his feet", k: "자리에서 일어섰다", s: "He was on his feet before the story was finished." },
+            { w: "In his mind", k: "마음이", s: "In his mind he was already on the mountain." }
+        ],
+        "10-copy.webp": [
+            { w: "gathered (gather)", k: "주웠다", s: "the elder ran up the mountain and gathered hazelnuts" },
+            { w: "filled a whole sack", k: "한 자루 그득 채웠다", s: "He filled a whole sack." },
+            { w: "had described (describe)", k: "말한", s: "the empty house his brother had described" },
+            { w: "hugging (hug)", k: "꼭 끌어안고", s: "there he sat hugging his sack" },
+            { w: "really did come", k: "정말로 왔다", s: "Late at night the goblins really did come." },
+            { w: "stared at ~ (stare)", k: "쳐다보았다", s: "The elder stared at the clubs and swallowed." },
+            { w: "I'd be rich", k: "나도 부자다", s: "With one of those I'd be rich too." },
+            { w: "crept into ~ (creep)", k: "슬금슬금 들어갔다", s: "His hand crept into the sack." }
+        ],
+        "11-caught.webp": [
+            { w: "a whole handful", k: "한 움큼", s: "He put a whole handful of nuts in his mouth" },
+            { w: "would never do", k: "성에 차지 않았다", s: "One would never do for him." },
+            { w: "The louder the better", k: "소리가 클수록 좋은", s: "The louder the better, he thought." },
+            { w: "one after another", k: "연달아", s: "One noise after another" },
+            { w: "loud enough to shake ~", k: "들썩일 만큼 요란한", s: "loud enough to shake the house" },
+            { w: "did not run", k: "달아나지 않았다", s: "But the goblins did not run." },
+            { w: "looked up at ~", k: "올려다보았다", s: "Every one of them looked up at the loft instead." },
+            { w: "took ~ last time", k: "지난번에 가져갔다", s: "The one who took our club last time!" },
+            { w: "all together", k: "우르르", s: "Up the ladder they came, all together." },
+            { w: "only then did he see ~", k: "그제야 알았다", s: "And only then did the elder see what he had done." }
+        ],
+        "12-nose.webp": [
+            { w: "grow long", k: "늘어나라", s: "Nose, grow long! Knock-knock!" },
+            { w: "chief", k: "대장", s: "The goblin chief knocked his club" },
+            { w: "stretched (stretch)", k: "늘어났다", s: "His nose stretched and stretched" },
+            { w: "dragged on ~ (drag)", k: "끌렸다", s: "until it dragged on the floor" },
+            { w: "shrieking with laughter", k: "깔깔 웃으며", s: "The goblins went off shrieking with laughter." },
+            { w: "wept (weep)", k: "엉엉 울었다", s: "The elder held his long nose and wept." },
+            { w: "holding ~ up", k: "받쳐 들고", s: "He walked all night holding his nose up" },
+            { w: "said nothing", k: "잠자코", s: "His brother said nothing and picked up the club." },
+            { w: "shrink (shrink)", k: "줄어들다", s: "Nose, shrink! Knock-knock!" },
+            { w: "slid back (slide)", k: "스르르 줄어들었다", s: "The nose slid back to its size." },
+            { w: "bowed his head", k: "고개를 숙였다", s: "And then he bowed his head before his brother." }
+        ],
+        "after": [
+            { w: "one of the great shapes", k: "큰 틀 가운데 하나", s: "is one of the great shapes of our old tales" },
+            { w: "the key", k: "열쇠", s: "The key here is the hazelnut." },
+            { w: "grows wild (grow)", k: "절로 난다", s: "It grows wild on the mountain" },
+            { w: "took ~ for ...", k: "~을 …으로 들었다", s: "The goblins took that sound for a house coming down." },
+            { w: "no thought of ~ing", k: "~할 마음이 조금도 없는", s: "the younger brother had no thought of tricking them" },
+            { w: "was aiming at nothing", k: "노린 것이 없었다", s: "he gained a great deal and was aiming at nothing" },
+            { w: "the other way about", k: "반대", s: "The elder was the other way about." },
+            { w: "timed ~ (time)", k: "때를 쟀다", s: "he timed his bite" },
+            { w: "worked out ~ in advance", k: "미리 정해 두었다", s: "and worked out in advance how he would take a club" },
+            { w: "the second time", k: "두 번째에는", s: "And the second time the goblins were not fooled." },
+            { w: "what they went for", k: "무엇을 바라고 갔는가", s: "not their cleverness but what they went for" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌰',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "A kind younger brother and a greedy elder one going to the same place and bringing back different things is one of the great shapes of our old tales. Heungbu and Nolbu is the same shape.",
+                    "The key here is the hazelnut. It grows wild on the mountain and its shell is so hard that biting it makes a loud crack. The goblins took that sound for a house coming down.",
+                    "Look again and the younger brother had no thought of tricking them. He bit a nut because he was hungry. He gained a great deal and was aiming at nothing.",
+                    "The elder was the other way about. He gathered a sackful, he timed his bite, and he worked out in advance how he would take a club. And the second time the goblins were not fooled."
+                ],
+                right: [
+                    "What divided the two brothers in this story was not their cleverness but what they went for.",
+                    "Picking up four hazelnuts, the younger brother thought first of giving three of them away. The elder filled a sack and thought only of himself. They picked the same thing on the same mountain, and what stayed in their hands was not the same.",
+                    "When something good comes your way, who do you think of first?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "아우가 산에서 주운 것은 무엇인가요?", choices: ["금덩이 하나", "개암 몇 알", "낡은 방망이"], answer: 1 },
     { q: "아우는 첫 번째 개암을 누구에게 주려 했나요?", choices: ["어머니", "아버지", "형님"], answer: 1 },

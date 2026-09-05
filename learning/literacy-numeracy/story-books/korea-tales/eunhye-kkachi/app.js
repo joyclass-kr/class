@@ -362,8 +362,7 @@ const EN = {
                         "The snake slid its coils loose and went up the mountain.",
                         "The scholar sat where he was on the floor all night.",
                         "The window was just turning grey.",
-                        "This is the end of me, he thought.",
-                        "And then it happened."
+                        "This is the end of me, he thought. And then it happened."
                     ],
                     right: [
                         "Up at the empty temple the snake lay curled beneath the bell.",
