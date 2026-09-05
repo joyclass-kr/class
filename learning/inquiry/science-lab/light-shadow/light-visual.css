@@ -6,8 +6,8 @@
 .shape-field { margin: 4px 0 16px; padding: 0; border: 0; }
 .shape-field legend { color: #dce9e8; font-size: 14px; font-weight: 850; }
 .shape-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 9px; }
-.shape-buttons button { border: 1px solid var(--line); border-radius: 11px; background: #0a1c24; color: var(--muted); font-weight: 850; cursor: pointer; padding: 10px 4px; }
-.shape-buttons button.selected { border-color: var(--cyan); background: rgba(82, 199, 255, .12); color: var(--cyan); }
+.shape-buttons button { border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(180deg, #102632 0%, #091720 100%); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; cursor: pointer; padding: 10px 4px; }
+.shape-buttons button.selected { border-color: var(--cyan); background: linear-gradient(180deg, rgba(56, 189, 248, 0.2) 0%, rgba(56, 189, 248, 0.06) 100%); box-shadow: 0 0 16px rgba(56, 189, 248, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--cyan); }
 
 /* Three-way prediction (커진다 / 작아진다 / 그대로) — styles.css only
    defines the two-column default. */

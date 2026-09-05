@@ -3,16 +3,36 @@
 .pick-field { margin: 4px 0 14px; padding: 0; border: 0; }
 .pick-field legend { color: #dce9e8; font-size: 14px; font-weight: 850; }
 .pick-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 9px; }
-.pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 9px 3px; border: 1px solid var(--line); border-radius: 11px; background: #0a1c24; color: var(--muted); font-weight: 850; font-size: 12px; cursor: pointer; }
+.pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 9px 3px; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(180deg, #102632 0%, #091720 100%); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 12px; cursor: pointer; }
 .pick-buttons button small { color: #6f8f8d; font-size: 9.5px; font-weight: 800; }
-.pick-buttons button.selected { border-color: var(--cyan); background: rgba(82, 199, 255, .12); color: var(--cyan); }
+.pick-buttons button.selected { border-color: var(--cyan); background: linear-gradient(180deg, rgba(56, 189, 248, 0.2) 0%, rgba(56, 189, 248, 0.06) 100%); box-shadow: 0 0 16px rgba(56, 189, 248, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--cyan); }
 .pick-buttons button.selected small { color: var(--cyan); }
 
 .prediction-buttons.three { grid-template-columns: repeat(3, 1fr); }
 .range-scale { grid-template-columns: repeat(3, 1fr); }
-.reset-button { width: 100%; margin-top: 8px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: transparent; color: var(--muted); font-weight: 850; cursor: pointer; }
-.reset-button:hover { color: var(--ink); border-color: rgba(151, 218, 211, .45); }
-
+.reset-button {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+    color: var(--muted);
+    font-weight: 850;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    touch-action: manipulation;
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.reset-button:hover {
+    color: var(--ink);
+    border-color: var(--line-bright);
+    background: rgba(255, 255, 255, 0.07);
+    transform: translateY(-1px);
+}
+.reset-button:active {
+    transform: translateY(1px) scale(0.98);
+}
 .collide-stage {
     display: flex;
     flex-direction: column;

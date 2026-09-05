@@ -1,9 +1,29 @@
 /* Apparatus: a landscape cross-section (land, sea, sky) with reservoir bars. */
 
 .prediction-buttons.three { grid-template-columns: repeat(3, 1fr); }
-.reset-button { width: 100%; margin-top: 8px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: transparent; color: var(--muted); font-weight: 850; cursor: pointer; }
-.reset-button:hover { color: var(--ink); border-color: rgba(151, 218, 211, .45); }
-
+.reset-button {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+    color: var(--muted);
+    font-weight: 850;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    touch-action: manipulation;
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.reset-button:hover {
+    color: var(--ink);
+    border-color: var(--line-bright);
+    background: rgba(255, 255, 255, 0.07);
+    transform: translateY(-1px);
+}
+.reset-button:active {
+    transform: translateY(1px) scale(0.98);
+}
 .cycle-stage {
     display: flex;
     flex-direction: column;
