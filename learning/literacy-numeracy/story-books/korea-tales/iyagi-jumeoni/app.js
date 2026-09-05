@@ -233,6 +233,458 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "📿",
+        art: "cover.webp",
+        title: "The Bag of Stories",
+        intro: [
+            "The Bag of Stories is an old Korean tale with no known author. It is about what happens when you keep stories to yourself instead of telling them on.",
+            "Stories were wealth once. Books were rare, so a story travelled only from mouth to mouth. Somebody who only listened was blocking the road a story travelled by.",
+            "What makes this one fun is that the stories themselves are characters. Shut in, they get angry and talk it over."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Bag on the Wall",
+            beats: [
+                {
+                    art: "01-boy.webp",
+                    emoji: "👂",
+                    left: [
+                        "Long ago in one house there lived a young master who loved stories.",
+                        "When the grown-ups gathered in the front room he was the first to run in and sit down.",
+                        "If somebody began a story he would put down his spoon in the middle of a meal.",
+                        "However late it got, he never dozed."
+                    ],
+                    right: [
+                        { t: "\"And then? What happened then?\"", v: "boy" },
+                        "He urged them on with shining eyes. The village elders were fond of him for it.",
+                        "So they told him story after story.",
+                        "And he did not forget a single one."
+                    ]
+                },
+                {
+                    art: "02-pouch.webp",
+                    emoji: "📿",
+                    left: [
+                        "But the young master had one strange habit.",
+                        "Nobody knew about it.",
+                        "When a story was finished he would blow it into a bag that hung on the wall.",
+                        "It was a small old silk bag."
+                    ],
+                    right: [
+                        { t: "\"This is mine. I'm giving it to nobody.\"", v: "boy" },
+                        "He patted the bag and pulled its string tight.",
+                        "And he never told that story to anyone.",
+                        "However his friends begged, he kept his mouth shut."
+                    ]
+                },
+                {
+                    art: "03-years.webp",
+                    emoji: "⏳",
+                    left: [
+                        "Ten years went by like that. The young master was old enough to marry.",
+                        "And the bag had swollen fit to burst.",
+                        "Press it as you might, nothing would go down.",
+                        "The nail it hung on was bending."
+                    ],
+                    right: [
+                        "In all that time he had not told one story to one person.",
+                        "He listened, he put them in, he pulled the string tight.",
+                        "However good the story, it was always the same.",
+                        "And the bag grew heavier and heavier."
+                    ]
+                },
+                {
+                    art: "04-angry.webp",
+                    emoji: "😤",
+                    left: [
+                        "Inside the bag it was dark and stifling, packed too tight to breathe.",
+                        "The stories knocked shoulders and grumbled.",
+                        "There was no room to stretch a leg or turn over.",
+                        "Ten years of it.",
+                        "Every one of them was furious."
+                    ],
+                    right: [
+                        { t: "\"Do you call this living?\"", v: "man" },
+                        "somebody shouted in a temper.",
+                        { t: "\"A story is meant to run from mouth to mouth!\"", v: "man" },
+                        { t: "\"And that boy has kept us shut in for ten years!\"", v: "granny" },
+                        "The bag buzzed like a beehive."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Servant Who Overheard",
+            beats: [
+                {
+                    art: "05-plot.webp",
+                    emoji: "🗣️",
+                    left: [
+                        "It was the night before the young master's wedding. The house was busy with preparations.",
+                        "And the bag on the wall was shaking.",
+                        "Inside it there was a great deal of muttering.",
+                        { t: "\"He goes to the bride's house tomorrow, they say?\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"Then let's teach him a lesson while we can!\"", v: "granny" },
+                        "The stories put their heads together and whispered.",
+                        { t: "\"Good. Here's what we do...\"", v: "man" },
+                        "There was a sound of snickering in the bag. It went on until deep in the night.",
+                        "What they were planning, nobody could tell."
+                    ]
+                },
+                {
+                    art: "06-listen.webp",
+                    emoji: "😳",
+                    left: [
+                        "An old servant passing the door happened to hear it, on his way back from working late.",
+                        "He held his breath and put his ear to the wall.",
+                        "At first he could not believe his ears.",
+                        "The bag was talking."
+                    ],
+                    right: [
+                        { t: "\"I'll put poison in the well on his road.\"", v: "man" },
+                        "The stories each took a part.",
+                        { t: "\"I'll be a strawberry patch and wait for him.\"", v: "granny" },
+                        { t: "\"I'll hide in the corner of the wedding room.\"", v: "man" },
+                        "The servant took in every word. And he did not sleep a wink all night."
+                    ]
+                },
+                {
+                    art: "07-well.webp",
+                    emoji: "🪣",
+                    left: [
+                        "Next morning the servant insisted on leading the horse himself.",
+                        "To keep the young master safe he had to have the reins.",
+                        "When the wedding party reached a well, the young master said he was thirsty.",
+                        "The servant's hand tightened on the reins."
+                    ],
+                    right: [
+                        { t: "\"There's a well. Fetch me a dipper of water.\"", v: "boy" },
+                        { t: "\"You cannot, sir!\"", v: "old" },
+                        "The servant said it flat, and led the horse straight past the well without stopping.",
+                        "The young master glared at him.",
+                        "Nobody behaved so on the way to a wedding."
+                    ]
+                },
+                {
+                    art: "08-berry.webp",
+                    emoji: "🍓",
+                    left: [
+                        "A little further on came a fine strawberry patch, red and heavy with fruit.",
+                        { t: "\"Those look good. Go and pick me some.\"", v: "boy" },
+                        "The young master pointed from the saddle.",
+                        "His mouth was watering."
+                    ],
+                    right: [
+                        { t: "\"You cannot have those either!\"", v: "old" },
+                        "The servant did not even look back. He pretended not to hear and drove the horse faster.",
+                        "The young master went red, then purple.",
+                        { t: "\"The man has gone properly mad today!\"", v: "boy" },
+                        "And still the servant kept hold of the reins."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Thing in the Corner",
+            beats: [
+                {
+                    art: "09-scold.webp",
+                    emoji: "😠",
+                    left: [
+                        "At the bride's house the young master called the servant to him. The feast was laid and people were everywhere.",
+                        { t: "\"How dare you behave like this today!\"", v: "boy" },
+                        "His voice was very rough.",
+                        "Everyone at the feast turned to look."
+                    ],
+                    right: [
+                        "The servant only bowed his head and said nothing.",
+                        "He could hardly say the stories in the bag had planned it.",
+                        "Nobody would have believed him anyway.",
+                        "He only kept glancing towards the wedding room."
+                    ]
+                },
+                {
+                    art: "10-room.webp",
+                    emoji: "🕯️",
+                    left: [
+                        "Late at night a red lamp was lit in the wedding room. The bride and groom went in.",
+                        "Just then the servant picked up a club from the kitchen.",
+                        "And he threw the wedding room door open.",
+                        "The whole feast was in an uproar."
+                    ],
+                    right: [
+                        { t: "\"The man's mad! Hold him!\"", v: "man" },
+                        "People rushed at him to take hold of him. And still he went straight into the room.",
+                        "Nothing anybody said would stop him.",
+                        "The hand holding the club was shaking.",
+                        "The bride shrank back against the wall."
+                    ]
+                },
+                {
+                    art: "11-snake.webp",
+                    emoji: "🐍",
+                    left: [
+                        "One side of the bedding was slightly raised. The servant prodded under it with the club.",
+                        "And out from under the bedding, sliding—",
+                        "came a great snake.",
+                        "It went out through the window.",
+                        "It was as thick as a man's arm."
+                    ],
+                    right: [
+                        "The room went as quiet as still water. The young master's face was white.",
+                        "The hands reaching for the club stopped where they were.",
+                        "Without the servant it would have been a terrible night.",
+                        "For a long while nobody could speak."
+                    ]
+                },
+                {
+                    art: "12-tell.webp",
+                    emoji: "🔥",
+                    left: [
+                        "Only then did the servant tell them all he had heard the night before — the well, the strawberry patch, everything.",
+                        "The young master said nothing for a long time.",
+                        "Now he understood it all.",
+                        "It was the work of the stories he had shut away."
+                    ],
+                    right: [
+                        "At home he untied the string of the bag. The stories came flowing out, one after another.",
+                        "And from that day he told a story to everyone he met.",
+                        "All the stories he had heard as a boy, every one of them.",
+                        "And the bag grew thin again."
+                    ]
+                }
+            ],
+            moral: "Hold a story in your hand and it goes bad; hand it on and it lives. What the young master collected for ten years was not stories but stuffiness.",
+            question: "Have you ever shared something good that only you knew?"
+        }
+    ],
+    quiz: [
+        { q: "How many people had the young master told stories to before his wedding?", choices: ["Only his friends", "Not one", "The elders in the front room"], answer: 1 },
+        { q: "Why were the stories in the bag angry?", choices: ["He had forgotten them", "They had quarrelled", "They could not get out"], answer: 2 },
+        { q: "Who overheard the stories talking?", choices: ["An old servant", "The young master's mother", "A child from next door"], answer: 0 },
+        { q: "What did the servant stop first?", choices: ["Drinking from the well", "Picking the strawberries", "Going into the wedding room"], answer: 0 },
+        { q: "What did the servant prod with the club in the wedding room?", choices: ["The bag on the wall", "The feast table", "The raised bedding"], answer: 2 },
+        { q: "What did the young master do after that?", choices: ["Bought a new bag", "Told his stories", "Stopped listening to stories"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He shut every story he heard into a bag, so what is never shared goes bad in the end.",
+                "The stories got angry and planned to pay him back, so the old people thought of stories as alive.",
+                "The old servant could explain nothing and took a beating for it, so you can do right and still be misunderstood.",
+                "The young master bowed low to the servant the moment he saw the snake, so it did not take him long to see his fault."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "keep ~ to yourself", k: "혼자만 갖고 있다", s: "when you keep stories to yourself" },
+            { w: "telling them on", k: "남에게 들려주기", s: "instead of telling them on" },
+            { w: "wealth", k: "재산", s: "Stories were wealth once." },
+            { w: "rare", k: "귀한", s: "Books were rare" },
+            { w: "from mouth to mouth", k: "입에서 입으로", s: "a story travelled only from mouth to mouth" },
+            { w: "blocking (block)", k: "막는", s: "Somebody who only listened was blocking the road" },
+            { w: "characters", k: "등장인물", s: "the stories themselves are characters" },
+            { w: "Shut in", k: "갇혀서", s: "Shut in, they get angry and talk it over." },
+            { w: "talk it over", k: "말을 주고받다", s: "they get angry and talk it over" }
+        ],
+        "01-boy.webp": [
+            { w: "young master", k: "도련님", s: "there lived a young master who loved stories" },
+            { w: "the front room", k: "사랑방", s: "When the grown-ups gathered in the front room" },
+            { w: "the first to ~", k: "제일 먼저 ~하는", s: "he was the first to run in and sit down" },
+            { w: "in the middle of ~", k: "~하다 말고", s: "he would put down his spoon in the middle of a meal" },
+            { w: "However late", k: "밤이 아무리 깊어도", s: "However late it got, he never dozed." },
+            { w: "dozed (doze)", k: "졸았다", s: "he never dozed" },
+            { w: "And then?", k: "그래서요?", s: "And then? What happened then?" },
+            { w: "urged ~ on (urge)", k: "재촉했다", s: "He urged them on with shining eyes." },
+            { w: "were fond of ~", k: "귀여워했다", s: "The village elders were fond of him for it." },
+            { w: "story after story", k: "이야기를 자꾸자꾸", s: "So they told him story after story." },
+            { w: "not a single one", k: "하나도", s: "And he did not forget a single one." }
+        ],
+        "02-pouch.webp": [
+            { w: "habit", k: "버릇", s: "But the young master had one strange habit." },
+            { w: "blow ~ into (blow)", k: "불어 넣다", s: "he would blow it into a bag that hung on the wall" },
+            { w: "hung (hang)", k: "걸려 있었다", s: "a bag that hung on the wall" },
+            { w: "silk bag", k: "비단 주머니", s: "It was a small old silk bag." },
+            { w: "to nobody", k: "아무한테도", s: "This is mine. I'm giving it to nobody." },
+            { w: "patted (pat)", k: "톡톡 두드렸다", s: "He patted the bag and pulled its string tight." },
+            { w: "pulled ~ tight", k: "꽉 조여 맸다", s: "pulled its string tight" },
+            { w: "However ~ begged", k: "아무리 졸라도", s: "However his friends begged, he kept his mouth shut." },
+            { w: "kept his mouth shut", k: "입을 다물었다", s: "he kept his mouth shut" }
+        ],
+        "03-years.webp": [
+            { w: "went by (go by)", k: "지났다", s: "Ten years went by like that." },
+            { w: "old enough to ~", k: "~할 나이가 된", s: "The young master was old enough to marry." },
+            { w: "had swollen (swell)", k: "불룩해졌다", s: "And the bag had swollen fit to burst." },
+            { w: "fit to burst", k: "터질 듯이", s: "had swollen fit to burst" },
+            { w: "Press it as you might", k: "아무리 눌러도", s: "Press it as you might, nothing would go down." },
+            { w: "was bending (bend)", k: "휘어지고 있었다", s: "The nail it hung on was bending." },
+            { w: "In all that time", k: "그동안", s: "In all that time he had not told one story to one person." },
+            { w: "However good ~", k: "아무리 좋은", s: "However good the story, it was always the same." },
+            { w: "heavier and heavier", k: "갈수록 무거운", s: "And the bag grew heavier and heavier." }
+        ],
+        "04-angry.webp": [
+            { w: "stifling", k: "답답한", s: "Inside the bag it was dark and stifling" },
+            { w: "packed too tight to ~", k: "숨 쉴 틈 없이 빽빽한", s: "packed too tight to breathe" },
+            { w: "knocked shoulders", k: "어깨를 부딪혔다", s: "The stories knocked shoulders and grumbled." },
+            { w: "grumbled (grumble)", k: "투덜거렸다", s: "The stories knocked shoulders and grumbled." },
+            { w: "no room to ~", k: "~할 자리가 없는", s: "There was no room to stretch a leg or turn over." },
+            { w: "furious", k: "성이 잔뜩 난", s: "Every one of them was furious." },
+            { w: "Do you call this living?", k: "이게 사는 거냐?", s: "Do you call this living?" },
+            { w: "in a temper", k: "화가 잔뜩 나서", s: "somebody shouted in a temper" },
+            { w: "is meant to ~", k: "~해야 하는 것이다", s: "A story is meant to run from mouth to mouth!" },
+            { w: "shut in", k: "가둔", s: "that boy has kept us shut in for ten years" },
+            { w: "buzzed like a beehive", k: "벌집처럼 웅성거렸다", s: "The bag buzzed like a beehive." }
+        ],
+        "05-plot.webp": [
+            { w: "the night before ~", k: "~ 앞둔 밤", s: "It was the night before the young master's wedding." },
+            { w: "preparations", k: "잔치 준비", s: "The house was busy with preparations." },
+            { w: "was shaking", k: "들썩거렸다", s: "And the bag on the wall was shaking." },
+            { w: "muttering", k: "웅성거림", s: "Inside it there was a great deal of muttering." },
+            { w: "the bride's house", k: "신부 집", s: "He goes to the bride's house tomorrow" },
+            { w: "teach him a lesson", k: "혼쭐을 내다", s: "Then let's teach him a lesson while we can!" },
+            { w: "put their heads together", k: "머리를 맞댔다", s: "The stories put their heads together and whispered." },
+            { w: "Here's what we do", k: "이렇게 하자", s: "Good. Here's what we do..." },
+            { w: "snickering", k: "킬킬거림", s: "There was a sound of snickering in the bag." },
+            { w: "nobody could tell", k: "알 수 없었다", s: "What they were planning, nobody could tell." }
+        ],
+        "06-listen.webp": [
+            { w: "happened to hear ~", k: "마침 들었다", s: "An old servant passing the door happened to hear it" },
+            { w: "working late", k: "늦게까지 일하기", s: "on his way back from working late" },
+            { w: "held his breath", k: "숨을 죽였다", s: "He held his breath and put his ear to the wall." },
+            { w: "could not believe his ears", k: "제 귀를 의심했다", s: "At first he could not believe his ears." },
+            { w: "poison", k: "독", s: "I'll put poison in the well on his road." },
+            { w: "took a part (take)", k: "제 몫을 정했다", s: "The stories each took a part." },
+            { w: "strawberry patch", k: "딸기밭", s: "I'll be a strawberry patch and wait for him." },
+            { w: "the wedding room", k: "신방", s: "I'll hide in the corner of the wedding room." },
+            { w: "took in every word", k: "빠짐없이 새겨들었다", s: "The servant took in every word." },
+            { w: "did not sleep a wink", k: "한숨도 자지 못했다", s: "And he did not sleep a wink all night." }
+        ],
+        "07-well.webp": [
+            { w: "insisted on ~ing (insist)", k: "기어이 ~하겠다고 했다", s: "the servant insisted on leading the horse himself" },
+            { w: "reins", k: "고삐", s: "To keep the young master safe he had to have the reins." },
+            { w: "wedding party", k: "혼례 행렬", s: "When the wedding party reached a well" },
+            { w: "thirsty", k: "목이 마른", s: "the young master said he was thirsty" },
+            { w: "tightened (tighten)", k: "힘이 들어갔다", s: "The servant's hand tightened on the reins." },
+            { w: "a dipper of water", k: "물 한 바가지", s: "Fetch me a dipper of water." },
+            { w: "You cannot, sir!", k: "안 됩니다!", s: "You cannot, sir!" },
+            { w: "said it flat", k: "딱 잘라 말했다", s: "The servant said it flat" },
+            { w: "straight past ~", k: "그대로 지나쳐", s: "led the horse straight past the well without stopping" },
+            { w: "glared at ~ (glare)", k: "눈을 부라렸다", s: "The young master glared at him." },
+            { w: "Nobody behaved so", k: "이런 법이 없었다", s: "Nobody behaved so on the way to a wedding." }
+        ],
+        "08-berry.webp": [
+            { w: "A little further on", k: "얼마 뒤", s: "A little further on came a fine strawberry patch" },
+            { w: "heavy with fruit", k: "주렁주렁 달린", s: "red and heavy with fruit" },
+            { w: "Go and pick ~", k: "따 오너라", s: "Those look good. Go and pick me some." },
+            { w: "from the saddle", k: "말 위에서", s: "The young master pointed from the saddle." },
+            { w: "mouth was watering", k: "입에 침이 고였다", s: "His mouth was watering." },
+            { w: "either", k: "그것도", s: "You cannot have those either!" },
+            { w: "did not even look back", k: "뒤도 돌아보지 않았다", s: "The servant did not even look back." },
+            { w: "pretended not to hear", k: "못 들은 척했다", s: "He pretended not to hear and drove the horse faster." },
+            { w: "went red, then purple", k: "붉으락푸르락해졌다", s: "The young master went red, then purple." },
+            { w: "properly mad", k: "아주 단단히 미친", s: "The man has gone properly mad today!" },
+            { w: "kept hold of ~", k: "놓지 않았다", s: "And still the servant kept hold of the reins." }
+        ],
+        "09-scold.webp": [
+            { w: "called ~ to him", k: "불러 세웠다", s: "the young master called the servant to him" },
+            { w: "was laid (lay)", k: "차려졌다", s: "The feast was laid and people were everywhere." },
+            { w: "How dare you ~", k: "어찌 이리 ~하냐", s: "How dare you behave like this today!" },
+            { w: "rough", k: "사나운", s: "His voice was very rough." },
+            { w: "turned to look", k: "돌아보았다", s: "Everyone at the feast turned to look." },
+            { w: "bowed his head", k: "고개를 조아렸다", s: "The servant only bowed his head and said nothing." },
+            { w: "could hardly say ~", k: "말할 수는 없었다", s: "He could hardly say the stories in the bag had planned it." },
+            { w: "anyway", k: "어차피", s: "Nobody would have believed him anyway." },
+            { w: "kept glancing", k: "흘끔흘끔 살폈다", s: "He only kept glancing towards the wedding room." }
+        ],
+        "10-room.webp": [
+            { w: "was lit (light)", k: "켜졌다", s: "a red lamp was lit in the wedding room" },
+            { w: "bride and groom", k: "신랑 신부", s: "The bride and groom went in." },
+            { w: "club", k: "몽둥이", s: "the servant picked up a club from the kitchen" },
+            { w: "threw ~ open (throw)", k: "벌컥 열었다", s: "And he threw the wedding room door open." },
+            { w: "in an uproar", k: "발칵 뒤집힌", s: "The whole feast was in an uproar." },
+            { w: "Hold him!", k: "붙잡아라!", s: "The man's mad! Hold him!" },
+            { w: "rushed at ~ (rush)", k: "우르르 달려들었다", s: "People rushed at him to take hold of him." },
+            { w: "Nothing ~ would stop him", k: "누가 말려도 소용없었다", s: "Nothing anybody said would stop him." },
+            { w: "shrank back (shrink)", k: "놀라 붙었다", s: "The bride shrank back against the wall." }
+        ],
+        "11-snake.webp": [
+            { w: "bedding", k: "이불", s: "One side of the bedding was slightly raised." },
+            { w: "slightly raised", k: "조금 부푼", s: "One side of the bedding was slightly raised." },
+            { w: "prodded (prod)", k: "툭 건드렸다", s: "The servant prodded under it with the club." },
+            { w: "sliding (slide)", k: "스르륵 미끄러지며", s: "And out from under the bedding, sliding—" },
+            { w: "as thick as ~", k: "~만 한 굵기의", s: "It was as thick as a man's arm." },
+            { w: "as quiet as still water", k: "물을 끼얹은 듯 조용한", s: "The room went as quiet as still water." },
+            { w: "reaching for ~", k: "빼앗으려던", s: "The hands reaching for the club stopped where they were." },
+            { w: "Without ~", k: "~이 아니었으면", s: "Without the servant it would have been a terrible night." },
+            { w: "For a long while", k: "한참 동안", s: "For a long while nobody could speak." }
+        ],
+        "12-tell.webp": [
+            { w: "Only then did he ~", k: "그제야 ~했다", s: "Only then did the servant tell them all he had heard" },
+            { w: "the night before", k: "지난밤에", s: "all he had heard the night before" },
+            { w: "Now he understood ~", k: "그제야 알았다", s: "Now he understood it all." },
+            { w: "the work of ~", k: "~이 한 짓", s: "It was the work of the stories he had shut away." },
+            { w: "had shut away", k: "가둔", s: "the stories he had shut away" },
+            { w: "untied (untie)", k: "풀었다", s: "At home he untied the string of the bag." },
+            { w: "came flowing out (flow)", k: "흘러나왔다", s: "The stories came flowing out, one after another." },
+            { w: "everyone he met", k: "만나는 사람마다", s: "he told a story to everyone he met" },
+            { w: "every one of them", k: "하나도 빠짐없이", s: "All the stories he had heard as a boy, every one of them." },
+            { w: "grew thin (grow)", k: "홀쭉해졌다", s: "And the bag grew thin again." }
+        ],
+        "after": [
+            { w: "a story about stories", k: "이야기에 대한 이야기", s: "This is a story about stories." },
+            { w: "not common", k: "흔치 않은", s: "That is not common among old tales." },
+            { w: "about themselves", k: "스스로를 두고", s: "The people who told stories made one about themselves." },
+            { w: "lived in people", k: "사람에게 있었다", s: "stories lived in people, not in books" },
+            { w: "unpacked ~ (unpack)", k: "풀어놓았다", s: "One person unpacked a story on a winter night" },
+            { w: "in the next village", k: "다음 마을에서", s: "and whoever heard it unpacked it again in the next village" },
+            { w: "That is how ~", k: "그렇게 ~", s: "That is how they stayed alive and moving." },
+            { w: "did not treasure ~", k: "아낀 것이 아니다", s: "the young master did not treasure the stories" },
+            { w: "kept them prisoner", k: "가두었다", s: "He kept them prisoner." },
+            { w: "gave back none of ~", k: "하나도 내놓지 않았다", s: "He gave back none of what he heard" },
+            { w: "because that is what ~ is", k: "원래 그런 것이라서", s: "the stories were furious because that is what a story is" },
+            { w: "somebody passed ~ on", k: "누군가 옮겨 주었다", s: "reached you because somebody passed them on by mouth" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🗣️',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This is a story about stories. That is not common among old tales. The people who told stories made one about themselves.",
+                    "Long ago stories lived in people, not in books. One person unpacked a story on a winter night, and whoever heard it unpacked it again in the next village. That is how they stayed alive and moving.",
+                    "Look again and the young master did not treasure the stories. He kept them prisoner. He gave back none of what he heard, and hung it all on the wall in a bag.",
+                    "So the stories were furious because that is what a story is. A story lives by being passed along."
+                ],
+                right: [
+                    "The stories in the book you are reading now reached you because somebody passed them on by mouth.",
+                    "Hold a story in your hand and it goes bad; hand it on and it lives. What the young master collected for ten years was not stories but stuffiness.",
+                    "Have you ever shared something good that only you knew?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "장가들기 전까지 도련님은 이야기를 몇 사람에게 들려주었나요?", choices: ["동무들에게만", "한 사람도 없었다", "사랑방 어른들에게"], answer: 1 },
     { q: "주머니 속 이야기들은 왜 화가 났나요?", choices: ["도련님이 다 잊어버려서", "서로 다투어서", "밖으로 못 나가서"], answer: 2 },

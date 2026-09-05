@@ -232,6 +232,449 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐀",
+        art: "cover.webp",
+        title: "The Field Mouse and the Nail Clippings",
+        intro: [
+            "An old Korean tale with no known author. It comes from an old saying: throw your nail clippings anywhere and a mouse will eat them and turn into you.",
+            "People once kept their clippings and hair carefully, believing something of the person stayed in them.",
+            "A double turning up and driving out the real person is a worldwide tale. Here the frightening part is that the family cannot tell which is which."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Clippings in the Yard",
+            beats: [
+                {
+                    art: "01-clip.webp",
+                    emoji: "✂️",
+                    left: [
+                        "Long ago in a village there lived a young man called Deokgu. His fault was doing everything by halves.",
+                        "Given a job, he would do half of it and go off to play.",
+                        "That day he sat on the veranda cutting his nails.",
+                        { t: "\"They'll only grow back anyway.\"", v: "boy" }
+                    ],
+                    right: [
+                        { t: "\"Deokgu, haven't I told you to gather those up?\"", v: "mother" },
+                        "His mother said it while wringing a cloth.",
+                        { t: "\"Oh, Mother, that's nothing but talk.\"", v: "boy" },
+                        "Deokgu did not even pretend to listen."
+                    ]
+                },
+                {
+                    art: "02-toss.webp",
+                    emoji: "🌬️",
+                    left: [
+                        "He flung the clippings out into the yard. The little white pieces scattered and rolled in the wind.",
+                        { t: "\"As if nails mattered.\"", v: "boy" },
+                        "He brushed his hands together.",
+                        "Then he got up and went out."
+                    ],
+                    right: [
+                        "His mother clicked her tongue behind him.",
+                        { t: "\"He'll come badly unstuck one of these days.\"", v: "mother" },
+                        "But Deokgu was already out of the gate.",
+                        "Only the white clippings were left, scattered in the yard.",
+                        "That night the sky was black and there was no moon."
+                    ]
+                },
+                {
+                    art: "03-rat.webp",
+                    emoji: "🐀",
+                    left: [
+                        "The house was deep asleep. A field mouse came out of a hole under the wall.",
+                        "It went about the yard sniffing.",
+                        "And it found the nail clippings scattered there.",
+                        "Its whiskers trembled as it smelled them."
+                    ],
+                    right: [
+                        "The mouse raked the clippings together with its front paws. Every last piece of them.",
+                        "Crunch, crunch.",
+                        "And it ate the lot without leaving one.",
+                        "Then it wiped its mouth with a paw.",
+                        "And stood up in the middle of the yard."
+                    ]
+                },
+                {
+                    art: "04-change.webp",
+                    emoji: "💫",
+                    left: [
+                        "At that moment a white steam rose off the mouse. It shook itself hard all over.",
+                        "Its body swelled, its fur went, and it stood up on two legs.",
+                        "The long tail vanished.",
+                        "The steam cleared and the moonlight came down on it."
+                    ],
+                    right: [
+                        "Standing there was Deokgu. The same face, the same height, the same voice.",
+                        "The false Deokgu turned his own two hands over and looked at them.",
+                        "Then he grinned and went into the house.",
+                        "And nobody saw it that night."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Man with the Same Face",
+            beats: [
+                {
+                    art: "05-return.webp",
+                    emoji: "😨",
+                    left: [
+                        "The next evening the real Deokgu came home, hungry after a whole day of playing.",
+                        "And from inside the room came a voice he knew.",
+                        "It was exactly his own voice.",
+                        "He opened the door and there sat somebody with his own face, eating."
+                    ],
+                    right: [
+                        { t: "\"You — who are you!\"", v: "boy" },
+                        "Deokgu froze on the doorsill.",
+                        { t: "\"That is my line!\"", v: "boy" },
+                        "The false one put down his spoon and stood up. Even the voice was his own.",
+                        "A chill went down Deokgu's back."
+                    ]
+                },
+                {
+                    art: "06-family.webp",
+                    emoji: "😵",
+                    left: [
+                        "The whole family ran out into the yard. They stood the two side by side and could not tell them apart.",
+                        "Every mole, every scar was the same.",
+                        "The two of them took hold of each other and shouted.",
+                        "Even their voices overlapped."
+                    ],
+                    right: [
+                        { t: "\"Mother, it's me!\"", v: "boy" },
+                        { t: "\"No, I'm the real one!\"", v: "boy" },
+                        "His father and sister did not know what to do. His mother covered her face with both hands.",
+                        "There was simply no telling which was which.",
+                        "The yard was loud until late into the night."
+                    ]
+                },
+                {
+                    art: "07-test.webp",
+                    emoji: "❓",
+                    left: [
+                        "The family decided to sort it out by questions. His father asked them one by one.",
+                        "Things from childhood, family matters, what happened last month.",
+                        "The real Deokgu kept stumbling.",
+                        "He had lived by halves, so his memory was dim."
+                    ],
+                    right: [
+                        "And the false one answered smoothly. He had eaten the memories left in the clippings.",
+                        "He named the very dates.",
+                        "The real Deokgu had nothing to say.",
+                        "He almost felt like the false one himself."
+                    ]
+                },
+                {
+                    art: "08-out.webp",
+                    emoji: "🚪",
+                    left: [
+                        { t: "\"That one is false! Throw him out!\"", v: "boy" },
+                        "The false one's voice was full of force. He pointed, and the family took the real one by the arms.",
+                        "And pushed him out of the gate.",
+                        "His mother could not watch and turned away."
+                    ],
+                    right: [
+                        { t: "\"Please believe me! I am Deokgu!\"", v: "boy" },
+                        "He put a hand through the closing gate.",
+                        "Bang.",
+                        "Deokgu heard his own gate shut in his face. Nothing in the world is sadder.",
+                        "He heard the bar go across too."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · What the Cat Knew",
+            beats: [
+                {
+                    art: "09-wander.webp",
+                    emoji: "🌧️",
+                    left: [
+                        "Deokgu had nowhere to go and nobody to hold on to.",
+                        "For days he slept in other people's sheds and under bridges.",
+                        "He begged his meals under the eaves.",
+                        "In a few days his clothes were rags.",
+                        { t: "\"How do I show that I am me?\"", v: "boy" }
+                    ],
+                    right: [
+                        "It was a night of rain. The water ran down inside his collar.",
+                        "Deokgu sat under the eaves biting his nails.",
+                        "Nails were what had brought him to this.",
+                        "Think as he might, nothing came to him."
+                    ]
+                },
+                {
+                    art: "10-cat.webp",
+                    emoji: "🐈",
+                    left: [
+                        "Then an old woman from next door stopped as she passed.",
+                        { t: "\"Aren't you Deokgu? What has happened to you?\"", v: "granny" },
+                        "He told her about the false one, half crying. She thought a while and slapped her knee.",
+                        { t: "\"Take our cat with you.\"", v: "granny" }
+                    ],
+                    right: [
+                        { t: "\"You can fool a person's eyes, not an animal's nose.\"", v: "granny" },
+                        { t: "\"An animal will know an animal.\"", v: "granny" },
+                        "Deokgu carried the cat home in his arms. It lay there quietly purring.",
+                        "His heart was hammering."
+                    ]
+                },
+                {
+                    art: "11-reveal.webp",
+                    emoji: "😼",
+                    left: [
+                        "Deokgu opened the gate and set the cat down. The family frowned to see him back again.",
+                        "The cat sniffed about the yard.",
+                        "Then all at once its back went up and its fur stood on end.",
+                        "Its tail swelled to twice the size."
+                    ],
+                    right: [
+                        { t: "\"Miaow!\"", v: "girl" },
+                        "The cat went straight for the false one. He backed away and fell off the veranda.",
+                        { t: "\"Aargh! Get off! Get away from me!\"", v: "boy" },
+                        "The cat would not let go.",
+                        "It hung on with its claws out."
+                    ]
+                },
+                {
+                    art: "12-rat-again.webp",
+                    emoji: "🕳️",
+                    left: [
+                        "While the false one leapt and rolled about the yard, a white steam rose off him.",
+                        "His body shrank and fur came out on it.",
+                        "A field mouse shot into the hole under the wall.",
+                        "It was over in the blink of an eye."
+                    ],
+                    right: [
+                        "Only then did the family take the real Deokgu in their arms. His mother held him and wept.",
+                        { t: "\"I'll never do things by halves again.\"", v: "boy" },
+                        "From that day he always gathered his nail clippings up.",
+                        "And he became somebody who finished what he began."
+                    ]
+                }
+            ],
+            moral: "Sometimes the false one answers better than the real one. What knew the real one then was not words but a smell. When human eyes are fooled, there is still another way of knowing.",
+            question: "How can you tell a good-sounding story from the truth?"
+        }
+    ],
+    quiz: [
+        { q: "What did Deokgu do with his nail clippings?", choices: ["Gathered them up carefully", "Put them in the hole under the wall", "Flung them out into the yard"], answer: 2 },
+        { q: "What happened to the mouse after it ate them?", choices: ["Its body shrank", "It became a man with the same face", "It went into the hole under the wall"], answer: 1 },
+        { q: "What was the false one doing when Deokgu opened the door?", choices: ["Going about the yard", "Turning his hands over", "Eating a meal"], answer: 2 },
+        { q: "What happened when his father asked about childhood?", choices: ["The real one kept stumbling", "The real one named the dates", "The real one put down his spoon"], answer: 0 },
+        { q: "What did the cat do when it saw the false one?", choices: ["Lay quietly in his arms", "Put its fur up and went for him", "Only sniffed about"], answer: 1 },
+        { q: "What kind of person did Deokgu become after that?", choices: ["Somebody who finishes what he begins", "Somebody who does everything by halves", "Somebody who works half a day and plays"], answer: 0 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The false one answered better about the family, so a man who lived by halves could not even prove he was himself.",
+                "A warning about nail clippings turned into a story, so what came off the body was not treated lightly.",
+                "One cat told them apart at once, so human eyes are not always the sharpest.",
+                "The old woman next door knew him and took him in for the night, so one person did believe him."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "field mouse", k: "들쥐", s: "The Field Mouse and the Nail Clippings" },
+            { w: "nail clippings", k: "깎은 손톱", s: "The Field Mouse and the Nail Clippings" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "saying", k: "오랜 말", s: "It comes from an old saying" },
+            { w: "turn into ~", k: "~으로 변하다", s: "a mouse will eat them and turn into you" },
+            { w: "believing ~", k: "~라고 여겨", s: "believing something of the person stayed in them" },
+            { w: "the bin", k: "쓰레기통", s: "Today you simply gather them into the bin." },
+            { w: "a double", k: "똑같이 생긴 가짜", s: "A double turning up and driving out the real person" },
+            { w: "driving out ~ (drive)", k: "몰아내는", s: "driving out the real person" },
+            { w: "tell which is which", k: "누가 누구인지 가리다", s: "the family cannot tell which is which" }
+        ],
+        "01-clip.webp": [
+            { w: "fault", k: "흠", s: "His fault was doing everything by halves." },
+            { w: "by halves", k: "대충대충", s: "doing everything by halves" },
+            { w: "Given a job", k: "일을 시키면", s: "Given a job, he would do half of it and go off to play." },
+            { w: "veranda", k: "마루", s: "That day he sat on the veranda cutting his nails." },
+            { w: "grow back", k: "다시 자라다", s: "They'll only grow back anyway." },
+            { w: "gather ~ up", k: "잘 모으다", s: "haven't I told you to gather those up" },
+            { w: "wringing (wring)", k: "짜는", s: "while wringing a cloth" },
+            { w: "nothing but talk", k: "그런 게 어디 있다", s: "Oh, Mother, that's nothing but talk." },
+            { w: "did not even pretend to ~", k: "들은 척도 안 했다", s: "Deokgu did not even pretend to listen." }
+        ],
+        "02-toss.webp": [
+            { w: "flung (fling)", k: "훅 뿌렸다", s: "He flung the clippings out into the yard." },
+            { w: "scattered (scatter)", k: "흩어졌다", s: "The little white pieces scattered and rolled in the wind." },
+            { w: "As if ~ mattered", k: "~이 무슨 대수라고", s: "As if nails mattered." },
+            { w: "brushed his hands together", k: "두 손을 털었다", s: "He brushed his hands together." },
+            { w: "clicked her tongue", k: "혀를 찼다", s: "His mother clicked her tongue behind him." },
+            { w: "come unstuck", k: "큰코다치다", s: "He'll come badly unstuck one of these days." },
+            { w: "one of these days", k: "언젠가", s: "He'll come badly unstuck one of these days." },
+            { w: "out of the gate", k: "대문 밖에", s: "But Deokgu was already out of the gate." },
+            { w: "were left", k: "남아 있었다", s: "Only the white clippings were left" }
+        ],
+        "03-rat.webp": [
+            { w: "deep asleep", k: "깊이 잠든", s: "The house was deep asleep." },
+            { w: "a hole under the wall", k: "담 밑 구멍", s: "A field mouse came out of a hole under the wall." },
+            { w: "sniffing (sniff)", k: "킁킁거리며", s: "It went about the yard sniffing." },
+            { w: "whiskers", k: "수염", s: "Its whiskers trembled as it smelled them." },
+            { w: "trembled (tremble)", k: "바르르 떨렸다", s: "Its whiskers trembled" },
+            { w: "raked ~ together (rake)", k: "긁어모았다", s: "The mouse raked the clippings together" },
+            { w: "Every last piece", k: "한 조각도 남기지 않고", s: "Every last piece of them." },
+            { w: "ate the lot", k: "모조리 먹었다", s: "And it ate the lot without leaving one." },
+            { w: "wiped (wipe)", k: "닦았다", s: "Then it wiped its mouth with a paw." }
+        ],
+        "04-change.webp": [
+            { w: "steam", k: "김", s: "a white steam rose off the mouse" },
+            { w: "rose off ~ (rise)", k: "피어올랐다", s: "a white steam rose off the mouse" },
+            { w: "shook itself (shake)", k: "몸을 떨었다", s: "It shook itself hard all over." },
+            { w: "swelled (swell)", k: "부풀었다", s: "Its body swelled, its fur went" },
+            { w: "fur", k: "털", s: "its fur went" },
+            { w: "vanished (vanish)", k: "쑥 사라졌다", s: "The long tail vanished." },
+            { w: "cleared (clear)", k: "걷혔다", s: "The steam cleared and the moonlight came down on it." },
+            { w: "turned ~ over", k: "이리저리 뒤집었다", s: "The false Deokgu turned his own two hands over" },
+            { w: "grinned (grin)", k: "씩 웃었다", s: "Then he grinned and went into the house." }
+        ],
+        "05-return.webp": [
+            { w: "hungry after ~", k: "~ 뒤라 배가 고픈", s: "came home, hungry after a whole day of playing" },
+            { w: "a voice he knew", k: "익숙한 목소리", s: "from inside the room came a voice he knew" },
+            { w: "exactly his own", k: "제 것과 꼭 같은", s: "It was exactly his own voice." },
+            { w: "with his own face", k: "자기와 똑같이 생긴", s: "there sat somebody with his own face" },
+            { w: "froze (freeze)", k: "굳었다", s: "Deokgu froze on the doorsill." },
+            { w: "doorsill", k: "문지방", s: "Deokgu froze on the doorsill." },
+            { w: "That is my line!", k: "그건 내가 할 말이다!", s: "That is my line!" },
+            { w: "put down his spoon", k: "숟가락을 놓았다", s: "The false one put down his spoon and stood up." },
+            { w: "A chill went down ~", k: "등골이 오싹했다", s: "A chill went down Deokgu's back." }
+        ],
+        "06-family.webp": [
+            { w: "side by side", k: "나란히", s: "They stood the two side by side" },
+            { w: "tell ~ apart", k: "구별하다", s: "could not tell them apart" },
+            { w: "mole", k: "점", s: "Every mole, every scar was the same." },
+            { w: "scar", k: "흉터", s: "Every mole, every scar was the same." },
+            { w: "took hold of ~", k: "멱살을 잡았다", s: "The two of them took hold of each other and shouted." },
+            { w: "overlapped (overlap)", k: "겹쳤다", s: "Even their voices overlapped." },
+            { w: "did not know what to do", k: "어쩔 줄 몰랐다", s: "His father and sister did not know what to do." },
+            { w: "covered her face", k: "얼굴을 감쌌다", s: "His mother covered her face with both hands." },
+            { w: "no telling ~", k: "알 수가 없는", s: "There was simply no telling which was which." }
+        ],
+        "07-test.webp": [
+            { w: "sort ~ out", k: "가려내다", s: "The family decided to sort it out by questions." },
+            { w: "one by one", k: "하나씩", s: "His father asked them one by one." },
+            { w: "family matters", k: "집안 사정", s: "Things from childhood, family matters" },
+            { w: "kept stumbling", k: "자꾸 더듬거렸다", s: "The real Deokgu kept stumbling." },
+            { w: "dim", k: "흐릿한", s: "he had lived by halves, so his memory was dim" },
+            { w: "smoothly", k: "술술", s: "And the false one answered smoothly." },
+            { w: "the memories left in ~", k: "~에 남아 있던 기억", s: "He had eaten the memories left in the clippings." },
+            { w: "the very dates", k: "날짜까지", s: "He named the very dates." },
+            { w: "had nothing to say", k: "말문이 막혔다", s: "The real Deokgu had nothing to say." },
+            { w: "almost felt like ~", k: "~인 것만 같았다", s: "He almost felt like the false one himself." }
+        ],
+        "08-out.webp": [
+            { w: "Throw him out!", k: "내쫓아라!", s: "That one is false! Throw him out!" },
+            { w: "full of force", k: "힘이 잔뜩 들어간", s: "The false one's voice was full of force." },
+            { w: "pointed (point)", k: "손가락질했다", s: "He pointed, and the family took the real one by the arms." },
+            { w: "pushed ~ out", k: "밀어냈다", s: "And pushed him out of the gate." },
+            { w: "turned away", k: "돌아섰다", s: "His mother could not watch and turned away." },
+            { w: "Please believe me", k: "제 말을 믿어 주세요", s: "Please believe me! I am Deokgu!" },
+            { w: "the closing gate", k: "닫히는 문", s: "He put a hand through the closing gate." },
+            { w: "shut in his face", k: "제 앞에서 닫혔다", s: "Deokgu heard his own gate shut in his face." },
+            { w: "the bar go across", k: "빗장 지르는 것", s: "He heard the bar go across too." }
+        ],
+        "09-wander.webp": [
+            { w: "nowhere to go", k: "갈 데가 없는", s: "Deokgu had nowhere to go" },
+            { w: "nobody to hold on to", k: "붙잡을 사람이 없는", s: "and nobody to hold on to" },
+            { w: "sheds", k: "헛간", s: "he slept in other people's sheds and under bridges" },
+            { w: "begged (beg)", k: "얻어먹었다", s: "He begged his meals under the eaves." },
+            { w: "eaves", k: "처마", s: "He begged his meals under the eaves." },
+            { w: "rags", k: "거지꼴", s: "In a few days his clothes were rags." },
+            { w: "ran down inside ~", k: "안으로 흘러들었다", s: "The water ran down inside his collar." },
+            { w: "biting his nails", k: "손톱을 물어뜯으며", s: "Deokgu sat under the eaves biting his nails." },
+            { w: "had brought him to this", k: "이 꼴이 되게 했다", s: "Nails were what had brought him to this." },
+            { w: "Think as he might", k: "아무리 생각해도", s: "Think as he might, nothing came to him." }
+        ],
+        "10-cat.webp": [
+            { w: "as she passed", k: "지나가다가", s: "an old woman from next door stopped as she passed" },
+            { w: "What has happened to you?", k: "그 꼴이 무슨 일이냐", s: "Aren't you Deokgu? What has happened to you?" },
+            { w: "half crying", k: "울먹이며", s: "He told her about the false one, half crying." },
+            { w: "slapped her knee", k: "무릎을 탁 쳤다", s: "She thought a while and slapped her knee." },
+            { w: "fool (fool)", k: "속이다", s: "You can fool a person's eyes, not an animal's nose." },
+            { w: "will know ~", k: "알아본다", s: "An animal will know an animal." },
+            { w: "purring (purr)", k: "골골거리며", s: "It lay there quietly purring." },
+            { w: "hammering (hammer)", k: "쿵쿵 뛰는", s: "His heart was hammering." }
+        ],
+        "11-reveal.webp": [
+            { w: "set ~ down (set)", k: "내려놓았다", s: "Deokgu opened the gate and set the cat down." },
+            { w: "frowned (frown)", k: "눈살을 찌푸렸다", s: "The family frowned to see him back again." },
+            { w: "sniffed about", k: "코를 킁킁거렸다", s: "The cat sniffed about the yard." },
+            { w: "all at once", k: "갑자기", s: "Then all at once its back went up" },
+            { w: "stood on end (stand)", k: "곤두섰다", s: "its fur stood on end" },
+            { w: "swelled to twice the size", k: "두 배로 부풀었다", s: "Its tail swelled to twice the size." },
+            { w: "went straight for ~", k: "곧장 달려들었다", s: "The cat went straight for the false one." },
+            { w: "backed away", k: "뒷걸음질 쳤다", s: "He backed away and fell off the veranda." },
+            { w: "Get off!", k: "저리 가!", s: "Aargh! Get off! Get away from me!" },
+            { w: "would not let go", k: "놓아주지 않았다", s: "The cat would not let go." },
+            { w: "claws out", k: "발톱을 세우고", s: "It hung on with its claws out." }
+        ],
+        "12-rat-again.webp": [
+            { w: "leapt and rolled (leap)", k: "펄쩍 뛰며 뒹굴었다", s: "While the false one leapt and rolled about the yard" },
+            { w: "shrank (shrink)", k: "쪼그라들었다", s: "His body shrank and fur came out on it." },
+            { w: "shot into ~ (shoot)", k: "쏙 사라졌다", s: "A field mouse shot into the hole under the wall." },
+            { w: "in the blink of an eye", k: "눈 깜짝할 사이에", s: "It was over in the blink of an eye." },
+            { w: "took ~ in their arms", k: "끌어안았다", s: "the family take the real Deokgu in their arms" },
+            { w: "wept (weep)", k: "울었다", s: "His mother held him and wept." },
+            { w: "never ~ again", k: "다시는 ~ 않다", s: "I'll never do things by halves again." },
+            { w: "always gathered ~ up", k: "꼭 모았다", s: "From that day he always gathered his nail clippings up." },
+            { w: "finished what he began", k: "끝까지 했다", s: "he became somebody who finished what he began" }
+        ],
+        "after": [
+            { w: "each claiming to be ~", k: "서로 자기가 ~라고 하며", s: "A story where a real one and a false one appear, each claiming to be the true person" },
+            { w: "is called ~", k: "~라고 한다", s: "is called a true-and-false tale" },
+            { w: "the best known", k: "가장 널리 알려진", s: "this nail story is the best known" },
+            { w: "was really kept (keep)", k: "실제로 지켰다", s: "The warning about scattering nail clippings was really kept once." },
+            { w: "part of ~", k: "~의 일부", s: "were still part of the person" },
+            { w: "of course", k: "물론", s: "Of course, today you gather them into the bin and that is that." },
+            { w: "is asking ~", k: "묻고 있다", s: "this story is asking only one thing" },
+            { w: "what makes me me", k: "나를 나이게 하는 것", s: "what makes me me" },
+            { w: "unexpected", k: "뜻밖의", s: "And the answer is unexpected." },
+            { w: "not ~ but ...", k: "~이 아니라 …", s: "Not knowledge and not a face." },
+            { w: "the same family", k: "같은 갈래", s: "The story of Ong Gojip is in the same family." },
+            { w: "in different clothes", k: "옷을 갈아입고", s: "The same bones come down to us in different clothes." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐭',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "A story where a real one and a false one appear, each claiming to be the true person, is called a true-and-false tale. Korea has several, and this nail story is the best known.",
+                    "The warning about scattering nail clippings was really kept once. Nails and hair were thought to be still part of the person even after they came off. Of course, today you gather them into the bin and that is that.",
+                    "Look again and this story is asking only one thing: what makes me me.",
+                    "And the answer is unexpected. Not knowledge and not a face. It was an animal, not a person, that knew. A nose sorted out what heads could not."
+                ],
+                right: [
+                    "The story of Ong Gojip is in the same family. There the false one is made of straw and a monk takes the punishment away. The same bones come down to us in different clothes.",
+                    "Sometimes the false one answers better than the real one. What knew the real one then was not words but a smell. When human eyes are fooled, there is still another way of knowing.",
+                    "How can you tell a good-sounding story from the truth?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "덕구는 깎은 손톱을 어떻게 했나요?", choices: ["잘 모아서 버렸다", "담 밑 구멍에 넣었다", "마당으로 훅 뿌렸다"], answer: 2 },
     { q: "들쥐는 손톱을 먹고 어떻게 되었나요?", choices: ["몸이 쪼그라들었다", "똑같이 생긴 사람이 되었다", "담 밑 구멍으로 사라졌다"], answer: 1 },

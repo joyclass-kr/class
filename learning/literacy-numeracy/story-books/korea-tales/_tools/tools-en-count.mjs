@@ -13,7 +13,8 @@
  *                줄은 낱말 사이에서만 꺾이므로 한 줄에 꽉 채워 들어가지 않는다.
  *                56자로 잡았다가 두 번 놓쳐서 52자로, 다시 50자로 낮췄다.
  *                넉넉한 쪽을 넘쳤다고 하는 일이 가끔 있지만 놓치는 것보다 낫다.
- *   표지      : 세 문단 · 450자 안쪽(3장 책 기준, 장이 하나 늘 때마다 75자씩 줄임)
+ *   표지      : 세 문단 · 450자 안쪽(3장·제목 두 줄 기준. 장이 하나 늘면 75자,
+ *                제목이 한 줄 더 접히면 50자씩 줄어든다)
  *                제목이 접히는 줄 수가 책마다 달라 px 로는 셈이 안 맞았다
  *
  * 이 도구를 통과해도 마지막에는 _sweep-all.html 로 여섯 화면을 다 봐야 한다.
@@ -27,7 +28,8 @@ import fs from 'fs';
 const SPREAD = { pane: 242, line: 25.7, gap: 4, chars: 50 };
 // 표지 머리글은 제목과 차례가 자리를 먹고 남는 만큼만 쓸 수 있다.
 // 장이 하나 늘면 차례 줄이 하나 늘어 대략 75자만큼 자리가 준다.
-const COVER = { maxParas: 3, base: 450, perChapter: 75 };
+// 제목이 길어 세 줄로 접히면 그만큼 머리글 자리가 줄어든다(제목 한 줄에 열여섯 자쯤).
+const COVER = { maxParas: 3, base: 450, perChapter: 75, titleChars: 16, perTitleLine: 50 };
 
 const showAll = process.argv.includes('--all');
 const listed = process.argv.slice(2).filter(a => !a.startsWith('--'));
@@ -66,8 +68,10 @@ for (const b of books) {
   // 대신 시범본(좁쌀 한 톨)에서 확인된 선을 그대로 쓴다: 세 문단·520자 안쪽.
   const coverChars = EN.cover.intro.reduce((a, t) => a + textOf(t).length, 0);
   if (EN.cover.intro.length > COVER.maxParas) hits.push(`표지 ${EN.cover.intro.length}문단 (${COVER.maxParas}문단까지)`);
-  const coverCap = COVER.base - COVER.perChapter * (EN.chapters.length - 3);
-  if (coverChars > coverCap) hits.push(`표지 ${coverChars}자 (${EN.chapters.length}장이라 ${coverCap}자까지)`);
+  const titleLines = Math.max(2, Math.ceil(EN.cover.title.length / COVER.titleChars));
+  const coverCap = COVER.base - COVER.perChapter * (EN.chapters.length - 3)
+                              - COVER.perTitleLine * (titleLines - 2);
+  if (coverChars > coverCap) hits.push(`표지 ${coverChars}자 (${EN.chapters.length}장·제목 ${titleLines}줄이라 ${coverCap}자까지)`);
 
   for (const c of EN.chapters) {
     for (const bt of c.beats) {

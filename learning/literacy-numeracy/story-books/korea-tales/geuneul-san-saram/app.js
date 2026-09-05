@@ -234,6 +234,455 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🌳",
+        art: "cover.webp",
+        title: "The Man Who Bought the Shade",
+        intro: [
+            "The Man Who Bought the Shade is an old Korean tale with no known author. It asks what happens when something nobody ever priced is bought and sold.",
+            "A great zelkova tree at the village entrance stood in every old village. In summer people spread a mat under it to rest and talk and nap.",
+            "Shade belongs to nobody. Stories about putting a price on such a thing are told the world over, and ours is unusually short and sharp."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · I'll Buy the Shade",
+            beats: [
+                {
+                    art: "01-tree.webp",
+                    emoji: "🌳",
+                    left: [
+                        "At the entrance of a village stood one huge zelkova tree.",
+                        "Five grown men with their arms out could barely reach round it.",
+                        "Its branches spread wide, and under them it was cool even in high summer.",
+                        "In summer the whole village gathered there."
+                    ],
+                    right: [
+                        "But the tree stood beside the wall of the richest man in the village.",
+                        "Whether it belonged to the village or to him, nobody knew.",
+                        "And the rich man always took it for his own.",
+                        "If anybody rested there he gave them a hard look."
+                    ]
+                },
+                {
+                    art: "02-rest.webp",
+                    emoji: "😌",
+                    left: [
+                        "It was a midsummer day so hot you could hardly breathe.",
+                        "A traveller walking a long road saw that zelkova from far off.",
+                        "At the sight of the shade he walked faster.",
+                        "The moment he reached it he put down his load."
+                    ],
+                    right: [
+                        { t: "\"Ah, that's better.\"", v: "man" },
+                        "He lay back with his head on his pack and stretched out both arms.",
+                        "Cicadas were loud over his head.",
+                        "The sweat on his forehead cooled by itself.",
+                        "His eyes closed in no time."
+                    ]
+                },
+                {
+                    art: "03-scold.webp",
+                    emoji: "😠",
+                    left: [
+                        "Then the gate flew open. The rich man came striding out.",
+                        "He had been watching from his yard.",
+                        { t: "\"Do you know where you are, lying about like that!\"", v: "old" },
+                        "His face was red with anger.",
+                        "The hand on his stick shook."
+                    ],
+                    right: [
+                        { t: "\"This tree is mine, and so is its shade!\"", v: "old" },
+                        "He struck the ground with his stick.",
+                        { t: "\"Get out this instant! Go on!\"", v: "old" },
+                        "The traveller opened his eyes and looked up at him. And he stayed lying there a while."
+                    ]
+                },
+                {
+                    art: "04-buy.webp",
+                    emoji: "💰",
+                    left: [
+                        "The traveller got slowly to his feet. Far from being angry, his face did not change at all.",
+                        "Then he took a string of coins from his belt.",
+                        { t: "\"In that case, sell me the shade.\"", v: "man" },
+                        "The coins jingled."
+                    ],
+                    right: [
+                        { t: "\"...What did you say?\"", v: "old" },
+                        "The rich man blinked. He thought he had misheard.",
+                        { t: "\"The price of the shade of this tree. I'll pay well.\"", v: "man" },
+                        "The traveller held out the string of coins.",
+                        "The rich man's eyes fastened on it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Shade Moves",
+            beats: [
+                {
+                    art: "05-deal.webp",
+                    emoji: "🤝",
+                    left: [
+                        "The rich man cheered inside. Money had rolled in while he sat still.",
+                        { t: "'Well, well. A fool who pays money for shade.'", v: "old" },
+                        { t: "\"Very well. From today that shade is yours.\"", v: "old" },
+                        "He put out both hands at once."
+                    ],
+                    right: [
+                        "He counted the coins one by one into his coat, and turned away humming.",
+                        "The traveller only smiled.",
+                        "And he lay down again in the shade.",
+                        "The sun was going over to the west."
+                    ]
+                },
+                {
+                    art: "06-move.webp",
+                    emoji: "🌇",
+                    left: [
+                        "The sun went further west. The tree's shadow stretched long.",
+                        "And the shade began to move.",
+                        "At first nobody noticed.",
+                        "From the road to the wall, over the wall,",
+                        "and at last into the middle of the rich man's yard."
+                    ],
+                    right: [
+                        "The whole yard turned cool. Shade lay over the jar stand and over the well.",
+                        "Even the cicadas moved into that yard to sing.",
+                        "The rich man knew nothing of it. He was asleep in his room.",
+                        "Snoring, at that."
+                    ]
+                },
+                {
+                    art: "07-enter.webp",
+                    emoji: "🚶",
+                    left: [
+                        "Then the traveller got up. He took his pack and followed the shade.",
+                        "Through the open gate and into the middle of the yard.",
+                        "And there he spread out a mat.",
+                        { t: "\"What do you think you are doing!\"", v: "old" }
+                    ],
+                    right: [
+                        "The rich man ran out in his stockinged feet.",
+                        { t: "\"My shade came here, so I came after it.\"", v: "man" },
+                        "The traveller said it quite calmly. And the rich man had nothing to say.",
+                        "He had sold that shade with his own mouth.",
+                        "The traveller lay down on his mat."
+                    ]
+                },
+                {
+                    art: "08-friends.webp",
+                    emoji: "👥",
+                    left: [
+                        "The next day the traveller stood at the roadside from early morning, and brought back the people he met.",
+                        { t: "\"This is my shade. Do rest here.\"", v: "man" },
+                        "One came in, then another.",
+                        "Before long there were more than ten."
+                    ],
+                    right: [
+                        "They sat round the yard fanning themselves and talking. The rich man's yard was as loud as a feast.",
+                        "Inside, the rich man ground his teeth.",
+                        "And there was nothing he could do.",
+                        "He had sold it himself."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · A Thing That Belongs to Nobody",
+            beats: [
+                {
+                    art: "09-porch.webp",
+                    emoji: "🏠",
+                    left: [
+                        "Day by day the shade came further in. The deeper into summer, the lower the sun.",
+                        "One day it reached the wooden hall itself.",
+                        "The floor there went cool.",
+                        "People sat on it to nap and to eat bowls of noodles."
+                    ],
+                    right: [
+                        "The rich man ended up watching from a corner of his own hall. With nowhere to sit, he perched on the end of the side floor.",
+                        "One day he was given a bowl of noodles somebody else had made.",
+                        "In his own house he felt like a guest.",
+                        "He could not sleep at night."
+                    ]
+                },
+                {
+                    art: "10-beg.webp",
+                    emoji: "🙏",
+                    left: [
+                        "At last the rich man came to the traveller. He had been working up to it for days.",
+                        { t: "\"Look here. I'll give you double. Let us undo it.\"", v: "old" },
+                        "There was no strength in his voice.",
+                        { t: "\"I cannot tell whether this house is mine or a marketplace.\"", v: "old" }
+                    ],
+                    right: [
+                        "He let out a long sigh. His shoulders were down.",
+                        "He was not the man who had struck the ground with a stick.",
+                        "The traveller said nothing for a long while.",
+                        "He only looked up at the tree.",
+                        "Then he spoke, slowly."
+                    ]
+                },
+                {
+                    art: "11-return.webp",
+                    emoji: "🍃",
+                    left: [
+                        { t: "\"Take your money back.\"", v: "man" },
+                        "He held the string of coins out to the rich man.",
+                        { t: "\"...You mean you'll undo it?\"", v: "old" },
+                        "The rich man's face lit up at once.",
+                        { t: "\"No.\"", v: "man" },
+                        "The traveller shook his head, and the face went hard again."
+                    ],
+                    right: [
+                        { t: "\"The shade is mine now, so I shall do as I like with it.\"", v: "man" },
+                        "He looked round at the people gathered in the yard.",
+                        { t: "\"From today this shade belongs to everyone in the village.\"", v: "man" },
+                        { t: "\"That is what shade is.\"", v: "man" },
+                        "The rich man's face went red."
+                    ]
+                },
+                {
+                    art: "12-village.webp",
+                    emoji: "🎋",
+                    left: [
+                        "The traveller packed up and left that same day. He left the money behind as well.",
+                        "He went over the hill without looking back.",
+                        "The rich man stood looking up at the tree a long time.",
+                        "He stood there until the sun went down."
+                    ],
+                    right: [
+                        "The next summer there was a mat spread under the zelkova, and the rich man sat on one side of it, fanning himself.",
+                        "Children rolled about on it.",
+                        "Nobody called the shade their own any more.",
+                        "And the zelkova threw a wider shade every year."
+                    ]
+                }
+            ],
+            moral: "The rich man thought he had made money selling shade. What he sold was not shade but his own yard. Put a price on what cannot be priced and the one who loses is usually the one who priced it.",
+            question: "What are the things that cannot be bought or sold?"
+        }
+    ],
+    quiz: [
+        { q: "How did the rich man regard the zelkova?", choices: ["He always took it for his own", "He took it for the village's", "He ignored anyone resting there"], answer: 0 },
+        { q: "What did the rich man do when the traveller lay in the shade?", choices: ["Sat down beside him", "Hummed to himself", "Struck the ground with his stick"], answer: 2 },
+        { q: "What did the traveller take from his belt?", choices: ["A fan", "A straw mat", "A string of coins"], answer: 2 },
+        { q: "Where did the shade move as the sun went down?", choices: ["Into the middle of the rich man's yard", "To the village entrance", "To the road outside the wall"], answer: 0 },
+        { q: "What did the rich man say when he could bear no more?", choices: ["That he would give the money back and undo it", "That he wanted to buy more shade", "That he would cut the tree down"], answer: 0 },
+        { q: "What did the traveller say at the end?", choices: ["That he wanted double his money", "That it belonged to the whole village", "That it was his now and he would sell it"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The man who sold the shade ended up a guest in his own yard, so selling what cannot be shared pushes you out of it.",
+                "The traveller left the money behind, so he had never been out to make money.",
+                "The rich man was sitting on one side of the mat the next summer, so people can change like that.",
+                "The traveller came back to that zelkova the next summer, so the village must have stayed in his mind."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "shade", k: "그늘", s: "The Man Who Bought the Shade" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "priced (price)", k: "값을 매긴", s: "something nobody ever priced" },
+            { w: "bought and sold", k: "사고팔리는", s: "is bought and sold" },
+            { w: "zelkova", k: "느티나무", s: "A great zelkova tree at the village entrance" },
+            { w: "entrance", k: "어귀", s: "at the village entrance" },
+            { w: "spread a mat (spread)", k: "돗자리를 깔았다", s: "people spread a mat under it" },
+            { w: "nap", k: "낮잠 자다", s: "to rest and talk and nap" },
+            { w: "belongs to nobody", k: "누구의 것도 아니다", s: "Shade belongs to nobody." },
+            { w: "the world over", k: "세계 곳곳에", s: "are told the world over" },
+            { w: "sharp", k: "매서운", s: "ours is unusually short and sharp" }
+        ],
+        "01-tree.webp": [
+            { w: "huge", k: "아름드리의", s: "At the entrance of a village stood one huge zelkova tree." },
+            { w: "barely", k: "겨우", s: "Five grown men with their arms out could barely reach round it." },
+            { w: "reach round ~", k: "안다", s: "could barely reach round it" },
+            { w: "branches", k: "가지", s: "Its branches spread wide" },
+            { w: "high summer", k: "한여름", s: "it was cool even in high summer" },
+            { w: "gathered (gather)", k: "모였다", s: "In summer the whole village gathered there." },
+            { w: "beside the wall of ~", k: "~의 담 옆에", s: "the tree stood beside the wall of the richest man" },
+            { w: "Whether ~", k: "~인지 아닌지", s: "Whether it belonged to the village or to him, nobody knew." },
+            { w: "took it for his own", k: "제 것이라 여겼다", s: "the rich man always took it for his own" },
+            { w: "a hard look", k: "눈을 흘김", s: "he gave them a hard look" }
+        ],
+        "02-rest.webp": [
+            { w: "midsummer", k: "한여름의", s: "It was a midsummer day so hot you could hardly breathe." },
+            { w: "hardly breathe", k: "숨이 턱턱 막히다", s: "so hot you could hardly breathe" },
+            { w: "from far off", k: "멀리서부터", s: "A traveller walking a long road saw that zelkova from far off." },
+            { w: "At the sight of ~", k: "~을 보고", s: "At the sight of the shade he walked faster." },
+            { w: "The moment ~", k: "~하자마자", s: "The moment he reached it he put down his load." },
+            { w: "load", k: "짐", s: "he put down his load" },
+            { w: "lay back (lie)", k: "벌렁 누웠다", s: "He lay back with his head on his pack" },
+            { w: "stretched out (stretch)", k: "쭉 뻗었다", s: "and stretched out both arms" },
+            { w: "cicadas", k: "매미", s: "Cicadas were loud over his head." },
+            { w: "by itself", k: "저절로", s: "The sweat on his forehead cooled by itself." },
+            { w: "in no time", k: "금세", s: "His eyes closed in no time." }
+        ],
+        "03-scold.webp": [
+            { w: "flew open (fly)", k: "벌컥 열렸다", s: "Then the gate flew open." },
+            { w: "came striding out (stride)", k: "성큼성큼 나왔다", s: "The rich man came striding out." },
+            { w: "had been watching", k: "내다보고 있었다", s: "He had been watching from his yard." },
+            { w: "lying about", k: "함부로 눕는", s: "Do you know where you are, lying about like that!" },
+            { w: "red with anger", k: "벌겋게 달아오른", s: "His face was red with anger." },
+            { w: "shook (shake)", k: "부들부들 떨렸다", s: "The hand on his stick shook." },
+            { w: "and so is ~", k: "~도 그렇다", s: "This tree is mine, and so is its shade!" },
+            { w: "struck (strike)", k: "쿵쿵 찍었다", s: "He struck the ground with his stick." },
+            { w: "this instant", k: "당장", s: "Get out this instant!" },
+            { w: "stayed lying", k: "그대로 누워 있었다", s: "And he stayed lying there a while." }
+        ],
+        "04-buy.webp": [
+            { w: "got to his feet", k: "몸을 일으켰다", s: "The traveller got slowly to his feet." },
+            { w: "Far from ~ing", k: "~하기는커녕", s: "Far from being angry, his face did not change at all." },
+            { w: "a string of coins", k: "엽전 꾸러미", s: "Then he took a string of coins from his belt." },
+            { w: "In that case", k: "그렇다면", s: "In that case, sell me the shade." },
+            { w: "jingled (jingle)", k: "짤랑거렸다", s: "The coins jingled." },
+            { w: "blinked (blink)", k: "눈을 껌뻑였다", s: "The rich man blinked." },
+            { w: "had misheard (mishear)", k: "잘못 들었다", s: "He thought he had misheard." },
+            { w: "the price of ~", k: "~ 값", s: "The price of the shade of this tree." },
+            { w: "I'll pay well", k: "넉넉히 드리겠습니다", s: "I'll pay well." },
+            { w: "fastened on ~ (fasten)", k: "딱 붙었다", s: "The rich man's eyes fastened on it." }
+        ],
+        "05-deal.webp": [
+            { w: "cheered inside", k: "속으로 옳다구나 했다", s: "The rich man cheered inside." },
+            { w: "had rolled in (roll)", k: "굴러들었다", s: "Money had rolled in while he sat still." },
+            { w: "a fool who ~", k: "~하는 바보", s: "A fool who pays money for shade." },
+            { w: "Very well.", k: "좋다.", s: "Very well. From today that shade is yours." },
+            { w: "put out both hands", k: "두 손을 내밀었다", s: "He put out both hands at once." },
+            { w: "counted ~ one by one", k: "하나하나 세었다", s: "He counted the coins one by one into his coat" },
+            { w: "humming (hum)", k: "콧노래를 흥얼거리며", s: "and turned away humming" },
+            { w: "only smiled", k: "빙그레 웃기만 했다", s: "The traveller only smiled." },
+            { w: "going over to the west", k: "서쪽으로 기우는", s: "The sun was going over to the west." }
+        ],
+        "06-move.webp": [
+            { w: "stretched long", k: "길게 늘어졌다", s: "The tree's shadow stretched long." },
+            { w: "began to move", k: "자리를 옮기기 시작했다", s: "And the shade began to move." },
+            { w: "At first nobody noticed", k: "처음에는 아무도 몰랐다", s: "At first nobody noticed." },
+            { w: "over the wall", k: "담을 넘어", s: "From the road to the wall, over the wall" },
+            { w: "at last", k: "마침내", s: "and at last into the middle of the rich man's yard" },
+            { w: "turned cool", k: "시원해졌다", s: "The whole yard turned cool." },
+            { w: "jar stand", k: "장독대", s: "Shade lay over the jar stand and over the well." },
+            { w: "well", k: "우물", s: "over the jar stand and over the well" },
+            { w: "knew nothing of it", k: "그것도 몰랐다", s: "The rich man knew nothing of it." },
+            { w: "Snoring, at that", k: "코까지 골면서", s: "Snoring, at that." }
+        ],
+        "07-enter.webp": [
+            { w: "followed (follow)", k: "따라갔다", s: "He took his pack and followed the shade." },
+            { w: "Through the open gate", k: "열린 대문을 지나", s: "Through the open gate and into the middle of the yard." },
+            { w: "spread out a mat", k: "돗자리를 폈다", s: "And there he spread out a mat." },
+            { w: "What do you think you are doing!", k: "이게 무슨 짓이오!", s: "What do you think you are doing!" },
+            { w: "in his stockinged feet", k: "버선발로", s: "The rich man ran out in his stockinged feet." },
+            { w: "came after it", k: "따라왔다", s: "My shade came here, so I came after it." },
+            { w: "quite calmly", k: "태연하게", s: "The traveller said it quite calmly." },
+            { w: "with his own mouth", k: "제 입으로", s: "He had sold that shade with his own mouth." }
+        ],
+        "08-friends.webp": [
+            { w: "from early morning", k: "이른 아침부터", s: "The traveller stood at the roadside from early morning" },
+            { w: "brought back ~ (bring)", k: "데려왔다", s: "and brought back the people he met" },
+            { w: "Do rest here", k: "편히 쉬시지요", s: "This is my shade. Do rest here." },
+            { w: "Before long", k: "어느새", s: "Before long there were more than ten." },
+            { w: "fanning themselves (fan)", k: "부채질하며", s: "They sat round the yard fanning themselves and talking." },
+            { w: "as loud as a feast", k: "잔칫집처럼 시끌시끌한", s: "The rich man's yard was as loud as a feast." },
+            { w: "ground his teeth (grind)", k: "이를 갈았다", s: "Inside, the rich man ground his teeth." },
+            { w: "nothing he could do", k: "어쩔 도리가 없는", s: "And there was nothing he could do." }
+        ],
+        "09-porch.webp": [
+            { w: "Day by day", k: "날이 갈수록", s: "Day by day the shade came further in." },
+            { w: "The deeper ~ the lower ~", k: "깊어질수록 낮아지는", s: "The deeper into summer, the lower the sun." },
+            { w: "the wooden hall", k: "대청마루", s: "One day it reached the wooden hall itself." },
+            { w: "went cool", k: "서늘해졌다", s: "The floor there went cool." },
+            { w: "bowls of noodles", k: "국수 한 그릇", s: "People sat on it to nap and to eat bowls of noodles." },
+            { w: "ended up ~ing", k: "~하게 되었다", s: "The rich man ended up watching from a corner" },
+            { w: "With nowhere to sit", k: "앉을 자리가 없어", s: "With nowhere to sit, he perched on the end of the side floor." },
+            { w: "perched (perch)", k: "겨우 걸터앉았다", s: "he perched on the end of the side floor" },
+            { w: "felt like a guest", k: "손님 같았다", s: "In his own house he felt like a guest." }
+        ],
+        "10-beg.webp": [
+            { w: "At last", k: "마침내", s: "At last the rich man came to the traveller." },
+            { w: "working up to ~", k: "벼르던", s: "He had been working up to it for days." },
+            { w: "double", k: "곱절", s: "I'll give you double." },
+            { w: "undo it", k: "무르다", s: "Let us undo it." },
+            { w: "no strength in his voice", k: "목소리에 힘이 없는", s: "There was no strength in his voice." },
+            { w: "marketplace", k: "저잣거리", s: "whether this house is mine or a marketplace" },
+            { w: "let out a long sigh", k: "한숨을 푹 쉬었다", s: "He let out a long sigh." },
+            { w: "shoulders were down", k: "어깨가 축 처졌다", s: "His shoulders were down." },
+            { w: "not the man who ~", k: "~하던 그 사람이 아닌", s: "He was not the man who had struck the ground with a stick." },
+            { w: "spoke slowly", k: "천천히 입을 열었다", s: "Then he spoke, slowly." }
+        ],
+        "11-return.webp": [
+            { w: "Take ~ back", k: "도로 가져가십시오", s: "Take your money back." },
+            { w: "held ~ out (hold)", k: "내밀었다", s: "He held the string of coins out to the rich man." },
+            { w: "You mean ~?", k: "~라는 말이오?", s: "You mean you'll undo it?" },
+            { w: "lit up (light up)", k: "밝아졌다", s: "The rich man's face lit up at once." },
+            { w: "shook his head (shake)", k: "고개를 저었다", s: "The traveller shook his head" },
+            { w: "went hard", k: "굳었다", s: "and the face went hard again" },
+            { w: "as I like", k: "제 뜻대로", s: "so I shall do as I like with it" },
+            { w: "looked round at ~", k: "둘러보았다", s: "He looked round at the people gathered in the yard." },
+            { w: "belongs to everyone", k: "모두의 것이다", s: "this shade belongs to everyone in the village" },
+            { w: "That is what ~ is", k: "본디 그런 것이다", s: "That is what shade is." }
+        ],
+        "12-village.webp": [
+            { w: "packed up", k: "짐을 챙겼다", s: "The traveller packed up and left that same day." },
+            { w: "left ~ behind", k: "도로 놓고 갔다", s: "He left the money behind as well." },
+            { w: "without looking back", k: "뒤도 돌아보지 않고", s: "He went over the hill without looking back." },
+            { w: "a long time", k: "한참 동안", s: "The rich man stood looking up at the tree a long time." },
+            { w: "until the sun went down", k: "해가 질 때까지", s: "He stood there until the sun went down." },
+            { w: "The next summer", k: "이듬해 여름", s: "The next summer there was a mat spread under the zelkova" },
+            { w: "on one side of it", k: "그 한쪽에", s: "the rich man sat on one side of it" },
+            { w: "rolled about (roll)", k: "뒹굴었다", s: "Children rolled about on it." },
+            { w: "any more", k: "이제는", s: "Nobody called the shade their own any more." },
+            { w: "threw a wider shade", k: "더 넓게 그늘을 드리웠다", s: "the zelkova threw a wider shade every year" }
+        ],
+        "after": [
+            { w: "several stories of ~", k: "~한 이야기가 여럿", s: "Korean tales hold several stories of somebody selling what cannot be sold." },
+            { w: "the best known", k: "가장 이름난", s: "Bong-i Kim Seondal, who sold the water of the Daedong River, is the best known." },
+            { w: "the other way round", k: "방향이 반대인", s: "This story is the other way round." },
+            { w: "somebody else's", k: "남의 것", s: "Kim Seondal sold somebody else's water" },
+            { w: "of his own accord", k: "스스로", s: "here the rich man sold his own of his own accord" },
+            { w: "all day long", k: "하루 종일", s: "Shade moves all day long as the sun goes." },
+            { w: "the inner room", k: "안방", s: "and by evening it is in the inner room" },
+            { w: "bit by bit", k: "조금씩", s: "So selling the shade was selling the house bit by bit." },
+            { w: "did not do that sum", k: "그 셈을 하지 않았다", s: "The rich man did not do that sum" },
+            { w: "in his hand that day", k: "그날 손에 쥔", s: "he only saw the money in his hand that day" },
+            { w: "never forced anything", k: "억지를 부린 적이 없다", s: "The traveller never forced anything." },
+            { w: "lay with ~ (lie)", k: "~에게 있었다", s: "The fault lay with the man who sold what he could not sell." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌳',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Korean tales hold several stories of somebody selling what cannot be sold. Bong-i Kim Seondal, who sold the water of the Daedong River, is the best known. This story is the other way round: Kim Seondal sold somebody else's water, and here the rich man sold his own of his own accord.",
+                    "Look again and what he sold was not shade. Shade moves all day long as the sun goes. In the morning it lies in the yard and by evening it is in the inner room.",
+                    "So selling the shade was selling the house bit by bit. The rich man did not do that sum; he only saw the money in his hand that day.",
+                    "The traveller never forced anything. He simply used what he had bought. The fault lay with the man who sold what he could not sell."
+                ],
+                right: [
+                    "The rich man thought he had made money selling shade. What he sold was not shade but his own yard. Put a price on what cannot be priced and the one who loses is usually the one who priced it.",
+                    "What are the things that cannot be bought or sold?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "부자는 느티나무를 어떻게 여겼나요?", choices: ["늘 제 것이라 여겼다", "마을 것이라 여겼다", "누가 쉬어도 모른 척했다"], answer: 0 },
     { q: "나그네가 그늘에 눕자 부자는 어떻게 했나요?", choices: ["옆에 나란히 앉았다", "콧노래를 흥얼거렸다", "지팡이로 땅을 찍었다"], answer: 2 },
@@ -263,7 +712,7 @@ const AFTERWORD = {
         {
             art: 'end.webp',
             left: [
-                "다만 방향이 반대입니다. 김선달은 팔 수 없는 것을 팔아 넘겼고, 여기서는 부자가 팔 수 없는 것을 스스로 팔았습니다.",
+                "우리 옛이야기에는 팔 수 없는 것을 판 사람 이야기가 여럿 있습니다. 대동강 물을 팔았다는 봉이 김선달이 가장 이름났지요. 다만 이 이야기는 방향이 반대입니다. 김선달은 남의 것을 팔아넘겼고, 여기서는 부자가 제 것을 스스로 팔았습니다.",
                 "다시 보면 부자가 판 것은 그늘이 아니었습니다. 그늘은 해를 따라 하루 종일 움직입니다. 아침에는 마당에 있다가 저녁에는 안방까지 들어옵니다.",
                 "그러니 그늘을 판다는 것은 집을 조금씩 파는 일이었습니다. 부자는 그 셈을 하지 않고 그날 손에 쥔 돈만 보았습니다.",
                 "나그네는 억지를 부린 적이 없습니다. 산 것을 그대로 썼을 뿐입니다. 잘못은 팔지 못할 것을 판 쪽에 있었습니다."
