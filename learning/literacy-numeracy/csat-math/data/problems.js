@@ -83,6 +83,10 @@
     {
       id: "2022-09", year: 2022, round: "9월", label: "2022학년도 9월",
       source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500236&m=0403&s=suneung"
+    },
+    {
+      id: "2022-06", year: 2022, round: "6월", label: "2022학년도 6월",
+      source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500236&m=0403&s=suneung"
     }
   ];
 
@@ -2264,6 +2268,136 @@
       short: true,
       answer: 108,
       help: R`극한 부분은 \(f(x)\ne 0\)인 자리에서는 \(2\bigl(|f|\bigr)'(x)\)와 같다. 그런데 \(f\)의 단순근에서는 좌우가 같은 크기로 올라와 차가 \(0\)이 되므로 값이 뚝 떨어진다. 곧 이 극한은 \(|f|\)가 꺾이는 자리마다 끊기고, (가)의 연속 조건이 \(f(x-3)\)의 근으로 그 끊김을 덮으라는 뜻이 된다.`
+    },
+    {
+      id: "2022-06-9", exam: "2022-06", no: 9, score: 4,
+      units: ["m1-seq"], memo: "네 걸음마다 되풀이되는 수열",
+      body: R`수열 \(\{a_{n}\}\)이 모든 자연수 \(n\)에 대하여
+        \[a_{n+1}=\begin{cases}\dfrac{1}{a_{n}} &amp; \left(n\text{이 홀수인 경우}\right)\\[8pt] 8a_{n} &amp; \left(n\text{이 짝수인 경우}\right)\end{cases}\]
+        이고 \(a_{12}=\dfrac{1}{2}\)일 때, \(a_{1}+a_{4}\)의 값은?`,
+      choices: [R`\(\dfrac{3}{4}\)`, R`\(\dfrac{9}{4}\)`, R`\(\dfrac{5}{2}\)`, R`\(\dfrac{17}{4}\)`, R`\(\dfrac{9}{2}\)`],
+      answer: 5,
+      help: R`네 걸음을 직접 밟아 보면 \(a_{5}=a_{1}\)이 되어 수열이 주기 \(4\)로 되풀이된다. 그러니 \(a_{12}\)는 \(a_{4}\)와 같고, \(a_{4}=\frac{a_{1}}{8}\)이다.`
+    },
+    {
+      id: "2022-06-10", exam: "2022-06", no: 10, score: 4,
+      units: ["m1-explog"], memo: "로그를 한쪽으로 모으기",
+      body: R`\(n\ge 2\)인 자연수 \(n\)에 대하여 두 곡선
+        \[y=\log_{n}x,\qquad y=-\log_{n}(x+3)+1\]
+        이 만나는 점의 \(x\)좌표가 \(1\)보다 크고 \(2\)보다 작도록 하는
+        모든 \(n\)의 값의 합은?`,
+      choices: [R`\(30\)`, R`\(35\)`, R`\(40\)`, R`\(45\)`, R`\(50\)`],
+      answer: 2,
+      help: R`두 식을 같게 놓고 로그를 한쪽으로 모으면 \(\log_{n}\bigl(x(x+3)\bigr)=1\), 곧 \(x(x+3)=n\)이 된다. 그러니 \(1<x<2\)를 \(x(x+3)\)의 범위로 옮기기만 하면 \(n\)의 범위가 그대로 나온다.`
+    },
+    {
+      id: "2022-06-11", exam: "2022-06", no: 11, score: 4,
+      units: ["m2-integ"], memo: "주기가 2인 함수의 넓은 구간 적분",
+      body: R`닫힌구간 \([0,\,1]\)에서 연속인 함수 \(f(x)\)가
+        \[f(0)=0,\quad f(1)=1,\quad \int_{0}^{1}f(x)\,dx=\frac{1}{6}\]
+        을 만족시킨다. 실수 전체의 집합에서 정의된 함수 \(g(x)\)가
+        다음 조건을 만족시킬 때, \(\displaystyle\int_{-3}^{2}g(x)\,dx\)의 값은?`,
+      note: [
+        R`(가) \(g(x)=\begin{cases}-f(x+1)+1 &amp; (-1<x<0)\\ f(x) &amp; (0\le x\le 1)\end{cases}\)`,
+        R`(나) 모든 실수 \(x\)에 대하여 \(g(x+2)=g(x)\)이다.`
+      ],
+      choices: [R`\(\dfrac{5}{2}\)`, R`\(\dfrac{17}{6}\)`, R`\(\dfrac{19}{6}\)`, R`\(\dfrac{7}{2}\)`, R`\(\dfrac{23}{6}\)`],
+      answer: 2,
+      help: R`(나)는 주기가 \(2\)라는 뜻이라 \(\int_{-3}^{2}\)를 길이 \(2\)짜리 구간 여럿과 나머지로 쪼갤 수 있다. 그리고 (가)의 \(-1<x<0\)쪽 식은 \(f\)를 뒤집어 옮긴 것이라, 그 구간의 적분이 \(\int_{0}^{1}f\)로 바뀐다.`
+    },
+    {
+      id: "2022-06-12", exam: "2022-06", no: 12, score: 4,
+      units: ["m1-trig"], memo: "같은 각이 만드는 닮은 삼각형 둘",
+      body: R`그림과 같이 \(\overline{\mathrm{AB}}=4\), \(\overline{\mathrm{AC}}=5\)이고 \(\cos(\angle\mathrm{BAC})=\dfrac{1}{8}\)인
+        삼각형 \(\mathrm{ABC}\)가 있다. 선분 \(\mathrm{AC}\) 위의 점 \(\mathrm{D}\)와 선분 \(\mathrm{BC}\) 위의
+        점 \(\mathrm{E}\)에 대하여
+        \[\angle\mathrm{BAC}=\angle\mathrm{BDA}=\angle\mathrm{BED}\]
+        일 때, 선분 \(\mathrm{DE}\)의 길이는?`,
+      figure: "2022-06-12.webp",
+      choices: [R`\(\dfrac{7}{3}\)`, R`\(\dfrac{5}{2}\)`, R`\(\dfrac{8}{3}\)`, R`\(\dfrac{17}{6}\)`, R`\(3\)`],
+      answer: 3,
+      help: R`\(\angle\mathrm{BAC}=\angle\mathrm{BDA}\)이고 두 삼각형이 각 \(\mathrm{B}\)를 함께 쓰므로 삼각형 \(\mathrm{ABC}\)와 \(\mathrm{DBA}\)가 닮음이다. 같은 방식으로 \(\angle\mathrm{BAC}=\angle\mathrm{BED}\)에서 삼각형 \(\mathrm{ABC}\)와 \(\mathrm{EBD}\)도 닮음이다. 닮음비를 차례로 이어 붙이면 \(\overline{\mathrm{DE}}\)가 나온다.`
+    },
+    {
+      id: "2022-06-13", exam: "2022-06", no: 13, score: 4,
+      units: ["m1-seq"], memo: "제곱수에서만 값이 달라지는 합",
+      body: R`실수 전체의 집합에서 정의된 함수 \(f(x)\)가 구간 \((0,\,1]\)에서
+        \[f(x)=\begin{cases}3 &amp; (0<x<1)\\ 1 &amp; (x=1)\end{cases}\]
+        이고, 모든 실수 \(x\)에 대하여 \(f(x+1)=f(x)\)를 만족시킨다.
+        \(\displaystyle\sum_{k=1}^{20}\frac{k\times f\bigl(\sqrt{k}\,\bigr)}{3}\)의 값은?`,
+      choices: [R`\(150\)`, R`\(160\)`, R`\(170\)`, R`\(180\)`, R`\(190\)`],
+      answer: 5,
+      help: R`\(f\)는 주기가 \(1\)이므로 \(f(\sqrt{k})\)는 \(\sqrt{k}\)가 정수일 때만 \(f(1)=1\)이고, 그 밖에는 모두 \(3\)이다. 곧 \(1\)부터 \(20\)까지 가운데 제곱수인 \(1,\,4,\,9,\,16\) 넷만 따로 세면 된다.`
+    },
+    {
+      id: "2022-06-14", exam: "2022-06", no: 14, score: 4,
+      units: ["m2-limit", "m2-diff"], memo: "절댓값을 x로 나눌 때 생기는 부호 뒤집힘",
+      body: R`두 양수 \(p\), \(q\)와 함수 \(f(x)=x^{3}-3x^{2}-9x-12\)에 대하여
+        실수 전체의 집합에서 연속인 함수 \(g(x)\)가 다음 조건을
+        만족시킬 때, \(p+q\)의 값은?`,
+      note: [
+        R`(가) 모든 실수 \(x\)에 대하여 \(xg(x)=\bigl|xf(x-p)+qx\bigr|\)이다.`,
+        R`(나) 함수 \(g(x)\)가 \(x=a\)에서 미분가능하지 않은 실수 \(a\)의 개수는 \(1\)이다.`
+      ],
+      choices: [R`\(6\)`, R`\(7\)`, R`\(8\)`, R`\(9\)`, R`\(10\)`],
+      answer: 3,
+      help: R`오른쪽을 \(\bigl|x\bigr|\times\bigl|f(x-p)+q\bigr|\)로 묶으면, \(x>0\)에서는 \(g(x)=\bigl|f(x-p)+q\bigr|\)이지만 \(x<0\)에서는 부호가 뒤집혀 \(g(x)=-\bigl|f(x-p)+q\bigr|\)가 된다. \(g\)가 \(x=0\)에서 연속이려면 좌우 극한이 같아야 하므로 그 자리의 값이 \(0\), 곧 \(f(-p)+q=0\)이어야 한다.`
+    },
+    {
+      id: "2022-06-15", exam: "2022-06", no: 15, score: 4,
+      units: ["m1-trig"], memo: "사인과 코사인의 근을 합쳐 양 끝 고르기",
+      body: R`\(-1\le t\le 1\)인 실수 \(t\)에 대하여 \(x\)에 대한 방정식
+        \[\left(\sin\frac{\pi x}{2}-t\right)\left(\cos\frac{\pi x}{2}-t\right)=0\]
+        의 실근 중에서 집합 \(\{x\mid 0\le x<4\}\)에 속하는 가장 작은 값을
+        \(\alpha(t)\), 가장 큰 값을 \(\beta(t)\)라 하자. &lt;보기&gt;에서 옳은 것만을
+        있는 대로 고른 것은?`,
+      noteTitle: "보 기",
+      note: [
+        R`ㄱ. \(-1\le t<0\)인 모든 실수 \(t\)에 대하여 \(\alpha(t)+\beta(t)=5\)이다.`,
+        R`ㄴ. \(\bigl\{t\mid\beta(t)-\alpha(t)=\beta(0)-\alpha(0)\bigr\}=\left\{t\ \middle|\ 0\le t\le\dfrac{\sqrt{2}}{2}\right\}\)`,
+        R`ㄷ. \(\alpha(t_{1})=\alpha(t_{2})\)인 두 실수 \(t_{1}\), \(t_{2}\)에 대하여 \(t_{2}-t_{1}=\dfrac{1}{2}\)이면 \(t_{1}\times t_{2}=\dfrac{1}{3}\)이다.`
+      ],
+      choices: [R`ㄱ`, R`ㄱ, ㄴ`, R`ㄱ, ㄷ`, R`ㄴ, ㄷ`, R`ㄱ, ㄴ, ㄷ`],
+      answer: 2,
+      help: R`곱이 \(0\)이니 방정식이 \(\sin\frac{\pi x}{2}=t\)와 \(\cos\frac{\pi x}{2}=t\) 둘로 갈린다. 두 곡선 모두 주기가 \(4\)라 \([0,\,4)\)에 근이 각각 둘씩 있고, \(\alpha(t)\)와 \(\beta(t)\)는 그 넷 가운데 가장 작은 것과 가장 큰 것이다.`
+    },
+    {
+      id: "2022-06-20", exam: "2022-06", no: 20, score: 4,
+      units: ["m2-integ", "m2-diff"], memo: "적분 밖으로 뺄 수 있는 것 가려내기",
+      body: R`실수 \(a\)와 함수 \(f(x)=x^{3}-12x^{2}+45x+3\)에 대하여 함수
+        \[g(x)=\int_{a}^{x}\bigl\{f(x)-f(t)\bigr\}\times\bigl\{f(t)\bigr\}^{4}\,dt\]
+        가 오직 하나의 극값을 갖도록 하는 모든 \(a\)의 값의 합을
+        구하시오.`,
+      short: true,
+      answer: 8,
+      help: R`적분 안에서 \(f(x)\)는 \(t\)에 대하여 상수이므로 밖으로 뺄 수 있다. 그러면 \(g(x)=f(x)\int_{a}^{x}\{f(t)\}^{4}dt-\int_{a}^{x}f(t)\{f(t)\}^{4}dt\)가 되고, 미분하면 뒷항이 앞항의 일부와 지워져 \(g'(x)=f'(x)\int_{a}^{x}\{f(t)\}^{4}dt\)만 남는다.`
+    },
+    {
+      id: "2022-06-21", exam: "2022-06", no: 21, score: 4,
+      units: ["m1-explog"], memo: "거듭제곱 방정식의 실근 개수와 중근",
+      body: R`다음 조건을 만족시키는 최고차항의 계수가 \(1\)인 이차함수
+        \(f(x)\)가 존재하도록 하는 모든 자연수 \(n\)의 값의 합을 구하시오.`,
+      note: [
+        R`(가) \(x\)에 대한 방정식 \(\bigl(x^{n}-64\bigr)f(x)=0\)은 서로 다른 두 실근을 갖고, 각각의 실근은 중근이다.`,
+        R`(나) 함수 \(f(x)\)의 최솟값은 음의 정수이다.`
+      ],
+      short: true,
+      answer: 24,
+      help: R`\(x^{n}=64\)의 실근은 \(n\)이 홀수면 \(64^{1/n}\) 하나뿐이고, 짝수면 \(\pm 64^{1/n}\) 둘이다. 전체 방정식이 "서로 다른 두 실근이고 각각 중근"이 되려면 \(f\)의 근이 그 근들과 어떻게 겹쳐야 하는지를 경우마다 따져야 한다.`
+    },
+    {
+      id: "2022-06-22", exam: "2022-06", no: 22, score: 4,
+      units: ["m2-diff"], memo: "합성한 방정식의 근을 원래 근으로 되돌리기",
+      body: R`삼차함수 \(f(x)\)가 다음 조건을 만족시킨다.`,
+      note: [
+        R`(가) 방정식 \(f(x)=0\)의 서로 다른 실근의 개수는 \(2\)이다.`,
+        R`(나) 방정식 \(f\bigl(x-f(x)\bigr)=0\)의 서로 다른 실근의 개수는 \(3\)이다.`
+      ],
+      bodyAfter: R`\(f(1)=4\), \(f'(1)=1\), \(f'(0)>1\)일 때, \(f(0)=\dfrac{q}{p}\)이다. \(p+q\)의
+        값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
+      short: true,
+      answer: 61,
+      help: R`(나)의 \(f\bigl(x-f(x)\bigr)=0\)은 \(x-f(x)\)가 \(f\)의 근이라는 뜻이다. (가)에서 \(f\)의 근은 둘뿐이니 그 값을 \(\alpha\), \(\beta\)라 하면, \(x-f(x)=\alpha\)와 \(x-f(x)=\beta\) 두 방정식의 근을 합쳐 셋이어야 한다.`
     }
   ];
 
