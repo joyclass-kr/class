@@ -414,6 +414,44 @@
             [
                 "ng-order", "ng-first", "ng-king", "ng-purpose",
                 "ng-vs-dongdong"
+            ]),
+        lesson("h2-sijo-1", 11, "강호와 충, 시조 읽기", "산에 살아도 마음은 임금께",
+            ["leei-gosan", "seondo-manheung", "seondo-gyeonhoeyo"],
+            [
+                "gosan-teacher", "gosan-first", "gosan-last",
+                "manheung-laugh", "manheung-mountain", "manheung-king",
+                "gyeonhoe-duty", "gyeonhoe-nim", "gyeonhoe-goose",
+                "sijo-gangho"
+            ]),
+        lesson("h2-sijo-2", 11, "옛 시조 더 읽기", "매화와 국화, 그리고 두꺼비",
+            ["minyeong-maehwasa", "leejeongbo-gukhwa", "sasol-dukkeobi"],
+            [
+                "maehwa-scene", "maehwa-promise", "maehwa-scent",
+                "gukhwa-again", "dukkeobi-again"
+            ]),
+        lesson("h2-goryeo", 11, "고려가요 더 읽기", "이별의 세 목소리",
+            ["goryeo-seogyeong", "goryeo-manjeonchun", "jeongseo-jeonggwajeong", "goryeo-gasiri"],
+            [
+                "seogyeong-first", "seogyeong-bead", "seogyeong-boatman", "seogyeong-refrain",
+                "manjeon-ice", "manjeon-peach",
+                "jeonggwajeong-bird", "jeonggwajeong-witness", "jeonggwajeong-end",
+                "goryeo-compare"
+            ]),
+        lesson("h2-hansi", 11, "한시 넷", "참새와 황두, 텅 빈 성과 무궁화",
+            ["jehyeon-sarihwa", "leesaek-bubyeongnu", "hwanghyeon-jeolmyeong", "dasan-tamjin"],
+            [
+                "sarihwa-sparrow", "sarihwa-origin",
+                "bubyeok-contrast", "bubyeok-hero",
+                "jeolmyeong-when", "jeolmyeong-scholar",
+                "tamjin-cotton", "tamjin-tax",
+                "hansi-common"
+            ]),
+        lesson("h2-minyo", 11, "민요와 잡가", "지은이 없는 노래들",
+            ["folk-sijipsari", "japga-yusanga", "goryeo-cheongsan"],
+            [
+                "sijip-form", "sijip-pepper", "sijip-birds", "sijip-change", "sijip-end",
+                "yusan-start", "yusan-words",
+                "minyo-vs"
             ])
     ]);
 

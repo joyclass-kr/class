@@ -5187,5 +5187,531 @@ window.POETRY_QUESTIONS = Object.freeze([
         ],
         answer: "하나는 님 그리움을, 하나는 농사일을 노래해요",
         explanation: "같은 틀에 다른 내용이에요. 견주어 묻기 좋은 짝이에요."
+    },
+
+    // ── 고2·3 · 강호와 충, 시조 읽기 ──────────────────────────────
+    {
+        id: "gosan-teacher",
+        poemId: "leei-gosan",
+        category: "마음 읽기",
+        prompt: "시조를 읽고 답해 보세요.",
+        sentence: "서시에서 무이산과 주자를 떠올린 까닭은 무엇인가요?",
+        choices: [
+            "그 스승의 삶과 학문을 본받으려고",
+            "그곳으로 이사 가려고",
+            "그 산이 더 아름다워서"
+        ],
+        answer: "그 스승의 삶과 학문을 본받으려고",
+        explanation: "주자가 무이산 아홉 굽이에서 지은 노래를 본떠 고산 아홉 굽이를 노래했어요."
+    },
+    {
+        id: "gosan-first",
+        poemId: "leei-gosan",
+        category: "장면 확인",
+        prompt: "시조를 읽고 답해 보세요.",
+        sentence: "첫 굽이에서 벗을 기다리며 무엇을 놓아 두었나요?",
+        choices: ["소나무 사이에 술동이", "바위 위에 거문고", "물가에 낚싯대"],
+        answer: "소나무 사이에 술동이",
+        explanation: "안개 걷힌 들판 너머 먼 산이 그림 같다고 했어요."
+    },
+    {
+        id: "gosan-last",
+        poemId: "leei-gosan",
+        category: "마음 읽기",
+        prompt: "시조를 읽고 답해 보세요.",
+        sentence: "아홉째 굽이의 겨울 산을 볼 것 없다고 하는 사람은 누구인가요?",
+        choices: [
+            "놀러 다니기만 하는 사람",
+            "말하는 이 자신",
+            "벗들"
+        ],
+        answer: "놀러 다니기만 하는 사람",
+        explanation: "눈 속 기암괴석의 참맛을 모르는 사람을 나무라는 말이에요."
+    },
+    {
+        id: "manheung-laugh",
+        poemId: "seondo-manheung",
+        category: "마음 읽기",
+        prompt: "시조를 읽고 답해 보세요.",
+        sentence: "남들이 웃어도 바위 아래 띠집을 짓는 까닭은 무엇인가요?",
+        choices: ["그것이 내 분수라고 여겨서", "돈이 없어서", "남을 놀리려고"],
+        answer: "그것이 내 분수라고 여겨서",
+        explanation: "자기를 어리석은 시골 사람이라 낮추며 그 분수를 지키겠대요."
+    },
+    {
+        id: "manheung-mountain",
+        poemId: "seondo-manheung",
+        category: "표현 찾기",
+        prompt: "시조를 읽고 답해 보세요.",
+        sentence: "먼 산을 바라보는 반가움을 무엇에 견주었나요?",
+        choices: ["그리던 님이 오는 반가움", "봄이 오는 반가움", "벗이 오는 반가움"],
+        answer: "그리던 님이 오는 반가움",
+        explanation: "말도 웃음도 없는 산인데 님보다 더 좋대요."
+    },
+    {
+        id: "manheung-king",
+        poemId: "seondo-manheung",
+        category: "마음 읽기",
+        prompt: "시조를 읽고 답해 보세요.",
+        sentence: "마지막 수에서 강산을 즐기는 것마저 누구 덕이라고 했나요?",
+        choices: ["임금", "부모", "벗"],
+        answer: "임금",
+        explanation: "자연 속에 있어도 임금 은혜를 잊지 않는다는 조선 선비의 마무리예요."
+    },
+    {
+        id: "gyeonhoe-duty",
+        poemId: "seondo-gyeonhoeyo",
+        category: "마음 읽기",
+        prompt: "시조를 읽고 답해 보세요.",
+        sentence: "첫 수에서 오직 무엇만 하겠다고 했나요?",
+        choices: ["내 몸이 해야 할 일을 닦는 것", "남의 잘잘못을 가리는 것", "슬픔을 잊는 것"],
+        answer: "내 몸이 해야 할 일을 닦는 것",
+        explanation: "남이 옳다 하든 그르다 하든 제 할 일만 하겠다는 태도예요."
+    },
+    {
+        id: "gyeonhoe-nim",
+        poemId: "seondo-gyeonhoeyo",
+        category: "마음 읽기",
+        prompt: "시조를 읽고 답해 보세요.",
+        sentence: "둘째 수에서 어리석은 일을 한 까닭은 무엇이라고 했나요?",
+        choices: ["님을 위한 탓", "젊은 탓", "남의 말을 들은 탓"],
+        answer: "님을 위한 탓",
+        explanation: "임금께 바른말을 하다 귀양 갔으면서, 그래도 임금이 헤아려 달라고 해요."
+    },
+    {
+        id: "gyeonhoe-goose",
+        poemId: "seondo-gyeonhoeyo",
+        category: "표현 찾기",
+        prompt: "시조를 읽고 답해 보세요.",
+        sentence: "셋째 수에서 '길고 길고', '많고 많고', '울고 울고'처럼 거듭한 까닭은 무엇인가요?",
+        choices: [
+            "멀고 큰 그리움을 소리로 늘여 보여 주려고",
+            "글자 수를 맞추려고",
+            "기러기를 흉내내려고"
+        ],
+        answer: "멀고 큰 그리움을 소리로 늘여 보여 주려고",
+        explanation: "외기러기 울음이 어버이 그리는 제 울음이에요."
+    },
+    {
+        id: "sijo-gangho",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "「고산구곡가」「만흥」「견회요」를 떠올려 보세요.",
+        sentence: "조선 선비의 시조에 되풀이 나오는 두 가지는 무엇인가요?",
+        choices: [
+            "자연을 즐기는 마음과 임금을 향한 충성",
+            "이별의 슬픔과 사랑",
+            "농사와 가난"
+        ],
+        answer: "자연을 즐기는 마음과 임금을 향한 충성",
+        explanation: "강호가도라고 불러요. 산에 살아도 마음은 임금께 가 있어요."
+    },
+
+    // ── 고2·3 · 옛 시조 더 읽기 ───────────────────────────────────
+    {
+        id: "maehwa-scene",
+        poemId: "minyeong-maehwasa",
+        category: "장면 확인",
+        prompt: "시조를 읽고 답해 보세요.",
+        sentence: "첫 수의 자리에는 누가 있나요?",
+        choices: [
+            "매화 그림자 비친 창가에 기생과 백발 노인들",
+            "산속의 스님",
+            "임금과 신하"
+        ],
+        answer: "매화 그림자 비친 창가에 기생과 백발 노인들",
+        explanation: "거문고와 노래, 술잔, 그리고 떠오르는 달까지 갖춘 풍류 자리예요."
+    },
+    {
+        id: "maehwa-promise",
+        poemId: "minyeong-maehwasa",
+        category: "마음 읽기",
+        prompt: "시조를 읽고 답해 보세요.",
+        sentence: "둘째 수에서 매화가 지킨 약속은 무엇인가요?",
+        choices: ["눈 올 때 피겠다는 약속", "봄에 피겠다는 약속", "향기를 내겠다는 약속"],
+        answer: "눈 올 때 피겠다는 약속",
+        explanation: "어리고 성긴 매화를 믿지 않았는데 두세 송이가 피었대요."
+    },
+    {
+        id: "maehwa-scent",
+        poemId: "minyeong-maehwasa",
+        category: "표현 찾기",
+        prompt: "시조를 읽고 답해 보세요.",
+        sentence: "촛불을 잡고 가까이 가니 무엇이 움직였나요?",
+        choices: ["그윽한 향기", "꽃잎", "그림자"],
+        answer: "그윽한 향기",
+        explanation: "눈에 안 보이는 향기까지 움직인다고 해서 매화를 살아 있는 벗처럼 그렸어요."
+    },
+    {
+        id: "dukkeobi-again",
+        poemId: "sasol-dukkeobi",
+        category: "견주어 읽기",
+        prompt: "「매화사」와 「두꺼비 파리를 물고」를 나란히 놓고 답해 보세요.",
+        sentence: "두 시조가 다른 점은 무엇인가요?",
+        choices: [
+            "하나는 양반의 풍류를, 하나는 백성의 풍자를 담았어요",
+            "둘 다 자연을 노래해요",
+            "둘 다 임금을 그리워해요"
+        ],
+        answer: "하나는 양반의 풍류를, 하나는 백성의 풍자를 담았어요",
+        explanation: "같은 시조인데 사설시조는 줄이 길어지고 웃음이 들어와요."
+    },
+    {
+        id: "gukhwa-again",
+        poemId: "leejeongbo-gukhwa",
+        category: "견주어 읽기",
+        prompt: "「국화야 너는 어이」와 「매화사」를 나란히 놓고 답해 보세요.",
+        sentence: "국화와 매화를 기리는 까닭은 어떻게 같나요?",
+        choices: [
+            "추울 때 홀로 피어 굳센 절개를 보여 줘서",
+            "향기가 좋아서",
+            "빛깔이 고와서"
+        ],
+        answer: "추울 때 홀로 피어 굳센 절개를 보여 줘서",
+        explanation: "서리 속 국화, 눈 속 매화. 조선 선비가 꽃에서 본 것은 절개예요."
+    },
+
+    // ── 고2·3 · 고려가요 더 읽기 ──────────────────────────────────
+    {
+        id: "seogyeong-first",
+        poemId: "goryeo-seogyeong",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "첫 묶음에서 님이 사랑만 해 준다면 무엇까지 하겠다고 했나요?",
+        choices: [
+            "살림을 버리고 울며 따르겠다고",
+            "서경을 떠나지 않겠다고",
+            "배를 타고 먼저 가겠다고"
+        ],
+        answer: "살림을 버리고 울며 따르겠다고",
+        explanation: "「가시리」가 보내는 노래라면 이 노래는 매달리는 노래예요."
+    },
+    {
+        id: "seogyeong-bead",
+        poemId: "goryeo-seogyeong",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "둘째 묶음의 구슬과 끈은 무엇을 말하나요?",
+        choices: [
+            "구슬이 깨져도 끈은 안 끊기듯 믿음은 변치 않는다는 것",
+            "구슬이 귀하다는 것",
+            "끈이 약하다는 것"
+        ],
+        answer: "구슬이 깨져도 끈은 안 끊기듯 믿음은 변치 않는다는 것",
+        explanation: "이 묶음은 「정석가」에도 똑같이 들어 있어요. 떠돌던 노래 조각이에요."
+    },
+    {
+        id: "seogyeong-boatman",
+        poemId: "goryeo-seogyeong",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "셋째 묶음에서 사공을 원망하는 까닭은 무엇인가요?",
+        choices: [
+            "님을 배에 태워 강 건너로 보내 버려서",
+            "뱃삯이 비싸서",
+            "배가 낡아서"
+        ],
+        answer: "님을 배에 태워 강 건너로 보내 버려서",
+        explanation: "건너편 꽃을 꺾을 거라는 말은 님이 다른 여인을 만날까 하는 걱정이에요."
+    },
+    {
+        id: "seogyeong-refrain",
+        poemId: "goryeo-seogyeong",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "'아즐가'와 '위 두어렁셩 두어렁셩 다링디리'는 무엇인가요?",
+        choices: [
+            "뜻 없이 가락을 맞추는 소리",
+            "님의 이름",
+            "서경의 지명"
+        ],
+        answer: "뜻 없이 가락을 맞추는 소리",
+        explanation: "'아즐가'는 줄 가운데, 긴 후렴은 줄 끝에 와요."
+    },
+    {
+        id: "manjeon-ice",
+        poemId: "goryeo-manjeonchun",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "얼음 위 댓잎 자리에서 얼어 죽어도 좋다는 말은 무엇을 보여 주나요?",
+        choices: [
+            "님과 함께하는 밤이 그만큼 소중하다는 것",
+            "겨울이 몹시 춥다는 것",
+            "댓잎이 따뜻하다는 것"
+        ],
+        answer: "님과 함께하는 밤이 그만큼 소중하다는 것",
+        explanation: "죽어도 좋으니 밤이 더디 새라고 해요. 사랑을 극단으로 밀어 말해요."
+    },
+    {
+        id: "manjeon-peach",
+        poemId: "goryeo-manjeonchun",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "둘째 묶음에서 시름없이 봄바람에 웃는 복숭아꽃은 무엇과 맞세워져 있나요?",
+        choices: ["잠 못 드는 나", "떠난 님", "지나가는 봄"],
+        answer: "잠 못 드는 나",
+        explanation: "꽃은 시름이 없고 나는 시름뿐이에요. 자연과 나를 맞세웠어요."
+    },
+    {
+        id: "jeonggwajeong-bird",
+        poemId: "jeongseo-jeonggwajeong",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "말하는 이는 자기를 무엇에 견주었나요?",
+        choices: ["산 접동새", "새벽달", "샛별"],
+        answer: "산 접동새",
+        explanation: "님을 그리워 우는 모습이 접동새 같대요."
+    },
+    {
+        id: "jeonggwajeong-witness",
+        poemId: "jeongseo-jeonggwajeong",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "자기가 결백하다는 것을 누가 안다고 했나요?",
+        choices: ["새벽달과 샛별", "임금", "뭇사람"],
+        answer: "새벽달과 샛별",
+        explanation: "사람은 몰라줘도 하늘은 안다는 말이에요."
+    },
+    {
+        id: "jeonggwajeong-end",
+        poemId: "jeongseo-jeonggwajeong",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "마지막 줄에서 님에게 무엇을 바라나요?",
+        choices: [
+            "돌이켜 들으시고 다시 사랑해 달라고",
+            "잊어 달라고",
+            "함께 떠나자고"
+        ],
+        answer: "돌이켜 들으시고 다시 사랑해 달라고",
+        explanation: "귀양 간 신하가 임금께 올린 호소예요. 「사미인곡」보다 삼백 년 앞선 노래예요."
+    },
+    {
+        id: "goryeo-compare",
+        poemId: "goryeo-gasiri",
+        category: "견주어 읽기",
+        prompt: "「가시리」「서경별곡」「정과정」을 나란히 놓고 답해 보세요.",
+        sentence: "세 노래의 이별은 어떻게 다른가요?",
+        choices: [
+            "보내며 돌아오길 빌고, 매달리며 원망하고, 결백을 호소해요",
+            "셋 다 조용히 보내요",
+            "셋 다 사공을 원망해요"
+        ],
+        answer: "보내며 돌아오길 빌고, 매달리며 원망하고, 결백을 호소해요",
+        explanation: "같은 이별인데 목소리가 셋이에요. 시험은 이 차이를 물어요."
+    },
+
+    // ── 고2·3 · 한시 넷 ───────────────────────────────────────────
+    {
+        id: "sarihwa-sparrow",
+        poemId: "jehyeon-sarihwa",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "농사를 망치는 참새는 누구를 가리키나요?",
+        choices: ["백성의 곡식을 빼앗는 벼슬아치", "진짜 참새", "게으른 농부"],
+        answer: "백성의 곡식을 빼앗는 벼슬아치",
+        explanation: "늙은 홀아비가 홀로 지은 농사를 다 없애는 것은 새가 아니라 사람이에요."
+    },
+    {
+        id: "sarihwa-origin",
+        poemId: "jehyeon-sarihwa",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "이 한시는 원래 무엇이었나요?",
+        choices: [
+            "백성들이 부르던 우리말 노래를 한시로 옮긴 것",
+            "임금이 지은 시",
+            "중국에서 들어온 시"
+        ],
+        answer: "백성들이 부르던 우리말 노래를 한시로 옮긴 것",
+        explanation: "이제현이 우리 노래를 한자로 적어 남겼어요. 원래 우리말 가사는 전하지 않아요."
+    },
+    {
+        id: "bubyeok-contrast",
+        poemId: "leesaek-bubyeongnu",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'성은 텅 비어 달 한 조각, 오래된 바위 위엔 구름 천 년'은 무엇을 맞세웠나요?",
+        choices: [
+            "사라진 사람의 일과 그대로인 자연",
+            "낮과 밤",
+            "성과 바위"
+        ],
+        answer: "사라진 사람의 일과 그대로인 자연",
+        explanation: "영웅은 떠났는데 산은 푸르고 강은 흘러요. 마지막 줄이 그 대비를 매듭지어요."
+    },
+    {
+        id: "bubyeok-hero",
+        poemId: "leesaek-bubyeongnu",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "돌아오지 않는 기린마와 어디 갔는지 모를 천손은 누구인가요?",
+        choices: ["고구려의 동명왕", "고려의 임금", "신라의 화랑"],
+        answer: "고구려의 동명왕",
+        explanation: "평양 옛 성에 올라 고구려의 옛 영광을 떠올려요."
+    },
+    {
+        id: "jeolmyeong-when",
+        poemId: "hwanghyeon-jeolmyeong",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'무궁화 세상이 가라앉았다'는 어떤 일을 말하나요?",
+        choices: ["1910년 나라를 빼앗긴 일", "큰 홍수", "무궁화가 진 일"],
+        answer: "1910년 나라를 빼앗긴 일",
+        explanation: "새와 짐승과 산과 강까지 슬퍼한다고 했어요."
+    },
+    {
+        id: "jeolmyeong-scholar",
+        poemId: "hwanghyeon-jeolmyeong",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "마지막 줄 '식자 노릇 어렵기도 하여라'는 어떤 마음인가요?",
+        choices: [
+            "글 배운 사람으로서 나라 망함에 책임을 느끼는 마음",
+            "공부가 어렵다는 마음",
+            "책을 덮고 쉬고 싶은 마음"
+        ],
+        answer: "글 배운 사람으로서 나라 망함에 책임을 느끼는 마음",
+        explanation: "이 시를 남기고 스스로 목숨을 끊었어요. 지식인의 책임을 끝까지 진 거예요."
+    },
+    {
+        id: "tamjin-cotton",
+        poemId: "dasan-tamjin",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "눈처럼 고운 무명은 어떻게 되었나요?",
+        choices: ["아전 줄 돈이라며 빼앗겼어요", "서울로 팔려 갔어요", "옷이 되었어요"],
+        answer: "아전 줄 돈이라며 빼앗겼어요",
+        explanation: "백성이 짠 것을 벼슬아치 밑 사람이 가져가요."
+    },
+    {
+        id: "tamjin-tax",
+        poemId: "dasan-tamjin",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "누전 세금이란 어떤 세금인가요?",
+        choices: [
+            "장부에 빠진 땅에까지 억지로 매긴 세금",
+            "정당한 세금",
+            "서울로 가는 뱃삯"
+        ],
+        answer: "장부에 빠진 땅에까지 억지로 매긴 세금",
+        explanation: "없는 땅에 세금을 매기니 백성이 견딜 수가 없어요."
+    },
+    {
+        id: "hansi-common",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "「사리화」와 「탐진촌요」를 나란히 놓고 답해 보세요.",
+        sentence: "고려의 한시와 조선의 한시가 똑같이 고발하는 것은 무엇인가요?",
+        choices: [
+            "벼슬아치의 수탈로 고통받는 백성",
+            "전쟁의 참혹함",
+            "임금의 어리석음"
+        ],
+        answer: "벼슬아치의 수탈로 고통받는 백성",
+        explanation: "참새와 황두, 오백 년 사이를 두고 같은 자리를 겨냥해요."
+    },
+
+    // ── 고2·3 · 민요와 잡가 ───────────────────────────────────────
+    {
+        id: "sijip-form",
+        poemId: "folk-sijipsari",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "시집살이 노래는 누가 묻고 누가 답하나요?",
+        choices: [
+            "사촌 동생이 묻고 형님이 답해요",
+            "한 사람이 혼자 노래해요",
+            "여러 사람이 후렴을 불러요"
+        ],
+        answer: "사촌 동생이 묻고 형님이 답해요",
+        explanation: "「속미인곡」처럼 묻고 답하는 짜임인데, 이쪽은 백성의 입말이에요."
+    },
+    {
+        id: "sijip-pepper",
+        poemId: "folk-sijipsari",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "시집살이를 무엇에 견주었나요?",
+        choices: ["고추보다 더 매운 것", "수박처럼 둥근 것", "물처럼 흐르는 것"],
+        answer: "고추보다 더 매운 것",
+        explanation: "먹는 것, 하는 일, 식구들을 차례로 견주며 매움을 쌓아요."
+    },
+    {
+        id: "sijip-birds",
+        poemId: "folk-sijipsari",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "시집 식구들을 무엇에 견주었나요?",
+        choices: ["저마다 다른 새", "저마다 다른 꽃", "저마다 다른 짐승"],
+        answer: "저마다 다른 새",
+        explanation: "호랑새, 꾸중새, 할림새, 뾰족새. 그리고 나는 썩는 새예요."
+    },
+    {
+        id: "sijip-change",
+        poemId: "folk-sijipsari",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "석 삼 년을 살고 나니 무엇이 무엇으로 바뀌었나요?",
+        choices: [
+            "배꽃 얼굴이 호박꽃으로, 백옥 손이 오리발로",
+            "가난이 부자로",
+            "미움이 사랑으로"
+        ],
+        answer: "배꽃 얼굴이 호박꽃으로, 백옥 손이 오리발로",
+        explanation: "고운 것과 거친 것을 짝지어 늘어놓았어요. 「규원가」의 설빈화안과 같은 자리예요."
+    },
+    {
+        id: "sijip-end",
+        poemId: "folk-sijipsari",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "마지막의 거위와 오리는 무엇을 보여 주나요?",
+        choices: [
+            "울음을 웃음으로 눙치는 마음",
+            "시집이 부자라는 것",
+            "봄이 왔다는 것"
+        ],
+        answer: "울음을 웃음으로 눙치는 마음",
+        explanation: "눈물 고인 것을 못이라 하고 거기 거위 오리가 논다고 해요. 슬픔을 해학으로 넘겨요."
+    },
+    {
+        id: "yusan-start",
+        poemId: "japga-yusanga",
+        category: "장면 확인",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "무엇을 하러 가자고 하나요?",
+        choices: ["봄 산천 경치를 구경하러", "농사를 지으러", "님을 만나러"],
+        answer: "봄 산천 경치를 구경하러",
+        explanation: "대지팡이와 짚신, 표주박 하나로 가볍게 나서요."
+    },
+    {
+        id: "yusan-words",
+        poemId: "japga-yusanga",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "이 노래의 말은 어떤 특징이 있나요?",
+        choices: [
+            "한자말 구절과 우리말이 섞여 있어요",
+            "순우리말뿐이에요",
+            "한문뿐이에요"
+        ],
+        answer: "한자말 구절과 우리말이 섞여 있어요",
+        explanation: "서울 소리꾼들이 양반 문자를 빌려 멋을 냈어요."
+    },
+    {
+        id: "minyo-vs",
+        poemId: "goryeo-cheongsan",
+        category: "견주어 읽기",
+        prompt: "「청산별곡」과 「시집살이 노래」와 「유산가」를 떠올려 보세요.",
+        sentence: "세 노래가 지은이 없이 전해진 까닭은 무엇인가요?",
+        choices: [
+            "여럿이 입에서 입으로 부르며 다듬어진 노래라서",
+            "지은이가 이름을 숨겨서",
+            "글로 쓰지 못하게 해서"
+        ],
+        answer: "여럿이 입에서 입으로 부르며 다듬어진 노래라서",
+        explanation: "고려 사람의 노래, 시집간 여인의 노래, 서울 소리꾼의 노래가 그렇게 남았어요."
     }
 ]);
