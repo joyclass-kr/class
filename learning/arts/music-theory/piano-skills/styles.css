@@ -195,7 +195,7 @@ h1, h2, p { margin-top: 0; }
 
 .scale-option-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);
+    grid-template-columns: minmax(0, 1fr);
     gap: 8px;
 }
 
@@ -606,7 +606,7 @@ input[type="range"] {
     .mini-keyboard { min-height: 108px; }
     .key-family-grid { grid-template-columns: minmax(0, 1fr) minmax(190px, .65fr); }
     .key-family-grid .choice-group:last-child { grid-column: 1 / -1; }
-    .scale-option-grid { grid-template-columns: 1fr 1fr; }
+    .scale-option-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 620px) {

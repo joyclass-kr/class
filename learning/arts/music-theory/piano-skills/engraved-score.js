@@ -1183,7 +1183,7 @@
     function scaleStaveNotes(VF, specs, clef, stemDirection, fingerPosition) {
         return specs.map(function (spec, index) {
             const duration = index === specs.length - 1 ? "q" : "8";
-            const note = staveNote(VF, clef, [spec], duration, stemDirection);
+            const note = new VF.StaveNote({ clef:clef, keys:[spec.key], duration:duration, stem_direction:stemDirection });
             const finger = new VF.Annotation(String(spec.finger))
                 .setFont("Inter, Arial, sans-serif", 11, "500")
                 .setVerticalJustification(fingerPosition);
@@ -1230,15 +1230,20 @@
         });
     }
 
-    function drawScaleSystem(VF, context, line, y, label, ascending, hand) {
+    function drawScaleSystem(VF, context, line, y, label, ascending, hand, keySignature) {
         const width = 1028;
         const x = 128;
         const bothHands = hand === "both";
         const treble = hand === "left" ? null : new VF.Stave(x, y, width).addClef("treble");
         const bassY = bothHands ? y + 92 : y;
         const bass = hand === "right" ? null : new VF.Stave(x, bassY, width).addClef("bass");
+        if (treble) treble.addKeySignature(keySignature);
+        if (bass) bass.addKeySignature(keySignature);
+        const noteStart = Math.max(treble ? treble.getNoteStartX() : 0, bass ? bass.getNoteStartX() : 0);
+        if (treble) treble.setNoteStartX(noteStart);
+        if (bass) bass.setNoteStartX(noteStart);
         context.setFont("Inter, Arial, sans-serif", 14, "700");
-        context.fillText(label, 34, y + 48);
+        context.fillText(label, 34, y + 8);
         if (treble) treble.setContext(context).draw();
         if (bass) bass.setContext(context).draw();
         if (bothHands) {
@@ -1267,7 +1272,10 @@
             leftVoice = new VF.Voice({ num_beats:8, beat_value:4 }).addTickables(leftNotes);
             voices.push(leftVoice);
         }
-        new VF.Formatter().joinVoices(voices).format(voices, width - 100);
+        // Each staff has its own accidental state. Key-signature notes need no
+        // repeated symbols; raised minor degrees still get their accidentals.
+        voices.forEach(function (voice) { VF.Accidental.applyAccidentals([voice], keySignature); });
+        new VF.Formatter().joinVoices(voices).format(voices, width - (noteStart - x) - 24);
         if (rightVoice) rightVoice.draw(context, treble);
         if (leftVoice) leftVoice.draw(context, bass);
         beams.forEach(function (beam) {
@@ -1279,28 +1287,19 @@
         const VF = window.Vex.Flow;
         const width = 1200;
         const bothHands = page.hand === "both";
-        const height = bothHands ? 620 : 520;
+        const height = bothHands ? 570 : 480;
         const renderer = new VF.Renderer(container, VF.Renderer.Backends.SVG);
         renderer.resize(width, height);
         const context = renderer.getContext();
         context.setFillStyle("#17201d");
         context.setStrokeStyle("#17201d");
-        context.setFont("Inter, Arial, sans-serif", 20, "700");
         const handLabel = { both:"Both Hands", right:"Right Hand", left:"Left Hand" }[page.hand] || "Both Hands";
-        context.fillText(page.keyLabel + " " + page.typeLabel + " · " + handLabel + " · Two Octaves", 34, 30);
-        context.setFont("Inter, Arial, sans-serif", 12, "500");
-        const guide = page.hand === "right"
-            ? "Right Hand · Treble Clef · Fingering numbers above notes"
-            : page.hand === "left"
-                ? "Left Hand · Bass Clef · Fingering numbers below notes"
-                : "Right Hand: upper staff · Left Hand: lower staff · Fingering numbers";
-        context.fillText(guide, 34, 52);
         if (bothHands) {
-            drawScaleSystem(VF, context, page.up, 100, "Ascending", true, page.hand);
-            drawScaleSystem(VF, context, page.down, 370, "Descending", false, page.hand);
+            drawScaleSystem(VF, context, page.up, 70, "Ascending", true, page.hand, page.keySignature);
+            drawScaleSystem(VF, context, page.down, 320, "Descending", false, page.hand, page.keySignature);
         } else {
-            drawScaleSystem(VF, context, page.up, 112, "Ascending", true, page.hand);
-            drawScaleSystem(VF, context, page.down, 342, "Descending", false, page.hand);
+            drawScaleSystem(VF, context, page.up, 70, "Ascending", true, page.hand, page.keySignature);
+            drawScaleSystem(VF, context, page.down, 300, "Descending", false, page.hand, page.keySignature);
         }
         const svg = container.querySelector("svg");
         if (svg) {

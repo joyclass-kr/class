@@ -8,7 +8,7 @@
     const elements = {};
     [
         "midiButton", "midiButtonLabel", "midiStatus", "scaleControls", "voicingControls", "referenceControls",
-        "whiteKeyChoices", "exceptionKeyChoices", "blackKeyChoices", "scaleTypeChoices", "handChoices",
+        "whiteKeyChoices", "exceptionKeyChoices", "blackKeyChoices", "scaleTypeChoices",
         "skillChoices", "referenceSelect", "previousChapterButton", "nextChapterButton", "chapterRange", "chapterTitle",
         "chapterSummary", "exerciseEyebrow", "exerciseTitle", "exerciseSummary", "scoreHeading", "pageControls",
         "scoreViewport", "scoreSurface", "scoreCaption", "previousPageButton", "nextPageButton", "pageIndicator",
@@ -31,7 +31,6 @@
         Gb:{ major:"G♭", minor:"F♯" },
         Ab:{ major:"A♭", minor:"G♯" }
     };
-    const HAND_LABELS = { both:"Both Hands", right:"Right Hand", left:"Left Hand" };
     const FLAT_NAMES = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"];
     const SHARP_NAMES = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"];
     const BLACK_PCS = new Set([1, 3, 6, 8, 10]);
@@ -39,7 +38,6 @@
         mode: "scale",
         scaleKeyId: "C",
         scaleType: "major",
-        hand: "both",
         skillId: 1,
         referenceId: "intro",
         sourcePageIndex: 0,
@@ -118,9 +116,6 @@
         Object.keys(DATA.scaleTypes).forEach(function (id) {
             elements.scaleTypeChoices.appendChild(choiceButton(id, DATA.scaleTypes[id].label, "scaleType"));
         });
-        Object.keys(HAND_LABELS).forEach(function (id) {
-            elements.handChoices.appendChild(choiceButton(id, HAND_LABELS[id], "hand"));
-        });
         SOURCE.referenceSections.forEach(function (section) {
             elements.referenceSelect.appendChild(option(section.id, section.label));
         });
@@ -134,11 +129,6 @@
         });
         document.querySelectorAll("[data-scale-type]").forEach(function (button) {
             const active = button.dataset.scaleType === state.scaleType;
-            button.classList.toggle("is-active", active);
-            button.setAttribute("aria-pressed", String(active));
-        });
-        document.querySelectorAll("[data-hand]").forEach(function (button) {
-            const active = button.dataset.hand === state.hand;
             button.classList.toggle("is-active", active);
             button.setAttribute("aria-pressed", String(active));
         });
@@ -175,7 +165,7 @@
             mode:state.mode,
             keyId:state.scaleKeyId,
             scaleType:state.scaleType,
-            hand:state.hand,
+            hand:"both",
             skillId:state.skillId,
             referenceId:state.referenceId
         });
@@ -185,6 +175,7 @@
         elements.previousPageButton.disabled = state.sourcePageIndex === 0;
         elements.nextPageButton.disabled = state.sourcePageIndex >= pages.length - 1;
         elements.pageControls.hidden = pages.length <= 1;
+        elements.pageControls.parentElement.hidden = state.mode === "scale";
         window.PianoEngraving.render(elements.scoreSurface, state.scoreModel, state.sourcePageIndex, { tempo:state.tempo });
         if (state.mode === "scale") {
             elements.scoreCaption.textContent = "Ascending과 Descending을 같은 박으로 연결하고, 손바꿈에서 멈추지 않습니다.";
@@ -236,7 +227,7 @@
             elements.exerciseEyebrow.textContent = stage;
             elements.exerciseTitle.textContent = scaleRootLabel() + " " + type.label;
             elements.exerciseSummary.textContent = lesson.summary;
-            elements.scoreHeading.textContent = scaleRootLabel() + " " + type.label + " · " + HAND_LABELS[state.hand] + " · Two Octaves";
+            elements.scoreHeading.textContent = scaleRootLabel() + " " + type.label + " · " + "Both Hands" + " · Two Octaves";
             return;
         }
         if (state.mode === "voicing") {
@@ -600,11 +591,10 @@
         button.addEventListener("click", function () { changeMode(button.dataset.mode); });
     });
     elements.scaleControls.addEventListener("click", function (event) {
-        const button = event.target.closest("button[data-scale-key], button[data-scale-type], button[data-hand]");
+        const button = event.target.closest("button[data-scale-key], button[data-scale-type]");
         if (!button) return;
         if (button.dataset.scaleKey) state.scaleKeyId = button.dataset.scaleKey;
         if (button.dataset.scaleType) state.scaleType = button.dataset.scaleType;
-        if (button.dataset.hand) state.hand = button.dataset.hand;
         state.sourcePageIndex = 0;
         resetPractice();
         renderAll();
