@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="동물과 식물 카드 열두 장을 다리·날개·사는 곳 같은 기준으로 두 무리로 나누어 보고, 낙타·북극곰·붕어 같은 생물을 사막·극지방·물속에 놓아 몸의 특징이 사는 곳과 맞는지 살펴보는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="living-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>동물과 식물 나누기, 사는 곳과 몸</h1>
+            </div>
+            <div class="grade-tags"><span>초등 3학년</span><span>생명과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>생물 카드를 나눌지, 생물을 사는 곳에 놓아 볼지 고릅니다.</li>
+            <li>카드 나누기는 나누는 기준을, 사는 곳은 곳과 생물을 정합니다.</li>
+            <li>결과를 먼저 예상해 봅니다.</li>
+            <li>시작해서 카드가 어느 상자로 가는지, 몸의 특징이 그곳에 맞는지 하나씩 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">같은 카드라도 나누는 기준이 달라지면 무리가 달라집니다</p>
+                <fieldset class="mode-field">
+                    <legend>실험 종류</legend>
+                    <div class="mode-buttons">
+                        <button type="button" data-mode="sort">카드 나누기<small>어떤 기준으로 나눌까</small></button>
+                        <button type="button" data-mode="habitat">사는 곳과 몸<small>여기서 잘 살 수 있을까</small></button>
+                    </div>
+                </fieldset>
+                <div id="controlArea"></div>
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons three" id="predictionArea"></div>
+                </fieldset>
+                <button class="run-button" id="checkBtn" type="button">시작</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">결과</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">까닭</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel burn-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">카드가 한 장씩 기준에 맞는 상자로 들어갑니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>나누는 기준</strong> 생물은 다리가 있는지, 날 수 있는지, 어디에 사는지 같은 기준으로 무리 지을 수 있습니다. 기준은 누가 보아도 똑같이 가를 수 있는 것이어야 하고, 기준이 달라지면 같은 생물도 다른 무리에 들어갑니다.</p>
+                <p><strong>동물과 식물</strong> 스스로 움직여 먹이를 먹는 것이 동물, 한자리에서 햇빛으로 양분을 만드는 것이 식물입니다. 다리가 없는 동물도 있으므로 다리로는 동물과 식물을 가를 수 없습니다.</p>
+                <p><strong>사는 곳에 맞는 몸</strong> 사막의 낙타는 두꺼운 발바닥과 긴 눈썹, 물을 오래 참는 몸을 가졌고, 극지방의 북극곰은 두꺼운 털과 지방, 물속의 붕어는 아가미와 지느러미를 가졌습니다. 몸의 특징이 사는 곳에 맞기 때문에 그곳에서 살 수 있습니다.</p>
+                <p><strong>식물도 마찬가지</strong> 사막의 선인장은 잎이 가시로 바뀌고 줄기에 물을 저장하며, 물속 수련은 잎이 넓고 줄기 속에 공기가 들어 있습니다. 사는 곳이 다르면 몸의 생김새도 다릅니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>생물을 나누는 기준으로 알맞은 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 예쁜가, 예쁘지 않은가</label>
+                        <label><input type="radio" name="q1" value="b"> 내가 좋아하는가, 싫어하는가</label>
+                        <label><input type="radio" name="q1" value="c"> 다리가 있는가, 없는가</label>
+                        <label><input type="radio" name="q1" value="d"> 이름이 긴가, 짧은가</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>기준은 누가 보아도 똑같이 가를 수 있어야 합니다. 예쁘다·좋아한다는 사람마다 달라 기준이 될 수 없습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>'다리가 있는가'로 나누면 붕어·뱀·지렁이와 소나무·민들레가 한 무리가 됩니다. 이것으로 알 수 있는 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 붕어·뱀·지렁이는 식물이다</label>
+                        <label><input type="radio" name="q2" value="b"> 다리가 없으면 모두 식물이다</label>
+                        <label><input type="radio" name="q2" value="c"> 이 기준은 잘못된 기준이다</label>
+                        <label><input type="radio" name="q2" value="d"> 다리로는 동물과 식물을 가를 수 없다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>다리가 없는 동물도 있으므로 다리는 동물·식물을 가르는 기준이 못 됩니다. 기준 자체는 또박또박 나눌 수 있으니 잘못된 것은 아닙니다. 무엇을 알아보려는지에 따라 알맞은 기준이 다릅니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>낙타가 사막에서 잘 살 수 있는 몸의 특징이 아닌 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 모래에 빠지지 않는 넓고 두꺼운 발바닥</label>
+                        <label><input type="radio" name="q3" value="b"> 물속에서 숨 쉬는 아가미</label>
+                        <label><input type="radio" name="q3" value="c"> 모래바람을 막는 긴 눈썹</label>
+                        <label><input type="radio" name="q3" value="d"> 물을 오래 참는 몸</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>아가미는 물속에 사는 붕어의 특징입니다. 낙타는 뜨겁고 건조한 사막에 맞게 발바닥·눈썹·혹·물 참기를 갖추었습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>극지방의 북극곰을 사막에 데려가면 어떻게 될까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 두꺼운 털과 지방 때문에 너무 더워 힘들어한다</label>
+                        <label><input type="radio" name="q4" value="b"> 털이 빠져 금방 적응한다</label>
+                        <label><input type="radio" name="q4" value="c"> 사막에서도 똑같이 잘 산다</label>
+                        <label><input type="radio" name="q4" value="d"> 모래를 먹으며 산다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>북극곰의 두꺼운 털과 지방은 추위를 막는 데는 좋지만 뜨거운 사막에서는 열을 내보내지 못해 힘듭니다. 몸의 특징은 원래 사는 곳에 맞추어져 있습니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=2"></script>
+</body>
+</html>
