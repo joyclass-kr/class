@@ -21,7 +21,6 @@
     unitChips: document.getElementById("unit-chips"),
     examSelect: document.getElementById("exam-select"),
     list: document.getElementById("list"),
-    guide: document.getElementById("guide"),
     moreWrap: document.getElementById("more-wrap"),
     btnMore: document.getElementById("btn-more"),
     empty: document.getElementById("empty"),
@@ -324,15 +323,12 @@
     const items = visibleProblems();
 
     if (!isFilterSelected) {
-      if (els.guide) els.guide.hidden = false;
       els.list.textContent = "";
       els.empty.hidden = true;
       if (els.moreWrap) els.moreWrap.hidden = true;
       updateCount([], 0);
       return;
     }
-
-    if (els.guide) els.guide.hidden = true;
 
     if (items.length === 0) {
       els.list.textContent = "";

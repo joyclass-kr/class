@@ -289,32 +289,6 @@ main { max-width: 940px; margin: 0 auto; padding: 16px 16px 48px; }
   font-size: 0.95rem;
 }
 
-/* ── 초기 안내 박스 ── */
-.guide-placeholder {
-  background: var(--card);
-  border: 1px dashed var(--line);
-  border-radius: var(--radius);
-  padding: 48px 24px;
-  text-align: center;
-  color: var(--ink-soft);
-  margin: 12px 0 24px;
-}
-.guide-icon {
-  font-size: 2.2rem;
-  margin-bottom: 10px;
-}
-.guide-title {
-  margin: 0 0 6px;
-  font-size: 1.12rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-.guide-desc {
-  margin: 0;
-  font-size: 0.92rem;
-  color: var(--ink-soft);
-}
-
 /* ── 더 보기 버튼 ── */
 .more-wrap {
   text-align: center;
