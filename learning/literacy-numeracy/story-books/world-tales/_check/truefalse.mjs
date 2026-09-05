@@ -56,9 +56,9 @@ function longestWordRun(a, b) {
 }
 
 function koQuiz(src) {
-    const i = src.indexOf('const QUIZ');
+    const i = src.indexOf('const QUIZ = [');
     if (i < 0) return null;
-    const j = src.indexOf('const EN', i);
+    const j = src.indexOf('const EN = {', i);
     const body = src.slice(i, j < 0 ? undefined : j);
     const k = body.indexOf('[');
     let depth = 0, end = -1;
@@ -75,8 +75,8 @@ function koQuiz(src) {
 
 /* 한글 본문만 뽑는다. 해설과 영어판은 뺀다. 이솝은 CHAPTERS 대신 FABLES를 쓴다. */
 function koStory(src) {
-    let i = src.indexOf('const CHAPTERS');
-    if (i < 0) i = src.indexOf('const FABLES');
+    let i = src.indexOf('const CHAPTERS = [');
+    if (i < 0) i = src.indexOf('const FABLES = [');
     if (i < 0) return '';
     let j = src.length;
     for (const mark of ['const AFTERWORD', 'const CHAPTER_SEGS', 'const COVER', 'const QUIZ', 'const EN']) {
@@ -88,7 +88,7 @@ function koStory(src) {
 
 /* 영어판은 따옴표 없는 열쇠말을 쓰고 홑따옴표를 섞어 쓴다. */
 function enQuiz(src) {
-    const at = src.indexOf('const EN');
+    const at = src.indexOf('const EN = {');
     if (at < 0) return null;
     const i = src.indexOf('quiz: [', at);
     if (i < 0) return null;
@@ -104,7 +104,7 @@ function enQuiz(src) {
 }
 
 function enStory(src) {
-    const i = src.indexOf('const EN');
+    const i = src.indexOf('const EN = {');
     if (i < 0) return '';
     let j = src.length;
     for (const mark of ['afterword:', 'quiz:', 'const UI']) {

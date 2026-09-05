@@ -28,9 +28,9 @@ function longestRun(a, b) {
 
 /* app.js에서 KR 문제만 떼어 온다. EN은 뒤에 따로 붙어 있으므로 앞쪽만 본다. */
 function quizOf(src) {
-    const i = src.indexOf('const QUIZ');
+    const i = src.indexOf('const QUIZ = [');
     if (i < 0) return null;
-    const j = src.indexOf('const EN', i);
+    const j = src.indexOf('const EN = {', i);
     const body = src.slice(i, j < 0 ? undefined : j);
     const k = body.indexOf('[');
     let depth = 0, end = -1;
