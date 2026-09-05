@@ -63,6 +63,10 @@
     {
       id: "2024-06", year: 2024, round: "6월", label: "2024학년도 6월",
       source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500236&m=0403&s=suneung"
+    },
+    {
+      id: "2023-suneung", year: 2023, round: "수능", label: "2023학년도 수능",
+      source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500234&m=0403&s=suneung"
     }
   ];
 
@@ -1568,6 +1572,137 @@
       short: true,
       answer: 380,
       help: R`두 평균변화율의 곱이 음수라는 것은 그 구간 안에서 \(f\)가 늘다가 줄거나 줄다가 는다는 뜻, 곧 구간이 극값을 품는다는 뜻이다. \(f'(x)=3x^{2}-4ax=x(3x-4a)\)이므로 극값은 \(x=0\)과 \(x=\frac{4a}{3}\)에 있고, 길이 \(\frac{3}{2}\)인 구간이 그 둘 중 하나를 품는 정수 \(k\)를 세는 문제가 된다.`
+    },
+    {
+      id: "2023-suneung-9", exam: "2023-suneung", no: 9, score: 4,
+      units: ["m1-trig"], memo: "감소하는 탄젠트 함수의 양 끝값",
+      body: R`함수
+        \[f(x)=a-\sqrt{3}\tan 2x\]
+        가 닫힌구간 \(\left[-\dfrac{\pi}{6},\,b\right]\)에서 최댓값 \(7\), 최솟값 \(3\)을 가질 때,
+        \(a\times b\)의 값은? (단, \(a\), \(b\)는 상수이다.)`,
+      choices: [R`\(\dfrac{\pi}{2}\)`, R`\(\dfrac{5\pi}{12}\)`, R`\(\dfrac{\pi}{3}\)`, R`\(\dfrac{\pi}{4}\)`, R`\(\dfrac{\pi}{6}\)`],
+      answer: 3,
+      help: R`\(\tan 2x\)는 증가하므로 \(-\sqrt{3}\tan 2x\)는 감소한다. 곧 최댓값은 왼쪽 끝 \(x=-\frac{\pi}{6}\)에서, 최솟값은 오른쪽 끝 \(x=b\)에서 나온다. 양 끝만 보면 된다.`
+    },
+    {
+      id: "2023-suneung-10", exam: "2023-suneung", no: 10, score: 4,
+      units: ["m2-integ"], memo: "위아래가 바뀐 두 넓이가 같을 조건",
+      body: R`두 곡선 \(y=x^{3}+x^{2}\), \(y=-x^{2}+k\)와 \(y\)축으로 둘러싸인
+        부분의 넓이를 \(A\), 두 곡선 \(y=x^{3}+x^{2}\), \(y=-x^{2}+k\)와
+        직선 \(x=2\)로 둘러싸인 부분의 넓이를 \(B\)라 하자.
+        \(A=B\)일 때, 상수 \(k\)의 값은? (단, \(4<k<5\))`,
+      figure: "2023-suneung-10.webp",
+      choices: [R`\(\dfrac{25}{6}\)`, R`\(\dfrac{13}{3}\)`, R`\(\dfrac{9}{2}\)`, R`\(\dfrac{14}{3}\)`, R`\(\dfrac{29}{6}\)`],
+      answer: 4,
+      help: R`\(A\)와 \(B\)는 두 곡선의 위아래가 서로 바뀐 두 조각이다. 그래서 \(A=B\)는 부호를 붙여 묶으면 \(\displaystyle\int_{0}^{2}\bigl\{(x^{3}+x^{2})-(-x^{2}+k)\bigr\}dx=0\) 한 줄이 되고, 교점을 구할 필요가 없다.`
+    },
+    {
+      id: "2023-suneung-11", exam: "2023-suneung", no: 11, score: 4,
+      units: ["m1-trig"], memo: "같은 각이 마주 보는 두 현",
+      body: R`그림과 같이 사각형 \(\mathrm{ABCD}\)가 한 원에 내접하고
+        \[\overline{\mathrm{AB}}=5,\quad \overline{\mathrm{AC}}=3\sqrt{5},\quad \overline{\mathrm{AD}}=7,\quad \angle\mathrm{BAC}=\angle\mathrm{CAD}\]
+        일 때, 이 원의 반지름의 길이는?`,
+      figure: "2023-suneung-11.webp",
+      choices: [R`\(\dfrac{5\sqrt{2}}{2}\)`, R`\(\dfrac{8\sqrt{5}}{5}\)`, R`\(\dfrac{5\sqrt{5}}{3}\)`, R`\(\dfrac{8\sqrt{2}}{3}\)`, R`\(\dfrac{9\sqrt{3}}{4}\)`],
+      answer: 1,
+      help: R`\(\angle\mathrm{BAC}=\angle\mathrm{CAD}\)이므로 두 각이 마주 보는 현이 같아 \(\overline{\mathrm{BC}}=\overline{\mathrm{CD}}\)다. 이 하나로 삼각형 \(\mathrm{ABC}\)와 \(\mathrm{ACD}\)에 각각 코사인법칙을 써서 만든 두 식이 같아지고, 거기서 \(\cos(\angle\mathrm{BAC})\)가 정해진다.`
+    },
+    {
+      id: "2023-suneung-12", exam: "2023-suneung", no: 12, score: 4,
+      units: ["m2-integ"], memo: "구간마다 되풀이되는 절댓값 함수",
+      body: R`실수 전체의 집합에서 연속인 함수 \(f(x)\)가 다음 조건을
+        만족시킨다.`,
+      note: [
+        R`\(n-1\le x<n\)일 때, \(\bigl|f(x)\bigr|=\bigl|6(x-n+1)(x-n)\bigr|\)이다. (단, \(n\)은 자연수이다.)`
+      ],
+      bodyAfter: R`열린구간 \((0,\,4)\)에서 정의된 함수
+        \[g(x)=\int_{0}^{x}f(t)\,dt-\int_{x}^{4}f(t)\,dt\]
+        가 \(x=2\)에서 최솟값 \(0\)을 가질 때, \(\displaystyle\int_{\frac{1}{2}}^{4}f(x)\,dx\)의 값은?`,
+      choices: [R`\(-\dfrac{3}{2}\)`, R`\(-\dfrac{1}{2}\)`, R`\(\dfrac{1}{2}\)`, R`\(\dfrac{3}{2}\)`, R`\(\dfrac{5}{2}\)`],
+      answer: 2,
+      help: R`\(g'(x)=f(x)-\bigl(-f(x)\bigr)=2f(x)\)다. \(g\)가 \(x=2\)에서 최소이니 \(f(2)=0\)이고, 그 최솟값이 \(0\)이라는 것은 \(\int_{0}^{2}f=\int_{2}^{4}f\)라는 뜻이다. 그리고 \(|f|\)가 길이 \(1\)인 구간마다 같은 모양을 되풀이하므로 각 구간의 적분은 크기가 같고 부호만 갈린다.`
+    },
+    {
+      id: "2023-suneung-13", exam: "2023-suneung", no: 13, score: 4,
+      units: ["m1-explog"], memo: "거듭제곱근이 정수가 될 조건",
+      body: R`자연수 \(m\,(m\ge 2)\)에 대하여 \(m^{12}\)의 \(n\)제곱근 중에서 정수가
+        존재하도록 하는 \(2\) 이상의 자연수 \(n\)의 개수를 \(f(m)\)이라 할 때,
+        \(\displaystyle\sum_{m=2}^{9}f(m)\)의 값은?`,
+      choices: [R`\(37\)`, R`\(42\)`, R`\(47\)`, R`\(52\)`, R`\(57\)`],
+      answer: 3,
+      help: R`\(m\)을 소인수분해해서 \(m=p^{e}\cdots\) 꼴로 보면 \(m^{12}\)의 지수는 \(12e\)가 된다. \(n\)제곱근이 정수이려면 그 지수가 \(n\)으로 나누어떨어져야 하므로, \(m\)이 어떤 수의 거듭제곱이면(예: \(4=2^{2}\), \(8=2^{3}\)) \(n\)의 후보가 늘어난다.`
+    },
+    {
+      id: "2023-suneung-14", exam: "2023-suneung", no: 14, score: 4,
+      units: ["m2-limit"], memo: "두 자리의 오른쪽 극한을 곱한 함수",
+      body: R`다항함수 \(f(x)\)에 대하여 함수 \(g(x)\)를 다음과 같이 정의한다.
+        \[g(x)=\begin{cases}x &amp; (x<-1 \text{ 또는 } x>1)\\ f(x) &amp; (-1\le x\le 1)\end{cases}\]
+        함수 \(h(x)=\displaystyle\lim_{t\to 0+}g(x+t)\times\lim_{t\to 2+}g(x+t)\)에 대하여
+        &lt;보기&gt;에서 옳은 것만을 있는 대로 고른 것은?`,
+      noteTitle: "보 기",
+      note: [
+        R`ㄱ. \(h(1)=3\)`,
+        R`ㄴ. 함수 \(h(x)\)는 실수 전체의 집합에서 연속이다.`,
+        R`ㄷ. 함수 \(g(x)\)가 닫힌구간 \([-1,\,1]\)에서 감소하고 \(g(-1)=-2\)이면 함수 \(h(x)\)는 실수 전체의 집합에서 최솟값을 갖는다.`
+      ],
+      choices: [R`ㄱ`, R`ㄴ`, R`ㄱ, ㄴ`, R`ㄱ, ㄷ`, R`ㄴ, ㄷ`],
+      answer: 1,
+      help: R`\(\lim_{t\to 0+}g(x+t)\)는 \(x\)에서의 오른쪽 극한이고, \(\lim_{t\to 2+}g(x+t)\)는 \(x+2\)에서의 오른쪽 극한이다. 곧 \(h(x)\)는 서로 \(2\)만큼 떨어진 두 자리의 오른쪽 극한을 곱한 것이다. \(g\)가 끊길 수 있는 자리는 \(x=\pm 1\)뿐이므로, 그 두 자리와 거기서 \(2\)만큼 떨어진 자리만 살피면 된다.`
+    },
+    {
+      id: "2023-suneung-15", exam: "2023-suneung", no: 15, score: 4,
+      units: ["m1-seq"], memo: "3의 배수인지로 갈리는 점화식",
+      body: R`모든 항이 자연수이고 다음 조건을 만족시키는 모든 수열
+        \(\{a_{n}\}\)에 대하여 \(a_{9}\)의 최댓값과 최솟값을 각각 \(M\), \(m\)이라 할 때,
+        \(M+m\)의 값은?`,
+      note: [
+        R`(가) \(a_{7}=40\)`,
+        R`(나) 모든 자연수 \(n\)에 대하여 \(a_{n+2}=\begin{cases}a_{n+1}+a_{n} &amp; \left(a_{n+1}\text{이 }3\text{의 배수가 아닌 경우}\right)\\[4pt] \dfrac{1}{3}a_{n+1} &amp; \left(a_{n+1}\text{이 }3\text{의 배수인 경우}\right)\end{cases}\)이다.`
+      ],
+      choices: [R`\(216\)`, R`\(218\)`, R`\(220\)`, R`\(222\)`, R`\(224\)`],
+      answer: 5,
+      help: R`\(a_{7}=40\)에서 앞으로 두 걸음만 더 가면 \(a_{9}\)다. 곧 \(a_{8}\)이 무엇이냐에 따라 갈리고, \(a_{8}\)은 \(a_{7}=40\)이 \(3\)의 배수가 아니므로 \(a_{8}=a_{7}+a_{6}\)에서 나온다. 뒤가 아니라 앞쪽 항을 거꾸로 좁히는 문제다.`
+    },
+    {
+      id: "2023-suneung-20", exam: "2023-suneung", no: 20, score: 4,
+      units: ["m2-integ"], memo: "속도와 가속도가 구간마다 다르게 주어짐",
+      body: R`수직선 위를 움직이는 점 \(\mathrm{P}\)의 시각 \(t\,(t\ge 0)\)에서의
+        속도 \(v(t)\)와 가속도 \(a(t)\)가 다음 조건을 만족시킨다.`,
+      note: [
+        R`(가) \(0\le t\le 2\)일 때, \(v(t)=2t^{3}-8t\)이다.`,
+        R`(나) \(t\ge 2\)일 때, \(a(t)=6t+4\)이다.`
+      ],
+      bodyAfter: R`시각 \(t=0\)에서 \(t=3\)까지 점 \(\mathrm{P}\)가 움직인 거리를 구하시오.`,
+      short: true,
+      answer: 17,
+      help: R`\(t\ge 2\)에서는 가속도만 주어졌으니 적분해 속도를 얻어야 하고, 그 적분상수는 \(t=2\)에서 앞 구간의 속도와 이어 붙여 정한다. 움직인 거리이므로 \(v=0\)이 되는 자리에서 구간을 끊어 절댓값을 더한다.`
+    },
+    {
+      id: "2023-suneung-21", exam: "2023-suneung", no: 21, score: 4,
+      units: ["m1-explog"], memo: "절댓값으로 꺾인 지수·로그 그래프",
+      body: R`자연수 \(n\)에 대하여 함수 \(f(x)\)를
+        \[f(x)=\begin{cases}\left|3^{\,x+2}-n\right| &amp; (x<0)\\ \left|\log_{2}(x+4)-n\right| &amp; (x\ge 0)\end{cases}\]
+        이라 하자. 실수 \(t\)에 대하여 \(x\)에 대한 방정식 \(f(x)=t\)의 서로
+        다른 실근의 개수를 \(g(t)\)라 할 때, 함수 \(g(t)\)의 최댓값이 \(4\)가
+        되도록 하는 모든 자연수 \(n\)의 값의 합을 구하시오.`,
+      short: true,
+      answer: 33,
+      help: R`절댓값 안이 \(0\)이 되는 자리에서 그래프가 \(V\) 모양으로 꺾인다. 가로선 \(y=t\)가 만나는 점의 개수는 그 꺾인 자리가 두 조각 각각에 있는지, 그리고 \(x=0\) 좌우에서 값이 어떻게 이어지는지로 정해진다. \(n\)이 커지면 꺾이는 자리가 어느 쪽으로 밀려나는지를 보면 된다.`
+    },
+    {
+      id: "2023-suneung-22", exam: "2023-suneung", no: 22, score: 4,
+      units: ["m2-diff"], memo: "평균변화율이 도함수 값과 같아지는 식",
+      body: R`최고차항의 계수가 \(1\)인 삼차함수 \(f(x)\)와 실수 전체의
+        집합에서 연속인 함수 \(g(x)\)가 다음 조건을 만족시킬 때,
+        \(f(4)\)의 값을 구하시오.`,
+      note: [
+        R`(가) 모든 실수 \(x\)에 대하여 \(f(x)=f(1)+(x-1)f'\bigl(g(x)\bigr)\)이다.`,
+        R`(나) 함수 \(g(x)\)의 최솟값은 \(\dfrac{5}{2}\)이다.`,
+        R`(다) \(f(0)=-3\), \(f\bigl(g(1)\bigr)=6\)`
+      ],
+      short: true,
+      answer: 13,
+      help: R`(가)를 옮기면 \(x\ne 1\)일 때 \(\dfrac{f(x)-f(1)}{x-1}=f'\bigl(g(x)\bigr)\)다. 곧 왼쪽은 \(x\)와 \(1\) 사이의 평균변화율이고, 오른쪽은 어느 한 점에서의 순간변화율이다. 평균값 정리가 말하는 그 점이 바로 \(g(x)\)라는 뜻이다.`
     }
   ];
 
