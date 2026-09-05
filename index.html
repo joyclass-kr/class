@@ -383,6 +383,32 @@
             font-family: "Malgun Gothic", sans-serif;
         }
 
+        .hub-quick-links {
+            display: flex;
+            justify-content: center;
+            margin: 0 0 18px;
+        }
+
+        .hub-quick-links a {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            width: min(100%, 460px);
+            min-height: 72px;
+            padding: 11px 15px;
+            border: 2px solid var(--gold);
+            background: linear-gradient(135deg, var(--gold-dark), var(--panel));
+            color: #ffffff;
+            text-align: left;
+            text-decoration: none;
+            font-family: "Malgun Gothic", sans-serif;
+        }
+
+        .hub-quick-links a:hover,
+        .hub-quick-links a:focus-visible {
+            filter: brightness(1.12);
+        }
+
         .worksheet-group {
             position: relative;
             flex: 0 1 220px;
@@ -965,6 +991,12 @@
 
     <div id="hubContent" hidden data-nosnippet>
         <h1 class="learning-hub-title">기초학력</h1>
+        <div class="hub-quick-links" aria-label="학급 함께 하기">
+            <a href="learning/class-race/" data-requires-player="true">
+                <span class="worksheet-copy"><strong>학급 순위전</strong><small>(Class Race) · 선생님이 연 방에 학급 코드로 참가</small></span>
+                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="3" fill="#fff8e1" stroke="#ffb300" stroke-width="1.2"/><rect x="4.5" y="13" width="4" height="7" fill="#ffb300"/><rect x="10" y="7" width="4" height="13" fill="#e53935"/><rect x="15.5" y="10" width="4" height="10" fill="#43a047"/><text x="12" y="6.2" font-size="4.5" font-weight="bold" fill="#212121" text-anchor="middle" font-family="'Malgun Gothic', sans-serif">1위</text></svg></span>
+            </a>
+        </div>
         <section class="hub-section worksheet-section category-section" data-category-section aria-labelledby="worksheet-title">
         <h2 id="worksheet-title" class="category-heading"><button id="category-literacy-toggle" class="category-toggle" type="button" aria-expanded="false" aria-controls="category-literacy-panel"><span class="category-number" aria-hidden="true">01</span><span class="category-label">문해·수리</span><span class="category-chevron" aria-hidden="true"></span></button></h2>
         <div id="category-literacy-panel" class="worksheet-container category-panel" role="region" aria-labelledby="category-literacy-toggle" hidden>
@@ -995,10 +1027,6 @@
             <a href="learning/literacy-numeracy/spelling/" data-requires-player="true">
                 <span class="worksheet-copy"><strong>한글 맞춤법</strong><small>(Korean Spelling)</small></span>
                 <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2" fill="#fff8e1" stroke="#ffb300" stroke-width="1.2"/><rect x="4" y="4" width="7" height="7" stroke="#ffb300" stroke-width="0.8" fill="none"/><text x="7.5" y="9.8" font-size="6" font-weight="bold" fill="#212121" text-anchor="middle" font-family="'Malgun Gothic', sans-serif">ㄱ</text><rect x="13" y="4" width="7" height="7" stroke="#ffb300" stroke-width="0.8" fill="none"/><text x="16.5" y="9.8" font-size="6" font-weight="bold" fill="#212121" text-anchor="middle" font-family="'Malgun Gothic', sans-serif">ㄴ</text><rect x="4" y="13" width="7" height="7" stroke="#ffb300" stroke-width="0.8" fill="none"/><text x="7.5" y="18.8" font-size="6" font-weight="bold" fill="#212121" text-anchor="middle" font-family="'Malgun Gothic', sans-serif">ㄷ</text><circle cx="16.5" cy="16.5" r="3.5" stroke="#e53935" stroke-width="1.2" fill="none"/><path fill="#e53935" d="M19 12l2 2-6 6h-2v-2l6-6z"/></svg></span>
-            </a>
-            <a href="learning/class-race/" data-requires-player="true">
-                <span class="worksheet-copy"><strong>학급 순위전</strong><small>(Class Race)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="3" fill="#fff8e1" stroke="#ffb300" stroke-width="1.2"/><rect x="4.5" y="13" width="4" height="7" fill="#ffb300"/><rect x="10" y="7" width="4" height="13" fill="#e53935"/><rect x="15.5" y="10" width="4" height="10" fill="#43a047"/><text x="12" y="6.2" font-size="4.5" font-weight="bold" fill="#212121" text-anchor="middle" font-family="'Malgun Gothic', sans-serif">1위</text></svg></span>
             </a>
             <details class="worksheet-group" data-access-group="idiomatic-language">
                 <summary aria-label="관용 표현 메뉴 열기"
