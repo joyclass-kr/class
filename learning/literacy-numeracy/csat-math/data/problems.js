@@ -59,6 +59,10 @@
     {
       id: "2024-09", year: 2024, round: "9월", label: "2024학년도 9월",
       source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500236&m=0403&s=suneung"
+    },
+    {
+      id: "2024-06", year: 2024, round: "6월", label: "2024학년도 6월",
+      source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500236&m=0403&s=suneung"
     }
   ];
 
@@ -1422,6 +1426,148 @@
       short: true,
       answer: 10,
       help: R`(나)의 왼쪽은 곱의 미분을 거꾸로 읽으면 \(\bigl(F(x)G(x)\bigr)'\)이다. 그러니 양변을 적분하면 \(F(x)G(x)\)가 곧바로 나온다. 한편 (가)는 양변을 미분하면 \(xf'(x)=4x\), 곧 \(f'(x)=4\)가 되어 \(f\)가 정해진다.`
+    },
+    {
+      id: "2024-06-9", exam: "2024-06", no: 9, score: 4,
+      units: ["m1-seq"], memo: "부분합의 차로 항 구하기",
+      body: R`수열 \(\{a_{n}\}\)이 모든 자연수 \(n\)에 대하여
+        \[\sum_{k=1}^{n}\frac{1}{(2k-1)a_{k}}=n^{2}+2n\]
+        을 만족시킬 때, \(\displaystyle\sum_{n=1}^{10}a_{n}\)의 값은?`,
+      choices: [R`\(\dfrac{10}{21}\)`, R`\(\dfrac{4}{7}\)`, R`\(\dfrac{2}{3}\)`, R`\(\dfrac{16}{21}\)`, R`\(\dfrac{6}{7}\)`],
+      answer: 1,
+      help: R`부분합의 차를 구하면 \(\frac{1}{(2n-1)a_{n}}=2n+1\), 곧 \(a_{n}=\frac{1}{(2n-1)(2n+1)}\)이다. 이것은 \(\frac{1}{2}\left(\frac{1}{2n-1}-\frac{1}{2n+1}\right)\)로 갈라져 합이 접힌다.`
+    },
+    {
+      id: "2024-06-10", exam: "2024-06", no: 10, score: 4,
+      units: ["m2-integ"], memo: "x축 위와 아래의 두 넓이의 차",
+      body: R`양수 \(k\)에 대하여 함수 \(f(x)\)는
+        \[f(x)=kx(x-2)(x-3)\]
+        이다. 곡선 \(y=f(x)\)와 \(x\)축이 원점 \(\mathrm{O}\)와 두 점 \(\mathrm{P}\), \(\mathrm{Q}\,\bigl(\overline{\mathrm{OP}}<\overline{\mathrm{OQ}}\bigr)\)
+        에서 만난다. 곡선 \(y=f(x)\)와 선분 \(\mathrm{OP}\)로 둘러싸인 영역을 \(A\),
+        곡선 \(y=f(x)\)와 선분 \(\mathrm{PQ}\)로 둘러싸인 영역을 \(B\)라 하자.
+        \[(A\text{의 넓이})-(B\text{의 넓이})=3\]
+        일 때, \(k\)의 값은?`,
+      figure: "2024-06-10.webp",
+      choices: [R`\(\dfrac{7}{6}\)`, R`\(\dfrac{4}{3}\)`, R`\(\dfrac{3}{2}\)`, R`\(\dfrac{5}{3}\)`, R`\(\dfrac{11}{6}\)`],
+      answer: 2,
+      help: R`\(A\)에서는 곡선이 \(x\)축 위에, \(B\)에서는 아래에 있다. 그래서 두 넓이의 차는 부호를 붙여 묶으면 \(\displaystyle\int_{0}^{3}f(x)\,dx=3\) 한 줄이 된다.`
+    },
+    {
+      id: "2024-06-11", exam: "2024-06", no: 11, score: 4,
+      units: ["m2-diff"], memo: "직선과 가장 가까운 곡선 위의 점",
+      body: R`그림과 같이 실수 \(t\,(0<t<1)\)에 대하여 곡선 \(y=x^{2}\) 위의
+        점 중에서 직선 \(y=2tx-1\)과의 거리가 최소인 점을 \(\mathrm{P}\)라 하고,
+        직선 \(\mathrm{OP}\)가 직선 \(y=2tx-1\)과 만나는 점을 \(\mathrm{Q}\)라 할 때,
+        \(\displaystyle\lim_{t\to 1-}\frac{\overline{\mathrm{PQ}}}{1-t}\)의 값은? (단, \(\mathrm{O}\)는 원점이다.)`,
+      figure: "2024-06-11.webp",
+      choices: [R`\(\sqrt{6}\)`, R`\(\sqrt{7}\)`, R`\(2\sqrt{2}\)`, R`\(3\)`, R`\(\sqrt{10}\)`],
+      answer: 3,
+      help: R`직선과의 거리가 가장 작은 점은 접선의 기울기가 그 직선과 같은 점이므로 \(\mathrm{P}=(t,\,t^{2})\)다. 그러면 직선 \(\mathrm{OP}\)가 \(y=tx\)이고, \(y=2tx-1\)과의 교점이 \(\mathrm{Q}\left(\frac{1}{t},\,1\right)\)로 곧바로 나온다.`
+    },
+    {
+      id: "2024-06-12", exam: "2024-06", no: 12, score: 4,
+      units: ["m1-seq"], memo: "공차가 두 배인 두 등차수열의 겹침",
+      body: R`\(a_{2}=-4\)이고 공차가 \(0\)이 아닌 등차수열 \(\{a_{n}\}\)에 대하여
+        수열 \(\{b_{n}\}\)을 \(b_{n}=a_{n}+a_{n+1}\,(n\ge 1)\)이라 하고, 두 집합 \(A\), \(B\)를
+        \[A=\bigl\{a_{1},\,a_{2},\,a_{3},\,a_{4},\,a_{5}\bigr\},\qquad B=\bigl\{b_{1},\,b_{2},\,b_{3},\,b_{4},\,b_{5}\bigr\}\]
+        라 하자. \(n(A\cap B)=3\)이 되도록 하는 모든 수열 \(\{a_{n}\}\)에
+        대하여 \(a_{20}\)의 값의 합은?`,
+      choices: [R`\(30\)`, R`\(34\)`, R`\(38\)`, R`\(42\)`, R`\(46\)`],
+      answer: 5,
+      help: R`\(b_{n}=a_{n}+a_{n+1}=2a_{n}+d\)이므로 \(\{b_{n}\}\)은 공차가 \(2d\)인 등차수열이다. 두 수열의 공차가 \(d\)와 \(2d\)로 다르니, 다섯 개씩 중에서 셋이 겹치려면 겹치는 자리가 몇 가지 꼴로만 가능하다.`
+    },
+    {
+      id: "2024-06-13", exam: "2024-06", no: 13, score: 4,
+      units: ["m1-trig"], memo: "지름이 만드는 직각과 현의 길이",
+      body: R`그림과 같이
+        \[\overline{\mathrm{BC}}=3,\quad \overline{\mathrm{CD}}=2,\quad \cos(\angle\mathrm{BCD})=-\frac{1}{3},\quad \angle\mathrm{DAB}>\frac{\pi}{2}\]
+        인 사각형 \(\mathrm{ABCD}\)에서 두 삼각형 \(\mathrm{ABC}\)와 \(\mathrm{ACD}\)는 모두
+        예각삼각형이다. 선분 \(\mathrm{AC}\)를 \(1:2\)로 내분하는 점 \(\mathrm{E}\)에 대하여
+        선분 \(\mathrm{AE}\)를 지름으로 하는 원이 두 선분 \(\mathrm{AB}\), \(\mathrm{AD}\)와 만나는
+        점 중 \(\mathrm{A}\)가 아닌 점을 각각 \(\mathrm{P}_{1}\), \(\mathrm{P}_{2}\)라 하고,
+        선분 \(\mathrm{CE}\)를 지름으로 하는 원이 두 선분 \(\mathrm{BC}\), \(\mathrm{CD}\)와 만나는
+        점 중 \(\mathrm{C}\)가 아닌 점을 각각 \(\mathrm{Q}_{1}\), \(\mathrm{Q}_{2}\)라 하자.
+        \(\overline{\mathrm{P}_{1}\mathrm{P}_{2}}:\overline{\mathrm{Q}_{1}\mathrm{Q}_{2}}=3:5\sqrt{2}\)이고 삼각형 \(\mathrm{ABD}\)의 넓이가 \(2\)일 때,
+        \(\overline{\mathrm{AB}}+\overline{\mathrm{AD}}\)의 값은? (단, \(\overline{\mathrm{AB}}>\overline{\mathrm{AD}}\))`,
+      figure: "2024-06-13.webp",
+      choices: [R`\(\sqrt{21}\)`, R`\(\sqrt{22}\)`, R`\(\sqrt{23}\)`, R`\(2\sqrt{6}\)`, R`\(5\)`],
+      answer: 1,
+      help: R`\(\overline{\mathrm{P}_{1}\mathrm{P}_{2}}\)는 지름이 \(\overline{\mathrm{AE}}\)인 원의 현이고, 그 현을 마주 보는 원주각이 \(\angle\mathrm{DAB}\)다. 그래서 사인법칙으로 \(\overline{\mathrm{P}_{1}\mathrm{P}_{2}}=\overline{\mathrm{AE}}\sin(\angle\mathrm{DAB})\)가 된다. \(\overline{\mathrm{Q}_{1}\mathrm{Q}_{2}}\)도 마찬가지로 \(\overline{\mathrm{CE}}\sin(\angle\mathrm{BCD})\)다.`
+    },
+    {
+      id: "2024-06-14", exam: "2024-06", no: 14, score: 4,
+      units: ["m2-integ"], memo: "속도의 근이 겹쳐야 하는 조건",
+      body: R`실수 \(a\,(a\ge 0)\)에 대하여 수직선 위를 움직이는 점 \(\mathrm{P}\)의
+        시각 \(t\,(t\ge 0)\)에서의 속도 \(v(t)\)를
+        \[v(t)=-t(t-1)(t-a)(t-2a)\]
+        라 하자. 점 \(\mathrm{P}\)가 시각 \(t=0\)일 때 출발한 후 운동 방향을
+        한 번만 바꾸도록 하는 \(a\)에 대하여, 시각 \(t=0\)에서 \(t=2\)까지
+        점 \(\mathrm{P}\)의 위치의 변화량의 최댓값은?`,
+      choices: [R`\(\dfrac{1}{5}\)`, R`\(\dfrac{7}{30}\)`, R`\(\dfrac{4}{15}\)`, R`\(\dfrac{3}{10}\)`, R`\(\dfrac{1}{3}\)`],
+      answer: 3,
+      help: R`운동 방향은 \(v\)의 부호가 바뀔 때만 바뀐다. \(v\)의 근은 \(0,\,1,\,a,\,2a\)인데 \(t>0\)에서 부호가 딱 한 번만 바뀌려면 근들이 서로 겹쳐 중복근이 되어야 한다. 위치의 변화량은 절댓값 없이 \(\int_{0}^{2}v(t)\,dt\)다.`
+    },
+    {
+      id: "2024-06-15", exam: "2024-06", no: 15, score: 4,
+      units: ["m1-seq"], memo: "부호에 따라 반대로 밀리는 수열",
+      body: R`자연수 \(k\)에 대하여 다음 조건을 만족시키는 수열 \(\{a_{n}\}\)이
+        있다.`,
+      note: [
+        R`\(a_{1}=k\)이고, 모든 자연수 \(n\)에 대하여 \(a_{n+1}=\begin{cases}a_{n}+2n-k &amp; \left(a_{n}\le 0\right)\\ a_{n}-2n-k &amp; \left(a_{n}>0\right)\end{cases}\)이다.`
+      ],
+      bodyAfter: R`\(a_{3}\times a_{4}\times a_{5}\times a_{6}<0\)이 되도록 하는 모든 \(k\)의 값의 합은?`,
+      choices: [R`\(10\)`, R`\(14\)`, R`\(18\)`, R`\(22\)`, R`\(26\)`],
+      answer: 2,
+      help: R`\(a_{n}\)이 \(0\) 이하면 \(+2n-k\), 양수면 \(-2n-k\)를 더한다. 곧 부호에 따라 방향이 갈린다. 네 항의 곱이 음수라는 것은 그 넷 가운데 음수가 홀수 개라는 뜻이므로, \(k\)를 작은 값부터 넣어 부호가 어떻게 갈리는지 직접 따라가는 편이 빠르다.`
+    },
+    {
+      id: "2024-06-20", exam: "2024-06", no: 20, score: 4,
+      units: ["m2-integ", "m2-diff"], memo: "적분으로 만든 삼차함수의 최소",
+      body: R`최고차항의 계수가 \(1\)인 이차함수 \(f(x)\)에 대하여 함수
+        \[g(x)=\int_{0}^{x}f(t)\,dt\]
+        가 다음 조건을 만족시킬 때, \(f(9)\)의 값을 구하시오.`,
+      note: [
+        R`\(x\ge 1\)인 모든 실수 \(x\)에 대하여 \(g(x)\ge g(4)\)이고 \(\bigl|g(x)\bigr|\ge\bigl|g(3)\bigr|\)이다.`
+      ],
+      short: true,
+      answer: 39,
+      help: R`\(g'=f\)이고 \(f\)가 최고차항 계수 \(1\)인 이차함수라 \(g\)는 삼차함수다. \(x\ge 1\)에서 \(g\)의 최솟값이 \(g(4)\)라는 것은 \(x=4\)가 극소, 곧 \(f(4)=0\)이라는 뜻이다. 그리고 \(g\)가 그 구간에서 값 \(0\)을 지나면 그 자리에서 \(|g|=0\)이 되므로, \(\bigl|g(x)\bigr|\ge\bigl|g(3)\bigr|\)이려면 \(g(3)=0\)이어야 한다.`
+    },
+    {
+      id: "2024-06-21", exam: "2024-06", no: 21, score: 4,
+      units: ["m1-explog"], memo: "감소 곡선과 증가 곡선의 교점",
+      body: R`실수 \(t\)에 대하여 두 곡선 \(y=t-\log_{2}x\)와 \(y=2^{\,x-t}\)이 만나는
+        점의 \(x\)좌표를 \(f(t)\)라 하자.
+        &lt;보기&gt;의 각 명제에 대하여 다음 규칙에 따라 \(A\), \(B\), \(C\)의
+        값을 정할 때, \(A+B+C\)의 값을 구하시오. (단, \(A+B+C\ne 0\))`,
+      note: [
+        R`명제 ㄱ이 참이면 \(A=100\), 거짓이면 \(A=0\)이다.`,
+        R`명제 ㄴ이 참이면 \(B=10\), 거짓이면 \(B=0\)이다.`,
+        R`명제 ㄷ이 참이면 \(C=1\), 거짓이면 \(C=0\)이다.`
+      ],
+      bullets: true,
+      bodyAfter: R`<div class="note-box has-title"><span class="note-title">보 기</span><ul>
+        <li>ㄱ. \(f(1)=1\)이고 \(f(2)=2\)이다.</li>
+        <li>ㄴ. 실수 \(t\)의 값이 증가하면 \(f(t)\)의 값도 증가한다.</li>
+        <li>ㄷ. 모든 양의 실수 \(t\)에 대하여 \(f(t)\ge t\)이다.</li>
+        </ul></div>`,
+      short: true,
+      answer: 110,
+      help: R`\(y=t-\log_{2}x\)는 감소하고 \(y=2^{\,x-t}\)는 증가하므로 교점은 언제나 하나뿐이다. ㄱ은 \(t=1\), \(t=2\)를 직접 넣어 보면 바로 확인된다. ㄴ과 ㄷ은 \(t\)가 커질 때 두 곡선이 각각 위로, 오른쪽으로 밀리는 것을 견주면 된다.`
+    },
+    {
+      id: "2024-06-22", exam: "2024-06", no: 22, score: 4,
+      units: ["m2-diff"], memo: "구간이 극값을 품는지 세기",
+      body: R`정수 \(a\,(a\ne 0)\)에 대하여 함수 \(f(x)\)를
+        \[f(x)=x^{3}-2ax^{2}\]
+        이라 하자. 다음 조건을 만족시키는 모든 정수 \(k\)의 값의 곱이
+        \(-12\)가 되도록 하는 \(a\)에 대하여 \(f'(10)\)의 값을 구하시오.`,
+      note: [
+        R`함수 \(f(x)\)에 대하여 \(\left\{\dfrac{f(x_{1})-f(x_{2})}{x_{1}-x_{2}}\right\}\times\left\{\dfrac{f(x_{2})-f(x_{3})}{x_{2}-x_{3}}\right\}<0\)을 만족시키는 세 실수 \(x_{1}\), \(x_{2}\), \(x_{3}\)이 열린구간 \(\left(k,\,k+\dfrac{3}{2}\right)\)에 존재한다.`
+      ],
+      short: true,
+      answer: 380,
+      help: R`두 평균변화율의 곱이 음수라는 것은 그 구간 안에서 \(f\)가 늘다가 줄거나 줄다가 는다는 뜻, 곧 구간이 극값을 품는다는 뜻이다. \(f'(x)=3x^{2}-4ax=x(3x-4a)\)이므로 극값은 \(x=0\)과 \(x=\frac{4a}{3}\)에 있고, 길이 \(\frac{3}{2}\)인 구간이 그 둘 중 하나를 품는 정수 \(k\)를 세는 문제가 된다.`
     }
   ];
 
