@@ -268,6 +268,514 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🌱",
+        art: "cover.webp",
+        title: "Yeoni and the Willow Boy",
+        intro: [
+            "This is an oral tale with no known author. It starts with an errand: go and pick spring greens in midwinter.",
+            "Three flowers come into it, one for bone, one for flesh and one for blood. They bring a fallen person back to life.",
+            "Open a rock door and spring is inside. Old tales held that however long the winter, spring is only shut up somewhere."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · An Errand in Midwinter",
+            beats: [
+                {
+                    art: "01-yeoni.webp",
+                    emoji: "❄️",
+                    left: [
+                        "Long ago in a village there lived a child called Yeoni.",
+                        "She had lost her mother early and lived with a stepmother.",
+                        "The stepmother gave all the work to Yeoni.",
+                        { t: "\"Yeoni! Go and fetch the water!\"", v: "woman" },
+                        "Her voice rang through the whole house."
+                    ],
+                    right: [
+                        "Drawing water, washing clothes, keeping the fire in.",
+                        "The stepmother's own child only played indoors.",
+                        "Yeoni's hands cracked with cold, and no day was free.",
+                        "Even so she never once complained.",
+                        "She bore it by remembering her own mother."
+                    ]
+                },
+                {
+                    art: "02-order.webp",
+                    emoji: "🥬",
+                    left: [
+                        "It was midwinter, with snow up to the knee.",
+                        "Cold wind came whistling through the cracks in the door.",
+                        "The stepmother threw a basket down in front of Yeoni.",
+                        { t: "\"Go up the mountain and pick spring greens.\"", v: "woman" },
+                        "The basket rolled across the floor."
+                    ],
+                    right: [
+                        { t: "\"...Where would greens be, in midwinter?\"", v: "girl" },
+                        "Yeoni picked the basket up and looked at her.",
+                        { t: "\"Do not think of coming in without them.\"", v: "woman" },
+                        "She said that and slammed the door shut.",
+                        "Yeoni stood a long while in the yard."
+                    ]
+                },
+                {
+                    art: "03-snow.webp",
+                    emoji: "🏔️",
+                    left: [
+                        "Yeoni took the basket and climbed the snowy mountain.",
+                        "The snow came up over her shins at every step.",
+                        "Dig as she might, all she found were dry roots.",
+                        "Her fingertips went red and her tears froze on her cheeks.",
+                        { t: "\"Greens, greens, where are you?\"", v: "girl" }
+                    ],
+                    right: [
+                        "I shall freeze to death here, she thought.",
+                        "The sun went down and the shadow of the hill came long over her.",
+                        "Yeoni sat down heavily under a great willow tree.",
+                        "She had not the strength to move a finger.",
+                        "The basket was still empty, with only snow gathering in it."
+                    ]
+                },
+                {
+                    art: "04-door.webp",
+                    emoji: "🚪",
+                    left: [
+                        "Then it happened. A sound came from behind her.",
+                        "At first she thought she had heard wrong.",
+                        "Grrrunch —",
+                        "The rock behind the willow slid slowly aside.",
+                        "Yeoni opened her eyes wide in surprise.",
+                        "Behind the rock there was a door."
+                    ],
+                    right: [
+                        "Warm air came breathing out through the gap.",
+                        "In midwinter it was as soft as a spring wind.",
+                        "There was even a smell of grass on it.",
+                        { t: "\"Cold, are you? Come in, quickly.\"", v: "boy" },
+                        "A boy inside the door held out his hand. He looked about Yeoni's age."
+                    ]
+                },
+                {
+                    art: "05-garden.webp",
+                    emoji: "🌸",
+                    left: [
+                        "Yeoni rubbed her eyes several times.",
+                        "Inside the rock it was spring all over, and bright.",
+                        "A stream ran babbling and butterflies went by.",
+                        "Birds sang, and the azaleas were out everywhere.",
+                        "She pinched her cheek, and it was not a dream."
+                    ],
+                    right: [
+                        "Under her feet green shoots lay thick over the ground.",
+                        "Yeoni dropped the basket out of her hand.",
+                        { t: "\"I am the Willow Boy.\"", v: "boy" },
+                        "He said it, holding out his hand.",
+                        "Yeoni took it before she knew what she was doing."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Door with Spring Behind It",
+            beats: [
+                {
+                    art: "06-doryeong.webp",
+                    emoji: "🧺",
+                    left: [
+                        "The Willow Boy filled Yeoni's basket right up with greens.",
+                        "Pick as she might, the greens never grew fewer.",
+                        { t: "\"Take them. There is as much as you like.\"", v: "boy" },
+                        "The basket was heaped in no time at all.",
+                        "Yeoni's eyes went round."
+                    ],
+                    right: [
+                        { t: "\"Thank you. But what is this place?\"", v: "girl" },
+                        "Yeoni asked it, looking all round her.",
+                        "Instead of answering, the Willow Boy only grinned.",
+                        { t: "\"Come again when you are cold. I will keep the door open.\"", v: "boy" },
+                        "Yeoni kept those words in her heart, and went down the hill lightly."
+                    ]
+                },
+                {
+                    art: "07-again.webp",
+                    emoji: "🌿",
+                    left: [
+                        "From that day Yeoni went to that door in secret.",
+                        "The basket was full every time she went.",
+                        "The two put their feet in the stream and talked.",
+                        "In there, and only there, Yeoni could laugh as much as she liked.",
+                        "It was in there that she learned to laugh again."
+                    ],
+                    right: [
+                        { t: "\"Is it still winter out there?\"", v: "boy" },
+                        "The Willow Boy asked it, splashing with his feet.",
+                        { t: "\"Yes. The snow is up to my knees.\"", v: "girl" },
+                        { t: "\"Then only here is spring.\"", v: "boy" },
+                        "The two looked at each other and laughed a long while.",
+                        "So the long winter was going by, little by little."
+                    ]
+                },
+                {
+                    art: "08-suspect.webp",
+                    emoji: "🤨",
+                    left: [
+                        "Green fresh greens came in every day in midwinter.",
+                        "The stepmother began to think it strange.",
+                        "In other houses they could not get even a dried one.",
+                        { t: "\"Where on earth do you pick these?\"", v: "woman" },
+                        "She stood Yeoni on the floor and pressed her."
+                    ],
+                    right: [
+                        "Yeoni said nothing and shook her head.",
+                        "There was a promise between her and the Willow Boy.",
+                        { t: "\"...Just on the mountain.\"", v: "girl" },
+                        "The stepmother's eyes narrowed.",
+                        { t: "\"We shall see about that.\"", v: "woman" },
+                        "That night she did not sleep at all."
+                    ]
+                },
+                {
+                    art: "09-follow.webp",
+                    emoji: "👣",
+                    left: [
+                        "Next day the stepmother crept along behind Yeoni.",
+                        "She followed the footprints in the snow.",
+                        "Yeoni went up the hill without time to look behind her.",
+                        "The stepmother hid herself behind a tree.",
+                        "She watched without making a sound."
+                    ],
+                    right: [
+                        "She saw the rock slide open under the willow tree.",
+                        "And she saw that it was full of spring inside.",
+                        "The stepmother stood frozen where she was.",
+                        "I shall have all of that for myself, she thought.",
+                        "Her eyes glittered with greed."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Three Flowers",
+            beats: [
+                {
+                    art: "10-strike.webp",
+                    emoji: "😨",
+                    left: [
+                        "Next day the stepmother stood at that door first.",
+                        "It was black dark, long before Yeoni would come.",
+                        { t: "\"Open! Open up at once, will you!\"", v: "woman" },
+                        "The door opened and she swept in greens and flowers alike.",
+                        "Her bundle swelled until it was fit to burst."
+                    ],
+                    right: [
+                        { t: "\"You must not! Not that, you must not!\"", v: "boy" },
+                        "The Willow Boy spread both arms and stood in her way.",
+                        "The stepmother shoved him hard aside.",
+                        "The Willow Boy fell flat on the grass.",
+                        "And then he did not move at all."
+                    ]
+                },
+                {
+                    art: "11-flee.webp",
+                    emoji: "💨",
+                    left: [
+                        "Rrrumble —",
+                        "The rock door began to close with a terrible sound.",
+                        "Inside it went dark all at once.",
+                        "Chips of stone showered down from the ceiling.",
+                        "The gap narrowed. She threw the bundle down and scrambled out."
+                    ],
+                    right: [
+                        { t: "\"Aaargh! H-help me!\"", v: "woman" },
+                        "Her skirt caught on the rock and tore right across.",
+                        "She rolled down the mountain without looking back.",
+                        "And she never came to that mountain again.",
+                        "She would not even say its name."
+                    ]
+                },
+                {
+                    art: "12-flowers.webp",
+                    emoji: "🌺",
+                    left: [
+                        "Yeoni came running late and shook the Willow Boy.",
+                        "His eyes were shut and he did not stir at all.",
+                        { t: "\"Get up! Open your eyes!\"", v: "girl" },
+                        "Yeoni's tears fell on the grass in big drops.",
+                        "Shake him and call him as she might, it was no use."
+                    ],
+                    right: [
+                        "Just then three flowers she had never seen stood by the stream.",
+                        "They had not been there a moment before.",
+                        "One snow white, one pink, one bright red.",
+                        "Yeoni picked the three of them very carefully.",
+                        { t: "\"Could these bring him back, I wonder?\"", v: "girl" }
+                    ]
+                },
+                {
+                    art: "13-revive.webp",
+                    emoji: "✨",
+                    left: [
+                        "With shaking hands Yeoni laid the flowers on his chest, one at a time.",
+                        "At the white flower his bent body straightened.",
+                        "At the pink flower the colour came back into his cheeks.",
+                        "At the red flower —",
+                        "A breath came back, very thin, very faint."
+                    ],
+                    right: [
+                        { t: "\"Atchoo!\"", v: "boy" },
+                        "The Willow Boy sat straight up.",
+                        "Yeoni sat down where she was.",
+                        "All the strength had gone out of her legs.",
+                        "And then she cried out loud the tears she had held in.",
+                        "This time they were tears of gladness."
+                    ]
+                },
+                {
+                    art: "14-spring.webp",
+                    emoji: "🌷",
+                    left: [
+                        { t: "\"How long was I asleep?\"", v: "boy" },
+                        "The Willow Boy asked it, rubbing his eyes.",
+                        "He looked as easy as if nothing had happened.",
+                        { t: "\"I do not know! You fool!\"", v: "girl" },
+                        "Yeoni laughed while she cried and cried while she laughed.",
+                        "She kept knocking his shoulder with her fist."
+                    ],
+                    right: [
+                        "That winter the rock door stayed wide open and would not close.",
+                        "Push at it as anybody might, it did not stir.",
+                        "The snow melted, streams ran, azaleas came out.",
+                        "Spring walked out of that door and spread over the whole mountain.",
+                        "They say spring still comes out of there."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What errand did the stepmother give in midwinter?", choices: ["To go and fetch water", "To pick spring greens", "To go and cut firewood"], answer: 1 },
+        { q: "What happened when Yeoni sat under the willow?", choices: ["The snow stopped and the sun came", "Her stepmother came after her", "The rock slid aside"], answer: 2 },
+        { q: "What was inside the rock door?", choices: ["A place in full spring", "A pitch dark cave", "A heap of gold and silver"], answer: 0 },
+        { q: "What did the stepmother do to Yeoni?", choices: ["Went up the mountain alone", "Stopped sending her out", "Followed her in secret"], answer: 2 },
+        { q: "What brought the fallen Willow Boy back?", choices: ["Three flowers", "The green shoots", "A spray of azalea"], answer: 0 },
+        { q: "What happened on that mountain that winter?", choices: ["Snow lay up to the knee", "Snow melted and streams ran", "A cold wind blew hard"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "She was told to pick spring greens in midwinter, so it was a task set to be failed and then found fault with.",
+                "Spring was only inside the rock door, so there are places that open for somebody who endures.",
+                "The door shut when the stepmother shoved him, so a door you try to open out of greed closes instead.",
+                "Yeoni only said the mountain when asked where the greens came from, so she must have wanted to keep it to herself."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "errand", k: "심부름", s: "It starts with an errand" },
+            { w: "greens", k: "나물", s: "go and pick spring greens in midwinter" },
+            { w: "midwinter", k: "한겨울", s: "go and pick spring greens in midwinter" },
+            { w: "flesh", k: "살", s: "one for bone, one for flesh and one for blood" },
+            { w: "fallen", k: "쓰러진", s: "They bring a fallen person back to life." },
+            { w: "back to life", k: "되살아나게", s: "They bring a fallen person back to life." },
+            { w: "however long ~", k: "아무리 길어도", s: "however long the winter, spring is only shut up somewhere" },
+            { w: "shut up", k: "갇힌", s: "spring is only shut up somewhere" }
+        ],
+        "01-yeoni.webp": [
+            { w: "stepmother", k: "새어머니", s: "She had lost her mother early and lived with a stepmother." },
+            { w: "gave all the work to ~", k: "일을 다 시켰다", s: "The stepmother gave all the work to Yeoni." },
+            { w: "fetch", k: "길어 오다", s: "Yeoni! Go and fetch the water!" },
+            { w: "rang through ~ (ring)", k: "쩌렁쩌렁 울렸다", s: "Her voice rang through the whole house." },
+            { w: "keeping the fire in", k: "불을 때기", s: "Drawing water, washing clothes, keeping the fire in." },
+            { w: "indoors", k: "방 안에서", s: "The stepmother's own child only played indoors." },
+            { w: "cracked (crack)", k: "터졌다", s: "Yeoni's hands cracked with cold" },
+            { w: "complained (complain)", k: "투정했다", s: "Even so she never once complained." },
+            { w: "bore it (bear)", k: "참았다", s: "She bore it by remembering her own mother." }
+        ],
+        "02-order.webp": [
+            { w: "up to the knee", k: "무릎까지", s: "It was midwinter, with snow up to the knee." },
+            { w: "whistling (whistle)", k: "쌩쌩 부는", s: "Cold wind came whistling through the cracks in the door." },
+            { w: "basket", k: "소쿠리", s: "The stepmother threw a basket down in front of Yeoni." },
+            { w: "pick", k: "뜯다", s: "Go up the mountain and pick spring greens." },
+            { w: "rolled across ~", k: "데구루루 굴렀다", s: "The basket rolled across the floor." },
+            { w: "Where would ~ be", k: "어디에 있겠어요", s: "Where would greens be, in midwinter?" },
+            { w: "Do not think of ~", k: "~할 생각도 마라", s: "Do not think of coming in without them." },
+            { w: "slammed (slam)", k: "쾅 닫았다", s: "She said that and slammed the door shut." }
+        ],
+        "03-snow.webp": [
+            { w: "shins", k: "정강이", s: "The snow came up over her shins at every step." },
+            { w: "Dig as she might", k: "아무리 헤쳐도", s: "Dig as she might, all she found were dry roots." },
+            { w: "roots", k: "풀뿌리", s: "all she found were dry roots" },
+            { w: "froze (freeze)", k: "얼어붙었다", s: "her tears froze on her cheeks" },
+            { w: "freeze to death", k: "얼어 죽다", s: "I shall freeze to death here, she thought." },
+            { w: "came long over her", k: "길게 내려앉았다", s: "the shadow of the hill came long over her" },
+            { w: "sat down heavily", k: "털썩 주저앉았다", s: "Yeoni sat down heavily under a great willow tree." },
+            { w: "willow", k: "버드나무", s: "under a great willow tree" },
+            { w: "gathering (gather)", k: "소복이 담기는", s: "with only snow gathering in it" }
+        ],
+        "04-door.webp": [
+            { w: "heard wrong", k: "잘못 들었다", s: "At first she thought she had heard wrong." },
+            { w: "slid aside (slide)", k: "옆으로 밀려났다", s: "The rock behind the willow slid slowly aside." },
+            { w: "in surprise", k: "놀라서", s: "Yeoni opened her eyes wide in surprise." },
+            { w: "came breathing out", k: "훅 끼쳐 나왔다", s: "Warm air came breathing out through the gap." },
+            { w: "gap", k: "틈", s: "Warm air came breathing out through the gap." },
+            { w: "as soft as ~", k: "~처럼 포근한", s: "In midwinter it was as soft as a spring wind." },
+            { w: "held out (hold out)", k: "내밀었다", s: "A boy inside the door held out his hand." },
+            { w: "about ~'s age", k: "~ 또래의", s: "He looked about Yeoni's age." }
+        ],
+        "05-garden.webp": [
+            { w: "rubbed her eyes", k: "눈을 비볐다", s: "Yeoni rubbed her eyes several times." },
+            { w: "all over", k: "온통", s: "Inside the rock it was spring all over, and bright." },
+            { w: "babbling (babble)", k: "졸졸 흐르는", s: "A stream ran babbling and butterflies went by." },
+            { w: "azaleas", k: "진달래", s: "Birds sang, and the azaleas were out everywhere." },
+            { w: "were out", k: "피어 있었다", s: "the azaleas were out everywhere" },
+            { w: "pinched (pinch)", k: "꼬집었다", s: "She pinched her cheek, and it was not a dream." },
+            { w: "shoots", k: "파릇파릇한 싹", s: "Under her feet green shoots lay thick over the ground." },
+            { w: "lay thick (lie)", k: "지천으로 깔렸다", s: "green shoots lay thick over the ground" },
+            { w: "before she knew ~", k: "얼결에", s: "Yeoni took it before she knew what she was doing." }
+        ],
+        "06-doryeong.webp": [
+            { w: "right up", k: "가득", s: "The Willow Boy filled Yeoni's basket right up with greens." },
+            { w: "Pick as she might", k: "아무리 뜯어도", s: "Pick as she might, the greens never grew fewer." },
+            { w: "grew fewer (grow)", k: "줄었다", s: "the greens never grew fewer" },
+            { w: "as much as you like", k: "얼마든지", s: "Take them. There is as much as you like." },
+            { w: "heaped (heap)", k: "수북해진", s: "The basket was heaped in no time at all." },
+            { w: "Instead of answering", k: "대답 대신", s: "Instead of answering, the Willow Boy only grinned." },
+            { w: "keep ~ open", k: "열어 두다", s: "Come again when you are cold. I will keep the door open." },
+            { w: "kept ~ in her heart", k: "마음에 새겼다", s: "Yeoni kept those words in her heart." },
+            { w: "lightly", k: "가볍게", s: "went down the hill lightly" }
+        ],
+        "07-again.webp": [
+            { w: "in secret", k: "몰래", s: "From that day Yeoni went to that door in secret." },
+            { w: "every time", k: "갈 때마다", s: "The basket was full every time she went." },
+            { w: "as much as she liked", k: "마음껏", s: "Yeoni could laugh as much as she liked" },
+            { w: "learned to ~", k: "~하는 법을 배웠다", s: "It was in there that she learned to laugh again." },
+            { w: "out there", k: "밖은", s: "Is it still winter out there?" },
+            { w: "splashing (splash)", k: "물장구를 치며", s: "The Willow Boy asked it, splashing with his feet." },
+            { w: "only here", k: "여기만", s: "Then only here is spring." },
+            { w: "little by little", k: "조금씩", s: "So the long winter was going by, little by little." }
+        ],
+        "08-suspect.webp": [
+            { w: "think it strange", k: "이상하게 여기다", s: "The stepmother began to think it strange." },
+            { w: "not even a dried one", k: "마른 것 하나도 없는", s: "In other houses they could not get even a dried one." },
+            { w: "Where on earth", k: "대체 어디서", s: "Where on earth do you pick these?" },
+            { w: "pressed her (press)", k: "다그쳤다", s: "She stood Yeoni on the floor and pressed her." },
+            { w: "shook her head (shake)", k: "고개를 저었다", s: "Yeoni said nothing and shook her head." },
+            { w: "a promise between ~", k: "~ 사이의 약속", s: "There was a promise between her and the Willow Boy." },
+            { w: "narrowed (narrow)", k: "가늘어졌다", s: "The stepmother's eyes narrowed." },
+            { w: "We shall see", k: "어디 두고 보자", s: "We shall see about that." }
+        ],
+        "09-follow.webp": [
+            { w: "crept along (creep)", k: "살금살금 따라갔다", s: "the stepmother crept along behind Yeoni" },
+            { w: "footprints", k: "발자국", s: "She followed the footprints in the snow." },
+            { w: "without time to ~", k: "~할 겨를도 없이", s: "Yeoni went up the hill without time to look behind her." },
+            { w: "hid herself (hide)", k: "몸을 숨겼다", s: "The stepmother hid herself behind a tree." },
+            { w: "without making a sound", k: "숨소리도 내지 않고", s: "She watched without making a sound." },
+            { w: "slide open", k: "스르르 열리다", s: "She saw the rock slide open under the willow tree." },
+            { w: "stood frozen", k: "얼어붙었다", s: "The stepmother stood frozen where she was." },
+            { w: "for myself", k: "내 것으로", s: "I shall have all of that for myself, she thought." },
+            { w: "greed", k: "욕심", s: "Her eyes glittered with greed." }
+        ],
+        "10-strike.webp": [
+            { w: "black dark", k: "캄캄한", s: "It was black dark, long before Yeoni would come." },
+            { w: "at once", k: "어서", s: "Open! Open up at once, will you!" },
+            { w: "swept in (sweep)", k: "마구 쓸어 담았다", s: "she swept in greens and flowers alike" },
+            { w: "~ and ~ alike", k: "~이며 ~이며", s: "greens and flowers alike" },
+            { w: "swelled (swell)", k: "부풀었다", s: "Her bundle swelled until it was fit to burst." },
+            { w: "fit to burst", k: "터질 듯한", s: "Her bundle swelled until it was fit to burst." },
+            { w: "stood in her way", k: "앞을 막아섰다", s: "The Willow Boy spread both arms and stood in her way." },
+            { w: "shoved (shove)", k: "확 밀쳤다", s: "The stepmother shoved him hard aside." },
+            { w: "fell flat (fall)", k: "그대로 쓰러졌다", s: "The Willow Boy fell flat on the grass." }
+        ],
+        "11-flee.webp": [
+            { w: "Rrrumble", k: "쿠르릉", s: "Rrrumble — the rock door began to close." },
+            { w: "terrible", k: "무서운", s: "The rock door began to close with a terrible sound." },
+            { w: "all at once", k: "대번에", s: "Inside it went dark all at once." },
+            { w: "Chips of stone", k: "돌 부스러기", s: "Chips of stone showered down from the ceiling." },
+            { w: "narrowed (narrow)", k: "좁아졌다", s: "The gap narrowed." },
+            { w: "scrambled out", k: "허둥지둥 빠져나갔다", s: "She threw the bundle down and scrambled out." },
+            { w: "caught on ~", k: "끼었다", s: "Her skirt caught on the rock and tore right across." },
+            { w: "tore (tear)", k: "찢어졌다", s: "Her skirt caught on the rock and tore right across." },
+            { w: "would not even say", k: "입에 올리지도 않았다", s: "She would not even say its name." }
+        ],
+        "12-flowers.webp": [
+            { w: "came running late", k: "뒤늦게 달려왔다", s: "Yeoni came running late and shook the Willow Boy." },
+            { w: "did not stir", k: "꼼짝하지 않았다", s: "His eyes were shut and he did not stir at all." },
+            { w: "in big drops", k: "뚝뚝", s: "Yeoni's tears fell on the grass in big drops." },
+            { w: "Shake ~ as she might", k: "아무리 흔들어도", s: "Shake him and call him as she might, it was no use." },
+            { w: "she had never seen", k: "못 보던", s: "three flowers she had never seen stood by the stream" },
+            { w: "a moment before", k: "조금 전까지", s: "They had not been there a moment before." },
+            { w: "snow white", k: "새하얀", s: "One snow white, one pink, one bright red." },
+            { w: "bring him back", k: "살려 내다", s: "Could these bring him back, I wonder?" }
+        ],
+        "13-revive.webp": [
+            { w: "one at a time", k: "하나씩", s: "Yeoni laid the flowers on his chest, one at a time." },
+            { w: "bent", k: "굽은", s: "At the white flower his bent body straightened." },
+            { w: "straightened (straighten)", k: "반듯해졌다", s: "his bent body straightened" },
+            { w: "the colour came back", k: "살이 돌았다", s: "At the pink flower the colour came back into his cheeks." },
+            { w: "faint", k: "가느다란", s: "A breath came back, very thin, very faint." },
+            { w: "Atchoo", k: "에취", s: "Atchoo!" },
+            { w: "sat straight up", k: "벌떡 일어나 앉았다", s: "The Willow Boy sat straight up." },
+            { w: "gone out of ~ (go)", k: "쭉 빠졌다", s: "All the strength had gone out of her legs." },
+            { w: "she had held in", k: "참았던", s: "she cried out loud the tears she had held in" },
+            { w: "gladness", k: "기쁨", s: "This time they were tears of gladness." }
+        ],
+        "14-spring.webp": [
+            { w: "asleep", k: "잠든", s: "How long was I asleep?" },
+            { w: "rubbing his eyes", k: "눈을 비비며", s: "The Willow Boy asked it, rubbing his eyes." },
+            { w: "as easy as if ~", k: "아무 일 없었다는 듯 태평하게", s: "He looked as easy as if nothing had happened." },
+            { w: "You fool", k: "이 바보야", s: "I do not know! You fool!" },
+            { w: "knocking (knock)", k: "툭툭 치는", s: "She kept knocking his shoulder with her fist." },
+            { w: "stayed wide open", k: "활짝 열린 채 있었다", s: "the rock door stayed wide open and would not close" },
+            { w: "Push at it as anybody might", k: "누가 닫으려 해도", s: "Push at it as anybody might, it did not stir." },
+            { w: "melted (melt)", k: "녹았다", s: "The snow melted, streams ran, azaleas came out." },
+            { w: "spread over ~ (spread)", k: "퍼졌다", s: "Spring walked out of that door and spread over the whole mountain." }
+        ],
+        "after": [
+            { w: "what is not there", k: "없는 것", s: "sent to fetch what is not there in midwinter" },
+            { w: "on the way", k: "그 길에서", s: "and meets a helper on the way" },
+            { w: "laid ~ over it", k: "얹었다", s: "This story lays spring over that." },
+            { w: "side by side", k: "나란히", s: "Putting winter and spring side by side" },
+            { w: "the answer", k: "답", s: "That is the answer this story gives." },
+            { w: "the whole of ~", k: "통째로", s: "The stepmother tried to take the whole of spring" },
+            { w: "not one bit", k: "하나도", s: "and got not one bit of it" },
+            { w: "was given", k: "나눠 받았다", s: "What is given and what is taken are that different." },
+            { w: "asking nothing back", k: "아무 대가 없이", s: "given you something asking nothing back" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌿',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Our old tales have several stories of a child sent to fetch what is not there in midwinter. A stepmother usually gives the errand, and the child meets a helper on the way.",
+                    "This story lays spring over that. The place the Willow Boy lives in is spring even in midwinter. Putting winter and spring side by side shows you the hearts of the two people.",
+                    "The part where the spring in Yeoni's basket spreads over the whole mountain is the answer this story gives.",
+                    "The stepmother tried to take the whole of spring and got not one bit of it."
+                ],
+                right: [
+                    "Yeoni brought back one basketful, and spring spread across a whole mountain from it. What is given and what is taken are that different.",
+                    "Has anybody ever given you something, asking nothing back for it?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "새어머니가 한겨울에 시킨 심부름은 무엇인가요?", choices: ["물을 길어 오라고", "봄나물을 뜯어 오라고", "나무를 해 오라고"], answer: 1 },
     { q: "연이가 버드나무 아래 주저앉자 무슨 일이 있었나요?", choices: ["눈이 그치고 해가 났다", "새어머니가 뒤따라왔다", "바위가 옆으로 밀려났다"], answer: 2 },
