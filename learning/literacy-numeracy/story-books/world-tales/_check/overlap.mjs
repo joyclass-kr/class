@@ -9,6 +9,7 @@
    버릴 것을 골라 주는 검사가 아니라 다시 볼 자리를 짚어 주는 눈금이다.
    ㄴ형(사실은 맞고 읽어 낸 것이 어긋난 것)은 사실 절이 겹치는 것이 당연하다. */
 import fs from 'node:fs';
+import { tally } from './seen.mjs';
 import path from 'node:path';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), '..');
@@ -49,12 +50,13 @@ function quizOf(src) {
 const LIMIT = 6;   // 이어진 토막이 여섯 자를 넘을 때만 짚는다
 const books = fs.readdirSync(ROOT).filter(d => fs.existsSync(path.join(ROOT, d, 'app.js'))).sort();
 let hit = 0;
+const seen = tally(books.length);
 
 for (const b of books) {
     const qz = quizOf(fs.readFileSync(path.join(ROOT, b, 'app.js'), 'utf8'));
-    if (!qz) { console.log('## ' + b + ' — 문제를 읽지 못했습니다'); continue; }
+    if (!qz) { seen.skip(b, '문제를 읽지 못했다'); continue; }
     const wideIdx = qz.findIndex(q => q.wide);
-    if (wideIdx < 0) continue;
+    if (wideIdx < 0) { seen.skip(b, '넓은 문항이 없다'); continue; }
     const wide = qz[wideIdx];
 
     /* 틀린 보기 = 답. 그 앞절(…한 것을 보면)이 사실을 담은 자리다. */
@@ -81,5 +83,6 @@ for (const b of books) {
 }
 
 console.log('');
-console.log('책 ' + books.length + '권, 다시 볼 자리 ' + hit + '군데.');
+seen.report();
+console.log('다시 볼 자리 ' + hit + '군데.');
 console.log('ㄴ형은 사실 절이 겹치는 것이 당연하니, 짚혔다고 다 고칠 것은 아니다.');

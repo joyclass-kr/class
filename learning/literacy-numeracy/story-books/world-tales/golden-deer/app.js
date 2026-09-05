@@ -512,7 +512,7 @@ const QUIZ = [
         "answer": 1
     },
     {
-        "q": "임금님이 황금 사슴을 보고 한 말은 무엇인가요?",
+        "q": "임금님이 활을 내려놓으며 한 말은 무엇인가요?",
         "choices": [
             "사람보다 낫다",
             "사냥을 더 하겠다",
@@ -996,7 +996,7 @@ const EN = {
             answer: 1
         },
         {
-            q: 'What did the king say when he saw the Golden Deer?',
+            q: 'What did the king say as he put down his bow?',
             choices: ['That he was better than a man', 'That this was not agreed', 'That he should send another deer'],
             answer: 0
         },

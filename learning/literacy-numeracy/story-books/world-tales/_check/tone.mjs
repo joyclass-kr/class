@@ -7,6 +7,7 @@
    말끝 목록을 정규식으로 못 박지 않고 끝 두 글자만 본다. 목록을 정하면 그 목록
    안에서만 쓰게 되어, 문장마다 자연스러운 말끝을 고르라는 뜻과 어긋난다. */
 import fs from 'node:fs';
+import { tally } from './seen.mjs';
 import path from 'node:path';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), '..');
@@ -14,16 +15,17 @@ const 맺음 = c => c.trim().replace(/[.]$/, '').slice(-2);
 
 const books = fs.readdirSync(ROOT).filter(d => !d.startsWith('_') && fs.existsSync(path.join(ROOT, d, 'app.js'))).sort();
 let hit = 0;
+const seen = tally(books.length);
 const 통계 = {};
 
 for (const b of books) {
     const s = fs.readFileSync(path.join(ROOT, b, 'app.js'), 'utf8');
     const i = s.indexOf('"wide": true');
-    if (i < 0) continue;
+    if (i < 0) { seen.skip(b, '넓은 문항이 없다'); continue; }
     const a = s.indexOf('[', i), z = s.indexOf(']', a);
     const opts = [...s.slice(a, z).matchAll(/"((?:[^"\\]|\\.)*)"/g)].map(m => m[1]);
     const am = s.slice(z).match(/"answer":\s*(\d+)/);
-    if (opts.length < 3 || !am) { console.log('## ' + b + ' — 보기를 읽지 못했습니다'); continue; }
+    if (opts.length < 3 || !am) { seen.skip(b, '보기를 읽지 못했다'); continue; }
     const ai = Number(am[1]);
     opts.forEach(o => { const e = 맺음(o); 통계[e] = (통계[e] || 0) + 1; });
 
@@ -40,5 +42,6 @@ const 총 = Object.values(통계).reduce((x, y) => x + y, 0);
 const 줄 = Object.entries(통계).sort((x, y) => y[1] - x[1]).slice(0, 8)
     .map(([e, n]) => e + ' ' + Math.round(n / 총 * 100) + '%').join(' · ');
 console.log('');
-console.log('책 ' + books.length + '권 · 보기 ' + 총 + '개 — ' + 줄);
+seen.report();
+console.log('보기 ' + 총 + '개 — ' + 줄);
 console.log('오답만 말끝이 딴 꼴인 책 ' + hit + '권.');
