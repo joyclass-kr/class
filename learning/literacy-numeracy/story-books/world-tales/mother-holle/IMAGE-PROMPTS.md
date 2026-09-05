@@ -37,22 +37,50 @@ frightening.
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-The diligent girl: a girl about 13 with chestnut-brown hair tied back under a
-PALE GREEN kerchief, in a blue pinafore over a white long-sleeved blouse with
-a white apron and brown ankle boots. Calm and willing, busy hands. Keep the
-green kerchief and the blue pinafore in every picture.
-The lazy stepsister: a plump girl with reddish curls and a PINK ribbon, in a
-frilled pink-and-white dress, always yawning.
-The stepmother: a sharp-faced woman with a wooden spoon.
-Mother Holle: a large kindly old woman with enormous teeth and a huge feather
-quilt, drawn as warm and grandmotherly, never witch-like.
+The diligent girl (EXACTLY as in 01-well to 06-gold): about 13, CHESTNUT-BROWN
+hair in a short bob tied low at the back, BROWN eyes, round cheeks with a touch
+of pink. A PALE GREEN kerchief with tiny white dots knotted under the chin,
+a PALE BLUE pinafore dress over a WHITE blouse, a WHITE apron, brown ankle boots.
+Calm and willing. In the gold shower she may be dusted gold, but her hair stays
+chestnut and her face stays the same — NO auburn wavy hair, NO blue eyes,
+NO bare feet.
+Mother Holle (EXACTLY as in 05-holle): a very LARGE old woman, a head and a half
+taller than the girl, broad and sturdy. GREY hair in a bun on top of her head —
+NO headscarf. A wide, warm, toothy grin with big teeth showing. A colourful
+striped-and-patterned shawl (red, blue, yellow) over a DARK BLUE dress, a WHITE
+apron, sturdy shoes. Always with her HUGE white feather quilt. Warm and
+grandmotherly, never witch-like. She is never small and never plain.
+The lazy stepsister (EXACTLY as in 07-lazy, but with a pink bow): PLUMP with a
+round face, REDDISH-BROWN CURLS, ONE PINK bow on top of her head, a PINK
+polka-dot dress with white frills and a white collar, white socks, black shoes.
+Smirking or yawning. NO bonnet, NO twin-tails, NO blue bow.
+The stepmother (EXACTLY as in 02-fall): thin and sharp-faced, a DARK GREY
+headscarf, a grey-brown long-sleeved dress with a BROWN bodice, a patterned
+brown apron, brown boots. Angry mouth. NO bun, NO navy dress.
 Everyone must look like the same person from picture to picture — same hair,
 same clothes, same face.
 ```
 
-> **아직 여섯 장만 그려졌습니다.** 01·02·03 세 장씩이에요. 남은 열두 장
-> (`04-apples`부터 `end`까지)을 그릴 때 위 설명을 그대로 붙여 넣으면
-> 앞의 여섯 장과 같은 아이가 나옵니다.
+> **열여덟 장 가운데 열다섯 장이 그려졌습니다.** 아직 없는 것은
+> `cover.webp` · `end.webp` · `08-ending-2.webp` 셋입니다.
+>
+> 그려진 그림을 다 견주어 보니 **아이는 처음부터 끝까지 같은 아이**인데,
+> 할머니·게으른 딸·새어머니는 장마다 딴사람이 됐습니다. 처음 지시문에
+> 아이만 자세히 적고 나머지 셋은 한 줄로 적어 둔 탓입니다. 위에 그림 기준으로
+> 못 박았으니, 아래 표의 「다시」 장은 위 설명을 그대로 붙여 다시 뽑으면 됩니다.
+>
+> | 파일 | 본 결과 |
+> |---|---|
+> | `01`~`03` 여섯 장 | 아이 · 새어머니 기준. 그대로 둡니다 |
+> | `04-apples` `04-apples-2` `05-holle-2` | 아이 그대로. 그대로 둡니다 |
+> | `05-holle` | **할머니 기준 그림.** 그대로 둡니다 |
+> | `06-gold` | 아이는 맞음. **할머니가 딴사람** — 작고, 머릿수건, 남색 옷 → 다시 |
+> | `06-gold-2` | **아이가 딴사람** — 붉은 곱슬머리, 파란 눈, 맨발 → 다시 |
+> | `07-lazy` | 딸은 기준 그림인데 **리본만 파랑** → 분홍으로. **새어머니가 딴사람** — 쪽머리, 남색 원피스 → 다시 |
+> | `07-lazy-2` | **딸이 딴사람** — 분홍 보닛에 세로 곱슬 → 다시 |
+> | `08-ending` | **딸이 딴사람** — 빨간 양갈래에 리본 둘. **할머니도 딴사람** — 작고 머릿수건 → 다시 |
+>
+> 아이는 `01`~`05`가 다 같으니 그것을 보기로 삼으면 됩니다.
 
 ## 표지 · 마무리
 
