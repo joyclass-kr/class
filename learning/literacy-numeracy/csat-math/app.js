@@ -4,21 +4,26 @@
   const DATA = window.CSAT_MATH;
   const STORE_KEY = "csat-math-done";
   const CIRCLED = ["①", "②", "③", "④", "⑤"];
+  const CHUNK_SIZE = 15;
 
   const examById = new Map(DATA.exams.map((e) => [e.id, e]));
   const unitById = new Map(DATA.units.map((u) => [u.id, u]));
 
   const state = {
-    unit: "all",
-    exam: "all",
+    unit: null,
+    exam: null,
     hideDone: false,
-    done: loadDone()
+    done: loadDone(),
+    displayLimit: CHUNK_SIZE
   };
 
   const els = {
     unitChips: document.getElementById("unit-chips"),
     examSelect: document.getElementById("exam-select"),
     list: document.getElementById("list"),
+    guide: document.getElementById("guide"),
+    moreWrap: document.getElementById("more-wrap"),
+    btnMore: document.getElementById("btn-more"),
     empty: document.getElementById("empty"),
     count: document.getElementById("count"),
     hideDone: document.getElementById("hide-done"),
@@ -85,9 +90,15 @@
     }
     sel.textContent = "";
 
+    const optNone = document.createElement("option");
+    optNone.value = "";
+    optNone.textContent = "-- 회차 선택 안 함 --";
+    optNone.selected = !state.exam;
+    sel.appendChild(optNone);
+
     const optAll = document.createElement("option");
     optAll.value = "all";
-    optAll.textContent = `전체 (${DATA.exams.length}회차 · ${DATA.problems.length}문항)`;
+    optAll.textContent = `전체 회차 (${DATA.exams.length}회차 · ${DATA.problems.length}문항)`;
     optAll.selected = state.exam === "all";
     sel.appendChild(optAll);
 
@@ -101,11 +112,15 @@
     });
   }
 
-  /* ── 문항 그리기 ── */
+  /* ── 문항 필터링 ── */
   function visibleProblems() {
+    if (!state.unit && !state.exam) {
+      return [];
+    }
+
     return DATA.problems.filter((p) => {
-      if (state.unit !== "all" && p.units.indexOf(state.unit) < 0) return false;
-      if (state.exam !== "all" && p.exam !== state.exam) return false;
+      if (state.unit && p.units.indexOf(state.unit) < 0) return false;
+      if (state.exam && state.exam !== "all" && p.exam !== state.exam) return false;
       if (state.hideDone && state.done[p.id]) return false;
       return true;
     });
@@ -136,7 +151,8 @@
     saveDone();
     card.classList.add("is-done");
     card.querySelector(".item-mark").textContent = right ? "맞음" : "틀림";
-    updateCount();
+    const items = visibleProblems();
+    updateCount(items, Math.min(state.displayLimit, items.length));
   }
 
   function buildChoices(problem, card) {
@@ -280,7 +296,7 @@
   }
 
   function renderMath(root) {
-    if (!window.renderMathInElement) return;
+    if (!window.renderMathInElement || !root) return;
     window.renderMathInElement(root, {
       delimiters: [
         { left: "\\[", right: "\\]", display: true },
@@ -290,19 +306,62 @@
     });
   }
 
-  function updateCount() {
-    const shown = visibleProblems();
-    const solved = shown.filter((p) => state.done[p.id]).length;
-    els.count.textContent = shown.length + "문항" + (solved ? " · 푼 것 " + solved : "");
+  function updateCount(items, renderedCount) {
+    if (!state.unit && !state.exam) {
+      els.count.textContent = `총 ${DATA.exams.length}회차 · ${DATA.problems.length}문항`;
+      return;
+    }
+    const solved = items.filter((p) => state.done[p.id]).length;
+    els.count.textContent =
+      items.length +
+      "문항" +
+      (solved ? " · 푼 것 " + solved : "") +
+      (renderedCount < items.length ? ` (${renderedCount}/${items.length}개 표시 중)` : "");
   }
 
   function render() {
+    const isFilterSelected = Boolean(state.unit || state.exam);
     const items = visibleProblems();
+
+    if (!isFilterSelected) {
+      if (els.guide) els.guide.hidden = false;
+      els.list.textContent = "";
+      els.empty.hidden = true;
+      if (els.moreWrap) els.moreWrap.hidden = true;
+      updateCount([], 0);
+      return;
+    }
+
+    if (els.guide) els.guide.hidden = true;
+
+    if (items.length === 0) {
+      els.list.textContent = "";
+      els.empty.hidden = false;
+      if (els.moreWrap) els.moreWrap.hidden = true;
+      updateCount([], 0);
+      return;
+    }
+
+    els.empty.hidden = true;
+
+    const toShow = items.slice(0, state.displayLimit);
     els.list.textContent = "";
-    items.forEach((p) => els.list.appendChild(buildCard(p)));
-    els.empty.hidden = items.length > 0;
+    toShow.forEach((p) => els.list.appendChild(buildCard(p)));
+
     renderMath(els.list);
-    updateCount();
+
+    if (els.moreWrap && els.btnMore) {
+      if (items.length > state.displayLimit) {
+        els.moreWrap.hidden = false;
+        const remain = items.length - state.displayLimit;
+        const nextChunk = Math.min(CHUNK_SIZE, remain);
+        els.btnMore.textContent = `더 보기 (${nextChunk}개 더 표시 · ${state.displayLimit}/${items.length})`;
+      } else {
+        els.moreWrap.hidden = true;
+      }
+    }
+
+    updateCount(items, toShow.length);
   }
 
   /* ── 이어 붙이기 ── */
@@ -311,8 +370,9 @@
       const btn = ev.target.closest(".chip");
       if (!btn) return;
       const val = btn.dataset.value;
-      const nextValue = state[key] === val && val !== "all" ? "all" : val;
+      const nextValue = state[key] === val ? null : val;
       state[key] = nextValue;
+      state.displayLimit = CHUNK_SIZE;
       box.querySelectorAll(".chip").forEach((b) => {
         b.setAttribute("aria-pressed", b.dataset.value === nextValue ? "true" : "false");
       });
@@ -327,13 +387,47 @@
 
     if (els.examSelect) {
       els.examSelect.addEventListener("change", function () {
-        state.exam = els.examSelect.value;
+        state.exam = els.examSelect.value || null;
+        state.displayLimit = CHUNK_SIZE;
         render();
+      });
+    }
+
+    if (els.btnMore) {
+      els.btnMore.addEventListener("click", function () {
+        const items = visibleProblems();
+        const prevLimit = state.displayLimit;
+        state.displayLimit += CHUNK_SIZE;
+        const newItems = items.slice(prevLimit, state.displayLimit);
+
+        const frag = document.createDocumentFragment();
+        const newCardElements = [];
+        newItems.forEach((p) => {
+          const card = buildCard(p);
+          frag.appendChild(card);
+          newCardElements.push(card);
+        });
+        els.list.appendChild(frag);
+
+        // 새롭게 추가된 카드들만 KaTeX 수식 렌더링
+        newCardElements.forEach((el) => renderMath(el));
+
+        if (items.length > state.displayLimit) {
+          els.moreWrap.hidden = false;
+          const remain = items.length - state.displayLimit;
+          const nextChunk = Math.min(CHUNK_SIZE, remain);
+          els.btnMore.textContent = `더 보기 (${nextChunk}개 더 표시 · ${state.displayLimit}/${items.length})`;
+        } else {
+          els.moreWrap.hidden = true;
+        }
+
+        updateCount(items, Math.min(state.displayLimit, items.length));
       });
     }
 
     els.hideDone.addEventListener("change", function () {
       state.hideDone = els.hideDone.checked;
+      state.displayLimit = CHUNK_SIZE;
       render();
     });
 
@@ -346,15 +440,13 @@
     render();
   }
 
-  // 즉시 또는 DOMContentLoaded 시점에 안전하게 초기화
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", start);
   } else {
     start();
   }
 
-  // KaTeX 스크립트가 늦게 로드될 경우를 대비한 추가 렌더링
   window.addEventListener("load", function () {
-    if (els.list) renderMath(els.list);
+    if (els.list && els.list.children.length > 0) renderMath(els.list);
   });
 })();
