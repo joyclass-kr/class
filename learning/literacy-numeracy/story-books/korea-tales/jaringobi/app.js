@@ -266,6 +266,504 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐟",
+        art: "cover.webp",
+        title: "The Great Miser",
+        intro: [
+            "This story comes from Chungju in Chungcheong. Even now a person who saves fiercely is called a Jaringobi.",
+            "Where the word itself came from nobody is sure. Several stories are told about it, and none of them is settled.",
+            "The miser here has a rival. He is often told of together with a miser from Gyeongsang, and one of the two loses."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Dried Fish on the Ceiling",
+            beats: [
+                {
+                    art: "01-house.webp",
+                    emoji: "🏠",
+                    left: [
+                        "Long ago in Chungju there lived a rich man everybody had heard of.",
+                        "His fields were wide and he had three storehouses.",
+                        "But stand at that house and nobody would know it.",
+                        "The roof sagged and the wall leaned to one side.",
+                        "Weeds grew knee-high in the yard."
+                    ],
+                    right: [
+                        "People slowed down every time they passed it.",
+                        { t: "\"That is a rich man's house?\"", v: "man" },
+                        { t: "\"Hush. That is the Jaringobi's house.\"", v: "man" },
+                        { t: "\"All three storehouses are rice, they say.\"", v: "man" },
+                        "They went by muttering. The gate was shut fast today as well."
+                    ]
+                },
+                {
+                    art: "02-gulbi.webp",
+                    emoji: "🐟",
+                    left: [
+                        "At mealtimes the whole family sat round the table.",
+                        "On the table were one bowl of rice and one bowl of water.",
+                        "No dish of greens, no piece of pickle.",
+                        "Instead one dried fish hung swinging from the ceiling.",
+                        "It was a well dried fish, browned all over."
+                    ],
+                    right: [
+                        "The Jaringobi lifted his spoon and spoke.",
+                        { t: "\"Now. One spoonful, then one look.\"", v: "old" },
+                        "The family took a spoonful of rice.",
+                        "Then they lifted their heads and looked at the ceiling.",
+                        "One spoonful, one look. Then again, and again.",
+                        "That was the side dish in that house."
+                    ]
+                },
+                {
+                    art: "03-twice.webp",
+                    emoji: "😲",
+                    left: [
+                        "But that day the youngest looked twice.",
+                        "The fish was so brown and good that his eyes kept going up.",
+                        "The Jaringobi's spoon stopped dead. His eyes flew open.",
+                        { t: "\"You there!\"", v: "old" },
+                        "The whole family put their spoons down."
+                    ],
+                    right: [
+                        "The Jaringobi got up and looked down at the youngest, terribly.",
+                        { t: "\"Salty! Too salty! Drink water at once!\"", v: "old" },
+                        "The youngest gulped down nothing but water.",
+                        "His lip stuck out a mile.",
+                        "The fish hung on the ceiling that day too, just as before."
+                    ]
+                },
+                {
+                    art: "04-fan.webp",
+                    emoji: "🌬️",
+                    left: [
+                        "It was the middle of summer.",
+                        "Sweat ran in a line down his back.",
+                        "The Jaringobi opened a fan wide and sat down on the floor edge.",
+                        "But he held the fan still and did not move it at all.",
+                        "Instead he waved his own head from side to side."
+                    ],
+                    right: [
+                        "His wife, watching, opened her eyes wide.",
+                        { t: "\"Husband, what sort of fanning is that?\"", v: "granny" },
+                        "The Jaringobi answered while he shook his head.",
+                        { t: "\"Fan the fan and the fan wears out. Shake a head and it does not.\"", v: "old" },
+                        "His wife could find nothing at all to say."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Chasing a Fly to Hanyang",
+            beats: [
+                {
+                    art: "05-fly.webp",
+                    emoji: "🪰",
+                    left: [
+                        "One day a fly settled on the jar stand.",
+                        "The lid of the bean paste jar happened to be open.",
+                        "The fly wiped at the paste with its front legs and flew up.",
+                        { t: "\"Look at that! My bean paste!\"", v: "old" },
+                        "The Jaringobi's eyes went wide and he jumped to his feet."
+                    ],
+                    right: [
+                        "He ran out into the yard without getting his shoes on.",
+                        { t: "\"Put my bean paste down before you go!\"", v: "old" },
+                        "Past the jar stand, over the wall, out into the lane.",
+                        "The fly took no notice and went on flying.",
+                        "And the Jaringobi did not stop."
+                    ]
+                },
+                {
+                    art: "06-chase.webp",
+                    emoji: "🏃",
+                    left: [
+                        "The fly went over a hill and across a plain.",
+                        "The Jaringobi ran panting after it.",
+                        "He went on like that till the sun went low.",
+                        "His breath was up in his throat.",
+                        "Somebody on the road saw the state of him and asked."
+                    ],
+                    right: [
+                        { t: "\"Where are you going, sir?\"", v: "man" },
+                        { t: "\"Hanyang! That thing is going to Hanyang!\"", v: "old" },
+                        "The Jaringobi shouted it, pointing up at the sky.",
+                        "The people watching held their sides. All that way for one fly!",
+                        "But the Jaringobi did not look back once."
+                    ]
+                },
+                {
+                    art: "07-hanyang.webp",
+                    emoji: "🏙️",
+                    left: [
+                        "Three whole days walking brought him to the market in Hanyang.",
+                        "But the fly went over the wall of some tiled house and was gone.",
+                        "The Jaringobi sat down at a stranger's wall.",
+                        "His straw shoes were finished and his soles were swollen."
+                    ],
+                    right: [
+                        "The Jaringobi looked at his own feet for a long while.",
+                        { t: "\"Shoes worth more than a spoonful of paste, and worn right out.\"", v: "old" },
+                        "And then all at once he laughed out loud.",
+                        "It was loud enough to turn the whole market round.",
+                        "The Jaringobi trudged home empty-handed."
+                    ]
+                },
+                {
+                    art: "08-rival.webp",
+                    emoji: "🤝",
+                    left: [
+                        "The story got as far as Gyeongsang.",
+                        "The one about chasing a fly all the way to Hanyang.",
+                        "There was a miser down there too who would not be beaten.",
+                        { t: "\"There is a man in Chungju worse than me?\"", v: "man" },
+                        "The miser flared up at the news."
+                    ],
+                    right: [
+                        "Next day the miser shouldered a bundle and set off for Chungju.",
+                        "In the bundle was one rice ball.",
+                        "One rice ball for a three-day road.",
+                        { t: "\"Let us see who is who.\"", v: "man" },
+                        "He walked three whole days, eating that rice ball a little at a time."
+                    ]
+                },
+                {
+                    art: "09-contest.webp",
+                    emoji: "🍚",
+                    left: [
+                        "The miser knocked at the gate and walked straight in without a greeting.",
+                        { t: "\"I am the man from Gyeongsang.\"", v: "man" },
+                        "The Jaringobi welcomed him and set a table.",
+                        "One bowl of rice and one bowl of water.",
+                        "And from the ceiling, sure enough, the dried fish hung."
+                    ],
+                    right: [
+                        "The miser took a spoonful of rice. He did not lift his head.",
+                        "Two spoonfuls, three. Still the same.",
+                        "The Jaringobi put down his spoon and stared.",
+                        { t: "\"Sir, do you not look at the fish at all?\"", v: "old" },
+                        { t: "\"Look at it and I shall eat more rice.\"", v: "man" },
+                        "The Jaringobi slapped his knee."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Year the Harvest Failed",
+            beats: [
+                {
+                    art: "10-drought.webp",
+                    emoji: "🌾",
+                    left: [
+                        "That summer not one drop of rain fell.",
+                        "The paddy floors cracked open like a turtle's back.",
+                        "The streams showed their beds.",
+                        "The sky was hard and bright day after day.",
+                        "Seven days went, and ten, without a single cloud."
+                    ],
+                    right: [
+                        "The rice dried up by the roots.",
+                        "Autumn came and there was nothing to take in.",
+                        "The villagers stripped bark off trees and boiled it into gruel.",
+                        "House by house, even that gruel ran out.",
+                        "The crying of children did not stop all night."
+                    ]
+                },
+                {
+                    art: "11-mutter.webp",
+                    emoji: "😠",
+                    left: [
+                        "People took to glancing over the Jaringobi's wall.",
+                        { t: "\"That man's storehouse must be bursting.\"", v: "man" },
+                        { t: "\"Three storehouses, are there not?\"", v: "man" },
+                        { t: "\"He will not put out one grain of rice.\"", v: "man" },
+                        { t: "\"Not a chance of it.\"", v: "man" },
+                        "People shook their heads and went away."
+                    ],
+                    right: [
+                        "That night a light was burning bright in his storehouse.",
+                        "People came outside the wall and watched it.",
+                        { t: "\"See there. Counting his sacks all night.\"", v: "man" },
+                        "That was all anybody thought, and they went home.",
+                        "The light did not go out until dawn."
+                    ]
+                },
+                {
+                    art: "12-open.webp",
+                    emoji: "🌅",
+                    left: [
+                        "Before dawn the next day, before it was even light,",
+                        "a thud woke the village out of sleep.",
+                        "It was the Jaringobi pushing his storehouse doors wide with his own hands.",
+                        "Inside the doors, sacks of rice stood in rows across the whole yard."
+                    ],
+                    right: [
+                        "The Jaringobi stood in the middle of the yard and shouted.",
+                        { t: "\"One sack to every house! Take it!\"", v: "old" },
+                        "The villagers froze where they stood.",
+                        "Not one of them put out a hand.",
+                        "They all thought they had heard wrong."
+                    ]
+                },
+                {
+                    art: "13-share.webp",
+                    emoji: "🍚",
+                    left: [
+                        "People only looked at one another.",
+                        "Then one of them got a question out.",
+                        { t: "\"Sir... if you give away all this...\"", v: "man" },
+                        { t: "\"Your storehouses will be empty.\"", v: "man" },
+                        "The Jaringobi leaned on the gatepost and smiled.",
+                        "It was the first smile anybody had seen in thirty years."
+                    ],
+                    right: [
+                        { t: "\"What do you think I saved for, thirty years?\"", v: "old" },
+                        "The Jaringobi's voice was quite level.",
+                        "There was not a trace of grudging in it.",
+                        { t: "\"I saved it to spend on a day like this one.\"", v: "old" },
+                        "The people stood without a word. Some of them had red eyes."
+                    ]
+                },
+                {
+                    art: "14-fish.webp",
+                    emoji: "🐟",
+                    left: [
+                        "That evening there was rice and water on his table too.",
+                        "The storehouses were empty.",
+                        "Nothing in the house had changed at all.",
+                        "The dried fish still hung from the ceiling.",
+                        "The same fish, browned just as it had been yesterday."
+                    ],
+                    right: [
+                        { t: "\"Now. One spoonful, then one look.\"", v: "old" },
+                        "The family took a spoonful and lifted their heads.",
+                        "But the youngest looked once, and then quietly looked again.",
+                        "This time the Jaringobi pretended not to see.",
+                        "He only pushed the water bowl over to him."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What did the Jaringobi hang from the ceiling?", choices: ["A dish of bean paste", "One dried fish", "A handful of dried greens"], answer: 1 },
+        { q: "What did he say when the youngest looked twice?", choices: ["That he would let it go once", "That he should eat more rice", "That it was salty, drink water"], answer: 2 },
+        { q: "What did he do to save the fan?", choices: ["Held it still and shook his head", "Cut the fan in half to use it", "Borrowed a fan from next door"], answer: 0 },
+        { q: "How far did he chase the fly?", choices: ["The next village", "Over the hill", "Hanyang"], answer: 2 },
+        { q: "What did he do at dawn when the harvest failed?", choices: ["Counted his sacks all night", "Pushed the storehouse doors wide", "Glanced over the wall"], answer: 1 },
+        { q: "What did the villagers understand then?", choices: ["That he was not rich at all", "Why he had saved so hard", "That the fish was a fake"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He hung the fish up and took one look for each spoonful, so even saving was done with a plan behind it.",
+                "He pushed the storehouse doors open himself in a bad year, so thirty years of saving had a reason.",
+                "The miser from Gyeongsang never looked at the fish once, so there is always somebody above.",
+                "He chased the fly to Hanyang and got his bean paste back in the end, so he saw a thing through once he began it."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "comes from ~", k: "~에서 전해진다", s: "This story comes from Chungju in Chungcheong." },
+            { w: "fiercely", k: "지독하게", s: "a person who saves fiercely is called a Jaringobi" },
+            { w: "nobody is sure", k: "아무도 모른다", s: "Where the word itself came from nobody is sure." },
+            { w: "settled", k: "정해진", s: "none of them is settled" },
+            { w: "rival", k: "겨루는 상대", s: "The miser here has a rival." },
+            { w: "is told of together with ~", k: "함께 묶여 전해진다", s: "He is often told of together with a miser from Gyeongsang." }
+        ],
+        "01-house.webp": [
+            { w: "everybody had heard of", k: "소문난", s: "there lived a rich man everybody had heard of" },
+            { w: "storehouses", k: "곳간", s: "His fields were wide and he had three storehouses." },
+            { w: "sagged (sag)", k: "내려앉았다", s: "The roof sagged and the wall leaned to one side." },
+            { w: "leaned (lean)", k: "기울었다", s: "the wall leaned to one side" },
+            { w: "knee-high", k: "무릎까지 오는", s: "Weeds grew knee-high in the yard." },
+            { w: "slowed down", k: "걸음을 늦췄다", s: "People slowed down every time they passed it." },
+            { w: "Hush", k: "쉿", s: "Hush. That is the Jaringobi's house." },
+            { w: "shut fast", k: "굳게 닫힌", s: "The gate was shut fast today as well." }
+        ],
+        "02-gulbi.webp": [
+            { w: "At mealtimes", k: "밥때가 되면", s: "At mealtimes the whole family sat round the table." },
+            { w: "greens", k: "나물", s: "No dish of greens, no piece of pickle." },
+            { w: "pickle", k: "김치", s: "No dish of greens, no piece of pickle." },
+            { w: "hung swinging", k: "대롱대롱 매달렸다", s: "one dried fish hung swinging from the ceiling" },
+            { w: "ceiling", k: "천장", s: "one dried fish hung swinging from the ceiling" },
+            { w: "browned all over", k: "노릇노릇한", s: "It was a well dried fish, browned all over." },
+            { w: "spoonful", k: "한 술", s: "Now. One spoonful, then one look." },
+            { w: "side dish", k: "반찬", s: "That was the side dish in that house." }
+        ],
+        "03-twice.webp": [
+            { w: "looked twice", k: "두 번 쳐다보았다", s: "But that day the youngest looked twice." },
+            { w: "kept going up", k: "자꾸 올라갔다", s: "his eyes kept going up" },
+            { w: "stopped dead", k: "딱 멈췄다", s: "The Jaringobi's spoon stopped dead." },
+            { w: "flew open (fly)", k: "번쩍 뜨였다", s: "His eyes flew open." },
+            { w: "terribly", k: "무섭게", s: "The Jaringobi got up and looked down at the youngest, terribly." },
+            { w: "Salty", k: "짜다", s: "Salty! Too salty! Drink water at once!" },
+            { w: "gulped down (gulp)", k: "벌컥벌컥 들이켰다", s: "The youngest gulped down nothing but water." },
+            { w: "stuck out a mile", k: "댓 발 나왔다", s: "His lip stuck out a mile." }
+        ],
+        "04-fan.webp": [
+            { w: "the middle of summer", k: "한여름", s: "It was the middle of summer." },
+            { w: "in a line", k: "줄줄", s: "Sweat ran in a line down his back." },
+            { w: "fan", k: "부채", s: "The Jaringobi opened a fan wide" },
+            { w: "the floor edge", k: "마루", s: "sat down on the floor edge" },
+            { w: "held ~ still", k: "꼼짝하지 않게 잡았다", s: "But he held the fan still and did not move it." },
+            { w: "from side to side", k: "좌우로", s: "Instead he waved his own head from side to side." },
+            { w: "what sort of ~", k: "그게 무슨 ~이오", s: "Husband, what sort of fanning is that?" },
+            { w: "wears out (wear)", k: "닳는다", s: "Fan the fan and the fan wears out." },
+            { w: "nothing to say", k: "할 말이 없는", s: "His wife could find nothing at all to say." }
+        ],
+        "05-fly.webp": [
+            { w: "settled (settle)", k: "앉았다", s: "One day a fly settled on the jar stand." },
+            { w: "jar stand", k: "장독대", s: "a fly settled on the jar stand" },
+            { w: "bean paste", k: "된장", s: "The lid of the bean paste jar happened to be open." },
+            { w: "happened to be ~", k: "마침 ~였다", s: "The lid happened to be open." },
+            { w: "wiped at ~ (wipe)", k: "쓱 훔쳤다", s: "The fly wiped at the paste with its front legs" },
+            { w: "jumped to his feet", k: "벌떡 일어섰다", s: "The Jaringobi's eyes went wide and he jumped to his feet." },
+            { w: "took no notice", k: "아랑곳하지 않았다", s: "The fly took no notice and went on flying." },
+            { w: "lane", k: "골목길", s: "over the wall, out into the lane" }
+        ],
+        "06-chase.webp": [
+            { w: "plain", k: "들판", s: "The fly went over a hill and across a plain." },
+            { w: "panting (pant)", k: "헐레벌떡", s: "The Jaringobi ran panting after it." },
+            { w: "went low (go)", k: "기울었다", s: "He went on like that till the sun went low." },
+            { w: "up in his throat", k: "턱까지 찬", s: "His breath was up in his throat." },
+            { w: "the state of him", k: "그 꼴", s: "Somebody on the road saw the state of him and asked." },
+            { w: "pointing up", k: "하늘을 가리키며", s: "The Jaringobi shouted it, pointing up at the sky." },
+            { w: "held their sides", k: "배를 잡고 웃었다", s: "The people watching held their sides." },
+            { w: "All that way", k: "거기까지", s: "All that way for one fly!" }
+        ],
+        "07-hanyang.webp": [
+            { w: "Three whole days", k: "사흘을 꼬박", s: "Three whole days walking brought him to the market." },
+            { w: "was gone", k: "사라졌다", s: "the fly went over the wall of some tiled house and was gone" },
+            { w: "a stranger's wall", k: "남의 집 담벼락", s: "The Jaringobi sat down at a stranger's wall." },
+            { w: "finished", k: "다 해진", s: "His straw shoes were finished and his soles were swollen." },
+            { w: "swollen (swell)", k: "부은", s: "his soles were swollen" },
+            { w: "worth more than ~", k: "~보다 값나가는", s: "Shoes worth more than a spoonful of paste" },
+            { w: "worn right out", k: "다 떨어진", s: "Shoes worth more than a spoonful of paste, and worn right out." },
+            { w: "trudged (trudge)", k: "터덜터덜 걸었다", s: "The Jaringobi trudged home empty-handed." }
+        ],
+        "08-rival.webp": [
+            { w: "got as far as ~", k: "~까지 퍼졌다", s: "The story got as far as Gyeongsang." },
+            { w: "would not be beaten", k: "지지 않는", s: "There was a miser down there too who would not be beaten." },
+            { w: "miser", k: "구두쇠", s: "There was a miser down there too" },
+            { w: "worse than me", k: "나보다 더한", s: "There is a man in Chungju worse than me?" },
+            { w: "flared up (flare)", k: "발끈했다", s: "The miser flared up at the news." },
+            { w: "bundle", k: "봇짐", s: "the miser shouldered a bundle and set off for Chungju" },
+            { w: "rice ball", k: "주먹밥", s: "In the bundle was one rice ball." },
+            { w: "who is who", k: "누가 나은지", s: "Let us see who is who." },
+            { w: "a little at a time", k: "아껴 가며", s: "eating that rice ball a little at a time" }
+        ],
+        "09-contest.webp": [
+            { w: "without a greeting", k: "인사도 없이", s: "The miser knocked and walked straight in without a greeting." },
+            { w: "set a table", k: "밥상을 내주었다", s: "The Jaringobi welcomed him and set a table." },
+            { w: "sure enough", k: "어김없이", s: "And from the ceiling, sure enough, the dried fish hung." },
+            { w: "lift his head", k: "고개를 들다", s: "He did not lift his head." },
+            { w: "Still the same", k: "그래도 그대로", s: "Two spoonfuls, three. Still the same." },
+            { w: "stared (stare)", k: "쳐다보았다", s: "The Jaringobi put down his spoon and stared." },
+            { w: "not ~ at all", k: "한 번도 ~ 않다", s: "Sir, do you not look at the fish at all?" },
+            { w: "slapped his knee", k: "무릎을 탁 쳤다", s: "The Jaringobi slapped his knee." }
+        ],
+        "10-drought.webp": [
+            { w: "not one drop", k: "한 방울도", s: "That summer not one drop of rain fell." },
+            { w: "paddy floors", k: "논바닥", s: "The paddy floors cracked open like a turtle's back." },
+            { w: "showed their beds", k: "바닥을 드러냈다", s: "The streams showed their beds." },
+            { w: "day after day", k: "날마다", s: "The sky was hard and bright day after day." },
+            { w: "a single cloud", k: "구름 한 점", s: "Seven days went, and ten, without a single cloud." },
+            { w: "by the roots", k: "뿌리째", s: "The rice dried up by the roots." },
+            { w: "take in", k: "거두다", s: "Autumn came and there was nothing to take in." },
+            { w: "gruel", k: "죽", s: "The villagers stripped bark off trees and boiled it into gruel." },
+            { w: "ran out (run out)", k: "떨어졌다", s: "House by house, even that gruel ran out." }
+        ],
+        "11-mutter.webp": [
+            { w: "took to ~ (take)", k: "~하기 시작했다", s: "People took to glancing over the Jaringobi's wall." },
+            { w: "bursting (burst)", k: "터져 나갈 듯한", s: "That man's storehouse must be bursting." },
+            { w: "one grain of rice", k: "쌀 한 톨", s: "He will not put out one grain of rice." },
+            { w: "Not a chance", k: "어림도 없다", s: "Not a chance of it." },
+            { w: "shook their heads (shake)", k: "고개를 저었다", s: "People shook their heads and went away." },
+            { w: "burning bright", k: "환하게 켜진", s: "That night a light was burning bright in his storehouse." },
+            { w: "sacks", k: "쌀가마", s: "See there. Counting his sacks all night." },
+            { w: "go out", k: "꺼지다", s: "The light did not go out until dawn." }
+        ],
+        "12-open.webp": [
+            { w: "Before dawn", k: "새벽에", s: "Before dawn the next day, before it was even light" },
+            { w: "thud", k: "쿵 하는 소리", s: "a thud woke the village out of sleep" },
+            { w: "woke ~ out of sleep", k: "잠에서 깨웠다", s: "a thud woke the village out of sleep" },
+            { w: "with his own hands", k: "손수", s: "pushing his storehouse doors wide with his own hands" },
+            { w: "in rows", k: "줄지어", s: "sacks of rice stood in rows across the whole yard" },
+            { w: "in the middle of ~", k: "한가운데", s: "The Jaringobi stood in the middle of the yard and shouted." },
+            { w: "to every house", k: "한 집에 하나씩", s: "One sack to every house! Take it!" },
+            { w: "froze (freeze)", k: "얼어붙었다", s: "The villagers froze where they stood." },
+            { w: "heard wrong", k: "잘못 들었다", s: "They all thought they had heard wrong." }
+        ],
+        "13-share.webp": [
+            { w: "got a question out", k: "더듬더듬 물었다", s: "Then one of them got a question out." },
+            { w: "give away ~", k: "다 내주다", s: "Sir... if you give away all this..." },
+            { w: "leaned on ~", k: "기댔다", s: "The Jaringobi leaned on the gatepost and smiled." },
+            { w: "gatepost", k: "대문 기둥", s: "The Jaringobi leaned on the gatepost and smiled." },
+            { w: "the first ~ in thirty years", k: "삼십 년 만의", s: "It was the first smile anybody had seen in thirty years." },
+            { w: "What ~ for", k: "무엇 때문에", s: "What do you think I saved for, thirty years?" },
+            { w: "quite level", k: "아주 담담한", s: "The Jaringobi's voice was quite level." },
+            { w: "grudging", k: "아까워하는 기색", s: "There was not a trace of grudging in it." },
+            { w: "a day like this one", k: "오늘 같은 날", s: "I saved it to spend on a day like this one." }
+        ],
+        "14-fish.webp": [
+            { w: "were empty", k: "텅 비었다", s: "The storehouses were empty." },
+            { w: "had changed", k: "달라졌다", s: "Nothing in the house had changed at all." },
+            { w: "still hung", k: "여전히 매달려 있었다", s: "The dried fish still hung from the ceiling." },
+            { w: "just as it had been", k: "똑같이", s: "The same fish, browned just as it had been yesterday." },
+            { w: "quietly", k: "슬쩍", s: "the youngest looked once, and then quietly looked again" },
+            { w: "pretended not to ~", k: "못 본 척했다", s: "This time the Jaringobi pretended not to see." },
+            { w: "pushed ~ over", k: "슬며시 밀어 주었다", s: "He only pushed the water bowl over to him." }
+        ],
+        "after": [
+            { w: "not one person's name", k: "한 사람의 이름이 아닌", s: "Jaringobi was not one person's name." },
+            { w: "the most famous part", k: "가장 이름난 자리", s: "the most famous part of this story" },
+            { w: "a pair", k: "한 짝", s: "the telling off for looking too often makes a pair with it" },
+            { w: "an object of fun", k: "웃음거리", s: "the story does not leave him only an object of fun" },
+            { w: "did not fall from ~", k: "~에서 떨어진 것이 아니다", s: "That rice did not fall from the sky." },
+            { w: "piled up (pile)", k: "쌓였다", s: "It was the years of saving piled up." },
+            { w: "an end in itself", k: "그 자체가 목적", s: "Saving was not an end in itself for him." },
+            { w: "when to spend", k: "언제 써야 하는지", s: "He knew when to spend what he had saved." },
+            { w: "what you save for", k: "무엇을 위해 아끼는가", s: "what you save for tells more than what you save" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐟',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Jaringobi was not one person's name. It was what people called somebody who saved to a fearful degree. The word is said to come from Chungcheong, but where it began is told several different ways.",
+                    "Hanging a dried fish from the ceiling and eating while looking up at it is the most famous part of this story. The telling off for looking too often makes a pair with it.",
+                    "Look again and the story does not leave him only an object of fun. It carries him as far as the day he opens the storehouse in a bad year.",
+                    "That rice did not fall from the sky. It was those years of hanging up a fish and saving, piled up."
+                ],
+                right: [
+                    "Saving was not an end in itself for him. He knew when to spend what he had saved.",
+                    "What you save for tells you more about a person than what they save.",
+                    "What are you saving? And when do you mean to spend it?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "자린고비는 천장에 무엇을 매달았나요?", choices: ["된장 한 종지", "굴비 한 마리", "말린 나물 한 줌"], answer: 1 },
     { q: "막내가 굴비를 두 번 보자 자린고비는 뭐라고 했나요?", choices: ["이번 한 번은 봐준다고", "밥을 더 먹으라고", "짜다며 물을 마시라고"], answer: 2 },

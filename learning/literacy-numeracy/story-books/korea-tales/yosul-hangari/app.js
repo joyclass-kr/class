@@ -417,7 +417,7 @@ const EN = {
         { q: "What did the rich man do when he heard the story?", choices: ["Threw his spoon down", "Opened his storehouse", "Peered over the wall"], answer: 0 },
         { q: "Who fell into the jar?", choices: ["The farmer's wife", "The village magistrate", "The rich man's father"], answer: 2 },
         { q: "What did the fathers filling the yard say?", choices: ["That they were hungry", "They broke the jar", "They left the house"], answer: 0 },
-        { q: "What became of the greedy rich man?", choices: ["He gave the jar back", "He spent everything he had", "He left the village"], answer: 1 },
+        { q: "What became of the greedy rich man?", choices: ["He gave the jar back", "His gold and fields went", "He left the village"], answer: 1 },
         {
             q: "Which reaction to this book does NOT fit?",
             wide: true,
