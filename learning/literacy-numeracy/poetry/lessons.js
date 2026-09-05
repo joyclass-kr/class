@@ -452,6 +452,65 @@
                 "sijip-form", "sijip-pepper", "sijip-birds", "sijip-change", "sijip-end",
                 "yusan-start", "yusan-words",
                 "minyo-vs"
+            ]),
+
+        // ── 고2·3 · 현대시 정리 카드 — 본문은 교과서·EBS 교재에서 ──────
+        lesson("h2-m-north", 11, "백석과 이용악, 북방의 삶", "본문은 교재에서",
+            ["baekseok-yeounangol", "baekseok-namsinuiju", "baekseok-huinbaram", "yongak-nalgeunjip"],
+            [
+                "yeounan-when", "yeounan-how",
+                "namsinuiju-where", "namsinuiju-tree",
+                "huinbaram-wall", "huinbaram-fate",
+                "nalgeun-who", "nalgeun-voice",
+                "north-common"
+            ]),
+        lesson("h2-m-image", 11, "이미지의 시인들", "본문은 교재에서",
+            ["gwanggyun-wasadeung", "gwanggyun-chuil", "chihwan-gitbal", "chihwan-saengmyeong"],
+            [
+                "wasadeung-where", "wasadeung-feel",
+                "chuil-leaf", "chuil-stone",
+                "gitbal-what", "gitbal-end",
+                "saengmyeong-where", "saengmyeong-why",
+                "image-common"
+            ]),
+        lesson("h2-m-cheongrok", 11, "청록파와 서정주", "본문은 교재에서",
+            ["mogwol-nageune", "jihun-seungmu", "dujin-hae", "jeongju-gukhwa", "jeongju-chucheonsa"],
+            [
+                "nageune-road", "nageune-mood",
+                "seungmu-who", "seungmu-flow",
+                "hae-animals", "hae-call",
+                "gukhwa-before", "gukhwa-sister",
+                "chucheon-who", "chucheon-swing",
+                "cheongrok-common"
+            ]),
+        lesson("h2-m-sixties", 11, "김수영과 신동엽", "본문은 교재에서",
+            ["suyeong-pul", "suyeong-nun", "suyeong-pokpo", "suyeong-gogung", "dongyeop-kkeopdegi"],
+            [
+                "pul-symbol", "pul-wind",
+                "nun-alive",
+                "pokpo-sound",
+                "gogung-self",
+                "kkeopdegi-what", "kkeopdegi-form",
+                "sixties-common"
+            ]),
+        lesson("h2-m-being", 11, "존재와 이름", "본문은 교재에서",
+            ["chunsu-kkot", "chunsu-seosi", "sangbyeong-gwicheon", "donggyu-pyeonji"],
+            [
+                "kkot-name", "kkot-wish",
+                "kkotseosi-beast",
+                "gwicheon-picnic", "gwicheon-death",
+                "pyeonji-small", "pyeonji-wait",
+                "being-common"
+            ]),
+        lesson("h2-m-life", 11, "삶의 자리에서", "본문은 교재에서",
+            ["gyeongnim-nongmu", "jaesam-chueok", "jaesam-gaeulgang", "jaegu-sapyeong", "gihyeongdo-binjip"],
+            [
+                "nongmu-what", "nongmu-feel",
+                "chueok-mother", "chueok-star",
+                "gaeulgang-what",
+                "sapyeong-where", "sapyeong-people",
+                "binjip-lost", "binjip-house",
+                "life-common"
             ])
     ]);
 

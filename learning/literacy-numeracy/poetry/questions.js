@@ -5713,5 +5713,457 @@ window.POETRY_QUESTIONS = Object.freeze([
         ],
         answer: "여럿이 입에서 입으로 부르며 다듬어진 노래라서",
         explanation: "고려 사람의 노래, 시집간 여인의 노래, 서울 소리꾼의 노래가 그렇게 남았어요."
+    },
+
+    // ── 고2·3 · 백석과 이용악, 북방의 삶 ──────────────────────────
+    {
+        id: "yeounan-when", poemId: "baekseok-yeounangol", category: "장면 확인",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「여우난골족」의 배경은 언제 어디인가요?",
+        choices: ["명절날 큰집", "장날 장터", "겨울밤 남의 집 방"],
+        answer: "명절날 큰집",
+        explanation: "친척들이 모두 모여 음식을 하고 아이들이 노는 하루예요."
+    },
+    {
+        id: "yeounan-how", poemId: "baekseok-yeounangol", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "친척들을 어떻게 그려 나가나요?",
+        choices: ["한 사람씩 사연과 함께 차례로 늘어놓아요", "이름만 부르고 지나가요", "한 사람만 자세히 그려요"],
+        answer: "한 사람씩 사연과 함께 차례로 늘어놓아요",
+        explanation: "늘어놓기가 백석 시의 큰 특징이에요. 음식도 놀이도 그렇게 쌓여요."
+    },
+    {
+        id: "namsinuiju-where", poemId: "baekseok-namsinuiju", category: "장면 확인",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「남신의주 유동 박시봉방」의 말하는 이는 어떤 처지인가요?",
+        choices: ["가족과 떨어져 남의 집 방에 세 들어 살아요", "고향 큰집에서 명절을 지내요", "먼 나라로 떠나는 배 위에 있어요"],
+        answer: "가족과 떨어져 남의 집 방에 세 들어 살아요",
+        explanation: "제목이 편지 봉투에 쓰는 주소 같은 꼴이에요. 박시봉이라는 목수의 집이에요."
+    },
+    {
+        id: "namsinuiju-tree", poemId: "baekseok-namsinuiju", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "시의 끝에서 떠올리는 나무는 무엇을 뜻하나요?",
+        choices: ["외롭지만 굳게 서서 견디는 삶의 태도", "고향의 풍경", "죽음"],
+        answer: "외롭지만 굳게 서서 견디는 삶의 태도",
+        explanation: "자책과 슬픔으로 가라앉다가 그 나무를 생각하며 마음을 다잡아요."
+    },
+    {
+        id: "huinbaram-wall", poemId: "baekseok-huinbaram", category: "장면 확인",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「흰 바람벽이 있어」에서 흰 벽에 지나가는 것은 무엇인가요?",
+        choices: ["어머니와 사랑하던 사람의 모습", "고향 산천", "옛 친구들"],
+        answer: "어머니와 사랑하던 사람의 모습",
+        explanation: "벽이 마음의 화면이 돼요."
+    },
+    {
+        id: "huinbaram-fate", poemId: "baekseok-huinbaram", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "제 운명을 어떻게 받아들이나요?",
+        choices: ["외롭고 높고 쓸쓸하게 살도록 태어났다고 받아들여요", "원망하며 거부해요", "바꾸겠다고 다짐해요"],
+        answer: "외롭고 높고 쓸쓸하게 살도록 태어났다고 받아들여요",
+        explanation: "그런 삶을 산 이들과 함께라는 위안으로 끝나요."
+    },
+    {
+        id: "nalgeun-who", poemId: "yongak-nalgeunjip", category: "장면 확인",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「낡은 집」에 살던 사람들은 누구이고 어떻게 되었나요?",
+        choices: ["털보네가 살다가 살 수 없어 북쪽으로 떠났어요", "부잣집이 새집으로 이사 갔어요", "주인이 병으로 세상을 떠났어요"],
+        answer: "털보네가 살다가 살 수 없어 북쪽으로 떠났어요",
+        explanation: "빈집만 남아 무너져 가요. 나라 잃은 때의 농촌이에요."
+    },
+    {
+        id: "nalgeun-voice", poemId: "yongak-nalgeunjip", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "이 시는 어떤 말투로 이어지나요?",
+        choices: ["이웃 아이가 보고 들은 것을 이야기하듯", "높임말로 님에게 말하듯", "구호처럼 외치듯"],
+        answer: "이웃 아이가 보고 들은 것을 이야기하듯",
+        explanation: "이야기시라고 불러요. 한 집안의 사연이 시대의 사연이 돼요."
+    },
+    {
+        id: "north-common", poemId: "", category: "견주어 읽기",
+        prompt: "이 묶음의 시 네 편을 떠올려 보세요.",
+        sentence: "백석과 이용악의 시가 함께 그리는 것은 무엇인가요?",
+        choices: ["나라 잃은 때 북쪽 땅 사람들의 삶과 공동체", "도시의 밤과 고독", "자연을 즐기는 선비"],
+        answer: "나라 잃은 때 북쪽 땅 사람들의 삶과 공동체",
+        explanation: "흥성한 명절과 무너진 빈집이 같은 시대의 두 얼굴이에요."
+    },
+
+    // ── 고2·3 · 이미지의 시인들 ───────────────────────────────────
+    {
+        id: "wasadeung-where", poemId: "gwanggyun-wasadeung", category: "장면 확인",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「와사등」의 말하는 이는 어디에 서 있나요?",
+        choices: ["도시의 밤거리 가스등 아래", "고향 마을 앞", "바닷가"],
+        answer: "도시의 밤거리 가스등 아래",
+        explanation: "어디로 가야 할지 모른 채 서 있어요."
+    },
+    {
+        id: "wasadeung-feel", poemId: "gwanggyun-wasadeung", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "이 시의 마음은 무엇인가요?",
+        choices: ["갈 곳 모르는 도시인의 외로움", "고향을 되찾은 기쁨", "님을 기다리는 설렘"],
+        answer: "갈 곳 모르는 도시인의 외로움",
+        explanation: "그림 같은 장면으로 마음을 대신 말하는 것이 김광균의 방법이에요."
+    },
+    {
+        id: "chuil-leaf", poemId: "gwanggyun-chuil", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「추일서정」은 가을 풍경을 무엇에 빗대나요?",
+        choices: ["낯선 나라의 돈, 공장 굴뚝, 열차 같은 도시의 사물", "고향의 논밭", "옛이야기의 인물"],
+        answer: "낯선 나라의 돈, 공장 굴뚝, 열차 같은 도시의 사물",
+        explanation: "자연을 자연으로 그리지 않고 도시의 눈으로 봐요."
+    },
+    {
+        id: "chuil-stone", poemId: "gwanggyun-chuil", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "마지막에 돌을 던지는 행동은 무엇을 드러내나요?",
+        choices: ["풍경 속에 홀로 남은 외로움", "가을이 반가운 마음", "누군가를 향한 분노"],
+        answer: "풍경 속에 홀로 남은 외로움",
+        explanation: "던진 돌이 허공에 고독한 반원을 긋고 사라져요."
+    },
+    {
+        id: "gitbal-what", poemId: "chihwan-gitbal", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「깃발」에서 깃발은 무엇을 뜻하나요?",
+        choices: ["닿을 수 없는 곳을 향한 동경", "나라의 상징", "바람의 세기"],
+        answer: "닿을 수 없는 곳을 향한 동경",
+        explanation: "소리 없는 외침이라는 어긋난 말로 시작해요."
+    },
+    {
+        id: "gitbal-end", poemId: "chihwan-gitbal", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "시는 무엇으로 끝나나요?",
+        choices: ["이 슬픈 마음을 누가 매달았느냐는 물음", "깃발이 날아가는 장면", "바다에 닿는 기쁨"],
+        answer: "이 슬픈 마음을 누가 매달았느냐는 물음",
+        explanation: "동경은 깃대에 매여 있어요. 그래서 좌절이에요."
+    },
+    {
+        id: "saengmyeong-where", poemId: "chihwan-saengmyeong", category: "장면 확인",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「생명의 서」에서 말하는 이는 어디로 가겠다고 하나요?",
+        choices: ["사막", "바다", "산"],
+        answer: "사막",
+        explanation: "아무것도 없는 곳에서 본래의 나를 만나겠다는 거예요."
+    },
+    {
+        id: "saengmyeong-why", poemId: "chihwan-saengmyeong", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "그곳에 가는 까닭은 무엇인가요?",
+        choices: ["본래의 나를 찾으려고", "재물을 얻으려고", "님을 만나려고"],
+        answer: "본래의 나를 찾으려고",
+        explanation: "찾지 못하면 그곳에서 죽어도 좋다고 해요. 유치환 시의 단호함이에요."
+    },
+    {
+        id: "image-common", poemId: "", category: "견주어 읽기",
+        prompt: "이 묶음의 시 네 편을 떠올려 보세요.",
+        sentence: "김광균과 유치환의 다른 점은 무엇인가요?",
+        choices: ["하나는 그림으로 마음을 대신하고, 하나는 의지를 곧장 말해요", "둘 다 자연을 노래해요", "둘 다 고향을 그리워해요"],
+        answer: "하나는 그림으로 마음을 대신하고, 하나는 의지를 곧장 말해요",
+        explanation: "가스등과 낙엽 곁에 깃발과 사막을 놓고 견주어 봐요."
+    },
+
+    // ── 고2·3 · 청록파와 서정주 ───────────────────────────────────
+    {
+        id: "nageune-road", poemId: "mogwol-nageune", category: "장면 확인",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「나그네」의 나그네는 어디를 걷나요?",
+        choices: ["강나루 건너 밀밭 길", "도시의 밤거리", "눈 덮인 고원"],
+        answer: "강나루 건너 밀밭 길",
+        explanation: "술 익는 마을을 지나 저녁놀 속을 걸어요."
+    },
+    {
+        id: "nageune-mood", poemId: "mogwol-nageune", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "나그네의 걸음은 어떤 느낌인가요?",
+        choices: ["구름에 달 가듯 느긋해요", "쫓기듯 급해요", "슬픔에 겨워 느려요"],
+        answer: "구름에 달 가듯 느긋해요",
+        explanation: "짧은 줄과 되풀이가 그 걸음의 가락이에요."
+    },
+    {
+        id: "seungmu-who", poemId: "jihun-seungmu", category: "장면 확인",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「승무」는 누구의 무엇을 그리나요?",
+        choices: ["여승의 춤", "무당의 굿", "선비의 시 짓기"],
+        answer: "여승의 춤",
+        explanation: "고깔과 긴 소매가 나비처럼 움직여요."
+    },
+    {
+        id: "seungmu-flow", poemId: "jihun-seungmu", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "춤을 따라 마음은 어디로 가나요?",
+        choices: ["번뇌에서 승화로", "기쁨에서 슬픔으로", "고향에서 타향으로"],
+        answer: "번뇌에서 승화로",
+        explanation: "세상 시름이 춤 속에서 별빛처럼 맑아져요."
+    },
+    {
+        id: "hae-animals", poemId: "dujin-hae", category: "장면 확인",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「해」에서 함께 노는 짐승들은 무엇을 보여 주나요?",
+        choices: ["사슴과 칡범이 어울리는 화합의 세상", "약육강식의 세상", "사냥의 즐거움"],
+        answer: "사슴과 칡범이 어울리는 화합의 세상",
+        explanation: "잡아먹는 것과 잡아먹히는 것이 함께 놀아요. 어둠이 걷힌 뒤의 세상이에요."
+    },
+    {
+        id: "hae-call", poemId: "dujin-hae", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「해」는 해를 어떻게 대하며 노래하나요?",
+        choices: ["해를 부르며 솟아라 하고 외쳐요", "조용히 혼잣말해요", "묻고 답해요"],
+        answer: "해를 부르며 솟아라 하고 외쳐요",
+        explanation: "부름과 되풀이가 노래의 힘이에요."
+    },
+    {
+        id: "gukhwa-before", poemId: "jeongju-gukhwa", category: "장면 확인",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「국화 옆에서」 국화가 피기까지 무엇이 있었나요?",
+        choices: ["봄의 소쩍새 울음, 여름의 천둥, 가을의 무서리", "봄비와 여름 햇살", "겨울 눈"],
+        answer: "봄의 소쩍새 울음, 여름의 천둥, 가을의 무서리",
+        explanation: "한 송이가 피기까지 온 계절이 애썼다는 말이에요."
+    },
+    {
+        id: "gukhwa-sister", poemId: "jeongju-gukhwa", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "국화를 누구에 견주었나요?",
+        choices: ["젊음을 지나 거울 앞에 선 누님", "어린 동생", "떠난 님"],
+        answer: "젊음을 지나 거울 앞에 선 누님",
+        explanation: "방황을 지나 원숙해진 삶이 국화예요."
+    },
+    {
+        id: "chucheon-who", poemId: "jeongju-chucheonsa", category: "장면 확인",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「추천사」에서 그네를 밀어 달라고 하는 사람은 누구인가요?",
+        choices: ["춘향", "향단", "이몽룡"],
+        answer: "춘향",
+        explanation: "옛이야기 인물의 목소리를 빌렸어요."
+    },
+    {
+        id: "chucheon-swing", poemId: "jeongju-chucheonsa", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "그네는 무엇을 보여 주나요?",
+        choices: ["벗어나고 싶지만 다시 내려올 수밖에 없는 처지", "놀이의 즐거움", "봄의 풍경"],
+        answer: "벗어나고 싶지만 다시 내려올 수밖에 없는 처지",
+        explanation: "높이 올라도 매인 줄이 있어요. 초월의 바람과 한계가 함께 있어요."
+    },
+    {
+        id: "cheongrok-common", poemId: "", category: "견주어 읽기",
+        prompt: "이 묶음의 시 다섯 편을 떠올려 보세요.",
+        sentence: "청록파 세 시인이 함께 이름을 얻은 까닭은 무엇인가요?",
+        choices: ["나라 잃은 끝 무렵 자연과 전통을 노래한 시집을 함께 냈기 때문에", "같은 고향 출신이라서", "같은 시를 썼기 때문에"],
+        answer: "나라 잃은 끝 무렵 자연과 전통을 노래한 시집을 함께 냈기 때문에",
+        explanation: "박목월·조지훈·박두진의 청록집이에요. 서정주는 따로지만 같은 시대 전통의 시인이에요."
+    },
+
+    // ── 고2·3 · 김수영과 신동엽 ───────────────────────────────────
+    {
+        id: "pul-symbol", poemId: "suyeong-pul", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「풀」에서 풀은 무엇을 뜻하나요?",
+        choices: ["짓눌려도 다시 일어서는 민중", "들판의 풀", "덧없는 인생"],
+        answer: "짓눌려도 다시 일어서는 민중",
+        explanation: "바람이 억누르는 힘이라면 풀은 눌리는 사람들이에요."
+    },
+    {
+        id: "pul-wind", poemId: "suyeong-pul", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "풀과 바람의 관계는 어떻게 바뀌나요?",
+        choices: ["바람에 눕던 풀이 바람보다 먼저 일어나요", "풀이 바람을 이기지 못해 쓰러져요", "풀과 바람이 함께 사라져요"],
+        answer: "바람에 눕던 풀이 바람보다 먼저 일어나요",
+        explanation: "눕고 일어나기의 되풀이 끝에 순서가 뒤집혀요."
+    },
+    {
+        id: "nun-alive", poemId: "suyeong-nun", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「눈」에서 눈은 무엇이고, 젊은 시인에게 무엇을 하자고 하나요?",
+        choices: ["순수한 것이고, 기침을 해서 더러운 것을 뱉자고", "차가운 것이고, 녹이자고", "슬픈 것이고, 울자고"],
+        answer: "순수한 것이고, 기침을 해서 더러운 것을 뱉자고",
+        explanation: "살아 있는 눈 앞에서 마음속 불순한 것을 뱉어 내자는 거예요."
+    },
+    {
+        id: "pokpo-sound", poemId: "suyeong-pokpo", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「폭포」의 곧은 소리는 무엇을 뜻하나요?",
+        choices: ["게으름과 안일을 뒤집는 곧은 정신", "물이 떨어지는 소리일 뿐", "슬픈 울음"],
+        answer: "게으름과 안일을 뒤집는 곧은 정신",
+        explanation: "폭포는 두려움 없이 떨어져요. 그 곧음이 시인이 바라는 정신이에요."
+    },
+    {
+        id: "gogung-self", poemId: "suyeong-gogung", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「어느 날 고궁을 나오면서」의 말하는 이는 무엇을 부끄러워하나요?",
+        choices: ["큰 불의에는 침묵하고 작은 일에만 화내는 자기", "고궁에 늦게 간 것", "돈이 없는 것"],
+        answer: "큰 불의에는 침묵하고 작은 일에만 화내는 자기",
+        explanation: "자기를 비웃는 것으로 시대를 비판해요. 소시민의 자기반성이에요."
+    },
+    {
+        id: "kkeopdegi-what", poemId: "dongyeop-kkeopdegi", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「껍데기는 가라」에서 껍데기와 알맹이는 무엇인가요?",
+        choices: ["거짓과 불의, 그리고 사월과 동학의 순수한 정신", "열매의 껍질과 속", "옷과 몸"],
+        answer: "거짓과 불의, 그리고 사월과 동학의 순수한 정신",
+        explanation: "아사달 아사녀로 순수한 겨레를, 쇠붙이로 무력을 그렸어요."
+    },
+    {
+        id: "kkeopdegi-form", poemId: "dongyeop-kkeopdegi", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「껍데기는 가라」의 말투는 어떤가요?",
+        choices: ["가라 하고 명령하듯 되풀이해요", "조용히 묻고 답해요", "높임말로 님에게 말해요"],
+        answer: "가라 하고 명령하듯 되풀이해요",
+        explanation: "명령과 되풀이가 시의 힘이에요. 「풀」의 되풀이와 견주어 봐요."
+    },
+    {
+        id: "sixties-common", poemId: "", category: "견주어 읽기",
+        prompt: "이 묶음의 시 다섯 편을 떠올려 보세요.",
+        sentence: "김수영과 신동엽의 시가 함께 하는 일은 무엇인가요?",
+        choices: ["1960년대 현실에 맞서 자유와 순수를 외쳐요", "자연을 즐기며 임금을 그리워해요", "고향과 어머니를 그리워해요"],
+        answer: "1960년대 현실에 맞서 자유와 순수를 외쳐요",
+        explanation: "풀·눈·폭포와 껍데기. 사월 혁명 뒤의 시들이에요."
+    },
+
+    // ── 고2·3 · 존재와 이름 ───────────────────────────────────────
+    {
+        id: "kkot-name", poemId: "chunsu-kkot", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「꽃」에서 이름을 불러 주는 일은 무엇을 뜻하나요?",
+        choices: ["상대를 알아보고 뜻을 주는 일", "꽃을 심는 일", "인사하는 일"],
+        answer: "상대를 알아보고 뜻을 주는 일",
+        explanation: "이름을 부르기 전에는 몸짓이었다가 부르니 꽃이 돼요."
+    },
+    {
+        id: "kkot-wish", poemId: "chunsu-kkot", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "말하는 이가 바라는 것은 무엇인가요?",
+        choices: ["서로에게 잊히지 않는 뜻이 되는 것", "꽃을 많이 갖는 것", "혼자 있는 것"],
+        answer: "서로에게 잊히지 않는 뜻이 되는 것",
+        explanation: "나도 누군가에게 불리고 싶다는 바람으로 이어져요."
+    },
+    {
+        id: "kkotseosi-beast", poemId: "chunsu-seosi", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「꽃을 위한 서시」에서 말하는 이는 자기를 무엇이라 하나요?",
+        choices: ["손대면 꽃이 사라지게 하는 위험한 짐승", "꽃을 가꾸는 정원사", "꽃을 그리는 화가"],
+        answer: "손대면 꽃이 사라지게 하는 위험한 짐승",
+        explanation: "참모습에 닿으려 할수록 그것이 사라져요. 얼굴 가린 신부 같아요."
+    },
+    {
+        id: "gwicheon-picnic", poemId: "sangbyeong-gwicheon", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「귀천」은 삶을 무엇에 견주나요?",
+        choices: ["소풍", "전쟁", "긴 밤"],
+        answer: "소풍",
+        explanation: "소풍 끝내고 하늘로 돌아가며 아름다웠다고 말하겠대요."
+    },
+    {
+        id: "gwicheon-death", poemId: "sangbyeong-gwicheon", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "죽음을 대하는 태도는 어떤가요?",
+        choices: ["담담하고 맑아요", "두렵고 슬퍼요", "분하고 억울해요"],
+        answer: "담담하고 맑아요",
+        explanation: "이슬처럼 왔다가 가는 것으로 봐요."
+    },
+    {
+        id: "pyeonji-small", poemId: "donggyu-pyeonji", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「즐거운 편지」에서 내 사랑이 사소하다고 한 것은 어떤 말인가요?",
+        choices: ["속마음과 반대로 말한 것", "정말 사소하다는 것", "잊었다는 것"],
+        answer: "속마음과 반대로 말한 것",
+        explanation: "「진달래꽃」의 반어와 같은 자리예요. 사소하다고 할수록 커 보여요."
+    },
+    {
+        id: "pyeonji-wait", poemId: "donggyu-pyeonji", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "기다림에 대해 무엇을 알고 있나요?",
+        choices: ["눈이 그치듯 언젠가 그칠 줄 알면서도 기다려요", "영원히 기다릴 수 있다고 믿어요", "기다리지 않기로 해요"],
+        answer: "눈이 그치듯 언젠가 그칠 줄 알면서도 기다려요",
+        explanation: "끝을 알면서 하는 기다림이라 더 진해요."
+    },
+    {
+        id: "being-common", poemId: "", category: "견주어 읽기",
+        prompt: "이 묶음의 시 네 편을 떠올려 보세요.",
+        sentence: "「꽃」과 「귀천」이 묻는 것은 무엇인가요?",
+        choices: ["나는 누구이고 삶은 무엇인가", "나라는 어디로 가는가", "고향은 어디인가"],
+        answer: "나는 누구이고 삶은 무엇인가",
+        explanation: "시대를 말하지 않고 존재를 말하는 시들이에요. 앞 묶음과 견주어 봐요."
+    },
+
+    // ── 고2·3 · 삶의 자리에서 ─────────────────────────────────────
+    {
+        id: "nongmu-what", poemId: "gyeongnim-nongmu", category: "장면 확인",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「농무」에서 사람들은 무엇을 하고 있나요?",
+        choices: ["장터에서 농악을 치며 놀아요", "밭에서 김을 매요", "장에서 물건을 팔아요"],
+        answer: "장터에서 농악을 치며 놀아요",
+        explanation: "구경꾼은 적고 치는 사람들만 신이 나요."
+    },
+    {
+        id: "nongmu-feel", poemId: "gyeongnim-nongmu", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "신명 속에 무엇이 들어 있나요?",
+        choices: ["밀려난 농촌의 울분과 한", "풍년의 기쁨", "명절의 설렘"],
+        answer: "밀려난 농촌의 울분과 한",
+        explanation: "산업화에 밀려난 농민이 울분을 춤으로 풀어요."
+    },
+    {
+        id: "chueok-mother", poemId: "jaesam-chueok", category: "장면 확인",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「추억에서」의 어머니는 어디에서 무엇을 했나요?",
+        choices: ["진주 장터 어물전에서 장사를 했어요", "학교에서 아이들을 가르쳤어요", "논에서 농사를 지었어요"],
+        answer: "진주 장터 어물전에서 장사를 했어요",
+        explanation: "은전 한 닢 만져 보지 못한 가난이 어머니의 한이에요."
+    },
+    {
+        id: "chueok-star", poemId: "jaesam-chueok", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "어머니의 한을 무엇으로 그렸나요?",
+        choices: ["별빛과 눈물", "천둥과 비", "꽃과 나비"],
+        answer: "별빛과 눈물",
+        explanation: "밤늦게 돌아오는 길의 별이 어머니 눈의 눈물이 돼요."
+    },
+    {
+        id: "gaeulgang-what", poemId: "jaesam-gaeulgang", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「울음이 타는 가을 강」에서 타는 것은 무엇인가요?",
+        choices: ["노을에 붉게 물든 강물을 울음으로 본 것", "불난 강가", "가을 단풍"],
+        answer: "노을에 붉게 물든 강물을 울음으로 본 것",
+        explanation: "붉은빛이 곧 울음이에요. 첫사랑부터 끝난 사랑까지 다 그 강에 있어요."
+    },
+    {
+        id: "sapyeong-where", poemId: "jaegu-sapyeong", category: "장면 확인",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「사평역에서」의 배경은 어디인가요?",
+        choices: ["눈 오는 겨울밤 간이역 대합실", "여름 바닷가", "봄날 장터"],
+        answer: "눈 오는 겨울밤 간이역 대합실",
+        explanation: "톱밥 난로 곁에서 막차를 기다려요."
+    },
+    {
+        id: "sapyeong-people", poemId: "jaegu-sapyeong", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "대합실의 사람들은 어떤 사람들인가요?",
+        choices: ["가난하고 지쳐 말없이 기다리는 사람들", "여행을 떠나는 즐거운 사람들", "장사를 하는 사람들"],
+        answer: "가난하고 지쳐 말없이 기다리는 사람들",
+        explanation: "난로에 톱밥을 던져 넣는 손길이 그들을 위로해요."
+    },
+    {
+        id: "binjip-lost", poemId: "gihyeongdo-binjip", category: "장면 확인",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「빈집」의 말하는 이는 무엇을 잃었나요?",
+        choices: ["사랑", "집", "친구"],
+        answer: "사랑",
+        explanation: "사랑을 잃고 쓴다고 첫 줄부터 밝혀요."
+    },
+    {
+        id: "binjip-house", poemId: "gihyeongdo-binjip", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "빈집은 무엇을 뜻하나요?",
+        choices: ["사랑이 떠난 뒤의 마음", "이사 간 집", "고향 집"],
+        answer: "사랑이 떠난 뒤의 마음",
+        explanation: "함께했던 것들에 작별하고 문을 잠가요. 잠긴 집 안에 사랑이 갇혀요."
+    },
+    {
+        id: "life-common", poemId: "", category: "견주어 읽기",
+        prompt: "이 묶음의 시 다섯 편을 떠올려 보세요.",
+        sentence: "「농무」「추억에서」「사평역에서」가 함께 바라보는 사람들은 누구인가요?",
+        choices: ["가난하고 밀려난 보통 사람들", "임금과 신하", "시인 자신"],
+        answer: "가난하고 밀려난 보통 사람들",
+        explanation: "장터의 농민, 어물전의 어머니, 대합실의 사람들이에요."
     }
 ]);
