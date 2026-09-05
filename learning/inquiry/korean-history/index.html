@@ -6,22 +6,24 @@
 <title>한능검 기본 기출</title>
 <meta name="description" content="한국사능력검정시험 기본 기출문제를 시대 단원과 회차로 골라 한 화면에서 이어 풉니다.">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-<link rel="stylesheet" href="styles.css?v=20260905-1">
+<link rel="stylesheet" href="styles.css?v=20260906-1">
 </head>
 <body>
 
 <header class="topbar">
-  <a class="back-link" href="../../../" aria-label="메인 화면으로 돌아가기">←</a>
-  <h1>한능검 기본 기출</h1>
+  <a class="back" href="../../../index.html" aria-label="메인 화면으로 돌아가기">←</a>
+  <h1 class="topbar-title">한능검 기본 기출</h1>
 </header>
 
 <main>
-  <section class="picker" aria-label="고르기">
-    <div class="picker-row">
-      <span class="picker-label" id="unit-label">단원</span>
-      <div class="chips" role="group" aria-labelledby="unit-label" id="unit-chips"></div>
-    </div>
-    <div class="picker-row">
+  <!-- 단원 카드 그리드 (기존의 아이콘 분류 화면) -->
+  <section class="unit-section" aria-label="시대 단원별 기출">
+    <div class="unit-grid" id="unit-grid"></div>
+  </section>
+
+  <!-- 보조 필터 및 제어 바 -->
+  <section class="picker" aria-label="회차 및 학습 옵션">
+    <div class="picker-row picker-row--exam">
       <span class="picker-label" id="exam-label">회차</span>
       <div class="chips" role="group" aria-labelledby="exam-label" id="exam-chips"></div>
     </div>
@@ -33,7 +35,11 @@
     </div>
   </section>
 
+  <!-- 문제 목록 (단원/회차 선택 시 노출) -->
   <ol class="list" id="list"></ol>
+  <div class="more-wrap" id="more-wrap" hidden>
+    <button type="button" class="btn-more" id="btn-more">더 보기</button>
+  </div>
   <p class="empty" id="empty" hidden>고른 조건에 맞는 문항이 없습니다.</p>
 </main>
 
@@ -41,8 +47,8 @@
   <p>문제지의 저작권은 국사편찬위원회에 있습니다. 이곳은 학습용으로 문항을 옮겨 싣고 회차와 번호를 밝힙니다.</p>
 </footer>
 
-<script src="data/questions.js?v=20260905-1"></script>
-<script src="data/explanations.js?v=20260905-1"></script>
-<script src="app.js?v=20260905-1"></script>
+<script src="data/questions.js?v=20260906-1"></script>
+<script src="data/explanations.js?v=20260906-1"></script>
+<script src="app.js?v=20260906-1"></script>
 </body>
 </html>

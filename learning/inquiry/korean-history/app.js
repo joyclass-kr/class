@@ -4,28 +4,45 @@
   const DATA = window.HANGUKSA;
   const EXPLANATIONS = window.HANGUKSA_EXPLANATIONS || {};
   const CIRCLED = ["①", "②", "③", "④"];
+  const CHUNK_SIZE = 15;
 
-  // 기록은 학생 이름별로 따로 둔다. 이름은 포털이 저장해 두거나 #student= 로 넘겨 준다.
   const PLAYER_NAME_KEY = "classPlayerName";
   const DONE_KEY = "hanguksa-done";
   const LEGACY_SOLVED_KEY = "hanguksa-solved";
   const LEGACY_WRONG_KEY = "hanguksa-wrong";
 
+  const UNITS_META = {
+    "prehistoric": { short: "선사·고조선", icon: "🪨", color: "mint" },
+    "early-states": { short: "여러 나라", icon: "🌾", color: "yellow" },
+    "three-kingdoms": { short: "삼국·가야", icon: "👑", color: "coral" },
+    "north-south": { short: "남북국", icon: "🪷", color: "sky" },
+    "goryeo": { short: "고려", icon: "🏺", color: "lavender" },
+    "joseon-early": { short: "조선 전기", icon: "📜", color: "mint" },
+    "joseon-late": { short: "조선 후기", icon: "🎨", color: "yellow" },
+    "opening": { short: "개항기", icon: "🚂", color: "coral" },
+    "occupation": { short: "일제강점기", icon: "🇰🇷", color: "sky" },
+    "contemporary": { short: "현대사", icon: "🏢", color: "lavender" },
+    "integrated": { short: "시대 통합", icon: "🗺️", color: "mint" }
+  };
+
   const unitById = new Map(DATA.units.map((u) => [u.id, u]));
 
   const state = {
-    unit: "all",
-    exam: "all",
+    unit: null,
+    exam: null,
     hideDone: false,
     onlyWrong: false,
     player: "",
-    done: {}
+    done: {},
+    displayLimit: CHUNK_SIZE
   };
 
   const els = {
-    unitChips: document.getElementById("unit-chips"),
+    unitGrid: document.getElementById("unit-grid"),
     examChips: document.getElementById("exam-chips"),
     list: document.getElementById("list"),
+    moreWrap: document.getElementById("more-wrap"),
+    btnMore: document.getElementById("btn-more"),
     empty: document.getElementById("empty"),
     count: document.getElementById("count"),
     hideDone: document.getElementById("hide-done"),
@@ -33,7 +50,7 @@
     reset: document.getElementById("reset")
   };
 
-  /* ── 기록 ── */
+  /* ── 기록 관리 ── */
   function normalizePlayerName(value) {
     const name = String(value || "").replace(/[^가-힣]/g, "").slice(0, 6);
     return /^[가-힣]{2,6}$/.test(name) ? name : "";
@@ -67,7 +84,6 @@
     }
   }
 
-  // 예전 앱은 푼 문제와 틀린 문제를 두 목록으로 따로 적었다. 한 번만 지금 꼴로 옮긴다.
   function loadDone() {
     const done = readJson(playerKey(DONE_KEY), null);
     if (done) return done;
@@ -84,13 +100,55 @@
     try {
       localStorage.setItem(playerKey(DONE_KEY), JSON.stringify(state.done));
     } catch (err) {
-      /* 저장이 막혀 있어도 푸는 데는 지장이 없다. */
+      /* 저장이 막혀 있어도 무방 */
     }
   }
 
-  /* ── 고르기 줄 ── */
+  /* ── 고르기 UI 빌드 ── */
   function countBy(pick) {
     return DATA.questions.filter(pick).length;
+  }
+
+  function buildUnitGrid() {
+    if (!els.unitGrid) return;
+    els.unitGrid.textContent = "";
+
+    DATA.units.forEach((u, idx) => {
+      const meta = UNITS_META[u.id] || { icon: "📖", color: "mint" };
+      const n = countBy((q) => q.unitId === u.id);
+      if (n === 0) return;
+
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = `unit-card ${meta.color}`;
+      card.dataset.value = u.id;
+      card.setAttribute("aria-pressed", state.unit === u.id ? "true" : "false");
+
+      const numStr = String(idx + 1).padStart(2, "0");
+
+      card.innerHTML = `
+        <div class="unit-card-head">
+          <span class="unit-number">${numStr}</span>
+          <span class="unit-icon" aria-hidden="true">${meta.icon}</span>
+        </div>
+        <div class="unit-name">${u.name}</div>
+        <div class="unit-details">${n}문제</div>
+      `;
+
+      card.addEventListener("click", function () {
+        const nextValue = state.unit === u.id ? null : u.id;
+        state.unit = nextValue;
+        state.displayLimit = CHUNK_SIZE;
+
+        els.unitGrid.querySelectorAll(".unit-card").forEach((c) => {
+          c.setAttribute("aria-pressed", c.dataset.value === nextValue ? "true" : "false");
+        });
+
+        render();
+      });
+
+      els.unitGrid.appendChild(card);
+    });
   }
 
   function makeChip(label, value, active, n) {
@@ -103,32 +161,44 @@
     return btn;
   }
 
-  function buildUnitChips() {
-    const box = els.unitChips;
-    box.textContent = "";
-    box.appendChild(makeChip("전체", "all", state.unit === "all", DATA.questions.length));
-    DATA.units.forEach((u) => {
-      const n = countBy((q) => q.unitId === u.id);
-      if (n === 0) return;
-      box.appendChild(makeChip(u.name, u.id, state.unit === u.id, n));
-    });
-  }
-
   function buildExamChips() {
-    const box = els.examChips;
-    box.textContent = "";
-    box.appendChild(makeChip("전체", "all", state.exam === "all", DATA.exams.length + "회차"));
+    if (!els.examChips) return;
+    els.examChips.textContent = "";
+
+    const allBtn = makeChip("전체 회차", "all", state.exam === "all", `${DATA.exams.length}회`);
+    els.examChips.appendChild(allBtn);
+
     DATA.exams.forEach((exam) => {
       const n = countBy((q) => q.exam === exam);
-      box.appendChild(makeChip(exam + "회", String(exam), state.exam === String(exam), n));
+      const chip = makeChip(`${exam}회`, String(exam), state.exam === String(exam), n);
+      els.examChips.appendChild(chip);
+    });
+
+    els.examChips.addEventListener("click", function (ev) {
+      const btn = ev.target.closest(".chip");
+      if (!btn) return;
+      const val = btn.dataset.value;
+      const nextValue = state.exam === val ? null : val;
+      state.exam = nextValue;
+      state.displayLimit = CHUNK_SIZE;
+
+      els.examChips.querySelectorAll(".chip").forEach((b) => {
+        b.setAttribute("aria-pressed", b.dataset.value === nextValue ? "true" : "false");
+      });
+
+      render();
     });
   }
 
-  /* ── 문항 그리기 ── */
+  /* ── 문항 필터링 및 렌더링 ── */
   function visibleQuestions() {
+    if (!state.unit && !state.exam) {
+      return [];
+    }
+
     return DATA.questions.filter((q) => {
-      if (state.unit !== "all" && q.unitId !== state.unit) return false;
-      if (state.exam !== "all" && String(q.exam) !== state.exam) return false;
+      if (state.unit && q.unitId !== state.unit) return false;
+      if (state.exam && state.exam !== "all" && String(q.exam) !== state.exam) return false;
       if (state.hideDone && state.done[q.id]) return false;
       if (state.onlyWrong && state.done[q.id] !== "wrong") return false;
       return true;
@@ -141,7 +211,8 @@
     card.classList.add("is-done");
     card.classList.toggle("is-wrong", !right);
     card.querySelector(".item-mark").textContent = right ? "맞음" : "틀림";
-    updateCount();
+    const items = visibleQuestions();
+    updateCount(items, Math.min(state.displayLimit, items.length));
   }
 
   function buildChoices(question, card) {
@@ -156,11 +227,12 @@
       btn.className = "choice";
       btn.textContent = symbol;
       btn.setAttribute("aria-label", (i + 1) + "번 선택");
-      // 이미 푼 문제는 정답만 보여 주고 다시 고르지 못하게 한다.
+
       if (mark) {
         btn.disabled = true;
         if (i + 1 === question.answer) btn.classList.add("is-right");
       }
+
       btn.addEventListener("click", function () {
         const picked = i + 1;
         const right = picked === question.answer;
@@ -171,6 +243,7 @@
         if (!right) btn.classList.add("is-wrong");
         markDone(question, card, right);
       });
+
       li.appendChild(btn);
       list.appendChild(li);
     });
@@ -221,7 +294,7 @@
     const head = document.createElement("div");
     head.className = "item-head";
     head.innerHTML =
-      '<span class="item-src">' + question.exam + "회 " + question.number + "번</span>" +
+      '<span class="item-src">제' + question.exam + "회 " + question.number + "번</span>" +
       '<span class="item-unit">' + (unit ? unit.name : "") + " · " + question.points + "점</span>" +
       '<span class="item-mark">' + (mark === "right" ? "맞음" : mark === "wrong" ? "틀림" : "") + "</span>";
     li.appendChild(head);
@@ -233,11 +306,12 @@
     img.alt = "제" + question.exam + "회 기본 " + question.number + "번 문제";
     img.loading = "lazy";
     img.decoding = "async";
-    // 그림 원본 폭을 CSS에 알려 주어 그보다 크게 늘리지 않는다. 화면 배율(2배 화면)만큼은 나눠 준다.
+
     img.addEventListener("load", function () {
       const ratio = window.devicePixelRatio || 1;
       img.style.setProperty("--native-width", Math.round(img.naturalWidth / ratio) + "px");
     }, { once: true });
+
     fig.appendChild(img);
     li.appendChild(fig);
 
@@ -246,55 +320,103 @@
     return li;
   }
 
-  function updateCount() {
-    const shown = visibleQuestions();
-    const solved = shown.filter((q) => state.done[q.id]).length;
-    const wrong = shown.filter((q) => state.done[q.id] === "wrong").length;
+  function updateCount(items, renderedCount) {
+    if (!state.unit && !state.exam) {
+      els.count.textContent = `총 ${DATA.exams.length}회차 · ${DATA.questions.length}문항`;
+      return;
+    }
+    const solved = items.filter((q) => state.done[q.id]).length;
+    const wrong = items.filter((q) => state.done[q.id] === "wrong").length;
     els.count.textContent =
-      shown.length + "문항" +
+      items.length + "문항" +
       (solved ? " · 푼 것 " + solved : "") +
-      (wrong ? " · 틀린 것 " + wrong : "");
+      (wrong ? " · 틀린 것 " + wrong : "") +
+      (renderedCount < items.length ? ` (${renderedCount}/${items.length}개 표시 중)` : "");
   }
 
   function render() {
+    const isFilterSelected = Boolean(state.unit || state.exam);
     const items = visibleQuestions();
-    els.list.textContent = "";
-    items.forEach((q) => els.list.appendChild(buildCard(q)));
-    els.empty.hidden = items.length > 0;
-    updateCount();
-  }
 
-  /* ── 이어 붙이기 ── */
-  function chipHandler(box, key) {
-    box.addEventListener("click", function (ev) {
-      const btn = ev.target.closest(".chip");
-      if (!btn) return;
-      state[key] = btn.dataset.value;
-      box.querySelectorAll(".chip").forEach((b) => {
-        b.setAttribute("aria-pressed", b === btn ? "true" : "false");
-      });
-      render();
-      window.scrollTo({ top: 0 });
-    });
+    if (!isFilterSelected) {
+      els.list.textContent = "";
+      els.empty.hidden = true;
+      if (els.moreWrap) els.moreWrap.hidden = true;
+      updateCount([], 0);
+      return;
+    }
+
+    if (items.length === 0) {
+      els.list.textContent = "";
+      els.empty.hidden = false;
+      if (els.moreWrap) els.moreWrap.hidden = true;
+      updateCount([], 0);
+      return;
+    }
+
+    els.empty.hidden = true;
+
+    const toShow = items.slice(0, state.displayLimit);
+    els.list.textContent = "";
+    toShow.forEach((q) => els.list.appendChild(buildCard(q)));
+
+    if (els.moreWrap && els.btnMore) {
+      if (items.length > state.displayLimit) {
+        els.moreWrap.hidden = false;
+        const remain = items.length - state.displayLimit;
+        const nextChunk = Math.min(CHUNK_SIZE, remain);
+        els.btnMore.textContent = `더 보기 (${nextChunk}개 더 표시 · ${state.displayLimit}/${items.length})`;
+      } else {
+        els.moreWrap.hidden = true;
+      }
+    }
+
+    updateCount(items, toShow.length);
   }
 
   function start() {
     resolvePlayer();
     state.done = loadDone();
 
-    buildUnitChips();
+    buildUnitGrid();
     buildExamChips();
-    chipHandler(els.unitChips, "unit");
-    chipHandler(els.examChips, "exam");
+
+    if (els.btnMore) {
+      els.btnMore.addEventListener("click", function () {
+        const items = visibleQuestions();
+        const prevLimit = state.displayLimit;
+        state.displayLimit += CHUNK_SIZE;
+        const newItems = items.slice(prevLimit, state.displayLimit);
+
+        const frag = document.createDocumentFragment();
+        newItems.forEach((q) => frag.appendChild(buildCard(q)));
+        els.list.appendChild(frag);
+
+        if (items.length > state.displayLimit) {
+          els.moreWrap.hidden = false;
+          const remain = items.length - state.displayLimit;
+          const nextChunk = Math.min(CHUNK_SIZE, remain);
+          els.btnMore.textContent = `더 보기 (${nextChunk}개 더 표시 · ${state.displayLimit}/${items.length})`;
+        } else {
+          els.moreWrap.hidden = true;
+        }
+
+        updateCount(items, Math.min(state.displayLimit, items.length));
+      });
+    }
 
     els.hideDone.addEventListener("change", function () {
       state.hideDone = els.hideDone.checked;
+      state.displayLimit = CHUNK_SIZE;
       render();
     });
+
     els.onlyWrong.addEventListener("change", function () {
       state.onlyWrong = els.onlyWrong.checked;
+      state.displayLimit = CHUNK_SIZE;
       render();
     });
+
     els.reset.addEventListener("click", function () {
       if (!window.confirm("지금까지 푼 기록을 모두 지울까요?")) return;
       state.done = {};
@@ -305,5 +427,9 @@
     render();
   }
 
-  start();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start);
+  } else {
+    start();
+  }
 })();
