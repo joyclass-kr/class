@@ -214,6 +214,420 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🧂",
+        art: "cover.webp",
+        title: "The Wonderful Mortar",
+        intro: [
+            "The Wonderful Mortar is an old Korean tale with no known author. It is also told as The Wonderful Millstone or The Millstone That Made Salt.",
+            "It is an origin tale — it explains why the sea is salty. Almost the same story turns up in far-off countries, in Norse tales and in Japan.",
+            "A mortar was a hollowed block of wood or stone. Grain went in and was pounded with a pestle. Every house had one."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Mortar from the Mountain",
+            beats: [
+                {
+                    art: "01-mountain.webp",
+                    emoji: "🌫️",
+                    left: [
+                        "Long ago in a village there lived a poor woodcutter.",
+                        "Every day he shouldered his carrying frame and went up the mountain.",
+                        "That day he went deep into the hills as always, and for some reason not one dry branch caught his eye.",
+                        { t: "\"I need a good load today.\"", v: "man" }
+                    ],
+                    right: [
+                        "As the sun went down, an old man with a white beard came out of the mist.",
+                        "The woodcutter stepped back in surprise.",
+                        { t: "\"How many loads have you cut today?\"", v: "old" },
+                        { t: "\"Not one. If I go home like this my family goes hungry.\"", v: "man" },
+                        "He set down his empty frame and hung his head."
+                    ]
+                },
+                {
+                    art: "02-mortar.webp",
+                    emoji: "🪨",
+                    left: [
+                        "The old man drew a little stone mortar out of his coat and held it out.",
+                        "It was a grain mortar the size of a grown man's fist, worn smooth and shiny.",
+                        { t: "\"A hard case. Take this.\"", v: "old" },
+                        { t: "\"Name a thing and say come out, and out it comes.\"", v: "old" }
+                    ],
+                    right: [
+                        { t: "\"To stop it you say enough. Don't forget that.\"", v: "old" },
+                        "The old man pressed the mortar into the woodcutter's hand.",
+                        "The woodcutter looked up to thank him.",
+                        "The old man was already gone. There was only mist.",
+                        "He stood there a long while."
+                    ]
+                },
+                {
+                    art: "03-rice.webp",
+                    emoji: "🍚",
+                    left: [
+                        "At home the woodcutter set the mortar in the middle of the floor.",
+                        "His wife and children sat round it.",
+                        "He hardly dared believe it, and spoke carefully.",
+                        { t: "\"Surely nothing will happen.\"", v: "man" },
+                        { t: "\"Rice, come out.\"", v: "man" },
+                        "And white rice came pouring out of the mortar!"
+                    ],
+                    right: [
+                        "The whole floor was covered with rice.",
+                        { t: "\"Goodness — enough! Enough!\"", v: "man" },
+                        "The rice stopped at once.",
+                        "The woodcutter went straight out, called his neighbours in and shared the rice.",
+                        "For the first time in months, cooking smoke rose all over the village."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Thief Takes the Mortar",
+            beats: [
+                {
+                    art: "04-rumor.webp",
+                    emoji: "🗣️",
+                    left: [
+                        { t: "\"Rice comes out of that house's mortar!\"", v: "granny" },
+                        { t: "\"Anything you name, they say.\"", v: "man" },
+                        "At first nobody believed a word of it.",
+                        "But smoke rose from the woodcutter's chimney every single day.",
+                        "The story went round the village and on to the next one."
+                    ],
+                    right: [
+                        "A thief sitting in an inn heard it.",
+                        "He packed his things that very day.",
+                        { t: "'With that mortar I'd never work again.'", v: "man" },
+                        "He swallowed hard. From that night on he prowled outside the woodcutter's wall.",
+                        "Whenever a dog barked he ducked out of sight."
+                    ]
+                },
+                {
+                    art: "05-steal.webp",
+                    emoji: "🌙",
+                    left: [
+                        "It was a pitch-dark night with no moon.",
+                        "The whole family was fast asleep.",
+                        "The thief went over the wall. Softly, softly.",
+                        "The wooden floor creaked once.",
+                        "He slid the door open and there was the mortar.",
+                        "He dropped it in a sack, swung it on his back and ran."
+                    ],
+                    right: [
+                        { t: "\"Now I'm a rich man!\"", v: "man" },
+                        "He ran for the sea without once looking back.",
+                        "Stay on land, he thought, and they would catch him.",
+                        "He untied a small boat and rowed with all his strength.",
+                        "He rowed until the skin came off his palms."
+                    ]
+                },
+                {
+                    art: "06-salt.webp",
+                    emoji: "🧂",
+                    left: [
+                        "The boat was far out to sea.",
+                        "So far that the land had gone out of sight.",
+                        "The thief took out the mortar and thought hard.",
+                        { t: "'What shall I ask for? Rice is everywhere, it fetches nothing...'", v: "man" },
+                        "He set the mortar on his knees."
+                    ],
+                    right: [
+                        { t: "\"Salt! That's it! Salt is worth its weight in gold!\"", v: "man" },
+                        { t: "\"Salt, come out!\"", v: "man" },
+                        "White salt came pouring out of the mortar and heaped up in the bottom of the boat.",
+                        "The thief clapped his hands and jumped up and down.",
+                        "He even started counting it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Why the Sea Is Salty",
+            beats: [
+                {
+                    art: "07-more.webp",
+                    emoji: "😰",
+                    left: [
+                        "In no time the salt covered the whole boat white.",
+                        "It buried the thief's ankles.",
+                        { t: "\"Ha! That will do!\"", v: "man" },
+                        "But the salt did not stop. It poured and poured.",
+                        "Only then did he think something was wrong."
+                    ],
+                    right: [
+                        { t: "\"Stop! Halt! This is getting bad!\"", v: "man" },
+                        "He grabbed the mortar in both hands and shook it hard.",
+                        "He even tried to throw it into the sea.",
+                        "It was no use. He had stolen the thing without hearing the word that stops it.",
+                        "The salt came faster and faster."
+                    ]
+                },
+                {
+                    art: "08-sinking.webp",
+                    emoji: "🌊",
+                    left: [
+                        "The salt rose to his knees, then to his waist.",
+                        "The boat sat lower and lower.",
+                        "Then it began to tip.",
+                        "Black seawater came over the side.",
+                        "The thief scooped salt out with both hands."
+                    ],
+                    right: [
+                        { t: "\"Help! Somebody help me!\"", v: "man" },
+                        "A wave came over the side.",
+                        "He shouted until his throat tore.",
+                        "But out in the middle of the open sea there was nobody at all.",
+                        "The waves swallowed the sound."
+                    ]
+                },
+                {
+                    art: "09-plank.webp",
+                    emoji: "🪵",
+                    left: [
+                        "At last the boat slid under.",
+                        "The bow went into the water first.",
+                        "The thief just managed to catch hold of a floating plank.",
+                        "All night the waves pushed him this way and that.",
+                        "He held on to that plank for dear life."
+                    ],
+                    right: [
+                        "Only next morning did he reach land.",
+                        "He was salted all over and it stung.",
+                        "There was nothing left in his hands.",
+                        "The mortar, the boat, the salt — all of it was under the sea.",
+                        "Only then was he sorry for what he had done."
+                    ]
+                },
+                {
+                    art: "10-sea.webp",
+                    emoji: "🌊",
+                    left: [
+                        "The mortar sank deep, deep down.",
+                        "Nobody could ever bring it up again.",
+                        "And even down there it did not stop.",
+                        "Nobody had said enough to it.",
+                        "There was nobody down there at all."
+                    ],
+                    right: [
+                        "They say it is still making salt in the deep sea today.",
+                        "It does not know how to stop.",
+                        "Pour, pour, pour.",
+                        "And that, they say, is why the sea is salty."
+                    ]
+                }
+            ],
+            moral: "Get hold of a thing before you know how to use it, and the thing swallows you instead. The thief knew the words that started it and not the word that stopped it.",
+            question: "Have you ever rushed to get something you did not understand, and got into trouble?"
+        }
+    ],
+    quiz: [
+        { q: "Who gave the woodcutter the mortar?", choices: ["A rich neighbour", "An old man in the mountains", "The village magistrate"], answer: 1 },
+        { q: "What words made things come out of the mortar?", choices: ["Stop", "Turn", "Come out"], answer: 2 },
+        { q: "Where did the thief take the mortar?", choices: ["Out to sea in a boat", "Over the pass into the hills", "Across the river to the next village"], answer: 0 },
+        { q: "What did the thief ask the mortar for?", choices: ["Rice", "Gold", "Salt"], answer: 2 },
+        { q: "Why could the thief not stop the salt?", choices: ["He did not know the word", "The mortar was broken", "The waves were too strong"], answer: 0 },
+        { q: "What happened to the mortar after it sank?", choices: ["It floated off on a plank", "The thief brought it up", "It does not know how to stop"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The woodcutter called his neighbours in as soon as the rice came, so what you do with a gift shows who you are.",
+                "The thief never heard the stopping word, so stealing a thing means knowing only half of it.",
+                "They explained a salty sea with a story, so the old people put tales even on the biggest things.",
+                "The thief went to the woodcutter afterwards and paid for the mortar, so he was truly sorry."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "mortar", k: "절구", s: "The Wonderful Mortar" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "millstone", k: "맷돌", s: "It is also told as The Wonderful Millstone" },
+            { w: "an origin tale", k: "유래담", s: "It is an origin tale" },
+            { w: "explains (explain)", k: "설명한다", s: "it explains why the sea is salty" },
+            { w: "salty", k: "짠", s: "why the sea is salty" },
+            { w: "turns up (turn up)", k: "나타난다, 있다", s: "Almost the same story turns up in far-off countries" },
+            { w: "far-off", k: "아주 먼", s: "turns up in far-off countries" },
+            { w: "Norse", k: "북유럽의", s: "in Norse tales and in Japan" },
+            { w: "hollowed (hollow)", k: "파낸", s: "A mortar was a hollowed block of wood or stone." },
+            { w: "grain", k: "곡식", s: "Grain went in and was pounded with a pestle." },
+            { w: "was pounded (pound)", k: "찧었다", s: "Grain went in and was pounded with a pestle." },
+            { w: "pestle", k: "공이", s: "was pounded with a pestle" }
+        ],
+        "01-mountain.webp": [
+            { w: "woodcutter", k: "나무꾼", s: "there lived a poor woodcutter" },
+            { w: "shouldered (shoulder)", k: "어깨에 졌다", s: "he shouldered his carrying frame" },
+            { w: "carrying frame", k: "지게", s: "he shouldered his carrying frame and went up the mountain" },
+            { w: "deep into the hills", k: "깊은 산으로", s: "he went deep into the hills as always" },
+            { w: "as always", k: "그날도 여느 때처럼", s: "he went deep into the hills as always" },
+            { w: "for some reason", k: "웬일인지", s: "for some reason not one dry branch caught his eye" },
+            { w: "caught his eye (catch)", k: "눈에 띄었다", s: "not one dry branch caught his eye" },
+            { w: "a good load", k: "많은 나무 짐", s: "I need a good load today." },
+            { w: "came out of the mist", k: "안개 속에서 나타났다", s: "an old man with a white beard came out of the mist" },
+            { w: "stepped back (step)", k: "뒤로 물러섰다", s: "The woodcutter stepped back in surprise." },
+            { w: "goes hungry", k: "굶는다", s: "If I go home like this my family goes hungry." },
+            { w: "hung his head (hang)", k: "고개를 숙였다", s: "He set down his empty frame and hung his head." }
+        ],
+        "02-mortar.webp": [
+            { w: "drew ~ out of (draw)", k: "~에서 꺼냈다", s: "The old man drew a little stone mortar out of his coat" },
+            { w: "held it out (hold out)", k: "내밀었다", s: "drew a little stone mortar out of his coat and held it out" },
+            { w: "the size of ~", k: "~만 한 크기", s: "a grain mortar the size of a grown man's fist" },
+            { w: "fist", k: "주먹", s: "the size of a grown man's fist" },
+            { w: "worn smooth (wear)", k: "닳아 반들반들한", s: "worn smooth and shiny" },
+            { w: "A hard case.", k: "딱하구먼.", s: "A hard case. Take this." },
+            { w: "Name a thing", k: "이름을 부르다", s: "Name a thing and say come out, and out it comes." },
+            { w: "out it comes", k: "그대로 나온다", s: "Name a thing and say come out, and out it comes." },
+            { w: "To stop it", k: "멈출 때는", s: "To stop it you say enough." },
+            { w: "pressed ~ into (press)", k: "쥐여 주었다", s: "The old man pressed the mortar into the woodcutter's hand." },
+            { w: "was already gone", k: "이미 사라지고 없었다", s: "The old man was already gone." },
+            { w: "a long while", k: "한참 동안", s: "He stood there a long while." }
+        ],
+        "03-rice.webp": [
+            { w: "set ~ in the middle of (set)", k: "한가운데 놓았다", s: "the woodcutter set the mortar in the middle of the floor" },
+            { w: "sat round it", k: "둘러앉았다", s: "His wife and children sat round it." },
+            { w: "hardly dared believe (dare)", k: "정말일까 싶었다", s: "He hardly dared believe it, and spoke carefully." },
+            { w: "Surely nothing will happen.", k: "설마 정말 나올까.", s: "Surely nothing will happen." },
+            { w: "came pouring out (pour)", k: "콸콸 쏟아져 나왔다", s: "And white rice came pouring out of the mortar!" },
+            { w: "was covered with ~", k: "~으로 덮였다", s: "The whole floor was covered with rice." },
+            { w: "at once", k: "딱, 곧바로", s: "The rice stopped at once." },
+            { w: "went straight out", k: "그 길로 나갔다", s: "The woodcutter went straight out, called his neighbours in" },
+            { w: "shared (share)", k: "나누어 주었다", s: "called his neighbours in and shared the rice" },
+            { w: "cooking smoke", k: "밥 짓는 연기", s: "cooking smoke rose all over the village" },
+            { w: "for the first time in months", k: "오랜만에", s: "For the first time in months, cooking smoke rose" }
+        ],
+        "04-rumor.webp": [
+            { w: "Anything you name", k: "부르기만 하면 뭐든", s: "Anything you name, they say." },
+            { w: "not a word of it", k: "한마디도", s: "At first nobody believed a word of it." },
+            { w: "chimney", k: "굴뚝", s: "smoke rose from the woodcutter's chimney every single day" },
+            { w: "every single day", k: "날마다", s: "smoke rose from the woodcutter's chimney every single day" },
+            { w: "went round (go round)", k: "쫙 퍼졌다", s: "The story went round the village and on to the next one." },
+            { w: "packed his things", k: "짐을 쌌다", s: "He packed his things that very day." },
+            { w: "that very day", k: "그날로", s: "He packed his things that very day." },
+            { w: "I'd never work again", k: "평생 놀고먹겠다", s: "With that mortar I'd never work again." },
+            { w: "swallowed hard", k: "침을 꿀꺽 삼켰다", s: "He swallowed hard." },
+            { w: "prowled (prowl)", k: "어슬렁거렸다", s: "he prowled outside the woodcutter's wall" },
+            { w: "ducked out of sight", k: "얼른 몸을 숨겼다", s: "Whenever a dog barked he ducked out of sight." }
+        ],
+        "05-steal.webp": [
+            { w: "pitch-dark", k: "캄캄한", s: "It was a pitch-dark night with no moon." },
+            { w: "fast asleep", k: "깊이 잠든", s: "The whole family was fast asleep." },
+            { w: "went over the wall", k: "담을 넘었다", s: "The thief went over the wall." },
+            { w: "Softly, softly.", k: "살금살금.", s: "Softly, softly." },
+            { w: "creaked (creak)", k: "삐걱 소리를 냈다", s: "The wooden floor creaked once." },
+            { w: "slid ~ open (slide)", k: "슬며시 열었다", s: "He slid the door open and there was the mortar." },
+            { w: "sack", k: "자루", s: "He dropped it in a sack" },
+            { w: "swung ~ on his back (swing)", k: "등에 졌다", s: "swung it on his back and ran" },
+            { w: "without once looking back", k: "뒤도 안 돌아보고", s: "He ran for the sea without once looking back." },
+            { w: "untied (untie)", k: "풀었다", s: "He untied a small boat" },
+            { w: "with all his strength", k: "힘껏", s: "rowed with all his strength" },
+            { w: "the skin came off", k: "살갗이 벗겨졌다", s: "He rowed until the skin came off his palms." }
+        ],
+        "06-salt.webp": [
+            { w: "far out to sea", k: "먼바다에", s: "The boat was far out to sea." },
+            { w: "out of sight", k: "보이지 않는", s: "So far that the land had gone out of sight." },
+            { w: "thought hard", k: "한참 궁리했다", s: "The thief took out the mortar and thought hard." },
+            { w: "What shall I ask for?", k: "무엇을 달라고 할까?", s: "What shall I ask for?" },
+            { w: "fetches nothing (fetch)", k: "값이 안 나간다", s: "Rice is everywhere, it fetches nothing" },
+            { w: "That's it!", k: "옳지!", s: "Salt! That's it!" },
+            { w: "worth its weight in gold", k: "금값인", s: "Salt is worth its weight in gold!" },
+            { w: "heaped up (heap)", k: "소복이 쌓였다", s: "White salt came pouring out and heaped up in the bottom of the boat" },
+            { w: "clapped his hands", k: "손뼉을 쳤다", s: "The thief clapped his hands and jumped up and down." },
+            { w: "counting (count)", k: "세는", s: "He even started counting it." }
+        ],
+        "07-more.webp": [
+            { w: "in no time", k: "금세", s: "In no time the salt covered the whole boat white." },
+            { w: "buried (bury)", k: "묻었다", s: "It buried the thief's ankles." },
+            { w: "ankles", k: "발목", s: "It buried the thief's ankles." },
+            { w: "That will do!", k: "이만하면 됐다!", s: "Ha! That will do!" },
+            { w: "poured and poured", k: "쏟아지고 또 쏟아졌다", s: "But the salt did not stop. It poured and poured." },
+            { w: "Only then did he ~", k: "그제야 ~했다", s: "Only then did he think something was wrong." },
+            { w: "Halt!", k: "서라!", s: "Stop! Halt! This is getting bad!" },
+            { w: "shook ~ hard (shake)", k: "마구 흔들었다", s: "He grabbed the mortar in both hands and shook it hard." },
+            { w: "It was no use.", k: "아무 소용이 없었다.", s: "It was no use." },
+            { w: "faster and faster", k: "점점 더 빨리", s: "The salt came faster and faster." }
+        ],
+        "08-sinking.webp": [
+            { w: "rose to ~ (rise)", k: "~까지 차올랐다", s: "The salt rose to his knees, then to his waist." },
+            { w: "sat lower (sit)", k: "점점 낮아졌다", s: "The boat sat lower and lower." },
+            { w: "tip", k: "기울다", s: "Then it began to tip." },
+            { w: "came over the side", k: "뱃전으로 넘어 들어왔다", s: "Black seawater came over the side." },
+            { w: "scooped ~ out (scoop)", k: "퍼냈다", s: "The thief scooped salt out with both hands." },
+            { w: "until his throat tore", k: "목이 터져라", s: "He shouted until his throat tore." },
+            { w: "the open sea", k: "먼바다", s: "out in the middle of the open sea there was nobody at all" },
+            { w: "swallowed the sound", k: "소리를 묻어 버렸다", s: "The waves swallowed the sound." }
+        ],
+        "09-plank.webp": [
+            { w: "slid under (slide)", k: "가라앉았다", s: "At last the boat slid under." },
+            { w: "bow", k: "뱃머리", s: "The bow went into the water first." },
+            { w: "just managed to ~", k: "겨우 ~했다", s: "The thief just managed to catch hold of a floating plank." },
+            { w: "catch hold of ~", k: "붙잡다", s: "just managed to catch hold of a floating plank" },
+            { w: "plank", k: "널빤지", s: "catch hold of a floating plank" },
+            { w: "this way and that", k: "이리저리", s: "All night the waves pushed him this way and that." },
+            { w: "for dear life", k: "죽을힘을 다해", s: "He held on to that plank for dear life." },
+            { w: "reach land", k: "뭍에 닿다", s: "Only next morning did he reach land." },
+            { w: "salted all over", k: "온몸이 소금에 절은", s: "He was salted all over and it stung." },
+            { w: "stung (sting)", k: "쓰라렸다", s: "He was salted all over and it stung." },
+            { w: "was sorry for ~", k: "~을 뉘우쳤다", s: "Only then was he sorry for what he had done." }
+        ],
+        "10-sea.webp": [
+            { w: "sank (sink)", k: "가라앉았다", s: "The mortar sank deep, deep down." },
+            { w: "bring it up", k: "건져 올리다", s: "Nobody could ever bring it up again." },
+            { w: "even down there", k: "그 아래에서도", s: "And even down there it did not stop." },
+            { w: "had said enough", k: "그만이라고 말했다", s: "Nobody had said enough to it." },
+            { w: "nobody at all", k: "아무도 없는", s: "There was nobody down there at all." },
+            { w: "They say ~", k: "~라고 한다", s: "They say it is still making salt in the deep sea today." },
+            { w: "does not know how to ~", k: "~할 줄을 모른다", s: "It does not know how to stop." },
+            { w: "Pour, pour", k: "콸콸", s: "Pour, pour, pour." },
+            { w: "that is why ~", k: "그 때문이다", s: "And that, they say, is why the sea is salty." }
+        ],
+        "after": [
+            { w: "In the Norse version", k: "북유럽 판본에서는", s: "In the Norse version it is a millstone, not a mortar." },
+            { w: "grinding (grind)", k: "갈고 있는", s: "and it is still down there grinding" },
+            { w: "which means ~", k: "~라는 뜻이다", s: "which means nobody has learned the stopping word yet" },
+            { w: "the stopping word", k: "멈추는 말", s: "nobody has learned the stopping word yet" },
+            { w: "on their own", k: "따로따로", s: "The stories did not appear on their own in places far apart." },
+            { w: "far apart", k: "서로 멀리 떨어진", s: "in places far apart" },
+            { w: "hand to hand", k: "사람에게서 사람에게로", s: "They travelled hand to hand for a very long time." },
+            { w: "the first thing ~ did", k: "처음 한 일", s: "The first thing the woodcutter did was share the rice." },
+            { w: "the same object", k: "같은 물건", s: "Two men had the same object and did different things first." },
+            { w: "swallows you instead", k: "도리어 나를 삼킨다", s: "the thing swallows you instead" },
+            { w: "get hold of ~", k: "손에 넣다", s: "Get hold of a thing before you know how to use it" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🧂',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "In the Norse version it is a millstone, not a mortar, and it is still down there grinding — which means nobody has learned the stopping word yet.",
+                    "The stories did not appear on their own in places far apart. They travelled hand to hand for a very long time.",
+                    "The first thing the woodcutter did was share the rice with his neighbours. Two men had the same object and did different things first."
+                ],
+                right: [
+                    "Get hold of a thing before you know how to use it, and the thing swallows you instead. The thief knew the words that started it and not the word that stopped it.",
+                    "Have you ever rushed to get something you did not understand, and got into trouble?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "나무꾼은 절구를 누구에게 받았나요?", choices: ["이웃 부자", "산속의 노인", "마을 원님"], answer: 1 },
     { q: "절구에서 물건이 나오게 하는 말은 무엇이었나요?", choices: ["멈춰라", "돌아라", "나와라"], answer: 2 },

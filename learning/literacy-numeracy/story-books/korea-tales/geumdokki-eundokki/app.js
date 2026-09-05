@@ -202,6 +202,404 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🪓",
+        art: "cover.webp",
+        title: "The Gold Axe and the Silver Axe",
+        intro: [
+            "Nearly everyone in Korea knows this story. Its root, though, is not Korean — it comes from Aesop.",
+            "In Aesop it is called The Woodcutter and Hermes, and the axe falls into a river, not a pond.",
+            "It first appeared in Korea in a school reader in 1906. The mountain spirit, in white beard and white robes, came later."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Splash! The Axe Is Gone",
+            beats: [
+                {
+                    art: "01-woodcutter.webp",
+                    emoji: "🪓",
+                    left: [
+                        "Long ago in the hills there lived a poor woodcutter.",
+                        "All he owned was a carrying frame and one worn iron axe.",
+                        "His wife and two small children lived on what that axe could earn.",
+                        "He went up at dawn and came down after sunset."
+                    ],
+                    right: [
+                        { t: "\"This axe feeds my family.\"", v: "man" },
+                        "He cared for it as if it were part of him. Every night he ground the blade on a whetstone.",
+                        "A blunt blade will not bring a tree down.",
+                        "The sound went on late into the night. Scrape, scrape."
+                    ]
+                },
+                {
+                    art: "02-splash.webp",
+                    emoji: "💦",
+                    left: [
+                        "That day he was cutting a tree beside a pond.",
+                        "It was a great thick tree and it would not come down.",
+                        "Thock! Thock!",
+                        "Sweat ran off his forehead with every swing, and the handle kept slipping.",
+                        "Still he did not stop."
+                    ],
+                    right: [
+                        "Then the wet handle slipped right out of his hands. The axe flew up into the air.",
+                        "Splash!",
+                        "Water leapt high on every side.",
+                        "The axe sank into the middle of the deep pond.",
+                        { t: "\"Oh no! My axe!\"", v: "man" }
+                    ]
+                },
+                {
+                    art: "03-cry.webp",
+                    emoji: "😭",
+                    left: [
+                        "The woodcutter dropped down at the water's edge. The pond was so deep you could not see the bottom.",
+                        "He did not dare swim down into it.",
+                        "He stared into the water for a long time.",
+                        { t: "\"Without that axe, what will my family eat?\"", v: "man" }
+                    ],
+                    right: [
+                        "He put his face on his knees and sobbed. His children's faces floated up in front of him.",
+                        "He could not go home empty-handed.",
+                        "Meanwhile the sun sank lower and lower.",
+                        "Still he could not get to his feet."
+                    ]
+                },
+                {
+                    art: "04-spirit.webp",
+                    emoji: "✨",
+                    left: [
+                        "And then it happened.",
+                        "The middle of the pond grew bright and the water slid apart. A white light rose out of the gap.",
+                        "An old man in white robes with a white beard stood up on the water.",
+                        "The light was so strong the woodcutter covered his face."
+                    ],
+                    right: [
+                        { t: "\"What makes you weep so bitterly?\"", v: "old" },
+                        "The voice rolled round the whole mountain.",
+                        "The woodcutter rubbed his eyes and rubbed them again.",
+                        "It was no dream. It was the spirit of the mountain.",
+                        "He threw himself flat on the bank."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Is This Your Axe?",
+            beats: [
+                {
+                    art: "05-gold.webp",
+                    emoji: "🥇",
+                    left: [
+                        "The spirit reached into the water and brought up an axe. A gold axe, blazing bright.",
+                        "The darkening pond went light again all at once.",
+                        "Gold seemed to be dripping off the blade.",
+                        "The woodcutter had never seen such a thing."
+                    ],
+                    right: [
+                        { t: "\"Is this your axe?\"", v: "old" },
+                        "The spirit held the gold axe out in front of him. The woodcutter looked straight at it.",
+                        { t: "\"No. It is not mine.\"", v: "man" },
+                        "He shook his head at once.",
+                        "He did not hesitate for a moment."
+                    ]
+                },
+                {
+                    art: "06-silver.webp",
+                    emoji: "🥈",
+                    left: [
+                        "The spirit reached in again and brought up a silver axe. It shone white as moonlight.",
+                        "Even the handle was wound with fine silver thread.",
+                        { t: "\"Then is this one yours?\"", v: "old" },
+                        "It was an axe he had never seen in his life."
+                    ],
+                    right: [
+                        { t: "\"That is not mine either. My axe is an iron one.\"", v: "man" },
+                        "He shook his head a second time. His voice did not waver at all.",
+                        "The spirit looked closely at his face.",
+                        "The woodcutter did not look away."
+                    ]
+                },
+                {
+                    art: "07-iron.webp",
+                    emoji: "🪓",
+                    left: [
+                        "The spirit reached in a third time. What came up was neither gold nor silver.",
+                        "It was a worn iron axe with a blunt blade and a handle rubbed shiny.",
+                        "It was notched here and there and not worth looking at.",
+                        "And the woodcutter's whole face lit up."
+                    ],
+                    right: [
+                        { t: "\"Yes! That's it! That's my axe!\"", v: "man" },
+                        "He shouted before he could stop himself, and jumped up and down with both hands out.",
+                        "He was as pleased as a child.",
+                        "It was quite a different face from the one he wore at the gold axe."
+                    ]
+                },
+                {
+                    art: "08-reward.webp",
+                    emoji: "🎁",
+                    left: [
+                        "At that the spirit burst out laughing.",
+                        "He laughed a long time, hard enough to shake his white beard.",
+                        { t: "\"Gold and silver in front of him, and he asks for his own.\"", v: "old" },
+                        { t: "\"That is a rare thing these days.\"", v: "old" },
+                        { t: "\"So take all three axes with you.\"", v: "old" }
+                    ],
+                    right: [
+                        "The spirit held out all three.",
+                        { t: "\"What? This iron one is all I need!\"", v: "man" },
+                        "The woodcutter waved his hands.",
+                        { t: "\"That is exactly why I am giving them.\"", v: "old" },
+                        "The spirit said only that and vanished. The woodcutter was a rich man that day."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Man Who Copied Him",
+            beats: [
+                {
+                    art: "09-copy.webp",
+                    emoji: "😏",
+                    left: [
+                        "A greedy neighbour heard the story.",
+                        { t: "\"All you do is drop an axe in the pond?\"", v: "man" },
+                        "He lay awake all night working it out. Next day he ran to the pond with his own axe.",
+                        "Then he threw it as hard as he could into the middle of the water."
+                    ],
+                    right: [
+                        { t: "\"Oh, my axe! My axe! Boo-hoo!\"", v: "man" },
+                        "He even squeezed out some tears. But his crying sounded so unlike crying.",
+                        "Now and then he glanced sideways at the pond while he wept.",
+                        "Still, he kept it up for a good long time."
+                    ]
+                },
+                {
+                    art: "10-greedy.webp",
+                    emoji: "💨",
+                    left: [
+                        "And the water really did slide apart, and the spirit really did come. He held up a gold axe and asked.",
+                        "The greedy man cheered inside.",
+                        { t: "\"Is this your axe?\"", v: "old" },
+                        { t: "\"Yes! That's the one! That is mine!\"", v: "man" },
+                        "The answer came far too fast."
+                    ],
+                    right: [
+                        { t: "\"You know it is not yours, and still you say so.\"", v: "old" },
+                        "The spirit looked down at him for a long moment. Then he put the gold axe back in the water and faded away.",
+                        "The greedy man never found even the axe he had thrown in.",
+                        "He trudged home with nothing at all."
+                    ]
+                }
+            ],
+            moral: "The woodcutter turned down the gold axe, and not because he wanted nothing. Of course a poor man wants a gold axe. He simply could not call a thing his own when it was not.",
+            question: "Have you ever wanted something you knew was not yours?"
+        }
+    ],
+    quiz: [
+        { q: "What did the woodcutter drop in the pond?", choices: ["A carrying frame", "A worn iron axe", "A whetstone"], answer: 1 },
+        { q: "What did the woodcutter do every night?", choices: ["Mended his carrying frame", "Ground his axe on a whetstone", "Went out to the pond"], answer: 1 },
+        { q: "What did the spirit hold out first?", choices: ["The gold axe", "The silver axe", "The iron axe"], answer: 0 },
+        { q: "Which axe did the woodcutter say was his?", choices: ["The gold one", "The silver one", "The iron one"], answer: 2 },
+        { q: "What did the spirit give the woodcutter?", choices: ["All three axes", "Only the gold axe", "Only his iron axe back"], answer: 0 },
+        { q: "What did the greedy man do?", choices: ["Stole the woodcutter's gold axe", "Dropped his axe in on purpose", "Went looking for the spirit"], answer: 1 },
+        { q: "What did the spirit say to the greedy man?", choices: ["That is a rare thing these days", "You know it is not yours", "Take all three with you"], answer: 1 },
+        { q: "What happened to the greedy man?", choices: ["He took the gold axe home", "The spirit scolded him", "He lost his own axe too"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "His face only lit up at the battered iron axe, so you can see on someone's face what is really theirs.",
+                "The greedy man's crying sounded wrong, so a put-on feeling shows somewhere.",
+                "He ground that axe every night, so you can tell what kind of axe it was to him.",
+                "The woodcutter bowed low the moment he was given three axes, so gratitude came before surprise."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "axe", k: "도끼", s: "The Gold Axe and the Silver Axe" },
+            { w: "nearly everyone", k: "거의 모든 사람", s: "Nearly everyone in Korea knows this story." },
+            { w: "root", k: "뿌리", s: "Its root, though, is not Korean" },
+            { w: "though", k: "그런데, 그렇지만", s: "Its root, though, is not Korean" },
+            { w: "it comes from ~", k: "~에서 왔다", s: "it comes from Aesop" },
+            { w: "woodcutter", k: "나무꾼", s: "In Aesop it is called The Woodcutter and Hermes" },
+            { w: "school reader", k: "교과서", s: "It first appeared in Korea in a school reader in 1906." },
+            { w: "first appeared (appear)", k: "처음 실렸다", s: "It first appeared in Korea in a school reader in 1906." },
+            { w: "mountain spirit", k: "산신령", s: "The mountain spirit, in white beard and white robes, came later." },
+            { w: "robes", k: "옷, 겉옷", s: "in white beard and white robes" },
+            { w: "came later", k: "그 뒤의 일이다", s: "The mountain spirit ... came later." }
+        ],
+        "01-woodcutter.webp": [
+            { w: "in the hills", k: "산골에", s: "Long ago in the hills there lived a poor woodcutter." },
+            { w: "All he owned was ~", k: "가진 것이라고는 ~뿐", s: "All he owned was a carrying frame and one worn iron axe." },
+            { w: "carrying frame", k: "지게", s: "a carrying frame and one worn iron axe" },
+            { w: "worn (wear)", k: "낡은", s: "one worn iron axe" },
+            { w: "lived on ~", k: "~에 기대어 살았다", s: "His wife and two small children lived on what that axe could earn." },
+            { w: "earn", k: "벌다", s: "lived on what that axe could earn" },
+            { w: "at dawn", k: "새벽에", s: "He went up at dawn and came down after sunset." },
+            { w: "feeds (feed)", k: "먹여 살린다", s: "This axe feeds my family." },
+            { w: "as if it were part of him", k: "제 몸처럼", s: "He cared for it as if it were part of him." },
+            { w: "ground (grind)", k: "갈았다", s: "Every night he ground the blade on a whetstone." },
+            { w: "blade", k: "날", s: "he ground the blade on a whetstone" },
+            { w: "whetstone", k: "숫돌", s: "he ground the blade on a whetstone" },
+            { w: "blunt", k: "무딘", s: "A blunt blade will not bring a tree down." }
+        ],
+        "02-splash.webp": [
+            { w: "beside a pond", k: "연못가에서", s: "he was cutting a tree beside a pond" },
+            { w: "would not come down", k: "좀처럼 안 넘어갔다", s: "It was a great thick tree and it would not come down." },
+            { w: "Thock!", k: "팍!", s: "Thock! Thock!" },
+            { w: "ran off ~ (run off)", k: "~에서 흘러내렸다", s: "Sweat ran off his forehead with every swing" },
+            { w: "swing", k: "도끼질", s: "Sweat ran off his forehead with every swing" },
+            { w: "kept slipping", k: "자꾸 미끄러졌다", s: "the handle kept slipping" },
+            { w: "handle", k: "손잡이", s: "the handle kept slipping" },
+            { w: "right out of his hands", k: "손에서 쭉", s: "the wet handle slipped right out of his hands" },
+            { w: "Splash!", k: "풍덩!", s: "Splash!" },
+            { w: "leapt (leap)", k: "튀어 올랐다", s: "Water leapt high on every side." },
+            { w: "sank (sink)", k: "가라앉았다", s: "The axe sank into the middle of the deep pond." }
+        ],
+        "03-cry.webp": [
+            { w: "dropped down (drop)", k: "털썩 주저앉았다", s: "The woodcutter dropped down at the water's edge." },
+            { w: "the water's edge", k: "물가", s: "dropped down at the water's edge" },
+            { w: "the bottom", k: "바닥", s: "so deep you could not see the bottom" },
+            { w: "did not dare ~ (dare)", k: "엄두가 안 났다", s: "He did not dare swim down into it." },
+            { w: "stared into ~ (stare)", k: "들여다보았다", s: "He stared into the water for a long time." },
+            { w: "sobbed (sob)", k: "엉엉 울었다", s: "He put his face on his knees and sobbed." },
+            { w: "floated up (float)", k: "아른거렸다", s: "His children's faces floated up in front of him." },
+            { w: "empty-handed", k: "빈손으로", s: "He could not go home empty-handed." },
+            { w: "meanwhile", k: "그러는 사이", s: "Meanwhile the sun sank lower and lower." },
+            { w: "get to his feet", k: "일어서다", s: "Still he could not get to his feet." }
+        ],
+        "04-spirit.webp": [
+            { w: "grew bright (grow)", k: "환해졌다", s: "The middle of the pond grew bright" },
+            { w: "slid apart (slide)", k: "스르르 갈라졌다", s: "the water slid apart" },
+            { w: "gap", k: "갈라진 틈", s: "A white light rose out of the gap." },
+            { w: "stood up on the water", k: "물 위로 올라섰다", s: "An old man in white robes ... stood up on the water." },
+            { w: "covered his face", k: "얼굴을 가렸다", s: "The light was so strong the woodcutter covered his face." },
+            { w: "weep (weep)", k: "울다", s: "What makes you weep so bitterly?" },
+            { w: "bitterly", k: "서럽게", s: "What makes you weep so bitterly?" },
+            { w: "rolled round ~ (roll)", k: "우렁우렁 울렸다", s: "The voice rolled round the whole mountain." },
+            { w: "It was no dream.", k: "꿈이 아니었다.", s: "It was no dream." },
+            { w: "threw himself flat (throw)", k: "넙죽 엎드렸다", s: "He threw himself flat on the bank." }
+        ],
+        "05-gold.webp": [
+            { w: "reached into ~ (reach)", k: "손을 넣었다", s: "The spirit reached into the water" },
+            { w: "brought up (bring)", k: "꺼냈다", s: "The spirit reached into the water and brought up an axe." },
+            { w: "blazing bright", k: "번쩍번쩍하는", s: "A gold axe, blazing bright." },
+            { w: "all at once", k: "대번에", s: "The darkening pond went light again all at once." },
+            { w: "dripping off ~ (drip)", k: "뚝뚝 떨어지는", s: "Gold seemed to be dripping off the blade." },
+            { w: "such a thing", k: "그런 것", s: "The woodcutter had never seen such a thing." },
+            { w: "held ~ out (hold out)", k: "내밀었다", s: "The spirit held the gold axe out in front of him." },
+            { w: "looked straight at ~", k: "빤히 들여다보았다", s: "The woodcutter looked straight at it." },
+            { w: "shook his head (shake)", k: "고개를 저었다", s: "He shook his head at once." },
+            { w: "hesitate", k: "망설이다", s: "He did not hesitate for a moment." }
+        ],
+        "06-silver.webp": [
+            { w: "shone (shine)", k: "빛났다", s: "It shone white as moonlight." },
+            { w: "white as moonlight", k: "달빛처럼 하얗게", s: "It shone white as moonlight." },
+            { w: "was wound with ~ (wind)", k: "~이 감겨 있었다", s: "Even the handle was wound with fine silver thread." },
+            { w: "thread", k: "실", s: "wound with fine silver thread" },
+            { w: "in his life", k: "평생", s: "It was an axe he had never seen in his life." },
+            { w: "not mine either", k: "그것도 제 것이 아니다", s: "That is not mine either." },
+            { w: "a second time", k: "또 한 번", s: "He shook his head a second time." },
+            { w: "waver", k: "흔들리다", s: "His voice did not waver at all." },
+            { w: "looked closely at ~", k: "가만히 살폈다", s: "The spirit looked closely at his face." },
+            { w: "look away", k: "눈을 피하다", s: "The woodcutter did not look away." }
+        ],
+        "07-iron.webp": [
+            { w: "a third time", k: "세 번째로", s: "The spirit reached in a third time." },
+            { w: "neither ~ nor ~", k: "~도 ~도 아닌", s: "What came up was neither gold nor silver." },
+            { w: "rubbed shiny", k: "반들반들해진", s: "a handle rubbed shiny" },
+            { w: "notched (notch)", k: "이가 빠진", s: "It was notched here and there" },
+            { w: "not worth looking at", k: "볼품없는", s: "not worth looking at" },
+            { w: "lit up (light up)", k: "환해졌다", s: "And the woodcutter's whole face lit up." },
+            { w: "before he could stop himself", k: "저도 모르게", s: "He shouted before he could stop himself" },
+            { w: "as pleased as a child", k: "아이처럼 좋아서", s: "He was as pleased as a child." },
+            { w: "quite a different face", k: "아주 다른 얼굴", s: "It was quite a different face from the one he wore at the gold axe." }
+        ],
+        "08-reward.webp": [
+            { w: "burst out laughing (burst)", k: "껄껄 웃고 말았다", s: "At that the spirit burst out laughing." },
+            { w: "hard enough to ~", k: "~할 만큼 크게", s: "He laughed a long time, hard enough to shake his white beard." },
+            { w: "asks for his own", k: "제 것만 찾는다", s: "Gold and silver in front of him, and he asks for his own." },
+            { w: "a rare thing", k: "드문 일", s: "That is a rare thing these days." },
+            { w: "these days", k: "요즘 세상에", s: "That is a rare thing these days." },
+            { w: "all I need", k: "저는 이것이면 된다", s: "This iron one is all I need!" },
+            { w: "waved his hands (wave)", k: "손사래를 쳤다", s: "The woodcutter waved his hands." },
+            { w: "That is exactly why ~", k: "그러니 ~하는 것이다", s: "That is exactly why I am giving them." },
+            { w: "vanished (vanish)", k: "사라졌다", s: "The spirit said only that and vanished." }
+        ],
+        "09-copy.webp": [
+            { w: "greedy", k: "욕심 많은", s: "A greedy neighbour heard the story." },
+            { w: "All you do is ~", k: "~하기만 하면 된다", s: "All you do is drop an axe in the pond?" },
+            { w: "lay awake (lie)", k: "잠도 자지 않았다", s: "He lay awake all night working it out." },
+            { w: "working it out", k: "궁리하며", s: "He lay awake all night working it out." },
+            { w: "as hard as he could", k: "있는 힘껏", s: "he threw it as hard as he could into the middle of the water" },
+            { w: "Boo-hoo!", k: "엉엉!", s: "Oh, my axe! My axe! Boo-hoo!" },
+            { w: "squeezed out (squeeze)", k: "짜냈다", s: "He even squeezed out some tears." },
+            { w: "so unlike ~", k: "~같지 않은", s: "But his crying sounded so unlike crying." },
+            { w: "glanced sideways (glance)", k: "곁눈질했다", s: "Now and then he glanced sideways at the pond" },
+            { w: "kept it up (keep up)", k: "계속했다", s: "Still, he kept it up for a good long time." }
+        ],
+        "10-greedy.webp": [
+            { w: "really did ~", k: "정말로 ~했다", s: "And the water really did slide apart" },
+            { w: "cheered inside", k: "속으로 좋아했다", s: "The greedy man cheered inside." },
+            { w: "That's the one!", k: "바로 그겁니다!", s: "Yes! That's the one!" },
+            { w: "far too fast", k: "너무 빨리", s: "The answer came far too fast." },
+            { w: "and still you say so", k: "그런데도 그렇게 말한다", s: "You know it is not yours, and still you say so." },
+            { w: "looked down at ~", k: "내려다보았다", s: "The spirit looked down at him for a long moment." },
+            { w: "faded away (fade)", k: "스르르 사라졌다", s: "Then he put the gold axe back in the water and faded away." },
+            { w: "never found even ~", k: "~마저 찾지 못했다", s: "The greedy man never found even the axe he had thrown in." },
+            { w: "trudged (trudge)", k: "터덜터덜 걸었다", s: "He trudged home with nothing at all." }
+        ],
+        "after": [
+            { w: "collected (collect)", k: "모았다", s: "the same story is among the ones Aesop collected in Greece" },
+            { w: "more than two thousand years ago", k: "이천 년도 더 전에", s: "more than two thousand years ago" },
+            { w: "in the place of ~", k: "~ 자리에", s: "There a god called Hermes stands in the place of the mountain spirit." },
+            { w: "crossing (cross)", k: "건너오면서", s: "Crossing from country to country over a very long time" },
+            { w: "turned into ~", k: "~으로 바뀌었다", s: "the god turned into a mountain spirit and the river into a pond" },
+            { w: "change into the clothes of ~", k: "~의 옷으로 갈아입다", s: "Stories travel like this and change into the clothes of the land." },
+            { w: "what he lost", k: "그가 잃은 것", s: "Look again at what the greedy man lost." },
+            { w: "not only ~ but also", k: "~뿐 아니라", s: "He not only failed to get a gold axe but also lost his own." },
+            { w: "set out to ~", k: "~하러 나섰다", s: "He set out to gain and let go of what he had." },
+            { w: "turned down ~ (turn down)", k: "마다했다", s: "The woodcutter turned down the gold axe" },
+            { w: "Of course ~", k: "왜 아니겠는가", s: "Of course a poor man wants a gold axe." },
+            { w: "call ~ his own", k: "제 것이라고 하다", s: "He simply could not call a thing his own when it was not." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🪓',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "The root of this story is not ours. The same story is among the ones Aesop collected in Greece more than two thousand years ago. There a god called Hermes stands in the place of the mountain spirit.",
+                    "Crossing from country to country over a very long time, the god turned into a mountain spirit and the river into a pond. Stories travel like this and change into the clothes of the land.",
+                    "Look again at what the greedy man lost. He not only failed to get a gold axe but also lost his own. He set out to gain and let go of what he had."
+                ],
+                right: [
+                    "The woodcutter turned down the gold axe, and not because he wanted nothing. Of course a poor man wants a gold axe. He simply could not call a thing his own when it was not.",
+                    "Have you ever wanted something you knew was not yours?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "나무꾼이 연못에 빠뜨린 것은 무엇인가요?", choices: ["지게 하나", "낡은 쇠도끼", "숫돌 한 덩이"], answer: 1 },
     { q: "나무꾼은 밤마다 무엇을 했나요?", choices: ["지게를 손보고 고쳤다", "숫돌에 도끼를 갈았다", "연못가에 나가 보았다"], answer: 1 },

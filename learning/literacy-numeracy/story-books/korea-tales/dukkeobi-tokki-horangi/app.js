@@ -206,6 +206,405 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐸",
+        art: "cover.webp",
+        title: "The Toad, the Rabbit and the Tiger",
+        intro: [
+            "The Toad, the Rabbit and the Tiger is an old Korean tale with no known author. It is also told as The Rice Cake Bet.",
+            "Korean tales love a contest between three: the biggest and strongest, the fastest, and the smallest and slowest. The last one always wins.",
+            "A siru is the pot rice cake is steamed in. It has holes in the bottom and sits over a cauldron. Steamed cake was food for feast days."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Who Gets the Rice Cake?",
+            beats: [
+                {
+                    art: "01-cake.webp",
+                    emoji: "🍡",
+                    left: [
+                        "One autumn day a tiger, a rabbit and a toad came together. A steaming cake pot stood in front of them.",
+                        "It was heaped with white rice cake, fresh from the steam.",
+                        "They had been given it at a village feast.",
+                        "The three of them sat round the pot up on a hill."
+                    ],
+                    right: [
+                        { t: "\"Oh, that looks good!\"", v: "girl" },
+                        "The rabbit's nose twitched.",
+                        { t: "\"You can smell it from here.\"", v: "girl" },
+                        "The tiger was already smacking his lips. The warm smell drifted right down the hill.",
+                        "The toad sat by the pot and only blinked."
+                    ]
+                },
+                {
+                    art: "02-argue.webp",
+                    emoji: "😤",
+                    left: [
+                        "But a problem came up at once.",
+                        { t: "\"So who's going to eat all this?\"", v: "girl" },
+                        { t: "\"Me, of course! I'm eating the lot!\"", v: "beast" },
+                        "The tiger brought a paw down with a thump, hard enough to shake the pot.",
+                        "The rabbit jumped in front of it.",
+                        { t: "\"Hold on a moment!\"", v: "girl" }
+                    ],
+                    right: [
+                        { t: "\"I'm the strongest here!\"", v: "beast" },
+                        "The tiger showed his teeth.",
+                        { t: "\"Does strong mean you eat everything? I'm the fastest.\"", v: "girl" },
+                        "The rabbit would not give way and put her ears up. The two of them pushed nose to nose.",
+                        "The cake was going cold and the quarrel went on."
+                    ]
+                },
+                {
+                    art: "03-quiet.webp",
+                    emoji: "🐸",
+                    left: [
+                        "The tiger and the rabbit went at it for a long time. The sun was already sinking.",
+                        "All that while the toad had not said one word.",
+                        "He sat by the pot and blinked.",
+                        { t: "\"Toad, why are you so quiet?\"", v: "girl" },
+                        "The rabbit gave him a poke."
+                    ],
+                    right: [
+                        { t: "\"Well... I'm not strong and I'm not fast.\"", v: "man" },
+                        "The toad answered slowly. Nothing showed on his face.",
+                        "The tiger and the rabbit snorted.",
+                        "Then they started arguing again.",
+                        "The toad only looked down the hill."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Let's Roll the Pot",
+            beats: [
+                {
+                    art: "04-idea.webp",
+                    emoji: "💡",
+                    left: [
+                        "Then the toad spoke up quietly. His voice was perfectly calm.",
+                        { t: "\"Arguing like this will never finish.\"", v: "man" },
+                        { t: "\"How about a fair bet instead?\"", v: "man" },
+                        "The two of them stopped and turned round."
+                    ],
+                    right: [
+                        { t: "\"A bet? What bet?\"", v: "beast" },
+                        "The tiger's eyes went wide.",
+                        { t: "\"We roll this pot down the hill.\"", v: "man" },
+                        { t: "\"Whoever catches it first eats the lot.\"", v: "man" },
+                        "The toad nodded down the slope. It was a long hill and quite steep."
+                    ]
+                },
+                {
+                    art: "05-agree.webp",
+                    emoji: "😁",
+                    left: [
+                        "The tiger laughed out loud and thumped his own chest with a paw.",
+                        { t: "\"Good! Who is faster than me?\"", v: "beast" },
+                        { t: "\"Not a chance. Running is what I do best!\"", v: "girl" },
+                        "The rabbit sprang up on the spot."
+                    ],
+                    right: [
+                        "The two were already at the start line, warming up. The tiger raked the ground with his claws.",
+                        "The rabbit stretched and bent her back legs.",
+                        "Neither of them gave the toad a thought.",
+                        "The toad just sat there comfortably and blinked."
+                    ]
+                },
+                {
+                    art: "06-roll.webp",
+                    emoji: "🏃",
+                    left: [
+                        { t: "\"Right. One, two, three!\"", v: "man" },
+                        "The toad gave the pot a little push towards the slope. It went rolling down the hill.",
+                        { t: "\"It's mine!\"", v: "beast" },
+                        { t: "\"No, I'm first!\"", v: "girl" },
+                        "The two shot off together."
+                    ],
+                    right: [
+                        "The tiger and the rabbit tore down after the pot without once looking back.",
+                        "Dust rose behind them in a cloud.",
+                        "The toad watched them go for a while.",
+                        "Then he began to crawl.",
+                        "There was no reason at all to hurry."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Cake All Down the Hill",
+            beats: [
+                {
+                    art: "07-scatter.webp",
+                    emoji: "🍘",
+                    left: [
+                        "The toad started slowly down the hill. One step, then another.",
+                        "There was not a sign of hurry about him.",
+                        "But his two eyes went busily over the ground.",
+                        "He was not out of breath.",
+                        "His legs did not ache either."
+                    ],
+                    right: [
+                        "Every time the pot turned over, a piece of cake dropped out. White cake lay scattered all over the hill.",
+                        "The pieces sat neatly on the grass.",
+                        "The toad did not miss a single one.",
+                        "He had known from the start that this would happen."
+                    ]
+                },
+                {
+                    art: "08-eat.webp",
+                    emoji: "😋",
+                    left: [
+                        "The toad stopped at the first piece. Then he picked up the fallen cake and ate it, one piece at a time.",
+                        { t: "\"My word, that's well steamed.\"", v: "man" },
+                        "Munch, munch, chew.",
+                        "The cake was still warm.",
+                        "It had come out of the steam up on that hill, after all."
+                    ],
+                    right: [
+                        "However much he picked up, more kept coming. There was a piece every few steps.",
+                        "The toad's belly grew rounder and rounder.",
+                        "He swallowed the last piece and patted it.",
+                        "He could not have been more pleased."
+                    ]
+                },
+                {
+                    art: "09-empty.webp",
+                    emoji: "😳",
+                    left: [
+                        "At the bottom the pot hit a big tree and stopped. The tiger and the rabbit grabbed it at the same moment.",
+                        { t: "\"I was first!\"", v: "beast" },
+                        { t: "\"No, I was!\"", v: "girl" },
+                        "They glared at each other, panting.",
+                        "Then they thought to look inside."
+                    ],
+                    right: [
+                        "One look into the pot and both of them went silent. The tiger lifted it up and turned it over.",
+                        "Nothing.",
+                        "Not one piece of cake was left.",
+                        "It had all spilled out on the way down.",
+                        "The two of them stared at each other."
+                    ]
+                },
+                {
+                    art: "10-belly.webp",
+                    emoji: "🐸",
+                    left: [
+                        "They scrambled back up the hill. They had to know where the cake had gone.",
+                        "At the top the toad was sitting comfortably.",
+                        "Patting his round belly.",
+                        { t: "\"My, I'm full. That was very good.\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"You — when did you eat all—!\"", v: "girl" },
+                        "The rabbit pointed at the toad's round belly. The tiger's mouth hung open and nothing came out.",
+                        "Instead of answering, the toad only blinked.",
+                        "After that day the three of them agreed to share the cake first."
+                    ]
+                }
+            ],
+            moral: "Sometimes an eye for where things are falling beats a fast pair of legs. The tiger and the rabbit ran watching the pot; the toad walked watching the road.",
+            question: "Have you ever hurried so much that you missed the thing that mattered?"
+        }
+    ],
+    quiz: [
+        { q: "What were the three arguing about?", choices: ["Who was faster", "Who would eat the cake", "Who was stronger"], answer: 1 },
+        { q: "Who suggested the bet?", choices: ["The tiger", "The rabbit", "The toad"], answer: 2 },
+        { q: "Who was to eat all the cake?", choices: ["The strongest", "The fastest", "Whoever caught the pot"], answer: 2 },
+        { q: "What happened each time the pot turned over?", choices: ["It broke on a rock", "A piece of cake dropped out", "A tree blocked its way"], answer: 1 },
+        { q: "What was inside the pot at the bottom of the hill?", choices: ["Nothing at all", "It was full of cake", "It was full of water"], answer: 0 },
+        { q: "What did the toad do after the other two ran off?", choices: ["Ran raising a cloud of dust", "Kept his eyes on the ground", "Turned the pot over to look"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The two who boasted of strength and speed held an empty pot, so while you race each other the food goes.",
+                "The toad was the one who offered the bet, so in a quarrel the quiet one sometimes sets the rules.",
+                "They agreed to share the cake first after that, so people settle things once they have been caught out.",
+                "The toad gave the other two a piece each of what he had picked up, so he never meant to have it all."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "toad", k: "두꺼비", s: "The Toad, the Rabbit and the Tiger" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "The Rice Cake Bet", k: "떡 내기", s: "It is also told as The Rice Cake Bet." },
+            { w: "a contest between three", k: "셋이 겨루기", s: "Korean tales love a contest between three" },
+            { w: "the biggest and strongest", k: "가장 크고 힘센 쪽", s: "the biggest and strongest, the fastest" },
+            { w: "the slowest", k: "가장 느린 쪽", s: "the smallest and slowest" },
+            { w: "always wins", k: "늘 이긴다", s: "The last one always wins." },
+            { w: "is steamed (steam)", k: "쪄 낸다", s: "the pot rice cake is steamed in" },
+            { w: "holes", k: "구멍", s: "It has holes in the bottom" },
+            { w: "cauldron", k: "솥", s: "sits over a cauldron" },
+            { w: "feast days", k: "잔칫날", s: "Steamed cake was food for feast days." }
+        ],
+        "01-cake.webp": [
+            { w: "came together", k: "모였다", s: "a tiger, a rabbit and a toad came together" },
+            { w: "steaming", k: "김이 모락모락 나는", s: "A steaming cake pot stood in front of them." },
+            { w: "was heaped with ~ (heap)", k: "수북이 담겼다", s: "It was heaped with white rice cake" },
+            { w: "fresh from the steam", k: "갓 쪄 낸", s: "white rice cake, fresh from the steam" },
+            { w: "feast", k: "잔치", s: "They had been given it at a village feast." },
+            { w: "sat round ~", k: "빙 둘러앉았다", s: "The three of them sat round the pot up on a hill." },
+            { w: "twitched (twitch)", k: "벌름거렸다", s: "The rabbit's nose twitched." },
+            { w: "smacking his lips", k: "입맛을 다시는", s: "The tiger was already smacking his lips." },
+            { w: "drifted (drift)", k: "퍼져 나갔다", s: "The warm smell drifted right down the hill." },
+            { w: "blinked (blink)", k: "눈을 껌뻑였다", s: "The toad sat by the pot and only blinked." }
+        ],
+        "02-argue.webp": [
+            { w: "came up at once", k: "곧 생겼다", s: "But a problem came up at once." },
+            { w: "eat the lot", k: "다 먹다", s: "Me, of course! I'm eating the lot!" },
+            { w: "paw", k: "앞발", s: "The tiger brought a paw down with a thump" },
+            { w: "with a thump", k: "쿵 하고", s: "brought a paw down with a thump" },
+            { w: "hard enough to ~", k: "~할 만큼 세게", s: "hard enough to shake the pot" },
+            { w: "jumped in front of ~", k: "앞을 막아섰다", s: "The rabbit jumped in front of it." },
+            { w: "Hold on a moment!", k: "잠깐만요!", s: "Hold on a moment!" },
+            { w: "showed his teeth", k: "이빨을 드러냈다", s: "The tiger showed his teeth." },
+            { w: "would not give way", k: "지지 않았다", s: "The rabbit would not give way" },
+            { w: "nose to nose", k: "코가 닿을 만큼", s: "The two of them pushed nose to nose." },
+            { w: "going cold", k: "식어 가는", s: "The cake was going cold and the quarrel went on." }
+        ],
+        "03-quiet.webp": [
+            { w: "went at it (go at)", k: "옥신각신했다", s: "The tiger and the rabbit went at it for a long time." },
+            { w: "sinking (sink)", k: "기울고 있는", s: "The sun was already sinking." },
+            { w: "All that while", k: "그동안", s: "All that while the toad had not said one word." },
+            { w: "gave him a poke", k: "툭 건드렸다", s: "The rabbit gave him a poke." },
+            { w: "Nothing showed on his face.", k: "아무 기색도 없었다.", s: "Nothing showed on his face." },
+            { w: "snorted (snort)", k: "코웃음을 쳤다", s: "The tiger and the rabbit snorted." },
+            { w: "started arguing", k: "다투기 시작했다", s: "Then they started arguing again." },
+            { w: "looked down the hill", k: "언덕 아래를 내려다보았다", s: "The toad only looked down the hill." }
+        ],
+        "04-idea.webp": [
+            { w: "spoke up (speak up)", k: "입을 열었다", s: "Then the toad spoke up quietly." },
+            { w: "perfectly calm", k: "아주 태연한", s: "His voice was perfectly calm." },
+            { w: "will never finish", k: "끝이 안 난다", s: "Arguing like this will never finish." },
+            { w: "How about ~ ?", k: "~하는 게 어떨까요?", s: "How about a fair bet instead?" },
+            { w: "fair", k: "공평한", s: "How about a fair bet instead?" },
+            { w: "turned round", k: "돌아보았다", s: "The two of them stopped and turned round." },
+            { w: "roll ~ down the hill", k: "언덕 아래로 굴리다", s: "We roll this pot down the hill." },
+            { w: "Whoever ~", k: "~하는 이가 누구든", s: "Whoever catches it first eats the lot." },
+            { w: "nodded down ~", k: "턱으로 가리켰다", s: "The toad nodded down the slope." },
+            { w: "steep", k: "가파른", s: "It was a long hill and quite steep." }
+        ],
+        "05-agree.webp": [
+            { w: "laughed out loud", k: "껄껄껄 웃었다", s: "The tiger laughed out loud" },
+            { w: "thumped (thump)", k: "쿵쿵 두드렸다", s: "thumped his own chest with a paw" },
+            { w: "Not a chance.", k: "어림없어요.", s: "Not a chance. Running is what I do best!" },
+            { w: "what I do best", k: "내가 제일 잘하는 것", s: "Running is what I do best!" },
+            { w: "sprang up (spring)", k: "껑충 뛰어올랐다", s: "The rabbit sprang up on the spot." },
+            { w: "the start line", k: "출발선", s: "The two were already at the start line" },
+            { w: "warming up", k: "몸을 푸는", s: "already at the start line, warming up" },
+            { w: "raked (rake)", k: "긁었다", s: "The tiger raked the ground with his claws." },
+            { w: "claws", k: "발톱", s: "raked the ground with his claws" },
+            { w: "gave ~ a thought", k: "안중에 두었다", s: "Neither of them gave the toad a thought." }
+        ],
+        "06-roll.webp": [
+            { w: "gave ~ a little push", k: "슬쩍 밀었다", s: "The toad gave the pot a little push" },
+            { w: "went rolling (go)", k: "데굴데굴 굴러갔다", s: "It went rolling down the hill." },
+            { w: "shot off (shoot off)", k: "튀어 나갔다", s: "The two shot off together." },
+            { w: "tore down after ~ (tear)", k: "쏜살같이 쫓아 내려갔다", s: "The tiger and the rabbit tore down after the pot" },
+            { w: "in a cloud", k: "뿌옇게", s: "Dust rose behind them in a cloud." },
+            { w: "for a while", k: "한참", s: "The toad watched them go for a while." },
+            { w: "crawl", k: "엉금엉금 기다", s: "Then he began to crawl." },
+            { w: "no reason at all to ~", k: "~할 까닭이 하나도 없는", s: "There was no reason at all to hurry." }
+        ],
+        "07-scatter.webp": [
+            { w: "not a sign of ~", k: "~한 기색이 조금도 없는", s: "There was not a sign of hurry about him." },
+            { w: "went busily over ~", k: "부지런히 살폈다", s: "But his two eyes went busily over the ground." },
+            { w: "out of breath", k: "숨이 찬", s: "He was not out of breath." },
+            { w: "ache", k: "아프다", s: "His legs did not ache either." },
+            { w: "turned over", k: "구를 때마다", s: "Every time the pot turned over, a piece of cake dropped out." },
+            { w: "dropped out (drop)", k: "툭 떨어졌다", s: "a piece of cake dropped out" },
+            { w: "lay scattered (lie)", k: "흩어져 있었다", s: "White cake lay scattered all over the hill." },
+            { w: "neatly", k: "얌전히", s: "The pieces sat neatly on the grass." },
+            { w: "did not miss a single one", k: "하나도 놓치지 않았다", s: "The toad did not miss a single one." },
+            { w: "from the start", k: "처음부터", s: "He had known from the start that this would happen." }
+        ],
+        "08-eat.webp": [
+            { w: "the first piece", k: "첫 번째 조각", s: "The toad stopped at the first piece." },
+            { w: "picked up (pick up)", k: "주웠다", s: "he picked up the fallen cake and ate it" },
+            { w: "one piece at a time", k: "하나씩", s: "ate it, one piece at a time" },
+            { w: "My word", k: "어이쿠", s: "My word, that's well steamed." },
+            { w: "well steamed", k: "잘 익은", s: "My word, that's well steamed." },
+            { w: "Munch, munch", k: "우물우물", s: "Munch, munch, chew." },
+            { w: "after all", k: "~이었으니까", s: "It had come out of the steam up on that hill, after all." },
+            { w: "However much ~", k: "주워도 주워도", s: "However much he picked up, more kept coming." },
+            { w: "every few steps", k: "몇 걸음마다", s: "There was a piece every few steps." },
+            { w: "rounder and rounder", k: "점점 볼록해지는", s: "The toad's belly grew rounder and rounder." },
+            { w: "patted (pat)", k: "툭툭 두드렸다", s: "He swallowed the last piece and patted it." },
+            { w: "could not have been more pleased", k: "그렇게 흐뭇할 수가 없었다", s: "He could not have been more pleased." }
+        ],
+        "09-empty.webp": [
+            { w: "hit ~ and stopped", k: "부딪혀 멈췄다", s: "the pot hit a big tree and stopped" },
+            { w: "at the same moment", k: "동시에", s: "The tiger and the rabbit grabbed it at the same moment." },
+            { w: "glared (glare)", k: "노려보았다", s: "They glared at each other, panting." },
+            { w: "panting (pant)", k: "숨을 헐떡이며", s: "They glared at each other, panting." },
+            { w: "thought to ~", k: "~할 생각이 들었다", s: "Then they thought to look inside." },
+            { w: "went silent", k: "입을 다물었다", s: "One look into the pot and both of them went silent." },
+            { w: "turned it over", k: "뒤집어 보았다", s: "The tiger lifted it up and turned it over." },
+            { w: "Not one ~ was left", k: "한 ~도 남지 않았다", s: "Not one piece of cake was left." },
+            { w: "spilled out (spill)", k: "흘렀다", s: "It had all spilled out on the way down." },
+            { w: "on the way down", k: "굴러오는 동안", s: "It had all spilled out on the way down." }
+        ],
+        "10-belly.webp": [
+            { w: "scrambled (scramble)", k: "부랴부랴 기어올랐다", s: "They scrambled back up the hill." },
+            { w: "had to know", k: "알아야 했다", s: "They had to know where the cake had gone." },
+            { w: "comfortably", k: "느긋하게", s: "At the top the toad was sitting comfortably." },
+            { w: "round belly", k: "볼록한 배", s: "Patting his round belly." },
+            { w: "I'm full", k: "배부르다", s: "My, I'm full. That was very good." },
+            { w: "pointed at ~ (point)", k: "가리켰다", s: "The rabbit pointed at the toad's round belly." },
+            { w: "hung open (hang)", k: "벌린 채였다", s: "The tiger's mouth hung open" },
+            { w: "instead of answering", k: "대답 대신", s: "Instead of answering, the toad only blinked." },
+            { w: "agreed to ~ (agree)", k: "~하기로 했다", s: "the three of them agreed to share the cake first" }
+        ],
+        "after": [
+            { w: "the slow one", k: "느린 쪽", s: "Stories where the slow one beats the fast one are everywhere" },
+            { w: "beats (beat)", k: "이긴다", s: "where the slow one beats the fast one" },
+            { w: "for the most part", k: "대개는", s: "For the most part, though, the fast one loses by sleeping" },
+            { w: "gets careless", k: "방심한다", s: "by sleeping or getting careless" },
+            { w: "differs in one place", k: "한 군데가 다르다", s: "This story differs from those in one place." },
+            { w: "makes a mistake", k: "실수를 한다", s: "The fast one has to make a mistake for the slow one to win." },
+            { w: "was watching the ground", k: "땅을 보고 있었다", s: "the toad walked and was watching the ground" },
+            { w: "the only one who ~", k: "~한 쪽뿐", s: "The only one who noticed the cake spilling was the one watching the ground." },
+            { w: "depends on ~ (depend)", k: "~에 달려 있다", s: "What you end up with sometimes depends on where you are looking" },
+            { w: "rather than ~", k: "~보다는", s: "rather than on how fast you are" },
+            { w: "an eye for ~", k: "~을 보는 눈", s: "an eye for where things are falling" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐸',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Stories where the slow one beats the fast one are everywhere in the world. For the most part, though, the fast one loses by sleeping or getting careless.",
+                    "This story differs from those in one place. In the hare and the tortoise the hare sleeps. The fast one has to make a mistake for the slow one to win.",
+                    "Look again. The other two ran watching the pot, and the toad walked and was watching the ground. The only one who noticed the cake spilling was the one watching the ground.",
+                    "What you end up with sometimes depends on where you are looking rather than on how fast you are."
+                ],
+                right: [
+                    "Sometimes an eye for where things are falling beats a fast pair of legs. The tiger and the rabbit ran watching the pot; the toad walked watching the road.",
+                    "Have you ever hurried so much that you missed the thing that mattered?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "셋이 다툰 까닭은 무엇인가요?", choices: ["누가 더 빠른지", "떡을 누가 먹을지", "누가 더 힘센지"], answer: 1 },
     { q: "내기를 하자고 한 것은 누구인가요?", choices: ["호랑이", "토끼", "두꺼비"], answer: 2 },

@@ -200,6 +200,404 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "👹",
+        art: "cover.webp",
+        title: "The Goblin Who Came at Night",
+        intro: [
+            "The Goblin Who Came at Night is an old Korean tale with no known author. It is also told as The Goblin Wrestling Match.",
+            "A Korean goblin is not like a Western monster. It has a horn and it is strong, but it is more foolish than frightening. It loves wrestling, and it plays tricks without doing real harm.",
+            "Goblins were said to grow out of old worn things — a broom, a pestle, a poker. So at dawn one shabby household object is often left where the goblin stood."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Man at the Stream",
+            beats: [
+                {
+                    art: "01-nightroad.webp",
+                    emoji: "🌙",
+                    left: [
+                        "Kim was walking home late at night. He had had a drink at the inn, and his feet were merry.",
+                        { t: "\"Ah, what a bright moon.\"", v: "man" },
+                        { t: "\"On a night like this I wouldn't be scared of a tiger.\"", v: "man" },
+                        "He hummed as he went."
+                    ],
+                    right: [
+                        "Then he came to the stream at the edge of the village and put a foot on the stepping stones.",
+                        "At the far end of them somebody was standing, planted there.",
+                        "Kim narrowed his eyes.",
+                        { t: "\"Wh— who's there? Who is that?\"", v: "man" },
+                        "There was no answer at all."
+                    ]
+                },
+                {
+                    art: "02-challenge.webp",
+                    emoji: "👹",
+                    left: [
+                        "Kim took one step nearer and stopped. The stranger was twice his height.",
+                        "One horn stuck up out of its head, and its eyes glowed red like lamps.",
+                        "He found himself stepping backwards.",
+                        "Only then did he understand. A goblin!"
+                    ],
+                    right: [
+                        { t: "\"Oi. You there, human.\"", v: "beast" },
+                        { t: "\"Wrestle me. I'm bored out of my mind.\"", v: "beast" },
+                        { t: "\"No thank you! I'm just going home!\"", v: "man" },
+                        "The goblin spread its arms and grinned. Its teeth showed white in the moonlight.",
+                        "Kim felt the drink go straight out of him, and his legs shook by themselves."
+                    ]
+                },
+                {
+                    art: "03-grip.webp",
+                    emoji: "💪",
+                    left: [
+                        { t: "\"Say no and you don't cross this bridge all night.\"", v: "beast" },
+                        { t: "\"Well. There's no help for it.\"", v: "man" },
+                        { t: "\"Right then — here goes!\"", v: "man" },
+                        "Kim sighed and rolled up his sleeves. Running was no good against legs that long, so a match was the better choice."
+                    ],
+                    right: [
+                        "Kim took hold of the goblin's waist and the goblin took hold of his. Its grip was like iron tongs.",
+                        { t: "\"Here I come!\"", v: "beast" },
+                        "The goblin roared it out. Birds went up out of the grass in a clatter.",
+                        { t: "\"You've got some strength in you!\"", v: "beast" }
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Hook the Left Leg",
+            beats: [
+                {
+                    art: "04-wrestle.webp",
+                    emoji: "🤼",
+                    left: [
+                        "Push, pull, and push again.",
+                        "The goblin was so strong it was like shoving a boulder. However hard Kim strained, he could not move it one step.",
+                        "The veins stood out on his forehead.",
+                        "The pebbles kept slipping under his feet, and the sweat ran off him."
+                    ],
+                    right: [
+                        "Before he knew it his feet were off the ground.",
+                        { t: "\"Huff... huff... this is bad.\"", v: "man" },
+                        { t: "\"Not finished yet!\"", v: "man" },
+                        { t: "\"I'll end up head first in the stream.\"", v: "man" },
+                        { t: "\"Tired already? Humans are weak things.\"", v: "beast" }
+                    ]
+                },
+                {
+                    art: "05-remember.webp",
+                    emoji: "💡",
+                    left: [
+                        "And then something his grandfather told him as a boy came back to him.",
+                        { t: "'A goblin's right side is iron, but its left leg is weak.'", v: "man" },
+                        "Kim's eyes opened wide.",
+                        { t: "'That's it. That's the way.'", v: "man" }
+                    ],
+                    right: [
+                        "Kim let himself sag as if all his strength had gone.",
+                        "Then he slid his foot in behind the goblin's left leg.",
+                        "The goblin noticed nothing. Sure it had won already, it was pushing with everything it had, its whole weight on one foot.",
+                        { t: "\"Right, here we go!\"", v: "beast" }
+                    ]
+                },
+                {
+                    art: "06-throw.webp",
+                    emoji: "💥",
+                    left: [
+                        { t: "\"Hup!\"", v: "man" },
+                        "Kim threw his whole body into it and put the goblin over.",
+                        "Thud!",
+                        "Down it went flat. The ground shook and stream water flew everywhere."
+                    ],
+                    right: [
+                        { t: "\"What? What's happening! Me, thrown down!\"", v: "beast" },
+                        "The goblin thrashed its arms and legs and could not get up at all. There was no strength in its left leg.",
+                        { t: "\"I won! I won!\"", v: "man" },
+                        "Kim did not waste the moment. He pulled off his belt."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · What Was Left in the Morning",
+            beats: [
+                {
+                    art: "07-tied.webp",
+                    emoji: "🪢",
+                    left: [
+                        "Kim tied the goblin to a willow by the stream.",
+                        "Round and round, good and tight, with every knot tied twice.",
+                        { t: "\"There. Not even a strong man could get out of that.\"", v: "man" },
+                        { t: "\"Go on. Try it.\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"I'm bringing the whole village in the morning, so don't you move!\"", v: "man" },
+                        { t: "\"Let me go! Let me go, I said! Oi! Human!\"", v: "beast" },
+                        "The goblin's shouting rang along the stream all night.",
+                        "But Kim went home without once looking back."
+                    ]
+                },
+                {
+                    art: "08-boast.webp",
+                    emoji: "😤",
+                    left: [
+                        "The next morning Kim stood in the middle of the village and raised his voice.",
+                        { t: "\"I caught a goblin last night! With these hands!\"", v: "man" },
+                        { t: "\"Everybody come and see!\"", v: "man" },
+                        "One by one the doors opened and people looked out."
+                    ],
+                    right: [
+                        { t: "\"What? A goblin?\"", v: "granny" },
+                        { t: "\"That great thing, and you? Don't tell tales.\"", v: "old" },
+                        { t: "\"Let's have a look then!\"", v: "man" },
+                        { t: "\"It's no tale! It's tied to the willow — come and see!\"", v: "man" },
+                        "The villagers did not believe a word of it, and every one of them went down to the stream."
+                    ]
+                },
+                {
+                    art: "09-broom.webp",
+                    emoji: "🧹",
+                    left: [
+                        "They came up to the willow by the stream.",
+                        "The belt was still wound round the tree exactly as Kim had left it, both knots still doubled.",
+                        { t: "\"There it is! That tree!\"", v: "man" },
+                        "People craned their necks to see inside the loops."
+                    ],
+                    right: [
+                        "And what was tied in there was not a horned goblin.",
+                        "It was one worn-out old broom.",
+                        { t: "\"Kim. What is this?\"", v: "old" },
+                        { t: "\"...Is this the goblin?\"", v: "granny" },
+                        "For a long moment nobody could speak."
+                    ]
+                },
+                {
+                    art: "10-laugh.webp",
+                    emoji: "😂",
+                    left: [
+                        { t: "\"Ha ha ha ha!\"", v: "old" },
+                        { t: "\"Kim wrestled a broom all night!\"", v: "man" },
+                        { t: "\"Oh, my sides!\"", v: "granny" },
+                        { t: "\"That mighty goblin was only this?\"", v: "man" },
+                        "The whole village was one great roar of laughter."
+                    ],
+                    right: [
+                        "Kim went red as a ripe persimmon and could not say a word.",
+                        "He quietly untied his belt and put it back on.",
+                        "After that, if Kim saw so much as a broom on a night road, he took a wide way round it.",
+                        { t: "\"I'm never wrestling at night again.\"", v: "man" }
+                    ]
+                }
+            ],
+            moral: "At night even an old broom looks like a horned goblin. What you saw in the dark looks different once the day has come.",
+            question: "Has something that frightened you turned out to be nothing at all?"
+        }
+    ],
+    quiz: [
+        { q: "Where did Kim meet the goblin?", choices: ["Under the inn floor", "By the stream at night", "In the middle of the village"], answer: 1 },
+        { q: "What did the goblin want to do?", choices: ["Have a drink", "Walk the night road", "Have a wrestling match"], answer: 2 },
+        { q: "Where was the goblin weak?", choices: ["Its right leg", "Its left leg", "Its waist"], answer: 1 },
+        { q: "What did Kim do with the goblin?", choices: ["Took it home", "Let it go", "Tied it to a tree"], answer: 2 },
+        { q: "What was tied to the tree in the morning?", choices: ["An old broom", "A great rock", "A broken carrying frame"], answer: 0 },
+        { q: "What did Kim do after that?", choices: ["Wrestled every night", "Kept away from brooms", "Went looking for goblins"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He wrestled all night with what turned out to be an old broom, so things seen in the dark always look bigger.",
+                "He won by remembering what his grandfather said, so the things old people let drop are not said for nothing.",
+                "The whole village just laughed and let it go, so a story like this was not made to tell anyone off.",
+                "The goblin stood on the bridge to keep night travellers safe, so it was not only fierce."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "goblin", k: "도깨비", s: "The Goblin Who Came at Night" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "wrestling match", k: "씨름 한판", s: "It is also told as The Goblin Wrestling Match." },
+            { w: "monster", k: "괴물", s: "A Korean goblin is not like a Western monster." },
+            { w: "horn", k: "뿔", s: "It has a horn and it is strong" },
+            { w: "foolish", k: "어수룩한", s: "it is more foolish than frightening" },
+            { w: "frightening", k: "무서운", s: "more foolish than frightening" },
+            { w: "plays tricks", k: "심술을 부린다", s: "it plays tricks without doing real harm" },
+            { w: "real harm", k: "정말 해치는 것", s: "without doing real harm" },
+            { w: "were said to ~", k: "~라고들 했다", s: "Goblins were said to grow out of old worn things" },
+            { w: "grow out of ~", k: "~에서 생기다", s: "grow out of old worn things" },
+            { w: "pestle", k: "절굿공이", s: "a broom, a pestle, a poker" },
+            { w: "poker", k: "부지깽이", s: "a broom, a pestle, a poker" },
+            { w: "shabby", k: "낡은", s: "one shabby household object is often left" },
+            { w: "household object", k: "살림살이", s: "one shabby household object" }
+        ],
+        "01-nightroad.webp": [
+            { w: "inn", k: "주막", s: "He had had a drink at the inn" },
+            { w: "merry", k: "흥겨운", s: "his feet were merry" },
+            { w: "scared of ~", k: "~이 무서운", s: "I wouldn't be scared of a tiger" },
+            { w: "hummed (hum)", k: "콧노래를 불렀다", s: "He hummed as he went." },
+            { w: "the edge of the village", k: "마을 어귀", s: "the stream at the edge of the village" },
+            { w: "stepping stones", k: "징검다리", s: "put a foot on the stepping stones" },
+            { w: "planted there", k: "떡 버티고 선", s: "somebody was standing, planted there" },
+            { w: "narrowed his eyes", k: "눈을 가늘게 떴다", s: "Kim narrowed his eyes." },
+            { w: "no answer at all", k: "아무 대답도 없는", s: "There was no answer at all." }
+        ],
+        "02-challenge.webp": [
+            { w: "one step nearer", k: "한 발짝 가까이", s: "Kim took one step nearer and stopped." },
+            { w: "twice his height", k: "키가 두 배인", s: "The stranger was twice his height." },
+            { w: "stuck up (stick up)", k: "삐죽 솟았다", s: "One horn stuck up out of its head" },
+            { w: "glowed (glow)", k: "벌겋게 빛났다", s: "its eyes glowed red like lamps" },
+            { w: "found himself ~ing", k: "저도 모르게 ~했다", s: "He found himself stepping backwards." },
+            { w: "Only then did he ~", k: "그제야 ~했다", s: "Only then did he understand." },
+            { w: "bored out of my mind", k: "심심해 죽겠다", s: "Wrestle me. I'm bored out of my mind." },
+            { w: "spread its arms (spread)", k: "팔을 벌렸다", s: "The goblin spread its arms and grinned." },
+            { w: "grinned (grin)", k: "히죽 웃었다", s: "The goblin spread its arms and grinned." },
+            { w: "go straight out of ~", k: "확 깨다", s: "Kim felt the drink go straight out of him" },
+            { w: "by themselves", k: "저절로", s: "his legs shook by themselves" }
+        ],
+        "03-grip.webp": [
+            { w: "There's no help for it.", k: "별수 없구먼.", s: "Well. There's no help for it." },
+            { w: "here goes", k: "에라, 모르겠다", s: "Right then — here goes!" },
+            { w: "rolled up his sleeves", k: "소매를 걷어붙였다", s: "Kim sighed and rolled up his sleeves." },
+            { w: "was no good against ~", k: "~을 당해 낼 수 없었다", s: "Running was no good against legs that long" },
+            { w: "the better choice", k: "나은 편", s: "so a match was the better choice" },
+            { w: "took hold of ~ (take)", k: "잡았다", s: "Kim took hold of the goblin's waist" },
+            { w: "grip", k: "손아귀 힘", s: "Its grip was like iron tongs." },
+            { w: "tongs", k: "집게", s: "Its grip was like iron tongs." },
+            { w: "roared it out (roar)", k: "우렁차게 외쳤다", s: "The goblin roared it out." },
+            { w: "in a clatter", k: "푸드덕", s: "Birds went up out of the grass in a clatter." }
+        ],
+        "04-wrestle.webp": [
+            { w: "shoving (shove)", k: "미는", s: "it was like shoving a boulder" },
+            { w: "boulder", k: "커다란 바위", s: "it was like shoving a boulder" },
+            { w: "however hard ~", k: "아무리 ~해도", s: "However hard Kim strained" },
+            { w: "strained (strain)", k: "용을 썼다", s: "However hard Kim strained" },
+            { w: "veins", k: "핏줄", s: "The veins stood out on his forehead." },
+            { w: "stood out (stand out)", k: "불끈 섰다", s: "The veins stood out on his forehead." },
+            { w: "pebbles", k: "자갈", s: "The pebbles kept slipping under his feet" },
+            { w: "ran off him", k: "비 오듯 흘렀다", s: "the sweat ran off him" },
+            { w: "off the ground", k: "땅에서 들린", s: "Before he knew it his feet were off the ground." },
+            { w: "head first", k: "머리부터, 처박혀", s: "I'll end up head first in the stream." },
+            { w: "Tired already?", k: "벌써 지쳤느냐?", s: "Tired already? Humans are weak things." }
+        ],
+        "05-remember.webp": [
+            { w: "came back to him", k: "번쩍 떠올랐다", s: "something his grandfather told him as a boy came back to him" },
+            { w: "as a boy", k: "어릴 적", s: "something his grandfather told him as a boy" },
+            { w: "opened wide", k: "번쩍 뜨였다", s: "Kim's eyes opened wide." },
+            { w: "That's the way.", k: "바로 그거다.", s: "That's it. That's the way." },
+            { w: "let himself sag", k: "슬쩍 몸을 낮췄다", s: "Kim let himself sag as if all his strength had gone." },
+            { w: "as if ~ had gone", k: "~이 다 빠진 것처럼", s: "as if all his strength had gone" },
+            { w: "slid ~ in behind (slide)", k: "뒤로 밀어 넣었다", s: "he slid his foot in behind the goblin's left leg" },
+            { w: "noticed nothing", k: "그것도 몰랐다", s: "The goblin noticed nothing." },
+            { w: "sure it had won", k: "다 이겼다고 여겨", s: "Sure it had won already, it was pushing with everything it had" },
+            { w: "its whole weight", k: "온몸을 실은", s: "its whole weight on one foot" }
+        ],
+        "06-throw.webp": [
+            { w: "Hup!", k: "이얍!", s: "Hup!" },
+            { w: "threw his whole body into ~", k: "온몸을 던지듯 했다", s: "Kim threw his whole body into it" },
+            { w: "put ~ over", k: "밀어 넘겼다", s: "Kim threw his whole body into it and put the goblin over." },
+            { w: "Thud!", k: "쿵!", s: "Thud!" },
+            { w: "went flat (go)", k: "나자빠졌다", s: "Down it went flat." },
+            { w: "thrashed (thrash)", k: "마구 버둥거렸다", s: "The goblin thrashed its arms and legs" },
+            { w: "could not get up at all", k: "도무지 일어나지 못했다", s: "could not get up at all" },
+            { w: "did not waste the moment", k: "그 틈을 놓치지 않았다", s: "Kim did not waste the moment." },
+            { w: "pulled off (pull off)", k: "풀었다", s: "He pulled off his belt." }
+        ],
+        "07-tied.webp": [
+            { w: "willow", k: "버드나무", s: "Kim tied the goblin to a willow by the stream." },
+            { w: "round and round", k: "몇 겹으로", s: "Round and round, good and tight" },
+            { w: "good and tight", k: "아주 단단히", s: "Round and round, good and tight" },
+            { w: "knot", k: "매듭", s: "with every knot tied twice" },
+            { w: "get out of ~", k: "풀고 나오다", s: "Not even a strong man could get out of that." },
+            { w: "Go on. Try it.", k: "어디 한번 풀어 보시지.", s: "Go on. Try it." },
+            { w: "don't you move", k: "꼼짝 말고 있어라", s: "I'm bringing the whole village in the morning, so don't you move!" },
+            { w: "rang (ring)", k: "쩌렁쩌렁 울렸다", s: "The goblin's shouting rang along the stream all night." },
+            { w: "without once looking back", k: "뒤도 안 돌아보고", s: "But Kim went home without once looking back." }
+        ],
+        "08-boast.webp": [
+            { w: "raised his voice", k: "목청을 높였다", s: "Kim stood in the middle of the village and raised his voice." },
+            { w: "with these hands", k: "이 손으로", s: "I caught a goblin last night! With these hands!" },
+            { w: "one by one", k: "하나둘", s: "One by one the doors opened and people looked out." },
+            { w: "looked out", k: "내다보았다", s: "the doors opened and people looked out" },
+            { w: "Don't tell tales.", k: "거짓말도 정도껏 하게.", s: "That great thing, and you? Don't tell tales." },
+            { w: "Let's have a look", k: "어디 한번 봅시다", s: "Let's have a look then!" },
+            { w: "It's no tale!", k: "거짓말이 아니오!", s: "It's no tale! It's tied to the willow" },
+            { w: "did not believe a word", k: "설마 했다", s: "The villagers did not believe a word of it" },
+            { w: "every one of them", k: "우르르 모두", s: "every one of them went down to the stream" }
+        ],
+        "09-broom.webp": [
+            { w: "came up to ~", k: "~ 앞에 다다랐다", s: "They came up to the willow by the stream." },
+            { w: "wound round ~ (wind)", k: "칭칭 감긴", s: "The belt was still wound round the tree" },
+            { w: "exactly as ~ had left it", k: "묶어 놓은 그대로", s: "exactly as Kim had left it" },
+            { w: "doubled (double)", k: "두 번 지은", s: "both knots still doubled" },
+            { w: "craned their necks (crane)", k: "목을 쭉 뺐다", s: "People craned their necks to see inside the loops." },
+            { w: "loops", k: "감긴 고리", s: "to see inside the loops" },
+            { w: "horned", k: "뿔 달린", s: "what was tied in there was not a horned goblin" },
+            { w: "worn-out", k: "다 닳은", s: "It was one worn-out old broom." },
+            { w: "for a long moment", k: "한참 동안", s: "For a long moment nobody could speak." }
+        ],
+        "10-laugh.webp": [
+            { w: "Oh, my sides!", k: "어이구, 배야!", s: "Oh, my sides!" },
+            { w: "mighty", k: "힘센", s: "That mighty goblin was only this?" },
+            { w: "a roar of laughter", k: "웃음바다", s: "The whole village was one great roar of laughter." },
+            { w: "red as a ripe persimmon", k: "홍시처럼 빨간", s: "Kim went red as a ripe persimmon" },
+            { w: "quietly", k: "슬그머니", s: "He quietly untied his belt and put it back on." },
+            { w: "so much as ~", k: "~조차, ~만 보아도", s: "if Kim saw so much as a broom on a night road" },
+            { w: "took a wide way round ~", k: "슬금슬금 피해 갔다", s: "he took a wide way round it" },
+            { w: "never ~ again", k: "다시는 ~ 않다", s: "I'm never wrestling at night again." }
+        ],
+        "after": [
+            { w: "have one thing in common", k: "한 가지 공통점이 있다", s: "The things that turn into goblins have one thing in common." },
+            { w: "turn into ~", k: "~이 되다", s: "The things that turn into goblins" },
+            { w: "every one of them", k: "하나같이", s: "Every one of them was held in a person's hand and used for years." },
+            { w: "brand-new", k: "새로 산", s: "There is no story of a brand-new thing becoming a goblin." },
+            { w: "buckwheat jelly", k: "메밀묵", s: "It likes buckwheat jelly" },
+            { w: "pay back a debt", k: "돈을 갚다", s: "and it even comes to pay back a debt" },
+            { w: "close to ~", k: "~에 아주 가까운", s: "It stands very close to people." },
+            { w: "the dark", k: "어둠", s: "the frightening thing in this story is not the goblin but the dark" },
+            { w: "the same object", k: "같은 물건", s: "What he saw at night and what he saw in the morning were the same object." },
+            { w: "draws the picture (draw)", k: "그림을 그린다", s: "so the head draws the picture instead" },
+            { w: "instead", k: "대신에", s: "so the head draws the picture instead" },
+            { w: "look like ~", k: "~을 닮다", s: "And that picture usually looks like whatever we are afraid of." },
+            { w: "hook ~ (hook)", k: "걸어 넘기다", s: "hook its left leg and throw it" },
+            { w: "such small details", k: "이런 세세한 말", s: "Such small details get passed along" },
+            { w: "get passed along", k: "붙어 다닌다", s: "Such small details get passed along" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🧹',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "The things that turn into goblins have one thing in common. Every one of them was held in a person's hand and used for years. There is no story of a brand-new thing becoming a goblin.",
+                    "So a goblin is not only frightening. It picks wrestling matches, it likes buckwheat jelly, and it even comes to pay back a debt. It stands very close to people.",
+                    "Look again: the frightening thing in this story is not the goblin but the dark. What he saw at night and what he saw in the morning were the same object.",
+                    "At night the eyes see little, so the head draws the picture instead. And that picture usually looks like whatever we are afraid of."
+                ],
+                right: [
+                    "If a goblin asks you to wrestle, they say, hook its left leg and throw it — a goblin has no right leg. Such small details get passed along, which means people told this story very often.",
+                    "At night even an old broom looks like a horned goblin. What you saw in the dark looks different once the day has come.",
+                    "Has something that frightened you turned out to be nothing at all?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "김 서방은 어디에서 도깨비를 만났나요?", choices: ["주막 마루 밑에서", "밤길 개울가에서", "마을 한복판에서"], answer: 1 },
     { q: "도깨비가 하자고 한 것은 무엇인가요?", choices: ["술 한잔", "밤길 걷기", "씨름 한판"], answer: 2 },
