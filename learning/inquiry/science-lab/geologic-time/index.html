@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="지구 46억 년을 1년 달력으로 줄여 최초의 생명·공룡·사람이 며칠에 나타나는지 재고, 다섯 번의 대멸종과 지금의 멸종에서 종의 몇 %가 사라졌는지 실제 자료로 확인하고, 종이 고루 섞인 숲과 한 종만 있는 밭에 병이 돌 때 얼마나 남는지 세어 생물 다양성의 뜻을 살피는 고등학교 통합과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="time-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>지질 시대와 생물 다양성 — 46억 년 달력, 대멸종, 종 다양성</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교 1학년</span><span>지구과학·생명과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>46억 년 달력, 대멸종, 종 다양성 가운데 하나를 고릅니다.</li>
+            <li>달력에 놓을 사건, 살펴볼 멸종, 숲의 생물 구성을 정합니다.</li>
+            <li>사건이 달력의 언제일지, 종의 몇 %가 사라졌을지, 병이 돌면 얼마나 남을지 예상합니다.</li>
+            <li>시작해서 달력 위의 자리, 사라지는 종, 남는 개체를 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">지구 46억 년을 1년으로 줄이면 하루는 1,260만 년입니다</p>
+                <fieldset class="mode-field">
+                    <legend>실험 종류</legend>
+                    <div class="mode-buttons three">
+                        <button type="button" data-mode="calendar">46억 년 달력<small>이 일은 며칠에?</small></button>
+                        <button type="button" data-mode="extinction">대멸종<small>몇 %가 사라졌나</small></button>
+                        <button type="button" data-mode="diversity">종 다양성<small>병이 돌면 얼마나 남나</small></button>
+                    </div>
+                </fieldset>
+                <div id="controlArea"></div>
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons" id="predictionArea"></div>
+                </fieldset>
+                <button class="run-button" id="checkBtn" type="button">달력 넘기기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">결과</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">까닭</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel burn-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">1월 1일 0시에 지구가 태어나고 12월 31일 밤 12시가 지금입니다. 노란 표시가 달력을 넘어갑니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>지질 시대</strong> 지구의 46억 년은 화석에 남은 생물의 큰 변화를 기준으로 나눕니다. 처음 40억 년(선캄브리아 시대)에는 세균 같은 작은 생물뿐이었고, 5억 4천만 년 전 고생대가 시작되며 껍데기와 뼈가 있는 동물이 갑자기 늘었습니다. 중생대(2억 5천만~6,600만 년 전)는 공룡의 시대, 신생대는 포유류의 시대이고, 사람은 마지막 몇십만 년에 나타났습니다. 1년 달력으로 줄이면 사람은 12월 31일 밤 11시가 넘어서야 등장합니다.</p>
+                <p><strong>대멸종</strong> 지질 시대의 경계는 대개 많은 생물이 한꺼번에 사라진 자리입니다. 지금까지 다섯 번의 큰 멸종이 있었고, 가장 컸던 페름기 말에는 바다 생물 종의 96 %가 사라졌습니다. 원인은 대규모 화산 폭발과 그에 따른 기후·바다의 변화, 빙하기, 소행성 충돌이었습니다. 멸종 뒤에는 살아남은 무리가 빈자리로 퍼져 나가며 새 종이 생겼지만, 회복에는 수백만 년에서 수천만 년이 걸렸습니다.</p>
+                <p><strong>생물 다양성</strong> 생물 다양성은 종의 수만이 아니라 각 종이 얼마나 고르게 있는지, 같은 종 안에 유전자가 얼마나 다양한지, 생태계가 얼마나 여러 가지인지를 함께 말합니다. 종이 고루 섞인 숲에서는 한 종을 덮치는 병이 돌아도 나머지가 남아 숲이 이어지지만, 한 종만 심은 밭은 한 번의 병으로 모두 잃습니다. 1845년 아일랜드는 한 품종의 감자만 심다가 병으로 흉년이 들어 100만 명이 굶어 죽었습니다.</p>
+                <p><strong>여섯 번째 멸종?</strong> 1500년 이후 기록된 멸종은 약 900종으로 전체의 1 %쯤이지만, 지금의 멸종 속도는 화석 기록의 자연스러운 속도보다 100~1,000배 빠르고, 평가된 종의 약 28 %가 멸종 위기에 있습니다. 서식지 파괴, 남획, 외래종, 기후 변화가 원인이며, 이 속도가 이어지면 여섯 번째 대멸종이 될 수 있어 보전 노력이 필요합니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="d">
+                    <h3>지구 46억 년을 1년 달력으로 줄이면 사람(호모 사피엔스)은 언제 나타날까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 6월쯤</label>
+                        <label><input type="radio" name="q1" value="b"> 10월 초</label>
+                        <label><input type="radio" name="q1" value="c"> 12월 초</label>
+                        <label><input type="radio" name="q1" value="d"> 12월 31일 밤 11시가 넘어서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>30만 년은 46억 년의 1만 5천분의 1이어서 달력에서 34분쯤입니다. 사람의 역사는 지구 역사의 마지막 한 시간도 되지 않습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>다섯 번의 대멸종 가운데 가장 컸던 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 백악기 말 — 공룡이 사라진 소행성 충돌</label>
+                        <label><input type="radio" name="q2" value="b"> 페름기 말 — 바다 생물 종의 96 %가 사라짐</label>
+                        <label><input type="radio" name="q2" value="c"> 오르도비스기 말 — 빙하기</label>
+                        <label><input type="radio" name="q2" value="d"> 데본기 말 — 바다의 산소 부족</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>2억 5,200만 년 전 페름기 말, 시베리아의 대규모 화산 폭발로 기후가 더워지고 바다가 산성이 되어 바다 생물 종의 96 %가 사라졌습니다. 공룡이 사라진 백악기 말은 76 %였습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>다섯 종이 20마리씩 섞인 숲과 한 종만 100마리 있는 밭에 그 한 종을 죽이는 병이 돌면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 숲은 80마리가 남지만 밭은 하나도 남지 않는다</label>
+                        <label><input type="radio" name="q3" value="b"> 둘 다 절반씩 남는다</label>
+                        <label><input type="radio" name="q3" value="c"> 밭은 종이 하나라 병에 더 강하다</label>
+                        <label><input type="radio" name="q3" value="d"> 둘 다 모두 사라진다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>병은 한 종만 덮치므로 종이 여러 가지면 나머지가 남습니다. 한 종만 심은 밭은 한 번의 병으로 모두 잃습니다. 종 다양성이 생태계를 버티게 하는 까닭입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>지금의 멸종을 '여섯 번째 대멸종'이 될 수 있다고 걱정하는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 이미 종의 절반이 사라졌기 때문에</label>
+                        <label><input type="radio" name="q4" value="b"> 소행성이 다가오고 있기 때문에</label>
+                        <label><input type="radio" name="q4" value="c"> 사라진 종은 아직 1 %쯤이지만 사라지는 속도가 자연스러운 속도의 100배가 넘기 때문에</label>
+                        <label><input type="radio" name="q4" value="d"> 화산이 자주 터지기 때문에</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>1500년 이후 기록된 멸종은 약 900종으로 아직 1 %쯤이지만, 속도가 화석 기록의 100~1,000배이고 평가된 종의 28 %가 위기에 있습니다. 이 속도가 이어지면 대멸종 규모가 됩니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>
