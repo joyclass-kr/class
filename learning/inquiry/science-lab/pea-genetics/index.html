@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="완두를 교배해 잡종 1대와 2대를 만들고 씨앗을 한 알씩 뿌려, 우열의 원리·분리의 법칙·독립의 법칙이 왜 3 : 1, 9 : 3 : 3 : 1로 나타나는지 세어 보는 중학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="pea-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>완두 교배와 유전 법칙</h1>
+            </div>
+            <div class="grade-tags"><span>중학교 3학년</span><span>생명과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>한 쌍의 형질을 볼지, 두 쌍의 형질을 볼지 고릅니다.</li>
+            <li>어버이 두 그루의 유전자형과 뿌릴 씨앗 수를 정합니다.</li>
+            <li>자손의 표현형 비가 어떻게 나올지 먼저 예상해 봅니다.</li>
+            <li>씨앗을 뿌려 한 알씩 세고, 유전자형 표(퍼넷 사각형)의 기대 비와 견주어 봅니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">생식세포가 만들어질 때 한 쌍의 유전자는 갈라져 하나씩 들어갑니다</p>
+                <fieldset class="mode-field">
+                    <legend>형질의 수</legend>
+                    <div class="mode-buttons">
+                        <button type="button" data-mode="one">한 쌍의 형질<small>우열의 원리 · 분리의 법칙</small></button>
+                        <button type="button" data-mode="two">두 쌍의 형질<small>독립의 법칙</small></button>
+                    </div>
+                </fieldset>
+                <div id="controlArea"></div>
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons" id="predictionArea"></div>
+                </fieldset>
+                <button class="run-button" id="checkBtn" type="button">씨앗 뿌리기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 씨앗을 뿌려 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>나온 비</span><strong id="valueA">-</strong></article>
+                            <article><span>기대한 비</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel burn-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">왼쪽 표는 기대, 오른쪽 씨앗은 실제로 뿌려 나온 결과입니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>우열의 원리</strong> 순종 둥근 완두(RR)와 순종 주름진 완두(rr)를 교배하면 잡종 1대는 모두 Rr인데 전부 둥글게 나타납니다. 둘이 함께 있을 때 겉으로 드러나는 R이 우성, 숨는 r이 열성입니다.</p>
+                <p><strong>분리의 법칙</strong> 잡종 1대(Rr)가 생식세포를 만들 때 R과 r은 갈라져 하나씩 들어갑니다. 이 생식세포들이 무작위로 만나 RR : Rr : rr = 1 : 2 : 1이 되고, 겉모습은 둥근 : 주름진 = 3 : 1이 됩니다.</p>
+                <p><strong>독립의 법칙</strong> 씨 모양과 씨 색처럼 서로 다른 형질의 유전자는 서로 상관없이 따로 갈라집니다. 그래서 RrYy끼리 교배하면 둥근 노란 : 둥근 초록 : 주름진 노란 : 주름진 초록 = 9 : 3 : 3 : 1이 됩니다.</p>
+                <p><strong>비는 많이 뿌려야 보인다</strong> 3 : 1은 확률이어서, 씨앗 몇 알로는 5 : 3이나 2 : 2도 나옵니다. 멘델이 완두 수천 알을 세어 법칙을 찾은 까닭입니다. 씨앗 수를 바꿔 뿌리면서 비가 어떻게 달라지는지 보세요.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="a">
+                    <h3>순종 둥근 완두(RR)와 순종 주름진 완두(rr)를 교배하면 잡종 1대의 씨 모양은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 모두 둥글다</label>
+                        <label><input type="radio" name="q1" value="b"> 둥근 것과 주름진 것이 3 : 1</label>
+                        <label><input type="radio" name="q1" value="c"> 둥근 것과 주름진 것이 1 : 1</label>
+                        <label><input type="radio" name="q1" value="d"> 모두 주름지다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>잡종 1대는 모두 Rr입니다. R과 r이 함께 있으면 우성인 R만 겉으로 드러나므로 전부 둥글게 나타납니다. 이것이 우열의 원리입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>잡종 1대(Rr)끼리 교배해 얻은 잡종 2대에서 둥근 완두와 주름진 완두의 비는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 1 : 1</label>
+                        <label><input type="radio" name="q2" value="b"> 2 : 1</label>
+                        <label><input type="radio" name="q2" value="c"> 3 : 1</label>
+                        <label><input type="radio" name="q2" value="d"> 1 : 2 : 1</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>생식세포 R, r이 무작위로 만나 RR : Rr : rr = 1 : 2 : 1이 됩니다. RR과 Rr은 모두 둥글게 보이므로 겉모습의 비는 둥근 : 주름진 = 3 : 1입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>잡종 2대에서 둥근 완두가 600알 나왔습니다. 이 가운데 순종(RR)은 약 몇 알일까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 약 100알</label>
+                        <label><input type="radio" name="q3" value="b"> 약 200알</label>
+                        <label><input type="radio" name="q3" value="c"> 약 300알</label>
+                        <label><input type="radio" name="q3" value="d"> 600알 모두</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>둥근 완두는 RR : Rr = 1 : 2입니다. 600알의 3분의 1인 약 200알이 순종 RR이고, 나머지 약 400알은 겉은 둥글지만 r을 숨긴 잡종 Rr입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>잡종 1대끼리 교배한 씨앗 8알을 뿌렸더니 둥근 것 5알, 주름진 것 3알이 나왔습니다. 3 : 1이 아닌 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 분리의 법칙이 틀렸기 때문에</label>
+                        <label><input type="radio" name="q4" value="b"> 주름진 것이 우성이기 때문에</label>
+                        <label><input type="radio" name="q4" value="c"> 어버이가 순종이 아니었기 때문에</label>
+                        <label><input type="radio" name="q4" value="d"> 씨앗이 적어 우연이 크게 작용했기 때문에</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>3 : 1은 씨앗 한 알 한 알이 둥글 확률이 4분의 3이라는 뜻입니다. 8알처럼 적게 뿌리면 우연 때문에 5 : 3, 7 : 1도 흔히 나오고, 수백 알을 뿌릴수록 3 : 1에 가까워집니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>
