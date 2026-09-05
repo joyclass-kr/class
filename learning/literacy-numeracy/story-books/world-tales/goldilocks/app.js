@@ -1045,7 +1045,7 @@ const EN = {
         ],
         '02-door.webp': [
             { word: 'wander', meaning: '돌아다니다', sentence: 'A child wandering in the wood.' },
-            { word: 'get lost', meaning: '길을 잃다', sentence: 'She came out to pick flowers, and got lost.' },
+            { word: 'get lost', meaning: '길을 잃다', sentence: 'She had come out to pick flowers, and got lost.' },
             { word: 'ache', meaning: '아프다', sentence: 'Her legs ached.' },
             { word: 'near to crying', meaning: '울고 싶은', sentence: 'She was near to crying.' },
             { word: 'glad of', meaning: '반가워서', sentence: 'She ran toward it, glad of it.' }

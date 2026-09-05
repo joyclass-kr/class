@@ -1023,7 +1023,7 @@ const EN = {
         ],
         '05-falada.webp': [
             { word: 'rest easy', meaning: '마음이 놓이다', sentence: 'The maid could not rest easy.' },
-            { word: 'there is no telling', meaning: '알 수 없다', sentence: 'There was no telling when he might speak.' },
+            { word: 'there is no telling', meaning: '알 수 없다', sentence: 'There was no telling when that white horse might open his mouth.' },
             { word: 'grieve', meaning: '마음 아프게 하다', sentence: 'It grieves me to look at him.' },
             { word: 'gatekeeper', meaning: '문지기', sentence: 'She went to the gatekeeper.' },
             { word: 'hesitate', meaning: '망설이다', sentence: 'The gatekeeper hesitated.' }

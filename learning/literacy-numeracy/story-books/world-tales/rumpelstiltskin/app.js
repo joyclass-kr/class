@@ -1047,7 +1047,7 @@ const EN = {
         '01-boast-2.webp': [
             { word: 'gift', meaning: '재주', sentence: 'What a remarkable gift.' },
             { word: 'cold sweat', meaning: '식은땀', sentence: "The cold sweat came out on the miller's back." },
-            { word: 'take back', meaning: '되돌리다', sentence: 'He could hardly say now that it had been a lie.' },
+            { word: 'hardly', meaning: '도무지 ~할 수 없다', sentence: 'He could hardly say now that it had been a lie.' },
             { word: 'thud', meaning: '쿵 소리', sentence: 'The gate shut behind her with a thud.' }
         ],
         '02-straw.webp': [

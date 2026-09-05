@@ -974,7 +974,7 @@ const EN = {
         '07-well.webp': [
             { word: 'hang open', meaning: '헤벌리다', sentence: 'He had dozed off with his mouth hanging open.' },
             { word: 'roll in', meaning: '굴려 넣다', sentence: 'They rolled the stones in one by one.' },
-            { word: 'seam', meaning: '바느질 자국', sentence: 'You could barely see the seam.' },
+            { word: 'hold one’s breath', meaning: '숨을 죽이다', sentence: 'All eight hid behind a tree and held their breath.' },
             { word: 'stir', meaning: '몸을 뒤척이다', sentence: 'At last the wolf stirred and woke.' },
             { word: 'sway', meaning: '휘청거리다', sentence: 'He set off toward the well, swaying with every step.' }
         ],

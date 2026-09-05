@@ -1031,7 +1031,7 @@ const EN = {
             { word: 'palm', meaning: '손바닥', sentence: 'The child set him on his palm.' }
         ],
         '01-soldier-2.webp': [
-            { word: 'run short', meaning: '모자라다', sentence: 'There had not been quite enough tin.' },
+            { word: 'not quite enough', meaning: '조금 모자란', sentence: 'There had not been quite enough tin to finish him.' },
             { word: 'pour', meaning: '붓다', sentence: 'He was the last one poured.' },
             { word: 'upright', meaning: '꼿꼿하게', sentence: 'He stood upright on the one leg.' },
             { word: 'tease', meaning: '놀리다', sentence: 'The toys went round the soldier teasing him.' },

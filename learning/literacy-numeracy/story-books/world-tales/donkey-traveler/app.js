@@ -1135,7 +1135,7 @@ const EN = {
         ],
         'end.webp': [
             { word: 'dumpling', meaning: '만두', sentence: 'An innkeeper who feeds his guests dumplings.' },
-            { word: 'pattern', meaning: '짜임', sentence: 'That pattern turns up often.' },
+            { word: 'do a sum', meaning: '셈을 하다', sentence: 'The innkeeper did a different sum.' },
             { word: 'work out', meaning: '궁리하다', sentence: 'He worked out how to sell them.' },
             { word: 'all the same', meaning: '그런데도', sentence: 'The traveller feeds that man the fruit all the same.' }
         ]

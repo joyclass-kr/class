@@ -1132,8 +1132,8 @@ const EN = {
             { word: 'look for', meaning: '찾다', sentence: 'Karen never went to look for them again.' }
         ],
         'end.webp': [
-            { word: 'show off', meaning: '자랑하다', sentence: 'His memory of showing off his first new shoes.' },
-            { word: 'tell off', meaning: '꾸중하다', sentence: 'And being told off for it.' },
+            { word: 'barefoot', meaning: '맨발로', sentence: 'Karen went barefoot all summer.' },
+            { word: 'leave behind', meaning: '두고 오다', sentence: 'She did not just take them off - she left them behind.' },
             { word: 'say nothing', meaning: '말하지 않다', sentence: 'Karen knew that, and said nothing.' },
             { word: 'by themselves', meaning: '저절로', sentence: 'Her feet begin to move by themselves.' }
         ]

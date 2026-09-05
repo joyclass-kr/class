@@ -1139,7 +1139,7 @@ const EN = {
         '08-ending.webp': [
             { word: 'sundown', meaning: '해질녘', sentence: 'They searched the marsh until sundown.' },
             { word: 'pebble', meaning: '돌멩이', sentence: 'Nor so much as a pebble.' },
-            { word: 'fool', meaning: '속이다', sentence: 'They saw they had been fooled.' },
+            { word: 'fool', meaning: '속이다', sentence: 'Only then did they see they had been fooled.' },
             { word: 'deal out', meaning: '내리다', sentence: 'I shall deal out the punishment!' }
         ],
         '08-ending-2.webp': [

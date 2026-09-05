@@ -1078,7 +1078,7 @@ const EN = {
         '04-barber.webp': [
             { word: 'barber', meaning: '이발사', sentence: 'The king sent for his barber.' },
             { word: 'send for', meaning: '부르다', sentence: 'The king sent for his barber.' },
-            { word: 'scissors', meaning: '가위', sentence: 'The hand holding the scissors shook.' },
+            { word: 'scissors', meaning: '가위', sentence: 'The hand holding the scissors began to shake.' },
             { word: 'glare', meaning: '눈을 부라리다', sentence: 'The king glared at him.' },
             { word: 'breathe a word', meaning: '입도 뻥긋하다', sentence: 'Do not breathe a word of it.' }
         ],

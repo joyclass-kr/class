@@ -1052,7 +1052,7 @@ const EN = {
             { word: 'draw out', meaning: '빠져나가다', sentence: 'The ship drew out of the harbour.' },
             { word: 'voyage', meaning: '항해', sentence: 'A voyage of more than a month.' },
             { word: 'rail', meaning: '난간', sentence: 'Marco held tight to the rail.' },
-            { word: 'impatient', meaning: '마음이 급한', sentence: 'He was impatient rather than afraid.' }
+            { word: 'impatient', meaning: '마음이 급한', sentence: 'He was not so much afraid as impatient.' }
         ],
         '03-voyage.webp': [
             { word: 'hold', meaning: '짐칸', sentence: 'The hold below was packed with people.' },

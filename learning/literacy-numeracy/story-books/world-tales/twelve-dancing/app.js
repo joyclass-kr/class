@@ -1072,7 +1072,7 @@ const EN = {
             { word: 'pretend', meaning: '~하는 척하다', sentence: 'Only pretend to drink it.' },
             { word: 'pour away', meaning: '몰래 버리다', sentence: 'And pour it away.' },
             { word: 'cloak', meaning: '망토', sentence: 'An old grey cloak.' },
-            { word: 'invisible', meaning: '보이지 않는', sentence: 'Put this on and nobody can see you.' }
+            { word: 'go round', meaning: '휘둥그레지다', sentence: "The soldier's eyes went round." }
         ],
         '04-wine.webp': [
             { word: 'court', meaning: '신하들', sentence: 'The court laughed at him.' },
@@ -1138,7 +1138,7 @@ const EN = {
             { word: 'proof', meaning: '증거', sentence: 'Where is your proof?' },
             { word: 'flash', meaning: '반짝이다', sentence: 'The silver and the gold flashed.' },
             { word: 'uproar', meaning: '술렁임', sentence: 'The room went into an uproar.' },
-            { word: 'hang one’s head', meaning: '고개를 숙이다', sentence: 'The princesses hung their heads.' },
+            { word: 'hang one’s head', meaning: '고개를 숙이다', sentence: 'Only then did the princesses hang their heads.' },
             { word: 'close up', meaning: '막아 버리다', sentence: 'The stair was closed up that same day.' }
         ],
         'end.webp': [

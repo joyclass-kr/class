@@ -1128,7 +1128,7 @@ const EN = {
         '04-memory.webp': [
             { word: 'mist', meaning: '안개', sentence: 'A great tree came up out of a thin mist.' },
             { word: 'board', meaning: '팻말', sentence: 'There was a board on the tree.' },
-            { word: 'welcome', meaning: '맞아 주다', sentence: 'Their grandparents welcomed them gladly.' },
+            { word: 'welcome', meaning: '맞아 주다', sentence: 'Their grandfather and grandmother welcomed them gladly.' },
             { word: 'stroke', meaning: '쓰다듬다', sentence: 'Their grandmother stroked their cheeks.' }
         ],
         '04-memory-2.webp': [

@@ -1002,8 +1002,8 @@ const EN = {
             { word: 'thump', meaning: '쿵 하는 소리', sentence: 'He landed in the yard with a thump.' }
         ],
         'end.webp': [
-            { word: 'gather', meaning: '모으다', sentence: 'It was first gathered into a book.' },
-            { word: 'think ahead', meaning: '미리 생각하다', sentence: 'The youngest only thought ahead to the day the wind would come.' },
+            { word: 'gather', meaning: '모으다', sentence: 'It was gathered into a book about a hundred and fifty years ago.' },
+            { word: 'think ahead', meaning: '미리 생각하다', sentence: 'The youngest only thought ahead to the day it would come.' },
             { word: 'turn away', meaning: '내치다', sentence: 'The youngest did not turn his brothers away.' }
         ]
     }

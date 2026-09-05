@@ -1101,7 +1101,7 @@ const EN = {
             { word: 'out loud', meaning: '소리 내어', sentence: 'Elisa laughed out loud.' }
         ],
         'end.webp': [
-            { word: 'rewrite', meaning: '다시 쓰다', sentence: 'Andersen took one and wrote it again.' },
+            { word: 'nettle', meaning: '쐐기풀', sentence: 'Nettles really do burn like fire when you touch them.' },
             { word: 'hold one’s tongue', meaning: '말을 참다', sentence: 'It was holding her tongue.' },
             { word: 'be wrong about', meaning: '오해하다', sentence: 'When people were wrong about her.' },
             { word: 'invent', meaning: '지어내다', sentence: 'The pain was not invented.' },
