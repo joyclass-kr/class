@@ -247,6 +247,458 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "👶",
+        art: "cover.webp",
+        title: "Uturi the Baby Warrior",
+        intro: [
+            "This is an old tale with no known author. It is told all over Korea, and follows every place named Dragon Horse Pond.",
+            "A child born with wings under his arms sets out to be a great warrior and does not get there. Few old tales end sadly like this.",
+            "One bean short, and it all goes wrong. Watch who ate that bean, and why one more year was too long to wait."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Baby with Wings",
+            beats: [
+                {
+                    art: "01-birth.webp",
+                    emoji: "👶",
+                    left: [
+                        "Long ago a poor couple lived in a mountain village.",
+                        "They were past forty and had no child.",
+                        { t: "\"One child, and I would ask for nothing more.\"", v: "mother" },
+                        "Night after night they set out clean well water and prayed.",
+                        "Then one spring the wife bore a son."
+                    ],
+                    right: [
+                        "But washing the baby, the mother stopped her hands.",
+                        "Under the baby's arms small wings had come out.",
+                        "One on each side, the size of a pigeon's wing.",
+                        { t: "\"Come and look at this.\"", v: "mother" },
+                        "The father had no words either. They named him Uturi."
+                    ]
+                },
+                {
+                    art: "02-fly.webp",
+                    emoji: "🕊️",
+                    left: [
+                        "It was the seventh day after he was born.",
+                        "The mother came out of the kitchen and the baby was gone.",
+                        { t: "\"Uturi! Uturi!\"", v: "mother" },
+                        "Then a bubbling laugh came from above.",
+                        "The baby was sitting on the roof beam. His mother sat down where she was."
+                    ],
+                    right: [
+                        "Uturi grew by the day.",
+                        "At a hundred days he lifted the rice mortar in one hand.",
+                        "At a year he picked a cow up off the ground.",
+                        { t: "\"Our boy will be a warrior.\"", v: "man" },
+                        "His father was glad. But his mother's face was not bright."
+                    ]
+                },
+                {
+                    art: "03-law.webp",
+                    emoji: "📜",
+                    left: [
+                        "In those days there was a frightening law.",
+                        "A child born with wings would overturn the country, it said.",
+                        "So his family and the whole village would be punished.",
+                        { t: "\"If the officers hear, we are all finished.\"", v: "old" },
+                        "From that day they kept the child inside."
+                    ],
+                    right: [
+                        "But talk got over the wall.",
+                        { t: "\"They say that boy sits up on the roof beam.\"", v: "man" },
+                        { t: "\"And has wings under his arms, I hear.\"", v: "man" },
+                        "People muttered it in the market.",
+                        "His mother lay awake nightly holding the door ring. There was nowhere to hide him."
+                    ]
+                },
+                {
+                    art: "04-decide.webp",
+                    emoji: "🏔️",
+                    left: [
+                        "One night Uturi, five years old, sat down in front of his mother.",
+                        { t: "\"Mother, I shall go to the mountain.\"", v: "boy" },
+                        { t: "\"If I stay, you and the village will be hurt.\"", v: "boy" },
+                        "His voice was calm, like a grown man's.",
+                        "His mother took him in her arms. How could she send him?"
+                    ],
+                    right: [
+                        { t: "\"Roast me three mal of beans and three of red beans. That is all.\"", v: "boy" },
+                        "One mal fills a big measure, so three were heavy for a child to carry.",
+                        { t: "\"What are the beans for?\"", v: "mother" },
+                        { t: "\"You will know when the time comes.\"", v: "boy" },
+                        "That was all Uturi said."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Three Years in the Rock",
+            beats: [
+                {
+                    art: "05-beans.webp",
+                    emoji: "🫘",
+                    left: [
+                        "Next day his mother roasted the beans in the big iron pot.",
+                        "A warm nutty smell spread through the house.",
+                        "The beans popped and crackled.",
+                        "Tears kept coming and she wiped them away.",
+                        "Then, without thinking, she took one bean and ate it. She forgot it at once."
+                    ],
+                    right: [
+                        "Uturi lifted the two sacks as if they weighed nothing.",
+                        { t: "\"Mother, keep just one thing for me.\"", v: "boy" },
+                        { t: "\"Tell nobody where I go. Not for three years.\"", v: "boy" },
+                        "His mother nodded again and again.",
+                        "And Uturi went up the mountain."
+                    ]
+                },
+                {
+                    art: "06-rock.webp",
+                    emoji: "🪨",
+                    left: [
+                        "Deep in the mountain stood a rock as big as a house.",
+                        "Uturi pushed it with his palm and the rock slid apart.",
+                        "Inside it was empty, like a wide room.",
+                        "He set the two sacks down in there.",
+                        { t: "\"Three years. Only three years.\"", v: "boy" }
+                    ],
+                    right: [
+                        "Uturi shut the rock from inside. Not a crack was left showing.",
+                        "From that night a strange sound came out of the rock.",
+                        "Thump, thump, thump. Like feet keeping step.",
+                        "The beans were becoming soldiers, and the red beans horses."
+                    ]
+                },
+                {
+                    art: "07-soldiers.webp",
+                    emoji: "⚔️",
+                    left: [
+                        "Every day his mother walked to the foot of the mountain and back.",
+                        "She never went near the rock.",
+                        { t: "\"Three years. Only three years.\"", v: "mother" },
+                        "She counted the days on her fingers.",
+                        "One year went, and then another. The sound in the rock grew louder."
+                    ],
+                    right: [
+                        "In the end that sound reached the government office.",
+                        { t: "\"Soldiers, you say, inside a rock in the hills?\"", v: "old" },
+                        { t: "\"Is that not the village with the winged child?\"", v: "old" },
+                        "The magistrate got to his feet.",
+                        "Next day the king's troops came into the village with spears."
+                    ]
+                },
+                {
+                    art: "08-torch.webp",
+                    emoji: "🔥",
+                    left: [
+                        "The troops gathered the villagers in a yard.",
+                        { t: "\"Where is the child with wings!\"", v: "man" },
+                        "Nobody answered.",
+                        { t: "\"Speak, or I set fire to the whole village.\"", v: "man" },
+                        "The captain raised a torch. Children began to cry."
+                    ],
+                    right: [
+                        "His mother bit her lip.",
+                        "A whole year still to go before the three were up.",
+                        "Then the baby next door screamed in its mother's arms.",
+                        "The torch came close to a thatched roof.",
+                        "His mother went down on her knees.",
+                        { t: "\"...The big rock up that mountain.\"", v: "mother" }
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Dragon Horse Cries",
+            beats: [
+                {
+                    art: "09-open.webp",
+                    emoji: "💥",
+                    left: [
+                        "The troops stood in front of the rock.",
+                        "Push as they might, it did not stir.",
+                        { t: "\"Then the mother's hands will open it.\"", v: "man" },
+                        "The captain pushed her forward, and she laid her shaking hands on the rock.",
+                        "It slid apart. The rock knew only her hands."
+                    ],
+                    right: [
+                        "Inside the rock the light was dazzling.",
+                        "Soldiers in armour stood in rows, and Uturi sat on a horse before them.",
+                        "But the soldiers still had their eyes half shut.",
+                        "The three years were not up.",
+                        { t: "\"Mother, why...\"", v: "boy" },
+                        "Uturi's eyes found his mother."
+                    ]
+                },
+                {
+                    art: "10-onebean.webp",
+                    emoji: "🌰",
+                    left: [
+                        "Uturi called out to the soldiers.",
+                        { t: "\"Rise!\"", v: "boy" },
+                        "One by one they opened their eyes. But the last place in the line was empty.",
+                        "One bean short: the bean his mother had eaten as she roasted them.",
+                        "That one gap made the whole line waver."
+                    ],
+                    right: [
+                        "Arrows came flying from the troops.",
+                        "Uturi spread his wings and rose into the air.",
+                        "But the half-woken soldiers could not move.",
+                        { t: "\"Mother, if you had waited one more year...\"", v: "boy" },
+                        "He said that, and fell on top of the rock.",
+                        "The soldiers turned back into beans and scattered."
+                    ]
+                },
+                {
+                    art: "11-horse.webp",
+                    emoji: "🐎",
+                    left: [
+                        "Just then a great cry came from the pond below.",
+                        "The water split and a white horse rose out of it.",
+                        "It had wings on its back. It was a dragon horse.",
+                        "A dragon horse is sent by heaven to carry a warrior.",
+                        "It circled the rock three times, looking for its master."
+                    ],
+                    right: [
+                        "But the master was gone already.",
+                        "The dragon horse looked at the sky and cried, long and loud.",
+                        "The mountain rang and the trees shook.",
+                        "Then it went back to the pond and under the water.",
+                        "Troops and villagers stood frozen. Only the mother wept."
+                    ]
+                },
+                {
+                    art: "12-pond.webp",
+                    emoji: "🌊",
+                    left: [
+                        "People called that pond the Dragon Horse Pond.",
+                        "They say the hoofmarks are on the rock to this day.",
+                        "After that his mother put one bean on the rock every day.",
+                        "The birds carried the beans away.",
+                        { t: "\"If only I had had this one bean.\"", v: "mother" }
+                    ],
+                    right: [
+                        "There was a saying handed down in that village.",
+                        { t: "\"The baby warrior did not die. His time did not come.\"", v: "man" },
+                        { t: "\"The dragon horse waits in the pond for his master still.\"", v: "man" },
+                        "So when hard times came, people looked at that pond.",
+                        "Waiting for the water to split again."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What was different about Uturi at birth?", choices: ["He had wings under his arms", "He was covered in scales", "He had all of his teeth"], answer: 0 },
+        { q: "What happened then if a winged child was born?", choices: ["The country gave out a reward", "The whole village was punished", "He was sent to a temple to grow up"], answer: 1 },
+        { q: "What did Uturi ask his mother for?", choices: ["A suit of armour to wear", "A horse of his own to ride", "Roasted beans and red beans"], answer: 2 },
+        { q: "What did Uturi ask his mother to keep?", choices: ["Not to say where he went", "To put food on the rock daily", "To warn him if troops came"], answer: 0 },
+        { q: "What did the beans become inside the rock?", choices: ["Rice and barley", "Soldiers and horses", "Gold and silver"], answer: 1 },
+        { q: "Why did his mother point at the rock?", choices: ["She feared he would go hungry", "She thought three years were up", "They would set fire to the village"], answer: 2 },
+        { q: "Why was one place in the line empty?", choices: ["His mother ate one bean", "There were too few red beans", "The troops took one away"], answer: 0 },
+        { q: "What did the dragon horse do after Uturi fell?", choices: ["Drove the troops away", "Cried and went into the pond", "Flew off with his mother"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The whole village feared a child with wings, so being different could be a crime in those days.",
+                "His mother pointed at the rock in front of a torch, so it was not betrayal but a hand trying to save neighbours.",
+                "One bean left one place in the line empty, so a great thing can turn on one small one.",
+                "The dragon horse carried Uturi up into the sky, so the baby warrior got what he wanted in the end."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "all over Korea", k: "우리나라 곳곳에", s: "It is told all over Korea" },
+            { w: "follows (follow)", k: "따라온다", s: "it follows every place named Dragon Horse Pond" },
+            { w: "under his arms", k: "겨드랑이에", s: "A child born with wings under his arms" },
+            { w: "sets out to ~", k: "~이 되려 한다", s: "sets out to be a great warrior and does not get there" },
+            { w: "end sadly", k: "슬프게 끝나다", s: "Few old tales end sadly like this." },
+            { w: "one bean short", k: "콩 한 알이 모자라", s: "One bean short, and it all goes wrong." },
+            { w: "goes wrong", k: "어그러진다", s: "One bean short, and it all goes wrong." }
+        ],
+        "01-birth.webp": [
+            { w: "couple", k: "부부", s: "Long ago a poor couple lived in a mountain village." },
+            { w: "past forty", k: "마흔이 넘은", s: "They were past forty and had no child." },
+            { w: "ask for nothing more", k: "소원이 없겠다", s: "One child, and I would ask for nothing more." },
+            { w: "prayed (pray)", k: "빌었다", s: "Night after night they set out clean well water and prayed." },
+            { w: "bore (bear)", k: "낳았다", s: "Then one spring the wife bore a son." },
+            { w: "stopped her hands", k: "손을 멈췄다", s: "But washing the baby, the mother stopped her hands." },
+            { w: "had come out", k: "돋아 있었다", s: "Under the baby's arms small wings had come out." },
+            { w: "the size of ~", k: "~만 한", s: "One on each side, the size of a pigeon's wing." },
+            { w: "had no words", k: "말을 잃었다", s: "The father had no words either." }
+        ],
+        "02-fly.webp": [
+            { w: "the seventh day", k: "이레째 되는 날", s: "It was the seventh day after he was born." },
+            { w: "was gone", k: "없어졌다", s: "The mother came out of the kitchen and the baby was gone." },
+            { w: "bubbling laugh", k: "까르르 웃음소리", s: "Then a bubbling laugh came from above." },
+            { w: "roof beam", k: "대들보", s: "The baby was sitting on the roof beam." },
+            { w: "by the day", k: "하루가 다르게", s: "Uturi grew by the day." },
+            { w: "rice mortar", k: "절구", s: "At a hundred days he lifted the rice mortar in one hand." },
+            { w: "picked ~ up", k: "번쩍 안아 올렸다", s: "At a year he picked a cow up off the ground." },
+            { w: "warrior", k: "장수", s: "Our boy will be a warrior." },
+            { w: "not bright", k: "밝지 않은", s: "But his mother's face was not bright." }
+        ],
+        "03-law.webp": [
+            { w: "frightening", k: "무서운", s: "In those days there was a frightening law." },
+            { w: "overturn", k: "뒤엎다", s: "A child born with wings would overturn the country." },
+            { w: "be punished", k: "벌을 받다", s: "So his family and the whole village would be punished." },
+            { w: "the officers", k: "관가", s: "If the officers hear, we are all finished." },
+            { w: "kept ~ inside", k: "밖에 내보내지 않았다", s: "From that day they kept the child inside." },
+            { w: "got over the wall", k: "담을 넘었다", s: "But talk got over the wall." },
+            { w: "muttered (mutter)", k: "수군거렸다", s: "People muttered it in the market." },
+            { w: "lay awake (lie)", k: "잠을 설쳤다", s: "His mother lay awake nightly holding the door ring." },
+            { w: "nowhere to hide ~", k: "숨길 곳이 없는", s: "There was nowhere to hide him." }
+        ],
+        "04-decide.webp": [
+            { w: "sat down in front of ~", k: "앞에 앉았다", s: "Uturi sat down in front of his mother" },
+            { w: "will be hurt", k: "다칠 것이다", s: "If I stay, you and the village will be hurt." },
+            { w: "calm", k: "차분한", s: "His voice was calm, like a grown man's." },
+            { w: "took him in her arms", k: "끌어안았다", s: "His mother took him in her arms." },
+            { w: "Roast (roast)", k: "볶다", s: "Roast me three mal of beans and three of red beans." },
+            { w: "mal", k: "말(되의 단위)", s: "One mal fills a big measure" },
+            { w: "measure", k: "되", s: "One mal fills a big measure, so three were heavy" },
+            { w: "when the time comes", k: "때가 되면", s: "You will know when the time comes." }
+        ],
+        "05-beans.webp": [
+            { w: "iron pot", k: "가마솥", s: "his mother roasted the beans in the big iron pot" },
+            { w: "nutty", k: "고소한", s: "A warm nutty smell spread through the house." },
+            { w: "popped and crackled", k: "타닥타닥 튀었다", s: "The beans popped and crackled." },
+            { w: "wiped ~ away", k: "훔쳤다", s: "Tears kept coming and she wiped them away." },
+            { w: "without thinking", k: "저도 모르게", s: "Then, without thinking, she took one bean and ate it." },
+            { w: "at once", k: "곧", s: "She forgot it at once." },
+            { w: "as if they weighed nothing", k: "가볍게", s: "Uturi lifted the two sacks as if they weighed nothing." },
+            { w: "Tell nobody", k: "아무에게도 말하지 마세요", s: "Tell nobody where I go. Not for three years." },
+            { w: "again and again", k: "몇 번이나", s: "His mother nodded again and again." }
+        ],
+        "06-rock.webp": [
+            { w: "as big as a house", k: "집채만 한", s: "Deep in the mountain stood a rock as big as a house." },
+            { w: "palm", k: "손바닥", s: "Uturi pushed it with his palm and the rock slid apart." },
+            { w: "slid apart (slide)", k: "스르르 갈라졌다", s: "the rock slid apart" },
+            { w: "set ~ down", k: "부려 놓았다", s: "He set the two sacks down in there." },
+            { w: "from inside", k: "안에서", s: "Uturi shut the rock from inside." },
+            { w: "Not a crack", k: "자국 하나 없이", s: "Not a crack was left showing." },
+            { w: "keeping step", k: "발을 맞추는", s: "Thump, thump, thump. Like feet keeping step." },
+            { w: "were becoming", k: "되고 있었다", s: "The beans were becoming soldiers, and the red beans horses." }
+        ],
+        "07-soldiers.webp": [
+            { w: "the foot of the mountain", k: "산 밑", s: "his mother walked to the foot of the mountain and back" },
+            { w: "went near ~", k: "가까이 갔다", s: "She never went near the rock." },
+            { w: "counted ~ on her fingers", k: "손가락으로 꼽았다", s: "She counted the days on her fingers." },
+            { w: "grew louder (grow)", k: "점점 커졌다", s: "The sound in the rock grew louder." },
+            { w: "reached (reach)", k: "들어갔다", s: "In the end that sound reached the government office." },
+            { w: "government office", k: "관가", s: "that sound reached the government office" },
+            { w: "magistrate", k: "사또", s: "The magistrate got to his feet." },
+            { w: "the king's troops", k: "관군", s: "Next day the king's troops came into the village with spears." },
+            { w: "spears", k: "창", s: "came into the village with spears" }
+        ],
+        "08-torch.webp": [
+            { w: "gathered (gather)", k: "모았다", s: "The troops gathered the villagers in a yard." },
+            { w: "set fire to ~", k: "불을 놓다", s: "Speak, or I set fire to the whole village." },
+            { w: "captain", k: "대장", s: "The captain raised a torch." },
+            { w: "torch", k: "횃불", s: "The captain raised a torch." },
+            { w: "bit her lip (bite)", k: "입술을 깨물었다", s: "His mother bit her lip." },
+            { w: "still to go", k: "아직 남은", s: "A whole year still to go before the three were up." },
+            { w: "screamed (scream)", k: "자지러지게 울었다", s: "Then the baby next door screamed in its mother's arms." },
+            { w: "thatched roof", k: "초가지붕", s: "The torch came close to a thatched roof." },
+            { w: "went down on her knees", k: "무릎을 꿇었다", s: "His mother went down on her knees." }
+        ],
+        "09-open.webp": [
+            { w: "Push as they might", k: "아무리 밀어도", s: "Push as they might, it did not stir." },
+            { w: "stir", k: "꿈쩍하다", s: "Push as they might, it did not stir." },
+            { w: "pushed ~ forward", k: "앞으로 밀었다", s: "The captain pushed her forward" },
+            { w: "shaking", k: "떨리는", s: "she laid her shaking hands on the rock" },
+            { w: "knew only ~", k: "~만 알아보았다", s: "The rock knew only her hands." },
+            { w: "dazzling", k: "눈부신", s: "Inside the rock the light was dazzling." },
+            { w: "armour", k: "갑옷", s: "Soldiers in armour stood in rows" },
+            { w: "half shut", k: "반쯤 감은", s: "But the soldiers still had their eyes half shut." },
+            { w: "were not up", k: "다 차지 않았다", s: "The three years were not up." }
+        ],
+        "10-onebean.webp": [
+            { w: "called out", k: "외쳤다", s: "Uturi called out to the soldiers." },
+            { w: "Rise", k: "일어나라", s: "Rise!" },
+            { w: "the last place", k: "맨 끝자리", s: "But the last place in the line was empty." },
+            { w: "one bean short", k: "콩 한 알이 모자라", s: "One bean short: the bean his mother had eaten." },
+            { w: "gap", k: "빈자리", s: "That one gap made the whole line waver." },
+            { w: "waver", k: "흔들리다", s: "That one gap made the whole line waver." },
+            { w: "Arrows", k: "화살", s: "Arrows came flying from the troops." },
+            { w: "spread his wings (spread)", k: "날개를 폈다", s: "Uturi spread his wings and rose into the air." },
+            { w: "half-woken", k: "반쯤 깬", s: "But the half-woken soldiers could not move." },
+            { w: "scattered (scatter)", k: "흩어졌다", s: "The soldiers turned back into beans and scattered." }
+        ],
+        "11-horse.webp": [
+            { w: "pond", k: "못", s: "Just then a great cry came from the pond below." },
+            { w: "split (split)", k: "갈라졌다", s: "The water split and a white horse rose out of it." },
+            { w: "rose out of ~ (rise)", k: "솟구쳐 올랐다", s: "a white horse rose out of it" },
+            { w: "dragon horse", k: "용마", s: "It had wings on its back. It was a dragon horse." },
+            { w: "is sent by heaven", k: "하늘이 보낸다", s: "A dragon horse is sent by heaven to carry a warrior." },
+            { w: "circled (circle)", k: "빙 돌았다", s: "It circled the rock three times, looking for its master." },
+            { w: "master", k: "주인", s: "looking for its master" },
+            { w: "rang (ring)", k: "울렸다", s: "The mountain rang and the trees shook." },
+            { w: "wept (weep)", k: "울었다", s: "Only the mother wept." }
+        ],
+        "12-pond.webp": [
+            { w: "hoofmarks", k: "말발굽 자국", s: "They say the hoofmarks are on the rock to this day." },
+            { w: "to this day", k: "지금도", s: "the hoofmarks are on the rock to this day" },
+            { w: "carried ~ away", k: "물어 갔다", s: "The birds carried the beans away." },
+            { w: "If only ~", k: "~만 있었으면", s: "If only I had had this one bean." },
+            { w: "handed down", k: "전해 온", s: "There was a saying handed down in that village." },
+            { w: "His time did not come", k: "때를 못 만났다", s: "The baby warrior did not die. His time did not come." },
+            { w: "waits for ~ still", k: "지금도 기다린다", s: "The dragon horse waits in the pond for his master still." },
+            { w: "hard times", k: "살기 어려운 때", s: "So when hard times came, people looked at that pond." }
+        ],
+        "after": [
+            { w: "is attached to ~", k: "붙어 있다", s: "and this story is attached to it" },
+            { w: "differs (differ)", k: "다르다", s: "Even the child's name differs" },
+            { w: "end well", k: "좋게 끝나다", s: "Old tales usually end well; this one does not." },
+            { w: "before he can ~", k: "~해 보지도 못하고", s: "The child falls before he can do anything at all." },
+            { w: "stayed longer", k: "더 오래 남았다", s: "That is why it has stayed longer." },
+            { w: "get rid of ~", k: "없애다", s: "It was the state that tried to get rid of the winged child." },
+            { w: "handed ~ over", k: "넘겼다", s: "the one who handed the child over was the closest person to him" },
+            { w: "does not stop there", k: "여기서 끝내지 않는다", s: "But the story does not stop there." },
+            { w: "a lost story", k: "진 이야기", s: "leaving a lost story open like this" },
+            { w: "set aside (set)", k: "접어 두었다", s: "Is there something you have set aside" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐎',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story is everywhere in Korea. Nearly every district has a Dragon Horse Pond or a Warrior Rock, and this story is attached to it. Even the child's name differs from place to place.",
+                    "Old tales usually end well; this one does not. The child who was to be a warrior falls before he can do anything at all. That is why it has stayed longer.",
+                    "It was the state that tried to get rid of the winged child. It feared that a strong child would turn the country over. How ordinary people saw the state is right there.",
+                    "The mother is different in different tellings. In some she gets rid of the child herself. Here she points at the rock in front of a torch. Either way, the one who handed the child over was the closest person to him."
+                ],
+                right: [
+                    "But the story does not stop there. The dragon horse is waiting in the pond, it says. The baby warrior did not die; his time did not come.",
+                    "Leaving a lost story open like that was the old way of telling.",
+                    "Is there something you have set aside because the time was wrong? What are you doing while you wait for it?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "우투리가 태어났을 때 남다른 점은 무엇이었나요?", choices: ["겨드랑이에 날개가 있었다", "온몸에 비늘이 있었다", "이가 다 나 있었다"], answer: 0 },
     { q: "그 시절 날개 달린 아이가 나면 어떻게 되었나요?", choices: ["나라에서 상을 내렸다", "온 마을이 벌을 받았다", "절에 보내 길렀다"], answer: 1 },

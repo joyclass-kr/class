@@ -247,6 +247,449 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🌙",
+        art: "cover.webp",
+        title: "The Sun and the Moon",
+        intro: [
+            "This is an oral tale with no known author. It was told all over Korea and is among the best known of our old stories.",
+            "It is a why-story as well. It explains how the sun and the moon came to be, and why sorghum stalks are red.",
+            "A beast dressing as a mother to get at children is told next door too. Taiwan has a tiger, Japan an ogre."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Give Me a Rice Cake",
+            beats: [
+                {
+                    art: "01-family.webp",
+                    emoji: "🏠",
+                    left: [
+                        "Long ago a brother and sister lived with their mother below a mountain.",
+                        "Their father had died early, and their mother worked in other people's houses.",
+                        { t: "\"Mother, out to work today as well?\"", v: "girl" },
+                        "The sister held her mother's skirt and would not let go."
+                    ],
+                    right: [
+                        { t: "\"They want me at a feast over the hill. There will be rice cakes.\"", v: "mother" },
+                        "She stroked their heads, one and then the other.",
+                        { t: "\"Lock the door. Open it to nobody at all.\"", v: "mother" },
+                        { t: "\"Yes, Mother.\"", v: "boy" },
+                        "They waved till they could not see the gate."
+                    ]
+                },
+                {
+                    art: "02-tiger.webp",
+                    emoji: "🐯",
+                    left: [
+                        "Their mother washed dishes at the feast all day and was paid in rice cakes.",
+                        "She came home with the basket on her head.",
+                        "Thinking of the children waiting, she walked faster.",
+                        "She had just come up onto the first hill.",
+                        "The wood there was uncommonly dark."
+                    ],
+                    right: [
+                        { t: "\"Rrraaargh!\"", v: "beast" },
+                        "A great tiger stood square in the road. She froze where she was.",
+                        { t: "\"Give me a rice cake and I will not eat you.\"", v: "beast" },
+                        "The tiger licked its lips as it said it.",
+                        "It had plainly smelled the cakes and followed her."
+                    ]
+                },
+                {
+                    art: "03-pass.webp",
+                    emoji: "🍡",
+                    left: [
+                        "She threw it a cake quickly and got over the hill.",
+                        "She held the basket close and ran without thinking.",
+                        "But on the second hill the very same tiger sat waiting.",
+                        { t: "\"How can that be the one from before?\"", v: "mother" }
+                    ],
+                    right: [
+                        { t: "\"Give me a rice cake and I will not eat you.\"", v: "beast" },
+                        "Every time, she had to throw another cake.",
+                        "It was the same on the third hill and on the fourth.",
+                        "The basket grew lighter, and her legs grew heavier.",
+                        "She kept looking back over her shoulder."
+                    ]
+                },
+                {
+                    art: "04-empty.webp",
+                    emoji: "🌫️",
+                    left: [
+                        "At the last hill the basket was empty.",
+                        "She turned it over to show and begged.",
+                        { t: "\"I have given you all the cakes. Please let me pass.\"", v: "mother" },
+                        { t: "\"There is truly nothing left.\"", v: "mother" },
+                        "The tiger's eyes glittered, and it did not move out of the road."
+                    ],
+                    right: [
+                        "That night their mother never came home.",
+                        "The tiger put on her clothes and came down the mountain.",
+                        "The children lit the lamp and watched the door.",
+                        { t: "\"Brother, why is Mother not coming?\"", v: "girl" },
+                        { t: "\"Brother, I am frightened.\"", v: "girl" },
+                        "The brother said nothing and held her hand tight."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Mother's Voice",
+            beats: [
+                {
+                    art: "05-knock.webp",
+                    emoji: "🚪",
+                    left: [
+                        "Then came a knocking at the door outside.",
+                        { t: "\"Children, it is Mother. Open the door.\"", v: "beast" },
+                        "The two looked at each other.",
+                        "It was the voice they had been waiting for.",
+                        { t: "\"Mother!\"", v: "girl" },
+                        "They jumped up, glad to hear it."
+                    ],
+                    right: [
+                        "But the brother suddenly caught his sister's sleeve.",
+                        "Something was not right.",
+                        { t: "\"...Why does Mother's voice sound like that?\"", v: "boy" },
+                        "It was far deeper and rougher than usual.",
+                        "Only then did the sister stop, and the two held their breath."
+                    ]
+                },
+                {
+                    art: "06-hand.webp",
+                    emoji: "🐾",
+                    left: [
+                        { t: "\"My throat is hoarse from the hills. Open up, quickly.\"", v: "beast" },
+                        "The voice outside pressed louder and louder.",
+                        "The brother held the door ring and hesitated a long while.",
+                        { t: "\"Then show us your hand, please.\"", v: "boy" },
+                        "He worked hard to keep his voice from shaking."
+                    ],
+                    right: [
+                        "A hand came pushing in through the crack of the door.",
+                        "It was black and shaggy with hair. It was not their mother's hand.",
+                        { t: "\"Mother's hand is not rough like that.\"", v: "boy" },
+                        "The brother whispered it very quietly.",
+                        "The two of them held on to each other hard."
+                    ]
+                },
+                {
+                    art: "07-escape.webp",
+                    emoji: "🏃",
+                    left: [
+                        { t: "\"W-we will cook first! Wait a little!\"", v: "boy" },
+                        "The brother said it loudly on purpose and took his sister's hand.",
+                        "He even rattled the pot lid in the kitchen.",
+                        "The two crept out of the back door on quiet feet.",
+                        "The tiger outside was completely taken in by the noise."
+                    ],
+                    right: [
+                        "Across the yard, by the well, stood a great tree.",
+                        "Its leaves were thick, just right for hiding in.",
+                        "The two climbed up into it.",
+                        "Only on a high branch did they get their breath back.",
+                        { t: "\"Brother, what are we to do?\"", v: "girl" },
+                        { t: "\"Hush. Do not make a sound.\"", v: "boy" }
+                    ]
+                },
+                {
+                    art: "08-well.webp",
+                    emoji: "💧",
+                    left: [
+                        "After a while the tiger broke the door in.",
+                        "But the room was empty.",
+                        "It searched the room and the kitchen and the whole house.",
+                        "It lifted the bedding and opened the cupboard too.",
+                        { t: "\"Where have they gone? They were inside, I know it.\"", v: "beast" }
+                    ],
+                    right: [
+                        "Out in the yard the tiger looked down into the well.",
+                        "The children on the branch above it were shown in the water.",
+                        { t: "\"Aha, so that is where you are!\"", v: "beast" },
+                        "It never dreamed they were up the tree.",
+                        "The tiger went round and round the well."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Rope from the Sky",
+            beats: [
+                {
+                    art: "09-laugh.webp",
+                    emoji: "😬",
+                    left: [
+                        "The tiger began baling the well out with a gourd.",
+                        "One gourdful, then two.",
+                        "It looked so funny that the sister let out a laugh.",
+                        "She clapped both hands over her mouth, but it was too late.",
+                        "The laugh rang out clear over the well."
+                    ],
+                    right: [
+                        "The tiger's head came up with a jerk.",
+                        "Only now did it see the two of them up in the tree.",
+                        { t: "\"So there you are! How did you get up?\"", v: "beast" },
+                        { t: "\"Come down at once!\"", v: "beast" },
+                        "It knocked at the foot of the tree with a paw."
+                    ]
+                },
+                {
+                    art: "10-climb.webp",
+                    emoji: "🪓",
+                    left: [
+                        "The brother thought fast and made something up.",
+                        { t: "\"We put sesame oil on and climbed!\"", v: "boy" },
+                        { t: "\"It is slippery. Not anybody can get up!\"", v: "boy" },
+                        "The tiger really did fetch the oil and rub it on its paws.",
+                        "And then it slid straight back down."
+                    ],
+                    right: [
+                        { t: "\"What is this? Why do I keep slipping!\"", v: "beast" },
+                        "Seeing it, the sister shouted before she could stop herself.",
+                        { t: "\"Silly! Cut steps with the axe and come up!\"", v: "girl" },
+                        { t: "\"No!\"", v: "boy" },
+                        "The brother covered her mouth, but it was too late. The tiger's eyes flew open."
+                    ]
+                },
+                {
+                    art: "11-rope.webp",
+                    emoji: "🪢",
+                    left: [
+                        "The tiger took the axe and came up, chopping as it went.",
+                        "One step, then another, closer all the time.",
+                        "The tree shook at every new cut.",
+                        "The two climbed to the end of the branch, and there was no higher to go.",
+                        { t: "\"Now I have you!\"", v: "beast" }
+                    ],
+                    right: [
+                        "The two put their hands together and prayed to the sky.",
+                        "The sister shut her eyes tight.",
+                        { t: "\"If you would save us, send down a strong rope!\"", v: "boy" },
+                        "And a thick new rope came sliding down out of the sky.",
+                        "They took hold of it and went up into the sky."
+                    ]
+                },
+                {
+                    art: "12-sky.webp",
+                    emoji: "🌞",
+                    left: [
+                        "As the two went up the rope, the tiger put its hands together too.",
+                        { t: "\"Those children shall not go alone!\"", v: "beast" },
+                        { t: "\"Send a rope down for me as well!\"", v: "beast" },
+                        "But what came down for the tiger was an old rotten rope.",
+                        "It never noticed, and climbed up delighted."
+                    ],
+                    right: [
+                        "Snap —",
+                        "The rope broke halfway and the tiger fell into a sorghum field.",
+                        "Sorghum stalks are red from that blood, they say.",
+                        { t: "\"Brother, I am afraid of the night.\"", v: "girl" },
+                        "So the brother became the moon and the sister the sun. Shy of eyes on her, she made herself dazzling."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What did their mother say as she left?", choices: ["Not to go near the well", "To keep the door locked", "To have the rice cooked"], answer: 1 },
+        { q: "What did the tiger say on every hill?", choices: ["Step aside and I will let you pass", "Sing me a song and I will spare you", "Give me a cake and I will not eat you"], answer: 2 },
+        { q: "How did they know it was not their mother?", choices: ["The hairy hand at the door crack", "The great load it carried on its back", "The old cloth it wore on its head"], answer: 0 },
+        { q: "Where did the tiger think the children were?", choices: ["Up the tree", "In the well", "In the cupboard"], answer: 1 },
+        { q: "What made the tiger look up into the tree?", choices: ["The sister laughed", "The brother shouted", "A branch broke off"], answer: 0 },
+        { q: "What came down out of the sky for them?", choices: ["A ladder made of gold", "A strong new rope", "A great bridge of cloud"], answer: 1 },
+        { q: "Where did the one on the rotten rope fall?", choices: ["Into the well", "Over the hill", "Into a sorghum field"], answer: 2 },
+        { q: "What did the sister do after she became the sun?", choices: ["Showed her face only at night", "Always hid behind the clouds", "Made herself dazzling to look at"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The brother asked to see a hand, so a body gives itself away before a voice does.",
+                "Their mother handed over a cake at every hill, so there are things that ask for more the more you give.",
+                "The brother became the moon because his sister feared the night, so they looked after each other to the last.",
+                "The tiger tried to climb with sesame oil on, so there must have been something simple and trusting about it."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "all over Korea", k: "우리나라 곳곳에서", s: "It was told all over Korea" },
+            { w: "among the best known", k: "가장 널리 알려진 축에 드는", s: "it is among the best known of our old stories" },
+            { w: "a why-story", k: "유래담", s: "It is a why-story as well." },
+            { w: "came to be", k: "생겨났다", s: "It explains how the sun and the moon came to be." },
+            { w: "sorghum stalks", k: "수숫대", s: "why sorghum stalks are red" },
+            { w: "get at ~", k: "노리다", s: "A beast dressing as a mother to get at children" },
+            { w: "next door", k: "이웃 나라에", s: "is told next door too" },
+            { w: "ogre", k: "도깨비 같은 것", s: "Taiwan has a tiger, Japan an ogre." }
+        ],
+        "01-family.webp": [
+            { w: "below a mountain", k: "산 밑에", s: "a brother and sister lived with their mother below a mountain" },
+            { w: "died early", k: "일찍 돌아가셨다", s: "Their father had died early" },
+            { w: "out to work", k: "일 나가는", s: "Mother, out to work today as well?" },
+            { w: "would not let go", k: "놓지 않았다", s: "The sister held her mother's skirt and would not let go." },
+            { w: "feast", k: "잔칫집", s: "They want me at a feast over the hill." },
+            { w: "rice cakes", k: "떡", s: "There will be rice cakes." },
+            { w: "one and then the other", k: "차례로", s: "She stroked their heads, one and then the other." },
+            { w: "to nobody at all", k: "누가 와도 안", s: "Lock the door. Open it to nobody at all." },
+            { w: "waved (wave)", k: "손을 흔들었다", s: "They waved till they could not see the gate." }
+        ],
+        "02-tiger.webp": [
+            { w: "was paid in ~", k: "~로 값을 받았다", s: "Their mother washed dishes all day and was paid in rice cakes." },
+            { w: "basket", k: "광주리", s: "She came home with the basket on her head." },
+            { w: "uncommonly", k: "유난히", s: "The wood there was uncommonly dark." },
+            { w: "square in the road", k: "길을 떡 막고", s: "A great tiger stood square in the road." },
+            { w: "froze (freeze)", k: "얼어붙었다", s: "She froze where she was." },
+            { w: "licked its lips", k: "입맛을 다셨다", s: "The tiger licked its lips as it said it." },
+            { w: "plainly", k: "분명히", s: "It had plainly smelled the cakes and followed her." }
+        ],
+        "03-pass.webp": [
+            { w: "got over ~", k: "넘었다", s: "She threw it a cake quickly and got over the hill." },
+            { w: "held ~ close", k: "끌어안았다", s: "She held the basket close and ran without thinking." },
+            { w: "without thinking", k: "정신없이", s: "She held the basket close and ran without thinking." },
+            { w: "the very same ~", k: "바로 그 ~", s: "But on the second hill the very same tiger sat waiting." },
+            { w: "the one from before", k: "아까 그것", s: "How can that be the one from before?" },
+            { w: "Every time", k: "그때마다", s: "Every time, she had to throw another cake." },
+            { w: "grew lighter (grow)", k: "가벼워졌다", s: "The basket grew lighter, and her legs grew heavier." },
+            { w: "over her shoulder", k: "뒤를 돌아", s: "She kept looking back over her shoulder." }
+        ],
+        "04-empty.webp": [
+            { w: "turned it over", k: "뒤집어 보였다", s: "She turned it over to show and begged." },
+            { w: "begged (beg)", k: "사정했다", s: "She turned it over to show and begged." },
+            { w: "let me pass", k: "보내 주세요", s: "I have given you all the cakes. Please let me pass." },
+            { w: "nothing left", k: "아무것도 없다", s: "There is truly nothing left." },
+            { w: "glittered (glitter)", k: "번뜩였다", s: "The tiger's eyes glittered" },
+            { w: "out of the road", k: "길을 비켜", s: "it did not move out of the road" },
+            { w: "put on ~", k: "입었다", s: "The tiger put on her clothes and came down the mountain." },
+            { w: "lit the lamp (light)", k: "등잔불을 켰다", s: "The children lit the lamp and watched the door." }
+        ],
+        "05-knock.webp": [
+            { w: "knocking (knock)", k: "문 두드리는 소리", s: "Then came a knocking at the door outside." },
+            { w: "had been waiting for", k: "기다리던", s: "It was the voice they had been waiting for." },
+            { w: "jumped up", k: "벌떡 일어섰다", s: "They jumped up, glad to hear it." },
+            { w: "caught ~ sleeve", k: "소매를 붙잡았다", s: "But the brother suddenly caught his sister's sleeve." },
+            { w: "not right", k: "이상한", s: "Something was not right." },
+            { w: "deeper and rougher", k: "굵고 걸걸한", s: "It was far deeper and rougher than usual." },
+            { w: "held their breath", k: "숨을 죽였다", s: "the two held their breath" }
+        ],
+        "06-hand.webp": [
+            { w: "hoarse", k: "쉰", s: "My throat is hoarse from the hills." },
+            { w: "Open up", k: "어서 열어라", s: "Open up, quickly." },
+            { w: "pressed (press)", k: "재촉했다", s: "The voice outside pressed louder and louder." },
+            { w: "door ring", k: "문고리", s: "The brother held the door ring and hesitated a long while." },
+            { w: "hesitated (hesitate)", k: "망설였다", s: "The brother held the door ring and hesitated a long while." },
+            { w: "keep ~ from shaking", k: "떨리지 않게 하다", s: "He worked hard to keep his voice from shaking." },
+            { w: "shaggy", k: "북슬북슬한", s: "It was black and shaggy with hair." },
+            { w: "rough", k: "거친", s: "Mother's hand is not rough like that." },
+            { w: "whispered (whisper)", k: "속삭였다", s: "The brother whispered it very quietly." }
+        ],
+        "07-escape.webp": [
+            { w: "on purpose", k: "일부러", s: "The brother said it loudly on purpose" },
+            { w: "rattled (rattle)", k: "달그락거렸다", s: "He even rattled the pot lid in the kitchen." },
+            { w: "crept out (creep)", k: "빠져나갔다", s: "The two crept out of the back door on quiet feet." },
+            { w: "on quiet feet", k: "발소리를 죽이고", s: "crept out of the back door on quiet feet" },
+            { w: "taken in (take in)", k: "감쪽같이 속았다", s: "The tiger outside was completely taken in by the noise." },
+            { w: "just right for ~", k: "~하기에 꼭 알맞은", s: "Its leaves were thick, just right for hiding in." },
+            { w: "got their breath back", k: "숨을 돌렸다", s: "Only on a high branch did they get their breath back." },
+            { w: "Hush", k: "쉿", s: "Hush. Do not make a sound." }
+        ],
+        "08-well.webp": [
+            { w: "broke ~ in (break)", k: "부수고 들어왔다", s: "After a while the tiger broke the door in." },
+            { w: "searched (search)", k: "뒤졌다", s: "It searched the room and the kitchen and the whole house." },
+            { w: "bedding", k: "이불", s: "It lifted the bedding and opened the cupboard too." },
+            { w: "cupboard", k: "장롱", s: "It lifted the bedding and opened the cupboard too." },
+            { w: "I know it", k: "분명하다", s: "Where have they gone? They were inside, I know it." },
+            { w: "well", k: "우물", s: "Out in the yard the tiger looked down into the well." },
+            { w: "were shown (show)", k: "비쳤다", s: "The children on the branch above it were shown in the water." },
+            { w: "never dreamed", k: "꿈에도 몰랐다", s: "It never dreamed they were up the tree." }
+        ],
+        "09-laugh.webp": [
+            { w: "baling ~ out (bale)", k: "물을 푸는", s: "The tiger began baling the well out with a gourd." },
+            { w: "gourd", k: "바가지", s: "The tiger began baling the well out with a gourd." },
+            { w: "let out a laugh", k: "풋 하고 웃었다", s: "It looked so funny that the sister let out a laugh." },
+            { w: "clapped ~ over (clap)", k: "틀어막았다", s: "She clapped both hands over her mouth" },
+            { w: "rang out (ring)", k: "또랑또랑 울렸다", s: "The laugh rang out clear over the well." },
+            { w: "with a jerk", k: "번쩍", s: "The tiger's head came up with a jerk." },
+            { w: "at once", k: "어서", s: "Come down at once!" },
+            { w: "the foot of the tree", k: "나무 밑동", s: "It knocked at the foot of the tree with a paw." }
+        ],
+        "10-climb.webp": [
+            { w: "made something up", k: "둘러댔다", s: "The brother thought fast and made something up." },
+            { w: "sesame oil", k: "참기름", s: "We put sesame oil on and climbed!" },
+            { w: "slippery", k: "미끄러운", s: "It is slippery. Not anybody can get up!" },
+            { w: "fetch", k: "가져오다", s: "The tiger really did fetch the oil and rub it on its paws." },
+            { w: "slid down (slide)", k: "주르륵 미끄러졌다", s: "And then it slid straight back down." },
+            { w: "keep slipping", k: "자꾸 미끄러진다", s: "What is this? Why do I keep slipping!" },
+            { w: "before she could stop herself", k: "저도 모르게", s: "the sister shouted before she could stop herself" },
+            { w: "Cut steps", k: "찍고 오르다", s: "Silly! Cut steps with the axe and come up!" },
+            { w: "flew open (fly)", k: "번쩍 뜨였다", s: "The tiger's eyes flew open." }
+        ],
+        "11-rope.webp": [
+            { w: "chopping (chop)", k: "찍으며", s: "The tiger took the axe and came up, chopping as it went." },
+            { w: "closer all the time", k: "점점 가까이", s: "One step, then another, closer all the time." },
+            { w: "at every new cut", k: "자국이 늘 때마다", s: "The tree shook at every new cut." },
+            { w: "no higher to go", k: "더 오를 데가 없는", s: "there was no higher to go" },
+            { w: "prayed (pray)", k: "빌었다", s: "The two put their hands together and prayed to the sky." },
+            { w: "If you would ~", k: "~하시려거든", s: "If you would save us, send down a strong rope!" },
+            { w: "came sliding down", k: "스르르 내려왔다", s: "a thick new rope came sliding down out of the sky" },
+            { w: "took hold of ~", k: "붙잡았다", s: "They took hold of it and went up into the sky." }
+        ],
+        "12-sky.webp": [
+            { w: "shall not ~", k: "~하게 둘 수 없다", s: "Those children shall not go alone!" },
+            { w: "rotten", k: "썩은", s: "what came down for the tiger was an old rotten rope" },
+            { w: "never noticed", k: "그것도 몰랐다", s: "It never noticed, and climbed up delighted." },
+            { w: "delighted", k: "신이 나서", s: "It never noticed, and climbed up delighted." },
+            { w: "Snap", k: "뚝", s: "Snap — the rope broke halfway." },
+            { w: "halfway", k: "반쯤 가서", s: "The rope broke halfway and the tiger fell into a sorghum field." },
+            { w: "sorghum field", k: "수수밭", s: "the tiger fell into a sorghum field" },
+            { w: "Shy of ~", k: "~이 부끄러워", s: "Shy of eyes on her, she made herself dazzling." },
+            { w: "dazzling", k: "눈부신", s: "she made herself dazzling" }
+        ],
+        "after": [
+            { w: "does so much work", k: "여러 몫을 한다", s: "It is not common for one story to do so much work." },
+            { w: "what hangs in the sky", k: "하늘에 걸린 것", s: "It explains what hangs in the sky" },
+            { w: "quite true", k: "정말이다", s: "That sorghum stalks are red is quite true." },
+            { w: "a substance", k: "성분", s: "The stalk holds a substance that turns it red" },
+            { w: "of itself", k: "저절로", s: "it reddens of itself as it ripens" },
+            { w: "imitating (imitate)", k: "흉내 내는", s: "Stories of a beast imitating a person to get a door opened" },
+            { w: "the lesson", k: "가르침", s: "The lesson in those stories is always the same." },
+            { w: "gave up his own", k: "제 몫을 내주었다", s: "he gave up his own at one word from her" },
+            { w: "did not let it pass", k: "그냥 넘기지 않았다", s: "they did not let it pass" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '☀️',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "It is not common for one story to do so much work. It explains what hangs in the sky, and what grows in the field, and along the way it says what to be careful of at your own door.",
+                    "That sorghum stalks are red is quite true. Only it is not tiger's blood. The stalk holds a substance that turns it red, so it reddens of itself as it ripens.",
+                    "Stories of a beast imitating a person to get a door opened are told all over the world. The Wolf and the Seven Kids is one, and Little Red Riding Hood is another.",
+                    "The lesson in those stories is always the same: at your door, do not trust a voice by itself."
+                ],
+                right: [
+                    "Look again at the ending, where the brother changed places with his sister. She said one word about being afraid of the night, and he gave up his own.",
+                    "What saved the two was not strength. It was that when their mother's voice sounded wrong they did not let it pass, and asked once more to see a hand.",
+                    "Has something ever felt wrong to you, and you let it pass anyway?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "어머니가 집을 나서며 오누이에게 한 말은 무엇인가요?", choices: ["우물가에 가지 말라고", "문 꼭 잠그고 있으라고", "밥을 지어 놓으라고"], answer: 1 },
     { q: "호랑이가 고개마다 한 말은 무엇인가요?", choices: ["길을 비켜 주면 봐주지", "노래를 하면 살려 주지", "떡 하나 주면 안 잡아먹지"], answer: 2 },
