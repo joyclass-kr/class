@@ -195,6 +195,47 @@
                 "guji-three", "guji-call",
                 "hyangsu-refrain", "hyangsu-scenes", "hyangsu-old-new",
                 "oldsong-why"
+            ]),
+
+        // ── 중1 · 시인별로 묶어 읽기 ──────────────────────────────────
+        // 여기서부터는 배우는 것이 아니라 시인으로 묶는다. 시험은 아는 시인의 처음 보는 시를 내니까,
+        // 익숙한 시 곁에 처음 보는 시를 한 편씩 두어 그 시인의 버릇을 익히게 한다.
+        lesson("m1-jiyong", 7, "정지용 다시 읽기", "아는 시인, 처음 보는 시",
+            ["jiyong-yurichang", "jiyong-hyangsu", "jiyong-hosu", "jiyong-byeoltong"],
+            [
+                "yurichang-what", "yurichang-action", "yurichang-paradox", "yurichang-restraint", "yurichang-bird",
+                "hyangsu-star-again",
+                "jiyong-habit", "jiyong-new"
+            ]),
+        lesson("m1-sowol", 7, "김소월 다시 읽기", "헤어짐 앞에서 머뭇거리는 시",
+            ["sowol-ganeungil", "sowol-jeopdongsae", "sowol-jindallae", "sowol-sanyuhwa"],
+            [
+                "ganeungil-hesitate", "ganeungil-crow", "ganeungil-water", "ganeungil-contrast",
+                "jeopdongsae-who", "jeopdongsae-why-cry", "jeopdongsae-sound", "jeopdongsae-story",
+                "sowol-habit"
+            ]),
+        lesson("m1-era", 7, "빼앗긴 땅에서 쓴 시", "시대를 알고 읽기",
+            ["sanghwa-ppaeatgin", "yuksa-cheongpodo", "dongju-seosi"],
+            [
+                "ppaeatgin-question", "ppaeatgin-walk", "ppaeatgin-spring", "ppaeatgin-last", "ppaeatgin-land",
+                "era-cheongpodo", "era-seosi",
+                "era-how"
+            ]),
+        lesson("m1-hyangga", 7, "천 년 전의 노래", "신라 향가 세 편",
+            ["hyangga-jemangmaega", "hyangga-seodongyo", "hyangga-heonhwaga"],
+            [
+                "jemangmaega-who", "jemangmaega-leaf", "jemangmaega-branch", "jemangmaega-hope",
+                "seodongyo-purpose", "seodongyo-children",
+                "heonhwaga-flower", "heonhwaga-condition",
+                "hyangga-what"
+            ]),
+        lesson("m1-textbook", 7, "교과서에서 읽는 시", "본문은 교과서에서",
+            ["gihyeongdo-eomma", "kimjonggil-seongtanje", "sinseokjeong-meonnara"],
+            [
+                "eomma-wait", "eomma-sell", "eomma-now", "eomma-feel",
+                "seongtanje-father", "seongtanje-why", "seongtanje-now",
+                "meonnara-who", "meonnara-where",
+                "textbook-common"
             ])
     ]);
 
@@ -202,6 +243,7 @@
         { grade: 3, label: "초등 3학년", short: "초3" },
         { grade: 4, label: "초등 4학년", short: "초4" },
         { grade: 5, label: "초등 5학년", short: "초5" },
-        { grade: 6, label: "초등 6학년", short: "초6" }
+        { grade: 6, label: "초등 6학년", short: "초6" },
+        { grade: 7, label: "중학 1학년", short: "중1" }
     ]);
 })();

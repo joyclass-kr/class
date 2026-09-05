@@ -361,6 +361,13 @@
         elements.quizPoemTitle.textContent = poem.title;
         elements.quizPoemByline.textContent = bylineOf(poem);
         renderPoemLines(elements.quizPoemBody, poem);
+        if (poem.rights !== "public") {
+            // 본문을 실을 수 없는 시는 문제 화면에서도 교과서를 펴게 안내한다.
+            const notice = document.createElement("p");
+            notice.className = "poem-notice";
+            notice.textContent = "교과서를 펴고 이 시를 읽은 뒤 답해 보세요.";
+            elements.quizPoemBody.append(notice);
+        }
     }
 
     function renderQuestion() {

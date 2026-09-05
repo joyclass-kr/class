@@ -2251,5 +2251,527 @@ window.POETRY_QUESTIONS = Object.freeze([
         ],
         answer: "글로 읽으려고 지은 것이 아니라 여럿이 부르려고 지었기 때문에",
         explanation: "후렴이 있어야 다 함께 들어와 부를 수 있어요. 노래로 태어난 자국이에요."
+    },
+
+    // ── 중1 · 정지용 다시 읽기 ────────────────────────────────────
+    {
+        id: "yurichang-what",
+        poemId: "jiyong-yurichang",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "유리에 어른거리는 '차고 슬픈 것'은 무엇을 가리키나요?",
+        choices: ["세상을 떠난 아이의 모습", "밤하늘의 별", "유리에 낀 성에"],
+        answer: "세상을 떠난 아이의 모습",
+        explanation: "마지막 줄의 '너는 산새처럼 날아갔구나'와 찢어진 폐혈관이 그 사정을 알려 줘요."
+    },
+    {
+        id: "yurichang-action",
+        poemId: "jiyong-yurichang",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "말하는 이가 밤에 홀로 하는 일은 무엇인가요?",
+        choices: ["유리를 닦는 일", "별을 세는 일", "창문을 여는 일"],
+        answer: "유리를 닦는 일",
+        explanation: "입김을 흐리고 지우고 보고 지우고 보는 것이 그 일이에요."
+    },
+    {
+        id: "yurichang-paradox",
+        poemId: "jiyong-yurichang",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'외로운 황홀한 심사'는 어떤 말인가요?",
+        choices: [
+            "어긋나는 두 말을 붙여 슬픔과 그리움이 겹친 마음을 보여 줘요",
+            "외로움이 다 사라졌다는 말이에요",
+            "잘못 쓴 말이에요"
+        ],
+        answer: "어긋나는 두 말을 붙여 슬픔과 그리움이 겹친 마음을 보여 줘요",
+        explanation: "외로운데 황홀해요. 유리 너머에서 아이를 만나는 듯한 마음이라 그래요."
+    },
+    {
+        id: "yurichang-restraint",
+        poemId: "jiyong-yurichang",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "이 시는 슬픔을 어떻게 드러내나요?",
+        choices: [
+            "울부짖지 않고 유리 닦는 손과 별 하나로 눌러서",
+            "슬프다는 말을 여러 번 되풀이해서",
+            "큰 소리로 이름을 불러서"
+        ],
+        answer: "울부짖지 않고 유리 닦는 손과 별 하나로 눌러서",
+        explanation: "'아아' 한 마디를 빼면 감정을 말하는 낱말이 거의 없어요. 그래서 더 아파요."
+    },
+    {
+        id: "yurichang-bird",
+        poemId: "jiyong-yurichang",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "마지막 줄에서 '너'를 무엇에 견주었나요?",
+        choices: ["산새", "별", "입김"],
+        answer: "산새",
+        explanation: "앞에서 '언 날개를 파다거린다'고 한 것이 여기서 산새로 이어져요."
+    },
+    {
+        id: "hyangsu-star-again",
+        poemId: "jiyong-hyangsu",
+        category: "견주어 읽기",
+        prompt: "「향수」와 「유리창 1」을 나란히 놓고 답해 보세요.",
+        sentence: "두 시의 밤 장면에 똑같이 나오는 것은 무엇인가요?",
+        choices: ["별", "달", "촛불"],
+        answer: "별",
+        explanation: "「향수」에는 성근 별이, 「유리창 1」에는 물 먹은 별이 있어요."
+    },
+    {
+        id: "jiyong-habit",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "정지용의 시 네 편을 떠올려 보세요.",
+        sentence: "정지용이 즐겨 쓰는 방법은 무엇인가요?",
+        choices: [
+            "마음을 곧장 말하지 않고 눈에 보이는 것으로 그려요",
+            "마음을 첫 줄에 크게 외쳐요",
+            "사물을 사람처럼 말하게 해요"
+        ],
+        answer: "마음을 곧장 말하지 않고 눈에 보이는 것으로 그려요",
+        explanation: "호수, 별똥, 실개천, 유리창. 그림을 보여 주고 마음은 그 뒤에 숨겨요."
+    },
+    {
+        id: "jiyong-new",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "정지용의 시 네 편을 떠올려 보세요.",
+        sentence: "처음 보는 정지용의 시를 만나면 무엇부터 찾으면 좋은가요?",
+        choices: [
+            "감각으로 그린 장면과 그 뒤에 눌러 둔 마음",
+            "몇 줄로 되어 있는지",
+            "지은 해가 언제인지"
+        ],
+        answer: "감각으로 그린 장면과 그 뒤에 눌러 둔 마음",
+        explanation: "시험에는 아는 시인의 처음 보는 시가 나와요. 시인의 버릇을 알면 길이 보여요."
+    },
+
+    // ── 중1 · 김소월 다시 읽기 ────────────────────────────────────
+    {
+        id: "ganeungil-hesitate",
+        poemId: "sowol-ganeungil",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "앞의 두 묶음에서 말하는 이는 무엇을 하고 있나요?",
+        choices: ["갈까 말까 머뭇거려요", "빨리 떠나려고 서둘러요", "돌아가서 인사를 해요"],
+        answer: "갈까 말까 머뭇거려요",
+        explanation: "'말을 할까', '그냥 갈까', '다시 더 한 번'이 다 망설이는 말이에요."
+    },
+    {
+        id: "ganeungil-crow",
+        poemId: "sowol-ganeungil",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "까마귀가 지저귀는 말은 무엇인가요?",
+        choices: ["서산에 해가 진다고", "어서 돌아오라고", "비가 온다고"],
+        answer: "서산에 해가 진다고",
+        explanation: "날이 저문다고 알려서 떠날 때가 되었다고 재촉해요."
+    },
+    {
+        id: "ganeungil-water",
+        poemId: "sowol-ganeungil",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "강물이 하는 말은 무엇인가요?",
+        choices: ["어서 따라오라고, 따라가자고", "여기 머물라고", "돌아가라고"],
+        answer: "어서 따라오라고, 따라가자고",
+        explanation: "흐르는 물이 사람처럼 말을 걸어요. 앞 강물 뒷 강물이 연달아 재촉해요."
+    },
+    {
+        id: "ganeungil-contrast",
+        poemId: "sowol-ganeungil",
+        category: "견주어 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "머뭇거리는 사람과 재촉하는 자연을 맞세운 까닭은 무엇인가요?",
+        choices: [
+            "떠나야 하는데 발이 떨어지지 않는 마음을 보여 주려고",
+            "자연이 사람보다 빠르다는 것을 보여 주려고",
+            "해 지는 풍경이 아름다워서"
+        ],
+        answer: "떠나야 하는데 발이 떨어지지 않는 마음을 보여 주려고",
+        explanation: "둘레는 다 흘러가는데 나만 서 있어요. 그 어긋남이 시의 마음이에요."
+    },
+    {
+        id: "jeopdongsae-who",
+        poemId: "sowol-jeopdongsae",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "접동새가 된 사람은 누구인가요?",
+        choices: ["의붓어미의 시샘에 죽은 누나", "진두강에 빠진 동생", "먼 데로 떠난 어머니"],
+        answer: "의붓어미의 시샘에 죽은 누나",
+        explanation: "죽어서 새가 되어 앞마을에 와서 운다고 했어요."
+    },
+    {
+        id: "jeopdongsae-why-cry",
+        poemId: "sowol-jeopdongsae",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "밤마다 우는 까닭은 무엇인가요?",
+        choices: ["남은 아홉 동생을 잊지 못해서", "새가 된 것이 억울해서", "집으로 돌아가는 길을 몰라서"],
+        answer: "남은 아홉 동생을 잊지 못해서",
+        explanation: "죽어서도 못 잊어 차마 못 잊어, 남들 다 자는 밤에 이 산 저 산 옮겨 가며 울어요."
+    },
+    {
+        id: "jeopdongsae-sound",
+        poemId: "sowol-jeopdongsae",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "첫 묶음의 '접동 접동 아우래비 접동'은 무엇인가요?",
+        choices: [
+            "새 울음소리를 아홉 오라비를 부르는 말로 들은 것",
+            "누나의 이름",
+            "마을 이름"
+        ],
+        answer: "새 울음소리를 아홉 오라비를 부르는 말로 들은 것",
+        explanation: "새소리가 곧 누나가 동생들을 부르는 소리가 돼요."
+    },
+    {
+        id: "jeopdongsae-story",
+        poemId: "sowol-jeopdongsae",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "이 시는 무엇을 시로 옮긴 것인가요?",
+        choices: ["전해 오는 옛이야기", "시인이 겪은 일", "신문에 난 사건"],
+        answer: "전해 오는 옛이야기",
+        explanation: "'옛날, 우리나라 먼 뒤쪽의'라고 시작하는 것이 이야기를 들려주는 말투예요."
+    },
+    {
+        id: "sowol-habit",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "김소월의 시 네 편을 떠올려 보세요.",
+        sentence: "「가는 길」「접동새」「진달래꽃」「산유화」에 똑같이 흐르는 것은 무엇인가요?",
+        choices: [
+            "헤어짐과 그리움",
+            "나라를 되찾자는 다짐",
+            "자연의 아름다움을 기리는 마음"
+        ],
+        answer: "헤어짐과 그리움",
+        explanation: "떠나는 사람, 죽은 누나, 보내는 임, 저만치 혼자 핀 꽃. 김소월의 시는 늘 그 자리에 서 있어요."
+    },
+
+    // ── 중1 · 빼앗긴 땅에서 쓴 시 ─────────────────────────────────
+    {
+        id: "ppaeatgin-question",
+        poemId: "sanghwa-ppaeatgin",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "제목이 묻고 있는 것은 무엇인가요?",
+        choices: ["빼앗긴 들에도 봄이 오느냐", "봄이 언제 오느냐", "누가 들을 빼앗았느냐"],
+        answer: "빼앗긴 들에도 봄이 오느냐",
+        explanation: "첫 줄에서 한 번 더 묻고, 마지막 줄에서 스스로 답해요."
+    },
+    {
+        id: "ppaeatgin-walk",
+        poemId: "sanghwa-ppaeatgin",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "말하는 이는 어디를 걸어가나요?",
+        choices: ["가르마 같은 논길", "바닷가 모래밭", "산속 오솔길"],
+        answer: "가르마 같은 논길",
+        explanation: "푸른 하늘과 푸른 들이 맞붙은 곳으로 꿈속을 가듯 걸어요."
+    },
+    {
+        id: "ppaeatgin-spring",
+        poemId: "sanghwa-ppaeatgin",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "시 가운데의 봄 들판은 어떻게 그려지나요?",
+        choices: [
+            "보리밭·도랑·종다리가 살아 움직이며 반겨요",
+            "메마르고 조용해요",
+            "사람이 아무도 없어 무서워요"
+        ],
+        answer: "보리밭·도랑·종다리가 살아 움직이며 반겨요",
+        explanation: "바람은 속삭이고 종다리는 웃고 도랑은 어깨춤을 춰요. 봄은 조금도 빼앗기지 않았어요."
+    },
+    {
+        id: "ppaeatgin-last",
+        poemId: "sanghwa-ppaeatgin",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "마지막 줄은 어떻게 끝나나요?",
+        choices: [
+            "들을 빼앗겨 봄조차 빼앗기겠다고",
+            "봄이 왔으니 괜찮다고",
+            "내년 봄을 기다리겠다고"
+        ],
+        answer: "들을 빼앗겨 봄조차 빼앗기겠다고",
+        explanation: "봄 들판을 실컷 그려 놓고 마지막 한 줄로 그 봄을 도로 거둬 가요."
+    },
+    {
+        id: "ppaeatgin-land",
+        poemId: "sanghwa-ppaeatgin",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'지금은 남의 땅'은 어떤 때를 가리키나요?",
+        choices: ["나라를 빼앗겼던 때", "땅을 팔았던 때", "이사를 간 때"],
+        answer: "나라를 빼앗겼던 때",
+        explanation: "1926년, 우리 땅이 남의 나라 것이던 때에 쓴 시예요."
+    },
+    {
+        id: "era-cheongpodo",
+        poemId: "yuksa-cheongpodo",
+        category: "견주어 읽기",
+        prompt: "그 시대를 떠올리며 답해 보세요.",
+        sentence: "「청포도」에서 기다리는 손님을 그 시대와 함께 읽으면 무엇으로 볼 수 있나요?",
+        choices: [
+            "되찾을 나라, 돌아올 자유 같은 것",
+            "먼 곳에 사는 친척",
+            "포도를 사러 오는 사람"
+        ],
+        answer: "되찾을 나라, 돌아올 자유 같은 것",
+        explanation: "이육사는 나라를 되찾으려다 여러 번 옥에 갇혔던 사람이에요. 손님이 누구인지 말하지 않은 까닭이 있어요."
+    },
+    {
+        id: "era-seosi",
+        poemId: "dongju-seosi",
+        category: "견주어 읽기",
+        prompt: "그 시대를 떠올리며 답해 보세요.",
+        sentence: "「서시」의 부끄럼 없이 살겠다는 다짐이 그 시대에 유독 무거웠던 까닭은 무엇인가요?",
+        choices: [
+            "나라를 빼앗긴 때라 바르게 살기가 어려웠기 때문에",
+            "시인이 아직 어렸기 때문에",
+            "별이 잘 보이지 않는 곳에 살았기 때문에"
+        ],
+        answer: "나라를 빼앗긴 때라 바르게 살기가 어려웠기 때문에",
+        explanation: "남의 나라 말로 살아야 하던 때에 우리말로 부끄럼을 말한 시예요."
+    },
+    {
+        id: "era-how",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "이 묶음의 시들을 떠올려 보세요.",
+        sentence: "시대를 알고 시를 읽으면 무엇이 달라지나요?",
+        choices: [
+            "봄·손님·별을 말한 시가 무엇을 참고 말했는지 보여요",
+            "시가 더 짧아 보여요",
+            "시인의 나이를 알 수 있어요"
+        ],
+        answer: "봄·손님·별을 말한 시가 무엇을 참고 말했는지 보여요",
+        explanation: "드러내 말할 수 없던 때라 시인들은 들판과 포도와 별에 마음을 실었어요."
+    },
+
+    // ── 중1 · 천 년 전의 노래 ─────────────────────────────────────
+    {
+        id: "jemangmaega-who",
+        poemId: "hyangga-jemangmaega",
+        category: "장면 확인",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "누구의 죽음을 노래하나요?",
+        choices: ["누이", "어머니", "벗"],
+        answer: "누이",
+        explanation: "제목의 '망매'가 죽은 누이라는 뜻이에요."
+    },
+    {
+        id: "jemangmaega-leaf",
+        poemId: "hyangga-jemangmaega",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "죽음을 무엇에 견주었나요?",
+        choices: ["이른 바람에 떨어지는 잎", "지는 해", "마른 우물"],
+        answer: "이른 바람에 떨어지는 잎",
+        explanation: "'이른' 바람이라는 말이 너무 일찍 떠났다는 뜻을 담아요."
+    },
+    {
+        id: "jemangmaega-branch",
+        poemId: "hyangga-jemangmaega",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "'한 가지에 나고도'는 무슨 뜻인가요?",
+        choices: ["같은 부모에게서 났다는 뜻", "같은 마을에 살았다는 뜻", "같은 해에 태어났다는 뜻"],
+        answer: "같은 부모에게서 났다는 뜻",
+        explanation: "한 가지에서 난 잎 둘이 서로 다른 곳으로 떨어져요."
+    },
+    {
+        id: "jemangmaega-hope",
+        poemId: "hyangga-jemangmaega",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "마지막에서 무엇을 다짐하나요?",
+        choices: [
+            "도를 닦으며 다시 만날 날을 기다리겠다고",
+            "누이를 잊겠다고",
+            "다시는 가을을 맞지 않겠다고"
+        ],
+        answer: "도를 닦으며 다시 만날 날을 기다리겠다고",
+        explanation: "슬픔에서 끝내지 않고 다시 만날 곳을 바라봐요."
+    },
+    {
+        id: "seodongyo-purpose",
+        poemId: "hyangga-seodongyo",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "이 노래는 무엇을 하려고 지어 불렸나요?",
+        choices: [
+            "소문을 퍼뜨려 공주와 맺어지려고",
+            "공주를 놀리려고",
+            "임금을 칭찬하려고"
+        ],
+        answer: "소문을 퍼뜨려 공주와 맺어지려고",
+        explanation: "노래가 온 장안에 퍼지자 공주는 궁에서 쫓겨나 정말 서동을 만나게 돼요."
+    },
+    {
+        id: "seodongyo-children",
+        poemId: "hyangga-seodongyo",
+        category: "장면 확인",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "이 노래를 퍼뜨린 사람들은 누구인가요?",
+        choices: ["아이들", "신하들", "장사꾼들"],
+        answer: "아이들",
+        explanation: "서동이 마를 나눠 주며 아이들에게 부르게 했어요."
+    },
+    {
+        id: "heonhwaga-flower",
+        poemId: "hyangga-heonhwaga",
+        category: "장면 확인",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "노인이 바치겠다고 한 것은 무엇인가요?",
+        choices: ["바위 위의 꽃", "암소", "바닷물"],
+        answer: "바위 위의 꽃",
+        explanation: "아무도 오르지 못한다던 바위의 꽃이에요."
+    },
+    {
+        id: "heonhwaga-condition",
+        poemId: "hyangga-heonhwaga",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "꽃을 바치는 데 붙인 조건은 무엇인가요?",
+        choices: ["나를 부끄러워하지 않으신다면", "암소를 주신다면", "이름을 알려 주신다면"],
+        answer: "나를 부끄러워하지 않으신다면",
+        explanation: "늙은 자기를 부끄러워하지만 않는다면 위험한 바위도 오르겠다는 말이에요."
+    },
+    {
+        id: "hyangga-what",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "이 묶음의 노래들을 떠올려 보세요.",
+        sentence: "향가는 어떤 노래인가요?",
+        choices: [
+            "천 년도 더 전, 신라 사람들이 우리말로 부른 노래",
+            "조선 선비들이 한문으로 지은 시",
+            "백 년 전 신문에 실린 시"
+        ],
+        answer: "천 년도 더 전, 신라 사람들이 우리말로 부른 노래",
+        explanation: "한자를 빌려 우리말을 적었기 때문에, 오늘 말로 옮겨서 읽어요."
+    },
+
+    // ── 중1 · 교과서에서 읽는 시 ──────────────────────────────────
+    {
+        id: "eomma-wait",
+        poemId: "gihyeongdo-eomma",
+        category: "장면 확인",
+        prompt: "교과서에서 시를 읽고 답해 보세요.",
+        sentence: "어린 말하는 이가 빈방에서 기다린 사람은 누구인가요?",
+        choices: ["시장에 간 엄마", "학교에 간 누나", "일 나간 아버지"],
+        answer: "시장에 간 엄마",
+        explanation: "엄마는 팔 것을 이고 시장에 갔고, 밤이 되어도 오지 않아요."
+    },
+    {
+        id: "eomma-sell",
+        poemId: "gihyeongdo-eomma",
+        category: "장면 확인",
+        prompt: "교과서에서 시를 읽고 답해 보세요.",
+        sentence: "엄마가 팔러 간 것은 무엇인가요?",
+        choices: ["열무", "생선", "옷감"],
+        answer: "열무",
+        explanation: "팔릴 때까지 돌아올 수 없으니 밤이 깊어요."
+    },
+    {
+        id: "eomma-now",
+        poemId: "gihyeongdo-eomma",
+        category: "마음 읽기",
+        prompt: "교과서에서 시를 읽고 답해 보세요.",
+        sentence: "시의 끝에서 말하는 이는 어느 때에 서 있나요?",
+        choices: [
+            "어른이 되어 어린 날을 돌아보는 때",
+            "여전히 어린 그날 밤",
+            "엄마가 돌아온 아침"
+        ],
+        answer: "어른이 되어 어린 날을 돌아보는 때",
+        explanation: "그 밤을 떠올리면 지금도 마음 한쪽이 아프다는 말로 끝나요."
+    },
+    {
+        id: "eomma-feel",
+        poemId: "gihyeongdo-eomma",
+        category: "마음 읽기",
+        prompt: "교과서에서 시를 읽고 답해 보세요.",
+        sentence: "빈방에서 혼자 기다리던 아이의 마음은 어떠했나요?",
+        choices: ["무섭고 외로웠어요", "신나고 즐거웠어요", "아무렇지도 않았어요"],
+        answer: "무섭고 외로웠어요",
+        explanation: "빗소리와 어둠 속에서 숙제를 하며 엄마를 기다려요."
+    },
+    {
+        id: "seongtanje-father",
+        poemId: "kimjonggil-seongtanje",
+        category: "장면 확인",
+        prompt: "교과서에서 시를 읽고 답해 보세요.",
+        sentence: "아버지가 눈 속을 헤치고 구해 온 것은 무엇인가요?",
+        choices: ["붉은 산수유 열매", "약초 뿌리", "장작"],
+        answer: "붉은 산수유 열매",
+        explanation: "흰 눈 속의 붉은 열매라 빛깔이 또렷하게 남아요."
+    },
+    {
+        id: "seongtanje-why",
+        poemId: "kimjonggil-seongtanje",
+        category: "마음 읽기",
+        prompt: "교과서에서 시를 읽고 답해 보세요.",
+        sentence: "아버지가 그것을 구해 온 까닭은 무엇인가요?",
+        choices: ["앓는 아들의 약으로 쓰려고", "성탄절 상을 차리려고", "이웃에게 팔려고"],
+        answer: "앓는 아들의 약으로 쓰려고",
+        explanation: "열이 나는 아이에게 먹일 약이 그 열매였어요."
+    },
+    {
+        id: "seongtanje-now",
+        poemId: "kimjonggil-seongtanje",
+        category: "마음 읽기",
+        prompt: "교과서에서 시를 읽고 답해 보세요.",
+        sentence: "어른이 된 말하는 이가 눈을 보며 떠올리는 것은 무엇인가요?",
+        choices: ["아버지의 사랑", "어린 날의 병", "성탄절 선물"],
+        answer: "아버지의 사랑",
+        explanation: "세월이 흘러 그때 아버지 나이가 되어서야 그 마음을 알아요."
+    },
+    {
+        id: "meonnara-who",
+        poemId: "sinseokjeong-meonnara",
+        category: "장면 확인",
+        prompt: "교과서에서 시를 읽고 답해 보세요.",
+        sentence: "말하는 이가 함께 가자고 하는 사람은 누구인가요?",
+        choices: ["어머니", "친구", "누이"],
+        answer: "어머니",
+        explanation: "'어머니'를 부르며 묻는 말이 묶음마다 되풀이돼요."
+    },
+    {
+        id: "meonnara-where",
+        poemId: "sinseokjeong-meonnara",
+        category: "마음 읽기",
+        prompt: "교과서에서 시를 읽고 답해 보세요.",
+        sentence: "그 먼 나라는 어떤 곳인가요?",
+        choices: [
+            "다툼 없이 자연 속에서 조용히 사는 곳",
+            "큰 도시가 있는 곳",
+            "전쟁이 벌어지는 곳"
+        ],
+        answer: "다툼 없이 자연 속에서 조용히 사는 곳",
+        explanation: "실제로 있는 나라가 아니라 마음이 그리는 곳이에요."
+    },
+    {
+        id: "textbook-common",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "이 묶음의 시들을 떠올려 보세요.",
+        sentence: "「엄마 걱정」「성탄제」「그 먼 나라를 알으십니까」에 똑같이 있는 것은 무엇인가요?",
+        choices: [
+            "부모를 향한 마음",
+            "나라를 잃은 슬픔",
+            "친구와 헤어진 아쉬움"
+        ],
+        answer: "부모를 향한 마음",
+        explanation: "엄마, 아버지, 어머니. 세 시가 부르는 사람이 같아요."
     }
 ]);
