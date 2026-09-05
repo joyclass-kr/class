@@ -262,6 +262,510 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🦅",
+        art: "cover.webp",
+        title: "Five-Fathom Beak",
+        intro: [
+            "This is an oral tale with no known author. In it there is a huge bird with a tail five fathoms long and a beak as long again.",
+            "A fathom is an old measure, the length of two arms spread wide, about as much as a grown person's height.",
+            "It is one of the most frightening creatures in our old tales. Children love it because it is beaten in the end."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Sky Goes Dark",
+            beats: [
+                {
+                    art: "01-mother.webp",
+                    emoji: "🌿",
+                    left: [
+                        "Long ago a mother and her son lived alone in a mountain village.",
+                        "The father had died when the son was still a baby.",
+                        "The son was twelve now, and as strong as a grown man.",
+                        "The two ploughed and cut wood and just got by."
+                    ],
+                    right: [
+                        { t: "\"Mother, I shall dig the greens today.\"", v: "boy" },
+                        "The son said it as he took up his carrying frame.",
+                        { t: "\"No need. You go and cut the wood.\"", v: "mother" },
+                        "His mother tapped him on the back and laughed out loud.",
+                        "Then she took her basket under her arm and went up the hill behind."
+                    ]
+                },
+                {
+                    art: "02-shadow.webp",
+                    emoji: "🌑",
+                    left: [
+                        "His mother was digging greens when all at once it went dark.",
+                        "The sun had been good and the greens easy to see.",
+                        "It was broad day, without a cloud in the sky.",
+                        "His mother tilted her head and looked up.",
+                        "She still had the basket in her hand."
+                    ],
+                    right: [
+                        "The whole sky was covered with black wings.",
+                        "A tail five fathoms long, and a beak as long again.",
+                        "A fathom is the length of two arms spread wide.",
+                        "It was a bigger bird than she had ever seen.",
+                        "She could not cry out, and froze where she stood.",
+                        "The beak came down towards her."
+                    ]
+                },
+                {
+                    art: "03-empty.webp",
+                    emoji: "🧺",
+                    left: [
+                        "At evening the son came down with wood on his back.",
+                        "The load pressed heavy on his shoulders.",
+                        { t: "\"Mother, I am back!\"", v: "boy" },
+                        "The son called it out loud in the middle of the yard.",
+                        "But the house was quiet, as if it were empty."
+                    ],
+                    right: [
+                        "He ran straight up the hill behind the house.",
+                        "The greens basket lay tipped over in the grass.",
+                        "Beside it one black feather had fallen.",
+                        "The son went all over the mountain calling for his mother.",
+                        "The hand that held the feather was shaking."
+                    ]
+                },
+                {
+                    art: "04-name.webp",
+                    emoji: "😨",
+                    left: [
+                        "The son took that feather down to the village.",
+                        "It was as long as he was tall, and stiff.",
+                        "The oldest man in the village saw it and went pale.",
+                        "The old man waved a hand and backed away.",
+                        "He could not get his words out."
+                    ],
+                    right: [
+                        { t: "\"That is Five-Fathom Tail, Five-Fathom Beak.\"", v: "old" },
+                        "The villagers muttered and drew back.",
+                        { t: "\"Nobody taken by that thing has ever come back.\"", v: "man" },
+                        "The son took the carrying frame off and threw it down in the yard.",
+                        { t: "\"I shall go and bring her home.\"", v: "boy" }
+                    ]
+                },
+                {
+                    art: "05-set-out.webp",
+                    emoji: "🥾",
+                    left: [
+                        { t: "\"Where are you going! Are we to lose you as well!\"", v: "old" },
+                        "The old man caught the son by the arm.",
+                        { t: "\"My mother is over there.\"", v: "boy" },
+                        "The son took that hand off, quietly. Nothing shook him at all.",
+                        "He tied a few pairs of straw shoes at his waist and set off."
+                    ],
+                    right: [
+                        "Towards the setting sun, the way the feather had come.",
+                        "He meant to walk till those shoes were worn through.",
+                        "The villagers came out to the pass and watched.",
+                        "Not one of them could say a safe journey to him.",
+                        "The son's back went over the hill and was gone."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Those He Met on the Road",
+            beats: [
+                {
+                    art: "06-washing.webp",
+                    emoji: "🧺",
+                    left: [
+                        "After days of walking he met an old woman washing at a stream.",
+                        "The washing was piled like a hill and her hands were very slow.",
+                        "The son was in a hurry, and his feet would not keep still.",
+                        "And still he stopped at that stream."
+                    ],
+                    right: [
+                        { t: "\"Child, tread this with me a while before you go.\"", v: "granny" },
+                        "The old woman asked it, knocking at her back.",
+                        "The son rolled up his trousers and got into the washing tub.",
+                        "He trod it down till the sun went low.",
+                        "His feet swelled up, and he did not say it was hard."
+                    ]
+                },
+                {
+                    art: "07-direction.webp",
+                    emoji: "🧭",
+                    left: [
+                        "When the washing was done the old woman asked at last.",
+                        { t: "\"Now then, where are you off to in such a hurry?\"", v: "granny" },
+                        "The son told her about his mother, all of it.",
+                        "The old woman's eyes went as round as plates.",
+                        "She dropped her washing club."
+                    ],
+                    right: [
+                        "The old woman slapped her knee.",
+                        { t: "\"That thing lives on the cliff at the western end.\"", v: "granny" },
+                        { t: "\"Never go near it before the sun goes down.\"", v: "granny" },
+                        { t: "\"After that it is in the nest.\"", v: "granny" },
+                        "The son set those words firmly in his mind and went on."
+                    ]
+                },
+                {
+                    art: "08-field.webp",
+                    emoji: "🌾",
+                    left: [
+                        "Next day he met an old man weeding a field.",
+                        "His back was bent and the hoe kept stopping.",
+                        "There was no end in sight to the furrows.",
+                        "The son sat down in the next furrow without a word and took a hoe.",
+                        "The old man glanced at him and said nothing at all."
+                    ],
+                    right: [
+                        "Only when the whole field was done did the old man straighten up.",
+                        "By then the sun had gone down behind the hill.",
+                        { t: "\"Thank you. But what is the matter with your hands?\"", v: "old" },
+                        "The son's palms were split all over.",
+                        "He put both hands behind his back quickly."
+                    ]
+                },
+                {
+                    art: "09-club.webp",
+                    emoji: "🔨",
+                    left: [
+                        "Hearing the story the old man got up and went into his shed.",
+                        "He had the face of somebody who has remembered something.",
+                        "After a long while he came out with a black club.",
+                        "It was an iron club as tall as the son himself.",
+                        { t: "\"I used this when I was young.\"", v: "old" }
+                    ],
+                    right: [
+                        { t: "\"Heat it red and put it down that thing's throat.\"", v: "old" },
+                        "The old man tapped the son on the shoulder.",
+                        { t: "\"The beak is five fathoms, but there is only one throat.\"", v: "old" },
+                        "The son tied the club tight on his back.",
+                        "And then he bowed low to the old man."
+                    ]
+                },
+                {
+                    art: "10-cliff.webp",
+                    emoji: "🪨",
+                    left: [
+                        "Days more of walking brought him to the western end at last.",
+                        "The shoes at his waist were on their third pair already.",
+                        "A rock cliff stood up as if to stab the sky.",
+                        "The wind struck the cliff and hummed.",
+                        "The son tipped his head back and looked up."
+                    ],
+                    right: [
+                        "At the top of the cliff was a nest heaped with branches.",
+                        "Broken branches lay scattered all round it.",
+                        "The son kept low and watched what was above.",
+                        "He swallowed hard.",
+                        "And he had not the least thought of turning back."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Only One Throat",
+            beats: [
+                {
+                    art: "11-nest.webp",
+                    emoji: "🪹",
+                    left: [
+                        "The son climbed the rock with his hands and feet.",
+                        "The rock was slippery and his fingertips tore.",
+                        "He set his teeth and went up a hand's width at a time.",
+                        "The sun was not down yet, so the nest was empty.",
+                        "He rolled himself into it, and the branches cracked."
+                    ],
+                    right: [
+                        "But from one side of the nest came a groaning.",
+                        "It was very thin and had no strength in it.",
+                        "He ran over, and his mother was crouched inside.",
+                        { t: "\"Mother!\"", v: "boy" },
+                        "His mother knew him, and the tears came without a sound."
+                    ]
+                },
+                {
+                    art: "12-fire.webp",
+                    emoji: "🔥",
+                    left: [
+                        "His mother caught his sleeve, shaking all over.",
+                        { t: "\"Hush. That thing will be back soon.\"", v: "boy" },
+                        "The son's voice was very low and very steady.",
+                        "He hid his mother deep in a crack in the cliff rock.",
+                        "He took off his coat and put it over her."
+                    ],
+                    right: [
+                        "Then he gathered dry branches and lit a fire.",
+                        "He pushed the iron club deep into it.",
+                        "The iron went red, little by little.",
+                        "Sparks flew and he did not feel his hands burn.",
+                        "The son held on to it and waited."
+                    ]
+                },
+                {
+                    art: "13-fight.webp",
+                    emoji: "⚔️",
+                    left: [
+                        "As the sun went down the sky went black again.",
+                        "The beating of wings rang like thunder.",
+                        "Five-Fathom Tail, Five-Fathom Beak came down onto the nest.",
+                        "Branches flew every way. The son lay flat.",
+                        "The whole cliff shook under him."
+                    ],
+                    right: [
+                        { t: "\"Hoooo, I smell a person here!\"", v: "beast" },
+                        "The bird's eyes flared red like torches.",
+                        "The five-fathom beak opened wide towards the son.",
+                        "The son took a new hold on the club with both hands.",
+                        "He did not step back one step."
+                    ]
+                },
+                {
+                    art: "14-home.webp",
+                    emoji: "🏠",
+                    left: [
+                        "The moment the bird opened its beak to swallow him,",
+                        "the son thrust the red-hot club out in front of it.",
+                        "The monster bird closed on it and bit.",
+                        "Sssss —",
+                        "It screamed and rolled off the cliff below."
+                    ],
+                    right: [
+                        "From that day the sky over that district never went dark again.",
+                        "The son came down the cliff with his mother on his back.",
+                        { t: "\"Am I not heavy?\"", v: "mother" },
+                        { t: "\"You are lighter than a greens basket.\"", v: "boy" },
+                        "His mother cried on his back a long while."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What is Five-Fathom Tail, Five-Fathom Beak?", choices: ["A fox with a long tail", "A very big bird", "A snake that lives in water"], answer: 1 },
+        { q: "What does a fathom measure?", choices: ["The length of one step", "The width of a hand span", "The length of two arms spread"], answer: 2 },
+        { q: "What did the son pick up on the hill?", choices: ["A broken branch", "A pair of straw shoes", "One black feather"], answer: 2 },
+        { q: "How did the son help the old woman?", choices: ["Trod the washing for her", "Weeded a whole field", "Made her straw shoes"], answer: 0 },
+        { q: "Where did the old man say to put the club?", choices: ["Into the thing's wing", "Into the nest", "Down the thing's throat"], answer: 2 },
+        { q: "Where was the monster bird's nest?", choices: ["Deep inside a cave", "On a sheer rock cliff", "Inside a great old tree"], answer: 1 },
+        { q: "What did the monster bird bite on?", choices: ["The red-hot club", "A dry branch", "The son's straw shoes"], answer: 0 },
+        { q: "What did the son say with his mother on his back?", choices: ["That he would be back soon", "That he would bring her home", "That she was lighter than a basket"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "Even in a hurry he trod the washing and weeded the field, so he got his road and his weapon where he stopped.",
+                "The beak was five fathoms but the throat was only one, so even a huge thing has a weak place in it.",
+                "He said she was lighter than a greens basket, so you can tell how thin she had grown in that nest.",
+                "The son asked the old man for the iron club, so he must have known in advance what he would need."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "huge", k: "아주 커다란", s: "In it there is a huge bird" },
+            { w: "fathoms", k: "발", s: "a tail five fathoms long and a beak as long again" },
+            { w: "beak", k: "부리", s: "a beak as long again" },
+            { w: "as long again", k: "그만큼 또", s: "a tail five fathoms long and a beak as long again" },
+            { w: "measure", k: "재는 단위", s: "A fathom is an old measure" },
+            { w: "spread wide", k: "쭉 벌린", s: "the length of two arms spread wide" },
+            { w: "creatures", k: "짐승", s: "one of the most frightening creatures in our old tales" },
+            { w: "is beaten (beat)", k: "지고 만다", s: "Children love it because it is beaten in the end." }
+        ],
+        "01-mother.webp": [
+            { w: "lived alone", k: "둘이 살았다", s: "a mother and her son lived alone in a mountain village" },
+            { w: "still a baby", k: "갓난아기일 적", s: "The father had died when the son was still a baby." },
+            { w: "as strong as ~", k: "~ 못지않게 힘센", s: "as strong as a grown man" },
+            { w: "just got by", k: "겨우겨우 살았다", s: "The two ploughed and cut wood and just got by." },
+            { w: "greens", k: "나물", s: "Mother, I shall dig the greens today." },
+            { w: "carrying frame", k: "지게", s: "The son said it as he took up his carrying frame." },
+            { w: "No need", k: "됐다", s: "No need. You go and cut the wood." },
+            { w: "tapped (tap)", k: "툭 쳤다", s: "His mother tapped him on the back and laughed out loud." },
+            { w: "under her arm", k: "옆구리에 끼고", s: "she took her basket under her arm" }
+        ],
+        "02-shadow.webp": [
+            { w: "all at once", k: "갑자기", s: "His mother was digging greens when all at once it went dark." },
+            { w: "broad day", k: "대낮", s: "It was broad day, without a cloud in the sky." },
+            { w: "tilted her head", k: "고개를 갸웃했다", s: "His mother tilted her head and looked up." },
+            { w: "was covered with ~", k: "~으로 덮였다", s: "The whole sky was covered with black wings." },
+            { w: "than she had ever seen", k: "여태 본 적 없는", s: "It was a bigger bird than she had ever seen." },
+            { w: "cry out", k: "소리를 내다", s: "She could not cry out, and froze where she stood." },
+            { w: "froze (freeze)", k: "얼어붙었다", s: "She could not cry out, and froze where she stood." },
+            { w: "came down towards ~", k: "~를 향해 내려왔다", s: "The beak came down towards her." }
+        ],
+        "03-empty.webp": [
+            { w: "load", k: "나뭇짐", s: "The load pressed heavy on his shoulders." },
+            { w: "pressed heavy", k: "묵직하게 짓눌렀다", s: "The load pressed heavy on his shoulders." },
+            { w: "as if it were empty", k: "텅 빈 듯", s: "But the house was quiet, as if it were empty." },
+            { w: "straight up", k: "그길로", s: "He ran straight up the hill behind the house." },
+            { w: "tipped over", k: "널브러진", s: "The greens basket lay tipped over in the grass." },
+            { w: "feather", k: "깃털", s: "Beside it one black feather had fallen." },
+            { w: "all over ~", k: "온 ~을", s: "The son went all over the mountain calling for his mother." },
+            { w: "was shaking", k: "부들부들 떨렸다", s: "The hand that held the feather was shaking." }
+        ],
+        "04-name.webp": [
+            { w: "as long as he was tall", k: "제 키만큼 긴", s: "It was as long as he was tall, and stiff." },
+            { w: "stiff", k: "뻣뻣한", s: "It was as long as he was tall, and stiff." },
+            { w: "went pale", k: "낯빛이 하얘졌다", s: "The oldest man in the village saw it and went pale." },
+            { w: "backed away", k: "뒷걸음질 쳤다", s: "The old man waved a hand and backed away." },
+            { w: "get his words out", k: "말을 잇다", s: "He could not get his words out." },
+            { w: "drew back (draw)", k: "물러섰다", s: "The villagers muttered and drew back." },
+            { w: "taken by ~", k: "~에게 끌려간", s: "Nobody taken by that thing has ever come back." },
+            { w: "threw ~ down (throw)", k: "던졌다", s: "The son took the frame off and threw it down in the yard." }
+        ],
+        "05-set-out.webp": [
+            { w: "Are we to ~", k: "~할 참이냐", s: "Are we to lose you as well!" },
+            { w: "caught ~ by the arm", k: "팔을 붙잡았다", s: "The old man caught the son by the arm." },
+            { w: "took ~ off", k: "떼어 놓았다", s: "The son took that hand off, quietly." },
+            { w: "Nothing shook him", k: "조금도 흔들리지 않았다", s: "Nothing shook him at all." },
+            { w: "at his waist", k: "허리에", s: "He tied a few pairs of straw shoes at his waist." },
+            { w: "the setting sun", k: "해 지는 쪽", s: "Towards the setting sun, the way the feather had come." },
+            { w: "worn through (wear)", k: "다 닳은", s: "He meant to walk till those shoes were worn through." },
+            { w: "pass", k: "고갯마루", s: "The villagers came out to the pass and watched." },
+            { w: "a safe journey", k: "잘 다녀오라는 말", s: "Not one of them could say a safe journey to him." }
+        ],
+        "06-washing.webp": [
+            { w: "piled like a hill", k: "산더미처럼 쌓인", s: "The washing was piled like a hill" },
+            { w: "in a hurry", k: "마음이 급한", s: "The son was in a hurry" },
+            { w: "keep still", k: "가만있다", s: "his feet would not keep still" },
+            { w: "tread (tread)", k: "밟다", s: "Child, tread this with me a while before you go." },
+            { w: "knocking at her back", k: "허리를 두드리며", s: "The old woman asked it, knocking at her back." },
+            { w: "rolled up (roll)", k: "걷어 올렸다", s: "The son rolled up his trousers" },
+            { w: "washing tub", k: "빨래통", s: "got into the washing tub" },
+            { w: "swelled up (swell)", k: "퉁퉁 부었다", s: "His feet swelled up" }
+        ],
+        "07-direction.webp": [
+            { w: "at last", k: "그제야", s: "When the washing was done the old woman asked at last." },
+            { w: "off to ~", k: "~로 가는 길인", s: "where are you off to in such a hurry?" },
+            { w: "all of it", k: "하나도 빠짐없이", s: "The son told her about his mother, all of it." },
+            { w: "as round as plates", k: "접시만 해진", s: "The old woman's eyes went as round as plates." },
+            { w: "washing club", k: "빨래 방망이", s: "She dropped her washing club." },
+            { w: "the western end", k: "서쪽 끝", s: "That thing lives on the cliff at the western end." },
+            { w: "Never go near ~", k: "절대로 다가가지 마라", s: "Never go near it before the sun goes down." },
+            { w: "set ~ firmly in his mind", k: "마음에 새겼다", s: "The son set those words firmly in his mind." }
+        ],
+        "08-field.webp": [
+            { w: "weeding (weed)", k: "밭을 매는", s: "Next day he met an old man weeding a field." },
+            { w: "bent", k: "굽은", s: "His back was bent and the hoe kept stopping." },
+            { w: "hoe", k: "호미", s: "His back was bent and the hoe kept stopping." },
+            { w: "no end in sight", k: "끝이 보이지 않는", s: "There was no end in sight to the furrows." },
+            { w: "furrows", k: "밭고랑", s: "There was no end in sight to the furrows." },
+            { w: "glanced at ~", k: "흘끔 보았다", s: "The old man glanced at him and said nothing at all." },
+            { w: "straighten up", k: "허리를 펴다", s: "Only when the whole field was done did the old man straighten up." },
+            { w: "the matter with ~", k: "~가 왜 그런가", s: "But what is the matter with your hands?" },
+            { w: "split (split)", k: "다 텄다", s: "The son's palms were split all over." }
+        ],
+        "09-club.webp": [
+            { w: "shed", k: "헛간", s: "the old man got up and went into his shed" },
+            { w: "remembered something", k: "무언가 생각났다", s: "He had the face of somebody who has remembered something." },
+            { w: "club", k: "몽둥이", s: "After a long while he came out with a black club." },
+            { w: "iron", k: "무쇠", s: "It was an iron club as tall as the son himself." },
+            { w: "Heat it red", k: "벌겋게 달구어라", s: "Heat it red and put it down that thing's throat." },
+            { w: "throat", k: "목구멍", s: "put it down that thing's throat" },
+            { w: "only one", k: "하나뿐인", s: "The beak is five fathoms, but there is only one throat." },
+            { w: "bowed low", k: "깊이 절했다", s: "And then he bowed low to the old man." }
+        ],
+        "10-cliff.webp": [
+            { w: "Days more", k: "며칠을 더", s: "Days more of walking brought him to the western end." },
+            { w: "on their third pair", k: "세 켤레째인", s: "The shoes at his waist were on their third pair already." },
+            { w: "as if to stab ~", k: "~를 찌를 듯이", s: "A rock cliff stood up as if to stab the sky." },
+            { w: "hummed (hum)", k: "웅웅 울었다", s: "The wind struck the cliff and hummed." },
+            { w: "tipped his head back", k: "목을 젖혔다", s: "The son tipped his head back and looked up." },
+            { w: "nest", k: "둥지", s: "At the top of the cliff was a nest heaped with branches." },
+            { w: "heaped with ~", k: "산더미처럼 쌓은", s: "a nest heaped with branches" },
+            { w: "scattered (scatter)", k: "어지럽게 흩어진", s: "Broken branches lay scattered all round it." },
+            { w: "kept low", k: "몸을 낮췄다", s: "The son kept low and watched what was above." },
+            { w: "not the least thought", k: "조금도 생각이 없는", s: "he had not the least thought of turning back" }
+        ],
+        "11-nest.webp": [
+            { w: "slippery", k: "미끄러운", s: "The rock was slippery and his fingertips tore." },
+            { w: "tore (tear)", k: "찢어졌다", s: "The rock was slippery and his fingertips tore." },
+            { w: "set his teeth", k: "이를 악물었다", s: "He set his teeth and went up a hand's width at a time." },
+            { w: "a hand's width", k: "한 뼘", s: "went up a hand's width at a time" },
+            { w: "rolled himself into ~", k: "몸을 굴려 들어갔다", s: "He rolled himself into it, and the branches cracked." },
+            { w: "groaning", k: "신음 소리", s: "But from one side of the nest came a groaning." },
+            { w: "crouched (crouch)", k: "웅크린", s: "his mother was crouched inside" },
+            { w: "knew him (know)", k: "알아보았다", s: "His mother knew him, and the tears came without a sound." },
+            { w: "without a sound", k: "소리 없이", s: "the tears came without a sound" }
+        ],
+        "12-fire.webp": [
+            { w: "caught his sleeve", k: "소매를 붙잡았다", s: "His mother caught his sleeve, shaking all over." },
+            { w: "shaking all over", k: "덜덜 떨며", s: "His mother caught his sleeve, shaking all over." },
+            { w: "Hush", k: "쉿", s: "Hush. That thing will be back soon." },
+            { w: "steady", k: "차분한", s: "The son's voice was very low and very steady." },
+            { w: "crack", k: "바위 틈", s: "He hid his mother deep in a crack in the cliff rock." },
+            { w: "lit a fire (light)", k: "불을 지폈다", s: "Then he gathered dry branches and lit a fire." },
+            { w: "went red", k: "벌겋게 달았다", s: "The iron went red, little by little." },
+            { w: "Sparks", k: "불티", s: "Sparks flew and he did not feel his hands burn." },
+            { w: "held on to ~", k: "꼭 붙들었다", s: "The son held on to it and waited." }
+        ],
+        "13-fight.webp": [
+            { w: "beating of wings", k: "날갯짓 소리", s: "The beating of wings rang like thunder." },
+            { w: "like thunder", k: "천둥처럼", s: "The beating of wings rang like thunder." },
+            { w: "came down onto ~", k: "내려앉았다", s: "Five-Fathom Beak came down onto the nest." },
+            { w: "every way", k: "사방으로", s: "Branches flew every way. The son lay flat." },
+            { w: "lay flat (lie)", k: "바짝 엎드렸다", s: "The son lay flat." },
+            { w: "I smell ~", k: "~ 냄새가 난다", s: "Hoooo, I smell a person here!" },
+            { w: "flared (flare)", k: "번뜩였다", s: "The bird's eyes flared red like torches." },
+            { w: "took a new hold", k: "고쳐 잡았다", s: "The son took a new hold on the club with both hands." },
+            { w: "step back", k: "물러서다", s: "He did not step back one step." }
+        ],
+        "14-home.webp": [
+            { w: "The moment ~", k: "~하는 순간", s: "The moment the bird opened its beak to swallow him" },
+            { w: "swallow", k: "삼키다", s: "the bird opened its beak to swallow him" },
+            { w: "thrust (thrust)", k: "쑥 내밀었다", s: "the son thrust the red-hot club out in front of it" },
+            { w: "red-hot", k: "벌겋게 달군", s: "the son thrust the red-hot club out" },
+            { w: "closed on ~", k: "덥석 물었다", s: "The monster bird closed on it and bit." },
+            { w: "screamed (scream)", k: "비명을 질렀다", s: "It screamed and rolled off the cliff below." },
+            { w: "district", k: "고장", s: "the sky over that district never went dark again" },
+            { w: "on his back", k: "등에 업고", s: "The son came down the cliff with his mother on his back." },
+            { w: "lighter than ~", k: "~보다 가벼운", s: "You are lighter than a greens basket." }
+        ],
+        "after": [
+            { w: "tells you the size", k: "크기를 말해 준다", s: "The name itself tells you the size." },
+            { w: "side by side", k: "나란히", s: "five grown people would have to stand side by side" },
+            { w: "comes with it", k: "따라온다", s: "the size comes with it every time you say the name" },
+            { w: "sets out (set out)", k: "길을 떠난다", s: "a child sets out on a long road to find a mother" },
+            { w: "in return", k: "그 대가로", s: "and gets what is needed in return" },
+            { w: "the shape of it", k: "그 짜임", s: "That is the shape of it." },
+            { w: "piled up (pile)", k: "쌓인", s: "It was those stopped steps piled up." },
+            { w: "hurrying (hurry)", k: "서두르는", s: "In the places a hurrying person goes past" },
+            { w: "went past", k: "지나쳐 버렸다", s: "the places a hurrying person would have gone past" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🪶',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "The name itself tells you the size. A fathom is two arms spread wide, so for the tail alone five grown people would have to stand side by side. The size comes with it every time you say the name.",
+                    "Our old tales hold several stories of a child who sets out on a long road to find a mother. In them the child helps the people met on the way, and gets what is needed in return. That is the shape of it.",
+                    "What beat the monster was not strength. It was those stopped steps piled up.",
+                    "He was in a hurry, and he stopped anyway."
+                ],
+                right: [
+                    "The son beat that bird not because he was strong. He trod the washing and got his road; he weeded the field and got his weapon.",
+                    "In the places a hurrying person would have gone straight past, the son stopped his feet.",
+                    "Can you help somebody else even when you are in a hurry yourself?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "꽁지 닷발 주둥이 닷발은 무엇인가요?", choices: ["꼬리가 긴 여우", "아주 커다란 새", "물속에 사는 뱀"], answer: 1 },
     { q: "발이라는 말은 무엇을 재는 단위인가요?", choices: ["한 걸음의 길이", "손 한 뼘의 길이", "두 팔을 벌린 길이"], answer: 2 },

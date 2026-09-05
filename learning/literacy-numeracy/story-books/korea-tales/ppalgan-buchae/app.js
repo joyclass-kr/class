@@ -268,6 +268,509 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🪭",
+        art: "cover.webp",
+        title: "The Red Fan and the Blue Fan",
+        intro: [
+            "This is an oral tale with no known author. Two fans come into it, and a wave of one makes a nose grow or shrink.",
+            "Japan and China tell one very like it. The growing-nose fan is well known in Japan, so many scholars think it travelled between the three.",
+            "A nose growing is funny because a nose is the part of a face you notice most and can do least about."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Fans Found on the Mountain",
+            beats: [
+                {
+                    art: "01-nap.webp",
+                    emoji: "😴",
+                    left: [
+                        "Kim Cheomji liked a nap better than work.",
+                        "He carried his frame up the hill and looked for shade, not wood.",
+                        "That day too he lay flat down in the shade of a great tree.",
+                        "The pine wind tickled his face and he was snoring.",
+                        { t: "\"Sleep comes before wood today.\"", v: "man" }
+                    ],
+                    right: [
+                        "He woke from a good long sleep and there were two fans beside him.",
+                        "There had certainly been nothing there before.",
+                        "One was bright red and one was bright blue.",
+                        { t: "\"Well, here is luck for nothing.\"", v: "man" },
+                        "Kim Cheomji looked all round, and there was nobody there."
+                    ]
+                },
+                {
+                    art: "02-red.webp",
+                    emoji: "🪭",
+                    left: [
+                        "It was hot just then, so he picked up the red fan and fanned his face.",
+                        "The wind of it was pleasantly cool.",
+                        "One fan, two fans.",
+                        "And then the end of his nose began to tickle.",
+                        { t: "\"My word, that is cool.\"", v: "man" },
+                        "Kim Cheomji did not stop fanning."
+                    ],
+                    right: [
+                        "Sssstretch —",
+                        "His nose grew a finger's length longer!",
+                        "Kim Cheomji took hold of his nose with both hands and blinked.",
+                        { t: "\"Eh? What is wrong with my nose!\"", v: "man" },
+                        "He even pinched his cheek hard, thinking it was a dream."
+                    ]
+                },
+                {
+                    art: "03-blue.webp",
+                    emoji: "😱",
+                    left: [
+                        { t: "\"Aaah! What is happening!\"", v: "man" },
+                        "Kim Cheomji snatched up the blue fan in a fluster.",
+                        "Not from any plan. It was simply the one his hand found.",
+                        "The moment he fanned with the blue one his nose slid back into place.",
+                        "Only then did he let out a great breath."
+                    ],
+                    right: [
+                        "Kim Cheomji sat blankly for a long while.",
+                        "Then a smile crept over his mouth.",
+                        "That is it, he thought. I shall make money with this.",
+                        "The red fan made a nose grow and the blue fan made it shrink.",
+                        "He hid the two fans in his sleeve and went down."
+                    ]
+                },
+                {
+                    art: "04-feast.webp",
+                    emoji: "🎊",
+                    left: [
+                        "As it happened, a rich house in the village was holding a great feast.",
+                        "The smell of meat came right out past the gate.",
+                        "Kim Cheomji slipped in among the onlookers.",
+                        "In the top seat the master of the house was laughing and patting his belly.",
+                        { t: "\"That is the one. He will do nicely.\"", v: "man" }
+                    ],
+                    right: [
+                        "Kim Cheomji edged back behind a pillar.",
+                        "Out of his sleeve came the red fan.",
+                        "Wave, wave, wave.",
+                        "Nobody was paying any attention to the man behind the pillar.",
+                        "Every time the fan moved, Kim Cheomji's eyes shone."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · A House for a Fan",
+            beats: [
+                {
+                    art: "05-nose.webp",
+                    emoji: "😲",
+                    left: [
+                        "The old man's nose began to grow and grow.",
+                        "One hand's width, two, three.",
+                        "At first nobody noticed it at all.",
+                        "Then the nose went plop into his soup bowl.",
+                        { t: "\"Eh? What is that!\"", v: "man" },
+                        "The man beside him dropped his chopsticks."
+                    ],
+                    right: [
+                        { t: "\"Aaargh! The master's nose!\"", v: "man" },
+                        "The feast table went over and the whole house was in an uproar.",
+                        "The guests screamed and ran.",
+                        "The nose grew all night, out into the yard.",
+                        "Three doctors were called, and not one could mend that nose."
+                    ]
+                },
+                {
+                    art: "06-cure.webp",
+                    emoji: "🩺",
+                    left: [
+                        "Three days went by like that.",
+                        "The old man's nose still reached to the yard.",
+                        "He could not eat and he could not sleep.",
+                        { t: "\"A great reward to whoever mends this nose!\"", v: "old" },
+                        "Only then did Kim Cheomji come strolling up."
+                    ],
+                    right: [
+                        "Kim Cheomji took the blue fan from his sleeve and waved it a few times.",
+                        "And the old man's nose slid smaller.",
+                        { t: "\"Oh! What a gift that is!\"", v: "old" },
+                        "But the old man forgot his nose and stared at the fan.",
+                        "He could not take his eyes off that blue fan."
+                    ]
+                },
+                {
+                    art: "07-trade.webp",
+                    emoji: "🏯",
+                    left: [
+                        { t: "\"Sell me that fan, my good man.\"", v: "old" },
+                        { t: "\"No. I make my living by it.\"", v: "man" },
+                        { t: "\"Name your price and you shall have it!\"", v: "old" },
+                        "Kim Cheomji shook his head hard.",
+                        "The more he did, the hotter the old man's mind grew."
+                    ],
+                    right: [
+                        { t: "\"Then I shall give you this house, the whole of it!\"", v: "old" },
+                        { t: "\"...What?\"", v: "man" },
+                        { t: "\"The tiled house, the storehouse, the yard, all of it!\"", v: "old" },
+                        "There was fire in the old man's eyes.",
+                        "Kim Cheomji held out both fans, as if giving in."
+                    ]
+                },
+                {
+                    art: "08-moveout.webp",
+                    emoji: "🧳",
+                    left: [
+                        "That same day the old man's family packed up and left the house.",
+                        "Bundles on their heads, jars in their arms.",
+                        "Going out of the gate in a line, they looked like people fleeing a war.",
+                        "The villagers who came to watch clicked their tongues."
+                    ],
+                    right: [
+                        { t: "\"Sir, are you sure about this?\"", v: "woman" },
+                        { t: "\"Be quiet! With that fan I can build ten houses!\"", v: "old" },
+                        "The old man held the fans tight and said it loudly.",
+                        "His family walked out in a line, near to tears.",
+                        { t: "\"Is a fan worth more than a house!\"", v: "woman" }
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · What Earthquake Is This",
+            beats: [
+                {
+                    art: "09-play.webp",
+                    emoji: "🪭",
+                    left: [
+                        "The old man spread a mat in the empty yard and sat down, delighted.",
+                        "With this fan, he felt, he could do anything at all.",
+                        { t: "\"Now then, let us see.\"", v: "old" },
+                        "The old man waved the red fan gently.",
+                        { t: "\"This fan is mine now.\"", v: "old" }
+                    ],
+                    right: [
+                        "And his own nose went stretching up.",
+                        "He could not get over how strange it was.",
+                        { t: "\"Ha ha! This is good sport!\"", v: "old" },
+                        { t: "\"More! More!\"", v: "old" },
+                        "The old man did not know how to stop.",
+                        "Every time the nose grew he held his sides and laughed."
+                    ]
+                },
+                {
+                    art: "10-sky.webp",
+                    emoji: "☁️",
+                    left: [
+                        "The nose passed the roof, passed the trees, and went up through the clouds.",
+                        "A bird going by swerved aside in fright.",
+                        "And still the old man did not stop fanning.",
+                        "Through the cloud the nose went on climbing.",
+                        { t: "\"This is what I bought the fan for!\"", v: "old" }
+                    ],
+                    right: [
+                        { t: "\"More! Higher!\"", v: "old" },
+                        "The old man had no idea how far his nose had got.",
+                        "He only sat below and fanned.",
+                        "But above that cloud was the country of heaven.",
+                        "The old man knew nothing whatever about it."
+                    ]
+                },
+                {
+                    art: "11-emperor.webp",
+                    emoji: "🍚",
+                    left: [
+                        "Just then the Jade Emperor was in the middle of his dinner.",
+                        "There were plenty of his favourite greens on the table.",
+                        "Rattle, rattle.",
+                        "The table began to shake.",
+                        "The Jade Emperor drew his brows together."
+                    ],
+                    right: [
+                        "Soup slopped over the edge of the bowl.",
+                        "The chopsticks rolled off and fell.",
+                        { t: "\"What earthquake is this!\"", v: "old" },
+                        "The Jade Emperor put down his spoon and got to his feet.",
+                        { t: "\"Who is shaking the sky!\"", v: "old" },
+                        "The officials came running out in a fluster."
+                    ]
+                },
+                {
+                    art: "12-pillar.webp",
+                    emoji: "😡",
+                    left: [
+                        "Outside there was a red pillar sticking up through the cloud.",
+                        "The end of it was blunt, which was strange in itself.",
+                        { t: "\"What in the world is this!\"", v: "old" },
+                        "The officials came crowding out.",
+                        { t: "\"A pillar has grown here out of nowhere, sire.\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"That cannot be left as it is.\"", v: "old" },
+                        { t: "\"An ugly thing. Tie it fast so it does not shake!\"", v: "old" },
+                        "The officials ran at it with thick rope.",
+                        "They wound it round the pillar in several turns.",
+                        "The knots were tied so hard that it could not stir."
+                    ]
+                },
+                {
+                    art: "13-tied.webp",
+                    emoji: "🪢",
+                    left: [
+                        "Down in the yard the old man was jumping up and down.",
+                        "The squeezing of his nose brought tears to his eyes.",
+                        { t: "\"Ow, ow, ow! It hurts! It hurts, I say!\"", v: "old" },
+                        "The old man fanned with the blue fan in a panic.",
+                        { t: "\"Oh, my nose is coming off!\"", v: "old" }
+                    ],
+                    right: [
+                        "But as the nose shrank, his body was pulled up into the sky.",
+                        "His feet came off the ground.",
+                        { t: "\"Eh, eh, eh? What is this now!\"", v: "old" },
+                        "The old man kicked his legs and went up.",
+                        { t: "\"Well. There is a man hanging on the pillar.\"", v: "man" },
+                        "The officials of heaven were lost for words."
+                    ]
+                },
+                {
+                    art: "14-fall.webp",
+                    emoji: "💫",
+                    left: [
+                        "The officials of heaven untied the rope and the old man fell.",
+                        "He rolled over and thumped into a straw pile.",
+                        "By good luck no bone was broken.",
+                        "But the two fans had blown away somewhere.",
+                        "The old man crawled out of the straw and sat blankly a long while."
+                    ],
+                    right: [
+                        "Seeing the state of him, Kim Cheomji quietly took out the deed.",
+                        "His own face was burning.",
+                        { t: "\"I got this house with a fan, so it is not mine.\"", v: "man" },
+                        { t: "\"This house is yours again, sir.\"", v: "man" },
+                        "The family came home that same day, and Kim Cheomji went to cut wood."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What did Kim Cheomji do up the mountain?", choices: ["Cut a load of wood", "Slept in the shade", "Looked all round him"], answer: 1 },
+        { q: "What happens if you fan with the red fan?", choices: ["A nose gets shorter", "A nose turns red", "A nose gets longer"], answer: 2 },
+        { q: "What did the rich man give up for the fans?", choices: ["All the rice in his store", "Whatever price was asked", "The tiled house, all of it"], answer: 2 },
+        { q: "What did the officials of heaven notice?", choices: ["A pillar up through the cloud", "Two very large fans", "A fallen chopstick"], answer: 0 },
+        { q: "What did heaven do with the risen nose?", choices: ["Tied it, thinking it a pillar", "Covered it over with cloud", "Left it alone and watched"], answer: 0 },
+        { q: "What did Kim Cheomji take out for the old man?", choices: ["The deed to the house", "The red fan", "The blue fan"], answer: 0 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "Kim Cheomji gave back the house he got with a fan, so a thing got by cheating does not stay long.",
+                "The old man gave a whole house for a fan, so once your eye is caught you cannot judge a price.",
+                "The officials tied the nose thinking it a pillar, so from above you cannot even tell what a thing is.",
+                "The old man picked up the blue fan and shrank his nose, so he must have come to his senses then."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "fan", k: "부채", s: "Two fans come into it" },
+            { w: "a wave of ~", k: "한 번 부치기", s: "a wave of one makes a nose grow or shrink" },
+            { w: "shrink", k: "줄어들다", s: "makes a nose grow or shrink" },
+            { w: "very like it", k: "아주 닮은", s: "Japan and China tell one very like it." },
+            { w: "travelled (travel)", k: "오가며 퍼졌다", s: "many scholars think it travelled between the three" },
+            { w: "notice most", k: "가장 눈에 띈다", s: "a nose is the part of a face you notice most" },
+            { w: "do least about", k: "가장 마음대로 못 한다", s: "the part you notice most and can do least about" }
+        ],
+        "01-nap.webp": [
+            { w: "nap", k: "낮잠", s: "Kim Cheomji liked a nap better than work." },
+            { w: "shade", k: "그늘", s: "He carried his frame up the hill and looked for shade, not wood." },
+            { w: "lay flat down (lie)", k: "벌렁 드러누웠다", s: "he lay flat down in the shade of a great tree" },
+            { w: "tickled (tickle)", k: "간질였다", s: "The pine wind tickled his face and he was snoring." },
+            { w: "snoring (snore)", k: "코를 골았다", s: "he was snoring" },
+            { w: "woke from ~ (wake)", k: "자고 일어났다", s: "He woke from a good long sleep" },
+            { w: "certainly", k: "분명히", s: "There had certainly been nothing there before." },
+            { w: "luck for nothing", k: "웬 떡", s: "Well, here is luck for nothing." }
+        ],
+        "02-red.webp": [
+            { w: "fanned (fan)", k: "부채질했다", s: "he picked up the red fan and fanned his face" },
+            { w: "pleasantly", k: "제법", s: "The wind of it was pleasantly cool." },
+            { w: "tickle", k: "간질간질하다", s: "the end of his nose began to tickle" },
+            { w: "My word", k: "어허", s: "My word, that is cool." },
+            { w: "a finger's length", k: "손가락 하나만큼", s: "His nose grew a finger's length longer!" },
+            { w: "took hold of ~", k: "붙잡았다", s: "Kim Cheomji took hold of his nose with both hands" },
+            { w: "blinked (blink)", k: "눈을 껌뻑였다", s: "took hold of his nose with both hands and blinked" },
+            { w: "pinched (pinch)", k: "꼬집었다", s: "He even pinched his cheek hard, thinking it was a dream." }
+        ],
+        "03-blue.webp": [
+            { w: "snatched up (snatch)", k: "허둥지둥 집었다", s: "Kim Cheomji snatched up the blue fan in a fluster." },
+            { w: "in a fluster", k: "허둥지둥", s: "snatched up the blue fan in a fluster" },
+            { w: "Not from any plan", k: "무슨 생각이 있어서가 아니라", s: "Not from any plan. It was simply the one his hand found." },
+            { w: "slid back into place", k: "제자리로 돌아왔다", s: "his nose slid back into place" },
+            { w: "let out a breath", k: "숨을 내쉬었다", s: "Only then did he let out a great breath." },
+            { w: "blankly", k: "멍하니", s: "Kim Cheomji sat blankly for a long while." },
+            { w: "crept over ~ (creep)", k: "슬며시 번졌다", s: "Then a smile crept over his mouth." },
+            { w: "That is it", k: "옳거니", s: "That is it, he thought." },
+            { w: "sleeve", k: "소매", s: "He hid the two fans in his sleeve and went down." }
+        ],
+        "04-feast.webp": [
+            { w: "As it happened", k: "마침", s: "As it happened, a rich house was holding a great feast." },
+            { w: "right out past ~", k: "~ 밖까지", s: "The smell of meat came right out past the gate." },
+            { w: "slipped in (slip)", k: "슬쩍 끼어들었다", s: "Kim Cheomji slipped in among the onlookers." },
+            { w: "onlookers", k: "구경꾼", s: "slipped in among the onlookers" },
+            { w: "the top seat", k: "윗자리", s: "In the top seat the master of the house was laughing" },
+            { w: "patting his belly", k: "배를 두드리며", s: "laughing and patting his belly" },
+            { w: "He will do nicely", k: "저 사람이 딱이구나", s: "That is the one. He will do nicely." },
+            { w: "edged back (edge)", k: "슬금슬금 물러났다", s: "Kim Cheomji edged back behind a pillar." },
+            { w: "paying attention", k: "눈여겨보는", s: "Nobody was paying any attention to the man behind the pillar." }
+        ],
+        "05-nose.webp": [
+            { w: "hand's width", k: "뼘", s: "One hand's width, two, three." },
+            { w: "noticed (notice)", k: "알아챘다", s: "At first nobody noticed it at all." },
+            { w: "went plop", k: "풍덩 빠졌다", s: "Then the nose went plop into his soup bowl." },
+            { w: "chopsticks", k: "젓가락", s: "The man beside him dropped his chopsticks." },
+            { w: "went over (go over)", k: "뒤집혔다", s: "The feast table went over" },
+            { w: "in an uproar", k: "발칵 뒤집힌", s: "the whole house was in an uproar" },
+            { w: "screamed (scream)", k: "비명을 질렀다", s: "The guests screamed and ran." },
+            { w: "mend", k: "고치다", s: "not one could mend that nose" }
+        ],
+        "06-cure.webp": [
+            { w: "reached to ~", k: "~까지 뻗었다", s: "The old man's nose still reached to the yard." },
+            { w: "reward", k: "상", s: "A great reward to whoever mends this nose!" },
+            { w: "whoever ~", k: "~하는 이에게", s: "A great reward to whoever mends this nose!" },
+            { w: "come strolling up", k: "어슬렁어슬렁 나타났다", s: "Only then did Kim Cheomji come strolling up." },
+            { w: "waved (wave)", k: "부쳤다", s: "took the blue fan from his sleeve and waved it a few times" },
+            { w: "slid smaller (slide)", k: "스르륵 줄어들었다", s: "And the old man's nose slid smaller." },
+            { w: "stared at ~", k: "뚫어져라 보았다", s: "the old man forgot his nose and stared at the fan" },
+            { w: "take his eyes off ~", k: "눈을 떼다", s: "He could not take his eyes off that blue fan." }
+        ],
+        "07-trade.webp": [
+            { w: "my good man", k: "여보게", s: "Sell me that fan, my good man." },
+            { w: "make my living", k: "먹고살다", s: "No. I make my living by it." },
+            { w: "Name your price", k: "값은 부르는 대로", s: "Name your price and you shall have it!" },
+            { w: "The more ~, the hotter ~", k: "그럴수록 더", s: "The more he did, the hotter the old man's mind grew." },
+            { w: "the whole of it", k: "통째로", s: "Then I shall give you this house, the whole of it!" },
+            { w: "tiled house", k: "기와집", s: "The tiled house, the storehouse, the yard, all of it!" },
+            { w: "There was fire in ~", k: "불이 났다", s: "There was fire in the old man's eyes." },
+            { w: "as if giving in", k: "못 이기는 척", s: "Kim Cheomji held out both fans, as if giving in." }
+        ],
+        "08-moveout.webp": [
+            { w: "packed up", k: "짐을 쌌다", s: "the old man's family packed up and left the house" },
+            { w: "Bundles", k: "보따리", s: "Bundles on their heads, jars in their arms." },
+            { w: "in a line", k: "줄줄이", s: "Going out of the gate in a line" },
+            { w: "fleeing a war (flee)", k: "피난 가는", s: "they looked like people fleeing a war" },
+            { w: "clicked their tongues", k: "혀를 찼다", s: "The villagers who came to watch clicked their tongues." },
+            { w: "are you sure", k: "정말 이래도 되는가", s: "Sir, are you sure about this?" },
+            { w: "Be quiet", k: "시끄럽다", s: "Be quiet! With that fan I can build ten houses!" },
+            { w: "near to tears", k: "울상이 되어", s: "His family walked out in a line, near to tears." }
+        ],
+        "09-play.webp": [
+            { w: "spread a mat", k: "자리를 깔았다", s: "The old man spread a mat in the empty yard" },
+            { w: "delighted", k: "신이 난", s: "sat down, delighted" },
+            { w: "anything at all", k: "무엇이든", s: "With this fan, he felt, he could do anything at all." },
+            { w: "gently", k: "살랑살랑", s: "The old man waved the red fan gently." },
+            { w: "went stretching up", k: "쭉쭉 뻗어 올라갔다", s: "And his own nose went stretching up." },
+            { w: "get over ~", k: "신기해 어쩔 줄 모르다", s: "He could not get over how strange it was." },
+            { w: "good sport", k: "재미있는 일", s: "Ha ha! This is good sport!" },
+            { w: "how to stop", k: "멈출 줄", s: "The old man did not know how to stop." },
+            { w: "held his sides", k: "배를 잡았다", s: "he held his sides and laughed" }
+        ],
+        "10-sky.webp": [
+            { w: "passed (pass)", k: "넘었다", s: "The nose passed the roof, passed the trees" },
+            { w: "swerved aside (swerve)", k: "옆으로 비켜 날았다", s: "A bird going by swerved aside in fright." },
+            { w: "in fright", k: "깜짝 놀라", s: "A bird going by swerved aside in fright." },
+            { w: "went on climbing", k: "계속 올라갔다", s: "Through the cloud the nose went on climbing." },
+            { w: "what I bought ~ for", k: "이 맛에 샀다", s: "This is what I bought the fan for!" },
+            { w: "had no idea", k: "까맣게 몰랐다", s: "The old man had no idea how far his nose had got." },
+            { w: "the country of heaven", k: "하늘나라", s: "But above that cloud was the country of heaven." },
+            { w: "nothing whatever", k: "아무것도", s: "The old man knew nothing whatever about it." }
+        ],
+        "11-emperor.webp": [
+            { w: "the Jade Emperor", k: "옥황상제", s: "Just then the Jade Emperor was in the middle of his dinner." },
+            { w: "in the middle of ~", k: "한창 ~하는 중인", s: "was in the middle of his dinner" },
+            { w: "favourite", k: "좋아하는", s: "There were plenty of his favourite greens on the table." },
+            { w: "Rattle", k: "덜컹", s: "Rattle, rattle." },
+            { w: "drew his brows together", k: "눈살을 찌푸렸다", s: "The Jade Emperor drew his brows together." },
+            { w: "slopped over (slop)", k: "찰랑찰랑 넘쳤다", s: "Soup slopped over the edge of the bowl." },
+            { w: "rolled off (roll)", k: "데굴데굴 굴러떨어졌다", s: "The chopsticks rolled off and fell." },
+            { w: "earthquake", k: "지진", s: "What earthquake is this!" },
+            { w: "got to his feet", k: "벌떡 일어섰다", s: "The Jade Emperor put down his spoon and got to his feet." }
+        ],
+        "12-pillar.webp": [
+            { w: "sticking up (stick)", k: "불쑥 솟은", s: "there was a red pillar sticking up through the cloud" },
+            { w: "blunt", k: "뭉툭한", s: "The end of it was blunt, which was strange in itself." },
+            { w: "in itself", k: "그 자체가", s: "which was strange in itself" },
+            { w: "came crowding out", k: "우르르 몰려나왔다", s: "The officials came crowding out." },
+            { w: "out of nowhere", k: "난데없이", s: "A pillar has grown here out of nowhere, sire." },
+            { w: "left as it is", k: "그냥 두다", s: "That cannot be left as it is." },
+            { w: "Tie it fast", k: "꽁꽁 묶어라", s: "An ugly thing. Tie it fast so it does not shake!" },
+            { w: "wound (wind)", k: "칭칭 감았다", s: "They wound it round the pillar in several turns." },
+            { w: "knots", k: "매듭", s: "The knots were tied so hard that it could not stir." }
+        ],
+        "13-tied.webp": [
+            { w: "jumping up and down", k: "펄쩍펄쩍 뛰는", s: "Down in the yard the old man was jumping up and down." },
+            { w: "squeezing (squeeze)", k: "조여 오기", s: "The squeezing of his nose brought tears to his eyes." },
+            { w: "in a panic", k: "허겁지겁", s: "The old man fanned with the blue fan in a panic." },
+            { w: "coming off", k: "떨어지려는", s: "Oh, my nose is coming off!" },
+            { w: "was pulled up", k: "딸려 올라갔다", s: "his body was pulled up into the sky" },
+            { w: "came off the ground", k: "땅에서 떨어졌다", s: "His feet came off the ground." },
+            { w: "kicked his legs", k: "발을 버둥거렸다", s: "The old man kicked his legs and went up." },
+            { w: "hanging on ~", k: "달린", s: "There is a man hanging on the pillar." },
+            { w: "lost for words", k: "어이없어했다", s: "The officials of heaven were lost for words." }
+        ],
+        "14-fall.webp": [
+            { w: "untied (untie)", k: "풀었다", s: "The officials of heaven untied the rope" },
+            { w: "thumped into ~", k: "쿵 하고 박혔다", s: "He rolled over and thumped into a straw pile." },
+            { w: "straw pile", k: "짚더미", s: "He rolled over and thumped into a straw pile." },
+            { w: "By good luck", k: "다행히", s: "By good luck no bone was broken." },
+            { w: "blown away (blow)", k: "날아가 버렸다", s: "But the two fans had blown away somewhere." },
+            { w: "crawled out (crawl)", k: "기어 나왔다", s: "The old man crawled out of the straw" },
+            { w: "the state of him", k: "그 꼴", s: "Seeing the state of him, Kim Cheomji took out the deed." },
+            { w: "deed", k: "집 문서", s: "Kim Cheomji quietly took out the deed." },
+            { w: "was burning", k: "화끈거렸다", s: "His own face was burning." }
+        ],
+        "after": [
+            { w: "stretch and shrink", k: "늘었다 줄었다 한다", s: "Stories where a body can stretch and shrink" },
+            { w: "a sight", k: "구경거리", s: "there is no better sight than something changing before your eyes" },
+            { w: "before your eyes", k: "눈앞에서", s: "something changing before your eyes" },
+            { w: "hold on to ~", k: "가지고 있다", s: "the one who gets that thing never holds on to it long" },
+            { w: "tests (test)", k: "시험한다", s: "because the thing tests the person" },
+            { w: "by his own strength", k: "제 힘으로", s: "he had not made it by his own strength either" },
+            { w: "was left with ~", k: "남은 것이 있었다", s: "and neither of them was left with anything" },
+            { w: "stay in your hand", k: "손에 머문다", s: "What you did not get by your own strength does not stay in your hand long." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🪭',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Stories where a body can stretch and shrink are ones children love. Japan has the same story. There is no better sight than something changing before your eyes.",
+                    "But such stories nearly always end the same way. The one who gets that thing never holds on to it long. It is because the thing tests the person.",
+                    "Look again at where Kim Cheomji got the fans in the first place. He had not made them by his own strength either.",
+                    "He picked them up beside him while he slept."
+                ],
+                right: [
+                    "The rich man gave a house and got a fan; Kim Cheomji gave a fan and got a house. And neither of them was left with anything.",
+                    "What you did not get by your own strength does not stay in your hand long.",
+                    "Of the things you have, which did you get by your own strength?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "김 첨지는 산에 올라가 무엇을 했나요?", choices: ["나무를 한 짐 했다", "그늘에서 낮잠을 잤다", "사방을 둘러보았다"], answer: 1 },
     { q: "빨간 부채로 부치면 어떻게 되나요?", choices: ["코가 짧아진다", "코가 빨개진다", "코가 길어진다"], answer: 2 },
