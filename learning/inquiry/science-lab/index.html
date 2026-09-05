@@ -11,17 +11,23 @@
 <body>
     <main>
         <header class="page-header">
-            <div class="title-row">
-                <a href="../../../">← 학습 메뉴</a>
+            <div class="header-top">
+                <a class="back-link" href="../../../">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <span>학습 메뉴</span>
+                </a>
+                <div class="header-status">
+                    <span class="lab-count-badge"><span class="pulse-dot" aria-hidden="true"></span>가상 실험실 <strong>61종</strong></span>
+                </div>
             </div>
-        </header>
 
-        <nav class="subject-nav" aria-label="과학 분야 바로가기">
-            <a href="#physics">물리</a>
-            <a href="#chemistry">화학</a>
-            <a href="#biology">생명과학</a>
-            <a href="#earth-science">지구과학</a>
-        </nav>
+            <nav class="subject-nav" aria-label="과학 분야 바로가기">
+                <a href="#physics" class="nav-chip physics"><span>⚛️ 물리</span></a>
+                <a href="#chemistry" class="nav-chip chemistry"><span>🧪 화학</span></a>
+                <a href="#biology" class="nav-chip biology"><span>🧬 생명과학</span></a>
+                <a href="#earth-science" class="nav-chip earth"><span>🪐 지구과학</span></a>
+            </nav>
+        </header>
 
         <section class="catalog" aria-label="주제별 실험 목록">
             <section class="subject-section physics" id="physics">
