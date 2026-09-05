@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#24150c">
+    <title>학급 순위전</title>
+    <link rel="stylesheet" href="/assets/network/multiplayer-lobby.css">
+    <link rel="stylesheet" href="styles.css?v=20260905-1">
+    <script src="/assets/network/game-network.js?v=20260821" defer></script>
+    <script src="/assets/network/multiplayer-lobby.js" defer></script>
+    <script src="app.js?v=20260905-1" defer></script>
+</head>
+<body>
+    <div class="page-shell">
+        <nav class="topbar" aria-label="페이지 이동">
+            <div class="topbar-links">
+                <a class="back-link" href="/">← 메인</a>
+            </div>
+        </nav>
+
+        <main>
+            <section id="missingScreen" class="panel hidden" aria-labelledby="missingTitle">
+                <p class="kicker">CLASS RACE</p>
+                <h1 id="missingTitle">이름을 먼저 저장해 주세요</h1>
+                <p class="lead">학급 순위에는 메인 화면에서 저장한 한글 이름이 표시됩니다.</p>
+                <a class="primary-button" href="/">메인에서 이름 저장</a>
+            </section>
+
+            <section id="lobbyScreen" class="panel hidden" aria-labelledby="lobbyTitle">
+                <p class="kicker">CLASS RACE</p>
+                <h1 id="lobbyTitle">학급 순위전</h1>
+                <div id="joinPane">
+                    <p class="lead"><strong id="savedName"></strong> 님, 선생님이 알려 준 학급 코드 4자리를 넣으세요.</p>
+                    <div class="join-row">
+                        <input id="joinCode" class="room-code-input" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="0000" aria-label="학급 코드">
+                        <button id="joinBtn" class="primary-button" type="button">학급 참가</button>
+                    </div>
+                    <p id="joinStatus" class="lobby-status" role="status">교사가 만든 학급 코드를 입력하세요.</p>
+                </div>
+
+                <div id="waitingPane" class="hidden">
+                    <p class="room-badge">학급 코드 <strong id="studentRoomCode">----</strong></p>
+                    <h2>선생님의 시작을 기다리고 있어요</h2>
+                    <div id="lobbyPlayers" class="mp-lobby-players player-list" aria-label="참가 학생"></div>
+                    <p id="lobbyGuide" class="lobby-status">학급에 연결하는 중입니다.</p>
+                </div>
+
+                <button id="leaveClassButton" class="text-button" type="button">← 학급에서 나가기</button>
+            </section>
+
+            <section id="quizScreen" class="hidden" aria-labelledby="questionText">
+                <div class="quiz-status">
+                    <div><span id="quizModeLabel"></span> · 문제 <strong><span id="questionNumber">1</span>/<span id="questionTotal">10</span></strong></div>
+                    <div>점수 <strong><span id="currentScore">0</span>점</strong></div>
+                </div>
+                <div class="progress-track" aria-hidden="true"><span id="progressFill"></span></div>
+
+                <article class="panel question-panel">
+                    <span id="questionCategory" class="question-category"></span>
+                    <p id="questionPrompt" class="question-prompt"></p>
+                    <h2 id="questionText" class="question-text"></h2>
+                    <div id="choiceList" class="choice-list" aria-label="답 선택"></div>
+
+                    <div id="feedback" class="feedback hidden" aria-live="polite">
+                        <h3 id="feedbackTitle"></h3>
+                        <p id="correctAnswer" class="correct-answer"></p>
+                        <p id="explanation" class="explanation"></p>
+                        <button id="nextButton" class="primary-button" type="button">다음 문제</button>
+                    </div>
+                </article>
+            </section>
+
+            <section id="resultScreen" class="panel result-panel hidden" aria-labelledby="resultTitle">
+                <p class="kicker">RACE COMPLETE</p>
+                <h2 id="resultTitle">순위전 결과</h2>
+                <div class="score-medallion" aria-label="최종 점수">
+                    <strong id="finalScore">0</strong>
+                    <span>/ <span id="finalTotal">10</span></span>
+                </div>
+                <p id="resultMessage" class="result-message"></p>
+                <p class="lead">정답 수가 같으면 먼저 마친 학생이 앞서요.</p>
+
+                <div class="rank-area">
+                    <div id="myRankCard" class="my-rank-card">순위를 집계하고 있어요.</div>
+                    <h3>학급 순위</h3>
+                    <ol id="classRankingList" class="ranking-list"></ol>
+                    <p id="rankingWaiting" class="ranking-waiting"></p>
+                </div>
+
+                <div class="review-area">
+                    <h3>나의 오답노트</h3>
+                    <p id="perfectReview" class="perfect-review hidden">틀린 문제가 없어요. 완벽합니다!</p>
+                    <ol id="missedList" class="missed-list"></ol>
+                </div>
+
+                <div class="result-actions">
+                    <a class="secondary-button" href="/">메인으로</a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <p id="announcer" class="sr-only" aria-live="assertive"></p>
+</body>
+</html>

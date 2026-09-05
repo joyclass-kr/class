@@ -341,6 +341,7 @@ const MAX_ROOM_PLAYERS = {
   codenames: 5,
   dobble: 8,
   spelling: 61,
+  quizrace: 61,
   circulation: 61,
   digestion: 61,
   respiration: 61,
@@ -374,6 +375,7 @@ const MULTIPLAYER_CONTENT_PATHS = Object.freeze({
   codenames: "/learning/games/codenames/codenames",
   dobble: "/learning/games/dobble/dobble",
   spelling: "/learning/literacy-numeracy/spelling",
+  quizrace: "/learning/class-race",
   circulation: "/learning/inquiry/human-body/circulation",
   digestion: "/learning/inquiry/human-body/digestion",
   respiration: "/learning/inquiry/human-body/respiration",
@@ -1078,6 +1080,77 @@ function spellingBroadcast(room) {
 
 function spellingError(socket, message) {
   safeSend(socket, { type: "SPELLING_ERROR", message });
+}
+
+// 공용 학급 순위전. 어느 앱이든 교사가 문제 묶음을 통째로 보내고, 서버는 점수와 시간만 매긴다.
+const QUIZRACE_MAX_QUESTIONS = 60;
+
+function quizraceCleanQuestion(raw) {
+  if (!raw || typeof raw !== "object") return null;
+  const id = cleanToken(raw.id, 80);
+  if (!/^[a-z0-9_:-]+$/i.test(id)) return null;
+  const choices = Array.isArray(raw.choices)
+    ? [...new Set(raw.choices.map(choice => cleanToken(choice, 120)).filter(Boolean))]
+    : [];
+  const answer = cleanToken(raw.answer, 120);
+  if (choices.length < 2 || choices.length > 4 || !choices.includes(answer)) return null;
+  const sentence = cleanToken(raw.sentence, 400);
+  if (!sentence) return null;
+  return {
+    id,
+    category: cleanToken(raw.category, 40),
+    prompt: cleanToken(raw.prompt, 120),
+    sentence,
+    choices,
+    answer,
+    explanation: cleanToken(raw.explanation, 800)
+  };
+}
+
+function quizracePublicState(room) {
+  const game = room?.quizrace;
+  if (!game) return null;
+
+  const finishers = game.players
+    .filter(player => game.results[player.id])
+    .map(player => ({
+      id: player.id,
+      name: player.name,
+      score: game.results[player.id].score,
+      elapsedMs: game.results[player.id].elapsedMs
+    }))
+    .sort((a, b) => b.score - a.score || a.elapsedMs - b.elapsedMs || a.name.localeCompare(b.name, "ko"))
+    .map((player, index) => ({ ...player, rank: index + 1 }));
+  const rankingById = new Map(finishers.map(player => [player.id, player]));
+
+  return {
+    phase: game.phase,
+    sessionId: game.sessionId,
+    appId: game.appId,
+    appTitle: game.appTitle,
+    rangeTitle: game.rangeTitle,
+    questionCount: game.questions.length,
+    questions: game.phase === "lobby" ? [] : game.questions,
+    startedAt: game.startedAt,
+    participants: game.players.map(player => ({
+      id: player.id,
+      name: player.name,
+      status: rankingById.has(player.id) ? "finished" : game.phase === "lobby" ? "waiting" : "playing"
+    })),
+    rankings: finishers
+  };
+}
+
+function quizraceBroadcast(room) {
+  const state = quizracePublicState(room);
+  if (!state) return;
+  for (const client of room.clients.values()) {
+    safeSend(client, { type: "QUIZRACE_STATE", state });
+  }
+}
+
+function quizraceError(socket, message) {
+  safeSend(socket, { type: "QUIZRACE_ERROR", message });
 }
 
 function circulationPublicState(room) {
@@ -1902,6 +1975,7 @@ wss.on("connection", (socket, request) => {
         if (existingRoom.codenames) codenamesBroadcast(existingRoom);
         if (existingRoom.dobble) dobbleBroadcast(existingRoom);
         if (existingRoom.spelling) spellingBroadcast(existingRoom);
+        if (existingRoom.quizrace) quizraceBroadcast(existingRoom);
         if (existingRoom.circulation) circulationBroadcast(existingRoom);
         if (existingRoom.digestion) digestionBroadcast(existingRoom);
         if (existingRoom.respiration) respirationBroadcast(existingRoom);
@@ -1992,6 +2066,19 @@ wss.on("connection", (socket, request) => {
           results: {}
         };
       }
+      if (gameId === "quizrace") {
+        room.quizrace = {
+          phase: "lobby",
+          sessionId: "",
+          appId: "",
+          appTitle: "",
+          rangeTitle: "",
+          questions: [],
+          startedAt: 0,
+          players: [],
+          results: {}
+        };
+      }
       if (gameId === "circulation") {
         room.circulation = createBodyExplorerGame();
       }
@@ -2044,6 +2131,7 @@ wss.on("connection", (socket, request) => {
       if (room.codenames) codenamesBroadcast(room);
       if (room.dobble) dobbleBroadcast(room);
       if (room.spelling) spellingBroadcast(room);
+      if (room.quizrace) quizraceBroadcast(room);
       if (room.circulation) circulationBroadcast(room);
       if (room.digestion) digestionBroadcast(room);
       if (room.respiration) respirationBroadcast(room);
@@ -2099,6 +2187,7 @@ wss.on("connection", (socket, request) => {
         if (room.expedition) expeditionBroadcast(room);
       if (room.clue) clueBroadcast(room);
         if (room.spelling) spellingBroadcast(room);
+        if (room.quizrace) quizraceBroadcast(room);
         if (room.circulation) circulationBroadcast(room);
         if (room.digestion) digestionBroadcast(room);
         if (room.respiration) respirationBroadcast(room);
@@ -2296,6 +2385,24 @@ wss.on("connection", (socket, request) => {
         }
         room.spelling.players.push({ id: playerId, name });
       }
+      if (room.quizrace) {
+        if (room.quizrace.phase !== "lobby") {
+          room.clients.delete(playerId);
+          socket.meta.roomKey = null;
+          socket.meta.role = null;
+          safeSend(socket, { type: "ERROR", message: "이미 시작한 학급 순위전입니다." });
+          return;
+        }
+        const name = cleanToken(message.name, 12);
+        if (!/^[가-힣]{2,6}$/.test(name)) {
+          room.clients.delete(playerId);
+          socket.meta.roomKey = null;
+          socket.meta.role = null;
+          safeSend(socket, { type: "ERROR", message: "메인 화면에서 한글 이름을 먼저 저장하세요." });
+          return;
+        }
+        room.quizrace.players.push({ id: playerId, name });
+      }
       if (room.circulation) {
         if (room.circulation.phase !== "lobby") {
           room.clients.delete(playerId);
@@ -2470,6 +2577,7 @@ wss.on("connection", (socket, request) => {
       if (room.codenames) codenamesBroadcast(room);
       if (room.dobble) dobbleBroadcast(room);
       if (room.spelling) spellingBroadcast(room);
+      if (room.quizrace) quizraceBroadcast(room);
       if (room.circulation) circulationBroadcast(room);
       if (room.digestion) digestionBroadcast(room);
       if (room.respiration) respirationBroadcast(room);
@@ -2567,6 +2675,106 @@ wss.on("connection", (socket, request) => {
       }
 
       spellingError(socket, "알 수 없는 학급 순위전 요청입니다.");
+      return;
+    }
+
+    if (type === "QUIZRACE_ACTION") {
+      const room = socket.meta.roomKey ? rooms.get(socket.meta.roomKey) : null;
+      const game = room?.quizrace;
+      const action = cleanToken(message.action, 30);
+      if (!room || !game) {
+        quizraceError(socket, "학급 순위전 방에 참가하지 않았습니다.");
+        return;
+      }
+
+      if (action === "START") {
+        if (playerId !== room.hostId) {
+          quizraceError(socket, "교사 화면에서만 순위전을 시작할 수 있습니다.");
+          return;
+        }
+        if (game.phase !== "lobby") {
+          quizraceError(socket, "이미 순위전이 진행 중입니다.");
+          return;
+        }
+        if (game.players.length < 1) {
+          quizraceError(socket, "학생이 한 명 이상 참가해야 합니다.");
+          return;
+        }
+        const rawQuestions = Array.isArray(message.questions) ? message.questions.slice(0, QUIZRACE_MAX_QUESTIONS) : [];
+        const questions = [];
+        const seenIds = new Set();
+        for (const raw of rawQuestions) {
+          const question = quizraceCleanQuestion(raw);
+          if (!question || seenIds.has(question.id)) continue;
+          seenIds.add(question.id);
+          questions.push(question);
+        }
+        if (questions.length < 1 || questions.length !== rawQuestions.length) {
+          quizraceError(socket, "문제 묶음이 올바르지 않습니다.");
+          return;
+        }
+        game.phase = "running";
+        game.sessionId = crypto.randomUUID();
+        game.appId = cleanToken(message.appId, 40);
+        game.appTitle = cleanToken(message.appTitle, 40);
+        game.rangeTitle = cleanToken(message.rangeTitle, 60);
+        game.questions = questions;
+        game.startedAt = Date.now();
+        game.results = {};
+        quizraceBroadcast(room);
+        return;
+      }
+
+      if (action === "SUBMIT") {
+        if (game.phase !== "running") {
+          quizraceError(socket, "현재 진행 중인 순위전이 없습니다.");
+          return;
+        }
+        if (cleanToken(message.sessionId, 80) !== game.sessionId) {
+          quizraceError(socket, "현재 순위전의 결과가 아닙니다.");
+          return;
+        }
+        if (!game.players.some(player => player.id === playerId)) {
+          quizraceError(socket, "참가 학생만 결과를 제출할 수 있습니다.");
+          return;
+        }
+        const score = Number(message.score);
+        if (!Number.isInteger(score) || score < 0 || score > game.questions.length) {
+          quizraceError(socket, "점수가 올바르지 않습니다.");
+          return;
+        }
+        if (!game.results[playerId]) {
+          game.results[playerId] = {
+            score,
+            elapsedMs: Math.max(0, Date.now() - game.startedAt)
+          };
+        }
+        if (game.players.length > 0 && game.players.every(player => game.results[player.id])) {
+          game.phase = "ended";
+        }
+        quizraceBroadcast(room);
+        return;
+      }
+
+      if (action === "RESET") {
+        if (playerId !== room.hostId) {
+          quizraceError(socket, "교사 화면에서만 새 순위전을 준비할 수 있습니다.");
+          return;
+        }
+        game.phase = "lobby";
+        game.sessionId = "";
+        game.appId = "";
+        game.appTitle = "";
+        game.rangeTitle = "";
+        game.questions = [];
+        game.startedAt = 0;
+        game.results = {};
+        game.players = game.players.filter(player => room.clients.has(player.id));
+        quizraceBroadcast(room);
+        return;
+      }
+
+      quizraceError(socket, "알 수 없는 학급 순위전 요청입니다.");
       return;
     }
 
@@ -4125,6 +4333,15 @@ wss.on("connection", (socket, request) => {
           spelling.phase = "ended";
         }
       }
+      if (currentRoom.quizrace) {
+        const quizrace = currentRoom.quizrace;
+        if (quizrace.phase === "lobby" || !quizrace.results[playerId]) {
+          quizrace.players = quizrace.players.filter(player => player.id !== playerId);
+        }
+        if (quizrace.phase === "running" && quizrace.players.length > 0 && quizrace.players.every(player => quizrace.results[player.id])) {
+          quizrace.phase = "ended";
+        }
+      }
       if (currentRoom.circulation) {
         const circulation = currentRoom.circulation;
         if (circulation.phase === "lobby" || !circulation.results[playerId]) {
@@ -4218,6 +4435,7 @@ wss.on("connection", (socket, request) => {
       if (currentRoom.codenames) codenamesBroadcast(currentRoom);
       if (currentRoom.dobble) dobbleBroadcast(currentRoom);
       if (currentRoom.spelling) spellingBroadcast(currentRoom);
+      if (currentRoom.quizrace) quizraceBroadcast(currentRoom);
       if (currentRoom.circulation) circulationBroadcast(currentRoom);
       if (currentRoom.digestion) digestionBroadcast(currentRoom);
       if (currentRoom.respiration) respirationBroadcast(currentRoom);
