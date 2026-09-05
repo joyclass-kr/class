@@ -346,7 +346,15 @@
     render();
   }
 
-  // katex가 다 실린 뒤에 그려야 수식이 살아난다.
-  if (document.readyState === "complete") start();
-  else window.addEventListener("load", start);
+  // 즉시 또는 DOMContentLoaded 시점에 안전하게 초기화
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start);
+  } else {
+    start();
+  }
+
+  // KaTeX 스크립트가 늦게 로드될 경우를 대비한 추가 렌더링
+  window.addEventListener("load", function () {
+    if (els.list) renderMath(els.list);
+  });
 })();

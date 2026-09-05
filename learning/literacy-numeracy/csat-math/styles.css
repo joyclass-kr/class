@@ -85,6 +85,8 @@ main { max-width: 940px; margin: 0 auto; padding: 16px 16px 48px; }
   display: inline-flex;
 }
 .picker-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
   background: #fff url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235a6673' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat right 12px center;
   background-size: 14px;
@@ -96,7 +98,8 @@ main { max-width: 940px; margin: 0 auto; padding: 16px 16px 48px; }
   color: var(--ink);
   cursor: pointer;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  min-width: 220px;
+  min-width: 240px;
+  max-width: 100%;
 }
 .picker-select:hover {
   border-color: #b9c3cf;
