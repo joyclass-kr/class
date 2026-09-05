@@ -934,7 +934,7 @@ const EN = {
         ],
         '04-candy-house.webp': [
             { word: 'wander', meaning: '헤매다', sentence: 'They wandered for three days.' },
-            { word: 'berry', meaning: '나무 열매', sentence: 'They lived on the berries they could pick.' },
+            { word: 'berry', meaning: '나무 열매', sentence: 'They wandered, living on the berries they could pick.' },
             { word: 'blister', meaning: '물집이 잡히다', sentence: 'Their feet blistered, and every step hurt.' },
             { word: 'clearing', meaning: '숲속 빈터', sentence: 'They came to a clearing in the middle of the forest.' }
         ],
@@ -966,7 +966,7 @@ const EN = {
         ],
         '06-oven-2.webp': [
             { word: 'hopeless', meaning: '답답한, 어쩔 수 없는', sentence: 'What a hopeless child you are!' },
-            { word: 'shove', meaning: '탁 밀다', sentence: 'Gretel shoved the door shut with both hands.' },
+            { word: 'shove', meaning: '탁 밀다', sentence: 'Gretel gave her a hard shove in the back.' },
             { word: 'bolt', meaning: '빗장', sentence: 'She slid the bolt across.' },
             { word: 'tumble out', meaning: '데굴데굴 굴러 나오다', sentence: 'Hansel came tumbling out.' },
             { word: 'stiff', meaning: '뻣뻣하게 굳은', sentence: 'His legs had gone so stiff he could hardly stand.' }

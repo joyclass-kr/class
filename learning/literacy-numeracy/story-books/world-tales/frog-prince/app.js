@@ -1054,7 +1054,7 @@ const EN = {
             { word: 'go stiff', meaning: '얼어붙다', sentence: 'She went stiff where she stood.' },
             { word: 'threshold', meaning: '문턱', sentence: 'The frog was sitting on the threshold.' },
             { word: 'slam', meaning: '쾅 닫다', sentence: 'The princess slammed the door.' },
-            { word: 'exchange looks', meaning: '눈짓을 주고받다', sentence: 'Her sisters exchanged looks.' }
+            { word: 'stick to', meaning: '들러붙다', sentence: 'Dry grass stuck to his feet.' }
         ],
         '05-king.webp': [
             { word: 'frighten', meaning: '무섭게 하다', sentence: 'What has frightened you so?' },

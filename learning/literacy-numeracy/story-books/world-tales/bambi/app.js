@@ -1116,10 +1116,10 @@ const EN = {
             { word: 'low', meaning: '낮게', sentence: '"Look closely," he said, low.' }
         ],
         '08-ending-2.webp': [
-            { word: 'read', meaning: '읽어 내다', sentence: 'He showed him how to read the wood.' },
-            { word: 'out of sight', meaning: '보이지 않게', sentence: 'Where to put himself out of sight.' },
-            { word: 'track', meaning: '다니는 길', sentence: 'And pointed out the tracks people use.' },
-            { word: 'take in', meaning: '마음에 새기다', sentence: 'Bambi took in every one of them.' }
+            { word: 'in words', meaning: '말로', sentence: 'The old stag never taught him in words.' },
+            { word: 'side by side', meaning: '나란히', sentence: 'They walked side by side like that for days.' },
+            { word: 'go about', meaning: '돌아다니다', sentence: 'You can go about by yourself now.' },
+            { word: 'out of sight', meaning: '보이지 않게', sentence: 'His shape went out of sight between the trees.' }
         ],
         'end.webp': [
             { word: 'to begin with', meaning: '원래는', sentence: 'It was written for grown-ups to begin with.' },

@@ -1101,7 +1101,7 @@ const EN = {
             { word: 'willow', meaning: '버드나무', sentence: 'A bank with willows hanging over it.' },
             { word: 'moor', meaning: '매어 두다', sentence: 'A boat was moored there.' },
             { word: 'pale', meaning: '창백한', sentence: 'Beside her lay a pale child.' },
-            { word: 'aboard', meaning: '배에', sentence: 'Rémi went aboard.' }
+            { word: 'call to', meaning: '부르다', sentence: 'The lady called to Rémi.' }
         ],
         '06-barge-2.webp': [
             { word: 'bow', meaning: '뱃머리', sentence: 'He sat at the bow and played.' },
@@ -1130,7 +1130,7 @@ const EN = {
         ],
         '08-ending-2.webp': [
             { word: 'go to live with', meaning: '함께 지내다', sentence: 'Rémi went to live with his new family.' },
-            { word: 'fetch', meaning: '모셔 오다', sentence: 'He brought Mother Barberin.' },
+            { word: 'bring', meaning: '모셔 오다', sentence: 'He brought Mother Barberin to come and live with them.' },
             { word: 'ever after', meaning: '그 뒤로도', sentence: 'He went on teaching ever after.' },
             { word: 'at one’s feet', meaning: '발치에', sentence: 'With Capi always lying at his feet.' }
         ],

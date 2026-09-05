@@ -1749,13 +1749,13 @@ const EN = {
             { word: 'sickle', meaning: '낫', sentence: 'They came up with sickles and sticks.' },
             { word: 'grumble', meaning: '툴툴대다', sentence: 'The grown-ups went back down grumbling.' },
             { word: 'for nothing', meaning: '헛되이', sentence: 'The village people came up for nothing.' },
-            { word: 'take no notice', meaning: '신경 쓰지 않다', sentence: "He's at it again. Take no notice." }
+            { word: 'laugh oneself sick', meaning: '배꼽이 빠지게 웃다', sentence: "Every time, he laughed himself sick." }
         ],
         'story-03-wolf-boy-3.webp': [
             { word: 'move in on', meaning: '슬금슬금 다가가다', sentence: 'The wolf was moving in on the sheep.' },
-            { word: 'give under', meaning: '후들거리다', sentence: "The boy's legs shook under him." },
+            { word: 'shake', meaning: '후들거리다', sentence: "The boy's legs shook under him." },
             { word: 'come through', meaning: '무사히 지나가다', sentence: 'The sheep came through it safely.' },
-            { word: 'go down on one’s knees', meaning: '무릎을 꿇다', sentence: 'The boy went down on his knees and cried.' }
+            { word: 'go down on one’s knees', meaning: '무릎을 꿇다', sentence: 'Only then did the boy go down on his knees.' }
         ],
         'story-04-ant.webp': [
             { word: 'beat down', meaning: '쨍쨍 내리쬐다', sentence: 'A summer day with the sun beating down.' },

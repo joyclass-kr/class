@@ -952,21 +952,21 @@ const EN = {
             { word: 'crowd round', meaning: '우르르 몰려들다', sentence: 'And all seven came crowding round.' }
         ],
         '04-disguise.webp': [
-            { word: 'make ready', meaning: '채비하다', sentence: 'The queen made ready that very day.' },
-            { word: 'pedlar', meaning: '장사꾼', sentence: "She picked up a pedlar's basket." },
+            { word: 'stoop', meaning: '구부정한 자세', sentence: 'She tried bending her back into a stoop.' },
+            { word: 'pedlar', meaning: '장사꾼', sentence: 'An old pedlar woman.' },
             { word: 'sash', meaning: '허리끈', sentence: 'Fine sashes for sale!' }
         ],
         '04-disguise-2.webp': [
             { word: 'pull tight', meaning: '꽉 조이다', sentence: 'The queen pulled it tight.' },
             { word: 'draw a breath', meaning: '숨을 쉬다', sentence: 'Snow White drew a great breath.' },
-            { word: 'be taken in', meaning: '속아 넘어가다', sentence: 'And again Snow White was taken in.' },
-            { word: 'take care', meaning: '조심하다', sentence: 'Now you really must take care.' }
+            { word: 'catch the light', meaning: '빛에 반짝이다', sentence: 'The beads set in the comb caught the light.' },
+            { word: 'stranger', meaning: '낯선 사람', sentence: 'Never open the door to a stranger.' }
         ],
         '05-apple.webp': [
             { word: 'cellar', meaning: '지하실', sentence: 'The queen went down to her cellar.' },
             { word: 'poison', meaning: '독, 독약', sentence: 'She put the poison on the red side only.' },
             { word: 'show', meaning: '드러나다, 표가 나다', sentence: 'From the outside nothing showed at all.' },
-            { word: 'dress oneself as', meaning: '~처럼 차려입다', sentence: "She dressed herself as a farmer's wife." }
+            { word: 'be allowed to', meaning: '~해도 된다', sentence: 'I am not allowed to open the door.' }
         ],
         '05-apple-2.webp': [
             { word: 'half each', meaning: '반씩', sentence: 'Let us share it, half each.' },

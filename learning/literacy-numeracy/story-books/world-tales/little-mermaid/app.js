@@ -1051,7 +1051,7 @@ const EN = {
         '07-dagger.webp': [
             { word: 'cut short', meaning: '짧게 자르다', sentence: 'Their hair had all been cut short.' },
             { word: 'hold out', meaning: '내밀다', sentence: 'One of them held out a knife.' },
-            { word: 'sunrise', meaning: '해 뜨는 때', sentence: 'It must be done before sunrise.' },
+            { word: 'grow together', meaning: '한데 붙다', sentence: 'Your legs will grow together into a tail again.' },
             { word: 'bride', meaning: '신부', sentence: 'The prince lay asleep with his new bride beside him.' }
         ],
         '07-dagger-2.webp': [

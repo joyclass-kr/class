@@ -1022,7 +1022,7 @@ const EN = {
             { word: 'look back', meaning: '돌아보다', sentence: 'He looked back once.' }
         ],
         'end.webp': [
-            { word: 'legend', meaning: '전설', sentence: 'The Grimms put it into their book of legends.' },
+            { word: 'fall behind', meaning: '뒤처지다', sentence: 'The child who fell behind catches up.' },
             { word: 'record', meaning: '기록', sentence: 'There is a record that children disappeared.' },
             { word: 'gap', meaning: '빈자리', sentence: 'The story grew up to fill that gap.' },
             { word: 'argue about', meaning: '~을 두고 다투다', sentence: 'What they argued about was the price.' },
