@@ -279,6 +279,513 @@ const HISTORY = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐢",
+        art: "cover.webp",
+        title: "Kim Suro",
+        intro: [
+            "The story of Kim Suro is kept in the Record of Garak, a text inside the Samguk Yusa. It is about the first king of Gaya.",
+            "The song the people sing in it is called the Song of Guji. It is among the oldest songs written down in Korea.",
+            "Gaya was not one country but six standing side by side. That is why six eggs come out of the box."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Voice on Guji Peak",
+            beats: [
+                {
+                    art: "01-gugan.webp",
+                    emoji: "🏘️",
+                    left: [
+                        "Long, long ago the land below the Nakdong River had no king.",
+                        "Instead nine headmen each led a village of their own.",
+                        "People called those nine the Nine Gan.",
+                        "The soil was rich and the water plentiful, and it was good land to live on."
+                    ],
+                    right: [
+                        "The nine villages farmed apart and held their feasts apart.",
+                        "They all worked hard, but they did not come together.",
+                        { t: "\"Our village is the best.\"", v: "man" },
+                        { t: "\"No, our rice is better than yours.\"", v: "man" },
+                        "Whenever the Nine Gan met they quarrelled so."
+                    ]
+                },
+                {
+                    art: "02-voice.webp",
+                    emoji: "👂",
+                    left: [
+                        "It was a spring day in the third month.",
+                        "The spring wind had turned quite warm.",
+                        "A strange sound came from a peak called Guji.",
+                        "It was like the ground humming underneath.",
+                        "It was loud enough to be heard in every village."
+                    ],
+                    right: [
+                        { t: "\"Is there anybody here?\"", v: "old" },
+                        "There was nobody to see, only the voice.",
+                        "People started and looked all round them.",
+                        "The Nine Gan went up the peak in a great hurry.",
+                        "They ran up it till their breath caught, and two hundred people came behind."
+                    ]
+                },
+                {
+                    art: "03-song.webp",
+                    emoji: "🎶",
+                    left: [
+                        { t: "\"Heaven has told me to set up a country here.\"", v: "old" },
+                        "The voice rang out on the peak again.",
+                        { t: "\"Dig at the earth, and sing, and dance.\"", v: "old" },
+                        "The Nine Gan went flat on their faces where they stood.",
+                        "Nobody dared lift a head. The ground hummed under their feet."
+                    ],
+                    right: [
+                        { t: "\"What song are we to sing?\"", v: "man" },
+                        "One of them asked it in a shaking voice.",
+                        "The voice told them the song.",
+                        { t: "\"Turtle, turtle, put out your head —\"", v: "old" },
+                        { t: "\"Put it out, or we roast you and eat you —\"", v: "old" },
+                        "It was very short and easy to remember."
+                    ]
+                },
+                {
+                    art: "04-dance.webp",
+                    emoji: "💃",
+                    left: [
+                        "The Nine Gan and two hundred people sang it.",
+                        "At first the voices were all over the place.",
+                        "They stamped their feet and clapped their hands.",
+                        "But as they sang they came together of themselves.",
+                        "For the first time the nine villages made one voice."
+                    ],
+                    right: [
+                        { t: "\"Turtle, turtle, put out your head!\"", v: "man" },
+                        "They dug at the earth and stamped hard.",
+                        { t: "\"Put it out, or we roast you and eat you!\"", v: "man" },
+                        "The peak heaved. Dust went up to the sky.",
+                        "It was the first moment the nine villages were of one mind."
+                    ]
+                },
+                {
+                    art: "05-rope.webp",
+                    emoji: "🎁",
+                    left: [
+                        "Then a purple cord came sliding down out of the sky.",
+                        "The cord seemed to reach right up to the end of the sky.",
+                        "A red cloth was tied to the end of it.",
+                        "They untied the cloth and a golden box came out.",
+                        "A dazzling light poured out of the box."
+                    ],
+                    right: [
+                        "The people held their breath and opened the lid.",
+                        "As it opened the light grew brighter still.",
+                        "They put their hands up against the dazzle.",
+                        { t: "\"...Eggs!\"", v: "man" },
+                        "The Nine Gan only looked at one another. Not one of them could speak."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Six Golden Eggs",
+            beats: [
+                {
+                    art: "06-eggs.webp",
+                    emoji: "🥚",
+                    left: [
+                        "Inside the box were six golden eggs.",
+                        "Each of them was round as the sun.",
+                        "They felt warm to the touch.",
+                        "The Nine Gan set the box in the house of a man called Ajin.",
+                        "Ajin was the eldest of the Nine Gan."
+                    ],
+                    right: [
+                        "The Nine Gan took turns guarding the box.",
+                        "At night they lit torches and sat round it in a ring.",
+                        "Not one of them could sleep.",
+                        { t: "\"What will come out of these eggs?\"", v: "man" },
+                        { t: "\"People, or something else?\"", v: "man" },
+                        "That was all any of them could think about."
+                    ]
+                },
+                {
+                    art: "07-hatch.webp",
+                    emoji: "👶",
+                    left: [
+                        "It was early on the morning of the twelfth day.",
+                        "People had gathered outside the house since before dawn.",
+                        "They lifted the lid, and everybody froze.",
+                        "All six eggs had broken open and six boys sat there.",
+                        "The whole inside of the box was bright."
+                    ],
+                    right: [
+                        "All six smiled at once. A soft light came off their bodies.",
+                        { t: "\"Good heavens! What is this!\"", v: "man" },
+                        "The Nine Gan sat down heavily where they were.",
+                        "The strength had gone out of their legs.",
+                        "Not one of them dared put a hand on those children."
+                    ]
+                },
+                {
+                    art: "08-suro.webp",
+                    emoji: "👑",
+                    left: [
+                        "One of them had broken out of his egg first.",
+                        "He had big eyes and a wide clear forehead.",
+                        "The people called that child Suro.",
+                        "In ten days Suro had grown as big as a man.",
+                        "In a fortnight he was near twice a grown man's height."
+                    ],
+                    right: [
+                        { t: "\"This child is our king.\"", v: "man" },
+                        "Every one of the Nine Gan nodded, without exception.",
+                        "Not one of them said anything against it.",
+                        "And these were the men who each said their own village was best.",
+                        "The name of that country was Gaya."
+                    ]
+                },
+                {
+                    art: "09-six.webp",
+                    emoji: "🗺️",
+                    left: [
+                        "The other five grew tall as well, each of them.",
+                        "The six brothers looked exactly alike.",
+                        "One day Suro called the five of them together.",
+                        "He took each brother's hand in turn.",
+                        "For a long while he said nothing at all."
+                    ],
+                    right: [
+                        { t: "\"I cannot rule all this wide land by myself.\"", v: "man" },
+                        { t: "\"Let each of us take one valley and rule it.\"", v: "man" },
+                        "The five went off, each to a different valley.",
+                        "That is how the six Gaya came to be.",
+                        "The six countries came and went between them in friendship after that."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · A Ship from the Sea",
+            beats: [
+                {
+                    art: "10-iron.webp",
+                    emoji: "⚒️",
+                    left: [
+                        "Good iron came out of the land Suro ruled.",
+                        "Dig into a hill and dark red ore came pouring out.",
+                        "In every valley the smithy hammers rang.",
+                        "Clang, clang.",
+                        "The smiths melted it and made ploughs for the fields, and swords."
+                    ],
+                    right: [
+                        "Clang, clang.",
+                        "The hammering did not stop from morning till evening.",
+                        "Gaya iron was famous for being hard.",
+                        "It was sold over the sea as well.",
+                        "The landing was full of ships come for iron, and Gaya grew richer."
+                    ]
+                },
+                {
+                    art: "11-alone.webp",
+                    emoji: "🌙",
+                    left: [
+                        "The Nine Gan spoke to Suro.",
+                        "They had laid on a feast and asked him to it.",
+                        { t: "\"Take one of our daughters for your queen.\"", v: "man" },
+                        { t: "\"Every one of them is lovely and good.\"", v: "man" },
+                        "The Nine Gan exchanged looks with one another."
+                    ],
+                    right: [
+                        "Suro shook his head slowly.",
+                        { t: "\"Heaven will send my match to me.\"", v: "man" },
+                        "The Nine Gan drew back, looking put out.",
+                        "After that Suro kept looking out towards the landing.",
+                        "Nobody knew the reason for it."
+                    ]
+                },
+                {
+                    art: "12-ship.webp",
+                    emoji: "⛵",
+                    left: [
+                        "One day a ship with a red sail appeared out at sea.",
+                        "The sail was as red as an evening sky.",
+                        "The villagers ran down to the landing in a crowd.",
+                        "It was a shape of ship nobody had seen before.",
+                        "There were strange marks carved on the bow."
+                    ],
+                    right: [
+                        "The one who came off it was a young woman in strange clothes.",
+                        "She wore an ornament in her hair that nobody had seen.",
+                        { t: "\"I am Heo Hwangok, and I come from Ayuta.\"", v: "woman" },
+                        { t: "\"In a dream I was told to come to this place.\"", v: "woman" },
+                        "The people murmured among themselves."
+                    ]
+                },
+                {
+                    art: "13-wedding.webp",
+                    emoji: "🎊",
+                    left: [
+                        "Suro went down to the hill himself to meet her.",
+                        "He ran down it without properly putting his shoes on.",
+                        "The two stood a long while looking at each other.",
+                        "Between them no words at all were needed.",
+                        "That night lights were lit all over Gaya."
+                    ],
+                    right: [
+                        "Drums and gongs sounded until dawn.",
+                        "Everybody in Gaya came out and danced.",
+                        "Heo Hwangok also unloaded the seed and the books she had brought.",
+                        "Grain and writing that Gaya had not had came in that way.",
+                        "The harvest that year was uncommonly good."
+                    ]
+                },
+                {
+                    art: "14-gaya.webp",
+                    emoji: "🌊",
+                    left: [
+                        "So Gaya became a country opened wide to the sea.",
+                        "Ships went out with iron and strange goods came in.",
+                        "The people of Gaya stopped fearing what was strange.",
+                        "Suro went up the hill and looked at the landing.",
+                        "He thought of the days of the nine villages."
+                    ],
+                    right: [
+                        { t: "\"We were nine villages.\"", v: "man" },
+                        { t: "\"Nine villages that quarrelled over whose was best.\"", v: "man" },
+                        "Suro raised a hand and pointed at the sea.",
+                        "The landing was packed with ships.",
+                        { t: "\"Now the sea itself is our own yard.\"", v: "man" },
+                        "The people heard it and laughed out loud."
+                    ]
+                }
+            ]
+        }
+    ],
+    history: {
+        title: 'From Here On It Is Real History',
+        note: 'Everything up to here was the story. From here on it is what the records show.',
+        paras: [
+            "Gaya really existed. Several countries stood side by side below the Nakdong River, and Geumgwan Gaya, at Gimhae, was the first of them to grow strong.",
+            "Very good iron came out of Gaya. Iron armour and horse helmets are dug out of Gaya tombs, along with heaps of iron ingots. Gaya sold that iron to Silla and to Japan.",
+            "At Gimhae there are still tombs called the tomb of King Suro and the tomb of Queen Heo. The Gimhae Kim and Gimhae Heo families count those two as their ancestors.",
+            "Gaya never joined into one country, and fell to Silla one by one. Geumgwan Gaya became Silla land in 532, and Dae Gaya in 562."
+        ]
+    },
+    quiz: [
+        { q: "Where did the Nine Gan hear the voice?", choices: ["At the landing by the sea", "On Guji Peak", "By the Nakdong River"], answer: 1 },
+        { q: "How does the song the voice taught begin?", choices: ["Heaven told me to set up a country", "Is there anybody here", "Turtle, turtle, put out your head"], answer: 2 },
+        { q: "What was in the golden box inside the red cloth?", choices: ["Six golden eggs", "One gold crown", "Six jade beads"], answer: 0 },
+        { q: "What did the Nine Gan say about the child?", choices: ["That he was their king", "That they would give a daughter", "That he should take a valley"], answer: 0 },
+        { q: "What became of the other five children?", choices: ["They became Suro's officers", "Each set up a country", "They all went back to the sky"], answer: 1 },
+        { q: "What did Heo Hwangok bring on her ship?", choices: ["Iron and ploughs", "A golden box", "Seed and books"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The nine villages made one voice for the first time while singing, so coming together starts with making a sound together.",
+                "Iron came out of the ground and ships came and went, so a story carries what that district lived by.",
+                "They took a woman from over the sea as queen, so it was a country that was not frightened of strangers.",
+                "Suro became king the very day he came out on Guji Peak, so what heaven decides brings no quarrel with it."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "is kept in ~", k: "~에 실려 있다", s: "The story of Kim Suro is kept in the Record of Garak." },
+            { w: "text", k: "글", s: "a text inside the Samguk Yusa" },
+            { w: "the first king", k: "첫 임금", s: "It is about the first king of Gaya." },
+            { w: "written down", k: "글로 남은", s: "among the oldest songs written down in Korea" },
+            { w: "side by side", k: "나란히", s: "Gaya was not one country but six standing side by side." },
+            { w: "That is why ~", k: "그래서 ~이다", s: "That is why six eggs come out of the box." }
+        ],
+        "01-gugan.webp": [
+            { w: "below ~", k: "~ 아래쪽", s: "the land below the Nakdong River had no king" },
+            { w: "headmen", k: "우두머리", s: "Instead nine headmen each led a village of their own." },
+            { w: "led (lead)", k: "이끌었다", s: "nine headmen each led a village of their own" },
+            { w: "rich", k: "기름진", s: "The soil was rich and the water plentiful" },
+            { w: "plentiful", k: "넉넉한", s: "The soil was rich and the water plentiful" },
+            { w: "apart", k: "따로", s: "The nine villages farmed apart and held their feasts apart." },
+            { w: "come together", k: "뭉치다", s: "They all worked hard, but they did not come together." },
+            { w: "quarrelled (quarrel)", k: "다투었다", s: "Whenever the Nine Gan met they quarrelled so." }
+        ],
+        "02-voice.webp": [
+            { w: "the third month", k: "삼월", s: "It was a spring day in the third month." },
+            { w: "peak", k: "봉우리", s: "A strange sound came from a peak called Guji." },
+            { w: "humming (hum)", k: "웅웅 울리는", s: "It was like the ground humming underneath." },
+            { w: "loud enough to ~", k: "~할 만큼 큰", s: "It was loud enough to be heard in every village." },
+            { w: "nobody to see", k: "사람은 보이지 않는", s: "There was nobody to see, only the voice." },
+            { w: "started (start)", k: "깜짝 놀랐다", s: "People started and looked all round them." },
+            { w: "in a great hurry", k: "헐레벌떡", s: "The Nine Gan went up the peak in a great hurry." },
+            { w: "breath caught", k: "숨이 턱에 찼다", s: "They ran up it till their breath caught." }
+        ],
+        "03-song.webp": [
+            { w: "set up a country", k: "나라를 세우다", s: "Heaven has told me to set up a country here." },
+            { w: "rang out (ring)", k: "울렸다", s: "The voice rang out on the peak again." },
+            { w: "Dig at ~", k: "파헤치다", s: "Dig at the earth, and sing, and dance." },
+            { w: "went flat on their faces", k: "넙죽 엎드렸다", s: "The Nine Gan went flat on their faces where they stood." },
+            { w: "dared (dare)", k: "감히 ~했다", s: "Nobody dared lift a head." },
+            { w: "in a shaking voice", k: "떨리는 목소리로", s: "One of them asked it in a shaking voice." },
+            { w: "put out ~", k: "내어라", s: "Turtle, turtle, put out your head" },
+            { w: "roast", k: "굽다", s: "Put it out, or we roast you and eat you" },
+            { w: "easy to remember", k: "외기 쉬운", s: "It was very short and easy to remember." }
+        ],
+        "04-dance.webp": [
+            { w: "all over the place", k: "제각각인", s: "At first the voices were all over the place." },
+            { w: "clapped (clap)", k: "손뼉을 쳤다", s: "They stamped their feet and clapped their hands." },
+            { w: "of themselves", k: "저절로", s: "as they sang they came together of themselves" },
+            { w: "made one voice", k: "한목소리를 냈다", s: "For the first time the nine villages made one voice." },
+            { w: "dug at ~ (dig)", k: "파헤쳤다", s: "They dug at the earth and stamped hard." },
+            { w: "heaved (heave)", k: "들썩였다", s: "The peak heaved. Dust went up to the sky." },
+            { w: "of one mind", k: "한마음인", s: "It was the first moment the nine villages were of one mind." }
+        ],
+        "05-rope.webp": [
+            { w: "purple", k: "자줏빛", s: "Then a purple cord came sliding down out of the sky." },
+            { w: "cord", k: "줄", s: "a purple cord came sliding down" },
+            { w: "reach right up to ~", k: "~까지 이어지다", s: "The cord seemed to reach right up to the end of the sky." },
+            { w: "was tied to ~", k: "묶여 있었다", s: "A red cloth was tied to the end of it." },
+            { w: "untied (untie)", k: "풀었다", s: "They untied the cloth and a golden box came out." },
+            { w: "dazzling", k: "눈부신", s: "A dazzling light poured out of the box." },
+            { w: "lid", k: "뚜껑", s: "The people held their breath and opened the lid." },
+            { w: "against the dazzle", k: "눈부셔서", s: "They put their hands up against the dazzle." }
+        ],
+        "06-eggs.webp": [
+            { w: "round as the sun", k: "해처럼 둥근", s: "Each of them was round as the sun." },
+            { w: "to the touch", k: "만져 보니", s: "They felt warm to the touch." },
+            { w: "set (set)", k: "모셔 두었다", s: "The Nine Gan set the box in the house of a man called Ajin." },
+            { w: "the eldest", k: "가장 나이 많은 이", s: "Ajin was the eldest of the Nine Gan." },
+            { w: "took turns", k: "번갈아 했다", s: "The Nine Gan took turns guarding the box." },
+            { w: "torches", k: "횃불", s: "At night they lit torches and sat round it in a ring." },
+            { w: "in a ring", k: "둘러앉아", s: "sat round it in a ring" },
+            { w: "That was all ~", k: "그 생각뿐이었다", s: "That was all any of them could think about." }
+        ],
+        "07-hatch.webp": [
+            { w: "the twelfth day", k: "열두 날째", s: "It was early on the morning of the twelfth day." },
+            { w: "since before dawn", k: "새벽부터", s: "People had gathered outside the house since before dawn." },
+            { w: "froze (freeze)", k: "얼어붙었다", s: "They lifted the lid, and everybody froze." },
+            { w: "broken open", k: "깨졌다", s: "All six eggs had broken open and six boys sat there." },
+            { w: "came off ~ (come off)", k: "돌았다", s: "A soft light came off their bodies." },
+            { w: "Good heavens", k: "아이고", s: "Good heavens! What is this!" },
+            { w: "sat down heavily", k: "털썩 주저앉았다", s: "The Nine Gan sat down heavily where they were." },
+            { w: "put a hand on ~", k: "손을 대다", s: "Not one of them dared put a hand on those children." }
+        ],
+        "08-suro.webp": [
+            { w: "broken out of ~", k: "깨고 나왔다", s: "One of them had broken out of his egg first." },
+            { w: "forehead", k: "이마", s: "He had big eyes and a wide clear forehead." },
+            { w: "as big as a man", k: "어른만큼", s: "In ten days Suro had grown as big as a man." },
+            { w: "a fortnight", k: "보름", s: "In a fortnight he was near twice a grown man's height." },
+            { w: "near twice", k: "곱절 가까이", s: "he was near twice a grown man's height" },
+            { w: "without exception", k: "한 사람도 빠짐없이", s: "Every one of the Nine Gan nodded, without exception." },
+            { w: "said anything against ~", k: "딴말을 했다", s: "Not one of them said anything against it." },
+            { w: "these were the men who ~", k: "~하던 사람들인데", s: "And these were the men who each said their own village was best." }
+        ],
+        "09-six.webp": [
+            { w: "grew tall (grow)", k: "훌쩍 자랐다", s: "The other five grew tall as well, each of them." },
+            { w: "exactly alike", k: "꼭 닮은", s: "The six brothers looked exactly alike." },
+            { w: "in turn", k: "하나씩 차례로", s: "He took each brother's hand in turn." },
+            { w: "rule", k: "다스리다", s: "I cannot rule all this wide land by myself." },
+            { w: "by myself", k: "나 혼자", s: "I cannot rule all this wide land by myself." },
+            { w: "valley", k: "골짜기", s: "Let each of us take one valley and rule it." },
+            { w: "came to be", k: "생겼다", s: "That is how the six Gaya came to be." },
+            { w: "in friendship", k: "사이좋게", s: "The six countries came and went between them in friendship." }
+        ],
+        "10-iron.webp": [
+            { w: "iron", k: "쇠", s: "Good iron came out of the land Suro ruled." },
+            { w: "ore", k: "쇳돌", s: "Dig into a hill and dark red ore came pouring out." },
+            { w: "smithy", k: "대장간", s: "In every valley the smithy hammers rang." },
+            { w: "Clang", k: "땅땅", s: "Clang, clang." },
+            { w: "smiths", k: "대장장이", s: "The smiths melted it and made ploughs for the fields, and swords." },
+            { w: "melted (melt)", k: "녹였다", s: "The smiths melted it and made ploughs" },
+            { w: "ploughs", k: "쟁기", s: "made ploughs for the fields, and swords" },
+            { w: "landing", k: "나루", s: "The landing was full of ships come for iron." },
+            { w: "grew richer", k: "넉넉해졌다", s: "Gaya grew richer" }
+        ],
+        "11-alone.webp": [
+            { w: "laid on a feast", k: "잔칫상을 차렸다", s: "They had laid on a feast and asked him to it." },
+            { w: "queen", k: "왕비", s: "Take one of our daughters for your queen." },
+            { w: "exchanged looks", k: "눈짓을 주고받았다", s: "The Nine Gan exchanged looks with one another." },
+            { w: "shook his head (shake)", k: "고개를 저었다", s: "Suro shook his head slowly." },
+            { w: "my match", k: "내 짝", s: "Heaven will send my match to me." },
+            { w: "drew back (draw)", k: "물러갔다", s: "The Nine Gan drew back, looking put out." },
+            { w: "put out", k: "서운한", s: "The Nine Gan drew back, looking put out." },
+            { w: "kept looking (keep)", k: "자꾸 내다보았다", s: "Suro kept looking out towards the landing." }
+        ],
+        "12-ship.webp": [
+            { w: "sail", k: "돛", s: "One day a ship with a red sail appeared out at sea." },
+            { w: "out at sea", k: "바다 저편에", s: "a ship with a red sail appeared out at sea" },
+            { w: "in a crowd", k: "우르르", s: "The villagers ran down to the landing in a crowd." },
+            { w: "nobody had seen before", k: "처음 보는", s: "It was a shape of ship nobody had seen before." },
+            { w: "carved (carve)", k: "새겨진", s: "There were strange marks carved on the bow." },
+            { w: "bow", k: "뱃머리", s: "There were strange marks carved on the bow." },
+            { w: "came off ~", k: "내렸다", s: "The one who came off it was a young woman in strange clothes." },
+            { w: "ornament", k: "장식", s: "She wore an ornament in her hair that nobody had seen." },
+            { w: "murmured (murmur)", k: "웅성거렸다", s: "The people murmured among themselves." }
+        ],
+        "13-wedding.webp": [
+            { w: "himself", k: "몸소", s: "Suro went down to the hill himself to meet her." },
+            { w: "properly", k: "제대로", s: "He ran down it without properly putting his shoes on." },
+            { w: "no words were needed", k: "말이 필요 없었다", s: "Between them no words at all were needed." },
+            { w: "were lit (light)", k: "밝혀졌다", s: "That night lights were lit all over Gaya." },
+            { w: "gongs", k: "징", s: "Drums and gongs sounded until dawn." },
+            { w: "unloaded (unload)", k: "내렸다", s: "Heo Hwangok also unloaded the seed and the books she had brought." },
+            { w: "seed", k: "씨앗", s: "unloaded the seed and the books she had brought" },
+            { w: "harvest", k: "농사", s: "The harvest that year was uncommonly good." },
+            { w: "uncommonly", k: "유난히", s: "The harvest that year was uncommonly good." }
+        ],
+        "14-gaya.webp": [
+            { w: "opened wide to ~", k: "활짝 열린", s: "Gaya became a country opened wide to the sea." },
+            { w: "goods", k: "물건", s: "Ships went out with iron and strange goods came in." },
+            { w: "stopped fearing ~", k: "무서워하지 않게 되었다", s: "The people of Gaya stopped fearing what was strange." },
+            { w: "the days of ~", k: "~하던 시절", s: "He thought of the days of the nine villages." },
+            { w: "over whose was best", k: "제 것이 제일이라고", s: "Nine villages that quarrelled over whose was best." },
+            { w: "raised a hand", k: "손을 들었다", s: "Suro raised a hand and pointed at the sea." },
+            { w: "packed with ~", k: "빼곡한", s: "The landing was packed with ships." },
+            { w: "our own yard", k: "우리 마당", s: "Now the sea itself is our own yard." }
+        ],
+        "after": [
+            { w: "stands beside ~", k: "나란히 놓인다", s: "This story stands beside Bak Hyeokgeose of Silla" },
+            { w: "one each", k: "저마다 하나씩", s: "The three countries have one each" },
+            { w: "not one but six", k: "하나가 아니라 여섯", s: "Only here it is not one egg but six." },
+            { w: "has come down (come down)", k: "전해 온다", s: "That song has come down to us under the name Song of Guji." },
+            { w: "a trace", k: "흔적", s: "It is also a trace of how far Gaya went by sea." },
+            { w: "held that ~", k: "~라고 여겼다", s: "each of them held that his own village was best" },
+            { w: "only after ~", k: "~한 다음에야", s: "only after they had sung together and stamped together" },
+            { w: "came into being", k: "생겼다", s: "the country came into being" },
+            { w: "doing something together", k: "같이 무언가 해 보기", s: "Coming together always starts with doing something together." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🥚',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story stands beside Bak Hyeokgeose of Silla and Jumong of Goguryeo. The three countries have one first-king story each.",
+                    "There is an egg here too. Only here it is not one egg but six. The six who came out of them became the kings of the six Gaya.",
+                    "That song has come down to us under the name Song of Guji. It is one of the oldest songs still left in Korea.",
+                    "The story that Kim Suro's queen came from far over the sea has come down with it. It is also a trace of how far Gaya went by sea."
+                ],
+                right: [
+                    "The Nine Gan were men who each held that his own village was best. And only after they had sung together and stamped their feet together did the country come into being.",
+                    "Coming together always starts with doing something together.",
+                    "When was the first moment you and somebody else were of one mind?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "아홉 간이 소리를 들은 곳은 어디인가요?", choices: ["바닷가 나루", "구지봉", "낙동강 가"], answer: 1 },
     { q: "소리가 일러 준 노래는 어떻게 시작하나요?", choices: ["하늘이 나라를 세우라 하셨다", "여기에 사람이 있느냐", "거북아 거북아 머리를 내어라"], answer: 2 },
