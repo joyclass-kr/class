@@ -416,7 +416,7 @@ const AFTERWORD = {
         {
             art: 'end.webp',
             left: [
-                "처음 적힌 판에는 금발 아이가 아니라 할머니가 들어갑니다. 백팔십 년쯤 전 영국에서 나왔지요.",
+                "처음 적힌 판에는 금발 아이가 아니라 할머니가 들어갑니다. 백구십 년쯤 전 영국에서 나왔지요.",
                 "아이는 세 번 다 같은 순서로 골랐습니다. 큰 것, 가운데 것, 작은 것이지요. 그리고 세 번 다 작은 것이 맞았습니다.",
                 "작은 것이 맞은 까닭은 아이가 제일 작았기 때문입니다. 좋은 것을 고른 것이 아니라 제 몸에 맞는 것을 고른 것이지요.",
                 "부서진 의자를 보고 아이는 멈칫합니다. 그러고는 그냥 지나가지요. 아무도 보지 않았으니까요."
@@ -1016,7 +1016,7 @@ const EN = {
             {
                 art: 'end.webp',
                 left: [
-                    "In the first written version it is not a golden-haired girl who goes in but an old woman. It came out in England about a hundred and eighty years ago.",
+                    "In the first written version it is not a golden-haired girl who goes in but an old woman. It came out in England about a hundred and ninety years ago.",
                     "The child chose in the same order all three times: the big one, the middle one, the small one. And all three times the small one was right.",
                     "The small one was right because she was the smallest. She was not picking the best thing. She was picking the thing that fitted her.",
                     "She stops short when she sees the broken chair. And then she walks on past it, because nobody had seen her."
