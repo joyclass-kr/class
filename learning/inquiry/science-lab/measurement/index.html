@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="원자에서 우주까지, 세슘 원자의 진동에서 우주의 나이까지 길이와 시간의 규모를 10배 눈금으로 재고, 미터·킬로그램·초·켈빈의 기준이 지구와 물에서 보관된 원기로, 다시 변하지 않는 자연 상수로 옮겨 온 역사를 따라가고, 눈금이 다른 자로 같은 막대를 열 번 재어 어느 자리까지 믿을 수 있는지 확인하는 고등학교 통합과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="measure-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>측정과 단위 — 자연의 규모, 단위의 기준, 눈금과 어림</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교 1학년</span><span>물리</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>자연의 규모, 단위의 기준, 눈금과 어림 가운데 하나를 고릅니다.</li>
+            <li>잴 대상, 단위와 시대, 자의 눈금을 정합니다.</li>
+            <li>사람 키와 몇 배 다를지, 그때 기준이 무엇이었을지, 어느 자리까지 믿을 수 있을지 예상합니다.</li>
+            <li>시작해서 10배 눈금을 따라가고, 기준의 역사를 넘기고, 열 번 잰 값을 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">10배씩 뛰는 눈금 하나가 한 자리입니다</p>
+                <fieldset class="mode-field">
+                    <legend>실험 종류</legend>
+                    <div class="mode-buttons three">
+                        <button type="button" data-mode="scale">자연의 규모<small>몇 자리 차이일까</small></button>
+                        <button type="button" data-mode="units">단위의 기준<small>무엇에 맞추었나</small></button>
+                        <button type="button" data-mode="measure">눈금과 어림<small>어디까지 믿을까</small></button>
+                    </div>
+                </fieldset>
+                <div id="controlArea"></div>
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons" id="predictionArea"></div>
+                </fieldset>
+                <button class="run-button" id="checkBtn" type="button">10배씩 가 보기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">결과</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">까닭</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel burn-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">눈금 한 칸이 10배입니다. 기준(사람 키 1.7 m 또는 1초)에서 출발해 대상까지 칸을 세어 갑니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>자연의 규모</strong> 자연에는 원자(1억분의 1 cm)부터 관측할 수 있는 우주(약 10²⁷ m)까지, 세슘 원자의 한 번 진동(100억분의 1초)부터 우주의 나이(138억 년, 약 4×10¹⁷초)까지 엄청나게 다른 크기가 함께 있습니다. 이렇게 넓은 범위는 10배씩 뛰는 눈금으로 세어야 한눈에 들어오고, 그래서 과학은 10의 몇 제곱이라는 표기를 씁니다. 우리가 맨눈으로 보는 세계는 그 가운데 아주 좁은 띠에 불과합니다.</p>
+                <p><strong>단위의 기준</strong> 길이·질량·시간·온도 같은 기본량은 누가 언제 어디서 재어도 같아야 하므로 기준(표준)이 필요합니다. 처음에는 지구 둘레와 물처럼 손에 닿는 자연물에 맞추었고, 다음에는 정밀하게 만든 막대와 추(원기)를 보관해 기준으로 삼았습니다. 그러나 물건은 닳고 변하므로, 지금은 빛의 속력·세슘 원자의 진동·플랑크 상수처럼 우주 어디서나 변하지 않는 자연 상수에 모든 단위를 묶어 두었습니다(2019년 완성). 기본 단위는 m, kg, s, A, K, mol, cd 일곱 가지입니다.</p>
+                <p><strong>측정과 어림</strong> 어떤 자로 재어도 참값을 완전히 알 수는 없습니다. 눈금 사이를 눈으로 열 등분해 한 자리를 어림해 적는데, 그 마지막 자리는 재는 사람과 순간에 따라 흔들립니다. 그래서 측정값은 '어느 자리까지 믿을 수 있는지'를 함께 담아야 하고, 그것이 유효숫자입니다. 여러 번 재어 평균을 내면 우연한 흔들림은 줄지만, 자 자체가 틀린 것(치우침)은 줄지 않습니다.</p>
+                <p><strong>어림의 힘</strong> 정확한 값을 모를 때도 자릿수만 맞게 어림하면 판단할 수 있습니다. 운동장 모래알이 10¹⁵개쯤인지 10¹⁸개쯤인지, 바닷물이 10²¹ L쯤인지 어림해 보는 훈련이 과학에서 답이 말이 되는지 가려내는 첫 단계입니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>사람 키 1.7 m와 지구 지름 약 1만 3천 km는 몇 자리(10배 눈금 몇 칸) 차이일까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 3칸쯤 (1,000배)</label>
+                        <label><input type="radio" name="q1" value="b"> 5칸쯤 (10만 배)</label>
+                        <label><input type="radio" name="q1" value="c"> 7칸쯤 (1,000만 배)</label>
+                        <label><input type="radio" name="q1" value="d"> 12칸쯤 (1조 배)</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>1만 3천 km = 1.3 × 10⁷ m이고 사람은 1.7 m이므로 약 750만 배, 10배 눈금으로 7칸쯤입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>지금 1미터의 기준은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 빛이 진공에서 1/299,792,458초 동안 가는 거리</label>
+                        <label><input type="radio" name="q2" value="b"> 파리에 보관된 백금 막대의 길이</label>
+                        <label><input type="radio" name="q2" value="c"> 지구 둘레의 4천만분의 1</label>
+                        <label><input type="radio" name="q2" value="d"> 어른 팔 길이의 두 배</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>1983년부터 미터는 빛의 속력에 묶여 있습니다. 지구 둘레(1793년)와 백금 막대(1889년)는 옛 기준으로, 재기 어렵거나 변할 수 있어 바뀌었습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>1 mm 눈금 자로 막대를 재어 123.4 mm라고 적었습니다. 마지막 자리 4는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 자에 새겨진 눈금을 그대로 읽은 정확한 값</label>
+                        <label><input type="radio" name="q3" value="b"> 적으면 안 되는 틀린 자리</label>
+                        <label><input type="radio" name="q3" value="c"> 컴퓨터가 계산한 값</label>
+                        <label><input type="radio" name="q3" value="d"> 눈금 사이를 눈으로 열 등분해 어림한 자리 — 사람마다 조금 다를 수 있음</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>측정값의 마지막 자리는 눈금 사이를 어림한 값입니다. 123.4의 3까지는 눈금으로 확실하고 4는 어림한 자리여서, 다른 사람은 123.3이나 123.5로 읽을 수 있습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>단위의 기준을 보관된 원기에서 자연 상수로 바꾼 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 원기를 잃어버렸기 때문에</label>
+                        <label><input type="radio" name="q4" value="b"> 물건은 닳거나 변하지만 빛의 속력이나 원자의 진동은 어디서나 변하지 않기 때문에</label>
+                        <label><input type="radio" name="q4" value="c"> 자연 상수가 더 재기 쉽기 때문에</label>
+                        <label><input type="radio" name="q4" value="d"> 원기가 너무 무거웠기 때문에</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>킬로그램 원기는 100년 동안 다른 복제품과 50 μg쯤 어긋났습니다. 자연 상수는 우주 어디서나 같아서, 어느 실험실이든 같은 기준을 스스로 되살릴 수 있습니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>
