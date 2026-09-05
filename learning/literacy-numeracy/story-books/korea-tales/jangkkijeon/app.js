@@ -244,6 +244,452 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐦",
+        art: "cover.webp",
+        title: "The Pheasant's Tale",
+        intro: [
+            "This is an old tale with no known author. It was once a pansori song, but the singing was lost and only the words remain.",
+            "A pheasant husband and wife talk and argue like people. It looks like an animal story, but it is really about people.",
+            "It all turns on one bean in the snow. That one day changes a whole family's winter."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · One Bean in the Snow",
+            beats: [
+                {
+                    art: "01-family.webp",
+                    emoji: "🐦",
+                    left: [
+                        "Long ago a pair of pheasants lived in a snowy mountain village.",
+                        "The male is called Jangkki, the female Katuri.",
+                        "Jangkki had a long fine tail. Katuri's feathers were plain.",
+                        "They had nine sons and twelve daughters.",
+                        { t: "\"Mother, we are hungry.\"", v: "boy" }
+                    ],
+                    right: [
+                        "Deep in winter the food ran out.",
+                        "Snow covered the mountain and not one grass seed showed.",
+                        { t: "\"Today the whole family goes out to look.\"", v: "man" },
+                        "Jangkki said it with his tail up.",
+                        "Katuri led, and twenty-one of them filed out into the snow."
+                    ]
+                },
+                {
+                    art: "02-bean.webp",
+                    emoji: "🫘",
+                    left: [
+                        "How far had they walked?",
+                        "In the middle of the snow field something red showed.",
+                        { t: "\"Look at that! A bean, a bean!\"", v: "man" },
+                        "Jangkki beat his wings and ran to it.",
+                        "One red bean lay on the white snow, fat and bright to the eye."
+                    ],
+                    right: [
+                        "But Katuri stopped where she was.",
+                        { t: "\"Husband, wait a moment.\"", v: "woman" },
+                        { t: "\"Why is one bean lying on the snow? There is no bean field here.\"", v: "woman" },
+                        "She looked all round. There were faint marks like footprints.",
+                        { t: "\"I think somebody has put it there.\"", v: "woman" }
+                    ]
+                },
+                {
+                    art: "03-dream.webp",
+                    emoji: "💭",
+                    left: [
+                        { t: "\"And my dream last night was a bad one.\"", v: "woman" },
+                        "Katuri's voice shook.",
+                        { t: "\"A black hat was set on your head, and you floated away on water.\"", v: "woman" },
+                        { t: "\"Please, let us leave that bean alone.\"", v: "woman" },
+                        "The children gathered close to their mother."
+                    ],
+                    right: [
+                        "Jangkki laughed out loud.",
+                        { t: "\"A black hat means office, and floating means good fortune running over.\"", v: "man" },
+                        { t: "\"Read a dream well and it is all good.\"", v: "man" },
+                        "He could not take his eyes off the bean. His mouth was watering already.",
+                        "Katuri's words did not reach his ears."
+                    ]
+                },
+                {
+                    art: "04-scold.webp",
+                    emoji: "😤",
+                    left: [
+                        { t: "\"Husband, do listen to me.\"", v: "woman" },
+                        "Katuri took hold of his wing.",
+                        "Jangkki shook it off hard.",
+                        { t: "\"What would a woman know? Keep to the house!\"", v: "man" },
+                        "His voice rang round the mountain. The children shrank back in fright."
+                    ],
+                    right: [
+                        "Calling her that put her below him.",
+                        "Katuri's heart went down.",
+                        { t: "\"Father, do as Mother says.\"", v: "boy" },
+                        "The eldest son spoke up, but Jangkki shook his head.",
+                        { t: "\"A man who says he will eat, eats.\"", v: "man" },
+                        "And he walked towards the bean."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Trap",
+            beats: [
+                {
+                    art: "05-trap.webp",
+                    emoji: "🪤",
+                    left: [
+                        "Katuri shut both eyes tight.",
+                        "The children hid their faces in her skirts.",
+                        "The snow field was dead quiet.",
+                        "Jangkki stood in front of the bean.",
+                        { t: "\"I never saw a bean as fat as this.\"", v: "man" },
+                        "He put his beak out and pecked at it. And at that very moment —"
+                    ],
+                    right: [
+                        "Snap!",
+                        "A trap hidden in the snow sprang up and caught him by the neck.",
+                        "A trap is a frame people set to catch animals.",
+                        "The bean had been the bait.",
+                        { t: "\"W-wife...\"", v: "man" },
+                        "Jangkki beat his wings, but the trap did not move."
+                    ]
+                },
+                {
+                    art: "06-lastwords.webp",
+                    emoji: "🍂",
+                    left: [
+                        "Katuri ran up and pecked at the trap and pushed at it with her feet.",
+                        "The children hung on it too.",
+                        "But the trap was made of iron and it did not stir.",
+                        "Jangkki's breath grew thinner.",
+                        { t: "\"I should have... listened to you...\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"When I am gone, raise the children well.\"", v: "man" },
+                        { t: "\"And never marry again. Live alone and think only of me.\"", v: "man" },
+                        "He said that, and his breath stopped.",
+                        "One long tail feather stirred in the wind on the snow.",
+                        "Katuri sat there a long, long while."
+                    ]
+                },
+                {
+                    art: "07-burial.webp",
+                    emoji: "❄️",
+                    left: [
+                        "Katuri and all twenty-one children cried out loud.",
+                        "The sound of it went right round the mountain.",
+                        { t: "\"Father! Father!\"", v: "boy" },
+                        "As the sun went down Katuri dried her eyes and stood up.",
+                        { t: "\"We cannot leave him so. Let us bury your father.\"", v: "woman" }
+                    ],
+                    right: [
+                        "They laid Jangkki on a sunny slope and covered him with snow.",
+                        "On top of it they set that bean.",
+                        { t: "\"This bean took you, so take the bean with you.\"", v: "woman" },
+                        "Katuri's voice was steady.",
+                        "The children crept under her wings, and she did not sleep all night."
+                    ]
+                },
+                {
+                    art: "08-crow.webp",
+                    emoji: "🐦‍⬛",
+                    left: [
+                        "Next day the news of Jangkki went round the mountain.",
+                        "The birds came one by one to mourn.",
+                        "To mourn is to visit a house of grief and comfort it.",
+                        "The first to come was the crow.",
+                        { t: "\"Oh dear, what a dreadful thing.\"", v: "old" }
+                    ],
+                    right: [
+                        "But even while it wept the crow kept glancing at Katuri.",
+                        { t: "\"Madam Katuri, how will you live now?\"", v: "old" },
+                        { t: "\"Twenty-one children is a great deal for one bird.\"", v: "old" },
+                        "Katuri did not answer.",
+                        "After the crow came an owl and a duck."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Katuri Chooses",
+            beats: [
+                {
+                    art: "09-suitors.webp",
+                    emoji: "🦆",
+                    left: [
+                        "The birds had not come to grieve.",
+                        "Each of them set out his own good points.",
+                        { t: "\"My black coat is mourning dress. Live with me and you honour him always.\"", v: "old" },
+                        "Mourning dress is what people wear at a funeral.",
+                        { t: "\"My night eyes are sharp. I would guard the children every night.\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"My house is on the water. Cool in summer, and fish to spare.\"", v: "man" },
+                        "The duck put that in as well.",
+                        "Katuri opened her mouth quietly.",
+                        { t: "\"My children cannot swim. They sleep at night. And I have a black coat myself.\"", v: "woman" },
+                        "The birds looked foolish and flew away."
+                    ]
+                },
+                {
+                    art: "10-alone.webp",
+                    emoji: "🌙",
+                    left: [
+                        "The birds left and the mountain went quiet again.",
+                        "Katuri looked up at the grave on the slope.",
+                        "The children slept beside her.",
+                        "Never marry again. His last words went round in her ears.",
+                        "And nobody, she thought, has asked how I want to live."
+                    ],
+                    right: [
+                        "The winter went by. Katuri fed the children on her own.",
+                        "She dug through snow for roots and searched the bushes for berries.",
+                        "The children grew by the day.",
+                        { t: "\"Mother, we can find food now too.\"", v: "girl" },
+                        "The eldest daughter held out an acorn."
+                    ]
+                },
+                {
+                    art: "11-spring.webp",
+                    emoji: "🌱",
+                    left: [
+                        "Spring came. The snow melted and new shoots came up on the mountain.",
+                        "One day a strange pheasant came over the mountain.",
+                        "He had lost his mate and lived alone.",
+                        { t: "\"I was passing, so I called in.\"", v: "man" },
+                        "He set out no good points. He asked the children's names, one by one."
+                    ],
+                    right: [
+                        "Looking for food together, they saw a bean in the grass.",
+                        "Katuri's heart turned over.",
+                        "But the strange pheasant looked at the bean and turned to her.",
+                        { t: "\"May I eat this bean? How does it look to you?\"", v: "man" },
+                        "And Katuri burst out laughing."
+                    ]
+                },
+                {
+                    art: "12-choice.webp",
+                    emoji: "🌸",
+                    left: [
+                        "That night Katuri called the children together.",
+                        { t: "\"I think I shall live with that pheasant now. What do you say?\"", v: "woman" },
+                        { t: "\"But Father said not to marry again.\"", v: "boy" },
+                        "The eldest son asked it.",
+                        { t: "\"That was your father's thought. This time your mother will choose.\"", v: "woman" }
+                    ],
+                    right: [
+                        "The spring mountain had a new family in it.",
+                        "Behind the children the new pheasant and Katuri walked side by side.",
+                        "He asked her first about everything, and she said what she thought.",
+                        "Spring grass came up on the grave on the slope.",
+                        "And they say the bean laid on it put out a shoot."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "Why did the family go out into the snow?", choices: ["The food had run out", "For a spring outing", "To a neighbour's feast"], answer: 0 },
+        { q: "What did Katuri think odd about the bean?", choices: ["Its colour was quite black", "Only one lay on the snow", "It sat in a bean field"], answer: 1 },
+        { q: "What was Katuri's dream the night before?", choices: ["Beans piled in a heap", "The children flying", "Jangkki in a black hat"], answer: 2 },
+        { q: "What did Jangkki do with what Katuri said?", choices: ["Shook it off as woman's talk", "Weighed it and then agreed", "Asked the children first"], answer: 0 },
+        { q: "What happened as Jangkki pecked the bean?", choices: ["A hunter came running", "The bean rolled away", "A trap caught his neck"], answer: 2 },
+        { q: "What did Jangkki say as he died?", choices: ["Never marry again", "Give the bean to the children", "Bury me up the mountain"], answer: 0 },
+        { q: "Which bird came to mourn first?", choices: ["The owl", "The crow", "The duck"], answer: 1 },
+        { q: "What did the spring pheasant do about the bean?", choices: ["Swallowed it quickly", "Shared it with the children", "Asked Katuri first"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "Jangkki brushed her off as woman's talk, so what he paid for not listening was his life.",
+                "The birds who came to mourn talked themselves up instead of grieving, so some people count their own gain even at a grief.",
+                "The spring pheasant saw a bean and asked her first, so what Katuri chose was not a handsome bird.",
+                "Katuri lived alone to the end as her husband told her, so the words of the dead came before the living."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "pansori", k: "판소리", s: "It was once a pansori song" },
+            { w: "the singing was lost", k: "소리가 끊겼다", s: "the singing was lost and only the words remain" },
+            { w: "remain", k: "남다", s: "only the words remain" },
+            { w: "argue", k: "다투다", s: "A pheasant husband and wife talk and argue like people." },
+            { w: "It looks like ~", k: "~ 같아 보인다", s: "It looks like an animal story, but it is really about people." },
+            { w: "turns on ~ (turn on)", k: "~에 달려 있다", s: "It all turns on one bean in the snow." }
+        ],
+        "01-family.webp": [
+            { w: "a pair of ~", k: "한 쌍의", s: "a pair of pheasants lived in a snowy mountain village" },
+            { w: "pheasants", k: "꿩", s: "a pair of pheasants" },
+            { w: "the male", k: "수컷", s: "The male is called Jangkki, the female Katuri." },
+            { w: "plain", k: "수수한", s: "Katuri's feathers were plain." },
+            { w: "ran out (run out)", k: "다 떨어졌다", s: "Deep in winter the food ran out." },
+            { w: "grass seed", k: "풀씨", s: "not one grass seed showed" },
+            { w: "with his tail up", k: "꽁지를 세우고", s: "Jangkki said it with his tail up." },
+            { w: "led (lead)", k: "앞장섰다", s: "Katuri led, and twenty-one of them filed out." },
+            { w: "filed out (file)", k: "줄지어 나갔다", s: "twenty-one of them filed out into the snow" }
+        ],
+        "02-bean.webp": [
+            { w: "showed (show)", k: "보였다", s: "In the middle of the snow field something red showed." },
+            { w: "beat his wings (beat)", k: "날개를 퍼덕였다", s: "Jangkki beat his wings and ran to it." },
+            { w: "fat", k: "굵은", s: "One red bean lay on the white snow, fat and bright to the eye." },
+            { w: "bright to the eye", k: "눈에 확 띄는", s: "fat and bright to the eye" },
+            { w: "wait a moment", k: "잠깐만요", s: "Husband, wait a moment." },
+            { w: "bean field", k: "콩밭", s: "Why is one bean lying on the snow? There is no bean field here." },
+            { w: "faint", k: "어렴풋한", s: "There were faint marks like footprints." },
+            { w: "footprints", k: "발자국", s: "There were faint marks like footprints." }
+        ],
+        "03-dream.webp": [
+            { w: "last night", k: "간밤", s: "And my dream last night was a bad one." },
+            { w: "shook (shake)", k: "떨렸다", s: "Katuri's voice shook." },
+            { w: "was set on ~", k: "씌워졌다", s: "A black hat was set on your head" },
+            { w: "floated away (float)", k: "떠내려갔다", s: "you floated away on water" },
+            { w: "leave ~ alone", k: "두고 가다", s: "Please, let us leave that bean alone." },
+            { w: "office", k: "벼슬", s: "A black hat means office" },
+            { w: "running over", k: "넘치는", s: "floating means good fortune running over" },
+            { w: "Read a dream well", k: "꿈을 좋게 풀다", s: "Read a dream well and it is all good." },
+            { w: "mouth was watering", k: "입에 침이 고였다", s: "His mouth was watering already." }
+        ],
+        "04-scold.webp": [
+            { w: "do listen", k: "제발 들어 보세요", s: "Husband, do listen to me." },
+            { w: "took hold of ~", k: "붙들었다", s: "Katuri took hold of his wing." },
+            { w: "shook ~ off (shake)", k: "홱 뿌리쳤다", s: "Jangkki shook it off hard." },
+            { w: "Keep to ~", k: "~이나 하시오", s: "What would a woman know? Keep to the house!" },
+            { w: "shrank back (shrink)", k: "움츠러들었다", s: "The children shrank back in fright." },
+            { w: "put her below him", k: "낮추어 불렀다", s: "Calling her that put her below him." },
+            { w: "heart went down", k: "가슴이 내려앉았다", s: "Katuri's heart went down." },
+            { w: "spoke up (speak up)", k: "나섰다", s: "The eldest son spoke up" }
+        ],
+        "05-trap.webp": [
+            { w: "hid their faces (hide)", k: "얼굴을 묻었다", s: "The children hid their faces in her skirts." },
+            { w: "dead quiet", k: "쥐 죽은 듯 고요한", s: "The snow field was dead quiet." },
+            { w: "beak", k: "부리", s: "He put his beak out and pecked at it." },
+            { w: "pecked (peck)", k: "쪼았다", s: "He put his beak out and pecked at it." },
+            { w: "at that very moment", k: "바로 그때", s: "And at that very moment —" },
+            { w: "Snap", k: "탁", s: "Snap!" },
+            { w: "sprang up (spring)", k: "튀어 올랐다", s: "A trap hidden in the snow sprang up" },
+            { w: "trap", k: "덫", s: "A trap is a frame people set to catch animals." },
+            { w: "bait", k: "미끼", s: "The bean had been the bait." }
+        ],
+        "06-lastwords.webp": [
+            { w: "hung on ~ (hang)", k: "매달렸다", s: "The children hung on it too." },
+            { w: "iron", k: "쇠", s: "But the trap was made of iron and it did not stir." },
+            { w: "grew thinner (grow)", k: "가늘어졌다", s: "Jangkki's breath grew thinner." },
+            { w: "I should have ~", k: "~할 것을", s: "I should have... listened to you..." },
+            { w: "When I am gone", k: "내가 죽거든", s: "When I am gone, raise the children well." },
+            { w: "raise", k: "키우다", s: "raise the children well" },
+            { w: "think only of ~", k: "~만 생각하다", s: "Live alone and think only of me." },
+            { w: "his breath stopped", k: "숨을 거두었다", s: "He said that, and his breath stopped." },
+            { w: "tail feather", k: "꽁지깃", s: "One long tail feather stirred in the wind on the snow." }
+        ],
+        "07-burial.webp": [
+            { w: "cried out loud", k: "소리 내어 울었다", s: "Katuri and all twenty-one children cried out loud." },
+            { w: "right round ~", k: "온 ~에", s: "The sound of it went right round the mountain." },
+            { w: "dried her eyes", k: "눈물을 닦았다", s: "Katuri dried her eyes and stood up" },
+            { w: "bury", k: "묻다", s: "We cannot leave him so. Let us bury your father." },
+            { w: "sunny slope", k: "양지바른 언덕", s: "They laid Jangkki on a sunny slope" },
+            { w: "took you (take)", k: "데려갔다", s: "This bean took you, so take the bean with you." },
+            { w: "steady", k: "담담한", s: "Katuri's voice was steady." },
+            { w: "crept under ~ (creep)", k: "파고들었다", s: "The children crept under her wings" }
+        ],
+        "08-crow.webp": [
+            { w: "went round (go round)", k: "퍼졌다", s: "Next day the news of Jangkki went round the mountain." },
+            { w: "mourn", k: "조문하다", s: "The birds came one by one to mourn." },
+            { w: "a house of grief", k: "슬픈 집", s: "To mourn is to visit a house of grief and comfort it." },
+            { w: "comfort", k: "위로하다", s: "to visit a house of grief and comfort it" },
+            { w: "The first to come", k: "제일 먼저 온 것", s: "The first to come was the crow." },
+            { w: "dreadful", k: "끔찍한", s: "Oh dear, what a dreadful thing." },
+            { w: "wept (weep)", k: "울었다", s: "But even while it wept the crow kept glancing at Katuri." },
+            { w: "kept glancing", k: "흘끔흘끔 살폈다", s: "the crow kept glancing at Katuri" },
+            { w: "a great deal", k: "너무 많은", s: "Twenty-one children is a great deal for one bird." }
+        ],
+        "09-suitors.webp": [
+            { w: "grieve", k: "슬퍼하다", s: "The birds had not come to grieve." },
+            { w: "set out ~ (set)", k: "늘어놓았다", s: "Each of them set out his own good points." },
+            { w: "good points", k: "제 자랑거리", s: "Each of them set out his own good points." },
+            { w: "mourning dress", k: "상복", s: "My black coat is mourning dress." },
+            { w: "honour", k: "기리다", s: "Live with me and you honour him always." },
+            { w: "funeral", k: "초상", s: "Mourning dress is what people wear at a funeral." },
+            { w: "night eyes", k: "밤눈", s: "My night eyes are sharp." },
+            { w: "to spare", k: "넘치도록", s: "Cool in summer, and fish to spare." },
+            { w: "looked foolish", k: "머쓱해졌다", s: "The birds looked foolish and flew away." }
+        ],
+        "10-alone.webp": [
+            { w: "grave", k: "무덤", s: "Katuri looked up at the grave on the slope." },
+            { w: "went round in her ears", k: "귓가에 맴돌았다", s: "His last words went round in her ears." },
+            { w: "how I want to live", k: "내가 어떻게 살고 싶은지", s: "nobody has asked how I want to live" },
+            { w: "on her own", k: "혼자서", s: "Katuri fed the children on her own." },
+            { w: "dug through ~ (dig)", k: "헤쳤다", s: "She dug through snow for roots" },
+            { w: "roots", k: "풀뿌리", s: "She dug through snow for roots" },
+            { w: "bushes", k: "덤불", s: "searched the bushes for berries" },
+            { w: "acorn", k: "도토리", s: "The eldest daughter held out an acorn." }
+        ],
+        "11-spring.webp": [
+            { w: "melted (melt)", k: "녹았다", s: "The snow melted and new shoots came up." },
+            { w: "shoots", k: "새순", s: "new shoots came up on the mountain" },
+            { w: "mate", k: "짝", s: "He had lost his mate and lived alone." },
+            { w: "called in", k: "들렀다", s: "I was passing, so I called in." },
+            { w: "one by one", k: "하나하나", s: "He asked the children's names, one by one." },
+            { w: "turned over", k: "철렁했다", s: "Katuri's heart turned over." },
+            { w: "How does it look to you", k: "부인 보기에는 어떻습니까", s: "May I eat this bean? How does it look to you?" },
+            { w: "burst out laughing", k: "웃음이 터졌다", s: "And Katuri burst out laughing." }
+        ],
+        "12-choice.webp": [
+            { w: "called ~ together", k: "불러 모았다", s: "That night Katuri called the children together." },
+            { w: "What do you say", k: "너희 생각은 어떠니", s: "I think I shall live with that pheasant now. What do you say?" },
+            { w: "This time", k: "이번에는", s: "This time your mother will choose." },
+            { w: "will choose", k: "정하겠다", s: "This time your mother will choose." },
+            { w: "side by side", k: "나란히", s: "the new pheasant and Katuri walked side by side" },
+            { w: "asked her first", k: "먼저 물었다", s: "He asked her first about everything" },
+            { w: "what she thought", k: "제 뜻", s: "she said what she thought" },
+            { w: "put out a shoot", k: "싹이 텄다", s: "the bean laid on it put out a shoot" }
+        ],
+        "after": [
+            { w: "one of the seven", k: "일곱 마당의 하나", s: "It is one of the seven whose singing was lost" },
+            { w: "in the same case as ~", k: "~과 같은 처지인", s: "in the same case as Onggojipjeon" },
+            { w: "a fable", k: "우화", s: "A story like this is called a fable." },
+            { w: "borrowed the mouths of ~", k: "입을 빌렸다", s: "old people borrowed the mouths of animals" },
+            { w: "to their faces", k: "대놓고", s: "what was hard to say to their faces" },
+            { w: "commonly said", k: "흔히 하던 말", s: "was commonly said by men in those days" },
+            { w: "whose side it is on", k: "누구 편인지", s: "It is plain whose side the story is on." },
+            { w: "was frowned on", k: "나쁘게 보았다", s: "a widow marrying again was frowned on" },
+            { w: "as somebody else decided", k: "남이 정해 준 대로", s: "and one who did not live as somebody else decided" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌸',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This was a pansori piece to begin with. Of the twelve pansori pieces it is one of the seven whose singing was lost, in the same case as Onggojipjeon. We can only read it now.",
+                    "Pheasants talk and marry and quarrel like people. A story like this is called a fable. Old people borrowed the mouths of animals to say what was hard to say to their faces.",
+                    "What Jangkki said to Katuri, that a woman would not know, was commonly said by men in those days. The story then puts that same Jangkki in a trap. It is plain whose side it is on.",
+                    "His last words are the same kind of thing. In those days a widow marrying again was frowned on. Katuri did not do as he said. This telling ends with Katuri choosing for herself."
+                ],
+                right: [
+                    "So it is not a story about pheasants. It is about one who would not listen, and one who did not live as somebody else decided. A single bean shows you both.",
+                    "Have you ever come to grief by not listening to somebody? And have you ever chosen for yourself instead of taking what was decided for you?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "장끼네 식구가 눈밭으로 나선 까닭은 무엇인가요?", choices: ["먹을 것이 다 떨어져서", "봄나들이를 가려고", "이웃 잔치에 가려고"], answer: 0 },
     { q: "까투리가 콩을 보고 이상하게 여긴 것은 무엇인가요?", choices: ["콩 빛깔이 새까매서", "눈 위에 한 알만 있어서", "콩밭 한가운데 있어서"], answer: 1 },

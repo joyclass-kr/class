@@ -250,6 +250,481 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "💪",
+        art: "cover.webp",
+        title: "The Half Boy",
+        intro: [
+            "This is an oral tale with no known author. Its hero has one eye, one arm and one leg.",
+            "Half a body, the strength of a giant, and quicker wits than anyone: that is the frame of it. Children loved this one.",
+            "Some districts have him whole at the end. In others he stays as he is and does well. This book follows the second."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Two Carp and a Half",
+            beats: [
+                {
+                    art: "01-carp.webp",
+                    emoji: "🐟",
+                    left: [
+                        "Long ago in a village a couple lived with no children.",
+                        "Ten years married, and still no word of a child.",
+                        "Every day they set clean water on a rock behind the house and prayed.",
+                        { t: "\"Only let us have one child, we beg you.\"", v: "woman" },
+                        "Then one day a passing monk gave them three carp."
+                    ],
+                    right: [
+                        { t: "\"Eat these, and do not leave one of them.\"", v: "old" },
+                        { t: "\"Then you will have three sons.\"", v: "old" },
+                        "The couple bowed low.",
+                        { t: "\"Thank you. We will do exactly as you say.\"", v: "man" },
+                        "From that day the wife cooked one carp at a time and ate it."
+                    ]
+                },
+                {
+                    art: "02-half.webp",
+                    emoji: "👶",
+                    left: [
+                        "She ate two, and did not leave a drop of the broth.",
+                        "But she was halfway through the third when it happened.",
+                        "Thump, thump. Somebody was knocking at the gate.",
+                        { t: "\"Goodness, who is that at this hour?\"", v: "woman" },
+                        "She pushed the table away and got up."
+                    ],
+                    right: [
+                        "She talked with the neighbour, and when she came back the half fish had gone cold.",
+                        { t: "\"Well, half a fish. What of it?\"", v: "woman" },
+                        "The next year three sons were born.",
+                        "The two eldest were sound, but the youngest was a half.",
+                        "One eye, one arm, one leg."
+                    ]
+                },
+                {
+                    art: "03-grow.webp",
+                    emoji: "💪",
+                    left: [
+                        "The village called the youngest Banjjogi, which means the half one.",
+                        "Eye and arm and leg were each exactly half.",
+                        { t: "\"Dear me. How will he ever get by on his own?\"", v: "man" },
+                        "The older neighbours clicked their tongues at him.",
+                        "But this Banjjogi was no ordinary child."
+                    ],
+                    right: [
+                        "He went hopping on one leg, and he was faster than his brothers.",
+                        "The carrying frame the two of them groaned at, he lifted with one arm.",
+                        "He had the strength of ten grown men and more.",
+                        "The villagers' eyes went round.",
+                        { t: "\"Is that really the Banjjogi we know?\"", v: "man" }
+                    ]
+                },
+                {
+                    art: "04-jealous.webp",
+                    emoji: "😒",
+                    left: [
+                        "But the two older brothers did not like it at all.",
+                        "Everywhere they went, people talked of nothing but Banjjogi.",
+                        { t: "\"That one half-boy makes fools of us.\"", v: "man" },
+                        "The eldest hit the floor with his fist. His face was twisted up."
+                    ],
+                    right: [
+                        { t: "\"In the fields, at the market, it is all about him.\"", v: "man" },
+                        "The second brother agreed.",
+                        { t: "\"Could we not put him somewhere far off?\"", v: "man" },
+                        "The two put their heads together and muttered.",
+                        "That night the light in their room burned late."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Home with the Tree",
+            beats: [
+                {
+                    art: "05-tie.webp",
+                    emoji: "🪢",
+                    left: [
+                        "One day the brothers took Banjjogi up the mountain.",
+                        { t: "\"Come and cut wood. Somewhere deep today.\"", v: "man" },
+                        "Banjjogi knew nothing of it and came along, pleased.",
+                        "The deeper the path, the thicker the trees.",
+                        "The brothers kept looking behind them."
+                    ],
+                    right: [
+                        "As the sun went low the brothers tied Banjjogi to a pine tree.",
+                        "With rope, round and round, very tight indeed.",
+                        "Banjjogi trusted them and kept still.",
+                        { t: "\"Brothers, what game is this?\"", v: "boy" },
+                        "They went down the mountain without once looking back."
+                    ]
+                },
+                {
+                    art: "06-uproot.webp",
+                    emoji: "🌲",
+                    left: [
+                        "The brothers were just finishing their supper.",
+                        "They ate with an effort to look as if nothing were wrong.",
+                        "Then a strange noise came from outside.",
+                        "Thump. Thump. Thump.",
+                        "The ground shook, and the shaking came nearer. Their spoons stopped."
+                    ],
+                    right: [
+                        "The yard heaved. They opened the door, and there stood Banjjogi.",
+                        "Still tied, with the pine tree on his back, roots and all.",
+                        { t: "\"Brothers, the rope would not come undone.\"", v: "boy" },
+                        "The two of them opened and shut their mouths and said nothing."
+                    ]
+                },
+                {
+                    art: "07-tiger.webp",
+                    emoji: "🐯",
+                    left: [
+                        "About then the village had a great worry.",
+                        "Every night a huge tiger came down off the mountain.",
+                        "It was as big as three grown men put together.",
+                        "The pawprints in the yards were the size of a table.",
+                        "The sight of them alone was chilling."
+                    ],
+                    right: [
+                        "It took a cow out of a byre, and a pig out of a pen.",
+                        "And then at last it hurt a person.",
+                        "Every night the villagers barred their doors.",
+                        "After sundown not a sound was heard in the lanes.",
+                        "Nobody dared to go out and face it."
+                    ]
+                },
+                {
+                    art: "08-catch.webp",
+                    emoji: "🪢",
+                    left: [
+                        "That night Banjjogi went out to the edge of the village alone.",
+                        "He meant to catch the tiger with his own hand.",
+                        "He had a great coil of rope over his shoulder.",
+                        "The night was pitch dark, with no moon and no stars.",
+                        { t: "\"Rrraaargh!\"", v: "beast" }
+                    ],
+                    right: [
+                        "Two blue eyes flashed in the grass. Banjjogi did not step back.",
+                        "The moment the tiger sprang, he caught it by the scruff with one arm.",
+                        "Struggle as it might, it was no use.",
+                        "Banjjogi tied it up tight with his rope.",
+                        "The tiger could not move until dawn."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Three Contests",
+            beats: [
+                {
+                    art: "09-promise.webp",
+                    emoji: "📜",
+                    left: [
+                        "The richest man in the village, Kim, had once said something.",
+                        "The whole village had heard it. He said it loudly at a feast.",
+                        { t: "\"Whoever catches that tiger shall be my son-in-law!\"", v: "old" },
+                        { t: "\"He shall have my daughter and half my fortune!\"", v: "old" }
+                    ],
+                    right: [
+                        "Banjjogi dragged the tiger to that man's gate and stood there.",
+                        "Onlookers came crowding round.",
+                        "Kim came out, and his face set hard.",
+                        { t: "\"Er, well now... the thing is...\"", v: "old" },
+                        "He kept trailing off, and looked Banjjogi up and down."
+                    ]
+                },
+                {
+                    art: "10-excuse.webp",
+                    emoji: "😤",
+                    left: [
+                        { t: "\"A promise is a promise, but I cannot take just anybody in.\"", v: "old" },
+                        "Kim cleared his throat loudly as he said it.",
+                        { t: "\"Win three contests and I shall think about it.\"", v: "old" },
+                        { t: "\"Lose, and you go home without another word.\"", v: "old" },
+                        "The crowd went very still."
+                    ],
+                    right: [
+                        "The people watching began to murmur.",
+                        { t: "\"That is going back on it, surely.\"", v: "man" },
+                        "They all looked at Kim with hard eyes.",
+                        "But Banjjogi nodded readily enough.",
+                        { t: "\"Very well. Three, or ten, if you like.\"", v: "boy" }
+                    ]
+                },
+                {
+                    art: "11-contest.webp",
+                    emoji: "🥇",
+                    left: [
+                        { t: "\"The first is a trial of strength.\"", v: "old" },
+                        "Kim pointed at the thick pillar of his storehouse.",
+                        "Several strong men pushing at it together had not moved it.",
+                        "Banjjogi pulled it out with one arm.",
+                        "Earth came showering off the foot of it, and the storehouse tipped."
+                    ],
+                    right: [
+                        { t: "\"The second is a race.\"", v: "old" },
+                        "Kim smiled at that. There was only the one leg, after all.",
+                        "The two fastest young men in the village stood up.",
+                        "But Banjjogi went ten paces at every hop.",
+                        "He came in first and sat down to wait for them."
+                    ]
+                },
+                {
+                    art: "12-jar.webp",
+                    emoji: "🏺",
+                    left: [
+                        { t: "\"The third is a trial of wits.\"", v: "old" },
+                        "Kim had a great jar set out in the yard.",
+                        { t: "\"Draw water from that stream and fill it up.\"", v: "old" },
+                        { t: "\"Only, you may not use the bucket.\"", v: "old" },
+                        "The crowd stirred. How do you fetch water with no bucket?"
+                    ],
+                    right: [
+                        "Banjjogi looked into the jar for a long while.",
+                        "Then he took the whole thing up in his one arm.",
+                        "And he walked off towards the stream with long strides.",
+                        "Splash, splash.",
+                        "Banjjogi came back carrying the jar, full to the top."
+                    ]
+                },
+                {
+                    art: "13-wedding.webp",
+                    emoji: "🎊",
+                    left: [
+                        "Kim had nothing left to say.",
+                        "There was no keeping the promise off any longer.",
+                        "That autumn a wedding was held in Kim's yard.",
+                        "Every person in the village came to it, without exception.",
+                        "Banjjogi put his two brothers in the seats of honour."
+                    ],
+                    right: [
+                        "Banjjogi poured wine for his brothers with his own hand.",
+                        { t: "\"If you had not taken me up the hill, I could not have pulled that pine.\"", v: "boy" },
+                        "The brothers went red and could not say anything.",
+                        "The eldest gave Banjjogi's shoulder a tap.",
+                        "From that day the three brothers got on well."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "Why was Banjjogi born a half?", choices: ["Heaven sent it as a punishment", "His mother did not eat all the carp", "His brothers were so jealous"], answer: 1 },
+        { q: "What did people say about Banjjogi at first?", choices: ["How will he get by on his own", "He has the strength of ten men", "They stared with round eyes"], answer: 0 },
+        { q: "What did the brothers do on the mountain?", choices: ["Tied him up and left him", "Drove him out of the house", "Sent him on a far errand"], answer: 0 },
+        { q: "How did the tied-up Banjjogi get back?", choices: ["Bit through the rope", "Somebody passing untied him", "Carried the whole tree back"], answer: 2 },
+        { q: "What did Banjjogi take to catch the tiger?", choices: ["A coil of rope", "The storehouse pillar", "A great big jar"], answer: 0 },
+        { q: "What was Kim's first contest?", choices: ["A trial of strength", "A race", "A trial of wits"], answer: 0 },
+        { q: "In which contest could he not use the bucket?", choices: ["Filling the jar with water", "Pulling out the storehouse pillar", "The race against two men"], answer: 0 },
+        { q: "What did Banjjogi do for his brothers at the end?", choices: ["Sat them in the seats of honour", "Took them up the mountain again", "Tied them up with rope"], answer: 0 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The child they said would never get by caught a tiger, so you cannot decide about somebody by the look of them.",
+                "Kim promised and then set contests to put it off, so a promise made to somebody weak was easily overturned then.",
+                "Banjjogi seated the brothers who tied him up in the seats of honour, so covering for somebody is harder than paying them back.",
+                "The brothers took Banjjogi up the mountain, so they meant to share the hard work of cutting wood between the three of them."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "hero", k: "주인공", s: "Its hero has one eye, one arm and one leg." },
+            { w: "the strength of a giant", k: "장사 같은 힘", s: "Half a body, the strength of a giant, and quicker wits" },
+            { w: "wits", k: "꾀", s: "quicker wits than anyone" },
+            { w: "frame", k: "뼈대", s: "that is the frame of it" },
+            { w: "whole", k: "온전한", s: "Some districts have him whole at the end." },
+            { w: "stays as he is", k: "반쪽인 채로 있다", s: "In others he stays as he is and does well." },
+            { w: "follows (follow)", k: "따랐다", s: "This book follows the second." }
+        ],
+        "01-carp.webp": [
+            { w: "couple", k: "부부", s: "a couple lived with no children" },
+            { w: "no word of ~", k: "~ 소식이 없는", s: "Ten years married, and still no word of a child." },
+            { w: "prayed (pray)", k: "빌었다", s: "they set clean water on a rock behind the house and prayed" },
+            { w: "we beg you", k: "부디", s: "Only let us have one child, we beg you." },
+            { w: "passing", k: "지나가던", s: "one day a passing monk gave them three carp" },
+            { w: "monk", k: "스님", s: "a passing monk gave them three carp" },
+            { w: "carp", k: "잉어", s: "a passing monk gave them three carp" },
+            { w: "do not leave ~", k: "남기지 마라", s: "Eat these, and do not leave one of them." },
+            { w: "bowed low", k: "허리를 깊이 숙였다", s: "The couple bowed low." }
+        ],
+        "02-half.webp": [
+            { w: "a drop", k: "한 방울", s: "She ate two, and did not leave a drop of the broth." },
+            { w: "broth", k: "국물", s: "did not leave a drop of the broth" },
+            { w: "halfway through ~", k: "반쯤 먹었을 때", s: "But she was halfway through the third when it happened." },
+            { w: "at this hour", k: "이 시간에", s: "Goodness, who is that at this hour?" },
+            { w: "pushed ~ away", k: "물렸다", s: "She pushed the table away and got up." },
+            { w: "gone cold", k: "싸늘히 식은", s: "when she came back the half fish had gone cold" },
+            { w: "What of it", k: "그쯤이야", s: "Well, half a fish. What of it?" },
+            { w: "sound", k: "멀쩡한", s: "The two eldest were sound, but the youngest was a half." }
+        ],
+        "03-grow.webp": [
+            { w: "which means ~", k: "~라는 뜻이다", s: "The village called the youngest Banjjogi, which means the half one." },
+            { w: "exactly half", k: "딱 절반", s: "Eye and arm and leg were each exactly half." },
+            { w: "get by", k: "살아가다", s: "How will he ever get by on his own?" },
+            { w: "clicked their tongues", k: "혀를 찼다", s: "The older neighbours clicked their tongues at him." },
+            { w: "no ordinary ~", k: "보통이 아닌", s: "But this Banjjogi was no ordinary child." },
+            { w: "hopping (hop)", k: "껑충껑충 뛰는", s: "He went hopping on one leg" },
+            { w: "carrying frame", k: "지게", s: "The carrying frame the two of them groaned at" },
+            { w: "groaned at (groan)", k: "낑낑댔다", s: "The carrying frame the two of them groaned at, he lifted with one arm." },
+            { w: "went round", k: "휘둥그레졌다", s: "The villagers' eyes went round." }
+        ],
+        "04-jealous.webp": [
+            { w: "did not like it at all", k: "영 못마땅했다", s: "But the two older brothers did not like it at all." },
+            { w: "nothing but ~", k: "~ 이야기뿐인", s: "people talked of nothing but Banjjogi" },
+            { w: "makes fools of ~", k: "우습게 만든다", s: "That one half-boy makes fools of us." },
+            { w: "twisted up", k: "잔뜩 일그러진", s: "His face was twisted up." },
+            { w: "it is all about ~", k: "다 ~ 이야기다", s: "In the fields, at the market, it is all about him." },
+            { w: "far off", k: "멀리", s: "Could we not put him somewhere far off?" },
+            { w: "muttered (mutter)", k: "수군거렸다", s: "The two put their heads together and muttered." },
+            { w: "burned late", k: "늦도록 켜져 있었다", s: "That night the light in their room burned late." }
+        ],
+        "05-tie.webp": [
+            { w: "cut wood", k: "나무하다", s: "Come and cut wood. Somewhere deep today." },
+            { w: "came along", k: "따라나섰다", s: "Banjjogi knew nothing of it and came along, pleased." },
+            { w: "The deeper ~, the thicker ~", k: "깊어질수록 빽빽해지는", s: "The deeper the path, the thicker the trees." },
+            { w: "kept looking behind", k: "자꾸 뒤를 돌아보았다", s: "The brothers kept looking behind them." },
+            { w: "went low (go)", k: "기울었다", s: "As the sun went low the brothers tied Banjjogi to a pine tree." },
+            { w: "pine tree", k: "소나무", s: "the brothers tied Banjjogi to a pine tree" },
+            { w: "round and round", k: "몇 겹이나", s: "With rope, round and round, very tight indeed." },
+            { w: "kept still", k: "가만히 있었다", s: "Banjjogi trusted them and kept still." },
+            { w: "without once looking back", k: "뒤도 안 돌아보고", s: "They went down the mountain without once looking back." }
+        ],
+        "06-uproot.webp": [
+            { w: "supper", k: "저녁상", s: "The brothers were just finishing their supper." },
+            { w: "with an effort", k: "애써", s: "They ate with an effort to look as if nothing were wrong." },
+            { w: "as if nothing were wrong", k: "아무렇지 않은 척", s: "to look as if nothing were wrong" },
+            { w: "came nearer", k: "가까워졌다", s: "The ground shook, and the shaking came nearer." },
+            { w: "heaved (heave)", k: "들썩였다", s: "The yard heaved." },
+            { w: "roots and all", k: "뿌리째", s: "with the pine tree on his back, roots and all" },
+            { w: "come undone", k: "풀리다", s: "Brothers, the rope would not come undone." },
+            { w: "opened and shut their mouths", k: "입만 벙긋거렸다", s: "The two of them opened and shut their mouths and said nothing." }
+        ],
+        "07-tiger.webp": [
+            { w: "About then", k: "그 무렵", s: "About then the village had a great worry." },
+            { w: "came down off ~", k: "내려왔다", s: "Every night a huge tiger came down off the mountain." },
+            { w: "put together", k: "합친", s: "It was as big as three grown men put together." },
+            { w: "pawprints", k: "발자국", s: "The pawprints in the yards were the size of a table." },
+            { w: "chilling", k: "오싹한", s: "The sight of them alone was chilling." },
+            { w: "byre", k: "외양간", s: "It took a cow out of a byre, and a pig out of a pen." },
+            { w: "pen", k: "우리", s: "a pig out of a pen" },
+            { w: "barred (bar)", k: "걸어 잠갔다", s: "Every night the villagers barred their doors." },
+            { w: "dared to ~ (dare)", k: "엄두를 냈다", s: "Nobody dared to go out and face it." }
+        ],
+        "08-catch.webp": [
+            { w: "the edge of the village", k: "마을 어귀", s: "Banjjogi went out to the edge of the village alone." },
+            { w: "meant to ~ (mean)", k: "~할 셈이었다", s: "He meant to catch the tiger with his own hand." },
+            { w: "coil", k: "한 타래", s: "He had a great coil of rope over his shoulder." },
+            { w: "pitch dark", k: "캄캄한", s: "The night was pitch dark, with no moon and no stars." },
+            { w: "flashed (flash)", k: "번쩍였다", s: "Two blue eyes flashed in the grass." },
+            { w: "step back", k: "물러서다", s: "Banjjogi did not step back." },
+            { w: "sprang (spring)", k: "덮쳤다", s: "The moment the tiger sprang, he caught it by the scruff." },
+            { w: "by the scruff", k: "목덜미를", s: "he caught it by the scruff with one arm" },
+            { w: "Struggle as it might", k: "아무리 발버둥 쳐도", s: "Struggle as it might, it was no use." }
+        ],
+        "09-promise.webp": [
+            { w: "the richest man", k: "제일 부자", s: "The richest man in the village, Kim, had once said something." },
+            { w: "at a feast", k: "잔칫날에", s: "He said it loudly at a feast." },
+            { w: "Whoever ~", k: "~하는 이는 누구든", s: "Whoever catches that tiger shall be my son-in-law!" },
+            { w: "son-in-law", k: "사위", s: "Whoever catches that tiger shall be my son-in-law!" },
+            { w: "fortune", k: "재산", s: "He shall have my daughter and half my fortune!" },
+            { w: "dragged (drag)", k: "끌고 갔다", s: "Banjjogi dragged the tiger to that man's gate." },
+            { w: "Onlookers", k: "구경꾼", s: "Onlookers came crowding round." },
+            { w: "set hard (set)", k: "굳어졌다", s: "Kim came out, and his face set hard." },
+            { w: "trailing off (trail)", k: "말끝을 흐리는", s: "He kept trailing off, and looked Banjjogi up and down." }
+        ],
+        "10-excuse.webp": [
+            { w: "A promise is a promise", k: "약속은 약속이지만", s: "A promise is a promise, but I cannot take just anybody in." },
+            { w: "just anybody", k: "아무나", s: "I cannot take just anybody in" },
+            { w: "contests", k: "내기", s: "Win three contests and I shall think about it." },
+            { w: "without another word", k: "두말 말고", s: "Lose, and you go home without another word." },
+            { w: "went very still", k: "조용해졌다", s: "The crowd went very still." },
+            { w: "murmur", k: "웅성거리다", s: "The people watching began to murmur." },
+            { w: "going back on ~", k: "딴소리하는", s: "That is going back on it, surely." },
+            { w: "with hard eyes", k: "못마땅한 눈으로", s: "They all looked at Kim with hard eyes." },
+            { w: "readily enough", k: "선선히", s: "But Banjjogi nodded readily enough." }
+        ],
+        "11-contest.webp": [
+            { w: "a trial of strength", k: "힘겨루기", s: "The first is a trial of strength." },
+            { w: "pillar", k: "기둥", s: "Kim pointed at the thick pillar of his storehouse." },
+            { w: "storehouse", k: "곳간", s: "the thick pillar of his storehouse" },
+            { w: "had not moved it", k: "꿈쩍도 못 했다", s: "Several strong men pushing at it together had not moved it." },
+            { w: "showering off (shower)", k: "우수수 떨어지는", s: "Earth came showering off the foot of it" },
+            { w: "tipped (tip)", k: "기우뚱했다", s: "the storehouse tipped" },
+            { w: "a race", k: "달리기", s: "The second is a race." },
+            { w: "after all", k: "~이니까", s: "There was only the one leg, after all." },
+            { w: "paces", k: "걸음", s: "But Banjjogi went ten paces at every hop." },
+            { w: "came in first", k: "먼저 들어왔다", s: "He came in first and sat down to wait for them." }
+        ],
+        "12-jar.webp": [
+            { w: "a trial of wits", k: "슬기 겨루기", s: "The third is a trial of wits." },
+            { w: "jar", k: "항아리", s: "Kim had a great jar set out in the yard." },
+            { w: "Draw water", k: "물을 긷다", s: "Draw water from that stream and fill it up." },
+            { w: "stream", k: "개울", s: "Draw water from that stream and fill it up." },
+            { w: "bucket", k: "두레박", s: "Only, you may not use the bucket." },
+            { w: "stirred (stir)", k: "술렁였다", s: "The crowd stirred." },
+            { w: "fetch", k: "길어 오다", s: "How do you fetch water with no bucket?" },
+            { w: "with long strides", k: "성큼성큼", s: "And he walked off towards the stream with long strides." },
+            { w: "full to the top", k: "가득 찬", s: "Banjjogi came back carrying the jar, full to the top." }
+        ],
+        "13-wedding.webp": [
+            { w: "nothing left to say", k: "더 할 말이 없는", s: "Kim had nothing left to say." },
+            { w: "keeping ~ off", k: "미루기", s: "There was no keeping the promise off any longer." },
+            { w: "without exception", k: "빠짐없이", s: "Every person in the village came to it, without exception." },
+            { w: "seats of honour", k: "윗자리", s: "Banjjogi put his two brothers in the seats of honour." },
+            { w: "poured (pour)", k: "따랐다", s: "Banjjogi poured wine for his brothers with his own hand." },
+            { w: "If you had not ~", k: "~하지 않으셨으면", s: "If you had not taken me up the hill, I could not have pulled that pine." },
+            { w: "went red", k: "얼굴이 붉어졌다", s: "The brothers went red and could not say anything." },
+            { w: "a tap", k: "툭 치기", s: "The eldest gave Banjjogi's shoulder a tap." },
+            { w: "got on well", k: "사이가 좋아졌다", s: "From that day the three brothers got on well." }
+        ],
+        "after": [
+            { w: "stands out (stand out)", k: "유난히 눈에 띈다", s: "Banjjogi stands out even among our old heroes." },
+            { w: "not common", k: "흔치 않은", s: "It is not common for somebody whose body is different" },
+            { w: "pitiful", k: "불쌍한", s: "The story never once draws Banjjogi as pitiful." },
+            { w: "lose heart", k: "주눅 들다", s: "he does not lose heart" },
+            { w: "the one in the wrong", k: "잘못한 사람", s: "the only one in the wrong is Kim" },
+            { w: "changed his tune", k: "말을 바꿨다", s: "and he is the one who changed his tune" },
+            { w: "worth noticing", k: "눈여겨볼 만한", s: "That is worth noticing in itself." },
+            { w: "ashamed of", k: "부끄러워한", s: "What was he so ashamed of?" },
+            { w: "by the look of ~", k: "생김새로", s: "Deciding by the look of somebody" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '💪',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Banjjogi stands out even among our old heroes. It is not common for somebody whose body is different from other people's to be the strong and clever one in a story.",
+                    "The story never once draws Banjjogi as pitiful. His brothers tease him and people point at him, and he does not lose heart. He is the one who brings the tiger in.",
+                    "Look again and the only one in the wrong here is Kim. He is the one who said first that whoever caught the tiger could have his daughter. And he is the one who changed his tune when it was caught.",
+                    "That old people made and passed on a story of a child born half who lives bravely is worth noticing in itself."
+                ],
+                right: [
+                    "Why did Kim not keep his promise? What was he so ashamed of?",
+                    "Kim looked for somebody to catch the tiger, and when one did, he looked at that person's face. Deciding by the look of somebody whether to keep a promise means it was never a promise at all.",
+                    "Have you ever got somebody wrong by going on how they looked?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "반쪽이가 반쪽으로 태어난 까닭은 무엇인가요?", choices: ["하늘에서 벌을 내렸기 때문에", "어머니가 잉어를 다 못 먹어서", "형들이 몹시 시샘을 해서"], answer: 1 },
     { q: "사람들이 처음에 반쪽이를 보고 뭐라고 했나요?", choices: ["혼자 살아가기나 하겠나", "힘이 어른 열 몫이라고 했다", "눈을 휘둥그레 뜨고 놀랐다"], answer: 0 },

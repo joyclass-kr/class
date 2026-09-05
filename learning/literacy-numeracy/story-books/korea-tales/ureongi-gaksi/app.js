@@ -254,6 +254,473 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐚",
+        art: "cover.webp",
+        title: "The Snail Bride",
+        intro: [
+            "This is an oral tale with no known author. A bride comes out of a snail picked up in a rice paddy.",
+            "A pond snail is a small shellfish that lives in paddies and streams. People used to catch them there and make soup of them.",
+            "Districts end it differently. In some the two live on together, in some they part. Either way he cannot wait three days."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · An Answer from the Paddy",
+            beats: [
+                {
+                    art: "01-field.webp",
+                    emoji: "🌾",
+                    left: [
+                        "Long ago in a village a poor young man lived alone.",
+                        "He had no parents and no brothers, and worked a paddy the size of a palm.",
+                        "He went out to it when he woke and came back to an empty room at sundown.",
+                        "There was nobody at all to speak to."
+                    ],
+                    right: [
+                        "That day too he was weeding, in water up to his knees.",
+                        "A lonely feeling came over him all at once.",
+                        "He straightened up and saw his own face in the paddy water.",
+                        { t: "\"Who am I growing this rice to eat with?\"", v: "man" },
+                        "It came out of him before he knew it."
+                    ]
+                },
+                {
+                    art: "02-voice.webp",
+                    emoji: "❓",
+                    left: [
+                        "Just then a sound came from behind him.",
+                        "A clear voice was speaking from somewhere.",
+                        { t: "\"With me. You will eat it with me.\"", v: "woman" },
+                        "The young man straightened up with a start.",
+                        { t: "\"Wh-who is there?\"", v: "man" },
+                        "He nearly dropped his hoe in the water."
+                    ],
+                    right: [
+                        "There was not a shadow of anybody in the paddy or on the bank.",
+                        "Look as far as he might, he was the only one out there.",
+                        { t: "\"...Am I hearing things?\"", v: "man" },
+                        "He tilted his head and bent down to work again.",
+                        "But he kept wondering what was behind him."
+                    ]
+                },
+                {
+                    art: "03-again.webp",
+                    emoji: "👂",
+                    left: [
+                        { t: "\"Who am I growing this rice to eat with?\"", v: "man" },
+                        "He said it again, exactly as before, on purpose.",
+                        "He held his breath and listened.",
+                        { t: "\"With me. You will eat it with me.\"", v: "woman" },
+                        "This time he heard it quite plainly, and his back went cold."
+                    ],
+                    right: [
+                        "He waded towards where the voice came from, splashing to his knees.",
+                        "He parted the rice plants and saw something smooth.",
+                        "It was shining and shining in the sunlight.",
+                        "The young man put his hand out carefully."
+                    ]
+                },
+                {
+                    art: "04-shell.webp",
+                    emoji: "🐚",
+                    left: [
+                        "In the water lay one great pond snail the size of his fist.",
+                        "It was far bigger than any other, and beautifully coloured.",
+                        "He lifted it out gently with both hands.",
+                        "Held up to the sun it turned many colours, like a rainbow."
+                    ],
+                    right: [
+                        { t: "\"Well, what a thing. Was it you?\"", v: "man" },
+                        "The snail said nothing at all.",
+                        "He carried it home carefully in his hands.",
+                        { t: "\"You had better be somewhere with clean water.\"", v: "man" },
+                        "He slipped it into the water jar in the kitchen. It sank to the bottom."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Table Laid",
+            beats: [
+                {
+                    art: "05-table.webp",
+                    emoji: "🍚",
+                    left: [
+                        "Next day he came back from work and stopped as he opened the door.",
+                        "A meal was set out there, steaming.",
+                        "The room was full of a good warm smell.",
+                        "He stood frozen with his hand on the door ring.",
+                        "He had left nobody at home."
+                    ],
+                    right: [
+                        "Hot rice, three kinds of greens, and bean paste soup as well.",
+                        "The young man looked all round the room.",
+                        { t: "\"Who could have done this?\"", v: "man" },
+                        "There was nobody in the kitchen or in the yard.",
+                        "That day he emptied his bowl clean, and still could not work it out."
+                    ]
+                },
+                {
+                    art: "06-days.webp",
+                    emoji: "🤔",
+                    left: [
+                        "It went on the next day, and the next, and the next.",
+                        "The meal was always laid just as he came home.",
+                        "It tasted so good that he emptied the bowl every time.",
+                        "At last he could bear it no longer and asked the neighbours."
+                    ],
+                    right: [
+                        { t: "\"It was not me, I can tell you.\"", v: "granny" },
+                        "The neighbour woman waved both hands at him.",
+                        { t: "\"We have not been to your house either.\"", v: "granny" },
+                        { t: "\"Who would go in and out of a house where a man lives alone?\"", v: "granny" },
+                        "He could make nothing of it at all.",
+                        { t: "\"Could the mountain spirit be helping me?\"", v: "man" }
+                    ]
+                },
+                {
+                    art: "07-hide.webp",
+                    emoji: "👀",
+                    left: [
+                        "One day he made as if to go out to the paddy and came back in secret.",
+                        "He shouldered his frame early and went off.",
+                        "Then he came back over the wall behind the house.",
+                        "He hid behind the straw pile by the kitchen and held his breath.",
+                        "His heart was thumping."
+                    ],
+                    right: [
+                        "After a long while something moved in the water jar.",
+                        "The water made a small slapping sound.",
+                        "The young man opened his eyes wide.",
+                        "He watched the kitchen through a gap in the straw, breathing as little as he could.",
+                        "Then the lid of the jar slid open."
+                    ]
+                },
+                {
+                    art: "08-appear.webp",
+                    emoji: "✨",
+                    left: [
+                        "A lovely bride came sliding out of the snail shell.",
+                        "She was young, her hair neatly braided.",
+                        "She rolled up her sleeves and lit the fire in the stove.",
+                        "He nearly cried out, and clapped both hands over his mouth."
+                    ],
+                    right: [
+                        "With practised hands she washed the rice, dressed the greens and laid the table.",
+                        "She even hummed a little song under her breath.",
+                        "The young man watched her, hardly breathing at all.",
+                        "His heart thumped so that he thought she would hear it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Not Three Days",
+            beats: [
+                {
+                    art: "09-caught.webp",
+                    emoji: "🫢",
+                    left: [
+                        "He could hold back no longer and jumped out of the straw.",
+                        "He could not stand only watching any more.",
+                        { t: "\"Wait, please!\"", v: "man" },
+                        { t: "\"Do not be frightened! It is me!\"", v: "man" },
+                        "The straw pile came down behind him, and the kitchen was all uproar."
+                    ],
+                    right: [
+                        "The bride started back towards the water jar.",
+                        "Her face went scarlet.",
+                        { t: "\"You... you have seen me.\"", v: "woman" },
+                        "She put her hand out to the jar.",
+                        "He caught her sleeve quickly.",
+                        { t: "\"Please do not go. I beg you.\"", v: "man" }
+                    ]
+                },
+                {
+                    art: "10-wait.webp",
+                    emoji: "⏳",
+                    left: [
+                        { t: "\"Live with me. Please live here with me.\"", v: "man" },
+                        "His voice was shaking badly.",
+                        "The bride looked down and said nothing for a long while.",
+                        "She only worked at the folds of her skirt.",
+                        "The kitchen was as quiet as if water had been poured over it."
+                    ],
+                    right: [
+                        { t: "\"Wait just three more days.\"", v: "woman" },
+                        "The bride got the words out at last.",
+                        { t: "\"After three days I shall be a whole person.\"", v: "woman" },
+                        { t: "\"Until then. Three days, that is all.\"", v: "woman" },
+                        "She took his hand in both of hers. Her eyes were full of pleading."
+                    ]
+                },
+                {
+                    art: "11-impatient.webp",
+                    emoji: "😖",
+                    left: [
+                        "He said he would.",
+                        "But when a day had passed he began to fret.",
+                        "That day too she laid the table and went back into the jar.",
+                        "What if she disappears in the meantime, he thought.",
+                        "For that thought he did not sleep all night."
+                    ],
+                    right: [
+                        "Next morning he took the bride's hand after all.",
+                        { t: "\"One day. Let us bring it forward by just one day.\"", v: "man" },
+                        { t: "\"Let us be married today.\"", v: "man" },
+                        "The bride looked at him, startled.",
+                        "And then, slowly, she nodded."
+                    ]
+                },
+                {
+                    art: "12-together.webp",
+                    emoji: "🏡",
+                    left: [
+                        "That day there was a small wedding.",
+                        "A few of the neighbours came to wish them well.",
+                        "The bride smiled, but her eyes were a little wet.",
+                        { t: "\"If only you had waited one more day.\"", v: "woman" },
+                        "She said it very quietly."
+                    ],
+                    right: [
+                        "But as the sun went down her fingertips began to show like water.",
+                        { t: "\"Wife, what is wrong with your hands?\"", v: "man" },
+                        { t: "\"I am not quite finished yet.\"", v: "woman" },
+                        "Her body grew smaller and smaller.",
+                        "And then she went into the snail shell."
+                    ]
+                },
+                {
+                    art: "13-jar.webp",
+                    emoji: "🫙",
+                    left: [
+                        "He held on to the water jar and called for her.",
+                        { t: "\"Wife! Wife! Come out just once!\"", v: "man" },
+                        "But there was no answer at all.",
+                        "Only the water slapped a little, now and then.",
+                        "He sat in front of the jar the whole night through.",
+                        "He even scratched at the jar with his nails."
+                    ],
+                    right: [
+                        "Not till the next morning did the bride come out again.",
+                        { t: "\"One day in three I have to go back like this.\"", v: "woman" },
+                        { t: "\"Because there is one day I did not finish.\"", v: "woman" },
+                        "From that day, one day in three, he laid the table alone.",
+                        "But he always set her bowl beside his and waited."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What happened when he spoke to himself in the paddy?", choices: ["Rain began all at once", "An answer came from somewhere", "A cow bellowed loudly"], answer: 1 },
+        { q: "Where did he put what he had picked up?", choices: ["Behind the straw pile", "Beside the stove", "In the water jar"], answer: 2 },
+        { q: "What was different when he came home?", choices: ["A meal was laid out", "The yard was swept", "The door stood open"], answer: 0 },
+        { q: "What did the bride ask of him?", choices: ["To put the snail back", "To tell nobody at all", "To wait three more days"], answer: 2 },
+        { q: "What did he do a day early?", choices: ["Held the wedding", "Went to the paddy", "Laid the table"], answer: 0 },
+        { q: "What came of hurrying the wedding?", choices: ["The bride went away for good", "One day in three she is a snail", "Nothing at all happened to them"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He could not wait three days and brought it forward by one, so the more you care the more impatient you get.",
+                "An answer came back to what he said alone in a paddy, so that one word must have meant a lot to a lonely person.",
+                "She asked him to wait three more days, so listening when somebody asks you to wait is a way of caring too.",
+                "She refused in the end to be married a day early, so a promise could not be broken by even one day."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "picked up (pick up)", k: "주워 온", s: "A bride comes out of a snail picked up in a rice paddy." },
+            { w: "rice paddy", k: "논", s: "a snail picked up in a rice paddy" },
+            { w: "pond snail", k: "우렁이", s: "A pond snail is a small shellfish that lives in paddies." },
+            { w: "shellfish", k: "고둥, 조개류", s: "a small shellfish that lives in paddies and streams" },
+            { w: "used to ~", k: "예전에는 ~했다", s: "People used to catch them there and make soup of them." },
+            { w: "Districts", k: "고장마다", s: "Districts end it differently." },
+            { w: "part", k: "헤어지다", s: "In some the two live on together, in some they part." }
+        ],
+        "01-field.webp": [
+            { w: "the size of a palm", k: "손바닥만 한", s: "worked a paddy the size of a palm" },
+            { w: "at sundown", k: "해가 지면", s: "came back to an empty room at sundown" },
+            { w: "nobody at all", k: "하나도 없는", s: "There was nobody at all to speak to." },
+            { w: "weeding (weed)", k: "김을 매는", s: "That day too he was weeding, in water up to his knees." },
+            { w: "up to his knees", k: "무릎까지", s: "in water up to his knees" },
+            { w: "came over him", k: "마음이 들었다", s: "A lonely feeling came over him all at once." },
+            { w: "straightened up", k: "허리를 폈다", s: "He straightened up and saw his own face in the paddy water." },
+            { w: "before he knew it", k: "저도 모르게", s: "It came out of him before he knew it." }
+        ],
+        "02-voice.webp": [
+            { w: "Just then", k: "그때", s: "Just then a sound came from behind him." },
+            { w: "clear", k: "또랑또랑한", s: "A clear voice was speaking from somewhere." },
+            { w: "with a start", k: "화들짝 놀라", s: "The young man straightened up with a start." },
+            { w: "hoe", k: "호미", s: "He nearly dropped his hoe in the water." },
+            { w: "not a shadow of ~", k: "그림자 하나 없는", s: "There was not a shadow of anybody in the paddy" },
+            { w: "bank", k: "논둑", s: "in the paddy or on the bank" },
+            { w: "Look as far as he might", k: "멀리까지 둘러보아도", s: "Look as far as he might, he was the only one out there." },
+            { w: "hearing things", k: "헛것을 듣는", s: "Am I hearing things?" },
+            { w: "kept wondering", k: "자꾸 궁금했다", s: "But he kept wondering what was behind him." }
+        ],
+        "03-again.webp": [
+            { w: "on purpose", k: "일부러", s: "He said it again, exactly as before, on purpose." },
+            { w: "held his breath", k: "숨을 죽였다", s: "He held his breath and listened." },
+            { w: "quite plainly", k: "아주 똑똑히", s: "This time he heard it quite plainly" },
+            { w: "his back went cold", k: "소름이 돋았다", s: "he heard it quite plainly, and his back went cold" },
+            { w: "waded (wade)", k: "첨벙첨벙 걸었다", s: "He waded towards where the voice came from" },
+            { w: "splashing (splash)", k: "물을 튀기며", s: "splashing to his knees" },
+            { w: "parted (part)", k: "헤쳤다", s: "He parted the rice plants and saw something smooth." },
+            { w: "smooth", k: "반들반들한", s: "He parted the rice plants and saw something smooth." }
+        ],
+        "04-shell.webp": [
+            { w: "the size of his fist", k: "주먹만 한", s: "one great pond snail the size of his fist" },
+            { w: "beautifully coloured", k: "빛깔이 고운", s: "It was far bigger than any other, and beautifully coloured." },
+            { w: "lifted ~ out", k: "건져 올렸다", s: "He lifted it out gently with both hands." },
+            { w: "Held up to the sun", k: "햇빛에 비추어 보니", s: "Held up to the sun it turned many colours" },
+            { w: "what a thing", k: "별일이로구나", s: "Well, what a thing. Was it you?" },
+            { w: "had better ~", k: "~하는 편이 좋다", s: "You had better be somewhere with clean water." },
+            { w: "slipped ~ into (slip)", k: "살며시 넣었다", s: "He slipped it into the water jar in the kitchen." },
+            { w: "sank (sink)", k: "가라앉았다", s: "It sank to the bottom." }
+        ],
+        "05-table.webp": [
+            { w: "steaming (steam)", k: "김이 모락모락 나는", s: "A meal was set out there, steaming." },
+            { w: "stood frozen (stand)", k: "그대로 얼어붙었다", s: "He stood frozen with his hand on the door ring." },
+            { w: "door ring", k: "문고리", s: "with his hand on the door ring" },
+            { w: "greens", k: "나물", s: "Hot rice, three kinds of greens, and bean paste soup" },
+            { w: "bean paste soup", k: "된장국", s: "three kinds of greens, and bean paste soup as well" },
+            { w: "Who could have ~", k: "누가 ~했을까", s: "Who could have done this?" },
+            { w: "emptied his bowl", k: "밥그릇을 비웠다", s: "That day he emptied his bowl clean" },
+            { w: "work it out", k: "알아내다", s: "he emptied his bowl clean, and still could not work it out" }
+        ],
+        "06-days.webp": [
+            { w: "went on (go on)", k: "이어졌다", s: "It went on the next day, and the next, and the next." },
+            { w: "just as ~", k: "~하는 때에 딱 맞춰", s: "The meal was always laid just as he came home." },
+            { w: "bear it no longer", k: "참다못하다", s: "At last he could bear it no longer and asked the neighbours." },
+            { w: "I can tell you", k: "정말이다", s: "It was not me, I can tell you." },
+            { w: "waved both hands", k: "손사래를 쳤다", s: "The neighbour woman waved both hands at him." },
+            { w: "go in and out of ~", k: "드나들다", s: "Who would go in and out of a house where a man lives alone?" },
+            { w: "make nothing of ~", k: "도무지 알 수 없다", s: "He could make nothing of it at all." },
+            { w: "mountain spirit", k: "산신령", s: "Could the mountain spirit be helping me?" }
+        ],
+        "07-hide.webp": [
+            { w: "made as if to ~", k: "~하는 척했다", s: "he made as if to go out to the paddy and came back in secret" },
+            { w: "in secret", k: "몰래", s: "came back in secret" },
+            { w: "shouldered (shoulder)", k: "지게를 졌다", s: "He shouldered his frame early and went off." },
+            { w: "over the wall", k: "담을 넘어", s: "Then he came back over the wall behind the house." },
+            { w: "straw pile", k: "짚더미", s: "He hid behind the straw pile by the kitchen" },
+            { w: "thumping (thump)", k: "두근두근하는", s: "His heart was thumping." },
+            { w: "slapping sound", k: "찰랑거리는 소리", s: "The water made a small slapping sound." },
+            { w: "a gap", k: "틈", s: "He watched the kitchen through a gap in the straw." },
+            { w: "slid open (slide)", k: "스르르 열렸다", s: "Then the lid of the jar slid open." }
+        ],
+        "08-appear.webp": [
+            { w: "came sliding out", k: "스르르 나왔다", s: "A lovely bride came sliding out of the snail shell." },
+            { w: "braided (braid)", k: "땋은", s: "She was young, her hair neatly braided." },
+            { w: "rolled up her sleeves", k: "소매를 걷었다", s: "She rolled up her sleeves and lit the fire in the stove." },
+            { w: "stove", k: "아궁이", s: "She rolled up her sleeves and lit the fire in the stove." },
+            { w: "nearly cried out", k: "소리를 지를 뻔했다", s: "He nearly cried out, and clapped both hands over his mouth." },
+            { w: "practised hands", k: "익숙한 손놀림", s: "With practised hands she washed the rice" },
+            { w: "dressed the greens", k: "나물을 무쳤다", s: "she washed the rice, dressed the greens and laid the table" },
+            { w: "hummed (hum)", k: "콧노래를 흥얼거렸다", s: "She even hummed a little song under her breath." },
+            { w: "hardly breathing", k: "숨도 제대로 못 쉬며", s: "The young man watched her, hardly breathing at all." }
+        ],
+        "09-caught.webp": [
+            { w: "hold back", k: "참다", s: "He could hold back no longer and jumped out of the straw." },
+            { w: "stand", k: "견디다", s: "He could not stand only watching any more." },
+            { w: "frightened", k: "놀란", s: "Do not be frightened! It is me!" },
+            { w: "came down", k: "와르르 무너졌다", s: "The straw pile came down behind him" },
+            { w: "uproar", k: "발칵 뒤집힌 상태", s: "the kitchen was all uproar" },
+            { w: "started back (start)", k: "화들짝 물러섰다", s: "The bride started back towards the water jar." },
+            { w: "scarlet", k: "새빨간", s: "Her face went scarlet." },
+            { w: "caught her sleeve", k: "소매를 붙잡았다", s: "He caught her sleeve quickly." },
+            { w: "I beg you", k: "부탁이오", s: "Please do not go. I beg you." }
+        ],
+        "10-wait.webp": [
+            { w: "shaking badly", k: "몹시 떨리는", s: "His voice was shaking badly." },
+            { w: "for a long while", k: "한참 동안", s: "The bride looked down and said nothing for a long while." },
+            { w: "folds", k: "치맛자락", s: "She only worked at the folds of her skirt." },
+            { w: "as if water had been poured", k: "물을 끼얹은 듯", s: "The kitchen was as quiet as if water had been poured over it." },
+            { w: "three more days", k: "사흘만 더", s: "Wait just three more days." },
+            { w: "got the words out", k: "겨우 입을 열었다", s: "The bride got the words out at last." },
+            { w: "a whole person", k: "온전한 사람", s: "After three days I shall be a whole person." },
+            { w: "pleading", k: "간절함", s: "Her eyes were full of pleading." }
+        ],
+        "11-impatient.webp": [
+            { w: "said he would", k: "그러겠다고 했다", s: "He said he would." },
+            { w: "fret", k: "조급해하다", s: "But when a day had passed he began to fret." },
+            { w: "went back into ~", k: "도로 들어갔다", s: "she laid the table and went back into the jar" },
+            { w: "in the meantime", k: "그사이에", s: "What if she disappears in the meantime, he thought." },
+            { w: "after all", k: "끝내", s: "Next morning he took the bride's hand after all." },
+            { w: "bring ~ forward", k: "앞당기다", s: "Let us bring it forward by just one day." },
+            { w: "be married", k: "혼례를 올리다", s: "Let us be married today." },
+            { w: "startled", k: "놀란", s: "The bride looked at him, startled." }
+        ],
+        "12-together.webp": [
+            { w: "wish them well", k: "축하해 주다", s: "A few of the neighbours came to wish them well." },
+            { w: "a little wet", k: "조금 젖은", s: "The bride smiled, but her eyes were a little wet." },
+            { w: "If only ~", k: "~하셨더라면", s: "If only you had waited one more day." },
+            { w: "fingertips", k: "손끝", s: "her fingertips began to show like water" },
+            { w: "show like water", k: "물빛으로 비치다", s: "her fingertips began to show like water" },
+            { w: "not quite finished", k: "아직 다 여물지 않은", s: "I am not quite finished yet." },
+            { w: "grew smaller (grow)", k: "작아졌다", s: "Her body grew smaller and smaller." }
+        ],
+        "13-jar.webp": [
+            { w: "held on to ~", k: "붙들었다", s: "He held on to the water jar and called for her." },
+            { w: "just once", k: "한 번만", s: "Wife! Wife! Come out just once!" },
+            { w: "now and then", k: "이따금", s: "Only the water slapped a little, now and then." },
+            { w: "the whole night through", k: "밤을 꼬박 새워", s: "He sat in front of the jar the whole night through." },
+            { w: "scratched (scratch)", k: "긁었다", s: "He even scratched at the jar with his nails." },
+            { w: "Not till ~", k: "~에야 비로소", s: "Not till the next morning did the bride come out again." },
+            { w: "one day in three", k: "사흘에 하루는", s: "One day in three I have to go back like this." },
+            { w: "did not finish", k: "채우지 못했다", s: "Because there is one day I did not finish." },
+            { w: "set ~ beside", k: "곁에 놓았다", s: "But he always set her bowl beside his and waited." }
+        ],
+        "after": [
+            { w: "keeps house", k: "살림을 한다", s: "a person comes out and keeps house for somebody" },
+            { w: "a promise to keep", k: "지켜야 할 약속", s: "Such stories always come with a promise to keep." },
+            { w: "look in on ~", k: "들여다보다", s: "Do not look in on me, or wait a few days." },
+            { w: "is always broken", k: "늘 깨진다", s: "And the promise is always broken." },
+            { w: "is punished", k: "벌을 받는다", s: "It is not a story in which the one who breaks it is punished." },
+            { w: "what is lost", k: "무엇을 잃는지", s: "It shows what is lost afterwards." },
+            { w: "the number of days", k: "날수", s: "What he missed was not the number of days." },
+            { w: "what she asked of him", k: "상대가 한 부탁", s: "It was what she asked of him." },
+            { w: "grow impatient", k: "조급해진다", s: "The more you care, the easier it is to grow impatient." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐚',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Stories where a person comes out of a snail or a shell and keeps house for somebody are told all over Korea. Japan has one where a crane, or a shell, becomes a person.",
+                    "Such stories always come with a promise to keep. Do not look in on me, or wait a few more days. And the promise is always broken.",
+                    "It is not a story in which the one who breaks it is punished. It shows what is lost afterwards.",
+                    "In some tellings the two live on together for a long time. In others they are parted. Every telling keeps the part where he could not wait three days."
+                ],
+                right: [
+                    "What he missed was not the number of days. It was what she asked of him.",
+                    "The more you care, the easier it is to grow impatient. But listening when somebody asks you to wait is itself a way of caring.",
+                    "When somebody asked you to wait, did you wait?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "총각이 논에서 혼잣말을 하자 무슨 일이 있었나요?", choices: ["갑자기 비가 내렸다", "어디선가 대답이 들렸다", "소가 크게 울었다"], answer: 1 },
     { q: "총각은 주워 온 것을 어디에 두었나요?", choices: ["짚더미 뒤", "아궁이 옆", "물독 속"], answer: 2 },
