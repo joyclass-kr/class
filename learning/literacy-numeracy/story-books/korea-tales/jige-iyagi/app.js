@@ -233,6 +233,452 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🪵",
+        art: "cover.webp",
+        title: "The Carrying Frame",
+        intro: [
+            "This is an old Korean tale with no known author, usually told as a goryeojang story.",
+            "One thing first: there is no record anywhere of a custom of leaving old parents on a mountain. It is taken as a made-up story meant to teach how parents should be cared for.",
+            "A jige is a Korean wooden carrying frame worn on the back. Here it is not a tool for loads but a mirror that shows a son what he has done."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Father on the Frame",
+            beats: [
+                {
+                    art: "01-old.webp",
+                    emoji: "👴",
+                    left: [
+                        "Long ago in a village a son and his wife lived with his old father.",
+                        "The son worked the fields and his wife mended other people's clothes.",
+                        "The father's strength was gone and he could not get up.",
+                        "He lay in the warm corner all day looking at the ceiling."
+                    ],
+                    right: [
+                        { t: "\"How long is he going to be like that?\"", v: "woman" },
+                        "his wife said sourly. Medicine and food — the household was tighter every month.",
+                        { t: "\"What can I do about it.\"", v: "man" },
+                        "That was all the son said, and he swept the yard.",
+                        "There was no strength in the broom."
+                    ]
+                },
+                {
+                    art: "02-decide.webp",
+                    emoji: "😔",
+                    left: [
+                        "About then a saying was going round that district.",
+                        "Nobody knew who had started it.",
+                        { t: "\"When the strength is gone, they take the old one up the mountain.\"", v: "man" },
+                        { t: "\"That is where they go in peace, they say.\"", v: "granny" },
+                        { t: "\"We all did it. Everybody does.\"", v: "man" }
+                    ],
+                    right: [
+                        "For nights the son turned over and over. He would fall asleep and sit up again.",
+                        "And at last he made up his mind.",
+                        { t: "\"...I'll go in the morning.\"", v: "man" },
+                        "His voice shook badly.",
+                        "His wife said nothing at all."
+                    ]
+                },
+                {
+                    art: "03-carry.webp",
+                    emoji: "🪵",
+                    left: [
+                        "Before dawn the son put the frame on and backed up to the veranda. Stars were still out.",
+                        "His father got onto the frame without a word.",
+                        "He did not ask where they were going.",
+                        "He knew, too."
+                    ],
+                    right: [
+                        "The not asking hurt more. And as they went out of the gate there were footsteps behind them.",
+                        "A seven-year-old had followed them out.",
+                        "He was pushing his feet into his shoes, still half asleep.",
+                        "The son's heart lurched."
+                    ]
+                },
+                {
+                    art: "04-follow.webp",
+                    emoji: "🧒",
+                    left: [
+                        { t: "\"Go inside.\"", v: "man" },
+                        "The son tried to push the boy back into the room.",
+                        { t: "\"No. I'm coming too.\"", v: "boy" },
+                        "The boy held the gatepost with both arms. He wanted to see grandfather carried on the frame.",
+                        "Pulled off, he took hold again."
+                    ],
+                    right: [
+                        "Coax him as they might, the boy would not give way. So the three of them went up the mountain together.",
+                        "Nobody spoke.",
+                        "Only a mountain bird called now and then.",
+                        "The frame creaked as they walked.",
+                        "The sound seemed very loud."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Place They Left Him",
+            beats: [
+                {
+                    art: "05-mountain.webp",
+                    emoji: "🌲",
+                    left: [
+                        "By the time the sun was high they were deep in the mountains.",
+                        "The trees were so thick you could hardly see the sky.",
+                        "The son set the frame down under a rock out of the wind.",
+                        "He lifted his father down carefully and sat him against the rock."
+                    ],
+                    right: [
+                        "He put the rice and water he had brought beside him. His father did not even look at it.",
+                        { t: "\"Father...\"", v: "man" },
+                        { t: "\"That will do. Go on down.\"", v: "old" },
+                        "His father said it with his back turned.",
+                        "His voice was quite level."
+                    ]
+                },
+                {
+                    art: "06-leave.webp",
+                    emoji: "🥀",
+                    left: [
+                        "The son looked back again and again as he went.",
+                        "His father did not look at him once.",
+                        "He wiped his eyes on his sleeve and the tears only came faster.",
+                        "He meant to leave the frame there. Seeing it would remind him of the father he had left."
+                    ],
+                    right: [
+                        { t: "\"Come along.\"", v: "man" },
+                        "He took the boy's small hand. And the boy pulled it away and ran back.",
+                        { t: "\"Where are you going!\"", v: "man" },
+                        "The son shouted after him and the boy did not stop.",
+                        "He ran straight for the rock."
+                    ]
+                },
+                {
+                    art: "07-pickup.webp",
+                    emoji: "🎒",
+                    left: [
+                        "The boy went under the rock and lifted the empty frame. It was old wood and heavy.",
+                        "He dragged it back, bigger than he was, grunting with the weight.",
+                        "The shoulder strap kept slipping.",
+                        "And still he would not let go of it."
+                    ],
+                    right: [
+                        { t: "\"Leave that here.\"", v: "man" },
+                        "The son's voice went rough before he could stop it.",
+                        { t: "\"No. We mustn't leave it.\"", v: "boy" },
+                        { t: "\"Why not? It's only a carrying frame.\"", v: "man" },
+                        "The boy shook his head without a word. And held the frame tighter."
+                    ]
+                },
+                {
+                    art: "08-words.webp",
+                    emoji: "❄️",
+                    left: [
+                        "Holding it, the boy looked up at his father. His eyes were very clear.",
+                        "There was no shadow at all on his face.",
+                        "He fingered the strap on his shoulder.",
+                        "And he said it quite calmly."
+                    ],
+                    right: [
+                        { t: "\"When you get old too, Father,\"", v: "boy" },
+                        { t: "\"I'll have to carry you up here on this.\"", v: "boy" },
+                        "He thought it was simply what people did. The mountain went dead quiet.",
+                        "Even the leaves seemed to stop."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Carried Back Down",
+            beats: [
+                {
+                    art: "09-frozen.webp",
+                    emoji: "😳",
+                    left: [
+                        "The son stood frozen where he was. His breath stopped and his legs went weak.",
+                        "The boy's words went round and round in his ears.",
+                        { t: "\"On this, up here, I'll have to carry you.\"", v: "man" },
+                        "The boy had meant nothing bad by it."
+                    ],
+                    right: [
+                        "He had watched his father and learned it, that was all. He would grow up doing what he saw today.",
+                        "And that frightened the son more than anything.",
+                        "He put both hands over his face.",
+                        "His palms were wet in a moment."
+                    ]
+                },
+                {
+                    art: "10-back.webp",
+                    emoji: "🏃",
+                    left: [
+                        "The son took the frame almost by force and ran back up the mountain. He tripped on stones and got up and ran on.",
+                        { t: "\"Father! Father!\"", v: "man" },
+                        "His breath was up in his throat and his mouth was dry.",
+                        "And still he did not slow down."
+                    ],
+                    right: [
+                        "Under the rock his father sat just as he had left him. He had not touched the rice.",
+                        "The son dropped to his knees in front of him.",
+                        { t: "\"I... I was wrong.\"", v: "man" },
+                        "His father said nothing and stroked his son's back."
+                    ]
+                },
+                {
+                    art: "11-down.webp",
+                    emoji: "🌄",
+                    left: [
+                        "The son carried his father down on the frame. The boy pushed from behind.",
+                        "His feet were far lighter than they had been going up.",
+                        "The frame sat close against his shoulders.",
+                        "Oddly, it did not feel heavy at all."
+                    ],
+                    right: [
+                        "The boy trotted along behind. Now and then he ran up to hold his grandfather's hand.",
+                        "The sun was going down.",
+                        "Three shadows stretched out long, side by side.",
+                        "The way down the mountain went on and on."
+                    ]
+                },
+                {
+                    art: "12-village.webp",
+                    emoji: "🏡",
+                    left: [
+                        "From that day the son and his wife cared for the old man better than ever. They boiled gruel morning and night and changed his bedding.",
+                        "His wife did not speak sourly again.",
+                        "The story soon went round the village.",
+                        "And people who heard it began going up the mountain."
+                    ],
+                    right: [
+                        "And every one of them brought a parent back down.",
+                        "They went up with a frame and came down with a frame.",
+                        "After that, they say, such a thing never happened in that district again.",
+                        "And it all began with one sentence from a seven-year-old."
+                    ]
+                }
+            ],
+            moral: "The boy said nothing wicked; he only said what he had seen. What grown-ups do passes straight to children. What turned the son round that day was not a scolding but one sentence from his own child.",
+            question: "If somebody copied exactly what you do, what would it look like?"
+        }
+    ],
+    quiz: [
+        { q: "What was the saying going round that district?", choices: ["That the mountain makes you live long", "That old parents are left on the mountain", "That old people are sent to a temple"], answer: 1 },
+        { q: "Who went up the mountain with them?", choices: ["The son's wife", "The seven-year-old son", "The villagers"], answer: 1 },
+        { q: "What did the boy do when his father said to go home?", choices: ["Pulled his hand away and ran back", "Took his hand without a word", "Held on to the gatepost"], answer: 0 },
+        { q: "What did the son do when he heard the boy?", choices: ["Threw the frame away", "Took the boy's hand and went down", "Put both hands over his face"], answer: 2 },
+        { q: "What did the son do when he ran back up?", choices: ["Left the rice there", "Left the frame there", "Went down on his knees"], answer: 2 },
+        { q: "What did the people who heard the story bring down?", choices: ["Their parents", "Only their frames", "Only rice and water"], answer: 0 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "A seven-year-old brought the frame back, so children grow by what they see, not what they are told.",
+                "The saying was going round the whole district, so it was not one family's doing but the time they lived in.",
+                "Everyone who heard it went up the mountain, so when one person turns round, others turn with them.",
+                "The grandfather got on the frame without a word, so he cannot have known where they were going."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "carrying frame", k: "지게", s: "The Carrying Frame" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "One thing first", k: "먼저 알아 둘 것", s: "One thing first: there is no record anywhere" },
+            { w: "record", k: "기록", s: "there is no record anywhere of a custom" },
+            { w: "custom", k: "풍습", s: "a custom of leaving old parents on a mountain" },
+            { w: "is taken as ~", k: "~으로 본다", s: "It is taken as a made-up story" },
+            { w: "made-up", k: "지어낸", s: "a made-up story meant to teach" },
+            { w: "worn on the back (wear)", k: "등에 지는", s: "a Korean wooden carrying frame worn on the back" },
+            { w: "loads", k: "짐", s: "not a tool for loads but a mirror" },
+            { w: "mirror", k: "거울", s: "a mirror that shows a son what he has done" }
+        ],
+        "01-old.webp": [
+            { w: "worked the fields", k: "밭일을 했다", s: "The son worked the fields" },
+            { w: "mended (mend)", k: "기웠다", s: "his wife mended other people's clothes" },
+            { w: "strength was gone", k: "기운이 다했다", s: "The father's strength was gone" },
+            { w: "the warm corner", k: "아랫목", s: "He lay in the warm corner all day" },
+            { w: "ceiling", k: "천장", s: "looking at the ceiling" },
+            { w: "sourly", k: "볼멘소리로", s: "his wife said sourly" },
+            { w: "tighter (tight)", k: "쪼들리는", s: "the household was tighter every month" },
+            { w: "What can I do about it", k: "저도 어쩌겠소", s: "What can I do about it." },
+            { w: "swept (sweep)", k: "쓸었다", s: "and he swept the yard" },
+            { w: "no strength in ~", k: "힘이 하나도 없는", s: "There was no strength in the broom." }
+        ],
+        "02-decide.webp": [
+            { w: "About then", k: "그 무렵", s: "About then a saying was going round that district." },
+            { w: "was going round", k: "떠돌고 있었다", s: "a saying was going round that district" },
+            { w: "who had started it", k: "누가 시작했는지", s: "Nobody knew who had started it." },
+            { w: "take ~ up the mountain", k: "산에 모셔다 두다", s: "they take the old one up the mountain" },
+            { w: "in peace", k: "편히", s: "That is where they go in peace, they say." },
+            { w: "Everybody does", k: "다들 그런다", s: "We all did it. Everybody does." },
+            { w: "turned over and over", k: "밤새 뒤척였다", s: "For nights the son turned over and over." },
+            { w: "made up his mind", k: "마음을 정했다", s: "And at last he made up his mind." },
+            { w: "shook badly", k: "몹시 떨렸다", s: "His voice shook badly." }
+        ],
+        "03-carry.webp": [
+            { w: "Before dawn", k: "새벽에", s: "Before dawn the son put the frame on" },
+            { w: "backed up to ~", k: "등을 댔다", s: "backed up to the veranda" },
+            { w: "were still out", k: "아직 남아 있었다", s: "Stars were still out." },
+            { w: "got onto ~ (get)", k: "몸을 실었다", s: "His father got onto the frame without a word." },
+            { w: "did not ask", k: "묻지 않았다", s: "He did not ask where they were going." },
+            { w: "hurt more", k: "더 마음 아팠다", s: "The not asking hurt more." },
+            { w: "footsteps", k: "발소리", s: "there were footsteps behind them" },
+            { w: "had followed ~ out", k: "따라 나왔다", s: "A seven-year-old had followed them out." },
+            { w: "half asleep", k: "잠이 덜 깬", s: "still half asleep" },
+            { w: "lurched (lurch)", k: "철렁했다", s: "The son's heart lurched." }
+        ],
+        "04-follow.webp": [
+            { w: "push ~ back", k: "밀어 넣다", s: "The son tried to push the boy back into the room." },
+            { w: "gatepost", k: "대문 기둥", s: "The boy held the gatepost with both arms." },
+            { w: "wanted to see ~", k: "궁금했다", s: "He wanted to see grandfather carried on the frame." },
+            { w: "Pulled off", k: "떼어 놓아도", s: "Pulled off, he took hold again." },
+            { w: "Coax ~ as they might", k: "아무리 달래도", s: "Coax him as they might, the boy would not give way." },
+            { w: "give way", k: "물러서다", s: "the boy would not give way" },
+            { w: "Nobody spoke", k: "아무도 입을 열지 않았다", s: "Nobody spoke." },
+            { w: "now and then", k: "이따금", s: "Only a mountain bird called now and then." },
+            { w: "creaked (creak)", k: "삐걱거렸다", s: "The frame creaked as they walked." },
+            { w: "seemed very loud", k: "유난히 크게 들렸다", s: "The sound seemed very loud." }
+        ],
+        "05-mountain.webp": [
+            { w: "By the time ~", k: "~할 무렵", s: "By the time the sun was high they were deep in the mountains." },
+            { w: "so thick that ~", k: "빽빽해서", s: "The trees were so thick you could hardly see the sky." },
+            { w: "out of the wind", k: "바람이 덜 드는", s: "The son set the frame down under a rock out of the wind." },
+            { w: "lifted ~ down", k: "내렸다", s: "He lifted his father down carefully" },
+            { w: "sat him against ~", k: "기대 앉혔다", s: "and sat him against the rock" },
+            { w: "did not even look at ~", k: "보지도 않았다", s: "His father did not even look at it." },
+            { w: "That will do", k: "됐다", s: "That will do. Go on down." },
+            { w: "with his back turned", k: "등을 돌린 채", s: "His father said it with his back turned." },
+            { w: "quite level", k: "아주 담담한", s: "His voice was quite level." }
+        ],
+        "06-leave.webp": [
+            { w: "again and again", k: "몇 번이나", s: "The son looked back again and again as he went." },
+            { w: "not once", k: "한 번도 ~ 않다", s: "His father did not look at him once." },
+            { w: "wiped ~ on his sleeve", k: "소매로 훔쳤다", s: "He wiped his eyes on his sleeve" },
+            { w: "came faster", k: "더 나왔다", s: "the tears only came faster" },
+            { w: "meant to ~ (mean)", k: "~하기로 했다", s: "He meant to leave the frame there." },
+            { w: "remind him of ~", k: "생각나게 하다", s: "Seeing it would remind him of the father he had left." },
+            { w: "Come along", k: "가자", s: "Come along." },
+            { w: "pulled it away", k: "손을 뺐다", s: "the boy pulled it away and ran back" },
+            { w: "shouted after ~", k: "뒤에서 소리쳤다", s: "The son shouted after him" },
+            { w: "ran straight for ~", k: "곧장 달려갔다", s: "He ran straight for the rock." }
+        ],
+        "07-pickup.webp": [
+            { w: "lifted (lift)", k: "들어 올렸다", s: "The boy went under the rock and lifted the empty frame." },
+            { w: "old wood", k: "낡은 나무", s: "It was old wood and heavy." },
+            { w: "dragged (drag)", k: "끌었다", s: "He dragged it back, bigger than he was" },
+            { w: "grunting (grunt)", k: "낑낑거리며", s: "grunting with the weight" },
+            { w: "strap", k: "어깨끈", s: "The shoulder strap kept slipping." },
+            { w: "let go of ~", k: "놓다", s: "And still he would not let go of it." },
+            { w: "Leave that here", k: "여기 두고 오너라", s: "Leave that here." },
+            { w: "went rough", k: "사나워졌다", s: "The son's voice went rough" },
+            { w: "before he could stop it", k: "저도 모르게", s: "before he could stop it" },
+            { w: "It's only ~", k: "그깟 ~이 뭐라고", s: "Why not? It's only a carrying frame." },
+            { w: "held ~ tighter", k: "더 꼭 끌어안았다", s: "And held the frame tighter." }
+        ],
+        "08-words.webp": [
+            { w: "looked up at ~", k: "올려다보았다", s: "the boy looked up at his father" },
+            { w: "very clear", k: "아주 맑은", s: "His eyes were very clear." },
+            { w: "no shadow", k: "아무 그늘도 없는", s: "There was no shadow at all on his face." },
+            { w: "fingered (finger)", k: "만지작거렸다", s: "He fingered the strap on his shoulder." },
+            { w: "quite calmly", k: "아주 태연하게", s: "And he said it quite calmly." },
+            { w: "When you get old", k: "늙으시면", s: "When you get old too, Father" },
+            { w: "I'll have to ~", k: "~해야 하잖아요", s: "I'll have to carry you up here on this." },
+            { w: "what people did", k: "당연한 일", s: "He thought it was simply what people did." },
+            { w: "went dead quiet", k: "쥐 죽은 듯 조용해졌다", s: "The mountain went dead quiet." },
+            { w: "seemed to stop", k: "멎은 것 같았다", s: "Even the leaves seemed to stop." }
+        ],
+        "09-frozen.webp": [
+            { w: "stood frozen (freeze)", k: "얼어붙었다", s: "The son stood frozen where he was." },
+            { w: "went weak", k: "힘이 풀렸다", s: "His breath stopped and his legs went weak." },
+            { w: "went round and round", k: "자꾸 되풀이되었다", s: "The boy's words went round and round in his ears." },
+            { w: "had meant nothing bad", k: "나쁜 마음으로 한 것이 아니다", s: "The boy had meant nothing bad by it." },
+            { w: "that was all", k: "그뿐이었다", s: "He had watched his father and learned it, that was all." },
+            { w: "doing what he saw", k: "본 대로 하며", s: "He would grow up doing what he saw today." },
+            { w: "more than anything", k: "무엇보다", s: "And that frightened the son more than anything." },
+            { w: "put ~ over his face", k: "얼굴을 감쌌다", s: "He put both hands over his face." },
+            { w: "palms", k: "손바닥", s: "His palms were wet in a moment." }
+        ],
+        "10-back.webp": [
+            { w: "almost by force", k: "빼앗듯이", s: "The son took the frame almost by force" },
+            { w: "tripped (trip)", k: "걸려 넘어졌다", s: "He tripped on stones and got up and ran on." },
+            { w: "up in his throat", k: "턱까지 차오른", s: "His breath was up in his throat" },
+            { w: "mouth was dry", k: "목이 탔다", s: "his mouth was dry" },
+            { w: "slow down", k: "걸음을 늦추다", s: "And still he did not slow down." },
+            { w: "just as he had left him", k: "그대로", s: "his father sat just as he had left him" },
+            { w: "had not touched ~", k: "손도 대지 않았다", s: "He had not touched the rice." },
+            { w: "dropped to his knees", k: "털썩 무릎을 꿇었다", s: "The son dropped to his knees in front of him." },
+            { w: "I was wrong", k: "제가 잘못했습니다", s: "I... I was wrong." },
+            { w: "stroked (stroke)", k: "쓸어 주었다", s: "His father said nothing and stroked his son's back." }
+        ],
+        "11-down.webp": [
+            { w: "carried ~ down", k: "지고 내려왔다", s: "The son carried his father down on the frame." },
+            { w: "pushed from behind", k: "뒤에서 밀었다", s: "The boy pushed from behind." },
+            { w: "far lighter", k: "훨씬 가벼운", s: "His feet were far lighter than they had been going up." },
+            { w: "sat close against ~", k: "착 붙었다", s: "The frame sat close against his shoulders." },
+            { w: "Oddly", k: "이상하게", s: "Oddly, it did not feel heavy at all." },
+            { w: "trotted along (trot)", k: "총총 따라 걸었다", s: "The boy trotted along behind." },
+            { w: "Now and then", k: "가끔", s: "Now and then he ran up to hold his grandfather's hand." },
+            { w: "stretched out long", k: "길게 늘어졌다", s: "Three shadows stretched out long, side by side." },
+            { w: "went on and on", k: "오래오래 이어졌다", s: "The way down the mountain went on and on." }
+        ],
+        "12-village.webp": [
+            { w: "better than ever", k: "더 정성껏", s: "the son and his wife cared for the old man better than ever" },
+            { w: "boiled gruel", k: "미음을 끓였다", s: "They boiled gruel morning and night" },
+            { w: "changed his bedding", k: "자리를 갈아 드렸다", s: "and changed his bedding" },
+            { w: "did not speak sourly", k: "볼멘소리를 하지 않았다", s: "His wife did not speak sourly again." },
+            { w: "went round ~", k: "퍼졌다", s: "The story soon went round the village." },
+            { w: "began going up ~", k: "올라가기 시작했다", s: "people who heard it began going up the mountain" },
+            { w: "every one of them", k: "저마다", s: "And every one of them brought a parent back down." },
+            { w: "never happened again", k: "아주 없어졌다", s: "such a thing never happened in that district again" },
+            { w: "it all began with ~", k: "다 ~에서 시작되었다", s: "And it all began with one sentence from a seven-year-old." }
+        ],
+        "after": [
+            { w: "leaving ~ on a mountain", k: "산에 버리기", s: "Stories of leaving an old parent on a mountain" },
+            { w: "widespread", k: "널리 퍼진", s: "It is a very widespread shape for a story." },
+            { w: "mostly end the same", k: "끝이 대개 같다", s: "Such stories mostly end the same way." },
+            { w: "sees something", k: "무언가를 본다", s: "The one who went to leave a parent sees something and comes back." },
+            { w: "not ~ but ...", k: "~이 아니라 …", s: "It is not a story about leaving but a story about coming back." },
+            { w: "the most frightening part", k: "가장 무서운 대목", s: "the most frightening part of this story" },
+            { w: "nothing wicked", k: "나쁜 말", s: "The boy said nothing wicked" },
+            { w: "what he had seen", k: "본 대로", s: "he only said what he had seen" },
+            { w: "passes straight to ~", k: "그대로 옮겨 간다", s: "What grown-ups do passes straight to children." },
+            { w: "turned ~ round", k: "되돌려 세웠다", s: "What turned the son round that day" },
+            { w: "scolding", k: "꾸중", s: "was not a scolding but one sentence from his own child" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🎒',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Stories of leaving an old parent on a mountain are told here and in Japan and China. It is a very widespread shape for a story.",
+                    "Such stories mostly end the same way. The one who went to leave a parent sees something and comes back. It is not a story about leaving but a story about coming back.",
+                    "The boy asking to bring the frame home is the most frightening part of this story."
+                ],
+                right: [
+                    "The boy said nothing wicked; he only said what he had seen. What grown-ups do passes straight to children. What turned the son round that day was not a scolding but one sentence from his own child.",
+                    "If somebody copied exactly what you do, what would it look like?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "그 고장에 떠돌던 말은 무엇이었나요?", choices: ["산에 가면 오래 산다는 말", "늙은 어버이는 산에 둔다는 말", "노인은 절에 보낸다는 말"], answer: 1 },
     { q: "산으로 갈 때 누가 함께 따라갔나요?", choices: ["며느리", "일곱 살 난 아들", "마을 사람들"], answer: 1 },

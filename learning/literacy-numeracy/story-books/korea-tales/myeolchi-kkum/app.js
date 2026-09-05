@@ -229,8 +229,459 @@ const COVER = {
     intro: [
         "멸치의 꿈은 지은이가 없는 구전 설화예요. 바닷물고기들의 생김새가 왜 저러한지를 이야기로 풀어낸 유래담이랍니다.",
         "넙치는 두 눈이 한쪽에 몰려 있고, 메기는 입이 옆으로 길게 찢어져 있고, 꼴뚜기는 눈이 몸통 아래쪽에 붙어 있어요. 병어는 입이 아주 작지요. 다들 실제로 그렇게 생겼답니다. 옛사람들은 그 생김새를 하나하나 이 이야기 한 편으로 다 설명해 냈어요.",
-        "꿈에 담긴 뜻을 풀어 보는 것을 꿈풀이라고 해요. 옛날에는 꿈에 뜻이 있다고 여겨 꿈풀이을 아주 중요하게 여겼지요. 같은 꿈을 두고 좋게도 나쁘게도 풀 수 있다는 것이 이 이야기의 웃음이 시작되는 자리랍니다."
+        "꿈에 담긴 뜻을 풀어 보는 것을 꿈풀이라고 해요. 옛날에는 꿈에 뜻이 있다고 여겨 꿈풀이를 아주 중요하게 여겼지요. 같은 꿈을 두고 좋게도 나쁘게도 풀 수 있다는 것이 이 이야기의 웃음이 시작되는 자리랍니다."
     ]
+};
+
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐟",
+        art: "cover.webp",
+        title: "The Anchovy's Dream",
+        intro: [
+            "The Anchovy's Dream is an old Korean tale with no known author. It is an origin tale, explaining why sea fish look the way they do.",
+            "A flatfish has both eyes on one side, a catfish has a mouth split wide, a pomfret has a tiny mouth. All true — and one story accounts for the lot.",
+            "Reading the meaning of a dream is called dream-telling. The same dream can be told well or badly, and that is where the laughter starts."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · A Strange Dream",
+            beats: [
+                {
+                    art: "01-dream.webp",
+                    emoji: "💭",
+                    left: [
+                        "In the East Sea there lived an anchovy no bigger than your little finger.",
+                        "He was very quick-tempered and very fond of showing off.",
+                        { t: "\"Where is there another fish in this sea like me?\"", v: "man" },
+                        "He boasted so to everyone he met."
+                    ],
+                    right: [
+                        "That night the anchovy had a strange dream, not long after he lay down.",
+                        "He dreamed his body floated up into the sky.",
+                        "It went through the clouds and dropped back into the sea.",
+                        "In the dream his head was spinning."
+                    ]
+                },
+                {
+                    art: "02-wake.webp",
+                    emoji: "😵",
+                    left: [
+                        "The anchovy sat straight up.",
+                        "All his fins were trembling. He was wide awake.",
+                        { t: "\"That was no ordinary dream, surely?\"", v: "man" },
+                        "He went over it and over it.",
+                        "It was quite unlike any other dream."
+                    ],
+                    right: [
+                        "Up to the sky and down again — it must be a great dream.",
+                        { t: "\"Am I to become somebody important?\"", v: "man" },
+                        "His heart beat faster.",
+                        { t: "\"Am I to rule the sea, perhaps?\"", v: "man" },
+                        "The more he thought, the likelier it sounded."
+                    ]
+                },
+                {
+                    art: "03-send.webp",
+                    emoji: "🏃",
+                    left: [
+                        "The anchovy called the goby who was beside him.",
+                        "The goby was the one who ran all his errands.",
+                        { t: "\"There's a flatfish in the West Sea who reads dreams, isn't there?\"", v: "man" },
+                        { t: "\"For dream-telling nobody can touch him.\"", v: "man" },
+                        { t: "\"Go and fetch him. Now.\"", v: "man" }
+                    ],
+                    right: [
+                        "The anchovy glared at him.",
+                        { t: "\"What? All the way to the West Sea?\"", v: "boy" },
+                        "The goby's face fell. It was a water road with no end to it.",
+                        "But he knew the anchovy's temper, so off he went without another word."
+                    ]
+                },
+                {
+                    art: "04-journey.webp",
+                    emoji: "🌊",
+                    left: [
+                        "From that day the goby swam night and day. He cut through the water until his fins wore down.",
+                        "When the waves were high he hid in the rocks all night.",
+                        "After days and days he found the flatfish at last.",
+                        "And he brought him back to the East Sea."
+                    ],
+                    right: [
+                        "On the way, a catfish, a pomfret and a cuttlefish heard about it and came along. Word had gone round that the anchovy was laying on a feast.",
+                        { t: "\"Is there a party of some kind?\"", v: "man" },
+                        { t: "\"Let's go and get a meal out of it.\"", v: "granny" },
+                        "They were all delighted at the thought of the table."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Dream Is Read",
+            beats: [
+                {
+                    art: "05-feast.webp",
+                    emoji: "🍽️",
+                    left: [
+                        "The anchovy laid a table fit to break its legs. Seaweed, shellfish, everything.",
+                        { t: "\"Now eat, and then read me my dream.\"", v: "man" },
+                        "He bowed low before the flatfish.",
+                        "He was waiting for one thing: that it was a good dream."
+                    ],
+                    right: [
+                        "The flatfish coughed and took his seat, stroking his whiskers very gravely.",
+                        "Beside him the catfish, the pomfret and the cuttlefish craned to watch.",
+                        "The sea went as quiet as still water.",
+                        "Even the weed did not move."
+                    ]
+                },
+                {
+                    art: "06-tell.webp",
+                    emoji: "🗣️",
+                    left: [
+                        "At last the anchovy told his dream. There was a good deal of force in his voice.",
+                        { t: "\"My body floated up into the sky.\"", v: "man" },
+                        { t: "\"It went through the clouds and dropped back into the sea.\"", v: "man" },
+                        "Half of it was boasting already."
+                    ],
+                    right: [
+                        { t: "\"Well? A great dream, is it not?\"", v: "man" },
+                        "He put his chin up. The flatfish closed his eyes and thought a long time.",
+                        "Everyone watched his mouth and held their breath.",
+                        "It was quiet enough to hear a bubble."
+                    ]
+                },
+                {
+                    art: "07-bad.webp",
+                    emoji: "😬",
+                    left: [
+                        "The flatfish opened his eyes and spoke slowly.",
+                        "His voice was quite level.",
+                        { t: "\"Hm. That is a dream of being hauled up in a net.\"", v: "old" },
+                        { t: "\"The clouds are the smoke of grilling,\"", v: "old" },
+                        { t: "\"and dropping into the sea is going into a soup bowl.\"", v: "old" }
+                    ],
+                    right: [
+                        "He had only said what he saw. And the feast froze like ice.",
+                        { t: "\"What — what did you say?!\"", v: "man" },
+                        "The anchovy shot to his feet.",
+                        "His face went blue.",
+                        "Nobody could open their mouth."
+                    ]
+                },
+                {
+                    art: "08-slap.webp",
+                    emoji: "💥",
+                    left: [
+                        "The anchovy lost his head completely. The table went over and dishes flew everywhere.",
+                        { t: "\"What a wicked creature! Is that what you make of my dream!\"", v: "man" },
+                        "Smack!",
+                        "The flatfish had no time to duck.",
+                        "The anchovy's tail caught him across the cheek."
+                    ],
+                    right: [
+                        { t: "\"Ow! My eyes!\"", v: "old" },
+                        "The flatfish rolled about on the sea floor. Nobody could stop it.",
+                        "And with that, both his eyes were swept round to one side.",
+                        "Push as he might, they would not go back.",
+                        "And that is why a flatfish has both eyes on one side."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Day the Sea Went Wild",
+            beats: [
+                {
+                    art: "09-catfish.webp",
+                    emoji: "😂",
+                    left: [
+                        "The catfish saw it and could not hold in his laughter. The blinking flatfish was too funny for words.",
+                        { t: "\"Ha ha ha! Look at those eyes!\"", v: "man" },
+                        "He laughed with his mouth as wide as it would go.",
+                        "He rolled about holding his stomach."
+                    ],
+                    right: [
+                        "But laughing that hard was a mistake. His mouth tore right across, side to side.",
+                        "The catfish felt it with a fin.",
+                        { t: "\"Eh? What's happened to my mouth!\"", v: "man" },
+                        "Try as he might, it would not close.",
+                        "A catfish has had a long wide mouth ever since."
+                    ]
+                },
+                {
+                    art: "10-pomfret.webp",
+                    emoji: "🤐",
+                    left: [
+                        "The pomfret beside him squeezed his mouth shut to keep from laughing. Laugh, and he would end up like the catfish.",
+                        { t: "\"Mmf! Mmmf!\"", v: "girl" },
+                        "His cheeks went red and his eyes watered.",
+                        "And still he would not open his mouth."
+                    ],
+                    right: [
+                        "But he had squeezed so hard that it would not open out again. He looked at himself in the water.",
+                        { t: "\"Oh dear, why has my mouth gone so small?\"", v: "girl" },
+                        "That, they say, is when a pomfret's mouth got so small.",
+                        "From holding in a laugh."
+                    ]
+                },
+                {
+                    art: "11-squid.webp",
+                    emoji: "😱",
+                    left: [
+                        "The cuttlefish thought there would be trouble and tried to get away. He backed off little by little.",
+                        "And his fin caught on a stone.",
+                        "He was in such a hurry that over he went.",
+                        "He struck his head hard on the bottom."
+                    ],
+                    right: [
+                        "And with that both his eyes slid right down.",
+                        { t: "\"Oh — why have my eyes come down here?\"", v: "man" },
+                        "The cuttlefish tried to push them up again. They did not move at all.",
+                        "And there they have stayed ever since."
+                    ]
+                },
+                {
+                    art: "12-goby.webp",
+                    emoji: "🐠",
+                    left: [
+                        "Watching all this from a corner, the goby's eyes nearly came out of his head. He was the one who had fetched the flatfish, after all.",
+                        { t: "\"I went all that way to bring him here, and now...\"", v: "boy" },
+                        "His heart kept lurching.",
+                        "He was afraid the anchovy would blame him too."
+                    ],
+                    right: [
+                        "And the goby's eyes, bulging with fright, stayed like that.",
+                        { t: "\"That is what running errands got me.\"", v: "boy" },
+                        "In one day, they say, the shapes of the sea were settled — over one dream badly read.",
+                        "And the anchovy still did not think he had done wrong."
+                    ]
+                }
+            ],
+            moral: "The flatfish said only what he saw, and was struck for it. Lose your temper with somebody who tells you what you do not want to hear, and after that nobody will tell you the truth.",
+            question: "How have you treated somebody who told you what you did not want to hear?"
+        }
+    ],
+    quiz: [
+        { q: "What was the anchovy's dream?", choices: ["A dream of ruling the sea", "A dream of going up to the sky and back", "A dream of becoming important"], answer: 1 },
+        { q: "Who went to fetch the dream-teller?", choices: ["The cuttlefish", "The pomfret", "The goby"], answer: 2 },
+        { q: "How did the flatfish read the dream?", choices: ["As being caught and grilled", "As being given high office", "As living a long life"], answer: 0 },
+        { q: "What happened to the flatfish after he was struck?", choices: ["His mouth went very small", "His body was pressed flat", "Both his eyes went to one side"], answer: 2 },
+        { q: "Who tore his mouth by laughing?", choices: ["The catfish", "The pomfret", "The goby"], answer: 0 },
+        { q: "Why did the cuttlefish's eyes come down?", choices: ["The anchovy struck him", "He fell while backing away", "A current swept him off"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He struck him for not reading it his way, so he only wanted to hear what suited him.",
+                "The flatfish said only what he saw, so there are places where telling the truth gets you hit.",
+                "All the shapes of the sea were settled in one day, so the old people gave reasons with a laugh.",
+                "The goby went all the way to the West Sea, so he must have been that fond of the anchovy."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "anchovy", k: "멸치", s: "The Anchovy's Dream" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "an origin tale", k: "유래담", s: "It is an origin tale" },
+            { w: "the way they do", k: "저러하게", s: "explaining why sea fish look the way they do" },
+            { w: "flatfish", k: "넙치", s: "A flatfish has both eyes on one side" },
+            { w: "catfish", k: "메기", s: "a catfish has a mouth split wide" },
+            { w: "cuttlefish", k: "꼴뚜기", s: "a cuttlefish has its eyes low down" },
+            { w: "pomfret", k: "병어", s: "a pomfret has a tiny mouth" },
+            { w: "accounts for ~ (account)", k: "설명한다", s: "one story accounts for the lot" },
+            { w: "the lot", k: "그 모두", s: "one story accounts for the lot" },
+            { w: "dream-telling", k: "꿈풀이", s: "Reading the meaning of a dream is called dream-telling." },
+            { w: "where ~ starts", k: "~이 시작되는 자리", s: "that is where the laughter starts" }
+        ],
+        "01-dream.webp": [
+            { w: "no bigger than ~", k: "~만 한", s: "an anchovy no bigger than your little finger" },
+            { w: "little finger", k: "새끼손가락", s: "no bigger than your little finger" },
+            { w: "quick-tempered", k: "성질이 급한", s: "He was very quick-tempered" },
+            { w: "showing off", k: "으스대기", s: "very fond of showing off" },
+            { w: "boasted (boast)", k: "뽐냈다", s: "He boasted so to everyone he met." },
+            { w: "not long after ~", k: "~한 지 얼마 안 되어", s: "not long after he lay down" },
+            { w: "floated up (float)", k: "두둥실 떠올랐다", s: "He dreamed his body floated up into the sky." },
+            { w: "dropped back into ~", k: "도로 뚝 떨어졌다", s: "It went through the clouds and dropped back into the sea." },
+            { w: "head was spinning", k: "어질어질했다", s: "In the dream his head was spinning." }
+        ],
+        "02-wake.webp": [
+            { w: "sat straight up", k: "벌떡 일어났다", s: "The anchovy sat straight up." },
+            { w: "fins", k: "지느러미", s: "All his fins were trembling." },
+            { w: "wide awake", k: "잠이 확 달아난", s: "He was wide awake." },
+            { w: "no ordinary dream", k: "보통 꿈이 아닌", s: "That was no ordinary dream, surely?" },
+            { w: "went over it (go over)", k: "곱씹었다", s: "He went over it and over it." },
+            { w: "quite unlike ~", k: "~와 아주 다른", s: "It was quite unlike any other dream." },
+            { w: "it must be ~", k: "아무래도 ~인 것 같다", s: "it must be a great dream" },
+            { w: "somebody important", k: "대단한 사람", s: "Am I to become somebody important?" },
+            { w: "rule (rule)", k: "다스리다", s: "Am I to rule the sea, perhaps?" },
+            { w: "The more ~ the likelier", k: "생각할수록 그럴듯한", s: "The more he thought, the likelier it sounded." }
+        ],
+        "03-send.webp": [
+            { w: "goby", k: "망둥이", s: "The anchovy called the goby who was beside him." },
+            { w: "ran errands (run)", k: "심부름을 했다", s: "The goby was the one who ran all his errands." },
+            { w: "reads dreams (read)", k: "꿈을 풀다", s: "There's a flatfish in the West Sea who reads dreams" },
+            { w: "nobody can touch ~", k: "따를 자가 없다", s: "For dream-telling nobody can touch him." },
+            { w: "fetch (fetch)", k: "모셔 오다", s: "Go and fetch him. Now." },
+            { w: "glared at ~ (glare)", k: "눈을 부라렸다", s: "The anchovy glared at him." },
+            { w: "All the way to ~", k: "~까지나", s: "What? All the way to the West Sea?" },
+            { w: "His face fell (fall)", k: "울상이 되었다", s: "The goby's face fell." },
+            { w: "with no end to it", k: "가도 가도 끝없는", s: "It was a water road with no end to it." },
+            { w: "temper", k: "성미", s: "But he knew the anchovy's temper" },
+            { w: "without another word", k: "두말없이", s: "so off he went without another word" }
+        ],
+        "04-journey.webp": [
+            { w: "night and day", k: "밤낮으로", s: "From that day the goby swam night and day." },
+            { w: "cut through ~ (cut)", k: "물살을 갈랐다", s: "He cut through the water until his fins wore down." },
+            { w: "wore down (wear)", k: "닳았다", s: "until his fins wore down" },
+            { w: "hid in ~ (hide)", k: "숨었다", s: "When the waves were high he hid in the rocks all night." },
+            { w: "at last", k: "겨우, 마침내", s: "After days and days he found the flatfish at last." },
+            { w: "came along", k: "따라왔다", s: "a catfish, a pomfret and a cuttlefish heard about it and came along" },
+            { w: "Word had gone round", k: "소문이 났다", s: "Word had gone round that the anchovy was laying on a feast." },
+            { w: "laying on a feast", k: "잔치를 차리는", s: "the anchovy was laying on a feast" },
+            { w: "get a meal out of ~", k: "한 상 얻어먹다", s: "Let's go and get a meal out of it." },
+            { w: "delighted", k: "신이 난", s: "They were all delighted at the thought of the table." }
+        ],
+        "05-feast.webp": [
+            { w: "fit to break its legs", k: "상다리가 휘어지게", s: "The anchovy laid a table fit to break its legs." },
+            { w: "seaweed", k: "미역", s: "Seaweed, shellfish, everything." },
+            { w: "shellfish", k: "조개", s: "Seaweed, shellfish, everything." },
+            { w: "read me my dream", k: "제 꿈을 풀어 주십시오", s: "Now eat, and then read me my dream." },
+            { w: "bowed low", k: "넙죽 엎드렸다", s: "He bowed low before the flatfish." },
+            { w: "waiting for one thing", k: "그 말만 기다렸다", s: "He was waiting for one thing" },
+            { w: "took his seat (take)", k: "자리에 앉았다", s: "The flatfish coughed and took his seat" },
+            { w: "gravely", k: "점잖게", s: "stroking his whiskers very gravely" },
+            { w: "craned (crane)", k: "목을 뺐다", s: "the catfish, the pomfret and the cuttlefish craned to watch" },
+            { w: "as quiet as still water", k: "물을 끼얹은 듯 조용한", s: "The sea went as quiet as still water." },
+            { w: "weed", k: "물풀", s: "Even the weed did not move." }
+        ],
+        "06-tell.webp": [
+            { w: "At last", k: "드디어", s: "At last the anchovy told his dream." },
+            { w: "a good deal of force", k: "힘이 잔뜩 들어간", s: "There was a good deal of force in his voice." },
+            { w: "Half of it", k: "반은", s: "Half of it was boasting already." },
+            { w: "put his chin up", k: "턱을 치켜들었다", s: "He put his chin up." },
+            { w: "closed his eyes", k: "눈을 감았다", s: "The flatfish closed his eyes and thought a long time." },
+            { w: "held their breath (hold)", k: "숨을 죽였다", s: "Everyone watched his mouth and held their breath." },
+            { w: "quiet enough to ~", k: "~할 만큼 조용한", s: "It was quiet enough to hear a bubble." },
+            { w: "bubble", k: "물방울", s: "quiet enough to hear a bubble" }
+        ],
+        "07-bad.webp": [
+            { w: "spoke slowly", k: "천천히 입을 열었다", s: "The flatfish opened his eyes and spoke slowly." },
+            { w: "quite level", k: "아주 담담한", s: "His voice was quite level." },
+            { w: "being hauled up (haul)", k: "끌려 올라가는 것", s: "That is a dream of being hauled up in a net." },
+            { w: "net", k: "그물", s: "a dream of being hauled up in a net" },
+            { w: "grilling (grill)", k: "굽는 것", s: "The clouds are the smoke of grilling" },
+            { w: "soup bowl", k: "국그릇", s: "dropping into the sea is going into a soup bowl" },
+            { w: "what he saw", k: "본 대로", s: "He had only said what he saw." },
+            { w: "froze like ice (freeze)", k: "얼음처럼 굳었다", s: "And the feast froze like ice." },
+            { w: "shot to his feet (shoot)", k: "벌떡 일어섰다", s: "The anchovy shot to his feet." },
+            { w: "went blue", k: "시퍼렇게 질렸다", s: "His face went blue." }
+        ],
+        "08-slap.webp": [
+            { w: "lost his head (lose)", k: "눈이 뒤집혔다", s: "The anchovy lost his head completely." },
+            { w: "went over (go over)", k: "뒤집혔다", s: "The table went over and dishes flew everywhere." },
+            { w: "wicked", k: "고약한", s: "What a wicked creature!" },
+            { w: "what you make of ~", k: "~을 그렇게 보다", s: "Is that what you make of my dream!" },
+            { w: "Smack!", k: "짝!", s: "Smack!" },
+            { w: "duck (duck)", k: "피하다", s: "The flatfish had no time to duck." },
+            { w: "caught him across ~", k: "후려쳤다", s: "The anchovy's tail caught him across the cheek." },
+            { w: "rolled about (roll)", k: "데굴데굴 굴렀다", s: "The flatfish rolled about on the sea floor." },
+            { w: "were swept round (sweep)", k: "쓸려 몰렸다", s: "both his eyes were swept round to one side" },
+            { w: "Push as he might", k: "아무리 밀어도", s: "Push as he might, they would not go back." }
+        ],
+        "09-catfish.webp": [
+            { w: "hold in ~", k: "참다", s: "The catfish saw it and could not hold in his laughter." },
+            { w: "blinking", k: "눈을 껌뻑이는", s: "The blinking flatfish was too funny for words." },
+            { w: "too funny for words", k: "하도 우스운", s: "was too funny for words" },
+            { w: "as wide as it would go", k: "있는 대로 벌리고", s: "He laughed with his mouth as wide as it would go." },
+            { w: "was a mistake", k: "탈이었다", s: "But laughing that hard was a mistake." },
+            { w: "tore right across (tear)", k: "쭉 찢어졌다", s: "His mouth tore right across, side to side." },
+            { w: "felt it with a fin", k: "지느러미로 만져 보았다", s: "The catfish felt it with a fin." },
+            { w: "Try as he might", k: "아무리 애를 써도", s: "Try as he might, it would not close." },
+            { w: "ever since", k: "그때부터 지금까지", s: "A catfish has had a long wide mouth ever since." }
+        ],
+        "10-pomfret.webp": [
+            { w: "squeezed ~ shut (squeeze)", k: "꼭 오므렸다", s: "The pomfret beside him squeezed his mouth shut" },
+            { w: "keep from ~ing", k: "~하지 않으려 하다", s: "squeezed his mouth shut to keep from laughing" },
+            { w: "end up like ~", k: "~ 꼴이 되다", s: "Laugh, and he would end up like the catfish." },
+            { w: "watered (water)", k: "눈물이 맺혔다", s: "His cheeks went red and his eyes watered." },
+            { w: "would not open", k: "끝내 열지 않았다", s: "And still he would not open his mouth." },
+            { w: "so hard that ~", k: "너무 힘껏 해서", s: "he had squeezed so hard that it would not open out again" },
+            { w: "in the water", k: "물빛에", s: "He looked at himself in the water." },
+            { w: "gone so small", k: "이리 작아진", s: "why has my mouth gone so small?" },
+            { w: "From ~ing", k: "~하다가", s: "From holding in a laugh." }
+        ],
+        "11-squid.webp": [
+            { w: "there would be trouble", k: "큰일 났다", s: "The cuttlefish thought there would be trouble" },
+            { w: "get away", k: "달아나다", s: "and tried to get away" },
+            { w: "backed off (back)", k: "뒷걸음질 쳤다", s: "He backed off little by little." },
+            { w: "caught on ~ (catch)", k: "걸렸다", s: "And his fin caught on a stone." },
+            { w: "in such a hurry", k: "너무 허둥대어", s: "He was in such a hurry that over he went." },
+            { w: "over he went", k: "그만 넘어졌다", s: "He was in such a hurry that over he went." },
+            { w: "struck (strike)", k: "부딪쳤다", s: "He struck his head hard on the bottom." },
+            { w: "slid right down (slide)", k: "쭉 미끄러졌다", s: "both his eyes slid right down" },
+            { w: "did not move at all", k: "꿈쩍도 하지 않았다", s: "They did not move at all." },
+            { w: "have stayed (stay)", k: "그대로 붙어 있다", s: "And there they have stayed ever since." }
+        ],
+        "12-goby.webp": [
+            { w: "from a corner", k: "구석에서", s: "Watching all this from a corner" },
+            { w: "came out of his head", k: "튀어나올 지경이었다", s: "the goby's eyes nearly came out of his head" },
+            { w: "after all", k: "~이었으니까", s: "He was the one who had fetched the flatfish, after all." },
+            { w: "all that way", k: "저 먼 데까지", s: "I went all that way to bring him here" },
+            { w: "kept lurching (lurch)", k: "철렁철렁했다", s: "His heart kept lurching." },
+            { w: "blame (blame)", k: "나무라다", s: "He was afraid the anchovy would blame him too." },
+            { w: "bulging with fright", k: "놀라 툭 불거진", s: "the goby's eyes, bulging with fright, stayed like that" },
+            { w: "what ~ got me", k: "~하다가 이 꼴이 되었다", s: "That is what running errands got me." },
+            { w: "were settled (settle)", k: "정해졌다", s: "the shapes of the sea were settled" },
+            { w: "badly read", k: "잘못 풀린", s: "over one dream badly read" }
+        ],
+        "after": [
+            { w: "why-stories", k: "왜 그런지 풀어 주는 이야기", s: "This is one of the why-stories." },
+            { w: "at one go", k: "한꺼번에", s: "It explains at one go why a flatfish has both eyes on one side" },
+            { w: "a reason attached", k: "붙여 둔 까닭", s: "Each shape of each sea fish has a reason attached to it." },
+            { w: "is really so", k: "실제로도 그렇다", s: "The flatfish's eyes on one side is really so." },
+            { w: "from the start", k: "처음부터", s: "But it is not so from the start." },
+            { w: "hatched (hatch)", k: "알에서 깬", s: "A newly hatched flatfish has one eye on each side" },
+            { w: "swims upright", k: "똑바로 서서 헤엄친다", s: "and swims upright like any fish" },
+            { w: "travels round ~ (travel)", k: "돌아서 옮겨 간다", s: "the right eye travels round the head to the left side" },
+            { w: "flat on the bottom", k: "바닥에 납작 엎드려", s: "and from then on it lives flat on the bottom" },
+            { w: "really does happen", k: "정말로 일어난다", s: "The thing the old people wondered at really does happen." },
+            { w: "did nothing wrong", k: "잘못한 것이 없다", s: "the flatfish did nothing wrong" },
+            { w: "as he saw it", k: "본 대로", s: "He was asked to read a dream and he read it as he saw it." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐟',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This is one of the why-stories. It explains at one go why a flatfish has both eyes on one side and why a catfish's mouth is so wide.",
+                    "Each shape of each sea fish has a reason attached to it. Korean tales are full of this kind of thing.",
+                    "The flatfish's eyes on one side is really so. But it is not so from the start. A newly hatched flatfish has one eye on each side and swims upright like any fish. Then, within a month, the right eye travels round the head to the left side, and from then on it lives flat on the bottom. The thing the old people wondered at really does happen.",
+                    "And look again: the flatfish did nothing wrong. He was asked to read a dream and he read it as he saw it."
+                ],
+                right: [
+                    "The flatfish said only what he saw, and was struck for it. Lose your temper with somebody who tells you what you do not want to hear, and after that nobody will tell you the truth.",
+                    "How have you treated somebody who told you what you did not want to hear?"
+                ]
+            }
+        ]
+    }
 };
 
 const QUIZ = [
