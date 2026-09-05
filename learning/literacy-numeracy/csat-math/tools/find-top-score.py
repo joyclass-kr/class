@@ -29,4 +29,4 @@ for path in sorted(glob.glob("papers/*-paper.pdf")):
 json.dump(out, open("four-point-index.json","w",encoding="utf-8"), ensure_ascii=False, indent=1)
 for k,v in out.items():
     miss=[n for n in range(1,23) if n not in v["scores"]]
-    print(f"{k:14} 공통{v['common_pages']}쪽 문항{v['n_items']:2} 4점{len(v['four']):2}개 {v['four']}" + (f"  ※배점못읽음{miss}" if miss else ""))
+    print(f"{k:14} 공통{v['common_pages']}쪽 문항{v['n_items']:2} 높은배점{len(v['four']):2}개 {v['four']}" + (f"  ※배점못읽음{miss}" if miss else ""))

@@ -79,6 +79,11 @@
 
   function buildExamChips() {
     const box = els.examChips;
+    // 회차가 하나뿐이면 고를 것이 없으니 줄 자체를 감춘다.
+    if (DATA.exams.length < 2) {
+      box.closest(".picker-row").hidden = true;
+      return;
+    }
     box.textContent = "";
     box.appendChild(makeChip("전체", "all", state.exam === "all", DATA.exams.length + "회차"));
     DATA.exams.forEach((e) => {

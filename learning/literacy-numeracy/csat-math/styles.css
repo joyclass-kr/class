@@ -39,7 +39,6 @@ body {
   border-bottom: 1px solid var(--line);
 }
 .topbar h1 { margin: 0; font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; }
-.topbar-note { margin: 0; color: var(--ink-soft); font-size: 0.86rem; }
 .back {
   color: var(--ink-soft);
   text-decoration: none;
@@ -65,6 +64,7 @@ main { max-width: 940px; margin: 0 auto; padding: 16px 16px 48px; }
   padding: 6px 0;
 }
 .picker-row + .picker-row { border-top: 1px solid var(--line-soft); }
+.picker-row[hidden] { display: none; }
 .picker-row--tail { align-items: center; flex-wrap: wrap; gap: 8px 16px; }
 .picker-label {
   flex: 0 0 42px;
