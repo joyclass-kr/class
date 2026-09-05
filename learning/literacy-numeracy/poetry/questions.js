@@ -2773,5 +2773,607 @@ window.POETRY_QUESTIONS = Object.freeze([
         ],
         answer: "부모를 향한 마음",
         explanation: "엄마, 아버지, 어머니. 세 시가 부르는 사람이 같아요."
+    },
+
+    // ── 중2 · 한용운 다시 읽기 ────────────────────────────────────
+    {
+        id: "nim-gone",
+        poemId: "manhae-nim",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "첫 줄에서 님은 어떻게 되었나요?",
+        choices: ["갔어요", "돌아왔어요", "잠들었어요"],
+        answer: "갔어요",
+        explanation: "'님은 갔습니다'를 두 번 거듭하며 시작해요."
+    },
+    {
+        id: "nim-not-sent",
+        poemId: "manhae-nim",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'님은 갔지마는 나는 님을 보내지 아니하였습니다'는 어떤 말인가요?",
+        choices: [
+            "앞뒤가 어긋나지만 마음으로는 보내지 않았다는 말",
+            "님이 아직 안 갔다는 말",
+            "님을 붙잡았다는 말"
+        ],
+        answer: "앞뒤가 어긋나지만 마음으로는 보내지 않았다는 말",
+        explanation: "몸은 갔어도 내 안에서는 떠나지 않았어요. 말이 어긋난 자리에 뜻이 있어요."
+    },
+    {
+        id: "nim-turn",
+        poemId: "manhae-nim",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'그러나'에서 시는 어느 쪽으로 방향을 트나요?",
+        choices: [
+            "슬픔에서 다시 만날 것을 믿는 쪽으로",
+            "슬픔에서 더 깊은 슬픔으로",
+            "님을 잊는 쪽으로"
+        ],
+        answer: "슬픔에서 다시 만날 것을 믿는 쪽으로",
+        explanation: "슬픔의 힘을 옮겨서 새 희망에 들어붓는다고 했어요."
+    },
+    {
+        id: "nim-song",
+        poemId: "manhae-nim",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "마지막 줄에서 님의 침묵을 휩싸고 도는 것은 무엇인가요?",
+        choices: ["사랑의 노래", "한숨의 미풍", "차디찬 티끌"],
+        answer: "사랑의 노래",
+        explanation: "님이 말이 없어도 내 노래는 그치지 않는다는 뜻이에요."
+    },
+    {
+        id: "nim-honorific",
+        poemId: "manhae-nim",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "이 시가 '~습니다'라는 높임말로 쓰인 까닭은 무엇일까요?",
+        choices: [
+            "님을 높이며 말을 건네는 태도라서",
+            "옛날 말투라서",
+            "글자 수를 맞추려고"
+        ],
+        answer: "님을 높이며 말을 건네는 태도라서",
+        explanation: "혼잣말이 아니라 님에게 드리는 말이라 끝까지 높여요."
+    },
+    {
+        id: "manhae-you",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "한용운의 시 네 편을 떠올려 보세요.",
+        sentence: "「님의 침묵」「나룻배와 행인」「복종」「알 수 없어요」의 '님·당신'은 무엇으로 읽을 수 있나요?",
+        choices: [
+            "사랑하는 사람이면서 잃어버린 나라, 깨달음 같은 여러 뜻",
+            "시인의 어머니",
+            "실제로 있던 한 사람"
+        ],
+        answer: "사랑하는 사람이면서 잃어버린 나라, 깨달음 같은 여러 뜻",
+        explanation: "한용운은 스님이자 독립운동가였어요. 님이라는 한 글자에 여러 뜻이 겹쳐 있어요."
+    },
+    {
+        id: "manhae-habit",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "한용운의 시 네 편을 떠올려 보세요.",
+        sentence: "한용운이 즐겨 쓰는 방법은 무엇인가요?",
+        choices: [
+            "앞뒤가 안 맞는 말로 깊은 마음을 말하고 높임말로 건네요",
+            "짧은 줄로 끊어서 소리를 흉내내요",
+            "사투리로 정겨움을 살려요"
+        ],
+        answer: "앞뒤가 안 맞는 말로 깊은 마음을 말하고 높임말로 건네요",
+        explanation: "보내지 않은 님, 달콤한 복종, 기름이 되는 재. 늘 어긋난 말 속에 뜻을 넣어요."
+    },
+    {
+        id: "alsu-nim-again",
+        poemId: "manhae-alsu",
+        category: "견주어 읽기",
+        prompt: "「알 수 없어요」와 「님의 침묵」을 나란히 놓고 답해 보세요.",
+        sentence: "두 시의 끝에 똑같이 남는 것은 무엇인가요?",
+        choices: ["꺼지지 않는 마음", "떠난 님의 발자국", "차가운 밤"],
+        answer: "꺼지지 않는 마음",
+        explanation: "하나는 밤을 지키는 약한 등불, 하나는 그치지 않는 사랑의 노래예요."
+    },
+
+    // ── 중2 · 이육사 다시 읽기 ────────────────────────────────────
+    {
+        id: "jeoljeong-where",
+        poemId: "yuksa-jeoljeong",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "말하는 이는 어디에 서 있나요?",
+        choices: [
+            "더 물러설 데 없는 고원의 서릿발 위",
+            "따뜻한 남쪽 들판",
+            "고향 마을 앞"
+        ],
+        answer: "더 물러설 데 없는 고원의 서릿발 위",
+        explanation: "채찍에 갈겨 북방으로 휩쓸려 와서, 한 발 디딜 곳조차 없는 자리예요."
+    },
+    {
+        id: "jeoljeong-season",
+        poemId: "yuksa-jeoljeong",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'매운 계절'은 무엇을 가리키나요?",
+        choices: [
+            "견디기 힘든 겨울이자 고통스러운 시대",
+            "고추가 익는 가을",
+            "매운 음식을 먹는 철"
+        ],
+        answer: "견디기 힘든 겨울이자 고통스러운 시대",
+        explanation: "계절을 채찍으로 그렸어요. 나라 잃은 때를 겨울에 실었어요."
+    },
+    {
+        id: "jeoljeong-rainbow",
+        poemId: "yuksa-jeoljeong",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'강철로 된 무지개'는 어떤 말인가요?",
+        choices: [
+            "차갑고 단단한 것과 아름다운 것을 붙인 어긋난 말",
+            "실제로 본 무지개",
+            "무지개가 사라졌다는 말"
+        ],
+        answer: "차갑고 단단한 것과 아름다운 것을 붙인 어긋난 말",
+        explanation: "겨울의 고통을 무지개라 불러요. 고통 속에서 오히려 뜻을 세우는 마음이에요."
+    },
+    {
+        id: "jeoljeong-eyes",
+        poemId: "yuksa-jeoljeong",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "눈을 감고 생각하는 까닭은 무엇인가요?",
+        choices: [
+            "물러설 곳이 없어 마음으로 맞서려고",
+            "너무 추워서",
+            "잠이 와서"
+        ],
+        answer: "물러설 곳이 없어 마음으로 맞서려고",
+        explanation: "몸은 갈 데가 없으니 눈을 감고 그 겨울을 다시 봐요."
+    },
+    {
+        id: "kkot-when",
+        poemId: "yuksa-kkot",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "첫 묶음에서 꽃은 언제 핀다고 했나요?",
+        choices: ["비 한 방울 내리지 않는 그때에도", "봄비가 내린 뒤에", "제비가 돌아온 날에"],
+        answer: "비 한 방울 내리지 않는 그때에도",
+        explanation: "필 수 없는 조건에서 오히려 핀다고 해요."
+    },
+    {
+        id: "kkot-promise",
+        poemId: "yuksa-kkot",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'저버리지 못할 약속'은 무엇인가요?",
+        choices: [
+            "얼어붙은 땅에도 꽃이 피고 봄이 온다는 것",
+            "제비가 남쪽으로 간다는 것",
+            "눈이 그친다는 것"
+        ],
+        answer: "얼어붙은 땅에도 꽃이 피고 봄이 온다는 것",
+        explanation: "눈 속 깊이 싹눈이 움직이고 있어요. 지금은 겨울이어도 반드시 온다는 약속이에요."
+    },
+    {
+        id: "yuksa-habit",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "이육사의 시 세 편을 떠올려 보세요.",
+        sentence: "이육사가 즐겨 쓰는 방법은 무엇인가요?",
+        choices: [
+            "극한의 자리에 서서 꺾이지 않는 뜻을 말해요",
+            "웃음으로 슬픔을 감춰요",
+            "사물을 사람처럼 그려요"
+        ],
+        answer: "극한의 자리에 서서 꺾이지 않는 뜻을 말해요",
+        explanation: "고원의 서릿발, 비 없는 땅, 툰드라. 가장 힘든 자리에서 꽃과 무지개를 말해요."
+    },
+    {
+        id: "yuksa-two-places",
+        poemId: "yuksa-cheongpodo",
+        category: "견주어 읽기",
+        prompt: "「청포도」와 「절정」을 나란히 놓고 답해 보세요.",
+        sentence: "두 시가 서 있는 자리는 어떻게 다른가요?",
+        choices: [
+            "하나는 기다림이 익어 가는 고장, 하나는 물러설 데 없는 고원",
+            "둘 다 고향 마을",
+            "둘 다 바닷가"
+        ],
+        answer: "하나는 기다림이 익어 가는 고장, 하나는 물러설 데 없는 고원",
+        explanation: "같은 시인이 넉넉한 자리와 벼랑 끝을 오가며 같은 뜻을 말해요."
+    },
+
+    // ── 중2 · 김영랑 다시 읽기 ────────────────────────────────────
+    {
+        id: "moran-wait",
+        poemId: "yeongrang-moran",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "말하는 이가 기다리는 것은 무엇인가요?",
+        choices: ["모란이 피는 봄", "떠난 사람", "여름의 무더위"],
+        answer: "모란이 피는 봄",
+        explanation: "모란이 피는 것이 곧 '나의 봄'이에요."
+    },
+    {
+        id: "moran-fall",
+        poemId: "yeongrang-moran",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "모란이 떨어져 버린 날 말하는 이는 어떻게 되나요?",
+        choices: ["봄을 잃은 설움에 잠겨요", "다른 꽃을 심어요", "여름을 반겨요"],
+        answer: "봄을 잃은 설움에 잠겨요",
+        explanation: "꽃잎이 시들고 자취도 없어지면 보람이 무너져요."
+    },
+    {
+        id: "moran-year",
+        poemId: "yeongrang-moran",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "모란이 지고 나면 한 해가 어떻게 된다고 했나요?",
+        choices: [
+            "그뿐 다 가고 말아 삼백예순 날을 섭섭해 운다고",
+            "다시 시작된다고",
+            "가을이 기다려진다고"
+        ],
+        answer: "그뿐 다 가고 말아 삼백예순 날을 섭섭해 운다고",
+        explanation: "피는 날은 며칠, 우는 날은 삼백예순 날. 숫자로 마음의 크기를 보여 줘요."
+    },
+    {
+        id: "moran-paradox",
+        poemId: "yeongrang-moran",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'찬란한 슬픔의 봄'은 어떤 말인가요?",
+        choices: [
+            "기다림의 기쁨과 잃음의 슬픔이 하나라는 어긋난 말",
+            "봄이 슬프기만 하다는 말",
+            "봄이 찬란하기만 하다는 말"
+        ],
+        answer: "기다림의 기쁨과 잃음의 슬픔이 하나라는 어긋난 말",
+        explanation: "피기 때문에 지고, 지기 때문에 다시 기다려요. 두 마음이 한 낱말에 겹쳐요."
+    },
+    {
+        id: "moran-frame",
+        poemId: "yeongrang-moran",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "시의 처음과 끝은 어떻게 이어져 있나요?",
+        choices: [
+            "'모란이 피기까지는 기다리고 있을 테요'가 앞뒤를 감싸요",
+            "처음은 기쁨, 끝은 슬픔으로 갈라져요",
+            "처음과 끝이 아무 상관이 없어요"
+        ],
+        answer: "'모란이 피기까지는 기다리고 있을 테요'가 앞뒤를 감싸요",
+        explanation: "끝에서는 같은 말 뒤에 '찬란한 슬픔의 봄을'이 덧붙어요."
+    },
+    {
+        id: "yeongrang-habit",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "김영랑의 시 세 편을 떠올려 보세요.",
+        sentence: "김영랑이 즐겨 쓰는 방법은 무엇인가요?",
+        choices: [
+            "부드러운 소리와 봄의 빛으로 마음을 노래해요",
+            "극한의 자리에서 뜻을 세워요",
+            "옛이야기를 시로 옮겨요"
+        ],
+        answer: "부드러운 소리와 봄의 빛으로 마음을 노래해요",
+        explanation: "돌담의 햇발, 단풍 드는 감잎, 모란. 소리가 흐르고 빛이 고와요."
+    },
+    {
+        id: "yeongrang-soft",
+        poemId: "yeongrang-doldam",
+        category: "견주어 읽기",
+        prompt: "김영랑의 시 세 편을 소리 내어 읽고 답해 보세요.",
+        sentence: "세 편에서 똑같이 느껴지는 소리의 결은 무엇인가요?",
+        choices: ["부드럽고 흐르는 소리", "딱딱하고 끊기는 소리", "크고 거친 소리"],
+        answer: "부드럽고 흐르는 소리",
+        explanation: "ㄹ과 ㅅ, 그리고 '~테요' '~이리' 같은 말끝이 노래처럼 흘러요."
+    },
+
+    // ── 중2 · 윤동주 다시 읽기 ────────────────────────────────────
+    {
+        id: "ttodareun-night",
+        poemId: "dongju-ttodareun",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "고향에 돌아온 날 밤 따라와 한 방에 누운 것은 무엇인가요?",
+        choices: ["내 백골", "고향 친구", "지조 높은 개"],
+        answer: "내 백골",
+        explanation: "낡고 힘없는 또 하나의 나예요."
+    },
+    {
+        id: "ttodareun-cry",
+        poemId: "dongju-ttodareun",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'우는 것이 누구냐'고 물으며 늘어놓은 셋은 무엇인가요?",
+        choices: ["나, 백골, 아름다운 혼", "나, 개, 바람", "고향, 어둠, 우주"],
+        answer: "나, 백골, 아름다운 혼",
+        explanation: "한 사람 안에 셋이 있어요. 낡은 나, 지금의 나, 되고 싶은 나."
+    },
+    {
+        id: "ttodareun-dog",
+        poemId: "dongju-ttodareun",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "밤새 어둠을 짖는 개는 무엇을 하나요?",
+        choices: [
+            "나를 쫓아서 편히 눌러앉지 못하게 깨워요",
+            "도둑을 막아요",
+            "백골을 지켜요"
+        ],
+        answer: "나를 쫓아서 편히 눌러앉지 못하게 깨워요",
+        explanation: "'지조 높은' 개예요. 어둠에 안주하려는 나를 몰아내요."
+    },
+    {
+        id: "ttodareun-go",
+        poemId: "dongju-ttodareun",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'또 다른 고향'은 어떤 곳인가요?",
+        choices: [
+            "돌아온 고향과 달리 참된 내가 살아야 할 곳",
+            "태어난 마을",
+            "백골이 묻힐 곳"
+        ],
+        answer: "돌아온 고향과 달리 참된 내가 살아야 할 곳",
+        explanation: "백골 몰래 가자고 해요. 낡은 나를 두고 떠나는 길이에요."
+    },
+    {
+        id: "dongju-habit",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "윤동주의 시 세 편을 떠올려 보세요.",
+        sentence: "윤동주가 즐겨 쓰는 방법은 무엇인가요?",
+        choices: [
+            "자기를 들여다보며 부끄러움과 다짐을 말해요",
+            "자연을 사람처럼 그려요",
+            "옛 노래의 후렴을 빌려 와요"
+        ],
+        answer: "자기를 들여다보며 부끄러움과 다짐을 말해요",
+        explanation: "우물 속 사나이, 한 방의 백골, 잎새에 이는 바람. 늘 자기를 보고 있어요."
+    },
+    {
+        id: "dongju-mirror",
+        poemId: "dongju-jahwasang",
+        category: "견주어 읽기",
+        prompt: "「자화상」「또 다른 고향」「서시」를 나란히 놓고 답해 보세요.",
+        sentence: "세 시에서 자기를 비춰 보는 것은 무엇인가요?",
+        choices: ["우물, 백골, 하늘", "거울, 사진, 강물", "친구, 부모, 스승"],
+        answer: "우물, 백골, 하늘",
+        explanation: "물에 비친 나, 방에 누운 낡은 나, 우러러본 하늘 앞의 나예요."
+    },
+
+    // ── 중2 · 떠남과 돌아옴 ───────────────────────────────────────
+    {
+        id: "gohyang-where",
+        poemId: "ojanghwan-gohyang",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "말하는 이는 고향 마을에 들어갔나요?",
+        choices: [
+            "아니요, 고향 앞 나루와 주막에서 서성여요",
+            "네, 집집마다 인사를 다녀요",
+            "네, 조상의 무덤에 갔어요"
+        ],
+        answer: "아니요, 고향 앞 나루와 주막에서 서성여요",
+        explanation: "제목이 「고향 앞에서」예요. 진종일 나룻가에 서성거려요."
+    },
+    {
+        id: "gohyang-season",
+        poemId: "ojanghwan-gohyang",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "어느 철인가요?",
+        choices: ["얼음이 풀리는 이른 봄", "한여름", "눈 오는 한겨울"],
+        answer: "얼음이 풀리는 이른 봄",
+        explanation: "흙이 풀리는 냄새가 나고 얼음장이 떠내려가요."
+    },
+    {
+        id: "gohyang-ask",
+        poemId: "ojanghwan-gohyang",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "장꾼들에게 무엇을 묻나요?",
+        choices: [
+            "전나무 우거진 마을을 보았느냐고",
+            "장이 언제 서느냐고",
+            "길이 어디로 났느냐고"
+        ],
+        answer: "전나무 우거진 마을을 보았느냐고",
+        explanation: "코앞의 고향을 남에게 물어요. 그만큼 낯설어진 거예요."
+    },
+    {
+        id: "gohyang-why",
+        poemId: "ojanghwan-gohyang",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "고향 앞까지 와서 들어가지 못하는 마음은 무엇일까요?",
+        choices: [
+            "그리우면서도 선뜻 들어설 수 없는 마음",
+            "길을 잃은 마음",
+            "고향이 싫어진 마음"
+        ],
+        answer: "그리우면서도 선뜻 들어설 수 없는 마음",
+        explanation: "누룩 뜨는 냄새까지 떠올리면서도 문턱을 넘지 못해요."
+    },
+    {
+        id: "tteonaganeun-repeat",
+        poemId: "yongcheol-tteonaganeun",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "처음과 끝에 되풀이되는 말은 무엇인가요?",
+        choices: ["나 두 야 간다", "아늑한 이 항구", "앞 대일 언덕"],
+        answer: "나 두 야 간다",
+        explanation: "한 글자씩 띄어 써서 한 걸음씩 떼는 것처럼 읽혀요."
+    },
+    {
+        id: "tteonaganeun-why",
+        poemId: "yongcheol-tteonaganeun",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "떠나는 까닭은 무엇인가요?",
+        choices: [
+            "젊은 나이를 눈물로 보낼 수 없어서",
+            "항구가 싫어져서",
+            "사람들이 쫓아내서"
+        ],
+        answer: "젊은 나이를 눈물로 보낼 수 없어서",
+        explanation: "머무르면 우는 날만 남는다는 말이에요."
+    },
+    {
+        id: "tteonaganeun-hard",
+        poemId: "yongcheol-tteonaganeun",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "떠나기 어려운 까닭은 무엇인가요?",
+        choices: [
+            "눈에 익은 산과 사랑하던 사람들 때문에",
+            "배가 없어서",
+            "바람이 세서"
+        ],
+        answer: "눈에 익은 산과 사랑하던 사람들 때문에",
+        explanation: "물 어린 눈에도 산봉우리와 주름진 얼굴들이 비쳐요."
+    },
+    {
+        id: "tteonaganeun-ahead",
+        poemId: "yongcheol-tteonaganeun",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "앞날은 어떻게 그려져 있나요?",
+        choices: [
+            "배를 댈 언덕조차 마련되지 않은 길",
+            "환한 새 항구",
+            "돌아올 날이 정해진 길"
+        ],
+        answer: "배를 댈 언덕조차 마련되지 않은 길",
+        explanation: "'앞 대일 언덕인들 마련이나 있을 거냐'예요. 그런데도 가겠대요."
+    },
+    {
+        id: "leaving-compare",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "「고향 앞에서」와 「떠나가는 배」를 나란히 놓고 답해 보세요.",
+        sentence: "하나는 돌아오고 하나는 떠나는데, 두 시의 말하는 이가 서 있는 자리는 어떻게 같나요?",
+        choices: [
+            "둘 다 문턱에서 머뭇거리는 자리예요",
+            "둘 다 이미 집 안에 있어요",
+            "둘 다 바다 한가운데예요"
+        ],
+        answer: "둘 다 문턱에서 머뭇거리는 자리예요",
+        explanation: "들어가지 못하는 사람과 떠나지 못하는 사람. 방향은 반대인데 자리는 같아요."
+    },
+
+    // ── 중2 · 옛 노래 더 읽기 ─────────────────────────────────────
+    {
+        id: "dosan-first",
+        poemId: "leehwang-dosan",
+        category: "표현 찾기",
+        prompt: "시조를 읽고 답해 보세요.",
+        sentence: "첫 수의 '초야우생'은 누구를 가리키나요?",
+        choices: ["시골에 사는 어리석은 자기 자신", "이름 없는 농부", "옛 성현"],
+        answer: "시골에 사는 어리석은 자기 자신",
+        explanation: "큰 학자가 자기를 낮춰 부른 말이에요."
+    },
+    {
+        id: "dosan-goin",
+        poemId: "leehwang-dosan",
+        category: "마음 읽기",
+        prompt: "시조를 읽고 답해 보세요.",
+        sentence: "둘째 수에서 옛 성현을 못 뵈어도 무엇이 앞에 있다고 했나요?",
+        choices: ["성현이 가던 길", "성현의 초상", "성현의 무덤"],
+        answer: "성현이 가던 길",
+        explanation: "사람은 못 만나도 그 길은 남아 있으니 따라가겠다는 뜻이에요."
+    },
+    {
+        id: "dosan-mountain",
+        poemId: "leehwang-dosan",
+        category: "마음 읽기",
+        prompt: "시조를 읽고 답해 보세요.",
+        sentence: "셋째 수에서 청산과 흐르는 물을 보고 무엇을 다짐하나요?",
+        choices: [
+            "그치지 않고 늘 푸르게 살겠다고",
+            "산에 들어가 살겠다고",
+            "물처럼 떠나겠다고"
+        ],
+        answer: "그치지 않고 늘 푸르게 살겠다고",
+        explanation: "'우리도 그치지 말아 만고상청하리라'예요. 배움을 그치지 않겠다는 말이에요."
+    },
+    {
+        id: "dongdong-refrain",
+        poemId: "goryeo-dongdong",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "묶음마다 붙는 후렴은 무엇인가요?",
+        choices: ["아으 동동다리", "위 증즐가 대평성대", "얄리얄리 얄랑셩"],
+        answer: "아으 동동다리",
+        explanation: "'동동'은 북소리를 흉내낸 말로 봐요."
+    },
+    {
+        id: "dongdong-month",
+        poemId: "goryeo-dongdong",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "이 노래는 어떤 짜임으로 이어지나요?",
+        choices: [
+            "정월, 이월, 삼월… 달마다 한 묶음씩",
+            "아침, 낮, 밤으로",
+            "봄, 여름, 가을, 겨울 넷으로"
+        ],
+        answer: "정월, 이월, 삼월… 달마다 한 묶음씩",
+        explanation: "열두 달을 차례로 노래하는 짜임을 달거리라고 해요."
+    },
+    {
+        id: "dongdong-alone",
+        poemId: "goryeo-dongdong",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "정월 노래에서 얼었다 녹았다 하는 냇물과 맞세운 것은 무엇인가요?",
+        choices: ["홀로 살아가는 이 몸", "높이 켠 등불", "덕과 복"],
+        answer: "홀로 살아가는 이 몸",
+        explanation: "냇물은 풀리기라도 하는데 나는 그대로 혼자라는 말이에요."
+    },
+    {
+        id: "jeongseokga-nut",
+        poemId: "goryeo-jeongseokga",
+        category: "장면 확인",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "구운 밤에서 싹이 나면 무엇을 하겠다고 했나요?",
+        choices: ["님과 헤어지겠다고", "님을 찾아가겠다고", "밤을 심겠다고"],
+        answer: "님과 헤어지겠다고",
+        explanation: "구운 밤에서는 싹이 날 리 없으니, 절대 헤어지지 않겠다는 말이에요."
+    },
+    {
+        id: "jeongseokga-why",
+        poemId: "goryeo-jeongseokga",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "될 수 없는 조건을 걸어 놓은 까닭은 무엇인가요?",
+        choices: [
+            "절대로 헤어지지 않겠다는 뜻을 세게 말하려고",
+            "정말 밤에서 싹이 난다고 믿어서",
+            "농사 이야기를 하려고"
+        ],
+        answer: "절대로 헤어지지 않겠다는 뜻을 세게 말하려고",
+        explanation: "'하늘이 무너져도'와 같은 말법이에요. 안 될 일을 걸어 마음을 못 박아요."
+    },
+    {
+        id: "old-refrain-again",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "「동동」「가시리」「청산별곡」의 후렴을 떠올려 보세요.",
+        sentence: "세 노래의 후렴이 똑같이 하는 일은 무엇인가요?",
+        choices: [
+            "뜻 없이 가락을 맞추고 여럿이 함께 부르게 해요",
+            "노래의 뜻을 풀이해요",
+            "지은이의 이름을 알려요"
+        ],
+        answer: "뜻 없이 가락을 맞추고 여럿이 함께 부르게 해요",
+        explanation: "동동다리, 대평성대, 얄랑셩. 소리는 달라도 하는 일은 같아요."
     }
 ]);

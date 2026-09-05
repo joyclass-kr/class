@@ -236,6 +236,49 @@
                 "seongtanje-father", "seongtanje-why", "seongtanje-now",
                 "meonnara-who", "meonnara-where",
                 "textbook-common"
+            ]),
+
+        // ── 중2 ───────────────────────────────────────────────────────
+        lesson("m2-manhae", 8, "한용운 다시 읽기", "어긋난 말에 담은 님",
+            ["manhae-nim", "manhae-narutbae", "manhae-bokjong", "manhae-alsu"],
+            [
+                "nim-gone", "nim-not-sent", "nim-turn", "nim-song", "nim-honorific",
+                "manhae-you", "manhae-habit",
+                "alsu-nim-again"
+            ]),
+        lesson("m2-yuksa", 8, "이육사 다시 읽기", "벼랑 끝에서 세운 뜻",
+            ["yuksa-jeoljeong", "yuksa-kkot", "yuksa-cheongpodo"],
+            [
+                "jeoljeong-where", "jeoljeong-season", "jeoljeong-rainbow", "jeoljeong-eyes",
+                "kkot-when", "kkot-promise",
+                "yuksa-habit", "yuksa-two-places"
+            ]),
+        lesson("m2-yeongrang", 8, "김영랑 다시 읽기", "찬란한 슬픔의 봄",
+            ["yeongrang-moran", "yeongrang-doldam", "kimyeongrang-omae"],
+            [
+                "moran-wait", "moran-fall", "moran-year", "moran-paradox", "moran-frame",
+                "yeongrang-habit", "yeongrang-soft"
+            ]),
+        lesson("m2-dongju", 8, "윤동주 다시 읽기", "나를 들여다보는 시",
+            ["dongju-ttodareun", "dongju-jahwasang", "dongju-seosi"],
+            [
+                "ttodareun-night", "ttodareun-cry", "ttodareun-dog", "ttodareun-go",
+                "dongju-habit", "dongju-mirror"
+            ]),
+        lesson("m2-leaving", 8, "떠남과 돌아옴", "문턱에서 머뭇거리는 시",
+            ["ojanghwan-gohyang", "yongcheol-tteonaganeun"],
+            [
+                "gohyang-where", "gohyang-season", "gohyang-ask", "gohyang-why",
+                "tteonaganeun-repeat", "tteonaganeun-why", "tteonaganeun-hard", "tteonaganeun-ahead",
+                "leaving-compare"
+            ]),
+        lesson("m2-old", 8, "옛 노래 더 읽기", "시조 세 수와 고려 노래 둘",
+            ["leehwang-dosan", "goryeo-dongdong", "goryeo-jeongseokga"],
+            [
+                "dosan-first", "dosan-goin", "dosan-mountain",
+                "dongdong-refrain", "dongdong-month", "dongdong-alone",
+                "jeongseokga-nut", "jeongseokga-why",
+                "old-refrain-again"
             ])
     ]);
 
@@ -244,6 +287,7 @@
         { grade: 4, label: "초등 4학년", short: "초4" },
         { grade: 5, label: "초등 5학년", short: "초5" },
         { grade: 6, label: "초등 6학년", short: "초6" },
-        { grade: 7, label: "중학 1학년", short: "중1" }
+        { grade: 7, label: "중학 1학년", short: "중1" },
+        { grade: 8, label: "중학 2학년", short: "중2" }
     ]);
 })();
