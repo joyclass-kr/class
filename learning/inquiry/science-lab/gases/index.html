@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="산소와 이산화 탄소를 발생시켜 물속 집기병에 모으고 향불과 석회수로 어떤 기체인지 확인하며, 주사기 속 공기를 누르고 데워 기체의 부피가 어떻게 바뀌는지 알아보는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="gases-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>산소·이산화 탄소 만들기와 공기 누르기</h1>
+            </div>
+            <div class="grade-tags"><span>초등 4학년</span><span>화학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>기체를 만들어 확인할지, 주사기 속 공기를 눌러 볼지 고릅니다.</li>
+            <li>기체 만들기는 만들 기체와 확인 방법을, 공기 누르기는 올릴 추와 물 온도를 정합니다.</li>
+            <li>결과를 먼저 예상해 봅니다.</li>
+            <li>실험을 시작해 집기병에 기체가 모이는 모습이나 피스톤이 움직이는 모습을 끝까지 지켜봅니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">산소는 다른 물질이 타는 것을 돕고, 이산화 탄소는 불을 끄고 석회수를 뿌옇게 합니다</p>
+                <fieldset class="mode-field">
+                    <legend>실험 종류</legend>
+                    <div class="mode-buttons">
+                        <button type="button" data-mode="make">기체 만들어 확인하기<small>어떤 기체일까</small></button>
+                        <button type="button" data-mode="press">공기 누르고 데우기<small>부피는 어떻게 될까</small></button>
+                    </div>
+                </fieldset>
+                <div id="controlArea"></div>
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons three" id="predictionArea"></div>
+                </fieldset>
+                <button class="run-button" id="checkBtn" type="button">실험 시작</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 실험을 시작해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">결과</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">까닭</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel burn-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">플라스크에서 생긴 기체가 고무관을 지나 물속 집기병에 모입니다. 다 모이면 확인 도구를 넣습니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>산소</strong> 묽은 과산화 수소수에 이산화 망가니즈를 넣으면 산소가 생깁니다. 색도 냄새도 없고, 다른 물질이 타는 것을 도와 향불을 넣으면 불꽃이 활활 커집니다. 우리가 숨 쉴 때 필요하고 병원의 산소통, 잠수부의 공기통에 쓰입니다.</p>
+                <p><strong>이산화 탄소</strong> 진한 식초에 탄산수소 나트륨(베이킹 소다)을 넣으면 이산화 탄소가 생깁니다. 색도 냄새도 없지만 불을 꺼뜨리고 석회수를 뿌옇게 만듭니다. 소화기, 탄산음료의 거품, 드라이아이스에 쓰입니다.</p>
+                <p><strong>물속에서 모으는 까닭</strong> 두 기체 모두 눈에 보이지 않아 얼마나 모였는지 알기 어렵습니다. 물이 가득 든 집기병을 뒤집어 두면 기체가 물을 밀어내며 차올라 양을 눈으로 볼 수 있습니다.</p>
+                <p><strong>기체의 부피</strong> 기체는 누르면 부피가 줄고 손을 떼면 되돌아옵니다. 또 온도가 오르면 부피가 늘고 내리면 줄어듭니다. 그래서 찌그러진 탁구공을 뜨거운 물에 넣으면 펴지고, 여름날 자전거 바퀴는 더 팽팽해집니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>집기병에 모은 기체에 향불을 넣었더니 불꽃이 활활 커졌습니다. 어떤 기체일까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 이산화 탄소</label>
+                        <label><input type="radio" name="q1" value="b"> 산소</label>
+                        <label><input type="radio" name="q1" value="c"> 수증기</label>
+                        <label><input type="radio" name="q1" value="d"> 질소</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>산소는 다른 물질이 타는 것을 도와줍니다. 향불의 작은 불씨가 산소 속에서 활활 타오르는 것이 산소를 확인하는 방법입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>이산화 탄소를 모은 집기병에 석회수를 넣고 흔들면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 붉게 변한다</label>
+                        <label><input type="radio" name="q2" value="b"> 아무 변화가 없다</label>
+                        <label><input type="radio" name="q2" value="c"> 뿌옇게 흐려진다</label>
+                        <label><input type="radio" name="q2" value="d"> 거품이 나며 끓는다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>이산화 탄소는 석회수를 뿌옇게 만듭니다. 산소에서는 석회수가 그대로이므로, 두 기체를 가려내는 방법이 됩니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>공기 40 mL가 든 주사기의 피스톤 위에 추를 올려 누르면 공기의 부피는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 줄어들고, 추를 내리면 되돌아온다</label>
+                        <label><input type="radio" name="q3" value="b"> 변하지 않는다</label>
+                        <label><input type="radio" name="q3" value="c"> 늘어난다</label>
+                        <label><input type="radio" name="q3" value="d"> 줄어든 채로 돌아오지 않는다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>기체는 누르면 부피가 줄어듭니다. 물이나 돌은 눌러도 부피가 거의 변하지 않는 것과 다릅니다. 추를 내리면 다시 원래 부피로 돌아옵니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>찌그러진 탁구공을 뜨거운 물에 넣으면 다시 펴지는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 물이 탁구공 속으로 들어가서</label>
+                        <label><input type="radio" name="q4" value="b"> 탁구공이 물에 녹아서</label>
+                        <label><input type="radio" name="q4" value="c"> 뜨거운 물이 탁구공을 밀어서</label>
+                        <label><input type="radio" name="q4" value="d"> 속의 공기가 데워져 부피가 늘어나서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>기체는 온도가 오르면 부피가 늘어납니다. 탁구공 속 공기가 데워져 늘어나면서 찌그러진 곳을 안에서 밀어 펴는 것입니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=2"></script>
+</body>
+</html>
