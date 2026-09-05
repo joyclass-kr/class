@@ -30,18 +30,53 @@ Children's picture book illustration, bright cheerful cartoon-animation style,
 bold clean outlines, saturated storybook colors, soft English countryside light,
 ABSOLUTELY NO TEXT ANYWHERE IN THE IMAGE - no letters, no words, no speech bubbles, no captions, no subtitles (the story text below is only to tell you what the scene is; never draw it), a sandy rabbit burrow under a fir tree, a walled
 vegetable garden with frames and tool shed, a lane and a farmhouse, expressive
-comic animal faces, wide panoramic composition, funny and never frightening.
+comic animal faces, wide panoramic composition, funny and never frightening,
+full-bleed artwork with NO white border, NO paper edge, NO sketchbook margin.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
+> **먼저 그린 그림에 맞춰 못 박아 둔 것입니다.** 앞서 이 설명이 "a small brown
+> rabbit in a blue jacket" 정도로만 적혀 있어서, 그릴 때마다 피터가 다른 토끼가
+> 되었습니다. 한 장에서는 머리 큰 만화 토끼, 한 장에서는 몸이 긴 산토끼였지요.
+> 맥그리거 아저씨도 어떤 장에서는 납작모자에 안경, 어떤 장에서는 맨머리에
+> 더벅머리였습니다. 아래 설명을 **한 글자도 빼지 말고** 매번 붙여 넣어 주세요.
+
 ```
-Peter: a small brown rabbit in a blue jacket with brass buttons, curious and
-reckless. His mother: a rabbit in an apron and cap with a basket. Flopsy, Mopsy
-and Cotton-tail: three tidy little rabbits in red cloaks. Mr McGregor: a stout
-gardener in a wide hat and heavy boots, drawn as comically grumpy, never
-menacing. A friendly sparrow trio.
+Peter: a young rabbit with warm sandy-tan fur and a cream chest and muzzle,
+a ROUND head with big dark eyes and pink inner ears, drawn as a cartoon child.
+NOT a lean long-bodied wild hare. He wears a cornflower-blue jacket with three
+round yellow buttons, and no trousers. His face and body must look the same in
+every picture.
+His mother: a taller rabbit in a pink polka-dot dress with a white apron.
+Flopsy, Mopsy and Cotton-tail: three smaller rabbits in red cloaks tied at
+the neck.
+Mr McGregor: a stout old gardener with a flat brown cap, round spectacles,
+a grey beard, a blue waistcoat over a checked shirt, and brown corduroy
+trousers. Comically grumpy, never menacing. Keep the cap and the spectacles
+in EVERY picture — never draw him bare-headed or without glasses.
+A friendly sparrow trio.
 ```
+
+## 피터가 무엇을 걸치고 있는지 (장면마다 다릅니다)
+
+이야기가 진행되면서 피터는 신발과 웃옷을 차례로 잃습니다. 그림이 그것을 따라가지
+않으면 앞뒤가 어긋납니다. 프롬프트에 아래 한 줄을 **꼭 함께** 넣어 주세요.
+
+| 파일 | 피터의 차림 |
+|---|---|
+| `cover` · `01-warning` · `01-warning-2` · `02-gate` · `02-gate-2` · `03-parsley` · `03-parsley-2` | `wearing his blue jacket and small brown shoes` |
+| `04-chase` | `wearing his blue jacket; both little brown shoes are flying off him as he runs` |
+| `04-chase-2` · `05-net` | `wearing his blue jacket, but barefoot — his shoes are gone` |
+| `05-net-2` · `06-can` · `06-can-2` · `07-escape` · `07-escape-2` · `08-ending` | `no jacket and barefoot — he left the jacket in the net` |
+| `08-ending-2` | 피터는 이불 속에 있고, 그의 파란 웃옷과 작은 신발은 **허수아비**가 걸치고 있습니다 |
+
+> 신발은 **토끼 발에 맞는 아주 작은 신**입니다. 어른 장화만 하게 그리면 안 됩니다.
+
+## 그림 가장자리
+
+> 종이 가장자리나 흰 테두리를 그리지 마세요. 그림이 칸을 가득 채워야 합니다.
+> 스케치북에 그린 것처럼 위나 옆에 흰 여백이 남으면 책에서 그대로 보입니다.
 
 ## 표지 · 마무리
 
