@@ -157,7 +157,7 @@
     },
     {
       id: "2026-suneung-21", exam: "2026-suneung", no: 21, score: 4,
-      units: ["m2-limit", "m2-diff"], memo: "연속과 극한 조건으로 함수 결정하기",
+      units: ["m2-limit"], memo: "연속과 극한 조건으로 함수 결정하기",
       body: R`최고차항의 계수가 양수인 삼차함수 \(f(x)\)와 실수 \(t\)에
         대하여 함수
         \[g(x)=\begin{cases}-f(x) &amp; (x&lt;t)\\ \ \ f(x) &amp; (x\ge t)\end{cases}\]
