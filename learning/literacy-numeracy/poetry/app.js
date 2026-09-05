@@ -34,7 +34,6 @@
         lessonList: document.getElementById("lessonList"),
         readKicker: document.getElementById("readKicker"),
         readTitle: document.getElementById("readTitle"),
-        readNote: document.getElementById("readNote"),
         readIndex: document.getElementById("readIndex"),
         readTotal: document.getElementById("readTotal"),
         poemTitle: document.getElementById("poemTitle"),
@@ -70,7 +69,6 @@
         feedbackTitle: document.getElementById("feedbackTitle"),
         correctAnswer: document.getElementById("correctAnswer"),
         explanation: document.getElementById("explanation"),
-        resultEyebrow: document.getElementById("resultEyebrow"),
         resultTitle: document.getElementById("resultTitle"),
         finalScore: document.getElementById("finalScore"),
         finalTotal: document.getElementById("finalTotal"),
@@ -308,9 +306,8 @@
         state.readIndex = 0;
         const lesson = currentLesson();
         const orderInGrade = lessonsOfGrade(lesson.grade).indexOf(lesson) + 1;
-        elements.readKicker.textContent = `${orderInGrade}차시 · 시 읽기`;
+        elements.readKicker.textContent = `${orderInGrade}차시`;
         elements.readTitle.textContent = lesson.title;
-        elements.readNote.textContent = lesson.note;
         elements.readTotal.textContent = String(currentLessonPoems().length);
         setScreen(elements.readScreen);
         renderReading();
@@ -577,7 +574,6 @@
 
         elements.nextLessonButton.classList.add("hidden");
         elements.lessonListButton.classList.add("hidden");
-        elements.resultEyebrow.textContent = "LEARNING COMPLETE";
         elements.resultTitle.textContent = "학습 결과";
         elements.restartButton.textContent = "새 문제 풀기";
 
@@ -587,7 +583,6 @@
             const orderInGrade = gradeList.indexOf(lesson) + 1;
             const { best, isNewBest } = saveLessonResult(lesson.id, state.score, total);
             const nextLesson = gradeList[orderInGrade];
-            elements.resultEyebrow.textContent = "LESSON COMPLETE";
             elements.resultTitle.textContent = `${orderInGrade}차시 · ${lesson.title}`;
             elements.bestMessage.textContent = isNewBest
                 ? `이 차시 최고 기록이에요! ${best}/${total}`

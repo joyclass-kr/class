@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#24150c">
     <title>시 읽기</title>
-    <link rel="stylesheet" href="styles.css?v=20260905-3">
+    <link rel="stylesheet" href="styles.css?v=20260905-4">
     <script src="poems.js" defer></script>
     <script src="questions.js" defer></script>
     <script src="lessons.js" defer></script>
@@ -30,18 +30,15 @@
                 <div class="mode-grid">
                     <button id="lessonModeButton" class="mode-card" type="button">
                         <strong>차시 학습</strong>
-                        <span>학년을 고르고 차시대로 시를 읽어요. 시를 다 읽으면 바로 확인 문제를 풀어요.</span>
-                        <small>LESSONS</small>
+                        <span>학년을 고르고 차시대로 시를 읽어요.</span>
                     </button>
                     <button id="personalModeButton" class="mode-card" type="button">
                         <strong>전체 무작위 10문제</strong>
                         <span><span data-question-count>0</span>문제에서 10문제씩 나와요. 한 바퀴 전에는 같은 문제가 다시 나오지 않아요.</span>
-                        <small>RANDOM 10</small>
                     </button>
                     <a id="classRaceLink" class="mode-card" href="../../class-race/">
                         <strong>학급 순위전</strong>
-                        <span>선생님이 연 학급 순위전 방으로 갑니다. 여러 앱의 문제를 학급이 함께 풀어요.</span>
-                        <small>CLASS RACE</small>
+                        <span>선생님이 연 학급 순위전 방으로 갑니다.</span>
                     </a>
                 </div>
             </section>
@@ -57,7 +54,6 @@
             <section id="readScreen" class="panel start-panel study-panel hidden" aria-labelledby="readTitle">
                 <p id="readKicker" class="mode-kicker"></p>
                 <h2 id="readTitle"></h2>
-                <p id="readNote" class="lead"></p>
                 <div class="poem-card">
                     <p class="study-count"><span id="readIndex">1</span> / <span id="readTotal">1</span></p>
                     <h3 id="poemTitle" class="poem-title"></h3>
@@ -76,9 +72,7 @@
             </section>
 
             <section id="personalScreen" class="panel start-panel hidden" aria-labelledby="personalTitle">
-                <span class="seal" aria-hidden="true">시</span>
-                <p class="mode-kicker">전체 무작위 10문제</p>
-                <h2 id="personalTitle">시를 읽고 답을 골라요</h2>
+                <h2 id="personalTitle">전체 무작위 10문제</h2>
                 <p class="lead"><span data-question-count>0</span>문제 중 10문제씩 나와요. 전체 문제를 한 번씩 풀기 전에는 같은 문제가 다시 나오지 않아요.</p>
                 <div class="category-list" aria-label="출제 영역">
                     <span>장면 확인</span>
@@ -129,7 +123,6 @@
             </section>
 
             <section id="resultScreen" class="panel result-panel hidden" aria-labelledby="resultTitle">
-                <p id="resultEyebrow" class="eyebrow">LEARNING COMPLETE</p>
                 <h2 id="resultTitle">학습 결과</h2>
                 <div class="score-medallion" aria-label="최종 점수">
                     <strong id="finalScore">0</strong>
@@ -154,10 +147,6 @@
             </section>
         </main>
 
-        <footer>
-            저작권 보호 기간이 끝난 작품과 구전 노래, 그리고 직접 옮긴 번역만 본문을 싣습니다.
-            보호 기간 안에 있는 작품은 제목과 지은이만 안내하고 본문은 교과서에서 읽습니다.
-        </footer>
     </div>
 
     <p id="announcer" class="visually-hidden" aria-live="assertive"></p>

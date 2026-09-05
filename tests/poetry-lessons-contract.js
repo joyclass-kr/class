@@ -13,7 +13,9 @@ const vm = require("vm");
 // 사후 70년. 2013년에 50년에서 70년으로 늘릴 때 이미 풀린 것은 그대로 두었으므로,
 // 1962년 12월 31일까지 돌아가신 분의 작품은 만료된 것으로 본다.
 const EXPIRY_CUTOFF_YEAR = 1962;
-const ALLOWED_BASIS = new Set(["expired", "oral", "own-translation"]);
+// classic은 1900년 이전에 지어진 옛 작품(시조·고전시가·옛 한시)이다.
+// 지은이의 사망 연도를 모르는 경우가 많지만 보호 기간이 끝난 것은 분명하다.
+const ALLOWED_BASIS = new Set(["expired", "oral", "own-translation", "classic"]);
 
 const poetryDir = path.join(__dirname, "..", "learning", "literacy-numeracy", "poetry");
 const read = (name) => fs.readFileSync(path.join(poetryDir, name), "utf8");
@@ -58,6 +60,13 @@ for (const poem of poems) {
 
     if (poem.basis === "oral") {
         assert.strictEqual(poem.poetDied, null, `${where}: 구전 노래는 poetDied가 null이어야 합니다.`);
+        continue;
+    }
+
+    if (poem.basis === "classic") {
+        // 옛 작품은 지은이의 사망 연도를 모를 수 있다. 알면 적되, 근래 사람이면 막는다.
+        assert.ok(poem.poetDied === null || (Number.isInteger(poem.poetDied) && poem.poetDied <= EXPIRY_CUTOFF_YEAR),
+            `${where}: 옛 작품으로 두려면 poetDied가 null이거나 ${EXPIRY_CUTOFF_YEAR}년 이전이어야 합니다 (지금 ${poem.poetDied}).`);
         continue;
     }
 

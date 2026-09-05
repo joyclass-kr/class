@@ -1031,5 +1031,535 @@ window.POETRY_QUESTIONS = Object.freeze([
         ],
         answer: "우스운 장면 뒤에 어떤 사정이 있는지",
         explanation: "웃고 넘기면 시의 절반만 읽은 것이 돼요."
+    },
+
+    // ── 11차시 · 빗댄 말을 감추기 ─────────────────────────────────
+    {
+        id: "narutbae-two",
+        poemId: "manhae-narutbae",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "말하는 이는 자기를 무엇이라고 했나요?",
+        choices: ["나룻배", "행인", "여울"],
+        answer: "나룻배",
+        explanation: "'나는 나룻배, 당신은 행인'이에요. '~같이'를 쓰지 않고 곧장 '~이다'로 말했어요."
+    },
+    {
+        id: "narutbae-direct",
+        poemId: "manhae-narutbae",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'나는 나룻배같이 기다립니다'로 바꾸면 무엇이 달라지나요?",
+        choices: ["빗댄 말이 드러나서 힘이 약해져요", "뜻이 아주 달라져요", "더 어려워져요"],
+        answer: "빗댄 말이 드러나서 힘이 약해져요",
+        explanation: "'~같이'를 감추고 곧장 '나는 나룻배'라고 하면 정말 나룻배가 된 것처럼 들려요."
+    },
+    {
+        id: "narutbae-wait",
+        poemId: "manhae-narutbae",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "당신이 오지 않을 때 나룻배는 무엇을 하나요?",
+        choices: ["바람과 눈비를 맞으며 기다려요", "다른 강으로 떠나요", "물가에 묶여 잠들어요"],
+        answer: "바람과 눈비를 맞으며 기다려요",
+        explanation: "밤에서 낮까지 기다리면서 날마다 낡아 간다고 했어요."
+    },
+    {
+        id: "narutbae-frame",
+        poemId: "manhae-narutbae",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'나는 나룻배 / 당신은 행인'은 시의 어디에 놓여 있나요?",
+        choices: ["맨 처음과 맨 끝", "가운데에만", "맨 끝에만"],
+        answer: "맨 처음과 맨 끝",
+        explanation: "같은 두 줄이 앞뒤를 감싸서, 읽고 나면 그 말만 남아요."
+    },
+    {
+        id: "sonyeon-palm",
+        poemId: "dongju-sonyeon",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "손금에 무엇이 흐른다고 했나요?",
+        choices: ["맑은 강물", "파란 물감", "단풍잎"],
+        answer: "맑은 강물",
+        explanation: "손금을 강물이라고 곧장 말했어요. 그래서 그 안에 얼굴이 비칠 수 있어요."
+    },
+    {
+        id: "sonyeon-blue",
+        poemId: "dongju-sonyeon",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "하늘을 들여다보면 어디에 파란 물감이 드나요?",
+        choices: ["눈썹", "머리카락", "옷소매"],
+        answer: "눈썹",
+        explanation: "눈썹에 들고, 볼을 쓸면 손바닥에도 묻어난다고 했어요."
+    },
+    {
+        id: "sonyeon-face",
+        poemId: "dongju-sonyeon",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "강물 속에 어리는 것은 무엇인가요?",
+        choices: ["순이의 얼굴", "단풍잎", "소년의 손금"],
+        answer: "순이의 얼굴",
+        explanation: "눈을 감아도 그 얼굴이 사라지지 않아요. 그만큼 마음에 깊이 박혀 있어요."
+    },
+    {
+        id: "nun-metaphor",
+        poemId: "dongju-nun",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'눈은 이불 같아요'가 아니라 '이불인가 봐'라고 하면 무엇이 다른가요?",
+        choices: ["정말 이불이 된 것처럼 들려요", "뜻이 반대가 돼요", "눈이 더 차갑게 느껴져요"],
+        answer: "정말 이불이 된 것처럼 들려요",
+        explanation: "빗대는 말을 감추면 두 가지가 하나로 겹쳐 보여요."
+    },
+    {
+        id: "bomeun-title",
+        poemId: "leejanghee-bomeun",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "제목 「봄은 고양이로다」는 어떤 말인가요?",
+        choices: ["봄을 고양이라고 곧장 말한 것", "봄에 고양이가 많다는 것", "고양이가 봄을 좋아한다는 것"],
+        answer: "봄을 고양이라고 곧장 말한 것",
+        explanation: "시 안에서는 '~와 같이'로 견주다가, 제목에서는 아예 '봄은 고양이'라고 못 박았어요."
+    },
+    {
+        id: "metaphor-what",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "이 차시에서 읽은 시들을 떠올려 보세요.",
+        sentence: "'~처럼'을 쓰지 않고 '~은 ~이다'로 말하면 어떤 힘이 생기나요?",
+        choices: [
+            "두 가지가 하나로 겹쳐 보여요",
+            "글자 수가 줄어들어요",
+            "뜻이 흐릿해져요"
+        ],
+        answer: "두 가지가 하나로 겹쳐 보여요",
+        explanation: "'나는 나룻배'라고 하면 사람과 배가 한 몸이 돼요."
+    },
+
+    // ── 12차시 · 소리가 만드는 느낌 ───────────────────────────────
+    {
+        id: "doldam-sound",
+        poemId: "yeongrang-doldam",
+        category: "표현 찾기",
+        prompt: "소리 내어 읽고 답해 보세요.",
+        sentence: "이 시를 소리 내어 읽으면 어떤 느낌이 드나요?",
+        choices: ["부드럽고 매끄러워요", "딱딱하고 세요", "빠르고 급해요"],
+        answer: "부드럽고 매끄러워요",
+        explanation: "속삭이는, 샘물, 살포시, 실비단처럼 ㄹ과 ㅅ 소리가 이어져요."
+    },
+    {
+        id: "doldam-simile",
+        poemId: "yeongrang-doldam",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'~같이'라는 말이 몇 번 나오나요?",
+        choices: ["네 번", "두 번", "한 번"],
+        answer: "네 번",
+        explanation: "햇발같이, 샘물같이, 부끄럼같이, 물결같이. 견주는 말을 네 번 거듭했어요."
+    },
+    {
+        id: "doldam-want",
+        poemId: "yeongrang-doldam",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "말하는 이가 하고 싶다고 한 일은 무엇인가요?",
+        choices: ["하늘을 우러르고 바라보는 일", "돌담을 쌓는 일", "샘물을 마시는 일"],
+        answer: "하늘을 우러르고 바라보는 일",
+        explanation: "두 묶음 모두 하늘을 보고 싶다는 말로 끝나요."
+    },
+    {
+        id: "bom-four-sounds",
+        poemId: "dongju-bom",
+        category: "표현 찾기",
+        prompt: "소리 내어 읽고 답해 보세요.",
+        sentence: "네 흉내말 가운데 가장 크고 쨍한 느낌을 주는 것은 무엇인가요?",
+        choices: ["째앵째앵", "코올코올", "소올소올"],
+        answer: "째앵째앵",
+        explanation: "된소리와 ㅐ 소리가 겹쳐서 한낮의 볕처럼 쨍하게 들려요."
+    },
+    {
+        id: "bom-soft-sounds",
+        poemId: "dongju-bom",
+        category: "표현 찾기",
+        prompt: "소리 내어 읽고 답해 보세요.",
+        sentence: "'코올코올'과 '소올소올'처럼 길게 늘여 쓰면 어떤 느낌이 드나요?",
+        choices: ["느리고 나른해져요", "빠르고 급해져요", "무섭고 어두워져요"],
+        answer: "느리고 나른해져요",
+        explanation: "글자를 늘여 적으면 읽는 속도도 늘어져요."
+    },
+    {
+        id: "omae-dialect",
+        poemId: "kimyeongrang-omae",
+        category: "표현 찾기",
+        prompt: "소리 내어 읽고 답해 보세요.",
+        sentence: "'오매'를 '어머나'로 바꾸어 읽으면 무엇이 달라지나요?",
+        choices: ["누이가 사는 고장의 말맛이 사라져요", "뜻이 반대가 돼요", "시가 더 슬퍼져요"],
+        answer: "누이가 사는 고장의 말맛이 사라져요",
+        explanation: "사투리는 뜻만이 아니라 그 고장의 소리까지 함께 데려와요."
+    },
+    {
+        id: "omae-repeat-sound",
+        poemId: "kimyeongrang-omae",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "“오매 단풍 들것네”는 몇 번 나오나요?",
+        choices: ["네 번", "두 번", "한 번"],
+        answer: "네 번",
+        explanation: "두 묶음마다 처음과 끝에 놓여서 노랫가락처럼 돌아와요."
+    },
+    {
+        id: "haetbi-sound-feel",
+        poemId: "dongju-haetbi",
+        category: "표현 찾기",
+        prompt: "소리 내어 읽고 답해 보세요.",
+        sentence: "'보슬보슬'을 '쏴아쏴아'로 바꾸면 무엇이 달라지나요?",
+        choices: ["가늘던 비가 굵고 세차게 느껴져요", "비가 그친 느낌이 들어요", "아무 차이가 없어요"],
+        answer: "가늘던 비가 굵고 세차게 느껴져요",
+        explanation: "같은 비라도 어떤 소리로 적느냐에 따라 세기가 달라져요."
+    },
+    {
+        id: "sound-why",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "이 차시에서 읽은 시들을 떠올려 보세요.",
+        sentence: "시를 소리 내어 읽어 보아야 하는 까닭은 무엇인가요?",
+        choices: [
+            "글자의 뜻만으로는 알 수 없는 느낌이 소리에 담겨 있어서",
+            "소리 내어 읽으면 더 빨리 읽을 수 있어서",
+            "외우기 쉬워서"
+        ],
+        answer: "글자의 뜻만으로는 알 수 없는 느낌이 소리에 담겨 있어서",
+        explanation: "부드러운 소리는 부드러운 마음을, 센 소리는 센 마음을 데려와요."
+    },
+
+    // ── 13차시 · 사물이 대신 우는 것 ──────────────────────────────
+    {
+        id: "cheonmalli-who",
+        poemId: "wangbangyeon-cheonmalli",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "말하는 이는 지금 어디에 앉아 있나요?",
+        choices: ["냇가", "산꼭대기", "집 마당"],
+        answer: "냇가",
+        explanation: "고운 님을 멀리 보내고 마음 둘 데가 없어 냇가에 앉았어요."
+    },
+    {
+        id: "cheonmalli-water",
+        poemId: "wangbangyeon-cheonmalli",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'저 물도 내 안 같아서 울어'에서 정말 우는 것은 누구인가요?",
+        choices: ["말하는 이", "냇물", "떠나간 님"],
+        answer: "말하는 이",
+        explanation: "물소리를 울음소리로 들은 거예요. 제 마음을 물에 옮겨 놓았어요."
+    },
+    {
+        id: "cheonmalli-night",
+        poemId: "wangbangyeon-cheonmalli",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "물이 '울어 밤길 예놋다'는 무슨 뜻인가요?",
+        choices: ["울면서 밤길을 간다는 뜻", "밤에는 물이 마른다는 뜻", "밤에 물소리가 그친다는 뜻"],
+        answer: "울면서 밤길을 간다는 뜻",
+        explanation: "물도 나처럼 밤새 울며 흘러간다고 본 거예요."
+    },
+    {
+        id: "chokbul-tears",
+        poemId: "leegae-chokbul",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "촛불의 무엇을 눈물로 보았나요?",
+        choices: ["흘러내리는 촛농", "흔들리는 불꽃", "타는 심지"],
+        answer: "흘러내리는 촛농",
+        explanation: "겉으로 눈물지고 속은 탄다고 했어요. 촛농이 눈물, 심지가 속이에요."
+    },
+    {
+        id: "chokbul-inside",
+        poemId: "leegae-chokbul",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'저 촉불 날과 같아서'는 무엇을 말하나요?",
+        choices: ["촛불과 내가 똑같이 속을 태우고 있다는 것", "촛불이 나를 비춘다는 것", "촛불이 곧 꺼진다는 것"],
+        answer: "촛불과 내가 똑같이 속을 태우고 있다는 것",
+        explanation: "겉으로만 눈물을 보이고 속이 타는 줄은 아무도 모른다는 말이에요."
+    },
+    {
+        id: "chokbul-question",
+        poemId: "leegae-chokbul",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "첫 줄에서 촛불에게 무엇을 묻나요?",
+        choices: ["누구와 이별했느냐고", "언제 켜졌느냐고", "왜 이리 밝으냐고"],
+        answer: "누구와 이별했느냐고",
+        explanation: "대답할 수 없는 것에게 묻고, 스스로 답을 내려요."
+    },
+    {
+        id: "jogae-empathy",
+        poemId: "dongju-jogaekkeopjil",
+        category: "견주어 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "조개껍데기가 그리워한다고 한 것은 사실 누구의 마음인가요?",
+        choices: ["말하는 이의 마음", "언니의 마음", "바다의 마음"],
+        answer: "말하는 이의 마음",
+        explanation: "'나처럼 그리워하네'라고 했어요. 제 마음을 조개에 얹어 놓은 거예요."
+    },
+    {
+        id: "empathy-how",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "이 차시에서 읽은 시들을 떠올려 보세요.",
+        sentence: "냇물이 울고 촛불이 눈물짓는 시를 읽을 때는 무엇을 살펴야 하나요?",
+        choices: [
+            "그 마음이 정말 누구의 것인지",
+            "물과 촛불이 어디에 있는지",
+            "몇 줄로 되어 있는지"
+        ],
+        answer: "그 마음이 정말 누구의 것인지",
+        explanation: "우는 것은 사물이 아니라, 그 사물을 바라보는 사람이에요."
+    },
+
+    // ── 14차시 · 처음과 끝이 어떻게 달라지나 ──────────────────────
+    {
+        id: "sanyuhwa-first",
+        poemId: "sowol-sanyuhwa",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "첫 묶음에서 꽃은 어떻게 된다고 했나요?",
+        choices: ["피네", "지네", "떨어지네"],
+        answer: "피네",
+        explanation: "'산에는 꽃 피네'로 시작해요."
+    },
+    {
+        id: "sanyuhwa-last",
+        poemId: "sowol-sanyuhwa",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "마지막 묶음에서 꽃은 어떻게 된다고 했나요?",
+        choices: ["지네", "피네", "웃네"],
+        answer: "지네",
+        explanation: "첫 묶음과 글자 하나만 다르고 나머지는 똑같아요."
+    },
+    {
+        id: "sanyuhwa-change",
+        poemId: "sowol-sanyuhwa",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'피네'가 '지네'로 바뀌면서 시는 무엇을 보여 주나요?",
+        choices: ["피고 지기를 되풀이하는 산의 한 해", "꽃이 사라져 버린 산", "봄이 오지 않는 산"],
+        answer: "피고 지기를 되풀이하는 산의 한 해",
+        explanation: "'갈 봄 여름 없이'라는 말이 앞뒤에 똑같이 있어서, 그 되풀이가 끝없이 이어져요."
+    },
+    {
+        id: "sanyuhwa-alone",
+        poemId: "sowol-sanyuhwa",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "'저만치 혼자서 피어 있네'는 어떤 느낌을 주나요?",
+        choices: ["가까이 갈 수 없는 거리감", "함께 있는 든든함", "곧 꺾일 것 같은 불안함"],
+        answer: "가까이 갈 수 없는 거리감",
+        explanation: "'저만치'라는 한마디가 꽃과 나 사이에 거리를 놓아요."
+    },
+    {
+        id: "gaeyeoul-start",
+        poemId: "sowol-gaeyeoul",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "이 시는 무엇으로 시작하나요?",
+        choices: ["물음", "다짐", "인사"],
+        answer: "물음",
+        explanation: "'당신은 무슨 일로 그리합니까?' 하고 물으며 시작해요."
+    },
+    {
+        id: "gaeyeoul-end",
+        poemId: "sowol-gaeyeoul",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "이 시는 무엇으로 끝나나요?",
+        choices: ["또 다른 물음", "또렷한 대답", "이별 인사"],
+        answer: "또 다른 물음",
+        explanation: "'굳이 잊지 말라는 부탁인지요'로 끝나요. 물음으로 시작해 물음으로 닫혀요."
+    },
+    {
+        id: "gaeyeoul-middle",
+        poemId: "sowol-gaeyeoul",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "두 물음 사이에서 떠올린 것은 무엇인가요?",
+        choices: ["가도 아주 가지는 않겠다던 약속", "개여울에서 놀던 어린 날", "떠나간 사람의 얼굴"],
+        answer: "가도 아주 가지는 않겠다던 약속",
+        explanation: "그 약속 한마디를 두 번 되뇌면서 날마다 개여울에 나와 앉아요."
+    },
+    {
+        id: "saeroungil-frame",
+        poemId: "dongju-saeroun-gil",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "이 시의 처음 두 줄과 마지막 두 줄은 어떤가요?",
+        choices: ["똑같아요", "정반대예요", "마지막이 더 길어요"],
+        answer: "똑같아요",
+        explanation: "'내를 건너서 숲으로 / 고개를 넘어서 마을로'가 앞뒤에 그대로 놓여요."
+    },
+    {
+        id: "saeroungil-middle",
+        poemId: "dongju-saeroun-gil",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "같은 길인데 '새로운 길'이라고 한 까닭은 무엇인가요?",
+        choices: [
+            "길에서 만나는 것이 날마다 달라서",
+            "길이 해마다 새로 나서",
+            "길을 처음 가 보아서"
+        ],
+        answer: "길에서 만나는 것이 날마다 달라서",
+        explanation: "민들레가 피고 까치가 날고 바람이 일어요. 가운데 묶음이 그 다름을 보여 줘요."
+    },
+    {
+        id: "byeoltong-flow",
+        poemId: "jiyong-byeoltong",
+        category: "견주어 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "이 짧은 시에서 처음과 끝 사이에 흐른 것은 무엇인가요?",
+        choices: ["어린 날부터 다 자랄 때까지의 세월", "하룻밤", "별똥이 떨어지는 한순간"],
+        answer: "어린 날부터 다 자랄 때까지의 세월",
+        explanation: "'가 보려' 마음먹은 때와 '다 자랐소' 사이가 시의 처음과 끝이에요."
+    },
+
+    // ── 15차시 · 시조의 틀 ────────────────────────────────────────
+    {
+        id: "hansanseom-lines",
+        poemId: "leesunsin-hansanseom",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "이 시는 몇 줄로 되어 있나요?",
+        choices: ["세 줄", "네 줄", "여섯 줄"],
+        answer: "세 줄",
+        explanation: "시조는 세 줄로 된 옛 노래예요. 세 줄을 차례로 초장·중장·종장이라고 불러요."
+    },
+    {
+        id: "hansanseom-where",
+        poemId: "leesunsin-hansanseom",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "말하는 이는 어디에 혼자 앉아 있나요?",
+        choices: ["한산섬의 수루", "배 위", "바닷가 모래밭"],
+        answer: "한산섬의 수루",
+        explanation: "달 밝은 밤, 적을 살피는 높은 망대에 큰 칼을 차고 앉아 있어요."
+    },
+    {
+        id: "hansanseom-turn",
+        poemId: "leesunsin-hansanseom",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "마지막 줄은 어떤 말로 시작하나요?",
+        choices: ["어디서", "한산섬", "큰 칼"],
+        answer: "어디서",
+        explanation: "시조의 마지막 줄은 이렇게 앞의 흐름을 한 번 꺾는 말로 시작하는 일이 많아요."
+    },
+    {
+        id: "ouga-count",
+        poemId: "yunseondo-ouga",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "여기 실린 「오우가」는 몇 수인가요?",
+        choices: ["세 수", "다섯 수", "한 수"],
+        answer: "세 수",
+        explanation: "빈 줄로 나뉜 세 덩어리예요. 시조는 이렇게 여러 수를 이어 붙이기도 해요."
+    },
+    {
+        id: "ouga-five",
+        poemId: "yunseondo-ouga",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "첫 수에서 꼽은 다섯 벗에 들지 않는 것은 무엇인가요?",
+        choices: ["구름", "물", "달"],
+        answer: "구름",
+        explanation: "물·돌·소나무·대나무·달이 다섯 벗이에요. 구름은 둘째 수에서 '검기를 자주 한다'며 물리쳤어요."
+    },
+    {
+        id: "ouga-water",
+        poemId: "yunseondo-ouga",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "둘째 수에서 물을 벗으로 삼은 까닭은 무엇인가요?",
+        choices: ["좋으면서도 그치는 때가 없어서", "빛깔이 고와서", "소리가 맑아서"],
+        answer: "좋으면서도 그치는 때가 없어서",
+        explanation: "구름은 자주 검어지고 바람은 그칠 때가 있지만 물은 늘 흐른다고 했어요."
+    },
+    {
+        id: "ouga-rock",
+        poemId: "yunseondo-ouga",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "셋째 수에서 바위를 벗으로 삼은 까닭은 무엇인가요?",
+        choices: ["변하지 않아서", "단단해서", "오래되어서"],
+        answer: "변하지 않아서",
+        explanation: "꽃은 금방 지고 풀은 곧 누레지는데 바위는 그대로예요."
+    },
+    {
+        id: "ouga-last-line",
+        poemId: "yunseondo-ouga",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "세 수의 마지막 줄이 모두 비슷하게 시작하는 말은 무엇인가요?",
+        choices: ["두어라, 좋고도, 아마도 같은 감탄하는 말", "물음을 던지는 말", "사람을 부르는 말"],
+        answer: "두어라, 좋고도, 아마도 같은 감탄하는 말",
+        explanation: "시조의 마지막 줄은 이렇게 감탄으로 시작해 생각을 매듭짓는 일이 많아요."
+    },
+    {
+        id: "daechu-autumn",
+        poemId: "hwanghui-daechu",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "이 시조가 그린 철은 언제인가요?",
+        choices: ["가을", "봄", "겨울"],
+        answer: "가을",
+        explanation: "대추가 붉고 밤이 떨어지고 벼를 벤 뒤예요."
+    },
+    {
+        id: "daechu-drink",
+        poemId: "hwanghui-daechu",
+        category: "마음 읽기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "마지막 줄에서 말하는 이는 무엇이라고 하나요?",
+        choices: ["이만하면 아니 먹고 어찌하겠느냐고", "일을 더 해야겠다고", "가을이 짧아 아쉽다고"],
+        answer: "이만하면 아니 먹고 어찌하겠느냐고",
+        explanation: "가을에 저절로 갖추어진 것을 늘어놓다가 마지막 줄에서 웃으며 매듭지어요."
+    },
+    {
+        id: "gukhwa-when",
+        poemId: "leejeongbo-gukhwa",
+        category: "장면 확인",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "국화는 언제 피었다고 했나요?",
+        choices: ["잎이 다 진 추운 때", "삼월 봄바람이 불 때", "한여름"],
+        answer: "잎이 다 진 추운 때",
+        explanation: "좋은 봄철을 다 보내고 홀로 추운 때에 피었어요."
+    },
+    {
+        id: "gukhwa-answer",
+        poemId: "leejeongbo-gukhwa",
+        category: "표현 찾기",
+        prompt: "시를 읽고 답해 보세요.",
+        sentence: "첫 줄에서 던진 물음에 누가 답하나요?",
+        choices: ["말하는 이가 스스로 답해요", "국화가 답해요", "아무도 답하지 않아요"],
+        answer: "말하는 이가 스스로 답해요",
+        explanation: "'아마도 오상고절은 너뿐인가 하노라'가 스스로 내린 답이에요."
+    },
+    {
+        id: "sijo-shape",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "이 차시에서 읽은 시조들을 떠올려 보세요.",
+        sentence: "시조 네 편에서 똑같이 찾을 수 있는 것은 무엇인가요?",
+        choices: [
+            "한 수가 세 줄로 되어 있다는 것",
+            "모두 가을을 노래한다는 것",
+            "모두 물음으로 시작한다는 것"
+        ],
+        answer: "한 수가 세 줄로 되어 있다는 것",
+        explanation: "석 줄이 시조의 틀이에요. 마지막 줄은 대개 감탄이나 물음으로 앞을 한 번 꺾어요."
     }
 ]);

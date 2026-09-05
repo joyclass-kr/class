@@ -100,11 +100,49 @@
             ]),
 
         // ── 초5 · 감춰진 뜻과 짜임 ────────────────────────────────────
-        lesson("g5-metaphor", 5, "빗댄 말을 감추기", "'~은 ~이다'로 곧장 말해요", [], []),
-        lesson("g5-sound", 5, "소리가 만드는 느낌", "부드러운 소리와 센 소리", [], []),
-        lesson("g5-empathy", 5, "사물이 대신 우는 것", "내 마음을 사물에 옮겨 놓아요", [], []),
-        lesson("g5-flow", 5, "처음과 끝이 어떻게 달라지나", "시가 흘러가는 길", [], []),
-        lesson("g5-sijo", 5, "시조의 틀", "석 줄에 담는 옛 노래", [], []),
+        lesson("g5-metaphor", 5, "빗댄 말을 감추기", "'~은 ~이다'로 곧장 말해요",
+            ["manhae-narutbae", "dongju-sonyeon", "dongju-nun", "leejanghee-bomeun"],
+            [
+                "narutbae-two", "narutbae-direct", "narutbae-wait", "narutbae-frame",
+                "sonyeon-palm", "sonyeon-blue", "sonyeon-face",
+                "nun-metaphor",
+                "bomeun-title",
+                "metaphor-what"
+            ]),
+        lesson("g5-sound", 5, "소리가 만드는 느낌", "부드러운 소리와 센 소리",
+            ["yeongrang-doldam", "dongju-bom", "kimyeongrang-omae", "dongju-haetbi"],
+            [
+                "doldam-sound", "doldam-simile", "doldam-want",
+                "bom-four-sounds", "bom-soft-sounds",
+                "omae-dialect", "omae-repeat-sound",
+                "haetbi-sound-feel",
+                "sound-why"
+            ]),
+        lesson("g5-empathy", 5, "사물이 대신 우는 것", "내 마음을 사물에 옮겨 놓아요",
+            ["wangbangyeon-cheonmalli", "leegae-chokbul", "dongju-jogaekkeopjil"],
+            [
+                "cheonmalli-who", "cheonmalli-water", "cheonmalli-night",
+                "chokbul-tears", "chokbul-inside", "chokbul-question",
+                "jogae-empathy",
+                "empathy-how"
+            ]),
+        lesson("g5-flow", 5, "처음과 끝이 어떻게 달라지나", "시가 흘러가는 길",
+            ["sowol-sanyuhwa", "sowol-gaeyeoul", "dongju-saeroun-gil", "jiyong-byeoltong"],
+            [
+                "sanyuhwa-first", "sanyuhwa-last", "sanyuhwa-change", "sanyuhwa-alone",
+                "gaeyeoul-start", "gaeyeoul-end", "gaeyeoul-middle",
+                "saeroungil-frame", "saeroungil-middle",
+                "byeoltong-flow"
+            ]),
+        lesson("g5-sijo", 5, "시조의 틀", "석 줄에 담는 옛 노래",
+            ["leesunsin-hansanseom", "yunseondo-ouga", "hwanghui-daechu", "leejeongbo-gukhwa"],
+            [
+                "hansanseom-lines", "hansanseom-where", "hansanseom-turn",
+                "ouga-count", "ouga-five", "ouga-water", "ouga-rock", "ouga-last-line",
+                "daechu-autumn", "daechu-drink",
+                "gukhwa-when", "gukhwa-answer",
+                "sijo-shape"
+            ]),
 
         // ── 초6 · 어긋난 말과 겹친 뜻 ─────────────────────────────────
         lesson("g6-irony", 6, "속마음과 반대로 말하기", "겉말과 속말이 어긋나요", [], []),
