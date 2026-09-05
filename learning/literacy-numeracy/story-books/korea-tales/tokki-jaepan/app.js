@@ -201,6 +201,409 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐰",
+        art: "cover.webp",
+        title: "The Rabbit's Judgement",
+        intro: [
+            "The Rabbit's Judgement is an old Korean tale with no known author. It is also told as The Ungrateful Tiger.",
+            "Its bones turn up all over the world. India has a tiger in a cage; Europe has a wolf or a snake in a pit. The rescuer ends up in danger and a clever animal saves him.",
+            "In Korean tales the rabbit wins by wits, never by strength. Old people especially liked stories where a small animal beats a big one."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Tiger in the Pit",
+            beats: [
+                {
+                    art: "01-pit.webp",
+                    emoji: "🕳️",
+                    left: [
+                        "A traveller was walking a mountain road with his pack on his back and his hat pulled down.",
+                        "The sun was low and he was hurrying.",
+                        "Then a mournful sound came from somewhere.",
+                        { t: "\"Aaaargh... will somebody save me!\"", v: "beast" },
+                        "The traveller stopped and listened."
+                    ],
+                    right: [
+                        "He went towards the sound and there was a great pit, twice as deep as a man is tall.",
+                        "Inside it a tiger was jumping and jumping.",
+                        "However high he jumped, his front paws could not reach the lip.",
+                        "He had fallen into a hunter's trap."
+                    ]
+                },
+                {
+                    art: "02-beg.webp",
+                    emoji: "🙏",
+                    left: [
+                        { t: "\"Sir, please get me out of here!\"", v: "beast" },
+                        "The tiger put his two front paws together and begged.",
+                        { t: "\"That I will not. Get you out and you'll eat me.\"", v: "man" },
+                        "The traveller shook his head and stepped back.",
+                        { t: "\"I would never do such a thing!\"", v: "beast" }
+                    ],
+                    right: [
+                        { t: "\"How could I forget the man who saved my life? I swear it!\"", v: "beast" },
+                        "The tiger's voice was full of pleading. He bowed his head over and over.",
+                        "Fat tears rolled out of his great eyes.",
+                        "The traveller saw those tears and stood there a long time."
+                    ]
+                },
+                {
+                    art: "03-rescue.webp",
+                    emoji: "🪵",
+                    left: [
+                        "Listening to him, the traveller's heart softened after all.",
+                        { t: "'When he begs like that...'", v: "man" },
+                        "He set his pack down, fetched a thick log from the hillside and laid it into the pit.",
+                        "It lay slanting, like a bridge."
+                    ],
+                    right: [
+                        "The tiger came up the log in a few great strides.",
+                        "The traveller even put out a hand and pulled him over the edge.",
+                        { t: "\"Thank you, sir!\"", v: "beast" },
+                        "And the moment the tiger had all four feet on the ground—",
+                        "his eyes changed completely. So did his voice."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Tiger Forgets",
+            beats: [
+                {
+                    art: "04-betray.webp",
+                    emoji: "😾",
+                    left: [
+                        { t: "\"Rrraaah! I'm starving.\"", v: "beast" },
+                        "The tiger licked his lips with a red tongue.",
+                        { t: "\"W— wait! Didn't you swear you would not eat me?\"", v: "man" },
+                        "The traveller took a step back without meaning to. His voice shook."
+                    ],
+                    right: [
+                        { t: "\"That was while I was down the pit.\"", v: "beast" },
+                        "The tiger shrugged and grinned.",
+                        { t: "\"And I am hungry now!\"", v: "beast" },
+                        "The traveller was too astonished to speak. He looked up at the sky, wondering what kind of law this was."
+                    ]
+                },
+                {
+                    art: "05-pine.webp",
+                    emoji: "🌲",
+                    left: [
+                        { t: "\"This is too unfair. Let us ask somebody.\"", v: "man" },
+                        "The traveller spread his arms and shouted it.",
+                        { t: "\"Very well. Three times, and no more.\"", v: "beast" },
+                        "The tiger nodded as if it cost him something. They asked the old pine by the road first."
+                    ],
+                    right: [
+                        { t: "\"Pine tree, which of us is right?\"", v: "man" },
+                        "The pine shook its branches and answered.",
+                        { t: "\"People cut us down as they please. I am for the tiger.\"", v: "old" },
+                        { t: "\"You see!\"", v: "beast" },
+                        "The tiger laughed out loud. The traveller went pale."
+                    ]
+                },
+                {
+                    art: "06-cow.webp",
+                    emoji: "🐂",
+                    left: [
+                        "Next they asked an ox pulling a plough in a field.",
+                        "The ox was soaked with sweat. The yoke had worn a deep mark into his neck.",
+                        { t: "\"Ox, which of us is right?\"", v: "man" },
+                        "The ox lifted his heavy head very slowly."
+                    ],
+                    right: [
+                        { t: "\"People work us till we drop, do they not.\"", v: "old" },
+                        "Still in the plough, he let his head sink again.",
+                        { t: "\"I am for the tiger too.\"", v: "old" },
+                        "Only one question was left now. The traveller sat down on the bank of the field."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Rabbit's Judgement",
+            beats: [
+                {
+                    art: "07-rabbit.webp",
+                    emoji: "🐰",
+                    left: [
+                        { t: "\"One left. Go on, ask.\"", v: "beast" },
+                        "The tiger urged him on. And just then a rabbit came hopping past.",
+                        "The traveller caught hold of her and told her the whole thing in a rush.",
+                        "It was his last chance."
+                    ],
+                    right: [
+                        "The rabbit put her ears up and listened to the end. Then she tilted her head.",
+                        "She had the face of someone who cannot follow a word of it.",
+                        { t: "\"Hmm... I don't understand any of that, I'm afraid.\"", v: "girl" },
+                        "The tiger snorted with impatience."
+                    ]
+                },
+                {
+                    art: "08-confused.webp",
+                    emoji: "❓",
+                    left: [
+                        { t: "\"You slow thing! I was down in that pit!\"", v: "beast" },
+                        "The tiger struck the ground with a paw and raised his voice.",
+                        { t: "\"A pit? Which pit?\"", v: "girl" },
+                        { t: "\"This pit, right here!\"", v: "beast" },
+                        "The rabbit blinked and looked down into the pit."
+                    ],
+                    right: [
+                        { t: "\"Ah. So the gentleman was inside the pit?\"", v: "girl" },
+                        "The rabbit made her eyes round.",
+                        { t: "\"No! I was inside, I tell you!\"", v: "beast" },
+                        "The tiger stamped with impatience. And the traveller, seeing at last what the rabbit was doing, kept his mouth shut."
+                    ]
+                },
+                {
+                    art: "09-back-in.webp",
+                    emoji: "🐯",
+                    left: [
+                        { t: "\"I simply cannot picture it.\"", v: "girl" },
+                        "The rabbit let her ears droop as if she were very sorry.",
+                        { t: "\"Could you show me, just once?\"", v: "girl" },
+                        "She put her front paws together and asked. The tiger could bear it no longer."
+                    ],
+                    right: [
+                        { t: "\"Oh, this is unbearable!\"", v: "beast" },
+                        "He strode down the log into the pit.",
+                        { t: "\"There! I was down here, like this!\"", v: "beast" },
+                        "The traveller clapped a hand over his own mouth, trying not to laugh."
+                    ]
+                },
+                {
+                    art: "10-verdict.webp",
+                    emoji: "⚖️",
+                    left: [
+                        "Now the rabbit turned to the traveller.",
+                        { t: "\"And how did this log get here?\"", v: "girl" },
+                        { t: "\"I laid it in to get the tiger out.\"", v: "man" },
+                        { t: "\"Then put that back where it was too.\"", v: "girl" },
+                        "The traveller took the log away, and the rabbit folded her arms and looked down."
+                    ],
+                    right: [
+                        { t: "\"Everything is as it was at the start. Stay there.\"", v: "girl" },
+                        { t: "\"Wh— what! You wicked rabbit!\"", v: "beast" },
+                        "However high the tiger jumped, it was no use.",
+                        "The traveller bowed low to the rabbit.",
+                        { t: "\"Do be more careful next time.\"", v: "girl" },
+                        "The two of them went down the mountain laughing."
+                    ]
+                }
+            ],
+            moral: "There are those in the world who will act as though they owe you nothing. The rabbit did not fight what she could not beat by strength. She made the tiger walk back to where he started.",
+            question: "When something is unfair but you cannot win by strength, what can you do?"
+        }
+    ],
+    quiz: [
+        { q: "Where was the tiger trapped?", choices: ["In a deep river", "In a hunter's pit", "In a great net"], answer: 1 },
+        { q: "What did the tiger promise if he was let out?", choices: ["To go back to the mountain", "To lay a log across", "To pay back the kindness"], answer: 2 },
+        { q: "Why did the pine side with the tiger?", choices: ["People cut trees down", "It was afraid of the tiger", "It disliked the traveller"], answer: 0 },
+        { q: "Why did the ox side with the tiger?", choices: ["It disliked the traveller", "It was afraid of the pit", "People work oxen too hard"], answer: 2 },
+        { q: "What did the rabbit ask the tiger to do?", choices: ["Fill in the pit", "Show her just once", "Come out of the pit"], answer: 1 },
+        { q: "What happened once the tiger was back in the pit?", choices: ["He jumped straight out", "The log was taken away", "The traveller pulled him out"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The rabbit played dumb and turned the scene back, so showing beats arguing sometimes.",
+                "He changed his story the moment he was out, so a promise made in trouble can last only that long.",
+                "The traveller softened at the tiger's tears, so tears can cloud what you decide.",
+                "The traveller put the tiger back and shovelled earth on top, so once burned, people turn hard too."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "judgement", k: "재판", s: "The Rabbit's Judgement" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "ungrateful", k: "은혜를 모르는", s: "It is also told as The Ungrateful Tiger." },
+            { w: "bones", k: "뼈대", s: "Its bones turn up all over the world." },
+            { w: "cage", k: "우리", s: "India has a tiger in a cage" },
+            { w: "pit", k: "구덩이, 함정", s: "Europe has a wolf or a snake in a pit" },
+            { w: "rescuer", k: "구해 준 사람", s: "The rescuer ends up in danger" },
+            { w: "ends up ~ing (end up)", k: "도리어 ~하게 된다", s: "The rescuer ends up in danger" },
+            { w: "clever", k: "꾀 많은", s: "a clever animal saves him" },
+            { w: "by wits", k: "꾀로", s: "the rabbit wins by wits, never by strength" },
+            { w: "beats (beat)", k: "이긴다", s: "stories where a small animal beats a big one" }
+        ],
+        "01-pit.webp": [
+            { w: "traveller", k: "나그네", s: "A traveller was walking a mountain road" },
+            { w: "pack", k: "봇짐", s: "with his pack on his back" },
+            { w: "pulled down", k: "눌러쓴", s: "his hat pulled down" },
+            { w: "was hurrying", k: "걸음이 급했다", s: "The sun was low and he was hurrying." },
+            { w: "mournful", k: "구슬픈", s: "Then a mournful sound came from somewhere." },
+            { w: "listened (listen)", k: "귀를 기울였다", s: "The traveller stopped and listened." },
+            { w: "twice as deep as ~", k: "~의 두 배 깊이인", s: "a great pit, twice as deep as a man is tall" },
+            { w: "However high ~", k: "아무리 높이 ~해도", s: "However high he jumped" },
+            { w: "paws", k: "앞발", s: "his front paws could not reach the lip" },
+            { w: "the lip", k: "구덩이 턱", s: "could not reach the lip" },
+            { w: "hunter's trap", k: "사냥꾼의 함정", s: "He had fallen into a hunter's trap." }
+        ],
+        "02-beg.webp": [
+            { w: "get me out", k: "저를 꺼내 주세요", s: "Sir, please get me out of here!" },
+            { w: "begged (beg)", k: "빌었다", s: "The tiger put his two front paws together and begged." },
+            { w: "That I will not.", k: "안 될 말이오.", s: "That I will not." },
+            { w: "stepped back", k: "뒷걸음질 쳤다", s: "The traveller shook his head and stepped back." },
+            { w: "such a thing", k: "그런 일", s: "I would never do such a thing!" },
+            { w: "How could I forget ~?", k: "어찌 잊겠습니까?", s: "How could I forget the man who saved my life?" },
+            { w: "swear (swear)", k: "맹세하다", s: "I swear it!" },
+            { w: "pleading", k: "간절함", s: "The tiger's voice was full of pleading." },
+            { w: "over and over", k: "또 하고 또", s: "He bowed his head over and over." },
+            { w: "rolled out of ~ (roll)", k: "뚝뚝 흘렀다", s: "Fat tears rolled out of his great eyes." }
+        ],
+        "03-rescue.webp": [
+            { w: "softened (soften)", k: "마음이 약해졌다", s: "the traveller's heart softened after all" },
+            { w: "after all", k: "그만, 결국", s: "the traveller's heart softened after all" },
+            { w: "When he begs like that", k: "저렇게까지 비는데", s: "When he begs like that..." },
+            { w: "set ~ down (set)", k: "내려놓았다", s: "He set his pack down" },
+            { w: "fetched (fetch)", k: "구해 왔다", s: "fetched a thick log from the hillside" },
+            { w: "log", k: "굵은 나무", s: "fetched a thick log from the hillside" },
+            { w: "laid ~ into (lay)", k: "걸쳐 놓았다", s: "laid it into the pit" },
+            { w: "slanting", k: "비스듬한", s: "It lay slanting, like a bridge." },
+            { w: "in a few great strides", k: "성큼성큼", s: "The tiger came up the log in a few great strides." },
+            { w: "put out a hand", k: "손을 내밀었다", s: "The traveller even put out a hand" },
+            { w: "the moment ~", k: "~하는 순간", s: "And the moment the tiger had all four feet on the ground" },
+            { w: "completely", k: "싹, 완전히", s: "his eyes changed completely" }
+        ],
+        "04-betray.webp": [
+            { w: "I'm starving.", k: "배가 고파 죽겠다.", s: "Rrraaah! I'm starving." },
+            { w: "licked (lick)", k: "핥았다", s: "The tiger licked his lips with a red tongue." },
+            { w: "tongue", k: "혀", s: "with a red tongue" },
+            { w: "Didn't you swear ~?", k: "맹세하지 않았소?", s: "Didn't you swear you would not eat me?" },
+            { w: "without meaning to", k: "저도 모르게", s: "The traveller took a step back without meaning to." },
+            { w: "shook (shake)", k: "떨렸다", s: "His voice shook." },
+            { w: "while I was ~", k: "~에 있을 때", s: "That was while I was down the pit." },
+            { w: "shrugged (shrug)", k: "어깨를 으쓱했다", s: "The tiger shrugged and grinned." },
+            { w: "too astonished to speak", k: "기가 막혀 말이 안 나왔다", s: "The traveller was too astonished to speak." },
+            { w: "what kind of law", k: "이런 법이 어디 있나", s: "wondering what kind of law this was" }
+        ],
+        "05-pine.webp": [
+            { w: "too unfair", k: "너무 억울한", s: "This is too unfair." },
+            { w: "Let us ask ~", k: "물어봅시다", s: "Let us ask somebody." },
+            { w: "spread his arms", k: "두 팔을 벌렸다", s: "The traveller spread his arms and shouted it." },
+            { w: "Very well.", k: "좋다.", s: "Very well. Three times, and no more." },
+            { w: "as if it cost him something", k: "못 이기는 척", s: "The tiger nodded as if it cost him something." },
+            { w: "pine", k: "소나무", s: "They asked the old pine by the road first." },
+            { w: "which of us is right", k: "어느 쪽이 옳은가", s: "Pine tree, which of us is right?" },
+            { w: "as they please", k: "마구, 제멋대로", s: "People cut us down as they please." },
+            { w: "I am for ~", k: "나는 ~ 편이다", s: "I am for the tiger." },
+            { w: "went pale", k: "얼굴이 하얘졌다", s: "The traveller went pale." }
+        ],
+        "06-cow.webp": [
+            { w: "pulling a plough", k: "쟁기를 끄는", s: "Next they asked an ox pulling a plough in a field." },
+            { w: "soaked with sweat", k: "땀에 젖은", s: "The ox was soaked with sweat." },
+            { w: "yoke", k: "멍에", s: "The yoke had worn a deep mark into his neck." },
+            { w: "had worn ~ (wear)", k: "파여 있었다", s: "The yoke had worn a deep mark into his neck." },
+            { w: "lifted ~ slowly", k: "천천히 들어 올렸다", s: "The ox lifted his heavy head very slowly." },
+            { w: "till we drop", k: "죽도록", s: "People work us till we drop" },
+            { w: "do they not", k: "않소", s: "People work us till we drop, do they not." },
+            { w: "let ~ sink (let)", k: "푹 숙였다", s: "he let his head sink again" },
+            { w: "Only one ~ was left", k: "하나밖에 남지 않았다", s: "Only one question was left now." },
+            { w: "the bank of the field", k: "밭두렁", s: "The traveller sat down on the bank of the field." }
+        ],
+        "07-rabbit.webp": [
+            { w: "Go on, ask.", k: "어서 물어보아라.", s: "One left. Go on, ask." },
+            { w: "urged ~ on (urge)", k: "재촉했다", s: "The tiger urged him on." },
+            { w: "came hopping past", k: "깡충깡충 지나갔다", s: "just then a rabbit came hopping past" },
+            { w: "caught hold of ~ (catch)", k: "붙들었다", s: "The traveller caught hold of her" },
+            { w: "in a rush", k: "다급하게", s: "told her the whole thing in a rush" },
+            { w: "his last chance", k: "마지막 기회", s: "It was his last chance." },
+            { w: "put her ears up", k: "귀를 쫑긋 세웠다", s: "The rabbit put her ears up and listened to the end." },
+            { w: "tilted her head", k: "고개를 갸웃했다", s: "Then she tilted her head." },
+            { w: "cannot follow ~", k: "알아듣지 못하다", s: "the face of someone who cannot follow a word of it" },
+            { w: "snorted (snort)", k: "콧김을 뿜었다", s: "The tiger snorted with impatience." },
+            { w: "impatience", k: "답답함", s: "The tiger snorted with impatience." }
+        ],
+        "08-confused.webp": [
+            { w: "You slow thing!", k: "답답하구나!", s: "You slow thing! I was down in that pit!" },
+            { w: "struck ~ with a paw", k: "앞발로 쳤다", s: "The tiger struck the ground with a paw" },
+            { w: "raised his voice", k: "목청을 높였다", s: "and raised his voice" },
+            { w: "Which pit?", k: "어느 구덩이요?", s: "A pit? Which pit?" },
+            { w: "right here", k: "바로 여기", s: "This pit, right here!" },
+            { w: "blinked (blink)", k: "눈을 껌뻑였다", s: "The rabbit blinked and looked down into the pit." },
+            { w: "So ~ was inside?", k: "그럼 ~이 안에 있었고요?", s: "So the gentleman was inside the pit?" },
+            { w: "I tell you", k: "~라니까", s: "No! I was inside, I tell you!" },
+            { w: "stamped (stamp)", k: "발을 동동 굴렀다", s: "The tiger stamped with impatience." },
+            { w: "seeing at last ~", k: "그제야 알아채고", s: "seeing at last what the rabbit was doing" },
+            { w: "kept his mouth shut", k: "입을 다물었다", s: "kept his mouth shut" }
+        ],
+        "09-back-in.webp": [
+            { w: "cannot picture ~", k: "그림이 안 그려진다", s: "I simply cannot picture it." },
+            { w: "droop", k: "늘어뜨리다", s: "The rabbit let her ears droop" },
+            { w: "as if she were very sorry", k: "아주 딱하다는 듯", s: "as if she were very sorry" },
+            { w: "just once", k: "딱 한 번만", s: "Could you show me, just once?" },
+            { w: "could bear it no longer", k: "더는 참을 수 없었다", s: "The tiger could bear it no longer." },
+            { w: "unbearable", k: "답답해 못 견딜", s: "Oh, this is unbearable!" },
+            { w: "strode (stride)", k: "성큼성큼 갔다", s: "He strode down the log into the pit." },
+            { w: "like this", k: "이렇게", s: "I was down here, like this!" },
+            { w: "clapped a hand over ~", k: "입을 틀어막았다", s: "The traveller clapped a hand over his own mouth" },
+            { w: "trying not to laugh", k: "웃음을 참으며", s: "trying not to laugh" }
+        ],
+        "10-verdict.webp": [
+            { w: "turned to ~", k: "돌아보았다", s: "Now the rabbit turned to the traveller." },
+            { w: "How did ~ get here?", k: "어떻게 된 것입니까?", s: "And how did this log get here?" },
+            { w: "laid ~ in (lay)", k: "걸쳐 놓았다", s: "I laid it in to get the tiger out." },
+            { w: "put ~ back where it was", k: "처음 자리에 도로 놓다", s: "Then put that back where it was too." },
+            { w: "took ~ away", k: "걷어 냈다", s: "The traveller took the log away" },
+            { w: "folded her arms", k: "팔짱을 꼈다", s: "the rabbit folded her arms and looked down" },
+            { w: "as it was at the start", k: "처음대로", s: "Everything is as it was at the start." },
+            { w: "wicked", k: "못된", s: "Wh— what! You wicked rabbit!" },
+            { w: "it was no use", k: "소용없었다", s: "However high the tiger jumped, it was no use." },
+            { w: "bowed low", k: "넙죽 절했다", s: "The traveller bowed low to the rabbit." },
+            { w: "Do be more careful", k: "조심하세요", s: "Do be more careful next time." }
+        ],
+        "after": [
+            { w: "is told widely", k: "널리 있다", s: "The story of saving a beast from a pit and nearly being eaten is told widely." },
+            { w: "nearly being eaten", k: "잡아먹힐 뻔한", s: "saving a beast from a pit and nearly being eaten" },
+            { w: "Only the animal changes", k: "짐승만 바뀐다", s: "Only the animal changes; the shape is the same." },
+            { w: "end the same way", k: "끝이 같다", s: "Such stories mostly end the same way too." },
+            { w: "let us start again", k: "처음부터 다시 해 보자", s: "and says let us start again from the beginning" },
+            { w: "not once", k: "한 번도 ~ 않다", s: "the rabbit did not once argue" },
+            { w: "argue", k: "다투다", s: "the rabbit did not once argue" },
+            { w: "right and wrong", k: "옳고 그름", s: "She did not weigh right and wrong either." },
+            { w: "All she said was ~", k: "다만 ~라고 했을 뿐", s: "All she said was that she could not follow it." },
+            { w: "of his own accord", k: "제 발로", s: "the tiger went down into the pit of his own accord" },
+            { w: "did not push ~ in", k: "밀어 넣지 않았다", s: "The rabbit did not push him in." },
+            { w: "owe you nothing", k: "은혜를 모른 척하다", s: "those who will act as though they owe you nothing" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '⚖️',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "The story of saving a beast from a pit and nearly being eaten is told widely in the world. India has one and Europe has one. Only the animal changes; the shape is the same.",
+                    "Such stories mostly end the same way too. A small clever animal turns up and says let us start again from the beginning.",
+                    "Look again: the rabbit did not once argue. She did not weigh right and wrong either. All she said was that she could not follow it.",
+                    "And at that the tiger went down into the pit of his own accord. The rabbit did not push him in; he walked in himself."
+                ],
+                right: [
+                    "There are those in the world who will act as though they owe you nothing. The rabbit did not fight what she could not beat by strength. She made the tiger walk back to where he started.",
+                    "When something is unfair but you cannot win by strength, what can you do?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "호랑이는 어디에 빠져 있었나요?", choices: ["깊은 강물", "사냥꾼의 함정", "커다란 그물"], answer: 1 },
     { q: "호랑이는 꺼내 주면 어떻게 하겠다고 했나요?", choices: ["산으로 가겠다", "나무를 걸쳐 주겠다", "은혜를 갚겠다"], answer: 2 },

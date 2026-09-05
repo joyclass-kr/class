@@ -9,7 +9,8 @@
  * 그래서 브라우저에서 실제 치수를 재어 와 그대로 흉내 낸다(1280x720 기준,
  * 가장 낮은 화면이라 여기서 안 넘치면 다른 화면에서도 안 넘친다).
  *
- *   본문 한쪽 : 칸 242px · 한 줄 25.7px · 문단 아래 여백 4px · 한 줄에 56자
+ *   본문 한쪽 : 칸 242px · 한 줄 25.7px · 문단 아래 여백 4px · 한 줄에 52자
+ *                (첫 줄은 들여쓰기가 있어 56자로 잡았다가 넘치는 쪽을 놓쳤다)
  *   표지      : 세 문단·520자 안쪽 (제목이 접히는 줄 수가 책마다 달라 px 로는 못 셈한다)
  *
  * 이 도구를 통과해도 마지막에는 _sweep-all.html 로 여섯 화면을 다 봐야 한다.
@@ -20,7 +21,7 @@
  */
 import fs from 'fs';
 
-const SPREAD = { pane: 242, line: 25.7, gap: 4, chars: 56 };
+const SPREAD = { pane: 242, line: 25.7, gap: 4, chars: 52 };
 const COVER = { maxParas: 3, maxChars: 520 };
 
 const showAll = process.argv.includes('--all');

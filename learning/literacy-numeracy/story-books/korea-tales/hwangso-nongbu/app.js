@@ -200,6 +200,412 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐂",
+        art: "cover.webp",
+        title: "The Farmer Who Became an Ox",
+        intro: [
+            "The Farmer Who Became an Ox is an old Korean tale with no known author. It is better known as The Lazy Man Who Turned into an Ox.",
+            "In our old stories the ox stands for hard work. Turning a lazy man into the most hard-working animal of all is the whole point of it.",
+            "When grown-ups tell a lazy child you'll turn into an ox, this is the story the saying comes from."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Farmer Who Hated Work",
+            beats: [
+                {
+                    art: "01-lazy.webp",
+                    emoji: "😴",
+                    left: [
+                        "Long ago in a village there lived a farmer who hated farm work more than anything.",
+                        "There were cobwebs on his hoe.",
+                        "The sun would be high in the sky and he would still be lying down.",
+                        { t: "\"Oh, what a hard life I have.\"", v: "man" },
+                        { t: "\"I'll do it tomorrow. Tomorrow.\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"The weeds in the field are as tall as a man. Go out and see!\"", v: "woman" },
+                        "His wife shouted from the yard.",
+                        { t: "\"Just a little longer.\"", v: "man" },
+                        { t: "\"That little longer is three days old!\"", v: "woman" },
+                        "She rapped on the doorsill, and the farmer only rolled over."
+                    ]
+                },
+                {
+                    art: "02-leave.webp",
+                    emoji: "🚶",
+                    left: [
+                        "To get away from the scolding the farmer slipped out of the house.",
+                        "He walked with his hands behind his back. He had nowhere to go.",
+                        { t: "\"Isn't there some way to live without working?\"", v: "man" },
+                        "That was all he thought about as he walked.",
+                        "His feet went wherever they liked."
+                    ],
+                    right: [
+                        "As he went the path grew narrower and the trees grew thicker.",
+                        "Before he knew it he was deep in hills he had never seen.",
+                        "There was no birdsong and no water sound. It was strangely quiet.",
+                        "And now he did not know the way back either."
+                    ]
+                },
+                {
+                    art: "03-mask.webp",
+                    emoji: "🎭",
+                    left: [
+                        "Under a great tree sat an old man with a white beard.",
+                        "In his hands was a mask shaped like an ox's face. It was carved from wood and very well made.",
+                        "The old man turned it this way and that.",
+                        { t: "\"Sir, what on earth is that?\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"Put this on and you'll eat all your life without lifting a finger.\"", v: "old" },
+                        "The old man's voice was very soft.",
+                        { t: "\"What? Is — is that true?\"", v: "man" },
+                        "The farmer's eyes opened wide. He had never dreamed such a thing existed.",
+                        "His hand was already out."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Day He Put It On",
+            beats: [
+                {
+                    art: "04-become.webp",
+                    emoji: "🐂",
+                    left: [
+                        { t: "\"Give it here! Quickly! I'll pay whatever you ask!\"", v: "man" },
+                        "He had no time to think what might follow. The old man smiled and handed it over.",
+                        "The farmer snatched it and pulled it over his face.",
+                        "And in that moment—"
+                    ],
+                    right: [
+                        { t: "\"Mooo—!\"", v: "beast" },
+                        "The farmer jumped at the sound of his own voice.",
+                        "His hands turned to hooves and yellow hair grew on his back. His clothes split along every seam.",
+                        "The farmer had become a great ox. The old man looked down at him without a word."
+                    ]
+                },
+                {
+                    art: "05-sold.webp",
+                    emoji: "💰",
+                    left: [
+                        "As if he had been waiting, the old man put a rope round the ox's neck. It pulled tight.",
+                        "Then he led him straight to the market.",
+                        { t: "\"A fine ox here! Strong as they come!\"", v: "old" },
+                        "The ox struggled and it was no use at all."
+                    ],
+                    right: [
+                        { t: "'I am not an ox! I am a man!'", v: "beast" },
+                        "People crowded round. He bellowed till his throat tore and only moos came out.",
+                        "The old man added one thing for the buyer.",
+                        { t: "\"One rule. Never feed him radish. Radish will kill him.\"", v: "old" },
+                        "The new owner tilted his head at that."
+                    ]
+                },
+                {
+                    art: "06-work.webp",
+                    emoji: "🌾",
+                    left: [
+                        "The work began before dawn the next day, while the morning star was still out.",
+                        "Plough on his shoulders, up and down the field; heavy loads on his back, up the hill.",
+                        { t: "\"Get on! Get on!\"", v: "man" },
+                        "The whip cracked behind him."
+                    ],
+                    right: [
+                        { t: "'Oh, what have I done.'", v: "beast" },
+                        "His nose stung. His shoulders felt as if they would come off and his hooves split open.",
+                        "However loudly he cried that it was unfair, nothing came out of his mouth but a moo.",
+                        "The whip did not rest."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · In the Radish Field",
+            beats: [
+                {
+                    art: "07-regret.webp",
+                    emoji: "😢",
+                    left: [
+                        "The fodder had no taste and his whole body ached. The shed was cold and dark.",
+                        { t: "'I should have ploughed my own field.'", v: "beast" },
+                        { t: "'That was a hundred times better than this.'", v: "beast" },
+                        { t: "'What is my wife doing now?'", v: "beast" },
+                        "He turned this way and that on the straw."
+                    ],
+                    right: [
+                        "Night after night the ox could not sleep. Big tears rolled from his great eyes and soaked the straw.",
+                        "But nobody knew what was inside him.",
+                        "The owner simply gave him more fodder.",
+                        "And the more he was fed the more he thought of home."
+                    ]
+                },
+                {
+                    art: "08-radish.webp",
+                    emoji: "🥬",
+                    left: [
+                        "Years went by like that. The ox was growing old now.",
+                        "One day he was passing a radish field, and he was so hungry he could not bear it.",
+                        { t: "'They said radish would kill me.'", v: "beast" },
+                        { t: "'Well, I don't care. I can't go on like this!'", v: "beast" }
+                    ],
+                    right: [
+                        "He shut his eyes tight, pulled up a radish and chewed it. Crunch, crunch, crunch.",
+                        "A cool taste spread all through him.",
+                        "His whole body itched and grew hot.",
+                        "And instead of dying, he began to change."
+                    ]
+                },
+                {
+                    art: "09-human.webp",
+                    emoji: "😲",
+                    left: [
+                        "Bang!",
+                        "With the sound his body went hot as fire. The yellow hair came showering off.",
+                        "His hooves split and turned back into hands.",
+                        "The tail was gone and the horns were gone.",
+                        "Where his clothes came from, nobody could say."
+                    ],
+                    right: [
+                        "The farmer stood upright in the middle of the radish field, turning his own hands over and looking at them.",
+                        { t: "\"Wha— what? The ox has turned into a man!\"", v: "man" },
+                        "The owner sat down flat on the spot.",
+                        "People came running from all over the field."
+                    ]
+                },
+                {
+                    art: "10-work-hard.webp",
+                    emoji: "💪",
+                    left: [
+                        "The farmer ran for home, barefoot as he was.",
+                        "It was his own yard, the first time in years.",
+                        { t: "\"Wife! I'm home! I came back alive!\"", v: "man" },
+                        "She ran out of the kitchen, took hold of him and wept."
+                    ],
+                    right: [
+                        "From that day the farmer was the hardest worker in the village. He was in the field before sunrise and home after dark.",
+                        "And whenever somebody was idling, he would say this:",
+                        { t: "\"Keep that up and you'll turn into an ox! I know — I've been one!\"", v: "man" },
+                        "The children laughed themselves silly at that."
+                    ]
+                }
+            ],
+            moral: "Dodging work can land you in far harder work. The farmer tried never to work again, and instead became an ox and worked himself half to death.",
+            question: "Have you ever put something off and made it harder for yourself?"
+        }
+    ],
+    quiz: [
+        { q: "Why did the farmer leave the house?", choices: ["To weed the field", "To get away from the scolding", "To sell an ox at the market"], answer: 1 },
+        { q: "What was the old man holding?", choices: ["An iron rope", "A long whip", "An ox-face mask"], answer: 2 },
+        { q: "What happened to the farmer's hands when he put the mask on?", choices: ["They became hooves", "Hair grew on them", "Horns grew on them"], answer: 0 },
+        { q: "What did the old man tell the buyer?", choices: ["Never use a whip", "Never let him sleep at night", "Never feed him radish"], answer: 2 },
+        { q: "What happened to the ox's body after the radish?", choices: ["His hooves split open", "Yellow hair grew on him", "All the yellow hair fell off"], answer: 2 },
+        { q: "What did he say to people who were idling?", choices: ["That they'd turn into an ox", "That they should do it tomorrow", "That they should go to market"], answer: 0 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "Looking for a life without work turned him into an ox, so the easy road became the hardest one.",
+                "He cried that it was unfair and only mooed, so being unable to make yourself understood is a terrible thing.",
+                "The ox work is described in such detail, so an ox then did as much work as a person.",
+                "His wife spotted the ox at the market and bought him back, so married people know each other somehow."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "ox", k: "황소", s: "The Farmer Who Became an Ox" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "better known as ~", k: "~으로 더 알려진", s: "It is better known as The Lazy Man Who Turned into an Ox." },
+            { w: "lazy", k: "게으른", s: "The Lazy Man Who Turned into an Ox" },
+            { w: "stands for ~ (stand)", k: "~을 나타낸다", s: "the ox stands for hard work" },
+            { w: "hard-working", k: "부지런한", s: "the most hard-working animal of all" },
+            { w: "the whole point", k: "바로 그 뜻", s: "is the whole point of it" },
+            { w: "grown-ups", k: "어른들", s: "When grown-ups tell a lazy child you'll turn into an ox" },
+            { w: "saying", k: "말, 속담", s: "this is the story the saying comes from" }
+        ],
+        "01-lazy.webp": [
+            { w: "hated (hate)", k: "몹시 싫어했다", s: "a farmer who hated farm work more than anything" },
+            { w: "more than anything", k: "죽기보다", s: "hated farm work more than anything" },
+            { w: "cobwebs", k: "거미줄", s: "There were cobwebs on his hoe." },
+            { w: "hoe", k: "괭이", s: "There were cobwebs on his hoe." },
+            { w: "high in the sky", k: "중천에 뜬", s: "The sun would be high in the sky" },
+            { w: "a hard life", k: "사나운 팔자", s: "Oh, what a hard life I have." },
+            { w: "weeds", k: "잡초", s: "The weeds in the field are as tall as a man." },
+            { w: "as tall as a man", k: "사람 키만큼", s: "The weeds in the field are as tall as a man." },
+            { w: "three days old", k: "사흘째인", s: "That little longer is three days old!" },
+            { w: "rapped (rap)", k: "탁탁 두드렸다", s: "She rapped on the doorsill" },
+            { w: "rolled over (roll)", k: "돌아누웠다", s: "the farmer only rolled over" }
+        ],
+        "02-leave.webp": [
+            { w: "get away from ~", k: "~을 피하다", s: "To get away from the scolding" },
+            { w: "scolding", k: "잔소리", s: "To get away from the scolding the farmer slipped out" },
+            { w: "slipped out (slip)", k: "슬그머니 나왔다", s: "the farmer slipped out of the house" },
+            { w: "with his hands behind his back", k: "뒷짐을 지고", s: "He walked with his hands behind his back." },
+            { w: "nowhere to go", k: "갈 데가 없는", s: "He had nowhere to go." },
+            { w: "without working", k: "일 안 하고", s: "Isn't there some way to live without working?" },
+            { w: "wherever they liked", k: "아무 데로나", s: "His feet went wherever they liked." },
+            { w: "grew narrower (grow)", k: "점점 좁아졌다", s: "the path grew narrower and the trees grew thicker" },
+            { w: "before he knew it", k: "어느새", s: "Before he knew it he was deep in hills he had never seen." },
+            { w: "birdsong", k: "새소리", s: "There was no birdsong and no water sound." },
+            { w: "strangely", k: "이상하게", s: "It was strangely quiet." }
+        ],
+        "03-mask.webp": [
+            { w: "mask", k: "탈", s: "In his hands was a mask shaped like an ox's face." },
+            { w: "shaped like ~", k: "~ 모양의", s: "a mask shaped like an ox's face" },
+            { w: "carved (carve)", k: "깎아 만든", s: "It was carved from wood and very well made." },
+            { w: "this way and that", k: "이리저리", s: "The old man turned it this way and that." },
+            { w: "what on earth ~", k: "그건 대체", s: "Sir, what on earth is that?" },
+            { w: "put ~ on", k: "쓰다", s: "Put this on and you'll eat all your life" },
+            { w: "without lifting a finger", k: "손끝 하나 까딱 않고", s: "you'll eat all your life without lifting a finger" },
+            { w: "Is that true?", k: "정말입니까?", s: "What? Is — is that true?" },
+            { w: "had never dreamed", k: "꿈에도 생각 못 했다", s: "He had never dreamed such a thing existed." },
+            { w: "existed (exist)", k: "있었다", s: "He had never dreamed such a thing existed." }
+        ],
+        "04-become.webp": [
+            { w: "Give it here!", k: "어서 주십시오!", s: "Give it here! Quickly!" },
+            { w: "whatever you ask", k: "얼마든지", s: "I'll pay whatever you ask!" },
+            { w: "what might follow", k: "뒷일", s: "He had no time to think what might follow." },
+            { w: "handed it over (hand over)", k: "건넸다", s: "The old man smiled and handed it over." },
+            { w: "snatched (snatch)", k: "냉큼 받았다", s: "The farmer snatched it and pulled it over his face." },
+            { w: "Mooo—", k: "음메—", s: "Mooo—!" },
+            { w: "his own voice", k: "제 소리", s: "The farmer jumped at the sound of his own voice." },
+            { w: "hooves (hoof)", k: "발굽", s: "His hands turned to hooves" },
+            { w: "split (split)", k: "터졌다", s: "His clothes split along every seam." },
+            { w: "seam", k: "실밥, 솔기", s: "His clothes split along every seam." },
+            { w: "without a word", k: "말없이", s: "The old man looked down at him without a word." }
+        ],
+        "05-sold.webp": [
+            { w: "As if he had been waiting", k: "기다렸다는 듯", s: "As if he had been waiting, the old man put a rope round the ox's neck." },
+            { w: "pulled tight", k: "바짝 죄었다", s: "It pulled tight." },
+            { w: "led (lead)", k: "끌고 갔다", s: "Then he led him straight to the market." },
+            { w: "Strong as they come", k: "힘이 아주 좋은", s: "A fine ox here! Strong as they come!" },
+            { w: "struggled (struggle)", k: "발버둥 쳤다", s: "The ox struggled and it was no use at all." },
+            { w: "crowded round (crowd)", k: "몰려들었다", s: "People crowded round." },
+            { w: "bellowed (bellow)", k: "목이 터져라 외쳤다", s: "He bellowed till his throat tore" },
+            { w: "buyer", k: "산 사람", s: "The old man added one thing for the buyer." },
+            { w: "feed (feed)", k: "먹이다", s: "Never feed him radish." },
+            { w: "radish", k: "무", s: "Never feed him radish. Radish will kill him." },
+            { w: "tilted his head", k: "고개를 갸웃했다", s: "The new owner tilted his head at that." }
+        ],
+        "06-work.webp": [
+            { w: "before dawn", k: "새벽부터", s: "The work began before dawn the next day" },
+            { w: "the morning star", k: "새벽별", s: "while the morning star was still out" },
+            { w: "plough", k: "쟁기", s: "Plough on his shoulders, up and down the field" },
+            { w: "loads", k: "짐", s: "heavy loads on his back, up the hill" },
+            { w: "Get on!", k: "이랴!", s: "Get on! Get on!" },
+            { w: "whip", k: "채찍", s: "The whip cracked behind him." },
+            { w: "cracked (crack)", k: "철썩 울렸다", s: "The whip cracked behind him." },
+            { w: "stung (sting)", k: "시큰했다", s: "His nose stung." },
+            { w: "come off", k: "빠지다", s: "His shoulders felt as if they would come off" },
+            { w: "split open", k: "쩍쩍 갈라졌다", s: "his hooves split open" },
+            { w: "However loudly ~", k: "아무리 크게 ~해도", s: "However loudly he cried that it was unfair" },
+            { w: "did not rest", k: "쉬지 않았다", s: "The whip did not rest." }
+        ],
+        "07-regret.webp": [
+            { w: "fodder", k: "소 먹이", s: "The fodder had no taste" },
+            { w: "ached (ache)", k: "쑤셨다", s: "his whole body ached" },
+            { w: "shed", k: "외양간", s: "The shed was cold and dark." },
+            { w: "I should have ~ed", k: "~할걸", s: "I should have ploughed my own field." },
+            { w: "a hundred times better", k: "백배는 나은", s: "That was a hundred times better than this." },
+            { w: "night after night", k: "밤마다", s: "Night after night the ox could not sleep." },
+            { w: "rolled from ~ (roll)", k: "뚝뚝 떨어졌다", s: "Big tears rolled from his great eyes" },
+            { w: "soaked (soak)", k: "적셨다", s: "and soaked the straw" },
+            { w: "what was inside him", k: "그 속마음", s: "But nobody knew what was inside him." },
+            { w: "the more ~ the more ~", k: "~할수록 더", s: "the more he was fed the more he thought of home" }
+        ],
+        "08-radish.webp": [
+            { w: "went by (go by)", k: "흘렀다", s: "Years went by like that." },
+            { w: "growing old", k: "늙어 가는", s: "The ox was growing old now." },
+            { w: "could not bear it", k: "견딜 수 없었다", s: "he was so hungry he could not bear it" },
+            { w: "I don't care", k: "에라, 모르겠다", s: "Well, I don't care." },
+            { w: "go on like this", k: "이대로 견디다", s: "I can't go on like this!" },
+            { w: "shut his eyes tight", k: "눈을 질끈 감았다", s: "He shut his eyes tight, pulled up a radish" },
+            { w: "pulled up (pull up)", k: "쑥 뽑았다", s: "pulled up a radish and chewed it" },
+            { w: "chewed (chew)", k: "우적우적 씹었다", s: "pulled up a radish and chewed it" },
+            { w: "Crunch", k: "아삭", s: "Crunch, crunch, crunch." },
+            { w: "spread (spread)", k: "쫙 퍼졌다", s: "A cool taste spread all through him." },
+            { w: "itched (itch)", k: "근질근질했다", s: "His whole body itched and grew hot." },
+            { w: "instead of ~ing", k: "~하기는커녕", s: "And instead of dying, he began to change." }
+        ],
+        "09-human.webp": [
+            { w: "Bang!", k: "펑!", s: "Bang!" },
+            { w: "hot as fire", k: "불덩이처럼 뜨거운", s: "With the sound his body went hot as fire." },
+            { w: "came showering off", k: "우수수 떨어졌다", s: "The yellow hair came showering off." },
+            { w: "turned back into ~", k: "도로 ~이 되었다", s: "His hooves split and turned back into hands." },
+            { w: "horns", k: "뿔", s: "The tail was gone and the horns were gone." },
+            { w: "nobody could say", k: "알 수 없었다", s: "Where his clothes came from, nobody could say." },
+            { w: "stood upright", k: "벌떡 섰다", s: "The farmer stood upright in the middle of the radish field" },
+            { w: "turning ~ over", k: "뒤집어 가며", s: "turning his own hands over and looking at them" },
+            { w: "sat down flat", k: "털썩 주저앉았다", s: "The owner sat down flat on the spot." },
+            { w: "came running", k: "몰려들었다", s: "People came running from all over the field." }
+        ],
+        "10-work-hard.webp": [
+            { w: "ran for home", k: "집을 향해 달렸다", s: "The farmer ran for home, barefoot as he was." },
+            { w: "barefoot", k: "맨발로", s: "barefoot as he was" },
+            { w: "the first time in years", k: "몇 해 만에", s: "It was his own yard, the first time in years." },
+            { w: "came back alive", k: "살아서 돌아왔다", s: "I'm home! I came back alive!" },
+            { w: "took hold of ~", k: "붙들었다", s: "She ran out of the kitchen, took hold of him and wept." },
+            { w: "wept (weep)", k: "울었다", s: "took hold of him and wept" },
+            { w: "the hardest worker", k: "제일 부지런한 사람", s: "the farmer was the hardest worker in the village" },
+            { w: "before sunrise", k: "해 뜨기 전에", s: "He was in the field before sunrise and home after dark." },
+            { w: "idling (idle)", k: "게으름 피우는", s: "whenever somebody was idling" },
+            { w: "Keep that up", k: "그러다가는", s: "Keep that up and you'll turn into an ox!" },
+            { w: "laughed themselves silly", k: "깔깔 웃었다", s: "The children laughed themselves silly at that." }
+        ],
+        "after": [
+            { w: "turns into ~ and back", k: "바뀌었다가 되돌아온다", s: "A person who turns into an animal and back is a very old shape for a story." },
+            { w: "as a punishment", k: "벌로", s: "Usually the change is a punishment" },
+            { w: "learns something", k: "무언가를 깨닫는다", s: "and the person learns something before turning back" },
+            { w: "there is a reason", k: "까닭이 있다", s: "There is a reason it is an ox in our version." },
+            { w: "the hardest-worked", k: "가장 고되게 일하던", s: "The ox was the hardest-worked creature of that time." },
+            { w: "did not know what work was", k: "일이 무엇인지 몰랐다", s: "he is a man who did not know what work was" },
+            { w: "Only after ~ does he ...", k: "~하고 나서야 비로소", s: "Only after becoming an ox does he understand" },
+            { w: "was ploughing (plough)", k: "갈고 있었다", s: "what he was ploughing at home really was" },
+            { w: "out of fear", k: "무서워서", s: "he ran to the field at the end not out of fear of punishment" },
+            { w: "as his own", k: "제 일로", s: "he saw the work as his own for the first time" },
+            { w: "worth noticing", k: "눈여겨볼 만한", s: "The ox's tears are worth noticing too." },
+            { w: "not once", k: "한 번도 ~ 않다", s: "As a man he had not once cried." },
+            { w: "dodging (dodge)", k: "피하는 것", s: "Dodging work can land you in far harder work." },
+            { w: "land you in ~", k: "~에 빠뜨리다", s: "Dodging work can land you in far harder work." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐂',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "A person who turns into an animal and back is a very old shape for a story. Greece has one and China has one. Usually the change is a punishment, and the person learns something before turning back.",
+                    "There is a reason it is an ox in our version. The ox was the hardest-worked creature of that time. A man who hated work was made into the animal that works most.",
+                    "Look again and he is not so much a lazy man as a man who did not know what work was. Only after becoming an ox does he understand what he was ploughing at home really was.",
+                    "So he ran to the field at the end not out of fear of punishment. He saw the work as his own for the first time."
+                ],
+                right: [
+                    "The ox's tears are worth noticing too. As a man he had not once cried.",
+                    "Dodging work can land you in far harder work. The farmer tried never to work again, and instead became an ox and worked himself half to death.",
+                    "Have you ever put something off and made it harder for yourself?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "농부는 왜 집을 나왔나요?", choices: ["밭에 잡초를 매러", "잔소리가 듣기 싫어서", "장에 소를 팔러"], answer: 1 },
     { q: "노인이 손에 들고 있던 것은 무엇이었나요?", choices: ["쇠 고삐", "긴 채찍", "소 얼굴 탈"], answer: 2 },

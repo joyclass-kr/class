@@ -204,6 +204,404 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🏺",
+        art: "cover.webp",
+        title: "The Magic Jar",
+        intro: [
+            "The Magic Jar is an old Korean tale with no known author. A vessel that gives back endlessly is called a hwasubun in Korean, and people still use the word today.",
+            "The shape of the story turns up all over the world: a greedy person takes an endless jar or millstone and comes off worse for it.",
+            "In our tales a greedy rich man is always punished the same way. The thing he seized by force turns round and torments him."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Jar in the Field",
+            beats: [
+                {
+                    art: "01-dig.webp",
+                    emoji: "🏺",
+                    left: [
+                        "Long ago there lived a poor farmer and his wife. Their paddy and their field were the size of a hand.",
+                        "For hard work there was no one like them in the village.",
+                        "They sowed in spring and reaped in autumn, and the store was always empty.",
+                        { t: "\"Maybe this year will be better.\"", v: "man" }
+                    ],
+                    right: [
+                        "Clang!",
+                        "The blade of his hoe struck something hard.",
+                        "Thinking it was a stone, he scraped the earth away.",
+                        "A great jar was buried there whole, big enough to hold a grown man.",
+                        "He cleared off all the soil and stood looking at it a long time."
+                    ]
+                },
+                {
+                    art: "02-hoe.webp",
+                    emoji: "😮",
+                    left: [
+                        { t: "\"A decent jar, this.\"", v: "man" },
+                        "He brushed off the earth and turned it about. Then he loaded it on his frame and carried it home.",
+                        "As he set it down in the yard he dropped his hoe into the jar.",
+                        { t: "\"Oh dear. Now how do I get that out?\"", v: "man" }
+                    ],
+                    right: [
+                        "He reached in and took out the hoe.",
+                        "And there was another hoe still inside the jar.",
+                        "He could not believe his eyes.",
+                        { t: "\"What?\"", v: "man" },
+                        "However many he took out, more hoes kept coming. They piled up in the yard."
+                    ]
+                },
+                {
+                    art: "03-coin.webp",
+                    emoji: "🪙",
+                    left: [
+                        { t: "\"Wife! Come and look at this!\"", v: "man" },
+                        "The farmer called at the top of his voice.",
+                        "She came running out of the kitchen.",
+                        "She looked at the yard and her mouth fell open.",
+                        "He dropped in one copper coin.",
+                        "He took it out and there were two. Out again, and three."
+                    ],
+                    right: [
+                        { t: "\"Whatever is happening!\"", v: "woman" },
+                        "She put both hands over her mouth.",
+                        "However many coins came out, there were always more. The yard was full of the sound of them.",
+                        "The two of them counted coins all night and then burst out laughing.",
+                        { t: "\"We'll never go hungry again.\"", v: "man" }
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Rich Man Takes It",
+            beats: [
+                {
+                    art: "04-rich.webp",
+                    emoji: "🏡",
+                    left: [
+                        "Within a few months you would not have known the farmer's house.",
+                        "The thatch came off and tiles went on. The store was full and two oxen stood in the shed.",
+                        "The couple shared rice with the neighbours as well.",
+                        "Nobody in the village had a bad word for them. There was laughter in that yard all day."
+                    ],
+                    right: [
+                        { t: "\"How did that house get rich so fast?\"", v: "granny" },
+                        "More and more people peered over the wall.",
+                        { t: "\"Dug a magic jar out of his field, they say.\"", v: "man" },
+                        "The story went round the village in no time. You cannot hide the sky with your palm."
+                    ]
+                },
+                {
+                    art: "05-seize.webp",
+                    emoji: "😤",
+                    left: [
+                        "The story reached the ear of the greediest rich man in the village.",
+                        "He already had three storehouses. And still he wanted what belonged to somebody else.",
+                        "He put his spoon down in the middle of his meal, almost throwing it.",
+                        "Then he went straight to the farmer's house."
+                    ],
+                    right: [
+                        { t: "\"That field was my family's land to begin with!\"", v: "man" },
+                        "He shouted it as he came into the yard.",
+                        { t: "\"So whatever came out of it is mine!\"", v: "man" },
+                        "The farmer had no chance to say a word. The rich man took the jar up in his arms and went.",
+                        "The couple sat down where they stood."
+                    ]
+                },
+                {
+                    art: "06-gold.webp",
+                    emoji: "💰",
+                    left: [
+                        "The rich man bolted his door and sat down in front of the jar. Not even his own family was to see.",
+                        "This time he was not putting coppers in.",
+                        "He dropped in one lump of gold and took out two.",
+                        "His hands shook."
+                    ],
+                    right: [
+                        "Out again, and three.",
+                        "The gold piled up on the floor like a hill.",
+                        { t: "\"Ha! Now I'm the richest man in the country!\"", v: "man" },
+                        "He pulled them out and out again, and never noticed his arms aching. He kept at it all night.",
+                        "His storehouse was full in a single day."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · A Yard Full of Fathers",
+            beats: [
+                {
+                    art: "07-father.webp",
+                    emoji: "👴",
+                    left: [
+                        "Just then his old father peered in through the crack of the door. Strange sounds had come from his son's room all night.",
+                        { t: "\"Son, what on earth are you doing?\"", v: "old" },
+                        { t: "\"Father, go away!\"", v: "man" },
+                        "But the old man could not stand not knowing."
+                    ],
+                    right: [
+                        "He pulled the door open and stood on tiptoe to look into the jar.",
+                        "He leaned in a little further—",
+                        "Splash!",
+                        "And in he went, right into the jar.",
+                        "His legs waved in the air."
+                    ]
+                },
+                {
+                    art: "08-two.webp",
+                    emoji: "😳",
+                    left: [
+                        "The rich man scrambled to pull his father out. The old man gasped like someone out of water.",
+                        { t: "\"Father! Are you all right?\"", v: "man" },
+                        "His father brushed down his wet clothes and coughed.",
+                        "The rich man let out his breath."
+                    ],
+                    right: [
+                        "And then a voice came from inside the jar. It was his father's voice, without any doubt.",
+                        { t: "\"Son, get me out too.\"", v: "old" },
+                        { t: "\"Wh— what is this!\"", v: "man" },
+                        "The rich man went white.",
+                        "With a shaking hand he looked down into the jar."
+                    ]
+                },
+                {
+                    art: "09-many.webp",
+                    emoji: "👨‍👨‍👦‍👦",
+                    left: [
+                        "However many he pulled out, another father came.",
+                        "Take one out and there was one more. He pulled fathers out until his arms went numb.",
+                        "Before long the yard was full of fathers, every one the same face in the same clothes.",
+                        { t: "\"Son, I'm hungry.\"", v: "old" }
+                    ],
+                    right: [
+                        { t: "\"Son, I'm hungry too. Give me my supper.\"", v: "old" },
+                        "The fathers came towards him, every one holding out a hand.",
+                        { t: "\"Son, me too!\"", v: "old" },
+                        "Dozens of them called him at once. The rich man covered his ears and sat down.",
+                        { t: "\"What am I to do!\"", v: "man" }
+                    ]
+                },
+                {
+                    art: "10-ruined.webp",
+                    emoji: "😵",
+                    left: [
+                        "He opened his storehouses to feed all those fathers. Dozens of fathers means dozens of bowls.",
+                        "The sacks of rice went down day by day.",
+                        "The gold went, and then the fields, one after another.",
+                        "His whole day went on cooking."
+                    ],
+                    right: [
+                        "In the end he sold the jar itself.",
+                        { t: "\"That house has a fine son. Dozens of fathers to look after.\"", v: "granny" },
+                        "The villagers said it to each other and laughed for a long while.",
+                        "Only then did the rich man go to the farmer and say he was sorry."
+                    ]
+                }
+            ],
+            moral: "Take a thing from somebody by force and you carry it off without knowing what is inside it. What the rich man got hold of was not wealth but a load he could not carry.",
+            question: "Have you ever tried to get something you wanted in a way that was not right?"
+        }
+    ],
+    quiz: [
+        { q: "What did the farmer drop into the jar first?", choices: ["A copper coin", "A hoe", "A lump of gold"], answer: 1 },
+        { q: "What happened when you put something in the jar?", choices: ["It disappeared", "It turned to gold", "It kept multiplying"], answer: 2 },
+        { q: "What did the rich man do when he heard the story?", choices: ["Threw his spoon down", "Opened his storehouse", "Peered over the wall"], answer: 0 },
+        { q: "Who fell into the jar?", choices: ["The farmer's wife", "The village magistrate", "The rich man's father"], answer: 2 },
+        { q: "What did the fathers filling the yard say?", choices: ["That they were hungry", "They broke the jar", "They left the house"], answer: 0 },
+        { q: "What became of the greedy rich man?", choices: ["He gave the jar back", "He spent everything he had", "He left the village"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "A heap of hoes came first, so the thing that astonished him at the start was not gold but a hoe.",
+                "The rich man carried the jar off saying the land was his family's, so back then whoever had power had the law.",
+                "The couple shared rice with their neighbours, so people who have gone without know how to share.",
+                "He emptied his storehouses feeding all those fathers, so in the end he looked after his father well."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "jar", k: "항아리", s: "The Magic Jar" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "vessel", k: "그릇", s: "A vessel that gives back endlessly" },
+            { w: "endlessly", k: "끝없이", s: "A vessel that gives back endlessly" },
+            { w: "turns up (turn up)", k: "나타난다", s: "The shape of the story turns up all over the world" },
+            { w: "greedy", k: "욕심 많은", s: "a greedy person takes an endless jar or millstone" },
+            { w: "millstone", k: "맷돌", s: "an endless jar or millstone" },
+            { w: "comes off worse", k: "도리어 낭패를 본다", s: "and comes off worse for it" },
+            { w: "is punished (punish)", k: "벌을 받는다", s: "a greedy rich man is always punished the same way" },
+            { w: "seized by force (seize)", k: "힘으로 빼앗은", s: "The thing he seized by force" },
+            { w: "torments (torment)", k: "괴롭힌다", s: "turns round and torments him" }
+        ],
+        "01-dig.webp": [
+            { w: "paddy", k: "논", s: "Their paddy and their field were the size of a hand." },
+            { w: "the size of a hand", k: "손바닥만 한", s: "were the size of a hand" },
+            { w: "no one like them", k: "으뜸인", s: "For hard work there was no one like them in the village." },
+            { w: "sowed (sow)", k: "씨를 뿌렸다", s: "They sowed in spring and reaped in autumn" },
+            { w: "reaped (reap)", k: "거두었다", s: "They sowed in spring and reaped in autumn" },
+            { w: "store", k: "곳간", s: "the store was always empty" },
+            { w: "Clang!", k: "쨍!", s: "Clang!" },
+            { w: "blade", k: "날", s: "The blade of his hoe struck something hard." },
+            { w: "struck (strike)", k: "부딪혔다", s: "The blade of his hoe struck something hard." },
+            { w: "scraped ~ away (scrape)", k: "헤쳤다", s: "he scraped the earth away" },
+            { w: "was buried (bury)", k: "묻혀 있었다", s: "A great jar was buried there whole" },
+            { w: "big enough to ~", k: "~할 만큼 큰", s: "big enough to hold a grown man" }
+        ],
+        "02-hoe.webp": [
+            { w: "decent", k: "쓸 만한", s: "A decent jar, this." },
+            { w: "brushed off (brush)", k: "털어 냈다", s: "He brushed off the earth and turned it about." },
+            { w: "turned it about", k: "이리저리 살폈다", s: "He brushed off the earth and turned it about." },
+            { w: "loaded (load)", k: "얹었다", s: "Then he loaded it on his frame and carried it home." },
+            { w: "set ~ down (set)", k: "내려놓았다", s: "As he set it down in the yard" },
+            { w: "dropped ~ into (drop)", k: "빠뜨렸다", s: "he dropped his hoe into the jar" },
+            { w: "reached in (reach)", k: "손을 쑥 넣었다", s: "He reached in and took out the hoe." },
+            { w: "could not believe his eyes", k: "제 눈을 의심했다", s: "He could not believe his eyes." },
+            { w: "However many ~", k: "꺼내고 또 꺼내도", s: "However many he took out, more hoes kept coming." },
+            { w: "piled up (pile)", k: "수북이 쌓였다", s: "They piled up in the yard." }
+        ],
+        "03-coin.webp": [
+            { w: "at the top of his voice", k: "목청껏", s: "The farmer called at the top of his voice." },
+            { w: "came running", k: "한달음에 뛰어나왔다", s: "She came running out of the kitchen." },
+            { w: "her mouth fell open", k: "입을 딱 벌렸다", s: "She looked at the yard and her mouth fell open." },
+            { w: "copper coin", k: "엽전", s: "He dropped in one copper coin." },
+            { w: "Whatever is happening!", k: "이게 무슨 일이래!", s: "Whatever is happening!" },
+            { w: "over her mouth", k: "입을 막고", s: "She put both hands over her mouth." },
+            { w: "there were always more", k: "끝이 없었다", s: "However many coins came out, there were always more." },
+            { w: "the sound of them", k: "짤랑거리는 소리", s: "The yard was full of the sound of them." },
+            { w: "burst out laughing", k: "웃음을 터뜨렸다", s: "counted coins all night and then burst out laughing" },
+            { w: "go hungry", k: "굶다", s: "We'll never go hungry again." }
+        ],
+        "04-rich.webp": [
+            { w: "within a few months", k: "몇 달 지나지 않아", s: "Within a few months you would not have known the farmer's house." },
+            { w: "thatch", k: "초가지붕", s: "The thatch came off and tiles went on." },
+            { w: "tiles", k: "기와", s: "The thatch came off and tiles went on." },
+            { w: "oxen (ox)", k: "소", s: "two oxen stood in the shed" },
+            { w: "shared (share)", k: "나누어 주었다", s: "The couple shared rice with the neighbours as well." },
+            { w: "a bad word for ~", k: "~을 미워하는 말", s: "Nobody in the village had a bad word for them." },
+            { w: "peered over ~ (peer)", k: "너머로 기웃거렸다", s: "More and more people peered over the wall." },
+            { w: "Dug ~ out of (dig)", k: "~에서 캤다", s: "Dug a magic jar out of his field, they say." },
+            { w: "in no time", k: "금세", s: "The story went round the village in no time." },
+            { w: "hide the sky with your palm", k: "손바닥으로 하늘을 가리다", s: "You cannot hide the sky with your palm." }
+        ],
+        "05-seize.webp": [
+            { w: "reached the ear of ~", k: "~ 귀에 들어갔다", s: "The story reached the ear of the greediest rich man" },
+            { w: "storehouses", k: "곳간", s: "He already had three storehouses." },
+            { w: "what belonged to somebody else", k: "남의 것", s: "And still he wanted what belonged to somebody else." },
+            { w: "in the middle of his meal", k: "밥을 먹다 말고", s: "He put his spoon down in the middle of his meal" },
+            { w: "went straight to ~", k: "곧장 갔다", s: "Then he went straight to the farmer's house." },
+            { w: "to begin with", k: "본래", s: "That field was my family's land to begin with!" },
+            { w: "whatever came out of it", k: "거기서 나온 것", s: "So whatever came out of it is mine!" },
+            { w: "had no chance to ~", k: "~할 틈도 없었다", s: "The farmer had no chance to say a word." },
+            { w: "took ~ up in his arms", k: "번쩍 안았다", s: "The rich man took the jar up in his arms and went." },
+            { w: "where they stood", k: "그 자리에", s: "The couple sat down where they stood." }
+        ],
+        "06-gold.webp": [
+            { w: "bolted (bolt)", k: "걸어 잠갔다", s: "The rich man bolted his door" },
+            { w: "was to see", k: "볼 수 있었다", s: "Not even his own family was to see." },
+            { w: "coppers", k: "엽전", s: "This time he was not putting coppers in." },
+            { w: "lump", k: "덩이", s: "He dropped in one lump of gold and took out two." },
+            { w: "shook (shake)", k: "부들부들 떨렸다", s: "His hands shook." },
+            { w: "piled up like a hill", k: "산처럼 쌓였다", s: "The gold piled up on the floor like a hill." },
+            { w: "the richest man", k: "제일 부자", s: "Now I'm the richest man in the country!" },
+            { w: "never noticed ~", k: "~한 줄도 몰랐다", s: "never noticed his arms aching" },
+            { w: "kept at it (keep at)", k: "그 짓을 계속했다", s: "He kept at it all night." },
+            { w: "in a single day", k: "하루 만에", s: "His storehouse was full in a single day." }
+        ],
+        "07-father.webp": [
+            { w: "peered in (peer)", k: "안을 기웃거렸다", s: "his old father peered in through the crack of the door" },
+            { w: "the crack of the door", k: "문틈", s: "peered in through the crack of the door" },
+            { w: "what on earth ~", k: "대체 무엇을", s: "Son, what on earth are you doing?" },
+            { w: "go away", k: "저리 가세요", s: "Father, go away!" },
+            { w: "could not stand ~ing", k: "견딜 수 없었다", s: "But the old man could not stand not knowing." },
+            { w: "on tiptoe", k: "까치발을 들고", s: "stood on tiptoe to look into the jar" },
+            { w: "leaned in (lean)", k: "몸을 기울였다", s: "He leaned in a little further" },
+            { w: "Splash!", k: "풍덩!", s: "Splash!" },
+            { w: "waved in the air", k: "허공에서 버둥거렸다", s: "His legs waved in the air." }
+        ],
+        "08-two.webp": [
+            { w: "scrambled to ~ (scramble)", k: "허둥지둥 ~했다", s: "The rich man scrambled to pull his father out." },
+            { w: "gasped (gasp)", k: "헐떡였다", s: "The old man gasped like someone out of water." },
+            { w: "brushed down ~", k: "털었다", s: "His father brushed down his wet clothes and coughed." },
+            { w: "coughed (cough)", k: "헛기침을 했다", s: "brushed down his wet clothes and coughed" },
+            { w: "let out his breath", k: "가슴을 쓸어내렸다", s: "The rich man let out his breath." },
+            { w: "without any doubt", k: "분명히", s: "It was his father's voice, without any doubt." },
+            { w: "get me out", k: "나도 꺼내 다오", s: "Son, get me out too." },
+            { w: "went white (go)", k: "하얗게 질렸다", s: "The rich man went white." },
+            { w: "with a shaking hand", k: "떨리는 손으로", s: "With a shaking hand he looked down into the jar." }
+        ],
+        "09-many.webp": [
+            { w: "another ~ came", k: "또 하나가 나왔다", s: "However many he pulled out, another father came." },
+            { w: "one more", k: "또 하나", s: "Take one out and there was one more." },
+            { w: "went numb (go)", k: "저렸다", s: "He pulled fathers out until his arms went numb." },
+            { w: "before long", k: "어느새", s: "Before long the yard was full of fathers" },
+            { w: "every one the same", k: "다들 똑같은", s: "every one the same face in the same clothes" },
+            { w: "holding out a hand", k: "손을 내밀며", s: "every one holding out a hand" },
+            { w: "dozens of ~", k: "수십 명의", s: "Dozens of them called him at once." },
+            { w: "at once", k: "한꺼번에", s: "Dozens of them called him at once." },
+            { w: "covered his ears", k: "귀를 막았다", s: "The rich man covered his ears and sat down." },
+            { w: "What am I to do!", k: "이걸 어쩐담!", s: "What am I to do!" }
+        ],
+        "10-ruined.webp": [
+            { w: "to feed ~", k: "~ 밥을 대려고", s: "He opened his storehouses to feed all those fathers." },
+            { w: "means (mean)", k: "~라는 뜻이다", s: "Dozens of fathers means dozens of bowls." },
+            { w: "went down (go down)", k: "줄어들었다", s: "The sacks of rice went down day by day." },
+            { w: "day by day", k: "하루가 다르게", s: "The sacks of rice went down day by day." },
+            { w: "one after another", k: "하나둘씩", s: "The gold went, and then the fields, one after another." },
+            { w: "went on ~ing", k: "~하는 데 다 갔다", s: "His whole day went on cooking." },
+            { w: "In the end", k: "결국", s: "In the end he sold the jar itself." },
+            { w: "look after ~", k: "모시다, 돌보다", s: "Dozens of fathers to look after." },
+            { w: "for a long while", k: "한참을", s: "The villagers said it to each other and laughed for a long while." },
+            { w: "Only then did he ~", k: "그제야 ~했다", s: "Only then did the rich man go to the farmer and say he was sorry." }
+        ],
+        "after": [
+            { w: "comes back as two", k: "두 개가 되어 나온다", s: "A vessel where whatever you put in comes back as two" },
+            { w: "in many countries", k: "여러 나라에", s: "is told in many countries" },
+            { w: "ends the same way", k: "끝이 비슷하다", s: "And such a story always ends the same way." },
+            { w: "only the good things", k: "좋은 것만", s: "It is not only the good things that multiply." },
+            { w: "multiply", k: "늘어나다", s: "It is not only the good things that multiply." },
+            { w: "particularly sharp", k: "특히 매서운", s: "The way this story chooses is particularly sharp." },
+            { w: "not ~ but ~", k: "~이 아니라 ~", s: "What multiplied was not wealth but people." },
+            { w: "asking for food", k: "밥을 달라는", s: "And people asking for food, at that." },
+            { w: "at that", k: "그것도", s: "And people asking for food, at that." },
+            { w: "did not much mind", k: "크게 아쉬워하지 않았다", s: "The farmer did not much mind losing the jar." },
+            { w: "in the first place", k: "처음부터", s: "It had come out of his field in the first place." },
+            { w: "a load he could not carry", k: "감당할 수 없는 짐", s: "not wealth but a load he could not carry" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🏺',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "A vessel where whatever you put in comes back as two is told in many countries. And such a story always ends the same way. It is not only the good things that multiply.",
+                    "The way this story chooses is particularly sharp. What multiplied was not wealth but people. And people asking for food, at that.",
+                    "The farmer did not much mind losing the jar. It had come out of his field in the first place."
+                ],
+                right: [
+                    "Take a thing from somebody by force and you carry it off without knowing what is inside it. What the rich man got hold of was not wealth but a load he could not carry.",
+                    "Have you ever tried to get something you wanted in a way that was not right?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "농부가 항아리에 처음 빠뜨린 것은 무엇인가요?", choices: ["엽전", "호미", "금덩이"], answer: 1 },
     { q: "항아리에 물건을 넣으면 어떻게 되었나요?", choices: ["사라져 버렸다", "금으로 변했다", "자꾸 늘어났다"], answer: 2 },
