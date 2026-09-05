@@ -874,7 +874,7 @@ const EN = {
         },
         {
             q: 'What did the huntsman take out of his bag?',
-            choices: ['Shears', 'A gun', 'Thread'],
+            choices: ['A pot of pepper', 'A pair of shears', 'A ball of thread'],
             answer: 0
         },
         {

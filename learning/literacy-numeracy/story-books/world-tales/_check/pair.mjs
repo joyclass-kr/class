@@ -35,7 +35,7 @@ const seen = tally(books.length);
 
 for (const b of books) {
     const s = fs.readFileSync(path.join(ROOT, b, 'app.js'), 'utf8');
-    const cut = s.indexOf('const EN');
+    const cut = s.indexOf('const EN = {');
     if (cut < 0) { seen.skip(b, '영어판이 없다'); continue; }
     const ko = items(s.slice(0, cut));
     const en = items(s.slice(cut));

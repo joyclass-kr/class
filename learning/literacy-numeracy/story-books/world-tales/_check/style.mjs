@@ -61,7 +61,7 @@ let total = 0;
 for (const b of books) {
     const s = fs.readFileSync(path.join(root, b, 'app.js'), 'utf8');
     // 본문만. 「읽고 나서」와 영어판은 뺀다 — 해설에서 "이 책은…"은 정상이다.
-    const start = Math.max(0, s.indexOf('const CHAPTERS'));
+    const start = Math.max(0, s.indexOf('const CHAPTERS = ['));
     let end = s.length;
     for (const k of ['const AFTERWORD', 'const CHAPTER_SEGS', 'const EN']) {
         const i = s.indexOf(k, start);
