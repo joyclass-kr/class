@@ -35,9 +35,8 @@
         .top-bar {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 12px 20px;
+            gap: 14px;
+            padding: 10px 20px;
             background: var(--paper);
             border-bottom: 1px solid var(--line);
             position: sticky;
@@ -57,8 +56,7 @@
             font-size: 16px;
         }
         .back-btn:hover { background: var(--canvas); }
-        .top-title { font-weight: 800; font-size: 15px; }
-        .top-school { font-size: 12px; color: var(--muted); }
+        .top-school { font-weight: 800; font-size: 14px; white-space: nowrap; }
         .year-select {
             padding: 6px 10px;
             border: 1px solid var(--line);
@@ -67,33 +65,32 @@
             color: var(--ink);
         }
 
-        /* ── 탭 ── */
+        /* ── 탭: 상단 바와 한 줄에 둔다. 탭 이름이 곧 이 화면의 제목이라
+              위에 따로 큰 제목을 두지 않는다 ── */
         .tabs {
             display: flex;
-            gap: 0;
-            border-bottom: 2px solid var(--line);
-            background: var(--paper);
-            padding: 0 20px;
+            gap: 2px;
+            flex: 1 1 auto;
+            min-width: 0;
             overflow-x: auto;
         }
         .tab-btn {
-            padding: 12px 18px;
+            padding: 8px 14px;
             border: none;
+            border-radius: 8px;
             background: transparent;
             color: var(--muted);
             font-weight: 700;
             font-size: 13px;
             cursor: pointer;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
             white-space: nowrap;
-            min-height: 44px;
+            min-height: 36px;
         }
-        .tab-btn.active { color: var(--brand); border-bottom-color: var(--brand); }
-        .tab-btn:hover:not(.active) { color: var(--ink); }
+        .tab-btn.active { color: #fff; background: var(--brand); }
+        .tab-btn:hover:not(.active) { color: var(--ink); background: var(--canvas); }
 
         /* ── 메인 ── */
-        .main { padding: 16px 24px; max-width: 100%; margin: 0 auto; }
+        .main { padding: 12px 24px 16px; max-width: 100%; margin: 0 auto; }
         .panel { display: none; }
         .panel.active { display: block; }
 
@@ -399,26 +396,19 @@
 </head>
 <body>
 
-<!-- 상단 바 -->
+<!-- 상단 바: 탭 이름이 곧 화면 제목이라 별도 큰 제목 없이 한 줄로 둔다 -->
 <div class="top-bar">
-    <div class="top-bar-left">
-        <a href="/classtools/" class="back-btn" title="뒤로">←</a>
-        <div>
-            <div class="top-title">전교생 명단 관리</div>
-            <div class="top-school" id="schoolName">학교 불러오는 중…</div>
-        </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;">
+    <a href="/classtools/" class="back-btn" title="뒤로">←</a>
+    <span class="top-school" id="schoolName">학교 불러오는 중…</span>
+    <nav class="tabs">
+        <button class="tab-btn active" id="tab-roster" onclick="switchTab('roster')">📋 전교생 명단</button>
+        <button class="tab-btn" id="tab-teachers" onclick="switchTab('teachers')">👩‍🏫 교사 명단</button>
+        <button class="tab-btn" id="tab-settings" onclick="switchTab('settings')">⚙️ 학교 설정</button>
+    </nav>
+    <div style="display:flex;align-items:center;gap:10px;flex:none;">
         <select class="year-select" id="yearSelect"></select>
-        <div id="userInfo" style="font-size:12px;color:var(--muted);"></div>
+        <div id="userInfo" style="font-size:12px;color:var(--muted);white-space:nowrap;"></div>
     </div>
-</div>
-
-<!-- 탭 -->
-<div class="tabs">
-    <button class="tab-btn active" id="tab-roster" onclick="switchTab('roster')">📋 전교생 명단</button>
-    <button class="tab-btn" id="tab-teachers" onclick="switchTab('teachers')">👩‍🏫 교사 명단</button>
-    <button class="tab-btn" id="tab-settings" onclick="switchTab('settings')">⚙️ 학교 설정</button>
 </div>
 
 <!-- 메인 -->
@@ -427,20 +417,7 @@
     <!-- 탭 1: 전교생 명단 -->
     <div class="panel active" id="panel-roster">
         <div class="card">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-                <div>
-                    <div class="card-title">전교생 명단</div>
-                    <div class="card-desc" id="rosterDesc">전교생 통합 명단입니다. (명단 수정은 학교 관리자만 가능합니다)</div>
-                </div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap;" id="rosterAdminActions">
-                    <button class="btn btn-secondary btn-sm" id="downloadTemplateBtn" onclick="downloadExcelTemplate()">📊 엑셀 양식 다운로드</button>
-                    <button class="btn btn-secondary btn-sm" id="pasteSectionBtn" onclick="togglePasteSection()">📥 붙여넣기로 입력</button>
-                    <button class="btn btn-secondary btn-sm" id="addStudentBtn" onclick="addSingleStudent()" style="display:none;">+ 학생 추가</button>
-                    <button class="btn btn-primary btn-sm" id="saveRosterBtn" onclick="saveRoster()" style="display:none;">💾 저장</button>
-                </div>
-            </div>
-
-            <!-- 필터 / 툴바 -->
+            <!-- 필터·안내·버튼을 한 줄에. 탭 이름이 곧 제목이라 따로 두지 않는다 -->
             <div class="roster-toolbar">
                 <select class="filter-select" id="filterGrade" onchange="renderRosterTable()">
                     <option value="">전체 학년</option>
@@ -451,6 +428,13 @@
                     <option value="">전체 반</option>
                 </select>
                 <span class="status-msg" id="rosterStatus"></span>
+                <span class="card-desc" id="rosterDesc" style="margin:0;">전교생 통합 명단 (수정은 학교 관리자만 가능)</span>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto;" id="rosterAdminActions">
+                    <button class="btn btn-secondary btn-sm" id="downloadTemplateBtn" onclick="downloadExcelTemplate()">📊 엑셀 양식 다운로드</button>
+                    <button class="btn btn-secondary btn-sm" id="pasteSectionBtn" onclick="togglePasteSection()">📥 붙여넣기로 입력</button>
+                    <button class="btn btn-secondary btn-sm" id="addStudentBtn" onclick="addSingleStudent()" style="display:none;">+ 학생 추가</button>
+                    <button class="btn btn-primary btn-sm" id="saveRosterBtn" onclick="saveRoster()" style="display:none;">💾 저장</button>
+                </div>
             </div>
 
             <!-- 명단 테이블 -->
@@ -490,12 +474,11 @@
     <!-- 탭 2: 교사 명단 -->
     <div class="panel" id="panel-teachers">
         <div class="card">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-                <div>
-                    <div class="card-title">교사 명단</div>
-                    <div class="card-desc">학교 전체 교직원 통합 명단입니다. (담임, 전담, 관리자 구분 및 구글 계정을 관리합니다)</div>
-                </div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap;" id="teacherAdminActions">
+            <!-- 안내·버튼을 한 줄에. 탭 이름이 곧 제목이라 따로 두지 않는다 -->
+            <div class="roster-toolbar">
+                <span class="card-desc" style="margin:0;">교직원 통합 명단 (담임·전담·관리자 구분, 구글 계정 관리)</span>
+                <span class="status-msg" id="teacherRosterStatus" style="margin-left:8px;"></span>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto;" id="teacherAdminActions">
                     <button class="btn btn-secondary btn-sm" id="toggleTeacherPasteBtn" onclick="toggleTeacherPasteSection()">📥 붙여넣기로 입력</button>
                     <button class="btn btn-secondary btn-sm" id="addTeacherBtn" onclick="addTeacherRow()">+ 교사 추가</button>
                     <button class="btn btn-primary btn-sm" id="saveTeacherRosterBtn" onclick="saveTeacherRoster()">💾 저장</button>
@@ -515,8 +498,6 @@
                     <span class="status-msg" id="teacherPasteStatus"></span>
                 </div>
             </div>
-
-            <p class="status-msg" id="teacherRosterStatus" style="margin-top:12px;"></p>
 
             <div class="table-container" style="margin-top:12px;">
                 <table class="roster-table">
@@ -542,12 +523,14 @@
     <!-- 탭 3: 학교 설정 -->
     <div class="panel" id="panel-settings">
         <div class="card">
-            <div class="card-title">학교 설정</div>
-            <div class="card-desc" id="settingsDesc">동아리, 방과후, 셔틀 슬롯 설정입니다. (변경 권한은 학교 관리자 전용)</div>
-            <div style="display:flex;justify-content:flex-end;margin-bottom:16px;" id="settingsAdminActions">
-                <button class="btn btn-primary btn-sm" id="saveSettingsBtn" onclick="saveSettings()">💾 설정 저장</button>
+            <!-- 안내·저장 버튼을 한 줄에. 탭 이름이 곧 제목이라 따로 두지 않는다 -->
+            <div class="roster-toolbar" style="margin-bottom:16px;">
+                <span class="card-desc" id="settingsDesc" style="margin:0;">명단 소속 열·결재선·특별실 설정 (변경은 학교 관리자만 가능)</span>
+                <span class="status-msg" id="settingsStatus" style="margin-left:8px;"></span>
+                <div style="margin-left:auto;" id="settingsAdminActions">
+                    <button class="btn btn-primary btn-sm" id="saveSettingsBtn" onclick="saveSettings()">💾 설정 저장</button>
+                </div>
             </div>
-            <p class="status-msg" id="settingsStatus"></p>
             <div class="settings-grid">
                 <!-- 명단 소속 열 -->
                 <div class="card" style="margin:0;grid-column:1/-1;">
