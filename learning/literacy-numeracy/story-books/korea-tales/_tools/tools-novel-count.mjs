@@ -21,7 +21,7 @@ for (const b of books) {
   const p = b + '/app.js';
   if (!fs.existsSync(p)) continue;
   const src = fs.readFileSync(p, 'utf8');
-  const i = src.indexOf('const CHAPTERS');
+  const i = src.indexOf('const CHAPTERS = [');
   if (i < 0) continue;
   let CH;
   try { CH = eval('(' + src.slice(src.indexOf('[', i), src.indexOf('\n];', i) + 2) + ')'); } catch { continue; }

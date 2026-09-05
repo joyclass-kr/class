@@ -25,7 +25,7 @@ if (!slug || !patchPath) {
 
 const appPath = slug + '/app.js';
 const backup = fs.readFileSync(appPath, 'utf8');
-const start = backup.indexOf('[', backup.indexOf('const CHAPTERS'));
+const start = backup.indexOf('[', backup.indexOf('const CHAPTERS = ['));
 const end = backup.indexOf('\n];', start) + 2;
 const CH = eval('(' + backup.slice(start, end) + ')');
 const beats = CH.flatMap(c => c.beats || []);
@@ -87,7 +87,7 @@ function bail(why) {
 }
 try { execFileSync('node', ['--check', appPath]); } catch { bail('문법이 깨졌다'); }
 const s2 = fs.readFileSync(appPath, 'utf8');
-const CH2 = eval('(' + s2.slice(s2.indexOf('[', s2.indexOf('const CHAPTERS')), s2.indexOf('\n];') + 2) + ')');
+const CH2 = eval('(' + s2.slice(s2.indexOf('[', s2.indexOf('const CHAPTERS = [')), s2.indexOf('\n];') + 2) + ')');
 const afterArts = CH2.flatMap(c => c.beats || []).map(b => b.art);
 if (afterArts.join('|') !== beforeArts.join('|')) bail('칸이 어긋났다');
 

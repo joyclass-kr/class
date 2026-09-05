@@ -2,7 +2,7 @@
 import fs from 'fs';
 for (const d of process.argv.slice(2)) {
   const s = fs.readFileSync(d + '/app.js', 'utf8');
-  const i = s.indexOf('const CHAPTERS');
+  const i = s.indexOf('const CHAPTERS = [');
   const CH = eval('(' + s.slice(s.indexOf('[', i), s.indexOf('\n];', i) + 2) + ')');
   console.log('===== ' + d);
   for (const c of CH) {

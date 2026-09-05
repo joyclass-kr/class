@@ -14,7 +14,7 @@ const LO = 85, HI = 105, LOP = 4, HIP = 6;
 let beats;
 if (process.argv[2] === '--book') {
   const s = fs.readFileSync(process.argv[3] + '/app.js', 'utf8');
-  const i = s.indexOf('const CHAPTERS');
+  const i = s.indexOf('const CHAPTERS = [');
   const CH = eval('(' + s.slice(s.indexOf('[', i), s.indexOf('\n];', i) + 2) + ')');
   beats = CH.flatMap(c => c.beats || []);
 } else {

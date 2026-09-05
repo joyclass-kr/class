@@ -18,7 +18,7 @@ const appPath = path.join(dir, slug, 'app.js');
 const src = fs.readFileSync(appPath, 'utf8');
 const backup = src;
 
-const i = src.indexOf('const CHAPTERS');
+const i = src.indexOf('const CHAPTERS = [');
 const j = src.indexOf('\n];', i);
 if (i < 0 || j < 0) { console.error('CHAPTERS를 못 찾음'); process.exit(1); }
 const head = src.slice(0, src.indexOf('[', i));
@@ -79,7 +79,7 @@ try {
   process.exit(1);
 }
 const s2 = fs.readFileSync(appPath, 'utf8');
-const CH2 = eval('(' + s2.slice(s2.indexOf('[', s2.indexOf('const CHAPTERS')), s2.indexOf('\n];') + 2) + ')');
+const CH2 = eval('(' + s2.slice(s2.indexOf('[', s2.indexOf('const CHAPTERS = [')), s2.indexOf('\n];') + 2) + ')');
 const afterArts = [];
 for (const c of CH2) for (const b of (c.beats || [])) afterArts.push(b.art);
 if (afterArts.join('|') !== beforeArts.join('|')) {

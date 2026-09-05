@@ -8,7 +8,7 @@ const issues = [];
 const bad = (s, k, m) => issues.push([s, k, m]);
 
 function grab(src, name) {
-  const i = src.indexOf('const ' + name);
+  const i = src.indexOf('const ' + name + ' = [');
   if (i < 0) return null;
   const j = src.indexOf('\n];', i);
   if (j < 0) return null;

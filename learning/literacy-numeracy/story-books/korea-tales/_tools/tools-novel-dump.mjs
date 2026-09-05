@@ -7,7 +7,7 @@ import fs from 'fs';
 
 const [slug, only] = process.argv.slice(2);
 const src = fs.readFileSync(slug + '/app.js', 'utf8');
-const i = src.indexOf('const CHAPTERS');
+const i = src.indexOf('const CHAPTERS = [');
 const CH = eval('(' + src.slice(src.indexOf('[', i), src.indexOf('\n];', i) + 2) + ')');
 
 for (const c of CH) {

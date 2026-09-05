@@ -60,7 +60,7 @@ const books = fs.readdirSync(ROOT).sort()
 let n = 0;
 for (const b of books) {
   const src = fs.readFileSync(path.join(ROOT, b, 'app.js'), 'utf8');
-  const i = src.indexOf('const QUIZ');
+  const i = src.indexOf('const QUIZ = [');
   if (i < 0) continue;
   let QUIZ;
   try { QUIZ = eval('(' + src.slice(src.indexOf('[', i), src.indexOf('\n];', i) + 2) + ')'); } catch { continue; }
