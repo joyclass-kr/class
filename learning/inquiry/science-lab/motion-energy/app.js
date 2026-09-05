@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const gx = t => GRAPH.x0 + (t / a.duration) * (GRAPH.x1 - GRAPH.x0);
         const gy = e => GRAPH.y0 - (e / eMax) * (GRAPH.y0 - GRAPH.y1);
         const ticks = [];
-        for (let e = 0; e <= eMax; e += eMax / 4) ticks.push([Math.round(e), gy(e)]);
+        for (let e = eMax / 4; e <= eMax; e += eMax / 4) ticks.push([Math.round(e), gy(e)]);   // no zero label: it would sit on the time axis's
         let out = graphFrame(
             [0, 0.25, 0.5, 0.75, 1].map(f => [(f * a.duration).toFixed(1), gx(f * a.duration)]),
             ticks, '시간 (초)', '에너지 (J)');
