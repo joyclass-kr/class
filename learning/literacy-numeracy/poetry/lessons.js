@@ -145,12 +145,57 @@
             ]),
 
         // ── 초6 · 어긋난 말과 겹친 뜻 ─────────────────────────────────
-        lesson("g6-irony", 6, "속마음과 반대로 말하기", "겉말과 속말이 어긋나요", [], []),
-        lesson("g6-paradox", 6, "앞뒤가 안 맞는 말", "말이 안 되는데 뜻이 통해요", [], []),
-        lesson("g6-symbol", 6, "하나가 여러 뜻", "별 하나가 여럿을 가리켜요", [], []),
-        lesson("g6-contrast", 6, "맞세우기", "빛깔과 처지를 나란히 놓아요", [], []),
-        lesson("g6-compare", 6, "두 편 나란히 읽기", "닮은 시와 다른 시", [], []),
-        lesson("g6-oldsong", 6, "옛 노래의 후렴과 가락", "가장 오래된 우리 노래들", [], [])
+        lesson("g6-irony", 6, "속마음과 반대로 말하기", "겉말과 속말이 어긋나요",
+            ["sowol-jindallae", "sowol-meonhuil", "sasol-dukkeobi"],
+            [
+                "jindallae-send", "jindallae-tears", "jindallae-flower", "jindallae-frame2",
+                "meonhuil-count", "meonhuil-truth", "meonhuil-future",
+                "dukkeobi-fall", "dukkeobi-boast", "dukkeobi-satire",
+                "irony-what"
+            ]),
+        lesson("g6-paradox", 6, "앞뒤가 안 맞는 말", "말이 안 되는데 뜻이 통해요",
+            ["manhae-bokjong", "manhae-alsu", "manhae-narutbae"],
+            [
+                "bokjong-sweet", "bokjong-choice", "bokjong-refuse",
+                "alsu-ash", "alsu-questions", "alsu-lamp",
+                "narutbae-paradox",
+                "paradox-what"
+            ]),
+        lesson("g6-symbol", 6, "하나가 여러 뜻", "별 하나가 여럿을 가리켜요",
+            ["dongju-seosi", "yuksa-cheongpodo", "nocheonmyeong-saseum"],
+            [
+                "seosi-star", "seosi-wind", "seosi-last",
+                "cheongpodo-guest", "cheongpodo-white", "cheongpodo-prepare",
+                "saseum-neck", "saseum-mirror", "saseum-self",
+                "symbol-what"
+            ]),
+        lesson("g6-contrast", 6, "맞세우기", "빛깔과 처지를 나란히 놓아요",
+            ["dongju-jahwasang", "yuksa-cheongpodo", "sowol-sanyuhwa", "nocheonmyeong-saseum"],
+            [
+                "jahwasang-feel", "jahwasang-who", "jahwasang-last",
+                "cheongpodo-contrast",
+                "sanyuhwa-contrast",
+                "saseum-contrast",
+                "contrast-why"
+            ]),
+        lesson("g6-compare", 6, "두 편 나란히 읽기", "닮은 시와 다른 시",
+            ["leebangwon-hayeoga", "jeongmongju-dansimga", "sowol-jindallae", "sowol-meonhuil"],
+            [
+                "hayeoga-ask", "hayeoga-chik",
+                "dansimga-answer", "dansimga-hundred",
+                "two-sijo-shape", "two-sijo-diff",
+                "two-sowol-same", "two-sowol-diff",
+                "compare-how"
+            ]),
+        lesson("g6-oldsong", 6, "옛 노래의 후렴과 가락", "가장 오래된 우리 노래들",
+            ["goryeo-cheongsan", "goryeo-gasiri", "gojia-guji", "jiyong-hyangsu"],
+            [
+                "cheongsan-refrain", "cheongsan-where", "cheongsan-bird",
+                "gasiri-refrain", "gasiri-mismatch", "gasiri-hope",
+                "guji-three", "guji-call",
+                "hyangsu-refrain", "hyangsu-scenes", "hyangsu-old-new",
+                "oldsong-why"
+            ])
     ]);
 
     window.POETRY_GRADES = Object.freeze([
