@@ -12,6 +12,13 @@
     const lessons = Array.isArray(window.POETRY_LESSONS) ? window.POETRY_LESSONS : [];
     const grades = Array.isArray(window.POETRY_GRADES) ? window.POETRY_GRADES : [];
 
+    // 소재로 고르는 문. 학년 탭 끝에 '소재별' 탭 하나로 들어간다.
+    // 시마다 붙은 topics 표시를 그대로 쓰고, 여기 적힌 차례로 보여 준다.
+    const TOPIC_TAB = "topic";
+    const TOPICS = ["봄", "여름", "가을", "겨울", "가족", "동물", "밤과 달", "고향",
+        "그리움", "이별", "자연", "다짐", "시대", "나라", "사랑", "옛이야기", "놀이", "기다림"];
+    const poemsByTopic = new Map(TOPICS.map((topic) => [topic, poems.filter((poem) => (poem.topics || []).includes(topic))]));
+
     const elements = {
         lessonScreen: document.getElementById("lessonScreen"),
         readScreen: document.getElementById("readScreen"),
@@ -20,6 +27,8 @@
         gradeTabs: document.getElementById("gradeTabs"),
         lessonProgressSummary: document.getElementById("lessonProgressSummary"),
         lessonList: document.getElementById("lessonList"),
+        topicChips: document.getElementById("topicChips"),
+        topicPoemList: document.getElementById("topicPoemList"),
         readKicker: document.getElementById("readKicker"),
         readTitle: document.getElementById("readTitle"),
         readIndex: document.getElementById("readIndex"),
@@ -74,6 +83,8 @@
 
     const state = {
         grade: grades[0] ? grades[0].grade : 3,
+        topic: "",
+        browse: null,
         lessonIndex: -1,
         readIndex: 0,
         questions: [],
@@ -153,6 +164,7 @@
     }
 
     function currentLessonPoems() {
+        if (state.browse) return state.browse.poems;
         const lesson = currentLesson();
         if (!lesson) return [];
         return lesson.poemIds.map((id) => poemById.get(id)).filter(Boolean);
@@ -190,18 +202,19 @@
 
     // ── 차시 목록 ────────────────────────────────────────────────
     function renderGradeTabs() {
-        elements.gradeTabs.replaceChildren(...grades.map((item) => {
+        const tabs = [...grades.map((item) => ({ key: item.grade, label: item.label })), { key: TOPIC_TAB, label: "소재별" }];
+        elements.gradeTabs.replaceChildren(...tabs.map((item) => {
             const button = document.createElement("button");
             button.type = "button";
             button.className = "grade-tab";
             button.textContent = item.label;
             button.setAttribute("role", "tab");
-            const isActive = item.grade === state.grade;
+            const isActive = item.key === state.grade;
             button.classList.toggle("is-active", isActive);
             button.setAttribute("aria-selected", isActive ? "true" : "false");
             button.addEventListener("click", () => {
-                state.grade = item.grade;
-                writeStoredValue(GRADE_KEY, item.grade);
+                state.grade = item.key;
+                writeStoredValue(GRADE_KEY, item.key);
                 renderGradeTabs();
                 renderLessonList();
             });
@@ -209,7 +222,71 @@
         }));
     }
 
+    // ── 소재별 ───────────────────────────────────────────────────
+    function renderTopicView() {
+        if (!poemsByTopic.has(state.topic)) state.topic = TOPICS.find((topic) => poemsByTopic.get(topic).length > 0) || "";
+        elements.topicChips.replaceChildren(...TOPICS.filter((topic) => poemsByTopic.get(topic).length > 0).map((topic) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "grade-tab";
+            button.textContent = topic;
+            button.classList.toggle("is-active", topic === state.topic);
+            button.addEventListener("click", () => {
+                state.topic = topic;
+                renderTopicView();
+            });
+            return button;
+        }));
+
+        const list = poemsByTopic.get(state.topic) || [];
+        elements.topicPoemList.replaceChildren(...list.map((poem, index) => {
+            const item = document.createElement("li");
+            const button = document.createElement("button");
+            const number = document.createElement("span");
+            const copy = document.createElement("span");
+            const title = document.createElement("strong");
+            const meta = document.createElement("span");
+            const gradeLabel = grades.find((entry) => entry.grade === poem.grade);
+
+            button.type = "button";
+            button.className = "lesson-card";
+            number.className = "lesson-number";
+            number.textContent = gradeLabel ? gradeLabel.short : "";
+            copy.className = "lesson-copy";
+            title.textContent = poem.title;
+            copy.append(title);
+            meta.className = "lesson-meta";
+            meta.textContent = poem.poet;
+            button.append(number, copy, meta);
+            button.addEventListener("click", () => openBrowse(list, index));
+            item.append(button);
+            return item;
+        }));
+    }
+
+    function openBrowse(list, index) {
+        state.browse = { topic: state.topic, poems: list };
+        state.lessonIndex = -1;
+        state.readIndex = index;
+        elements.readKicker.textContent = "";
+        elements.readTitle.textContent = state.topic;
+        elements.readTotal.textContent = String(list.length);
+        setScreen(elements.readScreen);
+        renderReading();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
     function renderLessonList() {
+        const topicMode = state.grade === TOPIC_TAB;
+        elements.topicChips.classList.toggle("hidden", !topicMode);
+        elements.topicPoemList.classList.toggle("hidden", !topicMode);
+        elements.lessonProgressSummary.classList.toggle("hidden", topicMode);
+        elements.lessonList.classList.toggle("hidden", topicMode);
+        if (topicMode) {
+            renderTopicView();
+            return;
+        }
+
         const progress = readLessonProgress();
         const list = lessonsOfGrade(state.grade);
         const ready = list.filter(isReady);
@@ -258,8 +335,11 @@
 
     function showLessonList() {
         state.lessonIndex = -1;
-        const stored = Number.parseInt(readStoredValue(GRADE_KEY), 10);
-        if (grades.some((item) => item.grade === stored)) state.grade = stored;
+        state.browse = null;
+        const storedRaw = readStoredValue(GRADE_KEY);
+        const stored = Number.parseInt(storedRaw, 10);
+        if (storedRaw === TOPIC_TAB) state.grade = TOPIC_TAB;
+        else if (grades.some((item) => item.grade === stored)) state.grade = stored;
         renderGradeTabs();
         renderLessonList();
         setScreen(elements.lessonScreen);
@@ -268,6 +348,7 @@
 
     // ── 시 읽기 ──────────────────────────────────────────────────
     function openReading(lessonIndex) {
+        state.browse = null;
         state.lessonIndex = lessonIndex;
         state.readIndex = 0;
         const lesson = currentLesson();
@@ -308,8 +389,13 @@
 
         elements.poemPoint.textContent = poem.point || "";
         elements.readPrevButton.disabled = state.readIndex === 0;
-        elements.readNextButton.textContent = isLast ? "확인 문제 풀기" : "다음 시";
-        elements.readSkipButton.classList.toggle("hidden", isLast);
+        if (state.browse) {
+            elements.readNextButton.textContent = isLast ? "목록으로" : "다음 시";
+            elements.readSkipButton.classList.add("hidden");
+        } else {
+            elements.readNextButton.textContent = isLast ? "확인 문제 풀기" : "다음 시";
+            elements.readSkipButton.classList.toggle("hidden", isLast);
+        }
         elements.announcer.textContent = `${poem.title}. ${poem.poet}. ${poem.point || ""}`;
     }
 
@@ -318,7 +404,8 @@
         const next = state.readIndex + step;
         if (next < 0) return;
         if (next >= poemList.length) {
-            startLessonQuiz();
+            if (state.browse) showLessonList();
+            else startLessonQuiz();
             return;
         }
         state.readIndex = next;

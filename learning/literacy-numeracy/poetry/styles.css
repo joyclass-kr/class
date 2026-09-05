@@ -1360,3 +1360,15 @@ a.mode-card small {
         padding-bottom: 108px;
     }
 }
+
+/* 소재 칩 줄은 학년 탭 줄과 붙어 보이지 않게 금 하나로 나눈다. */
+.topic-chips {
+    margin-top: 0;
+    padding-top: 12px;
+    border-top: 1px dashed rgba(90, 48, 22, 0.24);
+}
+
+.topic-chips .grade-tab {
+    padding: 7px 13px;
+    font-size: 14px;
+}
