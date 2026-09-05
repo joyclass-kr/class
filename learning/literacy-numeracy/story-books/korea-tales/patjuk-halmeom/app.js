@@ -299,6 +299,572 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🥣",
+        art: "cover.webp",
+        title: "The Red Bean Porridge Granny",
+        intro: [
+            "This is an oral tale with no known author. A chestnut, a turtle, a mortar, a mat and a carrying frame take on a tiger in turn.",
+            "The fun of it is that things from the kitchen and the yard each lend a hand. Each is small, and each does what it can where it stands.",
+            "Red bean porridge was eaten at the winter solstice. Red was held to drive bad things off."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Come Back in Autumn",
+            beats: [
+                {
+                    art: "01-field.webp",
+                    emoji: "🌱",
+                    left: [
+                        "Long ago an old woman lived alone below a mountain.",
+                        "For a field she had one small patch of red beans, and that was all.",
+                        "In spring she sowed and in summer she weeded.",
+                        { t: "\"This patch is what I live on.\"", v: "granny" },
+                        "She cared for that bean patch like her own child."
+                    ],
+                    right: [
+                        "That day too she was weeding the beans with her hoe.",
+                        "Her back ached and she got up and down again and again.",
+                        { t: "\"The beans must fill out well this year.\"", v: "granny" },
+                        "The pods were swelling out quite plump.",
+                        "The old woman ran a hand over them."
+                    ]
+                },
+                {
+                    art: "02-tiger.webp",
+                    emoji: "🐯",
+                    left: [
+                        "Then a cold wind came at her back.",
+                        "The sound of leaves and of birds stopped dead.",
+                        { t: "\"Rrraaargh!\"", v: "beast" },
+                        "The old woman turned round very slowly.",
+                        "A great tiger stood planted there. Its breath came hot at her."
+                    ],
+                    right: [
+                        { t: "\"Old woman, I am going to eat you today.\"", v: "beast" },
+                        { t: "\"I have eaten nothing for days and I can see nothing else.\"", v: "beast" },
+                        "The old woman dropped her hoe.",
+                        "Her legs shook under her.",
+                        "But she thought she must say something, anything."
+                    ]
+                },
+                {
+                    art: "03-deal.webp",
+                    emoji: "🥣",
+                    left: [
+                        { t: "\"W-wait! Wait just a moment!\"", v: "granny" },
+                        "The old woman threw both hands up.",
+                        "The tiger stopped its feet and looked down at her.",
+                        { t: "\"Eat me now and there is nothing but bone.\"", v: "granny" },
+                        { t: "\"Look, this arm is no thicker than a branch.\"", v: "granny" },
+                        "She rolled up her sleeve to show him."
+                    ],
+                    right: [
+                        { t: "\"When the beans fill out in autumn I shall make you a pot of porridge.\"", v: "granny" },
+                        "The old woman pointed at the bean patch.",
+                        { t: "\"Eat your fill of that, and then eat me.\"", v: "granny" },
+                        "The tiger licked its lips.",
+                        "At the word porridge its mouth watered of itself."
+                    ]
+                },
+                {
+                    art: "04-agree.webp",
+                    emoji: "🍂",
+                    left: [
+                        { t: "\"Well now, that is a fair enough thing to say.\"", v: "beast" },
+                        "The tiger nodded slowly.",
+                        { t: "\"Very well. When the beans are ripe I shall come again.\"", v: "beast" },
+                        { t: "\"And then you will be eaten, and no help for it.\"", v: "beast" },
+                        "The tiger swung its tail round and turned away.",
+                        "Its footfalls rang as it went."
+                    ],
+                    right: [
+                        "The tiger went off up the mountain at its own pace.",
+                        "She could not move till it was quite gone.",
+                        "Then she sat down where she was and sighed.",
+                        { t: "\"Whatever am I to do...\"", v: "granny" },
+                        "Autumn felt as if it would come in the blink of an eye."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · A Bowl of Porridge Each",
+            beats: [
+                {
+                    art: "05-cry.webp",
+                    emoji: "😭",
+                    left: [
+                        "Autumn came.",
+                        "The beans filled out that year better than ever.",
+                        "The old woman gathered them and made porridge in a great pot.",
+                        "She lit the fire, boiled the beans, rolled the rice balls.",
+                        "Her hands were busy and her heart kept sinking."
+                    ],
+                    right: [
+                        "The old woman cried and cried as she stirred with the ladle.",
+                        "The tears fell on the back of her hand.",
+                        { t: "\"When this porridge is made, I am eaten.\"", v: "granny" },
+                        "The good smell went out past the yard.",
+                        "And the sound of her crying went out with it."
+                    ]
+                },
+                {
+                    art: "06-chestnut.webp",
+                    emoji: "🌰",
+                    left: [
+                        "Then a chestnut came rolling into the kitchen.",
+                        { t: "\"Granny, why are you crying?\"", v: "boy" },
+                        "The old woman told the whole tiger story from the start.",
+                        "The chestnut listened to the end without a word.",
+                        "Then it spoke in a small voice."
+                    ],
+                    right: [
+                        { t: "\"Give me one bowl of porridge and I shall help you.\"", v: "boy" },
+                        { t: "\"I cannot do it alone, but together we can.\"", v: "boy" },
+                        "The chestnut ate its porridge up.",
+                        "Then it went into the ashes of the stove.",
+                        "It buried itself in the ash and did not move."
+                    ]
+                },
+                {
+                    art: "07-turtle.webp",
+                    emoji: "🐢",
+                    left: [
+                        "Next a turtle came crawling in.",
+                        "Its shell was still wet.",
+                        "It had come straight up from the stream, by the look of it.",
+                        { t: "\"Granny, why are you crying?\"", v: "boy" },
+                        "The old woman told that story once more.",
+                        { t: "\"Give me one bowl of porridge and I shall help.\"", v: "boy" }
+                    ],
+                    right: [
+                        "The turtle emptied its bowl in no time.",
+                        "It licked up even the last of the liquid.",
+                        "Then it went splash into the water jar in the kitchen.",
+                        "The water swayed once and was still.",
+                        "Inside the jar only its eyes showed."
+                    ]
+                },
+                {
+                    art: "08-dung.webp",
+                    emoji: "💩",
+                    left: [
+                        "Next some dog dirt came rolling in from the yard.",
+                        "It was fresh, and still steaming.",
+                        { t: "\"Granny, why are you crying?\"", v: "boy" },
+                        { t: "\"Oh dear, you as well...\"", v: "granny" },
+                        "The old woman did not know whether to laugh or cry.",
+                        { t: "\"I should like a bowl of porridge too.\"", v: "boy" }
+                    ],
+                    right: [
+                        "The dog dirt had its bowl of porridge as well.",
+                        { t: "\"This spot here is just right for me.\"", v: "boy" },
+                        "It spread itself flat in the middle of the kitchen floor.",
+                        "It lay so flat that nobody would notice it.",
+                        "In the dark it would show even less."
+                    ]
+                },
+                {
+                    art: "09-mortar.webp",
+                    emoji: "🪨",
+                    left: [
+                        "Thump, thump, thump.",
+                        "A noise loud enough to shake the ground came from the yard.",
+                        "This time it was a great mortar, hopping along.",
+                        { t: "\"Granny, why are you crying?\"", v: "man" },
+                        "The old woman wiped her eyes and told it.",
+                        { t: "\"Give me a bowl and I shall help too.\"", v: "man" }
+                    ],
+                    right: [
+                        "The mortar ate a good full bowl of porridge.",
+                        "Then it climbed up onto the frame above the kitchen door.",
+                        "It got up there with a struggle, being so heavy.",
+                        "The doorframe creaked under it.",
+                        "From below nobody would know it was there."
+                    ]
+                },
+                {
+                    art: "10-mat.webp",
+                    emoji: "🧺",
+                    left: [
+                        "Last of all a mat and a carrying frame came together.",
+                        "A mat is a big cover woven out of straw.",
+                        "The mat came rolled up and the frame walked in.",
+                        { t: "\"Granny, why are you crying?\"", v: "man" },
+                        { t: "\"We shall lend a hand as well.\"", v: "man" },
+                        "The old woman took up her ladle without a word."
+                    ],
+                    right: [
+                        "The mat and the frame had a bowl of porridge each.",
+                        "The pot was already half down.",
+                        "The mat lay flat in the middle of the yard.",
+                        "The frame leaned quietly against the wall.",
+                        "Now all six of them had their places."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · That Night",
+            beats: [
+                {
+                    art: "11-arrive.webp",
+                    emoji: "🌙",
+                    left: [
+                        "When the sun went down the tiger came at its own pace.",
+                        "The old woman hid in a corner of the kitchen and held her breath.",
+                        { t: "\"Old woman! Is that porridge ready!\"", v: "beast" },
+                        "The tiger pushed the gate open and came in.",
+                        "Heavy footfalls rang across the yard."
+                    ],
+                    right: [
+                        "Inside the kitchen it was too dark to see your own hand.",
+                        "The old woman had put the lamp out on purpose.",
+                        { t: "\"What are you about, with no light lit?\"", v: "beast" },
+                        "The tiger crouched down in front of the stove.",
+                        "In the stove only the ashes glowed red."
+                    ]
+                },
+                {
+                    art: "12-pop.webp",
+                    emoji: "💥",
+                    left: [
+                        "The tiger put its face into the stove and blew on the ash.",
+                        "It meant to bring the fire up and warm the pot.",
+                        "The ash flew up into the tiger's nose.",
+                        "The tiger blew once more, harder.",
+                        "And that was the moment.",
+                        "Pop!"
+                    ],
+                    right: [
+                        "Something shot up out of the ash.",
+                        "The chestnut that had been hiding hit the tiger square in the eye.",
+                        "It was a chestnut heated hot in the embers.",
+                        { t: "\"My eye! Oh, my eye!\"", v: "beast" },
+                        "The tiger clapped both paws over its eyes.",
+                        "Everything in front of it went yellow."
+                    ]
+                },
+                {
+                    art: "13-bite.webp",
+                    emoji: "😱",
+                    left: [
+                        "The tiger ran for the water jar to cool its burning eyes.",
+                        "The jar stood in a corner of the kitchen.",
+                        "It could not see, and found the jar by feeling for it.",
+                        "Then it plunged a front paw into the water.",
+                        "The cold water felt like life itself."
+                    ],
+                    right: [
+                        "Snap!",
+                        "The turtle in the jar bit that paw with all its might.",
+                        "The turtle had been waiting in the water for it.",
+                        { t: "\"Aaargh! And what is this now!\"", v: "beast" },
+                        "The tiger leapt about with the jar in its arms.",
+                        "Shake as it might, the turtle did not come off."
+                    ]
+                },
+                {
+                    art: "14-slip.webp",
+                    emoji: "🌀",
+                    left: [
+                        "Where it came down from that leap was on the dog dirt.",
+                        "The middle of the floor, where the dirt lay flat.",
+                        "Skiiid —",
+                        { t: "\"Whoa, whoa!\"", v: "beast" },
+                        "The tiger's feet went out in front and behind.",
+                        "There was no time at all to catch its balance."
+                    ],
+                    right: [
+                        "The tiger went straight over on its back.",
+                        "From its back to its tail it was covered in dog dirt.",
+                        "The tiger scrambled up and made for the door.",
+                        "Thump!",
+                        "Something heavy came down off the doorframe."
+                    ]
+                },
+                {
+                    art: "15-roll.webp",
+                    emoji: "🧺",
+                    left: [
+                        "The mortar on the doorframe came down on the tiger's head.",
+                        "It had thrown itself as if it had been waiting.",
+                        { t: "\"Oh, my head!\"", v: "beast" },
+                        "The tiger rolled out into the yard, seeing stars.",
+                        "There was not one part of it left sound."
+                    ],
+                    right: [
+                        "Then the mat lying in the yard got up on end.",
+                        "And it rolled the tiger up, round and round and round.",
+                        "The tiger could not move so much as a finger.",
+                        { t: "\"Let go! Let go of me!\"", v: "beast" },
+                        "The mat only squeezed the tighter."
+                    ]
+                },
+                {
+                    art: "16-river.webp",
+                    emoji: "🌊",
+                    left: [
+                        "The carrying frame by the wall came over.",
+                        "The frame was in no hurry at all.",
+                        "There was nothing whatever to hurry for.",
+                        "It took the rolled-up tiger on its back and walked off.",
+                        "Shout as the tiger might behind it, nothing came of it."
+                    ],
+                    right: [
+                        "The frame stopped when it came to the river.",
+                        "And it threw the tiger into the water with a splash.",
+                        "After that the tiger never came near the village.",
+                        "The old woman shared the rest of the porridge among the six.",
+                        { t: "\"Thank you, all of you. Thank you truly.\"", v: "granny" }
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "When did the old woman tell the tiger to come back?", choices: ["In autumn", "In spring", "In summer"], answer: 0 },
+        { q: "What hid in the stove?", choices: ["The turtle", "The mortar", "The chestnut"], answer: 2 },
+        { q: "What hid in the water jar?", choices: ["The turtle", "The chestnut", "The dog dirt"], answer: 0 },
+        { q: "What sat up above the door?", choices: ["The mat", "The carrying frame", "The mortar"], answer: 2 },
+        { q: "What rolled the tiger up?", choices: ["The mortar", "The mat", "The carrying frame"], answer: 1 },
+        { q: "What carried the tiger off at the end?", choices: ["The carrying frame", "The mat", "The mortar"], answer: 0 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "A chestnut, a turtle, dog dirt, a mortar, a mat and a frame each took a bowl and stood up, so small things together were too much even for a tiger.",
+                "Each of them took its own place, the stove, the water jar, the doorframe, so what each one is good at is different.",
+                "The old woman had put the kitchen lamp out beforehand, so she was frightened and still thinking all the same.",
+                "She told the tiger to come in autumn, so she must have meant to pack up and run away in the meantime."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "chestnut", k: "밤", s: "A chestnut, a turtle, a mortar, a mat and a carrying frame" },
+            { w: "mortar", k: "절구", s: "A chestnut, a turtle, a mortar, a mat" },
+            { w: "carrying frame", k: "지게", s: "a mat and a carrying frame take on a tiger in turn" },
+            { w: "take on ~", k: "맞서다", s: "take on a tiger in turn" },
+            { w: "lend a hand", k: "힘을 보태다", s: "things from the kitchen and the yard each lend a hand" },
+            { w: "where it stands", k: "제가 있던 자리에서", s: "each does what it can where it stands" },
+            { w: "the winter solstice", k: "동지", s: "Red bean porridge was eaten at the winter solstice." },
+            { w: "drive ~ off", k: "물리치다", s: "Red was held to drive bad things off." }
+        ],
+        "01-field.webp": [
+            { w: "patch", k: "밭뙈기", s: "she had one small patch of red beans" },
+            { w: "sowed (sow)", k: "심었다", s: "In spring she sowed and in summer she weeded." },
+            { w: "weeded (weed)", k: "김을 맸다", s: "In spring she sowed and in summer she weeded." },
+            { w: "what I live on", k: "이것으로 먹고산다", s: "This patch is what I live on." },
+            { w: "cared for ~", k: "아꼈다", s: "She cared for that bean patch like her own child." },
+            { w: "hoe", k: "호미", s: "she was weeding the beans with her hoe" },
+            { w: "fill out", k: "여물다", s: "The beans must fill out well this year." },
+            { w: "pods", k: "꼬투리", s: "The pods were swelling out quite plump." },
+            { w: "ran a hand over ~", k: "손으로 쓸어 보았다", s: "The old woman ran a hand over them." }
+        ],
+        "02-tiger.webp": [
+            { w: "came at her back", k: "등 뒤에서 불었다", s: "Then a cold wind came at her back." },
+            { w: "stopped dead", k: "뚝 그쳤다", s: "The sound of leaves and of birds stopped dead." },
+            { w: "stood planted", k: "떡 버티고 섰다", s: "A great tiger stood planted there." },
+            { w: "came hot at ~", k: "훅 끼쳤다", s: "Its breath came hot at her." },
+            { w: "nothing for days", k: "며칠째 아무것도", s: "I have eaten nothing for days" },
+            { w: "see nothing else", k: "눈에 뵈는 게 없다", s: "I can see nothing else" },
+            { w: "shook under her", k: "후들후들 떨렸다", s: "Her legs shook under her." },
+            { w: "something, anything", k: "무슨 말이라도", s: "she must say something, anything" }
+        ],
+        "03-deal.webp": [
+            { w: "threw ~ up (throw)", k: "번쩍 들었다", s: "The old woman threw both hands up." },
+            { w: "nothing but bone", k: "뼈밖에 없는", s: "Eat me now and there is nothing but bone." },
+            { w: "no thicker than ~", k: "~만 한 굵기인", s: "this arm is no thicker than a branch" },
+            { w: "rolled up her sleeve", k: "소매를 걷었다", s: "She rolled up her sleeve to show him." },
+            { w: "a pot of ~", k: "한 솥의", s: "I shall make you a pot of porridge" },
+            { w: "Eat your fill", k: "배불리 자시다", s: "Eat your fill of that, and then eat me." },
+            { w: "licked its lips", k: "입맛을 다셨다", s: "The tiger licked its lips." },
+            { w: "mouth watered", k: "침이 넘어갔다", s: "At the word porridge its mouth watered of itself." }
+        ],
+        "04-agree.webp": [
+            { w: "fair enough", k: "그럴듯한", s: "Well now, that is a fair enough thing to say." },
+            { w: "ripe", k: "여문", s: "When the beans are ripe I shall come again." },
+            { w: "no help for it", k: "꼼짝없이", s: "And then you will be eaten, and no help for it." },
+            { w: "swung ~ round (swing)", k: "휙 돌렸다", s: "The tiger swung its tail round and turned away." },
+            { w: "footfalls", k: "발자국 소리", s: "Its footfalls rang as it went." },
+            { w: "at its own pace", k: "어슬렁어슬렁", s: "The tiger went off up the mountain at its own pace." },
+            { w: "quite gone", k: "완전히 사라진", s: "She could not move till it was quite gone." },
+            { w: "in the blink of an eye", k: "눈 깜짝할 사이에", s: "Autumn felt as if it would come in the blink of an eye." }
+        ],
+        "05-cry.webp": [
+            { w: "better than ever", k: "그해따라 잘", s: "The beans filled out that year better than ever." },
+            { w: "gathered (gather)", k: "거두었다", s: "The old woman gathered them and made porridge." },
+            { w: "lit the fire (light)", k: "장작을 지폈다", s: "She lit the fire, boiled the beans, rolled the rice balls." },
+            { w: "rice balls", k: "새알심", s: "boiled the beans, rolled the rice balls" },
+            { w: "kept sinking", k: "자꾸 내려앉았다", s: "Her hands were busy and her heart kept sinking." },
+            { w: "stirred (stir)", k: "저었다", s: "The old woman cried as she stirred with the ladle." },
+            { w: "ladle", k: "국자", s: "as she stirred with the ladle" },
+            { w: "went out past ~", k: "밖까지 퍼졌다", s: "The good smell went out past the yard." }
+        ],
+        "06-chestnut.webp": [
+            { w: "came rolling", k: "데구루루 굴러왔다", s: "Then a chestnut came rolling into the kitchen." },
+            { w: "from the start", k: "처음부터", s: "The old woman told the whole tiger story from the start." },
+            { w: "to the end", k: "끝까지", s: "The chestnut listened to the end without a word." },
+            { w: "in a small voice", k: "조그만 목소리로", s: "Then it spoke in a small voice." },
+            { w: "alone", k: "혼자서는", s: "I cannot do it alone, but together we can." },
+            { w: "ate ~ up", k: "냠냠 먹었다", s: "The chestnut ate its porridge up." },
+            { w: "ashes", k: "재", s: "Then it went into the ashes of the stove." },
+            { w: "buried itself (bury)", k: "몸을 파묻었다", s: "It buried itself in the ash and did not move." }
+        ],
+        "07-turtle.webp": [
+            { w: "crawling (crawl)", k: "엉금엉금 기는", s: "Next a turtle came crawling in." },
+            { w: "shell", k: "등딱지", s: "Its shell was still wet." },
+            { w: "by the look of it", k: "모양이었다", s: "It had come straight up from the stream, by the look of it." },
+            { w: "once more", k: "또 한 번", s: "The old woman told that story once more." },
+            { w: "emptied (empty)", k: "비웠다", s: "The turtle emptied its bowl in no time." },
+            { w: "licked up (lick)", k: "싹싹 핥아 먹었다", s: "It licked up even the last of the liquid." },
+            { w: "water jar", k: "물동이", s: "Then it went splash into the water jar in the kitchen." },
+            { w: "swayed (sway)", k: "찰랑 흔들렸다", s: "The water swayed once and was still." }
+        ],
+        "08-dung.webp": [
+            { w: "dog dirt", k: "개똥", s: "Next some dog dirt came rolling in from the yard." },
+            { w: "fresh", k: "갓 나온", s: "It was fresh, and still steaming." },
+            { w: "steaming (steam)", k: "김이 모락모락 나는", s: "It was fresh, and still steaming." },
+            { w: "you as well", k: "너까지", s: "Oh dear, you as well..." },
+            { w: "whether to ~ or ~", k: "~할지 ~할지", s: "The old woman did not know whether to laugh or cry." },
+            { w: "just right for ~", k: "~에게 딱인", s: "This spot here is just right for me." },
+            { w: "spread itself flat", k: "철퍼덕 퍼졌다", s: "It spread itself flat in the middle of the kitchen floor." },
+            { w: "notice", k: "눈치채다", s: "It lay so flat that nobody would notice it." }
+        ],
+        "09-mortar.webp": [
+            { w: "Thump", k: "쿵", s: "Thump, thump, thump." },
+            { w: "loud enough to ~", k: "~할 만큼 큰", s: "A noise loud enough to shake the ground came from the yard." },
+            { w: "hopping along", k: "껑충껑충 뛰어오는", s: "This time it was a great mortar, hopping along." },
+            { w: "wiped her eyes", k: "눈물을 훔쳤다", s: "The old woman wiped her eyes and told it." },
+            { w: "a good full bowl", k: "배불리 한 그릇", s: "The mortar ate a good full bowl of porridge." },
+            { w: "the frame above ~", k: "문틀", s: "it climbed up onto the frame above the kitchen door" },
+            { w: "with a struggle", k: "낑낑거리며", s: "It got up there with a struggle, being so heavy." },
+            { w: "creaked (creak)", k: "삐걱 소리를 냈다", s: "The doorframe creaked under it." }
+        ],
+        "10-mat.webp": [
+            { w: "Last of all", k: "마지막으로", s: "Last of all a mat and a carrying frame came together." },
+            { w: "woven out of ~ (weave)", k: "~로 짠", s: "A mat is a big cover woven out of straw." },
+            { w: "rolled up", k: "둘둘 말린", s: "The mat came rolled up and the frame walked in." },
+            { w: "lend a hand", k: "힘을 보태다", s: "We shall lend a hand as well." },
+            { w: "took up (take)", k: "들었다", s: "The old woman took up her ladle without a word." },
+            { w: "half down", k: "반이나 줄어든", s: "The pot was already half down." },
+            { w: "lay flat (lie)", k: "납작 엎드렸다", s: "The mat lay flat in the middle of the yard." },
+            { w: "leaned against ~ (lean)", k: "기대어 섰다", s: "The frame leaned quietly against the wall." },
+            { w: "had their places", k: "자리를 잡았다", s: "Now all six of them had their places." }
+        ],
+        "11-arrive.webp": [
+            { w: "hid (hide)", k: "숨었다", s: "The old woman hid in a corner of the kitchen" },
+            { w: "held her breath", k: "숨을 죽였다", s: "hid in a corner of the kitchen and held her breath" },
+            { w: "pushed ~ open", k: "밀고 들어왔다", s: "The tiger pushed the gate open and came in." },
+            { w: "rang across ~ (ring)", k: "쿵쿵 울렸다", s: "Heavy footfalls rang across the yard." },
+            { w: "too dark to ~", k: "~할 수 없을 만큼 캄캄한", s: "it was too dark to see your own hand" },
+            { w: "put the lamp out", k: "등잔불을 껐다", s: "The old woman had put the lamp out on purpose." },
+            { w: "What are you about", k: "뭐 하는 게냐", s: "What are you about, with no light lit?" },
+            { w: "crouched down (crouch)", k: "쭈그리고 앉았다", s: "The tiger crouched down in front of the stove." },
+            { w: "glowed (glow)", k: "발갛게 남았다", s: "In the stove only the ashes glowed red." }
+        ],
+        "12-pop.webp": [
+            { w: "blew on ~ (blow)", k: "후후 불었다", s: "The tiger put its face into the stove and blew on the ash." },
+            { w: "bring the fire up", k: "불을 살리다", s: "It meant to bring the fire up and warm the pot." },
+            { w: "flew up (fly)", k: "풀풀 날았다", s: "The ash flew up into the tiger's nose." },
+            { w: "Pop", k: "팍", s: "Pop!" },
+            { w: "shot up (shoot)", k: "튀어 올랐다", s: "Something shot up out of the ash." },
+            { w: "square in the eye", k: "눈을 딱", s: "The chestnut hit the tiger square in the eye." },
+            { w: "embers", k: "잿불", s: "It was a chestnut heated hot in the embers." },
+            { w: "clapped ~ over (clap)", k: "감쌌다", s: "The tiger clapped both paws over its eyes." },
+            { w: "went yellow", k: "노래졌다", s: "Everything in front of it went yellow." }
+        ],
+        "13-bite.webp": [
+            { w: "burning", k: "화끈거리는", s: "The tiger ran for the water jar to cool its burning eyes." },
+            { w: "by feeling for it", k: "손으로 더듬어", s: "It could not see, and found the jar by feeling for it." },
+            { w: "plunged (plunge)", k: "푹 담갔다", s: "Then it plunged a front paw into the water." },
+            { w: "like life itself", k: "살 것 같은", s: "The cold water felt like life itself." },
+            { w: "Snap", k: "콱", s: "Snap!" },
+            { w: "with all its might", k: "힘껏", s: "The turtle in the jar bit that paw with all its might." },
+            { w: "leapt about (leap)", k: "펄쩍 뛰었다", s: "The tiger leapt about with the jar in its arms." },
+            { w: "come off", k: "떨어지다", s: "Shake as it might, the turtle did not come off." }
+        ],
+        "14-slip.webp": [
+            { w: "came down (come)", k: "내려앉았다", s: "Where it came down from that leap was on the dog dirt." },
+            { w: "lay flat (lie)", k: "납작 퍼져 있었다", s: "The middle of the floor, where the dirt lay flat." },
+            { w: "Skiiid", k: "찌이익", s: "Skiiid —" },
+            { w: "went out in front and behind", k: "앞뒤로 미끄러졌다", s: "The tiger's feet went out in front and behind." },
+            { w: "catch its balance", k: "균형을 잡다", s: "There was no time at all to catch its balance." },
+            { w: "went over on its back", k: "벌러덩 나자빠졌다", s: "The tiger went straight over on its back." },
+            { w: "covered in ~", k: "범벅이 된", s: "From its back to its tail it was covered in dog dirt." },
+            { w: "scrambled up", k: "허둥지둥 일어났다", s: "The tiger scrambled up and made for the door." },
+            { w: "made for ~", k: "~쪽으로 갔다", s: "The tiger scrambled up and made for the door." }
+        ],
+        "15-roll.webp": [
+            { w: "came down on ~", k: "위로 떨어졌다", s: "The mortar came down on the tiger's head." },
+            { w: "thrown itself (throw)", k: "몸을 던졌다", s: "It had thrown itself as if it had been waiting." },
+            { w: "seeing stars", k: "별을 보며", s: "The tiger rolled out into the yard, seeing stars." },
+            { w: "left sound", k: "성한 데가 남은", s: "There was not one part of it left sound." },
+            { w: "got up on end", k: "벌떡 일어섰다", s: "Then the mat lying in the yard got up on end." },
+            { w: "rolled ~ up", k: "둘둘 말았다", s: "And it rolled the tiger up, round and round and round." },
+            { w: "so much as ~", k: "~조차", s: "The tiger could not move so much as a finger." },
+            { w: "Let go", k: "놔라", s: "Let go! Let go of me!" },
+            { w: "the tighter", k: "더 세게", s: "The mat only squeezed the tighter." }
+        ],
+        "16-river.webp": [
+            { w: "came over", k: "성큼 다가왔다", s: "The carrying frame by the wall came over." },
+            { w: "in no hurry", k: "느긋한", s: "The frame was in no hurry at all." },
+            { w: "nothing to hurry for", k: "서두를 것이 없는", s: "There was nothing whatever to hurry for." },
+            { w: "on its back", k: "등에 지고", s: "It took the rolled-up tiger on its back and walked off." },
+            { w: "Shout as ~ might", k: "아무리 소리쳐도", s: "Shout as the tiger might behind it, nothing came of it." },
+            { w: "with a splash", k: "텀벙", s: "And it threw the tiger into the water with a splash." },
+            { w: "came near ~", k: "얼씬했다", s: "After that the tiger never came near the village." },
+            { w: "shared ~ among (share)", k: "나누어 주었다", s: "The old woman shared the rest of the porridge among the six." }
+        ],
+        "after": [
+            { w: "Count ~ up", k: "세어 보라", s: "Count up the helpers in this story." },
+            { w: "every one of them", k: "하나같이", s: "Every one of them was in the kitchen or the yard." },
+            { w: "a warrior", k: "장수", s: "There is no warrior with a sword" },
+            { w: "works magic", k: "도술을 부린다", s: "no wise man who works magic" },
+            { w: "the things she used", k: "쓰던 살림살이", s: "The things she used every day became the helpers." },
+            { w: "on its own", k: "혼자서", s: "not one of them could have done anything to the tiger on its own" },
+            { w: "What could ~ do", k: "무엇을 하겠는가", s: "What could one chestnut do?" },
+            { w: "great strength", k: "큰 힘", s: "A big thing is not always done by great strength." },
+            { w: "in turn", k: "차례로", s: "the small part each one has, laid down in turn" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌰',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Count up the helpers in this story. A chestnut, a turtle, dog dirt, a mortar, a mat, a carrying frame. Every one of them was in the kitchen or the yard already.",
+                    "There is no warrior with a sword and no wise man who works magic. The things the old woman used every day became the helpers.",
+                    "Look again and not one of them could have done anything to the tiger on its own. What could one chestnut do?",
+                    "A big thing is not always done by great strength. It is done by the small part each one has, laid down in turn."
+                ],
+                right: [
+                    "Not the chestnut, not the turtle, not the dog dirt could manage the tiger alone. But each did what it could do where it was, and the tiger went.",
+                    "Big things are often done not by great strength but by small parts from a lot of people.",
+                    "In something you did together with others, what was your part?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "할멈은 호랑이에게 언제 다시 오라고 했나요?", choices: ["가을에", "봄에", "여름에"], answer: 0 },
     { q: "아궁이에 숨은 것은 무엇인가요?", choices: ["자라", "절구", "밤"], answer: 2 },

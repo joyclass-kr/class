@@ -300,6 +300,571 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🎩",
+        art: "cover.webp",
+        title: "The Goblin's Cap",
+        intro: [
+            "This is an oral tale with no known author. It has a cap in it that makes you invisible when you put it on.",
+            "A gamtu was a small round cap men wore in Joseon days. Wearing one meant holding office, so even now to wear a cap means to have a post.",
+            "Things that make you invisible turn up all over the world. But it is rare for the one who gets such a thing to end well."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Night by the Stream",
+            beats: [
+                {
+                    art: "01-poor.webp",
+                    emoji: "🥣",
+                    left: [
+                        "Long ago in a village there lived a man called Dolsoe.",
+                        "For hard work there was nobody in the village like him.",
+                        "He went out by the morning star and worked till the moon rose.",
+                        "And oddly enough he was always poor."
+                    ],
+                    right: [
+                        "The storehouse was empty and the bowl showed its bottom.",
+                        { t: "\"Bowl, why are you always empty?\"", v: "man" },
+                        { t: "\"Well, no answer either.\"", v: "man" },
+                        "Dolsoe was a man who talked to empty bowls.",
+                        "The house was so quiet, living alone.",
+                        "And next day he was up by the morning star again."
+                    ]
+                },
+                {
+                    art: "02-fire.webp",
+                    emoji: "🔥",
+                    left: [
+                        "It was a summer night.",
+                        "He had gone round by the water on purpose, to cool off.",
+                        "Passing the stream, he saw a light moving some way off.",
+                        { t: "\"And I thought it would be cool tonight.\"", v: "man" },
+                        "Dolsoe stopped where he was."
+                    ],
+                    right: [
+                        { t: "\"Who lights a fire at this hour?\"", v: "man" },
+                        "Dolsoe held his breath and pushed through the grass.",
+                        "He came close, and he froze where he stood.",
+                        "The fire was burning up well, and there was nobody round it.",
+                        "The wood was crackling away all by itself."
+                    ]
+                },
+                {
+                    art: "03-crab.webp",
+                    emoji: "🦀",
+                    left: [
+                        "Then a crab came walking out of the stream all on its own.",
+                        "It went pat, pat towards the fire.",
+                        "And then it climbed up and sat down on the fire.",
+                        "A little later the cooked crab rose up into the air.",
+                        "Dolsoe rubbed his eyes, and rubbed them again."
+                    ],
+                    right: [
+                        "Somebody he could not see had picked that crab up.",
+                        "Crunch.",
+                        "Crunch.",
+                        { t: "\"Ah — that is the taste. Crab in summer, every time.\"", v: "beast" },
+                        "A very satisfied voice came from somewhere.",
+                        "The hairs went up on Dolsoe's back."
+                    ]
+                },
+                {
+                    art: "04-appear.webp",
+                    emoji: "👺",
+                    left: [
+                        "Dolsoe went flat behind a rock.",
+                        "He put both hands over his mouth to make no sound at all.",
+                        { t: "\"Ugh, it is too hot for this!\"", v: "beast" },
+                        "There was a sound of somebody fanning.",
+                        "And then two curved horns came out of the empty air."
+                    ],
+                    right: [
+                        "Arms and legs came next, and a whole great goblin was there.",
+                        "In its hand was a black cap.",
+                        "A gamtu is a small cap worn on the head.",
+                        "Dolsoe very nearly cried out.",
+                        { t: "\"Me too! Me too!\"", v: "boy" },
+                        "The goblins began taking their caps off."
+                    ]
+                },
+                {
+                    art: "05-party.webp",
+                    emoji: "🎶",
+                    left: [
+                        "Caps came off here and there and six goblins were suddenly there.",
+                        "The empty stream side was suddenly full of noise.",
+                        "The biggest goblin sang, and not one note was right.",
+                        "But they were all delighted and shook their shoulders."
+                    ],
+                    right: [
+                        "The smallest goblin kept dropping its crab legs.",
+                        "It had let three of them go already.",
+                        { t: "\"I told you to hold it in both hands!\"", v: "beast" },
+                        { t: "\"Hic! Do — hic — be quiet — hic —\"", v: "boy" },
+                        "The laughing of the goblins filled the night stream."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Man Nobody Could See",
+            beats: [
+                {
+                    art: "06-wrestle.webp",
+                    emoji: "🤼",
+                    left: [
+                        { t: "\"Right, wrestling now!\"", v: "beast" },
+                        "The biggest goblin rolled up its sleeves.",
+                        { t: "\"You cannot wrestle in a cap. Off with them!\"", v: "beast" },
+                        "The goblins tossed their caps onto a wide flat rock.",
+                        "Six black caps lay piled there in a row."
+                    ],
+                    right: [
+                        "That rock was the very one Dolsoe was lying behind.",
+                        "Dolsoe thought his breath would stop.",
+                        "It was near enough to reach out and touch.",
+                        { t: "\"Heave!\"", v: "beast" },
+                        "The goblins locked together and the dust flew up.",
+                        "They were so taken up with it that nobody saw."
+                    ]
+                },
+                {
+                    art: "07-steal.webp",
+                    emoji: "🫣",
+                    left: [
+                        "Dolsoe's heart was banging.",
+                        "One of them would not be missed, he thought.",
+                        "His hand crept up.",
+                        "The moment his fingers touched a cap his whole body stiffened.",
+                        "The cap was thin and smooth.",
+                        "Dolsoe swallowed hard."
+                    ],
+                    right: [
+                        "Dolsoe pulled one cap over, put it inside his coat and ran.",
+                        "Behind him he could hear the goblins muttering.",
+                        { t: "\"Eh? Where has my cap gone?\"", v: "beast" },
+                        { t: "\"You have dropped it somewhere again!\"", v: "beast" },
+                        "Dolsoe ran home without once looking back."
+                    ]
+                },
+                {
+                    art: "08-mirror.webp",
+                    emoji: "😳",
+                    left: [
+                        "At home Dolsoe caught his breath and tried the cap on.",
+                        "It was lighter and softer than he had expected.",
+                        "Then he stood in front of the mirror with shaking hands.",
+                        { t: "\"Aaah!\"", v: "man" },
+                        "Dolsoe's mouth fell open and he nearly dropped it."
+                    ],
+                    right: [
+                        "There was nothing in the mirror at all.",
+                        "Not when he lifted a hand, not when he stamped a foot.",
+                        "Shake himself as he might, the mirror showed an empty room.",
+                        { t: "\"Well, well. This is something.\"", v: "man" },
+                        "Dolsoe took it off and on again all night."
+                    ]
+                },
+                {
+                    art: "09-prank.webp",
+                    emoji: "😄",
+                    left: [
+                        "At first it was only fun.",
+                        "Dolsoe put the cap on and went round the village.",
+                        "He gave the washing line a flick and Yi looked up at the sky.",
+                        { t: "\"There is no wind. Why is it swinging?\"", v: "man" },
+                        { t: "\"Now that is odd.\"", v: "man" },
+                        "Dolsoe held his sides laughing under the wall."
+                    ],
+                    right: [
+                        "He gave the schoolmaster's hat a little push too.",
+                        "The hat came down over his eyes and the schoolmaster jumped.",
+                        { t: "\"You boys! Who touched my hat!\"", v: "old" },
+                        "It was the wrong children who were made to stand for it.",
+                        "Every time, Dolsoe slipped quietly away."
+                    ]
+                },
+                {
+                    art: "10-cow.webp",
+                    emoji: "🐮",
+                    left: [
+                        "The best of all was old Kim's cow.",
+                        "It was the gentlest cow in the whole village.",
+                        "Dolsoe swung himself up onto its back and the cow started.",
+                        { t: "\"Moooooo —\"", v: "beast" },
+                        "It threw up its back legs and bolted out of the yard."
+                    ],
+                    right: [
+                        "The cow went over the wall, down the lane, all round the village.",
+                        "Old Kim lost the rope and sat down hard.",
+                        { t: "\"The cow! The cow is running by itself!\"", v: "old" },
+                        "Dolsoe clung to its back, delighted.",
+                        "Only the laughing floated about in the air."
+                    ]
+                },
+                {
+                    art: "11-market.webp",
+                    emoji: "🍡",
+                    left: [
+                        "A few days later Dolsoe put the cap on and went to the market.",
+                        "It was crowded, and he took care not to bump anybody.",
+                        "In front of a cake stall his feet stopped.",
+                        "Steamed rice cakes were piled up like a hill.",
+                        "One would not matter, he thought."
+                    ],
+                    right: [
+                        "One cake rose into the air and disappeared.",
+                        "The cake seller rubbed his eyes and looked over his tray.",
+                        { t: "\"Eh? Where has that cake gone?\"", v: "man" },
+                        "The hand that held the cake was trembling.",
+                        "For the first time something pricked at his chest.",
+                        "And still he did not put the cake back."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Floating Red Spot",
+            beats: [
+                {
+                    art: "12-rumor.webp",
+                    emoji: "😰",
+                    left: [
+                        "Once became twice, and twice became ten times.",
+                        "At first it was hunger; later his hand simply went out.",
+                        "From cakes to fruit, from fruit to cloth.",
+                        "The storehouse filled up day by day.",
+                        "Dolsoe opened the storehouse door every night to look."
+                    ],
+                    right: [
+                        { t: "\"A ghost is taking things!\"", v: "man" },
+                        { t: "\"Ours went last night too!\"", v: "man" },
+                        "The traders held on to their goods and slept badly.",
+                        "But Dolsoe's own heart was getting heavier.",
+                        "The fuller the storehouse got, the less he slept."
+                    ]
+                },
+                {
+                    art: "13-hole.webp",
+                    emoji: "🧵",
+                    left: [
+                        "Then one night Dolsoe dozed off for a moment.",
+                        "A spark jumped onto the cap he had left beside the stove.",
+                        "He put it out quickly, but there was a hole in the side.",
+                        { t: "\"Oh dear. What am I to do with this?\"", v: "man" },
+                        "Dolsoe turned the cap over and over."
+                    ],
+                    right: [
+                        "Dolsoe went through a chest and found a piece of cloth.",
+                        "It was, of all things, bright red.",
+                        "He sewed it over the hole, crooked and uneven.",
+                        "He sewed so badly that the thread kept tangling.",
+                        "In the dark room that colour did not show."
+                    ]
+                },
+                {
+                    art: "14-spot.webp",
+                    emoji: "🔴",
+                    left: [
+                        "Next day the market people were all muttering.",
+                        "Every one of them was looking up at the air.",
+                        { t: "\"Look at that!\"", v: "man" },
+                        "One bright red spot was floating about in the air.",
+                        { t: "\"What on earth is that?\"", v: "man" },
+                        { t: "\"The ghost wears a red mark, it seems!\"", v: "man" }
+                    ],
+                    right: [
+                        "Only the sewn-on patch could be seen.",
+                        "Dolsoe knew nothing of it and went up to the cake stall.",
+                        "He only wondered why they were all like that.",
+                        { t: "\"That red thing is the thief!\"", v: "man" },
+                        { t: "\"Catch that and we have him!\"", v: "man" },
+                        "The people came crowding in."
+                    ]
+                },
+                {
+                    art: "15-caught.webp",
+                    emoji: "🙌",
+                    left: [
+                        "Hands came out from every side, feeling at the empty air.",
+                        "Then somebody caught hold of the cap.",
+                        "The cap came off and Dolsoe was suddenly there.",
+                        "The market went as quiet as if water had been poured over it.",
+                        "Dolsoe did not even think of running."
+                    ],
+                    right: [
+                        "After a long moment Dolsoe took a string of coins out of his coat.",
+                        { t: "\"For the cakes. I took twenty-three of them.\"", v: "man" },
+                        { t: "\"...You counted them?\"", v: "man" },
+                        { t: "\"Yes. I counted them every night.\"", v: "man" },
+                        "The market people could not say anything at all."
+                    ]
+                },
+                {
+                    art: "16-burn.webp",
+                    emoji: "🔥",
+                    left: [
+                        "That night Dolsoe put the cap into the stove.",
+                        "The red cloth was the last part to burn.",
+                        "He sat in front of the stove a long while, watching the fire.",
+                        { t: "\"Not being seen never made it not have happened.\"", v: "man" },
+                        "Dolsoe said it to himself."
+                    ],
+                    right: [
+                        "Next night he went to the stream, and one goblin sat there alone.",
+                        "It was the goblin that had lost its cap.",
+                        "Dolsoe sat down quietly beside it.",
+                        { t: "\"...I am sorry.\"", v: "man" },
+                        { t: "\"Never mind. Being seen is not so bad either.\"", v: "beast" },
+                        "The two sat like that until dawn."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What strange thing did Dolsoe first see at the stream?", choices: ["The stream ran back uphill", "A crab walked into the fire", "A great rock rolled by itself"], answer: 1 },
+        { q: "What came out of the empty air first?", choices: ["Two curved horns", "One cooked crab", "A bright red cloth"], answer: 0 },
+        { q: "How did Dolsoe get the cap?", choices: ["A goblin gave it to him", "Took it during the wrestling", "Found it under a rock"], answer: 1 },
+        { q: "What did Dolsoe see in the mirror?", choices: ["Two curved horns", "One bright red spot", "An empty room"], answer: 2 },
+        { q: "What happened when he got on the cow?", choices: ["It ran all round the village", "It sat down where it was", "It knew who Dolsoe was"], answer: 0 },
+        { q: "What did he mend the hole with?", choices: ["A piece of cloth", "Black thread", "A bit of washing line"], answer: 0 },
+        { q: "What did the people see that caught him?", choices: ["Footprints on the ground", "A shadow moving alone", "A floating red spot"], answer: 2 },
+        { q: "What did Dolsoe do with the cap at the end?", choices: ["Left it on the stream rock", "Put it away in a chest", "Burned it in the stove"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "What began as a prank moved on to cakes and then to cloth, so the first time is the hard one and the second is easy.",
+                "He was counting every night how many he had taken, so his mind was never once at ease about it.",
+                "Only the mended patch could be seen, so the place you try to hide is the first thing anybody sees.",
+                "He put the cap in the stove, so he burned it because he could not face giving it back to the goblin."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "invisible", k: "보이지 않는", s: "a cap that makes you invisible when you put it on" },
+            { w: "cap", k: "감투", s: "A gamtu was a small round cap men wore in Joseon days." },
+            { w: "holding office", k: "벼슬을 함", s: "Wearing one meant holding office" },
+            { w: "a post", k: "자리, 벼슬", s: "even now to wear a cap means to have a post" },
+            { w: "turn up", k: "나온다", s: "Things that make you invisible turn up all over the world." },
+            { w: "it is rare for ~", k: "~는 드물다", s: "But it is rare for the one who gets such a thing to end well." },
+            { w: "end well", k: "끝에 잘되다", s: "rare for the one who gets such a thing to end well" }
+        ],
+        "01-poor.webp": [
+            { w: "For hard work", k: "부지런하기로는", s: "For hard work there was nobody in the village like him." },
+            { w: "the morning star", k: "새벽별", s: "He went out by the morning star and worked till the moon rose." },
+            { w: "oddly enough", k: "이상하게도", s: "And oddly enough he was always poor." },
+            { w: "showed its bottom", k: "바닥이 보였다", s: "The storehouse was empty and the bowl showed its bottom." },
+            { w: "no answer either", k: "대답도 없다", s: "Well, no answer either." },
+            { w: "talked to ~", k: "말을 걸었다", s: "Dolsoe was a man who talked to empty bowls." },
+            { w: "living alone", k: "혼자 사니", s: "The house was so quiet, living alone." },
+            { w: "was up (be up)", k: "일어났다", s: "next day he was up by the morning star again" }
+        ],
+        "02-fire.webp": [
+            { w: "on purpose", k: "일부러", s: "He had gone round by the water on purpose, to cool off." },
+            { w: "cool off", k: "더위를 식히다", s: "He had gone round by the water on purpose, to cool off." },
+            { w: "some way off", k: "저만치에서", s: "he saw a light moving some way off" },
+            { w: "at this hour", k: "이 밤중에", s: "Who lights a fire at this hour?" },
+            { w: "pushed through ~", k: "헤쳤다", s: "Dolsoe held his breath and pushed through the grass." },
+            { w: "froze (freeze)", k: "얼어붙었다", s: "He came close, and he froze where he stood." },
+            { w: "burning up well", k: "활활 타는", s: "The fire was burning up well" },
+            { w: "all by itself", k: "저 혼자", s: "The wood was crackling away all by itself." }
+        ],
+        "03-crab.webp": [
+            { w: "all on its own", k: "저 혼자", s: "a crab came walking out of the stream all on its own" },
+            { w: "pat, pat", k: "타박타박", s: "It went pat, pat towards the fire." },
+            { w: "rose up (rise)", k: "붕 떠올랐다", s: "the cooked crab rose up into the air" },
+            { w: "rubbed his eyes", k: "눈을 비볐다", s: "Dolsoe rubbed his eyes, and rubbed them again." },
+            { w: "picked ~ up", k: "집어 들었다", s: "Somebody he could not see had picked that crab up." },
+            { w: "Crunch", k: "아그작", s: "Crunch." },
+            { w: "satisfied", k: "만족스러운", s: "A very satisfied voice came from somewhere." },
+            { w: "hairs went up", k: "소름이 돋았다", s: "The hairs went up on Dolsoe's back." }
+        ],
+        "04-appear.webp": [
+            { w: "went flat", k: "납작 엎드렸다", s: "Dolsoe went flat behind a rock." },
+            { w: "no sound at all", k: "숨소리도 안 나게", s: "He put both hands over his mouth to make no sound at all." },
+            { w: "fanning (fan)", k: "부채질하는", s: "There was a sound of somebody fanning." },
+            { w: "curved horns", k: "굽은 뿔", s: "two curved horns came out of the empty air" },
+            { w: "the empty air", k: "허공", s: "two curved horns came out of the empty air" },
+            { w: "goblin", k: "도깨비", s: "a whole great goblin was there" },
+            { w: "very nearly", k: "하마터면", s: "Dolsoe very nearly cried out." },
+            { w: "taking ~ off", k: "벗는", s: "The goblins began taking their caps off." }
+        ],
+        "05-party.webp": [
+            { w: "here and there", k: "여기저기서", s: "Caps came off here and there" },
+            { w: "full of noise", k: "시끌벅적한", s: "The empty stream side was suddenly full of noise." },
+            { w: "not one note was right", k: "음이 하나도 안 맞았다", s: "The biggest goblin sang, and not one note was right." },
+            { w: "delighted", k: "신이 난", s: "But they were all delighted and shook their shoulders." },
+            { w: "kept dropping", k: "자꾸 떨어뜨렸다", s: "The smallest goblin kept dropping its crab legs." },
+            { w: "let ~ go", k: "놓쳤다", s: "It had let three of them go already." },
+            { w: "Hic", k: "딸꾹", s: "Hic! Do — hic — be quiet — hic —" },
+            { w: "filled (fill)", k: "가득 찼다", s: "The laughing of the goblins filled the night stream." }
+        ],
+        "06-wrestle.webp": [
+            { w: "wrestling", k: "씨름", s: "Right, wrestling now!" },
+            { w: "rolled up its sleeves", k: "소매를 걷어붙였다", s: "The biggest goblin rolled up its sleeves." },
+            { w: "Off with them", k: "벗어라", s: "You cannot wrestle in a cap. Off with them!" },
+            { w: "tossed (toss)", k: "툭 던졌다", s: "The goblins tossed their caps onto a wide flat rock." },
+            { w: "lay piled (lie)", k: "쌓여 있었다", s: "Six black caps lay piled there in a row." },
+            { w: "the very one", k: "바로 그것", s: "That rock was the very one Dolsoe was lying behind." },
+            { w: "reach out and touch", k: "손만 뻗으면 닿다", s: "It was near enough to reach out and touch." },
+            { w: "locked together", k: "엉겨 붙었다", s: "The goblins locked together and the dust flew up." },
+            { w: "taken up with ~", k: "정신이 팔린", s: "They were so taken up with it that nobody saw." }
+        ],
+        "07-steal.webp": [
+            { w: "banging (bang)", k: "쿵쾅거리는", s: "Dolsoe's heart was banging." },
+            { w: "would not be missed", k: "없어져도 모른다", s: "One of them would not be missed, he thought." },
+            { w: "crept up (creep)", k: "슬금슬금 올라갔다", s: "His hand crept up." },
+            { w: "stiffened (stiffen)", k: "굳었다", s: "his whole body stiffened" },
+            { w: "swallowed hard", k: "침을 꿀꺽 삼켰다", s: "Dolsoe swallowed hard." },
+            { w: "pulled ~ over", k: "끌어당겼다", s: "Dolsoe pulled one cap over, put it inside his coat and ran." },
+            { w: "muttering (mutter)", k: "웅성거리는", s: "Behind him he could hear the goblins muttering." },
+            { w: "dropped ~ somewhere", k: "어디다 흘렸다", s: "You have dropped it somewhere again!" }
+        ],
+        "08-mirror.webp": [
+            { w: "caught his breath", k: "숨을 몰아쉬었다", s: "At home Dolsoe caught his breath and tried the cap on." },
+            { w: "than he had expected", k: "생각보다", s: "It was lighter and softer than he had expected." },
+            { w: "shaking hands", k: "떨리는 손", s: "Then he stood in front of the mirror with shaking hands." },
+            { w: "fell open (fall)", k: "딱 벌어졌다", s: "Dolsoe's mouth fell open" },
+            { w: "nothing at all", k: "아무것도", s: "There was nothing in the mirror at all." },
+            { w: "stamped a foot", k: "발을 굴렀다", s: "not when he stamped a foot" },
+            { w: "Shake ~ as he might", k: "아무리 흔들어도", s: "Shake himself as he might, the mirror showed an empty room." },
+            { w: "This is something", k: "이거 물건이다", s: "Well, well. This is something." }
+        ],
+        "09-prank.webp": [
+            { w: "only fun", k: "그저 재미난", s: "At first it was only fun." },
+            { w: "went round ~", k: "한 바퀴 돌았다", s: "Dolsoe put the cap on and went round the village." },
+            { w: "washing line", k: "빨랫줄", s: "He gave the washing line a flick" },
+            { w: "a flick", k: "툭 건드리기", s: "He gave the washing line a flick" },
+            { w: "held his sides", k: "배를 잡았다", s: "Dolsoe held his sides laughing under the wall." },
+            { w: "schoolmaster", k: "훈장님", s: "He gave the schoolmaster's hat a little push too." },
+            { w: "came down over ~", k: "푹 내려앉았다", s: "The hat came down over his eyes" },
+            { w: "were made to stand", k: "벌을 섰다", s: "It was the wrong children who were made to stand for it." },
+            { w: "slipped away (slip)", k: "슬그머니 자리를 떴다", s: "Every time, Dolsoe slipped quietly away." }
+        ],
+        "10-cow.webp": [
+            { w: "The best of all", k: "제일 신났던 것", s: "The best of all was old Kim's cow." },
+            { w: "gentlest", k: "제일 순한", s: "It was the gentlest cow in the whole village." },
+            { w: "swung himself up (swing)", k: "훌쩍 올라탔다", s: "Dolsoe swung himself up onto its back" },
+            { w: "started (start)", k: "깜짝 놀랐다", s: "Dolsoe swung himself up onto its back and the cow started." },
+            { w: "threw up ~ (throw)", k: "번쩍 들었다", s: "It threw up its back legs and bolted out of the yard." },
+            { w: "bolted (bolt)", k: "뛰쳐나갔다", s: "It threw up its back legs and bolted out of the yard." },
+            { w: "lost the rope", k: "고삐를 놓쳤다", s: "Old Kim lost the rope and sat down hard." },
+            { w: "clung to ~ (cling)", k: "붙어 있었다", s: "Dolsoe clung to its back, delighted." },
+            { w: "floated about", k: "둥둥 떠다녔다", s: "Only the laughing floated about in the air." }
+        ],
+        "11-market.webp": [
+            { w: "crowded", k: "사람이 많은", s: "It was crowded, and he took care not to bump anybody." },
+            { w: "bump", k: "부딪히다", s: "he took care not to bump anybody" },
+            { w: "cake stall", k: "떡판", s: "In front of a cake stall his feet stopped." },
+            { w: "Steamed rice cakes", k: "시루떡", s: "Steamed rice cakes were piled up like a hill." },
+            { w: "would not matter", k: "괜찮겠지", s: "One would not matter, he thought." },
+            { w: "disappeared (disappear)", k: "사라졌다", s: "One cake rose into the air and disappeared." },
+            { w: "tray", k: "떡판", s: "The cake seller rubbed his eyes and looked over his tray." },
+            { w: "trembling (tremble)", k: "파르르 떨리는", s: "The hand that held the cake was trembling." },
+            { w: "pricked at ~", k: "콕콕 쑤셨다", s: "For the first time something pricked at his chest." }
+        ],
+        "12-rumor.webp": [
+            { w: "Once became twice", k: "한 번이 두 번이 되었다", s: "Once became twice, and twice became ten times." },
+            { w: "his hand simply went out", k: "그냥 손이 갔다", s: "At first it was hunger; later his hand simply went out." },
+            { w: "cloth", k: "옷감", s: "From cakes to fruit, from fruit to cloth." },
+            { w: "filled up (fill)", k: "차올랐다", s: "The storehouse filled up day by day." },
+            { w: "ghost", k: "귀신", s: "A ghost is taking things!" },
+            { w: "held on to ~", k: "끌어안았다", s: "The traders held on to their goods and slept badly." },
+            { w: "goods", k: "물건", s: "The traders held on to their goods and slept badly." },
+            { w: "getting heavier", k: "무거워지는", s: "But Dolsoe's own heart was getting heavier." },
+            { w: "The fuller ~, the less ~", k: "찰수록 덜", s: "The fuller the storehouse got, the less he slept." }
+        ],
+        "13-hole.webp": [
+            { w: "dozed off (doze)", k: "깜빡 졸았다", s: "Then one night Dolsoe dozed off for a moment." },
+            { w: "spark", k: "불티", s: "A spark jumped onto the cap" },
+            { w: "stove", k: "아궁이", s: "the cap he had left beside the stove" },
+            { w: "put it out (put)", k: "껐다", s: "He put it out quickly, but there was a hole in the side." },
+            { w: "turned ~ over and over", k: "이리저리 뒤집어 보았다", s: "Dolsoe turned the cap over and over." },
+            { w: "went through ~", k: "뒤졌다", s: "Dolsoe went through a chest and found a piece of cloth." },
+            { w: "of all things", k: "하필이면", s: "It was, of all things, bright red." },
+            { w: "crooked and uneven", k: "삐뚤빼뚤", s: "He sewed it over the hole, crooked and uneven." },
+            { w: "kept tangling", k: "자꾸 엉켰다", s: "He sewed so badly that the thread kept tangling." }
+        ],
+        "14-spot.webp": [
+            { w: "muttering (mutter)", k: "웅성거리는", s: "Next day the market people were all muttering." },
+            { w: "looking up at ~", k: "올려다보는", s: "Every one of them was looking up at the air." },
+            { w: "floating about", k: "둥둥 떠다니는", s: "One bright red spot was floating about in the air." },
+            { w: "What on earth", k: "대체 무엇", s: "What on earth is that?" },
+            { w: "a red mark", k: "붉은 표", s: "The ghost wears a red mark, it seems!" },
+            { w: "the sewn-on patch", k: "기운 헝겊", s: "Only the sewn-on patch could be seen." },
+            { w: "knew nothing of it", k: "그것도 몰랐다", s: "Dolsoe knew nothing of it and went up to the cake stall." },
+            { w: "thief", k: "범인, 도둑", s: "That red thing is the thief!" },
+            { w: "came crowding in", k: "우르르 몰려들었다", s: "The people came crowding in." }
+        ],
+        "15-caught.webp": [
+            { w: "feeling at ~ (feel)", k: "더듬는", s: "Hands came out from every side, feeling at the empty air." },
+            { w: "caught hold of ~", k: "덥석 낚아챘다", s: "Then somebody caught hold of the cap." },
+            { w: "came off (come off)", k: "벗겨졌다", s: "The cap came off and Dolsoe was suddenly there." },
+            { w: "as if water had been poured", k: "물을 끼얹은 듯", s: "The market went as quiet as if water had been poured over it." },
+            { w: "did not even think of ~", k: "~할 생각도 못 했다", s: "Dolsoe did not even think of running." },
+            { w: "a string of coins", k: "엽전 꾸러미", s: "Dolsoe took a string of coins out of his coat." },
+            { w: "For the cakes", k: "떡값입니다", s: "For the cakes. I took twenty-three of them." },
+            { w: "counted (count)", k: "세었다", s: "Yes. I counted them every night." }
+        ],
+        "16-burn.webp": [
+            { w: "the last part to burn", k: "제일 마지막까지 탔다", s: "The red cloth was the last part to burn." },
+            { w: "watching the fire", k: "불을 들여다보며", s: "He sat in front of the stove a long while, watching the fire." },
+            { w: "Not being seen", k: "보이지 않는다고", s: "Not being seen never made it not have happened." },
+            { w: "to himself", k: "혼잣말로", s: "Dolsoe said it to himself." },
+            { w: "sat there alone", k: "혼자 앉아 있었다", s: "one goblin sat there alone" },
+            { w: "that had lost ~", k: "잃은", s: "It was the goblin that had lost its cap." },
+            { w: "Never mind", k: "됐다", s: "Never mind. Being seen is not so bad either." },
+            { w: "not so bad either", k: "그것도 살 만하다", s: "Being seen is not so bad either." }
+        ],
+        "after": [
+            { w: "worth noticing", k: "눈여겨볼 만한", s: "It is worth noticing that our story picked a gamtu." },
+            { w: "officials", k: "벼슬아치", s: "A gamtu was what officials wore." },
+            { w: "hold out (hold)", k: "버티다", s: "the one who gets an unseen power does not hold out long" },
+            { w: "tests (test)", k: "시험한다", s: "because that power tests the person" },
+            { w: "made ~ visible", k: "눈에 보이게 만들었다", s: "It made visible the thing that could not be seen." },
+            { w: "did not grow angry", k: "화를 내지 않았다", s: "the goblin did not grow angry at the end" },
+            { w: "all the while", k: "그동안에도", s: "all the while Dolsoe himself was watching" },
+            { w: "was watching", k: "다 보고 있었다", s: "Dolsoe himself was watching all of it" },
+            { w: "when nobody is looking", k: "아무도 안 볼 때", s: "What are you like when nobody is looking?" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🎩',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "It is worth noticing that our story picked a gamtu of all things. A gamtu was what officials wore. To say somebody wears a cap still means they have got a post.",
+                    "The endings of such stories are much the same everywhere. The one who gets an unseen power does not hold out long, because that power tests the person.",
+                    "That is why the story has him sew red cloth of all colours onto the cap. It made visible the thing that could not be seen.",
+                    "That the goblin did not grow angry at the end is worth noticing too. Having lost its cap and lived a while in a body people could see, it found that was not so bad."
+                ],
+                right: [
+                    "What caught Dolsoe was not the red cloth. All the while he believed nobody was watching, Dolsoe himself was watching all of it. That is why the fuller the storehouse got, the heavier his heart grew.",
+                    "What are you like when nobody is looking?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "돌쇠가 개울가에서 처음 본 이상한 것은 무엇인가요?", choices: ["개울물이 거꾸로 흘러 올라갔다", "게가 저 혼자 불 위로 걸어갔다", "커다란 돌이 저 혼자 굴러다녔다"], answer: 1 },
     { q: "도깨비가 나타날 때 허공에서 먼저 쑥 나온 것은 무엇인가요?", choices: ["굽은 뿔 두 개", "다 익은 게 한 마리", "새빨간 헝겊"], answer: 0 },
