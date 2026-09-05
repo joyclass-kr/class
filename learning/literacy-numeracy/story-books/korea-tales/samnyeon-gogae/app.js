@@ -217,6 +217,416 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "⛰️",
+        art: "cover.webp",
+        title: "Three-Year Hill",
+        intro: [
+            "Three-Year Hill has no author. It was shaped over hundreds of years by one mouth after another. Stories like that are called folk tales.",
+            "With no author there is no fixed original. The hill has a different name in every district; sometimes it is an old woman who falls.",
+            "It is a wisdom tale. Nobody uses strength or magic — one turn of thought is the whole answer."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Village Below the Hill",
+            beats: [
+                {
+                    art: "01-pass.webp",
+                    emoji: "⛰️",
+                    left: [
+                        "Behind the village there is a hill. Its name is Three-Year Hill.",
+                        "It is not high and not low, an ordinary hill.",
+                        { t: "\"Fall over once on that hill and you've only three years to live.\"", v: "old" },
+                        "Every grown-up and every child knew the saying. Nobody knew when it began.",
+                        "But the whole village believed it."
+                    ],
+                    right: [
+                        "So people walked that hill watching their own feet.",
+                        "Mothers held their children's hands tight.",
+                        { t: "\"Don't run! If you fall it's the end of you!\"", v: "woman" },
+                        "Only when the hill was behind them did anyone breathe out.",
+                        "One hill could take half a day to cross."
+                    ]
+                },
+                {
+                    art: "02-sandals.webp",
+                    emoji: "🪢",
+                    left: [
+                        "In the first house below the hill lived old Bak. He was past seventy and his back was still straight.",
+                        "He had made and sold straw sandals since he was young.",
+                        "Every night he sat at the lamp making sandals. The straw whispered as he twisted it.",
+                        "His fingertips were thick with hard skin."
+                    ],
+                    right: [
+                        { t: "\"Old Bak's sandals last a year and still look new.\"", v: "man" },
+                        { t: "\"Let me have a pair too!\"", v: "granny" },
+                        "His sandals were famous for being easy on the feet.",
+                        "At the market the customers came so fast that he could not stand up until his frame was empty.",
+                        "He was always proud of that."
+                    ]
+                },
+                {
+                    art: "03-homeward.webp",
+                    emoji: "🌄",
+                    left: [
+                        "That day too there was not one sandal left.",
+                        "The market was closing.",
+                        "Old Bak hummed with his empty frame on his back. The coins jingled in his pocket.",
+                        { t: "\"Well, well. What a fine day this has been.\"", v: "old" },
+                        "He shifted the frame on his shoulders."
+                    ],
+                    right: [
+                        "The sun was going down. To get home he had to cross Three-Year Hill.",
+                        "Old Bak went up the hill path with a good stride.",
+                        "He was not worried in the least.",
+                        { t: "'I've crossed this hill for decades. Never fallen once.'", v: "old" },
+                        "The humming came by itself."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Day He Fell",
+            beats: [
+                {
+                    art: "04-stumble.webp",
+                    emoji: "😲",
+                    left: [
+                        "The top of the hill was right in front of him.",
+                        "Old Bak walked looking ahead.",
+                        "And just then—",
+                        "Trip!",
+                        { t: "\"Whoa — whoa!\"", v: "old" },
+                        "His foot caught a stone, his arms went up, and down he went."
+                    ],
+                    right: [
+                        "Thud!",
+                        "The coins scattered everywhere.",
+                        "He was not badly hurt, luckily. He had only scraped a knee.",
+                        "He got up brushing the dirt off his clothes.",
+                        { t: "\"Dear me. There's no helping old age.\"", v: "old" },
+                        "He laughed as he picked up the coins."
+                    ]
+                },
+                {
+                    art: "05-realize.webp",
+                    emoji: "😰",
+                    left: [
+                        "And then he lifted his head.",
+                        "Old Bak looked around him.",
+                        "Things he knew came into view.",
+                        "The old pine by the road. The rock split down the middle.",
+                        { t: "\"No — surely not—\"", v: "old" }
+                    ],
+                    right: [
+                        { t: "\"This is Three-Year Hill!\"", v: "old" },
+                        "His face went white.",
+                        "He sat straight down where he was.",
+                        { t: "\"Three years... I've only three years left.\"", v: "old" },
+                        "The empty frame rolled over on its side.",
+                        "He could not get up for a long time."
+                    ]
+                },
+                {
+                    art: "06-bedridden.webp",
+                    emoji: "🛏️",
+                    left: [
+                        "From that day old Bak did not get up. The nightly whisper of straw stopped.",
+                        "He lay with the quilt over his head.",
+                        { t: "\"Do eat something.\"", v: "granny" },
+                        { t: "\"No... what is the use of eating with three years left.\"", v: "old" },
+                        "He refused food and water."
+                    ],
+                    right: [
+                        "However his wife coaxed him it made no difference. He lay all day looking at the wall.",
+                        "More and more often she wiped her eyes by the door.",
+                        { t: "\"Three years... three years...\"", v: "old" },
+                        "That was all he muttered.",
+                        "The whole village heard about it."
+                    ]
+                },
+                {
+                    art: "07-doctor.webp",
+                    emoji: "🩺",
+                    left: [
+                        "The village doctor came at a run.",
+                        "He even brought his medicine chest.",
+                        "He felt the pulse, looked at the tongue, pressed the stomach. Then he tilted his head.",
+                        { t: "\"This is strange. There is nothing wrong with him anywhere.\"", v: "man" },
+                        "Look as he might, there was no illness."
+                    ],
+                    right: [
+                        { t: "\"No. I die in three years.\"", v: "old" },
+                        "Old Bak answered facing the wall.",
+                        { t: "\"I beg your pardon?\"", v: "man" },
+                        "The doctor gave up and went home. Neighbours came to talk him round and it was the same.",
+                        "Day by day old Bak grew thinner.",
+                        "His cheeks fell in and his eyes went hollow."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Rolling Down the Hill",
+            beats: [
+                {
+                    art: "08-deoki.webp",
+                    emoji: "👦",
+                    left: [
+                        "Deoki next door heard about it. Ten years old, and famous for having his wits about him.",
+                        "The saying made no sense to him. Falling over cannot kill you.",
+                        "He went straight in through old Bak's door.",
+                        { t: "\"Grandfather, why are you lying down?\"", v: "boy" }
+                    ],
+                    right: [
+                        "Deoki sat down beside him.",
+                        { t: "\"I fell on Three-Year Hill. I've only three years left.\"", v: "old" },
+                        "Old Bak answered without any strength.",
+                        "Deoki tilted his head and thought for a while, and then his eyes lit up.",
+                        "He had the face of somebody with a very good idea."
+                    ]
+                },
+                {
+                    art: "09-counting.webp",
+                    emoji: "🔢",
+                    left: [
+                        { t: "\"Grandfather, one fall is three years, yes?\"", v: "boy" },
+                        "Deoki's voice was very clear.",
+                        { t: "\"That's right...\"", v: "old" },
+                        "Old Bak answered weakly.",
+                        { t: "\"Then what about two falls?\"", v: "boy" }
+                    ],
+                    right: [
+                        { t: "\"Six years... eh?\"", v: "old" },
+                        "Deoki counted on his fingers.",
+                        { t: "\"Three falls is nine! Roll ten times and it's thirty years!\"", v: "boy" },
+                        "Old Bak's eyes went wide. The quilt slid off him.",
+                        "The room went dead quiet.",
+                        "And then he kicked the quilt away."
+                    ]
+                },
+                {
+                    art: "10-rolling.webp",
+                    emoji: "🤸",
+                    left: [
+                        { t: "\"That's it! Of course!\"", v: "old" },
+                        "Old Bak jumped up and ran for Three-Year Hill with his shoes half on.",
+                        "Roll, roll, roll.",
+                        { t: "\"One! Two! Three!\"", v: "old" },
+                        "His wife called after him and he did not hear."
+                    ],
+                    right: [
+                        "People heard and came running and counted for him out loud.",
+                        "The children clapped and counted along.",
+                        "After twenty rolls old Bak stood up with the colour back in his face.",
+                        { t: "\"Ha! Sixty years — I've a good while yet!\"", v: "old" },
+                        "From that day the sound of sandal-making was heard again."
+                    ]
+                }
+            ],
+            moral: "Believe a thing is frightening and a harmless thing turns frightening. The same event can be a terror or nothing at all, depending on how you look at it.",
+            question: "Have you ever been stuck because you were worrying? Is there another way to look at it?"
+        }
+    ],
+    quiz: [
+        { q: "What did people do once they were over the hill?", choices: ["Walked watching their feet", "Breathed out with relief", "Held their children's hands"], answer: 1 },
+        { q: "What did old Bak do at the lamp every night?", choices: ["Counted coins", "Mended his carrying frame", "Made straw sandals"], answer: 2 },
+        { q: "Why did old Bak fall on the hill?", choices: ["His foot caught a stone", "His frame was too heavy", "He walked into a pine"], answer: 0 },
+        { q: "What did the village doctor say about him?", choices: ["A leg bone was broken", "He must take medicine a long time", "There was nothing wrong with him"], answer: 2 },
+        { q: "How many years did Deoki say ten rolls would be?", choices: ["Thirty years", "Nine years", "Three hundred years"], answer: 0 },
+        { q: "What happened to old Bak after rolling on the hilltop?", choices: ["He was hurt worse", "He got his spirits back", "He took to his bed again"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "A healthy old man took to his bed just from a thought, so the mind gives way before the body does.",
+                "The doctor found nothing wrong, so there are illnesses medicine cannot reach.",
+                "A ten-year-old raised him with one sum, so a belief is changed by swapping in another belief.",
+                "Deoki told him the saying was only a rumour, so plain truth is what saves a person."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "has no author", k: "지은이가 없다", s: "Three-Year Hill has no author." },
+            { w: "was shaped (shape)", k: "다듬어졌다", s: "It was shaped over hundreds of years" },
+            { w: "one mouth after another", k: "이 사람 저 사람의 입을 거쳐", s: "by one mouth after another" },
+            { w: "folk tales", k: "구전 설화", s: "Stories like that are called folk tales." },
+            { w: "fixed original", k: "정해진 원본", s: "With no author there is no fixed original." },
+            { w: "district", k: "고을", s: "The hill has a different name in every district" },
+            { w: "a wisdom tale", k: "지혜담", s: "It is a wisdom tale." },
+            { w: "magic", k: "도술", s: "Nobody uses strength or magic" },
+            { w: "one turn of thought", k: "생각을 한 번 뒤집기", s: "one turn of thought is the whole answer" }
+        ],
+        "01-pass.webp": [
+            { w: "ordinary", k: "흔한", s: "It is not high and not low, an ordinary hill." },
+            { w: "Fall over (fall)", k: "넘어지다", s: "Fall over once on that hill" },
+            { w: "you've only ~ to live", k: "~밖에 못 산다", s: "you've only three years to live" },
+            { w: "saying", k: "말, 속담", s: "Every grown-up and every child knew the saying." },
+            { w: "watching their own feet", k: "발밑만 보며", s: "people walked that hill watching their own feet" },
+            { w: "held ~ tight (hold)", k: "꼭 붙들었다", s: "Mothers held their children's hands tight." },
+            { w: "the end of you", k: "큰일 나는 것", s: "If you fall it's the end of you!" },
+            { w: "breathe out", k: "휴 하고 숨을 쉬다", s: "Only when the hill was behind them did anyone breathe out." },
+            { w: "half a day", k: "반나절", s: "One hill could take half a day to cross." }
+        ],
+        "02-sandals.webp": [
+            { w: "past seventy", k: "일흔이 넘은", s: "He was past seventy and his back was still straight." },
+            { w: "straw sandals", k: "짚신", s: "He had made and sold straw sandals since he was young." },
+            { w: "whispered (whisper)", k: "사각사각 소리를 냈다", s: "The straw whispered as he twisted it." },
+            { w: "twisted (twist)", k: "꼬았다", s: "The straw whispered as he twisted it." },
+            { w: "fingertips", k: "손끝", s: "His fingertips were thick with hard skin." },
+            { w: "hard skin", k: "굳은살", s: "thick with hard skin" },
+            { w: "last a year (last)", k: "일 년을 간다", s: "Old Bak's sandals last a year and still look new." },
+            { w: "a pair", k: "한 켤레", s: "Let me have a pair too!" },
+            { w: "easy on the feet", k: "발이 편한", s: "His sandals were famous for being easy on the feet." },
+            { w: "customers", k: "손님", s: "the customers came so fast" },
+            { w: "was proud of ~", k: "뿌듯해했다", s: "He was always proud of that." }
+        ],
+        "03-homeward.webp": [
+            { w: "not one ~ left", k: "하나도 남지 않은", s: "That day too there was not one sandal left." },
+            { w: "was closing", k: "파할 무렵이었다", s: "The market was closing." },
+            { w: "hummed (hum)", k: "콧노래를 불렀다", s: "Old Bak hummed with his empty frame on his back." },
+            { w: "jingled (jingle)", k: "짤랑거렸다", s: "The coins jingled in his pocket." },
+            { w: "What a fine day", k: "참 좋은 날이로구나", s: "What a fine day this has been." },
+            { w: "shifted (shift)", k: "고쳐 멨다", s: "He shifted the frame on his shoulders." },
+            { w: "with a good stride", k: "성큼성큼", s: "Old Bak went up the hill path with a good stride." },
+            { w: "not in the least", k: "조금도 ~ 않은", s: "He was not worried in the least." },
+            { w: "for decades", k: "몇십 년을", s: "I've crossed this hill for decades." },
+            { w: "by itself", k: "절로", s: "The humming came by itself." }
+        ],
+        "04-stumble.webp": [
+            { w: "right in front of ~", k: "코앞에", s: "The top of the hill was right in front of him." },
+            { w: "looking ahead", k: "앞만 보고", s: "Old Bak walked looking ahead." },
+            { w: "Trip!", k: "툭!", s: "Trip!" },
+            { w: "caught (catch)", k: "걸렸다", s: "His foot caught a stone" },
+            { w: "down he went", k: "그대로 고꾸라졌다", s: "his arms went up, and down he went" },
+            { w: "Thud!", k: "쿵!", s: "Thud!" },
+            { w: "scattered (scatter)", k: "흩어졌다", s: "The coins scattered everywhere." },
+            { w: "badly hurt", k: "크게 다친", s: "He was not badly hurt, luckily." },
+            { w: "scraped (scrape)", k: "쓸렸다", s: "He had only scraped a knee." },
+            { w: "brushing ~ off (brush)", k: "툭툭 털며", s: "He got up brushing the dirt off his clothes." },
+            { w: "no helping ~", k: "별수 없는", s: "There's no helping old age." }
+        ],
+        "05-realize.webp": [
+            { w: "lifted his head", k: "고개를 들었다", s: "And then he lifted his head." },
+            { w: "came into view", k: "눈에 들어왔다", s: "Things he knew came into view." },
+            { w: "pine", k: "소나무", s: "The old pine by the road." },
+            { w: "split down the middle", k: "쩍 갈라진", s: "The rock split down the middle." },
+            { w: "surely not", k: "설마", s: "No — surely not—" },
+            { w: "went white", k: "하얗게 질렸다", s: "His face went white." },
+            { w: "sat straight down", k: "털썩 주저앉았다", s: "He sat straight down where he was." },
+            { w: "I've only ~ left", k: "~밖에 안 남았다", s: "I've only three years left." },
+            { w: "rolled over on its side", k: "옆으로 굴렀다", s: "The empty frame rolled over on its side." }
+        ],
+        "06-bedridden.webp": [
+            { w: "did not get up", k: "일어나지 않았다", s: "From that day old Bak did not get up." },
+            { w: "nightly", k: "밤마다의", s: "The nightly whisper of straw stopped." },
+            { w: "quilt", k: "이불", s: "He lay with the quilt over his head." },
+            { w: "What is the use of ~ing", k: "~해 무엇 하나", s: "what is the use of eating with three years left" },
+            { w: "refused (refuse)", k: "마다했다", s: "He refused food and water." },
+            { w: "coaxed (coax)", k: "달랬다", s: "However his wife coaxed him it made no difference." },
+            { w: "made no difference", k: "소용없었다", s: "it made no difference" },
+            { w: "wiped her eyes", k: "눈물을 훔쳤다", s: "More and more often she wiped her eyes by the door." },
+            { w: "muttered (mutter)", k: "중얼거렸다", s: "That was all he muttered." }
+        ],
+        "07-doctor.webp": [
+            { w: "at a run", k: "한달음에", s: "The village doctor came at a run." },
+            { w: "medicine chest", k: "약상자", s: "He even brought his medicine chest." },
+            { w: "felt the pulse", k: "맥을 짚었다", s: "He felt the pulse, looked at the tongue" },
+            { w: "tongue", k: "혀", s: "looked at the tongue" },
+            { w: "pressed (press)", k: "꾹꾹 눌렀다", s: "pressed the stomach" },
+            { w: "nothing wrong", k: "아픈 데가 없는", s: "There is nothing wrong with him anywhere." },
+            { w: "Look as he might", k: "아무리 살펴도", s: "Look as he might, there was no illness." },
+            { w: "I beg your pardon?", k: "예?", s: "I beg your pardon?" },
+            { w: "gave up (give up)", k: "어이없어 포기했다", s: "The doctor gave up and went home." },
+            { w: "talk him round", k: "달래다", s: "Neighbours came to talk him round" },
+            { w: "grew thinner (grow)", k: "야위어 갔다", s: "Day by day old Bak grew thinner." },
+            { w: "fell in (fall in)", k: "홀쭉해졌다", s: "His cheeks fell in and his eyes went hollow." },
+            { w: "hollow", k: "퀭한", s: "his eyes went hollow" }
+        ],
+        "08-deoki.webp": [
+            { w: "next door", k: "이웃집", s: "Deoki next door heard about it." },
+            { w: "having his wits about him", k: "꾀가 많은", s: "famous for having his wits about him" },
+            { w: "made no sense to ~", k: "도무지 이상했다", s: "The saying made no sense to him." },
+            { w: "cannot kill you", k: "죽을 리가 없다", s: "Falling over cannot kill you." },
+            { w: "went straight in", k: "곧장 들어갔다", s: "He went straight in through old Bak's door." },
+            { w: "without any strength", k: "힘없이", s: "Old Bak answered without any strength." },
+            { w: "thought for a while", k: "한참 생각했다", s: "Deoki tilted his head and thought for a while" },
+            { w: "lit up (light up)", k: "반짝였다", s: "and then his eyes lit up" },
+            { w: "a very good idea", k: "좋은 수", s: "the face of somebody with a very good idea" }
+        ],
+        "09-counting.webp": [
+            { w: "one fall", k: "한 번 넘어지기", s: "Grandfather, one fall is three years, yes?" },
+            { w: "very clear", k: "또랑또랑한", s: "Deoki's voice was very clear." },
+            { w: "weakly", k: "힘없이", s: "Old Bak answered weakly." },
+            { w: "What about ~?", k: "~은요?", s: "Then what about two falls?" },
+            { w: "counted on his fingers", k: "손가락을 꼽았다", s: "Deoki counted on his fingers." },
+            { w: "Roll ten times", k: "열 번 구르면", s: "Roll ten times and it's thirty years!" },
+            { w: "went wide", k: "크게 떠졌다", s: "Old Bak's eyes went wide." },
+            { w: "slid off (slide)", k: "스르르 흘러내렸다", s: "The quilt slid off him." },
+            { w: "dead quiet", k: "쥐 죽은 듯 조용한", s: "The room went dead quiet." },
+            { w: "kicked ~ away", k: "걷어찼다", s: "And then he kicked the quilt away." }
+        ],
+        "10-rolling.webp": [
+            { w: "That's it!", k: "옳지!", s: "That's it! Of course!" },
+            { w: "jumped up", k: "벌떡 일어났다", s: "Old Bak jumped up and ran for Three-Year Hill" },
+            { w: "with his shoes half on", k: "신발도 제대로 못 신고", s: "ran for Three-Year Hill with his shoes half on" },
+            { w: "Roll, roll", k: "데굴데굴", s: "Roll, roll, roll." },
+            { w: "called after him", k: "뒤에서 불렀다", s: "His wife called after him and he did not hear." },
+            { w: "came running", k: "달려왔다", s: "People heard and came running" },
+            { w: "out loud", k: "큰 소리로", s: "counted for him out loud" },
+            { w: "counted along", k: "따라 세었다", s: "The children clapped and counted along." },
+            { w: "the colour back in his face", k: "화색이 돌아", s: "old Bak stood up with the colour back in his face" },
+            { w: "a good while yet", k: "아직 멀었다", s: "Sixty years — I've a good while yet!" }
+        ],
+        "after": [
+            { w: "are attached to ~", k: "얽혀 있다", s: "Stories are attached to hill names all over Korea." },
+            { w: "the seed of ~", k: "~의 씨앗", s: "The name Three-Year Hill is itself the seed of the fear." },
+            { w: "is fixed in ~", k: "박혀 있다", s: "The saying is fixed in the name" },
+            { w: "takes care", k: "조심하게 된다", s: "so everyone who crosses it takes care" },
+            { w: "did not change the facts", k: "사실을 바꾼 것이 아니다", s: "the boy did not change the facts" },
+            { w: "the sum", k: "셈", s: "He only changed the sum" },
+            { w: "the same words", k: "같은 말", s: "The same words, turned the other way round." },
+            { w: "turned the other way round", k: "방향이 뒤집힌", s: "The same words, turned the other way round." },
+            { w: "just as it was", k: "그대로", s: "The frightening rule became a good rule just as it was." },
+            { w: "harmless", k: "아무렇지 않은", s: "a harmless thing turns frightening" },
+            { w: "depending on ~", k: "~에 따라", s: "depending on how you look at it" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '⛰️',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Stories are attached to hill names all over Korea. Every hill that people crossed often had one of these stories on it.",
+                    "The name Three-Year Hill is itself the seed of the fear. The saying is fixed in the name, so everyone who crosses it takes care.",
+                    "Look again: the boy did not change the facts. He only changed the sum — one fall is three years, so ten falls is thirty.",
+                    "The same words, turned the other way round. The frightening rule became a good rule just as it was."
+                ],
+                right: [
+                    "Believe a thing is frightening and a harmless thing turns frightening. The same event can be a terror or nothing at all, depending on how you look at it.",
+                    "Have you ever been stuck because you were worrying? Is there another way to look at it?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "고개를 다 넘고 나서 사람들은 어떻게 했나요?", choices: ["발밑만 보고 걸었다", "휴 하고 숨을 쉬었다", "아이 손을 붙들었다"], answer: 1 },
     { q: "박 노인이 밤마다 등불 앞에서 한 일은 무엇인가요?", choices: ["엽전 세기", "지게 고치기", "짚신 만들기"], answer: 2 },

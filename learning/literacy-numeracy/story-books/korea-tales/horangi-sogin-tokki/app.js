@@ -203,6 +203,405 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐇",
+        art: "cover.webp",
+        title: "The Rabbit Who Fooled the Tiger",
+        intro: [
+            "The Rabbit Who Fooled the Tiger is an old Korean tale with no known author. It is really several tricks told as one story, so the pieces differ from place to place.",
+            "A weak but clever creature getting the better of a strong one is a worldwide kind of tale. Africa has Anansi the spider; North America has Brer Rabbit.",
+            "Old tales like a thing to happen three times — enough to feel like a pattern, and it stops before it gets dull."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · I'll Catch You a Sparrow",
+            beats: [
+                {
+                    art: "01-caught.webp",
+                    emoji: "🐯",
+                    left: [
+                        "Deep in the mountains a tiger who had not eaten for days was prowling about. His stomach rumbled loudly.",
+                        { t: "\"Rrraah, today I eat something, whatever it is.\"", v: "beast" },
+                        "And there in the grass he caught a rabbit.",
+                        "He pinned her down with one great paw."
+                    ],
+                    right: [
+                        { t: "\"So you're my supper!\"", v: "beast" },
+                        "The rabbit's heart hammered and she acted calm. Show fear here and she really would be eaten.",
+                        { t: "'Steady. Steady now.'", v: "girl" },
+                        "Her eyes rolled about while she thought up a plan.",
+                        { t: "\"You'll only hurt your teeth on me, sir.\"", v: "girl" }
+                    ]
+                },
+                {
+                    art: "02-sparrow.webp",
+                    emoji: "🐦",
+                    left: [
+                        { t: "\"There's no meat on me and I'm tough. No taste at all.\"", v: "girl" },
+                        { t: "\"What has a taste, then?\"", v: "beast" },
+                        { t: "\"Roast sparrow! Nothing on earth is so good.\"", v: "girl" },
+                        "The rabbit smacked her lips as she said it.",
+                        "The tiger's ears went up."
+                    ],
+                    right: [
+                        { t: "\"Sparrow, eh. That does sound likely.\"", v: "beast" },
+                        "He swallowed hard. The words made him hungrier still.",
+                        { t: "\"I'll catch them for you. But you must do exactly as I say.\"", v: "girl" },
+                        { t: "\"Yes, yes, I will!\"", v: "beast" },
+                        "He could think of nothing but roast sparrow."
+                    ]
+                },
+                {
+                    art: "03-fire.webp",
+                    emoji: "🔥",
+                    left: [
+                        { t: "\"Now shut your eyes tight and open your mouth wide.\"", v: "girl" },
+                        { t: "\"When I give the signal the sparrows will fly straight in.\"", v: "girl" },
+                        "The tiger shut his eyes and opened his mouth as told. He was as good as gold.",
+                        { t: "\"Don't open your eyes — you'll frighten them.\"", v: "girl" }
+                    ],
+                    right: [
+                        "Meanwhile the rabbit crept backwards. Then she struck a flint into the dry grass.",
+                        "Ssss—",
+                        "The spark caught in the dry grass.",
+                        { t: "\"Now! Shut it tight!\"", v: "girl" },
+                        "The dry grass went up in an instant."
+                    ]
+                },
+                {
+                    art: "04-burn.webp",
+                    emoji: "💨",
+                    left: [
+                        "Whoosh!",
+                        "Flames leapt up on every side. In a blink they had the tiger ringed round.",
+                        { t: "\"Are the sparrows not coming yet?\"", v: "beast" },
+                        { t: "\"Hot! It's hot!\"", v: "beast" },
+                        "He opened his eyes wide, and it was too late.",
+                        "The fire had caught his fur."
+                    ],
+                    right: [
+                        "With his whiskers burnt black he ran for the stream and threw himself in. The water hissed.",
+                        { t: "\"That rabbit! Just let me meet her again!\"", v: "beast" },
+                        "The rabbit was far away by then.",
+                        "From that day the tiger searched the whole mountain for her."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · These Are Mountain Rice Cakes",
+            beats: [
+                {
+                    art: "05-again.webp",
+                    emoji: "😾",
+                    left: [
+                        "A few days later the two met again on a mountain path. His whiskers were still burnt into curls.",
+                        "The tiger put up a paw and blocked her way.",
+                        { t: "\"Aha! Well met!\"", v: "beast" },
+                        { t: "\"Goodness, sir. What has happened to your whiskers?\"", v: "girl" },
+                        "The rabbit said it without turning a hair."
+                    ],
+                    right: [
+                        { t: "\"You! It's all your doing, is it not!\"", v: "beast" },
+                        { t: "\"Me? I went off after the sparrows that day.\"", v: "girl" },
+                        "She played innocent so coolly that the tiger began to doubt himself.",
+                        { t: "\"Those sparrows were so quick I lost them, worse luck.\"", v: "girl" },
+                        "And the tiger softened."
+                    ]
+                },
+                {
+                    art: "06-stones.webp",
+                    emoji: "🍡",
+                    left: [
+                        { t: "\"How lucky. I was just going to treat you to rice cake.\"", v: "girl" },
+                        { t: "\"Rice cake, you say?\"", v: "beast" },
+                        "The rabbit fetched an armful of round stones from the stream.",
+                        "Then she laid them out neatly on a fire."
+                    ],
+                    right: [
+                        { t: "\"Look — these are mountain rice cakes. Not everyone gets these.\"", v: "girl" },
+                        { t: "\"Well now, they do look good.\"", v: "beast" },
+                        "The stones glowed red in the fire. The tiger licked his lips and watched them.",
+                        { t: "\"A little longer. You mustn't touch them first.\"", v: "girl" }
+                    ]
+                },
+                {
+                    art: "07-hot.webp",
+                    emoji: "🥵",
+                    left: [
+                        { t: "\"Eat them one by one when they're done. I'll fetch honey.\"", v: "girl" },
+                        { t: "\"Honey too? Ha, this is a proper day!\"", v: "beast" },
+                        "He nodded and swallowed.",
+                        "The rabbit slipped away on those words. She was not going for honey, of course."
+                    ],
+                    right: [
+                        "The tiger could not wait and took a stone in his mouth. The outside was glowing and it looked delicious.",
+                        { t: "\"Ow, hot! Hot!\"", v: "beast" },
+                        "He burned the roof of his mouth and ran for the stream again.",
+                        { t: "\"That rabbit! She's tricked me twice!\"", v: "beast" }
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Fishing with Your Tail",
+            beats: [
+                {
+                    art: "08-winter.webp",
+                    emoji: "❄️",
+                    left: [
+                        "Winter came. There was nothing left to eat on the mountain.",
+                        "The river froze hard.",
+                        "The tiger was prowling the bank half starved when the two met again.",
+                        "He was so thin you could count his ribs."
+                    ],
+                    right: [
+                        "The rabbit's eyes shone.",
+                        { t: "\"Sir! Do you know how to catch fish?\"", v: "girl" },
+                        { t: "\"I do not. How? Fish — now that is welcome news.\"", v: "beast" },
+                        "His ears pricked up again. A hungry animal has no time for doubting."
+                    ]
+                },
+                {
+                    art: "09-tail.webp",
+                    emoji: "🎣",
+                    left: [
+                        { t: "\"Put your tail in a hole in the ice and sit still.\"", v: "girl" },
+                        { t: "\"The fish will hang on it in a row.\"", v: "girl" },
+                        "The tiger pushed his tail into the ice hole. The water was so cold he shivered all over.",
+                        { t: "\"Bear it a while and you'll eat till you burst.\"", v: "girl" }
+                    ],
+                    right: [
+                        { t: "\"When it feels heavy, pull hard. I'll drive them over from the far side.\"", v: "girl" },
+                        "And off she went.",
+                        "The tiger sat there all night feeling his tail grow heavier.",
+                        { t: "\"So many fish are biting!\"", v: "beast" },
+                        "He never dreamed the ice was freezing round it."
+                    ]
+                },
+                {
+                    art: "10-escape.webp",
+                    emoji: "🏃",
+                    left: [
+                        "Day broke. The tiger was in high spirits at the thought of hauling out his fish.",
+                        "But his tail was frozen fast in the ice and would not move at all.",
+                        { t: "\"Eh? Why won't it come out!\"", v: "beast" },
+                        { t: "\"Well, well — that must be a great many fish!\"", v: "beast" }
+                    ],
+                    right: [
+                        "Then voices came from over there. They were all carrying clubs.",
+                        "The tiger pulled with everything he had and the ice split.",
+                        "A handful of tail fur stayed behind in the ice.",
+                        { t: "\"There's no getting the better of that one!\"", v: "beast" },
+                        "And ever after, the tiger kept out of the rabbit's way."
+                    ]
+                }
+            ],
+            moral: "Being strong does not always mean winning. The rabbit never once met him strength for strength. She only said what the tiger wanted to hear.",
+            question: "When somebody comes to you with sweet words, what should you look at first?"
+        }
+    ],
+    quiz: [
+        { q: "What did the rabbit say tasted good?", choices: ["Steamed fish", "Roast sparrow", "Mountain rice cake"], answer: 1 },
+        { q: "What happened when the tiger shut his eyes and opened his mouth?", choices: ["It rained", "It snowed", "A fire started"], answer: 2 },
+        { q: "What did the rabbit roast and call rice cake?", choices: ["Round stones", "Dry leaves", "Big potatoes"], answer: 0 },
+        { q: "What did the rabbit say she was going to fetch?", choices: ["Water", "Rice cake", "Honey"], answer: 2 },
+        { q: "What was the rabbit's way of fishing in winter?", choices: ["Dropping stones in the ice hole", "Putting your tail in the ice hole", "Breaking the ice and jumping in"], answer: 1 },
+        { q: "What did the tiger do about the rabbit after that?", choices: ["Searched the whole mountain", "Pinned her with a paw", "Quietly kept out of her way"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He was fooled three times by the same rabbit, so a hungry animal has no time for doubting.",
+                "She always left first, so a good trick includes the way out.",
+                "There are so many tales of the strong one losing, so you can tell whose side the listeners were on.",
+                "He waited quietly as told until the stones were done, so he is very good at following instructions."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "fooled (fool)", k: "속였다", s: "The Rabbit Who Fooled the Tiger" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "tricks", k: "속임수", s: "It is really several tricks told as one story" },
+            { w: "differ from place to place", k: "지역마다 다르다", s: "the pieces differ from place to place" },
+            { w: "getting the better of ~", k: "골려 주는 것", s: "A weak but clever creature getting the better of a strong one" },
+            { w: "worldwide", k: "세계 곳곳의", s: "is a worldwide kind of tale" },
+            { w: "spider", k: "거미", s: "Africa has Anansi the spider" },
+            { w: "a pattern", k: "되풀이", s: "Three feels like a pattern" },
+            { w: "gets dull", k: "지루해진다", s: "stops just before it gets dull" },
+            { w: "exactly three", k: "꼭 세 번", s: "There are exactly three tricks here." }
+        ],
+        "01-caught.webp": [
+            { w: "prowling about (prowl)", k: "어슬렁거리는", s: "a tiger who had not eaten for days was prowling about" },
+            { w: "rumbled (rumble)", k: "꼬르륵거렸다", s: "His stomach rumbled loudly." },
+            { w: "whatever it is", k: "무엇이든", s: "today I eat something, whatever it is" },
+            { w: "pinned ~ down (pin)", k: "콱 눌렀다", s: "He pinned her down with one great paw." },
+            { w: "hammered (hammer)", k: "쿵쿵 뛰었다", s: "The rabbit's heart hammered" },
+            { w: "acted calm", k: "태연한 척했다", s: "The rabbit's heart hammered and she acted calm." },
+            { w: "Show fear", k: "놀라면", s: "Show fear here and she really would be eaten." },
+            { w: "Steady.", k: "침착하자.", s: "Steady. Steady now." },
+            { w: "thought up (think up)", k: "짜냈다", s: "while she thought up a plan" },
+            { w: "hurt your teeth", k: "이가 아프다", s: "You'll only hurt your teeth on me, sir." }
+        ],
+        "02-sparrow.webp": [
+            { w: "no meat on me", k: "살이 없다", s: "There's no meat on me and I'm tough." },
+            { w: "tough", k: "질긴", s: "There's no meat on me and I'm tough." },
+            { w: "Roast sparrow", k: "참새 구이", s: "Roast sparrow! Nothing on earth is so good." },
+            { w: "Nothing on earth", k: "이루 말할 수 없는", s: "Nothing on earth is so good." },
+            { w: "smacked her lips", k: "입맛을 다셨다", s: "The rabbit smacked her lips as she said it." },
+            { w: "went up (go up)", k: "쫑긋 섰다", s: "The tiger's ears went up." },
+            { w: "That does sound likely.", k: "그럴듯하구나.", s: "Sparrow, eh. That does sound likely." },
+            { w: "swallowed hard", k: "침을 꿀꺽 삼켰다", s: "He swallowed hard." },
+            { w: "hungrier still", k: "더 배고픈", s: "The words made him hungrier still." },
+            { w: "exactly as I say", k: "시키는 대로", s: "But you must do exactly as I say." },
+            { w: "nothing but ~", k: "~ 생각뿐", s: "He could think of nothing but roast sparrow." }
+        ],
+        "03-fire.webp": [
+            { w: "shut ~ tight", k: "꼭 감다", s: "Now shut your eyes tight" },
+            { w: "signal", k: "신호", s: "When I give the signal the sparrows will fly straight in." },
+            { w: "as told", k: "시키는 대로", s: "The tiger shut his eyes and opened his mouth as told." },
+            { w: "as good as gold", k: "아주 얌전한", s: "He was as good as gold." },
+            { w: "frighten (frighten)", k: "놀라게 하다", s: "you'll frighten them" },
+            { w: "Meanwhile", k: "그 틈에", s: "Meanwhile the rabbit crept backwards." },
+            { w: "crept (creep)", k: "살금살금 갔다", s: "the rabbit crept backwards" },
+            { w: "struck a flint (strike)", k: "부싯돌을 그었다", s: "Then she struck a flint into the dry grass." },
+            { w: "spark", k: "불씨", s: "The spark caught in the dry grass." },
+            { w: "caught (catch)", k: "옮아붙었다", s: "The spark caught in the dry grass." },
+            { w: "went up (go up)", k: "불이 붙었다", s: "The dry grass went up in an instant." }
+        ],
+        "04-burn.webp": [
+            { w: "Whoosh!", k: "화르륵!", s: "Whoosh!" },
+            { w: "leapt up (leap)", k: "확 타올랐다", s: "Flames leapt up on every side." },
+            { w: "ringed round", k: "빙 둘러싸인", s: "In a blink they had the tiger ringed round." },
+            { w: "too late", k: "이미 늦은", s: "He opened his eyes wide, and it was too late." },
+            { w: "had caught his fur", k: "털에 옮아붙었다", s: "The fire had caught his fur." },
+            { w: "burnt black", k: "까맣게 그을린", s: "With his whiskers burnt black" },
+            { w: "threw himself in (throw)", k: "뛰어들었다", s: "he ran for the stream and threw himself in" },
+            { w: "hissed (hiss)", k: "치익 소리를 냈다", s: "The water hissed." },
+            { w: "Just let me ~", k: "~하기만 해 봐라", s: "Just let me meet her again!" },
+            { w: "searched (search)", k: "뒤졌다", s: "the tiger searched the whole mountain for her" }
+        ],
+        "05-again.webp": [
+            { w: "burnt into curls", k: "꼬불꼬불 그을린", s: "His whiskers were still burnt into curls." },
+            { w: "blocked her way", k: "앞을 막아섰다", s: "The tiger put up a paw and blocked her way." },
+            { w: "Well met!", k: "잘 만났다!", s: "Aha! Well met!" },
+            { w: "without turning a hair", k: "천연덕스럽게", s: "The rabbit said it without turning a hair." },
+            { w: "all your doing", k: "다 너 때문", s: "It's all your doing, is it not!" },
+            { w: "went off after ~", k: "~을 잡으러 갔다", s: "I went off after the sparrows that day." },
+            { w: "played innocent", k: "시치미를 뗐다", s: "She played innocent so coolly" },
+            { w: "doubt himself", k: "헷갈리다", s: "the tiger began to doubt himself" },
+            { w: "worse luck", k: "아쉽게도", s: "Those sparrows were so quick I lost them, worse luck." },
+            { w: "softened (soften)", k: "마음이 풀렸다", s: "And the tiger softened." }
+        ],
+        "06-stones.webp": [
+            { w: "How lucky.", k: "마침 잘됐어요.", s: "How lucky. I was just going to treat you to rice cake." },
+            { w: "treat ~ to ...", k: "~에게 …을 대접하다", s: "I was just going to treat you to rice cake" },
+            { w: "fetched (fetch)", k: "주워 왔다", s: "The rabbit fetched an armful of round stones" },
+            { w: "an armful of ~", k: "한 아름의", s: "an armful of round stones" },
+            { w: "laid ~ out (lay)", k: "가지런히 올려놓았다", s: "Then she laid them out neatly on a fire." },
+            { w: "Not everyone gets ~", k: "아무나 못 먹는다", s: "Not everyone gets these." },
+            { w: "glowed red (glow)", k: "발갛게 익었다", s: "The stones glowed red in the fire." },
+            { w: "licked his lips", k: "입맛을 다셨다", s: "The tiger licked his lips and watched them." },
+            { w: "You mustn't ~", k: "~하시면 안 된다", s: "You mustn't touch them first." }
+        ],
+        "07-hot.webp": [
+            { w: "one by one", k: "하나씩", s: "Eat them one by one when they're done." },
+            { w: "when they're done", k: "다 익으면", s: "Eat them one by one when they're done." },
+            { w: "a proper day", k: "제대로인 날", s: "Honey too? Ha, this is a proper day!" },
+            { w: "slipped away (slip)", k: "쏙 사라졌다", s: "The rabbit slipped away on those words." },
+            { w: "of course", k: "물론", s: "She was not going for honey, of course." },
+            { w: "could not wait", k: "기다리다 못했다", s: "The tiger could not wait and took a stone in his mouth." },
+            { w: "glowing", k: "발갛게 익은", s: "The outside was glowing and it looked delicious." },
+            { w: "the roof of his mouth", k: "입천장", s: "He burned the roof of his mouth" },
+            { w: "twice", k: "두 번", s: "She's tricked me twice!" }
+        ],
+        "08-winter.webp": [
+            { w: "nothing left to eat", k: "먹을 것이 하나도 없는", s: "There was nothing left to eat on the mountain." },
+            { w: "froze hard (freeze)", k: "꽝꽝 얼었다", s: "The river froze hard." },
+            { w: "half starved", k: "배를 곯은", s: "The tiger was prowling the bank half starved" },
+            { w: "count his ribs", k: "갈비뼈를 세다", s: "He was so thin you could count his ribs." },
+            { w: "shone (shine)", k: "반짝 빛났다", s: "The rabbit's eyes shone." },
+            { w: "welcome news", k: "반가운 소리", s: "Fish — now that is welcome news." },
+            { w: "pricked up (prick up)", k: "솔깃했다", s: "His ears pricked up again." },
+            { w: "no time for doubting", k: "의심할 겨를이 없는", s: "A hungry animal has no time for doubting." }
+        ],
+        "09-tail.webp": [
+            { w: "a hole in the ice", k: "얼음 구멍", s: "Put your tail in a hole in the ice and sit still." },
+            { w: "sit still", k: "가만히 있다", s: "Put your tail in a hole in the ice and sit still." },
+            { w: "in a row", k: "줄줄이", s: "The fish will hang on it in a row." },
+            { w: "pushed ~ into (push)", k: "쑥 집어넣었다", s: "The tiger pushed his tail into the ice hole." },
+            { w: "shivered (shiver)", k: "떨었다", s: "The water was so cold he shivered all over." },
+            { w: "Bear it (bear)", k: "참으세요", s: "Bear it a while and you'll eat till you burst." },
+            { w: "till you burst", k: "배가 터지도록", s: "you'll eat till you burst" },
+            { w: "drive them over (drive)", k: "몰아 오다", s: "I'll drive them over from the far side." },
+            { w: "grow heavier", k: "무거워지다", s: "The tiger sat there all night feeling his tail grow heavier." },
+            { w: "never dreamed ~", k: "꿈에도 몰랐다", s: "He never dreamed the ice was freezing round it." }
+        ],
+        "10-escape.webp": [
+            { w: "Day broke (break)", k: "날이 밝았다", s: "Day broke." },
+            { w: "in high spirits", k: "신이 난", s: "The tiger was in high spirits" },
+            { w: "hauling out (haul)", k: "건져 올리는", s: "at the thought of hauling out his fish" },
+            { w: "frozen fast", k: "꽝꽝 붙은", s: "his tail was frozen fast in the ice" },
+            { w: "would not move at all", k: "꼼짝도 하지 않았다", s: "would not move at all" },
+            { w: "a great many", k: "아주 많은", s: "that must be a great many fish" },
+            { w: "clubs", k: "몽둥이", s: "They were all carrying clubs." },
+            { w: "with everything he had", k: "온 힘을 다해", s: "The tiger pulled with everything he had" },
+            { w: "split (split)", k: "갈라졌다", s: "the ice split" },
+            { w: "a handful of ~", k: "한 움큼의", s: "A handful of tail fur stayed behind in the ice." },
+            { w: "no getting the better of ~", k: "당해 낼 수 없는", s: "There's no getting the better of that one!" },
+            { w: "kept out of ~'s way", k: "슬슬 피해 다녔다", s: "the tiger kept out of the rabbit's way" }
+        ],
+        "after": [
+            { w: "the small and weak", k: "작고 약한 것", s: "Stories where the small and weak beat the big and strong by wits" },
+            { w: "by wits", k: "꾀로", s: "beat the big and strong by wits" },
+            { w: "holds that place (hold)", k: "그 자리를 맡는다", s: "With us it is usually the rabbit that holds that place." },
+            { w: "made up ~ (make up)", k: "지어냈다", s: "the rabbit in this story never once made up a lie" },
+            { w: "what the tiger wanted", k: "호랑이가 원하던 것", s: "Both were what the tiger wanted." },
+            { w: "the reason ~ was fooled", k: "속은 까닭", s: "the reason the tiger was fooled is not that the rabbit was clever" },
+            { w: "who wants to hear ~", k: "듣고 싶은 것이 있는 쪽", s: "Somebody who wants to hear a thing simply believes it." },
+            { w: "aims at ~ (aim)", k: "겨눈다", s: "So the story aims at the tiger's mind, not the rabbit's tricks." },
+            { w: "skip (skip)", k: "건너뛴다", s: "When we are in a hurry and wanting something, we skip the checking." },
+            { w: "worth thinking about", k: "웃어넘길 것이 아닌", s: "The ending is worth thinking about too." },
+            { w: "kept away", k: "피해 다녔다", s: "He could have won by strength, and he kept away." },
+            { w: "strength for strength", k: "힘으로 맞서서", s: "The rabbit never once met him strength for strength." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐰',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Stories where the small and weak beat the big and strong by wits are told everywhere. With us it is usually the rabbit that holds that place.",
+                    "But the rabbit in this story never once made up a lie. She offers to catch sparrows; she offers to catch fish. Both were what the tiger wanted.",
+                    "Look again and the reason the tiger was fooled is not that the rabbit was clever. It is that he was hungry. Somebody who wants to hear a thing simply believes it.",
+                    "So the story aims at the tiger's mind, not the rabbit's tricks. When we are in a hurry and wanting something, we skip the checking."
+                ],
+                right: [
+                    "The ending is worth thinking about too. He could have won by strength, and he kept away.",
+                    "Being strong does not always mean winning. The rabbit never once met him strength for strength. She only said what the tiger wanted to hear.",
+                    "When somebody comes to you with sweet words, what should you look at first?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "토끼는 호랑이에게 무엇이 맛있다고 했나요?", choices: ["물고기 찜", "참새 구이", "산속 떡"], answer: 1 },
     { q: "호랑이가 눈을 감고 입을 벌리자 무슨 일이 있었나요?", choices: ["비가 왔다", "눈이 왔다", "불이 났다"], answer: 2 },

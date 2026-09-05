@@ -219,6 +219,414 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐸",
+        art: "cover.webp",
+        title: "The Green Frog",
+        intro: [
+            "The Green Frog is an old Korean tale with no known author. It is told all over Korea, and China and Japan have tales very like it.",
+            "It is an origin tale — it explains why frogs cry so loudly when it rains.",
+            "In Korean a child who does the opposite of what grown-ups say is called a green frog. One story put a word into the dictionary."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Child Who Did Everything Backwards",
+            beats: [
+                {
+                    art: "01-opposite.webp",
+                    emoji: "🐸",
+                    left: [
+                        "Long ago, under a willow by a stream, lived a green frog and her son. Just the two of them.",
+                        "But this son was a very odd one. He always did the opposite of what his mother said.",
+                        { t: "\"Off you go and play on the mountain today.\"", v: "mother" },
+                        { t: "\"No! I'm going to the stream!\"", v: "boy" }
+                    ],
+                    right: [
+                        { t: "\"Then don't go to the stream.\"", v: "mother" },
+                        "His mother let out a sigh.",
+                        { t: "\"No! I'm going to the mountain!\"", v: "boy" },
+                        "She had nothing left to say. Whatever she said, he turned it over.",
+                        "He hopped about, taking no notice.",
+                        "She only watched him go."
+                    ]
+                },
+                {
+                    art: "02-backwards.webp",
+                    emoji: "🙃",
+                    left: [
+                        "Told to go forward he went backwards. Told to jump up he jumped down.",
+                        "His mother's worry meant nothing to him.",
+                        "Told to eat he went into the water; told to sleep he came out to play.",
+                        { t: "\"Oh, what a life I have.\"", v: "mother" },
+                        "She put a hand to her forehead."
+                    ],
+                    right: [
+                        "One day, after long thought, she tried this:",
+                        { t: "\"Child, just once today, please do as I say.\"", v: "mother" },
+                        { t: "\"Yes!\"", v: "boy" },
+                        "She turned round in surprise. And he was already hopping off the other way.",
+                        "She sighed again."
+                    ]
+                },
+                {
+                    art: "03-gulgae.webp",
+                    emoji: "🎵",
+                    left: [
+                        "She decided to start with how to cry.",
+                        { t: "\"When you cry, you cry gae-gul, gae-gul.\"", v: "mother" },
+                        { t: "\"Gul-gae! Gul-gae!\"", v: "boy" },
+                        { t: "\"No — gae-gul, I said.\"", v: "mother" },
+                        { t: "\"Gul-gae! Gul-gae!\"", v: "boy" },
+                        "She told him again and again and it was no use. Her voice went hoarse."
+                    ],
+                    right: [
+                        "The neighbourhood frogs held their sides laughing.",
+                        { t: "\"That house's son even cries backwards.\"", v: "granny" },
+                        "The mother frog went red and hid behind a lotus leaf.",
+                        "Her son, delighted, cried louder still.",
+                        "And still she did not think badly of him.",
+                        "One day he would grow up, she thought."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · A Mother's Last Request",
+            beats: [
+                {
+                    art: "04-sigh.webp",
+                    emoji: "😔",
+                    left: [
+                        "She sighed every night, and most of all on nights when the moon broke into pieces on the stream.",
+                        "She could not sleep.",
+                        { t: "\"Whatever I say, he does the other thing...\"", v: "mother" },
+                        { t: "\"What is to become of that child?\"", v: "mother" },
+                        "She thought of nothing but her son."
+                    ],
+                    right: [
+                        "Her son put his head out of the water.",
+                        "He climbed up onto the bank.",
+                        { t: "\"Mother, why do you keep sighing?\"", v: "boy" },
+                        { t: "\"...It's nothing at all.\"", v: "mother" },
+                        "She stroked his back gently. Her hand shook a little.",
+                        "The touch felt strange to him and he pulled away."
+                    ]
+                },
+                {
+                    art: "05-sick.webp",
+                    emoji: "🛏️",
+                    left: [
+                        "Then one day his mother took to her bed.",
+                        "It was near the end of summer.",
+                        "Her strength kept going and her body felt like stone. Even lifting an arm was too much.",
+                        "The colour went out of her face.",
+                        "Her son crouched at her head."
+                    ],
+                    right: [
+                        { t: "\"Mother, why don't you get up?\"", v: "boy" },
+                        { t: "\"A little rest and I'll be well.\"", v: "mother" },
+                        "He fetched water and held it to her mouth.",
+                        "But days passed and she did not get up.",
+                        "Only then was he afraid. It was a feeling he had never had.",
+                        "He did not leave her side for a step."
+                    ]
+                },
+                {
+                    art: "06-plan.webp",
+                    emoji: "💭",
+                    left: [
+                        "She lay looking up at the ceiling and thought.",
+                        "Her breathing came harder.",
+                        { t: "'I don't think I have long now.'", v: "mother" },
+                        { t: "'And that child does the opposite of everything...'", v: "mother" },
+                        "She closed her eyes and worked it out."
+                    ],
+                    right: [
+                        { t: "'Ask for the mountain and he'll bury me by the stream,'", v: "mother" },
+                        { t: "'ask for the stream and he'll bury me on the mountain.'", v: "mother" },
+                        "She went over it again and again.",
+                        "At last she made up her mind, and called her son close.",
+                        "There was no strength at all in her voice."
+                    ]
+                },
+                {
+                    art: "07-last-words.webp",
+                    emoji: "🌾",
+                    left: [
+                        { t: "\"Listen carefully, child.\"", v: "mother" },
+                        "He put his ear close.",
+                        "She held his front foot tight. Her fingers were cold.",
+                        { t: "\"When I am gone, bury me by the stream, not on the mountain.\"", v: "mother" },
+                        "Her voice was very small."
+                    ],
+                    right: [
+                        { t: "\"...What?\"", v: "boy" },
+                        { t: "\"It must be the stream. Do you understand?\"", v: "mother" },
+                        "He started to ask something, and she closed her eyes.",
+                        "He shook her.",
+                        "There was only the sound of the stream running.",
+                        "She did not open her eyes again."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Day It Rained",
+            beats: [
+                {
+                    art: "08-regret.webp",
+                    emoji: "😢",
+                    left: [
+                        "Only then did the green frog sit down by the stream and cry aloud.",
+                        { t: "\"Mother...\"", v: "boy" },
+                        { t: "\"I never once did what you said...\"", v: "boy" },
+                        "The crying carried across the stream.",
+                        "However he called, no answer came."
+                    ],
+                    right: [
+                        "Worn out with crying, he lifted his head and wiped his eyes with a front foot.",
+                        "They were swollen from weeping.",
+                        { t: "\"This once. Just this once I'll do as she said.\"", v: "boy" },
+                        "Then he got slowly to his feet.",
+                        "The stream sounded very loud."
+                    ]
+                },
+                {
+                    art: "09-grave.webp",
+                    emoji: "🪨",
+                    left: [
+                        "He buried his mother by the stream.",
+                        "He began to build the grave, carrying the stones one at a time.",
+                        "They were heavy and his hands slipped. He carried them until his front feet were raw.",
+                        "He did not stop until the sun went down and the stars came out."
+                    ],
+                    right: [
+                        "The round grave was finished.",
+                        "It was the first day in his life that he had done exactly as his mother said.",
+                        { t: "'Rest easy now, Mother.'", v: "boy" },
+                        "He sat in front of the grave a long time.",
+                        "The stars broke into pieces on the stream."
+                    ]
+                },
+                {
+                    art: "10-rain.webp",
+                    emoji: "🌧️",
+                    left: [
+                        "But a few days later the rain came down.",
+                        "The summer rains went on for days.",
+                        "The stream rose and rose. The water came right up to the stones of the grave.",
+                        { t: "\"What if Mother's grave washes away!\"", v: "boy" },
+                        "He kept watch beside it all night."
+                    ],
+                    right: [
+                        "He cried by that grave until his throat was raw.",
+                        { t: "\"Gae-gul, gae-gul! Gae-gul, gae-gul!\"", v: "boy" },
+                        "The harder the rain came, the louder he cried.",
+                        "And still he would not leave the place.",
+                        "That, they say, is why frogs cry so loudly when it rains."
+                    ]
+                }
+            ],
+            moral: "Thank you and I'm sorry have to be said while you still can. On the first day the green frog did as his mother asked, he could no longer say those words to her.",
+            question: "Is there something you want to say when you get home today?"
+        }
+    ],
+    quiz: [
+        { q: "What did the green frog do with his mother's words?", choices: ["Always obeyed them", "Always did the opposite", "Pretended not to hear"], answer: 1 },
+        { q: "When told to cry gae-gul, what did the son cry?", choices: ["Gae-gul", "Gul-gae", "Hoppity-hop"], answer: 1 },
+        { q: "Why did the mother ask to be buried by the stream?", choices: ["She expected him to bury her by the stream", "Because he played in the stream", "She expected him to bury her on the mountain"], answer: 2 },
+        { q: "What did the green frog carry one at a time all night?", choices: ["Lotus leaves", "Stones", "Willow branches"], answer: 1 },
+        { q: "What kind of day was that for the green frog?", choices: ["The first day he obeyed", "The first day he lied", "The first day he went up the mountain"], answer: 0 },
+        { q: "Why does the green frog cry when it rains?", choices: ["He dislikes rain", "He is worried about the grave", "He is hungry"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "She asked to be buried by the stream, so it was not that she distrusted him — she knew him too well.",
+                "The first time he obeyed was after she had gone, so some things are only understood too late.",
+                "He built the grave stone by stone, so being sorry is done with the hands, not with words.",
+                "The neighbourhood frogs copied his cry and played along with him, so at least he had friends."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "all over ~", k: "~ 곳곳에서", s: "It is told all over Korea" },
+            { w: "very like it", k: "아주 닮은", s: "China and Japan have tales very like it" },
+            { w: "an origin tale", k: "유래담", s: "It is an origin tale" },
+            { w: "explains (explain)", k: "풀어낸다", s: "it explains why frogs cry so loudly when it rains" },
+            { w: "the opposite of ~", k: "~의 반대", s: "a child who does the opposite of what grown-ups say" },
+            { w: "is called ~", k: "~라고 불린다", s: "is called a green frog" },
+            { w: "dictionary", k: "사전", s: "One story put a word into the dictionary." }
+        ],
+        "01-opposite.webp": [
+            { w: "willow", k: "버드나무", s: "under a willow by a stream" },
+            { w: "Just the two of them", k: "단둘이", s: "Just the two of them." },
+            { w: "an odd one", k: "별난 아이", s: "But this son was a very odd one." },
+            { w: "Off you go", k: "가서 놀아라", s: "Off you go and play on the mountain today." },
+            { w: "let out a sigh", k: "한숨을 쉬었다", s: "His mother let out a sigh." },
+            { w: "nothing left to say", k: "할 말을 잃은", s: "She had nothing left to say." },
+            { w: "Whatever she said", k: "무슨 말을 해도", s: "Whatever she said, he turned it over." },
+            { w: "turned it over", k: "뒤집어 놓았다", s: "he turned it over" },
+            { w: "hopped about (hop)", k: "폴짝폴짝 뛰어다녔다", s: "He hopped about, taking no notice." },
+            { w: "taking no notice", k: "아랑곳도 않고", s: "He hopped about, taking no notice." }
+        ],
+        "02-backwards.webp": [
+            { w: "Told to ~", k: "~하라고 하면", s: "Told to go forward he went backwards." },
+            { w: "backwards", k: "뒤로", s: "Told to go forward he went backwards." },
+            { w: "meant nothing to ~", k: "아랑곳없었다", s: "His mother's worry meant nothing to him." },
+            { w: "What a life I have", k: "내 팔자야", s: "Oh, what a life I have." },
+            { w: "put a hand to ~", k: "짚었다", s: "She put a hand to her forehead." },
+            { w: "after long thought", k: "곰곰 생각한 끝에", s: "One day, after long thought, she tried this" },
+            { w: "just once", k: "한 번만", s: "Child, just once today, please do as I say." },
+            { w: "do as I say", k: "내 말대로 하다", s: "please do as I say" },
+            { w: "turned round", k: "돌아보았다", s: "She turned round in surprise." },
+            { w: "the other way", k: "반대쪽으로", s: "he was already hopping off the other way" }
+        ],
+        "03-gulgae.webp": [
+            { w: "start with ~", k: "~부터 하다", s: "She decided to start with how to cry." },
+            { w: "again and again", k: "몇 번이나", s: "She told him again and again and it was no use." },
+            { w: "it was no use", k: "소용없었다", s: "She told him again and again and it was no use." },
+            { w: "went hoarse", k: "목이 쉬었다", s: "Her voice went hoarse." },
+            { w: "held their sides (hold)", k: "배를 잡았다", s: "The neighbourhood frogs held their sides laughing." },
+            { w: "even ~ backwards", k: "~도 거꾸로", s: "That house's son even cries backwards." },
+            { w: "went red", k: "얼굴이 빨개졌다", s: "The mother frog went red and hid behind a lotus leaf." },
+            { w: "lotus leaf", k: "연잎", s: "hid behind a lotus leaf" },
+            { w: "delighted", k: "신이 난", s: "Her son, delighted, cried louder still." },
+            { w: "think badly of ~", k: "미워하다", s: "And still she did not think badly of him." },
+            { w: "grow up", k: "철이 들다", s: "One day he would grow up, she thought." }
+        ],
+        "04-sigh.webp": [
+            { w: "most of all", k: "더욱이", s: "and most of all on nights when the moon broke into pieces" },
+            { w: "broke into pieces (break)", k: "잘게 부서졌다", s: "when the moon broke into pieces on the stream" },
+            { w: "the other thing", k: "반대로", s: "Whatever I say, he does the other thing" },
+            { w: "What is to become of ~?", k: "~을 어쩌면 좋을까?", s: "What is to become of that child?" },
+            { w: "nothing but ~", k: "~뿐", s: "She thought of nothing but her son." },
+            { w: "put his head out", k: "고개를 쏙 내밀었다", s: "Her son put his head out of the water." },
+            { w: "bank", k: "물가", s: "He climbed up onto the bank." },
+            { w: "keep sighing", k: "자꾸 한숨을 쉬다", s: "Mother, why do you keep sighing?" },
+            { w: "stroked (stroke)", k: "쓸어 주었다", s: "She stroked his back gently." },
+            { w: "pulled away", k: "몸을 뺐다", s: "The touch felt strange to him and he pulled away." }
+        ],
+        "05-sick.webp": [
+            { w: "took to her bed", k: "자리에 누웠다", s: "Then one day his mother took to her bed." },
+            { w: "near the end of ~", k: "~이 다 갈 무렵", s: "It was near the end of summer." },
+            { w: "kept going", k: "자꾸 빠졌다", s: "Her strength kept going" },
+            { w: "like stone", k: "돌덩이처럼", s: "her body felt like stone" },
+            { w: "too much", k: "힘에 부치는", s: "Even lifting an arm was too much." },
+            { w: "The colour went out of ~", k: "얼굴빛이 하얘졌다", s: "The colour went out of her face." },
+            { w: "crouched (crouch)", k: "쪼그리고 앉았다", s: "Her son crouched at her head." },
+            { w: "I'll be well", k: "괜찮아질 게다", s: "A little rest and I'll be well." },
+            { w: "fetched (fetch)", k: "떠다 주었다", s: "He fetched water and held it to her mouth." },
+            { w: "Only then was he ~", k: "그제야 ~했다", s: "Only then was he afraid." },
+            { w: "for a step", k: "한 발짝도", s: "He did not leave her side for a step." }
+        ],
+        "06-plan.webp": [
+            { w: "ceiling", k: "천장", s: "She lay looking up at the ceiling and thought." },
+            { w: "came harder", k: "가빠졌다", s: "Her breathing came harder." },
+            { w: "I don't have long", k: "오래 못 간다", s: "I don't think I have long now." },
+            { w: "worked it out", k: "곰곰 헤아렸다", s: "She closed her eyes and worked it out." },
+            { w: "bury (bury)", k: "묻다", s: "he'll bury me by the stream" },
+            { w: "went over it (go over)", k: "되뇌었다", s: "She went over it again and again." },
+            { w: "made up her mind", k: "마음을 정했다", s: "At last she made up her mind." },
+            { w: "called ~ close", k: "가까이 불렀다", s: "Then she called her son close." },
+            { w: "no strength at all", k: "힘이 하나도 없는", s: "There was no strength at all in her voice." }
+        ],
+        "07-last-words.webp": [
+            { w: "Listen carefully", k: "잘 들으렴", s: "Listen carefully, child." },
+            { w: "put his ear close", k: "귀를 바짝 댔다", s: "He put his ear close." },
+            { w: "held ~ tight (hold)", k: "꼭 잡았다", s: "She held his front foot tight." },
+            { w: "When I am gone", k: "내가 세상을 떠나거든", s: "When I am gone, bury me by the stream" },
+            { w: "not on the mountain", k: "산이 아니라", s: "bury me by the stream, not on the mountain" },
+            { w: "It must be ~", k: "꼭 ~여야 한다", s: "It must be the stream." },
+            { w: "started to ~", k: "~하려 했다", s: "He started to ask something" },
+            { w: "shook her (shake)", k: "흔들었다", s: "He shook her." },
+            { w: "running", k: "졸졸 흐르는", s: "There was only the sound of the stream running." }
+        ],
+        "08-regret.webp": [
+            { w: "cry aloud", k: "목놓아 울다", s: "sit down by the stream and cry aloud" },
+            { w: "never once", k: "한 번도 ~ 않다", s: "I never once did what you said..." },
+            { w: "carried across ~ (carry)", k: "건너까지 퍼졌다", s: "The crying carried across the stream." },
+            { w: "However he called", k: "아무리 불러도", s: "However he called, no answer came." },
+            { w: "worn out with ~", k: "~에 지친", s: "Worn out with crying, he lifted his head" },
+            { w: "swollen (swell)", k: "퉁퉁 부은", s: "They were swollen from weeping." },
+            { w: "This once", k: "이번 한 번만", s: "This once. Just this once I'll do as she said." },
+            { w: "got to his feet", k: "일어섰다", s: "Then he got slowly to his feet." }
+        ],
+        "09-grave.webp": [
+            { w: "grave", k: "무덤", s: "He began to build the grave" },
+            { w: "one at a time", k: "하나하나", s: "carrying the stones one at a time" },
+            { w: "slipped (slip)", k: "미끄러졌다", s: "They were heavy and his hands slipped." },
+            { w: "raw", k: "다 까진", s: "He carried them until his front feet were raw." },
+            { w: "did not stop until ~", k: "~까지 멈추지 않았다", s: "He did not stop until the sun went down" },
+            { w: "was finished", k: "완성되었다", s: "The round grave was finished." },
+            { w: "exactly as ~ said", k: "말한 그대로", s: "the first day in his life that he had done exactly as his mother said" },
+            { w: "Rest easy", k: "마음 놓으세요", s: "Rest easy now, Mother." },
+            { w: "a long time", k: "오래도록", s: "He sat in front of the grave a long time." }
+        ],
+        "10-rain.webp": [
+            { w: "came down (come down)", k: "쏟아졌다", s: "But a few days later the rain came down." },
+            { w: "the summer rains", k: "장맛비", s: "The summer rains went on for days." },
+            { w: "went on for days", k: "며칠이나 이어졌다", s: "The summer rains went on for days." },
+            { w: "rose and rose (rise)", k: "점점 불어 올랐다", s: "The stream rose and rose." },
+            { w: "right up to ~", k: "~까지 찰랑찰랑", s: "The water came right up to the stones of the grave." },
+            { w: "washes away", k: "떠내려가다", s: "What if Mother's grave washes away!" },
+            { w: "kept watch (keep)", k: "지켰다", s: "He kept watch beside it all night." },
+            { w: "until his throat was raw", k: "목이 쉬도록", s: "He cried by that grave until his throat was raw." },
+            { w: "The harder ~ the louder ~", k: "~할수록 더", s: "The harder the rain came, the louder he cried." },
+            { w: "would not leave ~", k: "자리를 뜨지 않았다", s: "And still he would not leave the place." }
+        ],
+        "after": [
+            { w: "in fact", k: "사실은", s: "Frogs crying loudly in the rain is in fact a call to find a mate." },
+            { w: "a mate", k: "짝", s: "a call to find a mate" },
+            { w: "heard it clearly", k: "똑똑히 들었다", s: "The old people did not know why, but they heard it clearly." },
+            { w: "left ~ alone", k: "그냥 두었다", s: "They did not leave what they did not know alone" },
+            { w: "flatfish", k: "넙치", s: "why a flatfish has both eyes on one side" },
+            { w: "thin on top", k: "성긴", s: "why a magpie's head is thin on top" },
+            { w: "one story for each ~", k: "하나에 이야기 하나씩", s: "one story for each thing they could see" },
+            { w: "never lied (lie)", k: "거짓말한 적이 없다", s: "the green frog never lied" },
+            { w: "one habit", k: "버릇 하나", s: "And that one habit turned, at the end, into something he could not undo." },
+            { w: "could not undo", k: "되돌릴 수 없는", s: "into something he could not undo" },
+            { w: "was kept for the first time", k: "처음으로 지켜졌다", s: "his mother's last words were kept for the first time" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🌧️',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Frogs crying loudly in the rain is in fact a call to find a mate. The old people did not know why, but they heard it clearly. They did not leave what they did not know alone; they made a story for it.",
+                    "Korean tales are full of these. Why a flatfish has both eyes on one side, why a magpie's head is thin on top, why a tiger keeps away from a rabbit. One story for each thing they could see.",
+                    "Look again and the green frog never lied. He never hated his mother. He simply did the opposite of what he was told. And that one habit turned, at the end, into something he could not undo.",
+                    "Look again at the stream, too. His mother said it knowing he would do the other thing. She said stream because she wanted the mountain.",
+                    "So the saddest part of this story is that his mother's last words were kept for the first time."
+                ],
+                right: [
+                    "What if he had buried her on the mountain? Would that have followed her wish, or gone against it?",
+                    "Thank you and I'm sorry have to be said while you still can. On the first day the green frog did as his mother asked, he could no longer say those words to her.",
+                    "Is there something you want to say when you get home today?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "청개구리는 엄마 말을 어떻게 했나요?", choices: ["늘 잘 들었다", "늘 반대로 했다", "못 들은 척했다"], answer: 1 },
     { q: "엄마가 개굴개굴 울라고 하자 아들은 뭐라고 울었나요?", choices: ["개굴개굴", "굴개굴개", "폴짝폴짝"], answer: 1 },
