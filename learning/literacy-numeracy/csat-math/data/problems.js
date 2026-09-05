@@ -29,12 +29,16 @@
       source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500236&m=0403&s=suneung"
     },
     {
+      id: "2026-suneung", year: 2026, round: "수능", label: "2026학년도 수능",
+      source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500234&m=0403&s=suneung"
+    },
+    {
       id: "2026-09", year: 2026, round: "9월", label: "2026학년도 9월",
       source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500236&m=0403&s=suneung"
     },
     {
-      id: "2026-suneung", year: 2026, round: "수능", label: "2026학년도 수능",
-      source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500234&m=0403&s=suneung"
+      id: "2026-06", year: 2026, round: "6월", label: "2026학년도 6월",
+      source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500236&m=0403&s=suneung"
     }
   ];
 
@@ -612,6 +616,150 @@
       short: true,
       answer: 73,
       help: R`\(\mathrm{AP}\)와 \(\mathrm{BQ}\)는 둘 다 직선 \(y=x\)에 수직이라 기울기가 \(-1\)로 같다. 곧 두 선분이 평행이고 사각형 \(\mathrm{APQB}\)는 사다리꼴이며, (가)의 \(y\)절편 차가 두 평행선 사이의 거리를 준다.`
+    },
+    {
+      id: "2026-06-9", exam: "2026-06", no: 9, score: 4,
+      units: ["m2-integ"], memo: "대칭 구간에서의 정적분",
+      body: R`함수 \(f(x)=x^{2}+ax\)에 대하여
+        \[\int_{-3}^{3}(x+1)f(x)\,dx = 36+\int_{-3}^{3}f(x)\,dx\]
+        일 때, 상수 \(a\)의 값은?`,
+      choices: [R`\(1\)`, R`\(2\)`, R`\(3\)`, R`\(4\)`, R`\(5\)`],
+      answer: 2,
+      help: R`적분 구간이 \(-3\)부터 \(3\)까지 원점에 대하여 대칭이라 홀수 차수 항의 적분은 모두 \(0\)이다. \((x+1)f(x)\)를 전개하면 짝수 차수인 \((a+1)x^{2}\)만 살아남는다.`
+    },
+    {
+      id: "2026-06-10", exam: "2026-06", no: 10, score: 4,
+      units: ["m1-explog"], memo: "로그 곡선 두 개와 정삼각형",
+      body: R`실수 \(a\,(a>1)\)에 대하여
+        곡선 \(y=\log_{a}(x+3)\)이 곡선 \(y=\log_{a}(-x+3)\)과 만나는 점을 \(\mathrm{A}\),
+        곡선 \(y=\log_{a}(x+3)\)이 \(x\)축과 만나는 점을 \(\mathrm{B}\),
+        곡선 \(y=\log_{a}(-x+3)\)이 \(x\)축과 만나는 점을 \(\mathrm{C}\)라 하자.
+        삼각형 \(\mathrm{ABC}\)가 정삼각형일 때, \(a\)의 값은?`,
+      choices: [R`\(3^{\frac{\sqrt{3}}{6}}\)`, R`\(3^{\frac{\sqrt{3}}{4}}\)`, R`\(3^{\frac{\sqrt{3}}{3}}\)`, R`\(3^{\frac{5\sqrt{3}}{12}}\)`, R`\(3^{\frac{\sqrt{3}}{2}}\)`],
+      answer: 1,
+      help: R`두 곡선은 \(y\)축에 대하여 서로 대칭이므로 교점 \(\mathrm{A}\)는 \(y\)축 위에 있고, \(\mathrm{B}(-2,\,0)\), \(\mathrm{C}(2,\,0)\)이다. 밑변 \(\overline{\mathrm{BC}}=4\)가 정해지니 정삼각형이라는 조건은 높이가 \(2\sqrt{3}\), 곧 \(\log_{a}3=2\sqrt{3}\)이라는 말이 된다.`
+    },
+    {
+      id: "2026-06-11", exam: "2026-06", no: 11, score: 4,
+      units: ["m2-diff"], memo: "위치가 주어진 점의 속도와 가속도",
+      body: R`시각 \(t=0\)일 때 출발하여 수직선 위를 움직이는 점 \(\mathrm{P}\)가 있다.
+        시각이 \(t\,(t\ge 0)\)일 때 점 \(\mathrm{P}\)의 위치 \(x\)가
+        \[x=t^{3}-t^{2}-t+1\]
+        이다. &lt;보기&gt;에서 옳은 것만을 있는 대로 고른 것은?`,
+      noteTitle: "보 기",
+      note: [
+        R`ㄱ. 시각 \(t=1\)일 때 점 \(\mathrm{P}\)의 위치는 \(1\)이다.`,
+        R`ㄴ. 시각 \(t=1\)일 때 점 \(\mathrm{P}\)의 속도는 \(0\)이다.`,
+        R`ㄷ. 출발한 후 점 \(\mathrm{P}\)의 운동 방향이 바뀌는 시각에 점 \(\mathrm{P}\)의 가속도는 \(4\)이다.`
+      ],
+      choices: [R`ㄱ`, R`ㄴ`, R`ㄷ`, R`ㄱ, ㄷ`, R`ㄴ, ㄷ`],
+      answer: 5,
+      help: R`위치가 바로 주어졌으니 속도는 \(x'=3t^{2}-2t-1=(3t+1)(t-1)\)이다. \(t\ge 0\)에서 부호가 바뀌는 곳은 \(t=1\) 하나뿐이라, ㄴ과 ㄷ이 같은 자리에서 함께 정해진다.`
+    },
+    {
+      id: "2026-06-12", exam: "2026-06", no: 12, score: 4,
+      units: ["m1-seq"], memo: "두 갈래로 갈리는 점화식",
+      body: R`다음 조건을 만족시키는 모든 수열 \(\{a_{n}\}\)에 대하여
+        \(a_{4}\)의 최댓값은?`,
+      note: [
+        R`(가) \(a_{1}=a_{3}\)`,
+        R`(나) 모든 자연수 \(n\)에 대하여 \(\left(a_{n+1}-a_{n}+3\right)\left(a_{n+1}-2a_{n}\right)=0\)이다.`
+      ],
+      choices: [R`\(9\)`, R`\(12\)`, R`\(15\)`, R`\(18\)`, R`\(21\)`],
+      answer: 2,
+      help: R`(나)는 각 \(n\)마다 \(a_{n+1}=a_{n}-3\)이거나 \(a_{n+1}=2a_{n}\), 둘 중 하나라는 뜻이다. \(a_{1}=a_{3}\)이므로 두 걸음 만에 제자리로 돌아오는 조합만 살아남고, 그 조합이 \(a_{1}\)의 값까지 정해 준다.`
+    },
+    {
+      id: "2026-06-13", exam: "2026-06", no: 13, score: 4,
+      units: ["m2-integ"], memo: "넓이 세 조각을 부호로 묶기",
+      body: R`그림과 같이 함수 \(f(x)=3x^{2}-7x+2\)에 대하여 곡선
+        \(y=f(x)\)와 직선 \(y=\dfrac{1}{3}x-\dfrac{2}{3}\) 및 \(y\)축으로 둘러싸인 영역을 \(A\),
+        곡선 \(y=f(x)\)와 직선 \(y=\dfrac{1}{3}x-\dfrac{2}{3}\)로 둘러싸인 영역을 \(B\),
+        곡선 \(y=f(x)\)와 두 직선 \(y=\dfrac{1}{3}x-\dfrac{2}{3}\), \(x=k\,(k>2)\)로
+        둘러싸인 영역을 \(C\)라 하자.
+        \[(A\text{의 넓이})+(C\text{의 넓이})=(B\text{의 넓이})\]
+        일 때, 상수 \(k\)의 값은?`,
+      figure: "2026-06-13.webp",
+      choices: [R`\(\dfrac{29}{12}\)`, R`\(\dfrac{5}{2}\)`, R`\(\dfrac{31}{12}\)`, R`\(\dfrac{8}{3}\)`, R`\(\dfrac{11}{4}\)`],
+      answer: 4,
+      help: R`\(B\)에서는 직선이 곡선보다 위에 있어 차의 부호가 반대다. 그래서 \(A+C=B\)는 부호를 붙여 더하면 \(\displaystyle\int_{0}^{k}\left(f(x)-\left(\frac{1}{3}x-\frac{2}{3}\right)\right)dx=0\)이라는 한 줄과 같은 말이 된다. 교점을 구할 필요가 없다.`
+    },
+    {
+      id: "2026-06-14", exam: "2026-06", no: 14, score: 4,
+      units: ["m1-trig"], memo: "중점과 내분점이 만든 선분의 길이",
+      body: R`\(\overline{\mathrm{AB}}=2\sqrt{7}\)인 삼각형 \(\mathrm{ABC}\)에서 선분 \(\mathrm{BC}\)의 중점을 \(\mathrm{P}\),
+        선분 \(\mathrm{BC}\)를 \(5:1\)로 내분하는 점을 \(\mathrm{Q}\)라 하자.
+        \[\overline{\mathrm{AQ}}=3\sqrt{2},\qquad \sin(\angle\mathrm{QAP}):\sin(\angle\mathrm{APQ})=\sqrt{2}:3\]
+        일 때, 삼각형 \(\mathrm{ABC}\)의 외접원의 넓이는?`,
+      figure: "2026-06-14.webp",
+      choices: [R`\(\dfrac{85}{9}\pi\)`, R`\(\dfrac{88}{9}\pi\)`, R`\(\dfrac{91}{9}\pi\)`, R`\(\dfrac{94}{9}\pi\)`, R`\(\dfrac{97}{9}\pi\)`],
+      answer: 2,
+      help: R`삼각형 \(\mathrm{APQ}\)에서 사인법칙을 쓰면 \(\overline{\mathrm{PQ}}:\overline{\mathrm{AQ}}=\sin(\angle\mathrm{QAP}):\sin(\angle\mathrm{APQ})=\sqrt{2}:3\)이라 \(\overline{\mathrm{PQ}}=2\)가 곧바로 나온다. 한편 \(\mathrm{P}\)가 중점이고 \(\mathrm{Q}\)가 \(5:1\) 내분점이므로 \(\overline{\mathrm{PQ}}=\frac{1}{3}\overline{\mathrm{BC}}\), 곧 \(\overline{\mathrm{BC}}=6\)이다.`
+    },
+    {
+      id: "2026-06-15", exam: "2026-06", no: 15, score: 4,
+      units: ["m2-diff"], memo: "오른쪽 미분계수가 늘 0 이하인 함수",
+      body: R`상수 \(k\)와 \(f'(0)=6\)인 삼차함수 \(f(x)\)에 대하여 함수
+        \[g(x)=\begin{cases}f(x)+k &amp; (|x|>1)\\ -f(x) &amp; (|x|\le 1)\end{cases}\]
+        이 다음 조건을 만족시킬 때, \(k+f\left(\dfrac{1}{2}\right)\)의 값은?`,
+      note: [
+        R`(가) 모든 실수 \(a\)에 대하여 \(\displaystyle\lim_{x\to a+}\frac{g(x)-g(a)}{x-a}\)의 값이 존재하고 그 값은 \(0\) 이하이다.`,
+        R`(나) \(x\)에 대한 방정식 \(g(x)=t\)의 서로 다른 실근의 개수가 \(2\)가 되도록 하는 실수 \(t\)의 최댓값은 \(13\)이다.`
+      ],
+      choices: [R`\(\dfrac{15}{4}\)`, R`\(\dfrac{27}{4}\)`, R`\(\dfrac{39}{4}\)`, R`\(\dfrac{51}{4}\)`, R`\(\dfrac{63}{4}\)`],
+      answer: 1,
+      help: R`(가)의 극한은 \(x=a\)에서의 오른쪽 미분계수다. 그 값이 어디서나 \(0\) 이하라는 것은 \(g\)에 올라가는 구간이 없다는 뜻이다. \(f'(0)=6>0\)인데도 이것이 가능한 까닭은 \(|x|\le 1\)에서 \(g=-f\)라 기울기의 부호가 뒤집히기 때문이다.`
+    },
+    {
+      id: "2026-06-20", exam: "2026-06", no: 20, score: 4,
+      units: ["m1-seq"], memo: "주기함수의 방정식이 만든 등차수열 셋",
+      body: R`실수 전체의 집합에서 정의된 함수 \(f(x)\)가 다음 조건을
+        만족시킨다.`,
+      note: [
+        R`\(0\le x<4\)일 때 \(f(x)=-x^{2}+4x\)이고, 모든 실수 \(x\)에 대하여 \(f(x+4)=f(x)\)이다.`
+      ],
+      bodyAfter: R`방정식 \(f\bigl(f(x)\bigr)=f(x)\)의 \(0\) 이상인 모든 실근을 작은 수부터
+        크기순으로 나열할 때, \(n\)번째 수를 \(a_{n}\)이라 하자.
+        다음은 \(a_{20}+a_{21}+a_{22}\)의 값을 구하는 과정이다.
+        <div class="proof-box">
+        <p>방정식 \(f(x)=x\)의 모든 실근이 \(0\), \(3\)이므로 방정식 \(f\bigl(f(x)\bigr)=f(x)\)의 실근을 구하는 것은 방정식 \(f(x)\times\bigl(f(x)-3\bigr)=0\)의 실근을 구하는 것과 같다.</p>
+        <p>\(0\le x<4\)일 때, 방정식 \(f(x)\times\bigl(f(x)-3\bigr)=0\)의 모든 실근은 \(0\), \(\fbox{(가)}\), \(3\)이므로</p>
+        \[a_{1}=0,\quad a_{2}=\fbox{(가)},\quad a_{3}=3\]
+        <p>이다. 또한 모든 실수 \(x\)에 대하여 \(f(x+4)=f(x)\)이므로 세 수열 \(\{a_{3n-2}\}\), \(\{a_{3n-1}\}\), \(\{a_{3n}\}\)은 첫째항이 각각 \(0\), \(\fbox{(가)}\), \(3\)이고 공차가 모두 \(\fbox{(나)}\)인 등차수열이다.</p>
+        <p>따라서 \(a_{20}+a_{21}+a_{22}=\fbox{(다)}\)이다.</p>
+        </div>
+        위의 (가), (나), (다)에 알맞은 수를 각각 \(p\), \(q\), \(r\)이라 할 때,
+        \(p+q+r\)의 값을 구하시오.`,
+      short: true,
+      answer: 85,
+      help: R`\(f\bigl(f(x)\bigr)=f(x)\)는 \(f(x)\)가 방정식 \(f(t)=t\)의 근이라는 뜻이고, 그 근이 \(0\)과 \(3\)뿐이라 \(f(x)\bigl(f(x)-3\bigr)=0\)으로 바뀐다. 한 주기 \([0,\,4)\)에서 근을 다 찾고 나면, \(f(x+4)=f(x)\)이므로 나머지는 공차가 \(4\)인 등차수열 셋으로 갈린다.`
+    },
+    {
+      id: "2026-06-21", exam: "2026-06", no: 21, score: 4,
+      units: ["m2-limit"], memo: "부호 함수와 절댓값이 든 두 극한",
+      body: R`함수 \(f(x)=(x-1)(x-2)\)와 최고차항의 계수가 \(1\)인
+        사차함수 \(g(x)\)가 다음 조건을 만족시킨다.`,
+      note: [
+        R`모든 실수 \(a\)에 대하여 \(\displaystyle\lim_{x\to a}\frac{g(x)\times|f(x)|}{f(x)}\)의 값과 \(\displaystyle\lim_{x\to a}\frac{\bigl|g(x)-f(x)\bigr|}{g(x)}\)의 값이 모두 존재한다.`
+      ],
+      bodyAfter: R`\(g(-1)\)의 값을 구하시오.`,
+      short: true,
+      answer: 42,
+      help: R`\(\frac{|f(x)|}{f(x)}\)는 \(f\)의 부호가 바뀌는 \(x=1\), \(x=2\)에서 \(1\)과 \(-1\)로 튄다. 첫 극한이 그 자리에서도 있으려면 곱해지는 \(g\)가 그 튐을 눌러야 하므로 \(g(1)=g(2)=0\)이다. 두 번째 극한은 \(g\)의 근에서 분모가 \(0\)이 되므로 분자도 \(0\)이어야 하고, 그래서 \(g\)의 근은 모두 \(f\)의 근이기도 해야 한다.`
+    },
+    {
+      id: "2026-06-22", exam: "2026-06", no: 22, score: 4,
+      units: ["m1-explog"], memo: "지수 곡선 두 개의 교점과 삼각형 넓이",
+      body: R`\(k>1\)인 실수 \(k\)에 대하여 두 곡선
+        \[y=2^{x}+\frac{k}{2},\qquad y=k\times\left(\frac{1}{2}\right)^{x}+k-2\]
+        가 만나는 점을 \(\mathrm{A}\)라 하고, 점 \(\mathrm{A}\)를 지나고 기울기가 \(-1\)인
+        직선이 곡선 \(y=2^{\,x-2}-3\)과 만나는 점을 \(\mathrm{B}\)라 하자.
+        삼각형 \(\mathrm{AOB}\)의 넓이가 \(16\)일 때, \(k+\log_{2}k=\dfrac{q}{p}\)이다.
+        \(p+q\)의 값을 구하시오. (단, \(\mathrm{O}\)는 원점이고, \(p\)와 \(q\)는 서로소인
+        자연수이다.)`,
+      short: true,
+      answer: 38,
+      help: R`두 곡선을 같게 놓고 \(2^{x}=u\)로 바꾸면 \(u^{2}+\left(2-\frac{k}{2}\right)u-k=0\)이 되고, 이것은 \((u+2)\left(u-\frac{k}{2}\right)=0\)으로 인수분해된다. \(u>0\)이므로 \(2^{x}=\frac{k}{2}\), 곧 \(\mathrm{A}\)의 \(x\)좌표가 \(\log_{2}k-1\)이다.`
     }
   ];
 
